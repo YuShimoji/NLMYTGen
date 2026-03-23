@@ -1,0 +1,8 @@
+[project]
+name = "nlmytgen"
+version = "0.1.0"
+description = "NotebookLM transcript to YMM4 CSV pipeline"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
