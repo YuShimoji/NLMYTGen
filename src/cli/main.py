@@ -105,7 +105,8 @@ def _cmd_build_csv(args: argparse.Namespace) -> int:
         for name in sorted(unmapped):
             print(f"[WARN] unmapped speaker: {name}", file=sys.stderr)
 
-    output = assemble(script, speaker_map=speaker_map)
+    merge = getattr(args, "merge_consecutive", False)
+    output = assemble(script, speaker_map=speaker_map, merge_consecutive=merge)
 
     # バリデーション
     results = validate(output)
@@ -212,6 +213,8 @@ def main(argv: list[str] | None = None) -> int:
     p_build.add_argument("input", help="Input file path (.txt or .csv)")
     p_build.add_argument("-o", "--output", help="Output CSV path")
     _add_speaker_map_args(p_build)
+    p_build.add_argument("--merge-consecutive", action="store_true",
+                         help="Merge consecutive utterances from the same speaker")
     p_build.add_argument("--dry-run", action="store_true", help="Preview without writing")
     p_build.add_argument("--stats", action="store_true", help="Show speaker statistics")
 

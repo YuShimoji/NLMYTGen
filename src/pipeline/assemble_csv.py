@@ -47,12 +47,14 @@ def find_unmapped_speakers(
 def assemble(
     script: StructuredScript,
     speaker_map: dict[str, str] | None = None,
+    merge_consecutive: bool = False,
 ) -> YMM4CsvOutput:
     """StructuredScript を YMM4CsvOutput に変換する。
 
     Args:
         script: 構造化済み台本
         speaker_map: 話者名マッピング (例: {"Host1": "れいむ", "Host2": "まりさ"})
+        merge_consecutive: True なら同一話者の連続発話を結合する
     """
     rows: list[YMM4CsvRow] = []
     effective_map = speaker_map or {}
@@ -60,6 +62,11 @@ def assemble(
     for utt in script.utterances:
         speaker = effective_map.get(utt.speaker, utt.speaker)
         text = _strip_speaker_prefix(utt.text, speaker=utt.speaker)
-        rows.append(YMM4CsvRow(speaker=speaker, text=text))
+
+        if merge_consecutive and rows and rows[-1].speaker == speaker:
+            merged_text = f"{rows[-1].text}{text}"
+            rows[-1] = YMM4CsvRow(speaker=speaker, text=merged_text)
+        else:
+            rows.append(YMM4CsvRow(speaker=speaker, text=text))
 
     return YMM4CsvOutput(rows=tuple(rows))
