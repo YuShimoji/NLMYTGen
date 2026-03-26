@@ -30,9 +30,9 @@ class RawTranscript:
 
 
 def load_transcript(path: Path) -> RawTranscript:
-    """ファイルから RawTranscript を読み込む。"""
+    """ファイルから RawTranscript を読み込む。BOM 付き UTF-8 も受け付ける。"""
     if not path.exists():
         raise FileNotFoundError(f"File not found: {path}")
 
-    text = path.read_text(encoding="utf-8")
+    text = path.read_text(encoding="utf-8-sig")
     return RawTranscript(text=text, source_path=path)
