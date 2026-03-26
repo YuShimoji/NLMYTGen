@@ -10,16 +10,30 @@ import re
 from src.contracts.structured_script import StructuredScript
 from src.contracts.ymm4_csv_schema import YMM4CsvOutput, YMM4CsvRow
 
-# テキスト先頭の話者プレフィックスを除去する正規表現。
-# 旧 csv_assembler.py L18 を参考に、v2 用に適応。
-_SPEAKER_PREFIX_RE = re.compile(
-    r"^(Host\d*|Speaker\d*|ナレーター\d*)\s*[:：]\s*", re.IGNORECASE
+# テキスト先頭の汎用話者プレフィックスを除去する正規表現。
+_GENERIC_PREFIX_RE = re.compile(
+    r"^(Host\d*|Speaker\d*|ナレーター\d*|進行役\d*|解説者\d*)\s*[:：]\s*",
+    re.IGNORECASE,
 )
 
 
-def _strip_speaker_prefix(text: str) -> str:
-    """テキスト先頭の話者プレフィックスを除去する。"""
-    return _SPEAKER_PREFIX_RE.sub("", text).strip()
+def _strip_speaker_prefix(text: str, speaker: str = "") -> str:
+    """テキスト先頭の話者プレフィックスを除去する。
+
+    speaker が指定された場合、その話者名がテキスト先頭にあれば除去する。
+    """
+    # 動的: 話者名がテキスト先頭にある場合
+    if speaker:
+        for sep in (":", "："):
+            prefix = f"{speaker}{sep}"
+            if text.startswith(prefix):
+                return text[len(prefix):].strip()
+            prefix_sp = f"{speaker} {sep}"
+            if text.startswith(prefix_sp):
+                return text[len(prefix_sp):].strip()
+
+    # 静的: 汎用パターン
+    return _GENERIC_PREFIX_RE.sub("", text).strip()
 
 
 def find_unmapped_speakers(
@@ -45,7 +59,7 @@ def assemble(
 
     for utt in script.utterances:
         speaker = effective_map.get(utt.speaker, utt.speaker)
-        text = _strip_speaker_prefix(utt.text)
+        text = _strip_speaker_prefix(utt.text, speaker=utt.speaker)
         rows.append(YMM4CsvRow(speaker=speaker, text=text))
 
     return YMM4CsvOutput(rows=tuple(rows))

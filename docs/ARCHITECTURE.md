@@ -30,8 +30,8 @@ NotebookLM transcript (.txt or .csv)
         │
         ▼
 ┌─────────────────────┐
-│ validate()          │  空フィールドチェック
-│ → [Warning, ...]    │  長文警告
+│ validate()          │  空フィールド / 長文チェック
+│ → [Warning, ...]    │
 └─────────────────────┘
         │
         ▼
@@ -75,4 +75,4 @@ src/
 ## 依存関係
 
 - 外部ライブラリ: なし (Python stdlib のみ)
-- 使用する stdlib: `csv`, `re`, `pathlib`, `argparse`, `dataclasses`
+- 使用する stdlib: `csv`, `re`, `pathlib`, `argparse`, `dataclasses`, `warnings`
