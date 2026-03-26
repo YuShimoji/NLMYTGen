@@ -57,8 +57,20 @@ YMM4 台本読込用 CSV:
 # CSV 生成
 python -m src.cli.main build-csv input.txt -o output.csv --speaker-map Host1=れいむ,Host2=まりさ
 
-# 入力検証のみ
+# 話者マッピングファイルを使用 (JSON or key=value テキスト)
+python -m src.cli.main build-csv input.txt --speaker-map-file speakers.json
+
+# プレビュー (CSV を書かずに結果を確認)
+python -m src.cli.main build-csv input.txt --speaker-map Host1=れいむ --dry-run
+
+# 統計表示付き
+python -m src.cli.main build-csv input.txt --speaker-map Host1=れいむ --stats
+
+# 入力検証
 python -m src.cli.main validate input.txt
+
+# 入力の詳細分析 + マッピングプレビュー
+python -m src.cli.main inspect input.txt --speaker-map Host1=れいむ,Host2=まりさ
 ```
 
 ## LLM の役割
