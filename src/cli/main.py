@@ -9,6 +9,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from collections import Counter
 from pathlib import Path
@@ -30,6 +31,45 @@ def _parse_speaker_map(raw: str) -> dict[str, str]:
         if key and value:
             result[key] = value
     return result
+
+
+def _load_speaker_map_file(path: Path) -> dict[str, str]:
+    """話者マッピングファイルを読み込む。JSON または key=value 形式。"""
+    text = path.read_text(encoding="utf-8")
+
+    # JSON の場合
+    if path.suffix.lower() == ".json":
+        data = json.loads(text)
+        if not isinstance(data, dict):
+            raise ValueError(f"Speaker map JSON must be an object: {path}")
+        return {str(k): str(v) for k, v in data.items()}
+
+    # key=value 形式 (1行1エントリ)
+    result: dict[str, str] = {}
+    for line in text.splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key, value = key.strip(), value.strip()
+        if key and value:
+            result[key] = value
+    return result
+
+
+def _resolve_speaker_map(args: argparse.Namespace) -> dict[str, str] | None:
+    """--speaker-map と --speaker-map-file を統合する。"""
+    result: dict[str, str] = {}
+
+    if getattr(args, "speaker_map_file", None):
+        result.update(_load_speaker_map_file(Path(args.speaker_map_file)))
+
+    if getattr(args, "speaker_map", None):
+        result.update(_parse_speaker_map(args.speaker_map))
+
+    return result or None
 
 
 def _print_stats(output, file=sys.stdout):
@@ -60,7 +100,7 @@ def _cmd_build_csv(args: argparse.Namespace) -> int:
         output_path = input_path.with_name(f"{input_path.stem}_ymm4.csv")
 
     # 話者マッピング
-    speaker_map = _parse_speaker_map(args.speaker_map) if args.speaker_map else None
+    speaker_map = _resolve_speaker_map(args)
 
     # パイプライン実行
     script = normalize(input_path)
@@ -128,7 +168,7 @@ def _cmd_validate(args: argparse.Namespace) -> int:
 def _cmd_inspect(args: argparse.Namespace) -> int:
     """inspect: 入力の詳細分析。マッピング結果のプレビュー。"""
     input_path = Path(args.input)
-    speaker_map = _parse_speaker_map(args.speaker_map) if args.speaker_map else None
+    speaker_map = _resolve_speaker_map(args)
 
     script = normalize(input_path)
 
@@ -154,6 +194,18 @@ def _cmd_inspect(args: argparse.Namespace) -> int:
     return 0
 
 
+def _add_speaker_map_args(parser: argparse.ArgumentParser) -> None:
+    """--speaker-map / --speaker-map-file 引数を追加する。"""
+    parser.add_argument(
+        "--speaker-map",
+        help="Speaker name mapping (e.g., Host1=れいむ,Host2=まりさ)",
+    )
+    parser.add_argument(
+        "--speaker-map-file",
+        help="Speaker map file (.json or key=value text)",
+    )
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="nlmytgen",
@@ -165,10 +217,7 @@ def main(argv: list[str] | None = None) -> int:
     p_build = subparsers.add_parser("build-csv", help="Build YMM4 CSV from input")
     p_build.add_argument("input", help="Input file path (.txt or .csv)")
     p_build.add_argument("-o", "--output", help="Output CSV path")
-    p_build.add_argument(
-        "--speaker-map",
-        help="Speaker name mapping (e.g., Host1=れいむ,Host2=まりさ)",
-    )
+    _add_speaker_map_args(p_build)
     p_build.add_argument("--dry-run", action="store_true", help="Preview without writing")
     p_build.add_argument("--stats", action="store_true", help="Show speaker statistics")
 
@@ -179,10 +228,7 @@ def main(argv: list[str] | None = None) -> int:
     # inspect
     p_inspect = subparsers.add_parser("inspect", help="Inspect input and preview mapping")
     p_inspect.add_argument("input", help="Input file path (.txt or .csv)")
-    p_inspect.add_argument(
-        "--speaker-map",
-        help="Speaker name mapping (e.g., Host1=れいむ,Host2=まりさ)",
-    )
+    _add_speaker_map_args(p_inspect)
 
     args = parser.parse_args(argv)
 
