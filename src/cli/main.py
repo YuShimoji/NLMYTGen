@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 from src.pipeline.normalize import normalize
-from src.pipeline.assemble_csv import assemble
+from src.pipeline.assemble_csv import assemble, find_unmapped_speakers
 from src.pipeline.validate_handoff import validate, has_errors, Severity
 
 
@@ -45,10 +45,17 @@ def _cmd_build_csv(args: argparse.Namespace) -> int:
 
     # パイプライン実行
     script = normalize(input_path)
+
+    # 未マッピング話者の警告 (assembly 前に実施)
+    if speaker_map:
+        unmapped = find_unmapped_speakers(script, speaker_map)
+        for name in sorted(unmapped):
+            print(f"[WARN] unmapped speaker: {name}", file=sys.stderr)
+
     output = assemble(script, speaker_map=speaker_map)
 
     # バリデーション
-    results = validate(output, speaker_map=speaker_map)
+    results = validate(output)
     for r in results:
         prefix = "ERROR" if r.severity == Severity.ERROR else "WARN"
         print(f"[{prefix}] row {r.row_index}: {r.message}", file=sys.stderr)
@@ -64,7 +71,7 @@ def _cmd_build_csv(args: argparse.Namespace) -> int:
 
 
 def _cmd_validate(args: argparse.Namespace) -> int:
-    """validate: 入力ファイルの構文チェックのみ。"""
+    """validate: 入力ファイルのパース + 出力検証。"""
     input_path = Path(args.input)
 
     script = normalize(input_path)
@@ -72,6 +79,16 @@ def _cmd_validate(args: argparse.Namespace) -> int:
 
     speakers = sorted(set(u.speaker for u in script.utterances))
     print(f"Speakers: {', '.join(speakers)}")
+
+    # handoff validation も実行
+    output = assemble(script)
+    results = validate(output)
+    for r in results:
+        prefix = "ERROR" if r.severity == Severity.ERROR else "WARN"
+        print(f"[{prefix}] row {r.row_index}: {r.message}", file=sys.stderr)
+
+    if has_errors(results):
+        return 1
     return 0
 
 

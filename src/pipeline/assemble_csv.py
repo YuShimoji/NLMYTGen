@@ -22,6 +22,14 @@ def _strip_speaker_prefix(text: str) -> str:
     return _SPEAKER_PREFIX_RE.sub("", text).strip()
 
 
+def find_unmapped_speakers(
+    script: StructuredScript,
+    speaker_map: dict[str, str],
+) -> set[str]:
+    """speaker_map に含まれない話者名を返す。assembly 前に呼ぶこと。"""
+    return {u.speaker for u in script.utterances} - set(speaker_map.keys())
+
+
 def assemble(
     script: StructuredScript,
     speaker_map: dict[str, str] | None = None,

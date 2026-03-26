@@ -8,10 +8,13 @@ from __future__ import annotations
 import csv
 import io
 import re
+import warnings
 from pathlib import Path
 
 from src.contracts.notebooklm_input import load_transcript
 from src.contracts.structured_script import StructuredScript, Utterance
+
+_SUPPORTED_EXTENSIONS = {".csv", ".txt"}
 
 # タイムスタンプ付き: [00:00] Speaker: text
 _TIMESTAMPED_RE = re.compile(
@@ -29,8 +32,15 @@ def normalize(path: Path) -> StructuredScript:
     .txt → テキストモード (話者タグ付き対話)
     """
     transcript = load_transcript(path)
+    suffix = path.suffix.lower()
 
-    if path.suffix.lower() == ".csv":
+    if suffix not in _SUPPORTED_EXTENSIONS:
+        warnings.warn(
+            f"Unsupported extension '{suffix}', treating as text: {path.name}",
+            stacklevel=2,
+        )
+
+    if suffix == ".csv":
         return _parse_csv(transcript.text)
     else:
         return _parse_text(transcript.text)

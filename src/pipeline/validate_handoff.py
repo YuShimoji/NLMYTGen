@@ -27,17 +27,13 @@ class ValidationResult:
     message: str
 
 
-def validate(
-    output: YMM4CsvOutput,
-    speaker_map: dict[str, str] | None = None,
-) -> list[ValidationResult]:
+def validate(output: YMM4CsvOutput) -> list[ValidationResult]:
     """YMM4CsvOutput を検証する。
 
     Returns:
         検証結果のリスト。空なら問題なし。
     """
     results: list[ValidationResult] = []
-    mapped_speakers = set((speaker_map or {}).values())
 
     for i, row in enumerate(output.rows):
         if not row.speaker or not row.speaker.strip():
@@ -54,12 +50,6 @@ def validate(
                     Severity.WARNING,
                     i,
                     f"text length {len(row.text)} exceeds {TEXT_LENGTH_WARN_THRESHOLD}",
-                )
-            )
-        if speaker_map and row.speaker not in mapped_speakers:
-            results.append(
-                ValidationResult(
-                    Severity.WARNING, i, f"unmapped speaker: {row.speaker}"
                 )
             )
 
