@@ -3,7 +3,7 @@
 ## GPS
 
 - Project: NLMYTGen
-- Slice: Phase 2 (CLI拡張・品質改善)
+- Slice: Phase 2 (CLI拡張・品質改善) -- 完了
 - Branch: master
 - Session: 2026-03-26
 
@@ -14,11 +14,11 @@
 - Tests: 15
 - Mock files: 0
 - TODO/FIXME/HACK: 0
-- Commits: 10 (3 initial + 7 this session)
+- Commits: 14 (3 initial + 11 this session)
 
 ## Counters
 
-- blocks_completed: 8
+- blocks_completed: 13
 - blocks_since_user_visible_change: 0
 - blocks_since_visual_audit: N/A (CLI project)
 - visual_evidence_status: N/A (CLI project)
@@ -26,13 +26,17 @@
 
 ## Evidence
 
-- CLI build-csv: sample data E2E confirmed
-- CLI validate: sample data confirmed
+- CLI build-csv: sample data E2E confirmed (txt + csv)
+- CLI validate: sample data confirmed (txt + csv)
 - CLI inspect: sample data confirmed
+- CLI generate-map: text + json format confirmed
 - --dry-run: confirmed
 - --stats: confirmed
-- --merge-consecutive: confirmed
+- --merge-consecutive: confirmed (12->11 utterances with consecutive merge)
 - --speaker-map-file: JSON confirmed
+- --speaker-map: CLI string confirmed
+- BOM UTF-8 input: confirmed
+- CSV header auto-skip: confirmed
 - unmapped speaker warning: confirmed
 - pytest 15/15 pass
 

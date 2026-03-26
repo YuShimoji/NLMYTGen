@@ -75,4 +75,4 @@ src/
 ## 依存関係
 
 - 外部ライブラリ: なし (Python stdlib のみ)
-- 使用する stdlib: `csv`, `re`, `pathlib`, `argparse`, `dataclasses`, `warnings`
+- 使用する stdlib: `csv`, `re`, `pathlib`, `argparse`, `dataclasses`, `warnings`, `json`, `collections`
