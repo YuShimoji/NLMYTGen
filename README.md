@@ -41,8 +41,9 @@ Audio Overview →
 
 NotebookLM 由来のテキストファイル。以下のフォーマットを受け付ける:
 
-- **CSV** (.csv): 2列 (話者名, テキスト)
+- **CSV** (.csv): 2列 (話者名, テキスト)。ヘッダー行は自動スキップ
 - **テキスト** (.txt): 話者タグ付き対話 (`Speaker: text` 形式)
+- BOM 付き UTF-8 も自動対応
 
 ## 出力
 
@@ -71,6 +72,13 @@ python -m src.cli.main validate input.txt
 
 # 入力の詳細分析 + マッピングプレビュー
 python -m src.cli.main inspect input.txt --speaker-map Host1=れいむ,Host2=まりさ
+
+# 話者マッピングテンプレートを自動生成
+python -m src.cli.main generate-map input.txt > speakers.txt
+# speakers.txt を編集して --speaker-map-file で使用
+
+# 同一話者の連続発話を結合
+python -m src.cli.main build-csv input.txt --merge-consecutive --speaker-map Host1=れいむ
 ```
 
 ## LLM の役割
