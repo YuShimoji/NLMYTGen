@@ -189,6 +189,27 @@ def _cmd_inspect(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_generate_map(args: argparse.Namespace) -> int:
+    """generate-map: 入力ファイルから話者マッピングテンプレートを生成する。"""
+    input_path = Path(args.input)
+    script = normalize(input_path)
+
+    speakers = sorted(set(u.speaker for u in script.utterances))
+    fmt = getattr(args, "format", "text")
+
+    if fmt == "json":
+        data = {s: s for s in speakers}
+        print(json.dumps(data, ensure_ascii=False, indent=2))
+    else:
+        print("# Speaker map template")
+        print(f"# Generated from: {input_path.name}")
+        print(f"# Edit the values (right side of =) to YMM4 character names")
+        for s in speakers:
+            print(f"{s}={s}")
+
+    return 0
+
+
 def _add_speaker_map_args(parser: argparse.ArgumentParser) -> None:
     """--speaker-map / --speaker-map-file 引数を追加する。"""
     parser.add_argument(
@@ -227,6 +248,12 @@ def main(argv: list[str] | None = None) -> int:
     p_inspect.add_argument("input", help="Input file path (.txt or .csv)")
     _add_speaker_map_args(p_inspect)
 
+    # generate-map
+    p_genmap = subparsers.add_parser("generate-map", help="Generate speaker map template from input")
+    p_genmap.add_argument("input", help="Input file path (.txt or .csv)")
+    p_genmap.add_argument("--format", choices=["text", "json"], default="text",
+                          help="Output format (default: text)")
+
     args = parser.parse_args(argv)
 
     try:
@@ -236,10 +263,12 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_validate(args)
         elif args.command == "inspect":
             return _cmd_inspect(args)
+        elif args.command == "generate-map":
+            return _cmd_generate_map(args)
         else:
             parser.print_help()
             return 1
-    except (ValueError, FileNotFoundError) as e:
+    except (ValueError, FileNotFoundError, json.JSONDecodeError) as e:
         print(f"Error: {e}", file=sys.stderr)
         return 1
 
