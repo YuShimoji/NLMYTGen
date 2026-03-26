@@ -19,34 +19,10 @@ from src.pipeline.assemble_csv import assemble, find_unmapped_speakers
 from src.pipeline.validate_handoff import validate, has_errors, Severity
 
 
-def _parse_speaker_map(raw: str) -> dict[str, str]:
-    """'Host1=れいむ,Host2=まりさ' 形式の文字列を辞書に変換する。"""
+def _parse_kv_pairs(lines: list[str]) -> dict[str, str]:
+    """key=value ペアのリストを辞書に変換する。# コメントと空行をスキップ。"""
     result: dict[str, str] = {}
-    for pair in raw.split(","):
-        pair = pair.strip()
-        if "=" not in pair:
-            continue
-        key, value = pair.split("=", 1)
-        key, value = key.strip(), value.strip()
-        if key and value:
-            result[key] = value
-    return result
-
-
-def _load_speaker_map_file(path: Path) -> dict[str, str]:
-    """話者マッピングファイルを読み込む。JSON または key=value 形式。"""
-    text = path.read_text(encoding="utf-8")
-
-    # JSON の場合
-    if path.suffix.lower() == ".json":
-        data = json.loads(text)
-        if not isinstance(data, dict):
-            raise ValueError(f"Speaker map JSON must be an object: {path}")
-        return {str(k): str(v) for k, v in data.items()}
-
-    # key=value 形式 (1行1エントリ)
-    result: dict[str, str] = {}
-    for line in text.splitlines():
+    for line in lines:
         line = line.strip()
         if not line or line.startswith("#"):
             continue
@@ -57,6 +33,24 @@ def _load_speaker_map_file(path: Path) -> dict[str, str]:
         if key and value:
             result[key] = value
     return result
+
+
+def _parse_speaker_map(raw: str) -> dict[str, str]:
+    """'Host1=れいむ,Host2=まりさ' 形式の文字列を辞書に変換する。"""
+    return _parse_kv_pairs(raw.split(","))
+
+
+def _load_speaker_map_file(path: Path) -> dict[str, str]:
+    """話者マッピングファイルを読み込む。JSON または key=value 形式。"""
+    text = path.read_text(encoding="utf-8")
+
+    if path.suffix.lower() == ".json":
+        data = json.loads(text)
+        if not isinstance(data, dict):
+            raise ValueError(f"Speaker map JSON must be an object: {path}")
+        return {str(k): str(v) for k, v in data.items()}
+
+    return _parse_kv_pairs(text.splitlines())
 
 
 def _resolve_speaker_map(args: argparse.Namespace) -> dict[str, str] | None:

@@ -16,6 +16,9 @@ from src.contracts.structured_script import StructuredScript, Utterance
 
 _SUPPORTED_EXTENSIONS = {".csv", ".txt"}
 
+# 話者名の最大長。コロン前の文字列がこれより長い場合は話者タグではなく通常テキストとみなす。
+_MAX_SPEAKER_NAME_LEN = 30
+
 # タイムスタンプ付き: [00:00] Speaker: text
 _TIMESTAMPED_RE = re.compile(
     r"^\[?\d{1,2}:\d{2}(?::\d{2})?\]?\s*([^:：]+?)\s*[:：]\s*(.+)$"
@@ -85,8 +88,7 @@ def _parse_text(text: str) -> StructuredScript:
         if m:
             speaker = m.group(1).strip()
             content = m.group(2).strip()
-            # 話者名が長すぎる場合はパース失敗とみなす (非対話行)
-            if len(speaker) <= 30 and content:
+            if len(speaker) <= _MAX_SPEAKER_NAME_LEN and content:
                 utterances.append(Utterance(speaker=speaker, text=content))
                 continue
 
