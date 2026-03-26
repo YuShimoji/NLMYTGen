@@ -49,13 +49,23 @@ def normalize(path: Path) -> StructuredScript:
         return _parse_text(transcript.text)
 
 
+_HEADER_WORDS = {"speaker", "text", "name", "character", "dialogue", "line", "話者", "テキスト", "セリフ"}
+
+
+def _looks_like_header(row: list[str]) -> bool:
+    """CSV の 1行目がヘッダー行かどうかを推定する。"""
+    return any(cell.strip().lower() in _HEADER_WORDS for cell in row[:2])
+
+
 def _parse_csv(text: str) -> StructuredScript:
-    """2列 CSV (speaker, text) をパースする。"""
+    """2列 CSV (speaker, text) をパースする。ヘッダー行は自動スキップ。"""
     utterances: list[Utterance] = []
     reader = csv.reader(io.StringIO(text))
 
-    for row in reader:
+    for i, row in enumerate(reader):
         if len(row) < 2:
+            continue
+        if i == 0 and _looks_like_header(row):
             continue
         speaker = row[0].strip()
         content = row[1].strip()
