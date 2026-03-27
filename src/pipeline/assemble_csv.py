@@ -64,7 +64,10 @@ def assemble(
         text = _strip_speaker_prefix(utt.text, speaker=utt.speaker)
 
         if merge_consecutive and rows and rows[-1].speaker == speaker:
-            merged_text = f"{rows[-1].text}{text}"
+            prev = rows[-1].text
+            # 前のテキストが句読点等で終わっていなければ句点を補う
+            sep = "" if prev.endswith(("。", "、", ".", ",", "!", "?", "！", "？", "\n")) else "。"
+            merged_text = f"{prev}{sep}{text}"
             rows[-1] = YMM4CsvRow(speaker=speaker, text=merged_text)
         else:
             rows.append(YMM4CsvRow(speaker=speaker, text=text))

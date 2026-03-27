@@ -3,9 +3,9 @@
 ## GPS
 
 - Project: NLMYTGen
-- Slice: Phase 2 (CLI拡張・品質改善) -- 完了
+- Slice: 実データ E2E 到達 (ラベルなし入力対応が前提)
 - Branch: master
-- Session: 2026-03-26
+- Session: 2026-03-27
 
 ## Quantitative Metrics
 
@@ -14,12 +14,12 @@
 - Tests: 15
 - Mock files: 0
 - TODO/FIXME/HACK: 0
-- Commits: 14 (3 initial + 11 this session)
+- Commits: 14 (3 initial + 11 previous sessions)
 
 ## Counters
 
-- blocks_completed: 13
-- blocks_since_user_visible_change: 0
+- blocks_completed: 14
+- blocks_since_user_visible_change: 1
 - blocks_since_visual_audit: N/A (CLI project)
 - visual_evidence_status: N/A (CLI project)
 - last_visual_audit_path: N/A
@@ -40,7 +40,16 @@
 - unmapped speaker warning: confirmed
 - pytest 15/15 pass
 
+## Blocking
+
+- 実 NotebookLM transcript がスピーカーラベルなし形式であることが判明 (2026-03-27)
+  - 現パーサーは "Speaker: text" コロン区切り形式のみ対応
+  - 実 transcript は行ごとの生テキスト（ラベルなし、2話者が交互に発話）
+  - ラベルなし入力の対応方針を決定後、E2E を実施する必要がある
+- YMM4 での実読込未確認（CSV 生成後に確認予定）
+
 ## Pending
 
-- 実 NotebookLM transcript での E2E 未実施
-- YMM4 での実読込未確認
+- ラベルなし入力対応: 行交互割当 or プレラベリングツール or 両方 → 要設計判断
+- 実 NotebookLM transcript での E2E（ラベルなし対応後）
+- YMM4 での実読込確認
