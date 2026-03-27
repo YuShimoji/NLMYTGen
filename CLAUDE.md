@@ -38,6 +38,6 @@ NotebookLM transcript to YMM4 CSV pipeline.
   - 15 tests, 0 failed (pytest), mock ゼロ
   - 外部依存ゼロ (Python stdlib のみ)
   - CLI: build-csv / validate / inspect / generate-map (--unlabeled, --speaker-map, --speaker-map-file, --dry-run, --stats, --merge-consecutive)
-  - **実データ E2E (コード側) 達成:** 実 NLM transcript (143行) → --unlabeled → 136 utterances → YMM4 CSV 生成成功
+  - **全工程 E2E 達成:** NLM transcript → --unlabeled → CSV (BOM付き) → YMM4 台本読込 → タイムライン配置
   - WORKFLOW.md: NLM → CSV → YMM4 → 動画 の全工程手順書
-  - 次のアクション: YMM4 での実読込確認 (手動ステップ)
+  - 全 blocker 解消。次スライス未定

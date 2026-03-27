@@ -3,9 +3,11 @@
 ## GPS
 
 - Project: NLMYTGen
-- Slice: 実データ E2E 到達 → YMM4 実読込確認
+- Slice: 全工程 E2E 達成。次スライス未定
 - Branch: master
-- Session: 2026-03-27
+- Session: 2026-03-27 (HANDOFF)
+- Active Artifact: NLM transcript → YMM4 CSV → YMM4 タイムライン配置
+- Last Change Relation: direct
 
 ## Quantitative Metrics
 
@@ -14,11 +16,11 @@
 - Tests: 15
 - Mock files: 0
 - TODO/FIXME/HACK: 0
-- Commits: 17 (origin) + local uncommitted (--unlabeled 実装)
+- Commits: 19
 
 ## Counters
 
-- blocks_completed: 15
+- blocks_completed: 17
 - blocks_since_user_visible_change: 0
 - blocks_since_visual_audit: N/A (CLI project)
 - visual_evidence_status: N/A (CLI project)
