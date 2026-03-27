@@ -17,7 +17,7 @@ def test_basic_two_column_output(tmp_path):
     csv_path = tmp_path / "out.csv"
     output.write(csv_path)
 
-    lines = csv_path.read_text(encoding="utf-8").strip().splitlines()
+    lines = csv_path.read_text(encoding="utf-8-sig").strip().splitlines()
     assert len(lines) == 2
     assert lines[0] == "れいむ,こんにちは"
     assert lines[1] == "まりさ,よろしく"
@@ -47,8 +47,8 @@ def test_speaker_prefix_stripped():
     assert output.rows[0].text == "これはテストです"
 
 
-def test_utf8_no_bom(tmp_path):
-    """出力は UTF-8 で BOM なし。"""
+def test_utf8_with_bom(tmp_path):
+    """出力は UTF-8 BOM 付き (YMM4 互換)。"""
     output = YMM4CsvOutput(
         rows=(YMM4CsvRow(speaker="れいむ", text="日本語テスト"),)
     )
@@ -56,9 +56,9 @@ def test_utf8_no_bom(tmp_path):
     output.write(csv_path)
 
     raw = csv_path.read_bytes()
-    # BOM (EF BB BF) で始まらない
-    assert not raw.startswith(b"\xef\xbb\xbf")
+    # BOM (EF BB BF) で始まる
+    assert raw.startswith(b"\xef\xbb\xbf")
     # UTF-8 でデコード可能
-    text = raw.decode("utf-8")
+    text = raw.decode("utf-8-sig")
     assert "れいむ" in text
     assert "日本語テスト" in text

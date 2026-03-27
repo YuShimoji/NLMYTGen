@@ -40,15 +40,17 @@
 - unmapped speaker warning: confirmed
 - **--unlabeled: 実 NLM transcript (143行) → 136 utterances → YMM4 CSV 生成成功**
 - **実データ E2E (コード側): confirmed — samples/output_real_nlm.csv (136行, れいむ/まりさ)**
+- **YMM4 台本読込: confirmed — タイムライン上に各要素が配置された (YMM4通常版で確認)**
+- CSV エンコーディング: UTF-8 BOM 付き (utf-8-sig) に変更済み
 - pytest 15/15 pass
 
 ## Blocking
 
-- ~~ラベルなし入力対応~~ → --unlabeled フラグで解決済み
-- YMM4 での実読込未確認（CSV 生成済み、手動確認待ち）
+- なし (全 blocker 解消済み)
 
 ## Pending
 
-- YMM4 での実読込確認 (samples/output_real_nlm.csv)
-- WORKFLOW.md: NLM → CSV → YMM4 → 動画 の全工程手順書
 - 短行結合閾値のチューニング（現在 ≤3文字。相槌 "はい。" も結合される副作用あり）
+- README に --unlabeled の使い方を追記
+- 別の NLM transcript でのロバスト性検証
+- YMM4 Lite の不具合は NLMYTGen 側の問題ではない (通常版で動作確認済み)

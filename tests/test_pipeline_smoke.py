@@ -21,7 +21,7 @@ def test_csv_to_csv_roundtrip(tmp_path):
     out_path = tmp_path / "out.csv"
     output.write(out_path)
 
-    lines = out_path.read_text(encoding="utf-8").strip().splitlines()
+    lines = out_path.read_text(encoding="utf-8-sig").strip().splitlines()
     assert lines[0].startswith("れいむ,")
     assert lines[1].startswith("まりさ,")
 

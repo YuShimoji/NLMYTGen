@@ -78,7 +78,7 @@ class StructuredScript:
 ### フォーマット
 
 - 2列、ヘッダーなし
-- UTF-8 (BOM なし)
+- UTF-8 (BOM 付き / utf-8-sig)
 - カンマ区切り
 - 列1: YMM4 キャラクター名 (例: "れいむ")
 - 列2: 発話テキスト
