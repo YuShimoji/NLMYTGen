@@ -28,11 +28,12 @@ _TIMESTAMPED_RE = re.compile(
 _SIMPLE_COLON_RE = re.compile(r"^([^:：]+?)\s*[:：]\s*(.+)$")
 
 
-def normalize(path: Path) -> StructuredScript:
+def normalize(path: Path, *, unlabeled: bool = False) -> StructuredScript:
     """入力ファイルをパースして StructuredScript を返す。
 
     .csv → CSV モード (2列: speaker, text)
     .txt → テキストモード (話者タグ付き対話)
+    unlabeled=True → ラベルなしモード (行交互で Speaker_A/Speaker_B を割当)
     """
     transcript = load_transcript(path)
     suffix = path.suffix.lower()
@@ -43,8 +44,10 @@ def normalize(path: Path) -> StructuredScript:
             stacklevel=2,
         )
 
-    if suffix == ".csv":
+    if suffix == ".csv" and not unlabeled:
         return _parse_csv(transcript.text)
+    elif unlabeled:
+        return _parse_text_unlabeled(transcript.text)
     else:
         return _parse_text(transcript.text)
 
@@ -104,4 +107,38 @@ def _parse_text(text: str) -> StructuredScript:
 
     if not utterances:
         raise ValueError("No valid utterances found in text input")
+    return StructuredScript(utterances=tuple(utterances))
+
+
+# ラベルなしモード: 短い行を前行に結合する閾値 (音声認識の分断アーティファクト緩和)
+_SHORT_LINE_THRESHOLD = 3
+
+
+def _parse_text_unlabeled(text: str) -> StructuredScript:
+    """ラベルなしテキストを行交互で 2 話者に割り当てる。
+
+    短い行 (≤ _SHORT_LINE_THRESHOLD 文字) は前の行に結合し、
+    音声認識の分断アーティファクトを緩和する。
+    """
+    # 非空行を収集
+    raw_lines = [line.strip() for line in text.splitlines() if line.strip()]
+    if not raw_lines:
+        raise ValueError("No valid utterances found in text input (unlabeled)")
+
+    # 短い行を前行に結合
+    merged: list[str] = []
+    for line in raw_lines:
+        if merged and len(line) <= _SHORT_LINE_THRESHOLD:
+            merged[-1] = f"{merged[-1]}{line}"
+        else:
+            merged.append(line)
+
+    if not merged:
+        raise ValueError("No valid utterances found in text input (unlabeled)")
+
+    speakers = ("Speaker_A", "Speaker_B")
+    utterances = [
+        Utterance(speaker=speakers[i % 2], text=line)
+        for i, line in enumerate(merged)
+    ]
     return StructuredScript(utterances=tuple(utterances))

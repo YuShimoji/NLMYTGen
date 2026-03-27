@@ -3,7 +3,7 @@
 ## GPS
 
 - Project: NLMYTGen
-- Slice: 実データ E2E 到達 (ラベルなし入力対応が前提)
+- Slice: 実データ E2E 到達 → YMM4 実読込確認
 - Branch: master
 - Session: 2026-03-27
 
@@ -14,12 +14,12 @@
 - Tests: 15
 - Mock files: 0
 - TODO/FIXME/HACK: 0
-- Commits: 14 (3 initial + 11 previous sessions)
+- Commits: 17 (origin) + local uncommitted (--unlabeled 実装)
 
 ## Counters
 
-- blocks_completed: 14
-- blocks_since_user_visible_change: 1
+- blocks_completed: 15
+- blocks_since_user_visible_change: 0
 - blocks_since_visual_audit: N/A (CLI project)
 - visual_evidence_status: N/A (CLI project)
 - last_visual_audit_path: N/A
@@ -38,18 +38,17 @@
 - BOM UTF-8 input: confirmed
 - CSV header auto-skip: confirmed
 - unmapped speaker warning: confirmed
+- **--unlabeled: 実 NLM transcript (143行) → 136 utterances → YMM4 CSV 生成成功**
+- **実データ E2E (コード側): confirmed — samples/output_real_nlm.csv (136行, れいむ/まりさ)**
 - pytest 15/15 pass
 
 ## Blocking
 
-- 実 NotebookLM transcript がスピーカーラベルなし形式であることが判明 (2026-03-27)
-  - 現パーサーは "Speaker: text" コロン区切り形式のみ対応
-  - 実 transcript は行ごとの生テキスト（ラベルなし、2話者が交互に発話）
-  - ラベルなし入力の対応方針を決定後、E2E を実施する必要がある
-- YMM4 での実読込未確認（CSV 生成後に確認予定）
+- ~~ラベルなし入力対応~~ → --unlabeled フラグで解決済み
+- YMM4 での実読込未確認（CSV 生成済み、手動確認待ち）
 
 ## Pending
 
-- ラベルなし入力対応: 行交互割当 or プレラベリングツール or 両方 → 要設計判断
-- 実 NotebookLM transcript での E2E（ラベルなし対応後）
-- YMM4 での実読込確認
+- YMM4 での実読込確認 (samples/output_real_nlm.csv)
+- WORKFLOW.md: NLM → CSV → YMM4 → 動画 の全工程手順書
+- 短行結合閾値のチューニング（現在 ≤3文字。相槌 "はい。" も結合される副作用あり）

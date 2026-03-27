@@ -34,10 +34,10 @@ NotebookLM transcript to YMM4 CSV pipeline.
 ## Project Status
 
 直近の状態 (2026-03-27):
-  - Phase 0 (基盤文書) + Phase 1 (実装骨格) + Phase 2 (CLI拡張・品質改善) 完了
+  - Phase 0 (基盤文書) + Phase 1 (実装骨格) + Phase 2 (CLI拡張・品質改善) + Phase 3 (ラベルなし入力対応) 完了
   - 15 tests, 0 failed (pytest), mock ゼロ
   - 外部依存ゼロ (Python stdlib のみ)
-  - CLI: build-csv / validate / inspect (--speaker-map, --speaker-map-file, --dry-run, --stats, --merge-consecutive)
-  - **実データ発見:** 実 NotebookLM transcript はスピーカーラベルなしの生テキスト形式。パーサー拡張（ラベルなし入力対応）が E2E の前提
-  - merge_consecutive 区切り文字なし結合バグ修正済み
-  - 次のアクション: ラベルなし入力対応 → 実データ E2E → YMM4 実読込確認
+  - CLI: build-csv / validate / inspect / generate-map (--unlabeled, --speaker-map, --speaker-map-file, --dry-run, --stats, --merge-consecutive)
+  - **実データ E2E (コード側) 達成:** 実 NLM transcript (143行) → --unlabeled → 136 utterances → YMM4 CSV 生成成功
+  - WORKFLOW.md: NLM → CSV → YMM4 → 動画 の全工程手順書
+  - 次のアクション: YMM4 での実読込確認 (手動ステップ)

@@ -97,7 +97,8 @@ def _cmd_build_csv(args: argparse.Namespace) -> int:
     speaker_map = _resolve_speaker_map(args)
 
     # パイプライン実行
-    script = normalize(input_path)
+    unlabeled = getattr(args, "unlabeled", False)
+    script = normalize(input_path, unlabeled=unlabeled)
 
     # 未マッピング話者の警告 (assembly 前に実施)
     if speaker_map:
@@ -141,8 +142,9 @@ def _cmd_build_csv(args: argparse.Namespace) -> int:
 def _cmd_validate(args: argparse.Namespace) -> int:
     """validate: 入力ファイルのパース + 出力検証。"""
     input_path = Path(args.input)
+    unlabeled = getattr(args, "unlabeled", False)
 
-    script = normalize(input_path)
+    script = normalize(input_path, unlabeled=unlabeled)
     print(f"OK: {len(script.utterances)} utterances parsed")
 
     speakers = sorted(set(u.speaker for u in script.utterances))
@@ -164,8 +166,9 @@ def _cmd_inspect(args: argparse.Namespace) -> int:
     """inspect: 入力の詳細分析。マッピング結果のプレビュー。"""
     input_path = Path(args.input)
     speaker_map = _resolve_speaker_map(args)
+    unlabeled = getattr(args, "unlabeled", False)
 
-    script = normalize(input_path)
+    script = normalize(input_path, unlabeled=unlabeled)
 
     print(f"Input: {input_path}")
     print(f"Utterances: {len(script.utterances)}")
@@ -192,7 +195,8 @@ def _cmd_inspect(args: argparse.Namespace) -> int:
 def _cmd_generate_map(args: argparse.Namespace) -> int:
     """generate-map: 入力ファイルから話者マッピングテンプレートを生成する。"""
     input_path = Path(args.input)
-    script = normalize(input_path)
+    unlabeled = getattr(args, "unlabeled", False)
+    script = normalize(input_path, unlabeled=unlabeled)
 
     speakers = sorted(set(u.speaker for u in script.utterances))
     fmt = getattr(args, "format", "text")
@@ -222,6 +226,14 @@ def _add_speaker_map_args(parser: argparse.ArgumentParser) -> None:
     )
 
 
+def _add_unlabeled_arg(parser: argparse.ArgumentParser) -> None:
+    """--unlabeled 引数を追加する。"""
+    parser.add_argument(
+        "--unlabeled", action="store_true",
+        help="Treat input as unlabeled text (alternating Speaker_A/Speaker_B)",
+    )
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="nlmytgen",
@@ -234,6 +246,7 @@ def main(argv: list[str] | None = None) -> int:
     p_build.add_argument("input", help="Input file path (.txt or .csv)")
     p_build.add_argument("-o", "--output", help="Output CSV path")
     _add_speaker_map_args(p_build)
+    _add_unlabeled_arg(p_build)
     p_build.add_argument("--merge-consecutive", action="store_true",
                          help="Merge consecutive utterances from the same speaker")
     p_build.add_argument("--dry-run", action="store_true", help="Preview without writing")
@@ -242,15 +255,18 @@ def main(argv: list[str] | None = None) -> int:
     # validate
     p_validate = subparsers.add_parser("validate", help="Validate input file")
     p_validate.add_argument("input", help="Input file path (.txt or .csv)")
+    _add_unlabeled_arg(p_validate)
 
     # inspect
     p_inspect = subparsers.add_parser("inspect", help="Inspect input and preview mapping")
     p_inspect.add_argument("input", help="Input file path (.txt or .csv)")
     _add_speaker_map_args(p_inspect)
+    _add_unlabeled_arg(p_inspect)
 
     # generate-map
     p_genmap = subparsers.add_parser("generate-map", help="Generate speaker map template from input")
     p_genmap.add_argument("input", help="Input file path (.txt or .csv)")
+    _add_unlabeled_arg(p_genmap)
     p_genmap.add_argument("--format", choices=["text", "json"], default="text",
                           help="Output format (default: text)")
 
