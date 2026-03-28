@@ -13,3 +13,4 @@ venv/
 .mypy_cache/
 *.csv
 !samples/*.csv
+uv.lock

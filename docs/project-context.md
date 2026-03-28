@@ -9,7 +9,7 @@ NLMandSlideVideoGenerator の設計ドリフトを断ち切った再建プロジ
 
 - Phase 0~4 完了 (基盤文書 + 実装骨格 + CLI拡張 + ラベルなし入力対応 + 品質改善・一括処理)
 - **全工程 E2E 達成:** NLM transcript → CSV → YMM4 台本読込 → タイムライン配置
-- 23 commits, 16 tests all passing, mock ゼロ
+- 25 commits, 16 tests all passing, mock ゼロ
 - 外部依存ゼロ (Python stdlib のみ)
 - CLI: build-csv / validate / inspect / generate-map の4コマンド
 - オプション: --unlabeled, --speaker-map, --speaker-map-file, --dry-run, --stats, --merge-consecutive
