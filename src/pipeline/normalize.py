@@ -113,22 +113,26 @@ def _parse_text(text: str) -> StructuredScript:
 # ラベルなしモード: 短い行を前行に結合する閾値 (音声認識の分断アーティファクト緩和)
 _SHORT_LINE_THRESHOLD = 3
 
+# 句読点で終わる短行は完全な発話（相槌等）とみなし結合しない
+_TERMINAL_PUNCTUATION = frozenset("。！？!?")
+
 
 def _parse_text_unlabeled(text: str) -> StructuredScript:
     """ラベルなしテキストを行交互で 2 話者に割り当てる。
 
-    短い行 (≤ _SHORT_LINE_THRESHOLD 文字) は前の行に結合し、
-    音声認識の分断アーティファクトを緩和する。
+    短い行 (≤ _SHORT_LINE_THRESHOLD 文字) のうち、句読点で終わらないものは
+    前の行に結合し、音声認識の分断アーティファクトを緩和する。
+    句読点で終わる短行（"はい。" 等）は完全な発話として保持する。
     """
     # 非空行を収集
     raw_lines = [line.strip() for line in text.splitlines() if line.strip()]
     if not raw_lines:
         raise ValueError("No valid utterances found in text input (unlabeled)")
 
-    # 短い行を前行に結合
+    # 短い行を前行に結合（句読点で終わる完全な発話は保持）
     merged: list[str] = []
     for line in raw_lines:
-        if merged and len(line) <= _SHORT_LINE_THRESHOLD:
+        if merged and len(line) <= _SHORT_LINE_THRESHOLD and line[-1] not in _TERMINAL_PUNCTUATION:
             merged[-1] = f"{merged[-1]}{line}"
         else:
             merged.append(line)

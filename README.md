@@ -43,6 +43,7 @@ NotebookLM 由来のテキストファイル。以下のフォーマットを受
 
 - **CSV** (.csv): 2列 (話者名, テキスト)。ヘッダー行は自動スキップ
 - **テキスト** (.txt): 話者タグ付き対話 (`Speaker: text` 形式)
+- **ラベルなしテキスト** (.txt + `--unlabeled`): 話者タグなしの生テキスト。行交互で 2 話者 (Speaker_A/Speaker_B) に自動割当
 - BOM 付き UTF-8 も自動対応
 
 ## 出力
@@ -79,6 +80,12 @@ python -m src.cli.main generate-map input.txt > speakers.txt
 
 # 同一話者の連続発話を結合
 python -m src.cli.main build-csv input.txt --merge-consecutive --speaker-map Host1=れいむ
+
+# ラベルなし NLM transcript (話者タグなしの生テキスト)
+python -m src.cli.main build-csv transcript.txt --unlabeled --speaker-map Speaker_A=れいむ,Speaker_B=まりさ
+
+# ラベルなし + 連続結合 + 統計
+python -m src.cli.main build-csv transcript.txt --unlabeled --merge-consecutive --speaker-map Speaker_A=れいむ,Speaker_B=まりさ --stats
 ```
 
 ## LLM の役割
