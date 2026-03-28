@@ -86,6 +86,9 @@ python -m src.cli.main build-csv transcript.txt --unlabeled --speaker-map Speake
 
 # ラベルなし + 連続結合 + 統計
 python -m src.cli.main build-csv transcript.txt --unlabeled --merge-consecutive --speaker-map Speaker_A=れいむ,Speaker_B=まりさ --stats
+
+# 複数ファイル一括処理 (各ファイルに {stem}_ymm4.csv を生成)
+python -m src.cli.main build-csv file1.txt file2.txt file3.txt --speaker-map Host1=れいむ,Host2=まりさ
 ```
 
 ## LLM の役割

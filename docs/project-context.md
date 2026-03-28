@@ -57,7 +57,7 @@ NLMandSlideVideoGenerator の設計ドリフトを断ち切った再建プロジ
 | IP-01 | LLM 構造化補助 (Gemini) | hold | 実データ E2E 完了後に再評価 |
 | IP-02 | YMM4 テンプレート連携 | hold | スコープ拡大時 |
 | IP-03 | YMM4 プラグイン開発 | hold | スコープ拡大時 |
-| IP-04 | 複数ファイル一括処理 | hold | PIPELINE_SPEC でスコープ外として明記 |
+| IP-04 | 複数ファイル一括処理 | **done** | build-csv で複数入力をサポート。エラーハンドリング・サマリー表示付き |
 | IP-05 | 実 NotebookLM transcript E2E | **done** | --unlabeled で 143行→136 utterances→CSV 生成成功 |
 | IP-06 | YMM4 実読込確認 | **done** | YMM4 通常版で台本読込 → タイムライン配置確認。Lite版は起動不具合あり |
 | IP-07 | ラベルなし入力対応 (行交互割当) | **done** | --unlabeled フラグで実装。短行結合あり |

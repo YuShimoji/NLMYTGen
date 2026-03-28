@@ -1,7 +1,7 @@
 """NLMYTGen CLI -- 単一エントリポイント。
 
 Usage:
-    python -m src.cli.main build-csv <input> [-o output.csv] [--speaker-map K1=V1,K2=V2] [--dry-run] [--stats]
+    python -m src.cli.main build-csv <input>... [-o output.csv] [--speaker-map K1=V1,K2=V2] [--dry-run] [--stats]
     python -m src.cli.main validate <input>
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
 """
@@ -83,24 +83,12 @@ def _print_stats(output, file=sys.stdout):
     print(f"  Total: {len(output.rows)} utterances, {total_chars} chars", file=file)
 
 
-def _cmd_build_csv(args: argparse.Namespace) -> int:
-    """build-csv: 入力ファイル → YMM4 CSV 生成。"""
-    input_path = Path(args.input)
-
-    # 出力パス決定
-    if args.output:
-        output_path = Path(args.output)
-    else:
-        output_path = input_path.with_name(f"{input_path.stem}_ymm4.csv")
-
-    # 話者マッピング
+def _build_one(input_path: Path, output_path: Path, args: argparse.Namespace) -> bool:
+    """単一ファイルの build-csv 処理。成功なら True を返す。"""
     speaker_map = _resolve_speaker_map(args)
-
-    # パイプライン実行
     unlabeled = getattr(args, "unlabeled", False)
     script = normalize(input_path, unlabeled=unlabeled)
 
-    # 未マッピング話者の警告 (assembly 前に実施)
     if speaker_map:
         unmapped = find_unmapped_speakers(script, speaker_map)
         for name in sorted(unmapped):
@@ -109,21 +97,18 @@ def _cmd_build_csv(args: argparse.Namespace) -> int:
     merge = getattr(args, "merge_consecutive", False)
     output = assemble(script, speaker_map=speaker_map, merge_consecutive=merge)
 
-    # バリデーション
     results = validate(output)
     for r in results:
         prefix = "ERROR" if r.severity == Severity.ERROR else "WARN"
         print(f"[{prefix}] row {r.row_index}: {r.message}", file=sys.stderr)
 
     if has_errors(results):
-        print("Validation errors found. CSV not written.", file=sys.stderr)
-        return 1
+        print(f"Validation errors found. CSV not written: {input_path.name}", file=sys.stderr)
+        return False
 
-    # 統計表示
     if getattr(args, "stats", False) or getattr(args, "dry_run", False):
         _print_stats(output)
 
-    # dry-run: プレビューのみ
     if getattr(args, "dry_run", False):
         print("--- Preview (first 5 rows) ---")
         for row in output.rows[:5]:
@@ -131,12 +116,44 @@ def _cmd_build_csv(args: argparse.Namespace) -> int:
         if len(output.rows) > 5:
             print(f"  ... ({len(output.rows) - 5} more rows)")
         print("(dry-run: CSV not written)")
-        return 0
+        return True
 
-    # 書き出し
     output.write(output_path)
     print(f"Written: {output_path} ({len(output.rows)} rows)")
-    return 0
+    return True
+
+
+def _cmd_build_csv(args: argparse.Namespace) -> int:
+    """build-csv: 入力ファイル → YMM4 CSV 生成。複数ファイル対応。"""
+    inputs = [Path(p) for p in args.input]
+
+    if len(inputs) == 1:
+        input_path = inputs[0]
+        if args.output:
+            output_path = Path(args.output)
+        else:
+            output_path = input_path.with_name(f"{input_path.stem}_ymm4.csv")
+        return 0 if _build_one(input_path, output_path, args) else 1
+
+    # 複数ファイル
+    if args.output:
+        print("[WARN] -o is ignored with multiple inputs (each file gets {stem}_ymm4.csv)", file=sys.stderr)
+
+    ok, fail = 0, 0
+    for input_path in inputs:
+        output_path = input_path.with_name(f"{input_path.stem}_ymm4.csv")
+        print(f"--- {input_path.name} ---")
+        try:
+            if _build_one(input_path, output_path, args):
+                ok += 1
+            else:
+                fail += 1
+        except (ValueError, FileNotFoundError) as e:
+            print(f"Error: {e}", file=sys.stderr)
+            fail += 1
+
+    print(f"\n=== Batch: {ok} succeeded, {fail} failed (of {len(inputs)} files) ===")
+    return 1 if fail > 0 else 0
 
 
 def _cmd_validate(args: argparse.Namespace) -> int:
@@ -243,7 +260,7 @@ def main(argv: list[str] | None = None) -> int:
 
     # build-csv
     p_build = subparsers.add_parser("build-csv", help="Build YMM4 CSV from input")
-    p_build.add_argument("input", help="Input file path (.txt or .csv)")
+    p_build.add_argument("input", nargs="+", help="Input file path(s) (.txt or .csv)")
     p_build.add_argument("-o", "--output", help="Output CSV path")
     _add_speaker_map_args(p_build)
     _add_unlabeled_arg(p_build)
