@@ -26,11 +26,11 @@ NLMandSlideVideoGenerator の設計ドリフトを断ち切った再建プロジ
 
 ## What Does NOT Exist Yet
 
-- LLM 構造化補助 (Gemini 等)
+- LLM 構造化補助 (Gemini 等) — 評価中 (IP-01)
 - 画像取得 / サムネイル生成
 - Web UI / API
 - YouTube 連携
-- 複数ファイルの一括処理
+- ~~複数ファイルの一括処理~~ → IP-04 で実装済み
 
 ## Key Decisions
 
@@ -49,12 +49,15 @@ NLMandSlideVideoGenerator の設計ドリフトを断ち切った再建プロジ
 | 2026-03-27 | --unlabeled フラグで行交互割当方式を採用 | 実 NLM transcript がラベルなし形式。短行(≤3文字)は前行結合で音声認識分断を緩和 |
 | 2026-03-27 | CSV 出力を UTF-8 BOM 付き (utf-8-sig) に変更 | YMM4 が BOM なし UTF-8 を Shift-JIS と誤認する問題への対応 |
 | 2026-03-27 | 台本読込メニューは「ツール → 台本読み込み」 | 「ファイル → プロジェクトを開く」ではない。WORKFLOW.md に明記 |
+| 2026-03-29 | Gemini API 技術調査完了。SDK統合済み(google-genai)だがSDK依存が重い。urllib直叩きなら外部依存ゼロ維持可能 | 旧SDK非推奨化済み。モデル廃止サイクルが速い(数ヶ月)。Flash-Lite $0.003/件 |
+| 2026-03-29 | IP-01 採否はgold set (正解ラベル)完成後に数値判定 | 行交互の精度が未測定のままLLM導入に進まない。Go/No-Go基準を先に定義 |
+| 2026-03-29 | ルールベース改善はカスケード問題で限界あり | 文分断検出が1箇所のずれを全行に波及させる。行単位の独立判定が必要 |
 
 ## IDEA POOL
 
 | ID | Idea | Status | Note |
 |----|------|--------|------|
-| IP-01 | LLM 構造化補助 (Gemini) | hold | 実データ E2E 完了後に再評価 |
+| IP-01 | LLM 構造化補助 (Gemini) | **no-go** | パターン正答率92.3%で行交互は高精度。LLM費用対効果が低い。代わりにロール推定機能を追加 |
 | IP-02 | YMM4 テンプレート連携 | hold | スコープ拡大時 |
 | IP-03 | YMM4 プラグイン開発 | hold | スコープ拡大時 |
 | IP-04 | 複数ファイル一括処理 | **done** | build-csv で複数入力をサポート。エラーハンドリング・サマリー表示付き |

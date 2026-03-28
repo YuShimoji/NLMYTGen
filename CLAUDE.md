@@ -33,12 +33,14 @@ NotebookLM transcript to YMM4 CSV pipeline.
 
 ## Project Status
 
-直近の状態 (2026-03-28):
+直近の状態 (2026-03-29):
   - Phase 0~4 完了 (基盤文書 + 実装骨格 + CLI拡張 + ラベルなし入力対応 + 品質改善・一括処理)
-  - 15 tests, 0 failed (pytest), mock ゼロ
+  - 16 tests, 0 failed (pytest), mock ゼロ
   - 外部依存ゼロ (Python stdlib のみ)
   - CLI: build-csv / validate / inspect / generate-map (--unlabeled, --speaker-map, --speaker-map-file, --dry-run, --stats, --merge-consecutive)
   - **全工程 E2E 達成:** NLM transcript → --unlabeled → CSV (BOM付き) → YMM4 台本読込 → タイムライン配置
   - **品質改善:** 句読点終端の相槌を独立発話として保持 (136→142 utterances)
   - **一括処理 (IP-04):** build-csv で複数入力ファイルをサポート
+  - **IP-01 (LLM構造化補助): No-Go判定** — 行交互パターン正答率92.3%でLLM費用対効果が低い
+  - **話者ロール推定:** inspect/generate-map --unlabeled で host/guest を自動推定
   - WORKFLOW.md: NLM → CSV → YMM4 → 動画 の全工程手順書

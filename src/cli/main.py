@@ -14,7 +14,7 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-from src.pipeline.normalize import normalize
+from src.pipeline.normalize import normalize, analyze_speaker_roles
 from src.pipeline.assemble_csv import assemble, find_unmapped_speakers
 from src.pipeline.validate_handoff import validate, has_errors, Severity
 
@@ -203,6 +203,28 @@ def _cmd_inspect(args: argparse.Namespace) -> int:
         if unmapped:
             print(f"Unmapped: {', '.join(sorted(unmapped))}")
 
+    # ロール推定（--unlabeled 時に特に有用）
+    if unlabeled:
+        roles = analyze_speaker_roles(script)
+        print("Speaker role analysis:")
+        role_labels = {"host": "host (introduces topics, longer explanations)",
+                       "guest": "guest (questions, short responses, reactions)",
+                       "unknown": "unknown"}
+        for sp in input_speakers:
+            r = roles[sp]
+            role_desc = role_labels.get(r["role"], r["role"])
+            print(f"  {sp}: {role_desc}")
+            print(f"    {r['utterances']} utterances, avg {r['avg_length']:.0f} chars")
+            print(f"    short responses: {r['short_responses']}, questions: {r['questions']}, topic intros: {r['topic_intros']}")
+
+        # speaker-map の推奨順序を提示
+        host_sp = next((sp for sp in input_speakers if roles[sp]["role"] == "host"), None)
+        guest_sp = next((sp for sp in input_speakers if roles[sp]["role"] == "guest"), None)
+        if host_sp and guest_sp and not speaker_map:
+            print(f"\nRecommended --speaker-map (host={host_sp}, guest={guest_sp}):")
+            print(f"  To map host to character A and guest to character B:")
+            print(f"  --speaker-map \"{host_sp}=<charA>,{guest_sp}=<charB>\"")
+
     output = assemble(script, speaker_map=speaker_map)
     _print_stats(output)
 
@@ -218,13 +240,23 @@ def _cmd_generate_map(args: argparse.Namespace) -> int:
     speakers = sorted(set(u.speaker for u in script.utterances))
     fmt = getattr(args, "format", "text")
 
+    # ロール推定（--unlabeled 時）
+    roles = analyze_speaker_roles(script) if unlabeled else {}
+
     if fmt == "json":
         data = {s: s for s in speakers}
+        if roles:
+            data["_roles"] = {s: roles[s]["role"] for s in speakers}
         print(json.dumps(data, ensure_ascii=False, indent=2))
     else:
         print("# Speaker map template")
         print(f"# Generated from: {input_path.name}")
         print(f"# Edit the values (right side of =) to YMM4 character names")
+        if roles:
+            for s in speakers:
+                role = roles[s]["role"]
+                hint = "host: longer explanations, topic intros" if role == "host" else "guest: short responses, questions"
+                print(f"# {s} = {hint}")
         for s in speakers:
             print(f"{s}={s}")
 

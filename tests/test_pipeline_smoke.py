@@ -84,6 +84,26 @@ def test_cli_validate(tmp_path):
     assert "2 utterances" in result.stdout
 
 
+def test_analyze_speaker_roles_host_guest():
+    """ロール推定: 長文話者=host、短応答話者=guest。"""
+    from src.pipeline.normalize import analyze_speaker_roles
+    from src.contracts.structured_script import StructuredScript, Utterance
+
+    script = StructuredScript(utterances=(
+        Utterance(speaker="Speaker_A", text="というわけで今回はAI技術の最新動向について詳しく解説していきます。"),
+        Utterance(speaker="Speaker_B", text="はい。"),
+        Utterance(speaker="Speaker_A", text="まずディープラーニングの進化ですが、トランスフォーマーモデルが登場してから劇的に変わりました。"),
+        Utterance(speaker="Speaker_B", text="なるほど、具体的にはどういう変化ですか?"),
+        Utterance(speaker="Speaker_A", text="自然言語処理の精度が飛躍的に向上し、以前は不可能だったタスクが実現できるようになったんです。"),
+        Utterance(speaker="Speaker_B", text="ええ。"),
+    ))
+
+    roles = analyze_speaker_roles(script)
+    assert roles["Speaker_A"]["role"] == "host"
+    assert roles["Speaker_B"]["role"] == "guest"
+    assert roles["Speaker_A"]["avg_length"] > roles["Speaker_B"]["avg_length"]
+
+
 def _project_root():
     """プロジェクトルートを返す。"""
     from pathlib import Path

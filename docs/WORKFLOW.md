@@ -96,7 +96,7 @@ python -m src.cli.main build-csv input.txt \
 | `-o PATH` | 出力 CSV パス (省略時: 入力ファイル名_ymm4.csv) |
 
 ### 出力
-- YMM4 CSV: 2列 (キャラクター名, テキスト)、ヘッダーなし、UTF-8 (BOM なし)
+- YMM4 CSV: 2列 (キャラクター名, テキスト)、ヘッダーなし、UTF-8 (BOM 付き / utf-8-sig)
 
 ---
 
@@ -142,5 +142,5 @@ python -m src.cli.main build-csv input.txt \
 
 - `--unlabeled` は 2 話者固定 (Speaker_A / Speaker_B の交互)
 - 短い行 (3文字以下) は前の行に自動結合される (音声認識の分断アーティファクト緩和)
-- 相槌 (「はい。」等) が前話者に吸収される場合がある
+- 句読点で終わる相槌 (「はい。」等) は独立発話として保持される (v0.4+)
 - 音声認識の誤字は NLMYTGen では修正しない (YMM4 側で修正)

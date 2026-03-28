@@ -146,3 +146,86 @@ def _parse_text_unlabeled(text: str) -> StructuredScript:
         for i, line in enumerate(merged)
     ]
     return StructuredScript(utterances=tuple(utterances))
+
+
+# --- 話者ロール推定 ---
+
+def analyze_speaker_roles(script: StructuredScript) -> dict[str, dict]:
+    """各話者のテキスト特徴を分析し、ロール（進行役/聞き手）を推定する。
+
+    Returns:
+        {speaker_name: {"utterances": int, "avg_length": float,
+                        "short_responses": int, "questions": int,
+                        "topic_intros": int, "role": "host"|"guest"}}
+    """
+    _AIZUCHI_ONLY = re.compile(
+        r'^(ええ|はい|そうですね|なるほど|その通りです|まさに|分かりました|うわあ)[。、]?$'
+    )
+    _QUESTION_END = re.compile(r'[?？]$|ですか[?？]?$|でしょうか[?？]?$')
+    _TOPIC_INTRO = re.compile(
+        r'^(というわけで|ではここから|そこで最後に|今回の|さて|では早速)'
+    )
+
+    stats: dict[str, dict] = {}
+    for u in script.utterances:
+        if u.speaker not in stats:
+            stats[u.speaker] = {
+                "utterances": 0, "total_chars": 0,
+                "short_responses": 0, "questions": 0,
+                "topic_intros": 0,
+            }
+        s = stats[u.speaker]
+        s["utterances"] += 1
+        s["total_chars"] += len(u.text)
+        if len(u.text) <= 15 or _AIZUCHI_ONLY.match(u.text):
+            s["short_responses"] += 1
+        if _QUESTION_END.search(u.text):
+            s["questions"] += 1
+        if _TOPIC_INTRO.match(u.text):
+            s["topic_intros"] += 1
+
+    # ロール推定: ポイント制
+    # 進行役: 話題導入が多い、平均文長が長い、短応答が少ない
+    # 聞き手: 質問が多い、短応答が多い
+    speakers = list(stats.keys())
+    for sp in speakers:
+        s = stats[sp]
+        s["avg_length"] = s["total_chars"] / s["utterances"] if s["utterances"] else 0
+
+    if len(speakers) == 2:
+        a, b = speakers[0], speakers[1]
+        sa, sb = stats[a], stats[b]
+
+        score_a, score_b = 0, 0
+        # 平均文長が長い方が進行役寄り
+        if sa["avg_length"] > sb["avg_length"]:
+            score_a += 1
+        else:
+            score_b += 1
+        # 短応答が多い方が聞き手寄り
+        if sa["short_responses"] > sb["short_responses"]:
+            score_b += 1
+        else:
+            score_a += 1
+        # 話題導入が多い方が進行役寄り
+        if sa["topic_intros"] > sb["topic_intros"]:
+            score_a += 1
+        else:
+            score_b += 1
+        # 質問が多い方が聞き手寄り
+        if sa["questions"] > sb["questions"]:
+            score_b += 1
+        else:
+            score_a += 1
+
+        stats[a]["role"] = "host" if score_a > score_b else "guest"
+        stats[b]["role"] = "host" if score_b > score_a else "guest"
+        # 同点なら最初に話す方を host
+        if score_a == score_b:
+            stats[a]["role"] = "host"
+            stats[b]["role"] = "guest"
+    else:
+        for sp in speakers:
+            stats[sp]["role"] = "unknown"
+
+    return stats
