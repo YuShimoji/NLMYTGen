@@ -5,28 +5,30 @@
 NLMYTGen v2: NotebookLM transcript to YMM4 CSV pipeline.
 NLMandSlideVideoGenerator の設計ドリフトを断ち切った再建プロジェクト。
 
-## Current State (2026-03-27)
+## Current State (2026-03-29)
 
-- Phase 0~3 完了 (基盤文書 + 実装骨格 + CLI拡張 + ラベルなし入力対応)
+- Phase 0~4 完了 (基盤文書 + 実装骨格 + CLI拡張 + ラベルなし入力対応 + 品質改善・一括処理)
 - **全工程 E2E 達成:** NLM transcript → CSV → YMM4 台本読込 → タイムライン配置
-- 19 commits, 15 tests all passing, mock ゼロ
+- 23 commits, 16 tests all passing, mock ゼロ
 - 外部依存ゼロ (Python stdlib のみ)
 - CLI: build-csv / validate / inspect / generate-map の4コマンド
 - オプション: --unlabeled, --speaker-map, --speaker-map-file, --dry-run, --stats, --merge-consecutive
 - CSV出力: UTF-8 BOM付き (utf-8-sig)。YMM4 互換確認済み
 - WORKFLOW.md: NLM → CSV → YMM4 → 動画 の全工程手順書
+- **IP-01 (LLM構造化補助): No-Go判定** -- パターン正答率92.3%でLLM費用対効果が低い
+- **話者ロール推定:** inspect/generate-map --unlabeled で host/guest を自動推定
 - 全 blocker 解消。次スライス未定
 
 ## What Exists
 
 - 3 data contracts: RawTranscript, StructuredScript, YMM4CsvOutput
 - 3 pipeline modules: normalize, assemble_csv, validate_handoff
-- CLI (build-csv / validate / inspect) via `python -m src.cli.main`
+- CLI (build-csv / validate / inspect / generate-map) via `python -m src.cli.main`
 - 基盤文書: README, PROJECT_CHARTER, ARCHITECTURE, PIPELINE_SPEC, 3 ADR, MIGRATION_LEDGER
 
 ## What Does NOT Exist Yet
 
-- LLM 構造化補助 (Gemini 等) — 評価中 (IP-01)
+- ~~LLM 構造化補助 (Gemini 等)~~ → IP-01 で評価完了、No-Go判定
 - 画像取得 / サムネイル生成
 - Web UI / API
 - YouTube 連携
