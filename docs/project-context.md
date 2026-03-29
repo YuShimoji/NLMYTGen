@@ -4,8 +4,8 @@
 - プロジェクト名: NLMYTGen
 - 環境: Python / uv / CLI
 - ブランチ戦略: main
-- 現フェーズ: Phase 0〜4 完了。ロバスト性検証フェーズ
-- 直近の状態: IP-01 No-Go 判定。話者ロール推定追加。validate_handoff / normalize 改善。speaker-map-file / BOM / ヘッダースキップ対応。uv 導入で pytest 実行可能化
+- 現フェーズ: 成功定義 3/3 達成。次フェーズ選定
+- 直近の状態 (2026-03-29): ロバスト性検証完了（2件目 transcript E2E + YMM4 読込成功）。成功定義全達成。IP-01 No-Go。話者ロール推定・speaker-map・BOM・unlabeled 対応済み
 
 ---
 
@@ -46,10 +46,10 @@
 - Active Artifact: NLM transcript → YMM4 CSV → 動画1本完成への経路
 - Artifact Surface: CSV / YMM4 読込 / レンダリング
 - Last Change Relation: direct
-- Evidence: sample transcript で Phase 0〜4 通過。別 transcript / YMM4 実読込は未検証
+- Evidence: 2件の transcript で E2E 通過 + YMM4 読込成功（2026-03-29）
 - 案件モード: CLI artifact
 - 現在の主レーン: Advance
-- Authority Return Items: 別 NLM transcript 提供（ユーザー操作）/ YMM4 読込確認（ユーザー操作）
+- Authority Return Items: なし（全 blocking 解消）
 - 次回最初に確認すべきファイル: src/cli/main.py / tests/
 - 未確定の設計論点: なし
 - Expansion Risk: なし
