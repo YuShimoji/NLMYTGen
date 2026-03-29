@@ -73,3 +73,44 @@ def assemble(
             rows.append(YMM4CsvRow(speaker=speaker, text=text))
 
     return YMM4CsvOutput(rows=tuple(rows))
+
+
+# 文末区切り文字
+_SENTENCE_ENDS = re.compile(r"(?<=[。！？!?])")
+
+
+def split_long_utterances(
+    output: YMM4CsvOutput,
+    max_length: int,
+) -> YMM4CsvOutput:
+    """長い発話を句点で分割する。
+
+    max_length を超える発話を文末（。！？!?）で分割し、
+    同じ話者の複数行に展開する。
+    単一文が max_length を超える場合はそのまま保持する。
+    """
+    rows: list[YMM4CsvRow] = []
+
+    for row in output.rows:
+        if len(row.text) <= max_length:
+            rows.append(row)
+            continue
+
+        # 文末で分割
+        sentences = [s for s in _SENTENCE_ENDS.split(row.text) if s]
+        if len(sentences) <= 1:
+            rows.append(row)
+            continue
+
+        # 文を max_length 以内にグループ化
+        buf = ""
+        for sentence in sentences:
+            if buf and len(buf) + len(sentence) > max_length:
+                rows.append(YMM4CsvRow(speaker=row.speaker, text=buf))
+                buf = sentence
+            else:
+                buf += sentence
+        if buf:
+            rows.append(YMM4CsvRow(speaker=row.speaker, text=buf))
+
+    return YMM4CsvOutput(rows=tuple(rows))

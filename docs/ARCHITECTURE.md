@@ -30,6 +30,12 @@ NotebookLM transcript (.txt or .csv)
         │
         ▼
 ┌─────────────────────┐
+│ split_long (opt)    │  --max-length 指定時のみ
+│ → YMM4CsvOutput     │  文末で分割
+└─────────────────────┘
+        │
+        ▼
+┌─────────────────────┐
 │ validate()          │  空フィールド / 長文チェック
 │ → [Warning, ...]    │
 └─────────────────────┘

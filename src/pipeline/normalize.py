@@ -82,7 +82,11 @@ def _parse_csv(text: str) -> StructuredScript:
 
 
 def _parse_text(text: str) -> StructuredScript:
-    """話者タグ付きテキストをパースする。"""
+    """話者タグ付きテキストをパースする。
+
+    話者タグにマッチしない行は、直前の発話の継続行として結合する。
+    これにより、コピペ時の改行崩れ（句読点が次行に分離する等）を吸収する。
+    """
     utterances: list[Utterance] = []
 
     for line in text.splitlines():
@@ -104,6 +108,11 @@ def _parse_text(text: str) -> StructuredScript:
             if len(speaker) <= _MAX_SPEAKER_NAME_LEN and content:
                 utterances.append(Utterance(speaker=speaker, text=content))
                 continue
+
+        # どのパターンにもマッチしない → 直前の発話に継続行として結合
+        if utterances:
+            prev = utterances[-1]
+            utterances[-1] = Utterance(speaker=prev.speaker, text=prev.text + line)
 
     if not utterances:
         raise ValueError("No valid utterances found in text input")

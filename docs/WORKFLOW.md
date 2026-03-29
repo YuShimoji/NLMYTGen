@@ -8,8 +8,8 @@ NLMYTGen を使った動画制作の全工程。
 
 ```
 S-1  NotebookLM でソースを投入し Audio Overview を生成
-S-2  Audio Overview をテキストに書き起こす (文字起こしツール)
-S-3  書き起こしテキストを NLMYTGen で YMM4 CSV に変換
+S-2  NotebookLM に「元の台本を出力して」と依頼し、台本テキストを取得
+S-3  台本テキストを NLMYTGen で YMM4 CSV に変換
 S-4  YMM4 で CSV を台本読込
 S-5  YMM4 で音声合成・字幕配置・動画レンダリング
 ```
@@ -29,31 +29,55 @@ S-5  YMM4 で音声合成・字幕配置・動画レンダリング
 
 ---
 
-## S-2: テキスト書き起こし
+## S-2: 台本テキスト取得
 
-Audio Overview の音声をテキストに書き起こす。
+NotebookLM に「音声解説の元の台本を出力してください」と依頼し、台本テキストを取得する。
 
-### 方法
+### 手順
+
+1. Audio Overview が生成済みのノートブックを開く
+2. チャットで「音声解説の元の台本を出力してください」と依頼
+3. 出力されたテキストをコピーし `.txt` ファイルとして保存
+
+### 出力形式
+- 話者ラベル付き: `スピーカー1: テキスト` / `スピーカー2: テキスト`
+- コピペ時に句読点や改行が分離することがある（パイプラインが自動結合する）
+
+### 出力
+- `.txt` ファイル (話者ラベル付き)
+
+### Fallback: 音声書き起こし
+
+元台本が取得できない場合は、Audio Overview の音声を書き起こす。
 
 | ツール | 特徴 |
 |--------|------|
-| NotebookLM のテキスト表示 | 要約であり完全な書き起こしではない場合がある |
 | Google ドキュメント音声入力 | 無料、日本語対応 |
 | Whisper (ローカル) | 高精度、オフライン可 |
 
-### 注意点
-- NotebookLM の Audio Overview 書き起こしは通常**話者ラベルなし**
-- 2話者が行ごとに交互発話する形式になる
-- 音声認識の精度により誤字・分断が含まれる
-
-### 出力
-- `.txt` ファイル (話者ラベルなし or ラベル付き)
+この場合は話者ラベルなしになるため `--unlabeled` オプションを使用する。
 
 ---
 
 ## S-3: NLMYTGen で CSV 変換
 
-### ラベルなし入力 (実際の NotebookLM 書き起こし)
+### ラベル付き入力 (NotebookLM 元台本 — 主導線)
+
+```bash
+# CSV 生成（長文分割あり）
+python -m src.cli.main build-csv input.txt \
+  --speaker-map "スピーカー1=れいむ,スピーカー2=まりさ" \
+  --max-length 80 \
+  -o output.csv
+
+# 確認 (dry-run + stats)
+python -m src.cli.main build-csv input.txt \
+  --speaker-map "スピーカー1=れいむ,スピーカー2=まりさ" \
+  --max-length 80 \
+  --dry-run --stats
+```
+
+### ラベルなし入力 (音声書き起こし fallback)
 
 ```bash
 # 話者マップを先に生成 (テンプレート)
@@ -67,20 +91,6 @@ python -m src.cli.main build-csv input.txt \
   --unlabeled \
   --speaker-map-file speaker_map.json \
   -o output.csv
-
-# 確認 (dry-run + stats)
-python -m src.cli.main build-csv input.txt \
-  --unlabeled \
-  --speaker-map-file speaker_map.json \
-  --dry-run --stats
-```
-
-### ラベル付き入力 (手動で話者タグを付けた場合)
-
-```bash
-python -m src.cli.main build-csv input.txt \
-  --speaker-map "ナレーター1=れいむ,ナレーター2=まりさ" \
-  -o output.csv
 ```
 
 ### オプション
@@ -91,6 +101,7 @@ python -m src.cli.main build-csv input.txt \
 | `--speaker-map K=V,...` | 話者名を YMM4 キャラクター名に変換 |
 | `--speaker-map-file PATH` | JSON or key=value ファイルから話者マップを読込 |
 | `--merge-consecutive` | 同一話者の連続発話を結合 |
+| `--max-length N` | N 文字超の発話を文末で分割 (推奨: 80) |
 | `--dry-run` | プレビューのみ (CSV 書き出しなし) |
 | `--stats` | 話者ごとの発話統計を表示 |
 | `-o PATH` | 出力 CSV パス (省略時: 入力ファイル名_ymm4.csv) |
@@ -143,4 +154,6 @@ python -m src.cli.main build-csv input.txt \
 - `--unlabeled` は 2 話者固定 (Speaker_A / Speaker_B の交互)
 - 短い行 (3文字以下) は前の行に自動結合される (音声認識の分断アーティファクト緩和)
 - 句読点で終わる相槌 (「はい。」等) は独立発話として保持される (v0.4+)
-- 音声認識の誤字は NLMYTGen では修正しない (YMM4 側で修正)
+- ラベル付きモードで話者タグにマッチしない行は直前の発話に結合される (コピペ改行崩れ対応)
+- `--max-length` は文末 (。！？!?) でのみ分割する。文末のない長文はそのまま保持される
+- コピペ由来の `,。` 等のアーティファクトは NLMYTGen では修正しない (YMM4 側で修正)

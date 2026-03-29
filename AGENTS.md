@@ -61,7 +61,7 @@
 ---
 
 ## 現在の状況（概要のみ。詳細は docs/ を参照）
-- Phase 0〜4 完了。IP-01 は No-Go 判定
-- 話者ロール推定追加済み
-- 次の本命: 別の NLM transcript でのロバスト性検証
+- 成功定義 3/3 達成（2026-03-29）。コアパイプライン完成
+- 次フェーズ: script-first 導線確立（NotebookLM 元台本出力 → NLMYTGen → YMM4）
+- 音声書き起こし(S-2)は fallback へ降格予定。元台本の直接取得が主導線
 - Web UI / API / YouTube 連携はまだ優先しない
