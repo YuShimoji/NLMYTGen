@@ -10,16 +10,16 @@
 ---
 
 ## ACTIVE ARTIFACT
-- Active Artifact: NLM transcript → YMM4 CSV → 動画1本完成への経路
-- Artifact Surface: CSV ファイル → YMM4 読込 → レンダリング結果
-- 現在のスライス: ロバスト性検証（別 NLM transcript で通す）
-- 成功状態: 別の NLM transcript で build-csv → CSV 生成 → YMM4 読込成功
+- Active Artifact: NLM transcript → YMM4 CSV + 編集支援メタデータ → 動画制作効率化
+- Artifact Surface: CSV ファイル + sidecar JSON → YMM4 読込 → 編集作業支援
+- 現在のスライス: YMM4編集支援メタデータ PoC
+- 成功状態: build-csv --emit-meta で sidecar JSON が生成され、発話時間推定・セグメント区切り・表情ヒントが含まれる
 
 ---
 
 ## CURRENT LANE
 - 主レーン: Advance
-- 今このレーンを優先する理由: 実成果物到達（E2E）がまだ1パターンのみ
+- 今このレーンを優先する理由: コアパイプライン完成（成功定義3/3）。YMM4編集支援機能で visible value を追加する
 
 ---
 

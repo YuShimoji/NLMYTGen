@@ -15,8 +15,9 @@ from collections import Counter
 from pathlib import Path
 
 from src.pipeline.normalize import normalize, analyze_speaker_roles
-from src.pipeline.assemble_csv import assemble, find_unmapped_speakers
+from src.pipeline.assemble_csv import assemble, find_unmapped_speakers, split_long_utterances
 from src.pipeline.validate_handoff import validate, has_errors, Severity
+from src.pipeline.edit_hints import generate_edit_hints
 
 
 def _parse_kv_pairs(lines: list[str]) -> dict[str, str]:
@@ -97,6 +98,10 @@ def _build_one(input_path: Path, output_path: Path, args: argparse.Namespace) ->
     merge = getattr(args, "merge_consecutive", False)
     output = assemble(script, speaker_map=speaker_map, merge_consecutive=merge)
 
+    max_length = getattr(args, "max_length", None)
+    if max_length:
+        output = split_long_utterances(output, max_length=max_length)
+
     results = validate(output)
     for r in results:
         prefix = "ERROR" if r.severity == Severity.ERROR else "WARN"
@@ -120,6 +125,17 @@ def _build_one(input_path: Path, output_path: Path, args: argparse.Namespace) ->
 
     output.write(output_path)
     print(f"Written: {output_path} ({len(output.rows)} rows)")
+
+    if getattr(args, "emit_meta", False):
+        meta = generate_edit_hints(output, source_file=str(input_path))
+        meta_path = output_path.with_suffix(".meta.json")
+        import json as _json
+        meta_path.write_text(
+            _json.dumps(meta.to_dict(), ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+        print(f"Meta: {meta_path} ({len(meta.segments)} segments, ~{meta.estimated_total_duration_sec}s)")
+
     return True
 
 
@@ -298,8 +314,12 @@ def main(argv: list[str] | None = None) -> int:
     _add_unlabeled_arg(p_build)
     p_build.add_argument("--merge-consecutive", action="store_true",
                          help="Merge consecutive utterances from the same speaker")
+    p_build.add_argument("--max-length", type=int, metavar="N",
+                         help="Split utterances longer than N chars at sentence boundaries")
     p_build.add_argument("--dry-run", action="store_true", help="Preview without writing")
     p_build.add_argument("--stats", action="store_true", help="Show speaker statistics")
+    p_build.add_argument("--emit-meta", action="store_true",
+                         help="Generate sidecar .meta.json with editing hints")
 
     # validate
     p_validate = subparsers.add_parser("validate", help="Validate input file")
