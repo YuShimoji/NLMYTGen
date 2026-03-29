@@ -62,6 +62,6 @@
 
 ## 現在の状況（概要のみ。詳細は docs/ を参照）
 - 成功定義 3/3 達成（2026-03-29）。コアパイプライン完成
-- 次フェーズ: script-first 導線確立（NotebookLM 元台本出力 → NLMYTGen → YMM4）
-- 音声書き起こし(S-2)は fallback へ降格予定。元台本の直接取得が主導線
+- 機能追加は docs/FEATURE_REGISTRY.md で管理。登録→承認→実装の順
+- 自動化の境界は docs/AUTOMATION_BOUNDARY.md で定義
 - Web UI / API / YouTube 連携はまだ優先しない

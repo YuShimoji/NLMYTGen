@@ -37,10 +37,12 @@
 
 ## IDEA POOL
 
-| ID | アイデア | 状態 | 関連領域 | 再訪トリガー |
-|----|----------|------|----------|--------------|
-| IP-02 | Web UI 化 | hold | Unlock | ロバスト性検証完了後 |
-| IP-03 | YouTube 自動アップロード | hold | Unlock | 動画制作パイプライン確立後 |
+FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理する。
+
+| ID | 旧アイデア | 移行先 |
+|----|----------|--------|
+| IP-02 | Web UI 化 | CLAUDE.md スコープ外 |
+| IP-03 | YouTube 自動アップロード | FEATURE_REGISTRY E-01 (hold) |
 
 ---
 

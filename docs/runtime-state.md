@@ -4,15 +4,15 @@
 
 ## 現在位置
 - project: NLMYTGen
-- lane: Advance
-- slice: YMM4編集支援メタデータ PoC
-- next_action: edit-hints PoC 実装 → テスト → E2E確認
+- lane: Advance (docs 基盤整備)
+- slice: FEATURE_REGISTRY + AUTOMATION_BOUNDARY 整備
+- next_action: B-10 (--emit-meta) のレビュー待ち → 次の approved 機能へ
 - 案件モード: CLI artifact
 
 ## 主成果物
-- active_artifact: NLM transcript → YMM4 CSV → 動画1本完成への経路
-- artifact_surface: CSV ファイル → YMM4 読込 → レンダリング結果
-- last_change_relation: direct
+- active_artifact: 動画制作ワークフロー全体の効率化（FEATURE_REGISTRY 管理下）
+- artifact_surface: CLI → CSV → YMM4 → 動画
+- last_change_relation: direct (docs 基盤整備)
 
 ## カウンター
 - blocks_since_user_visible_change: 0
