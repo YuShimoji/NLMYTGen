@@ -1,46 +1,29 @@
-# NLMYTGen
+# CLAUDE.md — NLMYTGen プロジェクト方針
+# このファイルはプロジェクトの方針・技術スタック・成功定義を定める。
+# 運用ルールは .claude/CLAUDE.md を参照。入口は AGENTS.md を参照。
 
-NotebookLM transcript to YMM4 CSV pipeline.
+## プロジェクト概要
+NotebookLM の transcript を YMM4 用 CSV に変換し、動画を制作するための CLI パイプライン。
 
-## Rules
+## 技術スタック
+- Python
+- uv（パッケージ管理・タスクランナー）
+- pytest（テスト）
+- YMM4（動画レンダリング — 外部ツール）
 
-- Path A only. No alternate pipelines.
-- NotebookLM is mandatory upstream context. Do not bypass it.
-- Internal LLM is not the primary script author. LLM is for structuring/normalization/validation only.
-- Do not introduce direct Python/Voicevox/MoviePy video generation.
-- Keep one main entrypoint (`src/cli/main.py`).
-- Prefer ADR update before architectural expansion.
-- Ask before adding major scope.
-- Respond in Japanese.
-- No emoji.
-- Tests are few and contract-focused. Do not inflate test count.
-- No abstract classes, provider patterns, plugin architectures, or fallback chains unless explicitly decided via ADR.
+## 成功定義
+1. 任意の NLM transcript を入力し、YMM4 が読み込める CSV を出力できる
+2. その CSV を YMM4 に読み込ませ、動画をレンダリングできる
+3. 複数の NLM transcript で再現性がある
 
-## Key Paths
+## 現在の優先順位
+1. 別の NLM transcript でのロバスト性検証
+2. YMM4 実読込の確認
+3. 最小動画1本の完成
+4. （後回し）Web UI / API / YouTube 連携
 
-- Source: `src/`
-- Tests: `tests/`
-- Docs: `docs/`
-- Samples: `samples/`
-- CLI entry: `src/cli/main.py`
-
-## Architecture
-
-- Input: NotebookLM transcript (.txt or .csv)
-- Internal: StructuredScript (frozen dataclass)
-- Output: YMM4 CSV (2-column, no header, UTF-8)
-- No external dependencies beyond Python stdlib.
-
-## Project Status
-
-直近の状態 (2026-03-29):
-  - Phase 0~4 完了 (基盤文書 + 実装骨格 + CLI拡張 + ラベルなし入力対応 + 品質改善・一括処理)
-  - 16 tests, 0 failed (pytest), mock ゼロ
-  - 外部依存ゼロ (Python stdlib のみ)
-  - CLI: build-csv / validate / inspect / generate-map (--unlabeled, --speaker-map, --speaker-map-file, --dry-run, --stats, --merge-consecutive)
-  - **全工程 E2E 達成:** NLM transcript → --unlabeled → CSV (BOM付き) → YMM4 台本読込 → タイムライン配置
-  - **品質改善:** 句読点終端の相槌を独立発話として保持 (136→142 utterances)
-  - **一括処理 (IP-04):** build-csv で複数入力ファイルをサポート
-  - **IP-01 (LLM構造化補助): No-Go判定** — 行交互パターン正答率92.3%でLLM費用対効果が低い
-  - **話者ロール推定:** inspect/generate-map --unlabeled で host/guest を自動推定
-  - WORKFLOW.md: NLM → CSV → YMM4 → 動画 の全工程手順書
+## スコープ外（現時点）
+- Web UI
+- API サーバー
+- YouTube 自動アップロード
+- 他プロジェクト（HoloSync / NLMandSlideVideoGenerator 等）との連携

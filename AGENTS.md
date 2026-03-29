@@ -1,54 +1,67 @@
-# NLMYTGen
+# AGENTS.md — NLMYTGen 入口ファイル
+# このファイルは repo の運用入口であり、状態スナップショットの複製ではない。
+# Claude Code / Web版Claude がこの repo で作業を開始するとき、最初にここを読む。
 
-NotebookLM transcript to YMM4 CSV pipeline.
+---
 
-## Rules
+## このプロジェクトについて
+- **プロジェクト名:** NLMYTGen
+- **プロジェクト root:** このファイルがある repo のルート
+- **種別:** CLI パイプライン（CLI artifact mode 適用）
+- **最終成果物到達経路:** NLM transcript → YMM4 CSV → 動画1本完成
+- **Artifact Surface:** CSV ファイル → YMM4 読込 → レンダリング結果
 
-- Path A only. No alternate pipelines.
-- NotebookLM is mandatory upstream context. Do not bypass it.
-- Internal LLM is not the primary script author. LLM is for structuring/normalization/validation only.
-- Do not introduce direct Python/Voicevox/MoviePy video generation.
-- Keep one main entrypoint (`src/cli/main.py`).
-- Prefer ADR update before architectural expansion.
-- Ask before adding major scope.
-- Respond in Japanese.
-- No emoji.
-- Tests are few and contract-focused. Do not inflate test count.
-- No abstract classes, provider patterns, plugin architectures, or fallback chains unless explicitly decided via ADR.
+---
 
-## Key Paths
+## 再アンカリング手順（この repo で作業を開始・再開するとき）
+以下の順で読むこと。この repo 以外のファイルは読まない。
 
-- Source: `src/`
-- Tests: `tests/`
-- Docs: `docs/`
-- Samples: `samples/`
-- CLI entry: `src/cli/main.py`
+```
+1. このファイル（AGENTS.md）を読む → プロジェクト概要・境界ルール
+2. .claude/CLAUDE.md を読む → repo-local の運用ルール
+3. docs/runtime-state.md を読む → 現在位置・カウンター・状態値
+4. docs/project-context.md を読む → DECISION LOG・IDEA POOL・HANDOFF SNAPSHOT
+5. 全景確認を出力:
+   📍 NLMYTGen / 🧩 [現在のスライス] / 🔲 [次のアクション]
+   🏷️ 案件モード: CLI artifact
+```
 
-## Architecture
+---
 
-- Input: NotebookLM transcript (.txt or .csv)
-- Internal: StructuredScript (frozen dataclass)
-- Output: YMM4 CSV (2-column, no header, UTF-8)
-- No external dependencies beyond Python stdlib.
+## 境界ルール（厳守）
 
-## Re-anchoring
+### 他プロジェクトへの逸脱禁止
+- **この repo 以外のプロジェクトのファイルを読み書きしない。**
+- HoloSync / NLMandSlideVideoGenerator / NarrativeGen / VastCore 等のファイル・memory・docs を参照しない。
+- 「NLMYTGen 用の memory がない」場合は**スキップする。他 PJ の memory を代用しない。**
+- AskUserQuestion の選択肢に「別プロジェクトへ移動」を含めない。
+- 別 repo への移動はユーザーが明示的に指示した場合のみ。
 
-再アンカリング手順（compact 後・refresh 後・文脈喪失時）:
-1. `docs/runtime-state.md` を読む → 現在位置・カウンター・量的指標
-2. `CLAUDE.md` を読む → プロジェクト名・成果物定義
-3. `docs/project-context.md` を読む → DECISION LOG・IDEA POOL
-4. 全景確認を出力してから作業を再開する
+### AskUserQuestion の範囲制限
+- 選択肢はこの repo 内の Advance / Audit / Excise / Unlock に限定すること。
+- 他 repo のタスクを候補に混ぜない。
+- 「別セッションで別 PJ」の提案はこの repo の判断としては出さない。
 
-## Project Status
+### 運用ファイルの削除禁止
+- AGENTS.md / .claude/CLAUDE.md / docs/runtime-state.md / docs/project-context.md は
+  「重複」として削除しない。それぞれ異なる責務を持つ入口ファイルである。
 
-直近の状態 (2026-03-29):
-  - Phase 0~4 完了 (基盤文書 + 実装骨格 + CLI拡張 + ラベルなし入力対応 + 品質改善・一括処理)
-  - 25 commits, 16 tests, 0 failed (pytest), mock ゼロ
-  - 外部依存ゼロ (Python stdlib のみ)
-  - CLI: build-csv / validate / inspect / generate-map (--unlabeled, --speaker-map, --speaker-map-file, --dry-run, --stats, --merge-consecutive)
-  - **全工程 E2E 達成:** NLM transcript → --unlabeled → CSV (BOM付き) → YMM4 台本読込 → タイムライン配置
-  - **品質改善:** 句読点終端の相槌を独立発話として保持 (136→142 utterances)
-  - **一括処理 (IP-04):** build-csv で複数入力ファイルをサポート
-  - **IP-01 (LLM構造化補助): No-Go判定** — 行交互パターン正答率92.3%でLLM費用対効果が低い
-  - **話者ロール推定:** inspect/generate-map --unlabeled で host/guest を自動推定
-  - WORKFLOW.md: NLM → CSV → YMM4 → 動画 の全工程手順書
+---
+
+## ファイルの責務分担
+
+| ファイル | 責務 | 更新タイミング |
+|---------|------|--------------|
+| AGENTS.md | 入口。概要・境界・再アンカリング手順 | PJ 構成変更時のみ |
+| .claude/CLAUDE.md | repo-local 運用ルール。global runbook への依存を減らす | ルール変更時のみ |
+| docs/runtime-state.md | 現在位置。カウンター・状態値・active_artifact | 毎ブロック終端 |
+| docs/project-context.md | 航海日誌。DECISION LOG・IDEA POOL・HANDOFF SNAPSHOT | セッション終端・HANDOFF 時 |
+| CLAUDE.md (ルート) | プロジェクト方針・技術スタック・成功定義 | 方針変更時のみ |
+
+---
+
+## 現在の状況（概要のみ。詳細は docs/ を参照）
+- Phase 0〜4 完了。IP-01 は No-Go 判定
+- 話者ロール推定追加済み
+- 次の本命: 別の NLM transcript でのロバスト性検証
+- Web UI / API / YouTube 連携はまだ優先しない

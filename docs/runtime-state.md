@@ -1,68 +1,45 @@
-# Runtime State
+# Runtime State — NLMYTGen
+# BLOCK SUMMARY のたびに更新する。
+# compact 後の再アンカリングではこのファイルを読む。
 
-## GPS
+## 現在位置
+- project: NLMYTGen
+- lane: Advance
+- slice: ロバスト性検証（別 NLM transcript）
+- next_action: [別の NLM transcript で build-csv → YMM4 読込まで通す]
+- 案件モード: CLI artifact
 
-- Project: NLMYTGen
-- Slice: IP-01 話者割当精度 評価完了 (No-Go) + ロール推定機能
-- Branch: master
-- Session: 2026-03-29
-- Active Artifact: NLM transcript → YMM4 CSV → 動画（最終成果物到達経路）
-- Last Change Relation: direct
+## 主成果物
+- active_artifact: NLM transcript → YMM4 CSV → 動画1本完成への経路
+- artifact_surface: CSV ファイル → YMM4 読込 → レンダリング結果
+- last_change_relation: direct
 
-## Quantitative Metrics
-
-- Source files: 8 (contracts/3 + pipeline/3 + cli/1 + __init__ 4本)
-- Test files: 4
-- Tests: 16
-- Mock files: 0
-- TODO/FIXME/HACK: 0
-- Commits: 25
-
-## Counters
-
-- blocks_completed: 21
+## カウンター
 - blocks_since_user_visible_change: 0
-- blocks_since_visual_audit: N/A (CLI project)
-- visual_evidence_status: N/A (CLI project)
-- last_visual_audit_path: N/A
+- blocks_since_manual_evidence: 0
+- blocks_since_visual_audit: 0
 
-## Evidence
+## 量的指標（task-scout 計数 / Main session 更新）
+- test_file_count: 0
+- mock_file_count: 0
+- impl_file_count: 0
+- mock_impl_ratio: 0.00
+- open_todo_count: 0
 
-- CLI build-csv: sample data E2E confirmed (txt + csv)
-- CLI validate: sample data confirmed (txt + csv)
-- CLI inspect: sample data confirmed
-- CLI generate-map: text + json format confirmed
-- --dry-run: confirmed
-- --stats: confirmed
-- --merge-consecutive: confirmed (12->11 utterances with consecutive merge)
-- --speaker-map-file: JSON confirmed
-- --speaker-map: CLI string confirmed
-- BOM UTF-8 input: confirmed
-- CSV header auto-skip: confirmed
-- unmapped speaker warning: confirmed
-- **--unlabeled: 実 NLM transcript (143行) → 142 utterances → YMM4 CSV 生成成功**
-- **実データ E2E (コード側): confirmed — samples/output_real_nlm.csv (142行, れいむ/まりさ)**
-- **短行結合チューニング: 句読点終端の相槌("はい。"等)を独立発話として保持 (136→142行)**
-- **一括処理 (IP-04): build-csv で複数入力ファイルをサポート。各ファイル独立処理+サマリー**
-- **YMM4 台本読込: confirmed — タイムライン上に各要素が配置された (YMM4通常版で確認)**
-- CSV エンコーディング: UTF-8 BOM 付き (utf-8-sig) に変更済み
-- pytest 16/16 pass
-- **話者割当分析 (Phase 0): 行交互の疑わしい箇所 22件特定。相槌パターン38.7%が両話者共通**
-- **評価基盤: gold_set_template.json + evaluate_diarization.py + Go/No-Go 判定基準**
-- **話者ロール推定: inspect/generate-map --unlabeled でhost/guest自動推定**
-- **Gold set 評価: パターン正答率92.3%。LLM(IP-01)はNo-Go判定**
+## 最終検証
+- last_verification_artifact: なし
+- last_verification_date: なし
 
-## Blocking
+## Evidence（CLI artifact mode）
+- evidence_status: 未検証
+- last_e2e_data: sample transcript（Phase 0〜4 完了）
+- external_tool_verification: YMM4 読込未確認
+- final_artifact_reached: No
+- blocking_dependency: 別 NLM transcript でのロバスト性検証
 
-- なし（全 blocker 解消済み）
+## Authority Return Items
+- 実 NLM transcript のバリエーション提供（ユーザー操作依存）
+- YMM4 実読込確認（ユーザー操作依存）
 
-## Pending
-
-- 別の NLM transcript でのロバスト性検証（汎化性確認。1件のデータでは限定的）
-- YMM4 Lite の不具合は NLMYTGen 側の問題ではない (通常版で動作確認済み)
-
-## Completed Evaluations
-
-- IP-01 (LLM構造化補助): **No-Go** — パターン正答率92.3%。行交互は高精度でLLM費用対効果が低い
-- Gold set: 65行の正解ラベル付きデータ作成済み (tools/gold_set.json)
-- 評価ツール: tools/evaluate_diarization.py で3手法を自動比較可能
+## 一時補助物（作ったら登録。統合/削除したら除去）
+# | ファイル/モジュール | 種別 | 削除条件 | 寿命 |
