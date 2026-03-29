@@ -40,12 +40,8 @@ NotebookLM transcript (.txt or .csv)
 │ → [Warning, ...]    │
 └─────────────────────┘
         │
-        ├──────────────────────────┐
-        ▼                          ▼ (--emit-meta)
-YMM4 CSV (2列, UTF-8)    ┌─────────────────────┐
-                          │ edit_hints()        │  時間推定・表情・セグメント
-                          │ → .meta.json        │
-                          └─────────────────────┘
+        ▼
+YMM4 CSV (2列, UTF-8)
 ```
 
 ## モジュール構成
@@ -59,7 +55,6 @@ src/
   pipeline/                  # 変換ロジック
     normalize.py             # 入力 → StructuredScript
     assemble_csv.py          # StructuredScript → YMM4CsvOutput
-    edit_hints.py            # YMM4CsvOutput → 編集支援メタデータ (sidecar JSON)
     validate_handoff.py      # 出力前検証
   cli/
     main.py                  # 単一エントリポイント
@@ -72,7 +67,6 @@ src/
 | `contracts/` | データ構造の定義と不変条件の保証 | ビジネスロジック |
 | `pipeline/normalize.py` | 入力ファイルのパースと正規化 | LLM 呼び出し、ネットワークアクセス |
 | `pipeline/assemble_csv.py` | 話者マッピングと CSV 組立、長文分割 | 画像取得、アニメーション割当 |
-| `pipeline/edit_hints.py` | 編集支援メタデータ生成 (時間推定、表情、セグメント) | CSV フォーマット変更、YMM4 プロジェクト操作 |
 | `pipeline/validate_handoff.py` | 出力前の整合性チェック | エラー修正、自動補完 |
 | `cli/main.py` | 引数解析と実行制御 | 直接的なデータ変換 |
 

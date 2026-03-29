@@ -5,46 +5,68 @@
 ## 現在位置
 - project: NLMYTGen
 - lane: Advance
-- slice: FEATURE_REGISTRY レビュー → 次の approved 機能の実装
-- next_action: ユーザーが FEATURE_REGISTRY の proposed 10件を優先順位付け → approved 機能から実装開始
+- slice: 機能スコープ整理 → 次機能選定
+- next_action: proposed 5件の優先順位付け + 機能承認
 - 案件モード: CLI artifact
 
 ## 主成果物
-- active_artifact: 動画制作ワークフロー全体の効率化（FEATURE_REGISTRY 管理下）
-- artifact_surface: CLI → CSV → YMM4 → 動画
-- last_change_relation: direct (docs 基盤整備 + FEATURE_REGISTRY/AUTOMATION_BOUNDARY 新設)
+- active_artifact: NLM transcript → YMM4 CSV → 動画制作ワークフロー効率化
+- artifact_surface: CLI → CSV → YMM4 台本読込 → 動画
+- last_change_relation: cleanup (スコープ整理 — rejected 7件 + docs stale 除去)
 
 ## カウンター
-- blocks_since_user_visible_change: 0
-- blocks_since_manual_evidence: 0
+- blocks_since_user_visible_change: 2
+- blocks_since_manual_evidence: 2
 - blocks_since_visual_audit: 0
 
 ## 量的指標
-- test_file_count: 5
+- test_file_count: 4
 - mock_file_count: 0
-- impl_file_count: 9
+- impl_file_count: 8
 - mock_impl_ratio: 0.00
 - open_todo_count: 0
 
 ## 最終検証
-- last_verification_artifact: 全28テスト PASS + 実データ E2E 2件
-- last_verification_date: 2026-03-29
+- last_verification_artifact: 全16テスト PASS（B-10 除去後）
+- last_verification_date: 2026-03-30
 
 ## Evidence（CLI artifact mode）
-- evidence_status: 実データ通過（2件の transcript で E2E 確認）
-- last_e2e_data: AI監視(51行) + Panopticon(87行)
-- external_tool_verification: YMM4 読込成功（2026-03-29、CSV形式は変更なし）
-- final_artifact_reached: Yes
+- evidence_status: 実データ通過（2件の transcript で CSV E2E 確認済み）
+- last_e2e_data: AI監視(51行) + Panopticon(87行) — CSV 生成確認
+- external_tool_verification: YMM4 読込成功（2026-03-29、CSV形式）
+- final_artifact_reached: Yes（CSV → YMM4 台本読込のパス）
 - blocking_dependency: なし
 
+## FEATURE_REGISTRY 状態サマリ (2026-03-30)
+- done: 11件（A-01〜A-02, B-01〜B-09, C-01）
+- proposed: 5件（A-04, D-02, E-02, F-01, F-02）
+- hold: 2件（A-03, E-01）
+- rejected: 8件（B-10, C-02, C-03, C-04, C-05, D-01, F-03 + PIL/画像合成）
+
+## Python のスコープ制約（2026-03-30 確定）
+Python の責務はテキスト変換のみ（CSV + テキストメタデータ）。
+以下は全て禁止（rejected として記録済み）:
+- 画像生成・画像合成（PIL/Pillow 含む）
+- .ymmp 生成・操作（音声ファイル参照を含むため外部生成不可能）
+- YMM4 テンプレート生成・演出指定
+- YMM4 出力の模倣・プレビュー
+- 動画レンダリング・音声合成
+
+## 外部メディア取得の方針（2026-03-30）
+- 取得機能（acquisition）と受け取り機能（receiving）は分離する
+- 最終的に自動化したい（ユーザー指示）
+- A-04（RSS）と D-02（背景動画取得）は proposed のまま
+
 ## Authority Return Items
-- B-10 (--emit-meta) の承認/削除/修正判断: unauthorized として FEATURE_REGISTRY に登録済み
-- proposed 10件の優先順位付け
-- GUI 技術選定（F-01 分割プレビュー）
-- YMM4 .ymmp フォーマット調査の可否（C-03）
+- proposed 5件の優先順位付け（A-04, D-02, E-02, F-01, F-02）
+- GUI 技術選定（F-01/F-02）
+- E-02 の仕様定義（入力/出力/テンプレート管理が未定義）
+
+## 既知の問題
+- E-02 は「テンプレートベース」と説明されているが、入力（何を元にメタデータを生成するか）、テンプレート管理方法、実際の価値（手入力との差分）が未検証
+- 前セッションで生成された proposed 全11件は B-10 混入と同じセッションの産物。うち 6件を rejected 済み
 
 ## 一時補助物（作ったら登録。統合/削除したら除去）
 | ファイル/モジュール | 種別 | 削除条件 | 寿命 |
 |---|---|---|---|
-| src/pipeline/edit_hints.py | unauthorized 機能 | B-10 が rejected なら削除 | レビュー待ち |
-| tests/test_edit_hints.py | unauthorized 機能のテスト | B-10 が rejected なら削除 | レビュー待ち |
+| (なし) | | | |
