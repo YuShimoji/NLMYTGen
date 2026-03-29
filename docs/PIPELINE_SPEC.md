@@ -170,6 +170,37 @@ python -m src.cli.main build-csv input.txt --max-length 80 -o output.csv
 
 ---
 
+## 編集支援メタデータ (`--emit-meta`)
+
+`build-csv --emit-meta` で、CSV と同時にサイドカー `.meta.json` を生成する。
+YMM4 の CSV フォーマットは変更しない（2列のまま）。
+
+### 出力ファイル
+- `{stem}_ymm4.meta.json` (CSV と同じディレクトリ)
+
+### 内容
+
+| フィールド | 説明 |
+|-----------|------|
+| `summary.total_utterances` | 総発話数 |
+| `summary.total_chars` | 総文字数 |
+| `summary.estimated_total_duration_sec` | 推定総読み上げ時間 (5文字/秒) |
+| `summary.speakers` | 話者ごとの発話数・文字数・推定時間 |
+| `segments[]` | 話題区切り (話題導入パターンで検出) |
+| `segments[].topic_preview` | セグメント冒頭テキスト抜粋 (40文字) |
+| `rows[]` | 発話ごとの詳細メタデータ |
+| `rows[].estimated_duration_sec` | 推定読み上げ時間 |
+| `rows[].expression_hint` | 表情ヒント (question/excited/laugh/surprise/neutral) |
+| `rows[].is_segment_start` | セグメント開始行か |
+
+### 用途
+- YMM4 で台本を読み込んだ後の編集作業を支援する
+- 推定時間でタイムライン全体の見通しを立てる
+- 表情ヒントでキャラクターの表情設定を効率化する
+- セグメント区切りで背景・場面転換のタイミングを把握する
+
+---
+
 ## 初期スコープ外
 
 以下は明示的にスコープ外とする:
