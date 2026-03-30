@@ -93,6 +93,53 @@ _LINE_BREAK_AFTER = {
     ")": 2,
     "】": 2,
 }
+_CLAUSE_BREAK_AFTER = {
+    "、": 0,
+    ",": 0,
+    "，": 0,
+    ";": 1,
+    ":": 1,
+    "：": 1,
+    "；": 1,
+}
+_CLAUSE_BREAK_BEFORE = (
+    "しかし",
+    "しかしながら",
+    "ですが",
+    "でも",
+    "なので",
+    "ため",
+    "一方で",
+    "ということ",
+)
+_AGGRESSIVE_BREAK_AFTER = {
+    "」": 1,
+    "』": 1,
+    "）": 1,
+    ")": 1,
+    "】": 1,
+    "は": 5,
+    "が": 5,
+    "を": 5,
+    "に": 5,
+    "へ": 5,
+    "と": 5,
+    "で": 5,
+    "も": 5,
+    "や": 5,
+    "の": 5,
+}
+_AGGRESSIVE_BREAK_AFTER_MARKERS = (
+    "という",
+    "として",
+    "により",
+    "による",
+    "について",
+    "に対して",
+    "していたら",
+    "したら",
+    "すると",
+)
 
 
 def display_width(text: str) -> int:
@@ -122,6 +169,98 @@ def estimate_display_lines(text: str, chars_per_line: int) -> int:
     return lines
 
 
+def _find_clause_breaks(text: str) -> list[tuple[int, int]]:
+    """一文の中で使える節分割候補を返す。"""
+    candidates: dict[int, int] = {}
+
+    for idx, ch in enumerate(text, start=1):
+        penalty = _CLAUSE_BREAK_AFTER.get(ch)
+        if penalty is not None:
+            candidates[idx] = min(candidates.get(idx, penalty), penalty)
+
+    for marker in _CLAUSE_BREAK_BEFORE:
+        start = 0
+        while True:
+            idx = text.find(marker, start)
+            if idx <= 0:
+                break
+            candidates[idx] = min(candidates.get(idx, 2), 2)
+            start = idx + len(marker)
+
+    return sorted(candidates.items())
+
+
+def _find_aggressive_breaks(text: str) -> list[tuple[int, int]]:
+    """通常候補が尽きた長文向けの、より強い分割候補を返す。"""
+    candidates: dict[int, int] = {}
+
+    for idx, ch in enumerate(text, start=1):
+        penalty = _AGGRESSIVE_BREAK_AFTER.get(ch)
+        if penalty is not None:
+            candidates[idx] = min(candidates.get(idx, penalty), penalty)
+
+    for marker in _AGGRESSIVE_BREAK_AFTER_MARKERS:
+        start = 0
+        while True:
+            idx = text.find(marker, start)
+            if idx < 0:
+                break
+            split_at = idx + len(marker)
+            candidates[split_at] = min(candidates.get(split_at, 2), 2)
+            start = idx + len(marker)
+
+    return sorted(candidates.items())
+
+
+def _split_single_long_sentence(
+    text: str,
+    *,
+    max_length: int,
+    measure,
+) -> list[str]:
+    """文末がない長文に対する節分割 fallback。"""
+    if measure(text) <= max_length:
+        return [text]
+
+    remaining = text
+    chunks: list[str] = []
+    min_chunk = max(6, max_length // 4)
+
+    while measure(remaining) > max_length:
+        best: tuple[int, int] | None = None
+
+        candidates = _find_clause_breaks(remaining)
+        if not candidates:
+            candidates = _find_aggressive_breaks(remaining)
+
+        for split_at, penalty in candidates:
+            left = remaining[:split_at]
+            right = remaining[split_at:]
+            if not right.strip():
+                continue
+
+            left_width = measure(left)
+            right_width = measure(right)
+            if left_width > max_length or left_width < min_chunk:
+                continue
+
+            short_tail_penalty = 50 if right_width < min_chunk else 0
+            score = (max_length - left_width) + penalty * 3 + short_tail_penalty
+            if best is None or score < best[0]:
+                best = (score, split_at)
+
+        if best is None:
+            return [text]
+
+        split_at = best[1]
+        chunks.append(remaining[:split_at])
+        remaining = remaining[split_at:]
+
+    if remaining:
+        chunks.append(remaining)
+    return chunks
+
+
 def _balance_two_lines(
     text: str,
     *,
@@ -136,7 +275,7 @@ def _balance_two_lines(
     if total_width <= chars_per_line or total_width > chars_per_line * 2:
         return text
 
-    min_width = max(6, chars_per_line // 4)
+    min_width = max(4, chars_per_line // 5)
     best: tuple[int, int] | None = None
 
     for idx, ch in enumerate(text, start=1):
@@ -154,8 +293,10 @@ def _balance_two_lines(
         if left_width > chars_per_line or right_width > chars_per_line:
             continue
 
-        short_penalty = 100 if min(left_width, right_width) < min_width else 0
-        score = abs(left_width - right_width) + penalty * 4 + short_penalty
+        if min(left_width, right_width) < min_width:
+            continue
+
+        score = abs(left_width - right_width) + penalty * 4
         if best is None or score < best[0]:
             best = (score, idx)
 
@@ -194,12 +335,30 @@ def split_long_utterances(
         # 文末で分割
         sentences = [s for s in _SENTENCE_ENDS.split(row.text) if s]
         if len(sentences) <= 1:
-            rows.append(row)
+            for chunk in _split_single_long_sentence(
+                row.text,
+                max_length=max_length,
+                measure=_measure,
+            ):
+                rows.append(YMM4CsvRow(speaker=row.speaker, text=chunk))
             continue
+
+        expanded_sentences: list[str] = []
+        for sentence in sentences:
+            if _measure(sentence) > max_length:
+                expanded_sentences.extend(
+                    _split_single_long_sentence(
+                        sentence,
+                        max_length=max_length,
+                        measure=_measure,
+                    )
+                )
+            else:
+                expanded_sentences.append(sentence)
 
         # 文を max_length 以内にグループ化
         buf = ""
-        for sentence in sentences:
+        for sentence in expanded_sentences:
             if buf and _measure(buf) + _measure(sentence) > max_length:
                 rows.append(YMM4CsvRow(speaker=row.speaker, text=buf))
                 buf = sentence

@@ -30,6 +30,29 @@
   - `ちょっと想像してみてください。\nあなたは配送バンの運転席に座っています。`
   - `猛暑の中で息苦しさを感じて、\n喘息の発作が起きそうになったとします。`
 
+## Post-import Visual Evidence
+
+| check | result |
+|---|---|
+| manual line breaks | 10 |
+| re-split long lines | 15 |
+| awkward word wraps | 5 |
+| timing-only issues | 0 |
+| overall | partial win |
+
+### Notes
+
+- `。` 位置での改行は一定数効いた
+- 一文が `、` などで長くつながる発話は依然としてはみ出しやすい
+- カギカッコ、カタカナ語、3字以上の漢字連なりでの折り返しは残る
+- 1文字だけの最終行が増えた。例: `す。` のような widow/orphan が発生
+
+### Assessment
+
+- B-12 は純粋な手動改行の負荷を減らしたが、長文再分割の負荷はまだ高い
+- 次の主 pain は「句読点が少ない長文の節分割」と「1文字行の回避」
+- 次候補は clause-aware split と widow/orphan guard を組み合わせた L2 改善
+
 ## Residual Risk
 
 - YMM4 テンプレート差込みの見た目最適化は未検証

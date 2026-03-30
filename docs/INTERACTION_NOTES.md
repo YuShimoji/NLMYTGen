@@ -22,3 +22,4 @@
 - BLOCK SUMMARY では、まず bottleneck と trust assessment を示す
 - handoff では「何が抜けているか」「次にやってはいけないこと」も残す
 - 再開時の repeated context は、まず `docs/ai/*.md` と project-local canonical docs を読んでから扱う
+- 字幕改行の報告では、「長すぎる行が減ったか」と「残りが bulk pain か individual judgement か」を分けて伝える。境界ケース段階に入ったら、rule 追加と corpus 収集を混同しない

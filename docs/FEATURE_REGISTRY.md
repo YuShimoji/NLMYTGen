@@ -60,7 +60,9 @@
 | B-09 | 複数ファイル一括処理 | done | L2 | build-csv に複数パス指定 |
 | B-10 | 編集支援メタデータ (--emit-meta) | rejected | L2 | 未承認で混入 → rejected (2026-03-30)。コード除去済み |
 | B-11 | S-5 workflow proof パック（字幕 overflow triage + evidence capture） | done | L2 | `build-csv --max-lines --chars-per-line --stats` を起点に、YMM4 取込前のはみ出し候補把握と取込後の修正量記録を repeatable にした。初回 proof で辞書 0 / timing 0 / 改行系 pain 優勢を確認 |
-| B-12 | 行バランス重視の字幕分割 | done | L2 | `--balance-lines` を追加。`--max-lines` 使用時に 2 行字幕へ自然な改行を opt-in で挿入し、読点・句点・カギカッコ付近を候補にしつつ行バランスを崩しにくい分割 heuristics を実装。`uv run pytest` 51 PASS |
+| B-12 | 行バランス重視の字幕分割 | done | L2 | `--balance-lines` を追加。`--max-lines` 使用時に 2 行字幕へ自然な改行を opt-in で挿入し、読点・句点・カギカッコ付近を候補にしつつ行バランスを崩しにくい分割 heuristics を実装。`uv run pytest` 51 PASS。再観測では手動改行は減ったが、句読点の少ない長文と 1 文字最終行は残存 |
+| B-13 | 節分割 + widow/orphan guard | done | L2 | `--balance-lines` の内部改善として、句読点が少ない一文を `、` や接続句で節分割する fallback と、1 文字最終行を避ける guard を追加。`uv run pytest` 54 PASS、sample dry-run で 57 発話 → 62 行に再編。post-import 再観測では手動改行 5 / 再分割 10 / 不自然な単語分割 5 で、改善はあるが決定打ではなかった |
+| B-14 | aggressive clause chunking | done | L2 | `--balance-lines` の内部改善として、複数文発話の中にある単一長文も sentence ごとに再展開し、通常候補が尽きた場合は引用句・機能語まで使った aggressive chunking fallback を適用。`uv run pytest` 56 PASS、sample dry-run で 57 発話 → 95 行、overflow candidates は 3 件まで減少 |
 
 ### C. YMM4 連携・演出 (L3-YMM4内部)
 

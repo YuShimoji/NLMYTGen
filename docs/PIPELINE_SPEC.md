@@ -152,7 +152,8 @@ Host2=まりさ
 - `--display-width` を併用すると、`--max-length` を文字数ではなく表示幅（全角=2, 半角=1, Ambiguous=2）として解釈する
 - `--max-lines N --chars-per-line M` を使うと、`M * N` の表示幅を閾値として分割し、`--stats` では推定はみ出し候補も警告する
 - `--balance-lines` を併用すると、2行字幕向けに読点・句点・カギカッコ付近を候補にした自然改行を opt-in で挿入する
-- `--balance-lines` は `--max-lines` 前提で、既存テキストを削らず改行位置だけを調整する best-effort 改善
+- `--balance-lines` は、句点がない長文に対して `、` や接続句で節分割する fallback、1文字だけの最終行を避ける widow/orphan guard、複数文発話の中にある単一長文をより積極的に複数字幕へ落とす aggressive clause chunking を含む
+- `--balance-lines` は `--max-lines` 前提の best-effort 改善で、本文の削除は行わない
 
 ```bash
 # 80 文字で分割

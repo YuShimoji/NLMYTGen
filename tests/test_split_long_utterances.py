@@ -64,13 +64,33 @@ class TestSplitBackwardCompatibility:
         # 再結合すると元のテキストになる
         assert "".join(r.text for r in result.rows) == text
 
-    def test_single_sentence_preserved(self):
-        """文末区切りのない長文はそのまま保持。"""
+    def test_long_single_sentence_inside_multi_sentence_row_is_expanded(self):
+        """複数文の先頭にある長文も、文ごとの fallback で再分割する。"""
+        text = (
+            "私たちが普段「アルゴリズムによる最適化」と聞くと、効率的でクリーンな魔法を想像しがちですが、"
+            "もしその計算式に「人間の身体的限界」という変数が最初から欠落していたらどうなるか。"
+            "今回の探求では、その裏側に切り込んでいきます。"
+        )
+        output = self._make_output(text)
+        result = split_long_utterances(output, max_length=80, use_display_width=True)
+        assert len(result.rows) >= 3
+        assert "".join(r.text for r in result.rows) == text
+
+    def test_single_sentence_preserved_without_clause_break(self):
+        """節分割候補のない長文はそのまま保持。"""
         text = "a" * 200
         output = self._make_output(text)
         result = split_long_utterances(output, max_length=80)
         assert len(result.rows) == 1
         assert result.rows[0].text == text
+
+    def test_single_sentence_split_at_clause_break(self):
+        """句点がなくても読点で節分割する。"""
+        text = "前半の説明が長く続き、後半の説明もまだ続いています"
+        output = self._make_output(text)
+        result = split_long_utterances(output, max_length=28, use_display_width=True)
+        assert len(result.rows) == 2
+        assert "".join(r.text for r in result.rows) == text
 
     def test_speaker_preserved(self):
         output = self._make_output("長い文です。もう一つの文です。", speaker="まりさ")
@@ -117,11 +137,29 @@ class TestSplitDisplayWidth:
         assert "".join(r.text for r in result.rows) == text
 
     def test_single_sentence_no_split_point(self):
-        """文末なし長文は display_width モードでもそのまま保持。"""
+        """文末も節分割候補もない長文は display_width モードでもそのまま保持。"""
         text = "あ" * 100  # no sentence end
         output = self._make_output(text)
         result = split_long_utterances(output, max_length=80, use_display_width=True)
         assert len(result.rows) == 1
+
+    def test_single_sentence_split_before_connector(self):
+        """接続句の直前でも節分割できる。"""
+        text = "最初に状況を説明しますしかしここから結論に入ります"
+        output = self._make_output(text)
+        result = split_long_utterances(output, max_length=28, use_display_width=True)
+        assert len(result.rows) == 2
+        assert result.rows[0].text.endswith("します")
+        assert result.rows[1].text.startswith("しかし")
+        assert "".join(r.text for r in result.rows) == text
+
+    def test_single_sentence_split_after_quote_phrase(self):
+        """通常候補が尽きた残り長文でも、引用句+機能語で節分割できる。"""
+        text = "もしその計算式に「人間の身体的限界」という変数が最初から欠落していたらどうなるか。"
+        output = self._make_output(text)
+        result = split_long_utterances(output, max_length=28, use_display_width=True)
+        assert len(result.rows) >= 2
+        assert "".join(r.text for r in result.rows) == text
 
 
 class TestBalanceSubtitleLines:
@@ -152,4 +190,10 @@ class TestBalanceSubtitleLines:
         text = "AAAAAA、BBBBBB"
         output = self._make_output(text)
         result = balance_subtitle_lines(output, chars_per_line=8, max_lines=3, use_display_width=True)
+        assert result.rows[0].text == text
+
+    def test_avoids_one_character_second_line(self):
+        text = "ABCDEFG、HI"
+        output = self._make_output(text)
+        result = balance_subtitle_lines(output, chars_per_line=8, max_lines=2, use_display_width=True)
         assert result.rows[0].text == text

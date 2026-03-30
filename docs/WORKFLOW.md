@@ -183,7 +183,7 @@ python -m src.cli.main build-csv input.txt \
 | `--display-width` | `--max-length` の値を表示幅 (全角=2, 半角=1) で判定 |
 | `--max-lines N` | 表示幅ベースで N 行以内に収まるよう分割 (`--chars-per-line` と併用) |
 | `--chars-per-line N` | 1行あたりの表示幅 (デフォルト: 40、`--max-lines` 使用時) |
-| `--balance-lines` | 2行字幕向けに自然な改行を挿入する opt-in 改善 (`--max-lines` 必須) |
+| `--balance-lines` | 2行字幕向けに自然な改行を入れつつ、句読点の少ない長文の節分割、短すぎる最終行回避、長い一文の aggressive chunking を行う opt-in 改善 (`--max-lines` 必須) |
 | `--dry-run` | プレビューのみ (CSV 書き出しなし) |
 | `--stats` | 話者ごとの発話統計 + はみ出し候補警告を表示 |
 | `-o PATH` | 出力 CSV パス (省略時: 入力ファイル名_ymm4.csv) |

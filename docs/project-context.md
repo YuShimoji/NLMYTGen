@@ -4,21 +4,29 @@
 - プロジェクト名: NLMYTGen
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
-- 現フェーズ: B-12 行バランス重視の字幕分割を実装し、post-import visual evidence の追加入力待ち
+- 現フェーズ: B-14 aggressive clause chunking を実装し、post-import visual evidence を待つ段階
 - 直近の状態 (2026-03-31):
   - B-04 分割品質改善: 表示幅ベース分割 (--display-width, --max-lines, --chars-per-line) 実装完了
   - A-04 RSS フィード連携 (`fetch-topics`): 再審査済み + 実装完了。done へ復帰
-  - `uv run pytest`: 51 PASS。`--balance-lines` を含む現ワークツリーのテスト再現に成功
+  - `uv run pytest`: 56 PASS。`B-14` を含む現ワークツリーのテスト再現に成功
   - 実データ dry-run + stats で CLI 動作確認
   - B-11 S-5 workflow proof: ユーザー承認で approved frontier に昇格。proof 条件と evidence packet を固定
   - B-11 初回 pre-import 証跡: `samples/AI監視が追い詰める生身の労働.txt` を `--max-lines 2 --chars-per-line 40 --stats --dry-run` で確認し、57 発話 / overflow warnings 34 を記録
   - B-11 初回 post-import 観測: 辞書登録 0、タイミングのみ 0、手動改行 / 再分割したい長文が約30件。S-5 の主因は読みではなく字幕改行のバランスだった
   - B-12 行バランス重視の字幕分割を実装。`--balance-lines` を追加し、2行字幕向けに自然な改行を opt-in で挿入できるようにした
   - B-12 検証: `build-csv --max-lines 2 --chars-per-line 40 --balance-lines --stats --dry-run` で実データ preview を確認。CSV 1行内の改行保持テストも追加
+  - B-12 post-import 再観測: 手動改行 10 / 再分割したい長文 15 / 不自然な単語分割 5。`。` での改行は効いたが、句読点の少ない長文と 1 文字最終行が残った
+  - B-13 を実装。`--balance-lines` の内部改善として、句読点が少ない長文の clause-aware split fallback と widow/orphan guard を追加
+  - B-13 検証: `uv run pytest` 54 PASS。sample dry-run では 57 発話 → 62 行に再編され、長い一文の一部が節分割されることを確認
+  - B-13 post-import 再観測: 手動改行 5 / 再分割したい長文 10 / 不自然な単語分割 5。減りはしたがまだ多く、長い一文が 1 字幕に残るケースは未解決
+  - B-14 を実装。複数文発話の中にある単一長文も sentence ごとに再展開し、aggressive clause chunking fallback を追加
+  - B-14 検証: sample dry-run では 57 発話 → 95 行に再編、overflow candidates は 3 件まで低減
+  - B-14 追加観測: `、` 起点の分割強化により長すぎる行はかなり減り、全字幕は 3 行以内に収まる水準まで改善。残課題は `ー`、`「」`、`202/4` のような数値+記号折り返しなど、境界ケースの改行品質へ移った
+  - feasibility audit: 字幕分割以外の候補を再棚卸しし、次の本命候補は S-6 LLM adapter、E-01/E-02 は secondary、quarantine 群は据え置きと整理
   - E-02 (YouTube メタデータ生成): 仕様検討の結果、hold へ移動。単体では価値薄
   - D-02 / F-01 / F-02: 汚染バッチ由来として quarantined のまま
   - C-01 (YMM4 台本読込): Python 機能ではなく確認済み手動工程として info へ整理
-  - FEATURE_REGISTRY: done 14 / info 2 / hold 3 / quarantined 3 / rejected 7
+  - FEATURE_REGISTRY: done 16 / info 2 / hold 3 / quarantined 3 / rejected 7
   - 8a1c710 で追加された canonical docs は handoff に未反映だったため、今回実内容で補完
   - `docs/ai/*.md` を canonical rules として入口に昇格し、resume prompt は補助に降格
   - `prompt-resume.md` を追加し、docs-only resume packet を repo 内で完結させた
@@ -31,14 +39,14 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → 動画
-- 現在のスライス: B-12 実装完了。残りは YMM4 での post-import visual evidence 更新
-- 成功状態: `--balance-lines` の CLI / tests / docs が同期し、次の判断を visual evidence に基づいて行える
+- 現在のスライス: B-14 の追加観測まで反映済み。次は S-6 LLM adapter を本命候補として spec/ADR feasibility を詰める
+- 成功状態: 字幕分割を局所最適のまま引っ張らず、次 frontier 候補を value path 付きで比較できる
 
 ---
 
 ## CURRENT LANE
 - 主レーン: Advance
-- 今このレーンを優先する理由: S-5 proof により pain の主因が字幕改行バランスだと判明し、ユーザー承認済みの B-12 で直接削減できるため
+- 今このレーンを優先する理由: 字幕分割の bulk pain がほぼ収束し、次の大きな効率化候補として S-6 LLM adapter の feasibility を詰める価値が最も高いため
 
 ---
 
@@ -71,6 +79,10 @@
 | 2026-03-30 | `prompt-resume.md` を docs-only handoff 用に追加 | promptなし / prompts分散 / 単一resume prompt | 次セッション開始手順を repo 内で完結させるため |
 | 2026-03-31 | B-11 S-5 workflow proof を approved frontier にする | S-5 workflow proof / S-6 LLM adapter / hold継続 | ユーザーが S-5 を先に進めると承認。最大 pain に近く、Python の責務境界を壊さずに workflow proof を積めるため |
 | 2026-03-31 | B-12 行バランス重視の字幕分割を実装する | proposal packet のみ / `--balance-lines` 実装 | S-5 proof で辞書や timing ではなく改行系 pain が支配的と確認できたため、2行字幕向けの自然改行 heuristics を opt-in で実装 |
+| 2026-03-31 | B-13 を次候補として proposal 化する | B-12 継続 / clause-aware split + widow guard | B-12 は手動改行を減らしたが、長文再分割 15 件と 1 文字最終行が残り、次の主 pain が節分割と widow/orphan 回避に絞れたため |
+| 2026-03-31 | B-13 節分割 + widow/orphan guard を実装する | proposal のみ / `--balance-lines` 内部改善 | 句読点の少ない長文と 1 文字最終行を減らす最短経路で、既存フラグのまま改善できるため |
+| 2026-03-31 | B-14 を次候補として proposal 化する | B-13 継続 / aggressive clause chunking | B-13 で手動改行は 5 まで減ったが、再分割 10 と長い一文 1 字幕問題が残り、より積極的な chunking の要否を切り分ける必要があるため |
+| 2026-03-31 | B-14 aggressive clause chunking を実装する | proposal のみ / `--balance-lines` 内部改善 | B-13 のままでは複数文発話の中にある単一長文が展開されず、operator pain の主因が残ったため。先に CLI 側でどこまで崩せるかを確かめる価値があった |
 
 ---
 
@@ -108,18 +120,23 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ## HANDOFF SNAPSHOT
 
-- Shared Focus: B-12 `--balance-lines` 実装を閉じ、S-5 の残修正を post-import visual evidence 付きで再観測する
+- Shared Focus: 字幕分割はいったん収束扱いにし、S-6 LLM adapter を次 frontier 候補として feasibility で比較する
 - Active Artifact: NLM transcript → YMM4 CSV → ゆっくり解説動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → 動画
 - Last Change Relation: direct (S-5 の主 pain だった字幕改行バランスへ直接効く opt-in 改善を実装)
-- Evidence: `uv run pytest` 51 PASS、`uv run python -m src.cli.main build-csv --help` OK、`--balance-lines` 付き実データ dry-run/stats 確認、CSV 1行内改行保持テスト追加
+- Evidence: `uv run pytest` 56 PASS、`--balance-lines` 付き実データ dry-run/stats 確認、sample は 57 発話 → 95 行に再編、overflow candidates は 3 件、追加観測では全字幕が 3 行以内に収まるまで改善
+- Evidence: `docs/verification/next-frontier-feasibility-2026-03-31.md` に候補比較を作成。S-6 が strongest next candidate、E-01/E-02 が secondary と整理
 - 案件モード: CLI artifact
-- 現在の主レーン: Advance (B-12 line-balance implementation)
+- 現在の主レーン: Advance (B-14 aggressive clause chunking implementation)
 - Current Trust Assessment:
-  - trusted: B-04 実装、A-04 `fetch-topics` 実装、51 PASS の現行テスト、workflow/境界 docs
+  - trusted: B-04 実装、A-04 `fetch-topics` 実装、56 PASS の現行テスト、workflow/境界 docs
   - trusted: B-11 の初回 proof（辞書 0、timing 0、改行系 pain が支配的）
   - trusted: B-12 `--balance-lines` 実装。2行字幕向けに自然改行を opt-in で挿入し、CSV 1行内改行保持もテスト済み
-  - needs re-check: B-12 が YMM4 テンプレート差込みで bulk rework をどこまで減らすか
+  - trusted: B-12 の post-import 再観測により、改善点と残課題が定量化できた
+  - trusted: B-13 clause-aware split + widow/orphan guard 実装。sample で 57 発話 → 62 行への再編を確認
+  - trusted: B-13 の post-import 再観測により、改善幅と限界が定量化できた
+  - trusted: B-14 aggressive clause chunking 実装。sample で 57 発話 → 95 行、overflow candidates 3 件まで低減し、全字幕 3 行以内まで改善
+  - needs re-check: 残る境界ケース (`ー`, `「」`, 数値+記号) を heuristic で吸うべきか、corpus として集めるべきか
   - dangerous: status 語彙を曖昧にしたまま次 frontier を選ぶこと、GUI や LLM 案を value path 未検証で前進させること
 - Recovered Canonical Context:
   - Python はテキスト変換のみ
@@ -132,9 +149,14 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - E-02: hold のまま。E-01 または別 integration point とセットでのみ再検討
   - quarantined 3件 (D-02, F-01, F-02) の個別再審査
 - 解決済み:
+  - feasibility audit: 字幕分割以外の候補を棚卸しし、S-6 LLM adapter が次の本命候補だと整理
   - B-11 S-5 workflow proof: ユーザー承認により approved frontier 化し、初回 proof を完了
   - B-11 初回 post-import 観測: S-5 の主因が読みではなく字幕改行バランスだと確認
   - B-12 行バランス重視の字幕分割: `--balance-lines` を実装し、CLI / tests / docs を同期
+  - B-12 post-import 再観測: 手動改行 10 / 再分割 15 / 不自然な単語分割 5。`。` 改行は効くが、句読点の少ない長文と 1 文字最終行が残る
+  - B-13 節分割 + widow/orphan guard: `--balance-lines` の内部改善として実装し、54 PASS と sample dry-run で挙動確認
+  - B-13 post-import 再観測: 手動改行 5 / 再分割 10 / 不自然な単語分割 5。減りはしたがまだ多く、長い一文 1 字幕問題が残る
+  - B-14 aggressive clause chunking: 複数文発話の中にある単一長文も再展開するよう実装し、56 PASS。sample dry-run では 57 発話 → 95 行、overflow candidates 3 件まで低減。追加観測では長すぎる行が大幅に減り、残課題は境界ケースの改行品質へ移行
   - A-04 RSS フィード連携: `fetch-topics` 実装と docs を再審査し、done に復帰
   - B-04 表示幅ベース分割: --display-width, --max-lines, --chars-per-line 実装完了
   - B-10 (--emit-meta): rejected → コード除去済み
@@ -145,7 +167,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 - 既知の問題:
   - S-6 LLM アダプター方式の仕様が未定義 (プロバイダー・アーキテクチャ・stdlib制約緩和)
   - 前回 handoff は `8a1c710` の追加ファイルと placeholder 状態を含んでいなかった
-  - B-12 は実装済み。読点/句点/カギカッコを使う分割 heuristics が YMM4 テンプレート差込みでどこまで効くかは未検証
+  - B-14 は CLI 側では strong win。次の論点は bulk overflow ではなく、境界ケースを rule で吸うか corpus として管理するか
 - Docs-only Resume Packet:
   - AGENTS.md
   - .claude/CLAUDE.md
@@ -157,7 +179,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 - What Not To Do Next:
   - quarantined 項目 (D-02, F-01, F-02) を通常候補としてそのまま spec 化しない
   - E-02 を standalone の高価値 task として再浮上させない
-  - B-12 の post-import visual evidence を取る前に、GUI や S-6 へ横滑りしない
+  - S-6 の spec/ADR feasibility を詰める前に、GUI や quarantine 項目へ横滑りしない
   - handoff に書かれていない placeholder docs を真実の source と誤認しない
 - New Fossils:
   - docs/INVARIANTS.md
