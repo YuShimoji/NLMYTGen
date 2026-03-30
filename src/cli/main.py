@@ -5,6 +5,7 @@ Usage:
     python -m src.cli.main validate <input>
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
+    python -m src.cli.main fetch-topics <URL>... [-n 20] [--after YYYY-MM-DD] [--format text|json]
 """
 
 from __future__ import annotations
@@ -264,6 +265,69 @@ def _cmd_inspect(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_fetch_topics(args: argparse.Namespace) -> int:
+    """fetch-topics: RSS/Atom フィードからトピック候補を取得する。"""
+    from datetime import date
+    from src.feed.fetch import fetch_feed
+
+    after_date: str | None = None
+    if getattr(args, "after", None):
+        try:
+            date.fromisoformat(args.after)
+            after_date = args.after
+        except ValueError:
+            print(f"Error: invalid date format: {args.after} (expected YYYY-MM-DD)", file=sys.stderr)
+            return 1
+
+    all_entries = []
+    for url in args.urls:
+        try:
+            entries = fetch_feed(url, timeout=args.timeout)
+        except (ValueError, OSError) as e:
+            print(f"Error fetching {url}: {e}", file=sys.stderr)
+            continue
+        all_entries.extend(entries)
+
+    if after_date:
+        all_entries = [e for e in all_entries if e.published and e.published >= after_date]
+
+    all_entries = all_entries[:args.limit]
+
+    if not all_entries:
+        print("No entries found.", file=sys.stderr)
+        return 0
+
+    fmt = getattr(args, "format", "text")
+    output_lines: list[str] = []
+
+    if fmt == "json":
+        data = [
+            {"title": e.title, "published": e.published, "source": e.source_url}
+            for e in all_entries
+        ]
+        output_lines.append(json.dumps(data, ensure_ascii=False, indent=2))
+    else:
+        seen_sources: set[str | None] = set()
+        for entry in all_entries:
+            if entry.source_url not in seen_sources:
+                seen_sources.add(entry.source_url)
+                today = date.today().isoformat()
+                output_lines.append(f"# Source: {entry.source_url} ({today})")
+            output_lines.append(entry.title)
+
+    text = "\n".join(output_lines) + "\n"
+
+    if getattr(args, "output", None):
+        out_path = Path(args.output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(text, encoding="utf-8")
+        print(f"Written: {out_path} ({len(all_entries)} entries)")
+    else:
+        sys.stdout.write(text)
+
+    return 0
+
+
 def _cmd_generate_map(args: argparse.Namespace) -> int:
     """generate-map: 入力ファイルから話者マッピングテンプレートを生成する。"""
     input_path = Path(args.input)
@@ -353,6 +417,15 @@ def main(argv: list[str] | None = None) -> int:
     _add_speaker_map_args(p_inspect)
     _add_unlabeled_arg(p_inspect)
 
+    # fetch-topics
+    p_fetch = subparsers.add_parser("fetch-topics", help="Fetch topic candidates from RSS/Atom feeds")
+    p_fetch.add_argument("urls", nargs="+", metavar="URL", help="RSS/Atom feed URL(s)")
+    p_fetch.add_argument("-o", "--output", help="Output file path (default: stdout)")
+    p_fetch.add_argument("-n", "--limit", type=int, default=20, help="Max entries to show (default: 20)")
+    p_fetch.add_argument("--after", metavar="YYYY-MM-DD", help="Only entries published after this date")
+    p_fetch.add_argument("--format", choices=["text", "json"], default="text", help="Output format (default: text)")
+    p_fetch.add_argument("--timeout", type=int, default=10, help="HTTP timeout in seconds (default: 10)")
+
     # generate-map
     p_genmap = subparsers.add_parser("generate-map", help="Generate speaker map template from input")
     p_genmap.add_argument("input", help="Input file path (.txt or .csv)")
@@ -371,6 +444,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_inspect(args)
         elif args.command == "generate-map":
             return _cmd_generate_map(args)
+        elif args.command == "fetch-topics":
+            return _cmd_fetch_topics(args)
         else:
             parser.print_help()
             return 1
