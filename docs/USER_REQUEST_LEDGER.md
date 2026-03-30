@@ -7,6 +7,7 @@
 - 痛点ドリブンで進める。FEATURE_REGISTRY の候補一覧から機械的に次タスクを選ばない。
 - `docs/ai/*.md` が存在するなら、tool-specific helper docs より先に canonical rules として扱う。
 - project-local canonical docs を先に読んで、既知文脈の再質問を避ける。
+- 次 frontier は S-5 workflow proof を先に進める。字幕はみ出し pain を、YMM4 自動化ではなく workflow proof と Python 側の事前警告改善で詰める。
 
 ## 未反映の是正要求
 - `approved` は「仕様定義済み + ユーザー承認済み」のみ。priority と status を混同しない。

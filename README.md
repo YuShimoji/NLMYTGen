@@ -84,6 +84,9 @@ python -m src.cli.main build-csv input.txt --merge-consecutive --speaker-map Hos
 # 表示幅ベースで字幕はみ出しを抑える
 python -m src.cli.main build-csv input.txt --speaker-map Host1=れいむ,Host2=まりさ --max-lines 2 --chars-per-line 40 --stats
 
+# 2行字幕向けに自然な改行を挿入
+python -m src.cli.main build-csv input.txt --speaker-map Host1=れいむ,Host2=まりさ --max-lines 2 --chars-per-line 40 --balance-lines --stats
+
 # ラベルなし NLM transcript (話者タグなしの生テキスト)
 python -m src.cli.main build-csv transcript.txt --unlabeled --speaker-map Speaker_A=れいむ,Speaker_B=まりさ
 

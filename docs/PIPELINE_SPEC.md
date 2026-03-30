@@ -141,7 +141,7 @@ Host2=まりさ
 テキスト内に含まれる話者プレフィックス (`Host1: テキスト` の `Host1: ` 部分) は自動除去する。
 これは speaker 列と text 列の重複を防ぐため。
 
-### 長文分割 (`--max-length`, `--display-width`, `--max-lines`)
+### 長文分割 (`--max-length`, `--display-width`, `--max-lines`, `--balance-lines`)
 
 `--max-length N` を指定すると、N 文字を超える発話を文末（。！？!?）で分割し、同じ話者の複数行に展開する。
 
@@ -151,6 +151,8 @@ Host2=まりさ
 - NotebookLM 元台本は 1 発話が長くなる傾向があるため、YMM4 での音声合成に適した粒度に分割する用途を想定
 - `--display-width` を併用すると、`--max-length` を文字数ではなく表示幅（全角=2, 半角=1, Ambiguous=2）として解釈する
 - `--max-lines N --chars-per-line M` を使うと、`M * N` の表示幅を閾値として分割し、`--stats` では推定はみ出し候補も警告する
+- `--balance-lines` を併用すると、2行字幕向けに読点・句点・カギカッコ付近を候補にした自然改行を opt-in で挿入する
+- `--balance-lines` は `--max-lines` 前提で、既存テキストを削らず改行位置だけを調整する best-effort 改善
 
 ```bash
 # 80 文字で分割
@@ -158,6 +160,9 @@ python -m src.cli.main build-csv input.txt --max-length 80 -o output.csv
 
 # 2 行 * 40 幅を基準に表示幅で分割
 python -m src.cli.main build-csv input.txt --max-lines 2 --chars-per-line 40 --stats
+
+# 2 行字幕向けに自然改行も入れる
+python -m src.cli.main build-csv input.txt --max-lines 2 --chars-per-line 40 --balance-lines --stats
 ```
 
 ---
