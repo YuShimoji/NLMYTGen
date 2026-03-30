@@ -13,9 +13,10 @@
 | approved | 承認済み・未実装 |
 | proposed | 提案中・承認待ち |
 | hold | 将来候補・現時点では着手しない |
+| quarantined | 汚染された提案バッチ由来。通常候補として扱わず、個別再審査が必要 |
 | rejected | 明示的に不採用 |
 | info | Python 機能ではなく手動工程の記録。WORKFLOW.md 参照 |
-| unauthorized | 未承認で混入した機能。レビュー待ち |
+| unauthorized | 未承認で実装や文書に混入した機能。レビュー待ち |
 
 ---
 
@@ -42,7 +43,7 @@
 | A-01 | NotebookLM 元台本テキスト取得（手動コピペ） | done | L1 | 主導線。WORKFLOW.md S-2 |
 | A-02 | 音声書き起こし fallback（Whisper / Google Docs） | done | L1 | --unlabeled で対応 |
 | A-03 | NotebookLM API 連携（台本自動取得） | hold | L1 | API 未公開。公開時に検討 |
-| A-04 | RSS フィード連携（ソース素材の自動取得） | proposed | L1 | NotebookLM へのソース投入を効率化 |
+| A-04 | RSS フィード連携（ソース素材の自動取得） | quarantined | L1 | 前セッションの汚染バッチ由来。NotebookLM 導線との接続点・取得元・権利/運用境界を個別再審査するまで通常候補に戻さない |
 
 ### B. 台本変換 (L2-変換)
 
@@ -51,7 +52,7 @@
 | B-01 | テキスト→YMM4 CSV 変換 (build-csv) | done | L2 | コアパイプライン |
 | B-02 | 話者マッピング (--speaker-map) | done | L2 | CLI / ファイル両対応 |
 | B-03 | ラベルなし入力 (--unlabeled) | done | L2 | 行交互 Speaker_A/B 割当 |
-| B-04 | 長文自動分割 (--max-length) | done | L2 | 文末区切りで分割 |
+| B-04 | 長文自動分割 (--max-length) | done | L2 | 文末区切り分割 + 表示幅ベース補助 (`--display-width`, `--max-lines`, `--chars-per-line`) |
 | B-05 | 同一話者連続結合 (--merge-consecutive) | done | L2 | |
 | B-06 | 入力検証 (validate) | done | L2 | |
 | B-07 | 入力分析 (inspect) | done | L2 | 話者統計・ロール推定 |
@@ -63,7 +64,7 @@
 
 | ID | 機能 | ステータス | レイヤー | 備考 |
 |----|------|-----------|---------|------|
-| C-01 | YMM4 台本読込（CSV インポート） | done | L3 | 手動操作。WORKFLOW.md S-4 |
+| C-01 | YMM4 台本読込（CSV インポート） | info | L3 | Python 機能ではなく手動工程。WORKFLOW.md S-4 の確認済み導線 |
 | C-02 | YMM4 演出テンプレート（Python 生成） | rejected | L3 | YMM4 テンプレートの外部生成・操作インターフェースが存在しない。NLMYTGen の責務（テキスト変換）を超える。**代替:** YMM4 の機能でテンプレートを手動作成・再利用する（WORKFLOW.md S-0） |
 | C-03 | YMM4 プロジェクトファイル (.ymmp) 自動生成 | rejected | L2→L3 | .ymmp は音声ファイル参照を含み、音声は YMM4 が台本読込時に内蔵 TTS で生成する。外部から完全な .ymmp を生成することは原理的に不可能 |
 | C-04 | 背景動画の配置自動化（Python 制御） | rejected | L3 | Python から YMM4 内部の配置を制御するインターフェースが存在しない。**代替:** YMM4 上で手動配置する（WORKFLOW.md S-6a） |
@@ -75,21 +76,21 @@
 | ID | 機能 | ステータス | レイヤー | 備考 |
 |----|------|-----------|---------|------|
 | D-01 | サムネイル自動生成（Python 画像生成） | rejected | L2 | Python での画像生成は禁止。**代替:** YMM4 テンプレートの文字・画像入れ替えによる手動制作（WORKFLOW.md S-8） |
-| D-02 | 背景動画の取得自動化 | proposed | L1 | 素材サイトからの取得 |
+| D-02 | 背景動画の取得自動化 | quarantined | L1 | 前セッションの汚染バッチ由来。取得元/API/権利/運用境界の精査前に進めない |
 
 ### E. 出力・配信 (L4)
 
 | ID | 機能 | ステータス | レイヤー | 備考 |
 |----|------|-----------|---------|------|
 | E-01 | YouTube 投稿自動化 | hold | L4 | YouTube Data API v3 |
-| E-02 | YouTube メタデータ生成（タイトル・説明・タグ） | proposed | L2 | テンプレートベース |
+| E-02 | YouTube メタデータ生成（タイトル・説明・タグ） | hold | L2 | 単体では YouTube Studio へのコピペ先が変わるだけ。E-01 または別の実 integration point とセットで再検討 |
 
 ### F. 開発インフラ・GUI
 
 | ID | 機能 | ステータス | レイヤー | 備考 |
 |----|------|-----------|---------|------|
-| F-01 | 分割プレビュー GUI | proposed | GUI | 分割文字数・分割箇所をプレビューしながら調整 |
-| F-02 | 設定管理 GUI | proposed | GUI | speaker-map、max-length 等の設定を GUI で管理 |
+| F-01 | 分割プレビュー GUI | quarantined | GUI | 前セッションの汚染バッチ由来。S-5 の痛点はあるが GUI が最短価値経路か未検証 |
+| F-02 | 設定管理 GUI | quarantined | GUI | 前セッションの汚染バッチ由来。設定固定点と F-01 の価値検証前に進めない |
 | F-03 | YMM4 出力プレビュー | rejected | GUI | YMM4 の見え方を Python で模倣することは視覚的生成に該当。YMM4 自体で確認すべき |
 
 ---

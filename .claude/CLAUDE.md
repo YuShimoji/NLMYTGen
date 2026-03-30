@@ -23,9 +23,11 @@
 ```
 1. AGENTS.md を読む → 概要・境界ルール
 2. .claude/CLAUDE.md（このファイル）を読む → repo-local ルール
-3. docs/runtime-state.md を読む → 現在位置・カウンター
-4. docs/project-context.md を読む → DECISION LOG・IDEA POOL
-5. 全景確認を出力してから作業を再開する
+3. docs/ai/CORE_RULESET.md → docs/ai/DECISION_GATES.md → docs/ai/STATUS_AND_HANDOFF.md → docs/ai/WORKFLOWS_AND_PHASES.md を読む
+4. docs/INVARIANTS.md → docs/USER_REQUEST_LEDGER.md → docs/OPERATOR_WORKFLOW.md → docs/INTERACTION_NOTES.md を読む
+5. docs/runtime-state.md → docs/project-context.md → docs/FEATURE_REGISTRY.md → docs/AUTOMATION_BOUNDARY.md を読む
+6. 必要な時だけ CLAUDE.md / docs/ARCHITECTURE.md / docs/PIPELINE_SPEC.md / docs/WORKFLOW.md / ADR を読む
+7. 全景確認を出力してから作業を再開する
 ```
 
 ---
@@ -71,3 +73,8 @@ Python の責務は**テキスト変換のみ**（CSV + テキストメタデー
 ## docs 参照
 # @../docs/project-context.md
 # @../docs/runtime-state.md
+# @../docs/FEATURE_REGISTRY.md
+# @../docs/INVARIANTS.md
+# @../docs/USER_REQUEST_LEDGER.md
+# @../docs/OPERATOR_WORKFLOW.md
+# @../docs/INTERACTION_NOTES.md

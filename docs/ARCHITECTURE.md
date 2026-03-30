@@ -30,8 +30,8 @@ NotebookLM transcript (.txt or .csv)
         │
         ▼
 ┌─────────────────────┐
-│ split_long (opt)    │  --max-length 指定時のみ
-│ → YMM4CsvOutput     │  文末で分割
+│ split_long (opt)    │  文字数/表示幅に応じて分割
+│ → YMM4CsvOutput     │  文末で分割 + はみ出し抑制
 └─────────────────────┘
         │
         ▼
@@ -66,7 +66,7 @@ src/
 |-----------|------|------------|
 | `contracts/` | データ構造の定義と不変条件の保証 | ビジネスロジック |
 | `pipeline/normalize.py` | 入力ファイルのパースと正規化 | LLM 呼び出し、ネットワークアクセス |
-| `pipeline/assemble_csv.py` | 話者マッピングと CSV 組立、長文分割 | 画像取得、アニメーション割当 |
+| `pipeline/assemble_csv.py` | 話者マッピングと CSV 組立、長文分割、表示幅計測 | 画像取得、アニメーション割当 |
 | `pipeline/validate_handoff.py` | 出力前の整合性チェック | エラー修正、自動補完 |
 | `cli/main.py` | 引数解析と実行制御 | 直接的なデータ変換 |
 

@@ -16,6 +16,7 @@ Status: canonical
 ## Resume / Continue / Refresh
 ### Resume
 Recover project-local canonical context first, then identify the active artifact and bottleneck.
+If a prompt file, chat summary, or handoff note disagrees with `runtime-state` / `project-context` / `FEATURE_REGISTRY`, trust the repo docs.
 
 ### Continue
 Do not rely on momentum. Re-check whether the current block still matches the bottleneck, actor, and value path.
@@ -24,6 +25,11 @@ Do not rely on momentum. Re-check whether the current block still matches the bo
 These are read-only unless the user explicitly asks for mutation in the current block.
 Do not auto-fill newly initialized project docs and commit them as “refresh work”.
 Initialization may be prepared, but long-lived writes belong to an explicit write block.
+
+## Prompt hygiene
+- Resume prompts in `prompts/` are convenience entrypoints, not canonical state stores.
+- Prompts must avoid embedding stale backlog status or outdated next steps when those belong in project docs.
+- When a prompt and repo docs differ, update the prompt or ignore it; do not override repo docs with prompt text.
 
 ## Task-scout requirements
 A scout pass should include, when relevant:

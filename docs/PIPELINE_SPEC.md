@@ -141,7 +141,7 @@ Host2=まりさ
 テキスト内に含まれる話者プレフィックス (`Host1: テキスト` の `Host1: ` 部分) は自動除去する。
 これは speaker 列と text 列の重複を防ぐため。
 
-### 長文分割 (`--max-length`)
+### 長文分割 (`--max-length`, `--display-width`, `--max-lines`)
 
 `--max-length N` を指定すると、N 文字を超える発話を文末（。！？!?）で分割し、同じ話者の複数行に展開する。
 
@@ -149,10 +149,15 @@ Host2=まりさ
 - 単一文が N 文字を超える場合はそのまま保持する
 - 分割後の各行は同じ話者名を持つ
 - NotebookLM 元台本は 1 発話が長くなる傾向があるため、YMM4 での音声合成に適した粒度に分割する用途を想定
+- `--display-width` を併用すると、`--max-length` を文字数ではなく表示幅（全角=2, 半角=1, Ambiguous=2）として解釈する
+- `--max-lines N --chars-per-line M` を使うと、`M * N` の表示幅を閾値として分割し、`--stats` では推定はみ出し候補も警告する
 
 ```bash
 # 80 文字で分割
 python -m src.cli.main build-csv input.txt --max-length 80 -o output.csv
+
+# 2 行 * 40 幅を基準に表示幅で分割
+python -m src.cli.main build-csv input.txt --max-lines 2 --chars-per-line 40 --stats
 ```
 
 ---

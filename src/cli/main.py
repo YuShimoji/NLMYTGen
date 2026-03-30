@@ -4,6 +4,7 @@ Usage:
     python -m src.cli.main build-csv <input>... [-o output.csv] [--speaker-map K1=V1,K2=V2] [--dry-run] [--stats]
     python -m src.cli.main validate <input>
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
+    python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
 """
 
 from __future__ import annotations
