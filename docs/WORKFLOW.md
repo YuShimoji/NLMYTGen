@@ -145,7 +145,7 @@ NotebookLM に「音声解説の元の台本を出力してください」と依
 # CSV 生成 (長文分割あり)
 python -m src.cli.main build-csv input.txt \
   --speaker-map "スピーカー1=れいむ,スピーカー2=まりさ" \
-  --max-length 80 \
+  --max-lines 2 --chars-per-line 40 --balance-lines \
   -o output.csv
 
 # 確認 (dry-run + stats)
@@ -183,6 +183,7 @@ python -m src.cli.main build-csv input.txt \
 | `--display-width` | `--max-length` の値を表示幅 (全角=2, 半角=1) で判定 |
 | `--max-lines N` | 表示幅ベースで N 行以内に収まるよう分割 (`--chars-per-line` と併用) |
 | `--chars-per-line N` | 1行あたりの表示幅 (デフォルト: 40、`--max-lines` 使用時) |
+| `--balance-lines` | 2行字幕向けに自然な改行を挿入する opt-in 改善 (`--max-lines` 必須) |
 | `--dry-run` | プレビューのみ (CSV 書き出しなし) |
 | `--stats` | 話者ごとの発話統計 + はみ出し候補警告を表示 |
 | `-o PATH` | 出力 CSV パス (省略時: 入力ファイル名_ymm4.csv) |
