@@ -5,17 +5,17 @@
 ## 現在位置
 - project: NLMYTGen
 - lane: Advance
-- slice: 機能スコープ整理 → 次機能選定
-- next_action: proposed 5件の優先順位付け + 機能承認
+- slice: ワークフロー全体再設計 (S-0〜S-9) → 次機能選定
+- next_action: 再設計の確認 → proposed 5件の優先順位付け + 機能承認
 - 案件モード: CLI artifact
 
 ## 主成果物
-- active_artifact: NLM transcript → YMM4 CSV → 動画制作ワークフロー効率化
-- artifact_surface: CLI → CSV → YMM4 台本読込 → 動画
-- last_change_relation: cleanup (スコープ整理 — rejected 7件 + docs stale 除去)
+- active_artifact: NLM transcript → YMM4 CSV → ゆっくり解説動画制作ワークフロー
+- artifact_surface: CLI → CSV → YMM4 台本読込 → 演出設定 → レンダリング → サムネイル → 投稿
+- last_change_relation: direct (WORKFLOW.md 全面改訂 + 関連6ファイル再構成)
 
 ## カウンター
-- blocks_since_user_visible_change: 2
+- blocks_since_user_visible_change: 0
 - blocks_since_manual_evidence: 2
 - blocks_since_visual_audit: 0
 
@@ -39,6 +39,7 @@
 
 ## FEATURE_REGISTRY 状態サマリ (2026-03-30)
 - done: 11件（A-01〜A-02, B-01〜B-09, C-01）
+- info: 1件（C-06: YMM4 手動工程の記録）
 - proposed: 5件（A-04, D-02, E-02, F-01, F-02）
 - hold: 2件（A-03, E-01）
 - rejected: 8件（B-10, C-02, C-03, C-04, C-05, D-01, F-03 + PIL/画像合成）

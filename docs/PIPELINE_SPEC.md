@@ -6,8 +6,8 @@
 
 #### CSV (.csv)
 - 2列: 話者名, テキスト
-- ヘッダー行なし
-- UTF-8 エンコーディング
+- ヘッダー行なし (ヘッダーがある場合は自動スキップ)
+- UTF-8 エンコーディング (BOM 付き utf-8-sig も自動対応)
 - カンマ区切り
 
 ```csv
@@ -170,12 +170,10 @@ python -m src.cli.main build-csv input.txt --max-length 80 -o output.csv
 
 ---
 
-## 初期スコープ外
+## スコープ外
 
-以下は明示的にスコープ外とする:
+以下は PIPELINE_SPEC の対象外。機能の管理は FEATURE_REGISTRY.md を参照。
 
-- 画像パス列 (YMM4 CSV の 3列目)
-- アニメーション種別列 (YMM4 CSV の 4列目)
-- LLM による構造化補助
-- ~~複数ファイルの一括処理~~ → build-csv で複数入力をサポート済み
-- YMM4 プロジェクトファイル (.ymmp) の直接生成
+- YMM4 プロジェクトファイル (.ymmp) の直接生成 (rejected: C-03)
+- LLM による構造化補助 (IP-01 No-Go)
+- 画像パス列・アニメーション種別列 (YMM4 CSV 3列目以降の拡張は未検討)
