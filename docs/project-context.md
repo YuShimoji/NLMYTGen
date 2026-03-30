@@ -4,10 +4,12 @@
 - プロジェクト名: NLMYTGen
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
-- 現フェーズ: ワークフロー全体再設計完了。次機能の選定・承認待ち
+- 現フェーズ: B-04 分割品質改善完了。S-6 LLM アダプター方式の仕様定義待ち
 - 直近の状態 (2026-03-30):
-  - WORKFLOW.md を S-0〜S-9 の全工程に大幅改訂。YMM4 側の手動工程を詳細記述
-  - rejected 工程の代替手段を全て WORKFLOW.md に記載 (C-02→S-0, C-04→S-6a, C-05→S-0, D-01→S-8)
+  - B-04 分割品質改善: 表示幅ベース分割 (--display-width, --max-lines, --chars-per-line) 実装完了
+  - 全31テスト PASS (既存16 + 新規15)、実データ3モード動作確認
+  - E-02 (YouTube メタデータ生成): 仕様検討の結果、単体では価値薄 (E-01 とセットで再検討)
+  - S-6 トピック分析: stdlib 制約内のパターンマッチ/NLP は精度不足 → LLM アダプター方式に転換予定
   - FEATURE_REGISTRY: done 11 / info 1 / proposed 5 / hold 2 / rejected 8
   - Python のスコープは「テキスト変換のみ」で確定済み
   - 動画形式: ゆっくり解説系スタンダード (プロジェクト開始時から不変)
@@ -18,8 +20,8 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → 動画
-- 現在のスライス: ワークフロー再設計 → 次機能選定
-- 成功状態: ワークフロー全体 (S-0〜S-9) が文書化され、次の改善対象が明確になる
+- 現在のスライス: B-04 分割品質改善完了 → S-6 LLM アダプター方式の仕様定義
+- 成功状態: S-5 字幕はみ出しが表示幅ベース分割で事前防止される。S-6 トピック分析が LLM で実用的精度に達する
 
 ---
 
@@ -42,6 +44,12 @@
 | 2026-03-30 | Python での生成・レンダリングを全面禁止 | 全面禁止 / 部分許容 | .ymmp は音声ファイル参照を含み外部生成不可能。この教訓を拡大適用。Python の責務はテキスト変換（CSV / テキストメタデータ文字列）のみに限定。rejected: B-10, C-02, C-03, C-04, C-05, D-01, F-03 |
 | 2026-03-30 | 外部メディア取得は分離設計で OK | L1拡張許容 / L2専念 | 取得機能と受け取り機能を分離すれば NLMYTGen に含めてよい。最終的に自動化する方針 |
 | 2026-03-30 | WORKFLOW.md を S-0〜S-9 の全工程に再設計 | 全面改訂 / 部分改訂 | 前作業者がrejectedで隔離しただけでYMM4側の代替ワークフローが欠落していた。S-5(演出)が5行だけだった。rejected工程の代替手段を全てWORKFLOW.mdに記載 |
+| 2026-03-30 | E-02 を先に仕様定義する | E-02 / A-04 / F-01 / 全件hold | ユーザーが選択。L2変換レイヤーで Python スコープ内に収まる唯一の候補 |
+| 2026-03-30 | E-02 は単体では価値が薄い | 着手 / 先送り / E-01とセット | YouTube Studio へのコピペが CLI テンプレートに変わるだけ。E-01 (API投稿) とセットでないと実質的効率化にならない |
+| 2026-03-30 | S-5 (字幕はみ出し) が最優先の痛点 | S-5 / S-6 / S-2 | ユーザーフィードバック。S-5/S-6 が最も時間がかかる工程 |
+| 2026-03-30 | S-6 トピック分析は stdlib 制約内では精度不足 | パターンマッチ / 軽量NLP / やらない | パターンマッチ30-50%、NLP 40-60%+CLAUDE.md違反。LLM アダプター方式に転換予定 |
+| 2026-03-30 | B-04 表示幅ベース分割を実装 | 表示幅 / 文字数維持 | 全角=2,半角=1 の display_width で YMM4 字幕はみ出しを事前防止。--display-width, --max-lines, --chars-per-line 追加 |
+| 2026-03-30 | S-6 トピック分析を LLM アダプター方式に転換 | LLM / パターンマッチ / やらない | ユーザー指示。コーパス分析ライブラリはレガシー化しており LLM に統一。モデル切替可能なアダプター設計 |
 | 2026-03-30 | サムネイルはYMM4テンプレートの文字・画像入れ替え | テンプレート手動 / Python自動生成 / 外部ツールのみ | 機械的な背景+文字の自動生成は不可。テンプレートの手動カスタマイズが必要。サムネイルは非常に重要 |
 
 ---
@@ -79,21 +87,26 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 ---
 
 ## HANDOFF SNAPSHOT
-- Active Artifact: NLM transcript → YMM4 CSV → 動画制作ワークフロー効率化
+
+- Active Artifact: NLM transcript → YMM4 CSV → ゆっくり解説動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → 動画
-- Last Change Relation: cleanup (スコープ整理 — rejected 7件 + docs stale 除去)
-- Evidence: 全16テスト PASS、実データ E2E 2件通過、YMM4 読込成功(2026-03-29)
+- Last Change Relation: direct (B-04 表示幅ベース分割改善)
+- Evidence: 全31テスト PASS (既存16+新規15)、実データ3モード動作確認、YMM4 読込成功(2026-03-29)
 - 案件モード: CLI artifact
 - 現在の主レーン: Advance
 - Authority Return Items:
-  - proposed 5件の優先順位付け（A-04, D-02, E-02, F-01, F-02）
-  - GUI 技術選定（F-01/F-02）
-  - E-02 の仕様定義（入力/出力/テンプレート管理が未定義）
+  - S-6 LLM アダプター方式: プロバイダー選定・アーキテクチャ設計
+  - 「stdlib のみ」制約の緩和 (LLM SDK 追加の ADR)
+  - E-02: E-01 とセットで再検討
+  - proposed 残4件 (A-04, D-02, F-01, F-02) の priority 確認
 - 解決済み:
-  - B-10 (--emit-meta): rejected → コード除去済み → docs stale 記述除去済み
-  - C-02/C-03/C-04/C-05/D-01/F-03: rejected — Python での生成・レンダリング全面禁止
+  - B-04 表示幅ベース分割: --display-width, --max-lines, --chars-per-line 実装完了
+  - B-10 (--emit-meta): rejected → コード除去済み
+  - C-02/C-03/C-04/C-05/D-01/F-03: rejected
+  - E-02 仕様検討: 単体では価値薄と判明
+  - S-6 stdlib 制約内分析: 精度不足で断念 → LLM 方式に転換
 - 既知の問題:
-  - E-02 は仕様が未定義（入力・出力・テンプレート管理・実際の価値が未検証）
+  - S-6 LLM アダプター方式の仕様が未定義 (プロバイダー・アーキテクチャ・stdlib制約緩和)
   - proposed 5件は全て前セッション（B-10 混入時）に一括生成された提案
 - 次回最初に確認すべきファイル: docs/FEATURE_REGISTRY.md, docs/runtime-state.md
 - 未確定の設計論点: GUI 技術選定、E-02 の仕様

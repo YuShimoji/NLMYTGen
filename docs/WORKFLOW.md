@@ -180,8 +180,11 @@ python -m src.cli.main build-csv input.txt \
 | `--speaker-map-file PATH` | JSON or key=value ファイルから話者マップを読込 |
 | `--merge-consecutive` | 同一話者の連続発話を結合 |
 | `--max-length N` | N 文字超の発話を文末で分割 (推奨: 80) |
+| `--display-width` | `--max-length` の値を表示幅 (全角=2, 半角=1) で判定 |
+| `--max-lines N` | 表示幅ベースで N 行以内に収まるよう分割 (`--chars-per-line` と併用) |
+| `--chars-per-line N` | 1行あたりの表示幅 (デフォルト: 40、`--max-lines` 使用時) |
 | `--dry-run` | プレビューのみ (CSV 書き出しなし) |
-| `--stats` | 話者ごとの発話統計を表示 |
+| `--stats` | 話者ごとの発話統計 + はみ出し候補警告を表示 |
 | `-o PATH` | 出力 CSV パス (省略時: 入力ファイル名_ymm4.csv) |
 
 ### 出力

@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 
 from src.contracts.structured_script import StructuredScript
 from src.contracts.ymm4_csv_schema import YMM4CsvOutput, YMM4CsvRow
@@ -79,20 +80,41 @@ def assemble(
 _SENTENCE_ENDS = re.compile(r"(?<=[。！？!?])")
 
 
+def display_width(text: str) -> int:
+    """全角=2, 半角=1 の簡易表示幅を返す。
+
+    East Asian Ambiguous ('A') を全角扱いする。
+    YMM4 は Windows 日本語フォント環境で動作するため、
+    Ambiguous 文字は全角幅で描画される。
+    """
+    w = 0
+    for ch in text:
+        w += 2 if unicodedata.east_asian_width(ch) in ("F", "W", "A") else 1
+    return w
+
+
 def split_long_utterances(
     output: YMM4CsvOutput,
     max_length: int,
+    *,
+    use_display_width: bool = False,
 ) -> YMM4CsvOutput:
     """長い発話を句点で分割する。
 
     max_length を超える発話を文末（。！？!?）で分割し、
     同じ話者の複数行に展開する。
     単一文が max_length を超える場合はそのまま保持する。
+
+    Args:
+        output: 分割対象の CSV 出力
+        max_length: 分割閾値 (文字数または表示幅)
+        use_display_width: True なら全角=2, 半角=1 の表示幅で判定
     """
+    _measure = display_width if use_display_width else len
     rows: list[YMM4CsvRow] = []
 
     for row in output.rows:
-        if len(row.text) <= max_length:
+        if _measure(row.text) <= max_length:
             rows.append(row)
             continue
 
@@ -105,7 +127,7 @@ def split_long_utterances(
         # 文を max_length 以内にグループ化
         buf = ""
         for sentence in sentences:
-            if buf and len(buf) + len(sentence) > max_length:
+            if buf and _measure(buf) + _measure(sentence) > max_length:
                 rows.append(YMM4CsvRow(speaker=row.speaker, text=buf))
                 buf = sentence
             else:

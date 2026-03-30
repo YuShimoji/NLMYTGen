@@ -15,7 +15,7 @@ from collections import Counter
 from pathlib import Path
 
 from src.pipeline.normalize import normalize, analyze_speaker_roles
-from src.pipeline.assemble_csv import assemble, find_unmapped_speakers, split_long_utterances
+from src.pipeline.assemble_csv import assemble, find_unmapped_speakers, split_long_utterances, display_width
 from src.pipeline.validate_handoff import validate, has_errors, Severity
 
 
@@ -66,8 +66,12 @@ def _resolve_speaker_map(args: argparse.Namespace) -> dict[str, str] | None:
     return result or None
 
 
-def _print_stats(output, file=sys.stdout):
-    """話者ごとの発話統計を表示する。"""
+def _print_stats(output, chars_per_line: int = 0, max_display_lines: int = 0, file=sys.stdout):
+    """話者ごとの発話統計を表示する。
+
+    chars_per_line > 0 かつ max_display_lines > 0 のとき、
+    推定行数が max_display_lines を超える行をはみ出し候補として警告する。
+    """
     speaker_counts = Counter(row.speaker for row in output.rows)
     speaker_chars = Counter()
     for row in output.rows:
@@ -81,6 +85,20 @@ def _print_stats(output, file=sys.stdout):
         print(f"  {speaker}: {count} utterances, {chars} chars (avg {avg})", file=file)
     total_chars = sum(speaker_chars.values())
     print(f"  Total: {len(output.rows)} utterances, {total_chars} chars", file=file)
+
+    if chars_per_line > 0 and max_display_lines > 0:
+        overflow = []
+        for i, row in enumerate(output.rows):
+            w = display_width(row.text)
+            lines = -(-w // chars_per_line)  # ceil division
+            if lines > max_display_lines:
+                overflow.append((i + 1, row.speaker, lines, w))
+        if overflow:
+            print(f"--- Overflow candidates (>{max_display_lines} lines at {chars_per_line} chars/line) ---", file=file)
+            for row_num, speaker, lines, w in overflow:
+                print(f"  [WARN] row {row_num}: {speaker}, 推定{lines}行 (display_width={w})", file=file)
+        else:
+            print(f"--- No overflow candidates (all within {max_display_lines} lines at {chars_per_line} chars/line) ---", file=file)
 
 
 def _build_one(input_path: Path, output_path: Path, args: argparse.Namespace) -> bool:
@@ -97,9 +115,16 @@ def _build_one(input_path: Path, output_path: Path, args: argparse.Namespace) ->
     merge = getattr(args, "merge_consecutive", False)
     output = assemble(script, speaker_map=speaker_map, merge_consecutive=merge)
 
+    max_lines = getattr(args, "max_lines", None)
     max_length = getattr(args, "max_length", None)
-    if max_length:
-        output = split_long_utterances(output, max_length=max_length)
+    use_dw = getattr(args, "display_width", False)
+    chars_per_line = getattr(args, "chars_per_line", 40)
+
+    if max_lines:
+        effective_max = chars_per_line * max_lines
+        output = split_long_utterances(output, max_length=effective_max, use_display_width=True)
+    elif max_length:
+        output = split_long_utterances(output, max_length=max_length, use_display_width=use_dw)
 
     results = validate(output)
     for r in results:
@@ -111,7 +136,9 @@ def _build_one(input_path: Path, output_path: Path, args: argparse.Namespace) ->
         return False
 
     if getattr(args, "stats", False) or getattr(args, "dry_run", False):
-        _print_stats(output)
+        stats_cpl = chars_per_line if (use_dw or max_lines) else 0
+        stats_lines = max_lines if max_lines else (2 if (use_dw or max_lines) else 0)
+        _print_stats(output, chars_per_line=stats_cpl, max_display_lines=stats_lines)
 
     if getattr(args, "dry_run", False):
         print("--- Preview (first 5 rows) ---")
@@ -305,6 +332,12 @@ def main(argv: list[str] | None = None) -> int:
                          help="Merge consecutive utterances from the same speaker")
     p_build.add_argument("--max-length", type=int, metavar="N",
                          help="Split utterances longer than N chars at sentence boundaries")
+    p_build.add_argument("--display-width", action="store_true",
+                         help="Use display width (fullwidth=2, halfwidth=1) for --max-length")
+    p_build.add_argument("--max-lines", type=int, metavar="N",
+                         help="Split to fit within N display lines (uses --chars-per-line)")
+    p_build.add_argument("--chars-per-line", type=int, default=40, metavar="N",
+                         help="Display width per line for --max-lines (default: 40)")
     p_build.add_argument("--dry-run", action="store_true", help="Preview without writing")
     p_build.add_argument("--stats", action="store_true", help="Show speaker statistics")
 
