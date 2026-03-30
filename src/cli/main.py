@@ -17,7 +17,14 @@ from collections import Counter
 from pathlib import Path
 
 from src.pipeline.normalize import normalize, analyze_speaker_roles
-from src.pipeline.assemble_csv import assemble, find_unmapped_speakers, split_long_utterances, display_width
+from src.pipeline.assemble_csv import (
+    assemble,
+    balance_subtitle_lines,
+    display_width,
+    estimate_display_lines,
+    find_unmapped_speakers,
+    split_long_utterances,
+)
 from src.pipeline.validate_handoff import validate, has_errors, Severity
 
 
@@ -77,7 +84,7 @@ def _print_stats(output, chars_per_line: int = 0, max_display_lines: int = 0, fi
     speaker_counts = Counter(row.speaker for row in output.rows)
     speaker_chars = Counter()
     for row in output.rows:
-        speaker_chars[row.speaker] += len(row.text)
+        speaker_chars[row.speaker] += len(row.text.replace("\n", ""))
 
     print("--- Stats ---", file=file)
     for speaker in sorted(speaker_counts):
@@ -92,7 +99,7 @@ def _print_stats(output, chars_per_line: int = 0, max_display_lines: int = 0, fi
         overflow = []
         for i, row in enumerate(output.rows):
             w = display_width(row.text)
-            lines = -(-w // chars_per_line)  # ceil division
+            lines = estimate_display_lines(row.text, chars_per_line)
             if lines > max_display_lines:
                 overflow.append((i + 1, row.speaker, lines, w))
         if overflow:
@@ -121,10 +128,18 @@ def _build_one(input_path: Path, output_path: Path, args: argparse.Namespace) ->
     max_length = getattr(args, "max_length", None)
     use_dw = getattr(args, "display_width", False)
     chars_per_line = getattr(args, "chars_per_line", 40)
+    balance_lines = getattr(args, "balance_lines", False)
 
     if max_lines:
         effective_max = chars_per_line * max_lines
         output = split_long_utterances(output, max_length=effective_max, use_display_width=True)
+        if balance_lines:
+            output = balance_subtitle_lines(
+                output,
+                chars_per_line=chars_per_line,
+                max_lines=max_lines,
+                use_display_width=True,
+            )
     elif max_length:
         output = split_long_utterances(output, max_length=max_length, use_display_width=use_dw)
 
@@ -160,6 +175,9 @@ def _build_one(input_path: Path, output_path: Path, args: argparse.Namespace) ->
 def _cmd_build_csv(args: argparse.Namespace) -> int:
     """build-csv: 入力ファイル → YMM4 CSV 生成。複数ファイル対応。"""
     inputs = [Path(p) for p in args.input]
+
+    if getattr(args, "balance_lines", False) and not args.max_lines:
+        raise ValueError("--balance-lines requires --max-lines")
 
     if len(inputs) == 1:
         input_path = inputs[0]
@@ -403,6 +421,8 @@ def main(argv: list[str] | None = None) -> int:
                          help="Split to fit within N display lines (uses --chars-per-line)")
     p_build.add_argument("--chars-per-line", type=int, default=40, metavar="N",
                          help="Display width per line for --max-lines (default: 40)")
+    p_build.add_argument("--balance-lines", action="store_true",
+                         help="Insert a natural line break for 2-line subtitles (requires --max-lines)")
     p_build.add_argument("--dry-run", action="store_true", help="Preview without writing")
     p_build.add_argument("--stats", action="store_true", help="Show speaker statistics")
 

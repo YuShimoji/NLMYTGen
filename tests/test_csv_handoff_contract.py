@@ -1,5 +1,7 @@
 """CSV Handoff 契約テスト。"""
 
+import csv
+
 from src.contracts.structured_script import Utterance, StructuredScript
 from src.contracts.ymm4_csv_schema import YMM4CsvOutput, YMM4CsvRow
 from src.pipeline.assemble_csv import assemble
@@ -62,3 +64,17 @@ def test_utf8_with_bom(tmp_path):
     text = raw.decode("utf-8-sig")
     assert "れいむ" in text
     assert "日本語テスト" in text
+
+
+def test_embedded_newline_is_preserved_as_single_csv_row(tmp_path):
+    """字幕内改行は quoted CSV として 1 行に保たれる。"""
+    output = YMM4CsvOutput(
+        rows=(YMM4CsvRow(speaker="れいむ", text="前半\n後半"),)
+    )
+    csv_path = tmp_path / "out.csv"
+    output.write(csv_path)
+
+    with csv_path.open("r", encoding="utf-8-sig", newline="") as f:
+        rows = list(csv.reader(f))
+
+    assert rows == [["れいむ", "前半\n後半"]]

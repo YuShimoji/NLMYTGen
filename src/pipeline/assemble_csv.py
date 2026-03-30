@@ -78,6 +78,21 @@ def assemble(
 
 # 文末区切り文字
 _SENTENCE_ENDS = re.compile(r"(?<=[。！？!?])")
+_LINE_BREAK_AFTER = {
+    "。": 0,
+    "！": 0,
+    "？": 0,
+    "!": 0,
+    "?": 0,
+    "、": 1,
+    ",": 1,
+    "，": 1,
+    "」": 2,
+    "』": 2,
+    "）": 2,
+    ")": 2,
+    "】": 2,
+}
 
 
 def display_width(text: str) -> int:
@@ -89,8 +104,66 @@ def display_width(text: str) -> int:
     """
     w = 0
     for ch in text:
+        if ch in ("\n", "\r"):
+            continue
         w += 2 if unicodedata.east_asian_width(ch) in ("F", "W", "A") else 1
     return w
+
+
+def estimate_display_lines(text: str, chars_per_line: int) -> int:
+    """明示改行を尊重した推定表示行数を返す。"""
+    if chars_per_line <= 0:
+        return 0
+
+    lines = 0
+    for chunk in text.split("\n"):
+        width = display_width(chunk)
+        lines += max(1, -(-width // chars_per_line))
+    return lines
+
+
+def _balance_two_lines(
+    text: str,
+    *,
+    chars_per_line: int,
+    measure,
+) -> str:
+    """2行字幕向けに、自然な候補位置へ改行を挿入する。"""
+    if "\n" in text:
+        return text
+
+    total_width = measure(text)
+    if total_width <= chars_per_line or total_width > chars_per_line * 2:
+        return text
+
+    min_width = max(6, chars_per_line // 4)
+    best: tuple[int, int] | None = None
+
+    for idx, ch in enumerate(text, start=1):
+        penalty = _LINE_BREAK_AFTER.get(ch)
+        if penalty is None:
+            continue
+
+        left = text[:idx]
+        right = text[idx:]
+        if not right.strip():
+            continue
+
+        left_width = measure(left)
+        right_width = measure(right)
+        if left_width > chars_per_line or right_width > chars_per_line:
+            continue
+
+        short_penalty = 100 if min(left_width, right_width) < min_width else 0
+        score = abs(left_width - right_width) + penalty * 4 + short_penalty
+        if best is None or score < best[0]:
+            best = (score, idx)
+
+    if best is None:
+        return text
+
+    split_at = best[1]
+    return f"{text[:split_at]}\n{text[split_at:]}"
 
 
 def split_long_utterances(
@@ -135,4 +208,30 @@ def split_long_utterances(
         if buf:
             rows.append(YMM4CsvRow(speaker=row.speaker, text=buf))
 
+    return YMM4CsvOutput(rows=tuple(rows))
+
+
+def balance_subtitle_lines(
+    output: YMM4CsvOutput,
+    *,
+    chars_per_line: int,
+    max_lines: int = 2,
+    use_display_width: bool = True,
+) -> YMM4CsvOutput:
+    """2行字幕向けに、見た目のバランスが良い改行を挿入する。"""
+    if max_lines != 2 or chars_per_line <= 0:
+        return output
+
+    measure = display_width if use_display_width else len
+    rows = [
+        YMM4CsvRow(
+            speaker=row.speaker,
+            text=_balance_two_lines(
+                row.text,
+                chars_per_line=chars_per_line,
+                measure=measure,
+            ),
+        )
+        for row in output.rows
+    ]
     return YMM4CsvOutput(rows=tuple(rows))

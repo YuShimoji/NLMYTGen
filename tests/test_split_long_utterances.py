@@ -6,7 +6,12 @@ B-04 品質改善: 表示幅ベースの分割をテストする。
 import pytest
 
 from src.contracts.ymm4_csv_schema import YMM4CsvOutput, YMM4CsvRow
-from src.pipeline.assemble_csv import display_width, split_long_utterances
+from src.pipeline.assemble_csv import (
+    balance_subtitle_lines,
+    display_width,
+    estimate_display_lines,
+    split_long_utterances,
+)
 
 
 class TestDisplayWidth:
@@ -117,3 +122,34 @@ class TestSplitDisplayWidth:
         output = self._make_output(text)
         result = split_long_utterances(output, max_length=80, use_display_width=True)
         assert len(result.rows) == 1
+
+
+class TestBalanceSubtitleLines:
+    """balance_subtitle_lines() のテスト。"""
+
+    def _make_output(self, *texts: str, speaker: str = "れいむ") -> YMM4CsvOutput:
+        return YMM4CsvOutput(rows=tuple(YMM4CsvRow(speaker=speaker, text=t) for t in texts))
+
+    def test_inserts_balanced_newline_after_comma(self):
+        output = self._make_output("AAAAAA、BBBBBB")
+        result = balance_subtitle_lines(output, chars_per_line=8, max_lines=2, use_display_width=True)
+        assert result.rows[0].text == "AAAAAA、\nBBBBBB"
+        assert estimate_display_lines(result.rows[0].text, 8) == 2
+
+    def test_preserves_text_without_candidate(self):
+        text = "ABCDEFGHIJKLMN"
+        output = self._make_output(text)
+        result = balance_subtitle_lines(output, chars_per_line=8, max_lines=2, use_display_width=True)
+        assert result.rows[0].text == text
+
+    def test_no_change_when_already_within_one_line(self):
+        text = "短い文。"
+        output = self._make_output(text)
+        result = balance_subtitle_lines(output, chars_per_line=20, max_lines=2, use_display_width=True)
+        assert result.rows[0].text == text
+
+    def test_only_applies_to_two_line_mode(self):
+        text = "AAAAAA、BBBBBB"
+        output = self._make_output(text)
+        result = balance_subtitle_lines(output, chars_per_line=8, max_lines=3, use_display_width=True)
+        assert result.rows[0].text == text
