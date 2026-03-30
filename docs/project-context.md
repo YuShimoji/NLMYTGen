@@ -7,11 +7,14 @@
 - 現フェーズ: backlog/status hygiene 監査と canonical context 修復完了。approved next frontier を再選定する段階
 - 直近の状態 (2026-03-30):
   - B-04 分割品質改善: 表示幅ベース分割 (--display-width, --max-lines, --chars-per-line) 実装完了
-  - 実データ dry-run + stats で CLI 動作確認。`pytest` / `uv` は現シェルに未導入で再実行不能
+  - A-04 RSS フィード連携 (`fetch-topics`): 再審査済み + 実装完了。done へ復帰
+  - `uv run pytest`: 46 PASS。feed 系の追加実装を含めて現ワークツリーのテスト再現に成功
+  - 実データ dry-run + stats で CLI 動作確認
   - E-02 (YouTube メタデータ生成): 仕様検討の結果、hold へ移動。単体では価値薄
-  - A-04 / D-02 / F-01 / F-02: 汚染バッチ由来として quarantined へ移動
+  - D-02 / F-01 / F-02: 汚染バッチ由来として quarantined のまま
   - C-01 (YMM4 台本読込): Python 機能ではなく確認済み手動工程として info へ整理
-  - FEATURE_REGISTRY: done 11 / info 2 / hold 3 / quarantined 4 / rejected 7
+  - FEATURE_REGISTRY: done 12 / info 2 / hold 3 / quarantined 3 / rejected 7
+  - approved frontier は現時点で空。S-5/S-6 まわりは authority return items と workflow proof 候補として保持
   - 8a1c710 で追加された canonical docs は handoff に未反映だったため、今回実内容で補完
   - `docs/ai/*.md` を canonical rules として入口に昇格し、resume prompt は補助に降格
   - `prompt-resume.md` を追加し、docs-only resume packet を repo 内で完結させた
@@ -24,14 +27,14 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → 動画
-- 現在のスライス: backlog/status hygiene 是正 + canonical context 修復
-- 成功状態: 次 frontier を status 語彙の誤用や汚染バッチに引きずられず選べる。workflow pain と value path が handoff から再利用できる
+- 現在のスライス: docs 同期完了。approved frontier が空のため、next frontier 選定待ち
+- 成功状態: docs が実態と一致し、46 テスト PASS。次 frontier をユーザーと選定できる状態
 
 ---
 
 ## CURRENT LANE
-- 主レーン: Audit
-- 今このレーンを優先する理由: コアパイプライン完成後に backlog/handoff の信頼性が崩れると、次 frontier 選定を誤るため
+- 主レーン: Audit → docs sync 完了。next frontier 選定待ち
+- 今このレーンを優先する理由: docs 同期が完了し、approved frontier が空。次の実装対象はユーザー判断 (HUMAN_AUTHORITY)
 
 ---
 
@@ -56,6 +59,7 @@
 | 2026-03-30 | S-6 トピック分析を LLM アダプター方式に転換 | LLM / パターンマッチ / やらない | ユーザー指示。コーパス分析ライブラリはレガシー化しており LLM に統一。モデル切替可能なアダプター設計 |
 | 2026-03-30 | サムネイルはYMM4テンプレートの文字・画像入れ替え | テンプレート手動 / Python自動生成 / 外部ツールのみ | 機械的な背景+文字の自動生成は不可。テンプレートの手動カスタマイズが必要。サムネイルは非常に重要 |
 | 2026-03-30 | A-04 / D-02 / F-01 / F-02 を quarantined に移す | proposed維持 / hold / quarantined | B-10 混入時の汚染バッチ由来で、個別再審査前に通常 backlog として扱うと再発するため |
+| 2026-03-30 | A-04 を done に戻す | quarantined維持 / hold / done | RSS/Atom からタイトル抽出して NotebookLM 検索クエリへ渡す `fetch-topics` は Python のテキスト取得責務に収まり、実装と台帳が一致したため |
 | 2026-03-30 | E-02 を hold に移す | proposed維持 / hold / rejected | 価値検証の結果、単体では bottleneck を減らさず、今は進めない方が正確だから |
 | 2026-03-30 | C-01 を done ではなく info に整理する | done維持 / info | Python 機能ではなく、確認済みの手動工程だから |
 | 2026-03-30 | canonical docs の雛形放置を handoff 不備として扱う | 雛形維持 / 内容補完 | `8a1c710` で docs は追加済みだったが、実内容が薄いままでは resume 時の再アンカー先として機能しない |
@@ -98,17 +102,17 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ## HANDOFF SNAPSHOT
 
-- Shared Focus: backlog/status hygiene を直し、次 frontier を pain/value path から選び直す
+- Shared Focus: docs 同期完了、46 PASS。approved frontier が空のため、次 frontier をユーザーと選定する
 - Active Artifact: NLM transcript → YMM4 CSV → ゆっくり解説動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → 動画
-- Last Change Relation: unblocker (status/doc 整備で次 frontier 誤選択を防止)
-- Evidence: 全31テスト PASS の過去記録あり。現セッションでは `python3 -m src.cli.main --help` と実データ dry-run/stats を確認。`pytest` / `uv` は現シェルに未導入
+- Last Change Relation: evidence-only (status/doc 整備とテスト再検証で次 frontier の誤選択を防止)
+- Evidence: `uv run pytest` 46 PASS、`python3 -m src.cli.main --help` OK、実データ dry-run/stats 確認
 - 案件モード: CLI artifact
-- 現在の主レーン: Audit
+- 現在の主レーン: docs sync 完了、next frontier 選定待ち
 - Current Trust Assessment:
-  - trusted: B-04 実装と既存 workflow/境界 docs
-  - needs re-check: 汚染バッチ由来 backlog、前回 handoff の完全性
-  - dangerous: status 語彙を曖昧にしたまま次 frontier を選ぶこと
+  - trusted: B-04 実装、A-04 `fetch-topics` 実装、46 PASS の現行テスト、workflow/境界 docs
+  - needs re-check: S-5/S-6 の post-import friction と visual evidence の鮮度
+  - dangerous: status 語彙を曖昧にしたまま次 frontier を選ぶこと、GUI や LLM 案を value path 未検証で前進させること
 - Recovered Canonical Context:
   - Python はテキスト変換のみ
   - S-5 / S-6 が最大 pain
@@ -118,8 +122,9 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - S-6 LLM アダプター方式を次 frontier にするかの再承認
   - 「stdlib のみ」制約の緩和 (LLM SDK 追加の ADR)
   - E-02: hold のまま。E-01 または別 integration point とセットでのみ再検討
-  - quarantined 4件 (A-04, D-02, F-01, F-02) の個別再審査
+  - quarantined 3件 (D-02, F-01, F-02) の個別再審査
 - 解決済み:
+  - A-04 RSS フィード連携: `fetch-topics` 実装と docs を再審査し、done に復帰
   - B-04 表示幅ベース分割: --display-width, --max-lines, --chars-per-line 実装完了
   - B-10 (--emit-meta): rejected → コード除去済み
   - C-02/C-03/C-04/C-05/D-01/F-03: rejected
@@ -129,6 +134,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 - 既知の問題:
   - S-6 LLM アダプター方式の仕様が未定義 (プロバイダー・アーキテクチャ・stdlib制約緩和)
   - 前回 handoff は `8a1c710` の追加ファイルと placeholder 状態を含んでいなかった
+  - S-5/S-6 については fresh visual evidence がなく、次 frontier の根拠が docs/推論寄り
 - Docs-only Resume Packet:
   - AGENTS.md
   - .claude/CLAUDE.md
@@ -138,8 +144,9 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - prompt-resume.md
 - 未確定の設計論点: LLM アダプターを本当にやるか、GUI が本当に bottleneck を減らすか
 - What Not To Do Next:
-  - quarantined 項目を通常候補としてそのまま spec 化しない
+  - quarantined 項目 (D-02, F-01, F-02) を通常候補としてそのまま spec 化しない
   - E-02 を standalone の高価値 task として再浮上させない
+  - approved frontier が空のまま、勢いで別の実装 task を捏造しない
   - handoff に書かれていない placeholder docs を真実の source と誤認しない
 - New Fossils:
   - docs/INVARIANTS.md

@@ -43,7 +43,7 @@
 | A-01 | NotebookLM 元台本テキスト取得（手動コピペ） | done | L1 | 主導線。WORKFLOW.md S-2 |
 | A-02 | 音声書き起こし fallback（Whisper / Google Docs） | done | L1 | --unlabeled で対応 |
 | A-03 | NotebookLM API 連携（台本自動取得） | hold | L1 | API 未公開。公開時に検討 |
-| A-04 | RSS フィード連携（ソース素材の自動取得） | quarantined | L1 | 前セッションの汚染バッチ由来。NotebookLM 導線との接続点・取得元・権利/運用境界を個別再審査するまで通常候補に戻さない |
+| A-04 | RSS フィード連携（トピック候補取得） | done | L1 | `fetch-topics` サブコマンド。RSS/Atom からタイトル抽出 → NotebookLM 検索クエリとして使用。再審査済み (2026-03-30)、実装完了 |
 
 ### B. 台本変換 (L2-変換)
 

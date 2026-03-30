@@ -52,10 +52,13 @@ src/
     notebooklm_input.py      # 入力契約: RawTranscript
     structured_script.py     # 内部契約: Utterance, StructuredScript
     ymm4_csv_schema.py       # 出力契約: YMM4CsvRow, YMM4CsvOutput
-  pipeline/                  # 変換ロジック
+    feed_entry.py            # フィード契約: FeedEntry
+  pipeline/                  # 変換ロジック (L2)
     normalize.py             # 入力 → StructuredScript
     assemble_csv.py          # StructuredScript → YMM4CsvOutput
     validate_handoff.py      # 出力前検証
+  feed/                      # フィード取得 (L1)
+    fetch.py                 # RSS/Atom 取得・パース → FeedEntry リスト
   cli/
     main.py                  # 単一エントリポイント
 ```
@@ -68,6 +71,7 @@ src/
 | `pipeline/normalize.py` | 入力ファイルのパースと正規化 | LLM 呼び出し、ネットワークアクセス |
 | `pipeline/assemble_csv.py` | 話者マッピングと CSV 組立、長文分割、表示幅計測 | 画像取得、アニメーション割当 |
 | `pipeline/validate_handoff.py` | 出力前の整合性チェック | エラー修正、自動補完 |
+| `feed/fetch.py` | RSS/Atom フィード取得・パース (L1) | CSV 変換、pipeline への直接結合 |
 | `cli/main.py` | 引数解析と実行制御 | 直接的なデータ変換 |
 
 ## 禁止される越境
@@ -75,10 +79,10 @@ src/
 1. **Python が品質を生成する**: 台本内容の創作、対話テンポの改善、個性の付与
 2. **Python が動画を生成する**: MoviePy, ffmpeg, Voicevox, TTS の使用
 3. **Python が NotebookLM を代替する**: LLM による主台本生成
-4. **pipeline が外部 API を呼ぶ**: 画像検索、Web リサーチ、YouTube 連携
+4. **pipeline が外部 API を呼ぶ**: 画像検索、Web リサーチ、YouTube 連携（`feed/` は L1 レイヤーであり pipeline 外。RSS/Atom の HTTP 取得は許可）
 5. **CLI が複数エントリポイントを持つ**: main.py 以外の実行スクリプト
 
 ## 依存関係
 
 - 外部ライブラリ: なし (Python stdlib のみ)
-- 使用する stdlib: `csv`, `re`, `pathlib`, `argparse`, `dataclasses`, `warnings`, `json`, `collections`
+- 使用する stdlib: `csv`, `re`, `pathlib`, `argparse`, `dataclasses`, `warnings`, `json`, `collections`, `urllib.request`, `xml.etree.ElementTree`, `email.utils`

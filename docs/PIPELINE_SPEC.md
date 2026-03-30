@@ -175,6 +175,72 @@ python -m src.cli.main build-csv input.txt --max-lines 2 --chars-per-line 40 --s
 
 ---
 
+## fetch-topics サブコマンド (A-04)
+
+RSS 2.0 / Atom 1.0 フィードからトピック候補（エントリタイトル）を取得する。
+取得したタイトルは NotebookLM の検索クエリや台本テーマ候補として使用する想定。
+
+### 使用方法
+
+```bash
+python -m src.cli.main fetch-topics <URL>... [-n 20] [--after YYYY-MM-DD] [--format text|json] [--timeout 10] [-o output.txt]
+```
+
+### 引数
+
+| 引数 | 必須 | 既定値 | 説明 |
+|------|------|--------|------|
+| URL | 必須 | — | RSS/Atom フィード URL（複数指定可） |
+| -n, --limit | 任意 | 20 | 表示するエントリ数の上限 |
+| --after | 任意 | — | この日付以降のエントリのみ抽出（YYYY-MM-DD 形式） |
+| --format | 任意 | text | 出力形式（text / json） |
+| --timeout | 任意 | 10 | HTTP タイムアウト秒数 |
+| -o, --output | 任意 | stdout | 出力先ファイルパス |
+
+### 内部表現: FeedEntry
+
+```python
+@dataclass(frozen=True)
+class FeedEntry:
+    title: str
+    published: str | None = None   # ISO 8601 日付文字列
+    source_url: str | None = None  # フィード URL
+```
+
+### 出力仕様
+
+#### text 形式（既定）
+
+```
+# Source: https://example.com/feed.xml (2026-03-30)
+記事タイトル1
+記事タイトル2
+```
+
+ソース URL ごとにヘッダーコメント行を出力し、その後にエントリタイトルを1行ずつ出力する。
+
+#### json 形式
+
+```json
+[
+  {"title": "記事タイトル1", "published": "2026-03-30", "source": "https://example.com/feed.xml"},
+  {"title": "記事タイトル2", "published": "2026-03-29", "source": "https://example.com/feed.xml"}
+]
+```
+
+### 対応フィード形式
+
+- RSS 2.0（`<channel>/<item>/<title>`, `<pubDate>`）
+- Atom 1.0（`<feed>/<entry>/<title>`, `<published>` or `<updated>`）
+
+### エラーハンドリング
+
+- フィード取得失敗: stderr にエラーを出力し、残りの URL を継続処理
+- 日付形式不正: エラー終了（exit code 1）
+- エントリ 0 件: stderr に "No entries found." を出力（exit code 0）
+
+---
+
 ## スコープ外
 
 以下は PIPELINE_SPEC の対象外。機能の管理は FEATURE_REGISTRY.md を参照。
