@@ -711,8 +711,9 @@ def insert_inline_breaks(
 ) -> str:
     """話者行テキスト内に明示改行を挿入して、YMM4 自動折り返しを制御する。
 
-    B-16: chars_per_line ごとに大区切り候補で改行。
-    候補がなければ改行せず YMM4 に委ねる。
+    B-16: 1行が chars_per_line を超えないよう、区切り位置で改行を挿入する。
+    大区切り (句読点等) を優先し、なければ小区切り (マーカー句等) を使う。
+    どちらもなければ YMM4 自動折り返しに委ねる。
     既に改行が含まれている場合はそのまま返す。
     """
     if not text or chars_per_line <= 0 or "\n" in text:
@@ -724,12 +725,86 @@ def insert_inline_breaks(
 
     widths = _width_at_positions(text)
     all_candidates = _collect_break_candidates(text)
-    # 大区切りのみ使用 (小区切りでは行内改行しない)
-    major = [(p, pen, k) for p, pen, k in all_candidates if k.startswith("major")]
-    if not major:
+
+    # 行内改行用の追加候補: 文字種境界 (ページ間分割では使わないが行内では許容)
+    # penalty を高く (10) して大区切り/マーカー句を優先
+    bracket_ranges = _find_bracket_ranges(text)
+    inline_extras: list[tuple[int, int, str]] = []
+    for idx in range(1, len(text)):
+        pos = idx
+        if _in_bracket(pos, bracket_ranges):
+            continue
+        if _is_katakana_run(text, pos) or _is_kanji_run(text, pos) or _is_digit_run(text, pos):
+            continue
+        if pos < len(text) and text[pos] == "ー":
+            continue
+        if pos > 0 and text[pos - 1] == "ー":
+            continue
+
+        prev_ch, curr_ch = text[idx - 1], text[idx]
+        # 助詞の後 (行内では許容)
+        if prev_ch in "をがはにでもやのへと" and not _is_hiragana(curr_ch) is False:
+            inline_extras.append((pos, 8, "inline:particle"))
+        # カタカナ→ひらがな
+        elif _is_katakana(prev_ch) and _is_hiragana(curr_ch):
+            inline_extras.append((pos, 10, "inline:kata-hira"))
+        # ひらがな→カタカナ
+        elif _is_hiragana(prev_ch) and _is_katakana(curr_ch):
+            inline_extras.append((pos, 10, "inline:hira-kata"))
+        # 漢字→ひらがな
+        elif _is_cjk_ideograph(prev_ch) and _is_hiragana(curr_ch):
+            inline_extras.append((pos, 10, "inline:kanji-hira"))
+        # ひらがな→漢字
+        elif _is_hiragana(prev_ch) and _is_cjk_ideograph(curr_ch):
+            inline_extras.append((pos, 10, "inline:hira-kanji"))
+
+    all_with_inline = sorted(
+        all_candidates + inline_extras,
+        key=lambda x: x[0],
+    )
+    if not all_with_inline:
         return text
 
+    major = [(p, pen, k) for p, pen, k in all_with_inline if k.startswith("major")]
+    minor = all_with_inline  # 全候補 (大+小+inline)
+
     min_line_width = max(4, chars_per_line // 6)
+
+    def _best_break(candidates: list[tuple[int, int, str]], prev_pos: int, prev_w: int) -> int:
+        """chars_per_line に最も近い候補を選ぶ。超過しない候補を優先。"""
+        target_w = prev_w + chars_per_line
+        total_w = widths[len(text)]
+        best_score = float("inf")
+        best_pos = -1
+
+        for pos, penalty, _kind in candidates:
+            if pos <= prev_pos:
+                continue
+            pos_w = widths[pos]
+            line_w = pos_w - prev_w
+            rest_w = total_w - pos_w
+
+            # chars_per_line を超えない候補を優先 (超過ペナルティ)
+            if line_w > chars_per_line:
+                overflow_penalty = (line_w - chars_per_line) * 2
+            else:
+                overflow_penalty = 0
+
+            # 短すぎる行はスキップ
+            if line_w < min_line_width:
+                continue
+            # 残りが短すぎる行を作らない
+            if 0 < rest_w < min_line_width:
+                continue
+
+            distance = abs(pos_w - target_w)
+            score = distance + penalty * 2 + overflow_penalty
+            if score < best_score:
+                best_score = score
+                best_pos = pos
+
+        return best_pos
+
     result_parts: list[str] = []
     prev_pos = 0
     prev_width = 0
@@ -739,32 +814,22 @@ def insert_inline_breaks(
         if remaining_width <= chars_per_line:
             break  # 残りは1行に収まる
 
-        target_width = prev_width + chars_per_line
-        best_score = float("inf")
-        best_pos = -1
+        # 第1優先: 大区切りで chars_per_line に近い位置を探す
+        best_pos = _best_break(major, prev_pos, prev_width)
 
-        for pos, penalty, _kind in major:
-            if pos <= prev_pos:
-                continue
-            pos_width = widths[pos]
-            line_width = pos_width - prev_width
-            rest_width = widths[len(text)] - pos_width
-
-            # chars_per_line を大幅に超える位置はスキップ
-            if line_width > chars_per_line + chars_per_line // 3:
-                continue
-            # 短すぎる行はスキップ
-            if line_width < min_line_width:
-                continue
-            # 残りが短すぎる行を作らない
-            if rest_width < min_line_width:
-                continue
-
-            distance = abs(pos_width - target_width)
-            score = distance + penalty * 3
-            if score < best_score:
-                best_score = score
-                best_pos = pos
+        # 大区切りが見つからない or chars_per_line を大幅超過 → 全候補で探す
+        if best_pos > 0:
+            line_w = widths[best_pos] - prev_width
+            if line_w > chars_per_line * 1.3:
+                # 大区切りが遠すぎる → 小区切りも含めて再探索
+                alt_pos = _best_break(minor, prev_pos, prev_width)
+                if alt_pos > 0:
+                    alt_line_w = widths[alt_pos] - prev_width
+                    if alt_line_w <= chars_per_line:
+                        best_pos = alt_pos
+        elif not best_pos or best_pos <= 0:
+            # 大区切りなし → 全候補で探す
+            best_pos = _best_break(minor, prev_pos, prev_width)
 
         if best_pos <= 0:
             break  # 候補なし、以降は YMM4 に委ねる
