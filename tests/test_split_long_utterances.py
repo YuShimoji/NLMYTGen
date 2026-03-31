@@ -10,6 +10,8 @@ from src.pipeline.assemble_csv import (
     balance_subtitle_lines,
     display_width,
     estimate_display_lines,
+    reflow_subtitles,
+    reflow_utterance,
     split_long_utterances,
 )
 
@@ -197,3 +199,111 @@ class TestBalanceSubtitleLines:
         output = self._make_output(text)
         result = balance_subtitle_lines(output, chars_per_line=8, max_lines=2, use_display_width=True)
         assert result.rows[0].text == text
+
+
+class TestReflowUtterance:
+    """B-15 reflow_utterance() トップダウン方式のテスト。"""
+
+    def test_short_text_no_split(self):
+        result = reflow_utterance("短いテキスト", chars_per_line=40, max_lines=2)
+        assert result == ["短いテキスト"]
+
+    def test_bracket_particle_protection(self):
+        """閉じ括弧+助詞はセットで保護される (コーパス P1)。"""
+        text = "私たちが普段「アルゴリズムによる最適化」と聞くと、効率的でクリーンな魔法を想像しがちですが、"
+        result = reflow_utterance(text, chars_per_line=40, max_lines=2)
+        joined = "".join(result)
+        assert joined == text
+        # 「」と」の間で切れていないこと
+        for chunk in result:
+            assert not chunk.endswith("」")  # 閉じ括弧が行末に孤立しない
+            assert not chunk.startswith("と聞")  # 助詞が行頭に孤立しない
+
+    def test_avoids_short_left_side(self):
+        """左側が極端に短い分割を避ける (コーパス P2)。"""
+        text = "例えば、一定時間アイテムをスキャンしないと、画面上でタイマーが動き始めます"
+        result = reflow_utterance(text, chars_per_line=40, max_lines=2)
+        joined = "".join(result)
+        assert joined == text
+        if len(result) > 1:
+            # 最初の行が6幅未満にならない
+            assert display_width(result[0]) >= 6
+
+    def test_katakana_word_protection(self):
+        """カタカナ語の途中で分割されない。"""
+        text = "完璧に計算されたアルゴリズムが生身の人間というノイズだらけの現実に衝突した"
+        result = reflow_utterance(text, chars_per_line=40, max_lines=2)
+        joined = "".join(result)
+        assert joined == text
+        # 「アルゴリズム」が分断されていない
+        for chunk in result:
+            assert "アルゴリズ" not in chunk or "アルゴリズム" in chunk
+
+    def test_digit_protection(self):
+        """数字連続の途中で分割されない。"""
+        text = "2025年から2026年にかけてのデータを分析しています、多くの発見がありました"
+        result = reflow_utterance(text, chars_per_line=40, max_lines=2)
+        joined = "".join(result)
+        assert joined == text
+        for chunk in result:
+            # 4桁数字が分断されていない
+            assert "202" not in chunk or "2025" in chunk or "2026" in chunk
+
+    def test_bracket_pair_not_split(self):
+        """括弧ペアの内部で分割されない。"""
+        text = "「配送サービスパートナー（DSP）」プログラムに19億ドルを投資し、大きな変革がありました"
+        result = reflow_utterance(text, chars_per_line=40, max_lines=2)
+        joined = "".join(result)
+        assert joined == text
+        # 閉じ括弧が行頭に漏出しない
+        for chunk in result[1:]:
+            assert not chunk.startswith("」")
+            assert not chunk.startswith("）")
+
+    def test_preserves_original_text(self):
+        """分割後の再結合が元テキストと一致する。"""
+        text = "これはディストピアSF映画のワンシーンではなく、完璧に計算されたアルゴリズムが生身の人間というノイズだらけの現実に衝突した時に、今まさに起きている日常なんです"
+        result = reflow_utterance(text, chars_per_line=40, max_lines=3)
+        assert "".join(result) == text
+
+    def test_long_音_extension_not_split(self):
+        """長音符の前後で分割されない。"""
+        text = "インターネットのセキュリティーが重要だと言われています、この問題を深く掘り下げます"
+        result = reflow_utterance(text, chars_per_line=40, max_lines=2)
+        joined = "".join(result)
+        assert joined == text
+        for chunk in result:
+            assert not chunk.endswith("ー")
+
+
+class TestReflowSubtitles:
+    """B-15 reflow_subtitles() 統合テスト。"""
+
+    def _make_output(self, *texts: str, speaker: str = "れいむ") -> YMM4CsvOutput:
+        return YMM4CsvOutput(rows=tuple(YMM4CsvRow(speaker=speaker, text=t) for t in texts))
+
+    def test_short_rows_pass_through(self):
+        output = self._make_output("短いテキスト。")
+        result = reflow_subtitles(output, chars_per_line=40, max_lines=2)
+        assert len(result.rows) == 1
+        assert result.rows[0].text == "短いテキスト。"
+
+    def test_multi_sentence_split_and_reflow(self):
+        """複数文の発話を句点で分割し、各文を reflow する。"""
+        text = (
+            "私たちが普段「アルゴリズムによる最適化」と聞くと、効率的でクリーンな魔法を想像しがちですが、"
+            "もしその計算式に「人間の身体的限界」という変数が最初から欠落していたらどうなるか。"
+            "今回の探求では、その裏側に切り込んでいきます。"
+        )
+        output = self._make_output(text)
+        result = reflow_subtitles(output, chars_per_line=40, max_lines=2)
+        # 再結合で元テキスト
+        assert "".join(r.text for r in result.rows) == text
+        # 複数行に分割される
+        assert len(result.rows) >= 2
+
+    def test_speaker_preserved(self):
+        output = self._make_output("長い文です。もう一つの文です。", speaker="まりさ")
+        result = reflow_subtitles(output, chars_per_line=10, max_lines=2)
+        for row in result.rows:
+            assert row.speaker == "まりさ"

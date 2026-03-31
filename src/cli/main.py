@@ -23,6 +23,7 @@ from src.pipeline.assemble_csv import (
     display_width,
     estimate_display_lines,
     find_unmapped_speakers,
+    reflow_subtitles,
     split_long_utterances,
 )
 from src.pipeline.validate_handoff import validate, has_errors, Severity
@@ -131,15 +132,16 @@ def _build_one(input_path: Path, output_path: Path, args: argparse.Namespace) ->
     balance_lines = getattr(args, "balance_lines", False)
 
     if max_lines:
-        effective_max = chars_per_line * max_lines
-        output = split_long_utterances(output, max_length=effective_max, use_display_width=True)
         if balance_lines:
-            output = balance_subtitle_lines(
+            # B-15: トップダウン方式で分割+バランスを1パスで実行
+            output = reflow_subtitles(
                 output,
                 chars_per_line=chars_per_line,
                 max_lines=max_lines,
-                use_display_width=True,
             )
+        else:
+            effective_max = chars_per_line * max_lines
+            output = split_long_utterances(output, max_length=effective_max, use_display_width=True)
     elif max_length:
         output = split_long_utterances(output, max_length=max_length, use_display_width=use_dw)
 
