@@ -1,0 +1,7 @@
+この packet の constraints と response_preferences を守って、output contract に沿う cue memo だけを返してください。
+
+特に次を優先してください。
+- section 数は必要以上に増やさない
+- 各 section は primary_background を 1 つ、supporting_visual は必要なら 1 つまで
+- sound_cue_optional は本当に必要な場合だけ書く
+- operator_todos は 4 件以内で簡潔にする

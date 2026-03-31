@@ -2,6 +2,8 @@
 
 Usage:
     python -m src.cli.main build-csv <input>... [-o output.csv] [--speaker-map K1=V1,K2=V2] [--dry-run] [--stats]
+    python -m src.cli.main build-cue-packet <input> [-o packet.md] [--format markdown|json] [--bundle-dir DIR]
+    python -m src.cli.main build-diagram-packet <input> [-o packet.md] [--format markdown|json] [--bundle-dir DIR]
     python -m src.cli.main validate <input>
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
@@ -17,6 +19,16 @@ from collections import Counter
 from pathlib import Path
 
 from src.pipeline.normalize import normalize, analyze_speaker_roles
+from src.pipeline.cue_packet import build_cue_packet_payload, render_cue_packet_markdown
+from src.pipeline.cue_proof import render_cue_workflow_proof
+from src.pipeline.diagram_brief import build_diagram_brief_payload, render_diagram_brief_markdown
+from src.pipeline.diagram_proof import render_diagram_workflow_proof
+from src.pipeline.diagram_rerun import (
+    render_diagram_baseline_notes_template,
+    render_diagram_quickstart,
+    render_diagram_rerun_diff_template,
+    render_diagram_rerun_prompt,
+)
 from src.pipeline.assemble_csv import (
     assemble,
     balance_subtitle_lines,
@@ -378,6 +390,146 @@ def _cmd_generate_map(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_build_cue_packet(args: argparse.Namespace) -> int:
+    """build-cue-packet: 外部 LLM/Automation 用の cue memo packet を生成する。"""
+    input_path = Path(args.input)
+    script = normalize(input_path, unlabeled=getattr(args, "unlabeled", False))
+    speaker_map = _resolve_speaker_map(args)
+
+    payload = build_cue_packet_payload(
+        script,
+        source_name=input_path.name,
+        speaker_map=speaker_map,
+    )
+
+    fmt = getattr(args, "format", "markdown")
+    bundle_dir_raw = getattr(args, "bundle_dir", None)
+
+    if bundle_dir_raw:
+        bundle_dir = Path(bundle_dir_raw)
+        bundle_dir.mkdir(parents=True, exist_ok=True)
+        stem = input_path.stem
+        md_path = bundle_dir / f"{stem}_cue_packet.md"
+        json_path = bundle_dir / f"{stem}_cue_packet.json"
+        proof_path = bundle_dir / f"{stem}_cue_workflow_proof.md"
+
+        packet_markdown = render_cue_packet_markdown(payload)
+        packet_json = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+        packet_command = f"python -m src.cli.main build-cue-packet {input_path}"
+        proof_text = render_cue_workflow_proof(
+            source_name=input_path.name,
+            packet_markdown_name=md_path.name,
+            packet_json_name=json_path.name,
+            packet_command=packet_command,
+            payload=payload,
+        )
+
+        md_path.write_text(packet_markdown, encoding="utf-8")
+        json_path.write_text(packet_json, encoding="utf-8")
+        if not proof_path.exists():
+            proof_path.write_text(proof_text, encoding="utf-8")
+        print(f"Written bundle: {md_path}, {json_path}, {proof_path}")
+        return 0
+
+    if fmt == "json":
+        text = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+    else:
+        text = render_cue_packet_markdown(payload)
+
+    if getattr(args, "output", None):
+        out_path = Path(args.output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(text, encoding="utf-8")
+        print(f"Written: {out_path}")
+    else:
+        sys.stdout.write(text)
+
+    return 0
+
+
+def _cmd_build_diagram_packet(args: argparse.Namespace) -> int:
+    """build-diagram-packet: 外部 LLM/Automation 用の diagram brief packet を生成する。"""
+    input_path = Path(args.input)
+    script = normalize(input_path, unlabeled=getattr(args, "unlabeled", False))
+    speaker_map = _resolve_speaker_map(args)
+
+    payload = build_diagram_brief_payload(
+        script,
+        source_name=input_path.name,
+        speaker_map=speaker_map,
+    )
+
+    fmt = getattr(args, "format", "markdown")
+    bundle_dir_raw = getattr(args, "bundle_dir", None)
+
+    if bundle_dir_raw:
+        bundle_dir = Path(bundle_dir_raw)
+        bundle_dir.mkdir(parents=True, exist_ok=True)
+        stem = input_path.stem
+        md_path = bundle_dir / f"{stem}_diagram_packet.md"
+        json_path = bundle_dir / f"{stem}_diagram_packet.json"
+        proof_path = bundle_dir / f"{stem}_diagram_workflow_proof.md"
+        rerun_prompt_path = bundle_dir / f"{stem}_diagram_rerun_prompt.txt"
+        rerun_diff_path = bundle_dir / f"{stem}_diagram_rerun_diff_template.md"
+        quickstart_path = bundle_dir / f"{stem}_diagram_quickstart.md"
+        baseline_notes_path = bundle_dir / f"{stem}_diagram_baseline_notes.md"
+
+        packet_markdown = render_diagram_brief_markdown(payload)
+        packet_json = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+        packet_command = f"python -m src.cli.main build-diagram-packet {input_path}"
+        proof_text = render_diagram_workflow_proof(
+            source_name=input_path.name,
+            packet_markdown_name=md_path.name,
+            packet_json_name=json_path.name,
+            packet_command=packet_command,
+            payload=payload,
+        )
+        rerun_prompt_text = render_diagram_rerun_prompt()
+        rerun_diff_text = render_diagram_rerun_diff_template()
+        baseline_notes_text = render_diagram_baseline_notes_template(
+            target_diagram_count=payload["response_preferences"]["target_diagram_count"],
+            section_seeds=payload["context"].get("section_seeds"),
+        )
+        quickstart_text = render_diagram_quickstart(
+            packet_name=md_path.name,
+            rerun_prompt_name=rerun_prompt_path.name,
+            diff_template_name=rerun_diff_path.name,
+            proof_log_name=proof_path.name,
+            baseline_notes_name=baseline_notes_path.name if baseline_notes_path.exists() else None,
+        )
+
+        md_path.write_text(packet_markdown, encoding="utf-8")
+        json_path.write_text(packet_json, encoding="utf-8")
+        if not proof_path.exists():
+            proof_path.write_text(proof_text, encoding="utf-8")
+        if not baseline_notes_path.exists():
+            baseline_notes_path.write_text(baseline_notes_text, encoding="utf-8")
+        rerun_prompt_path.write_text(rerun_prompt_text, encoding="utf-8")
+        rerun_diff_path.write_text(rerun_diff_text, encoding="utf-8")
+        quickstart_path.write_text(quickstart_text, encoding="utf-8")
+        print(
+            "Written bundle: "
+            f"{md_path}, {json_path}, {proof_path}, {rerun_prompt_path}, "
+            f"{rerun_diff_path}, {quickstart_path}, {baseline_notes_path}"
+        )
+        return 0
+
+    if fmt == "json":
+        text = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+    else:
+        text = render_diagram_brief_markdown(payload)
+
+    if getattr(args, "output", None):
+        out_path = Path(args.output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(text, encoding="utf-8")
+        print(f"Written: {out_path}")
+    else:
+        sys.stdout.write(text)
+
+    return 0
+
+
 def _add_speaker_map_args(parser: argparse.ArgumentParser) -> None:
     """--speaker-map / --speaker-map-file 引数を追加する。"""
     parser.add_argument(
@@ -431,6 +583,34 @@ def main(argv: list[str] | None = None) -> int:
     p_validate.add_argument("input", help="Input file path (.txt or .csv)")
     _add_unlabeled_arg(p_validate)
 
+    # build-cue-packet
+    p_cue = subparsers.add_parser(
+        "build-cue-packet",
+        help="Build a text-only cue packet for external LLM/Automation",
+    )
+    p_cue.add_argument("input", help="Input file path (.txt or .csv)")
+    p_cue.add_argument("-o", "--output", help="Output packet path (default: stdout)")
+    p_cue.add_argument("--format", choices=["markdown", "json"], default="markdown",
+                       help="Packet format (default: markdown)")
+    p_cue.add_argument("--bundle-dir",
+                       help="Write packet markdown/json plus a workflow-proof template into DIR")
+    _add_speaker_map_args(p_cue)
+    _add_unlabeled_arg(p_cue)
+
+    # build-diagram-packet
+    p_diagram = subparsers.add_parser(
+        "build-diagram-packet",
+        help="Build a text-only diagram brief packet for external LLM/Automation",
+    )
+    p_diagram.add_argument("input", help="Input file path (.txt or .csv)")
+    p_diagram.add_argument("-o", "--output", help="Output packet path (default: stdout)")
+    p_diagram.add_argument("--format", choices=["markdown", "json"], default="markdown",
+                           help="Packet format (default: markdown)")
+    p_diagram.add_argument("--bundle-dir",
+                           help="Write packet markdown/json plus a workflow-proof template into DIR")
+    _add_speaker_map_args(p_diagram)
+    _add_unlabeled_arg(p_diagram)
+
     # inspect
     p_inspect = subparsers.add_parser("inspect", help="Inspect input and preview mapping")
     p_inspect.add_argument("input", help="Input file path (.txt or .csv)")
@@ -460,6 +640,10 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_csv(args)
         elif args.command == "validate":
             return _cmd_validate(args)
+        elif args.command == "build-cue-packet":
+            return _cmd_build_cue_packet(args)
+        elif args.command == "build-diagram-packet":
+            return _cmd_build_diagram_packet(args)
         elif args.command == "inspect":
             return _cmd_inspect(args)
         elif args.command == "generate-map":

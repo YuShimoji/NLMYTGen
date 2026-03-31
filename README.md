@@ -78,6 +78,21 @@ python -m src.cli.main inspect input.txt --speaker-map Host1=れいむ,Host2=ま
 python -m src.cli.main generate-map input.txt > speakers.txt
 # speakers.txt を編集して --speaker-map-file で使用
 
+# B-15 Phase 1: 外部 LLM / Automation に渡す cue packet を生成
+python -m src.cli.main build-cue-packet input.txt -o cue_packet.md
+
+# JSON packet として出力
+python -m src.cli.main build-cue-packet input.txt --format json -o cue_packet.json
+
+# packet markdown/json と workflow proof 雛形をまとめて出力
+python -m src.cli.main build-cue-packet input.txt --bundle-dir samples
+
+# B-16: 外部 LLM / Automation に渡す diagram brief packet を生成
+python -m src.cli.main build-diagram-packet input.txt -o diagram_packet.md
+
+# diagram packet markdown/json と workflow proof 雛形をまとめて出力
+python -m src.cli.main build-diagram-packet input.txt --bundle-dir samples
+
 # 同一話者の連続発話を結合
 python -m src.cli.main build-csv input.txt --merge-consecutive --speaker-map Host1=れいむ
 
@@ -97,6 +112,29 @@ python -m src.cli.main build-csv transcript.txt --unlabeled --merge-consecutive 
 python -m src.cli.main build-csv file1.txt file2.txt file3.txt --speaker-map Host1=れいむ,Host2=まりさ
 ```
 
+## 開発環境とテスト
+
+`pytest` は `requirements-dev.txt` に固定してある。仮想環境を用意してインストールすれば `python -m pytest` でテストを実行できる。
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements-dev.txt
+python -m pytest
+```
+
+`uv` を使う場合は `uv venv .venv && uv pip install -r requirements-dev.txt` と `uv run pytest` でも同じ結果になる（WSL の標準 Python には ensurepip が入っていないため、この方法の方が早い）。
+
+この repo では `.venv` が Windows 形式 (`Scripts/`) の場合がある。WSL から確認する場合は、Linux 側の別名 venv を切るのが安全。
+
+```bash
+~/.local/bin/uv venv .venv-linux
+~/.local/bin/uv pip install -r requirements-dev.txt --python .venv-linux
+TMPDIR=/tmp TMP=/tmp TEMP=/tmp .venv-linux/bin/python -m pytest
+```
+
+WSL で実行する場合は `TMPDIR=/tmp TMP=/tmp TEMP=/tmp` を設定してから `pytest` を実行すると一時ファイルのパスずれを避けられる。
+
 ## LLM の役割
 
 このプロジェクトで LLM を使う場合、責務は以下に限定する:
@@ -107,3 +145,6 @@ python -m src.cli.main build-csv file1.txt file2.txt file3.txt --speaker-map Hos
 - CSV 向けフィールド整形
 
 LLM は NotebookLM の代替としての主台本生成には使わない。
+Phase 1 では `build-cue-packet` により、外部 LLM / Automation に渡す text-only cue packet を生成する。
+現在の cue contract は、section ごとに `主背景 1 つ + 補助素材 1 つ` を基本とし、音の cue は optional 扱いに寄せている。
+図作成 bottleneck 向けには `build-diagram-packet` により、図版そのものではなく「図作成前の text-only brief」を生成できる。
