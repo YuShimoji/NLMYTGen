@@ -704,6 +704,82 @@ def reflow_utterance(
     return [chunk for chunk in result if chunk]
 
 
+def insert_inline_breaks(
+    text: str,
+    *,
+    chars_per_line: int,
+) -> str:
+    """話者行テキスト内に明示改行を挿入して、YMM4 自動折り返しを制御する。
+
+    B-16: chars_per_line ごとに大区切り候補で改行。
+    候補がなければ改行せず YMM4 に委ねる。
+    既に改行が含まれている場合はそのまま返す。
+    """
+    if not text or chars_per_line <= 0 or "\n" in text:
+        return text
+
+    total_width = display_width(text)
+    if total_width <= chars_per_line:
+        return text
+
+    widths = _width_at_positions(text)
+    all_candidates = _collect_break_candidates(text)
+    # 大区切りのみ使用 (小区切りでは行内改行しない)
+    major = [(p, pen, k) for p, pen, k in all_candidates if k.startswith("major")]
+    if not major:
+        return text
+
+    min_line_width = max(4, chars_per_line // 6)
+    result_parts: list[str] = []
+    prev_pos = 0
+    prev_width = 0
+
+    while prev_pos < len(text):
+        remaining_width = widths[len(text)] - prev_width
+        if remaining_width <= chars_per_line:
+            break  # 残りは1行に収まる
+
+        target_width = prev_width + chars_per_line
+        best_score = float("inf")
+        best_pos = -1
+
+        for pos, penalty, _kind in major:
+            if pos <= prev_pos:
+                continue
+            pos_width = widths[pos]
+            line_width = pos_width - prev_width
+            rest_width = widths[len(text)] - pos_width
+
+            # chars_per_line を大幅に超える位置はスキップ
+            if line_width > chars_per_line + chars_per_line // 3:
+                continue
+            # 短すぎる行はスキップ
+            if line_width < min_line_width:
+                continue
+            # 残りが短すぎる行を作らない
+            if rest_width < min_line_width:
+                continue
+
+            distance = abs(pos_width - target_width)
+            score = distance + penalty * 3
+            if score < best_score:
+                best_score = score
+                best_pos = pos
+
+        if best_pos <= 0:
+            break  # 候補なし、以降は YMM4 に委ねる
+
+        result_parts.append(text[prev_pos:best_pos])
+        prev_pos = best_pos
+        prev_width = widths[best_pos]
+
+    # 残りを追加
+    if prev_pos < len(text):
+        result_parts.append(text[prev_pos:])
+
+    return "\n".join(result_parts)
+
+
 def reflow_subtitles(
     output: YMM4CsvOutput,
     *,
@@ -774,5 +850,14 @@ def reflow_subtitles(
                     pending = parts + pending  # 再帰的に処理
             for chunk in final_chunks:
                 rows.append(YMM4CsvRow(speaker=row.speaker, text=chunk))
+
+    # B-16: 各話者行に行内改行を挿入
+    rows = [
+        YMM4CsvRow(
+            speaker=r.speaker,
+            text=insert_inline_breaks(r.text, chars_per_line=chars_per_line),
+        )
+        for r in rows
+    ]
 
     return YMM4CsvOutput(rows=tuple(rows))

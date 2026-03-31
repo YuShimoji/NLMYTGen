@@ -30,6 +30,20 @@ NLMYTGen の GUI LLM プロンプトを Custom GPT / Claude Project に固定化
 
 ---
 
+## 方式 C: Gemini Gems (無料)
+
+### 手順
+
+1. gemini.google.com で「Gem manager」→「New Gem」
+2. 以下を設定:
+   - **Name**: ゆっくり演出アシスタント
+   - **Instructions**: 下記「統合プロンプト」をそのまま貼り付け
+3. 「Save」
+
+Custom GPT と同等の固定化が無料で可能。NotebookLM は System Instruction 固定不可のため不向き。
+
+---
+
 ## 統合プロンプト (C-07 + S-8)
 
 以下を Instructions / Project instructions にそのまま貼り付けてください:

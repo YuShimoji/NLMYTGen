@@ -297,8 +297,9 @@ class TestReflowSubtitles:
         )
         output = self._make_output(text)
         result = reflow_subtitles(output, chars_per_line=40, max_lines=2)
-        # 再結合で元テキスト
-        assert "".join(r.text for r in result.rows) == text
+        # 再結合で元テキスト (\n は B-16 行内改行なので除去して比較)
+        joined = "".join(r.text.replace("\n", "") for r in result.rows)
+        assert joined == text
         # 複数行に分割される
         assert len(result.rows) >= 2
 
@@ -307,3 +308,47 @@ class TestReflowSubtitles:
         result = reflow_subtitles(output, chars_per_line=10, max_lines=2)
         for row in result.rows:
             assert row.speaker == "まりさ"
+
+
+class TestInsertInlineBreaks:
+    """B-16 insert_inline_breaks() のテスト。"""
+
+    def test_short_text_no_break(self):
+        from src.pipeline.assemble_csv import insert_inline_breaks
+        result = insert_inline_breaks("短いテキスト", chars_per_line=40)
+        assert "\n" not in result
+
+    def test_inserts_break_at_comma(self):
+        """読点で行内改行が挿入される。"""
+        from src.pipeline.assemble_csv import insert_inline_breaks
+        text = "人間が管理していれば理解できる体調不良も、アルゴリズムにとっては単なる「エラーコード」でしかありません。"
+        result = insert_inline_breaks(text, chars_per_line=40)
+        assert "\n" in result
+        # 改行を除去すると元テキストに戻る
+        assert result.replace("\n", "") == text
+
+    def test_preserves_existing_newline(self):
+        """既に改行がある場合はそのまま。"""
+        from src.pipeline.assemble_csv import insert_inline_breaks
+        text = "1行目\n2行目"
+        result = insert_inline_breaks(text, chars_per_line=40)
+        assert result == text
+
+    def test_bracket_pair_same_line(self):
+        """括弧ペア内で改行されない。"""
+        from src.pipeline.assemble_csv import insert_inline_breaks
+        text = "倉庫労働者の71.4%がハンドスキャナーによって秒単位で生産性を追跡されていると答えています。"
+        result = insert_inline_breaks(text, chars_per_line=40)
+        # 改行を除去すると元テキストに戻る
+        assert result.replace("\n", "") == text
+
+    def test_no_break_in_kanji_run(self):
+        """漢字連続の途中で改行されない。"""
+        from src.pipeline.assemble_csv import insert_inline_breaks
+        text = "パッケージのサイズの違いや加齢による体力の低下といった「現実空間の摩擦」を一切計算に入れていないんです。"
+        result = insert_inline_breaks(text, chars_per_line=40)
+        # 改行を除去すると元テキストに戻る
+        assert result.replace("\n", "") == text
+        # 漢字連続の途中で切れていないことを確認
+        for line in result.split("\n"):
+            assert not line.endswith("計") or "計算" in line  # 「計/算」にならない
