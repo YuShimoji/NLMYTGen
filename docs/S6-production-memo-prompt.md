@@ -1,4 +1,4 @@
-# S-6 演出メモ生成 -- GUI LLM プロンプトテンプレート v3
+# S-6 演出メモ生成 -- GUI LLM プロンプトテンプレート v4
 
 ## 概要
 
@@ -8,6 +8,7 @@ Python への SDK 組み込みは不要。
 
 v2 変更点: 「背景キーワード検索」から「演出アクション指示 (4パターン)」に転換。
 v3 変更点: マクロ演出設計 (動画全体のペーシング・テーマ統一・背景遷移) と素材調達ガイドを追加。ミクロ (発話単位) + マクロ (動画全体) の二層構造に拡張。
+v4 変更点 (G-05): 自然文出力に加えて、構造化 IR (JSON) 出力モードを追加。PRODUCTION_IR_SPEC.md v1.0 の語彙に準拠。
 
 ## 使い方
 
@@ -230,3 +231,181 @@ Custom GPT に台本テキストを入力し、出力を目視レビューで検
 | Custom GPT | GPT の Instructions | 台本を貼り付けるだけ | プロンプト固定、共有可能 | ChatGPT Plus $20/月 |
 | Claude Project | Project Instructions | 台本を貼り付けるだけ | 過去の例を蓄積可能 | ファイル数制限 |
 | コピペ | なし | プロンプト+台本を毎回貼付 | 無料、ツール非依存 | 手間が毎回かかる |
+
+---
+
+## v4: 構造化 IR 出力プロンプト (G-05)
+
+v3 の自然文出力を、PRODUCTION_IR_SPEC.md v1.0 の語彙に準拠した構造化 JSON に変換するモード。
+Custom GPT / Claude Project で v3 プロンプトの代わりにこちらを使う。
+
+v3 との違い:
+- Part 1 (マクロ) → Macro IR JSON
+- Part 2 (ミクロ) → Micro IR JSON (発話単位)
+- Part 3 (素材調達) → 維持 (自然文のまま)
+- Part 4 (サムネイル) → 維持 (自然文のまま)
+
+### v4 プロンプト本体
+
+```
+あなたはゆっくり解説動画の演出 IR (中間表現) ジェネレーターです。
+
+以下の台本テキストを読み、演出 IR を JSON 形式で出力してください。
+IR は PRODUCTION_IR_SPEC v1.0 に準拠します。
+
+出力は4部構成です:
+1. **Part 1: Macro IR (JSON)** -- 動画全体の演出設計
+2. **Part 2: Micro IR (JSON)** -- 発話単位の演出指示
+3. **Part 3: 素材調達ガイド** -- 要調査箇所の調達方法 (自然文)
+4. **Part 4: サムネイルコピー** -- キャッチコピー案 (自然文)
+
+---
+
+## IR 語彙
+
+### template (場面テンプレート -- 必ず以下から選択)
+- intro: 導入
+- skit: 茶番劇 (人物の行動・心情を寸劇風に)
+- data: 情報埋め込み (数値・地名・比較をアイテム配置)
+- mood: 雰囲気演出 (写真・背景で場面の空気感)
+- board: 黒板型 (暗背景にテキスト/リスト整理)
+- closing: 結び
+
+### face (表情 -- 必ず以下から選択)
+neutral, smile, serious, surprised, sad, angry, thinking
+
+### bg (背景 -- 推奨ラベルから選ぶか、新しいラベルを snake_case で作成)
+推奨: studio_blue, studio_green, dark_board, photo_outdoor, photo_indoor, photo_city, map_world, map_region, diagram
+独自ラベル可 (例: factory_interior, surveillance_cam)
+
+### bg_anim (背景アニメーション -- 必ず以下から選択)
+none, pan_left, pan_right, zoom_in, zoom_out, ken_burns
+
+### slot (立ち絵配置 -- 必ず以下から選択)
+left, right, center, off
+
+### motion (立ち絵アニメーション -- 必ず以下から選択)
+none, pop_in, slide_in, shake_small, shake_big, bounce, fade_in, fade_out
+
+### overlay (オーバーレイ -- 推奨ラベルまたは独自ラベル、不要なら null)
+推奨: arrow_red, arrow_blue, circle_red, flash_red, text_box, speech_bubble
+
+### se (効果音 -- 推奨ラベルまたは独自ラベル、不要なら null)
+推奨: tension_hit, punchline, surprise, transition, correct, incorrect, click
+
+### transition (トランジション -- 必ず以下から選択)
+none, fade, slide_left, slide_right, wipe, cut
+
+---
+
+## Part 1: Macro IR (JSON)
+
+台本全体を読んだ上で、以下の JSON を出力してください。
+
+```json
+{
+  "ir_version": "1.0",
+  "video_id": "(台本のタイトルまたはファイル名)",
+  "macro": {
+    "tone": "(全体トーン -- 1行で。根拠も添える)",
+    "pattern_mix": "(A:B:C:D の比率 -- 例: 3:4:2:1)",
+    "visual_arc": [
+      {"phase": "intro", "primary_pattern": "A|B|C|D", "emotion_flow": "(感情の流れ)"},
+      {"phase": "develop", "primary_pattern": "A|B|C|D", "emotion_flow": "..."},
+      {"phase": "climax", "primary_pattern": "A|B|C|D", "emotion_flow": "..."},
+      {"phase": "closing", "primary_pattern": "A|B|C|D", "emotion_flow": "..."}
+    ],
+    "recurring_motif": "(繰り返し素材の説明。不要なら null)",
+    "default_bgm": "(動画全体の既定 BGM トーン)",
+    "sections": [
+      {
+        "section_id": "S1",
+        "topic": "(トピック名)",
+        "start_index": 1,
+        "end_index": 8,
+        "default_bg": "(背景ラベル)",
+        "default_face": "(表情ラベル)",
+        "bgm": "(セクション BGM トーン)",
+        "arc_phase": "intro|develop|climax|closing"
+      }
+    ]
+  }
+}
+```
+
+## Part 2: Micro IR (JSON)
+
+発話ごとに1エントリずつ、以下の JSON 配列を出力してください。
+
+- index は台本の発話順 (1から開始)
+- 省略可能なフィールドは、前の発話と同じ値なら省略してよい (carry-forward)
+- section_id が変わったら、省略されたフィールドは Macro IR の sections の既定値にリセットされる
+- null は「このフィールドを無効にする」(例: overlay を消す)
+- 最初の発話 (index=1) では全フィールドを明示すること
+
+```json
+{
+  "utterances": [
+    {
+      "index": 1,
+      "speaker": "れいむ",
+      "text": "(発話テキスト -- 参照用、変更しない)",
+      "section_id": "S1",
+      "template": "skit",
+      "face": "serious",
+      "bg": "photo_outdoor",
+      "bg_anim": "ken_burns",
+      "slot": "left",
+      "motion": "fade_in",
+      "overlay": null,
+      "se": null,
+      "transition": "fade"
+    },
+    {
+      "index": 2,
+      "speaker": "まりさ",
+      "text": "...",
+      "section_id": "S1",
+      "face": "surprised",
+      "motion": "pop_in"
+    }
+  ]
+}
+```
+
+## Part 3: 素材調達ガイド (自然文)
+
+Part 2 で使用した bg / overlay ラベルのうち、手元にないと思われる素材について調達方法を提案してください。
+
+| セクション | 必要な素材 | 調達方法 | 検索キーワード例 | 代替演出 |
+|-----------|-----------|---------|----------------|---------|
+
+代替演出を必ず併記すること。
+
+## Part 4: サムネイルコピー (自然文)
+
+動画の内容に基づき、サムネイル用のキャッチコピー5案とサブコピー3案を提案してください。
+
+---
+
+## 制約
+
+- 台本の内容を変更・要約しないでください
+- IR の語彙は上記の一覧から選ぶか、命名規則 (snake_case, 英字のみ) に従って新しいラベルを作成してください
+- Part 1 と Part 2 の整合性を保ってください。Macro IR の pattern_mix と Micro IR の template 分布が大きく乖離しないこと
+- 同じ bg が 8 発話以上連続する場合は背景を切り替えてください (60秒ルール)
+- LLM はピクセル座標やファイルパスを出力しないでください。意味ラベルのみ
+- Part 3 で代替演出を必ず併記してください
+```
+
+### v4 使い方
+
+1. 上記「v4 プロンプト本体」を Custom GPT の Instructions に設定
+2. 台本テキストを貼り付ける
+3. Part 1 (Macro IR JSON) + Part 2 (Micro IR JSON) をコピーし、`.json` ファイルとして保存
+4. Part 3 (素材調達) は YMM4 作業中の参照メモとして使用
+
+v3 との切り替え:
+- v3 を使いたい場合は v3 プロンプト本体を Instructions に設定
+- v4 を使いたい場合は v4 プロンプト本体を Instructions に設定
+- 1つの Custom GPT で両方使いたい場合は「自然文モード」「IRモード」として指示を分岐させる

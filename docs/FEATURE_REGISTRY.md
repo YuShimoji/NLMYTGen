@@ -111,7 +111,7 @@
 | G-02b | 完成品 ymmp 構造解析 (研究のみ、1件限定) | proposed | L3 | ImageItem/TachieItem のキー構造を1件確認。自前生成には進まない。2ブロック制限 |
 | G-03 | 演出適用ツール (IToolPlugin) | hold | L3 | G-01 が前提。タイムライン操作 API 非公開のため凍結 |
 | G-04 | ymmp 背景/表情自動差し替え | hold | L3 | ymmp 直接編集は控える。G-02b + 段階5の判断結果を踏まえて再検討 |
-| G-05 | C-07 v4 IR 出力プロンプト | proposed | L2 | G-02 の IR 語彙が前提。Custom GPT が自然文演出メモではなく構造化 IR (CSV/JSON) を出力するようプロンプト改訂 |
+| G-05 | C-07 v4 IR 出力プロンプト | done | L2 | G-02 done が前提 (充足)。Custom GPT が PRODUCTION_IR_SPEC v1.0 準拠の構造化 IR (JSON) を出力するようプロンプト改訂。`docs/S6-production-memo-prompt.md` v4 セクション。proof 待ち |
 | G-06 | IR → YMM4 接続方式の決定 + 実装 | proposed | L2/L3 | G-02b + G-05 の結果で判断。ymmp 変換器を作るか、手動配置ガイドとして IR を活用するか |
 
 ---
