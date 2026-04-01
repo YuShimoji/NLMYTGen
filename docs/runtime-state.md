@@ -5,8 +5,8 @@
 ## 現在位置
 - project: NLMYTGen
 - lane: Advance
-- slice: G-05 done (proof 待ち)。G-02b or G-06 が次候補
-- next_action: Custom GPT で v4 プロンプトの proof 実施 → G-02b (ymmp 解析研究) or G-06 (接続方式決定)
+- slice: G-02b done + G-05 done (proof 待ち)。G-06 (接続方式決定) が次
+- next_action: G-06 の判断。bg+face 差し替えが最小実用単位。motion 等は手動ガイドで対応
 - 案件モード: CLI artifact
 
 ## 主成果物
@@ -40,9 +40,9 @@
 
 ## FEATURE_REGISTRY 状態サマリ (2026-04-01)
 
-- done: 23件（A-01〜A-02, A-04, B-01〜B-17, C-07 v3→v4, C-08, G-02, G-05）
+- done: 24件（A-01〜A-02, A-04, B-01〜B-17, C-07 v3→v4, C-08, G-02, G-02b, G-05）
 - approved: 0件
-- proposed: 2件（G-02b ymmp構造解析研究, G-06 IR→YMM4接続方式決定）
+- proposed: 1件（G-06 IR→YMM4接続方式決定）
 - info: 2件（C-01, C-06）
 - hold: 4件（A-03, D-02, E-01, E-02）
 - quarantined: 2件（F-01, F-02）
