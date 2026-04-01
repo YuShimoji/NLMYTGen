@@ -22,6 +22,7 @@ class PatchResult:
     face_changes: int = 0
     bg_changes: int = 0
     bg_additions: int = 0
+    tachie_syncs: int = 0
     warnings: list[str] | None = None
 
     def __post_init__(self) -> None:
@@ -148,19 +149,31 @@ def patch_ymmp(
                     f"face label '{face_label}' not found in face_map"
                 )
 
-    # --- bg 差し替え ---
-    # ImageItem / VideoItem を Frame 順で並べる
-    bg_items = [
-        item
-        for item in items
-        if _item_type(item) in ("ImageItem", "VideoItem")
-        and item.get("Layer", -1) == 0  # 背景は通常 Layer 0
-    ]
-    bg_items.sort(key=lambda x: x.get("Frame", 0))
+    # --- TachieItem (立ち絵) ---
+    # TachieItem は元の配置を維持する。
+    # VoiceItem.TachieFaceParameter が発話ごとの表情制御を担うため、
+    # TachieItem の Frame/Length は変更しない。
 
-    # セクションごとの bg を適用
+    # --- bg 差し替え ---
+    # 既存の bg_items (Layer 0 の ImageItem/VideoItem) を削除し、
+    # セクションごとに正しい Frame/Length で再配置する
+    bg_item_types = ("ImageItem", "VideoItem")
+    existing_bg = [
+        item for item in items
+        if _item_type(item) in bg_item_types
+        and item.get("Layer", -1) == 0
+    ]
+    # テンプレートとして最初の bg_item を保持 (プロパティのコピー元)
+    bg_template = existing_bg[0] if existing_bg else None
+
+    # 既存 bg を items から除去
+    for bg_item in existing_bg:
+        items.remove(bg_item)
+        result.bg_changes += 1
+
+    # セクションごとに新しい bg_item を生成
     sections = ir_data.get("macro", {}).get("sections", [])
-    for section in sections:
+    for sec_idx, section in enumerate(sections):
         bg_label = section.get("default_bg")
         if not bg_label:
             continue
@@ -172,23 +185,56 @@ def patch_ymmp(
             continue
 
         start_idx = section.get("start_index", 1) - 1
-        # このセクションに対応する VoiceItem の Frame を取得
-        if start_idx < len(voice_items):
-            section_frame = voice_items[start_idx].get("Frame", 0)
-        else:
-            continue
+        end_idx = section.get("end_index", start_idx + 1) - 1
 
-        # section_frame に最も近い bg_item を探して差し替え
-        best = None
-        best_dist = float("inf")
-        for bg_item in bg_items:
-            dist = abs(bg_item.get("Frame", 0) - section_frame)
-            if dist < best_dist:
-                best_dist = dist
-                best = bg_item
-        if best and best.get("FilePath") != bg_path:
-            best["FilePath"] = bg_path
-            result.bg_changes += 1
+        # セクションの Frame 範囲を計算
+        # 開始: このセクションの最初の VoiceItem の Frame
+        # 終了: 次のセクションの最初の VoiceItem の Frame (なければタイムライン末尾)
+        if start_idx >= len(voice_items):
+            continue
+        section_start = voice_items[start_idx].get("Frame", 0)
+        # 最初のセクションはタイムライン冒頭 (Frame=0) から開始
+        if sec_idx == 0:
+            section_start = 0
+
+        # 次のセクションの開始を探す
+        next_section_start = None
+        if sec_idx + 1 < len(sections):
+            next_start_idx = sections[sec_idx + 1].get("start_index", 1) - 1
+            if next_start_idx < len(voice_items):
+                next_section_start = voice_items[next_start_idx].get("Frame", 0)
+
+        if next_section_start is not None:
+            section_end = next_section_start
+        else:
+            # 最後のセクション: タイムライン末尾まで
+            last_vi = voice_items[-1]
+            section_end = last_vi.get("Frame", 0) + last_vi.get("Length", 0)
+
+        section_length = max(section_end - section_start, 1)
+
+        # bg_item を生成
+        if bg_template:
+            import copy
+            new_bg = copy.deepcopy(bg_template)
+        else:
+            new_bg = {
+                "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+                "X": {"Values": [{"Value": 0.0}], "Span": 0.0, "AnimationType": "\u306a\u3057"},
+                "Y": {"Values": [{"Value": 0.0}], "Span": 0.0, "AnimationType": "\u306a\u3057"},
+                "Zoom": {"Values": [{"Value": 100.0}], "Span": 0.0, "AnimationType": "\u306a\u3057"},
+                "Opacity": {"Values": [{"Value": 100.0}], "Span": 0.0, "AnimationType": "\u306a\u3057"},
+                "Layer": 0,
+                "Group": 0,
+                "IsLocked": False,
+                "IsHidden": False,
+            }
+        new_bg["FilePath"] = bg_path
+        new_bg["Frame"] = section_start
+        new_bg["Length"] = section_length
+        new_bg["Layer"] = 0
+        items.append(new_bg)
+        result.bg_additions += 1
 
     return result
 

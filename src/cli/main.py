@@ -765,7 +765,7 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
     result = patch_ymmp(ymmp_data, ir_data, face_map, bg_map)
 
     print(f"Face changes: {result.face_changes}")
-    print(f"BG changes: {result.bg_changes}")
+    print(f"BG removed: {result.bg_changes}, BG added: {result.bg_additions}")
     if result.warnings:
         for w in result.warnings:
             print(f"  Warning: {w}", file=sys.stderr)
