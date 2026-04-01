@@ -130,9 +130,27 @@ Length: int  -- 表示フレーム数
 - VoiceItem は台本読込で生成済みのため、face の差し替えは「既存 VoiceItem の TachieFaceParameter を書き換える」形になる
 - VideoItem (背景) の追加・差し替えは比較的安全 (音声に依存しない)
 
+## 実機検証 (2026-04-02)
+
+テスト用 ymmp (`test - marisaFX.ymmp`, 876KB) を Python で書き換え、YMM4 で開く検証を実施。
+
+| テスト | 差し替え内容 | 結果 |
+|--------|------------|------|
+| test_verify_1_eye | Eye 00→10 | OK (正常に開ける、音声再生OK) |
+| test_verify_2_mouth | Mouth 00→10 | OK (口の見た目が変化) |
+| test_verify_3_multi | Eye 00→20 + Mouth 00→05 + Body 01→00 | OK (3パーツ同時差し替え正常) |
+
+**確認済み事実:**
+- Python で ymmp (JSON) のパーツファイルパスを書き換えて YMM4 で正常に開ける
+- VoiceCache (Base64 音声データ) は書き換えの影響を受けない
+- TachieFaceParameter (VoiceItem) と TachieItemParameter (TachieItem) の両方で差し替え有効
+- 複数パーツの同時差し替えでも問題なし
+
 ## 結論
 
 - ymmp は JSON であり、キー構造は読み取り可能
+- **表情パーツの差し替えは実機検証済みで動作する**
 - IR → ymmp の接続で最も実用的なのは **bg (背景) の差し替え** と **face (表情) の差し替え**
 - motion / transition / bg_anim は VideoEffects の構造が複雑で、自前構築のコストが高い
 - G-06 の判断材料として: 「bg + face の半自動差し替え」が最小実用単位。motion 等は手動配置ガイドで対応
+- **二段階方式 (台本読込で音声確保 → Python で ymmp 後処理) は実現可能と実証された**
