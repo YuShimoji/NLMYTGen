@@ -65,6 +65,7 @@
 | B-14 | aggressive clause chunking | done | L2 | `--balance-lines` の内部改善として、複数文発話の中にある単一長文も sentence ごとに再展開し、通常候補が尽きた場合は引用句・機能語まで使った aggressive chunking fallback を適用。`uv run pytest` 56 PASS、sample dry-run で 57 発話 → 95 行、overflow candidates は 3 件まで減少 |
 | B-15 | トップダウン改行 Phase 1: ページ間分割 | done | L2 | ページ間 (話者行) 分割をトップダウン方式に再設計。大区切り限定、閉じ括弧+助詞保護、カタカナ語/数字/漢字連続/括弧ペア内の分断禁止、再帰的 reflow。67テストPASS。ユーザー検証でページ間バランス偏り解消を確認。行内折り返し制御は B-16 へ |
 | B-16 | トップダウン改行 Phase 2: 行内折り返し制御 | done | L2 | `insert_inline_breaks()` で chars_per_line ごとに大区切り候補で行内改行 `\n` を挿入。`reflow_subtitles()` の最終段に統合。候補がなければ YMM4 自動折り返しに委ねる。72テストPASS。手動検証待ち |
+| B-17 | 字幕改行アルゴリズム v2 (統合リフロー) | done | L2 | B-15/B-16 を統合リフローとして再設計。`reflow_utterance()` ベースの一貫したトップダウン方式。91テストPASS |
 
 ### C. YMM4 連携・演出 (L3-YMM4内部)
 
@@ -106,7 +107,7 @@
 | ID | 機能 | ステータス | レイヤー | 備考 |
 |----|------|-----------|---------|------|
 | G-01 | YMM4 IToolPlugin feasibility spike | hold | L3 | タイムライン操作 API 非公開。優先度最下位。他経路で不十分な場合のみ検討 |
-| G-02 | 演出 IR 語彙定義 | proposed | L2 | **最優先。** template/face/bg/slot/motion/overlay/se の語彙を定義。YMM4 にもツールにも依存しない中間表現。成果物: `docs/PRODUCTION_IR_SPEC.md` |
+| G-02 | 演出 IR 語彙定義 | done | L2 | `docs/PRODUCTION_IR_SPEC.md` v1.0。template/face/bg/bg_anim/slot/motion/overlay/se/transition の9フィールド。Macro+Micro 二層構造、JSON/CSV 二重表現、carry-forward ルール |
 | G-02b | 完成品 ymmp 構造解析 (研究のみ、1件限定) | proposed | L3 | ImageItem/TachieItem のキー構造を1件確認。自前生成には進まない。2ブロック制限 |
 | G-03 | 演出適用ツール (IToolPlugin) | hold | L3 | G-01 が前提。タイムライン操作 API 非公開のため凍結 |
 | G-04 | ymmp 背景/表情自動差し替え | hold | L3 | ymmp 直接編集は控える。G-02b + 段階5の判断結果を踏まえて再検討 |
