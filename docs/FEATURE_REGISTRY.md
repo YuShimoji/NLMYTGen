@@ -105,10 +105,12 @@
 
 | ID | 機能 | ステータス | レイヤー | 備考 |
 |----|------|-----------|---------|------|
-| G-01 | YMM4 IToolPlugin feasibility spike | proposed | L3 | .NET/C# で最小プラグインをビルドし、YMM4 内部 API のアクセス範囲を実機検証。タイムライン操作可否、IPC 通信可否を確認。詳細: `docs/YMM4-AUTOMATION-RESEARCH.md` |
-| G-02 | ymmp 構造解析 + スキーマ文書化 | proposed | L3 | 台本読込後の ymmp サンプルから全フィールドを抽出し、Python から安全に編集できるスキーマを作成。G-01 の結果次第で主経路になる可能性あり |
-| G-03 | 演出適用ツール (IToolPlugin) | proposed | L3 | C-07 v3 の演出メモを YMM4 内で読み込み、背景/表情/BGM を半自動適用するツール。G-01 の結果が前提 |
-| G-04 | ymmp 背景/表情自動差し替え | proposed | L3 | 台本読込後の ymmp を Python で開き、C-07 v3 の指示に基づいて背景/表情を差し替え。G-02 の構造解析が前提 |
+| G-01 | YMM4 IToolPlugin feasibility spike | proposed | L3 | タイムライン操作 API が非公開のため優先度最下位。YMovieHelper 連携で不十分な場合の代替経路 |
+| G-02 | YMovieHelper 詳細調査 + 入力形式把握 | proposed | L3 | **最優先。** CSV 入力で表情変更 + 動画切り替え対応の既存ツール。入力仕様を把握し NLMYTGen 出力と接続可能か評価 |
+| G-02b | 完成品 ymmp 構造解析 (研究のみ) | proposed | L3 | ymmp を編集せず、構造を解析して再現可能性を研究。デッドファイルを作らない |
+| G-03 | 演出適用ツール (IToolPlugin) | proposed | L3 | G-01 の結果が前提。タイムライン操作 API 非公開のため実現可能性が低い |
+| G-04 | ymmp 背景/表情自動差し替え | hold | L3 | ymmp 直接編集は控える (過去の失敗経験)。G-02b の研究結果を踏まえて再検討 |
+| G-05 | C-07 v3 → YMovieHelper 入力変換 (build-ymh) | proposed | L2 | G-02 の結果が前提。演出メモ + CSV を YMovieHelper 入力形式に変換する Python サブコマンド |
 
 ---
 
