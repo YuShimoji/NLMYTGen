@@ -647,6 +647,17 @@ def main(argv: list[str] | None = None) -> int:
     p_genmap.add_argument("--format", choices=["text", "json"], default="text",
                           help="Output format (default: text)")
 
+    # extract-template
+    p_extract = subparsers.add_parser(
+        "extract-template",
+        help="Extract face_map / bg_map from an existing ymmp",
+    )
+    p_extract.add_argument("ymmp", help="Input ymmp file path")
+    p_extract.add_argument("-o", "--output-dir",
+                           help="Output directory for face_map.json and bg_map.json")
+    p_extract.add_argument("--format", choices=["json", "summary"], default="summary",
+                           help="Output format (default: summary to stdout)")
+
     # patch-ymmp
     p_patch = subparsers.add_parser(
         "patch-ymmp",
@@ -676,6 +687,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_generate_map(args)
         elif args.command == "fetch-topics":
             return _cmd_fetch_topics(args)
+        elif args.command == "extract-template":
+            return _cmd_extract_template(args)
         elif args.command == "patch-ymmp":
             return _cmd_patch_ymmp(args)
         else:
@@ -684,6 +697,52 @@ def main(argv: list[str] | None = None) -> int:
     except (ValueError, FileNotFoundError, json.JSONDecodeError) as e:
         print(f"Error: {e}", file=sys.stderr)
         return 1
+
+
+def _cmd_extract_template(args: argparse.Namespace) -> int:
+    from src.pipeline.ymmp_patch import load_ymmp
+    from src.pipeline.ymmp_extract import (
+        extract_template,
+        generate_face_map,
+        generate_bg_map,
+    )
+
+    ymmp_data = load_ymmp(args.ymmp)
+    result = extract_template(ymmp_data)
+
+    face_map = generate_face_map(result.face_patterns)
+    bg_map = generate_bg_map(result.bg_paths)
+
+    if args.format == "summary" and not args.output_dir:
+        print(f"Characters: {result.characters}")
+        print(f"VoiceItems: {result.voice_item_count}")
+        print(f"BG items: {result.bg_item_count}")
+        print(f"\n--- Face patterns ({len(face_map)} unique) ---")
+        for label, parts in face_map.items():
+            print(f"  {label}:")
+            for k, v in parts.items():
+                print(f"    {k}: {Path(v).name}")
+        print(f"\n--- BG paths ({len(bg_map)} unique) ---")
+        for label, path in bg_map.items():
+            print(f"  {label}: {Path(path).name}")
+        print("\nTo export JSON files, add -o <output_dir>")
+        return 0
+
+    out_dir = Path(args.output_dir) if args.output_dir else Path(".")
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    face_path = out_dir / "face_map.json"
+    with open(face_path, "w", encoding="utf-8") as f:
+        json.dump(face_map, f, ensure_ascii=False, indent=2)
+    print(f"face_map: {face_path} ({len(face_map)} patterns)")
+
+    bg_path = out_dir / "bg_map.json"
+    with open(bg_path, "w", encoding="utf-8") as f:
+        json.dump(bg_map, f, ensure_ascii=False, indent=2)
+    print(f"bg_map: {bg_path} ({len(bg_map)} paths)")
+
+    print(f"\nNext step: rename JSON keys to IR labels (serious, smile, studio_blue, etc.)")
+    return 0
 
 
 def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
