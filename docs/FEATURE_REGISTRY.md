@@ -110,7 +110,7 @@
 | G-02b | 完成品 ymmp 構造解析 (研究のみ) | proposed | L3 | ymmp を編集せず、構造を解析して再現可能性を研究。デッドファイルを作らない |
 | G-03 | 演出適用ツール (IToolPlugin) | proposed | L3 | G-01 の結果が前提。タイムライン操作 API 非公開のため実現可能性が低い |
 | G-04 | ymmp 背景/表情自動差し替え | hold | L3 | ymmp 直接編集は控える (過去の失敗経験)。G-02b の研究結果を踏まえて再検討 |
-| G-05 | C-07 v3 → YMovieHelper 入力変換 (build-ymh) | proposed | L2 | G-02 の結果が前提。演出メモ + CSV を YMovieHelper 入力形式に変換する Python サブコマンド |
+| G-05 | C-07 v3 → YMovieHelper 入力変換 (build-ymh) | proposed | L2 | G-02 の結果が前提。演出メモ + CSV を YMovieHelper 入力形式に変換する Python サブコマンド。テンプレート定義ファイル (JSON) の管理を含む。テンプレート名 → 背景/表情/BGM/SE のマッピング解決 |
 
 ---
 
