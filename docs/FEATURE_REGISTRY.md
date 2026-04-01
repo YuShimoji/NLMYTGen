@@ -105,12 +105,13 @@
 
 | ID | 機能 | ステータス | レイヤー | 備考 |
 |----|------|-----------|---------|------|
-| G-01 | YMM4 IToolPlugin feasibility spike | proposed | L3 | タイムライン操作 API が非公開のため優先度最下位。YMovieHelper 連携で不十分な場合の代替経路 |
-| G-02 | YMovieHelper 詳細調査 + 入力形式把握 | proposed | L3 | **最優先。** CSV 入力で表情変更 + 動画切り替え対応の既存ツール。入力仕様を把握し NLMYTGen 出力と接続可能か評価 |
-| G-02b | 完成品 ymmp 構造解析 (研究のみ) | proposed | L3 | ymmp を編集せず、構造を解析して再現可能性を研究。デッドファイルを作らない |
-| G-03 | 演出適用ツール (IToolPlugin) | proposed | L3 | G-01 の結果が前提。タイムライン操作 API 非公開のため実現可能性が低い |
-| G-04 | ymmp 背景/表情自動差し替え | hold | L3 | ymmp 直接編集は控える (過去の失敗経験)。G-02b の研究結果を踏まえて再検討 |
-| G-05 | C-07 v3 → YMovieHelper 入力変換 (build-ymh) | proposed | L2 | G-02 の結果が前提。演出メモ + CSV を YMovieHelper 入力形式に変換する Python サブコマンド。テンプレート定義ファイル (JSON) の管理を含む。テンプレート名 → 背景/表情/BGM/SE のマッピング解決 |
+| G-01 | YMM4 IToolPlugin feasibility spike | hold | L3 | タイムライン操作 API 非公開。優先度最下位。他経路で不十分な場合のみ検討 |
+| G-02 | 演出 IR 語彙定義 | proposed | L2 | **最優先。** template/face/bg/slot/motion/overlay/se の語彙を定義。YMM4 にもツールにも依存しない中間表現。成果物: `docs/PRODUCTION_IR_SPEC.md` |
+| G-02b | 完成品 ymmp 構造解析 (研究のみ、1件限定) | proposed | L3 | ImageItem/TachieItem のキー構造を1件確認。自前生成には進まない。2ブロック制限 |
+| G-03 | 演出適用ツール (IToolPlugin) | hold | L3 | G-01 が前提。タイムライン操作 API 非公開のため凍結 |
+| G-04 | ymmp 背景/表情自動差し替え | hold | L3 | ymmp 直接編集は控える。G-02b + 段階5の判断結果を踏まえて再検討 |
+| G-05 | C-07 v4 IR 出力プロンプト | proposed | L2 | G-02 の IR 語彙が前提。Custom GPT が自然文演出メモではなく構造化 IR (CSV/JSON) を出力するようプロンプト改訂 |
+| G-06 | IR → YMM4 接続方式の決定 + 実装 | proposed | L2/L3 | G-02b + G-05 の結果で判断。ymmp 変換器を作るか、手動配置ガイドとして IR を活用するか |
 
 ---
 

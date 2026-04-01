@@ -18,8 +18,9 @@
 - `.ymmp` を直接編集しても音声合成は成立しない。音声合成は YMM4 の台本読込経由でのみ行う。
 - YMM4 / `.ymmp` の直接編集や画面効果の自動注入は高リスクなため、LLM や Automation を使う場合も、まずはテキスト補助・コピペ用メモ・プリセット候補提示に留める。direct edit は workflow proof なしに採用しない。
 - GUI/API/SDK 追加は、value path と境界違反の有無を確認し、必要なら ADR を通してから扱う。
-- YMM4 自動化の主経路は「外部事前構築 (第二)」= YMovieHelper 連携。「プラグイン拡張 (第四)」は第二で足りない部分のみ後から足す。
-- 新しい自動化経路を提案する際は、既存の YMovieHelper 連携経路との比較を必須とする。代替経路が優位である根拠なしに経路を増やさない。
+- YMM4 自動化の主経路は「演出 IR 定義 → テンプレート資産蓄積 → 接続方式判断」の段階的アプローチ。特定の外部ツールを主軸にしない。
+- 新しい自動化経路を提案する際は、現行ロードマップ (YMM4-AUTOMATION-RESEARCH.md セクション4) の段階構成との整合を示すこと。根拠なしに経路を増やさない。
+- YMovieHelper は参照実装 (設計思想の観察対象)。「YMovieHelper を使う」「YMovieHelper に接続する」とは書かない。
 
 ## Prohibited Interpretations / Shortcuts
 - rejected を「その工程は不要」と解釈しない。代替の手動導線は WORKFLOW に残す。
