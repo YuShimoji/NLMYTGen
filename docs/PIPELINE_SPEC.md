@@ -247,10 +247,124 @@ class FeedEntry:
 
 ---
 
+## build-cue-packet サブコマンド (B-15 Phase 1)
+
+NotebookLM transcript から、外部 LLM / Automation に渡す text-only の cue packet を生成する。
+この packet は S-6 の背景・演出メモ準備に使う。YMM4 / `.ymmp` の直接編集は行わない。
+
+### 使用方法
+
+```bash
+python -m src.cli.main build-cue-packet input.txt [--format markdown|json] [-o packet.md]
+python -m src.cli.main build-cue-packet input.txt --bundle-dir samples
+```
+
+### 引数
+
+| 引数 | 必須 | 既定値 | 説明 |
+|------|------|--------|------|
+| input | 必須 | — | 入力 transcript (`.txt` / `.csv`) |
+| --format | 任意 | markdown | packet 形式（markdown / json） |
+| -o, --output | 任意 | stdout | 出力先ファイルパス |
+| --bundle-dir | 任意 | — | packet markdown/json と workflow proof 雛形をまとめて出力 |
+| --speaker-map | 任意 | — | 話者名→表示名のマッピングを packet context に含める |
+| --speaker-map-file | 任意 | — | JSON または key=value の話者マップを読込 |
+| --unlabeled | 任意 | false | ラベルなし transcript を Speaker_A/B 交互として扱う |
+
+### 出力内容
+
+- feature id / phase / objective
+- LLM に守らせる constraints
+- response preferences（section 数、背景密度、sound cue optional など）
+- cue memo の output contract
+- speaker list / speaker map / role analysis
+- section seed（話題転換句と発話数をもとにした暫定セクション境界）
+- 全発話 transcript
+
+### cue memo contract の運用メモ
+
+- 背景候補は section ごとに `primary_background` を 1 つ、必要なら `supporting_visual` を 1 つまでに寄せる
+- `sound_cue_optional` は任意項目で、明確に効く場面だけ書く
+- cue memo は制作判断を拘束しすぎず、方向づけを優先する
+
+### 境界
+
+- 主台本のゼロ生成はしない
+- transcript rewrite は Phase 1 ではしない
+- YMM4 / `.ymmp` direct edit はしない
+- 画像 / 音声 / 動画は生成しない
+
+### 想定運用
+
+1. `build-cue-packet` で packet を生成
+2. 外部 LLM / Automation に packet を渡して cue memo を得る
+3. 人間が cue memo を見て S-6 の背景・演出設定を行う
+
+`--bundle-dir` を使うと、packet markdown/json に加えて workflow proof 記録用の Markdown 雛形も同時に出力する。
+
+---
+
+## build-diagram-packet サブコマンド (B-16)
+
+NotebookLM transcript から、外部 LLM / Automation に渡す text-only の diagram brief packet を生成する。
+この packet は S-6 の図作成前メモ準備に使う。画像生成や YMM4 / `.ymmp` の直接編集は行わない。
+
+### 使用方法
+
+```bash
+python -m src.cli.main build-diagram-packet input.txt [--format markdown|json] [-o packet.md]
+python -m src.cli.main build-diagram-packet input.txt --bundle-dir samples
+```
+
+### 引数
+
+| 引数 | 必須 | 既定値 | 説明 |
+|------|------|--------|------|
+| input | 必須 | — | 入力 transcript (`.txt` / `.csv`) |
+| --format | 任意 | markdown | packet 形式（markdown / json） |
+| -o, --output | 任意 | stdout | 出力先ファイルパス |
+| --bundle-dir | 任意 | — | packet markdown/json、workflow proof 雛形、rerun prompt、rerun diff template、quickstart、baseline notes をまとめて出力 |
+| --speaker-map | 任意 | — | 話者名→表示名のマッピングを packet context に含める |
+| --speaker-map-file | 任意 | — | JSON または key=value の話者マップを読込 |
+| --unlabeled | 任意 | false | ラベルなし transcript を Speaker_A/B 交互として扱う |
+
+### 出力内容
+
+- feature id / phase / objective
+- LLM に守らせる constraints
+- response preferences（図の数、must_include 密度、operator todo 上限など）
+- diagram brief の output contract
+- speaker list / speaker map / role analysis
+- section seed（話題転換句と発話数をもとにした暫定セクション境界）
+- 全発話 transcript
+
+### diagram brief contract の運用メモ
+
+- 図に向く section だけを対象にする
+- 各 brief は `goal`, `must_include`, `comparison_axes`, `label_suggestions`, `avoid_misread` を中心に組み立てる
+- 図版そのものではなく、図作成前の判断材料を返す
+
+### 境界
+
+- 主台本のゼロ生成はしない
+- 画像や図版ファイルは生成しない
+- YMM4 / `.ymmp` direct edit はしない
+- 素材ダウンロードやレイアウト自動化はしない
+
+### 想定運用
+
+1. `build-diagram-packet` で packet を生成
+2. 外部 LLM / Automation に packet を渡して diagram brief を得る
+3. 人間が brief を見て図を作り、S-6 の演出へ反映する
+
+`--bundle-dir` を使うと、packet markdown/json に加えて workflow proof 記録用の Markdown 雛形、rerun prompt、rerun diff template、quickstart、baseline notes も同時に出力する。
+
+---
+
 ## スコープ外
 
 以下は PIPELINE_SPEC の対象外。機能の管理は FEATURE_REGISTRY.md を参照。
 
 - YMM4 プロジェクトファイル (.ymmp) の直接生成 (rejected: C-03)
-- LLM による構造化補助 (IP-01 No-Go)
+- 主台本のゼロ生成としての LLM 利用
 - 画像パス列・アニメーション種別列 (YMM4 CSV 3列目以降の拡張は未検討)

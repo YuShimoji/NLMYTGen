@@ -7,6 +7,7 @@
 
 ## UX / Algorithmic Invariants
 - NotebookLM が主台本品質の源泉であり、Python/LLM は主台本を生成しない。
+- ただし、NotebookLM 由来の既存台本を前提にした constrained rewrite（2本の台本の接続、聞き手/解説役の整合性調整、再編集指示の自動化）は検討対象に含めてよい。ゼロからの主台本生成とは区別する。
 - `build-csv` の既定動作は後方互換を保つ。表示幅ベース分割は opt-in で有効化する。
 - 優先度と status は分離する。項目を「先に見る」ことは implementation approval を意味しない。
 - canonical rules が repo 内にある場合は、`docs/ai/*.md` を tool-specific helper docs や prompt より先に読む。
@@ -15,6 +16,7 @@
 - Python の責務はテキスト変換のみ。CSV とテキストメタデータ文字列までに限定する。
 - 音声合成・字幕配置・演出指定・レンダリング・サムネイル最終判断は YMM4 または人間の責務。
 - `.ymmp` を直接編集しても音声合成は成立しない。音声合成は YMM4 の台本読込経由でのみ行う。
+- YMM4 / `.ymmp` の直接編集や画面効果の自動注入は高リスクなため、LLM や Automation を使う場合も、まずはテキスト補助・コピペ用メモ・プリセット候補提示に留める。direct edit は workflow proof なしに採用しない。
 - GUI/API/SDK 追加は、value path と境界違反の有無を確認し、必要なら ADR を通してから扱う。
 
 ## Prohibited Interpretations / Shortcuts

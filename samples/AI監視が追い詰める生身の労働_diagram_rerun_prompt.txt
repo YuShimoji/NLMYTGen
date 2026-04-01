@@ -1,0 +1,9 @@
+この packet の constraints と response_preferences を守って、output contract に沿う diagram brief だけを返してください。
+
+特に次を優先してください。
+- 図に向く section だけを選ぶ
+- 背景や通常の cue memo で十分な section は diagram brief に含めない
+- `goal` は「なぜ図が必要か」がすぐ分かる形にする
+- `must_include` は 3〜4 件程度に絞る
+- `label_suggestions` はそのまま図のラベル案として使える粒度にする
+- `avoid_misread` は本当に誤読しやすい点だけに絞る
