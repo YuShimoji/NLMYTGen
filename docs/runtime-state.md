@@ -5,8 +5,8 @@
 ## 現在位置
 - project: NLMYTGen
 - lane: Advance
-- slice: G-02b done + G-05 done (proof 待ち)。G-06 (接続方式決定) が次
-- next_action: G-06 の判断。bg+face 差し替えが最小実用単位。motion 等は手動ガイドで対応
+- slice: G-06 done。patch-ymmp 変換器プロトタイプ実装済み。face+bg 差し替え実機検証済み
+- next_action: テンプレート資産棚卸し (ユーザー作業) + G-05 proof (Custom GPT) + 実動画 E2E 検証
 - 案件モード: CLI artifact
 
 ## 主成果物
@@ -40,9 +40,9 @@
 
 ## FEATURE_REGISTRY 状態サマリ (2026-04-01)
 
-- done: 24件（A-01〜A-02, A-04, B-01〜B-17, C-07 v3→v4, C-08, G-02, G-02b, G-05）
+- done: 25件（A-01〜A-02, A-04, B-01〜B-17, C-07 v3→v4, C-08, G-02, G-02b, G-05, G-06）
 - approved: 0件
-- proposed: 1件（G-06 IR→YMM4接続方式決定）
+- proposed: 0件
 - info: 2件（C-01, C-06）
 - hold: 4件（A-03, D-02, E-01, E-02）
 - quarantined: 2件（F-01, F-02）

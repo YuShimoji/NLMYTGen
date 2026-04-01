@@ -112,7 +112,7 @@
 | G-03 | 演出適用ツール (IToolPlugin) | hold | L3 | G-01 が前提。タイムライン操作 API 非公開のため凍結 |
 | G-04 | ymmp 背景/表情自動差し替え | hold | L3 | ymmp 直接編集は控える。G-02b + 段階5の判断結果を踏まえて再検討 |
 | G-05 | C-07 v4 IR 出力プロンプト | done | L2 | G-02 done が前提 (充足)。Custom GPT が PRODUCTION_IR_SPEC v1.0 準拠の構造化 IR (JSON) を出力するようプロンプト改訂。`docs/S6-production-memo-prompt.md` v4 セクション。proof 待ち |
-| G-06 | IR → YMM4 接続方式の決定 + 実装 | proposed | L2/L3 | G-02b + G-05 の結果で判断。ymmp 変換器を作るか、手動配置ガイドとして IR を活用するか |
+| G-06 | IR → YMM4 接続方式の決定 + 実装 | done | L2/L3 | ymmp 後処理変換器。`patch-ymmp` サブコマンド + `src/pipeline/ymmp_patch.py`。face (表情パーツ) + bg (背景画像) を IR→ymmp で差し替え。実機検証済み (2026-04-02)。motion/transition は手動 |
 
 ---
 

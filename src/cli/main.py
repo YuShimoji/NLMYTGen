@@ -4,6 +4,7 @@ Usage:
     python -m src.cli.main build-csv <input>... [-o output.csv] [--speaker-map K1=V1,K2=V2] [--dry-run] [--stats]
     python -m src.cli.main build-cue-packet <input> [-o packet.md] [--format markdown|json] [--bundle-dir DIR]
     python -m src.cli.main build-diagram-packet <input> [-o packet.md] [--format markdown|json] [--bundle-dir DIR]
+    python -m src.cli.main patch-ymmp <ymmp> <ir-json> --face-map face.json --bg-map bg.json [-o patched.ymmp]
     python -m src.cli.main validate <input>
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
@@ -646,6 +647,18 @@ def main(argv: list[str] | None = None) -> int:
     p_genmap.add_argument("--format", choices=["text", "json"], default="text",
                           help="Output format (default: text)")
 
+    # patch-ymmp
+    p_patch = subparsers.add_parser(
+        "patch-ymmp",
+        help="Apply production IR to an existing ymmp (face + bg patch)",
+    )
+    p_patch.add_argument("ymmp", help="Input ymmp file path")
+    p_patch.add_argument("ir_json", help="Production IR JSON file path")
+    p_patch.add_argument("--face-map", help="Face label → parts file path mapping (JSON)")
+    p_patch.add_argument("--bg-map", help="BG label → image/video file path mapping (JSON)")
+    p_patch.add_argument("-o", "--output", help="Output ymmp path (default: <input>_patched.ymmp)")
+    p_patch.add_argument("--dry-run", action="store_true", help="Preview changes without writing")
+
     args = parser.parse_args(argv)
 
     try:
@@ -663,12 +676,52 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_generate_map(args)
         elif args.command == "fetch-topics":
             return _cmd_fetch_topics(args)
+        elif args.command == "patch-ymmp":
+            return _cmd_patch_ymmp(args)
         else:
             parser.print_help()
             return 1
     except (ValueError, FileNotFoundError, json.JSONDecodeError) as e:
         print(f"Error: {e}", file=sys.stderr)
         return 1
+
+
+def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
+    from src.pipeline.ymmp_patch import load_ymmp, save_ymmp, patch_ymmp
+
+    ymmp_data = load_ymmp(args.ymmp)
+    with open(args.ir_json, "r", encoding="utf-8") as f:
+        ir_data = json.load(f)
+
+    face_map: dict[str, dict[str, str]] = {}
+    if args.face_map:
+        with open(args.face_map, "r", encoding="utf-8") as f:
+            face_map = json.load(f)
+
+    bg_map: dict[str, str] = {}
+    if args.bg_map:
+        with open(args.bg_map, "r", encoding="utf-8") as f:
+            bg_map = json.load(f)
+
+    result = patch_ymmp(ymmp_data, ir_data, face_map, bg_map)
+
+    print(f"Face changes: {result.face_changes}")
+    print(f"BG changes: {result.bg_changes}")
+    if result.warnings:
+        for w in result.warnings:
+            print(f"  Warning: {w}", file=sys.stderr)
+
+    if args.dry_run:
+        print("(dry-run: no file written)")
+        return 0
+
+    out_path = args.output
+    if not out_path:
+        stem = Path(args.ymmp).stem
+        out_path = str(Path(args.ymmp).parent / f"{stem}_patched.ymmp")
+    save_ymmp(ymmp_data, out_path)
+    print(f"Written: {out_path}")
+    return 0
 
 
 if __name__ == "__main__":

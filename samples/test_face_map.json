@@ -1,0 +1,23 @@
+{
+  "serious": {
+    "Eyebrow": "D:\\MovieCreationWorkspace\\新まりさ\\眉\\06c.png",
+    "Eye": "D:\\MovieCreationWorkspace\\新まりさ\\目\\00.png",
+    "Mouth": "D:\\MovieCreationWorkspace\\新まりさ\\口\\00.png",
+    "Hair": "D:\\MovieCreationWorkspace\\新まりさ\\髪\\00o.png",
+    "Body": "D:\\MovieCreationWorkspace\\新まりさ\\体\\01.png"
+  },
+  "surprised": {
+    "Eyebrow": "D:\\MovieCreationWorkspace\\新まりさ\\眉\\09c.png",
+    "Eye": "D:\\MovieCreationWorkspace\\新まりさ\\目\\20.png",
+    "Mouth": "D:\\MovieCreationWorkspace\\新まりさ\\口\\05.png",
+    "Hair": "D:\\MovieCreationWorkspace\\新まりさ\\髪\\00o.png",
+    "Body": "D:\\MovieCreationWorkspace\\新まりさ\\体\\01.png"
+  },
+  "smile": {
+    "Eyebrow": "D:\\MovieCreationWorkspace\\新まりさ\\眉\\01c.png",
+    "Eye": "D:\\MovieCreationWorkspace\\新まりさ\\目\\02.png",
+    "Mouth": "D:\\MovieCreationWorkspace\\新まりさ\\口\\03.png",
+    "Hair": "D:\\MovieCreationWorkspace\\新まりさ\\髪\\00o.png",
+    "Body": "D:\\MovieCreationWorkspace\\新まりさ\\体\\01.png"
+  }
+}
