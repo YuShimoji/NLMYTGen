@@ -44,7 +44,7 @@ NotebookLM やその他のソースから素材を取得する段階。
 
 ### L2: 変換（NLMYTGen の中 — Python）
 
-テキストを YMM4 が読み込める形式に変換し、編集に必要な付随情報を生成する段階。
+テキストを YMM4 が読み込める形式に変換し、演出 IR を定義して S-6 を支援する段階。
 
 | 何をするか | 誰がやるか | 現状 |
 |-----------|-----------|------|
@@ -52,10 +52,13 @@ NotebookLM やその他のソースから素材を取得する段階。
 | 話者マッピング | NLMYTGen CLI | done (--speaker-map) |
 | 長文分割 | NLMYTGen CLI | done (--max-length, --display-width, --max-lines, --chars-per-line) |
 | 入力検証 | NLMYTGen CLI | done (validate) |
+| 演出 IR 語彙定義 | NLMYTGen docs | done (G-02, PRODUCTION_IR_SPEC.md v1.0) |
+| IR 出力プロンプト | Custom GPT Instructions | proposed (G-05) |
 | YouTube メタデータ生成 | NLMYTGen CLI (将来) | hold。単体では value path が弱い |
 
 **境界ルール:**
-- Python は CSV / テキストメタデータ生成 までが限界
+- Python は CSV / テキストメタデータ / 演出 IR 定義 (テキスト仕様) までが限界
+- 演出 IR は意味ラベルのみ。ピクセル座標・ファイルパス・YMM4 固有形式は含まない
 - **画像生成・画像合成・動画レンダリング・音声合成は Python ではやらない**
 - 外部 TTS (Voicevox 等) は使用しない
 
@@ -80,8 +83,8 @@ YMM4 上での操作。音声合成・字幕配置・動画レンダリングは
 | 最終プレビュー確認 | 人間 | -- | S-7a |
 | 動画レンダリング | YMM4 | YMM4 が実行 | S-7b-c |
 
-**NLMYTGen がやること:** YMM4 が読み込めるファイル (CSV) を生成する。それ以上はしない。
-**NLMYTGen がやらないこと:** .ymmp の生成・操作、テンプレート生成、演出指定。これらはすべて YMM4 内部の責務。
+**NLMYTGen がやること:** YMM4 が読み込めるファイル (CSV) を生成する。加えて、演出 IR (意味ラベルベースの構造化データ) を定義し、LLM (Custom GPT) が IR を出力するプロンプトを提供して S-6 を支援する。
+**NLMYTGen がやらないこと:** .ymmp の直接生成・操作、素材の自動取得・ダウンロード、ピクセル座標の直接指定。テンプレートの座標解決とファイル紐付けは将来の接続層 (G-06) で判断する。
 
 **省力化の原則:**
 YMM4 のプロジェクトテンプレート（S-0 で構築）を毎回複製することで、キャラクター設定・字幕スタイル・立ち絵・BGM の初期設定を引き継ぐ。Python から YMM4 内部を制御する経路は存在しない。

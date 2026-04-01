@@ -1,7 +1,8 @@
 # WORKFLOW: NotebookLM → YMM4 ゆっくり解説動画
 
 NLMYTGen を使った動画制作の全工程。
-NLMYTGen (Python) は S-3 (CSV変換) のみを担当する。それ以外は全て手動操作または外部ツールで行う。
+NLMYTGen (Python) は S-3 (CSV変換) を担当し、S-6 の演出設定を演出 IR + LLM プロンプト (C-07/G-05) で支援する。
+音声・字幕投入は YMM4 台本読込が不動の主経路。
 各ステップの自動化レイヤーは [AUTOMATION_BOUNDARY.md](AUTOMATION_BOUNDARY.md) を参照。
 
 ---
@@ -35,8 +36,11 @@ NLMYTGen (Python) は S-3 (CSV変換) のみを担当する。それ以外は全
 
 ### NLMYTGen の責務範囲
 
-NLMYTGen は **S-3 (テキスト→CSV変換) だけ**を担当する。
-S-0, S-4〜S-9 は全て YMM4 または外部ツールの手動操作である。
+NLMYTGen は以下を担当する:
+- **S-3 (テキスト→CSV変換)**: 台本テキストを YMM4 CSV に変換する (実装済み)
+- **S-6 支援 (演出 IR + LLM プロンプト)**: 演出 IR 語彙を定義し (G-02 done)、Custom GPT が構造化 IR を出力するプロンプトを提供する (G-05 proposed)。演出 IR は背景・立ち絵・素材配置の意味ラベルを定義し、テンプレート定義で座標・ファイルパスに解決する。詳細: [PRODUCTION_IR_SPEC.md](PRODUCTION_IR_SPEC.md)
+
+S-0, S-4〜S-9 の実操作は全て YMM4 または外部ツールの手動操作である。
 このワークフロー文書は、NLMYTGen のスコープ外であっても動画制作に必要な全工程をカバーする。
 
 ---
