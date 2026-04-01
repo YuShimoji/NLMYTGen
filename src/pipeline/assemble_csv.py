@@ -926,3 +926,312 @@ def reflow_subtitles(
     ]
 
     return YMM4CsvOutput(rows=tuple(rows))
+
+
+# ========================================================================
+# B-17: 字幕改行アルゴリズム v2 (統合リフロー)
+# ページ分割と行内改行を同時に決定する。
+# ========================================================================
+
+def _collect_break_candidates_v2(text: str) -> list[tuple[int, int, str]]:
+    """ページ間+行内改行の両方に使える全区切り候補を列挙する。
+
+    既存の _collect_break_candidates に加えて、行内改行用の文字種境界を統合。
+    """
+    base = _collect_break_candidates(text)
+
+    bracket_ranges = _find_bracket_ranges(text)
+    extras: list[tuple[int, int, str]] = []
+
+    for idx in range(1, len(text)):
+        pos = idx
+        if _in_bracket(pos, bracket_ranges):
+            continue
+        if _is_katakana_run(text, pos) or _is_kanji_run(text, pos) or _is_digit_run(text, pos):
+            continue
+        if pos < len(text) and text[pos] == "ー":
+            continue
+        if pos > 0 and text[pos - 1] == "ー":
+            continue
+
+        prev_ch, curr_ch = text[idx - 1], text[idx]
+
+        if prev_ch in "をがはにでもやのへと":
+            extras.append((pos, 8, "v2:particle"))
+        elif _is_katakana(prev_ch) and _is_hiragana(curr_ch):
+            extras.append((pos, 10, "v2:kata-hira"))
+        elif _is_hiragana(prev_ch) and _is_katakana(curr_ch):
+            extras.append((pos, 10, "v2:hira-kata"))
+        elif _is_cjk_ideograph(prev_ch) and _is_hiragana(curr_ch):
+            extras.append((pos, 10, "v2:kanji-hira"))
+        elif _is_hiragana(prev_ch) and _is_cjk_ideograph(curr_ch):
+            extras.append((pos, 10, "v2:hira-kanji"))
+
+    # 重複排除して統合 (低 penalty を優先)
+    combined: dict[int, tuple[int, str]] = {}
+    for pos, pen, kind in base + extras:
+        existing = combined.get(pos)
+        if existing is None or pen < existing[0]:
+            combined[pos] = (pen, kind)
+
+    return [(pos, pen, kind) for pos, (pen, kind) in sorted(combined.items())]
+
+
+def _calc_ideal_pages(total_width: int, page_capacity: int) -> int:
+    """理想的なページ数を計算する。"""
+    return max(1, -(-total_width // page_capacity))
+
+
+def _find_optimal_page_splits(
+    text: str,
+    widths: list[int],
+    candidates: list[tuple[int, int, str]],
+    *,
+    num_pages: int,
+    page_capacity: int,
+    chars_per_line: int,
+) -> list[int]:
+    """ビーム探索でページ分割位置を最適化する。
+
+    全ページの幅バランスが均等になるよう、短すぎるページにペナルティを課す。
+    """
+    if num_pages <= 1:
+        return []
+
+    total_width = widths[len(text)]
+    ideal_page_width = total_width / num_pages
+    min_page_width = max(chars_per_line, int(ideal_page_width * 0.3))
+
+    BEAM_WIDTH = 50
+
+    # 状態: (累積コスト, [分割位置リスト])
+    beam: list[tuple[float, list[int]]] = [(0.0, [])]
+
+    for split_idx in range(num_pages - 1):
+        next_beam: list[tuple[float, list[int]]] = []
+
+        for cost, splits in beam:
+            prev_pos = splits[-1] if splits else 0
+            prev_width = widths[prev_pos]
+
+            for pos, penalty, _kind in candidates:
+                if pos <= prev_pos:
+                    continue
+
+                pos_width = widths[pos]
+                page_width = pos_width - prev_width
+
+                if page_width < min_page_width:
+                    continue
+
+                remaining_width = total_width - pos_width
+                remaining_pages = num_pages - split_idx - 1
+                if remaining_pages > 0 and remaining_width / remaining_pages < min_page_width:
+                    continue
+
+                # コスト計算
+                balance_cost = abs(page_width - ideal_page_width)
+                break_cost = penalty * 4.0
+                short_penalty = 0.0
+                if page_width < ideal_page_width * 0.5:
+                    short_penalty = (ideal_page_width * 0.5 - page_width) * 2.0
+                overflow_penalty = 0.0
+                if page_width > page_capacity:
+                    overflow_penalty = (page_width - page_capacity) * 3.0
+
+                total_cost = cost + balance_cost + break_cost + short_penalty + overflow_penalty
+                next_beam.append((total_cost, splits + [pos]))
+
+        next_beam.sort(key=lambda x: x[0])
+        beam = next_beam[:BEAM_WIDTH]
+
+        if not beam:
+            break
+
+    # 最終ページの評価
+    best_cost = float("inf")
+    best_splits: list[int] = []
+
+    for cost, splits in beam:
+        last_pos = splits[-1] if splits else 0
+        last_width = total_width - widths[last_pos]
+
+        final_balance = abs(last_width - ideal_page_width)
+        final_short = 0.0
+        if last_width < min_page_width:
+            final_short = (min_page_width - last_width) * 3.0
+        final_overflow = 0.0
+        if last_width > page_capacity:
+            final_overflow = (last_width - page_capacity) * 3.0
+
+        total = cost + final_balance + final_short + final_overflow
+        if total < best_cost:
+            best_cost = total
+            best_splits = splits
+
+    return best_splits
+
+
+def _insert_line_breaks_v2(
+    text: str,
+    *,
+    chars_per_line: int,
+) -> str:
+    """ページ内テキストに行内改行を挿入する (v2)。
+
+    全体の行数を先に計算し、理想行幅に近い候補で改行する。
+    大区切り優先、なければ全候補を使う。
+    """
+    if not text or chars_per_line <= 0 or "\n" in text:
+        return text
+
+    total_width = display_width(text)
+    if total_width <= chars_per_line:
+        return text
+
+    needed_lines = -(-total_width // chars_per_line)
+    ideal_line_width = total_width / needed_lines
+
+    widths = _width_at_positions(text)
+    candidates = _collect_break_candidates_v2(text)
+    if not candidates:
+        return text
+
+    major = [(p, pen, k) for p, pen, k in candidates if k.startswith("major")]
+    min_line_width = max(4, chars_per_line // 6)
+
+    def _find_best(cands: list[tuple[int, int, str]], prev_pos: int, prev_w: int, target_w: float) -> int:
+        total_w = widths[len(text)]
+        best_score = float("inf")
+        best_pos = -1
+        for pos, penalty, _kind in cands:
+            if pos <= prev_pos:
+                continue
+            pos_w = widths[pos]
+            line_w = pos_w - prev_w
+            rest_w = total_w - pos_w
+            if line_w < min_line_width:
+                continue
+            if 0 < rest_w < min_line_width:
+                continue
+            overflow = (line_w - chars_per_line) * 3 if line_w > chars_per_line else 0
+            distance = abs(pos_w - target_w)
+            score = distance + penalty * 2 + overflow
+            if score < best_score:
+                best_score = score
+                best_pos = pos
+        return best_pos
+
+    result_parts: list[str] = []
+    prev_pos = 0
+    prev_w = 0
+
+    for line_idx in range(1, needed_lines):
+        target_w = prev_w + ideal_line_width
+        if widths[len(text)] - prev_w <= chars_per_line:
+            break
+
+        best_pos = _find_best(major, prev_pos, prev_w, target_w)
+        # 大区切りが chars_per_line を大幅超過 or なし → 全候補で再探索
+        if best_pos > 0 and (widths[best_pos] - prev_w) > chars_per_line * 1.2:
+            alt = _find_best(candidates, prev_pos, prev_w, target_w)
+            if alt > 0 and (widths[alt] - prev_w) <= chars_per_line:
+                best_pos = alt
+        elif best_pos <= 0:
+            best_pos = _find_best(candidates, prev_pos, prev_w, target_w)
+
+        if best_pos <= 0:
+            break
+
+        result_parts.append(text[prev_pos:best_pos])
+        prev_pos = best_pos
+        prev_w = widths[best_pos]
+
+    if prev_pos < len(text):
+        result_parts.append(text[prev_pos:])
+
+    return "\n".join(result_parts)
+
+
+def reflow_utterance_v2(
+    text: str,
+    *,
+    chars_per_line: int,
+    max_lines: int,
+) -> list[str]:
+    """v2: ページ分割+行内改行を統合的に決定する。
+
+    1. 総幅から理想ページ数を計算
+    2. 全区切り候補を列挙
+    3. ビーム探索でページ分割位置を決定
+    4. 各ページ内で行内改行を挿入
+
+    戻り値: list[str] -- 各要素が1ページ。行内に \\n を含む。
+    """
+    if not text or chars_per_line <= 0 or max_lines <= 0:
+        return [text] if text else []
+
+    total_width = display_width(text)
+    page_capacity = chars_per_line * max_lines
+
+    if total_width <= page_capacity:
+        return [_insert_line_breaks_v2(text, chars_per_line=chars_per_line)]
+
+    widths = _width_at_positions(text)
+    candidates = _collect_break_candidates_v2(text)
+
+    ideal_num_pages = _calc_ideal_pages(total_width, page_capacity)
+
+    # ビーム探索でページ分割
+    page_splits = _find_optimal_page_splits(
+        text, widths, candidates,
+        num_pages=ideal_num_pages,
+        page_capacity=page_capacity,
+        chars_per_line=chars_per_line,
+    )
+
+    # ページ数が不足した場合、減らして再試行
+    if len(page_splits) < ideal_num_pages - 1 and ideal_num_pages > 2:
+        for fewer in range(ideal_num_pages - 1, 0, -1):
+            page_splits = _find_optimal_page_splits(
+                text, widths, candidates,
+                num_pages=fewer,
+                page_capacity=page_capacity,
+                chars_per_line=chars_per_line,
+            )
+            if len(page_splits) == fewer - 1:
+                break
+
+    # テキストをページに分割
+    pages: list[str] = []
+    prev = 0
+    for pos in page_splits:
+        pages.append(text[prev:pos])
+        prev = pos
+    pages.append(text[prev:])
+
+    # 各ページ内で行内改行
+    return [_insert_line_breaks_v2(p, chars_per_line=chars_per_line) for p in pages if p]
+
+
+def reflow_subtitles_v2(
+    output: YMM4CsvOutput,
+    *,
+    chars_per_line: int,
+    max_lines: int,
+) -> YMM4CsvOutput:
+    """v2: ページ分割+行内改行を統合的に決定する字幕リフロー。"""
+    if chars_per_line <= 0 or max_lines <= 0:
+        return output
+
+    rows: list[YMM4CsvRow] = []
+    for row in output.rows:
+        pages = reflow_utterance_v2(
+            row.text,
+            chars_per_line=chars_per_line,
+            max_lines=max_lines,
+        )
+        for page in pages:
+            rows.append(YMM4CsvRow(speaker=row.speaker, text=page))
+
+    return YMM4CsvOutput(rows=tuple(rows))

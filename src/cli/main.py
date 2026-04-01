@@ -36,6 +36,7 @@ from src.pipeline.assemble_csv import (
     estimate_display_lines,
     find_unmapped_speakers,
     reflow_subtitles,
+    reflow_subtitles_v2,
     split_long_utterances,
 )
 from src.pipeline.validate_handoff import validate, has_errors, Severity
@@ -142,10 +143,18 @@ def _build_one(input_path: Path, output_path: Path, args: argparse.Namespace) ->
     use_dw = getattr(args, "display_width", False)
     chars_per_line = getattr(args, "chars_per_line", 40)
     balance_lines = getattr(args, "balance_lines", False)
+    reflow_v2 = getattr(args, "reflow_v2", False)
 
     if max_lines:
-        if balance_lines:
-            # B-15: トップダウン方式で分割+バランスを1パスで実行
+        if reflow_v2:
+            # B-17: v2 統合リフロー (ページ分割+行内改行を同時決定)
+            output = reflow_subtitles_v2(
+                output,
+                chars_per_line=chars_per_line,
+                max_lines=max_lines,
+            )
+        elif balance_lines:
+            # B-15/16: トップダウン方式
             output = reflow_subtitles(
                 output,
                 chars_per_line=chars_per_line,
@@ -577,6 +586,8 @@ def main(argv: list[str] | None = None) -> int:
                          help="Display width per line for --max-lines (default: 40)")
     p_build.add_argument("--balance-lines", action="store_true",
                          help="Insert a natural line break for 2-line subtitles (requires --max-lines)")
+    p_build.add_argument("--reflow-v2", action="store_true",
+                         help="Use v2 reflow algorithm (balanced page+line splitting, requires --max-lines)")
     p_build.add_argument("--dry-run", action="store_true", help="Preview without writing")
     p_build.add_argument("--stats", action="store_true", help="Show speaker statistics")
 

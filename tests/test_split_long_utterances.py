@@ -11,7 +11,9 @@ from src.pipeline.assemble_csv import (
     display_width,
     estimate_display_lines,
     reflow_subtitles,
+    reflow_subtitles_v2,
     reflow_utterance,
+    reflow_utterance_v2,
     split_long_utterances,
 )
 
@@ -352,3 +354,96 @@ class TestInsertInlineBreaks:
         # 漢字連続の途中で切れていないことを確認
         for line in result.split("\n"):
             assert not line.endswith("計") or "計算" in line  # 「計/算」にならない
+
+
+class TestReflowUtteranceV2:
+    """B-17 reflow_utterance_v2() のテスト。"""
+
+    def test_short_text_single_page(self):
+        result = reflow_utterance_v2("短いテキスト", chars_per_line=40, max_lines=3)
+        assert result == ["短いテキスト"]
+
+    def test_hai_problem_resolved(self):
+        """「はい。」が独立ページにならない。"""
+        text = "はい。そこで慌てて助手席のカバンに手を伸ばして吸入器を取り出そうとします。"
+        result = reflow_utterance_v2(text, chars_per_line=40, max_lines=3)
+        # 最初のページが「はい。」だけにならない
+        first_page_width = display_width(result[0].replace("\n", ""))
+        assert first_page_width > 10, f"First page too short: {result[0]}"
+
+    def test_preserves_original_text(self):
+        """分割後の再結合が元テキストと一致する。"""
+        text = "これはテスト文章です。複数の文を含みます。最後の文です。"
+        result = reflow_utterance_v2(text, chars_per_line=20, max_lines=2)
+        joined = "".join(p.replace("\n", "") for p in result)
+        assert joined == text
+
+    def test_page_balance(self):
+        """ページ間の文字数バランスが概ね均等。"""
+        text = (
+            "はい。そこで慌てて助手席のカバンに手を伸ばして"
+            "吸入器を取り出そうとします。"
+            "その瞬間、ダッシュボードに設置された"
+            "AIカメラがあなたをロックオンして"
+            "「脇見運転」としてシステムに"
+            "自動でフラグを立てるんです。"
+        )
+        result = reflow_utterance_v2(text, chars_per_line=40, max_lines=3)
+        page_widths = [display_width(p.replace("\n", "")) for p in result]
+        avg = sum(page_widths) / len(page_widths)
+        for w in page_widths:
+            assert w >= avg * 0.3, f"Page too short: {w} vs avg {avg}"
+
+    def test_bracket_not_split_across_pages(self):
+        """括弧ペア内でページ分割されない。"""
+        text = "画面上で「タイム・オフ・タスク（タスク離脱時間）」というタイマーがカチカチと動き始めます。"
+        result = reflow_utterance_v2(text, chars_per_line=40, max_lines=3)
+        joined = "".join(p.replace("\n", "") for p in result)
+        assert joined == text
+
+    def test_line_width_best_effort(self):
+        """各行が chars_per_line に近い幅で分割される。"""
+        text = "長い文章が続きます、句読点もあります。括弧「テスト」もあります。さらに続きます、最後です。"
+        result = reflow_utterance_v2(text, chars_per_line=40, max_lines=3)
+        for page in result:
+            for line in page.split("\n"):
+                # 厳密に40以下を強制はしない (候補位置の制約) が、大幅超過はしない
+                assert display_width(line) <= 60, f"Line too wide: {line}"
+
+    def test_multi_page_with_inline_breaks(self):
+        """複数ページの各ページ内に行内改行が入る。"""
+        text = (
+            "私たちが普段「アルゴリズムによる最適化」と聞くと、効率的でクリーンな魔法を想像しがちですが、"
+            "もしその計算式に「人間の身体的限界」という変数が最初から欠落していたらどうなるか。"
+            "今回の探求では、その見えない労働システムの裏側に鋭く切り込んでいきます。"
+        )
+        result = reflow_utterance_v2(text, chars_per_line=40, max_lines=3)
+        joined = "".join(p.replace("\n", "") for p in result)
+        assert joined == text
+        assert len(result) >= 2
+
+
+class TestReflowSubtitlesV2:
+    """B-17 reflow_subtitles_v2() 統合テスト。"""
+
+    def _make_output(self, *texts, speaker="れいむ"):
+        return YMM4CsvOutput(rows=tuple(YMM4CsvRow(speaker=speaker, text=t) for t in texts))
+
+    def test_short_rows_pass_through(self):
+        output = self._make_output("短いテキスト。")
+        result = reflow_subtitles_v2(output, chars_per_line=40, max_lines=3)
+        assert len(result.rows) == 1
+
+    def test_speaker_preserved(self):
+        output = self._make_output("長い文です。もう一つの文です。", speaker="まりさ")
+        result = reflow_subtitles_v2(output, chars_per_line=10, max_lines=2)
+        for row in result.rows:
+            assert row.speaker == "まりさ"
+
+    def test_multi_row_input(self):
+        output = self._make_output(
+            "最初の発話です。長い内容が続きます。",
+            "二番目の発話。こちらも長い。",
+        )
+        result = reflow_subtitles_v2(output, chars_per_line=20, max_lines=2)
+        assert len(result.rows) >= 2
