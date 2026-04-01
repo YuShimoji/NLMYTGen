@@ -76,7 +76,7 @@
 | C-04 | 背景動画の配置自動化（Python 制御） | rejected | L3 | Python から YMM4 内部の配置を制御するインターフェースが存在しない。**代替:** YMM4 上で手動配置する（WORKFLOW.md S-6a） |
 | C-05 | 素材配置の自動指定（Python 制御） | rejected | L3 | Python から YMM4 内部の素材配置を制御するインターフェースが存在しない。**代替:** YMM4 テンプレートで初期配置を定型化する（WORKFLOW.md S-0） |
 | C-06 | YMM4 演出・レンダリング工程（手動） | info | L3 | Python 機能ではなく手動工程の記録。読み上げ確認(S-5)・背景演出(S-6)・最終確認(S-7)。詳細は WORKFLOW.md 参照 |
-| C-07 | S-6 演出メモ生成（GUI LLM プロンプトテンプレート） | done | L3 補助 | v2 確定。4演出パターン + 発話単位指示 + 表示情報抽出 + 要調査明示。`docs/S6-production-memo-prompt.md`。統合ガイド: `docs/gui-llm-setup-guide.md` |
+| C-07 | S-6 演出メモ生成（GUI LLM プロンプトテンプレート） | done | L3 補助 | v3 確定。Part 1: マクロ演出設計 (全体トーン/ペーシング/背景遷移)、Part 2: ミクロ演出指示 (4パターン/発話単位)、Part 3: 素材調達ガイド。`docs/S6-production-memo-prompt.md`。統合ガイド: `docs/gui-llm-setup-guide.md` |
 | C-08 | S-8 サムネイルコピー生成（GUI LLM プロンプトテンプレート） | done | L3 補助 | C-07 と同方式。キャッチコピー5案 + サブコピー3案 + 表情提案 + 背景方向性。`docs/S8-thumbnail-copy-prompt.md`。C-07 と統合して Custom GPT / Claude Project に1つのプロンプトとして固定化可能 |
 
 ### D. 素材取得・生成 (L1 + L2)
@@ -84,7 +84,7 @@
 | ID | 機能 | ステータス | レイヤー | 備考 |
 |----|------|-----------|---------|------|
 | D-01 | サムネイル自動生成（Python 画像生成） | rejected | L2 | Python での画像生成は禁止。**代替:** YMM4 テンプレートの文字・画像入れ替えによる手動制作（WORKFLOW.md S-8） |
-| D-02 | 背景動画の取得自動化 | quarantined | L1 | 前セッションの汚染バッチ由来。取得元/API/権利/運用境界の精査前に進めない |
+| D-02 | 演出判断支援 (方向転換: 素材API → テキスト演出支援) | hold | L1 | 方向転換 (2026-04-01): 素材API検索 → 演出判断支援。C-07 v3 に L-macro + L-research として統合完了。v3 proof 成功 (4/5)。独立機能としては不要。C-07 v3 の改善要望が出た場合に再検討 |
 
 ### E. 出力・配信 (L4)
 
