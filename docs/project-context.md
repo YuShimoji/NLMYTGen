@@ -37,16 +37,16 @@
 ---
 
 ## ACTIVE ARTIFACT
-- Active Artifact: NLM transcript → YMM4 CSV → 動画制作ワークフロー効率化
-- Artifact Surface: CLI → CSV → YMM4 台本読込 → 動画
-- 現在のスライス: B-14 の追加観測まで反映済み。次は S-6 LLM adapter を本命候補として spec/ADR feasibility を詰める
-- 成功状態: 字幕分割を局所最適のまま引っ張らず、次 frontier 候補を value path 付きで比較できる
+- Active Artifact: NLM transcript → YMM4 CSV → 演出 IR → ymmp 後段適用 → 動画制作ワークフロー効率化
+- Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → patch-ymmp → 演出設定 → レンダリング
+- 現在のスライス: G-06 done + extract-template done。パイプライン実装完了。Custom GPT v4 proof + 実台本 E2E が次
+- 成功状態: face+bg 限定の全パイプライン E2E が通り、Level 3 (半自動制作ライン) に到達すること
 
 ---
 
 ## CURRENT LANE
 - 主レーン: Advance
-- 今このレーンを優先する理由: 字幕分割の bulk pain がほぼ収束し、次の大きな効率化候補として S-6 LLM adapter の feasibility を詰める価値が最も高いため
+- 今このレーンを優先する理由: 演出 IR パイプライン (G-02→G-05→G-06) が実装完了し、Custom GPT v4 proof → 実台本 E2E で Level 3 到達を目指す段階のため
 
 ---
 
@@ -159,72 +159,44 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ---
 
-## HANDOFF SNAPSHOT
+## HANDOFF SNAPSHOT (2026-04-02 更新)
 
-- Shared Focus: 字幕分割はいったん収束扱いにし、S-6 LLM adapter を次 frontier 候補として feasibility で比較する
-- Active Artifact: NLM transcript → YMM4 CSV → ゆっくり解説動画制作ワークフロー効率化
-- Artifact Surface: CLI → CSV → YMM4 台本読込 → 動画
-- Last Change Relation: direct (S-5 の主 pain だった字幕改行バランスへ直接効く opt-in 改善を実装)
-- Evidence: `uv run pytest` 56 PASS、`--balance-lines` 付き実データ dry-run/stats 確認、sample は 57 発話 → 95 行に再編、overflow candidates は 3 件、追加観測では全字幕が 3 行以内に収まるまで改善
-- Evidence: `docs/verification/next-frontier-feasibility-2026-03-31.md` に候補比較を作成。S-6 が strongest next candidate、E-01/E-02 が secondary と整理
+- Shared Focus: 演出 IR パイプライン実装完了。Custom GPT v4 proof → face+bg 限定 E2E で Level 3 到達を目指す
+- Active Artifact: NLM transcript → YMM4 CSV → 演出 IR → ymmp 後段適用 → 動画制作ワークフロー効率化
+- Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → patch-ymmp → 演出設定 → レンダリング
+- Last Change Relation: direct (演出 IR → ymmp 変換パイプライン実装。bg+face 差し替え実機検証済み)
+- Evidence: `uv run pytest` 91 PASS。G-06 patch-ymmp 実機検証 OK (face+bg)。extract-template done
 - 案件モード: CLI artifact
-- 現在の主レーン: Advance (B-14 aggressive clause chunking implementation)
+- 現在の主レーン: Advance (演出 IR パイプライン実用化)
+- 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中
 - Current Trust Assessment:
-  - trusted: B-04 実装、A-04 `fetch-topics` 実装、56 PASS の現行テスト、workflow/境界 docs
-  - trusted: B-11 の初回 proof（辞書 0、timing 0、改行系 pain が支配的）
-  - trusted: B-12 `--balance-lines` 実装。2行字幕向けに自然改行を opt-in で挿入し、CSV 1行内改行保持もテスト済み
-  - trusted: B-12 の post-import 再観測により、改善点と残課題が定量化できた
-  - trusted: B-13 clause-aware split + widow/orphan guard 実装。sample で 57 発話 → 62 行への再編を確認
-  - trusted: B-13 の post-import 再観測により、改善幅と限界が定量化できた
-  - trusted: B-14 aggressive clause chunking 実装。sample で 57 発話 → 95 行、overflow candidates 3 件まで低減し、全字幕 3 行以内まで改善
-  - needs re-check: 残る境界ケース (`ー`, `「」`, 数値+記号) を heuristic で吸うべきか、corpus として集めるべきか
-  - dangerous: status 語彙を曖昧にしたまま次 frontier を選ぶこと、GUI や LLM 案を value path 未検証で前進させること
+  - trusted: B-01~B-17 全字幕スタック (91 PASS)
+  - trusted: G-02 IR 語彙 v1.0、G-02b ymmp 構造解析、G-05 v4 プロンプト、G-06 patch-ymmp 実機検証
+  - trusted: extract-template (face_map/bg_map 自動抽出)
+  - needs re-check: Custom GPT v4 proof 未実施。IR 出力品質は未確認
+  - needs re-check: motion/transition/overlay の ymmp 適用は未実装 (正式スコープ内の frontier)
 - Recovered Canonical Context:
-  - Python はテキスト変換のみ
-  - S-5 / S-6 が最大 pain
-  - サムネイルは重要で手動判断を残す
-  - approved は仕様定義済み + ユーザー承認済みのみ
+  - Python はテキスト変換 + 演出 IR 定義 + ymmp 限定後段適用
+  - 視覚配置 IR が中心課題。C-07 系が主系統、D-02 は従属的補助論点
+  - patch-ymmp は Level 1 限定変換器。ゼロからの ymmp 生成とは区別する
+  - 「未実装」は「境界外」ではない。motion/transition/overlay は正式スコープ内の frontier
 - Authority Return Items:
-  - S-6 LLM アダプター方式を次 frontier にするかの再承認
-  - 「stdlib のみ」制約の緩和 (LLM SDK 追加の ADR)
-  - E-02: hold のまま。E-01 または別 integration point とセットでのみ再検討
-  - quarantined 3件 (D-02, F-01, F-02) の個別再審査
-- 解決済み:
-  - feasibility audit: 字幕分割以外の候補を棚卸しし、S-6 LLM adapter が次の本命候補だと整理
-  - B-11 S-5 workflow proof: ユーザー承認により approved frontier 化し、初回 proof を完了
-  - B-11 初回 post-import 観測: S-5 の主因が読みではなく字幕改行バランスだと確認
-  - B-12 行バランス重視の字幕分割: `--balance-lines` を実装し、CLI / tests / docs を同期
-  - B-12 post-import 再観測: 手動改行 10 / 再分割 15 / 不自然な単語分割 5。`。` 改行は効くが、句読点の少ない長文と 1 文字最終行が残る
-  - B-13 節分割 + widow/orphan guard: `--balance-lines` の内部改善として実装し、54 PASS と sample dry-run で挙動確認
-  - B-13 post-import 再観測: 手動改行 5 / 再分割 10 / 不自然な単語分割 5。減りはしたがまだ多く、長い一文 1 字幕問題が残る
-  - B-14 aggressive clause chunking: 複数文発話の中にある単一長文も再展開するよう実装し、56 PASS。sample dry-run では 57 発話 → 95 行、overflow candidates 3 件まで低減。追加観測では長すぎる行が大幅に減り、残課題は境界ケースの改行品質へ移行
-  - A-04 RSS フィード連携: `fetch-topics` 実装と docs を再審査し、done に復帰
-  - B-04 表示幅ベース分割: --display-width, --max-lines, --chars-per-line 実装完了
-  - B-10 (--emit-meta): rejected → コード除去済み
-  - C-02/C-03/C-04/C-05/D-01/F-03: rejected
-  - E-02 仕様検討: 単体では価値薄と判明し hold へ整理
-  - S-6 stdlib 制約内分析: 精度不足で断念 → LLM 方式に転換
-  - canonical docs (`INVARIANTS`, `USER_REQUEST_LEDGER`, `OPERATOR_WORKFLOW`, `INTERACTION_NOTES`) を実内容で補完
-- 既知の問題:
-  - S-6 LLM アダプター方式の仕様が未定義 (プロバイダー・アーキテクチャ・stdlib制約緩和)
-  - 前回 handoff は `8a1c710` の追加ファイルと placeholder 状態を含んでいなかった
-  - B-14 は CLI 側では strong win。次の論点は bulk overflow ではなく、境界ケースを rule で吸うか corpus として管理するか
+  - Custom GPT v4 proof (ユーザー作業)
+  - face+bg 限定 E2E (build-csv → Custom GPT → IR → patch-ymmp → YMM4)
+  - motion/transition/overlay の ymmp 適用を次に進めるかの判断
+  - E-02: hold 継続。E-01 とセットでのみ再検討
+  - F-01/F-02: quarantined 継続
+- What Not To Do Next:
+  - D-02 を主軸として扱わない (従属的補助論点)
+  - patch-ymmp を「研究か実用か」の二択で裁定しない (成熟段階モデルで評価)
+  - motion/transition/overlay を「未実装だから境界外」と誤分類しない
+  - quarantined 項目を通常候補としてそのまま spec 化しない
+  - 素材取得/API 検討を再び中心にしない
 - Docs-only Resume Packet:
-  - AGENTS.md
-  - .claude/CLAUDE.md
+  - AGENTS.md, .claude/CLAUDE.md
   - docs/ai/CORE_RULESET.md, docs/ai/DECISION_GATES.md, docs/ai/STATUS_AND_HANDOFF.md, docs/ai/WORKFLOWS_AND_PHASES.md
   - docs/INVARIANTS.md, docs/USER_REQUEST_LEDGER.md, docs/OPERATOR_WORKFLOW.md, docs/INTERACTION_NOTES.md
   - docs/runtime-state.md, docs/project-context.md, docs/FEATURE_REGISTRY.md, docs/AUTOMATION_BOUNDARY.md
+  - docs/PRODUCTION_IR_SPEC.md, docs/YMM4-AUTOMATION-RESEARCH.md
   - prompt-resume.md
-- 未確定の設計論点: LLM アダプターを本当にやるか、GUI が本当に bottleneck を減らすか
-- What Not To Do Next:
-  - quarantined 項目 (D-02, F-01, F-02) を通常候補としてそのまま spec 化しない
-  - E-02 を standalone の高価値 task として再浮上させない
-  - S-6 の spec/ADR feasibility を詰める前に、GUI や quarantine 項目へ横滑りしない
-  - handoff に書かれていない placeholder docs を真実の source と誤認しない
-- New Fossils:
-  - docs/INVARIANTS.md
-  - docs/USER_REQUEST_LEDGER.md
-  - docs/OPERATOR_WORKFLOW.md
-  - docs/INTERACTION_NOTES.md
 - Expansion Risk: なし
