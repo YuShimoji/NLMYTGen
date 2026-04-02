@@ -161,13 +161,13 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ## HANDOFF SNAPSHOT (2026-04-02 更新)
 
-- Shared Focus: 演出 IR パイプライン実装完了。Custom GPT v4 proof → face+bg 限定 E2E で Level 3 到達を目指す
-- Active Artifact: NLM transcript → YMM4 CSV → 演出 IR → ymmp 後段適用 → 動画制作ワークフロー効率化
-- Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → patch-ymmp → 演出設定 → レンダリング
-- Last Change Relation: direct (演出 IR → ymmp 変換パイプライン実装。bg+face 差し替え実機検証済み)
-- Evidence: `uv run pytest` 91 PASS。G-06 patch-ymmp 実機検証 OK (face+bg)。extract-template done
+- Shared Focus: 三層責務構造 (Writer IR / Template Registry / YMM4 Adapter) の docs 固定完了。次は YMM4 テンプレートファイル形式の実測 → PRODUCTION_IR_SPEC セクション2 の候補仕様更新 → Custom GPT v4 proof
+- Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
+- Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
+- Last Change Relation: direct (三層責務構造の全主要 docs 反映。設計の前提条件固定)
+- Evidence: `uv run pytest` 91 PASS。全主要 docs に三層語彙反映済み。実測/推測/未確認の棚卸し完了 (YMM4-AUTOMATION-RESEARCH セクション7)
 - 案件モード: CLI artifact
-- 現在の主レーン: Advance (演出 IR パイプライン実用化)
+- 現在の主レーン: Advance (docs 規範固定 → 実測フェーズへ移行)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中
 - Current Trust Assessment:
   - trusted: B-01~B-17 全字幕スタック (91 PASS)

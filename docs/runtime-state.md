@@ -4,9 +4,9 @@
 
 ## 現在位置
 - project: NLMYTGen
-- lane: Advance
-- slice: G-06 done + extract-template done。パイプライン実装完了。Custom GPT proof + 実動画 E2E が次
-- next_action: Custom GPT で v4 プロンプト proof → 実台本で全パイプライン E2E (build-csv + IR + patch-ymmp → YMM4)
+- lane: Advance (docs 規範固定)
+- slice: 三層責務構造 (Writer IR / Template Registry / YMM4 Adapter) の全主要 docs 反映完了
+- next_action: (1) YMM4 テンプレートファイル形式の実測 (最優先未確認項目) → (2) PRODUCTION_IR_SPEC セクション2 の preset+override 候補仕様更新 → (3) Custom GPT v4 proof
 - 案件モード: CLI artifact
 
 ## 主成果物
@@ -28,7 +28,7 @@
 - open_todo_count: 0
 
 ## 最終検証
-- last_verification_artifact: G-06 patch-ymmp 実機検証済み。face (Eye/Mouth/Body) + bg (ImageItem) 差し替え→YMM4 正常動作。bg セクション配置修正済み。91 PASS
+- last_verification_artifact: 三層責務構造 (Writer IR / Template Registry / YMM4 Adapter) を全主要 docs に固定。成熟段階モデル + 実測/推測/未確認の棚卸し完了。91 PASS
 - last_verification_date: 2026-04-02
 
 ## Evidence（CLI artifact mode）
