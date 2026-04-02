@@ -44,17 +44,18 @@
 - 2026-04-01 の C-07 v1 proof: セクション分割 OK、作業時間削減 OK、背景候補 NG。ストック素材検索は方向が違う。必要なのは茶番劇アニメ+図解の演出指示。
 - 2026-04-01 の C-07 v2 proof: 4演出パターン (茶番劇/情報埋め込み/雰囲気演出/黒板型) + 発話単位指示 + 表示情報抽出 + 要調査明示。3基準全て OK。C-07 done。
 
-## Actor Boundaries
-- `user`: NotebookLM 操作、YMM4 内の判断、演出微調整、サムネイル、投稿判断、Custom GPT 操作 (IR 生成)
-- `assistant`: CSV 変換、演出 IR 定義、ymmp 後処理変換器、台帳整備、仕様化
-- `tool`: 分割、統計、入力検証、speaker-map 生成、警告表示、extract-template、patch-ymmp
-- `shared`: どの pain を次に削るかの優先判断、frontier の approval、責務境界の更新
+## Actor Boundaries (三層責務構造対応)
+- `user`: NotebookLM 操作、Custom GPT で Writer IR 生成 (第1層)、Template Registry のラベル付け・素材準備 (第2層)、YMM4 内の判断・微調整、サムネイル、投稿判断、YMM4 native template の登録
+- `assistant`: CSV 変換、IR 語彙定義 (PRODUCTION_IR_SPEC)、YMM4 Adapter 実装 (第3層: patch-ymmp)、Template Registry の JSON 構造、台帳整備、仕様化
+- `tool`: 分割、統計、入力検証、speaker-map 生成、警告表示、extract-template、patch-ymmp (YMM4 Adapter)
+- `shared`: どの pain を次に削るかの優先判断、frontier の approval、三層の責務境界の更新
 
 ## 手動工程 / 自動化禁止工程
-- YMM4 内の演出指定、背景配置、表情切り替え、BGM/SE の最終判断
+- YMM4 内の演出指定、背景配置、表情切り替え、BGM/SE の最終判断 (Adapter で face/bg は半自動化するが、最終判断は人間)
 - サムネイルの訴求判断と最終デザイン
 - 実機での読み上げ確認、通しプレビュー、公開判断
 - GUI やテンプレートを作ること自体を目的化して、手動工程の本質的判断を隠さない
+- YMM4 native template の登録はユーザーが行う。Python で native template を再発明しない
 
 ## 運用ルール
 - 一度説明された workflow pain はここへ固定する
