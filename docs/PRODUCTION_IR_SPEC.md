@@ -340,61 +340,145 @@ Micro IR (発話ごとに1つ)
 
 ---
 
-## 6. テンプレート定義との接続点
+## 6. 三層アーキテクチャと責務分担
 
-### 6.1 概念
+### 6.1 工程分離の原則
 
-IR の意味ラベルは抽象的。テンプレート定義 (JSON) が具体的なリソースに解決する。
+演出パイプラインは2つの独立工程に分離する:
+
+- **Writer 工程** (演出スクリプト生成): LLM が台本から IR を出力する。「何を表示するか」の判断。品質はフィードバック駆動で改善し、scope を区切る
+- **Editor 工程** (テンプレート解決 + ymmp 適用): IR の意味ラベルを具体的なリソースとYMM4 操作に解決する。「どう配置するか」の実行。品質は複雑さ・汎用性・拡張性に依存
+
+### 6.2 三層アーキテクチャ
 
 ```
-IR: bg=studio_blue
-         ↓ テンプレート定義で解決
-解決済み: file_path=backgrounds/studio_blue_01.png, x=0, y=0, w=1920, h=1080
+第1層: Writer IR (演出スクリプト)
+  LLM が出力する高水準の演出指示。
+  scene_preset / face / bg 等の意味ラベルを選ぶ。
+  逐次属性は optional override。
+
+第2層: Template Registry (テンプレート辞書)
+  ユーザーの制作環境で使う素材・プリセットの辞書。
+  IR の意味ラベルと、具体的なリソース / YMM4 テンプレート名を紐付ける。
+
+第3層: YMM4 Adapter (Post-Processor)
+  IR + Template Registry → ymmp の接着層。
+  YMM4 ネイティブに解決できるものはテンプレート参照へ寄せ、
+  ネイティブで届かない部分だけを後段で補正する。
 ```
 
-### 6.2 テンプレート定義の構造 (概念設計)
+### 6.3 責務分担
 
-テンプレート定義は本仕様のスコープ外だが、接続点を明確にするために構造を示す。
+| 処理 | 担当層 | 方法 |
+|------|--------|------|
+| 音声合成 + 字幕配置 | YMM4 ネイティブ | 台本読込 (CSV) |
+| エフェクト / アニメーション / 場面テンプレート | YMM4 ネイティブ | YMM4 のアイテムテンプレート (インポート/エクスポート対応) |
+| face パーツ差し替え (発話ごと) | YMM4 Adapter (patch-ymmp) | VoiceItem.TachieFaceParameter の書き換え |
+| bg 画像差し替え (セクションごと) | YMM4 Adapter (patch-ymmp) | ImageItem/VideoItem の FilePath + Frame/Length |
+| slot 座標変更 | YMM4 Adapter (patch-ymmp) | TachieItem の X/Y (実測後) |
+| motion / transition / bg_anim | **未決定** | YMM4 テンプレートで一括適用 or Adapter で VideoEffects 書き込み (テンプレートファイル形式の実測後に判断) |
+| se / overlay | **未決定** | AudioItem/ImageItem の挿入 or YMM4 テンプレートのバンドル (実測後に判断) |
+
+### 6.4 Template Registry の構造
 
 ```json
 {
-  "template_version": "1.0",
-  "resolution": {"w": 1920, "h": 1080},
-  "bg": {
-    "studio_blue": {"file": "backgrounds/studio_blue_01.png"},
-    "dark_board": {"file": "backgrounds/dark_board.png"}
+  "registry_version": "1.0",
+  "project": {
+    "resolution": {"w": 1920, "h": 1080},
+    "fps": 30
   },
-  "slot": {
-    "left": {"x": 300, "y": 220},
-    "right": {"x": 1500, "y": 220},
-    "center": {"x": 960, "y": 220},
-    "off": null
+
+  "scene_presets": {
+    "skit": {
+      "description": "茶番劇。人物の行動・心情を寸劇風に",
+      "ymm4_template": "演出/茶番劇",
+      "defaults": {
+        "bg": "photo_indoor", "bg_anim": "none",
+        "slot": "left", "motion": "pop_in",
+        "overlay": "speech_bubble", "se": null
+      }
+    },
+    "data": {
+      "description": "情報埋め込み。数値・地名・比較をアイテム配置",
+      "ymm4_template": "演出/データ表示",
+      "defaults": {
+        "bg": "diagram", "bg_anim": "none",
+        "slot": "right", "motion": "none",
+        "overlay": "text_box", "se": null
+      }
+    },
+    "board": {
+      "description": "黒板型。暗背景にテキスト/リスト整理",
+      "ymm4_template": "演出/黒板",
+      "defaults": {
+        "bg": "dark_board", "bg_anim": "none",
+        "slot": "off", "motion": "none",
+        "overlay": null, "se": null
+      }
+    }
   },
-  "face": {
-    "neutral": {"tachie_suffix": "normal"},
-    "surprised": {"tachie_suffix": "odoroki"}
+
+  "characters": {
+    "れいむ": {
+      "default_slot": "left",
+      "face_map": {
+        "neutral":   {"Eyebrow": "...", "Eye": "...", "Mouth": "..."},
+        "serious":   {"Eyebrow": "...", "Eye": "...", "Mouth": "..."},
+        "surprised": {"Eyebrow": "...", "Eye": "...", "Mouth": "..."}
+      }
+    }
   },
-  "se": {
-    "tension_hit": {"file": "se/tension_hit.wav"},
-    "punchline": {"file": "se/punchline.wav"}
+
+  "bg_map": {
+    "studio_blue": "backgrounds/studio_blue_01.png",
+    "dark_board": "backgrounds/dark_board.png",
+    "photo_outdoor": "backgrounds/outdoor_01.jpg"
   },
-  "motion": {
-    "pop_in": {"type": "scale", "from": 0.5, "to": 1.0, "duration_ms": 200},
-    "slide_in": {"type": "translate", "from_x": -200, "to_x": 0, "duration_ms": 300}
+
+  "slots": {
+    "left":   {"x": -737, "y": 540, "zoom": 120},
+    "right":  {"x":  708, "y": 540, "zoom": 120},
+    "center": {"x":    0, "y": 540, "zoom": 120},
+    "off":    null
+  },
+
+  "se_map": {
+    "tension_hit": "se/tension_hit.wav",
+    "punchline": "se/punchline.wav"
   }
 }
 ```
 
-### 6.3 解決のタイミング
+**設計の要点:**
+1. `scene_presets` の `ymm4_template` フィールドで YMM4 ネイティブテンプレートを名前参照。YMM4 テンプレートにアニメーション/エフェクト/複合アイテムをバンドルしておけば、一括適用できる
+2. `defaults` は IR で省略された場合のフォールバック。IR に明示されたフィールドが優先 (override)
+3. `characters` 軸で face_map を持つ。同じ `face=serious` でもキャラごとにパーツ構成が異なることを吸収
+4. `bg_map` / `slots` / `se_map` は現在の face_map / bg_map の拡張
 
-IR → テンプレート定義での解決は、G-06 (接続方式決定) の成果物が担う。
+### 6.5 解決の優先順位 (v1.0 からの変更)
 
-| 接続方式 | 解決の実体 |
-|---------|-----------|
-| ymmp 変換器 (Python) | Python スクリプトが IR + テンプレート定義 → ymmp の部分データを生成 |
-| 手動配置ガイド | IR + テンプレート定義 → 人間が読む演出指示書を生成 |
+1. Micro IR に明示された値 (最優先)
+2. carry-forward (前の発話から継承)
+3. **scene_preset の defaults** (template フィールドで参照されたプリセットの既定値)
+4. Macro IR のセクション既定値 (section_id の変更でリセットされた場合)
+5. Template Registry の全体既定値
 
-どちらの方式でも、IR 自体は変わらない。
+### 6.6 YMM4 ネイティブ機能の活用方針
+
+YMM4 のアイテムテンプレートはインポート/エクスポートに対応しており、グローバル設定として保存される。ymmp 内にはテンプレート参照ではなく展開後の値が格納される。
+
+**活用方針:**
+- motion / transition / bg_anim 等の複雑なエフェクトは、YMM4 のアイテムテンプレートに登録して一括適用するのが最も安全で堅牢
+- Python 側 (Adapter) は face / bg / slot 等の「JSON キー置換レベル」の差し替えに集中する
+- YMM4 テンプレートファイルの形式は未解析。実測で形式が判明すれば、Python からテンプレートファイルを生成してインポートさせる経路も検討する
+- 表情アイテム (ボイスアイテムとは別の表情変更専用アイテム) の活用も検討する
+
+**実測が必要な項目:**
+- YMM4 テンプレートファイルのエクスポート形式 (拡張子、JSON 構造)
+- 表情アイテムの ymmp JSON 構造
+- GroupItem の内部構造
+- VideoEffects 配列の $type ごとの構造
 
 ---
 
