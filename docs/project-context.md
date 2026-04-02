@@ -161,7 +161,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ## HANDOFF SNAPSHOT (2026-04-02 更新)
 
-- Shared Focus: 三層責務構造 (Writer IR / Template Registry / YMM4 Adapter) の docs 固定完了。次は YMM4 テンプレートファイル形式の実測 → PRODUCTION_IR_SPEC セクション2 の候補仕様更新 → Custom GPT v4 proof
+- Shared Focus: 三層責務構造の docs 固定完了。実測フェーズに移行。YMM4 テンプレートファイル形式の実測手順書を作成済み (docs/verification/ymm4-template-measurement.md)。ユーザーの YMM4 操作待ち
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
 - Last Change Relation: direct (三層責務構造の全主要 docs 反映。設計の前提条件固定)
