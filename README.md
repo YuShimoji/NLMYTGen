@@ -38,14 +38,20 @@ Audio Overview →
                     CSV 生成 →                                         台本読込 →
                     バリデーション →                                    音声合成 →
                                                                        字幕配置 →
-                    台本テキスト ───────→ 演出 IR 生成 ──→
-                                          (構造化 JSON/CSV)
-                                                            ──→ S-6 演出設定 →
+                    台本テキスト ───→ Writer IR 生成 ──→                       ↓
+                                      (scene_preset +                  [ymmp]
+                                       optional override)                ↓
+                                                  ↓                      ↓
+                    Template Registry ── 意味ラベル→リソース解決           ↓
+                                                  ↓                      ↓
+                    YMM4 Adapter (patch-ymmp) ── face/bg 差し替え ──→ [ymmp']
+                                                                       ↓
+                                                            ──→ S-6 演出微調整 →
                                                                        レンダリング
 ```
 
 **Path A (実装済み):** CSV 変換 → YMM4 台本読込 → 音声 + 字幕
-**Path B (設計中):** 台本 → LLM → 演出 IR → テンプレート解決 → S-6 半自動化
+**Path B (三層責務):** 台本 → Writer IR (LLM) → Template Registry (解決) → YMM4 Adapter (patch-ymmp) → S-6 微調整
 
 ## 入力
 

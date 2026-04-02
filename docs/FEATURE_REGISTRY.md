@@ -111,8 +111,8 @@
 | G-02b | 完成品 ymmp 構造解析 (研究のみ、1件限定) | done | L3 | 171MB ymmp を解析。VoiceItem 1549件 / VideoItem 140件 / TachieItem 2件。TachieFaceParameter でパーツ単位の表情制御。bg+face 差し替えが最小実用単位。`docs/verification/G02b-ymmp-structure-analysis.md` |
 | G-03 | 演出適用ツール (IToolPlugin) | hold | L3 | G-01 が前提。タイムライン操作 API 非公開のため凍結 |
 | G-04 | ymmp 背景/表情自動差し替え | hold | L3 | ymmp 直接編集は控える。G-02b + 段階5の判断結果を踏まえて再検討 |
-| G-05 | C-07 v4 IR 出力プロンプト | done | L2 | G-02 done が前提 (充足)。Custom GPT が PRODUCTION_IR_SPEC v1.0 準拠の構造化 IR (JSON) を出力するようプロンプト改訂。`docs/S6-production-memo-prompt.md` v4 セクション。proof 待ち |
-| G-06 | IR → YMM4 接続方式の決定 + 実装 | done | L2/L3 | ymmp 後処理変換器。`patch-ymmp` サブコマンド + `src/pipeline/ymmp_patch.py`。face (表情パーツ) + bg (背景画像) を IR→ymmp で差し替え。実機検証済み (2026-04-02)。motion/transition は手動 |
+| G-05 | Writer IR 出力プロンプト (C-07 v4) | done | L2 | 三層の第1層 (Writer IR)。Custom GPT が PRODUCTION_IR_SPEC v1.0 準拠の構造化 IR (scene_preset + override) を出力。`docs/S6-production-memo-prompt.md` v4 セクション。proof 待ち |
+| G-06 | YMM4 Adapter (patch-ymmp) | done | L2/L3 | 三層の第3層 (YMM4 Adapter) の初期形。face (表情パーツ) + bg (背景画像) を IR→ymmp で差し替え。実機検証済み (2026-04-02)。motion/transition は YMM4 ネイティブに委ねる方針 (実測後に確定) |
 
 ---
 
