@@ -7,7 +7,9 @@
 - 痛点ドリブンで進める。FEATURE_REGISTRY の候補一覧から機械的に次タスクを選ばない。
 - `docs/ai/*.md` が存在するなら、tool-specific helper docs より先に canonical rules として扱う。
 - project-local canonical docs を先に読んで、既知文脈の再質問を避ける。
-- 次 frontier は S-5 workflow proof を先に進める。字幕はみ出し pain を、YMM4 自動化ではなく workflow proof と Python 側の事前警告改善で詰める。
+- 演出 IR + patch-ymmp パイプラインが実装完了。次は Custom GPT proof と実台本 E2E。
+- 手動作業が重くならないよう調整する。微調整を重ねるのではなく目的と実効性を明らかにして効果的な開発プランを維持する。
+- ユーザー作業が必要な場合、ハンズオンで解説する。
 
 ## 未反映の是正要求
 - `approved` は「仕様定義済み + ユーザー承認済み」のみ。priority と status を混同しない。

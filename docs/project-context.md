@@ -4,7 +4,7 @@
 - プロジェクト名: NLMYTGen
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
-- 現フェーズ: 演出 IR + テンプレート資産。G-02 演出 IR 語彙定義が最優先フロンティア
+- 現フェーズ: 演出 IR パイプライン実装完了。G-02/G-02b/G-05/G-06 全 done。Custom GPT proof + 実台本 E2E が次
 - 直近の状態 (2026-03-31):
   - B-04 分割品質改善: 表示幅ベース分割 (--display-width, --max-lines, --chars-per-line) 実装完了
   - A-04 RSS フィード連携 (`fetch-topics`): 再審査済み + 実装完了。done へ復帰
