@@ -5,8 +5,8 @@
 ## 現在位置
 - project: NLMYTGen
 - lane: Advance (docs 規範固定)
-- slice: YMM4 テンプレート実測完了 + docs 反映 (2026-04-03)
-- next_action: (1) Custom GPT v4 proof (ユーザー操作) → (2) 実台本 E2E (build-csv → Custom GPT → IR → patch-ymmp → YMM4)
+- slice: G-05 v4 proof 完了 + patch-ymmp 接続テスト完了 (2026-04-03)
+- next_action: (1) 実制作 ymmp での E2E (台本読込後 ymmp + 実 face_map/bg_map) → (2) Level 3 到達判定
 - 案件モード: CLI artifact
 
 ## 主成果物
