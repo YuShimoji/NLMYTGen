@@ -104,6 +104,38 @@ def test_analyze_speaker_roles_host_guest():
     assert roles["Speaker_A"]["avg_length"] > roles["Speaker_B"]["avg_length"]
 
 
+def test_load_ir_single_object(tmp_path):
+    """load_ir: 単一 JSON オブジェクトを読み込む。"""
+    from src.pipeline.ymmp_patch import load_ir
+
+    ir_file = tmp_path / "ir.json"
+    ir_file.write_text(
+        '{"ir_version": "1.0", "macro": {"sections": []}, "utterances": []}',
+        encoding="utf-8",
+    )
+    data = load_ir(ir_file)
+    assert data["ir_version"] == "1.0"
+    assert "macro" in data
+    assert "utterances" in data
+
+
+def test_load_ir_multi_object(tmp_path):
+    """load_ir: 2つの JSON オブジェクト連結形式を読み込む。"""
+    from src.pipeline.ymmp_patch import load_ir
+
+    ir_file = tmp_path / "ir.json"
+    ir_file.write_text(
+        '{"ir_version": "1.0", "macro": {"sections": []}}\n'
+        '{"utterances": [{"index": 1, "speaker": "A", "text": "hello"}]}',
+        encoding="utf-8",
+    )
+    data = load_ir(ir_file)
+    assert data["ir_version"] == "1.0"
+    assert "macro" in data
+    assert len(data["utterances"]) == 1
+    assert data["utterances"][0]["speaker"] == "A"
+
+
 def _project_root():
     """プロジェクトルートを返す。"""
     from pathlib import Path

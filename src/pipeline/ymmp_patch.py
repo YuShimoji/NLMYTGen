@@ -30,6 +30,37 @@ class PatchResult:
             self.warnings = []
 
 
+def load_ir(path: str | Path) -> dict:
+    """IR JSON を読み込む。単一オブジェクトと2オブジェクト連結の両方に対応."""
+    with open(path, "r", encoding="utf-8") as f:
+        content = f.read().strip()
+
+    # まず単一 JSON として試す
+    try:
+        return json.loads(content)
+    except json.JSONDecodeError:
+        pass
+
+    # 2つの JSON オブジェクト連結として処理
+    depth = 0
+    first_end = -1
+    for i, ch in enumerate(content):
+        if ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0:
+                first_end = i + 1
+                break
+
+    if first_end <= 0:
+        raise ValueError("IR JSON の解析に失敗しました")
+
+    obj1 = json.loads(content[:first_end])
+    obj2 = json.loads(content[first_end:].strip())
+    return {**obj1, **obj2}
+
+
 def load_ymmp(path: str | Path) -> dict:
     """ymmp (UTF-8 BOM 付き JSON) を読み込む."""
     with open(path, "r", encoding="utf-8-sig") as f:

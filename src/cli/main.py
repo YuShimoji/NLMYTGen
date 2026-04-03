@@ -746,11 +746,10 @@ def _cmd_extract_template(args: argparse.Namespace) -> int:
 
 
 def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
-    from src.pipeline.ymmp_patch import load_ymmp, save_ymmp, patch_ymmp
+    from src.pipeline.ymmp_patch import load_ymmp, load_ir, save_ymmp, patch_ymmp
 
     ymmp_data = load_ymmp(args.ymmp)
-    with open(args.ir_json, "r", encoding="utf-8") as f:
-        ir_data = json.load(f)
+    ir_data = load_ir(args.ir_json)
 
     face_map: dict[str, dict[str, str]] = {}
     if args.face_map:
