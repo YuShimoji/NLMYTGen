@@ -124,6 +124,9 @@
 | 2026-04-02 | 正本ドキュメント5件を演出IR主軸に更新 | 修正 | README/CLAUDE.md/WORKFLOW/AUTOMATION_BOUNDARY/INVARIANTS から「CSV変換専用ツール」旧理解を除去。再開時の旧理解引き戻しを構造的に防止 |
 | 2026-04-02 | G-05 C-07 v4 IR 出力プロンプト作成 | 完了 (proof待ち) | `docs/S6-production-memo-prompt.md` v4 セクション。Custom GPT が PRODUCTION_IR_SPEC v1.0 準拠の Macro+Micro IR JSON を出力するプロンプト。v3 (自然文) との切替可能。proof はユーザーが Custom GPT で実施 |
 | 2026-04-02 | ymmp 後処理の実機検証: 表情パーツ差し替えが動作することを確認 | 実証済み | Python で ymmp JSON のパーツパスを書き換え→YMM4で正常に開ける。音声・字幕は台本読込で確保済みのまま維持。二段階方式 (台本読込→ymmp後処理) が実現可能と確定 |
+| 2026-04-03 | YMM4 テンプレートは独立ファイルではなく ItemSettings.json 内の Templates 配列に保存 | 実測確定 | テンプレートの Items 構造は ymmp Items と同一。Adapter ロジック再利用可能。エフェクト・VoiceCache もテンプレートに完全保持 |
+| 2026-04-03 | Custom GPT v4 proof 完了 | 実証済み | 28 utterances / 5 sections / 全語彙チェック PASS / Macro-Micro 整合OK。carry-forward は全件フル指定 (省略なし) |
+| 2026-04-03 | Custom GPT v4 の IR 出力は 2オブジェクト連結形式 (Macro + Micro) | 実測確定 | load_ir() で単一 JSON と連結形式の両方に対応。CLI patch-ymmp で動作確認済み |
 
 ---
 
@@ -159,30 +162,33 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ---
 
-## HANDOFF SNAPSHOT (2026-04-02 更新)
+## HANDOFF SNAPSHOT (2026-04-03 更新)
 
-- Shared Focus: 三層責務構造の docs 固定完了。実測フェーズに移行。YMM4 テンプレートファイル形式の実測手順書を作成済み (docs/verification/ymm4-template-measurement.md)。ユーザーの YMM4 操作待ち
+- Shared Focus: G-05 v4 proof 完了 + patch-ymmp 接続テスト完了 + Multi-Object IR 読み込み対応。台本読込後の実制作 ymmp (v4_re.ymmp) がローカルに存在。次は extract-template → patch-ymmp E2E
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: direct (三層責務構造の全主要 docs 反映。設計の前提条件固定)
-- Evidence: `uv run pytest` 91 PASS。全主要 docs に三層語彙反映済み。実測/推測/未確認の棚卸し完了 (YMM4-AUTOMATION-RESEARCH セクション7)
+- Last Change Relation: direct (load_ir Multi-Object 対応実装。G-05 v4 proof + CLI 接続テスト完了)
+- Evidence: 93 PASS。Custom GPT v4 IR 出力 (28 utterances, 全語彙チェック PASS)。patch-ymmp CLI dry-run 成功。YMM4 テンプレート構造 (ItemSettings.json) 実測確定。台本読込後 ymmp (v4_re.ymmp) 保存済み
 - 案件モード: CLI artifact
-- 現在の主レーン: Advance (docs 規範固定 → 実測フェーズへ移行)
-- 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中
+- 現在の主レーン: Advance (演出パイプライン E2E)
+- 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近
 - Current Trust Assessment:
-  - trusted: B-01~B-17 全字幕スタック (91 PASS)
-  - trusted: G-02 IR 語彙 v1.0、G-02b ymmp 構造解析、G-05 v4 プロンプト、G-06 patch-ymmp 実機検証
+  - trusted: B-01~B-17 全字幕スタック (93 PASS)
+  - trusted: G-02 IR 語彙 v1.0、G-02b ymmp 構造解析、G-06 patch-ymmp 実機検証
   - trusted: extract-template (face_map/bg_map 自動抽出)
-  - needs re-check: Custom GPT v4 proof 未実施。IR 出力品質は未確認
+  - trusted: G-05 v4 proof 完了。Custom GPT が PRODUCTION_IR_SPEC v1.0 準拠の IR を正常出力
+  - trusted: load_ir Multi-Object 対応 (2オブジェクト連結形式の読み込み)
   - needs re-check: motion/transition/overlay の ymmp 適用は未実装 (正式スコープ内の frontier)
+  - needs re-check: 実制作 ymmp での face/bg 差し替え E2E は未実施
 - Recovered Canonical Context:
   - Python はテキスト変換 + 演出 IR 定義 + ymmp 限定後段適用
   - 視覚配置 IR が中心課題。C-07 系が主系統、D-02 は従属的補助論点
   - patch-ymmp は Level 1 限定変換器。ゼロからの ymmp 生成とは区別する
   - 「未実装」は「境界外」ではない。motion/transition/overlay は正式スコープ内の frontier
+  - YMM4 テンプレートは独立ファイルではなく ItemSettings.json の Templates 配列に JSON 保存
+  - Custom GPT v4 は 2オブジェクト連結形式 (Macro + Micro) で IR を出力する。load_ir() で対応済み
 - Authority Return Items:
-  - Custom GPT v4 proof (ユーザー作業)
-  - face+bg 限定 E2E (build-csv → Custom GPT → IR → patch-ymmp → YMM4)
+  - 実制作 ymmp (v4_re.ymmp) での face/bg 差し替え E2E → YMM4 で開いて確認
   - motion/transition/overlay の ymmp 適用を次に進めるかの判断
   - E-02: hold 継続。E-01 とセットでのみ再検討
   - F-01/F-02: quarantined 継続
@@ -192,11 +198,4 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - motion/transition/overlay を「未実装だから境界外」と誤分類しない
   - quarantined 項目を通常候補としてそのまま spec 化しない
   - 素材取得/API 検討を再び中心にしない
-- Docs-only Resume Packet:
-  - AGENTS.md, .claude/CLAUDE.md
-  - docs/ai/CORE_RULESET.md, docs/ai/DECISION_GATES.md, docs/ai/STATUS_AND_HANDOFF.md, docs/ai/WORKFLOWS_AND_PHASES.md
-  - docs/INVARIANTS.md, docs/USER_REQUEST_LEDGER.md, docs/OPERATOR_WORKFLOW.md, docs/INTERACTION_NOTES.md
-  - docs/runtime-state.md, docs/project-context.md, docs/FEATURE_REGISTRY.md, docs/AUTOMATION_BOUNDARY.md
-  - docs/PRODUCTION_IR_SPEC.md, docs/YMM4-AUTOMATION-RESEARCH.md
-  - prompt-resume.md
 - Expansion Risk: なし

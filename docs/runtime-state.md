@@ -4,15 +4,15 @@
 
 ## 現在位置
 - project: NLMYTGen
-- lane: Advance (docs 規範固定)
-- slice: G-05 v4 proof 完了 + patch-ymmp 接続テスト完了 (2026-04-03)
-- next_action: (1) 実制作 ymmp での E2E (台本読込後 ymmp + 実 face_map/bg_map) → (2) Level 3 到達判定
+- lane: Advance (演出パイプライン E2E)
+- slice: G-05 v4 proof 完了 + Multi-Object IR 読み込み対応 + patch-ymmp 接続テスト完了 (2026-04-03)
+- next_action: (1) 実制作 ymmp (samples/v4_re.ymmp, 8.5MB, 台本読込済み) で extract-template → face_map/bg_map 生成 → patch-ymmp E2E → (2) Level 3 到達判定
 - 案件モード: CLI artifact
 
 ## 主成果物
 - active_artifact: NLM transcript → YMM4 CSV → ゆっくり解説動画制作ワークフロー
 - artifact_surface: CLI → CSV → YMM4 台本読込 → 演出設定 → レンダリング → サムネイル → 投稿
-- last_change_relation: direct (YMM4 テンプレート実測 → docs 反映。ItemSettings.json 内テンプレート構造を確定)
+- last_change_relation: direct (load_ir Multi-Object 対応実装。G-05 v4 proof + CLI 接続テスト完了)
 
 ## カウンター
 - blocks_since_user_visible_change: 0
@@ -21,22 +21,22 @@
 
 ## 量的指標
 - test_file_count: 9
-- test_count: 91
+- test_count: 93
 - mock_file_count: 0
 - impl_file_count: 15
 - mock_impl_ratio: 0.00
 - open_todo_count: 0
 
 ## 最終検証
-- last_verification_artifact: YMM4 テンプレート実測完了 + YMM4-AUTOMATION-RESEARCH sec7 / PRODUCTION_IR_SPEC sec6.6 更新。91 PASS
+- last_verification_artifact: load_ir Multi-Object 対応 + G-05 v4 proof + CLI patch-ymmp dry-run 成功。93 PASS
 - last_verification_date: 2026-04-03
 
 ## Evidence（CLI artifact mode）
-- evidence_status: 実データ通過（2件の transcript で CSV E2E 確認済み）。YMM4 テンプレート構造実測済み (2026-04-03)
-- last_e2e_data: AI監視(57発話) を `--max-lines 2 --chars-per-line 40 --balance-lines` で再検証し、95 行 / overflow candidates 3 まで低減。YMM4 読込用 CSV も再生成済み
-- external_tool_verification: YMM4 読込成功（2026-03-29、CSV形式）。YMM4 テンプレート (ItemSettings.json) 構造確定 (2026-04-03)
+- evidence_status: Custom GPT v4 proof 完了 (28 utterances, 全チェック PASS)。patch-ymmp CLI dry-run 成功 (Multi-Object IR 対応)。台本読込後の実制作 ymmp (v4_re.ymmp, 8.5MB) がローカルに存在
+- last_e2e_data: AI監視(57発話) の CSV + Custom GPT v4 IR (28 utterances) + patch-ymmp dry-run
+- external_tool_verification: YMM4 読込成功（2026-03-29、CSV形式）。YMM4 テンプレート (ItemSettings.json) 構造確定 (2026-04-03)。台本読込後 ymmp 保存済み (2026-04-03)
 - final_artifact_reached: Yes（CSV → YMM4 台本読込のパス）
-- blocking_dependency: Custom GPT v4 proof (ユーザー操作)
+- blocking_dependency: 実制作 ymmp での face/bg 差し替え E2E (extract-template → patch-ymmp → YMM4 確認)
 
 ## FEATURE_REGISTRY 状態サマリ (2026-04-01)
 
