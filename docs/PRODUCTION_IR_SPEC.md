@@ -466,19 +466,30 @@ Micro IR (発話ごとに1つ)
 
 ### 6.6 YMM4 ネイティブ機能の活用方針
 
-YMM4 のアイテムテンプレートはインポート/エクスポートに対応しており、グローバル設定として保存される。ymmp 内にはテンプレート参照ではなく展開後の値が格納される。
+YMM4 のアイテムテンプレートはグローバル設定として `ItemSettings.json` の `Templates` 配列に保存される。ymmp 内にはテンプレート参照ではなく展開後の値が格納される。
+
+**実測結果 (2026-04-03):**
+
+- テンプレートは独立ファイルではなく、`YMM4フォルダ/user/setting/{version}/YukkuriMovieMaker.Settings.ItemSettings.json` 内の JSON オブジェクト
+- テンプレートの `Items` 配列は ymmp の `Items` と同一構造。Adapter のロジックがテンプレートにも再利用可能
+- ImageItem テンプレートに VideoEffects (StripeGlitchNoise, RectangleGlitchNoise, RandomRotateEffect) が完全保持される
+- VoiceItem テンプレートに VoiceCache (音声キャッシュ) が保持される
+- テンプレート名 (`Name`) で YMM4 GUI から呼び出せる。IR の `scene_preset` がテンプレート名を参照値として使える
+- 保存先は YMM4 バージョンごとのフォルダ (`user/setting/4.51.0.1/` 等)
 
 **活用方針:**
 - motion / transition / bg_anim 等の複雑なエフェクトは、YMM4 のアイテムテンプレートに登録して一括適用するのが最も安全で堅牢
 - Python 側 (Adapter) は face / bg / slot 等の「JSON キー置換レベル」の差し替えに集中する
-- YMM4 テンプレートファイルの形式は未解析。実測で形式が判明すれば、Python からテンプレートファイルを生成してインポートさせる経路も検討する
+- Template Registry の `ymm4_template` フィールドは ItemSettings.json 内のテンプレート名を参照する。Python がテンプレートを直接生成する経路は、ItemSettings.json の `Templates` 配列への追記として技術的に実現可能だが、YMM4 起動中のファイル書き換えリスクがあるため慎重に評価する
 - 表情アイテム (ボイスアイテムとは別の表情変更専用アイテム) の活用も検討する
 
-**実測が必要な項目:**
-- YMM4 テンプレートファイルのエクスポート形式 (拡張子、JSON 構造)
+**残りの実測項目:**
+
+- 複数アイテムをバンドルしたテンプレート (Items: list[2+]) の実例
 - 表情アイテムの ymmp JSON 構造
 - GroupItem の内部構造
-- VideoEffects 配列の $type ごとの構造
+- VideoEffects の $type ごとのパラメータ構造
+- テンプレートのインポート/エクスポート機能の具体的な出力形式
 
 ---
 
