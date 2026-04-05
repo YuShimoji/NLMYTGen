@@ -29,9 +29,11 @@
 - 汚染バッチ由来の D-02 / F-01 / F-02 は、個別再審査まで通常 backlog に戻さない。
 - 2026-04-05: H-01 schema v0.1 を `docs/PACKAGING_ORCHESTRATOR_SPEC.md` に明文化。H-01 は approved、H-02〜H-04 は proposed backlog とする。
 - 2026-04-06: H-02 schema v0.1 を `docs/THUMBNAIL_STRATEGY_SPEC.md` に明文化。H-02 は approved、C-08 は specificity-first / banned pattern / rotation recommendation を出力できる前提へ更新する。
+- 2026-04-06: H-02 dry proof を `docs/verification/H02-thumbnail-strategy-ai-monitoring-dry-proof.md` に記録。C-08 には `Specificity Ledger` と `Brief Compliance Check` を追加し、strict proof では「5案中3案が preferred_specifics を使い、banned pattern を避けるか」の 1 点だけを見る。
+- 2026-04-06: H-03 schema v0.1 を `docs/VISUAL_DENSITY_SCORE_SPEC.md` に明文化し、`docs/verification/H03-visual-density-ai-monitoring-proof.md` で AI監視 sample の dry proof を記録。visual stagnation risk と packaging promise の on-screen payoff を分けて warning 化できる状態にした。
 - 2026-04-06: H-04 schema v0.1 を `docs/EVIDENCE_RICHNESS_SCORE_SPEC.md` に明文化。H-04 は approved とし、7軸 score・warning class・repair suggestion を正本化する。
 - 2026-04-06: H-04 manual scoring proof packet を `docs/verification/H04-evidence-richness-manual-scoring-proof.md` に整備。実台本 1 本で warning を script/packaging repair に変換できるか検証できる状態にする。
-- 2026-04-06: `AI監視が追い詰める生身の労働` を用いて H-01 dry proof と H-04 manual proof を記録。H-01 は `docs/verification/H01-packaging-orchestrator-ai-monitoring-dry-proof.md`、H-04 は `docs/verification/H04-evidence-richness-ai-monitoring-proof.md` を正本とし、次 frontier は H-02 workflow proof に寄せる。
+- 2026-04-06: `AI監視が追い詰める生身の労働` を用いて H-01 dry proof と H-04 manual proof を記録。H-01 は `docs/verification/H01-packaging-orchestrator-ai-monitoring-dry-proof.md`、H-04 は `docs/verification/H04-evidence-richness-ai-monitoring-proof.md` を正本とし、その後 H-02/H-03 の dry proof まで進めたうえで、残る strict 未解決を H-02 GUI rerun proof に絞る。
 - 2026-04-06: G-12 で fade-family `transition` route (`VoiceFade*` / `JimakuFade*` / `Fade*`) を ymmp_measure で回収できるようにし、repo-local contract を更新。非 fade / template-backed transition family のみを未確定として残す。
 - 2026-04-06: G-13 を completed packet とし、`overlay` は deterministic `ImageItem` 挿入まで閉じ、`se` は route 不在を `SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast 化する。timeline lane は broad retry loop に戻さない。
 - 2026-04-05: face は `FACE_UNKNOWN_LABEL` / `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` / `FACE_MAP_MISS` / `IDLE_FACE_MAP_MISS` / `VOICE_NO_TACHIE_FACE` の failure class で扱う。broad な manual retry loop に戻さない。
@@ -47,6 +49,7 @@
 - H-01 brief の workflow proof 条件 (C-07 / C-08 で drift が減るか)
 - H-02 の workflow proof 条件 (specificity-first へ寄り、abstract hype が減るか)
 - H-04 の運用結果を何本か蓄積した時の warning threshold 見直し条件
+- H-03 を将来 ymmp readback と接続するときの測定項目 (静止秒数、背景切替、overlay 数など)
 
 ## 運用ルール
 - 会話で一度出た要求のうち、次回以降も効くものをここへ残す。

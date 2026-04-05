@@ -4,7 +4,7 @@
 - プロジェクト名: NLMYTGen
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
-- 現フェーズ: Production E2E 実証 + face サブクエスト completion 固定。timeline lane の G-11〜G-13 packet を閉じ、H-01 dry proof・H-02 dry proof・H-04 manual proof まで記録済み。active lane は H-02 strict GUI rerun proof を主軸とする packaging lane
+- 現フェーズ: Production E2E 実証 + face サブクエスト completion 固定。timeline lane の G-11〜G-13 packet を閉じ、H-01 dry proof・H-02 dry proof・H-03 dry proof・H-04 manual proof まで記録済み。repo 内 packaging 定義は一巡し、残る主未解決は H-02 strict GUI rerun proof の 1 回のみ
 - 直近の状態 (2026-04-05):
   - G-06 Production E2E: 60 VoiceItem / 28 IR utterance (row-range) / character-scoped face_map → face 133 changes / YMM4 visual proof OK
   - G-07 idle_face: 待機中表情の TachieFaceItem 挿入。28 件挿入 + carry-forward 動作確認
@@ -19,10 +19,12 @@
   - H-01 workflow proof packet: `docs/verification/H01-packaging-orchestrator-workflow-proof.md` を追加。sample brief / cue memo / alignment check を束ねた実行手順を整備
   - H-01 dry proof: `docs/verification/H01-packaging-orchestrator-ai-monitoring-dry-proof.md` により、AI監視 sample で brief が opening / title / thumbnail / cue memo の共有契約として機能することを repo-local artifact ベースで確認
   - H-02 dry proof: `docs/verification/H02-thumbnail-strategy-ai-monitoring-dry-proof.md` により、AI監視 sample で specificity-first / banned pattern / rotation recommendation / brief compliance を dry proof し、C-08 prompt に `Specificity Ledger` と `Brief Compliance Check` を追加
+  - H-03 Visual density score: `docs/VISUAL_DENSITY_SCORE_SPEC.md` v0.1 を追加。7軸の visual density score、warning class、repair suggestion を定義
+  - H-03 dry proof: `docs/verification/H03-visual-density-ai-monitoring-proof.md` により、AI監視 sample で visual stagnation risk と promise visual payoff を warning 化し、S2/S4 の flat risk を repair に変換できることを確認
   - H-04 manual proof: `docs/verification/H04-evidence-richness-ai-monitoring-proof.md` により、AI監視 sample を total 77 / `acceptable` と採点し、warning を anecdote continuity と late payoff の repair に変換できることを確認
 - G-12 measurement packet: `docs/verification/G12-timeline-route-measurement.md` と `samples/timeline_route_contract.json` を追加。profile ベースの route contract で current corpus の `motion` / `bg_anim` を固定し、fade-family `transition` route (`VoiceFade*` / `JimakuFade*` / `Fade*`) も mechanical に回収できる状態まで更新
   - G-13 overlay / se insertion packet: `docs/verification/G13-overlay-se-insertion-packet.md` を追加。`overlay` は registry + timing anchor から deterministic な `ImageItem` 挿入まで実装し、`se` は label/timing 解決までは閉じたうえで `AudioItem` write route 不在時に `SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast する boundary を固定
-  - packaging frontier packet: H-03 Visual density score を proposed backlog として整理。H-04 は schema 定義済み
+  - packaging frontier packet: H-03 まで schema + dry proof を記録済み。repo 内で残る packaging 側の strict 未解決は H-02 GUI rerun proof
   - `uv run pytest`: 220 passed / 3 xpassed
   - B-12 行バランス重視の字幕分割を実装。`--balance-lines` を追加し、2行字幕向けに自然な改行を opt-in で挿入できるようにした
   - B-12 検証: `build-csv --max-lines 2 --chars-per-line 40 --balance-lines --stats --dry-run` で実データ preview を確認。CSV 1行内の改行保持テストも追加
@@ -244,6 +246,7 @@ This section supersedes the 2026-04-05 roadmap block above.
 | 2026-04-06 | H-04 manual scoring proof packet を整備 | schema のみ / proof packet まで整備 | H-04 を机上定義で終わらせず、warning を script/packaging repair に変換できる実行単位まで前進させるため |
 | 2026-04-06 | H-02 は dry proof を先に通し、strict GUI rerun proof と分離して扱う | strict proof 待ち / dry proof 先行 | 既存 artifact だけでも specificity-first / banned pattern / rotation contract が機能するかを確認でき、GUI rerun 待ちで packaging lane 全体を止める必要がないため |
 | 2026-04-06 | H-01 はまず repo-local dry proof を通し、strict な GUI rerun proof と分離して扱う | dry proof なし / strict proof 待ち / dry proof 先行 | 既存 artifact だけでも brief が共有契約として機能するかは確認でき、strict な before/after rerun 待ちで packaging lane 全体を止める必要がないため |
+| 2026-04-06 | H-03 を packaging lane の最後の未定義ピースとして先に定義し、strict GUI rerun とは分離して進める | GUI rerun 完了待ち / H-03 先行定義 | visual stagnation risk は repo-local brief/cue/script だけでも warning 化できるため、外部 GUI 実行待ちで spec 定義全体を止める必要がないため |
 | 2026-04-06 | H-04 AI監視 sample は `acceptable` と判定し、主要 warning を anecdote continuity と late payoff に集約 | 高評価でそのまま通す / vague score に留める / warning を repair に落とす | H-04 の価値は数値化より repair 指示にあるため、包装 promise と本文根拠のズレを具体修正へ還元できる形で残す必要があるため |
 | 2026-04-06 | G-11 slot patch hardening を実装完了 | proposed 維持 / 実装完了 | timeline edit を broad manual retry loop にせず、slot を deterministic patch + fail-fast validation の packet として閉じるため |
 | 2026-04-06 | G-12 は patch 前に readback harness と route contract 照合を先行実装 | 先に patch / 先に measurement harness | native route を未確定のまま `motion` / `transition` / `bg_anim` の adapter write に進むと、file-format risk と creative judgement が再混線するため |
@@ -291,12 +294,12 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ## HANDOFF SNAPSHOT (2026-04-06 更新)
 
-- Shared Focus: face は completed subsystem のまま維持。timeline lane では G-11〜G-13 を completed packet として閉じ、H-01 dry proof と H-04 manual proof まで記録済み。active lane は H-02 workflow proof に移し、fade-family `transition` は repo-local corpus で確定済み、sample dependency は non-fade / template-backed family と `se` の AudioItem write route に限定された
-- Safe Next Frontier Packet: active lane は H-02 workflow proof。parallel backlog として H-03 を維持する。timeline は 1 つの巨大 frontier ではなく completed packet 群として扱い、known failure class または新 sample が出たときだけ局所再オープンする
+- Shared Focus: face は completed subsystem のまま維持。timeline lane では G-11〜G-13 を completed packet として閉じ、packaging lane でも H-01/H-02/H-03/H-04 の repo-local proof を記録済み。active frontier は strict な H-02 GUI rerun proof に細った。fade-family `transition` は repo-local corpus で確定済みで、sample dependency は non-fade / template-backed family と `se` の AudioItem write route に限定された
+- Safe Next Frontier Packet: active lane は H-02 strict GUI rerun proof。timeline は 1 つの巨大 frontier ではなく completed packet 群として扱い、known failure class または新 sample が出たときだけ局所再オープンする
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: direct (H-01 dry proof + H-04 manual proof execution + packaging lane handoff to H-02)
-- Evidence: Production E2E 実証済み + `uv run pytest`: 220 passed / 3 xpassed。`docs/verification/H01-packaging-orchestrator-ai-monitoring-dry-proof.md` で brief alignment を確認し、`docs/verification/H04-evidence-richness-ai-monitoring-proof.md` で AI監視 sample の warning を repair action に変換できることを確認。slot/face/timeline regression も維持
+- Last Change Relation: direct (H-03 spec definition + AI monitoring dry proof + packaging lane narrowed to one operator check)
+- Evidence: Production E2E 実証済み + `uv run pytest`: 220 passed / 3 xpassed。`docs/VISUAL_DENSITY_SCORE_SPEC.md` と `docs/verification/H03-visual-density-ai-monitoring-proof.md` により、visual stagnation risk と packaging promise の on-screen payoff を別軸で warning 化できることを確認。slot/face/timeline regression も維持
 - 案件モード: CLI artifact
 - 現在の主レーン: Advance (Packaging workflow proof)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近
@@ -313,6 +316,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - trusted: repo-local `.ymmp` 16 本の corpus audit により fade-family `transition` route は観測済み、`template` route は 0 件と確認済み
   - trusted: G-13 overlay insertion (`OVERLAY_*` validation + deterministic `ImageItem` patch)
   - trusted: G-13 se fail-fast gate (`SE_*` validation + `SE_WRITE_ROUTE_UNSUPPORTED`)
+  - trusted: H-02 dry proof (`Specificity Ledger` / `Brief Compliance Check` / banned-pattern rejection)
   - needs re-check: `samples/production.ymmp` は `bg_anim` route miss。production lane の `bg_anim` write path は未固定
   - needs re-check: non-fade / template-backed `transition` の ymmp route は repo 内 sample 不在のため未固定。新しい sample が入ったときだけ再測定する
   - needs re-check: `se` の real `AudioItem` write route は repo-local sample 不在のため未固定。新しい sample が入ったときだけ route 測定と write path 固定を行う
@@ -325,7 +329,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - YMM4 テンプレートは独立ファイルではなく ItemSettings.json の Templates 配列に JSON 保存
   - Custom GPT v4 は 2オブジェクト連結形式 (Macro + Micro) で IR を出力する。load_ir() で対応済み
 - Authority Return Items:
-  - H-02 workflow proof
+  - H-02 strict GUI rerun proof
   - `se` の real `AudioItem` write route が必要になった場合の sample 提供または route 判定
   - E-02: hold 継続。E-01 とセットでのみ再検討
   - F-01/F-02: quarantined 継続
