@@ -155,8 +155,8 @@ def _build_one(input_path: Path, output_path: Path, args: argparse.Namespace) ->
                 max_lines=max_lines,
             )
         elif balance_lines:
-            # B-15/16: トップダウン方式
-            output = reflow_subtitles(
+            # 既定の改行改善も階層型の統合リフローで処理する。
+            output = reflow_subtitles_v2(
                 output,
                 chars_per_line=chars_per_line,
                 max_lines=max_lines,
@@ -657,6 +657,8 @@ def main(argv: list[str] | None = None) -> int:
                            help="Output directory for face_map.json and bg_map.json")
     p_extract.add_argument("--format", choices=["json", "summary"], default="summary",
                            help="Output format (default: summary to stdout)")
+    p_extract.add_argument("--labeled", action="store_true",
+                           help="Use Remark field as IR label (character-scoped output)")
 
     # patch-ymmp
     p_patch = subparsers.add_parser(
@@ -669,6 +671,46 @@ def main(argv: list[str] | None = None) -> int:
     p_patch.add_argument("--bg-map", help="BG label → image/video file path mapping (JSON)")
     p_patch.add_argument("-o", "--output", help="Output ymmp path (default: <input>_patched.ymmp)")
     p_patch.add_argument("--dry-run", action="store_true", help="Preview changes without writing")
+
+    # apply-production
+    p_apply = subparsers.add_parser(
+        "apply-production",
+        help="One-command S-6 pipeline: extract maps + patch ymmp",
+    )
+    p_apply.add_argument("production_ymmp", help="Production ymmp (CSV imported)")
+    p_apply.add_argument("ir_json", help="Production IR JSON")
+    p_apply.add_argument("--palette", help="Palette ymmp for face_map extraction")
+    p_apply.add_argument("--face-map", help="Pre-built face_map.json (skip extraction)")
+    p_apply.add_argument("--bg-map", help="BG label → file path mapping (JSON)")
+    p_apply.add_argument("--refresh-maps", action="store_true",
+                         help="Force re-extract face_map from palette even if file exists")
+    p_apply.add_argument("--csv", help="CSV file for auto row_start/row_end annotation")
+    p_apply.add_argument("-o", "--output", help="Output ymmp path")
+    p_apply.add_argument("--dry-run", action="store_true", help="Preview without writing")
+
+    # annotate-row-range
+    p_annot = subparsers.add_parser(
+        "annotate-row-range",
+        help="Auto-annotate IR with row_start/row_end from CSV alignment",
+    )
+    p_annot.add_argument("ir_json", help="Production IR JSON")
+    p_annot.add_argument("csv", help="YMM4 CSV file (build-csv output)")
+    p_annot.add_argument("-o", "--output", help="Output IR JSON path")
+    p_annot.add_argument("--force", action="store_true",
+                         help="Overwrite existing row_start/row_end")
+    p_annot.add_argument("--keep-existing", action="store_true",
+                         help="Skip utterances with existing row_start/row_end")
+    p_annot.add_argument("--dry-run", action="store_true",
+                         help="Preview without writing")
+
+    # validate-ir
+    p_valir = subparsers.add_parser(
+        "validate-ir",
+        help="Check IR quality before apply-production (face distribution, unknown labels, etc.)",
+    )
+    p_valir.add_argument("ir_json", help="Production IR JSON")
+    p_valir.add_argument("--face-map", help="face_map.json for unknown label check")
+    p_valir.add_argument("--palette", help="Palette ymmp (alternative to --face-map)")
 
     args = parser.parse_args(argv)
 
@@ -691,6 +733,12 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_extract_template(args)
         elif args.command == "patch-ymmp":
             return _cmd_patch_ymmp(args)
+        elif args.command == "apply-production":
+            return _cmd_apply_production(args)
+        elif args.command == "annotate-row-range":
+            return _cmd_annotate_row_range(args)
+        elif args.command == "validate-ir":
+            return _cmd_validate_ir(args)
         else:
             parser.print_help()
             return 1
@@ -703,11 +751,23 @@ def _cmd_extract_template(args: argparse.Namespace) -> int:
     from src.pipeline.ymmp_patch import load_ymmp
     from src.pipeline.ymmp_extract import (
         extract_template,
+        extract_template_labeled,
         generate_face_map,
+        generate_face_map_labeled,
         generate_bg_map,
+        generate_bg_map_labeled,
     )
 
     ymmp_data = load_ymmp(args.ymmp)
+
+    if args.labeled:
+        return _cmd_extract_template_labeled(
+            args, ymmp_data,
+            extract_template_labeled,
+            generate_face_map_labeled,
+            generate_bg_map_labeled,
+        )
+
     result = extract_template(ymmp_data)
 
     face_map = generate_face_map(result.face_patterns)
@@ -745,6 +805,66 @@ def _cmd_extract_template(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_extract_template_labeled(
+    args: argparse.Namespace,
+    ymmp_data: dict,
+    extract_fn,
+    gen_face_fn,
+    gen_bg_fn,
+) -> int:
+    """--labeled モードの extract-template."""
+    result = extract_fn(ymmp_data)
+
+    # Conflict (同キャラ・同ラベル・異パーツ) はエラー
+    errors = [c for c in result.conflicts if c.startswith("Conflict:")]
+    warnings = [c for c in result.conflicts if c.startswith("Warning:")]
+
+    for w in warnings:
+        print(f"  {w}", file=sys.stderr)
+
+    if errors:
+        for e in errors:
+            print(f"  ERROR: {e}", file=sys.stderr)
+        return 1
+
+    face_map = gen_face_fn(result)
+    bg_map = gen_bg_fn(result)
+
+    total_faces = sum(len(labels) for labels in face_map.values())
+
+    if args.format == "summary" and not args.output_dir:
+        print(f"Characters: {result.characters}")
+        print(f"\n--- Face patterns (character-scoped, {total_faces} total) ---")
+        for char, labels in face_map.items():
+            print(f"  {char}:")
+            for label, parts in labels.items():
+                parts_str = ", ".join(
+                    f"{k}={Path(v).name}" for k, v in parts.items()
+                )
+                print(f"    {label}: {parts_str}")
+        print(f"\n--- BG labels ({len(bg_map)}) ---")
+        for label, path in bg_map.items():
+            print(f"  {label}: {Path(path).name}")
+        if total_faces == 0 and len(bg_map) == 0:
+            print("\n0 patterns extracted. Set Remark on VoiceItem/ImageItem in YMM4.")
+        return 0
+
+    out_dir = Path(args.output_dir) if args.output_dir else Path(".")
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    face_path = out_dir / "face_map.json"
+    with open(face_path, "w", encoding="utf-8") as f:
+        json.dump(face_map, f, ensure_ascii=False, indent=2)
+    print(f"face_map: {face_path} (character-scoped, {total_faces} patterns)")
+
+    bg_path = out_dir / "bg_map.json"
+    with open(bg_path, "w", encoding="utf-8") as f:
+        json.dump(bg_map, f, ensure_ascii=False, indent=2)
+    print(f"bg_map: {bg_path} ({len(bg_map)} labels)")
+
+    return 0
+
+
 def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
     from src.pipeline.ymmp_patch import load_ymmp, load_ir, save_ymmp, patch_ymmp
 
@@ -777,6 +897,236 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
     if not out_path:
         stem = Path(args.ymmp).stem
         out_path = str(Path(args.ymmp).parent / f"{stem}_patched.ymmp")
+    save_ymmp(ymmp_data, out_path)
+    print(f"Written: {out_path}")
+    return 0
+
+
+def _get_known_face_labels(face_map: dict) -> set[str]:
+    """face_map から既知の face ラベルを抽出する."""
+    labels: set[str] = set()
+    for key, value in face_map.items():
+        if isinstance(value, dict):
+            if all(isinstance(v, str) for v in value.values()):
+                labels.add(key)  # flat map
+            else:
+                labels.update(value.keys())  # char-scoped map
+    return labels
+
+
+def _print_validation(vr) -> None:
+    """IRValidationResult を表示する."""
+    from src.pipeline.ir_validate import IRValidationResult
+    # face distribution
+    if vr.face_distribution:
+        total = sum(vr.face_distribution.values())
+        print(f"\n--- Face Distribution ({total} utterances) ---")
+        for label, count in sorted(
+            vr.face_distribution.items(), key=lambda x: -x[1]
+        ):
+            pct = count * 100 // total
+            bar = "#" * (pct // 5)
+            print(f"  {label:12s} {count:3d} ({pct:2d}%) {bar}")
+
+    for msg in vr.errors:
+        print(f"  ERROR: {msg}", file=sys.stderr)
+    for msg in vr.warnings:
+        print(f"  WARNING: {msg}", file=sys.stderr)
+    for msg in vr.info:
+        print(f"  INFO: {msg}")
+
+
+def _cmd_validate_ir(args: argparse.Namespace) -> int:
+    """IR 品質 gate."""
+    from src.pipeline.ymmp_patch import load_ir, load_ymmp
+    from src.pipeline.ir_validate import validate_ir
+
+    ir_data = load_ir(args.ir_json)
+
+    known_labels = None
+    if args.face_map:
+        with open(args.face_map, "r", encoding="utf-8") as f:
+            face_map = json.load(f)
+        known_labels = _get_known_face_labels(face_map)
+    elif args.palette:
+        from src.pipeline.ymmp_extract import (
+            extract_template_labeled,
+            generate_face_map_labeled,
+        )
+        palette_data = load_ymmp(args.palette)
+        result = extract_template_labeled(palette_data)
+        face_map = generate_face_map_labeled(result)
+        known_labels = _get_known_face_labels(face_map)
+
+    vr = validate_ir(ir_data, known_labels)
+    _print_validation(vr)
+
+    if vr.has_errors:
+        print(f"\nValidation FAILED ({len(vr.errors)} errors)")
+        return 1
+    elif vr.warnings:
+        print(f"\nValidation PASSED with {len(vr.warnings)} warnings")
+        return 0
+    else:
+        print("\nValidation PASSED")
+        return 0
+
+
+def _load_csv_rows(csv_path: str) -> list[list[str]]:
+    """CSV を読み込んで [speaker, text] のリストを返す."""
+    import csv as csv_mod
+    with open(csv_path, "r", encoding="utf-8-sig") as f:
+        return list(csv_mod.reader(f))
+
+
+def _cmd_annotate_row_range(args: argparse.Namespace) -> int:
+    """IR に row_start/row_end を自動付与する."""
+    from src.pipeline.ymmp_patch import load_ir
+    from src.pipeline.row_range import annotate_row_range
+
+    ir_data = load_ir(args.ir_json)
+    csv_rows = _load_csv_rows(args.csv)
+
+    result = annotate_row_range(
+        ir_data, csv_rows,
+        force=args.force,
+        keep_existing=args.keep_existing,
+    )
+
+    utts = ir_data.get("utterances", [])
+    print(f"Matched: {result.matched}/{len(utts)}")
+    if result.unmatched_utterances:
+        print(f"Unmatched: {result.unmatched_utterances}")
+    if result.uncovered_rows:
+        print(f"Uncovered rows: {len(result.uncovered_rows)}")
+    if result.warnings:
+        for w in result.warnings:
+            print(f"  Warning: {w}", file=sys.stderr)
+
+    # 既存 range error の場合は書き込まず終了
+    if not result.matched and result.warnings:
+        has_existing_error = any("existing row_start" in w for w in result.warnings)
+        if has_existing_error:
+            return 1
+
+    if args.dry_run:
+        # dry-run: 各 utterance の range を表示
+        for u in utts:
+            rs = u.get("row_start", "-")
+            re_ = u.get("row_end", "-")
+            print(f"  IR[{u.get('index', '?'):2}] rows {rs}-{re_}")
+        print("(dry-run: no file written)")
+        return 0
+
+    out_path = args.output
+    if not out_path:
+        stem = Path(args.ir_json).stem
+        out_path = str(Path(args.ir_json).parent / f"{stem}_annotated.json")
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(ir_data, f, ensure_ascii=False, indent=2)
+    print(f"Written: {out_path}")
+    return 0
+
+
+
+def _cmd_apply_production(args: argparse.Namespace) -> int:
+    """S-6 ワンコマンド: extract-template → patch-ymmp をまとめて実行."""
+    from src.pipeline.ymmp_patch import load_ymmp, load_ir, save_ymmp, patch_ymmp
+    from src.pipeline.ymmp_extract import (
+        extract_template_labeled,
+        generate_face_map_labeled,
+        generate_bg_map_labeled,
+    )
+
+    # --- face_map の解決 ---
+    face_map: dict = {}
+    if args.face_map and not args.refresh_maps:
+        # 既存 face_map を使用
+        with open(args.face_map, "r", encoding="utf-8") as f:
+            face_map = json.load(f)
+        print(f"face_map: {args.face_map} (loaded)")
+    elif args.palette:
+        # palette から抽出
+        palette_data = load_ymmp(args.palette)
+        extract_result = extract_template_labeled(palette_data)
+
+        errors = [c for c in extract_result.conflicts if c.startswith("Conflict:")]
+        warnings = [c for c in extract_result.conflicts if c.startswith("Warning:")]
+        for w in warnings:
+            print(f"  {w}", file=sys.stderr)
+        if errors:
+            for e in errors:
+                print(f"  ERROR: {e}", file=sys.stderr)
+            return 1
+
+        face_map = generate_face_map_labeled(extract_result)
+        total_faces = sum(len(v) for v in face_map.values())
+        print(f"face_map: extracted from {args.palette} ({total_faces} patterns)")
+
+        # face_map.json を palette と同じディレクトリに保存
+        face_map_path = Path(args.palette).parent / "face_map.json"
+        with open(face_map_path, "w", encoding="utf-8") as f:
+            json.dump(face_map, f, ensure_ascii=False, indent=2)
+        print(f"  saved: {face_map_path}")
+
+        # bg_map も抽出して保存 (ラベル付き bg があれば)
+        bg_map_labeled = generate_bg_map_labeled(extract_result)
+        if bg_map_labeled:
+            bg_map_path = Path(args.palette).parent / "bg_map.json"
+            with open(bg_map_path, "w", encoding="utf-8") as f:
+                json.dump(bg_map_labeled, f, ensure_ascii=False, indent=2)
+            print(f"  bg_map: {bg_map_path} ({len(bg_map_labeled)} labels)")
+    else:
+        print("Warning: no --palette or --face-map specified. "
+              "Face changes will be skipped.", file=sys.stderr)
+
+    # --- bg_map の解決 ---
+    bg_map: dict[str, str] = {}
+    if args.bg_map:
+        with open(args.bg_map, "r", encoding="utf-8") as f:
+            bg_map = json.load(f)
+
+    # --- row-range annotation (--csv) ---
+    ir_data = load_ir(args.ir_json)
+
+    if getattr(args, "csv", None):
+        from src.pipeline.row_range import annotate_row_range
+        csv_rows = _load_csv_rows(args.csv)
+        annot = annotate_row_range(ir_data, csv_rows, force=True)
+        print(f"row-range: {annot.matched}/{len(ir_data.get('utterances', []))} matched")
+        if annot.unmatched_utterances:
+            for idx in annot.unmatched_utterances:
+                print(f"  Warning: utterance {idx} unmatched", file=sys.stderr)
+        if annot.uncovered_rows:
+            print(f"  Warning: {len(annot.uncovered_rows)} CSV rows uncovered",
+                  file=sys.stderr)
+
+    # --- patch ---
+    ymmp_data = load_ymmp(args.production_ymmp)
+
+    result = patch_ymmp(ymmp_data, ir_data, face_map, bg_map)
+
+    print(f"\nFace changes: {result.face_changes}")
+    if result.tachie_syncs:
+        print(f"Idle face inserts: {result.tachie_syncs}")
+    print(f"BG removed: {result.bg_changes}, BG added: {result.bg_additions}")
+
+    # --- quality gate ---
+    from src.pipeline.ir_validate import validate_ir
+    known_labels = _get_known_face_labels(face_map) if face_map else None
+    vr = validate_ir(ir_data, known_labels)
+    _print_validation(vr)
+
+    if args.dry_run:
+        print("(dry-run: no file written)")
+        return 0
+
+    out_path = args.output
+    if not out_path:
+        stem = Path(args.production_ymmp).stem
+        out_path = str(
+            Path(args.production_ymmp).parent / f"{stem}_patched.ymmp"
+        )
     save_ymmp(ymmp_data, out_path)
     print(f"Written: {out_path}")
     return 0

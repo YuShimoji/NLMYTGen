@@ -96,17 +96,44 @@ def _item_type(item: dict) -> str:
 
 
 def _resolve_face_parts(
-    face_label: str, face_map: dict[str, dict[str, str]]
+    face_label: str,
+    face_map: dict,
+    character_name: str | None = None,
 ) -> dict[str, str] | None:
     """IR の face ラベルをパーツファイルパスの辞書に解決する.
 
-    face_map の例:
+    character-scoped map (推奨):
     {
-        "serious": {"Eyebrow": "D:/.../.../03c.png", "Eye": "D:/.../10.png", ...},
-        "smile": {"Eyebrow": "D:/.../.../01c.png", ...}
+        "まりさ": {
+            "serious": {"Eyebrow": "D:/.../03c.png", ...},
+            "smile": {"Eyebrow": "D:/.../01c.png", ...}
+        }
+    }
+
+    flat map (後方互換):
+    {
+        "serious": {"Eyebrow": "D:/.../03c.png", ...},
+        "smile": {"Eyebrow": "D:/.../01c.png", ...}
     }
     """
-    return face_map.get(face_label)
+    # character-scoped: face_map[character_name][face_label]
+    if character_name and character_name in face_map:
+        char_entry = face_map[character_name]
+        if isinstance(char_entry, dict):
+            candidate = char_entry.get(face_label)
+            if isinstance(candidate, dict) and all(
+                isinstance(v, str) for v in candidate.values()
+            ):
+                return candidate
+
+    # flat fallback: face_map[face_label]
+    candidate = face_map.get(face_label)
+    if isinstance(candidate, dict) and all(
+        isinstance(v, str) for v in candidate.values()
+    ):
+        return candidate
+
+    return None
 
 
 def _resolve_bg(
@@ -118,6 +145,202 @@ def _resolve_bg(
     {"studio_blue": "C:/.../studio_blue.png", "dark_board": "C:/.../dark.png"}
     """
     return bg_map.get(bg_label)
+
+
+def _apply_face_to_voice_item(
+    voice_item: dict,
+    vi_index: int,
+    face_label: str,
+    face_map: dict,
+    result: PatchResult,
+) -> None:
+    """1 つの VoiceItem に face パーツを適用する."""
+    character_name = voice_item.get("CharacterName")
+    parts = _resolve_face_parts(face_label, face_map, character_name)
+    if parts:
+        fp = voice_item.get("TachieFaceParameter")
+        if fp:
+            for part_name, file_path in parts.items():
+                if part_name in fp and fp[part_name] != file_path:
+                    fp[part_name] = file_path
+                    result.face_changes += 1
+        else:
+            result.warnings.append(
+                f"VoiceItem index={vi_index + 1} has no TachieFaceParameter"
+            )
+    else:
+        result.warnings.append(
+            f"face label '{face_label}' not found in face_map"
+        )
+
+
+def _apply_face_positional(
+    voice_items: list[dict],
+    resolved: list[dict],
+    face_map: dict,
+    result: PatchResult,
+) -> None:
+    """位置ベースの face 適用 (後方互換)."""
+    for i, voice_item in enumerate(voice_items):
+        if i >= len(resolved):
+            break
+        ir_entry = resolved[i]
+        face_label = ir_entry.get("face")
+        if face_label:
+            _apply_face_to_voice_item(voice_item, i, face_label, face_map, result)
+
+
+def _apply_face_row_range(
+    voice_items: list[dict],
+    resolved: list[dict],
+    face_map: dict,
+    result: PatchResult,
+) -> None:
+    """row_start / row_end ベースの face 適用.
+
+    各 IR utterance の row_start..row_end (1-based, inclusive) の
+    VoiceItem 全てに同じ face を適用する。
+    """
+    num_vi = len(voice_items)
+    for ir_entry in resolved:
+        face_label = ir_entry.get("face")
+        if not face_label:
+            continue
+        row_start = ir_entry.get("row_start")
+        row_end = ir_entry.get("row_end")
+        if row_start is None or row_end is None:
+            result.warnings.append(
+                f"utterance index={ir_entry.get('index', '?')}"
+                f" missing row_start/row_end"
+            )
+            continue
+        if row_start < 1 or row_end < row_start:
+            result.warnings.append(
+                f"utterance index={ir_entry.get('index', '?')}"
+                f" invalid row_start={row_start} row_end={row_end}"
+            )
+            continue
+        # 1-based → 0-based
+        for vi_idx in range(row_start - 1, min(row_end, num_vi)):
+            _apply_face_to_voice_item(
+                voice_items[vi_idx], vi_idx, face_label, face_map, result
+            )
+
+
+def _build_tachie_face_item(
+    character_name: str,
+    parts: dict[str, str],
+    frame: int,
+    length: int,
+) -> dict:
+    """TachieFaceItem を生成する."""
+    tfp = {
+        "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter,"
+                 " YukkuriMovieMaker.Plugin.Tachie.AnimationTachie",
+        "EyeAnimation": "Default",
+        "MouthAnimation": "Default",
+        "Eyebrow": parts.get("Eyebrow"),
+        "Eye": parts.get("Eye"),
+        "Mouth": parts.get("Mouth"),
+        "Hair": parts.get("Hair"),
+        "Complexion": parts.get("Complexion"),
+        "Body": parts.get("Body"),
+        "Back1": None,
+        "Back2": None,
+        "Back3": None,
+        "Etc1": None,
+        "Etc2": None,
+        "Etc3": None,
+    }
+    return {
+        "$type": "YukkuriMovieMaker.Project.Items.TachieFaceItem,"
+                 " YukkuriMovieMaker",
+        "CharacterName": character_name,
+        "TachieFaceParameter": tfp,
+        "TachieFaceEffects": [],
+        "Group": 0,
+        "Frame": frame,
+        "Layer": 0,
+        "KeyFrames": {"Frames": [], "Count": 0},
+        "Length": length,
+        "PlaybackRate": 100.0,
+        "ContentOffset": "00:00:00",
+        "Remark": "",
+        "IsLocked": False,
+        "IsHidden": False,
+    }
+
+
+def _apply_idle_face(
+    items: list[dict],
+    voice_items: list[dict],
+    resolved: list[dict],
+    face_map: dict,
+    result: PatchResult,
+    use_row_range: bool,
+) -> None:
+    """待機中キャラに idle_face の TachieFaceItem を挿入する.
+
+    idle_face が指定された utterance で、発話者以外のキャラに
+    TachieFaceItem を挿入して待機中表情を制御する。
+    """
+    # idle_face を持つ utterance があるか判定
+    has_idle = any(e.get("idle_face") for e in resolved)
+    if not has_idle:
+        return
+
+    # 全キャラクター名を収集 (VoiceItem から)
+    all_chars = {vi.get("CharacterName", "") for vi in voice_items}
+    all_chars.discard("")
+
+    for ir_entry in resolved:
+        idle_label = ir_entry.get("idle_face")
+        if not idle_label:
+            continue
+
+        # 発話者の特定 (row-range モードでは row_start の VoiceItem から)
+        if use_row_range:
+            rs = ir_entry.get("row_start")
+            if rs is None or rs < 1 or rs - 1 >= len(voice_items):
+                continue
+            speaker = voice_items[rs - 1].get("CharacterName", "")
+            # Frame 範囲
+            re_ = ir_entry.get("row_end", rs)
+            start_frame = voice_items[rs - 1].get("Frame", 0)
+            end_vi_idx = min(re_, len(voice_items)) - 1
+            end_frame = (
+                voice_items[end_vi_idx].get("Frame", 0)
+                + voice_items[end_vi_idx].get("Length", 0)
+            )
+        else:
+            idx = ir_entry.get("index", 1) - 1
+            if idx < 0 or idx >= len(voice_items):
+                continue
+            speaker = voice_items[idx].get("CharacterName", "")
+            start_frame = voice_items[idx].get("Frame", 0)
+            end_frame = start_frame + voice_items[idx].get("Length", 0)
+
+        if not speaker:
+            continue
+
+        length = max(end_frame - start_frame, 1)
+
+        # non-speaker キャラに idle_face を適用
+        for char in all_chars:
+            if char == speaker:
+                continue
+            parts = _resolve_face_parts(idle_label, face_map, char)
+            if parts:
+                face_item = _build_tachie_face_item(
+                    char, parts, start_frame, length
+                )
+                items.append(face_item)
+                result.tachie_syncs += 1
+            else:
+                result.warnings.append(
+                    f"idle_face '{idle_label}' not found in face_map"
+                    f" for character '{char}'"
+                )
 
 
 def patch_ymmp(
@@ -157,33 +380,21 @@ def patch_ymmp(
     voice_items.sort(key=lambda x: x.get("Frame", 0))
 
     # --- face 差し替え ---
-    for i, voice_item in enumerate(voice_items):
-        if i >= len(resolved):
-            break
-        ir_entry = resolved[i]
-        face_label = ir_entry.get("face")
-        if face_label:
-            parts = _resolve_face_parts(face_label, face_map)
-            if parts:
-                fp = voice_item.get("TachieFaceParameter")
-                if fp:
-                    for part_name, file_path in parts.items():
-                        if part_name in fp and fp[part_name] != file_path:
-                            fp[part_name] = file_path
-                            result.face_changes += 1
-                else:
-                    result.warnings.append(
-                        f"VoiceItem index={i+1} has no TachieFaceParameter"
-                    )
-            else:
-                result.warnings.append(
-                    f"face label '{face_label}' not found in face_map"
-                )
+    # row-range モード判定: 最初の utterance に row_start があれば有効
+    use_row_range = bool(
+        resolved and resolved[0].get("row_start") is not None
+    )
 
-    # --- TachieItem (立ち絵) ---
-    # TachieItem は元の配置を維持する。
-    # VoiceItem.TachieFaceParameter が発話ごとの表情制御を担うため、
-    # TachieItem の Frame/Length は変更しない。
+    if use_row_range:
+        _apply_face_row_range(voice_items, resolved, face_map, result)
+    else:
+        _apply_face_positional(voice_items, resolved, face_map, result)
+
+    # --- idle_face (待機中表情) ---
+    # IR に idle_face が指定されている場合、各 utterance の開始 Frame に
+    # non-speaker キャラの TachieFaceItem を挿入する
+    _apply_idle_face(items, voice_items, resolved, face_map, result,
+                     use_row_range)
 
     # --- bg 差し替え ---
     # 既存の bg_items (Layer 0 の ImageItem/VideoItem) を削除し、
@@ -202,6 +413,15 @@ def patch_ymmp(
         items.remove(bg_item)
         result.bg_changes += 1
 
+    # --- utterance index → VoiceItem index の変換マップ (row-range 用) ---
+    utt_to_vi_start: dict[int, int] = {}
+    if use_row_range:
+        for entry in resolved:
+            utt_idx = entry.get("index", 0)
+            rs = entry.get("row_start")
+            if rs is not None:
+                utt_to_vi_start[utt_idx] = rs - 1  # 1-based → 0-based
+
     # セクションごとに新しい bg_item を生成
     sections = ir_data.get("macro", {}).get("sections", [])
     for sec_idx, section in enumerate(sections):
@@ -215,8 +435,14 @@ def patch_ymmp(
             )
             continue
 
-        start_idx = section.get("start_index", 1) - 1
-        end_idx = section.get("end_index", start_idx + 1) - 1
+        # start_index は IR utterance index (1-based)
+        utt_start = section.get("start_index", 1)
+
+        if use_row_range:
+            # row-range: utterance の row_start から VoiceItem index を引く
+            start_idx = utt_to_vi_start.get(utt_start, utt_start - 1)
+        else:
+            start_idx = utt_start - 1
 
         # セクションの Frame 範囲を計算
         # 開始: このセクションの最初の VoiceItem の Frame
@@ -231,7 +457,13 @@ def patch_ymmp(
         # 次のセクションの開始を探す
         next_section_start = None
         if sec_idx + 1 < len(sections):
-            next_start_idx = sections[sec_idx + 1].get("start_index", 1) - 1
+            next_utt_start = sections[sec_idx + 1].get("start_index", 1)
+            if use_row_range:
+                next_start_idx = utt_to_vi_start.get(
+                    next_utt_start, next_utt_start - 1
+                )
+            else:
+                next_start_idx = next_utt_start - 1
             if next_start_idx < len(voice_items):
                 next_section_start = voice_items[next_start_idx].get("Frame", 0)
 
@@ -279,7 +511,7 @@ def _resolve_carry_forward(ir_data: dict) -> list[dict]:
     }
 
     optional_fields = [
-        "template", "face", "bg", "bg_anim", "slot",
+        "template", "face", "idle_face", "bg", "bg_anim", "slot",
         "motion", "overlay", "se", "transition",
     ]
     resolved = []

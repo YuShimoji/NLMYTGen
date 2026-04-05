@@ -73,6 +73,10 @@ class ExtractResult:
     characters: list[str] = field(default_factory=list)
     voice_item_count: int = 0
     bg_item_count: int = 0
+    # --labeled モード用
+    labeled_faces: dict[str, dict[str, FacePattern]] = field(default_factory=dict)
+    labeled_bgs: dict[str, str] = field(default_factory=dict)
+    conflicts: list[str] = field(default_factory=list)
 
 
 def extract_template(ymmp_data: dict) -> ExtractResult:
@@ -84,14 +88,15 @@ def extract_template(ymmp_data: dict) -> ExtractResult:
     chars = ymmp_data.get("Characters", [])
     result.characters = [c.get("Name", "?") for c in chars]
 
-    # face パターン収集 (VoiceItem + TachieItem)
+    # face パターン収集 (VoiceItem + TachieItem + TachieFaceItem)
     seen_faces: dict[tuple, FacePattern] = OrderedDict()
 
     for item in items:
         itype = _item_type(item)
 
-        if itype == "VoiceItem":
-            result.voice_item_count += 1
+        if itype in ("VoiceItem", "TachieFaceItem"):
+            if itype == "VoiceItem":
+                result.voice_item_count += 1
             fp = item.get("TachieFaceParameter")
             if fp:
                 pattern = FacePattern(
@@ -141,6 +146,108 @@ def generate_face_map(patterns: list[FacePattern]) -> dict[str, dict[str, str]]:
         label = f"face_{i:02d}_{pattern.short_label}"
         face_map[label] = pattern.to_dict()
     return face_map
+
+
+def extract_template_labeled(ymmp_data: dict) -> ExtractResult:
+    """Remark フィールドをラベルとして使い、キャラ軸で face_map を抽出する.
+
+    palette ymmp 向け。各 VoiceItem/TachieItem の Remark に IR ラベル
+    (serious, smile 等) を設定し、CharacterName でスコープする。
+
+    同キャラ・同ラベル・同パーツ → idempotent (skip)
+    同キャラ・同ラベル・異パーツ → conflicts に追加 (ERROR)
+    """
+    items = _get_timeline_items(ymmp_data)
+    result = ExtractResult()
+
+    chars = ymmp_data.get("Characters", [])
+    result.characters = [c.get("Name", "?") for c in chars]
+
+    for item in items:
+        itype = _item_type(item)
+
+        if itype in ("VoiceItem", "TachieItem", "TachieFaceItem"):
+            remark = (item.get("Remark") or "").strip()
+            if not remark:
+                continue
+
+            char_name = (item.get("CharacterName") or "").strip()
+            if not char_name:
+                result.conflicts.append(
+                    f"Warning: Remark='{remark}' but CharacterName is empty"
+                )
+                continue
+
+            # TachieItem は TachieItemParameter,
+            # VoiceItem/TachieFaceItem は TachieFaceParameter
+            if itype == "TachieItem":
+                param = item.get("TachieItemParameter", {})
+            else:
+                param = item.get("TachieFaceParameter")
+                if itype == "VoiceItem":
+                    result.voice_item_count += 1
+
+            if not param:
+                result.conflicts.append(
+                    f"Warning: {itype} Remark='{remark}' ({char_name})"
+                    f" has no face parameter, skipped"
+                )
+                continue
+
+            pattern = FacePattern(
+                eyebrow=param.get("Eyebrow", ""),
+                eye=param.get("Eye", ""),
+                mouth=param.get("Mouth", ""),
+                hair=param.get("Hair", ""),
+                body=param.get("Body", ""),
+                complexion=param.get("Complexion") or "",
+            )
+
+            char_faces = result.labeled_faces.setdefault(char_name, {})
+            if remark in char_faces:
+                existing = char_faces[remark]
+                if existing.key != pattern.key:
+                    result.conflicts.append(
+                        f"Conflict: {char_name}.{remark} has multiple"
+                        f" part sets"
+                    )
+                # 同一パーツなら idempotent → skip
+            else:
+                char_faces[remark] = pattern
+
+        elif itype in ("ImageItem", "VideoItem"):
+            remark = (item.get("Remark") or "").strip()
+            if not remark:
+                continue
+            filepath = item.get("FilePath", "")
+            if not filepath:
+                continue
+
+            if remark in result.labeled_bgs:
+                if result.labeled_bgs[remark] != filepath:
+                    result.conflicts.append(
+                        f"Conflict: bg label '{remark}' has multiple"
+                        f" paths"
+                    )
+            else:
+                result.labeled_bgs[remark] = filepath
+
+    return result
+
+
+def generate_face_map_labeled(
+    result: ExtractResult,
+) -> dict[str, dict[str, dict[str, str]]]:
+    """labeled_faces から character-scoped face_map JSON を生成."""
+    return {
+        char: {label: pat.to_dict() for label, pat in labels.items()}
+        for char, labels in result.labeled_faces.items()
+    }
+
+
+def generate_bg_map_labeled(result: ExtractResult) -> dict[str, str]:
+    """labeled_bgs からラベル付き bg_map を生成."""
+    return dict(result.labeled_bgs)
 
 
 def generate_bg_map(bg_paths: list[str]) -> dict[str, str]:

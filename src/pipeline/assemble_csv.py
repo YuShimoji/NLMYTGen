@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import re
 import unicodedata
+from functools import lru_cache
 
 from src.contracts.structured_script import StructuredScript
 from src.contracts.ymm4_csv_schema import YMM4CsvOutput, YMM4CsvRow
@@ -521,17 +522,19 @@ def _collect_break_candidates(text: str) -> list[tuple[int, int, str]]:
         if existing is None or penalty < existing[0]:
             candidates[pos] = (penalty, kind)
 
+    # 大区切り: 閉じ括弧+助詞セットを最優先で保護
+    for idx, ch in enumerate(text):
+        if ch not in _CLOSE_BRACKETS:
+            continue
+        pos = idx + 1
+        if pos < len(text) and text[pos] in _POST_BRACKET_PARTICLES:
+            _add(pos + 1, 1, "major:bracket+particle")
+
     # 大区切り: 文字ベース
     for idx, ch in enumerate(text):
         pos = idx + 1  # 文字の直後
         penalty = _MAJOR_BREAK_AFTER.get(ch)
         if penalty is not None:
-            # 閉じ括弧+助詞セットの保護
-            if ch in _CLOSE_BRACKETS:
-                # 次の文字が助詞なら、助詞の後を候補にする
-                if pos < len(text) and text[pos] in _POST_BRACKET_PARTICLES:
-                    _add(pos + 1, 1, "major:bracket+particle")
-                    continue
             _add(pos, penalty, "major")
 
     # 閉じ括弧単体（助詞なし）
@@ -648,7 +651,8 @@ def reflow_utterance(
                 continue
             distance_penalty = abs(pos_width - abs_target)
             break_penalty = penalty * 3
-            score = distance_penalty + break_penalty
+            boundary_penalty = _boundary_penalty(text, pos, page_split=True)
+            score = distance_penalty + break_penalty + boundary_penalty
             if score < best_score:
                 best_score = score
                 best_pos = pos
@@ -667,7 +671,8 @@ def reflow_utterance(
                 continue
             distance_penalty = abs(pos_width - abs_target)
             break_penalty = penalty * 3
-            score = distance_penalty + break_penalty
+            boundary_penalty = _boundary_penalty(text, pos, page_split=True)
+            score = distance_penalty + break_penalty + boundary_penalty
             if score < best_score:
                 best_score = score
                 best_pos = pos
@@ -743,20 +748,8 @@ def insert_inline_breaks(
 
         prev_ch, curr_ch = text[idx - 1], text[idx]
         # 助詞の後 (行内では許容)
-        if prev_ch in "をがはにでもやのへと" and not _is_hiragana(curr_ch) is False:
+        if prev_ch in "をがはにでもやのへと":
             inline_extras.append((pos, 8, "inline:particle"))
-        # カタカナ→ひらがな
-        elif _is_katakana(prev_ch) and _is_hiragana(curr_ch):
-            inline_extras.append((pos, 10, "inline:kata-hira"))
-        # ひらがな→カタカナ
-        elif _is_hiragana(prev_ch) and _is_katakana(curr_ch):
-            inline_extras.append((pos, 10, "inline:hira-kata"))
-        # 漢字→ひらがな
-        elif _is_cjk_ideograph(prev_ch) and _is_hiragana(curr_ch):
-            inline_extras.append((pos, 10, "inline:kanji-hira"))
-        # ひらがな→漢字
-        elif _is_hiragana(prev_ch) and _is_cjk_ideograph(curr_ch):
-            inline_extras.append((pos, 10, "inline:hira-kanji"))
 
     all_with_inline = sorted(
         all_candidates + inline_extras,
@@ -798,7 +791,8 @@ def insert_inline_breaks(
                 continue
 
             distance = abs(pos_w - target_w)
-            score = distance + penalty * 2 + overflow_penalty
+            boundary_penalty = _boundary_penalty(text, pos, page_split=False)
+            score = distance + penalty * 2 + overflow_penalty + boundary_penalty
             if score < best_score:
                 best_score = score
                 best_pos = pos
@@ -958,14 +952,6 @@ def _collect_break_candidates_v2(text: str) -> list[tuple[int, int, str]]:
 
         if prev_ch in "をがはにでもやのへと":
             extras.append((pos, 8, "v2:particle"))
-        elif _is_katakana(prev_ch) and _is_hiragana(curr_ch):
-            extras.append((pos, 10, "v2:kata-hira"))
-        elif _is_hiragana(prev_ch) and _is_katakana(curr_ch):
-            extras.append((pos, 10, "v2:hira-kata"))
-        elif _is_cjk_ideograph(prev_ch) and _is_hiragana(curr_ch):
-            extras.append((pos, 10, "v2:kanji-hira"))
-        elif _is_hiragana(prev_ch) and _is_cjk_ideograph(curr_ch):
-            extras.append((pos, 10, "v2:hira-kanji"))
 
     # 重複排除して統合 (低 penalty を優先)
     combined: dict[int, tuple[int, str]] = {}
@@ -975,6 +961,272 @@ def _collect_break_candidates_v2(text: str) -> list[tuple[int, int, str]]:
             combined[pos] = (pen, kind)
 
     return [(pos, pen, kind) for pos, (pen, kind) in sorted(combined.items())]
+
+
+_LINE_START_FORBIDDEN = (
+    "」", "』", "）", ")", "】", "、", "。", "，",
+    "という", "として", "とは", "とも", "ですが", "です", "でした",
+    "ます", "ません", "なく", "なく、", "ように", "ような",
+)
+_LINE_END_FORBIDDEN = (
+    "「", "『", "（", "(", "【",
+    "では", "とは", "とも", "という", "として",
+)
+_PROTECTED_PHRASES = (
+    "という", "として", "とは", "とも",
+    "について", "に対して", "により", "による", "によって",
+    "ではなく", "ではなく、", "ながら",
+    "ように", "ような", "めましょう",
+    "ている", "ていく", "している", "していく", "にして",
+)
+
+
+def _boundary_penalty(text: str, pos: int, *, page_split: bool) -> float:
+    """画面上のまとまりを壊す切断に追加ペナルティを与える。"""
+    if pos <= 0 or pos >= len(text):
+        return 0.0
+
+    left = text[:pos]
+    right = text[pos:]
+    left_tail = left[-6:]
+    right_head = right[:6]
+
+    penalty = 0.0
+
+    if right.startswith(_LINE_START_FORBIDDEN):
+        penalty += 80.0
+    if left.endswith(_LINE_END_FORBIDDEN):
+        penalty += 80.0
+
+    left_last = left[-1]
+    right_first = right[0]
+
+    if left_last in _OPEN_BRACKETS or right_first in _CLOSE_BRACKETS:
+        penalty += 120.0
+
+    # 活用語尾・送り仮名の分断は強く避ける。
+    if _is_cjk_ideograph(left_last) and _is_hiragana(right_first):
+        penalty += 140.0
+
+    # 保護句の内部で切らない。
+    for phrase in _PROTECTED_PHRASES:
+        start = 0
+        while True:
+            idx = text.find(phrase, start)
+            if idx < 0:
+                break
+            if idx < pos < idx + len(phrase):
+                penalty += 160.0
+                break
+            start = idx + len(phrase)
+
+    # 引用句+助詞/補助表現は一塊として扱う。
+    if left_last in _CLOSE_BRACKETS and _is_hiragana(right_first):
+        penalty += 120.0
+    if any(ch in _CLOSE_BRACKETS for ch in left_tail[-3:]) and right.startswith(("と", "を", "が", "は", "に", "で", "も", "の", "へ", "や", "という")):
+        penalty += 100.0
+
+    # 助詞だけを行末に残して名詞句を次行へ送る切り方は避ける。
+    if left_last in "とをがはにでものへや" and (
+        _is_cjk_ideograph(right_first)
+        or _is_katakana(right_first)
+        or right_first in _OPEN_BRACKETS
+    ):
+        penalty += 55.0
+
+    # ページ跨ぎは同一ページ内改行よりさらに重く扱う。
+    if page_split:
+        penalty *= 1.4
+
+    return penalty
+
+
+def _render_split_positions(text: str, split_positions: list[int]) -> list[str]:
+    parts: list[str] = []
+    prev = 0
+    for pos in split_positions:
+        parts.append(text[prev:pos])
+        prev = pos
+    parts.append(text[prev:])
+    return [part for part in parts if part]
+
+
+def _optimize_inline_break_positions(
+    text: str,
+    *,
+    chars_per_line: int,
+) -> list[int]:
+    """ページ内の行分割を、完成した見え方ベースで最適化する。"""
+    if not text or chars_per_line <= 0:
+        return []
+
+    total_width = display_width(text)
+    if total_width <= chars_per_line:
+        return []
+
+    needed_lines = -(-total_width // chars_per_line)
+    ideal_line_width = total_width / needed_lines
+    min_line_width = max(6, chars_per_line // 6)
+
+    widths = _width_at_positions(text)
+    candidates = _collect_break_candidates_v2(text)
+    if not candidates:
+        return []
+
+    major = [(p, pen, k) for p, pen, k in candidates if k.startswith("major")]
+    beam: list[tuple[float, list[int]]] = [(0.0, [])]
+    beam_width = 32
+
+    def _expand_with(
+        beam_state: list[tuple[float, list[int]]],
+        cands: list[tuple[int, int, str]],
+        split_idx: int,
+    ) -> list[tuple[float, list[int]]]:
+        next_beam: list[tuple[float, list[int]]] = []
+        for cost, splits in beam_state:
+            prev_pos = splits[-1] if splits else 0
+            prev_w = widths[prev_pos]
+            target_w = prev_w + ideal_line_width
+            remaining_lines = needed_lines - split_idx - 1
+
+            for pos, penalty, _kind in cands:
+                if pos <= prev_pos:
+                    continue
+                pos_w = widths[pos]
+                line_w = pos_w - prev_w
+                rest_w = total_width - pos_w
+                if line_w < min_line_width:
+                    continue
+                if remaining_lines > 0 and rest_w / remaining_lines < min_line_width:
+                    continue
+
+                overflow_penalty = max(0.0, line_w - chars_per_line) * 6.0
+                width_penalty = abs(line_w - ideal_line_width)
+                short_penalty = 0.0
+                if line_w < ideal_line_width * 0.55:
+                    short_penalty = (ideal_line_width * 0.55 - line_w) * 4.0
+
+                total = (
+                    cost
+                    + width_penalty
+                    + penalty * 3.0
+                    + overflow_penalty
+                    + short_penalty
+                    + _boundary_penalty(text, pos, page_split=False)
+                )
+                next_beam.append((total, splits + [pos]))
+        next_beam.sort(key=lambda x: x[0])
+        return next_beam[:beam_width]
+
+    for split_idx in range(needed_lines - 1):
+        next_beam = _expand_with(beam, major, split_idx)
+        if not next_beam:
+            next_beam = _expand_with(beam, candidates, split_idx)
+        if not next_beam:
+            return []
+        beam = next_beam
+
+    best_cost = float("inf")
+    best_splits: list[int] = []
+    for cost, splits in beam:
+        last_pos = splits[-1] if splits else 0
+        last_w = total_width - widths[last_pos]
+        if last_w < min_line_width:
+            continue
+        final_short = 0.0
+        if last_w < ideal_line_width * 0.55:
+            final_short = (ideal_line_width * 0.55 - last_w) * 5.0
+        final_overflow = max(0.0, last_w - chars_per_line) * 6.0
+        final_cost = cost + abs(last_w - ideal_line_width) + final_short + final_overflow
+        if final_cost < best_cost:
+            best_cost = final_cost
+            best_splits = splits
+
+    return best_splits
+
+
+def _estimate_inline_layout_cost(
+    text: str,
+    *,
+    chars_per_line: int,
+) -> float:
+    """ページ単位の見え方コストを見積もる。"""
+    if not text:
+        return 0.0
+
+    split_positions = _optimize_inline_break_positions(text, chars_per_line=chars_per_line)
+    lines = _render_split_positions(text, split_positions)
+    if not lines:
+        lines = [text]
+
+    line_widths = [display_width(line) for line in lines]
+    total_width = sum(line_widths)
+    ideal_width = total_width / len(line_widths)
+
+    cost = 0.0
+    for width in line_widths:
+        cost += abs(width - ideal_width)
+        if width < max(6, chars_per_line * 0.45):
+            cost += (chars_per_line * 0.45 - width) * 12.0
+        if width < max(6, chars_per_line * 0.3):
+            cost += (chars_per_line * 0.3 - width) * 18.0
+        if width > chars_per_line:
+            cost += (width - chars_per_line) * 12.0
+
+    if len(line_widths) >= 2:
+        cost += abs(line_widths[0] - line_widths[-1]) * 0.6
+
+    return cost
+
+
+def _force_page_split_overflow(
+    text: str,
+    *,
+    page_capacity: int,
+    chars_per_line: int,
+) -> list[str]:
+    """まだ容量超過しているページを、安全な候補で再分割する。"""
+    if not text or display_width(text) <= page_capacity:
+        return [text] if text else []
+
+    widths = _width_at_positions(text)
+    total_width = widths[len(text)]
+    target = total_width / 2
+    min_width = max(12, chars_per_line // 2)
+
+    best_score = float("inf")
+    best_pos = -1
+    for pos, penalty, _kind in _collect_break_candidates_v2(text):
+        left_width = widths[pos]
+        right_width = total_width - left_width
+        if left_width < min_width or right_width < min_width:
+            continue
+        score = (
+            abs(left_width - target)
+            + penalty * 4.0
+            + _boundary_penalty(text, pos, page_split=True)
+        )
+        if score < best_score:
+            best_score = score
+            best_pos = pos
+
+    if best_pos <= 0:
+        return [text]
+
+    left = text[:best_pos]
+    right = text[best_pos:]
+    result: list[str] = []
+    result.extend(_force_page_split_overflow(
+        left,
+        page_capacity=page_capacity,
+        chars_per_line=chars_per_line,
+    ))
+    result.extend(_force_page_split_overflow(
+        right,
+        page_capacity=page_capacity,
+        chars_per_line=chars_per_line,
+    ))
+    return result
 
 
 def _calc_ideal_pages(total_width: int, page_capacity: int) -> int:
@@ -993,14 +1245,14 @@ def _find_optimal_page_splits(
 ) -> list[int]:
     """ビーム探索でページ分割位置を最適化する。
 
-    全ページの幅バランスが均等になるよう、短すぎるページにペナルティを課す。
+    全ページの幅バランスに加え、ページ内の実際の見え方も加味する。
     """
     if num_pages <= 1:
         return []
 
     total_width = widths[len(text)]
     ideal_page_width = total_width / num_pages
-    min_page_width = max(chars_per_line, int(ideal_page_width * 0.3))
+    min_page_width = max(16, int(ideal_page_width * 0.3))
 
     BEAM_WIDTH = 50
 
@@ -1029,17 +1281,32 @@ def _find_optimal_page_splits(
                 if remaining_pages > 0 and remaining_width / remaining_pages < min_page_width:
                     continue
 
+                segment = text[prev_pos:pos]
+
                 # コスト計算
                 balance_cost = abs(page_width - ideal_page_width)
                 break_cost = penalty * 4.0
                 short_penalty = 0.0
-                if page_width < ideal_page_width * 0.5:
-                    short_penalty = (ideal_page_width * 0.5 - page_width) * 2.0
+                if page_width < ideal_page_width * 0.6:
+                    short_penalty = (ideal_page_width * 0.6 - page_width) * 4.0
                 overflow_penalty = 0.0
                 if page_width > page_capacity:
-                    overflow_penalty = (page_width - page_capacity) * 3.0
+                    overflow_penalty = (page_width - page_capacity) * 14.0
+                boundary_cost = _boundary_penalty(text, pos, page_split=True)
+                layout_cost = _estimate_inline_layout_cost(
+                    segment,
+                    chars_per_line=chars_per_line,
+                )
 
-                total_cost = cost + balance_cost + break_cost + short_penalty + overflow_penalty
+                total_cost = (
+                    cost
+                    + balance_cost
+                    + break_cost
+                    + short_penalty
+                    + overflow_penalty
+                    + boundary_cost
+                    + layout_cost
+                )
                 next_beam.append((total_cost, splits + [pos]))
 
         next_beam.sort(key=lambda x: x[0])
@@ -1055,6 +1322,7 @@ def _find_optimal_page_splits(
     for cost, splits in beam:
         last_pos = splits[-1] if splits else 0
         last_width = total_width - widths[last_pos]
+        last_segment = text[last_pos:]
 
         final_balance = abs(last_width - ideal_page_width)
         final_short = 0.0
@@ -1062,9 +1330,13 @@ def _find_optimal_page_splits(
             final_short = (min_page_width - last_width) * 3.0
         final_overflow = 0.0
         if last_width > page_capacity:
-            final_overflow = (last_width - page_capacity) * 3.0
+            final_overflow = (last_width - page_capacity) * 14.0
 
-        total = cost + final_balance + final_short + final_overflow
+        final_layout = _estimate_inline_layout_cost(
+            last_segment,
+            chars_per_line=chars_per_line,
+        )
+        total = cost + final_balance + final_short + final_overflow + final_layout
         if total < best_cost:
             best_cost = total
             best_splits = splits
@@ -1085,72 +1357,330 @@ def _insert_line_breaks_v2(
     if not text or chars_per_line <= 0 or "\n" in text:
         return text
 
-    total_width = display_width(text)
-    if total_width <= chars_per_line:
+    split_positions = _optimize_inline_break_positions(
+        text,
+        chars_per_line=chars_per_line,
+    )
+    if not split_positions:
         return text
+    return "\n".join(_render_split_positions(text, split_positions))
 
-    needed_lines = -(-total_width // chars_per_line)
-    ideal_line_width = total_width / needed_lines
+
+_STRUCTURAL_PARTICLES = frozenset("はがをにでとへものかや")
+_STRUCTURAL_SENTENCE_ENDS = frozenset("。！？!?")
+_STRUCTURAL_COMMAS = frozenset("、,，;；:：")
+
+
+def _is_contentish(ch: str) -> bool:
+    return (
+        _is_cjk_ideograph(ch)
+        or _is_katakana(ch)
+        or ch.isdigit()
+        or ch in _OPEN_BRACKETS
+    )
+
+
+def _advance_hiragana_run(text: str, start: int) -> int:
+    pos = start
+    while pos < len(text) and _is_hiragana(text[pos]):
+        pos += 1
+    return pos
+
+
+def _collect_structural_breaks(text: str) -> list[tuple[int, int, str]]:
+    """大区切り/小区切りを構造ベースで収集する。"""
+    bracket_ranges = _find_bracket_ranges(text)
+    candidates: dict[int, tuple[int, str]] = {}
+
+    def _add(pos: int, penalty: int, kind: str) -> None:
+        if pos <= 0 or pos >= len(text):
+            return
+        if _in_bracket(pos, bracket_ranges):
+            return
+        if _is_katakana_run(text, pos):
+            return
+        if _is_kanji_run(text, pos):
+            return
+        if _is_digit_run(text, pos):
+            return
+        if text[pos - 1] == "ー" or text[pos] == "ー":
+            return
+        existing = candidates.get(pos)
+        if existing is None or penalty < existing[0]:
+            candidates[pos] = (penalty, kind)
+
+    for idx, ch in enumerate(text):
+        pos = idx + 1
+        if ch in _STRUCTURAL_SENTENCE_ENDS:
+            _add(pos, 0, "major:sentence")
+            continue
+        if ch in _STRUCTURAL_COMMAS:
+            _add(pos, 3, "major:comma")
+            continue
+        if ch in _CLOSE_BRACKETS:
+            if pos < len(text) and _is_hiragana(text[pos]):
+                run_end = _advance_hiragana_run(text, pos)
+                if run_end > pos and run_end < len(text):
+                    _add(run_end, 12, "minor:close+tail")
+            elif pos < len(text) and text[pos] not in _CLOSE_BRACKETS and not _is_contentish(text[pos]):
+                _add(pos, 9, "minor:close")
+
+    for pos in range(1, len(text)):
+        prev_ch = text[pos - 1]
+        curr_ch = text[pos]
+
+        if prev_ch in _STRUCTURAL_PARTICLES and _is_contentish(curr_ch):
+            _add(pos, 10, "minor:particle")
+
+        if _is_hiragana(prev_ch) and _is_contentish(curr_ch):
+            run_start = pos - 1
+            while run_start > 0 and _is_hiragana(text[run_start - 1]):
+                run_start -= 1
+            if run_start > 0:
+                left_anchor = text[run_start - 1]
+                if _is_cjk_ideograph(left_anchor) or _is_katakana(left_anchor) or left_anchor.isdigit() or left_anchor in _CLOSE_BRACKETS:
+                    run_len = pos - run_start
+                    _add(pos, 12 + max(0, run_len - 3) * 2, "minor:hira-tail")
+
+        if prev_ch.isdigit() and not curr_ch.isdigit() and not _is_cjk_ideograph(curr_ch):
+            _add(pos, 11, "minor:number-end")
+
+    return [(pos, penalty, kind) for pos, (penalty, kind) in sorted(candidates.items())]
+
+
+def _structural_boundary_penalty(text: str, pos: int, *, page_split: bool) -> float:
+    """個別語彙ではなく構造崩れに対して罰則を与える。"""
+    if pos <= 0 or pos >= len(text):
+        return 0.0
+
+    left_last = text[pos - 1]
+    right_first = text[pos]
+    penalty = 0.0
+
+    if left_last in _OPEN_BRACKETS:
+        penalty += 140.0
+    if left_last in _CLOSE_BRACKETS:
+        penalty += 110.0
+    if right_first in _CLOSE_BRACKETS or right_first in _STRUCTURAL_COMMAS:
+        penalty += 240.0
+    if left_last in _CLOSE_BRACKETS and _is_contentish(right_first):
+        penalty += 180.0 if not page_split else 220.0
+    if left_last in _CLOSE_BRACKETS and _is_hiragana(right_first):
+        penalty += 90.0
+        run_end = _advance_hiragana_run(text, pos)
+        if run_end < len(text) and _is_contentish(text[run_end]):
+            penalty += 260.0 if not page_split else 320.0
+    if _is_cjk_ideograph(left_last) and _is_hiragana(right_first):
+        penalty += 180.0
+    if left_last in _STRUCTURAL_PARTICLES and _is_contentish(right_first):
+        penalty += 45.0 if not page_split else 65.0
+
+    run_start = pos
+    while run_start > 0 and _is_hiragana(text[run_start - 1]):
+        run_start -= 1
+    run_len = pos - run_start
+    if 0 < run_len <= 3 and _is_contentish(right_first):
+        left_anchor_idx = run_start - 1
+        if left_anchor_idx >= 0:
+            left_anchor = text[left_anchor_idx]
+            if _is_cjk_ideograph(left_anchor) or _is_katakana(left_anchor) or left_anchor.isdigit() or left_anchor in _CLOSE_BRACKETS:
+                penalty += 320.0 if not page_split else 400.0
+
+    if page_split:
+        penalty *= 1.3
+    return penalty
+
+
+def _line_width_cost(width: int, *, ideal: float, chars_per_line: int, is_last: bool) -> float:
+    min_line = max(6, chars_per_line // 3)
+    cost = abs(width - ideal)
+    if width < min_line:
+        cost += (min_line - width) * 10.0
+    if not is_last and width < chars_per_line * 0.5:
+        cost += (chars_per_line * 0.5 - width) * 9.0
+    if width > chars_per_line:
+        cost += (width - chars_per_line) * 18.0
+    return cost
+
+
+def _layout_page_structural(
+    text: str,
+    start: int,
+    end: int,
+    widths: list[int],
+    break_positions: list[int],
+    *,
+    chars_per_line: int,
+    max_lines: int,
+) -> tuple[float, list[int]]:
+    """ページ内部を max_lines 行以内にレイアウトする。"""
+    total_width = widths[end] - widths[start]
+    if total_width <= chars_per_line:
+        return _line_width_cost(total_width, ideal=total_width, chars_per_line=chars_per_line, is_last=True), []
+
+    desired_lines = min(max_lines, max(1, -(-total_width // chars_per_line)))
+    ideal_line_width = total_width / desired_lines
+    inner_positions = [p for p in break_positions if start < p < end]
+
+    @lru_cache(maxsize=None)
+    def _dp(curr_pos: int, remaining_lines: int) -> tuple[float, tuple[int, ...]]:
+        current_width = widths[end] - widths[curr_pos]
+        if remaining_lines <= 1:
+            return (
+                _line_width_cost(
+                    current_width,
+                    ideal=ideal_line_width,
+                    chars_per_line=chars_per_line,
+                    is_last=True,
+                ),
+                (),
+            )
+
+        best_cost = float("inf")
+        best_splits: tuple[int, ...] = ()
+        for pos in inner_positions:
+            if pos <= curr_pos:
+                continue
+            line_width = widths[pos] - widths[curr_pos]
+            if line_width <= 0:
+                continue
+            tail_width = widths[end] - widths[pos]
+            min_tail = max(6, chars_per_line // 3) * (remaining_lines - 1)
+            if tail_width < min_tail:
+                continue
+
+            line_cost = _line_width_cost(
+                line_width,
+                ideal=ideal_line_width,
+                chars_per_line=chars_per_line,
+                is_last=False,
+            )
+            line_cost += _structural_boundary_penalty(text, pos, page_split=False)
+            rest_cost, rest_splits = _dp(pos, remaining_lines - 1)
+            total = line_cost + rest_cost
+            if total < best_cost:
+                best_cost = total
+                best_splits = (pos,) + rest_splits
+
+        if best_cost == float("inf"):
+            return (
+                _line_width_cost(
+                    current_width,
+                    ideal=ideal_line_width,
+                    chars_per_line=chars_per_line,
+                    is_last=True,
+                ) + current_width,
+                (),
+            )
+        return best_cost, best_splits
+
+    cost, split_positions = _dp(start, desired_lines)
+    return cost, list(split_positions)
+
+
+def _render_lines_for_page(text: str, start: int, end: int, line_splits: list[int]) -> str:
+    page_text = text[start:end]
+    if not line_splits:
+        return page_text
+    relative = [p - start for p in line_splits]
+    return "\n".join(_render_split_positions(page_text, relative))
+
+
+def _reflow_utterance_structural(
+    text: str,
+    *,
+    chars_per_line: int,
+    max_lines: int,
+) -> list[str]:
+    if not text or chars_per_line <= 0 or max_lines <= 0:
+        return [text] if text else []
 
     widths = _width_at_positions(text)
-    candidates = _collect_break_candidates_v2(text)
-    if not candidates:
-        return text
+    total_width = widths[len(text)]
+    page_capacity = chars_per_line * max_lines
+    if total_width <= chars_per_line:
+        return [text]
 
-    major = [(p, pen, k) for p, pen, k in candidates if k.startswith("major")]
-    min_line_width = max(4, chars_per_line // 6)
+    breaks = _collect_structural_breaks(text)
+    major_break_positions = [pos for pos, _pen, kind in breaks if kind.startswith("major:")]
+    break_positions = [pos for pos, _pen, _kind in breaks]
+    desired_pages = max(1, -(-total_width // page_capacity))
+    ideal_page_width = total_width / desired_pages
+    min_page_width = max(12, int(page_capacity * 0.3))
 
-    def _find_best(cands: list[tuple[int, int, str]], prev_pos: int, prev_w: int, target_w: float) -> int:
-        total_w = widths[len(text)]
-        best_score = float("inf")
-        best_pos = -1
-        for pos, penalty, _kind in cands:
-            if pos <= prev_pos:
-                continue
-            pos_w = widths[pos]
-            line_w = pos_w - prev_w
-            rest_w = total_w - pos_w
-            if line_w < min_line_width:
-                continue
-            if 0 < rest_w < min_line_width:
-                continue
-            overflow = (line_w - chars_per_line) * 3 if line_w > chars_per_line else 0
-            distance = abs(pos_w - target_w)
-            score = distance + penalty * 2 + overflow
-            if score < best_score:
-                best_score = score
-                best_pos = pos
-        return best_pos
+    def _solve_page_plan(page_break_positions: list[int]) -> tuple[float, tuple[tuple[int, tuple[int, ...]], ...]] | None:
+        positions = [0] + page_break_positions + [len(text)]
 
-    result_parts: list[str] = []
-    prev_pos = 0
-    prev_w = 0
+        @lru_cache(maxsize=None)
+        def _page_dp(start_idx: int) -> tuple[float, tuple[tuple[int, tuple[int, ...]], ...]] | None:
+            start = positions[start_idx]
+            if start == len(text):
+                return 0.0, ()
 
-    for line_idx in range(1, needed_lines):
-        target_w = prev_w + ideal_line_width
-        if widths[len(text)] - prev_w <= chars_per_line:
-            break
+            best_cost = float("inf")
+            best_plan: tuple[tuple[int, tuple[int, ...]], ...] = ()
+            for end_idx in range(start_idx + 1, len(positions)):
+                end = positions[end_idx]
+                seg_width = widths[end] - widths[start]
+                if end != len(text) and seg_width < min_page_width:
+                    continue
+                if seg_width > page_capacity * 1.35:
+                    break
 
-        best_pos = _find_best(major, prev_pos, prev_w, target_w)
-        # 大区切りが chars_per_line を大幅超過 or なし → 全候補で再探索
-        if best_pos > 0 and (widths[best_pos] - prev_w) > chars_per_line * 1.2:
-            alt = _find_best(candidates, prev_pos, prev_w, target_w)
-            if alt > 0 and (widths[alt] - prev_w) <= chars_per_line:
-                best_pos = alt
-        elif best_pos <= 0:
-            best_pos = _find_best(candidates, prev_pos, prev_w, target_w)
+                line_cost, line_splits = _layout_page_structural(
+                    text,
+                    start,
+                    end,
+                    widths,
+                    break_positions,
+                    chars_per_line=chars_per_line,
+                    max_lines=max_lines,
+                )
+                page_cost = line_cost + abs(seg_width - ideal_page_width) * 0.35
+                if end != len(text) and seg_width < ideal_page_width * 0.45:
+                    page_cost += (ideal_page_width * 0.45 - seg_width) * 8.0
+                if seg_width > page_capacity:
+                    page_cost += (seg_width - page_capacity) * 22.0
+                if end < len(text):
+                    page_cost += _structural_boundary_penalty(text, end, page_split=True)
 
-        if best_pos <= 0:
-            break
+                rest = _page_dp(end_idx)
+                if rest is None:
+                    continue
+                rest_cost, rest_plan = rest
+                total = page_cost + rest_cost
+                if total < best_cost:
+                    best_cost = total
+                    best_plan = ((end, tuple(line_splits)),) + rest_plan
 
-        result_parts.append(text[prev_pos:best_pos])
-        prev_pos = best_pos
-        prev_w = widths[best_pos]
+            if best_cost == float("inf"):
+                return None
+            return best_cost, best_plan
 
-    if prev_pos < len(text):
-        result_parts.append(text[prev_pos:])
+        return _page_dp(0)
 
-    return "\n".join(result_parts)
+    solved = _solve_page_plan(major_break_positions) if major_break_positions else None
+    if solved is None:
+        solved = _solve_page_plan(break_positions)
+    if solved is None:
+        line_cost, line_splits = _layout_page_structural(
+            text,
+            0,
+            len(text),
+            widths,
+            break_positions,
+            chars_per_line=chars_per_line,
+            max_lines=max_lines,
+        )
+        plan = ((len(text), tuple(line_splits)),)
+    else:
+        _cost, plan = solved
+    pages: list[str] = []
+    prev = 0
+    for end, line_splits in plan:
+        pages.append(_render_lines_for_page(text, prev, end, list(line_splits)))
+        prev = end
+    return [page for page in pages if page]
 
 
 def reflow_utterance_v2(
@@ -1159,59 +1689,12 @@ def reflow_utterance_v2(
     chars_per_line: int,
     max_lines: int,
 ) -> list[str]:
-    """v2: ページ分割+行内改行を統合的に決定する。
-
-    1. 総幅から理想ページ数を計算
-    2. 全区切り候補を列挙
-    3. ビーム探索でページ分割位置を決定
-    4. 各ページ内で行内改行を挿入
-
-    戻り値: list[str] -- 各要素が1ページ。行内に \\n を含む。
-    """
-    if not text or chars_per_line <= 0 or max_lines <= 0:
-        return [text] if text else []
-
-    total_width = display_width(text)
-    page_capacity = chars_per_line * max_lines
-
-    if total_width <= page_capacity:
-        return [_insert_line_breaks_v2(text, chars_per_line=chars_per_line)]
-
-    widths = _width_at_positions(text)
-    candidates = _collect_break_candidates_v2(text)
-
-    ideal_num_pages = _calc_ideal_pages(total_width, page_capacity)
-
-    # ビーム探索でページ分割
-    page_splits = _find_optimal_page_splits(
-        text, widths, candidates,
-        num_pages=ideal_num_pages,
-        page_capacity=page_capacity,
+    """v2: 大区切り→小区切りの階層でページ分割と行内改行を別々に決める。"""
+    return _reflow_utterance_structural(
+        text,
         chars_per_line=chars_per_line,
+        max_lines=max_lines,
     )
-
-    # ページ数が不足した場合、減らして再試行
-    if len(page_splits) < ideal_num_pages - 1 and ideal_num_pages > 2:
-        for fewer in range(ideal_num_pages - 1, 0, -1):
-            page_splits = _find_optimal_page_splits(
-                text, widths, candidates,
-                num_pages=fewer,
-                page_capacity=page_capacity,
-                chars_per_line=chars_per_line,
-            )
-            if len(page_splits) == fewer - 1:
-                break
-
-    # テキストをページに分割
-    pages: list[str] = []
-    prev = 0
-    for pos in page_splits:
-        pages.append(text[prev:pos])
-        prev = pos
-    pages.append(text[prev:])
-
-    # 各ページ内で行内改行
-    return [_insert_line_breaks_v2(p, chars_per_line=chars_per_line) for p in pages if p]
 
 
 def reflow_subtitles_v2(

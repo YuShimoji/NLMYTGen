@@ -422,6 +422,47 @@ class TestReflowUtteranceV2:
         assert joined == text
         assert len(result) >= 2
 
+    def test_keeps_quote_tail_phrase_together(self):
+        """閉じ括弧の直後に続くひらがな句を途中で切らない。"""
+        text = "もしその計算式に「人間の身体的限界」という変数が最初から欠落していたらどうなるか。"
+        result = reflow_utterance_v2(text, chars_per_line=40, max_lines=2)
+        rendered = "|".join(result)
+        assert "」\n" not in rendered
+        assert "」という" in rendered.replace("|", "").replace("\n", "")
+        assert "\nいう" not in rendered
+
+    def test_does_not_split_dewanaku_internally(self):
+        """ひらがな連結部の内部で切らず、句全体の後ろで調整する。"""
+        text = "これはディストピアSF映画のワンシーンではなく、完璧に計算されたアルゴリズムが生身の人間というノイズだらけの現実に衝突した時に、今まさに起きている日常なんです。"
+        result = reflow_utterance_v2(text, chars_per_line=40, max_lines=2)
+        rendered = "|".join(result)
+        assert "では\nなく" not in rendered
+
+    def test_keeps_bracketed_program_name_together(self):
+        """括弧を含む名称がページ先頭・行頭に漏れない。"""
+        text = "Amazonは「配送サービスパートナー（DSP）」プログラムに19億ドルを投資し、顧客がアプリからドライバーに感謝を伝える制度を打ち出しました。"
+        result = reflow_utterance_v2(text, chars_per_line=40, max_lines=2)
+        rendered = "|".join(result)
+        assert "（DSP）" in rendered.replace("|", "").replace("\n", "")
+        assert "）\n" not in rendered
+        assert "\n」" not in rendered
+
+
+    def test_keeps_quoted_term_and_explanatory_noun_together(self):
+        """逶ｴ蠕後→隱ｬ譏弱す繧育比ｸｭ縺ｮ蜿ｯ蜿門ｾ励ｂ蜷後§陦悟・縺ｫ谺ｩ繧九・"""
+        text = "繧ゅ＠縺昴・險育ｮ怜ｼ上↓縲御ｺｺ髢薙・霄ｫ菴鍋噪髯千阜縲阪→縺・≧螟画焚縺梧欠闕ｷ縺九ｉ谺｡縺ｨ縺・↑繧九°縲・"
+        result = reflow_utterance_v2(text, chars_per_line=40, max_lines=2)
+        rendered = "|".join(result)
+        assert "縺・≧\n螟画焚" not in rendered
+
+
+    def test_keeps_number_and_unit_together(self):
+        """謨ｰ蟄・→蜊∵悄蜊ｱ菴咲ｽｮ縺ｮ髫ｱ縺ｧ蛻・ｉ縺ｪ縺・・"""
+        text = "Amazon縺ｯ螟ｧ險ｳ縺ｪ譁ｹ邏縺ｧ19蜆医ラ繝ｫ繧呈兜雉・＠縺溘→隱・ｦ九ｌ縺ｦ縺・∪縺吶・"
+        result = reflow_utterance_v2(text, chars_per_line=30, max_lines=2)
+        rendered = "|".join(result)
+        assert "19\n蜆・" not in rendered
+
 
 class TestReflowSubtitlesV2:
     """B-17 reflow_subtitles_v2() 統合テスト。"""

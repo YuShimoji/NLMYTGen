@@ -136,6 +136,139 @@ def test_load_ir_multi_object(tmp_path):
     assert data["utterances"][0]["speaker"] == "A"
 
 
+def test_cli_apply_production_with_palette(tmp_path):
+    """CLI apply-production が palette から face_map 抽出 + patch を実行する。"""
+    import json
+
+    # --- palette ymmp ---
+    palette = {
+        "Timelines": [{"ID": 0, "Items": [
+            {
+                "$type": "YukkuriMovieMaker.Project.Items.TachieFaceItem, YukkuriMovieMaker",
+                "CharacterName": "marisa",
+                "Remark": "smile",
+                "Frame": 0, "Length": 100, "Layer": 0, "Group": 0,
+                "IsLocked": False, "IsHidden": False,
+                "TachieFaceParameter": {
+                    "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter, YukkuriMovieMaker.Plugin.Tachie.AnimationTachie",
+                    "Eyebrow": "smile_eb.png", "Eye": "smile_ey.png",
+                    "Mouth": "smile_mo.png", "Hair": "", "Body": "", "Complexion": "",
+                },
+                "TachieFaceEffects": [],
+                "KeyFrames": {"Frames": [], "Count": 0},
+                "PlaybackRate": 100.0, "ContentOffset": "00:00:00",
+            },
+        ], "LayerSettings": []}],
+        "Characters": [{"Name": "marisa"}],
+    }
+    palette_path = tmp_path / "palette.ymmp"
+    with open(palette_path, "w", encoding="utf-8-sig") as f:
+        json.dump(palette, f)
+
+    # --- production ymmp ---
+    production = {
+        "Timelines": [{"ID": 0, "Items": [
+            {
+                "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+                "CharacterName": "marisa", "Serif": "test", "Remark": "",
+                "Frame": 0, "Length": 100, "Layer": 1, "Group": 0,
+                "IsLocked": False, "IsHidden": False,
+                "TachieFaceParameter": {
+                    "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter, YukkuriMovieMaker.Plugin.Tachie.AnimationTachie",
+                    "Eyebrow": "default.png", "Eye": "default.png",
+                    "Mouth": "default.png", "Hair": "", "Body": "", "Complexion": "",
+                },
+            },
+        ], "LayerSettings": []}],
+        "Characters": [{"Name": "marisa"}],
+    }
+    prod_path = tmp_path / "production.ymmp"
+    with open(prod_path, "w", encoding="utf-8-sig") as f:
+        json.dump(production, f)
+
+    # --- IR ---
+    ir = {
+        "ir_version": "1.0", "video_id": "test",
+        "macro": {"sections": [{"section_id": "S1", "start_index": 1,
+                                 "end_index": 1, "default_face": "smile"}]},
+        "utterances": [{"index": 1, "speaker": "marisa", "text": "t",
+                        "section_id": "S1", "face": "smile"}],
+    }
+    ir_path = tmp_path / "ir.json"
+    ir_path.write_text(json.dumps(ir), encoding="utf-8")
+
+    out_path = tmp_path / "output.ymmp"
+
+    result = subprocess.run(
+        [sys.executable, "-m", "src.cli.main", "apply-production",
+         str(prod_path), str(ir_path),
+         "--palette", str(palette_path),
+         "-o", str(out_path)],
+        capture_output=True, text=True,
+        cwd=str(_project_root()),
+    )
+
+    assert result.returncode == 0, f"stderr: {result.stderr}"
+    assert out_path.exists()
+    assert "Face changes:" in result.stdout
+    assert "extracted from" in result.stdout
+
+    # face_map.json が palette 隣に生成されている
+    assert (tmp_path / "face_map.json").exists()
+
+
+def test_cli_apply_production_with_face_map(tmp_path):
+    """CLI apply-production が既存 face_map で動作する。"""
+    import json
+
+    production = {
+        "Timelines": [{"ID": 0, "Items": [
+            {
+                "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+                "CharacterName": "marisa", "Serif": "test", "Remark": "",
+                "Frame": 0, "Length": 100, "Layer": 1, "Group": 0,
+                "IsLocked": False, "IsHidden": False,
+                "TachieFaceParameter": {
+                    "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter, YukkuriMovieMaker.Plugin.Tachie.AnimationTachie",
+                    "Eyebrow": "default.png", "Eye": "default.png",
+                    "Mouth": "default.png", "Hair": "", "Body": "", "Complexion": "",
+                },
+            },
+        ], "LayerSettings": []}],
+        "Characters": [{"Name": "marisa"}],
+    }
+    prod_path = tmp_path / "production.ymmp"
+    with open(prod_path, "w", encoding="utf-8-sig") as f:
+        json.dump(production, f)
+
+    ir = {
+        "ir_version": "1.0", "video_id": "test",
+        "macro": {"sections": [{"section_id": "S1", "start_index": 1,
+                                 "end_index": 1, "default_face": "smile"}]},
+        "utterances": [{"index": 1, "speaker": "marisa", "text": "t",
+                        "section_id": "S1", "face": "smile"}],
+    }
+    ir_path = tmp_path / "ir.json"
+    ir_path.write_text(json.dumps(ir), encoding="utf-8")
+
+    face_map = {"marisa": {"smile": {"Eyebrow": "s.png", "Eye": "s.png", "Mouth": "s.png"}}}
+    fm_path = tmp_path / "face_map.json"
+    fm_path.write_text(json.dumps(face_map), encoding="utf-8")
+
+    result = subprocess.run(
+        [sys.executable, "-m", "src.cli.main", "apply-production",
+         str(prod_path), str(ir_path),
+         "--face-map", str(fm_path),
+         "--dry-run"],
+        capture_output=True, text=True,
+        cwd=str(_project_root()),
+    )
+
+    assert result.returncode == 0, f"stderr: {result.stderr}"
+    assert "Face changes:" in result.stdout
+    assert "(loaded)" in result.stdout
+
+
 def _project_root():
     """プロジェクトルートを返す。"""
     from pathlib import Path
