@@ -160,7 +160,13 @@ def score_evidence(
 
 
 def load_brief(path: str | Path) -> dict:
-    """Load an H-01 brief from JSON or Markdown-frontmatter hybrid."""
+    """Load an H-01 brief from JSON or Markdown.
+
+    Supports:
+    - Pure JSON file
+    - Markdown with embedded ```json block
+    - Markdown with YAML-like `- key: value` lines and ## sections
+    """
     text = Path(path).read_text(encoding="utf-8")
     # Try JSON first
     try:
@@ -172,4 +178,73 @@ def load_brief(path: str | Path) -> dict:
     match = re.search(r"```json\s*\n(.*?)\n```", text, re.DOTALL)
     if match:
         return json.loads(match.group(1))
-    raise ValueError(f"Cannot parse brief from {path}")
+    # Parse Markdown brief format (- key: value + ## sections)
+    return _parse_markdown_brief(text)
+
+
+def _parse_markdown_brief(text: str) -> dict:
+    """Parse Markdown brief with `- key: value` pairs and `## section` lists."""
+    import re
+    result: dict = {}
+    current_section: str | None = None
+    current_list: list = []
+
+    for line in text.splitlines():
+        stripped = line.strip()
+
+        # ## section header
+        section_match = re.match(r"^##\s+(\S+)", stripped)
+        if section_match:
+            if current_section and current_list:
+                result[current_section] = current_list
+            current_section = section_match.group(1)
+            current_list = []
+            continue
+
+        # Top-level `- key: value`
+        kv_match = re.match(r"^-\s+(\S+):\s*(.+)$", stripped)
+        if kv_match and current_section is None:
+            key = kv_match.group(1)
+            value = kv_match.group(2).strip()
+            # Try boolean/number
+            if value.lower() == "true":
+                result[key] = True
+            elif value.lower() == "false":
+                result[key] = False
+            else:
+                result[key] = value
+            continue
+
+        # Section-level list items
+        if current_section is not None:
+            item_match = re.match(r"^-\s+(.+)$", stripped)
+            if item_match:
+                item_text = item_match.group(1).strip()
+                # Check if it's a key: value within section (for required_evidence etc.)
+                sub_kv = re.match(r"^(\S+):\s*(.+)$", item_text)
+                if sub_kv:
+                    # Start new dict item or add to current
+                    if current_list and isinstance(current_list[-1], dict):
+                        key = sub_kv.group(1)
+                        if key in current_list[-1]:
+                            # New item
+                            current_list.append({key: sub_kv.group(2).strip()})
+                        else:
+                            current_list[-1][key] = sub_kv.group(2).strip()
+                    else:
+                        current_list.append({sub_kv.group(1): sub_kv.group(2).strip()})
+                else:
+                    current_list.append(item_text)
+
+    if current_section and current_list:
+        result[current_section] = current_list
+
+    # Parse consumer_hints as nested dict
+    if "consumer_hints" in result and isinstance(result["consumer_hints"], list):
+        hints = {}
+        for item in result["consumer_hints"]:
+            if isinstance(item, dict):
+                hints.update(item)
+        result["consumer_hints"] = hints
+
+    return result

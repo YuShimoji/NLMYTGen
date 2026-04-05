@@ -171,6 +171,52 @@ main {
 
 .hidden { display: none !important; }
 
+/* Scoring */
+.scoring-group {
+  margin-top: 16px;
+  padding: 12px;
+  background: #16213e;
+  border-radius: 6px;
+}
+.scoring-group h3 {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #e94560;
+}
+.score-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 16px;
+  margin-bottom: 8px;
+}
+.score-grid label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #a0a0a0;
+}
+.score-grid input[type="number"] {
+  width: 50px;
+  background: #1a1a2e;
+  border: 1px solid #0f3460;
+  color: #e0e0e0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  text-align: center;
+}
+.scoring-group button {
+  background: #0f3460;
+  border: none;
+  color: #e0e0e0;
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.scoring-group button:hover { background: #1a4080; }
+
 /* Action buttons */
 .action-row {
   margin-top: 16px;

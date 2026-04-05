@@ -12,6 +12,7 @@
     <nav>
       <button class="tab active" data-tab="csv">CSV 変換</button>
       <button class="tab" data-tab="production">演出適用</button>
+      <button class="tab" data-tab="scoring">品質診断</button>
     </nav>
   </header>
 
@@ -100,6 +101,45 @@
 
       <div id="validate-result" class="result-panel hidden"></div>
       <div id="production-result" class="result-panel hidden"></div>
+    </section>
+
+    <!-- 品質診断タブ -->
+    <section id="tab-scoring" class="tab-content">
+      <div class="file-row">
+        <label>Packaging Brief</label>
+        <button class="btn-file" data-target="scoring-brief">選択</button>
+        <span id="scoring-brief-path" class="file-path">未選択</span>
+      </div>
+
+      <div class="scoring-group">
+        <h3>H-04 Evidence Richness</h3>
+        <div class="score-grid">
+          <label>number <input type="number" id="ev-number" value="2" min="0" max="3"></label>
+          <label>named_entity <input type="number" id="ev-named_entity" value="2" min="0" max="3"></label>
+          <label>anecdote <input type="number" id="ev-anecdote" value="1" min="0" max="3"></label>
+          <label>case <input type="number" id="ev-case" value="2" min="0" max="3"></label>
+          <label>study <input type="number" id="ev-study" value="2" min="0" max="3"></label>
+          <label>freshness <input type="number" id="ev-freshness" value="1" min="0" max="3"></label>
+          <label>promise_payoff <input type="number" id="ev-promise_payoff" value="2" min="0" max="3"></label>
+        </div>
+        <button id="btn-score-evidence">Score Evidence</button>
+        <div id="evidence-result" class="result-panel hidden"></div>
+      </div>
+
+      <div class="scoring-group">
+        <h3>H-03 Visual Density</h3>
+        <div class="score-grid">
+          <label>scene_variety <input type="number" id="vd-scene_variety" value="2" min="0" max="3"></label>
+          <label>information_embedding <input type="number" id="vd-information_embedding" value="2" min="0" max="3"></label>
+          <label>symbolic_asset <input type="number" id="vd-symbolic_asset" value="2" min="0" max="3"></label>
+          <label>tempo_shift <input type="number" id="vd-tempo_shift" value="2" min="0" max="3"></label>
+          <label>pattern_balance <input type="number" id="vd-pattern_balance" value="2" min="0" max="3"></label>
+          <label>stagnation_risk <input type="number" id="vd-stagnation_risk" value="2" min="0" max="3"></label>
+          <label>promise_visual_payoff <input type="number" id="vd-promise_visual_payoff" value="2" min="0" max="3"></label>
+        </div>
+        <button id="btn-score-visual">Score Visual Density</button>
+        <div id="visual-result" class="result-panel hidden"></div>
+      </div>
     </section>
   </main>
 

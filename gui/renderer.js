@@ -346,3 +346,85 @@ window.addEventListener('DOMContentLoaded', async () => {
   const settings = await window.nlmytgen.loadSettings();
   applySettings(settings);
 });
+
+// --- Scoring Tab ---
+let scoringBriefPath = null;
+
+document.querySelector('[data-target="scoring-brief"]').addEventListener('click', async () => {
+  const path = await window.nlmytgen.selectFile({
+    title: 'Packaging Brief を選択',
+    filters: [
+      { name: 'Brief', extensions: ['json', 'md'] },
+      { name: 'All', extensions: ['*'] },
+    ],
+  });
+  if (path) {
+    scoringBriefPath = path;
+    document.getElementById('scoring-brief-path').textContent = path;
+  }
+});
+
+function collectScores(prefix, categories) {
+  const scores = {};
+  for (const cat of categories) {
+    scores[cat] = parseInt(document.getElementById(`${prefix}-${cat}`).value) || 0;
+  }
+  return scores;
+}
+
+function renderScoringResult(panel, result) {
+  panel.classList.remove('hidden', 'success', 'error');
+  if (result.json) {
+    const j = result.json;
+    panel.classList.add(j.total_score >= 60 ? 'success' : 'error');
+    let text = `Score: ${j.total_score}/100 (${j.band})\n\n`;
+    for (const [cat, score] of Object.entries(j.category_scores || {})) {
+      text += `  ${cat}: ${score}/3\n`;
+    }
+    if (j.warnings && j.warnings.length) {
+      text += `\nWarnings:\n`;
+      j.warnings.forEach(w => { text += `  ${w}\n`; });
+    }
+    if (j.recommended_repairs && j.recommended_repairs.length) {
+      text += `\nRepairs:\n`;
+      j.recommended_repairs.forEach(r => { text += `  - ${r}\n`; });
+    }
+    panel.textContent = text;
+  } else {
+    panel.classList.add('error');
+    panel.textContent = result.stderr || result.stdout || 'Unknown error';
+  }
+}
+
+const EV_CATS = ['number', 'named_entity', 'anecdote', 'case', 'study', 'freshness', 'promise_payoff'];
+const VD_CATS = ['scene_variety', 'information_embedding', 'symbolic_asset', 'tempo_shift', 'pattern_balance', 'stagnation_risk', 'promise_visual_payoff'];
+
+document.getElementById('btn-score-evidence').addEventListener('click', async () => {
+  if (!scoringBriefPath) {
+    alert('Packaging Brief を選択してください');
+    return;
+  }
+  const status = document.getElementById('status');
+  status.textContent = 'Scoring evidence...';
+  const result = await window.nlmytgen.scoreEvidence({
+    brief: scoringBriefPath,
+    scores: collectScores('ev', EV_CATS),
+  });
+  renderScoringResult(document.getElementById('evidence-result'), result);
+  status.textContent = 'Evidence scoring complete';
+});
+
+document.getElementById('btn-score-visual').addEventListener('click', async () => {
+  if (!scoringBriefPath) {
+    alert('Packaging Brief を選択してください');
+    return;
+  }
+  const status = document.getElementById('status');
+  status.textContent = 'Scoring visual density...';
+  const result = await window.nlmytgen.scoreVisualDensity({
+    brief: scoringBriefPath,
+    scores: collectScores('vd', VD_CATS),
+  });
+  renderScoringResult(document.getElementById('visual-result'), result);
+  status.textContent = 'Visual density scoring complete';
+});

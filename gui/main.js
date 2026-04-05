@@ -138,6 +138,20 @@ ipcMain.handle('validate-ir', async (_event, opts) => {
 
 // --- Save IR from paste ---
 
+ipcMain.handle('score-evidence', async (_event, opts) => {
+  const args = ['score-evidence', opts.brief, '--scores', JSON.stringify(opts.scores), '--format', 'json'];
+  const result = await runCli(args);
+  const json = parseJsonLine(result.stdout);
+  return { ...result, json };
+});
+
+ipcMain.handle('score-visual-density', async (_event, opts) => {
+  const args = ['score-visual-density', opts.brief, '--scores', JSON.stringify(opts.scores), '--format', 'json'];
+  const result = await runCli(args);
+  const json = parseJsonLine(result.stdout);
+  return { ...result, json };
+});
+
 ipcMain.handle('save-ir-paste', async (_event, opts) => {
   const result = await dialog.showSaveDialog(mainWindow, {
     title: 'IR JSON を保存',
