@@ -10,6 +10,9 @@
 - S-4: YMM4 で台本読込、キャラクター割当確認
 - S-5: 読み上げ確認、字幕はみ出し修正、辞書登録
 - S-6: 背景・演出・BGM・表情差し替え
+  - S-6a (手動): Custom GPT に台本テキストを貼り付けて IR JSON を取得
+  - S-6b (CLI): `apply-production production.ymmp ir.json --palette palette.ymmp --csv reflow.csv --bg-map bg_map.json -o output.ymmp` (face_map 抽出 + row-range 自動付与 + patch を 1 コマンドで実行)
+  - S-6c (手動): YMM4 で output.ymmp を開き、表情・背景・BGM を確認・微調整
 - S-7: 通し確認とレンダリング
 - S-8: サムネイルをテンプレートベースで手動調整
 - S-9: YouTube Studio で投稿作業
@@ -43,6 +46,7 @@
 - 2026-04-01 の B-15 第3回手動検証: ページ間分割はだいぶ改善。行内折り返し (YMM4自動折り返し) の違和感は残存。「1行/1ページの最大文字数から逆算する外殻」が必要で、B-16 として分離。B-15 done。
 - 2026-04-01 の C-07 v1 proof: セクション分割 OK、作業時間削減 OK、背景候補 NG。ストック素材検索は方向が違う。必要なのは茶番劇アニメ+図解の演出指示。
 - 2026-04-01 の C-07 v2 proof: 4演出パターン (茶番劇/情報埋め込み/雰囲気演出/黒板型) + 発話単位指示 + 表示情報抽出 + 要調査明示。3基準全て OK。C-07 done。
+- 2026-04-03 の production-slice patch-ymmp proof では、実IR先頭11発話を既存 ymmp に適用して face 13 / bg 2 変更を確認した。一方で 11 VoiceItem 中 4 件は `TachieFaceParameter` を持たず、face 差し替え対象外だった。full E2E 前に、台本読込後 ymmp の対象キャラ発話が表情パラメータを保持していることを operator 側で確認する必要がある。
 
 ## Actor Boundaries (三層責務構造対応)
 - `user`: NotebookLM 操作、Custom GPT で Writer IR 生成 (第1層)、Template Registry のラベル付け・素材準備 (第2層)、YMM4 内の判断・微調整、サムネイル、投稿判断、YMM4 native template の登録
@@ -56,6 +60,18 @@
 - 実機での読み上げ確認、通しプレビュー、公開判断
 - GUI やテンプレートを作ること自体を目的化して、手動工程の本質的判断を隠さない
 - YMM4 native template の登録はユーザーが行う。Python で native template を再発明しない
+- 表情ラベル (`serious` / `thinking` 等) は、パーツ番号から機械的に決めず、YMM4 上で見え方を確認したテンプレートをもとに人間が命名する
+- `extract-template` の出力キー (`face_01_...`, `bg_01_...`) は棚卸し用の仮ラベル。production 用 registry は visual review 後の意味ラベルへ手動で整える
+
+## palette 更新が必要になるケース
+- apply-production の face stats で UNKNOWN labels が出た → palette にそのラベルの表情を追加し再抽出
+- 連続 run が多い → palette のラベル間のパーツ差が小さすぎる可能性。パーツ組み合わせを見直す
+- Custom GPT プロンプトの face 許可リストを変更した → palette も揃える
+
+## 検証の境界 (2026-04-05 固定)
+- パイプラインの機械的動作はユニットテスト + CLI dry-run で検証する。YMM4 visual proof を繰り返し要求しない
+- ユーザーへの visual proof 依頼は「初回 E2E」と「最終制作物の品質判断」のみ。増分変更 (idle_face 追加、bg proof、再現 run) では不要
+- 「確認してほしいポイント」の列挙が毎回同じ内容 (表情が切り替わっているか) なら、それは確認ではなく作業の自己目的化
 
 ## 運用ルール
 - 一度説明された workflow pain はここへ固定する

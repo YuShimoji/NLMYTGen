@@ -4,15 +4,14 @@
 - プロジェクト名: NLMYTGen
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
-- 現フェーズ: 演出 IR パイプライン実装完了。G-02/G-02b/G-05/G-06 全 done。Custom GPT proof + 実台本 E2E が次
-- 直近の状態 (2026-03-31):
-  - B-04 分割品質改善: 表示幅ベース分割 (--display-width, --max-lines, --chars-per-line) 実装完了
-  - A-04 RSS フィード連携 (`fetch-topics`): 再審査済み + 実装完了。done へ復帰
-  - `uv run pytest`: 56 PASS。`B-14` を含む現ワークツリーのテスト再現に成功
-  - 実データ dry-run + stats で CLI 動作確認
-  - B-11 S-5 workflow proof: ユーザー承認で approved frontier に昇格。proof 条件と evidence packet を固定
-  - B-11 初回 pre-import 証跡: `samples/AI監視が追い詰める生身の労働.txt` を `--max-lines 2 --chars-per-line 40 --stats --dry-run` で確認し、57 発話 / overflow warnings 34 を記録
-  - B-11 初回 post-import 観測: 辞書登録 0、タイミングのみ 0、手動改行 / 再分割したい長文が約30件。S-5 の主因は読みではなく字幕改行のバランスだった
+- 現フェーズ: Production E2E 実証完了。face + bg + idle_face パイプライン全通。Tier 3 (安定化) へ
+- 直近の状態 (2026-04-05):
+  - G-06 Production E2E: 60 VoiceItem / 28 IR utterance (row-range) / character-scoped face_map → face 133 changes / YMM4 visual proof OK
+  - G-07 idle_face: 待機中表情の TachieFaceItem 挿入。28 件挿入 + carry-forward 動作確認
+  - bg section 切替 proof: 2 ラベル (van_dashboard_ai + dark_board) で BG added 2 / YMM4 確認 OK
+  - extract-template --labeled: palette.ymmp → character-scoped face_map (魔理沙 6 + 霊夢 5 = 11 表情)
+  - row-range: IR 28 発話 ↔ CSV 60 行の粒度差を row_start/row_end で吸収
+  - `uv run pytest`: 131 PASS (10 ファイル)
   - B-12 行バランス重視の字幕分割を実装。`--balance-lines` を追加し、2行字幕向けに自然な改行を opt-in で挿入できるようにした
   - B-12 検証: `build-csv --max-lines 2 --chars-per-line 40 --balance-lines --stats --dry-run` で実データ preview を確認。CSV 1行内の改行保持テストも追加
   - B-12 post-import 再観測: 手動改行 10 / 再分割したい長文 15 / 不自然な単語分割 5。`。` での改行は効いたが、句読点の少ない長文と 1 文字最終行が残った
@@ -127,6 +126,14 @@
 | 2026-04-03 | YMM4 テンプレートは独立ファイルではなく ItemSettings.json 内の Templates 配列に保存 | 実測確定 | テンプレートの Items 構造は ymmp Items と同一。Adapter ロジック再利用可能。エフェクト・VoiceCache もテンプレートに完全保持 |
 | 2026-04-03 | Custom GPT v4 proof 完了 | 実証済み | 28 utterances / 5 sections / 全語彙チェック PASS / Macro-Micro 整合OK。carry-forward は全件フル指定 (省略なし) |
 | 2026-04-03 | Custom GPT v4 の IR 出力は 2オブジェクト連結形式 (Macro + Micro) | 実測確定 | load_ir() で単一 JSON と連結形式の両方に対応。CLI patch-ymmp で動作確認済み |
+| 2026-04-03 | production-slice patch-ymmp proof 完了、ただし full E2E は実制作 ymmp 不在で未閉塞 | 実証済み / 要再確認 | `samples/test - marisaFX.ymmp` に実IR先頭11発話を適用し face 13 / bg 2 変更を確認。`samples/v4_re.ymmp` は current workspace で未確認のため、28発話 full E2E は次ブロックへ持ち越し |
+| 2026-04-03 | Template Registry は visual-review 前提。`extract-template` は棚卸し補助であって意味ラベル推定器ではない | 運用確定 | 表情ラベルは YMM4 上で見え方を確認して人間が命名する。現行 `patch-ymmp` のフラット `face_map` は単一キャラ proof 向けで、複数キャラ案件の最終形は character-scoped registry が必要 |
+| 2026-04-05 | face_map を character-scoped に、bg_map は flat を維持 | 実装確定 | face は同じラベルでもキャラごとにパーツが異なる。bg は scene/preset 責務で話者固有ではない |
+| 2026-04-05 | Remark フィールドを extract-template --labeled のラベル源に採用 | 実装確定 | Serif は発話テキスト用。Remark は VoiceItem / TachieItem / TachieFaceItem / ImageItem の全てに存在する空きメタデータ欄 |
+| 2026-04-05 | row_start / row_end で IR 意味単位と VoiceItem 粒度差を吸収 | 実装確定 | IR を 60 発話に崩す案 (A) とテキストマッチング (C) を却下。IR の意味単位を保ったまま複数 VoiceItem に適用する方式 (B) を採用 |
+| 2026-04-05 | idle_face: IR フィールド追加 + TachieFaceItem 挿入方式 | 実装確定 | TachieItem の表情制御ではなく、IR に idle_face を追加して adapter が non-speaker 側に TachieFaceItem を挿入。既存 face 適用経路を崩さず拡張 |
+| 2026-04-05 | bg section 切替 proof 成功 (2 ラベル) | 実証済み | 5 セクションのうち 2 ラベルで背景切替を確認。残りはユーザーが bg_map を拡張するだけ |
+| 2026-04-05 | `.claude` 側に常設ガードを追加 | 実装確定 | 毎回 prompt に重い禁止を書き足さず、repo-local 入口と hooks で repo 外逸脱 / broad question 停止 / repeated visual proof を抑止する |
 
 ---
 
@@ -164,11 +171,11 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ## HANDOFF SNAPSHOT (2026-04-03 更新)
 
-- Shared Focus: G-05 v4 proof 完了 + patch-ymmp 接続テスト完了 + Multi-Object IR 読み込み対応。台本読込後の実制作 ymmp (v4_re.ymmp) がローカルに存在。次は extract-template → patch-ymmp E2E
+- Shared Focus: G-05 v4 proof 完了 + production-slice patch-ymmp proof 完了 + Multi-Object IR 読み込み対応。次は実制作 28発話 ymmp を特定して extract-template → patch-ymmp full E2E
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: direct (load_ir Multi-Object 対応実装。G-05 v4 proof + CLI 接続テスト完了)
-- Evidence: 93 PASS。Custom GPT v4 IR 出力 (28 utterances, 全語彙チェック PASS)。patch-ymmp CLI dry-run 成功。YMM4 テンプレート構造 (ItemSettings.json) 実測確定。台本読込後 ymmp (v4_re.ymmp) 保存済み
+- Last Change Relation: direct (load_ir Multi-Object 対応実装。G-05 v4 proof + production-slice patch-ymmp proof 完了)
+- Evidence: 93 PASS。Custom GPT v4 IR 出力 (28 utterances, 全語彙チェック PASS)。production-slice patch-ymmp proof で face 13 / bg 2 変更を確認。YMM4 テンプレート構造 (ItemSettings.json) 実測確定。full E2E 用の実制作 ymmp は current workspace で未確認
 - 案件モード: CLI artifact
 - 現在の主レーン: Advance (演出パイプライン E2E)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近
@@ -179,7 +186,8 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - trusted: G-05 v4 proof 完了。Custom GPT が PRODUCTION_IR_SPEC v1.0 準拠の IR を正常出力
   - trusted: load_ir Multi-Object 対応 (2オブジェクト連結形式の読み込み)
   - needs re-check: motion/transition/overlay の ymmp 適用は未実装 (正式スコープ内の frontier)
-  - needs re-check: 実制作 ymmp での face/bg 差し替え E2E は未実施
+  - needs re-check: 実制作 28発話 ymmp での face/bg 差し替え full E2E は未実施
+  - needs re-check: VoiceItem が `TachieFaceParameter` を持たない箇所は face 差し替え対象外。テンプレート側前提の確認が必要
 - Recovered Canonical Context:
   - Python はテキスト変換 + 演出 IR 定義 + ymmp 限定後段適用
   - 視覚配置 IR が中心課題。C-07 系が主系統、D-02 は従属的補助論点
@@ -188,7 +196,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - YMM4 テンプレートは独立ファイルではなく ItemSettings.json の Templates 配列に JSON 保存
   - Custom GPT v4 は 2オブジェクト連結形式 (Macro + Micro) で IR を出力する。load_ir() で対応済み
 - Authority Return Items:
-  - 実制作 ymmp (v4_re.ymmp) での face/bg 差し替え E2E → YMM4 で開いて確認
+  - 実制作 28発話 ymmp の所在確定 → face/bg 差し替え full E2E → YMM4 で開いて確認
   - motion/transition/overlay の ymmp 適用を次に進めるかの判断
   - E-02: hold 継続。E-01 とセットでのみ再検討
   - F-01/F-02: quarantined 継続
@@ -199,3 +207,9 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - quarantined 項目を通常候補としてそのまま spec 化しない
   - 素材取得/API 検討を再び中心にしない
 - Expansion Risk: なし
+## 2026-04-05 Structural Linebreak Redesign Note
+
+- B-17 reflow v2 was reworked around structural major/minor boundaries instead of phrase-specific word lists.
+- Page carry-over and in-page line breaks are now evaluated separately: page planning prefers major boundaries first, then falls back to minor boundaries only when necessary.
+- Inline break scoring now strongly penalizes breaks inside short hiragana connector tails and around quoted/bracketed labels followed by explanatory nouns.
+- Sample proof on `samples/AI監視が追い詰める生身の労働.txt` improved several screen-facing failures (`では / なく`, `）」 / という`, `） / 」`, `19 / 億`) while leaving a smaller residual cluster around `XというY` and quoted explanatory phrases that still need another structural pass.

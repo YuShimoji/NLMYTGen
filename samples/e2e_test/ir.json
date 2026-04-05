@@ -1,0 +1,141 @@
+{
+  "ir_version": "1.0",
+  "video_id": "e2e_test",
+  "macro": {
+    "tone": "テスト用。表情と背景の切替を確認する",
+    "pattern_mix": "2:1:1:1",
+    "visual_arc": [
+      {
+        "phase": "intro",
+        "primary_pattern": "A",
+        "emotion_flow": "導入"
+      },
+      {
+        "phase": "develop",
+        "primary_pattern": "B",
+        "emotion_flow": "展開"
+      },
+      {
+        "phase": "climax",
+        "primary_pattern": "A",
+        "emotion_flow": "クライマックス"
+      },
+      {
+        "phase": "closing",
+        "primary_pattern": "D",
+        "emotion_flow": "結び"
+      }
+    ],
+    "sections": [
+      {
+        "section_id": "S1",
+        "topic": "導入パート",
+        "start_index": 1,
+        "end_index": 4,
+        "default_bg": "studio_blue",
+        "default_face": "neutral",
+        "bgm": "calm",
+        "arc_phase": "intro"
+      },
+      {
+        "section_id": "S2",
+        "topic": "展開パート",
+        "start_index": 5,
+        "end_index": 8,
+        "default_bg": "dark_board",
+        "default_face": "serious",
+        "bgm": "tense",
+        "arc_phase": "develop"
+      },
+      {
+        "section_id": "S3",
+        "topic": "結びパート",
+        "start_index": 9,
+        "end_index": 11,
+        "default_bg": "studio_blue",
+        "default_face": "smile",
+        "bgm": "upbeat",
+        "arc_phase": "closing"
+      }
+    ]
+  },
+  "utterances": [
+    {
+      "index": 1,
+      "speaker": "marisa",
+      "text": "u1",
+      "section_id": "S1",
+      "face": "neutral"
+    },
+    {
+      "index": 2,
+      "speaker": "reimu",
+      "text": "u2",
+      "section_id": "S1",
+      "face": "smile"
+    },
+    {
+      "index": 3,
+      "speaker": "marisa",
+      "text": "u3",
+      "section_id": "S1",
+      "face": "surprised"
+    },
+    {
+      "index": 4,
+      "speaker": "reimu",
+      "text": "u4",
+      "section_id": "S1",
+      "face": "thinking"
+    },
+    {
+      "index": 5,
+      "speaker": "marisa",
+      "text": "u5",
+      "section_id": "S2",
+      "face": "serious"
+    },
+    {
+      "index": 6,
+      "speaker": "reimu",
+      "text": "u6",
+      "section_id": "S2",
+      "face": "angry"
+    },
+    {
+      "index": 7,
+      "speaker": "marisa",
+      "text": "u7",
+      "section_id": "S2",
+      "face": "sad"
+    },
+    {
+      "index": 8,
+      "speaker": "reimu",
+      "text": "u8",
+      "section_id": "S2",
+      "face": "surprised"
+    },
+    {
+      "index": 9,
+      "speaker": "marisa",
+      "text": "u9",
+      "section_id": "S3",
+      "face": "smile"
+    },
+    {
+      "index": 10,
+      "speaker": "reimu",
+      "text": "u10",
+      "section_id": "S3",
+      "face": "smile"
+    },
+    {
+      "index": 11,
+      "speaker": "marisa",
+      "text": "u11",
+      "section_id": "S3",
+      "face": "neutral"
+    }
+  ]
+}

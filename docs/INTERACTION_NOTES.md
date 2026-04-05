@@ -10,6 +10,8 @@
 - AskUserQuestion の `question` に Markdown テーブルを入れる
 - 選択肢を commit / しない の yes/no で埋める
 - 既知文脈を「詳細を教えてください」で再質問する
+- `判断をお願いします` `何が足りないか教えてください` のような broad question で停止する
+- 同じ確認点の YMM4 visual proof を繰り返し要求する
 
 ## ユーザーが嫌う形式
 - 進路選択を不必要に狭める二択
@@ -29,3 +31,7 @@
 - 研究 (ymmp 解析、プラグイン API 調査、外部ツール評価等) と開発 (IR 定義、プロンプト改訂等) を混同しない。研究に2ブロック以上費やす場合は一度止まって開発に戻る
 - テスト設計やテストフレームワーク整備が開発の主活動になっていないか定期確認する
 - 外部ツール (YMovieHelper 等) を「主軸」として採用する提案には、運用依存軸 (保守性、メンテナンス状況) の評価を必須とする。サービス終了済み・更新停止ツールへの依存設計は避ける
+
+## 常設ガード (2026-04-05)
+- `.claude/CLAUDE.md` に block-start checklist を置き、毎ブロックの判断を強制する
+- `.claude/hooks/guardrails.py` で repo 外 project / memory / docs 参照、broad question による停止、反復 visual proof 要求を reject する

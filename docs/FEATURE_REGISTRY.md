@@ -112,7 +112,11 @@
 | G-03 | 演出適用ツール (IToolPlugin) | hold | L3 | G-01 が前提。タイムライン操作 API 非公開のため凍結 |
 | G-04 | ymmp 背景/表情自動差し替え | hold | L3 | ymmp 直接編集は控える。G-02b + 段階5の判断結果を踏まえて再検討 |
 | G-05 | Writer IR 出力プロンプト (C-07 v4) | done | L2 | 三層の第1層 (Writer IR)。Custom GPT が PRODUCTION_IR_SPEC v1.0 準拠の構造化 IR (scene_preset + override) を出力。`docs/S6-production-memo-prompt.md` v4 セクション。proof 待ち |
-| G-06 | YMM4 Adapter (patch-ymmp) | done | L2/L3 | 三層の第3層 (YMM4 Adapter) の初期形。face (表情パーツ) + bg (背景画像) を IR→ymmp で差し替え。実機検証済み (2026-04-02)。motion/transition は YMM4 ネイティブに委ねる方針 (実測後に確定) |
+| G-06 | YMM4 Adapter (patch-ymmp) | done | L2/L3 | 三層の第3層 (YMM4 Adapter)。face (表情パーツ) を IR→ymmp で差し替え。character-scoped face_map + row-range 対応済み。extract-template --labeled で palette ymmp から face_map 自動生成。production E2E 実証済み (2026-04-05: 60 VoiceItem / 28 IR utterance / face 133 changes) |
+| G-07 | 待機中表情の指定 (idle_face) | done | L2/L3 | IR に `idle_face` フィールドを追加。patch-ymmp が各 utterance の開始 Frame に non-speaker キャラの TachieFaceItem を挿入。carry-forward 対応。character-scoped face_map で解決。131 PASS (2026-04-05) |
+| G-08 | apply-production ワンコマンド | done | L2 | `apply-production` サブコマンド。palette → face_map 抽出 + row-range 自動付与 + patch-ymmp を 1 コマンドで実行。--palette / --face-map / --bg-map / --csv / --refresh-maps / --dry-run |
+| G-09 | annotate-row-range (row_start/row_end 自動付与) | done | L2 | IR utterance text と CSV 行の段階的 Greedy Forward Match (strict/loose/partial)。NFKC + 句読点除去。speaker 補助チェック。cascade failure 防止。`annotate-row-range` 独立コマンド + `apply-production --csv` 統合。151 PASS (2026-04-05) |
+| G-10 | IR 品質 gate (validate-ir) | done | L2 | `validate-ir` サブコマンド + `apply-production` 統合。unknown face label → ERROR、serious 偏り (>40%) → WARNING、連続 run (>4) → WARNING、idle_face 未指定 → WARNING、bg 未設定 → WARNING。Custom GPT プロンプトの face 許可リスト修正 (neutral 除外)、分布制約追加。169 PASS |
 
 ---
 
