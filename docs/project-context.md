@@ -4,7 +4,7 @@
 - プロジェクト名: NLMYTGen
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
-- 現フェーズ: Production E2E 実証 + face サブクエスト completion 固定。次の主 frontier は H-01 Packaging Orchestrator の workflow proof
+- 現フェーズ: Production E2E 実証 + face サブクエスト completion 固定。timeline lane の G-11〜G-13 packet を閉じ、H-01 dry proof・H-02 dry proof・H-04 manual proof まで記録済み。active lane は H-02 strict GUI rerun proof を主軸とする packaging lane
 - 直近の状態 (2026-04-05):
   - G-06 Production E2E: 60 VoiceItem / 28 IR utterance (row-range) / character-scoped face_map → face 133 changes / YMM4 visual proof OK
   - G-07 idle_face: 待機中表情の TachieFaceItem 挿入。28 件挿入 + carry-forward 動作確認
@@ -14,9 +14,16 @@
   - face completion hardening: `validate-ir` が `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` / `FACE_PROMPT_PALETTE_*` / `FACE_LATENT_GAP` を分類し、`apply-production` は row-range unmatched/uncovered・validation error・fatal face patch warning で fail-fast
   - H-01 Packaging Orchestrator brief: `docs/PACKAGING_ORCHESTRATOR_SPEC.md` v0.1 を追加。C-07/C-08 が参照する central brief schema を定義
   - H-02 Thumbnail strategy v2: `docs/THUMBNAIL_STRATEGY_SPEC.md` v0.1 を追加。specificity-first / banned pattern / rotation policy / output contract を定義
+  - H-04 Evidence richness score: `docs/EVIDENCE_RICHNESS_SCORE_SPEC.md` v0.1 を追加。7軸の category score、warning class、repair suggestion を定義
+  - H-04 proof packet: `docs/verification/H04-evidence-richness-manual-scoring-proof.md` を追加。1 本の実台本で score と repair action を結びつける実行単位を整備
   - H-01 workflow proof packet: `docs/verification/H01-packaging-orchestrator-workflow-proof.md` を追加。sample brief / cue memo / alignment check を束ねた実行手順を整備
-  - packaging frontier packet: H-03 Visual density score / H-04 Evidence richness score を proposed backlog として整理
-  - `uv run pytest`: 187 PASS (12 ファイル)
+  - H-01 dry proof: `docs/verification/H01-packaging-orchestrator-ai-monitoring-dry-proof.md` により、AI監視 sample で brief が opening / title / thumbnail / cue memo の共有契約として機能することを repo-local artifact ベースで確認
+  - H-02 dry proof: `docs/verification/H02-thumbnail-strategy-ai-monitoring-dry-proof.md` により、AI監視 sample で specificity-first / banned pattern / rotation recommendation / brief compliance を dry proof し、C-08 prompt に `Specificity Ledger` と `Brief Compliance Check` を追加
+  - H-04 manual proof: `docs/verification/H04-evidence-richness-ai-monitoring-proof.md` により、AI監視 sample を total 77 / `acceptable` と採点し、warning を anecdote continuity と late payoff の repair に変換できることを確認
+- G-12 measurement packet: `docs/verification/G12-timeline-route-measurement.md` と `samples/timeline_route_contract.json` を追加。profile ベースの route contract で current corpus の `motion` / `bg_anim` を固定し、fade-family `transition` route (`VoiceFade*` / `JimakuFade*` / `Fade*`) も mechanical に回収できる状態まで更新
+  - G-13 overlay / se insertion packet: `docs/verification/G13-overlay-se-insertion-packet.md` を追加。`overlay` は registry + timing anchor から deterministic な `ImageItem` 挿入まで実装し、`se` は label/timing 解決までは閉じたうえで `AudioItem` write route 不在時に `SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast する boundary を固定
+  - packaging frontier packet: H-03 Visual density score を proposed backlog として整理。H-04 は schema 定義済み
+  - `uv run pytest`: 220 passed / 3 xpassed
   - B-12 行バランス重視の字幕分割を実装。`--balance-lines` を追加し、2行字幕向けに自然な改行を opt-in で挿入できるようにした
   - B-12 検証: `build-csv --max-lines 2 --chars-per-line 40 --balance-lines --stats --dry-run` で実データ preview を確認。CSV 1行内の改行保持テストも追加
   - B-12 post-import 再観測: 手動改行 10 / 再分割したい長文 15 / 不自然な単語分割 5。`。` での改行は効いたが、句読点の少ない長文と 1 文字最終行が残った
@@ -43,14 +50,14 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → 演出 IR → ymmp 後段適用 → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → patch-ymmp → 演出設定 → レンダリング
-- 現在のスライス: face サブクエストを「failure class で再オープンする完成済みサブシステム」として固定。主 frontier は H-01 へ移行可能
+- 現在のスライス: face を completed subsystem、timeline を completed packet 群として固定。主 frontier は packaging lane の H-01 workflow proof
 - 成功状態: face+bg 限定の全パイプライン E2E が通り、Level 3 (半自動制作ライン) に到達すること
 
 ---
 
 ## CURRENT LANE
 - 主レーン: Advance
-- 今このレーンを優先する理由: face サブクエストを完成条件つきで閉じ、以後の主 frontier を packaging / orchestration 側へ進められる段階に入ったため
+- 今このレーンを優先する理由: face と timeline の mechanical packet を failure class 付きで閉じ、以後の主 frontier を packaging / orchestration 側へ安定して戻せる段階に入ったため
 
 ---
 
@@ -105,11 +112,13 @@ This section supersedes the 2026-04-05 roadmap block above.
 - 第二着手は H-02 Thumbnail strategy v2。
 - 本文根拠のある具体数値・固有名詞・年数・割合・金額を優先し、抽象煽りテンプレ依存を下げる。
 - rotation policy を定義し、構図 / 表情 / 配色 / コピー型の固定パターン連打を避ける。
-- 2026-04-06 時点で schema v0.1 は定義済み。次に必要なのは、C-08 実運用で specificity-first / banned pattern / rotation recommendation が機能するかの workflow proof。
+- 2026-04-06 時点で schema v0.1 と dry proof は定義済み。次に必要なのは、C-08 実運用で「5案中3案が preferred_specifics を使い、banned pattern を避けるか」を 1 回だけ確認する strict GUI rerun proof。
 
 ### Phase 3: Packaging packet に evidence gate を足す
 - 第三着手は H-04 Evidence richness score。
 - 逸話 / 具体事例 / 数値 / 学術知 / 最新情報のどれが弱いかを可視化し、title / thumbnail promise を本文が支えられているかを見る。
+- 2026-04-06 時点で `docs/EVIDENCE_RICHNESS_SCORE_SPEC.md` v0.1 により、7軸 score・warning class・repair suggestion までは定義済み。
+- 同日、`docs/verification/H04-evidence-richness-manual-scoring-proof.md` を追加し、実台本 1 本で warning が repair action に変換できるかを見る proof packet まで整備。
 
 ### Phase 4: Packaging packet に visual diagnostics を足す
 - 第四着手は H-03 Visual density score。
@@ -121,13 +130,15 @@ This section supersedes the 2026-04-05 roadmap block above.
 - `validate-ir` / `apply-production` / `patch-ymmp` が `SLOT_UNKNOWN_LABEL` / `SLOT_REGISTRY_GAP` / `SLOT_CHARACTER_DRIFT` / `SLOT_DEFAULT_DRIFT` を class 付きで扱う。
 
 ### Phase 6: Timeline packet の native route を実測で確定する
-- 次に G-12 timeline native-template measurement。
-- `motion` / `transition` / `bg_anim` は native template 参照で閉じるか、VideoEffects / transition key 書き換えで閉じるかを実測で決める。
-- 理由: ここを測らずに adapter 実装へ進むと、creative judgement と file-format risk が再び混ざるため。
+- G-12 timeline route measurement packet は完了。
+- `motion` / `bg_anim` は `docs/verification/G12-timeline-route-measurement.md` と `samples/timeline_route_contract.json` により、native route 候補を repo-local corpus で mechanical に確定済み。
+- fade-family `transition` route は repo-local corpus で mechanical に観測済み。未確定なのは non-fade / template-backed transition family のみ。
+- G-13 overlay / se insertion packet は完了。
+- 理由: fade-family `transition` まで route を固定した後、overlay/se を label 解決・timing anchor・fail-fast boundary まで閉じることで、timeline quality を broad manual retry loop から分離できたため。
 
-### Phase 7: Timeline packet の挿入系を closing する
-- その次に G-13 overlay / se timeline insertion adapter。
-- `overlay` / `se` の意味ラベルを registry 解決し、timing anchor 付きで deterministic に挿入できる状態を目指す。
+### Phase 7: Timeline lane は failure class 単位で再オープンする
+- `overlay` / `se` の packet は完了。`overlay` は deterministic に挿入でき、`se` は repo-local corpus に `AudioItem` write route が無い間は fail-fast で停止する。
+- 以後 timeline を再度触るのは、新しい `.ymmp` sample が入り route が観測可能になったとき、または既知 failure class が出たときだけ。
 - 最終的な演出密度判断・音量判断・テンポ判断は user に残す。
 
 ### Phase 8: Metadata は consumer として最後に再評価する
@@ -229,8 +240,17 @@ This section supersedes the 2026-04-05 roadmap block above.
 | 2026-04-05 | H-01 Packaging Orchestrator brief schema v0.1 を定義 | backlog のみ / schema 定義 | H-01 を abstract な気づきで終わらせず、C-07/C-08/E-02/H-04 が参照できる正本フィールドへ落とすため |
 | 2026-04-06 | H-01 workflow proof packet を整備 | schema のみ / proof packet まで整備 | H-01 を `approved` のまま放置せず、user が 1 本の実台本で drift を観測できる実行単位まで前進させるため |
 | 2026-04-06 | H-02 Thumbnail strategy v2 schema v0.1 を定義 | backlog のみ / schema 定義 | H-02 を感覚的な運用メモではなく、C-08 が参照できる specificity-first / banned pattern / rotation policy の正本へ落とすため |
+| 2026-04-06 | H-04 Evidence richness score schema v0.1 を定義 | backlog のみ / schema 定義 | H-04 を曖昧な「内容が強いか」ではなく、promise_payoff と evidence category に分解された repair-oriented gate にするため |
+| 2026-04-06 | H-04 manual scoring proof packet を整備 | schema のみ / proof packet まで整備 | H-04 を机上定義で終わらせず、warning を script/packaging repair に変換できる実行単位まで前進させるため |
+| 2026-04-06 | H-02 は dry proof を先に通し、strict GUI rerun proof と分離して扱う | strict proof 待ち / dry proof 先行 | 既存 artifact だけでも specificity-first / banned pattern / rotation contract が機能するかを確認でき、GUI rerun 待ちで packaging lane 全体を止める必要がないため |
+| 2026-04-06 | H-01 はまず repo-local dry proof を通し、strict な GUI rerun proof と分離して扱う | dry proof なし / strict proof 待ち / dry proof 先行 | 既存 artifact だけでも brief が共有契約として機能するかは確認でき、strict な before/after rerun 待ちで packaging lane 全体を止める必要がないため |
+| 2026-04-06 | H-04 AI監視 sample は `acceptable` と判定し、主要 warning を anecdote continuity と late payoff に集約 | 高評価でそのまま通す / vague score に留める / warning を repair に落とす | H-04 の価値は数値化より repair 指示にあるため、包装 promise と本文根拠のズレを具体修正へ還元できる形で残す必要があるため |
 | 2026-04-06 | G-11 slot patch hardening を実装完了 | proposed 維持 / 実装完了 | timeline edit を broad manual retry loop にせず、slot を deterministic patch + fail-fast validation の packet として閉じるため |
-| 2026-04-06 | G-12 は patch 前に readback harness を先行実装 | 先に patch / 先に measurement harness | native route を未確定のまま `motion` / `transition` / `bg_anim` の adapter write に進むと、file-format risk と creative judgement が再混線するため |
+| 2026-04-06 | G-12 は patch 前に readback harness と route contract 照合を先行実装 | 先に patch / 先に measurement harness | native route を未確定のまま `motion` / `transition` / `bg_anim` の adapter write に進むと、file-format risk と creative judgement が再混線するため |
+| 2026-04-06 | G-12 の current contract は `test - marisaFX.ymmp` で通し、`production.ymmp` の `bg_anim` miss を failure class として扱う | gap を黙殺 / warning 扱い / failure class 化 | timeline quality 問題を visual impression に戻さず、route gap を mechanical failure として扱うため |
+| 2026-04-06 | G-12 measurement packet を追加し、current corpus で route narrowing を先に完了 | harness のみ / packet 化して route narrowing | `motion` / `bg_anim` は current corpus で狭め、manual frontier を `transition` probe 1 本へ縮めると、operator の判断負荷を最小化できるため |
+| 2026-04-06 | fade-family `transition` route を ymmp_measure で回収可能にし、G-12 contract を更新 | `transition` を route 不在扱い / fade-family route を corpus-derived contract 化 | repo-local corpus に既にある fade key を拾えば、手動 probe を増やさずに `transition` の主要 family を mechanical に確定できるため |
+| 2026-04-06 | G-13 overlay / se insertion packet を completed として閉じる | overlay/se を broad manual frontier に残す / packet として閉じる | `overlay` は registry + timing anchor から deterministic な `ImageItem` 挿入まで閉じ、`se` は route 不在を `SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast 化できたため |
 | 2026-04-05 | サムネイル戦略は抽象煽りより具体数値・固有名詞優先 + rotation 管理 | 定型煽り / 具体性優先 / 各動画場当たり | 本文根拠とクリック訴求を両立し、固定パターン反復による疲労と硬直を避けるため |
 | 2026-04-05 | スコアリングは visual density / evidence richness の2軸から着手 | スコアなし / 単一総合点 / 2軸 | 演出不足と内容不足を別々に診断し、制作改善とマーケ改善の接続点を明確化するため |
 | 2026-04-06 | assistant 側の subquest を timeline edit まで拡張するが、packet 単位で進める | timeline を一括実装 / packet 分割 / 維持 | face と同様に mechanical scope を failure class / readback / boundary で切り分けないと、YMM4 手動確認ループへ戻るため。G-11 slot patch → G-12 native-template measurement → G-13 overlay/se insertion の順に進める |
@@ -271,14 +291,14 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ## HANDOFF SNAPSHOT (2026-04-06 更新)
 
-- Shared Focus: face は completed subsystem のまま維持。timeline lane では G-11 を閉じ、次は G-12 timeline native-template measurement。Packaging lane は backlog として維持
-- Safe Next Frontier Packet: active lane は G-12 → G-13。parallel backlog として H-01 → H-02 → H-04 → H-03 を維持する。timeline は 1 つの巨大 frontier ではなく packet 単位で扱う
+- Shared Focus: face は completed subsystem のまま維持。timeline lane では G-11〜G-13 を completed packet として閉じ、H-01 dry proof と H-04 manual proof まで記録済み。active lane は H-02 workflow proof に移し、fade-family `transition` は repo-local corpus で確定済み、sample dependency は non-fade / template-backed family と `se` の AudioItem write route に限定された
+- Safe Next Frontier Packet: active lane は H-02 workflow proof。parallel backlog として H-03 を維持する。timeline は 1 つの巨大 frontier ではなく completed packet 群として扱い、known failure class または新 sample が出たときだけ局所再オープンする
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: direct (G-12 measurement harness: `measure-timeline-routes` CLI + route candidate readback)
-- Evidence: Production E2E 実証済み + `uv run pytest`: 201 passed / 3 xfailed / 1 xpassed。`measure-timeline-routes` が ymmp から `VideoEffects` / transition key / template candidate route を read-only で抽出でき、slot/face 系 regression も維持
+- Last Change Relation: direct (H-01 dry proof + H-04 manual proof execution + packaging lane handoff to H-02)
+- Evidence: Production E2E 実証済み + `uv run pytest`: 220 passed / 3 xpassed。`docs/verification/H01-packaging-orchestrator-ai-monitoring-dry-proof.md` で brief alignment を確認し、`docs/verification/H04-evidence-richness-ai-monitoring-proof.md` で AI監視 sample の warning を repair action に変換できることを確認。slot/face/timeline regression も維持
 - 案件モード: CLI artifact
-- 現在の主レーン: Advance (演出パイプライン E2E)
+- 現在の主レーン: Advance (Packaging workflow proof)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近
 - Current Trust Assessment:
   - trusted: B-01~B-17 全字幕スタック (93 PASS)
@@ -288,9 +308,14 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - trusted: load_ir Multi-Object 対応 (2オブジェクト連結形式の読み込み)
   - trusted: face completion hardening (`PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` / `FACE_PROMPT_PALETTE_*` / `FACE_LATENT_GAP`)
   - trusted: G-11 slot patch hardening (`SLOT_UNKNOWN_LABEL` / `SLOT_REGISTRY_GAP` / `SLOT_CHARACTER_DRIFT` / `SLOT_DEFAULT_DRIFT` + TachieItem X/Y/Zoom patch + `off` hide)
-  - trusted: G-12 readback harness (`measure-timeline-routes` で `motion` / `transition` / `bg_anim` candidate route を抽出)
-  - needs re-check: motion / transition / overlay / se の timeline edit は G-12/G-13 として段階的に進める
-  - needs re-check: motion/transition/overlay の ymmp 適用 route は未固定 (正式スコープ内の frontier)
+  - trusted: G-12 readback harness (`measure-timeline-routes` で `motion` / `transition` / `bg_anim` candidate route を抽出し、`--expect` / `--profile` で route contract miss を検出)
+  - trusted: G-12 packet narrowing (`motion=TachieItem.VideoEffects`、`bg_anim=ImageItem.X/Y/Zoom`、effect-bearing bg=`ImageItem.VideoEffects` まで current corpus で狭め済み)
+  - trusted: repo-local `.ymmp` 16 本の corpus audit により fade-family `transition` route は観測済み、`template` route は 0 件と確認済み
+  - trusted: G-13 overlay insertion (`OVERLAY_*` validation + deterministic `ImageItem` patch)
+  - trusted: G-13 se fail-fast gate (`SE_*` validation + `SE_WRITE_ROUTE_UNSUPPORTED`)
+  - needs re-check: `samples/production.ymmp` は `bg_anim` route miss。production lane の `bg_anim` write path は未固定
+  - needs re-check: non-fade / template-backed `transition` の ymmp route は repo 内 sample 不在のため未固定。新しい sample が入ったときだけ再測定する
+  - needs re-check: `se` の real `AudioItem` write route は repo-local sample 不在のため未固定。新しい sample が入ったときだけ route 測定と write path 固定を行う
   - needs re-check: face label inventory そのものが creative quality として十分かは最終制作物で見る
 - Recovered Canonical Context:
   - Python はテキスト変換 + 演出 IR 定義 + ymmp 限定後段適用
@@ -300,8 +325,8 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - YMM4 テンプレートは独立ファイルではなく ItemSettings.json の Templates 配列に JSON 保存
   - Custom GPT v4 は 2オブジェクト連結形式 (Macro + Micro) で IR を出力する。load_ir() で対応済み
 - Authority Return Items:
-  - H-01 Packaging Orchestrator brief の workflow proof
-  - motion/transition/overlay の ymmp 適用を次に進めるかの判断
+  - H-02 workflow proof
+  - `se` の real `AudioItem` write route が必要になった場合の sample 提供または route 判定
   - E-02: hold 継続。E-01 とセットでのみ再検討
   - F-01/F-02: quarantined 継続
 - What Not To Do Next:
@@ -318,4 +343,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 - Page carry-over and in-page line breaks are now evaluated separately: page planning prefers major boundaries first, then falls back to minor boundaries only when necessary.
 - Inline break scoring now strongly penalizes breaks inside short hiragana connector tails and around quoted/bracketed labels followed by explanatory nouns.
 - Short comma-led intro lines are now penalized by width so that later particle/phrase breaks win when they keep the page visually denser.
+- Close-bracket/content fallback candidates and major-vs-all page-plan comparison were added, reducing earlier failures around quoted labels and explanatory nouns.
+- Emergency inner-break candidates inside long quoted labels were added as a last resort; remaining residuals are now mostly small 41-48 width overruns rather than gross structural breaks.
+- Single-hiragana tails after quoted terms are now scored separately, improving `...最適化」 / と聞くと` type boundaries while keeping `」` at the next-line head suppressed.
 - Sample proof on `samples/AI監視が追い詰める生身の労働.txt` improved several screen-facing failures (`では / なく`, `）」 / という`, `） / 」`, `19 / 億`) while leaving a smaller residual cluster around `XというY` and quoted explanatory phrases that still need another structural pass.

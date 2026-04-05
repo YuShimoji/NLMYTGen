@@ -29,6 +29,11 @@
 - 汚染バッチ由来の D-02 / F-01 / F-02 は、個別再審査まで通常 backlog に戻さない。
 - 2026-04-05: H-01 schema v0.1 を `docs/PACKAGING_ORCHESTRATOR_SPEC.md` に明文化。H-01 は approved、H-02〜H-04 は proposed backlog とする。
 - 2026-04-06: H-02 schema v0.1 を `docs/THUMBNAIL_STRATEGY_SPEC.md` に明文化。H-02 は approved、C-08 は specificity-first / banned pattern / rotation recommendation を出力できる前提へ更新する。
+- 2026-04-06: H-04 schema v0.1 を `docs/EVIDENCE_RICHNESS_SCORE_SPEC.md` に明文化。H-04 は approved とし、7軸 score・warning class・repair suggestion を正本化する。
+- 2026-04-06: H-04 manual scoring proof packet を `docs/verification/H04-evidence-richness-manual-scoring-proof.md` に整備。実台本 1 本で warning を script/packaging repair に変換できるか検証できる状態にする。
+- 2026-04-06: `AI監視が追い詰める生身の労働` を用いて H-01 dry proof と H-04 manual proof を記録。H-01 は `docs/verification/H01-packaging-orchestrator-ai-monitoring-dry-proof.md`、H-04 は `docs/verification/H04-evidence-richness-ai-monitoring-proof.md` を正本とし、次 frontier は H-02 workflow proof に寄せる。
+- 2026-04-06: G-12 で fade-family `transition` route (`VoiceFade*` / `JimakuFade*` / `Fade*`) を ymmp_measure で回収できるようにし、repo-local contract を更新。非 fade / template-backed transition family のみを未確定として残す。
+- 2026-04-06: G-13 を completed packet とし、`overlay` は deterministic `ImageItem` 挿入まで閉じ、`se` は route 不在を `SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast 化する。timeline lane は broad retry loop に戻さない。
 - 2026-04-05: face は `FACE_UNKNOWN_LABEL` / `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` / `FACE_MAP_MISS` / `IDLE_FACE_MAP_MISS` / `VOICE_NO_TACHIE_FACE` の failure class で扱う。broad な manual retry loop に戻さない。
 - 推奨ロードマップ順は H-01 workflow proof → H-02 → H-04 → H-03。E-02 はその後に consumer として再評価する。
 
@@ -41,6 +46,7 @@
 - Visual density score / Evidence richness score の定義、入力データ源、warning threshold
 - H-01 brief の workflow proof 条件 (C-07 / C-08 で drift が減るか)
 - H-02 の workflow proof 条件 (specificity-first へ寄り、abstract hype が減るか)
+- H-04 の運用結果を何本か蓄積した時の warning threshold 見直し条件
 
 ## 運用ルール
 - 会話で一度出た要求のうち、次回以降も効くものをここへ残す。

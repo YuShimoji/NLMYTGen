@@ -98,14 +98,18 @@
 - assistant / tool が先に閉じる対象は G-11 slot patch、G-12 motion/transition/bg_anim の write route 測定、G-13 overlay/se の timing anchor 付き挿入設計
 - `slot` は mechanical 対象。unknown slot label / slot registry gap / character default slot drift は YMM4 手動確認より前に止める
 - `motion` / `transition` / `bg_anim` は creative choice ではなく、まず「どの write route が安全か」を測る subquest として扱う。native template 参照か key 書き換えかを実測で確定するまでは manual frontier に押し戻さない
-- G-12 の測定は `measure-timeline-routes` を起点に行い、まず ymmp の `VideoEffects` / transition key / template candidate route を readback で把握する
+- G-12 の測定は `measure-timeline-routes` を起点に行い、まず ymmp の `VideoEffects` / transition key / template candidate route を readback で把握する。期待 route が決まったら `--expect` で contract miss を先に止める
+- `TIMELINE_ROUTE_MISS` は「その演出がダメ」という意味ではなく、「その ymmp には期待 route が存在しない」という mechanical failure として扱う
+- repo-local corpus に route 自体が 0 件なら、それは operator の visual judgement 待ちではなく sample dependency として扱う。2026-04-06 時点では `template` と non-fade / template-backed `transition` family のみがこれに該当する
 - `overlay` / `se` は意味ラベル → registry → timing anchor の deterministic 経路ができるまでは manual judgement に残すが、設計・dry-run・readback は assistant 側で先に閉じる
+- 2026-04-06 時点で `overlay` は assistant-owned mechanical scope として閉じた。`--overlay-map` があれば deterministic な `ImageItem` 挿入まで自動で行い、unknown label / map miss / timing anchor 不在 / spec 不正は visual review 前に failure class で止める
+- `se` は意味ラベル → registry → timing anchor までは assistant 側で閉じた。repo-local corpus に `AudioItem` write route が無い間は creative judgement 待ちではなく `SE_WRITE_ROUTE_UNSUPPORTED` として fail-fast し、新 sample が入った時だけ再測定する
 - 人間が残す判断は「どのテンプレートが見た目として良いか」「どのタイミングが気持ちいいか」「音量・密度・テンポが最終制作物として十分か」という creative quality のみ
 
 ## timeline edit サブクエストの completion criteria
 - G-11: completed。`slot` が registry で解決でき、`validate-ir` が `SLOT_UNKNOWN_LABEL` / `SLOT_REGISTRY_GAP` / `SLOT_CHARACTER_DRIFT` / `SLOT_DEFAULT_DRIFT` を事前検出し、`patch-ymmp` / `apply-production` が TachieItem X/Y/Zoom と `off` hide を deterministic に反映できる
-- G-12: `motion` / `transition` / `bg_anim` の write route が native template 参照か key 書き換えかで固定され、dry-run/readback で mechanical failure を再現できる
-- G-13: `overlay` / `se` の label 解決、timing anchor、挿入先構造が固定され、creative density judgement と mechanical insertion failure が分離される
+- G-12: `motion` / `bg_anim` の write route が repo-local corpus ベースで固定され、fade-family `transition` route も mechanical に確認済みで、残る route 不在カテゴリは non-fade / template-backed family の sample dependency として明示され、dry-run/readback で mechanical failure を再現できる
+- G-13: completed。`overlay` は label 解決、timing anchor、挿入先構造が固定され、creative density judgement と mechanical insertion failure が分離された。`se` は label/timing を解決し、write route 不在は `SE_WRITE_ROUTE_UNSUPPORTED` で mechanical failure として扱う
 - 上記を満たした packet は、それぞれ独立 failure class 単位で扱い、broad な timeline retry loop に戻さない
 
 ## 検証の境界 (2026-04-05 固定)

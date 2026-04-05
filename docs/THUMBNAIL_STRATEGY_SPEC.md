@@ -158,6 +158,42 @@ C-08 は最終的に以下を出せるべきである。
 7. rotation 上の推奨軸
 8. banned pattern に落ちた候補を除外したことの明示
 
+### 7.1 workflow proof 用の追加要求
+
+H-02 を workflow proof する間は、C-08 の出力に以下も含める。
+
+1. `specificity_ledger`
+2. `banned_pattern_check`
+3. `brief_compliance_check`
+
+目的は「良さそうに見えるコピー」ではなく、
+brief の制約が実際に消費されたかを repo 内 artifact から読めるようにすること。
+
+#### `specificity_ledger`
+
+- `preferred_specifics` のうち、どれを main copy に使ったか
+- 使わなかった具体項目がある場合は、なぜ採用しなかったか
+- `strongest_evidence` が abstract phrase ではなく、本文根拠に結びついているか
+
+#### `banned_pattern_check`
+
+- banned pattern に落ちた候補を 1 件以上明示して除外理由を書く
+- 「今回は banned に当たらない」とだけ書いて済ませない
+
+#### `brief_compliance_check`
+
+- `thumbnail_promise` に沿っているか
+- `forbidden_overclaim` を踏み越えていないか
+- `preferred_specifics` が使えるのに abstract hype へ逃げていないか
+
+### 7.2 specificity-first の proof rule
+
+`preferred_specifics` が与えられている場合、main copy 5案のうち
+少なくとも 3 案はそのいずれかを明示的に含むことを推奨ルールとする。
+
+満たせない場合は、モデルが「なぜ具体項目より別の型を優先したか」を
+説明しなければならない。
+
 ## 8. 推奨出力フォーマット
 
 ```md
@@ -192,6 +228,18 @@ C-08 は最終的に以下を出せるべきである。
 
 - [rejected copy or pattern]:
   - why_rejected:
+
+### Specificity Ledger
+
+- preferred_specific_used:
+- preferred_specific_not_used:
+- strongest_evidence_coverage:
+
+### Brief Compliance Check
+
+- thumbnail_promise_respected:
+- forbidden_overclaim_respected:
+- specificity_first_respected:
 ```
 
 ## 9. Sample Strategy (AI監視)
@@ -215,3 +263,10 @@ H-02 を done に上げる前に、最低限以下を満たす:
 4. rotation recommendation を 4 軸で返せる
 5. 実台本 1 本で「abstract hype から specificity-first へ寄った」と判断できる
 
+### dry proof の合格目安
+
+strict な GUI rerun proof の前段として、repo-local dry proof では以下を満たす。
+
+1. sample brief から `preferred_specifics` / banned pattern / rotation 軸を読める
+2. good candidate / rejected candidate を sample 単位で記述できる
+3. `specificity_ledger` と `brief_compliance_check` の出力契約が C-08 prompt に埋め込まれている
