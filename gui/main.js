@@ -32,10 +32,11 @@ app.on('window-all-closed', () => app.quit());
 function runCli(args) {
   return new Promise((resolve, reject) => {
     const repoRoot = path.resolve(__dirname, '..');
-    const proc = spawn('uv', ['run', 'nlmytgen', ...args], {
+    const uvPath = process.platform === 'win32' ? 'uv.exe' : 'uv';
+    const proc = spawn(uvPath, ['run', 'python', '-m', 'src.cli.main', ...args], {
       cwd: repoRoot,
       shell: true,
-      env: { ...process.env },
+      env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
     });
 
     let stdout = '';
@@ -49,7 +50,7 @@ function runCli(args) {
     });
 
     proc.on('error', (err) => {
-      reject(err);
+      resolve({ code: -1, stdout: '', stderr: `Process error: ${err.message}` });
     });
   });
 }

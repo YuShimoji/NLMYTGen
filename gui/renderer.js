@@ -90,7 +90,11 @@ async function runBuildCsv(dryRun) {
       status.textContent = dryRun ? 'Dry run complete' : `CSV written (${result.json.rows} rows)`;
     } else {
       csvResult.classList.add('error');
-      csvResult.textContent = result.stderr || 'Unknown error';
+      let errMsg = '';
+      if (result.stderr) errMsg += result.stderr + '\n';
+      if (result.stdout) errMsg += '[stdout] ' + result.stdout + '\n';
+      errMsg += `[exit code] ${result.code}`;
+      csvResult.textContent = errMsg || 'Unknown error';
       status.textContent = 'Build failed';
     }
   } catch (err) {
@@ -194,7 +198,9 @@ async function runApplyProduction(dryRun) {
       if (result.json && result.json.fatal_warnings) {
         result.json.fatal_warnings.forEach(w => { errText += `  ${w}\n`; });
       }
-      errText += result.stderr || '';
+      if (result.stderr) errText += result.stderr + '\n';
+      if (result.stdout) errText += '[stdout] ' + result.stdout + '\n';
+      errText += `[exit code] ${result.code}`;
       resultPanel.textContent = errText;
       status.textContent = 'Apply failed';
     }
