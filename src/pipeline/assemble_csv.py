@@ -1452,7 +1452,13 @@ def _collect_structural_breaks(text: str) -> list[tuple[int, int, str]]:
     return [(pos, penalty, kind) for pos, (penalty, kind) in sorted(candidates.items())]
 
 
-def _structural_boundary_penalty(text: str, pos: int, *, page_split: bool) -> float:
+def _structural_boundary_penalty(
+    text: str,
+    pos: int,
+    *,
+    page_split: bool,
+    kind: str = "",
+) -> float:
     """個別語彙ではなく構造崩れに対して罰則を与える。"""
     if pos <= 0 or pos >= len(text):
         return 0.0
@@ -1471,14 +1477,16 @@ def _structural_boundary_penalty(text: str, pos: int, *, page_split: bool) -> fl
         penalty += 240.0
     if left_last in _CLOSE_BRACKETS and _is_contentish(right_first):
         penalty += 180.0 if not page_split else 220.0
+    close_tail_page_split = page_split and kind in {"minor:close+tail", "minor:close+single-tail"}
+
     if left_last in _CLOSE_BRACKETS and _is_hiragana(right_first):
         run_end = _advance_hiragana_run(text, pos)
         if run_end == pos + 1 and run_end < len(text) and _is_contentish(text[run_end]):
-            penalty += 70.0 if not page_split else 110.0
+            penalty += 45.0 if close_tail_page_split else (70.0 if not page_split else 110.0)
         else:
-            penalty += 90.0
+            penalty += 55.0 if close_tail_page_split else 90.0
             if run_end < len(text) and _is_contentish(text[run_end]):
-                penalty += 260.0 if not page_split else 320.0
+                penalty += 70.0 if close_tail_page_split else (260.0 if not page_split else 320.0)
     if _is_cjk_ideograph(left_last) and _is_hiragana(right_first):
         penalty += 180.0
     if left_last in _STRUCTURAL_PARTICLES and _is_contentish(right_first):
@@ -1500,7 +1508,10 @@ def _structural_boundary_penalty(text: str, pos: int, *, page_split: bool) -> fl
                 not is_particle_run
                 and (_is_cjk_ideograph(left_anchor) or _is_katakana(left_anchor) or left_anchor.isdigit() or left_anchor in _CLOSE_BRACKETS)
             ):
-                penalty += 320.0 if not page_split else 400.0
+                if close_tail_page_split:
+                    penalty += 45.0
+                else:
+                    penalty += 320.0 if not page_split else 400.0
 
     if page_split:
         penalty *= 1.3
@@ -1701,7 +1712,12 @@ def _layout_page_structural(
                 is_last=False,
             )
             kind = local_break_kinds.get(pos, "")
-            line_cost += _structural_boundary_penalty(text, pos, page_split=False)
+            line_cost += _structural_boundary_penalty(
+                text,
+                pos,
+                page_split=False,
+                kind=kind,
+            )
             line_cost += _short_line_break_penalty(
                 text,
                 curr_pos,
@@ -1763,6 +1779,51 @@ def _segment_line_widths(text: str, start: int, end: int, line_splits: list[int]
     return widths
 
 
+def _plan_selection_adjustment(
+    text: str,
+    plan: tuple[tuple[int, tuple[int, ...]], ...],
+    *,
+    break_kinds: dict[int, str],
+    chars_per_line: int,
+    worst_single_line: int,
+) -> float:
+    """overflow を自然なページ持ち越しで解消できる計画を少し優遇する。"""
+    if len(plan) <= 1 or worst_single_line <= chars_per_line:
+        return 0.0
+
+    min_good_line = max(14, chars_per_line // 3)
+    min_good_page = max(28, int(chars_per_line * 0.7))
+    bonus = 0.0
+    prev = 0
+    for end, line_splits in plan:
+        line_widths = _segment_line_widths(text, prev, end, list(line_splits))
+        if not line_widths or max(line_widths) > chars_per_line:
+            return 0.0
+        if min(line_widths) < min_good_line:
+            return 0.0
+
+        if end < len(text):
+            page_width = sum(line_widths)
+            if page_width < min_good_page:
+                return 0.0
+
+            kind = break_kinds.get(end, "")
+            if kind == "minor:hira-tail":
+                return 0.0
+            if kind in {"minor:close+tail", "minor:close+single-tail"}:
+                bonus += 90.0
+            elif kind.startswith("minor:particle"):
+                bonus += 55.0
+            elif kind.startswith("major:"):
+                bonus += 25.0
+
+        prev = end
+
+    overflow_relief = worst_single_line - chars_per_line
+    bonus += overflow_relief * 28.0
+    return -bonus
+
+
 def _reflow_utterance_structural(
     text: str,
     *,
@@ -1811,6 +1872,7 @@ def _reflow_utterance_structural(
         target_pages: int | None = None,
     ) -> tuple[float, tuple[tuple[int, tuple[int, ...]], ...]] | None:
         positions = [0] + page_break_positions + [len(text)]
+        local_ideal_page_width = total_width / target_pages if target_pages and target_pages > 0 else ideal_page_width
 
         @lru_cache(maxsize=None)
         def _page_dp(
@@ -1845,13 +1907,18 @@ def _reflow_utterance_structural(
                     chars_per_line=chars_per_line,
                     max_lines=max_lines,
                 )
-                page_cost = line_cost + abs(seg_width - ideal_page_width) * 0.35
-                if end != len(text) and seg_width < ideal_page_width * 0.45:
-                    page_cost += (ideal_page_width * 0.45 - seg_width) * 8.0
+                page_cost = line_cost + abs(seg_width - local_ideal_page_width) * 0.35
+                if end != len(text) and seg_width < local_ideal_page_width * 0.45:
+                    page_cost += (local_ideal_page_width * 0.45 - seg_width) * 8.0
                 if seg_width > page_capacity:
                     page_cost += (seg_width - page_capacity) * 22.0
                 if end < len(text):
-                    page_cost += _structural_boundary_penalty(text, end, page_split=True)
+                    page_cost += _structural_boundary_penalty(
+                        text,
+                        end,
+                        page_split=True,
+                        kind=break_kinds.get(end, ""),
+                    )
 
                 next_pages_left = None if pages_left is None else pages_left - 1
                 rest = _page_dp(end_idx, next_pages_left)
@@ -1869,13 +1936,42 @@ def _reflow_utterance_structural(
 
         return _page_dp(0, target_pages)
 
-    major_exact = _solve_page_plan(major_break_positions, target_pages=desired_pages) if major_break_positions else None
-    all_exact = _solve_page_plan(break_positions, target_pages=desired_pages)
+    major_exact_candidates = []
+    all_exact_candidates = []
+    for extra_pages in range(0, 3):
+        target_pages = desired_pages + extra_pages
+        if major_break_positions:
+            major_exact_candidates.append(_solve_page_plan(major_break_positions, target_pages=target_pages))
+        all_exact_candidates.append(_solve_page_plan(break_positions, target_pages=target_pages))
+
     major_flexible = _solve_page_plan(major_break_positions) if major_break_positions else None
     all_flexible = _solve_page_plan(break_positions)
 
-    candidates = [c for c in (major_exact, all_exact, major_flexible, all_flexible) if c is not None]
-    solved = min(candidates, key=lambda item: item[0]) if candidates else None
+    candidates = [
+        c
+        for c in (
+            *major_exact_candidates,
+            *all_exact_candidates,
+            major_flexible,
+            all_flexible,
+        )
+        if c is not None
+    ]
+    solved = (
+        min(
+            candidates,
+            key=lambda item: item[0]
+            + _plan_selection_adjustment(
+                text,
+                item[1],
+                break_kinds=break_kinds,
+                chars_per_line=chars_per_line,
+                worst_single_line=worst_single_line,
+            ),
+        )
+        if candidates
+        else None
+    )
     if solved is None:
         line_cost, line_splits = _layout_page_structural(
             text,

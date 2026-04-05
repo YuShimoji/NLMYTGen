@@ -294,8 +294,8 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ## HANDOFF SNAPSHOT (2026-04-06 更新)
 
-- Shared Focus: face は completed subsystem のまま維持。timeline lane では G-11〜G-13 を completed packet として閉じ、packaging lane でも H-01/H-02/H-03/H-04 の repo-local proof を記録済み。active frontier は strict な H-02 GUI rerun proof に細った。fade-family `transition` は repo-local corpus で確定済みで、sample dependency は non-fade / template-backed family と `se` の AudioItem write route に限定された
-- Safe Next Frontier Packet: active lane は H-02 strict GUI rerun proof。timeline は 1 つの巨大 frontier ではなく completed packet 群として扱い、known failure class または新 sample が出たときだけ局所再オープンする
+- Shared Focus: face は completed subsystem のまま維持。timeline lane では G-11〜G-13 を completed packet として閉じた。packaging lane は H-01〜H-04 全て proof 済み (H-02 strict GUI rerun proof 2026-04-06 pass)。コピー品質の実用改善は別課題。fade-family `transition` は repo-local corpus で確定済みで、sample dependency は non-fade / template-backed family と `se` の AudioItem write route に限定された
+- Safe Next Frontier Packet: packaging spec lane 一巡完了。timeline は completed packet 群として扱い、known failure class または新 sample が出たときだけ局所再オープンする
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
 - Last Change Relation: direct (H-03 spec definition + AI monitoring dry proof + packaging lane narrowed to one operator check)
@@ -316,7 +316,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - trusted: repo-local `.ymmp` 16 本の corpus audit により fade-family `transition` route は観測済み、`template` route は 0 件と確認済み
   - trusted: G-13 overlay insertion (`OVERLAY_*` validation + deterministic `ImageItem` patch)
   - trusted: G-13 se fail-fast gate (`SE_*` validation + `SE_WRITE_ROUTE_UNSUPPORTED`)
-  - trusted: H-02 dry proof (`Specificity Ledger` / `Brief Compliance Check` / banned-pattern rejection)
+  - trusted: H-02 done (dry proof + strict GUI rerun proof pass 2026-04-06)
   - needs re-check: `samples/production.ymmp` は `bg_anim` route miss。production lane の `bg_anim` write path は未固定
   - needs re-check: non-fade / template-backed `transition` の ymmp route は repo 内 sample 不在のため未固定。新しい sample が入ったときだけ再測定する
   - needs re-check: `se` の real `AudioItem` write route は repo-local sample 不在のため未固定。新しい sample が入ったときだけ route 測定と write path 固定を行う
@@ -329,7 +329,6 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - YMM4 テンプレートは独立ファイルではなく ItemSettings.json の Templates 配列に JSON 保存
   - Custom GPT v4 は 2オブジェクト連結形式 (Macro + Micro) で IR を出力する。load_ir() で対応済み
 - Authority Return Items:
-  - H-02 strict GUI rerun proof
   - `se` の real `AudioItem` write route が必要になった場合の sample 提供または route 判定
   - E-02: hold 継続。E-01 とセットでのみ再検討
   - F-01/F-02: quarantined 継続
@@ -351,3 +350,6 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 - Emergency inner-break candidates inside long quoted labels were added as a last resort; remaining residuals are now mostly small 41-48 width overruns rather than gross structural breaks.
 - Single-hiragana tails after quoted terms are now scored separately, improving `...最適化」 / と聞くと` type boundaries while keeping `」` at the next-line head suppressed.
 - Sample proof on `samples/AI監視が追い詰める生身の労働.txt` improved several screen-facing failures (`では / なく`, `）」 / という`, `） / 」`, `19 / 億`) while leaving a smaller residual cluster around `XというY` and quoted explanatory phrases that still need another structural pass.
+- Carry-over scoring is now explicitly separated from in-page line breaks: `close+tail` boundaries and extra-page exact plans are allowed to win when they eliminate overflow without creating sparse fragment pages.
+- Exact page-count comparisons now use a target-specific ideal page width instead of reusing the base target, which fixed the `完璧に計算されたアルゴリズムが生身の / 人間という...` class by allowing one more page in the surrounding multi-sentence utterance.
+- Current sample residuals are down to 2 mechanical frontier cases in `_tmp_structural_balance.csv`: `誰の汗とリスクを動力にして回り始めるのかを / 解剖していくということですね。` and `自発的にリスクを取らせる罠のようなものです。 / データによると、`. Further automatic tightening risks over-fragmenting page flow more than it helps.

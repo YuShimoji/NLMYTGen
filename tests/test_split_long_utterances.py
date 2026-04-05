@@ -525,6 +525,37 @@ class TestReflowUtteranceV2:
         lines = "\n".join(result).split("\n")
         assert max(display_width(line) for line in lines) <= 40
 
+    def test_prefers_page_carry_over_for_long_noise_clause(self):
+        text = "完璧に計算されたアルゴリズムが生身の人間というノイズだらけの現実に衝突した時に、"
+        result = reflow_utterance_v2(text, chars_per_line=40, max_lines=2)
+        assert len(result) >= 2
+        all_lines = "\n".join(result).split("\n")
+        assert max(display_width(line) for line in all_lines) <= 40
+        assert "人間 / という" not in " / ".join(all_lines)
+
+    def test_prefers_page_carry_over_after_quote_tail(self):
+        text = "「私たちは直接の雇用主ではない」という建前を崩さないための高度な法務戦略ですね。"
+        result = reflow_utterance_v2(text, chars_per_line=40, max_lines=2)
+        assert len(result) == 2
+        all_lines = "\n".join(result).split("\n")
+        assert max(display_width(line) for line in all_lines) <= 40
+        assert result[0].endswith("という")
+        assert result[1].startswith("建前")
+
+    def test_adds_extra_page_when_multi_sentence_plan_still_leaves_overflow(self):
+        text = (
+            "そうなんです。そしてあなたの評価スコアが下がり、"
+            "最悪の場合にはシステムから自動的にペナルティを科される。"
+            "これはディストピアSF映画のワンシーンではなく、"
+            "完璧に計算されたアルゴリズムが生身の人間という"
+            "ノイズだらけの現実に衝突した時に、"
+            "今まさに起きている日常なんです"
+        )
+        result = reflow_utterance_v2(text, chars_per_line=40, max_lines=2)
+        all_lines = "\n".join(result).split("\n")
+        assert max(display_width(line) for line in all_lines) <= 40
+        assert any(page.endswith("生身の") for page in result)
+
 class TestReflowSubtitlesV2:
     """B-17 reflow_subtitles_v2() 統合テスト。"""
 
