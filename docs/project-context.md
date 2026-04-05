@@ -13,8 +13,9 @@
   - row-range: IR 28 発話 ↔ CSV 60 行の粒度差を row_start/row_end で吸収
   - face completion hardening: `validate-ir` が `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` / `FACE_PROMPT_PALETTE_*` / `FACE_LATENT_GAP` を分類し、`apply-production` は row-range unmatched/uncovered・validation error・fatal face patch warning で fail-fast
   - H-01 Packaging Orchestrator brief: `docs/PACKAGING_ORCHESTRATOR_SPEC.md` v0.1 を追加。C-07/C-08 が参照する central brief schema を定義
+  - H-02 Thumbnail strategy v2: `docs/THUMBNAIL_STRATEGY_SPEC.md` v0.1 を追加。specificity-first / banned pattern / rotation policy / output contract を定義
   - H-01 workflow proof packet: `docs/verification/H01-packaging-orchestrator-workflow-proof.md` を追加。sample brief / cue memo / alignment check を束ねた実行手順を整備
-  - packaging frontier packet: H-02 Thumbnail strategy v2 / H-03 Visual density score / H-04 Evidence richness score を proposed backlog として整理
+  - packaging frontier packet: H-03 Visual density score / H-04 Evidence richness score を proposed backlog として整理
   - `uv run pytest`: 187 PASS (12 ファイル)
   - B-12 行バランス重視の字幕分割を実装。`--balance-lines` を追加し、2行字幕向けに自然な改行を opt-in で挿入できるようにした
   - B-12 検証: `build-csv --max-lines 2 --chars-per-line 40 --balance-lines --stats --dry-run` で実データ preview を確認。CSV 1行内の改行保持テストも追加
@@ -104,6 +105,7 @@ This section supersedes the 2026-04-05 roadmap block above.
 - 第二着手は H-02 Thumbnail strategy v2。
 - 本文根拠のある具体数値・固有名詞・年数・割合・金額を優先し、抽象煽りテンプレ依存を下げる。
 - rotation policy を定義し、構図 / 表情 / 配色 / コピー型の固定パターン連打を避ける。
+- 2026-04-06 時点で schema v0.1 は定義済み。次に必要なのは、C-08 実運用で specificity-first / banned pattern / rotation recommendation が機能するかの workflow proof。
 
 ### Phase 3: Packaging packet に evidence gate を足す
 - 第三着手は H-04 Evidence richness score。
@@ -226,7 +228,9 @@ This section supersedes the 2026-04-05 roadmap block above.
 | 2026-04-05 | Packaging / marketing レイヤーを独立 frontier として backlog 化 | C-08 個別改善 / E-02 再開 / packaging layer 新設 | 台本→タイトル侵食を止め、タイトル / サムネ / 台本の整合を 1 つの central brief で管理するため |
 | 2026-04-05 | H-01 Packaging Orchestrator brief schema v0.1 を定義 | backlog のみ / schema 定義 | H-01 を abstract な気づきで終わらせず、C-07/C-08/E-02/H-04 が参照できる正本フィールドへ落とすため |
 | 2026-04-06 | H-01 workflow proof packet を整備 | schema のみ / proof packet まで整備 | H-01 を `approved` のまま放置せず、user が 1 本の実台本で drift を観測できる実行単位まで前進させるため |
+| 2026-04-06 | H-02 Thumbnail strategy v2 schema v0.1 を定義 | backlog のみ / schema 定義 | H-02 を感覚的な運用メモではなく、C-08 が参照できる specificity-first / banned pattern / rotation policy の正本へ落とすため |
 | 2026-04-06 | G-11 slot patch hardening を実装完了 | proposed 維持 / 実装完了 | timeline edit を broad manual retry loop にせず、slot を deterministic patch + fail-fast validation の packet として閉じるため |
+| 2026-04-06 | G-12 は patch 前に readback harness を先行実装 | 先に patch / 先に measurement harness | native route を未確定のまま `motion` / `transition` / `bg_anim` の adapter write に進むと、file-format risk と creative judgement が再混線するため |
 | 2026-04-05 | サムネイル戦略は抽象煽りより具体数値・固有名詞優先 + rotation 管理 | 定型煽り / 具体性優先 / 各動画場当たり | 本文根拠とクリック訴求を両立し、固定パターン反復による疲労と硬直を避けるため |
 | 2026-04-05 | スコアリングは visual density / evidence richness の2軸から着手 | スコアなし / 単一総合点 / 2軸 | 演出不足と内容不足を別々に診断し、制作改善とマーケ改善の接続点を明確化するため |
 | 2026-04-06 | assistant 側の subquest を timeline edit まで拡張するが、packet 単位で進める | timeline を一括実装 / packet 分割 / 維持 | face と同様に mechanical scope を failure class / readback / boundary で切り分けないと、YMM4 手動確認ループへ戻るため。G-11 slot patch → G-12 native-template measurement → G-13 overlay/se insertion の順に進める |
@@ -271,8 +275,8 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 - Safe Next Frontier Packet: active lane は G-12 → G-13。parallel backlog として H-01 → H-02 → H-04 → H-03 を維持する。timeline は 1 つの巨大 frontier ではなく packet 単位で扱う
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: direct (G-11 slot patch hardening: slot validation + deterministic TachieItem patch + CLI smoke)
-- Evidence: Production E2E 実証済み + `uv run pytest` 198 PASS。`validate-ir` が slot drift / registry gap を class 付きで検出し、`apply-production` / `patch-ymmp` が blocking slot failure で partial output を書かない
+- Last Change Relation: direct (G-12 measurement harness: `measure-timeline-routes` CLI + route candidate readback)
+- Evidence: Production E2E 実証済み + `uv run pytest` 198 PASS。`measure-timeline-routes` が ymmp から `VideoEffects` / transition key / template candidate route を read-only で抽出でき、slot/face 系 regression も維持
 - 案件モード: CLI artifact
 - 現在の主レーン: Advance (演出パイプライン E2E)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近
@@ -284,8 +288,9 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - trusted: load_ir Multi-Object 対応 (2オブジェクト連結形式の読み込み)
   - trusted: face completion hardening (`PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` / `FACE_PROMPT_PALETTE_*` / `FACE_LATENT_GAP`)
   - trusted: G-11 slot patch hardening (`SLOT_UNKNOWN_LABEL` / `SLOT_REGISTRY_GAP` / `SLOT_CHARACTER_DRIFT` / `SLOT_DEFAULT_DRIFT` + TachieItem X/Y/Zoom patch + `off` hide)
+  - trusted: G-12 readback harness (`measure-timeline-routes` で `motion` / `transition` / `bg_anim` candidate route を抽出)
   - needs re-check: motion / transition / overlay / se の timeline edit は G-12/G-13 として段階的に進める
-  - needs re-check: motion/transition/overlay の ymmp 適用は未実装 (正式スコープ内の frontier)
+  - needs re-check: motion/transition/overlay の ymmp 適用 route は未固定 (正式スコープ内の frontier)
   - needs re-check: face label inventory そのものが creative quality として十分かは最終制作物で見る
 - Recovered Canonical Context:
   - Python はテキスト変換 + 演出 IR 定義 + ymmp 限定後段適用

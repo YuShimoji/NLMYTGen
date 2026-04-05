@@ -28,6 +28,7 @@
 - 視覚系タスク (背景動画・アニメーション・サムネイル画像) に着手意向あり (2026-03-31)。字幕分割完了後に優先順位を判断。D-02 quarantined / D-01 rejected の再整理が前提。
 - 汚染バッチ由来の D-02 / F-01 / F-02 は、個別再審査まで通常 backlog に戻さない。
 - 2026-04-05: H-01 schema v0.1 を `docs/PACKAGING_ORCHESTRATOR_SPEC.md` に明文化。H-01 は approved、H-02〜H-04 は proposed backlog とする。
+- 2026-04-06: H-02 schema v0.1 を `docs/THUMBNAIL_STRATEGY_SPEC.md` に明文化。H-02 は approved、C-08 は specificity-first / banned pattern / rotation recommendation を出力できる前提へ更新する。
 - 2026-04-05: face は `FACE_UNKNOWN_LABEL` / `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` / `FACE_MAP_MISS` / `IDLE_FACE_MAP_MISS` / `VOICE_NO_TACHIE_FACE` の failure class で扱う。broad な manual retry loop に戻さない。
 - 推奨ロードマップ順は H-01 workflow proof → H-02 → H-04 → H-03。E-02 はその後に consumer として再評価する。
 
@@ -39,6 +40,7 @@
 - Thumbnail strategy v2 の heuristic 定義 (具体数値優先、抽象煽り blacklist、pattern rotation 軸)
 - Visual density score / Evidence richness score の定義、入力データ源、warning threshold
 - H-01 brief の workflow proof 条件 (C-07 / C-08 で drift が減るか)
+- H-02 の workflow proof 条件 (specificity-first へ寄り、abstract hype が減るか)
 
 ## 運用ルール
 - 会話で一度出た要求のうち、次回以降も効くものをここへ残す。
