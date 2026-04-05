@@ -493,7 +493,6 @@ class TestReflowUtteranceV2:
         assert "しかも、そこに\n" not in rendered
         assert "という\n環境変数" not in rendered
 
-    @pytest.mark.xfail(reason="B-17 edge case: 長い引用句含む発話の chars_per_line 超過")
     def test_balances_quoted_program_phrase_without_number_split(self):
         """引用付きプログラム名は数字単位を壊さずに均衡させる。"""
         text = "Amazonは「配送サービスパートナー（DSP）」プログラムに19億ドルを投資し、"
@@ -503,7 +502,6 @@ class TestReflowUtteranceV2:
         assert "19\n億" not in rendered
         assert max(display_width(line) for line in lines) <= 40
 
-    @pytest.mark.xfail(reason="B-17 edge case: 長い引用句含む発話の chars_per_line 超過")
     def test_balances_long_quoted_program_name_phrase(self):
         """長い引用付き名称は過度な片寄りを避ける。"""
         text = "顧客がアプリからドライバーに感謝を伝える「サンクマイドライバー」というプログラムを展開しています。"
@@ -513,7 +511,6 @@ class TestReflowUtteranceV2:
         assert "感謝を\n伝える" not in joined
         assert max(display_width(line) for line in lines) <= 40
 
-    @pytest.mark.xfail(reason="B-17 edge case: 長い引用句含む発話の chars_per_line 超過")
     def test_balances_long_quoted_timer_label(self):
         """長い引用ラベルがあっても過剰な1行オーバーを避ける。"""
         text = "画面上で「タイム・オフ・タスク（タスク離脱時間）」というタイマーがカチカチと動き始めます。"
@@ -527,7 +524,6 @@ class TestReflowUtteranceV2:
         result = reflow_utterance_v2(text, chars_per_line=40, max_lines=2)
         lines = "\n".join(result).split("\n")
         assert max(display_width(line) for line in lines) <= 40
-
 
 class TestReflowSubtitlesV2:
     """B-17 reflow_subtitles_v2() 統合テスト。"""
