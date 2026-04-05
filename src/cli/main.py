@@ -794,6 +794,26 @@ def main(argv: list[str] | None = None) -> int:
                          help="Prompt markdown for face contract drift check"
                               " (default: docs/S6-production-memo-prompt.md)")
 
+    # score-evidence (H-04)
+    p_score_ev = subparsers.add_parser(
+        "score-evidence",
+        help="H-04: Score evidence richness from brief + category scores",
+    )
+    p_score_ev.add_argument("brief", help="H-01 Packaging brief (JSON or Markdown)")
+    p_score_ev.add_argument("--scores", required=True,
+                            help="Category scores JSON: {\"number\": 3, \"anecdote\": 1, ...}")
+    p_score_ev.add_argument("--format", choices=["json", "text"], default="text")
+
+    # score-visual-density (H-03)
+    p_score_vd = subparsers.add_parser(
+        "score-visual-density",
+        help="H-03: Score visual density from brief + category scores",
+    )
+    p_score_vd.add_argument("brief", help="H-01 Packaging brief (JSON or Markdown)")
+    p_score_vd.add_argument("--scores", required=True,
+                            help="Category scores JSON: {\"scene_variety\": 2, ...}")
+    p_score_vd.add_argument("--format", choices=["json", "text"], default="text")
+
     args = parser.parse_args(argv)
 
     try:
@@ -823,6 +843,10 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_annotate_row_range(args)
         elif args.command == "validate-ir":
             return _cmd_validate_ir(args)
+        elif args.command == "score-evidence":
+            return _cmd_score_evidence(args)
+        elif args.command == "score-visual-density":
+            return _cmd_score_visual_density(args)
         else:
             parser.print_help()
             return 1
@@ -1624,6 +1648,63 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         }, ensure_ascii=False))
     else:
         print(f"Written: {out_path}")
+    return 0
+
+
+def _cmd_score_evidence(args: argparse.Namespace) -> int:
+    """H-04: Evidence richness score."""
+    from src.pipeline.evidence_score import score_evidence, load_brief
+
+    brief = load_brief(args.brief)
+    cat_scores = json.loads(args.scores)
+    result = score_evidence(brief, cat_scores)
+
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(result.to_dict(), ensure_ascii=False, indent=2))
+    else:
+        print(f"Evidence Richness Score: {result.total_score}/100 ({result.band})")
+        print(f"\nCategory scores:")
+        for cat, score in result.category_scores.items():
+            print(f"  {cat}: {score}/3")
+        if result.warnings:
+            print(f"\nWarnings:")
+            for w in result.warnings:
+                print(f"  {w}")
+        if result.recommended_repairs:
+            print(f"\nRecommended repairs:")
+            for r in result.recommended_repairs:
+                print(f"  - {r}")
+        if result.best_supports:
+            print(f"\nBest supports: {', '.join(result.best_supports)}")
+    return 0
+
+
+def _cmd_score_visual_density(args: argparse.Namespace) -> int:
+    """H-03: Visual density score."""
+    from src.pipeline.visual_density_score import score_visual_density
+    from src.pipeline.evidence_score import load_brief
+
+    brief = load_brief(args.brief)
+    cat_scores = json.loads(args.scores)
+    result = score_visual_density(brief, cat_scores)
+
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(result.to_dict(), ensure_ascii=False, indent=2))
+    else:
+        print(f"Visual Density Score: {result.total_score}/100 ({result.band})")
+        print(f"\nCategory scores:")
+        for cat, score in result.category_scores.items():
+            print(f"  {cat}: {score}/3")
+        if result.warnings:
+            print(f"\nWarnings:")
+            for w in result.warnings:
+                print(f"  {w}")
+        if result.recommended_repairs:
+            print(f"\nRecommended repairs:")
+            for r in result.recommended_repairs:
+                print(f"  - {r}")
     return 0
 
 
