@@ -1,0 +1,83 @@
+{
+  "profiles": {
+    "motion_only": {
+      "required_routes": {
+        "motion": [
+          "TachieItem.VideoEffects"
+        ]
+      },
+      "optional_routes": {
+        "bg_anim": [
+          "ImageItem.X/Y/Zoom",
+          "ImageItem.VideoEffects"
+        ],
+        "transition": [
+          "VoiceItem.VoiceFadeIn",
+          "VoiceItem.VoiceFadeOut",
+          "VoiceItem.JimakuFadeIn",
+          "VoiceItem.JimakuFadeOut",
+          "TachieItem.FadeIn",
+          "TachieItem.FadeOut"
+        ],
+        "template": [
+          "ImageItem.TemplateName",
+          "VoiceItem.TemplateName"
+        ]
+      }
+    },
+    "motion_bg_anim_minimal": {
+      "required_routes": {
+        "motion": [
+          "TachieItem.VideoEffects"
+        ],
+        "bg_anim": [
+          "ImageItem.X/Y/Zoom"
+        ]
+      },
+      "optional_routes": {
+        "bg_anim": [
+          "ImageItem.VideoEffects"
+        ],
+        "transition": [
+          "VoiceItem.VoiceFadeIn",
+          "VoiceItem.VoiceFadeOut",
+          "VoiceItem.JimakuFadeIn",
+          "VoiceItem.JimakuFadeOut",
+          "TachieItem.FadeIn",
+          "TachieItem.FadeOut"
+        ],
+        "template": [
+          "ImageItem.TemplateName",
+          "VoiceItem.TemplateName"
+        ]
+      }
+    },
+    "motion_bg_anim_effects": {
+      "required_routes": {
+        "motion": [
+          "TachieItem.VideoEffects"
+        ],
+        "bg_anim": [
+          "ImageItem.X/Y/Zoom",
+          "ImageItem.VideoEffects"
+        ]
+      },
+      "optional_routes": {
+        "transition": [
+          "VoiceItem.VoiceFadeIn",
+          "VoiceItem.VoiceFadeOut",
+          "VoiceItem.JimakuFadeIn",
+          "VoiceItem.JimakuFadeOut",
+          "TachieItem.FadeIn",
+          "TachieItem.FadeOut",
+          "ImageItem.FadeIn",
+          "ImageItem.FadeOut"
+        ],
+        "template": [
+          "ImageItem.TemplateName",
+          "VoiceItem.TemplateName"
+        ]
+      }
+    }
+  }
+}

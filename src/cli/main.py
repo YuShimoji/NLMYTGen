@@ -667,6 +667,10 @@ def main(argv: list[str] | None = None) -> int:
     )
     p_measure.add_argument("ymmp", help="Input ymmp file path")
     p_measure.add_argument("-o", "--output", help="Output report path")
+    p_measure.add_argument("--expect",
+                           help="Expected route contract JSON (category -> [routes])")
+    p_measure.add_argument("--profile",
+                           help="Contract profile name inside --expect JSON")
     p_measure.add_argument("--format", choices=["text", "json"], default="text",
                            help="Output format (default: text)")
 
@@ -680,6 +684,8 @@ def main(argv: list[str] | None = None) -> int:
     p_patch.add_argument("--face-map", help="Face label → parts file path mapping (JSON)")
     p_patch.add_argument("--bg-map", help="BG label → image/video file path mapping (JSON)")
     p_patch.add_argument("--slot-map", help="Slot label -> x/y/zoom mapping (JSON or registry)")
+    p_patch.add_argument("--overlay-map", help="Overlay label -> image asset mapping (JSON or registry)")
+    p_patch.add_argument("--se-map", help="SE label -> audio asset mapping (JSON or registry)")
     p_patch.add_argument("-o", "--output", help="Output ymmp path (default: <input>_patched.ymmp)")
     p_patch.add_argument("--dry-run", action="store_true", help="Preview changes without writing")
 
@@ -694,6 +700,8 @@ def main(argv: list[str] | None = None) -> int:
     p_apply.add_argument("--face-map", help="Pre-built face_map.json (skip extraction)")
     p_apply.add_argument("--bg-map", help="BG label → file path mapping (JSON)")
     p_apply.add_argument("--slot-map", help="Slot label -> x/y/zoom mapping (JSON or registry)")
+    p_apply.add_argument("--overlay-map", help="Overlay label -> image asset mapping (JSON or registry)")
+    p_apply.add_argument("--se-map", help="SE label -> audio asset mapping (JSON or registry)")
     p_apply.add_argument("--refresh-maps", action="store_true",
                          help="Force re-extract face_map from palette even if file exists")
     p_apply.add_argument("--csv", help="CSV file for auto row_start/row_end annotation")
@@ -727,6 +735,8 @@ def main(argv: list[str] | None = None) -> int:
     p_valir.add_argument("--face-map", help="face_map.json for unknown label check")
     p_valir.add_argument("--palette", help="Palette ymmp (alternative to --face-map)")
     p_valir.add_argument("--slot-map", help="Slot label -> x/y/zoom mapping (JSON or registry)")
+    p_valir.add_argument("--overlay-map", help="Overlay label -> image asset mapping (JSON or registry)")
+    p_valir.add_argument("--se-map", help="SE label -> audio asset mapping (JSON or registry)")
     p_valir.add_argument("--prompt-doc",
                          help="Prompt markdown for face contract drift check"
                               " (default: docs/S6-production-memo-prompt.md)")
@@ -832,15 +842,39 @@ def _cmd_measure_timeline_routes(args: argparse.Namespace) -> int:
     from src.pipeline.ymmp_measure import (
         measure_timeline_routes,
         render_timeline_measurement_text,
+        validate_timeline_route_contract,
     )
 
     ymmp_data = load_ymmp(args.ymmp)
     measurement = measure_timeline_routes(ymmp_data)
+    validation = None
+    if getattr(args, "expect", None):
+        with open(args.expect, "r", encoding="utf-8") as f:
+            contract = json.load(f)
+        validation = validate_timeline_route_contract(
+            measurement,
+            contract,
+            profile=getattr(args, "profile", None),
+        )
 
     if args.format == "json":
-        text = json.dumps(measurement.to_dict(), ensure_ascii=False, indent=2) + "\n"
+        payload = measurement.to_dict()
+        if validation is not None:
+            payload["validation"] = {
+                "errors": validation.errors,
+                "warnings": validation.warnings,
+                "missing_routes": validation.missing_routes,
+            }
+        text = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
     else:
         text = render_timeline_measurement_text(measurement)
+        if validation is not None:
+            lines = [text.rstrip(), "", "--- Contract Check ---"]
+            for msg in validation.errors:
+                lines.append(f"  ERROR: {msg}")
+            for msg in validation.warnings:
+                lines.append(f"  WARNING: {msg}")
+            text = "\n".join(lines) + "\n"
 
     if getattr(args, "output", None):
         out_path = Path(args.output)
@@ -850,6 +884,8 @@ def _cmd_measure_timeline_routes(args: argparse.Namespace) -> int:
     else:
         sys.stdout.write(text)
 
+    if validation is not None and validation.has_errors:
+        return 1
     return 0
 
 
@@ -935,6 +971,16 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
         slot_map, char_default_slots = _load_slot_contract(args.slot_map)
         print(f"slot_map: {args.slot_map} ({len(slot_map)} labels)")
 
+    overlay_map: dict[str, dict] = {}
+    if args.overlay_map:
+        overlay_map = _load_labeled_asset_map(args.overlay_map, "overlays")
+        print(f"overlay_map: {args.overlay_map} ({len(overlay_map)} labels)")
+
+    se_map: dict[str, dict] = {}
+    if args.se_map:
+        se_map = _load_labeled_asset_map(args.se_map, "se")
+        print(f"se_map: {args.se_map} ({len(se_map)} labels)")
+
     result = patch_ymmp(
         ymmp_data,
         ir_data,
@@ -942,10 +988,14 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
         bg_map,
         slot_map=slot_map,
         char_default_slots=char_default_slots,
+        overlay_map=overlay_map,
+        se_map=se_map,
     )
 
     print(f"Face changes: {result.face_changes}")
     print(f"Slot changes: {result.slot_changes}")
+    print(f"Overlay changes: {result.overlay_changes}")
+    print(f"SE plans: {result.se_plans}")
     print(f"BG removed: {result.bg_changes}, BG added: {result.bg_additions}")
     if result.warnings:
         for w in result.warnings:
@@ -1036,6 +1086,37 @@ def _load_slot_contract(
     return slot_map, char_default_slots
 
 
+def _load_labeled_asset_map(
+    path: str | Path,
+    section_name: str,
+) -> dict[str, dict]:
+    """Load overlay/se registry entries from either sectioned or flat JSON."""
+    with open(path, "r", encoding="utf-8") as f:
+        raw = json.load(f)
+
+    if not isinstance(raw, dict):
+        raise ValueError(f"{section_name} JSON must be an object")
+
+    asset_raw = raw.get(section_name) if isinstance(raw.get(section_name), dict) else raw
+    if not isinstance(asset_raw, dict):
+        raise ValueError(
+            f"{section_name} JSON must define a top-level object or '{section_name}'"
+        )
+
+    asset_map: dict[str, dict] = {}
+    for label, value in asset_raw.items():
+        if isinstance(value, str):
+            asset_map[str(label)] = {"path": value}
+            continue
+        if isinstance(value, dict):
+            asset_map[str(label)] = dict(value)
+            continue
+        raise ValueError(
+            f"{section_name} entry '{label}' must be a string path or object"
+        )
+    return asset_map
+
+
 def _default_prompt_doc_path() -> Path:
     """repo-local の既定 prompt doc パスを返す."""
     return Path(__file__).resolve().parents[2] / "docs" / "S6-production-memo-prompt.md"
@@ -1063,6 +1144,13 @@ def _fatal_face_patch_warnings(warnings: list[str]) -> list[str]:
         "VOICE_NO_TACHIE_FACE:",
         "ROW_RANGE_MISSING:",
         "ROW_RANGE_INVALID:",
+        "OVERLAY_MAP_MISS:",
+        "OVERLAY_NO_TIMING_ANCHOR:",
+        "OVERLAY_SPEC_INVALID:",
+        "SE_MAP_MISS:",
+        "SE_NO_TIMING_ANCHOR:",
+        "SE_SPEC_INVALID:",
+        "SE_WRITE_ROUTE_UNSUPPORTED:",
         "SLOT_CHARACTER_DRIFT:",
         "SLOT_DEFAULT_DRIFT:",
         "SLOT_REGISTRY_MISS:",
@@ -1111,6 +1199,22 @@ def _print_validation(vr) -> None:
         for char, labels in sorted(vr.character_slot_usage.items()):
             print(f"  {char}: {', '.join(labels)}")
 
+    if vr.overlay_distribution:
+        total_overlay = sum(vr.overlay_distribution.values())
+        print(f"\n--- Overlay Distribution ({total_overlay} utterances) ---")
+        for label, count in sorted(
+            vr.overlay_distribution.items(), key=lambda x: (-x[1], x[0])
+        ):
+            print(f"  {label:12s} {count:3d}")
+
+    if vr.se_distribution:
+        total_se = sum(vr.se_distribution.values())
+        print(f"\n--- SE Distribution ({total_se} utterances) ---")
+        for label, count in sorted(
+            vr.se_distribution.items(), key=lambda x: (-x[1], x[0])
+        ):
+            print(f"  {label:12s} {count:3d}")
+
     if vr.active_face_gaps or vr.latent_face_gaps:
         print("\n--- Palette Gap Report ---")
         for char, labels in sorted(vr.active_face_gaps.items()):
@@ -1136,6 +1240,8 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
     known_labels = None
     char_face = None
     known_slots = None
+    known_overlays = None
+    known_se = None
     char_default_slots = None
     prompt_face_labels, prompt_doc_path = _load_prompt_face_contract(
         getattr(args, "prompt_doc", None)
@@ -1158,6 +1264,12 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
     if args.slot_map:
         slot_map, char_default_slots = _load_slot_contract(args.slot_map)
         known_slots = set(slot_map)
+    if args.overlay_map:
+        overlay_map = _load_labeled_asset_map(args.overlay_map, "overlays")
+        known_overlays = set(overlay_map)
+    if args.se_map:
+        se_map = _load_labeled_asset_map(args.se_map, "se")
+        known_se = set(se_map)
 
     if prompt_doc_path and prompt_face_labels:
         print(
@@ -1166,12 +1278,18 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
         )
     if known_slots is not None:
         print(f"slot contract: {len(known_slots)} labels")
+    if known_overlays is not None:
+        print(f"overlay contract: {len(known_overlays)} labels")
+    if known_se is not None:
+        print(f"se contract: {len(known_se)} labels")
 
     vr = validate_ir(
         ir_data,
         known_labels,
         char_face_map=char_face,
         known_slot_labels=known_slots,
+        known_overlay_labels=known_overlays,
+        known_se_labels=known_se,
         char_default_slots=char_default_slots,
         prompt_face_labels=prompt_face_labels,
     )
@@ -1308,6 +1426,16 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         slot_map, char_default_slots = _load_slot_contract(args.slot_map)
         print(f"slot_map: {args.slot_map} ({len(slot_map)} labels)")
 
+    overlay_map: dict[str, dict] = {}
+    if args.overlay_map:
+        overlay_map = _load_labeled_asset_map(args.overlay_map, "overlays")
+        print(f"overlay_map: {args.overlay_map} ({len(overlay_map)} labels)")
+
+    se_map: dict[str, dict] = {}
+    if args.se_map:
+        se_map = _load_labeled_asset_map(args.se_map, "se")
+        print(f"se_map: {args.se_map} ({len(se_map)} labels)")
+
     # --- row-range annotation (--csv) ---
     ir_data = load_ir(args.ir_json)
 
@@ -1331,6 +1459,8 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
     known_labels = _get_known_face_labels(face_map) if face_map else None
     char_face = _get_char_face_map(face_map) if face_map else None
     known_slots = set(slot_map) if slot_map else None
+    known_overlays = set(overlay_map) if overlay_map else None
+    known_se = set(se_map) if se_map else None
     prompt_face_labels, prompt_doc_path = _load_prompt_face_contract(
         getattr(args, "prompt_doc", None)
     )
@@ -1345,6 +1475,8 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         known_labels,
         char_face_map=char_face,
         known_slot_labels=known_slots,
+        known_overlay_labels=known_overlays,
+        known_se_labels=known_se,
         char_default_slots=char_default_slots or None,
         prompt_face_labels=prompt_face_labels,
     )
@@ -1364,10 +1496,14 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         bg_map,
         slot_map=slot_map,
         char_default_slots=char_default_slots or None,
+        overlay_map=overlay_map,
+        se_map=se_map,
     )
 
     print(f"\nFace changes: {result.face_changes}")
     print(f"Slot changes: {result.slot_changes}")
+    print(f"Overlay changes: {result.overlay_changes}")
+    print(f"SE plans: {result.se_plans}")
     if result.tachie_syncs:
         print(f"Idle face inserts: {result.tachie_syncs}")
     print(f"BG removed: {result.bg_changes}, BG added: {result.bg_additions}")

@@ -28,6 +28,20 @@ def _utt(index, face="serious", idle=None, section="S1", speaker="sp", slot=None
     return d
 
 
+def _utt_with_timeline(
+    index,
+    *,
+    overlay=None,
+    se_label=None,
+):
+    d = _utt(index)
+    if overlay:
+        d["overlay"] = overlay
+    if se_label:
+        d["se"] = se_label
+    return d
+
+
 class TestUnknownLabels:
     def test_unknown_label_is_error(self):
         ir = _make_ir([_utt(1, "neutral"), _utt(2, "serious")])
@@ -294,6 +308,30 @@ class TestSlotValidation:
         )
         errors = [e for e in vr.errors if "SLOT_REGISTRY_GAP" in e]
         assert len(errors) == 1
+
+
+class TestTimelineLabelValidation:
+    def test_unknown_overlay_is_error(self):
+        ir = _make_ir([_utt_with_timeline(1, overlay="flash_red")])
+        vr = validate_ir(ir, known_overlay_labels={"arrow_red"})
+        assert vr.has_errors
+        assert vr.unknown_overlay_labels == ["flash_red"]
+
+    def test_unknown_se_is_error(self):
+        ir = _make_ir([_utt_with_timeline(1, se_label="surprise")])
+        vr = validate_ir(ir, known_se_labels={"click"})
+        assert vr.has_errors
+        assert vr.unknown_se_labels == ["surprise"]
+
+    def test_known_timeline_labels_pass(self):
+        ir = _make_ir([_utt_with_timeline(1, overlay="arrow_red", se_label="click")])
+        vr = validate_ir(
+            ir,
+            known_overlay_labels={"arrow_red"},
+            known_se_labels={"click"},
+        )
+        assert not [e for e in vr.errors if "OVERLAY_UNKNOWN_LABEL" in e]
+        assert not [e for e in vr.errors if "SE_UNKNOWN_LABEL" in e]
 
 
 class TestRowRangeValidation:

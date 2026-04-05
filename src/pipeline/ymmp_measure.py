@@ -26,6 +26,19 @@ class TimelineRouteMeasurement:
         return asdict(self)
 
 
+@dataclass
+class TimelineRouteValidationResult:
+    """Contract check result for measured timeline routes."""
+
+    errors: list[str] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
+    missing_routes: dict[str, list[str]] = field(default_factory=dict)
+
+    @property
+    def has_errors(self) -> bool:
+        return len(self.errors) > 0
+
+
 def _get_timeline_items(data: dict) -> list[dict]:
     """Return timeline items from either Timelines[] or legacy Timeline."""
     timelines = data.get("Timelines")
@@ -45,6 +58,15 @@ def _item_type(item: dict) -> str:
 
 def _normalized(name: str) -> str:
     return name.replace("_", "").lower()
+
+
+def _is_transition_leaf(normalized_leaf: str) -> bool:
+    """Return True when a leaf name looks like a transition/fade route."""
+    return (
+        "transition" in normalized_leaf
+        or normalized_leaf.endswith("fadein")
+        or normalized_leaf.endswith("fadeout")
+    )
 
 
 def _walk(node, path: str = ""):
@@ -133,7 +155,7 @@ def measure_timeline_routes(ymmp_data: dict) -> TimelineRouteMeasurement:
             leaf = path.rsplit(".", 1)[-1]
             normalized = _normalized(leaf)
 
-            if "transition" in normalized:
+            if _is_transition_leaf(normalized):
                 route = f"{item_type}.{path}"
                 _add_route(
                     route_counts,
@@ -225,3 +247,88 @@ def render_timeline_measurement_text(measurement: TimelineRouteMeasurement) -> s
             lines.append(f"  {category}: {', '.join(samples)}")
 
     return "\n".join(lines) + "\n"
+
+
+def validate_timeline_route_contract(
+    measurement: TimelineRouteMeasurement,
+    contract: dict,
+    *,
+    profile: str | None = None,
+) -> TimelineRouteValidationResult:
+    """Validate measured routes against a simple category -> routes contract."""
+    result = TimelineRouteValidationResult()
+    selected = contract
+    if profile:
+        profiles = contract.get("profiles")
+        if not isinstance(profiles, dict):
+            result.errors.append(
+                "TIMELINE_ROUTE_CONTRACT_INVALID: profiles must be an object"
+            )
+            return result
+        selected = profiles.get(profile)
+        if not isinstance(selected, dict):
+            result.errors.append(
+                "TIMELINE_ROUTE_PROFILE_UNKNOWN: "
+                f"profile '{profile}' is not defined"
+            )
+            return result
+
+    raw_required = selected.get("required_routes", selected)
+    raw_optional = selected.get("optional_routes", {})
+
+    if not isinstance(raw_required, dict):
+        result.errors.append(
+            "TIMELINE_ROUTE_CONTRACT_INVALID: required_routes must be an object"
+        )
+        return result
+    if not isinstance(raw_optional, dict):
+        result.errors.append(
+            "TIMELINE_ROUTE_CONTRACT_INVALID: optional_routes must be an object"
+        )
+        return result
+
+    for category, expected_routes in sorted(raw_required.items()):
+        if not isinstance(expected_routes, list) or not all(
+            isinstance(route, str) for route in expected_routes
+        ):
+            result.errors.append(
+                "TIMELINE_ROUTE_CONTRACT_INVALID: "
+                f"category '{category}' must map to a list of route strings"
+            )
+            continue
+
+        observed = set(measurement.route_counts.get(category, {}))
+        if not observed:
+            result.warnings.append(
+                "TIMELINE_ROUTE_CATEGORY_EMPTY: "
+                f"category '{category}' has no observed candidate routes"
+            )
+
+        missing = sorted(route for route in expected_routes if route not in observed)
+        if missing:
+            result.missing_routes[category] = missing
+            for route in missing:
+                result.errors.append(
+                    "TIMELINE_ROUTE_MISS: "
+                    f"category '{category}' is missing route '{route}'"
+                )
+
+    for category, expected_routes in sorted(raw_optional.items()):
+        if not isinstance(expected_routes, list) or not all(
+            isinstance(route, str) for route in expected_routes
+        ):
+            result.errors.append(
+                "TIMELINE_ROUTE_CONTRACT_INVALID: "
+                f"optional category '{category}' must map to a list of route strings"
+            )
+            continue
+
+        observed = set(measurement.route_counts.get(category, {}))
+        missing = sorted(route for route in expected_routes if route not in observed)
+        for route in missing:
+            result.warnings.append(
+                "TIMELINE_ROUTE_OPTIONAL_MISS: "
+                f"category '{category}' is missing optional route '{route}'"
+            )
+
+    return result

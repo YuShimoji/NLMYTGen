@@ -25,10 +25,16 @@ class IRValidationResult:
     used_face_labels: list[str] = field(default_factory=list)
     used_idle_face_labels: list[str] = field(default_factory=list)
     used_slot_labels: list[str] = field(default_factory=list)
+    used_overlay_labels: list[str] = field(default_factory=list)
+    used_se_labels: list[str] = field(default_factory=list)
     active_face_gaps: dict[str, list[str]] = field(default_factory=dict)
     latent_face_gaps: dict[str, list[str]] = field(default_factory=dict)
     slot_distribution: dict[str, int] = field(default_factory=dict)
+    overlay_distribution: dict[str, int] = field(default_factory=dict)
+    se_distribution: dict[str, int] = field(default_factory=dict)
     unknown_slot_labels: list[str] = field(default_factory=list)
+    unknown_overlay_labels: list[str] = field(default_factory=list)
+    unknown_se_labels: list[str] = field(default_factory=list)
     character_slot_usage: dict[str, list[str]] = field(default_factory=dict)
     prompt_palette_missing_labels: list[str] = field(default_factory=list)
     palette_only_labels: list[str] = field(default_factory=list)
@@ -82,6 +88,8 @@ def validate_ir(
     *,
     char_face_map: dict[str, set[str]] | None = None,
     known_slot_labels: set[str] | None = None,
+    known_overlay_labels: set[str] | None = None,
+    known_se_labels: set[str] | None = None,
     char_default_slots: dict[str, str] | None = None,
     prompt_face_labels: set[str] | None = None,
     serious_threshold: float = 0.40,
@@ -129,12 +137,16 @@ def validate_ir(
     face_usage: Counter = Counter()
     idle_usage: Counter = Counter()
     slot_usage: Counter = Counter()
+    overlay_usage: Counter = Counter()
+    se_usage: Counter = Counter()
     char_slot_usage: dict[str, set[str]] = {}
     for entry in resolved:
         speaker = entry.get("speaker", "")
         face = entry.get("face", "")
         idle_face = entry.get("idle_face", "")
         slot = entry.get("slot", "")
+        overlay = entry.get("overlay", "")
+        se_label = entry.get("se", "")
         if face:
             face_counts[face] += 1
             face_usage[face] += 1
@@ -144,12 +156,20 @@ def validate_ir(
             slot_usage[slot] += 1
             if speaker:
                 char_slot_usage.setdefault(speaker, set()).add(slot)
+        if overlay:
+            overlay_usage[overlay] += 1
+        if se_label:
+            se_usage[se_label] += 1
     total = sum(face_counts.values())
     result.face_distribution = dict(face_counts)
     result.used_face_labels = sorted(face_usage)
     result.used_idle_face_labels = sorted(idle_usage)
     result.slot_distribution = dict(slot_usage)
     result.used_slot_labels = sorted(slot_usage)
+    result.overlay_distribution = dict(overlay_usage)
+    result.se_distribution = dict(se_usage)
+    result.used_overlay_labels = sorted(overlay_usage)
+    result.used_se_labels = sorted(se_usage)
     result.character_slot_usage = {
         char: sorted(labels)
         for char, labels in sorted(char_slot_usage.items())
@@ -268,6 +288,28 @@ def validate_ir(
                     "SLOT_UNKNOWN_LABEL: "
                     f"unknown slot label '{label}' used {slot_usage[label]} times"
                     " (not in slot registry)"
+                )
+
+    if known_overlay_labels is not None:
+        unknown_overlays = sorted(set(overlay_usage) - known_overlay_labels)
+        if unknown_overlays:
+            result.unknown_overlay_labels = unknown_overlays
+            for label in unknown_overlays:
+                result.errors.append(
+                    "OVERLAY_UNKNOWN_LABEL: "
+                    f"unknown overlay label '{label}' used {overlay_usage[label]} times"
+                    " (not in overlay registry)"
+                )
+
+    if known_se_labels is not None:
+        unknown_se = sorted(set(se_usage) - known_se_labels)
+        if unknown_se:
+            result.unknown_se_labels = unknown_se
+            for label in unknown_se:
+                result.errors.append(
+                    "SE_UNKNOWN_LABEL: "
+                    f"unknown se label '{label}' used {se_usage[label]} times"
+                    " (not in se registry)"
                 )
 
     if char_default_slots:

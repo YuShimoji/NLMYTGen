@@ -424,6 +424,110 @@ class TestPatchYmmpAdapter:
         assert len(warnings) == 1  # reimu の serious
 
 
+class TestTimelineInsertion:
+    def _make_overlay_ymmp(self):
+        return _wrap_ymmp([
+            _make_voice_item("marisa", "", "default.png", "default.png", "default.png", frame=0),
+            _make_voice_item("marisa", "", "default.png", "default.png", "default.png", frame=100),
+        ])
+
+    def _make_overlay_ir(self, *, overlay=None, se_label=None):
+        utterance = {
+            "index": 1,
+            "speaker": "marisa",
+            "text": "t1",
+            "section_id": "S1",
+            "face": "serious",
+            "row_start": 1,
+            "row_end": 1,
+        }
+        if overlay:
+            utterance["overlay"] = overlay
+        if se_label:
+            utterance["se"] = se_label
+        return {
+            "ir_version": "1.0",
+            "video_id": "timeline_test",
+            "macro": {
+                "sections": [{
+                    "section_id": "S1",
+                    "start_index": 1,
+                    "end_index": 1,
+                    "default_bg": "bg1",
+                    "default_face": "serious",
+                }],
+            },
+            "utterances": [utterance],
+        }
+
+    def test_overlay_inserts_image_item(self):
+        ymmp = self._make_overlay_ymmp()
+        ir = self._make_overlay_ir(overlay="arrow_red")
+
+        result = patch_ymmp(
+            ymmp,
+            ir,
+            {"serious": {"Eyebrow": "s.png", "Eye": "s.png", "Mouth": "s.png"}},
+            {},
+            overlay_map={
+                "arrow_red": {
+                    "path": "C:/overlay/arrow_red.png",
+                    "layer": 4,
+                    "length": 12,
+                    "x": 10,
+                    "y": 20,
+                    "zoom": 150,
+                }
+            },
+        )
+
+        assert result.overlay_changes == 1
+        overlays = [
+            item for item in ymmp["Timelines"][0]["Items"]
+            if "ImageItem" in item.get("$type", "")
+        ]
+        assert len(overlays) == 1
+        assert overlays[0]["FilePath"] == "C:/overlay/arrow_red.png"
+        assert overlays[0]["Frame"] == 0
+        assert overlays[0]["Length"] == 12
+        assert overlays[0]["Layer"] == 4
+
+    def test_overlay_missing_map_warns(self):
+        ymmp = self._make_overlay_ymmp()
+        ir = self._make_overlay_ir(overlay="arrow_red")
+
+        result = patch_ymmp(
+            ymmp,
+            ir,
+            {"serious": {"Eyebrow": "s.png", "Eye": "s.png", "Mouth": "s.png"}},
+            {},
+        )
+
+        warnings = [w for w in result.warnings if w.startswith("OVERLAY_MAP_MISS")]
+        assert len(warnings) == 1
+        assert result.overlay_changes == 0
+
+    def test_se_is_planned_and_warns_until_route_is_fixed(self):
+        ymmp = self._make_overlay_ymmp()
+        ir = self._make_overlay_ir(se_label="click")
+
+        result = patch_ymmp(
+            ymmp,
+            ir,
+            {"serious": {"Eyebrow": "s.png", "Eye": "s.png", "Mouth": "s.png"}},
+            {},
+            se_map={
+                "click": {
+                    "path": "C:/se/click.wav",
+                }
+            },
+        )
+
+        assert result.se_plans == 1
+        warnings = [w for w in result.warnings if w.startswith("SE_WRITE_ROUTE_UNSUPPORTED")]
+        assert len(warnings) == 1
+
+
 # ---------------------------------------------------------------------------
 # E2E: extract_template_labeled → generate → patch_ymmp
 # ---------------------------------------------------------------------------

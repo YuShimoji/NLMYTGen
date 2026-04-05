@@ -550,6 +550,8 @@ def test_cli_measure_timeline_routes_json(tmp_path):
                     "Name": "Bounce",
                 }],
                 "Transition": {"Name": "Fade"},
+                "VoiceFadeIn": 0.2,
+                "VoiceFadeOut": 0.3,
             },
         ], "LayerSettings": []}],
     }
@@ -569,7 +571,348 @@ def test_cli_measure_timeline_routes_json(tmp_path):
     assert payload["item_type_counts"]["ImageItem"] == 1
     assert payload["route_counts"]["bg_anim"]["ImageItem.VideoEffects"] == 1
     assert payload["route_counts"]["motion"]["VoiceItem.VideoEffects"] == 1
+    assert payload["route_counts"]["transition"]["VoiceItem.VoiceFadeIn"] == 1
     assert payload["template_name_counts"]["BG Pan"] == 1
+
+
+def test_cli_measure_timeline_routes_expect_fails_on_missing_route(tmp_path):
+    """CLI measure-timeline-routes は contract miss を exit 1 で返す。"""
+    import json
+
+    ymmp = {
+        "Timelines": [{"ID": 0, "Items": [
+            {
+                "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+                "CharacterName": "marisa",
+                "VideoEffects": [],
+            },
+        ], "LayerSettings": []}],
+    }
+    ymmp_path = tmp_path / "measurement.ymmp"
+    with open(ymmp_path, "w", encoding="utf-8-sig") as f:
+        json.dump(ymmp, f)
+
+    contract = {
+        "required_routes": {
+            "motion": ["VoiceItem.VideoEffects"],
+            "transition": ["VoiceItem.Transition"],
+        }
+    }
+    contract_path = tmp_path / "routes.json"
+    contract_path.write_text(json.dumps(contract), encoding="utf-8")
+
+    result = subprocess.run(
+        [sys.executable, "-m", "src.cli.main", "measure-timeline-routes",
+         str(ymmp_path), "--expect", str(contract_path)],
+        capture_output=True, text=True,
+        cwd=str(_project_root()),
+    )
+
+    assert result.returncode == 1
+    assert "TIMELINE_ROUTE_MISS" in result.stdout
+
+
+def test_cli_measure_timeline_routes_expect_optional_warns_only(tmp_path):
+    """CLI measure-timeline-routes は optional miss だけなら成功する。"""
+    import json
+
+    ymmp = {
+        "Timelines": [{"ID": 0, "Items": [
+            {
+                "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+                "X": {"Values": [{"Value": 0.0}]},
+                "Y": {"Values": [{"Value": 0.0}]},
+                "Zoom": {"Values": [{"Value": 100.0}]},
+            },
+        ], "LayerSettings": []}],
+    }
+    ymmp_path = tmp_path / "measurement.ymmp"
+    with open(ymmp_path, "w", encoding="utf-8-sig") as f:
+        json.dump(ymmp, f)
+
+    contract = {
+        "required_routes": {
+            "bg_anim": ["ImageItem.X/Y/Zoom"],
+        },
+        "optional_routes": {
+            "transition": ["VoiceItem.Transition"],
+        },
+    }
+    contract_path = tmp_path / "routes.json"
+    contract_path.write_text(json.dumps(contract), encoding="utf-8")
+
+    result = subprocess.run(
+        [sys.executable, "-m", "src.cli.main", "measure-timeline-routes",
+         str(ymmp_path), "--expect", str(contract_path)],
+        capture_output=True, text=True,
+        cwd=str(_project_root()),
+    )
+
+    assert result.returncode == 0
+    assert "TIMELINE_ROUTE_OPTIONAL_MISS" in result.stdout
+
+
+def test_cli_measure_timeline_routes_profile_selection(tmp_path):
+    """CLI measure-timeline-routes は profile 指定で contract を選べる。"""
+    import json
+
+    ymmp = {
+        "Timelines": [{"ID": 0, "Items": [
+            {
+                "$type": "YukkuriMovieMaker.Project.Items.TachieItem, YukkuriMovieMaker",
+                "TachieItemParameter": {
+                    "X": -737.0,
+                    "Y": 540.0,
+                    "Zoom": 120.0,
+                },
+                "VideoEffects": [],
+            },
+        ], "LayerSettings": []}],
+    }
+    ymmp_path = tmp_path / "measurement.ymmp"
+    with open(ymmp_path, "w", encoding="utf-8-sig") as f:
+        json.dump(ymmp, f)
+
+    contract = {
+        "profiles": {
+            "motion_only": {
+                "required_routes": {
+                    "motion": ["TachieItem.VideoEffects"],
+                }
+            }
+        }
+    }
+    contract_path = tmp_path / "routes.json"
+    contract_path.write_text(json.dumps(contract), encoding="utf-8")
+
+    result = subprocess.run(
+        [sys.executable, "-m", "src.cli.main", "measure-timeline-routes",
+         str(ymmp_path), "--expect", str(contract_path), "--profile", "motion_only"],
+        capture_output=True, text=True,
+        cwd=str(_project_root()),
+    )
+
+    assert result.returncode == 0, f"stderr: {result.stderr}"
+
+
+def test_cli_measure_timeline_routes_unknown_profile_fails(tmp_path):
+    """CLI measure-timeline-routes は unknown profile を failure にする。"""
+    import json
+
+    ymmp = {"Timelines": [{"ID": 0, "Items": [], "LayerSettings": []}]}
+    ymmp_path = tmp_path / "measurement.ymmp"
+    with open(ymmp_path, "w", encoding="utf-8-sig") as f:
+        json.dump(ymmp, f)
+
+    contract_path = tmp_path / "routes.json"
+    contract_path.write_text(json.dumps({"profiles": {}}), encoding="utf-8")
+
+    result = subprocess.run(
+        [sys.executable, "-m", "src.cli.main", "measure-timeline-routes",
+         str(ymmp_path), "--expect", str(contract_path), "--profile", "missing"],
+        capture_output=True, text=True,
+        cwd=str(_project_root()),
+    )
+
+    assert result.returncode == 1
+    assert "TIMELINE_ROUTE_PROFILE_UNKNOWN" in result.stdout
+
+
+def test_cli_validate_ir_with_overlay_and_se_contracts(tmp_path):
+    """CLI validate-ir は overlay / se registry も見る."""
+    import json
+
+    ir = {
+        "ir_version": "1.0",
+        "video_id": "timeline_validate",
+        "macro": {"sections": [{"section_id": "S1", "start_index": 1, "end_index": 1, "default_face": "serious", "default_bg": "bg1"}]},
+        "utterances": [{
+            "index": 1,
+            "speaker": "marisa",
+            "text": "t",
+            "section_id": "S1",
+            "face": "serious",
+            "overlay": "arrow_red",
+            "se": "click",
+        }],
+    }
+    ir_path = tmp_path / "ir.json"
+    ir_path.write_text(json.dumps(ir), encoding="utf-8")
+
+    overlay_path = tmp_path / "overlay_map.json"
+    overlay_path.write_text(json.dumps({"overlays": {"arrow_red": "C:/overlay/arrow_red.png"}}), encoding="utf-8")
+
+    se_path = tmp_path / "se_map.json"
+    se_path.write_text(json.dumps({"se": {"click": "C:/se/click.wav"}}), encoding="utf-8")
+
+    result = subprocess.run(
+        [sys.executable, "-m", "src.cli.main", "validate-ir",
+         str(ir_path),
+         "--overlay-map", str(overlay_path),
+         "--se-map", str(se_path)],
+        capture_output=True,
+        text=True,
+        cwd=str(_project_root()),
+    )
+
+    assert result.returncode == 0, f"stderr: {result.stderr}"
+    assert "overlay contract: 1 labels" in result.stdout
+    assert "se contract: 1 labels" in result.stdout
+
+
+def test_cli_patch_ymmp_with_overlay_map(tmp_path):
+    """CLI patch-ymmp は overlay を dry-run まで反映する."""
+    import json
+
+    production = {
+        "Timelines": [{"ID": 0, "Items": [
+            {
+                "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+                "CharacterName": "marisa",
+                "Serif": "test",
+                "Remark": "",
+                "Frame": 0,
+                "Length": 100,
+                "Layer": 1,
+                "Group": 0,
+                "IsLocked": False,
+                "IsHidden": False,
+                "TachieFaceParameter": {
+                    "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter, YukkuriMovieMaker.Plugin.Tachie.AnimationTachie",
+                    "Eyebrow": "default.png",
+                    "Eye": "default.png",
+                    "Mouth": "default.png",
+                    "Hair": "",
+                    "Body": "",
+                    "Complexion": "",
+                },
+            },
+        ], "LayerSettings": []}],
+        "Characters": [{"Name": "marisa"}],
+    }
+    prod_path = tmp_path / "production.ymmp"
+    with open(prod_path, "w", encoding="utf-8-sig") as f:
+        json.dump(production, f)
+
+    ir = {
+        "ir_version": "1.0",
+        "video_id": "overlay_apply",
+        "macro": {"sections": [{"section_id": "S1", "start_index": 1, "end_index": 1, "default_face": "serious", "default_bg": "bg1"}]},
+        "utterances": [{
+            "index": 1,
+            "speaker": "marisa",
+            "text": "t",
+            "section_id": "S1",
+            "face": "serious",
+            "overlay": "arrow_red",
+            "row_start": 1,
+            "row_end": 1,
+        }],
+    }
+    ir_path = tmp_path / "ir.json"
+    ir_path.write_text(json.dumps(ir), encoding="utf-8")
+
+    face_map_path = tmp_path / "face_map.json"
+    face_map_path.write_text(json.dumps({"serious": {"Eyebrow": "s.png", "Eye": "s.png", "Mouth": "s.png"}}), encoding="utf-8")
+
+    overlay_path = tmp_path / "overlay_map.json"
+    overlay_path.write_text(json.dumps({
+        "overlays": {
+            "arrow_red": {
+                "path": "C:/overlay/arrow_red.png",
+                "layer": 4,
+                "length": 12,
+            }
+        }
+    }), encoding="utf-8")
+
+    result = subprocess.run(
+        [sys.executable, "-m", "src.cli.main", "patch-ymmp",
+         str(prod_path), str(ir_path),
+         "--face-map", str(face_map_path),
+         "--overlay-map", str(overlay_path),
+         "--dry-run"],
+        capture_output=True,
+        text=True,
+        cwd=str(_project_root()),
+    )
+
+    assert result.returncode == 0, f"stderr: {result.stderr}"
+    assert "overlay_map:" in result.stdout
+    assert "Overlay changes: 1" in result.stdout
+
+
+def test_cli_patch_ymmp_se_route_is_blocking(tmp_path):
+    """CLI patch-ymmp は se route 未固定を fail-fast で止める."""
+    import json
+
+    production = {
+        "Timelines": [{"ID": 0, "Items": [
+            {
+                "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+                "CharacterName": "marisa",
+                "Serif": "test",
+                "Remark": "",
+                "Frame": 0,
+                "Length": 100,
+                "Layer": 1,
+                "Group": 0,
+                "IsLocked": False,
+                "IsHidden": False,
+                "TachieFaceParameter": {
+                    "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter, YukkuriMovieMaker.Plugin.Tachie.AnimationTachie",
+                    "Eyebrow": "default.png",
+                    "Eye": "default.png",
+                    "Mouth": "default.png",
+                    "Hair": "",
+                    "Body": "",
+                    "Complexion": "",
+                },
+            },
+        ], "LayerSettings": []}],
+        "Characters": [{"Name": "marisa"}],
+    }
+    prod_path = tmp_path / "production.ymmp"
+    with open(prod_path, "w", encoding="utf-8-sig") as f:
+        json.dump(production, f)
+
+    ir = {
+        "ir_version": "1.0",
+        "video_id": "se_apply",
+        "macro": {"sections": [{"section_id": "S1", "start_index": 1, "end_index": 1, "default_face": "serious", "default_bg": "bg1"}]},
+        "utterances": [{
+            "index": 1,
+            "speaker": "marisa",
+            "text": "t",
+            "section_id": "S1",
+            "face": "serious",
+            "se": "click",
+            "row_start": 1,
+            "row_end": 1,
+        }],
+    }
+    ir_path = tmp_path / "ir.json"
+    ir_path.write_text(json.dumps(ir), encoding="utf-8")
+
+    face_map_path = tmp_path / "face_map.json"
+    face_map_path.write_text(json.dumps({"serious": {"Eyebrow": "s.png", "Eye": "s.png", "Mouth": "s.png"}}), encoding="utf-8")
+
+    se_path = tmp_path / "se_map.json"
+    se_path.write_text(json.dumps({"se": {"click": "C:/se/click.wav"}}), encoding="utf-8")
+
+    result = subprocess.run(
+        [sys.executable, "-m", "src.cli.main", "patch-ymmp",
+         str(prod_path), str(ir_path),
+         "--face-map", str(face_map_path),
+         "--se-map", str(se_path),
+         "--dry-run"],
+        capture_output=True,
+        text=True,
+        cwd=str(_project_root()),
+    )
+
+    assert result.returncode == 1
+    assert "SE_WRITE_ROUTE_UNSUPPORTED" in result.stderr
 
 
 def _project_root():

@@ -1,0 +1,7 @@
+{
+  "required_routes": {
+    "transition": [
+      "VoiceItem.Transition"
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "required_routes": {
+    "motion": [
+      "TachieItem.VideoEffects"
+    ],
+    "bg_anim": [
+      "ImageItem.X/Y/Zoom",
+      "ImageItem.VideoEffects"
+    ]
+  }
+}

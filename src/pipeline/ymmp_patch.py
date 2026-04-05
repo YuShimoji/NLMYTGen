@@ -21,9 +21,11 @@ class PatchResult:
 
     face_changes: int = 0
     slot_changes: int = 0
+    overlay_changes: int = 0
     bg_changes: int = 0
     bg_additions: int = 0
     tachie_syncs: int = 0
+    se_plans: int = 0
     warnings: list[str] | None = None
 
     def __post_init__(self) -> None:
@@ -494,6 +496,207 @@ def _apply_slots(
             _apply_slot_to_tachie_item(item, slot_label, slot_map[slot_label], result)
 
 
+def _resolve_utterance_timing(
+    ir_entry: dict,
+    voice_items: list[dict],
+    *,
+    use_row_range: bool,
+) -> tuple[int, int] | None:
+    """Resolve utterance start frame and duration from VoiceItems."""
+    if use_row_range:
+        row_start = ir_entry.get("row_start")
+        row_end = ir_entry.get("row_end")
+        if row_start is None or row_end is None:
+            return None
+        if row_start < 1 or row_end < row_start or row_start - 1 >= len(voice_items):
+            return None
+        start_idx = row_start - 1
+        end_idx = min(row_end, len(voice_items)) - 1
+    else:
+        utt_index = ir_entry.get("index", 0)
+        start_idx = utt_index - 1
+        end_idx = start_idx
+        if start_idx < 0 or start_idx >= len(voice_items):
+            return None
+
+    start_frame = voice_items[start_idx].get("Frame", 0)
+    end_frame = (
+        voice_items[end_idx].get("Frame", 0)
+        + voice_items[end_idx].get("Length", 0)
+    )
+    return start_frame, max(end_frame - start_frame, 1)
+
+
+def _coerce_int(value, *, default: int = 0) -> int:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _coerce_float(value, *, default: float) -> float:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _build_overlay_item(
+    spec: dict,
+    *,
+    frame: int,
+    length: int,
+) -> dict:
+    """Build a minimal overlay ImageItem from registry spec."""
+    return {
+        "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+        "X": {"Values": [{"Value": _coerce_float(spec.get("x"), default=0.0)}], "Span": 0.0, "AnimationType": "なし"},
+        "Y": {"Values": [{"Value": _coerce_float(spec.get("y"), default=0.0)}], "Span": 0.0, "AnimationType": "なし"},
+        "Zoom": {"Values": [{"Value": _coerce_float(spec.get("zoom"), default=100.0)}], "Span": 0.0, "AnimationType": "なし"},
+        "Opacity": {"Values": [{"Value": _coerce_float(spec.get("opacity"), default=100.0)}], "Span": 0.0, "AnimationType": "なし"},
+        "Layer": _coerce_int(spec.get("layer"), default=5),
+        "Group": _coerce_int(spec.get("group"), default=0),
+        "IsLocked": False,
+        "IsHidden": False,
+        "FilePath": spec["path"],
+        "Frame": frame,
+        "Length": max(length, 1),
+    }
+
+
+def _apply_overlay_items(
+    items: list[dict],
+    voice_items: list[dict],
+    resolved: list[dict],
+    overlay_map: dict[str, dict],
+    result: PatchResult,
+    *,
+    use_row_range: bool,
+) -> None:
+    """Insert overlay ImageItems at resolved utterance anchors."""
+    for ir_entry in resolved:
+        overlay_label = ir_entry.get("overlay")
+        if not overlay_label:
+            continue
+
+        spec = overlay_map.get(overlay_label)
+        if not isinstance(spec, dict):
+            result.warnings.append(
+                "OVERLAY_MAP_MISS: "
+                f"overlay label '{overlay_label}' not found in overlay_map"
+            )
+            continue
+        path = spec.get("path")
+        if not isinstance(path, str) or not path:
+            result.warnings.append(
+                "OVERLAY_SPEC_INVALID: "
+                f"overlay label '{overlay_label}' must define path"
+            )
+            continue
+
+        timing = _resolve_utterance_timing(
+            ir_entry,
+            voice_items,
+            use_row_range=use_row_range,
+        )
+        if timing is None:
+            result.warnings.append(
+                "OVERLAY_NO_TIMING_ANCHOR: "
+                f"overlay label '{overlay_label}' could not resolve timing"
+                f" for utterance index={ir_entry.get('index', '?')}"
+            )
+            continue
+
+        start_frame, utterance_length = timing
+        anchor = spec.get("anchor", "start")
+        if anchor not in {"start", "end"}:
+            result.warnings.append(
+                "OVERLAY_SPEC_INVALID: "
+                f"overlay label '{overlay_label}' has invalid anchor '{anchor}'"
+            )
+            continue
+
+        offset = _coerce_int(spec.get("offset"), default=0)
+        item_length = _coerce_int(spec.get("length"), default=utterance_length)
+        if item_length < 1:
+            result.warnings.append(
+                "OVERLAY_SPEC_INVALID: "
+                f"overlay label '{overlay_label}' must define positive length"
+            )
+            continue
+
+        frame = start_frame + offset
+        if anchor == "end":
+            frame = start_frame + utterance_length + offset
+
+        items.append(_build_overlay_item(spec, frame=frame, length=item_length))
+        result.overlay_changes += 1
+
+
+def _plan_se_items(
+    resolved: list[dict],
+    voice_items: list[dict],
+    se_map: dict[str, dict],
+    result: PatchResult,
+    *,
+    use_row_range: bool,
+) -> None:
+    """Resolve SE labels to timing anchors and fail fast until route is fixed."""
+    for ir_entry in resolved:
+        se_label = ir_entry.get("se")
+        if not se_label:
+            continue
+
+        spec = se_map.get(se_label)
+        if not isinstance(spec, dict):
+            result.warnings.append(
+                "SE_MAP_MISS: "
+                f"se label '{se_label}' not found in se_map"
+            )
+            continue
+        path = spec.get("path")
+        if not isinstance(path, str) or not path:
+            result.warnings.append(
+                "SE_SPEC_INVALID: "
+                f"se label '{se_label}' must define path"
+            )
+            continue
+
+        timing = _resolve_utterance_timing(
+            ir_entry,
+            voice_items,
+            use_row_range=use_row_range,
+        )
+        if timing is None:
+            result.warnings.append(
+                "SE_NO_TIMING_ANCHOR: "
+                f"se label '{se_label}' could not resolve timing"
+                f" for utterance index={ir_entry.get('index', '?')}"
+            )
+            continue
+
+        start_frame, utterance_length = timing
+        anchor = spec.get("anchor", "start")
+        if anchor not in {"start", "end"}:
+            result.warnings.append(
+                "SE_SPEC_INVALID: "
+                f"se label '{se_label}' has invalid anchor '{anchor}'"
+            )
+            continue
+
+        offset = _coerce_int(spec.get("offset"), default=0)
+        frame = start_frame + offset
+        if anchor == "end":
+            frame = start_frame + utterance_length + offset
+
+        result.se_plans += 1
+        result.warnings.append(
+            "SE_WRITE_ROUTE_UNSUPPORTED: "
+            f"se label '{se_label}' resolved to '{path}' at frame {frame}"
+            " but repo-local corpus has no fixed AudioItem write route"
+        )
+
+
 def patch_ymmp(
     ymmp_data: dict,
     ir_data: dict,
@@ -501,6 +704,8 @@ def patch_ymmp(
     bg_map: dict[str, str],
     slot_map: dict[str, dict | None] | None = None,
     char_default_slots: dict[str, str] | None = None,
+    overlay_map: dict[str, dict] | None = None,
+    se_map: dict[str, dict] | None = None,
 ) -> PatchResult:
     """演出 IR に従って ymmp を差し替える.
 
@@ -554,6 +759,21 @@ def patch_ymmp(
         slot_map or {},
         char_default_slots,
         result,
+    )
+    _apply_overlay_items(
+        items,
+        voice_items,
+        resolved,
+        overlay_map or {},
+        result,
+        use_row_range=use_row_range,
+    )
+    _plan_se_items(
+        resolved,
+        voice_items,
+        se_map or {},
+        result,
+        use_row_range=use_row_range,
     )
 
     # --- bg 差し替え ---
