@@ -1723,9 +1723,12 @@ def _reflow_utterance_structural(
 
         return _page_dp(0)
 
-    solved = _solve_page_plan(major_break_positions) if major_break_positions else None
-    if solved is None:
-        solved = _solve_page_plan(break_positions)
+    major_solved = _solve_page_plan(major_break_positions) if major_break_positions else None
+    all_solved = _solve_page_plan(break_positions)
+
+    solved = major_solved
+    if solved is None or (all_solved is not None and all_solved[0] < solved[0]):
+        solved = all_solved
     if solved is None:
         line_cost, line_splits = _layout_page_structural(
             text,

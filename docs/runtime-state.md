@@ -31,8 +31,8 @@
 - open_todo_count: 0
 
 ## 最終検証
-- last_verification_artifact: Face completion hardening: validate-ir prompt/palette drift + active gap + row-range integrity + fail-fast apply-production。`uv run pytest` 187 PASS
-- last_verification_date: 2026-04-05
+- last_verification_artifact: G-12 measurement harness: `measure-timeline-routes` CLI + route candidate readback。`uv run pytest`: 201 passed / 3 xfailed / 1 xpassed
+- last_verification_date: 2026-04-06
 
 ## Evidence（CLI artifact mode）
 - evidence_status: Production E2E 実証済み (2026-04-05)。palette.ymmp → extract-template --labeled → face_map.json (11表情) → Part 1+2IR_row_range.json (28 utt, row-range) → production.ymmp (60 VI) → production_patched.ymmp (face 133 changes) → YMM4 visual proof OK。全編にわたって表情切替を確認

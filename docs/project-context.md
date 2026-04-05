@@ -276,7 +276,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
 - Last Change Relation: direct (G-12 measurement harness: `measure-timeline-routes` CLI + route candidate readback)
-- Evidence: Production E2E 実証済み + `uv run pytest` 198 PASS。`measure-timeline-routes` が ymmp から `VideoEffects` / transition key / template candidate route を read-only で抽出でき、slot/face 系 regression も維持
+- Evidence: Production E2E 実証済み + `uv run pytest`: 201 passed / 3 xfailed / 1 xpassed。`measure-timeline-routes` が ymmp から `VideoEffects` / transition key / template candidate route を read-only で抽出でき、slot/face 系 regression も維持
 - 案件モード: CLI artifact
 - 現在の主レーン: Advance (演出パイプライン E2E)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近
