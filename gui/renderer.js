@@ -208,3 +208,65 @@ async function runApplyProduction(dryRun) {
 
 document.getElementById('btn-apply').addEventListener('click', () => runApplyProduction(false));
 document.getElementById('btn-apply-dry').addEventListener('click', () => runApplyProduction(true));
+
+// --- Settings persistence ---
+
+function collectSettings() {
+  return {
+    csv: {
+      speakerMap: document.getElementById('speaker-map').value,
+      maxLines: parseInt(document.getElementById('max-lines').value) || 2,
+      charsPerLine: parseInt(document.getElementById('chars-per-line').value) || 40,
+      reflowV2: document.getElementById('reflow-v2').checked,
+    },
+    production: {
+      palette: filePaths['palette'] || null,
+      bgMap: filePaths['bg-map'] || null,
+    },
+  };
+}
+
+function applySettings(settings) {
+  if (!settings) return;
+  if (settings.csv) {
+    if (settings.csv.speakerMap) document.getElementById('speaker-map').value = settings.csv.speakerMap;
+    if (settings.csv.maxLines) document.getElementById('max-lines').value = settings.csv.maxLines;
+    if (settings.csv.charsPerLine) document.getElementById('chars-per-line').value = settings.csv.charsPerLine;
+    if (settings.csv.reflowV2 !== undefined) document.getElementById('reflow-v2').checked = settings.csv.reflowV2;
+  }
+  if (settings.production) {
+    if (settings.production.palette) {
+      filePaths['palette'] = settings.production.palette;
+      document.getElementById('palette-path').textContent = settings.production.palette;
+    }
+    if (settings.production.bgMap) {
+      filePaths['bg-map'] = settings.production.bgMap;
+      document.getElementById('bg-map-path').textContent = settings.production.bgMap;
+    }
+  }
+}
+
+// Auto-save on changes
+function autoSave() {
+  window.nlmytgen.saveSettings(collectSettings());
+}
+
+document.getElementById('speaker-map').addEventListener('change', autoSave);
+document.getElementById('max-lines').addEventListener('change', autoSave);
+document.getElementById('chars-per-line').addEventListener('change', autoSave);
+document.getElementById('reflow-v2').addEventListener('change', autoSave);
+
+// Also save when production file paths change
+const originalBtnFileHandler = document.querySelectorAll('.btn-file');
+originalBtnFileHandler.forEach(btn => {
+  const origClick = btn.onclick;
+  btn.addEventListener('click', () => {
+    setTimeout(autoSave, 500);
+  });
+});
+
+// Load on startup
+window.addEventListener('DOMContentLoaded', async () => {
+  const settings = await window.nlmytgen.loadSettings();
+  applySettings(settings);
+});

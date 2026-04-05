@@ -1,6 +1,9 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
+const fs = require('fs');
 const { spawn } = require('child_process');
+
+const SETTINGS_PATH = path.join(__dirname, 'project-settings.json');
 
 let mainWindow;
 
@@ -97,4 +100,20 @@ ipcMain.handle('select-file', async (_event, opts) => {
     properties: ['openFile'],
   });
   return result.canceled ? null : result.filePaths[0];
+});
+
+// --- Settings persistence ---
+
+ipcMain.handle('load-settings', async () => {
+  try {
+    const data = fs.readFileSync(SETTINGS_PATH, 'utf8');
+    return JSON.parse(data);
+  } catch {
+    return null;
+  }
+});
+
+ipcMain.handle('save-settings', async (_event, settings) => {
+  fs.writeFileSync(SETTINGS_PATH, JSON.stringify(settings, null, 2), 'utf8');
+  return true;
 });

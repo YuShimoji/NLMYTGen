@@ -18,3 +18,4 @@ uv.lock
 samples/_tmp_*
 gui/node_modules/
 gui/package-lock.json
+gui/project-settings.json
