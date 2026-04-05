@@ -80,6 +80,9 @@ def _make_tachie_item(
             "Mouth": mo,
             "Hair": "",
             "Body": "",
+            "X": 0.0,
+            "Y": 540.0,
+            "Zoom": 100.0,
         },
     }
 
@@ -424,6 +427,161 @@ class TestPatchYmmpAdapter:
 # ---------------------------------------------------------------------------
 # E2E: extract_template_labeled → generate → patch_ymmp
 # ---------------------------------------------------------------------------
+
+class TestSlotPatch:
+    def _make_slot_ymmp(self, include_reimu_tachie: bool = True) -> dict:
+        items = [
+            _make_tachie_item("marisa", "", frame=0),
+            _make_voice_item("marisa", "", "default.png", "default.png", "default.png", frame=0),
+            _make_voice_item("reimu", "", "default.png", "default.png", "default.png", frame=100),
+        ]
+        if include_reimu_tachie:
+            items.insert(1, _make_tachie_item("reimu", "", frame=0))
+        return _wrap_ymmp(items)
+
+    def _make_slot_ir(self, utterances: list[dict]) -> dict:
+        return {
+            "ir_version": "1.0",
+            "video_id": "slot_test",
+            "macro": {
+                "sections": [{
+                    "section_id": "S1",
+                    "start_index": 1,
+                    "end_index": len(utterances),
+                    "default_bg": "bg1",
+                    "default_face": "serious",
+                }],
+            },
+            "utterances": utterances,
+        }
+
+    def _base_face_map(self) -> dict:
+        return {
+            "serious": {
+                "Eyebrow": "serious_eb.png",
+                "Eye": "serious_ey.png",
+                "Mouth": "serious_mo.png",
+            }
+        }
+
+    def _tachie_by_name(self, ymmp: dict) -> dict[str, dict]:
+        items = ymmp["Timelines"][0]["Items"]
+        return {
+            item["CharacterName"]: item
+            for item in items
+            if "TachieItem" in item.get("$type", "")
+        }
+
+    def test_slot_patch_updates_tachie_positions(self):
+        ymmp = self._make_slot_ymmp()
+        ir = self._make_slot_ir([
+            {"index": 1, "speaker": "marisa", "text": "t1", "section_id": "S1",
+             "face": "serious", "slot": "left"},
+            {"index": 2, "speaker": "reimu", "text": "t2", "section_id": "S1",
+             "face": "serious", "slot": "right"},
+        ])
+        slot_map = {
+            "left": {"x": -737, "y": 540, "zoom": 120},
+            "right": {"x": 708, "y": 540, "zoom": 120},
+        }
+
+        result = patch_ymmp(ymmp, ir, self._base_face_map(), {}, slot_map=slot_map)
+
+        tachie = self._tachie_by_name(ymmp)
+        assert tachie["marisa"]["TachieItemParameter"]["X"] == -737
+        assert tachie["marisa"]["TachieItemParameter"]["Y"] == 540
+        assert tachie["marisa"]["TachieItemParameter"]["Zoom"] == 120
+        assert tachie["reimu"]["TachieItemParameter"]["X"] == 708
+        assert tachie["reimu"]["TachieItemParameter"]["Y"] == 540
+        assert tachie["reimu"]["TachieItemParameter"]["Zoom"] == 120
+        assert result.slot_changes >= 4
+        assert not [w for w in result.warnings if w.startswith("SLOT_")]
+
+    def test_slot_default_fallback_applies_when_ir_slot_missing(self):
+        ymmp = self._make_slot_ymmp()
+        ir = self._make_slot_ir([
+            {"index": 1, "speaker": "marisa", "text": "t1", "section_id": "S1",
+             "face": "serious"},
+            {"index": 2, "speaker": "reimu", "text": "t2", "section_id": "S1",
+             "face": "serious"},
+        ])
+        slot_map = {
+            "left": {"x": -737, "y": 540, "zoom": 120},
+            "right": {"x": 708, "y": 540, "zoom": 120},
+        }
+        defaults = {"marisa": "left", "reimu": "right"}
+
+        result = patch_ymmp(
+            ymmp,
+            ir,
+            self._base_face_map(),
+            {},
+            slot_map=slot_map,
+            char_default_slots=defaults,
+        )
+
+        tachie = self._tachie_by_name(ymmp)
+        assert tachie["marisa"]["TachieItemParameter"]["X"] == -737
+        assert tachie["reimu"]["TachieItemParameter"]["X"] == 708
+        assert result.slot_changes >= 4
+
+    def test_slot_off_hides_tachie(self):
+        ymmp = self._make_slot_ymmp(include_reimu_tachie=False)
+        ir = self._make_slot_ir([
+            {"index": 1, "speaker": "marisa", "text": "t1", "section_id": "S1",
+             "face": "serious", "slot": "off"},
+        ])
+
+        result = patch_ymmp(
+            ymmp,
+            ir,
+            self._base_face_map(),
+            {},
+            slot_map={"off": None},
+        )
+
+        tachie = self._tachie_by_name(ymmp)
+        assert tachie["marisa"]["IsHidden"] is True
+        assert result.slot_changes >= 1
+
+    def test_slot_character_drift_warns_and_skips_patch(self):
+        ymmp = self._make_slot_ymmp(include_reimu_tachie=False)
+        ir = self._make_slot_ir([
+            {"index": 1, "speaker": "marisa", "text": "t1", "section_id": "S1",
+             "face": "serious", "slot": "left"},
+            {"index": 2, "speaker": "marisa", "text": "t2", "section_id": "S1",
+             "face": "serious", "slot": "right"},
+        ])
+        slot_map = {
+            "left": {"x": -737, "y": 540, "zoom": 120},
+            "right": {"x": 708, "y": 540, "zoom": 120},
+        }
+
+        result = patch_ymmp(ymmp, ir, self._base_face_map(), {}, slot_map=slot_map)
+
+        tachie = self._tachie_by_name(ymmp)
+        assert tachie["marisa"]["TachieItemParameter"]["X"] == 0.0
+        warnings = [w for w in result.warnings if w.startswith("SLOT_CHARACTER_DRIFT")]
+        assert len(warnings) == 1
+
+    def test_slot_missing_tachie_warns(self):
+        ymmp = self._make_slot_ymmp(include_reimu_tachie=False)
+        ir = self._make_slot_ir([
+            {"index": 1, "speaker": "marisa", "text": "t1", "section_id": "S1",
+             "face": "serious", "slot": "left"},
+            {"index": 2, "speaker": "reimu", "text": "t2", "section_id": "S1",
+             "face": "serious", "slot": "right"},
+        ])
+        slot_map = {
+            "left": {"x": -737, "y": 540, "zoom": 120},
+            "right": {"x": 708, "y": 540, "zoom": 120},
+        }
+
+        result = patch_ymmp(ymmp, ir, self._base_face_map(), {}, slot_map=slot_map)
+
+        warnings = [w for w in result.warnings if w.startswith("SLOT_NO_TACHIE_ITEM")]
+        assert len(warnings) == 1
+
 
 class TestE2ELabeledPipeline:
     def test_palette_to_patch(self):

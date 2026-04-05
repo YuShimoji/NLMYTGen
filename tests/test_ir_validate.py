@@ -17,11 +17,14 @@ def _make_ir(utterances, sections=None):
     }
 
 
-def _utt(index, face="serious", idle=None, section="S1"):
+def _utt(index, face="serious", idle=None, section="S1", speaker="sp", slot=None):
     d = {"index": index, "speaker": "sp", "text": "t",
          "section_id": section, "face": face}
+    d["speaker"] = speaker
     if idle:
         d["idle_face"] = idle
+    if slot:
+        d["slot"] = slot
     return d
 
 
@@ -180,7 +183,7 @@ class TestCharFaceCoverage:
     def test_speaker_not_in_map_ignored(self):
         """face_map にないキャラの発話はチェックしない."""
         ir = _make_ir([
-            self._utt2(1, "ゆかり", "surprised"),
+            self._utt2(1, "unknown", "surprised"),
         ])
         char_face = {
             "まりさ": {"serious", "surprised"},
@@ -250,6 +253,47 @@ serious, smile, surprised, thinking, angry, sad
         assert len(warnings) == 2
         assert vr.latent_face_gaps["まりさ"] == ["surprised"]
         assert vr.latent_face_gaps["れいむ"] == ["smile", "surprised"]
+
+
+class TestSlotValidation:
+    def test_unknown_slot_is_error(self):
+        ir = _make_ir([_utt(1, slot="left"), _utt(2, slot="sky")])
+        vr = validate_ir(ir, known_slot_labels={"left", "right"})
+        assert vr.has_errors
+        assert vr.unknown_slot_labels == ["sky"]
+
+    def test_character_slot_drift_is_error(self):
+        ir = _make_ir([
+            _utt(1, speaker="marisa", slot="left"),
+            _utt(2, speaker="marisa", slot="right"),
+        ])
+        vr = validate_ir(ir, known_slot_labels={"left", "right"})
+        errors = [e for e in vr.errors if "SLOT_CHARACTER_DRIFT" in e]
+        assert len(errors) == 1
+
+    def test_slot_default_drift_is_error(self):
+        ir = _make_ir([
+            _utt(1, speaker="marisa", slot="right"),
+        ])
+        vr = validate_ir(
+            ir,
+            known_slot_labels={"left", "right"},
+            char_default_slots={"marisa": "left"},
+        )
+        errors = [e for e in vr.errors if "SLOT_DEFAULT_DRIFT" in e]
+        assert len(errors) == 1
+
+    def test_slot_registry_gap_is_error(self):
+        ir = _make_ir([
+            _utt(1, speaker="marisa", slot="left"),
+        ])
+        vr = validate_ir(
+            ir,
+            known_slot_labels={"left", "right"},
+            char_default_slots={"marisa": "center"},
+        )
+        errors = [e for e in vr.errors if "SLOT_REGISTRY_GAP" in e]
+        assert len(errors) == 1
 
 
 class TestRowRangeValidation:

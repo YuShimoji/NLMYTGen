@@ -357,6 +357,173 @@ def test_cli_apply_production_fails_on_active_face_gap(tmp_path):
     assert not out_path.exists()
 
 
+def test_cli_validate_ir_fails_on_slot_default_drift(tmp_path):
+    """CLI validate-ir は slot default drift を検出して止まる。"""
+    import json
+
+    ir = {
+        "ir_version": "1.0",
+        "video_id": "slot_validate",
+        "macro": {
+            "sections": [{
+                "section_id": "S1",
+                "start_index": 1,
+                "end_index": 1,
+                "default_face": "serious",
+            }],
+        },
+        "utterances": [{
+            "index": 1,
+            "speaker": "marisa",
+            "text": "t",
+            "section_id": "S1",
+            "face": "serious",
+            "slot": "right",
+        }],
+    }
+    ir_path = tmp_path / "ir.json"
+    ir_path.write_text(json.dumps(ir), encoding="utf-8")
+
+    slot_contract = {
+        "slots": {
+            "left": {"x": -737, "y": 540, "zoom": 120},
+            "right": {"x": 708, "y": 540, "zoom": 120},
+        },
+        "characters": {
+            "marisa": {"default_slot": "left"},
+        },
+    }
+    slot_path = tmp_path / "slot_map.json"
+    slot_path.write_text(json.dumps(slot_contract), encoding="utf-8")
+
+    result = subprocess.run(
+        [sys.executable, "-m", "src.cli.main", "validate-ir",
+         str(ir_path),
+         "--slot-map", str(slot_path)],
+        capture_output=True, text=True,
+        cwd=str(_project_root()),
+    )
+
+    assert result.returncode == 1
+    assert "SLOT_DEFAULT_DRIFT" in result.stderr
+    assert "slot contract: 2 labels" in result.stdout
+
+
+def test_cli_apply_production_with_slot_map(tmp_path):
+    """CLI apply-production は slot_map を読み dry-run まで通せる。"""
+    import json
+
+    production = {
+        "Timelines": [{"ID": 0, "Items": [
+            {
+                "$type": "YukkuriMovieMaker.Project.Items.TachieItem, YukkuriMovieMaker",
+                "CharacterName": "marisa",
+                "Remark": "",
+                "Frame": 0,
+                "Length": 100,
+                "Layer": 0,
+                "Group": 0,
+                "IsLocked": False,
+                "IsHidden": False,
+                "TachieItemParameter": {
+                    "Eyebrow": "default.png",
+                    "Eye": "default.png",
+                    "Mouth": "default.png",
+                    "Hair": "",
+                    "Body": "",
+                    "X": 0.0,
+                    "Y": 540.0,
+                    "Zoom": 100.0,
+                },
+            },
+            {
+                "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+                "CharacterName": "marisa",
+                "Serif": "test",
+                "Remark": "",
+                "Frame": 0,
+                "Length": 100,
+                "Layer": 1,
+                "Group": 0,
+                "IsLocked": False,
+                "IsHidden": False,
+                "TachieFaceParameter": {
+                    "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter, YukkuriMovieMaker.Plugin.Tachie.AnimationTachie",
+                    "Eyebrow": "default.png",
+                    "Eye": "default.png",
+                    "Mouth": "default.png",
+                    "Hair": "",
+                    "Body": "",
+                    "Complexion": "",
+                },
+            },
+        ], "LayerSettings": []}],
+        "Characters": [{"Name": "marisa"}],
+    }
+    prod_path = tmp_path / "production.ymmp"
+    with open(prod_path, "w", encoding="utf-8-sig") as f:
+        json.dump(production, f)
+
+    ir = {
+        "ir_version": "1.0",
+        "video_id": "slot_apply",
+        "macro": {
+            "sections": [{
+                "section_id": "S1",
+                "start_index": 1,
+                "end_index": 1,
+                "default_face": "serious",
+            }],
+        },
+        "utterances": [{
+            "index": 1,
+            "speaker": "marisa",
+            "text": "t",
+            "section_id": "S1",
+            "face": "serious",
+            "slot": "left",
+        }],
+    }
+    ir_path = tmp_path / "ir.json"
+    ir_path.write_text(json.dumps(ir), encoding="utf-8")
+
+    face_map = {
+        "serious": {
+            "Eyebrow": "serious_eb.png",
+            "Eye": "serious_ey.png",
+            "Mouth": "serious_mo.png",
+        }
+    }
+    face_map_path = tmp_path / "face_map.json"
+    face_map_path.write_text(json.dumps(face_map), encoding="utf-8")
+
+    slot_contract = {
+        "slots": {
+            "left": {"x": -737, "y": 540, "zoom": 120},
+        },
+        "characters": {
+            "marisa": {"default_slot": "left"},
+        },
+    }
+    slot_path = tmp_path / "slot_map.json"
+    slot_path.write_text(json.dumps(slot_contract), encoding="utf-8")
+
+    result = subprocess.run(
+        [sys.executable, "-m", "src.cli.main", "apply-production",
+         str(prod_path), str(ir_path),
+         "--face-map", str(face_map_path),
+         "--slot-map", str(slot_path),
+         "--dry-run"],
+        capture_output=True, text=True,
+        cwd=str(_project_root()),
+    )
+
+    assert result.returncode == 0, f"stderr: {result.stderr}"
+    assert "slot_map:" in result.stdout
+    assert "Slot changes:" in result.stdout
+    assert "(dry-run: no file written)" in result.stdout
+
+
 def _project_root():
     """プロジェクトルートを返す。"""
     from pathlib import Path

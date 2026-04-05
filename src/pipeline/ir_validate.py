@@ -24,8 +24,12 @@ class IRValidationResult:
     palette_face_labels: list[str] = field(default_factory=list)
     used_face_labels: list[str] = field(default_factory=list)
     used_idle_face_labels: list[str] = field(default_factory=list)
+    used_slot_labels: list[str] = field(default_factory=list)
     active_face_gaps: dict[str, list[str]] = field(default_factory=dict)
     latent_face_gaps: dict[str, list[str]] = field(default_factory=dict)
+    slot_distribution: dict[str, int] = field(default_factory=dict)
+    unknown_slot_labels: list[str] = field(default_factory=list)
+    character_slot_usage: dict[str, list[str]] = field(default_factory=dict)
     prompt_palette_missing_labels: list[str] = field(default_factory=list)
     palette_only_labels: list[str] = field(default_factory=list)
     longest_face_run: int = 0
@@ -77,6 +81,8 @@ def validate_ir(
     known_face_labels: set[str] | None = None,
     *,
     char_face_map: dict[str, set[str]] | None = None,
+    known_slot_labels: set[str] | None = None,
+    char_default_slots: dict[str, str] | None = None,
     prompt_face_labels: set[str] | None = None,
     serious_threshold: float = 0.40,
     max_consecutive_run: int = 4,
@@ -122,18 +128,32 @@ def validate_ir(
     face_counts: Counter = Counter()
     face_usage: Counter = Counter()
     idle_usage: Counter = Counter()
+    slot_usage: Counter = Counter()
+    char_slot_usage: dict[str, set[str]] = {}
     for entry in resolved:
+        speaker = entry.get("speaker", "")
         face = entry.get("face", "")
         idle_face = entry.get("idle_face", "")
+        slot = entry.get("slot", "")
         if face:
             face_counts[face] += 1
             face_usage[face] += 1
         if idle_face:
             idle_usage[idle_face] += 1
+        if slot:
+            slot_usage[slot] += 1
+            if speaker:
+                char_slot_usage.setdefault(speaker, set()).add(slot)
     total = sum(face_counts.values())
     result.face_distribution = dict(face_counts)
     result.used_face_labels = sorted(face_usage)
     result.used_idle_face_labels = sorted(idle_usage)
+    result.slot_distribution = dict(slot_usage)
+    result.used_slot_labels = sorted(slot_usage)
+    result.character_slot_usage = {
+        char: sorted(labels)
+        for char, labels in sorted(char_slot_usage.items())
+    }
     all_used_labels = set(face_usage) | set(idle_usage)
 
     # serious 偏り
@@ -239,6 +259,44 @@ def validate_ir(
                 )
 
     # 連続 run
+    if known_slot_labels is not None:
+        unknown_slots = sorted(set(slot_usage) - known_slot_labels)
+        if unknown_slots:
+            result.unknown_slot_labels = unknown_slots
+            for label in unknown_slots:
+                result.errors.append(
+                    "SLOT_UNKNOWN_LABEL: "
+                    f"unknown slot label '{label}' used {slot_usage[label]} times"
+                    " (not in slot registry)"
+                )
+
+    if char_default_slots:
+        for char, default_slot in sorted(char_default_slots.items()):
+            if known_slot_labels is not None and default_slot not in known_slot_labels:
+                result.errors.append(
+                    "SLOT_REGISTRY_GAP: "
+                    f"character '{char}' default_slot '{default_slot}'"
+                    " is not defined in slot registry"
+                )
+
+    for char, labels in sorted(char_slot_usage.items()):
+        if len(labels) > 1:
+            result.errors.append(
+                "SLOT_CHARACTER_DRIFT: "
+                f"character '{char}' uses multiple slot labels: "
+                f"{', '.join(sorted(labels))}"
+            )
+            continue
+        if char_default_slots and char in char_default_slots:
+            used_slot = next(iter(labels))
+            default_slot = char_default_slots[char]
+            if used_slot != default_slot:
+                result.errors.append(
+                    "SLOT_DEFAULT_DRIFT: "
+                    f"character '{char}' uses slot '{used_slot}'"
+                    f" but registry default_slot is '{default_slot}'"
+                )
+
     run_label = ""
     run_len = 0
     max_run = 0

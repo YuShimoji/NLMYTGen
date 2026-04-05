@@ -663,12 +663,13 @@ def main(argv: list[str] | None = None) -> int:
     # patch-ymmp
     p_patch = subparsers.add_parser(
         "patch-ymmp",
-        help="Apply production IR to an existing ymmp (face + bg patch)",
+        help="Apply production IR to an existing ymmp (face + bg + slot patch)",
     )
     p_patch.add_argument("ymmp", help="Input ymmp file path")
     p_patch.add_argument("ir_json", help="Production IR JSON file path")
     p_patch.add_argument("--face-map", help="Face label → parts file path mapping (JSON)")
     p_patch.add_argument("--bg-map", help="BG label → image/video file path mapping (JSON)")
+    p_patch.add_argument("--slot-map", help="Slot label -> x/y/zoom mapping (JSON or registry)")
     p_patch.add_argument("-o", "--output", help="Output ymmp path (default: <input>_patched.ymmp)")
     p_patch.add_argument("--dry-run", action="store_true", help="Preview changes without writing")
 
@@ -682,6 +683,7 @@ def main(argv: list[str] | None = None) -> int:
     p_apply.add_argument("--palette", help="Palette ymmp for face_map extraction")
     p_apply.add_argument("--face-map", help="Pre-built face_map.json (skip extraction)")
     p_apply.add_argument("--bg-map", help="BG label → file path mapping (JSON)")
+    p_apply.add_argument("--slot-map", help="Slot label -> x/y/zoom mapping (JSON or registry)")
     p_apply.add_argument("--refresh-maps", action="store_true",
                          help="Force re-extract face_map from palette even if file exists")
     p_apply.add_argument("--csv", help="CSV file for auto row_start/row_end annotation")
@@ -714,6 +716,7 @@ def main(argv: list[str] | None = None) -> int:
     p_valir.add_argument("ir_json", help="Production IR JSON")
     p_valir.add_argument("--face-map", help="face_map.json for unknown label check")
     p_valir.add_argument("--palette", help="Palette ymmp (alternative to --face-map)")
+    p_valir.add_argument("--slot-map", help="Slot label -> x/y/zoom mapping (JSON or registry)")
     p_valir.add_argument("--prompt-doc",
                          help="Prompt markdown for face contract drift check"
                               " (default: docs/S6-production-memo-prompt.md)")
@@ -887,13 +890,36 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
         with open(args.bg_map, "r", encoding="utf-8") as f:
             bg_map = json.load(f)
 
-    result = patch_ymmp(ymmp_data, ir_data, face_map, bg_map)
+    slot_map: dict[str, dict | None] = {}
+    char_default_slots: dict[str, str] = {}
+    if args.slot_map:
+        slot_map, char_default_slots = _load_slot_contract(args.slot_map)
+        print(f"slot_map: {args.slot_map} ({len(slot_map)} labels)")
+
+    result = patch_ymmp(
+        ymmp_data,
+        ir_data,
+        face_map,
+        bg_map,
+        slot_map=slot_map,
+        char_default_slots=char_default_slots,
+    )
 
     print(f"Face changes: {result.face_changes}")
+    print(f"Slot changes: {result.slot_changes}")
     print(f"BG removed: {result.bg_changes}, BG added: {result.bg_additions}")
     if result.warnings:
         for w in result.warnings:
             print(f"  Warning: {w}", file=sys.stderr)
+
+    fatal_warnings = _fatal_face_patch_warnings(result.warnings or [])
+    if fatal_warnings:
+        print(
+            f"\nPatch FAILED ({len(fatal_warnings)} blocking issues)."
+            " Partial output was not accepted.",
+            file=sys.stderr,
+        )
+        return 1
 
     if args.dry_run:
         print("(dry-run: no file written)")
@@ -935,6 +961,42 @@ def _get_char_face_map(face_map: dict) -> dict[str, set[str]] | None:
     return char_map if char_map else None
 
 
+def _load_slot_contract(
+    path: str | Path,
+) -> tuple[dict[str, dict | None], dict[str, str]]:
+    """slot_map または registry 互換 JSON から slot 契約を読む."""
+    with open(path, "r", encoding="utf-8") as f:
+        raw = json.load(f)
+
+    if not isinstance(raw, dict):
+        raise ValueError("slot_map JSON must be an object")
+
+    slot_map_raw = raw.get("slots") if isinstance(raw.get("slots"), dict) else raw
+    if not isinstance(slot_map_raw, dict):
+        raise ValueError("slot_map JSON must define a top-level object or 'slots'")
+
+    slot_map: dict[str, dict | None] = {}
+    for label, value in slot_map_raw.items():
+        if value is None or isinstance(value, dict):
+            slot_map[str(label)] = value
+        else:
+            raise ValueError(
+                f"slot_map entry '{label}' must be an object or null"
+            )
+
+    char_default_slots: dict[str, str] = {}
+    characters = raw.get("characters")
+    if isinstance(characters, dict):
+        for char, spec in characters.items():
+            if not isinstance(spec, dict):
+                continue
+            default_slot = spec.get("default_slot")
+            if isinstance(default_slot, str) and default_slot:
+                char_default_slots[str(char)] = default_slot
+
+    return slot_map, char_default_slots
+
+
 def _default_prompt_doc_path() -> Path:
     """repo-local の既定 prompt doc パスを返す."""
     return Path(__file__).resolve().parents[2] / "docs" / "S6-production-memo-prompt.md"
@@ -962,6 +1024,11 @@ def _fatal_face_patch_warnings(warnings: list[str]) -> list[str]:
         "VOICE_NO_TACHIE_FACE:",
         "ROW_RANGE_MISSING:",
         "ROW_RANGE_INVALID:",
+        "SLOT_CHARACTER_DRIFT:",
+        "SLOT_DEFAULT_DRIFT:",
+        "SLOT_REGISTRY_MISS:",
+        "SLOT_NO_TACHIE_ITEM:",
+        "SLOT_VALUE_INVALID:",
     )
     return [
         warning
@@ -995,6 +1062,16 @@ def _print_validation(vr) -> None:
         if vr.used_idle_face_labels:
             print(f"  idle   : {', '.join(vr.used_idle_face_labels)}")
 
+    if vr.slot_distribution:
+        total_slots = sum(vr.slot_distribution.values())
+        print(f"\n--- Slot Distribution ({total_slots} utterances) ---")
+        for label, count in sorted(
+            vr.slot_distribution.items(), key=lambda x: (-x[1], x[0])
+        ):
+            print(f"  {label:12s} {count:3d}")
+        for char, labels in sorted(vr.character_slot_usage.items()):
+            print(f"  {char}: {', '.join(labels)}")
+
     if vr.active_face_gaps or vr.latent_face_gaps:
         print("\n--- Palette Gap Report ---")
         for char, labels in sorted(vr.active_face_gaps.items()):
@@ -1019,6 +1096,8 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
 
     known_labels = None
     char_face = None
+    known_slots = None
+    char_default_slots = None
     prompt_face_labels, prompt_doc_path = _load_prompt_face_contract(
         getattr(args, "prompt_doc", None)
     )
@@ -1037,17 +1116,24 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
         face_map = generate_face_map_labeled(result)
         known_labels = _get_known_face_labels(face_map)
         char_face = _get_char_face_map(face_map)
+    if args.slot_map:
+        slot_map, char_default_slots = _load_slot_contract(args.slot_map)
+        known_slots = set(slot_map)
 
     if prompt_doc_path and prompt_face_labels:
         print(
             f"prompt face contract: {prompt_doc_path}"
             f" ({len(prompt_face_labels)} labels)"
         )
+    if known_slots is not None:
+        print(f"slot contract: {len(known_slots)} labels")
 
     vr = validate_ir(
         ir_data,
         known_labels,
         char_face_map=char_face,
+        known_slot_labels=known_slots,
+        char_default_slots=char_default_slots,
         prompt_face_labels=prompt_face_labels,
     )
     _print_validation(vr)
@@ -1177,6 +1263,12 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         with open(args.bg_map, "r", encoding="utf-8") as f:
             bg_map = json.load(f)
 
+    slot_map: dict[str, dict | None] = {}
+    char_default_slots: dict[str, str] = {}
+    if args.slot_map:
+        slot_map, char_default_slots = _load_slot_contract(args.slot_map)
+        print(f"slot_map: {args.slot_map} ({len(slot_map)} labels)")
+
     # --- row-range annotation (--csv) ---
     ir_data = load_ir(args.ir_json)
 
@@ -1199,6 +1291,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
     from src.pipeline.ir_validate import validate_ir
     known_labels = _get_known_face_labels(face_map) if face_map else None
     char_face = _get_char_face_map(face_map) if face_map else None
+    known_slots = set(slot_map) if slot_map else None
     prompt_face_labels, prompt_doc_path = _load_prompt_face_contract(
         getattr(args, "prompt_doc", None)
     )
@@ -1212,6 +1305,8 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         ir_data,
         known_labels,
         char_face_map=char_face,
+        known_slot_labels=known_slots,
+        char_default_slots=char_default_slots or None,
         prompt_face_labels=prompt_face_labels,
     )
     _print_validation(vr)
@@ -1223,9 +1318,17 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
     # --- patch ---
     ymmp_data = load_ymmp(args.production_ymmp)
 
-    result = patch_ymmp(ymmp_data, ir_data, face_map, bg_map)
+    result = patch_ymmp(
+        ymmp_data,
+        ir_data,
+        face_map,
+        bg_map,
+        slot_map=slot_map,
+        char_default_slots=char_default_slots or None,
+    )
 
     print(f"\nFace changes: {result.face_changes}")
+    print(f"Slot changes: {result.slot_changes}")
     if result.tachie_syncs:
         print(f"Idle face inserts: {result.tachie_syncs}")
     print(f"BG removed: {result.bg_changes}, BG added: {result.bg_additions}")
@@ -1235,8 +1338,8 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
     fatal_warnings = _fatal_face_patch_warnings(result.warnings)
     if fatal_warnings:
         print(
-            f"\nPatch FAILED ({len(fatal_warnings)} face issues)."
-            " Partial face output was not accepted.",
+            f"\nPatch FAILED ({len(fatal_warnings)} blocking issues)."
+            " Partial output was not accepted.",
             file=sys.stderr,
         )
         return 1

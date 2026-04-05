@@ -20,6 +20,7 @@ class PatchResult:
     """差し替え結果のサマリ."""
 
     face_changes: int = 0
+    slot_changes: int = 0
     bg_changes: int = 0
     bg_additions: int = 0
     tachie_syncs: int = 0
@@ -352,11 +353,154 @@ def _apply_idle_face(
                 )
 
 
+def _set_animatable_scalar(container: dict, key: str, value: float) -> int:
+    """X/Y/Zoom のような scalar または keyframe 風フィールドを書き換える."""
+    current = container.get(key)
+    if isinstance(current, dict):
+        values = current.get("Values")
+        if isinstance(values, list) and values:
+            first = values[0]
+            old = first.get("Value")
+            if old != value:
+                first["Value"] = value
+                return 1
+            return 0
+        current["Values"] = [{"Value": value}]
+        return 1
+    if current != value:
+        container[key] = value
+        return 1
+    return 0
+
+
+def _resolve_character_slots(
+    resolved: list[dict],
+    char_default_slots: dict[str, str] | None,
+    result: PatchResult,
+) -> dict[str, str]:
+    """IR からキャラごとの effective slot を解決する."""
+    effective: dict[str, str] = {}
+    char_slot_usage: dict[str, set[str]] = {}
+
+    for entry in resolved:
+        speaker = entry.get("speaker", "")
+        slot = entry.get("slot")
+        if speaker and slot:
+            char_slot_usage.setdefault(speaker, set()).add(slot)
+
+    if char_default_slots:
+        for char, default_slot in char_default_slots.items():
+            if default_slot:
+                effective[char] = default_slot
+
+    for char, labels in sorted(char_slot_usage.items()):
+        if len(labels) > 1:
+            result.warnings.append(
+                "SLOT_CHARACTER_DRIFT: "
+                f"character '{char}' uses multiple slot labels: "
+                f"{', '.join(sorted(labels))}"
+            )
+            continue
+        slot = next(iter(labels))
+        default_slot = (char_default_slots or {}).get(char)
+        if default_slot and slot != default_slot:
+            result.warnings.append(
+                "SLOT_DEFAULT_DRIFT: "
+                f"character '{char}' uses slot '{slot}'"
+                f" but registry default_slot is '{default_slot}'"
+            )
+        effective[char] = slot
+
+    return effective
+
+
+def _apply_slot_to_tachie_item(
+    tachie_item: dict,
+    slot_label: str,
+    slot_spec: dict | None,
+    result: PatchResult,
+) -> None:
+    """1 件の TachieItem に slot を反映する."""
+    if slot_spec is None:
+        if not tachie_item.get("IsHidden", False):
+            tachie_item["IsHidden"] = True
+            result.slot_changes += 1
+        return
+
+    try:
+        x = float(slot_spec["x"])
+        y = float(slot_spec["y"])
+        zoom = float(slot_spec["zoom"])
+    except (KeyError, TypeError, ValueError):
+        result.warnings.append(
+            "SLOT_VALUE_INVALID: "
+            f"slot '{slot_label}' must define numeric x/y/zoom"
+        )
+        return
+
+    if tachie_item.get("IsHidden", False):
+        tachie_item["IsHidden"] = False
+        result.slot_changes += 1
+
+    param = tachie_item.setdefault("TachieItemParameter", {})
+    result.slot_changes += _set_animatable_scalar(param, "X", x)
+    result.slot_changes += _set_animatable_scalar(param, "Y", y)
+    result.slot_changes += _set_animatable_scalar(param, "Zoom", zoom)
+
+    for key, value in (("X", x), ("Y", y), ("Zoom", zoom)):
+        if key in tachie_item:
+            result.slot_changes += _set_animatable_scalar(tachie_item, key, value)
+
+
+def _apply_slots(
+    items: list[dict],
+    resolved: list[dict],
+    slot_map: dict[str, dict | None],
+    char_default_slots: dict[str, str] | None,
+    result: PatchResult,
+) -> None:
+    """TachieItem に slot を反映する."""
+    if not slot_map:
+        return
+
+    effective_slots = _resolve_character_slots(resolved, char_default_slots, result)
+    if not effective_slots:
+        return
+
+    tachie_items: dict[str, list[dict]] = {}
+    for item in items:
+        if _item_type(item) != "TachieItem":
+            continue
+        char = (item.get("CharacterName") or "").strip()
+        if char:
+            tachie_items.setdefault(char, []).append(item)
+
+    for char, slot_label in sorted(effective_slots.items()):
+        if slot_label not in slot_map:
+            result.warnings.append(
+                "SLOT_REGISTRY_MISS: "
+                f"slot '{slot_label}' not found in slot_map"
+                f" for character '{char}'"
+            )
+            continue
+        targets = tachie_items.get(char, [])
+        if not targets:
+            result.warnings.append(
+                "SLOT_NO_TACHIE_ITEM: "
+                f"character '{char}' has no TachieItem for slot patch"
+            )
+            continue
+        for item in targets:
+            _apply_slot_to_tachie_item(item, slot_label, slot_map[slot_label], result)
+
+
 def patch_ymmp(
     ymmp_data: dict,
     ir_data: dict,
     face_map: dict[str, dict[str, str]],
     bg_map: dict[str, str],
+    slot_map: dict[str, dict | None] | None = None,
+    char_default_slots: dict[str, str] | None = None,
 ) -> PatchResult:
     """演出 IR に従って ymmp を差し替える.
 
@@ -404,6 +548,13 @@ def patch_ymmp(
     # non-speaker キャラの TachieFaceItem を挿入する
     _apply_idle_face(items, voice_items, resolved, face_map, result,
                      use_row_range)
+    _apply_slots(
+        items,
+        resolved,
+        slot_map or {},
+        char_default_slots,
+        result,
+    )
 
     # --- bg 差し替え ---
     # 既存の bg_items (Layer 0 の ImageItem/VideoItem) を削除し、
