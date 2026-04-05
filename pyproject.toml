@@ -4,10 +4,16 @@ version = "0.1.0"
 description = "NotebookLM transcript to YMM4 CSV pipeline"
 requires-python = ">=3.11"
 
+[project.scripts]
+nlmytgen = "src.cli.main:cli_entry"
+
 [project.optional-dependencies]
 dev = [
     "pytest>=8.1,<9",
 ]
+
+[tool.setuptools.packages.find]
+include = ["src*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

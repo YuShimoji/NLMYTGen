@@ -125,8 +125,17 @@ def _print_stats(output, chars_per_line: int = 0, max_display_lines: int = 0, fi
             print(f"--- No overflow candidates (all within {max_display_lines} lines at {chars_per_line} chars/line) ---", file=file)
 
 
-def _build_one(input_path: Path, output_path: Path, args: argparse.Namespace) -> bool:
-    """単一ファイルの build-csv 処理。成功なら True を返す。"""
+def _build_one(
+    input_path: Path,
+    output_path: Path,
+    args: argparse.Namespace,
+    *,
+    json_result: dict | None = None,
+) -> bool:
+    """単一ファイルの build-csv 処理。成功なら True を返す。
+
+    json_result が渡された場合、結果データをそこに書き込む。
+    """
     speaker_map = _resolve_speaker_map(args)
     unlabeled = getattr(args, "unlabeled", False)
     script = normalize(input_path, unlabeled=unlabeled)
@@ -148,14 +157,12 @@ def _build_one(input_path: Path, output_path: Path, args: argparse.Namespace) ->
 
     if max_lines:
         if reflow_v2:
-            # B-17: v2 統合リフロー (ページ分割+行内改行を同時決定)
             output = reflow_subtitles_v2(
                 output,
                 chars_per_line=chars_per_line,
                 max_lines=max_lines,
             )
         elif balance_lines:
-            # 既定の改行改善も階層型の統合リフローで処理する。
             output = reflow_subtitles_v2(
                 output,
                 chars_per_line=chars_per_line,
@@ -174,6 +181,8 @@ def _build_one(input_path: Path, output_path: Path, args: argparse.Namespace) ->
 
     if has_errors(results):
         print(f"Validation errors found. CSV not written: {input_path.name}", file=sys.stderr)
+        if json_result is not None:
+            json_result.update({"success": False, "error": "validation_errors"})
         return False
 
     if getattr(args, "stats", False) or getattr(args, "dry_run", False):
@@ -188,17 +197,31 @@ def _build_one(input_path: Path, output_path: Path, args: argparse.Namespace) ->
         if len(output.rows) > 5:
             print(f"  ... ({len(output.rows) - 5} more rows)")
         print("(dry-run: CSV not written)")
+        if json_result is not None:
+            json_result.update({
+                "success": True, "dry_run": True,
+                "rows": len(output.rows),
+                "speakers": dict(Counter(r.speaker for r in output.rows)),
+            })
         return True
 
     output.write(output_path)
     print(f"Written: {output_path} ({len(output.rows)} rows)")
 
+    if json_result is not None:
+        json_result.update({
+            "success": True,
+            "output": str(output_path),
+            "rows": len(output.rows),
+            "speakers": dict(Counter(r.speaker for r in output.rows)),
+        })
     return True
 
 
 def _cmd_build_csv(args: argparse.Namespace) -> int:
     """build-csv: 入力ファイル → YMM4 CSV 生成。複数ファイル対応。"""
     inputs = [Path(p) for p in args.input]
+    fmt = getattr(args, "format", "text")
 
     if getattr(args, "balance_lines", False) and not args.max_lines:
         raise ValueError("--balance-lines requires --max-lines")
@@ -209,27 +232,53 @@ def _cmd_build_csv(args: argparse.Namespace) -> int:
             output_path = Path(args.output)
         else:
             output_path = input_path.with_name(f"{input_path.stem}_ymm4.csv")
-        return 0 if _build_one(input_path, output_path, args) else 1
+        jr: dict | None = {"input": str(input_path)} if fmt == "json" else None
+        success = _build_one(input_path, output_path, args, json_result=jr)
+        if fmt == "json":
+            print(json.dumps(jr, ensure_ascii=False))
+        return 0 if success else 1
 
     # 複数ファイル
     if args.output:
         print("[WARN] -o is ignored with multiple inputs (each file gets {stem}_ymm4.csv)", file=sys.stderr)
 
     ok, fail = 0, 0
+    results_list = []
     for input_path in inputs:
         output_path = input_path.with_name(f"{input_path.stem}_ymm4.csv")
-        print(f"--- {input_path.name} ---")
+        if fmt != "json":
+            print(f"--- {input_path.name} ---")
         try:
-            if _build_one(input_path, output_path, args):
+            success = _build_one(input_path, output_path, args)
+            if success:
                 ok += 1
             else:
                 fail += 1
+            if fmt == "json":
+                results_list.append({
+                    "input": str(input_path),
+                    "output": str(output_path),
+                    "success": success,
+                })
         except (ValueError, FileNotFoundError) as e:
-            print(f"Error: {e}", file=sys.stderr)
+            if fmt != "json":
+                print(f"Error: {e}", file=sys.stderr)
             fail += 1
+            if fmt == "json":
+                results_list.append({
+                    "input": str(input_path),
+                    "output": None,
+                    "success": False,
+                    "error": str(e),
+                })
 
-    print(f"\n=== Batch: {ok} succeeded, {fail} failed (of {len(inputs)} files) ===")
+    if fmt == "json":
+        print(json.dumps({"batch": results_list, "ok": ok, "fail": fail}, ensure_ascii=False))
+    else:
+        print(f"\n=== Batch: {ok} succeeded, {fail} failed (of {len(inputs)} files) ===")
     return 1 if fail > 0 else 0
+
+
 
 
 def _cmd_validate(args: argparse.Namespace) -> int:
@@ -591,6 +640,8 @@ def main(argv: list[str] | None = None) -> int:
                          help="Use v2 reflow algorithm (balanced page+line splitting, requires --max-lines)")
     p_build.add_argument("--dry-run", action="store_true", help="Preview without writing")
     p_build.add_argument("--stats", action="store_true", help="Show speaker statistics")
+    p_build.add_argument("--format", choices=["text", "json"], default="text",
+                         help="Output format for results (default: text)")
 
     # validate
     p_validate = subparsers.add_parser("validate", help="Validate input file")
@@ -710,6 +761,8 @@ def main(argv: list[str] | None = None) -> int:
                               " (default: docs/S6-production-memo-prompt.md)")
     p_apply.add_argument("-o", "--output", help="Output ymmp path")
     p_apply.add_argument("--dry-run", action="store_true", help="Preview without writing")
+    p_apply.add_argument("--format", choices=["text", "json"], default="text",
+                         help="Output format for results (default: text)")
 
     # annotate-row-range
     p_annot = subparsers.add_parser(
@@ -1500,27 +1553,53 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         se_map=se_map,
     )
 
-    print(f"\nFace changes: {result.face_changes}")
-    print(f"Slot changes: {result.slot_changes}")
-    print(f"Overlay changes: {result.overlay_changes}")
-    print(f"SE plans: {result.se_plans}")
-    if result.tachie_syncs:
-        print(f"Idle face inserts: {result.tachie_syncs}")
-    print(f"BG removed: {result.bg_changes}, BG added: {result.bg_additions}")
+    fmt = getattr(args, "format", "text")
+
+    if fmt != "json":
+        print(f"\nFace changes: {result.face_changes}")
+        print(f"Slot changes: {result.slot_changes}")
+        print(f"Overlay changes: {result.overlay_changes}")
+        print(f"SE plans: {result.se_plans}")
+        if result.tachie_syncs:
+            print(f"Idle face inserts: {result.tachie_syncs}")
+        print(f"BG removed: {result.bg_changes}, BG added: {result.bg_additions}")
     for warning in result.warnings:
         print(f"  WARNING: {warning}", file=sys.stderr)
 
     fatal_warnings = _fatal_face_patch_warnings(result.warnings)
     if fatal_warnings:
-        print(
-            f"\nPatch FAILED ({len(fatal_warnings)} blocking issues)."
-            " Partial output was not accepted.",
-            file=sys.stderr,
-        )
+        if fmt != "json":
+            print(
+                f"\nPatch FAILED ({len(fatal_warnings)} blocking issues)."
+                " Partial output was not accepted.",
+                file=sys.stderr,
+            )
+        if fmt == "json":
+            print(json.dumps({
+                "success": False,
+                "error": "fatal_warnings",
+                "fatal_warnings": fatal_warnings,
+                "face_changes": result.face_changes,
+                "slot_changes": result.slot_changes,
+                "warnings": result.warnings,
+            }, ensure_ascii=False))
         return 1
 
     if args.dry_run:
-        print("(dry-run: no file written)")
+        if fmt == "json":
+            print(json.dumps({
+                "success": True, "dry_run": True,
+                "face_changes": result.face_changes,
+                "slot_changes": result.slot_changes,
+                "overlay_changes": result.overlay_changes,
+                "se_plans": result.se_plans,
+                "tachie_syncs": result.tachie_syncs,
+                "bg_changes": result.bg_changes,
+                "bg_additions": result.bg_additions,
+                "warnings": result.warnings,
+            }, ensure_ascii=False))
+        else:
+            print("(dry-run: no file written)")
         return 0
 
     out_path = args.output
@@ -1530,8 +1609,27 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
             Path(args.production_ymmp).parent / f"{stem}_patched.ymmp"
         )
     save_ymmp(ymmp_data, out_path)
-    print(f"Written: {out_path}")
+    if fmt == "json":
+        print(json.dumps({
+            "success": True,
+            "output": out_path,
+            "face_changes": result.face_changes,
+            "slot_changes": result.slot_changes,
+            "overlay_changes": result.overlay_changes,
+            "se_plans": result.se_plans,
+            "tachie_syncs": result.tachie_syncs,
+            "bg_changes": result.bg_changes,
+            "bg_additions": result.bg_additions,
+            "warnings": result.warnings,
+        }, ensure_ascii=False))
+    else:
+        print(f"Written: {out_path}")
     return 0
+
+
+def cli_entry() -> None:
+    """pyproject.toml scripts エントリポイント."""
+    sys.exit(main())
 
 
 if __name__ == "__main__":
