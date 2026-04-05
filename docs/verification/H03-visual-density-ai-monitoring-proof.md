@@ -65,4 +65,4 @@
 | useful enough to keep using | yes |
 | strongest improvement | it separates "lots of information" from "information that will actually become visible" |
 | residual drift | final YMM4 execution could still flatten S2 or S4 if the operator does not split the planned beats |
-| next improvement inside repo | packaging-side definitions are now mostly in place; the remaining unresolved proof is the one strict H-02 GUI rerun check if we want external confirmation |
+| next improvement inside repo | packaging-side definitions complete (H-02 strict GUI rerun proof passed 2026-04-06). Next frontier is direct production workflow bottleneck reduction (script quality / staging automation / visual effects) |

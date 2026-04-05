@@ -37,10 +37,13 @@
 - 2026-04-06: G-12 で fade-family `transition` route (`VoiceFade*` / `JimakuFade*` / `Fade*`) を ymmp_measure で回収できるようにし、repo-local contract を更新。非 fade / template-backed transition family のみを未確定として残す。
 - 2026-04-06: G-13 を completed packet とし、`overlay` は deterministic `ImageItem` 挿入まで閉じ、`se` は route 不在を `SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast 化する。timeline lane は broad retry loop に戻さない。
 - 2026-04-05: face は `FACE_UNKNOWN_LABEL` / `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` / `FACE_MAP_MISS` / `IDLE_FACE_MAP_MISS` / `VOICE_NO_TACHIE_FACE` の failure class で扱う。broad な manual retry loop に戻さない。
-- 推奨ロードマップ順は H-01 workflow proof → H-02 → H-04 → H-03。E-02 はその後に consumer として再評価する。
+- 推奨ロードマップ順は 2026-04-06 rev.2 で刷新。packaging spec lane は一巡完了 (H-02 pass)。次フェーズは実制作の3大bottleneck (台本品質/演出配置自動化/視覚効果) に軸を移す。E-01/E-02 は制作パイプラインと完全分離。
+- 2026-04-06: ユーザーフィードバックにより実制作ワークフローの自動化カバレッジを棚卸し。done 35件だが最重量工程 (演出配置・視覚効果・台本品質) が未自動化。runtime-state.md に工程別カバレッジと3大bottleneckの詳細を記録。project-context.md ROADMAP を方向転換版に全面刷新。
 
 ## 今後明文化すべきこと
-- 視覚系タスク (背景動画・アニメーション・サムネイル) の具体的なアプローチと Python 責務境界
+- 台本品質保証の具体的アプローチ (NLM臭除去、話者混同修正、ゆっくり解説様式変換)
+- 演出配置自動化の技術的アプローチと Python/YMM4 責務境界
+- 視覚効果 (茶番劇風アニメ・図解アニメ・サムネイル) の実現手段
 - B-16 行内折り返し制御の「1行/1ページ最大文字数から逆算する外殻」の仕様
 - 素材取得系 (D-02 中心) の権利・取得元・受け取り境界
 - GUI 候補 (F-01 / F-02) が workflow bottleneck を本当に減らすかの workflow proof

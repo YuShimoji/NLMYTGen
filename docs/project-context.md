@@ -4,7 +4,7 @@
 - プロジェクト名: NLMYTGen
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
-- 現フェーズ: Production E2E 実証 + face サブクエスト completion 固定。timeline lane の G-11〜G-13 packet を閉じ、H-01 dry proof・H-02 dry proof・H-03 dry proof・H-04 manual proof まで記録済み。repo 内 packaging 定義は一巡し、残る主未解決は H-02 strict GUI rerun proof の 1 回のみ
+- 現フェーズ: 方向転換中。Production E2E 実証済み、packaging spec (H-01〜H-04) 一巡完了、timeline (G-11〜G-13) 完了。2026-04-06 フィードバックにより、実制作の3大bottleneck (台本品質/演出配置自動化/視覚効果) に軸を移す。詳細は ROADMAP UPDATE (2026-04-06 rev.2) 参照
 - 直近の状態 (2026-04-05):
   - G-06 Production E2E: 60 VoiceItem / 28 IR utterance (row-range) / character-scoped face_map → face 133 changes / YMM4 visual proof OK
   - G-07 idle_face: 待機中表情の TachieFaceItem 挿入。28 件挿入 + carry-forward 動作確認
@@ -24,7 +24,7 @@
   - H-04 manual proof: `docs/verification/H04-evidence-richness-ai-monitoring-proof.md` により、AI監視 sample を total 77 / `acceptable` と採点し、warning を anecdote continuity と late payoff の repair に変換できることを確認
 - G-12 measurement packet: `docs/verification/G12-timeline-route-measurement.md` と `samples/timeline_route_contract.json` を追加。profile ベースの route contract で current corpus の `motion` / `bg_anim` を固定し、fade-family `transition` route (`VoiceFade*` / `JimakuFade*` / `Fade*`) も mechanical に回収できる状態まで更新
   - G-13 overlay / se insertion packet: `docs/verification/G13-overlay-se-insertion-packet.md` を追加。`overlay` は registry + timing anchor から deterministic な `ImageItem` 挿入まで実装し、`se` は label/timing 解決までは閉じたうえで `AudioItem` write route 不在時に `SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast する boundary を固定
-  - packaging frontier packet: H-03 まで schema + dry proof を記録済み。repo 内で残る packaging 側の strict 未解決は H-02 GUI rerun proof
+  - packaging frontier packet: H-01〜H-04 schema + dry proof 記録済み。H-02 strict GUI rerun proof は 2026-04-06 pass で閉じた
   - `uv run pytest`: 220 passed / 3 xpassed
   - B-12 行バランス重視の字幕分割を実装。`--balance-lines` を追加し、2行字幕向けに自然な改行を opt-in で挿入できるようにした
   - B-12 検証: `build-csv --max-lines 2 --chars-per-line 40 --balance-lines --stats --dry-run` で実データ preview を確認。CSV 1行内の改行保持テストも追加
