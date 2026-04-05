@@ -4,14 +4,17 @@
 - プロジェクト名: NLMYTGen
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
-- 現フェーズ: Production E2E 実証完了。face + bg + idle_face パイプライン全通。Tier 3 (安定化) へ
+- 現フェーズ: Production E2E 実証 + face サブクエスト completion 固定。次の主 frontier は H-01 Packaging Orchestrator の workflow proof
 - 直近の状態 (2026-04-05):
   - G-06 Production E2E: 60 VoiceItem / 28 IR utterance (row-range) / character-scoped face_map → face 133 changes / YMM4 visual proof OK
   - G-07 idle_face: 待機中表情の TachieFaceItem 挿入。28 件挿入 + carry-forward 動作確認
   - bg section 切替 proof: 2 ラベル (van_dashboard_ai + dark_board) で BG added 2 / YMM4 確認 OK
   - extract-template --labeled: palette.ymmp → character-scoped face_map (魔理沙 6 + 霊夢 5 = 11 表情)
   - row-range: IR 28 発話 ↔ CSV 60 行の粒度差を row_start/row_end で吸収
-  - `uv run pytest`: 131 PASS (10 ファイル)
+  - face completion hardening: `validate-ir` が `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` / `FACE_PROMPT_PALETTE_*` / `FACE_LATENT_GAP` を分類し、`apply-production` は row-range unmatched/uncovered・validation error・fatal face patch warning で fail-fast
+  - H-01 Packaging Orchestrator brief: `docs/PACKAGING_ORCHESTRATOR_SPEC.md` v0.1 を追加。C-07/C-08 が参照する central brief schema を定義
+  - packaging frontier packet: H-02 Thumbnail strategy v2 / H-03 Visual density score / H-04 Evidence richness score を proposed backlog として整理
+  - `uv run pytest`: 187 PASS (12 ファイル)
   - B-12 行バランス重視の字幕分割を実装。`--balance-lines` を追加し、2行字幕向けに自然な改行を opt-in で挿入できるようにした
   - B-12 検証: `build-csv --max-lines 2 --chars-per-line 40 --balance-lines --stats --dry-run` で実データ preview を確認。CSV 1行内の改行保持テストも追加
   - B-12 post-import 再観測: 手動改行 10 / 再分割したい長文 15 / 不自然な単語分割 5。`。` での改行は効いたが、句読点の少ない長文と 1 文字最終行が残った
@@ -38,14 +41,51 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → 演出 IR → ymmp 後段適用 → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → patch-ymmp → 演出設定 → レンダリング
-- 現在のスライス: G-06 done + extract-template done。パイプライン実装完了。Custom GPT v4 proof + 実台本 E2E が次
+- 現在のスライス: face サブクエストを「failure class で再オープンする完成済みサブシステム」として固定。主 frontier は H-01 へ移行可能
 - 成功状態: face+bg 限定の全パイプライン E2E が通り、Level 3 (半自動制作ライン) に到達すること
 
 ---
 
 ## CURRENT LANE
 - 主レーン: Advance
-- 今このレーンを優先する理由: 演出 IR パイプライン (G-02→G-05→G-06) が実装完了し、Custom GPT v4 proof → 実台本 E2E で Level 3 到達を目指す段階のため
+- 今このレーンを優先する理由: face サブクエストを完成条件つきで閉じ、以後の主 frontier を packaging / orchestration 側へ進められる段階に入ったため
+
+---
+
+## RECOMMENDED ROADMAP (2026-04-05)
+
+### Phase 0: Tier 3 安定化を先に閉じる
+- G-10 を前提に、Custom GPT Instructions v4 差し替えと palette 不足ラベル追加を先に完了する。
+- 理由: packaging / marketing を強めても、演出基盤の face/bg 適用が不安定だと downstream の比較がノイズ化するため。
+
+### Phase 1: Packaging の中央制御を作る
+- 第一着手は H-01 Packaging Orchestrator brief。
+- ここで title promise / thumbnail promise / audience hook / required evidence / forbidden overclaim / alignment check を 1 つの brief に束ねる。
+- 理由: 現在の主問題は「良いコピーが出ない」ことより、「台本側がタイトルを侵食し、判断主体が分散する」ことにあるため。
+- 2026-04-05 時点で schema v0.1 は定義済み。次に必要なのは、C-07/C-08 実運用で drift が減るかの workflow proof。
+
+### Phase 2: サムネ戦略を H-01 配下で強化する
+- 第二着手は H-02 Thumbnail strategy v2。
+- 具体数値・固有名詞・年数・割合・金額など本文根拠のある具体性を優先し、抽象煽りテンプレへの依存を下げる。
+- 同時に構図 / 表情 / 配色 / コピー型の rotation を定義し、固定パターン連打を避ける。
+
+### Phase 3: 内容の強さを採点できるようにする
+- 第三着手は H-04 Evidence richness score。
+- 逸話 / 具体事例 / 数値 / 学術知 / 最新情報のどれが弱いかを可視化し、サムネやタイトルの promise を本文が支えられているかを見る。
+- 理由: 先に内容根拠の診断軸を持たないと、H-02 が click-first に偏るため。
+
+### Phase 4: 視覚密度を診断する
+- 第四着手は H-03 Visual density score。
+- 初期版は IR / section plan / bg_map / template 使用状況から proxy 算出し、背景切替・静止継続・情報埋め込み・演出配分を warning 化する。
+- 理由: これは有効だが、H-01/H-02/H-04 より bottleneck 直撃度が一段低く、先に中央制御と内容側 gate を作る方が効率が高い。
+
+### Phase 5: 配信 metadata は最後に再評価する
+- E-02 は H-01/H-02/H-04 の出力を受ける consumer として再評価する。
+- 単体で先に進めない。Packaging brief と evidence gate がない metadata 生成は、再び「コピペ先が変わるだけ」の弱い value path に戻るため。
+
+### Deferred / Not First
+- F-01/F-02 GUI は引き続き quarantine。H-01〜H-04 の運用で bottleneck が本当に減るか見るまでは戻さない。
+- D-02 は主軸に戻さない。素材取得より、何を見せるか / 何を約束するか / 何が足りないかの判断支援が先。
 
 ---
 
@@ -134,6 +174,12 @@
 | 2026-04-05 | idle_face: IR フィールド追加 + TachieFaceItem 挿入方式 | 実装確定 | TachieItem の表情制御ではなく、IR に idle_face を追加して adapter が non-speaker 側に TachieFaceItem を挿入。既存 face 適用経路を崩さず拡張 |
 | 2026-04-05 | bg section 切替 proof 成功 (2 ラベル) | 実証済み | 5 セクションのうち 2 ラベルで背景切替を確認。残りはユーザーが bg_map を拡張するだけ |
 | 2026-04-05 | `.claude` 側に常設ガードを追加 | 実装確定 | 毎回 prompt に重い禁止を書き足さず、repo-local 入口と hooks で repo 外逸脱 / broad question 停止 / repeated visual proof を抑止する |
+| 2026-04-05 | face サブクエストの completion criteria を固定 | 継続調整 / failure class 固定 | face を未整理な改善ループではなく completed subsystem として扱うため。mechanical failure は class 名で止め、人間判断は creative quality に限定 |
+| 2026-04-05 | apply-production は partial face output を書かない | patch 先行 / fail-fast | row-range 不整合、validation error、fatal face patch warning を書き出し前に止め、ymmp 化→手動確認ループを再発させないため |
+| 2026-04-05 | Packaging / marketing レイヤーを独立 frontier として backlog 化 | C-08 個別改善 / E-02 再開 / packaging layer 新設 | 台本→タイトル侵食を止め、タイトル / サムネ / 台本の整合を 1 つの central brief で管理するため |
+| 2026-04-05 | H-01 Packaging Orchestrator brief schema v0.1 を定義 | backlog のみ / schema 定義 | H-01 を abstract な気づきで終わらせず、C-07/C-08/E-02/H-04 が参照できる正本フィールドへ落とすため |
+| 2026-04-05 | サムネイル戦略は抽象煽りより具体数値・固有名詞優先 + rotation 管理 | 定型煽り / 具体性優先 / 各動画場当たり | 本文根拠とクリック訴求を両立し、固定パターン反復による疲労と硬直を避けるため |
+| 2026-04-05 | スコアリングは visual density / evidence richness の2軸から着手 | スコアなし / 単一総合点 / 2軸 | 演出不足と内容不足を別々に診断し、制作改善とマーケ改善の接続点を明確化するため |
 
 ---
 
@@ -169,13 +215,13 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ---
 
-## HANDOFF SNAPSHOT (2026-04-03 更新)
+## HANDOFF SNAPSHOT (2026-04-05 更新)
 
-- Shared Focus: G-05 v4 proof 完了 + production-slice patch-ymmp proof 完了 + Multi-Object IR 読み込み対応。次は実制作 28発話 ymmp を特定して extract-template → patch-ymmp full E2E
+- Shared Focus: face サブクエスト completion 固定。次の主 frontier は H-01 Packaging Orchestrator の workflow proof。face は failure class 発生時だけ再オープン
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: direct (load_ir Multi-Object 対応実装。G-05 v4 proof + production-slice patch-ymmp proof 完了)
-- Evidence: 93 PASS。Custom GPT v4 IR 出力 (28 utterances, 全語彙チェック PASS)。production-slice patch-ymmp proof で face 13 / bg 2 変更を確認。YMM4 テンプレート構造 (ItemSettings.json) 実測確定。full E2E 用の実制作 ymmp は current workspace で未確認
+- Last Change Relation: direct (face completion hardening: prompt/palette drift detector + palette gap report + fail-fast apply-production)
+- Evidence: Production E2E 実証済み + `uv run pytest` 187 PASS。`validate-ir` が prompt drift / active gap / row-range integrity を class 付きで検出し、`apply-production` が partial face output を書かない
 - 案件モード: CLI artifact
 - 現在の主レーン: Advance (演出パイプライン E2E)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近
@@ -185,9 +231,9 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - trusted: extract-template (face_map/bg_map 自動抽出)
   - trusted: G-05 v4 proof 完了。Custom GPT が PRODUCTION_IR_SPEC v1.0 準拠の IR を正常出力
   - trusted: load_ir Multi-Object 対応 (2オブジェクト連結形式の読み込み)
+  - trusted: face completion hardening (`PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` / `FACE_PROMPT_PALETTE_*` / `FACE_LATENT_GAP`)
   - needs re-check: motion/transition/overlay の ymmp 適用は未実装 (正式スコープ内の frontier)
-  - needs re-check: 実制作 28発話 ymmp での face/bg 差し替え full E2E は未実施
-  - needs re-check: VoiceItem が `TachieFaceParameter` を持たない箇所は face 差し替え対象外。テンプレート側前提の確認が必要
+  - needs re-check: face label inventory そのものが creative quality として十分かは最終制作物で見る
 - Recovered Canonical Context:
   - Python はテキスト変換 + 演出 IR 定義 + ymmp 限定後段適用
   - 視覚配置 IR が中心課題。C-07 系が主系統、D-02 は従属的補助論点
@@ -196,7 +242,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - YMM4 テンプレートは独立ファイルではなく ItemSettings.json の Templates 配列に JSON 保存
   - Custom GPT v4 は 2オブジェクト連結形式 (Macro + Micro) で IR を出力する。load_ir() で対応済み
 - Authority Return Items:
-  - 実制作 28発話 ymmp の所在確定 → face/bg 差し替え full E2E → YMM4 で開いて確認
+  - H-01 Packaging Orchestrator brief の workflow proof
   - motion/transition/overlay の ymmp 適用を次に進めるかの判断
   - E-02: hold 継続。E-01 とセットでのみ再検討
   - F-01/F-02: quarantined 継続
@@ -206,10 +252,12 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - motion/transition/overlay を「未実装だから境界外」と誤分類しない
   - quarantined 項目を通常候補としてそのまま spec 化しない
   - 素材取得/API 検討を再び中心にしない
+  - face 問題を broad な visual retry loop として再開しない。failure class か final creative judgement を起点にする
 - Expansion Risk: なし
 ## 2026-04-05 Structural Linebreak Redesign Note
 
 - B-17 reflow v2 was reworked around structural major/minor boundaries instead of phrase-specific word lists.
 - Page carry-over and in-page line breaks are now evaluated separately: page planning prefers major boundaries first, then falls back to minor boundaries only when necessary.
 - Inline break scoring now strongly penalizes breaks inside short hiragana connector tails and around quoted/bracketed labels followed by explanatory nouns.
+- Short comma-led intro lines are now penalized by width so that later particle/phrase breaks win when they keep the page visually denser.
 - Sample proof on `samples/AI監視が追い詰める生身の労働.txt` improved several screen-facing failures (`では / なく`, `）」 / という`, `） / 」`, `19 / 億`) while leaving a smaller residual cluster around `XというY` and quoted explanatory phrases that still need another structural pass.

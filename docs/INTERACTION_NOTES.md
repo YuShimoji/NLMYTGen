@@ -26,6 +26,11 @@
 - 再開時の repeated context は、まず `docs/ai/*.md` と project-local canonical docs を読んでから扱う
 - 字幕改行の報告では、「長すぎる行が減ったか」と「残りが bulk pain か individual judgement か」を分けて伝える。境界ケース段階に入ったら、rule 追加と corpus 収集を混同しない
 
+## face サブクエスト報告
+- face 問題は `FACE_UNKNOWN_LABEL` / `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` / `FACE_MAP_MISS` / `IDLE_FACE_MAP_MISS` / `VOICE_NO_TACHIE_FACE` の failure class 名で報告する
+- 「何が足りないですか」「どこを見ればよいですか」の broad question では止まらず、failure class ごとの next action を先に提示する
+- failure class が mechanical に確定しているときは、同じ趣旨の YMM4 visual proof を追加で要求しない
+
 ## 開発ドリフト回避
 - 新しい自動化経路を提案する際は、現行ロードマップ (YMM4-AUTOMATION-RESEARCH.md セクション4) の段階構成との整合を示すこと
 - 研究 (ymmp 解析、プラグイン API 調査、外部ツール評価等) と開発 (IR 定義、プロンプト改訂等) を混同しない。研究に2ブロック以上費やす場合は一度止まって開発に戻る

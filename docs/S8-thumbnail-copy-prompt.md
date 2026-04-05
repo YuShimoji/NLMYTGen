@@ -6,7 +6,23 @@ YouTube サムネイルのキャッチコピー候補を GUI LLM で生成する
 C-07 (S-6 演出メモ) と同じ方式で、Custom GPT / Claude Project / コピペで使う。
 Python 変更なし。
 
+Packaging Orchestrator brief (H-01) がある場合は、それをサムネイルコピー生成の上位制約とする。
+
 ---
+
+## H-01 連携 (推奨)
+
+`docs/PACKAGING_ORCHESTRATOR_SPEC.md` に沿った Packaging Orchestrator brief がある場合は、
+台本テキストの前にその brief を貼る。
+
+その場合、C-08 は以下を優先する:
+
+- `thumbnail_promise`
+- `required_evidence`
+- `forbidden_overclaim`
+- `thumbnail_controls.preferred_specifics`
+- `thumbnail_controls.banned_copy_patterns`
+- `thumbnail_controls.rotation_axes`
 
 ## プロンプト本体
 
@@ -14,6 +30,9 @@ Python 変更なし。
 あなたはゆっくり解説動画のサムネイル制作アシスタントです。
 
 以下の台本テキストを読み、YouTube サムネイル用の要素を提案してください。
+
+もし Packaging Orchestrator brief が先に与えられている場合は、それを上位制約として扱い、
+抽象煽りより本文根拠のある具体数値・固有名詞を優先してください。
 
 ## 出力フォーマット
 
@@ -94,5 +113,5 @@ Python 変更なし。
 C-07 の演出メモと同じ台本を入力するため、以下の運用が可能:
 
 1. C-07 で演出メモを生成 (S-6 作業用)
-2. 同じ会話で続けて「サムネイルも」と追加依頼
+2. Packaging Orchestrator brief がある場合は先に貼り、その後に同じ会話で「サムネイルも」と追加依頼
 3. または S-8 専用として別途このプロンプトを使用

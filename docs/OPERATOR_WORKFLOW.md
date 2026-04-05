@@ -11,7 +11,7 @@
 - S-5: 読み上げ確認、字幕はみ出し修正、辞書登録
 - S-6: 背景・演出・BGM・表情差し替え
   - S-6a (手動): Custom GPT に台本テキストを貼り付けて IR JSON を取得
-  - S-6b (CLI): `apply-production production.ymmp ir.json --palette palette.ymmp --csv reflow.csv --bg-map bg_map.json -o output.ymmp` (face_map 抽出 + row-range 自動付与 + patch を 1 コマンドで実行)
+  - S-6b (CLI): `apply-production production.ymmp ir.json --palette palette.ymmp --csv reflow.csv --bg-map bg_map.json -o output.ymmp` (face_map 抽出 + row-range 自動付与 + patch を 1 コマンドで実行。row-range mismatch / prompt drift / active gap / fatal face issue は書き出し前に停止)
   - S-6c (手動): YMM4 で output.ymmp を開き、表情・背景・BGM を確認・微調整
 - S-7: 通し確認とレンダリング
 - S-8: サムネイルをテンプレートベースで手動調整
@@ -47,6 +47,7 @@
 - 2026-04-01 の C-07 v1 proof: セクション分割 OK、作業時間削減 OK、背景候補 NG。ストック素材検索は方向が違う。必要なのは茶番劇アニメ+図解の演出指示。
 - 2026-04-01 の C-07 v2 proof: 4演出パターン (茶番劇/情報埋め込み/雰囲気演出/黒板型) + 発話単位指示 + 表示情報抽出 + 要調査明示。3基準全て OK。C-07 done。
 - 2026-04-03 の production-slice patch-ymmp proof では、実IR先頭11発話を既存 ymmp に適用して face 13 / bg 2 変更を確認した。一方で 11 VoiceItem 中 4 件は `TachieFaceParameter` を持たず、face 差し替え対象外だった。full E2E 前に、台本読込後 ymmp の対象キャラ発話が表情パラメータを保持していることを operator 側で確認する必要がある。
+- 2026-04-05 の face completion hardening で、この種の partial apply は `VOICE_NO_TACHIE_FACE` として mechanical failure に昇格した。以後は broad な visual retry loop ではなく、failure class に応じて対処する。
 
 ## Actor Boundaries (三層責務構造対応)
 - `user`: NotebookLM 操作、Custom GPT で Writer IR 生成 (第1層)、Template Registry のラベル付け・素材準備 (第2層)、YMM4 内の判断・微調整、サムネイル、投稿判断、YMM4 native template の登録
@@ -64,9 +65,34 @@
 - `extract-template` の出力キー (`face_01_...`, `bg_01_...`) は棚卸し用の仮ラベル。production 用 registry は visual review 後の意味ラベルへ手動で整える
 
 ## palette 更新が必要になるケース
-- apply-production の face stats で UNKNOWN labels が出た → palette にそのラベルの表情を追加し再抽出
+- `FACE_UNKNOWN_LABEL` / `FACE_ACTIVE_GAP` が出た → palette にそのラベルの表情を追加し再抽出
+- `FACE_PROMPT_PALETTE_GAP` が出た → Custom GPT の face 許可リストと palette の差分を解消する
+- `FACE_PROMPT_PALETTE_EXTRA` が出た → prompt が palette の実在ラベルより狭くなっていないか確認する
 - 連続 run が多い → palette のラベル間のパーツ差が小さすぎる可能性。パーツ組み合わせを見直す
-- Custom GPT プロンプトの face 許可リストを変更した → palette も揃える
+
+## face サブクエストの completion criteria (2026-04-05 固定)
+- `validate-ir` / `apply-production` が face 関連の mechanical failure を failure class 付きで止められること
+- current IR に必要な face / idle_face が palette で解決できない場合、`FACE_ACTIVE_GAP` として書き出し前に停止すること
+- prompt の face 契約と palette の drift が `FACE_PROMPT_PALETTE_GAP` / `FACE_PROMPT_PALETTE_EXTRA` / `FACE_LATENT_GAP` で可視化されること
+- row-range の不整合が `ROW_RANGE_MISSING` / `ROW_RANGE_INVALID` / `ROW_RANGE_OVERLAP`、または annotate の unmatched / uncovered として止まること
+- patch-time にしか分からない ymmp 側の欠陥 (`VOICE_NO_TACHIE_FACE` / `FACE_MAP_MISS` / `IDLE_FACE_MAP_MISS`) でも partial output を書かないこと
+- 上記が clean なら、face は「完成済みサブシステム」として扱い、次の主 frontier を止めないこと
+
+## face で人間が判断する範囲
+- palette の各ラベル名 (`serious` / `thinking` 等) が YMM4 上の見え方として妥当か
+- 新しい表情ラベルを増やす価値があるか、既存ラベルの再命名で足りるか
+- 実制作物でその表情が内容に対して十分かどうかという creative quality
+- 初回 E2E と最終制作物での「見え方の良し悪し」。同じ mechanical failure を疑うための repeated visual proof は不要
+
+## face を再度触る条件
+- `FACE_UNKNOWN_LABEL`
+- `PROMPT_FACE_DRIFT`
+- `FACE_ACTIVE_GAP`
+- `ROW_RANGE_MISSING` / `ROW_RANGE_INVALID` / `ROW_RANGE_OVERLAP`
+- row-range annotate の unmatched / uncovered
+- `FACE_MAP_MISS` / `IDLE_FACE_MAP_MISS`
+- `VOICE_NO_TACHIE_FACE`
+- 最終制作物で「今の label inventory 自体が足りない」と判断された場合
 
 ## 検証の境界 (2026-04-05 固定)
 - パイプラインの機械的動作はユニットテスト + CLI dry-run で検証する。YMM4 visual proof を繰り返し要求しない

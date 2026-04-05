@@ -111,12 +111,21 @@
 | G-02b | 完成品 ymmp 構造解析 (研究のみ、1件限定) | done | L3 | 171MB ymmp を解析。VoiceItem 1549件 / VideoItem 140件 / TachieItem 2件。TachieFaceParameter でパーツ単位の表情制御。bg+face 差し替えが最小実用単位。`docs/verification/G02b-ymmp-structure-analysis.md` |
 | G-03 | 演出適用ツール (IToolPlugin) | hold | L3 | G-01 が前提。タイムライン操作 API 非公開のため凍結 |
 | G-04 | ymmp 背景/表情自動差し替え | hold | L3 | ymmp 直接編集は控える。G-02b + 段階5の判断結果を踏まえて再検討 |
-| G-05 | Writer IR 出力プロンプト (C-07 v4) | done | L2 | 三層の第1層 (Writer IR)。Custom GPT が PRODUCTION_IR_SPEC v1.0 準拠の構造化 IR (scene_preset + override) を出力。`docs/S6-production-memo-prompt.md` v4 セクション。proof 待ち |
+| G-05 | Writer IR 出力プロンプト (C-07 v4) | done | L2 | 三層の第1層 (Writer IR)。Custom GPT が PRODUCTION_IR_SPEC v1.0 準拠の構造化 IR (scene_preset + override) を出力。`docs/S6-production-memo-prompt.md` v4 セクション。proof 完了 |
 | G-06 | YMM4 Adapter (patch-ymmp) | done | L2/L3 | 三層の第3層 (YMM4 Adapter)。face (表情パーツ) を IR→ymmp で差し替え。character-scoped face_map + row-range 対応済み。extract-template --labeled で palette ymmp から face_map 自動生成。production E2E 実証済み (2026-04-05: 60 VoiceItem / 28 IR utterance / face 133 changes) |
 | G-07 | 待機中表情の指定 (idle_face) | done | L2/L3 | IR に `idle_face` フィールドを追加。patch-ymmp が各 utterance の開始 Frame に non-speaker キャラの TachieFaceItem を挿入。carry-forward 対応。character-scoped face_map で解決。131 PASS (2026-04-05) |
-| G-08 | apply-production ワンコマンド | done | L2 | `apply-production` サブコマンド。palette → face_map 抽出 + row-range 自動付与 + patch-ymmp を 1 コマンドで実行。--palette / --face-map / --bg-map / --csv / --refresh-maps / --dry-run |
+| G-08 | apply-production ワンコマンド | done | L2 | `apply-production` サブコマンド。palette → face_map 抽出 + row-range 自動付与 + patch-ymmp を 1 コマンドで実行。`validate-ir` を内包し、row-range unmatched/uncovered・validation error・fatal face patch warning (`FACE_MAP_MISS` / `IDLE_FACE_MAP_MISS` / `VOICE_NO_TACHIE_FACE`) では書き出し前に停止する。--palette / --face-map / --bg-map / --csv / --refresh-maps / --dry-run |
 | G-09 | annotate-row-range (row_start/row_end 自動付与) | done | L2 | IR utterance text と CSV 行の段階的 Greedy Forward Match (strict/loose/partial)。NFKC + 句読点除去。speaker 補助チェック。cascade failure 防止。`annotate-row-range` 独立コマンド + `apply-production --csv` 統合。151 PASS (2026-04-05) |
-| G-10 | IR 品質 gate (validate-ir) | done | L2 | `validate-ir` サブコマンド + `apply-production` 統合。unknown face label → ERROR、serious 偏り (>40%) → WARNING、連続 run (>4) → WARNING、idle_face 未指定 → WARNING、bg 未設定 → WARNING。Custom GPT プロンプトの face 許可リスト修正 (neutral 除外)、分布制約追加。169 PASS |
+| G-10 | IR 品質 gate (validate-ir) | done | L2 | `validate-ir` サブコマンド + `apply-production` 統合。`FACE_UNKNOWN_LABEL` / `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` を ERROR、`FACE_PROMPT_PALETTE_GAP` / `FACE_PROMPT_PALETTE_EXTRA` / `FACE_LATENT_GAP` / serious 偏り (>40%) / 連続 run (>4) / idle_face 未指定 / bg 未設定 を WARNING として分類する。Custom GPT の face 許可リストと palette の drift report、キャラ別 palette gap report を出力。187 PASS |
+
+### H. Packaging / 評価 / オーケストレーション (L2 + L4)
+
+| ID | 機能 | ステータス | レイヤー | 備考 |
+|----|------|-----------|---------|------|
+| H-01 | Packaging Orchestrator brief | approved | L2 | タイトル / サムネ / 台本の約束を中央制御する text-only brief。`docs/PACKAGING_ORCHESTRATOR_SPEC.md` v0.1 で schema を定義済み。`promise` / `audience_hook` / `required_evidence` / `forbidden_overclaim` / `alignment_check` を正本化し、台本単体がタイトルを越権決定しないようにする。旧 code orchestrator パターンの復活ではない |
+| H-02 | Thumbnail strategy v2 (具体数値優先 + pattern rotation) | proposed | L2 | C-08 の上位互換候補。抽象煽りより、年数・人数・割合・金額・固有名詞など本文根拠のある具体性を優先。構図 / 表情 / 配色 / コピー型の rotation policy を持ち、視聴者疲労とパターン硬直を避ける |
+| H-03 | Visual density score | proposed | L2/L3 | 動画内の視覚情報量を proxy で計測する。初期は IR / section plan / bg_map / template 使用状況から算出し、将来的に ymmp readback を併用。背景切替回数、静止継続秒数、演出パターン配分、情報埋め込み数、overlay / animation 要素数を warning 化 |
+| H-04 | Evidence richness score | proposed | L1/L2 | 台本とソースセットを見て、逸話 / 具体事例 / 数値 / 学術知 / 最新情報の充足度を可視化する。タイトル / サムネの約束に対して本文根拠が足りるかも併記し、marketing と script quality を同時に見る |
 
 ---
 
