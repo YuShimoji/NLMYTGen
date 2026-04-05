@@ -28,7 +28,7 @@
         <h3>設定</h3>
         <div class="setting-row">
           <label for="speaker-map">Speaker Map</label>
-          <input type="text" id="speaker-map" placeholder="スピーカー1=れいむ,スピーカー2=まりさ">
+          <input type="text" id="speaker-map" value="スピーカー1=れいむ,スピーカー2=まりさ">
         </div>
         <div class="setting-row">
           <label for="max-lines">Max Lines</label>
@@ -48,6 +48,7 @@
       <div class="action-row">
         <button id="btn-build-csv" class="primary" disabled>Build CSV</button>
         <button id="btn-dry-run">Dry Run</button>
+        <button id="btn-open-output" class="hidden">出力フォルダを開く</button>
       </div>
 
       <div id="csv-result" class="result-panel hidden"></div>
@@ -66,6 +67,13 @@
           <button class="btn-file" data-target="ir-json">選択</button>
           <span id="ir-json-path" class="file-path">未選択</span>
         </div>
+
+        <div class="ir-paste-group">
+          <label>または IR を貼り付け:</label>
+          <textarea id="ir-paste" rows="4" placeholder="Custom GPT の IR JSON 出力をここに貼り付け → 保存ボタンで .json に書き出し"></textarea>
+          <button id="btn-save-ir">IR を JSON に保存</button>
+        </div>
+
         <div class="file-row">
           <label>Palette .ymmp</label>
           <button class="btn-file" data-target="palette">選択</button>
@@ -84,10 +92,13 @@
       </div>
 
       <div class="action-row">
+        <button id="btn-validate-ir" disabled>Validate IR</button>
         <button id="btn-apply" class="primary" disabled>Apply Production</button>
         <button id="btn-apply-dry">Dry Run</button>
+        <button id="btn-open-patched" class="hidden">出力フォルダを開く</button>
       </div>
 
+      <div id="validate-result" class="result-panel hidden"></div>
       <div id="production-result" class="result-panel hidden"></div>
     </section>
   </main>

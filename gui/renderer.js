@@ -13,8 +13,10 @@ const dropZone = document.getElementById('drop-zone');
 const selectedFile = document.getElementById('selected-file');
 const btnBuild = document.getElementById('btn-build-csv');
 const btnDryRun = document.getElementById('btn-dry-run');
+const btnOpenOutput = document.getElementById('btn-open-output');
 const csvResult = document.getElementById('csv-result');
 let currentTxtPath = null;
+let lastOutputPath = null;
 
 function setTxtFile(filePath) {
   currentTxtPath = filePath;
@@ -57,6 +59,7 @@ async function runBuildCsv(dryRun) {
   const status = document.getElementById('status');
   status.textContent = 'Building CSV...';
   btnBuild.disabled = true;
+  btnOpenOutput.classList.add('hidden');
 
   const opts = {
     input: currentTxtPath,
@@ -82,6 +85,8 @@ async function runBuildCsv(dryRun) {
       }
       if (result.json.output) {
         text += `\nOutput: ${result.json.output}`;
+        lastOutputPath = result.json.output;
+        btnOpenOutput.classList.remove('hidden');
       }
       if (result.json.dry_run) {
         text += `\n(dry-run: CSV not written)`;
@@ -109,6 +114,9 @@ async function runBuildCsv(dryRun) {
 
 btnBuild.addEventListener('click', () => runBuildCsv(false));
 btnDryRun.addEventListener('click', () => runBuildCsv(true));
+btnOpenOutput.addEventListener('click', () => {
+  if (lastOutputPath) window.nlmytgen.openFolder(lastOutputPath);
+});
 
 // --- Production Tab ---
 const filePaths = {
@@ -127,6 +135,8 @@ const fileFilters = {
   'bg-map': [{ name: 'JSON', extensions: ['json'] }],
 };
 
+let lastPatchedPath = null;
+
 document.querySelectorAll('.btn-file').forEach(btn => {
   btn.addEventListener('click', async () => {
     const target = btn.dataset.target;
@@ -138,20 +148,79 @@ document.querySelectorAll('.btn-file').forEach(btn => {
       filePaths[target] = path;
       document.getElementById(`${target}-path`).textContent = path;
       updateApplyButton();
+      autoSave();
     }
   });
 });
 
 function updateApplyButton() {
-  const ready = filePaths['prod-ymmp'] && filePaths['ir-json'];
-  document.getElementById('btn-apply').disabled = !ready;
+  const hasIr = filePaths['ir-json'];
+  const hasYmmp = filePaths['prod-ymmp'];
+  document.getElementById('btn-apply').disabled = !(hasIr && hasYmmp);
+  document.getElementById('btn-validate-ir').disabled = !hasIr;
 }
 
+// --- IR paste ---
+document.getElementById('btn-save-ir').addEventListener('click', async () => {
+  const content = document.getElementById('ir-paste').value.trim();
+  if (!content) return;
+
+  const saved = await window.nlmytgen.saveIrPaste({ content, defaultPath: 'ir.json' });
+  if (saved) {
+    filePaths['ir-json'] = saved;
+    document.getElementById('ir-json-path').textContent = saved;
+    document.getElementById('ir-paste').value = '';
+    document.getElementById('status').textContent = `IR saved: ${saved}`;
+    updateApplyButton();
+    autoSave();
+  }
+});
+
+// --- Validate IR ---
+document.getElementById('btn-validate-ir').addEventListener('click', async () => {
+  if (!filePaths['ir-json']) return;
+
+  const status = document.getElementById('status');
+  status.textContent = 'Validating IR...';
+
+  const opts = {
+    irJson: filePaths['ir-json'],
+    palette: filePaths['palette'] || undefined,
+  };
+
+  const validatePanel = document.getElementById('validate-result');
+
+  try {
+    const result = await window.nlmytgen.validateIr(opts);
+    validatePanel.classList.remove('hidden', 'success', 'error');
+
+    if (result.code === 0) {
+      validatePanel.classList.add('success');
+      validatePanel.textContent = result.stdout || 'Validation passed';
+      status.textContent = 'Validation passed';
+    } else {
+      validatePanel.classList.add('error');
+      let text = '';
+      if (result.stderr) text += result.stderr + '\n';
+      if (result.stdout) text += result.stdout;
+      validatePanel.textContent = text;
+      status.textContent = 'Validation failed';
+    }
+  } catch (err) {
+    validatePanel.classList.remove('hidden');
+    validatePanel.classList.add('error');
+    validatePanel.textContent = err.message;
+  }
+});
+
+// --- Apply Production ---
 async function runApplyProduction(dryRun) {
   if (!filePaths['prod-ymmp'] || !filePaths['ir-json']) return;
 
   const status = document.getElementById('status');
   status.textContent = 'Applying production...';
+  const btnOpenPatched = document.getElementById('btn-open-patched');
+  btnOpenPatched.classList.add('hidden');
 
   const opts = {
     ymmp: filePaths['prod-ymmp'],
@@ -183,6 +252,8 @@ async function runApplyProduction(dryRun) {
       }
       if (result.json.output) {
         text += `\nOutput: ${result.json.output}`;
+        lastPatchedPath = result.json.output;
+        btnOpenPatched.classList.remove('hidden');
       }
       if (result.json.dry_run) {
         text += `\n(dry-run: no file written)`;
@@ -214,6 +285,9 @@ async function runApplyProduction(dryRun) {
 
 document.getElementById('btn-apply').addEventListener('click', () => runApplyProduction(false));
 document.getElementById('btn-apply-dry').addEventListener('click', () => runApplyProduction(true));
+document.getElementById('btn-open-patched').addEventListener('click', () => {
+  if (lastPatchedPath) window.nlmytgen.openFolder(lastPatchedPath);
+});
 
 // --- Settings persistence ---
 
@@ -228,6 +302,7 @@ function collectSettings() {
     production: {
       palette: filePaths['palette'] || null,
       bgMap: filePaths['bg-map'] || null,
+      csvFile: filePaths['csv-file'] || null,
     },
   };
 }
@@ -249,10 +324,14 @@ function applySettings(settings) {
       filePaths['bg-map'] = settings.production.bgMap;
       document.getElementById('bg-map-path').textContent = settings.production.bgMap;
     }
+    if (settings.production.csvFile) {
+      filePaths['csv-file'] = settings.production.csvFile;
+      document.getElementById('csv-file-path').textContent = settings.production.csvFile;
+    }
   }
+  updateApplyButton();
 }
 
-// Auto-save on changes
 function autoSave() {
   window.nlmytgen.saveSettings(collectSettings());
 }
@@ -261,15 +340,6 @@ document.getElementById('speaker-map').addEventListener('change', autoSave);
 document.getElementById('max-lines').addEventListener('change', autoSave);
 document.getElementById('chars-per-line').addEventListener('change', autoSave);
 document.getElementById('reflow-v2').addEventListener('change', autoSave);
-
-// Also save when production file paths change
-const originalBtnFileHandler = document.querySelectorAll('.btn-file');
-originalBtnFileHandler.forEach(btn => {
-  const origClick = btn.onclick;
-  btn.addEventListener('click', () => {
-    setTimeout(autoSave, 500);
-  });
-});
 
 // Load on startup
 window.addEventListener('DOMContentLoaded', async () => {

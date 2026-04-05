@@ -35,7 +35,6 @@ function runCli(args) {
     const uvPath = process.platform === 'win32' ? 'uv.exe' : 'uv';
     const proc = spawn(uvPath, ['run', 'python', '-m', 'src.cli.main', ...args], {
       cwd: repoRoot,
-      shell: true,
       env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
     });
 
@@ -117,4 +116,35 @@ ipcMain.handle('load-settings', async () => {
 ipcMain.handle('save-settings', async (_event, settings) => {
   fs.writeFileSync(SETTINGS_PATH, JSON.stringify(settings, null, 2), 'utf8');
   return true;
+});
+
+// --- Open folder in Explorer ---
+
+ipcMain.handle('open-folder', async (_event, filePath) => {
+  const { shell } = require('electron');
+  shell.showItemInFolder(filePath);
+});
+
+// --- Validate IR ---
+
+ipcMain.handle('validate-ir', async (_event, opts) => {
+  const args = ['validate-ir', opts.irJson];
+  if (opts.faceMap) { args.push('--face-map', opts.faceMap); }
+  if (opts.palette) { args.push('--palette', opts.palette); }
+
+  const result = await runCli(args);
+  return result;
+});
+
+// --- Save IR from paste ---
+
+ipcMain.handle('save-ir-paste', async (_event, opts) => {
+  const result = await dialog.showSaveDialog(mainWindow, {
+    title: 'IR JSON を保存',
+    defaultPath: opts.defaultPath || 'ir.json',
+    filters: [{ name: 'JSON', extensions: ['json'] }],
+  });
+  if (result.canceled) return null;
+  fs.writeFileSync(result.filePath, opts.content, 'utf8');
+  return result.filePath;
 });
