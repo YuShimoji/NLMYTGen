@@ -166,11 +166,17 @@ def _apply_face_to_voice_item(
                     result.face_changes += 1
         else:
             result.warnings.append(
-                f"VoiceItem index={vi_index + 1} has no TachieFaceParameter"
+                "VOICE_NO_TACHIE_FACE: "
+                f"VoiceItem index={vi_index + 1}"
+                f" character='{character_name or '?'}'"
+                " has no TachieFaceParameter"
             )
     else:
         result.warnings.append(
+            "FACE_MAP_MISS: "
             f"face label '{face_label}' not found in face_map"
+            f" for character '{character_name or '?'}'"
+            f" (VoiceItem index={vi_index + 1})"
         )
 
 
@@ -210,12 +216,14 @@ def _apply_face_row_range(
         row_end = ir_entry.get("row_end")
         if row_start is None or row_end is None:
             result.warnings.append(
+                "ROW_RANGE_MISSING: "
                 f"utterance index={ir_entry.get('index', '?')}"
                 f" missing row_start/row_end"
             )
             continue
         if row_start < 1 or row_end < row_start:
             result.warnings.append(
+                "ROW_RANGE_INVALID: "
                 f"utterance index={ir_entry.get('index', '?')}"
                 f" invalid row_start={row_start} row_end={row_end}"
             )
@@ -338,6 +346,7 @@ def _apply_idle_face(
                 result.tachie_syncs += 1
             else:
                 result.warnings.append(
+                    "IDLE_FACE_MAP_MISS: "
                     f"idle_face '{idle_label}' not found in face_map"
                     f" for character '{char}'"
                 )

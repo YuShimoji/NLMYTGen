@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from src.pipeline.ir_validate import validate_ir
+from src.pipeline.ir_validate import extract_prompt_face_labels, validate_ir
 
 
 def _make_ir(utterances, sections=None):
@@ -28,6 +28,12 @@ def _utt(index, face="serious", idle=None, section="S1"):
 class TestUnknownLabels:
     def test_unknown_label_is_error(self):
         ir = _make_ir([_utt(1, "neutral"), _utt(2, "serious")])
+        vr = validate_ir(ir, known_face_labels={"serious", "smile"})
+        assert vr.has_errors
+        assert "neutral" in vr.unknown_labels
+
+    def test_unknown_idle_face_label_is_error(self):
+        ir = _make_ir([_utt(1, "serious", idle="neutral")])
         vr = validate_ir(ir, known_face_labels={"serious", "smile"})
         assert vr.has_errors
         assert "neutral" in vr.unknown_labels
@@ -108,6 +114,169 @@ class TestBgLabels:
         vr = validate_ir(ir)
         warnings = [w for w in vr.warnings if "no bg" in w]
         assert len(warnings) == 0
+
+
+class TestCharFaceCoverage:
+    """キャラ別 face カバレッジチェック."""
+
+    def _utt2(self, index, speaker, face, idle=None, section="S1"):
+        d = {"index": index, "speaker": speaker, "text": "t",
+             "section_id": section, "face": face}
+        if idle:
+            d["idle_face"] = idle
+        return d
+
+    def test_missing_face_for_character_is_error(self):
+        """霊夢に surprised がないケース: error で止まる."""
+        ir = _make_ir([
+            self._utt2(1, "まりさ", "surprised", idle="serious"),
+            self._utt2(2, "れいむ", "surprised"),
+        ])
+        char_face = {
+            "まりさ": {"serious", "smile", "surprised"},
+            "れいむ": {"serious", "smile"},  # surprised 欠落
+        }
+        vr = validate_ir(ir, char_face_map=char_face)
+        errors = [e for e in vr.errors if "surprised" in e and "れいむ" in e]
+        assert len(errors) == 1
+        assert "FACE_ACTIVE_GAP" in errors[0]
+
+    def test_idle_face_missing_for_non_speaker_is_error(self):
+        """まりさが発話中、idle_face=surprised が霊夢にないケース."""
+        ir = _make_ir([
+            self._utt2(1, "まりさ", "serious", idle="surprised"),
+        ])
+        char_face = {
+            "まりさ": {"serious", "surprised"},
+            "れいむ": {"serious", "smile"},  # surprised 欠落
+        }
+        vr = validate_ir(ir, char_face_map=char_face)
+        errors = [e for e in vr.errors if "surprised" in e and "れいむ" in e]
+        assert len(errors) == 1
+
+    def test_all_covered_no_warning(self):
+        """両キャラに全ラベルがある場合: warning なし."""
+        ir = _make_ir([
+            self._utt2(1, "まりさ", "surprised", idle="smile"),
+            self._utt2(2, "れいむ", "smile", idle="surprised"),
+        ])
+        char_face = {
+            "まりさ": {"serious", "smile", "surprised"},
+            "れいむ": {"serious", "smile", "surprised"},
+        }
+        vr = validate_ir(ir, char_face_map=char_face)
+        coverage_errors = [e for e in vr.errors if "FACE_ACTIVE_GAP" in e]
+        assert len(coverage_errors) == 0
+
+    def test_none_char_face_map_skips_check(self):
+        """char_face_map=None の場合はチェックしない."""
+        ir = _make_ir([
+            self._utt2(1, "れいむ", "surprised"),
+        ])
+        vr = validate_ir(ir, char_face_map=None)
+        coverage_errors = [e for e in vr.errors if "FACE_ACTIVE_GAP" in e]
+        assert len(coverage_errors) == 0
+
+    def test_speaker_not_in_map_ignored(self):
+        """face_map にないキャラの発話はチェックしない."""
+        ir = _make_ir([
+            self._utt2(1, "ゆかり", "surprised"),
+        ])
+        char_face = {
+            "まりさ": {"serious", "surprised"},
+        }
+        vr = validate_ir(ir, char_face_map=char_face)
+        coverage_errors = [e for e in vr.errors if "FACE_ACTIVE_GAP" in e]
+        assert len(coverage_errors) == 0
+
+
+class TestPromptFaceContract:
+    def test_extract_prompt_face_labels(self):
+        prompt = """
+### face (表情 -- 必ず以下から選択)
+serious, smile, surprised, thinking, angry, sad
+
+**face 分布制約:**
+"""
+        labels = extract_prompt_face_labels(prompt)
+        assert labels == {
+            "serious", "smile", "surprised",
+            "thinking", "angry", "sad",
+        }
+
+    def test_used_label_outside_prompt_is_error(self):
+        ir = _make_ir([_utt(1, "neutral")])
+        vr = validate_ir(
+            ir,
+            known_face_labels={"neutral", "serious"},
+            prompt_face_labels={"serious", "smile"},
+        )
+        errors = [e for e in vr.errors if "PROMPT_FACE_DRIFT" in e]
+        assert len(errors) == 1
+
+    def test_prompt_palette_drift_warns(self):
+        ir = _make_ir([_utt(1, "serious")])
+        vr = validate_ir(
+            ir,
+            known_face_labels={"serious", "smile", "thinking"},
+            prompt_face_labels={"serious", "smile", "sad"},
+        )
+        gap_warnings = [w for w in vr.warnings if "FACE_PROMPT_PALETTE_GAP" in w]
+        extra_warnings = [w for w in vr.warnings if "FACE_PROMPT_PALETTE_EXTRA" in w]
+        assert len(gap_warnings) == 1
+        assert len(extra_warnings) == 1
+        assert vr.prompt_palette_missing_labels == ["sad"]
+        assert vr.palette_only_labels == ["thinking"]
+
+    def test_latent_palette_gap_report_warns(self):
+        ir = _make_ir([{
+            "index": 1,
+            "speaker": "まりさ",
+            "text": "t",
+            "section_id": "S1",
+            "face": "serious",
+        }])
+        char_face = {
+            "まりさ": {"serious", "smile"},
+            "れいむ": {"serious"},
+        }
+        vr = validate_ir(
+            ir,
+            known_face_labels={"serious", "smile"},
+            char_face_map=char_face,
+            prompt_face_labels={"serious", "smile", "surprised"},
+        )
+        warnings = [w for w in vr.warnings if "FACE_LATENT_GAP" in w]
+        assert len(warnings) == 2
+        assert vr.latent_face_gaps["まりさ"] == ["surprised"]
+        assert vr.latent_face_gaps["れいむ"] == ["smile", "surprised"]
+
+
+class TestRowRangeValidation:
+    def test_partial_row_range_is_error(self):
+        ir = _make_ir([_utt(1), _utt(2)])
+        ir["utterances"][0]["row_start"] = 1
+        vr = validate_ir(ir)
+        errors = [e for e in vr.errors if "ROW_RANGE_MISSING" in e]
+        assert len(errors) == 2
+
+    def test_invalid_row_range_is_error(self):
+        ir = _make_ir([_utt(1)])
+        ir["utterances"][0]["row_start"] = 3
+        ir["utterances"][0]["row_end"] = 1
+        vr = validate_ir(ir)
+        errors = [e for e in vr.errors if "ROW_RANGE_INVALID" in e]
+        assert len(errors) == 1
+
+    def test_overlapping_row_range_is_error(self):
+        ir = _make_ir([_utt(1), _utt(2)])
+        ir["utterances"][0]["row_start"] = 1
+        ir["utterances"][0]["row_end"] = 2
+        ir["utterances"][1]["row_start"] = 2
+        ir["utterances"][1]["row_end"] = 3
+        vr = validate_ir(ir)
+        errors = [e for e in vr.errors if "ROW_RANGE_OVERLAP" in e]
+        assert len(errors) == 1
 
 
 class TestRowStart:

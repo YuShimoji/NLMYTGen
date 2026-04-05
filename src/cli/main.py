@@ -685,6 +685,9 @@ def main(argv: list[str] | None = None) -> int:
     p_apply.add_argument("--refresh-maps", action="store_true",
                          help="Force re-extract face_map from palette even if file exists")
     p_apply.add_argument("--csv", help="CSV file for auto row_start/row_end annotation")
+    p_apply.add_argument("--prompt-doc",
+                         help="Prompt markdown for face contract drift check"
+                              " (default: docs/S6-production-memo-prompt.md)")
     p_apply.add_argument("-o", "--output", help="Output ymmp path")
     p_apply.add_argument("--dry-run", action="store_true", help="Preview without writing")
 
@@ -711,6 +714,9 @@ def main(argv: list[str] | None = None) -> int:
     p_valir.add_argument("ir_json", help="Production IR JSON")
     p_valir.add_argument("--face-map", help="face_map.json for unknown label check")
     p_valir.add_argument("--palette", help="Palette ymmp (alternative to --face-map)")
+    p_valir.add_argument("--prompt-doc",
+                         help="Prompt markdown for face contract drift check"
+                              " (default: docs/S6-production-memo-prompt.md)")
 
     args = parser.parse_args(argv)
 
@@ -914,6 +920,56 @@ def _get_known_face_labels(face_map: dict) -> set[str]:
     return labels
 
 
+def _get_char_face_map(face_map: dict) -> dict[str, set[str]] | None:
+    """face_map からキャラ別の face ラベル集合を抽出する.
+
+    character-scoped map の場合のみ有効。flat map の場合は None を返す。
+    """
+    char_map: dict[str, set[str]] = {}
+    for key, value in face_map.items():
+        if isinstance(value, dict):
+            if all(isinstance(v, str) for v in value.values()):
+                return None  # flat map -- キャラ別チェック不可
+            else:
+                char_map[key] = set(value.keys())
+    return char_map if char_map else None
+
+
+def _default_prompt_doc_path() -> Path:
+    """repo-local の既定 prompt doc パスを返す."""
+    return Path(__file__).resolve().parents[2] / "docs" / "S6-production-memo-prompt.md"
+
+
+def _load_prompt_face_contract(prompt_doc: str | None) -> tuple[set[str] | None, Path | None]:
+    """prompt doc から face 契約ラベルを読み込む."""
+    from src.pipeline.ir_validate import load_prompt_face_labels
+
+    path = Path(prompt_doc) if prompt_doc else _default_prompt_doc_path()
+    if not path.exists():
+        return None, None
+
+    labels = load_prompt_face_labels(path)
+    if not labels:
+        return None, path
+    return labels, path
+
+
+def _fatal_face_patch_warnings(warnings: list[str]) -> list[str]:
+    """partial patch を許容しない face failure class を抽出する."""
+    fatal_prefixes = (
+        "FACE_MAP_MISS:",
+        "IDLE_FACE_MAP_MISS:",
+        "VOICE_NO_TACHIE_FACE:",
+        "ROW_RANGE_MISSING:",
+        "ROW_RANGE_INVALID:",
+    )
+    return [
+        warning
+        for warning in warnings
+        if warning.startswith(fatal_prefixes)
+    ]
+
+
 def _print_validation(vr) -> None:
     """IRValidationResult を表示する."""
     from src.pipeline.ir_validate import IRValidationResult
@@ -927,6 +983,24 @@ def _print_validation(vr) -> None:
             pct = count * 100 // total
             bar = "#" * (pct // 5)
             print(f"  {label:12s} {count:3d} ({pct:2d}%) {bar}")
+
+    if vr.prompt_face_labels or vr.palette_face_labels:
+        print("\n--- Face Contract ---")
+        if vr.prompt_face_labels:
+            print(f"  prompt : {', '.join(vr.prompt_face_labels)}")
+        if vr.palette_face_labels:
+            print(f"  palette: {', '.join(vr.palette_face_labels)}")
+        if vr.used_face_labels:
+            print(f"  used   : {', '.join(vr.used_face_labels)}")
+        if vr.used_idle_face_labels:
+            print(f"  idle   : {', '.join(vr.used_idle_face_labels)}")
+
+    if vr.active_face_gaps or vr.latent_face_gaps:
+        print("\n--- Palette Gap Report ---")
+        for char, labels in sorted(vr.active_face_gaps.items()):
+            print(f"  active {char}: {', '.join(labels)}")
+        for char, labels in sorted(vr.latent_face_gaps.items()):
+            print(f"  latent {char}: {', '.join(labels)}")
 
     for msg in vr.errors:
         print(f"  ERROR: {msg}", file=sys.stderr)
@@ -944,10 +1018,15 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
     ir_data = load_ir(args.ir_json)
 
     known_labels = None
+    char_face = None
+    prompt_face_labels, prompt_doc_path = _load_prompt_face_contract(
+        getattr(args, "prompt_doc", None)
+    )
     if args.face_map:
         with open(args.face_map, "r", encoding="utf-8") as f:
             face_map = json.load(f)
         known_labels = _get_known_face_labels(face_map)
+        char_face = _get_char_face_map(face_map)
     elif args.palette:
         from src.pipeline.ymmp_extract import (
             extract_template_labeled,
@@ -957,8 +1036,20 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
         result = extract_template_labeled(palette_data)
         face_map = generate_face_map_labeled(result)
         known_labels = _get_known_face_labels(face_map)
+        char_face = _get_char_face_map(face_map)
 
-    vr = validate_ir(ir_data, known_labels)
+    if prompt_doc_path and prompt_face_labels:
+        print(
+            f"prompt face contract: {prompt_doc_path}"
+            f" ({len(prompt_face_labels)} labels)"
+        )
+
+    vr = validate_ir(
+        ir_data,
+        known_labels,
+        char_face_map=char_face,
+        prompt_face_labels=prompt_face_labels,
+    )
     _print_validation(vr)
 
     if vr.has_errors:
@@ -1100,6 +1191,34 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         if annot.uncovered_rows:
             print(f"  Warning: {len(annot.uncovered_rows)} CSV rows uncovered",
                   file=sys.stderr)
+        if annot.unmatched_utterances or annot.uncovered_rows:
+            print("\nRow-range annotation FAILED", file=sys.stderr)
+            return 1
+
+    # --- quality gate (pre-patch) ---
+    from src.pipeline.ir_validate import validate_ir
+    known_labels = _get_known_face_labels(face_map) if face_map else None
+    char_face = _get_char_face_map(face_map) if face_map else None
+    prompt_face_labels, prompt_doc_path = _load_prompt_face_contract(
+        getattr(args, "prompt_doc", None)
+    )
+    if prompt_doc_path and prompt_face_labels:
+        print(
+            f"prompt face contract: {prompt_doc_path}"
+            f" ({len(prompt_face_labels)} labels)"
+        )
+
+    vr = validate_ir(
+        ir_data,
+        known_labels,
+        char_face_map=char_face,
+        prompt_face_labels=prompt_face_labels,
+    )
+    _print_validation(vr)
+    if vr.has_errors:
+        print(f"\nValidation FAILED ({len(vr.errors)} errors). Patch aborted.",
+              file=sys.stderr)
+        return 1
 
     # --- patch ---
     ymmp_data = load_ymmp(args.production_ymmp)
@@ -1110,12 +1229,17 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
     if result.tachie_syncs:
         print(f"Idle face inserts: {result.tachie_syncs}")
     print(f"BG removed: {result.bg_changes}, BG added: {result.bg_additions}")
+    for warning in result.warnings:
+        print(f"  WARNING: {warning}", file=sys.stderr)
 
-    # --- quality gate ---
-    from src.pipeline.ir_validate import validate_ir
-    known_labels = _get_known_face_labels(face_map) if face_map else None
-    vr = validate_ir(ir_data, known_labels)
-    _print_validation(vr)
+    fatal_warnings = _fatal_face_patch_warnings(result.warnings)
+    if fatal_warnings:
+        print(
+            f"\nPatch FAILED ({len(fatal_warnings)} face issues)."
+            " Partial face output was not accepted.",
+            file=sys.stderr,
+        )
+        return 1
 
     if args.dry_run:
         print("(dry-run: no file written)")

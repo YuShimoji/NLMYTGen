@@ -1,12 +1,14 @@
 """IR 品質 gate: apply-production の前に品質問題を事前検出する.
 
-face 偏り、unknown labels、連続 run、idle_face 未指定、bg 未設定を検出。
+face 偏り、unknown labels、prompt/palette drift、active gap、
+連続 run、idle_face 未指定、bg 未設定を検出する。
 """
 
 from __future__ import annotations
 
 from collections import Counter
 from dataclasses import dataclass, field
+from pathlib import Path
 
 
 @dataclass
@@ -18,6 +20,14 @@ class IRValidationResult:
     info: list[str] = field(default_factory=list)
     face_distribution: dict[str, int] = field(default_factory=dict)
     unknown_labels: list[str] = field(default_factory=list)
+    prompt_face_labels: list[str] = field(default_factory=list)
+    palette_face_labels: list[str] = field(default_factory=list)
+    used_face_labels: list[str] = field(default_factory=list)
+    used_idle_face_labels: list[str] = field(default_factory=list)
+    active_face_gaps: dict[str, list[str]] = field(default_factory=dict)
+    latent_face_gaps: dict[str, list[str]] = field(default_factory=dict)
+    prompt_palette_missing_labels: list[str] = field(default_factory=list)
+    palette_only_labels: list[str] = field(default_factory=list)
     longest_face_run: int = 0
     longest_face_run_label: str = ""
     idle_face_coverage: float = 0.0
@@ -27,10 +37,47 @@ class IRValidationResult:
         return len(self.errors) > 0
 
 
+def extract_prompt_face_labels(prompt_text: str) -> set[str]:
+    """prompt markdown から face 許可リストを抽出する."""
+    collecting = False
+    labels: list[str] = []
+
+    for raw_line in prompt_text.splitlines():
+        line = raw_line.strip()
+
+        if not collecting:
+            if line.lower().startswith("### face"):
+                collecting = True
+            continue
+
+        if not line:
+            if labels:
+                break
+            continue
+        if line.startswith("**") or line.startswith("###"):
+            break
+
+        cleaned = line.lstrip("-*").strip()
+        for token in cleaned.split(","):
+            label = token.strip().strip("`")
+            if label:
+                labels.append(label)
+
+    return set(labels)
+
+
+def load_prompt_face_labels(path: str | Path) -> set[str]:
+    """prompt markdown ファイルから face 許可リストを読み込む."""
+    with open(path, "r", encoding="utf-8") as f:
+        return extract_prompt_face_labels(f.read())
+
+
 def validate_ir(
     ir_data: dict,
     known_face_labels: set[str] | None = None,
     *,
+    char_face_map: dict[str, set[str]] | None = None,
+    prompt_face_labels: set[str] | None = None,
     serious_threshold: float = 0.40,
     max_consecutive_run: int = 4,
 ) -> IRValidationResult:
@@ -41,7 +88,13 @@ def validate_ir(
     ir_data : dict
         load_ir() 後の IR データ
     known_face_labels : set[str] | None
-        palette に存在する face ラベル。None なら unknown label チェックをスキップ
+        palette に存在する face ラベル (全キャラ統合)。None なら unknown label チェックをスキップ
+    char_face_map : dict[str, set[str]] | None
+        キャラ別の face ラベル集合。例: {"魔理沙": {"serious", "smile"}, "霊夢": {"serious"}}
+        指定されると、各発話の face/idle_face がそのキャラで解決可能かチェックする
+    prompt_face_labels : set[str] | None
+        Custom GPT prompt が許可している face ラベル集合。
+        指定されると、prompt ↔ palette drift と IR の contract drift を検出する
     serious_threshold : float
         serious の許容上限割合 (0.40 = 40%)
     max_consecutive_run : int
@@ -54,9 +107,11 @@ def validate_ir(
     result = IRValidationResult()
     utterances = ir_data.get("utterances", [])
     sections = ir_data.get("macro", {}).get("sections", [])
+    result.palette_face_labels = sorted(known_face_labels or set())
+    result.prompt_face_labels = sorted(prompt_face_labels or set())
 
     if not utterances:
-        result.errors.append("IR has no utterances")
+        result.errors.append("IR_EMPTY: IR has no utterances")
         return result
 
     # carry-forward を解決して face 分布を取得
@@ -65,32 +120,122 @@ def validate_ir(
 
     # --- face distribution ---
     face_counts: Counter = Counter()
+    face_usage: Counter = Counter()
+    idle_usage: Counter = Counter()
     for entry in resolved:
         face = entry.get("face", "")
+        idle_face = entry.get("idle_face", "")
         if face:
             face_counts[face] += 1
+            face_usage[face] += 1
+        if idle_face:
+            idle_usage[idle_face] += 1
     total = sum(face_counts.values())
     result.face_distribution = dict(face_counts)
+    result.used_face_labels = sorted(face_usage)
+    result.used_idle_face_labels = sorted(idle_usage)
+    all_used_labels = set(face_usage) | set(idle_usage)
 
     # serious 偏り
     if total > 0:
         serious_pct = face_counts.get("serious", 0) / total
         if serious_pct > serious_threshold:
             result.warnings.append(
+                "FACE_SERIOUS_SKEW: "
                 f"face 'serious' is {serious_pct:.0%} of utterances"
                 f" (threshold: {serious_threshold:.0%})"
             )
 
     # unknown labels
     if known_face_labels is not None:
-        unknown = sorted(set(face_counts.keys()) - known_face_labels)
+        unknown = sorted(all_used_labels - known_face_labels)
         if unknown:
             result.unknown_labels = unknown
             for label in unknown:
-                count = face_counts[label]
+                count = face_usage[label] + idle_usage[label]
                 result.errors.append(
+                    "FACE_UNKNOWN_LABEL: "
                     f"unknown face label '{label}' used {count} times"
                     f" (not in palette)"
+                )
+
+    # prompt contract drift
+    if prompt_face_labels is not None:
+        used_not_allowed = sorted(all_used_labels - prompt_face_labels)
+        for label in used_not_allowed:
+            count = face_usage[label] + idle_usage[label]
+            result.errors.append(
+                "PROMPT_FACE_DRIFT: "
+                f"face label '{label}' used {count} times"
+                f" but not allowed by prompt contract"
+            )
+
+        if known_face_labels is not None:
+            result.prompt_palette_missing_labels = sorted(
+                prompt_face_labels - known_face_labels
+            )
+            result.palette_only_labels = sorted(
+                known_face_labels - prompt_face_labels
+            )
+            for label in result.prompt_palette_missing_labels:
+                result.warnings.append(
+                    "FACE_PROMPT_PALETTE_GAP: "
+                    f"prompt allows face '{label}' but palette has no matching label"
+                )
+            for label in result.palette_only_labels:
+                result.warnings.append(
+                    "FACE_PROMPT_PALETTE_EXTRA: "
+                    f"palette label '{label}' is not listed in prompt contract"
+                )
+
+    # per-character face coverage
+    if char_face_map is not None:
+        missing_pairs: dict[tuple[str, str], int] = {}
+        for entry in resolved:
+            speaker = entry.get("speaker", "")
+            face = entry.get("face", "")
+            idle_face = entry.get("idle_face", "")
+            # face: speaker のラベルをチェック
+            if face and speaker in char_face_map:
+                if face not in char_face_map[speaker]:
+                    key = (speaker, face)
+                    missing_pairs[key] = missing_pairs.get(key, 0) + 1
+            # idle_face: speaker 以外の全キャラをチェック
+            if idle_face:
+                for char, labels in char_face_map.items():
+                    if char == speaker:
+                        continue
+                    if idle_face not in labels:
+                        key = (char, idle_face)
+                        missing_pairs[key] = missing_pairs.get(key, 0) + 1
+        active_face_gaps: dict[str, list[str]] = {}
+        for (char, label), count in sorted(missing_pairs.items()):
+            active_face_gaps.setdefault(char, []).append(label)
+            result.errors.append(
+                "FACE_ACTIVE_GAP: "
+                f"character '{char}' is missing face '{label}'"
+                f" required by current IR ({count} uses)"
+            )
+        result.active_face_gaps = {
+            char: sorted(set(labels))
+            for char, labels in active_face_gaps.items()
+        }
+
+        if prompt_face_labels is not None:
+            latent_face_gaps: dict[str, list[str]] = {}
+            for char, labels in sorted(char_face_map.items()):
+                missing = sorted(prompt_face_labels - labels)
+                if not missing:
+                    continue
+                active_missing = set(result.active_face_gaps.get(char, []))
+                latent = [label for label in missing if label not in active_missing]
+                if latent:
+                    latent_face_gaps[char] = latent
+            result.latent_face_gaps = latent_face_gaps
+            for char, labels in latent_face_gaps.items():
+                result.warnings.append(
+                    "FACE_LATENT_GAP: "
+                    f"character '{char}' is missing prompt labels: {', '.join(labels)}"
                 )
 
     # 連続 run
@@ -119,6 +264,7 @@ def validate_ir(
 
     if max_run > max_consecutive_run:
         result.warnings.append(
+            "FACE_RUN_LENGTH: "
             f"face '{max_run_label}' runs {max_run} consecutive"
             f" utterances (from utt {max_run_start},"
             f" max allowed: {max_consecutive_run})"
@@ -130,7 +276,7 @@ def validate_ir(
         result.idle_face_coverage = idle_count / total
     if idle_count == 0:
         result.warnings.append(
-            "idle_face is not specified in any utterance"
+            "IDLE_FACE_MISSING: idle_face is not specified in any utterance"
         )
 
     # bg 未設定
@@ -138,15 +284,45 @@ def validate_ir(
     bg_set = {b for b in bg_labels if b}
     if not bg_set:
         result.warnings.append(
-            "no bg labels defined in macro.sections"
+            "BG_MISSING: no bg labels defined in macro.sections"
         )
 
-    # row_start 未付与
-    has_row = sum(1 for u in utterances if u.get("row_start") is not None)
-    if has_row == 0 and len(utterances) > 0:
+    # row_start / row_end の整合
+    has_row = any(
+        u.get("row_start") is not None or u.get("row_end") is not None
+        for u in utterances
+    )
+    if not has_row:
         result.info.append(
-            "row_start/row_end not set."
+            "ROW_RANGE_INFO: row_start/row_end not set."
             " Use annotate-row-range or apply-production --csv"
         )
+    else:
+        prev_end = 0
+        for utt in utterances:
+            utt_idx = utt.get("index", "?")
+            row_start = utt.get("row_start")
+            row_end = utt.get("row_end")
+
+            if row_start is None or row_end is None:
+                result.errors.append(
+                    "ROW_RANGE_MISSING: "
+                    f"utterance index={utt_idx} missing row_start/row_end"
+                )
+                continue
+            if row_start < 1 or row_end < row_start:
+                result.errors.append(
+                    "ROW_RANGE_INVALID: "
+                    f"utterance index={utt_idx} invalid row_start={row_start}"
+                    f" row_end={row_end}"
+                )
+                continue
+            if row_start <= prev_end:
+                result.errors.append(
+                    "ROW_RANGE_OVERLAP: "
+                    f"utterance index={utt_idx} overlaps previous row range"
+                    f" (row_start={row_start}, previous_end={prev_end})"
+                )
+            prev_end = max(prev_end, row_end)
 
     return result

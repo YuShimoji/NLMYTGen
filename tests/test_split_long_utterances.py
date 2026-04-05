@@ -463,6 +463,36 @@ class TestReflowUtteranceV2:
         rendered = "|".join(result)
         assert "19\n蜆・" not in rendered
 
+    def test_avoids_sparse_line_after_comma_intro(self):
+        """読点付きの短い導入句だけで1行を使わない。"""
+        text = "例えば、一定時間アイテムをスキャンしないと、画面上で警告が表示されます。"
+        result = reflow_utterance_v2(text, chars_per_line=40, max_lines=2)
+        rendered = "|".join(result)
+        assert "例えば、\n" not in rendered
+
+    def test_avoids_sparse_line_after_comma_when_tail_fits(self):
+        """後続が収まるなら短い読点行で切らない。"""
+        text = "その瞬間、ダッシュボードに設置されたAIカメラがあなたを検知します。"
+        result = reflow_utterance_v2(text, chars_per_line=40, max_lines=2)
+        rendered = "|".join(result)
+        assert "その瞬間、\n" not in rendered
+
+    def test_prefers_particle_break_over_sparse_intro_line(self):
+        """短い導入句の読点より、後ろの助詞境界を優先する。"""
+        text = "それに対し、労働組合側は2025年10月の声明で、"
+        result = reflow_utterance_v2(text, chars_per_line=40, max_lines=2)
+        rendered = "|".join(result)
+        assert "それに対し、\n" not in rendered
+        assert "労働組合側は\n2025年" in rendered
+
+    def test_prefers_particle_break_after_quoted_term(self):
+        """引用語の後ろの説明名詞より、後続の助詞境界を優先する。"""
+        text = "しかも、そこに「猛暑」という環境変数が加わるわけですよね。"
+        result = reflow_utterance_v2(text, chars_per_line=40, max_lines=2)
+        rendered = "|".join(result)
+        assert "しかも、そこに\n" not in rendered
+        assert "という\n環境変数" not in rendered
+
 
 class TestReflowSubtitlesV2:
     """B-17 reflow_subtitles_v2() 統合テスト。"""

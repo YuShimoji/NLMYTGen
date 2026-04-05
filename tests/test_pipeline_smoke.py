@@ -269,6 +269,94 @@ def test_cli_apply_production_with_face_map(tmp_path):
     assert "(loaded)" in result.stdout
 
 
+def test_cli_apply_production_fails_on_active_face_gap(tmp_path):
+    """CLI apply-production は current IR の active gap を検出して止まる。"""
+    import json
+
+    palette = {
+        "Timelines": [{"ID": 0, "Items": [
+            {
+                "$type": "YukkuriMovieMaker.Project.Items.TachieFaceItem, YukkuriMovieMaker",
+                "CharacterName": "marisa",
+                "Remark": "smile",
+                "Frame": 0, "Length": 100, "Layer": 0, "Group": 0,
+                "IsLocked": False, "IsHidden": False,
+                "TachieFaceParameter": {
+                    "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter, YukkuriMovieMaker.Plugin.Tachie.AnimationTachie",
+                    "Eyebrow": "m_smile.png", "Eye": "m_smile.png",
+                    "Mouth": "m_smile.png", "Hair": "", "Body": "", "Complexion": "",
+                },
+                "TachieFaceEffects": [],
+                "KeyFrames": {"Frames": [], "Count": 0},
+                "PlaybackRate": 100.0, "ContentOffset": "00:00:00",
+            },
+            {
+                "$type": "YukkuriMovieMaker.Project.Items.TachieFaceItem, YukkuriMovieMaker",
+                "CharacterName": "reimu",
+                "Remark": "serious",
+                "Frame": 100, "Length": 100, "Layer": 0, "Group": 0,
+                "IsLocked": False, "IsHidden": False,
+                "TachieFaceParameter": {
+                    "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter, YukkuriMovieMaker.Plugin.Tachie.AnimationTachie",
+                    "Eyebrow": "r_serious.png", "Eye": "r_serious.png",
+                    "Mouth": "r_serious.png", "Hair": "", "Body": "", "Complexion": "",
+                },
+                "TachieFaceEffects": [],
+                "KeyFrames": {"Frames": [], "Count": 0},
+                "PlaybackRate": 100.0, "ContentOffset": "00:00:00",
+            },
+        ], "LayerSettings": []}],
+        "Characters": [{"Name": "marisa"}, {"Name": "reimu"}],
+    }
+    palette_path = tmp_path / "palette.ymmp"
+    with open(palette_path, "w", encoding="utf-8-sig") as f:
+        json.dump(palette, f)
+
+    production = {
+        "Timelines": [{"ID": 0, "Items": [
+            {
+                "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+                "CharacterName": "reimu", "Serif": "test", "Remark": "",
+                "Frame": 0, "Length": 100, "Layer": 1, "Group": 0,
+                "IsLocked": False, "IsHidden": False,
+                "TachieFaceParameter": {
+                    "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter, YukkuriMovieMaker.Plugin.Tachie.AnimationTachie",
+                    "Eyebrow": "default.png", "Eye": "default.png",
+                    "Mouth": "default.png", "Hair": "", "Body": "", "Complexion": "",
+                },
+            },
+        ], "LayerSettings": []}],
+        "Characters": [{"Name": "marisa"}, {"Name": "reimu"}],
+    }
+    prod_path = tmp_path / "production.ymmp"
+    with open(prod_path, "w", encoding="utf-8-sig") as f:
+        json.dump(production, f)
+
+    ir = {
+        "ir_version": "1.0", "video_id": "test",
+        "macro": {"sections": [{"section_id": "S1", "start_index": 1,
+                                 "end_index": 1, "default_face": "smile"}]},
+        "utterances": [{"index": 1, "speaker": "reimu", "text": "t",
+                        "section_id": "S1", "face": "smile"}],
+    }
+    ir_path = tmp_path / "ir.json"
+    ir_path.write_text(json.dumps(ir), encoding="utf-8")
+
+    out_path = tmp_path / "output.ymmp"
+    result = subprocess.run(
+        [sys.executable, "-m", "src.cli.main", "apply-production",
+         str(prod_path), str(ir_path),
+         "--palette", str(palette_path),
+         "-o", str(out_path)],
+        capture_output=True, text=True,
+        cwd=str(_project_root()),
+    )
+
+    assert result.returncode == 1
+    assert "FACE_ACTIVE_GAP" in result.stderr
+    assert not out_path.exists()
+
+
 def _project_root():
     """プロジェクトルートを返す。"""
     from pathlib import Path

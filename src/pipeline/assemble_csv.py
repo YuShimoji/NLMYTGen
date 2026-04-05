@@ -1483,7 +1483,12 @@ def _structural_boundary_penalty(text: str, pos: int, *, page_split: bool) -> fl
         left_anchor_idx = run_start - 1
         if left_anchor_idx >= 0:
             left_anchor = text[left_anchor_idx]
-            if _is_cjk_ideograph(left_anchor) or _is_katakana(left_anchor) or left_anchor.isdigit() or left_anchor in _CLOSE_BRACKETS:
+            run_text = text[run_start:pos]
+            is_particle_run = all(ch in _STRUCTURAL_PARTICLES for ch in run_text)
+            if (
+                not is_particle_run
+                and (_is_cjk_ideograph(left_anchor) or _is_katakana(left_anchor) or left_anchor.isdigit() or left_anchor in _CLOSE_BRACKETS)
+            ):
                 penalty += 320.0 if not page_split else 400.0
 
     if page_split:
@@ -1501,6 +1506,51 @@ def _line_width_cost(width: int, *, ideal: float, chars_per_line: int, is_last: 
     if width > chars_per_line:
         cost += (width - chars_per_line) * 18.0
     return cost
+
+
+def _short_line_break_penalty(
+    text: str,
+    start: int,
+    pos: int,
+    end: int,
+    *,
+    line_width: int,
+    tail_width: int,
+    chars_per_line: int,
+    max_lines: int,
+) -> float:
+    """読点・文頭導入句で生じるスカスカ行を抑制する。"""
+    if start >= pos or pos > end:
+        return 0.0
+
+    left = text[start:pos]
+    left_last = left[-1]
+    penalty = 0.0
+    short_threshold = max(12, int(chars_per_line * 0.55))
+    very_short_threshold = max(8, int(chars_per_line * 0.35))
+    remaining_lines = max(1, max_lines - 1)
+    fits_without_break = (line_width + tail_width) <= chars_per_line * remaining_lines
+
+    if line_width < short_threshold:
+        penalty += (short_threshold - line_width) * 5.0
+
+    if left_last in _STRUCTURAL_COMMAS and line_width < short_threshold:
+        penalty += (short_threshold - line_width) * 14.0
+        if fits_without_break:
+            penalty += 80.0
+
+    if left_last in _STRUCTURAL_SENTENCE_ENDS and line_width < very_short_threshold:
+        penalty += (very_short_threshold - line_width) * 10.0
+        if fits_without_break:
+            penalty += 55.0
+
+    # 「その瞬間、」「例えば、」のような短い導入句で切れた見え方を抑える。
+    if line_width < short_threshold and len(left) <= 10:
+        penalty += (short_threshold - line_width) * 6.0
+        if fits_without_break:
+            penalty += 35.0
+
+    return penalty
 
 
 def _layout_page_structural(
@@ -1556,6 +1606,16 @@ def _layout_page_structural(
                 is_last=False,
             )
             line_cost += _structural_boundary_penalty(text, pos, page_split=False)
+            line_cost += _short_line_break_penalty(
+                text,
+                curr_pos,
+                pos,
+                end,
+                line_width=line_width,
+                tail_width=tail_width,
+                chars_per_line=chars_per_line,
+                max_lines=remaining_lines,
+            )
             rest_cost, rest_splits = _dp(pos, remaining_lines - 1)
             total = line_cost + rest_cost
             if total < best_cost:
