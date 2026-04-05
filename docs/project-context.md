@@ -101,55 +101,58 @@
 
 ---
 
-## ROADMAP UPDATE (2026-04-06)
+## ROADMAP UPDATE (2026-04-06 rev.2)
 
-This section supersedes the 2026-04-05 roadmap block above.
+This section supersedes all previous roadmap blocks.
 
-### Phase 1: Packaging の中央制御を workflow proof する
-- 第一着手は H-01 Packaging Orchestrator brief。
-- title promise / thumbnail promise / audience hook / required evidence / forbidden overclaim / alignment_check を 1 つの brief に束ね、C-07/C-08 が上流制約として扱えるかを確認する。
-- 理由: 現在の主 bottleneck は「良いコピーを個別に出すこと」ではなく、「台本・サムネ・タイトルの判断主体が分散し drift すること」にあるため。
+### 現状認識 (2026-04-06 ユーザーフィードバックに基づく方向転換)
 
-### Phase 2: Packaging packet を強くする
-- 第二着手は H-02 Thumbnail strategy v2。
-- 本文根拠のある具体数値・固有名詞・年数・割合・金額を優先し、抽象煽りテンプレ依存を下げる。
-- rotation policy を定義し、構図 / 表情 / 配色 / コピー型の固定パターン連打を避ける。
-- 2026-04-06 時点で schema v0.1 と dry proof は定義済み。次に必要なのは、C-08 実運用で「5案中3案が preferred_specifics を使い、banned pattern を避けるか」を 1 回だけ確認する strict GUI rerun proof。
+done 35件の大半はテキスト変換パイプラインと spec/proof 整備に集中しており、
+実際の動画制作ワークフローで最も重い工程が未自動化のままである。
+packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フレームワークであり、
+実制作の手間を直接軽減するものではない。
 
-### Phase 3: Packaging packet に evidence gate を足す
-- 第三着手は H-04 Evidence richness score。
-- 逸話 / 具体事例 / 数値 / 学術知 / 最新情報のどれが弱いかを可視化し、title / thumbnail promise を本文が支えられているかを見る。
-- 2026-04-06 時点で `docs/EVIDENCE_RICHNESS_SCORE_SPEC.md` v0.1 により、7軸 score・warning class・repair suggestion までは定義済み。
-- 同日、`docs/verification/H04-evidence-richness-manual-scoring-proof.md` を追加し、実台本 1 本で warning が repair action に変換できるかを見る proof packet まで整備。
+**実制作の 3大 bottleneck (ユーザー特定):**
 
-### Phase 4: Packaging packet に visual diagnostics を足す
-- 第四着手は H-03 Visual density score。
-- 初期は IR / section plan / bg_map / template 使用状況から proxy 計測し、必要なら ymmp readback を利用する。
-- 目的は動画品質の自動判定ではなく、静止画面・背景停滞・演出パターン偏りの warning 化。
+1. **台本品質保証** — NotebookLM 出力はそのまま使えない。ゆっくり解説様式への変換、聞き手/解説の話者混同修正、NLM臭の除去、YT視聴者向け調整が毎回必要。台本品質は演出IR品質にも連鎖する (台本が曖昧 → IR も曖昧)
+2. **演出配置の自動化** — 最重量工程。IR を生成するところまでは来ているが、IRの通りにYMM4上で素材を配置する作業が全て手動。素材調達、レイアウト、タイミング制御、アニメーション設定を含む。現状の patch-ymmp は face/bg/slot/overlay のみで演出全体の自動配置には程遠い
+3. **視覚効果** — サムネイルを1枚も完成させていない。茶番劇風アニメ/図解アニメがゼロ。画像表示のみ
 
-### Phase 5: G-11 slot patch hardening 完了
-- `slot` を assistant-owned mechanical scope に寄せ、Template Registry の `slots` 定義から TachieItem の X/Y/Zoom を deterministic に書き換えられる状態まで前進。
-- `validate-ir` / `apply-production` / `patch-ymmp` が `SLOT_UNKNOWN_LABEL` / `SLOT_REGISTRY_GAP` / `SLOT_CHARACTER_DRIFT` / `SLOT_DEFAULT_DRIFT` を class 付きで扱う。
+### 今後の方向性
 
-### Phase 6: Timeline packet の native route を実測で確定する
-- G-12 timeline route measurement packet は完了。
-- `motion` / `bg_anim` は `docs/verification/G12-timeline-route-measurement.md` と `samples/timeline_route_contract.json` により、native route 候補を repo-local corpus で mechanical に確定済み。
-- fade-family `transition` route は repo-local corpus で mechanical に観測済み。未確定なのは non-fade / template-backed transition family のみ。
-- G-13 overlay / se insertion packet は完了。
-- 理由: fade-family `transition` まで route を固定した後、overlay/se を label 解決・timing anchor・fail-fast boundary まで閉じることで、timeline quality を broad manual retry loop から分離できたため。
+次フェーズでは spec 追加や proof 整備ではなく、上記 3 工程の手間を直接軽減する機能を優先する。
+具体的な着手順・手法はユーザーと合意のうえで決定する。
 
-### Phase 7: Timeline lane は failure class 単位で再オープンする
-- `overlay` / `se` の packet は完了。`overlay` は deterministic に挿入でき、`se` は repo-local corpus に `AudioItem` write route が無い間は fail-fast で停止する。
-- 以後 timeline を再度触るのは、新しい `.ymmp` sample が入り route が観測可能になったとき、または既知 failure class が出たときだけ。
-- 最終的な演出密度判断・音量判断・テンポ判断は user に残す。
+以下は着手候補の整理であり、順序は未確定:
 
-### Phase 8: Metadata は consumer として最後に再評価する
-- E-02 は H-01/H-02/H-04 の出力を受ける consumer として再評価する。
-- 単体では効率化にならない。Packaging Orchestrator と evidence gate がない metadata 生成はコピペ先が変わるだけで価値が薄い。
+#### 候補A: 台本品質の自動改善
+- NLM 出力 → ゆっくり解説様式への自動変換/支援
+- 話者混同の検出・修正支援
+- NLM臭の除去パターン
+- 台本品質が演出IRに連鎖するため、上流改善の効果が大きい
+- Python スコープ制約 (テキスト変換のみ) の範囲内で可能
+- GUI LLM (Custom GPT 等) での支援も選択肢
 
-### Deferred / Not First
-- F-01/F-02 GUI は再審査前の quarantine。H-01〜H-04 と G-11〜G-13 の packet で bottleneck が残るまでは戻さない。
-- D-02 は主軸に戻さない。表示内容や素材調達の判断支援が再度 bottleneck として明示されたときだけ再評価する。
+#### 候補B: 演出配置の自動化拡張
+- 現状 face/bg/slot/overlay → 演出全体への拡張
+- 素材調達・配置・タイミング制御のどこをどう自動化するか要設計
+- Python スコープ制約との整合 (.ymmp 操作は patch-ymmp の限定範囲のみ)
+- YMM4 側の制約 (タイムライン操作 API 非公開) が壁になる可能性
+
+#### 候補C: 視覚効果の実現
+- サムネイル制作の実ワークフロー確立
+- 茶番劇風アニメ/図解アニメの実現手段の特定
+- Python での画像生成は禁止のため、外部ツール or YMM4 内での実現が前提
+- C-08 prompt のコピー品質改善 (仕様準拠だが感情フック不足)
+
+#### 完了・維持 (着手不要)
+- Packaging spec lane: H-01〜H-04 全て proof 済み。追加 spec 作業なし
+- Timeline lane: G-11〜G-13 completed packet。failure class 発生時のみ再オープン
+- 字幕分割: B-01〜B-17。残差2件は方針判断待ち (急がない)
+- Electron GUI scaffold: Phase 1-5 完了。実運用は上記 bottleneck 解消後
+
+#### 別タスクとして完全分離
+- E-01/E-02 YouTube 投稿自動化: 制作パイプラインとは独立。混ぜない
 
 ## DECISION LOG
 
@@ -294,14 +297,14 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ## HANDOFF SNAPSHOT (2026-04-06 更新)
 
-- Shared Focus: face は completed subsystem のまま維持。timeline lane では G-11〜G-13 を completed packet として閉じた。packaging lane は H-01〜H-04 全て proof 済み (H-02 strict GUI rerun proof 2026-04-06 pass)。コピー品質の実用改善は別課題。fade-family `transition` は repo-local corpus で確定済みで、sample dependency は non-fade / template-backed family と `se` の AudioItem write route に限定された
-- Safe Next Frontier Packet: packaging spec lane 一巡完了。timeline は completed packet 群として扱い、known failure class または新 sample が出たときだけ局所再オープンする
+- Shared Focus: 2026-04-06 ユーザーフィードバックにより方向転換。done 35件だが実制作の3大bottleneck (台本品質/演出配置自動化/視覚効果) が未解決。packaging spec lane (H-01〜H-04) とtimeline lane (G-11〜G-13) は一巡完了。次フェーズはspec/proof整備ではなく実制作の手間を直接軽減する機能を優先する
+- Safe Next Frontier Packet: 台本品質改善 / 演出配置自動化拡張 / 視覚効果実現のいずれか。着手順はユーザーと合意のうえで決定
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
 - Last Change Relation: direct (H-03 spec definition + AI monitoring dry proof + packaging lane narrowed to one operator check)
 - Evidence: Production E2E 実証済み + `uv run pytest`: 220 passed / 3 xpassed。`docs/VISUAL_DENSITY_SCORE_SPEC.md` と `docs/verification/H03-visual-density-ai-monitoring-proof.md` により、visual stagnation risk と packaging promise の on-screen payoff を別軸で warning 化できることを確認。slot/face/timeline regression も維持
 - 案件モード: CLI artifact
-- 現在の主レーン: Advance (Packaging workflow proof)
+- 現在の主レーン: 方向転換中 (実制作bottleneck直接軽減へ移行)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近
 - Current Trust Assessment:
   - trusted: B-01~B-17 全字幕スタック (93 PASS)
@@ -333,12 +336,12 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - E-02: hold 継続。E-01 とセットでのみ再検討
   - F-01/F-02: quarantined 継続
 - What Not To Do Next:
+  - spec/proof 整備をさらに積み増さない (一巡済み。実制作の手間軽減が先)
+  - done 件数で進捗を測らない (35件だが実制作カバレッジは限定的)
   - D-02 を主軸として扱わない (従属的補助論点)
-  - patch-ymmp を「研究か実用か」の二択で裁定しない (成熟段階モデルで評価)
-  - motion/transition/overlay を「未実装だから境界外」と誤分類しない
   - quarantined 項目を通常候補としてそのまま spec 化しない
-  - 素材取得/API 検討を再び中心にしない
-  - face 問題を broad な visual retry loop として再開しない。failure class か final creative judgement を起点にする
+  - face 問題を broad な visual retry loop として再開しない
+  - E-01/E-02 を制作パイプラインと混ぜない (別タスクとして完全分離)
 - Expansion Risk: なし
 ## 2026-04-05 Structural Linebreak Redesign Note
 
