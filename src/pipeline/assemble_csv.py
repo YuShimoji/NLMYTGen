@@ -1424,6 +1424,8 @@ def _collect_structural_breaks(text: str) -> list[tuple[int, int, str]]:
                     _add(run_end, 12, "minor:close+tail")
             elif pos < len(text) and text[pos] not in _CLOSE_BRACKETS and not _is_contentish(text[pos]):
                 _add(pos, 9, "minor:close")
+            elif pos < len(text) and text[pos] not in _CLOSE_BRACKETS:
+                _add(pos, 18, "minor:close+content")
 
     for pos in range(1, len(text)):
         prev_ch = text[pos - 1]
@@ -1485,6 +1487,8 @@ def _structural_boundary_penalty(text: str, pos: int, *, page_split: bool) -> fl
             left_anchor = text[left_anchor_idx]
             run_text = text[run_start:pos]
             is_particle_run = all(ch in _STRUCTURAL_PARTICLES for ch in run_text)
+            if right_first in _OPEN_BRACKETS:
+                is_particle_run = True
             if (
                 not is_particle_run
                 and (_is_cjk_ideograph(left_anchor) or _is_katakana(left_anchor) or left_anchor.isdigit() or left_anchor in _CLOSE_BRACKETS)

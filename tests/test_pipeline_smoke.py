@@ -524,6 +524,54 @@ def test_cli_apply_production_with_slot_map(tmp_path):
     assert "(dry-run: no file written)" in result.stdout
 
 
+def test_cli_measure_timeline_routes_json(tmp_path):
+    """CLI measure-timeline-routes は candidate route report を返す。"""
+    import json
+
+    ymmp = {
+        "Timelines": [{"ID": 0, "Items": [
+            {
+                "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+                "FilePath": "C:/bg.png",
+                "X": {"Values": [{"Value": 0.0}]},
+                "Y": {"Values": [{"Value": 0.0}]},
+                "Zoom": {"Values": [{"Value": 100.0}]},
+                "VideoEffects": [{
+                    "$type": "YukkuriMovieMaker.Plugin.Effects.StripeGlitchNoise, YukkuriMovieMaker.Plugin.Effects",
+                    "Name": "Glitch",
+                }],
+                "TemplateName": "BG Pan",
+            },
+            {
+                "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+                "CharacterName": "marisa",
+                "VideoEffects": [{
+                    "$type": "YukkuriMovieMaker.Plugin.Effects.BounceEffect, YukkuriMovieMaker.Plugin.Effects",
+                    "Name": "Bounce",
+                }],
+                "Transition": {"Name": "Fade"},
+            },
+        ], "LayerSettings": []}],
+    }
+    ymmp_path = tmp_path / "measurement.ymmp"
+    with open(ymmp_path, "w", encoding="utf-8-sig") as f:
+        json.dump(ymmp, f)
+
+    result = subprocess.run(
+        [sys.executable, "-m", "src.cli.main", "measure-timeline-routes",
+         str(ymmp_path), "--format", "json"],
+        capture_output=True, text=True,
+        cwd=str(_project_root()),
+    )
+
+    assert result.returncode == 0, f"stderr: {result.stderr}"
+    payload = json.loads(result.stdout)
+    assert payload["item_type_counts"]["ImageItem"] == 1
+    assert payload["route_counts"]["bg_anim"]["ImageItem.VideoEffects"] == 1
+    assert payload["route_counts"]["motion"]["VoiceItem.VideoEffects"] == 1
+    assert payload["template_name_counts"]["BG Pan"] == 1
+
+
 def _project_root():
     """プロジェクトルートを返す。"""
     from pathlib import Path
