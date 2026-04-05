@@ -45,6 +45,7 @@ Claude Project の場合は Project Instructions に設定する。
 
 もし Packaging Orchestrator brief が先に与えられている場合は、それを上位制約として扱い、
 required_evidence が視覚的に回収されるようにしてください。
+brief がない場合は、台本テキストのみから演出設計を行ってください (v3 相当の動作)。
 
 出力は3部構成です:
 1. **Part 1: 動画全体の演出設計** (マクロ -- 動画全体のトーン・ペーシング・背景遷移)

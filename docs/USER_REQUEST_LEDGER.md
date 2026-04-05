@@ -22,6 +22,7 @@
 - NotebookLM / YMM4 / YouTube Studio の実 integration point を曖昧にしたまま仕様を進めない。
 
 ## Backlog Delta
+- 2026-04-06: assistant 側の subquest を timeline edit まで拡張する方針を追加。主 frontier は H-01 のまま維持し、次段は G-11 slot patch → G-12 native-template measurement → G-13 overlay/se insertion の packet として扱う
 - S-5 字幕はみ出しは B-15/B-16/B-17 で解決済み (トップダウン統合リフロー、91テストPASS)。
 - S-6 トピック分析は、API SDK ではなく GUI LLM (Custom GPT / Claude Project 等) を優先する (2026-03-31 ユーザー希望)。C-07 / C-08 は done。次の frontier は packaging / orchestration / scoring への接続。
 - 視覚系タスク (背景動画・アニメーション・サムネイル画像) に着手意向あり (2026-03-31)。字幕分割完了後に優先順位を判断。D-02 quarantined / D-01 rejected の再整理が前提。

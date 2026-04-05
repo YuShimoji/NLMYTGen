@@ -31,6 +31,12 @@
 - 「何が足りないですか」「どこを見ればよいですか」の broad question では止まらず、failure class ごとの next action を先に提示する
 - failure class が mechanical に確定しているときは、同じ趣旨の YMM4 visual proof を追加で要求しない
 
+## timeline サブクエスト報告
+- timeline 問題は 1 つの broad frontier として報告せず、`slot patch` / `native-template measurement` / `overlay-se insertion` の packet 名で分けて報告する
+- mechanical failure と creative judgement を混ぜない。前者は registry gap / write route / readback mismatch として示し、後者は見た目・テンポ・密度の判断として分離する
+- timeline packet でも repeated visual proof を要求しない。初回 proof または最終 creative judgement に必要な場合だけ visual check を使う
+- timeline packet の completion 報告では、visual impression ではなく `uv run pytest` / CLI smoke / dry-run/readback を先に根拠として示す
+
 ## 開発ドリフト回避
 - 新しい自動化経路を提案する際は、現行ロードマップ (YMM4-AUTOMATION-RESEARCH.md セクション4) の段階構成との整合を示すこと
 - 研究 (ymmp 解析、プラグイン API 調査、外部ツール評価等) と開発 (IR 定義、プロンプト改訂等) を混同しない。研究に2ブロック以上費やす場合は一度止まって開発に戻る
