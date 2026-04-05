@@ -1,0 +1,13 @@
+{
+  "name": "nlmytgen-gui",
+  "version": "0.1.0",
+  "description": "NLMYTGen GUI - Drag & Drop interface for YMM4 pipeline",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev"
+  },
+  "devDependencies": {
+    "electron": "^35.0.0"
+  }
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+  <title>NLMYTGen</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>NLMYTGen</h1>
+    <nav>
+      <button class="tab active" data-tab="csv">CSV 変換</button>
+      <button class="tab" data-tab="production">演出適用</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- CSV 変換タブ -->
+    <section id="tab-csv" class="tab-content active">
+      <div id="drop-zone" class="drop-zone">
+        <p>台本 .txt をここにドラッグ&ドロップ</p>
+        <p class="hint">または <button id="btn-select-txt">ファイルを選択</button></p>
+        <p id="selected-file" class="file-path"></p>
+      </div>
+
+      <div class="settings-group">
+        <h3>設定</h3>
+        <div class="setting-row">
+          <label for="speaker-map">Speaker Map</label>
+          <input type="text" id="speaker-map" placeholder="スピーカー1=れいむ,スピーカー2=まりさ">
+        </div>
+        <div class="setting-row">
+          <label for="max-lines">Max Lines</label>
+          <input type="number" id="max-lines" value="2" min="1" max="5">
+        </div>
+        <div class="setting-row">
+          <label for="chars-per-line">Chars/Line</label>
+          <input type="number" id="chars-per-line" value="40" min="20" max="80">
+        </div>
+        <div class="setting-row">
+          <label>
+            <input type="checkbox" id="reflow-v2" checked> Reflow v2
+          </label>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button id="btn-build-csv" class="primary" disabled>Build CSV</button>
+        <button id="btn-dry-run">Dry Run</button>
+      </div>
+
+      <div id="csv-result" class="result-panel hidden"></div>
+    </section>
+
+    <!-- 演出適用タブ -->
+    <section id="tab-production" class="tab-content">
+      <div class="file-select-group">
+        <div class="file-row">
+          <label>Production .ymmp</label>
+          <button class="btn-file" data-target="prod-ymmp">選択</button>
+          <span id="prod-ymmp-path" class="file-path">未選択</span>
+        </div>
+        <div class="file-row">
+          <label>IR JSON</label>
+          <button class="btn-file" data-target="ir-json">選択</button>
+          <span id="ir-json-path" class="file-path">未選択</span>
+        </div>
+        <div class="file-row">
+          <label>Palette .ymmp</label>
+          <button class="btn-file" data-target="palette">選択</button>
+          <span id="palette-path" class="file-path">未選択</span>
+        </div>
+        <div class="file-row">
+          <label>CSV (row-range)</label>
+          <button class="btn-file" data-target="csv-file">選択</button>
+          <span id="csv-file-path" class="file-path">未選択</span>
+        </div>
+        <div class="file-row">
+          <label>BG Map</label>
+          <button class="btn-file" data-target="bg-map">選択</button>
+          <span id="bg-map-path" class="file-path">未選択</span>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button id="btn-apply" class="primary" disabled>Apply Production</button>
+        <button id="btn-apply-dry">Dry Run</button>
+      </div>
+
+      <div id="production-result" class="result-panel hidden"></div>
+    </section>
+  </main>
+
+  <footer>
+    <span id="status">Ready</span>
+  </footer>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

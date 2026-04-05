@@ -16,3 +16,5 @@ venv/
 uv.lock
 .serena/
 samples/_tmp_*
+gui/node_modules/
+gui/package-lock.json
