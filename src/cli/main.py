@@ -660,6 +660,16 @@ def main(argv: list[str] | None = None) -> int:
     p_extract.add_argument("--labeled", action="store_true",
                            help="Use Remark field as IR label (character-scoped output)")
 
+    # measure-timeline-routes
+    p_measure = subparsers.add_parser(
+        "measure-timeline-routes",
+        help="Inspect motion / transition / bg_anim candidate routes in a ymmp",
+    )
+    p_measure.add_argument("ymmp", help="Input ymmp file path")
+    p_measure.add_argument("-o", "--output", help="Output report path")
+    p_measure.add_argument("--format", choices=["text", "json"], default="text",
+                           help="Output format (default: text)")
+
     # patch-ymmp
     p_patch = subparsers.add_parser(
         "patch-ymmp",
@@ -740,6 +750,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_fetch_topics(args)
         elif args.command == "extract-template":
             return _cmd_extract_template(args)
+        elif args.command == "measure-timeline-routes":
+            return _cmd_measure_timeline_routes(args)
         elif args.command == "patch-ymmp":
             return _cmd_patch_ymmp(args)
         elif args.command == "apply-production":
@@ -811,6 +823,33 @@ def _cmd_extract_template(args: argparse.Namespace) -> int:
     print(f"bg_map: {bg_path} ({len(bg_map)} paths)")
 
     print(f"\nNext step: rename JSON keys to IR labels (serious, smile, studio_blue, etc.)")
+    return 0
+
+
+def _cmd_measure_timeline_routes(args: argparse.Namespace) -> int:
+    """Read-only ymmp inspection for motion / transition / bg_anim routes."""
+    from src.pipeline.ymmp_patch import load_ymmp
+    from src.pipeline.ymmp_measure import (
+        measure_timeline_routes,
+        render_timeline_measurement_text,
+    )
+
+    ymmp_data = load_ymmp(args.ymmp)
+    measurement = measure_timeline_routes(ymmp_data)
+
+    if args.format == "json":
+        text = json.dumps(measurement.to_dict(), ensure_ascii=False, indent=2) + "\n"
+    else:
+        text = render_timeline_measurement_text(measurement)
+
+    if getattr(args, "output", None):
+        out_path = Path(args.output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(text, encoding="utf-8")
+        print(f"Written: {out_path}")
+    else:
+        sys.stdout.write(text)
+
     return 0
 
 
