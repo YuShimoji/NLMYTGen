@@ -9,6 +9,8 @@ Usage:
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
     python -m src.cli.main fetch-topics <URL>... [-n 20] [--after YYYY-MM-DD] [--format text|json]
+    python -m src.cli.main validate-ir <ir.json> [--palette ...] [--format text|json]
+    python -m src.cli.main emit-packaging-brief-template [-o path] [--format markdown|json]
 """
 
 from __future__ import annotations
@@ -737,6 +739,10 @@ def main(argv: list[str] | None = None) -> int:
     p_patch.add_argument("--slot-map", help="Slot label -> x/y/zoom mapping (JSON or registry)")
     p_patch.add_argument("--overlay-map", help="Overlay label -> image asset mapping (JSON or registry)")
     p_patch.add_argument("--se-map", help="SE label -> audio asset mapping (JSON or registry)")
+    p_patch.add_argument(
+        "--motion-map",
+        help="Motion label -> TachieItem VideoEffects list (JSON; see samples/motion_map.example.json)",
+    )
     p_patch.add_argument("-o", "--output", help="Output ymmp path (default: <input>_patched.ymmp)")
     p_patch.add_argument("--dry-run", action="store_true", help="Preview changes without writing")
 
@@ -753,6 +759,10 @@ def main(argv: list[str] | None = None) -> int:
     p_apply.add_argument("--slot-map", help="Slot label -> x/y/zoom mapping (JSON or registry)")
     p_apply.add_argument("--overlay-map", help="Overlay label -> image asset mapping (JSON or registry)")
     p_apply.add_argument("--se-map", help="SE label -> audio asset mapping (JSON or registry)")
+    p_apply.add_argument(
+        "--motion-map",
+        help="Motion label -> TachieItem VideoEffects list (JSON)",
+    )
     p_apply.add_argument("--refresh-maps", action="store_true",
                          help="Force re-extract face_map from palette even if file exists")
     p_apply.add_argument("--csv", help="CSV file for auto row_start/row_end annotation")
@@ -790,9 +800,15 @@ def main(argv: list[str] | None = None) -> int:
     p_valir.add_argument("--slot-map", help="Slot label -> x/y/zoom mapping (JSON or registry)")
     p_valir.add_argument("--overlay-map", help="Overlay label -> image asset mapping (JSON or registry)")
     p_valir.add_argument("--se-map", help="SE label -> audio asset mapping (JSON or registry)")
+    p_valir.add_argument(
+        "--motion-map",
+        help="Motion label -> VideoEffects list registry for MOTION_MAP_UNKNOWN_LABEL checks",
+    )
     p_valir.add_argument("--prompt-doc",
                          help="Prompt markdown for face contract drift check"
                               " (default: docs/S6-production-memo-prompt.md)")
+    p_valir.add_argument("--format", choices=["text", "json"], default="text",
+                         help="text: human report to stdout; json: machine summary on stdout, meta on stderr")
 
     # score-evidence (H-04)
     p_score_ev = subparsers.add_parser(
@@ -813,6 +829,20 @@ def main(argv: list[str] | None = None) -> int:
     p_score_vd.add_argument("--scores", required=True,
                             help="Category scores JSON: {\"scene_variety\": 2, ...}")
     p_score_vd.add_argument("--format", choices=["json", "text"], default="text")
+
+    # emit-packaging-brief-template (H-01)
+    p_emit_brief = subparsers.add_parser(
+        "emit-packaging-brief-template",
+        help="H-01: Write empty Packaging Orchestrator brief (Markdown or JSON skeleton)",
+    )
+    p_emit_brief.add_argument(
+        "-o", "--output",
+        help="Output file path (default: stdout)",
+    )
+    p_emit_brief.add_argument(
+        "--format", choices=["markdown", "json"], default="markdown",
+        help="markdown (default) or minimal JSON skeleton",
+    )
 
     args = parser.parse_args(argv)
 
@@ -847,6 +877,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_score_evidence(args)
         elif args.command == "score-visual-density":
             return _cmd_score_visual_density(args)
+        elif args.command == "emit-packaging-brief-template":
+            return _cmd_emit_packaging_brief_template(args)
         else:
             parser.print_help()
             return 1
@@ -1058,6 +1090,11 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
         se_map = _load_labeled_asset_map(args.se_map, "se")
         print(f"se_map: {args.se_map} ({len(se_map)} labels)")
 
+    motion_map: dict[str, list[dict]] | None = None
+    if getattr(args, "motion_map", None):
+        motion_map = _load_motion_map(args.motion_map)
+        print(f"motion_map: {args.motion_map} ({len(motion_map)} labels)")
+
     result = patch_ymmp(
         ymmp_data,
         ir_data,
@@ -1067,6 +1104,7 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
         char_default_slots=char_default_slots,
         overlay_map=overlay_map,
         se_map=se_map,
+        motion_map=motion_map,
     )
 
     print(f"Face changes: {result.face_changes}")
@@ -1074,6 +1112,9 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
     print(f"Overlay changes: {result.overlay_changes}")
     print(f"SE plans: {result.se_plans}")
     print(f"BG removed: {result.bg_changes}, BG added: {result.bg_additions}")
+    print(f"BG anim writes: {result.bg_anim_changes}")
+    print(f"Transition VoiceItem writes: {result.transition_changes}")
+    print(f"TachieItem VideoEffects writes: {result.motion_changes}")
     if result.warnings:
         for w in result.warnings:
             print(f"  Warning: {w}", file=sys.stderr)
@@ -1194,6 +1235,37 @@ def _load_labeled_asset_map(
     return asset_map
 
 
+def _load_motion_map(path: str | Path) -> dict[str, list[dict]]:
+    """motion ラベル → TachieItem.VideoEffects 配列（効果オブジェクトのリスト）を読む."""
+    with open(path, "r", encoding="utf-8") as f:
+        raw = json.load(f)
+
+    if not isinstance(raw, dict):
+        raise ValueError("motion_map JSON must be an object")
+
+    motions_raw = raw.get("motions") if isinstance(raw.get("motions"), dict) else raw
+    if not isinstance(motions_raw, dict):
+        raise ValueError(
+            "motion_map JSON must define a top-level object or 'motions'"
+        )
+
+    motion_map: dict[str, list[dict]] = {}
+    for label, value in motions_raw.items():
+        if not isinstance(value, list):
+            raise ValueError(
+                f"motion_map entry '{label}' must be a list of effect objects"
+            )
+        parsed: list[dict] = []
+        for i, item in enumerate(value):
+            if not isinstance(item, dict):
+                raise ValueError(
+                    f"motion_map entry '{label}'[{i}] must be an object"
+                )
+            parsed.append(dict(item))
+        motion_map[str(label)] = parsed
+    return motion_map
+
+
 def _default_prompt_doc_path() -> Path:
     """repo-local の既定 prompt doc パスを返す."""
     return Path(__file__).resolve().parents[2] / "docs" / "S6-production-memo-prompt.md"
@@ -1233,6 +1305,8 @@ def _fatal_face_patch_warnings(warnings: list[str]) -> list[str]:
         "SLOT_REGISTRY_MISS:",
         "SLOT_NO_TACHIE_ITEM:",
         "SLOT_VALUE_INVALID:",
+        "MOTION_MAP_MISS:",
+        "MOTION_NO_TACHIE_ITEM:",
     )
     return [
         warning
@@ -1307,6 +1381,42 @@ def _print_validation(vr) -> None:
         print(f"  INFO: {msg}")
 
 
+def _ir_validate_json_summary(vr, ir_data: dict) -> dict:
+    """validate-ir --format json 用の機械可読サマリ（詳細は従来どおり text モード）。"""
+    face_top = sorted(vr.face_distribution.items(), key=lambda x: -x[1])[:5]
+    return {
+        "command": "validate-ir",
+        "success": not vr.has_errors,
+        "error_count": len(vr.errors),
+        "warning_count": len(vr.warnings),
+        "info_count": len(vr.info),
+        "utterance_count": len(ir_data.get("utterances", [])),
+        "preview_errors": vr.errors[:8],
+        "preview_warnings": vr.warnings[:8],
+        "face_distribution_top": [{"label": k, "count": v} for k, v in face_top],
+    }
+
+
+def _apply_production_summary(result) -> dict:
+    """apply-production JSON に付与する変更件数・警告プレビュー。"""
+    fatal = _fatal_face_patch_warnings(result.warnings)
+    return {
+        "warning_count": len(result.warnings),
+        "fatal_warning_count": len(fatal),
+        "preview_warnings": result.warnings[:8],
+        "face_changes": result.face_changes,
+        "slot_changes": result.slot_changes,
+        "overlay_changes": result.overlay_changes,
+        "se_plans": result.se_plans,
+        "tachie_syncs": result.tachie_syncs,
+        "bg_removed": result.bg_changes,
+        "bg_added": result.bg_additions,
+        "bg_anim_changes": result.bg_anim_changes,
+        "transition_changes": result.transition_changes,
+        "motion_changes": result.motion_changes,
+    }
+
+
 def _cmd_validate_ir(args: argparse.Namespace) -> int:
     """IR 品質 gate."""
     from src.pipeline.ymmp_patch import load_ir, load_ymmp
@@ -1319,6 +1429,7 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
     known_slots = None
     known_overlays = None
     known_se = None
+    known_motion_labels = None
     char_default_slots = None
     prompt_face_labels, prompt_doc_path = _load_prompt_face_contract(
         getattr(args, "prompt_doc", None)
@@ -1347,18 +1458,30 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
     if args.se_map:
         se_map = _load_labeled_asset_map(args.se_map, "se")
         known_se = set(se_map)
+    if getattr(args, "motion_map", None):
+        motion_map = _load_motion_map(args.motion_map)
+        known_motion_labels = set(motion_map)
+
+    fmt = getattr(args, "format", "text")
+    meta_stream = sys.stderr if fmt == "json" else sys.stdout
 
     if prompt_doc_path and prompt_face_labels:
         print(
             f"prompt face contract: {prompt_doc_path}"
-            f" ({len(prompt_face_labels)} labels)"
+            f" ({len(prompt_face_labels)} labels)",
+            file=meta_stream,
         )
     if known_slots is not None:
-        print(f"slot contract: {len(known_slots)} labels")
+        print(f"slot contract: {len(known_slots)} labels", file=meta_stream)
     if known_overlays is not None:
-        print(f"overlay contract: {len(known_overlays)} labels")
+        print(f"overlay contract: {len(known_overlays)} labels", file=meta_stream)
     if known_se is not None:
-        print(f"se contract: {len(known_se)} labels")
+        print(f"se contract: {len(known_se)} labels", file=meta_stream)
+    if known_motion_labels is not None:
+        print(
+            f"motion contract: {len(known_motion_labels)} labels",
+            file=meta_stream,
+        )
 
     vr = validate_ir(
         ir_data,
@@ -1367,9 +1490,15 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
         known_slot_labels=known_slots,
         known_overlay_labels=known_overlays,
         known_se_labels=known_se,
+        known_motion_labels=known_motion_labels,
         char_default_slots=char_default_slots,
         prompt_face_labels=prompt_face_labels,
     )
+
+    if fmt == "json":
+        print(json.dumps(_ir_validate_json_summary(vr, ir_data), ensure_ascii=False))
+        return 1 if vr.has_errors else 0
+
     _print_validation(vr)
 
     if vr.has_errors:
@@ -1513,6 +1642,11 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         se_map = _load_labeled_asset_map(args.se_map, "se")
         print(f"se_map: {args.se_map} ({len(se_map)} labels)")
 
+    motion_map: dict[str, list[dict]] | None = None
+    if getattr(args, "motion_map", None):
+        motion_map = _load_motion_map(args.motion_map)
+        print(f"motion_map: {args.motion_map} ({len(motion_map)} labels)")
+
     # --- row-range annotation (--csv) ---
     ir_data = load_ir(args.ir_json)
 
@@ -1538,6 +1672,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
     known_slots = set(slot_map) if slot_map else None
     known_overlays = set(overlay_map) if overlay_map else None
     known_se = set(se_map) if se_map else None
+    known_motion_labels = set(motion_map) if motion_map else None
     prompt_face_labels, prompt_doc_path = _load_prompt_face_contract(
         getattr(args, "prompt_doc", None)
     )
@@ -1554,6 +1689,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         known_slot_labels=known_slots,
         known_overlay_labels=known_overlays,
         known_se_labels=known_se,
+        known_motion_labels=known_motion_labels,
         char_default_slots=char_default_slots or None,
         prompt_face_labels=prompt_face_labels,
     )
@@ -1575,6 +1711,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         char_default_slots=char_default_slots or None,
         overlay_map=overlay_map,
         se_map=se_map,
+        motion_map=motion_map,
     )
 
     fmt = getattr(args, "format", "text")
@@ -1587,6 +1724,9 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         if result.tachie_syncs:
             print(f"Idle face inserts: {result.tachie_syncs}")
         print(f"BG removed: {result.bg_changes}, BG added: {result.bg_additions}")
+        print(f"BG anim writes: {result.bg_anim_changes}")
+        print(f"Transition VoiceItem writes: {result.transition_changes}")
+        print(f"TachieItem VideoEffects writes: {result.motion_changes}")
     for warning in result.warnings:
         print(f"  WARNING: {warning}", file=sys.stderr)
 
@@ -1606,6 +1746,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
                 "face_changes": result.face_changes,
                 "slot_changes": result.slot_changes,
                 "warnings": result.warnings,
+                "summary": _apply_production_summary(result),
             }, ensure_ascii=False))
         return 1
 
@@ -1620,7 +1761,11 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
                 "tachie_syncs": result.tachie_syncs,
                 "bg_changes": result.bg_changes,
                 "bg_additions": result.bg_additions,
+                "bg_anim_changes": result.bg_anim_changes,
+                "transition_changes": result.transition_changes,
+                "motion_changes": result.motion_changes,
                 "warnings": result.warnings,
+                "summary": _apply_production_summary(result),
             }, ensure_ascii=False))
         else:
             print("(dry-run: no file written)")
@@ -1644,10 +1789,30 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
             "tachie_syncs": result.tachie_syncs,
             "bg_changes": result.bg_changes,
             "bg_additions": result.bg_additions,
+            "bg_anim_changes": result.bg_anim_changes,
+            "transition_changes": result.transition_changes,
+            "motion_changes": result.motion_changes,
             "warnings": result.warnings,
+            "summary": _apply_production_summary(result),
         }, ensure_ascii=False))
     else:
         print(f"Written: {out_path}")
+    return 0
+
+
+def _cmd_emit_packaging_brief_template(args: argparse.Namespace) -> int:
+    """H-01 空テンプレを stdout または -o に書き出す。"""
+    from src.pipeline.packaging_brief_template import emit_json_text, emit_markdown
+
+    fmt = getattr(args, "format", "markdown")
+    text = emit_json_text() if fmt == "json" else emit_markdown()
+    out = getattr(args, "output", None)
+    if out:
+        Path(out).parent.mkdir(parents=True, exist_ok=True)
+        Path(out).write_text(text, encoding="utf-8")
+        print(f"Written: {out}")
+    else:
+        sys.stdout.write(text)
     return 0
 
 

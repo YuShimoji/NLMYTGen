@@ -90,6 +90,7 @@ def validate_ir(
     known_slot_labels: set[str] | None = None,
     known_overlay_labels: set[str] | None = None,
     known_se_labels: set[str] | None = None,
+    known_motion_labels: set[str] | None = None,
     char_default_slots: dict[str, str] | None = None,
     prompt_face_labels: set[str] | None = None,
     serious_threshold: float = 0.40,
@@ -106,6 +107,8 @@ def validate_ir(
     char_face_map : dict[str, set[str]] | None
         キャラ別の face ラベル集合。例: {"魔理沙": {"serious", "smile"}, "霊夢": {"serious"}}
         指定されると、各発話の face/idle_face がそのキャラで解決可能かチェックする
+    known_motion_labels : set[str] | None
+        motion_map のキー集合。指定時、非 none の motion が台帳に無ければ MOTION_MAP_UNKNOWN_LABEL
     prompt_face_labels : set[str] | None
         Custom GPT prompt が許可している face ラベル集合。
         指定されると、prompt ↔ palette drift と IR の contract drift を検出する
@@ -129,7 +132,12 @@ def validate_ir(
         return result
 
     # carry-forward を解決して face 分布を取得
-    from src.pipeline.ymmp_patch import _resolve_carry_forward
+    from src.pipeline.ymmp_patch import (
+        BG_ANIM_ALLOWED,
+        MOTION_ALLOWED,
+        TRANSITION_ALLOWED,
+        _resolve_carry_forward,
+    )
     resolved = _resolve_carry_forward(ir_data)
 
     # --- face distribution ---
@@ -160,6 +168,55 @@ def validate_ir(
             overlay_usage[overlay] += 1
         if se_label:
             se_usage[se_label] += 1
+
+    for entry in resolved:
+        ba = entry.get("bg_anim")
+        if ba is None or ba == "":
+            continue
+        if ba not in BG_ANIM_ALLOWED:
+            result.errors.append(
+                "BG_ANIM_UNKNOWN_LABEL: "
+                f"utterance index={entry.get('index', '?')}"
+                f" has unsupported bg_anim '{ba}'"
+                f" (allowed: {', '.join(sorted(BG_ANIM_ALLOWED))})"
+            )
+
+    for entry in resolved:
+        tx = entry.get("transition")
+        if tx is None or tx == "":
+            continue
+        if tx not in TRANSITION_ALLOWED:
+            result.errors.append(
+                "TRANSITION_UNKNOWN_LABEL: "
+                f"utterance index={entry.get('index', '?')}"
+                f" has unsupported transition '{tx}'"
+                f" (allowed: {', '.join(sorted(TRANSITION_ALLOWED))})"
+            )
+
+    for entry in resolved:
+        mo = entry.get("motion")
+        if mo is None or mo == "":
+            continue
+        if mo not in MOTION_ALLOWED:
+            result.errors.append(
+                "MOTION_UNKNOWN_LABEL: "
+                f"utterance index={entry.get('index', '?')}"
+                f" has unsupported motion '{mo}'"
+                f" (allowed: {', '.join(sorted(MOTION_ALLOWED))})"
+            )
+
+    if known_motion_labels is not None:
+        for entry in resolved:
+            mo = entry.get("motion")
+            if mo is None or mo == "" or mo == "none":
+                continue
+            if mo not in known_motion_labels:
+                result.errors.append(
+                    "MOTION_MAP_UNKNOWN_LABEL: "
+                    f"utterance index={entry.get('index', '?')}"
+                    f" uses motion '{mo}' not in motion_map registry"
+                )
+
     total = sum(face_counts.values())
     result.face_distribution = dict(face_counts)
     result.used_face_labels = sorted(face_usage)

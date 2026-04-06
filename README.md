@@ -2,6 +2,8 @@
 
 NotebookLM の出力を YMM4 (ゆっくりMovieMaker4) 用 CSV に変換し、演出 IR (中間表現) で S-6 (背景・演出設定) の半自動化を目指すパイプライン。
 
+**GUI**: リポジトリ直下の [`start-gui.bat`](start-gui.bat) は **Shift_JIS (CP932) で保存**すること（UTF-8 / UTF-8-BOM にすると cmd で壊れる場合があります）。先頭 `REM` に同趣旨の注意あり。
+
 ## 目的
 
 1. NotebookLM で生成した Audio Overview のトランスクリプトを、YMM4 の台本読込フォーマットに変換する (CSV 変換 -- 実装済み)
@@ -70,6 +72,18 @@ YMM4 台本読込用 CSV:
 - 列2: 発話テキスト
 
 ## 使い方
+
+### H-01 Packaging Brief の空テンプレ（品質診断の前段）
+
+```bash
+# Markdown テンプレ（仕様 v0.1 §5 相当）をファイルへ
+python -m src.cli.main emit-packaging-brief-template -o packaging_brief.md
+
+# 最小 JSON 骨格（score-evidence 等でそのまま読める形）
+python -m src.cli.main emit-packaging-brief-template --format json -o packaging_brief.json
+```
+
+### CLI 一覧（抜粋）
 
 ```bash
 # CSV 生成

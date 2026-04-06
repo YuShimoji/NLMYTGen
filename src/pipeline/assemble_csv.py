@@ -473,6 +473,61 @@ def _is_digit_run(text: str, pos: int) -> bool:
     return False
 
 
+# 1文字だけ次行頭になりうち助詞（語幹+送り仮名分割の誤検知除外用）
+_HIRAGANA_LINE_HEAD_PARTICLE = frozenset("はがをにへやのともで")
+
+# 漢字語幹直後に付く語尾形（語の途中で切らない）。「あるいは」は除外する。
+_OKURIGANA_VERB_STARTS = ("える", "いる", "うる", "おる", "れる", "せる")
+
+
+def _forbidden_structural_split(text: str, pos: int) -> bool:
+    """語中・数値+単位・記号塊など、構造分割に使わない位置 (Reflow v2)。
+
+    運用で出やすい誤分割 (例: 2023/年, 1/失点, 見間違/った, 入り込/む, ～～/では) を抑える。
+    """
+    if pos <= 0 or pos >= len(text):
+        return False
+    left_last = text[pos - 1]
+    right = text[pos:]
+
+    if not right:
+        return False
+    right_first = right[0]
+
+    # 数字列の直後に漢字・単位を切らない (2023年, 1失点, 71.4% 等の % 側は digit_run で別扱い)
+    if left_last.isdigit():
+        if _is_cjk_ideograph(right_first) or right_first in "年月日点％%倍ヶヵ":
+            return True
+
+    # 漢字語幹 + 促音で始まる送り仮名 (見間違った 等)
+    if _is_cjk_ideograph(left_last) and right_first == "っ":
+        return True
+
+    # カタカナ語内の促音 (っ/ッ) の前 (例: バッター)
+    if _is_katakana(left_last) and right_first in "っッ" and len(right) > 1:
+        if _is_katakana(right[1]) or right[1] == "ー":
+            return True
+
+    # 波ダッシュ直後の「では」「でも」を分断しない
+    if left_last in "～〜" and right.startswith(("では", "でも")):
+        return True
+
+    # 漢字語幹 + 代表的な語尾送り仮名 (抑える 等)。「あるいは」は語境界として切りたいので除外。
+    if _is_cjk_ideograph(left_last):
+        if any(right.startswith(p) for p in _OKURIGANA_VERB_STARTS):
+            return True
+        if right.startswith("ある") and not right.startswith("あるいは"):
+            return True
+
+    # 漢字 + 1モーラの送り仮名のみ (入り込む の 込|む 等)。助詞1文字始まりは除外。
+    if _is_cjk_ideograph(left_last) and _is_hiragana(right_first):
+        if right_first not in _HIRAGANA_LINE_HEAD_PARTICLE:
+            if len(right) == 1 or not _is_hiragana(right[1]):
+                return True
+
+    return False
+
+
 # 大区切り候補
 _MAJOR_BREAK_AFTER: dict[str, int] = {
     "。": 0, "！": 0, "？": 0, "!": 0, "?": 0,
@@ -1403,6 +1458,8 @@ def _collect_structural_breaks(text: str) -> list[tuple[int, int, str]]:
             return
         if _is_digit_run(text, pos):
             return
+        if _forbidden_structural_split(text, pos):
+            return
         if text[pos - 1] == "ー" or text[pos] == "ー":
             return
         existing = candidates.get(pos)
@@ -1488,7 +1545,10 @@ def _structural_boundary_penalty(
             if run_end < len(text) and _is_contentish(text[run_end]):
                 penalty += 70.0 if close_tail_page_split else (260.0 if not page_split else 320.0)
     if _is_cjk_ideograph(left_last) and _is_hiragana(right_first):
-        penalty += 180.0
+        penalty += 275.0
+    # 名詞・カタカナ語幹の直後に「も」だけが次行頭 (三振も取れ 等)
+    if right_first == "も" and (_is_cjk_ideograph(left_last) or _is_katakana(left_last)):
+        penalty += 110.0
     if left_last in _STRUCTURAL_PARTICLES and _is_contentish(right_first):
         penalty += 45.0 if not page_split else 65.0
 
@@ -1583,6 +1643,8 @@ def _collect_emergency_inner_breaks(text: str, start: int, end: int) -> list[tup
 
     def _push(pos: int, kind: str, *, require_bracket: bool) -> None:
         if pos <= start or pos >= end or pos in seen:
+            return
+        if _forbidden_structural_split(text, pos):
             return
         if require_bracket and not _in_bracket(pos, bracket_ranges):
             return
