@@ -49,6 +49,7 @@ NotebookLM やその他のソースから素材を取得する段階。
 | 何をするか | 誰がやるか | 現状 |
 |-----------|-----------|------|
 | テキスト → YMM4 CSV | NLMYTGen CLI | done (build-csv) |
+| 台本機械診断（NLM→ゆっくり前段） | NLMYTGen CLI | done (`diagnose-script` / B-18) |
 | 話者マッピング | NLMYTGen CLI | done (--speaker-map) |
 | 長文分割 | NLMYTGen CLI | done (--max-length, --display-width, --max-lines, --chars-per-line) |
 | 入力検証 | NLMYTGen CLI | done (validate) |

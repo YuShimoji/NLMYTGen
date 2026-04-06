@@ -66,6 +66,7 @@
 | B-15 | トップダウン改行 Phase 1: ページ間分割 | done | L2 | ページ間 (話者行) 分割をトップダウン方式に再設計。大区切り限定、閉じ括弧+助詞保護、カタカナ語/数字/漢字連続/括弧ペア内の分断禁止、再帰的 reflow。67テストPASS。ユーザー検証でページ間バランス偏り解消を確認。行内折り返し制御は B-16 へ |
 | B-16 | トップダウン改行 Phase 2: 行内折り返し制御 | done | L2 | `insert_inline_breaks()` で chars_per_line ごとに大区切り候補で行内改行 `\n` を挿入。`reflow_subtitles()` の最終段に統合。候補がなければ YMM4 自動折り返しに委ねる。72テストPASS。手動検証待ち |
 | B-17 | 字幕改行アルゴリズム v2 (統合リフロー) | done | L2 | B-15/B-16 を統合リフローとして再設計。`reflow_utterance()` ベースの一貫したトップダウン方式。91テストPASS |
+| B-18 | 台本機械診断（NLM→ゆっくり前段） | done | L2 | `diagnose-script` CLI + `src/pipeline/script_diagnostics.py`。`--format json` / `--strict` / `--expected-explainer` / `--expected-listener`。仕様: `docs/SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md`。dry proof: `docs/verification/B18-script-diagnostics-ai-monitoring-sample.md` |
 
 ### C. YMM4 連携・演出 (L3-YMM4内部)
 
@@ -79,6 +80,7 @@
 | C-06 | YMM4 演出・レンダリング工程（手動） | info | L3 | Python 機能ではなく手動工程の記録。読み上げ確認(S-5)・背景演出(S-6)・最終確認(S-7)。詳細は WORKFLOW.md 参照 |
 | C-07 | S-6 演出メモ生成（GUI LLM プロンプトテンプレート） | done | L3 補助 | v3 確定。Part 1: マクロ演出設計 (全体トーン/ペーシング/背景遷移)、Part 2: ミクロ演出指示 (4パターン/発話単位)、Part 3: 素材調達ガイド。`docs/S6-production-memo-prompt.md`。統合ガイド: `docs/gui-llm-setup-guide.md` |
 | C-08 | S-8 サムネイルコピー生成（GUI LLM プロンプトテンプレート） | done | L3 補助 | C-07 と同方式。キャッチコピー5案 + サブコピー3案 + 表情提案 + 背景方向性。`docs/S8-thumbnail-copy-prompt.md`。C-07 と統合して Custom GPT / Claude Project に1つのプロンプトとして固定化可能 |
+| C-09 | S-1 台本 refinement 支援プロンプト（GUI LLM） | done | L3 補助 | `docs/S1-script-refinement-prompt.md`。`diagnose-script --format json` + 生台本を GUI LLM に渡す手順。`docs/gui-llm-setup-guide.md` に導線あり |
 
 ### D. 素材取得・生成 (L1 + L2)
 

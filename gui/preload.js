@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('nlmytgen', {
   validateIr: (opts) => ipcRenderer.invoke('validate-ir', opts),
   scoreEvidence: (opts) => ipcRenderer.invoke('score-evidence', opts),
   scoreVisualDensity: (opts) => ipcRenderer.invoke('score-visual-density', opts),
+  diagnoseScript: (opts) => ipcRenderer.invoke('diagnose-script', opts),
   selectFile: (opts) => ipcRenderer.invoke('select-file', opts),
   openFolder: (path) => ipcRenderer.invoke('open-folder', path),
   saveIrPaste: (opts) => ipcRenderer.invoke('save-ir-paste', opts),

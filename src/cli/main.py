@@ -7,6 +7,7 @@ Usage:
     python -m src.cli.main patch-ymmp <ymmp> <ir-json> --face-map face.json --bg-map bg.json [-o patched.ymmp]
     python -m src.cli.main validate <input>
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
+    python -m src.cli.main diagnose-script <input> [--speaker-map ...] [--format text|json] [--strict]
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
     python -m src.cli.main fetch-topics <URL>... [-n 20] [--after YYYY-MM-DD] [--format text|json]
 """
@@ -41,6 +42,11 @@ from src.pipeline.assemble_csv import (
     split_long_utterances,
 )
 from src.pipeline.validate_handoff import validate, has_errors, Severity
+from src.pipeline.script_diagnostics import (
+    diagnose_script,
+    diagnostics_to_jsonable,
+    has_error as diagnostics_has_error,
+)
 
 
 def _parse_kv_pairs(lines: list[str]) -> dict[str, str]:
@@ -354,6 +360,39 @@ def _cmd_inspect(args: argparse.Namespace) -> int:
     _print_stats(output)
 
     return 0
+
+
+def _cmd_diagnose_script(args: argparse.Namespace) -> int:
+    """B-18: 台本機械診断を stdout に出す。"""
+    input_path = Path(args.input)
+    speaker_map = _resolve_speaker_map(args)
+    unlabeled = getattr(args, "unlabeled", False)
+    script = normalize(input_path, unlabeled=unlabeled)
+    results = diagnose_script(
+        script,
+        speaker_map=speaker_map,
+        expected_explainer=args.expected_explainer,
+        expected_listener=args.expected_listener,
+        long_run_threshold=args.long_run_threshold,
+        listener_avg_ratio=args.listener_avg_ratio,
+        strict=args.strict,
+    )
+    fmt = getattr(args, "diag_format", "text")
+    meta: dict = {
+        "input": str(input_path.resolve()),
+        "utterance_count": len(script.utterances),
+        "mapped_speaker_keys": sorted(set(speaker_map.keys())) if speaker_map else [],
+    }
+    if fmt == "json":
+        payload = diagnostics_to_jsonable(results, meta=meta)
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+    else:
+        for d in results:
+            sev = d.severity.name
+            idx = "" if d.utterance_index is None else f" utt#{d.utterance_index}"
+            print(f"[{sev}] {d.code}{idx}: {d.message}")
+            print(f"  HINT: {d.hint}")
+    return 1 if diagnostics_has_error(results) else 0
 
 
 def _cmd_fetch_topics(args: argparse.Namespace) -> int:
@@ -814,6 +853,51 @@ def main(argv: list[str] | None = None) -> int:
                             help="Category scores JSON: {\"scene_variety\": 2, ...}")
     p_score_vd.add_argument("--format", choices=["json", "text"], default="text")
 
+    # diagnose-script (B-18)
+    p_diag_script = subparsers.add_parser(
+        "diagnose-script",
+        help="B-18: Mechanical script quality diagnostics before yukkuri refinement",
+    )
+    p_diag_script.add_argument("input", help="Input file path (.txt or .csv)")
+    _add_speaker_map_args(p_diag_script)
+    _add_unlabeled_arg(p_diag_script)
+    p_diag_script.add_argument(
+        "--expected-explainer",
+        default="まりさ",
+        help="Expected mapped name for explainer/host-like role (default: まりさ)",
+    )
+    p_diag_script.add_argument(
+        "--expected-listener",
+        default="れいむ",
+        help="Expected mapped name for listener/guest-like role (default: れいむ)",
+    )
+    p_diag_script.add_argument(
+        "--long-run-threshold",
+        type=int,
+        default=6,
+        metavar="N",
+        help="Warn when same speaker has N+ consecutive utterances (default: 6)",
+    )
+    p_diag_script.add_argument(
+        "--listener-avg-ratio",
+        type=float,
+        default=1.25,
+        metavar="R",
+        help="guest avg / host avg >= R triggers LISTENER_LONG_AVG_DOMINANCE (default: 1.25)",
+    )
+    p_diag_script.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        dest="diag_format",
+        help="Output format (default: text)",
+    )
+    p_diag_script.add_argument(
+        "--strict",
+        action="store_true",
+        help="Exit 1 if any ERROR diagnostic (e.g. unmapped speaker with incomplete map)",
+    )
+
     args = parser.parse_args(argv)
 
     try:
@@ -847,6 +931,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_score_evidence(args)
         elif args.command == "score-visual-density":
             return _cmd_score_visual_density(args)
+        elif args.command == "diagnose-script":
+            return _cmd_diagnose_script(args)
         else:
             parser.print_help()
             return 1

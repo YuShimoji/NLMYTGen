@@ -72,6 +72,10 @@ Host2: よろしくお願いします
 - 空でないこと (10 文字以上)
 - 1 つ以上の発話が抽出できること
 
+### 台本機械診断（B-18）
+
+`build-csv` の前段として、`diagnose-script <入力>` が `normalize()` 済みの台本に対し、話者ロールと期待キャラ（既定: れいむ=聞き手寄り・まりさ=解説寄り）の整合、NLM 様式フレーズ、同一話者の長い連続発話などを WARNING/INFO で列挙する。`--format json` で GUI LLM（C-09）への貼り付け用 JSON を出す。仕様は [SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md](SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md)。
+
 ---
 
 ## 内部表現: StructuredScript

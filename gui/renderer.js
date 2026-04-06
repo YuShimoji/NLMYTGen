@@ -349,6 +349,21 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 // --- Scoring Tab ---
 let scoringBriefPath = null;
+let scriptDiagPath = null;
+
+document.querySelector('[data-target="script-diag-input"]').addEventListener('click', async () => {
+  const path = await window.nlmytgen.selectFile({
+    title: '台本ファイルを選択',
+    filters: [
+      { name: 'Transcript', extensions: ['txt', 'csv'] },
+      { name: 'All', extensions: ['*'] },
+    ],
+  });
+  if (path) {
+    scriptDiagPath = path;
+    document.getElementById('script-diag-path').textContent = path;
+  }
+});
 
 document.querySelector('[data-target="scoring-brief"]').addEventListener('click', async () => {
   const path = await window.nlmytgen.selectFile({
@@ -412,6 +427,41 @@ document.getElementById('btn-score-evidence').addEventListener('click', async ()
   });
   renderScoringResult(document.getElementById('evidence-result'), result);
   status.textContent = 'Evidence scoring complete';
+});
+
+function renderScriptDiagResult(panel, result) {
+  panel.classList.remove('hidden', 'success', 'error');
+  if (result.json && result.json.diagnostics) {
+    const { diagnostics, meta } = result.json;
+    const hasErr = diagnostics.some((d) => d.severity === 'error');
+    panel.classList.add(hasErr ? 'error' : 'success');
+    let text = `utterances: ${meta.utterance_count ?? '?'}\n\n`;
+    for (const d of diagnostics) {
+      text += `[${d.severity.toUpperCase()}] ${d.code}`;
+      if (d.utterance_index != null) text += ` utt#${d.utterance_index}`;
+      text += `\n  ${d.message}\n  HINT: ${d.hint}\n\n`;
+    }
+    panel.textContent = text;
+  } else {
+    panel.classList.add('error');
+    panel.textContent = result.stderr || result.stdout || 'Unknown error';
+  }
+}
+
+document.getElementById('btn-diagnose-script').addEventListener('click', async () => {
+  if (!scriptDiagPath) {
+    alert('台本ファイルを選択してください');
+    return;
+  }
+  const status = document.getElementById('status');
+  status.textContent = 'Diagnosing script...';
+  const mapVal = document.getElementById('script-diag-speaker-map').value.trim();
+  const result = await window.nlmytgen.diagnoseScript({
+    input: scriptDiagPath,
+    speakerMap: mapVal || undefined,
+  });
+  renderScriptDiagResult(document.getElementById('script-diag-result'), result);
+  status.textContent = 'Script diagnosis complete';
 });
 
 document.getElementById('btn-score-visual').addEventListener('click', async () => {

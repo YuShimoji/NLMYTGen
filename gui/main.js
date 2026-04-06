@@ -152,6 +152,24 @@ ipcMain.handle('score-visual-density', async (_event, opts) => {
   return { ...result, json };
 });
 
+ipcMain.handle('diagnose-script', async (_event, opts) => {
+  const args = ['diagnose-script', opts.input, '--format', 'json'];
+  if (opts.speakerMap) args.push('--speaker-map', opts.speakerMap);
+  if (opts.unlabeled) args.push('--unlabeled');
+  if (opts.strict) args.push('--strict');
+  if (opts.expectedExplainer) args.push('--expected-explainer', opts.expectedExplainer);
+  if (opts.expectedListener) args.push('--expected-listener', opts.expectedListener);
+
+  const result = await runCli(args);
+  let json = null;
+  try {
+    json = JSON.parse(result.stdout.trim());
+  } catch {
+    /* stdout may be empty or non-JSON on failure */
+  }
+  return { ...result, json };
+});
+
 ipcMain.handle('save-ir-paste', async (_event, opts) => {
   const result = await dialog.showSaveDialog(mainWindow, {
     title: 'IR JSON を保存',
