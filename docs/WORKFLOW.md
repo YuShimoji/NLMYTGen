@@ -338,6 +338,8 @@ YouTube 動画のクリック率を最も左右する要素。テンプレート
 
 ### テンプレート運用
 
+再現用の **1 枚チェックリスト**は [THUMBNAIL_ONE_SHEET_WORKFLOW.md](THUMBNAIL_ONE_SHEET_WORKFLOW.md) を参照。
+
 1. YMM4 または外部ツール (Canva 等) でサムネイルテンプレートを作成
 2. 動画ごとにテンプレートを開き、以下を入れ替え:
    - タイトル文字

@@ -1,5 +1,8 @@
 """ymmp timeline route measurement tests."""
 
+import json
+from pathlib import Path
+
 from src.pipeline.ymmp_measure import (
     measure_timeline_routes,
     render_timeline_measurement_text,
@@ -226,3 +229,18 @@ def test_validate_timeline_route_contract_unknown_profile_is_error():
         msg.startswith("TIMELINE_ROUTE_PROFILE_UNKNOWN")
         for msg in result.errors
     )
+
+
+def test_samples_timeline_route_contract_has_production_ai_monitoring_lane():
+    """P2B: repo 同梱の contract に production レーン用プロファイルがある。"""
+    root = Path(__file__).resolve().parents[1]
+    path = root / "samples" / "timeline_route_contract.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    profiles = data["profiles"]
+    assert "production_ai_monitoring_lane" in profiles
+    lane = profiles["production_ai_monitoring_lane"]
+    req = lane["required_routes"]
+    assert "motion" in req and "transition" in req
+    assert "ShapeItem.VideoEffects" in req["motion"]
+    assert "TachieItem.VideoEffects" in req["motion"]
+    assert "VoiceItem.VoiceFadeIn" in req["transition"]

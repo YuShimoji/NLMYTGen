@@ -258,6 +258,7 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 | 2026-04-06 | fade-family `transition` route を ymmp_measure で回収可能にし、G-12 contract を更新 | `transition` を route 不在扱い / fade-family route を corpus-derived contract 化 | repo-local corpus に既にある fade key を拾えば、手動 probe を増やさずに `transition` の主要 family を mechanical に確定できるため |
 | 2026-04-06 | G-13 overlay / se insertion packet を completed として閉じる | overlay/se を broad manual frontier に残す / packet として閉じる | `overlay` は registry + timing anchor から deterministic な `ImageItem` 挿入まで閉じ、`se` は route 不在を `SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast 化できたため |
 | 2026-04-06 | Phase 1 として B-18 台本機械診断と C-09 refinement プロンプトを実装完了 | 保留 / 実装 | `diagnose-script`・`script_diagnostics.py`・`S1-script-refinement-prompt.md`・GUI 品質タブ・B18 dry proof・pytest 拡張まで一括 |
+| 2026-04-06 | Next roadmap: P01 運用手順、P2A feat ブランチレビュー（一括マージ不採用）、P2B+G-14 production contract、P2C SE 境界、サムネ 1 枚チェックリスト | 未実施 / 実施 | Phase 2/3 の文書・contract 整備を master に反映 |
 | 2026-04-05 | サムネイル戦略は抽象煽りより具体数値・固有名詞優先 + rotation 管理 | 定型煽り / 具体性優先 / 各動画場当たり | 本文根拠とクリック訴求を両立し、固定パターン反復による疲労と硬直を避けるため |
 | 2026-04-05 | スコアリングは visual density / evidence richness の2軸から着手 | スコアなし / 単一総合点 / 2軸 | 演出不足と内容不足を別々に診断し、制作改善とマーケ改善の接続点を明確化するため |
 | 2026-04-06 | assistant 側の subquest を timeline edit まで拡張するが、packet 単位で進める | timeline を一括実装 / packet 分割 / 維持 | face と同様に mechanical scope を failure class / readback / boundary で切り分けないと、YMM4 手動確認ループへ戻るため。G-11 slot patch → G-12 native-template measurement → G-13 overlay/se insertion の順に進める |
@@ -303,7 +304,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
 - Last Change Relation: master synced with origin; `d6b0b19` — H-03/H-04 採点ロジック + `score-visual-density` / `score-evidence` CLI + GUI 品質診断タブ
-- Evidence: Production E2E 実証済み + `uv run pytest`: **258 passed** (2026-04-06)。B-18/C-09 追加。slot/face/timeline regression 維持
+- Evidence: Production E2E 実証済み + `uv run pytest`: **259+ passed** (2026-04-06 更新時)。B-18/C-09・G-14 contract・P 系 verification。slot/face/timeline regression 維持
 - 案件モード: CLI artifact
 - 現在の主レーン: 方向転換中 (実制作bottleneck直接軽減へ移行)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近
@@ -323,7 +324,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - trusted: H-02 done (dry proof + strict GUI rerun proof pass 2026-04-06)
   - trusted: H-03/H-04 done — `score-visual-density` / `score-evidence` CLI + tests (`test_visual_density_score.py`, `test_evidence_score.py`)
   - trusted: B-18 `diagnose-script` + C-09 `docs/S1-script-refinement-prompt.md`（`test_script_diagnostics.py`）
-  - needs re-check: `samples/production.ymmp` は `bg_anim` route miss。production lane の `bg_anim` write path は未固定
+  - resolved (G-14): `production.ymmp` はタイムラインに ImageItem 無しのため bg_anim 未観測。`production_ai_monitoring_lane` で motion/transition のみ required とし contract pass。背景アニメ patch は ImageItem 含有 ymmp で別パケット
   - needs re-check: non-fade / template-backed `transition` の ymmp route は repo 内 sample 不在のため未固定。新しい sample が入ったときだけ再測定する
   - needs re-check: `se` の real `AudioItem` write route は repo-local sample 不在のため未固定。新しい sample が入ったときだけ route 測定と write path 固定を行う
   - needs re-check: face label inventory そのものが creative quality として十分かは最終制作物で見る

@@ -78,6 +78,25 @@
           "VoiceItem.TemplateName"
         ]
       }
+    },
+    "production_ai_monitoring_lane": {
+      "required_routes": {
+        "motion": [
+          "ShapeItem.VideoEffects",
+          "TachieItem.VideoEffects"
+        ],
+        "transition": [
+          "ShapeItem.FadeIn",
+          "ShapeItem.FadeOut",
+          "TachieItem.FadeIn",
+          "TachieItem.FadeOut",
+          "VoiceItem.JimakuFadeIn",
+          "VoiceItem.JimakuFadeOut",
+          "VoiceItem.VoiceFadeIn",
+          "VoiceItem.VoiceFadeOut"
+        ]
+      },
+      "optional_routes": {}
     }
   }
 }
