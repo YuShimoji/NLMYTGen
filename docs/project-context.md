@@ -52,14 +52,14 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → 演出 IR → ymmp 後段適用 → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → patch-ymmp → 演出設定 → レンダリング
-- 現在のスライス: face を completed subsystem、timeline を completed packet 群として固定。主 frontier は packaging lane の H-01 workflow proof
+- 現在のスライス: face・timeline・H-02/H-03/H-04 を completed として固定。主 frontier は H-01 運用固定と実制作3大bottleneck（`docs/runtime-state.md` 開発プラン参照）
 - 成功状態: face+bg 限定の全パイプライン E2E が通り、Level 3 (半自動制作ライン) に到達すること
 
 ---
 
 ## CURRENT LANE
-- 主レーン: Advance
-- 今このレーンを優先する理由: face と timeline の mechanical packet を failure class 付きで閉じ、以後の主 frontier を packaging / orchestration 側へ安定して戻せる段階に入ったため
+- 主レーン: Advance（実制作 bottleneck 直接軽減）
+- 今このレーンを優先する理由: face・timeline・packaging 採点の mechanical 束は揃った。残る重さは台本→手動配置→視覚効果の人間工程のため、レーンを実制作側へ移す
 
 ---
 
@@ -297,12 +297,12 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ## HANDOFF SNAPSHOT (2026-04-06 更新)
 
-- Shared Focus: 2026-04-06 ユーザーフィードバックにより方向転換。done 35件だが実制作の3大bottleneck (台本品質/演出配置自動化/視覚効果) が未解決。packaging spec lane (H-01〜H-04) とtimeline lane (G-11〜G-13) は一巡完了。次フェーズはspec/proof整備ではなく実制作の手間を直接軽減する機能を優先する
-- Safe Next Frontier Packet: 台本品質改善 / 演出配置自動化拡張 / 視覚効果実現のいずれか。着手順はユーザーと合意のうえで決定
+- Shared Focus: 2026-04-06 ユーザーフィードバックにより方向転換。実制作の3大bottleneck (台本品質/演出配置自動化/視覚効果) が主戦場。packaging は H-02/H-03/H-04 **実装 done**、H-01 は approved のまま運用で brief 固定。timeline lane (G-11〜G-13) 一巡完了。次フェーズは spec 増殖ではなく実制作手間の削減（詳細は `docs/runtime-state.md` の「開発プラン (2026-04-06)」）
+- Safe Next Frontier Packet: **既定順** — (1) 台本品質 (2) 演出配置の小パケット拡張 (3) 視覚効果（サムネ1本ワークフロー）。順序変更はユーザー明示時のみ
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: direct (H-03 spec definition + AI monitoring dry proof + packaging lane narrowed to one operator check)
-- Evidence: Production E2E 実証済み + `uv run pytest`: 220 passed / 3 xpassed。`docs/VISUAL_DENSITY_SCORE_SPEC.md` と `docs/verification/H03-visual-density-ai-monitoring-proof.md` により、visual stagnation risk と packaging promise の on-screen payoff を別軸で warning 化できることを確認。slot/face/timeline regression も維持
+- Last Change Relation: master synced with origin; `d6b0b19` — H-03/H-04 採点ロジック + `score-visual-density` / `score-evidence` CLI + GUI 品質診断タブ
+- Evidence: Production E2E 実証済み + `uv run pytest`: **247 passed** (2026-04-06)。H-03/H-04 は実装済み。slot/face/timeline regression 維持
 - 案件モード: CLI artifact
 - 現在の主レーン: 方向転換中 (実制作bottleneck直接軽減へ移行)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近
@@ -320,6 +320,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - trusted: G-13 overlay insertion (`OVERLAY_*` validation + deterministic `ImageItem` patch)
   - trusted: G-13 se fail-fast gate (`SE_*` validation + `SE_WRITE_ROUTE_UNSUPPORTED`)
   - trusted: H-02 done (dry proof + strict GUI rerun proof pass 2026-04-06)
+  - trusted: H-03/H-04 done — `score-visual-density` / `score-evidence` CLI + tests (`test_visual_density_score.py`, `test_evidence_score.py`)
   - needs re-check: `samples/production.ymmp` は `bg_anim` route miss。production lane の `bg_anim` write path は未固定
   - needs re-check: non-fade / template-backed `transition` の ymmp route は repo 内 sample 不在のため未固定。新しい sample が入ったときだけ再測定する
   - needs re-check: `se` の real `AudioItem` write route は repo-local sample 不在のため未固定。新しい sample が入ったときだけ route 測定と write path 固定を行う
