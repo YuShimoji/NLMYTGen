@@ -136,7 +136,7 @@ def test_apply_motion_sets_tachie_video_effects():
         ir,
         {"n": {"Eye": "i.png", "Mouth": "m.png", "Eyebrow": "e.png"}},
         {},
-        motion_map={"bounce": copy.deepcopy(bounce_fx)},
+        tachie_motion_effects_map={"bounce": copy.deepcopy(bounce_fx)},
     )
     assert res.motion_changes >= 1
     items = ymmp["Timelines"][0]["Items"]
@@ -208,7 +208,7 @@ def test_apply_motion_none_clears_video_effects():
         ir,
         {"n": {"Eye": "i.png", "Mouth": "m.png", "Eyebrow": "e.png"}},
         {},
-        motion_map=None,
+        tachie_motion_effects_map=None,
     )
     assert res.motion_changes >= 1
     items = ymmp["Timelines"][0]["Items"]
@@ -315,7 +315,7 @@ def test_phase2_motion_splits_tachie_by_utterance_timing():
         ir,
         {"n": {"Eye": "i.png", "Mouth": "m.png", "Eyebrow": "e.png"}},
         {},
-        motion_map={"bounce": bounce_fx},
+        tachie_motion_effects_map={"bounce": bounce_fx},
     )
     tachie_items = [
         i for i in ymmp["Timelines"][0]["Items"]
@@ -408,7 +408,7 @@ def test_phase2_motion_respects_row_range_anchor():
         ir,
         {"n": {"Eye": "i.png", "Mouth": "m.png", "Eyebrow": "e.png"}},
         {},
-        motion_map={"bounce": bounce_fx},
+        tachie_motion_effects_map={"bounce": bounce_fx},
     )
     tachie_items = [
         i for i in ymmp["Timelines"][0]["Items"]

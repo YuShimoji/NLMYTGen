@@ -4,6 +4,14 @@ NLMYTGen の GUI LLM プロンプトを Custom GPT / Claude Project に固定化
 
 ---
 
+## S-1 台本 refinement（C-09 / Phase 1）
+
+NotebookLM 生台本を `build-csv` に入れる前に、[SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md](SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md) の **`diagnose-script`**（B-18）で機械診断し、続けて [S1-script-refinement-prompt.md](S1-script-refinement-prompt.md) を GUI LLM に渡して constrained rewrite する。演出 IR（C-07）より**上流**の工程。
+
+**Electron GUI**: CSV 変換タブの「台本診断 JSON も保存」にチェックしたまま **Build CSV** または **Dry Run** が成功すると、`{台本ファイル名のstem}_script-diagnostics.json` を CSV 出力と同じディレクトリに書き出す（dry-run で CSV が無い場合は台本と同じディレクトリ）。Speaker Map は CSV 設定と同一。品質診断タブの「Diagnose Script」は従来どおり別途利用可。
+
+---
+
 ## 方式 A: Custom GPT (ChatGPT Plus)
 
 ### 手順

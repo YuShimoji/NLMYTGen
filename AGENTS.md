@@ -74,4 +74,4 @@
 - 機能追加は docs/FEATURE_REGISTRY.md で管理。登録→承認→実装の順
 - 自動化の境界は docs/AUTOMATION_BOUNDARY.md で定義
 - Web UI / API / YouTube 連携はまだ優先しない
-- 次 frontier は docs/runtime-state.md の `next_action` と docs/project-context.md の `HANDOFF SNAPSHOT` を正本とする
+- 次 frontier は docs/runtime-state.md の **`next_action`** と **「次以降の推奨プラン」**、および docs/project-context.md の `HANDOFF SNAPSHOT` を正本とする

@@ -507,7 +507,7 @@ class TestTimelineInsertion:
         assert len(warnings) == 1
         assert result.overlay_changes == 0
 
-    def test_se_is_planned_and_warns_until_route_is_fixed(self):
+    def test_se_inserts_audio_item(self):
         ymmp = self._make_overlay_ymmp()
         ir = self._make_overlay_ir(se_label="click")
 
@@ -524,8 +524,64 @@ class TestTimelineInsertion:
         )
 
         assert result.se_plans == 1
-        warnings = [w for w in result.warnings if w.startswith("SE_WRITE_ROUTE_UNSUPPORTED")]
-        assert len(warnings) == 1
+        assert not any(
+            w.startswith("SE_WRITE_ROUTE_UNSUPPORTED") for w in (result.warnings or [])
+        )
+        audios = [
+            i for i in ymmp["Timelines"][0]["Items"]
+            if "AudioItem" in i.get("$type", "")
+        ]
+        assert len(audios) == 1
+        assert audios[0]["FilePath"] == "C:/se/click.wav"
+        assert audios[0]["Frame"] == 0
+        assert audios[0]["Length"] == 100
+
+    def test_se_inserts_without_timeline_audio_template(self):
+        """タイムラインに AudioItem が無くても骨格で挿入できる."""
+        items = [
+            _make_voice_item("marisa", "", "d.png", "d.png", "d.png", frame=0),
+        ]
+        ymmp = _wrap_ymmp(items)
+        ir = {
+            "ir_version": "1.0",
+            "video_id": "se_only",
+            "macro": {
+                "sections": [{
+                    "section_id": "S1",
+                    "start_index": 1,
+                    "end_index": 1,
+                    "default_bg": "bg1",
+                    "default_face": "serious",
+                }],
+            },
+            "utterances": [{
+                "index": 1,
+                "speaker": "marisa",
+                "text": "t",
+                "section_id": "S1",
+                "face": "serious",
+                "se": "beep",
+            }],
+        }
+        face_map = {"serious": {"Eyebrow": "s.png", "Eye": "s.png", "Mouth": "s.png"}}
+        result = patch_ymmp(
+            ymmp,
+            ir,
+            face_map,
+            {"bg1": "C:/bg.png"},
+            se_map={"beep": {"path": "C:/se/beep.wav", "length": 30}},
+        )
+        assert result.se_plans == 1
+        audios = [
+            i for i in ymmp["Timelines"][0]["Items"]
+            if "AudioItem" in i.get("$type", "")
+        ]
+        assert len(audios) == 1
+        assert audios[0]["FilePath"] == "C:/se/beep.wav"
+        assert audios[0]["Length"] == 30
+        assert audios[0]["$type"] == (
+            "YukkuriMovieMaker.Project.Items.AudioItem, YukkuriMovieMaker"
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -956,6 +1012,123 @@ class TestRowRangeBg:
         # S2 starts at VoiceItem index 3 (row_start=4 → 0-based=3 → Frame=300)
         assert bgs[1]["Frame"] == 300
         assert bgs[1]["FilePath"] == "C:/b.png"
+
+    def test_g15_micro_bg_splits_section_by_utterance(self):
+        """同一セクション内で Micro bg が変わると Layer 0 を複数 ImageItem に分割する."""
+        items = [
+            _make_voice_item("sp", "", frame=0),
+            _make_voice_item("sp", "", frame=100),
+            _make_voice_item("sp", "", frame=200),
+            _make_voice_item("sp", "", frame=300),
+        ]
+        ymmp = _wrap_ymmp(items)
+        ir = {
+            "ir_version": "1.0",
+            "video_id": "t",
+            "macro": {
+                "sections": [{
+                    "section_id": "S1",
+                    "start_index": 1,
+                    "end_index": 2,
+                    "default_bg": "bg_a",
+                    "default_face": "serious",
+                }],
+            },
+            "utterances": [
+                {"index": 1, "speaker": "sp", "text": "a", "section_id": "S1",
+                 "face": "serious", "bg": "bg_a",
+                 "row_start": 1, "row_end": 2},
+                {"index": 2, "speaker": "sp", "text": "b", "section_id": "S1",
+                 "face": "serious", "bg": "bg_b",
+                 "row_start": 3, "row_end": 4},
+            ],
+        }
+        bg_map = {"bg_a": "C:/a.png", "bg_b": "C:/b.png"}
+        face_map = {
+            "serious": {"Eyebrow": "s.png", "Eye": "s.png", "Mouth": "s.png"},
+        }
+        patch_ymmp(ymmp, ir, face_map, bg_map)
+        bgs = sorted(
+            [i for i in ymmp["Timelines"][0]["Items"]
+             if "ImageItem" in i.get("$type", "")],
+            key=lambda x: x.get("Frame", 0),
+        )
+        assert len(bgs) == 2
+        assert bgs[0]["Frame"] == 0
+        assert bgs[0]["Length"] == 200
+        assert bgs[0]["FilePath"] == "C:/a.png"
+        assert bgs[1]["Frame"] == 200
+        assert bgs[1]["FilePath"] == "C:/b.png"
+
+    def test_g16_overlay_array_inserts_two_items(self):
+        ymmp = _make_row_range_ymmp(2)
+        ir = {
+            "ir_version": "1.0",
+            "video_id": "t",
+            "macro": {"sections": []},
+            "utterances": [
+                {"index": 1, "speaker": "marisa", "text": "t", "section_id": "S1",
+                 "face": "smile", "overlay": ["bubble", "box"],
+                 "row_start": 1, "row_end": 2},
+            ],
+        }
+        face_map = {
+            "smile": {"Eyebrow": "s.png", "Eye": "s.png", "Mouth": "s.png"},
+        }
+        overlay_map = {
+            "bubble": {"path": "C:/b.png", "layer": 5, "anchor": "start"},
+            "box": {"path": "C:/x.png", "layer": 6, "anchor": "start"},
+        }
+        result = patch_ymmp(ymmp, ir, face_map, {}, overlay_map=overlay_map)
+        assert result.overlay_changes == 2
+        layers = {
+            i.get("Layer")
+            for i in ymmp["Timelines"][0]["Items"]
+            if "ImageItem" in i.get("$type", "") and i.get("FilePath") in
+            ("C:/b.png", "C:/x.png")
+        }
+        assert layers == {5, 6}
+
+    def test_g17_motion_only_writes_motion_and_transition(self):
+        vi = _make_voice_item("marisa", "", frame=0)
+        ti = _make_tachie_item("marisa", "")
+        ti["VideoEffects"] = []
+        ti["Length"] = 500
+        ymmp = _wrap_ymmp([vi, ti])
+        ir = {
+            "ir_version": "1.0",
+            "video_id": "t",
+            "macro": {"sections": []},
+            "utterances": [
+                {"index": 1, "speaker": "marisa", "text": "t", "section_id": "S1",
+                 "face": "smile", "motion": "bounce", "transition": "soft"},
+            ],
+        }
+        face_map = {
+            "smile": {"Eyebrow": "s.png", "Eye": "s.png", "Mouth": "s.png"},
+        }
+        motion_map = {
+            "bounce": {
+                "video_effect": {
+                    "$type": "YukkuriMovieMaker.Plugin.Effects.BounceEffect, YukkuriMovieMaker.Plugin.Effects",
+                    "Name": "Bounce",
+                },
+            },
+        }
+        transition_map = {"soft": {"VoiceFadeIn": 0.3}}
+        result = patch_ymmp(
+            ymmp,
+            ir,
+            face_map,
+            {},
+            timeline_profile="motion_only",
+            motion_map=motion_map,
+            transition_map=transition_map,
+        )
+        assert result.motion_changes == 1
+        assert result.transition_changes == 1
+        assert vi["VoiceFadeIn"] == 0.3
+        assert len(ti["VideoEffects"]) == 1
 
 
 # ---------------------------------------------------------------------------

@@ -23,7 +23,7 @@
   - H-03 dry proof: `docs/verification/H03-visual-density-ai-monitoring-proof.md` により、AI監視 sample で visual stagnation risk と promise visual payoff を warning 化し、S2/S4 の flat risk を repair に変換できることを確認
   - H-04 manual proof: `docs/verification/H04-evidence-richness-ai-monitoring-proof.md` により、AI監視 sample を total 77 / `acceptable` と採点し、warning を anecdote continuity と late payoff の repair に変換できることを確認
 - G-12 measurement packet: `docs/verification/G12-timeline-route-measurement.md` と `samples/timeline_route_contract.json` を追加。profile ベースの route contract で current corpus の `motion` / `bg_anim` を固定し、fade-family `transition` route (`VoiceFade*` / `JimakuFade*` / `Fade*`) も mechanical に回収できる状態まで更新
-  - G-13 overlay / se insertion packet: `docs/verification/G13-overlay-se-insertion-packet.md` を追加。`overlay` は registry + timing anchor から deterministic な `ImageItem` 挿入まで実装し、`se` は label/timing 解決までは閉じたうえで `AudioItem` write route 不在時に `SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast する boundary を固定
+  - G-13 overlay / se insertion packet: `docs/verification/G13-overlay-se-insertion-packet.md`。`overlay` は deterministic `ImageItem` 挿入。`se` は G-18 で `AudioItem` 挿入まで拡張（旧 `SE_WRITE_ROUTE_UNSUPPORTED` は廃止）
   - packaging frontier packet: H-01〜H-04 schema + dry proof 記録済み。H-02 strict GUI rerun proof は 2026-04-06 pass で閉じた
   - `uv run pytest`: 220 passed / 3 xpassed
   - B-12 行バランス重視の字幕分割を実装。`--balance-lines` を追加し、2行字幕向けに自然な改行を opt-in で挿入できるようにした
@@ -52,14 +52,14 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → 演出 IR → ymmp 後段適用 → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → patch-ymmp → 演出設定 → レンダリング
-- 現在のスライス: face を completed subsystem、timeline を completed packet 群として固定。主 frontier は packaging lane の H-01 workflow proof
+- 現在のスライス: face・timeline・H-02/H-03/H-04 を completed として固定。主 frontier は H-01 運用固定と実制作3大bottleneck（`docs/runtime-state.md` 開発プラン参照）
 - 成功状態: face+bg 限定の全パイプライン E2E が通り、Level 3 (半自動制作ライン) に到達すること
 
 ---
 
 ## CURRENT LANE
-- 主レーン: Advance
-- 今このレーンを優先する理由: face と timeline の mechanical packet を failure class 付きで閉じ、以後の主 frontier を packaging / orchestration 側へ安定して戻せる段階に入ったため
+- 主レーン: Advance（実制作 bottleneck 直接軽減）
+- 今このレーンを優先する理由: face・timeline・packaging 採点の mechanical 束は揃った。残る重さは台本→手動配置→視覚効果の人間工程のため、レーンを実制作側へ移す
 
 ---
 
@@ -158,6 +158,11 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 
 | 日付 | 決定事項 | 選択肢 | 決定理由 |
 |------|----------|--------|----------|
+| 2026-04-08 | 次以降の推奨プランを `runtime-state.md` に正本化（P0 Phase1 本番 1 本・P1 H-01 運用・P2 演出実戦・P3 サムネ・Parking motion ブランチ）。GUI CSV 同梱診断 JSON を Phase 1 導線に明記 | 暗黙の優先 / 文書固定 | 実制作 bottleneck 軽減レーンを再アンカーし、未承認実装を増やさない |
+| 2026-04-07 | G-18 SE `AudioItem` 挿入を実装（`samples/AudioItem.ymmp` readback、`_apply_se_items`、テンプレート deepcopy または最小骨格）。`SE_WRITE_ROUTE_UNSUPPORTED` を廃止 | ゲート維持 / 実装 | サンプルと骨格で write route を確定し、G-13 の `se` を mechanical scope まで拡張 |
+| 2026-04-06 | G-15〜G-17 を実装（Micro `bg` 発話スパン / `overlay` 配列 / `--timeline-profile` + motion・transition・bg_anim マップ）。G-18 は AudioItem ymmp サンプル入手まで保留（verification に明記） | 一括 / ゲート付き | P2C に沿い SE write は corpus 確定後。G-12 `timeline_route_contract.json` と契約検証を先に置く |
+| 2026-04-06 | 視覚三スタイル（挿絵コマ / 再現PV / 資料パネル）を IR 既存語彙にマッピングし doc 正本化。延伸は G-15〜G-18 proposed | 一括実装 / 文書→テンプレ→Writer→台帳パケット | patch 制約（単一 overlay・セクション bg のみ・motion 未書込）を隠さず、`VISUAL_STYLE_PRESETS.md` と v4 プロンプトで Writer と運用を揃える |
+| 2026-04-06 | 将来開発ロードマップを `FUTURE_DEVELOPMENT_ROADMAP.md` に正本化。G-15〜G-18 は proposed のまま承認記録表で管理。feat/phase2-motion-segmentation は P2A-motion-branch-operator-decision で保留 | 未承認を approved に昇格 / 文書のみ | プランに沿いゲートを明文化。実装は承認後のみ |
 | 2025 | CLI パイプラインとして構築 | CLI / Web UI / Electron | 最小構成で検証可能 |
 | 2025 | IP-01 No-Go | Go / No-Go | 要件未充足 |
 | 2025 | Web UI / API / YouTube 連携は後回し | 優先 / 後回し | ロバスト性検証が先 |
@@ -256,7 +261,9 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 | 2026-04-06 | G-12 の current contract は `test - marisaFX.ymmp` で通し、`production.ymmp` の `bg_anim` miss を failure class として扱う | gap を黙殺 / warning 扱い / failure class 化 | timeline quality 問題を visual impression に戻さず、route gap を mechanical failure として扱うため |
 | 2026-04-06 | G-12 measurement packet を追加し、current corpus で route narrowing を先に完了 | harness のみ / packet 化して route narrowing | `motion` / `bg_anim` は current corpus で狭め、manual frontier を `transition` probe 1 本へ縮めると、operator の判断負荷を最小化できるため |
 | 2026-04-06 | fade-family `transition` route を ymmp_measure で回収可能にし、G-12 contract を更新 | `transition` を route 不在扱い / fade-family route を corpus-derived contract 化 | repo-local corpus に既にある fade key を拾えば、手動 probe を増やさずに `transition` の主要 family を mechanical に確定できるため |
-| 2026-04-06 | G-13 overlay / se insertion packet を completed として閉じる | overlay/se を broad manual frontier に残す / packet として閉じる | `overlay` は registry + timing anchor から deterministic な `ImageItem` 挿入まで閉じ、`se` は route 不在を `SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast 化できたため |
+| 2026-04-06 | G-13 overlay / se insertion packet を completed として閉じる | overlay/se を broad manual frontier に残す / packet として閉じる | `overlay` は registry + timing anchor から deterministic な `ImageItem` 挿入まで閉じた。当時 `se` は timing までで write route 不在を `SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast（G-18 で挿入まで実装） |
+| 2026-04-06 | Phase 1 として B-18 台本機械診断と C-09 refinement プロンプトを実装完了 | 保留 / 実装 | `diagnose-script`・`script_diagnostics.py`・`S1-script-refinement-prompt.md`・GUI 品質タブ・B18 dry proof・pytest 拡張まで一括 |
+| 2026-04-06 | Next roadmap: P01 運用手順、P2A feat ブランチレビュー（一括マージ不採用）、P2B+G-14 production contract、P2C SE 境界、サムネ 1 枚チェックリスト | 未実施 / 実施 | Phase 2/3 の文書・contract 整備を master に反映 |
 | 2026-04-05 | サムネイル戦略は抽象煽りより具体数値・固有名詞優先 + rotation 管理 | 定型煽り / 具体性優先 / 各動画場当たり | 本文根拠とクリック訴求を両立し、固定パターン反復による疲労と硬直を避けるため |
 | 2026-04-05 | スコアリングは visual density / evidence richness の2軸から着手 | スコアなし / 単一総合点 / 2軸 | 演出不足と内容不足を別々に診断し、制作改善とマーケ改善の接続点を明確化するため |
 | 2026-04-06 | assistant 側の subquest を timeline edit まで拡張するが、packet 単位で進める | timeline を一括実装 / packet 分割 / 維持 | face と同様に mechanical scope を failure class / readback / boundary で切り分けないと、YMM4 手動確認ループへ戻るため。G-11 slot patch → G-12 native-template measurement → G-13 overlay/se insertion の順に進める |
@@ -295,14 +302,14 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ---
 
-## HANDOFF SNAPSHOT (2026-04-06 更新)
+## HANDOFF SNAPSHOT (2026-04-08 更新)
 
-- Shared Focus: 2026-04-06 ユーザーフィードバックにより方向転換。done 35件だが実制作の3大bottleneck (台本品質/演出配置自動化/視覚効果) が未解決。packaging spec lane (H-01〜H-04) とtimeline lane (G-11〜G-13) は一巡完了。次フェーズはspec/proof整備ではなく実制作の手間を直接軽減する機能を優先する
-- Safe Next Frontier Packet: 台本品質改善 / 演出配置自動化拡張 / 視覚効果実現のいずれか。着手順はユーザーと合意のうえで決定
+- Shared Focus: 実制作 bottleneck 軽減レーン継続。G-18・GUI CSV+診断 JSON 同梱まで完了。**正本は `docs/runtime-state.md` の「次以降の推奨プラン (2026-04-08)」** — P0 は Phase 1 を新台本 1 本で完走し [P01](verification/P01-phase1-operator-e2e-proof.md) へ記録。packaging は H-02/H-03/H-04 done、H-01 は approved（運用載せが P1）
+- Safe Next Frontier Packet: **P0** Phase 1 本番 1 本（診断→C-09→CSV→YMM4→P01） / **P1** H-01 brief 運用 / **P2** 演出実戦（registry・`--se-map` 等） / **P3** サムネ 1 本 / **Parking** motion ブランチは P2A どおり一括マージしない
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: direct (H-03 spec definition + AI monitoring dry proof + packaging lane narrowed to one operator check)
-- Evidence: Production E2E 実証済み + `uv run pytest`: 220 passed / 3 xpassed。`docs/VISUAL_DENSITY_SCORE_SPEC.md` と `docs/verification/H03-visual-density-ai-monitoring-proof.md` により、visual stagnation risk と packaging promise の on-screen payoff を別軸で warning 化できることを確認。slot/face/timeline regression も維持
+- Last Change Relation: 推奨プラン正本化 (2026-04-08) + GUI CSV 同梱診断 JSON。履歴コミット参照は git log
+- Evidence: Production E2E 実証済み + `uv run pytest`: **266 passed** (2026-04-07)。B-18/C-09・G-14 contract・G-18 SE・P 系 verification。slot/face/timeline regression 維持
 - 案件モード: CLI artifact
 - 現在の主レーン: 方向転換中 (実制作bottleneck直接軽減へ移行)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近
@@ -318,11 +325,13 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - trusted: G-12 packet narrowing (`motion=TachieItem.VideoEffects`、`bg_anim=ImageItem.X/Y/Zoom`、effect-bearing bg=`ImageItem.VideoEffects` まで current corpus で狭め済み)
   - trusted: repo-local `.ymmp` 16 本の corpus audit により fade-family `transition` route は観測済み、`template` route は 0 件と確認済み
   - trusted: G-13 overlay insertion (`OVERLAY_*` validation + deterministic `ImageItem` patch)
-  - trusted: G-13 se fail-fast gate (`SE_*` validation + `SE_WRITE_ROUTE_UNSUPPORTED`)
+  - trusted: G-13/G-18 `se` (`SE_*` validation + G-18 `AudioItem` 挿入、`PatchResult.se_plans` = 挿入数)
   - trusted: H-02 done (dry proof + strict GUI rerun proof pass 2026-04-06)
-  - needs re-check: `samples/production.ymmp` は `bg_anim` route miss。production lane の `bg_anim` write path は未固定
+  - trusted: H-03/H-04 done — `score-visual-density` / `score-evidence` CLI + tests (`test_visual_density_score.py`, `test_evidence_score.py`)
+  - trusted: B-18 `diagnose-script` + C-09 `docs/S1-script-refinement-prompt.md`（`test_script_diagnostics.py`）
+  - resolved (G-14): `production.ymmp` はタイムラインに ImageItem 無しのため bg_anim 未観測。`production_ai_monitoring_lane` で motion/transition のみ required とし contract pass。背景アニメ patch は ImageItem 含有 ymmp で別パケット
   - needs re-check: non-fade / template-backed `transition` の ymmp route は repo 内 sample 不在のため未固定。新しい sample が入ったときだけ再測定する
-  - needs re-check: `se` の real `AudioItem` write route は repo-local sample 不在のため未固定。新しい sample が入ったときだけ route 測定と write path 固定を行う
+  - resolved (G-18): `se` の `AudioItem` 挿入は `samples/AudioItem.ymmp` + コード内骨格で固定。運用で YMM4 バージョン差が出たら readback のみ再確認
   - needs re-check: face label inventory そのものが creative quality として十分かは最終制作物で見る
 - Recovered Canonical Context:
   - Python はテキスト変換 + 演出 IR 定義 + ymmp 限定後段適用
@@ -332,7 +341,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - YMM4 テンプレートは独立ファイルではなく ItemSettings.json の Templates 配列に JSON 保存
   - Custom GPT v4 は 2オブジェクト連結形式 (Macro + Micro) で IR を出力する。load_ir() で対応済み
 - Authority Return Items:
-  - `se` の real `AudioItem` write route が必要になった場合の sample 提供または route 判定
+  - YMM4 大版本更新時: `AudioItem` 構造差分が出たら readback のみ再確認（G-18）
   - E-02: hold 継続。E-01 とセットでのみ再検討
   - F-01/F-02: quarantined 継続
 - What Not To Do Next:

@@ -386,8 +386,42 @@ dropZone.addEventListener('drop', (e) => {
   e.preventDefault();
   dropZone.classList.remove('dragover');
   const files = e.dataTransfer.files;
+  // #region agent log
+  const f0 = files.length > 0 ? files[0] : null;
+  window.nlmytgen.debugLog({
+    runId: 'pre-fix',
+    hypothesisId: 'H1',
+    location: 'renderer.js:drop',
+    message: 'drop handler',
+    data: {
+      filesLength: files.length,
+      fileName: f0 ? f0.name : null,
+      hasPathProp: !!(f0 && 'path' in f0),
+      pathType: f0 && 'path' in f0 ? typeof f0.path : 'n/a',
+      pathValue: f0 && f0.path != null ? String(f0.path).slice(0, 200) : null,
+    },
+  });
+  // #endregion
   if (files.length > 0) {
-    setTxtFile(files[0].path);
+    const f = files[0];
+    const legacy = typeof f.path === 'string' ? f.path : '';
+    const resolved = (legacy && legacy.trim()) || window.nlmytgen.getPathForFile(f) || '';
+    // #region agent log
+    window.nlmytgen.debugLog({
+      runId: 'post-fix',
+      hypothesisId: 'FIX',
+      location: 'renderer.js:drop-resolve',
+      message: 'path resolution',
+      data: {
+        legacyNonEmpty: !!(legacy && legacy.trim()),
+        resolvedNonEmpty: !!resolved,
+        resolvedTail: resolved ? resolved.slice(-80) : null,
+      },
+    });
+    // #endregion
+    if (resolved) {
+      setTxtFile(resolved);
+    }
   }
 });
 
@@ -444,6 +478,32 @@ async function runBuildCsv(dryRun) {
       if (result.json.dry_run) {
         text += `\n(dry-run: CSV not written)`;
       }
+
+      if (document.getElementById('csv-save-diagnostics').checked) {
+        status.textContent = dryRun ? 'Dry run complete — diagnosing…' : 'Writing CSV — diagnosing…';
+        const diag = await window.nlmytgen.diagnoseScript({
+          input: currentTxtPath,
+          speakerMap: opts.speakerMap || undefined,
+        });
+        if (diag.json) {
+          const saved = await window.nlmytgen.saveScriptDiagnostics({
+            inputTxtPath: currentTxtPath,
+            csvOutputPath: result.json.output || null,
+            jsonPayload: diag.json,
+          });
+          if (saved.ok && saved.path) {
+            text += `\n診断 JSON: ${saved.path}`;
+            if (diag.code !== 0) {
+              text += '\n（診断に ERROR あり。exit≠0 でも JSON は保存済み）';
+            }
+          } else {
+            text += `\n診断 JSON 保存失敗: ${saved.error || 'unknown'}`;
+          }
+        } else {
+          text += `\n診断 JSON 未取得: ${diag.stderr || diag.stdout || 'parse error'}`;
+        }
+      }
+
       renderSuccessTextPanel(csvResult, text);
       status.textContent = dryRun ? 'Dry run complete' : `CSV written (${result.json.rows} rows)`;
       if (result.json.dry_run) {
@@ -739,6 +799,7 @@ function collectSettings() {
       maxLines: parseInt(document.getElementById('max-lines').value) || 2,
       charsPerLine: parseInt(document.getElementById('chars-per-line').value) || 40,
       reflowV2: document.getElementById('reflow-v2').checked,
+      saveDiagnosticsWithCsv: document.getElementById('csv-save-diagnostics').checked,
     },
     production: {
       prodYmmp: filePaths['prod-ymmp'] || null,
@@ -769,6 +830,9 @@ function applySettings(settings) {
     if (settings.csv.maxLines) document.getElementById('max-lines').value = settings.csv.maxLines;
     if (settings.csv.charsPerLine) document.getElementById('chars-per-line').value = settings.csv.charsPerLine;
     if (settings.csv.reflowV2 !== undefined) document.getElementById('reflow-v2').checked = settings.csv.reflowV2;
+    if (settings.csv.saveDiagnosticsWithCsv !== undefined) {
+      document.getElementById('csv-save-diagnostics').checked = settings.csv.saveDiagnosticsWithCsv;
+    }
   }
   if (settings.production) {
     if (settings.production.prodYmmp) {
@@ -809,9 +873,11 @@ document.getElementById('speaker-map').addEventListener('change', autoSave);
 document.getElementById('max-lines').addEventListener('change', autoSave);
 document.getElementById('chars-per-line').addEventListener('change', autoSave);
 document.getElementById('reflow-v2').addEventListener('change', autoSave);
+document.getElementById('csv-save-diagnostics').addEventListener('change', autoSave);
 
 // --- Scoring Tab（DOMContentLoaded 内の H-01 テンプレ保存から参照するため先に宣言）---
 let scoringBriefPath = null;
+let scriptDiagPath = null;
 
 // Load on startup
 window.addEventListener('DOMContentLoaded', async () => {
@@ -857,6 +923,24 @@ window.addEventListener('DOMContentLoaded', async () => {
   if (btnMd) btnMd.addEventListener('click', () => saveH01Template('markdown'));
   const btnJ = document.getElementById('btn-save-h01-template-json');
   if (btnJ) btnJ.addEventListener('click', () => saveH01Template('json'));
+
+  const scriptDiagBtn = document.querySelector('[data-target="script-diag-input"]');
+  if (scriptDiagBtn) {
+    scriptDiagBtn.addEventListener('click', async () => {
+      const path = await window.nlmytgen.selectFile({
+        title: '台本ファイルを選択',
+        filters: [
+          { name: 'Transcript', extensions: ['txt', 'csv'] },
+          { name: 'All', extensions: ['*'] },
+        ],
+      });
+      if (path) {
+        scriptDiagPath = path;
+        const pathEl = document.getElementById('script-diag-path');
+        if (pathEl) pathEl.textContent = path;
+      }
+    });
+  }
 });
 
 document.querySelector('[data-target="scoring-brief"]').addEventListener('click', async () => {
@@ -922,6 +1006,41 @@ document.getElementById('btn-score-evidence').addEventListener('click', async ()
   });
   renderScoringResult(document.getElementById('evidence-result'), result);
   status.textContent = 'Evidence scoring complete';
+});
+
+function renderScriptDiagResult(panel, result) {
+  panel.classList.remove('hidden', 'success', 'error');
+  if (result.json && result.json.diagnostics) {
+    const { diagnostics, meta } = result.json;
+    const hasErr = diagnostics.some((d) => d.severity === 'error');
+    panel.classList.add(hasErr ? 'error' : 'success');
+    let text = `utterances: ${meta.utterance_count ?? '?'}\n\n`;
+    for (const d of diagnostics) {
+      text += `[${d.severity.toUpperCase()}] ${d.code}`;
+      if (d.utterance_index != null) text += ` utt#${d.utterance_index}`;
+      text += `\n  ${d.message}\n  HINT: ${d.hint}\n\n`;
+    }
+    panel.textContent = text;
+  } else {
+    panel.classList.add('error');
+    panel.textContent = result.stderr || result.stdout || 'Unknown error';
+  }
+}
+
+document.getElementById('btn-diagnose-script').addEventListener('click', async () => {
+  if (!scriptDiagPath) {
+    alert('台本ファイルを選択してください');
+    return;
+  }
+  const status = document.getElementById('status');
+  status.textContent = 'Diagnosing script...';
+  const mapVal = document.getElementById('script-diag-speaker-map').value.trim();
+  const result = await window.nlmytgen.diagnoseScript({
+    input: scriptDiagPath,
+    speakerMap: mapVal || undefined,
+  });
+  renderScriptDiagResult(document.getElementById('script-diag-result'), result);
+  status.textContent = 'Script diagnosis complete';
 });
 
 document.getElementById('btn-score-visual').addEventListener('click', async () => {

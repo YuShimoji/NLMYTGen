@@ -1,0 +1,125 @@
+{
+  "ir_version": "1.0",
+  "video_id": "visual_styles_dry_sample",
+  "macro": {
+    "tone": "三スタイル検証用の短いサンプル（実制作用ではない）。挿絵コマ・資料パネル・再現PV方針の template 混在を示す。",
+    "pattern_mix": "3:3:2:2",
+    "visual_arc": [
+      {"phase": "intro", "primary_pattern": "A", "emotion_flow": "サンプル"},
+      {"phase": "develop", "primary_pattern": "B", "emotion_flow": "サンプル"},
+      {"phase": "climax", "primary_pattern": "D", "emotion_flow": "サンプル"},
+      {"phase": "closing", "primary_pattern": "C", "emotion_flow": "サンプル"}
+    ],
+    "recurring_motif": null,
+    "default_bgm": "test",
+    "sections": [
+      {
+        "section_id": "S1",
+        "topic": "挿絵コマ風（skit）",
+        "start_index": 1,
+        "end_index": 2,
+        "default_bg": "photo_outdoor",
+        "default_face": "serious",
+        "bgm": "test",
+        "arc_phase": "intro"
+      },
+      {
+        "section_id": "S2",
+        "topic": "資料パネル風（data / board）",
+        "start_index": 3,
+        "end_index": 4,
+        "default_bg": "dark_board",
+        "default_face": "thinking",
+        "bgm": "test",
+        "arc_phase": "develop"
+      },
+      {
+        "section_id": "S3",
+        "topic": "再現PV風（mood / closing）",
+        "start_index": 5,
+        "end_index": 6,
+        "default_bg": "photo_city",
+        "default_face": "smile",
+        "bgm": "test",
+        "arc_phase": "closing"
+      }
+    ]
+  },
+  "utterances": [
+    {
+      "index": 1,
+      "speaker": "スピーカー1",
+      "text": "挿絵コマ1",
+      "section_id": "S1",
+      "template": "skit",
+      "face": "serious",
+      "idle_face": "serious",
+      "bg_anim": "none",
+      "slot": "left",
+      "motion": "pop_in",
+      "overlay": "speech_bubble",
+      "se": null,
+      "transition": "fade"
+    },
+    {
+      "index": 2,
+      "speaker": "スピーカー2",
+      "text": "挿絵コマ2",
+      "section_id": "S1",
+      "template": "skit",
+      "face": "surprised",
+      "slot": "right",
+      "motion": "shake_small",
+      "overlay": null,
+      "transition": "none"
+    },
+    {
+      "index": 3,
+      "speaker": "スピーカー1",
+      "text": "データ説明",
+      "section_id": "S2",
+      "template": "data",
+      "face": "thinking",
+      "slot": "left",
+      "motion": "none",
+      "overlay": "text_box",
+      "transition": "none"
+    },
+    {
+      "index": 4,
+      "speaker": "スピーカー2",
+      "text": "整理パート",
+      "section_id": "S2",
+      "template": "board",
+      "face": "serious",
+      "slot": "right",
+      "motion": "none",
+      "overlay": null,
+      "transition": "fade"
+    },
+    {
+      "index": 5,
+      "speaker": "スピーカー1",
+      "text": "PV風の雰囲気切替",
+      "section_id": "S3",
+      "template": "mood",
+      "face": "smile",
+      "idle_face": "smile",
+      "slot": "left",
+      "bg_anim": "ken_burns",
+      "motion": "fade_in",
+      "transition": "none"
+    },
+    {
+      "index": 6,
+      "speaker": "スピーカー2",
+      "text": "締め",
+      "section_id": "S3",
+      "template": "closing",
+      "face": "smile",
+      "slot": "right",
+      "motion": "none",
+      "transition": "fade"
+    }
+  ]
+}

@@ -61,12 +61,45 @@ class PatchResult:
     transition_changes: int = 0
     motion_changes: int = 0
     tachie_syncs: int = 0
-    se_plans: int = 0
+    se_plans: int = 0  # G-18: 挿入した SE (AudioItem) 件数
     warnings: list[str] | None = None
 
     def __post_init__(self) -> None:
         if self.warnings is None:
             self.warnings = []
+
+
+# samples/AudioItem.ymmp readback — FilePath/Frame/Length は挿入時に上書き
+_AUDIO_ITEM_SKELETON_JSON = (
+    '{"$type":"YukkuriMovieMaker.Project.Items.AudioItem, YukkuriMovieMaker",'
+    '"IsWaveformEnabled":false,"FilePath":"","AudioTrackIndex":0,'
+    '"Volume":{"Values":[{"Value":50.0}],"Span":0.0,"AnimationType":"なし",'
+    '"Bezier":{"Points":[{"Point":{"X":0.0,"Y":0.0},"ControlPoint1":{"X":-0.3,"Y":-0.3},'
+    '"ControlPoint2":{"X":0.3,"Y":0.3}},{"Point":{"X":1.0,"Y":1.0},'
+    '"ControlPoint1":{"X":-0.3,"Y":-0.3},"ControlPoint2":{"X":0.3,"Y":0.3}}],'
+    '"IsQuadratic":false}},"Pan":{"Values":[{"Value":0.0}],"Span":0.0,"AnimationType":"なし",'
+    '"Bezier":{"Points":[{"Point":{"X":0.0,"Y":0.0},"ControlPoint1":{"X":-0.3,"Y":-0.3},'
+    '"ControlPoint2":{"X":0.3,"Y":0.3}},{"Point":{"X":1.0,"Y":1.0},'
+    '"ControlPoint1":{"X":-0.3,"Y":-0.3},"ControlPoint2":{"X":0.3,"Y":0.3}}],'
+    '"IsQuadratic":false}},"PlaybackRate":100.0,"ContentOffset":"00:00:00",'
+    '"FadeIn":0.0,"FadeOut":0.0,"IsLooped":false,"EchoIsEnabled":false,'
+    '"EchoInterval":0.1,"EchoAttenuation":40.0,"AudioEffects":[],"Group":0,'
+    '"Frame":0,"Layer":0,"KeyFrames":{"Frames":[],"Count":0},"Length":194,'
+    '"Remark":"","IsLocked":false,"IsHidden":false}'
+)
+
+
+def _minimal_audio_item_dict() -> dict:
+    """タイムラインに AudioItem が無いときの挿入骨格."""
+    return json.loads(_AUDIO_ITEM_SKELETON_JSON)
+
+
+def _find_audio_item_template(items: list) -> dict | None:
+    """先頭の AudioItem をテンプレートとして複製用に返す."""
+    for item in items:
+        if _item_type(item) == "AudioItem":
+            return copy.deepcopy(item)
+    return None
 
 
 def load_ir(path: str | Path) -> dict:
@@ -663,7 +696,7 @@ def _motion_effects_for_label(
     if not motion_map:
         result.warnings.append(
             "MOTION_MAP_MISS: "
-            f"motion '{motion}' requires --motion-map"
+            f"motion '{motion}' requires --tachie-motion-map"
             f" (utterance index={ir_index})"
         )
         return []
@@ -682,7 +715,7 @@ def _apply_motion_to_tachie_items(
     items: list[dict],
     voice_items: list[dict],
     resolved: list[dict],
-    motion_map: dict[str, list[dict]] | None,
+    tachie_motion_effects_map: dict[str, list[dict]] | None,
     result: PatchResult,
     *,
     use_row_range: bool,
@@ -739,7 +772,7 @@ def _apply_motion_to_tachie_items(
             for start, end, motion, ir_index in raw_spans:
                 _ = start, end
                 effects = _motion_effects_for_label(
-                    motion, motion_map, result, ir_index=ir_index
+                    motion, tachie_motion_effects_map, result, ir_index=ir_index
                 )
                 for ti in targets:
                     old = _normalize_video_effects(ti.get("VideoEffects"))
@@ -812,7 +845,7 @@ def _apply_motion_to_tachie_items(
             new_item["Frame"] = start
             new_item["Length"] = span_len
             new_item["VideoEffects"] = _motion_effects_for_label(
-                motion, motion_map, result, ir_index=ir_index
+                motion, tachie_motion_effects_map, result, ir_index=ir_index
             )
             replacement.append(new_item)
         items[insert_at:insert_at] = replacement
@@ -851,6 +884,222 @@ def _resolve_utterance_timing(
     return start_frame, max(end_frame - start_frame, 1)
 
 
+def _utterance_frame_span_exclusive(
+    ir_entry: dict,
+    voice_items: list[dict],
+    *,
+    use_row_range: bool,
+) -> tuple[int, int] | None:
+    """発話に対応するタイムライン区間 [start, end) を Frame で返す."""
+    timing = _resolve_utterance_timing(
+        ir_entry, voice_items, use_row_range=use_row_range,
+    )
+    if timing is None:
+        return None
+    start_f, length = timing
+    return start_f, start_f + length
+
+
+def _bg_anim_for_bg_segment(
+    seg_s: int,
+    seg_e: int,
+    sec_utts: list[dict],
+    voice_items: list[dict],
+    use_row_range: bool,
+) -> str:
+    """[seg_s, seg_e) と時間的に重なる最初の発話の bg_anim（なければ none）."""
+    for u in sec_utts:
+        sp = _utterance_frame_span_exclusive(
+            u, voice_items, use_row_range=use_row_range,
+        )
+        if sp is None:
+            continue
+        su, eu = int(sp[0]), int(sp[1])
+        if su < seg_e and eu > seg_s:
+            raw = u.get("bg_anim")
+            return raw if isinstance(raw, str) and raw.strip() else "none"
+    return "none"
+
+
+def _merge_contiguous_same_bg(
+    segments: list[tuple[int, int, str]],
+) -> list[tuple[int, int, str]]:
+    """隣接し同一ラベルの bg 区間を結合する."""
+    if not segments:
+        return []
+    segs = sorted(segments, key=lambda x: (x[0], x[1]))
+    cs, ce, clab = segs[0]
+    out: list[tuple[int, int, str]] = []
+    for s, e, lab in segs[1:]:
+        if s < ce:
+            out.append((cs, ce, clab))
+            cs, ce, clab = s, e, lab
+            continue
+        if s == ce and lab == clab:
+            ce = e
+        else:
+            out.append((cs, ce, clab))
+            cs, ce, clab = s, e, lab
+    out.append((cs, ce, clab))
+    return out
+
+
+def _apply_bg_from_resolved_micro(
+    items: list,
+    resolved: list[dict],
+    sections: list[dict],
+    voice_items: list[dict],
+    use_row_range: bool,
+    utt_to_vi_start: dict[int, int],
+    bg_map: dict[str, str],
+    bg_template: dict | None,
+    result: PatchResult,
+) -> None:
+    """macro セクションと Micro `bg`（carry-forward 解決済み）から Layer 0 の bg を生成する."""
+
+    for sec_idx, section in enumerate(sections):
+        default_bg = section.get("default_bg")
+        if not default_bg:
+            continue
+        sec_id = section.get("section_id")
+        utt_start = section.get("start_index", 1)
+
+        if use_row_range:
+            start_idx = utt_to_vi_start.get(utt_start, utt_start - 1)
+        else:
+            start_idx = utt_start - 1
+        if start_idx >= len(voice_items):
+            continue
+        section_start = voice_items[start_idx].get("Frame", 0)
+        if sec_idx == 0:
+            section_start = 0
+
+        next_section_start: int | None = None
+        if sec_idx + 1 < len(sections):
+            next_utt_start = sections[sec_idx + 1].get("start_index", 1)
+            if use_row_range:
+                next_start_idx = utt_to_vi_start.get(
+                    next_utt_start, next_utt_start - 1
+                )
+            else:
+                next_start_idx = next_utt_start - 1
+            if next_start_idx < len(voice_items):
+                next_section_start = voice_items[next_start_idx].get("Frame", 0)
+
+        if next_section_start is not None:
+            section_end = next_section_start
+        else:
+            last_vi = voice_items[-1]
+            section_end = last_vi.get("Frame", 0) + last_vi.get("Length", 0)
+
+        utt_end = section.get("end_index", utt_start)
+        sec_utts = [
+            u for u in resolved
+            if u.get("section_id") == sec_id
+            and utt_start <= u.get("index", 0) <= utt_end
+        ]
+        sec_utts.sort(key=lambda u: u.get("index", 0))
+
+        segments: list[tuple[int, int, str]] = []
+        if not sec_utts:
+            bg_path = _resolve_bg(default_bg, bg_map)
+            if not bg_path:
+                result.warnings.append(
+                    f"bg label '{default_bg}' not found in bg_map"
+                )
+                continue
+            seg_len = max(section_end - section_start, 1)
+            new_bg = (
+                copy.deepcopy(bg_template)
+                if bg_template
+                else _minimal_bg_item_dict()
+            )
+            new_bg["FilePath"] = bg_path
+            new_bg["Frame"] = section_start
+            new_bg["Length"] = seg_len
+            new_bg["Layer"] = 0
+            bg_anim_label = "none"
+            for e in resolved:
+                if e.get("section_id") == sec_id and e.get("index") == utt_start:
+                    raw = e.get("bg_anim")
+                    bg_anim_label = raw if isinstance(raw, str) and raw.strip() else "none"
+                    break
+            _apply_bg_anim_to_image_item(new_bg, bg_anim_label, seg_len, result)
+            items.append(new_bg)
+            result.bg_additions += 1
+            continue
+
+        cursor = section_start
+        for u in sec_utts:
+            sp = _utterance_frame_span_exclusive(
+                u, voice_items, use_row_range=use_row_range,
+            )
+            if sp is None:
+                result.warnings.append(
+                    "BG_NO_TIMING_ANCHOR: "
+                    f"utterance index={u.get('index')} section={sec_id}"
+                )
+                continue
+            su, eu = sp
+            su = max(int(su), section_start)
+            eu = min(int(eu), section_end)
+            if eu <= su:
+                continue
+            eff_bg = u.get("bg") or default_bg
+            if cursor < su:
+                segments.append((cursor, su, default_bg))
+            if su < cursor:
+                result.warnings.append(
+                    "BG_SPAN_OVERLAP: "
+                    f"utterance index={u.get('index')} section={sec_id}"
+                )
+            segments.append((su, eu, eff_bg))
+            cursor = max(cursor, eu)
+        if cursor < section_end:
+            segments.append((cursor, section_end, default_bg))
+
+        merged = _merge_contiguous_same_bg(segments)
+        for seg_s, seg_e, lab in merged:
+            bg_path = _resolve_bg(lab, bg_map)
+            if not bg_path:
+                result.warnings.append(
+                    f"bg label '{lab}' not found in bg_map"
+                )
+                continue
+            new_bg = (
+                copy.deepcopy(bg_template)
+                if bg_template
+                else _minimal_bg_item_dict()
+            )
+            new_bg["FilePath"] = bg_path
+            new_bg["Frame"] = seg_s
+            new_bg["Length"] = max(seg_e - seg_s, 1)
+            new_bg["Layer"] = 0
+            anim_label = _bg_anim_for_bg_segment(
+                seg_s, seg_e, sec_utts, voice_items, use_row_range,
+            )
+            _apply_bg_anim_to_image_item(
+                new_bg, anim_label, new_bg["Length"], result,
+            )
+            items.append(new_bg)
+            result.bg_additions += 1
+
+
+def _minimal_bg_item_dict() -> dict:
+    """bg_template が無いときの最小 ImageItem 骨格."""
+    return {
+        "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+        "X": {"Values": [{"Value": 0.0}], "Span": 0.0, "AnimationType": "\u306a\u3057"},
+        "Y": {"Values": [{"Value": 0.0}], "Span": 0.0, "AnimationType": "\u306a\u3057"},
+        "Zoom": {"Values": [{"Value": 100.0}], "Span": 0.0, "AnimationType": "\u306a\u3057"},
+        "Opacity": {"Values": [{"Value": 100.0}], "Span": 0.0, "AnimationType": "\u306a\u3057"},
+        "Layer": 0,
+        "Group": 0,
+        "IsLocked": False,
+        "IsHidden": False,
+    }
+
+
 def _coerce_int(value, *, default: int = 0) -> int:
     try:
         return int(value)
@@ -865,6 +1114,17 @@ def _coerce_float(value, *, default: float) -> float:
         return default
 
 
+def iter_overlay_labels(raw) -> list[str]:
+    """IR の overlay フィールドをラベル列へ正規化する (string | list[string])."""
+    if raw is None or raw == "":
+        return []
+    if isinstance(raw, str):
+        return [raw] if raw else []
+    if isinstance(raw, list):
+        return [x for x in raw if isinstance(x, str) and x]
+    return []
+
+
 def _apply_bg_anim_to_image_item(
     item: dict,
     bg_anim: str | None,
@@ -873,8 +1133,8 @@ def _apply_bg_anim_to_image_item(
 ) -> None:
     """セクション bg ImageItem の X/Y/Zoom に線形キーフレームを書き込む (G-14).
 
-    IR の各セクション先頭発話の `bg_anim`（carry-forward 解決後）を参照する。
-    `ImageItem.X/Y/Zoom` + `Span` は G-12 の bg_anim 契約と整合する。
+    IR の `bg_anim`（carry-forward 解決後）を参照する。
+    G-17 の VideoEffects 系 bg_anim とは別経路（キーフレーム preset）。
     """
     if not bg_anim or bg_anim == "none":
         return
@@ -955,23 +1215,8 @@ def _apply_overlay_items(
 ) -> None:
     """Insert overlay ImageItems at resolved utterance anchors."""
     for ir_entry in resolved:
-        overlay_label = ir_entry.get("overlay")
-        if not overlay_label:
-            continue
-
-        spec = overlay_map.get(overlay_label)
-        if not isinstance(spec, dict):
-            result.warnings.append(
-                "OVERLAY_MAP_MISS: "
-                f"overlay label '{overlay_label}' not found in overlay_map"
-            )
-            continue
-        path = spec.get("path")
-        if not isinstance(path, str) or not path:
-            result.warnings.append(
-                "OVERLAY_SPEC_INVALID: "
-                f"overlay label '{overlay_label}' must define path"
-            )
+        labels = iter_overlay_labels(ir_entry.get("overlay"))
+        if not labels:
             continue
 
         timing = _resolve_utterance_timing(
@@ -980,40 +1225,58 @@ def _apply_overlay_items(
             use_row_range=use_row_range,
         )
         if timing is None:
-            result.warnings.append(
-                "OVERLAY_NO_TIMING_ANCHOR: "
-                f"overlay label '{overlay_label}' could not resolve timing"
-                f" for utterance index={ir_entry.get('index', '?')}"
-            )
+            for overlay_label in labels:
+                result.warnings.append(
+                    "OVERLAY_NO_TIMING_ANCHOR: "
+                    f"overlay label '{overlay_label}' could not resolve timing"
+                    f" for utterance index={ir_entry.get('index', '?')}"
+                )
             continue
 
         start_frame, utterance_length = timing
-        anchor = spec.get("anchor", "start")
-        if anchor not in {"start", "end"}:
-            result.warnings.append(
-                "OVERLAY_SPEC_INVALID: "
-                f"overlay label '{overlay_label}' has invalid anchor '{anchor}'"
-            )
-            continue
+        for overlay_label in labels:
+            spec = overlay_map.get(overlay_label)
+            if not isinstance(spec, dict):
+                result.warnings.append(
+                    "OVERLAY_MAP_MISS: "
+                    f"overlay label '{overlay_label}' not found in overlay_map"
+                )
+                continue
+            path = spec.get("path")
+            if not isinstance(path, str) or not path:
+                result.warnings.append(
+                    "OVERLAY_SPEC_INVALID: "
+                    f"overlay label '{overlay_label}' must define path"
+                )
+                continue
 
-        offset = _coerce_int(spec.get("offset"), default=0)
-        item_length = _coerce_int(spec.get("length"), default=utterance_length)
-        if item_length < 1:
-            result.warnings.append(
-                "OVERLAY_SPEC_INVALID: "
-                f"overlay label '{overlay_label}' must define positive length"
-            )
-            continue
+            anchor = spec.get("anchor", "start")
+            if anchor not in {"start", "end"}:
+                result.warnings.append(
+                    "OVERLAY_SPEC_INVALID: "
+                    f"overlay label '{overlay_label}' has invalid anchor '{anchor}'"
+                )
+                continue
 
-        frame = start_frame + offset
-        if anchor == "end":
-            frame = start_frame + utterance_length + offset
+            offset = _coerce_int(spec.get("offset"), default=0)
+            item_length = _coerce_int(spec.get("length"), default=utterance_length)
+            if item_length < 1:
+                result.warnings.append(
+                    "OVERLAY_SPEC_INVALID: "
+                    f"overlay label '{overlay_label}' must define positive length"
+                )
+                continue
 
-        items.append(_build_overlay_item(spec, frame=frame, length=item_length))
-        result.overlay_changes += 1
+            frame = start_frame + offset
+            if anchor == "end":
+                frame = start_frame + utterance_length + offset
+
+            items.append(_build_overlay_item(spec, frame=frame, length=item_length))
+            result.overlay_changes += 1
 
 
-def _plan_se_items(
+def _apply_se_items(
+    items: list,
     resolved: list[dict],
     voice_items: list[dict],
     se_map: dict[str, dict],
@@ -1021,7 +1284,14 @@ def _plan_se_items(
     *,
     use_row_range: bool,
 ) -> None:
-    """Resolve SE labels to timing anchors and fail fast until route is fixed."""
+    """SE ラベルを解決し AudioItem をタイムラインに挿入する (G-18)."""
+    if not se_map:
+        return
+
+    base = _find_audio_item_template(items)
+    if base is None:
+        base = _minimal_audio_item_dict()
+
     for ir_entry in resolved:
         se_label = ir_entry.get("se")
         if not se_label:
@@ -1069,12 +1339,209 @@ def _plan_se_items(
         if anchor == "end":
             frame = start_frame + utterance_length + offset
 
+        item_length = _coerce_int(spec.get("length"), default=utterance_length)
+        if item_length < 1:
+            result.warnings.append(
+                "SE_SPEC_INVALID: "
+                f"se label '{se_label}' must define positive length"
+            )
+            continue
+
+        new_audio = copy.deepcopy(base)
+        new_audio["FilePath"] = path
+        new_audio["Frame"] = frame
+        new_audio["Length"] = max(item_length, 1)
+        if "layer" in spec:
+            new_audio["Layer"] = _coerce_int(
+                spec.get("layer"), default=new_audio.get("Layer", 0),
+            )
+        if "audio_track_index" in spec:
+            new_audio["AudioTrackIndex"] = _coerce_int(
+                spec.get("audio_track_index"),
+                default=new_audio.get("AudioTrackIndex", 0),
+            )
+
+        items.append(new_audio)
         result.se_plans += 1
+
+
+def _default_timeline_contract_path() -> Path:
+    return Path(__file__).resolve().parent.parent.parent / "samples" / "timeline_route_contract.json"
+
+
+def _utterance_voice_items(
+    ir_entry: dict,
+    voice_items: list[dict],
+    *,
+    use_row_range: bool,
+) -> list[dict]:
+    """発話に対応する VoiceItem 行のリスト (同一順序)."""
+    if use_row_range:
+        row_start = ir_entry.get("row_start")
+        row_end = ir_entry.get("row_end")
+        if row_start is None or row_end is None:
+            return []
+        if row_start < 1 or row_start - 1 >= len(voice_items):
+            return []
+        end = min(row_end, len(voice_items))
+        return voice_items[row_start - 1 : end]
+    idx = ir_entry.get("index", 0) - 1
+    if 0 <= idx < len(voice_items):
+        return [voice_items[idx]]
+    return []
+
+
+def _find_layer0_bg_item(items: list) -> dict | None:
+    for item in items:
+        if _item_type(item) not in ("ImageItem", "VideoItem"):
+            continue
+        if item.get("Layer", -1) == 0:
+            return item
+    return None
+
+
+def _tachie_overlaps_voice_span(
+    titem: dict,
+    utt_vis: list[dict],
+) -> bool:
+    if not utt_vis:
+        return False
+    start_f = utt_vis[0].get("Frame", 0)
+    end_f = utt_vis[-1].get("Frame", 0) + utt_vis[-1].get("Length", 0)
+    tf = titem.get("Frame", 0)
+    tl = titem.get("Length", 0)
+    return tf < end_f and tf + tl > start_f
+
+
+def _apply_timeline_profile_adapters(
+    ymmp_data: dict,
+    items: list,
+    voice_items: list[dict],
+    resolved: list[dict],
+    *,
+    use_row_range: bool,
+    timeline_profile: str,
+    adapter_motion_map: dict[str, dict] | None,
+    transition_map: dict[str, dict] | None,
+    bg_anim_map: dict[str, dict] | None,
+    contract_path: Path | str | None,
+    result: PatchResult,
+) -> None:
+    """G-17: プロファイル限定で motion / transition / bg_anim を書き込む."""
+    from src.pipeline.ymmp_measure import (
+        measure_timeline_routes,
+        validate_timeline_route_contract,
+    )
+
+    cpath = Path(contract_path) if contract_path else _default_timeline_contract_path()
+    try:
+        with open(cpath, "r", encoding="utf-8") as f:
+            contract = json.load(f)
+    except OSError as exc:
         result.warnings.append(
-            "SE_WRITE_ROUTE_UNSUPPORTED: "
-            f"se label '{se_label}' resolved to '{path}' at frame {frame}"
-            " but repo-local corpus has no fixed AudioItem write route"
+            f"MOTION_ADAPTER_CONTRACT_IO: cannot read timeline contract: {exc}"
         )
+        return
+
+    measurement = measure_timeline_routes(ymmp_data)
+    vres = validate_timeline_route_contract(
+        measurement, contract, profile=timeline_profile,
+    )
+    if vres.has_errors:
+        for err in vres.errors:
+            result.warnings.append(f"MOTION_ADAPTER_CONTRACT: {err}")
+        return
+
+    adapter_motion_map = adapter_motion_map or {}
+    transition_map = transition_map or {}
+    bg_anim_map = bg_anim_map or {}
+
+    for ir_entry in resolved:
+        utt_vis = _utterance_voice_items(
+            ir_entry, voice_items, use_row_range=use_row_range,
+        )
+        speaker = (ir_entry.get("speaker") or "").strip()
+        mot = ir_entry.get("motion")
+        trans = ir_entry.get("transition")
+        bg_anim = ir_entry.get("bg_anim")
+
+        if mot:
+            spec = adapter_motion_map.get(mot)
+            if not isinstance(spec, dict):
+                result.warnings.append(
+                    f"MOTION_MAP_MISS: motion label '{mot}' not in adapter motion map"
+                )
+            else:
+                eff = spec.get("video_effect")
+                if not isinstance(eff, dict):
+                    result.warnings.append(
+                        "MOTION_SPEC_INVALID: "
+                        f"motion label '{mot}' needs video_effect object"
+                    )
+                elif speaker and utt_vis:
+                    placed = False
+                    for titem in items:
+                        if _item_type(titem) != "TachieItem":
+                            continue
+                        if (titem.get("CharacterName") or "").strip() != speaker:
+                            continue
+                        if not _tachie_overlaps_voice_span(titem, utt_vis):
+                            continue
+                        ve = titem.get("VideoEffects")
+                        if not isinstance(ve, list):
+                            ve = []
+                            titem["VideoEffects"] = ve
+                        ve.append(copy.deepcopy(eff))
+                        result.motion_changes += 1
+                        placed = True
+                        break
+                    if not placed:
+                        result.warnings.append(
+                            "MOTION_NO_TACHIE_ANCHOR: "
+                            f"motion '{mot}' utterance index={ir_entry.get('index')}"
+                        )
+
+        if trans:
+            fields = transition_map.get(trans)
+            if not isinstance(fields, dict):
+                result.warnings.append(
+                    f"TRANSITION_MAP_MISS: transition label '{trans}'"
+                    " not in transition_map"
+                )
+            elif utt_vis:
+                vi = utt_vis[0]
+                for k, v in fields.items():
+                    vi[k] = v
+                result.transition_changes += 1
+
+        if bg_anim:
+            spec = bg_anim_map.get(bg_anim)
+            if not isinstance(spec, dict):
+                result.warnings.append(
+                    f"BG_ANIM_MAP_MISS: bg_anim label '{bg_anim}'"
+                    " not in bg_anim_map"
+                )
+            else:
+                eff = spec.get("video_effect")
+                if not isinstance(eff, dict):
+                    result.warnings.append(
+                        "BG_ANIM_SPEC_INVALID: "
+                        f"bg_anim label '{bg_anim}' needs video_effect object"
+                    )
+                else:
+                    bg_item = _find_layer0_bg_item(items)
+                    if bg_item is None:
+                        result.warnings.append(
+                            "BG_ANIM_NO_LAYER0: "
+                            f"bg_anim '{bg_anim}' has no Layer 0 Image/Video item"
+                        )
+                    else:
+                        ve = bg_item.get("VideoEffects")
+                        if not isinstance(ve, list):
+                            ve = []
+                            bg_item["VideoEffects"] = ve
+                        ve.append(copy.deepcopy(eff))
+                        result.bg_anim_changes += 1
 
 
 def patch_ymmp(
@@ -1086,7 +1553,13 @@ def patch_ymmp(
     char_default_slots: dict[str, str] | None = None,
     overlay_map: dict[str, dict] | None = None,
     se_map: dict[str, dict] | None = None,
-    motion_map: dict[str, list[dict]] | None = None,
+    *,
+    timeline_profile: str | None = None,
+    motion_map: dict[str, dict] | None = None,
+    transition_map: dict[str, dict] | None = None,
+    bg_anim_map: dict[str, dict] | None = None,
+    timeline_contract_path: str | Path | None = None,
+    tachie_motion_effects_map: dict[str, list[dict]] | None = None,
 ) -> PatchResult:
     """演出 IR に従って ymmp を差し替える.
 
@@ -1147,14 +1620,15 @@ def patch_ymmp(
         result,
         use_row_range=use_row_range,
     )
-    _apply_motion_to_tachie_items(
-        items,
-        voice_items,
-        resolved,
-        motion_map,
-        result,
-        use_row_range=use_row_range,
-    )
+    if not timeline_profile:
+        _apply_motion_to_tachie_items(
+            items,
+            voice_items,
+            resolved,
+            tachie_motion_effects_map,
+            result,
+            use_row_range=use_row_range,
+        )
     _apply_overlay_items(
         items,
         voice_items,
@@ -1163,7 +1637,8 @@ def patch_ymmp(
         result,
         use_row_range=use_row_range,
     )
-    _plan_se_items(
+    _apply_se_items(
+        items,
         resolved,
         voice_items,
         se_map or {},
@@ -1197,90 +1672,33 @@ def patch_ymmp(
             if rs is not None:
                 utt_to_vi_start[utt_idx] = rs - 1  # 1-based → 0-based
 
-    # セクションごとに新しい bg_item を生成
     sections = ir_data.get("macro", {}).get("sections", [])
-    for sec_idx, section in enumerate(sections):
-        bg_label = section.get("default_bg")
-        if not bg_label:
-            continue
-        bg_path = _resolve_bg(bg_label, bg_map)
-        if not bg_path:
-            result.warnings.append(
-                f"bg label '{bg_label}' not found in bg_map"
-            )
-            continue
+    _apply_bg_from_resolved_micro(
+        items,
+        resolved,
+        sections,
+        voice_items,
+        use_row_range,
+        utt_to_vi_start,
+        bg_map,
+        bg_template,
+        result,
+    )
 
-        # start_index は IR utterance index (1-based)
-        utt_start = section.get("start_index", 1)
-
-        if use_row_range:
-            # row-range: utterance の row_start から VoiceItem index を引く
-            start_idx = utt_to_vi_start.get(utt_start, utt_start - 1)
-        else:
-            start_idx = utt_start - 1
-
-        # セクションの Frame 範囲を計算
-        # 開始: このセクションの最初の VoiceItem の Frame
-        # 終了: 次のセクションの最初の VoiceItem の Frame (なければタイムライン末尾)
-        if start_idx >= len(voice_items):
-            continue
-        section_start = voice_items[start_idx].get("Frame", 0)
-        # 最初のセクションはタイムライン冒頭 (Frame=0) から開始
-        if sec_idx == 0:
-            section_start = 0
-
-        # 次のセクションの開始を探す
-        next_section_start = None
-        if sec_idx + 1 < len(sections):
-            next_utt_start = sections[sec_idx + 1].get("start_index", 1)
-            if use_row_range:
-                next_start_idx = utt_to_vi_start.get(
-                    next_utt_start, next_utt_start - 1
-                )
-            else:
-                next_start_idx = next_utt_start - 1
-            if next_start_idx < len(voice_items):
-                next_section_start = voice_items[next_start_idx].get("Frame", 0)
-
-        if next_section_start is not None:
-            section_end = next_section_start
-        else:
-            # 最後のセクション: タイムライン末尾まで
-            last_vi = voice_items[-1]
-            section_end = last_vi.get("Frame", 0) + last_vi.get("Length", 0)
-
-        section_length = max(section_end - section_start, 1)
-
-        # bg_item を生成
-        if bg_template:
-            import copy
-            new_bg = copy.deepcopy(bg_template)
-        else:
-            new_bg = {
-                "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
-                "X": {"Values": [{"Value": 0.0}], "Span": 0.0, "AnimationType": "\u306a\u3057"},
-                "Y": {"Values": [{"Value": 0.0}], "Span": 0.0, "AnimationType": "\u306a\u3057"},
-                "Zoom": {"Values": [{"Value": 100.0}], "Span": 0.0, "AnimationType": "\u306a\u3057"},
-                "Opacity": {"Values": [{"Value": 100.0}], "Span": 0.0, "AnimationType": "\u306a\u3057"},
-                "Layer": 0,
-                "Group": 0,
-                "IsLocked": False,
-                "IsHidden": False,
-            }
-        new_bg["FilePath"] = bg_path
-        new_bg["Frame"] = section_start
-        new_bg["Length"] = section_length
-        new_bg["Layer"] = 0
-
-        bg_anim_label = "none"
-        for e in resolved:
-            if e.get("index") == utt_start:
-                bg_anim_label = e.get("bg_anim") or "none"
-                break
-        _apply_bg_anim_to_image_item(new_bg, bg_anim_label, section_length, result)
-
-        items.append(new_bg)
-        result.bg_additions += 1
+    if timeline_profile:
+        _apply_timeline_profile_adapters(
+            ymmp_data,
+            items,
+            voice_items,
+            resolved,
+            use_row_range=use_row_range,
+            timeline_profile=timeline_profile,
+            adapter_motion_map=motion_map,
+            transition_map=transition_map,
+            bg_anim_map=bg_anim_map,
+            contract_path=timeline_contract_path,
+            result=result,
+        )
 
     return result
 

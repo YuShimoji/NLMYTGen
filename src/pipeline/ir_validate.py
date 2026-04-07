@@ -137,6 +137,7 @@ def validate_ir(
         MOTION_ALLOWED,
         TRANSITION_ALLOWED,
         _resolve_carry_forward,
+        iter_overlay_labels,
     )
     resolved = _resolve_carry_forward(ir_data)
 
@@ -153,7 +154,7 @@ def validate_ir(
         face = entry.get("face", "")
         idle_face = entry.get("idle_face", "")
         slot = entry.get("slot", "")
-        overlay = entry.get("overlay", "")
+        raw_overlay = entry.get("overlay", "")
         se_label = entry.get("se", "")
         if face:
             face_counts[face] += 1
@@ -164,8 +165,24 @@ def validate_ir(
             slot_usage[slot] += 1
             if speaker:
                 char_slot_usage.setdefault(speaker, set()).add(slot)
-        if overlay:
-            overlay_usage[overlay] += 1
+        if raw_overlay is not None and raw_overlay != "":
+            if isinstance(raw_overlay, list):
+                if not all(isinstance(x, str) for x in raw_overlay):
+                    result.errors.append(
+                        "OVERLAY_INVALID_TYPE: "
+                        "overlay list must contain only strings"
+                    )
+                else:
+                    for ol in iter_overlay_labels(raw_overlay):
+                        overlay_usage[ol] += 1
+            elif isinstance(raw_overlay, str):
+                for ol in iter_overlay_labels(raw_overlay):
+                    overlay_usage[ol] += 1
+            else:
+                result.errors.append(
+                    "OVERLAY_INVALID_TYPE: "
+                    "overlay must be string, list of strings, null, or empty"
+                )
         if se_label:
             se_usage[se_label] += 1
 

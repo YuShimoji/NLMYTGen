@@ -70,6 +70,11 @@
             <input type="checkbox" id="reflow-v2" checked> Reflow v2
           </label>
         </div>
+        <div class="setting-row">
+          <label>
+            <input type="checkbox" id="csv-save-diagnostics" checked> 台本診断 JSON も保存（B-18・C-09 用。CSV と同じフォルダ）
+          </label>
+        </div>
       </div>
 
       <div class="action-row">
@@ -161,6 +166,21 @@
         <label>Packaging Brief</label>
         <button class="btn-file" data-target="scoring-brief">選択</button>
         <span id="scoring-brief-path" class="file-path">未選択</span>
+      </div>
+
+      <div class="scoring-group">
+        <h3>B-18 台本診断</h3>
+        <div class="file-row">
+          <label>台本 .txt / .csv</label>
+          <button class="btn-file" data-target="script-diag-input">選択</button>
+          <span id="script-diag-path" class="file-path">未選択</span>
+        </div>
+        <div class="setting-row">
+          <label for="script-diag-speaker-map">Speaker Map（省略可）</label>
+          <input type="text" id="script-diag-speaker-map" placeholder="スピーカー1=れいむ,スピーカー2=まりさ">
+        </div>
+        <button id="btn-diagnose-script">Diagnose Script</button>
+        <div id="script-diag-result" class="result-panel hidden"></div>
       </div>
 
       <div class="scoring-group">

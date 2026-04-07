@@ -322,6 +322,16 @@ none, pop_in, slide_in, shake_small, shake_big, bounce, fade_in, fade_out
 ### transition (トランジション -- 必ず以下から選択)
 none, fade, slide_left, slide_right, wipe, cut
 
+### 視覚スタイル三種（template 振り分けの補助語彙）
+
+台本の見せ方を次の三スタイルに寄せて設計する。IR フィールドは既存の `template` / `overlay` 等のみ（新キーは追加しない）。正本・制約表は `docs/VISUAL_STYLE_PRESETS.md`。
+
+- **挿絵コマ風**: 寸劇・コマ割 → 主に `template=skit`。吹き出し・枠は `overlay=speech_bubble` または `overlay_map` に登録したコマ用ラベル。複数コマを重ねる場合は制作側で 1 枚 PNG に合成し 1 ラベルにまとめる。
+- **資料パネル風**: 数値・図表・整理 → `template=data` または `board`。`overlay=text_box` 等。背景の機械適用は Macro の `sections[].default_bg` が正本（発話単位 `bg` は carry-forward のみで `patch-ymmp` 未使用）。
+- **再現PV風**: テンポ・カット感 → 主に `template=mood`（＋ `intro` / `closing`）。細部のモーションは YMM4 アイテムテンプレに寄せる。IR の `motion` / `transition` / `bg_anim` は記載してよいが、現行 `patch-ymmp` では ymmp に書き込まない（ルート実測は G-12）。
+
+振り分け目安: 比較・ファクト提示 → data/board。感情・行動のドラマ → skit。場面転換・締めの空気 → mood/closing。PV 的な強いテンポは mood 帯を選び YMM4 側テンプレで補完する。
+
 ---
 
 ## Part 1: Macro IR (JSON)

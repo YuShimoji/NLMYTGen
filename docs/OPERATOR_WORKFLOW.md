@@ -2,6 +2,8 @@
 
 人間オペレーターの実ワークフロー・痛点・品質目標を保持する正本。
 
+**並行して進める自分用の作業（Phase1・GUI LLM 同期・YMM4・サムネ・Git）の完全手順**は [OPERATOR_PARALLEL_WORK_RUNBOOK.md](OPERATOR_PARALLEL_WORK_RUNBOOK.md) に集約した。
+
 ## 全体フロー
 - S-0: YMM4 テンプレート構築 (初回のみ)
 - S-1: NotebookLM にソース投入、Audio Overview 生成
@@ -110,13 +112,13 @@
 - repo-local corpus に route 自体が 0 件なら、それは operator の visual judgement 待ちではなく sample dependency として扱う。2026-04-06 時点では `template` と non-fade / template-backed `transition` family のみがこれに該当する
 - `overlay` / `se` は意味ラベル → registry → timing anchor の deterministic 経路ができるまでは manual judgement に残すが、設計・dry-run・readback は assistant 側で先に閉じる
 - 2026-04-06 時点で `overlay` は assistant-owned mechanical scope として閉じた。`--overlay-map` があれば deterministic な `ImageItem` 挿入まで自動で行い、unknown label / map miss / timing anchor 不在 / spec 不正は visual review 前に failure class で止める
-- `se` は意味ラベル → registry → timing anchor までは assistant 側で閉じた。repo-local corpus に `AudioItem` write route が無い間は creative judgement 待ちではなく `SE_WRITE_ROUTE_UNSUPPORTED` として fail-fast し、新 sample が入った時だけ再測定する
+- `se` は意味ラベル → registry → timing anchor を assistant 側で閉じ、**G-18** から `--se-map` と IR の `se` に基づき `AudioItem` を挿入する（既存タイムラインの `AudioItem` をテンプレにできなければコード内最小骨格を使用）
 - 人間が残す判断は「どのテンプレートが見た目として良いか」「どのタイミングが気持ちいいか」「音量・密度・テンポが最終制作物として十分か」という creative quality のみ
 
 ## timeline edit サブクエストの completion criteria
 - G-11: completed。`slot` が registry で解決でき、`validate-ir` が `SLOT_UNKNOWN_LABEL` / `SLOT_REGISTRY_GAP` / `SLOT_CHARACTER_DRIFT` / `SLOT_DEFAULT_DRIFT` を事前検出し、`patch-ymmp` / `apply-production` が TachieItem X/Y/Zoom と `off` hide を deterministic に反映できる
 - G-12: `motion` / `bg_anim` の write route が repo-local corpus ベースで固定され、fade-family `transition` route も mechanical に確認済みで、残る route 不在カテゴリは non-fade / template-backed family の sample dependency として明示され、dry-run/readback で mechanical failure を再現できる
-- G-13: completed。`overlay` は label 解決、timing anchor、挿入先構造が固定され、creative density judgement と mechanical insertion failure が分離された。`se` は label/timing を解決し、write route 不在は `SE_WRITE_ROUTE_UNSUPPORTED` で mechanical failure として扱う
+- G-13: completed。`overlay` は label 解決、timing anchor、挿入先構造が固定され、creative density judgement と mechanical insertion failure が分離された。`se` は label/timing を解決し、G-18 で `AudioItem` 挿入まで mechanical（旧 `SE_WRITE_ROUTE_UNSUPPORTED` は廃止）
 - 上記を満たした packet は、それぞれ独立 failure class 単位で扱い、broad な timeline retry loop に戻さない
 
 ## 検証の境界 (2026-04-05 固定)
