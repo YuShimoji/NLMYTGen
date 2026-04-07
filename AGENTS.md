@@ -7,9 +7,17 @@
 ## このプロジェクトについて
 - **プロジェクト名:** NLMYTGen
 - **プロジェクト root:** このファイルがある repo のルート
-- **種別:** CLI パイプライン（CLI artifact mode 適用）
+- **種別:** CLI を中核とするパイプライン（CLI artifact mode 適用）。デスクトップ GUI（Electron、`gui/`・`start-gui.bat`）は CLI の操作面。成果物の正本は CSV 等の artifact
 - **最終成果物到達経路:** NLM transcript → YMM4 CSV → 動画1本完成
 - **Artifact Surface:** CSV ファイル → YMM4 読込 → レンダリング結果
+
+---
+
+## Read order の関係（正本）
+
+- **フル再アンカリング**（新規セッション・境界の再確認）: 下記「再アンカリング手順」のステップ 1〜5 が正。ステップ 2 の `.claude/CLAUDE.md` とステップ 6 のルート `CLAUDE.md` は別物（後者は方針・技術スタック・成功定義。日々の Hard Rules は `.claude/CLAUDE.md` と `docs/INVARIANTS.md`）。
+- **`.claude/CLAUDE.md` の Read Order リスト**: 上記ステップ 1（本ファイル）および 2〜5 と同じファイル列。ルート `CLAUDE.md` はリストに含めないが、方針確認のためステップ 6 相当として読む。
+- **`docs/ai/WORKFLOWS_AND_PHASES.md` の「Recommended read order」**: 同一チェーンの **サブセット**。`docs/ai/CORE_RULESET.md` から入るのは **resume / continue / refresh** 向け。境界・repo-local 運用が必要なときは本ファイルと `.claude/CLAUDE.md` に戻ること。
 
 ---
 
@@ -73,5 +81,5 @@
 - 成功定義 3/3 達成（2026-03-29）。コアパイプライン完成
 - 機能追加は docs/FEATURE_REGISTRY.md で管理。登録→承認→実装の順
 - 自動化の境界は docs/AUTOMATION_BOUNDARY.md で定義
-- Web UI / API / YouTube 連携はまだ優先しない
+- ブラウザ向け Web UI / API / YouTube 連携はまだ優先しない（デスクトップ GUI は別）
 - 次 frontier は docs/runtime-state.md の **`next_action`** と **「次以降の推奨プラン」**、および docs/project-context.md の `HANDOFF SNAPSHOT` を正本とする
