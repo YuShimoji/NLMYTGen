@@ -1,10 +1,16 @@
 # P2C — SE / `AudioItem` write route（現状境界）
 
-## 状態（G-13 正本）
+## 更新（2026-04-07）
+
+[samples/AudioItem.ymmp](../../samples/AudioItem.ymmp) を追加し、G-18 で **`_apply_se_items` による `AudioItem` 挿入**を実装した。以下の「ゲート前の記録」は履歴として残す。
+
+---
+
+## 状態（G-13 当時の正本・履歴）
 
 - `patch-ymmp` の `se` は **`--se-map` まで label / timing anchor を解決**できる。
-- repo-local corpus の `.ymmp` には **タイムライン上の `AudioItem` が含まれておらず**、`measure-timeline-routes` でも **SE 用の確定 write JSON パスが観測できない**。
-- そのため実装は **`SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast** する境界のまま（FEATURE_REGISTRY G-13）。
+- 当時 repo-local corpus の `.ymmp` には **タイムライン上の `AudioItem` が含まれておらず**、`measure-timeline-routes` でも **SE 用の確定 write JSON パスが観測できない**。
+- そのため実装は **`SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast** する境界とした（FEATURE_REGISTRY G-13）。
 
 ## 次に実装を進めるゲート
 

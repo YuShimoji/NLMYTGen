@@ -911,8 +911,9 @@ def test_cli_patch_ymmp_se_route_is_blocking(tmp_path):
         cwd=str(_project_root()),
     )
 
-    assert result.returncode == 1
-    assert "SE_WRITE_ROUTE_UNSUPPORTED" in result.stderr
+    assert result.returncode == 0
+    assert "SE insertions: 1" in result.stdout
+    assert "SE_WRITE_ROUTE_UNSUPPORTED" not in result.stderr
 
 
 def _project_root():

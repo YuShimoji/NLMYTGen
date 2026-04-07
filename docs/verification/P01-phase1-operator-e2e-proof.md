@@ -51,8 +51,19 @@ uv run python -m src.cli.main build-csv refined.txt -o _tmp_out.csv ^
 - `diagnose-script` on `samples/AI監視が追い詰める生身の労働.txt` → JSON 正常終了（exit 0）。診断内容は [B18-script-diagnostics-ai-monitoring-sample.md](B18-script-diagnostics-ai-monitoring-sample.md) と同型。
 - `build-csv` on 上記サンプル（未 refinement）→ 既存パイプラインどおり CSV 生成可能（E2E の「refined 稿」は人間または LLM 出力待ち）。
 
+### ロードマップ実装スライス（2026-04-06）
+
+将来開発プラン（repo: [FUTURE_DEVELOPMENT_ROADMAP.md](../FUTURE_DEVELOPMENT_ROADMAP.md)）に沿い、同サンプルで **CLI 部分を再実行**（exit 0）:
+
+- `diagnose-script` … `--format json`
+- `validate` … `OK: 28 utterances parsed`（既知 WARN: row 10 長文）
+- `build-csv` … `--dry-run`、111 行相当プレビュー
+
+**C-09（GUI LLM refinement）は未実施**のため、本スライスは「機械パス」の記録に留まる。人間＋ LLM で refined 稿まで進めたら、上表に別行で追記する。
+
 ## 記録
 
 | 日付 | 台本 | refined 使用 | 手動時間(前/後) | メモ |
 |------|------|--------------|-----------------|------|
+| 2026-04-06 | samples/AI監視が追い詰める生身の労働.txt | 未（C-09 未実施） | 未計測 | ロードマップ手順: CLI のみ再スモーク exit 0。refined 稿での E2E は運用者待ち |
 | （運用者が追記） | | | | |

@@ -35,6 +35,8 @@
 - 2026-04-06: H-04 manual scoring proof packet を `docs/verification/H04-evidence-richness-manual-scoring-proof.md` に整備。実台本 1 本で warning を script/packaging repair に変換できるか検証できる状態にする。
 - 2026-04-06: `AI監視が追い詰める生身の労働` を用いて H-01 dry proof と H-04 manual proof を記録。H-01 は `docs/verification/H01-packaging-orchestrator-ai-monitoring-dry-proof.md`、H-04 は `docs/verification/H04-evidence-richness-ai-monitoring-proof.md` を正本とし、その後 H-02/H-03 の dry proof まで進めたうえで、残る strict 未解決を H-02 GUI rerun proof に絞る。
 - 2026-04-06: G-12 で fade-family `transition` route (`VoiceFade*` / `JimakuFade*` / `Fade*`) を ymmp_measure で回収できるようにし、repo-local contract を更新。非 fade / template-backed transition family のみを未確定として残す。
+- 2026-04-08: 次以降の推奨プランを [runtime-state.md](runtime-state.md) 「次以降の推奨プラン (2026-04-08)」に固定（P0 Phase1 本番 1 本〜Parking motion）。HANDOFF / DECISION LOG を同期。
+- 2026-04-07: G-18 で `se` の `AudioItem` 挿入を実装（`_apply_se_items`）。`SE_WRITE_ROUTE_UNSUPPORTED` は廃止。正本 [G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)。
 - 2026-04-06: G-13 を completed packet とし、`overlay` は deterministic `ImageItem` 挿入まで閉じ、`se` は route 不在を `SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast 化する。timeline lane は broad retry loop に戻さない。
 - 2026-04-05: face は `FACE_UNKNOWN_LABEL` / `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` / `FACE_MAP_MISS` / `IDLE_FACE_MAP_MISS` / `VOICE_NO_TACHIE_FACE` の failure class で扱う。broad な manual retry loop に戻さない。
 - 推奨ロードマップ順は 2026-04-06 rev.2 で刷新。packaging spec lane は一巡完了 (H-02 pass)。次フェーズは実制作の3大bottleneck (台本品質/演出配置自動化/視覚効果) に軸を移す。E-01/E-02 は制作パイプラインと完全分離。

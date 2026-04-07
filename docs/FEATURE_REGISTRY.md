@@ -106,6 +106,8 @@
 
 ### G. YMM4 自動化 (L3 内部工程の効率化)
 
+G-15〜G-18 はユーザー承認済み（[FUTURE_DEVELOPMENT_ROADMAP.md](FUTURE_DEVELOPMENT_ROADMAP.md) 承認表）。**G-15〜G-18 は実装済み**（G-18: [G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)）。
+
 | ID | 機能 | ステータス | レイヤー | 備考 |
 |----|------|-----------|---------|------|
 | G-01 | YMM4 IToolPlugin feasibility spike | hold | L3 | タイムライン操作 API 非公開。優先度最下位。他経路で不十分な場合のみ検討 |
@@ -113,7 +115,7 @@
 | G-02b | 完成品 ymmp 構造解析 (研究のみ、1件限定) | done | L3 | 171MB ymmp を解析。VoiceItem 1549件 / VideoItem 140件 / TachieItem 2件。TachieFaceParameter でパーツ単位の表情制御。bg+face 差し替えが最小実用単位。`docs/verification/G02b-ymmp-structure-analysis.md` |
 | G-03 | 演出適用ツール (IToolPlugin) | hold | L3 | G-01 が前提。タイムライン操作 API 非公開のため凍結 |
 | G-04 | ymmp 背景/表情自動差し替え | hold | L3 | ymmp 直接編集は控える。G-02b + 段階5の判断結果を踏まえて再検討 |
-| G-05 | Writer IR 出力プロンプト (C-07 v4) | done | L2 | 三層の第1層 (Writer IR)。Custom GPT が PRODUCTION_IR_SPEC v1.0 準拠の構造化 IR (scene_preset + override) を出力。`docs/S6-production-memo-prompt.md` v4 セクション。proof 完了 |
+| G-05 | Writer IR 出力プロンプト (C-07 v4) | done | L2 | 三層の第1層 (Writer IR)。Custom GPT が PRODUCTION_IR_SPEC v1.0 準拠の構造化 IR (scene_preset + override) を出力。`docs/S6-production-memo-prompt.md` v4 セクション（視覚三スタイル補助語彙を含む）。proof 完了 |
 | G-06 | YMM4 Adapter (patch-ymmp) | done | L2/L3 | 三層の第3層 (YMM4 Adapter)。face (表情パーツ) を IR→ymmp で差し替え。character-scoped face_map + row-range 対応済み。extract-template --labeled で palette ymmp から face_map 自動生成。production E2E 実証済み (2026-04-05: 60 VoiceItem / 28 IR utterance / face 133 changes) |
 | G-07 | 待機中表情の指定 (idle_face) | done | L2/L3 | IR に `idle_face` フィールドを追加。patch-ymmp が各 utterance の開始 Frame に non-speaker キャラの TachieFaceItem を挿入。carry-forward 対応。character-scoped face_map で解決。131 PASS (2026-04-05) |
 | G-08 | apply-production ワンコマンド | done | L2 | `apply-production` サブコマンド。palette → face_map 抽出 + row-range 自動付与 + patch-ymmp を 1 コマンドで実行。`validate-ir` を内包し、row-range unmatched/uncovered・validation error・fatal face patch warning (`FACE_MAP_MISS` / `IDLE_FACE_MAP_MISS` / `VOICE_NO_TACHIE_FACE`) では書き出し前に停止する。--palette / --face-map / --bg-map / --csv / --refresh-maps / --dry-run |
@@ -121,8 +123,12 @@
 | G-10 | IR 品質 gate (validate-ir) | done | L2 | `validate-ir` サブコマンド + `apply-production` 統合。`FACE_UNKNOWN_LABEL` / `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` を ERROR、`FACE_PROMPT_PALETTE_GAP` / `FACE_PROMPT_PALETTE_EXTRA` / `FACE_LATENT_GAP` / serious 偏り (>40%) / 連続 run (>4) / idle_face 未指定 / bg 未設定 を WARNING として分類する。Custom GPT の face 許可リストと palette の drift report、キャラ別 palette gap report を出力。187 PASS |
 | G-11 | slot patch hardening | done | L2/L3 | `slot` registry contract を `validate-ir` / `apply-production` / `patch-ymmp` に統合。`SLOT_UNKNOWN_LABEL` / `SLOT_REGISTRY_GAP` / `SLOT_CHARACTER_DRIFT` / `SLOT_DEFAULT_DRIFT` を事前検出し、TachieItem の X/Y/Zoom を deterministic に反映、`off` は `IsHidden` に落とす。CLI smoke + unit tests 済み。`uv run pytest` 198 PASS (2026-04-06) |
 | G-12 | timeline route measurement packet | done | L3 | `measure-timeline-routes` CLI + `--expect` + `--profile` で ymmp の `motion` / `transition` / `bg_anim` candidate route を readback し、repo-local contract を `samples/timeline_route_contract.json` に固定。`docs/verification/G12-timeline-route-measurement.md` により `motion=TachieItem.VideoEffects`、`bg_anim=ImageItem.X/Y/Zoom`、effect-bearing bg は `ImageItem.VideoEffects`、fade-family `transition` は `VoiceItem.VoiceFadeIn/Out` / `VoiceItem.JimakuFadeIn/Out` / `TachieItem.FadeIn/Out` まで mechanical に確定。未確定なのは non-fade / template-backed transition family のみ。**補足:** CSV 読込後の [samples/production.ymmp](samples/production.ymmp) は ImageItem 無し→ **G-14** `production_ai_monitoring_lane` を参照 |
-| G-13 | overlay / se timeline insertion adapter | done | L2/L3 | `overlay` / `se` の意味ラベルを registry 解決し、timing anchor と failure class を固定。`overlay` は `--overlay-map` 経由で deterministic な `ImageItem` 挿入まで実装済み。`se` は `--se-map` で label/timing までは解決し、repo-local corpus に `AudioItem` write route が無い間は `SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast する。`docs/verification/G13-overlay-se-insertion-packet.md` を正本とする |
+| G-13 | overlay / se timeline insertion adapter | done | L2/L3 | `overlay` / `se` の意味ラベルを registry 解決し、timing anchor と failure class を固定。`overlay` は `--overlay-map` 経由で deterministic な `ImageItem` 挿入まで実装済み。`se` は `--se-map` で label/timing を解決し、G-18 で `AudioItem` 挿入まで実装（テンプレートまたは最小骨格）。`docs/verification/G13-overlay-se-insertion-packet.md` を正本とする |
 | G-14 | production lane timeline contract profile | done | L3 | [samples/production.ymmp](samples/production.ymmp)（CSV 読込後・ImageItem 無し）向けに [samples/timeline_route_contract.json](samples/timeline_route_contract.json) に `production_ai_monitoring_lane` を追加。`measure-timeline-routes --expect --profile production_ai_monitoring_lane` で ERROR なし。bg_anim は本 ymmp に観測が無いため required 外とし、ギャップを文書化（`docs/verification/P2B-production-timeline-contract-profile.md`） |
+| G-15 | patch-ymmp 発話スパン背景（Micro `bg`） | done | L2/L3 | Micro IR の `bg`（carry-forward 解決後）を Layer 0 に反映。[G15-micro-bg-patch.md](verification/G15-micro-bg-patch.md)。[VISUAL_STYLE_PRESETS.md](VISUAL_STYLE_PRESETS.md) |
+| G-16 | 複数 overlay / スタック（1 発話複数 ImageItem） | done | L2/L3 | `overlay` を文字列または配列で受け、同一発話に複数 ImageItem。[G16-multi-overlay-patch.md](verification/G16-multi-overlay-patch.md) |
+| G-17 | motion / transition / bg_anim の ymmp 書き込み Adapter | done | L2/L3 | `--timeline-profile` + maps。契約失敗時は書き込みスキップ。[G17-motion-adapter-packet.md](verification/G17-motion-adapter-packet.md) |
+| G-18 | SE AudioItem タイムライン挿入（write route 実装） | done | L2/L3 | `patch-ymmp` の `_apply_se_items` が `AudioItem` を挿入。[G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)。履歴メモ [G18-se-audioitem-deferred.md](verification/G18-se-audioitem-deferred.md)。P2C 参照 |
 
 ### H. Packaging / 評価 / オーケストレーション (L2 + L4)
 

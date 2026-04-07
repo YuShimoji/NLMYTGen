@@ -1,12 +1,24 @@
-const { contextBridge, ipcRenderer } = require('electron');
+const { contextBridge, ipcRenderer, webUtils } = require('electron');
 
 contextBridge.exposeInMainWorld('nlmytgen', {
+  // #region agent log
+  debugLog: (payload) => ipcRenderer.invoke('debug-log', payload),
+  // #endregion
+  /** Electron 32+ ではレンダラの File に path が無い。DnD / file input 共通で実パスを得る */
+  getPathForFile: (file) => {
+    try {
+      return webUtils.getPathForFile(file);
+    } catch {
+      return '';
+    }
+  },
   buildCsv: (opts) => ipcRenderer.invoke('build-csv', opts),
   applyProduction: (opts) => ipcRenderer.invoke('apply-production', opts),
   validateIr: (opts) => ipcRenderer.invoke('validate-ir', opts),
   scoreEvidence: (opts) => ipcRenderer.invoke('score-evidence', opts),
   scoreVisualDensity: (opts) => ipcRenderer.invoke('score-visual-density', opts),
   diagnoseScript: (opts) => ipcRenderer.invoke('diagnose-script', opts),
+  saveScriptDiagnostics: (opts) => ipcRenderer.invoke('save-script-diagnostics', opts),
   selectFile: (opts) => ipcRenderer.invoke('select-file', opts),
   openFolder: (path) => ipcRenderer.invoke('open-folder', path),
   saveIrPaste: (opts) => ipcRenderer.invoke('save-ir-paste', opts),

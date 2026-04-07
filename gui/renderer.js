@@ -22,6 +22,18 @@ function setTxtFile(filePath) {
   currentTxtPath = filePath;
   selectedFile.textContent = filePath;
   btnBuild.disabled = false;
+  // #region agent log
+  window.nlmytgen.debugLog({
+    runId: 'pre-fix',
+    hypothesisId: 'H4',
+    location: 'renderer.js:setTxtFile',
+    message: 'after assign',
+    data: {
+      pathTruthy: !!filePath,
+      pathType: typeof filePath,
+    },
+  });
+  // #endregion
 }
 
 // Drag & Drop
@@ -36,8 +48,42 @@ dropZone.addEventListener('drop', (e) => {
   e.preventDefault();
   dropZone.classList.remove('dragover');
   const files = e.dataTransfer.files;
+  // #region agent log
+  const f0 = files.length > 0 ? files[0] : null;
+  window.nlmytgen.debugLog({
+    runId: 'pre-fix',
+    hypothesisId: 'H1',
+    location: 'renderer.js:drop',
+    message: 'drop handler',
+    data: {
+      filesLength: files.length,
+      fileName: f0 ? f0.name : null,
+      hasPathProp: !!(f0 && 'path' in f0),
+      pathType: f0 && 'path' in f0 ? typeof f0.path : 'n/a',
+      pathValue: f0 && f0.path != null ? String(f0.path).slice(0, 200) : null,
+    },
+  });
+  // #endregion
   if (files.length > 0) {
-    setTxtFile(files[0].path);
+    const f = files[0];
+    const legacy = typeof f.path === 'string' ? f.path : '';
+    const resolved = (legacy && legacy.trim()) || window.nlmytgen.getPathForFile(f) || '';
+    // #region agent log
+    window.nlmytgen.debugLog({
+      runId: 'post-fix',
+      hypothesisId: 'FIX',
+      location: 'renderer.js:drop-resolve',
+      message: 'path resolution',
+      data: {
+        legacyNonEmpty: !!(legacy && legacy.trim()),
+        resolvedNonEmpty: !!resolved,
+        resolvedTail: resolved ? resolved.slice(-80) : null,
+      },
+    });
+    // #endregion
+    if (resolved) {
+      setTxtFile(resolved);
+    }
   }
 });
 
@@ -91,6 +137,32 @@ async function runBuildCsv(dryRun) {
       if (result.json.dry_run) {
         text += `\n(dry-run: CSV not written)`;
       }
+
+      if (document.getElementById('csv-save-diagnostics').checked) {
+        status.textContent = dryRun ? 'Dry run complete — diagnosing…' : 'Writing CSV — diagnosing…';
+        const diag = await window.nlmytgen.diagnoseScript({
+          input: currentTxtPath,
+          speakerMap: opts.speakerMap || undefined,
+        });
+        if (diag.json) {
+          const saved = await window.nlmytgen.saveScriptDiagnostics({
+            inputTxtPath: currentTxtPath,
+            csvOutputPath: result.json.output || null,
+            jsonPayload: diag.json,
+          });
+          if (saved.ok && saved.path) {
+            text += `\n診断 JSON: ${saved.path}`;
+            if (diag.code !== 0) {
+              text += '\n（診断に ERROR あり。exit≠0 でも JSON は保存済み）';
+            }
+          } else {
+            text += `\n診断 JSON 保存失敗: ${saved.error || 'unknown'}`;
+          }
+        } else {
+          text += `\n診断 JSON 未取得: ${diag.stderr || diag.stdout || 'parse error'}`;
+        }
+      }
+
       csvResult.textContent = text;
       status.textContent = dryRun ? 'Dry run complete' : `CSV written (${result.json.rows} rows)`;
     } else {
@@ -298,6 +370,7 @@ function collectSettings() {
       maxLines: parseInt(document.getElementById('max-lines').value) || 2,
       charsPerLine: parseInt(document.getElementById('chars-per-line').value) || 40,
       reflowV2: document.getElementById('reflow-v2').checked,
+      saveDiagnosticsWithCsv: document.getElementById('csv-save-diagnostics').checked,
     },
     production: {
       palette: filePaths['palette'] || null,
@@ -314,6 +387,9 @@ function applySettings(settings) {
     if (settings.csv.maxLines) document.getElementById('max-lines').value = settings.csv.maxLines;
     if (settings.csv.charsPerLine) document.getElementById('chars-per-line').value = settings.csv.charsPerLine;
     if (settings.csv.reflowV2 !== undefined) document.getElementById('reflow-v2').checked = settings.csv.reflowV2;
+    if (settings.csv.saveDiagnosticsWithCsv !== undefined) {
+      document.getElementById('csv-save-diagnostics').checked = settings.csv.saveDiagnosticsWithCsv;
+    }
   }
   if (settings.production) {
     if (settings.production.palette) {
@@ -340,6 +416,7 @@ document.getElementById('speaker-map').addEventListener('change', autoSave);
 document.getElementById('max-lines').addEventListener('change', autoSave);
 document.getElementById('chars-per-line').addEventListener('change', autoSave);
 document.getElementById('reflow-v2').addEventListener('change', autoSave);
+document.getElementById('csv-save-diagnostics').addEventListener('change', autoSave);
 
 // Load on startup
 window.addEventListener('DOMContentLoaded', async () => {

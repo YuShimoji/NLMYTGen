@@ -4,6 +4,7 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 
 const SETTINGS_PATH = path.join(__dirname, 'project-settings.json');
+const DEBUG_LOG_PATH = path.join(__dirname, '..', 'debug-1205ed.log');
 
 let mainWindow;
 
@@ -26,6 +27,18 @@ function createWindow() {
 
 app.whenReady().then(createWindow);
 app.on('window-all-closed', () => app.quit());
+
+// #region agent log
+ipcMain.handle('debug-log', async (_event, payload) => {
+  try {
+    const line = `${JSON.stringify({ sessionId: '1205ed', timestamp: Date.now(), ...payload })}\n`;
+    fs.appendFileSync(DEBUG_LOG_PATH, line, 'utf8');
+  } catch {
+    /* ignore debug I/O errors */
+  }
+  return true;
+});
+// #endregion
 
 // --- IPC handlers ---
 
@@ -168,6 +181,21 @@ ipcMain.handle('diagnose-script', async (_event, opts) => {
     /* stdout may be empty or non-JSON on failure */
   }
   return { ...result, json };
+});
+
+/** 台本診断 JSON を CSV と同じフォルダ（dry-run 時は台本と同じフォルダ）に書き出す */
+ipcMain.handle('save-script-diagnostics', async (_event, opts) => {
+  const inputTxtPath = opts.inputTxtPath;
+  const csvOutputPath = opts.csvOutputPath || null;
+  const jsonPayload = opts.jsonPayload;
+  if (!inputTxtPath || !jsonPayload) {
+    return { ok: false, error: 'inputTxtPath and jsonPayload are required' };
+  }
+  const stem = path.basename(inputTxtPath, path.extname(inputTxtPath));
+  const dir = csvOutputPath ? path.dirname(csvOutputPath) : path.dirname(inputTxtPath);
+  const outPath = path.join(dir, `${stem}_script-diagnostics.json`);
+  fs.writeFileSync(outPath, `${JSON.stringify(jsonPayload, null, 2)}\n`, 'utf8');
+  return { ok: true, path: outPath };
 });
 
 ipcMain.handle('save-ir-paste', async (_event, opts) => {

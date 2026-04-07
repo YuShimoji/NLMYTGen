@@ -1,4 +1,4 @@
-# S-1 台本 refinement 支援プロンプト（C-09）
+]# S-1 台本 refinement 支援プロンプト（C-09）
 
 NotebookLM 由来の台本を、**事実を増やさず**、ゆっくり解説向けの会話体・役割分担に整えるための GUI LLM 用指示書。  
 API/SDK は使わず、Custom GPT / Claude Project / Gemini Gems 等に **Instructions に貼る**か、都度ユーザーメッセージの先頭に置く。
@@ -12,13 +12,10 @@ API/SDK は使わず、Custom GPT / Claude Project / Gemini Gems 等に **Instru
 ## 運用手順（推奨）
 
 1. ローカルで診断を取得する:
-
-   ```bash
+  ```bash
    uv run python -m src.cli.main diagnose-script path/to/transcript.txt --speaker-map "スピーカー1=れいむ,スピーカー2=まりさ" --format json
-   ```
-
+  ```
 2. 以下の **入力ブロック** を GUI LLM に渡す（生台本全文 + JSON 全文）。
-
 3. 出力された修正台本を保存し、`build-csv` へ渡す。
 
 ---
@@ -68,3 +65,4 @@ API/SDK は使わず、Custom GPT / Claude Project / Gemini Gems 等に **Instru
 
 - `diagnose-script` の `--expected-explainer` / `--expected-listener` は、プロジェクトの YMM4 キャラ名に合わせて変える。
 - 修正後は必ず `validate` / `build-csv --dry-run` でパース可能か確認する。
+

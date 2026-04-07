@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "input": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen\\samples\\石油消失で書き換わる世界経済のOS.txt",
+    "utterance_count": 146,
+    "mapped_speaker_keys": [
+      "スピーカー1",
+      "スピーカー2"
+    ]
+  },
+  "diagnostics": [
+    {
+      "code": "SPEAKER_MAP_UNMAPPED",
+      "severity": "warning",
+      "utterance_index": null,
+      "message": "入力話者「ホストA」が speaker_map に無い（そのままのラベルで解析）",
+      "hint": "generate-map または手編集でマップに追加するか、意図した綴りか確認する"
+    },
+    {
+      "code": "SPEAKER_MAP_UNMAPPED",
+      "severity": "warning",
+      "utterance_index": null,
+      "message": "入力話者「ホストB」が speaker_map に無い（そのままのラベルで解析）",
+      "hint": "generate-map または手編集でマップに追加するか、意図した綴りか確認する"
+    },
+    {
+      "code": "EXPLAINER_ROLE_MISMATCH",
+      "severity": "warning",
+      "utterance_index": null,
+      "message": "文量・導入パターン上の host は「ホストB」だが、--expected-explainer は「まりさ」",
+      "hint": "NotebookLM の Host/解説が聞き手側キャラに付いていないか確認する"
+    },
+    {
+      "code": "LISTENER_ROLE_MISMATCH",
+      "severity": "warning",
+      "utterance_index": null,
+      "message": "質問・短応答寄りの guest は「ホストA」だが、--expected-listener は「れいむ」",
+      "hint": "話者マップの左右が逆になっていないか、台本の役割が崩れていないか確認する"
+    }
+  ]
+}

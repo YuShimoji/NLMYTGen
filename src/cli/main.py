@@ -776,6 +776,33 @@ def main(argv: list[str] | None = None) -> int:
     p_patch.add_argument("--slot-map", help="Slot label -> x/y/zoom mapping (JSON or registry)")
     p_patch.add_argument("--overlay-map", help="Overlay label -> image asset mapping (JSON or registry)")
     p_patch.add_argument("--se-map", help="SE label -> audio asset mapping (JSON or registry)")
+    p_patch.add_argument(
+        "--timeline-profile",
+        choices=[
+            "motion_only",
+            "motion_bg_anim_minimal",
+            "motion_bg_anim_effects",
+            "production_ai_monitoring_lane",
+        ],
+        default=None,
+        help="G-17: timeline_route_contract.json のプロファイル (maps と併用)",
+    )
+    p_patch.add_argument(
+        "--motion-map",
+        help="JSON: motion ラベル → {video_effect: {...}} (TachieItem.VideoEffects へ追記)",
+    )
+    p_patch.add_argument(
+        "--transition-map",
+        help="JSON: transition ラベル → VoiceItem へマージするフィールド辞書",
+    )
+    p_patch.add_argument(
+        "--bg-anim-map",
+        help="JSON: bg_anim ラベル → {video_effect: {...}} (Layer 0 Image/Video の VideoEffects へ)",
+    )
+    p_patch.add_argument(
+        "--timeline-contract",
+        help="timeline_route_contract.json のパス (省略時は samples/timeline_route_contract.json)",
+    )
     p_patch.add_argument("-o", "--output", help="Output ymmp path (default: <input>_patched.ymmp)")
     p_patch.add_argument("--dry-run", action="store_true", help="Preview changes without writing")
 
@@ -792,6 +819,21 @@ def main(argv: list[str] | None = None) -> int:
     p_apply.add_argument("--slot-map", help="Slot label -> x/y/zoom mapping (JSON or registry)")
     p_apply.add_argument("--overlay-map", help="Overlay label -> image asset mapping (JSON or registry)")
     p_apply.add_argument("--se-map", help="SE label -> audio asset mapping (JSON or registry)")
+    p_apply.add_argument(
+        "--timeline-profile",
+        choices=[
+            "motion_only",
+            "motion_bg_anim_minimal",
+            "motion_bg_anim_effects",
+            "production_ai_monitoring_lane",
+        ],
+        default=None,
+        help="G-17: timeline_route_contract.json のプロファイル",
+    )
+    p_apply.add_argument("--motion-map", help="JSON: motion ラベル → {video_effect: {...}}")
+    p_apply.add_argument("--transition-map", help="JSON: transition ラベル → VoiceItem フィールド")
+    p_apply.add_argument("--bg-anim-map", help="JSON: bg_anim ラベル → {video_effect: {...}}")
+    p_apply.add_argument("--timeline-contract", help="timeline_route_contract.json のパス")
     p_apply.add_argument("--refresh-maps", action="store_true",
                          help="Force re-extract face_map from palette even if file exists")
     p_apply.add_argument("--csv", help="CSV file for auto row_start/row_end annotation")
@@ -1144,6 +1186,22 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
         se_map = _load_labeled_asset_map(args.se_map, "se")
         print(f"se_map: {args.se_map} ({len(se_map)} labels)")
 
+    motion_map: dict[str, dict] = {}
+    if getattr(args, "motion_map", None):
+        with open(args.motion_map, "r", encoding="utf-8") as f:
+            motion_map = json.load(f)
+        print(f"motion_map: {args.motion_map} ({len(motion_map)} labels)")
+    transition_map: dict[str, dict] = {}
+    if getattr(args, "transition_map", None):
+        with open(args.transition_map, "r", encoding="utf-8") as f:
+            transition_map = json.load(f)
+        print(f"transition_map: {args.transition_map} ({len(transition_map)} labels)")
+    bg_anim_map: dict[str, dict] = {}
+    if getattr(args, "bg_anim_map", None):
+        with open(args.bg_anim_map, "r", encoding="utf-8") as f:
+            bg_anim_map = json.load(f)
+        print(f"bg_anim_map: {args.bg_anim_map} ({len(bg_anim_map)} labels)")
+
     result = patch_ymmp(
         ymmp_data,
         ir_data,
@@ -1153,12 +1211,22 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
         char_default_slots=char_default_slots,
         overlay_map=overlay_map,
         se_map=se_map,
+        timeline_profile=getattr(args, "timeline_profile", None),
+        motion_map=motion_map or None,
+        transition_map=transition_map or None,
+        bg_anim_map=bg_anim_map or None,
+        timeline_contract_path=getattr(args, "timeline_contract", None),
     )
 
     print(f"Face changes: {result.face_changes}")
     print(f"Slot changes: {result.slot_changes}")
     print(f"Overlay changes: {result.overlay_changes}")
-    print(f"SE plans: {result.se_plans}")
+    print(f"SE insertions: {result.se_plans}")
+    if result.motion_changes or result.transition_changes or result.bg_anim_changes:
+        print(
+            f"Timeline adapter: motion={result.motion_changes}, "
+            f"transition={result.transition_changes}, bg_anim={result.bg_anim_changes}"
+        )
     print(f"BG removed: {result.bg_changes}, BG added: {result.bg_additions}")
     if result.warnings:
         for w in result.warnings:
@@ -1313,7 +1381,6 @@ def _fatal_face_patch_warnings(warnings: list[str]) -> list[str]:
         "SE_MAP_MISS:",
         "SE_NO_TIMING_ANCHOR:",
         "SE_SPEC_INVALID:",
-        "SE_WRITE_ROUTE_UNSUPPORTED:",
         "SLOT_CHARACTER_DRIFT:",
         "SLOT_DEFAULT_DRIFT:",
         "SLOT_REGISTRY_MISS:",
@@ -1599,6 +1666,22 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         se_map = _load_labeled_asset_map(args.se_map, "se")
         print(f"se_map: {args.se_map} ({len(se_map)} labels)")
 
+    motion_map: dict[str, dict] = {}
+    if getattr(args, "motion_map", None):
+        with open(args.motion_map, "r", encoding="utf-8") as f:
+            motion_map = json.load(f)
+        print(f"motion_map: {args.motion_map} ({len(motion_map)} labels)")
+    transition_map: dict[str, dict] = {}
+    if getattr(args, "transition_map", None):
+        with open(args.transition_map, "r", encoding="utf-8") as f:
+            transition_map = json.load(f)
+        print(f"transition_map: {args.transition_map} ({len(transition_map)} labels)")
+    bg_anim_map: dict[str, dict] = {}
+    if getattr(args, "bg_anim_map", None):
+        with open(args.bg_anim_map, "r", encoding="utf-8") as f:
+            bg_anim_map = json.load(f)
+        print(f"bg_anim_map: {args.bg_anim_map} ({len(bg_anim_map)} labels)")
+
     # --- row-range annotation (--csv) ---
     ir_data = load_ir(args.ir_json)
 
@@ -1661,6 +1744,11 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         char_default_slots=char_default_slots or None,
         overlay_map=overlay_map,
         se_map=se_map,
+        timeline_profile=getattr(args, "timeline_profile", None),
+        motion_map=motion_map or None,
+        transition_map=transition_map or None,
+        bg_anim_map=bg_anim_map or None,
+        timeline_contract_path=getattr(args, "timeline_contract", None),
     )
 
     fmt = getattr(args, "format", "text")
@@ -1669,7 +1757,12 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         print(f"\nFace changes: {result.face_changes}")
         print(f"Slot changes: {result.slot_changes}")
         print(f"Overlay changes: {result.overlay_changes}")
-        print(f"SE plans: {result.se_plans}")
+        print(f"SE insertions: {result.se_plans}")
+        if result.motion_changes or result.transition_changes or result.bg_anim_changes:
+            print(
+                f"Timeline adapter: motion={result.motion_changes}, "
+                f"transition={result.transition_changes}, bg_anim={result.bg_anim_changes}"
+            )
         if result.tachie_syncs:
             print(f"Idle face inserts: {result.tachie_syncs}")
         print(f"BG removed: {result.bg_changes}, BG added: {result.bg_additions}")

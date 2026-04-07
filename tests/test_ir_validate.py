@@ -333,6 +333,22 @@ class TestTimelineLabelValidation:
         assert not [e for e in vr.errors if "OVERLAY_UNKNOWN_LABEL" in e]
         assert not [e for e in vr.errors if "SE_UNKNOWN_LABEL" in e]
 
+    def test_overlay_list_counts_each_label(self):
+        ir = _make_ir([_utt_with_timeline(1, overlay=["arrow_red", "text_box"])])
+        vr = validate_ir(
+            ir,
+            known_overlay_labels={"arrow_red", "text_box"},
+        )
+        assert not vr.has_errors
+        assert vr.overlay_distribution["arrow_red"] == 1
+        assert vr.overlay_distribution["text_box"] == 1
+
+    def test_overlay_invalid_type_is_error(self):
+        ir = _make_ir([_utt(1)])
+        ir["utterances"][0]["overlay"] = 123
+        vr = validate_ir(ir)
+        assert any("OVERLAY_INVALID_TYPE" in e for e in vr.errors)
+
 
 class TestRowRangeValidation:
     def test_partial_row_range_is_error(self):
@@ -375,3 +391,32 @@ class TestRowStart:
         vr = validate_ir(ir)
         info = [i for i in vr.info if "row_start" in i]
         assert len(info) == 0
+
+
+def test_ir_visual_styles_dry_sample_passes_cli_validation():
+    """三スタイル混在サンプル IR が validate-ir で ERROR なし（VISUAL_STYLE_PRESETS 系）。"""
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parent.parent
+    ir_path = root / "samples" / "ir_visual_styles_dry_sample.json"
+    palette_path = root / "samples" / "palette.ymmp"
+    overlay_path = root / "samples" / "visual_styles_overlay_map.example.json"
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "src.cli.main",
+            "validate-ir",
+            str(ir_path),
+            "--palette",
+            str(palette_path),
+            "--overlay-map",
+            str(overlay_path),
+        ],
+        capture_output=True,
+        text=True,
+        cwd=str(root),
+    )
+    assert result.returncode == 0, result.stdout + "\n" + result.stderr
