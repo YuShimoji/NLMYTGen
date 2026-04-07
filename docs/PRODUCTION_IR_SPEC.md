@@ -191,7 +191,7 @@ S-6b (パン・ズーム / Ken Burns) に対応。
 | `fade_in` | フェードイン |
 | `fade_out` | フェードアウト |
 
-**patch-ymmp（G-16/Phase2）:** `none` は `TachieItem.VideoEffects` を空配列にクリアする。それ以外の語彙は CLI の `--motion-map`（JSON）で `motion` ラベル → YMM4 効果オブジェクトの配列を定義する。適用時は発話アンカー（`row_start`/`row_end` 優先、未指定時 `index`）で `TachieItem` を区間分割し、区間ごとに `VideoEffects` を割り当てる。連続する同一 `motion` 区間は結合してアイテム増加を抑制する。効果の `$type` 等は環境依存のため台帳に記述する。
+**patch-ymmp（G-16 Phase2 / G-17）:** **Phase2**（`--timeline-profile` を付けないとき）: `none` は `TachieItem.VideoEffects` を空配列にクリアする。それ以外の語彙は CLI の **`--tachie-motion-map`**（JSON）で `motion` ラベル → YMM4 効果オブジェクトの**配列**を定義する（[samples/tachie_motion_map.example.json](../samples/tachie_motion_map.example.json)）。発話アンカー（`row_start`/`row_end` 優先、未指定時 `index`）で `TachieItem` を区間分割し、区間ごとに `VideoEffects` を割り当てる。連続する同一 `motion` 区間は結合する。**G-17**（`--timeline-profile` 指定時）: Phase2 の区間分割は走らず、`--motion-map`（各ラベル → `video_effect` 辞書）で既存 `TachieItem` に効果を追記する（[samples/motion_map_g17.example.json](../samples/motion_map_g17.example.json)）。詳細は [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md)。
 
 ### 3.7 `overlay` -- オーバーレイ素材
 
@@ -402,10 +402,10 @@ Micro IR (発話ごとに1つ)
 | face パーツ差し替え (発話ごと) | YMM4 Adapter (patch-ymmp) | VoiceItem.TachieFaceParameter の書き換え |
 | bg 画像差し替え (セクションごと) | YMM4 Adapter (patch-ymmp) | ImageItem/VideoItem の FilePath + Frame/Length |
 | slot 座標変更 | YMM4 Adapter (patch-ymmp) | TachieItem の X/Y (実測後) |
-| motion | YMM4 Adapter (patch-ymmp) | `TachieItem.VideoEffects`（`--motion-map` 台帳。[G-16](FEATURE_REGISTRY.md)） |
-| transition | YMM4 Adapter (patch-ymmp) | `VoiceItem` Voice/Jimaku フェード（G-15、`none` / `fade` のみ） |
-| bg_anim | YMM4 Adapter (patch-ymmp) | Layer0 `ImageItem` X/Y/Zoom プリセット（G-14） |
-| se / overlay | **未決定** | AudioItem/ImageItem の挿入 or YMM4 テンプレートのバンドル (実測後に判断) |
+| motion | YMM4 Adapter (patch-ymmp) | `TachieItem.VideoEffects`（Phase2: `--tachie-motion-map`。[G-16](FEATURE_REGISTRY.md)。G-17: `--timeline-profile` + `--motion-map`。[G-17](FEATURE_REGISTRY.md)） |
+| transition | YMM4 Adapter (patch-ymmp) | `VoiceItem` Voice/Jimaku フェード（G-15、`none` / `fade` のみ）。G-17 プロファイル経路あり |
+| bg_anim | YMM4 Adapter (patch-ymmp) | Layer0 のキーフレームプリセット（G-14、micro bg 連動）および G-17 の `VideoEffects` 追記（プロファイル + `bg_anim_map`） |
+| se / overlay | YMM4 Adapter (patch-ymmp) | `--se-map` / `--overlay-map` 経由で `AudioItem` / `ImageItem` 挿入（G-13/G-18）。対照: [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md) |
 
 ### 6.4 Template Registry の構造
 
