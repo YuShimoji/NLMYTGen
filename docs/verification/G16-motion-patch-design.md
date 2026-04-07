@@ -1,6 +1,6 @@
 # G-16 `motion` patch（設計メモ）
 
-> ステータス: **done**（[FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md)）。実装: `patch_ymmp` + `--motion-map` + `validate-ir`。
+> ステータス: **done**（[FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md)）。実装: Phase2 は `patch_ymmp` + **`--tachie-motion-map`**（**`--timeline-profile` 未指定時**のみ `_apply_motion_to_tachie_items` が実行）。G-17 経路の motion は **`--timeline-profile` + `--motion-map`**（`video_effect` 辞書）で別関数。対照: [PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md)。
 
 ## 目的
 
@@ -18,9 +18,9 @@ IR の `motion`（[PRODUCTION_IR_SPEC.md](../PRODUCTION_IR_SPEC.md) §3.6）を 
 ## 実装済み
 
 1. `measure-timeline-routes` + G-12 契約（既存）。
-2. **`motion_map.json`**: トップレベルまたは `"motions"` セクションで、ラベル → `VideoEffects` 配列。CLI: `src.cli.main` の `_load_motion_map`。
-3. **`validate-ir`**: `MOTION_UNKNOWN_LABEL`（仕様外語彙）、`--motion-map` 指定時は `MOTION_MAP_UNKNOWN_LABEL`（台帳に無い非 `none` ラベル）。
-4. **`_apply_motion_to_tachie_items`**（`ymmp_patch.py`）: carry-forward 解決済み IR を順に処理し、話者の `TachieItem` に書き込む。
+2. **Phase2 台帳 JSON**（[tachie_motion_map.example.json](../../samples/tachie_motion_map.example.json)）: トップレベルまたは `"motions"` で、ラベル → `VideoEffects` **オブジェクトの配列**。CLI: `src.cli.main` の `_load_tachie_motion_effects_map`、引数 **`--tachie-motion-map`**。
+3. **`validate-ir`**: `MOTION_UNKNOWN_LABEL`（仕様外語彙）。`--motion-map`（G-17 辞書）と **`--tachie-motion-map`**（Phase2）のいずれか／両方指定時、台帳キーの**和集合**で `MOTION_MAP_UNKNOWN_LABEL` を検査可能。
+4. **`_apply_motion_to_tachie_items`**（`ymmp_patch.py`）: **`timeline_profile` が無いときのみ**呼び出し。carry-forward 解決済み IR で発話区間に応じて `TachieItem` を分割し `VideoEffects` を適用。
 
 ## 制約（v1）
 

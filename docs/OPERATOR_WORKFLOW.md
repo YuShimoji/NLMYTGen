@@ -101,6 +101,12 @@
 - `VOICE_NO_TACHIE_FACE`
 - 最終制作物で「今の label inventory 自体が足りない」と判断された場合
 
+## motion: G-17 と Phase2（CLI の使い分け）
+
+- **`--timeline-profile` を付ける場合（G-17）**: `motion` / `transition` / `bg_anim` のうち、契約に含まれるものを **`--motion-map`**（各ラベル → `video_effect` 辞書）、`--transition-map`、`--bg-anim-map` で書き込む。サンプル: [samples/motion_map_g17.example.json](samples/motion_map_g17.example.json)。このとき **Phase2 の `TachieItem` 区間分割は実行されない**。
+- **プロファイルを付けない場合の motion（Phase2）**: **`--tachie-motion-map`** でラベル → **VideoEffects オブジェクトの配列**を渡し、発話アンカーに合わせて `TachieItem` を分割する。サンプル: [samples/tachie_motion_map.example.json](samples/tachie_motion_map.example.json)。
+- **`validate-ir`**: 台帳ラベル検証は **`--motion-map` と `--tachie-motion-map` のキーを併用**できる（和集合で `MOTION_MAP_UNKNOWN_LABEL` を抑止）。
+
 ## timeline edit サブクエストの境界 (2026-04-06 固定)
 - IR 語彙と `patch-ymmp` 実装の対応（何が自動で書き込まれるか）の正本: [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md)
 - assistant / tool が先に閉じる対象は G-11 slot patch、G-12 motion/transition/bg_anim の write route 測定、G-13 overlay/se の timing anchor 付き挿入設計、G-14 bg_anim（ImageItem X/Y/Zoom プリセット）patch

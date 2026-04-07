@@ -1,0 +1,8 @@
+{
+  "bounce": {
+    "video_effect": {
+      "$type": "YukkuriMovieMaker.Plugin.Effects.BounceEffect, YukkuriMovieMaker.Plugin.Effects",
+      "Name": "Bounce"
+    }
+  }
+}
