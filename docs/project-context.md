@@ -158,6 +158,7 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 
 | 日付 | 決定事項 | 選択肢 | 決定理由 |
 |------|----------|--------|----------|
+| 2026-04-08 | P2 次サイクルで map 警告解消（`bg_anim_map` + `transition_map`）後に `test_verify_4_bg.ymmp` へ 4 セクション拡張適用を実施。`BG anim writes: 7` を確認 | 警告放置で拡張 / 先に警告ゼロ化 / bg_anim いったん停止 | 原因切り分けを明確化したうえで拡張でき、短サイクルの再現性を高められるため |
 | 2026-04-08 | B-11 を最小クローズ（半分確認時点）し、改行 Pass / 辞書 0 をもって Gate B（運用側移行）を仮確定。P2 背景アニメ小規模適用を先行 | Gate A 維持 / Gate B 仮確定 / B-11 完全完了待ち | ループ停止を避けて最短で演出実戦へ入るため。`test_verify_4_bg.ymmp` で route は profile contract pass、`p2_bg_anim_small_scope.ir.json` で `BG anim writes: 2` を確認 |
 | 2026-04-08 | B-11 AI監視 proof の取込後記録を集約し、Gate A（改行系支配）を確定。`runtime-state.md` の `next_action` / P0 説明を Gate 根拠付きへ更新 | 保留継続 / Gate 判定を先に固定 | 次プランを感覚で動かさず、4 区分実測（辞書 0 / 手動改行 5 / 再分割 10 / タイミング 0）で優先順位を固定するため |
 | 2026-04-08 | 次以降の推奨プランを `runtime-state.md` に正本化（P0 Phase1 本番 1 本・P1 H-01 運用・P2 演出実戦・P3 サムネ・Parking motion ブランチ）。GUI CSV 同梱診断 JSON を Phase 1 導線に明記 | 暗黙の優先 / 文書固定 | 実制作 bottleneck 軽減レーンを再アンカーし、未承認実装を増やさない |

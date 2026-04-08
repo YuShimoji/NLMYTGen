@@ -1,5 +1,23 @@
 {
+  "none": {
+    "video_effect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.InOutFadeEffect, YukkuriMovieMaker",
+      "Name": "InOutFade"
+    }
+  },
   "ken_burns": {
+    "video_effect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.InOutFadeEffect, YukkuriMovieMaker",
+      "Name": "InOutFade"
+    }
+  },
+  "zoom_in": {
+    "video_effect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.InOutFadeEffect, YukkuriMovieMaker",
+      "Name": "InOutFade"
+    }
+  },
+  "pan_left": {
     "video_effect": {
       "$type": "YukkuriMovieMaker.Project.Effects.InOutFadeEffect, YukkuriMovieMaker",
       "Name": "InOutFade"

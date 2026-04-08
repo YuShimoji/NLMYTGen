@@ -1,0 +1,14 @@
+{
+  "none": {
+    "VoiceFadeIn": 0.0,
+    "VoiceFadeOut": 0.0,
+    "JimakuFadeIn": 0.0,
+    "JimakuFadeOut": 0.0
+  },
+  "fade": {
+    "VoiceFadeIn": 0.3,
+    "VoiceFadeOut": 0.3,
+    "JimakuFadeIn": 0.3,
+    "JimakuFadeOut": 0.3
+  }
+}
