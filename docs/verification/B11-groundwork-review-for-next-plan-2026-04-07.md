@@ -95,6 +95,7 @@ B-11 の既存記録を「次のプラン設計でそのまま判断材料に使
 - `docs/workflow-proof-template.md`
 - `docs/B11-manual-checkpoints.md`
 - 実行パック: `docs/verification/B11-pre-plan-execution-pack-2026-04-07.md`
+- オペレータハンズオン＋プラン下準備: `docs/verification/B11-operator-hands-on-and-recommended-plan-prep.md`
 - `docs/verification/B11-workflow-proof-ai-monitoring-labor.md`
 - `docs/verification/B11-workflow-proof-plan-synthesis-2026-04.md`
 - `docs/verification/B11-workflow-proof-sample-example-dialogue.md`

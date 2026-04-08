@@ -9,6 +9,7 @@
 
 ## 中断から再開（いまの位置）
 
+- **オペレータ向けの全文ハンズオン**（YMM4 手順〜4 区分の数え方〜プラン下準備）: [B11-operator-hands-on-and-recommended-plan-prep.md](B11-operator-hands-on-and-recommended-plan-prep.md)
 - **済み**: B-11 下地レビューと本パックは `feat/phase2-motion-segmentation` にコミット済み（`1df3028` 付近）。
 - **未完（ここから）**: 既存の進行中 proof で **セクション 2 だけ未記入**。
   - 正本: [`B11-workflow-proof-ai-monitoring-labor.md`](B11-workflow-proof-ai-monitoring-labor.md)
