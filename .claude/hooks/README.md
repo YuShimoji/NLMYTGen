@@ -9,5 +9,5 @@
 
 ## Scope
 Hook は「悪い挙動を通さない」ための最低限の装置。
-低価値な作業選択そのものまでは完全には防げないため、`../CLAUDE.md` の
-block-start checklist とセットで運用する。
+低価値な作業選択そのものまでは完全には防げないため、[../../docs/REPO_LOCAL_RULES.md](../../docs/REPO_LOCAL_RULES.md) の
+block-start checklist とセットで運用する（`../CLAUDE.md` は入口ポインタ）。

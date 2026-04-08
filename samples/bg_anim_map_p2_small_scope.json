@@ -1,0 +1,8 @@
+{
+  "ken_burns": {
+    "video_effect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.InOutFadeEffect, YukkuriMovieMaker",
+      "Name": "InOutFade"
+    }
+  }
+}

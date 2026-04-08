@@ -5,10 +5,11 @@ Audience: Claude Code, Codex, and any adapter that reads project-local AI rules.
 
 ## Purpose
 This ruleset exists to keep a single vendor-neutral source of truth for AI-assisted development.
-Adapters such as `.claude/CLAUDE.md` and `AGENTS.md` must stay thin and defer here.
+Adapters such as `AGENTS.md` and `.claude/CLAUDE.md` (pointer) must stay thin. Repo-local operational rules (Hard Rules, read order, checklists) are canonical in `docs/REPO_LOCAL_RULES.md`. Vendor-neutral rules defer to `docs/ai/*.md` (this file set).
 
 ## Source-of-truth policy
-- The canonical rules live in `docs/ai/*.md`.
+- Vendor-neutral canonical rules live in `docs/ai/*.md`.
+- Repo-local operational enforcement (Hard Rules, block-start checklist, read order for agents) lives in `docs/REPO_LOCAL_RULES.md`.
 - Adapters, prompts, hooks, and helper agents are subordinate.
 - Project-local canonical docs (`INVARIANTS`, `USER_REQUEST_LEDGER`, `OPERATOR_WORKFLOW`, `INTERACTION_NOTES`) are factual project memory, not optional decoration.
 - If a rule conflicts with project-local canonical docs, first verify whether the docs reflect newer explicit user instruction.

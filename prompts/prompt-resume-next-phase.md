@@ -6,7 +6,7 @@
 ## 最初にやること
 
 1. `AGENTS.md`
-2. `.claude/CLAUDE.md`
+2. `docs/REPO_LOCAL_RULES.md`（正本。`.claude/CLAUDE.md` は入口ポインタ）
 3. `docs/ai/*.md`
 4. `docs/INVARIANTS.md` / `docs/USER_REQUEST_LEDGER.md` / `docs/OPERATOR_WORKFLOW.md` / `docs/INTERACTION_NOTES.md`
 5. `docs/runtime-state.md` / `docs/project-context.md` / `docs/FEATURE_REGISTRY.md` / `docs/AUTOMATION_BOUNDARY.md`

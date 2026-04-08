@@ -6,7 +6,7 @@
 ## 最初に必ず読む順序
 
 1. `AGENTS.md`
-2. `.claude/CLAUDE.md`
+2. `docs/REPO_LOCAL_RULES.md`（正本。`.claude/CLAUDE.md` は入口ポインタ）
 3. `docs/ai/CORE_RULESET.md`
 4. `docs/ai/DECISION_GATES.md`
 5. `docs/ai/STATUS_AND_HANDOFF.md`

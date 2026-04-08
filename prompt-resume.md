@@ -6,7 +6,7 @@
 ## Read Order
 
 1. `AGENTS.md`
-2. `.claude/CLAUDE.md`
+2. `docs/REPO_LOCAL_RULES.md`（運用ルール正本。Claude Code が `.claude/CLAUDE.md` だけ読んだ場合はそこから辿る）
 3. `docs/ai/CORE_RULESET.md`
 4. `docs/ai/DECISION_GATES.md`
 5. `docs/ai/STATUS_AND_HANDOFF.md`

@@ -6,8 +6,7 @@
 
 ## 0. 全体の進め方
 
-コード側の G-15〜G-18 は **実装済み**。承認記録・履歴は [FUTURE_DEVELOPMENT_ROADMAP.md](FUTURE_DEVELOPMENT_ROADMAP.md) を参照。今後の新規スライスは FEATURE_REGISTRY で管理する。
-
+コード側の G-15〜G-18 は **実装済み**。承認記録・履歴は [FUTURE_DEVELOPMENT_ROADMAP.md](FUTURE_DEVELOPMENT_ROADMAP.md) を参照。今後の新規スライスは FEATURE_REGISTRY で管理する。`docs/verification/` 配下の proof・提案メモの読み方と **仕様の正本チェーン**は [verification/README.md](verification/README.md) を参照。
 
 | トラック  | 内容                                               | いつやるか                 |
 | ----- | ------------------------------------------------ | --------------------- |

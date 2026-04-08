@@ -4,7 +4,7 @@ Status: canonical
 
 ## Recommended read order on resume / continue / refresh
 
-**注:** 以下は **resume / continue / refresh** 向け（`docs/ai` から入るサブセット）。**新規の再アンカリング・境界ルールの確認**は [AGENTS.md](../../AGENTS.md) の手順全体（`.claude/CLAUDE.md` を含む）を正とする。関係の整理は AGENTS の「Read order の関係（正本）」を参照。
+**注:** 以下は **resume / continue / refresh** 向け（`docs/ai` から入るサブセット）。**新規の再アンカリング・境界ルールの確認**は [AGENTS.md](../../AGENTS.md) の手順全体（`docs/REPO_LOCAL_RULES.md` を含む）を正とする。関係の整理は AGENTS の「Read order の関係（正本）」を参照。
 
 1. `docs/ai/CORE_RULESET.md`
 2. `docs/ai/DECISION_GATES.md`

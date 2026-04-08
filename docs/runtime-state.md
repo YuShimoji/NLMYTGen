@@ -6,10 +6,10 @@
 - project: NLMYTGen
 - lane: 方向転換中 (実制作bottleneck直接軽減へ移行)
 - slice: G-15〜G-18 実装完了（Micro `bg` / 複数 `overlay` / timeline アダプタ / **SE `AudioItem` 挿入**）。Electron GUI: CSV 変換時に **診断 JSON 同梱保存**可（[gui-llm-setup-guide.md](gui-llm-setup-guide.md)）。正本 [G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)。従来: 視覚三スタイル [VISUAL_STYLE_PRESETS.md](VISUAL_STYLE_PRESETS.md)、P2A [P2A-motion-branch-operator-decision.md](verification/P2A-motion-branch-operator-decision.md)、P2C [P2C-se-audioitem-boundary.md](verification/P2C-se-audioitem-boundary.md)（履歴）
-- next_action: 下記 **「次以降の推奨プラン (2026-04-08)」** を正本とする（要約: P0 Phase 1 本番 1 本 → P1 H-01 運用 → P2 演出実戦 / P3 サムネ。motion ブランチは Parking）
+- next_action: B-11（AI監視）途中確認で **Gate B（運用側へ移行）** を仮確定。改行は Pass / 辞書 0 とし、P2 背景アニメ演出の小規模適用（1〜2セクション）を先に回す（P1/P2/P3/Parking の順は維持）。
 - recommended_frontier_order: 台本品質改善 → 演出配置自動化拡張 → 視覚効果実現（既定。変更可）
 - 再現ルール: 異種サンプル 1 本で打ち切り済み。以後は新しい failure が出たときだけ追加検証
-- operator/agent ガード: `.claude/CLAUDE.md` + `.claude/hooks/guardrails.py` で repo 外逸脱 / broad question 停止 / repeated visual proof を常設抑止
+- operator/agent ガード: [REPO_LOCAL_RULES.md](REPO_LOCAL_RULES.md)（正本）+ `.claude/hooks/guardrails.py` で repo 外逸脱 / broad question 停止 / repeated visual proof を常設抑止（`.claude/CLAUDE.md` は入口ポインタ）
 - 案件モード: CLI artifact
 
 ## 次以降の推奨プラン (2026-04-08 設定・正本)
@@ -18,7 +18,7 @@
 
 | 優先 | コード | 内容 | 完了の目安 |
 |------|--------|------|------------|
-| **P0** | — | **Phase 1 本番 1 本**: 新台本で `diagnose-script`（CLI または **GUI CSV タブの診断 JSON 同梱**）→ [S1-script-refinement-prompt.md](S1-script-refinement-prompt.md)（C-09）→ `build-csv` → YMM4 読込〜。所要時間・残修正区分・効果を [P01-phase1-operator-e2e-proof.md](verification/P01-phase1-operator-e2e-proof.md) に 1 行以上追記 | **最優先・今期の主目標** |
+| **P0** | — | **Phase 1 本番 1 本**: 新台本で `diagnose-script`（CLI または **GUI CSV タブの診断 JSON 同梱**）→ [S1-script-refinement-prompt.md](S1-script-refinement-prompt.md)（C-09）→ `build-csv` → YMM4 読込〜。所要時間・残修正区分・効果を [P01-phase1-operator-e2e-proof.md](verification/P01-phase1-operator-e2e-proof.md) に 1 行以上追記。**B-11 途中確認（改行 Pass / 辞書 0）を踏まえ、S-5 は監視継続しつつ P2 の背景演出試行を先に回す** | **最優先・今期の主目標** |
 | **P1** | H-01 `approved` | **Packaging brief 運用**: [PACKAGING_ORCHESTRATOR_SPEC.md](PACKAGING_ORCHESTRATOR_SPEC.md) に沿った brief を Custom GPT に常設し、1 本で title / thumbnail / script の drift が減るか観測（コード変更なしで可） | P0 と並行可・低負荷 |
 | **P2** | done 機能の実戦投入 | **演出パイプの実使用**: 本編で `overlay` / `se`（`--se-map`）/ `apply-production` が効くなら registry を整えて実戦投入。non-fade / template-backed `transition` は **新 ymmp sample が入ったときだけ** `measure-timeline-routes` で再測定 | 制作物が生まれたタイミング |
 | **P3** | — | **視覚・公開周辺**: [THUMBNAIL_ONE_SHEET_WORKFLOW.md](THUMBNAIL_ONE_SHEET_WORKFLOW.md) でサムネ 1 本を通す。茶番・図解アニメはツール選定後 | P0 の後でも可 |

@@ -44,5 +44,5 @@
 - 外部ツール (YMovieHelper 等) を「主軸」として採用する提案には、運用依存軸 (保守性、メンテナンス状況) の評価を必須とする。サービス終了済み・更新停止ツールへの依存設計は避ける
 
 ## 常設ガード (2026-04-05)
-- `.claude/CLAUDE.md` に block-start checklist を置き、毎ブロックの判断を強制する
+- `docs/REPO_LOCAL_RULES.md` に block-start checklist を置き（正本）、毎ブロックの判断を強制する（`.claude/CLAUDE.md` は入口）
 - `.claude/hooks/guardrails.py` で repo 外 project / memory / docs 参照、broad question による停止、反復 visual proof 要求を reject する

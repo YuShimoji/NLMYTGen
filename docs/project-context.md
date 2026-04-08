@@ -158,6 +158,8 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 
 | 日付 | 決定事項 | 選択肢 | 決定理由 |
 |------|----------|--------|----------|
+| 2026-04-08 | B-11 を最小クローズ（半分確認時点）し、改行 Pass / 辞書 0 をもって Gate B（運用側移行）を仮確定。P2 背景アニメ小規模適用を先行 | Gate A 維持 / Gate B 仮確定 / B-11 完全完了待ち | ループ停止を避けて最短で演出実戦へ入るため。`test_verify_4_bg.ymmp` で route は profile contract pass、`p2_bg_anim_small_scope.ir.json` で `BG anim writes: 2` を確認 |
+| 2026-04-08 | B-11 AI監視 proof の取込後記録を集約し、Gate A（改行系支配）を確定。`runtime-state.md` の `next_action` / P0 説明を Gate 根拠付きへ更新 | 保留継続 / Gate 判定を先に固定 | 次プランを感覚で動かさず、4 区分実測（辞書 0 / 手動改行 5 / 再分割 10 / タイミング 0）で優先順位を固定するため |
 | 2026-04-08 | 次以降の推奨プランを `runtime-state.md` に正本化（P0 Phase1 本番 1 本・P1 H-01 運用・P2 演出実戦・P3 サムネ・Parking motion ブランチ）。GUI CSV 同梱診断 JSON を Phase 1 導線に明記 | 暗黙の優先 / 文書固定 | 実制作 bottleneck 軽減レーンを再アンカーし、未承認実装を増やさない |
 | 2026-04-07 | G-18 SE `AudioItem` 挿入を実装（`samples/AudioItem.ymmp` readback、`_apply_se_items`、テンプレート deepcopy または最小骨格）。`SE_WRITE_ROUTE_UNSUPPORTED` を廃止 | ゲート維持 / 実装 | サンプルと骨格で write route を確定し、G-13 の `se` を mechanical scope まで拡張 |
 | 2026-04-06 | G-15〜G-17 を実装（Micro `bg` 発話スパン / `overlay` 配列 / `--timeline-profile` + motion・transition・bg_anim マップ）。G-18 は AudioItem ymmp サンプル入手まで保留（verification に明記） | 一括 / ゲート付き | P2C に沿い SE write は corpus 確定後。G-12 `timeline_route_contract.json` と契約検証を先に置く |
