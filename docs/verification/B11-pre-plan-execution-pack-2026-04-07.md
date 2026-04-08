@@ -7,6 +7,17 @@
 
 ---
 
+## 中断から再開（いまの位置）
+
+- **済み**: B-11 下地レビューと本パックは `feat/phase2-motion-segmentation` にコミット済み（`1df3028` 付近）。
+- **未完（ここから）**: 既存の進行中 proof で **セクション 2 だけ未記入**。
+  - 正本: [`B11-workflow-proof-ai-monitoring-labor.md`](B11-workflow-proof-ai-monitoring-labor.md)
+  - 取込用 CSV: `samples/AI監視が追い詰める生身の労働_B11_ymm4.csv`（リポジトリ同梱）
+  - 手順: 同ファイル内「YMM4 側の次ステップ」→ [B11-manual-checkpoints.md](../B11-manual-checkpoints.md) に沿って通し確認し、**2.1〜2.3 を実数で埋める**。
+- **別ルート**: 新台本で実案件 1 本を取る場合は下記 §0 から新規 `B11-workflow-proof-<案件>.md` を切る（AI 監視を完了させなくても可だが、最短は上記の §2 埋め）。
+
+---
+
 ## 0. 作成物（先に決める）
 
 - 記録ファイル: `docs/verification/B11-workflow-proof-<案件名>-<日付>.md`
