@@ -47,4 +47,4 @@
 
 ## feat/phase2-motion-segmentation
 
-**完了扱い（開発プラン 2026-04）**: ブランチ上で master を取り込み、G-17 / Phase2 / micro bg / G-14 キーフレームを統合済み。残作業は **master への PR マージ**と運用実証（workflow proof）。P2A 本文は歴史的判断として保持。
+**完了（2026-04-09）**: PR [#1](https://github.com/YuShimoji/NLMYTGen/pull/1) により **`master` へマージ済み**。以降のコード線は **`master` が正**。運用実証（workflow proof）は継続。P2A 本文は歴史的判断として保持。

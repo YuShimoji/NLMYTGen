@@ -8,7 +8,7 @@
 | 2 | [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) | B-11 / P01 / プロンプト / P2・S6 の受け入れ・差し戻し |
 | 3 | [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) | Gate 取り込み後の次期実装ドラフト（承認前） |
 | 4 | [CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) | 承認済みスライス表・実装チェックリスト |
-| 5 | [CORE-DEV-MASTER-PR-RUNBOOK.md](CORE-DEV-MASTER-PR-RUNBOOK.md) | `feat/phase2-motion-segmentation` → `master` の PR |
+| 5 | [CORE-DEV-MASTER-PR-RUNBOOK.md](CORE-DEV-MASTER-PR-RUNBOOK.md) | 大型統合 PR の手順（**PR #1 はマージ済み**。今後は `master` 起点のトピックブランチ用） |
 
 関連: [B11-pre-plan-execution-pack-2026-04-07.md](B11-pre-plan-execution-pack-2026-04-07.md)、[runtime-state.md](../runtime-state.md)。
 
