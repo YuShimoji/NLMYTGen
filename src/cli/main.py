@@ -12,6 +12,7 @@ Usage:
     python -m src.cli.main fetch-topics <URL>... [-n 20] [--after YYYY-MM-DD] [--format text|json]
     python -m src.cli.main validate-ir <ir.json> [--palette ...] [--format text|json]
     python -m src.cli.main emit-packaging-brief-template [-o path] [--format markdown|json]
+    python -m src.cli.main score-thumbnail-s8 --scores '{"single_claim":2,...}' [--payload ...] [--format text|json]
 """
 
 from __future__ import annotations
@@ -49,6 +50,7 @@ from src.pipeline.script_diagnostics import (
     diagnostics_to_jsonable,
     has_error as diagnostics_has_error,
 )
+from src.pipeline.thumbnail_s8_score import score_thumbnail_s8
 
 
 def _parse_kv_pairs(lines: list[str]) -> dict[str, str]:
@@ -927,6 +929,30 @@ def main(argv: list[str] | None = None) -> int:
                             help="Category scores JSON: {\"scene_variety\": 2, ...}")
     p_score_vd.add_argument("--format", choices=["json", "text"], default="text")
 
+    # score-thumbnail-s8 (Lane E probe)
+    p_score_thumb = subparsers.add_parser(
+        "score-thumbnail-s8",
+        help="Lane E probe: score S-8 thumbnail quality from manual category scores",
+    )
+    p_score_thumb.add_argument(
+        "--scores",
+        required=True,
+        help=(
+            "Category scores JSON: "
+            "{\"single_claim\": 0-3, \"specificity\": 0-3, "
+            "\"title_alignment\": 0-3, \"mobile_readability\": 0-3}"
+        ),
+    )
+    p_score_thumb.add_argument(
+        "--payload",
+        help="Optional metadata JSON: {\"run_id\":\"...\",\"video_slug\":\"...\",\"output_file\":\"...\"}",
+    )
+    p_score_thumb.add_argument(
+        "--payload-file",
+        help="Optional metadata JSON file path (same schema as --payload)",
+    )
+    p_score_thumb.add_argument("--format", choices=["json", "text"], default="text")
+
     # emit-packaging-brief-template (H-01)
     p_emit_brief = subparsers.add_parser(
         "emit-packaging-brief-template",
@@ -1019,6 +1045,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_score_evidence(args)
         elif args.command == "score-visual-density":
             return _cmd_score_visual_density(args)
+        elif args.command == "score-thumbnail-s8":
+            return _cmd_score_thumbnail_s8(args)
         elif args.command == "emit-packaging-brief-template":
             return _cmd_emit_packaging_brief_template(args)
         elif args.command == "diagnose-script":
@@ -2033,6 +2061,10 @@ def _cmd_emit_packaging_brief_template(args: argparse.Namespace) -> int:
     from src.pipeline.packaging_brief_template import emit_json_text, emit_markdown
 
     fmt = getattr(args, "format", "markdown")
+    if fmt not in {"markdown", "json"}:
+        raise ValueError(f"unsupported H-01 template format: {fmt}")
+
+    # Guard: schema drift やテンプレ欠落はここで失敗させる。
     text = emit_json_text() if fmt == "json" else emit_markdown()
     out = getattr(args, "output", None)
     if out:
@@ -2099,6 +2131,38 @@ def _cmd_score_visual_density(args: argparse.Namespace) -> int:
             for r in result.recommended_repairs:
                 print(f"  - {r}")
     return 0
+
+
+def _cmd_score_thumbnail_s8(args: argparse.Namespace) -> int:
+    """Lane E: S-8 thumbnail quality score."""
+    payload: dict = {}
+    if getattr(args, "payload", None):
+        payload = json.loads(args.payload)
+    if getattr(args, "payload_file", None):
+        payload = json.loads(Path(args.payload_file).read_text(encoding="utf-8"))
+
+    category_scores = json.loads(args.scores)
+    result = score_thumbnail_s8(payload, category_scores)
+
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(result.to_dict(), ensure_ascii=False, indent=2))
+    else:
+        print(f"Thumbnail S-8 Score: {result.total_score}/100 ({result.band})")
+        print("\nCategory scores:")
+        for key, score in result.category_scores.items():
+            print(f"  {key}: {score}/3")
+        if result.warnings:
+            print("\nWarnings:")
+            for warning in result.warnings:
+                print(f"  {warning}")
+        if result.recommended_repairs:
+            print("\nRecommended repairs:")
+            for repair in result.recommended_repairs:
+                print(f"  - {repair}")
+
+    # PASS 条件: pass band かつ warning なし
+    return 0 if (result.band == "pass" and not result.warnings) else 1
 
 
 def cli_entry() -> None:

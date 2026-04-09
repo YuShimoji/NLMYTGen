@@ -58,7 +58,7 @@
 ---
 
 ## CURRENT LANE
-- 主レーン: Advance（実制作 bottleneck 直接軽減）／**開発セッション上の優先は [runtime-state.md](runtime-state.md) のコア開発幹**（回帰・文書整合・承認済み修正、未承認 FEATURE 禁止）
+- 主レーン: Advance（実制作 bottleneck 直接軽減）／**開発セッション上の優先は [runtime-state.md](runtime-state.md)** — 2026-04-10 時点は **プラン設計入口**（次期コア実装プラン起票の直前まで整備済み）
 - 今このレーンを優先する理由: face・timeline・packaging 採点の mechanical 束は揃った。残る重さは台本→手動配置→視覚効果の人間工程のため、レーンを実制作側へ移す。レーン B 文書準備は 2026-04-09 完了扱い（DECISION LOG 参照）
 
 ---
@@ -158,6 +158,8 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 
 | 日付 | 決定事項 | 選択肢 | 決定理由 |
 |------|----------|--------|----------|
+| 2026-04-10 | 並行レーン証跡・H-05（`score-thumbnail-s8`）・視覚品質パケット文書を master に統合コミットし、**次期コア実装はプラン設計・起票から再開**するゲートを `runtime-state.md` の `next_action` で固定 | 実装を続行 / プラン入口で一旦止める | 作業ツリーを緑に戻し、次セッションで意図的に [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](verification/CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) から設計を始められるようにするため |
+| 2026-04-09 | レーンB実施計画（Custom GPT / 2体分離）を実行し、運用固定を記録: [LANE-B-execution-record-2026-04-09.md](verification/LANE-B-execution-record-2026-04-09.md)。B-4 は「brief を会話ごとに先貼り」、B-5 は「H-02厳密時はS8、素案時はv4 Part 4」に固定 | 方針未固定のまま運用 / 連携方式を固定 | Instructions 側のドリフトを避け、案件ごとに迷わず切替できる最小運用を先に確立するため |
 | 2026-04-09 | レーン E（サムネ S-8）の **repo 準備サイクルを完了・運用クローズ** とする: [LANE-E-S8-prep-2026-04-09.md](verification/LANE-E-S8-prep-2026-04-09.md) 運用クローズ節、P03 `lane_e_prep_2026-04-09_a`。公開直前の実 1 枚は P3・runbook トラック E で並行。**本開発幹へ復帰**（`runtime-state.md`） | 準備を開発ブロックに残す / クローズしてコアへ | 正本・チェックリスト・既定案件入力は repo 固定済み。YMM4 実書き出しは公開タイミングのオペレーションのためコア開発をブロックしない |
 | 2026-04-09 | レーン B（GUI LLM 正本同期）の **repo 側準備を完了** とする: [LANE-B-gui-llm-sync-checklist.md](verification/LANE-B-gui-llm-sync-checklist.md)、[samples/packaging_brief.template.md](../samples/packaging_brief.template.md)、[gui-llm-setup-guide.md](gui-llm-setup-guide.md) の v4 正本優先化、runbook B-1/B-4/B-5 の整合。以降の主作業は **本開発幹**（`runtime-state.md` のコア・P0・B-11 ゲート等）。Custom GPT 等への実貼り付けはオペレータがチェックリストで実施 | 文書のみ完了扱い / 貼り付け完了までブロック | 正本と手順は repo に固定済み。GUI 同期は人間作業のため開発レーンをブロックしない |
 | 2026-04-08 | P2 次サイクルで map 警告解消（`bg_anim_map` + `transition_map`）後に `test_verify_4_bg.ymmp` へ 4 セクション拡張適用を実施。`BG anim writes: 7` を確認 | 警告放置で拡張 / 先に警告ゼロ化 / bg_anim いったん停止 | 原因切り分けを明確化したうえで拡張でき、短サイクルの再現性を高められるため |
@@ -307,14 +309,14 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ---
 
-## HANDOFF SNAPSHOT (2026-04-08 更新)
+## HANDOFF SNAPSHOT (2026-04-10 更新)
 
-- Shared Focus: 実制作 bottleneck 軽減レーン継続。G-18・GUI CSV+診断 JSON 同梱まで完了。**正本は `docs/runtime-state.md` の「次以降の推奨プラン (2026-04-08)」** — P0 は Phase 1 を新台本 1 本で完走し [P01](verification/P01-phase1-operator-e2e-proof.md) へ記録。packaging は H-02/H-03/H-04 done、H-01 は approved（運用載せが P1）
-- Safe Next Frontier Packet: **P0** Phase 1 本番 1 本（診断→C-09→CSV→YMM4→P01） / **P1** H-01 brief 運用 / **P2** 演出実戦（registry・`--se-map` 等） / **P3** サムネ 1 本 / **Parking** motion ブランチは P2A どおり一括マージしない
+- Shared Focus: **次セッションはプラン設計から入る**（`docs/runtime-state.md` の `next_action`）。統合コミット済み: H-05 `score-thumbnail-s8`、並行 Prompt パック・[VISUAL-QUALITY-PACKETS.md](verification/VISUAL-QUALITY-PACKETS.md)、レーン B/C/E 証跡・lane サンプル。実装再開は [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](verification/CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) 起票・確定後。P0 / runbook はオペレータ並行で継続
+- Safe Next Frontier Packet: **直近（開発）** 次期コアプラン設計 → 承認後スライス実装。**運用**: **P0** Phase 1 本番 1 本（診断→C-09→CSV→YMM4→[P01](verification/P01-phase1-operator-e2e-proof.md)） / **P1** H-01 brief / **P2** 演出実戦 / **P3** サムネ 1 本 / **Parking** P2A どおり一括マージしない
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: 推奨プラン正本化 (2026-04-08) + GUI CSV 同梱診断 JSON。履歴コミット参照は git log
-- Evidence: Production E2E 実証済み + `uv run pytest`: **266 passed** (2026-04-07)。B-18/C-09・G-14 contract・G-18 SE・P 系 verification。slot/face/timeline regression 維持
+- Last Change Relation: 2026-04-10 統合コミット（H-05・verification 一式・`next_action` をプラン入口へ）。履歴は git log
+- Evidence: Production E2E 実証済み + `NLMYTGEN_PYTEST_FULL=1 uv run pytest`: **313 passed** (2026-04-10)
 - 案件モード: CLI artifact
 - 現在の主レーン: 方向転換中 (実制作bottleneck直接軽減へ移行)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近
@@ -333,6 +335,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - trusted: G-13/G-18 `se` (`SE_*` validation + G-18 `AudioItem` 挿入、`PatchResult.se_plans` = 挿入数)
   - trusted: H-02 done (dry proof + strict GUI rerun proof pass 2026-04-06)
   - trusted: H-03/H-04 done — `score-visual-density` / `score-evidence` CLI + tests (`test_visual_density_score.py`, `test_evidence_score.py`)
+  - trusted: H-05 done — `score-thumbnail-s8`（手動採点 JSON の機械集約、`thumbnail_s8_score.py`、`test_thumbnail_s8_score.py`）
   - trusted: B-18 `diagnose-script` + C-09 `docs/S1-script-refinement-prompt.md`（`test_script_diagnostics.py`）
   - resolved (G-14): `production.ymmp` はタイムラインに ImageItem 無しのため bg_anim 未観測。`production_ai_monitoring_lane` で motion/transition のみ required とし contract pass。背景アニメ patch は ImageItem 含有 ymmp で別パケット
   - needs re-check: non-fade / template-backed `transition` の ymmp route は repo 内 sample 不在のため未固定。新しい sample が入ったときだけ再測定する

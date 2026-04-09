@@ -22,3 +22,6 @@ gui/project-settings.json
 
 # Lane C: オペレータが絶対パスを書いたレジストリ JSON（repo に載せない）
 _local/
+
+# デバッグ用ログ（セッション一時物）
+debug-*.log

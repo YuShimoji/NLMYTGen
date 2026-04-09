@@ -7,7 +7,7 @@
 - git: **既定の開発ブランチは `master`**（2026-04-09: PR [#1](https://github.com/YuShimoji/NLMYTGen/pull/1) で `feat/phase2-motion-segmentation` をマージ済み。新規作業は `master` からブランチを切る）
 - lane: **コア開発幹**（回帰・ドキュメント整合・承認済みバグ修正）。**主軸は本開発** — エージェント作業は未承認 FEATURE を増やさず上記に集中。オペレータ並行: P0（Phase 1 本番）/ P2 等は runbook どおり。**レーン A（Phase 1）の repo 準備はオペレータ側でクローズ**（[OPERATOR_LANE_A_ENV.md](verification/OPERATOR_LANE_A_ENV.md)、[LANE_A_PREP_CHECKLIST.md](verification/LANE_A_PREP_CHECKLIST.md)）。**レーン D（H-01 brief）オペレータ完了・当面クローズ**（[H01-lane-d-prep-2026-04-09.md](verification/H01-lane-d-prep-2026-04-09.md) §6、2026-04-09）
 - slice: G-15〜G-18 実装完了（Micro `bg` / 複数 `overlay` / timeline アダプタ / **SE `AudioItem` 挿入**）。Electron GUI: CSV 変換時に **診断 JSON 同梱保存**可（[gui-llm-setup-guide.md](gui-llm-setup-guide.md)）。正本 [G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)。従来: 視覚三スタイル [VISUAL_STYLE_PRESETS.md](VISUAL_STYLE_PRESETS.md)、P2A [P2A-motion-branch-operator-decision.md](verification/P2A-motion-branch-operator-decision.md)、P2C [P2C-se-audioitem-boundary.md](verification/P2C-se-audioitem-boundary.md)（履歴）
-- next_action: **本開発幹に復帰**（回帰 `NLMYTGEN_PYTEST_FULL=1 uv run pytest`、承認済みバグ修正のみ、未承認 FEATURE は増やさない）。**実行フェーズ（2026-04-10 更新）**: P0 の次サイクル実行（CLI）は [P01-phase1-operator-e2e-proof.md](verification/P01-phase1-operator-e2e-proof.md) の `p0_nextcycle_amazon_2026-04-10_a` を参照。B-11 は [B11-workflow-proof-ai-monitoring-labor.md](verification/B11-workflow-proof-ai-monitoring-labor.md) で体裁充足（Gate B・§3）。**P2 判定**: YMM4 見え方記録 + [S6-background-animation-next-step-plan-prep.md](S6-background-animation-next-step-plan-prep.md) §2（5条件）が未充足のため **OPEN 継続**（[CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](verification/CORE-DEV-OPERATOR-INPUT-CHECKLIST.md)）。**並行レーン・コア幹**: [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md)。**A〜E 移譲後のコア開発手順（受け入れ・ドラフト・承認後スライス・master PR）**: [CORE-DEV-POST-DELEGATION-INDEX.md](verification/CORE-DEV-POST-DELEGATION-INDEX.md)。**レーン B（GUI LLM 正本同期）の repo 準備はクローズ**（[LANE-B-gui-llm-sync-checklist.md](verification/LANE-B-gui-llm-sync-checklist.md)、[gui-llm-setup-guide.md](gui-llm-setup-guide.md)。Instructions 実貼り付けはオペレータが並行実施可）。**P2**（背景アニメ短サイクル）— map 警告（`BG_ANIM_MAP_MISS` / `TRANSITION_MAP_MISS`）は最小 map で解消済み、`test_verify_4_bg.ymmp` で 4 セクション拡張（`BG anim writes: 7`）まで機械確認済み。**レーン C（視覚三スタイル）準備はクローズ**（[LANE-C-operator-prep-2026-04-09.md](verification/LANE-C-operator-prep-2026-04-09.md)）。**レーン E（サムネ S-8）repo 準備はクローズ**（[LANE-E-S8-prep-2026-04-09.md](verification/LANE-E-S8-prep-2026-04-09.md) 運用クローズ節。公開直前の実 1 枚は P3・runbook トラック E で並行可）。**C と P2 は YMM4 時間分割**（同時フル非推奨）。P3・Parking は下表。新規案件の B-11 は [B11-pre-plan-execution-pack-2026-04-07.md](verification/B11-pre-plan-execution-pack-2026-04-07.md) から切る。
+- next_action: **プラン設計フェーズの入口**（本コミットで作業ツリーを緑・正本同期まで固定済み）。次セッション最初は [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](verification/CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) と本ファイル「次以降の推奨プラン」を読み、**次期コア実装プランを起票・確定**してから承認済みスライス実装に着手する。参照: [CORE-DEV-POST-DELEGATION-INDEX.md](verification/CORE-DEV-POST-DELEGATION-INDEX.md)、並行 Prompt パック [CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md)、視覚検証 [VISUAL-QUALITY-PACKETS.md](verification/VISUAL-QUALITY-PACKETS.md)。P0 継続は [P01-phase1-operator-e2e-proof.md](verification/P01-phase1-operator-e2e-proof.md) の `p0_nextcycle_amazon_2026-04-10_a` を基準に運用。**P2 判定**: [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](verification/CORE-DEV-OPERATOR-INPUT-CHECKLIST.md)。未承認 FEATURE は増やさない。
 - recommended_frontier_order: 台本品質改善 → 演出配置自動化拡張 → 視覚効果実現（既定。変更可）
 - 再現ルール: 異種サンプル 1 本で打ち切り済み。以後は新しい failure が出たときだけ追加検証
 - operator/agent ガード: [REPO_LOCAL_RULES.md](REPO_LOCAL_RULES.md)（正本）+ `.claude/hooks/guardrails.py` で repo 外逸脱 / broad question 停止 / repeated visual proof を常設抑止（`.claude/CLAUDE.md` は入口ポインタ）
@@ -55,7 +55,7 @@
 ## 主成果物
 - active_artifact: NLM transcript → YMM4 CSV → ゆっくり解説動画制作ワークフロー
 - artifact_surface: CLI → CSV → YMM4 台本読込 → 演出設定 → レンダリング → サムネイル → 投稿
-- last_change_relation: FEATURE_REGISTRY G-15〜G-18 done、GUI CSV+診断 JSON 同梱、**次以降推奨プラン (2026-04-09 採用)**・`next_action` を実行フェーズへ更新（B-11 充足・Gate B 反映）、以前 (2026-04-08) 表構造を維持、`patch-ymmp --timeline-profile`、SE `AudioItem`（`_apply_se_items`）、プラン直前レーン整理 [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md)、runbook トラック D/E 見出し整合、**レーン C 準備クローズ**（[LANE-C-operator-prep-2026-04-09.md](verification/LANE-C-operator-prep-2026-04-09.md)）、**レーン E（S-8）repo 準備クローズ・運用クローズ**（[LANE-E-S8-prep-2026-04-09.md](verification/LANE-E-S8-prep-2026-04-09.md)）、**レーン D（H-01）オペレータ完了**（[H01-lane-d-prep-2026-04-09.md](verification/H01-lane-d-prep-2026-04-09.md)）、`runtime-state` を本開発主軸へ再アンカー、**コア移譲後手順一式** [CORE-DEV-POST-DELEGATION-INDEX.md](verification/CORE-DEV-POST-DELEGATION-INDEX.md)、**プラン設計前オペレータ準備一式**（レーン A〜E チェックリスト・H-01・packaging brief テンプレ・PRE-PLAN §2.4 索引、2026-04-09 コミット）、**`feat/phase2-motion-segmentation` → `master` マージ完了**（PR [#1](https://github.com/YuShimoji/NLMYTGen/pull/1)、2026-04-09。開発ベースは `master`）、**並行開発直前の本開発プランを実施**（2026-04-10: フル回帰・受け入れゲート点検・runbook を master 起点へ整合）
+- last_change_relation: 上記に加え **2026-04-10 統合コミット**: H-05 `score-thumbnail-s8`（`thumbnail_s8_score.py` / CLI）、レーン B/C/E 証跡・[VISUAL-QUALITY-PACKETS.md](verification/VISUAL-QUALITY-PACKETS.md)、[CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md)、lane サンプル JSON/CSV、packaging brief テンプレ周りの整合。**`next_action` をプラン設計入口へ戻す**（実装再開は次期プラン確定後）
 
 ## カウンター
 - blocks_since_user_visible_change: 0
@@ -63,16 +63,16 @@
 - blocks_since_visual_audit: 0
 
 ## 量的指標
-- test_file_count: 16
-- test_count: 301
+- test_file_count: 27
+- test_count: 313
 - mock_file_count: 0
 - impl_file_count: 22
 - mock_impl_ratio: 0.00
 - open_todo_count: 0
 
 ## 最終検証
-- last_verification_artifact: `NLMYTGEN_PYTEST_FULL=1 uv run pytest` 全件（subprocess CLI 統合含む）。**master マージ直後**に再実行済み（2026-04-09）。既定の `uv run pytest` はユニット中心（`tests/conftest.py`）
-- last_verification_date: 2026-04-09
+- last_verification_artifact: `NLMYTGEN_PYTEST_FULL=1 uv run pytest` 全件（subprocess CLI 統合含む）313 pass（2026-04-10）。既定の `uv run pytest` はユニット中心（`tests/conftest.py`）
+- last_verification_date: 2026-04-10
 
 ## Evidence（CLI artifact mode）
 - evidence_status: Production E2E 実証済み (2026-04-05)。palette.ymmp → extract-template --labeled → face_map.json (11表情) → Part 1+2IR_row_range.json (28 utt, row-range) → production.ymmp (60 VI) → production_patched.ymmp (face 133 changes) → YMM4 visual proof OK。全編にわたって表情切替を確認
@@ -81,9 +81,9 @@
 - final_artifact_reached: Yes (CSV → YMM4 台本読込 → IR → patch-ymmp → 表情差し替え済み ymmp)
 - blocking_dependency: なし。face は `FACE_UNKNOWN_LABEL` / `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` / `FACE_MAP_MISS` / `IDLE_FACE_MAP_MISS` / `VOICE_NO_TACHIE_FACE` の failure class か、最終 creative judgement NG のときだけ再オープン
 
-## FEATURE_REGISTRY 状態サマリ (2026-04-08 更新)
+## FEATURE_REGISTRY 状態サマリ (2026-04-10 更新)
 
-- done: 42件（上記 + G-15, G-16, G-17, G-18）
+- done: 43件（上記 + G-15〜G-18 + **H-05**）
 - approved: 1件（H-01）
 - proposed: 0件（G-15〜G-17 は done へ）
 - info: 2件（C-01, C-06）

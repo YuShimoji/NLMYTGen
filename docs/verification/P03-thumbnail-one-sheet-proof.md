@@ -173,3 +173,13 @@
 - 判定: prep-pass（S-0／B-5／案件入力の文書化、手順正本の突き合わせ、既存サンプルに対する品質軸の机上照合まで完了）
 - 最小メモ: オペレータは LANE-E チェックリストの未チェック項目（YMM4 実作業・GUI 同期の実施）を公開直前に完了させる。
 
+## Lane E Probe (`lane_e_probe_2026-04-09_a`)
+
+- run_id: `lane_e_probe_2026-04-09_a`
+- 入力契約: `score-thumbnail-s8`（`--scores` + 任意 `--payload`）
+- ファイル（参照アンカー）: `samples/onepass_2026-04-07_c_thumb.png`
+- スコア: `single_claim=2, specificity=2, title_alignment=2, mobile_readability=2`
+- 判定: needs_fix（`total_score=67`, band=`needs_fix`）
+- warning: なし（band 閾値未達のため needs_fix）
+- 最小メモ: 本 run は自動生成ではなく、手動採点の機械記録ルート確認を目的とした Probe。
+

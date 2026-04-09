@@ -144,6 +144,7 @@ G-15〜G-18 はユーザー承認済み（[FUTURE_DEVELOPMENT_ROADMAP.md](FUTURE
 | H-02 | Thumbnail strategy v2 (具体数値優先 + pattern rotation) | done | L2 | C-08 の上位互換候補。`docs/THUMBNAIL_STRATEGY_SPEC.md` v0.1 で specificity-first / banned pattern / rotation policy / output contract を定義済み。dry proof + strict GUI rerun proof (2026-04-06) pass。仕様準拠確認済み (4/5案が preferred_specifics 使用、banned pattern なし、Specificity Ledger・Brief Compliance Check 出力)。コピー品質の実用改善は別課題 |
 | H-03 | Visual density score | done | L2/L3 | `docs/VISUAL_DENSITY_SCORE_SPEC.md` v0.1 準拠。`score-visual-density` CLI（`src/pipeline/visual_density_score.py`）と GUI の品質診断タブで category スコア集計・total・warning/repair を出力。dry proof は `docs/verification/H03-visual-density-ai-monitoring-proof.md`。ymmp readback 併用は将来拡張 |
 | H-04 | Evidence richness score | done | L1/L2 | `docs/EVIDENCE_RICHNESS_SCORE_SPEC.md` v0.1 準拠。`score-evidence` CLI（`src/pipeline/evidence_score.py`）と GUI の品質診断タブ。manual proof は `docs/verification/H04-evidence-richness-ai-monitoring-proof.md`。タイトル / サムネ約束と本文根拠のギャップ診断 |
+| H-05 | S-8 thumbnail probe score（レーンE補助判定） | done | L2 | Automation Probe。`score-thumbnail-s8` で手動採点 JSON を機械集約し、PASS/NEEDS_FIX を返す。画像生成・画像解析は行わない。運用正本: `docs/verification/LANE-E-S8-prep-2026-04-09.md`。**承認範囲（2026-04-09）**: CLI 集約と検証記録のみ（`src/pipeline/thumbnail_s8_score.py` / `tests/test_thumbnail_s8_score.py`）。サムネ生成自動化は含めない。 |
 
 ---
 

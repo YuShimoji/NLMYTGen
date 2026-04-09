@@ -1,6 +1,7 @@
 # 次期実装プラン（ドラフト）— B-11 Gate 取り込み後・承認前
 
 **ステータス**: ドラフト（**ユーザー承認までは実装しない**）。入力: [B11-workflow-proof-ai-monitoring-labor.md](B11-workflow-proof-ai-monitoring-labor.md) §3。受け入れ記録: [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md)。
+**反映ルール**: 本書に反映してよいのは **PASS 判定入力のみ**（NEEDS_FIX は差し戻し後に再審査）。
 
 ---
 
@@ -20,8 +21,8 @@ Gate B の「運用導線・記録」に合わせ、**次の優先**を推奨す
 
 1. **P2 背景演出（ドキュメント＋registry 整備が中心）**  
    - 既存 CLI（`apply-production` / `patch-ymmp`、G-15〜G-17）は `done`。  
-   - コアは **オペレータが [S6-background-animation-next-step-plan-prep.md](../S6-background-animation-next-step-plan-prep.md) §2 の 5 条件を埋めたうえで**、実案件 IR の段階投入を支援する **verification 手順・サンプル JSON** の追補に留める。  
-   - **新規 FEATURE ID を増やす必要が出た場合のみ** §3 の台帳案を発行し、承認後に実装。
+   - [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) の 2026-04-09 再判定で、P2/S6 は「見え方一行（NG）+ §2 の5条件」を満たして PASS 化済み。  
+   - コアは実案件 IR の段階投入を支援する **verification 手順・サンプル JSON** の追補を先行し、実装拡張が必要な場合のみ §3 の台帳案を発行する。
 
 2. **GUI / runbook**  
    - 既存タブ・[OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) の改善は **文言・手順の明確化**に限定（新タブや F-01/F-02 相当は **quarantined のまま**。[FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) F 節の再審査ゲート必須）。
@@ -34,6 +35,7 @@ Gate B の「運用導線・記録」に合わせ、**次の優先**を推奨す
 ## 3. FEATURE_REGISTRY 変更案（承認待ち）
 
 **現時点の提案: 台帳に新規行を追加しない**（ドキュメント・サンプルのみの想定）。
+**境界ルール**: 未承認 FEATURE の実装は禁止。必要時は台帳に `proposed` 行だけ作成し、承認後に `approved` へ昇格してから実装に進む。
 
 承認時にユーザーが「コード変更スライス」を明示した場合の **記入テンプレ**（採用した行だけ残す）:
 
@@ -57,12 +59,16 @@ Gate B の「運用導線・記録」に合わせ、**次の優先**を推奨す
 
 1. ユーザーが本ドラフトの §2〜§3 を **承認または差し替え**。  
 2. 承認後、[CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) に **承認済みスライス**を記入し、PR を分割実装。  
-3. P2 の YMM4 見え方・S6 §2 が揃うまで、**registry を広げるコード変更は起票しない**（チェックリスト OPEN 扱い）。  
-4. P0 は [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) の `p0_nextcycle_amazon_2026-04-10_a` を基準に継続し、YMM4 読込結果はオペレータ追記を待って判定を確定する。
+3. 実装提案は [CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) へ 1 スライスずつ起票し、承認済み範囲でのみ着手する。  
+4. P0 は [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) の `p0_nextcycle_amazon_2026-04-10_a` を基準に継続し、YMM4 読込結果はオペレータ追記を取り込みながら判定を更新する。
+5. 画面演出は [VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md) の A1-A4/B1-B4 を **演出単位パケット**として扱い、PASS パケットのみを本ドラフトへ反映する。
 
 ---
 
 ## 6. 変更履歴
 
+- 2026-04-09: 画面演出を A1-A4/B1-B4 の演出単位パケットで扱うルールを追加。
+- 2026-04-09: PASS 入力のみ反映ルールと未承認 FEATURE 起票境界を明記。
+- 2026-04-09: P2/S6 再判定 PASS（見え方 NG 記録 + §2の5条件充足）を反映。実装起票は承認後スライス方式へ更新。
 - 2026-04-10: P0 次サイクル実行（Amazon・CLI）を次アクションへ反映。P2 は OPEN 条件維持。
 - 2026-04-09: 初版。Gate B 確定版に基づくドラフト。

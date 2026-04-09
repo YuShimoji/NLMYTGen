@@ -1,0 +1,42 @@
+{
+  "run_id": "bg_a3_2026-04-10_visual_styles_dry",
+  "task_id": "A3",
+  "evaluation_subject": {
+    "ir_path": "samples/ir_visual_styles_dry_sample.json",
+    "video_id": "visual_styles_dry_sample",
+    "rationale": "レーンC §5.1 で validate-ir 済みの三スタイル混在 dry IR。明示 bg_anim を含み、台本論点との対応を機械的に記述できる。"
+  },
+  "script_thesis_trace": [
+    {
+      "index": 1,
+      "text": "挿絵コマ1",
+      "section_id": "S1",
+      "section_topic": "挿絵コマ風（skit）",
+      "tone_intent": "コマ割り的・読みやすさ優先",
+      "bg_anim": "none",
+      "intent_match_note": "スキット1コマ目で背景を動かさない選択は、論点（挿絵コマの静止構図）と一致。トーンも落ち着いた説明寄り。"
+    },
+    {
+      "index": 5,
+      "text": "PV風の雰囲気切替",
+      "section_id": "S3",
+      "section_topic": "再現PV風（mood / closing）",
+      "tone_intent": "映画的・雰囲気演出",
+      "bg_anim": "ken_burns",
+      "intent_match_note": "発話が「雰囲気切替」を明示しており、ken_burns はゆっくりした視線誘導で PV 風トーンと整合。セクション default_bg（photo_city）との組み合わせも矛盾しない。"
+    }
+  ],
+  "scores": {
+    "target_quality": 2,
+    "readability": 2,
+    "timing_fit": 2,
+    "stability": 2
+  },
+  "checklist": {
+    "tone_match": true,
+    "topic_match": true,
+    "no_contradicting_visual": true
+  },
+  "result": "pass",
+  "notes": "評価スコープは明示フィールド bg_anim を持つ発話（index 1, 5）を主とする。index 2〜4, 6 は IR 上 bg_anim 未指定のためセクション意図（資料パネル・締め）に対して過剰なカメラワークを課していない（＝論点と衝突する演出指定なし）と判断。本 IR は実制作本番ではなく検証用サンプルのため target_quality は実用レベル(2)に留めた。"
+}

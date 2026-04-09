@@ -113,6 +113,12 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
 3. `apply-production ... --dry-run` → 問題なければ `-o` で書き出し → YMM4 確認。  
 4. 効果記録は [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) または [mass-production-pilot-checklist.md](mass-production-pilot-checklist.md) へ 1 行追記（任意）。
 
+### 演出品質の運用単位（2026-04-09 追加）
+
+- 背景アニメと情報オーバーレイの品質改善は、[VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md) の **A1-A4 / B1-B4** 単位で実施する。
+- 提出は各パケットごとに JSON（スコア + チェックリスト + PASS/NEEDS_FIX）。
+- コアは PASS のみ受け入れる（NEEDS_FIX は差し戻し）。
+
 ---
 
 ## 7. 準備フェーズの完了宣言（コア開発へ戻す）
@@ -120,3 +126,79 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
 - **repo で完結した範囲**: 正本読了の整理、B-3 の正本確認、`validate-ir` / `apply-production` の機械検証、オペレータ向けテンプレと `_local/` 方針。
 - **案件依存で後続**: [VISUAL_STYLE_YMM4_CHECKLIST.md](../VISUAL_STYLE_YMM4_CHECKLIST.md) のチェックボックス（YMM4 テンプレ・PNG 実体）、本番 IR と CSV の row-range 整合。
 - **コア開発幹**（[PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) §1.3）: 未承認 FEATURE を増やさず、回帰・ドキュメント整合・承認済みバグ修正に集中する。
+
+---
+
+## 8. 実行ログ追記（2026-04-09 / レーンC本番運用パック）
+
+### 8.1 `_local` overlay_map 運用
+
+- 作業用マップを `_local/lane_c/overlay_map.json` として配置（`samples/p2_overlay_map.json` を元に作成）。
+- `_local/` は [.gitignore](../../.gitignore) の除外対象であり、絶対パスを含むローカル資産参照をコミットしない方針を維持。
+
+### 8.2 `validate-ir`（P2 IR 基準）
+
+```powershell
+uv run python -m src.cli.main validate-ir samples/p2_overlay_se_ir.json `
+  --palette samples/palette.ymmp `
+  --overlay-map _local/lane_c/overlay_map.json
+```
+
+- **結果**: exit code **0**（`Validation PASSED with 3 warnings`）。
+- **観測 warning**: `FACE_SERIOUS_SKEW`、`FACE_LATENT_GAP`、`IDLE_FACE_MISSING`（既知の許容 warning として扱う）。
+
+### 8.3 `apply-production --dry-run`（P2 IR 基準）
+
+```powershell
+uv run python -m src.cli.main apply-production samples/production.ymmp samples/p2_overlay_se_ir.json `
+  --face-map samples/face_map.json `
+  --bg-map samples/bg_map_proof.json `
+  --overlay-map _local/lane_c/overlay_map.json `
+  --se-map samples/p2_se_map.json `
+  --timeline-profile production_ai_monitoring_lane `
+  --timeline-contract samples/timeline_route_contract.json `
+  --dry-run
+```
+
+- **結果**: exit code **0**、`Overlay changes: 2`、`SE insertions: 1`、`Transition VoiceItem writes: 1`。
+
+### 8.4 `_tmp` 出力固定（再現コマンド）
+
+```powershell
+uv run python -m src.cli.main apply-production samples/production.ymmp samples/p2_overlay_se_ir.json `
+  --face-map samples/face_map.json `
+  --bg-map samples/bg_map_proof.json `
+  --overlay-map _local/lane_c/overlay_map.json `
+  --se-map samples/p2_se_map.json `
+  --timeline-profile production_ai_monitoring_lane `
+  --timeline-contract samples/timeline_route_contract.json `
+  -o samples/_tmp_lane_c_apply_proof.ymmp
+```
+
+- **結果**: exit code **0**、`Written: samples/_tmp_lane_c_apply_proof.ymmp`。
+- **提出物**: [samples/_tmp_lane_c_apply_proof.ymmp](../../samples/_tmp_lane_c_apply_proof.ymmp)
+
+### 8.5 境界（案件依存で未実施）
+
+- YMM4 実機での最終見た目確認（テンプレ実体・素材差し替え）は案件依存のため本ログでは未実施。
+- 実案件では [VISUAL_STYLE_YMM4_CHECKLIST.md](../VISUAL_STYLE_YMM4_CHECKLIST.md) の §1〜§3 を実行し、結果のみコアへ提出する。
+
+---
+
+## 9. 追記（2026-04-10）— file5 基準・overlay B3 のみ
+
+[LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md) B-3 の機械ゲートに沿い、`VISUAL-QUALITY-PACKETS` の **overlay B3（タイミング一致）** だけを判定した記録を別紙に残した。
+
+- **実行記録**: [LANE-C-file5-B3-overlay-timing-2026-04-10.md](LANE-C-file5-B3-overlay-timing-2026-04-10.md)
+- **判定 JSON**: `samples/lane_c_file5_b3_overlay_timing_evidence.json`
+- **ログ**: `samples/lane_c_file5_b3_validate_logs.txt` / `samples/lane_c_file5_b3_apply_production_dryrun.txt`
+
+### 8.6 `VISUAL-QUALITY-PACKETS` A3（bg_anim 意図一致）— 2026-04-10
+
+- **対象 IR**: [samples/ir_visual_styles_dry_sample.json](../../samples/ir_visual_styles_dry_sample.json)（レーンC §5.1 `validate-ir` 済みの三スタイル dry サンプル）
+- **判定**: **PASS**（`target_quality` スコア 2、必須チェック `tone_match` / `topic_match` / `no_contradicting_visual` いずれも満たす）
+- **台本論点 ↔ bg_anim 一致の要約**:
+  - **index 1**（「挿絵コマ1」/ S1 挿絵コマ風）: `bg_anim: none` → コマ割り的な読みやすさ・静止構図の論点と一致。
+  - **index 5**（「PV風の雰囲気切替」/ S3 再現PV風）: `bg_anim: ken_burns` → 発話が明示する雰囲気切替・映画的トーンと一致。
+  - index 2〜4, 6 は IR 上 `bg_anim` 未指定のため、過剰なカメラワーク指定による論点矛盾はないと判断。
+- **提出 JSON（正本）**: [lane-c-bg_anim-A3-2026-04-10.json](lane-c-bg_anim-A3-2026-04-10.json)
