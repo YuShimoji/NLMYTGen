@@ -76,7 +76,7 @@ uv run python -m src.cli.main build-csv refined.txt -o _tmp_out.csv `
 
 ### B-1. セットアップの全体像
 
-手順の型は [gui-llm-setup-guide.md](gui-llm-setup-guide.md) を参照（Custom GPT / Claude Project / Gemini の各方式）。
+手順の型は [gui-llm-setup-guide.md](gui-llm-setup-guide.md) を参照（Custom GPT / Claude Project / Gemini の各方式）。漏れなく同期するチェックリストは [verification/LANE-B-gui-llm-sync-checklist.md](verification/LANE-B-gui-llm-sync-checklist.md)。
 
 ### B-2. S-1 台本 refinement 用（C-09）
 
@@ -94,12 +94,12 @@ uv run python -m src.cli.main build-csv refined.txt -o _tmp_out.csv `
 ### B-4. H-01 を使う場合（任意）
 
 - brief の schema: [PACKAGING_ORCHESTRATOR_SPEC.md](PACKAGING_ORCHESTRATOR_SPEC.md)
-- **やること**: 動画 1 本につき brief を 1 ファイル（テキスト）で用意し、**C-07 に台本より先に貼る**（S6 プロンプトの H-01 連携節どおり）。Custom GPT 側に「brief があるときは上位制約として従う」旨が v4 に含まれていることを確認する。
+- **やること**: 動画 1 本につき brief を 1 ファイル（テキスト）で用意し、**C-07 に台本より先に貼る**（S6 の「### H-01 連携 (推奨)」どおり）。v4 プロンプト本体のフェンス内だけを Instructions に貼った場合、**H-01 連携の説明文はフェンス外**にあるため、**同節を v4 の前に連結して Instructions に含める**か、**会話で毎回 brief を先に貼る**運用で上位制約を満たす。
 
 ### B-5. サムネコピー（C-08）
 
 - 正本: [S8-thumbnail-copy-prompt.md](S8-thumbnail-copy-prompt.md)
-- 統合運用は [gui-llm-setup-guide.md](gui-llm-setup-guide.md) の「統合プロンプト」を参照。
+- 使い分け（v4 Part 4 との差）は [gui-llm-setup-guide.md](gui-llm-setup-guide.md) の「使い方（v4 正本）」および [verification/LANE-B-gui-llm-sync-checklist.md](verification/LANE-B-gui-llm-sync-checklist.md) の B-5。
 
 ---
 

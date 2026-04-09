@@ -164,3 +164,12 @@
 - 判定: pass（接続維持）
 - 最小メモ: 品質最適化はスコープ外。v14（タイミングの母／英語ラベル分割）の run_id 付き記録のみ。
 
+## Lane E Prep (`lane_e_prep_2026-04-09_a`)
+
+- run_id: `lane_e_prep_2026-04-09_a`
+- 参照: [LANE-E-S8-prep-2026-04-09.md](LANE-E-S8-prep-2026-04-09.md)（PRE-PLAN レーン E・runbook トラック E の準備）
+- ファイル（参照アンカー）: `samples/onepass_2026-04-07_c_thumb.png`（新規 YMM4 書き出しは `thumb_<slug>.png` で別 run 追記）
+- 既定案件入力: スラッグ `ai_monitoring_labor`、台本 `samples/AI監視が追い詰める生身の労働.txt`、H-01 brief は任意
+- 判定: prep-pass（S-0／B-5／案件入力の文書化、手順正本の突き合わせ、既存サンプルに対する品質軸の机上照合まで完了）
+- 最小メモ: オペレータは LANE-E チェックリストの未チェック項目（YMM4 実作業・GUI 同期の実施）を公開直前に完了させる。
+

@@ -69,6 +69,11 @@
 ### 2.4 並行運用の前提確認（任意だが推奨）
 
 - [OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) の **A + B** が別担当でも衝突しないことを確認（Instructions 正本は repo）。
+- **レーン別 repo 準備チェックリスト**（2026-04-09 同梱）:
+  - **A**: [LANE_A_PREP_CHECKLIST.md](LANE_A_PREP_CHECKLIST.md)、[OPERATOR_LANE_A_ENV.md](OPERATOR_LANE_A_ENV.md)
+  - **B**: [LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md)、[gui-llm-setup-guide.md](../gui-llm-setup-guide.md)
+  - **C**: [LANE-C-operator-prep-2026-04-09.md](LANE-C-operator-prep-2026-04-09.md)、[lane-c-overlay-map.TEMPLATE.json](lane-c-overlay-map.TEMPLATE.json)（絶対パスは `_local/` に置き [.gitignore](../../.gitignore) 参照）
+  - **D**: [H01-lane-d-prep-2026-04-09.md](H01-lane-d-prep-2026-04-09.md)、[samples/packaging_brief.template.md](../../samples/packaging_brief.template.md)、[packaging_brief_EMPTY_TEMPLATE_emitted.md](packaging_brief_EMPTY_TEMPLATE_emitted.md)
 
 ### 2.5 レーン E（サムネ S-8）準備（任意だが推奨）
 
@@ -96,6 +101,7 @@
 
 ## 5. 変更履歴
 
+- 2026-04-09: §2.4 にレーン A〜D の repo 準備チェックリストへのリンクを追加（プラン設計前のオペレータ準備を索引化）。
 - 2026-04-09: §4 追加（コア開発索引へのリンク）。
 - 2026-04-09: §2.5 レーン E（S-8）準備チェックリスト [LANE-E-S8-prep-2026-04-09.md](LANE-E-S8-prep-2026-04-09.md) へのリンクを追加。
 - 2026-04-09: 初版。runbook のトラック D/E 見出しを表と整合（D=H-01、E=サムネ）。
