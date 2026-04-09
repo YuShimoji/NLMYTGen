@@ -57,10 +57,12 @@ Gate B の「運用導線・記録」に合わせ、**次の優先**を推奨す
 
 1. ユーザーが本ドラフトの §2〜§3 を **承認または差し替え**。  
 2. 承認後、[CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) に **承認済みスライス**を記入し、PR を分割実装。  
-3. P2 の YMM4 見え方・S6 §2 が揃うまで、**registry を広げるコード変更は起票しない**（チェックリスト OPEN 扱い）。
+3. P2 の YMM4 見え方・S6 §2 が揃うまで、**registry を広げるコード変更は起票しない**（チェックリスト OPEN 扱い）。  
+4. P0 は [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) の `p0_nextcycle_amazon_2026-04-10_a` を基準に継続し、YMM4 読込結果はオペレータ追記を待って判定を確定する。
 
 ---
 
 ## 6. 変更履歴
 
+- 2026-04-10: P0 次サイクル実行（Amazon・CLI）を次アクションへ反映。P2 は OPEN 条件維持。
 - 2026-04-09: 初版。Gate B 確定版に基づくドラフト。

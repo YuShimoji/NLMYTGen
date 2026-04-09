@@ -1,6 +1,6 @@
 # feat/phase2-motion-segmentation → master — PR 運用（コア開発）
 
-**状態（2026-04-09）**: PR [#1](https://github.com/YuShimoji/NLMYTGen/pull/1) は **マージ済み**。以降の開発は **`master` を正**とし、新機能用にトピックブランチを切る。
+**状態（2026-04-09）**: PR [#1](https://github.com/YuShimoji/NLMYTGen/pull/1) は **マージ済み**。以降の開発は `**master` を正**とし、新機能用にトピックブランチを切る。
 
 **背景**: [FUTURE_DEVELOPMENT_ROADMAP.md](../FUTURE_DEVELOPMENT_ROADMAP.md)。歴史: [P2A-motion-branch-operator-decision.md](P2A-motion-branch-operator-decision.md)（一括で持ち込まない方針で段階統合した）。
 
@@ -63,5 +63,6 @@ uv run pytest -q --tb=short
 
 - 2026-04-10: 以後の手順を `master` 起点トピックブランチ向けに一般化。
 - 2026-04-09: 初版。
-- 2026-04-09: `feat/phase2-motion-segmentation` → `master` の PR を作成: https://github.com/YuShimoji/NLMYTGen/pull/1
+- 2026-04-09: `feat/phase2-motion-segmentation` → `master` の PR を作成: [https://github.com/YuShimoji/NLMYTGen/pull/1](https://github.com/YuShimoji/NLMYTGen/pull/1)
 - 2026-04-09: PR #1 を **マージ**（merge commit）。`master` で `NLMYTGEN_PYTEST_FULL=1 uv run pytest` 再実行済み。
+

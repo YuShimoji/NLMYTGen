@@ -12,12 +12,12 @@
 
 ## 2. 受け入れチェックリスト
 
-| 入力 | 正本 | 受け入れ条件 | 状態（2026-04-09 監査） |
+| 入力 | 正本 | 受け入れ条件 | 状態（2026-04-10 監査） |
 |------|------|----------------|-------------------------|
 | B-11 実測 | [B11-pre-plan-execution-pack-2026-04-07.md](B11-pre-plan-execution-pack-2026-04-07.md) §5 | 同一ファイルに取込前/後・4 区分空欄なし・代表例 ≥3・§3 Gate 明記 | **PASS** — [B11-workflow-proof-ai-monitoring-labor.md](B11-workflow-proof-ai-monitoring-labor.md) |
-| P01 追記 | [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) | 対象案件の接続判定行が存在 | **PASS** — 表に複数案件・接続判定列あり |
+| P01 追記 | [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) | 対象案件の接続判定行が存在 | **PASS** — `p0_nextcycle_amazon_2026-04-10_a` を追記済み（CLI 接続判定） |
 | プロンプト同期 | [S1-script-refinement-prompt.md](../S1-script-refinement-prompt.md)、[S6-production-memo-prompt.md](../S6-production-memo-prompt.md) 等 | repo が正本。差分は PR で取り込み | **継続**: 変更のたびに PR レビュー |
-| P2 / S6 観測 | [runtime-state.md](../runtime-state.md)、[S6-background-animation-next-step-plan-prep.md](../S6-background-animation-next-step-plan-prep.md) §2 | YMM4 見え方 OK/NG の一行＋採用案について S6 の 5 条件 | **OPEN** — オペレータが YMM4 結果と S6 §2 を追記するまでコアは P2 向けコードスライスを起票しない |
+| P2 / S6 観測 | [runtime-state.md](../runtime-state.md)、[S6-background-animation-next-step-plan-prep.md](../S6-background-animation-next-step-plan-prep.md) §2 | YMM4 見え方 OK/NG の一行＋採用案について S6 の 5 条件 | **OPEN 継続** — 2026-04-10 時点で条件未充足。オペレータが YMM4 結果と S6 §2 を追記するまでコアは P2 向けコードスライスを起票しない |
 
 ---
 
@@ -41,5 +41,6 @@
 
 ## 5. 変更履歴
 
+- 2026-04-10: 監査日更新。P01 `p0_nextcycle_amazon_2026-04-10_a` を反映、P2/S6 は OPEN 継続を明文化。
 - 2026-04-10: §4 を master 起点のトピックブランチ運用へ更新。
 - 2026-04-09: 初版。AI 監視 B-11・P01 を PASS と記録。P2/S6 は OPEN。
