@@ -6,7 +6,7 @@
 - project: NLMYTGen
 - lane: 方向転換中 (実制作bottleneck直接軽減へ移行)
 - slice: G-15〜G-18 実装完了（Micro `bg` / 複数 `overlay` / timeline アダプタ / **SE `AudioItem` 挿入**）。Electron GUI: CSV 変換時に **診断 JSON 同梱保存**可（[gui-llm-setup-guide.md](gui-llm-setup-guide.md)）。正本 [G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)。従来: 視覚三スタイル [VISUAL_STYLE_PRESETS.md](VISUAL_STYLE_PRESETS.md)、P2A [P2A-motion-branch-operator-decision.md](verification/P2A-motion-branch-operator-decision.md)、P2C [P2C-se-audioitem-boundary.md](verification/P2C-se-audioitem-boundary.md)（履歴）
-- next_action: **プラン作成前**: [B11-pre-plan-execution-pack-2026-04-07.md](verification/B11-pre-plan-execution-pack-2026-04-07.md) に沿い、実案件 1 本の B-11 記録で §2（取込後・4 区分件数）と §3（Gate / 次投資先）まで埋める。並行: P2 背景アニメ短サイクル — map 警告（`BG_ANIM_MAP_MISS` / `TRANSITION_MAP_MISS`）は最小 map で解消済み、`test_verify_4_bg.ymmp` で 4 セクション拡張（`BG anim writes: 7`）まで機械確認済み。次は YMM4 で見え方確認 → 問題なければ実案件 IR へ段階展開（P1/P2/P3/Parking の順は維持）。
+- next_action: **プラン作成前**: [B11-pre-plan-execution-pack-2026-04-07.md](verification/B11-pre-plan-execution-pack-2026-04-07.md) に沿い、実案件 1 本の B-11 記録で §2（取込後・4 区分件数）と §3（Gate / 次投資先）まで埋める。**並行レーン数・コア開発幹**: [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md)。並行: P2 背景アニメ短サイクル — map 警告（`BG_ANIM_MAP_MISS` / `TRANSITION_MAP_MISS`）は最小 map で解消済み、`test_verify_4_bg.ymmp` で 4 セクション拡張（`BG anim writes: 7`）まで機械確認済み。次は YMM4 で見え方確認 → 問題なければ実案件 IR へ段階展開（P1/P2/P3/Parking の順は維持）。
 - recommended_frontier_order: 台本品質改善 → 演出配置自動化拡張 → 視覚効果実現（既定。変更可）
 - 再現ルール: 異種サンプル 1 本で打ち切り済み。以後は新しい failure が出たときだけ追加検証
 - operator/agent ガード: [REPO_LOCAL_RULES.md](REPO_LOCAL_RULES.md)（正本）+ `.claude/hooks/guardrails.py` で repo 外逸脱 / broad question 停止 / repeated visual proof を常設抑止（`.claude/CLAUDE.md` は入口ポインタ）
@@ -52,7 +52,7 @@
 ## 主成果物
 - active_artifact: NLM transcript → YMM4 CSV → ゆっくり解説動画制作ワークフロー
 - artifact_surface: CLI → CSV → YMM4 台本読込 → 演出設定 → レンダリング → サムネイル → 投稿
-- last_change_relation: FEATURE_REGISTRY G-15〜G-18 done、GUI CSV+診断 JSON 同梱、**次以降推奨プラン (2026-04-08)**、`patch-ymmp --timeline-profile`、SE `AudioItem`（`_apply_se_items`）
+- last_change_relation: FEATURE_REGISTRY G-15〜G-18 done、GUI CSV+診断 JSON 同梱、**次以降推奨プラン (2026-04-08)**、`patch-ymmp --timeline-profile`、SE `AudioItem`（`_apply_se_items`）、プラン直前レーン整理 [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md)、runbook トラック D/E 見出し整合
 
 ## カウンター
 - blocks_since_user_visible_change: 0

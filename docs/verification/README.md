@@ -13,6 +13,7 @@
 | 現在位置・次アクション | [runtime-state.md](../runtime-state.md) |
 | 意思決定・handoff | [project-context.md](../project-context.md) |
 | 並行作業の手順（オペレータ） | [OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) |
+| プラン直前・並行レーン数・コア開発幹 | [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) |
 
 ## 本ディレクトリの典型的な文書タイプ
 

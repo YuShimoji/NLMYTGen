@@ -114,7 +114,15 @@ uv run python -m src.cli.main build-csv refined.txt -o _tmp_out.csv `
 
 ---
 
-## トラック D — サムネ 1 枚（S-8）
+## トラック D — H-01 Packaging brief（任意だが推奨）
+
+- 正本: [PACKAGING_ORCHESTRATOR_SPEC.md](PACKAGING_ORCHESTRATOR_SPEC.md)
+- **手順の詳細**: 上記 [トラック B の B-4](#b-4-h-01を使う場合任意)（brief 1 本を C-07 より先に渡す運用）。
+- **やることの要約**: 動画 1 本につき brief を 1 ファイルで用意し、Custom GPT / 演出 IR 生成の上位制約として使う。
+
+---
+
+## トラック E — サムネ 1 枚（S-8）
 
 - 正本: [THUMBNAIL_ONE_SHEET_WORKFLOW.md](THUMBNAIL_ONE_SHEET_WORKFLOW.md)
 - 全体フロー: [WORKFLOW.md](WORKFLOW.md) の S-8
@@ -157,6 +165,6 @@ git push
 1. **トラック A** を実台本 1 本で最後まで（YMM4 読込まで）。
 2. **トラック B-3** で v4 Instructions が repo と一致しているか確認。
 3. 余力があれば **トラック C** のチェックリストを 1 セクションだけ進める。
-4. 公開前に **トラック D**。
+4. 公開前に **トラック E**（サムネ）。
 
 以上。
