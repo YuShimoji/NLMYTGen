@@ -14,8 +14,8 @@
 
 | 入力 | 正本 | 受け入れ条件 | 状態（2026-04-10 監査） |
 |------|------|----------------|-------------------------|
-| B-11 実測 | [B11-pre-plan-execution-pack-2026-04-07.md](B11-pre-plan-execution-pack-2026-04-07.md) §5 | 同一ファイルに取込前/後・4 区分空欄なし・代表例 ≥3・§3 Gate 明記 | **PASS** — [B11-workflow-proof-ai-monitoring-labor.md](B11-workflow-proof-ai-monitoring-labor.md) |
-| P01 追記 | [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) | 対象案件の接続判定行が存在 | **PASS** — `p0_nextcycle_amazon_2026-04-10_a` を追記済み（CLI 接続判定） |
+| B-11 実測 | [B11-pre-plan-execution-pack-2026-04-07.md](B11-pre-plan-execution-pack-2026-04-07.md) §5 | 同一ファイルに取込前/後・4 区分空欄なし・代表例 ≥3・§3 Gate 明記 | **PASS** — [B11-workflow-proof-ai-monitoring-labor.md](B11-workflow-proof-ai-monitoring-labor.md)。**NEEDS_FIX（Amazon 別紙）** — [B11-workflow-proof-amazon-panopticon-2026-04-10.md](B11-workflow-proof-amazon-panopticon-2026-04-10.md) は §1・代表例・§3 まで記載済みだが **§2 取込後が YMM4 未実施の暫定**（Gate は「保留」）。オペレータが実機通しで §2.1 を実測し §3 を確定 Gate に更新したら本 PASS。 |
+| P01 追記 | [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) | 対象案件の接続判定行が存在 | **PASS** — `p0_nextcycle_amazon_2026-04-10_a`（CLI）および `lane_a_amazon_2026-04-10_b`（CLI+refined・[B11-workflow-proof-amazon-panopticon-2026-04-10.md](B11-workflow-proof-amazon-panopticon-2026-04-10.md) 参照）を追記済み |
 | プロンプト同期 | [S1-script-refinement-prompt.md](../S1-script-refinement-prompt.md)、[S6-production-memo-prompt.md](../S6-production-memo-prompt.md) 等 | repo が正本。差分は PR で取り込み | **継続**: 変更のたびに PR レビュー。[LANE-B-execution-record-2026-04-09.md](LANE-B-execution-record-2026-04-09.md) §7（2026-04-10）で `validate-ir` / `apply-production --dry-run` 再検証・参照コミット固定 |
 | P2 / S6 観測 | [runtime-state.md](../runtime-state.md)、[S6-background-animation-next-step-plan-prep.md](../S6-background-animation-next-step-plan-prep.md) §2 | YMM4 見え方 OK/NG の一行＋採用案について S6 の 5 条件 | **PASS（2026-04-09）** — 見え方一行: **NG（本番投入は保留）**。`test_verify_4_bg.ymmp` 系の機械観測を根拠に S6 §2 の 5 条件を本表下の「P2/S6 充足証跡」で記入完了。未承認 FEATURE を増やさず、まずはコア幹の回帰・承認済みバグ修正へ復帰。 |
 | 画面演出パケット（A1-A4/B1-B4） | [VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md) | 各パケットで「対象スコア >=2」かつ必須チェック全 `yes`。判定は PASS/NEEDS_FIX 明示。 | **継続**: PASS 入力のみドラフト反映（NEEDS_FIX は差し戻し）。 |
@@ -60,6 +60,19 @@
 
 結論: **NEEDS_FIX によるドラフト差し止めなし**。T0 は承認記録の固定と T1 スライス起票へ進める。
 
+補足（2026-04-10・レーンA Amazon）: [B11-workflow-proof-amazon-panopticon-2026-04-10.md](B11-workflow-proof-amazon-panopticon-2026-04-10.md) は取込後未測のため、**T0 でプラン根拠に使う B-11 は引き続き AI 監視本編のみ**とする（Amazon 紙は CLI 前処理・次サイクル入力用）。
+
+---
+
+## 3.3 自己照合サマリ（2026-04-10・ファイル4レーンA Amazon）
+
+| 照合項目 | 結果 |
+|----------|------|
+| B-11 §1 取込前（stats・JSON・コマンド） | **PASS** |
+| B-11 §2 取込後（4 区分の実測・Gate 確定） | **NEEDS_FIX**（YMM4 実機未実施。暫定 0 と「保留」を明記） |
+| 代表例 ≥3・§3 記載 | **PASS**（代表例は overflow 候補ベース、§3 は「保留」明示） |
+| P01 行 `lane_a_amazon_2026-04-10_b` | **PASS** |
+
 ---
 
 ## 3.5 P2/S6 充足証跡（2026-04-09）
@@ -97,6 +110,7 @@
 ## 5. 変更履歴
 
 - 2026-04-11: §3.2 T0 再監査（PASS/継続の区分）を追加。
+- 2026-04-10: §3.3 自己照合（レーンA Amazon）、§3.2 補足、B-11/P01 受け入れ行を Amazon B-11・`lane_a_amazon_2026-04-10_b` 追記に合わせて更新。
 - 2026-04-10: 監査日更新。P01 `p0_nextcycle_amazon_2026-04-10_a` を反映、P2/S6 は OPEN 継続を明文化。
 - 2026-04-10: §4 を master 起点のトピックブランチ運用へ更新。
 - 2026-04-10: 「プロンプト同期」受け入れ状態に [LANE-B-execution-record-2026-04-09.md](LANE-B-execution-record-2026-04-09.md) §7（レーンB再検証）への参照を追記。

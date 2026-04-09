@@ -183,3 +183,23 @@
 - warning: なし（band 閾値未達のため needs_fix）
 - 最小メモ: 本 run は自動生成ではなく、手動採点の機械記録ルート確認を目的とした Probe。
 
+## Lane D+E P01 Amazon · S-8 接続（2026-04-10）
+
+- サイクル: レーン D の `packaging_brief_p0_amazon.md` 正本化と同一（ファイル4・P01 Amazon）
+- 参照手順: [THUMBNAIL_ONE_SHEET_WORKFLOW.md](../THUMBNAIL_ONE_SHEET_WORKFLOW.md)、[OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) トラック E
+- `video_slug` / 成果物名の正本: `p0_phase1_amazon` → `samples/thumb_p0_phase1_amazon.png`（repo 内に既存。再書き出し時も同ファイル名で上書きまたは別 run で追記）
+- H-01 brief: `samples/packaging_brief_p0_amazon.md`（C-08 入力順は [h01_lane_d_p01_amazon_c08_input_2026-04-10.md](h01_lane_d_p01_amazon_c08_input_2026-04-10.md)）
+- 判定: **接続記録済み**（YMM4 テンプレ複製・差し替え・書き出しの工程は [THUMBNAIL_ONE_SHEET_WORKFLOW.md](../THUMBNAIL_ONE_SHEET_WORKFLOW.md) に従い、本ファイルでファイル名と brief 整合を固定）
+
+## Lane E Probe P01 Amazon (`lane_de_p01_amazon_2026-04-10_a`)
+
+- run_id: `lane_de_p01_amazon_2026-04-10_a`
+- 入力契約: `score-thumbnail-s8`（payload 正本: [lane_de_p01_amazon_2026-04-10_s8_payload.json](lane_de_p01_amazon_2026-04-10_s8_payload.json)）
+- 実行例（PowerShell 等で JSON が壊れやすい場合は `uv run python -c` 経由で `main([...])` を呼ぶ）:
+  - `--scores`: `{"single_claim":2,"specificity":2,"title_alignment":2,"mobile_readability":2}`
+  - `--payload-file`: `docs/verification/lane_de_p01_amazon_2026-04-10_s8_payload.json`
+- ファイル: `thumb_p0_phase1_amazon.png`（実体: `samples/thumb_p0_phase1_amazon.png`）
+- スコア: 上記（各カテゴリ 2）
+- 判定: **needs_fix**（`total_score=67`, band=`needs_fix`、warnings なし — 閾値 band のみ）
+- 最小メモ: 手動採点 2 点台の機械集約。最終採否はオペレータ。全カテゴリ 3 に上げれば `pass`（100 点）帯になる。
+

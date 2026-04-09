@@ -55,7 +55,7 @@
 ## 主成果物
 - active_artifact: NLM transcript → YMM4 CSV → ゆっくり解説動画制作ワークフロー
 - artifact_surface: CLI → CSV → YMM4 台本読込 → 演出設定 → レンダリング → サムネイル → 投稿
-- last_change_relation: 上記に加え **2026-04-10 統合コミット**（H-05 等）および **2026-04-11 T0 クローズ**: [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](verification/CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §6 承認記録、[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) に T1 スライス 2 件起票、[CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](verification/CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) §3.2 T0 再監査。`next_action` を **フェーズ T1** へ更新
+- last_change_relation: 上記に加え **2026-04-10 統合コミット**（H-05 等）および **2026-04-11 T0 クローズ**（ドラフト §6・POST-APPROVAL T1 起票・チェックリスト §3.2・`next_action`→T1）。**続（同一日）**: P0 Amazon 並行証跡をリモート同期 — [B11-workflow-proof-amazon-panopticon-2026-04-10.md](verification/B11-workflow-proof-amazon-panopticon-2026-04-10.md)、レーン B/C/H01 追記、[P01](verification/P01-phase1-operator-e2e-proof.md)/[P03](verification/P03-thumbnail-one-sheet-proof.md)、`samples/` 診断・CSV・brief 同梱
 
 ## カウンター
 - blocks_since_user_visible_change: 0

@@ -1,0 +1,31 @@
+  WARNING: FACE_LATENT_GAP: character 'ゆっくり霊夢赤縁' is missing prompt labels: surprised
+prompt face contract: C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\docs\S6-production-memo-prompt.md (6 labels)
+overlay contract: 2 labels
+
+--- Face Distribution (6 utterances) ---
+  serious        2 (33%) ######
+  smile          2 (33%) ######
+  surprised      1 (16%) ###
+  thinking       1 (16%) ###
+
+--- Face Contract ---
+  prompt : angry, sad, serious, smile, surprised, thinking
+  palette: angry, sad, serious, smile, surprised, thinking
+  used   : serious, smile, surprised, thinking
+  idle   : serious, smile
+
+--- Slot Distribution (6 utterances) ---
+  left           3
+  right          3
+  スピーカー1: left
+  スピーカー2: right
+
+--- Overlay Distribution (2 utterances) ---
+  speech_bubble   1
+  text_box       1
+
+--- Palette Gap Report ---
+  latent ゆっくり霊夢赤縁: surprised
+  INFO: ROW_RANGE_INFO: row_start/row_end not set. Use annotate-row-range or apply-production --csv
+
+Validation PASSED with 1 warnings

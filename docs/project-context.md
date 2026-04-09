@@ -318,7 +318,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 - Safe Next Frontier Packet: **直近（開発）** T1 2 スライス完了後 T2（承認スライス実装）または T3（handoff）。**運用**: **P0** Phase 1 本番 1 本（診断→C-09→CSV→YMM4→[P01](verification/P01-phase1-operator-e2e-proof.md)） / **P1** H-01 brief / **P2** 演出実戦 / **P3** サムネ 1 本 / **Parking** P2A どおり一括マージしない
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: **2026-04-11** T0 完了（ドラフト §6 承認、POST-APPROVAL に T1 起票、チェックリスト §3.2）、`next_action` **T1** へ。履歴は git log
+- Last Change Relation: **2026-04-11** T0 完了＋P0 Amazon 並行証跡・サンプルを `origin/master` へ同期。`next_action` **T1**。履歴は git log
 - Evidence: Production E2E 実証済み + `NLMYTGEN_PYTEST_FULL=1 uv run pytest`: **313 passed** (2026-04-10)
 - 案件モード: CLI artifact
 - 現在の主レーン: 方向転換中 (実制作bottleneck直接軽減へ移行)

@@ -1,0 +1,25 @@
+  WARNING: FACE_SERIOUS_SKEW: face 'serious' is 100% of utterances (threshold: 40%)
+  WARNING: FACE_LATENT_GAP: character 'Ç‰Ç¡Ç≠ÇËóÏñ≤ê‘âè' is missing prompt labels: surprised
+  WARNING: IDLE_FACE_MISSING: idle_face is not specified in any utterance
+prompt face contract: C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\docs\S6-production-memo-prompt.md (6 labels)
+overlay contract: 12 labels
+
+--- Face Distribution (1 utterances) ---
+  serious        1 (100%) ####################
+
+--- Face Contract ---
+  prompt : angry, sad, serious, smile, surprised, thinking
+  palette: angry, sad, serious, smile, surprised, thinking
+  used   : serious
+
+--- Overlay Distribution (2 utterances) ---
+  arrow_red      1
+  speech_bubble   1
+
+--- SE Distribution (1 utterances) ---
+  click          1
+
+--- Palette Gap Report ---
+  latent Ç‰Ç¡Ç≠ÇËóÏñ≤ê‘âè: surprised
+
+Validation PASSED with 3 warnings

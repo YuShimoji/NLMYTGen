@@ -202,3 +202,56 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
   - **index 5**（「PV風の雰囲気切替」/ S3 再現PV風）: `bg_anim: ken_burns` → 発話が明示する雰囲気切替・映画的トーンと一致。
   - index 2〜4, 6 は IR 上 `bg_anim` 未指定のため、過剰なカメラワーク指定による論点矛盾はないと判断。
 - **提出 JSON（正本）**: [lane-c-bg_anim-A3-2026-04-10.json](lane-c-bg_anim-A3-2026-04-10.json)
+
+---
+
+## 10. 実行ログ（2026-04-10）— Prompt-C 機械回帰
+
+[CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) **Prompt-C** に沿った `validate-ir` / `apply-production --dry-run` の再実行。repo root は本リポジトリ。PowerShell では stderr の WARNING が非ゼロ終了と誤認されうるため、**終了コードは `cmd /c` で確認**（いずれも **0**）。
+
+**overlay-map（P2 系）**: `_local/lane_c/overlay_map.json` が存在したため、§8.2 / §8.3 と同じく **同ファイル**を使用（無い環境では `samples/p2_overlay_map.json` で §5.2 相当の回帰とする）。
+
+### 10.1 `validate-ir`（§5.1 三スタイル dry）
+
+```powershell
+uv run python -m src.cli.main validate-ir samples/ir_visual_styles_dry_sample.json `
+  --palette samples/palette.ymmp `
+  --overlay-map samples/visual_styles_overlay_map.example.json
+```
+
+- **exit code**: 0  
+- **要約**: `Validation PASSED with 1 warnings`（`FACE_LATENT_GAP` ほか、既存方針どおり許容）  
+- **フルログ**: [samples/lane_c_promptc_validate_dry_2026-04-10.txt](../../samples/lane_c_promptc_validate_dry_2026-04-10.txt)
+
+### 10.2 `validate-ir`（§8.2 P2 IR + `_local`）
+
+```powershell
+uv run python -m src.cli.main validate-ir samples/p2_overlay_se_ir.json `
+  --palette samples/palette.ymmp `
+  --overlay-map _local/lane_c/overlay_map.json
+```
+
+- **exit code**: 0  
+- **要約**: `Validation PASSED with 3 warnings`（`FACE_SERIOUS_SKEW` / `FACE_LATENT_GAP` / `IDLE_FACE_MISSING`、既知の許容 warning）  
+- **フルログ**: [samples/lane_c_promptc_validate_p2_2026-04-10.txt](../../samples/lane_c_promptc_validate_p2_2026-04-10.txt)
+
+### 10.3 `apply-production --dry-run`（§8.3 同引数）
+
+```powershell
+uv run python -m src.cli.main apply-production samples/production.ymmp samples/p2_overlay_se_ir.json `
+  --face-map samples/face_map.json `
+  --bg-map samples/bg_map_proof.json `
+  --overlay-map _local/lane_c/overlay_map.json `
+  --se-map samples/p2_se_map.json `
+  --timeline-profile production_ai_monitoring_lane `
+  --timeline-contract samples/timeline_route_contract.json `
+  --dry-run
+```
+
+- **exit code**: 0  
+- **要約**: `Face changes: 2`、`Overlay changes: 2`、`SE insertions: 1`、`Timeline adapter: motion=0, transition=1, bg_anim=0`、`BG anim writes: 0`、`Transition VoiceItem writes: 1`、`(dry-run: no file written)`  
+- **フルログ**: [samples/lane_c_promptc_apply_dryrun_2026-04-10.txt](../../samples/lane_c_promptc_apply_dryrun_2026-04-10.txt)
+
+### 10.4 境界（ファイル7との切り分け）
+
+`VISUAL-QUALITY-PACKETS` の **A2 / A4 / B2 / B4** の個別 JSON 提出は **Prompt-C 本体のスコープ外**（[CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) の **Prompt-C-Visual-Quality** / [VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md)）。必要時にパケット単位で実施し、[CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) の PASS 条件へ接続する。
