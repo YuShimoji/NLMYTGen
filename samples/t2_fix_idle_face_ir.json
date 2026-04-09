@@ -1,0 +1,60 @@
+{
+  "ir_version": "1.0",
+  "video_id": "t2_fix_idle_face",
+  "macro": {
+    "sections": [
+      {
+        "section_id": "S1",
+        "start_index": 1,
+        "end_index": 3,
+        "default_bg": "van_dashboard_ai",
+        "default_face": "serious"
+      }
+    ]
+  },
+  "utterances": [
+    {
+      "index": 1,
+      "speaker": "まりさ",
+      "text": "T2 utt1",
+      "section_id": "S1",
+      "face": "serious",
+      "idle_face": "serious",
+      "overlay": [
+        "speech_bubble"
+      ],
+      "se": "click",
+      "row_start": 1,
+      "row_end": 1
+    },
+    {
+      "index": 2,
+      "speaker": "れいむ",
+      "text": "T2 utt2",
+      "section_id": "S1",
+      "face": "thinking",
+      "idle_face": "serious",
+      "overlay": [
+        "arrow_blue",
+        "text_box"
+      ],
+      "se": "transition",
+      "row_start": 2,
+      "row_end": 2
+    },
+    {
+      "index": 3,
+      "speaker": "まりさ",
+      "text": "T2 utt3",
+      "section_id": "S1",
+      "face": "smile",
+      "idle_face": "serious",
+      "overlay": [
+        "warning_bias"
+      ],
+      "se": "surprise",
+      "row_start": 3,
+      "row_end": 3
+    }
+  ]
+}

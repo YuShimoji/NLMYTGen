@@ -1,0 +1,11 @@
+﻿{
+  "meta": {
+    "input": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen\\samples\\v12_meta_eval_split_refined.txt",
+    "utterance_count": 160,
+    "mapped_speaker_keys": [
+      "ホストA",
+      "ホストB"
+    ]
+  },
+  "diagnostics": []
+}

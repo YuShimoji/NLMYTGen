@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "input": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen\\samples\\AI監視が追い詰める生身の労働.txt",
+    "utterance_count": 28,
+    "mapped_speaker_keys": [
+      "スピーカー1",
+      "スピーカー2"
+    ]
+  },
+  "diagnostics": [
+    {
+      "code": "EXPLAINER_ROLE_MISMATCH",
+      "severity": "warning",
+      "utterance_index": null,
+      "message": "文量・導入パターン上の host は「れいむ」だが、--expected-explainer は「まりさ」",
+      "hint": "NotebookLM の Host/解説が聞き手側キャラに付いていないか確認する"
+    },
+    {
+      "code": "LISTENER_ROLE_MISMATCH",
+      "severity": "warning",
+      "utterance_index": null,
+      "message": "質問・短応答寄りの guest は「まりさ」だが、--expected-listener は「れいむ」",
+      "hint": "話者マップの左右が逆になっていないか、台本の役割が崩れていないか確認する"
+    }
+  ]
+}

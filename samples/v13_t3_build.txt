@@ -1,0 +1,23 @@
+﻿--- Stats ---
+  まりさ: 184 utterances, 4039 chars (avg 21)
+  れいむ: 180 utterances, 3928 chars (avg 21)
+  Total: 364 utterances, 7967 chars
+--- Overflow candidates (>2 lines at 40 chars/line) ---
+  [WARN] row 23: れいむ, 推定3行 (display_width=54)
+  [WARN] row 42: れいむ, 推定3行 (display_width=67)
+  [WARN] row 49: まりさ, 推定3行 (display_width=60)
+  [WARN] row 62: まりさ, 推定3行 (display_width=63)
+  [WARN] row 63: まりさ, 推定3行 (display_width=70)
+  [WARN] row 80: れいむ, 推定3行 (display_width=74)
+  [WARN] row 89: まりさ, 推定3行 (display_width=72)
+  [WARN] row 111: れいむ, 推定3行 (display_width=68)
+  [WARN] row 156: れいむ, 推定3行 (display_width=74)
+  [WARN] row 158: れいむ, 推定3行 (display_width=70)
+  [WARN] row 176: まりさ, 推定3行 (display_width=64)
+  [WARN] row 207: れいむ, 推定3行 (display_width=68)
+  [WARN] row 261: まりさ, 推定3行 (display_width=70)
+  [WARN] row 271: まりさ, 推定3行 (display_width=68)
+  [WARN] row 277: まりさ, 推定3行 (display_width=68)
+  [WARN] row 320: まりさ, 推定3行 (display_width=68)
+  [WARN] row 324: まりさ, 推定3行 (display_width=71)
+Written: samples\v13_t3_ymm4.csv (364 rows)

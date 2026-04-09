@@ -18,7 +18,7 @@
 
 | 優先 | コード | 内容 | 完了の目安 |
 |------|--------|------|------------|
-| **P0** | — | **Phase 1 本番 1 本**: 新台本で `diagnose-script`（CLI または **GUI CSV タブの診断 JSON 同梱**）→ [S1-script-refinement-prompt.md](S1-script-refinement-prompt.md)（C-09）→ `build-csv` → YMM4 読込〜。所要時間・残修正区分・効果を [P01-phase1-operator-e2e-proof.md](verification/P01-phase1-operator-e2e-proof.md) に 1 行以上追記 | **最優先・今期の主目標** |
+| **P0** | — | **Phase 1 本番 1 本**: 新台本で `diagnose-script`（CLI または **GUI CSV タブの診断 JSON 同梱**）→ [S1-script-refinement-prompt.md](S1-script-refinement-prompt.md)（C-09）→ `build-csv` → YMM4 読込〜。接続判定・残修正区分・効果を [P01-phase1-operator-e2e-proof.md](verification/P01-phase1-operator-e2e-proof.md) に 1 行以上追記 | **最優先・今期の主目標** |
 | **P1** | H-01 `approved` | **Packaging brief 運用**: [PACKAGING_ORCHESTRATOR_SPEC.md](PACKAGING_ORCHESTRATOR_SPEC.md) に沿った brief を Custom GPT に常設し、1 本で title / thumbnail / script の drift が減るか観測（コード変更なしで可） | P0 と並行可・低負荷 |
 | **P2** | done 機能の実戦投入 | **演出パイプの実使用**: 本編で `overlay` / `se`（`--se-map`）/ `apply-production` が効くなら registry を整えて実戦投入。non-fade / template-backed `transition` は **新 ymmp sample が入ったときだけ** `measure-timeline-routes` で再測定 | 制作物が生まれたタイミング |
 | **P3** | — | **視覚・公開周辺**: [THUMBNAIL_ONE_SHEET_WORKFLOW.md](THUMBNAIL_ONE_SHEET_WORKFLOW.md) でサムネ 1 本を通す。茶番・図解アニメはツール選定後 | P0 の後でも可 |
