@@ -49,47 +49,55 @@ Recommended inputs:
 
 H-03 starts with six density categories plus one payoff score.
 
-| Category | Meaning | Typical evidence |
-|---|---|---|
-| `scene_variety` | sections are visually distinct | interior / warehouse / road / PR UI / future city |
-| `information_embedding` | numbers, UI, charts, labels, and data moments are explicitly visualized | percentage card, timer UI, graph, law text, clause panel |
-| `symbolic_asset` | memorable objects or motifs exist | inhaler, scanner, countdown, thank-you button, drone |
-| `tempo_shift` | visual pacing changes across sections | tense cold open, dense UI section, slower reflective close |
-| `pattern_balance` | human scene / UI scene / abstract explanation / contrast scene are not overly concentrated | anecdote block, data block, PR block, future thought block |
-| `stagnation_risk` | repeated same-background risk is low | section-level turnover, multiple cue types, no single block visually flat |
-| `promise_visual_payoff` | title / thumbnail promise has visible on-screen payoff | `71.4%`, `19億ドル`, `タイム・オフ・タスク` become visual moments |
+
+| Category                | Meaning                                                                                    | Typical evidence                                                          |
+| ----------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
+| `scene_variety`         | sections are visually distinct                                                             | interior / warehouse / road / PR UI / future city                         |
+| `information_embedding` | numbers, UI, charts, labels, and data moments are explicitly visualized                    | percentage card, timer UI, graph, law text, clause panel                  |
+| `symbolic_asset`        | memorable objects or motifs exist                                                          | inhaler, scanner, countdown, thank-you button, drone                      |
+| `tempo_shift`           | visual pacing changes across sections                                                      | tense cold open, dense UI section, slower reflective close                |
+| `pattern_balance`       | human scene / UI scene / abstract explanation / contrast scene are not overly concentrated | anecdote block, data block, PR block, future thought block                |
+| `stagnation_risk`       | repeated same-background risk is low                                                       | section-level turnover, multiple cue types, no single block visually flat |
+| `promise_visual_payoff` | title / thumbnail promise has visible on-screen payoff                                     | `71.4%`, `19億ドル`, `タイム・オフ・タスク` become visual moments                      |
+
 
 ## 5. Scoring Model
 
 Each category uses a 0-3 ordinal score.
 
-| Score | Meaning |
-|---|---|
-| `0` | absent |
-| `1` | weak or incidental |
-| `2` | clearly present |
-| `3` | strong and intentionally surfaced |
+
+| Score | Meaning                           |
+| ----- | --------------------------------- |
+| `0`   | absent                            |
+| `1`   | weak or incidental                |
+| `2`   | clearly present                   |
+| `3`   | strong and intentionally surfaced |
+
 
 Total score is the weighted sum below, normalized to 100.
 
-| Category | Weight |
-|---|---|
-| `scene_variety` | 15 |
-| `information_embedding` | 15 |
-| `symbolic_asset` | 10 |
-| `tempo_shift` | 10 |
-| `pattern_balance` | 15 |
-| `stagnation_risk` | 15 |
-| `promise_visual_payoff` | 20 |
+
+| Category                | Weight |
+| ----------------------- | ------ |
+| `scene_variety`         | 15     |
+| `information_embedding` | 15     |
+| `symbolic_asset`        | 10     |
+| `tempo_shift`           | 10     |
+| `pattern_balance`       | 15     |
+| `stagnation_risk`       | 15     |
+| `promise_visual_payoff` | 20     |
+
 
 Interpretation bands:
 
-| Band | Meaning |
-|---|---|
-| `80-100` | strong visual support for current promise |
-| `60-79` | acceptable, but some sections may flatten |
-| `40-59` | noticeable visual stagnation risk |
-| `0-39` | high risk that the video will feel flat or disconnected from packaging |
+
+| Band     | Meaning                                                                |
+| -------- | ---------------------------------------------------------------------- |
+| `80-100` | strong visual support for current promise                              |
+| `60-79`  | acceptable, but some sections may flatten                              |
+| `40-59`  | noticeable visual stagnation risk                                      |
+| `0-39`   | high risk that the video will feel flat or disconnected from packaging |
+
 
 ## 6. Category Heuristics
 
@@ -146,15 +154,17 @@ High score when:
 
 H-03 should emit explicit warnings instead of only a total score.
 
-| Warning | Trigger |
-|---|---|
-| `VISUAL_SINGLE_BACKGROUND_RISK` | one section appears likely to sit on one background too long |
-| `VISUAL_DATA_PROMISE_UNPAID` | packaging relies on data, but cue memo does not clearly visualize it |
-| `VISUAL_SYMBOL_MISSING` | no memorable symbolic object or motif anchors the topic |
-| `VISUAL_PATTERN_REPEAT` | the same frame logic dominates too many sections |
-| `VISUAL_TEMPO_FLAT` | all sections appear to use similar explanatory pacing |
-| `VISUAL_CONTRAST_MISSING` | a PR-vs-reality or before-vs-after topic lacks clear visual contrast |
-| `VISUAL_ENDING_TOO_ABSTRACT` | ending reflection lacks enough concrete carry-over from earlier sections |
+
+| Warning                         | Trigger                                                                  |
+| ------------------------------- | ------------------------------------------------------------------------ |
+| `VISUAL_SINGLE_BACKGROUND_RISK` | one section appears likely to sit on one background too long             |
+| `VISUAL_DATA_PROMISE_UNPAID`    | packaging relies on data, but cue memo does not clearly visualize it     |
+| `VISUAL_SYMBOL_MISSING`         | no memorable symbolic object or motif anchors the topic                  |
+| `VISUAL_PATTERN_REPEAT`         | the same frame logic dominates too many sections                         |
+| `VISUAL_TEMPO_FLAT`             | all sections appear to use similar explanatory pacing                    |
+| `VISUAL_CONTRAST_MISSING`       | a PR-vs-reality or before-vs-after topic lacks clear visual contrast     |
+| `VISUAL_ENDING_TOO_ABSTRACT`    | ending reflection lacks enough concrete carry-over from earlier sections |
+
 
 ## 8. Output Contract
 
@@ -229,3 +239,4 @@ H-03 can be treated as defined enough to implement or proof once the following a
 3. H-01 dependency is explicit
 4. one real sample can be scored manually using cue memo plus brief
 5. result can produce a visual repair suggestion, not just a total score
+

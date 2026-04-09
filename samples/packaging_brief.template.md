@@ -17,10 +17,10 @@
 ## required_evidence
 
 - kind: number | named_entity | anecdote | case | study | freshness
-  value:
-  why_it_matters:
-  must_surface_in:
-    - thumbnail | opening | body | metadata
+value:
+why_it_matters:
+must_surface_in:
+  - thumbnail | opening | body | metadata
   status: confirmed | weak | missing
 
 ## missing_or_weak_evidence

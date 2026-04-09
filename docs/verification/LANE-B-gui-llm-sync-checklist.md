@@ -79,3 +79,21 @@
 ## 完了の記録（任意）
 
 同期日とツール名を [project-context.md](../project-context.md) の DECISION LOG に 1 行残す、または本ファイル末尾に日付と署名を追記してよい。
+
+---
+
+## 同期結果ログ
+
+### 2026-04-09 / レーンB（File5）実行記録
+
+| 対象 | repo 正本 | Instructions 側確認 | 差分判定 | 対応 |
+|------|-----------|----------------------|----------|------|
+| B-2: S-1 台本 refinement（C-09） | [S1-script-refinement-prompt.md](../S1-script-refinement-prompt.md) | 確認済み（「LLM への指示」+ 入力テンプレ） | 差分なし | 同期維持 |
+| B-3: S-6 演出 IR（C-07 v4） | [S6-production-memo-prompt.md](../S6-production-memo-prompt.md) の「### v4 プロンプト本体」フェンス内全文 | 確認済み（v4 フェンス全文・視覚スタイル三種を含む） | 差分なし | 同期維持 |
+| B-4: H-01 連携（任意） | [PACKAGING_ORCHESTRATOR_SPEC.md](../PACKAGING_ORCHESTRATOR_SPEC.md) + [S6-production-memo-prompt.md](../S6-production-memo-prompt.md)「### H-01 連携 (推奨)」 | 確認済み（brief 先貼り運用を採用） | 差分なし | 現運用継続 |
+| B-5: サムネコピー（C-08） | [S8-thumbnail-copy-prompt.md](../S8-thumbnail-copy-prompt.md) | 確認済み（S-8 正本同期） | 差分なし | 同期維持 |
+
+備考:
+
+- 実行元: [CORE-DEV-LANE-PROMPT-QUICKREF.md](CORE-DEV-LANE-PROMPT-QUICKREF.md) の File5 レーンB指示。
+- 参照手順: [OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) トラックB。

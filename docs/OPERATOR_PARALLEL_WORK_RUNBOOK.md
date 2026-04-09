@@ -119,6 +119,7 @@ uv run python -m src.cli.main build-csv refined.txt -o _tmp_out.csv `
 - 正本: [PACKAGING_ORCHESTRATOR_SPEC.md](PACKAGING_ORCHESTRATOR_SPEC.md)
 - **手順の詳細**: 上記 [トラック B の B-4](#b-4-h-01を使う場合任意)（brief 1 本を C-07 より先に渡す運用）。
 - **やることの要約**: 動画 1 本につき brief を 1 ファイルで用意し、Custom GPT / 演出 IR 生成の上位制約として使う。
+- **今回の 1 本（運用固定）**: `samples/The Amazon Panopticon Surveillance and the Modern Worker.txt` に対して `samples/packaging_brief_p0_nextcycle_amazon.md` を作成済み。C-07 / C-08 ともに **1) brief 全文 → 2) 台本全文** の順で入力する。
 
 ---
 

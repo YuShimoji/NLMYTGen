@@ -5,6 +5,7 @@
 **並行して進める自分用の作業（Phase1・GUI LLM 同期・YMM4・サムネ・Git）の完全手順**は [OPERATOR_PARALLEL_WORK_RUNBOOK.md](OPERATOR_PARALLEL_WORK_RUNBOOK.md) に集約した。
 
 ## 全体フロー
+
 - S-0: YMM4 テンプレート構築 (初回のみ)
 - S-1: NotebookLM にソース投入、Audio Overview 生成
 - S-2: 元台本テキスト取得、または音声書き起こし fallback
@@ -20,17 +21,20 @@
 - S-9: YouTube Studio で投稿作業
 
 ## 工程ごとの痛点
+
 - 最も重いのは S-5 (読み上げ確認・字幕修正) と S-6 (背景・演出設定)。
 - S-5b の字幕はみ出しは、YMM4 で都度直せるが、S-3 の分割品質が低いと手戻りが増える。
 - S-6 は人間の判断が中心で、単純なパターンマッチでは省力化になりにくい。
 - E-02 単体の metadata template は、YouTube Studio への手入力が残るため bottleneck 解消として弱い。
 
 ## 品質目標
+
 - S-3 の出力を YMM4 に読み込んだ時点で、話者名の不一致や極端な長文が少なく、修正が「例外処理」に留まる。
 - 字幕は通常ケースで 2 行以内に収まり、はみ出し候補は事前警告で把握できる。
 - 人間が行うのは、読み・演出・サムネイルなど創造判断を要する工程に寄る。
 
 ## 現在の workflow proof 条件
+
 - B-11 を approved frontier とし、S-5 の pain を「YMM4 取込前にどこまで減らせるか」を先に実証する。
 - proof は Python 側の改善余地と YMM4 手動修正の境界を見極めることが目的であり、YMM4 の自動操作を作ることではない。
 - proof は少なくとも 1 件の transcript で、`build-csv --max-lines 2 --chars-per-line 40 --stats` の事前警告と、YMM4 取込後の残修正量を同じ記録に残す。
@@ -57,12 +61,14 @@
 - 2026-04-06 の H-02 dry proof で、C-08 は `Specificity Ledger` と `Brief Compliance Check` を返す契約になった。strict GUI rerun proof は同日 pass で閉じた (4/5案が preferred_specifics 使用、banned pattern なし)。コピー品質の実用改善は別課題として残る。
 
 ## Actor Boundaries (三層責務構造対応)
+
 - `user`: NotebookLM 操作、Custom GPT で Writer IR 生成 (第1層)、Template Registry のラベル付け・素材準備 (第2層)、YMM4 内の判断・微調整、サムネイル、投稿判断、YMM4 native template の登録
 - `assistant`: CSV 変換、IR 語彙定義 (PRODUCTION_IR_SPEC)、YMM4 Adapter 実装 (第3層: patch-ymmp)、Template Registry の JSON 構造、台帳整備、仕様化
 - `tool`: 分割、統計、入力検証、speaker-map 生成、警告表示、extract-template、patch-ymmp (YMM4 Adapter)
 - `shared`: どの pain を次に削るかの優先判断、frontier の approval、三層の責務境界の更新
 
 ## 手動工程 / 自動化禁止工程
+
 - YMM4 内の演出指定、背景配置、表情切り替え、BGM/SE の最終判断 (Adapter で face/bg は半自動化するが、最終判断は人間)
 - サムネイルの訴求判断と最終デザイン
 - 実機での読み上げ確認、通しプレビュー、公開判断
@@ -72,12 +78,14 @@
 - `extract-template` の出力キー (`face_01_...`, `bg_01_...`) は棚卸し用の仮ラベル。production 用 registry は visual review 後の意味ラベルへ手動で整える
 
 ## palette 更新が必要になるケース
+
 - `FACE_UNKNOWN_LABEL` / `FACE_ACTIVE_GAP` が出た → palette にそのラベルの表情を追加し再抽出
 - `FACE_PROMPT_PALETTE_GAP` が出た → Custom GPT の face 許可リストと palette の差分を解消する
 - `FACE_PROMPT_PALETTE_EXTRA` が出た → prompt が palette の実在ラベルより狭くなっていないか確認する
 - 連続 run が多い → palette のラベル間のパーツ差が小さすぎる可能性。パーツ組み合わせを見直す
 
 ## face サブクエストの completion criteria (2026-04-05 固定)
+
 - `validate-ir` / `apply-production` が face 関連の mechanical failure を failure class 付きで止められること
 - current IR に必要な face / idle_face が palette で解決できない場合、`FACE_ACTIVE_GAP` として書き出し前に停止すること
 - prompt の face 契約と palette の drift が `FACE_PROMPT_PALETTE_GAP` / `FACE_PROMPT_PALETTE_EXTRA` / `FACE_LATENT_GAP` で可視化されること
@@ -86,12 +94,14 @@
 - 上記が clean なら、face は「完成済みサブシステム」として扱い、次の主 frontier を止めないこと
 
 ## face で人間が判断する範囲
+
 - palette の各ラベル名 (`serious` / `thinking` 等) が YMM4 上の見え方として妥当か
 - 新しい表情ラベルを増やす価値があるか、既存ラベルの再命名で足りるか
 - 実制作物でその表情が内容に対して十分かどうかという creative quality
 - 初回 E2E と最終制作物での「見え方の良し悪し」。同じ mechanical failure を疑うための repeated visual proof は不要
 
 ## face を再度触る条件
+
 - `FACE_UNKNOWN_LABEL`
 - `PROMPT_FACE_DRIFT`
 - `FACE_ACTIVE_GAP`
@@ -103,11 +113,12 @@
 
 ## motion: G-17 と Phase2（CLI の使い分け）
 
-- **`--timeline-profile` を付ける場合（G-17）**: `motion` / `transition` / `bg_anim` のうち、契約に含まれるものを **`--motion-map`**（各ラベル → `video_effect` 辞書）、`--transition-map`、`--bg-anim-map` で書き込む。サンプル: [samples/motion_map_g17.example.json](samples/motion_map_g17.example.json)。このとき **Phase2 の `TachieItem` 区間分割は実行されない**。
-- **プロファイルを付けない場合の motion（Phase2）**: **`--tachie-motion-map`** でラベル → **VideoEffects オブジェクトの配列**を渡し、発話アンカーに合わせて `TachieItem` を分割する。サンプル: [samples/tachie_motion_map.example.json](samples/tachie_motion_map.example.json)。
-- **`validate-ir`**: 台帳ラベル検証は **`--motion-map` と `--tachie-motion-map` のキーを併用**できる（和集合で `MOTION_MAP_UNKNOWN_LABEL` を抑止）。
+- `**--timeline-profile` を付ける場合（G-17）**: `motion` / `transition` / `bg_anim` のうち、契約に含まれるものを `**--motion-map`**（各ラベル → `video_effect` 辞書）、`--transition-map`、`--bg-anim-map` で書き込む。サンプル: [samples/motion_map_g17.example.json](samples/motion_map_g17.example.json)。このとき **Phase2 の `TachieItem` 区間分割は実行されない**。
+- **プロファイルを付けない場合の motion（Phase2）**: `**--tachie-motion-map`** でラベル → **VideoEffects オブジェクトの配列**を渡し、発話アンカーに合わせて `TachieItem` を分割する。サンプル: [samples/tachie_motion_map.example.json](samples/tachie_motion_map.example.json)。
+- `**validate-ir`**: 台帳ラベル検証は `**--motion-map` と `--tachie-motion-map` のキーを併用**できる（和集合で `MOTION_MAP_UNKNOWN_LABEL` を抑止）。
 
 ## timeline edit サブクエストの境界 (2026-04-06 固定)
+
 - IR 語彙と `patch-ymmp` 実装の対応（何が自動で書き込まれるか）の正本: [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md)
 - assistant / tool が先に閉じる対象は G-11 slot patch、G-12 motion/transition/bg_anim の write route 測定、G-13 overlay/se の timing anchor 付き挿入設計、G-14 bg_anim（ImageItem X/Y/Zoom プリセット）patch
 - `slot` は mechanical 対象。unknown slot label / slot registry gap / character default slot drift は YMM4 手動確認より前に止める
@@ -122,16 +133,19 @@
 - 人間が残す判断は「どのテンプレートが見た目として良いか」「どのタイミングが気持ちいいか」「音量・密度・テンポが最終制作物として十分か」という creative quality のみ
 
 ## timeline edit サブクエストの completion criteria
+
 - G-11: completed。`slot` が registry で解決でき、`validate-ir` が `SLOT_UNKNOWN_LABEL` / `SLOT_REGISTRY_GAP` / `SLOT_CHARACTER_DRIFT` / `SLOT_DEFAULT_DRIFT` を事前検出し、`patch-ymmp` / `apply-production` が TachieItem X/Y/Zoom と `off` hide を deterministic に反映できる
 - G-12: `motion` / `bg_anim` の write route が repo-local corpus ベースで固定され、fade-family `transition` route も mechanical に確認済みで、残る route 不在カテゴリは non-fade / template-backed family の sample dependency として明示され、dry-run/readback で mechanical failure を再現できる
 - G-13: completed。`overlay` は label 解決、timing anchor、挿入先構造が固定され、creative density judgement と mechanical insertion failure が分離された。`se` は label/timing を解決し、G-18 で `AudioItem` 挿入まで mechanical（旧 `SE_WRITE_ROUTE_UNSUPPORTED` は廃止）
 - 上記を満たした packet は、それぞれ独立 failure class 単位で扱い、broad な timeline retry loop に戻さない
 
 ## 検証の境界 (2026-04-05 固定)
+
 - パイプラインの機械的動作はユニットテスト + CLI dry-run で検証する。YMM4 visual proof を繰り返し要求しない
 - ユーザーへの visual proof 依頼は「初回 E2E」と「最終制作物の品質判断」のみ。増分変更 (idle_face 追加、bg proof、再現 run) では不要
 - 「確認してほしいポイント」の列挙が毎回同じ内容 (表情が切り替わっているか) なら、それは確認ではなく作業の自己目的化
 
 ## 運用ルール
+
 - 一度説明された workflow pain はここへ固定する
 - 「本制作へ進む前に workflow proof が必要」な案件では、その proof 条件もここへ残す

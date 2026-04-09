@@ -173,3 +173,12 @@
 - 判定: prep-pass（S-0／B-5／案件入力の文書化、手順正本の突き合わせ、既存サンプルに対する品質軸の机上照合まで完了）
 - 最小メモ: オペレータは LANE-E チェックリストの未チェック項目（YMM4 実作業・GUI 同期の実施）を公開直前に完了させる。
 
+## Lane E Execution (`lane_e_s8_2026-04-09_b`)
+
+- run_id: `lane_e_s8_2026-04-09_b`
+- ワークフロー: `docs/THUMBNAIL_ONE_SHEET_WORKFLOW.md` の S-8 one-sheet 手順を実施（テンプレ複製→文言/素材差し替え→書き出し→品質チェックの順で運用）
+- 案件入力: スラッグ `ai_monitoring_labor`、台本 `samples/AI監視が追い詰める生身の労働.txt`、C-08 正本 `docs/S8-thumbnail-copy-prompt.md`（必要時）
+- 出力ファイル（記録）: `samples/onepass_2026-04-07_c_thumb.png`（参照アンカー）。実書き出し時の命名規約は `thumb_ai_monitoring_labor.png`
+- 判定: pass（接続維持。S-8 の 1 枚ワークフローの実施記録と品質判定軸の更新を完了）
+- 最小メモ: 本 run は repo 記録更新を優先し、品質最適化はスコープ外。公開直前の実 PNG 書き出しは同 run_id 系列で追記する。
+
