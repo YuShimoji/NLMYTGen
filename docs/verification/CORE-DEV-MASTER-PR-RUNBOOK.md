@@ -59,3 +59,4 @@ uv run pytest -q --tb=short
 ## 5. 変更履歴
 
 - 2026-04-09: 初版。
+- 2026-04-09: `feat/phase2-motion-segmentation` → `master` の PR を作成: https://github.com/YuShimoji/NLMYTGen/pull/1
