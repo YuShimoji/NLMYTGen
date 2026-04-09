@@ -1,0 +1,16 @@
+{
+  "overlays": {
+    "arrow_blue": "C:/assets/overlays/arrow_blue.png",
+    "arrow_red": "C:/assets/overlays/arrow_red.png",
+    "circle_red": "C:/assets/overlays/circle_red.png",
+    "data_grid_callout": "C:/assets/overlays/data_grid_callout.png",
+    "flash_red": "C:/assets/overlays/flash_red.png",
+    "lobster_trap": "C:/assets/overlays/lobster_trap.png",
+    "panopticon_ring": "C:/assets/overlays/panopticon_ring.png",
+    "slide_gate": "C:/assets/overlays/slide_gate.png",
+    "smartphone_frame": "C:/assets/overlays/smartphone_frame.png",
+    "speech_bubble": "C:/assets/overlays/speech_bubble.png",
+    "text_box": "C:/assets/overlays/text_box.png",
+    "warning_bias": "C:/assets/overlays/warning_bias.png"
+  }
+}

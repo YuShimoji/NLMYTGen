@@ -1,0 +1,10 @@
+{
+  "se": {
+    "click": "C:/assets/se/click.wav",
+    "correct": "C:/assets/se/correct.wav",
+    "incorrect": "C:/assets/se/incorrect.wav",
+    "surprise": "C:/assets/se/surprise.wav",
+    "tension_hit": "C:/assets/se/tension_hit.wav",
+    "transition": "C:/assets/se/transition.wav"
+  }
+}

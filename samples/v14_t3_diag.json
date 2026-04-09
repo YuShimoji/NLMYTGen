@@ -1,0 +1,11 @@
+﻿{
+  "meta": {
+    "input": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen\\samples\\v14_timing_label_split_refined.txt",
+    "utterance_count": 163,
+    "mapped_speaker_keys": [
+      "ホストA",
+      "ホストB"
+    ]
+  },
+  "diagnostics": []
+}

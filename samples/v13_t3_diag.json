@@ -1,0 +1,11 @@
+﻿{
+  "meta": {
+    "input": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen\\samples\\v13_os_mission_split_refined.txt",
+    "utterance_count": 162,
+    "mapped_speaker_keys": [
+      "ホストA",
+      "ホストB"
+    ]
+  },
+  "diagnostics": []
+}

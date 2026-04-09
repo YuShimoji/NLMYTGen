@@ -1,0 +1,31 @@
+{
+  "ir_version": "1.0",
+  "video_id": "p2_overlay_se_adoption",
+  "macro": {
+    "sections": [
+      {
+        "section_id": "S1",
+        "start_index": 1,
+        "end_index": 1,
+        "default_bg": "van_dashboard_ai",
+        "default_face": "serious"
+      }
+    ]
+  },
+  "utterances": [
+    {
+      "index": 1,
+      "speaker": "まりさ",
+      "text": "P2 adoption smoke",
+      "section_id": "S1",
+      "face": "serious",
+      "overlay": [
+        "speech_bubble",
+        "arrow_red"
+      ],
+      "se": "click",
+      "row_start": 1,
+      "row_end": 1
+    }
+  ]
+}

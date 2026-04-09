@@ -1,0 +1,11 @@
+﻿{
+  "meta": {
+    "input": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen\\samples\\v11_chain_split_refined.txt",
+    "utterance_count": 159,
+    "mapped_speaker_keys": [
+      "ホストA",
+      "ホストB"
+    ]
+  },
+  "diagnostics": []
+}
