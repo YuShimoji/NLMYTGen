@@ -1,6 +1,6 @@
-# 次期実装プラン（ドラフト）— B-11 Gate 取り込み後・承認前
+# 次期実装プラン（ドラフト）— B-11 Gate 取り込み後
 
-**ステータス**: ドラフト（**ユーザー承認までは実装しない**）。入力: [B11-workflow-proof-ai-monitoring-labor.md](B11-workflow-proof-ai-monitoring-labor.md) §3。受け入れ記録: [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md)。
+**ステータス**: **§2〜§3 は 2026-04-11 承認済み**（下記 §6）。**コード実装**は [CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) §1 の **T1 スライス単位**でのみ着手する。入力: [B11-workflow-proof-ai-monitoring-labor.md](B11-workflow-proof-ai-monitoring-labor.md) §3。受け入れ記録: [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md)（§3.2 T0 再監査含む）。
 **反映ルール**: 本書に反映してよいのは **PASS 判定入力のみ**（NEEDS_FIX は差し戻し後に再審査）。
 
 ---
@@ -12,6 +12,18 @@
 | **Gate** | **B**（運用摩擦支配 → 運用側へ移行） |
 | **根拠要約** | 4 区分は全編通しで 0 件。顕著な改行・辞書修正なし。overflow 機械候補は残存（監視対象）。 |
 | **次投資先（オペレータ記述）** | 背景アニメを 1〜2 セクションで小規模適用し、route と見え方確認。F-01/F-02 は quarantined 維持。 |
+
+---
+
+## 1.5 ユーザー承認依頼（T0・記録用）
+
+次の判断について **チャットまたは issue** で回答し、§6 に記録する。
+
+1. **判断1**: §2（コア開発での解釈）および §3（FEATURE_REGISTRY 変更案）を **現文のまま承認**するか、差し替え文案を提示するか。
+2. **判断2**: §3 に **台帳新規行（コードスライス）** を今サイクルで扱うか。デフォルトは **追加しない**（ドキュメント・サンプルのみ）。
+3. **判断3**（任意）: §2.1 の「verification / サンプル JSON」の **具体パス・題材**を T0 で指定するか、**T1 でエージェントが提案**するか。
+
+**2026-04-11 の確定回答（実装セッション）**: 判断1 **現文承認**。判断2 **台帳新規行は出さない**。判断3 **T1 で具体提案**（ユーザー未指定）。
 
 ---
 
@@ -58,16 +70,25 @@ Gate B の「運用導線・記録」に合わせ、**次の優先**を推奨す
 ## 5. 次のアクション
 
 0. コア本開発の進め方・並行の組み合わせは [CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md](CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md) を参照。即実行 Prompt は [CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) §3.0。
-1. ユーザーが本ドラフトの §2〜§3 を **承認または差し替え**。  
-2. 承認後、[CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) に **承認済みスライス**を記入し、PR を分割実装。  
-3. 実装提案は [CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) へ 1 スライスずつ起票し、承認済み範囲でのみ着手する。  
+1. **§2〜§3 の T0 承認は完了（2026-04-11）** — 記録は §6。以降の改訂は新たな承認行を §6 に追加する。
+2. **現在フェーズ T1**: [CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) §1 の **T1-P2-DOCSAMPLE** / **T1-RUNBOOK-GUI** を順に実施し、1 スライス完了ごとに PR またはコミットを分割する。
+3. コード変更が必要になった場合のみ §3 テンプレに従い FEATURE_REGISTRY で `proposed` → 承認 → 別スライスとして起票する。
 4. P0 は [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) の `p0_nextcycle_amazon_2026-04-10_a` を基準に継続し、YMM4 読込結果はオペレータ追記を取り込みながら判定を更新する。
 5. 画面演出は [VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md) の A1-A4/B1-B4 を **演出単位パケット**として扱い、PASS パケットのみを本ドラフトへ反映する。
 
 ---
 
-## 6. 変更履歴
+## 6. ユーザー承認記録（T0）
 
+| 承認日 | 承認範囲 | ユーザー参照（要約） | 差し替え要約 |
+|--------|----------|----------------------|--------------|
+| 2026-04-11 | §2・§3 全文 | 「コア本開発フェーズ T0 実行プラン」の実装指示に基づき、§2〜§3 を **差し替えなし**で確定 | なし（§3 テンプレ表は未使用のまま。FEATURE 新規行なし） |
+
+---
+
+## 7. 変更履歴
+
+- 2026-04-11: T0 完了。§1.5 承認依頼、§6 承認記録、ステータスを承認済みへ。§2 を実戦投入 OK と誤読されないよう本文は変更せず（P2 見え方 NG はチェックリスト正本）。
 - 2026-04-09: 画面演出を A1-A4/B1-B4 の演出単位パケットで扱うルールを追加。
 - 2026-04-09: PASS 入力のみ反映ルールと未承認 FEATURE 起票境界を明記。
 - 2026-04-09: P2/S6 再判定 PASS（見え方 NG 記録 + §2の5条件充足）を反映。実装起票は承認後スライス方式へ更新。

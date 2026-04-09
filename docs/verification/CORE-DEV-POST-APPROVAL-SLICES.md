@@ -9,6 +9,8 @@
 | ID / 名称 | 承認日 | 内容要約 | PR / コミット |
 |-----------|--------|----------|----------------|
 | CORE-RETURN-DOCSYNC | 2026-04-09 | コア復帰準備スライス。P2/S6 再判定（見え方一行 + §2の5条件）反映、フル回帰結果反映、`runtime-state` の next_action を実装着手可能状態へ更新。 | local docs sync（このブロック） |
+| T1-P2-DOCSAMPLE | 2026-04-11 | [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §2.1: P2 段階投入向け **verification 手順 1 本 + 期待ログ**、および **IR/設定サンプル JSON**（[PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md) と矛盾なし）。FEATURE_REGISTRY 新規行なし。 | （T1 実施後に記入） |
+| T1-RUNBOOK-GUI | 2026-04-11 | 同ドラフト §2.2: [OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) と GUI 導線（[gui-llm-setup-guide.md](../gui-llm-setup-guide.md) 等）の **文言・手順の明確化**のみ。新タブ・F-01/F-02 復活は禁止。 | （T1 実施後に記入） |
 
 ---
 
@@ -36,5 +38,6 @@
 
 ## 4. 変更履歴
 
+- 2026-04-11: T0 承認に基づき `T1-P2-DOCSAMPLE` / `T1-RUNBOOK-GUI` を起票（フェーズ T1 用）。
 - 2026-04-09: `CORE-RETURN-DOCSYNC` を追加（コア復帰判定の承認後スライスとして起票）。
 - 2026-04-09: 初版。承認済みスライスなしで開始。

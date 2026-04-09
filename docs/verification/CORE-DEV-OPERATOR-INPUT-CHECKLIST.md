@@ -16,7 +16,7 @@
 |------|------|----------------|-------------------------|
 | B-11 実測 | [B11-pre-plan-execution-pack-2026-04-07.md](B11-pre-plan-execution-pack-2026-04-07.md) §5 | 同一ファイルに取込前/後・4 区分空欄なし・代表例 ≥3・§3 Gate 明記 | **PASS** — [B11-workflow-proof-ai-monitoring-labor.md](B11-workflow-proof-ai-monitoring-labor.md) |
 | P01 追記 | [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) | 対象案件の接続判定行が存在 | **PASS** — `p0_nextcycle_amazon_2026-04-10_a` を追記済み（CLI 接続判定） |
-| プロンプト同期 | [S1-script-refinement-prompt.md](../S1-script-refinement-prompt.md)、[S6-production-memo-prompt.md](../S6-production-memo-prompt.md) 等 | repo が正本。差分は PR で取り込み | **継続**: 変更のたびに PR レビュー |
+| プロンプト同期 | [S1-script-refinement-prompt.md](../S1-script-refinement-prompt.md)、[S6-production-memo-prompt.md](../S6-production-memo-prompt.md) 等 | repo が正本。差分は PR で取り込み | **継続**: 変更のたびに PR レビュー。[LANE-B-execution-record-2026-04-09.md](LANE-B-execution-record-2026-04-09.md) §7（2026-04-10）で `validate-ir` / `apply-production --dry-run` 再検証・参照コミット固定 |
 | P2 / S6 観測 | [runtime-state.md](../runtime-state.md)、[S6-background-animation-next-step-plan-prep.md](../S6-background-animation-next-step-plan-prep.md) §2 | YMM4 見え方 OK/NG の一行＋採用案について S6 の 5 条件 | **PASS（2026-04-09）** — 見え方一行: **NG（本番投入は保留）**。`test_verify_4_bg.ymmp` 系の機械観測を根拠に S6 §2 の 5 条件を本表下の「P2/S6 充足証跡」で記入完了。未承認 FEATURE を増やさず、まずはコア幹の回帰・承認済みバグ修正へ復帰。 |
 | 画面演出パケット（A1-A4/B1-B4） | [VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md) | 各パケットで「対象スコア >=2」かつ必須チェック全 `yes`。判定は PASS/NEEDS_FIX 明示。 | **継続**: PASS 入力のみドラフト反映（NEEDS_FIX は差し戻し）。 |
 
@@ -43,6 +43,22 @@
 - P2/S6 観測: **PASS（見え方 NG を明示し、実装拡張は保留）**
 
 判定: **コア開発幹への復帰可**（未承認 FEATURE を増やさず、回帰・文書整合・承認済みバグ修正に限定）
+
+---
+
+## 3.2 T0 再監査（ドラフト反映用・2026-04-11）
+
+[CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §2〜§3 へ **PASS のみ**反映する前提の区分。
+
+| 入力 | T0 判定 | ドラフトへの扱い |
+|------|---------|------------------|
+| B-11 実測 | **PASS** | §1 と整合済み。追記不要 |
+| P01 追記 | **PASS** | §5 次アクションと整合。追記不要 |
+| プロンプト同期 | **継続**（NEEDS_FIX なし） | 新規実測なし。§2 に差し込まない |
+| P2 / S6 観測 | **PASS**（見え方 NG 明示済み） | §2.1 の「本番投入前・ドキュメント先行」と整合。実戦投入 OK とは書かない |
+| 画面演出パケット | **継続** | 全パケット PASS が揃うまで §2 を「パケット完了」とは更新しない（§5 ルールどおり） |
+
+結論: **NEEDS_FIX によるドラフト差し止めなし**。T0 は承認記録の固定と T1 スライス起票へ進める。
 
 ---
 
@@ -80,11 +96,13 @@
 
 ## 5. 変更履歴
 
+- 2026-04-11: §3.2 T0 再監査（PASS/継続の区分）を追加。
+- 2026-04-10: 監査日更新。P01 `p0_nextcycle_amazon_2026-04-10_a` を反映、P2/S6 は OPEN 継続を明文化。
+- 2026-04-10: §4 を master 起点のトピックブランチ運用へ更新。
+- 2026-04-10: 「プロンプト同期」受け入れ状態に [LANE-B-execution-record-2026-04-09.md](LANE-B-execution-record-2026-04-09.md) §7（レーンB再検証）への参照を追記。
 - 2026-04-09: 画面演出パケット（A1-A4/B1-B4）のスコア＋チェックリスト受け入れ行を追加。
 - 2026-04-09: `hold/quarantined/rejected` の前面排除ルールを差し戻し条件とコア運用に追加。
 - 2026-04-09: 未承認機能混入の差し戻し条件を追加。H-05 承認整合（CLI 集約のみ）を反映。
 - 2026-04-09: Prompt パック参照と「PASS のみ反映」ルールを明記。
 - 2026-04-09: P2/S6 観測を PASS 化。YMM4 見え方一行（NG）と S6 §2 の 5 条件を「3.5 P2/S6 充足証跡」に追記。
-- 2026-04-10: 監査日更新。P01 `p0_nextcycle_amazon_2026-04-10_a` を反映、P2/S6 は OPEN 継続を明文化。
-- 2026-04-10: §4 を master 起点のトピックブランチ運用へ更新。
 - 2026-04-09: 初版。AI 監視 B-11・P01 を PASS と記録。P2/S6 は OPEN。
