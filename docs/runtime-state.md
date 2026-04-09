@@ -61,7 +61,7 @@
 
 ## 量的指標
 - test_file_count: 16
-- test_count: 266
+- test_count: 301
 - mock_file_count: 0
 - impl_file_count: 22
 - mock_impl_ratio: 0.00
@@ -69,7 +69,7 @@
 
 ## 最終検証
 - last_verification_artifact: `uv run pytest` 全件（G-15〜G-18 追試含む）
-- last_verification_date: 2026-04-06
+- last_verification_date: 2026-04-09
 
 ## Evidence（CLI artifact mode）
 - evidence_status: Production E2E 実証済み (2026-04-05)。palette.ymmp → extract-template --labeled → face_map.json (11表情) → Part 1+2IR_row_range.json (28 utt, row-range) → production.ymmp (60 VI) → production_patched.ymmp (face 133 changes) → YMM4 visual proof OK。全編にわたって表情切替を確認
