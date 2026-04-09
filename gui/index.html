@@ -16,6 +16,32 @@
     </nav>
   </header>
 
+  <div class="body-content">
+  <aside id="wizard-bar" class="wizard-bar" aria-label="制作ウィザード">
+    <div class="wizard-steps" role="tablist">
+      <button type="button" class="wizard-step active" data-wizard-step="1" data-tab="csv" id="wiz-step-1">1 台本→CSV</button>
+      <button type="button" class="wizard-step" data-wizard-step="2" data-tab="csv" id="wiz-step-2">2 プレビュー</button>
+      <button type="button" class="wizard-step" data-wizard-step="3" data-tab="production" id="wiz-step-3">3 IR 検証</button>
+      <button type="button" class="wizard-step" data-wizard-step="4" data-tab="production" id="wiz-step-4">4 演出適用</button>
+      <button type="button" class="wizard-step" data-wizard-step="5" data-tab="production" id="wiz-step-5">5 完了</button>
+    </div>
+    <p id="wizard-hint" class="wizard-hint"></p>
+    <div class="wizard-nav-row">
+      <button type="button" id="btn-wizard-prev" class="wizard-nav-btn">← 戻る</button>
+      <button type="button" id="btn-wizard-next" class="wizard-nav-btn primary">次へ →</button>
+    </div>
+    <button type="button" id="btn-wizard-scoring" class="wizard-nav-btn wizard-scoring-btn hidden">品質診断タブへ</button>
+    <details class="wizard-manual">
+      <summary>意思決定・手動確認が必要なタイミング</summary>
+      <div class="wizard-manual-body">
+        <p><strong>機械が保証する範囲</strong>：IR 語彙・row-range・palette 整合・patch 時の failure class 検出。ここで止まったらログのコード名が一次手掛かりです。</p>
+        <p><strong>必ず人が見るタイミング</strong>：YMM4 取込後の読み上げ・字幕の<strong>最終見た目</strong>（ツールの表示幅は近似）。表情ラベルの<strong>見え方の妥当性</strong>、背景・テンポ・音量の<strong>創作判断</strong>、通しプレビュー、サムネ・公開判断。</p>
+        <p><strong>頻度を抑える運用</strong>：増分変更のたびに visual proof を求めない方針です。初回 E2E と最終制作物の確認を優先し、同じ種類の失敗の繰り返し確認は避けます（<code>docs/OPERATOR_WORKFLOW.md</code>「検証の境界」参照）。</p>
+        <p><strong>TIMELINE_ROUTE_MISS / SE_WRITE_ROUTE_UNSUPPORTED</strong>：多くは「その ymmp に経路が無い」という<strong>サンプル・テンプレ依存</strong>です。創作判断というより、別テンプレで再測定するか feature を見直す<strong>設計判断</strong>が先にあります。</p>
+      </div>
+    </details>
+  </aside>
+
   <main>
     <!-- CSV 変換タブ -->
     <section id="tab-csv" class="tab-content active">
@@ -55,6 +81,20 @@
         <button id="btn-build-csv" class="primary" disabled>Build CSV</button>
         <button id="btn-dry-run">Dry Run</button>
         <button id="btn-open-output" class="hidden">出力フォルダを開く</button>
+      </div>
+
+      <div class="packet-assist-group">
+        <h3>外部 LLM 用パケット（テキストのみ）</h3>
+        <p class="hint">既存台本から Markdown/JSON と workflow proof 雛形をフォルダへ出力します（<code>ADR-0004</code>）。主台本のゼロ生成や .ymmp 直接編集は行いません。</p>
+        <div class="action-row">
+          <button type="button" id="btn-select-packet-dir">出力フォルダを選ぶ</button>
+          <span id="packet-dir-path" class="file-path">未選択</span>
+        </div>
+        <div class="action-row">
+          <button type="button" id="btn-build-cue-bundle" disabled>Cue パケット（bundle）</button>
+          <button type="button" id="btn-build-diagram-bundle" disabled>Diagram パケット（bundle）</button>
+        </div>
+        <div id="packet-result" class="result-panel hidden"></div>
       </div>
 
       <div id="csv-result" class="result-panel hidden"></div>
@@ -110,6 +150,18 @@
 
     <!-- 品質診断タブ -->
     <section id="tab-scoring" class="tab-content">
+      <p class="hint scoring-intro">H-01 Packaging Brief（JSON/Markdown）を選び、H-04 / H-03 のスコアを実行します。ウィザード完了後の品質チェック用です。</p>
+      <div class="action-row scoring-doc-row">
+        <button type="button" id="btn-open-packaging-spec" class="wizard-nav-btn">H-01 仕様を開く</button>
+        <button type="button" id="btn-open-h01-proof" class="wizard-nav-btn">H-01 workflow proof を開く</button>
+        <button type="button" id="btn-open-workflow-proof-template" class="wizard-nav-btn">B-11 記録テンプレを開く</button>
+        <button type="button" id="btn-open-b11-checkpoints" class="wizard-nav-btn">B-11 手動確認一覧</button>
+      </div>
+      <div class="action-row scoring-doc-row">
+        <button type="button" id="btn-save-h01-template-md" class="wizard-nav-btn primary">H-01 テンプレ（MD）を保存</button>
+        <button type="button" id="btn-save-h01-template-json" class="wizard-nav-btn primary">H-01 テンプレ（JSON）を保存</button>
+      </div>
+
       <div class="file-row">
         <label>Packaging Brief</label>
         <button class="btn-file" data-target="scoring-brief">選択</button>
@@ -162,6 +214,7 @@
       </div>
     </section>
   </main>
+  </div>
 
   <footer>
     <span id="status">Ready</span>

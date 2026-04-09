@@ -19,3 +19,6 @@ samples/_tmp_*
 gui/node_modules/
 gui/package-lock.json
 gui/project-settings.json
+
+# Lane C: オペレータが絶対パスを書いたレジストリ JSON（repo に載せない）
+_local/

@@ -1,0 +1,62 @@
+[
+  {
+    "text": "2023年の話",
+    "pos": 4,
+    "expected_forbidden": true,
+    "note": "digit + 年"
+  },
+  {
+    "text": "1失点に抑えた",
+    "pos": 1,
+    "expected_forbidden": true,
+    "note": "digit + 失点"
+  },
+  {
+    "text": "見間違った",
+    "pos": 3,
+    "expected_forbidden": true,
+    "note": "漢字 + っ（促音）"
+  },
+  {
+    "text": "入り込む",
+    "pos": 3,
+    "expected_forbidden": true,
+    "note": "漢字 + 1モーラ送り仮名"
+  },
+  {
+    "text": "サンプル～～では、続き",
+    "pos": 6,
+    "expected_forbidden": true,
+    "note": "波ダッシュ直後のでは"
+  },
+  {
+    "text": "抑える投手",
+    "pos": 1,
+    "expected_forbidden": true,
+    "note": "漢字 + える"
+  },
+  {
+    "text": "対策あるいは見送り",
+    "pos": 2,
+    "expected_forbidden": false,
+    "note": "あるいは は語境界として切る"
+  },
+  {
+    "text": "問題は別だ",
+    "pos": 2,
+    "expected_forbidden": false,
+    "note": "助詞はは単独モーラルールで許容"
+  },
+  {
+    "text": "バッターが打った",
+    "pos": 1,
+    "expected_forbidden": true,
+    "note": "カタカナ語内のッ（バ|ッター 境界）"
+  },
+  {
+    "text": "71.4%のシェア",
+    "pos": 4,
+    "expected_forbidden": true,
+    "note": "数字直後の％（4|% 境界）"
+  }
+]

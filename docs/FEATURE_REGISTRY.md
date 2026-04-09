@@ -78,7 +78,7 @@
 | C-04 | 背景動画の配置自動化（Python 制御） | rejected | L3 | Python から YMM4 内部の配置を制御するインターフェースが存在しない。**代替:** YMM4 上で手動配置する（WORKFLOW.md S-6a） |
 | C-05 | 素材配置の自動指定（Python 制御） | rejected | L3 | Python から YMM4 内部の素材配置を制御するインターフェースが存在しない。**代替:** YMM4 テンプレートで初期配置を定型化する（WORKFLOW.md S-0） |
 | C-06 | YMM4 演出・レンダリング工程（手動） | info | L3 | Python 機能ではなく手動工程の記録。読み上げ確認(S-5)・背景演出(S-6)・最終確認(S-7)。詳細は WORKFLOW.md 参照 |
-| C-07 | S-6 演出メモ生成（GUI LLM プロンプトテンプレート） | done | L3 補助 | v3 確定。Part 1: マクロ演出設計 (全体トーン/ペーシング/背景遷移)、Part 2: ミクロ演出指示 (4パターン/発話単位)、Part 3: 素材調達ガイド。`docs/S6-production-memo-prompt.md`。統合ガイド: `docs/gui-llm-setup-guide.md` |
+| C-07 | S-6 演出メモ生成（GUI LLM プロンプトテンプレート） | done | L3 補助 | v3 確定。Part 1: マクロ演出設計 (全体トーン/ペーシング/背景遷移)、Part 2: ミクロ演出指示 (4パターン/発話単位)、Part 3: 素材調達ガイド。`docs/S6-production-memo-prompt.md`。統合ガイド: `docs/gui-llm-setup-guide.md`。画像例由来のオペレータ意図の言語化正本: [C07-visual-pattern-operator-intent.md](C07-visual-pattern-operator-intent.md) |
 | C-08 | S-8 サムネイルコピー生成（GUI LLM プロンプトテンプレート） | done | L3 補助 | C-07 と同方式。キャッチコピー5案 + サブコピー3案 + 表情提案 + 背景方向性。`docs/S8-thumbnail-copy-prompt.md`。C-07 と統合して Custom GPT / Claude Project に1つのプロンプトとして固定化可能 |
 | C-09 | S-1 台本 refinement 支援プロンプト（GUI LLM） | done | L3 補助 | `docs/S1-script-refinement-prompt.md`。`diagnose-script --format json` + 生台本を GUI LLM に渡す手順。`docs/gui-llm-setup-guide.md` に導線あり |
 
@@ -104,6 +104,12 @@
 | F-02 | 設定管理 GUI | quarantined | GUI | 前セッションの汚染バッチ由来。設定固定点と F-01 の価値検証前に進めない |
 | F-03 | YMM4 出力プレビュー | rejected | GUI | YMM4 の見え方を Python で模倣することは視覚的生成に該当。YMM4 自体で確認すべき |
 
+#### F-01 / F-02 再審査ゲート（2026-04-06）
+
+- **ステータスは quarantined 維持**（台帳上の承認なしに復活させない）。
+- 再開の前提: 制作ウィザード（`start-gui.bat`）＋既存タブ（CSV / 演出適用 / 品質診断）で S-5・S-6 の痛点が十分吸収されるかを、[workflow-proof-template.md](workflow-proof-template.md) に沿った **B-11** 記録で判断する。
+- 記録上「分割プレビュー専用 GUI」や「設定の第二 UI」が最短価値だと判断された場合のみ、個別 FEATURE として台帳更新・スコープ確定のうえで再検討する。
+
 ### G. YMM4 自動化 (L3 内部工程の効率化)
 
 G-15〜G-18 はユーザー承認済み（[FUTURE_DEVELOPMENT_ROADMAP.md](FUTURE_DEVELOPMENT_ROADMAP.md) 承認表）。**G-15〜G-18 は実装済み**（G-18: [G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)）。
@@ -111,7 +117,7 @@ G-15〜G-18 はユーザー承認済み（[FUTURE_DEVELOPMENT_ROADMAP.md](FUTURE
 | ID | 機能 | ステータス | レイヤー | 備考 |
 |----|------|-----------|---------|------|
 | G-01 | YMM4 IToolPlugin feasibility spike | hold | L3 | タイムライン操作 API 非公開。優先度最下位。他経路で不十分な場合のみ検討 |
-| G-02 | 演出 IR 語彙定義 | done | L2 | `docs/PRODUCTION_IR_SPEC.md` v1.0。template/face/bg/bg_anim/slot/motion/overlay/se/transition の9フィールド。Macro+Micro 二層構造、JSON/CSV 二重表現、carry-forward ルール |
+| G-02 | 演出 IR 語彙定義 | done | L2 | `docs/PRODUCTION_IR_SPEC.md` v1.0。template/face/bg/bg_anim/slot/motion/overlay/se/transition の9フィールド。Macro+Micro 二層構造、JSON/CSV 二重表現、carry-forward ルール。語彙と `patch-ymmp` 適用範囲の対照: [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md) |
 | G-02b | 完成品 ymmp 構造解析 (研究のみ、1件限定) | done | L3 | 171MB ymmp を解析。VoiceItem 1549件 / VideoItem 140件 / TachieItem 2件。TachieFaceParameter でパーツ単位の表情制御。bg+face 差し替えが最小実用単位。`docs/verification/G02b-ymmp-structure-analysis.md` |
 | G-03 | 演出適用ツール (IToolPlugin) | hold | L3 | G-01 が前提。タイムライン操作 API 非公開のため凍結 |
 | G-04 | ymmp 背景/表情自動差し替え | hold | L3 | ymmp 直接編集は控える。G-02b + 段階5の判断結果を踏まえて再検討 |
@@ -127,14 +133,14 @@ G-15〜G-18 はユーザー承認済み（[FUTURE_DEVELOPMENT_ROADMAP.md](FUTURE
 | G-14 | production lane timeline contract profile | done | L3 | [samples/production.ymmp](samples/production.ymmp)（CSV 読込後・ImageItem 無し）向けに [samples/timeline_route_contract.json](samples/timeline_route_contract.json) に `production_ai_monitoring_lane` を追加。`measure-timeline-routes --expect --profile production_ai_monitoring_lane` で ERROR なし。bg_anim は本 ymmp に観測が無いため required 外とし、ギャップを文書化（`docs/verification/P2B-production-timeline-contract-profile.md`） |
 | G-15 | patch-ymmp 発話スパン背景（Micro `bg`） | done | L2/L3 | Micro IR の `bg`（carry-forward 解決後）を Layer 0 に反映。[G15-micro-bg-patch.md](verification/G15-micro-bg-patch.md)。[VISUAL_STYLE_PRESETS.md](VISUAL_STYLE_PRESETS.md) |
 | G-16 | 複数 overlay / スタック（1 発話複数 ImageItem） | done | L2/L3 | `overlay` を文字列または配列で受け、同一発話に複数 ImageItem。[G16-multi-overlay-patch.md](verification/G16-multi-overlay-patch.md) |
-| G-17 | motion / transition / bg_anim の ymmp 書き込み Adapter | done | L2/L3 | `--timeline-profile` + maps。契約失敗時は書き込みスキップ。[G17-motion-adapter-packet.md](verification/G17-motion-adapter-packet.md) |
+| G-17 | motion / transition / bg_anim の ymmp 書き込み Adapter | done | L2/L3 | `--timeline-profile` + `--motion-map`（`video_effect` 辞書）等。契約失敗時は書き込みスキップ。[G17-motion-adapter-packet.md](verification/G17-motion-adapter-packet.md)。**Phase2（別フラグ）:** `--tachie-motion-map` で VideoEffects 配列台帳＋発話区間による `TachieItem` 分割（`--timeline-profile` 未指定時のみ）。G-14 列挙子 `bg_anim` の X/Y/Zoom キーフレームは micro bg 生成時に別経路で適用 |
 | G-18 | SE AudioItem タイムライン挿入（write route 実装） | done | L2/L3 | `patch-ymmp` の `_apply_se_items` が `AudioItem` を挿入。[G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)。履歴メモ [G18-se-audioitem-deferred.md](verification/G18-se-audioitem-deferred.md)。P2C 参照 |
 
 ### H. Packaging / 評価 / オーケストレーション (L2 + L4)
 
 | ID | 機能 | ステータス | レイヤー | 備考 |
 |----|------|-----------|---------|------|
-| H-01 | Packaging Orchestrator brief | approved | L2 | タイトル / サムネ / 台本の約束を中央制御する text-only brief。`docs/PACKAGING_ORCHESTRATOR_SPEC.md` v0.1 で schema を定義済み。`promise` / `audience_hook` / `required_evidence` / `forbidden_overclaim` / `alignment_check` を正本化し、台本単体がタイトルを越権決定しないようにする。`docs/verification/H01-packaging-orchestrator-ai-monitoring-dry-proof.md` で repo-local dry proof まで記録済み。旧 code orchestrator パターンの復活ではない |
+| H-01 | Packaging Orchestrator brief | approved | L2 | タイトル / サムネ / 台本の約束を中央制御する text-only brief。`docs/PACKAGING_ORCHESTRATOR_SPEC.md` v0.1 で schema を定義済み。`promise` / `audience_hook` / `required_evidence` / `forbidden_overclaim` / `alignment_check` を正本化し、台本単体がタイトルを越権決定しないようにする。`docs/verification/H01-packaging-orchestrator-ai-monitoring-dry-proof.md` で repo-local dry proof まで記録済み。旧 code orchestrator パターンの復活ではない。空テンプレ出力: CLI `emit-packaging-brief-template`、GUI 品質診断タブの「H-01 テンプレを保存」。**スコープ確定（2026-04）**: 現状の **機械化範囲はテンプレ生成・GUI 保存まで**とする。ブリーフを入力にした自動パイプライン連携（例: `build-csv` / `apply-production` への自動注入、スコア結果のクローズドループ反映）は **未承認**。**拡張する場合**は本行の「スコープ確定」を更新し、`approved` の下位タスクとして台帳に分割してから実装する。 |
 | H-02 | Thumbnail strategy v2 (具体数値優先 + pattern rotation) | done | L2 | C-08 の上位互換候補。`docs/THUMBNAIL_STRATEGY_SPEC.md` v0.1 で specificity-first / banned pattern / rotation policy / output contract を定義済み。dry proof + strict GUI rerun proof (2026-04-06) pass。仕様準拠確認済み (4/5案が preferred_specifics 使用、banned pattern なし、Specificity Ledger・Brief Compliance Check 出力)。コピー品質の実用改善は別課題 |
 | H-03 | Visual density score | done | L2/L3 | `docs/VISUAL_DENSITY_SCORE_SPEC.md` v0.1 準拠。`score-visual-density` CLI（`src/pipeline/visual_density_score.py`）と GUI の品質診断タブで category スコア集計・total・warning/repair を出力。dry proof は `docs/verification/H03-visual-density-ai-monitoring-proof.md`。ymmp readback 併用は将来拡張 |
 | H-04 | Evidence richness score | done | L1/L2 | `docs/EVIDENCE_RICHNESS_SCORE_SPEC.md` v0.1 準拠。`score-evidence` CLI（`src/pipeline/evidence_score.py`）と GUI の品質診断タブ。manual proof は `docs/verification/H04-evidence-richness-ai-monitoring-proof.md`。タイトル / サムネ約束と本文根拠のギャップ診断 |

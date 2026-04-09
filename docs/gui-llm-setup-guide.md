@@ -4,6 +4,14 @@ NLMYTGen の GUI LLM プロンプトを Custom GPT / Claude Project に固定化
 
 ---
 
+## 正本（レーン B / C-07 v4）
+
+[OPERATOR_PARALLEL_WORK_RUNBOOK.md](OPERATOR_PARALLEL_WORK_RUNBOOK.md) トラック B および [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) に従い、**演出 IR（C-07）の Instructions 正本は [S6-production-memo-prompt.md](S6-production-memo-prompt.md) の「### v4 プロンプト本体」コードフェンス内の全文**とする。漏れなく同期する場合は [verification/LANE-B-gui-llm-sync-checklist.md](verification/LANE-B-gui-llm-sync-checklist.md) を使う。
+
+本ページ後半の **レガシー統合プロンプト v3** は、自然文のみの旧一体型運用向けの参照である。IR パイプ（`validate-ir` / `apply-production`）では **v4 を優先**する。
+
+---
+
 ## S-1 台本 refinement（C-09 / Phase 1）
 
 NotebookLM 生台本を `build-csv` に入れる前に、[SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md](SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md) の **`diagnose-script`**（B-18）で機械診断し、続けて [S1-script-refinement-prompt.md](S1-script-refinement-prompt.md) を GUI LLM に渡して constrained rewrite する。演出 IR（C-07）より**上流**の工程。
@@ -18,12 +26,14 @@ NotebookLM 生台本を `build-csv` に入れる前に、[SCRIPT_QUALITY_DIAGNOS
 
 1. ChatGPT で「Explore GPTs」→「Create a GPT」
 2. 「Configure」タブで以下を設定:
-   - **Name**: ゆっくり演出アシスタント
-   - **Description**: 台本から演出メモとサムネイルコピーを生成
-   - **Instructions**: 下記「統合プロンプト」をそのまま貼り付け
+   - **Name**: ゆっくり演出アシスタント（任意）
+   - **Description**: 台本から演出 IR（JSON）・素材メモ・サムネ素案を生成
+   - **Instructions**: [S6-production-memo-prompt.md](S6-production-memo-prompt.md) の **「### v4 プロンプト本体」**直下のコードフェンス内を **そのまま貼り付け**（C-07 v4 正本）
 3. 「Save」→「Only me」で保存
 
-以降は台本テキストを貼り付けるだけで演出メモとサムネイルコピーが生成される。
+Phase 1 の台本 refinement（C-09）は **別 GPT** に [S1-script-refinement-prompt.md](S1-script-refinement-prompt.md) を載せることを推奨（[verification/LANE-B-gui-llm-sync-checklist.md](verification/LANE-B-gui-llm-sync-checklist.md)）。
+
+以降は台本テキスト（必要なら先頭に H-01 brief）を貼り付け、S6「v4 使い方」に従い Part 1〜2 の JSON を取り出す。
 
 ---
 
@@ -32,9 +42,9 @@ NotebookLM 生台本を `build-csv` に入れる前に、[SCRIPT_QUALITY_DIAGNOS
 ### 手順
 
 1. claude.ai で「Projects」→「Create project」
-2. **Project name**: NLMYTGen 演出アシスタント
-3. **Project instructions**: 下記「統合プロンプト」をそのまま貼り付け
-4. 過去の演出メモ出力を「Knowledge」に追加すると、スタイルが安定する
+2. **Project name**: NLMYTGen 演出アシスタント（任意）
+3. **Project instructions**: [S6-production-memo-prompt.md](S6-production-memo-prompt.md) の **「### v4 プロンプト本体」**フェンス内をそのまま貼り付け
+4. 過去の IR 出力を「Knowledge」に追加すると、スタイルが安定する
 
 ---
 
@@ -44,17 +54,19 @@ NotebookLM 生台本を `build-csv` に入れる前に、[SCRIPT_QUALITY_DIAGNOS
 
 1. gemini.google.com で「Gem manager」→「New Gem」
 2. 以下を設定:
-   - **Name**: ゆっくり演出アシスタント
-   - **Instructions**: 下記「統合プロンプト」をそのまま貼り付け
+   - **Name**: ゆっくり演出アシスタント（任意）
+   - **Instructions**: [S6-production-memo-prompt.md](S6-production-memo-prompt.md) の **「### v4 プロンプト本体」**フェンス内をそのまま貼り付け
 3. 「Save」
 
 Custom GPT と同等の固定化が無料で可能。NotebookLM は System Instruction 固定不可のため不向き。
 
 ---
 
-## 統合プロンプト v3 (C-07 v3 + C-08)
+## レガシー: 統合プロンプト v3 (C-07 v3 + C-08)
 
-以下を Instructions / Project instructions にそのまま貼り付けてください:
+**新規セットアップでは上記 S6 v4 を使用すること。** 以下は v4 導入以前の自然文一体型。IR JSON を CLI に渡す運用には使わない。
+
+レガシー運用で Instructions / Project instructions にそのまま貼り付ける場合の参照:
 
 ```
 あなたはゆっくり解説動画の制作アシスタントです。
@@ -154,9 +166,19 @@ Custom GPT と同等の固定化が無料で可能。NotebookLM は System Instr
 
 ---
 
-## 使い方
+## 使い方（v4 正本）
 
-設定後は、会話で台本テキストを貼り付けるだけ:
+設定後は [S6-production-memo-prompt.md](S6-production-memo-prompt.md) の「### v4 使い方」に従う。会話に台本を貼り付け、Part 1 (Macro IR) と Part 2 (Micro IR) を 1 ファイルにまとめて `validate-ir` / `apply-production` へ渡す。
+
+H-01 brief を使う場合は **台本より先に** brief を貼る（[PACKAGING_ORCHESTRATOR_SPEC.md](PACKAGING_ORCHESTRATOR_SPEC.md)、空テンプレ [samples/packaging_brief.template.md](../samples/packaging_brief.template.md)）。
+
+**サムネコピー**を H-02 準拠で厳密に回す場合は [S8-thumbnail-copy-prompt.md](S8-thumbnail-copy-prompt.md) を別ラウンドまたは別 GPT で正本同期する（v4 の Part 4 は素案向け。使い分けは [verification/LANE-B-gui-llm-sync-checklist.md](verification/LANE-B-gui-llm-sync-checklist.md) の B-5）。
+
+Custom GPT の Instructions を更新した場合は、既存の会話ではなく新しい会話で試してください。
+
+### レガシー v3 の使い方
+
+下記 v3 ブロックを Instructions に載せた場合のみ、会話で台本を貼ると 4 パート（演出設計 → セクション別指示 → 素材調達 → サムネイルコピー）が自然文で一度に返る。
 
 ```
 以下が台本テキストです:
@@ -164,6 +186,3 @@ Custom GPT と同等の固定化が無料で可能。NotebookLM は System Instr
 ---
 スピーカー1: ちょっと想像してみてください。...
 ```
-
-4パート (演出設計 → セクション別指示 → 素材調達ガイド → サムネイルコピー) が一度に返ってきます。
-Custom GPT の Instructions を更新した場合は、既存の会話ではなく新しい会話で試してください。

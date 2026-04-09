@@ -1,5 +1,7 @@
 # P2A — `origin/feat/phase2-motion-segmentation` ブランチレビュー
 
+> **履歴注記（2026-04-以降）**: 以下の「一括マージしない」は **当時のリスク判断**である。のち **`feat/phase2-motion-segmentation` に `origin/master` をマージ**し、G-17 の `--motion-map`（`video_effect` 辞書）と Phase2 の **`--tachie-motion-map`**（配列台帳）を **CLI・実装で分離**した。現行の運用・正本は [PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md) と [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) の G-17 行を参照。
+
 ## 概要
 
 - **ベース差分**: `master..origin/feat/phase2-motion-segmentation` は **1 コミット**（`bcfb1f0`）だが、`master` 対比で **約 38 ファイル / +3487 行** の大きな差分。

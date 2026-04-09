@@ -34,6 +34,9 @@
 - B-11 を approved frontier とし、S-5 の pain を「YMM4 取込前にどこまで減らせるか」を先に実証する。
 - proof は Python 側の改善余地と YMM4 手動修正の境界を見極めることが目的であり、YMM4 の自動操作を作ることではない。
 - proof は少なくとも 1 件の transcript で、`build-csv --max-lines 2 --chars-per-line 40 --stats` の事前警告と、YMM4 取込後の残修正量を同じ記録に残す。
+- 記録フォーマットの正本は [workflow-proof-template.md](workflow-proof-template.md)。`docs/verification/` にコピーして案件ごとに記入する。リポジトリ内の記入例: [verification/B11-workflow-proof-sample-example-dialogue.md](verification/B11-workflow-proof-sample-example-dialogue.md)。
+- 手動確認のタイミング一覧: [B11-manual-checkpoints.md](B11-manual-checkpoints.md)。
+- 2026-04-06: 既存サンプル `samples/AI監視が追い詰める生身の労働.txt` について取込前記録（stats・overflow 警告・111 行 CSV 出力）を [verification/B11-workflow-proof-ai-monitoring-labor.md](verification/B11-workflow-proof-ai-monitoring-labor.md) に固定。取込後表は YMM4 通し確認待ち。
 - proof が成功とみなせる条件は、S-5 の修正が「例外処理」に留まり、全面的な手直しや GUI 欲求だけで次 frontier を決めないこと。
 - 残修正は最低でも「辞書登録」「手動改行」「再分割したい長文」「タイミングのみ」の 4 区分で分類する。
 - 2026-03-31 の初回観測では、辞書登録 0 / タイミングのみ 0 に対して、手動改行・再分割したい長文が約 30 箇所と支配的だった。次の L2 改善は読みではなく字幕改行のバランス改善を優先する。
@@ -48,6 +51,7 @@
 - 2026-04-01 の B-15 第3回手動検証: ページ間分割はだいぶ改善。行内折り返し (YMM4自動折り返し) の違和感は残存。「1行/1ページの最大文字数から逆算する外殻」が必要で、B-16 として分離。B-15 done。
 - 2026-04-01 の C-07 v1 proof: セクション分割 OK、作業時間削減 OK、背景候補 NG。ストック素材検索は方向が違う。必要なのは茶番劇アニメ+図解の演出指示。
 - 2026-04-01 の C-07 v2 proof: 4演出パターン (茶番劇/情報埋め込み/雰囲気演出/黒板型) + 発話単位指示 + 表示情報抽出 + 要調査明示。3基準全て OK。C-07 done。
+- 画像例から言語化したオペレータ意図（立ち絵＋フキダシ・ゆっくり顔差し替え、リソース列挙、地図/黒板整理、雰囲気ストック）の正本: [C07-visual-pattern-operator-intent.md](C07-visual-pattern-operator-intent.md)。
 - 2026-04-03 の production-slice patch-ymmp proof では、実IR先頭11発話を既存 ymmp に適用して face 13 / bg 2 変更を確認した。一方で 11 VoiceItem 中 4 件は `TachieFaceParameter` を持たず、face 差し替え対象外だった。full E2E 前に、台本読込後 ymmp の対象キャラ発話が表情パラメータを保持していることを operator 側で確認する必要がある。
 - 2026-04-05 の face completion hardening で、この種の partial apply は `VOICE_NO_TACHIE_FACE` として mechanical failure に昇格した。以後は broad な visual retry loop ではなく、failure class に応じて対処する。
 - 2026-04-06 の H-02 dry proof で、C-08 は `Specificity Ledger` と `Brief Compliance Check` を返す契約になった。strict GUI rerun proof は同日 pass で閉じた (4/5案が preferred_specifics 使用、banned pattern なし)。コピー品質の実用改善は別課題として残る。
@@ -97,11 +101,19 @@
 - `VOICE_NO_TACHIE_FACE`
 - 最終制作物で「今の label inventory 自体が足りない」と判断された場合
 
+## motion: G-17 と Phase2（CLI の使い分け）
+
+- **`--timeline-profile` を付ける場合（G-17）**: `motion` / `transition` / `bg_anim` のうち、契約に含まれるものを **`--motion-map`**（各ラベル → `video_effect` 辞書）、`--transition-map`、`--bg-anim-map` で書き込む。サンプル: [samples/motion_map_g17.example.json](samples/motion_map_g17.example.json)。このとき **Phase2 の `TachieItem` 区間分割は実行されない**。
+- **プロファイルを付けない場合の motion（Phase2）**: **`--tachie-motion-map`** でラベル → **VideoEffects オブジェクトの配列**を渡し、発話アンカーに合わせて `TachieItem` を分割する。サンプル: [samples/tachie_motion_map.example.json](samples/tachie_motion_map.example.json)。
+- **`validate-ir`**: 台帳ラベル検証は **`--motion-map` と `--tachie-motion-map` のキーを併用**できる（和集合で `MOTION_MAP_UNKNOWN_LABEL` を抑止）。
+
 ## timeline edit サブクエストの境界 (2026-04-06 固定)
-- assistant / tool が先に閉じる対象は G-11 slot patch、G-12 motion/transition/bg_anim の write route 測定、G-13 overlay/se の timing anchor 付き挿入設計
+- IR 語彙と `patch-ymmp` 実装の対応（何が自動で書き込まれるか）の正本: [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md)
+- assistant / tool が先に閉じる対象は G-11 slot patch、G-12 motion/transition/bg_anim の write route 測定、G-13 overlay/se の timing anchor 付き挿入設計、G-14 bg_anim（ImageItem X/Y/Zoom プリセット）patch
 - `slot` は mechanical 対象。unknown slot label / slot registry gap / character default slot drift は YMM4 手動確認より前に止める
 - `motion` / `transition` / `bg_anim` は creative choice ではなく、まず「どの write route が安全か」を測る subquest として扱う。native template 参照か key 書き換えかを実測で確定するまでは manual frontier に押し戻さない
 - G-12 の測定は `measure-timeline-routes` を起点に行い、まず ymmp の `VideoEffects` / transition key / template candidate route を readback で把握する。期待 route が決まったら `--expect` で contract miss を先に止める
+- 運用: `samples/` 等に新しい ymmp サンプルが追加され、timeline 系の期待 route を広げる場合は、該当カテゴリの `measure-timeline-routes` 記録（contract）を同じタイミングで更新する（sample dependency の解消単位）
 - `TIMELINE_ROUTE_MISS` は「その演出がダメ」という意味ではなく、「その ymmp には期待 route が存在しない」という mechanical failure として扱う
 - repo-local corpus に route 自体が 0 件なら、それは operator の visual judgement 待ちではなく sample dependency として扱う。2026-04-06 時点では `template` と non-fade / template-backed `transition` family のみがこれに該当する
 - `overlay` / `se` は意味ラベル → registry → timing anchor の deterministic 経路ができるまでは manual judgement に残すが、設計・dry-run・readback は assistant 側で先に閉じる

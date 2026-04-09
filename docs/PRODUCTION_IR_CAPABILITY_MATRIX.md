@@ -1,0 +1,107 @@
+# Production IR 能力マトリクス（語彙と L2/L3 の際限）
+
+> **正本の役割**: [PRODUCTION_IR_SPEC.md](PRODUCTION_IR_SPEC.md) にある**語彙・意味**と、`apply-production` / `patch-ymmp` が **実際に ymmp に書き込む範囲**の差を混同しないための対照表。  
+> 関連: [AUTOMATION_BOUNDARY.md](AUTOMATION_BOUNDARY.md)、[OPERATOR_WORKFLOW.md](OPERATOR_WORKFLOW.md)（G-11〜G-13）、[verification/G12-timeline-route-measurement.md](verification/G12-timeline-route-measurement.md)、[samples/timeline_route_contract.json](../samples/timeline_route_contract.json)。
+
+## 1. データの流れ（概要）
+
+```mermaid
+flowchart LR
+  subgraph spec [L2_Spec]
+    IRSpec[PRODUCTION_IR_SPEC]
+  end
+  subgraph author [L1_L2_Authoring]
+    LLM[Writer_IR_CustomGPT等]
+    Human[人間編集]
+  end
+  subgraph adapter [L2_Adapter]
+    Val[validate_ir]
+    Patch[patch_ymmp]
+  end
+  subgraph ymm4 [L3_YMM4]
+    Proj[ymmpプロジェクト]
+    Manual[手動微調整]
+  end
+  IRSpec --> LLM
+  IRSpec --> Human
+  LLM --> Val
+  Human --> Val
+  Val --> Patch
+  Patch --> Proj
+  Proj --> Manual
+```
+
+
+
+- **語彙**は仕様上すべて「意味ラベル」として定義できるが、**アダプタが書き込むのはその一部**である。  
+- **G-12** は `motion` / `transition` / `bg_anim` について **readback と経路契約**まで。patch での自動書き込みとは別レイヤー。
+
+**`motion` の分岐（実装）:**
+
+```mermaid
+flowchart TD
+  tp{timeline_profile 指定?}
+  tp -->|yes| g17[G17: motion_map に video_effect 辞書]
+  tp -->|no| p2[Phase2: tachie_motion_effects_map に配列台帳]
+  g17 --> adapt[_apply_timeline_profile_adapters]
+  p2 --> split[_apply_motion_to_tachie_items]
+```
+
+## 2. Micro IR フィールド別マトリクス
+
+
+| フィールド                    | 仕様（意味の正本）                                                                                                                                                                        | `patch_ymmp` が ymmp に反映                                            | `validate-ir` で検知                    | G-12 経路契約                                                                                                                                                                                 | L3 手動・備考                                          |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| `template`               | [PRODUCTION_IR_SPEC.md](PRODUCTION_IR_SPEC.md) §3.1（C-07 A–D + intro/closing）。オペレータが画像例から言語化した意図は [C07-visual-pattern-operator-intent.md](C07-visual-pattern-operator-intent.md) | **いいえ**（carry-forward のみ。ymmp の型を切り替えない）                           | 語彙チェックなし                             | 対象外                                                                                                                                                                                       | 演出構成・素材選定のガイド。YMM4 上の見え方はテンプレ依存                   |
+| `face`                   | 同 §3.2                                                                                                                                                                           | **はい**（face_map / palette 解決）                                      | はい（unknown / gap / drift / 連続 run 等） | 対象外                                                                                                                                                                                       | ラベルとパーツの対応は palette 整備が前提                         |
+| `idle_face`              | 同 §2.1（idle_face）                                                                                                                                                                | **はい**（TachieFaceItem 挿入）                                          | はい（カバレッジ等）                           | 対象外                                                                                                                                                                                       | 同上                                                |
+| `bg`（micro または macro 由来） | 同 §3.3                                                                                                                                                                           | **はい**（macro `default_bg` 中心にレイヤー0の bg を再配置）                       | macro に bg ラベルが無いと `BG_MISSING`      | `bg_anim` 系は ImageItem 経路と関連                                                                                                                                                              | ファイル解決は bg_map。動画 bg の扱いはテンプレ次第                   |
+| `slot`                   | 同 §3.5                                                                                                                                                                           | **はい**（slot_map + registry、`off` は非表示）                             | はい（契約あり時 unknown / drift）            | 対象外                                                                                                                                                                                       | 座標は registry。テンプレ外レイアウトは手動                        |
+| `overlay`                | 同 §3.7                                                                                                                                                                           | **はい**（`--overlay-map` 指定時、ImageItem 挿入）                           | はい（契約あり時 unknown）                    | 主に overlay 挿入設計（G-13）                                                                                                                                                                     | タイミング・見え方の最終判断は人間                                 |
+| `se`                     | 同 §3.8                                                                                                                                                                           | **条件付き**（registry で解決し、write route が corpus にある場合。無い場合は fail-fast） | はい（契約あり時 unknown）                    | `AudioItem` 経路は corpus 依存（G-13）                                                                                                                                                           | `SE_WRITE_ROUTE_UNSUPPORTED` は mechanical failure |
+| `bg_anim`                | 同 §3.4                                                                                                                                                                           | **はい（二経路）** **(A) キーフレーム（G-14）**: micro bg の各 Layer0 セグメントで、時間重なる発話の `bg_anim`（carry-forward 済み）を **ImageItem の X/Y/Zoom 線形キーフレーム**に反映（`none` / `pan_*` / `zoom_*` / `ken_burns`）。**`--timeline-profile` 不要。** **(B) VideoEffects（G-17）**: `--timeline-profile` + `--bg-anim-map`（ラベル → `{ video_effect: {...} }`）で、契約通過時のみ Layer0 Image/Video の **`VideoEffects` 追記**。 | **はい**（未知ラベルは `BG_ANIM_UNKNOWN_LABEL`） | **あり**（両経路とも G-12 契約と整合する readback 前提。[timeline_route_contract.json](../samples/timeline_route_contract.json)） | (A) は数値プリセットのみ。(B) はプロファイル限定。微調整は YMM4 手動可。 |
+| `motion`                 | 同 §3.6                                                                                                                                                                           | **はい（二経路・排他）** **Phase2**: `--tachie-motion-map` のみ有効化。**`--timeline-profile` を付けない**とき `_apply_motion_to_tachie_items` が動き、台帳は **VideoEffects オブジェクトの配列**（[tachie_motion_map.example.json](../samples/tachie_motion_map.example.json)）。発話アンカーで `TachieItem` を区間分割し、`none` は空配列でクリア。同一 motion の連続区間は結合。**G-17**: **`--timeline-profile` 指定時**は Phase2 ロジックは**走らず**、`_apply_timeline_profile_adapters` が **`--motion-map`**（[motion_map_g17.example.json](../samples/motion_map_g17.example.json)）で **既存 TachieItem** に `video_effect` を追記。 | **はい**（`MOTION_UNKNOWN_LABEL`／`MOTION_MAP_UNKNOWN_LABEL`。台帳キーは `validate-ir` で `--motion-map` と `--tachie-motion-map` の**和集合**で検証可） | **あり**（`TachieItem.VideoEffects`） | [G-16](FEATURE_REGISTRY.md) Phase2 + [G-17](FEATURE_REGISTRY.md)。`row_range` 優先 / `index` fallback。 |
+| `transition`             | 同 §3.9（機械化は **none / fade** のみ。仕様上の他語彙は validate で ERROR）                                                                                                                                                                           | **はい**（`fade` → `VoiceItem` の Voice/Jimaku フェード。`none` → 0 クリア） | **はい**（`none`/`fade` 以外は `TRANSITION_UNKNOWN_LABEL`） | **fade 系は観測済み**（G-12）。`slide`/`wipe` 等は未 patch（ERROR で止める）                                                                 | [G-15](FEATURE_REGISTRY.md)。秒数はコード定数（将来 registry 可） |
+
+
+## 3. Macro IR（参考）
+
+
+| 要素                                    | 仕様   | `patch_ymmp`  | `validate-ir`                | 備考                 |
+| ------------------------------------- | ---- | ------------- | ---------------------------- | ------------------ |
+| `sections[].default_bg`               | §2.2 | bg 再配置の入力     | `BG_MISSING` で macro 全体をチェック |                    |
+| `sections[].default_face` 等           | §2.2 | micro と合わせて参照 | face 系は micro 集計で検査          |                    |
+| `pattern_mix` / `visual_arc` / `tone` | §2.2 | **反映なし**      | なし                           | LLM・編集者向けの動画方針テキスト |
+
+
+## 4. なぜ「背景＋表情だけ」と感じるか
+
+現行の [ymmp_patch.py](../src/pipeline/ymmp_patch.py) では、**確実にタイムラインを書き換える**のは上表のとおり **face / idle_face / slot / bg / overlay（map 時）/ se（条件付き）/ motion（台帳付き）/ transition（G-15）/ bg_anim（上表の A または B）** である。  
+`motion` は **Phase2（`--tachie-motion-map`・profile 無し）** か **G-17（`--timeline-profile` + `--motion-map`）** のどちらか一方が効く（同時に両方の分割ロジックは走らない）。`transition` は **G-15** で **`none` / `fade`** のみ **VoiceItem** に反映（仕様の `slide_*` 等は **validate-ir で ERROR**）。`bg_anim` は **G-14 のキーフレーム**と **G-17 の VideoEffects** が併存しうる。仕様書の語彙は **将来拡張と Writer 契約**のために先に広げている。
+
+## 5. 将来拡張（台帳・契約が先）
+
+**`transition` の slide/wipe 等**や **未契約の新経路**を patch に載せる場合の前提例:
+
+1. [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md) で FEATURE を明記し承認する。
+2. [G-12](verification/G12-timeline-route-measurement.md) の契約と矛盾しない write route を選ぶ。
+3. `validate-ir` に unknown / contract miss を足し、失敗時は書き出し前に止める（G-11〜G-13 / G-14 / G-15 / G-16 / G-17 と同じパターン）。
+
+※ **G-14** により `bg_anim` の **ImageItem X/Y/Zoom プリセット**（micro bg 連動）は patch 済み。  
+※ **G-17** により `bg_anim` の **`ImageItem`/`VideoItem` の `VideoEffects` 追記**（プロファイル + `bg_anim_map`）も patch 済み。  
+※ **G-15** により `transition` の **fade（Voice/Jimaku）**は patch 済み。非 fade 系は別 FEATURE。  
+※ **G-16 Phase2** により **`--tachie-motion-map`** で **`TachieItem` 区間分割 + VideoEffects**。**G-17** により **`--timeline-profile` + `--motion-map`** で **TachieItem への video_effect 追記**（Phase2 ロジックは無効）。`ShapeItem` 経路は別 FEATURE。
+
+## 6. 関連コマンド
+
+
+| コマンド                              | 役割                               |
+| --------------------------------- | -------------------------------- |
+| `validate-ir`                     | 上表「validate-ir」列が Yes の領域を中心にゲート |
+| `apply-production` / `patch-ymmp` | 上表「patch_ymmp」が Yes の領域を書き換え     |
+| `measure-timeline-routes`         | G-12 の readback・`--expect` で経路契約 |
+
+
+---
+
+*このファイルは「語彙の全集＝自動適用の全集」ではないことを示すための正本とする。*

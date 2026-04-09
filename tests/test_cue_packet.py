@@ -4,6 +4,8 @@ import json
 import subprocess
 import sys
 
+import pytest
+
 from src.contracts.structured_script import StructuredScript, Utterance
 from src.pipeline.cue_packet import build_cue_packet_payload, render_cue_packet_markdown
 
@@ -47,6 +49,7 @@ def test_render_cue_packet_markdown_mentions_boundary_and_roles():
     assert "[Speaker_A | src=Speaker_A]" in text
 
 
+@pytest.mark.integration
 def test_cli_build_cue_packet_writes_json(tmp_path):
     input_txt = tmp_path / "in.txt"
     input_txt.write_text(
@@ -82,6 +85,7 @@ def test_cli_build_cue_packet_writes_json(tmp_path):
     assert "sound_cue_optional" in data["output_contract"]["sections"][0]
 
 
+@pytest.mark.integration
 def test_cli_build_cue_packet_bundle_writes_three_files(tmp_path):
     input_txt = tmp_path / "in.txt"
     input_txt.write_text(
@@ -113,6 +117,7 @@ def test_cli_build_cue_packet_bundle_writes_three_files(tmp_path):
     assert (out_dir / "in_cue_workflow_proof.md").exists()
 
 
+@pytest.mark.integration
 def test_cli_build_cue_packet_bundle_preserves_existing_proof_log(tmp_path):
     input_txt = tmp_path / "in.txt"
     input_txt.write_text(

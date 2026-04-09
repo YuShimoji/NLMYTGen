@@ -138,15 +138,79 @@ ipcMain.handle('open-folder', async (_event, filePath) => {
   shell.showItemInFolder(filePath);
 });
 
+const REPO_ROOT = path.resolve(__dirname, '..');
+
+/** リポジトリ内ドキュメントを既定アプリで開く (パストラバーサル防止) */
+ipcMain.handle('open-repo-doc', async (_event, relPath) => {
+  const { shell } = require('electron');
+  if (typeof relPath !== 'string' || !relPath) {
+    return { ok: false, message: 'invalid path' };
+  }
+  const normalized = path.normalize(relPath).replace(/^(\.\.(\/|\\|$))+/, '');
+  const full = path.resolve(REPO_ROOT, normalized);
+  const relToRoot = path.relative(REPO_ROOT, full);
+  if (relToRoot.startsWith('..') || path.isAbsolute(relToRoot)) {
+    return { ok: false, message: 'path outside repo' };
+  }
+  if (!fs.existsSync(full)) {
+    return { ok: false, message: `not found: ${full}` };
+  }
+  const errMsg = await shell.openPath(full);
+  return errMsg ? { ok: false, message: errMsg } : { ok: true, path: full };
+});
+
 // --- Validate IR ---
 
 ipcMain.handle('validate-ir', async (_event, opts) => {
-  const args = ['validate-ir', opts.irJson];
+  const args = ['validate-ir', opts.irJson, '--format', 'json'];
   if (opts.faceMap) { args.push('--face-map', opts.faceMap); }
   if (opts.palette) { args.push('--palette', opts.palette); }
+  if (opts.slotMap) { args.push('--slot-map', opts.slotMap); }
+  if (opts.overlayMap) { args.push('--overlay-map', opts.overlayMap); }
+  if (opts.seMap) { args.push('--se-map', opts.seMap); }
 
   const result = await runCli(args);
-  return result;
+  const json = parseJsonLine(result.stdout);
+  return { ...result, json };
+});
+
+ipcMain.handle('select-folder', async () => {
+  const r = await dialog.showOpenDialog(mainWindow, {
+    title: '出力フォルダを選択',
+    properties: ['openDirectory'],
+  });
+  return r.canceled ? null : r.filePaths[0];
+});
+
+ipcMain.handle('build-cue-packet-bundle', async (_event, opts) => {
+  const args = ['build-cue-packet', opts.input, '--bundle-dir', opts.bundleDir];
+  if (opts.speakerMap) { args.push('--speaker-map', opts.speakerMap); }
+  if (opts.unlabeled) { args.push('--unlabeled'); }
+  return runCli(args);
+});
+
+ipcMain.handle('build-diagram-packet-bundle', async (_event, opts) => {
+  const args = ['build-diagram-packet', opts.input, '--bundle-dir', opts.bundleDir];
+  if (opts.speakerMap) { args.push('--speaker-map', opts.speakerMap); }
+  if (opts.unlabeled) { args.push('--unlabeled'); }
+  return runCli(args);
+});
+
+/** H-01 空テンプレを保存ダイアログ経由で書き出す */
+ipcMain.handle('emit-packaging-brief-template', async (_event, opts) => {
+  const fmt = opts && opts.format === 'json' ? 'json' : 'markdown';
+  const defaultPath = (opts && opts.defaultPath) || (fmt === 'json' ? 'packaging_brief.json' : 'packaging_brief.md');
+  const save = await dialog.showSaveDialog(mainWindow, {
+    title: 'H-01 Packaging Brief テンプレを保存',
+    defaultPath,
+    filters: fmt === 'json'
+      ? [{ name: 'JSON', extensions: ['json'] }]
+      : [{ name: 'Markdown', extensions: ['md'] }],
+  });
+  if (save.canceled) return { canceled: true };
+  const args = ['emit-packaging-brief-template', '-o', save.filePath, '--format', fmt];
+  const result = await runCli(args);
+  return { canceled: false, ...result, path: save.filePath };
 });
 
 // --- Save IR from paste ---

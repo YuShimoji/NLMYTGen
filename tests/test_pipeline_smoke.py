@@ -3,6 +3,8 @@
 import subprocess
 import sys
 
+import pytest
+
 from src.pipeline.normalize import normalize
 from src.pipeline.assemble_csv import assemble
 
@@ -43,6 +45,7 @@ def test_text_to_csv(tmp_path):
     assert output.rows[0].text == "今日のテーマはAI技術です"
 
 
+@pytest.mark.integration
 def test_cli_build_csv(tmp_path):
     """CLI build-csv がファイルを生成する。"""
     input_csv = tmp_path / "in.csv"
@@ -65,6 +68,7 @@ def test_cli_build_csv(tmp_path):
     assert "Host1" in content
 
 
+@pytest.mark.integration
 def test_cli_validate(tmp_path):
     """CLI validate が正常終了する。"""
     input_csv = tmp_path / "in.csv"
@@ -136,6 +140,7 @@ def test_load_ir_multi_object(tmp_path):
     assert data["utterances"][0]["speaker"] == "A"
 
 
+@pytest.mark.integration
 def test_cli_apply_production_with_palette(tmp_path):
     """CLI apply-production が palette から face_map 抽出 + patch を実行する。"""
     import json
@@ -217,6 +222,7 @@ def test_cli_apply_production_with_palette(tmp_path):
     assert (tmp_path / "face_map.json").exists()
 
 
+@pytest.mark.integration
 def test_cli_apply_production_with_face_map(tmp_path):
     """CLI apply-production が既存 face_map で動作する。"""
     import json
@@ -269,6 +275,7 @@ def test_cli_apply_production_with_face_map(tmp_path):
     assert "(loaded)" in result.stdout
 
 
+@pytest.mark.integration
 def test_cli_apply_production_fails_on_active_face_gap(tmp_path):
     """CLI apply-production は current IR の active gap を検出して止まる。"""
     import json
@@ -357,6 +364,7 @@ def test_cli_apply_production_fails_on_active_face_gap(tmp_path):
     assert not out_path.exists()
 
 
+@pytest.mark.integration
 def test_cli_validate_ir_fails_on_slot_default_drift(tmp_path):
     """CLI validate-ir は slot default drift を検出して止まる。"""
     import json
@@ -409,6 +417,7 @@ def test_cli_validate_ir_fails_on_slot_default_drift(tmp_path):
     assert "slot contract: 2 labels" in result.stdout
 
 
+@pytest.mark.integration
 def test_cli_apply_production_with_slot_map(tmp_path):
     """CLI apply-production は slot_map を読み dry-run まで通せる。"""
     import json
@@ -524,6 +533,7 @@ def test_cli_apply_production_with_slot_map(tmp_path):
     assert "(dry-run: no file written)" in result.stdout
 
 
+@pytest.mark.integration
 def test_cli_measure_timeline_routes_json(tmp_path):
     """CLI measure-timeline-routes は candidate route report を返す。"""
     import json
@@ -575,6 +585,7 @@ def test_cli_measure_timeline_routes_json(tmp_path):
     assert payload["template_name_counts"]["BG Pan"] == 1
 
 
+@pytest.mark.integration
 def test_cli_measure_timeline_routes_expect_fails_on_missing_route(tmp_path):
     """CLI measure-timeline-routes は contract miss を exit 1 で返す。"""
     import json
@@ -612,6 +623,7 @@ def test_cli_measure_timeline_routes_expect_fails_on_missing_route(tmp_path):
     assert "TIMELINE_ROUTE_MISS" in result.stdout
 
 
+@pytest.mark.integration
 def test_cli_measure_timeline_routes_expect_optional_warns_only(tmp_path):
     """CLI measure-timeline-routes は optional miss だけなら成功する。"""
     import json
@@ -652,6 +664,7 @@ def test_cli_measure_timeline_routes_expect_optional_warns_only(tmp_path):
     assert "TIMELINE_ROUTE_OPTIONAL_MISS" in result.stdout
 
 
+@pytest.mark.integration
 def test_cli_measure_timeline_routes_profile_selection(tmp_path):
     """CLI measure-timeline-routes は profile 指定で contract を選べる。"""
     import json
@@ -695,6 +708,7 @@ def test_cli_measure_timeline_routes_profile_selection(tmp_path):
     assert result.returncode == 0, f"stderr: {result.stderr}"
 
 
+@pytest.mark.integration
 def test_cli_measure_timeline_routes_unknown_profile_fails(tmp_path):
     """CLI measure-timeline-routes は unknown profile を failure にする。"""
     import json
@@ -718,6 +732,7 @@ def test_cli_measure_timeline_routes_unknown_profile_fails(tmp_path):
     assert "TIMELINE_ROUTE_PROFILE_UNKNOWN" in result.stdout
 
 
+@pytest.mark.integration
 def test_cli_validate_ir_with_overlay_and_se_contracts(tmp_path):
     """CLI validate-ir は overlay / se registry も見る."""
     import json
@@ -760,6 +775,7 @@ def test_cli_validate_ir_with_overlay_and_se_contracts(tmp_path):
     assert "se contract: 1 labels" in result.stdout
 
 
+@pytest.mark.integration
 def test_cli_patch_ymmp_with_overlay_map(tmp_path):
     """CLI patch-ymmp は overlay を dry-run まで反映する."""
     import json
@@ -842,6 +858,7 @@ def test_cli_patch_ymmp_with_overlay_map(tmp_path):
     assert "Overlay changes: 1" in result.stdout
 
 
+@pytest.mark.integration
 def test_cli_patch_ymmp_se_route_is_blocking(tmp_path):
     """CLI patch-ymmp は se route 未固定を fail-fast で止める."""
     import json

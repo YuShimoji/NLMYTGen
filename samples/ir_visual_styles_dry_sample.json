@@ -108,7 +108,7 @@
       "slot": "left",
       "bg_anim": "ken_burns",
       "motion": "fade_in",
-      "transition": "cut"
+      "transition": "none"
     },
     {
       "index": 6,

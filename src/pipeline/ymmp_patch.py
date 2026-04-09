@@ -16,6 +16,38 @@ from dataclasses import dataclass
 from pathlib import Path
 
 
+# G-15: IR transition は当面 none / fade のみ（validate-ir と共有）
+TRANSITION_ALLOWED: frozenset[str] = frozenset({"none", "fade"})
+
+# VoiceItem フェード秒数（固定。将来 registry 拡張可）
+G15_VOICE_FADE_IN_SEC = 0.2
+G15_VOICE_FADE_OUT_SEC = 0.2
+G15_JIMAKU_FADE_IN_SEC = 0.2
+G15_JIMAKU_FADE_OUT_SEC = 0.2
+
+# PRODUCTION_IR_SPEC §3.4 と一致させる（validate-ir と共有）
+BG_ANIM_ALLOWED: frozenset[str] = frozenset({
+    "none",
+    "pan_left",
+    "pan_right",
+    "zoom_in",
+    "zoom_out",
+    "ken_burns",
+})
+
+# PRODUCTION_IR_SPEC §3.6 + none（validate-ir と共有）
+MOTION_ALLOWED: frozenset[str] = frozenset({
+    "none",
+    "pop_in",
+    "slide_in",
+    "shake_small",
+    "shake_big",
+    "bounce",
+    "fade_in",
+    "fade_out",
+})
+
+
 @dataclass
 class PatchResult:
     """差し替え結果のサマリ."""
@@ -25,11 +57,11 @@ class PatchResult:
     overlay_changes: int = 0
     bg_changes: int = 0
     bg_additions: int = 0
+    bg_anim_changes: int = 0
+    transition_changes: int = 0
+    motion_changes: int = 0
     tachie_syncs: int = 0
     se_plans: int = 0  # G-18: 挿入した SE (AudioItem) 件数
-    motion_changes: int = 0
-    transition_changes: int = 0
-    bg_anim_changes: int = 0
     warnings: list[str] | None = None
 
     def __post_init__(self) -> None:
@@ -533,6 +565,294 @@ def _apply_slots(
             _apply_slot_to_tachie_item(item, slot_label, slot_map[slot_label], result)
 
 
+def _voice_indices_for_ir_entry(
+    ir_entry: dict,
+    voice_items: list[dict],
+    *,
+    use_row_range: bool,
+) -> list[int]:
+    """IR 発話に対応する VoiceItem の 0-based インデックス列を返す."""
+    num_vi = len(voice_items)
+    if use_row_range:
+        row_start = ir_entry.get("row_start")
+        row_end = ir_entry.get("row_end")
+        if row_start is None or row_end is None:
+            return []
+        if row_start < 1 or row_end < row_start:
+            return []
+        return list(range(row_start - 1, min(row_end, num_vi)))
+    utt_index = ir_entry.get("index", 0)
+    idx = utt_index - 1
+    if idx < 0 or idx >= num_vi:
+        return []
+    return [idx]
+
+
+def _apply_transition_voice_items(
+    voice_items: list[dict],
+    resolved: list[dict],
+    result: PatchResult,
+    *,
+    use_row_range: bool,
+) -> None:
+    """G-15: IR transition を VoiceItem の Voice/Jimaku フェードに反映する（立ち絵 Fade は対象外）."""
+    for ir_entry in resolved:
+        raw = ir_entry.get("transition")
+        tr = (raw or "none") if raw is not None else "none"
+        if tr not in TRANSITION_ALLOWED:
+            continue
+
+        indices = _voice_indices_for_ir_entry(
+            ir_entry, voice_items, use_row_range=use_row_range
+        )
+        if not indices:
+            if tr != "none":
+                result.warnings.append(
+                    "TRANSITION_NO_VOICE_ANCHOR: "
+                    f"utterance index={ir_entry.get('index', '?')}"
+                    " has no VoiceItem span for transition"
+                )
+            continue
+
+        n = len(indices)
+        for pos, vi_idx in enumerate(indices):
+            vi = voice_items[vi_idx]
+            if tr == "none":
+                vi["VoiceFadeIn"] = 0.0
+                vi["VoiceFadeOut"] = 0.0
+                vi["JimakuFadeIn"] = 0.0
+                vi["JimakuFadeOut"] = 0.0
+                result.transition_changes += 1
+                continue
+
+            # fade: 先頭・末尾にのみ in/out（中間は 0）
+            if n == 1:
+                vi["VoiceFadeIn"] = G15_VOICE_FADE_IN_SEC
+                vi["VoiceFadeOut"] = G15_VOICE_FADE_OUT_SEC
+                vi["JimakuFadeIn"] = G15_JIMAKU_FADE_IN_SEC
+                vi["JimakuFadeOut"] = G15_JIMAKU_FADE_OUT_SEC
+            elif pos == 0:
+                vi["VoiceFadeIn"] = G15_VOICE_FADE_IN_SEC
+                vi["VoiceFadeOut"] = 0.0
+                vi["JimakuFadeIn"] = G15_JIMAKU_FADE_IN_SEC
+                vi["JimakuFadeOut"] = 0.0
+            elif pos == n - 1:
+                vi["VoiceFadeIn"] = 0.0
+                vi["VoiceFadeOut"] = G15_VOICE_FADE_OUT_SEC
+                vi["JimakuFadeIn"] = 0.0
+                vi["JimakuFadeOut"] = G15_JIMAKU_FADE_OUT_SEC
+            else:
+                vi["VoiceFadeIn"] = 0.0
+                vi["VoiceFadeOut"] = 0.0
+                vi["JimakuFadeIn"] = 0.0
+                vi["JimakuFadeOut"] = 0.0
+            result.transition_changes += 1
+
+
+def _normalize_video_effects(value: object) -> list:
+    """VideoEffects 未設定と空配列を同一視する."""
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return value
+    return []
+
+
+def _normalize_motion_label(value: object) -> str:
+    if not isinstance(value, str):
+        return "none"
+    label = value.strip()
+    if not label:
+        return "none"
+    return label
+
+
+def _merge_motion_spans(
+    spans: list[tuple[int, int, str]],
+) -> list[tuple[int, int, str]]:
+    """同一 motion の連続/重複区間を結合する."""
+    if not spans:
+        return []
+    sorted_spans = sorted(spans, key=lambda x: (x[0], x[1]))
+    merged: list[tuple[int, int, str]] = [sorted_spans[0]]
+    for start, end, motion in sorted_spans[1:]:
+        last_start, last_end, last_motion = merged[-1]
+        if motion == last_motion and start <= last_end:
+            merged[-1] = (last_start, max(last_end, end), last_motion)
+            continue
+        merged.append((start, end, motion))
+    return merged
+
+
+def _motion_effects_for_label(
+    motion: str,
+    motion_map: dict[str, list[dict]] | None,
+    result: PatchResult,
+    *,
+    ir_index: object,
+) -> list:
+    if motion == "none":
+        return []
+    if not motion_map:
+        result.warnings.append(
+            "MOTION_MAP_MISS: "
+            f"motion '{motion}' requires --tachie-motion-map"
+            f" (utterance index={ir_index})"
+        )
+        return []
+    mapped = motion_map.get(motion)
+    if mapped is None:
+        result.warnings.append(
+            "MOTION_MAP_MISS: "
+            f"motion label '{motion}' not found in motion_map"
+            f" (utterance index={ir_index})"
+        )
+        return []
+    return copy.deepcopy(mapped)
+
+
+def _apply_motion_to_tachie_items(
+    items: list[dict],
+    voice_items: list[dict],
+    resolved: list[dict],
+    tachie_motion_effects_map: dict[str, list[dict]] | None,
+    result: PatchResult,
+    *,
+    use_row_range: bool,
+) -> None:
+    """G-16 Phase2: 発話区間ベースで TachieItem を分割して motion を反映する."""
+    tachie_by_char: dict[str, list[dict]] = {}
+    for item in items:
+        if _item_type(item) != "TachieItem":
+            continue
+        char = (item.get("CharacterName") or "").strip()
+        if char:
+            tachie_by_char.setdefault(char, []).append(item)
+
+    spans_by_char: dict[str, list[tuple[int, int, str, object]]] = {}
+    for ir_entry in resolved:
+        motion = _normalize_motion_label(ir_entry.get("motion"))
+        speaker = (ir_entry.get("speaker") or "").strip()
+        if not speaker:
+            continue
+        if motion not in MOTION_ALLOWED:
+            continue
+        timing = _resolve_utterance_timing(
+            ir_entry,
+            voice_items,
+            use_row_range=use_row_range,
+        )
+        if timing is None:
+            if motion != "none":
+                result.warnings.append(
+                    "MOTION_NO_VOICE_ANCHOR: "
+                    f"motion '{motion}' could not resolve timing"
+                    f" for utterance index={ir_entry.get('index', '?')}"
+                )
+            continue
+        start_frame, utterance_length = timing
+        end_frame = start_frame + max(utterance_length, 1)
+        spans_by_char.setdefault(speaker, []).append(
+            (start_frame, end_frame, motion, ir_entry.get("index", "?"))
+        )
+
+    for speaker, raw_spans in spans_by_char.items():
+        targets = tachie_by_char.get(speaker, [])
+        non_none_exists = any(span[2] != "none" for span in raw_spans)
+        if not targets:
+            if non_none_exists:
+                result.warnings.append(
+                    "MOTION_NO_TACHIE_ITEM: "
+                    f"character '{speaker}' has no TachieItem for motion patch"
+                )
+            continue
+
+        # 複数 TachieItem は v1 と同じ後勝ち（将来拡張）
+        if len(targets) != 1:
+            for start, end, motion, ir_index in raw_spans:
+                _ = start, end
+                effects = _motion_effects_for_label(
+                    motion, tachie_motion_effects_map, result, ir_index=ir_index
+                )
+                for ti in targets:
+                    old = _normalize_video_effects(ti.get("VideoEffects"))
+                    if old == effects:
+                        continue
+                    ti["VideoEffects"] = effects
+                    result.motion_changes += 1
+            continue
+
+        target = targets[0]
+        if target not in items:
+            continue
+
+        base_start = int(target.get("Frame", 0))
+        base_length = int(target.get("Length", 0))
+        if base_length < 1:
+            max_end = max(end for _, end, _, _ in raw_spans)
+            base_length = max(max_end - base_start, 1)
+        base_end = base_start + base_length
+
+        clipped: list[tuple[int, int, str, object]] = []
+        for start, end, motion, ir_index in raw_spans:
+            clip_start = max(start, base_start)
+            clip_end = min(end, base_end)
+            if clip_end <= clip_start:
+                continue
+            clipped.append((clip_start, clip_end, motion, ir_index))
+        if not clipped:
+            continue
+
+        merged_spans = _merge_motion_spans(
+            [(s, e, m) for s, e, m, _ in clipped]
+        )
+
+        boundaries = {base_start, base_end}
+        for start, end, _motion in merged_spans:
+            boundaries.add(start)
+            boundaries.add(end)
+        ordered = sorted(boundaries)
+        if len(ordered) < 2:
+            continue
+
+        intervals: list[tuple[int, int, str, object]] = []
+        for idx in range(len(ordered) - 1):
+            start = ordered[idx]
+            end = ordered[idx + 1]
+            if end <= start:
+                continue
+            chosen_motion = "none"
+            chosen_idx: object = "?"
+            for s, e, motion, ir_index in clipped:
+                if s <= start < e:
+                    chosen_motion = motion
+                    chosen_idx = ir_index
+            if intervals and intervals[-1][2] == chosen_motion and intervals[-1][1] == start:
+                prev_start, _prev_end, prev_motion, prev_idx = intervals[-1]
+                intervals[-1] = (prev_start, end, prev_motion, prev_idx)
+                continue
+            intervals.append((start, end, chosen_motion, chosen_idx))
+
+        if not intervals:
+            continue
+
+        insert_at = items.index(target)
+        items.pop(insert_at)
+        replacement: list[dict] = []
+        for start, end, motion, ir_index in intervals:
+            span_len = max(end - start, 1)
+            new_item = copy.deepcopy(target)
+            new_item["Frame"] = start
+            new_item["Length"] = span_len
+            new_item["VideoEffects"] = _motion_effects_for_label(
+                motion, tachie_motion_effects_map, result, ir_index=ir_index
+            )
+            replacement.append(new_item)
+        items[insert_at:insert_at] = replacement
+        # 旧単一アイテムが複数区間に分割された場合は変化として扱う
+        result.motion_changes += len(replacement)
+
+
 def _resolve_utterance_timing(
     ir_entry: dict,
     voice_items: list[dict],
@@ -578,6 +898,27 @@ def _utterance_frame_span_exclusive(
         return None
     start_f, length = timing
     return start_f, start_f + length
+
+
+def _bg_anim_for_bg_segment(
+    seg_s: int,
+    seg_e: int,
+    sec_utts: list[dict],
+    voice_items: list[dict],
+    use_row_range: bool,
+) -> str:
+    """[seg_s, seg_e) と時間的に重なる最初の発話の bg_anim（なければ none）."""
+    for u in sec_utts:
+        sp = _utterance_frame_span_exclusive(
+            u, voice_items, use_row_range=use_row_range,
+        )
+        if sp is None:
+            continue
+        su, eu = int(sp[0]), int(sp[1])
+        if su < seg_e and eu > seg_s:
+            raw = u.get("bg_anim")
+            return raw if isinstance(raw, str) and raw.strip() else "none"
+    return "none"
 
 
 def _merge_contiguous_same_bg(
@@ -677,6 +1018,13 @@ def _apply_bg_from_resolved_micro(
             new_bg["Frame"] = section_start
             new_bg["Length"] = seg_len
             new_bg["Layer"] = 0
+            bg_anim_label = "none"
+            for e in resolved:
+                if e.get("section_id") == sec_id and e.get("index") == utt_start:
+                    raw = e.get("bg_anim")
+                    bg_anim_label = raw if isinstance(raw, str) and raw.strip() else "none"
+                    break
+            _apply_bg_anim_to_image_item(new_bg, bg_anim_label, seg_len, result)
             items.append(new_bg)
             result.bg_additions += 1
             continue
@@ -727,6 +1075,12 @@ def _apply_bg_from_resolved_micro(
             new_bg["Frame"] = seg_s
             new_bg["Length"] = max(seg_e - seg_s, 1)
             new_bg["Layer"] = 0
+            anim_label = _bg_anim_for_bg_segment(
+                seg_s, seg_e, sec_utts, voice_items, use_row_range,
+            )
+            _apply_bg_anim_to_image_item(
+                new_bg, anim_label, new_bg["Length"], result,
+            )
             items.append(new_bg)
             result.bg_additions += 1
 
@@ -769,6 +1123,62 @@ def iter_overlay_labels(raw) -> list[str]:
     if isinstance(raw, list):
         return [x for x in raw if isinstance(x, str) and x]
     return []
+
+
+def _apply_bg_anim_to_image_item(
+    item: dict,
+    bg_anim: str | None,
+    section_length: int,
+    result: PatchResult,
+) -> None:
+    """セクション bg ImageItem の X/Y/Zoom に線形キーフレームを書き込む (G-14).
+
+    IR の `bg_anim`（carry-forward 解決後）を参照する。
+    G-17 の VideoEffects 系 bg_anim とは別経路（キーフレーム preset）。
+    """
+    if not bg_anim or bg_anim == "none":
+        return
+    if bg_anim not in BG_ANIM_ALLOWED:
+        result.warnings.append(
+            f"BG_ANIM_UNKNOWN: unsupported bg_anim '{bg_anim}' in patch (skipped)"
+        )
+        return
+
+    span = float(max(section_length, 1))
+    # YMM4: 線形補間（表示名は環境依存のため、リポジトリ内サンプルと同系のキーを使用）
+    anim_type = "\u7dda\u5f62"
+
+    x0, y0, z0 = 0.0, 0.0, 100.0
+    x1, y1, z1 = 0.0, 0.0, 100.0
+    if bg_anim == "pan_left":
+        x0, x1 = 120.0, -120.0
+    elif bg_anim == "pan_right":
+        x0, x1 = -120.0, 120.0
+    elif bg_anim == "zoom_in":
+        z0, z1 = 100.0, 115.0
+    elif bg_anim == "zoom_out":
+        z0, z1 = 115.0, 100.0
+    elif bg_anim == "ken_burns":
+        x0, x1 = 0.0, 60.0
+        y0, y1 = 0.0, 30.0
+        z0, z1 = 100.0, 112.0
+
+    item["X"] = {
+        "Values": [{"Value": x0}, {"Value": x1}],
+        "Span": span,
+        "AnimationType": anim_type,
+    }
+    item["Y"] = {
+        "Values": [{"Value": y0}, {"Value": y1}],
+        "Span": span,
+        "AnimationType": anim_type,
+    }
+    item["Zoom"] = {
+        "Values": [{"Value": z0}, {"Value": z1}],
+        "Span": span,
+        "AnimationType": anim_type,
+    }
+    result.bg_anim_changes += 1
 
 
 def _build_overlay_item(
@@ -1011,7 +1421,7 @@ def _apply_timeline_profile_adapters(
     *,
     use_row_range: bool,
     timeline_profile: str,
-    motion_map: dict[str, dict] | None,
+    adapter_motion_map: dict[str, dict] | None,
     transition_map: dict[str, dict] | None,
     bg_anim_map: dict[str, dict] | None,
     contract_path: Path | str | None,
@@ -1042,7 +1452,7 @@ def _apply_timeline_profile_adapters(
             result.warnings.append(f"MOTION_ADAPTER_CONTRACT: {err}")
         return
 
-    motion_map = motion_map or {}
+    adapter_motion_map = adapter_motion_map or {}
     transition_map = transition_map or {}
     bg_anim_map = bg_anim_map or {}
 
@@ -1056,10 +1466,10 @@ def _apply_timeline_profile_adapters(
         bg_anim = ir_entry.get("bg_anim")
 
         if mot:
-            spec = motion_map.get(mot)
+            spec = adapter_motion_map.get(mot)
             if not isinstance(spec, dict):
                 result.warnings.append(
-                    f"MOTION_MAP_MISS: motion label '{mot}' not in motion_map"
+                    f"MOTION_MAP_MISS: motion label '{mot}' not in adapter motion map"
                 )
             else:
                 eff = spec.get("video_effect")
@@ -1149,6 +1559,7 @@ def patch_ymmp(
     transition_map: dict[str, dict] | None = None,
     bg_anim_map: dict[str, dict] | None = None,
     timeline_contract_path: str | Path | None = None,
+    tachie_motion_effects_map: dict[str, list[dict]] | None = None,
 ) -> PatchResult:
     """演出 IR に従って ymmp を差し替える.
 
@@ -1203,6 +1614,21 @@ def patch_ymmp(
         char_default_slots,
         result,
     )
+    _apply_transition_voice_items(
+        voice_items,
+        resolved,
+        result,
+        use_row_range=use_row_range,
+    )
+    if not timeline_profile:
+        _apply_motion_to_tachie_items(
+            items,
+            voice_items,
+            resolved,
+            tachie_motion_effects_map,
+            result,
+            use_row_range=use_row_range,
+        )
     _apply_overlay_items(
         items,
         voice_items,
@@ -1267,7 +1693,7 @@ def patch_ymmp(
             resolved,
             use_row_range=use_row_range,
             timeline_profile=timeline_profile,
-            motion_map=motion_map,
+            adapter_motion_map=motion_map,
             transition_map=transition_map,
             bg_anim_map=bg_anim_map,
             contract_path=timeline_contract_path,

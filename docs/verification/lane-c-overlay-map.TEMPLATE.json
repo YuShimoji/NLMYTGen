@@ -1,0 +1,6 @@
+{
+  "overlays": {
+    "speech_bubble": "C:/YOUR_ASSETS/overlays/speech_bubble.png",
+    "text_box": "C:/YOUR_ASSETS/overlays/text_box.png"
+  }
+}

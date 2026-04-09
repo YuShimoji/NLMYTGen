@@ -1,0 +1,6 @@
+[NLMYTGen] ˆË‘¶ŠÖŒW‚ğ“¯Šú‚µ‚Ä‚¢‚Ü‚·iuv syncj...
+warning: Skipping installation of entry points (`project.scripts`) because this project is not packaged; to install entry points, set `tool.uv.package = true` or define a `build-system`
+Resolved 7 packages in 1ms
+Audited in 0.01ms
+[NLMYTGen] Electron ‚ğ‹N“®‚µ‚Ä‚¢‚Ü‚·...
+

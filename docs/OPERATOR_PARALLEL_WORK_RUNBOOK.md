@@ -6,8 +6,7 @@
 
 ## 0. 全体の進め方
 
-コード側の G-15〜G-18 は **実装済み**。承認記録・履歴は [FUTURE_DEVELOPMENT_ROADMAP.md](FUTURE_DEVELOPMENT_ROADMAP.md) を参照。今後の新規スライスは FEATURE_REGISTRY で管理する。
-
+コード側の G-15〜G-18 は **実装済み**。承認記録・履歴は [FUTURE_DEVELOPMENT_ROADMAP.md](FUTURE_DEVELOPMENT_ROADMAP.md) を参照。今後の新規スライスは FEATURE_REGISTRY で管理する。`docs/verification/` 配下の proof・提案メモの読み方と **仕様の正本チェーン**は [verification/README.md](verification/README.md) を参照。
 
 | トラック  | 内容                                               | いつやるか                 |
 | ----- | ------------------------------------------------ | --------------------- |
@@ -77,7 +76,7 @@ uv run python -m src.cli.main build-csv refined.txt -o _tmp_out.csv `
 
 ### B-1. セットアップの全体像
 
-手順の型は [gui-llm-setup-guide.md](gui-llm-setup-guide.md) を参照（Custom GPT / Claude Project / Gemini の各方式）。
+手順の型は [gui-llm-setup-guide.md](gui-llm-setup-guide.md) を参照（Custom GPT / Claude Project / Gemini の各方式）。漏れなく同期するチェックリストは [verification/LANE-B-gui-llm-sync-checklist.md](verification/LANE-B-gui-llm-sync-checklist.md)。
 
 ### B-2. S-1 台本 refinement 用（C-09）
 
@@ -95,12 +94,12 @@ uv run python -m src.cli.main build-csv refined.txt -o _tmp_out.csv `
 ### B-4. H-01 を使う場合（任意）
 
 - brief の schema: [PACKAGING_ORCHESTRATOR_SPEC.md](PACKAGING_ORCHESTRATOR_SPEC.md)
-- **やること**: 動画 1 本につき brief を 1 ファイル（テキスト）で用意し、**C-07 に台本より先に貼る**（S6 プロンプトの H-01 連携節どおり）。Custom GPT 側に「brief があるときは上位制約として従う」旨が v4 に含まれていることを確認する。
+- **やること**: 動画 1 本につき brief を 1 ファイル（テキスト）で用意し、**C-07 に台本より先に貼る**（S6 の「### H-01 連携 (推奨)」どおり）。v4 プロンプト本体のフェンス内だけを Instructions に貼った場合、**H-01 連携の説明文はフェンス外**にあるため、**同節を v4 の前に連結して Instructions に含める**か、**会話で毎回 brief を先に貼る**運用で上位制約を満たす。
 
 ### B-5. サムネコピー（C-08）
 
 - 正本: [S8-thumbnail-copy-prompt.md](S8-thumbnail-copy-prompt.md)
-- 統合運用は [gui-llm-setup-guide.md](gui-llm-setup-guide.md) の「統合プロンプト」を参照。
+- 使い分け（v4 Part 4 との差）は [gui-llm-setup-guide.md](gui-llm-setup-guide.md) の「使い方（v4 正本）」および [verification/LANE-B-gui-llm-sync-checklist.md](verification/LANE-B-gui-llm-sync-checklist.md) の B-5。
 
 ---
 
@@ -115,7 +114,15 @@ uv run python -m src.cli.main build-csv refined.txt -o _tmp_out.csv `
 
 ---
 
-## トラック D — サムネ 1 枚（S-8）
+## トラック D — H-01 Packaging brief（任意だが推奨）
+
+- 正本: [PACKAGING_ORCHESTRATOR_SPEC.md](PACKAGING_ORCHESTRATOR_SPEC.md)
+- **手順の詳細**: 上記 [トラック B の B-4](#b-4-h-01を使う場合任意)（brief 1 本を C-07 より先に渡す運用）。
+- **やることの要約**: 動画 1 本につき brief を 1 ファイルで用意し、Custom GPT / 演出 IR 生成の上位制約として使う。
+
+---
+
+## トラック E — サムネ 1 枚（S-8）
 
 - 正本: [THUMBNAIL_ONE_SHEET_WORKFLOW.md](THUMBNAIL_ONE_SHEET_WORKFLOW.md)
 - 全体フロー: [WORKFLOW.md](WORKFLOW.md) の S-8
@@ -158,6 +165,6 @@ git push
 1. **トラック A** を実台本 1 本で最後まで（YMM4 読込まで）。
 2. **トラック B-3** で v4 Instructions が repo と一致しているか確認。
 3. 余力があれば **トラック C** のチェックリストを 1 セクションだけ進める。
-4. 公開前に **トラック D**。
+4. 公開前に **トラック E**（サムネ）。
 
 以上。

@@ -1,71 +1,11 @@
-# CLAUDE.md
+# CLAUDE.md（Claude Code 用入口）
 
-NLMYTGen の repo-local 運用ルール。長い背景説明ではなく、毎ブロックで効かせる
-強制ルールだけを置く。正本は `docs/ai/*.md` と project-local canonical docs。
+**運用ルールの正本:** [`docs/REPO_LOCAL_RULES.md`](../docs/REPO_LOCAL_RULES.md)（Hard Rules・Read Order・Checklist・Hooks 説明）
 
-## Read Order
-1. `AGENTS.md`
-2. `docs/ai/CORE_RULESET.md`
-3. `docs/ai/DECISION_GATES.md`
-4. `docs/ai/STATUS_AND_HANDOFF.md`
-5. `docs/ai/WORKFLOWS_AND_PHASES.md`
-6. `docs/INVARIANTS.md`
-7. `docs/USER_REQUEST_LEDGER.md`
-8. `docs/OPERATOR_WORKFLOW.md`
-9. `docs/INTERACTION_NOTES.md`
-10. `docs/runtime-state.md`
-11. `docs/project-context.md`
-12. `docs/FEATURE_REGISTRY.md`
-13. `docs/AUTOMATION_BOUNDARY.md`
+本ファイルはツールが慣例で読む **短い入口** に留める。境界・再アンカリングの正本は [`AGENTS.md`](../AGENTS.md)。
 
-## Hard Rules
-- この repo 以外の file / memory / docs を読まない・書かない。
-- HoloSync / NLMandSlideVideoGenerator / NarrativeGen / VastCore への逸脱を禁止。
-- repeated visual proof を要求しない。YMM4 visual proof は初回 E2E と最終制作物の
-  品質判断だけ。
-- mechanical な確認は test / CLI / dry-run / static analysis で閉じる。
-- 修正を指摘されたら止まらない。次を同じブロックで自分で確定して進める。
-  - 何が誤りだったか
-  - 何を修正するか
-  - 修正後にどう検証するか
-- `判断をお願いします` `何が足りないか教えてください` のような broad question で
-  止まらない。
-- user に聞く前に、repo 内根拠で決められない理由を自分で確認する。
-- `assistant 側でやることがない` と安易に結論しない。まず次を検討する。
-  - fail-fast
-  - gap report
-  - quality gate
-  - drift detection
-  - docs sync
-  - operator の手動負荷削減
+最低限ここだけでも:
 
-## Block-Start Checklist
-各ブロックで次を短く確定してから進める。
-
-1. 今の bottleneck は何か
-2. これからやる作業はその bottleneck に直接効くか
-3. user に新しい manual proof を頼まずに閉じられるか
-4. user に聞く前に repo 内根拠で決められないか
-
-この 4 つに yes と言えない作業は、まず理由を明文化してから進める。
-
-## Ask Hygiene
-- 質問は高位分岐だけ。
-- 質問が必要でも、3 個以下の実質差分がある選択肢まで圧縮する。
-- 「別 repo へ移動」「別 PJ の memory を参照」は選択肢に含めない。
-
-## Quality Priority
-- 進捗は「新機能が増えたか」ではなく、次で評価する。
-  - quality を落とす入力を早期に止められるか
-  - empty hit / unknown label / drift を可視化できるか
-  - operator の反復作業が減ったか
-  - artifact の品質に近づくか
-
-## Hooks
-機械的に判定できる違反は `.claude/hooks/guardrails.py` で reject する。
-対象:
-- repo 外逸脱
-- broad question による停止
-- repeated visual proof の反復要求
-
-Hook で止められない低価値作業は、このファイルの checklist で防ぐ。
+- この repo 以外は読まない・書かない。
+- 詳細は **`docs/REPO_LOCAL_RULES.md`** → **`AGENTS.md`** → **`docs/ai/*.md`**。
+- 機械ガード: **`.claude/hooks/guardrails.py`**
