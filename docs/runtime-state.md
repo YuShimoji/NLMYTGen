@@ -68,7 +68,7 @@
 - open_todo_count: 0
 
 ## 最終検証
-- last_verification_artifact: `uv run pytest` 全件（G-15〜G-18 追試含む）
+- last_verification_artifact: `NLMYTGEN_PYTEST_FULL=1 uv run pytest` 全件（subprocess CLI 統合含む）。既定の `uv run pytest` はユニット中心（`tests/conftest.py`）
 - last_verification_date: 2026-04-09
 
 ## Evidence（CLI artifact mode）
