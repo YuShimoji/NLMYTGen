@@ -11,9 +11,10 @@
 ```powershell
 cd "C:\Users\PLANNER007\NLMYTGen"
 git fetch origin
-git checkout feat/phase2-motion-segmentation
-git pull origin feat/phase2-motion-segmentation
-git log origin/master..HEAD --oneline
+git checkout master
+git pull origin master
+# 新規作業は master からトピックブランチを切る
+git checkout -b feat/topic-name
 ```
 
 - **差分が大きい場合**は PR 説明に **変更カテゴリ**（docs / tests / CLI / GUI）を箇条書きする。  
@@ -35,9 +36,9 @@ Remove-Item Env:NLMYTGEN_PYTEST_FULL -ErrorAction SilentlyContinue
 
 ```powershell
 gh auth status
-gh pr create --base master --head feat/phase2-motion-segmentation `
-  --title "feat: phase2 motion segmentation lane + core docs (merge to master)" `
-  --body "## 概要`n- feat/phase2-motion-segmentation を master に統合する PR。`n- コア開発手順: verification/CORE-DEV-POST-DELEGATION-INDEX.md`n`n## チェック`n- [ ] NLMYTGEN_PYTEST_FULL=1 pytest 緑`n- [ ] ドキュメントリンク切れなし`n"
+gh pr create --base master --head feat/topic-name `
+  --title "scope: summary" `
+  --body "## 概要`n- master 起点トピックブランチの変更を統合。`n- コア開発手順: verification/CORE-DEV-POST-DELEGATION-INDEX.md`n`n## チェック`n- [ ] NLMYTGEN_PYTEST_FULL=1 pytest 緑`n- [ ] ドキュメントリンク切れなし`n"
 ```
 
 （タイトル・本文はチーム規約に合わせて編集する。）
@@ -60,6 +61,7 @@ uv run pytest -q --tb=short
 
 ## 5. 変更履歴
 
+- 2026-04-10: 以後の手順を `master` 起点トピックブランチ向けに一般化。
 - 2026-04-09: 初版。
 - 2026-04-09: `feat/phase2-motion-segmentation` → `master` の PR を作成: https://github.com/YuShimoji/NLMYTGen/pull/1
 - 2026-04-09: PR #1 を **マージ**（merge commit）。`master` で `NLMYTGEN_PYTEST_FULL=1 uv run pytest` 再実行済み。

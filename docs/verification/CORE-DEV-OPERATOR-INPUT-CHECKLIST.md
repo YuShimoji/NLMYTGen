@@ -34,11 +34,12 @@
 
 ## 4. コア側のアクション（受け入れ後）
 
-- ドキュメントのみの変更 → レビュー後 `feat/phase2-motion-segmentation` にマージ。
+- ドキュメントのみの変更 → レビュー後 `master` 起点のトピックブランチでマージ。
 - B-11 §3 Gate が確定したら [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) を更新し、ユーザー承認を待つ（実装は [CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md)）。
 
 ---
 
 ## 5. 変更履歴
 
+- 2026-04-10: §4 を master 起点のトピックブランチ運用へ更新。
 - 2026-04-09: 初版。AI 監視 B-11・P01 を PASS と記録。P2/S6 は OPEN。
