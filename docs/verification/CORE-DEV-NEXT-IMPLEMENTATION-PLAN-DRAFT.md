@@ -57,6 +57,7 @@ Gate B の「運用導線・記録」に合わせ、**次の優先**を推奨す
 
 ## 5. 次のアクション
 
+0. コア本開発の進め方・並行の組み合わせは [CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md](CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md) を参照。即実行 Prompt は [CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) §3.0。
 1. ユーザーが本ドラフトの §2〜§3 を **承認または差し替え**。  
 2. 承認後、[CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) に **承認済みスライス**を記入し、PR を分割実装。  
 3. 実装提案は [CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) へ 1 スライスずつ起票し、承認済み範囲でのみ着手する。  
@@ -70,5 +71,6 @@ Gate B の「運用導線・記録」に合わせ、**次の優先**を推奨す
 - 2026-04-09: 画面演出を A1-A4/B1-B4 の演出単位パケットで扱うルールを追加。
 - 2026-04-09: PASS 入力のみ反映ルールと未承認 FEATURE 起票境界を明記。
 - 2026-04-09: P2/S6 再判定 PASS（見え方 NG 記録 + §2の5条件充足）を反映。実装起票は承認後スライス方式へ更新。
+- 2026-04-10: §5 に [CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md](CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md) と Prompt パック §3.0 への導線を追加。
 - 2026-04-10: P0 次サイクル実行（Amazon・CLI）を次アクションへ反映。P2 は OPEN 条件維持。
 - 2026-04-09: 初版。Gate B 確定版に基づくドラフト。
