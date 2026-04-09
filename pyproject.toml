@@ -17,3 +17,7 @@ include = ["src*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = ["-q", "--tb=short"]
+markers = [
+    "integration: subprocess 経由の CLI 統合テスト（引数なしの pytest では既定でスキップ）",
+]

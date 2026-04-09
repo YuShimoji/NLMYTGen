@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import pytest
+
 from src.pipeline.ir_validate import extract_prompt_face_labels, validate_ir
 
 
@@ -393,6 +395,7 @@ class TestRowStart:
         assert len(info) == 0
 
 
+@pytest.mark.integration
 def test_ir_visual_styles_dry_sample_passes_cli_validation():
     """三スタイル混在サンプル IR が validate-ir で ERROR なし（VISUAL_STYLE_PRESETS 系）。"""
     import subprocess

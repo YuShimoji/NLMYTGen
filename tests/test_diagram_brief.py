@@ -4,6 +4,8 @@ import json
 import subprocess
 import sys
 
+import pytest
+
 from src.contracts.structured_script import StructuredScript, Utterance
 from src.pipeline.diagram_brief import build_diagram_brief_payload, render_diagram_brief_markdown
 
@@ -46,6 +48,7 @@ def test_render_diagram_brief_markdown_mentions_text_only_boundary():
     assert "[Speaker_A | src=Speaker_A]" in text
 
 
+@pytest.mark.integration
 def test_cli_build_diagram_packet_writes_json(tmp_path):
     input_txt = tmp_path / "in.txt"
     input_txt.write_text(
@@ -80,6 +83,7 @@ def test_cli_build_diagram_packet_writes_json(tmp_path):
     assert "must_include" in data["output_contract"]["diagram_briefs"][0]
 
 
+@pytest.mark.integration
 def test_cli_build_diagram_packet_bundle_writes_rerun_helpers_too(tmp_path):
     input_txt = tmp_path / "in.txt"
     input_txt.write_text(
