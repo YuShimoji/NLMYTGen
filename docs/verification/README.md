@@ -13,7 +13,10 @@
 | 現在位置・次アクション | [runtime-state.md](../runtime-state.md) |
 | 意思決定・handoff | [project-context.md](../project-context.md) |
 | 並行作業の手順（オペレータ） | [OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) |
+| レーン B（GUI LLM 正本同期）チェックリスト | [LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md) |
+| レーン E（サムネ S-8）準備チェックリスト | [LANE-E-S8-prep-2026-04-09.md](LANE-E-S8-prep-2026-04-09.md) |
 | プラン直前・並行レーン数・コア開発幹 | [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) |
+| A〜E 移譲後のコア開発（索引） | [CORE-DEV-POST-DELEGATION-INDEX.md](CORE-DEV-POST-DELEGATION-INDEX.md) |
 
 ## 本ディレクトリの典型的な文書タイプ
 

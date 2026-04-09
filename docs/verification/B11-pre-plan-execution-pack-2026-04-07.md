@@ -12,12 +12,8 @@
 ## 中断から再開（いまの位置）
 
 - **オペレータ向けの全文ハンズオン**（YMM4 手順〜4 区分の数え方〜プラン下準備）: [B11-operator-hands-on-and-recommended-plan-prep.md](B11-operator-hands-on-and-recommended-plan-prep.md)
-- **済み**: B-11 下地レビューと本パックは `feat/phase2-motion-segmentation` にコミット済み（`1df3028` 付近）。
-- **未完（ここから）**: 既存の進行中 proof で **セクション 2 だけ未記入**。
-  - 正本: [`B11-workflow-proof-ai-monitoring-labor.md`](B11-workflow-proof-ai-monitoring-labor.md)
-  - 取込用 CSV: `samples/AI監視が追い詰める生身の労働_B11_ymm4.csv`（リポジトリ同梱）
-  - 手順: 同ファイル内「YMM4 側の次ステップ」→ [B11-manual-checkpoints.md](../B11-manual-checkpoints.md) に沿って通し確認し、**2.1〜2.3 を実数で埋める**。
-- **別ルート**: 新台本で実案件 1 本を取る場合は下記 §0 から新規 `B11-workflow-proof-<案件>.md` を切る（AI 監視を完了させなくても可だが、最短は上記の §2 埋め）。
+- **AI 監視サンプル**: [B11-workflow-proof-ai-monitoring-labor.md](B11-workflow-proof-ai-monitoring-labor.md) は **§5 完了条件を満たす**（取込前/後同一ファイル・4 区分・代表例 3 件・§3 Gate）。コア側の受け入れ記録は [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md)。
+- **新台本で B-11 を取り直す場合**: 下記 §0 から新規 `B11-workflow-proof-<案件>.md` を切り、§1〜§3 を同パックどおり埋める。
 
 ---
 

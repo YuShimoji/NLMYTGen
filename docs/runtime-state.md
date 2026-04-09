@@ -4,24 +4,26 @@
 
 ## 現在位置
 - project: NLMYTGen
-- lane: 方向転換中 (実制作bottleneck直接軽減へ移行)
+- lane: **コア開発幹**（回帰・ドキュメント整合・承認済みバグ修正）。**主軸は本開発** — エージェント作業は未承認 FEATURE を増やさず上記に集中。オペレータ並行: P0（Phase 1 本番）/ P2 等は runbook どおり。**レーン A（Phase 1）の repo 準備はオペレータ側でクローズ**（[OPERATOR_LANE_A_ENV.md](verification/OPERATOR_LANE_A_ENV.md)、[LANE_A_PREP_CHECKLIST.md](verification/LANE_A_PREP_CHECKLIST.md)）。**レーン D（H-01 brief）オペレータ完了・当面クローズ**（[H01-lane-d-prep-2026-04-09.md](verification/H01-lane-d-prep-2026-04-09.md) §6、2026-04-09）
 - slice: G-15〜G-18 実装完了（Micro `bg` / 複数 `overlay` / timeline アダプタ / **SE `AudioItem` 挿入**）。Electron GUI: CSV 変換時に **診断 JSON 同梱保存**可（[gui-llm-setup-guide.md](gui-llm-setup-guide.md)）。正本 [G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)。従来: 視覚三スタイル [VISUAL_STYLE_PRESETS.md](VISUAL_STYLE_PRESETS.md)、P2A [P2A-motion-branch-operator-decision.md](verification/P2A-motion-branch-operator-decision.md)、P2C [P2C-se-audioitem-boundary.md](verification/P2C-se-audioitem-boundary.md)（履歴）
-- next_action: **プラン作成前**: [B11-pre-plan-execution-pack-2026-04-07.md](verification/B11-pre-plan-execution-pack-2026-04-07.md) に沿い、実案件 1 本の B-11 記録で §2（取込後・4 区分件数）と §3（Gate / 次投資先）まで埋める。**並行レーン数・コア開発幹**: [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md)。並行: P2 背景アニメ短サイクル — map 警告（`BG_ANIM_MAP_MISS` / `TRANSITION_MAP_MISS`）は最小 map で解消済み、`test_verify_4_bg.ymmp` で 4 セクション拡張（`BG anim writes: 7`）まで機械確認済み。次は YMM4 で見え方確認 → 問題なければ実案件 IR へ段階展開（P1/P2/P3/Parking の順は維持）。
+- next_action: **本開発幹に復帰**（回帰 `NLMYTGEN_PYTEST_FULL=1 uv run pytest`、承認済みバグ修正のみ、未承認 FEATURE は増やさない）。**実行フェーズ（2026-04-09 採用）**: B-11 は [B11-workflow-proof-ai-monitoring-labor.md](verification/B11-workflow-proof-ai-monitoring-labor.md) で体裁充足（Gate B・§3。§2 実機は注記どおりオペレータ最終確認可）。**レーン A（Phase 1）repo 準備はクローズ** — C-09〜YMM4 の実行は P0 / オペレータ並行。**最優先は P0**（新台本 1 本で Phase 1 完走・[P01-phase1-operator-e2e-proof.md](verification/P01-phase1-operator-e2e-proof.md) へ接続判定 1 行以上）。**レーン D（H-01）完了**（2026-04-09、[H01-lane-d-prep-2026-04-09.md](verification/H01-lane-d-prep-2026-04-09.md)）— brief→C-07/C-08 は制作フローで継続。本開発のブロッカーではない。**並行レーン・コア幹**: [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md)。**A〜E 移譲後のコア開発手順（受け入れ・ドラフト・承認後スライス・master PR）**: [CORE-DEV-POST-DELEGATION-INDEX.md](verification/CORE-DEV-POST-DELEGATION-INDEX.md)。**レーン B（GUI LLM 正本同期）の repo 準備はクローズ**（[LANE-B-gui-llm-sync-checklist.md](verification/LANE-B-gui-llm-sync-checklist.md)、[gui-llm-setup-guide.md](gui-llm-setup-guide.md)。Instructions 実貼り付けはオペレータが並行実施可）。**P2**（背景アニメ短サイクル）— map 警告（`BG_ANIM_MAP_MISS` / `TRANSITION_MAP_MISS`）は最小 map で解消済み、`test_verify_4_bg.ymmp` で 4 セクション拡張（`BG anim writes: 7`）まで機械確認済み → **YMM4 見え方** → 問題なければ実案件 IR へ段階展開。**レーン C（視覚三スタイル）準備はクローズ**（[LANE-C-operator-prep-2026-04-09.md](verification/LANE-C-operator-prep-2026-04-09.md)）。**レーン E（サムネ S-8）repo 準備はクローズ**（[LANE-E-S8-prep-2026-04-09.md](verification/LANE-E-S8-prep-2026-04-09.md) 運用クローズ節。公開直前の実 1 枚は P3・runbook トラック E で並行可）。**C と P2 は YMM4 時間分割**（同時フル非推奨）。P3・Parking は下表。新規案件の B-11 は [B11-pre-plan-execution-pack-2026-04-07.md](verification/B11-pre-plan-execution-pack-2026-04-07.md) から切る。
 - recommended_frontier_order: 台本品質改善 → 演出配置自動化拡張 → 視覚効果実現（既定。変更可）
 - 再現ルール: 異種サンプル 1 本で打ち切り済み。以後は新しい failure が出たときだけ追加検証
 - operator/agent ガード: [REPO_LOCAL_RULES.md](REPO_LOCAL_RULES.md)（正本）+ `.claude/hooks/guardrails.py` で repo 外逸脱 / broad question 停止 / repeated visual proof を常設抑止（`.claude/CLAUDE.md` は入口ポインタ）
 - 案件モード: CLI artifact
 
-## 次以降の推奨プラン (2026-04-08 設定・正本)
+## 次以降の推奨プラン (2026-04-09 採用・正本)
 
 目的: **実制作の手間を減らすこと**を最優先し、未承認のコード機能は増やさない（[FEATURE_REGISTRY.md](FEATURE_REGISTRY.md) 準拠）。順序を変える場合はユーザー合意で `next_action` と本節を更新する。
 
+**採用根拠（2026-04-09）**: [B11-workflow-proof-ai-monitoring-labor.md](verification/B11-workflow-proof-ai-monitoring-labor.md) は Gate B（運用摩擦支配）— 4 区分の顕著手戻りはなく、主戦場を L2 改行コーパスに寄せず **P0 実行と演出・運用側の小さな検証**へ振る判断。並行レーン A〜E とコア開発 1 幹は [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) に従う。下表の P0〜Parking の優先構造は 2026-04-08 版を論理的正本として維持し、本日付で運用採用を固定した。
+
 | 優先 | コード | 内容 | 完了の目安 |
 |------|--------|------|------------|
-| **P0** | — | **Phase 1 本番 1 本**: 新台本で `diagnose-script`（CLI または **GUI CSV タブの診断 JSON 同梱**）→ [S1-script-refinement-prompt.md](S1-script-refinement-prompt.md)（C-09）→ `build-csv` → YMM4 読込〜。接続判定・残修正区分・効果を [P01-phase1-operator-e2e-proof.md](verification/P01-phase1-operator-e2e-proof.md) に 1 行以上追記。B-11 実測は [B11-pre-plan-execution-pack-2026-04-07.md](verification/B11-pre-plan-execution-pack-2026-04-07.md) まで進め、プラン直前は §3 Gate まで埋める。S-5 は監視継続しつつ P2 背景演出試行は `next_action` に従う | **最優先・今期の主目標** |
+| **P0** | — | **Phase 1 本番 1 本**: 新台本で `diagnose-script`（CLI または **GUI CSV タブの診断 JSON 同梱**）→ [S1-script-refinement-prompt.md](S1-script-refinement-prompt.md)（C-09）→ `build-csv` → YMM4 読込〜。接続判定・残修正区分・効果を [P01-phase1-operator-e2e-proof.md](verification/P01-phase1-operator-e2e-proof.md) に 1 行以上追記。プラン直前の B-11 実測は [B11-workflow-proof-ai-monitoring-labor.md](verification/B11-workflow-proof-ai-monitoring-labor.md) で充足済み；別台本では [B11-pre-plan-execution-pack-2026-04-07.md](verification/B11-pre-plan-execution-pack-2026-04-07.md) に沿って新規記録を切る。S-5 は監視継続しつつ P2 背景演出試行は `next_action` に従う | **最優先・今期の主目標** |
 | **P1** | H-01 `approved` | **Packaging brief 運用**: [PACKAGING_ORCHESTRATOR_SPEC.md](PACKAGING_ORCHESTRATOR_SPEC.md) に沿った brief を Custom GPT に常設し、1 本で title / thumbnail / script の drift が減るか観測（コード変更なしで可） | P0 と並行可・低負荷 |
-| **P2** | done 機能の実戦投入 | **演出パイプの実使用**: 本編で `overlay` / `se`（`--se-map`）/ `apply-production` が効くなら registry を整えて実戦投入。non-fade / template-backed `transition` は **新 ymmp sample が入ったときだけ** `measure-timeline-routes` で再測定 | 制作物が生まれたタイミング |
-| **P3** | — | **視覚・公開周辺**: [THUMBNAIL_ONE_SHEET_WORKFLOW.md](THUMBNAIL_ONE_SHEET_WORKFLOW.md) でサムネ 1 本を通す。茶番・図解アニメはツール選定後 | P0 の後でも可 |
+| **P2** | done 機能の実戦投入 | **演出パイプの実使用**: 本編で `overlay` / `se`（`--se-map`）/ `apply-production` が効くなら registry を整えて実戦投入。**B-11 §3 次投資先**（背景アニメ 1〜2 セクション・route / 見え方優先）と整合。non-fade / template-backed `transition` は **新 ymmp sample が入ったときだけ** `measure-timeline-routes` で再測定 | 制作物が生まれたタイミング |
+| **P3** | — | **視覚・公開周辺**: [THUMBNAIL_ONE_SHEET_WORKFLOW.md](THUMBNAIL_ONE_SHEET_WORKFLOW.md) でサムネ 1 本を通す。準備チェックリスト [verification/LANE-E-S8-prep-2026-04-09.md](verification/LANE-E-S8-prep-2026-04-09.md)。茶番・図解アニメはツール選定後 | P0 の後でも可 |
 | **Parking** | — | **`origin/feat/phase2-motion-segmentation`**: [P2A-motion-branch-operator-decision.md](verification/P2A-motion-branch-operator-decision.md) どおり **一括マージしない**。不足が明文化されたら設計 md / テスト単位の部分取り込みのみ検討 | 急がない |
 | **明示的に後回し** | — | 字幕 B-17 残差（急がない）、quarantined（F-01/F-02 等）の棚卸し spec 化、E-01/E-02 と制作パイプの混線、未承認 FEATURE の新規実装 | 別判断まで触らない |
 
@@ -52,7 +54,7 @@
 ## 主成果物
 - active_artifact: NLM transcript → YMM4 CSV → ゆっくり解説動画制作ワークフロー
 - artifact_surface: CLI → CSV → YMM4 台本読込 → 演出設定 → レンダリング → サムネイル → 投稿
-- last_change_relation: FEATURE_REGISTRY G-15〜G-18 done、GUI CSV+診断 JSON 同梱、**次以降推奨プラン (2026-04-08)**、`patch-ymmp --timeline-profile`、SE `AudioItem`（`_apply_se_items`）、プラン直前レーン整理 [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md)、runbook トラック D/E 見出し整合
+- last_change_relation: FEATURE_REGISTRY G-15〜G-18 done、GUI CSV+診断 JSON 同梱、**次以降推奨プラン (2026-04-09 採用)**・`next_action` を実行フェーズへ更新（B-11 充足・Gate B 反映）、以前 (2026-04-08) 表構造を維持、`patch-ymmp --timeline-profile`、SE `AudioItem`（`_apply_se_items`）、プラン直前レーン整理 [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md)、runbook トラック D/E 見出し整合、**レーン C 準備クローズ**（[LANE-C-operator-prep-2026-04-09.md](verification/LANE-C-operator-prep-2026-04-09.md)）、**レーン E（S-8）repo 準備クローズ・運用クローズ**（[LANE-E-S8-prep-2026-04-09.md](verification/LANE-E-S8-prep-2026-04-09.md)）、**レーン D（H-01）オペレータ完了**（[H01-lane-d-prep-2026-04-09.md](verification/H01-lane-d-prep-2026-04-09.md)）、`runtime-state` を本開発主軸へ再アンカー、**コア移譲後手順一式** [CORE-DEV-POST-DELEGATION-INDEX.md](verification/CORE-DEV-POST-DELEGATION-INDEX.md)
 
 ## カウンター
 - blocks_since_user_visible_change: 0
