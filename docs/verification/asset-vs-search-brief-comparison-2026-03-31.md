@@ -15,21 +15,25 @@
 
 ## Candidate Summary
 
-| candidate | main pain | likely output | actor helped | overlap risk | current attractiveness |
-|---|---|---|---|---|---|
-| asset brief | section ごとの素材選定迷い | 必須モチーフ、素材種別の優先順位、避けたい誤読、静止画/図/動画の向き不向き | S-6 で背景や補助素材を決める人 | B-15 cue memo と近い | strong |
-| search query brief | フリー素材探索の初動コスト | 検索語、除外語、探索方針、代替検索軸 | 素材サイト検索を始める人 | asset brief と部分重複 | medium |
+
+| candidate          | main pain         | likely output                          | actor helped      | overlap risk      | current attractiveness |
+| ------------------ | ----------------- | -------------------------------------- | ----------------- | ----------------- | ---------------------- |
+| asset brief        | section ごとの素材選定迷い | 必須モチーフ、素材種別の優先順位、避けたい誤読、静止画/図/動画の向き不向き | S-6 で背景や補助素材を決める人 | B-15 cue memo と近い | strong                 |
+| search query brief | フリー素材探索の初動コスト     | 検索語、除外語、探索方針、代替検索軸                     | 素材サイト検索を始める人      | asset brief と部分重複 | medium                 |
+
 
 ## Comparison by Decision Axis
 
-| axis | asset brief | search query brief | current edge |
-|---|---|---|---|
-| bottleneck fit | 「何を見せるべきか」に直接効く | 「どう探すか」に効く | asset brief |
-| workflow insertion point | 素材選定前の判断整理 | 素材探索開始時の検索補助 | asset brief |
-| dependency on external sites | 低い | 検索先や語彙に引っ張られやすい | asset brief |
-| overlap with existing tools | B-15 と役割が近い | B-15 / B-16 とは別役割にしやすい | search query brief |
-| evaluation ease | operator が「迷いが減ったか」を判断しやすい | 検索結果の当たり外れに左右されやすい | asset brief |
-| boundary safety | text-only に閉じやすい | text-only だが検索先文化へ寄りやすい | asset brief |
+
+| axis                         | asset brief                | search query brief      | current edge       |
+| ---------------------------- | -------------------------- | ----------------------- | ------------------ |
+| bottleneck fit               | 「何を見せるべきか」に直接効く            | 「どう探すか」に効く              | asset brief        |
+| workflow insertion point     | 素材選定前の判断整理                 | 素材探索開始時の検索補助            | asset brief        |
+| dependency on external sites | 低い                         | 検索先や語彙に引っ張られやすい         | asset brief        |
+| overlap with existing tools  | B-15 と役割が近い                | B-15 / B-16 とは別役割にしやすい  | search query brief |
+| evaluation ease              | operator が「迷いが減ったか」を判断しやすい | 検索結果の当たり外れに左右されやすい      | asset brief        |
+| boundary safety              | text-only に閉じやすい           | text-only だが検索先文化へ寄りやすい | asset brief        |
+
 
 ## Asset Brief Shape
 

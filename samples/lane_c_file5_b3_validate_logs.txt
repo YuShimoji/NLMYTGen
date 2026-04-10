@@ -1,0 +1,32 @@
+# lane_c_file5_b3 — validate-ir ログ
+# Date: 2026-04-10
+
+## 1) ir_visual_styles_dry_sample.json
+
+Command:
+uv run python -m src.cli.main validate-ir samples/ir_visual_styles_dry_sample.json --palette samples/palette.ymmp --overlay-map samples/visual_styles_overlay_map.example.json
+
+Exit code: 0
+
+--- excerpt ---
+overlay contract: 2 labels
+--- Overlay Distribution (2 utterances) ---
+  speech_bubble   1
+  text_box       1
+Validation PASSED with 1 warnings
+(WARNING: FACE_LATENT_GAP ...)
+
+## 2) p2_overlay_se_ir.json
+
+Command:
+uv run python -m src.cli.main validate-ir samples/p2_overlay_se_ir.json --palette samples/palette.ymmp --overlay-map samples/p2_overlay_map.json
+
+Exit code: 0
+
+--- excerpt ---
+overlay contract: 12 labels
+--- Overlay Distribution (2 utterances) ---
+  arrow_red      1
+  speech_bubble   1
+Validation PASSED with 3 warnings
+(FACE_SERIOUS_SKEW, FACE_LATENT_GAP, IDLE_FACE_MISSING)

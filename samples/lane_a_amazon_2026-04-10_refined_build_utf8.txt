@@ -1,0 +1,20 @@
+﻿--- Stats ---
+  Speaker_A: 122 utterances, 2691 chars (avg 22)
+  Speaker_B: 122 utterances, 2894 chars (avg 23)
+  Total: 244 utterances, 5585 chars
+--- Overflow candidates (>2 lines at 40 chars/line) ---
+  [WARN] row 39: Speaker_B, 推定3行 (display_width=79)
+  [WARN] row 70: Speaker_B, 推定3行 (display_width=82)
+  [WARN] row 85: Speaker_A, 推定3行 (display_width=72)
+  [WARN] row 102: Speaker_A, 推定3行 (display_width=66)
+  [WARN] row 104: Speaker_A, 推定3行 (display_width=76)
+  [WARN] row 116: Speaker_A, 推定4行 (display_width=83)
+  [WARN] row 158: Speaker_B, 推定3行 (display_width=79)
+  [WARN] row 160: Speaker_A, 推定3行 (display_width=64)
+  [WARN] row 161: Speaker_A, 推定3行 (display_width=72)
+  [WARN] row 167: Speaker_B, 推定3行 (display_width=76)
+  [WARN] row 169: Speaker_B, 推定3行 (display_width=60)
+  [WARN] row 210: Speaker_B, 推定3行 (display_width=72)
+  [WARN] row 235: Speaker_B, 推定3行 (display_width=81)
+Written: samples\amazon_panopticon_B11_ymm4.csv (244 rows)
+{"input": "samples\\amazon_panopticon_lane_a_refined.txt", "success": true, "output": "samples\\amazon_panopticon_B11_ymm4.csv", "rows": 244, "speakers": {"Speaker_A": 122, "Speaker_B": 122}}

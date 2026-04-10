@@ -1,0 +1,83 @@
+{
+  "run_id": "lane_c_file5_overlay_b3_2026-04-10",
+  "task_id": "B3",
+  "category": "overlay",
+  "basis_docs": [
+    "docs/verification/LANE-B-gui-llm-sync-checklist.md (B-3 minimal: validate-ir / apply-production --dry-run)",
+    "docs/verification/VISUAL-QUALITY-PACKETS.md (overlay B3 タイミング一致)",
+    "docs/verification/LANE-C-operator-prep-2026-04-09.md (§5 機械確認コマンド)"
+  ],
+  "inputs": {
+    "ir_per_utterance_overlay_binding": "samples/ir_visual_styles_dry_sample.json",
+    "overlay_map_visual_styles": "samples/visual_styles_overlay_map.example.json",
+    "ir_row_range_overlay_se": "samples/p2_overlay_se_ir.json",
+    "overlay_map_p2": "samples/p2_overlay_map.json",
+    "palette": "samples/palette.ymmp",
+    "production_ymmp": "samples/production.ymmp",
+    "face_map": "samples/face_map.json",
+    "bg_map": "samples/bg_map_proof.json",
+    "se_map": "samples/p2_se_map.json",
+    "timeline_profile": "production_ai_monitoring_lane",
+    "timeline_contract": "samples/timeline_route_contract.json"
+  },
+  "speech_sync_evidence": {
+    "ir_visual_styles_dry_sample": {
+      "summary": "overlay は発話 index 単位で付与。論点と表示の対応を IR 上で固定。",
+      "cases": [
+        {
+          "utterance_index": 1,
+          "text_excerpt": "挿絵コマ1",
+          "section_topic": "挿絵コマ風（skit）",
+          "overlay": "speech_bubble",
+          "appears_on_topic": "挿絵コマ台詞行に speech_bubble を付与"
+        },
+        {
+          "utterance_index": 2,
+          "text_excerpt": "挿絵コマ2",
+          "overlay": null,
+          "disappears_without_lag": "直前発話の overlay は当該 index にのみ存在し、次行では未指定"
+        },
+        {
+          "utterance_index": 3,
+          "text_excerpt": "データ説明",
+          "section_topic": "資料パネル風（data / board）",
+          "overlay": "text_box",
+          "no_topic_drift": "S2 の資料パネル節の台詞に text_box を付与"
+        }
+      ]
+    },
+    "p2_overlay_se_ir": {
+      "summary": "単一発話に row_start/row_end と overlay 一覧。YMM4 適用は当該 Voice 行範囲にスコープ。",
+      "utterance_index": 1,
+      "row_start": 1,
+      "row_end": 1,
+      "overlays": ["speech_bubble", "arrow_red"],
+      "apply_production_dry_run": {
+        "overlay_changes": 2,
+        "interpretation": "2 ラベルとも同一発話行レンジに対する変更として計上（発話区間との同期）"
+      }
+    }
+  },
+  "scores": {
+    "target_quality": 2,
+    "readability": 2,
+    "timing_fit": 3,
+    "stability": 2
+  },
+  "checklist": {
+    "appears_on_topic": true,
+    "disappears_without_lag": true,
+    "no_topic_drift": true
+  },
+  "result": "pass",
+  "cli_exit_codes": {
+    "validate_ir_visual_styles_dry_sample": 0,
+    "validate_ir_p2_overlay_se": 0,
+    "apply_production_dry_run": 0
+  },
+  "artifact_paths": {
+    "dry_run_log": "samples/lane_c_file5_b3_apply_production_dryrun.txt",
+    "execution_record": "docs/verification/LANE-C-file5-B3-overlay-timing-2026-04-10.md"
+  },
+  "notes": "file5 B-3 の機械ゲート（validate-ir / apply-production --dry-run）はいずれも exit 0。B3 必須3項は IR 上の発話単位 overlay 割当と p2 の row 範囲一致により満たすと判断。YMM4 実機のフレーム単位ずれは本証跡のスコープ外（LANE-C-operator-prep §8.5 と同旨）。"
+}

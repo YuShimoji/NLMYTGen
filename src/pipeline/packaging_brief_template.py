@@ -58,6 +58,38 @@ H01_MARKDOWN_BLANK = """# Packaging Orchestrator Brief
 - for_h03:
 """
 
+REQUIRED_JSON_KEYS = (
+    "brief_version",
+    "video_id",
+    "topic_label",
+    "target_viewer",
+    "audience_hook",
+    "title_promise",
+    "thumbnail_promise",
+    "novelty_basis",
+    "required_evidence",
+    "missing_or_weak_evidence",
+    "forbidden_overclaim",
+    "thumbnail_controls",
+    "script_opening_commitment",
+    "must_payoff_by_section",
+    "alignment_check",
+    "consumer_hints",
+)
+
+REQUIRED_MARKDOWN_SECTIONS = (
+    "# Packaging Orchestrator Brief",
+    "## novelty_basis",
+    "## required_evidence",
+    "## missing_or_weak_evidence",
+    "## forbidden_overclaim",
+    "## thumbnail_controls",
+    "## script_opening_commitment",
+    "## must_payoff_by_section",
+    "## alignment_check",
+    "## consumer_hints",
+)
+
 
 def minimal_json_brief() -> dict:
     """スコア CLI が解釈できる最小構造（中身はプレースホルダ）。"""
@@ -91,9 +123,33 @@ def minimal_json_brief() -> dict:
     }
 
 
+def _validate_json_brief_schema(data: dict) -> None:
+    """最低限の schema drift を検出する."""
+    missing = [key for key in REQUIRED_JSON_KEYS if key not in data]
+    if missing:
+        raise ValueError(f"H-01 JSON template missing required keys: {', '.join(missing)}")
+
+    if not isinstance(data["required_evidence"], list):
+        raise ValueError("H-01 JSON template invalid type: required_evidence must be a list")
+    if not isinstance(data["alignment_check"], list):
+        raise ValueError("H-01 JSON template invalid type: alignment_check must be a list")
+    if not isinstance(data["thumbnail_controls"], dict):
+        raise ValueError("H-01 JSON template invalid type: thumbnail_controls must be an object")
+
+
+def _validate_markdown_template(text: str) -> None:
+    """spec §5 との最低限の同期を確認する."""
+    missing = [marker for marker in REQUIRED_MARKDOWN_SECTIONS if marker not in text]
+    if missing:
+        raise ValueError(f"H-01 Markdown template missing sections: {', '.join(missing)}")
+
+
 def emit_markdown() -> str:
-    return H01_MARKDOWN_BLANK
+    _validate_markdown_template(H01_MARKDOWN_BLANK)
+    return H01_MARKDOWN_BLANK if H01_MARKDOWN_BLANK.endswith("\n") else H01_MARKDOWN_BLANK + "\n"
 
 
 def emit_json_text() -> str:
-    return json.dumps(minimal_json_brief(), ensure_ascii=False, indent=2) + "\n"
+    payload = minimal_json_brief()
+    _validate_json_brief_schema(payload)
+    return json.dumps(payload, ensure_ascii=False, indent=2) + "\n"

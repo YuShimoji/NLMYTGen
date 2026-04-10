@@ -1,0 +1,35 @@
+{
+  "run_id": "bg_a4_2026-04-10_p2_lane_c",
+  "task_id": "A4",
+  "evaluation_subject": {
+    "ir_path": "samples/p2_overlay_se_ir.json",
+    "ymmp_path": "samples/production.ymmp",
+    "overlay_map": "_local/lane_c/overlay_map.json",
+    "rationale": "LANE-C §8.2/§8.3 と同一入力。失敗クラス（BG_ANIM_* / TRANSITION_*）の機械監視は validate-ir と apply-production --dry-run のログで判定。"
+  },
+  "commands_executed": [
+    "uv run python -m src.cli.main validate-ir samples/p2_overlay_se_ir.json --palette samples/palette.ymmp --overlay-map _local/lane_c/overlay_map.json",
+    "uv run python -m src.cli.main apply-production samples/production.ymmp samples/p2_overlay_se_ir.json --face-map samples/face_map.json --bg-map samples/bg_map_proof.json --overlay-map _local/lane_c/overlay_map.json --se-map samples/p2_se_map.json --timeline-profile production_ai_monitoring_lane --timeline-contract samples/timeline_route_contract.json --dry-run"
+  ],
+  "exit_codes": {
+    "validate_ir": 0,
+    "apply_production_dry_run": 0
+  },
+  "log_observations": {
+    "validate_ir": "Validation PASSED with 3 warnings（FACE_SERIOUS_SKEW, FACE_LATENT_GAP, IDLE_FACE_MISSING のみ。BG_ANIM_* / TRANSITION_* の ERROR なし）",
+    "apply_production_dry_run": "Timeline adapter: motion=0, transition=1, bg_anim=0; Transition VoiceItem writes: 1; BG anim writes: 0。stderr に BG_ANIM_MAP_MISS / TRANSITION_MAP_MISS / BG_ANIM_UNKNOWN 等の失敗クラス文字列なし（WARNING は顔系のみ）"
+  },
+  "scores": {
+    "target_quality": 2,
+    "readability": 2,
+    "timing_fit": 2,
+    "stability": 3
+  },
+  "checklist": {
+    "no_bg_anim_failure_class": true,
+    "no_transition_failure_class": true,
+    "dry_run_exit_zero": true
+  },
+  "result": "pass",
+  "notes": "パケット A4（失敗クラス監視）。両コマンド exit 0。出力全文を目視し ERROR 相当の BG_ANIM_* / TRANSITION_* を検出せず。readability/timing_fit は本パケットの主目的外のため実用レベル(2)、stability は dry-run 完走とログ健全性から 3。"
+}

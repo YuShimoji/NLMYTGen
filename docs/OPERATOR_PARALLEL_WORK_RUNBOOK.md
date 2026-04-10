@@ -128,6 +128,7 @@ uv run python -m src.cli.main build-csv refined.txt -o _tmp_out.csv `
 - 正本: [THUMBNAIL_ONE_SHEET_WORKFLOW.md](THUMBNAIL_ONE_SHEET_WORKFLOW.md)
 - 全体フロー: [WORKFLOW.md](WORKFLOW.md) の S-8
 - **やること**: テンプレ複製 → 文字・画像差し替え → 書き出し（Python 画像生成は使わない）。
+- 任意 Probe: `score-thumbnail-s8` で手動採点を機械記録し、`P03-thumbnail-one-sheet-proof.md` に run 単位で追記する。
 
 ---
 

@@ -1,0 +1,16 @@
+﻿{
+  "meta": {
+    "input": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen\\samples\\amazon_panopticon_lane_a_refined.txt",
+    "utterance_count": 87,
+    "mapped_speaker_keys": []
+  },
+  "diagnostics": [
+    {
+      "code": "ROLE_SKIPPED_NO_MAP",
+      "severity": "info",
+      "utterance_index": null,
+      "message": "話者マップなしのため、期待名との一致（EXPLAINER/LISTENER）はスキップ",
+      "hint": "れいむ/まりさへのマップ後に再実行すると、役割とキャラ名の整合を機械チェックできる"
+    }
+  ]
+}

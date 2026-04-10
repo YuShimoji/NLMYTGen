@@ -13,6 +13,63 @@
 
 ---
 
+## レーン E 再オープン（Automation Probe・2026-04-09）
+
+S-8 実制作（YMM4 手動）を維持しながら、**品質判定と証跡記録のみ**を機械化補助する運用として再オープンする。
+
+- 画像生成・画像解析は実施しない（L2/L3 境界厳守）。
+- `score-thumbnail-s8` は手動採点 JSON を集約し、PASS/NEEDS_FIX の判定補助を返す。
+- creative judgement の最終決定権は従来どおりオペレータに残す。
+
+### Probe 入力契約
+
+`--scores`（必須）
+
+```json
+{
+  "single_claim": 0,
+  "specificity": 0,
+  "title_alignment": 0,
+  "mobile_readability": 0
+}
+```
+
+- 各値は `0..3`（0=不十分, 1=弱い, 2=実用, 3=強い）。
+
+`--payload` または `--payload-file`（任意）
+
+```json
+{
+  "run_id": "lane_e_probe_2026-04-09_a",
+  "video_slug": "ai_monitoring_labor",
+  "output_file": "thumb_ai_monitoring_labor.png"
+}
+```
+
+### 判定ルール（固定）
+
+- `total_score >= 80` かつ warning なし: `pass`（終了コード 0）
+- それ以外: `needs_fix`（終了コード 1）
+
+warning code:
+
+- `THUMB_SINGLE_CLAIM_WEAK`
+- `THUMB_SPECIFICITY_WEAK`
+- `THUMB_TITLE_ALIGNMENT_GAP`
+- `THUMB_MOBILE_READABILITY_RISK`
+- `THUMB_CONTRACT_BROKEN`
+
+### 実行例
+
+```powershell
+uv run python -m src.cli.main score-thumbnail-s8 `
+  --scores "{""single_claim"":2,""specificity"":2,""title_alignment"":2,""mobile_readability"":2}" `
+  --payload "{""run_id"":""lane_e_probe_2026-04-09_a"",""video_slug"":""ai_monitoring_labor"",""output_file"":""thumb_ai_monitoring_labor.png""}" `
+  --format json
+```
+
+---
+
 ## S-0. 初回のみ（YMM4 テンプレと書き出し）
 
 [THUMBNAIL_ONE_SHEET_WORKFLOW.md](../THUMBNAIL_ONE_SHEET_WORKFLOW.md)「事前準備」に対応。
@@ -86,5 +143,6 @@ YMM4 を持たない環境では新規 PNG を生成できない。レーン E *
 
 ## 変更履歴
 
+- 2026-04-09: Automation Probe として再オープン。`score-thumbnail-s8` の入力契約・判定基準・実行例を追記。
 - 2026-04-09: 運用クローズ節を追加（本開発幹へ復帰、実サムネは P3・トラック E で並行）。
 - 2026-04-09: 初版。PRE-PLAN レーン E・runbook トラック E に対応。

@@ -1,0 +1,46 @@
+{
+  "run_id": "lane_c_overlay_b1_2026-04-10_static",
+  "task_id": "B1",
+  "lane": "C",
+  "reference_files": {
+    "ir": "samples/p2_overlay_se_ir.json",
+    "overlay_map": "samples/p2_overlay_map.json",
+    "quality_packet_spec": "docs/verification/VISUAL-QUALITY-PACKETS.md"
+  },
+  "method": "static_repo_only",
+  "small_screen_assumption": "モバイル相当（縦長・安全域狭い）でのオーバーレイ内テキスト可読性を想定。画像実体・YMM4プレビューは未実施。",
+  "overlay_inventory": {
+    "from_ir_utterance_index_1": [
+      {
+        "key": "speech_bubble",
+        "role": "テキスト載せ想定の吹き出しPNG（ファイル名推定のみ）",
+        "mapped_asset": "C:/assets/overlays/speech_bubble.png"
+      },
+      {
+        "key": "arrow_red",
+        "role": "装飾・指示矢印PNG（テキスト可読性の主対象外の可能性が高い）",
+        "mapped_asset": "C:/assets/overlays/arrow_red.png"
+      }
+    ],
+    "utterance_text_for_context": "P2 adoption smoke",
+    "note": "IRの発話テキストはYMM4字幕/読み上げ経路であり、オーバーレイPNGに焼き込まれた文字列かはrepoデータからは断定不可。"
+  },
+  "scores": {
+    "target_quality": 1,
+    "readability": 1,
+    "timing_fit": 2,
+    "stability": 2
+  },
+  "checklist": {
+    "text_legible_mobile": false,
+    "font_contrast_ok": false,
+    "no_text_overflow": false
+  },
+  "result": "needs_fix",
+  "rationale": {
+    "text_legible_mobile": "小画面での文字サイズ・行長・安全域内配置は、PNGピクセルまたはYMM4上のスケールなしでは検証不能のため否認（保守的）。",
+    "font_contrast_ok": "前景/背景コントラストは色データ未参照のため証跡不足により否認（プラン方針）。",
+    "no_text_overflow": "吹き出し枠内への収まりはレイアウト実体未確認のため証跡不足により否認（プラン方針）。"
+  },
+  "notes": "レーンC B1 のみ実施。判定は repo 内 JSON のみに基づく静的監査。PASS には YMM4 またはオーバーレイPNGの実視認・計測（コントラスト/はみ出し/モバイル幅相当プレビュー）が必要。コア受け入れは VISUAL-QUALITY-PACKETS の checklist 全 true かつ target_quality>=2 が条件のため、本提出は NEEDS_FIX。"
+}

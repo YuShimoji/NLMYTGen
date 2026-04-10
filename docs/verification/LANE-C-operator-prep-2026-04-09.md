@@ -113,6 +113,12 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
 3. `apply-production ... --dry-run` → 問題なければ `-o` で書き出し → YMM4 確認。  
 4. 効果記録は [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) または [mass-production-pilot-checklist.md](mass-production-pilot-checklist.md) へ 1 行追記（任意）。
 
+### 演出品質の運用単位（2026-04-09 追加）
+
+- 背景アニメと情報オーバーレイの品質改善は、[VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md) の **A1-A4 / B1-B4** 単位で実施する。
+- 提出は各パケットごとに JSON（スコア + チェックリスト + PASS/NEEDS_FIX）。
+- コアは PASS のみ受け入れる（NEEDS_FIX は差し戻し）。
+
 ---
 
 ## 7. 準備フェーズの完了宣言（コア開発へ戻す）
@@ -123,12 +129,141 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
 
 ---
 
-## 8. レーン C 実作業（1区切り）進捗記録 — 2026-04-09
+## 8. 実行ログ追記（2026-04-09 / レーンC本番運用パック）
+
+### 8.1 `_local` overlay_map 運用
+
+- 作業用マップを `_local/lane_c/overlay_map.json` として配置（`samples/p2_overlay_map.json` を元に作成）。
+- `_local/` は [.gitignore](../../.gitignore) の除外対象であり、絶対パスを含むローカル資産参照をコミットしない方針を維持。
+
+### 8.2 `validate-ir`（P2 IR 基準）
+
+```powershell
+uv run python -m src.cli.main validate-ir samples/p2_overlay_se_ir.json `
+  --palette samples/palette.ymmp `
+  --overlay-map _local/lane_c/overlay_map.json
+```
+
+- **結果**: exit code **0**（`Validation PASSED with 3 warnings`）。
+- **観測 warning**: `FACE_SERIOUS_SKEW`、`FACE_LATENT_GAP`、`IDLE_FACE_MISSING`（既知の許容 warning として扱う）。
+
+### 8.3 `apply-production --dry-run`（P2 IR 基準）
+
+```powershell
+uv run python -m src.cli.main apply-production samples/production.ymmp samples/p2_overlay_se_ir.json `
+  --face-map samples/face_map.json `
+  --bg-map samples/bg_map_proof.json `
+  --overlay-map _local/lane_c/overlay_map.json `
+  --se-map samples/p2_se_map.json `
+  --timeline-profile production_ai_monitoring_lane `
+  --timeline-contract samples/timeline_route_contract.json `
+  --dry-run
+```
+
+- **結果**: exit code **0**、`Overlay changes: 2`、`SE insertions: 1`、`Transition VoiceItem writes: 1`。
+
+### 8.4 `_tmp` 出力固定（再現コマンド）
+
+```powershell
+uv run python -m src.cli.main apply-production samples/production.ymmp samples/p2_overlay_se_ir.json `
+  --face-map samples/face_map.json `
+  --bg-map samples/bg_map_proof.json `
+  --overlay-map _local/lane_c/overlay_map.json `
+  --se-map samples/p2_se_map.json `
+  --timeline-profile production_ai_monitoring_lane `
+  --timeline-contract samples/timeline_route_contract.json `
+  -o samples/_tmp_lane_c_apply_proof.ymmp
+```
+
+- **結果**: exit code **0**、`Written: samples/_tmp_lane_c_apply_proof.ymmp`。
+- **提出物**: [samples/_tmp_lane_c_apply_proof.ymmp](../../samples/_tmp_lane_c_apply_proof.ymmp)
+
+### 8.5 境界（案件依存で未実施）
+
+- YMM4 実機での最終見た目確認（テンプレ実体・素材差し替え）は案件依存のため本ログでは未実施。
+- 実案件では [VISUAL_STYLE_YMM4_CHECKLIST.md](../VISUAL_STYLE_YMM4_CHECKLIST.md) の §1〜§3 を実行し、結果のみコアへ提出する。
+
+---
+
+## 9. 追記（2026-04-10）— file5 基準・overlay B3 のみ
+
+[LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md) B-3 の機械ゲートに沿い、`VISUAL-QUALITY-PACKETS` の **overlay B3（タイミング一致）** だけを判定した記録を別紙に残した。
+
+- **実行記録**: [LANE-C-file5-B3-overlay-timing-2026-04-10.md](LANE-C-file5-B3-overlay-timing-2026-04-10.md)
+- **判定 JSON**: `samples/lane_c_file5_b3_overlay_timing_evidence.json`
+- **ログ**: `samples/lane_c_file5_b3_validate_logs.txt` / `samples/lane_c_file5_b3_apply_production_dryrun.txt`
+
+### 8.6 `VISUAL-QUALITY-PACKETS` A3（bg_anim 意図一致）— 2026-04-10
+
+- **対象 IR**: [samples/ir_visual_styles_dry_sample.json](../../samples/ir_visual_styles_dry_sample.json)（レーンC §5.1 `validate-ir` 済みの三スタイル dry サンプル）
+- **判定**: **PASS**（`target_quality` スコア 2、必須チェック `tone_match` / `topic_match` / `no_contradicting_visual` いずれも満たす）
+- **台本論点 ↔ bg_anim 一致の要約**:
+  - **index 1**（「挿絵コマ1」/ S1 挿絵コマ風）: `bg_anim: none` → コマ割り的な読みやすさ・静止構図の論点と一致。
+  - **index 5**（「PV風の雰囲気切替」/ S3 再現PV風）: `bg_anim: ken_burns` → 発話が明示する雰囲気切替・映画的トーンと一致。
+  - index 2〜4, 6 は IR 上 `bg_anim` 未指定のため、過剰なカメラワーク指定による論点矛盾はないと判断。
+- **提出 JSON（正本）**: [lane-c-bg_anim-A3-2026-04-10.json](lane-c-bg_anim-A3-2026-04-10.json)
+
+---
+
+## 10. 実行ログ（2026-04-10）— Prompt-C 機械回帰
+
+[CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) **Prompt-C** に沿った `validate-ir` / `apply-production --dry-run` の再実行。repo root は本リポジトリ。PowerShell では stderr の WARNING が非ゼロ終了と誤認されうるため、**終了コードは `cmd /c` で確認**（いずれも **0**）。
+
+**overlay-map（P2 系）**: `_local/lane_c/overlay_map.json` が存在したため、§8.2 / §8.3 と同じく **同ファイル**を使用（無い環境では `samples/p2_overlay_map.json` で §5.2 相当の回帰とする）。
+
+### 10.1 `validate-ir`（§5.1 三スタイル dry）
+
+```powershell
+uv run python -m src.cli.main validate-ir samples/ir_visual_styles_dry_sample.json `
+  --palette samples/palette.ymmp `
+  --overlay-map samples/visual_styles_overlay_map.example.json
+```
+
+- **exit code**: 0  
+- **要約**: `Validation PASSED with 1 warnings`（`FACE_LATENT_GAP` ほか、既存方針どおり許容）  
+- **フルログ**: [samples/lane_c_promptc_validate_dry_2026-04-10.txt](../../samples/lane_c_promptc_validate_dry_2026-04-10.txt)
+
+### 10.2 `validate-ir`（§8.2 P2 IR + `_local`）
+
+```powershell
+uv run python -m src.cli.main validate-ir samples/p2_overlay_se_ir.json `
+  --palette samples/palette.ymmp `
+  --overlay-map _local/lane_c/overlay_map.json
+```
+
+- **exit code**: 0  
+- **要約**: `Validation PASSED with 3 warnings`（`FACE_SERIOUS_SKEW` / `FACE_LATENT_GAP` / `IDLE_FACE_MISSING`、既知の許容 warning）  
+- **フルログ**: [samples/lane_c_promptc_validate_p2_2026-04-10.txt](../../samples/lane_c_promptc_validate_p2_2026-04-10.txt)
+
+### 10.3 `apply-production --dry-run`（§8.3 同引数）
+
+```powershell
+uv run python -m src.cli.main apply-production samples/production.ymmp samples/p2_overlay_se_ir.json `
+  --face-map samples/face_map.json `
+  --bg-map samples/bg_map_proof.json `
+  --overlay-map _local/lane_c/overlay_map.json `
+  --se-map samples/p2_se_map.json `
+  --timeline-profile production_ai_monitoring_lane `
+  --timeline-contract samples/timeline_route_contract.json `
+  --dry-run
+```
+
+- **exit code**: 0  
+- **要約**: `Face changes: 2`、`Overlay changes: 2`、`SE insertions: 1`、`Timeline adapter: motion=0, transition=1, bg_anim=0`、`BG anim writes: 0`、`Transition VoiceItem writes: 1`、`(dry-run: no file written)`  
+- **フルログ**: [samples/lane_c_promptc_apply_dryrun_2026-04-10.txt](../../samples/lane_c_promptc_apply_dryrun_2026-04-10.txt)
+
+### 10.4 境界（ファイル7との切り分け）
+
+`VISUAL-QUALITY-PACKETS` の **A2 / A4 / B2 / B4** の個別 JSON 提出は **Prompt-C 本体のスコープ外**（[CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) の **Prompt-C-Visual-Quality** / [VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md)）。必要時にパケット単位で実施し、[CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) の PASS 条件へ接続する。
+
+---
+
+## 11. レーン C 実作業（File5・1区切り）進捗記録 — 2026-04-09
 
 `File5` 指示の「YMM4 作業の準備チェックを 1 区切り進める」に対応し、  
 [VISUAL_STYLE_YMM4_CHECKLIST.md](../VISUAL_STYLE_YMM4_CHECKLIST.md) の **§1 資料パネル風（`data` / `board`）**を 1 区切りとして進めた。
 
-### 8.1 実施内容（repo 側で完了）
+### 11.1 実施内容（repo 側で完了）
 
 1. **正本・サンプルの突き合わせ**
    - `text_box` ラベルが `overlay_map` の雛形に存在することを確認。  
@@ -145,7 +280,7 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
    - 結果: **exit code 0 / Validation PASSED with warnings**（既知の `FACE_LATENT_GAP`）。
    - `Overlay Distribution` に `text_box` が出現し、§1 の資料パネル語彙が IR 〜 map 契約で通ることを再確認。
 
-### 8.2 チェックボックス進捗（§1）
+### 11.2 チェックボックス進捗（§1）
 
 | 項目 | 状態 | メモ |
 |------|------|------|
@@ -154,12 +289,12 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
 | `bg_map` に `dark_board` / `diagram` 登録 | 一部完了 | `dark_board` は確認済み、`diagram` は未登録 |
 | 発話単位背景の運用方針確認（sections 分割 or G-15 待ち） | 完了 | 既存正本の方針を再確認済み |
 
-### 8.3 次の 1 区切り候補
+### 11.3 次の 1 区切り候補
 
 - §2（挿絵コマ風）の `speech_bubble`/コマ枠の実パス登録、または  
 - §1 の残タスク（`diagram` ラベル追加 + YMM4 テンプレ実体化）を実施して同ファイルに追記する。
 
-### 8.4 実行ログ（§2）
+### 11.4 実行ログ（§2）
 
 - [LANE-C-s2-skit-prep-2026-04-09.md](LANE-C-s2-skit-prep-2026-04-09.md)  
   - run_id: `lane_c_s2_2026-04-09_a`
@@ -168,11 +303,11 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
   - run_id: `lane_c_s2_2026-04-09_b`
   - 判定: `partial`（local 実パス登録 + CLI 1サイクル完了。YMM4 実機の最終目視固定を次 run でクローズ）
 
-### 8.5 次区切り候補（更新）
+### 11.5 次区切り候補（更新）
 
 - §3（再現PV風）へ進み、YMM4 テンプレ側の演出束ねと `measure-timeline-routes` の案件別測定準備を行う。
 
-### 8.6 実行ログ（§3）
+### 11.6 実行ログ（§3）
 
 - [LANE-C-s3-mood-prep-2026-04-09.md](LANE-C-s3-mood-prep-2026-04-09.md)  
   - run_id: `lane_c_s3_2026-04-09_a`

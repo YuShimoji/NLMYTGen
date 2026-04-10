@@ -1,0 +1,17 @@
+{
+  "run_id": "bg_a1_2026-04-10_p2_overlay_se_proof",
+  "task_id": "A1",
+  "scores": {
+    "target_quality": 1,
+    "readability": 2,
+    "timing_fit": 2,
+    "stability": 3
+  },
+  "checklist": {
+    "route_consistent": true,
+    "no_abrupt_jump": true,
+    "section_boundary_intent_match": true
+  },
+  "result": "needs_fix",
+  "notes": "参照境界: ファイル5は docs/verification/LANE-B-gui-llm-sync-checklist.md（レーンB・GUI/LLM正本同期）。A1の判定定義は docs/verification/VISUAL-QUALITY-PACKETS.md のみを正とする（レーンC作業手順の混同防止）。証跡: samples/p2_overlay_se_ir.json と apply-production（samples/production.ymmp ベース、--timeline-profile production_ai_monitoring_lane、--timeline-contract samples/timeline_route_contract.json）。2026-04-10 再実行: exit 0、Timeline adapter motion=0 transition=1 bg_anim=0、BG anim writes: 0、Transition VoiceItem writes: 1。IRに bg_anim 未指定のためキーフレーム系背景切替は未実施。経路は契約プロファイルと整合（route_consistent）、パッチ起因の bg_anim 急跳は発生せず（no_abrupt_jump）、macro/utterance とも section_id=S1 の単一セクションで境界意図と矛盾なし（section_boundary_intent_match）。一方、A1対象の「切替品質」を bg_anim 観点で実証する信号が不足するため target_quality=1 とし、共通PASS条件（target_quality>=2）未充足により result=needs_fix。本番PASSには bg_anim 指定付きIR（例: samples/p2_bg_anim_small_scope.ir.json 経由の適用確認）を推奨。"
+}
