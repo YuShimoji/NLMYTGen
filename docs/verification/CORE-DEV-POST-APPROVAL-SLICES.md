@@ -11,7 +11,7 @@
 |-----------|--------|----------|----------------|
 | CORE-RETURN-DOCSYNC | 2026-04-09 | コア復帰準備スライス。P2/S6 再判定（見え方一行 + §2の5条件）反映、フル回帰結果反映、`runtime-state` の next_action を実装着手可能状態へ更新。 | local docs sync（このブロック） |
 | T1-P2-DOCSAMPLE | 2026-04-11 | [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §2.1: P2 段階投入向け **verification 手順 1 本 + 期待ログ**、および **IR/設定サンプル JSON**（[PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md) と矛盾なし）。FEATURE_REGISTRY 新規行なし。正本: [T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md](T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md)。 | `8c12391`（`docs: T1-P2-DOCSAMPLE 機械検証パック（P2 overlay/se/bg_anim）`） |
-| T1-RUNBOOK-GUI | 2026-04-11 | 同ドラフト §2.2: [OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) と GUI 導線（[gui-llm-setup-guide.md](../gui-llm-setup-guide.md) 等）の **文言・手順の明確化**のみ。新タブ・F-01/F-02 復活は禁止。 | （コミット後にハッシュを記入） |
+| T1-RUNBOOK-GUI | 2026-04-11 | 同ドラフト §2.2: [OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) と GUI 導線（[gui-llm-setup-guide.md](../gui-llm-setup-guide.md) 等）の **文言・手順の明確化**のみ。新タブ・F-01/F-02 復活は禁止。 | `72f9ff2`（`docs: T1-RUNBOOK-GUI（runbook↔gui 用語・導線の明確化）`） |
 | **File6-2026-04-10-01（承認後スライス移行準備）** | 2026-04-10 | `CORE-DEV-LANE-PROMPT-QUICKREF.md` の File6 指示に基づき、承認記録の反映と `master` 起点トピックブランチでの実装準備を開始。承認ソース: 本チャット指示「File6 の承認後スライスを進めてください。承認記録を反映し、master起点トピックブランチで実装準備を開始してください。」。`origin/master` 同期後のフル回帰は `313 passed`（2026-04-11、`runtime-state.md` 参照）。 | `topic/file6-post-approval-prep-2026-04-10` |
 
 ---
