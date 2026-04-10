@@ -100,6 +100,7 @@ flowchart TD
 | `validate-ir`                     | 上表「validate-ir」列が Yes の領域を中心にゲート |
 | `apply-production` / `patch-ymmp` | 上表「patch_ymmp」が Yes の領域を書き換え     |
 | `measure-timeline-routes`         | G-12 の readback・`--expect` で経路契約 |
+| T1-P2-DOCSAMPLE（P2 段階投入・機械パック） | 上記コマンドを **1 本の手順**にまとめた正本: [verification/T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md](verification/T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md) |
 
 
 ---
