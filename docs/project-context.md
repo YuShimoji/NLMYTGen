@@ -158,6 +158,7 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 
 | 日付 | 決定事項 | 選択肢 | 決定理由 |
 |------|----------|--------|----------|
+| 2026-04-10 | **T1 完了**（コア本開発）: [T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md](verification/T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md) で P2 機械検証を 1 本化、[OPERATOR_PARALLEL_WORK_RUNBOOK.md](OPERATOR_PARALLEL_WORK_RUNBOOK.md) と [gui-llm-setup-guide.md](gui-llm-setup-guide.md) で Phase 1 用語を整合。[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §1 の T1 行を完了コミットで固定。`runtime-state.md` の `next_action` を **T2**（承認スライス 1 本実装）へ | T1 を分割のまま保留 / handoff だけ先 | フェーズ境界を閉じ、次セッションが [Prompt-Core-T2](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) で迷わないようにするため |
 | 2026-04-11 | **T0 クローズ**: [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](verification/CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §2〜§3 を差し替えなしで承認記録（§6）し、[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) に **T1-P2-DOCSAMPLE** / **T1-RUNBOOK-GUI** を起票。開発フェーズを **T1** へ移行 | 承認前に T1 着手 / T0 で差し替え協議 | 実行プランどおりゲートを閉じ、文書・runbook 先行の作業契約を固定するため |
 | 2026-04-10 | レーン B（ファイル5）再検証: [LANE-B-execution-record-2026-04-09.md](verification/LANE-B-execution-record-2026-04-09.md) §7 を追記。正本コミット `fb0659a`、`validate-ir` / `apply-production --dry-run` を再実行し PASS。B-1/B-4/B-5 は 2026-04-09 方針継続。Custom GPT Instructions 突合はオペレータ（repo 外） | 再検証スキップ / 証跡のみ更新 | [CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) Prompt-B・ファイル2 プロンプト同期の記録要件を満たすため |
 | 2026-04-10 | コア本開発の **フェーズ T0〜T3** と並行レーンの相性を [CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md](verification/CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md) に正本化し、[CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) に **ファイル8・ファイル9** と §3.0 早見・Prompt-Core-T0〜T3 を追加 | タスク設計なしで Prompt のみ / 設計ドキュメントを分離 | 「ファイルNのレーンA」形式で並行投入しつつコア幹を迷わせないため |
@@ -312,14 +313,14 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ---
 
-## HANDOFF SNAPSHOT (2026-04-11 更新)
+## HANDOFF SNAPSHOT (2026-04-10 更新)
 
-- Shared Focus: **コア本開発フェーズ T1**（`docs/runtime-state.md` の `next_action`）。スライス: **T1-P2-DOCSAMPLE** → **T1-RUNBOOK-GUI**。Prompt: [CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) §3.0 **Core-T1**。方針承認: [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](verification/CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §6。P0 / runbook はオペレータ並行で継続
-- Safe Next Frontier Packet: **直近（開発）** T1 2 スライス完了後 T2（承認スライス実装）または T3（handoff）。**運用**: **P0** Phase 1 本番 1 本（診断→C-09→CSV→YMM4→[P01](verification/P01-phase1-operator-e2e-proof.md)） / **P1** H-01 brief / **P2** 演出実戦 / **P3** サムネ 1 本 / **Parking** P2A どおり一括マージしない
+- Shared Focus: **コア本開発フェーズ T2**（`docs/runtime-state.md` の `next_action`）。**T1 完了**: `T1-P2-DOCSAMPLE`（[T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md](verification/T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md)）＋`T1-RUNBOOK-GUI`（runbook↔gui 用語）。次は [CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §1 から **実装対象スライスを 1 本だけ**選び **Prompt-Core-T2**（[CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) §3.0）で進める。§1 に **未実装の approved コードスライスが無い**ときはユーザー承認で起票してから T2。P0 / オペレータ並行は継続
+- Safe Next Frontier Packet: **直近（開発）** T2（承認スライス 1 本の縦実装）→ 完了後は再度 T3 で handoff。**運用**: **P0** Phase 1 本番 1 本（診断→C-09→CSV→YMM4→[P01](verification/P01-phase1-operator-e2e-proof.md)） / **P1** H-01 brief / **P2** 演出実戦 / **P3** サムネ 1 本 / **Parking** P2A どおり一括マージしない
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: **2026-04-11** T0 完了＋P0 Amazon 並行証跡・サンプルを `origin/master` へ同期。`next_action` **T1**。履歴は git log
-- Evidence: Production E2E 実証済み + `NLMYTGEN_PYTEST_FULL=1 uv run pytest`: **313 passed** (2026-04-10)
+- Last Change Relation: **2026-04-10** T1 両スライス完了（P2 機械検証パック新設、runbook/gui 整備）、`next_action` **T2**。直前の **2026-04-11** 記録（T0・Amazon 同期・`origin/master`）は履歴として [runtime-state.md](runtime-state.md) `last_change_relation` に包含。詳細は git log
+- Evidence: Production E2E 実証済み + `NLMYTGEN_PYTEST_FULL=1 uv run pytest`: **313 passed** (2026-04-10、T1 完了後)
 - 案件モード: CLI artifact
 - 現在の主レーン: 方向転換中 (実制作bottleneck直接軽減へ移行)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近

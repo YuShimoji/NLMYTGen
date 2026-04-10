@@ -42,7 +42,7 @@
 ## 4. 変更履歴
 
 - 2026-04-10: **T1-RUNBOOK-GUI 完了**。[OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) に用語正本・T1-P2 導線・汎用 `cd` 例を追加。[gui-llm-setup-guide.md](../gui-llm-setup-guide.md) にトラック A との対応と Electron 節の runbook 参照を追記。コード・新タブなし。`NLMYTGEN_PYTEST_FULL=1 uv run pytest` 緑。
-- 2026-04-10: **T1-P2-DOCSAMPLE 完了**。[T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md](T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md) を正本化し、[PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md) §6 に導線を追加。`NLMYTGEN_PYTEST_FULL=1 uv run pytest` 緑。§2 のうち FEATURE 更新は該当なし（ドキュメントのみ）。`runtime-state` の最終検証日付は T1 完了後の T3 または本スライス後の handoff で更新する。
+- 2026-04-10: **T1-P2-DOCSAMPLE 完了**。[T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md](T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md) を正本化し、[PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md) §6 に導線を追加。`NLMYTGEN_PYTEST_FULL=1 uv run pytest` 緑。§2 のうち FEATURE 更新は該当なし（ドキュメントのみ）。
 - 2026-04-11: T0 承認に基づき `T1-P2-DOCSAMPLE` / `T1-RUNBOOK-GUI` を起票（フェーズ T1 用）。
 - 2026-04-09: `CORE-RETURN-DOCSYNC` を追加（コア復帰判定の承認後スライスとして起票）。
 - 2026-04-10: File6 承認記録（移行準備）を §1 に追加。`topic/file6-post-approval-prep-2026-04-10` を起票。
