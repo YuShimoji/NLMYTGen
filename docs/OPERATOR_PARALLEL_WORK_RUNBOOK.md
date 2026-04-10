@@ -21,6 +21,11 @@
 
 **A と B は独立**。**C は YMM4 作業時間が取れるとき**。**D は brief を運用するときから**。**E は動画 1 本ごと**。
 
+### 用語の突き合わせ（コア文書 ↔ 本 runbook）
+
+- **台本診断 JSON（B-18）**: CLI の `diagnose-script` 出力と同型。Electron の **CSV 変換タブ**で「台本診断 JSON も保存」にチェックしたときに同梱される `{台本stem}_script-diagnostics.json` も同じ種類の成果物として扱う。ファイル名・保存先の詳細は [gui-llm-setup-guide.md](gui-llm-setup-guide.md) を正本とする。
+- **P2 機械検証（repo 内のみ）**: `validate-ir` / `apply-production --dry-run` / `measure-timeline-routes` の再現手順は [verification/T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md](verification/T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md)。YMM4 実機の見え方は別途オペレータ記録（チェックリスト正本）で扱う。
+
 ---
 
 ## トラック A — Phase 1 運用 E2E（B-18 → C-09 → build-csv）
@@ -32,7 +37,8 @@
 PowerShell:
 
 ```powershell
-cd "C:\Users\thank\Storage\Media Contents Projects\NLMYTGen"
+# リポジトリ root へ移動（パスは自身の NLMYTGen クローンに置き換える）
+cd "C:\path\to\NLMYTGen"
 
 uv run python -m src.cli.main diagnose-script "samples\AI監視が追い詰める生身の労働.txt" `
   --speaker-map "スピーカー1=れいむ,スピーカー2=まりさ" `
@@ -61,6 +67,8 @@ uv run python -m src.cli.main build-csv refined.txt -o _tmp_out.csv `
 ```
 
 `--speaker-map` は台本のラベルに合わせる。問題なければ `--dry-run` を外して本番 CSV を出力する。
+
+**Electron（CSV 変換タブ）経由**で同じ系列を回す場合: 台本を選び Speaker Map を CLI と揃え、**Build CSV** または **Dry Run** の成功時に診断 JSON を同梱する手順は [gui-llm-setup-guide.md](gui-llm-setup-guide.md) の C-09 / Electron 節と一致させる（用語: 「台本診断 JSON も保存」）。
 
 ### A-4. YMM4 へ
 
@@ -137,7 +145,7 @@ uv run python -m src.cli.main build-csv refined.txt -o _tmp_out.csv `
 作業単位ごとに:
 
 ```powershell
-cd "C:\Users\thank\Storage\Media Contents Projects\NLMYTGen"
+cd "C:\path\to\NLMYTGen"   # リポジトリ root
 git status
 git add -A
 git commit -m "（内容を日本語で一文）"

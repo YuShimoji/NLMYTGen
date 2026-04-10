@@ -10,13 +10,17 @@ NLMYTGen の GUI LLM プロンプトを Custom GPT / Claude Project に固定化
 
 本ページ後半の **レガシー統合プロンプト v3** は、自然文のみの旧一体型運用向けの参照である。IR パイプ（`validate-ir` / `apply-production`）では **v4 を優先**する。
 
+### レーン A（Phase 1）runbook との対応
+
+CLI での `diagnose-script` → refinement → `validate` / `build-csv` の並びは [OPERATOR_PARALLEL_WORK_RUNBOOK.md](OPERATOR_PARALLEL_WORK_RUNBOOK.md) **トラック A** と手順・用語を揃える。**台本診断 JSON** = B-18 = `diagnose-script` の JSON 出力であり、C-09 の入力として Custom GPT に貼るものと同じ情報モデルである（GUI のチェックボックス表記「台本診断 JSON も保存」もここに対応）。
+
 ---
 
 ## S-1 台本 refinement（C-09 / Phase 1）
 
 NotebookLM 生台本を `build-csv` に入れる前に、[SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md](SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md) の **`diagnose-script`**（B-18）で機械診断し、続けて [S1-script-refinement-prompt.md](S1-script-refinement-prompt.md) を GUI LLM に渡して constrained rewrite する。演出 IR（C-07）より**上流**の工程。
 
-**Electron GUI**: CSV 変換タブの「台本診断 JSON も保存」にチェックしたまま **Build CSV** または **Dry Run** が成功すると、`{台本ファイル名のstem}_script-diagnostics.json` を CSV 出力と同じディレクトリに書き出す（dry-run で CSV が無い場合は台本と同じディレクトリ）。Speaker Map は CSV 設定と同一。品質診断タブの「Diagnose Script」は従来どおり別途利用可。
+**Electron GUI**: CSV 変換タブの「台本診断 JSON も保存」にチェックしたまま **Build CSV** または **Dry Run** が成功すると、`{台本ファイル名のstem}_script-diagnostics.json` を CSV 出力と同じディレクトリに書き出す（dry-run で CSV が無い場合は台本と同じディレクトリ）。Speaker Map は CSV 設定と同一。品質診断タブの「Diagnose Script」は従来どおり別途利用可。runbook トラック A の **A-1（CLI 診断）** / **A-3（validate・build-csv）** と同じ工程を GUI で行うときの正本は本節と [OPERATOR_PARALLEL_WORK_RUNBOOK.md](OPERATOR_PARALLEL_WORK_RUNBOOK.md) を併読する。
 
 ---
 
