@@ -1,0 +1,182 @@
+{
+  "submission_id": "file7_visual_quality_packets_2026-04-10_lane_c",
+  "source_spec": "docs/verification/VISUAL-QUALITY-PACKETS.md",
+  "run_policy": {
+    "score_range": "0-3",
+    "pass_condition": "target_quality >= 2 and all required checklist items are true"
+  },
+  "packets": [
+    {
+      "task_id": "A1",
+      "category": "bg_anim",
+      "run_id": "bg_a1_2026-04-10_p2_overlay_se_proof",
+      "scores": {
+        "target_quality": 1,
+        "readability": 2,
+        "timing_fit": 2,
+        "stability": 3
+      },
+      "checklist": {
+        "route_consistent": true,
+        "no_abrupt_jump": true,
+        "section_boundary_intent_match": true
+      },
+      "result": "NEEDS_FIX",
+      "evidence_refs": [
+        "docs/verification/lane-c-a1-bg-anim-packet-2026-04-10.json"
+      ]
+    },
+    {
+      "task_id": "A2",
+      "category": "bg_anim",
+      "run_id": "bg_a2_2026-04-10_static_ir_audit",
+      "scores": {
+        "target_quality": 1,
+        "readability": 2,
+        "timing_fit": 1,
+        "stability": 2
+      },
+      "checklist": {
+        "speed_is_readable": false,
+        "no_excess_stillness": false,
+        "pace_matches_script": false
+      },
+      "result": "NEEDS_FIX",
+      "notes": "ir_visual_styles_dry_sample では bg_anim 明示が index=1(none) と index=5(ken_burns) に限定され、速度プロファイル実測ログが不足。速すぎ/遅すぎ/停滞の機械判定証跡が成立しないため保守的に NEEDS_FIX。",
+      "evidence_refs": [
+        "samples/ir_visual_styles_dry_sample.json"
+      ]
+    },
+    {
+      "task_id": "A3",
+      "category": "bg_anim",
+      "run_id": "bg_a3_2026-04-10_visual_styles_dry",
+      "scores": {
+        "target_quality": 2,
+        "readability": 2,
+        "timing_fit": 2,
+        "stability": 2
+      },
+      "checklist": {
+        "tone_match": true,
+        "topic_match": true,
+        "no_contradicting_visual": true
+      },
+      "result": "PASS",
+      "evidence_refs": [
+        "docs/verification/lane-c-bg_anim-A3-2026-04-10.json"
+      ]
+    },
+    {
+      "task_id": "A4",
+      "category": "bg_anim",
+      "run_id": "bg_a4_2026-04-10_p2_lane_c",
+      "scores": {
+        "target_quality": 2,
+        "readability": 2,
+        "timing_fit": 2,
+        "stability": 3
+      },
+      "checklist": {
+        "no_bg_anim_failure_class": true,
+        "no_transition_failure_class": true,
+        "dry_run_exit_zero": true
+      },
+      "result": "PASS",
+      "evidence_refs": [
+        "docs/verification/lane-c-bg_anim-A4-2026-04-10.json"
+      ]
+    },
+    {
+      "task_id": "B1",
+      "category": "overlay",
+      "run_id": "lane_c_overlay_b1_2026-04-10_static",
+      "scores": {
+        "target_quality": 1,
+        "readability": 1,
+        "timing_fit": 2,
+        "stability": 2
+      },
+      "checklist": {
+        "text_legible_mobile": false,
+        "font_contrast_ok": false,
+        "no_text_overflow": false
+      },
+      "result": "NEEDS_FIX",
+      "evidence_refs": [
+        "docs/verification/lane-c-overlay-b1-readability-2026-04-10.json"
+      ]
+    },
+    {
+      "task_id": "B2",
+      "category": "overlay",
+      "run_id": "overlay_b2_2026-04-10_static_ir_audit",
+      "scores": {
+        "target_quality": 1,
+        "readability": 2,
+        "timing_fit": 2,
+        "stability": 2
+      },
+      "checklist": {
+        "one_overlay_one_claim": false,
+        "not_overloaded": false,
+        "has_concrete_anchor": true
+      },
+      "result": "NEEDS_FIX",
+      "notes": "p2_overlay_se_ir の単一発話に speech_bubble と arrow_red の2オーバーレイが同時割当。論点アンカーはあるが、B2の過密回避条件に対する安全側判定で NEEDS_FIX。",
+      "evidence_refs": [
+        "samples/p2_overlay_se_ir.json",
+        "samples/lane_c_file5_b3_apply_production_dryrun.txt"
+      ]
+    },
+    {
+      "task_id": "B3",
+      "category": "overlay",
+      "run_id": "lane_c_file5_overlay_b3_2026-04-10",
+      "scores": {
+        "target_quality": 2,
+        "readability": 2,
+        "timing_fit": 3,
+        "stability": 2
+      },
+      "checklist": {
+        "appears_on_topic": true,
+        "disappears_without_lag": true,
+        "no_topic_drift": true
+      },
+      "result": "PASS",
+      "evidence_refs": [
+        "samples/lane_c_file5_b3_overlay_timing_evidence.json",
+        "docs/verification/LANE-C-file5-B3-overlay-timing-2026-04-10.md"
+      ]
+    },
+    {
+      "task_id": "B4",
+      "category": "overlay",
+      "run_id": "overlay_b4_2026-04-10_static_occlusion_audit",
+      "scores": {
+        "target_quality": 1,
+        "readability": 1,
+        "timing_fit": 2,
+        "stability": 2
+      },
+      "checklist": {
+        "no_character_occlusion": false,
+        "no_key_info_occlusion": false,
+        "safe_area_respected": false
+      },
+      "result": "NEEDS_FIX",
+      "notes": "レイヤ競合は YMM4 タイムライン実視認またはレンダリング座標証跡が必要。静的JSONのみでは遮蔽・安全域を保証できないため NEEDS_FIX。",
+      "evidence_refs": [
+        "samples/p2_overlay_se_ir.json",
+        "samples/lane_c_file5_b3_apply_production_dryrun.txt"
+      ]
+    }
+  ],
+  "summary": {
+    "PASS": ["A3", "A4", "B3"],
+    "NEEDS_FIX": ["A1", "A2", "B1", "B2", "B4"],
+    "pass_count": 3,
+    "needs_fix_count": 5
+  }
+}

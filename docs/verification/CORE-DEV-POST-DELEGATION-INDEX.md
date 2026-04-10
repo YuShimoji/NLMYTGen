@@ -15,6 +15,8 @@
 | 8   | [CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md)                     | 承認済みスライス表・実装チェックリスト（`master` 起点・フル回帰）                   |
 | 9   | [CORE-DEV-MASTER-PR-RUNBOOK.md](CORE-DEV-MASTER-PR-RUNBOOK.md)                           | 大型統合 PR の手順（**PR #1 はマージ済み**。今後は `master` 起点のトピックブランチ用） |
 | 10  | [CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md](CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md)                 | コア本開発 **T0〜T3** のタスク設計・並行レーンの相性（Prompt パック **ファイル8**）        |
+| 11  | [T1-RUNBOOK-GUI-terminology-alignment-proof.md](T1-RUNBOOK-GUI-terminology-alignment-proof.md) | T1 文書先行での runbook / GUI 用語・導線一致の検証正本（実装なし） |
+| 12  | [T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md](T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md) | T1 文書先行での P2 段階投入（overlay / se / bg_anim）機械検証正本（実装なし） |
 
 
 関連: [B11-pre-plan-execution-pack-2026-04-07.md](B11-pre-plan-execution-pack-2026-04-07.md)、[runtime-state.md](../runtime-state.md)。
@@ -23,6 +25,8 @@
 
 ## 変更履歴
 
+- 2026-04-10: `T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md` を索引に追加（T1 文書先行の検証正本を対称化）。
+- 2026-04-10: `T1-RUNBOOK-GUI-terminology-alignment-proof.md` を索引に追加（T1 文書先行の検証記録）。
 - 2026-04-10: `P2-CONDITION45-PRECHECK-TEMPLATE.md` と `CORE-DEV-LANE-PROMPT-QUICKREF.md` を追加し、File N 参照の導線を拡張。
 - 2026-04-10: 分岐C向け `P2-READY-INPUT-TEMPLATE.md` を追加し、索引順を更新。
 - 2026-04-10: `CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md`（ファイル8）を索引に追加。

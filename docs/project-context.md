@@ -58,7 +58,7 @@
 ---
 
 ## CURRENT LANE
-- 主レーン: Advance（実制作 bottleneck 直接軽減）／**開発セッション上の優先は [runtime-state.md](runtime-state.md)** — コア本開発 **フェーズ T1**（[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §1）
+- 主レーン: Advance（実制作 bottleneck 直接軽減）／**開発セッション上の優先は [runtime-state.md](runtime-state.md)** — コア本開発 **フェーズ T2**（[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §1）
 - 今このレーンを優先する理由: face・timeline・packaging 採点の mechanical 束は揃った。残る重さは台本→手動配置→視覚効果の人間工程のため、レーンを実制作側へ移す。レーン B 文書準備は 2026-04-09 完了扱い（DECISION LOG 参照）
 
 ---
@@ -313,14 +313,14 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ---
 
-## HANDOFF SNAPSHOT (2026-04-10 更新)
+## HANDOFF SNAPSHOT (2026-04-10 T3同期)
 
-- Shared Focus: **コア本開発フェーズ T2**（`docs/runtime-state.md` の `next_action`）。**T1 完了**: `T1-P2-DOCSAMPLE`（[T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md](verification/T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md)）＋`T1-RUNBOOK-GUI`（runbook↔gui 用語）。次は [CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §1 から **実装対象スライスを 1 本だけ**選び **Prompt-Core-T2**（[CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) §3.0）で進める。§1 に **未実装の approved コードスライスが無い**ときはユーザー承認で起票してから T2。P0 / オペレータ並行は継続
+- Shared Focus: **コア本開発フェーズ T2**（`docs/runtime-state.md` の `next_action` 正本）として、[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §1 から承認済みコードスライスを 1 本だけ選び、[CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) の Prompt-Core-T2 で実装する。A〜E 並行入力は [CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md](verification/CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md) §3 の許可タイミングのみ受け入れ、[CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](verification/CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) 判定で `PASS` 入力だけを [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](verification/CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) へ反映する。
 - Safe Next Frontier Packet: **直近（開発）** T2（承認スライス 1 本の縦実装）→ 完了後は再度 T3 で handoff。**運用**: **P0** Phase 1 本番 1 本（診断→C-09→CSV→YMM4→[P01](verification/P01-phase1-operator-e2e-proof.md)） / **P1** H-01 brief / **P2** 演出実戦 / **P3** サムネ 1 本 / **Parking** P2A どおり一括マージしない
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: **2026-04-10** T1 両スライス完了（P2 機械検証パック新設、runbook/gui 整備）、`next_action` **T2**。直前の **2026-04-11** 記録（T0・Amazon 同期・`origin/master`）は履歴として [runtime-state.md](runtime-state.md) `last_change_relation` に包含。詳細は git log
-- Evidence: Production E2E 実証済み + `NLMYTGEN_PYTEST_FULL=1 uv run pytest`: **313 passed** (2026-04-10、T1 完了後)
+- Last Change Relation: **2026-04-10** T1 両スライス完了（P2 機械検証パック新設、runbook/gui 整備）後、**同日 T3 handoff 同期**として `runtime-state.md` / `project-context.md` を更新し、`next_action` を T2 の一文に再固定。加えて T1 境界追補として [T1-H01-packaging-template-bugfix-gate-proof-2026-04-10.md](verification/T1-H01-packaging-template-bugfix-gate-proof-2026-04-10.md) を追加し、H-01 テンプレ差分が未承認 FEATURE 追加でないことを記録。直前の **2026-04-11** 記録（T0・Amazon 同期・`origin/master`）は履歴として [runtime-state.md](runtime-state.md) `last_change_relation` に包含。詳細は git log
+- Evidence: Production E2E 実証済み + `NLMYTGEN_PYTEST_FULL=1 uv run pytest`: **313 passed** (2026-04-10、T1 境界追補後の回帰)
 - 案件モード: CLI artifact
 - 現在の主レーン: 方向転換中 (実制作bottleneck直接軽減へ移行)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近

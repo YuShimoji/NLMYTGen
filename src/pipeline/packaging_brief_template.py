@@ -77,6 +77,21 @@ REQUIRED_JSON_KEYS = (
     "consumer_hints",
 )
 
+REQUIRED_ROTATION_AXES_KEYS = (
+    "layout_family",
+    "emotion_family",
+    "color_family",
+    "copy_family",
+)
+
+REQUIRED_CONSUMER_HINT_KEYS = (
+    "for_c07",
+    "for_c08",
+    "for_e02",
+    "for_h04",
+    "for_h03",
+)
+
 REQUIRED_MARKDOWN_SECTIONS = (
     "# Packaging Orchestrator Brief",
     "## novelty_basis",
@@ -119,7 +134,13 @@ def minimal_json_brief() -> dict:
         "script_opening_commitment": "",
         "must_payoff_by_section": [],
         "alignment_check": [],
-        "consumer_hints": {},
+        "consumer_hints": {
+            "for_c07": "",
+            "for_c08": "",
+            "for_e02": "",
+            "for_h04": "",
+            "for_h03": "",
+        },
     }
 
 
@@ -135,6 +156,25 @@ def _validate_json_brief_schema(data: dict) -> None:
         raise ValueError("H-01 JSON template invalid type: alignment_check must be a list")
     if not isinstance(data["thumbnail_controls"], dict):
         raise ValueError("H-01 JSON template invalid type: thumbnail_controls must be an object")
+    if not isinstance(data["consumer_hints"], dict):
+        raise ValueError("H-01 JSON template invalid type: consumer_hints must be an object")
+
+    rotation_axes = data["thumbnail_controls"].get("rotation_axes")
+    if not isinstance(rotation_axes, dict):
+        raise ValueError("H-01 JSON template invalid type: thumbnail_controls.rotation_axes must be an object")
+    missing_rotation_axes = [key for key in REQUIRED_ROTATION_AXES_KEYS if key not in rotation_axes]
+    if missing_rotation_axes:
+        raise ValueError(
+            "H-01 JSON template missing required thumbnail_controls.rotation_axes keys: "
+            + ", ".join(missing_rotation_axes)
+        )
+
+    missing_consumer_hints = [key for key in REQUIRED_CONSUMER_HINT_KEYS if key not in data["consumer_hints"]]
+    if missing_consumer_hints:
+        raise ValueError(
+            "H-01 JSON template missing required consumer_hints keys: "
+            + ", ".join(missing_consumer_hints)
+        )
 
 
 def _validate_markdown_template(text: str) -> None:

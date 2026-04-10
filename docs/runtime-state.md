@@ -6,8 +6,11 @@
 - project: NLMYTGen
 - git: **既定の開発ブランチは `master`**（2026-04-09: PR [#1](https://github.com/YuShimoji/NLMYTGen/pull/1) で `feat/phase2-motion-segmentation` をマージ済み。新規作業は `master` からブランチを切る）
 - lane: **コア開発幹**（回帰・ドキュメント整合・承認済みバグ修正）。**主軸は本開発** — エージェント作業は未承認 FEATURE を増やさず上記に集中。オペレータ並行: P0（Phase 1 本番）/ P2 等は runbook どおり。**レーン A（Phase 1）の repo 準備はオペレータ側でクローズ**（[OPERATOR_LANE_A_ENV.md](verification/OPERATOR_LANE_A_ENV.md)、[LANE_A_PREP_CHECKLIST.md](verification/LANE_A_PREP_CHECKLIST.md)）。**レーン D（H-01 brief）オペレータ完了・当面クローズ**（[H01-lane-d-prep-2026-04-09.md](verification/H01-lane-d-prep-2026-04-09.md) §6、2026-04-09）
+- core_phase: **T2**（[CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md](verification/CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md) §2）
+- parallel_policy: **ファイル8 §3 を固定適用**（T0=並行不要 / T1=レーンC+ファイル7 / T1〜T2=レーンA / プロンプト更新直後=レーンB / 案件単位=レーンD・E）
 - slice: G-15〜G-18 実装完了（Micro `bg` / 複数 `overlay` / timeline アダプタ / **SE `AudioItem` 挿入**）。Electron GUI: CSV 変換時に **診断 JSON 同梱保存**可（[gui-llm-setup-guide.md](gui-llm-setup-guide.md)）。正本 [G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)。従来: 視覚三スタイル [VISUAL_STYLE_PRESETS.md](VISUAL_STYLE_PRESETS.md)、P2A [P2A-motion-branch-operator-decision.md](verification/P2A-motion-branch-operator-decision.md)、P2C [P2C-se-audioitem-boundary.md](verification/P2C-se-audioitem-boundary.md)（履歴）
-- next_action: **コア本開発フェーズ T2**（[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §1 の **承認済みスライスを 1 本だけ**実装）。**Prompt-Core-T2**: [CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) §3.0 早見 / **Prompt-Core-T2** 全文。T1 は完了（`T1-P2-DOCSAMPLE`・`T1-RUNBOOK-GUI`・正本 [T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md](verification/T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md)）。**新規コードスライスが §1 に無い**場合は、ユーザー承認でスライスを起票してから T2 に入るか、オペレータ並行（P0 / runbook）と `master` 同期に専念する。方針正本: [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](verification/CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §6。タスク設計: [CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md](verification/CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md) §2。**P2 判定**: [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](verification/CORE-DEV-OPERATOR-INPUT-CHECKLIST.md)。未承認 FEATURE は増やさない。
+- next_action: **T2 として [CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §1 から承認済みコードスライスを 1 本だけ選び、[CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) の Prompt-Core-T2 で実装して `NLMYTGEN_PYTEST_FULL=1 uv run pytest` を緑にする。並行入力はファイル8 §3 の許可タイミングだけ受け入れ、判定は [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](verification/CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) を正本にする。**
+- t2_readiness_memo: **T1 文書先行クローズは完了**（`T1-P2-DOCSAMPLE` / `T1-RUNBOOK-GUI` の相互導線を整合済み）。T2 着手は「§1 に承認済みコードスライスが 1 本以上あること」を条件に進め、該当なしの場合は (a) 新規スライス承認起票、(b) T3 同期、(c) 次 T0 で再承認のいずれかを選ぶ。
 - approval_slice_status: **File6 指示を承認として記録済み**（[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §1 に追記）。実装準備ブランチ: `topic/file6-post-approval-prep-2026-04-10`（`master` 起点・本マージ後は `origin/master` の T0/T1 文脈と整合）。P2 条件4ログは 2026-04-10 に再取得済み（[P2-CONDITION45-PRECHECK-TEMPLATE.md](verification/P2-CONDITION45-PRECHECK-TEMPLATE.md)）。
 - recommended_frontier_order: 台本品質改善 → 演出配置自動化拡張 → 視覚効果実現（既定。変更可）
 - 再現ルール: 異種サンプル 1 本で打ち切り済み。以後は新しい failure が出たときだけ追加検証
@@ -56,7 +59,7 @@
 ## 主成果物
 - active_artifact: NLM transcript → YMM4 CSV → ゆっくり解説動画制作ワークフロー
 - artifact_surface: CLI → CSV → YMM4 台本読込 → 演出設定 → レンダリング → サムネイル → 投稿
-- last_change_relation: 上記に加え **2026-04-10 統合コミット**（H-05 等）および **2026-04-11 T0 クローズ**（ドラフト §6・POST-APPROVAL T1 起票・チェックリスト §3.2・`next_action`→T1）。**続（同一日）**: P0 Amazon 並行証跡をリモート同期 — [B11-workflow-proof-amazon-panopticon-2026-04-10.md](verification/B11-workflow-proof-amazon-panopticon-2026-04-10.md)、レーン B/C/H01 追記、[P01](verification/P01-phase1-operator-e2e-proof.md)/[P03](verification/P03-thumbnail-one-sheet-proof.md)、`samples/` 診断・CSV・brief 同梱。**2026-04-10 T1 完了**: [T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md](verification/T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md) 新設、[PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md) §6 導線、[OPERATOR_PARALLEL_WORK_RUNBOOK.md](OPERATOR_PARALLEL_WORK_RUNBOOK.md)↔[gui-llm-setup-guide.md](gui-llm-setup-guide.md) 用語整備、`next_action`→**T2**
+- last_change_relation: 上記に加え **2026-04-10 統合コミット**（H-05 等）および **2026-04-11 T0 クローズ**（ドラフト §6・POST-APPROVAL T1 起票・チェックリスト §3.2・`next_action`→T1）。**続（同一日）**: P0 Amazon 並行証跡をリモート同期 — [B11-workflow-proof-amazon-panopticon-2026-04-10.md](verification/B11-workflow-proof-amazon-panopticon-2026-04-10.md)、レーン B/C/H01 追記、[P01](verification/P01-phase1-operator-e2e-proof.md)/[P03](verification/P03-thumbnail-one-sheet-proof.md)、`samples/` 診断・CSV・brief 同梱。**2026-04-10 T1 完了**: [T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md](verification/T1-P2-DOCSAMPLE-p2-staged-rollout-mechanical-proof.md) 新設、[PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md) §6 導線、[OPERATOR_PARALLEL_WORK_RUNBOOK.md](OPERATOR_PARALLEL_WORK_RUNBOOK.md)↔[gui-llm-setup-guide.md](gui-llm-setup-guide.md) 用語整備、`next_action`→**T2**。**T1 境界追補**: H-01 テンプレ差分のバグ修正判定を [T1-H01-packaging-template-bugfix-gate-proof-2026-04-10.md](verification/T1-H01-packaging-template-bugfix-gate-proof-2026-04-10.md) に記録。
 
 ## カウンター
 - blocks_since_user_visible_change: 0
@@ -72,8 +75,9 @@
 - open_todo_count: 0
 
 ## 最終検証
-- last_verification_artifact: `NLMYTGEN_PYTEST_FULL=1 uv run pytest` 全件（subprocess CLI 統合含む）313 pass（2026-04-10、T1 両スライス完了後の回帰）。既定の `uv run pytest` はユニット中心（`tests/conftest.py`）
+- last_verification_artifact: `NLMYTGEN_PYTEST_FULL=1 uv run pytest` 全件（subprocess CLI 統合含む）313 pass（2026-04-10、T1 境界追補後の回帰）。既定の `uv run pytest` はユニット中心（`tests/conftest.py`）
 - last_verification_date: 2026-04-10
+- handoff_sync: 2026-04-10（ファイル8フェーズT3で `runtime-state.md` / `project-context.md` を同期）
 
 ## Evidence（CLI artifact mode）
 - evidence_status: Production E2E 実証済み (2026-04-05)。palette.ymmp → extract-template --labeled → face_map.json (11表情) → Part 1+2IR_row_range.json (28 utt, row-range) → production.ymmp (60 VI) → production_patched.ymmp (face 133 changes) → YMM4 visual proof OK。全編にわたって表情切替を確認

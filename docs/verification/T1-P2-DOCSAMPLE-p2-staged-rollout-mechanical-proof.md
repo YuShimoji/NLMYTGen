@@ -30,6 +30,19 @@
 | P2 小規模 bg_anim IR | [samples/p2_bg_anim_small_scope.ir.json](../../samples/p2_bg_anim_small_scope.ir.json) |
 | 上記用 ymmp / マップ | [samples/test_verify_4_bg_p2_small.ymmp](../../samples/test_verify_4_bg_p2_small.ymmp)、[samples/bg_map_p2_small_scope.json](../../samples/bg_map_p2_small_scope.json)、[samples/transition_map_p2_small_scope.json](../../samples/transition_map_p2_small_scope.json)、[samples/bg_anim_map_p2_small_scope.json](../../samples/bg_anim_map_p2_small_scope.json) |
 
+### 2.1 サンプル JSON の正本優先順（T1 運用固定）
+
+1. 本書 §2 のパスを **T1 の機械検証サンプル正本**とする。  
+2. IR 語彙・patch 可能範囲の解釈が必要なときは、必ず [PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md) を先に参照する。  
+3. 追加のローカル検証 JSON（`_local` など）は補助証跡として扱い、T1 の正本参照を上書きしない。
+
+### 2.2 runbook / GUI 導線（T1-RUNBOOK-GUI との対称参照）
+
+- オペレータ向けの実行順・責務分担は [OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) のトラック A/B/C を正本にする。  
+- GUI 側の C-09 導線・「台本診断 JSON」用語は [gui-llm-setup-guide.md](../gui-llm-setup-guide.md) を正本にする。  
+- runbook / GUI の用語一致と導線検証は [T1-RUNBOOK-GUI-terminology-alignment-proof.md](T1-RUNBOOK-GUI-terminology-alignment-proof.md) を参照する。  
+- 本書は **P2 機械検証コマンドと期待ログ**のみを扱い、YMM4 実機見え方の判定は [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) を正本として扱う。
+
 ---
 
 ## 3. トラック A — overlay / se（`production.ymmp` ベース）

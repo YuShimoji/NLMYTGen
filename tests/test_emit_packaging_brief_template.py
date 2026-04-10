@@ -5,8 +5,10 @@ from pathlib import Path
 
 from src.cli.main import main
 from src.pipeline.packaging_brief_template import (
+    REQUIRED_CONSUMER_HINT_KEYS,
     REQUIRED_JSON_KEYS,
     REQUIRED_MARKDOWN_SECTIONS,
+    REQUIRED_ROTATION_AXES_KEYS,
     emit_json_text,
     emit_markdown,
     minimal_json_brief,
@@ -30,10 +32,18 @@ def test_minimal_json_roundtrip_and_keys() -> None:
     assert isinstance(data["required_evidence"], list)
     for key in REQUIRED_JSON_KEYS:
         assert key in data
+    for key in REQUIRED_ROTATION_AXES_KEYS:
+        assert key in data["thumbnail_controls"]["rotation_axes"]
+    for key in REQUIRED_CONSUMER_HINT_KEYS:
+        assert key in data["consumer_hints"]
     parsed = json.loads(emit_json_text())
     assert parsed["brief_version"] == data["brief_version"]
     assert isinstance(parsed["thumbnail_controls"], dict)
     assert "rotation_axes" in parsed["thumbnail_controls"]
+    for key in REQUIRED_ROTATION_AXES_KEYS:
+        assert key in parsed["thumbnail_controls"]["rotation_axes"]
+    for key in REQUIRED_CONSUMER_HINT_KEYS:
+        assert key in parsed["consumer_hints"]
 
 
 def test_cli_emit_packaging_brief_template_json(capsys) -> None:

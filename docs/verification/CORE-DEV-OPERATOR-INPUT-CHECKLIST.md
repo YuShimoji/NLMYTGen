@@ -55,10 +55,15 @@
 | B-11 実測 | **PASS** | §1 と整合済み。追記不要 |
 | P01 追記 | **PASS** | §5 次アクションと整合。追記不要 |
 | プロンプト同期 | **継続**（NEEDS_FIX なし） | 新規実測なし。§2 に差し込まない |
-| P2 / S6 観測 | **PASS**（見え方 NG 明示済み） | §2.1 の「本番投入前・ドキュメント先行」と整合。実戦投入 OK とは書かない |
+| P2 / S6 観測 | **PASS**（File2 の2行入力で記録済み） | [P2-READY-INPUT-TEMPLATE.md](P2-READY-INPUT-TEMPLATE.md) §1/§4 の 2 行（`YMM4見え方`・`S6§2(5条件)`）を根拠に判定。実戦投入 OK とは書かない |
 | 画面演出パケット | **継続** | 全パケット PASS が揃うまで §2 を「パケット完了」とは更新しない（§5 ルールどおり） |
 
 結論: **NEEDS_FIX によるドラフト差し止めなし**。T0 は承認記録の固定と T1 スライス起票へ進める。
+
+運用固定（File2 準拠）:
+- 判定入力は常に 2 行セット（`YMM4見え方` / `S6§2(5条件)`）。
+- `OK + 充足` の組み合わせのみ READY。その他は OPEN 継続。
+- OPEN/READY 判定の一次記録は [P2-READY-INPUT-TEMPLATE.md](P2-READY-INPUT-TEMPLATE.md)、反映先は本書の P2/S6 行。
 
 補足（2026-04-10・レーンA Amazon）: [B11-workflow-proof-amazon-panopticon-2026-04-10.md](B11-workflow-proof-amazon-panopticon-2026-04-10.md) は取込後未測のため、**T0 でプラン根拠に使う B-11 は引き続き AI 監視本編のみ**とする（Amazon 紙は CLI 前処理・次サイクル入力用）。
 
@@ -72,6 +77,20 @@
 | B-11 §2 取込後（4 区分の実測・Gate 確定） | **NEEDS_FIX**（YMM4 実機未実施。暫定 0 と「保留」を明記） |
 | 代表例 ≥3・§3 記載 | **PASS**（代表例は overflow 候補ベース、§3 は「保留」明示） |
 | P01 行 `lane_a_amazon_2026-04-10_b` | **PASS** |
+
+---
+
+## 3.4 自己照合サマリ（2026-04-10・ファイル4レーンA Amazon 完了版）
+
+| 照合項目 | 結果 |
+|----------|------|
+| B-11 §1 取込前（stats・JSON・コマンド） | **PASS** |
+| B-11 §2 取込後（B-11形式: 4区分の件数記入） | **PASS**（`辞書0 / 手動改行10 / 再分割4 / タイミング0`） |
+| 代表例 ≥3・§3 Gate 明記 | **PASS**（代表例4件、Gate A を確定） |
+| P01 行 `lane_a_amazon_2026-04-10_c` | **PASS** |
+| ファイル2 受け入れ条件（B-11 / P01）総合 | **PASS** |
+
+コア提出添付要約（1行）: 「レーンA Amazon は B-11 取込前/後・4区分・Gate 記録、および P01 接続判定追記まで完了。ファイル2受け入れ条件に自己照合し PASS。」
 
 ---
 
@@ -94,6 +113,23 @@
   - `Timeline adapter` 出力で `bg_anim` / `transition` の write 件数が 1 件以上
 - 既存運用への接続点:
   - `CSV -> YMM4 -> apply-production` の既存導線上で実施（runbook/P2 文脈と整合）
+
+---
+
+## 3.6 A〜E 入力の受け入れ判定（ファイル8 §2/§3 準拠・2026-04-10）
+
+`ファイル8`（[CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md](CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md)）の運用に合わせ、A〜E レーン入力を本表で判定する。  
+**ルール**: `PASS` のみ [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) に反映し、`NEEDS_FIX` は条件のみ返却する。
+
+| レーン | 判定 | 根拠 | NEEDS_FIX 時に返す条件（条件のみ） |
+|--------|------|------|------------------------------------|
+| **A** | **PASS** | [B11-workflow-proof-amazon-panopticon-2026-04-10.md](B11-workflow-proof-amazon-panopticon-2026-04-10.md) の取込前/後・4区分・Gate 記録、および [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) `lane_a_amazon_2026-04-10_c` | B-11 §5 必須（取込前/後、4区分空欄なし、代表例>=3、§3 Gate 明記）と P01 接続行を同一 run で満たすこと |
+| **B** | **PASS** | [LANE-B-execution-record-2026-04-09.md](LANE-B-execution-record-2026-04-09.md) §8（B-2/B-3 の再実行 exit 0、2体分離継続、repo 正本との差分なし） | 参照コミット固定、`validate-ir` と `apply-production --dry-run` の実行結果、GUI 側突合結果の3点を揃えること |
+| **C** | **PASS** | [LANE-C-file6-local-mechanical-proof-2026-04-10.md](LANE-C-file6-local-mechanical-proof-2026-04-10.md)（`validate-ir`/`apply-production --dry-run` exit 0、_local 方針順守） | `_local` 経路で案件ローカル差分を隔離し、機械確認ログ（exit code と集計）を提出すること |
+| **D** | **PASS** | [H01-lane-d-prep-2026-04-09.md](H01-lane-d-prep-2026-04-09.md) §6 完了（brief 先頭投入・正本整合・運用クローズ） | brief 先頭投入、B-3 正本同期、Evidence Log の3点を満たすこと |
+| **E** | **PASS** | [LANE-E-S8-prep-2026-04-09.md](LANE-E-S8-prep-2026-04-09.md)（準備サイクル完了、Probe 契約と判定基準固定） | runbook トラックEに沿い、実行証跡（run_id/出力/判定）を P03 へ追記すること |
+
+注記: 途中提出が条件未充足の場合は本表の `PASS` を維持せず `NEEDS_FIX` 扱いに戻す。ドラフト本文には反映しない。
 
 ---
 

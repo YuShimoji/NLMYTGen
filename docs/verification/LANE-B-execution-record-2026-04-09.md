@@ -132,3 +132,54 @@ uv run python -m src.cli.main apply-production "samples/test_verify_4_bg_p2_smal
 
 - [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) 表「プロンプト同期」: **repo が正本**／差分は PR で取り込み／状態は **継続監視**。
 - 差し戻し §3 項番3（GUI と repo の食い違いを記録なしに放置）に対し、本節で **参照コミット・機械検証結果・GUI 突合手順**を明示した。
+
+---
+
+## 8. 再検証 2026-04-10（ファイル5 レーンB・Prompt-B 再実施）
+
+実施目的: Prompt-B の要求どおり B-2/B-3/B-4/B-5 を再実施し、採用 GPT 構成（1体/2体）と repo 正本との差分有無を、ファイル2（プロンプト同期条件）に合わせて提出する。
+
+### 8.1 正本参照コミット（repo）
+
+- `git rev-parse HEAD` → `3e8509544ed39fe55eae5b8c1e17426a1cbd9647`（短縮 `3e85095`）
+- 突合対象ファイル:
+  - `docs/S1-script-refinement-prompt.md`
+  - `docs/S6-production-memo-prompt.md`（`### v4 プロンプト本体` フェンス内全文）
+  - `docs/S8-thumbnail-copy-prompt.md`
+  - `docs/verification/LANE-B-gui-llm-sync-checklist.md`
+
+### 8.2 B-2 機械検証（validate-ir）
+
+```powershell
+uv run python -m src.cli.main validate-ir "samples/ir_visual_styles_dry_sample.json" --face-map "samples/face_map.json"
+```
+
+- exit code: `0`
+- 出力要点: `Validation PASSED`、face contract 表示（prompt/palette/used）を確認
+
+### 8.3 B-3 機械検証（apply-production --dry-run）
+
+```powershell
+uv run python -m src.cli.main apply-production "samples/test_verify_4_bg_p2_small.ymmp" "samples/p2_bg_anim_small_scope.ir.json" --bg-map "samples/bg_map_p2_small_scope.json" --transition-map "samples/transition_map_p2_small_scope.json" --bg-anim-map "samples/bg_anim_map_p2_small_scope.json" --dry-run
+```
+
+- exit code: `0`
+- 出力要点: `Timeline adapter: motion=0, transition=4, bg_anim=3` / `BG anim writes: 3` / `Transition VoiceItem writes: 4`
+
+### 8.4 B-4 / B-5（運用方針の確認）
+
+- **B-4**: H-01 は継続して **会話ごとに brief を台本より先に貼る**運用を採用
+- **B-5**: サムネは **H-02 準拠が必要な案件は S8**、**高速素案は S6 v4 Part 4** の二段運用
+
+### 8.5 採用 GPT 構成・差分判定
+
+- 採用構成: **2体分離**（S1 専用 + S6 専用）
+- repo 正本との差分: **なし**（B-2/B-3/B-4/B-5 すべて同期維持）
+
+### 8.6 ファイル2 自己照合（Prompt 同期条件）
+
+- [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) の「プロンプト同期」受け入れ条件に対し、以下を満たす:
+  - repo 正本を参照コミットで固定
+  - 機械検証（`validate-ir` / `apply-production --dry-run`）を実行し結果を記録
+  - GUI 側の突合対象（S1/S6/S8）と運用方針（B-4/B-5）を明示
+- 判定: **継続監視（NEEDS_FIX なし）**

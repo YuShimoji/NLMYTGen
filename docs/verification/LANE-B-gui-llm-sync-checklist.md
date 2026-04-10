@@ -101,3 +101,18 @@
 
 - 実行元: [CORE-DEV-LANE-PROMPT-QUICKREF.md](CORE-DEV-LANE-PROMPT-QUICKREF.md) の File5 レーンB指示。
 - 参照手順: [OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) トラックB。レーンBの再検証記録は [LANE-B-execution-record-2026-04-09.md](LANE-B-execution-record-2026-04-09.md) §7（2026-04-10）を参照。
+
+### 2026-04-10 / レーンB（File5）実行記録（Prompt-B 再実施）
+
+| 対象 | repo 正本 | Instructions 側確認 | 差分判定 | 対応 |
+|------|-----------|----------------------|----------|------|
+| B-2: S-1 台本 refinement（C-09） | [S1-script-refinement-prompt.md](../S1-script-refinement-prompt.md) | 確認済み（「LLM への指示」+ 入力テンプレ） | 差分なし | 同期維持 |
+| B-3: S-6 演出 IR（C-07 v4） | [S6-production-memo-prompt.md](../S6-production-memo-prompt.md) の「### v4 プロンプト本体」フェンス内全文 | 確認済み（v4 フェンス全文・視覚スタイル三種を含む） | 差分なし | 同期維持 |
+| B-4: H-01 連携（任意） | [PACKAGING_ORCHESTRATOR_SPEC.md](../PACKAGING_ORCHESTRATOR_SPEC.md) + [S6-production-memo-prompt.md](../S6-production-memo-prompt.md)「### H-01 連携 (推奨)」 | 確認済み（brief 先貼り運用を採用） | 差分なし | 現運用継続 |
+| B-5: サムネコピー（C-08） | [S8-thumbnail-copy-prompt.md](../S8-thumbnail-copy-prompt.md) | 確認済み（H-02準拠時はS8、高速素案はS6 Part 4） | 差分なし | 案件単位で運用継続 |
+
+備考:
+
+- 採用 GPT 構成: **2体分離**（S1 専用 + S6 専用）。
+- ファイル2整合: [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) の「プロンプト同期」条件（repo 正本・差分記録・継続監視）に合致。
+- 機械検証ログ: [LANE-B-execution-record-2026-04-09.md](LANE-B-execution-record-2026-04-09.md) §8（2026-04-10）を参照。
