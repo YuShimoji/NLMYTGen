@@ -1,0 +1,23 @@
+{
+  "bundle_id": "p2_staged_bg_anim_verification_2026-04-11",
+  "intent": "P2 段階投入の最小機械検証（validate-ir → apply-production --dry-run）。bg_anim はマトリクス (A) G-14 キーフレーム経路（--timeline-profile なし）。",
+  "capability_matrix": "docs/PRODUCTION_IR_CAPABILITY_MATRIX.md",
+  "verification_doc": "docs/verification/T1-P2-staged-bg-anim-verification.md",
+  "artifacts": {
+    "ir_json": "samples/p2_bg_anim_small_scope.ir.json",
+    "fixture_ymmp": "samples/test_verify_4_bg_p2_small.ymmp",
+    "bg_map": "samples/bg_map_p2_small_scope.json",
+    "transition_map": "samples/transition_map_p2_small_scope.json",
+    "bg_anim_map": "samples/bg_anim_map_p2_small_scope.json",
+    "palette_for_validate": "samples/palette.ymmp"
+  },
+  "expected_apply_production_dry_run": {
+    "timeline_adapter": "motion=0, transition=4, bg_anim=3",
+    "bg_anim_writes": 3,
+    "transition_voiceitem_writes": 4
+  },
+  "notes": [
+    "bg_map の画像パスは環境依存。実ファイルを指すようコピーして差し替えること。",
+    "bg_anim_map の video_effect は契約検証用プレースホルダ。本番テンプレでは registry / 実効果に置き換える。"
+  ]
+}
