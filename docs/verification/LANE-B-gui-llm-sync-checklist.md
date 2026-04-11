@@ -38,6 +38,8 @@
 
 ## B-3. S-6 演出 IR（C-07 v4 / G-05）
 
+（`bg_anim` を含む採用時の固定手順・期待ログ: [T1-P2-staged-bg-anim-verification.md](T1-P2-staged-bg-anim-verification.md)。runbook トラック C 補足と同一。）
+
 **正本**: [S6-production-memo-prompt.md](../S6-production-memo-prompt.md) の見出し **「### v4 プロンプト本体」**直下のコードフェンス **内の全文**（先頭は `あなたはゆっくり解説動画の演出 IR`、末尾は Part 4 制約まで）。
 
 - 演出用 GPT の Instructions を **上記フェンス内だけ**で **丸ごと置換**した（v3 断片の混在なし）

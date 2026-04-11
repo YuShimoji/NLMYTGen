@@ -112,6 +112,15 @@ uv run python -m src.cli.main build-csv refined.txt -o _tmp_out.csv `
 
 `apply-production` / `patch-ymmp` を使う場合は [WORKFLOW.md](WORKFLOW.md) S-6b と CLI ヘルプに従う。
 
+### トラック C 補足 — P2 `bg_anim` の段階投入（機械ゲート）
+
+本編の一部セクションだけ `bg_anim`（パン・ズーム等）を載せ始めるときは、**先に repo 内の固定手順で validate / dry-run を通す**と差分が追いやすい。
+
+- **手順と期待ログの正本**: [verification/T1-P2-staged-bg-anim-verification.md](verification/T1-P2-staged-bg-anim-verification.md)
+- **入力ファイル一覧（JSON マニフェスト）**: [samples/p2_staged_bg_anim_verification.bundle.json](../samples/p2_staged_bg_anim_verification.bundle.json)
+
+`bg_map` の画像パスは環境依存のため、コピーして自分の素材パスへ差し替えてから本番 `apply-production` に進む（手順書 §1 注記）。
+
 ---
 
 ## トラック D — H-01 Packaging brief（任意だが推奨）
@@ -165,7 +174,7 @@ git push
 
 1. **トラック A** を実台本 1 本で最後まで（YMM4 読込まで）。
 2. **トラック B-3** で v4 Instructions が repo と一致しているか確認。
-3. 余力があれば **トラック C** のチェックリストを 1 セクションだけ進める。
+3. 余力があれば **トラック C** のチェックリストを 1 セクションだけ進める（`bg_anim` を増やす週は [T1-P2-staged-bg-anim-verification.md](verification/T1-P2-staged-bg-anim-verification.md) の手順 A/B を先に 1 回）。
 4. 公開前に **トラック E**（サムネ）。
 
 以上。

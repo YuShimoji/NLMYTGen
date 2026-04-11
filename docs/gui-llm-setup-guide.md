@@ -170,6 +170,8 @@ Custom GPT と同等の固定化が無料で可能。NotebookLM は System Instr
 
 設定後は [S6-production-memo-prompt.md](S6-production-memo-prompt.md) の「### v4 使い方」に従う。会話に台本を貼り付け、Part 1 (Macro IR) と Part 2 (Micro IR) を 1 ファイルにまとめて `validate-ir` / `apply-production` へ渡す。
 
+**CLI 側の機械ゲート（演出 IR）**: パレット付きの `validate-ir` は [OPERATOR_PARALLEL_WORK_RUNBOOK.md](OPERATOR_PARALLEL_WORK_RUNBOOK.md) トラック C および [verification/LANE-B-gui-llm-sync-checklist.md](verification/LANE-B-gui-llm-sync-checklist.md) B-3 を参照。`bg_anim` を段階的に載せる案件では、固定入力での回帰手順 [verification/T1-P2-staged-bg-anim-verification.md](verification/T1-P2-staged-bg-anim-verification.md) を併用するとよい（期待ログ付き）。
+
 H-01 brief を使う場合は **台本より先に** brief を貼る（[PACKAGING_ORCHESTRATOR_SPEC.md](PACKAGING_ORCHESTRATOR_SPEC.md)、空テンプレ [samples/packaging_brief.template.md](../samples/packaging_brief.template.md)）。
 
 **サムネコピー**を H-02 準拠で厳密に回す場合は [S8-thumbnail-copy-prompt.md](S8-thumbnail-copy-prompt.md) を別ラウンドまたは別 GPT で正本同期する（v4 の Part 4 は素案向け。使い分けは [verification/LANE-B-gui-llm-sync-checklist.md](verification/LANE-B-gui-llm-sync-checklist.md) の B-5）。
