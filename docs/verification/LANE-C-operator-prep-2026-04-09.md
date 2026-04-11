@@ -6,11 +6,11 @@
 
 ---
 
-## 1. YMM4 時間割（カレンダー用テンプレ）
+## 1. YMM4 稼働ブロック（スロット名テンプレ）
 
 PRE-PLAN のとおり **レーン C と P2 は同一 YMM4 ウィンドウを奪い合う**。1 人運用なら **同時フルは避け、時間帯で分割**する。トラック A（CSV 取込〜タイムライン調整）と同日にやる場合は、**読込ブロック**と **テンプレ／マップ整備ブロック**を分ける。
 
-以下は **運用方針として固定**したスロット名（具体日時はオペレータカレンダーへ転記する）。
+以下は **運用方針として固定**したスロット名（具体の開始時刻はオペレータの外部スケジュールに委ねる。repo に週 cadence は置かない）。
 
 | ブロック | 目的 | 運用メモ |
 |----------|------|----------|
@@ -255,3 +255,54 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
 ### 10.4 境界（ファイル7との切り分け）
 
 `VISUAL-QUALITY-PACKETS` の **A2 / A4 / B2 / B4** の個別 JSON 提出は **Prompt-C 本体のスコープ外**（[CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) の **Prompt-C-Visual-Quality** / [VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md)）。必要時にパケット単位で実施し、[CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) の PASS 条件へ接続する。
+
+---
+
+## 11. 実行ログ（2026-04-11）— Prompt-C 機械回帰
+
+[CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) **Prompt-C** に沿った再実行。本環境では `_local/lane_c/overlay_map.json` が **未配置**のため、§8.2 / §8.3 の **P2 系**はドキュメント記載のフォールバックどおり **`samples/p2_overlay_map.json`** を使用（§5.2 相当の回帰）。
+
+### 11.1 `validate-ir`（§5.1 三スタイル dry）
+
+```powershell
+uv run python -m src.cli.main validate-ir samples/ir_visual_styles_dry_sample.json `
+  --palette samples/palette.ymmp `
+  --overlay-map samples/visual_styles_overlay_map.example.json
+```
+
+- **exit code**: 0  
+- **要約**: `Validation PASSED with 1 warnings`（`FACE_LATENT_GAP`、既存方針どおり許容）  
+- **フルログ**: [samples/lane_c_promptc_validate_dry_2026-04-11.txt](../../samples/lane_c_promptc_validate_dry_2026-04-11.txt)
+
+### 11.2 `validate-ir`（P2 IR、`samples/p2_overlay_map.json`）
+
+```powershell
+uv run python -m src.cli.main validate-ir samples/p2_overlay_se_ir.json `
+  --palette samples/palette.ymmp `
+  --overlay-map samples/p2_overlay_map.json
+```
+
+- **exit code**: 0  
+- **要約**: `Validation PASSED with 3 warnings`（`FACE_SERIOUS_SKEW` / `FACE_LATENT_GAP` / `IDLE_FACE_MISSING`、既知の許容 warning）  
+- **フルログ**: [samples/lane_c_promptc_validate_p2_2026-04-11.txt](../../samples/lane_c_promptc_validate_p2_2026-04-11.txt)
+
+### 11.3 `apply-production --dry-run`（§5.2 / §8.3 同系、`samples/p2_overlay_map.json`）
+
+```powershell
+uv run python -m src.cli.main apply-production samples/production.ymmp samples/p2_overlay_se_ir.json `
+  --face-map samples/face_map.json `
+  --bg-map samples/bg_map_proof.json `
+  --overlay-map samples/p2_overlay_map.json `
+  --se-map samples/p2_se_map.json `
+  --timeline-profile production_ai_monitoring_lane `
+  --timeline-contract samples/timeline_route_contract.json `
+  --dry-run
+```
+
+- **exit code**: 0  
+- **要約**: `Face changes: 2`、`Overlay changes: 2`、`SE insertions: 1`、`Timeline adapter: motion=0, transition=1, bg_anim=0`、`BG anim writes: 0`、`Transition VoiceItem writes: 1`、`(dry-run: no file written)`  
+- **フルログ**: [samples/lane_c_promptc_apply_dryrun_2026-04-11.txt](../../samples/lane_c_promptc_apply_dryrun_2026-04-11.txt)
+
+### 11.4 裏取りテスト
+
+`pytest tests/test_ir_validate.py::test_ir_visual_styles_dry_sample_passes_cli_validation` — **PASS**（2026-04-11）

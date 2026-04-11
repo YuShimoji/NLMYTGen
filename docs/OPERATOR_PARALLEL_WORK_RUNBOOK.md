@@ -170,11 +170,13 @@ git push
 
 ---
 
-## 最短の「週 1 回やるなら」チェックリスト
+## 最小チェックリスト（余力・到達ベース）
+
+壁時計の cadence（週 N 回など）は正本に置かない。以下は **優先順のみ**（上から詰める）。
 
 1. **トラック A** を実台本 1 本で最後まで（YMM4 読込まで）。
 2. **トラック B-3** で v4 Instructions が repo と一致しているか確認。
-3. 余力があれば **トラック C** のチェックリストを 1 セクションだけ進める（`bg_anim` を増やす週は [T1-P2-staged-bg-anim-verification.md](verification/T1-P2-staged-bg-anim-verification.md) の手順 A/B を先に 1 回）。
+3. 余力があれば **トラック C** のチェックリストを 1 セクションだけ進める（`bg_anim` を触るセッションでは [T1-P2-staged-bg-anim-verification.md](verification/T1-P2-staged-bg-anim-verification.md) の手順 A/B を先に 1 回）。
 4. 公開前に **トラック E**（サムネ）。
 
 以上。
