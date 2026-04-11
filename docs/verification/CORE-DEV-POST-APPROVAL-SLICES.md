@@ -38,6 +38,6 @@
 
 ## 4. 変更履歴
 
-- 2026-04-11: T0 承認に基づき `T1-P2-DOCSAMPLE` / `T1-RUNBOOK-GUI` を起票（フェーズ T1 用）。
+- 2026-04-11: T0 承認に基づき `T1-P2-DOCSAMPLE` / `T1-RUNBOOK-GUI` を起票（フェーズ T1 用）。**舵取りプラン**: DOCSAMPLE の `validate-ir samples/p2_bg_anim_small_scope.ir.json` を再実行し exit 0 を確認。RUNBOOK-GUI 相当の runbook / GUI 導線は repo 既存コミットにて充足と判断。
 - 2026-04-09: `CORE-RETURN-DOCSYNC` を追加（コア復帰判定の承認後スライスとして起票）。
 - 2026-04-09: 初版。承認済みスライスなしで開始。

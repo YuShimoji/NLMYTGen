@@ -58,8 +58,8 @@
 ---
 
 ## CURRENT LANE
-- 主レーン: Advance（実制作 bottleneck 直接軽減）／**開発セッション上の優先は [runtime-state.md](runtime-state.md)** — コア本開発 **フェーズ T1**（[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §1）
-- 今このレーンを優先する理由: face・timeline・packaging 採点の mechanical 束は揃った。残る重さは台本→手動配置→視覚効果の人間工程のため、レーンを実制作側へ移す。レーン B 文書準備は 2026-04-09 完了扱い（DECISION LOG 参照）
+- 主レーン: Advance（実制作 bottleneck 直接軽減）／**開発セッション上の優先は [runtime-state.md](runtime-state.md)** — **P0 縦（本編 v14・YMM4 S-4）** を先頭。コア本開発 **フェーズ T1** の承認済みスライスは repo 充足確認済み（[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §1・§4）
+- 今このレーンを優先する理由: face・timeline・packaging 採点の mechanical 束は揃った。残る重さは台本→手動配置→視覚効果の人間工程のため、**P0 の YMM4 到達**で縦を切る。レーン B 文書準備は 2026-04-09 完了扱い（DECISION LOG 参照）
 
 ---
 
@@ -158,6 +158,8 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 
 | 日付 | 決定事項 | 選択肢 | 決定理由 |
 |------|----------|--------|----------|
+| 2026-04-11 | **P0 縦優先の固定**: 本編主軸＝AI監視 v14（`samples/v14_t3_ymm4.csv`）。Amazon Panopticon の B-11 §2 は **横**（別カレンダーブロック）。正本 [P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md)。P01 行 `p0_mainline_v14_steering_2026-04-11_a`（機械再スモーク）。`runtime-state.md` の `next_action` を P0 先頭へ。T1 DOCSAMPLE の `validate-ir` を再実行し充足確認（[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §4） | 本週は Amazon 縦を優先 / 本編のみ固定 | 縦スライスが品質横展開に埋もれないよう、YMM4 到達工程を 1 本に束ねるため |
+| 2026-04-11 | レーン B（ファイル5）再検証: [LANE-B-execution-record-2026-04-09.md](verification/LANE-B-execution-record-2026-04-09.md) §8 を追記。正本コミット `927588e`、`validate-ir` / `apply-production --dry-run` を再実行し PASS。B-1/B-4/B-5 は従来方針継続。Custom GPT Instructions 突合はオペレータ（repo 外） | 再検証スキップ / 証跡のみ更新 | Prompt-B・ファイル2「プロンプト同期」の参照コミットを現 HEAD に更新するため |
 | 2026-04-11 | **T0 クローズ**: [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](verification/CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §2〜§3 を差し替えなしで承認記録（§6）し、[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) に **T1-P2-DOCSAMPLE** / **T1-RUNBOOK-GUI** を起票。開発フェーズを **T1** へ移行 | 承認前に T1 着手 / T0 で差し替え協議 | 実行プランどおりゲートを閉じ、文書・runbook 先行の作業契約を固定するため |
 | 2026-04-10 | レーン B（ファイル5）再検証: [LANE-B-execution-record-2026-04-09.md](verification/LANE-B-execution-record-2026-04-09.md) §7 を追記。正本コミット `fb0659a`、`validate-ir` / `apply-production --dry-run` を再実行し PASS。B-1/B-4/B-5 は 2026-04-09 方針継続。Custom GPT Instructions 突合はオペレータ（repo 外） | 再検証スキップ / 証跡のみ更新 | [CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) Prompt-B・ファイル2 プロンプト同期の記録要件を満たすため |
 | 2026-04-10 | コア本開発の **フェーズ T0〜T3** と並行レーンの相性を [CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md](verification/CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md) に正本化し、[CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) に **ファイル8・ファイル9** と §3.0 早見・Prompt-Core-T0〜T3 を追加 | タスク設計なしで Prompt のみ / 設計ドキュメントを分離 | 「ファイルNのレーンA」形式で並行投入しつつコア幹を迷わせないため |
@@ -314,11 +316,11 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ## HANDOFF SNAPSHOT (2026-04-11 更新)
 
-- Shared Focus: **コア本開発フェーズ T1**（`docs/runtime-state.md` の `next_action`）。スライス: **T1-P2-DOCSAMPLE** → **T1-RUNBOOK-GUI**。Prompt: [CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) §3.0 **Core-T1**。方針承認: [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](verification/CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §6。P0 / runbook はオペレータ並行で継続
-- Safe Next Frontier Packet: **直近（開発）** T1 2 スライス完了後 T2（承認スライス実装）または T3（handoff）。**運用**: **P0** Phase 1 本番 1 本（診断→C-09→CSV→YMM4→[P01](verification/P01-phase1-operator-e2e-proof.md)） / **P1** H-01 brief / **P2** 演出実戦 / **P3** サムネ 1 本 / **Parking** P2A どおり一括マージしない
+- Shared Focus: **P0 縦優先（本編 v14）** — `docs/runtime-state.md` の `next_action` 先頭。[P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md) の Block-A（YMM4 S-4）。**T1** スライス（DOCSAMPLE / RUNBOOK-GUI）は repo 充足確認済み・新規起票なし。Prompt: [CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) §3.0 **Core-T1**。方針承認: [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](verification/CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §6
+- Safe Next Frontier Packet: **直近（開発）** オペレータが P0 Block-A 完了後、承認済みなら T2 実装スライス。**運用**: **P0** Phase 1 本番（診断→C-09→CSV→YMM4→[P01](verification/P01-phase1-operator-e2e-proof.md)、本編主軸 `p0_mainline_v14_steering_2026-04-11_a`） / **P1** H-01 brief / **P2** 演出実戦（制作物トリガ） / **P3** サムネ / **Parking** P2A どおり一括マージしない
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: **2026-04-11** T0 完了＋P0 Amazon 並行証跡・サンプルを `origin/master` へ同期。`next_action` **T1**。履歴は git log
+- Last Change Relation: **2026-04-11** T0 完了＋P0 Amazon 並行証跡・サンプルを `origin/master` へ同期。**同日追記**: 舵取りプラン実装（P0 縦固定・`next_action` 先頭 P0・[P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md)）。履歴は git log
 - Evidence: Production E2E 実証済み + `NLMYTGEN_PYTEST_FULL=1 uv run pytest`: **313 passed** (2026-04-10)
 - 案件モード: CLI artifact
 - 現在の主レーン: 方向転換中 (実制作bottleneck直接軽減へ移行)
