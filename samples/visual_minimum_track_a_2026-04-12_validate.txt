@@ -1,0 +1,28 @@
+﻿prompt face contract: C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\docs\S6-production-memo-prompt.md (6 labels)
+overlay contract: 2 labels
+se contract: 1 labels
+
+--- Face Distribution (1 utterances) ---
+  serious        1 (100%) ####################
+
+--- Face Contract ---
+  prompt : angry, sad, serious, smile, surprised, thinking
+  palette: angry, sad, serious, smile, surprised, thinking
+  used   : serious
+
+--- Overlay Distribution (2 utterances) ---
+  arrow_red      1
+  speech_bubble   1
+
+--- SE Distribution (1 utterances) ---
+  click          1
+
+Validation PASSED with 2 warnings
+uv :   WARNING: FACE_SERIOUS_SKEW: face 'serious' is 100% of utterances (threshold: 40%)
+発生場所 C:\Users\thank\AppData\Local\Temp\ps-script-0b1fa4a9-a265-41b4-baa1-204a825f46d9.ps1:82 文字:73
++ ... \NLMYTGen"; uv run python -m src.cli.main validate-ir samples/p2_over ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  WARNING: FACE...threshold: 40%):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  WARNING: IDLE_FACE_MISSING: idle_face is not specified in any utterance

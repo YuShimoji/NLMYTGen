@@ -1,0 +1,38 @@
+﻿uv :   WARNING: FACE_SERIOUS_SKEW: face 'serious' is 100% of utterances (threshold: 40%)
+発生場所 C:\Users\thank\AppData\Local\Temp\ps-script-1b069934-4d2d-4b24-8de8-07762cfbf23e.ps1:82 文字:73
++ ... \NLMYTGen"; uv run python -m src.cli.main apply-production samples/pr ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  WARNING: FACE...threshold: 40%):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  WARNING: IDLE_FACE_MISSING: idle_face is not specified in any utterance
+face_map: samples/face_map.json (loaded)
+overlay_map: samples/track_a_overlay_map_repo_paths.json (2 labels)
+se_map: samples/track_a_se_map_repo_paths.json (1 labels)
+prompt face contract: C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\docs\S6-production-memo-prompt.md (6 labels)
+
+--- Face Distribution (1 utterances) ---
+  serious        1 (100%) ####################
+
+--- Face Contract ---
+  prompt : angry, sad, serious, smile, surprised, thinking
+  palette: angry, sad, serious, smile, surprised, thinking
+  used   : serious
+
+--- Overlay Distribution (2 utterances) ---
+  arrow_red      1
+  speech_bubble   1
+
+--- SE Distribution (1 utterances) ---
+  click          1
+
+Face changes: 2
+Slot changes: 0
+Overlay changes: 2
+SE insertions: 1
+Timeline adapter: motion=0, transition=1, bg_anim=0
+BG removed: 0, BG added: 1
+BG anim writes: 0
+Transition VoiceItem writes: 1
+TachieItem VideoEffects writes: 0
+(dry-run: no file written)

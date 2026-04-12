@@ -11,7 +11,7 @@
 
 | 項目 | 値 |
 | --- | --- |
-| 記録日（取込前 CLI） | 2026-04-10 |
+| 記録日（取込前 CLI） | 2026-04-10（**機械再検証 2026-04-11** — §1.1） |
 | 記録日（取込後 YMM4） | **未実施（オペレータ更新待ち）** |
 | トランスクリプト識別子 | `samples/The Amazon Panopticon Surveillance and the Modern Worker.txt`（refined: `samples/amazon_panopticon_lane_a_refined.txt`） |
 | 出力 CSV（YMM4 台本読込用） | `samples/amazon_panopticon_B11_ymm4.csv` |
@@ -68,6 +68,14 @@ Written: samples\amazon_panopticon_B11_ymm4.csv (244 rows)
 **補助ログ（全文）**: [`samples/lane_a_amazon_2026-04-10_refined_build_utf8.txt`](../../samples/lane_a_amazon_2026-04-10_refined_build_utf8.txt)
 
 **B-18（refined 稿）**: [`samples/lane_a_amazon_2026-04-10_refined_diag.json`](../../samples/lane_a_amazon_2026-04-10_refined_diag.json) — `ROLE_SKIPPED_NO_MAP`（info）のみ。
+
+### 1.1 機械再検証（2026-04-11）
+
+レーン A（P0）継続として、repo root で §1 と同一の `build-csv` コマンドを再実行。stats・overflow 候補 14 件・最終 JSON（244 rows）が **2026-04-10 記録と一致**することを確認済み。
+
+- ビルドログ: [`samples/lane_a_amazon_2026-04-11_refined_build.txt`](../../samples/lane_a_amazon_2026-04-11_refined_build.txt)
+- 診断 JSON: [`samples/lane_a_amazon_2026-04-11_refined_diag.json`](../../samples/lane_a_amazon_2026-04-11_refined_diag.json)
+- `validate --unlabeled`: [`samples/lane_a_amazon_2026-04-11_refined_validate.txt`](../../samples/lane_a_amazon_2026-04-11_refined_validate.txt)（87 utterances）
 
 ### YMM4 側の次ステップ（手動）
 

@@ -1,7 +1,7 @@
 # コア本開発 — 今後タスク設計（次サイクル正本）
 
 **役割**: コア本開発レーンを主軸にした「次に何をするか」を固定する。並行レーン A〜E は **価値が出るときだけ** 同時進行させる。  
-**Prompt の正本索引**: [CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md)（ファイル番号とコピー用一文）。  
+**Prompt の正本索引**: [CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md)（ファイル番号・早見・原則）。**全文コピペ・検収**は [CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md](CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md)（ファイル10）。  
 **ドラフト承認の正本**: [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md)（§2〜§3 はユーザー承認までコードに反映しない）。  
 **受け入れの正本**: [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md)。
 
@@ -43,7 +43,7 @@
 
 ## 4. コア用コピー Prompt（ファイル番号のみ指定）
 
-> 詳細な前文は [CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) §3.1 を正とする。
+> 詳細な前文は [CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) §3 を正とする。全文ブロックは **ファイル10**。
 
 | ID | 貼り付け一文 |
 |----|----------------|
@@ -51,9 +51,11 @@
 | **Core-T1** | 「**ファイル8**のフェーズ **T1** に従い、verification・サンプル・runbook 中心で進めてください。未承認 FEATURE の実装は禁止。**ファイル2**に照らし不足があればファイル3へは書かないでください。」 |
 | **Core-T2** | 「**ファイル8**のフェーズ **T2** に従い、**CORE-DEV-POST-APPROVAL-SLICES** §1 の **承認済みスライスを 1 本だけ**実装し、`NLMYTGEN_PYTEST_FULL=1 uv run pytest` を緑にしてください。」 |
 | **Core-T3** | 「**ファイル8**のフェーズ **T3** に従い、`runtime-state.md` と `project-context.md` の HANDOFF を更新し、次セッションの `next_action` を一文で残してください。」 |
-| **Core-Full** | 「**ファイル8**→**ファイル1**→**ファイル2**→**ファイル3**の順で読み、**ファイル9**（本パック）の **Prompt-Core** 全文どおりにコア本開発レーンを進めてください。」 |
+| **Core-Full** | 「**ファイル8**→**ファイル1**→**ファイル2**→**ファイル3**の順で読み、**ファイル10** の **Prompt-Core（フル）** を実行すること。**ファイル9** §2 の運用原則に従うこと。」 |
 
-※ **ファイル9** = [CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md)（パック自体をファイル9として参照する運用。§1 一覧参照）。
+※ **ファイル9** = [CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md)（運用原則・§3.0 早見・サイクル手順）。**ファイル10** = [CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md](CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md)（**コピペ用の全文 Prompt フェンス・検収・返却テンプレ**の正本）。
+
+§4 の表は **早見（一文）** 用である。**エージェントへ渡す全文**はファイル10からフェンスごとにコピーする。
 
 ---
 
@@ -67,6 +69,8 @@
 | **C-画質** | 「**ファイル7**の **A1〜A4 / B1〜B4** の該当パケットを 1 つ選び実施してください。」（**Prompt-C-Visual-Quality**） |
 | **D** | 「**ファイル4**の**レーンD**を進めてください。」（**Prompt-D**） |
 | **E** | 「**ファイル4**の**レーンE**を進めてください。」（**Prompt-E**） |
+| **V**（視覚最低限） | 「**ファイル10** の **Prompt-V** を丸ごとコピーして実行。」 |
+| **R**（改行ギャップ） | 「**ファイル10** の **Prompt-R** を丸ごとコピーして実行。」 |
 
 ---
 
@@ -75,10 +79,12 @@
 1. [runtime-state.md](../runtime-state.md)（現在位置・`next_action`）  
 2. **本ファイル** §2（今どの T か）  
 3. [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md)  
-4. [CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md)（投げる Prompt を選ぶ）
+4. [CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md](CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md)（全文 Prompt・検収）→ 必要なら [CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md)（原則・早見表）
 
 ---
 
 ## 7. 変更履歴
 
+- 2026-04-12: オペレータ **P0 Block-A** と [P01](P01-phase1-operator-e2e-proof.md) **経路 A** の対応を [P0-BLOCK-A-AND-PATH-A.md](P0-BLOCK-A-AND-PATH-A.md) に正本化（`runtime-state.md` の P0 行と整合）。並行レーン表（§3）の趣旨は不変。
+- 2026-04-11: **ファイル10**（コピペ全文・検収ハブ）を索引に追加。§4 Core-Full をファイル10準拠に更新。§6 の読み順にファイル10を挿入。
 - 2026-04-10: 初版。コア T0〜T3 と並行レーンの組み合わせ、コピー Prompt 早見を正本化。

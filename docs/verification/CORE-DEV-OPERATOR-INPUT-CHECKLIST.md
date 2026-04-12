@@ -16,7 +16,8 @@
 |------|------|----------------|-------------------------|
 | B-11 実測 | [B11-pre-plan-execution-pack-2026-04-07.md](B11-pre-plan-execution-pack-2026-04-07.md) §5 | 同一ファイルに取込前/後・4 区分空欄なし・代表例 ≥3・§3 Gate 明記 | **PASS** — [B11-workflow-proof-ai-monitoring-labor.md](B11-workflow-proof-ai-monitoring-labor.md)。**NEEDS_FIX（Amazon 別紙）** — [B11-workflow-proof-amazon-panopticon-2026-04-10.md](B11-workflow-proof-amazon-panopticon-2026-04-10.md) は §1・代表例・§3 まで記載済みだが **§2 取込後が YMM4 未実施の暫定**（Gate は「保留」）。オペレータが実機通しで §2.1 を実測し §3 を確定 Gate に更新したら本 PASS。 |
 | P01 追記 | [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) | 対象案件の接続判定行が存在 | **PASS** — `p0_nextcycle_amazon_2026-04-10_a`（CLI）および `lane_a_amazon_2026-04-10_b`（CLI+refined・[B11-workflow-proof-amazon-panopticon-2026-04-10.md](B11-workflow-proof-amazon-panopticon-2026-04-10.md) 参照）を追記済み |
-| プロンプト同期 | [S1-script-refinement-prompt.md](../S1-script-refinement-prompt.md)、[S6-production-memo-prompt.md](../S6-production-memo-prompt.md) 等 | repo が正本。差分は PR で取り込み | **継続**: 変更のたびに PR レビュー。[LANE-B-execution-record-2026-04-09.md](LANE-B-execution-record-2026-04-09.md) §7（2026-04-10）で `validate-ir` / `apply-production --dry-run` 再検証・参照コミット固定 |
+| H-01 レーンD（Prompt-D） | [OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) トラック D / B-4、[H01-packaging-orchestrator-workflow-proof.md](H01-packaging-orchestrator-workflow-proof.md) | 動画 1 本につき brief 1 ファイル。C-07/C-08 で **brief を台本より先**に渡す手順が verification に記録されている | **PASS** — P01 Amazon: 生 ASR（2026-04-10 記録）+ refined（[h01_lane_d_p01_amazon_c07_refined_input_2026-04-11.md](h01_lane_d_p01_amazon_c07_refined_input_2026-04-11.md) / [h01_lane_d_p01_amazon_c08_refined_input_2026-04-11.md](h01_lane_d_p01_amazon_c08_refined_input_2026-04-11.md)、proof「Lane D P01 Amazon」） |
+| プロンプト同期 | [S1-script-refinement-prompt.md](../S1-script-refinement-prompt.md)、[S6-production-memo-prompt.md](../S6-production-memo-prompt.md) 等 | repo が正本。差分は PR で取り込み | **継続**: 変更のたびに PR レビュー。[LANE-B-execution-record-2026-04-09.md](LANE-B-execution-record-2026-04-09.md) §7（2026-04-10）・§8（2026-04-11）で `validate-ir` / `apply-production --dry-run` 再検証・参照コミット固定 |
 | P2 / S6 観測 | [runtime-state.md](../runtime-state.md)、[S6-background-animation-next-step-plan-prep.md](../S6-background-animation-next-step-plan-prep.md) §2 | YMM4 見え方 OK/NG の一行＋採用案について S6 の 5 条件 | **PASS（2026-04-09）** — 見え方一行: **NG（本番投入は保留）**。`test_verify_4_bg.ymmp` 系の機械観測を根拠に S6 §2 の 5 条件を本表下の「P2/S6 充足証跡」で記入完了。未承認 FEATURE を増やさず、まずはコア幹の回帰・承認済みバグ修正へ復帰。 |
 | 画面演出パケット（A1-A4/B1-B4） | [VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md) | 各パケットで「対象スコア >=2」かつ必須チェック全 `yes`。判定は PASS/NEEDS_FIX 明示。 | **継続**: PASS 入力のみドラフト反映（NEEDS_FIX は差し戻し）。 |
 
@@ -54,6 +55,7 @@
 |------|---------|------------------|
 | B-11 実測 | **PASS** | §1 と整合済み。追記不要 |
 | P01 追記 | **PASS** | §5 次アクションと整合。追記不要 |
+| H-01 レーンD | **PASS**（P01 Amazon refined 手順を verification に固定） | 実装要求なし。§2 へ計画差し込み不要 |
 | プロンプト同期 | **継続**（NEEDS_FIX なし） | 新規実測なし。§2 に差し込まない |
 | P2 / S6 観測 | **PASS**（見え方 NG 明示済み） | §2.1 の「本番投入前・ドキュメント先行」と整合。実戦投入 OK とは書かない |
 | 画面演出パケット | **継続** | 全パケット PASS が揃うまで §2 を「パケット完了」とは更新しない（§5 ルールどおり） |
@@ -64,14 +66,14 @@
 
 ---
 
-## 3.3 自己照合サマリ（2026-04-10・ファイル4レーンA Amazon）
+## 3.3 自己照合サマリ（ファイル4レーンA Amazon）
 
 | 照合項目 | 結果 |
 |----------|------|
-| B-11 §1 取込前（stats・JSON・コマンド） | **PASS** |
+| B-11 §1 取込前（stats・JSON・コマンド） | **PASS**（2026-04-11 再実行で §1.1 と整合・差分なし） |
 | B-11 §2 取込後（4 区分の実測・Gate 確定） | **NEEDS_FIX**（YMM4 実機未実施。暫定 0 と「保留」を明記） |
 | 代表例 ≥3・§3 記載 | **PASS**（代表例は overflow 候補ベース、§3 は「保留」明示） |
-| P01 行 `lane_a_amazon_2026-04-10_b` | **PASS** |
+| P01 行 `lane_a_amazon_2026-04-10_b` / `lane_a_amazon_2026-04-11_c` | **PASS** |
 
 ---
 
@@ -109,6 +111,8 @@
 
 ## 5. 変更履歴
 
+- 2026-04-11: §2 に H-01 レーンD（Prompt-D）受け入れ行を追加（P01 Amazon の refined 経路を verification に固定）。
+- 2026-04-11: 「プロンプト同期」受け入れ行を [LANE-B-execution-record-2026-04-09.md](LANE-B-execution-record-2026-04-09.md) §8（レーンB再検証・HEAD `927588e`）へ更新。
 - 2026-04-11: §3.2 T0 再監査（PASS/継続の区分）を追加。
 - 2026-04-10: §3.3 自己照合（レーンA Amazon）、§3.2 補足、B-11/P01 受け入れ行を Amazon B-11・`lane_a_amazon_2026-04-10_b` 追記に合わせて更新。
 - 2026-04-10: 監査日更新。P01 `p0_nextcycle_amazon_2026-04-10_a` を反映、P2/S6 は OPEN 継続を明文化。

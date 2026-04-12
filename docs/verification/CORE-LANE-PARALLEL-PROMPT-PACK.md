@@ -15,7 +15,8 @@
 - ファイル6: [LANE-C-operator-prep-2026-04-09.md](LANE-C-operator-prep-2026-04-09.md)
 - ファイル7: [VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md)
 - ファイル8: [CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md](CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md)（**コア T0〜T3 のタスク設計・並行の組み合わせ**）
-- ファイル9: **本ファイル**（`CORE-LANE-PARALLEL-PROMPT-PACK.md`）— 運用原則・レーン別 Prompt 全文の正本
+- ファイル9: **本ファイル**（`CORE-LANE-PARALLEL-PROMPT-PACK.md`）— 運用原則・§3.0 早見・サイクル手順の正本
+- **ファイル10**: [CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md](CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md) — **コピペ用 Prompt 全文ブロック・検収チェックリスト・返却テンプレ**の正本（依頼時はここを開いてフェンスごとにコピーする）
 
 ---
 
@@ -31,6 +32,8 @@
 
 ## 3. 即実行 Prompt（レーン別）
 
+**コピペ用の全文**（フェンス単位でエージェントに渡すブロック）は **ファイル10** に集約した。本節の **Prompt-A〜E / Core-*** の引用は早見・索引として残すが、**二重メンテを避けるため追記・改稿はファイル10 を先に更新**し、必要なら本節の短文を追随する。
+
 ### 3.0 早見（コピー用・最短）
 
 | やりたいこと | 貼り付け |
@@ -45,6 +48,8 @@
 | 並行 画質パケット | 「**ファイル7**の **A1〜A4 / B1〜B4** から 1 パケット選び実施してください。」（**Prompt-C-Visual-Quality**） |
 | 並行 D | 「**ファイル4**の**レーンD**を進めてください。」（**Prompt-D**） |
 | 並行 E | 「**ファイル4**の**レーンE**を進めてください。」（**Prompt-E**） |
+| 並行 視覚最低限（本編1案件） | **ファイル10** の **Prompt-V** を丸ごとコピー |
+| 並行 改行ギャップ計測 | **ファイル10** の **Prompt-R** を丸ごとコピー |
 
 ### Prompt-A（Phase 1 実行）
 
@@ -114,5 +119,6 @@
 
 ## 6. 変更履歴
 
+- 2026-04-11: **ファイル10**（コピペ全文・検収ハブ）を追加。§3 冒頭に集約方針、§3.0 に Prompt-V / Prompt-R 早見を追加。ファイル9の説明を「早見・原則」に限定。
 - 2026-04-10: **ファイル8・ファイル9** を追加。§3.0 早見、Prompt-Core 分割（T0〜T3）、サイクル手順を **CORE-DEV-TASK-DESIGN-NEXT-CYCLE** と整合。
 - 2026-04-09: 初版（コア本開発レーン中心の Prompt パックを正本化）。

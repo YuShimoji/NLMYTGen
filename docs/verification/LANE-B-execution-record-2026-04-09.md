@@ -132,3 +132,55 @@ uv run python -m src.cli.main apply-production "samples/test_verify_4_bg_p2_smal
 
 - [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) 表「プロンプト同期」: **repo が正本**／差分は PR で取り込み／状態は **継続監視**。
 - 差し戻し §3 項番3（GUI と repo の食い違いを記録なしに放置）に対し、本節で **参照コミット・機械検証結果・GUI 突合手順**を明示した。
+
+---
+
+## 8. 再検証 2026-04-11（ファイル5 レーンB・Prompt-B）
+
+実施目的: [LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md) B-1〜B-5 の維持確認と、[CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) Prompt-B（B-2/B-3/B-4/B-5・GPT 構成・repo 正本差分）に沿った証跡更新。
+
+### 8.1 正本参照コミット（repo）
+
+- `git rev-parse HEAD` → `927588eb630bd7b50917085a7e6573436479095f`（短縮 `927588e`）
+- 突合対象ファイル: `docs/S1-script-refinement-prompt.md`、`docs/S6-production-memo-prompt.md`（`### v4 プロンプト本体` フェンス内全文）、`docs/S8-thumbnail-copy-prompt.md`
+
+### 8.2 B-1（セットアップ方針）
+
+- [gui-llm-setup-guide.md](../gui-llm-setup-guide.md) を前提とし、§7 からの方針を継続: **方式 A（Custom GPT）**・**2体分離（S1 専用 + S6 v4 専用）**。変更なし。
+
+### 8.3 B-2 機械検証（validate-ir）
+
+```powershell
+uv run python -m src.cli.main validate-ir "samples/ir_visual_styles_dry_sample.json" --face-map "samples/face_map.json"
+```
+
+- exit code: `0`
+- 出力要点: `Validation PASSED`、face 契約表示（prompt/palette/used）確認
+
+### 8.4 B-3 機械検証（apply-production --dry-run）
+
+```powershell
+uv run python -m src.cli.main apply-production "samples/test_verify_4_bg_p2_small.ymmp" "samples/p2_bg_anim_small_scope.ir.json" --bg-map "samples/bg_map_p2_small_scope.json" --transition-map "samples/transition_map_p2_small_scope.json" --bg-anim-map "samples/bg_anim_map_p2_small_scope.json" --dry-run
+```
+
+- exit code: `0`
+- 出力要点: `Timeline adapter: motion=0, transition=4, bg_anim=3` / `BG anim writes: 3` / `Transition VoiceItem writes: 4`（§3・§7 と一致）
+
+### 8.5 B-4 / B-5（運用方針・再掲）
+
+- **B-4**: **会話ごとに brief を台本より先に貼る**（S6 v4 本体の最小化）。参照: `docs/PACKAGING_ORCHESTRATOR_SPEC.md`、`samples/packaging_brief.template.md`
+- **B-5**: **H-02 準拠が必要な案件**は `docs/S8-thumbnail-copy-prompt.md`（別ラウンドまたは別 GPT）。**素案のみ**は S6 v4 Part 4
+
+### 8.6 repo 正本と Custom GPT Instructions の差分
+
+- **repo 側**: 上記コミット時点の正本のみ。運用方針の差分はなし（§1〜§5・§7 と整合）。
+- **GUI 側**: Instructions は repo に無いため、オペレータは **本節のコミット**でチェックアウトした S1「LLM への指示」＋入力テンプレ、および S6 の v4 フェンス内全文と **目視突合**し、差分があれば貼り替える（[LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md) B-2/B-3）。
+
+### 8.7 実施者
+
+- **repo 機械検証・本節の文書更新**: Cursor エージェント（依頼セッション、2026-04-11）
+- **Custom GPT Instructions の突合・貼替**: オペレータ（repo 外 UI）
+
+### 8.8 ファイル2 自己照合（プロンプト同期）
+
+- [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) 表「プロンプト同期」: **継続監視**。本節で参照コミット `927588e` と機械検証を再度固定した。

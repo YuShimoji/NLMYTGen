@@ -114,7 +114,7 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 
 **実制作の 3大 bottleneck (ユーザー特定):**
 
-1. **台本品質保証** — NotebookLM 出力はそのまま使えない。ゆっくり解説様式への変換、聞き手/解説の話者混同修正、NLM臭の除去、YT視聴者向け調整が毎回必要。台本品質は演出IR品質にも連鎖する (台本が曖昧 → IR も曖昧)
+1. **台本品質保証** — 台本をどこまで NotebookLM に近いままにするか、事前にゆっくり向けへ整えるかは**案件ごとに可変**であり、repo が本番運用を二分して固定するものではない（現状の作業が原文寄りでも、本番でも常にそうとは限らない）。機械側で共通するのは、`validate` / `build-csv` による**YMM4 用 CSV への正規化**（話者ラベル・分割・表示幅等）。任意で `diagnose-script`（B-18）や C-09（[S1-script-refinement-prompt.md](S1-script-refinement-prompt.md)）による **constrained rewrite** を足すかは都度判断。2026-04-06 フィードバックの「原文のまま使い切れない」は**典型痛みの列挙**であり全案件への断定ではない。手順の書き分けは [P01-phase1-operator-e2e-proof.md](verification/P01-phase1-operator-e2e-proof.md)。曖昧さは演出 IR に連鎖しうる。
 2. **演出配置の自動化** — 最重量工程。IR を生成するところまでは来ているが、IRの通りにYMM4上で素材を配置する作業が全て手動。素材調達、レイアウト、タイミング制御、アニメーション設定を含む。現状の patch-ymmp は face/bg/slot/overlay のみで演出全体の自動配置には程遠い
 3. **視覚効果** — サムネイルを1枚も完成させていない。茶番劇風アニメ/図解アニメがゼロ。画像表示のみ
 
@@ -126,12 +126,11 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 以下は着手候補の整理であり、順序は未確定:
 
 #### 候補A: 台本品質の自動改善
-- NLM 出力 → ゆっくり解説様式への自動変換/支援
-- 話者混同の検出・修正支援
-- NLM臭の除去パターン
-- 台本品質が演出IRに連鎖するため、上流改善の効果が大きい
+- **手段例（機械のみ）**: `build-csv` / reflow / `diagnose-script` の**検知・警告**で、YMM4 取込後の手戻り（字幕はみ出し等）を減らす（C-09 を使わない案件でも価値あり）
+- **手段例（LLM 支援を追加）**: ゆっくり解説様式への変換/支援（C-09）、話者混同の検出・修正支援、NLM 臭の除去パターン（案件で採用する場合）
+- 台本品質が演出 IR に連鎖するため、上流で手を入れるほど効果が出やすい場合がある（採用時）
 - Python スコープ制約 (テキスト変換のみ) の範囲内で可能
-- GUI LLM (Custom GPT 等) での支援も選択肢
+- GUI LLM (Custom GPT 等) での支援も選択肢（採用時）
 
 #### 候補B: 演出配置の自動化拡張
 - 現状 face/bg/slot/overlay → 演出全体への拡張
@@ -158,6 +157,11 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 
 | 日付 | 決定事項 | 選択肢 | 決定理由 |
 |------|----------|--------|----------|
+| 2026-04-13 | **茶番劇 E2E 実演 Phase 1/2 PASS**: face 138 + idle_face 16 + slot 10 + motion 6 を IR→apply-production→YMM4 で実証。src/ 変更なし。正本 [CHABANGEKI-E2E-PROOF-2026-04-13.md](verification/CHABANGEKI-E2E-PROOF-2026-04-13.md) | 既存 done 機能のみ / 新規実装 | トラック A（演出 IR 実戦）のサブセットとして、追加コード変更なしで E2E パイプライン動作を実証 |
+| 2026-04-13 | **表情指定: テンプレ（プリセット名）のほうが実用的**。パーツ個別指定（face_map の Eyebrow/Eye/Mouth パス）だと YMM4 上で「カスタム」表示になり、運用上不便。将来の face_map 構造見直しの根拠 | パーツ指定維持 / テンプレ指定移行 | オペレータフィードバック。E2E Phase 1/2 で発見 |
+| 2026-04-13 | **体テンプレ構想**: 別体素材（配達員等）にゆっくり頭を重ね、テンプレ蓄積→IR で指定する将来像。グループ制御で移動・拡大縮小は破綻なし。左右反転は素材分割が必要。FEATURE 起票は別ブロック。正本 [TACHIE-BODY-FACE-SWAP-ymmp-geometry-2026-04-13.md](verification/TACHIE-BODY-FACE-SWAP-ymmp-geometry-2026-04-13.md) §7 / [TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md](verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md) §3.2 | 体テンプレ / パーツ差替（G-19）/ 保留 | オペレータ調査で YMM4 のグループ制御仕様を確認。IR + レジストリで制御する設計は overlay/bg と同型で実現可能 |
+| 2026-04-12 | **P0 Block-A タスク再設計クローズ**: [P0-BLOCK-A-AND-PATH-A.md](verification/P0-BLOCK-A-AND-PATH-A.md) を正本化。[runtime-state.md](runtime-state.md) の P0 優先行を「C-09 必須」と読めないよう修正。Block-A＝S-4 読込エラーのみ／NotebookLM 準拠稿は経路 A で可 | 表を据え置き / 正本化 | CSV 手前で台本改善を前提にするとオペレータがブロックするため。機械再スモーク `samples/p0_steering_v14_2026-04-12_*` |
+| 2026-04-11 | **正本の表現是正**: 「運用で二系統ある」という断定を撤回。**案件ごと可変**・現状が原文寄りでも本番固定ではない旨を bottleneck #1 と [P01-phase1-operator-e2e-proof.md](verification/P01-phase1-operator-e2e-proof.md) に反映。C-09 は任意、v14 は repo 検証アンカーと明記（[P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md) 等） | 二系統を正本に残す / 撤回 | ユーザー指摘: 二系統はエンティティ調査ではなく文書整理枠であり、本番方針まで固定しないため |
 | 2026-04-11 | **開発正本から壁時計 cadence を除外**: 「2 週間」「週 1 回」「60〜90 分の固定ブロック」等の運用を repo 正本に置かず、**工程到達**（S-4 等）とオペレータセッション単位で記述する。反映: [P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md)、[OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md)、[LANE-C-operator-prep-2026-04-09.md](verification/LANE-C-operator-prep-2026-04-09.md)、[PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md)、[CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) §5、`runtime-state.md` の `next_action` | 週次を正本に残す / 到達のみ | 開発リズムをカレンダー週に束縛しないため |
 | 2026-04-11 | **P0 縦優先の固定**: 本編主軸＝AI監視 v14（`samples/v14_t3_ymm4.csv`）。Amazon Panopticon の B-11 §2 は **横**（別オペレータセッション）。正本 [P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md)。P01 行 `p0_mainline_v14_steering_2026-04-11_a`（機械再スモーク）。`runtime-state.md` の `next_action` を P0 先頭へ。T1 DOCSAMPLE の `validate-ir` を再実行し充足確認（[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §4） | Amazon 縦を先に採る / 本編のみ固定 | 縦スライスが品質横展開に埋もれないよう、YMM4 到達工程を 1 本に束ねるため（週 cadence は正本に置かない） |
 | 2026-04-11 | レーン B（ファイル5）再検証: [LANE-B-execution-record-2026-04-09.md](verification/LANE-B-execution-record-2026-04-09.md) §8 を追記。正本コミット `927588e`、`validate-ir` / `apply-production --dry-run` を再実行し PASS。B-1/B-4/B-5 は従来方針継続。Custom GPT Instructions 突合はオペレータ（repo 外） | 再検証スキップ / 証跡のみ更新 | Prompt-B・ファイル2「プロンプト同期」の参照コミットを現 HEAD に更新するため |
@@ -315,13 +319,13 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ---
 
-## HANDOFF SNAPSHOT (2026-04-11 更新)
+## HANDOFF SNAPSHOT (2026-04-12 更新)
 
-- Shared Focus: **P0 縦優先（本編 v14）** — `docs/runtime-state.md` の `next_action` 先頭。[P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md) の Block-A（YMM4 S-4）。**T1** スライス（DOCSAMPLE / RUNBOOK-GUI）は repo 充足確認済み・新規起票なし。Prompt: [CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) §3.0 **Core-T1**。方針承認: [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](verification/CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §6
-- Safe Next Frontier Packet: **次の開発ブロック**でオペレータが P0 Block-A 到達後、承認済みなら T2 実装スライス。**運用**: **P0** Phase 1 本番（診断→C-09→CSV→YMM4→[P01](verification/P01-phase1-operator-e2e-proof.md)、本編主軸 `p0_mainline_v14_steering_2026-04-11_a`） / **P1** H-01 brief / **P2** 演出実戦（制作物トリガ） / **P3** サムネ / **Parking** P2A どおり一括マージしない
+- Shared Focus: **P0 本編 v14・Block-A 通過**（2026-04-12）— [P01-phase1-operator-e2e-proof.md](verification/P01-phase1-operator-e2e-proof.md) `p0_mainline_v14_steering_2026-04-11_a` = PASS（YMM4 S-4）。次針は `docs/runtime-state.md` の `next_action`（`parallel_replan_2026_04` または S-5 以降）。経路整理は [P0-BLOCK-A-AND-PATH-A.md](verification/P0-BLOCK-A-AND-PATH-A.md)。**T1** スライス（DOCSAMPLE / RUNBOOK-GUI）は repo 充足確認済み・新規起票なし。Prompt: [CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) §3.0 **Core-T1**。方針承認: [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](verification/CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §6
+- Safe Next Frontier Packet: **次の開発ブロック**でオペレータが P0 Block-A 到達後、承認済みなら T2 実装スライス。**運用**: **P0** Phase 1 本番（経路 A または B で CSV→[P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md) Block-A。手順正本 [P0-BLOCK-A-AND-PATH-A.md](verification/P0-BLOCK-A-AND-PATH-A.md)、[P01](verification/P01-phase1-operator-e2e-proof.md)、本編主軸 `p0_mainline_v14_steering_2026-04-11_a`） / **P1** H-01 brief / **P2** 演出実戦（制作物トリガ） / **P3** サムネ / **Parking** P2A どおり一括マージしない
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: **2026-04-11** T0 完了＋P0 Amazon 並行証跡・サンプルを `origin/master` へ同期。**同日追記**: 舵取りプラン実装（P0 縦固定・`next_action` 先頭 P0・[P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md)）。履歴は git log
+- Last Change Relation: **2026-04-12** P01 `p0_mainline_v14_steering_2026-04-11_a` を PASS（YMM4 S-4）に更新、`next_action` を Block-A 通過後へ。**同日（先行）**: P0 Block-A と経路 A の正本化（[P0-BLOCK-A-AND-PATH-A.md](verification/P0-BLOCK-A-AND-PATH-A.md)、`runtime-state.md` P0 行、`samples/p0_steering_v14_2026-04-12_*`）。**2026-04-11** T0 完了＋P0 Amazon 並行証跡・サンプルを `origin/master` へ同期。**同日追記**: 舵取りプラン実装（P0 縦固定・`next_action` 先頭 P0・[P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md)）。履歴は git log
 - Evidence: Production E2E 実証済み + `NLMYTGEN_PYTEST_FULL=1 uv run pytest`: **313 passed** (2026-04-10)
 - 案件モード: CLI artifact
 - 現在の主レーン: 方向転換中 (実制作bottleneck直接軽減へ移行)

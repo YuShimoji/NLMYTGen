@@ -29,7 +29,8 @@
 2. docs/REPO_LOCAL_RULES.md を読む → repo-local の運用ルール（Hard Rules・Read Order・Checklist）の正本
 3. docs/ai/CORE_RULESET.md → docs/ai/DECISION_GATES.md → docs/ai/STATUS_AND_HANDOFF.md → docs/ai/WORKFLOWS_AND_PHASES.md を読む → canonical rules
 4. docs/INVARIANTS.md → docs/USER_REQUEST_LEDGER.md → docs/OPERATOR_WORKFLOW.md → docs/INTERACTION_NOTES.md を読む → durable context / pain / ask hygiene
-5. docs/runtime-state.md → docs/project-context.md → docs/FEATURE_REGISTRY.md → docs/AUTOMATION_BOUNDARY.md を読む → 現在地・handoff・backlog・境界
+5. docs/runtime-state.md → docs/project-context.md → docs/FEATURE_REGISTRY.md → docs/AUTOMATION_BOUNDARY.md を読む → 現在地・handoff・backlog・境界（`project-context.md` は長大で、IDE の Markdown プレビューが空白になることがある。**航海日誌を読むときはエディタのソース表示・生 MD で開く**）
+   - （任意）ドキュメント地図: `docs/NAV.md` — 正本への短い導線。上記ステップの省略にはしない。
 6. 必要な時だけ CLAUDE.md / docs/ARCHITECTURE.md / docs/PIPELINE_SPEC.md / docs/WORKFLOW.md / ADR を読む
 7. 全景確認を出力:
    📍 NLMYTGen / 🧩 [現在のスライス] / 🔲 [次のアクション]
@@ -73,6 +74,8 @@
 | docs/OPERATOR_WORKFLOW.md | 実ワークフロー・痛点・品質目標 | pain / workflow proof が分かったブロックで即時 |
 | docs/INTERACTION_NOTES.md | 報告形式・質問 hygiene・嫌われる形式 | 対話上の学習があったブロックで即時 |
 | docs/runtime-state.md | 現在位置。カウンター・状態値・active_artifact | 毎ブロック終端 |
+| docs/NAV.md | ドキュメント地図。再開 3 枚・正本索引への導線・テンプレと状態の区別 | 索引や迷子対策を増やしたとき |
+| docs/verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md | 立ち絵 複数体×顔差し替えの準備パック（FEATURE G-19/G-20 proposed・別スレッド用 Prompt） | 体+顔スライスを起票したとき |
 | docs/project-context.md | 航海日誌。DECISION LOG・IDEA POOL・HANDOFF SNAPSHOT | セッション終端・HANDOFF 時 |
 | CLAUDE.md (ルート) | プロジェクト方針・技術スタック・成功定義・同ファイル内「絶対的な制約」。日々の運用 Hard Rules の正本は `docs/REPO_LOCAL_RULES.md`、非交渉境界の正本は `docs/INVARIANTS.md` | 方針変更時のみ（運用ルール・不変条件は各正本側） |
 

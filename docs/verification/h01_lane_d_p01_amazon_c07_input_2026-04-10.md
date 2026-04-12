@@ -36,4 +36,5 @@
 
 ## メモ
 
+- **C-09 後に refined 台本が正のとき**は [h01_lane_d_p01_amazon_c07_refined_input_2026-04-11.md](h01_lane_d_p01_amazon_c07_refined_input_2026-04-11.md) を参照（貼付順は同じく brief 先）。
 - 実際の Custom GPT セッション URL や生成ログはオペレータ環境に残す。本 repo では上記パスと貼付順のみを正本とする。

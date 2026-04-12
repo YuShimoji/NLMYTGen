@@ -3,6 +3,10 @@
 NotebookLM 由来の台本を、**事実を増やさず**、ゆっくり解説向けの会話体・役割分担に整えるための GUI LLM 用指示書。  
 API/SDK は使わず、Custom GPT / Claude Project / Gemini Gems 等に **Instructions に貼る**か、都度ユーザーメッセージの先頭に置く。
 
+## 任意性（本番方針の固定ではない）
+
+NotebookLM に近い本文を **ほぼそのまま** `validate` / `build-csv` に回す案件では、**本プロンプト（C-09）を使わなくてよい**（[P01-phase1-operator-e2e-proof.md](verification/P01-phase1-operator-e2e-proof.md) の経路 A。経路 A/B は **検証・説明用のラベル**で、案件ごとに機械のみ／LLM 支援を足すかは可変）。使う場合も下記【絶対条件】のとおり **事実の追加・改変は禁止**（constrained rewrite のみ）。
+
 ## 正本・境界
 
 - [INVARIANTS.md](INVARIANTS.md): 主台本のゼロから生成は禁止。既存 NLM テキストの **constrained rewrite** のみ。

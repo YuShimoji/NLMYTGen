@@ -283,6 +283,8 @@ python -m src.cli.main build-csv input.txt \
 2. ゆっくりとした動きで単調さを軽減
 3. 動きの速度・方向はトピックの雰囲気に合わせる
 
+公式・プラグイン・既知トラブル対策の参照用に、[verification/YMM4-bg-animation-operator-research-2026-04.md](verification/YMM4-bg-animation-operator-research-2026-04.md)（YMM4 オペレーション補遺）を利用できる。
+
 ### c. 立ち絵の表情切り替え
 
 1. 発話の内容に合わせて表情を変更 (S-0 で設定したパターンから選択)

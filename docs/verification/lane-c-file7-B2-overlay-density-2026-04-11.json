@@ -1,0 +1,60 @@
+{
+  "run_id": "lane_c_file7_overlay_b2_2026-04-11",
+  "task_id": "B2",
+  "quality_packet_ref": "docs/verification/VISUAL-QUALITY-PACKETS.md",
+  "evaluation_subject": {
+    "ir_path": "samples/ir_visual_styles_dry_sample.json",
+    "overlay_map": "samples/visual_styles_overlay_map.example.json",
+    "palette": "samples/palette.ymmp",
+    "rationale": "ファイル7 §3 B2（情報密度）。三スタイル混在の短尺 IR で、発話ごとの overlay 件数と論点の対応を静的に監査。"
+  },
+  "commands_executed": [
+    "uv run python -m src.cli.main validate-ir samples/ir_visual_styles_dry_sample.json --palette samples/palette.ymmp --overlay-map samples/visual_styles_overlay_map.example.json"
+  ],
+  "exit_codes": {
+    "validate_ir": 0
+  },
+  "log_observations": {
+    "validate_ir": "Validation PASSED with 1 warnings（FACE_LATENT_GAP のみ）。OVERLAY_* / OVERLAY_MAP_MISS 等の overlay 失敗クラスなし。Overlay Distribution: speech_bubble 1, text_box 1（計2発話のみ overlay あり、他4発話は overlay なし）"
+  },
+  "overlay_density_audit": {
+    "utterances_with_overlay": [
+      {
+        "index": 1,
+        "text": "挿絵コマ1",
+        "section_id": "S1",
+        "template": "skit",
+        "overlay_keys": ["speech_bubble"],
+        "count_per_utterance": 1
+      },
+      {
+        "index": 3,
+        "text": "データ説明",
+        "section_id": "S2",
+        "template": "data",
+        "overlay_keys": ["text_box"],
+        "count_per_utterance": 1
+      }
+    ],
+    "max_overlays_per_utterance": 1,
+    "utterances_with_multiple_overlays": []
+  },
+  "checklist_evidence": {
+    "one_overlay_one_claim": "各 overlay 付き発話はラベル1つのみ。index1=コマ割り見出しに吹き出し、index3=資料説明にテキスト枠と、台詞の役割と1:1。",
+    "not_overloaded": "6発話中 overlay は2発話のみ。同一発話に複数ラベルやテキスト列のスタックなし。",
+    "has_concrete_anchor": "いずれも utterance index・section_id・template と紐づく。row_start/row_end 未設定は validate の ROW_RANGE_INFO のみ（本パケットは情報密度の過不足判定であり、タイムライン行アンカー必須とは切り分け）。"
+  },
+  "scores": {
+    "target_quality": 2,
+    "readability": 2,
+    "timing_fit": 2,
+    "stability": 3
+  },
+  "checklist": {
+    "one_overlay_one_claim": true,
+    "not_overloaded": true,
+    "has_concrete_anchor": true
+  },
+  "result": "pass",
+  "notes": "ファイル7から B2 を1本実施。YMM4 上の画素配置・最終見た目は未検証。IR＋overlay_map＋validate-ir exit 0 に基づき PASS。実運用の本番 PASS に近づける場合は apply-production 経路と row アンカー付与後の再採点を推奨。"
+}

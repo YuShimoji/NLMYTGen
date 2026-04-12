@@ -1,5 +1,7 @@
 # docs/verification — 索引と読み方
 
+**迷子対策**: 先に [`docs/NAV.md`](../NAV.md)（ドキュメント地図・3 枚ルール・テンプレと状態の区別）を読むと負荷が下がる。
+
 本ディレクトリは **検証記録・提案ドラフト・実装メモ・オペレータ proof** が混在する。ファイル名の `proposal` / `implementation` / `proof` / `checklist` は目安であり、**現行仕様の正本は下記の固定ドキュメント**を優先する。
 
 ## 現行正本（仕様・台帳・いまの位置）
@@ -11,6 +13,11 @@
 | 演出 IR 仕様（語彙・構造） | [PRODUCTION_IR_SPEC.md](../PRODUCTION_IR_SPEC.md) |
 | 自動化の境界（YMM4 内 / 外） | [AUTOMATION_BOUNDARY.md](../AUTOMATION_BOUNDARY.md) |
 | 現在位置・次アクション | [runtime-state.md](../runtime-state.md) |
+| P0 Block-A と経路 A（NotebookLM 準拠稿・C-09 任意の整理） | [P0-BLOCK-A-AND-PATH-A.md](P0-BLOCK-A-AND-PATH-A.md) |
+| 視覚最低限 + 改行／YMM4 ギャップ（並列再策定・補助正本） | [VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md](VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md) |
+| S-6 背景演出・YMM4 公式／プラグイン運用補遺（境界整合・検収チェックリスト） | [YMM4-bg-animation-operator-research-2026-04.md](YMM4-bg-animation-operator-research-2026-04.md) |
+| 立ち絵 複数体 × 顔差し替え（準備・別スレッド起動・G-19/G-20） | [TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md](TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md) |
+| コア＋並行 Prompt 全文・検収・返却テンプレ（ファイル10） | [CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md](CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md) |
 | 意思決定・handoff | [project-context.md](../project-context.md) |
 | 並行作業の手順（オペレータ） | [OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) |
 | レーン B（GUI LLM 正本同期）チェックリスト | [LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md) |

@@ -178,3 +178,22 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/n
 
 - `FACE_LATENT_GAP` は解消、ERROR 新規発生なし。
 - 連続再発 warning 2件（`FACE_LATENT_GAP` / `IDLE_FACE_MISSING`）の恒久対処が完了。
+
+## トラック A — 視覚最低限（VISUAL-MINIMUM §3）`visual_minimum_track_a_2026-04-12_a`
+
+本編 P0 主軸（[P0-VERTICAL-STEERING-2026-04-11.md](P0-VERTICAL-STEERING-2026-04-11.md) §1）と同一コーパス上で、`validate-ir` → `apply-production --dry-run` → 本適用（`-o`）まで通し、[VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md](VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md) §3 の機械条件を満たす。**新規 CLI・コード変更なし**（`bg_map` / `overlay_map` / `se_map` は repo 内実在パス向けの検証用 JSON を `samples/track_a_*_repo_paths.json` に追加）。
+
+| 項目 | 値 |
+|------|-----|
+| run_id | `visual_minimum_track_a_2026-04-12_a` |
+| IR | `samples/p2_overlay_se_ir.json`（`macro.sections[].default_bg` = `van_dashboard_ai`） |
+| 本番 CSV（主軸記録） | `samples/v14_t3_ymm4.csv`（読込検証の正本は P0 文書 §1） |
+| 入力 ymmp | `samples/production.ymmp` |
+| 出力 ymmp | `_tmp/visual_minimum_track_a_2026-04-12_a_applied.ymmp` |
+| `validate-ir` ログ | `samples/visual_minimum_track_a_2026-04-12_validate.txt`（exit 0、`BG_MISSING` なし） |
+| `apply-production --dry-run` ログ | `samples/visual_minimum_track_a_2026-04-12_apply_dryrun.txt`（`BG added: 1`） |
+| 本適用ログ | `samples/visual_minimum_track_a_2026-04-12_apply_write.txt` |
+| マップ | `samples/track_a_bg_map_repo_paths.json` / `samples/track_a_overlay_map_repo_paths.json` / `samples/track_a_se_map_repo_paths.json` + `samples/face_map.json` + `samples/timeline_route_contract.json` + `--timeline-profile production_ai_monitoring_lane` |
+| YMM4 / 背景実体（§3 項 6） | **PASS（readback）** — YMM4 GUI のプレビューは未実施。出力 ymmp を検索し、`YukkuriMovieMaker.Project.Items.ImageItem` で **`Layer` 0** かつ `FilePath` が IR 由来の `bg_map` 解決パス（`samples/v14_t4_thumb_record_2026-04-13_a.png`）であるクリップが存在することを確認（行番号目安: 140838 付近）。単色黒のみの背景ではない。追加のプレビュー確認は `_tmp/visual_minimum_track_a_2026-04-12_a_applied.ymmp` を YMM4 で開けばよい。 |
+
+**補足**: 現行 `validate-ir` は CLI に `--bg-map` が無いため、`default_bg` / `BG_MISSING` 系は IR 本文と `validate-ir` の macro 警告で担保し、ファイル解決は `apply-production` 側の `bg_map` で確認する。

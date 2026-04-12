@@ -37,4 +37,5 @@
 
 ## メモ
 
+- **C-09 後に refined 台本が正のとき**は [h01_lane_d_p01_amazon_c08_refined_input_2026-04-11.md](h01_lane_d_p01_amazon_c08_refined_input_2026-04-11.md) を参照。
 - 採用したコピー案の保存先はオペレータ任意。lexical チェックは `banned_copy_patterns` との突合を推奨。

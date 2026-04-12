@@ -188,7 +188,7 @@
 - サイクル: レーン D の `packaging_brief_p0_amazon.md` 正本化と同一（ファイル4・P01 Amazon）
 - 参照手順: [THUMBNAIL_ONE_SHEET_WORKFLOW.md](../THUMBNAIL_ONE_SHEET_WORKFLOW.md)、[OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) トラック E
 - `video_slug` / 成果物名の正本: `p0_phase1_amazon` → `samples/thumb_p0_phase1_amazon.png`（repo 内に既存。再書き出し時も同ファイル名で上書きまたは別 run で追記）
-- H-01 brief: `samples/packaging_brief_p0_amazon.md`（C-08 入力順は [h01_lane_d_p01_amazon_c08_input_2026-04-10.md](h01_lane_d_p01_amazon_c08_input_2026-04-10.md)）
+- H-01 brief: `samples/packaging_brief_p0_amazon.md`（C-08 入力順: 生 ASR は [h01_lane_d_p01_amazon_c08_input_2026-04-10.md](h01_lane_d_p01_amazon_c08_input_2026-04-10.md)、**C-09 後は refined** が [h01_lane_d_p01_amazon_c08_refined_input_2026-04-11.md](h01_lane_d_p01_amazon_c08_refined_input_2026-04-11.md)）
 - 判定: **接続記録済み**（YMM4 テンプレ複製・差し替え・書き出しの工程は [THUMBNAIL_ONE_SHEET_WORKFLOW.md](../THUMBNAIL_ONE_SHEET_WORKFLOW.md) に従い、本ファイルでファイル名と brief 整合を固定）
 
 ## Lane E Probe P01 Amazon (`lane_de_p01_amazon_2026-04-10_a`)
@@ -202,4 +202,19 @@
 - スコア: 上記（各カテゴリ 2）
 - 判定: **needs_fix**（`total_score=67`, band=`needs_fix`、warnings なし — 閾値 band のみ）
 - 最小メモ: 手動採点 2 点台の機械集約。最終採否はオペレータ。全カテゴリ 3 に上げれば `pass`（100 点）帯になる。
+
+## Lane E File4 P01 Amazon · 証跡ラップ (`lane_e_file4_p01_amazon_2026-04-11_a`)
+
+- run_id: `lane_e_file4_p01_amazon_2026-04-11_a`
+- 案件: **ファイル4**（P01 Amazon）／**レーン E**（S-8）— [CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) Prompt-E
+- 成果物（repo）: `samples/thumb_p0_phase1_amazon.png`（`video_slug`: `p0_phase1_amazon`、出力名は上記「Lane D+E P01 Amazon · S-8 接続（2026-04-10）」節と同一）
+- **実施証跡（repo 固定・2026-04-11 取得）**
+  - Length: 119456 bytes
+  - LastWriteTimeUtc: `2026-04-08T11:44:46.8942184Z`
+  - SHA256: `BEF38190D45D368A66BB5015E1ED057A9BFF219335B05B8FC6A9485FCF96EBB4`
+  - 手順正本: [THUMBNAIL_ONE_SHEET_WORKFLOW.md](../THUMBNAIL_ONE_SHEET_WORKFLOW.md)（テンプレ複製 → 差し替え → 静止画書き出し）。本ブロックは **既存 PNG の存在確認** と brief 接続の再固定（YMM4 画面操作の再ログはオペレータ環境）
+- H-01 brief: `samples/packaging_brief_p0_amazon.md`（レーン D 正本と同一）
+- レーン A refined（`lane_a_amazon_2026-04-11_refined_*`）との関係: スラッグ・サムネファイル名は据え置き（refined 後も `thumb_p0_phase1_amazon.png` でアンカー維持）
+- `score-thumbnail-s8`: payload [lane_e_file4_p01_amazon_2026-04-11_s8_payload.json](lane_e_file4_p01_amazon_2026-04-11_s8_payload.json)、採点 `single_claim=2, specificity=2, title_alignment=2, mobile_readability=2` → **needs_fix**（`total_score=67`, warnings なし）
+- コア提出: **運用記録のみ**（未承認機能要求なし）。`pass` 帯へ上げる場合は YMM4 側で調整後、手動採点を 3 寄せに更新して同 CLI を再実行
 

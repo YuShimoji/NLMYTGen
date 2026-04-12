@@ -269,6 +269,7 @@ P01 Amazon 台本向けに Packaging Orchestrator brief を新規正本化し、
 - transcript: `samples/The Amazon Panopticon Surveillance and the Modern Worker.txt`
 - C-07 入力記録: [h01_lane_d_p01_amazon_c07_input_2026-04-10.md](h01_lane_d_p01_amazon_c07_input_2026-04-10.md)
 - C-08 入力記録: [h01_lane_d_p01_amazon_c08_input_2026-04-10.md](h01_lane_d_p01_amazon_c08_input_2026-04-10.md)
+- **C-09 後（refined 正）**: C-07/C-08 は **brief → refined 台本** を正とする（[h01_lane_d_p01_amazon_c07_refined_input_2026-04-11.md](h01_lane_d_p01_amazon_c07_refined_input_2026-04-11.md)、[h01_lane_d_p01_amazon_c08_refined_input_2026-04-11.md](h01_lane_d_p01_amazon_c08_refined_input_2026-04-11.md)）。生 ASR のみを渡す記録は上記 2026-04-10 版のまま残す。
 
 ### Run
 
@@ -279,6 +280,16 @@ P01 Amazon 台本向けに Packaging Orchestrator brief を新規正本化し、
 | packaging brief | `samples/packaging_brief_p0_amazon.md` |
 | C-07 input path | [h01_lane_d_p01_amazon_c07_input_2026-04-10.md](h01_lane_d_p01_amazon_c07_input_2026-04-10.md)（手順・貼付順） |
 | C-08 input path | [h01_lane_d_p01_amazon_c08_input_2026-04-10.md](h01_lane_d_p01_amazon_c08_input_2026-04-10.md)（手順・貼付順） |
+
+### Run（refined 経路 · `lane_d_p01_amazon_refined_2026-04-11`）
+
+| 項目 | 記録 |
+|---|---|
+| date | 2026-04-11 |
+| transcript / source | `samples/amazon_panopticon_lane_a_refined.txt`（[P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) `lane_a_amazon_2026-04-10_b` と同一） |
+| packaging brief | `samples/packaging_brief_p0_amazon.md` |
+| C-07 input path | [h01_lane_d_p01_amazon_c07_refined_input_2026-04-11.md](h01_lane_d_p01_amazon_c07_refined_input_2026-04-11.md) |
+| C-08 input path | [h01_lane_d_p01_amazon_c08_refined_input_2026-04-11.md](h01_lane_d_p01_amazon_c08_refined_input_2026-04-11.md) |
 
 ### Before / After Drift Check（brief 対 台本の机上照合）
 
@@ -294,11 +305,11 @@ P01 Amazon 台本向けに Packaging Orchestrator brief を新規正本化し、
 
 | チェック | yes/no | メモ |
 |---|---|---|
-| thumbnail promise を支える具体根拠が opening か body 前半にある | yes | 71.4%（L16付近）、吸入器逸話（L1-L3）、9%気温相関（L51） |
+| thumbnail promise を支える具体根拠が opening か body 前半にある | yes | 71.4%（生/refined とも L16 付近）、吸入器逸話（L1–L3）、9% 気温相関（L51 付近） |
 | title promise が forbidden overclaim を踏み越えていない | yes | 断定は台本範囲内の主張に留まる |
 | 台本が title を決めるのではなく、brief の promise を本文で回収している | yes | 倉庫→路上→PR対立の構成が brief の must_payoff と整合 |
-| サムネコピーが banned_copy_patterns に該当しない | pending | C-08 採用稿が確定したらオペレータが lexical 確認 |
-| 導入が script_opening_commitment を守っている | yes | 吸入器または監視フラグを冒頭で提示 |
+| サムネコピーが banned_copy_patterns に該当しない | yes | **repo-local exemplar**（GPT 実出力ではない）: メイン「倉庫労働者の71.4%が秒単位追跡と回答」／サブ「PR 19億ドルと現場の対比」。`banned_copy_patterns`（衝撃の真実／知らないと損／ヤバすぎる／閲覧注意）との部分一致なし。採用稿確定後はオペレータが同手順で再突合 |
+| 導入が script_opening_commitment を守っている | yes | refined でも吸入器逸話・脇見運転フラグを冒頭で提示（L1–L3） |
 
 ### Assessment
 
@@ -307,5 +318,5 @@ P01 Amazon 台本向けに Packaging Orchestrator brief を新規正本化し、
 | useful enough to keep using? | yes |
 | strongest improvement | P01 Amazon で `p0_phase1_amazon` 軸に brief・C-07/C-08 手順・サムネファイル名を一本化できた |
 | residual drift | Custom GPT の実出力は環境側に残す。`p0_nextcycle_amazon_*` は CLI 記録用スラッグとして並存しうるが、パッケージング正本は本 brief の `video_id` に合わせる |
-| next improvement inside repo | C-08 採用後のコピー案を任意で verification に貼付し、Alignment の pending を閉じる |
+| next improvement inside repo | 運用者が C-08 で採用した**最終コピー**を任意で本節または verification に貼付し、exemplar との差分が許容かを記録する（次案件は同テンプレで run 行を追加） |
 
