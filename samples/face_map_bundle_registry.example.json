@@ -1,0 +1,14 @@
+{
+  "bodies": {
+    "default": {
+      "face_map": "face_map_bundles/default.json"
+    },
+    "haitatsuin": {
+      "face_map": "face_map_bundles/haitatsuin.json"
+    }
+  },
+  "characters": {
+    "ゆっくり魔理沙黄縁": { "default_body": "default" },
+    "ゆっくり霊夢赤縁": { "default_body": "default" }
+  }
+}

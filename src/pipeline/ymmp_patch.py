@@ -208,6 +208,42 @@ def _resolve_face_parts(
     return None
 
 
+def _select_face_map_for_body(
+    face_map_bundle: dict[str, dict] | None,
+    face_map_flat: dict,
+    body_id: str | None,
+    char_default_bodies: dict[str, str] | None = None,
+    character_name: str | None = None,
+) -> dict:
+    """body_id に対応する face_map をバンドルから選択する.
+
+    フォールバックチェーン:
+    1. body_id が指定され、バンドルに存在 → そのバンドルの face_map
+    2. character_name の default_body がバンドルに存在 → その face_map
+    3. バンドルに "default" キーが存在 → その face_map
+    4. 上記すべて失敗 → face_map_flat をそのまま返す (後方互換)
+    """
+    if face_map_bundle is None:
+        return face_map_flat
+
+    # 1. explicit body_id
+    if body_id and body_id in face_map_bundle:
+        return face_map_bundle[body_id]
+
+    # 2. character default
+    if character_name and char_default_bodies:
+        char_default = char_default_bodies.get(character_name)
+        if char_default and char_default in face_map_bundle:
+            return face_map_bundle[char_default]
+
+    # 3. "default" key
+    if "default" in face_map_bundle:
+        return face_map_bundle["default"]
+
+    # 4. fallback to flat
+    return face_map_flat
+
+
 def _resolve_bg(
     bg_label: str, bg_map: dict[str, str]
 ) -> str | None:
@@ -257,6 +293,7 @@ def _apply_face_positional(
     resolved: list[dict],
     face_map: dict,
     result: PatchResult,
+    face_map_for_entry=None,
 ) -> None:
     """位置ベースの face 適用 (後方互換)."""
     for i, voice_item in enumerate(voice_items):
@@ -265,7 +302,8 @@ def _apply_face_positional(
         ir_entry = resolved[i]
         face_label = ir_entry.get("face")
         if face_label:
-            _apply_face_to_voice_item(voice_item, i, face_label, face_map, result)
+            effective_map = face_map_for_entry(ir_entry) if face_map_for_entry else face_map
+            _apply_face_to_voice_item(voice_item, i, face_label, effective_map, result)
 
 
 def _apply_face_row_range(
@@ -273,6 +311,7 @@ def _apply_face_row_range(
     resolved: list[dict],
     face_map: dict,
     result: PatchResult,
+    face_map_for_entry=None,
 ) -> None:
     """row_start / row_end ベースの face 適用.
 
@@ -300,10 +339,11 @@ def _apply_face_row_range(
                 f" invalid row_start={row_start} row_end={row_end}"
             )
             continue
+        effective_map = face_map_for_entry(ir_entry) if face_map_for_entry else face_map
         # 1-based → 0-based
         for vi_idx in range(row_start - 1, min(row_end, num_vi)):
             _apply_face_to_voice_item(
-                voice_items[vi_idx], vi_idx, face_label, face_map, result
+                voice_items[vi_idx], vi_idx, face_label, effective_map, result
             )
 
 
@@ -358,6 +398,7 @@ def _apply_idle_face(
     face_map: dict,
     result: PatchResult,
     use_row_range: bool,
+    face_map_for_entry=None,
 ) -> None:
     """待機中キャラに idle_face の TachieFaceItem を挿入する.
 
@@ -406,10 +447,11 @@ def _apply_idle_face(
         length = max(end_frame - start_frame, 1)
 
         # non-speaker キャラに idle_face を適用
+        effective_map = face_map_for_entry(ir_entry) if face_map_for_entry else face_map
         for char in all_chars:
             if char == speaker:
                 continue
-            parts = _resolve_face_parts(idle_label, face_map, char)
+            parts = _resolve_face_parts(idle_label, effective_map, char)
             if parts:
                 face_item = _build_tachie_face_item(
                     char, parts, start_frame, length
@@ -1560,6 +1602,8 @@ def patch_ymmp(
     bg_anim_map: dict[str, dict] | None = None,
     timeline_contract_path: str | Path | None = None,
     tachie_motion_effects_map: dict[str, list[dict]] | None = None,
+    face_map_bundle: dict[str, dict] | None = None,
+    char_default_bodies: dict[str, str] | None = None,
 ) -> PatchResult:
     """演出 IR に従って ymmp を差し替える.
 
@@ -1573,6 +1617,10 @@ def patch_ymmp(
         face ラベル → パーツファイルパスの辞書
     bg_map : dict
         bg ラベル → 画像/動画ファイルパスの辞書
+    face_map_bundle : dict, optional
+        body_id → face_map の辞書 (G-19)。指定時は body_id に応じた face_map を選択する
+    char_default_bodies : dict, optional
+        character_name → default body_id のマッピング (G-19)
 
     Returns
     -------
@@ -1591,6 +1639,18 @@ def patch_ymmp(
     ]
     voice_items.sort(key=lambda x: x.get("Frame", 0))
 
+    # --- G-19: エントリごとの face_map 選択 ---
+    # bundle がある場合、各エントリの body_id に応じた face_map を事前解決する
+    def _face_map_for_entry(entry: dict) -> dict:
+        if face_map_bundle is None:
+            return face_map
+        body_id = entry.get("body_id")
+        speaker = entry.get("speaker")
+        return _select_face_map_for_body(
+            face_map_bundle, face_map, body_id,
+            char_default_bodies, speaker,
+        )
+
     # --- face 差し替え ---
     # row-range モード判定: 最初の utterance に row_start があれば有効
     use_row_range = bool(
@@ -1598,15 +1658,22 @@ def patch_ymmp(
     )
 
     if use_row_range:
-        _apply_face_row_range(voice_items, resolved, face_map, result)
+        _apply_face_row_range(
+            voice_items, resolved, face_map, result,
+            face_map_for_entry=_face_map_for_entry if face_map_bundle else None,
+        )
     else:
-        _apply_face_positional(voice_items, resolved, face_map, result)
+        _apply_face_positional(
+            voice_items, resolved, face_map, result,
+            face_map_for_entry=_face_map_for_entry if face_map_bundle else None,
+        )
 
     # --- idle_face (待機中表情) ---
     # IR に idle_face が指定されている場合、各 utterance の開始 Frame に
     # non-speaker キャラの TachieFaceItem を挿入する
     _apply_idle_face(items, voice_items, resolved, face_map, result,
-                     use_row_range)
+                     use_row_range,
+                     face_map_for_entry=_face_map_for_entry if face_map_bundle else None)
     _apply_slots(
         items,
         resolved,
@@ -1712,7 +1779,7 @@ def _resolve_carry_forward(ir_data: dict) -> list[dict]:
     }
 
     optional_fields = [
-        "template", "face", "idle_face", "bg", "bg_anim", "slot",
+        "template", "face", "idle_face", "body_id", "bg", "bg_anim", "slot",
         "motion", "overlay", "se", "transition",
     ]
     resolved = []
@@ -1729,6 +1796,7 @@ def _resolve_carry_forward(ir_data: dict) -> list[dict]:
             prev = {
                 "face": sec.get("default_face"),
                 "bg": sec.get("default_bg"),
+                "body_id": sec.get("default_body_id"),
             }
             prev_section = current_section
 

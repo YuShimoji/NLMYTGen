@@ -776,6 +776,7 @@ def main(argv: list[str] | None = None) -> int:
     p_patch.add_argument("ymmp", help="Input ymmp file path")
     p_patch.add_argument("ir_json", help="Production IR JSON file path")
     p_patch.add_argument("--face-map", help="Face label → parts file path mapping (JSON)")
+    p_patch.add_argument("--face-map-bundle", help="G-19: Face map bundle registry JSON (multi-body)")
     p_patch.add_argument("--bg-map", help="BG label → image/video file path mapping (JSON)")
     p_patch.add_argument("--slot-map", help="Slot label -> x/y/zoom mapping (JSON or registry)")
     p_patch.add_argument("--overlay-map", help="Overlay label -> image asset mapping (JSON or registry)")
@@ -823,6 +824,7 @@ def main(argv: list[str] | None = None) -> int:
     p_apply.add_argument("ir_json", help="Production IR JSON")
     p_apply.add_argument("--palette", help="Palette ymmp for face_map extraction")
     p_apply.add_argument("--face-map", help="Pre-built face_map.json (skip extraction)")
+    p_apply.add_argument("--face-map-bundle", help="G-19: Face map bundle registry JSON (multi-body)")
     p_apply.add_argument("--bg-map", help="BG label → file path mapping (JSON)")
     p_apply.add_argument("--slot-map", help="Slot label -> x/y/zoom mapping (JSON or registry)")
     p_apply.add_argument("--overlay-map", help="Overlay label -> image asset mapping (JSON or registry)")
@@ -891,6 +893,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     p_valir.add_argument("ir_json", help="Production IR JSON")
     p_valir.add_argument("--face-map", help="face_map.json for unknown label check")
+    p_valir.add_argument("--face-map-bundle", help="G-19: Face map bundle registry JSON (multi-body)")
     p_valir.add_argument("--palette", help="Palette ymmp (alternative to --face-map)")
     p_valir.add_argument("--slot-map", help="Slot label -> x/y/zoom mapping (JSON or registry)")
     p_valir.add_argument("--overlay-map", help="Overlay label -> image asset mapping (JSON or registry)")
@@ -1237,7 +1240,16 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
     ir_data = load_ir(args.ir_json)
 
     face_map: dict[str, dict[str, str]] = {}
-    if args.face_map:
+    face_map_bundle: dict[str, dict] | None = None
+    char_default_bodies: dict[str, str] | None = None
+    if getattr(args, "face_map_bundle", None):
+        if args.face_map:
+            print("Error: --face-map and --face-map-bundle are mutually exclusive",
+                  file=sys.stderr)
+            return 1
+        face_map_bundle, char_default_bodies = _load_face_map_bundle(args.face_map_bundle)
+        print(f"face_map_bundle: {args.face_map_bundle} ({len(face_map_bundle)} bodies)")
+    elif args.face_map:
         with open(args.face_map, "r", encoding="utf-8") as f:
             face_map = json.load(f)
 
@@ -1301,6 +1313,8 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
         bg_anim_map=bg_anim_map or None,
         timeline_contract_path=getattr(args, "timeline_contract", None),
         tachie_motion_effects_map=tachie_motion_effects_map,
+        face_map_bundle=face_map_bundle,
+        char_default_bodies=char_default_bodies,
     )
 
     print(f"Face changes: {result.face_changes}")
@@ -1403,6 +1417,55 @@ def _load_slot_contract(
                 char_default_slots[str(char)] = default_slot
 
     return slot_map, char_default_slots
+
+
+def _load_face_map_bundle(
+    bundle_path: str | Path,
+) -> tuple[dict[str, dict], dict[str, str]]:
+    """face_map バンドルレジストリ JSON を読み、body_id → face_map を返す (G-19).
+
+    Returns
+    -------
+    (body_face_maps, char_default_bodies)
+        body_face_maps: { body_id: { char_name: { label: { parts } } } }
+        char_default_bodies: { char_name: default_body_id }
+    """
+    bundle_path = Path(bundle_path)
+    with open(bundle_path, "r", encoding="utf-8") as f:
+        raw = json.load(f)
+
+    bodies_section = raw.get("bodies")
+    if not isinstance(bodies_section, dict):
+        raise ValueError("face_map_bundle must have a 'bodies' object")
+
+    body_face_maps: dict[str, dict] = {}
+    base_dir = bundle_path.parent
+    for body_id, spec in bodies_section.items():
+        if not isinstance(spec, dict):
+            raise ValueError(f"bodies['{body_id}'] must be an object")
+        face_map_rel = spec.get("face_map")
+        if not isinstance(face_map_rel, str):
+            raise ValueError(f"bodies['{body_id}'].face_map must be a string path")
+        face_map_path = base_dir / face_map_rel
+        if not face_map_path.exists():
+            raise FileNotFoundError(
+                f"Face map file not found: {face_map_path} "
+                f"(referenced by bodies['{body_id}'])"
+            )
+        with open(face_map_path, "r", encoding="utf-8") as fm:
+            body_face_maps[body_id] = json.load(fm)
+
+    char_default_bodies: dict[str, str] = {}
+    characters = raw.get("characters")
+    if isinstance(characters, dict):
+        for char, spec in characters.items():
+            if not isinstance(spec, dict):
+                continue
+            default_body = spec.get("default_body")
+            if isinstance(default_body, str) and default_body:
+                char_default_bodies[str(char)] = default_body
+
+    return body_face_maps, char_default_bodies
 
 
 def _load_labeled_asset_map(
@@ -1800,6 +1863,17 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         generate_bg_map_labeled,
     )
 
+    # --- G-19: face_map_bundle の解決 ---
+    face_map_bundle: dict[str, dict] | None = None
+    char_default_bodies: dict[str, str] | None = None
+    if getattr(args, "face_map_bundle", None):
+        if args.face_map:
+            print("Error: --face-map and --face-map-bundle are mutually exclusive",
+                  file=sys.stderr)
+            return 1
+        face_map_bundle, char_default_bodies = _load_face_map_bundle(args.face_map_bundle)
+        print(f"face_map_bundle: {args.face_map_bundle} ({len(face_map_bundle)} bodies)")
+
     # --- face_map の解決 ---
     face_map: dict = {}
     if args.face_map and not args.refresh_maps:
@@ -1963,6 +2037,8 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         bg_anim_map=bg_anim_map or None,
         timeline_contract_path=getattr(args, "timeline_contract", None),
         tachie_motion_effects_map=tachie_motion_effects_map,
+        face_map_bundle=face_map_bundle,
+        char_default_bodies=char_default_bodies,
     )
 
     fmt = getattr(args, "format", "text")

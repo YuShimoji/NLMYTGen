@@ -1,0 +1,54 @@
+{
+  "ゆっくり魔理沙黄縁": {
+    "neutral": {
+      "Eyebrow": "migrated_tachie\\新まりさ\\眉\\06c.png",
+      "Eye": "migrated_tachie\\新まりさ\\目\\00.png",
+      "Mouth": "migrated_tachie\\新まりさ\\口\\00.png",
+      "Hair": "migrated_tachie\\新まりさ\\髪\\00o.png",
+      "Body": "migrated_tachie\\新まりさ\\体\\01.png",
+      "Other": "migrated_tachie\\新まりさ\\他\\00o.png"
+    },
+    "smile": {
+      "Eyebrow": "migrated_tachie\\新まりさ\\眉\\01c.png",
+      "Eye": "migrated_tachie\\新まりさ\\目\\02.png",
+      "Mouth": "migrated_tachie\\新まりさ\\口\\03.png",
+      "Hair": "migrated_tachie\\新まりさ\\髪\\00o.png",
+      "Body": "migrated_tachie\\新まりさ\\体\\01.png",
+      "Other": "migrated_tachie\\新まりさ\\他\\00o.png"
+    },
+    "serious": {
+      "Eyebrow": "migrated_tachie\\新まりさ\\眉\\03c.png",
+      "Eye": "migrated_tachie\\新まりさ\\目\\00.png",
+      "Mouth": "migrated_tachie\\新まりさ\\口\\00.png",
+      "Hair": "migrated_tachie\\新まりさ\\髪\\00o.png",
+      "Body": "migrated_tachie\\新まりさ\\体\\01.png",
+      "Other": "migrated_tachie\\新まりさ\\他\\00b.png"
+    }
+  },
+  "ゆっくり霊夢赤縁": {
+    "neutral": {
+      "Eyebrow": "migrated_tachie\\新れいむ\\眉\\05c.png",
+      "Eye": "migrated_tachie\\新れいむ\\目\\00.png",
+      "Mouth": "migrated_tachie\\新れいむ\\口\\00.png",
+      "Hair": "migrated_tachie\\新れいむ\\髪\\00o.png",
+      "Body": "migrated_tachie\\新れいむ\\体\\00.png",
+      "Other": "migrated_tachie\\新れいむ\\他\\00o.png"
+    },
+    "smile": {
+      "Eyebrow": "migrated_tachie\\新れいむ\\眉\\02c.png",
+      "Eye": "migrated_tachie\\新れいむ\\目\\02.png",
+      "Mouth": "migrated_tachie\\新れいむ\\口\\03.png",
+      "Hair": "migrated_tachie\\新れいむ\\髪\\00o.png",
+      "Body": "migrated_tachie\\新れいむ\\体\\00.png",
+      "Other": "migrated_tachie\\新れいむ\\他\\00o.png"
+    },
+    "serious": {
+      "Eyebrow": "migrated_tachie\\新れいむ\\眉\\03c.png",
+      "Eye": "migrated_tachie\\新れいむ\\目\\00.png",
+      "Mouth": "migrated_tachie\\新れいむ\\口\\00.png",
+      "Hair": "migrated_tachie\\新れいむ\\髪\\00o.png",
+      "Body": "migrated_tachie\\新れいむ\\体\\00.png",
+      "Other": "migrated_tachie\\新れいむ\\後\\00o.png"
+    }
+  }
+}
