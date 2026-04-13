@@ -1747,6 +1747,12 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
     if known_motion_keys:
         known_motion_labels = known_motion_keys
 
+    # G-19: face_map_bundle → known_body_ids
+    known_body_ids: set[str] | None = None
+    if getattr(args, "face_map_bundle", None):
+        bundle_maps, _ = _load_face_map_bundle(args.face_map_bundle)
+        known_body_ids = set(bundle_maps.keys())
+
     fmt = getattr(args, "format", "text")
     meta_stream = sys.stderr if fmt == "json" else sys.stdout
 
@@ -1767,6 +1773,11 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
             f"motion contract: {len(known_motion_labels)} labels",
             file=meta_stream,
         )
+    if known_body_ids is not None:
+        print(
+            f"body_id contract: {len(known_body_ids)} bodies",
+            file=meta_stream,
+        )
 
     vr = validate_ir(
         ir_data,
@@ -1778,6 +1789,7 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
         known_motion_labels=known_motion_labels,
         char_default_slots=char_default_slots,
         prompt_face_labels=prompt_face_labels,
+        known_body_ids=known_body_ids,
     )
 
     if fmt == "json":

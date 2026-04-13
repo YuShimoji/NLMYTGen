@@ -213,3 +213,50 @@ class TestPatchWithBundle:
         result = patch_ymmp(ymmp, ir_data, FACE_MAP_BODY_A, {})
         assert result.face_changes >= 1  # per-part count
         assert vi1["TachieFaceParameter"]["Body"] == "bodyA/marisa/body.png"
+
+
+# --- validate_ir body_id tests ---
+
+class TestValidateIrBodyId:
+    def test_body_id_unknown_is_error(self):
+        from src.pipeline.ir_validate import validate_ir
+
+        ir_data = {
+            "utterances": [
+                {"index": 1, "speaker": "まりさ", "text": "a",
+                 "section_id": "S1", "face": "neutral", "body_id": "unknown_body"},
+            ],
+            "macro": {"sections": [{"section_id": "S1", "topic": "t"}]},
+        }
+        vr = validate_ir(ir_data, known_body_ids={"default", "haitatsuin"})
+        body_errors = [e for e in vr.errors if "BODY_ID_UNKNOWN" in e]
+        assert len(body_errors) == 1
+        assert "unknown_body" in body_errors[0]
+
+    def test_body_id_known_no_error(self):
+        from src.pipeline.ir_validate import validate_ir
+
+        ir_data = {
+            "utterances": [
+                {"index": 1, "speaker": "まりさ", "text": "a",
+                 "section_id": "S1", "face": "neutral", "body_id": "default"},
+            ],
+            "macro": {"sections": [{"section_id": "S1", "topic": "t"}]},
+        }
+        vr = validate_ir(ir_data, known_body_ids={"default", "haitatsuin"})
+        body_errors = [e for e in vr.errors if "BODY_ID_UNKNOWN" in e]
+        assert len(body_errors) == 0
+
+    def test_body_id_none_skips_check(self):
+        from src.pipeline.ir_validate import validate_ir
+
+        ir_data = {
+            "utterances": [
+                {"index": 1, "speaker": "まりさ", "text": "a",
+                 "section_id": "S1", "face": "neutral"},
+            ],
+            "macro": {"sections": [{"section_id": "S1", "topic": "t"}]},
+        }
+        vr = validate_ir(ir_data, known_body_ids={"default"})
+        body_errors = [e for e in vr.errors if "BODY_ID_UNKNOWN" in e]
+        assert len(body_errors) == 0

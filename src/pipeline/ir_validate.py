@@ -95,6 +95,7 @@ def validate_ir(
     prompt_face_labels: set[str] | None = None,
     serious_threshold: float = 0.40,
     max_consecutive_run: int = 4,
+    known_body_ids: set[str] | None = None,
 ) -> IRValidationResult:
     """IR の品質問題を検出する.
 
@@ -232,6 +233,20 @@ def validate_ir(
                     "MOTION_MAP_UNKNOWN_LABEL: "
                     f"utterance index={entry.get('index', '?')}"
                     f" uses motion '{mo}' not in motion_map registry"
+                )
+
+    # --- G-19: body_id validation ---
+    if known_body_ids is not None:
+        for entry in resolved:
+            body_id = entry.get("body_id")
+            if body_id is None or body_id == "":
+                continue
+            if body_id not in known_body_ids:
+                result.errors.append(
+                    "BODY_ID_UNKNOWN: "
+                    f"utterance index={entry.get('index', '?')}"
+                    f" uses body_id '{body_id}' not in face_map_bundle"
+                    f" (known: {', '.join(sorted(known_body_ids))})"
                 )
 
     total = sum(face_counts.values())
