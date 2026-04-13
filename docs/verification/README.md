@@ -22,6 +22,8 @@
 | 並行作業の手順（オペレータ） | [OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) |
 | レーン B（GUI LLM 正本同期）チェックリスト | [LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md) |
 | レーン E（サムネ S-8）準備チェックリスト | [LANE-E-S8-prep-2026-04-09.md](LANE-E-S8-prep-2026-04-09.md) |
+| Group制御 + 素材配置自動化の包括見直しチェック | [G20-group-and-asset-automation-review-checklist-2026-04.md](G20-group-and-asset-automation-review-checklist-2026-04.md) |
+| Group制御 + 素材配置自動化の包括レビュー結果 | [G20-group-and-asset-automation-comprehensive-review-2026-04.md](G20-group-and-asset-automation-comprehensive-review-2026-04.md) |
 | プラン直前・並行レーン数・コア開発幹 | [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) |
 | A〜E 移譲後のコア開発（索引） | [CORE-DEV-POST-DELEGATION-INDEX.md](CORE-DEV-POST-DELEGATION-INDEX.md) |
 

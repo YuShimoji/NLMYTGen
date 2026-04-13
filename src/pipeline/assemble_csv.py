@@ -1582,9 +1582,9 @@ def _line_width_cost(width: int, *, ideal: float, chars_per_line: int, is_last: 
     min_line = max(6, chars_per_line // 3)
     cost = abs(width - ideal)
     if width < min_line:
-        cost += (min_line - width) * 10.0
+        cost += (min_line - width) * 13.0
     if not is_last and width < chars_per_line * 0.5:
-        cost += (chars_per_line * 0.5 - width) * 9.0
+        cost += (chars_per_line * 0.5 - width) * 12.0
     if width > chars_per_line:
         cost += (width - chars_per_line) * 18.0
     return cost
@@ -1614,25 +1614,42 @@ def _short_line_break_penalty(
     fits_without_break = (line_width + tail_width) <= chars_per_line * remaining_lines
 
     if line_width < short_threshold:
-        penalty += (short_threshold - line_width) * 5.0
+        penalty += (short_threshold - line_width) * 7.0
 
     if left_last in _STRUCTURAL_COMMAS and line_width < short_threshold:
         penalty += (short_threshold - line_width) * 14.0
         if fits_without_break:
-            penalty += 80.0
+            penalty += 130.0
 
     if left_last in _STRUCTURAL_SENTENCE_ENDS and line_width < very_short_threshold:
         penalty += (very_short_threshold - line_width) * 10.0
         if fits_without_break:
-            penalty += 55.0
+            penalty += 95.0
+
+    # 「はい。そうです。」のような短文連鎖の連続分割を抑える。
+    # 句点で切る優先度は維持しつつ、直後に短い句点文が続く場合は
+    # 1回目の分割を重くして、1つ先の句点でまとめて切る方向へ寄せる。
+    if left_last in _STRUCTURAL_SENTENCE_ENDS:
+        next_sentence_idx = text.find("。", pos)
+        if next_sentence_idx >= 0:
+            next_sentence_width = display_width(text[pos : next_sentence_idx + 1])
+            if next_sentence_width <= max(10, int(chars_per_line * 0.45)):
+                penalty += 95.0
+                if line_width < short_threshold:
+                    penalty += 40.0
 
     # 「その瞬間、」「例えば、」のような短い導入句で切れた見え方を抑える。
     if line_width < short_threshold and len(left) <= 10:
         penalty += (short_threshold - line_width) * 6.0
         if fits_without_break:
-            penalty += 35.0
+            penalty += 70.0
 
     return penalty
+
+
+def _is_standalone_punctuation(line: str) -> bool:
+    stripped = line.strip()
+    return stripped in {"。", "、", "！", "？", "!", "?", "，", ",", ";", "；", ":", "："}
 
 
 def _collect_emergency_inner_breaks(text: str, start: int, end: int) -> list[tuple[int, str]]:
@@ -1756,16 +1773,26 @@ def _layout_page_structural(
 
         best_cost = float("inf")
         best_splits: tuple[int, ...] = ()
+        non_last_min_width = max(2, chars_per_line // 5)
+        middle_line_min_width = max(10, int(chars_per_line * 0.45))
         for pos in inner_positions:
             if pos <= curr_pos:
                 continue
             line_width = widths[pos] - widths[curr_pos]
             if line_width <= 0:
                 continue
+            if line_width < non_last_min_width:
+                continue
+            line_text = text[curr_pos:pos]
+            if _is_standalone_punctuation(line_text):
+                continue
             tail_width = widths[end] - widths[pos]
             min_tail = max(6, chars_per_line // 3) * (remaining_lines - 1)
             if tail_width < min_tail:
                 continue
+            if remaining_lines == 2 and desired_lines >= 3:
+                if tail_width < middle_line_min_width:
+                    continue
 
             line_cost = _line_width_cost(
                 line_width,
@@ -1799,6 +1826,12 @@ def _layout_page_structural(
                 tail_width=tail_width,
                 chars_per_line=chars_per_line,
             )
+            if kind.startswith("major:"):
+                line_cost += 0.0
+            elif kind.startswith("minor:"):
+                line_cost += 8.0
+            elif kind.startswith("emergency:"):
+                line_cost += 16.0
             rest_cost, rest_splits = _dp(pos, remaining_lines - 1)
             total = line_cost + rest_cost
             if total < best_cost:

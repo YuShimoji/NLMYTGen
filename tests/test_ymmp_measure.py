@@ -56,6 +56,13 @@ def test_measure_timeline_routes_collects_candidate_routes():
                 "Zoom": 120.0,
             },
         },
+        {
+            "$type": "YukkuriMovieMaker.Project.Items.GroupItem, YukkuriMovieMaker",
+            "Remark": "main",
+            "X": {"Values": [{"Value": 0.0}]},
+            "Y": {"Values": [{"Value": 0.0}]},
+            "Zoom": {"Values": [{"Value": 100.0}]},
+        },
     ])
 
     measurement = measure_timeline_routes(ymmp)
@@ -67,6 +74,7 @@ def test_measure_timeline_routes_collects_candidate_routes():
     assert measurement.route_counts["bg_anim"]["ImageItem.VideoEffects"] == 1
     assert measurement.route_counts["bg_anim"]["ImageItem.X/Y/Zoom"] == 1
     assert measurement.route_counts["slot"]["TachieItem.TachieItemParameter.X/Y/Zoom"] == 1
+    assert measurement.route_counts["group_motion"]["GroupItem.X/Y/Zoom"] == 1
     assert any(
         route.endswith("Transition") or ".Transition." in route
         for route in measurement.route_counts["transition"]
@@ -244,3 +252,14 @@ def test_samples_timeline_route_contract_has_production_ai_monitoring_lane():
     assert "ShapeItem.VideoEffects" in req["motion"]
     assert "TachieItem.VideoEffects" in req["motion"]
     assert "VoiceItem.VoiceFadeIn" in req["transition"]
+
+
+def test_samples_timeline_route_contract_has_group_motion_profile():
+    root = Path(__file__).resolve().parents[1]
+    path = root / "samples" / "timeline_route_contract.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    profiles = data["profiles"]
+    assert "group_motion_only" in profiles
+    lane = profiles["group_motion_only"]
+    req = lane["required_routes"]
+    assert req["group_motion"] == ["GroupItem.X/Y/Zoom"]

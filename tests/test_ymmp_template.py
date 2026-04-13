@@ -139,6 +139,26 @@ def _make_image_item(
     }
 
 
+def _make_group_item(
+    remark: str = "main",
+    *,
+    frame: int = 0,
+    layer: int = 3,
+) -> dict:
+    return {
+        "$type": "YukkuriMovieMaker.Project.Items.GroupItem, YukkuriMovieMaker",
+        "Remark": remark,
+        "Frame": frame,
+        "Length": 100,
+        "Layer": layer,
+        "GroupRange": 2,
+        "X": {"Values": [{"Value": 0.0}], "Span": 0.0, "AnimationType": "なし"},
+        "Y": {"Values": [{"Value": 0.0}], "Span": 0.0, "AnimationType": "なし"},
+        "Zoom": {"Values": [{"Value": 100.0}], "Span": 0.0, "AnimationType": "なし"},
+        "Rotation": {"Values": [{"Value": 0.0}], "Span": 0.0, "AnimationType": "なし"},
+    }
+
+
 def _wrap_ymmp(items: list[dict], characters: list[str] | None = None) -> dict:
     chars = [{"Name": c} for c in (characters or [])]
     return {
@@ -741,6 +761,112 @@ class TestSlotPatch:
 
         warnings = [w for w in result.warnings if w.startswith("SLOT_NO_TACHIE_ITEM")]
         assert len(warnings) == 1
+
+
+class TestGroupMotionPatch:
+    def test_group_motion_updates_existing_group_item(self):
+        ymmp = _wrap_ymmp([
+            _make_voice_item("marisa", "", "default.png", "default.png", "default.png", frame=0),
+            _make_group_item("main_group", layer=4),
+        ])
+        ir = {
+            "ir_version": "1.0",
+            "video_id": "group_motion_test",
+            "macro": {
+                "sections": [{
+                    "section_id": "S1",
+                    "start_index": 1,
+                    "end_index": 1,
+                    "default_bg": "bg1",
+                    "default_face": "serious",
+                }],
+            },
+            "utterances": [{
+                "index": 1,
+                "speaker": "marisa",
+                "text": "t1",
+                "section_id": "S1",
+                "face": "serious",
+                "group_target": "main_group",
+                "group_motion": "slide_left",
+            }],
+        }
+        face_map = {
+            "serious": {
+                "Eyebrow": "serious_eb.png",
+                "Eye": "serious_ey.png",
+                "Mouth": "serious_mo.png",
+            }
+        }
+        group_motion_map = {
+            "slide_left": {"x": -320, "y": 540, "zoom": 105},
+        }
+
+        result = patch_ymmp(
+            ymmp,
+            ir,
+            face_map,
+            {},
+            group_motion_map=group_motion_map,
+        )
+
+        group_items = [
+            i for i in ymmp["Timelines"][0]["Items"]
+            if "GroupItem" in i.get("$type", "")
+        ]
+        assert len(group_items) == 1
+        group = group_items[0]
+        assert group["X"]["Values"][0]["Value"] == -320
+        assert group["Y"]["Values"][0]["Value"] == 540
+        assert group["Zoom"]["Values"][0]["Value"] == 105
+        assert result.group_motion_changes == 3
+
+    def test_group_motion_missing_target_warns(self):
+        ymmp = _wrap_ymmp([
+            _make_voice_item("marisa", "", "default.png", "default.png", "default.png", frame=0),
+            _make_group_item("existing_group", layer=4),
+        ])
+        ir = {
+            "ir_version": "1.0",
+            "video_id": "group_motion_warn_test",
+            "macro": {
+                "sections": [{
+                    "section_id": "S1",
+                    "start_index": 1,
+                    "end_index": 1,
+                    "default_bg": "bg1",
+                    "default_face": "serious",
+                }],
+            },
+            "utterances": [{
+                "index": 1,
+                "speaker": "marisa",
+                "text": "t1",
+                "section_id": "S1",
+                "face": "serious",
+                "group_target": "missing_group",
+                "group_motion": "slide_left",
+            }],
+        }
+        face_map = {
+            "serious": {
+                "Eyebrow": "serious_eb.png",
+                "Eye": "serious_ey.png",
+                "Mouth": "serious_mo.png",
+            }
+        }
+        result = patch_ymmp(
+            ymmp,
+            ir,
+            face_map,
+            {},
+            group_motion_map={"slide_left": {"x": -320}},
+        )
+        assert result.group_motion_changes == 0
+        assert any(
+            w.startswith("GROUP_MOTION_TARGET_MISS:")
+            for w in (result.warnings or [])
+        )
 
 
 class TestE2ELabeledPipeline:

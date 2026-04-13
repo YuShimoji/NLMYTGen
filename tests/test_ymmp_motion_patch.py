@@ -73,6 +73,34 @@ def test_validate_ir_motion_map_unknown_label():
     assert any("MOTION_MAP_UNKNOWN_LABEL" in e for e in vr.errors)
 
 
+def test_validate_ir_group_motion_map_unknown_label():
+    ir = {
+        "ir_version": "1.0",
+        "video_id": "x",
+        "macro": {
+            "sections": [{"section_id": "S1", "start_index": 1, "default_bg": "b"}],
+        },
+        "utterances": [
+            {
+                "index": 1,
+                "speaker": "a",
+                "text": "t",
+                "section_id": "S1",
+                "face": "f",
+                "group_target": "main_group",
+                "group_motion": "slide_left",
+            },
+        ],
+    }
+    vr = validate_ir(
+        ir,
+        known_face_labels={"f"},
+        known_group_motion_labels={"zoom_in"},
+    )
+    assert vr.has_errors
+    assert any("GROUP_MOTION_UNKNOWN_LABEL" in e for e in vr.errors)
+
+
 def test_apply_motion_sets_tachie_video_effects():
     bounce_fx = [
         {

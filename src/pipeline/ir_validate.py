@@ -91,6 +91,7 @@ def validate_ir(
     known_overlay_labels: set[str] | None = None,
     known_se_labels: set[str] | None = None,
     known_motion_labels: set[str] | None = None,
+    known_group_motion_labels: set[str] | None = None,
     char_default_slots: dict[str, str] | None = None,
     prompt_face_labels: set[str] | None = None,
     serious_threshold: float = 0.40,
@@ -233,6 +234,32 @@ def validate_ir(
                     "MOTION_MAP_UNKNOWN_LABEL: "
                     f"utterance index={entry.get('index', '?')}"
                     f" uses motion '{mo}' not in motion_map registry"
+                )
+
+    for entry in resolved:
+        gm = entry.get("group_motion")
+        if gm is None or gm == "":
+            continue
+        if not isinstance(gm, str):
+            result.errors.append(
+                "GROUP_MOTION_INVALID_TYPE: "
+                f"utterance index={entry.get('index', '?')}"
+                " group_motion must be string"
+            )
+            continue
+        target = entry.get("group_target")
+        if target is not None and not isinstance(target, str):
+            result.errors.append(
+                "GROUP_TARGET_INVALID_TYPE: "
+                f"utterance index={entry.get('index', '?')}"
+                " group_target must be string"
+            )
+        if known_group_motion_labels is not None and gm != "none":
+            if gm not in known_group_motion_labels:
+                result.errors.append(
+                    "GROUP_MOTION_UNKNOWN_LABEL: "
+                    f"utterance index={entry.get('index', '?')}"
+                    f" uses group_motion '{gm}' not in group_motion_map registry"
                 )
 
     # --- G-19: body_id validation ---

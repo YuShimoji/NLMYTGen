@@ -788,6 +788,7 @@ def main(argv: list[str] | None = None) -> int:
             "motion_bg_anim_minimal",
             "motion_bg_anim_effects",
             "production_ai_monitoring_lane",
+            "group_motion_only",
         ],
         default=None,
         help="G-17: timeline_route_contract.json のプロファイル (maps と併用)",
@@ -807,6 +808,10 @@ def main(argv: list[str] | None = None) -> int:
     p_patch.add_argument(
         "--bg-anim-map",
         help="JSON: bg_anim ラベル → {video_effect: {...}} (Layer 0 Image/Video の VideoEffects へ)",
+    )
+    p_patch.add_argument(
+        "--group-motion-map",
+        help="A案: group_motion ラベル → {x,y,zoom}（既存 GroupItem の幾何）",
     )
     p_patch.add_argument(
         "--timeline-contract",
@@ -836,6 +841,7 @@ def main(argv: list[str] | None = None) -> int:
             "motion_bg_anim_minimal",
             "motion_bg_anim_effects",
             "production_ai_monitoring_lane",
+            "group_motion_only",
         ],
         default=None,
         help="G-17: timeline_route_contract.json のプロファイル",
@@ -855,6 +861,10 @@ def main(argv: list[str] | None = None) -> int:
     p_apply.add_argument(
         "--bg-anim-map",
         help="JSON: bg_anim ラベル → {video_effect: {...}}",
+    )
+    p_apply.add_argument(
+        "--group-motion-map",
+        help="A案: group_motion ラベル → {x,y,zoom}（既存 GroupItem の幾何）",
     )
     p_apply.add_argument(
         "--timeline-contract",
@@ -905,6 +915,10 @@ def main(argv: list[str] | None = None) -> int:
     p_valir.add_argument(
         "--tachie-motion-map",
         help="Phase2: VideoEffects 配列台帳 JSON のラベル（MOTION_MAP_UNKNOWN_LABEL 用）",
+    )
+    p_valir.add_argument(
+        "--group-motion-map",
+        help="A案: group_motion 台帳 JSON のラベル（GROUP_MOTION_UNKNOWN_LABEL 用）",
     )
     p_valir.add_argument("--prompt-doc",
                          help="Prompt markdown for face contract drift check"
@@ -1297,6 +1311,13 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
         with open(args.bg_anim_map, "r", encoding="utf-8") as f:
             bg_anim_map = json.load(f)
         print(f"bg_anim_map: {args.bg_anim_map} ({len(bg_anim_map)} labels)")
+    group_motion_map: dict[str, dict] = {}
+    if getattr(args, "group_motion_map", None):
+        group_motion_map = _load_group_motion_map(args.group_motion_map)
+        print(
+            f"group_motion_map: {args.group_motion_map} "
+            f"({len(group_motion_map)} labels)"
+        )
 
     result = patch_ymmp(
         ymmp_data,
@@ -1311,6 +1332,7 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
         motion_map=motion_map or None,
         transition_map=transition_map or None,
         bg_anim_map=bg_anim_map or None,
+        group_motion_map=group_motion_map or None,
         timeline_contract_path=getattr(args, "timeline_contract", None),
         tachie_motion_effects_map=tachie_motion_effects_map,
         face_map_bundle=face_map_bundle,
@@ -1330,6 +1352,7 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
     print(f"BG anim writes: {result.bg_anim_changes}")
     print(f"Transition VoiceItem writes: {result.transition_changes}")
     print(f"TachieItem VideoEffects writes: {result.motion_changes}")
+    print(f"GroupItem geometry writes: {result.group_motion_changes}")
     if result.warnings:
         for w in result.warnings:
             print(f"  Warning: {w}", file=sys.stderr)
@@ -1544,6 +1567,27 @@ def _load_adapter_motion_map(path: str | Path) -> dict[str, dict]:
     return out
 
 
+def _load_group_motion_map(path: str | Path) -> dict[str, dict]:
+    """A案: group_motion ラベル → GroupItem.X/Y/Zoom の辞書を読む."""
+    with open(path, "r", encoding="utf-8") as f:
+        raw = json.load(f)
+    if not isinstance(raw, dict):
+        raise ValueError("group_motion_map JSON must be an object")
+
+    motions_raw = raw.get("group_motions") if isinstance(raw.get("group_motions"), dict) else raw
+    if not isinstance(motions_raw, dict):
+        raise ValueError(
+            "group_motion_map JSON must define a top-level object or 'group_motions'"
+        )
+
+    out: dict[str, dict] = {}
+    for label, spec in motions_raw.items():
+        if not isinstance(spec, dict):
+            raise ValueError(f"group_motion_map entry '{label}' must be an object")
+        out[str(label)] = dict(spec)
+    return out
+
+
 def _default_prompt_doc_path() -> Path:
     """repo-local の既定 prompt doc パスを返す."""
     return Path(__file__).resolve().parents[2] / "docs" / "S6-production-memo-prompt.md"
@@ -1584,6 +1628,9 @@ def _fatal_face_patch_warnings(warnings: list[str]) -> list[str]:
         "SLOT_VALUE_INVALID:",
         "MOTION_MAP_MISS:",
         "MOTION_NO_TACHIE_ITEM:",
+        "GROUP_MOTION_NO_GROUP_ITEM:",
+        "GROUP_MOTION_TARGET_MISS:",
+        "GROUP_MOTION_TARGET_AMBIGUOUS:",
     )
     return [
         warning
@@ -1691,6 +1738,7 @@ def _apply_production_summary(result) -> dict:
         "bg_anim_changes": result.bg_anim_changes,
         "transition_changes": result.transition_changes,
         "motion_changes": result.motion_changes,
+        "group_motion_changes": result.group_motion_changes,
     }
 
 
@@ -1707,6 +1755,7 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
     known_overlays = None
     known_se = None
     known_motion_labels = None
+    known_group_motion_labels = None
     char_default_slots = None
     prompt_face_labels, prompt_doc_path = _load_prompt_face_contract(
         getattr(args, "prompt_doc", None)
@@ -1746,6 +1795,10 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
         )
     if known_motion_keys:
         known_motion_labels = known_motion_keys
+    if getattr(args, "group_motion_map", None):
+        known_group_motion_labels = set(
+            _load_group_motion_map(args.group_motion_map).keys()
+        )
 
     # G-19: face_map_bundle → known_body_ids
     known_body_ids: set[str] | None = None
@@ -1773,6 +1826,11 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
             f"motion contract: {len(known_motion_labels)} labels",
             file=meta_stream,
         )
+    if known_group_motion_labels is not None:
+        print(
+            f"group motion contract: {len(known_group_motion_labels)} labels",
+            file=meta_stream,
+        )
     if known_body_ids is not None:
         print(
             f"body_id contract: {len(known_body_ids)} bodies",
@@ -1787,6 +1845,7 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
         known_overlay_labels=known_overlays,
         known_se_labels=known_se,
         known_motion_labels=known_motion_labels,
+        known_group_motion_labels=known_group_motion_labels,
         char_default_slots=char_default_slots,
         prompt_face_labels=prompt_face_labels,
         known_body_ids=known_body_ids,
@@ -1973,6 +2032,13 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         with open(args.bg_anim_map, "r", encoding="utf-8") as f:
             bg_anim_map = json.load(f)
         print(f"bg_anim_map: {args.bg_anim_map} ({len(bg_anim_map)} labels)")
+    group_motion_map: dict[str, dict] = {}
+    if getattr(args, "group_motion_map", None):
+        group_motion_map = _load_group_motion_map(args.group_motion_map)
+        print(
+            f"group_motion_map: {args.group_motion_map} "
+            f"({len(group_motion_map)} labels)"
+        )
 
     # --- row-range annotation (--csv) ---
     ir_data = load_ir(args.ir_json)
@@ -2005,6 +2071,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
     if tachie_motion_effects_map:
         known_motion_keys.update(tachie_motion_effects_map.keys())
     known_motion_labels = known_motion_keys or None
+    known_group_motion_labels = set(group_motion_map) if group_motion_map else None
     prompt_face_labels, prompt_doc_path = _load_prompt_face_contract(
         getattr(args, "prompt_doc", None)
     )
@@ -2022,6 +2089,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         known_overlay_labels=known_overlays,
         known_se_labels=known_se,
         known_motion_labels=known_motion_labels,
+        known_group_motion_labels=known_group_motion_labels,
         char_default_slots=char_default_slots or None,
         prompt_face_labels=prompt_face_labels,
     )
@@ -2047,6 +2115,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         motion_map=motion_map or None,
         transition_map=transition_map or None,
         bg_anim_map=bg_anim_map or None,
+        group_motion_map=group_motion_map or None,
         timeline_contract_path=getattr(args, "timeline_contract", None),
         tachie_motion_effects_map=tachie_motion_effects_map,
         face_map_bundle=face_map_bundle,
@@ -2065,12 +2134,15 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
                 f"Timeline adapter: motion={result.motion_changes}, "
                 f"transition={result.transition_changes}, bg_anim={result.bg_anim_changes}"
             )
+        if result.group_motion_changes:
+            print(f"Group motion writes: {result.group_motion_changes}")
         if result.tachie_syncs:
             print(f"Idle face inserts: {result.tachie_syncs}")
         print(f"BG removed: {result.bg_changes}, BG added: {result.bg_additions}")
         print(f"BG anim writes: {result.bg_anim_changes}")
         print(f"Transition VoiceItem writes: {result.transition_changes}")
         print(f"TachieItem VideoEffects writes: {result.motion_changes}")
+    print(f"GroupItem geometry writes: {result.group_motion_changes}")
     for warning in result.warnings:
         print(f"  WARNING: {warning}", file=sys.stderr)
 
@@ -2108,6 +2180,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
                 "bg_anim_changes": result.bg_anim_changes,
                 "transition_changes": result.transition_changes,
                 "motion_changes": result.motion_changes,
+                "group_motion_changes": result.group_motion_changes,
                 "warnings": result.warnings,
                 "summary": _apply_production_summary(result),
             }, ensure_ascii=False))
@@ -2136,6 +2209,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
             "bg_anim_changes": result.bg_anim_changes,
             "transition_changes": result.transition_changes,
             "motion_changes": result.motion_changes,
+            "group_motion_changes": result.group_motion_changes,
             "warnings": result.warnings,
             "summary": _apply_production_summary(result),
         }, ensure_ascii=False))

@@ -132,6 +132,16 @@ def measure_timeline_routes(ymmp_data: dict) -> TimelineRouteMeasurement:
                 f"{item_type}.X/Y/Zoom",
                 item_type,
             )
+        if item_type == "GroupItem" and all(
+            key in item for key in ("X", "Y", "Zoom")
+        ):
+            _add_route(
+                route_counts,
+                route_samples,
+                "group_motion",
+                "GroupItem.X/Y/Zoom",
+                item_type,
+            )
 
         if isinstance(item.get("VideoEffects"), list):
             category = "bg_anim" if item_type in {"ImageItem", "VideoItem"} else "motion"

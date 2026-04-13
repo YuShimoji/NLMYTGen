@@ -1,0 +1,19 @@
+{
+  "group_motions": {
+    "slide_left": {
+      "x": -320,
+      "y": 540,
+      "zoom": 100
+    },
+    "slide_right": {
+      "x": 320,
+      "y": 540,
+      "zoom": 100
+    },
+    "zoom_focus": {
+      "x": 0,
+      "y": 540,
+      "zoom": 118
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "ir_version": "1.0",
+  "video_id": "track_a_bg_only_2026_04_13",
+  "macro": {
+    "sections": [
+      {
+        "section_id": "S1",
+        "start_index": 1,
+        "end_index": 1,
+        "default_bg": "van_dashboard_ai",
+        "default_face": "serious"
+      }
+    ]
+  },
+  "utterances": [
+    {
+      "index": 1,
+      "speaker": "まりさ",
+      "text": "track A bg-only lane split (macro default_bg + micro bg + bg_map only)",
+      "section_id": "S1",
+      "bg": "dark_board",
+      "transition": "none",
+      "row_start": 1,
+      "row_end": 1
+    }
+  ]
+}

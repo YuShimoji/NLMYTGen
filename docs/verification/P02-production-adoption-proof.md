@@ -197,3 +197,19 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/n
 | YMM4 / 背景実体（§3 項 6） | **PASS（readback）** — YMM4 GUI のプレビューは未実施。出力 ymmp を検索し、`YukkuriMovieMaker.Project.Items.ImageItem` で **`Layer` 0** かつ `FilePath` が IR 由来の `bg_map` 解決パス（`samples/v14_t4_thumb_record_2026-04-13_a.png`）であるクリップが存在することを確認（行番号目安: 140838 付近）。単色黒のみの背景ではない。追加のプレビュー確認は `_tmp/visual_minimum_track_a_2026-04-12_a_applied.ymmp` を YMM4 で開けばよい。 |
 
 **補足**: 現行 `validate-ir` は CLI に `--bg-map` が無いため、`default_bg` / `BG_MISSING` 系は IR 本文と `validate-ir` の macro 警告で担保し、ファイル解決は `apply-production` 側の `bg_map` で確認する。
+
+## トラック A 縮小 — macro + micro `bg` + `bg_map` のみ（`track_a_bg_only_2026_04_13`）
+
+別レーンで立ち絵（G-19/G-20）を進める前提で、**IR から overlay / se を外し**、utterance には **`bg` と `transition: none` のみ**を明示（表情は `macro.sections[].default_face` に寄せる）。`validate-ir` → `apply-production --dry-run` の機械経路を切り分けて記録する。
+
+| 項目 | 値 |
+|------|-----|
+| run_id | `track_a_bg_only_2026_04_13` |
+| IR | `samples/track_a_bg_only_ir_2026-04-13.json` |
+| `bg_map` | `samples/track_a_bg_only_map_2026-04-13.json`（ラベル `van_dashboard_ai` / `dark_board` → repo 内 PNG） |
+| 入力 ymmp | `samples/production.ymmp` |
+| `validate-ir` | exit 0（`FACE_SERIOUS_SKEW` / `IDLE_FACE_MISSING` の warning のみ） |
+| `apply-production --dry-run` | ログ: `samples/track_a_bg_only_apply_dryrun_2026-04-13.txt`。`BG added: 2`、`Face changes: 2`（既定表情の機械適用）、`Overlay changes: 0`、`SE insertions: 0`。`TRANSITION_MAP_MISS: transition label 'none' not in transition_map` は warning（本 run では `none` 固定のまま）。 |
+| YMM4 | **未実施**（dry-run のみ）。本適用は別レーンと同一 ymmp を触る場合は適用順を合意してから `-o` 実行。 |
+
+**判定**: 背景ラベル解決と `apply-production` の bg 経路が、overlay/se 無しでも機械的に通ることを repo 内で確認。立ち絵本体の契約変更は本 run のスコープ外。

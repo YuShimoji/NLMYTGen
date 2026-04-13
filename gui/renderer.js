@@ -801,7 +801,7 @@ function collectSettings() {
     csv: {
       speakerMap: document.getElementById('speaker-map').value,
       maxLines: parseInt(document.getElementById('max-lines').value) || 2,
-      charsPerLine: parseInt(document.getElementById('chars-per-line').value) || 40,
+      charsPerLine: parseInt(document.getElementById('chars-per-line').value) || 20,
       reflowV2: document.getElementById('reflow-v2').checked,
       saveDiagnosticsWithCsv: document.getElementById('csv-save-diagnostics').checked,
     },

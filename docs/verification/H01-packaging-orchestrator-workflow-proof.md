@@ -320,3 +320,25 @@ P01 Amazon 台本向けに Packaging Orchestrator brief を新規正本化し、
 | residual drift | Custom GPT の実出力は環境側に残す。`p0_nextcycle_amazon_*` は CLI 記録用スラッグとして並存しうるが、パッケージング正本は本 brief の `video_id` に合わせる |
 | next improvement inside repo | 運用者が C-08 で採用した**最終コピー**を任意で本節または verification に貼付し、exemplar との差分が許容かを記録する（次案件は同テンプレで run 行を追加） |
 
+---
+
+## Custom GPT 運用固定と drift 観測メモ（2026-04-13）
+
+**目的（P1 / [runtime-state.md](../runtime-state.md) 優先表）**: H-01 を **Custom GPT 側の常設上流**として固定し、title / thumbnail / script の drift を観測可能にする。repo 内の機械化は [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) H-01 行のとおり **テンプレ生成・GUI 保存まで**とし、`build-csv` への自動注入は行わない。
+
+### 運用者チェックリスト（毎案件・GPT 内で先頭に置く）
+
+| # | 項目 | 記入 |
+|---|------|------|
+| 1 | 本案件の `video_id` と brief ファイル名（repo または GPT プロジェクト内） | |
+| 2 | C-07 貼付順: brief →（refined なら refined 台本）→ 既存メモ | [h01_lane_d_sample_c07_input_2026-04-09.md](h01_lane_d_sample_c07_input_2026-04-09.md) 系を踏襲 |
+| 3 | C-08 貼付順: brief → 同上 | [h01_lane_d_sample_c08_input_2026-04-09.md](h01_lane_d_sample_c08_input_2026-04-09.md) 系を踏襲 |
+| 4 | drift 1 件: **侵食**（台本が title を決めた）/ **根拠離れ**（サムネと本文）/ **抽象煽り**（banned 接近）のどれか | yes/no + 1 行 |
+| 5 | alignment_check（brief の must_payoff が本文に存在するか） | yes/no |
+
+### repo 側の短記録（本日・立ち絵別レーンと競合しない範囲）
+
+- **Amazon 軸**: 正本 brief `samples/packaging_brief_p0_amazon.md` は据え置き。Custom GPT に **同ファイルの要点**（`title_promise` / `thumbnail_promise` / `required_evidence` / `forbidden_overclaim`）を Instructions か最初の user メッセージテンプレに毎回含めると、Lane D 記録（上記「Before / After Drift Check」）と突合しやすい。
+- **本編 v14 軸**: 台帳上 H-01 の自動パイプは未承認のため、v14 用の **新規 brief ファイル**を切る場合は `emit-packaging-brief-template` または GUI「H-01 テンプレを保存」で空テンプレを生成し、オペレータが `video_id` だけ先に埋めてから GPT に渡す（実ファイル名は次 run 行で P01 または本節に追記）。
+- **drift 観測の正本**: GPT の実出力は環境外に残る。repo には **上表の yes/no と 1 行メモ**のみ戻せば足りる（[USER_REQUEST_LEDGER.md](../USER_REQUEST_LEDGER.md) の「時間差より接続・分類・証跡」方針に整合）。
+

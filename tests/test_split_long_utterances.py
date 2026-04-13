@@ -477,6 +477,14 @@ class TestReflowUtteranceV2:
         rendered = "|".join(result)
         assert "その瞬間、\n" not in rendered
 
+    def test_avoids_double_break_on_short_sentence_chain(self):
+        """短い句点文が連続する場合、句点ごとの連続改行を避ける。"""
+        text = "はい。そうです。ここから本題に入ります。"
+        result = reflow_utterance_v2(text, chars_per_line=20, max_lines=2)
+        rendered = "\n".join(result)
+        assert "はい。\nそうです。" not in rendered
+        assert "".join(page.replace("\n", "") for page in result) == text
+
     def test_prefers_particle_break_over_sparse_intro_line(self):
         """短い導入句の読点より、後ろの助詞境界を優先する。"""
         text = "それに対し、労働組合側は2025年10月の声明で、"
@@ -555,6 +563,30 @@ class TestReflowUtteranceV2:
         all_lines = "\n".join(result).split("\n")
         assert max(display_width(line) for line in all_lines) <= 40
         assert any(page.endswith("生身の") for page in result)
+
+    def test_never_emits_standalone_punctuation_line(self):
+        """句読点だけの行を作らない。"""
+        text = "検証は完了しました。次に、運用で再現するかを確認します。"
+        result = reflow_utterance_v2(text, chars_per_line=20, max_lines=3)
+        lines = "\n".join(result).split("\n")
+        forbidden = {"。", "、", "！", "？", "!", "?", "，", ",", ";", "；", ":", "："}
+        assert all(line.strip() not in forbidden for line in lines)
+
+    def test_never_emits_single_character_non_last_line(self):
+        """非最終行で1文字行を作らない。"""
+        text = "この設計は安全ですが、実運用では負荷が急に増えることがあります。"
+        result = reflow_utterance_v2(text, chars_per_line=20, max_lines=3)
+        lines = "\n".join(result).split("\n")
+        assert all(display_width(line.strip()) >= 2 for line in lines[:-1] if line.strip())
+
+    def test_avoids_too_short_middle_line_in_three_line_layout(self):
+        """3行時に中段だけ極端に短い配置を避ける。"""
+        text = "私たちは暫定対応として監視を強化し、次のリリースで恒久対策を入れます。"
+        result = reflow_utterance_v2(text, chars_per_line=20, max_lines=3)
+        lines = [line for line in "\n".join(result).split("\n") if line]
+        if len(lines) >= 3:
+            middle_width = display_width(lines[1])
+            assert middle_width >= max(8, int(20 * 0.4))
 
 class TestReflowSubtitlesV2:
     """B-17 reflow_subtitles_v2() 統合テスト。"""

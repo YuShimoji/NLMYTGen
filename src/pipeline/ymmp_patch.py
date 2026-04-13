@@ -60,6 +60,7 @@ class PatchResult:
     bg_anim_changes: int = 0
     transition_changes: int = 0
     motion_changes: int = 0
+    group_motion_changes: int = 0
     tachie_syncs: int = 0
     se_plans: int = 0  # G-18: 挿入した SE (AudioItem) 件数
     warnings: list[str] | None = None
@@ -605,6 +606,120 @@ def _apply_slots(
             continue
         for item in targets:
             _apply_slot_to_tachie_item(item, slot_label, slot_map[slot_label], result)
+
+
+def _extract_group_target_name(entry: dict) -> str | None:
+    target = entry.get("group_target")
+    if isinstance(target, str):
+        normalized = target.strip()
+        return normalized or None
+    return None
+
+
+def _resolve_group_motion_targets(
+    resolved: list[dict],
+    result: PatchResult,
+) -> dict[str, str]:
+    """IR から group_target ごとの motion ラベルを解決する."""
+    usage: dict[str, set[str]] = {}
+    for entry in resolved:
+        motion = entry.get("group_motion")
+        if not isinstance(motion, str):
+            continue
+        motion_label = motion.strip()
+        if not motion_label or motion_label == "none":
+            continue
+        target = _extract_group_target_name(entry) or "__auto__"
+        usage.setdefault(target, set()).add(motion_label)
+
+    effective: dict[str, str] = {}
+    for target, labels in sorted(usage.items()):
+        if len(labels) > 1:
+            result.warnings.append(
+                "GROUP_MOTION_DRIFT: "
+                f"group_target '{target}' uses multiple group_motion labels: "
+                f"{', '.join(sorted(labels))}"
+            )
+            continue
+        effective[target] = next(iter(labels))
+    return effective
+
+
+def _group_target_matches(item: dict, target: str) -> bool:
+    if target == "__auto__":
+        return True
+    for key in ("Remark", "Name", "Label"):
+        value = item.get(key)
+        if isinstance(value, str) and value.strip() == target:
+            return True
+    return False
+
+
+def _apply_group_motion(
+    items: list[dict],
+    resolved: list[dict],
+    group_motion_map: dict[str, dict] | None,
+    result: PatchResult,
+) -> None:
+    """A案: 既存 GroupItem の X/Y/Zoom を更新する."""
+    if not group_motion_map:
+        return
+
+    effective = _resolve_group_motion_targets(resolved, result)
+    if not effective:
+        return
+
+    group_items = [item for item in items if _item_type(item) == "GroupItem"]
+    if not group_items:
+        for target, motion_label in sorted(effective.items()):
+            result.warnings.append(
+                "GROUP_MOTION_NO_GROUP_ITEM: "
+                f"group_target '{target}' motion '{motion_label}' has no GroupItem"
+            )
+        return
+
+    for target, motion_label in sorted(effective.items()):
+        spec = group_motion_map.get(motion_label)
+        if not isinstance(spec, dict):
+            result.warnings.append(
+                "GROUP_MOTION_MAP_MISS: "
+                f"group_motion label '{motion_label}' not found in group_motion_map"
+            )
+            continue
+
+        matched = [item for item in group_items if _group_target_matches(item, target)]
+        if target == "__auto__":
+            if len(group_items) == 1:
+                matched = group_items
+            else:
+                result.warnings.append(
+                    "GROUP_MOTION_TARGET_AMBIGUOUS: "
+                    "group_target omitted but multiple GroupItem exist"
+                )
+                continue
+
+        if not matched:
+            result.warnings.append(
+                "GROUP_MOTION_TARGET_MISS: "
+                f"group_target '{target}' not found in GroupItem"
+            )
+            continue
+
+        for group_item in matched:
+            for axis in ("x", "y", "zoom"):
+                if axis not in spec:
+                    continue
+                try:
+                    value = float(spec[axis])
+                except (TypeError, ValueError):
+                    result.warnings.append(
+                        "GROUP_MOTION_VALUE_INVALID: "
+                        f"group_motion '{motion_label}' has non numeric {axis}"
+                    )
+                    continue
+                result.group_motion_changes += _set_animatable_scalar(
+                    group_item, axis.upper() if axis != "zoom" else "Zoom", value
+                )
 
 
 def _voice_indices_for_ir_entry(
@@ -1600,6 +1715,7 @@ def patch_ymmp(
     motion_map: dict[str, dict] | None = None,
     transition_map: dict[str, dict] | None = None,
     bg_anim_map: dict[str, dict] | None = None,
+    group_motion_map: dict[str, dict] | None = None,
     timeline_contract_path: str | Path | None = None,
     tachie_motion_effects_map: dict[str, list[dict]] | None = None,
     face_map_bundle: dict[str, dict] | None = None,
@@ -1712,6 +1828,12 @@ def patch_ymmp(
         result,
         use_row_range=use_row_range,
     )
+    _apply_group_motion(
+        items,
+        resolved,
+        group_motion_map,
+        result,
+    )
 
     # --- bg 差し替え ---
     # 既存の bg_items (Layer 0 の ImageItem/VideoItem) を削除し、
@@ -1780,7 +1902,7 @@ def _resolve_carry_forward(ir_data: dict) -> list[dict]:
 
     optional_fields = [
         "template", "face", "idle_face", "body_id", "bg", "bg_anim", "slot",
-        "motion", "overlay", "se", "transition",
+        "motion", "group_motion", "group_target", "overlay", "se", "transition",
     ]
     resolved = []
     prev: dict[str, str | None] = {}
