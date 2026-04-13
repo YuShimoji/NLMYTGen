@@ -45,14 +45,15 @@
 
 ### D — 実装（G-19 / G-20 が **`approved` になってから**）
 
-- [ ] [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) を `approved` に更新してからコード変更。  
-- [ ] 縦スライス 1 本 = 1 承認（[CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) の精神）。  
-- [ ] `NLMYTGEN_PYTEST_FULL=1 uv run pytest` 緑。  
-- [ ] [PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md) を追随。
+- [x] [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) を `approved` に更新してからコード変更。（2026-04-13: G-19 approved + 実装完了）
+- [x] 縦スライス 1 本 = 1 承認（[CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) の精神）。
+- [x] `NLMYTGEN_PYTEST_FULL=1 uv run pytest` 緑。（328 pass）
+- [x] [PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md) を追随。
+- **G-20 は未実施**（YMM4 GUI 確認待ち）。
 
 ### E — 検証
 
-- [ ] 本ファイル近傍に `TACHIE-BODY-FACE-SWAP-proof-*.md` を切るか、既存 B-11 形式の表に 1 行追加。  
+- [x] [G19-face-map-bundle-implementation.md](G19-face-map-bundle-implementation.md) に実装記録。  
 - [ ] 変更した `face_map` / IR サンプルパスを明記。
 
 ### 2.1 フェーズ A〜C 記入メモ（準備スレッド・2026-04-13）
