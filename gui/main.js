@@ -96,6 +96,7 @@ ipcMain.handle('apply-production', async (_event, opts) => {
   if (opts.palette) { args.push('--palette', opts.palette); }
   if (opts.faceMap) { args.push('--face-map', opts.faceMap); }
   if (opts.bgMap) { args.push('--bg-map', opts.bgMap); }
+  if (opts.faceMapBundle) { args.push('--face-map-bundle', opts.faceMapBundle); }
   if (opts.slotMap) { args.push('--slot-map', opts.slotMap); }
   if (opts.csv) { args.push('--csv', opts.csv); }
   if (opts.output) { args.push('-o', opts.output); }
@@ -164,6 +165,7 @@ ipcMain.handle('open-repo-doc', async (_event, relPath) => {
 ipcMain.handle('validate-ir', async (_event, opts) => {
   const args = ['validate-ir', opts.irJson, '--format', 'json'];
   if (opts.faceMap) { args.push('--face-map', opts.faceMap); }
+  if (opts.faceMapBundle) { args.push('--face-map-bundle', opts.faceMapBundle); }
   if (opts.palette) { args.push('--palette', opts.palette); }
   if (opts.slotMap) { args.push('--slot-map', opts.slotMap); }
   if (opts.overlayMap) { args.push('--overlay-map', opts.overlayMap); }

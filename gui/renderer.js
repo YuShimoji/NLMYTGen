@@ -585,6 +585,7 @@ const filePaths = {
   'palette': null,
   'csv-file': null,
   'bg-map': null,
+  'face-map-bundle': null,
 };
 
 const fileFilters = {
@@ -593,6 +594,7 @@ const fileFilters = {
   'palette': [{ name: 'YMM4 Project', extensions: ['ymmp'] }],
   'csv-file': [{ name: 'CSV', extensions: ['csv'] }],
   'bg-map': [{ name: 'JSON', extensions: ['json'] }],
+  'face-map-bundle': [{ name: 'JSON', extensions: ['json'] }],
 };
 
 let lastPatchedPath = null;
@@ -646,6 +648,7 @@ document.getElementById('btn-validate-ir').addEventListener('click', async () =>
   const opts = {
     irJson: filePaths['ir-json'],
     palette: filePaths['palette'] || undefined,
+    faceMapBundle: filePaths['face-map-bundle'] || undefined,
   };
 
   const validatePanel = document.getElementById('validate-result');
@@ -715,6 +718,7 @@ async function runApplyProduction(dryRun) {
     palette: filePaths['palette'] || undefined,
     csv: filePaths['csv-file'] || undefined,
     bgMap: filePaths['bg-map'] || undefined,
+    faceMapBundle: filePaths['face-map-bundle'] || undefined,
     dryRun,
   };
 
@@ -806,6 +810,7 @@ function collectSettings() {
       irJson: filePaths['ir-json'] || null,
       palette: filePaths['palette'] || null,
       bgMap: filePaths['bg-map'] || null,
+      faceMapBundle: filePaths['face-map-bundle'] || null,
       csvFile: filePaths['csv-file'] || null,
     },
     packetAssist: {
@@ -850,6 +855,10 @@ function applySettings(settings) {
     if (settings.production.bgMap) {
       filePaths['bg-map'] = settings.production.bgMap;
       document.getElementById('bg-map-path').textContent = settings.production.bgMap;
+    }
+    if (settings.production.faceMapBundle) {
+      filePaths['face-map-bundle'] = settings.production.faceMapBundle;
+      document.getElementById('face-map-bundle-path').textContent = settings.production.faceMapBundle;
     }
     if (settings.production.csvFile) {
       filePaths['csv-file'] = settings.production.csvFile;
