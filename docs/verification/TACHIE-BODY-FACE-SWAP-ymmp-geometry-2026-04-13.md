@@ -2,7 +2,8 @@
 
 **日付**: 2026-04-13  
 **正本パック**: [TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md](TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md) §3  
-**readback 対象**: リポジトリ内 [samples/test_verify_2_mouth.ymmp](../../samples/test_verify_2_mouth.ymmp)（AnimationTachie、`TachieItem` / `VoiceItem` 双方を含む）
+**readback 対象（一次）**: リポジトリ内 [samples/test_verify_2_mouth.ymmp](../../samples/test_verify_2_mouth.ymmp)（AnimationTachie、`TachieItem` / `VoiceItem` 双方を含む）。  
+**二次 readback（体＋顔の実データサンプル・フェーズ B 正本）**: [samples/characterAnimSample/haitatsuin_2026-04-12.ymmp](../../samples/characterAnimSample/haitatsuin_2026-04-12.ymmp) — 観測表は §6。
 
 ---
 
@@ -65,7 +66,7 @@
 |------|------|
 | 対象 | [samples/characterAnimSample/haitatsuin_2026-04-12.ymmp](../../samples/characterAnimSample/haitatsuin_2026-04-12.ymmp)。キャラ名は **`ゆっくり魔理沙黄縁`** / **`ゆっくり霊夢赤縁`**。プラグインは **`YukkuriMovieMaker.Plugin.Tachie.AnimationTachie`**（PREP §2.1 の A 行と一致）。 |
 | Tier A（パス・再現性） | 旧参照（`MovieCreationWorkspace` 配下の絶対パス）をやめ、[samples/characterAnimSample/migrated_tachie/](../../samples/characterAnimSample/migrated_tachie/) を指す **相対パス**へ寄せた。未ラベル `extract-template` では **2 パターン**（`face_01_*` / `face_02_*`）が抽出され、パーツキーはいずれも `Eyebrow` / `Eye` / `Mouth` / `Hair` / `Body`。成果 JSON: [samples/characterAnimSample/face_map_extracted.json](../../samples/characterAnimSample/face_map_extracted.json)。 |
-| `--labeled` | [samples/characterAnimSample/extract_template_labeled/face_map.json](../../samples/characterAnimSample/extract_template_labeled/face_map.json) は空オブジェクト（VoiceItem の **Remark 未設定**のため 0 パターン）。「ラベル安定」の確認は YMM4 で Remark を付与したうえで再実行が必要。 |
+| `--labeled` | [samples/characterAnimSample/extract_template_labeled/face_map.json](../../samples/characterAnimSample/extract_template_labeled/face_map.json) は空オブジェクト（VoiceItem の **Remark 未設定**のため 0 パターン）。**2026-04-13** に `uv run python -m src.cli.main extract-template …/haitatsuin_2026-04-12.ymmp --labeled -o …/extract_template_labeled` を再実行し exit 0・**0 patterns** を確認（内容は `{}` のまま）。「ラベル安定」の確認は YMM4 で Remark を付与したうえで再実行が必要。 |
 | Tier B 示唆 | 同一プラグインで **Body** のファイル名が `01.png`（魔理沙側）と `00.png`（霊夢側）に分かれており、体バリエーション差分が **パーツパス差**として readback 上は分離可能。反転・同量移動は §1〜§3 の **`TachieItem` / `VoiceItem` 二系統**がそのまま当てはまる（GUI 未確認項目は変更なし）。 |
 | 素材注意 | `migrated_tachie` 内の PNG はリポ既存の `reimu_easy.png` を複製した **プレースホルダ**であり、本番の見た目整合はオペレータが実パーツへ差し替える必要がある。 |
 

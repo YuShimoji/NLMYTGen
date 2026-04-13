@@ -84,6 +84,7 @@ ipcMain.handle('build-csv', async (_event, opts) => {
   if (opts.maxLines) { args.push('--max-lines', String(opts.maxLines)); }
   if (opts.charsPerLine) { args.push('--chars-per-line', String(opts.charsPerLine)); }
   if (opts.reflowV2) { args.push('--reflow-v2'); }
+  if (opts.balanceLines) { args.push('--balance-lines'); }
   if (opts.dryRun) { args.push('--dry-run'); }
 
   const result = await runCli(args);

@@ -12,6 +12,8 @@
 
 ## 2. 受け入れチェックリスト
 
+実機通し: `INVARIANTS.md` の YMM4 2 タイミング（増分で増やさない）。
+
 | 入力 | 正本 | 受け入れ条件 | 状態（2026-04-10 監査） |
 |------|------|----------------|-------------------------|
 | B-11 実測 | [B11-pre-plan-execution-pack-2026-04-07.md](B11-pre-plan-execution-pack-2026-04-07.md) §5 | 同一ファイルに取込前/後・4 区分空欄なし・代表例 ≥3・§3 Gate 明記 | **PASS** — [B11-workflow-proof-ai-monitoring-labor.md](B11-workflow-proof-ai-monitoring-labor.md)。**NEEDS_FIX（Amazon 別紙）** — [B11-workflow-proof-amazon-panopticon-2026-04-10.md](B11-workflow-proof-amazon-panopticon-2026-04-10.md) は §1・代表例・§3 まで記載済みだが **§2 取込後が YMM4 未実施の暫定**（Gate は「保留」）。オペレータが実機通しで §2.1 を実測し §3 を確定 Gate に更新したら本 PASS。 |

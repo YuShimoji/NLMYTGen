@@ -6,7 +6,7 @@
 
 ## 現在位置
 
-ドキュメント地図（任意）: [NAV.md](NAV.md)
+ドキュメント地図（任意）: [NAV.md](NAV.md) / Electron 最小経路・検証ラダー: [GUI_MINIMUM_PATH.md](GUI_MINIMUM_PATH.md)（2026-04-14: balance-lines GUI 露出・ウィザード範囲明記）
 
 - project: NLMYTGen
 - git: **既定の開発ブランチは `master`**（2026-04-09: PR [#1](https://github.com/YuShimoji/NLMYTGen/pull/1) で `feat/phase2-motion-segmentation` をマージ済み。新規作業は `master` からブランチを切る）
@@ -87,8 +87,7 @@
 
 ## 最終検証
 
-- last_verification_artifact: 既定 `uv run pytest` 緑（2026-04-13、並列プラン文書同期後に再実行・exit 0）。フルは `NLMYTGEN_PYTEST_FULL=1 uv run pytest`（2026-04-11 時点 313 pass、subprocess CLI 統合含む）。既定の `uv run pytest` はユニット中心（`tests/conftest.py`）
-- last_verification_date: 2026-04-13
+- last_verification: 318 passed, 21 skipped（コード変更時のみ実行。ドキュメントのみの変更では不要）
 
 ## Evidence（CLI artifact mode）
 

@@ -14,12 +14,15 @@ document.querySelectorAll('.tab').forEach((btn) => {
 
 // --- 制作ウィザード (1 本の動画向け導線) ---
 const WIZARD_HINTS = {
-  1: '台本 .txt を選び、Speaker Map / Reflow v2 を確認して Build CSV します。出力 CSV は手順 4 で row-range 用に自動で参照できます。',
-  2: 'Dry Run で行数・話者を確認し、問題なければ Build CSV で書き出します。',
-  3: 'Production .ymmp と IR JSON（または貼り付け保存）を選び、Palette があれば Validate IR を実行します。',
-  4: 'CSV(row-range) に手順 1 の出力が入っているか確認し、Dry Run → Apply Production の順が安全です。',
-  5: '「出力フォルダを開く」で ymmp / csv を確認します。S-5 の取込前後を 1 本にまとめる記録は docs/workflow-proof-template.md（B-11）。外部 LLM 用テキストは CSV タブのパケット（bundle）から出力できます。パッケージ点数は「品質診断」タブです。',
+  1: '台本 .txt を選び、Speaker Map・Max lines・自然改行（balance-lines）で B-11/B-12 手順に揃え、Reflow v2 を必要に応じて確認して Build CSV。出力 CSV は手順 4 で row-range 用に参照できます。',
+  2: 'Dry Run で行数・話者・話者統計とはみ出し候補（パネル下部）を確認し、問題なければ Build CSV で書き出します。',
+  3: 'Production .ymmp と IR JSON（または貼り付け保存）を選び、IR に face があれば Palette 必須。Validate IR を実行します。',
+  4: 'CSV(row-range) に手順 1 の出力が入っているか確認し、IR に bg があれば BG Map 推奨。Dry Run → Apply Production の順が安全です。',
+  5: '「出力フォルダを開く」で ymmp / csv を確認します。S-5 の取込前後を 1 本にまとめる記録は docs/workflow-proof-template.md（B-11）。外部 LLM 用テキストは CSV タブのパケット（bundle）。パッケージ点数は「品質診断」タブ。',
 };
+
+/** 各ステップのヒント末尾に付与（フル E2E ではないことの固定表示） */
+const WIZARD_SCOPE_FOOTER = '\n\n（ウィザード範囲: S-3・S-6b のみ／S-4・S-5 は YMM4／S-7〜S-9 は本 GUI 外）';
 
 let currentWizardStep = 1;
 
@@ -32,7 +35,7 @@ function setWizardStep(step, { persist = true } = {}) {
   });
   const hintEl = document.getElementById('wizard-hint');
   if (hintEl) {
-    hintEl.textContent = WIZARD_HINTS[currentWizardStep] || '';
+    hintEl.textContent = (WIZARD_HINTS[currentWizardStep] || '') + WIZARD_SCOPE_FOOTER;
   }
   const stepBtn = document.querySelector(`.wizard-step[data-wizard-step="${currentWizardStep}"]`);
   if (stepBtn && stepBtn.dataset.tab) {
@@ -67,6 +70,62 @@ document.getElementById('btn-wizard-next').addEventListener('click', () => {
 });
 
 // --- 失敗時: failure class → エラーカード + ドキュメント ---
+/** build-csv の JSON `stats` を結果パネル用 HTML にする（--stats 相当を GUI で可視化） */
+function formatBuildCsvStatsHtml(stats) {
+  if (!stats || typeof stats !== 'object') return '';
+  const parts = [];
+  parts.push('<div class="csv-stats-section">');
+  parts.push('<h4 class="csv-stats-title">話者統計・はみ出し候補</h4>');
+  parts.push('<table class="csv-stats-table"><thead><tr><th>話者</th><th>発話数</th><th>合計文字</th><th>平均</th></tr></thead><tbody>');
+  for (const row of stats.speakers || []) {
+    parts.push(
+      `<tr><td>${escapeHtml(String(row.speaker))}</td><td>${row.utterances}</td>`
+      + `<td>${row.total_chars}</td><td>${row.avg_chars}</td></tr>`,
+    );
+  }
+  parts.push('</tbody></table>');
+  parts.push(
+    `<p class="csv-stats-total">合計: ${stats.total_utterances} 発話 / ${stats.total_chars} 文字</p>`,
+  );
+  const op = stats.overflow_params;
+  if (op) {
+    const oc = stats.overflow_candidates || [];
+    parts.push(
+      `<h4 class="csv-stats-title">はみ出し候補（${op.max_display_lines} 行超・${op.chars_per_line} 文字/行基準）</h4>`,
+    );
+    if (oc.length === 0) {
+      parts.push('<p class="csv-stats-ok">候補なし（この設定では推定が閾値内）</p>');
+    } else {
+      parts.push('<div class="csv-overflow-scroll"><table class="csv-stats-table">'
+        + '<thead><tr><th>行</th><th>話者</th><th>推定行数</th><th>display_width</th></tr></thead><tbody>');
+      const maxShow = 80;
+      for (const item of oc.slice(0, maxShow)) {
+        parts.push(
+          `<tr><td>${item.row}</td><td>${escapeHtml(String(item.speaker))}</td>`
+          + `<td>${item.estimated_lines}</td><td>${item.display_width}</td></tr>`,
+        );
+      }
+      parts.push('</tbody></table></div>');
+      if (oc.length > maxShow) {
+        parts.push(`<p class="csv-stats-trunc">先頭 ${maxShow} 件のみ表示（全 ${oc.length} 件）</p>`);
+      }
+    }
+  } else {
+    parts.push(
+      '<p class="csv-stats-hint">Max lines と Chars/Line を指定すると、はみ出し候補（推定行数）を計算します。</p>',
+    );
+  }
+  parts.push('</div>');
+  return parts.join('');
+}
+
+function renderCsvBuildSuccessPanel(panel, summaryText, stats) {
+  panel.classList.remove('hidden', 'error');
+  panel.classList.add('success');
+  const statsHtml = formatBuildCsvStatsHtml(stats);
+  panel.innerHTML = `<pre class="csv-build-summary">${escapeHtml(summaryText)}</pre>${statsHtml}`;
+}
+
 function escapeHtml(s) {
   return String(s)
     .replace(/&/g, '&amp;')
@@ -445,12 +504,18 @@ async function runBuildCsv(dryRun) {
   btnBuild.disabled = true;
   btnOpenOutput.classList.add('hidden');
 
+  const maxLinesRaw = parseInt(document.getElementById('max-lines').value, 10);
+  const maxLines = Number.isFinite(maxLinesRaw) && maxLinesRaw > 0 ? maxLinesRaw : undefined;
+  const charsRaw = parseInt(document.getElementById('chars-per-line').value, 10);
+  const charsPerLine = Number.isFinite(charsRaw) && charsRaw > 0 ? charsRaw : undefined;
+  const balanceChecked = document.getElementById('balance-lines').checked;
   const opts = {
     input: currentTxtPath,
     speakerMap: document.getElementById('speaker-map').value || undefined,
-    maxLines: parseInt(document.getElementById('max-lines').value) || undefined,
-    charsPerLine: parseInt(document.getElementById('chars-per-line').value) || undefined,
+    maxLines,
+    charsPerLine,
     reflowV2: document.getElementById('reflow-v2').checked,
+    balanceLines: balanceChecked && maxLines != null ? true : undefined,
     dryRun,
   };
 
@@ -504,7 +569,7 @@ async function runBuildCsv(dryRun) {
         }
       }
 
-      renderSuccessTextPanel(csvResult, text);
+      renderCsvBuildSuccessPanel(csvResult, text, result.json.stats);
       status.textContent = dryRun ? 'Dry run complete' : `CSV written (${result.json.rows} rows)`;
       if (result.json.dry_run) {
         setWizardStep(2, { persist: true });
@@ -803,6 +868,7 @@ function collectSettings() {
       maxLines: parseInt(document.getElementById('max-lines').value) || 2,
       charsPerLine: parseInt(document.getElementById('chars-per-line').value) || 20,
       reflowV2: document.getElementById('reflow-v2').checked,
+      balanceLines: document.getElementById('balance-lines').checked,
       saveDiagnosticsWithCsv: document.getElementById('csv-save-diagnostics').checked,
     },
     production: {
@@ -835,6 +901,9 @@ function applySettings(settings) {
     if (settings.csv.maxLines) document.getElementById('max-lines').value = settings.csv.maxLines;
     if (settings.csv.charsPerLine) document.getElementById('chars-per-line').value = settings.csv.charsPerLine;
     if (settings.csv.reflowV2 !== undefined) document.getElementById('reflow-v2').checked = settings.csv.reflowV2;
+    if (settings.csv.balanceLines !== undefined) {
+      document.getElementById('balance-lines').checked = settings.csv.balanceLines;
+    }
     if (settings.csv.saveDiagnosticsWithCsv !== undefined) {
       document.getElementById('csv-save-diagnostics').checked = settings.csv.saveDiagnosticsWithCsv;
     }
@@ -882,6 +951,7 @@ document.getElementById('speaker-map').addEventListener('change', autoSave);
 document.getElementById('max-lines').addEventListener('change', autoSave);
 document.getElementById('chars-per-line').addEventListener('change', autoSave);
 document.getElementById('reflow-v2').addEventListener('change', autoSave);
+document.getElementById('balance-lines').addEventListener('change', autoSave);
 document.getElementById('csv-save-diagnostics').addEventListener('change', autoSave);
 
 // --- Scoring Tab（DOMContentLoaded 内の H-01 テンプレ保存から参照するため先に宣言）---
@@ -910,6 +980,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   bindOpenDoc('btn-open-h01-proof', 'docs/verification/H01-packaging-orchestrator-workflow-proof.md');
   bindOpenDoc('btn-open-workflow-proof-template', 'docs/workflow-proof-template.md');
   bindOpenDoc('btn-open-b11-checkpoints', 'docs/B11-manual-checkpoints.md');
+  bindOpenDoc('btn-open-gui-guide', 'docs/GUI_MINIMUM_PATH.md');
 
   async function saveH01Template(format) {
     const status = document.getElementById('status');

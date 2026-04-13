@@ -100,39 +100,100 @@ def _resolve_speaker_map(args: argparse.Namespace) -> dict[str, str] | None:
     return result or None
 
 
+def _build_stats_payload(
+    output,
+    chars_per_line: int = 0,
+    max_display_lines: int = 0,
+) -> dict:
+    """話者統計とはみ出し候補を JSON 用 dict にまとめる（GUI / --format json 用）。"""
+    speaker_counts = Counter(row.speaker for row in output.rows)
+    speaker_chars = Counter()
+    for row in output.rows:
+        speaker_chars[row.speaker] += len(row.text.replace("\n", ""))
+
+    speakers_out: list[dict] = []
+    for speaker in sorted(speaker_counts):
+        count = speaker_counts[speaker]
+        chars = speaker_chars[speaker]
+        avg = chars // count if count else 0
+        speakers_out.append(
+            {
+                "speaker": speaker,
+                "utterances": count,
+                "total_chars": chars,
+                "avg_chars": avg,
+            }
+        )
+    total_chars = sum(speaker_chars.values())
+    payload: dict = {
+        "speakers": speakers_out,
+        "total_utterances": len(output.rows),
+        "total_chars": total_chars,
+        "overflow_candidates": [],
+        "overflow_params": None,
+    }
+
+    if chars_per_line > 0 and max_display_lines > 0:
+        payload["overflow_params"] = {
+            "chars_per_line": chars_per_line,
+            "max_display_lines": max_display_lines,
+        }
+        overflow: list[dict] = []
+        for i, row in enumerate(output.rows):
+            w = display_width(row.text)
+            lines = estimate_display_lines(row.text, chars_per_line)
+            if lines > max_display_lines:
+                overflow.append(
+                    {
+                        "row": i + 1,
+                        "speaker": row.speaker,
+                        "estimated_lines": lines,
+                        "display_width": w,
+                    }
+                )
+        payload["overflow_candidates"] = overflow
+
+    return payload
+
+
 def _print_stats(output, chars_per_line: int = 0, max_display_lines: int = 0, file=sys.stdout):
     """話者ごとの発話統計を表示する。
 
     chars_per_line > 0 かつ max_display_lines > 0 のとき、
     推定行数が max_display_lines を超える行をはみ出し候補として警告する。
     """
-    speaker_counts = Counter(row.speaker for row in output.rows)
-    speaker_chars = Counter()
-    for row in output.rows:
-        speaker_chars[row.speaker] += len(row.text.replace("\n", ""))
+    payload = _build_stats_payload(output, chars_per_line, max_display_lines)
 
     print("--- Stats ---", file=file)
-    for speaker in sorted(speaker_counts):
-        count = speaker_counts[speaker]
-        chars = speaker_chars[speaker]
-        avg = chars // count if count else 0
-        print(f"  {speaker}: {count} utterances, {chars} chars (avg {avg})", file=file)
-    total_chars = sum(speaker_chars.values())
-    print(f"  Total: {len(output.rows)} utterances, {total_chars} chars", file=file)
+    for entry in payload["speakers"]:
+        sp = entry["speaker"]
+        count = entry["utterances"]
+        chars = entry["total_chars"]
+        avg = entry["avg_chars"]
+        print(f"  {sp}: {count} utterances, {chars} chars (avg {avg})", file=file)
+    print(
+        f"  Total: {payload['total_utterances']} utterances, {payload['total_chars']} chars",
+        file=file,
+    )
 
-    if chars_per_line > 0 and max_display_lines > 0:
-        overflow = []
-        for i, row in enumerate(output.rows):
-            w = display_width(row.text)
-            lines = estimate_display_lines(row.text, chars_per_line)
-            if lines > max_display_lines:
-                overflow.append((i + 1, row.speaker, lines, w))
-        if overflow:
-            print(f"--- Overflow candidates (>{max_display_lines} lines at {chars_per_line} chars/line) ---", file=file)
-            for row_num, speaker, lines, w in overflow:
-                print(f"  [WARN] row {row_num}: {speaker}, 推定{lines}行 (display_width={w})", file=file)
+    op = payload["overflow_params"]
+    if op:
+        cpl = op["chars_per_line"]
+        mdl = op["max_display_lines"]
+        oc = payload["overflow_candidates"]
+        if oc:
+            print(f"--- Overflow candidates (>{mdl} lines at {cpl} chars/line) ---", file=file)
+            for item in oc:
+                print(
+                    f"  [WARN] row {item['row']}: {item['speaker']}, "
+                    f"推定{item['estimated_lines']}行 (display_width={item['display_width']})",
+                    file=file,
+                )
         else:
-            print(f"--- No overflow candidates (all within {max_display_lines} lines at {chars_per_line} chars/line) ---", file=file)
+            print(
+                f"--- No overflow candidates (all within {mdl} lines at {cpl} chars/line) ---",
+                file=file,
+            )
 
 
 def _build_one(
@@ -188,6 +249,14 @@ def _build_one(
     for r in results:
         prefix = "ERROR" if r.severity == Severity.ERROR else "WARN"
         print(f"[{prefix}] row {r.row_index}: {r.message}", file=sys.stderr)
+
+    if json_result is not None:
+        max_lines = getattr(args, "max_lines", None)
+        use_dw = getattr(args, "display_width", False)
+        chars_per_line = getattr(args, "chars_per_line", 40)
+        stats_cpl = chars_per_line if (use_dw or max_lines) else 0
+        stats_lines = max_lines if max_lines else (2 if (use_dw or max_lines) else 0)
+        json_result["stats"] = _build_stats_payload(output, stats_cpl, stats_lines)
 
     if has_errors(results):
         print(f"Validation errors found. CSV not written: {input_path.name}", file=sys.stderr)

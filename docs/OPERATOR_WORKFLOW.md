@@ -5,56 +5,40 @@
 **並行して進める自分用の作業（Phase1・GUI LLM 同期・YMM4・サムネ・Git）の完全手順**は [OPERATOR_PARALLEL_WORK_RUNBOOK.md](OPERATOR_PARALLEL_WORK_RUNBOOK.md) に集約した。
 
 ## 全体フロー
-- S-0: YMM4 テンプレート構築 (初回のみ)
-- S-1: NotebookLM にソース投入、Audio Overview 生成
-- S-2: 元台本テキスト取得、または音声書き起こし fallback
-- S-3: NLMYTGen で CSV 変換、必要に応じて分割・統計確認
-- S-4: YMM4 で台本読込、キャラクター割当確認
-- S-5: 読み上げ確認、字幕はみ出し修正、辞書登録
-- S-6: 背景・演出・BGM・表情差し替え
-  - S-6a (手動): Custom GPT に台本テキストを貼り付けて IR JSON を取得
-  - S-6b (CLI): `apply-production production.ymmp ir.json --palette palette.ymmp --csv reflow.csv --bg-map bg_map.json -o output.ymmp` (face_map 抽出 + row-range 自動付与 + patch を 1 コマンドで実行。row-range mismatch / prompt drift / active gap / fatal face issue は書き出し前に停止)
-  - S-6c (手動): YMM4 で output.ymmp を開き、表情・背景・BGM を確認・微調整
-- S-7: 通し確認とレンダリング
-- S-8: サムネイルをテンプレートベースで手動調整
-- S-9: YouTube Studio で投稿作業
+- S-0（YMM4テンプレート構築）: 初回のみ
+- S-1（ソース投入・Audio Overview生成）: NotebookLM にソース投入、Audio Overview 生成
+- S-2（台本テキスト取得）: 元台本テキスト取得、または音声書き起こし fallback
+- S-3（CSV変換）: NLMYTGen で CSV 変換、必要に応じて分割・統計確認
+- S-4（台本読込）: YMM4 で台本読込、キャラクター割当確認
+- S-5（読み上げ確認・字幕修正）: 読み上げ確認、字幕はみ出し修正、辞書登録
+- S-6（背景・演出設定）: 背景・演出・BGM・表情差し替え
+  - S-6a（手動IR取得）: Custom GPT に台本テキストを貼り付けて IR JSON を取得
+  - S-6b（GUI演出適用）: GUI の演出適用タブで Production ymmp + IR JSON + 必要なファイルを指定して Apply Production を実行（face_map 抽出 + row-range 自動付与 + patch を一括実行。row-range mismatch / prompt drift / active gap / fatal face issue は書き出し前に停止）
+  - S-6c（手動微調整）: YMM4 で output.ymmp を開き、表情・背景・BGM を確認・微調整
+- S-7（通し確認・レンダリング）: 通し確認とレンダリング
+- S-8（サムネイル制作）: サムネイルをテンプレートベースで手動調整
+- S-9（YouTube投稿）: YouTube Studio で投稿作業
 
 ## 工程ごとの痛点
-- 最も重いのは S-5 (読み上げ確認・字幕修正) と S-6 (背景・演出設定)。
-- S-5b の字幕はみ出しは、YMM4 で都度直せるが、S-3 の分割品質が低いと手戻りが増える。
-- S-6 は人間の判断が中心で、単純なパターンマッチでは省力化になりにくい。
+- 最も重いのは S-5（読み上げ確認・字幕修正）と S-6（背景・演出設定）。
+- S-5（読み上げ確認）の字幕はみ出しは YMM4 で都度直せるが、S-3（CSV変換）の分割品質が低いと手戻りが増える。
+- S-6（背景・演出設定）は人間の判断が中心で、単純なパターンマッチでは省力化になりにくい。
 - E-02 単体の metadata template は、YouTube Studio への手入力が残るため bottleneck 解消として弱い。
 
 ## 品質目標
-- S-3 の出力を YMM4 に読み込んだ時点で、話者名の不一致や極端な長文が少なく、修正が「例外処理」に留まる。
+- S-3（CSV変換）の出力を YMM4 に読み込んだ時点で、話者名の不一致や極端な長文が少なく、修正が「例外処理」に留まる。
 - 字幕は通常ケースで 2 行以内に収まり、はみ出し候補は事前警告で把握できる。
 - 人間が行うのは、読み・演出・サムネイルなど創造判断を要する工程に寄る。
 
 ## 現在の workflow proof 条件
 - B-11 を approved frontier とし、S-5 の pain を「YMM4 取込前にどこまで減らせるか」を先に実証する。
 - proof は Python 側の改善余地と YMM4 手動修正の境界を見極めることが目的であり、YMM4 の自動操作を作ることではない。
-- proof は少なくとも 1 件の transcript で、`build-csv --max-lines 2 --chars-per-line 40 --stats` の事前警告と、YMM4 取込後の残修正量を同じ記録に残す。
+- proof は少なくとも 1 件の transcript で、GUI の CSV 変換（Max lines 2・Chars/Line 40・balance-lines ON）の結果と、YMM4 取込後の残修正量を同じ記録に残す。
 - 記録フォーマットの正本は [workflow-proof-template.md](workflow-proof-template.md)。`docs/verification/` にコピーして案件ごとに記入する。リポジトリ内の記入例: [verification/B11-workflow-proof-sample-example-dialogue.md](verification/B11-workflow-proof-sample-example-dialogue.md)。
 - 手動確認のタイミング一覧: [B11-manual-checkpoints.md](B11-manual-checkpoints.md)。
-- 2026-04-06: 既存サンプル `samples/AI監視が追い詰める生身の労働.txt` について取込前記録（stats・overflow 警告・111 行 CSV 出力）を [verification/B11-workflow-proof-ai-monitoring-labor.md](verification/B11-workflow-proof-ai-monitoring-labor.md) に固定。取込後表は YMM4 通し確認待ち。
+- 観測ログ（移管）: [project-context.md#b-11-workflow-proof-chronicle-archive](project-context.md#b-11-workflow-proof-chronicle-archive)。現行条件は本節の bullets。
 - proof が成功とみなせる条件は、S-5 の修正が「例外処理」に留まり、全面的な手直しや GUI 欲求だけで次 frontier を決めないこと。
 - 残修正は最低でも「辞書登録」「手動改行」「再分割したい長文」「タイミングのみ」の 4 区分で分類する。
-- 2026-03-31 の初回観測では、辞書登録 0 / タイミングのみ 0 に対して、手動改行・再分割したい長文が約 30 箇所と支配的だった。次の L2 改善は読みではなく字幕改行のバランス改善を優先する。
-- 2026-03-31 の B-12 再観測では、手動改行 10 / 再分割したい長文 15 / 不自然な単語分割 5。`。` での改行は効いたが、句読点の少ない長文と 1 文字最終行が残り、次の主 pain は clause-aware split と widow/orphan guard だと判明した。
-- 2026-03-31 の B-13 実装では、`--balance-lines` の内部改善として clause-aware split fallback と widow/orphan guard を追加した。sample dry-run では 57 発話 → 62 行に再編され、次に必要なのは YMM4 取込後の fresh visual evidence である。
-- 2026-03-31 の B-13 再観測では、手動改行 5 / 再分割したい長文 10 / 不自然な単語分割 5。減りはしたが「まだ多い」という operator judgement で、特に長い一文が 1 字幕に残るケースは未解決だった。次の主 pain は aggressive clause chunking に移った。
-- 2026-03-31 の B-14 実装では、複数文発話の中にある単一長文も sentence ごとに再展開し、通常候補が尽きた残り長文には aggressive clause chunking fallback を追加した。sample dry-run では 57 発話 → 95 行、overflow candidates は 3 件まで減少したため、次に必要なのは YMM4 上で「再分割負荷が減ったか」と「細かく切れすぎていないか」を同時に見る post-import visual evidence である。
-- 2026-03-31 の追加観測では、`、` 起点の分割強化により長すぎる行はかなり減り、全字幕が 3 行以内には収まる水準まで改善した。残課題は bulk overflow ではなく、`ー`、カギ括弧 `「」`、数値や記号を含む `202/4` のような折り返しなど、個別ケースの良し悪しを集めて傾向化する段階に移った。ここから先は rule の複雑化が急速に進むため、heuristic を足し続ける前に「改行すべき/すべきでない例」の corpus を集める value path が強い。
-- 2026-03-31 の B-15 初期コーパス収集では、`AI監視が追い詰める生身の労働_balance_lines_ymm4.csv` から 14 件 (bad-split 10, good 4) を抽出した。傾向パターン: P1=閉じ括弧直後+助詞で不自然分割 (5件)、P2=左側が極端に短い (3件)。P1/P2 はいずれもルール候補 (3件以上)。対策案と初期コーパスの妥当性について手動検証待ち。
-- 2026-04-01 の B-15 第1回手動検証: ユーザーが YMM4 取込後に確認。報告: 漢字途中切断 (`事情は完/全に`, `身体的限/界`)、カタカナ途中 (`評価スコ/アが`)、単語途中 (`働/き続ける`, `路上/へと`)、次頁区切りの違和感 (`ロックオン/して`)。原因は小区切り(文字種境界)の誤発動と候補不足時の強制切断。修正: 大区切り限定方式に変更、漢字連続を禁止位置に追加。
-- 2026-04-01 の B-15 第2回手動検証: 第1回報告の7パターン全て解消。4行またがりなし。若干の違和感は残るが「明らかなバランス偏りはなくなっている」。追加フィードバック: 漢字→ひらがな境界の小区切りは外すべき (`単/なる`, `見間違/った` 類)。文字種境界より行長精度を優先する方針を確認。小区切り候補から文字種境界を除去。
-- 2026-04-01 の B-15 第3回手動検証: ページ間分割はだいぶ改善。行内折り返し (YMM4自動折り返し) の違和感は残存。「1行/1ページの最大文字数から逆算する外殻」が必要で、B-16 として分離。B-15 done。
-- 2026-04-01 の C-07 v1 proof: セクション分割 OK、作業時間削減 OK、背景候補 NG。ストック素材検索は方向が違う。必要なのは茶番劇アニメ+図解の演出指示。
-- 2026-04-01 の C-07 v2 proof: 4演出パターン (茶番劇/情報埋め込み/雰囲気演出/黒板型) + 発話単位指示 + 表示情報抽出 + 要調査明示。3基準全て OK。C-07 done。
-- 画像例から言語化したオペレータ意図（立ち絵＋フキダシ・ゆっくり顔差し替え、リソース列挙、地図/黒板整理、雰囲気ストック）の正本: [C07-visual-pattern-operator-intent.md](C07-visual-pattern-operator-intent.md)。
-- 2026-04-03 の production-slice patch-ymmp proof では、実IR先頭11発話を既存 ymmp に適用して face 13 / bg 2 変更を確認した。一方で 11 VoiceItem 中 4 件は `TachieFaceParameter` を持たず、face 差し替え対象外だった。full E2E 前に、台本読込後 ymmp の対象キャラ発話が表情パラメータを保持していることを operator 側で確認する必要がある。
-- 2026-04-05 の face completion hardening で、この種の partial apply は `VOICE_NO_TACHIE_FACE` として mechanical failure に昇格した。以後は broad な visual retry loop ではなく、failure class に応じて対処する。
-- 2026-04-06 の H-02 dry proof で、C-08 は `Specificity Ledger` と `Brief Compliance Check` を返す契約になった。strict GUI rerun proof は同日 pass で閉じた (4/5案が preferred_specifics 使用、banned pattern なし)。コピー品質の実用改善は別課題として残る。
 
 ## Actor Boundaries (三層責務構造対応)
 - `user`: NotebookLM 操作、Custom GPT で Writer IR 生成 (第1層)、Template Registry のラベル付け・素材準備 (第2層)、YMM4 内の判断・微調整、サムネイル、投稿判断、YMM4 native template の登録
@@ -127,10 +111,15 @@
 - G-13: completed。`overlay` は label 解決、timing anchor、挿入先構造が固定され、creative density judgement と mechanical insertion failure が分離された。`se` は label/timing を解決し、G-18 で `AudioItem` 挿入まで mechanical（旧 `SE_WRITE_ROUTE_UNSUPPORTED` は廃止）
 - 上記を満たした packet は、それぞれ独立 failure class 単位で扱い、broad な timeline retry loop に戻さない
 
-## 検証の境界 (2026-04-05 固定)
-- パイプラインの機械的動作はユニットテスト + CLI dry-run で検証する。YMM4 visual proof を繰り返し要求しない
-- ユーザーへの visual proof 依頼は「初回 E2E」と「最終制作物の品質判断」のみ。増分変更 (idle_face 追加、bg proof、再現 run) では不要
-- 「確認してほしいポイント」の列挙が毎回同じ内容 (表情が切り替わっているか) なら、それは確認ではなく作業の自己目的化
+## 検証の境界
+- パイプラインの機械的動作はユニットテスト + GUI の Dry Run で検証する。YMM4 visual proof を繰り返し要求しない
+- YMM4 を開くのは **(1) テンプレ用素材の登録時** と **(2) 全素材を集め終わって配置・書き出すとき** の 2 つだけ。増分変更のたびに中間確認で開かない
+- テストや検証が開発のブロッカーにならないようにする。品質ゲートは開発速度を優先して柔軟に運用する
+
+## L2（Python変換工程）字幕変更と YMM4 実機の切り分け
+- **CSV・字幕リフロー（B-11〜B-17 系）のみの変更**は L2（Python変換工程）。コードを変更したときだけユニットテストを実行する。**増分のたびに YMM4 通しを要求しない**（上記「検証の境界」と同じ精神）。
+- **patch / IR 契約・timeline adapter**の変更は L3（YMM4内部工程）。GUI の Dry Run を優先し、YMM4 通しは**契約や経路が変わったマイルストーン時**に限定する。
+- **制作工程は全て GUI で完結させる。** GUI に不足している機能がある場合は、GUI に実装すべき課題として扱う（[GUI_MINIMUM_PATH.md](GUI_MINIMUM_PATH.md) 基本方針）。
 
 ## 運用ルール
 - 一度説明された workflow pain はここへ固定する

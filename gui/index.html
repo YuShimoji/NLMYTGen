@@ -14,6 +14,9 @@
       <button class="tab" data-tab="production">演出適用</button>
       <button class="tab" data-tab="scoring">品質診断</button>
     </nav>
+    <div class="header-actions">
+      <button type="button" id="btn-open-gui-guide" class="wizard-nav-btn">操作ガイド</button>
+    </div>
   </header>
 
   <div class="body-content">
@@ -34,6 +37,7 @@
     <details class="wizard-manual">
       <summary>意思決定・手動確認が必要なタイミング</summary>
       <div class="wizard-manual-body">
+        <p><strong>ウィザードの範囲</strong>：S-3（台本→CSV）と S-6b（IR 検証・演出適用）まで。<strong>S-4/S-5</strong>（YMM4 取込・読み上げ・字幕直し）、<strong>S-7〜S-9</strong>（通し・サムネ・投稿）は本 GUI の外です。詳細は「操作ガイド」→ <code>docs/GUI_MINIMUM_PATH.md</code>。</p>
         <p><strong>機械が保証する範囲</strong>：IR 語彙・row-range・palette 整合・patch 時の failure class 検出。ここで止まったらログのコード名が一次手掛かりです。</p>
         <p><strong>必ず人が見るタイミング</strong>：YMM4 取込後の読み上げ・字幕の<strong>最終見た目</strong>（ツールの表示幅は近似）。表情ラベルの<strong>見え方の妥当性</strong>、背景・テンポ・音量の<strong>創作判断</strong>、通しプレビュー、サムネ・公開判断。</p>
         <p><strong>頻度を抑える運用</strong>：増分変更のたびに visual proof を求めない方針です。初回 E2E と最終制作物の確認を優先し、同じ種類の失敗の繰り返し確認は避けます（<code>docs/OPERATOR_WORKFLOW.md</code>「検証の境界」参照）。</p>
@@ -72,6 +76,11 @@
         </div>
         <div class="setting-row">
           <label>
+            <input type="checkbox" id="balance-lines" checked> 自然改行（balance-lines、B-11/B-12 相当・Max lines 必須）
+          </label>
+        </div>
+        <div class="setting-row">
+          <label>
             <input type="checkbox" id="csv-save-diagnostics" checked> 台本診断 JSON も保存（B-18・C-09 用。CSV と同じフォルダ）
           </label>
         </div>
@@ -102,17 +111,20 @@
 
     <!-- 演出適用タブ -->
     <section id="tab-production" class="tab-content">
+      <p class="hint production-lane-intro">必須/任意の正本は <code>docs/GUI_MINIMUM_PATH.md</code> のレーン B。下は運用時の目安です。</p>
       <div class="file-select-group">
         <div class="file-row">
           <label>Production .ymmp</label>
           <button class="btn-file" data-target="prod-ymmp">選択</button>
           <span id="prod-ymmp-path" class="file-path">未選択</span>
         </div>
+        <p class="file-row-hint">必須 — 台本読込済みなど、apply のベースとなるプロジェクト。</p>
         <div class="file-row">
           <label>IR JSON</label>
           <button class="btn-file" data-target="ir-json">選択</button>
           <span id="ir-json-path" class="file-path">未選択</span>
         </div>
+        <p class="file-row-hint">必須 — Writer IR。下の貼り付けから保存しても可。</p>
 
         <div class="ir-paste-group">
           <label>または IR を貼り付け:</label>
@@ -125,21 +137,25 @@
           <button class="btn-file" data-target="palette">選択</button>
           <span id="palette-path" class="file-path">未選択</span>
         </div>
+        <p class="file-row-hint">IR に face 等が含まれるとき必須 — 表情ラベル解決用レジストリ。</p>
         <div class="file-row">
           <label>CSV (row-range)</label>
           <button class="btn-file" data-target="csv-file">選択</button>
           <span id="csv-file-path" class="file-path">未選択</span>
         </div>
+        <p class="file-row-hint">row-range を annotate/apply に使うとき必須 — 手順 1 の CSV を参照する運用が典型。</p>
         <div class="file-row">
           <label>BG Map</label>
           <button class="btn-file" data-target="bg-map">選択</button>
           <span id="bg-map-path" class="file-path">未選択</span>
         </div>
+        <p class="file-row-hint">IR に bg があるとき推奨。</p>
         <div class="file-row">
           <label>Face Map Bundle (G-19)</label>
           <button class="btn-file" data-target="face-map-bundle">選択</button>
           <span id="face-map-bundle-path" class="file-path">未選択</span>
         </div>
+        <p class="file-row-hint">G-19 複数体運用時のみ。</p>
       </div>
 
       <div class="action-row">
@@ -156,6 +172,7 @@
     <!-- 品質診断タブ -->
     <section id="tab-scoring" class="tab-content">
       <p class="hint scoring-intro">H-01 Packaging Brief（JSON/Markdown）を選び、H-04 / H-03 のスコアを実行します。ウィザード完了後の品質チェック用です。</p>
+      <p class="hint scoring-intro">H-05 は任意。コマンドは <code>docs/dev/CLI_REFERENCE.md</code>（GUI ボタンなし）。</p>
       <div class="action-row scoring-doc-row">
         <button type="button" id="btn-open-packaging-spec" class="wizard-nav-btn">H-01 仕様を開く</button>
         <button type="button" id="btn-open-h01-proof" class="wizard-nav-btn">H-01 workflow proof を開く</button>

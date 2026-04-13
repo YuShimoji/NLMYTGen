@@ -16,6 +16,8 @@
 
 ## 2. 正本マップ（仕様・台帳・検証索引）
 
+- [GUI_MINIMUM_PATH.md](GUI_MINIMUM_PATH.md) — **Electron GUI**: 最小ファイル集合・必須/任意・ウィザード範囲（S-3 / S-6b）・L2/L3/creative 検証ラダー
+
 `docs/verification` 直下の個別ファイルが多いときは、先に次の **索引表**だけ読む。
 
 - [verification/README.md](verification/README.md) — **現行正本**一覧（FEATURE_REGISTRY・IR 仕様・runtime-state・ファイル10 等への誘導）

@@ -59,8 +59,8 @@
 | B-08 | 話者マップテンプレート生成 (generate-map) | done | L2 | |
 | B-09 | 複数ファイル一括処理 | done | L2 | build-csv に複数パス指定 |
 | B-10 | 編集支援メタデータ (--emit-meta) | rejected | L2 | 未承認で混入 → rejected (2026-03-30)。コード除去済み |
-| B-11 | S-5 workflow proof パック（字幕 overflow triage + evidence capture） | done | L2 | `build-csv --max-lines --chars-per-line --stats` を起点に、YMM4 取込前のはみ出し候補把握と取込後の修正量記録を repeatable にした。初回 proof で辞書 0 / timing 0 / 改行系 pain 優勢を確認 |
-| B-12 | 行バランス重視の字幕分割 | done | L2 | `--balance-lines` を追加。`--max-lines` 使用時に 2 行字幕へ自然な改行を opt-in で挿入し、読点・句点・カギカッコ付近を候補にしつつ行バランスを崩しにくい分割 heuristics を実装。`uv run pytest` 51 PASS。再観測では手動改行は減ったが、句読点の少ない長文と 1 文字最終行は残存 |
+| B-11 | S-5 workflow proof パック（字幕 overflow triage + evidence capture） | done | L2 | `build-csv --max-lines --chars-per-line` + 統計（CLI `--stats` または GUI の JSON `stats` / F-04）を起点に、YMM4 取込前のはみ出し候補把握と取込後の修正量記録を repeatable にした。初回 proof で辞書 0 / timing 0 / 改行系 pain 優勢を確認 |
+| B-12 | 行バランス重視の字幕分割 | done | L2 | `--balance-lines` を追加。`--max-lines` 使用時に 2 行字幕へ自然な改行を opt-in で挿入し、読点・句点・カギカッコ付近を候補にしつつ行バランスを崩しにくい分割 heuristics を実装。`uv run pytest` 51 PASS。再観測では手動改行は減ったが、句読点の少ない長文と 1 文字最終行は残存。Electron GUI の CSV タブから同フラグを指定可能（新規 F-ID ではない表面化）。運用の正本: [GUI_MINIMUM_PATH.md](GUI_MINIMUM_PATH.md) |
 | B-13 | 節分割 + widow/orphan guard | done | L2 | `--balance-lines` の内部改善として、句読点が少ない一文を `、` や接続句で節分割する fallback と、1 文字最終行を避ける guard を追加。`uv run pytest` 54 PASS、sample dry-run で 57 発話 → 62 行に再編。post-import 再観測では手動改行 5 / 再分割 10 / 不自然な単語分割 5 で、改善はあるが決定打ではなかった |
 | B-14 | aggressive clause chunking | done | L2 | `--balance-lines` の内部改善として、複数文発話の中にある単一長文も sentence ごとに再展開し、通常候補が尽きた場合は引用句・機能語まで使った aggressive chunking fallback を適用。`uv run pytest` 56 PASS、sample dry-run で 57 発話 → 95 行、overflow candidates は 3 件まで減少 |
 | B-15 | トップダウン改行 Phase 1: ページ間分割 | done | L2 | ページ間 (話者行) 分割をトップダウン方式に再設計。大区切り限定、閉じ括弧+助詞保護、カタカナ語/数字/漢字連続/括弧ペア内の分断禁止、再帰的 reflow。67テストPASS。ユーザー検証でページ間バランス偏り解消を確認。行内折り返し制御は B-16 へ |
@@ -103,6 +103,7 @@
 | F-01 | 分割プレビュー GUI | quarantined | GUI | 前セッションの汚染バッチ由来。S-5 の痛点はあるが GUI が最短価値経路か未検証 |
 | F-02 | 設定管理 GUI | quarantined | GUI | 前セッションの汚染バッチ由来。設定固定点と F-01 の価値検証前に進めない |
 | F-03 | YMM4 出力プレビュー | rejected | GUI | YMM4 の見え方を Python で模倣することは視覚的生成に該当。YMM4 自体で確認すべき |
+| F-04 | CSV タブ話者統計・はみ出し候補表示（`build-csv` JSON `stats`） | done | GUI | `--stats` 相当を `--format json` 応答に含め、GUI の Dry Run / Build CSV 結果パネルで表形式表示。制作は GUI のみで取込前の把握が可能 |
 
 #### F-01 / F-02 再審査ゲート（2026-04-06）
 
@@ -146,7 +147,7 @@ G-15〜G-18 はユーザー承認済み（[FUTURE_DEVELOPMENT_ROADMAP.md](FUTURE
 | H-02 | Thumbnail strategy v2 (具体数値優先 + pattern rotation) | done | L2 | C-08 の上位互換候補。`docs/THUMBNAIL_STRATEGY_SPEC.md` v0.1 で specificity-first / banned pattern / rotation policy / output contract を定義済み。dry proof + strict GUI rerun proof (2026-04-06) pass。仕様準拠確認済み (4/5案が preferred_specifics 使用、banned pattern なし、Specificity Ledger・Brief Compliance Check 出力)。コピー品質の実用改善は別課題 |
 | H-03 | Visual density score | done | L2/L3 | `docs/VISUAL_DENSITY_SCORE_SPEC.md` v0.1 準拠。`score-visual-density` CLI（`src/pipeline/visual_density_score.py`）と GUI の品質診断タブで category スコア集計・total・warning/repair を出力。dry proof は `docs/verification/H03-visual-density-ai-monitoring-proof.md`。ymmp readback 併用は将来拡張 |
 | H-04 | Evidence richness score | done | L1/L2 | `docs/EVIDENCE_RICHNESS_SCORE_SPEC.md` v0.1 準拠。`score-evidence` CLI（`src/pipeline/evidence_score.py`）と GUI の品質診断タブ。manual proof は `docs/verification/H04-evidence-richness-ai-monitoring-proof.md`。タイトル / サムネ約束と本文根拠のギャップ診断 |
-| H-05 | S-8 thumbnail probe score（レーンE補助判定） | done | L2 | Automation Probe。`score-thumbnail-s8` で手動採点 JSON を機械集約し、PASS/NEEDS_FIX を返す。画像生成・画像解析は行わない。運用正本: `docs/verification/LANE-E-S8-prep-2026-04-09.md`。**承認範囲（2026-04-09）**: CLI 集約と検証記録のみ（`src/pipeline/thumbnail_s8_score.py` / `tests/test_thumbnail_s8_score.py`）。サムネ生成自動化は含めない。 |
+| H-05 | S-8 thumbnail probe score（レーンE補助判定） | done | L2 | Automation Probe。`score-thumbnail-s8` で手動採点 JSON を機械集約し、PASS/NEEDS_FIX を返す。画像生成・画像解析は行わない。運用正本: `docs/verification/LANE-E-S8-prep-2026-04-09.md`。**承認範囲（2026-04-09）**: CLI 集約と検証記録のみ（`src/pipeline/thumbnail_s8_score.py` / `tests/test_thumbnail_s8_score.py`）。サムネ生成自動化は含めない。**GUI**: 品質診断タブに「CLI のみ」の注記あり。コマンド例は制作手順本文に置かず [docs/dev/CLI_REFERENCE.md](dev/CLI_REFERENCE.md) に集約。 |
 
 ---
 

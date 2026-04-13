@@ -35,12 +35,12 @@
 - timeline 問題は 1 つの broad frontier として報告せず、`slot patch` / `native-template measurement` / `overlay-se insertion` の packet 名で分けて報告する
 - mechanical failure と creative judgement を混ぜない。前者は registry gap / write route / readback mismatch として示し、後者は見た目・テンポ・密度の判断として分離する
 - timeline packet でも repeated visual proof を要求しない。初回 proof または最終 creative judgement に必要な場合だけ visual check を使う
-- timeline packet の completion 報告では、visual impression ではなく `uv run pytest` / CLI smoke / dry-run/readback を先に根拠として示す
+- timeline packet の completion 報告では、visual impression ではなく dry-run/readback の結果を先に根拠として示す。コード変更がないときにテストを回さない
 
 ## 開発ドリフト回避
 - 新しい自動化経路を提案する際は、現行ロードマップ (YMM4-AUTOMATION-RESEARCH.md セクション4) の段階構成との整合を示すこと
 - 研究 (ymmp 解析、プラグイン API 調査、外部ツール評価等) と開発 (IR 定義、プロンプト改訂等) を混同しない。研究に2ブロック以上費やす場合は一度止まって開発に戻る
-- テスト設計やテストフレームワーク整備が開発の主活動になっていないか定期確認する
+- テスト設計が主活動になっていないか確認する。テストはコード変更時のみ。ドキュのみでは回さない。completion で pytest を示すのも `src/` / `gui/` ロジック変更ブロックのみ（REPO_LOCAL_RULES と同じ）
 - 外部ツール (YMovieHelper 等) を「主軸」として採用する提案には、運用依存軸 (保守性、メンテナンス状況) の評価を必須とする。サービス終了済み・更新停止ツールへの依存設計は避ける
 
 ## 常設ガード (2026-04-05)

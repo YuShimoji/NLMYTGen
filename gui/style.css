@@ -26,6 +26,13 @@ header h1 {
 
 nav { display: flex; gap: 4px; }
 
+.header-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .tab {
   background: transparent;
   border: 1px solid #0f3460;
@@ -40,6 +47,18 @@ nav { display: flex; gap: 4px; }
   color: #fff;
 }
 .tab:hover { color: #fff; }
+
+.production-lane-intro {
+  margin-bottom: 10px;
+}
+
+.file-row-hint {
+  font-size: 11px;
+  color: #8a9bb8;
+  margin: -4px 0 10px 0;
+  line-height: 1.4;
+  padding-left: 2px;
+}
 
 .body-content {
   flex: 1;
@@ -222,6 +241,85 @@ nav { display: flex; gap: 4px; }
   max-height: 220px;
   overflow-y: auto;
   color: #c0c0c0;
+}
+
+/* CSV タブ — build-csv JSON stats（話者統計・はみ出し候補） */
+.csv-build-summary {
+  margin: 0 0 12px 0;
+  padding: 10px;
+  background: #16213e;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 160px;
+  overflow-y: auto;
+  color: #e0e0e0;
+}
+
+.csv-stats-section {
+  margin-top: 4px;
+  padding: 10px;
+  background: #16213e;
+  border-radius: 6px;
+  border: 1px solid #0f3460;
+}
+
+.csv-stats-title {
+  font-size: 13px;
+  color: #a0d0ff;
+  margin: 8px 0 6px 0;
+}
+
+.csv-stats-title:first-child {
+  margin-top: 0;
+}
+
+.csv-stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.csv-stats-table th,
+.csv-stats-table td {
+  border: 1px solid #0f3460;
+  padding: 4px 8px;
+  text-align: left;
+}
+
+.csv-stats-table thead {
+  background: #1a1a2e;
+  color: #a0a0a0;
+}
+
+.csv-stats-total {
+  font-size: 12px;
+  color: #ccc;
+  margin-bottom: 4px;
+}
+
+.csv-stats-ok {
+  font-size: 12px;
+  color: #86efac;
+}
+
+.csv-stats-hint {
+  font-size: 12px;
+  color: #8a9bb8;
+}
+
+.csv-stats-trunc {
+  font-size: 11px;
+  color: #8a9bb8;
+  margin-top: 6px;
+}
+
+.csv-overflow-scroll {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 4px;
 }
 
 main {

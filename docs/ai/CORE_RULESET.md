@@ -53,3 +53,31 @@ If a write fails, a readback mismatch occurs, or the result is uncertain, do not
 
 ## Evidence discipline
 Use visual or artifact evidence whenever relevant. If evidence is stale or unknown, say so. Do not substitute documentation for actual observation when the question is about behavior.
+
+## Terminology and naming discipline
+
+### ペア形式ルール
+略称（S-n、L-n、機能ID等）を使うときは、常に `ID（説明名）` のペア形式で書く。裸の略称を禁止する。
+
+- 工程: `S-3（CSV変換工程）` — 裸の `S-3` は不可
+- レイヤー: `L2（Python変換工程）` — 裸の `L2` は不可
+- 機能ID: セクション内の初出で `B-12（行バランス字幕分割）` と書き、同セクション内の2回目以降は裸でも可
+
+### 二語彙ルール
+本プロジェクトには2つの独立した座標系がある。混同しない。
+
+- **L1-L4**: 動画制作パイプライン上の位置（どこで動くか）。正本: `docs/AUTOMATION_BOUNDARY.md`
+  - L1（入力取得）/ L2（Python変換）/ L3（YMM4内部）/ L4（配信）
+- **第1層-第3層（三層責務構造）**: IR設計の責務分担（誰が設計を持つか）。正本: `PRODUCTION_IR_SPEC.md` セクション6
+  - 第1層（Writer IR）/ 第2層（Template Registry）/ 第3層（YMM4 Adapter）
+
+L2（Python変換工程）が停滞すると CSV も IR も生成できず、S-3（CSV変換）以降の全工程が止まる。
+第2層（Template Registry）が停滞すると演出自動配置（face/bg）が止まるが、基本的な動画制作（手動演出）は続行できる。
+
+### 因果関係の明示
+工程やレイヤーに言及するときは、「進めると何が実現されるか / 止まると何が詰まるか」を可能な限り併記する。
+グロサリーの正本は `CLAUDE.md`（プロジェクトルート）の「工程・レイヤー略語の読み方」表。
+
+### 適用範囲
+- 適用する: 生きているドキュメント（CLAUDE.md、CORE_RULESET.md、OPERATOR_WORKFLOW.md、GUI_MINIMUM_PATH.md、AUTOMATION_BOUNDARY.md、runtime-state.md）
+- 適用しない: docs/verification/* の過去証跡、git 履歴、日付入りジャーナル（ただし今後の追記にはペア形式を適用）

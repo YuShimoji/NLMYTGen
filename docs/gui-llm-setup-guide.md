@@ -2,6 +2,8 @@
 
 NLMYTGen の GUI LLM プロンプトを Custom GPT / Claude Project に固定化する手順。
 
+**GUI で「どのファイルが必須か」「ウィザードがどこまでか」**は先に [GUI_MINIMUM_PATH.md](GUI_MINIMUM_PATH.md) を読む（本書は LLM 手順が主題）。
+
 ---
 
 ## 正本（レーン B / C-07 v4）
