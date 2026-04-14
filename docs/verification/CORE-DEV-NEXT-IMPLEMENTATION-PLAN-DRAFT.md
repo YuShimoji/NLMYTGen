@@ -60,9 +60,9 @@ Gate B の「運用導線・記録」に合わせ、**次の優先**を推奨す
 
 ## 4. 検証の出し方（承認後スライスごと）
 
-- **最小**: `NLMYTGEN_PYTEST_FULL=1 uv run pytest` 緑。  
-- **CLI 変更**: 既存 `tests/test_pipeline_smoke.py` パターンに **1 ケース**追加するか、該当モジュールの単体テスト。  
-- **ドキュメントのみ**: verification に **手順と期待ログ 1 ブロック**。  
+- **基本方針**: pytest の実行は開発者判断。`src/` または `tests/` を触ったときに `uv run pytest` (default suite) を走らせる。integration 込みは `NLMYTGEN_PYTEST_FULL=1` を付けた opt-in で、必須ゲートではない。
+- **CLI 変更**: 既存 `tests/test_pipeline_smoke.py` パターンに **1 ケース**追加するか、該当モジュールの単体テスト。
+- **ドキュメントのみ**: verification に **手順と期待ログ 1 ブロック**。pytest 実行は不要。
 - **IR / ymmp**: [PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md) と矛盾しないこと。
 
 ---

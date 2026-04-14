@@ -40,7 +40,7 @@
 |--------------|----------|
 | コア：プラン承認まで | 「**ファイル8**のフェーズ **T0** に従い、**ファイル3**をユーザー承認できる状態に整えてください。**ファイル2**で PASS とならない入力はドラフトに反映せず差し戻し条件のみ返してください。」 |
 | コア：文書・サンプル先行 | 「**ファイル8**のフェーズ **T1** に従い進めてください。未承認 FEATURE 実装は禁止。」 |
-| コア：スライス 1 本実装 | 「**ファイル8**のフェーズ **T2** に従い、**CORE-DEV-POST-APPROVAL-SLICES** §1 の承認済みスライスを **1 本だけ**実装し、フル pytest を緑にしてください。」 |
+| コア：スライス 1 本実装 | 「**ファイル8**のフェーズ **T2** に従い、**CORE-DEV-POST-APPROVAL-SLICES** §1 の承認済みスライスを **1 本だけ**実装してください。pytest は `src/` または `tests/` を触った場合のみ `uv run pytest` を走らせる（FULL は opt-in）。」 |
 | コア：handoff 同期 | 「**ファイル8**のフェーズ **T3** に従い、`runtime-state.md` / `project-context.md` を更新してください。」 |
 | 並行 A | 「**ファイル4**の**レーンA**を進めてください。」（下記 **Prompt-A** が詳細） |
 | 並行 B | 「**ファイル5**の**レーンB**を進めてください。」（**Prompt-B**） |
@@ -89,7 +89,7 @@
 
 ### Prompt-Core-T2（承認スライス 1 本実装）
 
-「**ファイル8** フェーズ **T2**。**CORE-DEV-POST-APPROVAL-SLICES** §1 から **1 スライスだけ**選び実装し、`NLMYTGEN_PYTEST_FULL=1 uv run pytest` を緑にしてください。」
+「**ファイル8** フェーズ **T2**。**CORE-DEV-POST-APPROVAL-SLICES** §1 から **1 スライスだけ**選び実装してください。pytest は `src/` または `tests/` を触った場合のみ `uv run pytest` (default suite) を走らせる（integration 込みは `NLMYTGEN_PYTEST_FULL=1` の opt-in、必須ゲートではない）。」
 
 ### Prompt-Core-T3（runtime / handoff）
 

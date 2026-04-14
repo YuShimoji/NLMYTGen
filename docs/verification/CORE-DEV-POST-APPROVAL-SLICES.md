@@ -19,7 +19,7 @@
 1. [ ] [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) の該当スライスにユーザーが **明示承認**（チャットまたは issue へのリンクを §1 表に貼る）。
 2. [ ] [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) を更新（`proposed` → `approved` → 実装後 `done` の遷移を守る）。
 3. [ ] 実装は **縦スライス 1 本**（一括マージしない。[P2A-phase2-motion-segmentation-branch-review.md](P2A-phase2-motion-segmentation-branch-review.md) の精神）。
-4. [ ] `NLMYTGEN_PYTEST_FULL=1 uv run pytest` が緑。
+4. [ ] pytest は `src/` または `tests/` を触った場合のみ `uv run pytest` (default suite) が緑。integration 込みの `NLMYTGEN_PYTEST_FULL=1` は開発者判断で opt-in（必須ゲートではない）。
 5. [ ] [runtime-state.md](../runtime-state.md) の「最終検証」日付・必要なら `last_change_relation` を更新。
 6. [ ] Gate 別の参照:
    - **Gate A**: B-17 周辺・再現コーパス・テストを同じ PR に。

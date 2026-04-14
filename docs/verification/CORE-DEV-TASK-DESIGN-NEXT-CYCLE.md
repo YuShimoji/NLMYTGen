@@ -12,7 +12,7 @@
 - 未承認の FEATURE は [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) に `proposed` のみ起票し、**実装しない**。
 - オペレータ入力は **PASS のみ** [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) に反映する。
 - 実装は [CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) §1 の **承認済みスライス 1 本ずつ**。
-- 検証の最低ライン: `NLMYTGEN_PYTEST_FULL=1 uv run pytest` が緑。
+- pytest は開発者判断で走らせる（`OPERATOR_WORKFLOW.md` L120）。default suite (`uv run pytest`) は integration skip で軽量。integration 込みは `NLMYTGEN_PYTEST_FULL=1` を付けた opt-in。承認済みスライスの完了条件に「pytest 全件緑」は含めない。
 
 ---
 
@@ -21,7 +21,7 @@
 | フェーズ | 目的 | 主な成果物 | 完了条件 |
 |----------|------|------------|----------|
 | **T0** | 次期方針の確定 | ファイル3（ドラフト）の承認、§1 表への「承認日・差し替え」記録 | ユーザーが §2〜§3 を承認または差し替え明示。NEEDS_FIX 入力はドラフトに書かない |
-| **T1** | Gate B 寄りの **文書・サンプル先行** | verification 手順、IR/JSON サンプル、runbook/GUI 文言の明確化（[ファイル3](CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §2 整合） | コード変更が無いか、あっても既存承認スライス・バグ修正の範囲。フル pytest 緑 |
+| **T1** | Gate B 寄りの **文書・サンプル先行** | verification 手順、IR/JSON サンプル、runbook/GUI 文言の明確化（[ファイル3](CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §2 整合） | コード変更が無いか、あっても既存承認スライス・バグ修正の範囲 |
 | **T2** | **承認済みスライス**の縦実装 | §1 に起票した 1 スライス = 1 PR/コミット単位の実装 | FEATURE_REGISTRY 遷移遵守、`POST-APPROVAL` チェックリスト完了 |
 | **T3** | 同期・再アンカー | `runtime-state.md` / `project-context.md` HANDOFF / 最終検証日付 | 次サイクルの `next_action` が一文で分かる |
 
@@ -49,7 +49,7 @@
 |----|----------------|
 | **Core-T0** | 「**ファイル8**のフェーズ **T0** に従い、**ファイル3**をユーザー承認できる状態に整えてください。**ファイル2**で PASS とならないオペレータ入力はドラフトに反映せず、差し戻し条件だけ返してください。」 |
 | **Core-T1** | 「**ファイル8**のフェーズ **T1** に従い、verification・サンプル・runbook 中心で進めてください。未承認 FEATURE の実装は禁止。**ファイル2**に照らし不足があればファイル3へは書かないでください。」 |
-| **Core-T2** | 「**ファイル8**のフェーズ **T2** に従い、**CORE-DEV-POST-APPROVAL-SLICES** §1 の **承認済みスライスを 1 本だけ**実装し、`NLMYTGEN_PYTEST_FULL=1 uv run pytest` を緑にしてください。」 |
+| **Core-T2** | 「**ファイル8**のフェーズ **T2** に従い、**CORE-DEV-POST-APPROVAL-SLICES** §1 の **承認済みスライスを 1 本だけ**実装してください。pytest はコードに触れた経路のみ開発者判断で走らせる（必須ゲートではない）。」 |
 | **Core-T3** | 「**ファイル8**のフェーズ **T3** に従い、`runtime-state.md` と `project-context.md` の HANDOFF を更新し、次セッションの `next_action` を一文で残してください。」 |
 | **Core-Full** | 「**ファイル8**→**ファイル1**→**ファイル2**→**ファイル3**の順で読み、**ファイル10** の **Prompt-Core（フル）** を実行すること。**ファイル9** §2 の運用原則に従うこと。」 |
 

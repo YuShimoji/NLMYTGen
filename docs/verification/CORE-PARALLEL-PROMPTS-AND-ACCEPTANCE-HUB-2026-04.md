@@ -37,7 +37,7 @@
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------- |
 | **Core-T0**                 | [ファイル3](CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) の整理、承認依頼用メモ                                                                            | ユーザー承認後の方針文だけ（NEEDS_FIX は渡さない）                    |
 | **Core-T1**                 | verification / `samples/*.json` / runbook / GUI 文言                                                                                         | 差分パス一覧＋ファイル2で PASS と自己判定した要約                      |
-| **Core-T2**                 | コード、`FEATURE_REGISTRY`、pytest 緑                                                                                                            | PR またはコミット＋ POST-APPROVAL §2 チェック                 |
+| **Core-T2**                 | コード、`FEATURE_REGISTRY`、pytest は code 変更時のみ default suite 緑                                                                                  | PR またはコミット＋ POST-APPROVAL §2 チェック                 |
 | **Core-T3**                 | [runtime-state.md](../runtime-state.md)、[project-context.md](../project-context.md)                                                        | 次セッション用の `next_action` 一文（親チャットにも §4 で貼る）         |
 | **Core-Full**               | 上記の組み合わせ                                                                                                                                   | 各フェーズに応じた上表の集合                                    |
 | **Prompt-A**                | [P01](P01-phase1-operator-e2e-proof.md) 表、B-11 系 proof                                                                                     | **ファイル2**で PASS なら、コアは **要約＋ログパス**のみ（未承認の実装依頼は不可） |
@@ -82,7 +82,7 @@
 | ------ | ------------------------------------------------------------------------------------------------------------ |
 | **T0** | ファイル3をユーザー承認可能に整える。NEEDS_FIX はドラフトに書かない。                                                                     |
 | **T1** | verification・サンプル JSON・runbook / GUI 文言優先。未承認 FEATURE の実装は禁止。                                                |
-| **T2** | [CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) §1 の **承認済みスライスを 1 本だけ**実装。フル pytest 緑。 |
+| **T2** | [CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) §1 の **承認済みスライスを 1 本だけ**実装。pytest は `src/` または `tests/` を触った場合のみ default suite 緑（FULL は opt-in）。 |
 | **T3** | `runtime-state.md` / `project-context.md` HANDOFF 更新、`next_action` を一文で残す。                                   |
 
 
@@ -99,7 +99,7 @@
 
 - **ファイル2**に照らし、コアへ取り込むオペレータ入力は **PASS のみ**（NEEDS_FIX はドラフト・実装に混ぜない）。
 - **FEATURE_REGISTRY** に無い機能を **承認なしで実装していない**（要望は `proposed` 行の起票に留めた）。
-- コアでコードを変更した → `NLMYTGEN_PYTEST_FULL=1 uv run pytest` が **緑**。
+- コアで `src/` または `tests/` を変更した → `uv run pytest` (default suite) が緑。integration 込みは `NLMYTGEN_PYTEST_FULL=1` の opt-in で、必須ゲートではない。ドキュメントのみの変更では pytest 不要。
 - `runtime-state.md` の `**next_action` / `last_change_relation` / `parallel_replan_2026_04`** が、実施内容と矛盾しない（更新したなら日付・リンクが辻褄が合う）。
 - 並行レーンのみ実施した → コア幹には **機械ログ・証跡パス・P01/P02 等の追記場所**を返し、未承認の「実装して」要求を混ぜない。
 
@@ -116,7 +116,7 @@
 - 変更の要約: （1〜3 文）
 - 触った主なパス: （例: `docs/verification/foo.md` のみ）
 - ファイル2 自己判定: PASS / NEEDS_FIX（NEEDS_FIX なら条件のみ列挙）
-- pytest: 未実施 / PASS（フル）
+- pytest: 未実施 / PASS (default) / PASS (FULL)
 - runtime-state 更新: なし / あり（一言）
 - 次アクション一文: （例: ユーザー承認後に T2 でスライス X を実装）
 ```
@@ -142,7 +142,7 @@
 ### Prompt-Core-T2
 
 ```
-**ファイル8** フェーズ **T2**。**CORE-DEV-POST-APPROVAL-SLICES** §1 から **1 スライスだけ**選び実装し、`NLMYTGEN_PYTEST_FULL=1 uv run pytest` を緑にしてください。
+**ファイル8** フェーズ **T2**。**CORE-DEV-POST-APPROVAL-SLICES** §1 から **1 スライスだけ**選び実装してください。pytest は `src/` または `tests/` を触った場合のみ `uv run pytest` (default suite) を走らせる。integration 込みの `NLMYTGEN_PYTEST_FULL=1` は opt-in で、必須ゲートではない。
 ```
 
 ### Prompt-Core-T3
