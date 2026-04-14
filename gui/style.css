@@ -1,27 +1,45 @@
+:root {
+  --color-bg-dark: #1a1a2e;
+  --color-bg-panel: #16213e;
+  --color-border: #0f3460;
+  --color-border-hover: #1a4080;
+  --color-accent: #e94560;
+  --color-accent-hover: #d63050;
+  --color-text: #e0e0e0;
+  --color-text-muted: #a0a0a0;
+  --color-text-dim: #888;
+  --color-text-hint: #8a9bb8;
+  --color-success: #4ade80;
+  --color-success-text: #86efac;
+  --color-success-border: #14532d;
+  --color-error-bg: #2a1518;
+  --color-error-border: #7f1d1d;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: 'Segoe UI', 'Yu Gothic UI', sans-serif;
-  background: #1a1a2e;
-  color: #e0e0e0;
+  background: var(--color-bg-dark);
+  color: var(--color-text);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 header {
-  background: #16213e;
+  background: var(--color-bg-panel);
   padding: 12px 20px;
   display: flex;
   align-items: center;
   gap: 24px;
-  border-bottom: 1px solid #0f3460;
+  border-bottom: 1px solid var(--color-border);
 }
 
 header h1 {
   font-size: 18px;
   font-weight: 600;
-  color: #e94560;
+  color: var(--color-accent);
 }
 
 nav { display: flex; gap: 4px; }
@@ -35,15 +53,15 @@ nav { display: flex; gap: 4px; }
 
 .tab {
   background: transparent;
-  border: 1px solid #0f3460;
-  color: #a0a0a0;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
   padding: 6px 16px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 13px;
 }
 .tab.active {
-  background: #0f3460;
+  background: var(--color-border);
   color: #fff;
 }
 .tab:hover { color: #fff; }
@@ -54,7 +72,7 @@ nav { display: flex; gap: 4px; }
 
 .file-row-hint {
   font-size: 11px;
-  color: #8a9bb8;
+  color: var(--color-text-hint);
   margin: -4px 0 10px 0;
   line-height: 1.4;
   padding-left: 2px;
@@ -72,8 +90,8 @@ nav { display: flex; gap: 4px; }
   flex-shrink: 0;
   align-self: stretch;
   min-height: 0;
-  background: #16213e;
-  border-right: 1px solid #0f3460;
+  background: var(--color-bg-panel);
+  border-right: 1px solid var(--color-border);
   padding: 16px 12px;
   display: flex;
   flex-direction: column;
@@ -112,14 +130,14 @@ nav { display: flex; gap: 4px; }
 .wizard-bar-footer {
   flex-shrink: 0;
   padding-top: 8px;
-  border-top: 1px solid #0f3460;
+  border-top: 1px solid var(--color-border);
 }
 
 .wizard-step {
   text-align: left;
-  background: #1a1a2e;
-  border: 1px solid #0f3460;
-  color: #a0a0a0;
+  background: var(--color-bg-dark);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
   padding: 8px 10px;
   border-radius: 6px;
   cursor: pointer;
@@ -127,20 +145,20 @@ nav { display: flex; gap: 4px; }
 }
 
 .wizard-step:hover {
-  color: #e0e0e0;
-  border-color: #1a4080;
+  color: var(--color-text);
+  border-color: var(--color-border-hover);
 }
 
 .wizard-step.active {
-  border-color: #e94560;
+  border-color: var(--color-accent);
   color: #fff;
-  background: #0f3460;
+  background: var(--color-border);
   box-shadow: 0 0 0 1px rgba(233, 69, 96, 0.35), 0 0 14px rgba(233, 69, 96, 0.22);
 }
 
 .wizard-step.done:not(.active) {
-  color: #86efac;
-  border-color: #14532d;
+  color: var(--color-success-text);
+  border-color: var(--color-success-border);
 }
 
 .wizard-bar-note {
@@ -159,9 +177,9 @@ nav { display: flex; gap: 4px; }
 .wizard-nav-btn {
   flex: 1;
   min-width: 72px;
-  background: #1a1a2e;
-  border: 1px solid #0f3460;
-  color: #a0a0a0;
+  background: var(--color-bg-dark);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
   padding: 6px 8px;
   border-radius: 4px;
   cursor: pointer;
@@ -173,13 +191,18 @@ nav { display: flex; gap: 4px; }
 }
 
 .wizard-nav-btn.primary {
-  background: #0f3460;
-  border-color: #e94560;
+  background: var(--color-border);
+  border-color: var(--color-accent);
   color: #fff;
 }
 
-.wizard-nav-btn.primary:hover {
-  background: #1a4080;
+/* 共通ボタン hover（同一の背景色を共有するセレクタを集約） */
+.wizard-nav-btn.primary:hover,
+.failure-doc-link:hover,
+.btn-file:hover,
+.ir-paste-group button:hover,
+.scoring-group button:hover {
+  background: var(--color-border-hover);
 }
 
 .wizard-scoring-btn {
@@ -191,15 +214,15 @@ nav { display: flex; gap: 4px; }
   margin-top: 10px;
   font-size: 11px;
   color: #888;
-  border: 1px solid #0f3460;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   padding: 6px 8px;
-  background: #1a1a2e;
+  background: var(--color-bg-dark);
 }
 
 .wizard-manual summary {
   cursor: pointer;
-  color: #a0a0a0;
+  color: var(--color-text-muted);
   font-weight: 600;
 }
 
@@ -213,7 +236,7 @@ nav { display: flex; gap: 4px; }
 
 .wizard-manual-body code {
   font-size: 10px;
-  color: #e94560;
+  color: var(--color-accent);
 }
 
 /* ウィザード連動: メイン領域のアンカー強調（scroll-margin でヘッダ下に収める） */
@@ -233,29 +256,29 @@ nav { display: flex; gap: 4px; }
 
 /* ネストされたアンカーでもフォーカス時はボーダーを表示する */
 .wizard-step-anchor .wizard-step-anchor.wizard-main-focus {
-  border: 2px solid #e94560;
+  border: 2px solid var(--color-accent);
   padding: 4px 8px;
   border-radius: 8px;
 }
 
 .wizard-step-anchor.wizard-main-focus {
   outline: none;
-  border-color: #e94560;
+  border-color: var(--color-accent);
   transition: border-color 0.2s ease;
 }
 
 /* 失敗時エラーカード */
 .failure-card {
-  border: 1px solid #7f1d1d;
+  border: 1px solid var(--color-error-border);
   border-radius: 6px;
   padding: 10px 12px;
   margin-bottom: 10px;
-  background: #2a1518;
+  background: var(--color-error-bg);
 }
 
 .failure-card-generic {
-  border-color: #0f3460;
-  background: #1a1a2e;
+  border-color: var(--color-border);
+  background: var(--color-bg-dark);
 }
 
 .failure-card-title {
@@ -274,24 +297,21 @@ nav { display: flex; gap: 4px; }
 }
 
 .failure-doc-link {
-  background: #0f3460;
-  border: 1px solid #e94560;
-  color: #e0e0e0;
+  background: var(--color-border);
+  border: 1px solid var(--color-accent);
+  color: var(--color-text);
   padding: 4px 10px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 11px;
 }
 
-.failure-doc-link:hover {
-  background: #1a4080;
-}
 
 .failure-log {
   margin: 0;
   margin-top: 12px;
   padding: 10px;
-  background: #16213e;
+  background: var(--color-bg-panel);
   border-radius: 4px;
   font-size: 11px;
   white-space: pre-wrap;
@@ -305,22 +325,22 @@ nav { display: flex; gap: 4px; }
 .csv-build-summary {
   margin: 0 0 12px 0;
   padding: 10px;
-  background: #16213e;
+  background: var(--color-bg-panel);
   border-radius: 4px;
   font-size: 12px;
   white-space: pre-wrap;
   word-break: break-word;
   max-height: 160px;
   overflow-y: auto;
-  color: #e0e0e0;
+  color: var(--color-text);
 }
 
 .csv-stats-section {
   margin-top: 4px;
   padding: 10px;
-  background: #16213e;
+  background: var(--color-bg-panel);
   border-radius: 6px;
-  border: 1px solid #0f3460;
+  border: 1px solid var(--color-border);
 }
 
 .csv-stats-title {
@@ -342,14 +362,14 @@ nav { display: flex; gap: 4px; }
 
 .csv-stats-table th,
 .csv-stats-table td {
-  border: 1px solid #0f3460;
+  border: 1px solid var(--color-border);
   padding: 4px 8px;
   text-align: left;
 }
 
 .csv-stats-table thead {
-  background: #1a1a2e;
-  color: #a0a0a0;
+  background: var(--color-bg-dark);
+  color: var(--color-text-muted);
 }
 
 .csv-stats-total {
@@ -360,17 +380,17 @@ nav { display: flex; gap: 4px; }
 
 .csv-stats-ok {
   font-size: 12px;
-  color: #86efac;
+  color: var(--color-success-text);
 }
 
 .csv-stats-hint {
   font-size: 12px;
-  color: #8a9bb8;
+  color: var(--color-text-hint);
 }
 
 .csv-stats-trunc {
   font-size: 11px;
-  color: #8a9bb8;
+  color: var(--color-text-hint);
   margin-top: 6px;
 }
 
@@ -397,9 +417,9 @@ main {
   max-height: min(40vh, 320px);
   overflow-y: auto;
   padding: 10px 12px;
-  background: #16213e;
+  background: var(--color-bg-panel);
   border-radius: 8px;
-  border: 2px solid #e94560;
+  border: 2px solid var(--color-accent);
 }
 
 .wizard-main-context.hidden {
@@ -410,7 +430,7 @@ main {
   display: block;
   font-size: 12px;
   font-weight: 600;
-  color: #e94560;
+  color: var(--color-accent);
   margin-bottom: 6px;
 }
 
@@ -445,22 +465,22 @@ main .hint strong {
 
 /* Drop zone */
 .drop-zone {
-  border: 2px dashed #0f3460;
+  border: 2px dashed var(--color-border);
   border-radius: 8px;
   padding: 40px 20px;
   text-align: center;
   transition: border-color 0.2s, background 0.2s;
 }
 .drop-zone.dragover {
-  border-color: #e94560;
+  border-color: var(--color-accent);
   background: rgba(233, 69, 96, 0.05);
 }
 .drop-zone p { margin: 8px 0; }
 .drop-zone .hint { font-size: 12px; color: #666; }
 .drop-zone .hint button {
   background: transparent;
-  border: 1px solid #0f3460;
-  color: #a0a0a0;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
   padding: 4px 12px;
   border-radius: 4px;
   cursor: pointer;
@@ -468,7 +488,7 @@ main .hint strong {
 
 .file-path {
   font-size: 12px;
-  color: #e94560;
+  color: var(--color-accent);
   word-break: break-all;
 }
 
@@ -476,13 +496,13 @@ main .hint strong {
 .settings-group {
   margin-top: 16px;
   padding: 12px;
-  background: #16213e;
+  background: var(--color-bg-panel);
   border-radius: 6px;
 }
 .settings-group h3 {
   font-size: 13px;
   margin-bottom: 8px;
-  color: #a0a0a0;
+  color: var(--color-text-muted);
 }
 .setting-row {
   display: flex;
@@ -496,9 +516,9 @@ main .hint strong {
 }
 .setting-row input[type="text"],
 .setting-row input[type="number"] {
-  background: #1a1a2e;
-  border: 1px solid #0f3460;
-  color: #e0e0e0;
+  background: var(--color-bg-dark);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 13px;
@@ -514,14 +534,14 @@ main .hint strong {
 .packet-assist-group {
   margin-top: 16px;
   padding: 12px;
-  background: #16213e;
+  background: var(--color-bg-panel);
   border-radius: 6px;
 }
 
 .packet-assist-group h3 {
   font-size: 13px;
   margin-bottom: 8px;
-  color: #a0a0a0;
+  color: var(--color-text-muted);
   font-weight: 600;
 }
 
@@ -537,15 +557,14 @@ main .hint strong {
   min-width: 120px;
 }
 .btn-file {
-  background: #0f3460;
+  background: var(--color-border);
   border: none;
-  color: #e0e0e0;
+  color: var(--color-text);
   padding: 4px 12px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
 }
-.btn-file:hover { background: #1a4080; }
 
 /* IR paste */
 .ir-paste-group {
@@ -554,15 +573,15 @@ main .hint strong {
 }
 .ir-paste-group label {
   font-size: 12px;
-  color: #a0a0a0;
+  color: var(--color-text-muted);
   display: block;
   margin-bottom: 4px;
 }
 .ir-paste-group textarea {
   width: 100%;
-  background: #1a1a2e;
-  border: 1px solid #0f3460;
-  color: #e0e0e0;
+  background: var(--color-bg-dark);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
   padding: 8px;
   border-radius: 4px;
   font-family: 'Cascadia Code', 'Consolas', monospace;
@@ -571,15 +590,14 @@ main .hint strong {
 }
 .ir-paste-group button {
   margin-top: 4px;
-  background: #0f3460;
+  background: var(--color-border);
   border: none;
-  color: #e0e0e0;
+  color: var(--color-text);
   padding: 4px 12px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
 }
-.ir-paste-group button:hover { background: #1a4080; }
 
 .hidden { display: none !important; }
 
@@ -587,13 +605,13 @@ main .hint strong {
 .scoring-group {
   margin-top: 16px;
   padding: 12px;
-  background: #16213e;
+  background: var(--color-bg-panel);
   border-radius: 6px;
 }
 .scoring-group h3 {
   font-size: 14px;
   margin-bottom: 8px;
-  color: #e94560;
+  color: var(--color-accent);
 }
 .score-grid {
   display: grid;
@@ -606,28 +624,27 @@ main .hint strong {
   justify-content: space-between;
   align-items: center;
   font-size: 12px;
-  color: #a0a0a0;
+  color: var(--color-text-muted);
 }
 .score-grid input[type="number"] {
   width: 50px;
-  background: #1a1a2e;
-  border: 1px solid #0f3460;
-  color: #e0e0e0;
+  background: var(--color-bg-dark);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 12px;
   text-align: center;
 }
 .scoring-group button {
-  background: #0f3460;
+  background: var(--color-border);
   border: none;
-  color: #e0e0e0;
+  color: var(--color-text);
   padding: 6px 16px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 13px;
 }
-.scoring-group button:hover { background: #1a4080; }
 
 /* Action buttons */
 .action-row {
@@ -636,7 +653,7 @@ main .hint strong {
   gap: 8px;
 }
 button.primary {
-  background: #e94560;
+  background: var(--color-accent);
   border: none;
   color: #fff;
   padding: 8px 24px;
@@ -649,12 +666,12 @@ button.primary:disabled {
   background: #555;
   cursor: not-allowed;
 }
-button.primary:not(:disabled):hover { background: #d63050; }
+button.primary:not(:disabled):hover { background: var(--color-accent-hover); }
 
 .action-row button:not(.primary) {
-  background: #16213e;
-  border: 1px solid #0f3460;
-  color: #a0a0a0;
+  background: var(--color-bg-panel);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
@@ -665,20 +682,20 @@ button.primary:not(:disabled):hover { background: #d63050; }
 .result-panel {
   margin-top: 16px;
   padding: 12px;
-  background: #16213e;
+  background: var(--color-bg-panel);
   border-radius: 6px;
   font-size: 13px;
   white-space: pre-wrap;
   font-family: 'Cascadia Code', 'Consolas', monospace;
 }
 .result-panel.hidden { display: none; }
-.result-panel.success { border-left: 3px solid #4ade80; }
-.result-panel.error { border-left: 3px solid #e94560; }
+.result-panel.success { border-left: 3px solid var(--color-success); }
+.result-panel.error { border-left: 3px solid var(--color-accent); }
 
 footer {
-  background: #16213e;
+  background: var(--color-bg-panel);
   padding: 6px 20px;
   font-size: 12px;
   color: #666;
-  border-top: 1px solid #0f3460;
+  border-top: 1px solid var(--color-border);
 }

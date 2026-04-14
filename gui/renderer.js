@@ -1,3 +1,11 @@
+// --- 定数 ---
+const WIZARD_STEP_FIRST = 1;
+const WIZARD_STEP_LAST = 5;
+/** 各タブを開いたときに揃えるウィザード入り口ステップ */
+const TAB_ENTRY_STEPS = { csv: 1, production: 3, scoring: 5 };
+/** 結果パネルが空のときにフォーカス対象を親に切り替える高さ閾値 (px) */
+const MIN_ANCHOR_HEIGHT = 32;
+
 // --- Tab switching ---
 /** @param {string} tabName @param {{ alignWizard?: boolean }} [opts] alignWizard: ヘッダタブ由来のときだけ true（ウィザードをタブの入り口に揃える） */
 function switchMainTab(tabName, { alignWizard = true } = {}) {
@@ -11,7 +19,7 @@ function switchMainTab(tabName, { alignWizard = true } = {}) {
     clearWizardMainFocus();
   }
   if (alignWizard) {
-    const entryStep = { csv: 1, production: 3, scoring: 5 }[tabName];
+    const entryStep = TAB_ENTRY_STEPS[tabName];
     if (entryStep != null) {
       setWizardStep(entryStep, { persist: true, syncTab: false });
     }
@@ -99,7 +107,7 @@ function focusWizardMain(step) {
   let el = document.getElementById(anchorId);
   if (step === 5 && anchorId === 'wizard-anchor-prod-done' && el) {
     const bothHidden = vr && pr && vr.classList.contains('hidden') && pr.classList.contains('hidden');
-    if (bothHidden || el.offsetHeight < 32) {
+    if (bothHidden || el.offsetHeight < MIN_ANCHOR_HEIGHT) {
       anchorId = 'wizard-anchor-prod-apply';
       el = document.getElementById(anchorId);
     }
@@ -124,7 +132,7 @@ function scheduleWizardMainFocus(step) {
 }
 
 function setWizardStep(step, { persist = true, syncTab = true } = {}) {
-  currentWizardStep = Math.min(5, Math.max(1, step));
+  currentWizardStep = Math.min(WIZARD_STEP_LAST, Math.max(WIZARD_STEP_FIRST, step));
   document.querySelectorAll('.wizard-step').forEach((el) => {
     const s = parseInt(el.dataset.wizardStep, 10);
     el.classList.toggle('active', s === currentWizardStep);
@@ -134,11 +142,11 @@ function setWizardStep(step, { persist = true, syncTab = true } = {}) {
   if (syncTab && stepBtn && stepBtn.dataset.tab) {
     switchMainTab(stepBtn.dataset.tab, { alignWizard: false });
   }
-  document.getElementById('btn-wizard-prev').disabled = currentWizardStep <= 1;
-  document.getElementById('btn-wizard-next').disabled = currentWizardStep >= 5;
+  document.getElementById('btn-wizard-prev').disabled = currentWizardStep <= WIZARD_STEP_FIRST;
+  document.getElementById('btn-wizard-next').disabled = currentWizardStep >= WIZARD_STEP_LAST;
   const scoringBtn = document.getElementById('btn-wizard-scoring');
   if (scoringBtn) {
-    scoringBtn.classList.toggle('hidden', currentWizardStep !== 5);
+    scoringBtn.classList.toggle('hidden', currentWizardStep !== WIZARD_STEP_LAST);
   }
   if (persist) {
     autoSave();
