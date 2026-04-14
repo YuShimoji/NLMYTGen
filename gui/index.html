@@ -21,6 +21,7 @@
 
   <div class="body-content">
   <aside id="wizard-bar" class="wizard-bar" aria-label="制作ウィザード">
+    <div class="wizard-bar-stack">
     <div class="wizard-steps" role="tablist">
       <button type="button" class="wizard-step active" data-wizard-step="1" data-tab="csv" id="wiz-step-1">1 台本→CSV</button>
       <button type="button" class="wizard-step" data-wizard-step="2" data-tab="csv" id="wiz-step-2">2 プレビュー</button>
@@ -28,27 +29,38 @@
       <button type="button" class="wizard-step" data-wizard-step="4" data-tab="production" id="wiz-step-4">4 演出適用</button>
       <button type="button" class="wizard-step" data-wizard-step="5" data-tab="production" id="wiz-step-5">5 完了</button>
     </div>
-    <p id="wizard-hint" class="wizard-hint"></p>
-    <div class="wizard-nav-row">
-      <button type="button" id="btn-wizard-prev" class="wizard-nav-btn">← 戻る</button>
-      <button type="button" id="btn-wizard-next" class="wizard-nav-btn primary">次へ →</button>
+    <div class="wizard-bar-scroll">
+      <p class="wizard-bar-note">上のタブで画面を切り替えると、左の手順はそのタブの入り口に合わせて移動します。</p>
+      <details class="wizard-manual">
+        <summary>意思決定・手動確認が必要なタイミング</summary>
+        <div class="wizard-manual-body">
+          <p><strong>ウィザードの範囲</strong>：S-3（台本→CSV）と S-6b（IR 検証・演出適用）まで。<strong>S-4/S-5</strong>（YMM4 取込・読み上げ・字幕直し）、<strong>S-7〜S-9</strong>（通し・サムネ・投稿）は本 GUI の外です。詳細は「操作ガイド」→ <code>docs/GUI_MINIMUM_PATH.md</code>。</p>
+          <p><strong>機械が保証する範囲</strong>：IR 語彙・row-range・palette 整合・patch 時の failure class 検出。ここで止まったらログのコード名が一次手掛かりです。</p>
+          <p><strong>必ず人が見るタイミング</strong>：YMM4 取込後の読み上げ・字幕の<strong>最終見た目</strong>（ツールの表示幅は近似）。表情ラベルの<strong>見え方の妥当性</strong>、背景・テンポ・音量の<strong>創作判断</strong>、通しプレビュー、サムネ・公開判断。</p>
+          <p><strong>頻度を抑える運用</strong>：増分変更のたびに visual proof を求めない方針です。初回 E2E と最終制作物の確認を優先し、同じ種類の失敗の繰り返し確認は避けます（<code>docs/OPERATOR_WORKFLOW.md</code>「検証の境界」参照）。</p>
+          <p><strong>TIMELINE_ROUTE_MISS / SE_WRITE_ROUTE_UNSUPPORTED</strong>：多くは「その ymmp に経路が無い」という<strong>サンプル・テンプレ依存</strong>です。創作判断というより、別テンプレで再測定するか feature を見直す<strong>設計判断</strong>が先にあります。</p>
+        </div>
+      </details>
     </div>
-    <button type="button" id="btn-wizard-scoring" class="wizard-nav-btn wizard-scoring-btn hidden">品質診断タブへ</button>
-    <details class="wizard-manual">
-      <summary>意思決定・手動確認が必要なタイミング</summary>
-      <div class="wizard-manual-body">
-        <p><strong>ウィザードの範囲</strong>：S-3（台本→CSV）と S-6b（IR 検証・演出適用）まで。<strong>S-4/S-5</strong>（YMM4 取込・読み上げ・字幕直し）、<strong>S-7〜S-9</strong>（通し・サムネ・投稿）は本 GUI の外です。詳細は「操作ガイド」→ <code>docs/GUI_MINIMUM_PATH.md</code>。</p>
-        <p><strong>機械が保証する範囲</strong>：IR 語彙・row-range・palette 整合・patch 時の failure class 検出。ここで止まったらログのコード名が一次手掛かりです。</p>
-        <p><strong>必ず人が見るタイミング</strong>：YMM4 取込後の読み上げ・字幕の<strong>最終見た目</strong>（ツールの表示幅は近似）。表情ラベルの<strong>見え方の妥当性</strong>、背景・テンポ・音量の<strong>創作判断</strong>、通しプレビュー、サムネ・公開判断。</p>
-        <p><strong>頻度を抑える運用</strong>：増分変更のたびに visual proof を求めない方針です。初回 E2E と最終制作物の確認を優先し、同じ種類の失敗の繰り返し確認は避けます（<code>docs/OPERATOR_WORKFLOW.md</code>「検証の境界」参照）。</p>
-        <p><strong>TIMELINE_ROUTE_MISS / SE_WRITE_ROUTE_UNSUPPORTED</strong>：多くは「その ymmp に経路が無い」という<strong>サンプル・テンプレ依存</strong>です。創作判断というより、別テンプレで再測定するか feature を見直す<strong>設計判断</strong>が先にあります。</p>
+    <div class="wizard-bar-footer">
+      <div class="wizard-nav-row">
+        <button type="button" id="btn-wizard-prev" class="wizard-nav-btn">← 戻る</button>
+        <button type="button" id="btn-wizard-next" class="wizard-nav-btn primary">次へ →</button>
       </div>
-    </details>
+      <button type="button" id="btn-wizard-scoring" class="wizard-nav-btn wizard-scoring-btn hidden">品質診断タブへ</button>
+    </div>
+    </div>
   </aside>
 
   <main>
+    <div id="wizard-main-context" class="wizard-main-context" aria-live="polite">
+      <span id="wizard-main-context-step" class="wizard-main-context-step"></span>
+      <p id="wizard-main-context-body" class="wizard-main-context-body"></p>
+    </div>
+    <div class="main-tab-scroll">
     <!-- CSV 変換タブ -->
     <section id="tab-csv" class="tab-content active">
+      <div id="wizard-anchor-csv-input" class="wizard-step-anchor">
       <div id="drop-zone" class="drop-zone">
         <p>台本 .txt をここにドラッグ&ドロップ</p>
         <p class="hint">または <button id="btn-select-txt">ファイルを選択</button></p>
@@ -84,8 +96,11 @@
             <input type="checkbox" id="csv-save-diagnostics" checked> 台本診断 JSON も保存（B-18・C-09 用。CSV と同じフォルダ）
           </label>
         </div>
+        <p class="hint">本線（S-3）では、チェック ON のまま <strong>Build CSV</strong> または <strong>Dry Run</strong> が成功したときだけ台本診断（B-18）の JSON が書き出されます（CSV 出力と同じフォルダ／dry-run で CSV が無いときは台本と同じフォルダ）。CSV を経由せず診断だけやり直す・別の台本を対象にする・まず結果だけ画面で確認したいときは「品質診断」タブの B-18 を使います。</p>
+      </div>
       </div>
 
+      <div id="wizard-anchor-csv-preview" class="wizard-step-anchor">
       <div class="action-row">
         <button id="btn-build-csv" class="primary" disabled>Build CSV</button>
         <button id="btn-dry-run">Dry Run</button>
@@ -107,10 +122,12 @@
       </div>
 
       <div id="csv-result" class="result-panel hidden"></div>
+      </div>
     </section>
 
     <!-- 演出適用タブ -->
     <section id="tab-production" class="tab-content">
+      <div id="wizard-anchor-prod-ir" class="wizard-step-anchor">
       <p class="hint production-lane-intro">必須/任意の正本は <code>docs/GUI_MINIMUM_PATH.md</code> のレーン B。下は運用時の目安です。</p>
       <div class="file-select-group">
         <div class="file-row">
@@ -157,7 +174,9 @@
         </div>
         <p class="file-row-hint">G-19 複数体運用時のみ。</p>
       </div>
+      </div>
 
+      <div id="wizard-anchor-prod-apply" class="wizard-step-anchor">
       <div class="action-row">
         <button id="btn-validate-ir" disabled>Validate IR</button>
         <button id="btn-apply" class="primary" disabled>Apply Production</button>
@@ -165,8 +184,11 @@
         <button id="btn-open-patched" class="hidden">出力フォルダを開く</button>
       </div>
 
+      <div id="wizard-anchor-prod-done" class="wizard-step-anchor">
       <div id="validate-result" class="result-panel hidden"></div>
       <div id="production-result" class="result-panel hidden"></div>
+      </div>
+      </div>
     </section>
 
     <!-- 品質診断タブ -->
@@ -192,6 +214,7 @@
 
       <div class="scoring-group">
         <h3>B-18 台本診断</h3>
+        <p class="hint">1 本通しの CSV 変換では、多くの場合「CSV 変換」タブの「台本診断 JSON も保存」で足ります（同じ <code>diagnose-script</code>）。ここは CSV 出力なしで診断を再実行したいときや、別の台本ファイルを対象にするとき用です。</p>
         <div class="file-row">
           <label>台本 .txt / .csv</label>
           <button class="btn-file" data-target="script-diag-input">選択</button>
@@ -235,6 +258,7 @@
         <div id="visual-result" class="result-panel hidden"></div>
       </div>
     </section>
+    </div>
   </main>
   </div>
 

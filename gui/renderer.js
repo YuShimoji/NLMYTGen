@@ -1,11 +1,22 @@
 // --- Tab switching ---
-function switchMainTab(tabName) {
+/** @param {string} tabName @param {{ alignWizard?: boolean }} [opts] alignWizard: ヘッダタブ由来のときだけ true（ウィザードをタブの入り口に揃える） */
+function switchMainTab(tabName, { alignWizard = true } = {}) {
   document.querySelectorAll('.tab').forEach((b) => {
     b.classList.toggle('active', b.dataset.tab === tabName);
   });
   document.querySelectorAll('.tab-content').forEach((s) => {
     s.classList.toggle('active', s.id === `tab-${tabName}`);
   });
+  if (tabName === 'scoring') {
+    clearWizardMainFocus();
+  }
+  if (alignWizard) {
+    const entryStep = { csv: 1, production: 3, scoring: 5 }[tabName];
+    if (entryStep != null) {
+      setWizardStep(entryStep, { persist: true, syncTab: false });
+    }
+  }
+  refreshWizardMainContextStrip();
 }
 
 document.querySelectorAll('.tab').forEach((btn) => {
@@ -24,22 +35,104 @@ const WIZARD_HINTS = {
 /** 各ステップのヒント末尾に付与（フル E2E ではないことの固定表示） */
 const WIZARD_SCOPE_FOOTER = '\n\n（ウィザード範囲: S-3・S-6b のみ／S-4・S-5 は YMM4／S-7〜S-9 は本 GUI 外）';
 
+const WIZARD_STEP_LABELS = {
+  1: '手順 1 · 台本→CSV',
+  2: '手順 2 · プレビュー',
+  3: '手順 3 · IR 検証',
+  4: '手順 4 · 演出適用',
+  5: '手順 5 · 完了',
+};
+
+/** メイン上部の手順コンテキスト帯（品質診断タブでは非表示） */
+function refreshWizardMainContextStrip() {
+  const strip = document.getElementById('wizard-main-context');
+  const body = document.getElementById('wizard-main-context-body');
+  const stepEl = document.getElementById('wizard-main-context-step');
+  if (!strip || !body || !stepEl) return;
+  const scoringOn = document.getElementById('tab-scoring')?.classList.contains('active');
+  if (scoringOn) {
+    strip.classList.add('hidden');
+    body.textContent = '';
+    stepEl.textContent = '';
+    return;
+  }
+  strip.classList.remove('hidden');
+  stepEl.textContent = WIZARD_STEP_LABELS[currentWizardStep] || '';
+  body.textContent = (WIZARD_HINTS[currentWizardStep] || '') + WIZARD_SCOPE_FOOTER;
+}
+
+/** ウィザード手順 → メイン領域のフォーカス先（品質診断タブ表示中は適用しない） */
+const WIZARD_MAIN_ANCHORS = {
+  1: 'wizard-anchor-csv-input',
+  2: 'wizard-anchor-csv-preview',
+  3: 'wizard-anchor-prod-ir',
+  4: 'wizard-anchor-prod-apply',
+  5: 'wizard-anchor-prod-done',
+};
+
 let currentWizardStep = 1;
 
-function setWizardStep(step, { persist = true } = {}) {
+function prefersReducedMotion() {
+  return typeof window.matchMedia === 'function'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function clearWizardMainFocus() {
+  document.querySelectorAll('.wizard-main-focus').forEach((el) => {
+    el.classList.remove('wizard-main-focus');
+  });
+}
+
+/**
+ * メイン領域の該当ブロックへスクロールし、アウトラインを付与する。
+ * 品質診断タブ表示中は no-op（ウィザード表現の整理は別途）。
+ */
+function focusWizardMain(step) {
+  const scoringSection = document.getElementById('tab-scoring');
+  if (scoringSection && scoringSection.classList.contains('active')) {
+    return;
+  }
+  let anchorId = WIZARD_MAIN_ANCHORS[step];
+  if (!anchorId) return;
+  const vr = document.getElementById('validate-result');
+  const pr = document.getElementById('production-result');
+  let el = document.getElementById(anchorId);
+  if (step === 5 && anchorId === 'wizard-anchor-prod-done' && el) {
+    const bothHidden = vr && pr && vr.classList.contains('hidden') && pr.classList.contains('hidden');
+    if (bothHidden || el.offsetHeight < 32) {
+      anchorId = 'wizard-anchor-prod-apply';
+      el = document.getElementById(anchorId);
+    }
+  }
+  if (!el || el.offsetParent == null) {
+    return;
+  }
+  clearWizardMainFocus();
+  el.classList.add('wizard-main-focus');
+  const behavior = prefersReducedMotion() ? 'instant' : 'smooth';
+  try {
+    el.scrollIntoView({ behavior, block: 'start' });
+  } catch {
+    el.scrollIntoView(true);
+  }
+}
+
+function scheduleWizardMainFocus(step) {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => focusWizardMain(step));
+  });
+}
+
+function setWizardStep(step, { persist = true, syncTab = true } = {}) {
   currentWizardStep = Math.min(5, Math.max(1, step));
   document.querySelectorAll('.wizard-step').forEach((el) => {
     const s = parseInt(el.dataset.wizardStep, 10);
     el.classList.toggle('active', s === currentWizardStep);
     el.classList.toggle('done', s < currentWizardStep);
   });
-  const hintEl = document.getElementById('wizard-hint');
-  if (hintEl) {
-    hintEl.textContent = (WIZARD_HINTS[currentWizardStep] || '') + WIZARD_SCOPE_FOOTER;
-  }
   const stepBtn = document.querySelector(`.wizard-step[data-wizard-step="${currentWizardStep}"]`);
-  if (stepBtn && stepBtn.dataset.tab) {
-    switchMainTab(stepBtn.dataset.tab);
+  if (syncTab && stepBtn && stepBtn.dataset.tab) {
+    switchMainTab(stepBtn.dataset.tab, { alignWizard: false });
   }
   document.getElementById('btn-wizard-prev').disabled = currentWizardStep <= 1;
   document.getElementById('btn-wizard-next').disabled = currentWizardStep >= 5;
@@ -50,6 +143,8 @@ function setWizardStep(step, { persist = true } = {}) {
   if (persist) {
     autoSave();
   }
+  refreshWizardMainContextStrip();
+  scheduleWizardMainFocus(currentWizardStep);
 }
 
 document.querySelectorAll('.wizard-step').forEach((btn) => {
@@ -445,39 +540,10 @@ dropZone.addEventListener('drop', (e) => {
   e.preventDefault();
   dropZone.classList.remove('dragover');
   const files = e.dataTransfer.files;
-  // #region agent log
-  const f0 = files.length > 0 ? files[0] : null;
-  window.nlmytgen.debugLog({
-    runId: 'pre-fix',
-    hypothesisId: 'H1',
-    location: 'renderer.js:drop',
-    message: 'drop handler',
-    data: {
-      filesLength: files.length,
-      fileName: f0 ? f0.name : null,
-      hasPathProp: !!(f0 && 'path' in f0),
-      pathType: f0 && 'path' in f0 ? typeof f0.path : 'n/a',
-      pathValue: f0 && f0.path != null ? String(f0.path).slice(0, 200) : null,
-    },
-  });
-  // #endregion
   if (files.length > 0) {
     const f = files[0];
     const legacy = typeof f.path === 'string' ? f.path : '';
     const resolved = (legacy && legacy.trim()) || window.nlmytgen.getPathForFile(f) || '';
-    // #region agent log
-    window.nlmytgen.debugLog({
-      runId: 'post-fix',
-      hypothesisId: 'FIX',
-      location: 'renderer.js:drop-resolve',
-      message: 'path resolution',
-      data: {
-        legacyNonEmpty: !!(legacy && legacy.trim()),
-        resolvedNonEmpty: !!resolved,
-        resolvedTail: resolved ? resolved.slice(-80) : null,
-      },
-    });
-    // #endregion
     if (resolved) {
       setTxtFile(resolved);
     }

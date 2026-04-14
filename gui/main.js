@@ -4,7 +4,6 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 
 const SETTINGS_PATH = path.join(__dirname, 'project-settings.json');
-const DEBUG_LOG_PATH = path.join(__dirname, '..', 'debug-1205ed.log');
 
 let mainWindow;
 
@@ -27,18 +26,6 @@ function createWindow() {
 
 app.whenReady().then(createWindow);
 app.on('window-all-closed', () => app.quit());
-
-// #region agent log
-ipcMain.handle('debug-log', async (_event, payload) => {
-  try {
-    const line = `${JSON.stringify({ sessionId: '1205ed', timestamp: Date.now(), ...payload })}\n`;
-    fs.appendFileSync(DEBUG_LOG_PATH, line, 'utf8');
-  } catch {
-    /* ignore debug I/O errors */
-  }
-  return true;
-});
-// #endregion
 
 // --- IPC handlers ---
 

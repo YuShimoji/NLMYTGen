@@ -70,18 +70,49 @@ nav { display: flex; gap: 4px; }
 .wizard-bar {
   width: 208px;
   flex-shrink: 0;
+  align-self: stretch;
+  min-height: 0;
   background: #16213e;
   border-right: 1px solid #0f3460;
   padding: 16px 12px;
   display: flex;
   flex-direction: column;
+  gap: 0;
+}
+
+/* 手順＋ヒント＋ナビを上から詰め、サイドバー下の余白は背景のみ（flex:1 スクロール内の死に空間を避ける） */
+.wizard-bar-stack {
+  display: flex;
+  flex-direction: column;
   gap: 10px;
+  align-self: flex-start;
+  width: 100%;
+  max-height: 100%;
+  min-height: 0;
+  flex: 0 1 auto;
 }
 
 .wizard-steps {
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.wizard-bar-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.wizard-bar-footer {
+  flex-shrink: 0;
+  padding-top: 8px;
+  border-top: 1px solid #0f3460;
 }
 
 .wizard-step {
@@ -104,6 +135,7 @@ nav { display: flex; gap: 4px; }
   border-color: #e94560;
   color: #fff;
   background: #0f3460;
+  box-shadow: 0 0 0 1px rgba(233, 69, 96, 0.35), 0 0 14px rgba(233, 69, 96, 0.22);
 }
 
 .wizard-step.done:not(.active) {
@@ -111,19 +143,17 @@ nav { display: flex; gap: 4px; }
   border-color: #14532d;
 }
 
-.wizard-hint {
-  font-size: 11px;
-  color: #888;
-  line-height: 1.5;
-  min-height: 3.2em;
+.wizard-bar-note {
+  font-size: 10px;
+  line-height: 1.45;
+  color: #6b7280;
+  margin: 0;
 }
 
 .wizard-nav-row {
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
-  padding-top: 8px;
-  border-top: 1px solid #0f3460;
 }
 
 .wizard-nav-btn {
@@ -184,6 +214,34 @@ nav { display: flex; gap: 4px; }
 .wizard-manual-body code {
   font-size: 10px;
   color: #e94560;
+}
+
+/* ウィザード連動: メイン領域のアンカー強調（scroll-margin でヘッダ下に収める） */
+.wizard-step-anchor {
+  scroll-margin-top: 12px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+/* ネストされたアンカー（prod-done inside prod-apply）は既定で余白を消す */
+.wizard-step-anchor .wizard-step-anchor {
+  border: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* ネストされたアンカーでもフォーカス時はボーダーを表示する */
+.wizard-step-anchor .wizard-step-anchor.wizard-main-focus {
+  border: 2px solid #e94560;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.wizard-step-anchor.wizard-main-focus {
+  outline: none;
+  border-color: #e94560;
+  transition: border-color 0.2s ease;
 }
 
 /* 失敗時エラーカード */
@@ -324,9 +382,62 @@ nav { display: flex; gap: 4px; }
 
 main {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
   padding: 20px;
+  gap: 12px;
+  overflow: hidden;
+}
+
+/* ウィザード手順の説明（メイン上部・左列より広い折り返し幅） */
+.wizard-main-context {
+  flex-shrink: 0;
+  max-height: min(40vh, 320px);
+  overflow-y: auto;
+  padding: 10px 12px;
+  background: #16213e;
+  border-radius: 8px;
+  border: 2px solid #e94560;
+}
+
+.wizard-main-context.hidden {
+  display: none !important;
+}
+
+.wizard-main-context-step {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #e94560;
+  margin-bottom: 6px;
+}
+
+.wizard-main-context-body {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #a8acb8;
+}
+
+.main-tab-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
   min-width: 0;
+}
+
+main .hint {
+  font-size: 12px;
+  line-height: 1.55;
+  color: #888;
+  margin-top: 8px;
+}
+
+main .hint strong {
+  color: #b8bcc8;
+  font-weight: 600;
 }
 
 .tab-content { display: none; }
@@ -394,6 +505,25 @@ main {
 }
 .setting-row input[type="text"] { flex: 1; }
 .setting-row input[type="number"] { width: 80px; }
+
+.settings-group > .hint {
+  margin-left: 112px;
+  margin-top: 10px;
+}
+
+.packet-assist-group {
+  margin-top: 16px;
+  padding: 12px;
+  background: #16213e;
+  border-radius: 6px;
+}
+
+.packet-assist-group h3 {
+  font-size: 13px;
+  margin-bottom: 8px;
+  color: #a0a0a0;
+  font-weight: 600;
+}
 
 /* File select (production tab) */
 .file-select-group { display: flex; flex-direction: column; gap: 8px; }

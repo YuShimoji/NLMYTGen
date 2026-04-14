@@ -1,9 +1,6 @@
 const { contextBridge, ipcRenderer, webUtils } = require('electron');
 
 contextBridge.exposeInMainWorld('nlmytgen', {
-  // #region agent log
-  debugLog: (payload) => ipcRenderer.invoke('debug-log', payload),
-  // #endregion
   /** Electron 32+ ではレンダラの File に path が無い。DnD / file input 共通で実パスを得る */
   getPathForFile: (file) => {
     try {
