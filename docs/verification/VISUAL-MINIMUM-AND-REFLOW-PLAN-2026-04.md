@@ -8,13 +8,13 @@
 | 用途                         | 正本パス                                                                                                                                          |
 | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | 現在位置・`next_action`         | [runtime-state.md](../runtime-state.md)                                                                                                       |
-| P0 縦・Block-A               | [P0-VERTICAL-STEERING-2026-04-11.md](P0-VERTICAL-STEERING-2026-04-11.md)、[P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md)、[P0-BLOCK-A-AND-PATH-A.md](P0-BLOCK-A-AND-PATH-A.md)（経路 A／C-09 任意） |
+| Phase 1 Block-A (縦)         | [P0-VERTICAL-STEERING-2026-04-11.md](P0-VERTICAL-STEERING-2026-04-11.md)、[P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md)、[P0-BLOCK-A-AND-PATH-A.md](P0-BLOCK-A-AND-PATH-A.md)（経路 A／C-09 任意） |
 | 機能台帳（新規コードは `proposed`→承認） | [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md)                                                                                                 |
 | L2/L3 境界                   | [AUTOMATION_BOUNDARY.md](../AUTOMATION_BOUNDARY.md)                                                                                           |
 | IR 語彙 vs patch 範囲          | [PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md)                                                                   |
 | IR 仕様                      | [PRODUCTION_IR_SPEC.md](../PRODUCTION_IR_SPEC.md)                                                                                             |
 | 改行・`build-csv` オプション       | [PIPELINE_SPEC.md](../PIPELINE_SPEC.md)、CLI `--help`                                                                                          |
-| P2 実戦・採用記録の置き場（任意）         | [P02-production-adoption-proof.md](P02-production-adoption-proof.md)                                                                          |
+| 主軸 (演出配置自動化) 実戦・採用記録の置き場（任意） | [P02-production-adoption-proof.md](P02-production-adoption-proof.md)                                                                          |
 
 
 ## 2. 二軸の到達定義（ズレの明示）
@@ -26,7 +26,7 @@
 | **B: 改行／YMM4 ギャップ** | `chars-per-line` と実画面の文字折り返しが一致しない | **同一 CSV 行**について、`build-csv --stats` の機械候補と、YMM4 取込後の **実表示**を対にし、ギャップを 1 行以上記録する（下 §4）。必要になったら [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) に **B-xx `proposed`**（係数・キャリブ CLI 等）を起票する | B-17 を「未実装」と書き換えること（台帳上は `done`。残差はモデル限界として扱う）              |
 
 
-`**next_action` の P0（Block-A）** は **Phase 1 の S-4 接続**までの狭義ゲートである。本ファイルの軸 A・B は **P0 通過後**または **オペレータ時間の並列配分**で進め、P0 の PASS を置き換えない。
+`**next_action` の Phase 1 Block-A** は **Phase 1 の S-4 接続**までの狭義ゲートである。本ファイルの軸 A・B は **Block-A 通過後**または **オペレータ時間の並列配分**で進め、Block-A の PASS を置き換えない。
 
 ## 3. トラック A — 視覚最低限チェックリスト（マトリクス整合）
 
@@ -76,7 +76,7 @@
 
 ### 4.1.2 記録例（第2コーパス・v14 主軸・`gapreflow_2026-04-13_b`）
 
-本編 P0 縦で固定している **v14 refined** について、B11（AI監視生台本）とは別コーパスで L2 推定を再採取した。YMM4 実機の通し確認は [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) `p0_mainline_v14_steering_2026-04-11_a` を正とし、本表は **CLI 機械ログ ↔ 既存 PASS 行の対照**に留める。
+本編 Phase 1 Block-A 縦で固定している **v14 refined** について、B11（AI監視生台本）とは別コーパスで L2 推定を再採取した。YMM4 実機の通し確認は [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) `p0_mainline_v14_steering_2026-04-11_a` を正とし、本表は **CLI 機械ログ ↔ 既存 PASS 行の対照**に留める。
 
 | 項目                  | 記録（`gapreflow_2026-04-13_b`） |
 | ------------------- | -------------------------------- |
@@ -85,7 +85,7 @@
 | `build-csv --stats` | overflow 候補 **16** 件。代表: row **23**（まりさ `display_width=54`）、row **49**（れいむ `display_width=60`）、row **157**（まりさ `display_width=74`）。全行番号はセッションログ参照。 |
 | YMM4                | 解像度・フォントの数値は P01 当該行に集約。Block-A（S-4）は **PASS** 済みのため、本 run は「v14 で L2 WARN が B11（2 件）より多いコーパス差」を記録するためのもの。 |
 | 取込後実測               | **機械 WARN 16 件**に対し、P01 申告ベースの実害分類は **未再採寸**（別レーン作業との二重負荷を避ける）。次に実機で「はみ出しのみ／不要」の対照を取る場合は `run_id` を分けて追記する。 |
-| 結論                  | v14 は **機械 WARN が多コーパス**だが P0 ゲート（S-4）は通過済み。ギャップ深掘りは **必要な行だけ** YMM4 目視でペア化するか、C-09 コーパスで WARN 純減を優先するかを案件で選択。係数・キャリブ CLI は引き続き **データ溜まり後**に B-xx 起票。 |
+| 結論                  | v14 は **機械 WARN が多コーパス**だが Phase 1 Block-A ゲート（S-4）は通過済み。ギャップ深掘りは **必要な行だけ** YMM4 目視でペア化するか、C-09 コーパスで WARN 純減を優先するかを案件で選択。係数・キャリブ CLI は引き続き **データ溜まり後**に B-xx 起票。 |
 
 ### 4.2 P01 表への追記（任意・1 行）
 

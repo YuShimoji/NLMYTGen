@@ -12,7 +12,7 @@
 | 発話単位 overlay 割当の根拠 IR | `samples/ir_visual_styles_dry_sample.json` |
 | その overlay マップ | `samples/visual_styles_overlay_map.example.json` |
 | apply-production 通し確認用 IR | `samples/p2_overlay_se_ir.json` |
-| P2 overlay マップ | `samples/p2_overlay_map.json` |
+| overlay/se マップ | `samples/p2_overlay_map.json` |
 | パレット | `samples/palette.ymmp` |
 | 本番相当 ymmp | `samples/production.ymmp` |
 

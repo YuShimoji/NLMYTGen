@@ -9,7 +9,7 @@
 | ID / 名称 | 承認日 | 内容要約 | PR / コミット |
 |-----------|--------|----------|----------------|
 | CORE-RETURN-DOCSYNC | 2026-04-09 | コア復帰準備スライス。P2/S6 再判定（見え方一行 + §2の5条件）反映、フル回帰結果反映、`runtime-state` の next_action を実装着手可能状態へ更新。 | local docs sync（このブロック） |
-| T1-P2-DOCSAMPLE | 2026-04-11 | [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §2.1: P2 段階投入向け **verification 手順 1 本 + 期待ログ**、および **IR/設定サンプル JSON**（[PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md) と矛盾なし）。FEATURE_REGISTRY 新規行なし。 | `927588e`: [T1-P2-staged-bg-anim-verification.md](T1-P2-staged-bg-anim-verification.md) + [p2_staged_bg_anim_verification.bundle.json](../../samples/p2_staged_bg_anim_verification.bundle.json) |
+| T1-BG-ANIM-DOCSAMPLE (旧 ID: T1-P2-DOCSAMPLE) | 2026-04-11 | [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §2.1: 背景アニメ 段階投入向け **verification 手順 1 本 + 期待ログ**、および **IR/設定サンプル JSON**（[PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md) と矛盾なし）。FEATURE_REGISTRY 新規行なし。 | `927588e`: [T1-P2-staged-bg-anim-verification.md](T1-P2-staged-bg-anim-verification.md) + [p2_staged_bg_anim_verification.bundle.json](../../samples/p2_staged_bg_anim_verification.bundle.json) |
 | T1-RUNBOOK-GUI | 2026-04-11 | 同ドラフト §2.2: [OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) と GUI 導線（[gui-llm-setup-guide.md](../gui-llm-setup-guide.md) 等）の **文言・手順の明確化**のみ。新タブ・F-01/F-02 復活は禁止。 | runbook トラック C 補足・最短チェックリスト、`gui-llm-setup-guide` CLI ゲート節、`LANE-B-gui-llm-sync-checklist` B-3 注記 |
 
 ---

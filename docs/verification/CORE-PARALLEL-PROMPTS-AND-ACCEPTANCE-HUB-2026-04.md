@@ -88,7 +88,7 @@
 
 **次サイクルでの縛り**
 
-- [runtime-state.md](../runtime-state.md) の `next_action`（**P0 Block-A 狭義**＝YMM4 S-4 読込まで）と矛盾させない。経路 A／C-09 任意の整理は [P0-BLOCK-A-AND-PATH-A.md](P0-BLOCK-A-AND-PATH-A.md)。オペレータ P0 はコア T フェーズと独立しうる。
+- [runtime-state.md](../runtime-state.md) の `next_action`（**Phase 1 Block-A 狭義**＝YMM4 S-4 読込まで）と矛盾させない。経路 A／C-09 任意の整理は [P0-BLOCK-A-AND-PATH-A.md](P0-BLOCK-A-AND-PATH-A.md)。オペレータの Phase 1 Block-A 運用はコア T フェーズと独立しうる。
 - **T2**: §1 表に **未実装かつ承認済み**のスライスがあるときのみ実施する。現状で次スライスが無い場合は **起票・ユーザー承認待ち**、または **回帰・既存バグ修正のみ**（[FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) 未承認の新規実装はしない）。
 
 ---

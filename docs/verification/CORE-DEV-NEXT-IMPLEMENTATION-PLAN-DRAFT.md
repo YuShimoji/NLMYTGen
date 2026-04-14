@@ -73,7 +73,7 @@ Gate B の「運用導線・記録」に合わせ、**次の優先**を推奨す
 1. **§2〜§3 の T0 承認は完了（2026-04-11）** — 記録は §6。以降の改訂は新たな承認行を §6 に追加する。
 2. **現在フェーズ T1**: [CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) §1 の **T1-P2-DOCSAMPLE** / **T1-RUNBOOK-GUI** を順に実施し、1 スライス完了ごとに PR またはコミットを分割する。
 3. コード変更が必要になった場合のみ §3 テンプレに従い FEATURE_REGISTRY で `proposed` → 承認 → 別スライスとして起票する。
-4. P0 は [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) の `p0_nextcycle_amazon_2026-04-10_a` を基準に継続し、YMM4 読込結果はオペレータ追記を取り込みながら判定を更新する。
+4. Phase 1 Block-A (メンテ層・継続観測) は [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) の `p0_nextcycle_amazon_2026-04-10_a` を基準に継続し、YMM4 読込結果はオペレータ追記を取り込みながら判定を更新する。
 5. 画面演出は [VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md) の A1-A4/B1-B4 を **演出単位パケット**として扱い、PASS パケットのみを本ドラフトへ反映する。
 
 ---

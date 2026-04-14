@@ -112,7 +112,7 @@ uv run python -m src.cli.main build-csv refined.txt -o _tmp_out.csv `
 
 `apply-production` / `patch-ymmp` を使う場合は [WORKFLOW.md](WORKFLOW.md) S-6b と CLI ヘルプに従う。
 
-### トラック C 補足 — P2 `bg_anim` の段階投入（機械ゲート）
+### トラック C 補足 — 主軸 `bg_anim` の段階投入（機械ゲート）
 
 本編の一部セクションだけ `bg_anim`（パン・ズーム等）を載せ始めるときは、**先に repo 内の固定手順で validate / dry-run を通す**と差分が追いやすい。
 

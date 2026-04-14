@@ -8,15 +8,15 @@
 
 ## 1. YMM4 稼働ブロック（スロット名テンプレ）
 
-PRE-PLAN のとおり **レーン C と P2 は同一 YMM4 ウィンドウを奪い合う**。1 人運用なら **同時フルは避け、時間帯で分割**する。トラック A（CSV 取込〜タイムライン調整）と同日にやる場合は、**読込ブロック**と **テンプレ／マップ整備ブロック**を分ける。
+PRE-PLAN のとおり **レーン C と 主軸 (背景アニメ) は同一 YMM4 ウィンドウを奪い合う**。1 人運用なら **同時フルは避け、時間帯で分割**する。トラック A（CSV 取込〜タイムライン調整）と同日にやる場合は、**読込ブロック**と **テンプレ／マップ整備ブロック**を分ける。
 
 以下は **運用方針として固定**したスロット名（具体の開始時刻はオペレータの外部スケジュールに委ねる。repo に週 cadence は置かない）。
 
 | ブロック | 目的 | 運用メモ |
 |----------|------|----------|
-| C-1 | レーン C：YMM4 テンプレ複製・`overlay_map` 編集 | P2 と **同一セッションでフル併用しない** |
+| C-1 | レーン C：YMM4 テンプレ複製・`overlay_map` 編集 | 主軸 (背景アニメ) と **同一セッションでフル併用しない** |
 | C-2 | レーン C：`validate-ir` / `apply-production` の CLI 確認 | repo 側は §5 まで **完了済み** |
-| P2 | 背景アニメ短サイクル（P2） | `runtime-state.md` の `next_action` に従う |
+| 主軸-BG | 背景アニメ短サイクル | `runtime-state.md` の `next_action` に従う |
 | A | トラック A：CSV 取込・本番 ymmp 調整 | C-1 と **別ブロック**推奨 |
 
 ---
@@ -136,7 +136,7 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
 - 作業用マップを `_local/lane_c/overlay_map.json` として配置（`samples/p2_overlay_map.json` を元に作成）。
 - `_local/` は [.gitignore](../../.gitignore) の除外対象であり、絶対パスを含むローカル資産参照をコミットしない方針を維持。
 
-### 8.2 `validate-ir`（P2 IR 基準）
+### 8.2 `validate-ir`（overlay/se IR 基準）
 
 ```powershell
 uv run python -m src.cli.main validate-ir samples/p2_overlay_se_ir.json `
@@ -147,7 +147,7 @@ uv run python -m src.cli.main validate-ir samples/p2_overlay_se_ir.json `
 - **結果**: exit code **0**（`Validation PASSED with 3 warnings`）。
 - **観測 warning**: `FACE_SERIOUS_SKEW`、`FACE_LATENT_GAP`、`IDLE_FACE_MISSING`（既知の許容 warning として扱う）。
 
-### 8.3 `apply-production --dry-run`（P2 IR 基準）
+### 8.3 `apply-production --dry-run`（overlay/se IR 基準）
 
 ```powershell
 uv run python -m src.cli.main apply-production samples/production.ymmp samples/p2_overlay_se_ir.json `
@@ -209,7 +209,7 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
 
 [CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) **Prompt-C** に沿った `validate-ir` / `apply-production --dry-run` の再実行。repo root は本リポジトリ。PowerShell では stderr の WARNING が非ゼロ終了と誤認されうるため、**終了コードは `cmd /c` で確認**（いずれも **0**）。
 
-**overlay-map（P2 系）**: `_local/lane_c/overlay_map.json` が存在したため、§8.2 / §8.3 と同じく **同ファイル**を使用（無い環境では `samples/p2_overlay_map.json` で §5.2 相当の回帰とする）。
+**overlay-map（overlay/se 系）**: `_local/lane_c/overlay_map.json` が存在したため、§8.2 / §8.3 と同じく **同ファイル**を使用（無い環境では `samples/p2_overlay_map.json` で §5.2 相当の回帰とする）。
 
 ### 10.1 `validate-ir`（§5.1 三スタイル dry）
 
@@ -223,7 +223,7 @@ uv run python -m src.cli.main validate-ir samples/ir_visual_styles_dry_sample.js
 - **要約**: `Validation PASSED with 1 warnings`（`FACE_LATENT_GAP` ほか、既存方針どおり許容）  
 - **フルログ**: [samples/lane_c_promptc_validate_dry_2026-04-10.txt](../../samples/lane_c_promptc_validate_dry_2026-04-10.txt)
 
-### 10.2 `validate-ir`（§8.2 P2 IR + `_local`）
+### 10.2 `validate-ir`（§8.2 overlay/se IR + `_local`）
 
 ```powershell
 uv run python -m src.cli.main validate-ir samples/p2_overlay_se_ir.json `
@@ -260,7 +260,7 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
 
 ## 11. 実行ログ（2026-04-11）— Prompt-C 機械回帰
 
-[CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) **Prompt-C** に沿った再実行。本環境では `_local/lane_c/overlay_map.json` が **未配置**のため、§8.2 / §8.3 の **P2 系**はドキュメント記載のフォールバックどおり **`samples/p2_overlay_map.json`** を使用（§5.2 相当の回帰）。
+[CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) **Prompt-C** に沿った再実行。本環境では `_local/lane_c/overlay_map.json` が **未配置**のため、§8.2 / §8.3 の **overlay/se 系**はドキュメント記載のフォールバックどおり **`samples/p2_overlay_map.json`** を使用（§5.2 相当の回帰）。
 
 ### 11.1 `validate-ir`（§5.1 三スタイル dry）
 
@@ -274,7 +274,7 @@ uv run python -m src.cli.main validate-ir samples/ir_visual_styles_dry_sample.js
 - **要約**: `Validation PASSED with 1 warnings`（`FACE_LATENT_GAP`、既存方針どおり許容）  
 - **フルログ**: [samples/lane_c_promptc_validate_dry_2026-04-11.txt](../../samples/lane_c_promptc_validate_dry_2026-04-11.txt)
 
-### 11.2 `validate-ir`（P2 IR、`samples/p2_overlay_map.json`）
+### 11.2 `validate-ir`（overlay/se IR、`samples/p2_overlay_map.json`）
 
 ```powershell
 uv run python -m src.cli.main validate-ir samples/p2_overlay_se_ir.json `
