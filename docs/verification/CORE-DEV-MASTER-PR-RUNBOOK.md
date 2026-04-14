@@ -24,11 +24,13 @@ git checkout -b feat/topic-name
 
 ## 2. 回帰（PR オープン前）
 
+`src/` または `tests/` を変更したブロックの終わりにのみ実施する（GUI/docs のみの変更では不要）。integration テストは `conftest.py` で default-skip されているため、通常は下記のみで良い:
+
 ```powershell
-$env:NLMYTGEN_PYTEST_FULL = "1"
 uv run pytest -q --tb=short
-Remove-Item Env:NLMYTGEN_PYTEST_FULL -ErrorAction SilentlyContinue
 ```
+
+integration 込みで走らせたい局面（パイプライン全経路の疎通確認など）では `$env:NLMYTGEN_PYTEST_FULL = "1"` を一時的に付ける。
 
 ---
 
@@ -38,10 +40,10 @@ Remove-Item Env:NLMYTGEN_PYTEST_FULL -ErrorAction SilentlyContinue
 gh auth status
 gh pr create --base master --head feat/topic-name `
   --title "scope: summary" `
-  --body "## 概要`n- master 起点トピックブランチの変更を統合。`n- コア開発手順: verification/CORE-DEV-POST-DELEGATION-INDEX.md`n`n## チェック`n- [ ] NLMYTGEN_PYTEST_FULL=1 pytest 緑`n- [ ] ドキュメントリンク切れなし`n"
+  --body "## 概要`n- master 起点トピックブランチの変更を統合。`n- コア開発手順: verification/CORE-DEV-POST-DELEGATION-INDEX.md`n`n## チェック`n- [ ] ドキュメントリンク切れなし`n"
 ```
 
-（タイトル・本文はチーム規約に合わせて編集する。）
+（タイトル・本文はチーム規約に合わせて編集する。pytest の実施有無は §2 の条件に従う。）
 
 ---
 
@@ -50,19 +52,18 @@ gh pr create --base master --head feat/topic-name `
 ```powershell
 git checkout master
 git pull origin master
-$env:NLMYTGEN_PYTEST_FULL = "1"
-uv run pytest -q --tb=short
 ```
 
-- [runtime-state.md](../runtime-state.md) の `last_verification_date` を更新。  
-- 長寿命ブランチを残す場合は、マージ後に `feat/phase2-motion-segmentation` を削除するか方針を決める。
+- [runtime-state.md](../runtime-state.md) の `last_verification_date` は §2 で回帰を走らせた場合のみ更新する。
+- マージ後の pytest 再実行は不要（§2 で済んでいる）。
 
 ---
 
 ## 5. 変更履歴
 
+- 2026-04-14: §2-4 から「PR ごとの `NLMYTGEN_PYTEST_FULL=1` 全件実行」要求を除去。`OPERATOR_WORKFLOW.md` L120 の「Python 変更時のみテスト」方針と整合させた。
 - 2026-04-10: 以後の手順を `master` 起点トピックブランチ向けに一般化。
 - 2026-04-09: 初版。
 - 2026-04-09: `feat/phase2-motion-segmentation` → `master` の PR を作成: [https://github.com/YuShimoji/NLMYTGen/pull/1](https://github.com/YuShimoji/NLMYTGen/pull/1)
-- 2026-04-09: PR #1 を **マージ**（merge commit）。`master` で `NLMYTGEN_PYTEST_FULL=1 uv run pytest` 再実行済み。
+- 2026-04-09: PR #1 を **マージ**（merge commit）。
 

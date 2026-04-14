@@ -25,12 +25,11 @@
 - G-12 measurement packet: `docs/verification/G12-timeline-route-measurement.md` と `samples/timeline_route_contract.json` を追加。profile ベースの route contract で current corpus の `motion` / `bg_anim` を固定し、fade-family `transition` route (`VoiceFade*` / `JimakuFade*` / `Fade*`) も mechanical に回収できる状態まで更新
   - G-13 overlay / se insertion packet: `docs/verification/G13-overlay-se-insertion-packet.md`。`overlay` は deterministic `ImageItem` 挿入。`se` は G-18 で `AudioItem` 挿入まで拡張（旧 `SE_WRITE_ROUTE_UNSUPPORTED` は廃止）
   - packaging frontier packet: H-01〜H-04 schema + dry proof 記録済み。H-02 strict GUI rerun proof は 2026-04-06 pass で閉じた
-  - `uv run pytest`: 220 passed / 3 xpassed
   - B-12 行バランス重視の字幕分割を実装。`--balance-lines` を追加し、2行字幕向けに自然な改行を opt-in で挿入できるようにした
   - B-12 検証: `build-csv --max-lines 2 --chars-per-line 40 --balance-lines --stats --dry-run` で実データ preview を確認。CSV 1行内の改行保持テストも追加
   - B-12 post-import 再観測: 手動改行 10 / 再分割したい長文 15 / 不自然な単語分割 5。`。` での改行は効いたが、句読点の少ない長文と 1 文字最終行が残った
   - B-13 を実装。`--balance-lines` の内部改善として、句読点が少ない長文の clause-aware split fallback と widow/orphan guard を追加
-  - B-13 検証: `uv run pytest` 54 PASS。sample dry-run では 57 発話 → 62 行に再編され、長い一文の一部が節分割されることを確認
+  - B-13 検証: sample dry-run では 57 発話 → 62 行に再編され、長い一文の一部が節分割されることを確認
   - B-13 post-import 再観測: 手動改行 5 / 再分割したい長文 10 / 不自然な単語分割 5。減りはしたがまだ多く、長い一文が 1 字幕に残るケースは未解決
   - B-14 を実装。複数文発話の中にある単一長文も sentence ごとに再展開し、aggressive clause chunking fallback を追加
   - B-14 検証: sample dry-run では 57 発話 → 95 行に再編、overflow candidates は 3 件まで低減
@@ -279,7 +278,7 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 | 2026-04-06 | G-12 measurement packet を追加し、current corpus で route narrowing を先に完了 | harness のみ / packet 化して route narrowing | `motion` / `bg_anim` は current corpus で狭め、manual frontier を `transition` probe 1 本へ縮めると、operator の判断負荷を最小化できるため |
 | 2026-04-06 | fade-family `transition` route を ymmp_measure で回収可能にし、G-12 contract を更新 | `transition` を route 不在扱い / fade-family route を corpus-derived contract 化 | repo-local corpus に既にある fade key を拾えば、手動 probe を増やさずに `transition` の主要 family を mechanical に確定できるため |
 | 2026-04-06 | G-13 overlay / se insertion packet を completed として閉じる | overlay/se を broad manual frontier に残す / packet として閉じる | `overlay` は registry + timing anchor から deterministic な `ImageItem` 挿入まで閉じた。当時 `se` は timing までで write route 不在を `SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast（G-18 で挿入まで実装） |
-| 2026-04-06 | Phase 1 として B-18 台本機械診断と C-09 refinement プロンプトを実装完了 | 保留 / 実装 | `diagnose-script`・`script_diagnostics.py`・`S1-script-refinement-prompt.md`・GUI 品質タブ・B18 dry proof・pytest 拡張まで一括 |
+| 2026-04-06 | Phase 1 として B-18 台本機械診断と C-09 refinement プロンプトを実装完了 | 保留 / 実装 | `diagnose-script`・`script_diagnostics.py`・`S1-script-refinement-prompt.md`・GUI 品質タブ・B18 dry proof まで一括 |
 | 2026-04-06 | Next roadmap: P01 運用手順、P2A feat ブランチレビュー（一括マージ不採用）、P2B+G-14 production contract、P2C SE 境界、サムネ 1 枚チェックリスト | 未実施 / 実施 | Phase 2/3 の文書・contract 整備を master に反映 |
 | 2026-04-05 | サムネイル戦略は抽象煽りより具体数値・固有名詞優先 + rotation 管理 | 定型煽り / 具体性優先 / 各動画場当たり | 本文根拠とクリック訴求を両立し、固定パターン反復による疲労と硬直を避けるため |
 | 2026-04-05 | スコアリングは visual density / evidence richness の2軸から着手 | スコアなし / 単一総合点 / 2軸 | 演出不足と内容不足を別々に診断し、制作改善とマーケ改善の接続点を明確化するため |
@@ -327,12 +326,12 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
 - Last Change Relation: **2026-04-13** 並列プラン実施記録（上記 Shared Focus）。**2026-04-12** P01 `p0_mainline_v14_steering_2026-04-11_a` を PASS（YMM4 S-4）に更新、`next_action` を Block-A 通過後へ。**同日（先行）**: P0 Block-A と経路 A の正本化（[P0-BLOCK-A-AND-PATH-A.md](verification/P0-BLOCK-A-AND-PATH-A.md)、`runtime-state.md` P0 行、`samples/p0_steering_v14_2026-04-12_*`）。**2026-04-11** T0 完了＋P0 Amazon 並行証跡・サンプルを `origin/master` へ同期。**同日追記**: 舵取りプラン実装（P0 縦固定・`next_action` 先頭 P0・[P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md)）。履歴は git log
 - Handoff Focus (next): Group 制御の推奨対応は完了。`group_motion` の失敗3種（`NO_GROUP_ITEM` / `TARGET_MISS` / `TARGET_AMBIGUOUS`）は CLI で fatal 化済み。次回の再開起点は [G20-group-and-asset-automation-comprehensive-review-2026-04.md](verification/G20-group-and-asset-automation-comprehensive-review-2026-04.md) の「次スライス推奨（`group_target` 命名規約 lint 強化）」。
-- Evidence: Production E2E 実証済み + `NLMYTGEN_PYTEST_FULL=1 uv run pytest`: **313 passed** (2026-04-10)
+- Evidence: Production E2E 実証済み + pytest 全件 **313 passed** (2026-04-10)。以降の pytest 実行は `src/` または `tests/` を変更したブロックの終わりにのみ `uv run pytest -q` を走らせ、必要時のみ `NLMYTGEN_PYTEST_FULL=1` を付ける。
 - 案件モード: CLI artifact
 - 現在の主レーン: 方向転換中 (実制作bottleneck直接軽減へ移行)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近
 - Current Trust Assessment:
-  - trusted: B-01~B-17 全字幕スタック (93 PASS)
+  - trusted: B-01~B-17 全字幕スタック（実装+検証済み）
   - trusted: G-02 IR 語彙 v1.0、G-02b ymmp 構造解析、G-06 patch-ymmp 実機検証
   - trusted: extract-template (face_map/bg_map 自動抽出)
   - trusted: G-05 v4 proof 完了。Custom GPT が PRODUCTION_IR_SPEC v1.0 準拠の IR を正常出力

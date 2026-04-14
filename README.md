@@ -152,32 +152,14 @@ python -m src.cli.main build-csv file1.txt file2.txt file3.txt --speaker-map Hos
 
 ## 開発環境とテスト
 
-**推奨:** このリポジトリでは [CLAUDE.md](CLAUDE.md) のスタックどおり **`uv`** で依存同期・テストする（`uv sync`、`uv run pytest`）。`pytest` は `pyproject.toml` の optional `dev` にも定義あり。
-
-**代替:** `requirements-dev.txt` と `pip` でも同じテストが走る。
+このリポジトリは `uv` を推奨する（`uv sync` + `uv run pytest`）。`pytest` は `pyproject.toml` の optional `dev` に定義。
 
 ```bash
 uv sync
 uv run pytest
 ```
 
-```bash
-# pip 代替
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements-dev.txt
-python -m pytest
-```
-
-`uv` を venv + pip の代わりに使う場合は `uv venv .venv && uv pip install -r requirements-dev.txt` と `uv run pytest` でも同じ結果になる（WSL の標準 Python には ensurepip が入っていないため、この方法の方が早いことがある）。
-
-この repo では `.venv` が Windows 形式 (`Scripts/`) の場合がある。WSL から確認する場合は、Linux 側の別名 venv を切るのが安全。
-
-```bash
-~/.local/bin/uv venv .venv-linux
-~/.local/bin/uv pip install -r requirements-dev.txt --python .venv-linux
-TMPDIR=/tmp TMP=/tmp TEMP=/tmp .venv-linux/bin/python -m pytest
-```
+pytest は `src/` または `tests/` を変更したブロックの終わりにだけ走らせる。integration テストは `conftest.py` で default-skip、全件走らせたい時だけ `NLMYTGEN_PYTEST_FULL=1 uv run pytest`。
 
 WSL で実行する場合は `TMPDIR=/tmp TMP=/tmp TEMP=/tmp` を設定してから `pytest` を実行すると一時ファイルのパスずれを避けられる。
 
