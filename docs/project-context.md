@@ -57,8 +57,8 @@
 ---
 
 ## CURRENT LANE
-- 主レーン: Advance（実制作 bottleneck 直接軽減）／**開発セッション上の優先は [runtime-state.md](runtime-state.md)** — **P0 縦（本編 v14・YMM4 S-4）** を先頭。コア本開発 **フェーズ T1** の承認済みスライスは repo 充足確認済み（[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §1・§4）
-- 今このレーンを優先する理由: face・timeline・packaging 採点の mechanical 束は揃った。残る重さは台本→手動配置→視覚効果の人間工程のため、**P0 の YMM4 到達**で縦を切る。レーン B 文書準備は 2026-04-09 完了扱い（DECISION LOG 参照）
+- 主レーン: Advance（実制作 bottleneck 直接軽減）／**開発セッション上の優先は [runtime-state.md](runtime-state.md) §優先順位 (正本)** — 主軸 = 演出配置自動化の実戦投入 / メンテ層で Phase 1 Block-A (本編 v14・YMM4 S-4) の継続観測。コア本開発 **フェーズ T1** の承認済みスライスは repo 充足確認済み（[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §1・§4）
+- 今このレーンを優先する理由: face・timeline・packaging 採点の mechanical 束は揃った。残る重さは台本→手動配置→視覚効果の人間工程のため、**Phase 1 Block-A の YMM4 到達**で縦を切った上で、主軸 (演出配置) を実案件に投入する。レーン B 文書準備は 2026-04-09 完了扱い（DECISION LOG 参照）
 
 ---
 

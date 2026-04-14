@@ -31,9 +31,9 @@
 
 Gate B の「運用導線・記録」に合わせ、**次の優先**を推奨する（実装は承認後）。
 
-1. **P2 背景演出（ドキュメント＋registry 整備が中心）**  
+1. **主軸: 背景演出（ドキュメント＋registry 整備が中心）**  
    - 既存 CLI（`apply-production` / `patch-ymmp`、G-15〜G-17）は `done`。  
-   - [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) の 2026-04-09 再判定で、P2/S6 は「見え方一行（NG）+ §2 の5条件」を満たして PASS 化済み。  
+   - [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) の 2026-04-09 再判定で、背景アニメ/S6 は「見え方一行（NG）+ §2 の5条件」を満たして PASS 化済み。  
    - コアは実案件 IR の段階投入を支援する **verification 手順・サンプル JSON** の追補を先行し、実装拡張が必要な場合のみ §3 の台帳案を発行する。
 
 2. **GUI / runbook**  

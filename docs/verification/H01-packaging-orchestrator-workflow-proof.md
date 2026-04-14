@@ -170,7 +170,7 @@ sample brief を基準に repo 内 artifact を照合すると、以下の改善
 
 ## Operational Lock Run (2026-04-07)
 
-P1 の「H-01 brief を運用固定」のため、既存 sample を使って運用手順を固定した。
+メンテ層「H-01 brief を運用固定」のため、既存 sample を使って運用手順を固定した。
 
 ### Run
 
@@ -324,7 +324,7 @@ P01 Amazon 台本向けに Packaging Orchestrator brief を新規正本化し、
 
 ## Custom GPT 運用固定と drift 観測メモ（2026-04-13）
 
-**目的（P1 / [runtime-state.md](../runtime-state.md) 優先表）**: H-01 を **Custom GPT 側の常設上流**として固定し、title / thumbnail / script の drift を観測可能にする。repo 内の機械化は [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) H-01 行のとおり **テンプレ生成・GUI 保存まで**とし、`build-csv` への自動注入は行わない。
+**目的（メンテ層 / [runtime-state.md](../runtime-state.md) §優先順位 (正本)）**: H-01 を **Custom GPT 側の常設上流**として固定し、title / thumbnail / script の drift を観測可能にする。repo 内の機械化は [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) H-01 行のとおり **テンプレ生成・GUI 保存まで**とし、`build-csv` への自動注入は行わない。
 
 ### 運用者チェックリスト（毎案件・GPT 内で先頭に置く）
 

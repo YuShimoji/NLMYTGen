@@ -30,7 +30,7 @@ uv run python -m src.cli.main validate-ir samples/ir_visual_styles_dry_sample.js
 
 - **exit code**: `0`（`Validation PASSED with 1 warnings`）
 
-### 2.2 validate-ir（P2 overlay + SE IR）
+### 2.2 validate-ir（overlay + SE IR）
 
 ```powershell
 uv run python -m src.cli.main validate-ir samples/p2_overlay_se_ir.json `
