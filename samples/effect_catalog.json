@@ -1,0 +1,1420 @@
+{
+  "_meta": {
+    "source": "EffectsSamples_2026-04-15.ymmp",
+    "total_unique_effects": 111,
+    "duplicates_skipped": [
+      "ChromaKeyEffect2",
+      "RandomOpacityEffect"
+    ],
+    "note": "YMM4 v4.51.0.3. community effects require plugin installation."
+  },
+  "effects": {
+    "TilingGroupItemsEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.TilingGroupItems.TilingGroupItemsEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "group_tiling",
+      "parameters": [
+        "Wrap",
+        "IsVertical",
+        "IsEndAligned"
+      ]
+    },
+    "RadialArrangeGroupItemsEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.RadialArrangeGroupItems.RadialArrangeGroupItemsEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "group_tiling",
+      "parameters": [
+        "Radius",
+        "Arc",
+        "Direction",
+        "IsRotationSynchronized",
+        "IsCentering"
+      ]
+    },
+    "ArrangeGroupItemsEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.ArrangeGroupItems.ArrangeGroupItemsEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "group_tiling",
+      "parameters": [
+        "Interval",
+        "Angle",
+        "IsCentering"
+      ]
+    },
+    "RandomDuplicatorEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.RandomDuplicatorEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "group_tiling",
+      "parameters": [
+        "Count",
+        "Range",
+        "Rotation",
+        "IsThreeDimensional",
+        "RandomMove",
+        "RandomRotation"
+      ]
+    },
+    "CircularDuplicatorEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.CircularDuplicatorEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "group_tiling",
+      "parameters": [
+        "Count",
+        "Radius",
+        "CircumferenceRate",
+        "IsSyncedAngle"
+      ]
+    },
+    "LuminanceMaskEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.LuminanceMask.LuminanceMaskEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "group_tiling",
+      "parameters": [
+        "Blur",
+        "IsInverted",
+        "Brush"
+      ]
+    },
+    "TilingEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.TilingEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "group_tiling",
+      "parameters": [
+        "X",
+        "Y"
+      ]
+    },
+    "CopyAndReverseEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.CopyAndReverseEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "group_tiling",
+      "parameters": [
+        "Position",
+        "Distance",
+        "IsTopBottomReversed",
+        "IsLeftRightReversed",
+        "IsCentering"
+      ]
+    },
+    "MeshDeformationEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.MeshDeformationEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "transform_position",
+      "parameters": [
+        "HorizontalCount",
+        "VerticalCount",
+        "Points"
+      ]
+    },
+    "AutomaticZoomEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.AutomaticZoomEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "transform_position",
+      "parameters": [
+        "AutomaticZoomMode",
+        "AutomaticZoomTarget",
+        "AutomaticZoomMarginTop",
+        "AutomaticZoomMarginLeft",
+        "IgnoreRotation"
+      ]
+    },
+    "ZoomEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.ZoomEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "transform_position",
+      "parameters": [
+        "Zoom",
+        "ZoomX",
+        "ZoomY",
+        "IsNearestNeighbor"
+      ]
+    },
+    "ZoomPixelEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.ZoomPixel.ZoomPixelEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "transform_position",
+      "parameters": [
+        "SizeMode",
+        "Size",
+        "Dot"
+      ]
+    },
+    "PolarTransformEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.PolarTransformEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "transform_position",
+      "parameters": [
+        "CoreWidth",
+        "TwistAngle"
+      ]
+    },
+    "XYToPolarTransformEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.XYToPolarTransformEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "transform_position",
+      "parameters": [
+        "XRange",
+        "ZRange",
+        "IsClockwise",
+        "IsSyncRotation"
+      ]
+    },
+    "SkewEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.SkewEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "transform_position",
+      "parameters": [
+        "AngleX",
+        "AngleY",
+        "CenterPoint",
+        "CenterX",
+        "CenterY"
+      ]
+    },
+    "FlipEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.Flip.FlipEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "transform_position",
+      "parameters": [
+        "IsVertical",
+        "IsHorizontal"
+      ]
+    },
+    "DrawLazyEffectEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.DrawLazyEffectEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "transform_position",
+      "parameters": [
+        "IsXYZ",
+        "IsOpacity",
+        "IsZoom",
+        "IsRotation",
+        "IsInvert",
+        "IsCamera"
+      ]
+    },
+    "CenterPointEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.CenterPointEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "transform_position",
+      "parameters": [
+        "Horizontal",
+        "Vertical",
+        "X",
+        "Y",
+        "IsKeepPosition"
+      ]
+    },
+    "DrawPositionEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.DrawPositionEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "transform_position",
+      "parameters": [
+        "X",
+        "Y",
+        "Z"
+      ]
+    },
+    "PolarDrawPositionEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.PolarDrawPositionEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "transform_position",
+      "parameters": [
+        "Radius",
+        "Angle",
+        "Angle2",
+        "IsSyncRotation"
+      ]
+    },
+    "OpacityEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.OpacityEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "transform_position",
+      "parameters": [
+        "Opacity",
+        "IsAbsolute"
+      ]
+    },
+    "MarginEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.MarginEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "transform_position",
+      "parameters": [
+        "Top",
+        "Bottom",
+        "Left",
+        "Right"
+      ]
+    },
+    "InOutGetUpEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.InOutGetUpEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "in_out_animation",
+      "parameters": [
+        "Base",
+        "Is3D",
+        "IsInEffect",
+        "IsOutEffect",
+        "EffectTimeSeconds",
+        "EasingType",
+        "EasingMode"
+      ]
+    },
+    "InOutBorderBlurEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.InOutBorderBlurEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "in_out_animation",
+      "parameters": [
+        "Value",
+        "IsInEffect",
+        "IsOutEffect",
+        "EffectTimeSeconds",
+        "EasingType",
+        "EasingMode"
+      ]
+    },
+    "InOutSkewEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.InOutSkewEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "in_out_animation",
+      "parameters": [
+        "AngleX",
+        "AngleY",
+        "CenterPoint",
+        "CenterX",
+        "CenterY",
+        "IsInEffect",
+        "IsOutEffect",
+        "EffectTimeSeconds",
+        "EasingType",
+        "EasingMode"
+      ]
+    },
+    "InOutCrashEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.InOutCrashEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "in_out_animation",
+      "parameters": [
+        "IsInEffect",
+        "IsOutEffect",
+        "EffectTimeSeconds",
+        "PlaybackRate",
+        "Size",
+        "X",
+        "Y",
+        "Z",
+        "FlySpeed",
+        "FallSpeed",
+        "Delay",
+        "Impact",
+        "RandomRotate",
+        "RandomVector"
+      ]
+    },
+    "InOutTransitionEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.InOutTransitionEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "in_out_animation",
+      "parameters": [
+        "File",
+        "Tolerance",
+        "Angle",
+        "KeepAspect",
+        "IsFixedCoveringScale",
+        "IsInEffect",
+        "IsReversedInEffect",
+        "IsOutEffect",
+        "IsReversedOutEffect",
+        "EffectTimeSeconds",
+        "EasingType",
+        "EasingMode"
+      ]
+    },
+    "InOutJumpEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.InOutJumpEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "in_out_animation",
+      "parameters": [
+        "IsInEffect",
+        "IsInReverse",
+        "IsOutEffect",
+        "IsOutReverse",
+        "EffectTimeSeconds",
+        "JumpHeight",
+        "Stretch",
+        "Period",
+        "Distortion",
+        "Interval",
+        "X",
+        "Y"
+      ]
+    },
+    "InOutMoveFromOutsideImageEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.InOutMoveFromOutsideImageEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "in_out_animation",
+      "parameters": [
+        "Value",
+        "IsInEffect",
+        "IsOutEffect",
+        "EffectTimeSeconds",
+        "EasingType",
+        "EasingMode"
+      ]
+    },
+    "FillBackgroundEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.FillBackgroundEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "border_shadow_3d",
+      "parameters": [
+        "Opacity",
+        "Round",
+        "BlendMode",
+        "IsBackgroundOnly",
+        "Brush",
+        "Top",
+        "Bottom",
+        "Left",
+        "Right"
+      ]
+    },
+    "ReflectionAndExtrusionEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.ReflectionAndExtrusion.ReflectionAndExtrusionEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "border_shadow_3d",
+      "parameters": [
+        "LightingMode",
+        "Lighting",
+        "HeightmapMode",
+        "Heightmap",
+        "Blur",
+        "IsInvert"
+      ]
+    },
+    "HalfToneShadowEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.HalfToneShadowEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "border_shadow_3d",
+      "parameters": [
+        "X",
+        "Y",
+        "Opacity",
+        "Angle",
+        "Blur",
+        "Layout",
+        "Distance",
+        "Size",
+        "Color",
+        "Strength",
+        "KeepBrightness",
+        "IsRotateAtCenter"
+      ]
+    },
+    "InnerHalfToneShadowEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.InnerHalfToneShadowEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "border_shadow_3d",
+      "parameters": [
+        "X",
+        "Y",
+        "Opacity",
+        "Blur",
+        "BlendMode",
+        "Layout",
+        "Distance",
+        "Size",
+        "Color",
+        "Strength"
+      ]
+    },
+    "HalfToneOutlineEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.HalfToneOutlineEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "border_shadow_3d",
+      "parameters": [
+        "StrokeThickness",
+        "Opacity",
+        "Blur",
+        "IsOutlineOnly",
+        "Layout",
+        "Distance",
+        "Size",
+        "Color",
+        "Strength"
+      ]
+    },
+    "HalfToneBorderBlurEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.HalfToneBorderBlurEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "border_shadow_3d",
+      "parameters": [
+        "Blur",
+        "Layout",
+        "Distance",
+        "Size",
+        "Strength"
+      ]
+    },
+    "ThreeDimensionalEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.ThreeDimensional.ThreeDimensionalEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "border_shadow_3d",
+      "parameters": [
+        "X",
+        "Y",
+        "Length",
+        "Opacity",
+        "Attenuation",
+        "ShadowType",
+        "Color1",
+        "Color2",
+        "IsAbsolutePoint"
+      ]
+    },
+    "FrameLineEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.FrameLineEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "border_shadow_3d",
+      "parameters": [
+        "Opacity",
+        "Thickness",
+        "RenderPlacement",
+        "Type",
+        "Top",
+        "Bottom",
+        "Left",
+        "Right",
+        "Brush"
+      ]
+    },
+    "CropEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.CropEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "crop_key_mask",
+      "parameters": [
+        "Top",
+        "Bottom",
+        "Left",
+        "Right",
+        "IsCentering"
+      ]
+    },
+    "RatioCropEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.RatioCrop.RatioCropEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "crop_key_mask",
+      "parameters": [
+        "Top",
+        "Bottom",
+        "Left",
+        "Right",
+        "IsCentering"
+      ]
+    },
+    "ChromaKeyEffect2": {
+      "$type": "YukkuriMovieMaker.Project.Effects.ChromaKeyEffect2, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "crop_key_mask",
+      "parameters": [
+        "DistanceMode",
+        "KeyColor",
+        "Threshold2",
+        "Smoothness",
+        "Despill",
+        "IsInvert"
+      ]
+    },
+    "MotionTrackingEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.MotionTrackingEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "crop_key_mask",
+      "parameters": [
+        "Smooth",
+        "IsReverce",
+        "IsReverseZoom",
+        "IsFixedSize",
+        "Path",
+        "ControlPointVisibleSeconds",
+        "IsOnlyCurrentFrameRectLine"
+      ]
+    },
+    "LuminanceKeyEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.LuminanceKey.LuminanceKeyEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "crop_key_mask",
+      "parameters": [
+        "Threshold",
+        "Smoothness",
+        "Mode",
+        "IsInvert"
+      ]
+    },
+    "PosterizeEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.PosterizeEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "crop_key_mask",
+      "parameters": [
+        "R",
+        "G",
+        "B"
+      ]
+    },
+    "CropByAngleEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.CropByAngleEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "crop_key_mask",
+      "parameters": [
+        "X",
+        "Y",
+        "Angle",
+        "Blur",
+        "Width"
+      ]
+    },
+    "MaskEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.MaskEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "crop_key_mask",
+      "parameters": [
+        "X",
+        "Y",
+        "Opacity",
+        "Angle",
+        "ShapeType2",
+        "ShapeParameter",
+        "Blur",
+        "InvertMask"
+      ]
+    },
+    "HlslPixelShaderCodeEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.HlslPixelShaderCodeEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "InputExpand",
+        "OutputExpand",
+        "Value0",
+        "Value1",
+        "Value2",
+        "Value3",
+        "Source"
+      ]
+    },
+    "HlslPixelShaderFileEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.HlslPixelShaderFileEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "InputExpand",
+        "OutputExpand",
+        "Value0",
+        "Value1",
+        "Value2",
+        "Value3",
+        "File"
+      ]
+    },
+    "EdgeDetectionEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.EdgeDetection.EdgeDetectionEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Strength",
+        "BlurRadius",
+        "Mode",
+        "IsOverlayEdges"
+      ]
+    },
+    "GammaCorrectionEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.GammaCorrectionEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Gamma",
+        "Red",
+        "Green",
+        "Blue"
+      ]
+    },
+    "GradientEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.GradientEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "GradientType",
+        "Stops",
+        "X",
+        "Y",
+        "Opacity",
+        "Size",
+        "Rotation",
+        "ExtendMode",
+        "Blend"
+      ]
+    },
+    "SharpenEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.SharpenEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Sharpness",
+        "Threshold"
+      ]
+    },
+    "HightlightsAndShadowsEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.HightlightsAndShadowsEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Highlights",
+        "Shadows"
+      ]
+    },
+    "SepiaEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.SepiaEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Strength",
+        "SepiaIntensity"
+      ]
+    },
+    "DisplacementMapEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.DisplacementMapEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Mode",
+        "Transform",
+        "Blur",
+        "IsPatternMapPreviewEnabled",
+        "Brush"
+      ]
+    },
+    "NoiseEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.NoiseEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "NoiseType",
+        "NoiseParameter",
+        "IsColor",
+        "IsAlpha",
+        "IsUniqueSeed"
+      ]
+    },
+    "NoiseColorShiftEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.NoiseColorShiftEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Mode",
+        "Transform",
+        "NoiseType",
+        "NoiseParameter"
+      ]
+    },
+    "NoiseDisplacementMapEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.NoiseDisplacementMapEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Mode",
+        "Transform",
+        "NoiseType",
+        "NoiseParameter"
+      ]
+    },
+    "GaussianBlurEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.GaussianBlurEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Blur",
+        "IsHardBorderMode"
+      ]
+    },
+    "BlurMapEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.BlurMap.BlurMapEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Blur",
+        "IsFixedSize",
+        "Brush"
+      ]
+    },
+    "MosaicEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.MosaicEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "MosaicType",
+        "MosaicParameter"
+      ]
+    },
+    "LensBlurEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.LensBlur.LensBlurEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "color_blur_shader",
+      "parameters": [
+        "BlurRadius",
+        "Brightness",
+        "EdgeStrength",
+        "Quality"
+      ]
+    },
+    "StretchEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.Stretch.StretchEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "color_blur_shader",
+      "parameters": [
+        "X",
+        "Y",
+        "Angle",
+        "StretchLength",
+        "Range",
+        "IsCentering"
+      ]
+    },
+    "SpiralTransformEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.SpiralTransform.SpiralTransformEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Angle",
+        "IsRotateOuter"
+      ]
+    },
+    "VignetteBlurEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.VignetteBlur.VignetteBlurEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "color_blur_shader",
+      "parameters": [
+        "X",
+        "Y",
+        "Radius",
+        "Aspect",
+        "Softness",
+        "IsFixedSize",
+        "Mode",
+        "Blur",
+        "BlurAngle",
+        "Lightness",
+        "ColorShift"
+      ]
+    },
+    "EdgeTrimmingEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.EdgeTrimming.EdgeTrimmingEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Thickness"
+      ]
+    },
+    "CircularBlurEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.CircularBlur.CircularBlurEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Angle",
+        "X",
+        "Y",
+        "IsHardBorderMode"
+      ]
+    },
+    "RoundCornerEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.RoundCornerEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Radius",
+        "Blur"
+      ]
+    },
+    "FishEyeLensEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.FishEyeLens.FishEyeLensEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Projection",
+        "Angle",
+        "Zoom"
+      ]
+    },
+    "ColorShiftEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.ColorShift.ColorShiftEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Shift",
+        "Angle",
+        "Strength",
+        "Mode",
+        "IsPremultipliedAlpha"
+      ]
+    },
+    "ColorBlindnessEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.ColorBlindness.ColorBlindnessEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Type",
+        "Strength"
+      ]
+    },
+    "ChromaticAberrationEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.ChromaticAberrationEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Strength"
+      ]
+    },
+    "ColorCorrectionEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.ColorCorrection.ColorCorrectionEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Lightness",
+        "Contrast",
+        "HueRotation",
+        "Brightness",
+        "Saturation"
+      ]
+    },
+    "InvertEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.InvertEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": []
+    },
+    "TintEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.TintEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Color"
+      ]
+    },
+    "LinearTransferEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.LinearTransferEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "RedYIntercept",
+        "RedSlope",
+        "GreenYIntercept",
+        "GreenSlope",
+        "BlueYIntercept",
+        "BlueSlope",
+        "AlphaYIntercept",
+        "AlphaSlope"
+      ]
+    },
+    "MonocolorizationEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.MonocolorizationEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Strength",
+        "Color",
+        "KeepBrightness"
+      ]
+    },
+    "MorphologyEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.MorphologyEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Mode",
+        "Width",
+        "Height"
+      ]
+    },
+    "BinarizationEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.Binarization.BinarizationEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Threshold",
+        "IsInverted",
+        "KeepColor"
+      ]
+    },
+    "BloomEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.Bloom.BloomEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Strength",
+        "Threshold",
+        "Blur",
+        "IsFixedSizeEnabled",
+        "IsColorizationEnabled",
+        "Color"
+      ]
+    },
+    "UnidirectionalBlurEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.UnidirectionalBlur.UnidirectionalBlurEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Angle",
+        "Length"
+      ]
+    },
+    "RadialBlurEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.RadialBlurEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Blur",
+        "X",
+        "Y",
+        "IsHardBorderMode"
+      ]
+    },
+    "RadialLightEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.RadialLightEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Value",
+        "X",
+        "Y",
+        "IsHardBorderMode"
+      ]
+    },
+    "DirectionalBlurEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.DirectionalBlurEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "StandardDeviation",
+        "Angle",
+        "IsHardBorderMode"
+      ]
+    },
+    "HalfToneEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.HalfToneEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Layout",
+        "Distance",
+        "Size",
+        "Color",
+        "Strength"
+      ]
+    },
+    "ExposureEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.ExposureEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "color_blur_shader",
+      "parameters": [
+        "Value"
+      ]
+    },
+    "CameraPositionEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.CameraPositionEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "camera",
+      "parameters": [
+        "X",
+        "Y",
+        "Z",
+        "RotationY",
+        "RotationX",
+        "RotationZ"
+      ]
+    },
+    "CameraWraparoundEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.CameraWraparoundEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "camera",
+      "parameters": [
+        "X",
+        "Y",
+        "Z",
+        "Radius",
+        "RotationY",
+        "RotationX",
+        "RotationZ"
+      ]
+    },
+    "CameraShakeEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.CameraShake.CameraShakeEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "camera",
+      "parameters": [
+        "X",
+        "Y",
+        "Z",
+        "Yaw",
+        "Pitch",
+        "Roll",
+        "Span"
+      ]
+    },
+    "CameraLookAtEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.CameraLookAtEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "camera",
+      "parameters": [
+        "X",
+        "Y",
+        "Z",
+        "LookAtX",
+        "LookAtY",
+        "LookAtZ",
+        "RotationZ"
+      ]
+    },
+    "RectangleGlitchNoiseEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.RectangleGlitchNoise.RectangleGlitchNoiseEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "RectangleCount",
+        "RectangleMaxWidth",
+        "RectangleMaxHeight",
+        "RectangleMaxXShift",
+        "RectangleMaxYShift",
+        "ColorMaxShift",
+        "PlaybackRate",
+        "Probability",
+        "IsClipping",
+        "IsHardBorderMode",
+        "Repeat",
+        "RectangleMaxWidthAttenuation",
+        "RectangleMaxHeightAttenuation",
+        "RectangleMaxXShiftAttenuation",
+        "RectangleMaxYShiftAttenuation"
+      ]
+    },
+    "StripeGlitchNoiseEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.StripeGlitchNoise.StripeGlitchNoiseEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "StripeCount",
+        "StripeMaxWidth",
+        "StripeMaxShift",
+        "ColorMaxShift",
+        "PlaybackRate",
+        "Probability",
+        "IsHardBorderMode",
+        "Repeat",
+        "StripeMaxWidthAttenuation",
+        "StripeMaxShiftAttenuation"
+      ]
+    },
+    "ShuffleTextEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.ShuffleText.ShuffleTextEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "Interval",
+        "Delay",
+        "Enum_Mode",
+        "UpLetter",
+        "LowLetter",
+        "Hirakana",
+        "Katakana",
+        "Kanji",
+        "Number",
+        "Symbol",
+        "Text",
+        "Font",
+        "FontSize",
+        "Color",
+        "Bold",
+        "Italic"
+      ]
+    },
+    "RandomMoveEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.RandomMoveEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "X",
+        "Y",
+        "Z",
+        "Span"
+      ]
+    },
+    "RandomRotateEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.RandomRotateEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "X",
+        "Y",
+        "Z",
+        "Is3D",
+        "Span"
+      ]
+    },
+    "RandomZoomEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.RandomZoomEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "Zoom",
+        "ZoomX",
+        "ZoomY",
+        "Span"
+      ]
+    },
+    "RandomSkewEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.RandomSkewEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "AngleX",
+        "AngleY",
+        "CenterPoint",
+        "CenterX",
+        "CenterY",
+        "Span"
+      ]
+    },
+    "RandomOpacityEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.RandomOpacityEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "Opacity",
+        "Span"
+      ]
+    },
+    "AudioVolumeMoveEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.AudioVolume.Move.AudioVolumeMoveEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "X",
+        "Y",
+        "Z",
+        "Calculater"
+      ]
+    },
+    "AudioVolumeRotateEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.AudioVolume.Rotate.AudioVolumeRotateEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "X",
+        "Y",
+        "Z",
+        "Is3D",
+        "Calculater"
+      ]
+    },
+    "AudioVolumeZoomEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.AudioVolume.Zoom.AudioVolumeZoomEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "Zoom",
+        "ZoomX",
+        "ZoomY",
+        "Calculater"
+      ]
+    },
+    "AudioVolumeSkewEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.AudioVolume.Skew.AudioVolumeSkewEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "AngleX",
+        "AngleY",
+        "CenterPoint",
+        "CenterX",
+        "CenterY",
+        "Calculater"
+      ]
+    },
+    "AudioVolumeOpacityEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.AudioVolume.Opacity.AudioVolumeOpacityEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "Opacity",
+        "Invert",
+        "Calculater"
+      ]
+    },
+    "CrashEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.CrashEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "StartTime",
+        "PlaybackRate",
+        "Size",
+        "X",
+        "Y",
+        "Z",
+        "FlySpeed",
+        "FallSpeed",
+        "Delay",
+        "Impact",
+        "RandomRotate",
+        "RandomVector"
+      ]
+    },
+    "JumpEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.JumpEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "JumpHeight",
+        "Stretch",
+        "Period",
+        "Distortion",
+        "Interval",
+        "X",
+        "Y"
+      ]
+    },
+    "WaveEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.Wave.WaveEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "Angle1",
+        "Angle2",
+        "Amplitude",
+        "WaveLength",
+        "Period"
+      ]
+    },
+    "RippleEffect": {
+      "$type": "YukkuriMovieMaker.Plugin.Community.Effect.Video.Ripple.RippleEffect, YukkuriMovieMaker.Plugin.Community",
+      "is_community": true,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "X",
+        "Y",
+        "Amplitude",
+        "WaveLength",
+        "Period"
+      ]
+    },
+    "RepeatMoveEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.RepeatMoveEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "X",
+        "Y",
+        "Z",
+        "Span",
+        "EasingType",
+        "EasingMode",
+        "IsCentering"
+      ]
+    },
+    "RepeatRotateEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.RepeatRotateEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "X",
+        "Y",
+        "Z",
+        "Is3D",
+        "Span",
+        "EasingType",
+        "EasingMode",
+        "IsCentering"
+      ]
+    },
+    "RepeatZoomEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.RepeatZoomEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "Zoom",
+        "ZoomX",
+        "ZoomY",
+        "Span",
+        "EasingType",
+        "EasingMode",
+        "IsCentering"
+      ]
+    },
+    "RepeatSkewEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.RepeatSkewEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "AngleX",
+        "AngleY",
+        "CenterPoint",
+        "CenterX",
+        "CenterY",
+        "Span",
+        "EasingType",
+        "EasingMode",
+        "IsCentering"
+      ]
+    },
+    "RepeatOpacityEffect": {
+      "$type": "YukkuriMovieMaker.Project.Effects.RepeatOpacityEffect, YukkuriMovieMaker",
+      "is_community": false,
+      "category": "animation_glitch_audio",
+      "parameters": [
+        "Opacity",
+        "Span",
+        "EasingType",
+        "EasingMode"
+      ]
+    }
+  },
+  "categories": {
+    "group_tiling": {
+      "item_index": 0,
+      "count": 8
+    },
+    "transform_position": {
+      "item_index": 1,
+      "count": 14
+    },
+    "in_out_animation": {
+      "item_index": 2,
+      "count": 7
+    },
+    "border_shadow_3d": {
+      "item_index": 3,
+      "count": 8
+    },
+    "crop_key_mask": {
+      "item_index": 4,
+      "count": 9
+    },
+    "color_blur_shader": {
+      "item_index": 5,
+      "count": 40
+    },
+    "camera": {
+      "item_index": 6,
+      "count": 4
+    },
+    "animation_glitch_audio": {
+      "item_index": 7,
+      "count": 23
+    },
+    "group_control": {
+      "item_index": 8,
+      "count": 0,
+      "has_keyframes": true,
+      "keyframe_frames": [
+        49,
+        154
+      ]
+    }
+  }
+}
