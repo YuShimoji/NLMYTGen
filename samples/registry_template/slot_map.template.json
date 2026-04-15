@@ -1,0 +1,12 @@
+{
+  "slots": {
+    "left":   { "x": -750, "y": 375, "zoom": 100 },
+    "right":  { "x":  759, "y": 375, "zoom": 100 },
+    "center": { "x":    0, "y": 375, "zoom": 100 },
+    "off": null
+  },
+  "characters": {
+    "__CHARACTER_A__": { "default_slot": "right" },
+    "__CHARACTER_B__": { "default_slot": "left"  }
+  }
+}

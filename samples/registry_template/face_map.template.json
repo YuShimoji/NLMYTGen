@@ -1,0 +1,34 @@
+{
+  "__CHARACTER_A__": {
+    "neutral": {
+      "Eyebrow": "__TACHIE_PATH__/eyebrow/00.png",
+      "Eye":     "__TACHIE_PATH__/eye/00.png",
+      "Mouth":   "__TACHIE_PATH__/mouth/00.png",
+      "Hair":    "__TACHIE_PATH__/hair/00.png",
+      "Body":    "__TACHIE_PATH__/body/01.png"
+    },
+    "smile": {
+      "Eyebrow": "__TACHIE_PATH__/eyebrow/01.png",
+      "Eye":     "__TACHIE_PATH__/eye/01.png",
+      "Mouth":   "__TACHIE_PATH__/mouth/01.png",
+      "Hair":    "__TACHIE_PATH__/hair/00.png",
+      "Body":    "__TACHIE_PATH__/body/01.png"
+    },
+    "serious": {
+      "Eyebrow": "__TACHIE_PATH__/eyebrow/02.png",
+      "Eye":     "__TACHIE_PATH__/eye/02.png",
+      "Mouth":   "__TACHIE_PATH__/mouth/02.png",
+      "Hair":    "__TACHIE_PATH__/hair/00.png",
+      "Body":    "__TACHIE_PATH__/body/01.png"
+    }
+  },
+  "__CHARACTER_B__": {
+    "neutral": {
+      "Eyebrow": "__TACHIE_PATH_B__/eyebrow/00.png",
+      "Eye":     "__TACHIE_PATH_B__/eye/00.png",
+      "Mouth":   "__TACHIE_PATH_B__/mouth/00.png",
+      "Hair":    "__TACHIE_PATH_B__/hair/00.png",
+      "Body":    "__TACHIE_PATH_B__/body/01.png"
+    }
+  }
+}

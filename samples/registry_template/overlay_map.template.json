@@ -1,0 +1,19 @@
+{
+  "overlays": {
+    "speech_bubble": "__YOUR_PROJECT_PATH__/overlays/speech_bubble.png",
+    "arrow_red": {
+      "path": "__YOUR_PROJECT_PATH__/overlays/arrow_red.png",
+      "layer": 4,
+      "length": 12,
+      "anchor": "start",
+      "offset": 0
+    },
+    "highlight_box": {
+      "path": "__YOUR_PROJECT_PATH__/overlays/highlight_box.png",
+      "x": 0,
+      "y": 0,
+      "zoom": 100,
+      "opacity": 100
+    }
+  }
+}

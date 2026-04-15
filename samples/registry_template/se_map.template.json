@@ -1,0 +1,12 @@
+{
+  "se": {
+    "click": "__YOUR_PROJECT_PATH__/se/click.wav",
+    "correct": {
+      "path": "__YOUR_PROJECT_PATH__/se/correct.wav",
+      "anchor": "start",
+      "offset": 0
+    },
+    "tension_hit": "__YOUR_PROJECT_PATH__/se/tension_hit.wav",
+    "wrong_buzzer": "__YOUR_PROJECT_PATH__/se/wrong_buzzer.wav"
+  }
+}
