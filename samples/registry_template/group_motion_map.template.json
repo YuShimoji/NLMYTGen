@@ -1,27 +1,20 @@
 {
   "group_motions": {
-    "slide_left": {
-      "x": -320,
-      "y": 540,
-      "zoom": 100
-    },
-    "slide_right": {
-      "x": 320,
-      "y": 540,
-      "zoom": 100
-    },
-    "zoom_focus": {
-      "x": 0,
-      "y": 540,
-      "zoom": 118
-    },
-    "nudge_left": {
-      "mode": "relative",
-      "x": -50
-    },
-    "nudge_right": {
-      "mode": "relative",
-      "x": 50
-    }
+    "slide_left":    { "x": -320, "y": 540, "zoom": 100 },
+    "slide_right":   { "x":  320, "y": 540, "zoom": 100 },
+    "zoom_focus":    { "x":    0, "y": 540, "zoom": 118 },
+    "center_stage":  { "x":    0, "y": 540, "zoom": 130 },
+    "aside_left":    { "x": -600, "y": 540, "zoom":  85 },
+    "aside_right":   { "x":  600, "y": 540, "zoom":  85 },
+    "reset_center":  { "x":    0, "y": 540, "zoom": 100 },
+
+    "nudge_left":        { "mode": "relative", "x": -50 },
+    "nudge_right":       { "mode": "relative", "x":  50 },
+    "nudge_up":          { "mode": "relative", "y": -30 },
+    "nudge_down":        { "mode": "relative", "y":  30 },
+    "approach":          { "mode": "relative", "zoom":  20 },
+    "retreat":           { "mode": "relative", "zoom": -20 },
+    "zoom_in_relative":  { "mode": "relative", "zoom":  15 },
+    "zoom_out_relative": { "mode": "relative", "zoom": -15 }
   }
 }
