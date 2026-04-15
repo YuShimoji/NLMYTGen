@@ -1,0 +1,26 @@
+face_map: samples/face_map.json (loaded)
+slot_map: samples/slot_map_e2e.json (4 labels)
+tachie_motion_map: samples/tachie_motion_map_e2e.json (2 labels)
+prompt face contract: C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\docs\S6-production-memo-prompt.md (6 labels)
+
+--- Face Distribution (28 utterances) ---
+  serious       14 (50%) ##########
+  thinking       8 (28%) #####
+  surprised      2 ( 7%) #
+  angry          2 ( 7%) #
+  sad            1 ( 3%) 
+  smile          1 ( 3%) 
+
+--- Face Contract ---
+  prompt : angry, sad, serious, smile, surprised, thinking
+  palette: angry, sad, serious, smile, surprised, thinking
+  used   : angry, sad, serious, smile, surprised, thinking
+  idle   : serious
+
+--- Slot Distribution (28 utterances) ---
+  left          15
+  right         13
+  Ç‰Ç¡Ç≠ÇËóÏñ≤ê‘âè: right
+  Ç‰Ç¡Ç≠ÇËñÇóùçπâ©âè: left
+GroupItem geometry writes: 0
+{"success": true, "dry_run": true, "face_changes": 139, "slot_changes": 10, "overlay_changes": 0, "se_plans": 0, "tachie_syncs": 28, "bg_changes": 0, "bg_additions": 9, "bg_anim_changes": 0, "transition_changes": 60, "motion_changes": 10, "group_motion_changes": 0, "warnings": [], "summary": {"warning_count": 0, "fatal_warning_count": 0, "preview_warnings": [], "face_changes": 139, "slot_changes": 10, "overlay_changes": 0, "se_plans": 0, "tachie_syncs": 28, "bg_removed": 0, "bg_added": 9, "bg_anim_changes": 0, "transition_changes": 60, "motion_changes": 10, "group_motion_changes": 0}}

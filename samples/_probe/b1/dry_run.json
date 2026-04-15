@@ -1,0 +1,17 @@
+face_map: samples/e2e_test/face_map.json (loaded)
+prompt face contract: C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\docs\S6-production-memo-prompt.md (6 labels)
+
+--- Face Distribution (11 utterances) ---
+  smile          3 (27%) #####
+  neutral        2 (18%) ###
+  surprised      2 (18%) ###
+  thinking       1 ( 9%) #
+  serious        1 ( 9%) #
+  angry          1 ( 9%) #
+  sad            1 ( 9%) #
+
+--- Face Contract ---
+  prompt : angry, sad, serious, smile, surprised, thinking
+  palette: angry, neutral, sad, serious, smile, surprised, thinking
+  used   : angry, neutral, sad, serious, smile, surprised, thinking
+  INFO: ROW_RANGE_INFO: row_start/row_end not set. Use annotate-row-range or apply-production --csv

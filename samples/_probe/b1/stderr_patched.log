@@ -1,0 +1,7 @@
+  WARNING: FACE_PROMPT_PALETTE_EXTRA: palette label 'neutral' is not listed in prompt contract
+  WARNING: IDLE_FACE_MISSING: idle_face is not specified in any utterance
+  WARNING: VOICE_NO_TACHIE_FACE: VoiceItem index=1 character='Ç‰Ç¡Ç≠ÇËóÏñ≤' has no TachieFaceParameter
+  WARNING: VOICE_NO_TACHIE_FACE: VoiceItem index=2 character='Ç‰Ç¡Ç≠ÇËñÇóùçπ' has no TachieFaceParameter
+  WARNING: VOICE_NO_TACHIE_FACE: VoiceItem index=9 character='Ç‰Ç¡Ç≠ÇËóÏñ≤' has no TachieFaceParameter
+  WARNING: VOICE_NO_TACHIE_FACE: VoiceItem index=10 character='Ç‰Ç¡Ç≠ÇËóÏñ≤' has no TachieFaceParameter
+  WARNING: BG_SPAN_OVERLAP: utterance index=10 section=S3

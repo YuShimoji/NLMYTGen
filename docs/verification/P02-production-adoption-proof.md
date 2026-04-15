@@ -213,3 +213,12 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/n
 | YMM4 | **未実施**（dry-run のみ）。本適用は別レーンと同一 ymmp を触る場合は適用順を合意してから `-o` 実行。 |
 
 **判定**: 背景ラベル解決と `apply-production` の bg 経路が、overlay/se 無しでも機械的に通ることを repo 内で確認。立ち絵本体の契約変更は本 run のスコープ外。
+
+## B-3 再実証 (`b3_reproof_2026-04-16`)
+
+- 日付: 2026-04-16
+- 正本: [B3-production-reproof-2026-04-16.md](B3-production-reproof-2026-04-16.md)
+- 入力: `samples/production.ymmp` + `samples/chabangeki_e2e_ir.json` + face_map + bg_map_proof + slot_map_e2e + tachie_motion_map_e2e
+- 結果: exit 0 / fatal 0 / face_changes **139** (2026-04-13 実績 138 から +0.7% 以内) / slot 10 / bg_additions 9 / motion 10 / tachie_syncs 28 / transition 60
+- 決定性: 同一コマンド 2 回実行で出力 JSON が完全一致 (591 bytes, identical)
+- **判定**: pipeline 再現性・決定性ともに確認。主軸「演出配置自動化の実戦投入」の完了条件を production.ymmp で満たした

@@ -47,6 +47,7 @@
 - 2026-04-06: ユーザーフィードバックにより実制作ワークフローの自動化カバレッジを棚卸し。done 35件だが最重量工程 (演出配置・視覚効果・台本品質) が未自動化。runtime-state.md に工程別カバレッジと3大bottleneckの詳細を記録。project-context.md ROADMAP を方向転換版に全面刷新。
 - 2026-04-15: メンテ並行委任 Prompt 4 件（H-01 brief / H-02 サムネ one-sheet / B-17 改行残差観測 / B-18 台本診断観測）を `docs/prompts/` に durable 化。別セッション・Custom GPT・user GUI 作業で再利用できる正本として分離し、[CORE-PARALLEL-HUB §7](verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md) から索引する構成に固定。
 - 2026-04-16: X-2a 先行実地確認完了 → [X2A-haitatsuin-dryrun-proof-2026-04-16.md](verification/X2A-haitatsuin-dryrun-proof-2026-04-16.md)。配達員 ymmp dry-run で face 15/transition 3/motion 2 件の機械適用を確認、G-21 は当面不要判定（proposed 維持）。Phase 1-D Step 1 同時消化（palette → 2 キャラ face_map、55 パーツ全実在）。
+- 2026-04-16: B-1 + B-3 完了。B-1 は [B1-e2e-test-regression-proof-2026-04-16.md](verification/B1-e2e-test-regression-proof-2026-04-16.md) observational close (legacy drift を pipeline が正しく捕捉、e2e_test archived 提案)。B-3 は [B3-production-reproof-2026-04-16.md](verification/B3-production-reproof-2026-04-16.md) で production.ymmp + CHABANGEKI IR で exit 0 / face_changes 139 (2026-04-13 実績 138 から +0.7%) / 決定性確認済。主軸「演出配置自動化の実戦投入」を production.ymmp で再実証、次は B-2 新規エピソード。
 
 ## 今後明文化すべきこと
 - 台本品質保証の具体的アプローチ (NLM臭除去、話者混同修正、ゆっくり解説様式変換)

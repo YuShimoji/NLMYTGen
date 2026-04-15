@@ -1,0 +1,53 @@
+face_map: samples/face_map.json (loaded)
+prompt face contract: C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\docs\S6-production-memo-prompt.md (6 labels)
+
+--- Face Distribution (28 utterances) ---
+  serious       14 (50%) ##########
+  thinking       8 (28%) #####
+  surprised      2 ( 7%) #
+  angry          2 ( 7%) #
+  sad            1 ( 3%) 
+  smile          1 ( 3%) 
+
+--- Face Contract ---
+  prompt : angry, sad, serious, smile, surprised, thinking
+  palette: angry, sad, serious, smile, surprised, thinking
+  used   : angry, sad, serious, smile, surprised, thinking
+
+--- Slot Distribution (28 utterances) ---
+  left          14
+  right         13
+  center         1
+  スピーカー1: center, left
+  スピーカー2: right
+
+--- Overlay Distribution (26 utterances) ---
+  text_box       4
+  speech_bubble   3
+  arrow_red      2
+  ai_lockon_box   1
+  arrow_blue     1
+  circle_red     1
+  consumer_to_worker_flow   1
+  countdown_timer   1
+  flash_red      1
+  frictionless_human_diagram   1
+  heat_haze      1
+  legal_shield   1
+  mental_health_66   1
+  pr_vs_power    1
+  question_split   1
+  risk_externalization_flow   1
+  scan_rate_714   1
+  score_down_meter   1
+  speed_violation_161   1
+  temperature_plus9   1
+
+--- SE Distribution (23 utterances) ---
+  click          6
+  tension_hit    5
+  correct        3
+  incorrect      3
+  transition     3
+  surprise       2
+  punchline      1

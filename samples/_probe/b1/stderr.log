@@ -1,0 +1,5 @@
+  ERROR: PROMPT_FACE_DRIFT: face label 'neutral' used 2 times but not allowed by prompt contract
+  WARNING: FACE_PROMPT_PALETTE_EXTRA: palette label 'neutral' is not listed in prompt contract
+  WARNING: IDLE_FACE_MISSING: idle_face is not specified in any utterance
+
+Validation FAILED (1 errors). Patch aborted.

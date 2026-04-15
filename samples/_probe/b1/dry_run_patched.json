@@ -1,0 +1,18 @@
+face_map: samples/e2e_test/face_map.json (loaded)
+prompt face contract: C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\docs\S6-production-memo-prompt.md (6 labels)
+
+--- Face Distribution (11 utterances) ---
+  serious        3 (27%) #####
+  smile          3 (27%) #####
+  surprised      2 (18%) ###
+  thinking       1 ( 9%) #
+  angry          1 ( 9%) #
+  sad            1 ( 9%) #
+
+--- Face Contract ---
+  prompt : angry, sad, serious, smile, surprised, thinking
+  palette: angry, neutral, sad, serious, smile, surprised, thinking
+  used   : angry, sad, serious, smile, surprised, thinking
+  INFO: ROW_RANGE_INFO: row_start/row_end not set. Use annotate-row-range or apply-production --csv
+GroupItem geometry writes: 0
+{"success": false, "error": "fatal_warnings", "fatal_warnings": ["VOICE_NO_TACHIE_FACE: VoiceItem index=1 character='Ç‰Ç¡Ç≠ÇËóÏñ≤' has no TachieFaceParameter", "VOICE_NO_TACHIE_FACE: VoiceItem index=2 character='Ç‰Ç¡Ç≠ÇËñÇóùçπ' has no TachieFaceParameter", "VOICE_NO_TACHIE_FACE: VoiceItem index=9 character='Ç‰Ç¡Ç≠ÇËóÏñ≤' has no TachieFaceParameter", "VOICE_NO_TACHIE_FACE: VoiceItem index=10 character='Ç‰Ç¡Ç≠ÇËóÏñ≤' has no TachieFaceParameter"], "face_changes": 1, "slot_changes": 0, "warnings": ["VOICE_NO_TACHIE_FACE: VoiceItem index=1 character='Ç‰Ç¡Ç≠ÇËóÏñ≤' has no TachieFaceParameter", "VOICE_NO_TACHIE_FACE: VoiceItem index=2 character='Ç‰Ç¡Ç≠ÇËñÇóùçπ' has no TachieFaceParameter", "VOICE_NO_TACHIE_FACE: VoiceItem index=9 character='Ç‰Ç¡Ç≠ÇËóÏñ≤' has no TachieFaceParameter", "VOICE_NO_TACHIE_FACE: VoiceItem index=10 character='Ç‰Ç¡Ç≠ÇËóÏñ≤' has no TachieFaceParameter", "BG_SPAN_OVERLAP: utterance index=10 section=S3"], "summary": {"warning_count": 5, "fatal_warning_count": 4, "preview_warnings": ["VOICE_NO_TACHIE_FACE: VoiceItem index=1 character='Ç‰Ç¡Ç≠ÇËóÏñ≤' has no TachieFaceParameter", "VOICE_NO_TACHIE_FACE: VoiceItem index=2 character='Ç‰Ç¡Ç≠ÇËñÇóùçπ' has no TachieFaceParameter", "VOICE_NO_TACHIE_FACE: VoiceItem index=9 character='Ç‰Ç¡Ç≠ÇËóÏñ≤' has no TachieFaceParameter", "VOICE_NO_TACHIE_FACE: VoiceItem index=10 character='Ç‰Ç¡Ç≠ÇËóÏñ≤' has no TachieFaceParameter", "BG_SPAN_OVERLAP: utterance index=10 section=S3"], "face_changes": 1, "slot_changes": 0, "overlay_changes": 0, "se_plans": 0, "tachie_syncs": 0, "bg_removed": 1, "bg_added": 4, "bg_anim_changes": 0, "transition_changes": 11, "motion_changes": 0, "group_motion_changes": 0}}

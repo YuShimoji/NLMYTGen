@@ -1,0 +1,23 @@
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=2 has unsupported transition 'cut' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=3 has unsupported transition 'cut' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=4 has unsupported transition 'wipe' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=5 has unsupported transition 'slide_left' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=7 has unsupported transition 'cut' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=8 has unsupported transition 'slide_right' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=10 has unsupported transition 'wipe' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=11 has unsupported transition 'cut' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=13 has unsupported transition 'slide_left' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=15 has unsupported transition 'cut' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=16 has unsupported transition 'wipe' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=17 has unsupported transition 'cut' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=18 has unsupported transition 'slide_right' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=21 has unsupported transition 'cut' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=22 has unsupported transition 'wipe' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=23 has unsupported transition 'cut' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=24 has unsupported transition 'slide_left' (allowed: fade, none)
+  ERROR: TRANSITION_UNKNOWN_LABEL: utterance index=27 has unsupported transition 'cut' (allowed: fade, none)
+  ERROR: SLOT_CHARACTER_DRIFT: character 'スピーカー1' uses multiple slot labels: center, left
+  WARNING: FACE_SERIOUS_SKEW: face 'serious' is 50% of utterances (threshold: 40%)
+  WARNING: IDLE_FACE_MISSING: idle_face is not specified in any utterance
+
+Validation FAILED (19 errors). Patch aborted.
