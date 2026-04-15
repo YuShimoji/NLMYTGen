@@ -1,0 +1,83 @@
+{
+  "ゆっくり魔理沙黄縁": {
+    "serious": {
+      "Eyebrow": "D:\\MovieCreationWorkspace\\新まりさ\\眉\\08c.png",
+      "Eye": "D:\\MovieCreationWorkspace\\新まりさ\\目\\00.png",
+      "Mouth": "D:\\MovieCreationWorkspace\\新まりさ\\口\\07.png",
+      "Hair": "D:\\MovieCreationWorkspace\\新まりさ\\髪\\00o.png",
+      "Body": "D:\\MovieCreationWorkspace\\新まりさ\\体\\01.png"
+    },
+    "smile": {
+      "Eyebrow": "D:\\MovieCreationWorkspace\\新まりさ\\眉\\06c.png",
+      "Eye": "D:\\MovieCreationWorkspace\\新まりさ\\目\\28.png",
+      "Mouth": "D:\\MovieCreationWorkspace\\新まりさ\\口\\05.png",
+      "Hair": "D:\\MovieCreationWorkspace\\新まりさ\\髪\\00o.png",
+      "Body": "D:\\MovieCreationWorkspace\\新まりさ\\体\\01.png"
+    },
+    "surprised": {
+      "Eyebrow": "D:\\MovieCreationWorkspace\\新まりさ\\眉\\07c.png",
+      "Eye": "D:\\MovieCreationWorkspace\\新まりさ\\目\\05.png",
+      "Mouth": "D:\\MovieCreationWorkspace\\新まりさ\\口\\09.png",
+      "Hair": "D:\\MovieCreationWorkspace\\新まりさ\\髪\\00o.png",
+      "Body": "D:\\MovieCreationWorkspace\\新まりさ\\体\\01.png"
+    },
+    "thinking": {
+      "Eyebrow": "D:\\MovieCreationWorkspace\\新まりさ\\眉\\08c.png",
+      "Eye": "D:\\MovieCreationWorkspace\\新まりさ\\目\\14.png",
+      "Mouth": "D:\\MovieCreationWorkspace\\新まりさ\\口\\07.png",
+      "Hair": "D:\\MovieCreationWorkspace\\新まりさ\\髪\\00o.png",
+      "Body": "D:\\MovieCreationWorkspace\\新まりさ\\体\\01.png"
+    },
+    "angry": {
+      "Eyebrow": "D:\\MovieCreationWorkspace\\新まりさ\\眉\\09c.png",
+      "Eye": "D:\\MovieCreationWorkspace\\新まりさ\\目\\02.png",
+      "Mouth": "D:\\MovieCreationWorkspace\\新まりさ\\口\\03.png",
+      "Hair": "D:\\MovieCreationWorkspace\\新まりさ\\髪\\00o.png",
+      "Body": "D:\\MovieCreationWorkspace\\新まりさ\\体\\01.png"
+    },
+    "sad": {
+      "Eyebrow": "D:\\MovieCreationWorkspace\\新まりさ\\眉\\08c.png",
+      "Eye": "D:\\MovieCreationWorkspace\\新まりさ\\目\\00.png",
+      "Mouth": "D:\\MovieCreationWorkspace\\新まりさ\\口\\04.png",
+      "Hair": "D:\\MovieCreationWorkspace\\新まりさ\\髪\\00o.png",
+      "Body": "D:\\MovieCreationWorkspace\\新まりさ\\体\\01.png"
+    }
+  },
+  "ゆっくり霊夢赤縁": {
+    "serious": {
+      "Eyebrow": "D:\\MovieCreationWorkspace\\新れいむ\\眉\\08c.png",
+      "Eye": "D:\\MovieCreationWorkspace\\新れいむ\\目\\00.png",
+      "Mouth": "D:\\MovieCreationWorkspace\\新れいむ\\口\\07.png",
+      "Hair": "D:\\MovieCreationWorkspace\\新れいむ\\髪\\00o.png",
+      "Body": "D:\\MovieCreationWorkspace\\新れいむ\\体\\00.png"
+    },
+    "smile": {
+      "Eyebrow": "D:\\MovieCreationWorkspace\\新れいむ\\眉\\05c.png",
+      "Eye": "D:\\MovieCreationWorkspace\\新れいむ\\目\\28.png",
+      "Mouth": "D:\\MovieCreationWorkspace\\新れいむ\\口\\05.png",
+      "Hair": "D:\\MovieCreationWorkspace\\新れいむ\\髪\\00o.png",
+      "Body": "D:\\MovieCreationWorkspace\\新れいむ\\体\\00.png"
+    },
+    "thinking": {
+      "Eyebrow": "D:\\MovieCreationWorkspace\\新れいむ\\眉\\08c.png",
+      "Eye": "D:\\MovieCreationWorkspace\\新れいむ\\目\\14.png",
+      "Mouth": "D:\\MovieCreationWorkspace\\新れいむ\\口\\07.png",
+      "Hair": "D:\\MovieCreationWorkspace\\新れいむ\\髪\\00o.png",
+      "Body": "D:\\MovieCreationWorkspace\\新れいむ\\体\\00.png"
+    },
+    "angry": {
+      "Eyebrow": "D:\\MovieCreationWorkspace\\新れいむ\\眉\\09c.png",
+      "Eye": "D:\\MovieCreationWorkspace\\新れいむ\\目\\02.png",
+      "Mouth": "D:\\MovieCreationWorkspace\\新れいむ\\口\\03b.png",
+      "Hair": "D:\\MovieCreationWorkspace\\新れいむ\\髪\\00o.png",
+      "Body": "D:\\MovieCreationWorkspace\\新れいむ\\体\\00.png"
+    },
+    "sad": {
+      "Eyebrow": "D:\\MovieCreationWorkspace\\新れいむ\\眉\\08c.png",
+      "Eye": "D:\\MovieCreationWorkspace\\新れいむ\\目\\00.png",
+      "Mouth": "D:\\MovieCreationWorkspace\\新れいむ\\口\\04.png",
+      "Hair": "D:\\MovieCreationWorkspace\\新れいむ\\髪\\00o.png",
+      "Body": "D:\\MovieCreationWorkspace\\新れいむ\\体\\00.png"
+    }
+  }
+}

@@ -1,0 +1,4 @@
+  WARNING: FACE_LATENT_GAP: character 'Ç‰Ç¡Ç≠ÇËóÏñ≤ê‘âè' is missing prompt labels: surprised
+  WARNING: IDLE_FACE_MISSING: idle_face is not specified in any utterance
+  WARNING: GROUP_MOTION_DRIFT: group_target 'Group' uses multiple group_motion labels: reset_center, slide_left, slide_right
+  WARNING: bg label 'studio_blue' not found in bg_map

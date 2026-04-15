@@ -1,0 +1,19 @@
+face_map: samples/_probe/haitatsuin_x2a/face_map_x2a.json (loaded)
+group_motion_map: samples/group_motion_map.example.json (15 labels)
+prompt face contract: C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\docs\S6-production-memo-prompt.md (6 labels)
+
+--- Face Distribution (3 utterances) ---
+  smile          1 (33%) ######
+  angry          1 (33%) ######
+  serious        1 (33%) ######
+
+--- Face Contract ---
+  prompt : angry, sad, serious, smile, surprised, thinking
+  palette: angry, sad, serious, smile, surprised, thinking
+  used   : angry, serious, smile
+
+--- Palette Gap Report ---
+  latent Ç‰Ç¡Ç≠ÇËóÏñ≤ê‘âè: surprised
+  INFO: ROW_RANGE_INFO: row_start/row_end not set. Use annotate-row-range or apply-production --csv
+GroupItem geometry writes: 0
+{"success": true, "dry_run": true, "face_changes": 15, "slot_changes": 0, "overlay_changes": 0, "se_plans": 0, "tachie_syncs": 0, "bg_changes": 0, "bg_additions": 0, "bg_anim_changes": 0, "transition_changes": 3, "motion_changes": 2, "group_motion_changes": 0, "warnings": ["GROUP_MOTION_DRIFT: group_target 'Group' uses multiple group_motion labels: reset_center, slide_left, slide_right", "bg label 'studio_blue' not found in bg_map"], "summary": {"warning_count": 2, "fatal_warning_count": 0, "preview_warnings": ["GROUP_MOTION_DRIFT: group_target 'Group' uses multiple group_motion labels: reset_center, slide_left, slide_right", "bg label 'studio_blue' not found in bg_map"], "face_changes": 15, "slot_changes": 0, "overlay_changes": 0, "se_plans": 0, "tachie_syncs": 0, "bg_removed": 0, "bg_added": 0, "bg_anim_changes": 0, "transition_changes": 3, "motion_changes": 2, "group_motion_changes": 0}}
