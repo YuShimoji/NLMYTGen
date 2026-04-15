@@ -20,6 +20,7 @@
 - [verification/PROJECT_INIT_CHECKLIST.md](verification/PROJECT_INIT_CHECKLIST.md) — **実案件投入**: palette → registry → validate-ir → apply-production の 5 ステップ
 - [verification/FAILURE_DIAGNOSIS_MATRIX.md](verification/FAILURE_DIAGNOSIS_MATRIX.md) — ERROR/WARNING 全 64 種の診断マトリクス
 - `samples/registry_template/` — 6 種の registry JSON 雛形（overlay/se/bg/slot/face/group_motion_map）
+- `samples/effect_catalog.json` — YMM4 v4.51 の VideoEffect カタログ（111 ユニーク、9 カテゴリ）。抽出元 `samples/EffectsSamples_2026-04-15.ymmp` / 再抽出 `scripts/extract_effect_catalog.py`。**用途**: `motion_map` / `tachie_motion_map` / `bg_anim_map` / `group_motion_map` に書くエフェクト名・`$type`・パラメータキーのピックアップ元。運用メモ [samples/EFFECT_CATALOG_USAGE.md](../samples/EFFECT_CATALOG_USAGE.md)
 
 `docs/verification` 直下の個別ファイルが多いときは、先に次の **索引表**だけ読む。
 
@@ -32,7 +33,7 @@
 - [OPERATOR_PARALLEL_WORK_RUNBOOK.md](OPERATOR_PARALLEL_WORK_RUNBOOK.md) — オペレータ並行（ファイル4）
 - [verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md](verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md) — **ファイル10**: コピペ用 Prompt 全文・検収・親チャット返却テンプレ
 - [verification/CORE-DEV-POST-DELEGATION-INDEX.md](verification/CORE-DEV-POST-DELEGATION-INDEX.md) — コア移譲後ドキュメントの索引（ファイル2〜）
-- [verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md](verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md) — 立ち絵 複数体×顔差し替え（**G-19/G-20 `proposed`**・別スレッド用 Prompt 同梱）
+- [verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md](verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md) — 立ち絵 複数体×顔差し替え（**G-19 `done` / G-20 `approved` / G-21 `proposed`**・§3.2 が茶番劇体テンプレ G-21 の構想正本）
 - [verification/CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) — 即実行 Prompt の運用原則・早見（ファイル9）。全文はファイル10を先に更新する運用
 
 ---

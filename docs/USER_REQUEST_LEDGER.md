@@ -18,7 +18,7 @@
 - 手動時間の計測は目的から外す。今後は時間差ではなく接続成立・失敗分類・差分証跡を優先する（2026-04-07）。
 
 - 表情指定をテンプレ（YMM4 プリセット名）ベースに切り替える方式の調査・設計（2026-04-13 フィードバック: パーツ個別指定では「カスタム空白」になり実用性が低い）
-- 体テンプレ蓄積と IR からの body_template 指定の将来設計（2026-04-13 構想: overlay/bg と同型のレジストリ + ImageItem 挿入。FEATURE 起票は別ブロック）
+- 体テンプレ蓄積と IR からの body_template 指定の将来設計（2026-04-13 構想: overlay/bg と同型のレジストリ + ImageItem 挿入）。**2026-04-15 起票完了**: FEATURE_REGISTRY **G-21 `proposed`**。茶番劇運用（配達員・消防員等の外部素材 ImageItem + ゆっくり頭 TachieItem 重畳）。X-2 先行実地確認後に `approved` 昇格判定
 
 ## 未反映の是正要求
 - `approved` は「仕様定義済み + ユーザー承認済み」のみ。priority と status を混同しない。
@@ -45,6 +45,7 @@
 - 2026-04-05: face は `FACE_UNKNOWN_LABEL` / `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` / `FACE_MAP_MISS` / `IDLE_FACE_MAP_MISS` / `VOICE_NO_TACHIE_FACE` の failure class で扱う。broad な manual retry loop に戻さない。
 - 推奨ロードマップ順は 2026-04-06 rev.2 で刷新。packaging spec lane は一巡完了 (H-02 pass)。次フェーズは実制作の3大bottleneck (台本品質/演出配置自動化/視覚効果) に軸を移す。E-01/E-02 は制作パイプラインと完全分離。
 - 2026-04-06: ユーザーフィードバックにより実制作ワークフローの自動化カバレッジを棚卸し。done 35件だが最重量工程 (演出配置・視覚効果・台本品質) が未自動化。runtime-state.md に工程別カバレッジと3大bottleneckの詳細を記録。project-context.md ROADMAP を方向転換版に全面刷新。
+- 2026-04-15: メンテ並行委任 Prompt 4 件（H-01 brief / H-02 サムネ one-sheet / B-17 改行残差観測 / B-18 台本診断観測）を `docs/prompts/` に durable 化。別セッション・Custom GPT・user GUI 作業で再利用できる正本として分離し、[CORE-PARALLEL-HUB §7](verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md) から索引する構成に固定。
 
 ## 今後明文化すべきこと
 - 台本品質保証の具体的アプローチ (NLM臭除去、話者混同修正、ゆっくり解説様式変換)

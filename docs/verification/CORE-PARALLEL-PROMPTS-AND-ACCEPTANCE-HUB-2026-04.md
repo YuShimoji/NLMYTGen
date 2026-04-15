@@ -234,8 +234,24 @@ docs/verification/VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md の §4 の表を 1 
 
 ---
 
-## 7. 変更履歴
+## 7. 委任 Prompt 正本索引（詳細版 2026-04-15 追加）
 
+§5 の Prompt は **短縮版**。別セッション・Custom GPT・user GUI 作業へ独立して委任する場合は、以下の **詳細版正本ファイル**を使う。受入基準・P01/P03 追記形式・実装フラグ整合まで含めて揃えている。
+
+| 委任 Prompt 正本 | 対応 §5 Prompt | 主な用途 | 成果物の行き先 |
+|---|---|---|---|
+| [H01-packaging-brief-prompt.md](../prompts/H01-packaging-brief-prompt.md) | Prompt-D（H-01 brief） | Custom GPT 固定で動画 1 本の brief 生成 | `samples/<video_id>_brief.md` または brief JSON |
+| [H02-thumbnail-one-sheet-prompt.md](../prompts/H02-thumbnail-one-sheet-prompt.md) | Prompt-E（サムネ S-8） | 1 枚分 one-sheet 生成 + `score-thumbnail-s8` payload 出力 | [P03](P03-thumbnail-one-sheet-proof.md) |
+| [B17-reflow-residue-observation-prompt.md](../prompts/B17-reflow-residue-observation-prompt.md) | Prompt-R（改行／YMM4 ギャップ） | `build-csv --reflow-v2` 後の残差 4 項目観測 | [P01](P01-phase1-operator-e2e-proof.md) メモ列 1 行 |
+| [B18-script-diagnostics-observation-prompt.md](../prompts/B18-script-diagnostics-observation-prompt.md) | Prompt-A の機械診断部 | 新規台本の `diagnose-script` 機械観測（warning 件数・コード集計） | [P01](P01-phase1-operator-e2e-proof.md) メモ列 1 行 |
+
+**使い分け**: §5 の短縮 Prompt はハブ内で完結する即渡しコピー用。上記詳細版は、別担当者に文脈を再説明せず委譲するとき・Custom GPT 固定で繰り返し使うとき・受入基準と P01 追記形式まで厳密に固定したいときに使う。
+
+---
+
+## 8. 変更履歴
+
+- 2026-04-15: §7 委任 Prompt 正本索引（詳細版 4 件）を追加。`docs/prompts/` に正本を分離。
 - 2026-04-11: レーン数・本ファイルの役割（進捗はホールドしない）・成果物の行き先表を追加。§6 から冒頭節へ誘導。
 - 2026-04-11: 初版。コア本幹タスク設計に沿った検収・全文 Prompt の単一ハブとして新設（ファイル10）。
 
