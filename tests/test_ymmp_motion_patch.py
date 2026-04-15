@@ -493,3 +493,133 @@ def test_phase2_motion_respects_row_range_anchor():
     assert tachie_items[0]["Frame"] == 0
     assert tachie_items[0]["Length"] == 40
     assert tachie_items[0]["VideoEffects"] == bounce_fx
+
+
+# --- G-20 Slice 2: relative mode ---
+
+
+def _make_group_motion_ymmp(*, group_x=100.0, group_y=200.0, group_zoom=100.0):
+    """GroupItem を 1 件持つ最小 ymmp."""
+    return {
+        "Timelines": [{
+            "ID": 0,
+            "Items": [
+                {
+                    "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+                    "CharacterName": "a",
+                    "Serif": "hello",
+                    "Frame": 0,
+                    "Length": 50,
+                    "Layer": 1,
+                    "TachieFaceParameter": {
+                        "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter",
+                        "Eyebrow": "e.png", "Eye": "i.png", "Mouth": "m.png",
+                        "Hair": "", "Body": "", "Complexion": "",
+                    },
+                },
+                {
+                    "$type": "YukkuriMovieMaker.Project.Items.GroupItem, YukkuriMovieMaker",
+                    "Remark": "main",
+                    "X": group_x,
+                    "Y": group_y,
+                    "Zoom": group_zoom,
+                    "Layer": 2,
+                },
+            ],
+            "LayerSettings": [],
+        }],
+        "Characters": [{"Name": "a"}],
+    }
+
+
+def _group_motion_ir(*, group_target="main", group_motion="slide_left"):
+    return {
+        "ir_version": "1.0",
+        "video_id": "t",
+        "macro": {"sections": [{"section_id": "S1", "start_index": 1, "end_index": 1, "default_bg": "b"}]},
+        "utterances": [
+            {
+                "index": 1, "speaker": "a", "text": "hello", "section_id": "S1",
+                "face": "n", "group_target": group_target, "group_motion": group_motion,
+            },
+        ],
+    }
+
+
+def test_group_motion_absolute_mode_unchanged():
+    """absolute (既定) は従来と同じ絶対値書き込み."""
+    ymmp = _make_group_motion_ymmp(group_x=100.0, group_y=200.0, group_zoom=100.0)
+    ir = _group_motion_ir()
+    gm_map = {"slide_left": {"x": -320, "y": 540, "zoom": 100}}
+    res = patch_ymmp(ymmp, ir, {"n": {"Eye": "i.png", "Mouth": "m.png", "Eyebrow": "e.png"}}, {},
+                     group_motion_map=gm_map)
+    gi = [i for i in ymmp["Timelines"][0]["Items"] if "GroupItem" in i.get("$type", "")][0]
+    assert gi["X"] == -320.0
+    assert gi["Y"] == 540.0
+    assert gi["Zoom"] == 100.0
+    assert res.group_motion_changes >= 1
+
+
+def test_group_motion_absolute_mode_explicit():
+    """mode: absolute を明示しても同じ挙動."""
+    ymmp = _make_group_motion_ymmp(group_x=50.0)
+    ir = _group_motion_ir()
+    gm_map = {"slide_left": {"mode": "absolute", "x": -320, "y": 540, "zoom": 100}}
+    patch_ymmp(ymmp, ir, {"n": {"Eye": "i.png", "Mouth": "m.png", "Eyebrow": "e.png"}}, {},
+               group_motion_map=gm_map)
+    gi = [i for i in ymmp["Timelines"][0]["Items"] if "GroupItem" in i.get("$type", "")][0]
+    assert gi["X"] == -320.0
+
+
+def test_group_motion_relative_mode_adds_to_current():
+    """mode: relative は現在値に加算する."""
+    ymmp = _make_group_motion_ymmp(group_x=100.0, group_y=200.0, group_zoom=100.0)
+    ir = _group_motion_ir()
+    gm_map = {"slide_left": {"mode": "relative", "x": -50, "y": 30, "zoom": 10}}
+    res = patch_ymmp(ymmp, ir, {"n": {"Eye": "i.png", "Mouth": "m.png", "Eyebrow": "e.png"}}, {},
+                     group_motion_map=gm_map)
+    gi = [i for i in ymmp["Timelines"][0]["Items"] if "GroupItem" in i.get("$type", "")][0]
+    assert gi["X"] == 50.0    # 100 + (-50)
+    assert gi["Y"] == 230.0   # 200 + 30
+    assert gi["Zoom"] == 110.0  # 100 + 10
+    assert res.group_motion_changes >= 1
+
+
+def test_group_motion_relative_mode_with_keyframe_dict():
+    """keyframe 形式 (Values[0].Value) でも relative が効く."""
+    ymmp = _make_group_motion_ymmp()
+    gi = [i for i in ymmp["Timelines"][0]["Items"] if "GroupItem" in i.get("$type", "")][0]
+    gi["X"] = {"Values": [{"Value": 200.0}]}
+    ir = _group_motion_ir()
+    gm_map = {"slide_left": {"mode": "relative", "x": -80}}
+    patch_ymmp(ymmp, ir, {"n": {"Eye": "i.png", "Mouth": "m.png", "Eyebrow": "e.png"}}, {},
+               group_motion_map=gm_map)
+    assert gi["X"]["Values"][0]["Value"] == 120.0  # 200 + (-80)
+
+
+def test_group_motion_relative_partial_axes():
+    """relative で一部の軸だけ指定した場合、指定外の軸は変わらない."""
+    ymmp = _make_group_motion_ymmp(group_x=100.0, group_y=200.0, group_zoom=80.0)
+    ir = _group_motion_ir()
+    gm_map = {"slide_left": {"mode": "relative", "x": 10}}
+    patch_ymmp(ymmp, ir, {"n": {"Eye": "i.png", "Mouth": "m.png", "Eyebrow": "e.png"}}, {},
+               group_motion_map=gm_map)
+    gi = [i for i in ymmp["Timelines"][0]["Items"] if "GroupItem" in i.get("$type", "")][0]
+    assert gi["X"] == 110.0
+    assert gi["Y"] == 200.0   # 変更なし
+    assert gi["Zoom"] == 80.0  # 変更なし
+
+
+def test_load_group_motion_map_rejects_invalid_mode():
+    """不正な mode はロード時にエラー."""
+    import json
+    import tempfile
+    from src.cli.main import _load_group_motion_map
+
+    data = {"group_motions": {"bad": {"mode": "incremental", "x": 10}}}
+    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as f:
+        json.dump(data, f)
+        f.flush()
+        import pytest
+        with pytest.raises(ValueError, match="invalid mode"):
+            _load_group_motion_map(f.name)

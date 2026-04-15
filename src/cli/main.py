@@ -1649,10 +1649,17 @@ def _load_group_motion_map(path: str | Path) -> dict[str, dict]:
             "group_motion_map JSON must define a top-level object or 'group_motions'"
         )
 
+    _VALID_MODES = {"absolute", "relative"}
     out: dict[str, dict] = {}
     for label, spec in motions_raw.items():
         if not isinstance(spec, dict):
             raise ValueError(f"group_motion_map entry '{label}' must be an object")
+        mode = spec.get("mode", "absolute")
+        if mode not in _VALID_MODES:
+            raise ValueError(
+                f"group_motion_map entry '{label}' has invalid mode '{mode}'"
+                f" (must be one of {sorted(_VALID_MODES)})"
+            )
         out[str(label)] = dict(spec)
     return out
 

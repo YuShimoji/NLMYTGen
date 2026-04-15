@@ -95,8 +95,29 @@
 
 **追記（G-20 スライス1・2026-04-14）**: 台帳 G-20 を `approved` に更新。`validate-ir`（`src/pipeline/ir_validate.py`）で `group_target` の **空・前後空白・改行含有**を `GROUP_TARGET_EMPTY` / `GROUP_TARGET_SURROUNDING_WHITESPACE` / `GROUP_TARGET_NEWLINE` として事前エラー化。単体テストは `tests/test_ymmp_motion_patch.py`（`test_validate_ir_group_target_*`）。
 
-## 6. 包括見直しの判断基準（次回継続用）
+**追記（G-20 スライス2・2026-04-15）**: `group_motion_map` に **`mode: "relative"`**（相対オフセット）を追加。`absolute`（既定・従来互換）は絶対値書き込み、`relative` は GroupItem の現在値に加算。`_load_group_motion_map` でモード値バリデーション。テスト 7 件追加。`samples/group_motion_map.example.json` に `nudge_left` / `nudge_right` / `zoom_in_relative` サンプル。
 
-- テンプレ監査で `group_target` 命名一致率が十分か。
-- Group適用失敗の発生頻度が fatal 化後に許容範囲か。
-- 1本あたり手動修正時間がどれだけ減ったか（定量）。
+## 8. 残スライス候補（レガシー化防止・起票）
+
+以下はスライス1/2 の包括レビューで特定された中優先候補。実案件で価値が確認されたタイミングで個別スライスに昇格する。
+
+### 候補C: `face_map_bundle` と `group_target` の事前整合チェック
+
+- **目的**: 素材配置（face_map_bundle のキャラ・body 構成）と Group 適用（group_target の命名）の前提不一致を、`validate-ir` 段階で早期発見する。
+- **影響範囲**: `src/pipeline/ir_validate.py`（チェック追加）、テスト。プロダクトコードの挙動変更なし。
+- **昇格トリガー**: 実案件で `face_map_bundle` と `group_target` の不一致が原因の手戻りが発生したとき。
+- **状態**: proposed（値検証待ち）
+
+### 候補D: テンプレ監査チェックの標準化（Group 中央基準 + 命名確認）
+
+- **目的**: テンプレごとの Group 構造差（単一 Group 前提の崩れ、中央基準のずれ）を運用ルールとして明文化し、新テンプレ投入時のチェックリストを標準化する。
+- **影響範囲**: `docs/verification/` のチェックリスト・runbook 中心。コード変更は最小（チェック自動化する場合のみ）。
+- **昇���トリガー**: テンプレ追加・差し替え時に Group 構造の不一致で適用失敗が頻発したとき。
+- **状態**: proposed（値検証待ち）
+
+## 6. 包括見直しの判断基準（���回継続用）
+
+- テンプレ監���で `group_target` 命名一致率が十分か。
+- Group��用失敗の発生頻度が fatal 化後に許���範囲か。
+- 1本あた��手動修正時間がどれだけ減ったか（定��）。
+- **候補C/D の昇格判断**: 上記トリガーに該当する手戻りが出たら、本節 §8 から個別スライスに昇格する。

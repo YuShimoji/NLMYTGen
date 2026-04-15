@@ -467,6 +467,22 @@ def _apply_idle_face(
                 )
 
 
+def _get_animatable_scalar(container: dict, key: str) -> float:
+    """X/Y/Zoom の現在値を読む。未設定なら 0.0 を返す."""
+    current = container.get(key)
+    if isinstance(current, dict):
+        values = current.get("Values")
+        if isinstance(values, list) and values:
+            v = values[0].get("Value")
+            if isinstance(v, (int, float)):
+                return float(v)
+            return 0.0
+        return 0.0
+    if isinstance(current, (int, float)):
+        return float(current)
+    return 0.0
+
+
 def _set_animatable_scalar(container: dict, key: str, value: float) -> int:
     """X/Y/Zoom のような scalar または keyframe 風フィールドを書き換える."""
     current = container.get(key)
@@ -705,20 +721,27 @@ def _apply_group_motion(
             )
             continue
 
+        mode = spec.get("mode", "absolute")
         for group_item in matched:
             for axis in ("x", "y", "zoom"):
                 if axis not in spec:
                     continue
                 try:
-                    value = float(spec[axis])
+                    delta = float(spec[axis])
                 except (TypeError, ValueError):
                     result.warnings.append(
                         "GROUP_MOTION_VALUE_INVALID: "
                         f"group_motion '{motion_label}' has non numeric {axis}"
                     )
                     continue
+                ymmp_key = axis.upper() if axis != "zoom" else "Zoom"
+                if mode == "relative":
+                    current = _get_animatable_scalar(group_item, ymmp_key)
+                    value = current + delta
+                else:
+                    value = delta
                 result.group_motion_changes += _set_animatable_scalar(
-                    group_item, axis.upper() if axis != "zoom" else "Zoom", value
+                    group_item, ymmp_key, value
                 )
 
 

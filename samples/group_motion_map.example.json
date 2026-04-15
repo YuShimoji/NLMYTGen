@@ -14,6 +14,18 @@
       "x": 0,
       "y": 540,
       "zoom": 118
+    },
+    "nudge_left": {
+      "mode": "relative",
+      "x": -50
+    },
+    "nudge_right": {
+      "mode": "relative",
+      "x": 50
+    },
+    "zoom_in_relative": {
+      "mode": "relative",
+      "zoom": 15
     }
   }
 }
