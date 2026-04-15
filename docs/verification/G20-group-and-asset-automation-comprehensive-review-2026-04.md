@@ -93,6 +93,8 @@
 上記3クラスを warning から **fatal（書き出し前停止）**へ昇格した。  
 `patch-ymmp` と `apply-production` の両経路で同一判定を適用する。
 
+**追記（G-20 スライス1・2026-04-14）**: 台帳 G-20 を `approved` に更新。`validate-ir`（`src/pipeline/ir_validate.py`）で `group_target` の **空・前後空白・改行含有**を `GROUP_TARGET_EMPTY` / `GROUP_TARGET_SURROUNDING_WHITESPACE` / `GROUP_TARGET_NEWLINE` として事前エラー化。単体テストは `tests/test_ymmp_motion_patch.py`（`test_validate_ir_group_target_*`）。
+
 ## 6. 包括見直しの判断基準（次回継続用）
 
 - テンプレ監査で `group_target` 命名一致率が十分か。

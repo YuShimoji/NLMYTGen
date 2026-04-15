@@ -101,6 +101,53 @@ def test_validate_ir_group_motion_map_unknown_label():
     assert any("GROUP_MOTION_UNKNOWN_LABEL" in e for e in vr.errors)
 
 
+def _ir_one_utt_group(*, group_target, group_motion: str = "slide_left") -> dict:
+    return {
+        "ir_version": "1.0",
+        "video_id": "x",
+        "macro": {
+            "sections": [{"section_id": "S1", "start_index": 1, "end_index": 1, "default_bg": "b"}],
+        },
+        "utterances": [
+            {
+                "index": 1,
+                "speaker": "a",
+                "text": "t",
+                "section_id": "S1",
+                "face": "f",
+                "group_target": group_target,
+                "group_motion": group_motion,
+            },
+        ],
+    }
+
+
+def test_validate_ir_group_target_empty_string():
+    vr = validate_ir(_ir_one_utt_group(group_target=""), known_face_labels={"f"})
+    assert vr.has_errors
+    assert any(e.startswith("GROUP_TARGET_EMPTY:") for e in vr.errors)
+
+
+def test_validate_ir_group_target_whitespace_only():
+    vr = validate_ir(_ir_one_utt_group(group_target="   "), known_face_labels={"f"})
+    assert vr.has_errors
+    assert any(e.startswith("GROUP_TARGET_EMPTY:") for e in vr.errors)
+
+
+def test_validate_ir_group_target_surrounding_whitespace():
+    vr = validate_ir(_ir_one_utt_group(group_target=" main "), known_face_labels={"f"})
+    assert vr.has_errors
+    assert any(
+        e.startswith("GROUP_TARGET_SURROUNDING_WHITESPACE:") for e in vr.errors
+    )
+
+
+def test_validate_ir_group_target_newline_rejected():
+    vr = validate_ir(_ir_one_utt_group(group_target="a\nb"), known_face_labels={"f"})
+    assert vr.has_errors
+    assert any(e.startswith("GROUP_TARGET_NEWLINE:") for e in vr.errors)
+
+
 def test_apply_motion_sets_tachie_video_effects():
     bounce_fx = [
         {

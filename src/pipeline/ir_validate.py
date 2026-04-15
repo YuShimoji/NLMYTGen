@@ -254,6 +254,27 @@ def validate_ir(
                 f"utterance index={entry.get('index', '?')}"
                 " group_target must be string"
             )
+        elif isinstance(target, str):
+            # G-20 スライス1: Remark/Name/Label 一致運用で手戻りになりやすい入力を事前に止める
+            if not target.strip():
+                result.errors.append(
+                    "GROUP_TARGET_EMPTY: "
+                    f"utterance index={entry.get('index', '?')}"
+                    " group_target is empty or whitespace-only"
+                    " (omit the field to use single GroupItem auto-target)"
+                )
+            elif target != target.strip():
+                result.errors.append(
+                    "GROUP_TARGET_SURROUNDING_WHITESPACE: "
+                    f"utterance index={entry.get('index', '?')}"
+                    " group_target must not have leading or trailing whitespace"
+                )
+            elif "\n" in target or "\r" in target:
+                result.errors.append(
+                    "GROUP_TARGET_NEWLINE: "
+                    f"utterance index={entry.get('index', '?')}"
+                    " group_target must not contain newline characters"
+                )
         if known_group_motion_labels is not None and gm != "none":
             if gm not in known_group_motion_labels:
                 result.errors.append(

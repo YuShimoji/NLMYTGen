@@ -1,43 +1,63 @@
 @echo off
 setlocal
-REM IMPORTANT: Keep this file Shift_JIS (CP932). UTF-8 or UTF-8-BOM breaks cmd.exe.
-REM CP932: Japanese Windows cmd parses this script as Shift_JIS (no UTF-8 BOM).
+REM ASCII-only. Optional: Shift_JIS if you add non-ASCII messages for cmd.exe.
 chcp 932 >nul 2>&1
 cd /d "%~dp0"
 
 where node >nul 2>&1
 if errorlevel 1 (
-  echo [NLMYTGen] Node.js �� PATH �ɂ���܂���BLTS �� https://nodejs.org �������Ă���Ď��s���Ă��������B
+  echo [NLMYTGen] Node.js is not in PATH. Install from https://nodejs.org and retry.
   pause
   exit /b 1
 )
 
 where npx >nul 2>&1
 if errorlevel 1 (
-  echo [NLMYTGen] npx ���g���܂���BNode.js �� npm �����C���X�g�[�����m�F���Ă��������B
+  echo [NLMYTGen] npx not found. Reinstall Node.js with npm.
   pause
   exit /b 1
 )
 
 where uv >nul 2>&1
-if not errorlevel 1 (
-  echo [NLMYTGen] �ˑ��֌W�𓯊����Ă��܂��iuv sync�j...
-  uv sync
-  if errorlevel 1 (
-    echo [NLMYTGen] uv sync �Ɏ��s���܂����B���|�W�g�������Ŏ蓮�m�F���Ă��������B
-    pause
-    exit /b 1
-  )
-) else (
-  echo [NLMYTGen] ����: uv �� PATH �ɂ���܂���BGUI �� CSV/CLI �� uv �����ł͓����Ȃ��ꍇ������܂��B
+if errorlevel 1 goto UvMissing
+
+if defined NLMYTGEN_FORCE_UV_SYNC goto RunUvSync
+if exist "%~dp0.venv\Scripts\python.exe" goto UvSkipped
+
+:RunUvSync
+echo [NLMYTGen] uv sync...
+uv sync
+if errorlevel 1 (
+  echo [NLMYTGen] uv sync failed. Check repo root.
+  pause
+  exit /b 1
 )
+goto UvAfter
+
+:UvSkipped
+goto UvAfter
+
+:UvMissing
+echo [NLMYTGen] WARN: uv not in PATH. GUI needs uv for CSV/CLI.
+
+:UvAfter
 
 cd /d "%~dp0gui"
-echo [NLMYTGen] Electron ���N�����Ă��܂�...
-npx --yes electron .
-set ERR=%ERRORLEVEL%
-if not "%ERR%"=="0" (
-  echo [NLMYTGen] �I���R�[�h %ERR%
+if not exist "package.json" (
+  echo [NLMYTGen] gui\package.json not found.
   pause
+  exit /b 1
 )
-exit /b %ERR%
+
+REM Local electron is fast; npx resolves each time (slower). One-time: cd gui ^&^& npm install
+if exist "node_modules\.bin\electron.cmd" (
+  call node_modules\.bin\electron.cmd .
+) else (
+  npx --yes electron .
+)
+if errorlevel 1 (
+  echo [NLMYTGen] Electron exited with error.
+  pause
+  exit /b 1
+)
+exit /b 0

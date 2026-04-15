@@ -2,7 +2,7 @@
 
 NotebookLM の出力を YMM4 (ゆっくりMovieMaker4) 用 CSV に変換し、演出 IR (中間表現) で S-6 (背景・演出設定) の半自動化を目指すパイプライン。
 
-**GUI**: リポジトリ直下の [`start-gui.bat`](start-gui.bat) は **Shift_JIS (CP932) で保存**すること（UTF-8 / UTF-8-BOM にすると cmd で壊れる場合があります）。先頭 `REM` に同趣旨の注意あり。
+**GUI**: リポジトリ直下の [`start-gui.bat`](start-gui.bat) は **Shift_JIS (CP932) で保存**すること（UTF-8 / UTF-8-BOM にすると cmd で壊れる場合があります）。起動の速さのため、**`.venv` が既にあるときは `uv sync` をスキップ**します（強制したいときは `set NLMYTGEN_FORCE_UV_SYNC=1` のうえで実行）。`gui` で **1 回だけ** `npm install` しておくと `node_modules\.bin\electron` が使われ、`npx` より起動が速くなります（未インストール時は従来どおり `npx --yes electron`）。
 
 ## ドキュメント最短経路（初日）
 

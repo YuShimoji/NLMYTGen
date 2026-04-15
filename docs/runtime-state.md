@@ -73,11 +73,11 @@
 - final_artifact_reached: Yes (CSV → YMM4 台本読込 → IR → patch-ymmp → 表情差し替え済み ymmp)
 - blocking_dependency: なし。face は `FACE_UNKNOWN_LABEL` / `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE`_* / `FACE_MAP_MISS` / `IDLE_FACE_MAP_MISS` / `VOICE_NO_TACHIE_FACE` の failure class か、最終 creative judgement NG のときだけ再オープン
 
-## FEATURE_REGISTRY 状態サマリ (2026-04-10 更新)
+## FEATURE_REGISTRY 状態サマリ (2026-04-14 更新)
 
-- done: 43件（上記 + G-15〜G-18 + **H-05**）
-- approved: 1件（H-01）
-- proposed: 2件（G-19, G-20）
+- done: 43件（上記 + G-15〜G-18 + **H-05** 等、台帳集計）
+- approved: 2件（H-01, G-20）
+- proposed: 0件
 - info: 2件（C-01, C-06）
 - hold: 4件（A-03, D-02, E-01, E-02）
 - quarantined: 2件（F-01, F-02）

@@ -18,7 +18,7 @@ NLMYTGen の GUI LLM プロンプトを Custom GPT / Claude Project に固定化
 
 NotebookLM 生台本を `build-csv` に入れる前に、[SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md](SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md) の **`diagnose-script`**（B-18）で機械診断し、続けて [S1-script-refinement-prompt.md](S1-script-refinement-prompt.md) を GUI LLM に渡して constrained rewrite する。演出 IR（C-07）より**上流**の工程。
 
-**Electron GUI**: CSV 変換タブの「台本診断 JSON も保存」にチェックしたまま **Build CSV** または **Dry Run** が成功すると、`{台本ファイル名のstem}_script-diagnostics.json` を CSV 出力と同じディレクトリに書き出す（dry-run で CSV が無い場合は台本と同じディレクトリ）。Speaker Map は CSV 設定と同一。品質診断タブの「Diagnose Script」は従来どおり別途利用可。
+**Electron GUI**: CSV 変換タブの「台本診断 JSON も保存」にチェックしたまま **Build CSV** または **Dry Run** が成功すると、`{台本ファイル名のstem}_script-diagnostics.json` を CSV 出力と同じディレクトリに書き出す（dry-run で CSV が無い場合は台本と同じディレクトリ）。Speaker Map は CSV 設定と同一。品質診断タブの「Diagnose Script」は従来どおり別途利用可（同一 `diagnose-script`。**1 本通しの CSV 生成では CSV タブのチェックで足りることが多く**、品質診断側は CSV を書かず診断だけやり直す・別台本を対象にする・まず結果だけ画面で見たいとき向け）。
 
 ---
 

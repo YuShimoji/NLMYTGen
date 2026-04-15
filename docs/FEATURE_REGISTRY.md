@@ -137,7 +137,7 @@ G-15〜G-18 はユーザー承認済み（[FUTURE_DEVELOPMENT_ROADMAP.md](FUTURE
 | G-17 | motion / transition / bg_anim の ymmp 書き込み Adapter | done | L2/L3 | `--timeline-profile` + `--motion-map`（`video_effect` 辞書）等。契約失敗時は書き込みスキップ。[G17-motion-adapter-packet.md](verification/G17-motion-adapter-packet.md)。**Phase2（別フラグ）:** `--tachie-motion-map` で VideoEffects 配列台帳＋発話区間による `TachieItem` 分割（`--timeline-profile` 未指定時のみ）。G-14 列挙子 `bg_anim` の X/Y/Zoom キーフレームは micro bg 生成時に別経路で適用 |
 | G-18 | SE AudioItem タイムライン挿入（write route 実装） | done | L2/L3 | `patch-ymmp` の `_apply_se_items` が `AudioItem` を挿入。[G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)。履歴メモ [G18-se-audioitem-deferred.md](verification/G18-se-audioitem-deferred.md)。P2C 参照 |
 | G-19 | 立ち絵 複数体素材 × ゆっくり顔（body_variant / face_map 束ね） | done | L2/L3 | 複数の体素材それぞれに、同一系のゆっくり顔パーツを `face_map`（character-scoped 含む）で解決する運用を機械化。**方式**: Option A（ディレクトリ + マニフェスト）。IR に `body_id`（carry-forward）を追加し、`--face-map-bundle` CLI フラグでバンドルレジストリを指定。`validate-ir` に `BODY_ID_UNKNOWN` / `BODY_FACE_MAP_MISS` チェック追加。準備正本: [TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md](verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md)。**スコープ**: body_id はシーンレベル（V1）。キャラ別 body_id は別スライス。`--palette` 経路は single-body のまま |
-| G-20 | 立ち絵 顔/体の幾何（反転・平行移動・相対オフセット）IR + patch | proposed | L2/L3 | 体と顔をセットで反転・移動し視覚整合を保つ。運用前提は **中央基準 GroupItem テンプレ**（使い捨て Group 化は標準運用にしない）。A案（既存 GroupItem の `X/Y/Zoom` 操作）を優先し、B案（Group生成挿入）は将来比較対象として分離。ymmp 上の **実キー調査**（本パック §3）完了後に契約を確定し、`validate-ir` + `patch-ymmp` の範囲に収める。既存 `slot`（TachieItem X/Y/Zoom）で足りる部分と、Face 側パラメータが要る部分を分離して起票する。**承認前は `src/` 変更禁止** |
+| G-20 | 立ち絵 顔/体の幾何（反転・平行移動・相対オフセット）IR + patch | approved | L2/L3 | 体と顔をセットで反転・移動し視覚整合を保つ。運用前提は **中央基準 GroupItem テンプレ**（使い捨て Group 化は標準運用にしない）。A案（既存 GroupItem の `X/Y/Zoom` 操作）を優先し、B案（Group生成挿入）は将来比較対象として分離。ymmp 上の **実キー調査**（本パック §3）完了後に契約を確定し、`validate-ir` + `patch-ymmp` の範囲に収める。既存 `slot`（TachieItem X/Y/Zoom）で足りる部分と、Face 側パラメータが要る部分を分離して起票する。**スライス1（承認済み）**: `validate-ir` で `group_target` の空・前後空白・改行含有を `GROUP_TARGET_*` として事前エラー化（Remark 一致運用の曖昧さ低減）。反転・相対オフセット等の **新 IR フィールド**は別スライスで台帳追記のうえ実装する。 |
 
 ### H. Packaging / 評価 / オーケストレーション (L2 + L4)
 
@@ -174,3 +174,13 @@ G-15〜G-18 はユーザー承認済み（[FUTURE_DEVELOPMENT_ROADMAP.md](FUTURE
 3. `proposed` の機能は、ユーザーの承認を得て `approved` に昇格してから実装する。
 4. `unauthorized` の機能は次のレビューで承認 / 削除 / 修正のいずれかを判断する。
 5. オミットリストに載っている機能を復活させる場合は、新しい ADR を起草する。
+
+### 実装着手前チェック（`src/` 変更前）
+
+作業が **全体ブロック** になるわけではなく、**当該変更が属する FEATURE 行のステータス**でゲートが決まる。着手前に次を照合する。
+
+1. **該当行の特定** — 変更内容がどの ID 行に属するか 1 行で書けること。新規能力なら本台帳に 1 行追加し `proposed` から始める。
+2. **`done` または既存 `approved` の延長** — バグ修正・テスト・validate 厳格化・スコープ内の GUI/CLI 改善などは、原則このまま実装してよい（ルール 2 の「`done` の改善は除く」）。
+3. **`proposed` の本文スコープ**（例: G-20 の「承認前は `src/` 変更禁止」）— **ユーザー承認と `approved` 昇格（または承認済みスライスへの分割記載）のあと**に `src/` を触る。迷う場合は拡張を起票し、既存行の「スコープ確定」文を更新してから進める。
+
+`docs/runtime-state.md` の「未承認 FEATURE は増やさない」は **優先度・スコープ膨張の指針**であり、上記 2 のような保守・硬化を禁止するものではない。
