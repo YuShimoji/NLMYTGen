@@ -12,10 +12,10 @@
 - git: **既定の開発ブランチは `master`**（2026-04-09: PR [#1](https://github.com/YuShimoji/NLMYTGen/pull/1) で `feat/phase2-motion-segmentation` をマージ済み。新規作業は `master` からブランチを切る）
 - lane: **コア開発幹**（回帰・ドキュメント整合・承認済みバグ修正）。**主軸は本開発** — エージェント作業は未承認 FEATURE を増やさず上記に集中。オペレータ並行: Phase 1 Block-A (通過済、メンテ層の継続観測) / 主軸 (演出配置自動化の実戦投入) は runbook どおり。**レーン A（Phase 1）の repo 準備はオペレータ側でクローズ**（[OPERATOR_LANE_A_ENV.md](verification/OPERATOR_LANE_A_ENV.md)、[LANE_A_PREP_CHECKLIST.md](verification/LANE_A_PREP_CHECKLIST.md)）。**レーン D（H-01 brief）オペレータ完了・当面クローズ**（[H01-lane-d-prep-2026-04-09.md](verification/H01-lane-d-prep-2026-04-09.md) §6、2026-04-09）
 - slice: G-15〜G-18 実装完了（Micro `bg` / 複数 `overlay` / timeline アダプタ / **SE `AudioItem` 挿入**）。Electron GUI: CSV 変換時に **診断 JSON 同梱保存**可（[gui-llm-setup-guide.md](gui-llm-setup-guide.md)）。正本 [G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)。従来: 視覚三スタイル [VISUAL_STYLE_PRESETS.md](VISUAL_STYLE_PRESETS.md)、P2A [P2A-motion-branch-operator-decision.md](verification/P2A-motion-branch-operator-decision.md)、P2C [P2C-se-audioitem-boundary.md](verification/P2C-se-audioitem-boundary.md)（履歴）
-- next_action: Block-A 通過済 (`p0_mainline_v14_steering_2026-04-11_a` が **PASS（YMM4 S-4）**、`samples/v14_t3_ymm4.csv`・台本読込エラーなし・字幕見え方目視確認。手順は [P0-BLOCK-A-AND-PATH-A.md](verification/P0-BLOCK-A-AND-PATH-A.md) / [P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md))。次針は **§優先順位 (正本) の主軸 = 演出配置自動化の実戦投入**。本編 1 本で `overlay` / `se` / `apply-production` を通し [P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md) に 1 行追記、または user 判断で **hold (視覚効果ツール選定)** を着手。並列オプションは `parallel_replan_2026_04` / [WORKFLOW.md](../WORKFLOW.md) S-5 以降。コア本開発は `repo 充足を確認済み` で新規スライスは増やさず、承認済み実装へ進む場合のみ [CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §2 ゲート。承認済み方針: [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](verification/CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md)（§6）。タスク設計: [CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md](verification/CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md)。オペレータ入力判定: [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](verification/CORE-DEV-OPERATOR-INPUT-CHECKLIST.md)。未承認 FEATURE は増やさない。
+- next_action: **Phase 1-D（palette → face_map 実パーツ一致確認）が次のユーザーアクション**。Phase 1 基盤整備（registry テンプレ・初期化チェックリスト・診断マトリクス）は 2026-04-15 で完了。手順は [PROJECT_INIT_CHECKLIST.md](verification/PROJECT_INIT_CHECKLIST.md) Step 1。その後 **実案件 1 本で apply-production を通す**（Step 2-5）。G-20 スライス2（`mode: relative`）完了、プリセット 15 ラベル整備済み。G-20 反転（IsInverted）は YMM4 GUI 確認待ち。コア本開発は `repo 充足を確認済み` で新規スライスは増やさず、承認済み実装へ進む場合のみ [CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §2 ゲート。未承認 FEATURE は増やさない。
 - parallel_replan_2026_04: **視覚最低限 + 改行／YMM4 ギャップ**の到達定義・チェックリスト・計測テンプレは [VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md](verification/VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md)。`next_action` の主軸とは別軸の **並列オプション**。オペレータ時間の並列で、同文書の **トラック A（演出 IR 実戦 = 主軸の実務サブセット）** / **トラック B（改行ギャップ記録 = メンテ層 B-17 観測）** を配分する。`project-context.md` が IDE プレビューで空白になる場合は **生 Markdown で開く**（正本の針は本ファイルのまま）。エージェント依頼の **コピペ全文 Prompt・検収・親チャット返却テンプレ**は [CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md](verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md)（ファイル10）に集約。
 - recommended_frontier_order: 台本品質の継続観測 (メンテ) → 演出配置自動化の実戦投入 (主軸) → 視覚効果ツール選定 (hold・user 判断)（既定。変更可）
-  - **再開ショートカット（推奨対応）**: Group 制御は A案（既存 GroupItem）で fail-safe 強化まで実装済み。次回は `docs/verification/G20-group-and-asset-automation-comprehensive-review-2026-04.md` の「次スライス推奨（命名規約 lint 強化）」から再開する。
+  - **再開ショートカット（推奨対応）**: G-20 スライス1-2 完了（group_target バリデーション + `mode: relative`）。プリセット 15 ラベル整備済み。**運用基盤**（registry テンプレ `samples/registry_template/`・初期化チェックリスト [PROJECT_INIT_CHECKLIST.md](verification/PROJECT_INIT_CHECKLIST.md)・診断マトリクス [FAILURE_DIAGNOSIS_MATRIX.md](verification/FAILURE_DIAGNOSIS_MATRIX.md)）は 2026-04-15 完了。次回は **Phase 1-D（palette 確認）→ 実案件投入**。反転（IsInverted）は YMM4 GUI 確認後に別スライス。候補 C/D は [G20 包括レビュー §8](verification/G20-group-and-asset-automation-comprehensive-review-2026-04.md) に起票済み。
   - **並列の読み**: 上記フロンティア順と別に、[VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md](verification/VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md) の **トラック A**（最小視覚 = 主軸の実務サブセット）と **トラック B**（B-17 済み L2 と YMM4 実表示のギャップ計測 = メンテ層観測）を **同時期に進めてよい**。先にオペレータ時間を取る軸は案件による（ユーザー合意で `next_action` 本文は変えず、配分のみ記録してよい）。
 - 再現ルール: 異種サンプル 1 本で打ち切り済み。以後は新しい failure が出たときだけ追加検証
 - operator/agent ガード: [REPO_LOCAL_RULES.md](REPO_LOCAL_RULES.md)（正本）+ `.claude/hooks/guardrails.py` で repo 外逸脱 / broad question 停止 / repeated visual proof を常設抑止（`.claude/CLAUDE.md` は入口ポインタ）
@@ -55,7 +55,7 @@
 ## 量的指標
 
 - test_file_count: 27
-- test_count: 313
+- test_count: 350
 - mock_file_count: 0
 - impl_file_count: 22
 - mock_impl_ratio: 0.00
@@ -63,7 +63,7 @@
 
 ## 最終検証
 
-- last_verification: 318 passed, 21 skipped（コード変更時のみ実行。ドキュメントのみの変更では不要）
+- last_verification: 350 passed（2026-04-15。G-20 スライス2 テスト 6 件追加後。コード変更時のみ実行）
 
 ## Evidence（CLI artifact mode）
 
@@ -73,10 +73,10 @@
 - final_artifact_reached: Yes (CSV → YMM4 台本読込 → IR → patch-ymmp → 表情差し替え済み ymmp)
 - blocking_dependency: なし。face は `FACE_UNKNOWN_LABEL` / `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE`_* / `FACE_MAP_MISS` / `IDLE_FACE_MAP_MISS` / `VOICE_NO_TACHIE_FACE` の failure class か、最終 creative judgement NG のときだけ再オープン
 
-## FEATURE_REGISTRY 状態サマリ (2026-04-14 更新)
+## FEATURE_REGISTRY 状態サマリ (2026-04-15 更新)
 
 - done: 43件（上記 + G-15〜G-18 + **H-05** 等、台帳集計）
-- approved: 2件（H-01, G-20）
+- approved: 2件（H-01, G-20）— G-20 はスライス1-2 完了、反転は別スライス待ち
 - proposed: 0件
 - info: 2件（C-01, C-06）
 - hold: 4件（A-03, D-02, E-01, E-02）

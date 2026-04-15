@@ -17,6 +17,9 @@
 ## 2. 正本マップ（仕様・台帳・検証索引）
 
 - [GUI_MINIMUM_PATH.md](GUI_MINIMUM_PATH.md) — **Electron GUI**: 最小ファイル集合・必須/任意・ウィザード範囲（S-3 / S-6b）・L2/L3/creative 検証ラダー
+- [verification/PROJECT_INIT_CHECKLIST.md](verification/PROJECT_INIT_CHECKLIST.md) — **実案件投入**: palette → registry → validate-ir → apply-production の 5 ステップ
+- [verification/FAILURE_DIAGNOSIS_MATRIX.md](verification/FAILURE_DIAGNOSIS_MATRIX.md) — ERROR/WARNING 全 64 種の診断マトリクス
+- `samples/registry_template/` — 6 種の registry JSON 雛形（overlay/se/bg/slot/face/group_motion_map）
 
 `docs/verification` 直下の個別ファイルが多いときは、先に次の **索引表**だけ読む。
 
