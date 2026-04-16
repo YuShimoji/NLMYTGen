@@ -1,0 +1,12 @@
+backup: C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\samples\_probe\b2\haitatsuin_face_map_pre_expand.json
+
+=== ADDED (7) ===
+  ゆっくり魔理沙黄縁 / surprised: ['Eyebrow', 'Eye', 'Mouth', 'Hair', 'Body', 'Other']
+  ゆっくり魔理沙黄縁 / thinking: ['Eyebrow', 'Eye', 'Mouth', 'Hair', 'Body', 'Other']
+  ゆっくり魔理沙黄縁 / angry: ['Eyebrow', 'Eye', 'Mouth', 'Hair', 'Body', 'Other']
+  ゆっくり魔理沙黄縁 / sad: ['Eyebrow', 'Eye', 'Mouth', 'Hair', 'Body', 'Other']
+  ゆっくり霊夢赤縁 / thinking: ['Eyebrow', 'Eye', 'Mouth', 'Hair', 'Body', 'Other']
+  ゆっくり霊夢赤縁 / angry: ['Eyebrow', 'Eye', 'Mouth', 'Hair', 'Body', 'Other']
+  ゆっくり霊夢赤縁 / sad: ['Eyebrow', 'Eye', 'Mouth', 'Hair', 'Body', 'Other']
+
+=== MISSING (0) ===

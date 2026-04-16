@@ -1,0 +1,79 @@
+{
+  "macro": {
+    "sections": [
+      { "section_id": "S1", "default_bg": "studio_blue" }
+    ]
+  },
+  "utterances": [
+    {
+      "index": 1,
+      "speaker": "ゆっくり霊夢赤縁",
+      "text": "あの、想像してみてください。ある朝目覚めると、",
+      "section_id": "S1",
+      "face": "smile"
+    },
+    {
+      "index": 2,
+      "speaker": "ゆっくり霊夢赤縁",
+      "text": "ま、世界のエネルギー供給の 20% が跡形もなく消滅していると。",
+      "section_id": "S1",
+      "face": "serious"
+    },
+    {
+      "index": 3,
+      "speaker": "ゆっくり魔理沙黄縁",
+      "text": "ええ、いきなりですよね。",
+      "section_id": "S1",
+      "face": "smile"
+    },
+    {
+      "index": 4,
+      "speaker": "ゆっくり霊夢赤縁",
+      "text": "そうなんですよ。なんか徐々に減っていくんじゃなくて",
+      "section_id": "S1",
+      "face": "serious"
+    },
+    {
+      "index": 5,
+      "speaker": "ゆっくり霊夢赤縁",
+      "text": "巨大なスイッチが急に切られたみたいに、",
+      "section_id": "S1",
+      "face": "serious"
+    },
+    {
+      "index": 6,
+      "speaker": "ゆっくり霊夢赤縁",
+      "text": "たった数日で起きるんです。",
+      "section_id": "S1",
+      "face": "serious"
+    },
+    {
+      "index": 7,
+      "speaker": "ゆっくり霊夢赤縁",
+      "text": "これちょっとした SF 映画のオープニングみたいじゃないですか?",
+      "section_id": "S1",
+      "face": "smile"
+    },
+    {
+      "index": 8,
+      "speaker": "ゆっくり魔理沙黄縁",
+      "text": "全くですね。でも、えっと、",
+      "section_id": "S1",
+      "face": "smile"
+    },
+    {
+      "index": 9,
+      "speaker": "ゆっくり魔理沙黄縁",
+      "text": "残念ながらこれはフィクションではなくって",
+      "section_id": "S1",
+      "face": "serious"
+    },
+    {
+      "index": 10,
+      "speaker": "ゆっくり魔理沙黄縁",
+      "text": "現在の中東で現実に起きていることなんです。",
+      "section_id": "S1",
+      "face": "serious"
+    }
+  ]
+}

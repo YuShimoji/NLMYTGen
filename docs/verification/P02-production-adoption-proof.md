@@ -221,4 +221,22 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/n
 - 入力: `samples/production.ymmp` + `samples/chabangeki_e2e_ir.json` + face_map + bg_map_proof + slot_map_e2e + tachie_motion_map_e2e
 - 結果: exit 0 / fatal 0 / face_changes **139** (2026-04-13 実績 138 から +0.7% 以内) / slot 10 / bg_additions 9 / motion 10 / tachie_syncs 28 / transition 60
 - 決定性: 同一コマンド 2 回実行で出力 JSON が完全一致 (591 bytes, identical)
+
+## B-2 haitatsuin dry-run (`b2_haitatsuin_dryrun_2026-04-17`)
+
+- 日付: 2026-04-17
+- 正本: [B2-haitatsuin-dryrun-proof-2026-04-17.md](B2-haitatsuin-dryrun-proof-2026-04-17.md)
+- 入力 v1: `samples/characterAnimSample/haitatsuin_2026-04-12.ymmp` + `samples/_probe/b2/haitatsuin_ir_10utt.json` + face_map (3 表情) + overlay_map (最小)
+- 結果 v1: exit 0 / fatal 0 / face_changes **18** (10 utt / serious 6 + smile 4) / transition 10 / motion 3 / warnings 10
+- 判定 v1: **PASS — B-2 の CLI 経路は機械的に通過**
+
+## B-2 haitatsuin dry-run v2 (`b2_haitatsuin_dryrun_2026-04-17_v2`, face_map 6 表情拡張)
+
+- 日付: 2026-04-17
+- 正本: [B2-haitatsuin-dryrun-proof-2026-04-17.md §v2](B2-haitatsuin-dryrun-proof-2026-04-17.md)
+- 入力 v2: 同 ymmp + `samples/_probe/b2/haitatsuin_ir_10utt_v2.json` + face_map **6 表情拡張済** (palette.ymmp 由来 angry/sad/surprised/thinking を追加、霊夢 surprised のみ palette 欠如) + overlay_map (最小)
+- 結果 v2: exit 0 / fatal 0 / face_changes **50** (+32 vs v1) / transition 10 / motion 2 / warnings **4** (v1 の 10 → 4、6 件解消)
+- 解消 warning: `FACE_PROMPT_PALETTE_GAP` × 4 / `FACE_LATENT_GAP` (魔理沙) / `FACE_SERIOUS_SKEW`
+- 残 warning (全 non-fatal): `FACE_PROMPT_PALETTE_EXTRA` (neutral 保持) / `FACE_LATENT_GAP` (霊夢 surprised) / `IDLE_FACE_MISSING` / bg_map 未指定
+- 判定 v2: **PASS — prompt contract 準拠への到達**。立ち絵発話中非表示問題は user 先行解決済 ([HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md](HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md) 5 次追記)。残 warning は別拡張 (palette に霊夢 surprised 追加 / bg_map 整備 / idle_face 拡張)
 - **判定**: pipeline 再現性・決定性ともに確認。主軸「演出配置自動化の実戦投入」の完了条件を production.ymmp で満たした

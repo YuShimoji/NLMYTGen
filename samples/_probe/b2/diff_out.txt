@@ -1,0 +1,19 @@
+=== ROOT レベル diff (全 ymmp) ===
+total diff entries: 3
+unique top paths: 3
+  .LayoutXml : 1 entries
+  .FilePath : 1 entries
+  .Timelines : 1 entries
+
+=== 最初の 60 個の差分 (Items 以外を優先) ===
+  VALUE_CHANGE   .LayoutXml
+    new: "<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<LayoutRoot>\r\n  <RootPanel Orientation=\"Horizontal\">\r\n    <LayoutPanel Orientation=\"Vertical\">\r\n      <LayoutDocumentPaneGroup Orientation=\"Vertical\">\r\n      
+    old: "<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<LayoutRoot>\r\n  <RootPanel Orientation=\"Horizontal\">\r\n    <LayoutPanel Orientation=\"Vertical\">\r\n      <LayoutDocumentPaneGroup Orientation=\"Vertical\">\r\n      
+  VALUE_CHANGE   .FilePath
+    new: "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen\\samples\\_probe\\b2\\haitatsuin_1utt_preset_2026-04-17.ymmp"
+    old: "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen\\samples\\characterAnimSample\\haitatsuin_2026-04-12.ymmp"
+  VALUE_CHANGE   .Timelines[0].CurrentFrame
+    new: 0
+    old: 5772
+
+=== Items 内差分サンプル (最大 30 件) ===

@@ -69,6 +69,18 @@ samples/
 
 **決定**: `ov_{type}_{variant}.png`
 
+### 2-c-i. 立ち絵レンダリング PNG (G-22 dual-rendering 経路 B)
+
+立ち絵を YMM4 で 1 フレーム透明 PNG に書き出して overlay として使う場合は、**`{speaker}_{emotion}.png`** (立ち絵パーツと同一規約、§2-a) を基本とする。`ov_` プレフィクスは付けない。
+
+- 基本: `{speaker}_{emotion}.png` — 例: `reimu_surprised.png`, `marisa_angry.png`
+- **派生が必要な場合のみ** `_rendered` suffix を付与する (同名の立ち絵パーツファイルと衝突回避が必要な場合に限る。通常は不要)
+- overlay_map.json 側の**キー名も同じ**に揃える: `"reimu_surprised": "./samples/Mat/reimu_surprised.png"`
+
+**理由**: IR / overlay_map / ファイル名の三者でラベルが一致していないと `OVERLAY_UNKNOWN_LABEL` が頻発する。経路 A (TachieItem) と経路 B (書き出し PNG) は **IR 上のフィールドが異なる** (`face` vs `overlay`) ため、ラベル名自体はキャラ × 表情で共通化してよい。
+
+詳細手順: [STEP3_TACHIE_RENDERING_PIPELINE.md](STEP3_TACHIE_RENDERING_PIPELINE.md)
+
 ### 2-d. SE
 
 - [✓] `se_{action}.wav` — 例: `se_click.wav`, `se_tension_hit.wav`
@@ -146,3 +158,4 @@ se_click.wav,https://freesound.org/...,CC0,any_use,2026-04-16,
 
 - 2026-04-16: 初版。ユーザー記入用テンプレ
 - 2026-04-16: 全項目記入完了。保存場所=A (`samples/Mat/` 続投) / 命名規約=各レイヤーのフラット形式 (`{speaker}_{emotion}.png` / `bg_{scene_type}_{variant}.png` / `ov_{type}_{variant}.png` / `se_{action}.wav`) / ライセンス=A (`LICENSE.csv` 素材同階層) / 差し替え=既定フロー
+- 2026-04-17: §2-c-i を追加。G-22 dual-rendering 経路 B の立ち絵レンダリング PNG は `{speaker}_{emotion}.png` (§2-a と同一規約) を基本とし、`_rendered` suffix は衝突時のみ。overlay_map のキー名と揃えることで `OVERLAY_UNKNOWN_LABEL` を防ぐ

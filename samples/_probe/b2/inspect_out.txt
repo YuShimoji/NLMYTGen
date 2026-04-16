@@ -1,0 +1,233 @@
+=== CharacterName 分布 (VoiceItem) ===
+  'ゆっくり魔理沙黄縁': 184
+  'ゆっくり霊夢赤縁': 181
+
+=== TachieFaceParameter の詳細 (キャラごと 1 件) ===
+--- CharacterName: 'ゆっくり霊夢赤縁' ---
+  $type: 'YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter, YukkuriMovieMaker.Plugin.Tachie.AnimationTachie'
+  EyeAnimation: 'Default'
+  MouthAnimation: 'Default'
+  Eyebrow: '..\\Mat\\新れいむ\\眉\\05c.png'  [OK]
+  Eye: '..\\Mat\\新れいむ\\目\\00.png'  [OK]
+  Mouth: '..\\Mat\\新れいむ\\口\\00.png'  [OK]
+  Hair: '..\\Mat\\新れいむ\\髪\\00o.png'  [OK]
+  Complexion: None
+  Body: '..\\Mat\\新れいむ\\体\\00.png'  [OK]
+  Back1: '..\\Mat\\新れいむ\\後\\00o.png'  [OK]
+  Back2: None
+  Back3: None
+  Etc1: '..\\Mat\\新れいむ\\他\\00o.png'  [OK]
+  Etc2: '..\\Mat\\新れいむ\\他\\00a.png'  [OK]
+  Etc3: None
+--- CharacterName: 'ゆっくり魔理沙黄縁' ---
+  $type: 'YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter, YukkuriMovieMaker.Plugin.Tachie.AnimationTachie'
+  EyeAnimation: 'Default'
+  MouthAnimation: 'Default'
+  Eyebrow: '..\\Mat\\新まりさ\\眉\\06c.png'  [OK]
+  Eye: '..\\Mat\\新まりさ\\目\\00.png'  [OK]
+  Mouth: '..\\Mat\\新まりさ\\口\\00.png'  [OK]
+  Hair: '..\\Mat\\新まりさ\\髪\\00o.png'  [OK]
+  Complexion: None
+  Body: '..\\Mat\\新まりさ\\体\\01.png'  [OK]
+  Back1: None
+  Back2: None
+  Back3: None
+  Etc1: '..\\Mat\\新まりさ\\他\\00o.png'  [OK]
+  Etc2: '..\\Mat\\新まりさ\\他\\00b.png'  [OK]
+  Etc3: None
+
+=== TachieItem (レイヤー別・全フィールド) ===
+  layer=5 name='ゆっくり魔理沙黄縁' frame=0 length=65098 muted=None
+    TachieItemParameter: <dict 14キー>
+      $type: 'YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.ItemParameter, YukkuriMovieMaker.Plugin.Tachie.AnimationTachie'
+      IsHiddenWhenNoSpeech: False
+      Eyebrow: '..\\Mat\\新まりさ\\眉\\06c.png'
+      Eye: '..\\Mat\\新まりさ\\目\\00.png'
+      Mouth: '..\\Mat\\新まりさ\\口\\00.png'
+      Hair: '..\\Mat\\新まりさ\\髪\\00o.png'
+      Complexion: None
+      Body: '..\\Mat\\新まりさ\\体\\01.png'
+      Back1: None
+      Back2: None
+      Back3: None
+      Etc1: '..\\Mat\\新まりさ\\他\\00o.png'
+      Etc2: '..\\Mat\\新まりさ\\他\\00b.png'
+      Etc3: None
+    X: <dict 4キー>
+      Values: [{"Value": 759.5}]
+      Span: 0.0
+      AnimationType: 'なし'
+      Bezier: {"Points": [{"Point": {"X": 0.0, "Y": 0.0}, "ControlPoint1": {"X": -0.3, "Y": -0.3}, "ControlPoint2": {"X": 0.3, "Y": 0.3}}, {"Point": {"X": 1.0, "Y": 1.0}, "ControlPoint1": {"X": 
+    Y: <dict 4キー>
+      Values: [{"Value": 380.0}]
+      Span: 0.0
+      AnimationType: 'なし'
+      Bezier: {"Points": [{"Point": {"X": 0.0, "Y": 0.0}, "ControlPoint1": {"X": -0.3, "Y": -0.3}, "ControlPoint2": {"X": 0.3, "Y": 0.3}}, {"Point": {"X": 1.0, "Y": 1.0}, "ControlPoint1": {"X": 
+    Z: <dict 4キー>
+      Values: [{"Value": 0.0}]
+      Span: 0.0
+      AnimationType: 'なし'
+      Bezier: {"Points": [{"Point": {"X": 0.0, "Y": 0.0}, "ControlPoint1": {"X": -0.3, "Y": -0.3}, "ControlPoint2": {"X": 0.3, "Y": 0.3}}, {"Point": {"X": 1.0, "Y": 1.0}, "ControlPoint1": {"X": 
+    Opacity: <dict 4キー>
+      Values: [{"Value": 100.0}]
+      Span: 0.0
+      AnimationType: 'なし'
+      Bezier: {"Points": [{"Point": {"X": 0.0, "Y": 0.0}, "ControlPoint1": {"X": -0.3, "Y": -0.3}, "ControlPoint2": {"X": 0.3, "Y": 0.3}}, {"Point": {"X": 1.0, "Y": 1.0}, "ControlPoint1": {"X": 
+    Zoom: <dict 4キー>
+      Values: [{"Value": 100.0}]
+      Span: 0.0
+      AnimationType: 'なし'
+      Bezier: {"Points": [{"Point": {"X": 0.0, "Y": 0.0}, "ControlPoint1": {"X": -0.3, "Y": -0.3}, "ControlPoint2": {"X": 0.3, "Y": 0.3}}, {"Point": {"X": 1.0, "Y": 1.0}, "ControlPoint1": {"X": 
+    Rotation: <dict 4キー>
+      Values: [{"Value": 0.0}]
+      Span: 0.0
+      AnimationType: 'なし'
+      Bezier: {"Points": [{"Point": {"X": 0.0, "Y": 0.0}, "ControlPoint1": {"X": -0.3, "Y": -0.3}, "ControlPoint2": {"X": 0.3, "Y": 0.3}}, {"Point": {"X": 1.0, "Y": 1.0}, "ControlPoint1": {"X": 
+    FadeIn: 0.0
+    FadeOut: 0.0
+    Blend: 'Normal'
+    IsInverted: False
+    IsClippingWithObjectAbove: False
+    IsAlwaysOnTop: False
+    IsZOrderEnabled: False
+    VideoEffects: [{"$type": "YukkuriMovieMaker.Project.Effects.OutlineEffect, YukkuriMovieMaker", "StrokeThickness": {"Values": [{"Value": 5.0}], "Span": 0.0, "AnimationType": "なし", "Bezier": {"Points": [{"Point": {"X
+    Group: 0
+    KeyFrames: <dict 2キー>
+      Frames: []
+      Count: 0
+    PlaybackRate: 100.0
+    ContentOffset: '00:00:00'
+    Remark: ''
+    IsLocked: False
+    IsHidden: False
+  layer=6 name='ゆっくり霊夢赤縁' frame=0 length=65098 muted=None
+    TachieItemParameter: <dict 14キー>
+      $type: 'YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.ItemParameter, YukkuriMovieMaker.Plugin.Tachie.AnimationTachie'
+      IsHiddenWhenNoSpeech: False
+      Eyebrow: '..\\Mat\\新れいむ\\眉\\05c.png'
+      Eye: '..\\Mat\\新れいむ\\目\\00.png'
+      Mouth: '..\\Mat\\新れいむ\\口\\00.png'
+      Hair: '..\\Mat\\新れいむ\\髪\\00o.png'
+      Complexion: None
+      Body: '..\\Mat\\新れいむ\\体\\00.png'
+      Back1: '..\\Mat\\新れいむ\\後\\00o.png'
+      Back2: None
+      Back3: None
+      Etc1: '..\\Mat\\新れいむ\\他\\00o.png'
+      Etc2: '..\\Mat\\新れいむ\\他\\00a.png'
+      Etc3: None
+    X: <dict 4キー>
+      Values: [{"Value": -750.0}]
+      Span: 0.0
+      AnimationType: 'なし'
+      Bezier: {"Points": [{"Point": {"X": 0.0, "Y": 0.0}, "ControlPoint1": {"X": -0.3, "Y": -0.3}, "ControlPoint2": {"X": 0.3, "Y": 0.3}}, {"Point": {"X": 1.0, "Y": 1.0}, "ControlPoint1": {"X": 
+    Y: <dict 4キー>
+      Values: [{"Value": 370.0}]
+      Span: 0.0
+      AnimationType: 'なし'
+      Bezier: {"Points": [{"Point": {"X": 0.0, "Y": 0.0}, "ControlPoint1": {"X": -0.3, "Y": -0.3}, "ControlPoint2": {"X": 0.3, "Y": 0.3}}, {"Point": {"X": 1.0, "Y": 1.0}, "ControlPoint1": {"X": 
+    Z: <dict 4キー>
+      Values: [{"Value": 0.0}]
+      Span: 0.0
+      AnimationType: 'なし'
+      Bezier: {"Points": [{"Point": {"X": 0.0, "Y": 0.0}, "ControlPoint1": {"X": -0.3, "Y": -0.3}, "ControlPoint2": {"X": 0.3, "Y": 0.3}}, {"Point": {"X": 1.0, "Y": 1.0}, "ControlPoint1": {"X": 
+    Opacity: <dict 4キー>
+      Values: [{"Value": 100.0}]
+      Span: 0.0
+      AnimationType: 'なし'
+      Bezier: {"Points": [{"Point": {"X": 0.0, "Y": 0.0}, "ControlPoint1": {"X": -0.3, "Y": -0.3}, "ControlPoint2": {"X": 0.3, "Y": 0.3}}, {"Point": {"X": 1.0, "Y": 1.0}, "ControlPoint1": {"X": 
+    Zoom: <dict 4キー>
+      Values: [{"Value": 100.0}]
+      Span: 0.0
+      AnimationType: 'なし'
+      Bezier: {"Points": [{"Point": {"X": 0.0, "Y": 0.0}, "ControlPoint1": {"X": -0.3, "Y": -0.3}, "ControlPoint2": {"X": 0.3, "Y": 0.3}}, {"Point": {"X": 1.0, "Y": 1.0}, "ControlPoint1": {"X": 
+    Rotation: <dict 4キー>
+      Values: [{"Value": 0.0}]
+      Span: 0.0
+      AnimationType: 'なし'
+      Bezier: {"Points": [{"Point": {"X": 0.0, "Y": 0.0}, "ControlPoint1": {"X": -0.3, "Y": -0.3}, "ControlPoint2": {"X": 0.3, "Y": 0.3}}, {"Point": {"X": 1.0, "Y": 1.0}, "ControlPoint1": {"X": 
+    FadeIn: 0.0
+    FadeOut: 0.0
+    Blend: 'Normal'
+    IsInverted: True
+    IsClippingWithObjectAbove: False
+    IsAlwaysOnTop: False
+    IsZOrderEnabled: False
+    VideoEffects: [{"$type": "YukkuriMovieMaker.Project.Effects.OutlineEffect, YukkuriMovieMaker", "StrokeThickness": {"Values": [{"Value": 5.0}], "Span": 0.0, "AnimationType": "なし", "Bezier": {"Points": [{"Point": {"X
+    Group: 0
+    KeyFrames: <dict 2キー>
+      Frames: []
+      Count: 0
+    PlaybackRate: 100.0
+    ContentOffset: '00:00:00'
+    Remark: ''
+    IsLocked: False
+    IsHidden: False
+
+=== VoiceItem [2] 全フィールド (文字列系だけ、フィルターなし) ===
+  $type: 'YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker'
+  IsWaveformEnabled: False
+  CharacterName: 'ゆっくり霊夢赤縁'
+  Serif: 'あの、想像してみてください。\nある朝目覚めると、'
+  Decorations: []
+  Hatsuon: 'あの、そうぞう_シてみてください。\nある/あさ/めざめると、'
+  LipSyncFrames: [{"Time": "00:00:00", "Shape": "I"}, {"Time": "00:00:00.0700000", "Shape": "E"}, {"Time": "00:00:00.2100000", "Shape": "I"}, {"Time": "00:00:00.4300000", "Shape": "O"}, {"Time": "0
+  VoiceLength: '00:00:03.0466250'
+  VoiceCache: 'i0pfIxGi7AAA0F7twwHUkbrw58+/3wDObdsji0ppbRQjIjAKFaMIAUkBicoD5z+8Yj/P7zfPva9+8alUlFAUVMyYYiVmz6qpc5sdOKtmRGElZmJNqfr14t4zPL/N3qc/8KkSBSzMuTDnqlyGrlOXUbe5O1e3uSgjcUYhFooYtEq+pwcuLcu
+  PlaybackRate: 100.0
+  ContentOffset: '00:00:00'
+  VoiceFadeIn: 0.0
+  VoiceFadeOut: 0.0
+  EchoIsEnabled: False
+  EchoInterval: 0.1
+  EchoAttenuation: 40.0
+  AudioEffects: []
+  JimakuVisibility: 'UseCharacterSetting'
+  JimakuFadeIn: 0.0
+  JimakuFadeOut: 0.0
+  Blend: 'Normal'
+  IsInverted: False
+  IsClippingWithObjectAbove: False
+  IsAlwaysOnTop: False
+  IsZOrderEnabled: False
+  Font: 'けいふぉんと'
+  WordWrap: 'WholeWord'
+  BasePoint: 'CenterTop'
+  FontColor: '#FFFFFFFF'
+  Style: 'Normal'
+  StyleColor: '#ABD60000'
+  Bold: False
+  Italic: False
+  Underline: False
+  Strikethrough: False
+  IsTrimEndSpace: True
+  IsDevidedPerCharacter: False
+  DisplayInterval: 90.0
+  DisplayDirection: 'FromFirst'
+  HideInterval: 0.0
+  HideDirection: 'FromFirst'
+  JimakuVideoEffects: [{"$type": "YukkuriMovieMaker.Project.Effects.GradientEffect, YukkuriMovieMaker", "GradientType": "Convex", "Stops": [{"Offset": 0.0, "Color": "#FFFF4F4B"}, {"Offset": 0.4778761061
+  TachieFaceEffects: []
+  Group: 0
+  Frame: 0
+  Layer: 0
+  Length: 201
+  Remark: ''
+  IsLocked: False
+  IsHidden: False
+  --- TachieFaceParameter 全キー (値省略なし) ---
+    $type: 'YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter, YukkuriMovieMaker.Plugin.Tachie.AnimationTachie'
+    EyeAnimation: 'Default'
+    MouthAnimation: 'Default'
+    Eyebrow: '..\\Mat\\新れいむ\\眉\\05c.png'
+    Eye: '..\\Mat\\新れいむ\\目\\00.png'
+    Mouth: '..\\Mat\\新れいむ\\口\\00.png'
+    Hair: '..\\Mat\\新れいむ\\髪\\00o.png'
+    Complexion: None
+    Body: '..\\Mat\\新れいむ\\体\\00.png'
+    Back1: '..\\Mat\\新れいむ\\後\\00o.png'
+    Back2: None
+    Back3: None
+    Etc1: '..\\Mat\\新れいむ\\他\\00o.png'
+    Etc2: '..\\Mat\\新れいむ\\他\\00a.png'
+    Etc3: None

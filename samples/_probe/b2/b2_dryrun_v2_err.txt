@@ -1,0 +1,4 @@
+  WARNING: FACE_PROMPT_PALETTE_EXTRA: palette label 'neutral' is not listed in prompt contract
+  WARNING: FACE_LATENT_GAP: character 'Ç‰Ç¡Ç≠ÇËóÏñ≤ê‘âè' is missing prompt labels: surprised
+  WARNING: IDLE_FACE_MISSING: idle_face is not specified in any utterance
+  WARNING: bg label 'studio_blue' not found in bg_map

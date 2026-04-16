@@ -1,0 +1,6 @@
+total items: 14
+types: {'TachieFaceItem': 12, 'TachieItem': 2}
+names: {'ゆっくり魔理沙黄縁': 7, 'ゆっくり霊夢赤縁': 7}
+TachieItems:
+  name='ゆっくり霊夢赤縁' remark='' body='D:\\MovieCreationWorkspace\\新れいむ\\体\\00.png'
+  name='ゆっくり魔理沙黄縁' remark='' body='D:\\MovieCreationWorkspace\\新まりさ\\体\\01.png'

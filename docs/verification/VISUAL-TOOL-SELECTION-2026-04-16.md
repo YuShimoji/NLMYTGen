@@ -98,7 +98,9 @@
 
 ### Step 3: YMM4 テンプレ初期セット 5 種作成
 
-**前提**: 既存の立ち絵入り ymmp を 1 本ベースにする。候補: `samples/characterAnimSample/haitatsuin_2026-04-12.ymmp` (復旧 B で立ち絵パス書き換え済み)。テンプレ作成は **別名で複製した作業用 ymmp** で行うのが安全。
+**作業チェックリスト正本**: [STEP3_YMM4_TEMPLATE_CHECKLIST.md](../STEP3_YMM4_TEMPLATE_CHECKLIST.md) — 5 種テンプレ各エフェクトの parameter 初期値の目安・チェックボックス付き作業手順・失敗パターン。
+
+**前提**: 既存の立ち絵入り ymmp を 1 本ベースにする。候補: `samples/characterAnimSample/haitatsuin_2026-04-12.ymmp` (復旧 B で立ち絵パス書き換え済み。ただし YMM4 側キャラクター登録の修正が未完な場合あり → [HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md](HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md) 2026-04-17 追記参照)。テンプレ作成は **別名で複製した作業用 ymmp** で行うのが安全。
 
 **作業内容**:
 
@@ -124,11 +126,15 @@
 
 経路 B (書き出し PNG の overlay 挿入) を使う場合の準備。**Step 3 のテンプレ作成と並行してよい**。
 
+**作業パイプライン正本**: [STEP3_TACHIE_RENDERING_PIPELINE.md](../STEP3_TACHIE_RENDERING_PIPELINE.md) — 透明背景 PNG 書き出し・overlay_map 登録・検証までのチェックボックス付き手順・失敗パターン。
+
+概略:
+
 1. Step 3 と同じ作業用 ymmp を YMM4 で開く
 2. 対象 VoiceItem を選択し、`TachieFaceParameter` で表情プリセットを選択 (GUI)
 3. タイムライン上の背景レイヤーを一時ミュート
 4. 動画出力 → **範囲 1 フレーム・透明 PNG** で書き出し
-5. 出力 PNG を `samples/Mat/{speaker}_{emotion}.png` に配置 ([MATERIAL_SOURCING_RULES.md](../MATERIAL_SOURCING_RULES.md) の命名規約)
+5. 出力 PNG を `samples/Mat/{speaker}_{emotion}.png` に配置 ([MATERIAL_SOURCING_RULES.md](../MATERIAL_SOURCING_RULES.md) §2-c-i の命名規約)
 6. 主要表情ぶん (例: reimu_anger / reimu_easy / reimu_shocked 等) を繰り返す
 
 詳細: [G22-dual-rendering-tachie-and-png-2026-04-16.md §3](G22-dual-rendering-tachie-and-png-2026-04-16.md)
@@ -160,8 +166,9 @@ assistant 側で追加可能な下ごしらえ (G-21 承認後の `scene_presets
 
 ## 7. 関連ファイル
 
-- plan (外部): `C:/Users/PLANNER007/.claude/plans/splendid-popping-horizon.md`
+- plan (外部): `C:/Users/PLANNER007/.claude/plans/splendid-popping-horizon.md` / `C:/Users/thank/.claude/plans/fluffy-greeting-panda.md` (本セッション)
 - docs: [VISUAL_EFFECT_SELECTION_GUIDE.md](../VISUAL_EFFECT_SELECTION_GUIDE.md) / [VISUAL_TOOL_DECISION.md](../VISUAL_TOOL_DECISION.md) / [MATERIAL_SOURCING_RULES.md](../MATERIAL_SOURCING_RULES.md)
+- **Step 3 補助 docs (2026-04-17 新設)**: [STEP3_YMM4_TEMPLATE_CHECKLIST.md](../STEP3_YMM4_TEMPLATE_CHECKLIST.md) / [STEP3_TACHIE_RENDERING_PIPELINE.md](../STEP3_TACHIE_RENDERING_PIPELINE.md)
 - registry 雛形: [samples/registry_template/](../../samples/registry_template/)
 - エフェクトカタログ: [samples/effect_catalog.json](../../samples/effect_catalog.json) / [samples/EFFECT_CATALOG_USAGE.md](../../samples/EFFECT_CATALOG_USAGE.md)
 - 既存立ち絵: `samples/Mat/新れいむ/` / `samples/Mat/新まりさ/`
@@ -173,3 +180,4 @@ assistant 側で追加可能な下ごしらえ (G-21 承認後の `scene_presets
 
 - 2026-04-16: 初版。Step 1-2 完了時点の進捗を記録。Step 3-5 は user actor 作業待ち
 - 2026-04-16: Dual-rendering 運用を §4.2 に追加し G-22 起票。Step 3 補助 (立ち絵レンダリング PNG 書き出し) と Step 4 の PNG 登録指示を追加
+- 2026-04-17: Step 3 / Step 3 補助のチェックリスト正本として [STEP3_YMM4_TEMPLATE_CHECKLIST.md](../STEP3_YMM4_TEMPLATE_CHECKLIST.md) / [STEP3_TACHIE_RENDERING_PIPELINE.md](../STEP3_TACHIE_RENDERING_PIPELINE.md) を新設・リンク。[MATERIAL_SOURCING_RULES.md](../MATERIAL_SOURCING_RULES.md) §2-c-i に立ち絵レンダリング PNG の命名規約を追記。user の B-2 haitatsuin 視覚確認 NG 所見を [HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md](HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md) 末尾に追記 (原因は YMM4 キャラクター登録側の migrated_tachie 参照)

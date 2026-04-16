@@ -1,0 +1,10 @@
+  WARNING: FACE_SERIOUS_SKEW: face 'serious' is 60% of utterances (threshold: 40%)
+  WARNING: FACE_PROMPT_PALETTE_GAP: prompt allows face 'angry' but palette has no matching label
+  WARNING: FACE_PROMPT_PALETTE_GAP: prompt allows face 'sad' but palette has no matching label
+  WARNING: FACE_PROMPT_PALETTE_GAP: prompt allows face 'surprised' but palette has no matching label
+  WARNING: FACE_PROMPT_PALETTE_GAP: prompt allows face 'thinking' but palette has no matching label
+  WARNING: FACE_PROMPT_PALETTE_EXTRA: palette label 'neutral' is not listed in prompt contract
+  WARNING: FACE_LATENT_GAP: character 'Ç‰Ç¡Ç≠ÇËóÏñ≤ê‘âè' is missing prompt labels: angry, sad, surprised, thinking
+  WARNING: FACE_LATENT_GAP: character 'Ç‰Ç¡Ç≠ÇËñÇóùçπâ©âè' is missing prompt labels: angry, sad, surprised, thinking
+  WARNING: IDLE_FACE_MISSING: idle_face is not specified in any utterance
+  WARNING: bg label 'studio_blue' not found in bg_map
