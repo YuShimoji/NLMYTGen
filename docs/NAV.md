@@ -35,6 +35,7 @@
 - [verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md](verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md) — **ファイル10**: コピペ用 Prompt 全文・検収・親チャット返却テンプレ
 - [verification/CORE-DEV-POST-DELEGATION-INDEX.md](verification/CORE-DEV-POST-DELEGATION-INDEX.md) — コア移譲後ドキュメントの索引（ファイル2〜）
 - [verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md](verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md) — 立ち絵 複数体×顔差し替え（**G-19 `done` / G-20 `approved` / G-21 `proposed`**・§3.2 が茶番劇体テンプレ G-21 の構想正本）
+- [verification/G22-dual-rendering-tachie-and-png-2026-04-16.md](verification/G22-dual-rendering-tachie-and-png-2026-04-16.md) — **G-22 `proposed`**: 同一演出を立ち絵 TachieItem + YMM4 書き出し PNG の両経路で実現する dual-rendering 運用。既存 G-13 overlay 経路で完結 (コード変更なし想定)。承認判定は視覚効果 slice Step 5 proof 後
 - [verification/CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) — 即実行 Prompt の運用原則・早見（ファイル9）。全文はファイル10を先に更新する運用
 
 ---

@@ -67,7 +67,7 @@
 
 ---
 
-## 4. 2 つの重要方針 (今回固定)
+## 4. 3 つの重要方針 (今回固定)
 
 ### 4.1 Canva 除外 (当初からの方針、2026-04-16 明示)
 
@@ -75,7 +75,18 @@
 
 **影響範囲**: `VISUAL_EFFECT_SELECTION_GUIDE.md` / `VISUAL_TOOL_DECISION.md` / `WORKFLOW.md` §S-8 / `THUMBNAIL_ONE_SHEET_WORKFLOW.md` から Canva 推奨記述を全て除去済み。
 
-### 4.2 立ち絵セットアップは踏まない (2026-04-16 明示)
+### 4.2 Dual-rendering 運用 (2026-04-16 追加・G-22 として起票)
+
+同一演出を **2 経路で実現可能**にする方針。詳細は [G22-dual-rendering-tachie-and-png-2026-04-16.md](G22-dual-rendering-tachie-and-png-2026-04-16.md) 正本。
+
+- **経路 A (立ち絵 TachieItem)**: 既存の `face` / `idle_face` / `slot` + `face_map`。主要キャラの本編・表情遷移あり・整合性と演出蓄積を優先
+- **経路 B (書き出し PNG の overlay 挿入)**: YMM4 で立ち絵を 1 フレーム透明 PNG に書き出し → `overlay_map` に登録 → 既存 `overlay` フィールドで挿入。背景キャラ・ワンシーン登場・サムネ素材等・工数削減を優先
+
+**実装**: 既存 G-13 (done) でそのまま動作するため、**コード変更なし**が第一候補。registry メタ拡張 (`source: "tachie_render"` 等) は承認後に別起票。
+
+**承認判定**: 視覚効果 slice Step 5 proof 完了時に、(A)/(B) 併用の実績から G-22 proposed → approved / 当面不要判定を決定。
+
+### 4.3 立ち絵セットアップは踏まない (2026-04-16 明示)
 
 視覚効果 slice の Step 3 以降で「立ち絵自体を YMM4 上で設定 (キャラクター登録・AnimationTachie プラグイン設定) し、タイムラインに立ち絵を表示させる」という手順を踏まない。既存の `samples/Mat/新れいむ/` `samples/Mat/新まりさ/` 配下のパーツ・表情はテストに十分。既存 palette.ymmp / haitatsuin.ymmp / characterAnimSample 等を **そのまま使う**。
 
@@ -109,9 +120,23 @@
 6. 5 種分繰り返す
 7. `ItemSettings.json` の `Templates` 配列に 5 件追加されたことを確認
 
+### Step 3 補助: 立ち絵レンダリング PNG 書き出し (G-22 運用準備・任意)
+
+経路 B (書き出し PNG の overlay 挿入) を使う場合の準備。**Step 3 のテンプレ作成と並行してよい**。
+
+1. Step 3 と同じ作業用 ymmp を YMM4 で開く
+2. 対象 VoiceItem を選択し、`TachieFaceParameter` で表情プリセットを選択 (GUI)
+3. タイムライン上の背景レイヤーを一時ミュート
+4. 動画出力 → **範囲 1 フレーム・透明 PNG** で書き出し
+5. 出力 PNG を `samples/Mat/{speaker}_{emotion}.png` に配置 ([MATERIAL_SOURCING_RULES.md](../MATERIAL_SOURCING_RULES.md) の命名規約)
+6. 主要表情ぶん (例: reimu_anger / reimu_easy / reimu_shocked 等) を繰り返す
+
+詳細: [G22-dual-rendering-tachie-and-png-2026-04-16.md §3](G22-dual-rendering-tachie-and-png-2026-04-16.md)
+
 ### Step 4: registry 登録 (Step 3 と並行可)
 
 - `bg_map.json` / `overlay_map.json` (`samples/registry_template/` から複製) にラベル登録
+- **Step 3 補助で書き出した PNG も `overlay_map.json` に登録** (例: `"reimu_anger_rendered": "./samples/Mat/reimu_anger.png"`)
 - `scene_presets` は G-21 承認後に assistant が雛形作成予定
 
 ### Step 5: 1 本の実案件で proof
@@ -147,3 +172,4 @@ assistant 側で追加可能な下ごしらえ (G-21 承認後の `scene_presets
 ## 8. 変更履歴
 
 - 2026-04-16: 初版。Step 1-2 完了時点の進捗を記録。Step 3-5 は user actor 作業待ち
+- 2026-04-16: Dual-rendering 運用を §4.2 に追加し G-22 起票。Step 3 補助 (立ち絵レンダリング PNG 書き出し) と Step 4 の PNG 登録指示を追加

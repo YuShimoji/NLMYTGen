@@ -12,7 +12,7 @@
 - git: **既定の開発ブランチは `master`**（2026-04-09: PR [#1](https://github.com/YuShimoji/NLMYTGen/pull/1) で `feat/phase2-motion-segmentation` をマージ済み。新規作業は `master` からブランチを切る）
 - lane: **コア開発幹**（回帰・ドキュメント整合・承認済みバグ修正）。**主軸は本開発** — エージェント作業は未承認 FEATURE を増やさず上記に集中。オペレータ並行: Phase 1 Block-A (通過済、メンテ層の継続観測) / 主軸 (演出配置自動化の実戦投入) は runbook どおり。**レーン A（Phase 1）の repo 準備はオペレータ側でクローズ**（[OPERATOR_LANE_A_ENV.md](verification/OPERATOR_LANE_A_ENV.md)、[LANE_A_PREP_CHECKLIST.md](verification/LANE_A_PREP_CHECKLIST.md)）。**レーン D（H-01 brief）オペレータ完了・当面クローズ**（[H01-lane-d-prep-2026-04-09.md](verification/H01-lane-d-prep-2026-04-09.md) §6、2026-04-09）
 - slice: G-15〜G-18 実装完了（Micro `bg` / 複数 `overlay` / timeline アダプタ / **SE `AudioItem` 挿入**）。Electron GUI: CSV 変換時に **診断 JSON 同梱保存**可（[gui-llm-setup-guide.md](gui-llm-setup-guide.md)）。正本 [G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)。従来: 視覚三スタイル [VISUAL_STYLE_PRESETS.md](VISUAL_STYLE_PRESETS.md)、P2A [P2A-motion-branch-operator-decision.md](verification/P2A-motion-branch-operator-decision.md)、P2C [P2C-se-audioitem-boundary.md](verification/P2C-se-audioitem-boundary.md)（履歴）
-- next_action: **視覚効果ツール選定 slice (2026-04-16 開始) が user 作業待ちで保留**。Step 1-2 完了 (assistant 成果 + user 決定記入済み)、Step 3 以降は YMM4 GUI 作業のため user actor に移譲。正本 [VISUAL-TOOL-SELECTION-2026-04-16.md](verification/VISUAL-TOOL-SELECTION-2026-04-16.md)。**user 次アクション**: (a) 既存立ち絵入り ymmp を別名複製して YMM4 で開く、(b) テンプレ 5 種 (skit_reaction_jump / board_list_entry / map_pan_zoom / mood_sepia_blur / intro_punch) を作成、(c) `bg_map.json` / `overlay_map.json` にラベル登録、(d) 1 本の実案件で proof → P02 追記 → hold → done 昇格。**確定した 2 方針**: ① Canva 除外 (ローカル完結維持)、② 立ち絵セットアップは踏まない (既存 `samples/Mat/新れいむ/` `samples/Mat/新まりさ/` で十分)。**並行レーン (待機中)**: B-2 haitatsuin は復旧 B 完了 → user 視覚確認待ちのまま、face_map / overlay_map / 10 utterance IR は視覚効果 slice 完了後に再開可 ([HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md](verification/HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md))。**前セッション残件**: (A) 茶番劇テンプレ運用ガイド docs 化、(C) G-20 反転 (IsInverted) YMM4 GUI 確認。コア本開発は `repo 充足を確認済み` で新規スライスは増やさず、承認済み実装へ進む場合のみ [CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §2 ゲート。
+- next_action: **視覚効果ツール選定 slice (2026-04-16 開始) が user 作業待ちで保留**。Step 1-2 完了 (assistant 成果 + user 決定記入済み)、Step 3 以降は YMM4 GUI 作業のため user actor に移譲。正本 [VISUAL-TOOL-SELECTION-2026-04-16.md](verification/VISUAL-TOOL-SELECTION-2026-04-16.md)。**user 次アクション**: (a) 既存立ち絵入り ymmp を別名複製して YMM4 で開く (例: haitatsuin_2026-04-12.ymmp → template_work_2026-04-16.ymmp)、(b) テンプレ 5 種 (skit_reaction_jump / board_list_entry / map_pan_zoom / mood_sepia_blur / intro_punch) を作成、(c) **補助 (G-22 運用)**: 主要表情を 1 フレーム透明 PNG で書き出し `samples/Mat/{speaker}_{emotion}.png` に保存、(d) `bg_map.json` / `overlay_map.json` にラベル登録 (書き出し PNG も overlay_map に)、(e) 1 本の実案件で proof → P02 追記 → hold → done 昇格。**確定した 3 方針**: ① Canva 除外 (ローカル完結維持)、② 立ち絵セットアップは踏まない (既存 `samples/Mat/新れいむ/` `samples/Mat/新まりさ/` で十分)、③ **Dual-rendering** (G-22 proposed): 立ち絵 TachieItem + 書き出し PNG overlay の両経路を用途別に使い分け。コード変更なし想定・承認判定は Step 5 proof 後 ([G22-dual-rendering-tachie-and-png-2026-04-16.md](verification/G22-dual-rendering-tachie-and-png-2026-04-16.md))。**並行レーン (待機中)**: B-2 haitatsuin は復旧 B 完了 → user 視覚確認待ちのまま、face_map / overlay_map / 10 utterance IR は視覚効果 slice 完了後に再開可 ([HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md](verification/HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md))。**前セッション残件**: (A) 茶番劇テンプレ運用ガイド docs 化、(C) G-20 反転 (IsInverted) YMM4 GUI 確認。コア本開発は `repo 充足を確認済み` で新規スライスは増やさず、承認済み実装へ進む場合のみ [CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §2 ゲート。
 - parallel_replan_2026_04: **視覚最低限 + 改行／YMM4 ギャップ**の到達定義・チェックリスト・計測テンプレは [VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md](verification/VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md)。`next_action` の主軸とは別軸の **並列オプション**。オペレータ時間の並列で、同文書の **トラック A（演出 IR 実戦 = 主軸の実務サブセット）** / **トラック B（改行ギャップ記録 = メンテ層 B-17 観測）** を配分する。`project-context.md` が IDE プレビューで空白になる場合は **生 Markdown で開く**（正本の針は本ファイルのまま）。エージェント依頼の **コピペ全文 Prompt・検収・親チャット返却テンプレ**は [CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md](verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md)（ファイル10）に集約。
 - recommended_frontier_order: **視覚効果ツール選定 (in-progress・user 作業待ち)** → B-2 haitatsuin (復旧 B 完了・user 視覚確認待ち) → 演出配置自動化の実戦投入 (主軸) → 台本品質の継続観測 (メンテ)（2026-04-16 更新: 視覚効果選定が user 作業で Step 3-5 を保留中のため frontier 先頭に移動）
   - **再開ショートカット（推奨対応）**: G-20 スライス1-2 完了（group_target バリデーション + `mode: relative`）。プリセット 15 ラベル整備済み。**運用基盤**（registry テンプレ `samples/registry_template/`・初期化チェックリスト [PROJECT_INIT_CHECKLIST.md](verification/PROJECT_INIT_CHECKLIST.md)・診断マトリクス [FAILURE_DIAGNOSIS_MATRIX.md](verification/FAILURE_DIAGNOSIS_MATRIX.md)）は 2026-04-15 完了。次回は **Phase 1-D（palette 確認）→ 実案件投入**。反転（IsInverted）は YMM4 GUI 確認後に別スライス。候補 C/D は [G20 包括レビュー §8](verification/G20-group-and-asset-automation-comprehensive-review-2026-04.md) に起票済み。
@@ -63,7 +63,7 @@
 
 ## 最終検証
 
-- last_verification: 329 passed / 21 skipped（2026-04-16。視覚効果ツール選定 slice docs-only changes、`src/` 変更なし。regression なし確認）
+- last_verification: 329 passed / 21 skipped（2026-04-16。G-22 proposed 起票 + Dual-rendering 運用 docs-only changes、`src/` 変更なし。regression なし確認）
 
 ## Evidence（CLI artifact mode）
 
@@ -73,11 +73,11 @@
 - final_artifact_reached: Yes (CSV → YMM4 台本読込 → IR → patch-ymmp → 表情差し替え済み ymmp)
 - blocking_dependency: なし。face は `FACE_UNKNOWN_LABEL` / `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE`_* / `FACE_MAP_MISS` / `IDLE_FACE_MAP_MISS` / `VOICE_NO_TACHIE_FACE` の failure class か、最終 creative judgement NG のときだけ再オープン
 
-## FEATURE_REGISTRY 状態サマリ (2026-04-15 更新)
+## FEATURE_REGISTRY 状態サマリ (2026-04-16 更新)
 
 - done: 43件（上記 + G-15〜G-18 + **H-05** 等、台帳集計）
 - approved: 2件（H-01, G-20）— G-20 はスライス1-2 完了、反転は別スライス待ち
-- proposed: 1件（**G-21**: 茶番劇体テンプレ = 外部素材 ImageItem + ゆっくり頭 TachieItem 重畳。X-2 先行実地確認後に昇格判定）
+- proposed: 2件（**G-21**: 茶番劇体テンプレ = 外部素材 ImageItem + ゆっくり頭 TachieItem 重畳。X-2 先行実地確認後に昇格判定。**G-22** (2026-04-16 起票): Dual-rendering scene_presets = 同一演出を立ち絵 TachieItem + 書き出し PNG overlay の両経路で実現。既存 G-13 done で動作するため **コード変更なし**想定。視覚効果 slice Step 5 proof 後に昇格判定）
 - info: 2件（C-01, C-06）
 - hold: 4件（A-03, D-02, E-01, E-02）
 - quarantined: 2件（F-01, F-02）
