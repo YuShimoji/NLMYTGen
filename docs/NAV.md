@@ -21,6 +21,7 @@
 - [verification/FAILURE_DIAGNOSIS_MATRIX.md](verification/FAILURE_DIAGNOSIS_MATRIX.md) — ERROR/WARNING 全 64 種の診断マトリクス
 - `samples/registry_template/` — 6 種の registry JSON 雛形（overlay/se/bg/slot/face/group_motion_map）
 - `samples/effect_catalog.json` — YMM4 v4.51 の VideoEffect カタログ（111 ユニーク、9 カテゴリ）。抽出元 `samples/EffectsSamples_2026-04-15.ymmp` / 再抽出 `scripts/extract_effect_catalog.py`。**用途**: `motion_map` / `tachie_motion_map` / `bg_anim_map` / `group_motion_map` に書くエフェクト名・`$type`・パラメータキーのピックアップ元。運用メモ [samples/EFFECT_CATALOG_USAGE.md](../samples/EFFECT_CATALOG_USAGE.md)
+- [VISUAL_EFFECT_SELECTION_GUIDE.md](VISUAL_EFFECT_SELECTION_GUIDE.md) — **視覚効果ツール選定**: 4 類 × 3 ルート比較・エフェクト 111 種の用途別再編・テンプレバンドル 5 種案・ハンズオン 5 ステップ。姉妹: [VISUAL_TOOL_DECISION.md](VISUAL_TOOL_DECISION.md)(ユーザー記入)・[MATERIAL_SOURCING_RULES.md](MATERIAL_SOURCING_RULES.md)(素材運用ルール)
 
 `docs/verification` 直下の個別ファイルが多いときは、先に次の **索引表**だけ読む。
 
