@@ -156,6 +156,7 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 
 | 日付 | 決定事項 | 選択肢 | 決定理由 |
 |------|----------|--------|----------|
+| 2026-04-17 | **茶番劇演者の主経路を template-first に固定**。配達員等の外部素材演者は `speaker_tachie` の `motion` と混同せず、**GroupItem canonical template → 小演出テンプレ量産 → production で template 解決 + fallback + manual note** を正本化。[SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md) | `motion` 拡張を主軸 / body_map 旧案継続 / template-first | 既存コードの route contract は `TachieItem` / Layer 0 背景 / Group geometry に分かれており、茶番劇演者の量産には直結しない。production bottleneck は direct write 不足より template 資産不足にあるため |
 | 2026-04-13 | **茶番劇 E2E 実演 Phase 1/2 PASS**: face 138 + idle_face 16 + slot 10 + motion 6 を IR→apply-production→YMM4 で実証。src/ 変更なし。正本 [CHABANGEKI-E2E-PROOF-2026-04-13.md](verification/CHABANGEKI-E2E-PROOF-2026-04-13.md) | 既存 done 機能のみ / 新規実装 | トラック A（演出 IR 実戦）のサブセットとして、追加コード変更なしで E2E パイプライン動作を実証 |
 | 2026-04-13 | **表情指定: テンプレ（プリセット名）のほうが実用的**。パーツ個別指定（face_map の Eyebrow/Eye/Mouth パス）だと YMM4 上で「カスタム」表示になり、運用上不便。将来の face_map 構造見直しの根拠 | パーツ指定維持 / テンプレ指定移行 | オペレータフィードバック。E2E Phase 1/2 で発見 |
 | 2026-04-13 | **体テンプレ構想**: 別体素材（配達員等）にゆっくり頭を重ね、テンプレ蓄積→IR で指定する将来像。グループ制御で移動・拡大縮小は破綻なし。左右反転は素材分割が必要。FEATURE 起票は別ブロック。正本 [TACHIE-BODY-FACE-SWAP-ymmp-geometry-2026-04-13.md](verification/TACHIE-BODY-FACE-SWAP-ymmp-geometry-2026-04-13.md) §7 / [TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md](verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md) §3.2 | 体テンプレ / パーツ差替（G-19）/ 保留 | オペレータ調査で YMM4 のグループ制御仕様を確認。IR + レジストリで制御する設計は overlay/bg と同型で実現可能 |
@@ -325,7 +326,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
 - Last Change Relation: **2026-04-13** 並列プラン実施記録（上記 Shared Focus）。**2026-04-12** P01 `p0_mainline_v14_steering_2026-04-11_a` を PASS（YMM4 S-4）に更新、`next_action` を Block-A 通過後へ。**同日（先行）**: P0 Block-A と経路 A の正本化（[P0-BLOCK-A-AND-PATH-A.md](verification/P0-BLOCK-A-AND-PATH-A.md)、`runtime-state.md` P0 行、`samples/p0_steering_v14_2026-04-12_*`）。**2026-04-11** T0 完了＋P0 Amazon 並行証跡・サンプルを `origin/master` へ同期。**同日追記**: 舵取りプラン実装（P0 縦固定・`next_action` 先頭 P0・[P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md)）。履歴は git log
-- Handoff Focus (next): Group 制御の推奨対応は完了。`group_motion` の失敗3種（`NO_GROUP_ITEM` / `TARGET_MISS` / `TARGET_AMBIGUOUS`）は CLI で fatal 化済み。次回の再開起点は [G20-group-and-asset-automation-comprehensive-review-2026-04.md](verification/G20-group-and-asset-automation-comprehensive-review-2026-04.md) の「次スライス推奨（`group_target` 命名規約 lint 強化）」。
+- Handoff Focus (next): 次回の再開起点は **G-24 茶番劇 Group template-first**。`group_motion` の失敗3種（`NO_GROUP_ITEM` / `TARGET_MISS` / `TARGET_AMBIGUOUS`）は引き続き geometry helper の failure class として維持するが、主軸は `group_motion` 拡張ではなく [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md) の **canonical template → 小演出テンプレ量産 → production で template 解決 + fallback + manual note**。
 - Evidence: Production E2E 実証済み + pytest 全件 **313 passed** (2026-04-10)。以降の pytest 実行は `src/` または `tests/` を変更したブロックの終わりにのみ `uv run pytest -q` を走らせ、必要時のみ `NLMYTGEN_PYTEST_FULL=1` を付ける。
 - 案件モード: CLI artifact
 - 現在の主レーン: 方向転換中 (実制作bottleneck直接軽減へ移行)

@@ -11,6 +11,7 @@
 | 機能の全件・ステータス | [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) |
 | 演出 IR のフィールドと CLI 適用の対応 | [PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md) |
 | 演出 IR 仕様（語彙・構造） | [PRODUCTION_IR_SPEC.md](../PRODUCTION_IR_SPEC.md) |
+| 茶番劇 Group テンプレの正本 | [SKIT_GROUP_TEMPLATE_SPEC.md](../SKIT_GROUP_TEMPLATE_SPEC.md) |
 | 自動化の境界（YMM4 内 / 外） | [AUTOMATION_BOUNDARY.md](../AUTOMATION_BOUNDARY.md) |
 | 現在位置・次アクション | [runtime-state.md](../runtime-state.md) |
 | P0 Block-A と経路 A（NotebookLM 準拠稿・C-09 任意の整理） | [P0-BLOCK-A-AND-PATH-A.md](P0-BLOCK-A-AND-PATH-A.md) |

@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "registry_kind": "skit_group_template",
+  "notes": "Operator/assistant shared registry. Not consumed by CLI yet.",
+  "canonical_groups": {
+    "haitatsuin_delivery_v1": {
+      "target_type": "skit_group",
+      "group_remark": "haitatsuin_delivery_main",
+      "canonical_template_name": "delivery_base_v1",
+      "description": "Delivery body + yukkuri head + fixed decorations",
+      "manual_checks": [
+        "head/body alignment",
+        "group center position",
+        "default zoom"
+      ]
+    }
+  },
+  "templates": {
+    "delivery_surprise_jump_v1": {
+      "group_key": "haitatsuin_delivery_v1",
+      "intent": "surprise_jump",
+      "template_name": "delivery_surprise_jump_v1",
+      "target_type": "skit_group",
+      "fallback": "delivery_panic_shake_v1",
+      "manual_checks": [
+        "jump height",
+        "head/body sync"
+      ]
+    },
+    "delivery_panic_shake_v1": {
+      "group_key": "haitatsuin_delivery_v1",
+      "intent": "panic_shake",
+      "template_name": "delivery_panic_shake_v1",
+      "target_type": "skit_group",
+      "fallback": "delivery_deny_shake_v1",
+      "manual_checks": [
+        "rotation strength",
+        "screen overlap"
+      ]
+    },
+    "delivery_deny_shake_v1": {
+      "group_key": "haitatsuin_delivery_v1",
+      "intent": "deny_shake",
+      "template_name": "delivery_deny_shake_v1",
+      "target_type": "skit_group",
+      "fallback": "delivery_reset_center_v1",
+      "manual_checks": [
+        "horizontal sway range"
+      ]
+    }
+  },
+  "resolution_policy": {
+    "exact_match_first": true,
+    "allow_fallback": true,
+    "emit_manual_note_when_unresolved": true
+  }
+}

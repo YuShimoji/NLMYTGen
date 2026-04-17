@@ -212,16 +212,21 @@ def validate_ir(
                 f" (allowed: {', '.join(sorted(TRANSITION_ALLOWED))})"
             )
 
+    # tachie_motion_map のキーも許可ラベルに含める (G-23 Motion Preset Library)
+    effective_motion_allowed = set(MOTION_ALLOWED)
+    if known_motion_labels is not None:
+        effective_motion_allowed |= known_motion_labels
+
     for entry in resolved:
         mo = entry.get("motion")
         if mo is None or mo == "":
             continue
-        if mo not in MOTION_ALLOWED:
+        if mo not in effective_motion_allowed:
             result.errors.append(
                 "MOTION_UNKNOWN_LABEL: "
                 f"utterance index={entry.get('index', '?')}"
                 f" has unsupported motion '{mo}'"
-                f" (allowed: {', '.join(sorted(MOTION_ALLOWED))})"
+                f" (allowed: {', '.join(sorted(effective_motion_allowed))})"
             )
 
     if known_motion_labels is not None:
@@ -235,6 +240,49 @@ def validate_ir(
                     f"utterance index={entry.get('index', '?')}"
                     f" uses motion '{mo}' not in motion_map registry"
                 )
+
+    # --- motion_target validation ---
+    for entry in resolved:
+        mt = entry.get("motion_target")
+        if mt is None or mt == "" or mt == "speaker":
+            continue
+        if isinstance(mt, str):
+            if not mt.startswith("layer:"):
+                result.errors.append(
+                    "MOTION_TARGET_INVALID: "
+                    f"utterance index={entry.get('index', '?')}"
+                    f" has unrecognized motion_target '{mt}'"
+                    " (expected 'speaker', 'layer:N', or {\"layer\": N})"
+                )
+            else:
+                try:
+                    int(mt[6:])
+                except ValueError:
+                    result.errors.append(
+                        "MOTION_TARGET_INVALID: "
+                        f"utterance index={entry.get('index', '?')}"
+                        f" motion_target layer number is not integer: '{mt}'"
+                    )
+        elif isinstance(mt, dict):
+            layer = mt.get("layer")
+            if layer is None:
+                result.errors.append(
+                    "MOTION_TARGET_INVALID: "
+                    f"utterance index={entry.get('index', '?')}"
+                    " motion_target dict must have 'layer' key"
+                )
+            elif not isinstance(layer, (int, str)):
+                result.errors.append(
+                    "MOTION_TARGET_INVALID: "
+                    f"utterance index={entry.get('index', '?')}"
+                    f" motion_target.layer must be int or string, got {type(layer).__name__}"
+                )
+        else:
+            result.errors.append(
+                "MOTION_TARGET_INVALID_TYPE: "
+                f"utterance index={entry.get('index', '?')}"
+                " motion_target must be string or dict"
+            )
 
     for entry in resolved:
         gm = entry.get("group_motion")

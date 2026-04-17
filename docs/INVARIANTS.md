@@ -32,6 +32,7 @@
 - 演出パイプラインは Writer 工程 (LLM による IR 生成) と Editor 工程 (テンプレート解決 + ymmp 適用) に分離する。proof の際限なき拡張を防ぐため、Writer の品質はフィードバック駆動で scope を区切り、Editor の設計品質で吸収する。
 - 演出パイプラインは三層構造: 第1層 Writer IR (高水準の意味ラベル) / 第2層 Template Registry (素材・プリセット辞書 + YMM4 ネイティブテンプレート名参照) / 第3層 YMM4 Adapter (IR + Registry → ymmp の接着層)。詳細は PRODUCTION_IR_SPEC.md セクション6 を参照。
 - YMM4 ネイティブに解決できるもの (エフェクト、アニメーション、場面テンプレート) は YMM4 のアイテムテンプレート機能に委ね、Adapter (patch-ymmp) は face/bg/slot 等の JSON キー置換レベルの差し替えに集中する。YMM4 の既存機能を再発明しない。
+- **外部素材ベースの茶番劇演者**（配達員・消防員等の body/head 合成）は、`speaker_tachie` と混同しない。`motion` は **ゆっくり立ち絵 (`TachieItem`)** の語彙として扱い、茶番劇演者は **GroupItem テンプレート資産**として扱う。正本: `SKIT_GROUP_TEMPLATE_SPEC.md`
 - IR は逐次属性の全指定ではなく、scene_preset による高水準バンドル参照 + optional override を基本とする。LLM にはプリセット一覧を渡し、個別フィールドの組み立てを強いない。
 - タイトル / サムネイル / 台本の約束 (promise) は central brief で統制し、台本単体が動画タイトルを越権決定しない。最終 owner は人間であり、assistant は判断材料と候補整理を支援する。
 - visual density score / evidence richness score は creative final judgement の代替ではなく、gate / diagnostic として使う。スコア最大化自体を目的化しない。
@@ -48,6 +49,7 @@
 - YMM4 プラグイン開発 (G-01/G-03) に時間を使う前に、演出 IR 定義 (G-02 done) + IR 出力プロンプト (G-05) を進めること。見通しのない .NET 環境構築を先行しない。
 - ymmp のゼロからの生成は禁止。台本読込後の限定的な後段適用 (patch-ymmp による face/bg 差し替え) は Level 1 変換器として許容済み。ただし適用範囲の拡張は成熟段階を上げる判断として扱い、無制限な ymmp 編集には進まない。デッドファイル蓄積を避ける。
 - テストスイートの拡張を目的化しない。テストは実装の検証手段であり、テスト設計が開発の主活動にならないこと。
+- route contract / readback / unit test は **production value path の代替ではない**。テンプレート資産の不足や運用前提のズレを、テスト通過だけで「自動化できた」と扱わない。
 - **テストはコードを変更したときだけ実行する。** ドキュメントのみの変更、設定変更、GUI テキスト変更でテストを回さない。テスト実行を作業完了の儀式にしない。
 - proof は出力レビューで完了とする。実動画制作や定量計測 (N% 以上が一致等) を proof 要件にしない。
 - 手動時間計測を開発目的にしない。効果測定は時間差ではなく、接続成立・failure class・差分証跡を優先する。

@@ -19,6 +19,7 @@
 | `se_map.template.json` | SE 音声ラベル → パス + タイミング | `--se-map` |
 | `slot_map.template.json` | キャラ配置スロット（x/y/zoom）+ デフォルト | `--slot-map` |
 | `group_motion_map.template.json` | GroupItem 幾何（absolute/relative） | `--group-motion-map` |
+| `skit_group_registry.template.json` | 茶番劇 Group の canonical template / 派生 template / fallback / manual check 台帳 | まだ CLI 直結なし（shared registry） |
 
 ## パス記法
 
@@ -55,6 +56,13 @@ Windows のパス区切りは `/` でも `\\` でも可。
 
 - `mode: "absolute"`（既定）: 値が GroupItem の最終座標になる
 - `mode: "relative"`: 値が GroupItem の現在値に加算される（テンプレ変更に強い）
+
+### skit_group_registry
+
+- `speaker_tachie` 用の `motion` 台帳とは別物
+- 配達員などの外部素材演者を **GroupItem テンプレート資産**として記録する
+- exact template / fallback / manual check を残し、production での template 解決に使う
+- 詳細な運用正本は [docs/SKIT_GROUP_TEMPLATE_SPEC.md](../../docs/SKIT_GROUP_TEMPLATE_SPEC.md)
 
 ## face_map_bundle (G-19)
 

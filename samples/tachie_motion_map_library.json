@@ -1,0 +1,255 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "spec": "docs/MOTION_PRESET_LIBRARY_SPEC.md",
+    "source": "samples/EffectsSamples_2026-04-15.ymmp (111 effects)",
+    "generated": "2026-04-17",
+    "note": "Phase 1: spec-driven manual generation. Phase 2 will add generate-motion-presets CLI."
+  },
+  "motions": {
+
+    "none": [],
+
+    "bounce": [
+      {
+        "$type": "YukkuriMovieMaker.Plugin.Effects.BounceEffect, YukkuriMovieMaker.Plugin.Effects",
+        "Name": "Bounce"
+      }
+    ],
+
+    "surprise_jump": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.JumpEffect, YukkuriMovieMaker"
+      },
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.RandomRotateEffect, YukkuriMovieMaker",
+        "Is3D": false
+      }
+    ],
+
+    "surprise_crash": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.CrashEffect, YukkuriMovieMaker",
+        "StartTime": 0.0,
+        "PlaybackRate": 100.0,
+        "Size": 50.0,
+        "Impact": 100.0
+      },
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.RandomRotateEffect, YukkuriMovieMaker",
+        "Is3D": false
+      }
+    ],
+
+    "happy_bounce": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.JumpEffect, YukkuriMovieMaker"
+      }
+    ],
+
+    "happy_sway": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.RepeatMoveEffect, YukkuriMovieMaker",
+        "EasingType": "Sine",
+        "EasingMode": "InOut",
+        "IsCentering": true
+      },
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.RepeatRotateEffect, YukkuriMovieMaker",
+        "Is3D": false,
+        "EasingType": "Sine",
+        "EasingMode": "InOut",
+        "IsCentering": true
+      }
+    ],
+
+    "sad_droop": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.OpacityEffect, YukkuriMovieMaker",
+        "IsAbsolute": false
+      },
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.RepeatMoveEffect, YukkuriMovieMaker",
+        "EasingType": "Sine",
+        "EasingMode": "InOut",
+        "IsCentering": true
+      }
+    ],
+
+    "angry_shake": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.RandomMoveEffect, YukkuriMovieMaker"
+      },
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.RandomRotateEffect, YukkuriMovieMaker",
+        "Is3D": false
+      }
+    ],
+
+    "angry_crash": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.CrashEffect, YukkuriMovieMaker",
+        "StartTime": 0.0,
+        "PlaybackRate": 120.0,
+        "Size": 70.0,
+        "Impact": 150.0
+      },
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.RandomMoveEffect, YukkuriMovieMaker"
+      }
+    ],
+
+    "thinking_zoom": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.ZoomEffect, YukkuriMovieMaker",
+        "IsNearestNeighbor": false
+      }
+    ],
+
+    "panic_shake": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.RandomMoveEffect, YukkuriMovieMaker"
+      },
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.RandomRotateEffect, YukkuriMovieMaker",
+        "Is3D": false
+      },
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.RandomZoomEffect, YukkuriMovieMaker"
+      }
+    ],
+
+    "tsukkomi": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.InOutCrashEffect, YukkuriMovieMaker",
+        "IsInEffect": true,
+        "IsOutEffect": false,
+        "EffectTimeSeconds": 0.3,
+        "PlaybackRate": 150.0,
+        "Size": 40.0,
+        "Impact": 80.0,
+        "RandomRotate": 50.0,
+        "RandomVector": 50.0
+      }
+    ],
+
+    "nod": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.RepeatMoveEffect, YukkuriMovieMaker",
+        "EasingType": "Sine",
+        "EasingMode": "InOut",
+        "IsCentering": true
+      }
+    ],
+
+    "deny_shake": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.RepeatMoveEffect, YukkuriMovieMaker",
+        "EasingType": "Sine",
+        "EasingMode": "InOut",
+        "IsCentering": true
+      }
+    ],
+
+    "entrance_left": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.InOutMoveFromOutsideImageEffect, YukkuriMovieMaker",
+        "Value": "Left",
+        "IsInEffect": true,
+        "IsOutEffect": false,
+        "EffectTimeSeconds": 0.3,
+        "EasingType": "Expo",
+        "EasingMode": "Out"
+      }
+    ],
+
+    "entrance_right": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.InOutMoveFromOutsideImageEffect, YukkuriMovieMaker",
+        "Value": "Right",
+        "IsInEffect": true,
+        "IsOutEffect": false,
+        "EffectTimeSeconds": 0.3,
+        "EasingType": "Expo",
+        "EasingMode": "Out"
+      }
+    ],
+
+    "entrance_top": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.InOutMoveFromOutsideImageEffect, YukkuriMovieMaker",
+        "Value": "Top",
+        "IsInEffect": true,
+        "IsOutEffect": false,
+        "EffectTimeSeconds": 0.3,
+        "EasingType": "Expo",
+        "EasingMode": "Out"
+      }
+    ],
+
+    "entrance_getup": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.InOutGetUpEffect, YukkuriMovieMaker",
+        "Base": "Bottom",
+        "Is3D": false,
+        "IsInEffect": true,
+        "IsOutEffect": false,
+        "EffectTimeSeconds": 0.3,
+        "EasingType": "Expo",
+        "EasingMode": "Out"
+      }
+    ],
+
+    "exit_left": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.InOutMoveFromOutsideImageEffect, YukkuriMovieMaker",
+        "Value": "Left",
+        "IsInEffect": false,
+        "IsOutEffect": true,
+        "EffectTimeSeconds": 0.3,
+        "EasingType": "Expo",
+        "EasingMode": "Out"
+      }
+    ],
+
+    "exit_right": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.InOutMoveFromOutsideImageEffect, YukkuriMovieMaker",
+        "Value": "Right",
+        "IsInEffect": false,
+        "IsOutEffect": true,
+        "EffectTimeSeconds": 0.3,
+        "EasingType": "Expo",
+        "EasingMode": "Out"
+      }
+    ],
+
+    "flashback": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.SepiaEffect, YukkuriMovieMaker"
+      },
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.GaussianBlurEffect, YukkuriMovieMaker",
+        "IsHardBorderMode": false
+      }
+    ],
+
+    "focus_zoom": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.ZoomEffect, YukkuriMovieMaker",
+        "IsNearestNeighbor": false
+      }
+    ],
+
+    "defocus": [
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.GaussianBlurEffect, YukkuriMovieMaker",
+        "IsHardBorderMode": false
+      },
+      {
+        "$type": "YukkuriMovieMaker.Project.Effects.OpacityEffect, YukkuriMovieMaker",
+        "IsAbsolute": false
+      }
+    ]
+  }
+}

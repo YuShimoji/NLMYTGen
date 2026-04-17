@@ -45,7 +45,12 @@ flowchart TD
   tp -->|no| p2[Phase2: tachie_motion_effects_map に配列台帳]
   g17 --> adapt[_apply_timeline_profile_adapters]
   p2 --> split[_apply_motion_to_tachie_items]
+  p2 --> layer[_apply_motion_to_layer_items]
+  split -.->|motion_target 未指定| split
+  layer -.->|motion_target: layer:N| layer
 ```
+
+**`motion_target` による適用先分岐**: IR に `motion_target: "layer:N"` を指定すると、`_apply_motion_to_tachie_items` はそのエントリをスキップし、`_apply_motion_to_layer_items` が該当レイヤーの `ImageItem`/`GroupItem` に VideoEffects を書き込む。未指定時は従来どおり speaker の `TachieItem` が対象。両経路は常に両方実行される（排他ではない）。
 
 ## 2. Micro IR フィールド別マトリクス
 
@@ -61,8 +66,8 @@ flowchart TD
 | `overlay`                | 同 §3.7                                                                                                                                                                           | **はい**（`--overlay-map` 指定時、ImageItem 挿入）                           | はい（契約あり時 unknown）                    | 主に overlay 挿入設計（G-13）                                                                                                                                                                     | タイミング・見え方の最終判断は人間                                 |
 | `se`                     | 同 §3.8                                                                                                                                                                           | **条件付き**（registry で解決し、write route が corpus にある場合。無い場合は fail-fast） | はい（契約あり時 unknown）                    | `AudioItem` 経路は corpus 依存（G-13）                                                                                                                                                           | `SE_WRITE_ROUTE_UNSUPPORTED` は mechanical failure |
 | `bg_anim`                | 同 §3.4                                                                                                                                                                           | **はい（二経路）** **(A) キーフレーム（G-14）**: micro bg の各 Layer0 セグメントで、時間重なる発話の `bg_anim`（carry-forward 済み）を **ImageItem の X/Y/Zoom 線形キーフレーム**に反映（`none` / `pan_*` / `zoom_*` / `ken_burns`）。**`--timeline-profile` 不要。** **(B) VideoEffects（G-17）**: `--timeline-profile` + `--bg-anim-map`（ラベル → `{ video_effect: {...} }`）で、契約通過時のみ Layer0 Image/Video の **`VideoEffects` 追記**。 | **はい**（未知ラベルは `BG_ANIM_UNKNOWN_LABEL`） | **あり**（両経路とも G-12 契約と整合する readback 前提。[timeline_route_contract.json](../samples/timeline_route_contract.json)） | (A) は数値プリセットのみ。(B) はプロファイル限定。微調整は YMM4 手動可。 |
-| `motion`                 | 同 §3.6                                                                                                                                                                           | **はい（二経路・排他）** **Phase2**: `--tachie-motion-map` のみ有効化。**`--timeline-profile` を付けない**とき `_apply_motion_to_tachie_items` が動き、台帳は **VideoEffects オブジェクトの配列**（[tachie_motion_map.example.json](../samples/tachie_motion_map.example.json)）。発話アンカーで `TachieItem` を区間分割し、`none` は空配列でクリア。同一 motion の連続区間は結合。**G-17**: **`--timeline-profile` 指定時**は Phase2 ロジックは**走らず**、`_apply_timeline_profile_adapters` が **`--motion-map`**（[motion_map_g17.example.json](../samples/motion_map_g17.example.json)）で **既存 TachieItem** に `video_effect` を追記。 | **はい**（`MOTION_UNKNOWN_LABEL`／`MOTION_MAP_UNKNOWN_LABEL`。台帳キーは `validate-ir` で `--motion-map` と `--tachie-motion-map` の**和集合**で検証可） | **あり**（`TachieItem.VideoEffects`） | [G-16](FEATURE_REGISTRY.md) Phase2 + [G-17](FEATURE_REGISTRY.md)。`row_range` 優先 / `index` fallback。 |
-| `group_motion` / `group_target` | G-20（中央基準 Group テンプレ前提）                                                                                                                                                           | **はい（A案）**: `--group-motion-map` 指定時、既存 `GroupItem` を探索して `X/Y/Zoom` を更新。`group_target` 未指定時は GroupItem が 1 件の場合のみ自動解決。 | **はい**（`GROUP_MOTION_UNKNOWN_LABEL`） | **あり**（`GroupItem.X/Y/Zoom`） | GroupItem の新規生成（B案）は対象外。テンプレ側に中央基準 GroupItem が必要。 |
+| `motion`                 | 同 §3.6                                                                                                                                                                           | **はい（三経路）** **Phase2**: `--tachie-motion-map` のみ有効化。**`--timeline-profile` を付けない**とき `_apply_motion_to_tachie_items` が動き、台帳は **VideoEffects オブジェクトの配列**（[tachie_motion_map.example.json](../samples/tachie_motion_map.example.json)）。発話アンカーで `TachieItem` を区間分割し、`none` は空配列でクリア。同一 motion の連続区間は結合。**G-17**: **`--timeline-profile` 指定時**は Phase2 ロジックは**走らず**、`_apply_timeline_profile_adapters` が **`--motion-map`**（[motion_map_g17.example.json](../samples/motion_map_g17.example.json)）で **既存 TachieItem** に `video_effect` を追記。**motion_target 経路**: IR に `motion_target: "layer:N"` を指定すると、Phase2 と同時に `_apply_motion_to_layer_items` が該当レイヤーの `ImageItem`/`GroupItem` に同じ `tachie_motion_effects_map` の VideoEffects を書き込む（TachieItem 経路はスキップ）。 | **はい**（`MOTION_UNKNOWN_LABEL`／`MOTION_MAP_UNKNOWN_LABEL`。台帳キーは `validate-ir` で `--motion-map` と `--tachie-motion-map` の**和集合**で検証可） | **あり**（`TachieItem.VideoEffects`、`motion_target` 時は `ImageItem.VideoEffects` / `GroupItem.VideoEffects`） | `motion_target` 未指定時は speaker_tachie 対象。`motion_target: "layer:N"` 指定時は背景 ImageItem 等にも適用可。 |
+| `group_motion` / `group_target` | G-20（中央基準 Group テンプレ前提）                                                                                                                                                           | **はい（A案）**: `--group-motion-map` 指定時、既存 `GroupItem` を探索して `X/Y/Zoom` を更新。`group_target` 未指定時は GroupItem が 1 件の場合のみ自動解決。 | **はい**（`GROUP_MOTION_UNKNOWN_LABEL`） | **あり**（`GroupItem.X/Y/Zoom`） | **幾何補助**。茶番劇演者の主経路ではなく、template-first 運用の微調整に使う。GroupItem の新規生成（B案）は対象外。 |
 | `transition`             | 同 §3.9（機械化は **none / fade** のみ。仕様上の他語彙は validate で ERROR）                                                                                                                                                                           | **はい**（`fade` → `VoiceItem` の Voice/Jimaku フェード。`none` → 0 クリア） | **はい**（`none`/`fade` 以外は `TRANSITION_UNKNOWN_LABEL`） | **fade 系は観測済み**（G-12）。`slide`/`wipe` 等は未 patch（ERROR で止める）                                                                 | [G-15](FEATURE_REGISTRY.md)。秒数はコード定数（将来 registry 可） |
 
 
@@ -79,7 +84,7 @@ flowchart TD
 ## 4. なぜ「背景＋表情だけ」と感じるか
 
 現行の [ymmp_patch.py](../src/pipeline/ymmp_patch.py) では、**確実にタイムラインを書き換える**のは上表のとおり **face / idle_face / slot / bg / overlay（map 時）/ se（条件付き）/ motion（台帳付き）/ group_motion（A案）/ transition（G-15）/ bg_anim（上表の A または B）** である。  
-`motion` は **Phase2（`--tachie-motion-map`・profile 無し）** か **G-17（`--timeline-profile` + `--motion-map`）** のどちらか一方が効く（同時に両方の分割ロジックは走らない）。`transition` は **G-15** で **`none` / `fade`** のみ **VoiceItem** に反映（仕様の `slide_*` 等は **validate-ir で ERROR**）。`bg_anim` は **G-14 のキーフレーム**と **G-17 の VideoEffects** が併存しうる。仕様書の語彙は **将来拡張と Writer 契約**のために先に広げている。
+`motion` は **Phase2（`--tachie-motion-map`・profile 無し）** か **G-17（`--timeline-profile` + `--motion-map`）** のどちらか一方が効く（同時に両方の分割ロジックは走らない）。Phase2 使用時、IR に `motion_target: "layer:N"` を指定すると `_apply_motion_to_layer_items` が該当レイヤーの `ImageItem`/`GroupItem` にも VideoEffects を書き込む（`_apply_motion_to_tachie_items` はその IR エントリをスキップ）。`transition` は **G-15** で **`none` / `fade`** のみ **VoiceItem** に反映（仕様の `slide_*` 等は **validate-ir で ERROR**）。`bg_anim` は **G-14 のキーフレーム**と **G-17 の VideoEffects** が併存しうる。仕様書の語彙は **将来拡張と Writer 契約**のために先に広げている。
 
 ## 5. 将来拡張（台帳・契約が先）
 
@@ -92,7 +97,7 @@ flowchart TD
 ※ **G-14** により `bg_anim` の **ImageItem X/Y/Zoom プリセット**（micro bg 連動）は patch 済み。  
 ※ **G-17** により `bg_anim` の **`ImageItem`/`VideoItem` の `VideoEffects` 追記**（プロファイル + `bg_anim_map`）も patch 済み。  
 ※ **G-15** により `transition` の **fade（Voice/Jimaku）**は patch 済み。非 fade 系は別 FEATURE。  
-※ **G-16 Phase2** により **`--tachie-motion-map`** で **`TachieItem` 区間分割 + VideoEffects**。**G-17** により **`--timeline-profile` + `--motion-map`** で **TachieItem への video_effect 追記**（Phase2 ロジックは無効）。`ShapeItem` 経路は別 FEATURE。
+※ **G-16 Phase2** により **`--tachie-motion-map`** で **`TachieItem` 区間分割 + VideoEffects**。`motion_target: "layer:N"` 指定時は `ImageItem`/`GroupItem` にも同様の分割 + VideoEffects を適用。**G-17** により **`--timeline-profile` + `--motion-map`** で **TachieItem への video_effect 追記**（Phase2 ロジックは無効）。`ShapeItem` 経路は別 FEATURE。
 
 ## 6. 関連コマンド
 

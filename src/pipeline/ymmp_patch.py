@@ -909,13 +909,22 @@ def _apply_motion_to_tachie_items(
         if char:
             tachie_by_char.setdefault(char, []).append(item)
 
+    # tachie_motion_map のキーも許可ラベルに含める (G-23 Motion Preset Library)
+    effective_allowed = set(MOTION_ALLOWED)
+    if tachie_motion_effects_map:
+        effective_allowed |= set(tachie_motion_effects_map.keys())
+
     spans_by_char: dict[str, list[tuple[int, int, str, object]]] = {}
     for ir_entry in resolved:
+        # motion_target が指定されている場合は _apply_motion_to_layer_items で処理
+        mt = ir_entry.get("motion_target")
+        if mt is not None and mt != "speaker":
+            continue
         motion = _normalize_motion_label(ir_entry.get("motion"))
         speaker = (ir_entry.get("speaker") or "").strip()
         if not speaker:
             continue
-        if motion not in MOTION_ALLOWED:
+        if motion not in effective_allowed:
             continue
         timing = _resolve_utterance_timing(
             ir_entry,
@@ -1030,6 +1039,202 @@ def _apply_motion_to_tachie_items(
             replacement.append(new_item)
         items[insert_at:insert_at] = replacement
         # 旧単一アイテムが複数区間に分割された場合は変化として扱う
+        result.motion_changes += len(replacement)
+
+
+def _parse_motion_target_layer(motion_target: object) -> int | None:
+    """motion_target 値からレイヤー番号を抽出する.
+
+    受理する形式:
+    - "layer:10"  (文字列)
+    - {"layer": 10}  (辞書)
+    """
+    if isinstance(motion_target, str):
+        if motion_target.startswith("layer:"):
+            try:
+                return int(motion_target[6:])
+            except ValueError:
+                return None
+    elif isinstance(motion_target, dict):
+        layer = motion_target.get("layer")
+        if isinstance(layer, int):
+            return layer
+        if isinstance(layer, str):
+            try:
+                return int(layer)
+            except ValueError:
+                return None
+    return None
+
+
+def _apply_motion_to_layer_items(
+    items: list[dict],
+    voice_items: list[dict],
+    resolved: list[dict],
+    tachie_motion_effects_map: dict[str, list[dict]] | None,
+    result: PatchResult,
+    *,
+    use_row_range: bool,
+) -> None:
+    """motion_target で指定されたレイヤーの ImageItem/GroupItem に VideoEffects を適用する.
+
+    TachieItem 以外のアイテム (背景イラスト等) にモーションプリセットを適用する
+    ための経路。発話タイミングをアンカーにして、対象レイヤーのアイテムを
+    TachieItem と同様に分割し、区間ごとに VideoEffects を書き込む。
+    """
+    # tachie_motion_map のキーも許可ラベルに含める (G-23 Motion Preset Library)
+    effective_allowed = set(MOTION_ALLOWED)
+    if tachie_motion_effects_map:
+        effective_allowed |= set(tachie_motion_effects_map.keys())
+
+    # motion_target 付きエントリをレイヤー別に収集
+    spans_by_layer: dict[int, list[tuple[int, int, str, object]]] = {}
+    for ir_entry in resolved:
+        mt = ir_entry.get("motion_target")
+        if mt is None or mt == "speaker":
+            continue
+        layer = _parse_motion_target_layer(mt)
+        if layer is None:
+            result.warnings.append(
+                "MOTION_TARGET_INVALID: "
+                f"utterance index={ir_entry.get('index', '?')}"
+                f" has unrecognized motion_target '{mt}'"
+                " (expected 'layer:N' or {{\"layer\": N}})"
+            )
+            continue
+        motion = _normalize_motion_label(ir_entry.get("motion"))
+        if motion not in effective_allowed:
+            continue
+        timing = _resolve_utterance_timing(
+            ir_entry,
+            voice_items,
+            use_row_range=use_row_range,
+        )
+        if timing is None:
+            if motion != "none":
+                result.warnings.append(
+                    "MOTION_NO_VOICE_ANCHOR: "
+                    f"motion '{motion}' could not resolve timing"
+                    f" for utterance index={ir_entry.get('index', '?')}"
+                    f" (motion_target layer:{layer})"
+                )
+            continue
+        start_frame, utterance_length = timing
+        end_frame = start_frame + max(utterance_length, 1)
+        spans_by_layer.setdefault(layer, []).append(
+            (start_frame, end_frame, motion, ir_entry.get("index", "?"))
+        )
+
+    if not spans_by_layer:
+        return
+
+    for target_layer, raw_spans in sorted(spans_by_layer.items()):
+        # 対象レイヤーのアイテムを収集 (TachieItem 以外)
+        layer_items = [
+            item for item in items
+            if item.get("Layer") == target_layer
+            and _item_type(item) in ("ImageItem", "GroupItem")
+        ]
+        non_none_exists = any(span[2] != "none" for span in raw_spans)
+        if not layer_items:
+            if non_none_exists:
+                result.warnings.append(
+                    "MOTION_TARGET_NO_ITEM: "
+                    f"layer {target_layer} has no ImageItem/GroupItem"
+                    " for motion_target patch"
+                )
+            continue
+
+        # 複数アイテムが同レイヤーにある場合: 各アイテムと重なる span を適用
+        if len(layer_items) != 1:
+            for li in layer_items:
+                li_frame = int(li.get("Frame", 0))
+                li_end = li_frame + int(li.get("Length", 0))
+                for start, end, motion, ir_index in raw_spans:
+                    if start < li_end and end > li_frame:
+                        effects = _motion_effects_for_label(
+                            motion, tachie_motion_effects_map, result,
+                            ir_index=ir_index,
+                        )
+                        old = _normalize_video_effects(li.get("VideoEffects"))
+                        if old == effects:
+                            continue
+                        li["VideoEffects"] = effects
+                        result.motion_changes += 1
+            continue
+
+        # 単一アイテム: TachieItem と同じ分割ロジック
+        target = layer_items[0]
+        if target not in items:
+            continue
+
+        base_start = int(target.get("Frame", 0))
+        base_length = int(target.get("Length", 0))
+        if base_length < 1:
+            max_end = max(end for _, end, _, _ in raw_spans)
+            base_length = max(max_end - base_start, 1)
+        base_end = base_start + base_length
+
+        clipped: list[tuple[int, int, str, object]] = []
+        for start, end, motion, ir_index in raw_spans:
+            clip_start = max(start, base_start)
+            clip_end = min(end, base_end)
+            if clip_end <= clip_start:
+                continue
+            clipped.append((clip_start, clip_end, motion, ir_index))
+        if not clipped:
+            continue
+
+        merged_spans = _merge_motion_spans(
+            [(s, e, m) for s, e, m, _ in clipped]
+        )
+
+        boundaries = {base_start, base_end}
+        for start, end, _motion in merged_spans:
+            boundaries.add(start)
+            boundaries.add(end)
+        ordered = sorted(boundaries)
+        if len(ordered) < 2:
+            continue
+
+        intervals: list[tuple[int, int, str, object]] = []
+        for idx in range(len(ordered) - 1):
+            start = ordered[idx]
+            end = ordered[idx + 1]
+            if end <= start:
+                continue
+            chosen_motion = "none"
+            chosen_idx: object = "?"
+            for s, e, motion, ir_index in clipped:
+                if s <= start < e:
+                    chosen_motion = motion
+                    chosen_idx = ir_index
+            if (
+                intervals
+                and intervals[-1][2] == chosen_motion
+                and intervals[-1][1] == start
+            ):
+                prev_start, _prev_end, prev_motion, prev_idx = intervals[-1]
+                intervals[-1] = (prev_start, end, prev_motion, prev_idx)
+                continue
+            intervals.append((start, end, chosen_motion, chosen_idx))
+
+        if not intervals:
+            continue
+
+        insert_at = items.index(target)
+        items.pop(insert_at)
+        replacement: list[dict] = []
+        for start, end, motion, ir_index in intervals:
+            span_len = max(end - start, 1)
+            new_item = copy.deepcopy(target)
+            new_item["Frame"] = start
+            new_item["Length"] = span_len
+            new_item["VideoEffects"] = _motion_effects_for_label(
+                motion, tachie_motion_effects_map, result, ir_index=ir_index
+            )
+            replacement.append(new_item)
+        items[insert_at:insert_at] = replacement
         result.motion_changes += len(replacement)
 
 
@@ -1835,6 +2040,15 @@ def patch_ymmp(
             result,
             use_row_range=use_row_range,
         )
+    # motion_target 付きエントリ: 指定レイヤーの ImageItem/GroupItem に適用
+    _apply_motion_to_layer_items(
+        items,
+        voice_items,
+        resolved,
+        tachie_motion_effects_map,
+        result,
+        use_row_range=use_row_range,
+    )
     _apply_overlay_items(
         items,
         voice_items,

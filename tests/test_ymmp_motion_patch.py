@@ -5,7 +5,9 @@ import copy
 from src.pipeline.ir_validate import validate_ir
 from src.pipeline.ymmp_patch import (
     MOTION_ALLOWED,
+    PatchResult,
     _apply_motion_to_tachie_items,
+    _parse_motion_target_layer,
     patch_ymmp,
 )
 
@@ -623,3 +625,235 @@ def test_load_group_motion_map_rejects_invalid_mode():
         import pytest
         with pytest.raises(ValueError, match="invalid mode"):
             _load_group_motion_map(f.name)
+
+
+# ---------------------------------------------------------------------------
+# motion_target: ImageItem / GroupItem への VideoEffects 適用
+# ---------------------------------------------------------------------------
+
+_BOUNCE_FX = [{"$type": "YukkuriMovieMaker.Plugin.Effects.BounceEffect, YukkuriMovieMaker.Plugin.Effects", "Name": "Bounce"}]
+_FACE_MAP = {"n": {"Eye": "i.png", "Mouth": "m.png", "Eyebrow": "e.png"}}
+_MOTION_MAP = {"bounce": _BOUNCE_FX}
+
+
+def _make_layer_motion_ymmp(*, target_layer=5, item_type="ImageItem",
+                            frame=0, length=60):
+    """VoiceItem + 指定レイヤーの ImageItem/GroupItem を含む最小 YMMP."""
+    full_type = f"YukkuriMovieMaker.Project.Items.{item_type}, YukkuriMovieMaker"
+    return {
+        "Timelines": [{
+            "ID": 0,
+            "Items": [
+                {
+                    "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+                    "CharacterName": "a",
+                    "Serif": "x",
+                    "Frame": 0,
+                    "Length": 30,
+                    "Layer": 1,
+                    "TachieFaceParameter": {
+                        "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter",
+                        "Eyebrow": "e.png", "Eye": "i.png", "Mouth": "m.png",
+                        "Hair": "", "Body": "", "Complexion": "",
+                    },
+                },
+                {
+                    "$type": full_type,
+                    "Layer": target_layer,
+                    "Frame": frame,
+                    "Length": length,
+                    "VideoEffects": [],
+                    "Remark": "",
+                    "FilePath": "dummy.png" if item_type == "ImageItem" else "",
+                },
+            ],
+            "LayerSettings": [],
+        }],
+        "Characters": [{"Name": "a"}],
+    }
+
+
+def _layer_motion_ir(*, motion_target="layer:5", motion="bounce"):
+    """motion_target 付きの最小 IR."""
+    utt = {
+        "index": 1, "speaker": "a", "text": "x", "section_id": "S1",
+        "face": "n", "motion": motion, "motion_target": motion_target,
+    }
+    return {
+        "ir_version": "1.0", "video_id": "t",
+        "macro": {"sections": []},
+        "utterances": [utt],
+    }
+
+
+def test_parse_motion_target_layer_formats():
+    assert _parse_motion_target_layer("layer:10") == 10
+    assert _parse_motion_target_layer({"layer": 5}) == 5
+    assert _parse_motion_target_layer({"layer": "7"}) == 7
+    assert _parse_motion_target_layer("layer:") is None
+    assert _parse_motion_target_layer("layer:abc") is None
+    assert _parse_motion_target_layer({"X": 1}) is None
+    assert _parse_motion_target_layer("speaker") is None
+    assert _parse_motion_target_layer(42) is None
+    assert _parse_motion_target_layer(None) is None
+
+
+def test_motion_target_layer_applies_to_image_item():
+    """単一 ImageItem に VideoEffects が書き込まれる (主 happy path)."""
+    ymmp = _make_layer_motion_ymmp()
+    ir = _layer_motion_ir()
+    res = patch_ymmp(ymmp, ir, _FACE_MAP, {},
+                     tachie_motion_effects_map=_MOTION_MAP)
+    items = ymmp["Timelines"][0]["Items"]
+    images = [i for i in items if "ImageItem" in i.get("$type", "")]
+    assert len(images) >= 1
+    assert any(i.get("VideoEffects") == _BOUNCE_FX for i in images)
+    assert res.motion_changes >= 1
+
+
+def test_motion_target_splits_image_item_by_timing():
+    """2 utterance で 1 ImageItem が分��される."""
+    ymmp = {
+        "Timelines": [{
+            "ID": 0,
+            "Items": [
+                {
+                    "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+                    "CharacterName": "a", "Serif": "x",
+                    "Frame": 0, "Length": 30, "Layer": 1,
+                    "TachieFaceParameter": {
+                        "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter",
+                        "Eyebrow": "e.png", "Eye": "i.png", "Mouth": "m.png",
+                        "Hair": "", "Body": "", "Complexion": "",
+                    },
+                },
+                {
+                    "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+                    "CharacterName": "a", "Serif": "y",
+                    "Frame": 30, "Length": 30, "Layer": 1,
+                    "TachieFaceParameter": {
+                        "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter",
+                        "Eyebrow": "e.png", "Eye": "i.png", "Mouth": "m.png",
+                        "Hair": "", "Body": "", "Complexion": "",
+                    },
+                },
+                {
+                    "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+                    "Layer": 5, "Frame": 0, "Length": 60,
+                    "VideoEffects": [], "Remark": "", "FilePath": "dummy.png",
+                },
+            ],
+            "LayerSettings": [],
+        }],
+        "Characters": [{"Name": "a"}],
+    }
+    ir = {
+        "ir_version": "1.0", "video_id": "t",
+        "macro": {"sections": []},
+        "utterances": [
+            {"index": 1, "speaker": "a", "text": "x", "section_id": "S1",
+             "face": "n", "motion": "bounce", "motion_target": "layer:5"},
+            {"index": 2, "speaker": "a", "text": "y", "section_id": "S1",
+             "face": "n", "motion": "none", "motion_target": "layer:5"},
+        ],
+    }
+    res = patch_ymmp(ymmp, ir, _FACE_MAP, {},
+                     tachie_motion_effects_map=_MOTION_MAP)
+    items = ymmp["Timelines"][0]["Items"]
+    images = [i for i in items if "ImageItem" in i.get("$type", "")]
+    assert len(images) == 2
+    bounce_seg = [i for i in images if i.get("VideoEffects") == _BOUNCE_FX]
+    none_seg = [i for i in images if i.get("VideoEffects") == []]
+    assert len(bounce_seg) == 1
+    assert len(none_seg) == 1
+    assert bounce_seg[0]["Frame"] == 0
+    assert bounce_seg[0]["Length"] == 30
+    assert none_seg[0]["Frame"] == 30
+    assert res.motion_changes >= 2
+
+
+def test_motion_target_no_item_on_layer_warns():
+    """対象レイヤーにアイテムなし → 警告."""
+    ymmp = _make_layer_motion_ymmp(target_layer=99)
+    ir = _layer_motion_ir(motion_target="layer:5", motion="bounce")
+    res = patch_ymmp(ymmp, ir, _FACE_MAP, {},
+                     tachie_motion_effects_map=_MOTION_MAP)
+    assert any(w.startswith("MOTION_TARGET_NO_ITEM:") for w in (res.warnings or []))
+
+
+def test_motion_target_speaker_uses_tachie_path():
+    """motion_target='speaker' → layer-items 経路ではなく TachieItem 経路を使用."""
+    ymmp = {
+        "Timelines": [{
+            "ID": 0,
+            "Items": [
+                {
+                    "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+                    "CharacterName": "a", "Serif": "x",
+                    "Frame": 0, "Length": 30, "Layer": 1,
+                    "TachieFaceParameter": {
+                        "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter",
+                        "Eyebrow": "e.png", "Eye": "i.png", "Mouth": "m.png",
+                        "Hair": "", "Body": "", "Complexion": "",
+                    },
+                },
+                {
+                    "$type": "YukkuriMovieMaker.Project.Items.TachieItem, YukkuriMovieMaker",
+                    "CharacterName": "a", "Layer": 2, "Frame": 0, "Length": 60,
+                    "VideoEffects": [],
+                    "TachieItemParameter": {"X": 0.0, "Y": 0.0, "Zoom": 100.0},
+                },
+            ],
+            "LayerSettings": [],
+        }],
+        "Characters": [{"Name": "a"}],
+    }
+    ir = _layer_motion_ir(motion_target="speaker", motion="bounce")
+    res = patch_ymmp(ymmp, ir, _FACE_MAP, {},
+                     tachie_motion_effects_map=_MOTION_MAP)
+    items = ymmp["Timelines"][0]["Items"]
+    tachie = [i for i in items if "TachieItem" in i.get("$type", "")]
+    assert any(t.get("VideoEffects") == _BOUNCE_FX for t in tachie)
+    assert res.motion_changes >= 1
+
+
+def test_motion_target_none_clears_effects():
+    """motion='none' + motion_target → VideoEffects は空."""
+    ymmp = _make_layer_motion_ymmp()
+    ir = _layer_motion_ir(motion="none")
+    res = patch_ymmp(ymmp, ir, _FACE_MAP, {},
+                     tachie_motion_effects_map=_MOTION_MAP)
+    items = ymmp["Timelines"][0]["Items"]
+    images = [i for i in items if "ImageItem" in i.get("$type", "")]
+    for img in images:
+        assert img.get("VideoEffects", []) == []
+
+
+def test_validate_ir_motion_target_invalid_string():
+    """IR validation: 不正文字列 → MOTION_TARGET_INVALID."""
+    ir = {
+        "ir_version": "1.0", "video_id": "t",
+        "macro": {"sections": []},
+        "utterances": [
+            {"index": 1, "speaker": "a", "text": "x", "section_id": "S1",
+             "face": "n", "motion_target": "invalid_format"},
+        ],
+    }
+    vr = validate_ir(ir)
+    assert vr.has_errors
+    assert any("MOTION_TARGET_INVALID" in e for e in vr.errors)
+
+
+def test_validate_ir_motion_target_dict_missing_layer():
+    """IR validation: layer キーなし dict → MOTION_TARGET_INVALID."""
+    ir = {
+        "ir_version": "1.0", "video_id": "t",
+        "macro": {"sections": []},
+        "utterances": [
+            {"index": 1, "speaker": "a", "text": "x", "section_id": "S1",
+             "face": "n", "motion_target": {"X": 1}},
+        ],
+    }
+    vr = validate_ir(ir)
+    assert vr.has_errors
+    assert any("MOTION_TARGET_INVALID" in e for e in vr.errors)

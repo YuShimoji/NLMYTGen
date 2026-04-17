@@ -90,6 +90,35 @@
 - **`--timeline-profile` を付ける場合（G-17）**: `motion` / `transition` / `bg_anim` のうち、契約に含まれるものを **`--motion-map`**（各ラベル → `video_effect` 辞書）、`--transition-map`、`--bg-anim-map` で書き込む。サンプル: [samples/motion_map_g17.example.json](samples/motion_map_g17.example.json)。このとき **Phase2 の `TachieItem` 区間分割は実行されない**。
 - **プロファイルを付けない場合の motion（Phase2）**: **`--tachie-motion-map`** でラベル → **VideoEffects オブジェクトの配列**を渡し、発話アンカーに合わせて `TachieItem` を分割する。サンプル: [samples/tachie_motion_map.example.json](samples/tachie_motion_map.example.json)。
 - **`validate-ir`**: 台帳ラベル検証は **`--motion-map` と `--tachie-motion-map` のキーを併用**できる（和集合で `MOTION_MAP_UNKNOWN_LABEL` を抑止）。
+- **重要な境界**: 上記の `motion` は **speaker_tachie（ゆっくり立ち絵）専用**。配達員などの外部素材演者はここに含めない。茶番劇演者の主経路は [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md) の **GroupItem テンプレ運用**。
+
+## 茶番劇テンプレ運用（2026-04-17 固定）
+
+### 開発段階
+
+- 1 つの **canonical skit_group template** を YMM4 上で作る
+- canonical から `surprise_jump` / `panic_shake` 等の **小演出テンプレート**を派生させる
+- assistant 側は template registry 台帳・命名・fallback・manual check を整備する
+- 成果物は **YMM4 native template 資産**であり、JSON の direct write route を増やすことではない
+
+### 実制作
+
+- IR 要求はまず **template 解決**する
+- exact template がなければ fallback を返す
+- 汎用テンプレで吸収できない場合は **未自動化理由 + 手動確認ポイント**を注記する
+- `motion` の direct write 拡張を先に増やすのではなく、既存 template 資産の再利用を優先する
+
+### 役割分担
+
+- `speaker_tachie`: 既存 `face` / `idle_face` / `slot` / `motion`
+- `skit_group`: 外部素材演者の GroupItem テンプレ
+- `overlay_render`: YMM4 書き出し PNG を使う補助経路
+
+### これにより止めること
+
+- 配達員の body/head を `motion` の主対象として設計すること
+- GroupItem / ImageItem / TachieItem を 1 つの feature として混ぜること
+- route contract やテストが通っただけで production 演出まで成立したと扱うこと
 
 ## timeline edit サブクエストの境界 (2026-04-06 固定)
 - IR 語彙と `patch-ymmp` 実装の対応（何が自動で書き込まれるか）の正本: [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md)

@@ -1420,7 +1420,7 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
     print(f"BG removed: {result.bg_changes}, BG added: {result.bg_additions}")
     print(f"BG anim writes: {result.bg_anim_changes}")
     print(f"Transition VoiceItem writes: {result.transition_changes}")
-    print(f"TachieItem VideoEffects writes: {result.motion_changes}")
+    print(f"VideoEffects writes (motion): {result.motion_changes}")
     print(f"GroupItem geometry writes: {result.group_motion_changes}")
     if result.warnings:
         for w in result.warnings:
@@ -2217,7 +2217,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         print(f"BG removed: {result.bg_changes}, BG added: {result.bg_additions}")
         print(f"BG anim writes: {result.bg_anim_changes}")
         print(f"Transition VoiceItem writes: {result.transition_changes}")
-        print(f"TachieItem VideoEffects writes: {result.motion_changes}")
+        print(f"VideoEffects writes (motion): {result.motion_changes}")
     print(f"GroupItem geometry writes: {result.group_motion_changes}")
     for warning in result.warnings:
         print(f"  WARNING: {warning}", file=sys.stderr)

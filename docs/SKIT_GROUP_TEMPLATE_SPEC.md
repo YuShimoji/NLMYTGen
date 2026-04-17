@@ -1,0 +1,220 @@
+# Skit Group Template Spec
+
+> **目的**: 配達員・消防員・アイドル等の **外部素材ベースの茶番劇演者**を、`TachieItem` の派生としてではなく **GroupItem テンプレート資産**として扱う。  
+> **ねらい**: 開発段階では 1 つの canonical template から小演出を量産し、実制作では既存テンプレートの組み合わせで全体演出を組み立てる。IR から直接任意エフェクトを書き込むことを主軸にしない。
+
+---
+
+## 1. この仕様が直す混同
+
+現行 repo では次の 3 つが混ざりやすい。
+
+1. **speaker_tachie**
+   - 解説役のゆっくり立ち絵 (`TachieItem`)
+   - `face` / `idle_face` / `slot` / `motion` の主対象
+
+2. **skit_group**
+   - 配達員などの外部人物素材 + ゆっくり頭 + 装飾を束ねた **GroupItem テンプレート**
+   - 本仕様の主対象
+
+3. **overlay_render**
+   - YMM4 で書き出した透過 PNG を `overlay_map` で使う補助経路
+   - 背景キャラや一枚絵補助に使うが、主軸ではない
+
+**固定ルール**:
+
+- `motion` は **speaker_tachie の motion** として扱う
+- 配達員等の茶番劇演者は **skit_group template** で扱う
+- `group_motion` は **skit_group の幾何補助**であり、感情モーションの主表現ではない
+
+---
+
+## 2. 現行コードの事実
+
+### 2.1 できること
+
+- `motion` Phase2 / G-17:
+  - `TachieItem.VideoEffects`
+- `bg_anim`:
+  - Layer 0 背景の `X/Y/Zoom` または `VideoEffects`
+- `group_motion`:
+  - `GroupItem.X/Y/Zoom`
+
+### 2.2 できないこと
+
+- 任意 Layer の ImageItem に対する汎用 `VideoEffects` 自動適用
+- 茶番劇演者の body/head を直接対象にした `motion` 解決
+- 1 つの GroupItem に時系列で複数の感情モーションを安全に積むこと
+
+したがって、**茶番劇演者の主経路は「テンプレート解決」**であり、任意 item への direct write 拡張ではない。
+
+---
+
+## 3. 開発段階の主経路
+
+### 3.1 目的
+
+- 1 つの canonical template を起点に、再利用可能な小演出テンプレートを量産する
+- 量産物は「JSON の数値台帳」ではなく **YMM4 native template 資産**として蓄積する
+
+### 3.2 canonical template
+
+最初に 1 つだけ、以下を満たす GroupItem テンプレートを作る。
+
+- `GroupItem` に安定した `Remark` を付ける
+- body / head / 装飾の構成を固定する
+- 基準点は中央
+- 配下アイテムは相対配置
+- 長さ・初期座標・初期倍率を基準化する
+
+### 3.3 小演出の量産
+
+canonical template から次のような小演出を派生テンプレートとして作る。
+
+- `surprise_jump`
+- `panic_shake`
+- `deny_shake`
+- `happy_sway`
+- `sad_droop`
+- `thinking_zoom`
+- `intro_punch`
+- `reset_center`
+
+ここでの自動化対象は **テンプレート派生の叩き台作成**であり、任意案件へ直接焼くことではない。
+
+### 3.4 開発段階の成果物
+
+- canonical template 1 件
+- 派生テンプレート 6〜8 件
+- template registry 台帳
+- 「自動生成で触れた箇所 / 手動確認が必要な箇所」の注記
+
+---
+
+## 4. 実制作の主経路
+
+### 4.1 方針
+
+本番では IR の要求を **まず template 解決**する。
+
+1. exact template がある
+   - そのまま採用
+2. exact template がないが近い演出がある
+   - fallback template を採用
+   - 差分を注記
+3. 汎用テンプレートで吸収できない
+   - 未自動化として注記
+   - 手動確認ポイントを明記
+
+### 4.2 自動生成側が返すべきもの
+
+- 採用 template 名
+- fallback の有無
+- 未自動化理由
+- 手動確認ポイント
+
+例:
+
+- `requested: panic_shake`
+- `resolved: delivery_panic_shake_v1`
+- `fallback: none`
+- `manual_checks: head/body sync, screen overlap`
+
+または
+
+- `requested: collapse_then_runaway`
+- `resolved: delivery_surprise_jump_v1`
+- `fallback_reason: multi-stage acting is not covered by current generic template set`
+- `manual_checks: second beat transition, exit timing`
+
+### 4.3 本番で主軸にしないもの
+
+- `motion` の direct write 拡張
+- ImageItem への任意 `VideoEffects` 直書きの量産依存
+- テスト追加だけで production value path を説明したつもりになること
+
+---
+
+## 5. IR との関係
+
+本仕様は **「IR から何でも直接書く」路線ではない**。
+
+IR 側の責務は次の順にする。
+
+1. まず高水準の演出意図を出す
+2. その意図を template registry に解決する
+3. 解決不能なら fallback を返す
+4. fallback も無理なら manual note を返す
+
+このため、将来 IR を拡張する場合も **raw effect の列挙ではなく template 解決を先に置く**。
+
+---
+
+## 6. template registry の最小形
+
+`samples/registry_template/skit_group_registry.template.json` を最小雛形とする。
+
+記録するもの:
+
+- canonical group 名
+- GroupItem の `Remark`
+- template 名
+- 目的 (`intent`)
+- fallback
+- manual check
+- 適用対象 (`speaker_tachie` / `skit_group` / `overlay_render`)
+
+この registry は **現時点では運用台帳**であり、CLI の必須入力ではない。
+先に台帳を固定し、必要になったら resolver 実装へ広げる。
+
+---
+
+## 7. 旧 G 系の位置づけ
+
+### G-20
+
+- 残す
+- 役割は **GroupItem geometry helper**
+- 茶番劇の主経路ではなく、テンプレートの微調整補助
+
+### G-21
+
+- 旧「body_map / ImageItem 挿入」案は主軸から外す
+- template-first で吸収できないときだけ再開する
+
+### G-22
+
+- dual-rendering は補助経路
+- `overlay_render` の実務補助としては有効
+- ただし skit_group の主仕様ではない
+
+### G-23
+
+- 既存の motion preset library は **speaker_tachie 専用**
+- 茶番劇演者の主経路として扱わない
+
+---
+
+## 8. 推奨対応
+
+### 8.1 直近の正規 frontier
+
+1. canonical skit_group template を 1 件固定する
+2. 小演出テンプレートを 6〜8 件量産する
+3. registry 台帳を埋める
+4. production では template 解決 + fallback note を返す
+
+### 8.2 やらないこと
+
+- `motion` の意味を広げて配達員演者まで含める
+- GroupItem / ImageItem / TachieItem を同一 feature として扱う
+- route contract や unit test の成立だけで production readiness とみなす
+
+---
+
+## 9. 成功条件
+
+- 茶番劇演者が `speaker_tachie` と明確に分離される
+- 開発段階で 1 canonical → 複数小演出の量産が回る
+- 本番で「exact / fallback / manual note」を返せる
+- 古い G 系の提案が、主軸でないのに次の実装を支配しない
