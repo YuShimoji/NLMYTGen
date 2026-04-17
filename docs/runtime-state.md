@@ -11,8 +11,12 @@
 - project: NLMYTGen
 - git: **既定の開発ブランチは `master`**（2026-04-09: PR [#1](https://github.com/YuShimoji/NLMYTGen/pull/1) で `feat/phase2-motion-segmentation` をマージ済み。新規作業は `master` からブランチを切る）
 - lane: **コア開発幹**（回帰・ドキュメント整合・承認済みバグ修正）。**主軸は本開発** — エージェント作業は未承認 FEATURE を増やさず上記に集中。オペレータ並行: Phase 1 Block-A (通過済、メンテ層の継続観測) / 主軸 (演出配置自動化の実戦投入) は runbook どおり。**レーン A（Phase 1）の repo 準備はオペレータ側でクローズ**（[OPERATOR_LANE_A_ENV.md](verification/OPERATOR_LANE_A_ENV.md)、[LANE_A_PREP_CHECKLIST.md](verification/LANE_A_PREP_CHECKLIST.md)）。**レーン D（H-01 brief）オペレータ完了・当面クローズ**（[H01-lane-d-prep-2026-04-09.md](verification/H01-lane-d-prep-2026-04-09.md) §6、2026-04-09）
-- slice: **G-24 茶番劇 Group テンプレ生成・解決運用の仕様同期**。G-15〜G-18 は done のまま、G-20 は geometry helper、G-23 は `speaker_tachie` 専用 library としてスコープを締め直した。正本 [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md)。
-- next_action: **G-24 を production 主軸へ移す**。assistant 側は仕様・台帳・旧 G 系の位置づけを同期済み。**次の実作業**は (a) haitatsuin 配達員の **canonical skit_group template** を 1 件固定、(b) そこから小演出テンプレートを 6〜8 件作成、(c) `samples/registry_template/skit_group_registry.template.json` を埋め、(d) 実案件では IR 要求を **exact / fallback / manual note** で解決し、P02 に 1 行追記する。補助経路としての PNG 書き出しは G-22 hold の範囲で必要時のみ使う。
+- slice: **G-24 茶番劇 Group テンプレ生成 — user 作業待ち**。G-23 motion_target ルーティング実装完了 (コミット `1b45ff2`)。G-24 仕様・3 層分離・テスト 358 件全 pass。assistant 側のコード・ドキュメント・テスト作業は完了し、次は user の YMM4 作業待ち。
+- next_action: **user 作業 3 件が先行**。assistant は結果報告を受けて再開する。
+  - **(a)** `_tmp/b2_haitatsuin_motion_applied_v2.ymmp` を YMM4 で開き、Layer 10 の配達員 ImageItem に VideoEffects が視覚的に機能するか確認
+  - **(b)** haitatsuin 配達員の **canonical skit_group template** を YMM4 上で 1 件作成 (Remark 固定・中央基準・相対配置)
+  - **(c)** canonical から小演出テンプレートを 6-8 件派生 (surprise_jump / panic_shake / deny_shake / happy_sway 等)
+  - **user 完了後の assistant 作業**: `skit_group_registry.template.json` を実テンプレートで埋める → 実案件で IR 要求を template 解決 → P02 に証跡追記。補助経路としての `motion_target: "layer:N"` は template だけでは吸収できない案件で使用。PNG 書き出しは G-22 hold の範囲で必要時のみ。
 - parallel_replan_2026_04: **視覚最低限 + 改行／YMM4 ギャップ**の到達定義・チェックリスト・計測テンプレは [VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md](verification/VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md)。`next_action` の主軸とは別軸の **並列オプション**。オペレータ時間の並列で、同文書の **トラック A（演出 IR 実戦 = 主軸の実務サブセット）** / **トラック B（改行ギャップ記録 = メンテ層 B-17 観測）** を配分する。`project-context.md` が IDE プレビューで空白になる場合は **生 Markdown で開く**（正本の針は本ファイルのまま）。エージェント依頼の **コピペ全文 Prompt・検収・親チャット返却テンプレ**は [CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md](verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md)（ファイル10）に集約。
 - recommended_frontier_order: **G-24 茶番劇 Group template-first 運用** → 演出配置自動化の実戦投入 (P02) → 台本品質の継続観測 (メンテ) → 補助経路 (G-22 / PNG overlay) の必要最小限運用
   - **再開ショートカット（推奨対応）**: G-20 スライス1-2 完了（group_target バリデーション + `mode: relative`）は前提として維持。ただし主軸は `group_motion` の拡張ではなく、**canonical skit_group template → 派生 template 群 → production での template 解決**。
