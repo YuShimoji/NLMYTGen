@@ -1043,7 +1043,7 @@ def _apply_motion_to_tachie_items(
 
 
 def _parse_motion_target_layer(motion_target: object) -> int | None:
-    """motion_target 値からレイヤー番号を抽出する.
+    """motion_target 単一値からレイヤー番号を抽出する.
 
     受理する形式:
     - "layer:10"  (文字列)
@@ -1065,6 +1065,30 @@ def _parse_motion_target_layer(motion_target: object) -> int | None:
             except ValueError:
                 return None
     return None
+
+
+def _parse_motion_target_layers(motion_target: object) -> list[int] | None:
+    """motion_target からレイヤー番号のリストを抽出する.
+
+    受理する形式:
+    - 単一: "layer:10" / {"layer": 10}
+    - 配列: ["layer:10", "layer:11"] / [{"layer": 10}, {"layer": 11}]
+
+    いずれの要素も既存 _parse_motion_target_layer で解析する。
+    不正要素を 1 つでも含む配列は None を返す (全体を reject)。
+    """
+    if isinstance(motion_target, list):
+        if not motion_target:
+            return None
+        layers: list[int] = []
+        for elem in motion_target:
+            layer = _parse_motion_target_layer(elem)
+            if layer is None:
+                return None
+            layers.append(layer)
+        return layers
+    single = _parse_motion_target_layer(motion_target)
+    return [single] if single is not None else None
 
 
 def _apply_motion_to_layer_items(
@@ -1093,13 +1117,13 @@ def _apply_motion_to_layer_items(
         mt = ir_entry.get("motion_target")
         if mt is None or mt == "speaker":
             continue
-        layer = _parse_motion_target_layer(mt)
-        if layer is None:
+        layers = _parse_motion_target_layers(mt)
+        if layers is None:
             result.warnings.append(
                 "MOTION_TARGET_INVALID: "
                 f"utterance index={ir_entry.get('index', '?')}"
                 f" has unrecognized motion_target '{mt}'"
-                " (expected 'layer:N' or {{\"layer\": N}})"
+                " (expected 'layer:N', {\"layer\": N}, or a list of them)"
             )
             continue
         motion = _normalize_motion_label(ir_entry.get("motion"))
@@ -1116,14 +1140,15 @@ def _apply_motion_to_layer_items(
                     "MOTION_NO_VOICE_ANCHOR: "
                     f"motion '{motion}' could not resolve timing"
                     f" for utterance index={ir_entry.get('index', '?')}"
-                    f" (motion_target layer:{layer})"
+                    f" (motion_target layers={layers})"
                 )
             continue
         start_frame, utterance_length = timing
         end_frame = start_frame + max(utterance_length, 1)
-        spans_by_layer.setdefault(layer, []).append(
-            (start_frame, end_frame, motion, ir_entry.get("index", "?"))
-        )
+        for layer in layers:
+            spans_by_layer.setdefault(layer, []).append(
+                (start_frame, end_frame, motion, ir_entry.get("index", "?"))
+            )
 
     if not spans_by_layer:
         return

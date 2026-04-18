@@ -857,3 +857,80 @@ def test_validate_ir_motion_target_dict_missing_layer():
     vr = validate_ir(ir)
     assert vr.has_errors
     assert any("MOTION_TARGET_INVALID" in e for e in vr.errors)
+
+
+# ---------------------------------------------------------------------------
+# motion_target: 複数 layer 配列対応 (body + 顔同期の短期検証ブリッジ)
+# ---------------------------------------------------------------------------
+
+def test_motion_target_array_applies_to_multiple_layers():
+    """T1 正常系: ["layer:10","layer:11"] で Layer 10 と 11 両方に VideoEffects."""
+    ymmp = {
+        "Timelines": [{
+            "ID": 0,
+            "Items": [
+                {
+                    "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+                    "CharacterName": "a", "Serif": "x",
+                    "Frame": 0, "Length": 30, "Layer": 1,
+                    "TachieFaceParameter": {
+                        "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.FaceParameter",
+                        "Eyebrow": "e.png", "Eye": "i.png", "Mouth": "m.png",
+                        "Hair": "", "Body": "", "Complexion": "",
+                    },
+                },
+                {
+                    "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+                    "Layer": 10, "Frame": 0, "Length": 60,
+                    "VideoEffects": [], "Remark": "", "FilePath": "body.png",
+                },
+                {
+                    "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+                    "Layer": 11, "Frame": 0, "Length": 60,
+                    "VideoEffects": [], "Remark": "", "FilePath": "face.png",
+                },
+            ],
+            "LayerSettings": [],
+        }],
+        "Characters": [{"Name": "a"}],
+    }
+    ir = {
+        "ir_version": "1.0", "video_id": "t",
+        "macro": {"sections": []},
+        "utterances": [
+            {"index": 1, "speaker": "a", "text": "x", "section_id": "S1",
+             "face": "n", "motion": "bounce",
+             "motion_target": ["layer:10", "layer:11"]},
+        ],
+    }
+    res = patch_ymmp(ymmp, ir, _FACE_MAP, {},
+                     tachie_motion_effects_map=_MOTION_MAP)
+    items = ymmp["Timelines"][0]["Items"]
+    layer10_effects = [i.get("VideoEffects") for i in items if i.get("Layer") == 10]
+    layer11_effects = [i.get("VideoEffects") for i in items if i.get("Layer") == 11]
+    # 両レイヤーに _BOUNCE_FX が書き込まれていること
+    assert any(fx == _BOUNCE_FX for fx in layer10_effects), \
+        f"Layer 10 missing VideoEffects: {layer10_effects}"
+    assert any(fx == _BOUNCE_FX for fx in layer11_effects), \
+        f"Layer 11 missing VideoEffects: {layer11_effects}"
+    # 書き込みは 1 utterance × 2 layers で 2 件以上
+    assert res.motion_changes >= 2
+
+
+def test_validate_ir_motion_target_array_rejects_invalid_element():
+    """T2 異常系: 不正要素を含む配列 validator が reject."""
+    ir = {
+        "ir_version": "1.0", "video_id": "t",
+        "macro": {"sections": []},
+        "utterances": [
+            {"index": 1, "speaker": "a", "text": "x", "section_id": "S1",
+             "face": "n",
+             "motion_target": ["layer:10", "not-layer", None]},
+        ],
+    }
+    vr = validate_ir(ir)
+    assert vr.has_errors
+    # 不正 2 要素分の MOTION_TARGET_INVALID が出ていること
+    invalid_errors = [e for e in vr.errors if "MOTION_TARGET_INVALID" in e]
+    assert len(invalid_errors) >= 2, \
+        f"Expected >=2 MOTION_TARGET_INVALID errors, got {invalid_errors}"

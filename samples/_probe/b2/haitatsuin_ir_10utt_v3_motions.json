@@ -1,7 +1,10 @@
 {
   "macro": {
     "sections": [
-      { "section_id": "S1", "default_bg": "studio_blue" }
+      {
+        "section_id": "S1",
+        "default_bg": "studio_blue"
+      }
     ]
   },
   "utterances": [
@@ -12,7 +15,10 @@
       "section_id": "S1",
       "face": "thinking",
       "motion": "nod",
-      "motion_target": "layer:10"
+      "motion_target": [
+        "layer:10",
+        "layer:11"
+      ]
     },
     {
       "index": 2,
@@ -29,7 +35,10 @@
       "section_id": "S1",
       "face": "surprised",
       "motion": "surprise_jump",
-      "motion_target": "layer:10"
+      "motion_target": [
+        "layer:10",
+        "layer:11"
+      ]
     },
     {
       "index": 4,
@@ -46,7 +55,10 @@
       "section_id": "S1",
       "face": "serious",
       "motion": "panic_shake",
-      "motion_target": "layer:10"
+      "motion_target": [
+        "layer:10",
+        "layer:11"
+      ]
     },
     {
       "index": 6,
@@ -71,7 +83,10 @@
       "section_id": "S1",
       "face": "sad",
       "motion": "deny_shake",
-      "motion_target": "layer:10"
+      "motion_target": [
+        "layer:10",
+        "layer:11"
+      ]
     },
     {
       "index": 9,

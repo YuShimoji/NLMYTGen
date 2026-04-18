@@ -242,47 +242,64 @@ def validate_ir(
                 )
 
     # --- motion_target validation ---
-    for entry in resolved:
-        mt = entry.get("motion_target")
-        if mt is None or mt == "" or mt == "speaker":
-            continue
-        if isinstance(mt, str):
-            if not mt.startswith("layer:"):
+    def _validate_motion_target_single(mt_value: object, idx: object, elem_pos: int | None = None) -> None:
+        """単一 motion_target 値 (str or dict) を検証してエラーを result に積む."""
+        elem_tag = "" if elem_pos is None else f" element[{elem_pos}]"
+        if isinstance(mt_value, str):
+            if not mt_value.startswith("layer:"):
                 result.errors.append(
                     "MOTION_TARGET_INVALID: "
-                    f"utterance index={entry.get('index', '?')}"
-                    f" has unrecognized motion_target '{mt}'"
-                    " (expected 'speaker', 'layer:N', or {\"layer\": N})"
+                    f"utterance index={idx}{elem_tag}"
+                    f" has unrecognized motion_target '{mt_value}'"
+                    " (expected 'speaker', 'layer:N', {\"layer\": N}, or a list of them)"
                 )
             else:
                 try:
-                    int(mt[6:])
+                    int(mt_value[6:])
                 except ValueError:
                     result.errors.append(
                         "MOTION_TARGET_INVALID: "
-                        f"utterance index={entry.get('index', '?')}"
-                        f" motion_target layer number is not integer: '{mt}'"
+                        f"utterance index={idx}{elem_tag}"
+                        f" motion_target layer number is not integer: '{mt_value}'"
                     )
-        elif isinstance(mt, dict):
-            layer = mt.get("layer")
+        elif isinstance(mt_value, dict):
+            layer = mt_value.get("layer")
             if layer is None:
                 result.errors.append(
                     "MOTION_TARGET_INVALID: "
-                    f"utterance index={entry.get('index', '?')}"
+                    f"utterance index={idx}{elem_tag}"
                     " motion_target dict must have 'layer' key"
                 )
             elif not isinstance(layer, (int, str)):
                 result.errors.append(
                     "MOTION_TARGET_INVALID: "
-                    f"utterance index={entry.get('index', '?')}"
+                    f"utterance index={idx}{elem_tag}"
                     f" motion_target.layer must be int or string, got {type(layer).__name__}"
                 )
         else:
             result.errors.append(
                 "MOTION_TARGET_INVALID_TYPE: "
-                f"utterance index={entry.get('index', '?')}"
-                " motion_target must be string or dict"
+                f"utterance index={idx}{elem_tag}"
+                f" motion_target must be string, dict, or list, got {type(mt_value).__name__}"
             )
+
+    for entry in resolved:
+        mt = entry.get("motion_target")
+        if mt is None or mt == "" or mt == "speaker":
+            continue
+        idx = entry.get("index", "?")
+        if isinstance(mt, list):
+            if not mt:
+                result.errors.append(
+                    "MOTION_TARGET_INVALID: "
+                    f"utterance index={idx}"
+                    " motion_target list must not be empty"
+                )
+                continue
+            for pos, elem in enumerate(mt):
+                _validate_motion_target_single(elem, idx, elem_pos=pos)
+        else:
+            _validate_motion_target_single(mt, idx)
 
     for entry in resolved:
         gm = entry.get("group_motion")
