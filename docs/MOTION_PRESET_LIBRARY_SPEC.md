@@ -215,17 +215,11 @@ uv run python -m src.cli.main apply-production \
 
 ---
 
-## 適用対象 (2026-04-19 更新)
+## 適用対象
 
-本 library は **TachieItem / ImageItem / GroupItem 横断で利用可**。従来「speaker_tachie 専用」と位置付けていたが、skit_group の body/顔 ImageItem に motion_target 経由で直書きする需要が確認されたため、**汎用エフェクト台帳**として扱う。
-
-- **TachieItem (解説役ゆっくり立ち絵)**: `motion` フィールドから `_apply_motion_to_tachie_items()` 経由で適用
-- **ImageItem/GroupItem (skit_group の body/顔/装飾)**: `motion_target: "layer:N"` 指定で `_apply_motion_to_layer_items()` 経由で適用
-- **フラット + アニメ両方埋まった v2 以降**: どちらの経路でも可視的な動きが出る
-
-「speaker_tachie 専用」という制限は削除。ただし motion ラベルの意味 (驚き・喜び等) は立ち絵前提で設計されているため、skit_group で使う場合は「配達員が驚く」「配達員がうなずく」等、**演者に読み替え可能な label のみ採用**する運用。
+適用対象は `motion` (TachieItem) と `motion_target` (ImageItem/GroupItem) の両経路。茶番劇固有の所作は **canonical template 主経路** ([SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md)) に委ね、library は補助として用いる。
 
 ## 変更履歴
 
 - 2026-04-17: 初版。EffectsSamples 111種から感情ラベル23種 + 原子17種を定義。Phase 1 は JSON 手動生成、Phase 2 で CLI 自動生成
-- 2026-04-19: Phase 2 library v2 に更新。flat + 動 param 両方埋め、motion_target 経路で ImageItem/GroupItem にも可視的動作を出す。speaker_tachie 専用制限を解除し TachieItem/ImageItem/GroupItem 横断の汎用台帳に位置づけ直す。panic_shake から RandomZoom を除去 (user feedback: 「体のみ伸び縮み」の原因)。根拠: user 指示 2026-04-19 + b2_haitatsuin_motion_regen_2026-04-19 proof
+- 2026-04-19: Phase 2 library v2 に更新。flat + animation params 両方埋め、motion_target 経路で ImageItem/GroupItem にも可視的動作を出せる前提を整える。panic_shake から RandomZoom を除去。根拠: user 指示 2026-04-19 + `b2_haitatsuin_motion_regen_2026-04-19` proof

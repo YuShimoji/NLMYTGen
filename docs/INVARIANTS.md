@@ -36,7 +36,7 @@
 - **`TachieItem` は解説役のゆっくり立ち絵専用。** 外部茶番劇演者 (配達員・消防員・アイドル等) の GroupItem 配下には `TachieItem` を含めない。配下構成は **body `ImageItem` + 顔 `ImageItem` + (任意で装飾 `ImageItem`)** の重ね合わせに固定する。理由: 連番アニメ `TachieItem` の新規セットアップ (AnimationTachie プラグイン設定・パーツ分解・表情マッピング) は運用コストが過大で、既に非採用決定済。
 - **解説役のゆっくり立ち絵は新規セットアップしない。** 既存の「ゆっくり霊夢」「ゆっくり魔理沙」等の `TachieItem` を流用する。新キャラの連番アニメ立ち絵を増設しない。
 - **外部演者の顔感情差し替えは `ImageItem.Source` パス置換で行う。** `TachieFaceParameter` / 連番アニメパーツ分解は外部演者には適用しない。
-- **`tachie_motion_map_library.json` は汎用エフェクト台帳** (2026-04-19 以降、Phase 2 v2)。`TachieItem` / `ImageItem` / `GroupItem` 横断で `motion` と `motion_target` 両経路から適用できる。従来「speaker_tachie 専用」と記述していたが、skit_group 演者でも利用可に訂正。ただし library は「演者に読み替え可能な汎用感情表現」の補助台帳であり、茶番劇固有の所作は canonical template に蓄積する主経路は変わらない。根拠: user 指示 2026-04-19 + `b2_haitatsuin_motion_regen_2026-04-19` proof
+- **`skit_group` の主経路は canonical template である。** library (tachie_motion_map) / motion_target 直書き / group_motion は補助経路であり、茶番劇固有の所作の主体にはしない。根拠: SKIT_GROUP_TEMPLATE_SPEC §3.1-3.3
 - IR は逐次属性の全指定ではなく、scene_preset による高水準バンドル参照 + optional override を基本とする。LLM にはプリセット一覧を渡し、個別フィールドの組み立てを強いない。
 - タイトル / サムネイル / 台本の約束 (promise) は central brief で統制し、台本単体が動画タイトルを越権決定しない。最終 owner は人間であり、assistant は判断材料と候補整理を支援する。
 - visual density score / evidence richness score は creative final judgement の代替ではなく、gate / diagnostic として使う。スコア最大化自体を目的化しない。

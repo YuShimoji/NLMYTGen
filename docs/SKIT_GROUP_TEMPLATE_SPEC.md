@@ -207,13 +207,10 @@ IR 側の責務は次の順にする。
 - `overlay_render` の実務補助としては有効
 - ただし skit_group の主仕様ではない
 
-### G-23 (2026-04-19 改訂)
+### G-23
 
-- motion preset library は **TachieItem / ImageItem / GroupItem 横断の汎用台帳** (Phase 2 v2 以降)
-- skit_group 演者でも `motion_target: "layer:N"` 経路で使える。ただし以下は**主経路ではない**:
-  - library 単体だけで茶番劇の固有演出を完結させる発想 — canonical template 作成を省略しない
-  - IR から任意エフェクトを直書きで量産する発想 — template 解決を先に置く
-- library の意義: 「演者に読み替え可能な汎用感情表現」(驚き / うなずき / 否定 等) を軽量に当てる補助。茶番劇固有の所作 (特定の動きのパターン化) は canonical template に蓄積する
+- motion preset library は `motion_target` 経由で ImageItem/GroupItem にも補助的に適用可
+- ただし茶番劇の**主経路は canonical template**。library は主経路にしない
 
 ---
 

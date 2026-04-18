@@ -2,7 +2,7 @@
 
 **位置づけ**: `tachie_motion_map_library.json` を v1 (flat only) → v2 (flat + animation params) に改訂し、motion_target 経路で ImageItem/GroupItem に**可視的な動き**が出ることを検証。
 
-**ステータス**: **PASS** (Face changes 50 / VideoEffects writes motion 6 / fatal 0、library v2 のパラメータで Layer 10 に書き込み完了)。
+**ステータス**: **技術 PASS / UX 未達** (機械的書き込みは成功したが、Layer 10 body only の制約により演者全体の所作 proof には至らず。user 視覚確認結果: 「前のファイルの値を少し弱くしただけに見える」「body だけが動いて顔は乗ったまま」)。
 
 ## run_id
 
@@ -97,11 +97,11 @@ uv run python -m src.cli.main apply-production \
 - **panic_shake (index 5)**: 小刻みな全方向震えが出ているか。**伸び縮みが消えているか**
 - **deny_shake (index 8)**: 水平首振りが出ているか
 
-## 要 user 確認事項 (library v2 設計で曖昧だった箇所)
+## UX 未達の原因と次ブロックの対処
 
-1. **`thinking_zoom` / `focus_zoom`**: ZoomEffect を「脈動 (100→拡大→戻る)」で実装した。user 意図が「静止したまま拡大」であれば別設計が必要
-2. **`sad_droop`**: RepeatMove で「下がって戻る」動作。user 意図が「沈んだまま戻らない」であれば別 Effect (単発 Move or Opacity alone) に置換
-3. **全体の強度スケール**: 現状 `normal` 強度で設定。実用で「強すぎ」「弱すぎ」があれば `_light` / `_heavy` バリエーション追加を検討
+**根本制約**: `motion_target: "layer:10"` は body ImageItem (Layer 10) のみを動かし、顔 ImageItem (Layer 11) は対象外。library v2 のパラメータをいくら調整しても「演者全体の所作」にはならない。
+
+**次ブロックでの対処**: `motion_target` を複数 layer 配列に拡張 (`["layer:10","layer:11"]`) し、body + 顔を同期して動かす短期検証ブリッジを追加する。詳細: [B2-haitatsuin-motion-layer-array-2026-04-19.md](B2-haitatsuin-motion-layer-array-2026-04-19.md) (次ブロック生成予定)
 
 ## 関連
 
