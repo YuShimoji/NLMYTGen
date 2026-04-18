@@ -126,17 +126,19 @@ Layer  0: VoiceItem x365 -- 音声・字幕
 
 G-24 で確立された分離。`motion_target` はあくまで**補助経路**であり、茶番劇演者の主経路はテンプレート解決。
 
-| 層 | 対象 | 主経路 | 補助 |
-|----|------|--------|------|
-| **speaker_tachie** | 解説役のゆっくり立ち絵 (TachieItem) | `motion` (G-16/G-17) + `face` / `idle_face` / `slot` | -- |
-| **skit_group** | 配達員等の外部人物素材 + 装飾 (GroupItem テンプレート) | **canonical template → 派生テンプレ → template 解決** (G-24) | `motion_target` で VideoEffects 直書き / `group_motion` で幾何補助 |
-| **overlay_render** | YMM4 書き出し透過 PNG | `overlay_map` (G-16) | G-22 hold |
+| 層 | 対象 | 配下アイテム型 | 主経路 | 補助 |
+|----|------|--------------|--------|------|
+| **speaker_tachie** | 解説役のゆっくり立ち絵 | `TachieItem` (連番アニメ + TachieFaceParameter) | `motion` (G-16/G-17) + `face` / `idle_face` / `slot` | -- |
+| **skit_group** | 配達員等の外部人物素材 + 装飾 | **`ImageItem` のみ** (body + 顔 + 任意で装飾)。`TachieItem` 不可 | **canonical template → 派生テンプレ → template 解決** (G-24) | `motion_target` で VideoEffects 直書き / `group_motion` で幾何補助 |
+| **overlay_render** | YMM4 書き出し透過 PNG | `ImageItem` | `overlay_map` (G-16) | G-22 hold |
 
 ### 固定ルール (INVARIANTS.md に追記済み)
 
 - `motion` は **speaker_tachie の motion** として扱う (省略時)
 - 配達員等の茶番劇演者は **skit_group template** で扱う
 - `group_motion` は **skit_group の幾何補助** であり、感情モーションの主表現ではない
+- **`skit_group` 配下は `ImageItem` のみ** (body + 顔 + 任意で装飾)。`TachieItem` は解説役専用で、外部演者には使わない
+- 顔の感情差し替えは `ImageItem.Source` パス置換で行う (`TachieFaceParameter` / 連番アニメパーツ分解は外部演者に適用しない)
 
 ---
 

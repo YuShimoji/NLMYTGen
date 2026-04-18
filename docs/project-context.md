@@ -114,7 +114,7 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 **実制作の 3大 bottleneck (ユーザー特定):**
 
 1. **台本品質保証** — 台本をどこまで NotebookLM に近いままにするか、事前にゆっくり向けへ整えるかは**案件ごとに可変**であり、repo が本番運用を二分して固定するものではない（現状の作業が原文寄りでも、本番でも常にそうとは限らない）。機械側で共通するのは、`validate` / `build-csv` による**YMM4 用 CSV への正規化**（話者ラベル・分割・表示幅等）。任意で `diagnose-script`（B-18）や C-09（[S1-script-refinement-prompt.md](S1-script-refinement-prompt.md)）による **constrained rewrite** を足すかは都度判断。2026-04-06 フィードバックの「原文のまま使い切れない」は**典型痛みの列挙**であり全案件への断定ではない。手順の書き分けは [P01-phase1-operator-e2e-proof.md](verification/P01-phase1-operator-e2e-proof.md)。曖昧さは演出 IR に連鎖しうる。
-2. **演出配置の自動化** — 最重量工程。IR を生成するところまでは来ているが、IRの通りにYMM4上で素材を配置する作業が全て手動。素材調達、レイアウト、タイミング制御、アニメーション設定を含む。現状の patch-ymmp は face/bg/slot/overlay のみで演出全体の自動配置には程遠い
+2. **演出配置の自動化** — 最重量工程。IR を生成するところまでは来ているが、**「全て手動」ではない**。現行の patch-ymmp は face/bg/slot/overlay に加え、`motion_target` による **ImageItem/GroupItem への VideoEffects 適用**、`group_motion` による **既存 GroupItem の X/Y/Zoom 更新**まで機械適用できる。したがって、**既存 sample / GroupItem / layer / target labeling が揃う案件では assistant 側が rough placement と effect 適用を先行し、user は YMM4 上で意図確認とテンプレ資産化に集中できる**。未解消なのは、茶番劇演者の主経路である `skit_group` template registry が **CLI 未消費**であり、canonical template authoring と派生テンプレ蓄積が YMM4 側に残っている点。素材調達、レイアウト判断、タイミング制御、アニメーション設定のうち「主経路の資産 authoring」と「最終見え方判断」は依然として bottleneck である
 3. **視覚効果** — サムネイルを1枚も完成させていない。茶番劇風アニメ/図解アニメがゼロ。画像表示のみ
 
 ### 今後の方向性

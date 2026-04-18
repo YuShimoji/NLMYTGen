@@ -32,7 +32,10 @@
 - 演出パイプラインは Writer 工程 (LLM による IR 生成) と Editor 工程 (テンプレート解決 + ymmp 適用) に分離する。proof の際限なき拡張を防ぐため、Writer の品質はフィードバック駆動で scope を区切り、Editor の設計品質で吸収する。
 - 演出パイプラインは三層構造: 第1層 Writer IR (高水準の意味ラベル) / 第2層 Template Registry (素材・プリセット辞書 + YMM4 ネイティブテンプレート名参照) / 第3層 YMM4 Adapter (IR + Registry → ymmp の接着層)。詳細は PRODUCTION_IR_SPEC.md セクション6 を参照。
 - YMM4 ネイティブに解決できるもの (エフェクト、アニメーション、場面テンプレート) は YMM4 のアイテムテンプレート機能に委ね、Adapter (patch-ymmp) は face/bg/slot 等の JSON キー置換レベルの差し替えに集中する。YMM4 の既存機能を再発明しない。
-- **外部素材ベースの茶番劇演者**（配達員・消防員等の body/head 合成）は、`speaker_tachie` と混同しない。`motion` は **ゆっくり立ち絵 (`TachieItem`)** の語彙として扱い、茶番劇演者は **GroupItem テンプレート資産**として扱う。正本: `SKIT_GROUP_TEMPLATE_SPEC.md`
+- **外部素材ベースの茶番劇演者**（配達員・消防員等の body/顔合成）は、`speaker_tachie` と混同しない。`motion` は **ゆっくり立ち絵 (`TachieItem`)** の語彙として扱い、茶番劇演者は **GroupItem テンプレート資産**として扱う。正本: `SKIT_GROUP_TEMPLATE_SPEC.md`
+- **`TachieItem` は解説役のゆっくり立ち絵専用。** 外部茶番劇演者 (配達員・消防員・アイドル等) の GroupItem 配下には `TachieItem` を含めない。配下構成は **body `ImageItem` + 顔 `ImageItem` + (任意で装飾 `ImageItem`)** の重ね合わせに固定する。理由: 連番アニメ `TachieItem` の新規セットアップ (AnimationTachie プラグイン設定・パーツ分解・表情マッピング) は運用コストが過大で、既に非採用決定済。
+- **解説役のゆっくり立ち絵は新規セットアップしない。** 既存の「ゆっくり霊夢」「ゆっくり魔理沙」等の `TachieItem` を流用する。新キャラの連番アニメ立ち絵を増設しない。
+- **外部演者の顔感情差し替えは `ImageItem.Source` パス置換で行う。** `TachieFaceParameter` / 連番アニメパーツ分解は外部演者には適用しない。
 - IR は逐次属性の全指定ではなく、scene_preset による高水準バンドル参照 + optional override を基本とする。LLM にはプリセット一覧を渡し、個別フィールドの組み立てを強いない。
 - タイトル / サムネイル / 台本の約束 (promise) は central brief で統制し、台本単体が動画タイトルを越権決定しない。最終 owner は人間であり、assistant は判断材料と候補整理を支援する。
 - visual density score / evidence richness score は creative final judgement の代替ではなく、gate / diagnostic として使う。スコア最大化自体を目的化しない。

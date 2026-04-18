@@ -10,11 +10,14 @@
 現行 repo では次の 3 つが混ざりやすい。
 
 1. **speaker_tachie**
-   - 解説役のゆっくり立ち絵 (`TachieItem`)
+   - 解説役のゆっくり立ち絵 (`TachieItem` / 連番アニメ + TachieFaceParameter)
    - `face` / `idle_face` / `slot` / `motion` の主対象
+   - 既存の「ゆっくり霊夢 / ゆっくり魔理沙」等を**そのまま流用**。新規立ち絵セットアップ(AnimationTachieプラグイン設定・パーツ分解・表情マッピング)は禁止
 
 2. **skit_group**
-   - 配達員などの外部人物素材 + ゆっくり頭 + 装飾を束ねた **GroupItem テンプレート**
+   - 配達員などの外部人物素材を束ねた **GroupItem テンプレート**
+   - 配下は **全て `ImageItem` の 1 枚画像重ね合わせ** (body / 顔 / 装飾)
+   - `TachieItem` は配下に**含めない**。連番アニメ / TachieFaceParameter / パーツ分解は使わない
    - 本仕様の主対象
 
 3. **overlay_render**
@@ -23,9 +26,16 @@
 
 **固定ルール**:
 
+- `TachieItem` は **解説役のゆっくり立ち絵専用**。外部茶番劇演者には使わない
+- 外部茶番劇演者の body / 顔 / 装飾は **すべて `ImageItem` (1 枚画像)** で構成する
+- 顔の感情差し替えは「顔 `ImageItem` の Source パスを差し替える」運用 (TachieFaceParameter は使わない)
 - `motion` は **speaker_tachie の motion** として扱う
 - 配達員等の茶番劇演者は **skit_group template** で扱う
 - `group_motion` は **skit_group の幾何補助**であり、感情モーションの主表現ではない
+
+**背景**:
+
+立ち絵 (連番アニメ TachieItem) を新規セットアップするコストが過大なため、外部演者では採用しない決定が既に固定されている。配達員・消防員等の茶番劇演者は「body + 顔」の 2 枚画像重ね合わせで十分であり、感情表現は顔画像の差し替えで吸収する。
 
 ---
 
@@ -62,10 +72,19 @@
 最初に 1 つだけ、以下を満たす GroupItem テンプレートを作る。
 
 - `GroupItem` に安定した `Remark` を付ける
-- body / head / 装飾の構成を固定する
+- 配下構成は **body `ImageItem` + 顔 `ImageItem` + (任意で装飾 `ImageItem`)** の重ね合わせ
+- `TachieItem` は配下に含めない (解説役専用、§1 固定ルール)
 - 基準点は中央
 - 配下アイテムは相対配置
 - 長さ・初期座標・初期倍率を基準化する
+
+**具体構成例 (haitatsuin)**:
+
+| 配下アイテム | 型 | 実体 | 備考 |
+|---|---|---|---|
+| body | `ImageItem` | 配達員イラスト (例: Layer 10 相当) | 1 枚画像。複数ポーズが必要なら別テンプレで分岐 |
+| 顔 | `ImageItem` | `reimu_easy.png` 等の 1 枚顔画像 | 感情差し替えは Source パス置換で対応 |
+| 装飾 | `ImageItem` | 荷物 / 矢印 / エフェクト素材 | 省略可。案件ごとに足す |
 
 ### 3.3 小演出の量産
 
@@ -208,6 +227,9 @@ IR 側の責務は次の順にする。
 
 - `motion` の意味を広げて配達員演者まで含める
 - GroupItem / ImageItem / TachieItem を同一 feature として扱う
+- **外部茶番劇演者の配下に `TachieItem` (連番アニメ / TachieFaceParameter) を入れる**
+- 外部演者のために新規立ち絵セットアップ (AnimationTachie プラグイン設定 / パーツ分解) を行う
+- 顔の感情差し替えを `TachieFaceParameter` で実装する (ImageItem の Source パス差し替えで吸収)
 - route contract や unit test の成立だけで production readiness とみなす
 
 ---

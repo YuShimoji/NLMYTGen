@@ -101,6 +101,14 @@
 - assistant 側は template registry 台帳・命名・fallback・manual check を整備する
 - 成果物は **YMM4 native template 資産**であり、JSON の direct write route を増やすことではない
 
+### skit_group 配下アイテム構成 (構造的制約)
+
+- **配下は `ImageItem` のみ**: body `ImageItem` (1 枚画像) + 顔 `ImageItem` (1 枚画像) + (任意で装飾 `ImageItem`)
+- **`TachieItem` は配下に含めない**。`TachieItem` (連番アニメ + TachieFaceParameter) は解説役のゆっくり立ち絵専用
+- 新キャラの立ち絵セットアップ (AnimationTachie プラグイン設定 / パーツ分解 / 表情マッピング) は**行わない**。運用コスト過大で非採用決定済
+- 顔の感情差し替えは **`ImageItem.Source` パス置換**で行う (例: `reimu_easy.png` → `reimu_surprised.png`)。`TachieFaceParameter` は使わない
+- 既存の解説役 (ゆっくり霊夢 / ゆっくり魔理沙 の `TachieItem`) は GroupItem の外に独立配置し、skit_group に流用しない
+
 ### 実制作
 
 - IR 要求はまず **template 解決**する

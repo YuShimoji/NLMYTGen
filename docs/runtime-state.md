@@ -11,12 +11,13 @@
 - project: NLMYTGen
 - git: **既定の開発ブランチは `master`**（2026-04-09: PR [#1](https://github.com/YuShimoji/NLMYTGen/pull/1) で `feat/phase2-motion-segmentation` をマージ済み。新規作業は `master` からブランチを切る）
 - lane: **コア開発幹**（回帰・ドキュメント整合・承認済みバグ修正）。**主軸は本開発** — エージェント作業は未承認 FEATURE を増やさず上記に集中。オペレータ並行: Phase 1 Block-A (通過済、メンテ層の継続観測) / 主軸 (演出配置自動化の実戦投入) は runbook どおり。**レーン A（Phase 1）の repo 準備はオペレータ側でクローズ**（[OPERATOR_LANE_A_ENV.md](verification/OPERATOR_LANE_A_ENV.md)、[LANE_A_PREP_CHECKLIST.md](verification/LANE_A_PREP_CHECKLIST.md)）。**レーン D（H-01 brief）オペレータ完了・当面クローズ**（[H01-lane-d-prep-2026-04-09.md](verification/H01-lane-d-prep-2026-04-09.md) §6、2026-04-09）
-- slice: **G-24 茶番劇 Group テンプレ生成 — user 作業待ち**。G-23 motion_target ルーティング実装完了 (コミット `1b45ff2`)。G-24 仕様・3 層分離・テスト 358 件全 pass。assistant 側のコード・ドキュメント・テスト作業は完了し、次は user の YMM4 作業待ち。
-- next_action: **user 作業 3 件が先行**。assistant は結果報告を受けて再開する。
-  - **(a)** `_tmp/b2_haitatsuin_motion_applied_v2.ymmp` を YMM4 で開き、Layer 10 の配達員 ImageItem に VideoEffects が視覚的に機能するか確認
-  - **(b)** haitatsuin 配達員の **canonical skit_group template** を YMM4 上で 1 件作成 (Remark 固定・中央基準・相対配置)
-  - **(c)** canonical から小演出テンプレートを 6-8 件派生 (surprise_jump / panic_shake / deny_shake / happy_sway 等)
-  - **user 完了後の assistant 作業**: `skit_group_registry.template.json` を実テンプレートで埋める → 実案件で IR 要求を template 解決 → P02 に証跡追記。補助経路としての `motion_target: "layer:N"` は template だけでは吸収できない案件で使用。PNG 書き出しは G-22 hold の範囲で必要時のみ。
+- slice: **G-24 茶番劇 Group template-first 運用 — shared 進行**。G-23 motion_target ルーティング実装完了 (コミット `1b45ff2`)。G-24 仕様・3 層分離・テスト 358 件全 pass。**user 専任なのは YMM4 上の canonical template authoring と最終見え方確認であり、assistant 側も既存 haitatsuin sample / GroupItem / layer 指定を足場に rough placement と effect 適用を継続できる**。
+- next_action: **assistant 先行 + user 先行の 2 系統で進める**。G-24 を user-only と読まない。
+  - **assistant 先行 (A)**: 既存の haitatsuin sample / `motion_target` / `group_motion` 経路を使って、rough placement・effect 適用・registry 下準備を進める。`skit_group_registry` は CLI 未消費のため、**template 解決の主経路**ではなく **既存 GroupItem / ImageItem への当たり適用**として扱う
+  - **assistant 先行 (B)**: visual check 用 ymmp がワークツリーに存在しない場合、**最新の motion-target proof ymmp を再生成してから** user に視覚確認を返す。`runtime-state` に存在しない `_tmp/...ymmp` を前提にしない
+  - **user 先行 (C)**: haitatsuin 配達員の **canonical skit_group template** を YMM4 上で 1 件固定する (Remark 固定・中央基準・相対配置)。**配下は `ImageItem` のみ**: body `ImageItem` (配達員イラスト 1 枚画像) + 顔 `ImageItem` (`reimu_easy.png` 等の 1 枚顔画像) + (任意で装飾 `ImageItem`)。`TachieItem` は配下に含めない (解説役専用)。顔の感情差し替えは `ImageItem.Source` パス置換で吸収
+  - **user 先行 (D)**: canonical から小演出テンプレートを 6-8 件派生する (surprise_jump / panic_shake / deny_shake / happy_sway 等)。全て `ImageItem` 重ね合わせ構成を維持 (`TachieFaceParameter` / 連番アニメ立ち絵は使わない)
+  - **shared 後続 (E)**: `skit_group_registry.template.json` を実テンプレートで埋める → 実案件で IR 要求を template 解決しつつ、template だけでは吸収しきれない箇所では `motion_target: "layer:N"` / `group_motion` で補助 → P02 に証跡追記
 - parallel_replan_2026_04: **視覚最低限 + 改行／YMM4 ギャップ**の到達定義・チェックリスト・計測テンプレは [VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md](verification/VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md)。`next_action` の主軸とは別軸の **並列オプション**。オペレータ時間の並列で、同文書の **トラック A（演出 IR 実戦 = 主軸の実務サブセット）** / **トラック B（改行ギャップ記録 = メンテ層 B-17 観測）** を配分する。`project-context.md` が IDE プレビューで空白になる場合は **生 Markdown で開く**（正本の針は本ファイルのまま）。エージェント依頼の **コピペ全文 Prompt・検収・親チャット返却テンプレ**は [CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md](verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md)（ファイル10）に集約。
 - recommended_frontier_order: **G-24 茶番劇 Group template-first 運用** → 演出配置自動化の実戦投入 (P02) → 台本品質の継続観測 (メンテ) → 補助経路 (G-22 / PNG overlay) の必要最小限運用
   - **再開ショートカット（推奨対応）**: G-20 スライス1-2 完了（group_target バリデーション + `mode: relative`）は前提として維持。ただし主軸は `group_motion` の拡張ではなく、**canonical skit_group template → 派生 template 群 → production での template 解決**。

@@ -1,17 +1,41 @@
 {
   "schema_version": "1.0",
   "registry_kind": "skit_group_template",
-  "notes": "Operator/assistant shared registry. Not consumed by CLI yet.",
+  "notes": "Operator/assistant shared registry. Not consumed by CLI yet. Skit group children MUST be ImageItem only. TachieItem (yukkuri character animation) is forbidden in skit_group because it is reserved for speaker_tachie. See docs/SKIT_GROUP_TEMPLATE_SPEC.md section 1.",
+  "child_item_rule": {
+    "allowed_types": ["ImageItem"],
+    "forbidden_types": ["TachieItem"],
+    "reason": "TachieItem (yukkuri animation tachie) is reserved for speaker_tachie. External skit performers must be composed from ImageItem layers only. See INVARIANTS.md."
+  },
   "canonical_groups": {
     "haitatsuin_delivery_v1": {
       "target_type": "skit_group",
       "group_remark": "haitatsuin_delivery_main",
       "canonical_template_name": "delivery_base_v1",
-      "description": "Delivery body + yukkuri head + fixed decorations",
+      "description": "Delivery performer composed of ImageItem layers: body ImageItem (delivery illustration) + face ImageItem (single-frame face image) + optional decoration ImageItem. No TachieItem allowed.",
+      "child_composition": {
+        "body": {
+          "item_type": "ImageItem",
+          "example_source": "samples/Mat/haitatsuin/body.png",
+          "required": true
+        },
+        "face": {
+          "item_type": "ImageItem",
+          "example_source": "samples/Mat/haitatsuin/reimu_easy.png",
+          "required": true,
+          "emotion_swap_method": "Replace ImageItem.Source path with a different 1-frame face image. Do NOT use TachieFaceParameter."
+        },
+        "decoration": {
+          "item_type": "ImageItem",
+          "required": false,
+          "note": "Optional: accessories, arrows, effect stickers"
+        }
+      },
       "manual_checks": [
         "head/body alignment",
         "group center position",
-        "default zoom"
+        "default zoom",
+        "all children are ImageItem (no TachieItem)"
       ]
     }
   },

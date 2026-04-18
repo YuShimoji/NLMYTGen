@@ -2,6 +2,11 @@
 
 > **位置づけ**: 視覚効果ツール選定 slice の Step 3 の user ハンズオン補助。[VISUAL_EFFECT_SELECTION_GUIDE.md](VISUAL_EFFECT_SELECTION_GUIDE.md) §2.3 のテンプレ 5 種を YMM4 で実際に作成・保存するときに使う作業リスト。
 > **前提**: Step 1 (ツール決定) / Step 2 (素材ルール) 記入済。既存立ち絵入り ymmp (例: `samples/characterAnimSample/haitatsuin_2026-04-12.ymmp`) を**別名複製**して開いた状態で作業する。
+>
+> **アイテム種別ルール (INVARIANTS 準拠)**:
+> - `TachieItem` と書かれた箇所は **既存の解説役立ち絵 (ゆっくり霊夢 / ゆっくり魔理沙) を流用**する意味。新キャラの連番アニメ立ち絵を新規セットアップしない
+> - 外部素材演者 (配達員等) は `TachieItem` を使わず、`ImageItem` 重ね合わせで構成 (正本: [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md))
+> - 本チェックリストのテンプレ 5 種は **解説役の演出** (既存 TachieItem 流用) または **汎用素材 ImageItem** を対象とする。外部茶番劇演者の専用テンプレは G-24 主軸の別系統
 
 ## 共通作業
 
@@ -18,7 +23,7 @@
 
 ### 作成手順
 
-- [ ] GroupItem 作成 → 内部に **TachieItem** (既存立ち絵) を 1 体配置
+- [ ] GroupItem 作成 → 内部に **既存の解説役 TachieItem** (ゆっくり霊夢 or 魔理沙) を 1 体流用配置 ※新キャラの立ち絵セットアップは行わない
 - [ ] GroupItem に `JumpEffect` を追加
   - パラメータ目安:
     - `ジャンプ高さ`: 50〜80 px
@@ -35,6 +40,7 @@
 
 - **立ち絵パスが壊れる**: テンプレ保存時点でパス解決ができていれば OK。視覚表示されないままで保存しても Template 自体は登録されるが、別案件に流用したとき全部空になる
 - **エフェクトを TachieItem に直接つけた**: GroupItem に付けないと overlay_map 経由で呼び出したとき動作しない
+- **外部茶番劇演者 (配達員等) 用に使おうとした**: このテンプレは解説役専用。外部演者は `ImageItem` 重ね合わせの G-24 skit_group template 系 (別系統) を使う
 
 ---
 
@@ -115,7 +121,7 @@
 
 ### 作成手順
 
-- [ ] GroupItem 作成 → 内部に **TextItem** (タイトル) と **TachieItem** (キャラ) を配置
+- [ ] GroupItem 作成 → 内部に **TextItem** (タイトル) と **既存の解説役 TachieItem** (ゆっくり霊夢 or 魔理沙を流用) を配置 ※新キャラの立ち絵セットアップは行わない
 - [ ] GroupItem に `InOutCrashEffect` を追加
   - パラメータ目安:
     - `登場時間`: 0.15 秒 (瞬発)
