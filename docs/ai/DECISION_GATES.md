@@ -25,6 +25,7 @@ The following do not become standard options without explicit re-approval:
 - boundary-stopped or responsibility-external items
 
 ## Value Validation Gate
+Scope: 新規 frontier / proposed 機能 / 未承認の新方向にのみ適用する。既存 `approved` 機能の延長 (バグ修正・validate 厳格化・scope 内 CLI/GUI 改善)・`done` 機能の保守・docs 整合作業には適用しない。`docs/FEATURE_REGISTRY.md` の「実装着手前チェック」と整合。
 Before entering PLAN MODE or specification work for a proposed item, answer all of these in one sentence each:
 1. What workflow step or integration point will the output feed into?
 2. What manual step, judgment, copy, or transfer is actually removed?
@@ -49,11 +50,13 @@ Examples of workflow proof:
 - operator edits → tool runs → result observed
 
 ## Read-Only Refresh Gate
-During REFRESH / REANCHOR / SCAN / AUDIT:
+発火条件: user が現ブロック冒頭で REFRESH / REANCHOR / SCAN / AUDIT のいずれかを**明示宣言した**場合に限る。assistant 側の解釈で自己発火させない。
+宣言済ブロック内での制約:
 - no writes to long-lived repo files
 - no commits / pushes
 - no mutation justified only by “while we are here”
 Creating local scratch notes is acceptable only if explicitly asked and clearly not treated as project progress.
+同一ブロック内で user が明示 mutation を依頼した場合は、その依頼範囲に限り例外。
 
 ## Write Failure Hard Stop
 If any of the following occurs in the current block, stop before commit/push/handoff-complete:

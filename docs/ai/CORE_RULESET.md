@@ -40,7 +40,7 @@ Every major action has an actor and an owner artifact.
 Do not silently slide human-owned creative work into assistant execution.
 
 ### Read-only audit phases
-REFRESH, REANCHOR, SCAN, AUDIT, and similar phases are read-only by default. They do not write repo state, commit, push, or mutate long-lived files unless the user explicitly asks for that mutation in the current block.
+REFRESH / REANCHOR / SCAN / AUDIT は、**user が現ブロック冒頭で当該 phase 名を明示宣言した場合に限り** read-only として扱う。assistant が自己判断で「これは REFRESH 相当」と解釈して自己発火させない。user 宣言済みブロック内では long-lived repo files への書き込み・commit・push を禁止する。ただし同一ブロック内で user が明示的に mutation を依頼した場合は、その依頼範囲に限り例外。
 
 ### Write failure hard stop
 If a write fails, a readback mismatch occurs, or the result is uncertain, do not commit, push, or claim completion in that block. Repair or clearly stop.

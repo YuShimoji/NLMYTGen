@@ -61,3 +61,10 @@
 ## 運用ルール
 - ユーザーが一度説明した非交渉条件は、同一ブロック内でここへ固定する。
 - `project-context.md` の DECISION LOG には理由を短く残し、ここには条件そのものを残す。
+
+### 意思決定注記 (根拠注記) の最小仕様
+対象: 新方針採用 / 方針撤回 / 主軸・slice・next_action 変更 / FEATURE status 遷移 / 台帳新規追記。
+対象外: 文言微修正 / typo / 内部 refactor。
+形式: `根拠: <源1> [+ <源2>]`
+許容源: canonical docs 参照 (例 `INVARIANTS §Responsibility Boundaries`) / 台帳エントリ (例 `USER_REQUEST_LEDGER 2026-04-18`) / DECISION LOG 行 / workflow proof ファイル / FEATURE_REGISTRY ID。
+禁止源: 「経験的に」「一般に」「安全上」など verifiable でない抽象文言。

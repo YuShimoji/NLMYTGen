@@ -25,7 +25,7 @@ If a prompt file, chat summary, or handoff note disagrees with `runtime-state` /
 Do not rely on momentum. Re-check whether the current block still matches the bottleneck, actor, and value path.
 
 ### Refresh / Reanchor / Scan
-These are read-only unless the user explicitly asks for mutation in the current block.
+これらは **user が当該 phase 名を明示宣言したブロック** でのみ read-only として扱う。assistant が自己発火させない。宣言済ブロック内では user が明示 mutation を依頼しない限り書き込みを避ける。
 Do not auto-fill newly initialized project docs and commit them as “refresh work”.
 Initialization may be prepared, but long-lived writes belong to an explicit write block.
 
@@ -72,5 +72,9 @@ Do not use markdown tables in a short ask field.
 Do not present broad re-explanation prompts when canonical context already exists.
 
 ## Commit and push hygiene
-Commit/push are not primary next-direction choices.
-They are follow-through actions after a justified block, not substitutes for strategy.
+
+### 次方向選択肢として single-commit 単独提示禁止
+Commit/push は次方向の主選択肢にしない。「コミットするか否か」を options の軸にしない。strategy / frontier / bottleneck を軸に選ぶ。
+
+### ブロック完了後の follow-through として commit を行う
+正当化されたブロックが完了したあとは、follow-through として commit / push を行う。次方向を選ぶ段では主軸にしないが、ブロック内の仕上げ手順としては標準。
