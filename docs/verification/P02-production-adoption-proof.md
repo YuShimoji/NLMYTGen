@@ -240,3 +240,13 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/n
 - 残 warning (全 non-fatal): `FACE_PROMPT_PALETTE_EXTRA` (neutral 保持) / `FACE_LATENT_GAP` (霊夢 surprised) / `IDLE_FACE_MISSING` / bg_map 未指定
 - 判定 v2: **PASS — prompt contract 準拠への到達**。立ち絵発話中非表示問題は user 先行解決済 ([HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md](HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md) 5 次追記)。残 warning は別拡張 (palette に霊夢 surprised 追加 / bg_map 整備 / idle_face 拡張)
 - **判定**: pipeline 再現性・決定性ともに確認。主軸「演出配置自動化の実戦投入」の完了条件を production.ymmp で満たした
+
+## B-2 haitatsuin motion_target 本書出し (`b2_haitatsuin_motion_regen_2026-04-19`)
+
+- 日付: 2026-04-19
+- 正本: [B2-haitatsuin-motion-target-regen-2026-04-19.md](B2-haitatsuin-motion-target-regen-2026-04-19.md)
+- 入力: 同 ymmp + `samples/_probe/b2/haitatsuin_ir_10utt_v3_motions.json` (motion_target: layer:10 x 4) + face_map (10 表情版) + bg_map + tachie_motion_map (G-23 23 label)
+- 結果: exit 0 / fatal 0 / face_changes **50** / transition 10 / motion 6 / **VideoEffects writes (motion): 6** (motion_target 4 entries が 6 segment 分割)
+- 出力 ymmp: `_tmp/b2_haitatsuin_motion_applied_v2.ymmp` (42.66 MB、gitignore)
+- 判定: **PASS — motion_target 経路で Layer 10 配達員 ImageItem に VideoEffects を機械的に適用**。次 user action は YMM4 での視覚確認 (Layer 10 セグメント × 4 の各 motion が配達員のみに効き、立ち絵は静止)
+- 根拠: runtime-state next_action assistant 先行 (B) + [B2-haitatsuin-dryrun-proof-2026-04-17.md](B2-haitatsuin-dryrun-proof-2026-04-17.md) dry-run PASS
