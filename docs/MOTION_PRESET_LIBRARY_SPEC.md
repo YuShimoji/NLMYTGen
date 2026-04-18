@@ -137,9 +137,12 @@ YMM4 の VideoEffects パラメータは 2 種類:
 1. **フラットパラメータ**: `Size: 50.0`, `IsInEffect: true` 等 → JSON にそのまま書ける
 2. **アニメーションパラメータ**: `JumpHeight: {Values: [{Value: 100.0}], ...}` 等 → キーフレーム対応の入れ子構造
 
-**方針**: フラットパラメータのみをプリセットで制御する。アニメーションパラメータは YMM4 のデフォルト値に任せる (= JSON に含めない)。これにより:
-- パラメータ未指定のエフェクトは YMM4 が自前のデフォルトで描画する
-- 人間が YMM4 上で微調整した場合、そのフレームのキーフレーム値が優先される
+**方針 (v2 - 2026-04-19 改訂)**: **フラットとアニメーション両方**を library に埋める。
+
+- **理由**: v1 (flat only) では TachieItem には YMM4 のデフォルトキーフレームが効くが、**ImageItem/GroupItem (skit_group) に motion_target 経由で直書きする場合は YMM4 のデフォルト補完が効かず、振幅ゼロ相当の動きしか出ない**。実地 proof (`b2_haitatsuin_motion_regen_2026-04-19`) で確認済み。
+- **アニメーションパラメータの書き方**: `{ "Values": [{ "Value": <float> }], "Span": 0.0, "AnimationType": "なし", "Bezier": {...} }` の完全構造で記述。キーフレーム複数の場合は `Values` に複数エントリを入れ `Span` に時間指定、`AnimationType` を "加速減速" / "線形" 等に変更。
+- **基準値**: `samples/EffectsSamples_2026-04-15.ymmp` から抽出した実サンプル値。各 motion で感情表現として妥当な値へ調整 (例: `nod` の RepeatMove.Y は EffectsSamples の 100px から 15px に控えめ化)。
+- **人間が YMM4 上で微調整した場合**: 発話 utterance の TachieItem/ImageItem に直接キーフレームを追加すれば、library の値を上書きできる (YMM4 の通常の override 挙動)。
 
 ### 4-b. 強度プリセット
 
@@ -164,9 +167,11 @@ python -m src.cli.main generate-motion-presets \
   -o samples/tachie_motion_map_library.json
 ```
 
-**Phase 1 (今回)**: 仕様書 (本ファイル) に基づき `tachie_motion_map_library.json` を**手動 (assistant) で生成**する。コード変更なし。
+**Phase 1 (初版、2026-04-17)**: 仕様書に基づき `tachie_motion_map_library.json` を**手動 (assistant) で生成**。flat parameter のみ、アニメーション値は空。コード変更なし。
 
-**Phase 2 (将来)**: `generate-motion-presets` サブコマンドを実装。preset 定義テーブル (YAML/JSON) を入力に、`effect_catalog.json` からパラメータを引いて `tachie_motion_map.json` を自動生成する。ラベル追加時は定義テーブルに1行追加して再生成。
+**Phase 2 (v2、2026-04-19)**: アニメーションパラメータまで埋めた library v2 を生成。`samples/_probe/b2/build_library_v2.py` で組み立て。EffectsSamples の実サンプル値を基準に、各 motion の感情表現に応じて振幅・周期を調整。motion_target 経路で ImageItem/GroupItem に直書きしても可視的な動きが出る。
+
+**Phase 3 (将来)**: `generate-motion-presets` サブコマンドを実装。preset 定義テーブルを入力に自動生成。ラベル追加時は定義テーブルに 1 行追加して再生成。
 
 ### 5-b. 使用フロー
 
@@ -210,6 +215,17 @@ uv run python -m src.cli.main apply-production \
 
 ---
 
+## 適用対象 (2026-04-19 更新)
+
+本 library は **TachieItem / ImageItem / GroupItem 横断で利用可**。従来「speaker_tachie 専用」と位置付けていたが、skit_group の body/顔 ImageItem に motion_target 経由で直書きする需要が確認されたため、**汎用エフェクト台帳**として扱う。
+
+- **TachieItem (解説役ゆっくり立ち絵)**: `motion` フィールドから `_apply_motion_to_tachie_items()` 経由で適用
+- **ImageItem/GroupItem (skit_group の body/顔/装飾)**: `motion_target: "layer:N"` 指定で `_apply_motion_to_layer_items()` 経由で適用
+- **フラット + アニメ両方埋まった v2 以降**: どちらの経路でも可視的な動きが出る
+
+「speaker_tachie 専用」という制限は削除。ただし motion ラベルの意味 (驚き・喜び等) は立ち絵前提で設計されているため、skit_group で使う場合は「配達員が驚く」「配達員がうなずく」等、**演者に読み替え可能な label のみ採用**する運用。
+
 ## 変更履歴
 
 - 2026-04-17: 初版。EffectsSamples 111種から感情ラベル23種 + 原子17種を定義。Phase 1 は JSON 手動生成、Phase 2 で CLI 自動生成
+- 2026-04-19: Phase 2 library v2 に更新。flat + 動 param 両方埋め、motion_target 経路で ImageItem/GroupItem にも可視的動作を出す。speaker_tachie 専用制限を解除し TachieItem/ImageItem/GroupItem 横断の汎用台帳に位置づけ直す。panic_shake から RandomZoom を除去 (user feedback: 「体のみ伸び縮み」の原因)。根拠: user 指示 2026-04-19 + b2_haitatsuin_motion_regen_2026-04-19 proof

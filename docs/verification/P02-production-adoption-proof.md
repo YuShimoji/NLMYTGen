@@ -250,3 +250,14 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/n
 - 出力 ymmp: `_tmp/b2_haitatsuin_motion_applied_v2.ymmp` (42.66 MB、gitignore)
 - 判定: **PASS — motion_target 経路で Layer 10 配達員 ImageItem に VideoEffects を機械的に適用**。次 user action は YMM4 での視覚確認 (Layer 10 セグメント × 4 の各 motion が配達員のみに効き、立ち絵は静止)
 - 根拠: runtime-state next_action assistant 先行 (B) + [B2-haitatsuin-dryrun-proof-2026-04-17.md](B2-haitatsuin-dryrun-proof-2026-04-17.md) dry-run PASS
+
+## B-2 haitatsuin library v2 再生成 (`b2_haitatsuin_motion_regen_v3_2026-04-19`)
+
+- 日付: 2026-04-19
+- 正本: [B2-haitatsuin-motion-library-v2-2026-04-19.md](B2-haitatsuin-motion-library-v2-2026-04-19.md)
+- 背景: v1 (flat only library) では ImageItem への motion_target 直書きでデフォルト補完が効かず「体のみ伸び縮み」「制御されていない」と user 報告。v2 で flat + animation params 両方を EffectsSamples 実値ベースで埋め、panic_shake から RandomZoomEffect を除去
+- 入力: 同 ymmp + v3 IR + face_map + bg_map + **tachie_motion_map_library v2.0.0** (102KB)
+- 結果: exit 0 / fatal 0 / face_changes 50 / transition 10 / motion 6 / VideoEffects writes (motion): 6
+- 出力 ymmp: `_tmp/b2_haitatsuin_motion_applied_v3.ymmp` (42.66 MB、gitignore)
+- 判定: **PASS — library v2 で motion 4 種 (nod / surprise_jump / panic_shake / deny_shake) に感情表現として妥当なパラメータ値 (振幅・周期) を書き込み完了**。user 視覚確認で「v1 の貧弱な見え方から実用レベルへ改善されているか」を判定する
+- 根拠: user 指示 2026-04-19「要素は全て揃っているはず。一つ一つ丁寧に設定してください」+ EffectsSamples_2026-04-15.ymmp 実サンプル値
