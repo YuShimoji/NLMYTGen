@@ -1255,6 +1255,12 @@ def _clip_animated_to_segment(
     return new_prop
 
 
+def _motion_target_segment_remark(motion: str, ir_index: object) -> str:
+    """motion_target 分割 segment をタイムライン上で識別するための Remark."""
+    idx = ir_index if ir_index is not None else "?"
+    return f"motion:{motion} utt:{idx}"
+
+
 def _apply_motion_to_layer_items(
     items: list[dict],
     voice_items: list[dict],
@@ -1439,6 +1445,7 @@ def _apply_motion_to_layer_items(
             new_item["VideoEffects"] = _motion_effects_for_label(
                 motion, tachie_motion_effects_map, result, ir_index=ir_index
             )
+            new_item["Remark"] = _motion_target_segment_remark(motion, ir_index)
             replacement.append(new_item)
         items[insert_at:insert_at] = replacement
         result.motion_changes += len(replacement)

@@ -1,6 +1,8 @@
 # skit_01_delivery_dispute v2 proof (2026-04-20)
 
-**位置づけ**: library v3 one-shot を UX 再設計したうえで、`skit_01` を「誤配トラブル」の短い茶番として再構成。**登場 → 行動 → 反応 → 退場**の 4 ビートが連続して読めることを確認する。
+**今回の生成物（正本）**: 茶番用の再生成 YMMP は **`_tmp/skit_01_v2.ymmp`**（`apply-production` の `-o` 指定）。`skit_02.ymmp` という固定ファイルは置いていない; 同内容を `_tmp/skit_02.ymmp` として出すなら `-o` だけ差し替え。
+
+**位置づけ**: one-shot を**軸別**（驚き=縦 / 否定=横 / 登場=横+着地）に再定義し、GroupItem `Remark` に `motion:…` を焼き込み。誤配茶番の **登場 → 行動 → 反応 → 退場**が追いやすいことを狙う。
 
 ## storyboard (3 scene)
 
@@ -29,20 +31,33 @@ uv run python -m src.cli.main apply-production \
 ## 技術 PASS
 
 - exit 0 / fatal_warning 0 / Face changes 50 / VideoEffects writes (motion) 10
-- Layer 9 GroupItem: **8 segment に分割**。各 segment に意図どおりの motion / base prop を焼き込み
+- Layer 9 GroupItem: **8 segment**。各 segment の **Remark** に `motion:<label> utt:<index>`（パン区間は `utt:?` のことがある）
 
-inspect 実測:
+### motion 対応表（`_tmp/skit_01_v2.ymmp` Layer 9 GroupItem）
 
-| seg | F | L | X Values | Y Values | VideoEffects | 役割 |
-|---|---|---|---|---|---|---|
-| 0 | 0 | 201 | [-572.0, -12.0, 318.0, 432.0, 408.0] | [13.0, -21.0, -49.0, -69.0, -57.0] | `[]` | **enter_from_left** (滑り込み + 着地) |
-| 1 | 201 | 275 | [274.9, 92.9] (pan 継続) | [-57.0] | `[RepeatMoveEffect]` | **nod** (既存 library) |
-| 2 | 476 | 98 | [92.9, 28.0] (pan 継続) | [-57.0, -39.0, -161.0, -111.0, -83.0, -57.0] | `[]` | **surprise_oneshot** (のけぞり + 跳ね) |
-| 3 | 574 | 628 | [28.0, -250.0, -160.4] (pan、straddle 中間 keyframe 保持) | [-57.0] | `[]` | none (pan) |
-| 4 | 1202 | 145 | [-160.4, -280.4, -50.4, -256.4, -72.4, -204.4, -160.4] | [-57.0, -47.0, -49.0, -51.0, -53.0, -55.0, -57.0] | `[]` | **deny_oneshot** (強い首振り否定) |
-| 5 | 1347 | 144 | [-98.0, -36.0] | [-57.0] | `[]` | none (pan) |
-| 6 | 1491 | 176 | [-36.0, 39.8] + VideoEffects | [-57.0] | `[InOutMoveFromOutsideImageEffect]` | **exit_left** |
-| 7 | 1667 | 321 | [39.8, 178.0] | [-57.0] | `[]` | none (pan 残響) |
+| Frame range | Remark | motion | 意図 |
+|---|---|---|---|
+| F=0–200 (L=201) | `motion:enter_from_left utt:1` | enter_from_left | 登場（横接近→着地） |
+| F=201–475 | `motion:nod utt:2` | nod | 行動（会釈相当・RepeatMove） |
+| F=476–573 | `motion:surprise_oneshot utt:3` | surprise_oneshot | 驚き（**Y 軸のみ**の one-shot） |
+| F=574–1201 | `motion:none utt:?` | none | 台詞のみ・カメラ pan |
+| F=1202–1346 | `motion:deny_oneshot utt:8` | deny_oneshot | 否定（**X 軸のみ**の one-shot） |
+| F=1347–1490 | `motion:none utt:?` | none | pan |
+| F=1491–1666 | `motion:exit_left utt:10` | exit_left | 退場 |
+| F=1667–1987 | `motion:none utt:?` | none | pan 残響 |
+
+inspect 実測（差分の大きい one-shot のみ）:
+
+| seg | F | L | X / Y（要点） | VideoEffects |
+|---|---|---|---|---|
+| 0 | 0 | 201 | X 多段、Y は **最後だけ** -73 付近へ沈む | `[]` |
+| 2 | 476 | 98 | **Y のみ** 7 キーで大きく上下、Rotation 0 固定 | `[]` |
+| 4 | 1202 | 145 | **X のみ** ±220 級で往復、Y は一定 | `[]` |
+
+**なぜ deny / surprise を見分けやすいか**
+
+- ライブラリで **surprise は Y のみ・deny は X のみ**に分離したため、合成で斜めに見えにくい。
+- 各 segment に **Remark** が入るため、タイムライン上でラベルと見た目を突き合わせできる。
 
 - one-shot segment (0/2/4) の VideoEffects=[] → base prop 焼き込みで純粋 one-shot
 - pan segment (1/3/5/7) は v6 clip/remap で元軌跡を保持、境界連続
@@ -53,8 +68,8 @@ inspect 実測:
 YMM4 で `_tmp/skit_01_v2.ymmp` を開き、タイムライン再生で次を確認:
 
 1. scene 1: 配達員が左外から入り、軽い行き過ぎ後に着地する（登場として読める）
-2. scene 2: 誤配に気づく台詞と同時に、のけぞり→跳ね戻りが走る（反応として読める）
-3. scene 3: 「今はダメです!」で左右首振りの否定が明確に出る（平行移動だけに見えない）
+2. scene 2: 誤配に気づく台詞と同時に、**縦方向だけ**大きく跳ねる（斜め漂いではない）
+3. scene 3: 「今はダメです!」で **左右方向だけ**大きく往復する（驚きの縦ジャンプと軸が違う）
 4. scene 4: 退場台詞で左へ抜け、場面が閉じる
 
 各 one-shot motion がループせずに 1 発で終わることを確認する。OK なら skit_01 成立。

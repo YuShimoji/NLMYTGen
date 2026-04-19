@@ -4094,34 +4094,24 @@
     ],
     "enter_from_left": {
       "schema": "base_prop_oneshot",
-      "description": "画面外(左)から滑り込み、軽い着地弧とオーバーシュートで登場を読ませる one-shot",
+      "description": "左から横方向に接近し、最後にだけ軽く沈んで「着地して止まる」2段を読ませる one-shot（移動中は縦ズレなし）",
       "delta_keyframes": {
         "X": {
           "Values": [
-            -980.0,
-            -420.0,
-            -90.0,
-            24.0,
+            -1050.0,
+            -520.0,
+            -110.0,
+            26.0,
             0.0
           ],
           "AnimationType": "直線移動"
         },
         "Y": {
           "Values": [
-            70.0,
-            36.0,
-            8.0,
-            -12.0,
-            0.0
-          ],
-          "AnimationType": "直線移動"
-        },
-        "Zoom": {
-          "Values": [
+            0.0,
+            0.0,
+            0.0,
             -16.0,
-            -10.0,
-            -4.0,
-            3.0,
             0.0
           ],
           "AnimationType": "直線移動"
@@ -4130,40 +4120,17 @@
     },
     "deny_oneshot": {
       "schema": "base_prop_oneshot",
-      "description": "体を軽く引きつつ左右に強く首振りし、最後に正面へ戻す one-shot deny",
+      "description": "左右方向のみで大きく首振り否定し anchor に戻す one-shot（縦・傾きなしで平行移動と差別化）",
       "delta_keyframes": {
         "X": {
           "Values": [
             0.0,
-            -120.0,
-            110.0,
-            -96.0,
-            88.0,
-            -44.0,
-            0.0
-          ],
-          "AnimationType": "直線移動"
-        },
-        "Rotation": {
-          "Values": [
-            0.0,
-            -12.0,
-            10.0,
-            -8.0,
-            7.0,
-            -4.0,
-            0.0
-          ],
-          "AnimationType": "直線移動"
-        },
-        "Y": {
-          "Values": [
-            0.0,
-            10.0,
-            8.0,
-            6.0,
-            4.0,
-            2.0,
+            -220.0,
+            220.0,
+            -185.0,
+            185.0,
+            -125.0,
+            125.0,
             0.0
           ],
           "AnimationType": "直線移動"
@@ -4172,36 +4139,16 @@
     },
     "surprise_oneshot": {
       "schema": "base_prop_oneshot",
-      "description": "一瞬のけぞってから跳ね戻り、拡大と傾きで驚きを読ませる one-shot",
+      "description": "縦方向のみで大きく一度跳ねて戻す驚き one-shot（Zoom/Rotation なしで斜め成分を排除）",
       "delta_keyframes": {
         "Y": {
           "Values": [
             0.0,
-            18.0,
-            -104.0,
-            -54.0,
-            -26.0,
-            0.0
-          ],
-          "AnimationType": "直線移動"
-        },
-        "Zoom": {
-          "Values": [
-            0.0,
-            14.0,
-            23.0,
-            15.0,
-            8.0,
-            0.0
-          ],
-          "AnimationType": "直線移動"
-        },
-        "Rotation": {
-          "Values": [
-            0.0,
-            -7.0,
-            4.0,
-            -2.0,
+            -28.0,
+            -155.0,
+            -185.0,
+            -125.0,
+            -55.0,
             0.0
           ],
           "AnimationType": "直線移動"

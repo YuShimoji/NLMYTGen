@@ -6,9 +6,9 @@
 
 | label | 用途 | delta_keyframes |
 |---|---|---|
-| `enter_from_left` | 登場 (左から滑り込み + 着地) | X=[-980, -420, -90, 24, 0], Y=[70, 36, 8, -12, 0], Zoom=[-16, -10, -4, 3, 0] |
-| `deny_oneshot` | 否定 (強い首振り + 体の戻し) | X=[0, -120, 110, -96, 88, -44, 0], Rotation=[0, -12, 10, -8, 7, -4, 0], Y=[0, 10, 8, 6, 4, 2, 0] |
-| `surprise_oneshot` | 驚き (のけぞり + 跳ね + 角度) | Y=[0, 18, -104, -54, -26, 0], Zoom=[0, 14, 23, 15, 8, 0], Rotation=[0, -7, 4, -2, 0] |
+| `enter_from_left` | 登場 (横接近 + 最終フレームだけ着地) | X=[-1050, -520, -110, 26, 0], Y=[0, 0, 0, -16, 0]（移動中は縦ゼロ） |
+| `deny_oneshot` | 否定 (左右のみ・大振幅) | X=[0, -220, 220, -185, 185, -125, 125, 0] のみ |
+| `surprise_oneshot` | 驚き (縦のみ) | Y=[0, -28, -155, -185, -125, -55, 0] のみ |
 
 いずれも `{"schema": "base_prop_oneshot", "delta_keyframes": {...}}` 形式で library に追記。
 
@@ -16,6 +16,7 @@
 
 - [src/cli/main.py](../../src/cli/main.py) `_load_tachie_motion_effects_map`: base_prop_oneshot dict entry を受理
 - [src/pipeline/ymmp_patch.py](../../src/pipeline/ymmp_patch.py) `_motion_oneshot_base_deltas` + `_apply_oneshot_deltas_to_segment` 新設。`_apply_motion_to_layer_items` の GroupItem 分割時、v6 clip/remap 直後に anchor = clipped first-value を取り、`new Values = [anchor + d for d in delta]` を segment base prop に OVERRIDE
+- 同上 `_apply_motion_to_layer_items`: 分割後の各 GroupItem に `Remark` を `motion:<label> utt:<index>` で付与（タイムライン上で segment と motion を対応づけ）
 - `_motion_effects_for_label`: base_prop_oneshot entry は VideoEffects=[] を返す
 
 方針: 感情表現・行動 segment 中は camera pan を一拍停めて motion を clean に見せる (intentional trade-off)。
@@ -34,24 +35,30 @@ uv run python -m src.cli.main apply-production \
   -o _tmp/b2_haitatsuin_oneshot_block2.ymmp
 ```
 
-技術 PASS (inspect 実測):
+技術 PASS (inspect 実測、`_tmp/b2_haitatsuin_oneshot_block2.ymmp`):
 
-| seg | motion | base prop 変換 | VideoEffects |
-|---|---|---|---|
-| [0] F=0 L=201 | enter_from_left | X=[-572, -12, 318, 432, 408], Y=[13, -21, -49, -69, -57], Zoom=[87.8, 93.8, 99.8, 106.8, 103.8] | `[]` |
-| [2] F=476 L=98 | surprise_oneshot | Y=[-57, -39, -161, -111, -83, -57], Zoom=[103.8, 117.8, 126.8, 118.8, 111.8, 103.8], Rotation=[0, -7, 4, -2, 0] | `[]` |
-| [6] F=1202 L=145 | deny_oneshot | X=[-160.4, -280.4, -50.4, -256.4, -72.4, -204.4, -160.4], Rotation=[0, -12, 10, -8, 7, -4, 0] | `[]` |
+| seg | Remark | motion | base prop（要点） | VideoEffects |
+|---|---|---|---|---|
+| [0] F=0 L=201 | `motion:enter_from_left utt:1` | enter_from_left | X 多段 + Y は最後だけ沈み、Zoom/Rotation なし | `[]` |
+| [2] F=476 L=98 | `motion:surprise_oneshot utt:3` | surprise_oneshot | **Y だけ**が大きく変化（7 キー）、Rotation 固定 0 | `[]` |
+| [6] F=1202 L=145 | `motion:deny_oneshot utt:8` | deny_oneshot | **X だけ**が ±220 級で往復、Y は一定 | `[]` |
 
-v6 clip/remap は他 segment (index 2/4/5/7/9/10 などの pan-only) で引き続き機能し、元軌跡該当区間を保持。
+**なぜ前より読み分けやすいか（設計）**
+
+- `surprise_oneshot`: delta を **Y のみ**に限定し Zoom/Rotation を外した → 斜め・ふわふわの主因だった複合軸を排除。
+- `deny_oneshot`: delta を **X のみ**に限定し振幅を上げた → pan 上でも「横方向のレール」として単独で目立つ。
+- `enter_from_left`: 横接近は X のみ、縦は **着地 1 拍**だけ → 「流れてくる」と「止まる」の二段が分離。
+
+v6 clip/remap は他 segment (pan-only) で引き続き機能し、元軌跡該当区間を保持。
 
 pytest: 既存 32 件 PASS。
 
 ## UX 判定
 
 user が YMM4 で `_tmp/b2_haitatsuin_oneshot_block2.ymmp` を開き、
-- index 1 で「左外から入る → 軽く行き過ぎる → 所定位置へ着地」が読める
-- index 3 で「のけぞり → 大きく跳ねる → 元位置復帰」の驚きが読める
-- index 8 で「左右に強く首を振って否定し、正面に戻る」動きが 1 回で終わる (ループしない)
+- index 1: 横スライドのあと一拍だけ縦が沈み、**止まって着地**したように見える
+- index 3: **縦だけ**大きく跳ねる（驚き）。斜め漂いに見えないこと
+- index 8: **左右だけ**大きく往復し、否定として追える。驚き区間と**動きの軸**が違うこと
 
 を確認。OK なら library v3 導入成立、skit_01 に進める。
 
