@@ -15,10 +15,7 @@
       "section_id": "S1",
       "face": "thinking",
       "motion": "nod",
-      "motion_target": [
-        "layer:10",
-        "layer:11"
-      ]
+      "motion_target": "layer:9"
     },
     {
       "index": 2,
@@ -35,10 +32,7 @@
       "section_id": "S1",
       "face": "surprised",
       "motion": "surprise_jump",
-      "motion_target": [
-        "layer:10",
-        "layer:11"
-      ]
+      "motion_target": "layer:9"
     },
     {
       "index": 4,
@@ -55,10 +49,7 @@
       "section_id": "S1",
       "face": "serious",
       "motion": "panic_shake",
-      "motion_target": [
-        "layer:10",
-        "layer:11"
-      ]
+      "motion_target": "layer:9"
     },
     {
       "index": 6,
@@ -83,10 +74,7 @@
       "section_id": "S1",
       "face": "sad",
       "motion": "deny_shake",
-      "motion_target": [
-        "layer:10",
-        "layer:11"
-      ]
+      "motion_target": "layer:9"
     },
     {
       "index": 9,

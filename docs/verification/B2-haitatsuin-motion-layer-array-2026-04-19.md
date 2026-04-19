@@ -1,6 +1,10 @@
 # B-2 haitatsuin motion_target 配列対応 ymmp 再生成 proof (2026-04-19)
 
-**位置づけ**: `motion_target` の複数 layer 配列対応 (`["layer:10","layer:11"]`) を使って、body (Layer 10) と 顔 (Layer 11) を同期させた短期検証。canonical template (B 本筋) 完成までのブリッジ。library v2 proof の「body-only 制約で UX 未達」を解消するのが目的。
+**位置づけ**: `motion_target` の複数 layer 配列対応 (`["layer:10","layer:11"]`) を使って、body (Layer 10) と 顔 (Layer 11) を同期させた短期検証。
+
+**本番経路としてのステータス**: **代替実現済 (deprecated for haitatsuin case)**。実機観察後に Layer 9 の既存 GroupItem が canonical template として既に完成していたことが判明し、`motion_target: "layer:9"` (単一 GroupItem 指定) 経路で本来の canonical 経路が成立。詳細は [B2-haitatsuin-motion-groupitem-2026-04-19.md](B2-haitatsuin-motion-groupitem-2026-04-19.md) を正本とする。
+
+**array 対応自体の有用性**: 装飾のみの演者 (GroupItem が未設定かつ複数 layer に素材が分散) など、GroupItem が使えない case では依然有効。コード実装は維持。
 
 ## run_id
 

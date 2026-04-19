@@ -261,3 +261,16 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/n
 - 出力 ymmp: `_tmp/b2_haitatsuin_motion_applied_v3.ymmp` (42.66 MB、gitignore)
 - 判定: **PASS — library v2 で motion 4 種 (nod / surprise_jump / panic_shake / deny_shake) に感情表現として妥当なパラメータ値 (振幅・周期) を書き込み完了**。user 視覚確認で「v1 の貧弱な見え方から実用レベルへ改善されているか」を判定する
 - 根拠: user 指示 2026-04-19「要素は全て揃っているはず。一つ一つ丁寧に設定してください」+ EffectsSamples_2026-04-15.ymmp 実サンプル値
+
+## B-2 haitatsuin GroupItem 単一 layer 指定 (`b2_haitatsuin_motion_groupitem_2026-04-19`)
+
+- 日付: 2026-04-19
+- 正本: [B2-haitatsuin-motion-groupitem-2026-04-19.md](B2-haitatsuin-motion-groupitem-2026-04-19.md)
+- 背景: v4 array proof の実機確認で「頭部だけ小刻み / 体は伸び縮み / 開始位置ズレ」が観察され原因分析。既存 Layer 9 GroupItem が canonical template として完成済であることが判明し、motion_target を `"layer:9"` 単一指定に変更
+- 入力: 同 ymmp + v3 IR (motion_target: "layer:9" に変更) + face_map + bg_map + tachie_motion_map v2
+- 結果: exit 0 / fatal 0 / Face changes 50 / VideoEffects writes (motion): 10
+- **GroupItem 8 segment 分割**: nod (F 0-201) / none / surprise_jump (F 476-574) / none / panic_shake (F 766-910) / none / deny_shake (F 1202-1347) / none — utterance timing で完全対応
+- Layer 10/11 の ImageItem には書き込みなし (GroupItem 配下で effect 継承)
+- 出力 ymmp: `_tmp/b2_haitatsuin_motion_applied_v5.ymmp` (gitignore)
+- 判定: **技術 PASS — canonical template 経路で motion が意図どおり GroupItem に書き込まれた**。UX PASS 判定は user 視覚確認待ち (body + 顔 が同期して動くか)
+- 根拠: user 指摘「GroupItem は既に正しく設定されて調整するだけで動く」+ inspect_group_layer.py 実機確認 + INVARIANTS §skit_group の主経路は canonical template
