@@ -28,3 +28,6 @@ debug-*.log
 
 # 作業中の ymmp・中間生成物（セッション作業スクラッチ）
 _tmp/
+
+# B2 プローブ採掘のフル効果サンプル JSON（セッション一時・リモートに載せない）
+samples/_probe/b2/effect_full_samples.json

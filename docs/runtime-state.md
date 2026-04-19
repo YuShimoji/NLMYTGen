@@ -6,6 +6,15 @@
 
 ## 現在位置
 
+### セッション引き継ぎ（2026-04-20）
+
+- **同期確認**: `git log -1 --oneline` が最新。**motion 軸別 one-shot + motion_target Remark** の実装コミットは **`396ea4b`**。続けて **引き継ぎ本文（本節）と `.gitignore`** を入れたコミットがその直後。**本ブロック完了後**は `git push origin master` でリモートと揃えること。
+- **検証用 ymmp（再生成・`_tmp/` は gitignore）**: `skit` 系・B2 one-shot proof は verification 短文に記載のパスに合わせて再生成すること（具体パスは [B2-oneshot-library-v3-2026-04-19.md](verification/B2-oneshot-library-v3-2026-04-19.md)、[skit_01_delivery_dispute_v1_2026-04-19.md](verification/skit_01_delivery_dispute_v1_2026-04-19.md)）。
+- **手動参照マスタ（ユーザー作成）**: `_tmp/skit_ManualSample_01.ymmp` — 日本語 Remark・VideoEffects 多用。パイプライン出力の `motion:… utt:…` とは別の参照用。
+- **再開時**: segment / Group 確認は `inspect_v5_group_segments.py` 系。茶番 E2E 経路は既存 IR + `apply-production`（IR 例: `samples/_probe/skit_01/skit_01_ir.json`）。
+- **既知メモ**: pan のみ区間で Remark が `motion:none utt:?` になりうる。camera pan の X と縦 one-shot が重なると画面上は斜めに見える可能性。`nod` は RepeatMove、`nod_oneshot` は未実装。
+- **プローブ採掘**: `samples/_probe/b2/effect_full_samples.json` は `.gitignore`（リポジトリに載せない方針）。必要なら ignore を外してから追加コミット。
+
 ドキュメント地図（任意）: [NAV.md](NAV.md) / Electron 最小経路・検証ラダー: [GUI_MINIMUM_PATH.md](GUI_MINIMUM_PATH.md)（2026-04-14: balance-lines GUI 露出・ウィザード範囲明記）
 
 - project: NLMYTGen
