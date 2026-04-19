@@ -4094,11 +4094,34 @@
     ],
     "enter_from_left": {
       "schema": "base_prop_oneshot",
-      "description": "画面外(左 -800px オフセット)から所定位置へ one-shot 直線移動して静止",
+      "description": "画面外(左)から滑り込み、軽い着地弧とオーバーシュートで登場を読ませる one-shot",
       "delta_keyframes": {
         "X": {
           "Values": [
-            -800.0,
+            -980.0,
+            -420.0,
+            -90.0,
+            24.0,
+            0.0
+          ],
+          "AnimationType": "直線移動"
+        },
+        "Y": {
+          "Values": [
+            70.0,
+            36.0,
+            8.0,
+            -12.0,
+            0.0
+          ],
+          "AnimationType": "直線移動"
+        },
+        "Zoom": {
+          "Values": [
+            -16.0,
+            -10.0,
+            -4.0,
+            3.0,
             0.0
           ],
           "AnimationType": "直線移動"
@@ -4107,15 +4130,40 @@
     },
     "deny_oneshot": {
       "schema": "base_prop_oneshot",
-      "description": "左右に 3 往復首振りして anchor 位置で静止 (one-shot deny)",
+      "description": "体を軽く引きつつ左右に強く首振りし、最後に正面へ戻す one-shot deny",
       "delta_keyframes": {
         "X": {
           "Values": [
             0.0,
-            -25.0,
-            25.0,
-            -15.0,
-            15.0,
+            -120.0,
+            110.0,
+            -96.0,
+            88.0,
+            -44.0,
+            0.0
+          ],
+          "AnimationType": "直線移動"
+        },
+        "Rotation": {
+          "Values": [
+            0.0,
+            -12.0,
+            10.0,
+            -8.0,
+            7.0,
+            -4.0,
+            0.0
+          ],
+          "AnimationType": "直線移動"
+        },
+        "Y": {
+          "Values": [
+            0.0,
+            10.0,
+            8.0,
+            6.0,
+            4.0,
+            2.0,
             0.0
           ],
           "AnimationType": "直線移動"
@@ -4124,14 +4172,15 @@
     },
     "surprise_oneshot": {
       "schema": "base_prop_oneshot",
-      "description": "Y 方向に 1 ジャンプ + Zoom ふくらみ one-shot で驚き、anchor 位置に戻る",
+      "description": "一瞬のけぞってから跳ね戻り、拡大と傾きで驚きを読ませる one-shot",
       "delta_keyframes": {
         "Y": {
           "Values": [
             0.0,
-            -50.0,
-            -25.0,
-            -55.0,
+            18.0,
+            -104.0,
+            -54.0,
+            -26.0,
             0.0
           ],
           "AnimationType": "直線移動"
@@ -4139,9 +4188,20 @@
         "Zoom": {
           "Values": [
             0.0,
+            14.0,
+            23.0,
+            15.0,
             8.0,
+            0.0
+          ],
+          "AnimationType": "直線移動"
+        },
+        "Rotation": {
+          "Values": [
+            0.0,
+            -7.0,
             4.0,
-            8.0,
+            -2.0,
             0.0
           ],
           "AnimationType": "直線移動"

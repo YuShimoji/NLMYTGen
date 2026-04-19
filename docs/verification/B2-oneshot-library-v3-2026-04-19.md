@@ -6,9 +6,9 @@
 
 | label | 用途 | delta_keyframes |
 |---|---|---|
-| `enter_from_left` | 登場 (左から) | X=[-800, 0] AT=直線移動 |
-| `deny_oneshot` | 否定 (左右に 3 往復して戻る) | X=[0, -25, 25, -15, 15, 0] AT=直線移動 |
-| `surprise_oneshot` | 驚き (Y 跳ね + Zoom ふくらみ) | Y=[0, -50, -25, -55, 0], Zoom=[0, 8, 4, 8, 0] AT=直線移動 |
+| `enter_from_left` | 登場 (左から滑り込み + 着地) | X=[-980, -420, -90, 24, 0], Y=[70, 36, 8, -12, 0], Zoom=[-16, -10, -4, 3, 0] |
+| `deny_oneshot` | 否定 (強い首振り + 体の戻し) | X=[0, -120, 110, -96, 88, -44, 0], Rotation=[0, -12, 10, -8, 7, -4, 0], Y=[0, 10, 8, 6, 4, 2, 0] |
+| `surprise_oneshot` | 驚き (のけぞり + 跳ね + 角度) | Y=[0, 18, -104, -54, -26, 0], Zoom=[0, 14, 23, 15, 8, 0], Rotation=[0, -7, 4, -2, 0] |
 
 いずれも `{"schema": "base_prop_oneshot", "delta_keyframes": {...}}` 形式で library に追記。
 
@@ -38,9 +38,9 @@ uv run python -m src.cli.main apply-production \
 
 | seg | motion | base prop 変換 | VideoEffects |
 |---|---|---|---|
-| [0] F=0 L=201 | enter_from_left | X=[-392, 408] (anchor 408 + delta) | `[]` |
-| [2] F=476 L=98 | surprise_oneshot | Y=[-57, -107, -82, -112, -57] + Zoom=[103.8, 111.8, 107.8, 111.8, 103.8] | `[]` |
-| [6] F=1202 L=145 | deny_oneshot | X=[-160.4, -185.4, -135.4, -175.4, -145.4, -160.4] (anchor -160.4 中心の shake) | `[]` |
+| [0] F=0 L=201 | enter_from_left | X=[-572, -12, 318, 432, 408], Y=[13, -21, -49, -69, -57], Zoom=[87.8, 93.8, 99.8, 106.8, 103.8] | `[]` |
+| [2] F=476 L=98 | surprise_oneshot | Y=[-57, -39, -161, -111, -83, -57], Zoom=[103.8, 117.8, 126.8, 118.8, 111.8, 103.8], Rotation=[0, -7, 4, -2, 0] | `[]` |
+| [6] F=1202 L=145 | deny_oneshot | X=[-160.4, -280.4, -50.4, -256.4, -72.4, -204.4, -160.4], Rotation=[0, -12, 10, -8, 7, -4, 0] | `[]` |
 
 v6 clip/remap は他 segment (index 2/4/5/7/9/10 などの pan-only) で引き続き機能し、元軌跡該当区間を保持。
 
@@ -49,9 +49,9 @@ pytest: 既存 32 件 PASS。
 ## UX 判定
 
 user が YMM4 で `_tmp/b2_haitatsuin_oneshot_block2.ymmp` を開き、
-- index 1 で配達員が左から登場する one-shot
-- index 3 で Y 方向の 1 jump + Zoom ふくらみ
-- index 8 で左右 3 往復の首振りが 1 回きりで終わる (ループしない)
+- index 1 で「左外から入る → 軽く行き過ぎる → 所定位置へ着地」が読める
+- index 3 で「のけぞり → 大きく跳ねる → 元位置復帰」の驚きが読める
+- index 8 で「左右に強く首を振って否定し、正面に戻る」動きが 1 回で終わる (ループしない)
 
 を確認。OK なら library v3 導入成立、skit_01 に進める。
 
