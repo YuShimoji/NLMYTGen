@@ -10,98 +10,98 @@
   "utterances": [
     {
       "index": 1,
-      "speaker": "ゆっくり霊夢赤縁",
-      "text": "あの、想像してみてください。ある朝目覚めると、",
+      "speaker": "ゆっくり魔理沙黄縁",
+      "text": "ピザ特急便です! チーズ増し二枚をお届けしました!",
       "section_id": "S1",
-      "face": "thinking",
+      "face": "smile",
       "motion": "enter_from_left",
       "motion_target": "layer:9",
-      "_skit_note": "scene1: 画面外から中央へ登場"
+      "_skit_note": "scene1: 配達員が勢いよく登場"
     },
     {
       "index": 2,
       "speaker": "ゆっくり霊夢赤縁",
-      "text": "ま、世界のエネルギー供給の 20% が跡形もなく消滅していると。",
+      "text": "注文してないです。住所、ちゃんと見ましたか?",
       "section_id": "S1",
-      "face": "sad",
+      "face": "serious",
       "motion": "nod",
       "motion_target": "layer:9",
-      "_skit_note": "scene1: カメラへ軽く会釈 (既存 library v2 nod)"
+      "_skit_note": "scene1: 受け取り拒否の行動"
     },
     {
       "index": 3,
       "speaker": "ゆっくり魔理沙黄縁",
-      "text": "ええ、いきなりですよね。",
+      "text": "えっ、表札は同じなのに! しまった、部屋番号が違う!",
       "section_id": "S1",
       "face": "surprised",
       "motion": "surprise_oneshot",
       "motion_target": "layer:9",
-      "_skit_note": "scene2: 話の展開に驚く"
+      "_skit_note": "scene2: 誤配に気づいて驚く"
     },
     {
       "index": 4,
       "speaker": "ゆっくり霊夢赤縁",
-      "text": "そうなんですよ。なんか徐々に減っていくんじゃなくて",
+      "text": "隣の部屋は 302 号。ここは 301 号ですよ。",
       "section_id": "S1",
       "face": "thinking",
       "motion": "none",
-      "_skit_note": "scene2: 沈黙"
+      "_skit_note": "scene2: 落ち着いて訂正"
     },
     {
       "index": 5,
-      "speaker": "ゆっくり霊夢赤縁",
-      "text": "巨大なスイッチが急に切られたみたいに、",
+      "speaker": "ゆっくり魔理沙黄縁",
+      "text": "階段を一つ飛ばしてしまいました、今すぐ届け直します!",
       "section_id": "S1",
-      "face": "serious",
+      "face": "sad",
       "motion": "none",
-      "_skit_note": "scene2: 沈黙"
+      "_skit_note": "scene2: その場で行動宣言"
     },
     {
       "index": 6,
       "speaker": "ゆっくり霊夢赤縁",
-      "text": "たった数日で起きるんです。",
+      "text": "急がなくて大丈夫です、ただ箱が逆さですよ。",
       "section_id": "S1",
-      "face": "serious",
+      "face": "thinking",
       "motion": "none",
-      "_skit_note": "scene2: 沈黙"
+      "_skit_note": "scene3: 問題を指摘"
     },
     {
       "index": 7,
-      "speaker": "ゆっくり霊夢赤縁",
-      "text": "これちょっとした SF 映画のオープニングみたいじゃないですか?",
+      "speaker": "ゆっくり魔理沙黄縁",
+      "text": "え、ほんとだ。チーズが雪崩れてる!?",
       "section_id": "S1",
-      "face": "smile",
+      "face": "sad",
       "motion": "none",
-      "_skit_note": "scene2: 沈黙"
+      "_skit_note": "scene3: 焦りを見せる"
     },
     {
       "index": 8,
-      "speaker": "ゆっくり魔理沙黄縁",
-      "text": "全くですね。でも、えっと、",
+      "speaker": "ゆっくり霊夢赤縁",
+      "text": "その向きで走ったらさらに崩れます。今はダメです!",
       "section_id": "S1",
-      "face": "sad",
+      "face": "angry",
       "motion": "deny_oneshot",
       "motion_target": "layer:9",
-      "_skit_note": "scene3: 否定 (左右 3 往復)"
+      "_skit_note": "scene3: 強い否定リアクション"
     },
     {
       "index": 9,
       "speaker": "ゆっくり魔理沙黄縁",
-      "text": "残念ながらこれはフィクションではなくって",
+      "text": "了解です! 箱を正して、今度こそ 302 号へ行ってきます!",
       "section_id": "S1",
       "face": "serious",
       "motion": "none",
-      "_skit_note": "scene3: 間"
+      "_skit_note": "scene3: 立て直し"
     },
     {
       "index": 10,
       "speaker": "ゆっくり魔理沙黄縁",
-      "text": "現在の中東で現実に起きていることなんです。",
+      "text": "失礼しましたー! 今度はちゃんと届けます!",
       "section_id": "S1",
-      "face": "angry",
+      "face": "smile",
       "motion": "exit_left",
       "motion_target": "layer:9",
-      "_skit_note": "scene3: 左へ退場 (既存 library exit_left = InOutMove OUT)"
+      "_skit_note": "scene4: 退場"
     }
   ]
 }
