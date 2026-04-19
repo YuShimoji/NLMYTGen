@@ -13,7 +13,7 @@
 - **手動参照マスタ（ユーザー作成）**: `_tmp/skit_ManualSample_01.ymmp` — 日本語 Remark・VideoEffects 多用。パイプライン出力の `motion:… utt:…` とは別の参照用。
 - **再開時**: segment / Group 確認は `inspect_v5_group_segments.py` 系。茶番 E2E 経路は既存 IR + `apply-production`（IR 例: `samples/_probe/skit_01/skit_01_ir.json`）。
 - **既知メモ**: pan のみ区間で Remark が `motion:none utt:?` になりうる。camera pan の X と縦 one-shot が重なると画面上は斜めに見える可能性。`nod` は RepeatMove、`nod_oneshot` は未実装。
-- **プローブ採掘**: `samples/_probe/b2/effect_full_samples.json` は `.gitignore`（リポジトリに載せない方針）。必要なら ignore を外してから追加コミット。
+- **YMM 効果サンプル（共有参照）**: `samples/_probe/b2/effect_full_samples.json` をリポジトリに同梱する（作業環境の突き合わせ用）。motion プリセットの正本は引き続き `tachie_motion_map_library.json` / `EffectsSamples_*.ymmp` / [MOTION_PRESET_LIBRARY_SPEC.md](MOTION_PRESET_LIBRARY_SPEC.md)。
 
 ドキュメント地図（任意）: [NAV.md](NAV.md) / Electron 最小経路・検証ラダー: [GUI_MINIMUM_PATH.md](GUI_MINIMUM_PATH.md)（2026-04-14: balance-lines GUI 露出・ウィザード範囲明記）
 
