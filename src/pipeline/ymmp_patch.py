@@ -1091,6 +1091,96 @@ def _parse_motion_target_layers(motion_target: object) -> list[int] | None:
     return [single] if single is not None else None
 
 
+# GroupItem/ImageItem の base X/Y/Zoom 等 animated 属性の再構成対象
+_CLIPPABLE_ANIMATED_PROPS: tuple[str, ...] = (
+    "X", "Y", "Zoom", "Rotation", "Opacity",
+)
+_AT_NONE: frozenset[str] = frozenset({"なし", ""})
+_AT_LINEAR: frozenset[str] = frozenset({"直線移動"})
+
+
+def _clip_animated_to_segment(
+    prop: object,
+    seg_start_local: int,
+    seg_length: int,
+    original_length: int,
+    result: "PatchResult | None" = None,
+    prop_name: str = "?",
+) -> object:
+    """animated 属性を segment 範囲で clip + 境界補間して remap する.
+
+    元 Values は original_length フレーム全域に等間隔で配置されていると解釈する
+    (Span=0.0 が本番 ymmp で標準なので、n 個の値は t_i = i * original_length / (n-1))。
+
+    Args:
+        prop: 元 animated 属性辞書 {Values, Span, AnimationType}
+        seg_start_local: 元アイテム timeline 上の segment 開始位置 (local, 0 起点)
+        seg_length: segment の frame 長
+        original_length: 元アイテム全体の frame 長
+        result: warning 記録用 (optional)
+        prop_name: warning 用の属性名
+    Returns:
+        segment 範囲に clip + remap した新しい辞書。
+        non-animated / 1 点のみ / 単一値は deepcopy のまま返す。
+    """
+    if not isinstance(prop, dict):
+        return prop
+    values = prop.get("Values")
+    if not isinstance(values, list) or len(values) < 2:
+        return copy.deepcopy(prop)
+
+    at = str(prop.get("AnimationType", ""))
+    if at in _AT_NONE:
+        return copy.deepcopy(prop)
+
+    if at not in _AT_LINEAR:
+        if result is not None:
+            result.warnings.append(
+                "ANIMATED_CLIP_UNSUPPORTED: "
+                f"prop={prop_name} AnimationType={at!r} "
+                "fallback to deep copy (segment animation may be distorted)"
+            )
+        return copy.deepcopy(prop)
+
+    if original_length <= 0 or seg_length <= 0:
+        return copy.deepcopy(prop)
+
+    try:
+        raw = [float(v.get("Value") if isinstance(v, dict) else v)
+               for v in values]
+    except (TypeError, ValueError, AttributeError):
+        return copy.deepcopy(prop)
+
+    n = len(raw)
+    times = [i * original_length / (n - 1) for i in range(n)]
+
+    def _interp(t: float) -> float:
+        if t <= times[0]:
+            return raw[0]
+        if t >= times[-1]:
+            return raw[-1]
+        for i in range(n - 1):
+            if times[i] <= t <= times[i + 1]:
+                span = times[i + 1] - times[i]
+                if span == 0:
+                    return raw[i]
+                frac = (t - times[i]) / span
+                return raw[i] + (raw[i + 1] - raw[i]) * frac
+        return raw[-1]
+
+    seg_end_local = seg_start_local + seg_length
+    out_values: list[float] = [_interp(seg_start_local)]
+    for i in range(n):
+        t_i = times[i]
+        if seg_start_local < t_i < seg_end_local:
+            out_values.append(raw[i])
+    out_values.append(_interp(seg_end_local))
+
+    new_prop = copy.deepcopy(prop)
+    new_prop["Values"] = [{"Value": v} for v in out_values]
+    return new_prop
+
+
 def _apply_motion_to_layer_items(
     items: list[dict],
     voice_items: list[dict],
@@ -1255,6 +1345,18 @@ def _apply_motion_to_layer_items(
             new_item = copy.deepcopy(target)
             new_item["Frame"] = start
             new_item["Length"] = span_len
+            seg_start_local = start - base_start
+            for prop_name in _CLIPPABLE_ANIMATED_PROPS:
+                original_prop = target.get(prop_name)
+                if isinstance(original_prop, dict):
+                    new_item[prop_name] = _clip_animated_to_segment(
+                        original_prop,
+                        seg_start_local,
+                        span_len,
+                        base_length,
+                        result=result,
+                        prop_name=prop_name,
+                    )
             new_item["VideoEffects"] = _motion_effects_for_label(
                 motion, tachie_motion_effects_map, result, ir_index=ir_index
             )

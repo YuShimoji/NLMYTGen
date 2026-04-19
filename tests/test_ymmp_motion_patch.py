@@ -7,6 +7,7 @@ from src.pipeline.ymmp_patch import (
     MOTION_ALLOWED,
     PatchResult,
     _apply_motion_to_tachie_items,
+    _clip_animated_to_segment,
     _parse_motion_target_layer,
     patch_ymmp,
 )
@@ -934,3 +935,75 @@ def test_validate_ir_motion_target_array_rejects_invalid_element():
     invalid_errors = [e for e in vr.errors if "MOTION_TARGET_INVALID" in e]
     assert len(invalid_errors) >= 2, \
         f"Expected >=2 MOTION_TARGET_INVALID errors, got {invalid_errors}"
+
+
+def _make_animated_linear(values: list[float]) -> dict:
+    return {
+        "Values": [{"Value": v} for v in values],
+        "Span": 0.0,
+        "AnimationType": "直線移動",
+    }
+
+
+def _make_animated_none(values: list[float]) -> dict:
+    return {
+        "Values": [{"Value": v} for v in values],
+        "Span": 0.0,
+        "AnimationType": "なし",
+    }
+
+
+def _extract_values(prop: dict) -> list[float]:
+    return [v["Value"] for v in prop["Values"]]
+
+
+def test_clip_animated_to_segment_no_straddle():
+    """segment が中間 keyframe を跨がないケース.
+
+    元: Values=[100, 200] AT=直線移動 original_length=100f
+    - seg [0, 50]: [100, 150] (右境界 50f 線形補間)
+    - seg [50, 100]: [150, 200]
+    """
+    prop = _make_animated_linear([100.0, 200.0])
+
+    left = _clip_animated_to_segment(prop, 0, 50, 100)
+    assert _extract_values(left) == [100.0, 150.0]
+    assert left["AnimationType"] == "直線移動"
+
+    right = _clip_animated_to_segment(prop, 50, 50, 100)
+    assert _extract_values(right) == [150.0, 200.0]
+    assert right["AnimationType"] == "直線移動"
+
+
+def test_clip_animated_to_segment_straddle():
+    """segment が中間 keyframe を跨ぐケース.
+
+    元: Values=[100, 200, 300] AT=直線移動 original_length=100f
+    (中間 keyframe t=50f 値 200)
+    - seg [0, 80]: [100, 200, 260] (中間 keyframe 保持 + 右境界 80f 補間)
+    - seg [80, 100]: [260, 300]
+    """
+    prop = _make_animated_linear([100.0, 200.0, 300.0])
+
+    left = _clip_animated_to_segment(prop, 0, 80, 100)
+    assert _extract_values(left) == [100.0, 200.0, 260.0]
+    assert left["AnimationType"] == "直線移動"
+
+    right = _clip_animated_to_segment(prop, 80, 20, 100)
+    assert _extract_values(right) == [260.0, 300.0]
+    assert right["AnimationType"] == "直線移動"
+
+
+def test_clip_animated_to_segment_fixed_regression():
+    """AnimationType='なし' fixed 値は deepcopy で全 segment に複製される (regression)."""
+    prop = _make_animated_none([150.0])
+
+    for seg_start, seg_len in [(0, 40), (40, 30), (70, 30)]:
+        clipped = _clip_animated_to_segment(
+            prop, seg_start, seg_len, 100,
+        )
+        assert _extract_values(clipped) == [150.0]
+        assert clipped["AnimationType"] == "なし"
+        # deep copy されていること (同一参照でない)
+        assert clipped is not prop
+        assert clipped["Values"] is not prop["Values"]
