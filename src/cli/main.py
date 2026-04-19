@@ -1605,11 +1605,34 @@ def _load_tachie_motion_effects_map(path: str | Path) -> dict[str, list[dict]]:
             "motion_map JSON must define a top-level object or 'motions'"
         )
 
-    motion_map: dict[str, list[dict]] = {}
+    motion_map: dict[str, object] = {}
     for label, value in motions_raw.items():
+        if isinstance(value, dict) and value.get("schema") == "base_prop_oneshot":
+            # v3 one-shot schema: { "schema": "base_prop_oneshot",
+            #   "delta_keyframes": { "X": {"Values":[...], "AnimationType":...}, ... } }
+            deltas = value.get("delta_keyframes")
+            if not isinstance(deltas, dict) or not deltas:
+                raise ValueError(
+                    f"motion_map entry '{label}' (base_prop_oneshot) "
+                    "must have non-empty 'delta_keyframes' dict"
+                )
+            for prop_name, prop_def in deltas.items():
+                if not isinstance(prop_def, dict):
+                    raise ValueError(
+                        f"motion_map '{label}'.delta_keyframes['{prop_name}'] "
+                        "must be an object"
+                    )
+                if not isinstance(prop_def.get("Values"), list):
+                    raise ValueError(
+                        f"motion_map '{label}'.delta_keyframes['{prop_name}']"
+                        ".Values must be a list"
+                    )
+            motion_map[str(label)] = dict(value)
+            continue
         if not isinstance(value, list):
             raise ValueError(
                 f"motion_map entry '{label}' must be a list of effect objects"
+                " or a base_prop_oneshot dict"
             )
         parsed: list[dict] = []
         for i, item in enumerate(value):

@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "version": "2.0.0",
+    "version": "3.0.0",
     "spec": "docs/MOTION_PRESET_LIBRARY_SPEC.md",
     "source": "samples/EffectsSamples_2026-04-15.ymmp (111 effects)",
     "generated": "2026-04-19",
-    "note": "Phase 2: parameter-filled library. Each motion has concrete values for animation parameters so motion_target direct-write produces visible, emotion-specific behavior. Scale is 'normal' intensity; _light/_heavy variants are future work. Applicable to both TachieItem (speaker) and ImageItem/GroupItem (skit performers) — not restricted by item type.",
+    "note": "Phase 2: parameter-filled library. Each motion has concrete values for animation parameters so motion_target direct-write produces visible, emotion-specific behavior. Scale is 'normal' intensity; _light/_heavy variants are future work. Applicable to both TachieItem (speaker) and ImageItem/GroupItem (skit performers) — not restricted by item type. v3: base_prop_oneshot schema added for enter_from_left / deny_oneshot / surprise_oneshot. One-shot motions override segment base X/Y via anchor+delta, suspending camera pan during the reaction beat (intentional).",
     "intensity": "normal"
   },
   "motions": {
@@ -4091,6 +4091,62 @@
         "IsEnabled": true,
         "Remark": ""
       }
-    ]
+    ],
+    "enter_from_left": {
+      "schema": "base_prop_oneshot",
+      "description": "画面外(左 -800px オフセット)から所定位置へ one-shot 直線移動して静止",
+      "delta_keyframes": {
+        "X": {
+          "Values": [
+            -800.0,
+            0.0
+          ],
+          "AnimationType": "直線移動"
+        }
+      }
+    },
+    "deny_oneshot": {
+      "schema": "base_prop_oneshot",
+      "description": "左右に 3 往復首振りして anchor 位置で静止 (one-shot deny)",
+      "delta_keyframes": {
+        "X": {
+          "Values": [
+            0.0,
+            -25.0,
+            25.0,
+            -15.0,
+            15.0,
+            0.0
+          ],
+          "AnimationType": "直線移動"
+        }
+      }
+    },
+    "surprise_oneshot": {
+      "schema": "base_prop_oneshot",
+      "description": "Y 方向に 1 ジャンプ + Zoom ふくらみ one-shot で驚き、anchor 位置に戻る",
+      "delta_keyframes": {
+        "Y": {
+          "Values": [
+            0.0,
+            -50.0,
+            -25.0,
+            -55.0,
+            0.0
+          ],
+          "AnimationType": "直線移動"
+        },
+        "Zoom": {
+          "Values": [
+            0.0,
+            8.0,
+            4.0,
+            8.0,
+            0.0
+          ],
+          "AnimationType": "直線移動"
+        }
+      }
+    }
   }
 }

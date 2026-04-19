@@ -866,7 +866,7 @@ def _merge_motion_spans(
 
 def _motion_effects_for_label(
     motion: str,
-    motion_map: dict[str, list[dict]] | None,
+    motion_map: dict[str, object] | None,
     result: PatchResult,
     *,
     ir_index: object,
@@ -888,7 +888,81 @@ def _motion_effects_for_label(
             f" (utterance index={ir_index})"
         )
         return []
+    # base_prop_oneshot schema は VideoEffects を書かない (base prop 側で適用)
+    if isinstance(mapped, dict) and mapped.get("schema") == "base_prop_oneshot":
+        return []
     return copy.deepcopy(mapped)
+
+
+def _motion_oneshot_base_deltas(
+    motion: str,
+    motion_map: dict[str, object] | None,
+) -> dict[str, dict] | None:
+    """base_prop_oneshot schema の delta_keyframes を取り出す.
+
+    戻り値: {prop_name: {"Values":[float...], "AnimationType": str}} or None
+    """
+    if not motion_map or motion == "none":
+        return None
+    entry = motion_map.get(motion)
+    if not isinstance(entry, dict):
+        return None
+    if entry.get("schema") != "base_prop_oneshot":
+        return None
+    deltas_raw = entry.get("delta_keyframes")
+    if not isinstance(deltas_raw, dict):
+        return None
+    result: dict[str, dict] = {}
+    for prop_name, prop_def in deltas_raw.items():
+        if not isinstance(prop_def, dict):
+            continue
+        values = prop_def.get("Values")
+        if not isinstance(values, list) or not values:
+            continue
+        try:
+            nums = [float(v) for v in values]
+        except (TypeError, ValueError):
+            continue
+        result[str(prop_name)] = {
+            "Values": nums,
+            "AnimationType": str(prop_def.get("AnimationType", "直線移動")),
+        }
+    return result or None
+
+
+def _apply_oneshot_deltas_to_segment(
+    segment_item: dict,
+    deltas: dict[str, dict],
+) -> None:
+    """segment の base prop (X/Y/Zoom/Rotation/Opacity) に
+    anchor + delta_values の one-shot 上書きを適用する.
+
+    anchor = 現 segment の対応 prop の 先頭 Value (v6 clip 後の値)。
+    OVERWRITE: 元の camera pan は当 segment 中は停止する代わりに、
+    motion が clean に一発で動くことを優先する (方針: 感情表現/行動は一拍止める)。
+    """
+    for prop_name, delta_def in deltas.items():
+        current = segment_item.get(prop_name)
+        anchor = 0.0
+        anim_type = delta_def.get("AnimationType", "直線移動")
+        if isinstance(current, dict):
+            vals = current.get("Values")
+            if isinstance(vals, list) and vals:
+                first = vals[0]
+                try:
+                    anchor = float(
+                        first.get("Value") if isinstance(first, dict) else first
+                    )
+                except (TypeError, ValueError):
+                    anchor = 0.0
+        new_values = [
+            {"Value": anchor + d} for d in delta_def["Values"]
+        ]
+        segment_item[prop_name] = {
+            "Values": new_values,
+            "Span": 0.0,
+            "AnimationType": anim_type,
+        }
 
 
 def _apply_motion_to_tachie_items(
@@ -1357,6 +1431,11 @@ def _apply_motion_to_layer_items(
                         result=result,
                         prop_name=prop_name,
                     )
+            oneshot_deltas = _motion_oneshot_base_deltas(
+                motion, tachie_motion_effects_map,
+            )
+            if oneshot_deltas:
+                _apply_oneshot_deltas_to_segment(new_item, oneshot_deltas)
             new_item["VideoEffects"] = _motion_effects_for_label(
                 motion, tachie_motion_effects_map, result, ir_index=ir_index
             )
