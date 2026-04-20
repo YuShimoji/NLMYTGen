@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.2",
   "registry_kind": "skit_group_template",
-  "notes": "Operator/assistant shared registry. Not consumed by CLI yet. Skit group children MUST be ImageItem only. TachieItem (yukkuri character animation) is forbidden in skit_group because it is reserved for speaker_tachie. See docs/SKIT_GROUP_TEMPLATE_SPEC.md section 1.",
+  "notes": "Operator/assistant shared registry. Skit group children MUST be ImageItem only. TachieItem (yukkuri character animation) is forbidden in skit_group because it is reserved for speaker_tachie. See docs/SKIT_GROUP_TEMPLATE_SPEC.md section 1. v1.1: template intents aligned to actual library motions used in skit_01 proof (2026-04-20). v1.2: audit-skit-group / patch-ymmp / apply-production can consume canonical_groups/templates/intent_fallbacks as a preflight registry, but patch-time template resolution is still out of scope.",
   "child_item_rule": {
     "allowed_types": ["ImageItem"],
     "forbidden_types": ["TachieItem"],
@@ -40,38 +40,74 @@
     }
   },
   "templates": {
-    "delivery_surprise_jump_v1": {
+    "delivery_enter_from_left_v1": {
       "group_key": "haitatsuin_delivery_v1",
-      "intent": "surprise_jump",
-      "template_name": "delivery_surprise_jump_v1",
+      "intent": "enter_from_left",
+      "library_motion": "enter_from_left",
+      "template_name": "delivery_enter_from_left_v1",
       "target_type": "skit_group",
-      "fallback": "delivery_panic_shake_v1",
+      "fallback": null,
       "manual_checks": [
-        "jump height",
-        "head/body sync"
-      ]
+        "landing position",
+        "overshoot + settle timing"
+      ],
+      "skit_01_proof": "scene 1 utt:1 — verified in skit_01_delivery_dispute_v1_2026-04-19.md"
     },
-    "delivery_panic_shake_v1": {
+    "delivery_surprise_oneshot_v1": {
       "group_key": "haitatsuin_delivery_v1",
-      "intent": "panic_shake",
-      "template_name": "delivery_panic_shake_v1",
+      "intent": "surprise_oneshot",
+      "library_motion": "surprise_oneshot",
+      "template_name": "delivery_surprise_oneshot_v1",
       "target_type": "skit_group",
-      "fallback": "delivery_deny_shake_v1",
+      "fallback": "delivery_nod_v1",
       "manual_checks": [
-        "rotation strength",
-        "screen overlap"
-      ]
+        "Y-axis only jump height",
+        "one-shot (no loop)"
+      ],
+      "skit_01_proof": "scene 2 utt:3 — Y-only jump, verified in skit_01_delivery_dispute_v1_2026-04-19.md"
     },
-    "delivery_deny_shake_v1": {
+    "delivery_deny_oneshot_v1": {
       "group_key": "haitatsuin_delivery_v1",
-      "intent": "deny_shake",
-      "template_name": "delivery_deny_shake_v1",
+      "intent": "deny_oneshot",
+      "library_motion": "deny_oneshot",
+      "template_name": "delivery_deny_oneshot_v1",
       "target_type": "skit_group",
-      "fallback": "delivery_reset_center_v1",
+      "fallback": "delivery_nod_v1",
       "manual_checks": [
-        "horizontal sway range"
-      ]
+        "X-axis only sway range",
+        "one-shot (no loop)"
+      ],
+      "skit_01_proof": "scene 3 utt:8 — X-only sway, verified in skit_01_delivery_dispute_v1_2026-04-19.md"
+    },
+    "delivery_exit_left_v1": {
+      "group_key": "haitatsuin_delivery_v1",
+      "intent": "exit_left",
+      "library_motion": "exit_left",
+      "template_name": "delivery_exit_left_v1",
+      "target_type": "skit_group",
+      "fallback": null,
+      "manual_checks": [
+        "exit direction and speed",
+        "scene closure timing"
+      ],
+      "skit_01_proof": "scene 4 utt:10 — verified in skit_01_delivery_dispute_v1_2026-04-19.md"
+    },
+    "delivery_nod_v1": {
+      "group_key": "haitatsuin_delivery_v1",
+      "intent": "nod",
+      "library_motion": "nod",
+      "template_name": "delivery_nod_v1",
+      "target_type": "skit_group",
+      "fallback": null,
+      "manual_checks": [
+        "nod amplitude (RepeatMove loop)",
+        "does not dominate scene"
+      ],
+      "skit_01_proof": "scene 1 utt:2 — verified in skit_01_delivery_dispute_v1_2026-04-19.md"
     }
+  },
+  "intent_fallbacks": {
+    "collapse_then_runaway": "delivery_surprise_oneshot_v1"
   },
   "resolution_policy": {
     "exact_match_first": true,

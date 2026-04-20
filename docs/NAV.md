@@ -21,6 +21,7 @@
 - [verification/FAILURE_DIAGNOSIS_MATRIX.md](verification/FAILURE_DIAGNOSIS_MATRIX.md) — ERROR/WARNING 全 64 種の診断マトリクス
 - `samples/registry_template/` — 6 種の registry JSON 雛形（overlay/se/bg/slot/face/group_motion_map）
 - `samples/effect_catalog.json` — YMM4 v4.51 の VideoEffect カタログ（111 ユニーク、9 カテゴリ）。抽出元 `samples/EffectsSamples_2026-04-15.ymmp` / 再抽出 `scripts/extract_effect_catalog.py`。**用途**: `motion_map` / `tachie_motion_map` / `bg_anim_map` / `group_motion_map` に書くエフェクト名・`$type`・パラメータキーのピックアップ元。運用メモ [samples/EFFECT_CATALOG_USAGE.md](../samples/EFFECT_CATALOG_USAGE.md)
+- [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md) — **Capability Atlas 正本**。`IR -> registry -> ymmp` の接合点で、何が `direct_proven` / `template_catalog_only` / `probe_only` / `unsupported` かを 1 枚で判断する。機械台帳: `python scripts/build_capability_atlas.py` -> `samples/_generated/capability_atlas.json`
 - [VISUAL_EFFECT_SELECTION_GUIDE.md](VISUAL_EFFECT_SELECTION_GUIDE.md) — **視覚効果ツール選定**: 4 類 × 3 ルート比較・エフェクト 111 種の用途別再編・テンプレバンドル 5 種案・ハンズオン 5 ステップ。姉妹: [VISUAL_TOOL_DECISION.md](VISUAL_TOOL_DECISION.md)(ユーザー記入)・[MATERIAL_SOURCING_RULES.md](MATERIAL_SOURCING_RULES.md)(素材運用ルール)
 - [STEP3_YMM4_TEMPLATE_CHECKLIST.md](STEP3_YMM4_TEMPLATE_CHECKLIST.md) / [STEP3_TACHIE_RENDERING_PIPELINE.md](STEP3_TACHIE_RENDERING_PIPELINE.md) — **視覚効果 slice Step 3 ハンズオン**: 5 種テンプレ各エフェクトの parameter 初期値+チェックリスト / G-22 dual-rendering 経路 B の PNG 書き出し→overlay_map 登録パイプライン
 - [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md) — **茶番劇 Group テンプレ正本**: 配達員などの外部素材演者を `speaker_tachie` と分離し、canonical template → 小演出量産 → production での template 解決 + fallback note までを定義
@@ -37,7 +38,7 @@
 - [verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md](verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md) — **ファイル10**: コピペ用 Prompt 全文・検収・親チャット返却テンプレ
 - [verification/CORE-DEV-POST-DELEGATION-INDEX.md](verification/CORE-DEV-POST-DELEGATION-INDEX.md) — コア移譲後ドキュメントの索引（ファイル2〜）
 - [verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md](verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md) — 立ち絵 複数体×顔差し替え（**G-19 `done` / G-20 `approved`** の準備正本）。茶番劇演者の現行主軸は [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md)
-- `samples/registry_template/skit_group_registry.template.json` — **茶番劇 Group 台帳雛形**。canonical group / 派生 template / fallback / manual check を shared registry として記録する。現時点では CLI 入力ではなく運用台帳
+- `samples/registry_template/skit_group_registry.template.json` — **茶番劇 Group 台帳雛形**。canonical group / 派生 template / fallback / manual check を shared registry として記録する。`audit-skit-group` / `patch-ymmp --skit-group-registry` / `apply-production --skit-group-registry` の preflight 入力でもある
 - [verification/G22-dual-rendering-tachie-and-png-2026-04-16.md](verification/G22-dual-rendering-tachie-and-png-2026-04-16.md) — **G-22 `hold`**: 立ち絵 TachieItem + YMM4 書き出し PNG の補助経路。現行主軸ではなく、必要時のみ参照
 - [verification/CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) — 即実行 Prompt の運用原則・早見（ファイル9）。全文はファイル10を先に更新する運用
 

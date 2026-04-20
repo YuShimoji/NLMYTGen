@@ -10,6 +10,7 @@
 - AskUserQuestion の `question` に Markdown テーブルを入れる
 - 選択肢を commit / しない の yes/no で埋める
 - 既知文脈を「詳細を教えてください」で再質問する
+- repo 側 handoff が欠落 `_tmp/*.ymmp` を指しているときに、先に user へ正確なファイル名や ManualSample 再作成を求める
 - `判断をお願いします` `何が足りないか教えてください` のような broad question で停止する
 - 同じ確認点の YMM4 visual proof を繰り返し要求する
 

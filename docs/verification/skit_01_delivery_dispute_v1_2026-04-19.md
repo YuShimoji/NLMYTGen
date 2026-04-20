@@ -1,8 +1,8 @@
 # skit_01_delivery_dispute v2 proof (2026-04-20)
 
-**今回の生成物（正本）**: 茶番用の再生成 YMMP は **`_tmp/skit_01_v2.ymmp`**（`apply-production` の `-o` 指定）。`skit_02.ymmp` という固定ファイルは置いていない; 同内容を `_tmp/skit_02.ymmp` として出すなら `-o` だけ差し替え。
+**今回の生成物（repo に残っている検証用 artifact）**: 茶番用 YMMP は **`_tmp/skit_01_v2_verify.ymmp`**。旧表記 `_tmp/skit_01_v2.ymmp` は workflow breakage 前の stale path であり、現ブロック以降の gate に使わない。
 
-**位置づけ**: one-shot を**軸別**（驚き=縦 / 否定=横 / 登場=横+着地）に再定義し、GroupItem `Remark` に `motion:…` を焼き込み。誤配茶番の **登場 → 行動 → 反応 → 退場**が追いやすいことを狙う。
+**位置づけ**: one-shot を**軸別**（驚き=縦 / 否定=横 / 登場=横+着地）に再定義し、GroupItem `Remark` に `motion:…` を焼き込んだ **mechanical motion proof**。誤配茶番の **登場 → 行動 → 反応 → 退場**が追いやすいことを狙うが、G-24 の template-first workflow proof 完了を意味しない。workflow breakage の正本は [skit_01-workflow-breakage-audit-2026-04-20.md](skit_01-workflow-breakage-audit-2026-04-20.md)。
 
 ## storyboard (3 scene)
 
@@ -25,7 +25,7 @@ uv run python -m src.cli.main apply-production \
   --face-map samples/face_map_bundles/haitatsuin.json \
   --bg-map samples/_probe/b2/palette_extract/bg_map.json \
   --tachie-motion-map samples/tachie_motion_map_library.json \
-  -o _tmp/skit_01_v2.ymmp
+  -o _tmp/skit_01_v2_verify.ymmp
 ```
 
 ## 技術 PASS
@@ -33,7 +33,7 @@ uv run python -m src.cli.main apply-production \
 - exit 0 / fatal_warning 0 / Face changes 50 / VideoEffects writes (motion) 10
 - Layer 9 GroupItem: **8 segment**。各 segment の **Remark** に `motion:<label> utt:<index>`（パン区間は `utt:?` のことがある）
 
-### motion 対応表（`_tmp/skit_01_v2.ymmp` Layer 9 GroupItem）
+### motion 対応表（`_tmp/skit_01_v2_verify.ymmp` Layer 9 GroupItem）
 
 | Frame range | Remark | motion | 意図 |
 |---|---|---|---|
@@ -65,19 +65,35 @@ inspect 実測（差分の大きい one-shot のみ）:
 
 ## UX 判定 (user)
 
-YMM4 で `_tmp/skit_01_v2.ymmp` を開き、タイムライン再生で次を確認:
+YMM4 で `_tmp/skit_01_v2_verify.ymmp` を開き、タイムライン再生で次を確認:
 
 1. scene 1: 配達員が左外から入り、軽い行き過ぎ後に着地する（登場として読める）
 2. scene 2: 誤配に気づく台詞と同時に、**縦方向だけ**大きく跳ねる（斜め漂いではない）
 3. scene 3: 「今はダメです!」で **左右方向だけ**大きく往復する（驚きの縦ジャンプと軸が違う）
 4. scene 4: 退場台詞で左へ抜け、場面が閉じる
 
-各 one-shot motion がループせずに 1 発で終わることを確認する。OK なら skit_01 成立。
+各 one-shot motion がループせずに 1 発で終わることを確認する。OK なら **この surviving artifact の motion readability は成立**。ただし G-24 の template-first workflow proof は、repo-resident canonical template / exact-fallback-manual-note 証跡が揃うまで未成立。
 
 ## 関連
 
 - [B2-oneshot-library-v3-2026-04-19.md](B2-oneshot-library-v3-2026-04-19.md) — library v3 の 3 one-shot proof
 - [B2-haitatsuin-motion-groupitem-keyframe-remap-2026-04-19.md](B2-haitatsuin-motion-groupitem-keyframe-remap-2026-04-19.md) — v6 clip/remap (pan segment の基盤)
+
+## registry 整合 (2026-04-20)
+
+`skit_group_registry.template.json` を v1.1 に更新し、skit_01 proof で実証した 5 motion を `templates` に反映。
+
+| registry template | intent (= library motion) | skit_01 での使用 |
+| --- | --- | --- |
+| `delivery_enter_from_left_v1` | `enter_from_left` | scene 1 utt:1 |
+| `delivery_surprise_oneshot_v1` | `surprise_oneshot` | scene 2 utt:3 |
+| `delivery_deny_oneshot_v1` | `deny_oneshot` | scene 3 utt:8 |
+| `delivery_exit_left_v1` | `exit_left` | scene 4 utt:10 |
+| `delivery_nod_v1` | `nod` | scene 1 utt:2 |
+
+旧 intent 名 (`surprise_jump` / `panic_shake` / `deny_shake`) は廃止。`SKIT_GROUP_TEMPLATE_SPEC.md` §3.3 も同期。
+
+根拠: skit_01 技術 PASS (exit 0 / face_changes 50 / motion writes 10) + SKIT_GROUP_TEMPLATE_SPEC §3.3
 
 ## 残課題 (skit_02 以降)
 

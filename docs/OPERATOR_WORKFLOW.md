@@ -90,7 +90,7 @@
 - **`--timeline-profile` を付ける場合（G-17）**: `motion` / `transition` / `bg_anim` のうち、契約に含まれるものを **`--motion-map`**（各ラベル → `video_effect` 辞書）、`--transition-map`、`--bg-anim-map` で書き込む。サンプル: [samples/motion_map_g17.example.json](samples/motion_map_g17.example.json)。このとき **Phase2 の `TachieItem` 区間分割は実行されない**。
 - **プロファイルを付けない場合の motion（Phase2）**: **`--tachie-motion-map`** でラベル → **VideoEffects オブジェクトの配列**を渡し、発話アンカーに合わせて `TachieItem` を分割する。サンプル: [samples/tachie_motion_map.example.json](samples/tachie_motion_map.example.json)。
 - **`validate-ir`**: 台帳ラベル検証は **`--motion-map` と `--tachie-motion-map` のキーを併用**できる（和集合で `MOTION_MAP_UNKNOWN_LABEL` を抑止）。
-- **重要な境界**: 上記の `motion` は **speaker_tachie（ゆっくり立ち絵）専用**。配達員などの外部素材演者はここに含めない。茶番劇演者の主経路は [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md) の **GroupItem テンプレ運用**。
+- **重要な境界**: 上記の `motion` は **speaker_tachie（ゆっくり立ち絵）専用**。配達員などの外部素材演者はここに含めない。茶番劇演者の主経路は [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md) の **GroupItem テンプレ運用**。route 選択で迷ったら [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md) を先に見る。
 
 ## 茶番劇テンプレ運用（2026-04-17 固定）
 
@@ -129,10 +129,11 @@
 - route contract やテストが通っただけで production 演出まで成立したと扱うこと
 
 ## timeline edit サブクエストの境界 (2026-04-06 固定)
+- route 選択の正本: [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md)（何が `direct_proven` / `template_catalog_only` / `probe_only` / `unsupported` かを先に判断する）
 - IR 語彙と `patch-ymmp` 実装の対応（何が自動で書き込まれるか）の正本: [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md)
 - assistant / tool が先に閉じる対象は G-11 slot patch、G-12 motion/transition/bg_anim の write route 測定、G-13 overlay/se の timing anchor 付き挿入設計、G-14 bg_anim（ImageItem X/Y/Zoom プリセット）patch
 - `slot` は mechanical 対象。unknown slot label / slot registry gap / character default slot drift は YMM4 手動確認より前に止める
-- `motion` / `transition` / `bg_anim` は creative choice ではなく、まず「どの write route が安全か」を測る subquest として扱う。native template 参照か key 書き換えかを実測で確定するまでは manual frontier に押し戻さない
+- `motion` / `transition` / `bg_anim` は creative choice ではなく、まず「どの write route が安全か」を測る subquest として扱う。native template 参照か key 書き換えかを実測で確定するまでは manual frontier に押し戻さない。Atlas ではこの状態差を `direct_proven` / `probe_only` / `unsupported` で明示する
 - G-12 の測定は `measure-timeline-routes` を起点に行い、まず ymmp の `VideoEffects` / transition key / template candidate route を readback で把握する。期待 route が決まったら `--expect` で contract miss を先に止める
 - 運用: `samples/` 等に新しい ymmp サンプルが追加され、timeline 系の期待 route を広げる場合は、該当カテゴリの `measure-timeline-routes` 記録（contract）を同じタイミングで更新する（sample dependency の解消単位）
 - `TIMELINE_ROUTE_MISS` は「その演出がダメ」という意味ではなく、「その ymmp には期待 route が存在しない」という mechanical failure として扱う

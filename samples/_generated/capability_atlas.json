@@ -1,0 +1,2953 @@
+{
+  "schema_version": "1.0",
+  "entries": [
+    {
+      "expression_id": "bg_layer.bg",
+      "scope": "bg_layer",
+      "preferred_route": "IR bg -> bg_map -> patch-ymmp",
+      "support_level": "direct_proven",
+      "evidence": [
+        {
+          "path": "docs/PRODUCTION_IR_CAPABILITY_MATRIX.md",
+          "reason": "bg is a patch-time route in the capability matrix"
+        },
+        {
+          "path": "docs/verification/G15-micro-bg-patch.md",
+          "reason": "micro bg patch is the proof packet for Layer 0 background writes"
+        }
+      ],
+      "manual_checks": [
+        "Confirm the chosen background still matches the narrative beat in YMM4"
+      ],
+      "limitations": [
+        "Background asset choice remains a registry/operator judgement"
+      ]
+    },
+    {
+      "expression_id": "bg_layer.bg_anim",
+      "scope": "bg_layer",
+      "preferred_route": "IR bg_anim -> timeline contract route -> patch-ymmp",
+      "support_level": "direct_proven",
+      "evidence": [
+        {
+          "path": "samples/timeline_route_contract.json",
+          "reason": "ImageItem X/Y/Zoom and ImageItem.VideoEffects routes are measured in repo-local contract profiles"
+        },
+        {
+          "path": "docs/verification/G12-timeline-route-measurement.md",
+          "reason": "bg_anim route measurement packet fixes the repo-local write routes"
+        },
+        {
+          "path": "docs/PRODUCTION_IR_CAPABILITY_MATRIX.md",
+          "reason": "bg_anim has two approved patch paths: keyframes and VideoEffects"
+        }
+      ],
+      "manual_checks": [
+        "Check whether the pan/zoom strength is visually comfortable in the target scene"
+      ],
+      "limitations": [
+        "VideoEffects route depends on a measured profile; do not assume every ymmp corpus has the same background route"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.ArrangeGroupItemsEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'ArrangeGroupItemsEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.AudioVolumeMoveEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'AudioVolumeMoveEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.AudioVolumeOpacityEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'AudioVolumeOpacityEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.AudioVolumeRotateEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'AudioVolumeRotateEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.AudioVolumeSkewEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'AudioVolumeSkewEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.AudioVolumeZoomEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'AudioVolumeZoomEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.AutomaticZoomEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'AutomaticZoomEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.BinarizationEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'BinarizationEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.BloomEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'BloomEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.BlurMapEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'BlurMapEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.CameraLookAtEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'CameraLookAtEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.CameraPositionEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'CameraPositionEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.CameraShakeEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'CameraShakeEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.CameraWraparoundEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'CameraWraparoundEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.CenterPointEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'CenterPointEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.ChromaKeyEffect2",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'ChromaKeyEffect2'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.ChromaticAberrationEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'ChromaticAberrationEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.CircularBlurEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'CircularBlurEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.CircularDuplicatorEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'CircularDuplicatorEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.ColorBlindnessEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'ColorBlindnessEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.ColorCorrectionEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'ColorCorrectionEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.ColorShiftEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'ColorShiftEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.CopyAndReverseEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'CopyAndReverseEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.CrashEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'CrashEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.CropByAngleEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'CropByAngleEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.CropEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'CropEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.DirectionalBlurEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'DirectionalBlurEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.DisplacementMapEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'DisplacementMapEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.DrawLazyEffectEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'DrawLazyEffectEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.DrawPositionEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'DrawPositionEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.EdgeDetectionEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'EdgeDetectionEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.EdgeTrimmingEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'EdgeTrimmingEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.ExposureEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'ExposureEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.FillBackgroundEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'FillBackgroundEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.FishEyeLensEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'FishEyeLensEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.FlipEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'FlipEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.FrameLineEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'FrameLineEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.GammaCorrectionEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'GammaCorrectionEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.GaussianBlurEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'GaussianBlurEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.GradientEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'GradientEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.HalfToneBorderBlurEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'HalfToneBorderBlurEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.HalfToneEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'HalfToneEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.HalfToneOutlineEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'HalfToneOutlineEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.HalfToneShadowEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'HalfToneShadowEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.HightlightsAndShadowsEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'HightlightsAndShadowsEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.HlslPixelShaderCodeEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'HlslPixelShaderCodeEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.HlslPixelShaderFileEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'HlslPixelShaderFileEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.InOutBorderBlurEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'InOutBorderBlurEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.InOutCrashEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'InOutCrashEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.InOutGetUpEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'InOutGetUpEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.InOutJumpEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'InOutJumpEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.InOutMoveFromOutsideImageEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'InOutMoveFromOutsideImageEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.InOutSkewEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'InOutSkewEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.InOutTransitionEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'InOutTransitionEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.InnerHalfToneShadowEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'InnerHalfToneShadowEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.InvertEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'InvertEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.JumpEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'JumpEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.LensBlurEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'LensBlurEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.LinearTransferEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'LinearTransferEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.LuminanceKeyEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'LuminanceKeyEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.LuminanceMaskEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'LuminanceMaskEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.MarginEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'MarginEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.MaskEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'MaskEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.MeshDeformationEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'MeshDeformationEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.MonocolorizationEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'MonocolorizationEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.MorphologyEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'MorphologyEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.MosaicEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'MosaicEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.MotionTrackingEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'MotionTrackingEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.NoiseColorShiftEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'NoiseColorShiftEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.NoiseDisplacementMapEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'NoiseDisplacementMapEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.NoiseEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'NoiseEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.OpacityEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'OpacityEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.PolarDrawPositionEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'PolarDrawPositionEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.PolarTransformEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'PolarTransformEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.PosterizeEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'PosterizeEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RadialArrangeGroupItemsEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RadialArrangeGroupItemsEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RadialBlurEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RadialBlurEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RadialLightEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RadialLightEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RandomDuplicatorEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RandomDuplicatorEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RandomMoveEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RandomMoveEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RandomOpacityEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RandomOpacityEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RandomRotateEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RandomRotateEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RandomSkewEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RandomSkewEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RandomZoomEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RandomZoomEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RatioCropEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RatioCropEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RectangleGlitchNoiseEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RectangleGlitchNoiseEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.ReflectionAndExtrusionEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'ReflectionAndExtrusionEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RepeatMoveEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RepeatMoveEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RepeatOpacityEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RepeatOpacityEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RepeatRotateEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RepeatRotateEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RepeatSkewEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RepeatSkewEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RepeatZoomEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RepeatZoomEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RippleEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RippleEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.RoundCornerEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'RoundCornerEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.SepiaEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'SepiaEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.SharpenEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'SharpenEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.ShuffleTextEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'ShuffleTextEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.SkewEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'SkewEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.SpiralTransformEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'SpiralTransformEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.StretchEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'StretchEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.StripeGlitchNoiseEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'StripeGlitchNoiseEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.ThreeDimensionalEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'ThreeDimensionalEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.TilingEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'TilingEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.TilingGroupItemsEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'TilingGroupItemsEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.TintEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'TintEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.UnidirectionalBlurEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'UnidirectionalBlurEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.VignetteBlurEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'VignetteBlurEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.WaveEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'WaveEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.XYToPolarTransformEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'XYToPolarTransformEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.ZoomEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'ZoomEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use"
+      ]
+    },
+    {
+      "expression_id": "effect_atom.ZoomPixelEffect",
+      "scope": "effect_catalog",
+      "preferred_route": "Use as a registry pick-up source only after choosing motion/template/bg_anim/overlay/se",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "samples/effect_catalog.json",
+          "reason": "Effect catalog contains raw effect atom 'ZoomPixelEffect'"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog usage note treats effect names as registry/source material"
+        }
+      ],
+      "manual_checks": [
+        "Promote to a higher-level route before relying on it in a production script"
+      ],
+      "limitations": [
+        "Raw effect atom only; choose a higher-level IR route before production use",
+        "Requires YukkuriMovieMaker.Plugin.Community in the target environment"
+      ]
+    },
+    {
+      "expression_id": "overlay_se.overlay",
+      "scope": "overlay_se",
+      "preferred_route": "IR overlay -> overlay_map -> timing anchor -> patch-ymmp",
+      "support_level": "direct_proven",
+      "evidence": [
+        {
+          "path": "docs/verification/G13-overlay-se-insertion-packet.md",
+          "reason": "overlay insertion packet fixes deterministic label/timing insertion"
+        },
+        {
+          "path": "docs/PRODUCTION_IR_CAPABILITY_MATRIX.md",
+          "reason": "overlay is listed as a yes/write path in patch_ymmp"
+        }
+      ],
+      "manual_checks": [
+        "Confirm density, overlap, and final screen readability in YMM4"
+      ],
+      "limitations": [
+        "Overlay remains registry and timing-anchor dependent"
+      ]
+    },
+    {
+      "expression_id": "overlay_se.se",
+      "scope": "overlay_se",
+      "preferred_route": "IR se -> se_map -> timing anchor -> patch-ymmp",
+      "support_level": "direct_proven",
+      "evidence": [
+        {
+          "path": "docs/verification/G18-se-audioitem-implementation.md",
+          "reason": "SE AudioItem insertion is implemented and documented"
+        },
+        {
+          "path": "docs/PRODUCTION_IR_CAPABILITY_MATRIX.md",
+          "reason": "se is a conditional write path with mechanical failure classes"
+        }
+      ],
+      "manual_checks": [
+        "Check timing, loudness, and whether the SE is worth keeping in the final edit"
+      ],
+      "limitations": [
+        "SE still requires registry resolution and timing-anchor coverage"
+      ]
+    },
+    {
+      "expression_id": "skit_group.canonical_anchor",
+      "scope": "skit_group",
+      "preferred_route": "canonical ymmp -> audit-skit-group",
+      "support_level": "direct_proven",
+      "evidence": [
+        {
+          "path": "samples/canonical.ymmp",
+          "reason": "Canonical skit_group artifact contains GroupItem remark 'haitatsuin_delivery_main' on Layer 9 with ImageItem-only children"
+        },
+        {
+          "path": "docs/verification/G24-canonical-anchor-adoption-2026-04-20.md",
+          "reason": "Canonical adoption packet records audit-skit-group success against the canonical corpus"
+        }
+      ],
+      "manual_checks": [
+        "Confirm the left-facing base pose and center-relative composition still match the intended default actor stance"
+      ],
+      "limitations": [
+        "Derived native template assets are still pending; this proves the anchor, not the full template set"
+      ]
+    },
+    {
+      "expression_id": "skit_group.group_motion",
+      "scope": "skit_group",
+      "preferred_route": "IR group_motion + group_target -> group_motion_map -> GroupItem.X/Y/Zoom",
+      "support_level": "direct_proven",
+      "evidence": [
+        {
+          "path": "samples/timeline_route_contract.json",
+          "reason": "group_motion_only profile fixes GroupItem.X/Y/Zoom as the measured route"
+        },
+        {
+          "path": "docs/verification/G20-group-and-asset-automation-comprehensive-review-2026-04.md",
+          "reason": "G-20 review fixes group_motion as geometry helper, not the acting mainline"
+        },
+        {
+          "path": "docs/PRODUCTION_IR_CAPABILITY_MATRIX.md",
+          "reason": "group_motion is documented as a yes/write path with failure classes"
+        }
+      ],
+      "manual_checks": [
+        "Check whether the geometry nudge preserves scene composition and relative alignment"
+      ],
+      "limitations": [
+        "Use only as a geometry helper; do not replace canonical skit templates with repeated group_motion tweaks"
+      ]
+    },
+    {
+      "expression_id": "skit_group.intent.deny_oneshot",
+      "scope": "skit_group",
+      "preferred_route": "template intent -> skit_group_registry -> audit-skit-group",
+      "support_level": "template_catalog_only",
+      "evidence": [
+        {
+          "path": "samples/registry_template/skit_group_registry.template.json",
+          "reason": "Registry template defines skit intent 'deny_oneshot'"
+        },
+        {
+          "path": "docs/SKIT_GROUP_TEMPLATE_SPEC.md",
+          "reason": "Skit group spec fixes template-first as the mainline"
+        },
+        {
+          "path": "docs/verification/G24-canonical-anchor-adoption-2026-04-20.md",
+          "reason": "Canonical anchor is now repo-resident, but derived native template assets are still pending"
+        }
+      ],
+      "manual_checks": [
+        "X-axis only sway range",
+        "one-shot (no loop)"
+      ],
+      "limitations": [
+        "Current repo evidence proves canonical anchor existence plus preflight classification, but not a full repo-resident derived native template asset set",
+        "Run audit-skit-group before treating this intent as production-ready template resolution",
+        "Per-template fallback note exists (delivery_nod_v1), but preflight resolution uses top-level intent_fallbacks first"
+      ]
+    },
+    {
+      "expression_id": "skit_group.intent.enter_from_left",
+      "scope": "skit_group",
+      "preferred_route": "template intent -> skit_group_registry -> audit-skit-group",
+      "support_level": "template_catalog_only",
+      "evidence": [
+        {
+          "path": "samples/registry_template/skit_group_registry.template.json",
+          "reason": "Registry template defines skit intent 'enter_from_left'"
+        },
+        {
+          "path": "docs/SKIT_GROUP_TEMPLATE_SPEC.md",
+          "reason": "Skit group spec fixes template-first as the mainline"
+        },
+        {
+          "path": "docs/verification/G24-canonical-anchor-adoption-2026-04-20.md",
+          "reason": "Canonical anchor is now repo-resident, but derived native template assets are still pending"
+        }
+      ],
+      "manual_checks": [
+        "landing position",
+        "overshoot + settle timing"
+      ],
+      "limitations": [
+        "Current repo evidence proves canonical anchor existence plus preflight classification, but not a full repo-resident derived native template asset set",
+        "Run audit-skit-group before treating this intent as production-ready template resolution"
+      ]
+    },
+    {
+      "expression_id": "skit_group.intent.exit_left",
+      "scope": "skit_group",
+      "preferred_route": "template intent -> skit_group_registry -> audit-skit-group",
+      "support_level": "template_catalog_only",
+      "evidence": [
+        {
+          "path": "samples/registry_template/skit_group_registry.template.json",
+          "reason": "Registry template defines skit intent 'exit_left'"
+        },
+        {
+          "path": "docs/SKIT_GROUP_TEMPLATE_SPEC.md",
+          "reason": "Skit group spec fixes template-first as the mainline"
+        },
+        {
+          "path": "docs/verification/G24-canonical-anchor-adoption-2026-04-20.md",
+          "reason": "Canonical anchor is now repo-resident, but derived native template assets are still pending"
+        }
+      ],
+      "manual_checks": [
+        "exit direction and speed",
+        "scene closure timing"
+      ],
+      "limitations": [
+        "Current repo evidence proves canonical anchor existence plus preflight classification, but not a full repo-resident derived native template asset set",
+        "Run audit-skit-group before treating this intent as production-ready template resolution"
+      ]
+    },
+    {
+      "expression_id": "skit_group.intent.nod",
+      "scope": "skit_group",
+      "preferred_route": "template intent -> skit_group_registry -> audit-skit-group",
+      "support_level": "template_catalog_only",
+      "evidence": [
+        {
+          "path": "samples/registry_template/skit_group_registry.template.json",
+          "reason": "Registry template defines skit intent 'nod'"
+        },
+        {
+          "path": "docs/SKIT_GROUP_TEMPLATE_SPEC.md",
+          "reason": "Skit group spec fixes template-first as the mainline"
+        },
+        {
+          "path": "docs/verification/G24-canonical-anchor-adoption-2026-04-20.md",
+          "reason": "Canonical anchor is now repo-resident, but derived native template assets are still pending"
+        }
+      ],
+      "manual_checks": [
+        "nod amplitude (RepeatMove loop)",
+        "does not dominate scene"
+      ],
+      "limitations": [
+        "Current repo evidence proves canonical anchor existence plus preflight classification, but not a full repo-resident derived native template asset set",
+        "Run audit-skit-group before treating this intent as production-ready template resolution"
+      ]
+    },
+    {
+      "expression_id": "skit_group.intent.surprise_oneshot",
+      "scope": "skit_group",
+      "preferred_route": "template intent -> skit_group_registry -> audit-skit-group",
+      "support_level": "template_catalog_only",
+      "evidence": [
+        {
+          "path": "samples/registry_template/skit_group_registry.template.json",
+          "reason": "Registry template defines skit intent 'surprise_oneshot'"
+        },
+        {
+          "path": "docs/SKIT_GROUP_TEMPLATE_SPEC.md",
+          "reason": "Skit group spec fixes template-first as the mainline"
+        },
+        {
+          "path": "docs/verification/G24-canonical-anchor-adoption-2026-04-20.md",
+          "reason": "Canonical anchor is now repo-resident, but derived native template assets are still pending"
+        }
+      ],
+      "manual_checks": [
+        "Y-axis only jump height",
+        "one-shot (no loop)"
+      ],
+      "limitations": [
+        "Current repo evidence proves canonical anchor existence plus preflight classification, but not a full repo-resident derived native template asset set",
+        "Run audit-skit-group before treating this intent as production-ready template resolution",
+        "Per-template fallback note exists (delivery_nod_v1), but preflight resolution uses top-level intent_fallbacks first"
+      ]
+    },
+    {
+      "expression_id": "skit_group.motion_target",
+      "scope": "skit_group",
+      "preferred_route": "IR motion + motion_target -> tachie_motion_map_library -> layer-specific VideoEffects",
+      "support_level": "direct_proven",
+      "evidence": [
+        {
+          "path": "docs/verification/B2-haitatsuin-motion-groupitem-2026-04-19.md",
+          "reason": "motion_target layer:9 proof shows GroupItem-level VideoEffects writes in repo-local corpus"
+        },
+        {
+          "path": "docs/MOTION_PRESET_LIBRARY_SPEC.md",
+          "reason": "motion library v2 documents why animation params are needed for ImageItem/GroupItem targets"
+        },
+        {
+          "path": "docs/PRODUCTION_IR_CAPABILITY_MATRIX.md",
+          "reason": "motion_target is documented as a direct write path to ImageItem/GroupItem"
+        }
+      ],
+      "manual_checks": [
+        "Confirm the whole actor still moves as intended and does not break face/body alignment"
+      ],
+      "limitations": [
+        "Supplementary route only; skit_group acting should start from template intent, not from raw motion_target edits"
+      ]
+    },
+    {
+      "expression_id": "speaker_tachie.face",
+      "scope": "speaker_tachie",
+      "preferred_route": "IR face -> face_map/palette -> patch-ymmp",
+      "support_level": "direct_proven",
+      "evidence": [
+        {
+          "path": "docs/FEATURE_REGISTRY.md",
+          "reason": "G-06 records face patch as done and production proven"
+        },
+        {
+          "path": "docs/verification/CHABANGEKI-E2E-PROOF-2026-04-13.md",
+          "reason": "face changes are included in the tea-time E2E proof"
+        }
+      ],
+      "manual_checks": [
+        "Confirm the chosen label still reads correctly as a human expression in YMM4"
+      ],
+      "limitations": [
+        "Label naming remains human-authored; patch only resolves existing registry labels"
+      ]
+    },
+    {
+      "expression_id": "speaker_tachie.idle_face",
+      "scope": "speaker_tachie",
+      "preferred_route": "IR idle_face -> face_map/palette -> patch-ymmp",
+      "support_level": "direct_proven",
+      "evidence": [
+        {
+          "path": "docs/FEATURE_REGISTRY.md",
+          "reason": "G-07 records idle_face as done"
+        },
+        {
+          "path": "docs/verification/CHABANGEKI-E2E-PROOF-2026-04-13.md",
+          "reason": "idle_face insertion is part of the tea-time E2E proof"
+        }
+      ],
+      "manual_checks": [
+        "Check that non-speaker idle faces do not feel distracting in context"
+      ],
+      "limitations": [
+        "Idle face coverage still depends on palette completeness"
+      ]
+    },
+    {
+      "expression_id": "speaker_tachie.motion",
+      "scope": "speaker_tachie",
+      "preferred_route": "IR motion -> tachie_motion_map_library or motion_map -> patch-ymmp",
+      "support_level": "direct_proven",
+      "evidence": [
+        {
+          "path": "samples/timeline_route_contract.json",
+          "reason": "motion routes are measured for TachieItem.VideoEffects in the repo-local contract"
+        },
+        {
+          "path": "docs/MOTION_PRESET_LIBRARY_SPEC.md",
+          "reason": "motion library is the approved label-to-effect path for motion"
+        },
+        {
+          "path": "docs/verification/G17-motion-adapter-packet.md",
+          "reason": "motion write adapter is already proved for measured routes"
+        }
+      ],
+      "manual_checks": [
+        "Check intensity, repetition, and whether the motion steals focus from the line itself"
+      ],
+      "limitations": [
+        "This route is for speaker_tachie; do not widen it into the skit_group mainline"
+      ]
+    },
+    {
+      "expression_id": "speaker_tachie.slot",
+      "scope": "speaker_tachie",
+      "preferred_route": "IR slot -> slot_map -> patch-ymmp",
+      "support_level": "direct_proven",
+      "evidence": [
+        {
+          "path": "docs/FEATURE_REGISTRY.md",
+          "reason": "G-11 records slot patch as completed"
+        },
+        {
+          "path": "docs/verification/CHABANGEKI-E2E-PROOF-2026-04-13.md",
+          "reason": "slot changes are included in the tea-time E2E proof"
+        }
+      ],
+      "manual_checks": [
+        "Check final left/right staging and whether the scene stays readable"
+      ],
+      "limitations": [
+        "Slot positions remain registry-driven, not freeform creative layout synthesis"
+      ]
+    },
+    {
+      "expression_id": "transition.fade",
+      "scope": "transition",
+      "preferred_route": "IR transition=fade -> measured fade-family route -> patch-ymmp",
+      "support_level": "direct_proven",
+      "evidence": [
+        {
+          "path": "samples/timeline_route_contract.json",
+          "reason": "fade-family transition keys are part of the measured contract"
+        },
+        {
+          "path": "docs/verification/G12-timeline-route-measurement.md",
+          "reason": "fade-family transition is the confirmed route family in repo-local corpus"
+        },
+        {
+          "path": "docs/PRODUCTION_IR_CAPABILITY_MATRIX.md",
+          "reason": "transition is patchable only for none/fade in the current adapter"
+        }
+      ],
+      "manual_checks": [
+        "Check whether the fade timing feels natural for the scene cut"
+      ],
+      "limitations": [
+        "Only fade is a production route today; other transition families remain outside the supported path"
+      ]
+    },
+    {
+      "expression_id": "transition.non_fade",
+      "scope": "transition",
+      "preferred_route": "Do not write directly from IR; redesign with fade or manual YMM4 authoring",
+      "support_level": "unsupported",
+      "evidence": [
+        {
+          "path": "docs/verification/G12-timeline-route-measurement.md",
+          "reason": "non-fade/template-backed transition families remain unmeasured in repo-local corpus"
+        },
+        {
+          "path": "docs/PRODUCTION_IR_CAPABILITY_MATRIX.md",
+          "reason": "validate-ir treats non-fade transition labels as unknown for patch-time application"
+        }
+      ],
+      "manual_checks": [
+        "If a non-fade transition is still desired, re-measure the route and document it before implementation"
+      ],
+      "limitations": [
+        "Unsupported in the current production adapter"
+      ]
+    },
+    {
+      "expression_id": "ymmp.direct_effect_from_atom",
+      "scope": "ir_junction",
+      "preferred_route": "Do not derive IR directly from raw effect names; choose a higher-level route first",
+      "support_level": "unsupported",
+      "evidence": [
+        {
+          "path": "docs/TIMELINE_EFFECT_CAPABILITY_ATLAS.md",
+          "reason": "Capability Atlas explicitly treats effect atoms as a dictionary, not as a primary IR contract"
+        },
+        {
+          "path": "samples/EFFECT_CATALOG_USAGE.md",
+          "reason": "effect_catalog is described as a pick-up source for registries, not a production IR schema"
+        }
+      ],
+      "manual_checks": [
+        "Translate the intent into motion/template/bg_anim/overlay/se before patching"
+      ],
+      "limitations": [
+        "Raw effect names are not a recommended production entrypoint"
+      ]
+    }
+  ]
+}

@@ -5,6 +5,7 @@ Usage:
     python -m src.cli.main build-cue-packet <input> [-o packet.md] [--format markdown|json] [--bundle-dir DIR]
     python -m src.cli.main build-diagram-packet <input> [-o packet.md] [--format markdown|json] [--bundle-dir DIR]
     python -m src.cli.main patch-ymmp <ymmp> <ir-json> --face-map face.json --bg-map bg.json [-o patched.ymmp]
+    python -m src.cli.main audit-skit-group <ymmp> <ir-json> --skit-group-registry registry.json [--format text|json]
     python -m src.cli.main validate <input>
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
     python -m src.cli.main diagnose-script <input> [--speaker-map ...] [--format text|json] [--strict]
@@ -883,6 +884,10 @@ def main(argv: list[str] | None = None) -> int:
         help="A案: group_motion ラベル → {x,y,zoom}（既存 GroupItem の幾何）",
     )
     p_patch.add_argument(
+        "--skit-group-registry",
+        help="G-24: skit_group canonical anchor / exact-fallback-manual_note registry JSON",
+    )
+    p_patch.add_argument(
         "--timeline-contract",
         help="timeline_route_contract.json のパス (省略時は samples/timeline_route_contract.json)",
     )
@@ -934,6 +939,10 @@ def main(argv: list[str] | None = None) -> int:
     p_apply.add_argument(
         "--group-motion-map",
         help="A案: group_motion ラベル → {x,y,zoom}（既存 GroupItem の幾何）",
+    )
+    p_apply.add_argument(
+        "--skit-group-registry",
+        help="G-24: skit_group canonical anchor / exact-fallback-manual_note registry JSON",
     )
     p_apply.add_argument(
         "--timeline-contract",
@@ -994,6 +1003,25 @@ def main(argv: list[str] | None = None) -> int:
                               " (default: docs/S6-production-memo-prompt.md)")
     p_valir.add_argument("--format", choices=["text", "json"], default="text",
                          help="text: human report to stdout; json: machine summary on stdout, meta on stderr")
+
+    # audit-skit-group
+    p_skit_audit = subparsers.add_parser(
+        "audit-skit-group",
+        help="G-24: preflight audit for canonical skit_group anchor and template resolution",
+    )
+    p_skit_audit.add_argument("ymmp", help="Input ymmp file path")
+    p_skit_audit.add_argument("ir_json", help="Production IR JSON file path")
+    p_skit_audit.add_argument(
+        "--skit-group-registry",
+        required=True,
+        help="skit_group registry JSON with canonical_groups/templates/intent_fallbacks",
+    )
+    p_skit_audit.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
 
     # score-evidence (H-04)
     p_score_ev = subparsers.add_parser(
@@ -1127,6 +1155,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_annotate_row_range(args)
         elif args.command == "validate-ir":
             return _cmd_validate_ir(args)
+        elif args.command == "audit-skit-group":
+            return _cmd_audit_skit_group(args)
         elif args.command == "score-evidence":
             return _cmd_score_evidence(args)
         elif args.command == "score-visual-density":
@@ -1321,6 +1351,18 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
 
     ymmp_data = load_ymmp(args.ymmp)
     ir_data = load_ir(args.ir_json)
+
+    skit_audit_result = None
+    if getattr(args, "skit_group_registry", None):
+        skit_audit_result = _run_skit_group_audit(
+            ymmp_data,
+            ir_data,
+            args.skit_group_registry,
+        )
+        _print_skit_group_audit(skit_audit_result)
+        if skit_audit_result.status == "error":
+            print("\nSkit group preflight FAILED. Patch aborted.", file=sys.stderr)
+            return 1
 
     face_map: dict[str, dict[str, str]] = {}
     face_map_bundle: dict[str, dict] | None = None
@@ -1841,6 +1883,42 @@ def _apply_production_summary(result) -> dict:
     }
 
 
+def _skit_audit_json_summary(audit_result) -> dict:
+    return audit_result.to_dict()
+
+
+def _print_skit_group_audit(audit_result, *, file=sys.stdout) -> None:
+    from src.pipeline.skit_group_audit import render_skit_group_audit_text
+
+    print(render_skit_group_audit_text(audit_result), file=file)
+
+
+def _run_skit_group_audit(ymmp_data: dict, ir_data: dict, registry_path: str):
+    from src.pipeline.skit_group_audit import audit_skit_group, load_skit_group_registry
+
+    registry_data = load_skit_group_registry(registry_path)
+    return audit_skit_group(ymmp_data, ir_data, registry_data)
+
+
+def _cmd_audit_skit_group(args: argparse.Namespace) -> int:
+    from src.pipeline.ymmp_patch import load_ir, load_ymmp
+
+    ymmp_data = load_ymmp(args.ymmp)
+    ir_data = load_ir(args.ir_json)
+    audit_result = _run_skit_group_audit(
+        ymmp_data,
+        ir_data,
+        args.skit_group_registry,
+    )
+
+    if args.format == "json":
+        print(json.dumps(_skit_audit_json_summary(audit_result), ensure_ascii=False))
+    else:
+        _print_skit_group_audit(audit_result)
+
+    return 1 if audit_result.status == "error" else 0
+
+
 def _cmd_validate_ir(args: argparse.Namespace) -> int:
     """IR 品質 gate."""
     from src.pipeline.ymmp_patch import load_ir, load_ymmp
@@ -2200,6 +2278,28 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
 
     # --- patch ---
     ymmp_data = load_ymmp(args.production_ymmp)
+    fmt = getattr(args, "format", "text")
+
+    skit_audit_result = None
+    if getattr(args, "skit_group_registry", None):
+        skit_audit_result = _run_skit_group_audit(
+            ymmp_data,
+            ir_data,
+            args.skit_group_registry,
+        )
+        if fmt == "json":
+            if skit_audit_result.status == "error":
+                print(json.dumps({
+                    "success": False,
+                    "error": "skit_group_preflight_failed",
+                    "skit_audit": _skit_audit_json_summary(skit_audit_result),
+                }, ensure_ascii=False))
+                return 1
+        else:
+            _print_skit_group_audit(skit_audit_result)
+            if skit_audit_result.status == "error":
+                print("\nSkit group preflight FAILED. Patch aborted.", file=sys.stderr)
+                return 1
 
     result = patch_ymmp(
         ymmp_data,
@@ -2220,8 +2320,6 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         face_map_bundle=face_map_bundle,
         char_default_bodies=char_default_bodies,
     )
-
-    fmt = getattr(args, "format", "text")
 
     if fmt != "json":
         print(f"\nFace changes: {result.face_changes}")
@@ -2267,7 +2365,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
 
     if args.dry_run:
         if fmt == "json":
-            print(json.dumps({
+            payload = {
                 "success": True, "dry_run": True,
                 "face_changes": result.face_changes,
                 "slot_changes": result.slot_changes,
@@ -2282,7 +2380,10 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
                 "group_motion_changes": result.group_motion_changes,
                 "warnings": result.warnings,
                 "summary": _apply_production_summary(result),
-            }, ensure_ascii=False))
+            }
+            if skit_audit_result is not None:
+                payload["skit_audit"] = _skit_audit_json_summary(skit_audit_result)
+            print(json.dumps(payload, ensure_ascii=False))
         else:
             print("(dry-run: no file written)")
         return 0
@@ -2295,7 +2396,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         )
     save_ymmp(ymmp_data, out_path)
     if fmt == "json":
-        print(json.dumps({
+        payload = {
             "success": True,
             "output": out_path,
             "face_changes": result.face_changes,
@@ -2311,7 +2412,10 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
             "group_motion_changes": result.group_motion_changes,
             "warnings": result.warnings,
             "summary": _apply_production_summary(result),
-        }, ensure_ascii=False))
+        }
+        if skit_audit_result is not None:
+            payload["skit_audit"] = _skit_audit_json_summary(skit_audit_result)
+        print(json.dumps(payload, ensure_ascii=False))
     else:
         print(f"Written: {out_path}")
     return 0
