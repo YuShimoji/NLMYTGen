@@ -30,11 +30,18 @@ def test_capability_atlas_classifies_canonical_anchor_as_direct_proven():
     assert entries["skit_group.canonical_anchor"]["support_level"] == "direct_proven"
 
 
-def test_capability_atlas_classifies_skit_group_enter_from_left_as_template_catalog_only():
+def test_capability_atlas_classifies_exported_starter_intent_as_direct_proven():
     atlas = build_default_capability_atlas(_project_root())
     entries = _entry_map(atlas)
 
-    assert entries["skit_group.intent.enter_from_left"]["support_level"] == "template_catalog_only"
+    assert entries["skit_group.intent.enter_from_left"]["support_level"] == "direct_proven"
+
+
+def test_capability_atlas_keeps_non_exported_skit_group_intent_as_template_catalog_only():
+    atlas = build_default_capability_atlas(_project_root())
+    entries = _entry_map(atlas)
+
+    assert entries["skit_group.intent.deny_oneshot"]["support_level"] == "template_catalog_only"
 
 
 def test_capability_atlas_classifies_non_fade_transition_as_unsupported():
@@ -67,7 +74,8 @@ def test_build_capability_atlas_script_writes_expected_json(tmp_path):
     entries = _entry_map(data)
     assert entries["speaker_tachie.motion"]["support_level"] == "direct_proven"
     assert entries["skit_group.canonical_anchor"]["support_level"] == "direct_proven"
-    assert entries["skit_group.intent.enter_from_left"]["support_level"] == "template_catalog_only"
+    assert entries["skit_group.intent.enter_from_left"]["support_level"] == "direct_proven"
+    assert entries["skit_group.intent.deny_oneshot"]["support_level"] == "template_catalog_only"
 
 
 def test_capability_atlas_evidence_paths_exist_in_repo():
@@ -91,12 +99,13 @@ def test_canonical_anchor_corpus_is_ok_and_exact_only():
     audit = audit_skit_group(ymmp_data, ir_data, registry)
 
     assert entries["skit_group.canonical_anchor"]["support_level"] == "direct_proven"
-    assert entries["skit_group.intent.enter_from_left"]["support_level"] == "template_catalog_only"
+    assert entries["skit_group.intent.enter_from_left"]["support_level"] == "direct_proven"
+    assert entries["skit_group.intent.deny_oneshot"]["support_level"] == "template_catalog_only"
     assert audit.status == "ok"
     assert audit.summary == {"exact": 5, "fallback": 0, "manual_note": 0}
 
 
-def test_current_skit01_stays_template_catalog_only_and_matches_preflight_failure():
+def test_old_skit01_still_fails_preflight_even_after_starter_export():
     root = _project_root()
     atlas = build_default_capability_atlas(root)
     entries = _entry_map(atlas)
@@ -106,6 +115,6 @@ def test_current_skit01_stays_template_catalog_only_and_matches_preflight_failur
     registry = load_skit_group_registry(root / "samples/registry_template/skit_group_registry.template.json")
     audit = audit_skit_group(ymmp_data, ir_data, registry)
 
-    assert entries["skit_group.intent.enter_from_left"]["support_level"] == "template_catalog_only"
+    assert entries["skit_group.intent.enter_from_left"]["support_level"] == "direct_proven"
     assert audit.status == "error"
     assert any(err.startswith("SKIT_CANONICAL_GROUP_MISSING:") for err in audit.errors)

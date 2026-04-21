@@ -274,3 +274,120 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/n
 - 出力 ymmp: `_tmp/b2_haitatsuin_motion_applied_v5.ymmp` (gitignore)
 - 判定: **技術 PASS — canonical template 経路で motion が意図どおり GroupItem に書き込まれた**。UX PASS 判定は user 視覚確認待ち (body + 顔 が同期して動くか)
 - 根拠: user 指摘「GroupItem は既に正しく設定されて調整するだけで動く」+ inspect_group_layer.py 実機確認 + INVARIANTS §skit_group の主経路は canonical template
+
+## G-24 starter batch preflight sync (`g24_starter_sync_2026-04-21`)
+
+- 日付: 2026-04-21
+- 目的: G-24 の初回 starter batch を `enter_from_left` / `surprise_oneshot` の 2 件に固定し、`samples/canonical.ymmp` 内で観測された copy に assistant 側の registry / preflight / proof を同期する
+- コマンド:
+
+```bash
+python -m src.cli.main audit-skit-group \
+  samples/canonical.ymmp \
+  samples/_probe/skit_01/skit_01_ir.json \
+  --skit-group-registry samples/registry_template/skit_group_registry.template.json \
+  --format text
+```
+
+- 結果: `Anchor group = haitatsuin_delivery_v1` / `anchor layer = 9` / `summary = exact 5, fallback 0, manual_note 0`
+- **repo-local inspection**:
+  - frame `0` / layer `9` / `haitatsuin_delivery_main`
+  - frame `306` / layer `9` / `delivery_enter_from_left_v1`
+  - frame `658` / layer `9` / `delivery_surprise_oneshot_v1`
+  - 上記 3 group はいずれも `GroupRange=2` で、隣接 layer `10` / `11` に `ImageItem` ペアを持つ
+- **starter batch exact 条件**:
+  - `enter_from_left` → `delivery_enter_from_left_v1` (`exact`)
+    - manual checks: `landing position`, `overshoot + settle timing`
+  - `surprise_oneshot` → `delivery_surprise_oneshot_v1` (`exact`)
+    - manual checks: `Y-axis only jump height`, `one-shot (no loop)`
+- `nod` / `deny_oneshot` / `exit_left` も canonical corpus では `exact` のまま維持されるが、今回の starter batch では **registry catalog / preflight entry** として扱い、初回 native template authoring 完了扱いには含めない
+- `motion_target` / `group_motion` は補助経路のまま据え置き。template-first の主経路を置き換えない
+- 判定: **PASS — assistant-owned starter packet は canonical-project 内 starter copy に同期完了**。次の user-owned action は `enter_from_left` / `surprise_oneshot` の manual checks を YMM4 上で閉じることで、その後の shared action は production adoption proof に `exact / fallback / manual_note` を追記すること
+
+## G-24 starter batch 後の maintenance default
+
+- 既定順は **B-18 script diagnostics observation → H-01/H-02 on demand → B-17 drift-only**
+- H-01 brief は新しい packaging brief が必要な案件でのみ起動し、常時 front に出さない
+- B-17 reflow 観測は新しい drift が見えた時だけ verification を更新する
+
+## G-24 cautious starter-to-proof gate (`g24_cautious_gate_2026-04-21`)
+
+- 日付: 2026-04-21
+- 目的: standalone native template export を急がず、**manual acceptance → 1 件の production adoption proof → standalone export** の順を gate として固定する
+- proof 候補の内容: [skit_01_delivery_dispute_v1_2026-04-19.md](skit_01_delivery_dispute_v1_2026-04-19.md) の 4 scene 構成 + `samples/_probe/skit_01/skit_01_ir.json`
+- **Phase 1 gate（user-owned, PASS）**:
+  - `delivery_enter_from_left_v1`: `landing position`, `overshoot + settle timing`, body-face sync
+  - `delivery_surprise_oneshot_v1`: `Y-axis only jump height`, `one-shot (no loop)`, body-face sync
+  - user report (2026-04-21): `enter_from_left` 側に意図しない退場設定が混ざっていたため YMM4 でカット済み。repo-local inspection 上も `InOutMoveFromOutsideFrameEffect` は `IsInEffect=True` / `IsOutEffect=False`。2 件とも loop / body-face drift なしを確認済み
+- **Phase 2 gate（assistant-owned, PASS）**:
+  - starter 2 件はどちらも `exact` 必須
+  - 非 starter intent は `exact / fallback / manual_note` のいずれでもよいが、理由を明示記録する
+  - `motion_target` / `group_motion` は補助経路としてのみ許可し、starter 2 件の代替に使った場合は assetization をブロックする
+
+- repo-local check 1: canonical copy corpus は preflight と exact 条件を満たすが、voice anchor を持たない
+
+```bash
+python -m src.cli.main apply-production \
+  samples/canonical.ymmp \
+  samples/_probe/skit_01/skit_01_ir.json \
+  --tachie-motion-map samples/tachie_motion_map_library.json \
+  --skit-group-registry samples/registry_template/skit_group_registry.template.json \
+  --dry-run --format json
+```
+
+  - 結果: `success=true`, `skit_audit.summary = exact 5 / fallback 0 / manual_note 0`
+  - ただし warning は `MOTION_NO_VOICE_ANCHOR` x5。`samples/canonical.ymmp` は starter copy / exact classification の正本だが、**1 件の production adoption proof を閉じるための voice-anchored ymmp ではない**
+
+- repo-local check 2: old `skit_01` corpus は content / motion proof としては有効だが、G-24 preflight gate には乗らない
+
+```bash
+python -m src.cli.main audit-skit-group \
+  samples/characterAnimSample/haitatsuin_2026-04-12.ymmp \
+  samples/_probe/skit_01/skit_01_ir.json \
+  --skit-group-registry samples/registry_template/skit_group_registry.template.json \
+  --format text
+```
+
+  - 結果: `SKIT_CANONICAL_GROUP_MISSING`
+  - 判定: `skit_01_delivery_dispute_v2` は **content candidate** としては採用するが、現状の surviving ymmp をそのまま G-24 production adoption proof へ昇格しない
+
+- repo-local check 3: canonical anchor を持つ voice-anchored production ymmp で cautious gate の Phase 2 を閉じる
+
+```bash
+python -m src.cli.main audit-skit-group \
+  samples/haitatsuin_2026-04-12_g24_proof.ymmp \
+  samples/_probe/skit_01/skit_01_ir.json \
+  --skit-group-registry samples/registry_template/skit_group_registry.template.json \
+  --format text
+
+python -m src.cli.main apply-production \
+  samples/haitatsuin_2026-04-12_g24_proof.ymmp \
+  samples/_probe/skit_01/skit_01_ir.json \
+  --tachie-motion-map samples/tachie_motion_map_library.json \
+  --skit-group-registry samples/registry_template/skit_group_registry.template.json \
+  --face-map samples/face_map_bundles/haitatsuin.json \
+  --bg-map samples/_probe/b2/palette_extract/bg_map.json \
+  --dry-run --format json
+```
+
+  - `samples/haitatsuin_2026-04-12_g24_proof.ymmp` は user が用意した canonical-anchor + voice-anchored proof ymmp。`audit-skit-group` は `exact=5 / fallback=0 / manual_note=0`
+  - starter 2 件はどちらも `exact`:
+    - `enter_from_left` → `delivery_enter_from_left_v1`
+    - `surprise_oneshot` → `delivery_surprise_oneshot_v1`
+  - 非 starter 3 件 (`nod` / `deny_oneshot` / `exit_left`) もすべて `exact`
+  - `apply-production --dry-run` は `success=true`、`face_changes=50`、`transition_changes=10`、`motion_changes=8`、`group_motion_changes=0`
+  - `group_motion_changes=0` のため、starter 2 件を `motion_target` / `group_motion` で代替していない。template-first が主経路として成立
+  - warning は `bg label 'studio_blue' not found in bg_map` の 1 件のみ。starter 2 件の exact 成立と P02 gate を阻害しない non-fatal warning として扱う
+
+- user report check 4: standalone native template library export を starter 2 件で同期
+
+  - user report (2026-04-21): `delivery_enter_from_left_v1` / `delivery_surprise_oneshot_v1` を **名前そのまま**で YMM4 の GroupItem template として登録済み
+  - 登録単位は GroupItem で、body/face の `ImageItem` 2 点も含めて保存
+  - この report により、starter 2 件は **canonical-project copy + production adoption proof + standalone export** の 3 点セットが揃った
+  - `delivery_deny_oneshot_v1` / `delivery_exit_left_v1` / `delivery_nod_v1` は今回の export 対象に含めない
+
+- 現時点の判断:
+  - **Phase 1**: PASS（manual acceptance 完了）
+  - **Phase 2**: PASS（`samples/haitatsuin_2026-04-12_g24_proof.ymmp` + `samples/_probe/skit_01/skit_01_ir.json` で production adoption proof 完了）
+  - **Phase 3**: PASS（starter 2 件の standalone native template library export 完了）
+  - Capability Atlas は `skit_group.intent.enter_from_left` / `skit_group.intent.surprise_oneshot` を `direct_proven` 候補へ昇格し、`deny_oneshot` / `exit_left` / `nod` は `template_catalog_only` のまま維持する

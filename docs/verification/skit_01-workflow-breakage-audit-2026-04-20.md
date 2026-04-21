@@ -46,7 +46,7 @@ That makes it a valid assistant-owned comparison target, but only as a motion pr
 1. Keep `skit_01` on a repo-local audit route: source ymmp + proof ymmp + IR + registry.
 2. Do not ask the user to recreate `_tmp/skit_ManualSample_01.ymmp`.
 3. Do not treat `_tmp/skit_01_v2_verify.ymmp` as G-24 complete proof.
-4. Resume G-24 only through artifacts that are actually present in the repo. `samples/canonical.ymmp` now covers canonical anchor existence, but `skit_01` old corpus remains a mechanical motion proof until derived native template assets exist.
+4. Resume G-24 only through artifacts that are actually present in the repo. `samples/canonical.ymmp` now covers canonical anchor existence plus starter-copy presence, but `skit_01` old corpus remains a mechanical motion proof until a standalone native template library export or production adoption proof exists.
 
 ## Next official entrypoint
 

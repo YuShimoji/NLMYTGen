@@ -17,6 +17,10 @@ DEFAULT_TIMELINE_CONTRACT_PATH = Path("samples/timeline_route_contract.json")
 DEFAULT_MOTION_LIBRARY_PATH = Path("samples/tachie_motion_map_library.json")
 DEFAULT_SKIT_REGISTRY_PATH = Path("samples/registry_template/skit_group_registry.template.json")
 DEFAULT_OUTPUT_PATH = Path("samples/_generated/capability_atlas.json")
+EXPORTED_SKIT_TEMPLATE_INTENTS = frozenset({
+    "enter_from_left",
+    "surprise_oneshot",
+})
 
 
 def _read_json(path: Path) -> dict[str, Any]:
@@ -334,10 +338,30 @@ def _skit_template_entries(skit_registry: dict[str, Any]) -> list[dict[str, Any]
             continue
         intent = template.get("intent") or template_name
         manual_checks = [str(value) for value in template.get("manual_checks", [])]
-        limitations = [
-            "Current repo evidence proves canonical anchor existence plus preflight classification, but not a full repo-resident derived native template asset set",
-            "Run audit-skit-group before treating this intent as production-ready template resolution",
+        support_level = "template_catalog_only"
+        evidence = [
+            _evidence("samples/registry_template/skit_group_registry.template.json", f"Registry template defines skit intent '{intent}'"),
+            _evidence("docs/SKIT_GROUP_TEMPLATE_SPEC.md", "Skit group spec fixes template-first as the mainline"),
         ]
+        limitations = []
+        if intent in EXPORTED_SKIT_TEMPLATE_INTENTS:
+            support_level = "direct_proven"
+            evidence.extend([
+                _evidence("docs/verification/P02-production-adoption-proof.md", "Starter manual acceptance, production adoption proof, and standalone export sync are recorded here"),
+                _evidence("samples/haitatsuin_2026-04-12_g24_proof.ymmp", "Voice-anchored production proof corpus resolves the exported starter templates as exact without group_motion substitution"),
+            ])
+            limitations.extend([
+                "Promotion is limited to the exported starter batch only; remaining skit intents stay template_catalog_only until their own export/proof is synced",
+                "Target ymmp still needs a compatible skit_group actor setup and preflight should be run before production use",
+            ])
+        else:
+            evidence.append(
+                _evidence("docs/verification/G24-canonical-anchor-adoption-2026-04-20.md", "Canonical anchor is repo-resident, but this intent is still awaiting standalone native template asset proof"),
+            )
+            limitations.extend([
+                "Current repo evidence proves canonical anchor existence plus preflight classification, but not a full repo-resident derived native template asset set for this intent",
+                "Run audit-skit-group before treating this intent as production-ready template resolution",
+            ])
         fallback = template.get("fallback")
         if fallback:
             limitations.append(f"Per-template fallback note exists ({fallback}), but preflight resolution uses top-level intent_fallbacks first")
@@ -346,12 +370,8 @@ def _skit_template_entries(skit_registry: dict[str, Any]) -> list[dict[str, Any]
                 f"skit_group.intent.{intent}",
                 "skit_group",
                 "template intent -> skit_group_registry -> audit-skit-group",
-                "template_catalog_only",
-                [
-                    _evidence("samples/registry_template/skit_group_registry.template.json", f"Registry template defines skit intent '{intent}'"),
-                    _evidence("docs/SKIT_GROUP_TEMPLATE_SPEC.md", "Skit group spec fixes template-first as the mainline"),
-                    _evidence("docs/verification/G24-canonical-anchor-adoption-2026-04-20.md", "Canonical anchor is now repo-resident, but derived native template assets are still pending"),
-                ],
+                support_level,
+                evidence,
                 manual_checks,
                 limitations,
             )
@@ -432,4 +452,3 @@ def _validate_atlas(atlas: dict[str, Any]) -> None:
         for ev in entry["evidence"]:
             if not isinstance(ev, dict) or set(ev.keys()) != {"path", "reason"}:
                 raise ValueError(f"Atlas entry {expression_id} has invalid evidence payload")
-

@@ -38,16 +38,17 @@ Atlas は次の repo-local artifact を根拠にする。
   - registry + timing anchor + patch path が正本化済み
 - `transition.fade`
   - fade-family は G-12 / capability matrix で成立
+- `skit_group.intent.enter_from_left`
+- `skit_group.intent.surprise_oneshot`
+  - manual acceptance + production adoption proof + standalone native template export が starter 2 件で同期済み
 
 ### `template_catalog_only`
 
-- `skit_group.intent.enter_from_left`
-- `skit_group.intent.surprise_oneshot`
 - `skit_group.intent.deny_oneshot`
 - `skit_group.intent.exit_left`
 - `skit_group.intent.nod`
 
-これらは registry と preflight で分類できるが、**repo-resident native template asset**の completion proof はまだ無い。
+これらは registry と preflight で分類できるが、**standalone native template asset**の completion proof はまだ無い。
 
 ### `probe_only`
 
@@ -61,17 +62,18 @@ Atlas は次の repo-local artifact を根拠にする。
 - raw effect 名からの IR 直書き
 - repo 根拠のない template route
 
-## Why current `skit_01` stays `template_catalog_only`
+## Why old `skit_01` still does not become a standalone-template proof by itself
 
-current `skit_01` は mechanical motion proof としては有益だが、G-24 completion としてはまだ不足している。
+old `skit_01` は mechanical motion proof としては有益だが、それ単体で G-24 completion を名乗れるわけではない。
 
 理由:
 
-- `audit-skit-group` は current corpus で `SKIT_CANONICAL_GROUP_MISSING` を返す
+- `audit-skit-group` は old corpus で `SKIT_CANONICAL_GROUP_MISSING` を返す
 - 欠落した ManualSample を gate に戻さない
 - surviving ymmp は motion-labeled artifact としては使えるが、canonical template asset の証跡にはならない
+- starter 2 件の `direct_proven` は **canonical copy + proof corpus + standalone export sync** の 3 点セットで成立している
 
-したがって Atlas でも `skit_group` の template intent は `template_catalog_only` に留める。
+したがって Atlas でも remaining `skit_group` template intent は `template_catalog_only` に留める。
 
 ## Resulting operator rule
 

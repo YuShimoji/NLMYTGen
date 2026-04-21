@@ -13,7 +13,8 @@
 |---|---|---|---|
 | `speaker_tachie` | `face` / `idle_face` / `slot` / `motion` | `direct_proven` | 既存の主経路 |
 | `skit_group` canonical | `samples/canonical.ymmp` -> `audit-skit-group` | `direct_proven` | canonical anchor は repo 内で成立済み |
-| `skit_group` intent | **template intent** -> `skit_group_registry` -> `audit-skit-group` | `template_catalog_only` | G-24 の主軸。canonical はあるが派生 asset proof はまだ |
+| `skit_group` starter intent | **template intent** -> `skit_group_registry` -> `audit-skit-group` | `direct_proven` | `enter_from_left` / `surprise_oneshot` は starter export まで完了 |
+| `skit_group` remaining intent | **template intent** -> `skit_group_registry` -> `audit-skit-group` | `template_catalog_only` | `nod` / `deny_oneshot` / `exit_left` は catalog / preflight まで |
 | `skit_group` の補助調整 | `motion_target` / `group_motion` | `direct_proven` | 補助経路。主経路ではない |
 | `bg_layer` | `bg` / `bg_anim` | `direct_proven` | measured route 前提 |
 | `overlay_se` | `overlay` / `se` | `direct_proven` | registry + timing anchor 前提 |
@@ -45,17 +46,17 @@
 | `overlay_se.se` | `se -> se_map -> timing anchor` | G-18 | タイミング・音量 | registry 前提 |
 | `transition.fade` | `transition=fade` | G-12 / capability matrix | fade timing | fade 以外は未対応 |
 | `skit_group.canonical_anchor` | `samples/canonical.ymmp -> audit-skit-group` | canonical adoption packet | 左向き基準姿勢・ImageItem-only 構成 | **anchor 成立のみ。派生 asset は別** |
+| `skit_group.intent.enter_from_left` | `template intent -> registry -> audit-skit-group` | P02 cautious gate + standalone export sync | 着地位置 / overshoot / settle | **starter export 済み** |
+| `skit_group.intent.surprise_oneshot` | `template intent -> registry -> audit-skit-group` | P02 cautious gate + standalone export sync | Y-only jump / one-shot | **starter export 済み** |
 | `skit_group.motion_target` | `motion + motion_target -> layer VideoEffects` | B-2 GroupItem proof | 顔/body の同期 | **補助経路** |
 | `skit_group.group_motion` | `group_motion + group_target -> X/Y/Zoom` | G-20 / route contract | 構図の破綻 | **幾何補助** |
 
 ### 2.2 `template_catalog_only`
 
-現時点の `skit_group_registry` にある template intent は、**canonical anchor の repo proof は得られたが、派生 native template asset proof は未成立**。
+現時点の `skit_group_registry` にある remaining template intent は、**canonical anchor の repo proof は得られているが、standalone native template asset proof はまだ未成立**。
 
 現 registry 例:
 
-- `enter_from_left`
-- `surprise_oneshot`
 - `deny_oneshot`
 - `exit_left`
 - `nod`
@@ -63,9 +64,10 @@
 意味すること:
 
 - `audit-skit-group` は canonical corpus に対して exact / fallback / manual_note を判定できる
-- ただし repo にあるのは **canonical anchor 1 件**であり、派生 native template asset 群の proof はまだ無い
+- starter 2 件 (`enter_from_left` / `surprise_oneshot`) は export 済みのため `direct_proven` へ昇格した
+- ただし `deny_oneshot` / `exit_left` / `nod` はまだ standalone asset proof が無い
 - old `skit_01` corpus は引き続き canonical anchor 不足を再現する
-- したがって `skit_group.intent.*` の support level は今回も `template_catalog_only` に留める
+- したがって remaining `skit_group.intent.*` は `template_catalog_only` に留める
 
 ### 2.3 `probe_only`
 
@@ -121,7 +123,7 @@ ManualSample が無いときは、次の順で確認する。
    - timeline route 側: `python -m src.cli.main measure-timeline-routes <ymmp> --expect samples/timeline_route_contract.json --profile <profile>`
 4. **Atlas の support_level を見る**  
    - `direct_proven`: 既存 adapter path で進める
-   - `template_catalog_only`: preflight と registry 整備まで。completion 扱いしない
+   - `template_catalog_only`: preflight と registry 整備まで。starter export 完了前の intent は completion 扱いしない
    - `probe_only`: registry/material planning の材料としてのみ使う
    - `unsupported`: route 再測定か方針変更が必要
 
