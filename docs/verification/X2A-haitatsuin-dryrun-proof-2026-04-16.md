@@ -135,6 +135,6 @@ uv run python -m src.cli.main apply-production \
 
 ## 次のアクション候補
 
-1. **G-21 を `proposed` のまま維持**（本 proof の結論）、FEATURE_REGISTRY 備考に X-2a 結果リンク追加
+1. **G-21 は当面不要として維持**（本 proof の結論）、FEATURE_REGISTRY 備考に X-2a 結果リンク追加
 2. **茶番劇テンプレ運用ガイド docs/ に起こす**（YMM4 手動 GroupItem 化 + 合成 PNG 運用の 2 パス）
 3. **別の実案件で PROJECT_INIT_CHECKLIST Step 2-5 を 1 本通す**（主軸「演出配置自動化の実戦投入」を進める）

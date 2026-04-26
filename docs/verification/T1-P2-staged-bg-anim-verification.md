@@ -1,6 +1,6 @@
 # 主軸 背景演出（bg_anim）段階投入 — 機械検証手順（T1）
 
-**スライス**: `T1-BG-ANIM-DOCSAMPLE` (旧 ID: `T1-P2-DOCSAMPLE`)（[CORE-DEV-POST-APPROVAL-SLICES.md](CORE-DEV-POST-APPROVAL-SLICES.md) §1）  
+**スライス**: `T1-BG-ANIM-DOCSAMPLE` (旧 ID: `T1-P2-DOCSAMPLE`)。旧コア計画文書は削除済みで、現行判断には使わない。
 **目的**: 実案件で `bg_anim` を **1〜2 セクション規模**から載せるときの **validate-ir → apply-production --dry-run** を、repo 固定の入力で再現する。  
 **能力マトリクス正本**: [PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md) の `bg_anim` 行。**本手順は (A) G-14 キーフレーム経路**（`--timeline-profile` なし。ImageItem Layer0 上の X/Y/Zoom）。G-17（VideoEffects + プロファイル）は別手順。
 

@@ -82,7 +82,7 @@ brief: `samples/packaging_brief_ai_monitoring.md`
 
 ## 4. 受け入れ観点（自己照合）
 
-参照: `docs/verification/CORE-DEV-OPERATOR-INPUT-CHECKLIST.md`
+参照: `docs/runtime-state.md`, `docs/verification/P02-production-adoption-proof.md`
 
 - B-3 同期観点: **PASS（repo 正本の必須文言・手順整合を確認）**
 - Prompt 同期の差し戻し条件（remote drift）: **未観測**（repo 側は入力順と正本を固定済み）

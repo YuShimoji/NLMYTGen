@@ -1,5 +1,5 @@
 # DECISION_GATES.md
-Ruleset-Version: v18
+Ruleset-Version: v20
 Status: canonical
 
 ## Active Artifact and Change Relation
@@ -42,6 +42,17 @@ Every next-step option and every PLAN MODE entry must state:
 - actor: `user`, `assistant`, `tool`, `shared`
 - owner artifact: what artifact this actor actually owns
 If the task is a human-owned creative/manual step, the assistant may support or scaffold it, but must not silently become the actor.
+
+## Task Connectivity Gate
+Before applying a prompt template, checklist, or short response contract to a manual/shared action, state:
+- what file, project, or tool must be opened
+- what artifact is created or modified
+- the source object or anchor
+- actor and owner artifact
+- what `PASS` / `FAIL` / `OK` / `NG` means
+- when to stop and replan
+
+If any field is missing, do not collapse the task into a template. Resolve the missing field first.
 
 ## Workflow-Proof Gate
 If the project depends on a human-authored production workflow, do not jump to quantity expansion (content writing, asset proliferation, mass production) before the workflow has been proven once end-to-end.

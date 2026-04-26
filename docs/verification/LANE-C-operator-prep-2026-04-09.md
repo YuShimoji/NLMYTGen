@@ -8,13 +8,13 @@
 
 ## 1. YMM4 稼働ブロック（スロット名テンプレ）
 
-PRE-PLAN のとおり **レーン C と 主軸 (背景アニメ) は同一 YMM4 ウィンドウを奪い合う**。1 人運用なら **同時フルは避け、時間帯で分割**する。トラック A（CSV 取込〜タイムライン調整）と同日にやる場合は、**読込ブロック**と **テンプレ／マップ整備ブロック**を分ける。
+PRE-PLAN の当時設計では **レーン C と旧背景アニメ証跡は同一 YMM4 ウィンドウを奪い合う**。現行 G-24 の入口ではないため、必要時だけ参照し、1 人運用なら **同時フルは避け、時間帯で分割**する。トラック A（CSV 取込〜タイムライン調整）と同日にやる場合は、**読込ブロック**と **テンプレ／マップ整備ブロック**を分ける。
 
 以下は **運用方針として固定**したスロット名（具体の開始時刻はオペレータの外部スケジュールに委ねる。repo に週 cadence は置かない）。
 
 | ブロック | 目的 | 運用メモ |
 |----------|------|----------|
-| C-1 | レーン C：YMM4 テンプレ複製・`overlay_map` 編集 | 主軸 (背景アニメ) と **同一セッションでフル併用しない** |
+| C-1 | レーン C：YMM4 テンプレ複製・`overlay_map` 編集 | 旧背景アニメ証跡と **同一セッションでフル併用しない** |
 | C-2 | レーン C：`validate-ir` / `apply-production` の CLI 確認 | repo 側は §5 まで **完了済み** |
 | 主軸-BG | 背景アニメ短サイクル | `runtime-state.md` の `next_action` に従う |
 | A | トラック A：CSV 取込・本番 ymmp 調整 | C-1 と **別ブロック**推奨 |
@@ -115,7 +115,7 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
 
 ### 演出品質の運用単位（2026-04-09 追加）
 
-- 背景アニメと情報オーバーレイの品質改善は、[VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md) の **A1-A4 / B1-B4** 単位で実施する。
+- 背景アニメと情報オーバーレイの品質改善は、旧 A1-A4 / B1-B4 観点の履歴を参照する場合でも、現行判断では案件ごとの検証記録と `runtime-state.md` を優先する。
 - 提出は各パケットごとに JSON（スコア + チェックリスト + PASS/NEEDS_FIX）。
 - コアは PASS のみ受け入れる（NEEDS_FIX は差し戻し）。
 
@@ -187,13 +187,13 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
 
 ## 9. 追記（2026-04-10）— file5 基準・overlay B3 のみ
 
-[LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md) B-3 の機械ゲートに沿い、`VISUAL-QUALITY-PACKETS` の **overlay B3（タイミング一致）** だけを判定した記録を別紙に残した。
+[LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md) B-3 の機械ゲートに沿い、旧 **overlay B3（タイミング一致）** だけを判定した記録を別紙に残した。
 
 - **実行記録**: [LANE-C-file5-B3-overlay-timing-2026-04-10.md](LANE-C-file5-B3-overlay-timing-2026-04-10.md)
 - **判定 JSON**: `samples/lane_c_file5_b3_overlay_timing_evidence.json`
 - **ログ**: `samples/lane_c_file5_b3_validate_logs.txt` / `samples/lane_c_file5_b3_apply_production_dryrun.txt`
 
-### 8.6 `VISUAL-QUALITY-PACKETS` A3（bg_anim 意図一致）— 2026-04-10
+### 8.6 旧 A3（bg_anim 意図一致）— 2026-04-10
 
 - **対象 IR**: [samples/ir_visual_styles_dry_sample.json](../../samples/ir_visual_styles_dry_sample.json)（レーンC §5.1 `validate-ir` 済みの三スタイル dry サンプル）
 - **判定**: **PASS**（`target_quality` スコア 2、必須チェック `tone_match` / `topic_match` / `no_contradicting_visual` いずれも満たす）
@@ -207,7 +207,7 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
 
 ## 10. 実行ログ（2026-04-10）— Prompt-C 機械回帰
 
-[CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) **Prompt-C** に沿った `validate-ir` / `apply-production --dry-run` の再実行。repo root は本リポジトリ。PowerShell では stderr の WARNING が非ゼロ終了と誤認されうるため、**終了コードは `cmd /c` で確認**（いずれも **0**）。
+旧 **Prompt-C** に沿った `validate-ir` / `apply-production --dry-run` の再実行。repo root は本リポジトリ。PowerShell では stderr の WARNING が非ゼロ終了と誤認されうるため、**終了コードは `cmd /c` で確認**（いずれも **0**）。
 
 **overlay-map（overlay/se 系）**: `_local/lane_c/overlay_map.json` が存在したため、§8.2 / §8.3 と同じく **同ファイル**を使用（無い環境では `samples/p2_overlay_map.json` で §5.2 相当の回帰とする）。
 
@@ -254,13 +254,13 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
 
 ### 10.4 境界（ファイル7との切り分け）
 
-`VISUAL-QUALITY-PACKETS` の **A2 / A4 / B2 / B4** の個別 JSON 提出は **Prompt-C 本体のスコープ外**（[CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) の **Prompt-C-Visual-Quality** / [VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md)）。必要時にパケット単位で実施し、[CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) の PASS 条件へ接続する。
+旧 **A2 / A4 / B2 / B4** の個別 JSON 提出は当時の Prompt-C 本体のスコープ外。必要時は、現行の案件ごとの検証記録と `runtime-state.md` / `P02-production-adoption-proof.md` の PASS 条件へ接続する。
 
 ---
 
 ## 11. 実行ログ（2026-04-11）— Prompt-C 機械回帰
 
-[CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) **Prompt-C** に沿った再実行。本環境では `_local/lane_c/overlay_map.json` が **未配置**のため、§8.2 / §8.3 の **overlay/se 系**はドキュメント記載のフォールバックどおり **`samples/p2_overlay_map.json`** を使用（§5.2 相当の回帰）。
+旧 **Prompt-C** に沿った再実行。本環境では `_local/lane_c/overlay_map.json` が **未配置**のため、§8.2 / §8.3 の **overlay/se 系**はドキュメント記載のフォールバックどおり **`samples/p2_overlay_map.json`** を使用（§5.2 相当の回帰）。
 
 ### 11.1 `validate-ir`（§5.1 三スタイル dry）
 

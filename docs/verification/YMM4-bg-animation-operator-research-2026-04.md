@@ -4,7 +4,7 @@
 
 - **目的**: S-6 における「背景の運動・揺らぎ・ループ・エフェクトチェーン」を、**YMM4 内で完結する**運用（公式機能・FAQ・コミュニティプラグイン）として整理するオペレータ向け補遺である。
 - **正本との関係**: 自動化の全体骨格・三層責務は [YMM4-AUTOMATION-RESEARCH.md](../YMM4-AUTOMATION-RESEARCH.md)、境界は [AUTOMATION_BOUNDARY.md](../AUTOMATION_BOUNDARY.md)、非交渉条件は [INVARIANTS.md](../INVARIANTS.md)。**第 2 のロードマップ本文はここに置かない**（優先度・次アクションは [runtime-state.md](../runtime-state.md) を参照）。
-- **`bg_anim` と patch の技術的正本**: [PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md)（`bg_anim` 行）、経路測定は [G12-timeline-route-measurement.md](G12-timeline-route-measurement.md)、品質パケットは [VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md)。
+- **`bg_anim` と patch の技術的正本**: [PRODUCTION_IR_CAPABILITY_MATRIX.md](../PRODUCTION_IR_CAPABILITY_MATRIX.md)（`bg_anim` 行）、経路測定は [G12-timeline-route-measurement.md](G12-timeline-route-measurement.md)。品質観点は案件ごとの検証記録で扱う。
 
 以下の **公式 URL・リリース事実** は、当時の調査メモに基づき **最終確認日 2026-04-07 (JST)** とする。細かい版固定はオペレータ環境で [manjubox.net/ymm4/release/](https://manjubox.net/ymm4/release/) を参照して判断する。
 
@@ -102,7 +102,7 @@
 
 ### 7.4 品質パケット（任意だが推奨）
 
-- [ ] `bg_anim`／`overlay` の品質観点は [VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md) の単位で切り出し、必要なブロックだけ検証記録を残せる。
+- [ ] `bg_anim`／`overlay` の品質観点は案件ごとの検証単位で切り出し、必要なブロックだけ検証記録を残せる。
 
 ---
 

@@ -13,7 +13,6 @@ DEFAULT_PROOF = REPO_ROOT / '_tmp/skit_01_v2_verify.ymmp'
 DEFAULT_REGISTRY = REPO_ROOT / 'samples/registry_template/skit_group_registry.template.json'
 RUNTIME_STATE = REPO_ROOT / 'docs/runtime-state.md'
 VERIFY_DOC = REPO_ROOT / 'docs/verification/skit_01_delivery_dispute_v1_2026-04-19.md'
-PROMPT_DOC = REPO_ROOT / 'docs/prompts/G24-skit01-proof-continuation.md'
 PREFERRED_PROOF_PATH = '_tmp/skit_01_v2.ymmp'
 SURVIVING_PROOF_PATH = '_tmp/skit_01_v2_verify.ymmp'
 MANUAL_SAMPLE_PATH = REPO_ROOT / '_tmp/skit_ManualSample_01.ymmp'
@@ -84,7 +83,6 @@ def main() -> int:
 
     runtime_text = read_text(RUNTIME_STATE)
     verify_text = read_text(VERIFY_DOC)
-    prompt_text = read_text(PROMPT_DOC)
 
     if MANUAL_SAMPLE_PATH.exists():
         trusted.append(f'manual reference exists: {MANUAL_SAMPLE_PATH.relative_to(REPO_ROOT)}')
@@ -98,12 +96,12 @@ def main() -> int:
 
     preferred_path = REPO_ROOT / PREFERRED_PROOF_PATH
     surviving_path = REPO_ROOT / SURVIVING_PROOF_PATH
-    mentions_preferred = PREFERRED_PROOF_PATH in verify_text or PREFERRED_PROOF_PATH in prompt_text
+    mentions_preferred = PREFERRED_PROOF_PATH in verify_text
     if not preferred_path.exists() and surviving_path.exists() and mentions_preferred:
         failures.append(
             (
                 'PROOF_OUTPUT_PATH_DRIFT',
-                'Stale path _tmp/skit_01_v2.ymmp remains in repo docs/prompt for drift tracking, while the surviving repo artifact is _tmp/skit_01_v2_verify.ymmp.',
+                'Stale path _tmp/skit_01_v2.ymmp remains in repo verification docs for drift tracking, while the surviving repo artifact is _tmp/skit_01_v2_verify.ymmp.',
             )
         )
 

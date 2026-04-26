@@ -83,7 +83,7 @@ uv run python -m src.cli.main build-csv refined.txt -o _tmp_out.csv ^
 
 ### ロードマップ実装スライス（2026-04-06）
 
-将来開発プラン（repo: [FUTURE_DEVELOPMENT_ROADMAP.md](../FUTURE_DEVELOPMENT_ROADMAP.md)）に沿い、同サンプルで **CLI 部分を再実行**（exit 0）:
+[FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) の G-15〜G-18 実装済み状態に沿い、同サンプルで **CLI 部分を再実行**（exit 0）:
 
 - `diagnose-script` … `--format json`
 - `validate` … `OK: 28 utterances parsed`（既知 WARN: row 10 長文）

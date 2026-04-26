@@ -5,7 +5,7 @@
   "reference_files": {
     "ir": "samples/p2_overlay_se_ir.json",
     "overlay_map": "samples/p2_overlay_map.json",
-    "quality_packet_spec": "docs/verification/VISUAL-QUALITY-PACKETS.md"
+  "quality_packet_spec": "legacy visual quality packet; deleted 2026-04-27"
   },
   "method": "static_repo_only",
   "small_screen_assumption": "モバイル相当（縦長・安全域狭い）でのオーバーレイ内テキスト可読性を想定。画像実体・YMM4プレビューは未実施。",
@@ -42,5 +42,5 @@
     "font_contrast_ok": "前景/背景コントラストは色データ未参照のため証跡不足により否認（プラン方針）。",
     "no_text_overflow": "吹き出し枠内への収まりはレイアウト実体未確認のため証跡不足により否認（プラン方針）。"
   },
-  "notes": "レーンC B1 のみ実施。判定は repo 内 JSON のみに基づく静的監査。PASS には YMM4 またはオーバーレイPNGの実視認・計測（コントラスト/はみ出し/モバイル幅相当プレビュー）が必要。コア受け入れは VISUAL-QUALITY-PACKETS の checklist 全 true かつ target_quality>=2 が条件のため、本提出は NEEDS_FIX。"
+    "notes": "レーンC B1 のみ実施。判定は repo 内 JSON のみに基づく静的監査。PASS には YMM4 またはオーバーレイPNGの実視認・計測（コントラスト/はみ出し/モバイル幅相当プレビュー）が必要。旧視覚品質パケットの checklist 全 true かつ target_quality>=2 が条件だったため、本提出は NEEDS_FIX。現行判断の正本にはしない。"
 }

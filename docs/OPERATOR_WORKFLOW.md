@@ -61,7 +61,7 @@
 - `FACE_PROMPT_PALETTE_EXTRA` が出た → prompt が palette の実在ラベルより狭くなっていないか確認する
 - 連続 run が多い → palette のラベル間のパーツ差が小さすぎる可能性。パーツ組み合わせを見直す
 
-## face サブクエストの completion criteria (2026-04-05 固定)
+## face サブクエストの completion criteria
 - `validate-ir` / `apply-production` が face 関連の mechanical failure を failure class 付きで止められること
 - current IR に必要な face / idle_face が palette で解決できない場合、`FACE_ACTIVE_GAP` として書き出し前に停止すること
 - prompt の face 契約と palette の drift が `FACE_PROMPT_PALETTE_GAP` / `FACE_PROMPT_PALETTE_EXTRA` / `FACE_LATENT_GAP` で可視化されること
@@ -90,9 +90,9 @@
 - **`--timeline-profile` を付ける場合（G-17）**: `motion` / `transition` / `bg_anim` のうち、契約に含まれるものを **`--motion-map`**（各ラベル → `video_effect` 辞書）、`--transition-map`、`--bg-anim-map` で書き込む。サンプル: [samples/motion_map_g17.example.json](samples/motion_map_g17.example.json)。このとき **Phase2 の `TachieItem` 区間分割は実行されない**。
 - **プロファイルを付けない場合の motion（Phase2）**: **`--tachie-motion-map`** でラベル → **VideoEffects オブジェクトの配列**を渡し、発話アンカーに合わせて `TachieItem` を分割する。サンプル: [samples/tachie_motion_map.example.json](samples/tachie_motion_map.example.json)。
 - **`validate-ir`**: 台帳ラベル検証は **`--motion-map` と `--tachie-motion-map` のキーを併用**できる（和集合で `MOTION_MAP_UNKNOWN_LABEL` を抑止）。
-- **重要な境界**: 上記の `motion` は **speaker_tachie（ゆっくり立ち絵）専用**。配達員などの外部素材演者はここに含めない。茶番劇演者の主経路は [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md) の **GroupItem テンプレ運用**。route 選択で迷ったら [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md) を先に見る。
+- **重要な境界**: `motion` の既定対象は `speaker_tachie`（ゆっくり立ち絵）。`motion_target` / `group_motion` は補助経路であり、G-24 茶番劇演者の主経路ではない。茶番劇演者は [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md) の **GroupItem テンプレ運用**を優先する。route 選択で迷ったら [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md) を先に見る。
 
-## 茶番劇テンプレ運用（2026-04-17 固定）
+## 茶番劇テンプレ運用
 
 ### 開発段階
 
@@ -128,7 +128,7 @@
 - GroupItem / ImageItem / TachieItem を 1 つの feature として混ぜること
 - route contract やテストが通っただけで production 演出まで成立したと扱うこと
 
-## timeline edit サブクエストの境界 (2026-04-06 固定)
+## timeline edit サブクエストの境界
 - route 選択の正本: [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md)（何が `direct_proven` / `template_catalog_only` / `probe_only` / `unsupported` かを先に判断する）
 - IR 語彙と `patch-ymmp` 実装の対応（何が自動で書き込まれるか）の正本: [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md)
 - assistant / tool が先に閉じる対象は G-11 slot patch、G-12 motion/transition/bg_anim の write route 測定、G-13 overlay/se の timing anchor 付き挿入設計、G-14 bg_anim（ImageItem X/Y/Zoom プリセット）patch
@@ -137,9 +137,9 @@
 - G-12 の測定は `measure-timeline-routes` を起点に行い、まず ymmp の `VideoEffects` / transition key / template candidate route を readback で把握する。期待 route が決まったら `--expect` で contract miss を先に止める
 - 運用: `samples/` 等に新しい ymmp サンプルが追加され、timeline 系の期待 route を広げる場合は、該当カテゴリの `measure-timeline-routes` 記録（contract）を同じタイミングで更新する（sample dependency の解消単位）
 - `TIMELINE_ROUTE_MISS` は「その演出がダメ」という意味ではなく、「その ymmp には期待 route が存在しない」という mechanical failure として扱う
-- repo-local corpus に route 自体が 0 件なら、それは operator の visual judgement 待ちではなく sample dependency として扱う。2026-04-06 時点では `template` と non-fade / template-backed `transition` family のみがこれに該当する
+- repo-local corpus に route 自体が 0 件なら、それは operator の visual judgement 待ちではなく sample dependency として扱う。現状では `template` と non-fade / template-backed `transition` family のみがこれに該当する
 - `overlay` / `se` は意味ラベル → registry → timing anchor の deterministic 経路ができるまでは manual judgement に残すが、設計・dry-run・readback は assistant 側で先に閉じる
-- 2026-04-06 時点で `overlay` は assistant-owned mechanical scope として閉じた。`--overlay-map` があれば deterministic な `ImageItem` 挿入まで自動で行い、unknown label / map miss / timing anchor 不在 / spec 不正は visual review 前に failure class で止める
+- `overlay` は assistant-owned mechanical scope として閉じている。`--overlay-map` があれば deterministic な `ImageItem` 挿入まで自動で行い、unknown label / map miss / timing anchor 不在 / spec 不正は visual review 前に failure class で止める
 - `se` は意味ラベル → registry → timing anchor を assistant 側で閉じ、**G-18** から `--se-map` と IR の `se` に基づき `AudioItem` を挿入する（既存タイムラインの `AudioItem` をテンプレにできなければコード内最小骨格を使用）
 - 人間が残す判断は「どのテンプレートが見た目として良いか」「どのタイミングが気持ちいいか」「音量・密度・テンポが最終制作物として十分か」という creative quality のみ
 

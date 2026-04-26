@@ -4,158 +4,83 @@
 - プロジェクト名: NLMYTGen
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
-- 現フェーズ: 方向転換中。Production E2E 実証済み、packaging spec (H-01〜H-04) 一巡完了、timeline (G-11〜G-13) 完了。2026-04-06 フィードバックにより、実制作の3大bottleneck (台本品質/演出配置自動化/視覚効果) に軸を移す。詳細は ROADMAP UPDATE (2026-04-06 rev.2) 参照
-- 直近の状態:
-  - G-06 Production E2E: 60 VoiceItem / 28 IR utterance (row-range) / character-scoped face_map → face 133 changes / YMM4 visual proof OK
-  - G-07 idle_face: 待機中表情の TachieFaceItem 挿入。28 件挿入 + carry-forward 動作確認
-  - bg section 切替 proof: 2 ラベル (van_dashboard_ai + dark_board) で BG added 2 / YMM4 確認 OK
-  - extract-template --labeled: palette.ymmp → character-scoped face_map (魔理沙 6 + 霊夢 5 = 11 表情)
-  - row-range: IR 28 発話 ↔ CSV 60 行の粒度差を row_start/row_end で吸収
-  - face completion hardening: `validate-ir` が `PROMPT_FACE_DRIFT` / `FACE_ACTIVE_GAP` / `ROW_RANGE_*` / `FACE_PROMPT_PALETTE_*` / `FACE_LATENT_GAP` を分類し、`apply-production` は row-range unmatched/uncovered・validation error・fatal face patch warning で fail-fast
-  - H-01 Packaging Orchestrator brief: `docs/PACKAGING_ORCHESTRATOR_SPEC.md` v0.1 を追加。C-07/C-08 が参照する central brief schema を定義
-  - H-02 Thumbnail strategy v2: `docs/THUMBNAIL_STRATEGY_SPEC.md` v0.1 を追加。specificity-first / banned pattern / rotation policy / output contract を定義
-  - H-04 Evidence richness score: `docs/EVIDENCE_RICHNESS_SCORE_SPEC.md` v0.1 を追加。7軸の category score、warning class、repair suggestion を定義
-  - H-04 proof packet: `docs/verification/H04-evidence-richness-manual-scoring-proof.md` を追加。1 本の実台本で score と repair action を結びつける実行単位を整備
-  - H-01 workflow proof packet: `docs/verification/H01-packaging-orchestrator-workflow-proof.md` を追加。sample brief / cue memo / alignment check を束ねた実行手順を整備
-  - H-01 dry proof: `docs/verification/H01-packaging-orchestrator-ai-monitoring-dry-proof.md` により、AI監視 sample で brief が opening / title / thumbnail / cue memo の共有契約として機能することを repo-local artifact ベースで確認
-  - H-02 dry proof: `docs/verification/H02-thumbnail-strategy-ai-monitoring-dry-proof.md` により、AI監視 sample で specificity-first / banned pattern / rotation recommendation / brief compliance を dry proof し、C-08 prompt に `Specificity Ledger` と `Brief Compliance Check` を追加
-  - H-03 Visual density score: `docs/VISUAL_DENSITY_SCORE_SPEC.md` v0.1 を追加。7軸の visual density score、warning class、repair suggestion を定義
-  - H-03 dry proof: `docs/verification/H03-visual-density-ai-monitoring-proof.md` により、AI監視 sample で visual stagnation risk と promise visual payoff を warning 化し、S2/S4 の flat risk を repair に変換できることを確認
-  - H-04 manual proof: `docs/verification/H04-evidence-richness-ai-monitoring-proof.md` により、AI監視 sample を total 77 / `acceptable` と採点し、warning を anecdote continuity と late payoff の repair に変換できることを確認
-- G-12 measurement packet: `docs/verification/G12-timeline-route-measurement.md` と `samples/timeline_route_contract.json` を追加。profile ベースの route contract で current corpus の `motion` / `bg_anim` を固定し、fade-family `transition` route (`VoiceFade*` / `JimakuFade*` / `Fade*`) も mechanical に回収できる状態まで更新
-  - G-13 overlay / se insertion packet: `docs/verification/G13-overlay-se-insertion-packet.md`。`overlay` は deterministic `ImageItem` 挿入。`se` は G-18 で `AudioItem` 挿入まで拡張（旧 `SE_WRITE_ROUTE_UNSUPPORTED` は廃止）
-  - packaging frontier packet: H-01〜H-04 schema + dry proof 記録済み。H-02 strict GUI rerun proof は 2026-04-06 pass で閉じた
-  - B-12 行バランス重視の字幕分割を実装。`--balance-lines` を追加し、2行字幕向けに自然な改行を opt-in で挿入できるようにした
-  - B-12 検証: `build-csv --max-lines 2 --chars-per-line 40 --balance-lines --stats --dry-run` で実データ preview を確認。CSV 1行内の改行保持テストも追加
-  - B-12 post-import 再観測: 手動改行 10 / 再分割したい長文 15 / 不自然な単語分割 5。`。` での改行は効いたが、句読点の少ない長文と 1 文字最終行が残った
-  - B-13 を実装。`--balance-lines` の内部改善として、句読点が少ない長文の clause-aware split fallback と widow/orphan guard を追加
-  - B-13 検証: sample dry-run では 57 発話 → 62 行に再編され、長い一文の一部が節分割されることを確認
-  - B-13 post-import 再観測: 手動改行 5 / 再分割したい長文 10 / 不自然な単語分割 5。減りはしたがまだ多く、長い一文が 1 字幕に残るケースは未解決
-  - B-14 を実装。複数文発話の中にある単一長文も sentence ごとに再展開し、aggressive clause chunking fallback を追加
-  - B-14 検証: sample dry-run では 57 発話 → 95 行に再編、overflow candidates は 3 件まで低減
-  - B-14 追加観測: `、` 起点の分割強化により長すぎる行はかなり減り、全字幕は 3 行以内に収まる水準まで改善。残課題は `ー`、`「」`、`202/4` のような数値+記号折り返しなど、境界ケースの改行品質へ移った
-  - feasibility audit: 字幕分割以外の候補を再棚卸しし、次の本命候補は S-6 LLM adapter、E-01/E-02 は secondary、quarantine 群は据え置きと整理
-  - E-02 (YouTube メタデータ生成): 仕様検討の結果、hold へ移動。単体では価値薄
-  - D-02 / F-01 / F-02: 汚染バッチ由来として quarantined のまま
-  - C-01 (YMM4 台本読込): Python 機能ではなく確認済み手動工程として info へ整理
-  - FEATURE_REGISTRY: done 16 / info 2 / hold 3 / quarantined 3 / rejected 7
-  - 8a1c710 で追加された canonical docs は handoff に未反映だったため、今回実内容で補完
-  - `docs/ai/*.md` を canonical rules として入口に昇格し、resume prompt は補助に降格
-  - `prompt-resume.md` を追加し、docs-only resume packet を repo 内で完結させた
-  - Python のスコープは「テキスト変換のみ」で確定済み
-  - 動画形式: ゆっくり解説系スタンダード (プロジェクト開始時から不変)
-  - サムネイル: YMM4 テンプレートの文字・画像入れ替えで手動制作。非常に重要
+- 現在地の正本: 通常再開では `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md` で止める。本ファイル冒頭は状態スナップショットではなく、航海日誌への短い入口。
+- 現フェーズ: G-24 `delivery_nod_v1` cautious gate。assistant-owned readiness は PASS、user-owned YMM4 native GroupItem template author/export + manual acceptance 待ち。
+- 古い roadmap / prompt / verification packet は現行判断に使わない。必要な履歴は DECISION LOG と HANDOFF SNAPSHOT の該当行だけ読む。
+- Python のスコープは「テキスト変換 + IR/registry + ymmp 限定後段適用」。動画レンダリング・画像生成・YMM4 GUI 操作は Python の責務ではない。
 
 ---
 
 ## ACTIVE ARTIFACT
-- Active Artifact: NLM transcript → YMM4 CSV → 演出 IR → ymmp 後段適用 → 動画制作ワークフロー効率化
-- Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → patch-ymmp → 演出設定 → レンダリング
-- 現在のスライス: face・timeline・H-02/H-03/H-04 を completed として固定。主 frontier は H-01 運用固定と実制作3大bottleneck（`docs/runtime-state.md` 開発プラン参照）
-- 成功状態: face+bg 限定の全パイプライン E2E が通り、Level 3 (半自動制作ライン) に到達すること
+- Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
+- Artifact Surface: CLI artifact → CSV / registry / patched ymmp → YMM4 読込・確認・レンダリング
+- 現在のスライス: G-24 `delivery_nod_v1` の template-first gate。`audit-skit-group` の readiness と standalone export proof を混同しない。
+- 成功状態: `delivery_nod_v1` が user-owned YMM4 export + manual acceptance を通過し、`skit_group.intent.nod` を `direct_proven` へ昇格できること。
 
 ---
 
 ## CURRENT LANE
-- 主レーン: Advance（実制作 bottleneck 直接軽減）／**開発セッション上の優先は [runtime-state.md](runtime-state.md) §優先順位 (正本)** — 主軸 = 演出配置自動化の実戦投入 / メンテ層で Phase 1 Block-A (本編 v14・YMM4 S-4) の継続観測。コア本開発 **フェーズ T1** の承認済みスライスは repo 充足確認済み（[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §1・§4）
-- 今このレーンを優先する理由: face・timeline・packaging 採点の mechanical 束は揃った。残る重さは台本→手動配置→視覚効果の人間工程のため、**Phase 1 Block-A の YMM4 到達**で縦を切った上で、主軸 (演出配置) を実案件に投入する。レーン B 文書準備は 2026-04-09 完了扱い（DECISION LOG 参照）
+- 主レーン: Advance（G-24 template-first の実制作接続）。現行の優先は [runtime-state.md](runtime-state.md) の `next_action`。
+- 今このレーンを優先する理由: starter 2 件の成功を `nod` に安全に横展開し、template readiness を export proof と混同する status drift を閉じるため。
 
 ---
 
-## RECOMMENDED ROADMAP (2026-04-05)
+## ROADMAP UPDATE (2026-04-27 post-cleanup prep)
 
-### Phase 0: Tier 3 安定化を先に閉じる
-- G-10 を前提に、Custom GPT Instructions v4 差し替えと palette 不足ラベル追加を先に完了する。
-- 理由: packaging / marketing を強めても、演出基盤の face/bg 適用が不安定だと downstream の比較がノイズ化するため。
+This section narrows the next roadmap after the legacy-document cleanup. It does not approve new implementation scope. The roadmap is intentionally gate-shaped: close the current G-24 `nod` proof, then widen only to the next catalog intents that have the same value path.
 
-### Phase 1: Packaging の中央制御を作る
-- 第一着手は H-01 Packaging Orchestrator brief。
-- ここで title promise / thumbnail promise / audience hook / required evidence / forbidden overclaim / alignment check を 1 つの brief に束ねる。
-- 理由: 現在の主問題は「良いコピーが出ない」ことより、「台本側がタイトルを侵食し、判断主体が分散する」ことにあるため。
-- 2026-04-05 時点で schema v0.1 は定義済み。次に必要なのは、C-07/C-08 実運用で drift が減るかの workflow proof。
-- 2026-04-06 時点で workflow proof packet も整備済み。次に必要なのは user 実行による before/after drift 記録。
+### 現行ロードマップの主軸
 
-### Phase 2: サムネ戦略を H-01 配下で強化する
-- 第二着手は H-02 Thumbnail strategy v2。
-- 具体数値・固有名詞・年数・割合・金額など本文根拠のある具体性を優先し、抽象煽りテンプレへの依存を下げる。
-- 同時に構図 / 表情 / 配色 / コピー型の rotation を定義し、固定パターン連打を避ける。
+1. **G-24 `delivery_nod_v1` cautious gate を閉じる**
+   - actor: user + assistant
+   - owner artifact: YMM4 native template asset + `skit_group` registry / Capability Atlas state
+   - bottleneck: `audit-skit-group` readiness と standalone native template export proof がまだ分離されたまま
+   - done condition: `delivery_nod_v1` が GroupItem + body/face の 2 `ImageItem` children + no `TachieItem` で export され、manual acceptance (`nod amplitude`, `does not dominate scene`) を PASS する
+2. **`nod` 昇格後、`deny_oneshot -> exit_left` を同じ gate で処理する**
+   - actor: shared
+   - owner artifact: `skit_group.intent.*` の support level
+   - bottleneck: starter 2 件の成功を remaining intent 群へ安全に横展開すること
+   - done condition: each intent is either `direct_proven` after export proof, or remains `template_catalog_only` with an explicit replan reason
+3. **P02 production adoption を template 解決の実戦運用へ寄せる**
+   - actor: assistant + user
+   - owner artifact: production adoption proof / template resolution notes
+   - bottleneck: route contract や dry-run pass を production value path と混同しないこと
+   - done condition: exact / fallback / manual note が、実制作の S-6（背景・演出設定）でどの手作業を減らすかまで記録される
+4. **メンテ層は on-demand に保つ**
+   - actor: operator / assistant
+   - owner artifact: B-18 台本診断、B-17 改行残差、H-01/H-02 packaging / thumbnail briefs
+   - bottleneck: G-24 の主軸を、done 件数稼ぎや古い spec/proof 整備で薄めないこと
+   - done condition: 新台本・新サムネ・drift 発生時だけ起動し、通常の次 frontier にはしない
 
-### Phase 3: 内容の強さを採点できるようにする
-- 第三着手は H-04 Evidence richness score。
-- 逸話 / 具体事例 / 数値 / 学術知 / 最新情報のどれが弱いかを可視化し、サムネやタイトルの promise を本文が支えられているかを見る。
-- 理由: 先に内容根拠の診断軸を持たないと、H-02 が click-first に偏るため。
+### formal plan の分岐条件
 
-### Phase 4: 視覚密度を診断する
-- 第四着手は H-03 Visual density score。
-- 初期版は IR / section plan / bg_map / template 使用状況から proxy 算出し、背景切替・静止継続・情報埋め込み・演出配分を warning 化する。
-- 理由: これは有効だが、H-01/H-02/H-04 より bottleneck 直撃度が一段低く、先に中央制御と内容側 gate を作る方が効率が高い。
+- **`delivery_nod_v1` export 未報告**: 次プランは YMM4 hands-on / acceptance を閉じる短い operation packet から始める。assistant 側の readiness 再検証は既に PASS のため、再度の proof 採掘を主目的にしない。
+- **`delivery_nod_v1: PASS` 報告済み**: 次プランは `skit_group.intent.nod` の `direct_proven` 昇格、Capability Atlas / registry / P02 / runtime-state 同期、続いて `deny_oneshot` packet 作成へ進む。
+- **`delivery_nod_v1: FAIL - <reason>` 報告**: 次プランは `fallback` / `manual_note` / `motion_target` / `group_motion` のどれが必要になったかを failure class として分け、G-24 template-first の範囲を再設計する。FAIL を代替成功にしない。
+- **新規制作案件が先に来た場合**: G-24 の主軸は維持し、メンテ層は B-18 → H-01/H-02 on demand → B-17 drift-only の順で必要分だけ起動する。
 
-### Phase 5: 配信 metadata は最後に再評価する
-- E-02 は H-01/H-02/H-04 の出力を受ける consumer として再評価する。
-- 単体で先に進めない。Packaging brief と evidence gate がない metadata 生成は、再び「コピペ先が変わるだけ」の弱い value path に戻るため。
+### プラン作成前に揃えるもの
 
-### Deferred / Not First
-- F-01/F-02 GUI は引き続き quarantine。H-01〜H-04 の運用で bottleneck が本当に減るか見るまでは戻さない。
-- D-02 は主軸に戻さない。素材取得より、何を見せるか / 何を約束するか / 何が足りないかの判断支援が先。
+- [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) は G-24 `delivery_nod_v1` を現行アンカーとして更新済み。
+- `runtime-state.md` と `verification/P02-production-adoption-proof.md` は、assistant-owned readiness と user-owned export proof を分離する現行参照先として更新済み。
+- 削除済みレガシードキュメント名への repo-local 参照は `git grep` で残存なし。
+- `formal plan の分岐条件` は本節に固定済み。次プランはこの分岐のどれに入ったかを冒頭で宣言してから書く。
+- 次の formal plan は、`delivery_nod_v1` の user export が未完なら **hands-on / acceptance packet**、PASS 済みなら **state promotion + `deny_oneshot` packet** から始める。
 
----
+### 今回やらないこと
 
-## ROADMAP UPDATE (2026-04-06 rev.2)
-
-This section supersedes all previous roadmap blocks.
-
-### 現状認識 (2026-04-06 ユーザーフィードバックに基づく方向転換)
-
-done 35件の大半はテキスト変換パイプラインと spec/proof 整備に集中しており、
-実際の動画制作ワークフローで最も重い工程が未自動化のままである。
-packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フレームワークであり、
-実制作の手間を直接軽減するものではない。
-
-**実制作の 3大 bottleneck (ユーザー特定):**
-
-1. **台本品質保証** — 台本をどこまで NotebookLM に近いままにするか、事前にゆっくり向けへ整えるかは**案件ごとに可変**であり、repo が本番運用を二分して固定するものではない（現状の作業が原文寄りでも、本番でも常にそうとは限らない）。機械側で共通するのは、`validate` / `build-csv` による**YMM4 用 CSV への正規化**（話者ラベル・分割・表示幅等）。任意で `diagnose-script`（B-18）や C-09（[S1-script-refinement-prompt.md](S1-script-refinement-prompt.md)）による **constrained rewrite** を足すかは都度判断。2026-04-06 フィードバックの「原文のまま使い切れない」は**典型痛みの列挙**であり全案件への断定ではない。手順の書き分けは [P01-phase1-operator-e2e-proof.md](verification/P01-phase1-operator-e2e-proof.md)。曖昧さは演出 IR に連鎖しうる。
-2. **演出配置の自動化** — 最重量工程。IR を生成するところまでは来ているが、**「全て手動」ではない**。現行の patch-ymmp は face/bg/slot/overlay に加え、`motion_target` による **ImageItem/GroupItem への VideoEffects 適用**、`group_motion` による **既存 GroupItem の X/Y/Zoom 更新**まで機械適用できる。したがって、**既存 sample / GroupItem / layer / target labeling が揃う案件では assistant 側が rough placement と effect 適用を先行し、user は YMM4 上で意図確認とテンプレ資産化に集中できる**。未解消なのは、茶番劇演者の主経路である `skit_group` template registry が **CLI preflight では消費されるが patch-time resolver ではない**ため、canonical template authoring と派生テンプレ蓄積が依然として YMM4 側に残っている点。素材調達、レイアウト判断、タイミング制御、アニメーション設定のうち「主経路の資産 authoring」と「最終見え方判断」は依然として bottleneck である
-3. **視覚効果** — サムネイルを1枚も完成させていない。茶番劇風アニメ/図解アニメがゼロ。画像表示のみ
-
-### 今後の方向性
-
-次フェーズでは spec 追加や proof 整備ではなく、上記 3 工程の手間を直接軽減する機能を優先する。
-具体的な着手順・手法はユーザーと合意のうえで決定する。
-
-以下は着手候補の整理であり、順序は未確定:
-
-#### 候補A: 台本品質の自動改善
-- **手段例（機械のみ）**: `build-csv` / reflow / `diagnose-script` の**検知・警告**で、YMM4 取込後の手戻り（字幕はみ出し等）を減らす（C-09 を使わない案件でも価値あり）
-- **手段例（LLM 支援を追加）**: ゆっくり解説様式への変換/支援（C-09）、話者混同の検出・修正支援、NLM 臭の除去パターン（案件で採用する場合）
-- 台本品質が演出 IR に連鎖するため、上流で手を入れるほど効果が出やすい場合がある（採用時）
-- Python スコープ制約 (テキスト変換のみ) の範囲内で可能
-- GUI LLM (Custom GPT 等) での支援も選択肢（採用時）
-
-#### 候補B: 演出配置の自動化拡張
-- 現状 face/bg/slot/overlay → 演出全体への拡張
-- 素材調達・配置・タイミング制御のどこをどう自動化するか要設計
-- Python スコープ制約との整合 (.ymmp 操作は patch-ymmp の限定範囲のみ)
-- YMM4 側の制約 (タイムライン操作 API 非公開) が壁になる可能性
-
-#### 候補C: 視覚効果の実現
-- サムネイル制作の実ワークフロー確立
-- 茶番劇風アニメ/図解アニメの実現手段の特定
-- Python での画像生成は禁止のため、外部ツール or YMM4 内での実現が前提
-- C-08 prompt のコピー品質改善 (仕様準拠だが感情フック不足)
-
-#### 完了・維持 (着手不要)
-- Packaging spec lane: H-01〜H-04 全て proof 済み。追加 spec 作業なし
-- Timeline lane: G-11〜G-13 completed packet。failure class 発生時のみ再オープン
-- 字幕分割: B-01〜B-17。残差2件は方針判断待ち (急がない)
-- Electron GUI scaffold: Phase 1-5 完了。実運用は上記 bottleneck 解消後
-
-#### 別タスクとして完全分離
-- E-01/E-02 YouTube 投稿自動化: 制作パイプラインとは独立。混ぜない
+- 新しい FEATURE を増やさない。
+- `motion_target` / `group_motion` を `nod` の代替成功として扱わない。
+- 背景アニメ/S6 の古い証跡を、現行判断に混ぜない。
+- `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
 
 | 日付 | 決定事項 | 選択肢 | 決定理由 |
 |------|----------|--------|----------|
+| 2026-04-27 | **ドキュメント汚染を根絶し、再開時の入口を最小正本へ戻す**。resume 用プロンプト導線を削除し、`verification/` は証跡置き場に降格、`USER_REQUEST_LEDGER.md` は現在有効な要求だけへ圧縮、固定日付風のルール見出しと旧背景アニメ/S6 再採用を廃止する。 | テンプレ維持 / 古い証跡を正本化 / 最小正本へ集約 | 再スタート時の読了過多と「正本っぽい古い文書」による判断汚染が、G-24 `delivery_nod_v1` の作業接続性を落としていたため。 |
+| 2026-04-27 | **次期ロードマップは G-24 `delivery_nod_v1` gate-shaped sequence から始める**。formal plan は `delivery_nod_v1` 未報告 / PASS / FAIL / 新規制作案件のどれかを冒頭で宣言し、未報告なら hands-on acceptance、PASS なら `nod` 昇格 + `deny_oneshot`、FAIL なら failure class 分解から開始する。 | 背景アニメ/S6 に戻す / 新 FEATURE を増やす / G-24 gate 分岐で開始 | レガシードキュメント整理後の bottleneck は `audit-skit-group` readiness と user-owned export proof の分離であり、`exact` を export proof と読み替えると status drift が再発するため。根拠: `runtime-state.md` next_action + `verification/P02-production-adoption-proof.md` + `INTERACTION_NOTES.md` TEMPLATE_FORMALISM |
+| 2026-04-23 | **Keep the G-24 `nod` cycle at readiness-PASS, but do not promote to `direct_proven` yet**. Assistant rechecked `delivery_nod_v1` on the canonical/proof corpora and confirmed proof-corpus `group_motion_changes=0`. Because the repo still does not track a discrete canonical-project `delivery_nod_v1` copy, Phase 1 is corrected to YMM4 author/export from `samples/haitatsuin_2026-04-12_g24_proof.ymmp` or an equivalent local project, starting from Layer 9 `GroupItem` Remark `haitatsuin_delivery_main`. `skit_group.intent.nod` stays `template_catalog_only` until manual acceptance plus standalone export are confirmed. | Promote now / assume a tracked copy exists / keep the gate but correct the packet | Readiness is already proven, but assuming a nonexistent tracked copy would corrupt handoff. This keeps assistant-owned facts and user-owned export clearly separated while preserving the cautious-gate order. |
 | 2026-04-21 | **starter 2 件の standalone native template export を完了扱いにする**。user report により `delivery_enter_from_left_v1` / `delivery_surprise_oneshot_v1` は名前そのままの GroupItem template として登録済みで、body/face の `ImageItem` 2 点も含めて保存された。これにより starter 2 件は canonical-project copy / production adoption proof / standalone export の 3 点セットを満たしたとみなす。 | export 保留 / starter 2 件だけ export / 5 件一括 export | cautious gate の目的は「急ぎすぎず proof 後に資産化すること」だった。必要最小限の 2 件だけを先に独立資産化したほうが、Atlas 昇格と次の拡張 frontier を明確に切り分けられるため |
 | 2026-04-21 | **G-24 cautious gate の Phase 2 を PASS として閉じる**。`samples/haitatsuin_2026-04-12_g24_proof.ymmp` を canonical-anchor + voice-anchored production proof ymmp として採用し、`samples/_probe/skit_01/skit_01_ir.json` に対する `audit-skit-group` と `apply-production --dry-run` を通す。starter 2 件は `exact`、非 starter 3 件も `exact`、`group_motion_changes=0` を確認したため、template-first が production proof 上でも成立したとみなす。 | proof 追加保留 / Phase 2 PASS / すぐ Atlas 昇格 | cautious gate の目的は standalone export 前に content/workflow proof を 1 件閉じることだった。proof ymmp が用意できた以上、そこで止めず repo-local で成立条件を実測し、昇格条件と export 判断を分離したほうが次の判断が明確だから |
 | 2026-04-21 | **starter 2 件の manual acceptance を PASS として閉じる**。`delivery_enter_from_left_v1` / `delivery_surprise_oneshot_v1` の loop・body-face drift は無く、`enter_from_left` に紛れていた退場設定は YMM4 上でカット済みとして扱う。以後の blocker は acceptance ではなく、canonical anchor を持つ voice-anchored production ymmp 不在に切り替える。 | acceptance 継続保留 / PASS 化 / すぐ export | visual acceptance の論点は user 確認で閉じたため。今後は同じ見え方確認を繰り返すより、Phase 2 proof を閉じるための ymmp 条件に集中したほうが bottleneck 直撃だから |
@@ -171,13 +96,13 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 | 2026-04-13 | **体テンプレ構想**: 別体素材（配達員等）にゆっくり頭を重ね、テンプレ蓄積→IR で指定する将来像。グループ制御で移動・拡大縮小は破綻なし。左右反転は素材分割が必要。FEATURE 起票は別ブロック。正本 [TACHIE-BODY-FACE-SWAP-ymmp-geometry-2026-04-13.md](verification/TACHIE-BODY-FACE-SWAP-ymmp-geometry-2026-04-13.md) §7 / [TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md](verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md) §3.2 | 体テンプレ / パーツ差替（G-19）/ 保留 | オペレータ調査で YMM4 のグループ制御仕様を確認。IR + レジストリで制御する設計は overlay/bg と同型で実現可能 |
 | 2026-04-12 | **P0 Block-A タスク再設計クローズ**: [P0-BLOCK-A-AND-PATH-A.md](verification/P0-BLOCK-A-AND-PATH-A.md) を正本化。[runtime-state.md](runtime-state.md) の P0 優先行を「C-09 必須」と読めないよう修正。Block-A＝S-4 読込エラーのみ／NotebookLM 準拠稿は経路 A で可 | 表を据え置き / 正本化 | CSV 手前で台本改善を前提にするとオペレータがブロックするため。機械再スモーク `samples/p0_steering_v14_2026-04-12_*` |
 | 2026-04-11 | **正本の表現是正**: 「運用で二系統ある」という断定を撤回。**案件ごと可変**・現状が原文寄りでも本番固定ではない旨を bottleneck #1 と [P01-phase1-operator-e2e-proof.md](verification/P01-phase1-operator-e2e-proof.md) に反映。C-09 は任意、v14 は repo 検証アンカーと明記（[P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md) 等） | 二系統を正本に残す / 撤回 | ユーザー指摘: 二系統はエンティティ調査ではなく文書整理枠であり、本番方針まで固定しないため |
-| 2026-04-11 | **開発正本から壁時計 cadence を除外**: 「2 週間」「週 1 回」「60〜90 分の固定ブロック」等の運用を repo 正本に置かず、**工程到達**（S-4 等）とオペレータセッション単位で記述する。反映: [P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md)、[OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md)、[LANE-C-operator-prep-2026-04-09.md](verification/LANE-C-operator-prep-2026-04-09.md)、[PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md)、[CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) §5、`runtime-state.md` の `next_action` | 週次を正本に残す / 到達のみ | 開発リズムをカレンダー週に束縛しないため |
-| 2026-04-11 | **P0 縦優先の固定**: 本編主軸＝AI監視 v14（`samples/v14_t3_ymm4.csv`）。Amazon Panopticon の B-11 §2 は **横**（別オペレータセッション）。正本 [P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md)。P01 行 `p0_mainline_v14_steering_2026-04-11_a`（機械再スモーク）。`runtime-state.md` の `next_action` を P0 先頭へ。T1 DOCSAMPLE の `validate-ir` を再実行し充足確認（[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) §4） | Amazon 縦を先に採る / 本編のみ固定 | 縦スライスが品質横展開に埋もれないよう、YMM4 到達工程を 1 本に束ねるため（週 cadence は正本に置かない） |
+| 2026-04-11 | **開発正本から壁時計 cadence を除外**: 「2 週間」「週 1 回」「60〜90 分の固定ブロック」等の運用を repo 正本に置かず、**工程到達**（S-4 等）とオペレータセッション単位で記述する。反映: [P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md)、[OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md)、[LANE-C-operator-prep-2026-04-09.md](verification/LANE-C-operator-prep-2026-04-09.md)、[PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md)、`runtime-state.md` の `next_action` | 週次を正本に残す / 到達のみ | 開発リズムをカレンダー週に束縛しないため |
+| 2026-04-11 | **P0 縦優先の固定**: 本編主軸＝AI監視 v14（`samples/v14_t3_ymm4.csv`）。Amazon Panopticon の B-11 §2 は **横**（別オペレータセッション）。正本 [P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md)。P01 行 `p0_mainline_v14_steering_2026-04-11_a`（機械再スモーク）。`runtime-state.md` の `next_action` を P0 先頭へ。旧 T1 DOCSAMPLE の `validate-ir` は当時 PASS 済みだが、現行判断には使わない。 | Amazon 縦を先に採る / 本編のみ固定 | 縦スライスが品質横展開に埋もれないよう、YMM4 到達工程を 1 本に束ねるため（週 cadence は正本に置かない） |
 | 2026-04-11 | レーン B（ファイル5）再検証: [LANE-B-execution-record-2026-04-09.md](verification/LANE-B-execution-record-2026-04-09.md) §8 を追記。正本コミット `927588e`、`validate-ir` / `apply-production --dry-run` を再実行し PASS。B-1/B-4/B-5 は従来方針継続。Custom GPT Instructions 突合はオペレータ（repo 外） | 再検証スキップ / 証跡のみ更新 | Prompt-B・ファイル2「プロンプト同期」の参照コミットを現 HEAD に更新するため |
-| 2026-04-11 | **T0 クローズ**: [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](verification/CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) §2〜§3 を差し替えなしで承認記録（§6）し、[CORE-DEV-POST-APPROVAL-SLICES.md](verification/CORE-DEV-POST-APPROVAL-SLICES.md) に **T1-P2-DOCSAMPLE** / **T1-RUNBOOK-GUI** を起票。開発フェーズを **T1** へ移行 | 承認前に T1 着手 / T0 で差し替え協議 | 実行プランどおりゲートを閉じ、文書・runbook 先行の作業契約を固定するため |
-| 2026-04-10 | レーン B（ファイル5）再検証: [LANE-B-execution-record-2026-04-09.md](verification/LANE-B-execution-record-2026-04-09.md) §7 を追記。正本コミット `fb0659a`、`validate-ir` / `apply-production --dry-run` を再実行し PASS。B-1/B-4/B-5 は 2026-04-09 方針継続。Custom GPT Instructions 突合はオペレータ（repo 外） | 再検証スキップ / 証跡のみ更新 | [CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) Prompt-B・ファイル2 プロンプト同期の記録要件を満たすため |
-| 2026-04-10 | コア本開発の **フェーズ T0〜T3** と並行レーンの相性を [CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md](verification/CORE-DEV-TASK-DESIGN-NEXT-CYCLE.md) に正本化し、[CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) に **ファイル8・ファイル9** と §3.0 早見・Prompt-Core-T0〜T3 を追加 | タスク設計なしで Prompt のみ / 設計ドキュメントを分離 | 「ファイルNのレーンA」形式で並行投入しつつコア幹を迷わせないため |
-| 2026-04-10 | 並行レーン証跡・H-05（`score-thumbnail-s8`）・視覚品質パケット文書を master に統合コミットし、**次期コア実装はプラン設計・起票から再開**するゲートを `runtime-state.md` の `next_action` で固定 | 実装を続行 / プラン入口で一旦止める | 作業ツリーを緑に戻し、次セッションで意図的に [CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md](verification/CORE-DEV-NEXT-IMPLEMENTATION-PLAN-DRAFT.md) から設計を始められるようにするため |
+| 2026-04-11 | **T0 クローズ（履歴）**: 旧コア計画で **T1-P2-DOCSAMPLE** / **T1-RUNBOOK-GUI** を起票し、開発フェーズを **T1** へ移行した。2026-04-27 の整理で当該計画文書は削除済み。 | 承認前に T1 着手 / T0 で差し替え協議 | 当時のゲート履歴のみ残す。現行の再開判断は `runtime-state.md` と G-24 gate を優先するため |
+| 2026-04-10 | レーン B（ファイル5）再検証: [LANE-B-execution-record-2026-04-09.md](verification/LANE-B-execution-record-2026-04-09.md) §7 を追記。正本コミット `fb0659a`、`validate-ir` / `apply-production --dry-run` を再実行し PASS。B-1/B-4/B-5 は 2026-04-09 方針継続。Custom GPT Instructions 突合はオペレータ（repo 外） | 再検証スキップ / 証跡のみ更新 | 当時のプロンプト同期記録要件を満たすため。現行判断には使わない |
+| 2026-04-10 | コア本開発の **フェーズ T0〜T3** と並行レーンの相性を旧文書で一時整理した。2026-04-27 の整理で旧設計文書・旧 Prompt ハブは削除済み。 | タスク設計なしで Prompt のみ / 設計ドキュメントを分離 | 履歴のみ残す。現行の作業接続は `runtime-state.md` / `verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md` / `verification/P02-production-adoption-proof.md` を使うため |
+| 2026-04-10 | 並行レーン証跡・H-05（`score-thumbnail-s8`）・旧視覚品質パケット文書を master に統合コミットし、当時は次期コア実装をプラン設計・起票から再開するゲートに固定した。 | 実装を続行 / プラン入口で一旦止める | 2026-04-27 の整理後は、旧プラン入口ではなく `runtime-state.md` の G-24 gate から再開するため |
 | 2026-04-09 | レーンB実施計画（Custom GPT / 2体分離）を実行し、運用固定を記録: [LANE-B-execution-record-2026-04-09.md](verification/LANE-B-execution-record-2026-04-09.md)。B-4 は「brief を会話ごとに先貼り」、B-5 は「H-02厳密時はS8、素案時はv4 Part 4」に固定 | 方針未固定のまま運用 / 連携方式を固定 | Instructions 側のドリフトを避け、案件ごとに迷わず切替できる最小運用を先に確立するため |
 | 2026-04-09 | レーン E（サムネ S-8）の **repo 準備サイクルを完了・運用クローズ** とする: [LANE-E-S8-prep-2026-04-09.md](verification/LANE-E-S8-prep-2026-04-09.md) 運用クローズ節、P03 `lane_e_prep_2026-04-09_a`。公開直前の実 1 枚は P3・runbook トラック E で並行。**本開発幹へ復帰**（`runtime-state.md`） | 準備を開発ブロックに残す / クローズしてコアへ | 正本・チェックリスト・既定案件入力は repo 固定済み。YMM4 実書き出しは公開タイミングのオペレーションのためコア開発をブロックしない |
 | 2026-04-09 | レーン B（GUI LLM 正本同期）の **repo 側準備を完了** とする: [LANE-B-gui-llm-sync-checklist.md](verification/LANE-B-gui-llm-sync-checklist.md)、[samples/packaging_brief.template.md](../samples/packaging_brief.template.md)、[gui-llm-setup-guide.md](gui-llm-setup-guide.md) の v4 正本優先化、runbook B-1/B-4/B-5 の整合。以降の主作業は **本開発幹**（`runtime-state.md` のコア・P0・B-11 ゲート等）。Custom GPT 等への実貼り付けはオペレータがチェックリストで実施 | 文書のみ完了扱い / 貼り付け完了までブロック | 正本と手順は repo に固定済み。GUI 同期は人間作業のため開発レーンをブロックしない |
@@ -188,7 +113,7 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 | 2026-04-07 | G-18 SE `AudioItem` 挿入を実装（`samples/AudioItem.ymmp` readback、`_apply_se_items`、テンプレート deepcopy または最小骨格）。`SE_WRITE_ROUTE_UNSUPPORTED` を廃止 | ゲート維持 / 実装 | サンプルと骨格で write route を確定し、G-13 の `se` を mechanical scope まで拡張 |
 | 2026-04-06 | G-15〜G-17 を実装（Micro `bg` 発話スパン / `overlay` 配列 / `--timeline-profile` + motion・transition・bg_anim マップ）。G-18 は AudioItem ymmp サンプル入手まで保留（verification に明記） | 一括 / ゲート付き | P2C に沿い SE write は corpus 確定後。G-12 `timeline_route_contract.json` と契約検証を先に置く |
 | 2026-04-06 | 視覚三スタイル（挿絵コマ / 再現PV / 資料パネル）を IR 既存語彙にマッピングし doc 正本化。延伸は G-15〜G-18 proposed | 一括実装 / 文書→テンプレ→Writer→台帳パケット | patch 制約（単一 overlay・セクション bg のみ・motion 未書込）を隠さず、`VISUAL_STYLE_PRESETS.md` と v4 プロンプトで Writer と運用を揃える |
-| 2026-04-06 | 将来開発ロードマップを `FUTURE_DEVELOPMENT_ROADMAP.md` に正本化。G-15〜G-18 は proposed のまま承認記録表で管理。feat/phase2-motion-segmentation は P2A-motion-branch-operator-decision で保留 | 未承認を approved に昇格 / 文書のみ | プランに沿いゲートを明文化。実装は承認後のみ |
+| 2026-04-06 | G-15〜G-18 のゲートと feat/phase2-motion-segmentation の保留判断を一度文書化。現在の正本は FEATURE_REGISTRY と各 verification 証跡に統合済み | 未承認を approved に昇格 / 文書のみ | プランに沿いゲートを明文化。実装は承認後のみ |
 | 2025 | CLI パイプラインとして構築 | CLI / Web UI / Electron | 最小構成で検証可能 |
 | 2025 | IP-01 No-Go | Go / No-Go | 要件未充足 |
 | 2025 | Web UI / API / YouTube 連携は後回し | 優先 / 後回し | ロバスト性検証が先 |
@@ -211,7 +136,7 @@ packaging spec (H-01〜H-04) は一巡完了したが、それは判断支援フ
 | 2026-03-30 | C-01 を done ではなく info に整理する | done維持 / info | Python 機能ではなく、確認済みの手動工程だから |
 | 2026-03-30 | canonical docs の雛形放置を handoff 不備として扱う | 雛形維持 / 内容補完 | `8a1c710` で docs は追加済みだったが、実内容が薄いままでは resume 時の再アンカー先として機能しない |
 | 2026-03-30 | `docs/ai/*.md` を canonical rules として先に読む | helper docs優先 / canonical rules優先 | tool-specific helper docs や prompt より repo 内 canonical rules を先に読む方が再開の一貫性が高い |
-| 2026-03-30 | `prompt-resume.md` を docs-only handoff 用に追加 | promptなし / prompts分散 / 単一resume prompt | 次セッション開始手順を repo 内で完結させるため |
+| 2026-03-30 | docs-only handoff 用の単一 resume prompt を採用（2026-04-27 に廃止） | promptなし / prompts分散 / 単一resume prompt | 当時は次セッション開始手順を repo 内で完結させるため |
 | 2026-03-31 | B-11 S-5 workflow proof を approved frontier にする | S-5 workflow proof / S-6 LLM adapter / hold継続 | ユーザーが S-5 を先に進めると承認。最大 pain に近く、Python の責務境界を壊さずに workflow proof を積めるため |
 | 2026-03-31 | B-12 行バランス重視の字幕分割を実装する | proposal packet のみ / `--balance-lines` 実装 | S-5 proof で辞書や timing ではなく改行系 pain が支配的と確認できたため、2行字幕向けの自然改行 heuristics を opt-in で実装 |
 | 2026-03-31 | B-13 を次候補として proposal 化する | B-12 継続 / clause-aware split + widow guard | B-12 は手動改行を減らしたが、長文再分割 15 件と 1 文字最終行が残り、次の主 pain が節分割と widow/orphan 回避に絞れたため |
@@ -328,15 +253,19 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ---
 
-## HANDOFF SNAPSHOT (2026-04-21 更新)
+## HANDOFF SNAPSHOT (2026-04-26 update)
 
-- Shared Focus: **G-24 cautious starter-to-proof gate on top of canonical anchor adoption**。old `skit_01` corpus は引き続き `REFERENCE_MASTER_MISSING` / `PROOF_OUTPUT_PATH_DRIFT` / `CANONICAL_GROUP_REMARK_MISSING` / `TEMPLATE_RESOLUTION_UNPROVEN` を伴うため、欠落した ManualSample を gate にしない。一方で `samples/canonical.ymmp` は frame 0 `haitatsuin_delivery_main` canonical anchor に加え、frame 306 `delivery_enter_from_left_v1` / frame 658 `delivery_surprise_oneshot_v1` の 2 件スターター copy を repo-resident artifact として持つ。assistant 側はそれに合わせて registry / preflight / P02 / handoff を同期し、manual acceptance と production adoption proof も PASS として閉じた。さらに user report により starter 2 件の standalone export も完了し、**残論点は次にどの intent を同じ gate に乗せるか**へ移った。正本 [G24-canonical-anchor-adoption-2026-04-20.md](verification/G24-canonical-anchor-adoption-2026-04-20.md) / [skit_01-workflow-breakage-audit-2026-04-20.md](verification/skit_01-workflow-breakage-audit-2026-04-20.md) / [P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md)。
-- Safe Next Frontier Packet: **主軸は引き続き G-24 茶番劇 Group template-first**。`samples/canonical.ymmp` により canonical anchor と starter copy 2 件は repo 内で観測可能になり、assistant 側の starter packet（registry / preflight / P02 / handoff）も同期済み。route の入り口は [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md)、template-first の成立判定は `python -m src.cli.main audit-skit-group <ymmp> <ir.json> --skit-group-registry <json>` を正規入口にし、old corpus の stale path `_tmp/skit_01_v2.ymmp` や欠落 ManualSample を gate に使わない。**starter 2 件 (`enter_from_left` / `surprise_oneshot`) は standalone export まで完了**したため、shared frontier は registry note / runtime-state / handoff / Capability Atlas をその state に合わせて更新し、次の拡張候補を `nod -> deny_oneshot -> exit_left` の順で進めること。**メンテ / hold / quarantined / rejected** の扱いは従来どおり。
+- Shared Focus: **G-24 `nod` cautious gate readiness + user export packet**. The old `skit_01` corpus is still not a gate because of `REFERENCE_MASTER_MISSING`, `PROOF_OUTPUT_PATH_DRIFT`, `CANONICAL_GROUP_REMARK_MISSING`, and `TEMPLATE_RESOLUTION_UNPROVEN`. The current shared cycle narrows to `delivery_nod_v1`: assistant rechecked `audit-skit-group` on `samples/canonical.ymmp` and `samples/haitatsuin_2026-04-12_g24_proof.ymmp`, confirmed `delivery_nod_v1` stays `exact`, and rechecked proof-corpus `group_motion_changes=0`. There is still no repo-tracked discrete `delivery_nod_v1` copy. Canonical docs: [G24-canonical-anchor-adoption-2026-04-20.md](verification/G24-canonical-anchor-adoption-2026-04-20.md) / [skit_01-workflow-breakage-audit-2026-04-20.md](verification/skit_01-workflow-breakage-audit-2026-04-20.md) / [P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md).
+- Restart Governance Delta: **2026-04-27** normal restart read budget is now capped at `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`. Protected/canonical docs remain sources of truth, but they are not all full-read requirements. Read `project-context` HANDOFF / DECISION LOG, FEATURE ID, invariant, ledger, workflow, interaction failure class, or AI gate only when the current decision needs that section. Full re-anchoring is an exception, not the default.
+- Interaction Governance Delta: **2026-04-27** template formalism is now a structural failure class. Obsolete prompts, archived packets, and superseded roadmap/setup docs remain deleted; `INTERACTION_NOTES.md` treats interaction failures as project risks, and now explicitly blocks prompt/checklist/OK-NG templates from replacing task connectivity. Manual/shared actions must state open target, created artifact, source object, actor, owner artifact, acceptance meaning, and replan condition before using short result codes.
+- Roadmap Prep Delta: **2026-04-27** next roadmap is narrowed to G-24 `delivery_nod_v1` cautious gate first, then `deny_oneshot -> exit_left` only after `nod` export/acceptance passes. [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) and [P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md) separate readiness from standalone export proof; no new FEATURE status or production route was changed.
+- Implementation Delta: **2026-04-27** assistant-owned readiness was rerun for `delivery_nod_v1`. `audit-skit-group` stayed `exact=5 / fallback=0 / manual_note=0` on canonical and proof corpora, and `apply-production --dry-run` stayed `success=true` / `motion_changes=8` / `group_motion_changes=0` when run with `--tachie-motion-map samples/tachie_motion_map_library.json`. This did not change support level; `nod` remains `template_catalog_only` until user-owned YMM4 author/export + manual acceptance are reported.
+- Safe Next Frontier Packet: **The next concrete move is to close `delivery_nod_v1` through manual acceptance plus standalone export**. Entry route stays [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md), and template-first validity still starts at `python -m src.cli.main audit-skit-group <ymmp> <ir.json> --skit-group-registry <json>`. Important distinction: `audit-skit-group` `exact` proves readiness, not the existence of a repo-tracked `delivery_nod_v1` copy. In YMM4, open `samples/haitatsuin_2026-04-12_g24_proof.ymmp` or the user's local equivalent, start from the Layer 9 GroupItem `haitatsuin_delivery_main`, and export a YMM4 native GroupItem template named `delivery_nod_v1` that includes body/face `ImageItem` children and no `TachieItem`. Manual acceptance means reporting whether that YMM4 result passes `nod amplitude (RepeatMove loop)` plus `does not dominate scene`. After a clean pass, promote `skit_group.intent.nod` to `direct_proven` and move next to `deny_oneshot -> exit_left`.
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: **2026-04-21** G-24 starter export sync。user report により `delivery_enter_from_left_v1` / `delivery_surprise_oneshot_v1` を **名前そのままの GroupItem template + ImageItem 2 点込み**で standalone native template library に登録済みと確認した。assistant 側は P02 / runtime / handoff / registry note / Capability Atlas をこの状態に同期し、`skit_group.intent.enter_from_left` と `skit_group.intent.surprise_oneshot` のみ `direct_proven` へ昇格、`deny_oneshot` / `exit_left` / `nod` は `template_catalog_only` に据え置いた。**2026-04-21** G-24 cautious starter-to-proof gate の Phase 2 を closing。user が `samples/haitatsuin_2026-04-12_g24_proof.ymmp` を用意し、assistant 側で `audit-skit-group` と `apply-production --dry-run` を `samples/_probe/skit_01/skit_01_ir.json` に対して実行したところ、starter 2 件と非 starter 3 件の合計 5 件すべてが `exact`、`group_motion_changes=0`、warning は `bg label 'studio_blue' not found in bg_map` のみだった。これにより standalone export の前提である **manual acceptance → production adoption proof** は完了した。**2026-04-21** G-24 cautious starter-to-proof gate。standalone export の前提を **manual acceptance → 1 件の production adoption proof → export** に更新し、content candidate を `skit_01_delivery_dispute_v2` + `samples/_probe/skit_01/skit_01_ir.json` に固定した。**2026-04-21** G-24 starter copy sync。`samples/canonical.ymmp` に frame 306 `delivery_enter_from_left_v1` / frame 658 `delivery_surprise_oneshot_v1` を追加し、assistant 側の registry / preflight / P02 / handoff / maintenance order を canonical-project 内 copy に合わせて同期した。`delivery_nod_v1` / `delivery_deny_oneshot_v1` / `delivery_exit_left_v1` は canonical corpus 上の exact を維持する catalog entry として残し、Capability Atlas の `skit_group.intent.*` は **standalone native template library proof ではない**ため `template_catalog_only` のまま据え置いた。**2026-04-20** `samples/canonical.ymmp` を official canonical artifact として採用し、canonical adoption packet を追加。`audit-skit-group` は canonical corpus で `status=ok / exact=5` を返し、Capability Atlas には `skit_group.canonical_anchor=direct_proven` を追加した。一方で `skit_group.intent.*` は standalone native template library proof が未成立のため `template_catalog_only` のまま維持。**2026-04-20** Capability Atlas (`TIMELINE_EFFECT_CAPABILITY_ATLAS.md` + `samples/_generated/capability_atlas.json`) を追加し、`scripts/build_capability_atlas.py` で route の support level を再生成できるようにした。これにより ManualSample なしでも `IR -> registry -> ymmp` の接合点を operator が 1 枚で判断できる。**2026-04-20** `audit-skit-group` を CLI 正規入口として実装し、`patch-ymmp` / `apply-production` に `--skit-group-registry` preflight を追加。registry `intent_fallbacks`・spec 同期・pytest 追加で、canonical anchor / exact / fallback / manual_note を repo 内 artifact だけで fail-fast 判定できる状態に更新。**2026-04-13** 並列プラン実施記録（上記 Shared Focus）。**2026-04-12** P01 `p0_mainline_v14_steering_2026-04-11_a` を PASS（YMM4 S-4）に更新、`next_action` を Block-A 通過後へ。**同日（先行）**: P0 Block-A と経路 A の正本化（[P0-BLOCK-A-AND-PATH-A.md](verification/P0-BLOCK-A-AND-PATH-A.md)、`runtime-state.md` P0 行、`samples/p0_steering_v14_2026-04-12_*`）。**2026-04-11** T0 完了＋P0 Amazon 並行証跡・サンプルを `origin/master` へ同期。**同日追記**: 舵取りプラン実装（P0 縦固定・`next_action` 先頭 P0・[P0-VERTICAL-STEERING-2026-04-11.md](verification/P0-VERTICAL-STEERING-2026-04-11.md)）。履歴は git log
-- Handoff Focus (next): 次回の再開起点は **G-24 茶番劇 Group template-first**。route 判断は [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md)、canonical anchor / starter copy 確認は `samples/canonical.ymmp`、production proof corpus は `samples/haitatsuin_2026-04-12_g24_proof.ymmp`、template-first の成立判定は `audit-skit-group`。`group_motion` の失敗3種（`NO_GROUP_ITEM` / `TARGET_MISS` / `TARGET_AMBIGUOUS`）は引き続き geometry helper の failure class として維持するが、starter 2 件の proof では `group_motion_changes=0` を確認済み。**starter 2 件の manual acceptance / production adoption proof / standalone export は完了**しているため、次の frontier は `nod` → `deny_oneshot` → `exit_left` の順で同じ gate を回すこと。ManualSample 再作成依頼・stale prompt の再利用・`_tmp/skit_01_v2.ymmp` 前提の再開はしない。
-- Evidence: Production E2E 実証済み + cautious gate の repo-local 検証を Phase 3 PASS まで完走。`samples/canonical.ymmp` の repo-local inspection で frame 0 / 306 / 658 の 3 GroupItem を確認し、`delivery_enter_from_left_v1` の `InOutMoveFromOutsideFrameEffect` が `IsOutEffect=False` であることも確認した。user report では starter 2 件の loop / body-face drift なし、`enter_from_left` 側の退場設定はカット済み。さらに `samples/haitatsuin_2026-04-12_g24_proof.ymmp` に対する `audit-skit-group` では `exact=5 / fallback=0 / manual_note=0`、`apply-production --dry-run --face-map samples/face_map_bundles/haitatsuin.json --bg-map samples/_probe/b2/palette_extract/bg_map.json` では `success=true` / `face_changes=50` / `transition_changes=10` / `motion_changes=8` / `group_motion_changes=0` を確認した。warning は `bg label 'studio_blue' not found in bg_map` の 1 件のみ。最後に user report で、starter 2 件が GroupItem template + ImageItem 2 点込みで standalone native template library に登録済みと確認した。これにより Phase 1 PASS / Phase 2 PASS / Phase 3 PASS の gate 条件を repo-local + user report の事実として固定した。`uv run python -m pytest tests/test_capability_atlas.py tests/test_skit_group_audit.py -q -s` も PASS（20 tests）。以降の pytest 実行は `src/` または `tests/` を変更したブロックの終わりにのみ `uv run pytest -q` を走らせ、必要時のみ `NLMYTGEN_PYTEST_FULL=1` を付ける。
+- Last Change Relation: **2026-04-27** restart read budget correction. Normal restart is now a three-doc path plus targeted section reads; full canonical sweep is reserved for explicit re-anchoring, drift, or boundary uncertainty. No production artifact, FEATURE status, or G-24 route changed; `skit_group.intent.nod` remains `template_catalog_only` until manual acceptance plus standalone export are confirmed.
+- Handoff Focus (next): Resume from the user-owned `delivery_nod_v1` author/export step. Route reference stays [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md), canonical anchor confirmation stays in `samples/canonical.ymmp`, proof / hands-on project stays `samples/haitatsuin_2026-04-12_g24_proof.ymmp` or the user's local equivalent, and the concrete hands-on instructions live in [P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md) §G-24 `delivery_nod_v1` user hands-on correction. Keep the existing `group_motion` failure classes (`NO_GROUP_ITEM`, `TARGET_MISS`, `TARGET_AMBIGUOUS`), but do not escape into `motion_target` / `group_motion` substitution for this cycle. If the user can export `delivery_nod_v1` as a GroupItem template with 2 `ImageItem` children and no `TachieItem`, and the two manual acceptance points pass, promote `skit_group.intent.nod` to `direct_proven`. The next frontier after that remains `deny_oneshot -> exit_left`.
+- Evidence: Production E2E remains proven, and starter 2 remains Phase-3 PASS. On the 2026-04-27 readiness rerun, `audit-skit-group` returned `exact=5 / fallback=0 / manual_note=0` on both `samples/canonical.ymmp` and `samples/haitatsuin_2026-04-12_g24_proof.ymmp`, including `delivery_nod_v1`; `apply-production --dry-run` returned `success=true` / `motion_changes=8` / `group_motion_changes=0` when run with `--tachie-motion-map samples/tachie_motion_map_library.json`. Earlier collect-only observed 28 test files / 384 tests and FEATURE_REGISTRY parsing observed done=45 / approved=3 / hold=9 / info=2 / quarantined=2 / rejected=7. No `src` or `gui` production logic changed, so full pytest was not rerun.
 - 案件モード: CLI artifact
 - 現在の主レーン: 方向転換中 (実制作bottleneck直接軽減へ移行)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近
@@ -374,6 +303,9 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - F-01/F-02: quarantined 継続
 - What Not To Do Next:
   - spec/proof 整備をさらに積み増さない (一巡済み。実制作の手間軽減が先)
+  - 再スタート時に保護 docs / canonical docs を全部読む運用へ戻さない。通常再開は 3 点 + 必要節だけ
+  - interaction failure を個人的な反応ラベルへ戻さない。対話メモは、再質問・停止・手動検証押し戻し・価値経路 drift を防ぐための failure class として保守する
+  - Prompt / checklist / `OK/NG` 返却テンプレを、開く対象・作る対象・元 object・判定主体の説明の代替にしない
   - done 件数で進捗を測らない (35件だが実制作カバレッジは限定的)
   - D-02 を主軸として扱わない (従属的補助論点)
   - quarantined 項目を通常候補としてそのまま spec 化しない

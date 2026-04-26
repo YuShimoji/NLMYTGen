@@ -8,4 +8,3 @@
 
 - [G18-se-audioitem-implementation.md](G18-se-audioitem-implementation.md)
 - [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) G-18 行
-- [FUTURE_DEVELOPMENT_ROADMAP.md](../FUTURE_DEVELOPMENT_ROADMAP.md) 承認表

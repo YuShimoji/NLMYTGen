@@ -120,4 +120,4 @@ score-thumbnail-s8 payload (JSON 1 ブロック、docs/verification/LANE-E-S8-pr
 - [S8-thumbnail-copy-prompt.md](../S8-thumbnail-copy-prompt.md) — ベース Prompt
 - [verification/LANE-E-S8-prep-2026-04-09.md](../verification/LANE-E-S8-prep-2026-04-09.md) — Lane-E probe 契約・実行例
 - [verification/P03-thumbnail-one-sheet-proof.md](../verification/P03-thumbnail-one-sheet-proof.md) — 運用記録先
-- [CORE-PARALLEL-HUB §5 Prompt-E](../verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md)
+- [runtime-state.md](../runtime-state.md) — 現在の主軸とメンテ層の優先順位

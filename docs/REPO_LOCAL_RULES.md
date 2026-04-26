@@ -1,30 +1,31 @@
 # REPO_LOCAL_RULES.md — repo-local 運用ルール（正本）
 
-NLMYTGen の **日々の Hard Rules・Read Order・Checklist** の正本。長い背景説明ではなく、毎ブロックで効かせる強制ルールだけを置く。vendor-neutral な AI ルールは引き続き `docs/ai/*.md`、非交渉境界は `docs/INVARIANTS.md`。
+NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本。長い背景説明ではなく、毎ブロックで効かせる強制ルールだけを置く。vendor-neutral な AI ルールは引き続き `docs/ai/*.md`、非交渉境界は `docs/INVARIANTS.md`。
 
 **`.claude/CLAUDE.md`** は Claude Code 等が慣例で読む入口用の **短いポインタ** に留める（本文の重複を避ける）。
 
 ---
 
-## Read Order
+## Restart Read Budget
 
-以下は `AGENTS.md` の再アンカリング手順ステップ 1〜5 と同じファイル列。ルート `CLAUDE.md` は方針・スタック・成功定義のみ。エディタがルート `CLAUDE.md` だけ読んだ場合は、続けて本ファイルと `docs/INVARIANTS.md` を読むこと。`docs/ai/WORKFLOWS_AND_PHASES.md` の「Recommended read order」は `docs/ai` から入る **resume 用サブセット**であり、フル再アンカリングの代替にはならない。
+通常再開では、読了対象を増やすこと自体を progress にしない。毎回読むのは次の 3 点まで。
 
-1. `AGENTS.md`
-2. `docs/ai/CORE_RULESET.md`
-3. `docs/ai/DECISION_GATES.md`
-4. `docs/ai/STATUS_AND_HANDOFF.md`
-5. `docs/ai/WORKFLOWS_AND_PHASES.md`
-6. `docs/INVARIANTS.md`
-7. `docs/USER_REQUEST_LEDGER.md`
-8. `docs/OPERATOR_WORKFLOW.md`
-9. `docs/INTERACTION_NOTES.md`
-10. `docs/runtime-state.md`
-11. `docs/project-context.md`
-12. `docs/FEATURE_REGISTRY.md`
-13. `docs/AUTOMATION_BOUNDARY.md`
+1. `AGENTS.md` — repo 境界・削除禁止・入口責務
+2. `docs/REPO_LOCAL_RULES.md` — 本ファイルの Hard Rules / Block-Start Checklist / Ask Hygiene
+3. `docs/runtime-state.md` — `slice` / `next_action` / `last_change_relation` / `last_verification`
 
-（任意）ドキュメント地図・迷子対策: `docs/NAV.md` — 上記の代替ではなく、正本への短い導線。
+追加で読むのは、作業接続に必要な場合だけ。
+
+- 迷子対策: `docs/NAV.md`
+- handoff / 決定履歴: `docs/project-context.md` の HANDOFF SNAPSHOT または該当 DECISION LOG だけ
+- status / backlog: `docs/FEATURE_REGISTRY.md` の該当 ID だけ
+- 非交渉境界: `docs/INVARIANTS.md` の該当節だけ
+- durable request: `docs/USER_REQUEST_LEDGER.md` の現在有効な要求 / 該当 backlog delta だけ
+- workflow pain: `docs/OPERATOR_WORKFLOW.md` の該当工程だけ
+- ask / manual verification / template formalism: `docs/INTERACTION_NOTES.md` の該当 failure class だけ
+- vendor-neutral rule: `docs/ai/*.md` の該当 gate / workflow 節だけ
+
+フル再アンカリングは `AGENTS.md` の例外手順を使う。全 canonical docs の存在は保つが、全文読了を通常再開の前提にしない。
 
 ## Hard Rules
 

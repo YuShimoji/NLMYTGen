@@ -1,7 +1,7 @@
 {
   "run_id": "lane_c_file7_overlay_b2_2026-04-11",
   "task_id": "B2",
-  "quality_packet_ref": "docs/verification/VISUAL-QUALITY-PACKETS.md",
+  "quality_packet_ref": "legacy visual quality packet; deleted 2026-04-27",
   "evaluation_subject": {
     "ir_path": "samples/ir_visual_styles_dry_sample.json",
     "overlay_map": "samples/visual_styles_overlay_map.example.json",

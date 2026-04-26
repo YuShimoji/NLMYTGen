@@ -206,7 +206,7 @@
 ## Lane E File4 P01 Amazon · 証跡ラップ (`lane_e_file4_p01_amazon_2026-04-11_a`)
 
 - run_id: `lane_e_file4_p01_amazon_2026-04-11_a`
-- 案件: **ファイル4**（P01 Amazon）／**レーン E**（S-8）— [CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) Prompt-E
+- 案件: **ファイル4**（P01 Amazon）／旧 **レーン E**（S-8）
 - 成果物（repo）: `samples/thumb_p0_phase1_amazon.png`（`video_slug`: `p0_phase1_amazon`、出力名は上記「Lane D+E P01 Amazon · S-8 接続（2026-04-10）」節と同一）
 - **実施証跡（repo 固定・2026-04-11 取得）**
   - Length: 119456 bytes

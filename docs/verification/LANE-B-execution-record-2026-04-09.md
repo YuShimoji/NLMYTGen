@@ -84,7 +84,7 @@ uv run python -m src.cli.main apply-production "samples/test_verify_4_bg_p2_smal
 
 ## 7. 再検証 2026-04-10（ファイル5 レーンB・Prompt-B）
 
-実施目的: [LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md) B-1〜B-5 の維持確認と、[CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md)（ファイル2）「プロンプト同期」観点の証跡更新。
+実施目的: [LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md) B-1〜B-5 の維持確認と、当時の「プロンプト同期」観点の証跡更新。
 
 ### 7.1 正本参照コミット（repo）
 
@@ -130,14 +130,14 @@ uv run python -m src.cli.main apply-production "samples/test_verify_4_bg_p2_smal
 
 ### 7.8 ファイル2 自己照合（プロンプト同期）
 
-- [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) 表「プロンプト同期」: **repo が正本**／差分は PR で取り込み／状態は **継続監視**。
+- 当時の「プロンプト同期」観点: **repo が正本**／差分は PR で取り込み／状態は **継続監視**。
 - 差し戻し §3 項番3（GUI と repo の食い違いを記録なしに放置）に対し、本節で **参照コミット・機械検証結果・GUI 突合手順**を明示した。
 
 ---
 
 ## 8. 再検証 2026-04-11（ファイル5 レーンB・Prompt-B）
 
-実施目的: [LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md) B-1〜B-5 の維持確認と、[CORE-LANE-PARALLEL-PROMPT-PACK.md](CORE-LANE-PARALLEL-PROMPT-PACK.md) Prompt-B（B-2/B-3/B-4/B-5・GPT 構成・repo 正本差分）に沿った証跡更新。
+実施目的: [LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md) B-1〜B-5 の維持確認と、旧 Prompt-B（B-2/B-3/B-4/B-5・GPT 構成・repo 正本差分）に沿った証跡更新。
 
 ### 8.1 正本参照コミット（repo）
 
@@ -183,4 +183,4 @@ uv run python -m src.cli.main apply-production "samples/test_verify_4_bg_p2_smal
 
 ### 8.8 ファイル2 自己照合（プロンプト同期）
 
-- [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md) 表「プロンプト同期」: **継続監視**。本節で参照コミット `927588e` と機械検証を再度固定した。
+- 当時の「プロンプト同期」観点: **継続監視**。本節で参照コミット `927588e` と機械検証を再度固定した。

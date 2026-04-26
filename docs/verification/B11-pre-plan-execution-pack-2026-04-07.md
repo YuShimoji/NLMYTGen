@@ -12,7 +12,7 @@
 ## 中断から再開（いまの位置）
 
 - **オペレータ向けの全文ハンズオン**（YMM4 手順〜4 区分の数え方〜プラン下準備）: [B11-operator-hands-on-and-recommended-plan-prep.md](B11-operator-hands-on-and-recommended-plan-prep.md)
-- **AI 監視サンプル**: [B11-workflow-proof-ai-monitoring-labor.md](B11-workflow-proof-ai-monitoring-labor.md) は **§5 完了条件を満たす**（取込前/後同一ファイル・4 区分・代表例 3 件・§3 Gate）。コア側の受け入れ記録は [CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](CORE-DEV-OPERATOR-INPUT-CHECKLIST.md)。
+- **AI 監視サンプル**: [B11-workflow-proof-ai-monitoring-labor.md](B11-workflow-proof-ai-monitoring-labor.md) は **§5 完了条件を満たす**（取込前/後同一ファイル・4 区分・代表例 3 件・§3 Gate）。現行の受け入れ判断は `runtime-state.md` と [P02-production-adoption-proof.md](P02-production-adoption-proof.md) を優先する。
 - **新台本で B-11 を取り直す場合**: 下記 §0 から新規 `B11-workflow-proof-<案件>.md` を切り、§1〜§3 を同パックどおり埋める。
 
 ---

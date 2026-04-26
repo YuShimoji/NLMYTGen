@@ -4,7 +4,7 @@
   "category": "overlay",
   "basis_docs": [
     "docs/verification/LANE-B-gui-llm-sync-checklist.md (B-3 minimal: validate-ir / apply-production --dry-run)",
-    "docs/verification/VISUAL-QUALITY-PACKETS.md (overlay B3 タイミング一致)",
+    "legacy overlay B3 timing match; visual quality packet deleted 2026-04-27",
     "docs/verification/LANE-C-operator-prep-2026-04-09.md (§5 機械確認コマンド)"
   ],
   "inputs": {

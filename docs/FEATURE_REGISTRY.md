@@ -113,7 +113,7 @@
 
 ### G. YMM4 自動化 (L3 内部工程の効率化)
 
-G-15〜G-18 はユーザー承認済み（[FUTURE_DEVELOPMENT_ROADMAP.md](FUTURE_DEVELOPMENT_ROADMAP.md) 承認表）。**G-15〜G-18 は実装済み**（G-18: [G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)）。
+G-15〜G-18 は **実装済み**。現行ステータスは本台帳の各行を正本とし、履歴・証跡は各 verification doc を参照する（G-18: [G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)）。
 
 | ID | 機能 | ステータス | レイヤー | 備考 |
 |----|------|-----------|---------|------|

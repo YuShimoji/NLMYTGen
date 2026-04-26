@@ -1,7 +1,7 @@
 # G-22 — Dual-rendering scene_presets (立ち絵 TachieItem + 書き出し PNG の両運用)
 
 **ステータス**: **G-22 proposed**（2026-04-16 起票。承認判定は視覚効果 slice Step 5 proof 後）
-**関連 FEATURE**: [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) Section C / G-13 (done・overlay 挿入) / G-21 (proposed・外部素材+ゆっくり頭 重畳)
+**関連 FEATURE**: [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) Section C / G-13 (done・overlay 挿入) / G-21 (hold・外部素材+ゆっくり頭 重畳)
 **slice 正本**: [VISUAL-TOOL-SELECTION-2026-04-16.md](VISUAL-TOOL-SELECTION-2026-04-16.md)
 **目的**: 同一演出を (A) 立ち絵 TachieItem 経路 と (B) YMM4 で書き出した立ち絵レンダリング PNG の overlay 経路 の両方で実現可能にし、工数削減と作業全体の整合性・演出蓄積を両立する。
 
@@ -32,7 +32,7 @@
 | ID | 内容 | G-22 との違い |
 |----|------|---------------|
 | **G-13 (done)** | `overlay` ラベル → `ImageItem` 挿入。`overlay_map` 解決 | G-22 は G-13 を **そのまま流用**。新規実装不要の可能性が高い |
-| **G-21 (proposed・当面不要判定)** | 外部人物素材 (配達員等) + ゆっくり頭 TachieItem 重畳 | G-21 は **2 アイテムの重畳**。G-22 は **立ち絵を事前レンダリングした単一 PNG** |
+| **G-21 (hold・当面不要判定)** | 外部人物素材 (配達員等) + ゆっくり頭 TachieItem 重畳 | G-21 は **2 アイテムの重畳**。G-22 は **立ち絵を事前レンダリングした単一 PNG** |
 | **G-19 (done)** | ゆっくり立ち絵内部の body パーツ束ね | レイヤー別 (G-19 は TachieItem 内部)。G-22 はタイムラインレイヤー |
 
 **混同注意**: G-21 は「外部画像 + ゆっくり頭」の**タイムライン重畳**、G-22 は「立ち絵を事前に 1 枚絵化した PNG」の**単層挿入**。

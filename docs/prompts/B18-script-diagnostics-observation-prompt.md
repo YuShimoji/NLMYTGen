@@ -2,7 +2,7 @@
 
 **目的**: 新規 NLM 台本に対して `diagnose-script` を実行し、診断コード別の warning/error 件数を P01 に記録する。**Block-A 通過済みの継続観測** として運用する。
 
-**位置づけ**: 既存 [CORE-PARALLEL-HUB §5 Prompt-A](../verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md) の機械診断部分を詳細化した運用正本。[SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md](../SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md) と `diagnose-script` CLI に直結する。
+**位置づけ**: メンテ層の機械診断手順。[SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md](../SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md) と `diagnose-script` CLI に直結する。主軸 G-24 を押し流さず、新規台本が来た場合だけ起動する。
 
 ---
 
@@ -101,5 +101,5 @@ warning 0 件の場合:
 
 - [SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md](../SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md) — 診断コード v1 / severity / CLI 仕様
 - [P01-phase1-operator-e2e-proof.md](../verification/P01-phase1-operator-e2e-proof.md) — 追記先（メモ列に `diagnose-script=...` 実績あり）
-- [CORE-PARALLEL-HUB §5 Prompt-A](../verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md)
+- [runtime-state.md](../runtime-state.md) — 現在の主軸とメンテ層の優先順位
 - [src/cli/main.py](../../src/cli/main.py) `p_diag_script` — argparse 実装

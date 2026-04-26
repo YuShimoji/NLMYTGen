@@ -1,20 +1,15 @@
 # WORKFLOWS_AND_PHASES.md
-Ruleset-Version: v18
+Ruleset-Version: v20
 Status: canonical
 
-## Recommended read order on resume / continue / refresh
+## Recommended read budget on resume / continue / refresh
 
-**注:** 以下は **resume / continue / refresh** 向け（`docs/ai` から入るサブセット）。**新規の再アンカリング・境界ルールの確認**は [AGENTS.md](../../AGENTS.md) の手順全体（`docs/REPO_LOCAL_RULES.md` を含む）を正とする。関係の整理は AGENTS の「Read order の関係（正本）」を参照。
+**注:** 通常再開の読了予算は [REPO_LOCAL_RULES.md](../REPO_LOCAL_RULES.md) の `Restart Read Budget` が正。`docs/ai` は必要な gate / workflow 節だけを参照する。`docs/ai/*.md` 全文読了を resume の前提にしない。
 
-1. `docs/ai/CORE_RULESET.md`
-2. `docs/ai/DECISION_GATES.md`
-3. `docs/ai/STATUS_AND_HANDOFF.md`
-4. `docs/ai/WORKFLOWS_AND_PHASES.md`
-5. `docs/INVARIANTS.md`
-6. `docs/USER_REQUEST_LEDGER.md`
-7. `docs/OPERATOR_WORKFLOW.md`
-8. `docs/INTERACTION_NOTES.md`
-9. runtime / context / registry / boundary docs
+1. `AGENTS.md`
+2. `docs/REPO_LOCAL_RULES.md`
+3. `docs/runtime-state.md`
+4. 必要になった gate / workflow / invariant / ledger / handoff の該当節だけ
 
 ## Resume / Continue / Refresh
 ### Resume
@@ -47,7 +42,8 @@ A scout pass should include, when relevant:
 
 ## Manual verification pattern
 - Put verification items in normal text, not inside the ask field.
-- Ask only for `OK / NG` or a short result code.
+- Before using a short result code, state the task connection floor: what to open, what to create/modify, the source object, the actor, the owner artifact, and what the result code means.
+- Use `OK / NG` or `PASS / FAIL` only after that floor is explicit. If any field is missing, do not compress the request into a template; resolve the missing field first.
 - Ask for next direction separately.
 
 ## Option generation

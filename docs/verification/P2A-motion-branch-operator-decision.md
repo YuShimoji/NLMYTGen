@@ -1,7 +1,7 @@
 # P2A — feat/phase2-motion-segmentation 取り込み判断（オペレータ記録）
 
 > 正本レビュー: [P2A-phase2-motion-segmentation-branch-review.md](P2A-phase2-motion-segmentation-branch-review.md)  
-> ロードマップ連携: [FUTURE_DEVELOPMENT_ROADMAP.md](../FUTURE_DEVELOPMENT_ROADMAP.md)（G-17）
+> G-17 連携: [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md)（G-17） / [G17-motion-adapter-packet.md](G17-motion-adapter-packet.md)
 
 ## 現状の判断（2026-04-06）
 
@@ -14,7 +14,7 @@
 ## 次にオペレータがやること（任意）
 
 1. 本番の制作で **motion / transition を IR から自動で載せたい痛点**が顕在化したか確認する。  
-2. 顕在化したら、P2A の差分要約と [FUTURE_DEVELOPMENT_ROADMAP.md](../FUTURE_DEVELOPMENT_ROADMAP.md) の G-17 行を読み、**小さなパッチ**として取り込む範囲を決める。  
+2. 顕在化したら、P2A の差分要約と [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) の G-17 行 / [G17-motion-adapter-packet.md](G17-motion-adapter-packet.md) を読み、**小さなパッチ**として取り込む範囲を決める。
 3. 決定したら FEATURE_REGISTRY・verification を更新し、`approved` スライスとして実装する。
 
 ## 承認記録（取り込みを実行したときに追記）

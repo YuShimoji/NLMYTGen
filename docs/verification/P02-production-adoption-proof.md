@@ -377,7 +377,7 @@ python -m src.cli.main apply-production \
   - 非 starter 3 件 (`nod` / `deny_oneshot` / `exit_left`) もすべて `exact`
   - `apply-production --dry-run` は `success=true`、`face_changes=50`、`transition_changes=10`、`motion_changes=8`、`group_motion_changes=0`
   - `group_motion_changes=0` のため、starter 2 件を `motion_target` / `group_motion` で代替していない。template-first が主経路として成立
-  - warning は `bg label 'studio_blue' not found in bg_map` の 1 件のみ。starter 2 件の exact 成立と P02 gate を阻害しない non-fatal warning として扱う
+  - machine-readable `warnings[]` only shows `bg label 'studio_blue' not found in bg_map`. CLI output also replays the known `FACE_PROMPT_PALETTE_EXTRA` / `FACE_LATENT_GAP` / `IDLE_FACE_MISSING` baseline warnings from the haitatsuin face bundle. These warnings stay non-fatal and do not block the starter exactness or the P02 gate
 
 - user report check 4: standalone native template library export を starter 2 件で同期
 
@@ -390,4 +390,27 @@ python -m src.cli.main apply-production \
   - **Phase 1**: PASS（manual acceptance 完了）
   - **Phase 2**: PASS（`samples/haitatsuin_2026-04-12_g24_proof.ymmp` + `samples/_probe/skit_01/skit_01_ir.json` で production adoption proof 完了）
   - **Phase 3**: PASS（starter 2 件の standalone native template library export 完了）
-  - Capability Atlas は `skit_group.intent.enter_from_left` / `skit_group.intent.surprise_oneshot` を `direct_proven` 候補へ昇格し、`deny_oneshot` / `exit_left` / `nod` は `template_catalog_only` のまま維持する
+  - Capability Atlas keeps `skit_group.intent.enter_from_left` / `skit_group.intent.surprise_oneshot` as the promoted starter pair, while `deny_oneshot` / `exit_left` / `nod` remain `template_catalog_only` until each export/proof cycle is closed
+  - 2026-04-23 follow-up: the same proof corpus was rerun for `delivery_nod_v1` readiness and stayed at `exact` / `group_motion_changes=0`. This is still readiness, not standalone export proof, so `nod` remains `template_catalog_only` for now. Next step: in YMM4, open `samples/haitatsuin_2026-04-12_g24_proof.ymmp` or an equivalent local project, start from Layer 9 `GroupItem` Remark `haitatsuin_delivery_main`, and author/export a YMM4 native GroupItem template named `delivery_nod_v1`; keep the structure as GroupItem + 2 `ImageItem` children (body / face), with no `TachieItem`; accept only if `nod amplitude (RepeatMove loop)` and `does not dominate scene` both pass. If fallback/manual_note/motion_target/group_motion becomes necessary, stop and replan.
+  - 2026-04-27 implementation pass: assistant re-ran `audit-skit-group` on `samples/canonical.ymmp` and `samples/haitatsuin_2026-04-12_g24_proof.ymmp`; both stayed `exact=5 / fallback=0 / manual_note=0`, including `delivery_nod_v1`. The matching `apply-production --dry-run` command requires `--tachie-motion-map samples/tachie_motion_map_library.json`; without it, the skit motion labels fail as `MOTION_UNKNOWN_LABEL`. With the motion map included, dry-run returned `success=true`, `motion_changes=8`, and `group_motion_changes=0`. This confirms assistant-owned readiness only. `delivery_nod_v1` still must not be promoted to `direct_proven` until user-owned YMM4 author/export + manual acceptance are reported.
+
+### G-24 `delivery_nod_v1` user hands-on correction (2026-04-27)
+
+The previous handoff wording was too compressed and made the work object unclear. Use the following concrete interpretation.
+
+This is an operation packet, not a reusable return template. Do not ask for `PASS` / `FAIL` until the open target, source GroupItem, created template name, included items, and report meaning are all explicit.
+
+- **Open in YMM4**: `samples/haitatsuin_2026-04-12_g24_proof.ymmp` or the user's local YMM4 project that contains the same delivery actor setup.
+  - The relevant existing actor is the Layer 9 `GroupItem` with Remark `haitatsuin_delivery_main`.
+  - Its children are Layer 10 body `ImageItem` + Layer 11 face `ImageItem`.
+  - `samples/canonical.ymmp` is the compact repo anchor and starter-copy proof; it is useful for comparison, but the hands-on export target is the proof / working project that the user can operate in YMM4.
+- **Create**: a **YMM4 native GroupItem template** named exactly `delivery_nod_v1`.
+  - Start from the existing `haitatsuin_delivery_main` GroupItem.
+  - Apply the `nod` behavior to the GroupItem as a small vertical RepeatMove-style bow.
+  - The reference motion map uses `RepeatMoveEffect` with `X=0`, `Y=15`, `Span=0.4`, `Easing=Sine InOut`, `IsCentering=true`.
+  - Save/export it as a GroupItem template including both body and face `ImageItem` children.
+  - Do not create a new `.ymmp` project, a Python file, or a `TachieItem` setup.
+- **Manual acceptance means**: the user reports the observed result of this YMM4 operation, not an approval of assistant work.
+  - PASS condition: the template is exported as `delivery_nod_v1`, the body and face move together, the nod is visible but not scene-dominating, and no `TachieItem` is included.
+  - FAIL condition: the result needs `fallback`, `manual_note`, `motion_target`, `group_motion`, separate body/face hacks, or a new character setup.
+  - Return wording should be: `delivery_nod_v1: PASS` or `delivery_nod_v1: FAIL - <reason>`.

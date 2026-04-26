@@ -2,7 +2,7 @@
 
 **目的**: NotebookLM 台本ドラフト + トピック概要から、C-07 / C-08 / E-02 / H-03 / H-04 が参照する Packaging Orchestrator brief を 1 本生成する。
 
-**位置づけ**: これは**別セッションの LLM / Custom GPT / user の GUI 作業**に渡すための Prompt 正本。既存 [CORE-PARALLEL-HUB §5 Prompt-D](../verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md#prompt-dh-01-brief-運用) の詳細版に当たる。
+**位置づけ**: これは**別セッションの LLM / Custom GPT / user の GUI 作業**に渡すための詳細手順。packaging brief が必要な案件でだけ使い、現行主軸や `next_action` の代替にしない。
 
 ---
 
@@ -87,5 +87,5 @@
 ## 参照
 
 - [PACKAGING_ORCHESTRATOR_SPEC.md](../PACKAGING_ORCHESTRATOR_SPEC.md) — 仕様本体（§4 データモデル / §5 Markdown format / §8 受入基準）
-- [CORE-PARALLEL-HUB §5 Prompt-D](../verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md)
+- [runtime-state.md](../runtime-state.md) — 現在の主軸とメンテ層の優先順位
 - [S8-thumbnail-copy-prompt.md](../S8-thumbnail-copy-prompt.md) — C-08 側で brief を参照する側のプロンプト

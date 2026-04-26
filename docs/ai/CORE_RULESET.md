@@ -1,5 +1,5 @@
 # CORE_RULESET.md
-Ruleset-Version: v18
+Ruleset-Version: v20
 Status: canonical
 Audience: Claude Code, Codex, and any adapter that reads project-local AI rules.
 
@@ -22,7 +22,7 @@ Advance the active artifact or its verified delivery path. Docs, cleanup, tests,
 If the user states a durable constraint, workflow pain, invariant, backlog item, or prohibited shortcut, write it into the appropriate canonical doc in the same block. Do not postpone that write to handoff.
 
 ### Question Dedup
-Before asking, read the canonical rules and project-local canonical docs. Summarize what is already known, then ask only for missing deltas. Do not ask the user to re-explain known context.
+Before asking, read the relevant canonical rule or project-local canonical section needed for the current decision. Do not expand this into a full-corpus read by default. Summarize what is already known, then ask only for missing deltas. Do not ask the user to re-explain known context.
 
 ### Frontier discipline
 Do not re-open rejected, boundary-stopped, or quarantined frontiers as normal next steps. User interest in “looking again” is not automatic approval.
@@ -49,7 +49,7 @@ If a write fails, a readback mismatch occurs, or the result is uncertain, do not
 - `INVARIANTS.md`: non-negotiables, UX/algorithm invariants, role boundaries, prohibited shortcuts
 - `USER_REQUEST_LEDGER.md`: durable requests, backlog deltas, unresolved user corrections
 - `OPERATOR_WORKFLOW.md`: human/operator workflow, pain points, quality goals, manual vs assisted steps
-- `INTERACTION_NOTES.md`: reporting style, ask hygiene, disliked patterns, manual verification conventions
+- `INTERACTION_NOTES.md`: reporting style, ask hygiene, interaction failure patterns, manual verification conventions
 
 ## Evidence discipline
 Use visual or artifact evidence whenever relevant. If evidence is stale or unknown, say so. Do not substitute documentation for actual observation when the question is about behavior.

@@ -1,5 +1,5 @@
 # STATUS_AND_HANDOFF.md
-Ruleset-Version: v18
+Ruleset-Version: v20
 Status: canonical
 
 ## Feature status semantics

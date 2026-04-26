@@ -4,13 +4,13 @@
 
 ---
 
-## 1. 再開の 3 枚（最短）
+## 1. 通常再開の 3 点（最短）
 
 1. [AGENTS.md](../AGENTS.md) — 入口・境界・再アンカリング手順の正本
-2. [REPO_LOCAL_RULES.md](REPO_LOCAL_RULES.md) — Hard Rules・Read Order の正本
+2. [REPO_LOCAL_RULES.md](REPO_LOCAL_RULES.md) — Hard Rules・再開読了予算・Checklist の正本
 3. [runtime-state.md](runtime-state.md) — 現在位置・`next_action`・カウンターの正本
 
-フル再アンカリングは `AGENTS.md` のステップ 1〜5 どおり。省略しない。
+通常再開はここで止める。フル再アンカリングは、境界不明・drift 検出・user 明示の REANCHOR / REFRESH / AUDIT などの例外時だけ `AGENTS.md` の例外手順を使う。
 
 ---
 
@@ -28,33 +28,28 @@
 
 `docs/verification` 直下の個別ファイルが多いときは、先に次の **索引表**だけ読む。
 
-- [verification/README.md](verification/README.md) — **現行正本**一覧（FEATURE_REGISTRY・IR 仕様・runtime-state・ファイル10 等への誘導）
+- [verification/README.md](verification/README.md) — 証跡ディレクトリの読み方（現行判断の索引ではない）
 
 ---
 
-## 3. 並行作業・Prompt・検収
+## 3. 並行作業・手順
 
-- [OPERATOR_PARALLEL_WORK_RUNBOOK.md](OPERATOR_PARALLEL_WORK_RUNBOOK.md) — オペレータ並行（ファイル4）
-- [verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md](verification/CORE-PARALLEL-PROMPTS-AND-ACCEPTANCE-HUB-2026-04.md) — **ファイル10**: コピペ用 Prompt 全文・検収・親チャット返却テンプレ
-- [verification/CORE-DEV-POST-DELEGATION-INDEX.md](verification/CORE-DEV-POST-DELEGATION-INDEX.md) — コア移譲後ドキュメントの索引（ファイル2〜）
+- [OPERATOR_PARALLEL_WORK_RUNBOOK.md](OPERATOR_PARALLEL_WORK_RUNBOOK.md) — オペレータ並行。現行 `next_action` と接続する場合だけ参照する
 - [verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md](verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md) — 立ち絵 複数体×顔差し替え（**G-19 `done` / G-20 `approved`** の準備正本）。茶番劇演者の現行主軸は [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md)
 - `samples/registry_template/skit_group_registry.template.json` — **茶番劇 Group 台帳雛形**。canonical group / 派生 template / fallback / manual check を shared registry として記録する。`audit-skit-group` / `patch-ymmp --skit-group-registry` / `apply-production --skit-group-registry` の preflight 入力でもある
 - [verification/G22-dual-rendering-tachie-and-png-2026-04-16.md](verification/G22-dual-rendering-tachie-and-png-2026-04-16.md) — **G-22 `hold`**: 立ち絵 TachieItem + YMM4 書き出し PNG の補助経路。現行主軸ではなく、必要時のみ参照
-- [verification/CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) — 即実行 Prompt の運用原則・早見（ファイル9）。全文はファイル10を先に更新する運用
+- [prompts/B18-script-diagnostics-observation-prompt.md](prompts/B18-script-diagnostics-observation-prompt.md) / [prompts/B17-reflow-residue-observation-prompt.md](prompts/B17-reflow-residue-observation-prompt.md) — メンテ層の詳細手順。主軸 G-24 を押し流さない場合だけ使う
 
 ---
 
 ## 4. テンプレと状態（混同しやすい点）
 
-次の節は **消えない依頼文（コピペ用テンプレ）**であり、タスク完了と連動して削除・打ち消し線には **しない**。
-
-- [verification/CORE-LANE-PARALLEL-PROMPT-PACK.md](verification/CORE-LANE-PARALLEL-PROMPT-PACK.md) §3（即実行 Prompt）
-- [verification/VISUAL-QUALITY-PACKETS.md](verification/VISUAL-QUALITY-PACKETS.md) §4（パケット別の短文 Prompt）
+汎用 Prompt ハブ・ファイル番号式のコア計画・パケット別短文 Prompt は削除済み。テンプレは状態正本ではなく、`open target` / `create target` / `source object` / `actor` / `acceptance meaning` が接続済みのときだけ、該当する詳細手順ファイルを使う。
 
 **いまどこまで終わっているか**は、次を見る。
 
 - [runtime-state.md](runtime-state.md) の `next_action` / `parallel_replan_*`
-- [verification/CORE-DEV-OPERATOR-INPUT-CHECKLIST.md](verification/CORE-DEV-OPERATOR-INPUT-CHECKLIST.md)（ファイル2）の PASS / 継続
+- [verification/P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md) の G-24 受け入れ・採用記録
 - 案件ごとの `*-proof.md` や verification 配下の JSON 証跡
 
 ---

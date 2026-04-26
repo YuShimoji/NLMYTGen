@@ -100,7 +100,7 @@ AnimationTachie は合成後の 1 アイテムとして動くため、TachieItem
 - 自動化するには IR 語彙（`body_template`）と body_map レジストリの追加が必要（将来 FEATURE）
 - 左右反転の自動化は制約が大きく、当面は手動運用
 
-## 8. Group 中央基準の標準運用（2026-04 固定）
+## 8. Group 中央基準の標準運用
 
 以下を G-20 の前提運用として固定する。
 

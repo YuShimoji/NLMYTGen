@@ -1,7 +1,7 @@
 # レーン C / overlay B3（タイミング一致）— file5 基準 実施記録
 
 **実施日**: 2026-04-10  
-**スコープ**: [LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md) の **B-3**（`validate-ir` / `apply-production --dry-run`）に相当する機械検証 **のみ**に加え、[VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md) の **overlay B3**（発話論点と表示タイミングの同期）の **判定 JSON** を提出。B-1 / B-2 / B-4 / B-5 および bg_anim A 系は未実施。
+**スコープ**: [LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md) の **B-3**（`validate-ir` / `apply-production --dry-run`）に相当する機械検証 **のみ**に加え、旧 **overlay B3**（発話論点と表示タイミングの同期）の **判定 JSON** を提出。B-1 / B-2 / B-4 / B-5 および bg_anim A 系は未実施。
 
 ---
 
@@ -82,5 +82,5 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
 ## 5. 参照
 
 - file5 正本: [LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md) §B-3  
-- B3 定義: [VISUAL-QUALITY-PACKETS.md](VISUAL-QUALITY-PACKETS.md) §3 B3  
+- B3 定義: 旧 overlay B3（発話論点と表示タイミングの同期）
 - コマンド雛形: [LANE-C-operator-prep-2026-04-09.md](LANE-C-operator-prep-2026-04-09.md) §5 / §8

@@ -195,7 +195,7 @@ S-6b (パン・ズーム / Ken Burns) に対応。
 
 ### 3.6 `motion` -- 立ち絵アニメーション
 
-> **重要な境界 (2026-04-17):** `motion` は **speaker_tachie（ゆっくり立ち絵）** の語彙であり、配達員などの **外部素材ベースの茶番劇演者**を直接動かす主経路ではない。茶番劇演者は [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md) の **GroupItem テンプレ運用**を正本とする。
+> **重要な境界:** `motion` の既定対象は **speaker_tachie（ゆっくり立ち絵）**。`motion_target` / `group_motion` は補助経路であり、配達員などの **外部素材ベースの茶番劇演者**を直接動かす主経路ではない。茶番劇演者は [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md) の **GroupItem テンプレ運用**を優先する。
 
 | 値 | 意味 |
 |----|------|
@@ -216,7 +216,7 @@ S-6b (パン・ズーム / Ken Burns) に対応。
 - `group_motion`: `group_motion_map` で `X/Y/Zoom` に解決される意味ラベル。
 - 本項は **幾何補助**であり、茶番劇演者の感情モーション主経路ではない。配達員等の茶番劇演者については [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md) の template-first 運用を優先する。
 
-**運用前提（固定）:**
+**運用前提:**
 - GroupItem はテンプレート側に事前配置する（A案）。
 - Group の基準点は中央に固定し、配下アイテムは相対配置で保存する。
 - patch 側で GroupItem を新規生成する方式（B案）は本仕様の対象外。
@@ -513,7 +513,7 @@ Micro IR (発話ごとに1つ)
 3. `characters` 軸で face_map を持つ。同じ `face=serious` でもキャラごとにパーツ構成が異なることを吸収
 4. `bg_map` / `slots` / `se_map` は現在の face_map / bg_map の拡張
 
-**運用上の重要事項 (2026-04-03 固定):**
+**運用上の重要事項:**
 - `face=serious` / `face=thinking` などの意味ラベルは、ファイル名やパーツ番号から自動推定しない
 - YMM4 上で人間が見え方を確認し、「この組み合わせを serious と呼ぶ」と決めたテンプレートを Template Registry に登録する
 - `extract-template` は既存 ymmp から「使われているパーツ組み合わせ」を棚卸しする補助であり、意味ラベルを推論するツールではない
