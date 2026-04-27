@@ -5,7 +5,7 @@
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
 - 現在地の正本: 通常再開では `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md` で止める。本ファイル冒頭は状態スナップショットではなく、航海日誌への短い入口。
-- 現フェーズ: G-24 alias 登録は PASS。次は alias-enabled registry で実制作IR/corpusを検証する段階であり、追加 motion authoring ではない。
+- 現フェーズ: G-24 skit_group placement は raw clone write/readback まで到達済み。ただし user visual check で spacing/composition が粗いことが分かったため、次は YMM4 template source を分析して normalized placement plan を生成する段階であり、追加 motion authoring や user 手配置ではない。
 - 古い roadmap / prompt / verification packet は現行判断に使わない。必要な履歴は DECISION LOG と HANDOFF SNAPSHOT の該当行だけ読む。
 - Python のスコープは「テキスト変換 + IR/registry + ymmp 限定後段適用」。動画レンダリング・画像生成・YMM4 GUI 操作は Python の責務ではない。
 
@@ -14,8 +14,8 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI artifact → CSV / registry / patched ymmp → YMM4 読込・確認・レンダリング
-- 現在のスライス: G-24 alias registration PASS。`surprise_jump` / `deny_shake` は registry fallback 済み、`panic_shake` は新テンプレまたは manual_note 候補として維持。
-- 成功状態: 実制作IR/corpusで exact / fallback / manual_note を出し、追加 YMM4 motion 作成が本当に必要かを concrete gap ベースで判断できること。
+- 現在のスライス: G-24 template-analyzed placement planner。v1 template source 5/5 と `--skit-group-only` raw clone transport は成立済みで、`panic_shake` は通常語彙から除外する。
+- 成功状態: template source から actor footprint / relative motion / timing density を分析し、real estate DX exact/fallback cues を手配置なしで production-like `.ymmp` に再配置し、readback と user creative acceptance の両方で閉じること。
 
 ---
 
@@ -258,19 +258,19 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ## HANDOFF SNAPSHOT (2026-04-26 update)
 
-- Shared Focus: **G-24 real-production validation after alias registration PASS**. Existing production-like IRs now resolve `surprise_jump -> delivery_surprise_oneshot_v1` and `deny_shake -> delivery_deny_oneshot_v1` through `intent_fallbacks`; `panic_shake` remains a new-template/manual-note candidate. [G24-alias-registration-2026-04-27.md](verification/G24-alias-registration-2026-04-27.md) records the follow-up. The current shared cycle is no longer motion authoring or alias planning; it is running real production IR/corpus validation. Canonical docs: [G24-canonical-anchor-adoption-2026-04-20.md](verification/G24-canonical-anchor-adoption-2026-04-20.md) / [skit_01-workflow-breakage-audit-2026-04-20.md](verification/skit_01-workflow-breakage-audit-2026-04-20.md) / [P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md).
+- Shared Focus: **G-24 template-analyzed placement after raw clone readback**. The v1 source contains all five templates and `--skit-group-only` can insert exact/fallback cues, but raw clone output is not production acceptance because user visual feedback found spacing/composition too rough. The current shared cycle is no longer motion authoring, alias planning, or user hand placement; it is adding template analyzer + placement planner so reusable YMM4 templates become generated production placement. Canonical current state: [runtime-state.md](runtime-state.md) slice / next_action.
 - Restart Governance Delta: **2026-04-27** normal restart read budget is now capped at `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`. Protected/canonical docs remain sources of truth, but they are not all full-read requirements. Read `project-context` HANDOFF / DECISION LOG, FEATURE ID, invariant, ledger, workflow, interaction failure class, or AI gate only when the current decision needs that section. Full re-anchoring is an exception, not the default.
 - Interaction Governance Delta: **2026-04-27** template formalism is now a structural failure class. Obsolete prompts, archived packets, and superseded roadmap/setup docs remain deleted; `INTERACTION_NOTES.md` treats interaction failures as project risks, and now explicitly blocks prompt/checklist/OK-NG templates from replacing task connectivity. Manual/shared actions must state open target, created artifact, source object, actor, owner artifact, acceptance meaning, and replan condition before using short result codes.
 - Roadmap Prep Delta: **2026-04-27** G-24 planned author/export is closed at the v1 set (`enter_from_left` / `surprise_oneshot` / `nod` / `deny_oneshot` / `exit_left`). [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) and [P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md) now point to production-use validation rather than another cautious authoring gate.
 - Implementation Delta: **2026-04-27** user completed `delivery_deny_oneshot_v1` and `delivery_exit_left_v1`. Repo inspection found the two target samples use plain body/face `ImageItem` children and no `TachieItem`; `deny_oneshot` is a short X-axis one-shot sway, and `exit_left` uses a leftward OUT `InOutMoveEffect`. `skit_group.intent.deny_oneshot` / `skit_group.intent.exit_left` are now `direct_proven`.
 - Validation Delta: **2026-04-27** repo-probe production-use validation PASS. `audit-skit-group` on `samples/canonical.ymmp` + `samples/_probe/skit_01/skit_01_ir.json` returned `exact=5 / fallback=0 / manual_note=0`. No confirmation `.ymmp` was generated.
 - Gap Classification Delta: **2026-04-27** production-like gap classification PASS. IR A returned `exact=3 / manual_note=1`; IR B returned `exact=1 / manual_note=3`; this was followed by alias registration for `surprise_jump` and `deny_shake`.
-- Safe Next Frontier Packet: **The next concrete move is real-production IR/corpus validation with the alias-enabled registry**. Entry route stays [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md), and template-first validity still starts at `python -m src.cli.main audit-skit-group <ymmp> <ir.json> --skit-group-registry <json>`. Treat `samples/haitatsuin_2026-04-12_g24_proof.ymmp` as compact template/sample proof in the current worktree; it is not currently a voice-anchored adoption corpus because the canonical group anchor is absent.
+- Safe Next Frontier Packet: **The next concrete move is template analyzer + placement planner for real-estate DX skit_group placement**. Entry route stays `patch-ymmp --skit-group-only`, but raw template clone must be treated as transport proof only. The next proof should show an analyzed placement plan, patched `.ymmp` readback, and no hand-placed cue correction.
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: **2026-04-27** G-24 alias registration PASS. Existing production-like IRs now resolve two alias labels through fallback and leave one unresolved panic gap.
-- Handoff Focus (next): Resume from real-production IR/corpus validation. Run the same exact/fallback/manual_note report with the alias-enabled registry; keep `panic_shake` manual/new-template until user acceptance.
-- Evidence: Production E2E remains proven, starter 2 remains Phase-3 PASS, v1 G-24 planned templates are PASS / `direct_proven`, repo-probe validation is PASS, and production-like alias registration is PASS. Current inspection of `samples/haitatsuin_2026-04-12_g24_proof.ymmp` found template/sample snippets only (`TachieItem` count 0, no canonical group anchor); validation input remains `samples/canonical.ymmp`.
+- Last Change Relation: **2026-04-28** G-24 raw clone placement and image-path readback PASS, followed by user correction that placement spacing/composition must be generated from template analysis rather than fixed by user hand placement.
+- Handoff Focus (next): Resume from template analyzer + placement planner. Keep `panic_shake` out of normal Part 2 JSON vocabulary; do not request template reauthoring unless diagnostics prove source data is missing.
+- Evidence: Production E2E remains proven, v1 G-24 planned templates are PASS / `direct_proven`, repo-tracked template source is 5/5, and raw clone placement readback inserted the expected Layer 9 cues. That readback is transport proof, not production acceptance.
 - 案件モード: CLI artifact
 - 現在の主レーン: 方向転換中 (実制作bottleneck直接軽減へ移行)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近

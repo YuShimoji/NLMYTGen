@@ -167,7 +167,7 @@ def _static_entries() -> list[dict[str, Any]]:
         _entry(
             "skit_group.canonical_anchor",
             "skit_group",
-            "canonical ymmp -> audit-skit-group",
+            "canonical ymmp -> audit-skit-group / template-source readback",
             "direct_proven",
             [
                 _evidence("samples/canonical.ymmp", "Canonical skit_group artifact contains GroupItem remark 'haitatsuin_delivery_main' on Layer 9 with ImageItem-only children"),
@@ -178,6 +178,22 @@ def _static_entries() -> list[dict[str, Any]]:
             ],
             [
                 "Derived native template assets are still pending; this proves the anchor, not the full template set",
+            ],
+        ),
+        _entry(
+            "skit_group.placement",
+            "skit_group",
+            "IR skit_group intent -> registry -> ymmp template source -> GroupItem timeline insertion",
+            "probe_only",
+            [
+                _evidence("src/pipeline/skit_group_placement.py", "Patch-time skit_group placement copies repo-tracked GroupItem template clips into the target ymmp"),
+                _evidence("samples/templates/skit_group/delivery_v1_templates.ymmp", "Repo-tracked template source contains available delivery_v1 GroupItem clips"),
+            ],
+            [
+                "Confirm inserted GroupItems appear on the intended utterance and layer before final render",
+            ],
+            [
+                "Full v1 template source is present; production placement still needs readback on a CSV-imported real-estate DX ymmp copy",
             ],
         ),
         _entry(

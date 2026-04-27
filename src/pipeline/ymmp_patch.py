@@ -61,6 +61,8 @@ class PatchResult:
     transition_changes: int = 0
     motion_changes: int = 0
     group_motion_changes: int = 0
+    skit_group_placements: int = 0
+    skit_group_item_insertions: int = 0
     tachie_syncs: int = 0
     se_plans: int = 0  # G-18: 挿入した SE (AudioItem) 件数
     warnings: list[str] | None = None
@@ -2161,6 +2163,9 @@ def patch_ymmp(
     tachie_motion_effects_map: dict[str, list[dict]] | None = None,
     face_map_bundle: dict[str, dict] | None = None,
     char_default_bodies: dict[str, str] | None = None,
+    skit_group_registry: dict | None = None,
+    skit_group_template_source: dict | None = None,
+    skit_group_only: bool = False,
 ) -> PatchResult:
     """演出 IR に従って ymmp を差し替える.
 
@@ -2195,6 +2200,26 @@ def patch_ymmp(
         item for item in items if _item_type(item) == "VoiceItem"
     ]
     voice_items.sort(key=lambda x: x.get("Frame", 0))
+
+    if skit_group_only:
+        if skit_group_registry is None or skit_group_template_source is None:
+            result.warnings.append(
+                "SKIT_PLACEMENT_REGISTRY_INVALID: "
+                "skit_group_only requires skit_group_registry and skit_group_template_source"
+            )
+            return result
+        from src.pipeline.skit_group_placement import apply_skit_group_placement
+
+        skit_result = apply_skit_group_placement(
+            ymmp_data,
+            ir_data,
+            skit_group_registry,
+            skit_group_template_source,
+        )
+        result.skit_group_placements += skit_result.placements
+        result.skit_group_item_insertions += skit_result.group_item_insertions
+        result.warnings.extend(skit_result.warnings)
+        return result
 
     # --- G-19: エントリごとの face_map 選択 ---
     # bundle がある場合、各エントリの body_id に応じた face_map を事前解決する
@@ -2284,6 +2309,18 @@ def patch_ymmp(
         group_motion_map,
         result,
     )
+    if skit_group_registry is not None and skit_group_template_source is not None:
+        from src.pipeline.skit_group_placement import apply_skit_group_placement
+
+        skit_result = apply_skit_group_placement(
+            ymmp_data,
+            ir_data,
+            skit_group_registry,
+            skit_group_template_source,
+        )
+        result.skit_group_placements += skit_result.placements
+        result.skit_group_item_insertions += skit_result.group_item_insertions
+        result.warnings.extend(skit_result.warnings)
 
     # --- bg 差し替え ---
     # 既存の bg_items (Layer 0 の ImageItem/VideoItem) を削除し、

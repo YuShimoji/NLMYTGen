@@ -4,6 +4,13 @@
 ## Systemic Diagnosis
 - この repo の失敗は「未承認実装」そのものより、status 語彙の崩れと value path 不在が静かに混入することにある。
 - 「テンプレートを作る」「GUI を作る」といった命題先行は、実ワークフローの bottleneck を見失わせやすい。
+- 「手順票を渡す」「preflight が通る」「低推論 AI に演出判断を委任する」は制作自動化の成果ではない。制作価値は YMM4 artifact へ反映された自動配置・自動差し替えで測る。
+
+## Production Value North Star
+- **YMM4 が制作基盤であり、Python は接着層である。** Python は CSV / IR / registry / 台本読込後 `.ymmp` patch をつなぐが、動画・音声・素材・テンプレートの生成主体ではない。
+- **`.ymmp` patch に反映されない作業は production value とみなさない。** 手順票、operator-ready packet、read-only audit、preflight、テスト通過は接続証跡であり、成果そのものではない。
+- **配置自動化は timeline write capability で判定する。** skit_group actor の価値は、IR + registry + repo-tracked YMM4 template source から GroupItem が対象発話へ自動挿入されることで成立する。
+- **S-4 代替を Python に移さない。** Python は音声合成、発音情報生成、YMM4 台本読込相当処理、`.ymmp` ゼロ生成を行わない。
 
 ## UX / Algorithmic Invariants
 - **制作工程は全て GUI で完結させる。** 制作のために CLI を使う必要がある状態は設計の不備であり、GUI 側を改善する対象とする。CLI は開発・デバッグ用。
@@ -17,7 +24,7 @@
 - canonical rules が repo 内にある場合は、`docs/ai/*.md` を tool-specific helper docs や prompt より先に読む。
 
 ## Responsibility Boundaries
-- Python の責務はテキスト変換のみ。CSV とテキストメタデータ文字列までに限定する。
+- Python の責務は CSV / IR / registry / 台本読込後 `.ymmp` patch の接着層に限定する。YMM4 が持つ制作機能を Python 側で再生成しない。
 - 音声合成・字幕配置・演出指定・レンダリング・サムネイル最終判断は YMM4 または人間の責務。
 - `.ymmp` を直接編集しても音声合成は成立しない。音声合成は YMM4 の台本読込経由でのみ行う。
 - YMM4 / `.ymmp` の直接編集や画面効果の自動注入は高リスクなため、LLM や Automation を使う場合も、まずはテキスト補助・コピペ用メモ・プリセット候補提示に留める。direct edit は workflow proof なしに採用しない。

@@ -189,7 +189,7 @@ G-24 は user が全サンプルを手作りする運用ではない。
    - 未自動化として注記
    - 手動確認ポイントを明記
 
-重要: template 解決は、Python が YMM4 native template を自動挿入するという意味ではない。現段階では、IR / registry / `audit-skit-group` が **どの YMM4 native template を使うべきか、fallback か、manual note か**を返し、operator が YMM4 の S-6（背景・演出設定）でその named template を適用できるようにする。
+重要: template 解決は、operator に named template を選ばせるための手順票ではない。現段階の主経路は、IR / registry / repo-tracked `.ymmp` template source を `patch-ymmp --skit-group-template-source --skit-group-only` へ渡し、YMM4 で作った GroupItem template を対象発話の timeline に自動挿入することである。`audit-skit-group` は read-only の補助診断に降格する。
 
 ### 4.2 自動生成側が返すべきもの
 
@@ -217,13 +217,13 @@ G-24 は user が全サンプルを手作りする運用ではない。
 
 - `surprise_jump` -> `delivery_surprise_oneshot_v1`
 - `deny_shake` -> `delivery_deny_oneshot_v1`
-- `panic_shake` は alias にせず `manual_note` / 新テンプレ候補として残す
+- `panic_shake` は通常の Writer IR 語彙に含めず、必要なら自然文メモ側の新テンプレ候補として扱う
 
 2026-04-27 時点の IR 生成フロー反映:
 
 - skit_group actor 用 utterance は `motion_target: "layer:9"` を必須にする
 - `motion` は v1 intent（`enter_from_left` / `surprise_oneshot` / `nod` / `deny_oneshot` / `exit_left`）または alias intent（`surprise_jump` / `deny_shake`）を使う
-- `panic_shake` は必要時だけ出し、`audit-skit-group` 後に `manual_note` / 新テンプレ候補 / IR wording 回避へ分類する
+- `panic_shake` など未登録 label は `validate-ir --strict-skit-group-intents` で止め、Part 2 JSON には出さない
 - 最小入力形は `samples/g24_skit_group_minimal_production_ir.json`
 
 ### 4.3 本番で主軸にしないもの
@@ -264,8 +264,8 @@ IR 側の責務は次の順にする。
 - manual check
 - 適用対象 (`speaker_tachie` / `skit_group` / `overlay_render`)
 
-この registry は **patch-time resolver ではない**が、`audit-skit-group` / `patch-ymmp --skit-group-registry` / `apply-production --skit-group-registry` の **preflight 入力**として使う。
-先に canonical anchor / exact / fallback / manual note の成立可否を機械判定し、その後で必要なら resolver 実装へ広げる。
+この registry は GroupItem 本体を埋め込まない。GroupItem 本体は repo-tracked `.ymmp` template source に置き、registry は intent / fallback / template_name の解決表として `patch-ymmp --skit-group-registry --skit-group-template-source --skit-group-only` の patch-time resolver に渡す。
+`audit-skit-group` は canonical anchor / exact / fallback / manual note の read-only 確認に限り使う。
 
 ---
 
@@ -303,20 +303,30 @@ IR 側の責務は次の順にする。
 2. v1 planned set（`enter_from_left` / `surprise_oneshot` / `nod` / `deny_oneshot` / `exit_left`）を閉じる（完了）
 3. registry / Capability Atlas を `direct_proven` へ同期する（完了）
 4. production-like alias を登録する（`surprise_jump` / `deny_shake` は完了、`panic_shake` は manual/new-template）
-5. production では template 解決 + fallback / manual note を返し、S-6（背景・演出設定）の選択負荷が下がるかを見る
+5. production では template 解決 + fallback を `.ymmp` timeline へ自動配置し、manual note ではなく write capability の成立で評価する
 6. 追加 motion は production gap が出た時だけ再起票する
 
 実制作 IR 生成時の固定導線:
 
 ```bash
-python -m src.cli.main audit-skit-group \
-  samples/canonical.ymmp \
+python -m src.cli.main validate-ir \
   <production_skit_group_ir.json> \
   --skit-group-registry samples/registry_template/skit_group_registry.template.json \
+  --strict-skit-group-intents \
   --format text
+
+python -m src.cli.main patch-ymmp \
+  samples/_probe/g24/real_estate_dx_csv_import_base.ymmp \
+  samples/_probe/g24/real_estate_dx_skit_group_ir_aligned.json \
+  --skit-group-registry samples/registry_template/skit_group_registry.template.json \
+  --skit-group-template-source samples/templates/skit_group/delivery_v1_templates.ymmp \
+  --skit-group-only \
+  -o samples/_probe/g24/real_estate_dx_skit_group_patched.ymmp
 ```
 
-`exact` / `fallback` は採用候補、`manual_note` だけを分類対象にする。
+`exact` / `fallback` は自動配置対象、未登録 label は strict validation で停止する。real estate DX スライスでは YMM4 CSV 読込後に長文が複数 VoiceItem へ分割されるため、`real_estate_dx_skit_group_ir_aligned.json` の `row_start` / `row_end` を placement anchor として使う。template source 欠落は `SKIT_TEMPLATE_SOURCE_MISSING` として fail-fast し、operator 手順で補完しない。
+
+template source 内で複数テンプレートが同一 frame/layer に重なる場合、GroupItem と同じ `Remark` を持つ ImageItem だけを同一 clip として扱う。古い絶対パス等で ImageItem の `FilePath` が repo-local asset に解決できない場合は `SKIT_TEMPLATE_SOURCE_ASSET_MISSING` として fail-fast する。
 
 ### 8.2 やらないこと
 

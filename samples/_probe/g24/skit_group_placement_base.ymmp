@@ -1,0 +1,55 @@
+﻿{
+  "SelectedTimelineIndex": 0,
+  "Timelines": [
+    {
+      "Items": [
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+          "CharacterName": "marisa",
+          "Serif": "skit group placement fixture voice 1",
+          "Frame": 0,
+          "Layer": 0,
+          "Length": 90,
+          "Group": 0,
+          "Remark": ""
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+          "CharacterName": "marisa",
+          "Serif": "skit group placement fixture voice 2",
+          "Frame": 120,
+          "Layer": 0,
+          "Length": 90,
+          "Group": 0,
+          "Remark": ""
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+          "CharacterName": "marisa",
+          "Serif": "skit group placement fixture voice 3",
+          "Frame": 240,
+          "Layer": 0,
+          "Length": 90,
+          "Group": 0,
+          "Remark": ""
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+          "CharacterName": "marisa",
+          "Serif": "skit group placement fixture voice 4",
+          "Frame": 360,
+          "Layer": 0,
+          "Length": 90,
+          "Group": 0,
+          "Remark": ""
+        }
+      ],
+      "LayerSettings": []
+    }
+  ],
+  "Characters": [
+    {
+      "Name": "marisa"
+    }
+  ]
+}

@@ -43,8 +43,8 @@ NLMYTGen は以下を担当する:
 - **S-3 (テキスト→CSV変換)**: 台本テキストを YMM4 CSV に変換する (実装済み)
 - **S-6 支援 (三層責務構造)**:
   - **Writer IR** (第1層): Custom GPT が台本から演出 IR (scene_preset + override) を出力 (G-05 done)。G-24 skit_group actor を使う発話は `motion_target: "layer:9"` と v1/alias intent を出す
-  - **Template Registry** (第2層): 制作環境の再利用資産辞書 (face_map/bg_map/slots/se_map + YMM4 native template 名参照)。skit_group は `skit_group_registry` で exact / fallback / manual_note を preflight する
-  - **YMM4 Adapter** (第3層): IR + Registry → ymmp の接着。face/bg の差し替えは実装済み (G-06 patch-ymmp)。skit_group template 解決は `audit-skit-group` で operator の S-6 選択を支援する
+  - **Template Registry** (第2層): 制作環境の再利用資産辞書 (face_map/bg_map/slots/se_map + YMM4 native template 名参照)。skit_group は registry で exact / fallback / manual_note を解決し、template 本体は repo-tracked `.ymmp` template source から読む
+  - **YMM4 Adapter** (第3層): IR + Registry → ymmp の接着。face/bg の差し替えに加え、skit_group は template source の GroupItem を対象発話の timeline へ自動配置する。`audit-skit-group` は補助 preflight であり成果本体ではない
   - 詳細: [PRODUCTION_IR_SPEC.md](PRODUCTION_IR_SPEC.md) セクション6、[AUTOMATION_BOUNDARY.md](AUTOMATION_BOUNDARY.md) 三層責務構造
 
 S-0, S-4〜S-9 の実操作は全て YMM4 または外部ツールの手動操作である。
@@ -295,19 +295,23 @@ python -m src.cli.main build-csv input.txt \
 - 場面転換、強調、ツッコミ等に SE を配置 (必要に応じて)
 - 多用しすぎると騒がしくなるので注意
 
-### f. skit_group actor template preflight
+### f. skit_group actor template placement
 
 配達員などの外部茶番劇演者を使う場合、実制作 IR の該当 utterance は `motion_target: "layer:9"` を持ち、`motion` は v1 intent または alias intent に限定する。最小入力形は `samples/g24_skit_group_minimal_production_ir.json`。
 
 ```bash
-python -m src.cli.main audit-skit-group \
-  samples/canonical.ymmp \
-  production_skit_group_ir.json \
+python -m src.cli.main patch-ymmp \
+  samples/_probe/g24/real_estate_dx_csv_import_base.ymmp \
+  samples/_probe/g24/real_estate_dx_skit_group_ir_aligned.json \
   --skit-group-registry samples/registry_template/skit_group_registry.template.json \
-  --format text
+  --skit-group-template-source samples/templates/skit_group/delivery_v1_templates.ymmp \
+  --skit-group-only \
+  -o samples/_probe/g24/real_estate_dx_skit_group_patched.ymmp
 ```
 
-`exact` / `fallback` は採用候補として扱い、`panic_shake` 等の `manual_note` だけを新テンプレ候補・manual note・IR wording 回避に分類する。ここで追加 motion authoring へ戻らない。
+`exact` / `fallback` は GroupItem 自動配置対象として扱う。`--skit-group-only` は face/bg/transition などの未解決をこの配置スライスから切り離す。YMM4 CSV 読込後に長文が分割される案件では aligned IR の `row_start` / `row_end` を使い、VoiceItem 順の `index` 直置きでズレたまま配置しない。`panic_shake` 等の未登録 intent は通常語彙から除外し、strict validation では ERROR にする。template source に存在しない将来テンプレートは `SKIT_TEMPLATE_SOURCE_MISSING` として fail-fast し、手順票で埋め合わせない。
+
+read-only 確認が必要な場合だけ `audit-skit-group` を使う。ただし preflight PASS は制作成果ではなく、成果認定は patched `.ymmp` に GroupItem が挿入されたこととする。
 
 ### g. トランジション
 

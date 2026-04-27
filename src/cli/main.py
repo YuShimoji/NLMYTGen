@@ -5,6 +5,7 @@ Usage:
     python -m src.cli.main build-cue-packet <input> [-o packet.md] [--format markdown|json] [--bundle-dir DIR]
     python -m src.cli.main build-diagram-packet <input> [-o packet.md] [--format markdown|json] [--bundle-dir DIR]
     python -m src.cli.main patch-ymmp <ymmp> <ir-json> --face-map face.json --bg-map bg.json [-o patched.ymmp]
+    python -m src.cli.main patch-ymmp <ymmp> <ir-json> --skit-group-registry registry.json --skit-group-template-source templates.ymmp [--skit-group-only] [-o patched.ymmp]
     python -m src.cli.main audit-skit-group <ymmp> <ir-json> --skit-group-registry registry.json [--format text|json]
     python -m src.cli.main validate <input>
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
@@ -888,6 +889,15 @@ def main(argv: list[str] | None = None) -> int:
         help="G-24: skit_group canonical anchor / exact-fallback-manual_note registry JSON",
     )
     p_patch.add_argument(
+        "--skit-group-template-source",
+        help="G-24: repo-tracked ymmp template library for skit_group GroupItem placement",
+    )
+    p_patch.add_argument(
+        "--skit-group-only",
+        action="store_true",
+        help="G-24: apply only skit_group GroupItem placement; skip face/bg/timeline patch paths",
+    )
+    p_patch.add_argument(
         "--timeline-contract",
         help="timeline_route_contract.json のパス (省略時は samples/timeline_route_contract.json)",
     )
@@ -945,6 +955,15 @@ def main(argv: list[str] | None = None) -> int:
         help="G-24: skit_group canonical anchor / exact-fallback-manual_note registry JSON",
     )
     p_apply.add_argument(
+        "--skit-group-template-source",
+        help="G-24: repo-tracked ymmp template library for skit_group GroupItem placement",
+    )
+    p_apply.add_argument(
+        "--skit-group-only",
+        action="store_true",
+        help="G-24: apply only skit_group GroupItem placement; skip face/bg/timeline patch paths",
+    )
+    p_apply.add_argument(
         "--timeline-contract",
         help="timeline_route_contract.json のパス",
     )
@@ -997,6 +1016,15 @@ def main(argv: list[str] | None = None) -> int:
     p_valir.add_argument(
         "--group-motion-map",
         help="A案: group_motion 台帳 JSON のラベル（GROUP_MOTION_UNKNOWN_LABEL 用）",
+    )
+    p_valir.add_argument(
+        "--skit-group-registry",
+        help="G-24: skit_group intent vocabulary registry JSON",
+    )
+    p_valir.add_argument(
+        "--strict-skit-group-intents",
+        action="store_true",
+        help="Fail when motion_target layer entries use labels outside the skit_group registry",
     )
     p_valir.add_argument("--prompt-doc",
                          help="Prompt markdown for face contract drift check"
@@ -1349,11 +1377,40 @@ def _cmd_extract_template_labeled(
 def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
     from src.pipeline.ymmp_patch import load_ymmp, load_ir, save_ymmp, patch_ymmp
 
+    skit_group_only = bool(getattr(args, "skit_group_only", False))
+    if skit_group_only and (
+        not getattr(args, "skit_group_registry", None)
+        or not getattr(args, "skit_group_template_source", None)
+    ):
+        print(
+            "Error: --skit-group-only requires --skit-group-registry "
+            "and --skit-group-template-source",
+            file=sys.stderr,
+        )
+        return 1
+
     ymmp_data = load_ymmp(args.ymmp)
     ir_data = load_ir(args.ir_json)
 
     skit_audit_result = None
-    if getattr(args, "skit_group_registry", None):
+    skit_group_registry_data = None
+    skit_group_template_source_data = None
+    if getattr(args, "skit_group_template_source", None):
+        if not getattr(args, "skit_group_registry", None):
+            print(
+                "Error: --skit-group-template-source requires --skit-group-registry",
+                file=sys.stderr,
+            )
+            return 1
+        skit_group_registry_data, skit_labels = _load_skit_group_registry_contract(
+            args.skit_group_registry,
+        )
+        skit_group_template_source_data = load_ymmp(args.skit_group_template_source)
+        print(
+            f"skit_group_template_source: {args.skit_group_template_source} "
+            f"({len(skit_labels)} registry labels)"
+        )
+    elif getattr(args, "skit_group_registry", None):
         skit_audit_result = _run_skit_group_audit(
             ymmp_data,
             ir_data,
@@ -1448,6 +1505,9 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
         tachie_motion_effects_map=tachie_motion_effects_map,
         face_map_bundle=face_map_bundle,
         char_default_bodies=char_default_bodies,
+        skit_group_registry=skit_group_registry_data,
+        skit_group_template_source=skit_group_template_source_data,
+        skit_group_only=skit_group_only,
     )
 
     print(f"Face changes: {result.face_changes}")
@@ -1464,6 +1524,11 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
     print(f"Transition VoiceItem writes: {result.transition_changes}")
     print(f"VideoEffects writes (motion): {result.motion_changes}")
     print(f"GroupItem geometry writes: {result.group_motion_changes}")
+    print(
+        "Skit group placements: "
+        f"{result.skit_group_placements} "
+        f"(GroupItems inserted: {result.skit_group_item_insertions})"
+    )
     if result.warnings:
         for w in result.warnings:
             print(f"  Warning: {w}", file=sys.stderr)
@@ -1772,6 +1837,12 @@ def _fatal_face_patch_warnings(warnings: list[str]) -> list[str]:
         "GROUP_MOTION_NO_GROUP_ITEM:",
         "GROUP_MOTION_TARGET_MISS:",
         "GROUP_MOTION_TARGET_AMBIGUOUS:",
+        "SKIT_TEMPLATE_SOURCE_MISSING:",
+        "SKIT_TEMPLATE_SOURCE_FORBIDDEN_ITEM:",
+        "SKIT_TEMPLATE_SOURCE_ASSET_MISSING:",
+        "SKIT_PLACEMENT_NO_VOICE_TIMING:",
+        "SKIT_PLACEMENT_GROUP_AMBIGUOUS:",
+        "SKIT_PLACEMENT_REGISTRY_INVALID:",
     )
     return [
         warning
@@ -1859,6 +1930,7 @@ def _ir_validate_json_summary(vr, ir_data: dict) -> dict:
         "preview_errors": vr.errors[:8],
         "preview_warnings": vr.warnings[:8],
         "face_distribution_top": [{"label": k, "count": v} for k, v in face_top],
+        "used_skit_group_motion_labels": vr.used_skit_group_motion_labels,
     }
 
 
@@ -1880,6 +1952,8 @@ def _apply_production_summary(result) -> dict:
         "transition_changes": result.transition_changes,
         "motion_changes": result.motion_changes,
         "group_motion_changes": result.group_motion_changes,
+        "skit_group_placements": result.skit_group_placements,
+        "skit_group_item_insertions": result.skit_group_item_insertions,
     }
 
 
@@ -1898,6 +1972,25 @@ def _run_skit_group_audit(ymmp_data: dict, ir_data: dict, registry_path: str):
 
     registry_data = load_skit_group_registry(registry_path)
     return audit_skit_group(ymmp_data, ir_data, registry_data)
+
+
+def _load_skit_group_registry_contract(registry_path: str) -> tuple[dict, set[str]]:
+    from src.pipeline.skit_group_audit import load_skit_group_registry
+
+    registry_data = load_skit_group_registry(registry_path)
+    templates = registry_data.get("templates", {})
+    if not isinstance(templates, dict):
+        return registry_data, set()
+    labels = {
+        raw.get("intent")
+        for raw in templates.values()
+        if isinstance(raw, dict) and isinstance(raw.get("intent"), str)
+    }
+    fallbacks = registry_data.get("intent_fallbacks", {})
+    if isinstance(fallbacks, dict):
+        labels.update(key for key in fallbacks if isinstance(key, str))
+    labels.discard(None)
+    return registry_data, {str(label) for label in labels}
 
 
 def _cmd_audit_skit_group(args: argparse.Namespace) -> int:
@@ -1933,6 +2026,7 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
     known_se = None
     known_motion_labels = None
     known_group_motion_labels = None
+    known_skit_group_motion_labels = None
     char_default_slots = None
     prompt_face_labels, prompt_doc_path = _load_prompt_face_contract(
         getattr(args, "prompt_doc", None)
@@ -1976,6 +2070,16 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
         known_group_motion_labels = set(
             _load_group_motion_map(args.group_motion_map).keys()
         )
+    if getattr(args, "skit_group_registry", None):
+        _, known_skit_group_motion_labels = _load_skit_group_registry_contract(
+            args.skit_group_registry
+        )
+    elif getattr(args, "strict_skit_group_intents", False):
+        print(
+            "Error: --strict-skit-group-intents requires --skit-group-registry",
+            file=sys.stderr,
+        )
+        return 1
 
     # G-19: face_map_bundle → known_body_ids
     known_body_ids: set[str] | None = None
@@ -2008,6 +2112,11 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
             f"group motion contract: {len(known_group_motion_labels)} labels",
             file=meta_stream,
         )
+    if known_skit_group_motion_labels is not None:
+        print(
+            f"skit_group intent contract: {len(known_skit_group_motion_labels)} labels",
+            file=meta_stream,
+        )
     if known_body_ids is not None:
         print(
             f"body_id contract: {len(known_body_ids)} bodies",
@@ -2023,6 +2132,8 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
         known_se_labels=known_se,
         known_motion_labels=known_motion_labels,
         known_group_motion_labels=known_group_motion_labels,
+        known_skit_group_motion_labels=known_skit_group_motion_labels,
+        strict_skit_group_intents=getattr(args, "strict_skit_group_intents", False),
         char_default_slots=char_default_slots,
         prompt_face_labels=prompt_face_labels,
         known_body_ids=known_body_ids,
@@ -2110,6 +2221,111 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         generate_face_map_labeled,
         generate_bg_map_labeled,
     )
+
+    skit_group_only = bool(getattr(args, "skit_group_only", False))
+    if skit_group_only:
+        if (
+            not getattr(args, "skit_group_registry", None)
+            or not getattr(args, "skit_group_template_source", None)
+        ):
+            print(
+                "Error: --skit-group-only requires --skit-group-registry "
+                "and --skit-group-template-source",
+                file=sys.stderr,
+            )
+            return 1
+        if getattr(args, "csv", None):
+            print(
+                "Error: --skit-group-only uses existing IR index anchors; "
+                "do not pass --csv",
+                file=sys.stderr,
+            )
+            return 1
+
+        skit_group_registry_data, skit_labels = _load_skit_group_registry_contract(
+            args.skit_group_registry,
+        )
+        skit_group_template_source_data = load_ymmp(args.skit_group_template_source)
+        ir_data = load_ir(args.ir_json)
+        ymmp_data = load_ymmp(args.production_ymmp)
+        fmt = getattr(args, "format", "text")
+        if fmt != "json":
+            print(
+                f"skit_group_registry: {args.skit_group_registry} "
+                f"({len(skit_labels)} labels)"
+            )
+            print(f"skit_group_template_source: {args.skit_group_template_source}")
+
+        result = patch_ymmp(
+            ymmp_data,
+            ir_data,
+            {},
+            {},
+            skit_group_registry=skit_group_registry_data,
+            skit_group_template_source=skit_group_template_source_data,
+            skit_group_only=True,
+        )
+
+        if fmt != "json":
+            print(
+                "Skit group placements: "
+                f"{result.skit_group_placements} "
+                f"(GroupItems inserted: {result.skit_group_item_insertions})"
+            )
+        for warning in result.warnings:
+            print(f"  WARNING: {warning}", file=sys.stderr)
+
+        fatal_warnings = _fatal_face_patch_warnings(result.warnings)
+        if fatal_warnings:
+            if fmt != "json":
+                print(
+                    f"\nPatch FAILED ({len(fatal_warnings)} blocking issues)."
+                    " Partial output was not accepted.",
+                    file=sys.stderr,
+                )
+            else:
+                print(json.dumps({
+                    "success": False,
+                    "error": "fatal_warnings",
+                    "fatal_warnings": fatal_warnings,
+                    "skit_group_placements": result.skit_group_placements,
+                    "skit_group_item_insertions": result.skit_group_item_insertions,
+                    "warnings": result.warnings,
+                    "summary": _apply_production_summary(result),
+                }, ensure_ascii=False))
+            return 1
+
+        if args.dry_run:
+            if fmt == "json":
+                print(json.dumps({
+                    "success": True,
+                    "dry_run": True,
+                    "skit_group_placements": result.skit_group_placements,
+                    "skit_group_item_insertions": result.skit_group_item_insertions,
+                    "warnings": result.warnings,
+                    "summary": _apply_production_summary(result),
+                }, ensure_ascii=False))
+            else:
+                print("(dry-run: no file written)")
+            return 0
+
+        out_path = args.output
+        if not out_path:
+            stem = Path(args.production_ymmp).stem
+            out_path = str(Path(args.production_ymmp).parent / f"{stem}_patched.ymmp")
+        save_ymmp(ymmp_data, out_path)
+        if fmt == "json":
+            print(json.dumps({
+                "success": True,
+                "output": out_path,
+                "skit_group_placements": result.skit_group_placements,
+                "skit_group_item_insertions": result.skit_group_item_insertions,
+                "warnings": result.warnings,
+                "summary": _apply_production_summary(result),
+            }, ensure_ascii=False))
+        else:
+            print(f"Written: {out_path}")
+        return 0
 
     # --- G-19: face_map_bundle の解決 ---
     face_map_bundle: dict[str, dict] | None = None
@@ -2216,6 +2432,26 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
             f"group_motion_map: {args.group_motion_map} "
             f"({len(group_motion_map)} labels)"
         )
+    skit_group_registry_data = None
+    skit_group_template_source_data = None
+    known_skit_group_motion_labels = None
+    if getattr(args, "skit_group_registry", None):
+        skit_group_registry_data, known_skit_group_motion_labels = (
+            _load_skit_group_registry_contract(args.skit_group_registry)
+        )
+        print(
+            f"skit_group_registry: {args.skit_group_registry} "
+            f"({len(known_skit_group_motion_labels)} labels)"
+        )
+    if getattr(args, "skit_group_template_source", None):
+        if skit_group_registry_data is None:
+            print(
+                "Error: --skit-group-template-source requires --skit-group-registry",
+                file=sys.stderr,
+            )
+            return 1
+        skit_group_template_source_data = load_ymmp(args.skit_group_template_source)
+        print(f"skit_group_template_source: {args.skit_group_template_source}")
 
     # --- row-range annotation (--csv) ---
     ir_data = load_ir(args.ir_json)
@@ -2267,6 +2503,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         known_se_labels=known_se,
         known_motion_labels=known_motion_labels,
         known_group_motion_labels=known_group_motion_labels,
+        known_skit_group_motion_labels=known_skit_group_motion_labels,
         char_default_slots=char_default_slots or None,
         prompt_face_labels=prompt_face_labels,
     )
@@ -2281,7 +2518,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
     fmt = getattr(args, "format", "text")
 
     skit_audit_result = None
-    if getattr(args, "skit_group_registry", None):
+    if getattr(args, "skit_group_registry", None) and skit_group_template_source_data is None:
         skit_audit_result = _run_skit_group_audit(
             ymmp_data,
             ir_data,
@@ -2319,6 +2556,8 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         tachie_motion_effects_map=tachie_motion_effects_map,
         face_map_bundle=face_map_bundle,
         char_default_bodies=char_default_bodies,
+        skit_group_registry=skit_group_registry_data,
+        skit_group_template_source=skit_group_template_source_data,
     )
 
     if fmt != "json":
@@ -2339,7 +2578,12 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         print(f"BG anim writes: {result.bg_anim_changes}")
         print(f"Transition VoiceItem writes: {result.transition_changes}")
         print(f"VideoEffects writes (motion): {result.motion_changes}")
-    print(f"GroupItem geometry writes: {result.group_motion_changes}")
+        print(f"GroupItem geometry writes: {result.group_motion_changes}")
+        print(
+            "Skit group placements: "
+            f"{result.skit_group_placements} "
+            f"(GroupItems inserted: {result.skit_group_item_insertions})"
+        )
     for warning in result.warnings:
         print(f"  WARNING: {warning}", file=sys.stderr)
 
@@ -2358,6 +2602,8 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
                 "fatal_warnings": fatal_warnings,
                 "face_changes": result.face_changes,
                 "slot_changes": result.slot_changes,
+                "skit_group_placements": result.skit_group_placements,
+                "skit_group_item_insertions": result.skit_group_item_insertions,
                 "warnings": result.warnings,
                 "summary": _apply_production_summary(result),
             }, ensure_ascii=False))
@@ -2378,6 +2624,8 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
                 "transition_changes": result.transition_changes,
                 "motion_changes": result.motion_changes,
                 "group_motion_changes": result.group_motion_changes,
+                "skit_group_placements": result.skit_group_placements,
+                "skit_group_item_insertions": result.skit_group_item_insertions,
                 "warnings": result.warnings,
                 "summary": _apply_production_summary(result),
             }
@@ -2410,6 +2658,8 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
             "transition_changes": result.transition_changes,
             "motion_changes": result.motion_changes,
             "group_motion_changes": result.group_motion_changes,
+            "skit_group_placements": result.skit_group_placements,
+            "skit_group_item_insertions": result.skit_group_item_insertions,
             "warnings": result.warnings,
             "summary": _apply_production_summary(result),
         }
