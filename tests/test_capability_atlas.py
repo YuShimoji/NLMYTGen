@@ -30,18 +30,18 @@ def test_capability_atlas_classifies_canonical_anchor_as_direct_proven():
     assert entries["skit_group.canonical_anchor"]["support_level"] == "direct_proven"
 
 
-def test_capability_atlas_classifies_exported_starter_intent_as_direct_proven():
+def test_capability_atlas_classifies_exported_v1_skit_intents_as_direct_proven():
     atlas = build_default_capability_atlas(_project_root())
     entries = _entry_map(atlas)
 
-    assert entries["skit_group.intent.enter_from_left"]["support_level"] == "direct_proven"
-
-
-def test_capability_atlas_keeps_non_exported_skit_group_intent_as_template_catalog_only():
-    atlas = build_default_capability_atlas(_project_root())
-    entries = _entry_map(atlas)
-
-    assert entries["skit_group.intent.deny_oneshot"]["support_level"] == "template_catalog_only"
+    for intent in [
+        "enter_from_left",
+        "surprise_oneshot",
+        "deny_oneshot",
+        "exit_left",
+        "nod",
+    ]:
+        assert entries[f"skit_group.intent.{intent}"]["support_level"] == "direct_proven"
 
 
 def test_capability_atlas_classifies_non_fade_transition_as_unsupported():
@@ -74,8 +74,14 @@ def test_build_capability_atlas_script_writes_expected_json(tmp_path):
     entries = _entry_map(data)
     assert entries["speaker_tachie.motion"]["support_level"] == "direct_proven"
     assert entries["skit_group.canonical_anchor"]["support_level"] == "direct_proven"
-    assert entries["skit_group.intent.enter_from_left"]["support_level"] == "direct_proven"
-    assert entries["skit_group.intent.deny_oneshot"]["support_level"] == "template_catalog_only"
+    for intent in [
+        "enter_from_left",
+        "surprise_oneshot",
+        "deny_oneshot",
+        "exit_left",
+        "nod",
+    ]:
+        assert entries[f"skit_group.intent.{intent}"]["support_level"] == "direct_proven"
 
 
 def test_capability_atlas_evidence_paths_exist_in_repo():
@@ -99,10 +105,33 @@ def test_canonical_anchor_corpus_is_ok_and_exact_only():
     audit = audit_skit_group(ymmp_data, ir_data, registry)
 
     assert entries["skit_group.canonical_anchor"]["support_level"] == "direct_proven"
-    assert entries["skit_group.intent.enter_from_left"]["support_level"] == "direct_proven"
-    assert entries["skit_group.intent.deny_oneshot"]["support_level"] == "template_catalog_only"
+    for intent in [
+        "enter_from_left",
+        "surprise_oneshot",
+        "deny_oneshot",
+        "exit_left",
+        "nod",
+    ]:
+        assert entries[f"skit_group.intent.{intent}"]["support_level"] == "direct_proven"
     assert audit.status == "ok"
     assert audit.summary == {"exact": 5, "fallback": 0, "manual_note": 0}
+
+
+def test_default_registry_resolves_production_like_aliases_and_keeps_panic_manual():
+    root = _project_root()
+    ymmp_data = load_ymmp(str(root / "samples/canonical.ymmp"))
+    ir_data = load_ir(str(root / "samples/_probe/b2/haitatsuin_ir_10utt_v3_motions.json"))
+    registry = load_skit_group_registry(root / "samples/registry_template/skit_group_registry.template.json")
+    audit = audit_skit_group(ymmp_data, ir_data, registry)
+
+    assert audit.status == "ok"
+    assert audit.summary == {"exact": 1, "fallback": 2, "manual_note": 1}
+    by_intent = {entry.requested_intent: entry for entry in audit.entries}
+    assert by_intent["surprise_jump"].resolution == "fallback"
+    assert by_intent["surprise_jump"].template_name == "delivery_surprise_oneshot_v1"
+    assert by_intent["deny_shake"].resolution == "fallback"
+    assert by_intent["deny_shake"].template_name == "delivery_deny_oneshot_v1"
+    assert by_intent["panic_shake"].resolution == "manual_note"
 
 
 def test_old_skit01_still_fails_preflight_even_after_starter_export():

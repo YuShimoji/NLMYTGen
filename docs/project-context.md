@@ -5,7 +5,7 @@
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
 - 現在地の正本: 通常再開では `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md` で止める。本ファイル冒頭は状態スナップショットではなく、航海日誌への短い入口。
-- 現フェーズ: G-24 `delivery_nod_v1` cautious gate。assistant-owned readiness は PASS、user-owned YMM4 native GroupItem template author/export + manual acceptance 待ち。
+- 現フェーズ: G-24 alias 登録は PASS。次は alias-enabled registry で実制作IR/corpusを検証する段階であり、追加 motion authoring ではない。
 - 古い roadmap / prompt / verification packet は現行判断に使わない。必要な履歴は DECISION LOG と HANDOFF SNAPSHOT の該当行だけ読む。
 - Python のスコープは「テキスト変換 + IR/registry + ymmp 限定後段適用」。動画レンダリング・画像生成・YMM4 GUI 操作は Python の責務ではない。
 
@@ -14,38 +14,41 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI artifact → CSV / registry / patched ymmp → YMM4 読込・確認・レンダリング
-- 現在のスライス: G-24 `delivery_nod_v1` の template-first gate。`audit-skit-group` の readiness と standalone export proof を混同しない。
-- 成功状態: `delivery_nod_v1` が user-owned YMM4 export + manual acceptance を通過し、`skit_group.intent.nod` を `direct_proven` へ昇格できること。
+- 現在のスライス: G-24 alias registration PASS。`surprise_jump` / `deny_shake` は registry fallback 済み、`panic_shake` は新テンプレまたは manual_note 候補として維持。
+- 成功状態: 実制作IR/corpusで exact / fallback / manual_note を出し、追加 YMM4 motion 作成が本当に必要かを concrete gap ベースで判断できること。
 
 ---
 
 ## CURRENT LANE
 - 主レーン: Advance（G-24 template-first の実制作接続）。現行の優先は [runtime-state.md](runtime-state.md) の `next_action`。
-- 今このレーンを優先する理由: starter 2 件の成功を `nod` に安全に横展開し、template readiness を export proof と混同する status drift を閉じるため。
+- 今このレーンを優先する理由: v1 planned set の author/export は閉じたため、次は作成済みテンプレートが実制作の選択負荷を減らすかに接続するため。
 
 ---
 
 ## ROADMAP UPDATE (2026-04-27 post-cleanup prep)
 
-This section narrows the next roadmap after the legacy-document cleanup. It does not approve new implementation scope. The roadmap is intentionally gate-shaped: close the current G-24 `nod` proof, then widen only to the next catalog intents that have the same value path.
+This section narrows the next roadmap after the legacy-document cleanup. It does not approve new implementation scope. The gate-shaped author/export pass is now closed for the v1 planned set; the current value path is production-use validation with existing templates.
 
 ### 現行ロードマップの主軸
 
-1. **G-24 `delivery_nod_v1` cautious gate を閉じる**
+1. **G-24 `delivery_nod_v1` cautious gate を閉じる（完了）**
    - actor: user + assistant
    - owner artifact: YMM4 native template asset + `skit_group` registry / Capability Atlas state
-   - bottleneck: `audit-skit-group` readiness と standalone native template export proof がまだ分離されたまま
+   - bottleneck: `audit-skit-group` readiness と standalone native template export proof の分離
    - done condition: `delivery_nod_v1` が GroupItem + body/face の 2 `ImageItem` children + no `TachieItem` で export され、manual acceptance (`nod amplitude`, `does not dominate scene`) を PASS する
-2. **`nod` 昇格後、`deny_oneshot -> exit_left` を同じ gate で処理する**
+2. **`deny_oneshot -> exit_left` を同じ gate で処理する（完了）**
    - actor: shared
    - owner artifact: `skit_group.intent.*` の support level
    - bottleneck: starter 2 件の成功を remaining intent 群へ安全に横展開すること
-   - done condition: each intent is either `direct_proven` after export proof, or remains `template_catalog_only` with an explicit replan reason
-3. **P02 production adoption を template 解決の実戦運用へ寄せる**
+   - done condition: `deny_oneshot` / `exit_left` が `direct_proven` after export proof になること
+   - result: user completed both samples; repo inspection found ImageItem body/face + no `TachieItem`; both intents are now `direct_proven`
+3. **P02 production adoption を template 解決の実戦運用へ寄せる（現行）**
    - actor: assistant + user
    - owner artifact: production adoption proof / template resolution notes
-   - bottleneck: route contract や dry-run pass を production value path と混同しないこと
+   - bottleneck: 小演出 authoring 自体を progress と誤認せず、作った template が実制作の選択負荷を減らすかへ接続すること
    - done condition: exact / fallback / manual note が、実制作の S-6（背景・演出設定）でどの手作業を減らすかまで記録される
+   - loop stop: `exit_left` 後は追加 motion 作成へ進まず、実制作 IR の template 解決結果を見て production gap が出た時だけ新テンプレートを再起票する
+   - role split: user は少数の reusable native template を作り、assistant は組み合わせ・registry・fallback note で production-like sample / 解決結果を作る。user は全サンプル作成ではなく確認に集中する
 4. **メンテ層は on-demand に保つ**
    - actor: operator / assistant
    - owner artifact: B-18 台本診断、B-17 改行残差、H-01/H-02 packaging / thumbnail briefs
@@ -54,18 +57,18 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ### formal plan の分岐条件
 
-- **`delivery_nod_v1` export 未報告**: 次プランは YMM4 hands-on / acceptance を閉じる短い operation packet から始める。assistant 側の readiness 再検証は既に PASS のため、再度の proof 採掘を主目的にしない。
-- **`delivery_nod_v1: PASS` 報告済み**: 次プランは `skit_group.intent.nod` の `direct_proven` 昇格、Capability Atlas / registry / P02 / runtime-state 同期、続いて `deny_oneshot` packet 作成へ進む。
-- **`delivery_nod_v1: FAIL - <reason>` 報告**: 次プランは `fallback` / `manual_note` / `motion_target` / `group_motion` のどれが必要になったかを failure class として分け、G-24 template-first の範囲を再設計する。FAIL を代替成功にしない。
+- **通常**: 次プランは existing v1 template set を使った production-like sample / 解決結果作成から始める。assistant が exact / fallback / manual_note を整理し、user は YMM4 上で結果確認に集中する。
+- **十分**: exact coverage が制作負荷を減らすなら production-use hardening を続ける。追加 motion authoring はしない。
+- **不足**: `fallback` / `manual_note` / missing-template / body-face drift / `TachieItem` 混入 / repo bug を failure class として分け、追加テンプレート起票か修正かを選ぶ。FAIL を代替成功にしない。
 - **新規制作案件が先に来た場合**: G-24 の主軸は維持し、メンテ層は B-18 → H-01/H-02 on demand → B-17 drift-only の順で必要分だけ起動する。
 
 ### プラン作成前に揃えるもの
 
-- [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) は G-24 `delivery_nod_v1` を現行アンカーとして更新済み。
-- `runtime-state.md` と `verification/P02-production-adoption-proof.md` は、assistant-owned readiness と user-owned export proof を分離する現行参照先として更新済み。
+- [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) は G-24 production-use validation を現行アンカーとして更新済み。
+- `runtime-state.md` と `verification/P02-production-adoption-proof.md` は、v1 template completion と production-use validation を分離する現行参照先として更新済み。
 - 削除済みレガシードキュメント名への repo-local 参照は `git grep` で残存なし。
 - `formal plan の分岐条件` は本節に固定済み。次プランはこの分岐のどれに入ったかを冒頭で宣言してから書く。
-- 次の formal plan は、`delivery_nod_v1` の user export が未完なら **hands-on / acceptance packet**、PASS 済みなら **state promotion + `deny_oneshot` packet** から始める。
+- 次の formal plan は **production-like sample / 解決結果作成** から始める。追加 motion authoring は production gap が具体化した時だけ起票する。
 
 ### 今回やらないこと
 
@@ -255,17 +258,19 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ## HANDOFF SNAPSHOT (2026-04-26 update)
 
-- Shared Focus: **G-24 `nod` cautious gate readiness + user export packet**. The old `skit_01` corpus is still not a gate because of `REFERENCE_MASTER_MISSING`, `PROOF_OUTPUT_PATH_DRIFT`, `CANONICAL_GROUP_REMARK_MISSING`, and `TEMPLATE_RESOLUTION_UNPROVEN`. The current shared cycle narrows to `delivery_nod_v1`: assistant rechecked `audit-skit-group` on `samples/canonical.ymmp` and `samples/haitatsuin_2026-04-12_g24_proof.ymmp`, confirmed `delivery_nod_v1` stays `exact`, and rechecked proof-corpus `group_motion_changes=0`. There is still no repo-tracked discrete `delivery_nod_v1` copy. Canonical docs: [G24-canonical-anchor-adoption-2026-04-20.md](verification/G24-canonical-anchor-adoption-2026-04-20.md) / [skit_01-workflow-breakage-audit-2026-04-20.md](verification/skit_01-workflow-breakage-audit-2026-04-20.md) / [P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md).
+- Shared Focus: **G-24 real-production validation after alias registration PASS**. Existing production-like IRs now resolve `surprise_jump -> delivery_surprise_oneshot_v1` and `deny_shake -> delivery_deny_oneshot_v1` through `intent_fallbacks`; `panic_shake` remains a new-template/manual-note candidate. [G24-alias-registration-2026-04-27.md](verification/G24-alias-registration-2026-04-27.md) records the follow-up. The current shared cycle is no longer motion authoring or alias planning; it is running real production IR/corpus validation. Canonical docs: [G24-canonical-anchor-adoption-2026-04-20.md](verification/G24-canonical-anchor-adoption-2026-04-20.md) / [skit_01-workflow-breakage-audit-2026-04-20.md](verification/skit_01-workflow-breakage-audit-2026-04-20.md) / [P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md).
 - Restart Governance Delta: **2026-04-27** normal restart read budget is now capped at `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`. Protected/canonical docs remain sources of truth, but they are not all full-read requirements. Read `project-context` HANDOFF / DECISION LOG, FEATURE ID, invariant, ledger, workflow, interaction failure class, or AI gate only when the current decision needs that section. Full re-anchoring is an exception, not the default.
 - Interaction Governance Delta: **2026-04-27** template formalism is now a structural failure class. Obsolete prompts, archived packets, and superseded roadmap/setup docs remain deleted; `INTERACTION_NOTES.md` treats interaction failures as project risks, and now explicitly blocks prompt/checklist/OK-NG templates from replacing task connectivity. Manual/shared actions must state open target, created artifact, source object, actor, owner artifact, acceptance meaning, and replan condition before using short result codes.
-- Roadmap Prep Delta: **2026-04-27** next roadmap is narrowed to G-24 `delivery_nod_v1` cautious gate first, then `deny_oneshot -> exit_left` only after `nod` export/acceptance passes. [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) and [P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md) separate readiness from standalone export proof; no new FEATURE status or production route was changed.
-- Implementation Delta: **2026-04-27** assistant-owned readiness was rerun for `delivery_nod_v1`. `audit-skit-group` stayed `exact=5 / fallback=0 / manual_note=0` on canonical and proof corpora, and `apply-production --dry-run` stayed `success=true` / `motion_changes=8` / `group_motion_changes=0` when run with `--tachie-motion-map samples/tachie_motion_map_library.json`. This did not change support level; `nod` remains `template_catalog_only` until user-owned YMM4 author/export + manual acceptance are reported.
-- Safe Next Frontier Packet: **The next concrete move is to close `delivery_nod_v1` through manual acceptance plus standalone export**. Entry route stays [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md), and template-first validity still starts at `python -m src.cli.main audit-skit-group <ymmp> <ir.json> --skit-group-registry <json>`. Important distinction: `audit-skit-group` `exact` proves readiness, not the existence of a repo-tracked `delivery_nod_v1` copy. In YMM4, open `samples/haitatsuin_2026-04-12_g24_proof.ymmp` or the user's local equivalent, start from the Layer 9 GroupItem `haitatsuin_delivery_main`, and export a YMM4 native GroupItem template named `delivery_nod_v1` that includes body/face `ImageItem` children and no `TachieItem`. Manual acceptance means reporting whether that YMM4 result passes `nod amplitude (RepeatMove loop)` plus `does not dominate scene`. After a clean pass, promote `skit_group.intent.nod` to `direct_proven` and move next to `deny_oneshot -> exit_left`.
+- Roadmap Prep Delta: **2026-04-27** G-24 planned author/export is closed at the v1 set (`enter_from_left` / `surprise_oneshot` / `nod` / `deny_oneshot` / `exit_left`). [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) and [P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md) now point to production-use validation rather than another cautious authoring gate.
+- Implementation Delta: **2026-04-27** user completed `delivery_deny_oneshot_v1` and `delivery_exit_left_v1`. Repo inspection found the two target samples use plain body/face `ImageItem` children and no `TachieItem`; `deny_oneshot` is a short X-axis one-shot sway, and `exit_left` uses a leftward OUT `InOutMoveEffect`. `skit_group.intent.deny_oneshot` / `skit_group.intent.exit_left` are now `direct_proven`.
+- Validation Delta: **2026-04-27** repo-probe production-use validation PASS. `audit-skit-group` on `samples/canonical.ymmp` + `samples/_probe/skit_01/skit_01_ir.json` returned `exact=5 / fallback=0 / manual_note=0`. No confirmation `.ymmp` was generated.
+- Gap Classification Delta: **2026-04-27** production-like gap classification PASS. IR A returned `exact=3 / manual_note=1`; IR B returned `exact=1 / manual_note=3`; this was followed by alias registration for `surprise_jump` and `deny_shake`.
+- Safe Next Frontier Packet: **The next concrete move is real-production IR/corpus validation with the alias-enabled registry**. Entry route stays [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md), and template-first validity still starts at `python -m src.cli.main audit-skit-group <ymmp> <ir.json> --skit-group-registry <json>`. Treat `samples/haitatsuin_2026-04-12_g24_proof.ymmp` as compact template/sample proof in the current worktree; it is not currently a voice-anchored adoption corpus because the canonical group anchor is absent.
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: **2026-04-27** restart read budget correction. Normal restart is now a three-doc path plus targeted section reads; full canonical sweep is reserved for explicit re-anchoring, drift, or boundary uncertainty. No production artifact, FEATURE status, or G-24 route changed; `skit_group.intent.nod` remains `template_catalog_only` until manual acceptance plus standalone export are confirmed.
-- Handoff Focus (next): Resume from the user-owned `delivery_nod_v1` author/export step. Route reference stays [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md), canonical anchor confirmation stays in `samples/canonical.ymmp`, proof / hands-on project stays `samples/haitatsuin_2026-04-12_g24_proof.ymmp` or the user's local equivalent, and the concrete hands-on instructions live in [P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md) §G-24 `delivery_nod_v1` user hands-on correction. Keep the existing `group_motion` failure classes (`NO_GROUP_ITEM`, `TARGET_MISS`, `TARGET_AMBIGUOUS`), but do not escape into `motion_target` / `group_motion` substitution for this cycle. If the user can export `delivery_nod_v1` as a GroupItem template with 2 `ImageItem` children and no `TachieItem`, and the two manual acceptance points pass, promote `skit_group.intent.nod` to `direct_proven`. The next frontier after that remains `deny_oneshot -> exit_left`.
-- Evidence: Production E2E remains proven, and starter 2 remains Phase-3 PASS. On the 2026-04-27 readiness rerun, `audit-skit-group` returned `exact=5 / fallback=0 / manual_note=0` on both `samples/canonical.ymmp` and `samples/haitatsuin_2026-04-12_g24_proof.ymmp`, including `delivery_nod_v1`; `apply-production --dry-run` returned `success=true` / `motion_changes=8` / `group_motion_changes=0` when run with `--tachie-motion-map samples/tachie_motion_map_library.json`. Earlier collect-only observed 28 test files / 384 tests and FEATURE_REGISTRY parsing observed done=45 / approved=3 / hold=9 / info=2 / quarantined=2 / rejected=7. No `src` or `gui` production logic changed, so full pytest was not rerun.
+- Last Change Relation: **2026-04-27** G-24 alias registration PASS. Existing production-like IRs now resolve two alias labels through fallback and leave one unresolved panic gap.
+- Handoff Focus (next): Resume from real-production IR/corpus validation. Run the same exact/fallback/manual_note report with the alias-enabled registry; keep `panic_shake` manual/new-template until user acceptance.
+- Evidence: Production E2E remains proven, starter 2 remains Phase-3 PASS, v1 G-24 planned templates are PASS / `direct_proven`, repo-probe validation is PASS, and production-like alias registration is PASS. Current inspection of `samples/haitatsuin_2026-04-12_g24_proof.ymmp` found template/sample snippets only (`TachieItem` count 0, no canonical group anchor); validation input remains `samples/canonical.ymmp`.
 - 案件モード: CLI artifact
 - 現在の主レーン: 方向転換中 (実制作bottleneck直接軽減へ移行)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近

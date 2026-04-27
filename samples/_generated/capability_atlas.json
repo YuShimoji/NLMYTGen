@@ -2623,7 +2623,7 @@
       "expression_id": "skit_group.intent.deny_oneshot",
       "scope": "skit_group",
       "preferred_route": "template intent -> skit_group_registry -> audit-skit-group",
-      "support_level": "template_catalog_only",
+      "support_level": "direct_proven",
       "evidence": [
         {
           "path": "samples/registry_template/skit_group_registry.template.json",
@@ -2634,8 +2634,16 @@
           "reason": "Skit group spec fixes template-first as the mainline"
         },
         {
-          "path": "docs/verification/G24-canonical-anchor-adoption-2026-04-20.md",
-          "reason": "Canonical anchor is repo-resident, but this intent is still awaiting standalone native template asset proof"
+          "path": "docs/verification/P02-production-adoption-proof.md",
+          "reason": "Manual acceptance, production adoption proof, and standalone export sync are recorded here"
+        },
+        {
+          "path": "samples/canonical.ymmp",
+          "reason": "Canonical anchor plus skit registry resolves the v1 template set as exact in audit-skit-group"
+        },
+        {
+          "path": "samples/haitatsuin_2026-04-12_g24_proof.ymmp",
+          "reason": "Repo-tracked proof sample stores exported native GroupItem snippets for completed v1 intents"
         }
       ],
       "manual_checks": [
@@ -2643,8 +2651,8 @@
         "one-shot (no loop)"
       ],
       "limitations": [
-        "Current repo evidence proves canonical anchor existence plus preflight classification, but not a full repo-resident derived native template asset set for this intent",
-        "Run audit-skit-group before treating this intent as production-ready template resolution",
+        "Promotion is limited to exported skit intents only; future skit intents stay template_catalog_only until their own export/proof is synced",
+        "Target ymmp still needs a compatible skit_group actor setup and preflight should be run before production use",
         "Per-template fallback note exists (delivery_nod_v1), but preflight resolution uses top-level intent_fallbacks first"
       ]
     },
@@ -2664,11 +2672,15 @@
         },
         {
           "path": "docs/verification/P02-production-adoption-proof.md",
-          "reason": "Starter manual acceptance, production adoption proof, and standalone export sync are recorded here"
+          "reason": "Manual acceptance, production adoption proof, and standalone export sync are recorded here"
+        },
+        {
+          "path": "samples/canonical.ymmp",
+          "reason": "Canonical anchor plus skit registry resolves the v1 template set as exact in audit-skit-group"
         },
         {
           "path": "samples/haitatsuin_2026-04-12_g24_proof.ymmp",
-          "reason": "Voice-anchored production proof corpus resolves the exported starter templates as exact without group_motion substitution"
+          "reason": "Repo-tracked proof sample stores exported native GroupItem snippets for completed v1 intents"
         }
       ],
       "manual_checks": [
@@ -2676,7 +2688,7 @@
         "overshoot + settle timing"
       ],
       "limitations": [
-        "Promotion is limited to the exported starter batch only; remaining skit intents stay template_catalog_only until their own export/proof is synced",
+        "Promotion is limited to exported skit intents only; future skit intents stay template_catalog_only until their own export/proof is synced",
         "Target ymmp still needs a compatible skit_group actor setup and preflight should be run before production use"
       ]
     },
@@ -2684,7 +2696,7 @@
       "expression_id": "skit_group.intent.exit_left",
       "scope": "skit_group",
       "preferred_route": "template intent -> skit_group_registry -> audit-skit-group",
-      "support_level": "template_catalog_only",
+      "support_level": "direct_proven",
       "evidence": [
         {
           "path": "samples/registry_template/skit_group_registry.template.json",
@@ -2695,8 +2707,16 @@
           "reason": "Skit group spec fixes template-first as the mainline"
         },
         {
-          "path": "docs/verification/G24-canonical-anchor-adoption-2026-04-20.md",
-          "reason": "Canonical anchor is repo-resident, but this intent is still awaiting standalone native template asset proof"
+          "path": "docs/verification/P02-production-adoption-proof.md",
+          "reason": "Manual acceptance, production adoption proof, and standalone export sync are recorded here"
+        },
+        {
+          "path": "samples/canonical.ymmp",
+          "reason": "Canonical anchor plus skit registry resolves the v1 template set as exact in audit-skit-group"
+        },
+        {
+          "path": "samples/haitatsuin_2026-04-12_g24_proof.ymmp",
+          "reason": "Repo-tracked proof sample stores exported native GroupItem snippets for completed v1 intents"
         }
       ],
       "manual_checks": [
@@ -2704,15 +2724,15 @@
         "scene closure timing"
       ],
       "limitations": [
-        "Current repo evidence proves canonical anchor existence plus preflight classification, but not a full repo-resident derived native template asset set for this intent",
-        "Run audit-skit-group before treating this intent as production-ready template resolution"
+        "Promotion is limited to exported skit intents only; future skit intents stay template_catalog_only until their own export/proof is synced",
+        "Target ymmp still needs a compatible skit_group actor setup and preflight should be run before production use"
       ]
     },
     {
       "expression_id": "skit_group.intent.nod",
       "scope": "skit_group",
       "preferred_route": "template intent -> skit_group_registry -> audit-skit-group",
-      "support_level": "template_catalog_only",
+      "support_level": "direct_proven",
       "evidence": [
         {
           "path": "samples/registry_template/skit_group_registry.template.json",
@@ -2723,8 +2743,16 @@
           "reason": "Skit group spec fixes template-first as the mainline"
         },
         {
-          "path": "docs/verification/G24-canonical-anchor-adoption-2026-04-20.md",
-          "reason": "Canonical anchor is repo-resident, but this intent is still awaiting standalone native template asset proof"
+          "path": "docs/verification/P02-production-adoption-proof.md",
+          "reason": "Manual acceptance, production adoption proof, and standalone export sync are recorded here"
+        },
+        {
+          "path": "samples/canonical.ymmp",
+          "reason": "Canonical anchor plus skit registry resolves the v1 template set as exact in audit-skit-group"
+        },
+        {
+          "path": "samples/haitatsuin_2026-04-12_g24_proof.ymmp",
+          "reason": "Repo-tracked proof sample stores exported native GroupItem snippets for completed v1 intents"
         }
       ],
       "manual_checks": [
@@ -2732,8 +2760,8 @@
         "does not dominate scene"
       ],
       "limitations": [
-        "Current repo evidence proves canonical anchor existence plus preflight classification, but not a full repo-resident derived native template asset set for this intent",
-        "Run audit-skit-group before treating this intent as production-ready template resolution"
+        "Promotion is limited to exported skit intents only; future skit intents stay template_catalog_only until their own export/proof is synced",
+        "Target ymmp still needs a compatible skit_group actor setup and preflight should be run before production use"
       ]
     },
     {
@@ -2752,11 +2780,15 @@
         },
         {
           "path": "docs/verification/P02-production-adoption-proof.md",
-          "reason": "Starter manual acceptance, production adoption proof, and standalone export sync are recorded here"
+          "reason": "Manual acceptance, production adoption proof, and standalone export sync are recorded here"
+        },
+        {
+          "path": "samples/canonical.ymmp",
+          "reason": "Canonical anchor plus skit registry resolves the v1 template set as exact in audit-skit-group"
         },
         {
           "path": "samples/haitatsuin_2026-04-12_g24_proof.ymmp",
-          "reason": "Voice-anchored production proof corpus resolves the exported starter templates as exact without group_motion substitution"
+          "reason": "Repo-tracked proof sample stores exported native GroupItem snippets for completed v1 intents"
         }
       ],
       "manual_checks": [
@@ -2764,7 +2796,7 @@
         "one-shot (no loop)"
       ],
       "limitations": [
-        "Promotion is limited to the exported starter batch only; remaining skit intents stay template_catalog_only until their own export/proof is synced",
+        "Promotion is limited to exported skit intents only; future skit intents stay template_catalog_only until their own export/proof is synced",
         "Target ymmp still needs a compatible skit_group actor setup and preflight should be run before production use",
         "Per-template fallback note exists (delivery_nod_v1), but preflight resolution uses top-level intent_fallbacks first"
       ]

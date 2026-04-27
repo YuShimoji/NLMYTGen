@@ -390,9 +390,27 @@ python -m src.cli.main apply-production \
   - **Phase 1**: PASS（manual acceptance 完了）
   - **Phase 2**: PASS（`samples/haitatsuin_2026-04-12_g24_proof.ymmp` + `samples/_probe/skit_01/skit_01_ir.json` で production adoption proof 完了）
   - **Phase 3**: PASS（starter 2 件の standalone native template library export 完了）
-  - Capability Atlas keeps `skit_group.intent.enter_from_left` / `skit_group.intent.surprise_oneshot` as the promoted starter pair, while `deny_oneshot` / `exit_left` / `nod` remain `template_catalog_only` until each export/proof cycle is closed
-  - 2026-04-23 follow-up: the same proof corpus was rerun for `delivery_nod_v1` readiness and stayed at `exact` / `group_motion_changes=0`. This is still readiness, not standalone export proof, so `nod` remains `template_catalog_only` for now. Next step: in YMM4, open `samples/haitatsuin_2026-04-12_g24_proof.ymmp` or an equivalent local project, start from Layer 9 `GroupItem` Remark `haitatsuin_delivery_main`, and author/export a YMM4 native GroupItem template named `delivery_nod_v1`; keep the structure as GroupItem + 2 `ImageItem` children (body / face), with no `TachieItem`; accept only if `nod amplitude (RepeatMove loop)` and `does not dominate scene` both pass. If fallback/manual_note/motion_target/group_motion becomes necessary, stop and replan.
-  - 2026-04-27 implementation pass: assistant re-ran `audit-skit-group` on `samples/canonical.ymmp` and `samples/haitatsuin_2026-04-12_g24_proof.ymmp`; both stayed `exact=5 / fallback=0 / manual_note=0`, including `delivery_nod_v1`. The matching `apply-production --dry-run` command requires `--tachie-motion-map samples/tachie_motion_map_library.json`; without it, the skit motion labels fail as `MOTION_UNKNOWN_LABEL`. With the motion map included, dry-run returned `success=true`, `motion_changes=8`, and `group_motion_changes=0`. This confirms assistant-owned readiness only. `delivery_nod_v1` still must not be promoted to `direct_proven` until user-owned YMM4 author/export + manual acceptance are reported.
+  - Capability Atlas keeps `skit_group.intent.enter_from_left` / `skit_group.intent.surprise_oneshot` / `skit_group.intent.nod` as promoted exported intents after the starter + nod syncs. A later 2026-04-27 sync promotes `deny_oneshot` / `exit_left` as well after user sample completion and repo inspection.
+  - 2026-04-23 follow-up: the same proof corpus was rerun for `delivery_nod_v1` readiness and stayed at `exact` / `group_motion_changes=0`. At that point this was readiness, not standalone export proof, so `nod` correctly remained `template_catalog_only` until the later user-owned export report.
+  - 2026-04-27 implementation pass: assistant re-ran `audit-skit-group` on `samples/canonical.ymmp` and `samples/haitatsuin_2026-04-12_g24_proof.ymmp`; both stayed `exact=5 / fallback=0 / manual_note=0`, including `delivery_nod_v1`. The matching `apply-production --dry-run` command requires `--tachie-motion-map samples/tachie_motion_map_library.json`; without it, the skit motion labels fail as `MOTION_UNKNOWN_LABEL`. With the motion map included, dry-run returned `success=true`, `motion_changes=8`, and `group_motion_changes=0`. This confirmed assistant-owned readiness before user-owned export.
+  - 2026-04-27 user report: `delivery_nod_v1` was created, saved as a YMM4 native GroupItem template, and given the same Remark. User acceptance confirmed body + face move together, the nod is visible but not scene-dominating, and no `TachieItem` is included. `skit_group.intent.nod` is promoted to `direct_proven`. The next frontier at that point was `delivery_deny_oneshot_v1`, then `delivery_exit_left_v1`; this was later superseded by the v1 planned set completion sync below.
+
+### G-24 v1 planned set completion sync (2026-04-27)
+
+User reported that the remaining 2 samples were created and asked assistant to confirm and move forward.
+
+Repo inspection of `samples/haitatsuin_2026-04-12_g24_proof.ymmp` found:
+
+- `delivery_deny_oneshot_v1`: 2 body/face `ImageItem` children plus Layer 9 `GroupItem` snippets with matching Remark, short X-axis one-shot sway, `TachieItem` count 0.
+- `delivery_exit_left_v1`: 2 body/face `ImageItem` children plus Layer 9 `GroupItem` with matching Remark, OUT `InOutMoveEffect` value `-2000.0` toward left, `TachieItem` count 0.
+- The current proof `.ymmp` is a compact template/sample proof and no longer contains the canonical voice-anchored group anchor; `audit-skit-group` on it therefore reports `SKIT_CANONICAL_GROUP_MISSING`. This does not block template promotion, but production-use validation should use `samples/canonical.ymmp` plus real/probe IR.
+
+Current judgment:
+
+- `skit_group.intent.deny_oneshot`: `direct_proven`
+- `skit_group.intent.exit_left`: `direct_proven`
+- v1 planned set complete: `enter_from_left` / `surprise_oneshot` / `nod` / `deny_oneshot` / `exit_left`
+- next frontier: production-use validation with exact / fallback / manual_note reporting, not further planned motion authoring
 
 ### G-24 `delivery_nod_v1` user hands-on correction (2026-04-27)
 

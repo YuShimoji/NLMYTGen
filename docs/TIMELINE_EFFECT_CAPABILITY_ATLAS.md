@@ -13,8 +13,8 @@
 |---|---|---|---|
 | `speaker_tachie` | `face` / `idle_face` / `slot` / `motion` | `direct_proven` | 既存の主経路 |
 | `skit_group` canonical | `samples/canonical.ymmp` -> `audit-skit-group` | `direct_proven` | canonical anchor は repo 内で成立済み |
-| `skit_group` starter intent | **template intent** -> `skit_group_registry` -> `audit-skit-group` | `direct_proven` | `enter_from_left` / `surprise_oneshot` は starter export まで完了 |
-| `skit_group` remaining intent | **template intent** -> `skit_group_registry` -> `audit-skit-group` | `template_catalog_only` | `nod` / `deny_oneshot` / `exit_left` は catalog / preflight まで |
+| `skit_group` exported intent | **template intent** -> `skit_group_registry` -> `audit-skit-group` | `direct_proven` | v1 planned set 5 件 (`enter_from_left` / `surprise_oneshot` / `nod` / `deny_oneshot` / `exit_left`) は export まで完了 |
+| `skit_group` future intent | **template intent** -> `skit_group_registry` -> `audit-skit-group` | `template_catalog_only` | v1 外の新 intent は production gap が出た時だけ起票 |
 | `skit_group` の補助調整 | `motion_target` / `group_motion` | `direct_proven` | 補助経路。主経路ではない |
 | `bg_layer` | `bg` / `bg_anim` | `direct_proven` | measured route 前提 |
 | `overlay_se` | `overlay` / `se` | `direct_proven` | registry + timing anchor 前提 |
@@ -47,27 +47,32 @@
 | `transition.fade` | `transition=fade` | G-12 / capability matrix | fade timing | fade 以外は未対応 |
 | `skit_group.canonical_anchor` | `samples/canonical.ymmp -> audit-skit-group` | canonical adoption packet | 左向き基準姿勢・ImageItem-only 構成 | **anchor 成立のみ。派生 asset は別** |
 | `skit_group.intent.enter_from_left` | `template intent -> registry -> audit-skit-group` | P02 cautious gate + standalone export sync | 着地位置 / overshoot / settle | **starter export 済み** |
+| `skit_group.intent.nod` | `template intent -> registry -> audit-skit-group` | P02 cautious gate + standalone export sync | nod amplitude / does not dominate scene | **export 済み** |
 | `skit_group.intent.surprise_oneshot` | `template intent -> registry -> audit-skit-group` | P02 cautious gate + standalone export sync | Y-only jump / one-shot | **starter export 済み** |
+| `skit_group.intent.deny_oneshot` | `template intent -> registry -> audit-skit-group` | P02 cautious gate + standalone export sync | X-only sway range / one-shot | **export 済み** |
+| `skit_group.intent.exit_left` | `template intent -> registry -> audit-skit-group` | P02 cautious gate + standalone export sync | exit direction / scene closure timing | **export 済み** |
 | `skit_group.motion_target` | `motion + motion_target -> layer VideoEffects` | B-2 GroupItem proof | 顔/body の同期 | **補助経路** |
 | `skit_group.group_motion` | `group_motion + group_target -> X/Y/Zoom` | G-20 / route contract | 構図の破綻 | **幾何補助** |
 
 ### 2.2 `template_catalog_only`
 
-現時点の `skit_group_registry` にある remaining template intent は、**canonical anchor の repo proof は得られているが、standalone native template asset proof はまだ未成立**。
+現時点の v1 planned set には remaining `template_catalog_only` intent は無い。
 
-現 registry 例:
+future registry 例（production gap が出た時だけ起票）:
 
-- `deny_oneshot`
-- `exit_left`
-- `nod`
+- `happy_sway`
+- `sad_droop`
+- `thinking_zoom`
+- `nod_oneshot`
+- `reset_center`
 
 意味すること:
 
 - `audit-skit-group` は canonical corpus に対して exact / fallback / manual_note を判定できる
-- starter 2 件 (`enter_from_left` / `surprise_oneshot`) は export 済みのため `direct_proven` へ昇格した
-- ただし `deny_oneshot` / `exit_left` / `nod` はまだ standalone asset proof が無い
+- v1 planned set 5 件は user-owned native template export / sample proof を経て `direct_proven` へ昇格した
+- v1 外の intent は production-use validation で concrete gap が出るまで追加しない
 - old `skit_01` corpus は引き続き canonical anchor 不足を再現する
-- したがって remaining `skit_group.intent.*` は `template_catalog_only` に留める
+- したがって future `skit_group.intent.*` は起票時点では `template_catalog_only` に留める
 
 ### 2.3 `probe_only`
 
@@ -123,7 +128,7 @@ ManualSample が無いときは、次の順で確認する。
    - timeline route 側: `python -m src.cli.main measure-timeline-routes <ymmp> --expect samples/timeline_route_contract.json --profile <profile>`
 4. **Atlas の support_level を見る**  
    - `direct_proven`: 既存 adapter path で進める
-   - `template_catalog_only`: preflight と registry 整備まで。starter export 完了前の intent は completion 扱いしない
+   - `template_catalog_only`: preflight と registry 整備まで。standalone export / sample proof 完了前の intent は completion 扱いしない
    - `probe_only`: registry/material planning の材料としてのみ使う
    - `unsupported`: route 再測定か方針変更が必要
 
