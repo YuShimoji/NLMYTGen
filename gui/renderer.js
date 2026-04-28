@@ -456,6 +456,36 @@ const FAILURE_HELP = {
     doc: 'docs/OPERATOR_WORKFLOW.md',
     docLabel: 'OPERATOR_WORKFLOW',
   },
+  SKIT_GROUP_UNKNOWN_INTENT: {
+    title: 'skit_group の motion が registry に無い',
+    action: 'IR を v1/alias intent に直すか、制作 gap として新テンプレート候補に分離してください。panic_shake は通常語彙に入れません。',
+    doc: 'docs/SKIT_GROUP_TEMPLATE_SPEC.md',
+    docLabel: 'SKIT_GROUP_TEMPLATE_SPEC',
+  },
+  SKIT_TEMPLATE_SOURCE_MISSING: {
+    title: '必要な GroupItem テンプレートが template source に無い',
+    action: 'repo-tracked template source に同名 Remark の GroupItem を同期してください。手順票で手置き補完しません。',
+    doc: 'docs/SKIT_GROUP_TEMPLATE_SPEC.md',
+    docLabel: 'SKIT_GROUP_TEMPLATE_SPEC',
+  },
+  SKIT_TEMPLATE_SOURCE_ASSET_MISSING: {
+    title: 'template source の画像パスが repo-local asset に解決できない',
+    action: 'ImageItem の FilePath を samples 配下の実在ファイルへ同期し、古い Windows 絶対パスのままにしないでください。',
+    doc: 'docs/SKIT_GROUP_TEMPLATE_SPEC.md',
+    docLabel: 'SKIT_GROUP_TEMPLATE_SPEC',
+  },
+  SKIT_TEMPLATE_ANALYSIS_INSUFFICIENT: {
+    title: 'template-analyzed placement に必要な数値 transform が足りない',
+    action: 'GroupItem の X/Y/Zoom keyframe を template source から読める状態に直してください。配置の手修正より先に source fact を確認します。',
+    doc: 'docs/SKIT_GROUP_TEMPLATE_SPEC.md',
+    docLabel: 'SKIT_GROUP_TEMPLATE_SPEC',
+  },
+  SKIT_PLACEMENT_NO_VOICE_TIMING: {
+    title: 'skit_group 配置先の VoiceItem タイミングが見つからない',
+    action: 'CSV 読込済み ymmp と aligned IR の row_start / row_end / index 対応を見直してください。',
+    doc: 'docs/WORKFLOW.md',
+    docLabel: 'WORKFLOW',
+  },
 };
 
 function blobContainsFailureCode(blob, code) {
@@ -759,6 +789,8 @@ const filePaths = {
   'csv-file': null,
   'bg-map': null,
   'face-map-bundle': null,
+  'skit-group-registry': null,
+  'skit-group-template-source': null,
 };
 
 const fileFilters = {
@@ -769,6 +801,8 @@ const fileFilters = {
   'csv-file': [{ name: 'CSV', extensions: ['csv'] }],
   'bg-map': [{ name: 'JSON', extensions: ['json'] }],
   'face-map-bundle': [{ name: 'JSON', extensions: ['json'] }],
+  'skit-group-registry': [{ name: 'JSON', extensions: ['json'] }],
+  'skit-group-template-source': [{ name: 'YMM4 Project', extensions: ['ymmp'] }],
 };
 
 let lastPatchedPath = null;
@@ -823,6 +857,9 @@ document.getElementById('btn-validate-ir').addEventListener('click', async () =>
     irJson: filePaths['ir-json'],
     palette: filePaths['palette'] || undefined,
     faceMapBundle: filePaths['face-map-bundle'] || undefined,
+    skitGroupRegistry: filePaths['skit-group-registry'] || undefined,
+    strictSkitGroupIntents: document.getElementById('strict-skit-group-intents').checked
+      && !!filePaths['skit-group-registry'],
   };
 
   const validatePanel = document.getElementById('validate-result');
@@ -890,9 +927,16 @@ async function runApplyProduction(dryRun) {
     ymmp: filePaths['prod-ymmp'],
     irJson: filePaths['ir-json'],
     palette: filePaths['palette'] || undefined,
-    csv: filePaths['csv-file'] || undefined,
+    csv: document.getElementById('skit-group-only').checked
+      ? undefined
+      : filePaths['csv-file'] || undefined,
     bgMap: filePaths['bg-map'] || undefined,
     faceMapBundle: filePaths['face-map-bundle'] || undefined,
+    skitGroupRegistry: filePaths['skit-group-registry'] || undefined,
+    skitGroupTemplateSource: filePaths['skit-group-template-source'] || undefined,
+    strictSkitGroupIntents: document.getElementById('strict-skit-group-intents').checked
+      && !!filePaths['skit-group-registry'],
+    skitGroupOnly: document.getElementById('skit-group-only').checked,
     dryRun,
   };
 
@@ -904,13 +948,21 @@ async function runApplyProduction(dryRun) {
 
     if (result.json && result.json.success) {
       let text = '';
+      const summary = result.json.summary || {};
       if (result.json.summary) {
-        const s = result.json.summary;
-        text += `[要約] 警告 ${s.warning_count} 件 / face ${s.face_changes} / slot ${s.slot_changes} / BG −${s.bg_removed} +${s.bg_added}\n\n`;
+        text += `[要約] 警告 ${summary.warning_count} 件 / face ${summary.face_changes} / slot ${summary.slot_changes} / BG −${summary.bg_removed} +${summary.bg_added} / skit_group ${summary.skit_group_placements}\n\n`;
       }
-      text += `Face changes: ${result.json.face_changes}\n`;
-      text += `Slot changes: ${result.json.slot_changes}\n`;
-      text += `BG: removed ${result.json.bg_changes}, added ${result.json.bg_additions}\n`;
+      const faceChanges = result.json.face_changes ?? summary.face_changes ?? 0;
+      const slotChanges = result.json.slot_changes ?? summary.slot_changes ?? 0;
+      const bgRemoved = result.json.bg_changes ?? summary.bg_removed ?? 0;
+      const bgAdded = result.json.bg_additions ?? summary.bg_added ?? 0;
+      text += `Face changes: ${faceChanges}\n`;
+      text += `Slot changes: ${slotChanges}\n`;
+      text += `BG: removed ${bgRemoved}, added ${bgAdded}\n`;
+      if (result.json.skit_group_placements !== undefined) {
+        text += `Skit group placements: ${result.json.skit_group_placements}`;
+        text += ` (GroupItems inserted: ${result.json.skit_group_item_insertions || 0})\n`;
+      }
       if (result.json.tachie_syncs) {
         text += `Idle face inserts: ${result.json.tachie_syncs}\n`;
       }
@@ -995,6 +1047,10 @@ function collectSettings() {
       bgMap: filePaths['bg-map'] || null,
       faceMapBundle: filePaths['face-map-bundle'] || null,
       csvFile: filePaths['csv-file'] || null,
+      skitGroupRegistry: filePaths['skit-group-registry'] || null,
+      skitGroupTemplateSource: filePaths['skit-group-template-source'] || null,
+      strictSkitGroupIntents: document.getElementById('strict-skit-group-intents').checked,
+      skitGroupOnly: document.getElementById('skit-group-only').checked,
     },
     packetAssist: {
       bundleDir: packetBundleDir || null,
@@ -1067,6 +1123,20 @@ function applySettings(settings) {
       filePaths['csv-file'] = settings.production.csvFile;
       document.getElementById('csv-file-path').textContent = settings.production.csvFile;
     }
+    if (settings.production.skitGroupRegistry) {
+      filePaths['skit-group-registry'] = settings.production.skitGroupRegistry;
+      document.getElementById('skit-group-registry-path').textContent = settings.production.skitGroupRegistry;
+    }
+    if (settings.production.skitGroupTemplateSource) {
+      filePaths['skit-group-template-source'] = settings.production.skitGroupTemplateSource;
+      document.getElementById('skit-group-template-source-path').textContent = settings.production.skitGroupTemplateSource;
+    }
+    if (settings.production.strictSkitGroupIntents !== undefined) {
+      document.getElementById('strict-skit-group-intents').checked = settings.production.strictSkitGroupIntents;
+    }
+    if (settings.production.skitGroupOnly !== undefined) {
+      document.getElementById('skit-group-only').checked = settings.production.skitGroupOnly;
+    }
   }
   if (settings.packetAssist && settings.packetAssist.bundleDir) {
     packetBundleDir = settings.packetAssist.bundleDir;
@@ -1094,6 +1164,8 @@ document.getElementById('letter-spacing').addEventListener('change', autoSave);
 document.getElementById('reflow-v2').addEventListener('change', autoSave);
 document.getElementById('balance-lines').addEventListener('change', autoSave);
 document.getElementById('csv-save-diagnostics').addEventListener('change', autoSave);
+document.getElementById('strict-skit-group-intents').addEventListener('change', autoSave);
+document.getElementById('skit-group-only').addEventListener('change', autoSave);
 
 // --- Scoring Tab（DOMContentLoaded 内の H-01 テンプレ保存から参照するため先に宣言）---
 let scoringBriefPath = null;

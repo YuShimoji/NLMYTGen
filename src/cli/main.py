@@ -1245,6 +1245,17 @@ def main(argv: list[str] | None = None) -> int:
         help="G-24: apply only skit_group GroupItem placement; skip face/bg/timeline patch paths",
     )
     p_patch.add_argument(
+        "--skit-group-compact-review",
+        action="store_true",
+        help="G-24: place skit_group cues sequentially for compact visual review instead of production timing",
+    )
+    p_patch.add_argument(
+        "--skit-group-review-spacing",
+        type=int,
+        default=240,
+        help="G-24: frame spacing for --skit-group-compact-review (default: 240)",
+    )
+    p_patch.add_argument(
         "--timeline-contract",
         help="timeline_route_contract.json のパス (省略時は samples/timeline_route_contract.json)",
     )
@@ -1309,6 +1320,22 @@ def main(argv: list[str] | None = None) -> int:
         "--skit-group-only",
         action="store_true",
         help="G-24: apply only skit_group GroupItem placement; skip face/bg/timeline patch paths",
+    )
+    p_apply.add_argument(
+        "--skit-group-compact-review",
+        action="store_true",
+        help="G-24: place skit_group cues sequentially for compact visual review instead of production timing",
+    )
+    p_apply.add_argument(
+        "--skit-group-review-spacing",
+        type=int,
+        default=240,
+        help="G-24: frame spacing for --skit-group-compact-review (default: 240)",
+    )
+    p_apply.add_argument(
+        "--strict-skit-group-intents",
+        action="store_true",
+        help="Fail when motion_target layer entries use labels outside the skit_group registry",
     )
     p_apply.add_argument(
         "--timeline-contract",
@@ -1855,6 +1882,8 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
         skit_group_registry=skit_group_registry_data,
         skit_group_template_source=skit_group_template_source_data,
         skit_group_only=skit_group_only,
+        skit_group_compact_review=getattr(args, "skit_group_compact_review", False),
+        skit_group_review_spacing=getattr(args, "skit_group_review_spacing", 240),
     )
 
     print(f"Face changes: {result.face_changes}")
@@ -2190,6 +2219,7 @@ def _fatal_face_patch_warnings(warnings: list[str]) -> list[str]:
         "SKIT_PLACEMENT_NO_VOICE_TIMING:",
         "SKIT_PLACEMENT_GROUP_AMBIGUOUS:",
         "SKIT_PLACEMENT_REGISTRY_INVALID:",
+        "SKIT_TEMPLATE_ANALYSIS_INSUFFICIENT:",
     )
     return [
         warning
@@ -2570,6 +2600,12 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
     )
 
     skit_group_only = bool(getattr(args, "skit_group_only", False))
+    if getattr(args, "strict_skit_group_intents", False) and not getattr(args, "skit_group_registry", None):
+        print(
+            "Error: --strict-skit-group-intents requires --skit-group-registry",
+            file=sys.stderr,
+        )
+        return 1
     if skit_group_only:
         if (
             not getattr(args, "skit_group_registry", None)
@@ -2594,8 +2630,29 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         )
         skit_group_template_source_data = load_ymmp(args.skit_group_template_source)
         ir_data = load_ir(args.ir_json)
-        ymmp_data = load_ymmp(args.production_ymmp)
         fmt = getattr(args, "format", "text")
+        if getattr(args, "strict_skit_group_intents", False):
+            from src.pipeline.ir_validate import validate_ir
+            vr = validate_ir(
+                ir_data,
+                known_skit_group_motion_labels=skit_labels,
+                strict_skit_group_intents=True,
+            )
+            if vr.has_errors:
+                if fmt == "json":
+                    print(json.dumps({
+                        "success": False,
+                        "error": "validation_failed",
+                        "validation": _ir_validate_json_summary(vr, ir_data),
+                    }, ensure_ascii=False))
+                else:
+                    _print_validation(vr)
+                    print(
+                        f"\nValidation FAILED ({len(vr.errors)} errors). Patch aborted.",
+                        file=sys.stderr,
+                )
+                return 1
+        ymmp_data = load_ymmp(args.production_ymmp)
         if fmt != "json":
             print(
                 f"skit_group_registry: {args.skit_group_registry} "
@@ -2611,6 +2668,8 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
             skit_group_registry=skit_group_registry_data,
             skit_group_template_source=skit_group_template_source_data,
             skit_group_only=True,
+            skit_group_compact_review=getattr(args, "skit_group_compact_review", False),
+            skit_group_review_spacing=getattr(args, "skit_group_review_spacing", 240),
         )
 
         if fmt != "json":
@@ -2851,6 +2910,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         known_motion_labels=known_motion_labels,
         known_group_motion_labels=known_group_motion_labels,
         known_skit_group_motion_labels=known_skit_group_motion_labels,
+        strict_skit_group_intents=getattr(args, "strict_skit_group_intents", False),
         char_default_slots=char_default_slots or None,
         prompt_face_labels=prompt_face_labels,
     )
@@ -2905,6 +2965,8 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         char_default_bodies=char_default_bodies,
         skit_group_registry=skit_group_registry_data,
         skit_group_template_source=skit_group_template_source_data,
+        skit_group_compact_review=getattr(args, "skit_group_compact_review", False),
+        skit_group_review_spacing=getattr(args, "skit_group_review_spacing", 240),
     )
 
     if fmt != "json":

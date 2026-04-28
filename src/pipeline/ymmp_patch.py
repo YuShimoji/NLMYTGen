@@ -2166,6 +2166,8 @@ def patch_ymmp(
     skit_group_registry: dict | None = None,
     skit_group_template_source: dict | None = None,
     skit_group_only: bool = False,
+    skit_group_compact_review: bool = False,
+    skit_group_review_spacing: int = 240,
 ) -> PatchResult:
     """演出 IR に従って ymmp を差し替える.
 
@@ -2215,6 +2217,8 @@ def patch_ymmp(
             ir_data,
             skit_group_registry,
             skit_group_template_source,
+            compact_review=skit_group_compact_review,
+            compact_review_spacing=skit_group_review_spacing,
         )
         result.skit_group_placements += skit_result.placements
         result.skit_group_item_insertions += skit_result.group_item_insertions
@@ -2317,6 +2321,8 @@ def patch_ymmp(
             ir_data,
             skit_group_registry,
             skit_group_template_source,
+            compact_review=skit_group_compact_review,
+            compact_review_spacing=skit_group_review_spacing,
         )
         result.skit_group_placements += skit_result.placements
         result.skit_group_item_insertions += skit_result.group_item_insertions

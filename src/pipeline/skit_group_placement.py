@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 from dataclasses import dataclass, field
 from pathlib import Path
+from statistics import median
 
 from src.pipeline.skit_group_audit import _parse_registry, _resolve_entry
 from src.pipeline.ymmp_patch import (
@@ -20,8 +21,11 @@ FAIL_SOURCE_ASSET_MISSING = "SKIT_TEMPLATE_SOURCE_ASSET_MISSING"
 FAIL_NO_TIMING = "SKIT_PLACEMENT_NO_VOICE_TIMING"
 FAIL_GROUP_AMBIGUOUS = "SKIT_PLACEMENT_GROUP_AMBIGUOUS"
 FAIL_REGISTRY_INVALID = "SKIT_PLACEMENT_REGISTRY_INVALID"
+FAIL_ANALYSIS_INSUFFICIENT = "SKIT_TEMPLATE_ANALYSIS_INSUFFICIENT"
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
+_TRANSFORM_AXES = ("X", "Y", "Zoom")
+_DEFAULT_COMPACT_REVIEW_SPACING_FRAMES = 240
 
 
 @dataclass
@@ -40,6 +44,28 @@ class SkitPlacementResult:
     manual_notes: int = 0
     duplicate_skips: int = 0
     warnings: list[str] = field(default_factory=list)
+
+
+@dataclass(frozen=True)
+class SkitTemplateChildOffset:
+    frame_offset: int
+    layer_offset: int
+    transform_values: dict[str, list[float]]
+
+
+@dataclass(frozen=True)
+class SkitTemplateSegmentTiming:
+    frame_offset: int
+    length: int
+
+
+@dataclass(frozen=True)
+class SkitTemplateAnalysis:
+    rest_pose: dict[str, float]
+    clip_baselines: dict[str, dict[str, float]]
+    child_offsets: dict[str, list[SkitTemplateChildOffset]]
+    segment_timings: dict[str, list[SkitTemplateSegmentTiming]]
+    transform_deltas: dict[str, list[dict[str, list[float]]]]
 
 
 def extract_skit_group_templates(template_source_data: dict) -> dict[str, SkitTemplateClip]:
@@ -102,6 +128,9 @@ def apply_skit_group_placement(
     ir_data: dict,
     registry_data: dict,
     template_source_data: dict,
+    *,
+    compact_review: bool = False,
+    compact_review_spacing: int = _DEFAULT_COMPACT_REVIEW_SPACING_FRAMES,
 ) -> SkitPlacementResult:
     """IR の skit_group intent を GroupItem template として timeline へ挿入する."""
     result = SkitPlacementResult()
@@ -124,6 +153,10 @@ def apply_skit_group_placement(
     )
     result.warnings.extend(source_warnings)
     templates = extract_skit_group_templates(template_source_data)
+    analysis, analysis_warnings = analyze_skit_group_templates(templates)
+    result.warnings.extend(analysis_warnings)
+    if analysis is None:
+        return result
 
     items = _get_timeline_items(ymmp_data)
     voice_items = [item for item in items if _item_type(item) == "VoiceItem"]
@@ -136,6 +169,8 @@ def apply_skit_group_placement(
         for item in items
         if _item_type(item) == "GroupItem" and isinstance(item.get("Remark"), str)
     }
+    compact_index = 0
+    compact_spacing = max(compact_review_spacing, 1)
 
     for entry in resolved:
         motion = entry.get("motion")
@@ -174,18 +209,22 @@ def apply_skit_group_placement(
             )
             continue
 
-        timing = _resolve_utterance_timing(
-            entry,
-            voice_items,
-            use_row_range=use_row_range,
-        )
-        if timing is None:
-            result.warnings.append(
-                f"{FAIL_NO_TIMING}: utterance index={resolution.index}"
-                f" template '{template_name}' has no VoiceItem timing"
+        if compact_review:
+            target_frame = compact_index * compact_spacing
+            compact_index += 1
+        else:
+            timing = _resolve_utterance_timing(
+                entry,
+                voice_items,
+                use_row_range=use_row_range,
             )
-            continue
-        target_frame = int(timing[0])
+            if timing is None:
+                result.warnings.append(
+                    f"{FAIL_NO_TIMING}: utterance index={resolution.index}"
+                    f" template '{template_name}' has no VoiceItem timing"
+                )
+                continue
+            target_frame = int(timing[0])
 
         for target_layer in target_layers:
             placement_remark = _placement_remark(template_name, resolution.index)
@@ -194,6 +233,7 @@ def apply_skit_group_placement(
                 continue
             inserted = _clone_template_items(
                 template,
+                analysis=analysis,
                 target_frame=target_frame,
                 target_layer=target_layer,
                 placement_remark=placement_remark,
@@ -208,6 +248,101 @@ def apply_skit_group_placement(
 
     items.sort(key=lambda item: (item.get("Frame", 0), item.get("Layer", 0)))
     return result
+
+
+def analyze_skit_group_templates(
+    templates: dict[str, SkitTemplateClip],
+) -> tuple[SkitTemplateAnalysis | None, list[str]]:
+    """template source から正規化用の rest pose / offset / timing を抽出する."""
+    warnings: list[str] = []
+    rest_pose_samples: dict[str, list[float]] = {
+        axis_name: [] for axis_name in _TRANSFORM_AXES
+    }
+    clip_baselines: dict[str, dict[str, float]] = {}
+
+    for clip in templates.values():
+        group_items = [
+            item for item in clip.items
+            if _item_type(item) == "GroupItem"
+        ]
+        if not group_items:
+            warnings.append(
+                f"{FAIL_ANALYSIS_INSUFFICIENT}: template '{clip.name}'"
+                " has no GroupItem transform source"
+            )
+            continue
+
+        clip_baseline: dict[str, float] = {}
+        for axis_name in _TRANSFORM_AXES:
+            axis_samples: list[float] = []
+            for group_item in group_items:
+                first_value = _first_transform_value(group_item, axis_name)
+                if first_value is not None:
+                    axis_samples.append(first_value)
+                    rest_pose_samples[axis_name].append(first_value)
+            if axis_samples:
+                clip_baseline[axis_name] = float(median(axis_samples))
+            else:
+                warnings.append(
+                    f"{FAIL_ANALYSIS_INSUFFICIENT}: template '{clip.name}'"
+                    f" has no numeric {axis_name} transform baseline"
+                )
+        if all(axis_name in clip_baseline for axis_name in _TRANSFORM_AXES):
+            clip_baselines[clip.name] = clip_baseline
+
+    rest_pose: dict[str, float] = {}
+    for axis_name, samples in rest_pose_samples.items():
+        if samples:
+            rest_pose[axis_name] = float(median(samples))
+        else:
+            warnings.append(
+                f"{FAIL_ANALYSIS_INSUFFICIENT}: template source has no numeric"
+                f" {axis_name} rest-pose samples"
+            )
+
+    if warnings:
+        return None, warnings
+
+    child_offsets: dict[str, list[SkitTemplateChildOffset]] = {}
+    segment_timings: dict[str, list[SkitTemplateSegmentTiming]] = {}
+    transform_deltas: dict[str, list[dict[str, list[float]]]] = {}
+    for clip in templates.values():
+        baseline = clip_baselines[clip.name]
+        child_offsets[clip.name] = []
+        segment_timings[clip.name] = []
+        transform_deltas[clip.name] = []
+        for item in clip.items:
+            item_type = _item_type(item)
+            if item_type == "ImageItem":
+                child_offsets[clip.name].append(
+                    SkitTemplateChildOffset(
+                        frame_offset=_coerce_int(item.get("Frame"), 0) - clip.base_frame,
+                        layer_offset=_coerce_int(item.get("Layer"), 0) - clip.base_layer,
+                        transform_values=_transform_values(item, _TRANSFORM_AXES),
+                    )
+                )
+            if item_type == "GroupItem":
+                segment_timings[clip.name].append(
+                    SkitTemplateSegmentTiming(
+                        frame_offset=_coerce_int(item.get("Frame"), 0) - clip.base_frame,
+                        length=max(_coerce_int(item.get("Length"), 0), 1),
+                    )
+                )
+                transform_deltas[clip.name].append({
+                    axis_name: [
+                        value - baseline[axis_name]
+                        for value in _transform_values(item, (axis_name,))[axis_name]
+                    ]
+                    for axis_name in _TRANSFORM_AXES
+                })
+
+    return SkitTemplateAnalysis(
+        rest_pose=rest_pose,
+        clip_baselines=clip_baselines,
+        child_offsets=child_offsets,
+        segment_timings=segment_timings,
+        transform_deltas=transform_deltas,
+    ), []
 
 
 def _extract_template_clip(items: list[dict], template_name: str) -> SkitTemplateClip | None:
@@ -263,6 +398,7 @@ def _extract_template_clip(items: list[dict], template_name: str) -> SkitTemplat
 def _clone_template_items(
     template: SkitTemplateClip,
     *,
+    analysis: SkitTemplateAnalysis,
     target_frame: int,
     target_layer: int,
     placement_remark: str,
@@ -273,16 +409,71 @@ def _clone_template_items(
         new_item = copy.deepcopy(item)
         new_item["Frame"] = target_frame + _coerce_int(item.get("Frame"), 0) - template.base_frame
         new_item["Layer"] = _coerce_int(item.get("Layer"), 0) + layer_delta
-        if _item_type(new_item) == "ImageItem":
+        item_type = _item_type(new_item)
+        if item_type == "ImageItem":
             file_path = new_item.get("FilePath")
             if isinstance(file_path, str) and file_path:
                 resolved_path = _resolve_repo_asset_path(file_path)
                 if resolved_path is not None:
-                    new_item["FilePath"] = str(resolved_path)
-        if _item_type(new_item) == "GroupItem":
+                    new_item["FilePath"] = _format_yymm_asset_path(resolved_path)
+        if item_type == "GroupItem":
+            _normalize_group_transform(new_item, template.name, analysis)
             new_item["Remark"] = placement_remark
         cloned.append(new_item)
     return cloned
+
+
+def _normalize_group_transform(
+    item: dict,
+    template_name: str,
+    analysis: SkitTemplateAnalysis,
+) -> None:
+    baseline = analysis.clip_baselines[template_name]
+    for axis_name in _TRANSFORM_AXES:
+        axis_shift = analysis.rest_pose[axis_name] - baseline[axis_name]
+        _shift_transform_values(item, axis_name, axis_shift)
+
+
+def _shift_transform_values(item: dict, axis_name: str, axis_shift: float) -> None:
+    transform = item.get(axis_name)
+    if not isinstance(transform, dict):
+        return
+    values = transform.get("Values")
+    if not isinstance(values, list):
+        return
+    for keyframe in values:
+        if not isinstance(keyframe, dict):
+            continue
+        value = _coerce_float(keyframe.get("Value"))
+        if value is None:
+            continue
+        keyframe["Value"] = value + axis_shift
+
+
+def _first_transform_value(item: dict, axis_name: str) -> float | None:
+    values = _transform_values(item, (axis_name,))[axis_name]
+    if not values:
+        return None
+    return values[0]
+
+
+def _transform_values(item: dict, axis_names: tuple[str, ...]) -> dict[str, list[float]]:
+    transforms: dict[str, list[float]] = {}
+    for axis_name in axis_names:
+        transforms[axis_name] = []
+        transform = item.get(axis_name)
+        if not isinstance(transform, dict):
+            continue
+        values = transform.get("Values")
+        if not isinstance(values, list):
+            continue
+        for keyframe in values:
+            if not isinstance(keyframe, dict):
+                continue
+            value = _coerce_float(keyframe.get("Value"))
+            if value is not None:
+                transforms[axis_name].append(value)
+    return transforms
 
 
 def _resolve_repo_asset_path(file_path: str) -> Path | None:
@@ -302,6 +493,14 @@ def _resolve_repo_asset_path(file_path: str) -> Path | None:
     return None
 
 
+def _format_yymm_asset_path(path: Path) -> str:
+    parts = path.resolve().parts
+    if len(parts) >= 4 and parts[0] == "/" and parts[1] == "mnt" and len(parts[2]) == 1:
+        drive = parts[2].upper()
+        return f"{drive}:\\" + "\\".join(parts[3:])
+    return str(path)
+
+
 def _placement_remark(template_name: str, ir_index: int | None) -> str:
     idx = ir_index if ir_index is not None else "?"
     return f"skit_group:{template_name} utt:{idx}"
@@ -317,3 +516,11 @@ def _time_spans_overlap(left: dict, right: dict) -> bool:
 
 def _coerce_int(value: object, default: int) -> int:
     return value if isinstance(value, int) else default
+
+
+def _coerce_float(value: object) -> float | None:
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    return None

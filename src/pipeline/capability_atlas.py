@@ -186,14 +186,15 @@ def _static_entries() -> list[dict[str, Any]]:
             "IR skit_group intent -> registry -> ymmp template source -> GroupItem timeline insertion",
             "probe_only",
             [
-                _evidence("src/pipeline/skit_group_placement.py", "Patch-time skit_group placement copies repo-tracked GroupItem template clips into the target ymmp"),
+                _evidence("src/pipeline/skit_group_placement.py", "Patch-time skit_group placement copies repo-tracked GroupItem template clips into the target ymmp and normalizes GroupItem X/Y/Zoom from template analysis"),
                 _evidence("samples/templates/skit_group/delivery_v1_templates.ymmp", "Repo-tracked template source contains available delivery_v1 GroupItem clips"),
+                _evidence("samples/_probe/g24/real_estate_dx_skit_group_patched.ymmp", "Real-estate DX readback contains normalized G-24 GroupItem insertions"),
             ],
             [
-                "Confirm inserted GroupItems appear on the intended utterance and layer before final render",
+                "Confirm the analyzed patched ymmp composition in YMM4 before final render",
             ],
             [
-                "Full v1 template source is present; production placement still needs readback on a CSV-imported real-estate DX ymmp copy",
+                "Machine readback passes; final composition acceptance remains a creative YMM4 check",
             ],
         ),
         _entry(

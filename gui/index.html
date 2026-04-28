@@ -212,6 +212,27 @@
           <span id="face-map-bundle-path" class="file-path">未選択</span>
         </div>
         <p class="file-row-hint">G-19 複数体運用時のみ。</p>
+        <div class="file-row">
+          <label>Skit Group Registry (G-24)</label>
+          <button class="btn-file" data-target="skit-group-registry">選択</button>
+          <span id="skit-group-registry-path" class="file-path">未選択</span>
+        </div>
+        <p class="file-row-hint">配達員などの外部茶番劇演者を自動配置するときに使う intent / fallback 台帳。</p>
+        <div class="file-row">
+          <label>Skit Group Template Source</label>
+          <button class="btn-file" data-target="skit-group-template-source">選択</button>
+          <span id="skit-group-template-source-path" class="file-path">未選択</span>
+        </div>
+        <p class="file-row-hint">YMM4 で作成した GroupItem テンプレート集。指定時は template-analyzed placement で配置します。</p>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="strict-skit-group-intents" checked>
+          skit_group intent を registry に限定（G-24 推奨）
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="skit-group-only">
+          skit_group 配置だけを適用（face/bg 等を切り離す）
+        </label>
+        <p class="file-row-hint">skit_group-only は aligned IR の既存 row/index anchor を使うため、CSV(row-range) はコマンドへ渡しません。</p>
       </div>
       </div>
 

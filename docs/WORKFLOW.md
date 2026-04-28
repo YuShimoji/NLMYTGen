@@ -312,6 +312,10 @@ python -m src.cli.main build-csv input.txt \
 
 配達員などの外部茶番劇演者を使う場合、実制作 IR の該当 utterance は `motion_target: "layer:9"` を持ち、`motion` は v1 intent または alias intent に限定する。最小入力形は `samples/g24_skit_group_minimal_production_ir.json`。
 
+制作時の標準入口は GUI の **演出適用**タブ。`Skit Group Registry (G-24)` に `samples/registry_template/skit_group_registry.template.json`、`Skit Group Template Source` に `samples/templates/skit_group/delivery_v1_templates.ymmp` を指定し、`skit_group intent を registry に限定` を ON にして **Validate IR → Dry Run → Apply Production** の順で進める。G-24 だけを切り分ける場合は `skit_group 配置だけを適用` を ON にする。この場合、aligned IR の既存 row/index anchor を使うため CSV(row-range) はコマンドへ渡さない。
+
+CLI で切り分ける場合:
+
 ```bash
 python -m src.cli.main patch-ymmp \
   samples/_probe/g24/real_estate_dx_csv_import_base.ymmp \
@@ -322,7 +326,7 @@ python -m src.cli.main patch-ymmp \
   -o samples/_probe/g24/real_estate_dx_skit_group_patched.ymmp
 ```
 
-`exact` / `fallback` は GroupItem 自動配置対象として扱う。`--skit-group-only` は face/bg/transition などの未解決をこの配置スライスから切り離す。YMM4 CSV 読込後に長文が分割される案件では aligned IR の `row_start` / `row_end` を使い、VoiceItem 順の `index` 直置きでズレたまま配置しない。`panic_shake` 等の未登録 intent は通常語彙から除外し、strict validation では ERROR にする。template source に存在しない将来テンプレートは `SKIT_TEMPLATE_SOURCE_MISSING` として fail-fast し、手順票で埋め合わせない。
+`exact` / `fallback` は GroupItem 自動配置対象として扱う。`--skit-group-only` は face/bg/transition などの未解決をこの配置スライスから切り離す。YMM4 CSV 読込後に長文が分割される案件では aligned IR の `row_start` / `row_end` を使い、VoiceItem 順の `index` 直置きでズレたまま配置しない。`panic_shake` 等の未登録 intent は通常語彙から除外し、strict validation では ERROR にする。template source に存在しない将来テンプレートは `SKIT_TEMPLATE_SOURCE_MISSING` として fail-fast し、手順票で埋め合わせない。2026-04-28 以後の placement は template-analyzed placement であり、template source の GroupItem transform 中央値から rest pose を導出して `X` / `Y` / `Zoom` を正規化する。数値 transform を読めない場合は `SKIT_TEMPLATE_ANALYSIS_INSUFFICIENT` で止める。
 
 read-only 確認が必要な場合だけ `audit-skit-group` を使う。ただし preflight PASS は制作成果ではなく、成果認定は patched `.ymmp` に GroupItem が挿入されたこととする。
 

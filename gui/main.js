@@ -98,6 +98,10 @@ ipcMain.handle('apply-production', async (_event, opts) => {
   if (opts.faceMapBundle) { args.push('--face-map-bundle', opts.faceMapBundle); }
   if (opts.slotMap) { args.push('--slot-map', opts.slotMap); }
   if (opts.csv) { args.push('--csv', opts.csv); }
+  if (opts.skitGroupRegistry) { args.push('--skit-group-registry', opts.skitGroupRegistry); }
+  if (opts.skitGroupTemplateSource) { args.push('--skit-group-template-source', opts.skitGroupTemplateSource); }
+  if (opts.strictSkitGroupIntents) { args.push('--strict-skit-group-intents'); }
+  if (opts.skitGroupOnly) { args.push('--skit-group-only'); }
   if (opts.output) { args.push('-o', opts.output); }
   if (opts.dryRun) { args.push('--dry-run'); }
 
@@ -169,6 +173,8 @@ ipcMain.handle('validate-ir', async (_event, opts) => {
   if (opts.slotMap) { args.push('--slot-map', opts.slotMap); }
   if (opts.overlayMap) { args.push('--overlay-map', opts.overlayMap); }
   if (opts.seMap) { args.push('--se-map', opts.seMap); }
+  if (opts.skitGroupRegistry) { args.push('--skit-group-registry', opts.skitGroupRegistry); }
+  if (opts.strictSkitGroupIntents) { args.push('--strict-skit-group-intents'); }
 
   const result = await runCli(args);
   const json = parseJsonLine(result.stdout);

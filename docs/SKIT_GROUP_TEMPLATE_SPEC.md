@@ -328,6 +328,10 @@ python -m src.cli.main patch-ymmp \
 
 template source 内で複数テンプレートが同一 frame/layer に重なる場合、GroupItem と同じ `Remark` を持つ ImageItem だけを同一 clip として扱う。古い絶対パス等で ImageItem の `FilePath` が repo-local asset に解決できない場合は `SKIT_TEMPLATE_SOURCE_ASSET_MISSING` として fail-fast する。
 
+2026-04-28 以後の placement は raw clone ではなく template-analyzed placement とする。`patch-ymmp` / `apply-production` は repo-tracked template source の GroupItem 群から rest pose を中央値で導出し、各 template の `X` / `Y` / `Zoom` を template-local baseline から rest pose へ平行移動して配置する。これにより authoring 用の外側座標を production timeline へそのまま持ち込まず、`surprise_oneshot` の Y ジャンプや `deny_oneshot` の X 揺れなどの相対 delta は維持する。数値 transform を導出できない場合は `SKIT_TEMPLATE_ANALYSIS_INSUFFICIENT` で fail-fast する。
+
+YMM4 での確認は production timing artifact と compact review artifact を分ける。production artifact は実発話 frame へ配置するため演出が動画全体に散る。visual acceptance では `--skit-group-compact-review` を使い、同じ IR / registry / template source から skit_group cue だけを短い間隔で並べた `samples/_probe/g24/real_estate_dx_skit_group_compact_review.ymmp` を見る。ImageItem の `FilePath` は YMM4 が読める Windows path として書き出し、WSL の `/mnt/c/...` path を production artifact に混入させない。
+
 ### 8.2 やらないこと
 
 - `motion` の意味を広げて配達員演者まで含める
