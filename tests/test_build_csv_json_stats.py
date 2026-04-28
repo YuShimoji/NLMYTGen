@@ -210,3 +210,67 @@ def test_build_csv_wrap_px_uses_measured_reflow_stats(tmp_path, capsys) -> None:
 
     rows = list(csv.reader(out_csv.open(encoding="utf-8-sig", newline="")))
     assert "\n" in rows[0][1]
+
+
+def test_build_csv_wrap_px_can_use_wpf_measure_helper(tmp_path, capsys) -> None:
+    helper = tmp_path / "fake_measure_wpf.py"
+    helper.write_text(
+        "#!/usr/bin/env python3\n"
+        "import json\n"
+        "import sys\n"
+        "request = json.loads(sys.stdin.read())\n"
+        "font_size = float(request['FontSize'])\n"
+        "letter_spacing = float(request.get('LetterSpacing', 0.0))\n"
+        "widths = []\n"
+        "for text in request['Texts']:\n"
+        "    widths.append(len(text) * font_size + max(0, len(text) - 1) * letter_spacing)\n"
+        "print(json.dumps({'Widths': widths}))\n",
+        encoding="utf-8",
+    )
+    helper.chmod(0o755)
+
+    txt = tmp_path / "script.txt"
+    txt.write_text(
+        "[00:00] Host1: これはWPF計測経路のテストです。指定幅で折り返します。\n",
+        encoding="utf-8",
+    )
+    out_csv = tmp_path / "measured_wpf.csv"
+    code = main(
+        [
+            "build-csv",
+            str(txt),
+            "-o",
+            str(out_csv),
+            "--format",
+            "json",
+            "--max-lines",
+            "2",
+            "--wrap-px",
+            "180",
+            "--wrap-safety",
+            "1",
+            "--measure-backend",
+            "wpf",
+            "--measure-exe",
+            str(helper),
+            "--font-family",
+            "FakeFont",
+            "--font-size",
+            "10",
+            "--letter-spacing",
+            "1",
+            "--reflow-v2",
+        ],
+    )
+    assert code == 0
+    out = capsys.readouterr().out.strip()
+    parsed = json.loads(out.split("\n")[-1])
+    op = parsed["stats"]["overflow_params"]
+    assert op["measure_backend"] == "wpf"
+    assert op["measure_exe"] == str(helper)
+    assert op["font_family"] == "FakeFont"
+    assert op["font_size"] == 10.0
+    assert op["letter_spacing"] == 1.0
+
+    rows = list(csv.reader(out_csv.open(encoding="utf-8-sig", newline="")))
+    assert "\n" in rows[0][1] or len(rows) > 1

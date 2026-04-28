@@ -375,6 +375,8 @@ def _build_stats_payload(
             payload["overflow_params"]["font_family"] = measure_info.get("font_family")
             payload["overflow_params"]["font_size"] = measure_info.get("font_size")
             payload["overflow_params"]["letter_spacing"] = measure_info.get("letter_spacing")
+            if measure_info.get("measure_exe") is not None:
+                payload["overflow_params"]["measure_exe"] = measure_info.get("measure_exe")
         overflow: list[dict] = []
         for i, row in enumerate(output.rows):
             w = display_width(row.text)

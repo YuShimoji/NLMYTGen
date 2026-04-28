@@ -11,11 +11,13 @@ from src.pipeline.assemble_csv import (
     display_width,
     estimate_display_lines,
     reflow_subtitles,
+    reflow_subtitles_measured,
     reflow_subtitles_v2,
     reflow_utterance,
     reflow_utterance_v2,
     split_long_utterances,
 )
+from src.pipeline.text_measure import EastAsianWidthMeasurer
 
 
 class TestDisplayWidth:
@@ -612,3 +614,47 @@ class TestReflowSubtitlesV2:
         )
         result = reflow_subtitles_v2(output, chars_per_line=20, max_lines=2)
         assert len(result.rows) >= 2
+
+
+class TestReflowSubtitlesMeasured:
+    """B-17 実測幅リフローの直接テスト。"""
+
+    def _make_output(self, *texts, speaker="れいむ"):
+        return YMM4CsvOutput(rows=tuple(YMM4CsvRow(speaker=speaker, text=t) for t in texts))
+
+    def test_short_rows_pass_through(self):
+        output = self._make_output("短いテキスト。")
+        result = reflow_subtitles_measured(
+            output,
+            max_width=40,
+            max_lines=2,
+            measurer=EastAsianWidthMeasurer(),
+        )
+        assert [row.text for row in result.rows] == ["短いテキスト。"]
+
+    def test_wraps_long_row_by_measured_width(self):
+        output = self._make_output("これは字幕実測幅のテストです。横幅指定では早めに改行します。")
+        result = reflow_subtitles_measured(
+            output,
+            max_width=32,
+            max_lines=2,
+            measurer=EastAsianWidthMeasurer(),
+        )
+        assert len(result.rows) == 1
+        lines = result.rows[0].text.split("\n")
+        assert len(lines) == 2
+        assert max(display_width(line) for line in lines) <= 32
+
+    def test_avoids_standalone_punctuation_and_single_character_lines(self):
+        output = self._make_output("検証は完了しました。次に、運用で再現するかを確認します。")
+        result = reflow_subtitles_measured(
+            output,
+            max_width=14,
+            max_lines=2,
+            measurer=EastAsianWidthMeasurer(),
+        )
+        lines = [line for row in result.rows for line in row.text.split("\n") if line]
+        forbidden = {"。", "、", "！", "？", "!", "?", "，", ",", ";", "；", ":", "："}
+        assert all(line.strip() not in forbidden for line in lines)
+        assert all(len(line.strip()) >= 2 for line in lines[:-1])
+        assert max(display_width(line) for line in lines) <= 14

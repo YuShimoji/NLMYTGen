@@ -8,6 +8,8 @@
 
 ### Session Handoff (2026-04-23)
 
+- **Follow-up worklog verification / B-17 measured reflow test hardening (2026-04-28)**: Verified the second pasted analysis against the repo. `impl_file_count` drift was real (`src/**/*.py = 35`), while `test_file_count` remained 31. Added direct tests for `reflow_subtitles_measured()` covering short passthrough, measured-width wrapping, and punctuation/single-character-line safety, plus a CLI WPF-backend smoke test using a fake helper executable. `build-csv --format json` now includes `measure_exe` in `overflow_params` when WPF measurement is used. This does not close YMM4 visual paired evidence; it closes the local code-path verification gap.
+- **Worklog consistency audit / stale boundary correction (2026-04-28)**: Audited the pasted work logs against the current worktree. The earlier risks around large unstaged changes and stale test counters are now resolved: the branch is clean, recent work is split into commits, and collected tests are `31 files / 419 tests`. Found and corrected one remaining blind spot in this file: the older "Python text-only / `.ymmp` operation prohibited" section and 2026-04-06 workflow coverage table conflicted with the current allowed `patch-ymmp` boundary. Updated the wording to distinguish prohibited zero-from-scratch `.ymmp` / YMM4 production emulation from allowed limited post-import `.ymmp` patching.
 - **Thumbnail real-template acceptance readback (2026-04-28)**: Implemented the missing machine readback step for the thumbnail real-template lane. `patch-thumbnail-template` now verifies patched in-memory values and, when `-o/--output` is used, reloads the written `.ymmp` and returns `file_readback` checks for text, image path, color, and X/Y/Zoom/Rotation values. `_tmp/thumbnail/patch_smoke.json` was prepared with a Windows-readable sample image path, but `_tmp/thumbnail/real_template.ymmp` is not present in this workspace yet, so real YMM4 visual acceptance remains pending.
 - **Thumbnail template slot audit / limited patch v1 (2026-04-28)**: Corrected the prior thumbnail drift from docs-only planning to working `.ymmp` slot tooling. Added `audit-thumbnail-template` and `patch-thumbnail-template` with implementation in `src/pipeline/thumbnail_template.py`. Contract: humans duplicate/rough-place a YMM4 thumbnail template and mark existing items with `Remark=thumb.text.<id>` or `Remark=thumb.image.<id>`; the CLI can then audit patchable fields and patch text, ImageItem `FilePath`, existing color route, and X/Y/Zoom/Rotation first values into a copied `.ymmp`. Repo scan still found no real thumbnail `.ymmp` template, so real YMM4 visual acceptance remains open; `samples/canonical.ymmp` correctly fails audit with `THUMB_TEMPLATE_NO_SLOTS`.
 - **B-17 measured-width subtitle reflow (2026-04-28)**: Addressed the remaining YMM4/display-width gap by adding an opt-in measured reflow path for `build-csv`. New CLI options: `--wrap-px`, `--wrap-safety`, `--measure-backend eaw|wpf`, `--font-family`, `--font-size`, `--letter-spacing`, and `--measure-exe`. `src/pipeline/text_measure.py` keeps the legacy East Asian Width model as fallback and adds a WPF-backed measurer; `tools/MeasureTextWpf` contains the Windows helper source. The GUI CSV tab now exposes Wrap Width / Measure Backend / font fields, and stats reports measured wrap params. This shifts B-17 from pure character-count approximation toward YMM4 display-condition-based wrapping while still requiring YMM4-side auto-wrap to be OFF or wide enough to avoid double wrapping.
@@ -63,7 +65,7 @@
 - git: **既定の開発ブランチは `master`**（2026-04-09: PR [#1](https://github.com/YuShimoji/NLMYTGen/pull/1) で `feat/phase2-motion-segmentation` をマージ済み。新規作業は `master` からブランチを切る）
 - lane: **コア開発幹**（回帰・ドキュメント整合・承認済みバグ修正）。**主軸は本開発** — エージェント作業は未承認 FEATURE を増やさず上記に集中。オペレータ並行: Phase 1 Block-A (通過済、メンテ層の継続観測) / 主軸 (演出配置自動化の実戦投入) は runbook どおり。**レーン A（Phase 1）の repo 準備はオペレータ側でクローズ**（[OPERATOR_LANE_A_ENV.md](verification/OPERATOR_LANE_A_ENV.md)、[LANE_A_PREP_CHECKLIST.md](verification/LANE_A_PREP_CHECKLIST.md)）。**レーン D（H-01 brief）オペレータ完了・当面クローズ**（[H01-lane-d-prep-2026-04-09.md](verification/H01-lane-d-prep-2026-04-09.md) §6、2026-04-09）
 - slice: **Thumbnail template slot patch v1 has saved-file readback; real thumbnail template acceptance is now the open thumbnail lane**. `audit-thumbnail-template` / `patch-thumbnail-template` can operate on copied YMM4 thumbnail templates with `thumb.text.*` / `thumb.image.*` Remark slots and `patch-thumbnail-template -o` now reports `file_readback`. `build-session-manifest` remains available for production handoff. G-24 compact-review acceptance remains open but is no longer the only immediate lane.
-- next_action: **Place one real YMM4 thumbnail template copy at `_tmp/thumbnail/real_template.ymmp`, then audit and patch it**. Mark at least `thumb.text.title` and `thumb.image.background` on existing YMM4 items, run `audit-thumbnail-template`, then run `patch-thumbnail-template _tmp/thumbnail/real_template.ymmp --patch _tmp/thumbnail/patch_smoke.json -o _tmp/thumbnail/real_template_patched.ymmp --format json` and open the patched `.ymmp` in YMM4. If `file_readback` shows a route mismatch, update `thumbnail_template.py` from that readback instead of adding more docs. In parallel, G-24 compact review can still be visually accepted when operator time allows.
+- next_action: **Primary — place one real YMM4 thumbnail template copy at `_tmp/thumbnail/real_template.ymmp`, then audit and patch it**. Mark at least `thumb.text.title` and `thumb.image.background` on existing YMM4 items, run `audit-thumbnail-template`, then run `patch-thumbnail-template _tmp/thumbnail/real_template.ymmp --patch _tmp/thumbnail/patch_smoke.json -o _tmp/thumbnail/real_template_patched.ymmp --format json` and open the patched `.ymmp` in YMM4. If `file_readback` shows a route mismatch, update `thumbnail_template.py` from that readback instead of adding more docs. **Secondary acceptance lanes**: G-24 compact review can be visually accepted when operator time allows; B-17 font-scale / measured reflow needs YMM4 paired evidence only when an actual subtitle drift case is visible.
   - **assistant (A)**: Keep Writer IR strict: skit_group actor utterances require `motion_target: "layer:9"` and registry v1/alias intents only; `panic_shake` is not normal Part 2 JSON vocabulary.
   - **assistant (B)**: Use `samples/templates/skit_group/delivery_v1_templates.ymmp` as the repo-tracked template source and analysis input. It now contains all five v1 templates; any future missing template must remain a fail-fast diagnostic, not a silent fallback.
   - **assistant (C)**: Treat `samples/_probe/g24/real_estate_dx_skit_group_compact_review.ymmp` as the current visual acceptance artifact. Treat `samples/_probe/g24/real_estate_dx_skit_group_patched.ymmp` as the production-timing artifact. Do not ask the user to manually correct spacing in YMM4 unless readback shows a missing source fact.
@@ -102,7 +104,7 @@
 
 - active_artifact: NLM transcript → YMM4 CSV → ゆっくり解説動画制作ワークフロー
 - artifact_surface: CLI → CSV → YMM4 台本読込 → 演出設定 → レンダリング → サムネイル → 投稿
-- last_change_relation: **2026-04-28** Thumbnail real-template acceptance correction. Strengthened `patch-thumbnail-template` so it verifies patched values and reloads written output as `file_readback`, then prepared `_tmp/thumbnail/patch_smoke.json` for the first real template run. `_tmp/thumbnail/real_template.ymmp` is still absent, so the next proof is a real YMM4 template audit/patch/open step, not more planning docs.
+- last_change_relation: **2026-04-28** Follow-up worklog verification and B-17 measured reflow test hardening. Confirmed `impl_file_count` drift and corrected it to 35, added focused local tests for the measured reflow path and WPF-measurer CLI path, and kept real-world acceptance lanes separated: thumbnail real-template proof is primary, G-24 visual acceptance is secondary, and B-17 YMM4 paired evidence is drift-triggered.
 
 ## カウンター
 
@@ -113,15 +115,15 @@
 ## 量的指標
 
 - test_file_count: 31
-- test_count: 419
+- test_count: 423
 - mock_file_count: 0
-- impl_file_count: 30
+- impl_file_count: 35
 - mock_impl_ratio: 0.00
 - open_todo_count: 0
 
 ## 最終検証
 
-- last_verification: **2026-04-28 thumbnail real-template readback v1**. `uv run pytest -q -s tests/test_thumbnail_template.py` PASS. Temporary CLI smoke for `audit-thumbnail-template` -> `patch-thumbnail-template -o --format json` PASS with `file_readback_success=true` and 7 checks. `uv run pytest -q -s tests/test_thumbnail_template.py tests/test_session_manifest.py` PASS. `uv run pytest -q -s` PASS (exit 0). Collected tests: 419. `git diff --check -- src docs tests` PASS.
+- last_verification: **2026-04-28 follow-up worklog verification / B-17 tests**. `find src -type f -name '*.py'` counted 35 implementation files; `uv run pytest --collect-only -q --capture=no` counted `31` test files / `423` tests. Focused tests: `uv run pytest -q -s tests/test_split_long_utterances.py::TestReflowSubtitlesMeasured tests/test_build_csv_json_stats.py::test_build_csv_wrap_px_can_use_wpf_measure_helper` PASS. `python3 -m py_compile src/cli/main.py src/pipeline/assemble_csv.py src/pipeline/text_measure.py` PASS. `uv run pytest -q -s tests/test_build_csv_json_stats.py tests/test_split_long_utterances.py` PASS. `uv run pytest -q -s` PASS. `git diff --check -- src gui docs tests tools` PASS.
 
 ## Evidence（CLI artifact mode）
 
@@ -141,15 +143,21 @@
 - quarantined: 2件（F-01, F-02）
 - rejected: 7件（B-10, C-02, C-03, C-04, C-05, D-01, F-03）
 
-## Python のスコープ制約（2026-03-30 確定）
+## Python のスコープ制約（2026-03-30 確定、2026-04-28 境界補正）
 
-Python の責務はテキスト変換のみ（CSV + テキストメタデータ）。
-以下は全て禁止（rejected として記録済み）:
+Python の責務は CSV / IR / registry / 台本読込後 `.ymmp` patch の接着層に限定する。YMM4 が持つ制作機能を Python 側で再生成しない。
+
+許容済み:
+
+- CSV / 診断 JSON / manifest などの CLI artifact 生成
+- 台本読込後 `.ymmp` に対する限定 patch（face / bg / slot / overlay / se / motion / bg_anim / transition / skit_group / thumb.* など、capability matrix と feature registry で範囲が固定されたもの）
+- repo-tracked YMM4 template source / registry / readback に基づく限定的な値差し替え
+
+禁止:
 
 - 画像生成・画像合成（PIL/Pillow 含む）
-- .ymmp 生成・操作（音声ファイル参照を含むため外部生成不可能）
-- YMM4 テンプレート生成・演出指定
-- YMM4 出力の模倣・プレビュー
+- `.ymmp` のゼロからの生成、YMM4 台本読込の代替、YMM4 GUI 操作
+- YMM4 テンプレート資産の自動制作、YMM4 出力の模倣・プレビュー
 - 動画レンダリング・音声合成
 
 ## 外部メディア取得の方針（2026-03-30）
@@ -203,9 +211,9 @@ FEATURE_REGISTRY 上 done 42 件だが、実際の動画制作ワークフロー
 | 2   | 台本→CSV変換            | build-csv CLI        | **自動**     | 軽い      | B-01〜B-17 で字幕分割品質も改善済み                                                                   |
 | 3   | CSV→YMM4読込          | YMM4 台本読込            | 手動操作 (1回)  | 軽い      | C-01 (info) として記録済み                                                                      |
 | 4   | 演出IR生成              | Custom GPT (C-07)    | 半手動 (コピペ)  | 中       | GPTへの入力と出力の受け渡しが手動                                                                       |
-| 5   | IR→ymmp適用 (face/bg) | apply-production CLI | **自動**     | 軽い      | face 133 changes / bg section 切替まで実証済み                                                   |
-| 6   | **YMM4上の演出配置**      | **手動**               | **未自動化**   | **最重量** | IRが指示する演出を実際にYMM4上で配置する作業。素材調達・配置・タイミング調整を含む。現状のpatch-ymmpはface/bg差し替えのみで、演出全体の自動配置には程遠い |
-| 7   | **視覚効果制作**          | **手動**               | **未自動化**   | **重い**  | サムネイル未完成。茶番劇風アニメ/図解アニメがゼロ。画像表示のみの状態。C-08 prompt は仕様準拠 pass だが実用品質に課題あり                   |
+| 5   | IR→ymmp適用 | apply-production CLI / GUI 演出適用タブ | **一部自動** | 軽〜中 | face/bg/slot/overlay/se/motion/bg_anim/transition/skit_group は capability matrix 範囲で限定 patch 可能。GUI 露出は face/bg/skit_group 中心で、overlay/se/motion map 類は未露出 |
+| 6   | **YMM4上の演出配置** | YMM4 + template-first tooling | **一部自動 / acceptance は手動** | **重い** | G-24 skit_group は repo-tracked template source → registry → analyzed placement → `.ymmp` readback まで到達。最終 composition / 間隔 / テンポは YMM4 creative acceptance として残る |
+| 7   | **視覚効果・サムネ制作** | YMM4 / 人間 + 限定 patch 補助 | **補助あり / 生成なし** | **重い** | サムネは `thumbnail_design` sibling artifact + `thumb.*` template slot patch が最小入口。画像生成・PNG 書き出し・完成判断は自動化しない。実サムネ template proof は未完了 |
 | 8   | レンダリング              | YMM4                 | 手動トリガー     | 軽い      | C-06 (info) として記録済み                                                                      |
 | 9   | YouTube投稿           | YouTube Studio       | 手動         | 中       | E-01/E-02 hold。**完全に別タスクとして切り出す**                                                        |
 
@@ -223,21 +231,23 @@ NotebookLM で生成した台本には以下の構造的弱点があり、動画
 
 ### 演出配置の未自動化問題 (工程6の詳細)
 
-現状の patch-ymmp でできること:
+現状の patch-ymmp / apply-production でできること:
 
 - face (表情) の差し替え: 133 changes 実証済み
 - bg (背景) のセクション切替: 2ラベルで実証済み
 - slot (キャラ位置): X/Y/Zoom の deterministic patch
 - overlay: deterministic な ImageItem 挿入
 - se (SFX): fully implemented through `AudioItem` writes (G-18 done). Readback proof lives in `samples/AudioItem.ymmp` and `docs/verification/G13-overlay-se-insertion-packet.md`.
+- motion / bg_anim / fade-family transition: capability matrix 範囲で write route 固定済み
+- skit_group: template source / registry 解決 / analyzed placement / readback まで実装済み。creative acceptance は別
 
-現状の patch-ymmp でできないこと (= 手動で最も重い部分):
+現状の patch-ymmp / apply-production でできないこと (= 手動または template authoring に残る部分):
 
 - **素材の調達と準備**: 背景画像、図解素材、茶番劇用のキャラポーズ等の入手・加工
-- **素材の配置とレイアウト**: 画面上のどこに何をどのサイズで置くか
-- **タイミング制御**: どの発話に合わせてどの素材を出し入れするか
-- **アニメーション/モーション**: 拡大縮小・スライド・フェード等の演出効果の設定
-- **茶番劇風演出**: ゆっくり解説で重要な視覚的演出パターンの実現
+- **新規テンプレ authoring**: YMM4 native template と素材登録は人間が作る
+- **最終レイアウト判断**: 画面上の間隔・テンポ・見栄えは creative acceptance
+- **GUI 未露出 map 類**: overlay / se / motion / bg_anim / timeline-profile は production で必要化したら GUI 補完スライス
+- **未登録の茶番劇 intent**: production gap が出た時だけ新テンプレとして起票
 - **図解アニメーション**: 情報伝達のための図解・チャート等の動的表示
 
 ### 視覚効果の未実現 (工程7の詳細)
