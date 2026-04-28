@@ -378,6 +378,42 @@ python -m src.cli.main build-diagram-packet input.txt --bundle-dir samples
 
 ---
 
+## build-session-manifest サブコマンド
+
+S-3 CSV、B-18 診断、S-6 IR 検証/適用、YMM4 確認、サムネ設計の「今どこまで終わったか」を 1 つの handoff artifact に束ねる。YMM4 操作、サムネ `.ymmp` 生成、画像生成は行わない。
+
+### 使用方法
+
+```bash
+python -m src.cli.main build-session-manifest \
+  --video-id VIDEO_ID \
+  --csv output.csv \
+  --ir-json production_ir.json \
+  --validate-result validate.json \
+  --apply-result apply.json \
+  --thumbnail-design thumbnail_design.json \
+  --format markdown \
+  -o session_manifest.md
+```
+
+### 入力の境界
+
+- `thumbnail_design` は記録対象のみ。`validate-ir` / `apply-production` には渡さない。
+- 任意入力が無い項目は manifest に `not_recorded` として残す。
+- YMM4 の目視確認、字幕確認、サムネ確認は `manual_acceptance` の `manual_pending` placeholders に残す。
+
+### 出力内容
+
+- `paths`: 台本、CSV、診断、IR、base/patched ymmp、thumbnail_design などの記録状態
+- `csv`: CSV 行数、話者数、話者別行数、build options / stats summary
+- `script_diagnostics`: warning/error 件数と codes
+- `ir_validation`: `validate-ir --format json` の success / warning / error summary
+- `apply_production`: `apply-production --format json` の dry-run/write status、output、summary counts
+- `manual_acceptance`: subtitle / YMM4 composition / thumbnail check の placeholder
+- `next_action`: 次に見るべき一点
+
+---
+
 ## スコープ外
 
 以下は PIPELINE_SPEC の対象外。機能の管理は FEATURE_REGISTRY.md を参照。

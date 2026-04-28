@@ -14,6 +14,9 @@ Usage:
     python -m src.cli.main fetch-topics <URL>... [-n 20] [--after YYYY-MM-DD] [--format text|json]
     python -m src.cli.main validate-ir <ir.json> [--palette ...] [--format text|json]
     python -m src.cli.main emit-packaging-brief-template [-o path] [--format markdown|json]
+    python -m src.cli.main build-session-manifest --video-id ID [artifact paths...] [--format markdown|json] [-o path]
+    python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
+    python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main score-thumbnail-s8 --scores '{"single_claim":2,...}' [--payload ...] [--format text|json]
 """
 
@@ -1501,6 +1504,30 @@ def main(argv: list[str] | None = None) -> int:
         help="markdown (default) or minimal JSON skeleton",
     )
 
+    # build-session-manifest (production handoff)
+    p_session_manifest = subparsers.add_parser(
+        "build-session-manifest",
+        help="Build a production session manifest / operator handoff sheet",
+    )
+    p_session_manifest.add_argument("--video-id", required=True, help="Video/project identifier")
+    p_session_manifest.add_argument("--source-script", help="Refined/source script path")
+    p_session_manifest.add_argument("--csv", help="YMM4 CSV path")
+    p_session_manifest.add_argument("--script-diagnostics", help="diagnose-script --format json result path")
+    p_session_manifest.add_argument("--production-ymmp", help="Base production .ymmp path")
+    p_session_manifest.add_argument("--ir-json", help="Production IR JSON path")
+    p_session_manifest.add_argument("--validate-result", help="validate-ir --format json result path")
+    p_session_manifest.add_argument("--apply-result", help="apply-production --format json result path")
+    p_session_manifest.add_argument("--patched-ymmp", help="Patched production .ymmp path")
+    p_session_manifest.add_argument("--thumbnail-design", help="thumbnail_design sibling artifact path")
+    p_session_manifest.add_argument("--thumbnail-output", help="Exported thumbnail image path, if available")
+    p_session_manifest.add_argument(
+        "--format",
+        choices=["markdown", "json"],
+        default="markdown",
+        help="Output format (default: markdown)",
+    )
+    p_session_manifest.add_argument("-o", "--output", help="Output path (default: stdout)")
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -1589,6 +1616,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_patch_thumbnail_template(args)
         elif args.command == "emit-packaging-brief-template":
             return _cmd_emit_packaging_brief_template(args)
+        elif args.command == "build-session-manifest":
+            return _cmd_build_session_manifest(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
