@@ -68,7 +68,7 @@ uv run python -m src.cli.main apply-production "samples/test_verify_4_bg_p2_smal
 
 今回の固定方針:
 - **H-02 準拠が必要な案件**: `docs/S8-thumbnail-copy-prompt.md` を別ラウンド（または別 GPT）で使用
-- **高速な素案のみ必要な案件**: S6 v4 の Part 4 を使用
+- **高速な素案のみ必要な案件**: 当時は S6 v4 のサムネ欄を使う運用だったが、現在は S8 を簡略運用し、C-07 v4 には混ぜない
 
 これにより、厳密運用と速度優先運用を案件単位で切り替える。
 
@@ -116,7 +116,7 @@ uv run python -m src.cli.main apply-production "samples/test_verify_4_bg_p2_smal
 ### 7.5 B-4 / B-5（運用方針・再掲）
 
 - **B-4**: 継続して **会話ごとに brief を台本より先に貼る**（S6 v4 本体の最小化）。参照: `docs/PACKAGING_ORCHESTRATOR_SPEC.md`、`samples/packaging_brief.template.md`
-- **B-5**: **H-02 準拠が必要な案件**は `docs/S8-thumbnail-copy-prompt.md`（別ラウンドまたは別 GPT）。**素案のみ**は S6 v4 Part 4
+- **B-5**: **H-02 準拠が必要な案件**は `docs/S8-thumbnail-copy-prompt.md`（別ラウンドまたは別 GPT）。現在は**素案のみ**でも S8 を簡略運用し、C-07 v4 には混ぜない
 
 ### 7.6 repo 正本と Custom GPT Instructions の差分
 
@@ -169,7 +169,7 @@ uv run python -m src.cli.main apply-production "samples/test_verify_4_bg_p2_smal
 ### 8.5 B-4 / B-5（運用方針・再掲）
 
 - **B-4**: **会話ごとに brief を台本より先に貼る**（S6 v4 本体の最小化）。参照: `docs/PACKAGING_ORCHESTRATOR_SPEC.md`、`samples/packaging_brief.template.md`
-- **B-5**: **H-02 準拠が必要な案件**は `docs/S8-thumbnail-copy-prompt.md`（別ラウンドまたは別 GPT）。**素案のみ**は S6 v4 Part 4
+- **B-5**: **H-02 準拠が必要な案件**は `docs/S8-thumbnail-copy-prompt.md`（別ラウンドまたは別 GPT）。現在は**素案のみ**でも S8 を簡略運用し、C-07 v4 には混ぜない
 
 ### 8.6 repo 正本と Custom GPT Instructions の差分
 

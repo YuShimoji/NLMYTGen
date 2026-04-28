@@ -29,7 +29,7 @@ NotebookLM 生台本を `build-csv` に入れる前に、[SCRIPT_QUALITY_DIAGNOS
 1. ChatGPT で「Explore GPTs」→「Create a GPT」
 2. 「Configure」タブで以下を設定:
    - **Name**: ゆっくり演出アシスタント（任意）
-   - **Description**: 台本から演出 IR（JSON）・素材メモ・サムネ素案を生成
+   - **Description**: 台本から本編 Production IR（JSON）と素材メモを生成
    - **Instructions**: [S6-production-memo-prompt.md](S6-production-memo-prompt.md) の **「### v4 プロンプト本体」**直下のコードフェンス内を **そのまま貼り付け**（C-07 v4 正本）
 3. 「Save」→「Only me」で保存
 
@@ -176,7 +176,7 @@ Custom GPT と同等の固定化が無料で可能。NotebookLM は System Instr
 
 H-01 brief を使う場合は **台本より先に** brief を貼る（[PACKAGING_ORCHESTRATOR_SPEC.md](PACKAGING_ORCHESTRATOR_SPEC.md)、空テンプレ [samples/packaging_brief.template.md](../samples/packaging_brief.template.md)）。
 
-**サムネコピー**を H-02 準拠で厳密に回す場合は [S8-thumbnail-copy-prompt.md](S8-thumbnail-copy-prompt.md) を別ラウンドまたは別 GPT で正本同期する（v4 の Part 4 は素案向け。使い分けは [verification/LANE-B-gui-llm-sync-checklist.md](verification/LANE-B-gui-llm-sync-checklist.md) の B-5）。
+**サムネコピー**は C-07 v4 では生成しない。H-02 準拠で回す場合も、早い素案だけが必要な場合も、[S8-thumbnail-copy-prompt.md](S8-thumbnail-copy-prompt.md) を別ラウンドまたは別 GPT で正本同期する。
 
 Custom GPT の Instructions を更新した場合は、既存の会話ではなく新しい会話で試してください。
 

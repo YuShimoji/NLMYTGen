@@ -66,7 +66,7 @@ SE registry:
 
 ### 廃止（G-18 以降）
 
-- `SE_WRITE_ROUTE_UNSUPPORTED` — [samples/AudioItem.ymmp](../../samples/AudioItem.ymmp) と G-18 `_apply_se_items` により `AudioItem` 挿入を実装したため発行しない。
+- 旧 SE write-route unsupported failure — [samples/AudioItem.ymmp](../../samples/AudioItem.ymmp) と G-18 `_apply_se_items` により `AudioItem` 挿入を実装したため発行しない。
 
 ## Current G-13 State
 

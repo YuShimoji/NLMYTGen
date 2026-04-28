@@ -99,7 +99,7 @@ uv run python -m src.cli.main build-csv refined.txt -o _tmp_out.csv `
 ### B-5. サムネコピー（C-08）
 
 - 正本: [S8-thumbnail-copy-prompt.md](S8-thumbnail-copy-prompt.md)
-- 使い分け（v4 Part 4 との差）は [gui-llm-setup-guide.md](gui-llm-setup-guide.md) の「使い方（v4 正本）」および [verification/LANE-B-gui-llm-sync-checklist.md](verification/LANE-B-gui-llm-sync-checklist.md) の B-5。
+- C-07 v4 は本編 Production IR 専用。サムネコピーは H-02 準拠でも素案でも S8 を別ラウンド / 別 GPT で使う。
 
 ---
 

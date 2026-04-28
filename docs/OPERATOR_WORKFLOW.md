@@ -30,10 +30,10 @@
 - 字幕は通常ケースで 2 行以内に収まり、はみ出し候補は事前警告で把握できる。
 - 人間が行うのは、読み・演出・サムネイルなど創造判断を要する工程に寄る。
 
-## 現在の workflow proof 条件
-- B-11 を approved frontier とし、S-5 の pain を「YMM4 取込前にどこまで減らせるか」を先に実証する。
+## workflow proof / 残差観測条件
+- B-11 は S-5 pain を取込前にどこまで減らせるかを実証した履歴テンプレートであり、現在の主軸 frontier ではない。通常は B-18 診断、必要時の C-09 constrained rewrite、B-17 系リフローを前提にメンテ観測として回す。
 - proof は Python 側の改善余地と YMM4 手動修正の境界を見極めることが目的であり、YMM4 の自動操作を作ることではない。
-- proof は少なくとも 1 件の transcript で、GUI の CSV 変換（Max lines 2・Chars/Line 40・balance-lines ON）の結果と、YMM4 取込後の残修正量を同じ記録に残す。
+- proof は少なくとも 1 件の transcript で、GUI の CSV 変換（Max lines 2・Chars/Line 40・Reflow v2・必要なら Subtitle Font Source / Scale）の結果と、YMM4 取込後の残修正量を同じ記録に残す。
 - 記録フォーマットの正本は [workflow-proof-template.md](workflow-proof-template.md)。`docs/verification/` にコピーして案件ごとに記入する。リポジトリ内の記入例: [verification/B11-workflow-proof-sample-example-dialogue.md](verification/B11-workflow-proof-sample-example-dialogue.md)。
 - 手動確認のタイミング一覧: [B11-manual-checkpoints.md](B11-manual-checkpoints.md)。
 - 観測ログ（移管）: [project-context.md#b-11-workflow-proof-chronicle-archive](project-context.md#b-11-workflow-proof-chronicle-archive)。現行条件は本節の bullets。
@@ -94,12 +94,27 @@
 
 ## 茶番劇テンプレ運用
 
+### 実制作段階
+
+- 標準入口は **GUI 演出適用タブ**。Production `.ymmp` / IR JSON / Skit Group Registry / Skit Group Template Source を選び、`skit_group intent を registry に限定` を ON にして **Validate IR → Dry Run → Apply Production** の順で進める
+- `skit_group 配置だけを適用` は G-24 の切り分け用。aligned IR の既存 row/index anchor を使うため、CSV(row-range) は同時に渡さない
+- IR 要求はまず **template 解決**する。exact / fallback は自動配置、未登録 label は strict validation で止める
+- 汎用テンプレで吸収できない場合は **制作中の手置きで埋めず**、未自動化理由 + 手動確認ポイント + 新テンプレ候補として分離する
+- YMM4 で見るのは patched `.ymmp` の composition acceptance。readback が通っている場合、NG 時は template source の数値事実・配置値を先に見直す
+
 ### 開発段階
 
 - 1 つの **canonical skit_group template** を YMM4 上で作る
-- canonical から `surprise_jump` / `panic_shake` 等の **小演出テンプレート**を派生させる
+- canonical から v1 planned set（`enter_from_left` / `surprise_oneshot` / `nod` / `deny_oneshot` / `exit_left`）のような **小演出テンプレート**を派生させる
 - assistant 側は template registry 台帳・命名・fallback・manual check を整備する
 - 成果物は **YMM4 native template 資産**であり、JSON の direct write route を増やすことではない
+- template-analyzed placement は repo-tracked template source の GroupItem `X` / `Y` / `Zoom` から rest pose と相対 delta を読む。YMM4 上の authoring 座標を production 座標としてそのまま持ち込まない
+
+### 研究段階
+
+- 新しい timeline 効果・未測定 route・未知の YMM4 内部キーは、制作案件へ混ぜる前に research/probe として隔離する
+- 研究の出口は「採用」ではなく、failure class / readback / template source 依存の有無を明文化すること
+- `panic_shake` など production gap 由来の新演出は、既存 v1/alias で代替できないと確認できた時だけ再起票する
 
 ### skit_group 配下アイテム構成 (構造的制約)
 
@@ -108,13 +123,6 @@
 - 新キャラの立ち絵セットアップ (AnimationTachie プラグイン設定 / パーツ分解 / 表情マッピング) は**行わない**。運用コスト過大で非採用決定済
 - 顔の感情差し替えは **`ImageItem.Source` パス置換**で行う (例: `reimu_easy.png` → `reimu_surprised.png`)。`TachieFaceParameter` は使わない
 - 既存の解説役 (ゆっくり霊夢 / ゆっくり魔理沙 の `TachieItem`) は GroupItem の外に独立配置し、skit_group に流用しない
-
-### 実制作
-
-- IR 要求はまず **template 解決**する
-- exact template がなければ fallback を返す
-- 汎用テンプレで吸収できない場合は **未自動化理由 + 手動確認ポイント**を注記する
-- `motion` の direct write 拡張を先に増やすのではなく、既存 template 資産の再利用を優先する
 
 ### 役割分担
 
@@ -146,12 +154,12 @@
 ## timeline edit サブクエストの completion criteria
 - G-11: completed。`slot` が registry で解決でき、`validate-ir` が `SLOT_UNKNOWN_LABEL` / `SLOT_REGISTRY_GAP` / `SLOT_CHARACTER_DRIFT` / `SLOT_DEFAULT_DRIFT` を事前検出し、`patch-ymmp` / `apply-production` が TachieItem X/Y/Zoom と `off` hide を deterministic に反映できる
 - G-12: `motion` / `bg_anim` の write route が repo-local corpus ベースで固定され、fade-family `transition` route も mechanical に確認済みで、残る route 不在カテゴリは non-fade / template-backed family の sample dependency として明示され、dry-run/readback で mechanical failure を再現できる
-- G-13: completed。`overlay` は label 解決、timing anchor、挿入先構造が固定され、creative density judgement と mechanical insertion failure が分離された。`se` は label/timing を解決し、G-18 で `AudioItem` 挿入まで mechanical（旧 `SE_WRITE_ROUTE_UNSUPPORTED` は廃止）
+- G-13: completed。`overlay` は label 解決、timing anchor、挿入先構造が固定され、creative density judgement と mechanical insertion failure が分離された。`se` は label/timing を解決し、G-18 で `AudioItem` 挿入まで mechanical（旧 unsupported failure class は廃止）
 - 上記を満たした packet は、それぞれ独立 failure class 単位で扱い、broad な timeline retry loop に戻さない
 
 ## 検証の境界
 - パイプラインの機械的動作はユニットテスト + GUI の Dry Run で検証する。YMM4 visual proof を繰り返し要求しない
-- YMM4 を開くのは **(1) テンプレ用素材の登録時** と **(2) 全素材を集め終わって配置・書き出すとき** の 2 つだけ。増分変更のたびに中間確認で開かない
+- YMM4 を開くのは **(1) テンプレ用素材の登録時** と **(2) 全素材を集め終わって配置・書き出すとき** の 2 つだけ。増分変更のたびに中間確認で開かない。G-24 compact review は「配置済み artifact の creative acceptance」であり、readback で閉じられる機械確認を人間へ戻す例外ではない
 - テストや検証が開発のブロッカーにならないようにする。品質ゲートは開発速度を優先して柔軟に運用する
 
 ## L2（Python変換工程）字幕変更と YMM4 実機の切り分け

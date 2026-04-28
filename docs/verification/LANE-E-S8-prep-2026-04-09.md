@@ -88,8 +88,8 @@ uv run python -m src.cli.main score-thumbnail-s8 `
 
 **C-08 正本**: [S8-thumbnail-copy-prompt.md](../S8-thumbnail-copy-prompt.md)
 
-- [ ] Custom GPT / Claude Project / 統合プロンプトのいずれかで、S8 正本と **一致**している（[gui-llm-setup-guide.md](../gui-llm-setup-guide.md) Part 4 参照）
-- [ ] 今回の案件で **S8 専用ラウンド**と **C-07 v4 Part 4 素案**のどちらを使うか決めた（LANE-B B-5 の表どおり）
+- [ ] Custom GPT / Claude Project / 統合プロンプトのいずれかで、S8 正本と **一致**している（[gui-llm-setup-guide.md](../gui-llm-setup-guide.md) 参照）
+- [ ] 今回の案件で **S8 専用ラウンド**または **S8 簡略運用**のどちらを使うか決めた（C-07 v4 には混ぜない）
 
 ---
 
