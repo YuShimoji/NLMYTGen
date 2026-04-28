@@ -22,11 +22,49 @@ Thumbnail strategy v2 は、ゆっくり解説動画のサムネイル訴求を
 この spec は以下を直接は行わない:
 
 - サムネイル画像の自動生成
+- サムネイル用 `.ymmp` の自動生成
+- 台本本文へのサムネイル指示の混入
+- 本編 Production IR へのサムネイル指示の混入
 - CTR の自動最適化
 - 特定 platform の rule 判定の断定
 - 最終デザインの自動決定
 
 ここで扱うのは、**コピーと visual direction の戦略制約** である。
+
+## 2.1 仕様状態の整理（2026-04-28）
+
+これまで repo 内に存在していたサムネイル周りの仕様は、**コピー戦略・判断支援・手動制作手順**が中心だった。つまり「サムネイルをどう生成し、台本 / 本編演出 / YMM4 配置とどう分けるか」は、2026-04-28 時点まで明示が薄かった。
+
+既存仕様で定義済みだったもの:
+
+- H-01: title / thumbnail / script の上位 promise と禁止表現
+- C-08 / H-02: サムネコピー候補、表情、背景方向性、rotation recommendation
+- H-03 / H-04: 本文側でサムネ / タイトル promise を回収できているかの手動スコア集約
+- H-05: 完成サムネに対する手動採点の CLI 集約
+- `THUMBNAIL_ONE_SHEET_WORKFLOW`: YMM4 テンプレを人間が複製し、文字・立ち絵・背景を差し替えて PNG 書き出しする手順
+
+未定義または未実装だったもの:
+
+- `thumbnail_design` の machine-readable schema
+- サムネ用 YMM4 `.ymmp` template source / slot registry の repo 管理
+- ShapeItem の readback と限定 patch route
+- サムネ配置済み `.ymmp` の自動生成
+- サムネ制作物の多様な repo-local corpus
+
+2026-04-28 追補: 最小の YMM4 template copy 差し替え入口として、`audit-thumbnail-template` と `patch-thumbnail-template` を追加した。対象は既存 item の `Remark` が `thumb.text.<id>` / `thumb.image.<id>` の slot のみで、文字列、画像 `FilePath`、既存の `Color` route、`X` / `Y` / `Zoom` / `Rotation` の先頭値だけを patch する。repo 内に実サムネ `.ymmp` template はまだ無いため、実制作 template の TextItem route 固定と視覚 acceptance は未完了。
+
+したがって現行整理では、サムネイルは **台本本文でも Production IR でもなく、H-01 から分岐する sibling artifact** として扱う。
+
+```text
+H-01 Packaging Brief
+├─ 台本 / refined script
+├─ 本編 Production IR
+└─ thumbnail_design / H-02 one-sheet
+```
+
+AI 生成のタイミングは同じでよい。1 回の LLM セッションで「台本手直し」「本編 Production IR」「thumbnail_design 下書き」を出してよいが、出力 block / 保存 artifact は分ける。`thumbnail_design` は台本本文を書き換えず、`validate-ir` / `apply-production` に渡さない。
+
+YMM4 上のサムネ実作業は別タイミングで行う。現状は、H-02 / `thumbnail_design` を見ながら user がサムネ用 YMM4 テンプレを複製し、文字・立ち絵・背景を差し替えて PNG 書き出しする。テンプレ側に `thumb.*` Remark slot がある場合のみ、NLMYTGen は既存テンプレ内の named slot を限定 patch できる。画像生成、PNG 書き出し、最終デザイン判断は行わない。
 
 ## 3. 基本原則
 

@@ -8,6 +8,8 @@ Python 変更なし。
 
 Packaging Orchestrator brief (H-01) がある場合は、それをサムネイルコピー生成の上位制約とする。
 
+この出力は **台本本文でも本編 Production IR でもない**。AI 生成の同じタイミングで台本手直し / Production IR と一緒に出してよいが、保存・利用する artifact は `thumbnail_design` / H-02 one-sheet として分ける。サムネ配置済み YMM4 `.ymmp` の生成は、このプロンプトの目的ではない。
+
 ---
 
 ## H-01 連携 (推奨)
@@ -199,3 +201,11 @@ C-07 の演出メモと同じ台本を入力するため、以下の運用が可
 1. C-07 で演出メモを生成 (S-6 作業用)
 2. Packaging Orchestrator brief がある場合は先に貼り、その後に同じ会話で「サムネイルも」と追加依頼
 3. または S-8 専用として別途このプロンプトを使用
+
+推奨は、同じ LLM セッションで出しても **出力 block を分ける**こと。
+
+- `refined_script`: 台本手直し
+- `production_ir`: 本編 YMM4 timeline 用
+- `thumbnail_design`: サムネ 1 枚用
+
+`thumbnail_design` は `validate-ir` / `apply-production` に渡さず、YMM4 サムネテンプレを複製して手動差し替えする時の設計メモとして使う。

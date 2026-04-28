@@ -79,7 +79,7 @@
 | C-05 | 素材配置の自動指定（Python 制御） | rejected | L3 | Python から YMM4 内部の素材配置を制御するインターフェースが存在しない。**代替:** YMM4 テンプレートで初期配置を定型化する（WORKFLOW.md S-0） |
 | C-06 | YMM4 演出・レンダリング工程（手動） | info | L3 | Python 機能ではなく手動工程の記録。読み上げ確認(S-5)・背景演出(S-6)・最終確認(S-7)。詳細は WORKFLOW.md 参照 |
 | C-07 | S-6 演出メモ生成（GUI LLM プロンプトテンプレート） | done | L3 補助 | v3 確定。Part 1: マクロ演出設計 (全体トーン/ペーシング/背景遷移)、Part 2: ミクロ演出指示 (4パターン/発話単位)、Part 3: 素材調達ガイド。`docs/S6-production-memo-prompt.md`。統合ガイド: `docs/gui-llm-setup-guide.md`。画像例由来のオペレータ意図の言語化正本: [C07-visual-pattern-operator-intent.md](C07-visual-pattern-operator-intent.md) |
-| C-08 | S-8 サムネイルコピー生成（GUI LLM プロンプトテンプレート） | done | L3 補助 | C-07 と同方式。キャッチコピー5案 + サブコピー3案 + 表情提案 + 背景方向性。`docs/S8-thumbnail-copy-prompt.md`。C-07 と統合して Custom GPT / Claude Project に1つのプロンプトとして固定化可能 |
+| C-08 | S-8 サムネイルコピー生成（GUI LLM プロンプトテンプレート） | done | L3 補助 | キャッチコピー5案 + サブコピー3案 + 表情提案 + 背景方向性。`docs/S8-thumbnail-copy-prompt.md`。現行 C-07 v4 は本編 Production IR 専用なので、サムネコピーは S8/H-02 として別ラウンドまたは別 GPT に分離する |
 | C-09 | S-1 台本 refinement 支援プロンプト（GUI LLM） | done | L3 補助 | `docs/S1-script-refinement-prompt.md`。`diagnose-script --format json` + 生台本を GUI LLM に渡す手順。`docs/gui-llm-setup-guide.md` に導線あり |
 
 ### D. 素材取得・生成 (L1 + L2)

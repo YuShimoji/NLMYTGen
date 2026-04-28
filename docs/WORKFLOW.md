@@ -388,6 +388,8 @@ YouTube 動画のクリック率を最も左右する要素。テンプレート
   - 背景画像
 3. レイアウト・フォント・色使いはテンプレートで統一感を維持
 
+任意で、テンプレ copy の差し替え対象に `thumb.text.*` / `thumb.image.*` の `Remark` を付けておくと、NLMYTGen の `audit-thumbnail-template` / `patch-thumbnail-template` で文字列・画像パス・最小ジオメトリを限定 patch できる。これは既存 YMM4 item の更新だけであり、画像生成・PNG 書き出し・最終デザイン判断は YMM4 / 人間側に残す。
+
 ---
 
 ## S-9: YouTube 投稿

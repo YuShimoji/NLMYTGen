@@ -1469,6 +1469,24 @@ def main(argv: list[str] | None = None) -> int:
     )
     p_score_thumb.add_argument("--format", choices=["json", "text"], default="text")
 
+    # thumbnail template slot audit / patch
+    p_audit_thumb_template = subparsers.add_parser(
+        "audit-thumbnail-template",
+        help="Audit YMM4 thumbnail template thumb.* Remark slots",
+    )
+    p_audit_thumb_template.add_argument("ymmp", help="Thumbnail template .ymmp path")
+    p_audit_thumb_template.add_argument("--format", choices=["text", "json"], default="text")
+
+    p_patch_thumb_template = subparsers.add_parser(
+        "patch-thumbnail-template",
+        help="Patch YMM4 thumbnail template thumb.* slots from JSON",
+    )
+    p_patch_thumb_template.add_argument("ymmp", help="Thumbnail template .ymmp path")
+    p_patch_thumb_template.add_argument("--patch", required=True, help="Thumbnail patch JSON path")
+    p_patch_thumb_template.add_argument("-o", "--output", help="Output .ymmp path")
+    p_patch_thumb_template.add_argument("--dry-run", action="store_true", help="Preview changes without writing")
+    p_patch_thumb_template.add_argument("--format", choices=["text", "json"], default="text")
+
     # emit-packaging-brief-template (H-01)
     p_emit_brief = subparsers.add_parser(
         "emit-packaging-brief-template",
@@ -1565,6 +1583,10 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_score_visual_density(args)
         elif args.command == "score-thumbnail-s8":
             return _cmd_score_thumbnail_s8(args)
+        elif args.command == "audit-thumbnail-template":
+            return _cmd_audit_thumbnail_template(args)
+        elif args.command == "patch-thumbnail-template":
+            return _cmd_patch_thumbnail_template(args)
         elif args.command == "emit-packaging-brief-template":
             return _cmd_emit_packaging_brief_template(args)
         elif args.command == "diagnose-script":
@@ -3098,6 +3120,85 @@ def _cmd_emit_packaging_brief_template(args: argparse.Namespace) -> int:
     else:
         sys.stdout.write(text)
     return 0
+
+
+def _cmd_build_session_manifest(args: argparse.Namespace) -> int:
+    """Production session manifest を stdout または -o に書き出す。"""
+    from src.pipeline.session_manifest import (
+        PATH_KEYS,
+        build_session_manifest,
+        emit_session_manifest_text,
+    )
+
+    paths = {
+        key: getattr(args, key, None)
+        for key in PATH_KEYS
+    }
+    manifest = build_session_manifest(video_id=args.video_id, paths=paths)
+    text = emit_session_manifest_text(manifest, getattr(args, "format", "markdown"))
+
+    output = getattr(args, "output", None)
+    if output:
+        out_path = Path(output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(text, encoding="utf-8")
+        print(f"Written: {out_path}")
+    else:
+        sys.stdout.write(text)
+    return 0
+
+
+def _cmd_audit_thumbnail_template(args: argparse.Namespace) -> int:
+    """YMM4 サムネテンプレの thumb.* slot を read-only 監査する。"""
+    from src.pipeline.thumbnail_template import (
+        audit_thumbnail_template,
+        render_thumbnail_template_audit_text,
+    )
+    from src.pipeline.ymmp_patch import load_ymmp
+
+    result = audit_thumbnail_template(load_ymmp(args.ymmp))
+    if args.format == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        sys.stdout.write(render_thumbnail_template_audit_text(result))
+    return 0 if result["success"] else 1
+
+
+def _cmd_patch_thumbnail_template(args: argparse.Namespace) -> int:
+    """YMM4 サムネテンプレの thumb.* slot だけを限定 patch する。"""
+    from src.pipeline.thumbnail_template import (
+        load_thumbnail_patch,
+        patch_thumbnail_template,
+        render_thumbnail_patch_text,
+        verify_thumbnail_patch_readback,
+    )
+    from src.pipeline.ymmp_patch import load_ymmp, save_ymmp
+
+    data = load_ymmp(args.ymmp)
+    patch_payload = load_thumbnail_patch(args.patch)
+    result = patch_thumbnail_template(data, patch_payload)
+    if result["success"] and not args.dry_run:
+        if not args.output:
+            raise ValueError("patch-thumbnail-template requires -o/--output unless --dry-run is set")
+        out_path = Path(args.output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        save_ymmp(data, out_path)
+        result["output"] = str(out_path)
+        file_readback = verify_thumbnail_patch_readback(load_ymmp(out_path), patch_payload)
+        result["file_readback"] = file_readback
+        if not file_readback["success"]:
+            result["success"] = False
+            result["status"] = "error"
+            result["errors"].extend(file_readback["errors"])
+    result["dry_run"] = bool(args.dry_run)
+
+    if args.format == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        sys.stdout.write(render_thumbnail_patch_text(result))
+        if result["success"] and not args.dry_run:
+            print(f"Written: {result['output']}")
+    return 0 if result["success"] else 1
 
 
 def _cmd_score_evidence(args: argparse.Namespace) -> int:
