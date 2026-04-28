@@ -33,7 +33,7 @@ document.querySelectorAll('.tab').forEach((btn) => {
 
 // --- 制作ウィザード (1 本の動画向け導線) ---
 const WIZARD_HINTS = {
-  1: '台本 .txt を選び、Speaker Map・Max lines・自然改行（balance-lines）で B-11/B-12 手順に揃え、Reflow v2 を必要に応じて確認して Build CSV。出力 CSV は手順 4 で row-range 用に参照できます。',
+  1: '台本 .txt を選び、YMM4 の字幕 FontSize が分かる .ymmp と Wrap Width (px) を指定するか Subtitle Font Scale (%) を確認します。Speaker Map・Max lines・自然改行（balance-lines）で B-11/B-12 手順に揃え、Reflow v2 を必要に応じて確認して Build CSV。出力 CSV は手順 4 で row-range 用に参照できます。',
   2: 'Dry Run で行数・話者・話者統計とはみ出し候補（パネル下部）を確認し、問題なければ Build CSV で書き出します。',
   3: 'Production .ymmp と IR JSON（または貼り付け保存）を選び、IR に face があれば Palette 必須。Validate IR を実行します。',
   4: 'CSV(row-range) に手順 1 の出力が入っているか確認し、IR に bg があれば BG Map 推奨。Dry Run → Apply Production の順が安全です。',
@@ -193,9 +193,23 @@ function formatBuildCsvStatsHtml(stats) {
   const op = stats.overflow_params;
   if (op) {
     const oc = stats.overflow_candidates || [];
+    const effectiveCpl = op.effective_chars_per_line || op.chars_per_line;
+    const fontScale = op.subtitle_font_scale || 100;
+    const scaleNote = effectiveCpl === op.chars_per_line && fontScale === 100
+      ? `${op.chars_per_line} 文字/行基準`
+      : `実効 ${effectiveCpl} 文字/行（基準 ${op.chars_per_line}・フォント ${fontScale}%）`;
+    const wrapNote = op.measure_backend
+      ? ` / 実測 ${op.effective_wrap_px}px（${op.measure_backend}）`
+      : '';
     parts.push(
-      `<h4 class="csv-stats-title">はみ出し候補（${op.max_display_lines} 行超・${op.chars_per_line} 文字/行基準）</h4>`,
+      `<h4 class="csv-stats-title">はみ出し候補（${op.max_display_lines} 行超・${escapeHtml(scaleNote + wrapNote)}）</h4>`,
     );
+    if (op.subtitle_font_scale_source === 'ymmp') {
+      parts.push(
+        `<p class="csv-stats-hint">字幕フォント倍率は YMM4 から推定: FontSize ${op.subtitle_font_size}`
+        + ` / 基準 ${op.subtitle_base_font_size}（候補 ${op.subtitle_font_entry_count} 件）</p>`,
+      );
+    }
     if (oc.length === 0) {
       parts.push('<p class="csv-stats-ok">候補なし（この設定では推定が閾値内）</p>');
     } else {
@@ -582,12 +596,31 @@ async function runBuildCsv(dryRun) {
   const maxLines = Number.isFinite(maxLinesRaw) && maxLinesRaw > 0 ? maxLinesRaw : undefined;
   const charsRaw = parseInt(document.getElementById('chars-per-line').value, 10);
   const charsPerLine = Number.isFinite(charsRaw) && charsRaw > 0 ? charsRaw : undefined;
+  const fontScaleRaw = parseFloat(document.getElementById('subtitle-font-scale').value);
+  const subtitleFontScale = Number.isFinite(fontScaleRaw) && fontScaleRaw > 0 ? fontScaleRaw : undefined;
+  const wrapPxRaw = parseFloat(document.getElementById('wrap-px').value);
+  const wrapPx = Number.isFinite(wrapPxRaw) && wrapPxRaw > 0 ? wrapPxRaw : undefined;
+  const wrapSafetyRaw = parseFloat(document.getElementById('wrap-safety').value);
+  const wrapSafety = Number.isFinite(wrapSafetyRaw) && wrapSafetyRaw > 0 ? wrapSafetyRaw : undefined;
+  const fontSizeRaw = parseFloat(document.getElementById('font-size').value);
+  const fontSize = Number.isFinite(fontSizeRaw) && fontSizeRaw > 0 ? fontSizeRaw : undefined;
+  const letterSpacingRaw = parseFloat(document.getElementById('letter-spacing').value);
+  const letterSpacing = Number.isFinite(letterSpacingRaw) ? letterSpacingRaw : undefined;
   const balanceChecked = document.getElementById('balance-lines').checked;
+  const subtitleFontSourceYmmp = filePaths['subtitle-font-source-ymmp'] || undefined;
   const opts = {
     input: currentTxtPath,
     speakerMap: document.getElementById('speaker-map').value || undefined,
     maxLines,
     charsPerLine,
+    subtitleFontScale,
+    subtitleFontSourceYmmp,
+    wrapPx,
+    wrapSafety,
+    measureBackend: document.getElementById('measure-backend').value || undefined,
+    fontFamily: document.getElementById('font-family').value || undefined,
+    fontSize,
+    letterSpacing,
     reflowV2: document.getElementById('reflow-v2').checked,
     balanceLines: balanceChecked && maxLines != null ? true : undefined,
     dryRun,
@@ -719,6 +752,7 @@ document.getElementById('btn-build-diagram-bundle').addEventListener('click', ()
 
 // --- Production Tab ---
 const filePaths = {
+  'subtitle-font-source-ymmp': null,
   'prod-ymmp': null,
   'ir-json': null,
   'palette': null,
@@ -728,6 +762,7 @@ const filePaths = {
 };
 
 const fileFilters = {
+  'subtitle-font-source-ymmp': [{ name: 'YMM4 Project', extensions: ['ymmp'] }],
   'prod-ymmp': [{ name: 'YMM4 Project', extensions: ['ymmp'] }],
   'ir-json': [{ name: 'JSON', extensions: ['json'] }],
   'palette': [{ name: 'YMM4 Project', extensions: ['ymmp'] }],
@@ -940,7 +975,15 @@ function collectSettings() {
     csv: {
       speakerMap: document.getElementById('speaker-map').value,
       maxLines: parseInt(document.getElementById('max-lines').value) || 2,
-      charsPerLine: parseInt(document.getElementById('chars-per-line').value) || 20,
+      charsPerLine: parseInt(document.getElementById('chars-per-line').value) || 40,
+      subtitleFontScale: parseFloat(document.getElementById('subtitle-font-scale').value) || 100,
+      subtitleFontSourceYmmp: filePaths['subtitle-font-source-ymmp'] || null,
+      wrapPx: parseFloat(document.getElementById('wrap-px').value) || null,
+      wrapSafety: parseFloat(document.getElementById('wrap-safety').value) || 0.94,
+      measureBackend: document.getElementById('measure-backend').value || '',
+      fontFamily: document.getElementById('font-family').value || '',
+      fontSize: parseFloat(document.getElementById('font-size').value) || null,
+      letterSpacing: parseFloat(document.getElementById('letter-spacing').value) || 0,
       reflowV2: document.getElementById('reflow-v2').checked,
       balanceLines: document.getElementById('balance-lines').checked,
       saveDiagnosticsWithCsv: document.getElementById('csv-save-diagnostics').checked,
@@ -974,6 +1017,23 @@ function applySettings(settings) {
     if (settings.csv.speakerMap) document.getElementById('speaker-map').value = settings.csv.speakerMap;
     if (settings.csv.maxLines) document.getElementById('max-lines').value = settings.csv.maxLines;
     if (settings.csv.charsPerLine) document.getElementById('chars-per-line').value = settings.csv.charsPerLine;
+    if (settings.csv.subtitleFontScale) {
+      document.getElementById('subtitle-font-scale').value = settings.csv.subtitleFontScale;
+    }
+    if (settings.csv.subtitleFontSourceYmmp) {
+      filePaths['subtitle-font-source-ymmp'] = settings.csv.subtitleFontSourceYmmp;
+      document.getElementById('subtitle-font-source-ymmp-path').textContent = settings.csv.subtitleFontSourceYmmp;
+    }
+    if (settings.csv.wrapPx) document.getElementById('wrap-px').value = settings.csv.wrapPx;
+    if (settings.csv.wrapSafety) document.getElementById('wrap-safety').value = settings.csv.wrapSafety;
+    if (settings.csv.measureBackend !== undefined) {
+      document.getElementById('measure-backend').value = settings.csv.measureBackend;
+    }
+    if (settings.csv.fontFamily) document.getElementById('font-family').value = settings.csv.fontFamily;
+    if (settings.csv.fontSize) document.getElementById('font-size').value = settings.csv.fontSize;
+    if (settings.csv.letterSpacing !== undefined) {
+      document.getElementById('letter-spacing').value = settings.csv.letterSpacing;
+    }
     if (settings.csv.reflowV2 !== undefined) document.getElementById('reflow-v2').checked = settings.csv.reflowV2;
     if (settings.csv.balanceLines !== undefined) {
       document.getElementById('balance-lines').checked = settings.csv.balanceLines;
@@ -1024,6 +1084,13 @@ function autoSave() {
 document.getElementById('speaker-map').addEventListener('change', autoSave);
 document.getElementById('max-lines').addEventListener('change', autoSave);
 document.getElementById('chars-per-line').addEventListener('change', autoSave);
+document.getElementById('subtitle-font-scale').addEventListener('change', autoSave);
+document.getElementById('wrap-px').addEventListener('change', autoSave);
+document.getElementById('wrap-safety').addEventListener('change', autoSave);
+document.getElementById('measure-backend').addEventListener('change', autoSave);
+document.getElementById('font-family').addEventListener('change', autoSave);
+document.getElementById('font-size').addEventListener('change', autoSave);
+document.getElementById('letter-spacing').addEventListener('change', autoSave);
 document.getElementById('reflow-v2').addEventListener('change', autoSave);
 document.getElementById('balance-lines').addEventListener('change', autoSave);
 document.getElementById('csv-save-diagnostics').addEventListener('change', autoSave);

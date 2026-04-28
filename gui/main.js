@@ -70,6 +70,17 @@ ipcMain.handle('build-csv', async (_event, opts) => {
   if (opts.speakerMap) { args.push('--speaker-map', opts.speakerMap); }
   if (opts.maxLines) { args.push('--max-lines', String(opts.maxLines)); }
   if (opts.charsPerLine) { args.push('--chars-per-line', String(opts.charsPerLine)); }
+  if (opts.subtitleFontSourceYmmp) {
+    args.push('--subtitle-font-source-ymmp', opts.subtitleFontSourceYmmp);
+  } else if (opts.subtitleFontScale) {
+    args.push('--subtitle-font-scale', String(opts.subtitleFontScale));
+  }
+  if (opts.wrapPx) { args.push('--wrap-px', String(opts.wrapPx)); }
+  if (opts.wrapSafety) { args.push('--wrap-safety', String(opts.wrapSafety)); }
+  if (opts.measureBackend) { args.push('--measure-backend', opts.measureBackend); }
+  if (opts.fontFamily) { args.push('--font-family', opts.fontFamily); }
+  if (opts.fontSize) { args.push('--font-size', String(opts.fontSize)); }
+  if (opts.letterSpacing !== undefined) { args.push('--letter-spacing', String(opts.letterSpacing)); }
   if (opts.reflowV2) { args.push('--reflow-v2'); }
   if (opts.balanceLines) { args.push('--balance-lines'); }
   if (opts.dryRun) { args.push('--dry-run'); }

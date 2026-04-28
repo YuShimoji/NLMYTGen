@@ -79,8 +79,47 @@
         </div>
         <div class="setting-row">
           <label for="chars-per-line">Chars/Line</label>
-          <input type="number" id="chars-per-line" value="20" min="20" max="80">
+          <input type="number" id="chars-per-line" value="40" min="20" max="80">
         </div>
+        <div class="setting-row">
+          <label for="subtitle-font-scale">Subtitle Font Scale (%)</label>
+          <input type="number" id="subtitle-font-scale" value="100" min="1" max="300">
+        </div>
+        <div class="file-row">
+          <label>YMM4 Subtitle Font Source</label>
+          <button class="btn-file" data-target="subtitle-font-source-ymmp">選択</button>
+          <span id="subtitle-font-source-ymmp-path" class="file-path">未選択</span>
+        </div>
+        <p class="file-row-hint">未選択なら上の倍率を使います。選択時は .ymmp 内の字幕 FontSize から倍率を自動推定します。</p>
+        <div class="setting-row">
+          <label for="wrap-px">Wrap Width (px)</label>
+          <input type="number" id="wrap-px" min="1" placeholder="例: 1180">
+        </div>
+        <div class="setting-row">
+          <label for="measure-backend">Measure Backend</label>
+          <select id="measure-backend">
+            <option value="">Auto</option>
+            <option value="wpf">WPF (Windows)</option>
+            <option value="eaw">EAW fallback</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label for="font-family">Font Family</label>
+          <input type="text" id="font-family" placeholder="例: けいふぉんと">
+        </div>
+        <div class="setting-row">
+          <label for="font-size">Font Size</label>
+          <input type="number" id="font-size" min="1" step="0.1" placeholder=".ymmp から推定可">
+        </div>
+        <div class="setting-row">
+          <label for="letter-spacing">Letter Spacing (px)</label>
+          <input type="number" id="letter-spacing" step="0.1" value="0">
+        </div>
+        <div class="setting-row">
+          <label for="wrap-safety">Wrap Safety</label>
+          <input type="number" id="wrap-safety" min="0.1" max="1" step="0.01" value="0.94">
+        </div>
+        <p class="file-row-hint">Wrap Width 指定時は実測幅ベースで改行します。WPF は Windows の計測ヘルパーを使うため、YMM4 表示に近い測量です。</p>
         <div class="setting-row">
           <label>
             <input type="checkbox" id="reflow-v2" checked> Reflow v2

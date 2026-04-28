@@ -21,8 +21,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from collections import Counter
+from math import ceil
 from pathlib import Path
 
 from src.pipeline.normalize import normalize, analyze_speaker_roles
@@ -43,9 +45,11 @@ from src.pipeline.assemble_csv import (
     estimate_display_lines,
     find_unmapped_speakers,
     reflow_subtitles,
+    reflow_subtitles_measured,
     reflow_subtitles_v2,
     split_long_utterances,
 )
+from src.pipeline.text_measure import EastAsianWidthMeasurer, TextMeasurer, WpfTextMeasurer
 from src.pipeline.validate_handoff import validate, has_errors, Severity
 from src.pipeline.script_diagnostics import (
     diagnose_script,
@@ -102,10 +106,211 @@ def _resolve_speaker_map(args: argparse.Namespace) -> dict[str, str] | None:
     return result or None
 
 
+def _positive_percent(raw: str) -> float:
+    """argparse 用: 0 より大きい倍率パーセントだけを受け付ける。"""
+    try:
+        value = float(raw)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("must be a positive number") from exc
+    if value <= 0:
+        raise argparse.ArgumentTypeError("must be greater than 0")
+    return value
+
+
+def _positive_float(raw: str) -> float:
+    """argparse 用: 0 より大きい数値だけを受け付ける。"""
+    try:
+        value = float(raw)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("must be a positive number") from exc
+    if value <= 0:
+        raise argparse.ArgumentTypeError("must be greater than 0")
+    return value
+
+
+def _wrap_safety_value(raw: str) -> float:
+    """argparse 用: wrap safety は 0 < value <= 1 の範囲に限定する。"""
+    value = _positive_float(raw)
+    if value > 1:
+        raise argparse.ArgumentTypeError("must be less than or equal to 1")
+    return value
+
+
+def _effective_chars_per_line(chars_per_line: int, subtitle_font_scale: float) -> int:
+    """基準 chars_per_line を字幕フォント倍率で補正する。"""
+    if chars_per_line <= 0:
+        return chars_per_line
+    return max(1, int(chars_per_line * 100 / subtitle_font_scale))
+
+
+def _animation_scalar_value(raw) -> float | None:
+    """YMM4 の Animation 型から代表値を取り出す。"""
+    if isinstance(raw, (int, float)):
+        return float(raw)
+    if not isinstance(raw, dict):
+        return None
+    values = raw.get("Values")
+    if not isinstance(values, list) or not values:
+        return None
+    first_value = values[0]
+    if not isinstance(first_value, dict):
+        return None
+    value = first_value.get("Value")
+    if isinstance(value, (int, float)):
+        return float(value)
+    return None
+
+
+def _iter_mapping_nodes(raw):
+    """YMM4 JSON 内の dict ノードを再帰走査する。"""
+    if isinstance(raw, dict):
+        yield raw
+        for value in raw.values():
+            yield from _iter_mapping_nodes(value)
+    elif isinstance(raw, list):
+        for value in raw:
+            yield from _iter_mapping_nodes(value)
+
+
+def _subtitle_font_size_entries_from_ymmp(data: dict) -> list[dict]:
+    """YMM4 project 内の字幕フォントサイズ候補を抽出する。"""
+    entries: list[dict] = []
+    for node in _iter_mapping_nodes(data):
+        if "FontSize" not in node:
+            continue
+        if not any(key in node for key in ("Font", "JimakuVisibility", "IsJimakuVisible")):
+            continue
+        font_size = _animation_scalar_value(node.get("FontSize"))
+        if font_size is None or font_size <= 0:
+            continue
+        node_type = str(node.get("$type", ""))
+        source = "voice_item" if "VoiceItem" in node_type or "Serif" in node else "character"
+        entries.append(
+            {
+                "font_size": font_size,
+                "font": node.get("Font"),
+                "character": node.get("CharacterName") or node.get("Name"),
+                "jimaku_visibility": node.get("JimakuVisibility"),
+                "source": source,
+            }
+        )
+    return entries
+
+
+def _infer_subtitle_font_scale_from_ymmp(path: Path, base_font_size: float) -> tuple[float, float, int, dict]:
+    """YMM4 project の字幕 FontSize から倍率を推定する。最大値を採用して安全側に倒す。"""
+    with path.open("r", encoding="utf-8-sig") as file:
+        data = json.load(file)
+    entries = _subtitle_font_size_entries_from_ymmp(data)
+    if not entries:
+        raise ValueError(f"Subtitle FontSize not found in YMM4 project: {path}")
+    selected = max(entries, key=lambda entry: entry["font_size"])
+    if selected.get("font") is None:
+        font_candidates = [entry for entry in entries if entry.get("font")]
+        if font_candidates:
+            selected = {**selected, "font": max(font_candidates, key=lambda entry: entry["font_size"]).get("font")}
+    font_size = selected["font_size"]
+    return font_size * 100 / base_font_size, font_size, len(entries), selected
+
+
+def _resolve_subtitle_font_scale(args: argparse.Namespace) -> tuple[float, dict]:
+    """明示倍率または YMM4 project から字幕フォント倍率を決める。"""
+    explicit_scale = getattr(args, "subtitle_font_scale", None)
+    if explicit_scale is not None:
+        return explicit_scale, {"source": "manual"}
+
+    source_ymmp = getattr(args, "subtitle_font_source_ymmp", None)
+    if source_ymmp:
+        base_font_size = getattr(args, "subtitle_base_font_size", 45.0)
+        inferred_scale, font_size, entry_count, selected = _infer_subtitle_font_scale_from_ymmp(
+            Path(source_ymmp),
+            base_font_size,
+        )
+        return inferred_scale, {
+            "source": "ymmp",
+            "font_size": font_size,
+            "font": selected.get("font"),
+            "character": selected.get("character"),
+            "base_font_size": base_font_size,
+            "font_entry_count": entry_count,
+            "source_ymmp": str(source_ymmp),
+        }
+
+    return 100.0, {"source": "default"}
+
+
+def _default_wpf_measure_exe() -> Path:
+    env_path = os.environ.get("NLMYTGEN_WPF_MEASURE_EXE")
+    if env_path:
+        return Path(env_path)
+    return (
+        Path(__file__).resolve().parents[2]
+        / "tools"
+        / "MeasureTextWpf"
+        / "bin"
+        / "Release"
+        / "net8.0-windows"
+        / "win-x64"
+        / "publish"
+        / "MeasureTextWpf.exe"
+    )
+
+
+def _resolve_text_measurer(
+    args: argparse.Namespace,
+    subtitle_font_info: dict,
+) -> tuple[TextMeasurer | None, dict | None]:
+    """--wrap-px 指定時の計測バックエンドを構築する。"""
+    wrap_px = getattr(args, "wrap_px", None)
+    if wrap_px is None:
+        return None, None
+
+    backend = getattr(args, "measure_backend", None)
+    font_family = getattr(args, "font_family", None) or subtitle_font_info.get("font")
+    font_size = getattr(args, "font_size", None) or subtitle_font_info.get("font_size")
+    letter_spacing = float(getattr(args, "letter_spacing", 0.0) or 0.0)
+    if backend is None:
+        backend = "wpf" if (font_family and font_size) else "eaw"
+
+    info = {
+        "backend": backend,
+        "wrap_px": wrap_px,
+        "wrap_safety": getattr(args, "wrap_safety", 0.94),
+        "effective_wrap_px": wrap_px * getattr(args, "wrap_safety", 0.94),
+        "font_family": font_family,
+        "font_size": font_size,
+        "letter_spacing": letter_spacing,
+    }
+
+    if backend == "eaw":
+        return EastAsianWidthMeasurer(), info
+
+    if backend != "wpf":
+        raise ValueError(f"Unsupported measure backend: {backend}")
+    if not font_family:
+        raise ValueError("--measure-backend wpf requires --font-family or --subtitle-font-source-ymmp with Font")
+    if not font_size:
+        raise ValueError("--measure-backend wpf requires --font-size or --subtitle-font-source-ymmp with FontSize")
+
+    exe_path = Path(getattr(args, "measure_exe", None) or _default_wpf_measure_exe())
+    if not exe_path.exists():
+        raise FileNotFoundError(
+            f"WPF measure helper not found: {exe_path}. "
+            "Build it with: dotnet publish tools/MeasureTextWpf -c Release -r win-x64 --self-contained false"
+        )
+    info["measure_exe"] = str(exe_path)
+    return WpfTextMeasurer(exe_path, font_family, float(font_size), letter_spacing), info
+
+
 def _build_stats_payload(
     output,
     chars_per_line: int = 0,
     max_display_lines: int = 0,
+    subtitle_font_scale: float = 100.0,
+    effective_chars_per_line: int | None = None,
+    subtitle_font_info: dict | None = None,
+    measure_info: dict | None = None,
+    measurer: TextMeasurer | None = None,
 ) -> dict:
     """話者統計とはみ出し候補を JSON 用 dict にまとめる（GUI / --format json 用）。"""
     speaker_counts = Counter(row.speaker for row in output.rows)
@@ -136,35 +341,89 @@ def _build_stats_payload(
     }
 
     if chars_per_line > 0 and max_display_lines > 0:
+        effective_cpl = (
+            effective_chars_per_line
+            if effective_chars_per_line is not None
+            else _effective_chars_per_line(chars_per_line, subtitle_font_scale)
+        )
         payload["overflow_params"] = {
             "chars_per_line": chars_per_line,
+            "subtitle_font_scale": subtitle_font_scale,
+            "effective_chars_per_line": effective_cpl,
             "max_display_lines": max_display_lines,
         }
+        if subtitle_font_info:
+            payload["overflow_params"]["subtitle_font_scale_source"] = subtitle_font_info.get("source")
+            if subtitle_font_info.get("font") is not None:
+                payload["overflow_params"]["subtitle_font"] = subtitle_font_info["font"]
+            if subtitle_font_info.get("font_size") is not None:
+                payload["overflow_params"]["subtitle_font_size"] = subtitle_font_info["font_size"]
+            if subtitle_font_info.get("base_font_size") is not None:
+                payload["overflow_params"]["subtitle_base_font_size"] = subtitle_font_info["base_font_size"]
+            if subtitle_font_info.get("font_entry_count") is not None:
+                payload["overflow_params"]["subtitle_font_entry_count"] = subtitle_font_info["font_entry_count"]
+            if subtitle_font_info.get("source_ymmp") is not None:
+                payload["overflow_params"]["subtitle_font_source_ymmp"] = subtitle_font_info["source_ymmp"]
+        if measure_info:
+            payload["overflow_params"]["measure_backend"] = measure_info.get("backend")
+            payload["overflow_params"]["wrap_px"] = measure_info.get("wrap_px")
+            payload["overflow_params"]["wrap_safety"] = measure_info.get("wrap_safety")
+            payload["overflow_params"]["effective_wrap_px"] = measure_info.get("effective_wrap_px")
+            payload["overflow_params"]["font_family"] = measure_info.get("font_family")
+            payload["overflow_params"]["font_size"] = measure_info.get("font_size")
+            payload["overflow_params"]["letter_spacing"] = measure_info.get("letter_spacing")
         overflow: list[dict] = []
         for i, row in enumerate(output.rows):
             w = display_width(row.text)
-            lines = estimate_display_lines(row.text, chars_per_line)
+            measured_width = None
+            if measurer is not None and measure_info:
+                line_limit = float(measure_info["effective_wrap_px"])
+                measured_widths = [measurer.width(chunk) for chunk in row.text.split("\n")]
+                lines = sum(max(1, ceil(width / line_limit)) for width in measured_widths)
+                measured_width = max(measured_widths) if measured_widths else 0.0
+            else:
+                lines = estimate_display_lines(row.text, effective_cpl)
             if lines > max_display_lines:
-                overflow.append(
-                    {
-                        "row": i + 1,
-                        "speaker": row.speaker,
-                        "estimated_lines": lines,
-                        "display_width": w,
-                    }
-                )
+                item = {
+                    "row": i + 1,
+                    "speaker": row.speaker,
+                    "estimated_lines": lines,
+                    "display_width": w,
+                }
+                if measured_width is not None:
+                    item["measured_width"] = round(measured_width, 2)
+                overflow.append(item)
         payload["overflow_candidates"] = overflow
 
     return payload
 
 
-def _print_stats(output, chars_per_line: int = 0, max_display_lines: int = 0, file=sys.stdout):
+def _print_stats(
+    output,
+    chars_per_line: int = 0,
+    max_display_lines: int = 0,
+    subtitle_font_scale: float = 100.0,
+    effective_chars_per_line: int | None = None,
+    subtitle_font_info: dict | None = None,
+    measure_info: dict | None = None,
+    measurer: TextMeasurer | None = None,
+    file=sys.stdout,
+):
     """話者ごとの発話統計を表示する。
 
     chars_per_line > 0 かつ max_display_lines > 0 のとき、
     推定行数が max_display_lines を超える行をはみ出し候補として警告する。
     """
-    payload = _build_stats_payload(output, chars_per_line, max_display_lines)
+    payload = _build_stats_payload(
+        output,
+        chars_per_line,
+        max_display_lines,
+        subtitle_font_scale=subtitle_font_scale,
+        effective_chars_per_line=effective_chars_per_line,
+        subtitle_font_info=subtitle_font_info,
+        measure_info=measure_info,
+        measurer=measurer,
+    )
 
     print("--- Stats ---", file=file)
     for entry in payload["speakers"]:
@@ -181,19 +440,49 @@ def _print_stats(output, chars_per_line: int = 0, max_display_lines: int = 0, fi
     op = payload["overflow_params"]
     if op:
         cpl = op["chars_per_line"]
+        effective_cpl = op["effective_chars_per_line"]
+        font_scale = op["subtitle_font_scale"]
         mdl = op["max_display_lines"]
         oc = payload["overflow_candidates"]
+        measure_backend = op.get("measure_backend")
         if oc:
-            print(f"--- Overflow candidates (>{mdl} lines at {cpl} chars/line) ---", file=file)
+            if measure_backend:
+                header = (
+                    f"--- Overflow candidates (>{mdl} lines at {op.get('effective_wrap_px'):g}px; "
+                    f"backend={measure_backend}) ---"
+                )
+            elif effective_cpl == cpl and font_scale == 100:
+                header = f"--- Overflow candidates (>{mdl} lines at {cpl} chars/line) ---"
+            else:
+                header = (
+                    f"--- Overflow candidates (>{mdl} lines at effective {effective_cpl} chars/line; "
+                    f"base={cpl}, font_scale={font_scale:g}%) ---"
+                )
+            print(header, file=file)
             for item in oc:
+                width_note = f"display_width={item['display_width']}"
+                if "measured_width" in item:
+                    width_note += f", measured_width={item['measured_width']}"
                 print(
                     f"  [WARN] row {item['row']}: {item['speaker']}, "
-                    f"推定{item['estimated_lines']}行 (display_width={item['display_width']})",
+                    f"推定{item['estimated_lines']}行 ({width_note})",
                     file=file,
                 )
         else:
+            if measure_backend:
+                fit_target = f"{op.get('effective_wrap_px'):g}px; backend={measure_backend}"
+            elif effective_cpl == cpl and font_scale == 100:
+                fit_target = f"{cpl} chars/line"
+            else:
+                fit_target = f"effective {effective_cpl} chars/line; base={cpl}, font_scale={font_scale:g}%"
             print(
-                f"--- No overflow candidates (all within {mdl} lines at {cpl} chars/line) ---",
+                f"--- No overflow candidates (all within {mdl} lines at {fit_target}) ---",
+                file=file,
+            )
+        if op.get("subtitle_font_scale_source") == "ymmp":
+            print(
+                f"Subtitle font scale inferred from YMM4: {font_scale:g}% "
+                f"(font_size={op.get('subtitle_font_size')}, base={op.get('subtitle_base_font_size')})",
                 file=file,
             )
 
@@ -225,24 +514,34 @@ def _build_one(
     max_length = getattr(args, "max_length", None)
     use_dw = getattr(args, "display_width", False)
     chars_per_line = getattr(args, "chars_per_line", 40)
+    subtitle_font_scale, subtitle_font_info = _resolve_subtitle_font_scale(args)
+    effective_chars_per_line = _effective_chars_per_line(chars_per_line, subtitle_font_scale)
+    text_measurer, measure_info = _resolve_text_measurer(args, subtitle_font_info)
     balance_lines = getattr(args, "balance_lines", False)
     reflow_v2 = getattr(args, "reflow_v2", False)
 
     if max_lines:
-        if reflow_v2:
+        if text_measurer is not None and measure_info is not None:
+            output = reflow_subtitles_measured(
+                output,
+                max_width=float(measure_info["effective_wrap_px"]),
+                max_lines=max_lines,
+                measurer=text_measurer,
+            )
+        elif reflow_v2:
             output = reflow_subtitles_v2(
                 output,
-                chars_per_line=chars_per_line,
+                chars_per_line=effective_chars_per_line,
                 max_lines=max_lines,
             )
         elif balance_lines:
             output = reflow_subtitles_v2(
                 output,
-                chars_per_line=chars_per_line,
+                chars_per_line=effective_chars_per_line,
                 max_lines=max_lines,
             )
         else:
-            effective_max = chars_per_line * max_lines
+            effective_max = effective_chars_per_line * max_lines
             output = split_long_utterances(output, max_length=effective_max, use_display_width=True)
     elif max_length:
         output = split_long_utterances(output, max_length=max_length, use_display_width=use_dw)
@@ -258,7 +557,16 @@ def _build_one(
         chars_per_line = getattr(args, "chars_per_line", 40)
         stats_cpl = chars_per_line if (use_dw or max_lines) else 0
         stats_lines = max_lines if max_lines else (2 if (use_dw or max_lines) else 0)
-        json_result["stats"] = _build_stats_payload(output, stats_cpl, stats_lines)
+        json_result["stats"] = _build_stats_payload(
+            output,
+            stats_cpl,
+            stats_lines,
+            subtitle_font_scale=subtitle_font_scale,
+            effective_chars_per_line=effective_chars_per_line if stats_cpl > 0 else None,
+            subtitle_font_info=subtitle_font_info,
+            measure_info=measure_info,
+            measurer=text_measurer,
+        )
 
     if has_errors(results):
         print(f"Validation errors found. CSV not written: {input_path.name}", file=sys.stderr)
@@ -269,7 +577,16 @@ def _build_one(
     if getattr(args, "stats", False) or getattr(args, "dry_run", False):
         stats_cpl = chars_per_line if (use_dw or max_lines) else 0
         stats_lines = max_lines if max_lines else (2 if (use_dw or max_lines) else 0)
-        _print_stats(output, chars_per_line=stats_cpl, max_display_lines=stats_lines)
+        _print_stats(
+            output,
+            chars_per_line=stats_cpl,
+            max_display_lines=stats_lines,
+            subtitle_font_scale=subtitle_font_scale,
+            effective_chars_per_line=effective_chars_per_line if stats_cpl > 0 else None,
+            subtitle_font_info=subtitle_font_info,
+            measure_info=measure_info,
+            measurer=text_measurer,
+        )
 
     if getattr(args, "dry_run", False):
         print("--- Preview (first 5 rows) ---")
@@ -306,6 +623,8 @@ def _cmd_build_csv(args: argparse.Namespace) -> int:
 
     if getattr(args, "balance_lines", False) and not args.max_lines:
         raise ValueError("--balance-lines requires --max-lines")
+    if getattr(args, "wrap_px", None) is not None and not args.max_lines:
+        raise ValueError("--wrap-px requires --max-lines")
 
     if len(inputs) == 1:
         input_path = inputs[0]
@@ -314,7 +633,15 @@ def _cmd_build_csv(args: argparse.Namespace) -> int:
         else:
             output_path = input_path.with_name(f"{input_path.stem}_ymm4.csv")
         jr: dict | None = {"input": str(input_path)} if fmt == "json" else None
-        success = _build_one(input_path, output_path, args, json_result=jr)
+        try:
+            success = _build_one(input_path, output_path, args, json_result=jr)
+        except (ValueError, FileNotFoundError) as exc:
+            if fmt == "json":
+                jr = {"input": str(input_path), "success": False, "error": str(exc)}
+                print(json.dumps(jr, ensure_ascii=False))
+            else:
+                print(f"Error: {exc}", file=sys.stderr)
+            return 1
         if fmt == "json":
             print(json.dumps(jr, ensure_ascii=False))
         return 0 if success else 1
@@ -748,6 +1075,26 @@ def main(argv: list[str] | None = None) -> int:
                          help="Split to fit within N display lines (uses --chars-per-line)")
     p_build.add_argument("--chars-per-line", type=int, default=40, metavar="N",
                          help="Display width per line for --max-lines (default: 40)")
+    p_build.add_argument("--subtitle-font-scale", type=_positive_percent, metavar="PERCENT",
+                         help="Subtitle font scale percent used to narrow effective chars/line (default: 100)")
+    p_build.add_argument("--subtitle-font-source-ymmp",
+                         help="YMM4 project to infer subtitle font scale from FontSize when scale is omitted")
+    p_build.add_argument("--subtitle-base-font-size", type=_positive_percent, default=45.0, metavar="N",
+                         help="Base YMM4 subtitle FontSize treated as 100%% for --subtitle-font-source-ymmp (default: 45)")
+    p_build.add_argument("--wrap-px", type=_positive_float, metavar="PX",
+                         help="Measured subtitle line width in pixels/units; enables measured reflow with --max-lines")
+    p_build.add_argument("--wrap-safety", type=_wrap_safety_value, default=0.94, metavar="RATIO",
+                         help="Safety factor applied to --wrap-px (default: 0.94)")
+    p_build.add_argument("--measure-backend", choices=["eaw", "wpf"],
+                         help="Measured reflow backend for --wrap-px (default: wpf when font data exists, otherwise eaw)")
+    p_build.add_argument("--font-family",
+                         help="Font family for --measure-backend wpf; inferred from --subtitle-font-source-ymmp when possible")
+    p_build.add_argument("--font-size", type=_positive_float, metavar="PX",
+                         help="Font size for --measure-backend wpf; inferred from --subtitle-font-source-ymmp when possible")
+    p_build.add_argument("--letter-spacing", type=float, default=0.0, metavar="PX",
+                         help="Additional per-character spacing for measured text width (default: 0)")
+    p_build.add_argument("--measure-exe",
+                         help="Path to MeasureTextWpf.exe (or set NLMYTGEN_WPF_MEASURE_EXE)")
     p_build.add_argument("--balance-lines", action="store_true",
                          help="Insert a natural line break for 2-line subtitles (requires --max-lines)")
     p_build.add_argument("--reflow-v2", action="store_true",

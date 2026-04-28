@@ -577,7 +577,7 @@ class TestReflowUtteranceV2:
         text = "この設計は安全ですが、実運用では負荷が急に増えることがあります。"
         result = reflow_utterance_v2(text, chars_per_line=20, max_lines=3)
         lines = "\n".join(result).split("\n")
-        assert all(display_width(line.strip()) >= 2 for line in lines[:-1] if line.strip())
+        assert all(len(line.strip()) >= 2 for line in lines[:-1] if line.strip())
 
     def test_avoids_too_short_middle_line_in_three_line_layout(self):
         """3行時に中段だけ極端に短い配置を避ける。"""

@@ -8,9 +8,11 @@ from __future__ import annotations
 import re
 import unicodedata
 from functools import lru_cache
+from math import ceil
 
 from src.contracts.structured_script import StructuredScript
 from src.contracts.ymm4_csv_schema import YMM4CsvOutput, YMM4CsvRow
+from src.pipeline.text_measure import TextMeasurer
 
 # テキスト先頭の汎用話者プレフィックスを除去する正規表現。
 _GENERIC_PREFIX_RE = re.compile(
@@ -2101,6 +2103,302 @@ def reflow_utterance_v2(
         chars_per_line=chars_per_line,
         max_lines=max_lines,
     )
+
+
+def _measure_texts(measurer: TextMeasurer, texts: list[str]) -> list[float]:
+    widths_method = getattr(measurer, "widths", None)
+    if callable(widths_method):
+        return [float(width) for width in widths_method(texts)]
+    return [float(measurer.width(text)) for text in texts]
+
+
+def _width_at_positions_measured(text: str, measurer: TextMeasurer) -> list[float]:
+    if not text:
+        return [0.0]
+    prefixes = [text[:position] for position in range(1, len(text) + 1)]
+    return [0.0] + _measure_texts(measurer, prefixes)
+
+
+def _collect_measured_breaks(text: str) -> list[tuple[int, int, str]]:
+    structural = _collect_structural_breaks(text)
+    by_position: dict[int, tuple[int, str]] = {
+        position: (penalty, kind)
+        for position, penalty, kind in structural
+    }
+
+    for position in range(1, len(text)):
+        if position in by_position:
+            continue
+        if _forbidden_structural_split(text, position):
+            continue
+        if _is_katakana_run(text, position) or _is_digit_run(text, position):
+            continue
+        if text[position - 1] == "ー" or text[position] == "ー":
+            continue
+        by_position[position] = (45, "measured:fallback")
+
+    return [
+        (position, penalty, kind)
+        for position, (penalty, kind) in sorted(by_position.items())
+    ]
+
+
+def _line_width_cost_measured(
+    width: float,
+    *,
+    ideal: float,
+    max_width: float,
+    is_last: bool,
+) -> float:
+    min_line = max(1.0, max_width / 3.0)
+    cost = abs(width - ideal)
+    if width < min_line:
+        cost += (min_line - width) * 13.0
+    if not is_last and width < max_width * 0.5:
+        cost += (max_width * 0.5 - width) * 12.0
+    if width > max_width:
+        cost += (width - max_width) * 22.0
+    return cost
+
+
+def _layout_page_measured(
+    text: str,
+    start: int,
+    end: int,
+    widths: list[float],
+    break_positions: list[int],
+    break_kinds: dict[int, str],
+    *,
+    max_width: float,
+    max_lines: int,
+) -> tuple[float, list[int]]:
+    total_width = widths[end] - widths[start]
+    if total_width <= max_width:
+        return _line_width_cost_measured(
+            total_width,
+            ideal=total_width,
+            max_width=max_width,
+            is_last=True,
+        ), []
+
+    desired_lines = min(max_lines, max(1, ceil(total_width / max_width)))
+    ideal_line_width = total_width / desired_lines
+    inner_positions = [position for position in break_positions if start < position < end]
+
+    @lru_cache(maxsize=None)
+    def _dp(current_position: int, remaining_lines: int) -> tuple[float, tuple[int, ...]]:
+        current_width = widths[end] - widths[current_position]
+        if remaining_lines <= 1:
+            return (
+                _line_width_cost_measured(
+                    current_width,
+                    ideal=ideal_line_width,
+                    max_width=max_width,
+                    is_last=True,
+                ),
+                (),
+            )
+
+        best_cost = float("inf")
+        best_splits: tuple[int, ...] = ()
+        non_last_min_width = max(1.0, max_width / 5.0)
+        min_tail_width = max(1.0, max_width / 3.0)
+
+        for position in inner_positions:
+            if position <= current_position:
+                continue
+            line_width = widths[position] - widths[current_position]
+            if line_width <= 0 or line_width < non_last_min_width:
+                continue
+            tail_width = widths[end] - widths[position]
+            if tail_width < min_tail_width * (remaining_lines - 1):
+                continue
+            line_text = text[current_position:position]
+            if _is_standalone_punctuation(line_text):
+                continue
+
+            kind = break_kinds.get(position, "")
+            penalty = 0.0
+            if kind.startswith("major:"):
+                penalty += 0.0
+            elif kind.startswith("minor:"):
+                penalty += 14.0
+            elif kind.startswith("measured:fallback"):
+                penalty += 52.0
+            else:
+                penalty += 24.0
+
+            line_cost = _line_width_cost_measured(
+                line_width,
+                ideal=ideal_line_width,
+                max_width=max_width,
+                is_last=False,
+            )
+            line_cost += _structural_boundary_penalty(
+                text,
+                position,
+                page_split=False,
+                kind=kind,
+            )
+            line_cost += penalty
+
+            rest_cost, rest_splits = _dp(position, remaining_lines - 1)
+            total = line_cost + rest_cost
+            if total < best_cost:
+                best_cost = total
+                best_splits = (position,) + rest_splits
+
+        if best_cost == float("inf"):
+            return (
+                _line_width_cost_measured(
+                    current_width,
+                    ideal=ideal_line_width,
+                    max_width=max_width,
+                    is_last=True,
+                ) + current_width,
+                (),
+            )
+        return best_cost, best_splits
+
+    cost, split_positions = _dp(start, desired_lines)
+    return cost, list(split_positions)
+
+
+def _reflow_utterance_measured(
+    text: str,
+    *,
+    max_width: float,
+    max_lines: int,
+    measurer: TextMeasurer,
+) -> list[str]:
+    if not text or max_width <= 0 or max_lines <= 0:
+        return [text] if text else []
+
+    widths = _width_at_positions_measured(text, measurer)
+    total_width = widths[len(text)]
+    page_capacity = max_width * max_lines
+    if total_width <= max_width:
+        return [text]
+
+    breaks = _collect_measured_breaks(text)
+    break_positions = [position for position, _penalty, _kind in breaks]
+    break_kinds = {position: kind for position, _penalty, kind in breaks}
+    desired_pages = max(1, ceil(total_width / page_capacity))
+    min_page_width = max(1.0, page_capacity * 0.25)
+
+    def _solve_page_plan(target_pages: int) -> tuple[float, tuple[tuple[int, tuple[int, ...]], ...]] | None:
+        positions = [0] + break_positions + [len(text)]
+        ideal_page_width = total_width / target_pages
+
+        @lru_cache(maxsize=None)
+        def _page_dp(
+            start_index: int,
+            pages_left: int,
+        ) -> tuple[float, tuple[tuple[int, tuple[int, ...]], ...]] | None:
+            start = positions[start_index]
+            if start == len(text):
+                return (0.0, ()) if pages_left == 0 else None
+            if pages_left <= 0:
+                return None
+
+            best_cost = float("inf")
+            best_plan: tuple[tuple[int, tuple[int, ...]], ...] = ()
+            for end_index in range(start_index + 1, len(positions)):
+                end = positions[end_index]
+                segment_width = widths[end] - widths[start]
+                if end != len(text) and segment_width < min_page_width:
+                    continue
+                if segment_width > page_capacity * 1.45:
+                    break
+
+                line_cost, line_splits = _layout_page_measured(
+                    text,
+                    start,
+                    end,
+                    widths,
+                    break_positions,
+                    break_kinds,
+                    max_width=max_width,
+                    max_lines=max_lines,
+                )
+                page_cost = line_cost + abs(segment_width - ideal_page_width) * 0.35
+                if segment_width > page_capacity:
+                    page_cost += (segment_width - page_capacity) * 30.0
+                if end < len(text):
+                    page_cost += _structural_boundary_penalty(
+                        text,
+                        end,
+                        page_split=True,
+                        kind=break_kinds.get(end, ""),
+                    )
+
+                rest = _page_dp(end_index, pages_left - 1)
+                if rest is None:
+                    continue
+                rest_cost, rest_plan = rest
+                total = page_cost + rest_cost
+                if total < best_cost:
+                    best_cost = total
+                    best_plan = ((end, tuple(line_splits)),) + rest_plan
+
+            if best_cost == float("inf"):
+                return None
+            return best_cost, best_plan
+
+        return _page_dp(0, target_pages)
+
+    candidates = [
+        candidate
+        for extra_pages in range(0, 3)
+        if (candidate := _solve_page_plan(desired_pages + extra_pages)) is not None
+    ]
+    if candidates:
+        _cost, plan = min(candidates, key=lambda item: item[0])
+    else:
+        line_cost, line_splits = _layout_page_measured(
+            text,
+            0,
+            len(text),
+            widths,
+            break_positions,
+            break_kinds,
+            max_width=max_width,
+            max_lines=max_lines,
+        )
+        _ = line_cost
+        plan = ((len(text), tuple(line_splits)),)
+
+    pages: list[str] = []
+    previous = 0
+    for end, line_splits in plan:
+        pages.append(_render_lines_for_page(text, previous, end, list(line_splits)))
+        previous = end
+    return [page for page in pages if page]
+
+
+def reflow_subtitles_measured(
+    output: YMM4CsvOutput,
+    *,
+    max_width: float,
+    max_lines: int,
+    measurer: TextMeasurer,
+) -> YMM4CsvOutput:
+    """実測幅ベースでページ分割+行内改行を決定する字幕リフロー。"""
+    if max_width <= 0 or max_lines <= 0:
+        return output
+
+    rows: list[YMM4CsvRow] = []
+    for row in output.rows:
+        pages = _reflow_utterance_measured(
+            row.text,
+            max_width=max_width,
+            max_lines=max_lines,
+            measurer=measurer,
+        )
+        for page in pages:
+            rows.append(YMM4CsvRow(speaker=row.speaker, text=page))
+
+    return YMM4CsvOutput(rows=tuple(rows))
 
 
 def reflow_subtitles_v2(

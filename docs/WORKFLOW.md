@@ -160,7 +160,11 @@ NotebookLM に「音声解説の元の台本を出力してください」と依
 3. 設定を確認:
    - **Speaker Map**: `スピーカー1=れいむ,スピーカー2=まりさ`（台本の話者名に合わせる）
    - **Max Lines**: `2`（2行字幕）
-   - **Chars/Line**: `20`〜`40`（字幕幅に合わせる）
+   - **Chars/Line**: `40`（標準。YMM4 実表示で狭いテンプレだと分かった時だけ下げる）
+   - **YMM4 Subtitle Font Source**: 字幕仕様の基準にする `.ymmp` がある場合は選択（字幕 `FontSize` から倍率を自動推定）
+   - **Subtitle Font Scale (%)**: `100`（`.ymmp` 未選択時の手動指定。YMM4 側で字幕フォントを大きくしたら `110` / `120` / `125` などに上げ、実効 Chars/Line を自動で狭める）
+   - **Wrap Width (px)**: YMM4 の字幕折り返し幅を固定している場合に指定（指定時は実測幅ベースの改行に切替）
+   - **Measure Backend**: Windows 側で WPF helper を使える場合は `WPF (Windows)`、未整備なら `EAW fallback`
    - **自然改行（balance-lines）**: ON（Max Lines 指定時のみ有効）
    - **Reflow v2**: ON
 4. **Dry Run** で行数・話者・話者統計とはみ出し候補を確認
@@ -190,6 +194,13 @@ python -m src.cli.main build-csv input.txt \
 | `--display-width`         | `--max-length` の値を表示幅 (全角=2, 半角=1) で判定                                                               |
 | `--max-lines N`           | 表示幅ベースで N 行以内に収まるよう分割 (`--chars-per-line` と併用)                                                       |
 | `--chars-per-line N`      | 1行あたりの表示幅 (デフォルト: 40、`--max-lines` 使用時)                                                              |
+| `--subtitle-font-scale PERCENT` | 字幕フォント倍率に応じて実効 `chars-per-line` を狭める (デフォルト: 100。例: 40 と 125% なら実効 32) |
+| `--subtitle-font-source-ymmp PATH` | YMM4 project の字幕 `FontSize` から倍率を自動推定する。複数候補は安全側として最大値を採用 |
+| `--subtitle-base-font-size N` | 自動推定時に `100%` とみなす基準 `FontSize` (デフォルト: 45) |
+| `--wrap-px PX` | YMM4 の字幕折り返し幅を px/計測単位で指定し、実測幅ベースで改行する (`--max-lines` 必須) |
+| `--measure-backend eaw\|wpf` | `wrap-px` 用の計測器。`wpf` は Windows WPF helper、`eaw` は従来の全角/半角 fallback |
+| `--font-family NAME` / `--font-size N` / `--letter-spacing N` | WPF 計測時の字幕フォント条件。`font-family` / `font-size` は `.ymmp` から推定可能な場合は省略可 |
+| `--wrap-safety RATIO` | 実測幅に掛ける安全率 (デフォルト: 0.94)。二重折り返しや縁取り差を避けるため少し狭める |
 | `--balance-lines`         | 2行字幕向けに自然な改行を入れつつ、句読点の少ない長文の節分割、短すぎる最終行回避、長い一文の aggressive chunking を行う opt-in 改善 (`--max-lines` 必須) |
 | `--dry-run`               | プレビューのみ (CSV 書き出しなし)                                                                                 |
 | `--stats`                 | 話者ごとの発話統計 + はみ出し候補警告を表示                                                                              |
@@ -199,6 +210,8 @@ python -m src.cli.main build-csv input.txt \
 ### 出力
 
 - YMM4 CSV: 2列 (キャラクター名, テキスト)、ヘッダーなし、UTF-8 (BOM 付き / utf-8-sig)
+
+> **YMM4 側の注意**: Python で明示改行を入れる運用では、YMM4 側の自動折り返しは OFF か十分広い値にする。Python 改行と YMM4 自動折り返しを両方効かせると、二重折り返しで 1 文字押し出しが再発しやすい。行頭位置が左右に動く場合は幅ではなく中央揃え/右揃えの問題なので、左揃えに固定する。
 
 ---
 
