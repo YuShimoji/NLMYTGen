@@ -199,6 +199,32 @@ DEFAULT_RECIPE_PRESETS: dict[str, dict[str, Any]] = {
         "effect_names": ["CenterPointEffect"],
         "effect_candidates": ["CenterPointEffect", "RepeatRotateEffect"],
     },
+    # --- Slice 3 proof additions (2026-04-30) ---
+    # Source: S-5 motion brief prompt judgment from natural-language scenes.
+    # Documented in docs/verification/G26-motion-recipe-pipeline-slice3-proof-2026-04-30.md
+    "realization_nod": {
+        "motion_goal": "Realization beat: brief zoom-in spike followed by a slow nod.",
+        "emotion": "agreement",
+        "intensity": "medium",
+        "duration_frames": 90,
+        "reset_policy": "returns_to_neutral",
+        "forbidden_patterns": ["wrong motion", "too subtle"],
+        "rotation_values": [0.0, 0.0, -10.0, 0.0],
+        "zoom_delta_values": [0.0, 4.2, 0.0, 0.0],
+        "effect_names": ["CenterPointEffect"],
+        "effect_candidates": ["CenterPointEffect", "ZoomEffect", "RepeatMoveEffect"],
+    },
+    "sad_tilt_blur": {
+        "motion_goal": "Sustained sad tilt with screen blur for despondent stillness.",
+        "emotion": "sadness",
+        "intensity": "medium",
+        "duration_frames": 120,
+        "reset_policy": "hold",
+        "forbidden_patterns": ["wrong motion", "too busy", "looks like nod"],
+        "rotation_values": [0.0, -12.0, -12.0],
+        "effect_names": ["CenterPointEffect", "GaussianBlurEffect"],
+        "effect_candidates": ["CenterPointEffect", "GaussianBlurEffect", "OpacityEffect"],
+    },
 }
 
 

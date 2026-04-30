@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "g26_motion_recipe_brief",
+  "notes": "Slice 3 end-to-end proof brief. Two new motion goals derived from natural-language scenes via the S-5 motion brief prompt flow. Both reference newly-added presets in src/pipeline/motion_recipe.py (DEFAULT_RECIPE_PRESETS).",
+  "review": {
+    "spacing_frames": 180,
+    "acceptance_classes": [
+      "pass",
+      "wrong motion",
+      "body-face drift",
+      "too subtle",
+      "too strong",
+      "too busy",
+      "screen spacing",
+      "asset path",
+      "openability"
+    ]
+  },
+  "recipes": [
+    {
+      "goal_id": "realization_nod",
+      "motion_goal": "Realization beat: brief zoom-in spike followed by a slow nod.",
+      "emotion": "agreement",
+      "intensity": "medium",
+      "duration_frames": 90,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": ["wrong motion", "too subtle"],
+      "scene_input": "ふと何かに気づいて、軽く目を見開いてからゆっくり頷く"
+    },
+    {
+      "goal_id": "sad_tilt_blur",
+      "motion_goal": "Sustained sad tilt with screen blur for despondent stillness.",
+      "emotion": "sadness",
+      "intensity": "medium",
+      "duration_frames": 120,
+      "reset_policy": "hold",
+      "forbidden_patterns": ["wrong motion", "too busy", "looks like nod"],
+      "scene_input": "落ち込んで体を傾けたまま、ぼんやり画面がぼやける"
+    }
+  ]
+}

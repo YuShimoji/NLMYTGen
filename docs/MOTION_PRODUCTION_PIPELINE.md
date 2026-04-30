@@ -94,6 +94,22 @@ Phase E:  Visual Acceptance & Library Promotion
 
 prompt body には [`MOTION_PRESET_LIBRARY_SPEC § 3`](MOTION_PRESET_LIBRARY_SPEC.md#3-感情ラベル定義テーブル) の 23 ラベルと 8 emotion カテゴリ早見表を埋め込み、LLM が **既存ラベルへの fit を最初に試みる**ことを強制している。
 
+### Phase A.5: novel goal_id = preset 拡張（現行アーキテクチャ）
+
+`build-motion-recipes` CLI は [`src/pipeline/motion_recipe.py`](../src/pipeline/motion_recipe.py) `DEFAULT_RECIPE_PRESETS` に登録された goal_id しか受け付けない。既存 12 preset で fit しない novel motion を作りたい場合、Phase A の brief entry に加えて **preset 定義ブロック** が必要。
+
+手順:
+
+1. S-5 prompt が brief entry を出力 (例: `realization_nod`)
+2. S-5 prompt が **preset 拡張ブロック**も出力（rotation_values / y_delta_values / zoom_delta_values / effect_names / effect_candidates を含む完全 dict）
+3. エンジニアが [`src/pipeline/motion_recipe.py`](../src/pipeline/motion_recipe.py) `DEFAULT_RECIPE_PRESETS` に append
+4. brief 側に同 goal_id の entry を追加（または slice-specific brief に書く）
+5. `uv run pytest tests/test_motion_recipe.py -q` で regression なし確認
+6. `build-motion-recipes` 実行
+7. YMM4 で visual acceptance (Phase E)
+
+**Slice 4 候補**: `_resolve_brief_recipes` を拡張して preset が無い goal_id でも brief 内で完全定義可能にする。これが入れば preset 拡張は library promotion 後 (Phase E pass 後) に集約できる。現状はコード変更が前提。
+
 ---
 
 ## 4. Phase B+C+D: `build-motion-recipes` CLI
