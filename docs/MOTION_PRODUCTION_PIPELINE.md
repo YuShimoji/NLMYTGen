@@ -88,11 +88,11 @@ Phase E:  Visual Acceptance & Library Promotion
 
 新しい motion goal を追加する場合は brief JSON に entry を append する。
 
-### 将来 (Slice 2): S-5 GUI LLM prompt
+### GUI LLM 経由: S-5 motion brief prompt
 
-[`docs/S6-production-memo-prompt.md`](S6-production-memo-prompt.md) と同じ pattern で `docs/S5-motion-brief-prompt.md` を新設予定。Cowork / Custom GPTs / Claude Project に instructions として投入し、自然言語のシーン記述から brief JSON entry を出力させる。
+[`docs/S5-motion-brief-prompt.md`](S5-motion-brief-prompt.md) を Custom GPT / Claude Project / Cowork の instructions に投入し、自然言語のシーン記述から brief JSON entry を生成する。出力された entry は [`samples/recipe_briefs/g26_motion_recipe_brief.v1.json`](../samples/recipe_briefs/g26_motion_recipe_brief.v1.json) の `recipes` 配列に追記する。
 
-prompt body には [`MOTION_PRESET_LIBRARY_SPEC § 3`](MOTION_PRESET_LIBRARY_SPEC.md#3-感情ラベル定義テーブル) の 23 ラベルと effect カテゴリ早見表を埋め、LLM が **既存ラベルへの fit を最初に試みる**ことを強制する。
+prompt body には [`MOTION_PRESET_LIBRARY_SPEC § 3`](MOTION_PRESET_LIBRARY_SPEC.md#3-感情ラベル定義テーブル) の 23 ラベルと 8 emotion カテゴリ早見表を埋め込み、LLM が **既存ラベルへの fit を最初に試みる**ことを強制している。
 
 ---
 
@@ -204,9 +204,19 @@ uv run pytest tests/test_motion_recipe.py -q
 
 ## 7. Loop / Timing Reference
 
-**Slice 2 で `docs/MOTION_RECIPE_LOOP_TIMING.md` を新設予定**。effect ごとに loop type / duration controls / parameter range / composition rules を表化する。
+正本: [`docs/MOTION_RECIPE_LOOP_TIMING.md`](MOTION_RECIPE_LOOP_TIMING.md)
 
-現時点では [`samples/_probe/b2/build_library_v2.py`](../samples/_probe/b2/build_library_v2.py) の `e_repeat_move` / `e_random_move` / `anim_keyframes` / `BEZIER_DEFAULT` が canonical reference として使われている。Phase C で recipe parameters を決める際は、まずこれらの値域を出発点にし、brief の `intensity` (light / medium / strong) で scaling する。
+35 effect (主要) について以下を表化:
+
+- Loop type 5 分類 (single-shot / continuous-repeat / continuous-shake / in_out / sustained)
+- Duration / Timing controls 早見表 (Length / Span / Period / EffectTimeSeconds 等)
+- Effect ごと canonical 値 (intensity 別、`tachie_motion_map_library.json` から実測)
+- Intensity scaling formula (`light` / `medium` / `strong` の換算則)
+- Composition rules (複数 effect 同時適用時の timing 整合)
+- AnimationType / EasingType / Bezier 補足
+- 既知の制約 (community plugin 依存、Rotation 二重制御禁忌など)
+
+Phase C で recipe parameters を決める際は本表の標準値を出発点にし、brief の `intensity` で scaling する。表に該当 effect が無いときは `samples/_probe/b2/extract_effect_params.py` で `EffectsSamples_2026-04-15.ymmp` から抽出する。
 
 ---
 
