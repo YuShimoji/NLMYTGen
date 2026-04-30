@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "g26_motion_recipe_brief",
+  "notes": "Purpose-driven G-26 review brief. Recipes remain proposed until YMM4 visual acceptance promotes them.",
+  "review": {
+    "spacing_frames": 140,
+    "acceptance_classes": [
+      "pass",
+      "wrong motion",
+      "body-face drift",
+      "too subtle",
+      "too strong",
+      "screen spacing",
+      "asset path",
+      "openability"
+    ]
+  },
+  "recipes": [
+    {
+      "goal_id": "nod_clear",
+      "motion_goal": "Readable nod for agreement, understanding, or confirmation.",
+      "emotion": "agreement",
+      "intensity": "medium",
+      "duration_frames": 48,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": ["body-face drift", "too subtle"]
+    },
+    {
+      "goal_id": "nod_subtle",
+      "motion_goal": "Light nod for agreement or backchannel reaction.",
+      "emotion": "agreement",
+      "intensity": "light",
+      "duration_frames": 36,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": ["body-face drift", "too subtle"]
+    },
+    {
+      "goal_id": "nod_double",
+      "motion_goal": "Double nod for stronger agreement or energetic reaction.",
+      "emotion": "agreement",
+      "intensity": "strong",
+      "duration_frames": 66,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": ["body-face drift", "too busy"]
+    },
+    {
+      "goal_id": "jump_small",
+      "motion_goal": "Small jump for light surprise or pop emphasis.",
+      "emotion": "surprise",
+      "intensity": "light",
+      "duration_frames": 42,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": ["body-face drift", "too strong"]
+    },
+    {
+      "goal_id": "jump_high",
+      "motion_goal": "High jump for discovery or strong surprise.",
+      "emotion": "surprise",
+      "intensity": "strong",
+      "duration_frames": 54,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": ["body-face drift", "screen spacing"]
+    },
+    {
+      "goal_id": "jump_emphasis",
+      "motion_goal": "Jump with slight landing dip for comic emphasis.",
+      "emotion": "surprise",
+      "intensity": "medium",
+      "duration_frames": 72,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": ["body-face drift", "too strong"]
+    },
+    {
+      "goal_id": "panic_crash",
+      "motion_goal": "Panic impact beat for sudden trouble or collapse.",
+      "emotion": "panic",
+      "intensity": "strong",
+      "duration_frames": 70,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": ["body-face drift", "too destructive", "community plugin missing"]
+    },
+    {
+      "goal_id": "shocked_jump",
+      "motion_goal": "Effect-driven jump for a clear shocked reaction.",
+      "emotion": "surprise",
+      "intensity": "strong",
+      "duration_frames": 60,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": ["body-face drift", "too strong"]
+    },
+    {
+      "goal_id": "surprised_chromatic",
+      "motion_goal": "Surprise accent with zoom, tiny wobble, and color split.",
+      "emotion": "surprise",
+      "intensity": "medium",
+      "duration_frames": 50,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": ["body-face drift", "too noisy"]
+    },
+    {
+      "goal_id": "anger_outburst",
+      "motion_goal": "Angry tremble / outburst beat.",
+      "emotion": "anger",
+      "intensity": "medium",
+      "duration_frames": 60,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": ["body-face drift", "wrong emotion"]
+    },
+    {
+      "goal_id": "shobon_droop",
+      "motion_goal": "Drooping reaction for disappointment or sadness.",
+      "emotion": "sadness",
+      "intensity": "medium",
+      "duration_frames": 80,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": ["body-face drift", "looks like nod"]
+    },
+    {
+      "goal_id": "lean_curious",
+      "motion_goal": "Lean-in curious pose for doubt or thinking.",
+      "emotion": "curiosity",
+      "intensity": "medium",
+      "duration_frames": 60,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": ["body-face drift", "wrong tilt direction"]
+    }
+  ]
+}

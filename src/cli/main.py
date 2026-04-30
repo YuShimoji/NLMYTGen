@@ -17,7 +17,8 @@ Usage:
     python -m src.cli.main build-session-manifest --video-id ID [artifact paths...] [--format markdown|json] [-o path]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
-python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
+    python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
+    python -m src.cli.main build-motion-recipes [--brief brief.json] [--out-ymmp review.ymmp] [--out-readback readback.json] [--out-manifest manifest.md]
     python -m src.cli.main score-thumbnail-s8 --scores '{"single_claim":2,...}' [--payload ...] [--format text|json]
 """
 
@@ -1223,6 +1224,70 @@ def main(argv: list[str] | None = None) -> int:
         help="Output report format (default: json)",
     )
 
+    # build-motion-recipes
+    p_motion_recipes = subparsers.add_parser(
+        "build-motion-recipes",
+        help="G-26: build purpose-driven YMM4 motion recipe review artifacts",
+    )
+    p_motion_recipes.add_argument(
+        "--brief",
+        default="samples/recipe_briefs/g26_motion_recipe_brief.v1.json",
+        help="Motion recipe brief JSON (default: samples/recipe_briefs/g26_motion_recipe_brief.v1.json)",
+    )
+    p_motion_recipes.add_argument(
+        "--seed",
+        default="samples/canonical.ymmp",
+        help="YMM4-saved full project canvas seed (default: samples/canonical.ymmp)",
+    )
+    p_motion_recipes.add_argument(
+        "--template-source",
+        default="samples/templates/skit_group/delivery_v1_templates.ymmp",
+        help="YMM4 template source with GroupItem/ImageItem actor clips",
+    )
+    p_motion_recipes.add_argument(
+        "--effect-catalog",
+        default="samples/effect_catalog.json",
+        help="YMM4 effect catalog JSON (default: samples/effect_catalog.json)",
+    )
+    p_motion_recipes.add_argument(
+        "--effect-samples",
+        default="samples/_probe/b2/effect_full_samples.json",
+        help="Optional concrete effect sample JSON (default: samples/_probe/b2/effect_full_samples.json)",
+    )
+    p_motion_recipes.add_argument(
+        "--motion-library",
+        default="samples/tachie_motion_map_library.json",
+        help="Motion preset library JSON (default: samples/tachie_motion_map_library.json)",
+    )
+    p_motion_recipes.add_argument(
+        "--corpus-ymmp",
+        default="_tmp/g26/composition/演出_palette_v2.ymmp",
+        help="Optional candidate composition corpus ymmp (default: _tmp/g26/composition/演出_palette_v2.ymmp)",
+    )
+    p_motion_recipes.add_argument(
+        "--out-ymmp",
+        "--out-yMMP",
+        dest="out_ymmp",
+        default="_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1.ymmp",
+        help="Output review ymmp path",
+    )
+    p_motion_recipes.add_argument(
+        "--out-readback",
+        default="_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1_readback.json",
+        help="Output machine readback JSON path",
+    )
+    p_motion_recipes.add_argument(
+        "--out-manifest",
+        default="_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1_manifest.md",
+        help="Output review manifest markdown path",
+    )
+    p_motion_recipes.add_argument(
+        "--format",
+        choices=["json", "text"],
+        default="json",
+        help="Output summary format (default: json)",
+    )
+
     # patch-ymmp
     p_patch = subparsers.add_parser(
         "patch-ymmp",
@@ -1630,6 +1695,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_measure_timeline_routes(args)
         elif args.command == "probe-ymmp-variations":
             return _cmd_probe_ymmp_variations(args)
+        elif args.command == "build-motion-recipes":
+            return _cmd_build_motion_recipes(args)
         elif args.command == "patch-ymmp":
             return _cmd_patch_ymmp(args)
         elif args.command == "apply-production":
@@ -1817,6 +1884,53 @@ def _cmd_probe_ymmp_variations(args: argparse.Namespace) -> int:
         sys.stdout.write(render_variation_probe_text(result))
         if args.output and result["success"]:
             print(f"Written: {result['output']}")
+    return 0 if result["success"] else 1
+
+
+def _cmd_build_motion_recipes(args: argparse.Namespace) -> int:
+    """Build purpose-driven G-26 YMM4 motion recipe review artifacts."""
+    from src.pipeline.motion_recipe import (
+        MotionRecipeBuildPaths,
+        build_motion_recipe_review,
+    )
+
+    corpus_path = Path(args.corpus_ymmp) if getattr(args, "corpus_ymmp", None) else None
+    effect_samples_path = (
+        Path(args.effect_samples)
+        if getattr(args, "effect_samples", None)
+        else None
+    )
+    result = build_motion_recipe_review(
+        MotionRecipeBuildPaths(
+            brief=Path(args.brief),
+            seed=Path(args.seed),
+            template_source=Path(args.template_source),
+            effect_catalog=Path(args.effect_catalog),
+            effect_samples=effect_samples_path,
+            motion_library=Path(args.motion_library),
+            corpus_ymmp=corpus_path,
+            out_ymmp=Path(args.out_ymmp),
+            out_readback=Path(args.out_readback),
+            out_manifest=Path(args.out_manifest),
+        )
+    )
+
+    if args.format == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        print(f"Motion recipe review: {result['outputs']['ymmp']}")
+        print(f"Readback: {result['outputs']['readback']}")
+        print(f"Manifest: {result['outputs']['manifest']}")
+        print(
+            "Recipes: "
+            f"{result['recipe_count']} "
+            f"(GroupItems: {result['recipe_group_count']}, "
+            f"ImageItems: {result['recipe_image_count']})"
+        )
+        if result["warnings"]:
+            print("Warnings:")
+            for warning in result["warnings"]:
+                print(f"  - {warning}")
     return 0 if result["success"] else 1
 
 

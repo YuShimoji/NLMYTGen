@@ -12,6 +12,14 @@
 
 通常再開はここで止める。フル再アンカリングは、境界不明・drift 検出・user 明示の REANCHOR / REFRESH / AUDIT などの例外時だけ `AGENTS.md` の例外手順を使う。
 
+**Creative slice 例外**: 演出 / motion / 視覚 effect 制作タスクの場合、上記 3 点に加えて以下も必読:
+
+- [MOTION_PRODUCTION_PIPELINE.md](MOTION_PRODUCTION_PIPELINE.md) — workflow 正本（5-phase pipeline + Anti-Shortcut Rules）
+- [MOTION_PRESET_LIBRARY_SPEC.md](MOTION_PRESET_LIBRARY_SPEC.md) — emotion → atom data spec（23 ラベル）
+- [samples/effect_catalog.json](../samples/effect_catalog.json) — 111 effect の機械可読カタログ
+
+これらを読まずに motion 制作を試みること自体が `MOTION_PRODUCTION_PIPELINE.md` の Anti-Shortcut Rule #1 / #4 違反として扱う。
+
 ---
 
 ## 2. 正本マップ（仕様・台帳・検証索引）
