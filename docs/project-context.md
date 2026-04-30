@@ -81,6 +81,10 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 | 日付 | 決定事項 | 選択肢 | 決定理由 |
 |------|----------|--------|----------|
+| 2026-04-30 | **G-25 の creative acceptance を negative として閉じ、G-26 motion primitive grammar / compatibility probe を起票**。G-25 review はYMM4で開けるが、`nudge / scale / rotate / effect_reuse` は動きのvariationとして使えない。 | G-25候補を調整して継続 / productionへ接続 / G-26へ切替 | ユーザー確認で、うなずき・退場・小ジャンプ・傾きの機械的な組み合わせが、反対方向の傾き、傾いたままの退場、傾いた小ジャンプなどの不自然な動きを生むことが分かったため。次は座標差分ではなく、motion primitive の開始姿勢・終了姿勢・方向意味・reset policy・相性を扱う。 |
+| 2026-04-30 | **G-25 review `.ymmp` の openability 修復を C案ベースで実施**。`LayerSettings` は array ではなく `{ "Items": [...] }` object をYMM4期待形として扱い、`probe-ymmp-variations -o` は template/stub source を直接 review surface にせず、必要時に `--review-seed` で YMM4 保存済み full project canvas を使う。 | guard反転のみ / full seed化のみ / guard反転 + full seed化 | ユーザー環境のYMM4エラーは `YukkuriMovieMaker.Project.LayerSettings` object 要求を示しており、repo内 `.ymmp` も object 形が主流だったため。JSON可読性とYMM4実読込schemaを混同し、stubをopenable artifactへ昇格させたことが不安定化の本体だった。 |
+| 2026-04-29 | **G-25 YMM4 property-based variation probe を実装し、手動演出からの保守的な派生生成を初回検証へ進める**。`probe-ymmp-variations` は `Remark` clip、`X/Y/Zoom/Rotation`、反転 route、`VideoEffects` fingerprint を JSON report にし、`-o` 指定時だけ compact review `.ymmp` を追加生成する。 | さらに計画保留 / G-24 に直結 / 独立 probe として実装 | ユーザーの痛点は「手動演出のタグ・座標・反転・拡縮から variation を自動生成できるかが未試行」だったため。G-24 production placement に混ぜず、`.ymmp` ゼロ生成や Python 画像生成にも戻らない、限定 readback / derivative review として最小検証する。 |
+| 2026-04-29 | **汚染パッチ由来の rejected / hold を手段単位に再定義**。B-10 旧 `--emit-meta`、C-02/C-04/C-05 の Python 万能制御、D-01 の Python 画像生成、F-03 の YMM4 表示エミュレーションは `method-rejected`。一方、診断 JSON / IR / manifest / packaging brief、G-24 template source placement、H-02 thumbnail slot patch、H-01/H-02 由来の metadata draft は `goal-allowed` / `successor-lane` として扱う。 | 目的ごと拒否 / 手段単位で拒否 / 全面復活 | 旧拒否理由が「動画品質を上げるためのメタデータ・演出制御・サムネ・YouTube metadata」まで萎縮させるリスクがあったため。禁止対象を危険な生成・エミュレーション手段に限定し、承認済み artifact 経路を邪魔しないため。 |
 | 2026-04-27 | **ドキュメント汚染を根絶し、再開時の入口を最小正本へ戻す**。resume 用プロンプト導線を削除し、`verification/` は証跡置き場に降格、`USER_REQUEST_LEDGER.md` は現在有効な要求だけへ圧縮、固定日付風のルール見出しと旧背景アニメ/S6 再採用を廃止する。 | テンプレ維持 / 古い証跡を正本化 / 最小正本へ集約 | 再スタート時の読了過多と「正本っぽい古い文書」による判断汚染が、G-24 `delivery_nod_v1` の作業接続性を落としていたため。 |
 | 2026-04-27 | **次期ロードマップは G-24 `delivery_nod_v1` gate-shaped sequence から始める**。formal plan は `delivery_nod_v1` 未報告 / PASS / FAIL / 新規制作案件のどれかを冒頭で宣言し、未報告なら hands-on acceptance、PASS なら `nod` 昇格 + `deny_oneshot`、FAIL なら failure class 分解から開始する。 | 背景アニメ/S6 に戻す / 新 FEATURE を増やす / G-24 gate 分岐で開始 | レガシードキュメント整理後の bottleneck は `audit-skit-group` readiness と user-owned export proof の分離であり、`exact` を export proof と読み替えると status drift が再発するため。根拠: `runtime-state.md` next_action + `verification/P02-production-adoption-proof.md` + `INTERACTION_NOTES.md` TEMPLATE_FORMALISM |
 | 2026-04-23 | **Keep the G-24 `nod` cycle at readiness-PASS, but do not promote to `direct_proven` yet**. Assistant rechecked `delivery_nod_v1` on the canonical/proof corpora and confirmed proof-corpus `group_motion_changes=0`. Because the repo still does not track a discrete canonical-project `delivery_nod_v1` copy, Phase 1 is corrected to YMM4 author/export from `samples/haitatsuin_2026-04-12_g24_proof.ymmp` or an equivalent local project, starting from Layer 9 `GroupItem` Remark `haitatsuin_delivery_main`. `skit_group.intent.nod` stays `template_catalog_only` until manual acceptance plus standalone export are confirmed. | Promote now / assume a tracked copy exists / keep the gate but correct the packet | Readiness is already proven, but assuming a nonexistent tracked copy would corrupt handoff. This keeps assistant-owned facts and user-owned export clearly separated while preserving the cautious-gate order. |
@@ -123,7 +127,7 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 | 2026-03-29 | B-10 (--emit-meta) を未承認で混入 | — | 未承認。後に rejected → コード除去 |
 | 2026-03-30 | FEATURE_REGISTRY + AUTOMATION_BOUNDARY で機能管理 | 台帳管理 / ad-hoc | 未承認機能混入の再発防止 |
 | 2026-03-30 | 自動化レイヤーを L1〜L4+GUI の5層で定義 | 5層 / 3層 / フラット | YMM4内部/外部の境界を明確化 |
-| 2026-03-30 | Python での生成・レンダリングを全面禁止 | 全面禁止 / 部分許容 | .ymmp は音声ファイル参照を含み外部生成不可能。この教訓を拡大適用。Python の責務はテキスト変換（CSV / テキストメタデータ文字列）のみに限定。rejected: B-10, C-02, C-03, C-04, C-05, D-01, F-03 |
+| 2026-03-30 | Python での生成・レンダリングを手段単位で禁止 | method-rejected / 全面禁止 / 部分許容 | .ymmp ゼロ生成・音声合成・画像生成・YMM4 表示エミュレーションは不可。この教訓は「目的の禁止」ではなく「危険な手段の禁止」として扱う。CSV / IR / registry / manifest / brief 生成と、台本読込後 `.ymmp` への限定 patch は許容する。rejected: B-10, C-02, C-03, C-04, C-05, D-01, F-03 |
 | 2026-03-30 | 外部メディア取得は分離設計で OK | L1拡張許容 / L2専念 | 取得機能と受け取り機能を分離すれば NLMYTGen に含めてよい。最終的に自動化する方針 |
 | 2026-03-30 | WORKFLOW.md を S-0〜S-9 の全工程に再設計 | 全面改訂 / 部分改訂 | 前作業者がrejectedで隔離しただけでYMM4側の代替ワークフローが欠落していた。S-5(演出)が5行だけだった。rejected工程の代替手段を全てWORKFLOW.mdに記載 |
 | 2026-03-30 | E-02 を先に仕様定義する | E-02 / A-04 / F-01 / 全件hold | ユーザーが選択。L2変換レイヤーで Python スコープ内に収まる唯一の候補 |
@@ -132,7 +136,7 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 | 2026-03-30 | S-6 トピック分析は stdlib 制約内では精度不足 | パターンマッチ / 軽量NLP / やらない | パターンマッチ30-50%、NLP 40-60%+CLAUDE.md違反。LLM アダプター方式に転換予定 |
 | 2026-03-30 | B-04 表示幅ベース分割を実装 | 表示幅 / 文字数維持 | 全角=2,半角=1 の display_width で YMM4 字幕はみ出しを事前防止。--display-width, --max-lines, --chars-per-line 追加 |
 | 2026-03-30 | S-6 トピック分析を LLM アダプター方式に転換 | LLM / パターンマッチ / やらない | ユーザー指示。コーパス分析ライブラリはレガシー化しており LLM に統一。モデル切替可能なアダプター設計 |
-| 2026-03-30 | サムネイルはYMM4テンプレートの文字・画像入れ替え | テンプレート手動 / Python自動生成 / 外部ツールのみ | 機械的な背景+文字の自動生成は不可。テンプレートの手動カスタマイズが必要。サムネイルは非常に重要 |
+| 2026-03-30 | サムネイルはYMM4テンプレートの文字・画像入れ替え | テンプレート手動 / Python自動生成 / 外部ツールのみ | Python 画像生成は不可。YMM4 テンプレートの手動カスタマイズを基本にし、後続 H-02 の `thumbnail_design` と `thumb.*` slot 限定 patch は successor-lane として許容する。サムネイルは非常に重要 |
 | 2026-03-30 | A-04 / D-02 / F-01 / F-02 を quarantined に移す | proposed維持 / hold / quarantined | B-10 混入時の汚染バッチ由来で、個別再審査前に通常 backlog として扱うと再発するため |
 | 2026-03-30 | A-04 を done に戻す | quarantined維持 / hold / done | RSS/Atom からタイトル抽出して NotebookLM 検索クエリへ渡す `fetch-topics` は Python のテキスト取得責務に収まり、実装と台帳が一致したため |
 | 2026-03-30 | E-02 を hold に移す | proposed維持 / hold / rejected | 価値検証の結果、単体では bottleneck を減らさず、今は進めない方が正確だから |
@@ -234,14 +238,14 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 **禁止:**
 - 画像生成・画像合成（PIL/Pillow 含む）
-- .ymmp 生成・操作（音声ファイル参照を含むため外部生成不可能）
-- YMM4 テンプレート生成・演出指定（YMM4 内部の責務）
-- YMM4 出力の模倣・プレビュー
+- .ymmp ゼロ生成・YMM4 台本読込代替（音声ファイル参照・発音情報を外部生成できないため）
+- YMM4 native template 資産の Python 生成・YMM4 GUI 万能制御
+- YMM4 出力の模倣・Python preview
 - 動画レンダリング・音声合成
 - 外部 TTS（Voicevox 等）
 
 **根拠:**
-YMM4 の .ymmp プロジェクトファイルは音声ファイル（WAV 等）への参照を含む。その音声は YMM4 が台本 CSV を読み込む際に内蔵 TTS で自動合成するもの。NLMYTGen から音声ファイルを生成できないため、完全な .ymmp を外部から作ることは原理的に不可能。この制約から、YMM4 内部の操作（テンプレート・演出・素材配置）を Python から制御するアプローチ全般が成り立たない。
+YMM4 の .ymmp プロジェクトファイルは音声ファイル（WAV 等）への参照を含む。その音声は YMM4 が台本 CSV を読み込む際に内蔵 TTS で自動合成するもの。NLMYTGen から音声ファイルを生成できないため、完全な .ymmp を外部から作ることは原理的に不可能。ただしこの制約は、台本読込後 `.ymmp` に対する限定 patch、repo-tracked YMM4 template source の placement、thumbnail `thumb.*` slot patch、audit/readback/compact review artifact を禁止しない。
 
 ---
 
@@ -304,7 +308,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - Custom GPT v4 は 2オブジェクト連結形式 (Macro + Micro) で IR を出力する。load_ir() で対応済み
 - Authority Return Items:
   - YMM4 大版本更新時: `AudioItem` 構造差分が出たら readback のみ再確認（G-18）
-  - E-02: hold 継続。E-01 とセットでのみ再検討
+  - E-02: 旧 standalone template は hold 継続。H-01/H-02/H-04 を入力にした metadata draft は successor-lane として別起票可
   - F-01/F-02: quarantined 継続
 - What Not To Do Next:
   - spec/proof 整備をさらに積み増さない (一巡済み。実制作の手間軽減が先)
@@ -315,7 +319,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - D-02 を主軸として扱わない (従属的補助論点)
   - quarantined 項目を通常候補としてそのまま spec 化しない
   - face 問題を broad な visual retry loop として再開しない
-  - E-01/E-02 を制作パイプラインと混ぜない (別タスクとして完全分離)
+  - E-01/旧 E-02 standalone を制作パイプラインへ自動注入しない（metadata draft は integration point 明示の successor-lane で扱う）
 - Expansion Risk: なし
 
 ## B-11 workflow proof chronicle (archive)

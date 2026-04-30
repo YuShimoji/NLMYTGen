@@ -17,6 +17,7 @@ Usage:
     python -m src.cli.main build-session-manifest --video-id ID [artifact paths...] [--format markdown|json] [-o path]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
+python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
     python -m src.cli.main score-thumbnail-s8 --scores '{"single_claim":2,...}' [--payload ...] [--format text|json]
 """
 
@@ -1191,6 +1192,37 @@ def main(argv: list[str] | None = None) -> int:
     p_measure.add_argument("--format", choices=["text", "json"], default="text",
                            help="Output format (default: text)")
 
+    # probe-ymmp-variations
+    p_variation = subparsers.add_parser(
+        "probe-ymmp-variations",
+        help="Inspect manual YMM4 clips and optionally append conservative review variants",
+    )
+    p_variation.add_argument("ymmp", help="Input ymmp file path")
+    p_variation.add_argument(
+        "-o",
+        "--output",
+        help="Output review ymmp path; when omitted, no ymmp is written",
+    )
+    p_variation.add_argument(
+        "--review-seed",
+        help=(
+            "YMM4-saved full project canvas used for -o review output; "
+            "keeps source templates as extraction inputs only"
+        ),
+    )
+    p_variation.add_argument(
+        "--review-spacing",
+        type=int,
+        default=120,
+        help="Frame spacing between appended review variants (default: 120)",
+    )
+    p_variation.add_argument(
+        "--format",
+        choices=["json", "text"],
+        default="json",
+        help="Output report format (default: json)",
+    )
+
     # patch-ymmp
     p_patch = subparsers.add_parser(
         "patch-ymmp",
@@ -1596,6 +1628,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_extract_template(args)
         elif args.command == "measure-timeline-routes":
             return _cmd_measure_timeline_routes(args)
+        elif args.command == "probe-ymmp-variations":
+            return _cmd_probe_ymmp_variations(args)
         elif args.command == "patch-ymmp":
             return _cmd_patch_ymmp(args)
         elif args.command == "apply-production":
@@ -1741,6 +1775,51 @@ def _cmd_measure_timeline_routes(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_probe_ymmp_variations(args: argparse.Namespace) -> int:
+    """Probe manual YMM4 clips for conservative property-based variations."""
+    from src.pipeline.ymmp_openability import is_ymmp_project_canvas, save_openable_ymmp
+    from src.pipeline.ymmp_patch import load_ymmp
+    from src.pipeline.ymmp_variation import (
+        probe_ymmp_variations,
+        render_variation_probe_text,
+    )
+
+    data = load_ymmp(args.ymmp)
+    review_data = None
+    if getattr(args, "review_seed", None):
+        if not args.output:
+            raise ValueError("--review-seed requires -o/--output")
+        review_data = load_ymmp(args.review_seed)
+    elif args.output and not is_ymmp_project_canvas(data):
+        raise ValueError(
+            "YMM4_REVIEW_SEED_REQUIRED: -o review output requires a YMM4-saved "
+            "full project canvas. Pass --review-seed when the probe source is a "
+            "template/stub ymmp."
+        )
+    result = probe_ymmp_variations(
+        data,
+        create_review=bool(args.output),
+        review_data=review_data,
+        review_spacing=args.review_spacing,
+    )
+    if args.output and result["success"]:
+        out_path = Path(args.output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        output_data = review_data if review_data is not None else data
+        result["openability"] = save_openable_ymmp(output_data, out_path)
+        if review_data is not None:
+            result["review_seed"] = str(args.review_seed)
+        result["output"] = str(out_path)
+
+    if args.format == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        sys.stdout.write(render_variation_probe_text(result))
+        if args.output and result["success"]:
+            print(f"Written: {result['output']}")
+    return 0 if result["success"] else 1
+
+
 def _cmd_extract_template_labeled(
     args: argparse.Namespace,
     ymmp_data: dict,
@@ -1802,7 +1881,7 @@ def _cmd_extract_template_labeled(
 
 
 def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
-    from src.pipeline.ymmp_patch import load_ymmp, load_ir, save_ymmp, patch_ymmp
+    from src.pipeline.ymmp_patch import load_ymmp, load_ir, patch_ymmp
 
     skit_group_only = bool(getattr(args, "skit_group_only", False))
     if skit_group_only and (
@@ -1979,7 +2058,9 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
     if not out_path:
         stem = Path(args.ymmp).stem
         out_path = str(Path(args.ymmp).parent / f"{stem}_patched.ymmp")
-    save_ymmp(ymmp_data, out_path)
+    from src.pipeline.ymmp_openability import save_openable_ymmp
+
+    save_openable_ymmp(ymmp_data, out_path)
     print(f"Written: {out_path}")
     return 0
 
@@ -2645,7 +2726,8 @@ def _cmd_annotate_row_range(args: argparse.Namespace) -> int:
 
 def _cmd_apply_production(args: argparse.Namespace) -> int:
     """S-6 ワンコマンド: extract-template → patch-ymmp をまとめて実行."""
-    from src.pipeline.ymmp_patch import load_ymmp, load_ir, save_ymmp, patch_ymmp
+    from src.pipeline.ymmp_openability import save_openable_ymmp
+    from src.pipeline.ymmp_patch import load_ymmp, load_ir, patch_ymmp
     from src.pipeline.ymmp_extract import (
         extract_template_labeled,
         generate_face_map_labeled,
@@ -2772,11 +2854,12 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         if not out_path:
             stem = Path(args.production_ymmp).stem
             out_path = str(Path(args.production_ymmp).parent / f"{stem}_patched.ymmp")
-        save_ymmp(ymmp_data, out_path)
+        openability = save_openable_ymmp(ymmp_data, out_path)
         if fmt == "json":
             print(json.dumps({
                 "success": True,
                 "output": out_path,
+                "openability": openability,
                 "skit_group_placements": result.skit_group_placements,
                 "skit_group_item_insertions": result.skit_group_item_insertions,
                 "warnings": result.warnings,
@@ -3104,11 +3187,12 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         out_path = str(
             Path(args.production_ymmp).parent / f"{stem}_patched.ymmp"
         )
-    save_ymmp(ymmp_data, out_path)
+    openability = save_openable_ymmp(ymmp_data, out_path)
     if fmt == "json":
         payload = {
             "success": True,
             "output": out_path,
+            "openability": openability,
             "face_changes": result.face_changes,
             "slot_changes": result.slot_changes,
             "overlay_changes": result.overlay_changes,
@@ -3203,7 +3287,8 @@ def _cmd_patch_thumbnail_template(args: argparse.Namespace) -> int:
         render_thumbnail_patch_text,
         verify_thumbnail_patch_readback,
     )
-    from src.pipeline.ymmp_patch import load_ymmp, save_ymmp
+    from src.pipeline.ymmp_openability import save_openable_ymmp
+    from src.pipeline.ymmp_patch import load_ymmp
 
     data = load_ymmp(args.ymmp)
     patch_payload = load_thumbnail_patch(args.patch)
@@ -3213,7 +3298,7 @@ def _cmd_patch_thumbnail_template(args: argparse.Namespace) -> int:
             raise ValueError("patch-thumbnail-template requires -o/--output unless --dry-run is set")
         out_path = Path(args.output)
         out_path.parent.mkdir(parents=True, exist_ok=True)
-        save_ymmp(data, out_path)
+        result["openability"] = save_openable_ymmp(data, out_path)
         result["output"] = str(out_path)
         file_readback = verify_thumbnail_patch_readback(load_ymmp(out_path), patch_payload)
         result["file_readback"] = file_readback
