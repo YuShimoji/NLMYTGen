@@ -15,6 +15,7 @@
 - 茶番劇 G-24 を user-only の配置作業と表現しない。既存 sample / GroupItem / layer / target labeling が揃う案件では、assistant が rough placement・effect 適用・registry 下準備を先行し、user は YMM4 上の意図確認と canonical template authoring に集中できるようにする。
 - 手動作成済み YMM4 演出の `Remark` tag、座標、反転、拡大縮小、既存 `VideoEffects` から variation を自動生成できるかを、これ以上 docs-only で先送りしない。まず G-25 `probe-ymmp-variations` のような独立 review artifact で feasibility を見て、production placement への接続は結果を見て別スライスにする。
 - G-25 のYMM4確認により、`nudge / scale / rotate / effect_reuse` のような property 差分は、動きのvariationとしては不採用。以後は、うなずき・退場・小ジャンプ・傾きなどを motion primitive として扱い、開始姿勢・終了姿勢・方向意味・reset policy・相性を機械可読化してから候補生成する。傾いたまま退場、傾いた小ジャンプ、反対方向の傾きなどの accidental composition を避ける。
+- G-26 は docs-only / JSON-only で止めない。画面上でサンプルが見える状態を優先し、既存 YMM4-saved seed + repo-tracked template source から compact review `.ymmp` を作り、readback で openability / inserted GroupItems / asset path を確認してから次判断へ進める。
 - 手順票に従って人間が配置する作業を「制作自動化」と扱わない。G-24 の成果は、IR + registry + repo-tracked YMM4 template source から `.ymmp` timeline へ GroupItem が自動挿入されること。
 - Python 生成へ戻らない。YMM4 を制作基盤とし、Python は CSV / IR / registry / 台本読込後 `.ymmp` patch の接着層に限定する。
 - NotebookLM 出力は低信頼入力として扱う。誤字・誤変換・指示無視が後工程に組み込まれるため、CSV / IR 生成前に B-18 `diagnose-script` または C-09 / manual QC を挟む。
