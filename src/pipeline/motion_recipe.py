@@ -402,16 +402,27 @@ def _resolve_brief_recipes(brief: dict[str, Any]) -> list[dict[str, Any]]:
 
         preset = DEFAULT_RECIPE_PRESETS.get(goal_id)
         if preset is None:
-            raise ValueError(f"MOTION_RECIPE_UNKNOWN_GOAL: {goal_id}")
-        recipe = {"goal_id": goal_id, **copy.deepcopy(preset), **overrides}
-        for required_key in (
+            # Novel goal_id: brief entry must self-define all required fields
+            # (Slice 4 architecture: brief-supplied recipes work without preset extension).
+            # String entries (goal_id-only references) still require an existing preset.
+            if not isinstance(raw_recipe, dict):
+                raise ValueError(f"MOTION_RECIPE_UNKNOWN_GOAL: {goal_id}")
+            recipe = {"goal_id": goal_id, **overrides}
+        else:
+            recipe = {"goal_id": goal_id, **copy.deepcopy(preset), **overrides}
+        required_keys = (
             "motion_goal",
             "emotion",
             "intensity",
             "duration_frames",
             "reset_policy",
             "forbidden_patterns",
-        ):
+        )
+        if preset is None:
+            # Novel goal must self-supply effect_candidates so the shortlist
+            # is non-empty (otherwise _build_recipe_items raises later).
+            required_keys = required_keys + ("effect_candidates",)
+        for required_key in required_keys:
             if required_key not in recipe:
                 raise ValueError(f"MOTION_RECIPE_FIELD_REQUIRED: {goal_id}.{required_key}")
         resolved.append(recipe)

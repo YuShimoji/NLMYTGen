@@ -94,21 +94,34 @@ Phase E:  Visual Acceptance & Library Promotion
 
 prompt body には [`MOTION_PRESET_LIBRARY_SPEC § 3`](MOTION_PRESET_LIBRARY_SPEC.md#3-感情ラベル定義テーブル) の 23 ラベルと 8 emotion カテゴリ早見表を埋め込み、LLM が **既存ラベルへの fit を最初に試みる**ことを強制している。
 
-### Phase A.5: novel goal_id = preset 拡張（現行アーキテクチャ）
+### Phase A novel goal_id の扱い (Slice 4 以降の運用)
 
-`build-motion-recipes` CLI は [`src/pipeline/motion_recipe.py`](../src/pipeline/motion_recipe.py) `DEFAULT_RECIPE_PRESETS` に登録された goal_id しか受け付けない。既存 12 preset で fit しない novel motion を作りたい場合、Phase A の brief entry に加えて **preset 定義ブロック** が必要。
+novel goal_id (既存 14 preset で fit しないもの) には 2 経路がある:
+
+#### 経路 1: brief 内完全定義 (推奨、Slice 4 で実装済)
+
+`_resolve_brief_recipes` は preset 未登録の goal_id でも、brief entry に必須キー (`motion_goal` / `emotion` / `intensity` / `duration_frames` / `reset_policy` / `forbidden_patterns` / `effect_candidates`) と route フィールド (`rotation_values` / `y_delta_values` / `zoom_delta_values`) / `effect_names` を含めば accept する。コード変更不要。
 
 手順:
 
-1. S-5 prompt が brief entry を出力 (例: `realization_nod`)
-2. S-5 prompt が **preset 拡張ブロック**も出力（rotation_values / y_delta_values / zoom_delta_values / effect_names / effect_candidates を含む完全 dict）
-3. エンジニアが [`src/pipeline/motion_recipe.py`](../src/pipeline/motion_recipe.py) `DEFAULT_RECIPE_PRESETS` に append
-4. brief 側に同 goal_id の entry を追加（または slice-specific brief に書く）
-5. `uv run pytest tests/test_motion_recipe.py -q` で regression なし確認
-6. `build-motion-recipes` 実行
-7. YMM4 で visual acceptance (Phase E)
+1. S-5 prompt が brief entry を novel goal 用に出力 (route + effect 含む完全形)
+2. brief 配列に追記
+3. `build-motion-recipes` 実行 → review .ymmp 生成
+4. YMM4 で visual acceptance (Phase E)
+5. pass なら Phase E の library promotion で `MOTION_PRESET_LIBRARY_SPEC § 3` に追加
 
-**Slice 4 候補**: `_resolve_brief_recipes` を拡張して preset が無い goal_id でも brief 内で完全定義可能にする。これが入れば preset 拡張は library promotion 後 (Phase E pass 後) に集約できる。現状はコード変更が前提。
+#### 経路 2: preset 化 (再利用が見込まれる goal のみ)
+
+複数案件で繰り返し使う goal は、visual acceptance pass 後に [`src/pipeline/motion_recipe.py`](../src/pipeline/motion_recipe.py) `DEFAULT_RECIPE_PRESETS` に preset 化することで brief を簡潔化できる (brief 側は `goal_id` だけで参照可能)。
+
+手順:
+
+1. 経路 1 で brief 内完全定義 → visual acceptance pass
+2. brief 内 fields をそのまま `DEFAULT_RECIPE_PRESETS` の新 entry にコピー
+3. brief 側を `goal_id` 参照だけに圧縮 (overrides は不要)
+4. `uv run pytest tests/test_motion_recipe.py -q` で regression なし確認
+
+経路 2 は **library promotion の選択工程**であって必須ではない。一度きりの goal は brief 内に持ち回しても CLI は問題なく動く。
 
 ---
 
