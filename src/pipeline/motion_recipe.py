@@ -497,6 +497,10 @@ def _build_recipe_items(
     _set_transform_values(group, "Rotation", rotation_values)
     _set_transform_values(group, "Y", y_values)
     _set_transform_values(group, "Zoom", zoom_values)
+    keyframe_info = _sync_group_keyframes(
+        group,
+        keyframe_frames=recipe.get("keyframe_frames"),
+    )
 
     effect_names = list(recipe.get("effect_names", []))
     if "CenterPointEffect" not in effect_names:
@@ -538,6 +542,10 @@ def _build_recipe_items(
             "Rotation": _axis_values(group, "Rotation"),
             "Zoom": _axis_values(group, "Zoom"),
         },
+        "route_point_count": keyframe_info["route_point_count"],
+        "route_point_counts": keyframe_info["route_point_counts"],
+        "keyframe_count": keyframe_info["keyframe_count"],
+        "keyframe_frames": keyframe_info["keyframe_frames"],
         "used_effects": [_effect_name(effect) for effect in effects],
         "effect_shortlist": effect_shortlist,
         "expected_review": "YMM4 visual acceptance required before promotion",
@@ -596,7 +604,98 @@ def _set_transform_values(item: dict[str, Any], axis_name: str, values: list[flo
     transform["Values"] = [{"Value": float(value)} for value in values]
     if len(values) > 1:
         transform["AnimationType"] = _linear_animation_type(item)
+    else:
+        transform["AnimationType"] = "なし"
     item[axis_name] = transform
+
+
+def _sync_group_keyframes(
+    item: dict[str, Any],
+    *,
+    keyframe_frames: Any = None,
+) -> dict[str, Any]:
+    route_point_counts = _animated_route_point_counts(item)
+    unique_counts = set(route_point_counts.values())
+    remark = str(item.get("Remark", "<unknown>"))
+    if len(unique_counts) > 1:
+        detail = ", ".join(
+            f"{axis}={count}" for axis, count in sorted(route_point_counts.items())
+        )
+        raise ValueError(f"MOTION_RECIPE_KEYFRAME_COUNT_MISMATCH: {remark}: {detail}")
+
+    route_point_count = next(iter(unique_counts), 1)
+    if route_point_count <= 1:
+        frames: list[int] = []
+    elif keyframe_frames is None:
+        frames = _default_keyframe_frames(
+            length=int(item.get("Length", 0)),
+            route_point_count=route_point_count,
+        )
+    else:
+        frames = _validate_keyframe_frames(
+            keyframe_frames,
+            route_point_count=route_point_count,
+            length=int(item.get("Length", 0)),
+            remark=remark,
+        )
+
+    item["KeyFrames"] = {
+        "Frames": frames,
+        "Count": len(frames),
+    }
+    return {
+        "route_point_count": route_point_count,
+        "route_point_counts": route_point_counts,
+        "keyframe_count": len(frames),
+        "keyframe_frames": frames,
+    }
+
+
+def _animated_route_point_counts(item: dict[str, Any]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for axis_name in ("X", "Y", "Zoom", "Rotation", "Opacity"):
+        values = _axis_values(item, axis_name)
+        if len(values) > 1:
+            counts[axis_name] = len(values)
+    return counts
+
+
+def _default_keyframe_frames(*, length: int, route_point_count: int) -> list[int]:
+    if route_point_count <= 2:
+        return []
+    frames = [
+        round(length * index / (route_point_count - 1))
+        for index in range(1, route_point_count - 1)
+    ]
+    return _validate_keyframe_frames(
+        frames,
+        route_point_count=route_point_count,
+        length=length,
+        remark="<default>",
+    )
+
+
+def _validate_keyframe_frames(
+    value: Any,
+    *,
+    route_point_count: int,
+    length: int,
+    remark: str,
+) -> list[int]:
+    if not isinstance(value, list):
+        raise ValueError(f"MOTION_RECIPE_KEYFRAME_FRAMES_INVALID: {remark}")
+    frames = [int(frame) for frame in value]
+    expected_count = max(route_point_count - 2, 0)
+    if len(frames) != expected_count:
+        raise ValueError(
+            f"MOTION_RECIPE_KEYFRAME_COUNT_MISMATCH: {remark}: "
+            f"frames={len(frames)} values={route_point_count}"
+        )
+    if any(frame <= 0 or frame >= length for frame in frames):
+        raise ValueError(f"MOTION_RECIPE_KEYFRAME_FRAMES_INVALID: {remark}")
+    if any(left >= right for left, right in zip(frames, frames[1:])):
+        raise ValueError(f"MOTION_RECIPE_KEYFRAME_FRAMES_INVALID: {remark}")
+    return frames
 
 
 def _linear_animation_type(item: dict[str, Any]) -> str:

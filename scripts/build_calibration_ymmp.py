@@ -20,6 +20,7 @@ Run from repo root:
 from __future__ import annotations
 
 import copy
+import argparse
 import json
 from dataclasses import dataclass
 from pathlib import Path
@@ -33,6 +34,7 @@ from src.pipeline.motion_recipe import (
     _normalize_group,
     _clone_images,
     _set_transform_values,
+    _sync_group_keyframes,
 )
 
 
@@ -66,6 +68,7 @@ class Variant:
     effects_override: list[dict[str, Any]] | None = None
     face_filename: str | None = None
     anchor_mode: str | None = None  # "head" / "center" / "absent"
+    keyframe_frames: list[int] | None = None
 
 
 def _effect_short_name(effect: dict[str, Any]) -> str:
@@ -226,6 +229,7 @@ def _emit_variant(
     if variant.zoom_delta_values is not None:
         z_resolved = [rest_pose["Zoom"] + d for d in variant.zoom_delta_values]
         _set_transform_values(group, "Zoom", z_resolved)
+    _sync_group_keyframes(group, keyframe_frames=variant.keyframe_frames)
 
     # Effects override (default: head anchor only)
     if variant.effects_override is not None:
@@ -344,6 +348,34 @@ def build_c_y_bounce_patterns(samples: dict[str, dict[str, Any]]) -> None:
     _build_calibration_ymmp(OUT_DIR / "C_y_bounce_patterns.ymmp", variants, samples)
 
 
+def build_b_keyframes_smoke(samples: dict[str, dict[str, Any]]) -> None:
+    """B': minimal structural smoke after KeyFrames synchronization fix."""
+    patterns = [
+        ("3pt_simple_60", [0.0, -10.0, 0.0]),
+        ("5pt_double_60", [0.0, -7.0, 0.0, -5.0, 0.0]),
+        ("7pt_hold_double_60", [0.0, -7.0, -7.0, 0.0, -5.0, -5.0, 0.0]),
+    ]
+    variants = [
+        Variant(label=f"RotSmoke_{name}", length=60, rotation_values=values)
+        for name, values in patterns
+    ]
+    _build_calibration_ymmp(OUT_DIR / "B_keyframes_smoke.ymmp", variants, samples)
+
+
+def build_c_bounce_smoke(samples: dict[str, dict[str, Any]]) -> None:
+    """C': minimal Y bounce structural smoke after KeyFrames synchronization fix."""
+    patterns = [
+        ("3pt_single_60", [0.0, -45.0, 0.0]),
+        ("5pt_double_60", [0.0, -45.0, 5.0, -35.0, 0.0]),
+        ("7pt_triple_decay_60", [0.0, -45.0, 0.0, -35.0, 5.0, -25.0, 0.0]),
+    ]
+    variants = [
+        Variant(label=f"YSmoke_{name}", length=60, y_delta_values=deltas)
+        for name, deltas in patterns
+    ]
+    _build_calibration_ymmp(OUT_DIR / "C_bounce_smoke.ymmp", variants, samples)
+
+
 def build_d_effect_intensity(samples: dict[str, dict[str, Any]]) -> None:
     """D: Effect parameter intensity steps."""
     anchor_head = _make_anchor_effect("head", samples)
@@ -455,14 +487,58 @@ assistant が GUIDE.md を埋め、Phase D 改修に進む。
     print(f"wrote {readme_path}")
 
 
+def write_structural_smoke_readme() -> None:
+    readme_path = OUT_DIR / "STRUCTURAL_SMOKE_README.md"
+    readme_path.write_text(
+        """# G-26 KeyFrames Structural Smoke
+
+`B_rotation_patterns.ymmp` / `C_y_bounce_patterns.ymmp` の初回版は
+GroupItem `KeyFrames` が更新されず、中間点が1箇所へ潰れていたため
+threshold 観測としては無効。
+
+この smoke は修正後の最小確認用。YMM4 で開く対象は次の2件のみ。
+
+| file | variants | 見ること |
+|------|----------|----------|
+| `B_keyframes_smoke.ymmp` | 3pt / 5pt / 7pt Rotation | 中間点が等間隔に分散し、double / hold が意図通り読めるか |
+| `C_bounce_smoke.ymmp` | 3pt / 5pt / 7pt Y bounce | 二段・三段の上下動が潰れず、段として読めるか |
+
+assistant 側の事前検証条件:
+
+- 各 GroupItem で `len(animated Values) == KeyFrames.Count + 2`
+- POSIX asset paths 0
+- blank asset paths 0
+""",
+        encoding="utf-8",
+    )
+    print(f"wrote {readme_path}")
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--structural-smoke-only",
+        action="store_true",
+        help="Write only the repaired B/C structural smoke artifacts.",
+    )
+    args = parser.parse_args()
+
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     samples = _load_effect_samples()
     print(f"effect samples loaded: {len(samples)} types")
+    if args.structural_smoke_only:
+        build_b_keyframes_smoke(samples)
+        build_c_bounce_smoke(samples)
+        write_structural_smoke_readme()
+        print(f"\nStructural smoke artifacts written to: {OUT_DIR}")
+        return
+
     build_a1_static_position(samples)
     build_a2_static_rotation_opacity(samples)
     build_b_rotation_patterns(samples)
     build_c_y_bounce_patterns(samples)
+    build_b_keyframes_smoke(samples)
+    build_c_bounce_smoke(samples)
     build_d_effect_intensity(samples)
     build_e_face_swap(samples)
     build_f_anchor_modes(samples)

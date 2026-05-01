@@ -112,7 +112,7 @@ def test_brief_supplied_recipe_without_preset(tmp_path: Path) -> None:
                 "duration_frames": 60,
                 "reset_policy": "returns_to_neutral",
                 "forbidden_patterns": ["wrong motion"],
-                "y_delta_values": [0.0, -30.0, 0.0],
+                "y_delta_values": [0.0, -30.0, -15.0, 0.0],
                 "rotation_values": [0.0, -3.0, 3.0, 0.0],
                 "effect_names": ["CenterPointEffect"],
                 "effect_candidates": ["CenterPointEffect", "JumpEffect"],
@@ -142,9 +142,64 @@ def test_brief_supplied_recipe_without_preset(tmp_path: Path) -> None:
     assert recipe["goal_id"] == "test_brief_only_excited_pop"
     assert recipe["emotion"] == "happiness"
     assert recipe["route_values"]["Rotation"] == [0.0, -3.0, 3.0, 0.0]
-    expected_y = [462.5 + delta for delta in (0.0, -30.0, 0.0)]
+    expected_y = [462.5 + delta for delta in (0.0, -30.0, -15.0, 0.0)]
     assert recipe["route_values"]["Y"] == expected_y
+    assert recipe["route_point_count"] == 4
+    assert recipe["keyframe_count"] == 2
+    assert recipe["keyframe_frames"] == [20, 40]
     assert recipe["used_effects"] == ["CenterPointEffect"]
+
+    data = load_ymmp(tmp_path / "review.ymmp")
+    items = _get_timeline_items(data)
+    group = next(
+        item for item in items
+        if _item_type(item) == "GroupItem"
+        and item.get("Remark") == "recipe:test_brief_only_excited_pop"
+    )
+    assert group["KeyFrames"] == {"Frames": [20, 40], "Count": 2}
+
+
+def test_brief_animated_route_point_mismatch_raises(tmp_path: Path) -> None:
+    """Animated routes must share one keyframe structure before visual review."""
+    import pytest
+
+    brief = {
+        "schema_version": "1.0",
+        "artifact_kind": "g26_motion_recipe_brief",
+        "recipes": [
+            {
+                "goal_id": "test_route_mismatch",
+                "motion_goal": "Mismatched animated route points should fail before YMM4.",
+                "emotion": "surprise",
+                "intensity": "medium",
+                "duration_frames": 60,
+                "reset_policy": "returns_to_neutral",
+                "forbidden_patterns": ["wrong motion"],
+                "y_delta_values": [0.0, -30.0, 0.0],
+                "rotation_values": [0.0, -3.0, 3.0, 0.0],
+                "effect_names": ["CenterPointEffect"],
+                "effect_candidates": ["CenterPointEffect"],
+            }
+        ],
+    }
+    brief_path = tmp_path / "mismatch.json"
+    brief_path.write_text(json.dumps(brief), encoding="utf-8")
+
+    paths = MotionRecipeBuildPaths(
+        brief=brief_path,
+        seed=ROOT / "samples/canonical.ymmp",
+        template_source=ROOT / "samples/templates/skit_group/delivery_v1_templates.ymmp",
+        effect_catalog=ROOT / "samples/effect_catalog.json",
+        effect_samples=ROOT / "samples/_probe/b2/effect_full_samples.json",
+        motion_library=ROOT / "samples/tachie_motion_map_library.json",
+        corpus_ymmp=None,
+        out_ymmp=tmp_path / "review.ymmp",
+        out_readback=tmp_path / "readback.json",
+        out_manifest=tmp_path / "manifest.md",
+    )
+
+    with pytest.raises(ValueError, match="MOTION_RECIPE_KEYFRAME_COUNT_MISMATCH"):
+        build_motion_recipe_review(paths)
 
 
 def test_brief_unknown_goal_without_required_fields_raises(tmp_path: Path) -> None:

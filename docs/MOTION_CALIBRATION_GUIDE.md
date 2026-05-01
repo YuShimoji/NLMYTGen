@@ -8,11 +8,11 @@
 
 ---
 
-## 0. 状態 (2026-05-01)
+## 0. 状態 (2026-05-02)
 
-**初版作成中**。Step 4 で calibration .ymmp 6-7 件を build → user の YMM4 確認 → observation 反映 → 本書の各 § 観測値欄を埋める、というフローで完成する。
+**軌道修正中**。初回 calibration は threshold 観測ではなく、`KeyFrames` 同期漏れを発見する構造 smoke になった。特に B / C の animated pattern は `Values` 数に対して GroupItem `KeyFrames.Frames` / `Count` が更新されず、中間点が 1 点に潰れていたため、threshold としては無効。
 
-現状の表は **observation 欄が空** の draft。Step 5 完了時に値が入る。
+有効な観測は E face swap、D の一部 effect coupling、F anchor 禁忌のみ。B / C は修正後の `_tmp/g26/calibration/B_keyframes_smoke.ymmp` と `_tmp/g26/calibration/C_bounce_smoke.ymmp` で最小再確認する。
 
 ---
 
@@ -101,6 +101,8 @@ Rotation 系 motion における pivot の効き方。
 
 ### A. GroupItem static (観測値、Step 5 で記入)
 
+A1 / A2 は「数値が変更できること」の既知再確認に寄ったため、recipe threshold の主根拠としては扱わない。画面位置・占有率は production placement / seed / template-source 文脈で別途見る。
+
 | 軸 | 値 | 観測 | recipe で使う threshold |
 |----|----|-----|------------------------|
 | X | -200 | (未観測) |  |
@@ -121,39 +123,60 @@ Rotation 系 motion における pivot の効き方。
 
 ### B. Animated Rotation patterns (観測値、Step 5 で記入)
 
+初回 `B_rotation_patterns.ymmp` は **invalid due to KeyFrames bug**。`Values` が 5 個でも `KeyFrames={Frames:[14], Count:1}` のままで、中間点が同一frameへ潰れていた。下表は threshold ではなく、修正後 smoke で再観測する候補。
+
 | pattern | Length | 観測 | 用途 / threshold |
 |---------|--------|------|-----------------|
-| `[0, -10, 0]` | 30 | (未観測) | nod_clear 候補? |
-| `[0, -10, 0]` | 60 | (未観測) |  |
-| `[0, -10, -10, 0]` | 60 | (未観測) | hold が hold として読める? |
-| `[0, -5, -5, -5, 0]` | 80 | (未観測) | long-hold が単純揺れに退化しない? |
-| `[0, -7, 0, -5, 0]` | 66 | (未観測) | double が double に見える? |
-| `[0, 0, -10, 0]` | 90 | (未観測) | delayed nod の前半静止が認識? |
+| `[0, -10, 0]` | 30 | invalid: old file had stale KeyFrames | 修正後 smoke で再確認 |
+| `[0, -10, 0]` | 60 | invalid: old file had stale KeyFrames | 修正後 smoke で再確認 |
+| `[0, -10, -10, 0]` | 60 | invalid: old file had stale KeyFrames | 修正後 smoke で再確認 |
+| `[0, -5, -5, -5, 0]` | 80 | invalid: old file had stale KeyFrames | 修正後 smoke で再確認 |
+| `[0, -7, 0, -5, 0]` | 66 | invalid: old file had stale KeyFrames | 修正後 smoke で再確認 |
+| `[0, 0, -10, 0]` | 90 | invalid: old file had stale KeyFrames | 修正後 smoke で再確認 |
+
+修正後 smoke:
+
+| file | pattern | Length | KeyFrames | 観測 |
+|------|---------|--------|-----------|------|
+| `B_keyframes_smoke.ymmp` | 3pt simple | 60 | `[30]` | user 確認待ち |
+| `B_keyframes_smoke.ymmp` | 5pt double | 60 | `[15, 30, 45]` | user 確認待ち |
+| `B_keyframes_smoke.ymmp` | 7pt hold double | 60 | `[10, 20, 30, 40, 50]` | user 確認待ち |
 
 ### C. Y bounce patterns (観測値、Step 5 で記入)
 
+初回 `C_y_bounce_patterns.ymmp` も **invalid due to KeyFrames bug**。B と同じく、複数値 Y route の中間点が 1 点に潰れていた。修正後 smoke だけを手動確認対象にする。
+
 | pattern | 振幅 | 観測 | threshold |
 |---------|------|------|----------|
-| `[Y, Y-30, Y]` | 30 | (未観測) | jump_small の最低振幅? |
-| `[Y, Y-90, Y]` | 90 | (未観測) | jump_high として明確? |
-| `[Y, Y-150, Y]` | 150 | (未観測) | 過剰? |
-| `[Y, Y-30, Y+10, Y-30, Y]` | 30 | (未観測) | 二段が二段に見える? |
-| `[Y, Y-45, Y+5, Y-35, Y]` | 45→35 | (未観測) | 減衰 2 段が読める? |
+| `[Y, Y-30, Y]` | 30 | invalid: old file had stale KeyFrames | 修正後 smoke で再確認 |
+| `[Y, Y-90, Y]` | 90 | invalid: old file had stale KeyFrames | 修正後 smoke で再確認 |
+| `[Y, Y-150, Y]` | 150 | invalid: old file had stale KeyFrames | 修正後 smoke で再確認 |
+| `[Y, Y-30, Y+10, Y-30, Y]` | 30 | invalid: old file had stale KeyFrames | 修正後 smoke で再確認 |
+| `[Y, Y-45, Y+5, Y-35, Y]` | 45→35 | invalid: old file had stale KeyFrames | 修正後 smoke で再確認 |
+
+修正後 smoke:
+
+| file | pattern | Length | KeyFrames | 観測 |
+|------|---------|--------|-----------|------|
+| `C_bounce_smoke.ymmp` | 3pt single | 60 | `[30]` | user 確認待ち |
+| `C_bounce_smoke.ymmp` | 5pt double | 60 | `[15, 30, 45]` | user 確認待ち |
+| `C_bounce_smoke.ymmp` | 7pt triple decay | 60 | `[10, 20, 30, 40, 50]` | user 確認待ち |
 
 ### D. Effect intensity (観測値、Step 5 で記入)
 
 | effect | parameter 値 | 観測 | intensity scaling |
 |--------|-------------|------|-------------------|
-| JumpEffect Stretch | 10 | (未観測) | _light? |
-| JumpEffect Stretch | 25 | (未観測) | medium? |
-| JumpEffect Stretch | 50 | (未観測) | _heavy? |
-| CrashEffect Size | 30 | (未観測) |  |
-| CrashEffect Size | 80 | (未観測) |  |
+| JumpEffect Stretch | 10 | Height 側にロックされ、Stretch 単独差分として読みにくい | Stretch 単独 override 禁止 |
+| JumpEffect Stretch | 25 | Height 側にロックされ、Stretch 単独差分として読みにくい | Stretch 単独 override 禁止 |
+| JumpEffect Stretch | 50 | Height 側にロックされ、Stretch 単独差分として読みにくい | Stretch 単独 override 禁止 |
+| CrashEffect Size | 30 | 細かく重く見える | 小さすぎ注意 |
+| CrashEffect Size | 80 | 大きめで良い。細かさより軽く見える | panic/crash 標準候補 |
 | ChromaticAberration Strength | 5 | (未観測) | 弱すぎるライン? |
 | ChromaticAberration Strength | 15 | (未観測) |  |
 | ChromaticAberration Strength | 30 | (未観測) | 過剰? |
 | GaussianBlur Blur | 2 | (未観測) |  |
-| GaussianBlur Blur | 10 | (未観測) |  |
+| GaussianBlur Blur | 5 | 顔が微妙に見える | 弱defocus候補 |
+| GaussianBlur Blur | 10 | 顔が分からなくなる | 強すぎ / 顔演技と併用注意 |
 | RepeatRotate Span | 0.3 | (未観測) |  |
 | RepeatRotate Span | 1.0 | (未観測) |  |
 
@@ -161,19 +184,20 @@ Rotation 系 motion における pivot の効き方。
 
 | face_id | 観測 | 採用可否 |
 |---------|------|---------|
-| shocked | (未観測) | surprise 系で使えるか |
-| panic | (未観測) | panic 系で使えるか |
-| surprised | (未観測) | surprise の弱い形 |
-| anger | (未観測) | anger 系 |
-| shobon | (未観測) | sadness 系 |
+| easy | 正常表示 | neutral / agreement 系で採用可 |
+| shocked | 正常表示 | surprise 系で採用可 |
+| panic | 正常表示 | panic 系で採用可 |
+| surprised | 正常表示 | surprise の弱い形で採用可 |
+| anger | 正常表示 | anger 系で採用可 |
+| shobon | 正常表示 | sadness 系で採用可 |
 
 ### F. Anchor mode (観測値、Step 5 で記入)
 
 | mode | Rotation -10° の見え方 | 推奨用途 |
 |------|---------------------|---------|
-| Bottom + Custom (頭部) | (未観測) | nod / lean / tilt |
-| Center | (未観測) | 体ごとの傾き演出 |
-| 不在 | (未観測) | (推奨されない可能性) |
+| Bottom + Custom (頭部) | 既存 `nod.ymmp` / `delivery_nod_v1` の ground truth。実用基準 | nod / lean / tilt の既定 |
+| Center | 画面外に出て上半身のみになる。位置補正なしでは不可 | 禁忌、またはX/Y補正実装後のみ |
+| 不在 | 画面外に出る。回転中心が大きく左側にあり、頷き時に上昇して見える | 禁忌 |
 
 ---
 
@@ -190,6 +214,9 @@ _tmp/g26/calibration/
   D_effect_intensity.ymmp         # 6 effect × 3 値
   E_face_swap.ymmp                # 5 face (easy 除く)
   F_anchor_modes.ymmp             # 3 anchor mode × Rotation -10° 動
+  B_keyframes_smoke.ymmp          # KeyFrames修正後の Rotation 3/5/7pt smoke
+  C_bounce_smoke.ymmp             # KeyFrames修正後の Y bounce 3/5/7pt smoke
+  STRUCTURAL_SMOKE_README.md      # B/C smoke の確認ポイント
   README.md                       # 各 .ymmp の frame 配置と観測ポイント
 ```
 

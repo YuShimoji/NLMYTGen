@@ -40,6 +40,8 @@
 
 8. **YMM4 内部挙動の baseline 検証**: 中間 keyframe (`[a, b, b, b, a]` のような hold pattern)、Span=0 + Values 複数の解釈、anchor mode 別の Rotation 見え方など、**YMM4 が実際にどう描画するか** を仮定で進めない。calibration .ymmp で 1 度観測し、観測値を [`MOTION_CALIBRATION_GUIDE.md`](MOTION_CALIBRATION_GUIDE.md) に記録してから、その値を recipe で使う。
 
+   Structural gate: route `Values` を複数にした GroupItem は、YMM4 へ渡す前に `KeyFrames.Frames` / `Count` を同期する。複数の animated route が異なる point 数を持つ場合は `MOTION_RECIPE_KEYFRAME_COUNT_MISMATCH` で停止し、user visual check に回さない。
+
 9. **Reference-anchored construction**: 新 recipe は `samples/nod.ymmp` / `samples/templates/skit_group/delivery_v1_templates.ymmp` 等の **user 手作 .ymmp を ground truth** として、route / effect / anchor の構造差分を明示してから build する。「nod の派生」「surprise_oneshot に Rotation 追加」のように関係を明文化。仮定で構造を作らない。
 
 10. **Stale artifact lifecycle**: 実装が進んで defect が判明したら、defect を持つ古い review .ymmp を **`_tmp/g26/recipe_pipeline/superseded_<date>/` に物理移動**し、INDEX.md / handoff doc / runtime-state に **STATUS: SUPERSEDED** marker を立てる。古い出力を新出力と同列に acceptance に並べない。古い defect の発見が複数 recipe で繰り返されることを防ぐ。
