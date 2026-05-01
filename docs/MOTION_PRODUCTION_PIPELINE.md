@@ -34,13 +34,31 @@
 
 5. **Rearranging existing samples を progress と称することの禁止**: 既存 motion を別 frame に並べたものは composition ではない。Phase A の motion brief が無いビルドは progress として記録しない。
 
-6. **「感覚」「だいたい」でのパラメータ決定禁止**: Phase C は `MOTION_RECIPE_LOOP_TIMING.md`（予定、Slice 2）の range 表 + [`build_library_v2.py`](../samples/_probe/b2/build_library_v2.py) の値 + [`samples/_probe/b2/effect_full_samples.json`](../samples/_probe/b2/effect_full_samples.json) を canonical reference として使う。表に該当値が無い effect は [`extract_effect_params.py`](../samples/_probe/b2/extract_effect_params.py) で `EffectsSamples_2026-04-15.ymmp` から抽出する。
+6. **「感覚」「だいたい」でのパラメータ決定禁止**: Phase C は [`MOTION_RECIPE_LOOP_TIMING.md`](MOTION_RECIPE_LOOP_TIMING.md) の range 表 + [`MOTION_CALIBRATION_GUIDE.md`](MOTION_CALIBRATION_GUIDE.md) の観測 threshold + [`build_library_v2.py`](../samples/_probe/b2/build_library_v2.py) の値を canonical reference として使う。表に該当値が無い effect は [`extract_effect_params.py`](../samples/_probe/b2/extract_effect_params.py) で `EffectsSamples_2026-04-15.ymmp` から抽出する。
+
+7. **要所 smoke test (per-element / per-category)**: recipe 単位の smoke test ではなく **element 単位の calibration** を入口にする。新しい route 構造 / effect / face / anchor を recipe に組み込む前に、その element 単独の挙動を `_tmp/g26/calibration/` 配下の最小 .ymmp で 1 回観測する。recipe 12 件まとめて build → 12 件まとめて acceptance、というフローは禁止。Phase D 改修や新 element 導入時のみ calibration を再走、通常の recipe 量産では calibration guide の observed 値を信頼して進める。
+
+8. **YMM4 内部挙動の baseline 検証**: 中間 keyframe (`[a, b, b, b, a]` のような hold pattern)、Span=0 + Values 複数の解釈、anchor mode 別の Rotation 見え方など、**YMM4 が実際にどう描画するか** を仮定で進めない。calibration .ymmp で 1 度観測し、観測値を [`MOTION_CALIBRATION_GUIDE.md`](MOTION_CALIBRATION_GUIDE.md) に記録してから、その値を recipe で使う。
+
+9. **Reference-anchored construction**: 新 recipe は `samples/nod.ymmp` / `samples/templates/skit_group/delivery_v1_templates.ymmp` 等の **user 手作 .ymmp を ground truth** として、route / effect / anchor の構造差分を明示してから build する。「nod の派生」「surprise_oneshot に Rotation 追加」のように関係を明文化。仮定で構造を作らない。
+
+10. **Stale artifact lifecycle**: 実装が進んで defect が判明したら、defect を持つ古い review .ymmp を **`_tmp/g26/recipe_pipeline/superseded_<date>/` に物理移動**し、INDEX.md / handoff doc / runtime-state に **STATUS: SUPERSEDED** marker を立てる。古い出力を新出力と同列に acceptance に並べない。古い defect の発見が複数 recipe で繰り返されることを防ぐ。
+
+11. **Single-recipe build option**: smoke / 段階 rebuild のために `build-motion-recipes --recipe-id <goal_id>` で 1 件だけ build できる経路を保持。bulk 12 件 build は user pass 確認後にのみ実行。
+
+12. **Acceptance pending 中の新 recipe build 禁止**: 既存 review .ymmp が visual acceptance 未済の間は、新 recipe の build を行わない。古い defect が次世代出力に伝播するのを防ぐ。Phase E が動いてから次の Phase A/D へ。
+
+13. **Schema 必須化: `face_id` / `anchor_template_source`**: brief 内 recipe entry に **`face_id`** (emotion → reimu_*.png mapping か明示指定) と **`anchor_template_source`** (`delivery_nod_v1` 既定 / 他 template 指定可) を必須化。表情切替・anchor 切替が「実装漏れ」ではなく「契約違反」になる schema レベルで強制。CLI が field 欠で reject。
 
 ---
 
 ## 2. 5-Phase Pipeline 全体像
 
 ```
+Phase 0:  Calibration (initial / 改修時のみ、要所 smoke)
+            input:  element list (GroupItem props / Effects / keyframe pattern / face / anchor)
+            output: MOTION_CALIBRATION_GUIDE.md (観測 threshold + scaling formula)
+              ↓
 Phase A:  Motion Brief (creative ideation)
             input:  シーン / utterance / 望む情緒
             output: brief JSON   (samples/recipe_briefs/<id>.json)
@@ -50,11 +68,11 @@ Phase B:  Catalog Inspection (mechanical)
             output: effect shortlist (build-motion-recipes 内部処理)
               ↓
 Phase C:  Recipe Assembly (loop / timing 逆算)
-            input:  shortlist + concrete effect samples + motion library
+            input:  shortlist + concrete effect samples + motion library + CALIBRATION_GUIDE
             output: recipe (build-motion-recipes 内部処理)
               ↓
 Phase D:  Build Sample (.ymmp)
-            input:  recipe + seed .ymmp + 表情 asset
+            input:  recipe + seed .ymmp + 表情 asset (face_id mapping)
             output: review .ymmp + readback JSON + manifest MD
               ↓
 Phase E:  Visual Acceptance & Library Promotion
@@ -62,7 +80,9 @@ Phase E:  Visual Acceptance & Library Promotion
             output: tachie_motion_map_library.json 追記 + registry 更新
 ```
 
-**Phase D で初めて `.ymmp` を作る**。Phase A〜C を飛ばして D に行くのは Anti-shortcut Rule #1 違反。
+**Phase D で初めて recipe-level の `.ymmp` を作る**。Phase A〜C を飛ばして D に行くのは Anti-shortcut Rule #1 違反。
+
+**Phase 0 (Calibration)** は新 element / 新 effect / 新 anchor 導入時にのみ走らせる single-element 観測フェーズ。recipe build より上流に位置し、`MOTION_CALIBRATION_GUIDE.md` を更新する。一度 calibrate した element は guide の値を引いて再走しない (Rule R7)。
 
 ---
 

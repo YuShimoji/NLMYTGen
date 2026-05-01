@@ -1,10 +1,18 @@
 # G-26 Visual Acceptance Handoff
 
-> **対象**: `build-motion-recipes` で生成済の 16 recipe を YMM4 で目視確認し、各 recipe を 9 区分で分類する作業手順。
+> **STATUS: SUPERSEDED — 本 handoff の 16 recipe は acceptance 不適**
 >
-> **位置づけ**: [MOTION_PRODUCTION_PIPELINE.md § 5 Phase E](../MOTION_PRODUCTION_PIPELINE.md) の実走 handoff。本書 1 件で acceptance を完遂できるよう独立して書く。
+> 2026-05-01 user verification で defect 7 件確認 (表情固定 / anchor 流用 / hold 退化 / 振幅不足 / effect parameter 弱小)。本 handoff の対象 .ymmp は `_tmp/g26/recipe_pipeline/superseded_2026-05-01/` 配下に物理移動済。
 >
-> **資料**: [`_tmp/g26/acceptance_pack/INDEX.md`](../../_tmp/g26/acceptance_pack/INDEX.md) に 16 recipe + 3 sheet + 3 promotion log のリンク集。
+> Calibration phase ([`MOTION_PRODUCTION_PIPELINE.md` § 2 Phase 0](../MOTION_PRODUCTION_PIPELINE.md)) を経た上で、`motion_recipe.py` 改修 + recipe 段階 rebuild の後に新 handoff doc を発行する。
+>
+> 本 doc は履歴として残置 (将来似た流れの再発防止 reference)。以下の記述は当時の意図。
+
+> **対象 (当時)**: `build-motion-recipes` で生成済の 16 recipe を YMM4 で目視確認し、各 recipe を 9 区分で分類する作業手順。
+>
+> **位置づけ (当時)**: [MOTION_PRODUCTION_PIPELINE.md § 5 Phase E](../MOTION_PRODUCTION_PIPELINE.md) の実走 handoff。本書 1 件で acceptance を完遂できるよう独立して書く。
+>
+> **資料 (当時)**: [`_tmp/g26/acceptance_pack/INDEX.md`](../../_tmp/g26/acceptance_pack/INDEX.md) に 16 recipe + 3 sheet + 3 promotion log のリンク集。
 
 ---
 

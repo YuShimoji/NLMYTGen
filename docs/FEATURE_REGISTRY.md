@@ -163,6 +163,8 @@ G-26 recipe lab correction (2026-04-30): absence of user-authored tilt/chain sou
 
 G-26 recipe pipeline v1 (2026-04-30): added CLI artifact route `build-motion-recipes` for intent-first sample creation. It consumes `samples/recipe_briefs/g26_motion_recipe_brief.v1.json`, YMM4 seed/template source, `samples/effect_catalog.json`, `samples/_probe/b2/effect_full_samples.json`, and `samples/tachie_motion_map_library.json`, then writes `_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1.{ymmp,md}` plus readback JSON. Initial set covers 12 proposed recipes (`nod_*`, `jump_*`, `panic_crash`, `shocked_jump`, `surprised_chromatic`, `anger_outburst`, `shobon_droop`, `lean_curious`). 正本: [G26-motion-recipe-pipeline-2026-04-30.md](verification/G26-motion-recipe-pipeline-2026-04-30.md)。
 
+G-26 Calibration phase 開始 (2026-05-01): v1/slice3_proof/slice4_proof 計 16 recipe を visual acceptance で defect 7 件 (face fixed / anchor reused / hold 退化 / 振幅不足 / effect parameter 弱小 / etc.) のため全 superseded、`_tmp/g26/recipe_pipeline/superseded_2026-05-01/` に物理移動。Anti-Shortcut Rules を R7-R13 へ拡張し、Phase 0 (Calibration: element 単位 baseline 観測) を pipeline 図に追加。`face_id` / `anchor_template_source` を recipe schema 必須化予定。次は calibration .ymmp 6-7 件で element threshold を確定 → `motion_recipe.py` 改修 → 段階 rebuild。正本: [MOTION_PRODUCTION_PIPELINE.md](MOTION_PRODUCTION_PIPELINE.md) Phase 0 + R7-R13。
+
 ### H. Packaging / 評価 / オーケストレーション (L2 + L4)
 
 | ID | 機能 | ステータス | レイヤー | 備考 |
