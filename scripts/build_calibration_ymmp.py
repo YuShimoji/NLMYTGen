@@ -506,6 +506,7 @@ threshold 観測としては無効。
 assistant 側の事前検証条件:
 
 - 各 GroupItem で `len(animated Values) == KeyFrames.Count + 2`
+- animated route の `AnimationType` が `なし` ではない (`直線移動`)
 - POSIX asset paths 0
 - blank asset paths 0
 """,

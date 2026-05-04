@@ -31,11 +31,22 @@ DEFAULT_OUTPUT_MANIFEST_PATH = Path(
     "_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1_manifest.md"
 )
 
+REPO_ROOT = Path(__file__).resolve().parents[2]
 RECIPE_STATUS_PROPOSED = "proposed"
 RECIPE_REMARK_PREFIX = "recipe:"
 BASE_TEMPLATE_NAME = "delivery_nod_v1"
 DEFAULT_LAYER = 9
 DEFAULT_GROUP_RANGE = 2
+MOTION_SOURCE_GENERATED_ROUTE = "generated_route"
+MOTION_SOURCE_NATIVE_TEMPLATE = "native_template"
+CHARACTER_FACE_FILES = {
+    "easy": Path("samples/characterAnimSample/reimu_easy.png"),
+    "shocked": Path("samples/characterAnimSample/reimu_shocked.png"),
+    "panic": Path("samples/characterAnimSample/reimu_panic.png"),
+    "surprised": Path("samples/characterAnimSample/reimu_surprised.png"),
+    "anger": Path("samples/characterAnimSample/reimu_anger.png"),
+    "shobon": Path("samples/characterAnimSample/reimu_shobon.png"),
+}
 
 
 @dataclass(frozen=True)
@@ -50,6 +61,7 @@ class MotionRecipeBuildPaths:
     out_manifest: Path = DEFAULT_OUTPUT_MANIFEST_PATH
     effect_samples: Path | None = DEFAULT_EFFECT_SAMPLES_PATH
     corpus_ymmp: Path | None = DEFAULT_CORPUS_YMMP_PATH
+    recipe_id: str | None = None
 
 
 DEFAULT_RECIPE_ORDER = [
@@ -237,14 +249,8 @@ def build_motion_recipe_review(paths: MotionRecipeBuildPaths) -> dict[str, Any]:
 
     template_source = load_ymmp(paths.template_source)
     templates = extract_skit_group_templates(template_source)
-    base_clip = templates.get(BASE_TEMPLATE_NAME) or next(iter(templates.values()), None)
-    if base_clip is None:
+    if not templates:
         raise ValueError("MOTION_RECIPE_TEMPLATE_SOURCE_EMPTY")
-
-    base_group = _first_group_item(base_clip)
-    base_images = _image_items(base_clip)
-    if len(base_images) < 1:
-        raise ValueError("MOTION_RECIPE_TEMPLATE_SOURCE_NO_IMAGE_CHILDREN")
 
     effect_catalog = _load_json(paths.effect_catalog)
     motion_library = _load_json(paths.motion_library)
@@ -269,24 +275,41 @@ def build_motion_recipe_review(paths: MotionRecipeBuildPaths) -> dict[str, Any]:
     if not isinstance(effect_catalog_entries, dict):
         raise ValueError("MOTION_RECIPE_EFFECT_CATALOG_INVALID")
 
-    recipes = _resolve_brief_recipes(brief)
-    rest_pose = _rest_pose_from_group(base_group)
+    recipes = _filter_recipes_by_id(
+        _resolve_brief_recipes(brief),
+        recipe_id=paths.recipe_id,
+    )
     spacing = _brief_spacing(brief)
     items: list[dict[str, Any]] = []
     readback_recipes: list[dict[str, Any]] = []
     warnings: list[str] = []
 
     for index, recipe in enumerate(recipes):
+        template_clip, anchor_template_source = _template_clip_for_recipe(recipe, templates)
         frame = int(recipe.get("frame", index * spacing))
-        recipe_items, recipe_readback, recipe_warnings = _build_recipe_items(
-            recipe=recipe,
-            frame=frame,
-            base_group=base_group,
-            base_images=base_images,
-            rest_pose=rest_pose,
-            effect_objects=effect_objects,
-            effect_catalog_entries=effect_catalog_entries,
-        )
+        if _motion_source(recipe) == MOTION_SOURCE_NATIVE_TEMPLATE:
+            recipe_items, recipe_readback, recipe_warnings = _build_native_template_items(
+                recipe=recipe,
+                frame=frame,
+                anchor_template_source=anchor_template_source,
+                template_clip=template_clip,
+            )
+        else:
+            base_group = _first_group_item(template_clip)
+            base_images = _image_items(template_clip)
+            if len(base_images) < 1:
+                raise ValueError("MOTION_RECIPE_TEMPLATE_SOURCE_NO_IMAGE_CHILDREN")
+            rest_pose = _rest_pose_from_group(base_group)
+            recipe_items, recipe_readback, recipe_warnings = _build_recipe_items(
+                recipe=recipe,
+                frame=frame,
+                anchor_template_source=anchor_template_source,
+                base_group=base_group,
+                base_images=base_images,
+                rest_pose=rest_pose,
+                effect_objects=effect_objects,
+                effect_catalog_entries=effect_catalog_entries,
+            )
         items.extend(recipe_items)
         readback_recipes.append(recipe_readback)
         warnings.extend(recipe_warnings)
@@ -321,7 +344,7 @@ def build_motion_recipe_review(paths: MotionRecipeBuildPaths) -> dict[str, Any]:
     readback = {
         "success": True,
         "artifact_kind": "g26_motion_recipe_review",
-        "schema_version": "1.0",
+        "schema_version": str(brief.get("schema_version", "1.0")),
         "status_model": {
             "review_candidate": RECIPE_STATUS_PROPOSED,
             "accepted_candidate": "requires_yymm4_visual_pass",
@@ -336,6 +359,7 @@ def build_motion_recipe_review(paths: MotionRecipeBuildPaths) -> dict[str, Any]:
             "motion_library": str(paths.motion_library),
             "corpus_ymmp": str(paths.corpus_ymmp) if paths.corpus_ymmp else None,
             "corpus_ymmp_used": corpus_data is not None,
+            "recipe_id": paths.recipe_id,
         },
         "outputs": {
             "ymmp": str(paths.out_ymmp),
@@ -381,6 +405,7 @@ def _load_json(path: Path | str | None) -> Any:
 def _resolve_brief_recipes(brief: dict[str, Any]) -> list[dict[str, Any]]:
     if not isinstance(brief, dict):
         raise ValueError("MOTION_RECIPE_BRIEF_INVALID")
+    is_v2 = _is_v2_brief(brief)
     raw_recipes = brief.get("recipes")
     if raw_recipes is None:
         raw_recipes = [brief] if brief.get("motion_goal") else DEFAULT_RECIPE_ORDER
@@ -418,15 +443,43 @@ def _resolve_brief_recipes(brief: dict[str, Any]) -> list[dict[str, Any]]:
             "reset_policy",
             "forbidden_patterns",
         )
-        if preset is None:
+        motion_source = _motion_source(recipe)
+        if preset is None and motion_source != MOTION_SOURCE_NATIVE_TEMPLATE:
             # Novel goal must self-supply effect_candidates so the shortlist
             # is non-empty (otherwise _build_recipe_items raises later).
             required_keys = required_keys + ("effect_candidates",)
+        if is_v2:
+            required_keys = required_keys + ("face_id", "anchor_template_source")
         for required_key in required_keys:
             if required_key not in recipe:
                 raise ValueError(f"MOTION_RECIPE_FIELD_REQUIRED: {goal_id}.{required_key}")
         resolved.append(recipe)
     return resolved
+
+
+def _is_v2_brief(brief: dict[str, Any]) -> bool:
+    return str(brief.get("schema_version", "")).split(".")[0] == "2"
+
+
+def _motion_source(recipe: dict[str, Any]) -> str:
+    value = recipe.get("motion_source", MOTION_SOURCE_GENERATED_ROUTE)
+    if value not in {MOTION_SOURCE_GENERATED_ROUTE, MOTION_SOURCE_NATIVE_TEMPLATE}:
+        goal_id = str(recipe.get("goal_id", "<unknown>"))
+        raise ValueError(f"MOTION_RECIPE_MOTION_SOURCE_UNKNOWN: {goal_id}.{value}")
+    return str(value)
+
+
+def _filter_recipes_by_id(
+    recipes: list[dict[str, Any]],
+    *,
+    recipe_id: str | None,
+) -> list[dict[str, Any]]:
+    if recipe_id is None:
+        return recipes
+    filtered = [recipe for recipe in recipes if recipe.get("goal_id") == recipe_id]
+    if not filtered:
+        raise ValueError(f"MOTION_RECIPE_ID_NOT_FOUND: {recipe_id}")
+    return filtered
 
 
 def _brief_spacing(brief: dict[str, Any]) -> int:
@@ -436,6 +489,22 @@ def _brief_spacing(brief: dict[str, Any]) -> int:
         if isinstance(spacing, int) and spacing > 0:
             return spacing
     return 140
+
+
+def _template_clip_for_recipe(
+    recipe: dict[str, Any],
+    templates: dict[str, Any],
+) -> tuple[Any, str]:
+    goal_id = str(recipe.get("goal_id", "<unknown>"))
+    raw_anchor = recipe.get("anchor_template_source", BASE_TEMPLATE_NAME)
+    if not isinstance(raw_anchor, str) or not raw_anchor:
+        raise ValueError(f"MOTION_RECIPE_FIELD_REQUIRED: {goal_id}.anchor_template_source")
+    clip = templates.get(raw_anchor)
+    if clip is None:
+        raise ValueError(
+            f"MOTION_RECIPE_ANCHOR_TEMPLATE_SOURCE_MISSING: {goal_id}: {raw_anchor}"
+        )
+    return clip, raw_anchor
 
 
 def _first_group_item(clip: Any) -> dict[str, Any]:
@@ -465,6 +534,7 @@ def _build_recipe_items(
     *,
     recipe: dict[str, Any],
     frame: int,
+    anchor_template_source: str,
     base_group: dict[str, Any],
     base_images: list[dict[str, Any]],
     rest_pose: dict[str, float],
@@ -524,6 +594,9 @@ def _build_recipe_items(
     if not effect_shortlist:
         raise ValueError(f"MOTION_RECIPE_EFFECT_SHORTLIST_EMPTY: {goal_id}")
 
+    face_id = recipe.get("face_id")
+    _apply_recipe_face_id(image_items, goal_id=goal_id, face_id=face_id)
+
     readback = {
         "goal_id": goal_id,
         "status": RECIPE_STATUS_PROPOSED,
@@ -531,6 +604,9 @@ def _build_recipe_items(
         "frame": frame,
         "length": length,
         "layer": group.get("Layer"),
+        "face_id": face_id,
+        "anchor_template_source": anchor_template_source,
+        "motion_source": MOTION_SOURCE_GENERATED_ROUTE,
         "motion_goal": recipe["motion_goal"],
         "emotion": recipe["emotion"],
         "intensity": recipe["intensity"],
@@ -551,6 +627,147 @@ def _build_recipe_items(
         "expected_review": "YMM4 visual acceptance required before promotion",
     }
     return items, readback, warnings
+
+
+def _build_native_template_items(
+    *,
+    recipe: dict[str, Any],
+    frame: int,
+    anchor_template_source: str,
+    template_clip: Any,
+) -> tuple[list[dict[str, Any]], dict[str, Any], list[str]]:
+    goal_id = str(recipe["goal_id"])
+    remark = f"{RECIPE_REMARK_PREFIX}{goal_id}"
+    length = int(recipe["duration_frames"])
+    items = _clone_native_template_items(
+        template_clip,
+        frame=frame,
+        length=length,
+        remark=remark,
+    )
+    group_items = [item for item in items if _item_type(item) == "GroupItem"]
+    image_items = [item for item in items if _item_type(item) == "ImageItem"]
+    if not group_items:
+        raise ValueError("MOTION_RECIPE_TEMPLATE_SOURCE_NO_GROUP")
+    if not image_items:
+        raise ValueError("MOTION_RECIPE_TEMPLATE_SOURCE_NO_IMAGE_CHILDREN")
+
+    primary_group = _primary_native_motion_group(group_items)
+    keyframe_info = _group_keyframe_info(primary_group)
+    readback = {
+        "goal_id": goal_id,
+        "status": RECIPE_STATUS_PROPOSED,
+        "remark": remark,
+        "frame": frame,
+        "length": length,
+        "layer": primary_group.get("Layer"),
+        "face_id": recipe.get("face_id"),
+        "anchor_template_source": anchor_template_source,
+        "motion_source": MOTION_SOURCE_NATIVE_TEMPLATE,
+        "motion_goal": recipe["motion_goal"],
+        "emotion": recipe["emotion"],
+        "intensity": recipe["intensity"],
+        "reset_policy": recipe["reset_policy"],
+        "forbidden_patterns": list(recipe.get("forbidden_patterns", [])),
+        "route_values": {
+            "X": _axis_values(primary_group, "X"),
+            "Y": _axis_values(primary_group, "Y"),
+            "Rotation": _axis_values(primary_group, "Rotation"),
+            "Zoom": _axis_values(primary_group, "Zoom"),
+        },
+        "route_point_count": keyframe_info["route_point_count"],
+        "route_point_counts": keyframe_info["route_point_counts"],
+        "keyframe_count": keyframe_info["keyframe_count"],
+        "keyframe_frames": keyframe_info["keyframe_frames"],
+        "used_effects": sorted({
+            _effect_name(effect)
+            for group in group_items
+            for effect in group.get("VideoEffects", [])
+            if isinstance(effect, dict) and _effect_name(effect)
+        }),
+        "effect_shortlist": [],
+        "native_template_item_count": len(items),
+        "native_template_group_count": len(group_items),
+        "native_template_image_count": len(image_items),
+        "native_template_groups": [_native_group_readback(group) for group in group_items],
+        "expected_review": "YMM4 visual acceptance required before promotion",
+    }
+    return items, readback, []
+
+
+def _clone_native_template_items(
+    template_clip: Any,
+    *,
+    frame: int,
+    length: int,
+    remark: str,
+) -> list[dict[str, Any]]:
+    cloned: list[dict[str, Any]] = []
+    base_frame = int(getattr(template_clip, "base_frame", 0))
+    for item in template_clip.items:
+        if _item_type(item) not in {"GroupItem", "ImageItem"}:
+            continue
+        new_item = copy.deepcopy(item)
+        new_item["Frame"] = frame + int(new_item.get("Frame", 0)) - base_frame
+        new_item["Length"] = length
+        new_item["Remark"] = remark
+        if _item_type(new_item) == "ImageItem":
+            file_path = new_item.get("FilePath")
+            if isinstance(file_path, str) and file_path:
+                resolved = _resolve_repo_asset_path(file_path)
+                if resolved is not None:
+                    new_item["FilePath"] = _format_yymm_asset_path(resolved)
+        cloned.append(new_item)
+    return cloned
+
+
+def _primary_native_motion_group(group_items: list[dict[str, Any]]) -> dict[str, Any]:
+    animated = [
+        group
+        for group in group_items
+        if _animated_route_point_counts(group)
+    ]
+    if animated:
+        return max(animated, key=lambda group: int(group.get("Layer", 0)))
+    return group_items[0]
+
+
+def _group_keyframe_info(group: dict[str, Any]) -> dict[str, Any]:
+    keyframes = group.get("KeyFrames")
+    frames = keyframes.get("Frames") if isinstance(keyframes, dict) else []
+    if not isinstance(frames, list):
+        frames = []
+    route_point_counts = _animated_route_point_counts(group)
+    route_point_count = max(route_point_counts.values(), default=1)
+    return {
+        "route_point_count": route_point_count,
+        "route_point_counts": route_point_counts,
+        "keyframe_count": len(frames),
+        "keyframe_frames": [int(frame) for frame in frames],
+    }
+
+
+def _native_group_readback(group: dict[str, Any]) -> dict[str, Any]:
+    keyframe_info = _group_keyframe_info(group)
+    return {
+        "layer": group.get("Layer"),
+        "group_range": group.get("GroupRange"),
+        "route_values": {
+            "X": _axis_values(group, "X"),
+            "Y": _axis_values(group, "Y"),
+            "Rotation": _axis_values(group, "Rotation"),
+            "Zoom": _axis_values(group, "Zoom"),
+        },
+        "rotation_animation": (
+            group.get("Rotation", {}).get("AnimationType")
+            if isinstance(group.get("Rotation"), dict)
+            else None
+        ),
+        "route_point_count": keyframe_info["route_point_count"],
+        "route_point_counts": keyframe_info["route_point_counts"],
+        "keyframe_count": keyframe_info["keyframe_count"],
+        "keyframe_frames": keyframe_info["keyframe_frames"],
+    }
 
 
 def _normalize_group(
@@ -597,13 +814,38 @@ def _clone_images(
     return cloned
 
 
+def _apply_recipe_face_id(
+    image_items: list[dict[str, Any]],
+    *,
+    goal_id: str,
+    face_id: Any,
+) -> None:
+    if face_id is None:
+        return
+    if not isinstance(face_id, str) or not face_id:
+        raise ValueError(f"MOTION_RECIPE_FACE_ID_UNKNOWN: {goal_id}.{face_id}")
+    face_file = CHARACTER_FACE_FILES.get(face_id)
+    if face_file is None:
+        raise ValueError(f"MOTION_RECIPE_FACE_ID_UNKNOWN: {goal_id}.{face_id}")
+    resolved = REPO_ROOT / face_file
+    if not resolved.exists():
+        raise ValueError(f"MOTION_RECIPE_FACE_ASSET_MISSING: {goal_id}.{face_id}")
+
+    face_layer = DEFAULT_LAYER + 2
+    for image in image_items:
+        if int(image.get("Layer", -1)) == face_layer:
+            image["FilePath"] = _format_yymm_asset_path(resolved)
+            return
+    raise ValueError(f"MOTION_RECIPE_FACE_IMAGE_MISSING: {goal_id}")
+
+
 def _set_transform_values(item: dict[str, Any], axis_name: str, values: list[float]) -> None:
     transform = copy.deepcopy(item.get(axis_name))
     if not isinstance(transform, dict):
         transform = {"Span": 0.0, "AnimationType": "なし"}
     transform["Values"] = [{"Value": float(value)} for value in values]
     if len(values) > 1:
-        transform["AnimationType"] = _linear_animation_type(item)
+        transform["AnimationType"] = _animated_animation_type(transform)
     else:
         transform["AnimationType"] = "なし"
     item[axis_name] = transform
@@ -698,10 +940,10 @@ def _validate_keyframe_frames(
     return frames
 
 
-def _linear_animation_type(item: dict[str, Any]) -> str:
-    rotation = item.get("Rotation")
-    if isinstance(rotation, dict) and isinstance(rotation.get("AnimationType"), str):
-        return rotation["AnimationType"]
+def _animated_animation_type(transform: dict[str, Any]) -> str:
+    animation_type = transform.get("AnimationType")
+    if isinstance(animation_type, str) and animation_type and animation_type != "なし":
+        return animation_type
     return "直線移動"
 
 

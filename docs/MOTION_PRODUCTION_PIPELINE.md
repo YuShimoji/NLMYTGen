@@ -52,6 +52,8 @@
 
 13. **Schema 必須化: `face_id` / `anchor_template_source`**: brief 内 recipe entry に **`face_id`** (emotion → reimu_*.png mapping か明示指定) と **`anchor_template_source`** (`delivery_nod_v1` 既定 / 他 template 指定可) を必須化。表情切替・anchor 切替が「実装漏れ」ではなく「契約違反」になる schema レベルで強制。CLI が field 欠で reject。
 
+14. **Native template clone**: authored YMM4 template を保持したい recipe は `motion_source: "native_template"` を使う。builder は anchor template 内の GroupItem / ImageItem をすべて clone し、frame / length / Remark / asset path だけ正規化する。route 再生成・face 差し替え・effect 合成は行わない。
+
 ---
 
 ## 2. 5-Phase Pipeline 全体像

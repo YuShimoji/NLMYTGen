@@ -18,7 +18,7 @@ Usage:
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
-    python -m src.cli.main build-motion-recipes [--brief brief.json] [--out-ymmp review.ymmp] [--out-readback readback.json] [--out-manifest manifest.md]
+    python -m src.cli.main build-motion-recipes [--brief brief.json] [--recipe-id goal_id] [--out-ymmp review.ymmp] [--out-readback readback.json] [--out-manifest manifest.md]
     python -m src.cli.main score-thumbnail-s8 --scores '{"single_claim":2,...}' [--payload ...] [--format text|json]
 """
 
@@ -1235,6 +1235,10 @@ def main(argv: list[str] | None = None) -> int:
         help="Motion recipe brief JSON (default: samples/recipe_briefs/g26_motion_recipe_brief.v1.json)",
     )
     p_motion_recipes.add_argument(
+        "--recipe-id",
+        help="Build only the matching recipe goal_id (default: build all brief recipes)",
+    )
+    p_motion_recipes.add_argument(
         "--seed",
         default="samples/canonical.ymmp",
         help="YMM4-saved full project canvas seed (default: samples/canonical.ymmp)",
@@ -1268,17 +1272,17 @@ def main(argv: list[str] | None = None) -> int:
         "--out-ymmp",
         "--out-yMMP",
         dest="out_ymmp",
-        default="_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1.ymmp",
+        default=None,
         help="Output review ymmp path",
     )
     p_motion_recipes.add_argument(
         "--out-readback",
-        default="_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1_readback.json",
+        default=None,
         help="Output machine readback JSON path",
     )
     p_motion_recipes.add_argument(
         "--out-manifest",
-        default="_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1_manifest.md",
+        default=None,
         help="Output review manifest markdown path",
     )
     p_motion_recipes.add_argument(
@@ -1900,6 +1904,7 @@ def _cmd_build_motion_recipes(args: argparse.Namespace) -> int:
         if getattr(args, "effect_samples", None)
         else None
     )
+    out_ymmp, out_readback, out_manifest = _motion_recipe_output_paths(args)
     result = build_motion_recipe_review(
         MotionRecipeBuildPaths(
             brief=Path(args.brief),
@@ -1909,9 +1914,10 @@ def _cmd_build_motion_recipes(args: argparse.Namespace) -> int:
             effect_samples=effect_samples_path,
             motion_library=Path(args.motion_library),
             corpus_ymmp=corpus_path,
-            out_ymmp=Path(args.out_ymmp),
-            out_readback=Path(args.out_readback),
-            out_manifest=Path(args.out_manifest),
+            out_ymmp=out_ymmp,
+            out_readback=out_readback,
+            out_manifest=out_manifest,
+            recipe_id=args.recipe_id,
         )
     )
 
@@ -1932,6 +1938,24 @@ def _cmd_build_motion_recipes(args: argparse.Namespace) -> int:
             for warning in result["warnings"]:
                 print(f"  - {warning}")
     return 0 if result["success"] else 1
+
+
+def _motion_recipe_output_paths(args: argparse.Namespace) -> tuple[Path, Path, Path]:
+    recipe_id = getattr(args, "recipe_id", None)
+    if recipe_id:
+        default_dir = Path("_tmp/g26/recipe_pipeline/v2")
+        default_ymmp = default_dir / f"{recipe_id}_review.ymmp"
+        default_readback = default_dir / f"{recipe_id}_review_readback.json"
+        default_manifest = default_dir / f"{recipe_id}_review_manifest.md"
+    else:
+        default_ymmp = Path("_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1.ymmp")
+        default_readback = Path("_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1_readback.json")
+        default_manifest = Path("_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1_manifest.md")
+    return (
+        Path(args.out_ymmp) if getattr(args, "out_ymmp", None) else default_ymmp,
+        Path(args.out_readback) if getattr(args, "out_readback", None) else default_readback,
+        Path(args.out_manifest) if getattr(args, "out_manifest", None) else default_manifest,
+    )
 
 
 def _cmd_extract_template_labeled(

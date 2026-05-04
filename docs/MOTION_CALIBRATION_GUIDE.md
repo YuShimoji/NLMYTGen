@@ -14,6 +14,10 @@
 
 有効な観測は E face swap、D の一部 effect coupling、F anchor 禁忌のみ。B / C は修正後の `_tmp/g26/calibration/B_keyframes_smoke.ymmp` と `_tmp/g26/calibration/C_bounce_smoke.ymmp` で最小再確認する。
 
+**2026-05-04 追記**: user 確認で、修正後 smoke の各 GroupItem は中間点が複数あるものの素材が微動だにしなかった。原因は animated route の `Values` / GroupItem `KeyFrames` は同期していたが、該当軸の `AnimationType` が `なし` のままだったこと。`motion_recipe.py` の route 設定を修正し、animated route は `AnimationType=直線移動` になるようにしたうえで、同じ 2 ファイルを再生成済み。
+
+**2026-05-04 再確認 PASS**: user が再生成後の `B_keyframes_smoke.ymmp` / `C_bounce_smoke.ymmp` を YMM4 で確認し、全クリップが意図通り動作すると報告。`KeyFrames.Count=5` の 7pt 系は、5 つの中間点すべてが独立 action ではなく、hold / return を含む制御点列として扱う。B の 7pt は「2 回の傾き action + hold/return」、C の 7pt は「3 回の bounce action + return」と解釈する。
+
 ---
 
 ## 1. Element list (calibration scope)
@@ -138,9 +142,9 @@ A1 / A2 は「数値が変更できること」の既知再確認に寄ったた
 
 | file | pattern | Length | KeyFrames | 観測 |
 |------|---------|--------|-----------|------|
-| `B_keyframes_smoke.ymmp` | 3pt simple | 60 | `[30]` | user 確認待ち |
-| `B_keyframes_smoke.ymmp` | 5pt double | 60 | `[15, 30, 45]` | user 確認待ち |
-| `B_keyframes_smoke.ymmp` | 7pt hold double | 60 | `[10, 20, 30, 40, 50]` | user 確認待ち |
+| `B_keyframes_smoke.ymmp` | 3pt simple | 60 | `[30]` | PASS。1 回の傾き action として読める |
+| `B_keyframes_smoke.ymmp` | 5pt double | 60 | `[15, 30, 45]` | PASS。2 段の傾き action として読める |
+| `B_keyframes_smoke.ymmp` | 7pt hold double | 60 | `[10, 20, 30, 40, 50]` | PASS。5 中間点は hold/return を含む制御点で、意味上は 2 回の傾き action |
 
 ### C. Y bounce patterns (観測値、Step 5 で記入)
 
@@ -158,9 +162,9 @@ A1 / A2 は「数値が変更できること」の既知再確認に寄ったた
 
 | file | pattern | Length | KeyFrames | 観測 |
 |------|---------|--------|-----------|------|
-| `C_bounce_smoke.ymmp` | 3pt single | 60 | `[30]` | user 確認待ち |
-| `C_bounce_smoke.ymmp` | 5pt double | 60 | `[15, 30, 45]` | user 確認待ち |
-| `C_bounce_smoke.ymmp` | 7pt triple decay | 60 | `[10, 20, 30, 40, 50]` | user 確認待ち |
+| `C_bounce_smoke.ymmp` | 3pt single | 60 | `[30]` | PASS。1 回の bounce action として読める |
+| `C_bounce_smoke.ymmp` | 5pt double | 60 | `[15, 30, 45]` | PASS。2 段の bounce action として読める |
+| `C_bounce_smoke.ymmp` | 7pt triple decay | 60 | `[10, 20, 30, 40, 50]` | PASS。5 中間点は return を含む制御点で、意味上は 3 回の bounce action |
 
 ### D. Effect intensity (観測値、Step 5 で記入)
 
