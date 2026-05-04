@@ -168,6 +168,16 @@
     <section id="tab-production" class="tab-content">
       <div id="wizard-anchor-prod-ir" class="wizard-step-anchor">
       <p class="hint production-lane-intro">必須/任意の正本は <code>docs/GUI_MINIMUM_PATH.md</code> のレーン B。下は運用時の目安です。</p>
+      <div class="episode-pack-panel">
+        <div class="file-row">
+          <label>Episode Pack Root</label>
+          <button type="button" id="btn-select-episode-pack">選択</button>
+          <button type="button" id="btn-open-episode-pack" class="hidden">開く</button>
+          <span id="episode-pack-root-path" class="file-path">未選択</span>
+        </div>
+        <p class="file-row-hint">例: <code>_tmp/episode_runs/pilot_yukkuri_theater_v1/</code>。選択すると episode_id と既定pathを推定し、CSV/IR/適用結果の保存先をpack内へ固定します。</p>
+        <pre id="episode-pack-expected" class="episode-pack-expected hidden"></pre>
+      </div>
       <div class="file-select-group">
         <div class="file-row">
           <label>Production .ymmp</label>

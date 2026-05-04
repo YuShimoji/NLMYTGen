@@ -561,6 +561,7 @@ const csvResult = document.getElementById('csv-result');
 let currentTxtPath = null;
 let lastOutputPath = null;
 let packetBundleDir = null;
+let episodePack = null;
 
 function updatePacketButtons() {
   const cue = document.getElementById('btn-build-cue-bundle');
@@ -640,6 +641,7 @@ async function runBuildCsv(dryRun) {
   const subtitleFontSourceYmmp = filePaths['subtitle-font-source-ymmp'] || undefined;
   const opts = {
     input: currentTxtPath,
+    output: episodePack && !dryRun ? episodePack.paths.csv : undefined,
     speakerMap: document.getElementById('speaker-map').value || undefined,
     maxLines,
     charsPerLine,
@@ -807,6 +809,74 @@ const fileFilters = {
 
 let lastPatchedPath = null;
 
+function setFilePath(target, filePath, { save = true } = {}) {
+  if (!target || !Object.prototype.hasOwnProperty.call(filePaths, target)) return;
+  filePaths[target] = filePath;
+  const label = document.getElementById(`${target}-path`);
+  if (label) label.textContent = filePath || '未選択';
+  updateApplyButton();
+  if (save) autoSave();
+}
+
+function updateEpisodePackPanel() {
+  const rootLabel = document.getElementById('episode-pack-root-path');
+  const expected = document.getElementById('episode-pack-expected');
+  const openBtn = document.getElementById('btn-open-episode-pack');
+  if (!rootLabel || !expected || !openBtn) return;
+  if (!episodePack) {
+    rootLabel.textContent = '未選択';
+    expected.textContent = '';
+    expected.classList.add('hidden');
+    openBtn.classList.add('hidden');
+    return;
+  }
+  const p = episodePack.paths;
+  rootLabel.textContent = episodePack.root;
+  expected.textContent = [
+    `episode_id: ${episodePack.episodeId}`,
+    `Build CSV -> ${p.csv}`,
+    `Validate IR -> ${p.validateResult}`,
+    `Dry Run -> ${p.dryRunResult}`,
+    `Apply JSON -> ${p.applyResult}`,
+    `Patched .ymmp -> ${p.patchedYmmp}`,
+  ].join('\n');
+  expected.classList.remove('hidden');
+  openBtn.classList.remove('hidden');
+}
+
+function setEpisodePack(pack, { save = true } = {}) {
+  episodePack = pack || null;
+  updateEpisodePackPanel();
+  if (episodePack) {
+    const p = episodePack.paths;
+    const existing = episodePack.existing || {};
+    if (existing.csv) setFilePath('csv-file', p.csv, { save: false });
+    if (existing.irJson) setFilePath('ir-json', p.irJson, { save: false });
+    if (existing.baseYmmp) setFilePath('prod-ymmp', p.baseYmmp, { save: false });
+    if (existing.bgMap) setFilePath('bg-map', p.bgMap, { save: false });
+    if (existing.skitGroupRegistry) setFilePath('skit-group-registry', p.skitGroupRegistry, { save: false });
+    if (existing.skitGroupTemplateSource) {
+      setFilePath('skit-group-template-source', p.skitGroupTemplateSource, { save: false });
+    }
+  }
+  updateApplyButton();
+  if (save) autoSave();
+}
+
+async function saveEpisodePackJson(pathKey, payload, label) {
+  if (!episodePack || !episodePack.paths || !episodePack.paths[pathKey] || !payload) {
+    return '';
+  }
+  const saved = await window.nlmytgen.saveJsonArtifact({
+    path: episodePack.paths[pathKey],
+    payload,
+  });
+  if (saved && saved.ok) {
+    return `\nSaved ${label}: ${saved.path}`;
+  }
+  return `\n${label} save failed: ${(saved && saved.error) || 'unknown error'}`;
+}
+
 document.querySelectorAll('.btn-file').forEach(btn => {
   btn.addEventListener('click', async () => {
     const target = btn.dataset.target;
@@ -815,10 +885,7 @@ document.querySelectorAll('.btn-file').forEach(btn => {
       filters: fileFilters[target] || [{ name: 'All', extensions: ['*'] }],
     });
     if (path) {
-      filePaths[target] = path;
-      document.getElementById(`${target}-path`).textContent = path;
-      updateApplyButton();
-      autoSave();
+      setFilePath(target, path);
     }
   });
 });
@@ -830,12 +897,29 @@ function updateApplyButton() {
   document.getElementById('btn-validate-ir').disabled = !hasIr;
 }
 
+document.getElementById('btn-select-episode-pack')?.addEventListener('click', async () => {
+  const pack = await window.nlmytgen.selectEpisodePack();
+  if (pack) {
+    setEpisodePack(pack);
+    document.getElementById('status').textContent = `Episode Pack selected: ${pack.episodeId}`;
+  }
+});
+
+document.getElementById('btn-open-episode-pack')?.addEventListener('click', () => {
+  if (episodePack && episodePack.root) {
+    window.nlmytgen.openFolder(episodePack.root);
+  }
+});
+
 // --- IR paste ---
 document.getElementById('btn-save-ir').addEventListener('click', async () => {
   const content = document.getElementById('ir-paste').value.trim();
   if (!content) return;
 
-  const saved = await window.nlmytgen.saveIrPaste({ content, defaultPath: 'ir.json' });
+  const saved = await window.nlmytgen.saveIrPaste({
+    content,
+    defaultPath: episodePack ? episodePack.paths.irJson : 'ir.json',
+  });
   if (saved) {
     filePaths['ir-json'] = saved;
     document.getElementById('ir-json-path').textContent = saved;
@@ -885,6 +969,7 @@ document.getElementById('btn-validate-ir').addEventListener('click', async () =>
         j.preview_warnings.forEach((w) => { text += `  ${w}\n`; });
       }
       if (result.stderr) text += `\n--- メタ情報 ---\n${result.stderr}`;
+      text += await saveEpisodePackJson('validateResult', result.json, 'Validate IR JSON');
       if (j.success && result.code === 0) {
         renderSuccessTextPanel(validatePanel, text);
         status.textContent = 'Validation passed';
@@ -937,6 +1022,7 @@ async function runApplyProduction(dryRun) {
     strictSkitGroupIntents: document.getElementById('strict-skit-group-intents').checked
       && !!filePaths['skit-group-registry'],
     skitGroupOnly: document.getElementById('skit-group-only').checked,
+    output: episodePack && !dryRun ? episodePack.paths.patchedYmmp : undefined,
     dryRun,
   };
 
@@ -945,6 +1031,11 @@ async function runApplyProduction(dryRun) {
   try {
     const result = await window.nlmytgen.applyProduction(opts);
     resultPanel.classList.remove('hidden');
+    const savedResultLine = await saveEpisodePackJson(
+      dryRun ? 'dryRunResult' : 'applyResult',
+      result.json,
+      dryRun ? 'Dry Run JSON' : 'Apply Production JSON',
+    );
 
     if (result.json && result.json.success) {
       let text = '';
@@ -978,6 +1069,7 @@ async function runApplyProduction(dryRun) {
       if (result.json.dry_run) {
         text += `\n(dry-run: no file written)`;
       }
+      text += savedResultLine;
       renderSuccessTextPanel(resultPanel, text);
       status.textContent = dryRun ? 'Dry run complete' : 'Production applied';
       if (!dryRun && result.json.output) {
@@ -998,6 +1090,7 @@ async function runApplyProduction(dryRun) {
       if (result.stderr) errText += result.stderr + '\n';
       if (result.stdout) errText += '[stdout] ' + result.stdout + '\n';
       errText += `[exit code] ${result.code}`;
+      errText += savedResultLine;
       renderFailurePanel(resultPanel, errText);
       status.textContent = 'Apply failed';
     }
@@ -1041,6 +1134,7 @@ function collectSettings() {
       saveDiagnosticsWithCsv: document.getElementById('csv-save-diagnostics').checked,
     },
     production: {
+      episodePack,
       prodYmmp: filePaths['prod-ymmp'] || null,
       irJson: filePaths['ir-json'] || null,
       palette: filePaths['palette'] || null,
@@ -1099,6 +1193,9 @@ function applySettings(settings) {
     }
   }
   if (settings.production) {
+    if (settings.production.episodePack) {
+      setEpisodePack(settings.production.episodePack, { save: false });
+    }
     if (settings.production.prodYmmp) {
       filePaths['prod-ymmp'] = settings.production.prodYmmp;
       document.getElementById('prod-ymmp-path').textContent = settings.production.prodYmmp;

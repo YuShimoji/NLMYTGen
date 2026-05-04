@@ -25,6 +25,7 @@
 ## 2. 正本マップ（仕様・台帳・検証索引）
 
 - [GUI_MINIMUM_PATH.md](GUI_MINIMUM_PATH.md) — **Electron GUI**: 最小ファイル集合・必須/任意・ウィザード範囲（S-3 / S-6b）・L2/L3/creative 検証ラダー
+- [EPISODE_RUN_PACK.md](EPISODE_RUN_PACK.md) — **1本通し制作パック**: `_tmp/episode_runs/<episode_id>/` の構成、GUI `Episode Pack Root` 導線、既定保存path、YMM4確認と gaps 記録の境界
 - [verification/PROJECT_INIT_CHECKLIST.md](verification/PROJECT_INIT_CHECKLIST.md) — **実案件投入**: palette → registry → validate-ir → apply-production の 5 ステップ
 - [verification/FAILURE_DIAGNOSIS_MATRIX.md](verification/FAILURE_DIAGNOSIS_MATRIX.md) — ERROR/WARNING 全 64 種の診断マトリクス
 - `samples/registry_template/` — 6 種の registry JSON 雛形（overlay/se/bg/slot/face/group_motion_map）

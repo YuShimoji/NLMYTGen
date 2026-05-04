@@ -4,6 +4,7 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 
 const SETTINGS_PATH = path.join(__dirname, 'project-settings.json');
+const REPO_ROOT = path.resolve(__dirname, '..');
 
 let mainWindow;
 
@@ -62,6 +63,39 @@ function parseJsonLine(stdout) {
     } catch { /* not JSON, try previous line */ }
   }
   return null;
+}
+
+function describeEpisodePack(rootPath) {
+  const root = path.resolve(rootPath);
+  const episodeId = path.basename(root);
+  const paths = {
+    sourceScript: path.join(root, 'csv', `${episodeId}.txt`),
+    csv: path.join(root, 'csv', `${episodeId}.csv`),
+    irJson: path.join(root, 'ir', `${episodeId}_production_ir.json`),
+    validateResult: path.join(root, 'ir', `${episodeId}_validate.json`),
+    dryRunResult: path.join(root, 'ymmp', `${episodeId}_dry_run.json`),
+    applyResult: path.join(root, 'ymmp', `${episodeId}_apply.json`),
+    baseYmmp: path.join(root, 'ymmp', `${episodeId}_base.ymmp`),
+    patchedYmmp: path.join(root, 'ymmp', `${episodeId}_patched.ymmp`),
+    faceMap: path.join(root, 'maps', 'face_map.json'),
+    bgMap: path.join(root, 'maps', 'bg_map.json'),
+    skitGroupRegistry: path.join(root, 'maps', 'skit_group_registry.json'),
+    skitGroupTemplateSource: path.join(
+      REPO_ROOT,
+      'samples',
+      'templates',
+      'skit_group',
+      'delivery_v1_templates.ymmp',
+    ),
+    ymm4Acceptance: path.join(root, 'review', 'ymm4_acceptance.md'),
+    gaps: path.join(root, 'review', 'gaps.md'),
+    sessionManifest: path.join(root, 'manifest', 'session_manifest.md'),
+  };
+  const existing = {};
+  for (const [key, value] of Object.entries(paths)) {
+    existing[key] = fs.existsSync(value);
+  }
+  return { root, episodeId, paths, existing };
 }
 
 ipcMain.handle('build-csv', async (_event, opts) => {
@@ -142,8 +176,6 @@ ipcMain.handle('open-folder', async (_event, filePath) => {
   shell.showItemInFolder(filePath);
 });
 
-const REPO_ROOT = path.resolve(__dirname, '..');
-
 /** リポジトリ内ドキュメントを既定アプリで開く (パストラバーサル防止) */
 ipcMain.handle('open-repo-doc', async (_event, relPath) => {
   const { shell } = require('electron');
@@ -187,6 +219,39 @@ ipcMain.handle('select-folder', async () => {
     properties: ['openDirectory'],
   });
   return r.canceled ? null : r.filePaths[0];
+});
+
+ipcMain.handle('describe-episode-pack', async (_event, rootPath) => {
+  if (typeof rootPath !== 'string' || !rootPath) {
+    return null;
+  }
+  return describeEpisodePack(rootPath);
+});
+
+ipcMain.handle('select-episode-pack', async () => {
+  const r = await dialog.showOpenDialog(mainWindow, {
+    title: 'Episode Pack Root を選択',
+    properties: ['openDirectory'],
+  });
+  return r.canceled ? null : describeEpisodePack(r.filePaths[0]);
+});
+
+ipcMain.handle('save-json-artifact', async (_event, opts) => {
+  const outputPath = opts && typeof opts.path === 'string' ? opts.path : '';
+  if (!outputPath) {
+    return { ok: false, error: 'output path is required' };
+  }
+  try {
+    fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+    fs.writeFileSync(
+      outputPath,
+      `${JSON.stringify(opts.payload ?? {}, null, 2)}\n`,
+      'utf8',
+    );
+    return { ok: true, path: outputPath };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
 });
 
 ipcMain.handle('build-cue-packet-bundle', async (_event, opts) => {

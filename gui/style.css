@@ -646,6 +646,30 @@ main .hint strong {
   font-size: 13px;
 }
 
+.episode-pack-panel {
+  margin: 10px 0 14px;
+  padding: 12px;
+  background: rgba(91, 142, 255, 0.08);
+  border: 1px solid rgba(91, 142, 255, 0.35);
+  border-radius: 8px;
+}
+
+.episode-pack-expected {
+  margin: 8px 0 0;
+  padding: 10px;
+  background: var(--color-bg-dark);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text-muted);
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
+}
+
+.episode-pack-expected.hidden {
+  display: none;
+}
+
 /* Action buttons */
 .action-row {
   margin-top: 16px;

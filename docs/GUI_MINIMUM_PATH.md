@@ -57,6 +57,17 @@ NLMYTGen GUI（`start-gui.bat` / `gui/`）で「何を用意すればよいか�
 
 ### 演出適用タブ — S-6b（演出適用工程）
 
+**Episode Pack Mode**: 1本通し制作では最初に `Episode Pack Root` で `_tmp/episode_runs/<episode_id>/` を選ぶ。GUIは episode_id をフォルダ名から推定し、`Build CSV`、`Validate IR`、`Dry Run`、`Apply Production` の保存先をpack内の既定pathへ固定する。
+
+| GUI操作 | 保存先 |
+|---|---|
+| `Build CSV` | `csv/<episode_id>.csv` |
+| `Validate IR` | `ir/<episode_id>_validate.json` |
+| `Dry Run` | `ymmp/<episode_id>_dry_run.json` |
+| `Apply Production` | `ymmp/<episode_id>_apply.json`、`ymmp/<episode_id>_patched.ymmp` |
+
+pack導線の詳細は `docs/EPISODE_RUN_PACK.md` を正とする。
+
 | ファイル | 必須 / 任意 | なぜ必要か |
 |-----------|-------------|-----------|
 | Production `.ymmp` | **必須** | 台本読込済みのベースプロジェクト。これに対して演出を適用する |
