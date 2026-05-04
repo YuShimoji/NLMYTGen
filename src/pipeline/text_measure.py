@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+import sys
 import unicodedata
 from functools import lru_cache
 from pathlib import Path
@@ -65,8 +66,13 @@ class WpfTextMeasurer:
             "LetterSpacing": self.letter_spacing,
             "Texts": texts,
         }
+        command = (
+            [sys.executable, self.exe_path]
+            if Path(self.exe_path).suffix.lower() == ".py"
+            else [self.exe_path]
+        )
         result = subprocess.run(
-            [self.exe_path],
+            command,
             input=json.dumps(payload, ensure_ascii=False),
             text=True,
             encoding="utf-8",

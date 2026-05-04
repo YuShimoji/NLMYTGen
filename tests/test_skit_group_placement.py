@@ -305,9 +305,7 @@ def test_resolve_repo_asset_path_accepts_windows_samples_suffix():
     )
 
     assert resolved == ROOT / "samples/characterAnimSample/reimu_easy.png"
-    assert _format_yymm_asset_path(resolved) == (
-        r"C:\Users\PLANNER007\NLMYTGen\samples\characterAnimSample\reimu_easy.png"
-    )
+    assert _format_yymm_asset_path(resolved) == str(resolved)
 
 
 def test_repo_template_enter_from_left_normalizes_landing_pose():
@@ -642,7 +640,10 @@ def test_cli_patch_ymmp_skit_group_only_real_estate_ir_readback(tmp_path):
     assert len(image_items) == 10
     assert all(_resolve_repo_asset_path(item["FilePath"]) is not None for item in image_items)
     assert all(not item["FilePath"].startswith("/mnt/") for item in image_items)
-    assert all(item["FilePath"].startswith("C:\\Users\\PLANNER007\\NLMYTGen\\samples\\") for item in image_items)
+    assert all(
+        item["FilePath"].startswith(str(ROOT / "samples"))
+        for item in image_items
+    )
     assert len(groups) == 9
     enter = [
         item for item in groups
