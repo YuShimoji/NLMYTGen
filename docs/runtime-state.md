@@ -72,7 +72,7 @@
 - git: **既定の開発ブランチは `master`**（2026-04-09: PR [#1](https://github.com/YuShimoji/NLMYTGen/pull/1) で `feat/phase2-motion-segmentation` をマージ済み。新規作業は `master` からブランチを切る）
 - lane: **コア開発幹**（回帰・ドキュメント整合・承認済みバグ修正）。**主軸は本開発** — エージェント作業は未承認 FEATURE を増やさず上記に集中。オペレータ並行: Phase 1 Block-A (通過済、メンテ層の継続観測) / 主軸 (演出配置自動化の実戦投入) は runbook どおり。**レーン A（Phase 1）の repo 準備はオペレータ側でクローズ**（[OPERATOR_LANE_A_ENV.md](verification/OPERATOR_LANE_A_ENV.md)、[LANE_A_PREP_CHECKLIST.md](verification/LANE_A_PREP_CHECKLIST.md)）。**レーン D（H-01 brief）オペレータ完了・当面クローズ**（[H01-lane-d-prep-2026-04-09.md](verification/H01-lane-d-prep-2026-04-09.md) §6、2026-04-09）
 - slice: **G-26 Calibration phase entered (2026-05-01)**. v1 (12) + slice3_proof (2) + slice4_proof (2) の 16 recipe は visual acceptance で defect 7 件確認 (face fixed / anchor reused / hold 退化 / 振幅不足 / effect parameter 弱小 / panic 系の絵不一致 / shocked 表情無切替) → **全 superseded**、`_tmp/g26/recipe_pipeline/superseded_2026-05-01/` に物理移動。Anti-Shortcut Rules を R7-R13 に拡張し、Phase 0 (Calibration) を pipeline 図に追加。**正本ワークフロー**: [MOTION_PRODUCTION_PIPELINE.md](MOTION_PRODUCTION_PIPELINE.md) (Phase 0 + Anti-Shortcut Rules R7-R13 含む)。
-- next_action: **Primary — repaired KeyFrames structural smoke → 代表 recipe smoke**. 2026-05-02 に `motion_recipe.py` の route `Values` / GroupItem `KeyFrames` 同期漏れを修正し、複数 animated route の point 数不一致を `MOTION_RECIPE_KEYFRAME_COUNT_MISMATCH` で停止する structural gate を追加。初回 calibration B/C は threshold 無効として扱い、ユーザー確認対象を `_tmp/g26/calibration/B_keyframes_smoke.ymmp` と `_tmp/g26/calibration/C_bounce_smoke.ymmp` の 2 件に縮小する。確認後に `nod_clear_v2` 1 件だけ smoke build し、画面上で読める場合のみ段階拡張する。古い 16 recipe (v1 / slice3 / slice4) と古い brief (`samples/recipe_briefs/g26_motion_recipe_brief.{v1,slice3_proof,slice4_proof}.json`) は superseded 扱い、新 brief は v2 として再起票。Acceptance pending 中の量産 recipe build / library promotion / G-24 production placement 接続は禁止 (Rule R12)。**Secondary lanes**: real thumbnail template slot patch remains available when operator time allows; G-24 production placement remains separate and must not consume unaccepted G-26 recipes.
+- next_action: **Primary — GUI Episode Pack Modeで `pilot_yukkuri_theater_v1` の実素材投入へ進む**. `Episode Pack Root` 選択により、`Build CSV` は `csv/<episode_id>.csv`、`Validate IR` は `ir/<episode_id>_validate.json`、`Dry Run` は `ymmp/<episode_id>_dry_run.json`、`Apply Production` は `ymmp/<episode_id>_apply.json` と `ymmp/<episode_id>_patched.ymmp` へ保存される。次の user action は `_tmp/episode_runs/pilot_yukkuri_theater_v1/` に source script / 台本読込済み base `.ymmp` / Production IR / 必要mapを置き、GUIで `Episode Pack Root → Build CSV → Validate IR → Dry Run → Apply Production` を通すこと。初回は `face` / `idle_face` / `bg` / `skit_group` と `nod_clear_v2` / `nod_head_v1` だけを主軸にし、GUI未露出mapは標準化せず `review/gaps.md` に記録する。YMM4 は patched `.ymmp` 作成後に1回だけ通し確認する。motion library 昇格・G-24 production 常時接続・YouTube metadata/thumbnail は pilot 後の別判断。
   - **assistant (A)**: Keep Writer IR strict: skit_group actor utterances require `motion_target: "layer:9"` and registry v1/alias intents only; `panic_shake` is not normal Part 2 JSON vocabulary.
   - **assistant (B)**: Use `samples/templates/skit_group/delivery_v1_templates.ymmp` as the repo-tracked template source and analysis input. It now contains all five v1 templates; any future missing template must remain a fail-fast diagnostic, not a silent fallback.
   - **assistant (C)**: Treat `samples/_probe/g24/real_estate_dx_skit_group_compact_review.ymmp` as the current visual acceptance artifact. Treat `samples/_probe/g24/real_estate_dx_skit_group_patched.ymmp` as the production-timing artifact. Do not ask the user to manually correct spacing in YMM4 unless readback shows a missing source fact.
@@ -112,7 +112,7 @@
 
 - active_artifact: NLM transcript → YMM4 CSV → ゆっくり解説動画制作ワークフロー
 - artifact_surface: CLI → CSV → YMM4 台本読込 → 演出設定 → レンダリング → サムネイル → 投稿
-- last_change_relation: **2026-05-02** G-26 calibration was reframed from broad threshold collection to structural route correctness first. `_set_transform_values()` no longer leaves stale GroupItem `KeyFrames`; generated animated routes now synchronize `KeyFrames.Frames` / `Count`, and mismatched animated route point counts fail before YMM4 visual review. Reliable observations from the first calibration run were retained (face swap OK, Blur 5/10 threshold, Crash size tendency, Jump Stretch coupling, non-head anchor禁忌), while old B/C threshold rows are marked invalid.
+- last_change_relation: **2026-05-04** Repaired GUI Episode Pack bridge after pilot-pack stabilization. GUI production now has `Episode Pack Root`, derives episode_id/default paths, fixes `Build CSV` output to `csv/<episode_id>.csv`, saves `Validate IR` / `Dry Run` / `Apply Production` JSON into pack paths, and forces patched output to `ymmp/<episode_id>_patched.ymmp`. `docs/EPISODE_RUN_PACK.md` and generated pack README now spell out the human GUI steps and NG return artifacts.
 
 ## カウンター
 
@@ -122,16 +122,16 @@
 
 ## 量的指標
 
-- test_file_count: 33
-- test_count: 433
+- test_file_count: 35
+- test_count: 457
 - mock_file_count: 0
-- impl_file_count: 37
+- impl_file_count: 39
 - mock_impl_ratio: 0.00
 - open_todo_count: 0
 
 ## 最終検証
 
-- last_verification: **2026-05-02 G-26 KeyFrames structural gate**. `uv run pytest tests/test_motion_recipe.py -q` passed (6 tests). `scripts/build_calibration_ymmp.py --structural-smoke-only` generated `_tmp/g26/calibration/B_keyframes_smoke.ymmp` and `_tmp/g26/calibration/C_bounce_smoke.ymmp`; readback confirmed 3 GroupItems / 6 ImageItems each, POSIX asset paths 0, blank asset paths 0, and `len(animated Values) == KeyFrames.Count + 2` for all six smoke variants.
+- last_verification: **2026-05-04 GUI Episode Pack bridge verified**. `node --check gui/main.js gui/preload.js gui/renderer.js` passed. Targeted checks passed: `uv run pytest tests/test_episode_run_pack.py tests/test_session_manifest.py tests/test_gui_episode_pack_bridge.py -q`. Full `uv run pytest -q` passed with no failures.
 
 ## Evidence（CLI artifact mode）
 
