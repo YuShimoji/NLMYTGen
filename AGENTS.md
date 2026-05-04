@@ -17,17 +17,17 @@
 
 - **通常再開（default）**: 毎回の読了対象は最小にする。`AGENTS.md` の境界、`docs/REPO_LOCAL_RULES.md` の Hard Rules / Block-Start Checklist、`docs/runtime-state.md` の `next_action` を確認し、そこから必要な正本だけを追加で読む。
 - **フル再アンカリング（例外）**: 新規セッションで境界が不明、ルール変更直後、正本間 drift 検出、user が REANCHOR / REFRESH / AUDIT を明示、または `runtime-state.md` だけでは作業接続できない場合に限る。下記「フル再アンカリング手順」を使う。
-- **正本 docs の扱い**: `docs/ai/*.md` / `docs/INVARIANTS.md` / `docs/USER_REQUEST_LEDGER.md` / `docs/OPERATOR_WORKFLOW.md` / `docs/INTERACTION_NOTES.md` は削除禁止の canonical source だが、通常再開時に全文読了する義務はない。変更対象・判断対象に応じて該当節だけ参照する。
+- **正本 docs の扱い**: `docs/ai/*.md` / `docs/INVARIANTS.md` / `docs/USER_REQUEST_LEDGER.md` / `docs/OPERATOR_WORKFLOW.md` / `docs/INTERACTION_NOTES.md` は通常保護する canonical source。通常再開時に全文読了する義務はなく、変更対象・判断対象に応じて該当節だけ参照する。明示された cleanup scope では、古い出力固定・再開磁石は excise してよいが、現行の product constraint は visible docs へ移してから扱う。
 - **`.claude/CLAUDE.md`** は Claude Code 等が読む **入口ポインタ**。日々の Hard Rules の正本は **`docs/REPO_LOCAL_RULES.md`**、非交渉境界は `docs/INVARIANTS.md`。
 
 ---
 
 ## 通常再開手順（default）
 
-この repo 以外のファイルは読まない。通常は以下で止め、必要になった正本だけ追加で読む。
+通常はこの repo 内だけを読む。ユーザーが cross-project / 他 repo 作業を明示した場合は、その明示範囲だけを扱う。通常再開は以下で止め、必要になった正本だけ追加で読む。
 
 ```
-1. AGENTS.md → repo 境界・削除禁止・現在の入口責務を確認
+1. AGENTS.md → repo 境界・現在の入口責務を確認
 2. docs/REPO_LOCAL_RULES.md → Hard Rules / Block-Start Checklist / Ask Hygiene を確認
 3. docs/runtime-state.md → `slice` / `next_action` / `last_change_relation` / `last_verification` を確認
 4. 必要時のみ:
@@ -35,9 +35,7 @@
    - handoff や決定履歴が必要なら docs/project-context.md の HANDOFF SNAPSHOT / 該当 DECISION LOG だけ
    - status / backlog 判断なら docs/FEATURE_REGISTRY.md の該当 ID だけ
    - ルール・境界・対話失敗を扱うなら docs/ai/*.md / INVARIANTS / USER_REQUEST_LEDGER / OPERATOR_WORKFLOW / INTERACTION_NOTES の該当節だけ
-5. 全景確認を出力:
-   📍 NLMYTGen / 🧩 [現在のスライス] / 🔲 [次のアクション]
-   🏷️ 案件モード: CLI artifact
+5. 必要なら、現在の slice / bottleneck / 次に閉じる作業を短く確認する。固定見出し・絵文字テンプレは不要。
 ```
 
 ---
@@ -53,32 +51,31 @@
 5. docs/runtime-state.md → docs/project-context.md の HANDOFF SNAPSHOT / 必要な DECISION LOG → docs/FEATURE_REGISTRY.md の該当 ID → docs/AUTOMATION_BOUNDARY.md の該当節を読む → 現在地・handoff・backlog・境界（`project-context.md` は長大で、全文読了ではなく該当節を読む）
    - （任意）ドキュメント地図: `docs/NAV.md` — 正本への短い導線。迷子対策であり、全ファイル読了義務ではない。
 6. 必要な時だけ CLAUDE.md / docs/ARCHITECTURE.md / docs/PIPELINE_SPEC.md / docs/WORKFLOW.md / ADR を読む
-7. 全景確認を出力:
-   📍 NLMYTGen / 🧩 [現在のスライス] / 🔲 [次のアクション]
-   🏷️ 案件モード: CLI artifact
+7. 必要なら、現在の slice / bottleneck / 次に閉じる作業を短く確認する。固定見出し・絵文字テンプレは不要。
 ```
 
 ---
 
-## 境界ルール（厳守）
+## 境界ルール（通常運用）
 
-### 他プロジェクトへの逸脱禁止
-- **この repo 以外のプロジェクトのファイルを読み書きしない。**
-- HoloSync / NLMandSlideVideoGenerator / NarrativeGen / VastCore 等のファイル・memory・docs を参照しない。
-- 「NLMYTGen 用の memory がない」場合は**スキップする。他 PJ の memory を代用しない。**
-- AskUserQuestion の選択肢に「別プロジェクトへ移動」を含めない。
+### 通常境界と cross-project 例外
+- 通常作業ではこの repo 以外のプロジェクトのファイルを読み書きしない。
+- HoloSync / NLMandSlideVideoGenerator / NarrativeGen / VastCore 等のファイル・memory・docs は、ユーザーが明示した cross-project scope に含まれる場合だけ参照する。
+- 「NLMYTGen 用の memory がない」場合、通常はスキップする。他 PJ の memory は代用しない。cross-project 作業では、明示範囲に必要な記憶だけを使う。
+- AskUserQuestion の選択肢に「別プロジェクトへ移動」を含めるのは、ユーザーが cross-project 進行を求めた場合だけ。
 - 別 repo への移動はユーザーが明示的に指示した場合のみ。
 
-### AskUserQuestion の範囲制限
-- 選択肢はこの repo 内の Advance / Audit / Excise / Unlock に限定すること。
-- 他 repo のタスクを候補に混ぜない。
-- 「別セッションで別 PJ」の提案はこの repo の判断としては出さない。
+### AskUserQuestion の hook 設計
+- 通常の選択肢はこの repo 内の Advance / Audit / Excise / Unlock を起点にする。
+- cross-project 指示がある場合は、明示された repo / docs だけを候補に含める。
+- option は固定メニューではなく、異なる bottleneck を解く hook として出す。形式よりも、次に何が軽くなるかを優先する。
 
-### 運用ファイルの削除禁止
+### 運用ファイルの保護と cleanup 例外
 - AGENTS.md / docs/REPO_LOCAL_RULES.md / .claude/CLAUDE.md / docs/runtime-state.md / docs/project-context.md は
-  「重複」として削除しない。それぞれ異なる責務を持つ入口・正本ファイルである（`.claude/CLAUDE.md` はポインタ、運用本文の正本は `docs/REPO_LOCAL_RULES.md`）。
+  通常は「重複」として削除しない。それぞれ異なる責務を持つ入口・正本ファイルである（`.claude/CLAUDE.md` はポインタ、運用本文の正本は `docs/REPO_LOCAL_RULES.md`）。
 - docs/ai/*.md と docs/INVARIANTS.md / docs/USER_REQUEST_LEDGER.md / docs/OPERATOR_WORKFLOW.md / docs/INTERACTION_NOTES.md も
-  resume/handoff の canonical source であり、「補助 docs」として削除しない。ただし通常再開で全文読了しない。判断対象に応じて該当節を参照する。
+  resume/handoff の canonical source であり、通常は「補助 docs」として削除しない。ただし通常再開で全文読了しない。判断対象に応じて該当節を参照する。
+- 明示された cleanup scope では、obsolete な出力固定ファイル・restart magnet・古い adapter 重複は削除候補にする。現行事実や product constraint が含まれる場合は、visible docs の正本へ移してから削る。
 
 ---
 

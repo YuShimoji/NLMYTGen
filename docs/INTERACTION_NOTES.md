@@ -34,17 +34,19 @@
 - `COMPLETION_CLAIM_DRIFT`: 「実装完了」報告が test pass / preflight / docs 更新を完了根拠として提示し、その slice の production-value condition (write-route artifact の readback) を demonstrate しない。`uv run pytest PASS` を完了の最上段証跡に置き、実走行 demo を含めずに canonical 状態を「閉じた」へ進める。
   - 予防: 完了報告は `changed` / `not changed` / `verified` / `still blocked` を分け、`verified` 欄に success criterion に対応する readback 結果 (例: G-24 placement なら patched `.ymmp` への GroupItem 挿入の JSON readback、IR index 単位の Layer / Frame 一致) を併記する。実走行 demo が未実施なら「コード骨格完了、demo 未実施」と切り分けて報告する。`INVARIANTS §Production Value North Star` の preflight ≠ 成果ルールを運用補強する。
 - `USER_ARTIFACT_DRIFT`: ユーザー authoring artifact (YMM4 native template / sample / IR / registry) の PASS sync を報告するだけで、user-side 元 artifact の path、repo-tracked 取り込み先 path、bridge step (誰が・いつ・どう取り込むか) の trio を併記せず canonical 状態を「閉じた」へ進める。後で artifact が repo に存在せず、user に「自分が作った artifact がリモートに無い、また作る必要があるか」を再発見させる。fail-fast (例: `SKIT_TEMPLATE_SOURCE_MISSING`) を「意図的ブロッカー」と表現することで、coordination 失敗が機能のように見える reframe が起きる。
-  - 予防: user authoring の記録は PASS / FAIL ラベルだけでなく上記 trio を必ず併記する。trio が埋まらないなら handoff は incomplete として next_action に残す。fail-fast 自体は維持してよいが、その隣に「user-side 元 artifact が `<path>` に存在 / repo の `<path>` へ未取り込み / bridge step は誰がいつ実行」を併記し、blocker と coordination gap を分離して報告する。
+  - 予防: user authoring の記録は PASS / FAIL ラベルだけでなく上記 trio を completion の最小情報に含める。trio が埋まらないなら handoff は incomplete として next_action に残す。fail-fast 自体は維持してよいが、その隣に「user-side 元 artifact が `<path>` に存在 / repo の `<path>` へ未取り込み / bridge step は誰がいつ実行」を併記し、blocker と coordination gap を分離して報告する。
 - `CANONICAL_FACT_DRIFT`: canonical docs (`USER_REQUEST_LEDGER` / `runtime-state` / `FEATURE_REGISTRY` / spec docs / verification index) が同じ事実 (件数・ステータス・ファイルパス・取り込み有無) で互いに矛盾し、片方が事実誤認のまま canonical 扱いされる。docs を読んだ user の判断が誤誘導され、未完了の作業が「閉じた」と扱われたり、既に閉じた作業が再依頼される。`STATUS_DRIFT` は category 混同 (priority と status、selection と approval、done と proof-only) であり、こちらは事実値の cross-doc 矛盾なので別 failure class として扱う。
   - 予防: canonical docs を更新する commit では、変更前に他 canonical docs の同一事実箇所を grep で抽出し、矛盾しないことを cross-audit する。件数・状態・パス・「currently」表記 (時間とともに stale 化する snapshot を canonical 表記しない) は特に注意。実装が並行で進む状況では、handoff 履歴エントリは過去時制または明示的 snapshot ラベルにし、現在事実は slice / next_action ブロックを単一の正本にする。
 - `TEMPLATE_ANALYSIS_BYPASS`: YMM4 template source を「分析入力」ではなく「完成 timeline の raw clone 元」と扱い、配置の間隔・構図・密度が粗いときに analyzer / placement planner の不足ではなく user のテンプレート作り直しへ戻してしまう。template-first の意図が「少数 reusable template から production placement を自動生成する」から「人間が完成配置に近いテンプレを用意する」へすり替わり、配置自動化の主戦場が消える。
   - 予防: 報告では `template source` / `analyzed placement plan` / `patched .ymmp readback` / `creative acceptance` を分ける。raw clone readback は transport proof であり production acceptance ではない。spacing / composition の問題はまず assistant 側の template analyzer・placement planner・row/timing density の不足として扱い、missing source fact が readback で証明されるまで user にテンプレート再作成を依頼しない。
+- `OWNERSHIP_HANDOFF_BLUR`: 完了報告の末尾に「次は人間側作業」とだけ書き、assistant が本当に停止しているのか、並行してできる調査があるのか、user がどの artifact をどこへ置けばよいのか、返答後に assistant が何を閉じるのかを曖昧にする。ユーザーが「こちらの作業で止まっていますか？」と再確認する摩擦が発生する。
+  - 予防: user-owned step を出すときは、`assistant status` / `user action` / `assistant next after user action` の 3 点を本文で短く書く。hands-on が必要そうな手順なら、先に見る path、置く path、完了判定、NG 時の返し方を添える。例: `assistant status: blocked on material input; user action: put source script / base .ymmp / Production IR / maps into <pack>; assistant next: validate manifest, run pack checks, then patch/generate the next artifact`。
 
 ## Ask Protocol
-- 質問前に必ず、repo 内根拠で決められない理由を確認する。理由がない場合は質問せず進める。
+- 質問前に、repo 内根拠で決められない理由を確認する。理由がない場合は質問せず進める。cross-project 指示がある場合は、明示された他 repo / docs も根拠範囲に含める。
 - 質問は高位分岐だけに限定し、1 問 1 intent にする。手動確認依頼と次アクション選択を同じ ask に混ぜない。
 - AskUserQuestion の `question` に Markdown テーブルや長い仕様説明を入れない。ただし短い `OK / NG` や `PASS / FAIL` 形式は、作業対象・判定主体・返答の意味が本文で接続済みの場合に限る。未接続なら短縮せず、先に操作内容を具体化する。
-- 選択肢は 3 個以下に圧縮し、各選択肢が異なる bottleneck を解く場合だけ提示する。commit / しない、続ける / 止めるだけの yes/no を主軸にしない。
+- 選択肢は 2〜4 個程度に圧縮し、各選択肢が異なる bottleneck を解く場合だけ提示する。commit / しない、続ける / 止めるだけの yes/no を主軸にしない。`Advance` / `Audit` / `Excise` / `Explore` / `Verify` などは固定メニューではなく、次の返答を誘発する hook として使う。
 - 既知文脈を「詳細を教えてください」で再質問しない。必要なら「repo 内で確認した既知情報」と「不足している delta」を明示して、delta だけ聞く。
 
 ## Manual Verification Protocol
@@ -54,9 +56,10 @@
 - YMM4 native template authoring を依頼するときは、最初に「開く `.ymmp`」「新規 `.ymmp` ではない場合の元 object」「作る native template 名」「含める / 含めない item」「返答が承認なのか観察報告なのか」「assistant 側で次に閉じる作業」を明記する。`既存の作業コピー` のような曖昧語や、説明抜きの `OK/NG` だけで始めない。
 
 ## Report Protocol
-- BLOCK SUMMARY では、まず current bottleneck、change relation、trust assessment、次に何が可能になったかを示す。
-- completion 報告では、`changed` / `not changed` / `verified` / `still blocked` を分ける。docs 更新だけの場合は、実制作上の摩擦が何だけ減ったのかを明示する。
-- handoff では「何が抜けているか」「次にやってはいけないこと」「再オープン条件」も残す。
+- 報告形式は固定見出しではなく安全柵として扱う。必要最小限は、何を変えた / 変えていない、根拠または readback、残るリスクや judgement、次に取り得る hook。
+- user action が次の blocker の場合は、`assistant status`（停止中 / 並行作業あり）・`user action`（対象 path と必要 artifact）・`assistant next after user action`（受領後に閉じる検証や生成）を分ける。
+- completion 報告では、`changed` / `not changed` / `verified` / `still blocked` の区別を保つ。docs 更新だけの場合は、実制作上の摩擦が何だけ減ったのかを明示する。
+- handoff では「何が抜けているか」「次にやってはいけないこと」「再オープン条件」を必要時に残す。ただし固定テンプレの穴埋めを進捗にしない。
 - 再開時の repeated context は、まず `docs/ai/*.md` と project-local canonical docs を読んでから扱う。prompt や古い handoff を正本より優先しない。
 - 字幕改行の報告では、「長すぎる行が減ったか」と「残りが bulk pain か individual judgement か」を分ける。境界ケース段階では、rule 追加と corpus 収集を混同しない。
 
@@ -76,7 +79,7 @@
 - 外部ツール (YMovieHelper 等) を主軸として採用する提案には、保守性・更新状況・撤退可能性の評価を必須とする。サービス終了済み・更新停止ツールへの依存設計は避ける。
 
 ## Maintenance Rule
-- このファイルへ追記するときは、必ず `failure mode -> project risk -> prevention / report contract` の形にする。
+- このファイルへ追記するときは、原則として `failure mode -> project risk -> prevention / report contract` の形にする。
 - 心理・印象語だけでルールを追加しない。必要なら、判断遅延、手戻り、manual proof 増加、artifact path drift のどれを防ぐのかへ翻訳する。
 - 仕様境界・責務境界・workflow pain そのものは、必要に応じて `INVARIANTS.md` / `OPERATOR_WORKFLOW.md` / `USER_REQUEST_LEDGER.md` へ同期する。このファイルだけに閉じ込めない。
 

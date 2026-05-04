@@ -10,7 +10,7 @@ NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本
 
 通常再開では、読了対象を増やすこと自体を progress にしない。毎回読むのは次の 3 点まで。
 
-1. `AGENTS.md` — repo 境界・削除禁止・入口責務
+1. `AGENTS.md` — repo 境界・入口責務
 2. `docs/REPO_LOCAL_RULES.md` — 本ファイルの Hard Rules / Block-Start Checklist / Ask Hygiene
 3. `docs/runtime-state.md` — `slice` / `next_action` / `last_change_relation` / `last_verification`
 
@@ -29,8 +29,8 @@ NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本
 
 ## Hard Rules
 
-- この repo 以外の file / memory / docs を読まない・書かない。
-- HoloSync / NLMandSlideVideoGenerator / NarrativeGen / VastCore への逸脱を禁止。
+- 通常はこの repo 以外の file / memory / docs を読まない・書かない。ユーザーが cross-project / 他 repo 作業を明示した場合は、その明示範囲だけ扱う。
+- HoloSync / NLMandSlideVideoGenerator / NarrativeGen / VastCore への逸脱は通常禁止。明示された cross-project scope に含まれる場合だけ例外にする。
 - repeated visual proof を要求しない。YMM4 visual proof は初回 E2E と最終制作物の品質判断だけ。
 - mechanical な確認は GUI の Dry Run または開発時のユニットテストで閉じる。コード変更がないときにテストを回さない。
 - `src/` または `gui/` のロジックを変えたブロックの終わりにだけ pytest 結果を示す。ドキュ / runtime-state のみのブロックでは不要。
@@ -66,14 +66,15 @@ NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本
 2. これからやる作業はその bottleneck に直接効くか
 3. user に新しい manual proof を頼まずに閉じられるか
 4. user に聞く前に repo 内根拠で決められないか
+5. user-owned step を出す場合、assistant が停止しているのか・user が何を置く/返すのか・受領後に assistant が何をするのかが一読で分かるか
 
-この 4 つに yes と言えない作業は、まず理由を明文化してから進める。
+この 5 つに yes と言えない作業は、まず理由を明文化してから進める。
 
 ## Ask Hygiene
 
 - 質問は高位分岐だけ。
-- 質問が必要でも、3 個以下の実質差分がある選択肢まで圧縮する。
-- 「別 repo へ移動」「別 PJ の memory を参照」は選択肢に含めない。
+- 質問が必要でも、2〜4 個程度の実質差分がある選択肢まで圧縮する。固定メニューではなく、異なる bottleneck を解く hook として出す。
+- 通常は「別 repo へ移動」「別 PJ の memory を参照」を選択肢に含めない。ユーザーが cross-project 作業を明示した場合だけ、その範囲内で候補にする。
 
 ## Quality Priority
 
@@ -87,7 +88,7 @@ NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本
 
 機械的に判定できる違反は `.claude/hooks/guardrails.py` で reject する。対象:
 
-- repo 外逸脱
+- 明示 scope なしの repo 外参照
 - broad question による停止
 - repeated visual proof の反復要求
 

@@ -24,7 +24,7 @@ NotebookLM の台本を YMM4 用 CSV に変換し、さらに演出 IR (中間�
 - **動画生成・合成は YMM4 上で完結する**
 - **NotebookLM が台本品質の源泉** (ADR-0002) — LLM で主台本を生成しない
 - **Python は接着層であり生成主体ではない** — 詳細は `docs/INVARIANTS.md` の Production Value North Star
-- **他プロジェクトを参照しない** (AGENTS.md 境界ルール)
+- **通常は他プロジェクトを参照しない**。ユーザーが cross-project / 他 repo 作業を明示した場合は、AGENTS.md の明示範囲ルールに従う。
 
 ## 機能追加のルール
 - **docs/FEATURE_REGISTRY.md が全件把握の唯一のソース**

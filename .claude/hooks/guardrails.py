@@ -17,6 +17,15 @@ FORBIDDEN_PATTERNS = [
     re.compile(r"[\\/]\.claude[\\/]+projects[\\/]", re.IGNORECASE),
 ]
 
+CROSS_PROJECT_SCOPE_PATTERNS = [
+    re.compile(r"cross[- ]project", re.IGNORECASE),
+    re.compile(r"他\s*repo", re.IGNORECASE),
+    re.compile(r"他プロジェクト"),
+    re.compile(r"別プロジェクト"),
+    re.compile(r"明示範囲"),
+    re.compile(r"authority cleanup", re.IGNORECASE),
+]
+
 STOP_PATTERNS = [
     re.compile(r"判断をお願いします"),
     re.compile(r"何が足りないか教えてください"),
@@ -88,6 +97,10 @@ def _matches_any(text: str, patterns: list[re.Pattern[str]]) -> bool:
     return any(pattern.search(text) for pattern in patterns)
 
 
+def _has_cross_project_scope(strings: list[str]) -> bool:
+    return _matches_any("\n".join(strings), CROSS_PROJECT_SCOPE_PATTERNS)
+
+
 def _check_stop_content(strings: list[str]) -> str | None:
     joined = "\n".join(strings)
     if _matches_any(joined, STOP_PATTERNS):
@@ -104,15 +117,15 @@ def main() -> int:
     strings = _collect_strings(payload)
     event = _event_name(payload).lower()
 
-    forbidden = _contains_forbidden_path(strings)
-    if forbidden:
-        print(
-            "Guardrails rejected repo-external or forbidden project reference:\n"
-            f"{forbidden}"
-        )
-        return 2
-
     if "stop" in event or "response" in event:
+        forbidden = _contains_forbidden_path(strings)
+        if forbidden and not _has_cross_project_scope(strings):
+            print(
+                "Guardrails rejected repo-external reference without explicit cross-project scope:\n"
+                f"{forbidden}"
+            )
+            return 2
+
         issue = _check_stop_content(strings)
         if issue:
             print(f"Guardrails rejected assistant output: {issue}")
