@@ -13,13 +13,21 @@ def test_minimal_manifest_marks_missing_artifacts_not_recorded() -> None:
 
     assert manifest["video_id"] == "video-001"
     assert manifest["paths"]["csv"]["status"] == "not_recorded"
+    assert manifest["paths"]["face_map"]["status"] == "not_recorded"
+    assert manifest["paths"]["skit_group_registry"]["status"] == "not_recorded"
+    assert manifest["paths"]["ymm4_acceptance"]["status"] == "not_recorded"
     assert manifest["paths"]["thumbnail_design"]["status"] == "not_recorded"
     assert manifest["csv"]["status"] == "not_recorded"
     assert manifest["script_diagnostics"]["status"] == "not_recorded"
     assert manifest["ir_validation"]["status"] == "not_recorded"
     assert manifest["apply_production"]["status"] == "not_recorded"
     assert manifest["manual_acceptance"]["subtitle_check"]["status"] == "manual_pending"
+    assert manifest["manual_acceptance"]["overall_tempo"]["status"] == "manual_pending"
+    assert manifest["manual_acceptance"]["face_readability"]["status"] == "manual_pending"
+    assert manifest["manual_acceptance"]["skit_group_placement"]["status"] == "manual_pending"
+    assert manifest["manual_acceptance"]["nod_strength"]["status"] == "manual_pending"
     assert manifest["manual_acceptance"]["ymm4_composition"]["status"] == "manual_pending"
+    assert manifest["manual_acceptance"]["episode_gaps"]["status"] == "manual_pending"
     assert manifest["manual_acceptance"]["thumbnail_check"]["status"] == "manual_pending"
     assert manifest["next_action"] == "Build CSV and record the output path."
 
@@ -72,6 +80,10 @@ def test_manifest_summarizes_csv_diagnostics_validate_and_apply_json(tmp_path) -
     )
     ir_path = tmp_path / "production_ir.json"
     ir_path.write_text("{}", encoding="utf-8")
+    face_map_path = tmp_path / "face_map.json"
+    face_map_path.write_text("{}", encoding="utf-8")
+    gaps_path = tmp_path / "gaps.md"
+    gaps_path.write_text("# gaps\n", encoding="utf-8")
 
     manifest = build_session_manifest(
         video_id="video-002",
@@ -82,12 +94,16 @@ def test_manifest_summarizes_csv_diagnostics_validate_and_apply_json(tmp_path) -
             "validate_result": str(validate_path),
             "apply_result": str(apply_path),
             "patched_ymmp": str(tmp_path / "patched.ymmp"),
+            "face_map": str(face_map_path),
+            "gaps": str(gaps_path),
         },
     )
 
     assert manifest["csv"]["row_count"] == 3
     assert manifest["csv"]["speaker_count"] == 2
     assert manifest["script_diagnostics"]["error_count"] == 1
+    assert manifest["paths"]["face_map"]["status"] == "recorded"
+    assert manifest["paths"]["gaps"]["status"] == "recorded"
     assert manifest["script_diagnostics"]["warning_count"] == 1
     assert manifest["script_diagnostics"]["codes"] == [
         "NLM_STYLE_MARKER",

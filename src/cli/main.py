@@ -14,6 +14,7 @@ Usage:
     python -m src.cli.main fetch-topics <URL>... [-n 20] [--after YYYY-MM-DD] [--format text|json]
     python -m src.cli.main validate-ir <ir.json> [--palette ...] [--format text|json]
     python -m src.cli.main emit-packaging-brief-template [-o path] [--format markdown|json]
+    python -m src.cli.main init-episode-run --episode-id ID [--root DIR] [--force] [--format text|json]
     python -m src.cli.main build-session-manifest --video-id ID [artifact paths...] [--format markdown|json] [-o path]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
@@ -1607,6 +1608,29 @@ def main(argv: list[str] | None = None) -> int:
         help="markdown (default) or minimal JSON skeleton",
     )
 
+    # init-episode-run (one-video production pack scaffold)
+    p_episode_run = subparsers.add_parser(
+        "init-episode-run",
+        help="Create a one-video production pack under _tmp/episode_runs/<episode_id>",
+    )
+    p_episode_run.add_argument("--episode-id", required=True, help="Episode/run identifier")
+    p_episode_run.add_argument(
+        "--root",
+        default="_tmp/episode_runs",
+        help="Episode run root directory (default: _tmp/episode_runs)",
+    )
+    p_episode_run.add_argument(
+        "--force",
+        action="store_true",
+        help="Overwrite starter files if they already exist",
+    )
+    p_episode_run.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # build-session-manifest (production handoff)
     p_session_manifest = subparsers.add_parser(
         "build-session-manifest",
@@ -1618,9 +1642,19 @@ def main(argv: list[str] | None = None) -> int:
     p_session_manifest.add_argument("--script-diagnostics", help="diagnose-script --format json result path")
     p_session_manifest.add_argument("--production-ymmp", help="Base production .ymmp path")
     p_session_manifest.add_argument("--ir-json", help="Production IR JSON path")
+    p_session_manifest.add_argument("--face-map", help="face_map JSON path")
+    p_session_manifest.add_argument("--bg-map", help="bg_map JSON path")
+    p_session_manifest.add_argument("--overlay-map", help="overlay_map JSON path, if used")
+    p_session_manifest.add_argument("--se-map", help="se_map JSON path, if used")
+    p_session_manifest.add_argument("--motion-map", help="motion_map JSON path, if used")
+    p_session_manifest.add_argument("--bg-anim-map", help="bg_anim_map JSON path, if used")
+    p_session_manifest.add_argument("--skit-group-registry", help="skit_group registry JSON path")
+    p_session_manifest.add_argument("--skit-group-template-source", help="skit_group template source .ymmp path")
     p_session_manifest.add_argument("--validate-result", help="validate-ir --format json result path")
     p_session_manifest.add_argument("--apply-result", help="apply-production --format json result path")
     p_session_manifest.add_argument("--patched-ymmp", help="Patched production .ymmp path")
+    p_session_manifest.add_argument("--ymm4-acceptance", help="YMM4 acceptance note path")
+    p_session_manifest.add_argument("--gaps", help="Episode gaps note path")
     p_session_manifest.add_argument("--thumbnail-design", help="thumbnail_design sibling artifact path")
     p_session_manifest.add_argument("--thumbnail-output", help="Exported thumbnail image path, if available")
     p_session_manifest.add_argument(
@@ -1723,6 +1757,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_patch_thumbnail_template(args)
         elif args.command == "emit-packaging-brief-template":
             return _cmd_emit_packaging_brief_template(args)
+        elif args.command == "init-episode-run":
+            return _cmd_init_episode_run(args)
         elif args.command == "build-session-manifest":
             return _cmd_build_session_manifest(args)
         elif args.command == "diagnose-script":
@@ -3398,6 +3434,22 @@ def _cmd_build_session_manifest(args: argparse.Namespace) -> int:
         print(f"Written: {out_path}")
     else:
         sys.stdout.write(text)
+    return 0
+
+
+def _cmd_init_episode_run(args: argparse.Namespace) -> int:
+    """Create the one-video production pack scaffold."""
+    from src.pipeline.episode_run_pack import (
+        emit_episode_run_pack_text,
+        init_episode_run_pack,
+    )
+
+    result = init_episode_run_pack(
+        episode_id=args.episode_id,
+        root=args.root,
+        force=bool(getattr(args, "force", False)),
+    )
+    sys.stdout.write(emit_episode_run_pack_text(result, getattr(args, "format", "text")))
     return 0
 
 

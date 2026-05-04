@@ -20,9 +20,19 @@ PATH_KEYS = (
     "script_diagnostics",
     "production_ymmp",
     "ir_json",
+    "face_map",
+    "bg_map",
+    "overlay_map",
+    "se_map",
+    "motion_map",
+    "bg_anim_map",
+    "skit_group_registry",
+    "skit_group_template_source",
     "validate_result",
     "apply_result",
     "patched_ymmp",
+    "ymm4_acceptance",
+    "gaps",
     "thumbnail_design",
     "thumbnail_output",
 )
@@ -289,17 +299,37 @@ def _summarize_apply_production(
 
 def _manual_acceptance_placeholders() -> dict[str, dict[str, str]]:
     return {
+        "overall_tempo": {
+            "status": "manual_pending",
+            "note": "Judge only the one-pass rhythm of the full episode in YMM4.",
+        },
+        "face_readability": {
+            "status": "manual_pending",
+            "note": "Check whether face changes read clearly in context.",
+        },
+        "skit_group_placement": {
+            "status": "manual_pending",
+            "note": "Check spacing and screen dominance for skit_group inserts.",
+        },
+        "nod_strength": {
+            "status": "manual_pending",
+            "note": "Check nod_clear_v2 / nod_head_v1 only where the episode uses them.",
+        },
         "subtitle_check": {
             "status": "manual_pending",
-            "note": "YMM4 import/read/subtitle display check is outside this manifest CLI.",
+            "note": "Check subtitle display and collapse risk after the patched .ymmp is opened.",
         },
         "ymm4_composition": {
             "status": "manual_pending",
             "note": "Open the patched .ymmp in YMM4 and judge spacing/timing/scene dominance.",
         },
+        "episode_gaps": {
+            "status": "manual_pending",
+            "note": "Classify NGs as wrong motion / screen spacing / body-face drift / too subtle / missing演出.",
+        },
         "thumbnail_check": {
             "status": "manual_pending",
-            "note": "Use thumbnail_design/one-sheet when creating the YMM4 thumbnail template copy.",
+            "note": "Thumbnail work remains a later packaging lane unless this episode explicitly records it.",
         },
     }
 
