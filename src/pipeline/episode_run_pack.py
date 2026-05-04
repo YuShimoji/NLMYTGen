@@ -83,6 +83,17 @@ def build_episode_pack_manifest(*, episode_id: str, run_dir: str | Path) -> dict
             for dirname in EPISODE_RUN_DIRS
         },
         "standard_inputs": {
+            "required_files": [
+                "csv/<episode_id>.txt",
+                "ir/<episode_id>_production_ir.json",
+                "ymmp/<episode_id>_base.ymmp",
+            ],
+            "conditional_files": [
+                "maps/bg_map.json",
+                "maps/skit_group_registry.json",
+                "samples/templates/skit_group/delivery_v1_templates.ymmp",
+                "maps/face_map.json or face map bundle",
+            ],
             "production_ir": ["face", "idle_face", "bg", "skit_group"],
             "conditional_ir": ["overlay", "se", "motion", "bg_anim"],
             "conditional_rule": (
@@ -129,8 +140,9 @@ def build_episode_pack_manifest(*, episode_id: str, run_dir: str | Path) -> dict
         },
         "session_manifest_target": str(run_path / "manifest" / "session_manifest.md"),
         "next_action": (
-            "Keep the first pilot narrow: assemble one full-through video, then template "
-            "only the missing演出 that the YMM4 pass proves necessary."
+            "Keep the first pilot narrow: place the required source script, Production IR, "
+            "and base .ymmp in the expected paths, run GUI Validate IR -> Dry Run -> Apply "
+            "Production, then template only the missing演出 that the YMM4 pass proves necessary."
         ),
     }
 
@@ -225,31 +237,51 @@ This pack keeps one full-through yukkuri theater pilot in one place.
 
 ## GUI hands-on route
 
-assistant status: pack is the container; GUI writes review artifacts to fixed paths.
-user action: use the GUI buttons below, then do one YMM4 review only after Apply succeeds.
-assistant next: if any step fails, return the saved JSON or panel text and keep `review/gaps.md` focused on the blocker.
+assistant status: blocked only on the user-owned pack inputs listed below; GUI writes review artifacts to fixed paths.
+user action: put the required files at the exact paths, use the GUI buttons below, then do one YMM4 review only after Apply succeeds.
+assistant next: if any step fails, return the saved JSON or panel text; assistant will inspect that artifact and keep `review/gaps.md` focused on the blocker.
+
+## Initial input packet
+
+Required before the GUI route can complete:
+
+| File | Purpose | Created by / when |
+|---|---|---|
+| `csv/{episode_id}.txt` | source script for `Build CSV` | user places the refined script here |
+| `ir/{episode_id}_production_ir.json` | Production IR for `Validate IR` / `Dry Run` / `Apply Production` | user places the S-6 IR here, or saves pasted IR through GUI |
+| `ymmp/{episode_id}_base.ymmp` | YMM4 base project after CSV import | user saves this from YMM4 after `csv/{episode_id}.csv` is built |
+
+Conditional files:
+
+| File | Use only when |
+|---|---|
+| `maps/bg_map.json` | IR uses background labels / `bg` changes |
+| `maps/skit_group_registry.json` | IR uses `skit_group` intents |
+| `samples/templates/skit_group/delivery_v1_templates.ymmp` | `skit_group` placement is enabled; select this repo template source in GUI |
+| `maps/face_map.json` or face map bundle | face / idle_face labels need an explicit character-scoped map |
 
 1. Start GUI with `start-gui.bat`.
 2. Open the `演出適用` tab and choose this folder as `Episode Pack Root`.
-3. Open the `CSV 変換` tab, select `csv/{episode_id}.txt`, then press `Build CSV`.
+3. Confirm `csv/{episode_id}.txt` and `ir/{episode_id}_production_ir.json` exist in this pack.
+4. Open the `CSV 変換` tab, select `csv/{episode_id}.txt`, then press `Build CSV`.
    - success output: `csv/{episode_id}.csv`
    - GUI also reflects that CSV in `CSV (row-range)`.
-4. Import the CSV in YMM4, then save the base project as `ymmp/{episode_id}_base.ymmp`.
-5. Return to `演出適用`, select `ymmp/{episode_id}_base.ymmp` and `ir/{episode_id}_production_ir.json`.
-6. Select only maps that this episode actually needs:
+5. Import the CSV in YMM4, then save the base project as `ymmp/{episode_id}_base.ymmp`.
+6. Return to `演出適用`, select `ymmp/{episode_id}_base.ymmp` and `ir/{episode_id}_production_ir.json`.
+7. Select only maps that this episode actually needs:
    - `maps/bg_map.json`
    - `maps/skit_group_registry.json`
    - `samples/templates/skit_group/delivery_v1_templates.ymmp`
-7. Press `Validate IR`.
+8. Press `Validate IR`.
    - success/failure JSON: `ir/{episode_id}_validate.json`
-8. Press `Dry Run`.
+9. Press `Dry Run`.
    - result JSON: `ymmp/{episode_id}_dry_run.json`
-9. Press `Apply Production`.
+10. Press `Apply Production`.
    - result JSON: `ymmp/{episode_id}_apply.json`
    - patched project: `ymmp/{episode_id}_patched.ymmp`
-10. Open `ymmp/{episode_id}_patched.ymmp` in YMM4 once and fill `review/ymm4_acceptance.md`.
-11. Record missing演出 and GUI-unexposed map needs in `review/gaps.md`.
-12. Build the final `manifest/session_manifest.md` with `manifest/session_manifest.command.txt`.
+11. Open `ymmp/{episode_id}_patched.ymmp` in YMM4 once and fill `review/ymm4_acceptance.md`.
+12. Record missing演出 and GUI-unexposed map needs in `review/gaps.md`.
+13. Build the final `manifest/session_manifest.md` with `manifest/session_manifest.command.txt`.
 
 ## NG return rule
 

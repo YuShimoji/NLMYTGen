@@ -47,6 +47,8 @@ NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本
   - drift detection
   - docs sync
   - operator の手動負荷削減
+- user-owned step を出すときは、`素材投入` / `入力を置く` / `GUIで進める` のような総称だけで止めない。最低限、assistant が停止中か、user が置く必須ファイル・任意ファイルの exact path、作成/選択の順番、成功時にできる出力、NG時に返す JSON / 文面、受領後に assistant が閉じる検証を同じ handoff に含める。
+- 最終応答は `やったこと` だけで閉じない。根拠 / 残リスク / 次の owner / user 返答後に assistant が閉じる作業まで論理的に接続する。接続できない場合は、まず assistant 側の gap report / drift detection / fail-fast / docs sync を検討する。
 
 ## pytest（最小）
 
@@ -67,8 +69,32 @@ NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本
 3. user に新しい manual proof を頼まずに閉じられるか
 4. user に聞く前に repo 内根拠で決められないか
 5. user-owned step を出す場合、assistant が停止しているのか・user が何を置く/返すのか・受領後に assistant が何をするのかが一読で分かるか
+6. `素材` や `artifact` という総称を使う場合、その内訳・置き先・戻り値が直後に列挙されているか
 
-この 5 つに yes と言えない作業は、まず理由を明文化してから進める。
+この 6 つに yes と言えない作業は、まず理由を明文化してから進める。
+
+## Block-End Closeout Contract
+
+ブロック終端の報告は固定テンプレートではなく、次の作業を破綻なく再開するための最低契約として扱う。少なくとも次の鎖を本文内で保つ。
+
+- `summary`: 完了したこと / 意図的に触っていないこと。
+- `evidence`: 検証・readback・確認した根拠、または確認しなかった理由。
+- `risk`: 残る不確実性、古い証跡、creative judgement。
+- `next owner`: 次に動くのが assistant / user / both のどれか。
+- `assistant next`: user 返答後に assistant が見る JSON / readback / gap、生成または修正する artifact。
+
+この鎖を埋められないまま `確認してください` `次をお願いします` で終えない。
+
+## User-Owned Handoff Contract
+
+user が次に動く必要がある場合は、短くても次を 1 セットで出す。
+
+- `assistant status`: blocked / parallel work available のどちらか。
+- `user action`: 必須 artifact、任意 artifact、置き先 path、GUI 操作順、完了判定。
+- `assistant next`: 受領後に見る JSON / readback / gap、次に生成または修正する artifact。
+- `do not`: NG 時に手編集してはいけない出力、まだ開かない YMM4 確認、混ぜてはいけない別 lane。
+
+例外なく、`素材` は file-kind ではなく説明語として扱う。`source script` / `Production IR` / `base .ymmp` / `bg_map` / `skit_group_registry` のように、実ファイル種別へ展開してから user へ渡す。
 
 ## Ask Hygiene
 

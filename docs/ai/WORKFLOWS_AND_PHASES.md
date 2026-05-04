@@ -43,6 +43,7 @@ A scout pass should include, when relevant:
 ## Manual verification pattern
 - Put verification items in normal text, not inside the ask field.
 - Before using a short result code, state the task connection floor: what to open, what to create/modify, the source object, the actor, the owner artifact, and what the result code means.
+- Before asking the user to place or create artifacts, list the exact required files, conditional files, target paths, and returned JSON/text. Generic words such as "materials", "inputs", or "artifacts" are not enough unless expanded immediately.
 - Use `OK / NG` or `PASS / FAIL` only after that floor is explicit. If any field is missing, do not compress the request into a template; resolve the missing field first.
 - Ask for next direction separately.
 

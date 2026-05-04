@@ -41,6 +41,10 @@
   - 予防: 報告では `template source` / `analyzed placement plan` / `patched .ymmp readback` / `creative acceptance` を分ける。raw clone readback は transport proof であり production acceptance ではない。spacing / composition の問題はまず assistant 側の template analyzer・placement planner・row/timing density の不足として扱い、missing source fact が readback で証明されるまで user にテンプレート再作成を依頼しない。
 - `OWNERSHIP_HANDOFF_BLUR`: 完了報告の末尾に「次は人間側作業」とだけ書き、assistant が本当に停止しているのか、並行してできる調査があるのか、user がどの artifact をどこへ置けばよいのか、返答後に assistant が何を閉じるのかを曖昧にする。ユーザーが「こちらの作業で止まっていますか？」と再確認する摩擦が発生する。
   - 予防: user-owned step を出すときは、`assistant status` / `user action` / `assistant next after user action` の 3 点を本文で短く書く。hands-on が必要そうな手順なら、先に見る path、置く path、完了判定、NG 時の返し方を添える。例: `assistant status: blocked on material input; user action: put source script / base .ymmp / Production IR / maps into <pack>; assistant next: validate manifest, run pack checks, then patch/generate the next artifact`。
+- `MATERIAL_HANDOFF_GAP`: `素材投入` / `入力artifact` / `必要ファイル` などの総称で user-owned step を渡し、何をどこへ置くか、どの順に GUI を押すか、NG 時に何を返すかが直後に列挙されない。結果として user が「素材とは何か」を再質問する。
+  - 予防: handoff では必須ファイルと任意ファイルを分け、各ファイルについて `purpose` / `target path` / `created by` / `used by GUI button or command` を最低限示す。既存 pack や README を参照する場合でも、本文に初回入力の exact path を再掲する。`素材` という語は最後にしか使わず、まず `source script` / `Production IR` / `base .ymmp` / `map` へ展開する。
+- `CLOSING_CHAIN_BREAK`: 最終応答が「やったこと」だけを述べ、根拠・残リスク・次の owner・user 返答後に assistant が閉じる作業のどれかを欠いたまま終わる。結果として、user に作業だけが振られ、次に何を返せば再開できるか、そもそも assistant が停止しているのかが分からなくなる。
+  - 予防: closeout 前に `summary -> evidence -> risk -> next owner -> assistant next` の鎖を確認する。鎖が切れている場合は、曖昧な「確認してください」で終えず、assistant 側で閉じる gap report / drift detection / fail-fast / docs sync を先に検討する。user action が必要なら、停止理由と返答後の assistant 作業を同じ段落で接続する。
 
 ## Ask Protocol
 - 質問前に、repo 内根拠で決められない理由を確認する。理由がない場合は質問せず進める。cross-project 指示がある場合は、明示された他 repo / docs も根拠範囲に含める。
@@ -57,7 +61,9 @@
 
 ## Report Protocol
 - 報告形式は固定見出しではなく安全柵として扱う。必要最小限は、何を変えた / 変えていない、根拠または readback、残るリスクや judgement、次に取り得る hook。
+- 最終応答では `summary -> evidence -> risk -> next owner -> assistant next` の論理鎖を切らない。見出し名は任意だが、次の作業が user に渡る場合でも assistant が次に何を閉じるかまで書く。
 - user action が次の blocker の場合は、`assistant status`（停止中 / 並行作業あり）・`user action`（対象 path と必要 artifact）・`assistant next after user action`（受領後に閉じる検証や生成）を分ける。
+- user action が file placement / GUI operation の場合は、本文中に必須ファイル・任意ファイル・操作順・成功出力・NG返却ファイルを置く。README や manifest へのリンクだけで初回手順説明を代替しない。
 - completion 報告では、`changed` / `not changed` / `verified` / `still blocked` の区別を保つ。docs 更新だけの場合は、実制作上の摩擦が何だけ減ったのかを明示する。
 - handoff では「何が抜けているか」「次にやってはいけないこと」「再オープン条件」を必要時に残す。ただし固定テンプレの穴埋めを進捗にしない。
 - 再開時の repeated context は、まず `docs/ai/*.md` と project-local canonical docs を読んでから扱う。prompt や古い handoff を正本より優先しない。

@@ -25,6 +25,12 @@ def test_init_episode_run_pack_creates_expected_layout(tmp_path) -> None:
         (run_dir / "manifest" / "episode_pack_manifest.json").read_text(encoding="utf-8")
     )
     assert manifest["episode_id"] == "pilot_001"
+    assert manifest["standard_inputs"]["required_files"] == [
+        "csv/<episode_id>.txt",
+        "ir/<episode_id>_production_ir.json",
+        "ymmp/<episode_id>_base.ymmp",
+    ]
+    assert "maps/bg_map.json" in manifest["standard_inputs"]["conditional_files"]
     assert manifest["standard_inputs"]["production_ir"] == [
         "face",
         "idle_face",
@@ -45,6 +51,10 @@ def test_init_episode_run_pack_creates_expected_layout(tmp_path) -> None:
     assert "assistant status" in readme
     assert "user action" in readme
     assert "assistant next" in readme
+    assert "Initial input packet" in readme
+    assert "csv/pilot_001.txt" in readme
+    assert "ir/pilot_001_production_ir.json" in readme
+    assert "ymmp/pilot_001_base.ymmp" in readme
     assert "Validate IR" in readme
     assert "pilot_001_dry_run.json" in readme
     assert "pilot_001_patched.ymmp" in readme

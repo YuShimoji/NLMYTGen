@@ -64,6 +64,28 @@ A robust handoff should preserve:
 - what not to do next
 - new fossils created in the current thread
 
+## Closeout chain minimum
+Final responses should not merely summarize activity; they should make the next move executable.
+Do not force fixed section names, but preserve the logical chain:
+- summary: what is complete and what was deliberately not changed
+- evidence: validation, readback, or why validation was not run
+- risk: residual uncertainty, stale evidence, or judgement still needed
+- next owner: assistant, user, or both
+- assistant next: what the assistant will inspect, generate, or fix after any user-owned return
+
+If user action is the next blocker, explain why the assistant is blocked or what can still run in parallel. A response that ends with only "please check" or "continue from here" is incomplete unless the exact user action and assistant follow-up are already clear.
+
+## User-owned artifact handoff
+When the next blocker is a user-owned action, the handoff must be concrete enough to execute without a follow-up clarification.
+Do not say only "place materials", "run the GUI", or "return the outputs".
+Include:
+- whether the assistant is blocked or can continue in parallel
+- exact required artifacts and their target paths
+- optional artifacts and the condition that makes each one necessary
+- the operation sequence, especially GUI tabs/buttons when GUI is the route
+- success outputs and NG return files/text
+- what the assistant will inspect or generate immediately after the user returns
+
 ## No progress laundering
 Do not claim progress merely because:
 - a doc was created during refresh

@@ -59,6 +59,8 @@ NLMYTGen GUI（`start-gui.bat` / `gui/`）で「何を用意すればよいか�
 
 **Episode Pack Mode**: 1本通し制作では最初に `Episode Pack Root` で `_tmp/episode_runs/<episode_id>/` を選ぶ。GUIは episode_id をフォルダ名から推定し、`Build CSV`、`Validate IR`、`Dry Run`、`Apply Production` の保存先をpack内の既定pathへ固定する。
 
+初回入力として user に依頼するものは `素材投入` と総称しない。pack内ではまず `csv/<episode_id>.txt`（元台本）、`ir/<episode_id>_production_ir.json`（演出IR）、`ymmp/<episode_id>_base.ymmp`（YMM4でCSV読込後に保存したbase project）の3つを必須として案内する。`maps/bg_map.json`、`maps/skit_group_registry.json`、`samples/templates/skit_group/delivery_v1_templates.ymmp` は IR が該当機能を使う場合だけ選ぶ。
+
 | GUI操作 | 保存先 |
 |---|---|
 | `Build CSV` | `csv/<episode_id>.csv` |
