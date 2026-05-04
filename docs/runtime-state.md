@@ -112,7 +112,7 @@
 
 - active_artifact: NLM transcript → YMM4 CSV → ゆっくり解説動画制作ワークフロー
 - artifact_surface: CLI → CSV → YMM4 台本読込 → 演出設定 → レンダリング → サムネイル → 投稿
-- last_change_relation: **2026-05-05** Closed the recommended restart-prep path by turning the pilot Episode Pack handoff into exact user-owned inputs. `docs/REPO_LOCAL_RULES.md`, `docs/ai/*`, and `docs/INTERACTION_NOTES.md` require user-owned steps to expand generic `materials/artifacts` into exact required files, conditional files, target paths, GUI sequence, success outputs, NG return artifacts, and assistant next action. Episode Run Pack docs/generator now surface the initial required packet (`csv/<episode_id>.txt`, `ir/<episode_id>_production_ir.json`, `ymmp/<episode_id>_base.ymmp`) plus conditional maps/template source; `runtime-state.md` names the concrete missing `pilot_yukkuri_theater_v1` inputs.
+- last_change_relation: **2026-05-05** Hardened closeout reporting after user feedback that file-change lists were not enough to understand what happened or what comes next. `docs/REPO_LOCAL_RULES.md`, `docs/ai/STATUS_AND_HANDOFF.md`, and `docs/INTERACTION_NOTES.md` now require a user-readable `meaning` layer in final reports: what changed for the workflow/behavior/decision space, why it matters, what is now possible or prohibited, residual risk, next owner, and assistant next. File paths, line numbers, commits, and tests are evidence only, not a substitute for explanation. This builds on the same-day doc-route handoff guard: future reports must be executable/understandable from the response body first, with files cited afterward as support. `.claude/hooks/guardrails.py` also rejects md/README/manifest handoff laundering so the rule is not documentation-only.
 
 ## カウンター
 
@@ -131,7 +131,7 @@
 
 ## 最終検証
 
-- last_verification: **2026-05-05 restart-prep closeout verified**. `uv run pytest tests/test_episode_run_pack.py -q` passed. `uv run python -m py_compile src/pipeline/episode_run_pack.py src/cli/main.py` passed. `git diff --check` passed.
+- last_verification: **2026-05-05 closeout meaning-layer guard verified**. `uv run python -m py_compile .claude/hooks/guardrails.py` passed. Guardrail samples verified md route handoff rejection and exact inline handoff pass. Focused Episode Pack checks passed: `uv run pytest tests/test_episode_run_pack.py -q` and `uv run pytest tests/test_gui_episode_pack_bridge.py -q`. `git diff --check` passed.
 
 ## Evidence（CLI artifact mode）
 

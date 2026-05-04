@@ -40,6 +40,25 @@ VISUAL_PROOF_PATTERNS = [
     re.compile(r"開いて確認"),
 ]
 
+DOC_ROUTE_HANDOFF_PATTERNS = [
+    re.compile(
+        r"(?:手順の正本|手順.*正本|procedure source of truth|procedure source|source of truth)[^\n]*(?:\.md|README|manifest)(?::\d+)?",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"(?:詳しい手順|詳細手順|手順詳細|詳細は)[^\n]*(?:\.md|README|manifest)[^\n]*(?:参照|見て|確認|従)",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"(?:\.md|README|manifest)[^\n]*(?:参照|見て|確認)[^\n]*(?:入力を置く|GUI|YMM4|Build CSV|Validate IR|Apply Production)",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"(?:\.md|README|manifest)[^\n]*(?:GUI|YMM4|Build CSV|Validate IR|Apply Production)[^\n]*(?:進め|操作|押|置|実行|press|run|select|open|\?{3,})",
+        re.IGNORECASE,
+    ),
+]
+
 ALLOWED_VISUAL_CONTEXT = [
     re.compile(r"初回\s*E2E"),
     re.compile(r"最終.*品質判断"),
@@ -48,7 +67,10 @@ ALLOWED_VISUAL_CONTEXT = [
 
 
 def _read_payload() -> Any:
-    raw = sys.stdin.read()
+    raw = sys.stdin.read().lstrip("\ufeff")
+    json_starts = [pos for pos in (raw.find("{"), raw.find("[")) if pos >= 0]
+    if json_starts:
+        raw = raw[min(json_starts) :]
     if not raw.strip():
         return {}
     try:
@@ -109,6 +131,8 @@ def _check_stop_content(strings: list[str]) -> str | None:
         joined, ALLOWED_VISUAL_CONTEXT
     ):
         return "repeated visual proof request detected"
+    if _matches_any(joined, DOC_ROUTE_HANDOFF_PATTERNS):
+        return "md/README/manifest handoff laundering detected; inline exact user-operable steps instead"
     return None
 
 

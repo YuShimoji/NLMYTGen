@@ -68,10 +68,13 @@ A robust handoff should preserve:
 Final responses should not merely summarize activity; they should make the next move executable.
 Do not force fixed section names, but preserve the logical chain:
 - summary: what is complete and what was deliberately not changed
+- meaning: what actually changed for the workflow, behavior, or decision space, understandable without opening changed files
 - evidence: validation, readback, or why validation was not run
 - risk: residual uncertainty, stale evidence, or judgement still needed
 - next owner: assistant, user, or both
 - assistant next: what the assistant will inspect, generate, or fix after any user-owned return
+
+File paths, line numbers, commits, and test names are evidence, not explanation. Put the user-readable meaning first, then cite files as support. Do not wait for the user to ask for "details" or "steps" before explaining what the change means and what happens next.
 
 If user action is the next blocker, explain why the assistant is blocked or what can still run in parallel. A response that ends with only "please check" or "continue from here" is incomplete unless the exact user action and assistant follow-up are already clear.
 
@@ -86,9 +89,12 @@ Include:
 - success outputs and NG return files/text
 - what the assistant will inspect or generate immediately after the user returns
 
+Docs, README files, and manifests may support the handoff, but they do not replace the handoff. If the user must place files, operate the GUI, or check YMM4, the response body must be executable on its own. Phrases like "the procedure source of truth is <file>.md:<line>" are invalid when they are used to avoid restating required files, exact paths, operation order, outputs, NG returns, and assistant next action.
+
 ## No progress laundering
 Do not claim progress merely because:
 - a doc was created during refresh
 - a framework-compliant report was produced
+- a list of changed files was shown
 - a low-friction helper feature was specified
 Report what became easier, safer, or more real for the actual artifact path.

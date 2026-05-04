@@ -7,6 +7,7 @@
 - assistant status: GUI側に `Episode Pack Root` を選ばせ、CSV/IR検証/適用結果をpack内の既定pathへ保存する。
 - user action: 初回入力は `csv/<episode_id>.txt`、`ir/<episode_id>_production_ir.json`、`ymmp/<episode_id>_base.ymmp` の3つを必須として明示する。必要mapは条件付きで列挙し、`素材投入` の一語で代替しない。
 - assistant next: NG時は保存済みJSONまたはGUIパネル文面を受け取り、機械側で原因を切り分ける。
+- route rule: 本ファイルは assistant / maintainer が読む pack 定義であり、user handoff の手順本文の代替ではない。`手順の正本は docs/EPISODE_RUN_PACK.md:<line>` のように参照して user action を成立扱いしない。pilot 操作を渡す応答では、必須3点、任意map、GUI順、成功出力、NG返却、assistant next を本文に再掲する。
 
 ## Directory
 

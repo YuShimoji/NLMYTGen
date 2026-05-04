@@ -68,7 +68,7 @@ NLMYTGen GUI（`start-gui.bat` / `gui/`）で「何を用意すればよいか�
 | `Dry Run` | `ymmp/<episode_id>_dry_run.json` |
 | `Apply Production` | `ymmp/<episode_id>_apply.json`、`ymmp/<episode_id>_patched.ymmp` |
 
-pack導線の詳細は `docs/EPISODE_RUN_PACK.md` を正とする。
+pack定義の詳細は `docs/EPISODE_RUN_PACK.md` を内部参照とする。ただし user handoff では、この md 参照を手順本文の代替にしない。pilot 操作を渡す応答は、必須入力・任意map・GUI順・成功出力・NG返却を本文だけで実行できる粒度に展開する。
 
 | ファイル | 必須 / 任意 | なぜ必要か |
 |-----------|-------------|-----------|

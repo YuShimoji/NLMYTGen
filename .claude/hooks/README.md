@@ -6,6 +6,7 @@
 - 明示 cross-project scope なしの repo 外 project / memory / docs 参照を、assistant output 上で reject
 - broad question による停止の reject
 - repeated visual proof 要求の reject
+- `.md` / README / manifest を user-owned 手順本文の代替にする handoff laundering の reject
 
 ## Scope
 Hook は「悪い挙動を通さない」ための最低限の装置で、入口ファイルの代替ではない。

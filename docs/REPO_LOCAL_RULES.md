@@ -48,6 +48,9 @@ NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本
   - docs sync
   - operator の手動負荷削減
 - user-owned step を出すときは、`素材投入` / `入力を置く` / `GUIで進める` のような総称だけで止めない。最低限、assistant が停止中か、user が置く必須ファイル・任意ファイルの exact path、作成/選択の順番、成功時にできる出力、NG時に返す JSON / 文面、受領後に assistant が閉じる検証を同じ handoff に含める。
+- user-owned step を `.md` / README / manifest への参照で成立扱いしない。`手順の正本は <file>.md:<line>` のような官僚的 handoff は **invalid handoff** として扱い、接続済み `next_action` / closeout に数えない。docs は補足根拠であり、user が実行する導線ではない。
+- Codex / GUI / 現在の表示面から referenced `.md` を開けるか不明な場合、その導線は **開けないもの** として扱う。file placement / GUI operation / YMM4 check を user に渡すなら、本文だけで実行できる必須ファイル、exact path、操作順、成功出力、NG返却、assistant next を再掲する。
+- 最終報告で file path / line / commit / test 名の列挙を、説明の代替にしない。file list は証跡であり説明ではない。ユーザーがファイルを開かなくても、何が変わったか、なぜ効くか、これで次に何が可能/禁止になるか、次に誰が何をするかが本文だけで分かるようにする。
 - 最終応答は `やったこと` だけで閉じない。根拠 / 残リスク / 次の owner / user 返答後に assistant が閉じる作業まで論理的に接続する。接続できない場合は、まず assistant 側の gap report / drift detection / fail-fast / docs sync を検討する。
 
 ## pytest（最小）
@@ -70,8 +73,10 @@ NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本
 4. user に聞く前に repo 内根拠で決められないか
 5. user-owned step を出す場合、assistant が停止しているのか・user が何を置く/返すのか・受領後に assistant が何をするのかが一読で分かるか
 6. `素材` や `artifact` という総称を使う場合、その内訳・置き先・戻り値が直後に列挙されているか
+7. `.md` / README / manifest 参照を、user が実行する手順本文の代替にしていないか
+8. 最終報告が file list だけでなく、読まなくても分かる意味・効果・次動作を含んでいるか
 
-この 6 つに yes と言えない作業は、まず理由を明文化してから進める。
+この 8 つに yes と言えない作業は、まず理由を明文化してから進める。
 
 ## Block-End Closeout Contract
 
@@ -82,8 +87,9 @@ NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本
 - `risk`: 残る不確実性、古い証跡、creative judgement。
 - `next owner`: 次に動くのが assistant / user / both のどれか。
 - `assistant next`: user 返答後に assistant が見る JSON / readback / gap、生成または修正する artifact。
+- `meaning`: file path を開かなくても分かる、今回の変更で実際に変わった挙動・制約・制作導線上の効果。
 
-この鎖を埋められないまま `確認してください` `次をお願いします` で終えない。
+この鎖を埋められないまま `確認してください` `次をお願いします` で終えない。file path / line number は根拠として添えるだけで、`meaning` の代替にしない。
 
 ## User-Owned Handoff Contract
 
@@ -93,6 +99,7 @@ user が次に動く必要がある場合は、短くても次を 1 セットで
 - `user action`: 必須 artifact、任意 artifact、置き先 path、GUI 操作順、完了判定。
 - `assistant next`: 受領後に見る JSON / readback / gap、次に生成または修正する artifact。
 - `do not`: NG 時に手編集してはいけない出力、まだ開かない YMM4 確認、混ぜてはいけない別 lane。
+- `doc route`: docs / README / manifest は裏付けとして添えてよいが、そこへ手順を転嫁しない。user action が必要な handoff は、この応答本文だけで実行できなければ invalid。
 
 例外なく、`素材` は file-kind ではなく説明語として扱う。`source script` / `Production IR` / `base .ymmp` / `bg_map` / `skit_group_registry` のように、実ファイル種別へ展開してから user へ渡す。
 
@@ -117,5 +124,6 @@ user が次に動く必要がある場合は、短くても次を 1 セットで
 - 明示 scope なしの repo 外参照
 - broad question による停止
 - repeated visual proof の反復要求
+- `.md` / README / manifest を user-owned 手順本文の代替にする handoff laundering
 
 Hook で止められない低価値作業は、本ファイルの checklist で防ぐ。

@@ -43,6 +43,10 @@
   - 予防: user-owned step を出すときは、`assistant status` / `user action` / `assistant next after user action` の 3 点を本文で短く書く。hands-on が必要そうな手順なら、先に見る path、置く path、完了判定、NG 時の返し方を添える。例: `assistant status: blocked on material input; user action: put source script / base .ymmp / Production IR / maps into <pack>; assistant next: validate manifest, run pack checks, then patch/generate the next artifact`。
 - `MATERIAL_HANDOFF_GAP`: `素材投入` / `入力artifact` / `必要ファイル` などの総称で user-owned step を渡し、何をどこへ置くか、どの順に GUI を押すか、NG 時に何を返すかが直後に列挙されない。結果として user が「素材とは何か」を再質問する。
   - 予防: handoff では必須ファイルと任意ファイルを分け、各ファイルについて `purpose` / `target path` / `created by` / `used by GUI button or command` を最低限示す。既存 pack や README を参照する場合でも、本文に初回入力の exact path を再掲する。`素材` という語は最後にしか使わず、まず `source script` / `Production IR` / `base .ymmp` / `map` へ展開する。
+- `DOC_ROUTE_LAUNDERING`: user-owned hands-on を `.md` / README / manifest への参照へ転嫁し、`手順の正本は <file>.md:<line>` のように書くことで導線が接続済みだと誤認する。Codex / GUI / 現在の表示面から referenced file を開けない、または user が本文だけで次動作を実行できない場合、これは「補足参照」ではなく route break であり、manual step のたらい回しになる。
+  - 予防: file placement / GUI operation / YMM4 check を user に渡すときは、応答本文に必須ファイル、任意ファイル、exact path、操作順、成功出力、NG返却、assistant next を再掲する。docs は根拠・背景・後で assistant が読む場所としてだけ扱い、user action の実行本文を置き換えない。検出した場合は severe interaction failure として、その handoff を無効化し、同じブロックで self-contained packet へ修正する。機械的に検出できる文面は `.claude/hooks/guardrails.py` で reject する。
+- `FILE_DIFF_CLOSEOUT`: 最終報告が「どのファイルに何を追加したか」の列挙に寄り、ユーザーがファイルを開かないと、実際に何が変わったのか、制作導線上の効果、次に誰が何をするのかを復元できない。これは evidence を explanation と取り違える closeout failure であり、認知負荷を user に押し戻す。
+  - 予防: file path / line number は根拠欄に限定し、先に `何が変わったか` / `なぜ効くか` / `これで次に何が可能または禁止になるか` / `まだ残る判断` / `次 owner と assistant next` を本文で説明する。ユーザーが「詳しく」「手順も」と追加依頼しなくても、通常 closeout にはこの意味層を含める。docs-only 変更でも「どの文章を足した」ではなく「次回からどの挙動が invalid / required になるか」を述べる。
 - `CLOSING_CHAIN_BREAK`: 最終応答が「やったこと」だけを述べ、根拠・残リスク・次の owner・user 返答後に assistant が閉じる作業のどれかを欠いたまま終わる。結果として、user に作業だけが振られ、次に何を返せば再開できるか、そもそも assistant が停止しているのかが分からなくなる。
   - 予防: closeout 前に `summary -> evidence -> risk -> next owner -> assistant next` の鎖を確認する。鎖が切れている場合は、曖昧な「確認してください」で終えず、assistant 側で閉じる gap report / drift detection / fail-fast / docs sync を先に検討する。user action が必要なら、停止理由と返答後の assistant 作業を同じ段落で接続する。
 
@@ -61,10 +65,13 @@
 
 ## Report Protocol
 - 報告形式は固定見出しではなく安全柵として扱う。必要最小限は、何を変えた / 変えていない、根拠または readback、残るリスクや judgement、次に取り得る hook。
+- 報告の主語を file ではなく workflow / behavior / decision に置く。file path はクリック可能な証跡として後ろに置き、読者が開かなくても意味が通る本文を先に書く。
 - 最終応答では `summary -> evidence -> risk -> next owner -> assistant next` の論理鎖を切らない。見出し名は任意だが、次の作業が user に渡る場合でも assistant が次に何を閉じるかまで書く。
 - user action が次の blocker の場合は、`assistant status`（停止中 / 並行作業あり）・`user action`（対象 path と必要 artifact）・`assistant next after user action`（受領後に閉じる検証や生成）を分ける。
 - user action が file placement / GUI operation の場合は、本文中に必須ファイル・任意ファイル・操作順・成功出力・NG返却ファイルを置く。README や manifest へのリンクだけで初回手順説明を代替しない。
+- `.md` / README / manifest への参照は、user action の実行導線ではなく裏付けに限定する。`手順の正本は ...` と書いて本文を薄くする報告は closeout 不成立として扱う。
 - completion 報告では、`changed` / `not changed` / `verified` / `still blocked` の区別を保つ。docs 更新だけの場合は、実制作上の摩擦が何だけ減ったのかを明示する。
+- user が「解説」「手順」「詳しく」を明示しない場合でも、closeout は最低限の意味説明を省略しない。短くてよいが、file diff だけで閉じるのは禁止。
 - handoff では「何が抜けているか」「次にやってはいけないこと」「再オープン条件」を必要時に残す。ただし固定テンプレの穴埋めを進捗にしない。
 - 再開時の repeated context は、まず `docs/ai/*.md` と project-local canonical docs を読んでから扱う。prompt や古い handoff を正本より優先しない。
 - 字幕改行の報告では、「長すぎる行が減ったか」と「残りが bulk pain か individual judgement か」を分ける。境界ケース段階では、rule 追加と corpus 収集を混同しない。
