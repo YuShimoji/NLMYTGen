@@ -112,7 +112,7 @@
 
 - active_artifact: NLM transcript → YMM4 CSV → ゆっくり解説動画制作ワークフロー
 - artifact_surface: CLI → CSV → YMM4 台本読込 → 演出設定 → レンダリング → サムネイル → 投稿
-- last_change_relation: **2026-05-05** Hardened closeout reporting after user feedback that file-change lists were not enough to understand what happened or what comes next. `docs/REPO_LOCAL_RULES.md`, `docs/ai/STATUS_AND_HANDOFF.md`, and `docs/INTERACTION_NOTES.md` now require a user-readable `meaning` layer in final reports: what changed for the workflow/behavior/decision space, why it matters, what is now possible or prohibited, residual risk, next owner, and assistant next. File paths, line numbers, commits, and tests are evidence only, not a substitute for explanation. This builds on the same-day doc-route handoff guard: future reports must be executable/understandable from the response body first, with files cited afterward as support. `.claude/hooks/guardrails.py` also rejects md/README/manifest handoff laundering so the rule is not documentation-only.
+- last_change_relation: **2026-05-05** Advanced the primary Episode Pack path for `pilot_yukkuri_theater_v1` to the assistant-owned preflight boundary. The pack root already exists at `_tmp/episode_runs/pilot_yukkuri_theater_v1/`; assistant prepared `maps/skit_group_registry.json` from the repo template and wrote `_tmp/episode_runs/pilot_yukkuri_theater_v1/review/assistant_preflight.json`. Remaining blocker is intentionally user-owned required input, not more planning: `csv/pilot_yukkuri_theater_v1.txt`, `ir/pilot_yukkuri_theater_v1_production_ir.json`, and `ymmp/pilot_yukkuri_theater_v1_base.ymmp` are missing. Do not replace this with a docs link; the next handoff must restate exact paths, GUI order, NG returns, and assistant next in the response body.
 
 ## カウンター
 
@@ -131,7 +131,7 @@
 
 ## 最終検証
 
-- last_verification: **2026-05-05 closeout meaning-layer guard verified**. `uv run python -m py_compile .claude/hooks/guardrails.py` passed. Guardrail samples verified md route handoff rejection and exact inline handoff pass. Focused Episode Pack checks passed: `uv run pytest tests/test_episode_run_pack.py -q` and `uv run pytest tests/test_gui_episode_pack_bridge.py -q`. `git diff --check` passed.
+- last_verification: **2026-05-05 Episode Pack preflight**. Confirmed `_tmp/episode_runs/pilot_yukkuri_theater_v1/` exists with starter README, review notes, and manifest command. Confirmed required input files are missing: `csv/pilot_yukkuri_theater_v1.txt`, `ir/pilot_yukkuri_theater_v1_production_ir.json`, `ymmp/pilot_yukkuri_theater_v1_base.ymmp`. Copied `samples/registry_template/skit_group_registry.template.json` to pack-local `maps/skit_group_registry.json` and parsed it as JSON. Confirmed `samples/templates/skit_group/delivery_v1_templates.ymmp` exists. No Build CSV / Validate IR / Dry Run / Apply Production run was possible without the required inputs.
 
 ## Evidence（CLI artifact mode）
 
