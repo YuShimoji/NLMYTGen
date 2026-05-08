@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "compact_review_artifact": "samples\\_probe\\g24\\real_estate_dx_overlay_only_compact_review.html",
+  "manifest": "samples\\_probe\\g24\\real_estate_dx_overlay_only_compact_review.json",
+  "validator_result": "samples\\_probe\\g24\\real_estate_dx_background_skit_blueprint_validate.json",
+  "allowed_next_actions": [
+    "overlay_only_compact_review"
+  ],
+  "forbidden_next_actions": [
+    "cast_motion_ir",
+    "ymm4_creative_acceptance",
+    "production_timing"
+  ],
+  "remaining_blockers": [
+    "ASSET_BLOCKED_REAL_ESTATE_CAST_TEMPLATES_MISSING: consumer/gatekeeper_agent/curator_risk_pro are not available as production templates",
+    "ASSET_BLOCKED_REAL_ESTATE_PROPS_MISSING: VIP door, REINS PC, QR/status board, card-sorting, SNS/AI/risk cards are missing or placeholder-only"
+  ],
+  "is_creative_acceptance": false,
+  "checks": {
+    "source_lock_sha256": {
+      "samples\\_probe\\g24\\real_estate_dx_background_skit_blueprint_validate.json": "c150793d8697aa345de4bcc0c1b2d1d90ec52e51b4ae321b94c8fd2832e72da8",
+      "samples\\_probe\\g24\\real_estate_dx_overlay_card_placeholder_map.json": "7246577d1dfa2dfdb2bab0e27d419a4185f4170accfc9a393b16b5b10cd55720",
+      "samples\\_probe\\g24\\real_estate_dx_row_time_map.json": "6002bdacecb6947e6913afccc97aed7676a7e0632e0b231678ef3ad4c70d5724",
+      "samples\\_probe\\g24\\real_estate_dx_script_maturity_diagnostic.json": "6971aba9b3076ea3eb1b88f2183074b8559e7ff5cf6df470f2da9b6650f828ab"
+    },
+    "segments": 11,
+    "placeholder_items_expected": 24,
+    "placeholder_items_rendered": 24,
+    "html_size_bytes": 10952,
+    "no_cast_motion_ir": true,
+    "no_yymm4_creative_acceptance": true,
+    "no_production_timing": true,
+    "no_delivery_template_cast_reuse": true,
+    "ymmp_shape_carrier_item_types": {
+      "ShapeItem": 24
+    },
+    "ymmp_shape_carrier_items": 24,
+    "ymmp_shape_carrier_no_skit_group": true,
+    "ymmp_shape_carrier_no_delivery_template": true
+  },
+  "errors": [],
+  "ymmp_shape_carrier": "samples\\_probe\\g24\\real_estate_dx_overlay_only_compact_review.ymmp"
+}

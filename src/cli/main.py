@@ -13,8 +13,10 @@ Usage:
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
     python -m src.cli.main fetch-topics <URL>... [-n 20] [--after YYYY-MM-DD] [--format text|json]
     python -m src.cli.main validate-ir <ir.json> [--palette ...] [--format text|json]
+    python -m src.cli.main validate-background-skit-blueprint <blueprint.json> --script <txt> --ymmp <ymmp> [--fps 60] [--format text|json]
     python -m src.cli.main emit-packaging-brief-template [-o path] [--format markdown|json]
     python -m src.cli.main init-episode-run --episode-id ID [--root DIR] [--force] [--format text|json]
+    python -m src.cli.main episode-run-handoff --episode-id ID [--root DIR] [--format text|json]
     python -m src.cli.main build-session-manifest --video-id ID [artifact paths...] [--format markdown|json] [-o path]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
@@ -63,6 +65,12 @@ from src.pipeline.script_diagnostics import (
     has_error as diagnostics_has_error,
 )
 from src.pipeline.thumbnail_s8_score import score_thumbnail_s8
+
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8")
 
 
 def _parse_kv_pairs(lines: list[str]) -> dict[str, str]:
@@ -1513,6 +1521,20 @@ def main(argv: list[str] | None = None) -> int:
     p_valir.add_argument("--format", choices=["text", "json"], default="text",
                          help="text: human report to stdout; json: machine summary on stdout, meta on stderr")
 
+    # validate-background-skit-blueprint
+    p_skit_blueprint = subparsers.add_parser(
+        "validate-background-skit-blueprint",
+        help="Validate source-backed background skit blueprint before IR/YMM4 timing",
+    )
+    p_skit_blueprint.add_argument("blueprint_json", help="Background skit blueprint JSON")
+    p_skit_blueprint.add_argument("--script", required=True, help="Source script .txt")
+    p_skit_blueprint.add_argument(
+        "--ymmp",
+        help="YMM4 project used for total duration readback; missing path returns blocked",
+    )
+    p_skit_blueprint.add_argument("--fps", type=float, default=60.0, help="YMM4 fps (default: 60)")
+    p_skit_blueprint.add_argument("--format", choices=["text", "json"], default="text")
+
     # audit-skit-group
     p_skit_audit = subparsers.add_parser(
         "audit-skit-group",
@@ -1631,6 +1653,23 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_episode_handoff = subparsers.add_parser(
+        "episode-run-handoff",
+        help="Print a self-contained user handoff for one episode run pack",
+    )
+    p_episode_handoff.add_argument("--episode-id", required=True, help="Episode/run identifier")
+    p_episode_handoff.add_argument(
+        "--root",
+        default="_tmp/episode_runs",
+        help="Episode run root directory (default: _tmp/episode_runs)",
+    )
+    p_episode_handoff.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # build-session-manifest (production handoff)
     p_session_manifest = subparsers.add_parser(
         "build-session-manifest",
@@ -1743,6 +1782,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_annotate_row_range(args)
         elif args.command == "validate-ir":
             return _cmd_validate_ir(args)
+        elif args.command == "validate-background-skit-blueprint":
+            return _cmd_validate_background_skit_blueprint(args)
         elif args.command == "audit-skit-group":
             return _cmd_audit_skit_group(args)
         elif args.command == "score-evidence":
@@ -1759,6 +1800,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_emit_packaging_brief_template(args)
         elif args.command == "init-episode-run":
             return _cmd_init_episode_run(args)
+        elif args.command == "episode-run-handoff":
+            return _cmd_episode_run_handoff(args)
         elif args.command == "build-session-manifest":
             return _cmd_build_session_manifest(args)
         elif args.command == "diagnose-script":
@@ -2841,6 +2884,32 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
         return 0
 
 
+def _cmd_validate_background_skit_blueprint(args: argparse.Namespace) -> int:
+    """Background skit blueprint gate."""
+    from src.pipeline.background_skit_blueprint import (
+        load_background_skit_blueprint,
+        render_background_skit_blueprint_text,
+        validate_background_skit_blueprint,
+    )
+
+    blueprint = load_background_skit_blueprint(args.blueprint_json)
+    result = validate_background_skit_blueprint(
+        blueprint,
+        script_path=args.script,
+        ymmp_path=getattr(args, "ymmp", None),
+        fps=args.fps,
+    )
+    if args.format == "json":
+        print(json.dumps(result.to_dict(), ensure_ascii=False, indent=2))
+    else:
+        sys.stdout.write(render_background_skit_blueprint_text(result))
+    if result.status == "passed":
+        return 0
+    if result.status == "blocked":
+        return 2
+    return 1
+
+
 def _load_csv_rows(csv_path: str) -> list[list[str]]:
     """CSV を読み込んで [speaker, text] のリストを返す."""
     import csv as csv_mod
@@ -3450,6 +3519,21 @@ def _cmd_init_episode_run(args: argparse.Namespace) -> int:
         force=bool(getattr(args, "force", False)),
     )
     sys.stdout.write(emit_episode_run_pack_text(result, getattr(args, "format", "text")))
+    return 0
+
+
+def _cmd_episode_run_handoff(args: argparse.Namespace) -> int:
+    """Print a self-contained user-facing handoff for an episode run pack."""
+    from src.pipeline.episode_run_pack import (
+        build_episode_run_handoff,
+        emit_episode_run_handoff_text,
+    )
+
+    result = build_episode_run_handoff(
+        episode_id=args.episode_id,
+        root=args.root,
+    )
+    sys.stdout.write(emit_episode_run_handoff_text(result, getattr(args, "format", "text")))
     return 0
 
 

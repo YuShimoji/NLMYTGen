@@ -5,6 +5,54 @@
 
 ---
 
+## 0. 背景茶番劇の役割定義
+
+背景茶番劇は、語り手台本への **合いの手 / リアクション track ではない**。語り手・ゆっくり立ち絵とは並行する別レイヤーであり、台本行を逐語理解して反応するのではなく、動画テーマに説得力を足す独立した小場面として設計する。
+
+たとえば不動産DXの pilot では、`はい` で頷く、`いや、鋭い` で飛び上がる、という発話同期の短尺反応は茶番劇の本義ではない。成立する方向は、`ベッドで何千もの物件情報を眺める人物`、`PCでREINS等の業務データベースを扱う不動産業者`、`情報独占からキュレーション/CXへ移る比喩場面` のように、背景側だけで見ても状況が分かる visual story である。
+
+背景茶番劇を Production IR / `.ymmp` placement へ進める前に、最低限次を scene bible として分ける。`scene plan + asset matrix` だけでは、時間配分・登場人物の継続性・画面内の読み順が未固定のため不十分である。さらに IR / 演出指定へ進める場合は [BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW.md](BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW.md) に従い、総尺・絶対時刻・演出秒数・タイムライン密度・台本成熟度を実数値で定量化し、`validate-background-skit-blueprint` の validator result と照合する。`総尺 / mm:ss / 演出秒数が必要` のような項目名列挙や validator result のない数値表は、設計図ではなく未完 checklist である。
+
+- `scene beat`: 背景側で何が起きるか
+- `script line range`: どの台本範囲を支える背景劇か
+- `time budget`: 各 beat に割く構成比
+- `cast continuity`: 主役・対立役・変化後の役が全編でどう継続/退場/交代するか
+- `visual situation`: 視聴者が一目で理解できる場所・人物・行動
+- `story logic`: その小場面が動画テーマへどう説得力を足すか
+- `script/theme anchor`: 台本のどの論点を支えるか。台本行への反応ではなく、節・主張・比喩への対応として書く
+- `needed assets or templates`: 必要な背景・人物・小道具・既存 YMM4 template
+- `characters`: 背景側に出す人物・役割・既存演者との対応
+- `placement` / `screen placement`: 画面内の位置関係・前景/背景・出入り方向
+- `props`: 端末、物件カード、扉、荷物など視聴者が状況を読むための小道具
+- `rest span`: 背景劇を休ませ、語りを邪魔しない区間
+- `asset availability`: 既存 / 不足 / user-owned authoring / assistant-owned selection の区別
+- `existing template reuse`: `delivery_v1_templates.ymmp` 等を使うなら、誰を何の比喩として演じるか
+- `missing template candidate`: 足りない場合に起票する新 template。曖昧なまま fallback しない
+- `mechanical proof path`: registry / template source / readback / compact review のどれで機械確認するか
+- `timetable`: IR へ進める場合の total duration / start-end time / duration sec / density audit。値を入れ、`script_source` / `line_count` / `range_basis` を添える
+
+この scene bible が無い `skit_group` / background skit handoff は **invalid**。発話行に合わせた cue 表だけで作った `.ymmp` は、GroupItem transport / readback proof にはなっても creative acceptance / production quality の証跡にはならない。役割理解がズレた artifact は YMM4 確認待ちへ渡さず、`BACKGROUND_SKIT_ROLE_DRIFT` として gap report と scene bible へ戻す。
+
+`pilot_yukkuri_theater_v1` の正本は [PILOT_YUKKURI_THEATER_SCENE_BIBLE.md](PILOT_YUKKURI_THEATER_SCENE_BIBLE.md)。不動産DXでは `消費者` / `ゲートキーパー業者` / `キュレーター・リスク管理プロ` の cast continuity と 7 ブロックの time budget を先に固定する。
+
+### 0.1 十分な返答の基準
+
+ユーザーに「茶番劇の認識」や「この台本ならどう演出するか」を説明する返答は、概念共有だけでは不足である。最低限、次を同じ返答内で接続する。
+
+- `認識`: 合いの手禁止、独立背景小場面、transport/readback proof と creative acceptance の分離
+- `不動産DX scene bible`: 7 ブロックの `script line range / time budget / cast continuity / screen placement / props / 休ませる区間 / block proof path`
+- `quantitative timetable`: IR / 演出指定に進むなら `total duration / mm:ss start-end / duration sec / density audit / sparse risk` を実数値で含めること。値を埋められない場合は `TIMETABLE_BLOCKED_*` と exact missing source を返すこと。IR/YMM4 へ接続するには validator `status: passed` と `derived_metrics` が必要
+- `配達 mini bible`: 台本行 cue ではなく、一本の小話として `setup → complication → reaction → resolution` が読める構成
+- `intent / template boundary`: IR intent (`enter_from_left` 等) と template 名 (`delivery_enter_from_left_v1` 等) を分けること
+- `asset / proof matrix`: 既存 template で足りるもの、不足素材、新 template candidate、user-owned / assistant-owned、proof path の区別
+- `next action`: assistant がまず scene bible に基づく gap report と template/proxy 分類を作ること。`このまま IR / YMM4 確認に接続できる` とは言わず、IR / YMM4 配置 / creative acceptance にはまだ進めないこと
+
+「未確定です」「設計表を作るべきです」「素材面が未整理です」「いま提示できるのは scene bible レベルです」で止めるのは未完 closeout である。未確定を認める場合でも、次に assistant が作る `background_skit_blueprint.json + validate-background-skit-blueprint result` へ接続する。雰囲気語や励ましで closeout しない。
+
+また、返答内で `Python は既存 GroupItem を配置するだけ` のように adapter の役割を潰して書いてはいけない。素材アートは生成しないが、IR validation、registry 解決、template source 解析、`.ymmp` patch、readback、gap report 生成を担う。
+
+---
+
 ## 1. この仕様が直す混同
 
 現行 repo では次の 3 つが混ざりやすい。

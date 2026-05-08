@@ -59,7 +59,7 @@ NLMYTGen GUI（`start-gui.bat` / `gui/`）で「何を用意すればよいか�
 
 **Episode Pack Mode**: 1本通し制作では最初に `Episode Pack Root` で `_tmp/episode_runs/<episode_id>/` を選ぶ。GUIは episode_id をフォルダ名から推定し、`Build CSV`、`Validate IR`、`Dry Run`、`Apply Production` の保存先をpack内の既定pathへ固定する。
 
-初回入力として user に依頼するものは `素材投入` と総称しない。pack内ではまず `csv/<episode_id>.txt`（元台本）、`ir/<episode_id>_production_ir.json`（演出IR）、`ymmp/<episode_id>_base.ymmp`（YMM4でCSV読込後に保存したbase project）の3つを必須として案内する。`maps/bg_map.json`、`maps/skit_group_registry.json`、`samples/templates/skit_group/delivery_v1_templates.ymmp` は IR が該当機能を使う場合だけ選ぶ。
+初回入力として user に依頼するものは `素材投入` と総称しない。pack内ではまず `csv/<episode_id>.txt`（この動画で喋らせる完成会話台本。既存完成台本があれば新規作成不要）と `ir/<episode_id>_production_ir.json`（同じ台本に対応する演出IR）の2点を初期入力として案内する。`ymmp/<episode_id>_base.ymmp` は通常 `Build CSV` の後に YMM4 側で CSV を読み込んで Save As する `generated_later` artifact であり、最初から存在する前提で「置く」と書かない。`maps/bg_map.json`、`maps/skit_group_registry.json`、`samples/templates/skit_group/delivery_v1_templates.ymmp` は IR が該当機能を使う場合だけ選ぶ。
 
 | GUI操作 | 保存先 |
 |---|---|
@@ -68,7 +68,7 @@ NLMYTGen GUI（`start-gui.bat` / `gui/`）で「何を用意すればよいか�
 | `Dry Run` | `ymmp/<episode_id>_dry_run.json` |
 | `Apply Production` | `ymmp/<episode_id>_apply.json`、`ymmp/<episode_id>_patched.ymmp` |
 
-pack定義の詳細は `docs/EPISODE_RUN_PACK.md` を内部参照とする。ただし user handoff では、この md 参照を手順本文の代替にしない。pilot 操作を渡す応答は、必須入力・任意map・GUI順・成功出力・NG返却を本文だけで実行できる粒度に展開する。
+pack定義の詳細は `docs/EPISODE_RUN_PACK.md` を内部参照とする。ただし user handoff では、この md 参照を手順本文の代替にしない。pilot 操作を渡す応答は、初期入力2点、後続生成のbase `.ymmp`、任意map、GUI順、成功出力、NG返却を本文だけで実行できる粒度に展開する。assistant 側は必要に応じて `uv run python -m src.cli.main episode-run-handoff --episode-id <episode_id>` を使い、各ファイルの存在状態、何のファイルか、作成手順、使う GUI ボタンを確認してから本文へ落とす。
 
 | ファイル | 必須 / 任意 | なぜ必要か |
 |-----------|-------------|-----------|

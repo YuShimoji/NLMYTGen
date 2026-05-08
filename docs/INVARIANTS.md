@@ -44,6 +44,7 @@
 - **解説役のゆっくり立ち絵は新規セットアップしない。** 既存の「ゆっくり霊夢」「ゆっくり魔理沙」等の `TachieItem` を流用する。新キャラの連番アニメ立ち絵を増設しない。
 - **外部演者の顔感情差し替えは `ImageItem.Source` パス置換で行う。** `TachieFaceParameter` / 連番アニメパーツ分解は外部演者には適用しない。
 - **`skit_group` の主経路は canonical template である。** library (tachie_motion_map) / motion_target 直書き / group_motion は補助経路であり、茶番劇固有の所作の主体にはしない。根拠: SKIT_GROUP_TEMPLATE_SPEC §3.1-3.3
+- **背景茶番劇は語り手への合いの手ではない。** 語り手台本と並行する独立 visual story として、節・主張・比喩に説得力を足す。台本行を逐語理解して `はい` で頷く、`いや、鋭い` で飛ぶ、のような cue 反応は `BACKGROUND_SKIT_ROLE_DRIFT` として creative acceptance / production quality から除外する。scene bible が無い、または time budget / cast continuity / screen placement が無いまま `skit_group` IR / `.ymmp` handoff / YMM4 確認へ進めることは禁止。さらに IR / 演出指定へ進む場合、総尺・`mm:ss` 開始終了・演出秒数・density thresholds/audit・script maturity は実数値で必要であり、項目名列挙や雰囲気語では代替できない。数値入り表も `validate-background-skit-blueprint` の `status: passed` と `derived_metrics` が無ければ production timing へ進めない。根拠: SKIT_GROUP_TEMPLATE_SPEC §0 / PILOT_YUKKURI_THEATER_SCENE_BIBLE / BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW
 - IR は逐次属性の全指定ではなく、scene_preset による高水準バンドル参照 + optional override を基本とする。LLM にはプリセット一覧を渡し、個別フィールドの組み立てを強いない。
 - タイトル / サムネイル / 台本の約束 (promise) は central brief で統制し、台本単体が動画タイトルを越権決定しない。最終 owner は人間であり、assistant は判断材料と候補整理を支援する。
 - visual density score / evidence richness score は creative final judgement の代替ではなく、gate / diagnostic として使う。スコア最大化自体を目的化しない。

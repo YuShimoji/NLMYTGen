@@ -7,6 +7,8 @@
 | build-csv（手元） | `python -m src.cli.main build-csv ...` — `--format json` で `stats`（話者・はみ出し候補） |
 | apply-production | `python -m src.cli.main apply-production ...` — GUI の演出適用タブと同じ |
 | validate-ir | `python -m src.cli.main validate-ir ...` |
+| validate-background-skit-blueprint | `python -m src.cli.main validate-background-skit-blueprint blueprint.json --script script.txt --ymmp base.ymmp --fps 60 --format json` — 茶番劇の数値表を source-backed artifact として再計算し、IR/YMM4 前に `passed / failed / blocked` を返す |
+| Episode Pack handoff | `python -m src.cli.main episode-run-handoff --episode-id ...` — user handoff 前に必須入力の state / what / create / used-by を出す |
 | 制作 manifest | `python -m src.cli.main build-session-manifest --video-id ...` — CSV/IR/YMM4/サムネ設計の handoff artifact |
 | サムネ slot 監査 | `python -m src.cli.main audit-thumbnail-template thumb_template.ymmp` — `thumb.text.*` / `thumb.image.*` Remark を確認 |
 | サムネ限定 patch | `python -m src.cli.main patch-thumbnail-template thumb_template.ymmp --patch patch.json -o out.ymmp` — 文字・画像パス・最小ジオメトリのみ。保存後 readback も返す |

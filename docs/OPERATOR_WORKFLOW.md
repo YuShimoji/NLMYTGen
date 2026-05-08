@@ -96,11 +96,14 @@
 
 ### 実制作段階
 
+- 背景茶番劇は語り手への合いの手ではない。GUI / Apply Production へ入る前に、背景側の独立 scene bible + asset/proof matrix（scene beat / script line range / time budget / cast continuity / visual situation / story logic / script-theme anchor / characters / screen placement / props / rest span / asset availability / existing or missing templates / mechanical proof path）を固定する
+- IR / 演出指定へ進む前に [BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW.md](BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW.md) の gates を通す。`time budget %` や `総尺 / mm:ss / 演出秒数が必要` の項目名だけでは不足で、総尺、`mm:ss` の開始/終了、演出秒数、意図的休止、タイムライン密度、台本成熟度を実数値で埋める。行範囲には `script_source` / `line_count` / `range_basis` を添える。さらに `validate-background-skit-blueprint` の `status: passed` がない限り、数値入り表を production timing へ渡さない
 - 標準入口は **GUI 演出適用タブ**。Production `.ymmp` / IR JSON / Skit Group Registry / Skit Group Template Source を選び、`skit_group intent を registry に限定` を ON にして **Validate IR → Dry Run → Apply Production** の順で進める
 - `skit_group 配置だけを適用` は G-24 の切り分け用。aligned IR の既存 row/index anchor を使うため、CSV(row-range) は同時に渡さない
 - IR 要求はまず **template 解決**する。exact / fallback は自動配置、未登録 label は strict validation で止める
 - 汎用テンプレで吸収できない場合は **制作中の手置きで埋めず**、未自動化理由 + 手動確認ポイント + 新テンプレ候補として分離する
-- YMM4 で見るのは patched `.ymmp` の composition acceptance。readback が通っている場合、NG 時は template source の数値事実・配置値を先に見直す
+- YMM4 で見るのは scene bible が成立した patched `.ymmp` の composition acceptance。readback が通っている場合、NG 時は template source の数値事実・配置値を先に見直す。scene bible 不在、または time budget / cast continuity / screen placement が抜けた発話行リアクション artifact は確認対象にしない
+- YMM4 で見る前に density thresholds と density audit を出す。`minimum_active_visual_coverage_pct` / `maximum_unexplained_gap_sec` / `visual_states_per_min_range` を置き、`unexplained_empty_duration_sec` / `longest_unexplained_gap_sec` / `visual_states_per_min` が未確認のまま、スカスカかどうかを人間に丸投げしない
 
 ### 開発段階
 

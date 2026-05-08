@@ -33,7 +33,9 @@
 - [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md) — **Capability Atlas 正本**。`IR -> registry -> ymmp` の接合点で、何が `direct_proven` / `template_catalog_only` / `probe_only` / `unsupported` かを 1 枚で判断する。機械台帳: `python scripts/build_capability_atlas.py` -> `samples/_generated/capability_atlas.json`
 - [VISUAL_EFFECT_SELECTION_GUIDE.md](VISUAL_EFFECT_SELECTION_GUIDE.md) — **視覚効果ツール選定**: 4 類 × 3 ルート比較・エフェクト 111 種の用途別再編・テンプレバンドル 5 種案・ハンズオン 5 ステップ。姉妹: [VISUAL_TOOL_DECISION.md](VISUAL_TOOL_DECISION.md)(ユーザー記入)・[MATERIAL_SOURCING_RULES.md](MATERIAL_SOURCING_RULES.md)(素材運用ルール)
 - [STEP3_YMM4_TEMPLATE_CHECKLIST.md](STEP3_YMM4_TEMPLATE_CHECKLIST.md) / [STEP3_TACHIE_RENDERING_PIPELINE.md](STEP3_TACHIE_RENDERING_PIPELINE.md) — **視覚効果 slice Step 3 ハンズオン**: 5 種テンプレ各エフェクトの parameter 初期値+チェックリスト / G-22 dual-rendering 経路 B の PNG 書き出し→overlay_map 登録パイプライン
-- [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md) — **茶番劇 Group テンプレ正本**: 配達員などの外部素材演者を `speaker_tachie` と分離し、canonical template → 小演出量産 → production での template 解決 + fallback note までを定義
+- [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md) — **茶番劇 Group テンプレ正本**: 茶番劇を語り手への合いの手ではなく独立した背景小場面として定義し、配達員などの外部素材演者を `speaker_tachie` と分離し、canonical template → 小演出量産 → production での template 解決 + fallback note までを定義
+- [PILOT_YUKKURI_THEATER_SCENE_BIBLE.md](PILOT_YUKKURI_THEATER_SCENE_BIBLE.md) — **pilot_yukkuri_theater_v1 背景茶番劇 Scene Bible**: 不動産DXの 7 ブロック time budget / cast continuity / screen placement / props / proof path と、配達短編の setup → complication → reaction → resolution を固定する IR 前の正本
+- [BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW.md](BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW.md) — **背景茶番劇 Blueprint/Timetable 正本**: IR / 演出指定へ進む前に、総尺・開始/終了時刻・演出秒数・density thresholds/audit・script maturity・asset/control matrix を `background_skit_blueprint` artifact と validator result で固定する
 
 `docs/verification` 直下の個別ファイルが多いときは、先に次の **索引表**だけ読む。
 

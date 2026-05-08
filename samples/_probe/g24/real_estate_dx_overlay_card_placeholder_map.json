@@ -1,0 +1,701 @@
+{
+  "status": "overlay_placeholder_map_ready_cast_motion_blocked",
+  "source_lock": {
+    "script_source": "samples\\不動産DX_魔法の鍵とキュレーション.txt",
+    "script_sha256": "f3c2fab2e4ecd965e85795dcf908cfffe1f4c3364c94962f7b9c7ad407af8fb9",
+    "script_line_count": 152,
+    "csv_source": "samples\\不動産DX_魔法の鍵とキュレーション_ymm4.csv",
+    "csv_row_count": 352,
+    "ymmp_source": "samples\\_probe\\g24\\real_estate_dx_skit_group_patched.ymmp",
+    "voice_item_count": 352,
+    "fps": 60,
+    "mapping_basis": "sequential normalized text match from source script line to one or more CSV rows, then CSV row ordinal to sorted VoiceItem ordinal"
+  },
+  "row_time_map": "samples\\_probe\\g24\\real_estate_dx_row_time_map.json",
+  "script_maturity_diagnostic": "samples\\_probe\\g24\\real_estate_dx_script_maturity_diagnostic.json",
+  "coordinate_system": "normalized_screen_0_to_1_top_left_origin; convert later to YMM4 project coordinates",
+  "layer_policy": {
+    "placeholder_overlay_layers": "above background, below narrator/tachie unless compact review isolates background skit",
+    "skit_group_delivery_templates": "not used for real-estate cast; delivery_v1_templates reserved for delivery mini scene or explicit movement proxy only"
+  },
+  "items": [
+    {
+      "id": "RE01_PHONE_KEY",
+      "block_id": "RE-01",
+      "subbeat_id": null,
+      "line_start": 1,
+      "line_end": 12,
+      "csv_row_start": 1,
+      "csv_row_end": 39,
+      "start_sec": 0.0,
+      "end_sec": 112.933333,
+      "label": "スマホ=魔法の鍵",
+      "kind": "phone_card",
+      "normalized_box": {
+        "x": 0.18,
+        "y": 0.68,
+        "w": 0.18,
+        "h": 0.16
+      },
+      "screen_role": "consumer access metaphor",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE01_PROPERTY_CARDS",
+      "block_id": "RE-01",
+      "subbeat_id": null,
+      "line_start": 1,
+      "line_end": 12,
+      "csv_row_start": 1,
+      "csv_row_end": 39,
+      "start_sec": 0.0,
+      "end_sec": 112.933333,
+      "label": "物件カード増殖",
+      "kind": "card_cluster",
+      "normalized_box": {
+        "x": 0.42,
+        "y": 0.32,
+        "w": 0.32,
+        "h": 0.28
+      },
+      "screen_role": "search results",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE01_CLOSED_DOOR",
+      "block_id": "RE-01",
+      "subbeat_id": null,
+      "line_start": 1,
+      "line_end": 12,
+      "csv_row_start": 1,
+      "csv_row_end": 39,
+      "start_sec": 0.0,
+      "end_sec": 112.933333,
+      "label": "遠景の閉じた扉",
+      "kind": "door_shape",
+      "normalized_box": {
+        "x": 0.78,
+        "y": 0.35,
+        "w": 0.14,
+        "h": 0.32
+      },
+      "screen_role": "future gatekeeper foreshadow",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE02_VIP_DOOR",
+      "block_id": "RE-02",
+      "subbeat_id": null,
+      "line_start": 13,
+      "line_end": 24,
+      "csv_row_start": 40,
+      "csv_row_end": 69,
+      "start_sec": 112.933333,
+      "end_sec": 201.0,
+      "label": "REINS / VIPクラブ",
+      "kind": "door_shape",
+      "normalized_box": {
+        "x": 0.66,
+        "y": 0.28,
+        "w": 0.2,
+        "h": 0.38
+      },
+      "screen_role": "private database barrier",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE02_REINS_PC",
+      "block_id": "RE-02",
+      "subbeat_id": null,
+      "line_start": 13,
+      "line_end": 24,
+      "csv_row_start": 40,
+      "csv_row_end": 69,
+      "start_sec": 112.933333,
+      "end_sec": 201.0,
+      "label": "生データDB",
+      "kind": "monitor_card",
+      "normalized_box": {
+        "x": 0.72,
+        "y": 0.52,
+        "w": 0.18,
+        "h": 0.14
+      },
+      "screen_role": "inside information",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE02_PUBLIC_PORTAL",
+      "block_id": "RE-02",
+      "subbeat_id": null,
+      "line_start": 13,
+      "line_end": 24,
+      "csv_row_start": 40,
+      "csv_row_end": 69,
+      "start_sec": 112.933333,
+      "end_sec": 201.0,
+      "label": "一般ポータル（一部情報）",
+      "kind": "card",
+      "normalized_box": {
+        "x": 0.23,
+        "y": 0.5,
+        "w": 0.24,
+        "h": 0.14
+      },
+      "screen_role": "outside partial information",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE03_SHIELDS",
+      "block_id": "RE-03",
+      "subbeat_id": null,
+      "line_start": 25,
+      "line_end": 36,
+      "csv_row_start": 70,
+      "csv_row_end": 95,
+      "start_sec": 201.0,
+      "end_sec": 276.033333,
+      "label": "プライバシー / リスク / 秩序",
+      "kind": "three_cards",
+      "normalized_box": {
+        "x": 0.38,
+        "y": 0.34,
+        "w": 0.34,
+        "h": 0.2
+      },
+      "screen_role": "legitimate protection reasons",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE03_SHADOW_FEE",
+      "block_id": "RE-03",
+      "subbeat_id": null,
+      "line_start": 25,
+      "line_end": 36,
+      "csv_row_start": 70,
+      "csv_row_end": 95,
+      "start_sec": 201.0,
+      "end_sec": 276.033333,
+      "label": "背後の利益の影",
+      "kind": "shadow_badge",
+      "normalized_box": {
+        "x": 0.55,
+        "y": 0.54,
+        "w": 0.2,
+        "h": 0.16
+      },
+      "screen_role": "dark-side hint",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE04_SELLER_BUYER",
+      "block_id": "RE-04",
+      "subbeat_id": null,
+      "line_start": 37,
+      "line_end": 48,
+      "csv_row_start": 96,
+      "csv_row_end": 119,
+      "start_sec": 276.033333,
+      "end_sec": 342.633333,
+      "label": "売主 ⇄ 業者 ⇄ 買主",
+      "kind": "relationship_cards",
+      "normalized_box": {
+        "x": 0.28,
+        "y": 0.38,
+        "w": 0.44,
+        "h": 0.18
+      },
+      "screen_role": "double-agency relationship",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE04_PENDING_SIGN",
+      "block_id": "RE-04",
+      "subbeat_id": null,
+      "line_start": 37,
+      "line_end": 48,
+      "csv_row_start": 96,
+      "csv_row_end": 119,
+      "start_sec": 276.033333,
+      "end_sec": 342.633333,
+      "label": "商談中",
+      "kind": "stamp_card",
+      "normalized_box": {
+        "x": 0.63,
+        "y": 0.3,
+        "w": 0.15,
+        "h": 0.1
+      },
+      "screen_role": "route blocking sign",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE04_ROUTE_GATE",
+      "block_id": "RE-04",
+      "subbeat_id": null,
+      "line_start": 37,
+      "line_end": 48,
+      "csv_row_start": 96,
+      "csv_row_end": 119,
+      "start_sec": 276.033333,
+      "end_sec": 342.633333,
+      "label": "他社ルート閉鎖",
+      "kind": "gate_shape",
+      "normalized_box": {
+        "x": 0.7,
+        "y": 0.56,
+        "w": 0.18,
+        "h": 0.18
+      },
+      "screen_role": "blocked alternative path",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE05_QR_BOARD",
+      "block_id": "RE-05",
+      "subbeat_id": null,
+      "line_start": 49,
+      "line_end": 60,
+      "csv_row_start": 120,
+      "csv_row_end": 140,
+      "start_sec": 342.633333,
+      "end_sec": 408.1,
+      "label": "QR / 公開ステータス",
+      "kind": "status_board",
+      "normalized_box": {
+        "x": 0.43,
+        "y": 0.34,
+        "w": 0.28,
+        "h": 0.22
+      },
+      "screen_role": "transparency state change",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE05_HALF_OPEN_DOOR",
+      "block_id": "RE-05",
+      "subbeat_id": null,
+      "line_start": 49,
+      "line_end": 60,
+      "csv_row_start": 120,
+      "csv_row_end": 140,
+      "start_sec": 342.633333,
+      "end_sec": 408.1,
+      "label": "半分開いた扉",
+      "kind": "door_shape",
+      "normalized_box": {
+        "x": 0.73,
+        "y": 0.36,
+        "w": 0.16,
+        "h": 0.32
+      },
+      "screen_role": "barrier opening",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE06_SORT_TABLE",
+      "block_id": "RE-06",
+      "subbeat_id": null,
+      "line_start": 61,
+      "line_end": 82,
+      "csv_row_start": 141,
+      "csv_row_end": 185,
+      "start_sec": 408.1,
+      "end_sec": 531.7,
+      "label": "候補を整理するテーブル",
+      "kind": "table_cards",
+      "normalized_box": {
+        "x": 0.35,
+        "y": 0.4,
+        "w": 0.34,
+        "h": 0.2
+      },
+      "screen_role": "curation process",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE06_DEFECT_CARD",
+      "block_id": "RE-06",
+      "subbeat_id": null,
+      "line_start": 61,
+      "line_end": 82,
+      "csv_row_start": 141,
+      "csv_row_end": 185,
+      "start_sec": 408.1,
+      "end_sec": 531.7,
+      "label": "欠点も見せるカード",
+      "kind": "warning_card",
+      "normalized_box": {
+        "x": 0.6,
+        "y": 0.58,
+        "w": 0.18,
+        "h": 0.12
+      },
+      "screen_role": "honest defect disclosure",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE06_SHORTLIST",
+      "block_id": "RE-06",
+      "subbeat_id": null,
+      "line_start": 61,
+      "line_end": 82,
+      "csv_row_start": 141,
+      "csv_row_end": 185,
+      "start_sec": 408.1,
+      "end_sec": 531.7,
+      "label": "少ないが意味のある候補",
+      "kind": "shortlist_cards",
+      "normalized_box": {
+        "x": 0.25,
+        "y": 0.58,
+        "w": 0.22,
+        "h": 0.12
+      },
+      "screen_role": "curated shortlist",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE07A_OSHI_TAIPA",
+      "block_id": "RE-07",
+      "subbeat_id": "RE-07A",
+      "line_start": 83,
+      "line_end": 102,
+      "csv_row_start": 186,
+      "csv_row_end": 226,
+      "start_sec": 531.7,
+      "end_sec": 653.716667,
+      "label": "タイパ / 推し活 / TVなし",
+      "kind": "lifestyle_cards",
+      "normalized_box": {
+        "x": 0.32,
+        "y": 0.34,
+        "w": 0.36,
+        "h": 0.2
+      },
+      "screen_role": "Gen-Z condition shift",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE07A_SNS_TRUST",
+      "block_id": "RE-07",
+      "subbeat_id": "RE-07A",
+      "line_start": 83,
+      "line_end": 102,
+      "csv_row_start": 186,
+      "csv_row_end": 226,
+      "start_sec": 531.7,
+      "end_sec": 653.716667,
+      "label": "SNSで顔が見える信頼",
+      "kind": "sns_card",
+      "normalized_box": {
+        "x": 0.58,
+        "y": 0.56,
+        "w": 0.24,
+        "h": 0.14
+      },
+      "screen_role": "influencer trust setup",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE07B_SNS_RISK",
+      "block_id": "RE-07",
+      "subbeat_id": "RE-07B",
+      "line_start": 103,
+      "line_end": 113,
+      "csv_row_start": 227,
+      "csv_row_end": 252,
+      "start_sec": 653.716667,
+      "end_sec": 730.25,
+      "label": "無免許 / おとり広告リスク",
+      "kind": "warning_cards",
+      "normalized_box": {
+        "x": 0.42,
+        "y": 0.36,
+        "w": 0.34,
+        "h": 0.2
+      },
+      "screen_role": "SNS gray-zone warning",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE07C_2030_RISKS",
+      "block_id": "RE-07",
+      "subbeat_id": "RE-07C",
+      "line_start": 114,
+      "line_end": 129,
+      "csv_row_start": 253,
+      "csv_row_end": 296,
+      "start_sec": 730.25,
+      "end_sec": 864.116667,
+      "label": "空き家 / ハザード / 相続",
+      "kind": "risk_card_cluster",
+      "normalized_box": {
+        "x": 0.3,
+        "y": 0.35,
+        "w": 0.34,
+        "h": 0.2
+      },
+      "screen_role": "specialist risk domains",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE07C_AI_CONCIERGE",
+      "block_id": "RE-07",
+      "subbeat_id": "RE-07C",
+      "line_start": 114,
+      "line_end": 129,
+      "csv_row_start": 253,
+      "csv_row_end": 296,
+      "start_sec": 730.25,
+      "end_sec": 864.116667,
+      "label": "AIコンシェルジュ",
+      "kind": "ai_panel",
+      "normalized_box": {
+        "x": 0.63,
+        "y": 0.42,
+        "w": 0.22,
+        "h": 0.16
+      },
+      "screen_role": "DX customer experience",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE07D_AI_MATCH",
+      "block_id": "RE-07",
+      "subbeat_id": "RE-07D",
+      "line_start": 130,
+      "line_end": 143,
+      "csv_row_start": 297,
+      "csv_row_end": 331,
+      "start_sec": 864.116667,
+      "end_sec": 979.95,
+      "label": "AIの100%マッチ物件",
+      "kind": "ai_recommendation_card",
+      "normalized_box": {
+        "x": 0.3,
+        "y": 0.36,
+        "w": 0.28,
+        "h": 0.16
+      },
+      "screen_role": "AI recommendation thesis",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE07D_HUMAN_RISK",
+      "block_id": "RE-07",
+      "subbeat_id": "RE-07D",
+      "line_start": 130,
+      "line_end": 143,
+      "csv_row_start": 297,
+      "csv_row_end": 331,
+      "start_sec": 864.116667,
+      "end_sec": 979.95,
+      "label": "境界紛争 / 相続 / 感情調整",
+      "kind": "human_risk_cards",
+      "normalized_box": {
+        "x": 0.57,
+        "y": 0.34,
+        "w": 0.3,
+        "h": 0.2
+      },
+      "screen_role": "invisible human risk",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    },
+    {
+      "id": "RE07E_FINAL_GUIDE",
+      "block_id": "RE-07",
+      "subbeat_id": "RE-07E",
+      "line_start": 144,
+      "line_end": 152,
+      "csv_row_start": 332,
+      "csv_row_end": 352,
+      "start_sec": 979.95,
+      "end_sec": 1049.533333,
+      "label": "専門的キュレーター / リスク管理者 / 買ってはいけない理由",
+      "kind": "final_three_cards",
+      "normalized_box": {
+        "x": 0.34,
+        "y": 0.38,
+        "w": 0.42,
+        "h": 0.24
+      },
+      "screen_role": "final guide criteria",
+      "asset_state": "placeholder_text_or_shape",
+      "control_route": "overlay/card placeholder map; no delivery skit_group template",
+      "readback_check": [
+        "item id present",
+        "time window matches row_time_map",
+        "label visible"
+      ],
+      "production_asset_required_later": true
+    }
+  ],
+  "blocked_exclusions": [
+    "No delivery_v1_templates literal reuse for consumer/gatekeeper/curator.",
+    "No cast motion IR until real-estate templates or accepted reskin proxies exist.",
+    "No YMM4 creative acceptance from this placeholder map alone."
+  ],
+  "first_safe_review_scope": "overlay/card-only compact review using these labels and time windows; judge story readability before production assets"
+}

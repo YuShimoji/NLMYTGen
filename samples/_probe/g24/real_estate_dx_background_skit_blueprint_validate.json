@@ -1,0 +1,150 @@
+{
+  "status": "blocked",
+  "errors": [],
+  "warnings": [],
+  "blockers": [
+    "ASSET_BLOCKED_REAL_ESTATE_CAST_TEMPLATES_MISSING: consumer/gatekeeper_agent/curator_risk_pro are not available as production templates",
+    "ASSET_BLOCKED_REAL_ESTATE_PROPS_MISSING: VIP door, REINS PC, QR/status board, card-sorting, SNS/AI/risk cards are missing or placeholder-only"
+  ],
+  "allowed_next_actions": [
+    "overlay_only_compact_review"
+  ],
+  "forbidden_next_actions": [
+    "cast_motion_ir",
+    "ymm4_creative_acceptance",
+    "production_timing"
+  ],
+  "derived_metrics": {
+    "script": {
+      "path": "samples\\不動産DX_魔法の鍵とキュレーション.txt",
+      "line_count": 152,
+      "sha256": "f3c2fab2e4ecd965e85795dcf908cfffe1f4c3364c94962f7b9c7ad407af8fb9"
+    },
+    "duration": {
+      "ymmp_path": "samples\\_probe\\g24\\real_estate_dx_skit_group_patched.ymmp",
+      "fps": 60.0,
+      "total_duration_sec": 1049.5333333333333,
+      "formula": "max(Frame + Length) / fps"
+    },
+    "resolved_blockers": [
+      "SCRIPT_BLOCKED_RE07_TOO_BROAD"
+    ],
+    "subbeats": {
+      "re07_authority": "blueprint.blocks.RE-07.subbeats",
+      "recognized": [
+        {
+          "id": "RE-07A",
+          "line_start": 83,
+          "line_end": 102,
+          "csv_row_start": 186,
+          "csv_row_end": 226,
+          "voice_index_start": 186,
+          "voice_index_end": 226,
+          "start_sec": 531.7,
+          "end_sec": 653.716667,
+          "duration_sec": 122.016667
+        },
+        {
+          "id": "RE-07B",
+          "line_start": 103,
+          "line_end": 113,
+          "csv_row_start": 227,
+          "csv_row_end": 252,
+          "voice_index_start": 227,
+          "voice_index_end": 252,
+          "start_sec": 653.716667,
+          "end_sec": 730.25,
+          "duration_sec": 76.533333
+        },
+        {
+          "id": "RE-07C",
+          "line_start": 114,
+          "line_end": 129,
+          "csv_row_start": 253,
+          "csv_row_end": 296,
+          "voice_index_start": 253,
+          "voice_index_end": 296,
+          "start_sec": 730.25,
+          "end_sec": 864.116667,
+          "duration_sec": 133.866667
+        },
+        {
+          "id": "RE-07D",
+          "line_start": 130,
+          "line_end": 143,
+          "csv_row_start": 297,
+          "csv_row_end": 331,
+          "voice_index_start": 297,
+          "voice_index_end": 331,
+          "start_sec": 864.116667,
+          "end_sec": 979.95,
+          "duration_sec": 115.833333
+        },
+        {
+          "id": "RE-07E",
+          "line_start": 144,
+          "line_end": 152,
+          "csv_row_start": 332,
+          "csv_row_end": 352,
+          "voice_index_start": 332,
+          "voice_index_end": 352,
+          "start_sec": 979.95,
+          "end_sec": 1049.533333,
+          "duration_sec": 69.583333
+        }
+      ]
+    },
+    "blocks": {
+      "block_count": 7,
+      "line_ranges": [
+        {
+          "start": 1,
+          "end": 12,
+          "block_id": "RE-01"
+        },
+        {
+          "start": 13,
+          "end": 24,
+          "block_id": "RE-02"
+        },
+        {
+          "start": 25,
+          "end": 36,
+          "block_id": "RE-03"
+        },
+        {
+          "start": 37,
+          "end": 48,
+          "block_id": "RE-04"
+        },
+        {
+          "start": 49,
+          "end": 60,
+          "block_id": "RE-05"
+        },
+        {
+          "start": 61,
+          "end": 82,
+          "block_id": "RE-06"
+        },
+        {
+          "start": 83,
+          "end": 152,
+          "block_id": "RE-07"
+        }
+      ],
+      "active_window_count": 7,
+      "rest_window_count": 7,
+      "intent_count": 0
+    },
+    "density": {
+      "active_visual_duration_sec": 734.673333,
+      "active_visual_coverage_pct": 70.0,
+      "intentional_rest_duration_sec": 314.86,
+      "unexplained_empty_duration_sec": 0,
+      "longest_unexplained_gap_sec": 0.0,
+      "visual_states_per_min": 0.400178,
+      "repeated_motion_ratio": 0.0
+    }
+  }
+}

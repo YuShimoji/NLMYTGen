@@ -1,0 +1,783 @@
+{
+  "source_lock": {
+    "script_source": "samples\\不動産DX_魔法の鍵とキュレーション.txt",
+    "script_sha256": "f3c2fab2e4ecd965e85795dcf908cfffe1f4c3364c94962f7b9c7ad407af8fb9",
+    "line_count": 152,
+    "ymmp_source": "samples\\_probe\\g24\\real_estate_dx_skit_group_patched.ymmp",
+    "fps": 60,
+    "total_duration_formula": "max(Frame + Length) / fps",
+    "duration_source": "YMM4 readback from real_estate_dx_skit_group_patched.ymmp"
+  },
+  "script_diagnostic": {
+    "summary": "不動産DX台本は背景茶番劇の7幕に分けられるが、RE-07が70行と長く、production timing前にSNS/AI/最終停止の小節分割が必要。",
+    "source_line_citations": [
+      "lines 1-12: self-search and thesis setup",
+      "lines 13-24: REINS/VIP database access asymmetry",
+      "lines 25-36: legitimate protection reasons and first dark-side turn",
+      "lines 37-48: double-agency/blocking mechanism",
+      "lines 49-60: QR/status transparency turn",
+      "lines 61-82: curation and defect disclosure value",
+      "lines 83-152: SNS/AI era, human risk-management value, final prompt"
+    ],
+    "ideal_script_delta": [
+      {
+        "line_start": 83,
+        "line_end": 122,
+        "change": "split SNS trust, lifestyle fit, and AI recommendation into separate visual anchors before final production timing"
+      },
+      {
+        "line_start": 123,
+        "line_end": 152,
+        "change": "make the human stop-card payoff explicit before the closing question so final blocking can be timed precisely"
+      },
+      {
+        "line_start": 151,
+        "line_end": 152,
+        "change": "keep as epilogue prompt inside RE-07 or author a short closing beat; do not leave as uncovered lines"
+      }
+    ],
+    "explained_line_gaps": []
+  },
+  "duration_model": {
+    "total_duration_sec": 1049.533333,
+    "total_duration_mmss": "17:30",
+    "duration_source": "confirmed from YMM4 Frame/Length readback plus actual CSV/VoiceItem row-to-time map",
+    "confidence": "total_confirmed_block_windows_confirmed_by_row_time_map",
+    "revision_trigger": "replace estimated block split after CSV/VoiceItem row-to-time map or accepted narration timing changes"
+  },
+  "blocks": [
+    {
+      "block_id": "RE-01",
+      "title": "自力検索",
+      "line_start": 1,
+      "line_end": 12,
+      "duration_pct": 10,
+      "visual_state": "consumer_search_cards",
+      "cast": [
+        "consumer",
+        "distant_gatekeeper_shadow"
+      ],
+      "props": [
+        "smartphone_key",
+        "property_cards",
+        "closed_vip_door"
+      ],
+      "story_beat": "消費者がベッドでスマホ検索し、物件カードが増殖する。鍵の比喩はスマホを持つ手で見せる。",
+      "placement": "消費者は左下から中央左、物件カードは中央、閉じた扉は右奥。",
+      "range_basis": "scene bible lines 1-12; intro question, consumer search, central thesis setup are contiguous in source script.",
+      "proof_path": "consumer/search UI assets and closed-door prop must exist before compact review; old patched ymmp is not acceptance proof.",
+      "negative_rationale": "speaker reaction cueではなく、検索行動そのものを背景小場面にする。",
+      "script_maturity": "usable_thesis_setup",
+      "sparse_risk": "medium_without_property_cards",
+      "block_start_sec": 0.0,
+      "block_end_sec": 112.933333,
+      "block_start_mmss": "00:00",
+      "block_end_mmss": "01:53",
+      "duration_sec": 112.933333,
+      "skit_active_windows": [
+        {
+          "start_sec": 0.0,
+          "end_sec": 79.053333
+        }
+      ],
+      "rest_windows": [
+        {
+          "start_sec": 79.053333,
+          "end_sec": 112.933333
+        }
+      ],
+      "intent": "",
+      "template_name": "",
+      "block_start_sec_scene_bible_pct_estimate": 0.0,
+      "block_end_sec_scene_bible_pct_estimate": 104.953333,
+      "duration_sec_scene_bible_pct_estimate": 104.953333,
+      "block_start_mmss_scene_bible_pct_estimate": "00:00",
+      "block_end_mmss_scene_bible_pct_estimate": "01:45",
+      "timing_basis": "actual CSV/VoiceItem row-to-time map from real_estate_dx_row_time_map.json; scene-bible percentage retained only as design weight",
+      "csv_row_start": 1,
+      "csv_row_end": 39,
+      "voice_index_start": 1,
+      "voice_index_end": 39
+    },
+    {
+      "block_id": "RE-02",
+      "title": "REINS-VIPクラブ",
+      "line_start": 13,
+      "line_end": 24,
+      "duration_pct": 12,
+      "visual_state": "vip_database_barrier",
+      "cast": [
+        "consumer",
+        "gatekeeper_agent"
+      ],
+      "props": [
+        "reins_pc_db",
+        "closed_vip_door",
+        "portal_cards"
+      ],
+      "story_beat": "ゲートキーパー業者がVIPクラブ内でDBを見て、消費者は扉の外で一般向けカードだけを見る。",
+      "placement": "右奥にVIP扉とPC机、中央に境界線、左手前に消費者。",
+      "range_basis": "scene bible lines 13-24; REINS definition and access asymmetry are introduced as one continuous section.",
+      "proof_path": "VIP door, PC/DB screen, and boundary props must be represented in asset matrix before IR.",
+      "negative_rationale": "配達員nodを不動産業者の説明相槌として使わない。情報非対称の構図で演出する。",
+      "script_maturity": "usable_concept_definition",
+      "sparse_risk": "high_without_door_pc_props",
+      "block_start_sec": 112.933333,
+      "block_end_sec": 201.0,
+      "block_start_mmss": "01:53",
+      "block_end_mmss": "03:21",
+      "duration_sec": 88.066667,
+      "skit_active_windows": [
+        {
+          "start_sec": 112.933333,
+          "end_sec": 174.58
+        }
+      ],
+      "rest_windows": [
+        {
+          "start_sec": 174.58,
+          "end_sec": 201.0
+        }
+      ],
+      "intent": "",
+      "template_name": "",
+      "block_start_sec_scene_bible_pct_estimate": 104.953333,
+      "block_end_sec_scene_bible_pct_estimate": 230.897333,
+      "duration_sec_scene_bible_pct_estimate": 125.944,
+      "block_start_mmss_scene_bible_pct_estimate": "01:45",
+      "block_end_mmss_scene_bible_pct_estimate": "03:51",
+      "timing_basis": "actual CSV/VoiceItem row-to-time map from real_estate_dx_row_time_map.json; scene-bible percentage retained only as design weight",
+      "csv_row_start": 40,
+      "csv_row_end": 69,
+      "voice_index_start": 40,
+      "voice_index_end": 69
+    },
+    {
+      "block_id": "RE-03",
+      "title": "保護理由",
+      "line_start": 25,
+      "line_end": 36,
+      "duration_pct": 12,
+      "visual_state": "legitimate_shields_with_shadow",
+      "cast": [
+        "consumer",
+        "gatekeeper_agent"
+      ],
+      "props": [
+        "protection_shields",
+        "shadow_fee_bag"
+      ],
+      "story_beat": "プライバシー、リスク調査、市場秩序の盾を並べ、正当性の裏に利益の影を滲ませる。",
+      "placement": "中央に3枚の盾カード、右奥に業者、左に消費者。影は盾の背後。",
+      "range_basis": "scene bible lines 25-36; protection rationale and first dark-side turn are one source-backed beat.",
+      "proof_path": "shield and shadow overlays are required; surprise motion alone is not scene proof.",
+      "negative_rationale": "line 35の闇をjump反応で代替せず、画面内の影と盾で意味化する。",
+      "script_maturity": "usable_but_needs_visual_causality",
+      "sparse_risk": "medium_without_shadow_overlay",
+      "block_start_sec": 201.0,
+      "block_end_sec": 276.033333,
+      "block_start_mmss": "03:21",
+      "block_end_mmss": "04:36",
+      "duration_sec": 75.033333,
+      "skit_active_windows": [
+        {
+          "start_sec": 201.0,
+          "end_sec": 253.523333
+        }
+      ],
+      "rest_windows": [
+        {
+          "start_sec": 253.523333,
+          "end_sec": 276.033333
+        }
+      ],
+      "intent": "",
+      "template_name": "",
+      "block_start_sec_scene_bible_pct_estimate": 230.897333,
+      "block_end_sec_scene_bible_pct_estimate": 356.841333,
+      "duration_sec_scene_bible_pct_estimate": 125.944,
+      "block_start_mmss_scene_bible_pct_estimate": "03:51",
+      "block_end_mmss_scene_bible_pct_estimate": "05:57",
+      "timing_basis": "actual CSV/VoiceItem row-to-time map from real_estate_dx_row_time_map.json; scene-bible percentage retained only as design weight",
+      "csv_row_start": 70,
+      "csv_row_end": 95,
+      "voice_index_start": 70,
+      "voice_index_end": 95
+    },
+    {
+      "block_id": "RE-04",
+      "title": "囲い込み",
+      "line_start": 37,
+      "line_end": 48,
+      "duration_pct": 14,
+      "visual_state": "double_agency_blocking",
+      "cast": [
+        "consumer",
+        "gatekeeper_agent"
+      ],
+      "props": [
+        "seller_buyer_cards",
+        "double_agency_arrows",
+        "deal_pending_sign",
+        "closed_route_gate"
+      ],
+      "story_beat": "業者が売主カードと買主カードの間へ割り込み、他社ルートに商談中札を置く。",
+      "placement": "中央に業者、左に買主/消費者、右に売主カード、奥に閉じた他社ルート。",
+      "range_basis": "scene bible lines 37-48; double-agency mechanism and block-the-route consequence are contiguous.",
+      "proof_path": "deal-pending sign, double-agency arrows, and blocked route must exist; deny-like shake is insufficient.",
+      "negative_rationale": "怒り/驚きリアクションではなく、利益相反を人物blockingで読ませる。",
+      "script_maturity": "strong_visual_anchor",
+      "sparse_risk": "low_if_blocking_props_exist",
+      "block_start_sec": 276.033333,
+      "block_end_sec": 342.633333,
+      "block_start_mmss": "04:36",
+      "block_end_mmss": "05:43",
+      "duration_sec": 66.6,
+      "skit_active_windows": [
+        {
+          "start_sec": 276.033333,
+          "end_sec": 322.653333
+        }
+      ],
+      "rest_windows": [
+        {
+          "start_sec": 322.653333,
+          "end_sec": 342.633333
+        }
+      ],
+      "intent": "",
+      "template_name": "",
+      "block_start_sec_scene_bible_pct_estimate": 356.841333,
+      "block_end_sec_scene_bible_pct_estimate": 503.776,
+      "duration_sec_scene_bible_pct_estimate": 146.934667,
+      "block_start_mmss_scene_bible_pct_estimate": "05:57",
+      "block_end_mmss_scene_bible_pct_estimate": "08:24",
+      "timing_basis": "actual CSV/VoiceItem row-to-time map from real_estate_dx_row_time_map.json; scene-bible percentage retained only as design weight",
+      "csv_row_start": 96,
+      "csv_row_end": 119,
+      "voice_index_start": 96,
+      "voice_index_end": 119
+    },
+    {
+      "block_id": "RE-05",
+      "title": "QR透明化",
+      "line_start": 49,
+      "line_end": 60,
+      "duration_pct": 10,
+      "visual_state": "qr_status_transparency",
+      "cast": [
+        "consumer",
+        "gatekeeper_agent"
+      ],
+      "props": [
+        "qr_status_board",
+        "smartphone_key",
+        "opened_vip_door"
+      ],
+      "story_beat": "QR読取とステータス盤点灯で、閉じていた情報の扉が半分開く。",
+      "placement": "中央にQR/ステータス盤、左に消費者、右奥に開き始めるVIP扉。業者は退く。",
+      "range_basis": "scene bible lines 49-60; QR and status visibility turn the previous barrier into transparency.",
+      "proof_path": "QR/status board overlay and opening-door state required before IR; delivery movement may be proxy only.",
+      "negative_rationale": "既存enter/exitを透明化の本体にしない。情報表示の状態変化を主動作にする。",
+      "script_maturity": "usable_transition",
+      "sparse_risk": "medium_without_status_board",
+      "block_start_sec": 342.633333,
+      "block_end_sec": 408.1,
+      "block_start_mmss": "05:43",
+      "block_end_mmss": "06:48",
+      "duration_sec": 65.466667,
+      "skit_active_windows": [
+        {
+          "start_sec": 342.633333,
+          "end_sec": 388.46
+        }
+      ],
+      "rest_windows": [
+        {
+          "start_sec": 388.46,
+          "end_sec": 408.1
+        }
+      ],
+      "intent": "",
+      "template_name": "",
+      "block_start_sec_scene_bible_pct_estimate": 503.776,
+      "block_end_sec_scene_bible_pct_estimate": 608.729333,
+      "duration_sec_scene_bible_pct_estimate": 104.953333,
+      "block_start_mmss_scene_bible_pct_estimate": "08:24",
+      "block_end_mmss_scene_bible_pct_estimate": "10:09",
+      "timing_basis": "actual CSV/VoiceItem row-to-time map from real_estate_dx_row_time_map.json; scene-bible percentage retained only as design weight",
+      "csv_row_start": 120,
+      "csv_row_end": 140,
+      "voice_index_start": 120,
+      "voice_index_end": 140
+    },
+    {
+      "block_id": "RE-06",
+      "title": "キュレーション",
+      "line_start": 61,
+      "line_end": 82,
+      "duration_pct": 17,
+      "visual_state": "curated_cards_with_defects",
+      "cast": [
+        "consumer",
+        "curator_risk_pro"
+      ],
+      "props": [
+        "card_sorting_table",
+        "property_cards",
+        "defect_card"
+      ],
+      "story_beat": "大量カードを専門家がテーマ別に整理し、欠点カードも隠さず添えて候補を絞る。",
+      "placement": "左に消費者、中央に整理テーブル、右にキュレーター。不要カードは奥へ流す。",
+      "range_basis": "scene bible lines 61-82; curation value and defect disclosure are one positive-professional beat.",
+      "proof_path": "curator body, card sorting template, and defect-card overlay must be gap-reported before compact review.",
+      "negative_rationale": "配達員再スキンだけで専門家の価値を表したことにしない。カード整理の結果を見せる。",
+      "script_maturity": "usable_value_shift",
+      "sparse_risk": "high_without_curator_template",
+      "block_start_sec": 408.1,
+      "block_end_sec": 531.7,
+      "block_start_mmss": "06:48",
+      "block_end_mmss": "08:52",
+      "duration_sec": 123.6,
+      "skit_active_windows": [
+        {
+          "start_sec": 408.1,
+          "end_sec": 494.62
+        }
+      ],
+      "rest_windows": [
+        {
+          "start_sec": 494.62,
+          "end_sec": 531.7
+        }
+      ],
+      "intent": "",
+      "template_name": "",
+      "block_start_sec_scene_bible_pct_estimate": 608.729333,
+      "block_end_sec_scene_bible_pct_estimate": 787.15,
+      "duration_sec_scene_bible_pct_estimate": 178.420667,
+      "block_start_mmss_scene_bible_pct_estimate": "10:09",
+      "block_end_mmss_scene_bible_pct_estimate": "13:07",
+      "timing_basis": "actual CSV/VoiceItem row-to-time map from real_estate_dx_row_time_map.json; scene-bible percentage retained only as design weight",
+      "csv_row_start": 141,
+      "csv_row_end": 185,
+      "voice_index_start": 141,
+      "voice_index_end": 185
+    },
+    {
+      "block_id": "RE-07",
+      "title": "AI後の人間価値",
+      "line_start": 83,
+      "line_end": 152,
+      "duration_pct": 25,
+      "visual_state": "ai_recommendation_human_stop",
+      "cast": [
+        "consumer",
+        "curator_risk_pro"
+      ],
+      "props": [
+        "sns_ai_cards",
+        "risk_stop_card",
+        "defect_card"
+      ],
+      "story_beat": "SNS/AI推薦が並ぶ中、最後に専門家が買ってはいけない理由カードで消費者を止める。",
+      "placement": "前半はSNS/AIカードを背景全面、後半は中央の消費者と右の専門家へ収束。",
+      "range_basis": "scene bible lines 83-150 plus source readback lines 151-152; closing prompt belongs to the same epilogue/value beat, preventing a line gap.",
+      "proof_path": "SNS/AI/risk cards and stop-card blocking must be proven; final stop is not a motion label jump. RE-07A-E are now validator-visible through block.subbeats and row_time_map.",
+      "negative_rationale": "締めの問いを単なる退場cueにせず、人間プロの判断価値へ収束させる。",
+      "script_maturity": "too_broad_for_single_motion; needs sub-beat split before production timing",
+      "sparse_risk": "high_due_long_block_needs_subbeats",
+      "block_start_sec": 531.7,
+      "block_end_sec": 1049.533333,
+      "block_start_mmss": "08:52",
+      "block_end_mmss": "17:30",
+      "duration_sec": 517.833333,
+      "skit_active_windows": [
+        {
+          "start_sec": 531.7,
+          "end_sec": 894.183333
+        }
+      ],
+      "rest_windows": [
+        {
+          "start_sec": 894.183333,
+          "end_sec": 1049.533333
+        }
+      ],
+      "intent": "",
+      "template_name": "",
+      "block_start_sec_scene_bible_pct_estimate": 787.15,
+      "block_end_sec_scene_bible_pct_estimate": 1049.533333,
+      "duration_sec_scene_bible_pct_estimate": 262.383333,
+      "block_start_mmss_scene_bible_pct_estimate": "13:07",
+      "block_end_mmss_scene_bible_pct_estimate": "17:30",
+      "timing_basis": "actual CSV/VoiceItem row-to-time map from real_estate_dx_row_time_map.json; scene-bible percentage retained only as design weight",
+      "csv_row_start": 186,
+      "csv_row_end": 352,
+      "voice_index_start": 186,
+      "voice_index_end": 352,
+      "subbeats": [
+        {
+          "id": "RE-07A",
+          "line_start": 83,
+          "line_end": 102,
+          "csv_row_start": 186,
+          "csv_row_end": 226,
+          "voice_index_start": 186,
+          "voice_index_end": 226,
+          "start_sec": 531.7,
+          "end_sec": 653.716667,
+          "duration_sec": 122.016667,
+          "timing_basis": "official row_time_map.re07_subbeat_time_map; validator authority for resolving SCRIPT_BLOCKED_RE07_TOO_BROAD"
+        },
+        {
+          "id": "RE-07B",
+          "line_start": 103,
+          "line_end": 113,
+          "csv_row_start": 227,
+          "csv_row_end": 252,
+          "voice_index_start": 227,
+          "voice_index_end": 252,
+          "start_sec": 653.716667,
+          "end_sec": 730.25,
+          "duration_sec": 76.533333,
+          "timing_basis": "official row_time_map.re07_subbeat_time_map; validator authority for resolving SCRIPT_BLOCKED_RE07_TOO_BROAD"
+        },
+        {
+          "id": "RE-07C",
+          "line_start": 114,
+          "line_end": 129,
+          "csv_row_start": 253,
+          "csv_row_end": 296,
+          "voice_index_start": 253,
+          "voice_index_end": 296,
+          "start_sec": 730.25,
+          "end_sec": 864.116667,
+          "duration_sec": 133.866667,
+          "timing_basis": "official row_time_map.re07_subbeat_time_map; validator authority for resolving SCRIPT_BLOCKED_RE07_TOO_BROAD"
+        },
+        {
+          "id": "RE-07D",
+          "line_start": 130,
+          "line_end": 143,
+          "csv_row_start": 297,
+          "csv_row_end": 331,
+          "voice_index_start": 297,
+          "voice_index_end": 331,
+          "start_sec": 864.116667,
+          "end_sec": 979.95,
+          "duration_sec": 115.833333,
+          "timing_basis": "official row_time_map.re07_subbeat_time_map; validator authority for resolving SCRIPT_BLOCKED_RE07_TOO_BROAD"
+        },
+        {
+          "id": "RE-07E",
+          "line_start": 144,
+          "line_end": 152,
+          "csv_row_start": 332,
+          "csv_row_end": 352,
+          "voice_index_start": 332,
+          "voice_index_end": 352,
+          "start_sec": 979.95,
+          "end_sec": 1049.533333,
+          "duration_sec": 69.583333,
+          "timing_basis": "official row_time_map.re07_subbeat_time_map; validator authority for resolving SCRIPT_BLOCKED_RE07_TOO_BROAD"
+        }
+      ]
+    }
+  ],
+  "asset_control_matrix": {
+    "consumer": {
+      "availability": "missing",
+      "owner": "user-owned art after assistant gap report",
+      "control_needed": [
+        "hold",
+        "search gesture",
+        "choose/stop reaction"
+      ],
+      "control_route": "new YMM4 group/template or placeholder proxy",
+      "readback_check": [
+        "group exists",
+        "position within block windows"
+      ]
+    },
+    "distant_gatekeeper_shadow": {
+      "availability": "missing",
+      "owner": "assistant layout; user art if native image needed",
+      "control_needed": [
+        "shadow/door silhouette"
+      ],
+      "control_route": "overlay or simple YMM4 shape",
+      "readback_check": [
+        "visible in RE-01"
+      ]
+    },
+    "gatekeeper_agent": {
+      "availability": "missing",
+      "owner": "user-owned art after assistant gap report",
+      "control_needed": [
+        "hold",
+        "block route",
+        "retreat"
+      ],
+      "control_route": "new/reskinned template; delivery literal reuse forbidden",
+      "readback_check": [
+        "group exists",
+        "blocking position"
+      ]
+    },
+    "curator_risk_pro": {
+      "availability": "missing",
+      "owner": "user-owned art after assistant gap report",
+      "control_needed": [
+        "sort cards",
+        "show defect",
+        "stop with card"
+      ],
+      "control_route": "new/reskinned template",
+      "readback_check": [
+        "group exists",
+        "stop-card pose"
+      ]
+    },
+    "smartphone_key": {
+      "availability": "missing",
+      "owner": "assistant layout; user art if final native asset needed",
+      "control_needed": [
+        "show",
+        "scan"
+      ],
+      "control_route": "overlay or ImageItem slot",
+      "readback_check": [
+        "path/readback duration"
+      ]
+    },
+    "property_cards": {
+      "availability": "missing",
+      "owner": "assistant layout",
+      "control_needed": [
+        "spawn",
+        "sort",
+        "hold"
+      ],
+      "control_route": "overlay/card template",
+      "readback_check": [
+        "card count or representative card exists"
+      ]
+    },
+    "closed_vip_door": {
+      "availability": "missing",
+      "owner": "assistant layout",
+      "control_needed": [
+        "closed state"
+      ],
+      "control_route": "overlay or shape group",
+      "readback_check": [
+        "visible state closed"
+      ]
+    },
+    "opened_vip_door": {
+      "availability": "missing",
+      "owner": "assistant layout",
+      "control_needed": [
+        "opening/open state"
+      ],
+      "control_route": "overlay or shape group",
+      "readback_check": [
+        "visible state open/half-open"
+      ]
+    },
+    "portal_cards": {
+      "availability": "missing",
+      "owner": "assistant layout",
+      "control_needed": [
+        "show partial public info"
+      ],
+      "control_route": "overlay/card template",
+      "readback_check": [
+        "visible in RE-02"
+      ]
+    },
+    "reins_pc_db": {
+      "availability": "missing",
+      "owner": "assistant layout; user art if final native asset needed",
+      "control_needed": [
+        "show database/private club"
+      ],
+      "control_route": "overlay or ImageItem slot",
+      "readback_check": [
+        "visible screen/PC prop"
+      ]
+    },
+    "protection_shields": {
+      "availability": "missing",
+      "owner": "assistant layout",
+      "control_needed": [
+        "show privacy/risk/order shields"
+      ],
+      "control_route": "overlay/cards",
+      "readback_check": [
+        "three shield cards visible"
+      ]
+    },
+    "shadow_fee_bag": {
+      "availability": "missing",
+      "owner": "assistant layout",
+      "control_needed": [
+        "darken/reveal shadow"
+      ],
+      "control_route": "overlay/shape",
+      "readback_check": [
+        "shadow exists behind shields"
+      ]
+    },
+    "seller_buyer_cards": {
+      "availability": "missing",
+      "owner": "assistant layout",
+      "control_needed": [
+        "show seller/buyer sides"
+      ],
+      "control_route": "overlay/cards",
+      "readback_check": [
+        "seller and buyer labels visible"
+      ]
+    },
+    "double_agency_arrows": {
+      "availability": "missing",
+      "owner": "assistant layout",
+      "control_needed": [
+        "show two-way commission route"
+      ],
+      "control_route": "overlay/shape arrows",
+      "readback_check": [
+        "two-way arrows visible"
+      ]
+    },
+    "deal_pending_sign": {
+      "availability": "missing",
+      "owner": "assistant layout",
+      "control_needed": [
+        "stamp/place sign"
+      ],
+      "control_route": "overlay/card",
+      "readback_check": [
+        "sign visible in RE-04"
+      ]
+    },
+    "closed_route_gate": {
+      "availability": "missing",
+      "owner": "assistant layout",
+      "control_needed": [
+        "block other-company route"
+      ],
+      "control_route": "overlay/shape gate",
+      "readback_check": [
+        "route visibly blocked"
+      ]
+    },
+    "qr_status_board": {
+      "availability": "missing",
+      "owner": "assistant layout",
+      "control_needed": [
+        "scan",
+        "status light"
+      ],
+      "control_route": "overlay/board template",
+      "readback_check": [
+        "QR/status board visible"
+      ]
+    },
+    "card_sorting_table": {
+      "availability": "missing",
+      "owner": "assistant layout",
+      "control_needed": [
+        "sort/curate"
+      ],
+      "control_route": "overlay/table template",
+      "readback_check": [
+        "sorted card state visible"
+      ]
+    },
+    "defect_card": {
+      "availability": "missing",
+      "owner": "assistant layout",
+      "control_needed": [
+        "show negative information"
+      ],
+      "control_route": "overlay/card",
+      "readback_check": [
+        "defect card visible"
+      ]
+    },
+    "sns_ai_cards": {
+      "availability": "missing",
+      "owner": "assistant layout",
+      "control_needed": [
+        "show SNS/AI recommendation stream"
+      ],
+      "control_route": "overlay/card stream",
+      "readback_check": [
+        "SNS/AI cards visible"
+      ]
+    },
+    "risk_stop_card": {
+      "availability": "missing",
+      "owner": "assistant layout",
+      "control_needed": [
+        "stop/reject purchase"
+      ],
+      "control_route": "overlay/card held by curator",
+      "readback_check": [
+        "stop-card visible in final block"
+      ]
+    },
+    "delivery_v1_templates": {
+      "availability": "repo-tracked samples/templates/skit_group/delivery_v1_templates.ymmp",
+      "owner": "assistant",
+      "control_needed": [
+        "enter_from_left",
+        "nod",
+        "surprise_oneshot",
+        "deny_oneshot",
+        "exit_left"
+      ],
+      "control_route": "skit_group template source for delivery mini scene; real-estate proxy only",
+      "readback_check": [
+        "template source opens/readback"
+      ],
+      "template_name": "delivery_v1_templates.ymmp",
+      "symbolic_role": "delivery mini scene main actor, or non-real-estate movement proxy only",
+      "proxy_limitation": "not a literal consumer/gatekeeper/curator cast for real-estate DX"
+    }
+  },
+  "density_thresholds": {
+    "minimum_active_visual_coverage_pct": 65,
+    "maximum_unexplained_gap_sec": 0,
+    "visual_states_per_min_range": [
+      0.3,
+      1.0
+    ],
+    "maximum_repeated_motion_ratio": 1
+  },
+  "density_audit": {
+    "active_visual_coverage_pct": 70.0,
+    "active_visual_duration_sec": 734.673333,
+    "intentional_rest_duration_sec": 314.86,
+    "unexplained_empty_duration_sec": 0,
+    "longest_unexplained_gap_sec": 0,
+    "visual_states_per_min": 0.400178
+  },
+  "blockers": [
+    "ASSET_BLOCKED_REAL_ESTATE_CAST_TEMPLATES_MISSING: consumer/gatekeeper_agent/curator_risk_pro are not available as production templates",
+    "ASSET_BLOCKED_REAL_ESTATE_PROPS_MISSING: VIP door, REINS PC, QR/status board, card-sorting, SNS/AI/risk cards are missing or placeholder-only",
+    "SCRIPT_BLOCKED_RE07_TOO_BROAD_FOR_PRODUCTION_TIMING: lines 83-152 must be split into sub-beats before revised IR/compact review"
+  ],
+  "row_time_map": "samples\\_probe\\g24\\real_estate_dx_row_time_map.json",
+  "workflow_authority": {
+    "validator_reads": [
+      "blocks[].subbeats",
+      "row_time_map.re07_subbeat_time_map"
+    ],
+    "gap_report_status": "supporting artifact only; not sufficient unless connected to validator input",
+    "overlay_only_requires": "validate-background-skit-blueprint allowed_next_actions includes overlay_only_compact_review"
+  }
+}
