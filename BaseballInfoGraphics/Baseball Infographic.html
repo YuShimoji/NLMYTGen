@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<title>野球インフォグラフィック</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;600;700;900&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: #f0eee9; font-family: "Noto Sans JP", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .ig-frame { width: 1280px; height: 720px; position: relative; }
+</style>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="data.js"></script>
+<script src="image-slot.js"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="components/strike-zone.jsx"></script>
+<script type="text/babel" src="components/diamond.jsx"></script>
+<script type="text/babel" src="variants/detailed.jsx"></script>
+
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "homeColor": "#F97316",
+  "awayColor": "#FACC15",
+  "accentTeam": "home",
+  "density": "standard",
+  "showRomaji": false,
+  "statMode": "simple",
+  "autoPlay": true
+}/*EDITMODE-END*/;
+
+const TEAM_COLOR_OPTIONS = [
+  '#F97316', // ジャイアンツ オレンジ
+  '#FACC15', // タイガース 黄
+  '#DC2626', // カープ 赤
+  '#1E40AF', // ベイスターズ 青
+  '#0EA5E9', // スワローズ 水色
+  '#7C3AED', // バファローズ 紫
+  '#16A34A', // ヤクルト 緑(代替)
+  '#0F172A', // 黒系
+  '#BE185D', // ホークス
+];
+
+function App() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [pitchIdx, setPitchIdx] = React.useState(0);
+  const [playing, setPlaying] = React.useState(tweaks.autoPlay);
+  const totalPitches = window.GAME_DATA.atBat.pitches.length;
+
+  // データを動的にチームカラーで上書き
+  const data = React.useMemo(() => {
+    const d = JSON.parse(JSON.stringify(window.GAME_DATA));
+    d.teams.home.primary = tweaks.homeColor;
+    d.teams.away.primary = tweaks.awayColor;
+    return d;
+  }, [tweaks.homeColor, tweaks.awayColor]);
+
+  const accentColor = tweaks.accentTeam === 'home' ? tweaks.homeColor : tweaks.awayColor;
+
+  // リアルタイム更新シミュレーション
+  React.useEffect(() => {
+    if (!playing) return;
+    const t = setInterval(() => {
+      setPitchIdx(i => (i + 1) % totalPitches);
+    }, 2400);
+    return () => clearInterval(t);
+  }, [playing, totalPitches]);
+
+  return (
+    <>
+      <DesignCanvas>
+        <DCSection id="variants" title="野球インフォグラフィック · C 詳細のみ" subtitle="リアルタイムストライクゾーン更新シミュレーション · 1280×720">
+          <DCArtboard id="detailed" label="C · 詳細" width={1280} height={720}>
+            <div className="ig-frame">
+              <DetailedVariant
+                data={data}
+                currentPitchIdx={pitchIdx}
+                teamColor={accentColor}
+                density={tweaks.density}
+                showRomaji={tweaks.showRomaji}
+                statMode={tweaks.statMode}
+              />
+            </div>
+          </DCArtboard>
+        </DCSection>
+      </DesignCanvas>
+
+      {/* 再生コントロール — Tweaks以外のメインコントロール */}
+      <div style={{
+        position: 'fixed', left: 16, bottom: 16, zIndex: 1000,
+        background: 'rgba(15,15,25,0.92)', color: '#fff',
+        backdropFilter: 'blur(12px)',
+        border: '1px solid rgba(255,255,255,0.1)',
+        borderRadius: 8,
+        padding: '10px 14px',
+        display: 'flex', alignItems: 'center', gap: 12,
+        fontSize: 12, fontFamily: 'Geist Mono, monospace',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+      }}>
+        <button onClick={() => setPlaying(!playing)} style={{
+          width: 28, height: 28, borderRadius: 14, border: 'none',
+          background: playing ? '#EF4444' : '#10B981', color: '#fff',
+          cursor: 'pointer', fontSize: 12,
+        }}>{playing ? '■' : '▶'}</button>
+        <button onClick={() => setPitchIdx(i => (i - 1 + totalPitches) % totalPitches)} style={btnStyle}>‹</button>
+        <span style={{ minWidth: 80, textAlign: 'center', letterSpacing: '0.05em' }}>
+          PITCH {pitchIdx + 1} / {totalPitches}
+        </span>
+        <button onClick={() => setPitchIdx(i => (i + 1) % totalPitches)} style={btnStyle}>›</button>
+        <span style={{ color: 'rgba(255,255,255,0.4)', marginLeft: 6 }}>
+          {window.GAME_DATA.atBat.pitches[pitchIdx]?.kmh}km/h · {window.GAME_DATA.atBat.pitches[pitchIdx]?.typeJa}
+        </span>
+      </div>
+
+      <TweaksPanel title="Tweaks">
+        <TweakSection label="チームカラー">
+          <TweakColor label="ホーム" value={tweaks.homeColor}
+                      options={TEAM_COLOR_OPTIONS}
+                      onChange={(v) => setTweak('homeColor', v)} />
+          <TweakColor label="アウェイ" value={tweaks.awayColor}
+                      options={TEAM_COLOR_OPTIONS}
+                      onChange={(v) => setTweak('awayColor', v)} />
+          <TweakRadio label="アクセント" value={tweaks.accentTeam}
+                      options={[{value: 'home', label: 'ホーム'}, {value: 'away', label: 'アウェイ'}]}
+                      onChange={(v) => setTweak('accentTeam', v)} />
+        </TweakSection>
+        <TweakSection label="情報密度">
+          <TweakRadio label="密度" value={tweaks.density}
+                      options={[{value: 'compact', label: 'コンパクト'}, {value: 'standard', label: '詳細'}]}
+                      onChange={(v) => setTweak('density', v)} />
+          <TweakRadio label="成績表示" value={tweaks.statMode}
+                      options={[{value: 'simple', label: '簡易'}, {value: 'detailed', label: '詳細'}]}
+                      onChange={(v) => setTweak('statMode', v)} />
+          <TweakToggle label="ローマ字表記" value={tweaks.showRomaji}
+                       onChange={(v) => setTweak('showRomaji', v)} />
+        </TweakSection>
+        <TweakSection label="再生">
+          <TweakToggle label="自動再生" value={playing}
+                       onChange={setPlaying} />
+        </TweakSection>
+      </TweaksPanel>
+    </>
+  );
+}
+
+const btnStyle = {
+  width: 28, height: 28, borderRadius: 14, border: '1px solid rgba(255,255,255,0.15)',
+  background: 'transparent', color: '#fff',
+  cursor: 'pointer', fontSize: 14,
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
