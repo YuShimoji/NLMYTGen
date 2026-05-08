@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nlmytgen.local/sports_news/sports_episode.schema.json",
+  "title": "sports_news episode",
+  "type": "object",
+  "required": [
+    "episode",
+    "source_ledger",
+    "fact_ledger",
+    "reaction_digest",
+    "rights_manifest",
+    "visual_plan",
+    "publish_gate"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "episode": {
+      "type": "object",
+      "required": ["id", "type", "league", "sport", "event_date", "title_angle", "visual_mode"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+        "type": { "type": "string", "enum": ["sports_news", "sports_reaction_digest"] },
+        "league": { "type": "string", "minLength": 1 },
+        "sport": { "type": "string", "minLength": 1 },
+        "event_date": { "type": "string", "minLength": 1 },
+        "title_angle": { "type": "string", "minLength": 1 },
+        "visual_mode": { "const": "self_made_broadcast_cards" }
+      }
+    },
+    "source_ledger": { "type": "object" },
+    "fact_ledger": { "type": "object" },
+    "reaction_digest": { "type": "object" },
+    "rights_manifest": { "type": "object" },
+    "game_context": {
+      "type": "object",
+      "required": ["team_home", "team_away", "score", "inning", "top_bottom"],
+      "additionalProperties": true,
+      "properties": {
+        "team_home": { "$ref": "#/$defs/team" },
+        "team_away": { "$ref": "#/$defs/team" },
+        "score": {
+          "type": "object",
+          "required": ["home", "away"],
+          "additionalProperties": false,
+          "properties": {
+            "home": { "type": "integer" },
+            "away": { "type": "integer" }
+          }
+        },
+        "inning": { "type": "integer", "minimum": 1 },
+        "top_bottom": { "type": "string", "enum": ["top", "bottom"] }
+      }
+    },
+    "at_bat": {
+      "type": "object",
+      "required": ["pitcher", "batter", "count", "pitch_event"],
+      "additionalProperties": true,
+      "properties": {
+        "pitcher": { "$ref": "#/$defs/player" },
+        "batter": { "$ref": "#/$defs/player" },
+        "count": { "type": "object" },
+        "previous_pitch": { "$ref": "#/$defs/pitch" },
+        "pitch_event": { "$ref": "#/$defs/pitch" }
+      }
+    },
+    "visual_plan": {
+      "type": "object",
+      "required": ["scenes"],
+      "additionalProperties": false,
+      "properties": {
+        "scenes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "card_type", "claim", "data_refs"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+              "card_type": {
+                "type": "string",
+                "enum": [
+                  "opening_breaking_card",
+                  "scoreboard_card",
+                  "player_stat_card",
+                  "pitch_event_card",
+                  "trend_comparison_card",
+                  "reaction_digest_card",
+                  "timeline_card",
+                  "watch_point_card",
+                  "lower_third",
+                  "ticker"
+                ]
+              },
+              "claim": { "type": "string", "minLength": 1 },
+              "data_refs": {
+                "type": "array",
+                "items": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" }
+              },
+              "notes": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "publish_gate": {
+      "type": "object",
+      "required": ["status", "required_before_publish"],
+      "additionalProperties": false,
+      "properties": {
+        "status": { "type": "string", "enum": ["passed", "blocked", "needs_review"] },
+        "required_before_publish": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "team": {
+      "type": "object",
+      "required": ["code", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "code": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 }
+      }
+    },
+    "player": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": true,
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "throws": { "type": "string" },
+        "bats": { "type": "string" }
+      }
+    },
+    "pitch": {
+      "type": "object",
+      "required": ["pitch_type", "result"],
+      "additionalProperties": true,
+      "properties": {
+        "pitch_type": { "type": "string", "minLength": 1 },
+        "velocity_kmh": { "type": "number" },
+        "result": { "type": "string", "minLength": 1 },
+        "zone": { "type": "string" }
+      }
+    }
+  }
+}

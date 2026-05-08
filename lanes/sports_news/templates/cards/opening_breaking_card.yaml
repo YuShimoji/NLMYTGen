@@ -1,0 +1,14 @@
+card_type: opening_breaking_card
+purpose: "Open the episode with one factual hook and one interpretive angle."
+required_fields:
+  - headline
+  - subheadline
+  - event_label
+  - source_refs
+visual_rules:
+  background: dark_broadcast
+  max_primary_claims: 1
+  no_external_images: true
+  no_team_logos: true
+notes:
+  - "Use typography, rule lines, and restrained accent color instead of photos or footage."

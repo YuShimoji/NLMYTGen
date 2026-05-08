@@ -1,0 +1,17 @@
+card_type: player_stat_card
+purpose: "Show pitcher or batter context with mobile-readable major values."
+required_fields:
+  - player_name
+  - role
+  - handedness
+  - primary_stat
+  - today_summary
+optional_fields:
+  - secondary_stat
+  - trend_note
+visual_rules:
+  max_major_values: 5
+  no_player_photo: true
+  no_ai_person_image: true
+notes:
+  - "Move dense splits or matchup history to a trend card instead of overfilling the side panel."

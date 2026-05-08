@@ -58,6 +58,15 @@ news topic / game facts
 | exported visual asset | future | PNG / animated video / image sequence のいずれか |
 | YMM4 placement note | future | どのタイムライン位置に何秒置くかを決める |
 
+## sports_news lane artifact bundle
+
+`lanes/sports_news/` は、この仕様をスポーツニュース全般へ拡張するための MVP artifact bundle として扱う。初期内容は schema / sample / card template / closed topics / visual language であり、renderer 実装・network 取得・外部素材取得・AI 画像生成は含めない。
+
+- `lanes/sports_news/README.md` — text/data/source driven lane の境界
+- `lanes/sports_news/schemas/` — source / fact / reaction / rights / episode contracts
+- `lanes/sports_news/examples/baseball_pitch_event_sample.yaml` — 架空データによる野球 pitch event sample
+- `lanes/sports_news/templates/cards/` — self-made broadcast card UI のテンプレート仕様
+
 ## 出力 artifact
 
 | Output | 用途 | 最低条件 |

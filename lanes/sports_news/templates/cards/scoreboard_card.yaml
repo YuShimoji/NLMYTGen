@@ -1,0 +1,17 @@
+card_type: scoreboard_card
+purpose: "Show current game state without making inning/status look like another score."
+required_fields:
+  - team_home
+  - team_away
+  - score_home
+  - score_away
+  - inning
+  - top_bottom
+  - status_label
+visual_rules:
+  score_priority: dominant
+  inning_priority: secondary_labeled
+  format_hint: "TEAM_A 3 - 4 TEAM_B, then Top 7th / 7回表"
+  no_team_logos: true
+notes:
+  - "Use generic text codes or reviewed team labels; do not use official marks decoratively."

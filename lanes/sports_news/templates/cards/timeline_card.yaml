@@ -1,0 +1,14 @@
+card_type: timeline_card
+purpose: "Show event order with source-backed beats."
+required_fields:
+  - timeline_title
+  - beats
+beat_required_fields:
+  - label
+  - time_or_order
+  - fact_ref
+visual_rules:
+  max_beats: 5
+  no_footage_stills: true
+notes:
+  - "Use geometric markers and text, not screenshots."

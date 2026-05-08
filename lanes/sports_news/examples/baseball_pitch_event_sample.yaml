@@ -1,0 +1,180 @@
+episode:
+  id: baseball_pitch_event_sample
+  type: sports_news
+  league: SAMPLE
+  sport: baseball
+  event_date: "sample-date"
+  title_angle: "終盤の一球で流れが変わるサンプル打席"
+  visual_mode: self_made_broadcast_cards
+
+game_context:
+  team_home:
+    code: FAL
+    name: "Sample Falcons"
+  team_away:
+    code: EAG
+    name: "Sample Eagles"
+  score:
+    home: 4
+    away: 3
+  inning: 7
+  top_bottom: top
+
+at_bat:
+  pitcher:
+    name: "Sample Pitcher"
+    throws: R
+    era: 2.18
+    today_pitch_count: 87
+    today_strikeouts: 7
+  batter:
+    name: "Sample Batter"
+    bats: L
+    avg: 0.302
+    ops: 0.891
+    today_result: "single, strikeout, groundout"
+  count:
+    before_pitch:
+      balls: 2
+      strikes: 2
+      outs: 1
+    pitch_number_in_plate_appearance: 5
+  previous_pitch:
+    pitch_type: FF
+    velocity_kmh: 155
+    result: Foul
+    zone: "upper_outer"
+  pitch_event:
+    pitch_type: SL
+    velocity_kmh: 140
+    result: Strike
+    zone: "low_outer"
+    intended_zone: "low_outer"
+    actual_zone: "low_outer"
+    interpretation: "前球の速球から外角低めのスライダーへ緩急をつけた"
+
+source_ledger:
+  sources:
+    - id: src_boxscore_sample
+      title: "Sample box score feed"
+      url: "sample://boxscore/baseball_pitch_event_sample"
+      publisher: "Sample Data Provider"
+      provider: "manual-placeholder"
+      source_type: stats
+      retrieved_at: "sample-retrieved-at"
+      use_as: data_reference
+      rights_note: "Placeholder structured data; no footage, screenshots, photos, logos, or third-party visual assets."
+    - id: src_reaction_forum_sample
+      title: "Sample fan reaction digest input"
+      url: "sample://reaction/baseball_pitch_event_sample"
+      publisher: "Sample Forum"
+      provider: "manual-placeholder"
+      source_type: forum
+      retrieved_at: "sample-retrieved-at"
+      use_as: reaction_reference
+      rights_note: "Placeholder paraphrase input; no screenshot display and no profile icon reuse."
+
+fact_ledger:
+  confirmed_facts:
+    - id: fact_score_state
+      text: "Sample Falcons lead Sample Eagles 4-3 in the top of the seventh."
+      source_refs: [src_boxscore_sample]
+    - id: fact_pitch_sequence
+      text: "The sample sequence moves from a 155 km/h fastball to a 140 km/h slider."
+      source_refs: [src_boxscore_sample]
+  numerical_claims:
+    - id: num_velocity_delta
+      text: "The sample velocity gap between the previous pitch and current pitch is 15 km/h."
+      source_refs: [src_boxscore_sample]
+  uncertain_claims:
+    - id: uncertain_intent
+      text: "Pitch intent is only available when structured intended-zone data is supplied."
+      source_refs: [src_boxscore_sample]
+  claims_to_avoid:
+    - id: avoid_unsourced_praise
+      text: "Do not claim overseas fans are universally praising the pitch without sourced reaction items."
+      source_refs: [src_reaction_forum_sample]
+
+reaction_digest:
+  items:
+    - id: reaction_fan_01
+      source_reference: src_reaction_forum_sample
+      source_type: forum
+      mode: paraphrase
+      original_language: en
+      original_text: "placeholder sample paraphrase source"
+      translation_draft: "速球の後に低めのスライダーを見せた配球が良かった、という反応。"
+      rendered_text: "緩急で打者の目線を外した、という反応が目立つ"
+      category: pitch_selection
+      sentiment: positive
+      display_label: FAN-01
+    - id: reaction_media_01
+      source_reference: src_reaction_forum_sample
+      source_type: media
+      mode: paraphrase
+      original_language: en
+      rendered_text: "終盤のカウント作りを評価する見方"
+      category: game_context
+      sentiment: neutral_positive
+      display_label: MEDIA-01
+
+rights_manifest:
+  media_policy:
+    match_footage: blocked
+    official_video: not_used_as_asset
+    official_video_screenshot: blocked
+    official_audio: blocked
+    x_screenshot: blocked
+    site_screenshot: blocked
+    ai_public_visuals: blocked
+    news_photo: blocked
+    team_logo: blocked
+    self_made_infographic: allowed
+    self_made_svg_badge: allowed
+    self_made_card_ui: allowed
+  publish_gate:
+    status: passed
+    checks:
+      - id: no_external_media_assets
+        status: passed
+        note: "Sample uses self-made card UI only."
+      - id: sourced_claims_only
+        status: passed
+        note: "Every claim and reaction points to a sample source reference."
+      - id: no_content_id_strategy
+        status: passed
+        note: "No match footage, official video, official audio, or screenshot is referenced."
+
+visual_plan:
+  scenes:
+    - id: scene_opening
+      card_type: opening_breaking_card
+      claim: "終盤の一球で打席の流れが変わる"
+      data_refs: [fact_score_state]
+    - id: scene_scoreboard
+      card_type: scoreboard_card
+      claim: "まず読むべきは4対3の一点差"
+      data_refs: [fact_score_state]
+    - id: scene_pitch_event
+      card_type: pitch_event_card
+      claim: "前球155km/h FFから140km/h SLへ緩急"
+      data_refs: [fact_pitch_sequence, num_velocity_delta]
+    - id: scene_pitcher
+      card_type: player_stat_card
+      claim: "投手は終盤でも球数と奪三振を維持"
+      data_refs: [src_boxscore_sample]
+    - id: scene_reaction
+      card_type: reaction_digest_card
+      claim: "反応は配球意図への評価に集中"
+      data_refs: [reaction_fan_01, reaction_media_01]
+    - id: scene_watch_point
+      card_type: watch_point_card
+      claim: "次に見るべきは外角スライダーの見極め"
+      data_refs: [uncertain_intent]
+
+publish_gate:
+  status: passed
+  required_before_publish:
+    - "Confirm real episode data replaces every sample:// source."
+    - "Confirm no third-party visual asset was added."
+    - "Confirm thumbnail promise matches the script body."

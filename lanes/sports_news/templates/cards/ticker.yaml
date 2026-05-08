@@ -1,0 +1,12 @@
+card_type: ticker
+purpose: "Carry short source-backed updates or reminders."
+required_fields:
+  - ticker_items
+item_required_fields:
+  - text
+  - source_ref
+visual_rules:
+  short_text_only: true
+  no_claim_without_source: true
+notes:
+  - "Ticker text must not introduce new unsourced claims."

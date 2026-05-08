@@ -1,0 +1,11 @@
+card_type: watch_point_card
+purpose: "Close a short segment with a clear next viewing point."
+required_fields:
+  - watch_point
+  - why_it_matters
+  - source_refs
+visual_rules:
+  max_claims: 1
+  CTA_style: editorial_not_hype
+notes:
+  - "Avoid unsourced exaggeration such as universal overseas praise."
