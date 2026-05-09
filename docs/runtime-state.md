@@ -135,7 +135,7 @@
 
 ## 最終検証
 
-- last_verification: **2026-05-10 sports_news ambientBackdrop preview sample**. Ran stale-authority search (`stale-authority-search-ok`), `git diff --check -- BaseballInfoGraphics lanes/sports_news docs/BASEBALL_NEWS_PIPELINE_SPEC.md docs/MATERIAL_SOURCING_RULES.md docs/runtime-state.md`, `node --check BaseballInfoGraphics/data.js`, JSON parse checks for sports_news schemas, `uv run --with pyyaml --with jsonschema` sports episode and rights manifest validation, TypeScript JSX parse for `BaseballInfoGraphics/variants/detailed.jsx`, SVG HTTP load check (`200 image/svg+xml`), and Browser localhost check for one C detailed artboard, pitch claim, `ambientBackdrop` DOM metadata, and zero console errors.
+- last_verification: **2026-05-10 sports_news ambientBackdrop preview sample / Git follow-through reset**. Ran stale-authority search (`stale-authority-search-ok`), `git diff --check -- BaseballInfoGraphics lanes/sports_news docs/BASEBALL_NEWS_PIPELINE_SPEC.md docs/MATERIAL_SOURCING_RULES.md docs/runtime-state.md`, `node --check BaseballInfoGraphics/data.js`, JSON parse checks for sports_news schemas, `uv run --with pyyaml --with jsonschema` sports episode and rights manifest validation, SVG HTTP load check (`200 image/svg+xml`), and Browser localhost check for one C detailed artboard, deterministic pitch params, pitch claim, `window.__BASEBALL_INFOGRAPHICS_STATE__.ambientBackdrop` readback, and zero current-page console errors. TypeScript JSX parse was not used because `typescript` is not installed in this repo; browser Babel loading is the active JSX/openability proof.
 
 ## Evidence（CLI artifact mode）
 
