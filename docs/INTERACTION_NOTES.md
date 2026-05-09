@@ -64,6 +64,8 @@
   - ペナルティ: reviewer が raw JSON を読まないと意味が分からない、HTML を最後までスクロールしないと全体比較できない、別案が弱すぎて判断材料にならない、または見た目が整っているだけで `not creative acceptance` 境界が曖昧な場合、その review handoff は未完。assistant は同じブロックで report packaging failure として list/map を補い、忖度せず `revise` / `reduce` / `split` / `rationale missing` / `blocked` を返せる形にする。
 - `CLOSING_CHAIN_BREAK`: 最終応答が「やったこと」だけを述べ、根拠・残リスク・次の owner・user 返答後に assistant が閉じる作業のどれかを欠いたまま終わる。結果として、user に作業だけが振られ、次に何を返せば再開できるか、そもそも assistant が停止しているのかが分からなくなる。
   - 予防: closeout 前に `summary -> evidence -> risk -> next owner -> assistant next` の鎖を確認する。鎖が切れている場合は、曖昧な「確認してください」で終えず、assistant 側で閉じる gap report / drift detection / fail-fast / docs sync を先に検討する。user action が必要なら、停止理由と返答後の assistant 作業を同じ段落で接続する。
+- `NEXT_WORK_SHORTHAND`: 残作業レビューや次回作業導線が `P0/P1`、commit/test/path、または「こちら側で未処理なし」の短文に縮退し、各作業の目的・効果・必要条件・現在状態・owner・次の動きが本文だけで分からない。ユーザーは何を選ぶと何が軽くなるか判断できず、次回の作業開始がまた status 確認から始まる。
+  - 予防: `残作業` / `次回` / `優先順位` / `レビューしてください` が出た場合は、作業ごとに `作業 / 目的 / 効果 / 必要条件 / 現在の状態 / owner / 次の動き` を表または同等の構造で出す。記号 priority は補助に留め、証跡 path は根拠として後置する。assistant が今すぐ動ける候補と user review 待ちを混ぜない。
 
 ## Ask Protocol
 - 質問前に、repo 内根拠で決められない理由を確認する。理由がない場合は質問せず進める。cross-project 指示がある場合は、明示された他 repo / docs も根拠範囲に含める。
@@ -88,6 +90,7 @@
 - completion 報告では、`changed` / `not changed` / `verified` / `still blocked` の区別を保つ。docs 更新だけの場合は、実制作上の摩擦が何だけ減ったのかを明示する。
 - completion 報告で `検証 pass` と `未追跡ファイル` を出す場合は、そこで止めない。未追跡が正式追加対象なら `next owner`、stage/commit の扱い、user が見るべき差分、OK/NG 後の assistant next を添える。
 - user が「解説」「手順」「詳しく」を明示しない場合でも、closeout は最低限の意味説明を省略しない。短くてよいが、file diff だけで閉じるのは禁止。
+- `残作業` / `次回作業` / `優先順位` / `レビュー` を求められた場合は、記号だけの priority list ではなく、目的・効果・必要条件・現在状態・owner・次の動きを表にする。複数候補があるときは「最優先 / 次候補 / 後で」の自然言語 label を優先し、`P0` 等は補助表記に留める。
 - handoff では「何が抜けているか」「次にやってはいけないこと」「再オープン条件」を必要時に残す。ただし固定テンプレの穴埋めを進捗にしない。
 - 再開時の repeated context は、まず `docs/ai/*.md` と project-local canonical docs を読んでから扱う。prompt や古い handoff を正本より優先しない。
 - 字幕改行の報告では、「長すぎる行が減ったか」と「残りが bulk pain か individual judgement か」を分ける。境界ケース段階では、rule 追加と corpus 収集を混同しない。

@@ -96,8 +96,9 @@ NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本
 11. 茶番劇の数値表を出す場合、`validate-background-skit-blueprint` の validator result があり、`derived_metrics` と照合済みか
 12. 台本行範囲を使う場合、`script_source` / `line_count` / `range_basis` があり、任意の line range を置いていないか
 13. 最終報告が file list だけでなく、読まなくても分かる意味・効果・次動作を含んでいるか
+14. 残作業レビュー / 次回作業導線を出す場合、`P0/P1` や path 列挙だけでなく、作業ごとの目的・効果・必要条件・現在状態・owner・次の動きが表または同等の構造で分かるか
 
-この 13 個に yes と言えない作業は、まず理由を明文化してから進める。
+この 14 個に yes と言えない作業は、まず理由を明文化してから進める。
 
 ## Block-End Closeout Contract
 
@@ -111,6 +112,20 @@ NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本
 - `meaning`: file path を開かなくても分かる、今回の変更で実際に変わった挙動・制約・制作導線上の効果。
 
 この鎖を埋められないまま `確認してください` `次をお願いします` で終えない。file path / line number は根拠として添えるだけで、`meaning` の代替にしない。
+
+残作業レビュー・次回作業導線・複数候補の優先順位を出す場合は、短い箇条書きへ圧縮しすぎない。`P0` / `P1` / `P2` のような記号は補助ラベルに留め、少なくとも次の列を表または同等の構造で本文に含める。
+
+| 列 | 必須内容 |
+| --- | --- |
+| 作業 | 人間が認識できる具体名。記号だけにしない |
+| 目的 | 何を解く作業か。どの bottleneck に効くか |
+| 効果 | 完了すると制作導線・判断・安全性がどう軽くなるか |
+| 必要条件 | user artifact / repo artifact / creative judgement / validator pass など |
+| 現在の状態 | done / blocked / backlog / assistant 着手可 / user review 待ちを分ける |
+| owner | 次に動くのが assistant / user / both のどれか |
+| 次の動き | 直後の action。user 返答後に assistant が何を閉じるかも含める |
+
+この表は固定テンプレートではなく、`残作業` `次回` `優先順位` `レビューしてください` が出たときの情報欠落防止である。証跡 path / commit / test は表の後ろに根拠として添え、表の代替にしない。
 
 ## User-Owned Handoff Contract
 
