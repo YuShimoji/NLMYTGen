@@ -49,23 +49,9 @@ NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本
   - drift detection
   - docs sync
   - operator の手動負荷削減
-- `skit_group` / background skit / 茶番劇を扱うときは、語り手への合いの手ではなく、並行する独立小場面であることを scene bible で先に固定する。台本行ごとのリアクション cue だけで `.ymmp` を作った場合、その artifact は transport/readback proof に降格し、creative acceptance / production quality / YMM4 確認待ちへ渡してはいけない。scene bible 不在、または time budget / cast continuity / screen placement が無い handoff は **invalid handoff** として同じブロックで gap report に戻す。
-- 茶番劇の認識説明で「未確定」「設計表を作るべき」「素材面が未整理」と言うだけで終えない。概念共有に加えて `scene bible + time budget + cast continuity`（script line range / 登場人物 / 配置 / 背景 / props / 休ませる区間 / 既存素材 / 不足素材 / owner / proof path）を assistant-owned next action として接続する。これが無い closeout は **BACKGROUND_SKIT_UNDERSPECIFIED_ACK** として未完扱い。
-- 茶番劇の設計図 closeout で `script line range` を省かない。7 ブロックの概略や time budget 表だけでは self-contained ではない。各 block の proof path と、IR intent / template_name の分離も同じ返答内に含める。
-- 茶番劇を IR / 演出指定へ進める場合、構成比や項目名だけで止めない。`total duration` / `mm:ss start-end` / `duration sec` / `density audit` / `sparse risk` / `script maturity` は **実数値** を入れる。`総尺 / mm:ss / 演出秒数が必要` は未完。総尺が未確定なら `estimated timetable` として、source / formula / confidence / revision trigger を明記する。値を計算できない場合は `TIMETABLE_BLOCKED_*` と exact missing source を返す。
-- 茶番劇の数値入り表だけでは IR / YMM4 / production timing に進めない。`background_skit_blueprint.json` 相当の source-backed artifact を作り、`validate-background-skit-blueprint` の `status` / `errors` / `blockers` / `derived_metrics` を closeout に含める。`passed` 以外は cast motion IR / YMM4 creative acceptance / production timing 生成不可。ただし `blocked` でも `allowed_next_actions` に `overlay_only_compact_review` がある場合だけ overlay/card-only compact review に進める。`failed` / `blocked` は、捏造せず止まった診断としてのみ有効。
-- overlay/card-only compact review を生成した closeout は、人間向け言い換えではなく `artifact path: ...` / `readback result: ...` / `allowed_next_actions: [overlay_only_compact_review]` / `forbidden_next_actions: [cast_motion_ir, ymm4_creative_acceptance, production_timing]` / `remaining blockers: [...]` / `not creative acceptance` を literal key として同じ本文に含める。これが無い生成報告は integration review に渡さない。
-- overlay/card-only compact review を user review に渡す場合、HTML / JSON だけで妥当性判断を求めない。必ず reviewer-facing design memo を添え、各場面ごとに `purpose` / `alternatives considered` / `chosen rationale` / `weak assumptions` / `useful reviewer signal` / `assistant action if challenged` を示す。JSON/readback は機械 proof、HTML は preview surface であり、manager-facing design review memo の代替ではない。`OK/NG`、`pass/revise/blocked`、`accept/reduce/replace` の強制で止めず、違和感・不足・優先度・弱い仮定を自然文で返せる形にする。
-- `lines 1-12` のような台本行範囲を使う場合、`script_source` / `line_count` / `range_basis` / readback evidence を同じ表に入れる。行範囲だけの設計図は arbitrary estimate とみなし、IR / YMM4 / creative acceptance へ進めない。
-- 台本が構造未成熟なら、演出で取り繕わない。`script_diagnostic` と `ideal-script delta` を先に出し、どの台本なら理想だったか、どの行範囲に thesis / causality / visual anchor / evidence / payoff が欠けているかを返す。
-- 茶番劇 closeout では `舞台監督の香り` などの雰囲気語、励まし、感想で設計を代替しない。必要なのは values / blockers / deltas / source-backed gaps である。
-- 茶番劇の次工程を `このまま IR / YMM4 確認に接続できる` と過大表現しない。正しい順序は `scene bible → asset/proof gap report → template/proxy 分類 → revised skit_group IR案 → compact review → creative acceptance → production timing`。
-- adapter / Python の説明を「既存 GroupItem を配置するだけ」に矮小化しない。素材アート生成はしないが、IR validation / registry 解決 / template source 解析 / `.ymmp` patch / readback / gap report は assistant-owned である。
-- user-owned step を出すときは、`素材投入` / `入力を置く` / `GUIで進める` のような総称だけで止めない。最低限、assistant が停止中か、user が扱う必須ファイル・任意ファイルの exact path、各ファイルの現在状態（既存 / missing / GUI・YMM4で後続生成）、何のファイルか、作成元または生成手順、作成/選択の順番、成功時にできる出力、NG時に返す JSON / 文面、受領後に assistant が閉じる検証を同じ handoff に含める。
-- `置く: <path>` / `put: <path>` の列挙だけで user action を渡すのは禁止。各行または直後に `what / create / used by / state` 相当がない場合、その handoff は invalid として同じブロックで書き直す。特に Episode Pack の `ymmp/<episode_id>_base.ymmp` は通常「最初に置くファイル」ではなく、`Build CSV` 後に YMM4 で CSV を読み込んで Save As する後続生成物として説明する。
-- `新しい台本を用意してください` のように、台本要求を単独で渡すのは禁止。Episode Pack では `source script` が「この動画で喋らせる完成会話台本」であること、既存完成台本があれば新規作成不要であること、UTF-8 `.txt` / 話者付き行などの受け入れ形式、CSV / Production IR row-range / YMM4 base / manifest を同じ台本に結びつける理由を同じ handoff に含める。
-- user-owned step を `.md` / README / manifest への参照で成立扱いしない。`手順の正本は <file>.md:<line>` のような官僚的 handoff は **invalid handoff** として扱い、接続済み `next_action` / closeout に数えない。docs は補足根拠であり、user が実行する導線ではない。
-- Codex / GUI / 現在の表示面から referenced `.md` を開けるか不明な場合、その導線は **開けないもの** として扱う。file placement / GUI operation / YMM4 check を user に渡すなら、本文だけで実行できる必須ファイル、exact path、操作順、成功出力、NG返却、assistant next を再掲する。
+- user-owned step を出すときは、`素材投入` / `入力を置く` / `GUIで進める` のような総称だけで止めない。assistant が停止中か並行作業可能か、必須・任意ファイルの exact path、各ファイルの state（既存 / missing / 後続生成）と作成元、成功・NG 時の戻り、受領後に assistant が閉じる検証を同じ handoff に含める。
+- user-owned step を `.md` / README / manifest への参照で成立扱いしない。`手順の正本は <file>.md:<line>` のような官僚的 handoff は **invalid handoff** として扱い、接続済み `next_action` / closeout に数えない。本文だけで実行できる必須ファイル・exact path・操作順・成功出力・NG返却・assistant next を必ず再掲する。docs は補足根拠であり、user が実行する導線ではない。
+- task-specific な傷跡 (茶番劇 / overlay review / Episode Pack 特有手順 / 特定 IR 形式) を Hard Rules に追加しない。個別 slice の制約は当該 slice の handoff doc / FEATURE_REGISTRY / runtime-state に残し、本ファイルは横断的に効く強制ルールだけに保つ。
 - 最終報告で file path / line / commit / test 名の列挙を、説明の代替にしない。file list は証跡であり説明ではない。ユーザーがファイルを開かなくても、何が変わったか、なぜ効くか、これで次に何が可能/禁止になるか、次に誰が何をするかが本文だけで分かるようにする。
 - 最終応答は `やったこと` だけで閉じない。根拠 / 残リスク / 次の owner / user 返答後に assistant が閉じる作業まで論理的に接続する。接続できない場合は、まず assistant 側の gap report / drift detection / fail-fast / docs sync を検討する。
 - `検証 pass` と `未追跡ファイル` だけを列挙して止まらない。未追跡が正式追加対象なら、stage/commit の owner、user が見るべき差分、OK/NG 後に assistant が何をするかまで書く。
@@ -91,15 +77,11 @@ NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本
 5. user-owned step を出す場合、assistant が停止しているのか・user が何を置く/返すのか・受領後に assistant が何をするのかが一読で分かるか
 6. `素材` や `artifact` という総称を使う場合、その内訳・置き先・戻り値・現在状態・作成元が直後に列挙されているか
 7. `.md` / README / manifest 参照を、user が実行する手順本文の代替にしていないか
-8. 茶番劇を扱う場合、`合いの手ではない` / `別レイヤー` / `独立小場面` / `scene bible` が固定され、台本行リアクションだけで acceptance に進んでいないか
-9. 茶番劇の認識説明で、`script line range` / `time budget` / `cast continuity` / `screen placement` / `block proof path` / `asset-proof matrix` と assistant-owned next action まで接続しているか
-10. 茶番劇を IR / 演出指定へ進める場合、`total duration` / `mm:ss start-end` / `duration sec` / `density audit` / `script maturity` が実数値で揃っているか
-11. 茶番劇の数値表を出す場合、`validate-background-skit-blueprint` の validator result があり、`derived_metrics` と照合済みか
-12. 台本行範囲を使う場合、`script_source` / `line_count` / `range_basis` があり、任意の line range を置いていないか
-13. 最終報告が file list だけでなく、読まなくても分かる意味・効果・次動作を含んでいるか
-14. 残作業レビュー / 次回作業導線を出す場合、`P0/P1` や path 列挙だけでなく、作業ごとの目的・効果・必要条件・現在状態・owner・次の動きが表または同等の構造で分かるか
+8. 最終報告が file list だけでなく、読まなくても分かる意味・効果・次動作を含んでいるか
+9. 残作業レビュー / 次回作業導線を出す場合、`P0/P1` や path 列挙だけでなく、作業ごとの目的・効果・必要条件・現在状態・owner・次の動きが表または同等の構造で分かるか
+10. 指摘を受けた直後に、根拠を確認する前に方針を反転していないか
 
-この 14 個に yes と言えない作業は、まず理由を明文化してから進める。
+この 10 個に yes と言えない作業は、まず理由を明文化してから進める。
 
 ## Block-End Closeout Contract
 
