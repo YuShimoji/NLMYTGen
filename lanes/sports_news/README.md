@@ -31,6 +31,7 @@ The first MVP is a baseball-style sports news screen / episode format:
 
 - 3 minutes or shorter.
 - Structured YAML/JSON source input.
+- Screen plan first: script segment -> card sequence -> information budget -> YMM4 placement type.
 - Original scoreboard, stat, pitch-event, trend, timeline, and watch-point cards.
 - Reactions represented as sourced digest cards.
 - Ambient backdrops may support atmosphere when their provenance is recorded before asset ingest or publication.
@@ -42,7 +43,7 @@ The current visual reference is the repo-local `BaseballInfoGraphics/` draft des
 | Path | Purpose |
 | --- | --- |
 | `schemas/` | Minimal machine-readable contracts for source, fact, reaction, publish-gate, and episode packets. |
-| `examples/` | Placeholder sample data with sample-only sources and provenance notes. |
+| `examples/` | Placeholder sample data, screen plan samples, and sample-only provenance notes. |
 | `docs/` | Visual language and screen template notes. |
 | `templates/cards/` | YAML card specs for original broadcast/data UI modules. |
 

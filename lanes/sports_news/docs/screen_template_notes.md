@@ -35,6 +35,21 @@ The inning number must not look like another score. Team scores are larger and v
 6. `reaction_digest_card`: sourced reaction summary.
 7. `watch_point_card`: what to watch next.
 
+## Screen plan review unit
+
+Before building renderer/export work, plan the video as script-linked screen segments. Each segment should define:
+
+- script range or voice time range;
+- viewer question;
+- card sequence;
+- information budget;
+- primary screen (`BaseballInfoGraphics`, card template, or YMM4-only note);
+- duration;
+- YMM4 placement type (`ImageItem`, `VideoItem`, or text-only note);
+- reviewer signal to look for.
+
+The first review asks whether the whole video has the right screen rhythm and information density. It is not a PNG/export proof.
+
 ## Design connection
 
 `BaseballInfoGraphics/` currently contains a draft baseball infographic source. Use it as a visual direction reference only:

@@ -9,6 +9,7 @@ NLMYTGen GUI（`start-gui.bat` / `gui/`）で「何を用意すればよいか�
 - 制作は GUI のみ。CLI が要る状態は GUI 不足として台帳・実装で潰す（`docs/INVARIANTS.md`）。
 - YMM4 は (1) テンプレ登録 (2) 全素材後の配置・書出 のみ。増分で繰り返し開かない。
 - 品質ゲートは INVARIANTS のとおり（速度優先で柔軟）。
+- タスクごとの primary review surface は [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md) で固定する。GUI と YMM4 の両方を同時に判断面として渡さない。
 
 ---
 
@@ -102,8 +103,10 @@ pack定義の詳細は `docs/EPISODE_RUN_PACK.md` を内部参照とする。た
 | **L2（Python変換工程）** | CSV 変換・字幕リフロー | コード変更時のみユニットテスト | **開かない** |
 | **L3（YMM4内部工程）** | patch-ymmp / timeline adapter | GUI の Dry Run | **契約変更時のみ** |
 | **creative（創作判断）** | 表情の見え方・テンポ | 人判断 | 完成物を見るとき |
+| **G-27（Real Estate DX）** | scene decision packet / overlay-card review | validator + review memo | validator が blocked の間は開かない |
+| **Baseball screen plan** | screen plan / card order / information budget | screen plan review | PNG/clip placement proof まで進んだ時だけ |
 
-G-24 skit_group は L3 の機械配置と creative composition acceptance を分ける。`SKIT_TEMPLATE_SOURCE_MISSING` / `SKIT_TEMPLATE_ANALYSIS_INSUFFICIENT` は GUI 上の failure class として先に止め、YMM4 での手置き修正へ押し戻さない。
+G-24 skit_group は template-first 基盤として閉じている。`SKIT_TEMPLATE_SOURCE_MISSING` / `SKIT_TEMPLATE_ANALYSIS_INSUFFICIENT` は GUI 上の failure class として先に止め、YMM4 での手置き修正へ押し戻さない。Real Estate DX の場面判断は G-27 として扱い、`production template exists` / `accepted proxy` / `cut from plan` の分類が済むまで新しい YMM4 placement に進めない。
 
 ---
 
@@ -118,6 +121,7 @@ G-24 skit_group は L3 の機械配置と creative composition acceptance を分
 
 - [dev/CLI_REFERENCE.md](dev/CLI_REFERENCE.md) — 開発用 CLI 索引
 - [OPERATOR_WORKFLOW.md](OPERATOR_WORKFLOW.md) — 痛点・検証の境界
+- [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md) — タスク別 review surface / close gate の正本
 - [gui-llm-setup-guide.md](gui-llm-setup-guide.md) — Custom GPT 同期
 - [NAV.md](NAV.md) — ドキュメント地図
 - [WORKFLOW.md](WORKFLOW.md) — S-0〜S-9 全体

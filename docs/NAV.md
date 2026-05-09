@@ -25,6 +25,7 @@
 ## 2. 正本マップ（仕様・台帳・検証索引）
 
 - [GUI_MINIMUM_PATH.md](GUI_MINIMUM_PATH.md) — **Electron GUI**: 最小ファイル集合・必須/任意・ウィザード範囲（S-3 / S-6b）・L2/L3/creative 検証ラダー
+- [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md) — **改善レビューサイクル正本**: タスクごとの review surface / machine proof / human signal / close gate / next artifact。G-27 Real Estate DX、Baseball screen plan、GUI/YMM4 の見る場所を統一する
 - [EPISODE_RUN_PACK.md](EPISODE_RUN_PACK.md) — **1本通し制作パック**: `_tmp/episode_runs/<episode_id>/` の構成、GUI `Episode Pack Root` 導線、既定保存path、YMM4確認と gaps 記録の境界
 - [verification/PROJECT_INIT_CHECKLIST.md](verification/PROJECT_INIT_CHECKLIST.md) — **実案件投入**: palette → registry → validate-ir → apply-production の 5 ステップ
 - [verification/FAILURE_DIAGNOSIS_MATRIX.md](verification/FAILURE_DIAGNOSIS_MATRIX.md) — ERROR/WARNING 全 64 種の診断マトリクス
@@ -33,7 +34,7 @@
 - [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md) — **Capability Atlas 正本**。`IR -> registry -> ymmp` の接合点で、何が `direct_proven` / `template_catalog_only` / `probe_only` / `unsupported` かを 1 枚で判断する。機械台帳: `python scripts/build_capability_atlas.py` -> `samples/_generated/capability_atlas.json`
 - [VISUAL_EFFECT_SELECTION_GUIDE.md](VISUAL_EFFECT_SELECTION_GUIDE.md) — **視覚効果ツール選定**: 4 類 × 3 ルート比較・エフェクト 111 種の用途別再編・テンプレバンドル 5 種案・ハンズオン 5 ステップ。姉妹: [VISUAL_TOOL_DECISION.md](VISUAL_TOOL_DECISION.md)(ユーザー記入)・[MATERIAL_SOURCING_RULES.md](MATERIAL_SOURCING_RULES.md)(素材運用ルール)
 - [STEP3_YMM4_TEMPLATE_CHECKLIST.md](STEP3_YMM4_TEMPLATE_CHECKLIST.md) / [STEP3_TACHIE_RENDERING_PIPELINE.md](STEP3_TACHIE_RENDERING_PIPELINE.md) — **視覚効果 slice Step 3 ハンズオン**: 5 種テンプレ各エフェクトの parameter 初期値+チェックリスト / G-22 dual-rendering 経路 B の PNG 書き出し→overlay_map 登録パイプライン
-- [BASEBALL_NEWS_PIPELINE_SPEC.md](BASEBALL_NEWS_PIPELINE_SPEC.md) — **野球速報レーン正本**: C 詳細インフォグラフィックを正本デザインとして扱い、ゆっくり解説形式・スポーツニュース題材・PNG/animation export・YMM4 接続を既存 skit/thumbnail レーンから分離する
+- [BASEBALL_NEWS_PIPELINE_SPEC.md](BASEBALL_NEWS_PIPELINE_SPEC.md) — **野球速報レーン正本**: C 詳細インフォグラフィックを正本デザインとして扱い、screen plan で動画全体の画面割り・情報量・YMM4 配置を確認してから PNG/animation export へ進む
 - [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md) — **茶番劇 Group テンプレ正本**: 茶番劇を語り手への合いの手ではなく独立した背景小場面として定義し、配達員などの外部素材演者を `speaker_tachie` と分離し、canonical template → 小演出量産 → production での template 解決 + fallback note までを定義
 - [PILOT_YUKKURI_THEATER_SCENE_BIBLE.md](PILOT_YUKKURI_THEATER_SCENE_BIBLE.md) — **pilot_yukkuri_theater_v1 背景茶番劇 Scene Bible**: 不動産DXの 7 ブロック time budget / cast continuity / screen placement / props / proof path と、配達短編の setup → complication → reaction → resolution を固定する IR 前の正本
 - [BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW.md](BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW.md) — **背景茶番劇 Blueprint/Timetable 正本**: IR / 演出指定へ進む前に、総尺・開始/終了時刻・演出秒数・density thresholds/audit・script maturity・asset/control matrix を `background_skit_blueprint` artifact と validator result で固定する
@@ -61,7 +62,8 @@
 **いまどこまで終わっているか**は、次を見る。
 
 - [runtime-state.md](runtime-state.md) の `next_action` / `parallel_replan_*`
-- [verification/P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md) の G-24 受け入れ・採用記録
+- [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md) の G-27 / Baseball / GUI-YMM4 review cycle
+- [verification/P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md) の G-24 基盤受け入れ・採用記録
 - 案件ごとの `*-proof.md` や verification 配下の JSON 証跡
 
 ---

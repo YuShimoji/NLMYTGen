@@ -16,6 +16,7 @@
 - このフォルダは background skit / skit_group のテンプレート置き場ではない。
 - このフォルダはサムネイル制作レーンではない。
 - PNG export は必要だが、アプリ内 animation を活かすため、静止画化だけで完了扱いにしない。
+- production export の前に、`screen plan` で台本セグメントごとの画面目的・情報量・YMM4 placement を固定する。
 - 背景 slot は `ambientBackdrop` と呼ぶ。これは球場感・照明・芝・抽象スタジアムなどの雰囲気背景用であり、実在選手写真・公式映像・ニュース写真・主張根拠の slot ではない。
 - `ambientBackdrop` はデザイン機能であり、episode asset として使う段階で `LICENSE.csv` または生成記録に provenance を残す。
 
@@ -55,11 +56,12 @@
 
 ## 今後の開発単位
 
-1. C 詳細の可読性・情報優先度・安全余白を改善する。
-2. `data.js` の mock を実入力 JSON contract へ分離する。
-3. 1280x720 PNG export を deterministic にする。
-4. 投球更新などの animation を deterministic に制御し、動画素材または連番へ出力する。
-5. YMM4 に PNG/animation asset を置くための placement contract を作る。
+1. `screen plan` で台本セグメントごとの画面目的・情報量・YMM4 placement を確認する。
+2. C 詳細の可読性・情報優先度・安全余白を改善する。
+3. `data.js` の mock を実入力 JSON contract へ分離する。
+4. 1280x720 PNG export を deterministic にする。
+5. 投球更新などの animation を deterministic に制御し、動画素材または連番へ出力する。
+6. YMM4 に PNG/animation asset を置くための placement contract を作る。
 
 ## 参照仕様
 

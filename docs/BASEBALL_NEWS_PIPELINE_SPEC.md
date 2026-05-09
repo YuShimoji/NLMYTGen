@@ -41,6 +41,7 @@ Status: draft lane boundary (2026-05-07)
 news topic / game facts
   -> sports news brief
   -> ゆっくり解説 script / segment plan
+  -> screen plan (card sequence / information budget / YMM4 placement)
   -> baseball visual data JSON
   -> BaseballInfoGraphics preview
   -> PNG frame or animated capture
@@ -54,6 +55,7 @@ news topic / game facts
 | --- | --- | --- |
 | sports news brief | future | 速報の論点、試合状況、なぜ今見るべきかをまとめる |
 | narration script | existing pipeline reuse | ゆっくり解説として喋らせる完成台本 |
+| screen plan | future | 台本セグメントごとの画面目的、カード順、情報量、YMM4配置方式を決める |
 | baseball visual data JSON | future | チーム、選手、スコア、投球、成績を UI に渡す |
 | render config | future | 色、表示密度、静止/動画、開始投球、尺、fps などを指定する |
 | exported visual asset | future | PNG / animated video / image sequence のいずれか |
@@ -85,6 +87,34 @@ news topic / game facts
 | render manifest | どの入力データから何を出したかの記録 | source path、data hash、variant、export settings を含む |
 | YMM4 import note | 手動または半自動配置の接続情報 | 配置先、尺、NG時の返却内容が明確 |
 
+## Screen-plan-first policy
+
+Baseball Info は InfoGraphics 駆動で進めるが、最初の review surface は renderer / PNG / YMM4 proof ではなく `screen plan` とする。
+
+`screen plan` は台本セグメントごとに次を持つ。
+
+| Field | 役割 |
+| --- | --- |
+| segment id / script range | 台本のどの区間か |
+| viewer question | 視聴者がその画面で理解すること |
+| card sequence | `opening_breaking_card` / `scoreboard_card` / `pitch_event_card` 等の順序 |
+| information budget | 主要数値・固有名・比較・反応をどこまで載せるか |
+| primary screen | BaseballInfoGraphics / card template / YMM4-only note のどれで見せるか |
+| duration | voice 区間または表示秒数 |
+| YMM4 placement | `ImageItem` / `VideoItem` / text-only note のいずれか |
+| review signal | 過密・不足・退屈・誤読になりそうな点 |
+
+この段階では、動画全体の画面構成・情報量・カード順が見えることを優先する。C 詳細の見た目や export は、screen plan で必要な画面が決まった後に絞って進める。
+
+## YMM4 placement policy
+
+React / HTML を YMM4 に直接入れない。`BaseballInfoGraphics/` は design source であり、YMM4 proof ではない。
+
+- Phase 1: 1280x720 PNG を専用 layer の `ImageItem` として配置する。
+- Phase 2: deterministic animated clip を `VideoItem` として配置する。
+- Phase 3: render manifest と YMM4 placement note で、入力データ・出力 asset・配置区間を接続する。
+- review-only prototype が必要な場合だけ、`BaseballInfoGraphics/` 配下に明示的な prototype 出力を作る。
+
 ## Animation-first policy
 
 このレーンでは PNG 書き出しだけを最終目標にしない。現在のアプリは投球状態を一定間隔で更新するため、速報・試合解説ではアニメーションを制作価値として扱う。
@@ -100,6 +130,7 @@ Python 側が画像を生成・合成するのではなく、ブラウザのデ�
 
 - C 詳細は見栄えの方向性は良いが、情報密度・安全余白・ニュース動画内での可読性は未検証。
 - 現在のデータは mock であり、実試合データ schema はまだ未定義。
+- 台本全体から見た screen plan がまだ無く、カード順・情報量・YMM4配置の品質判断ができない。
 - HTML は CDN/Babel 依存のプロトタイプで、production renderer ではない。
 - ブラウザ表示と artboard export は別物なので、通常スクリーンショットを production proof にしない。
 - アニメーション export 方式は未実装。PNG 書き出しだけでレーン完了扱いにしない。
@@ -111,6 +142,7 @@ Python 側が画像を生成・合成するのではなく、ブラウザのデ�
 | --- | --- | --- |
 | BN-00 | レーン境界と用語を固定する | 本 spec と `BaseballInfoGraphics/README.md` が存在する |
 | BN-01 | C 詳細デザイン改善 audit | 可読性、余白、情報優先度、スポーツニュースらしさの改善リストを作る |
+| BN-01G | screen plan review unit | 台本セグメントごとのカード順・情報量・YMM4配置方式をレビューできる |
 | BN-02 | baseball visual data schema | mock data から実入力 JSON contract を分離する |
 | BN-03 | static PNG export contract | 1280x720 PNG と manifest を deterministic に出せる |
 | BN-04 | animation export contract | duration / fps / state sequence を固定して clip か連番を出せる |
