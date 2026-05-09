@@ -52,7 +52,6 @@
 - `samples/registry_template/skit_group_registry.template.json` — **茶番劇 Group 台帳雛形**。canonical group / 派生 template / fallback / manual check を shared registry として記録する。`audit-skit-group` / `patch-ymmp --skit-group-registry` / `apply-production --skit-group-registry` の preflight 入力でもある
 - [verification/G22-dual-rendering-tachie-and-png-2026-04-16.md](verification/G22-dual-rendering-tachie-and-png-2026-04-16.md) — **G-22 `hold`**: 立ち絵 TachieItem + YMM4 書き出し PNG の補助経路。現行主軸ではなく、必要時のみ参照
 - [prompts/B18-script-diagnostics-observation-prompt.md](prompts/B18-script-diagnostics-observation-prompt.md) / [prompts/B17-reflow-residue-observation-prompt.md](prompts/B17-reflow-residue-observation-prompt.md) — メンテ層の詳細手順。ゆっくり解説本流の `next_action` を押し流さない場合だけ使う
-- [prompts/baseball-sidequest-lane-prompt.md](prompts/baseball-sidequest-lane-prompt.md) — **Baseball sidequest 依頼 Prompt**。Baseball / sports_news を本流から分離し、screen plan first で別レーンとして起動するときだけ使う
 
 ---
 

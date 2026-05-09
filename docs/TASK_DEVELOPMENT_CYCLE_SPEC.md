@@ -8,7 +8,7 @@
 
 NLMYTGen の本流は、ゆっくり解説動画の制作ワークフローである。つまり、台本診断、CSV、YMM4 台本読込、Production IR、演出配置、茶番劇、サムネイル、投稿準備を、ゆっくり解説の完成動画へ接続することを主軸とする。
 
-Baseball Info / `sports_news` は大きなサイドクエストであり、本流の `runtime-state.md` `next_action` を置き換えない。Baseball を進める場合は、明示的に Baseball sidequest として依頼し、`docs/prompts/baseball-sidequest-lane-prompt.md` の境界に従う。
+Baseball Info / `sports_news` は大きなサイドクエストであり、本流の `runtime-state.md` `next_action` を置き換えない。Baseball を進める場合は、チャットで明示的に Baseball sidequest として依頼する。専用 Prompt md は作らず、本書と Baseball 正本 docs の境界に従う。
 
 サイドクエスト中でも、共通サイクルは本書を使う。ただし closeout では、本流へ戻すものと Baseball lane に閉じるものを分けて記録する。
 
