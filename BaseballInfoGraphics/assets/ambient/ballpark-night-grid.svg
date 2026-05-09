@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="Abstract night ballpark ambient backdrop">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#031022"/>
+      <stop offset="0.45" stop-color="#081a2f"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <radialGradient id="leftLight" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(165 115) rotate(22) scale(310 190)">
+      <stop offset="0" stop-color="#e0f2fe" stop-opacity="0.58"/>
+      <stop offset="0.24" stop-color="#7dd3fc" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="rightLight" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1112 98) rotate(158) scale(330 200)">
+      <stop offset="0" stop-color="#fef9c3" stop-opacity="0.52"/>
+      <stop offset="0.22" stop-color="#fde68a" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#fde68a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="field" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#14532d" stop-opacity="0.28"/>
+      <stop offset="0.6" stop-color="#052e16" stop-opacity="0.54"/>
+      <stop offset="1" stop-color="#020617" stop-opacity="0.8"/>
+    </linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0v48" fill="none" stroke="#94a3b8" stroke-opacity="0.055" stroke-width="1"/>
+    </pattern>
+    <filter id="softBlur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="url(#sky)"/>
+  <rect width="1280" height="720" fill="url(#grid)"/>
+  <rect width="1280" height="720" fill="url(#leftLight)"/>
+  <rect width="1280" height="720" fill="url(#rightLight)"/>
+
+  <g opacity="0.32" filter="url(#softBlur)">
+    <path d="M75 286C216 210 406 172 640 172c234 0 424 38 565 114" fill="none" stroke="#38bdf8" stroke-opacity="0.22" stroke-width="22"/>
+    <path d="M116 330c158-75 333-112 524-112s366 37 524 112" fill="none" stroke="#22c55e" stroke-opacity="0.18" stroke-width="18"/>
+  </g>
+
+  <g opacity="0.5">
+    <path d="M150 532c128-77 292-116 490-116s362 39 490 116v188H150z" fill="url(#field)"/>
+    <path d="M640 416l112 130-112 72-112-72z" fill="#052e16" fill-opacity="0.42" stroke="#bbf7d0" stroke-opacity="0.16" stroke-width="2"/>
+    <path d="M640 470l54 62-54 35-54-35z" fill="none" stroke="#fef3c7" stroke-opacity="0.18" stroke-width="2"/>
+    <path d="M279 607c93-77 213-116 361-116s268 39 361 116" fill="none" stroke="#fef3c7" stroke-opacity="0.12" stroke-width="3"/>
+  </g>
+
+  <g opacity="0.28">
+    <circle cx="190" cy="110" r="3" fill="#f8fafc"/>
+    <circle cx="215" cy="104" r="2.4" fill="#f8fafc"/>
+    <circle cx="240" cy="101" r="2.8" fill="#f8fafc"/>
+    <circle cx="1052" cy="92" r="2.7" fill="#fef9c3"/>
+    <circle cx="1080" cy="88" r="3" fill="#fef9c3"/>
+    <circle cx="1108" cy="89" r="2.4" fill="#fef9c3"/>
+  </g>
+
+  <rect width="1280" height="720" fill="#020617" opacity="0.18"/>
+</svg>

@@ -8,7 +8,7 @@ required_fields:
 visual_rules:
   background: dark_broadcast
   max_primary_claims: 1
-  no_external_images: true
-  no_team_logos: true
+  ambient_backdrop_allowed: true
+  provenance_required_for_non_data_visuals: true
 notes:
-  - "Use typography, rule lines, and restrained accent color instead of photos or footage."
+  - "Use typography, rule lines, restrained accent color, and optional atmosphere-only backdrops."

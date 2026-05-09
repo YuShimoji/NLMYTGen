@@ -21,6 +21,7 @@ Status: draft lane boundary (2026-05-07)
 | C 詳細デザイン | 野球インフォグラフィックの正本デザイン | A/B/minimal/standard などの廃止済み案 |
 | インフォグラフィック | 試合状況・投球・選手・スコアを視覚化するニュース素材 | background skit の演者・茶番劇テンプレート |
 | デザインソース | HTML/React/Babel の編集・プレビュー用アプリ | YMM4 に直接入れる最終素材 |
+| ambient backdrop | 球場感・照明・芝・抽象スタジアムなど、カードの雰囲気を支える背景 | 選手写真・公式映像・ニュース写真・主張根拠 |
 | 静止 PNG | 任意時点の 1280x720 フレーム | アニメーション全体の代替 |
 | アニメーション素材 | ブラウザアプリの状態遷移・投球更新を録画/連番化した映像素材 | Python で画像合成した疑似プレビュー |
 | 野球データ JSON | 試合・選手・投球・スコアなどの機械可読データ | ナレーション台本そのもの |
@@ -60,12 +61,20 @@ news topic / game facts
 
 ## sports_news lane artifact bundle
 
-`lanes/sports_news/` は、この仕様をスポーツニュース全般へ拡張するための MVP artifact bundle として扱う。初期内容は schema / sample / card template / closed topics / visual language であり、renderer 実装・network 取得・外部素材取得・AI 画像生成は含めない。
+`lanes/sports_news/` は、この仕様をスポーツニュース全般へ拡張するための MVP artifact bundle として扱う。初期内容は schema / sample / card template / visual language であり、renderer 実装・network 取得・素材取得自動化は含めない。
 
 - `lanes/sports_news/README.md` — text/data/source driven lane の境界
-- `lanes/sports_news/schemas/` — source / fact / reaction / rights / episode contracts
+- `lanes/sports_news/schemas/` — source / fact / reaction / publish gate / episode contracts
 - `lanes/sports_news/examples/baseball_pitch_event_sample.yaml` — 架空データによる野球 pitch event sample
-- `lanes/sports_news/templates/cards/` — self-made broadcast card UI のテンプレート仕様
+- `lanes/sports_news/templates/cards/` — original broadcast/data card UI のテンプレート仕様
+
+## Rights / provenance boundary
+
+権利・素材の判断は、core design の禁止リストとして使わない。判断軸は分離する。
+
+- Core design: C 詳細の情報階層、可読性、animation、`ambientBackdrop` slot はデザイン仕様として進める。
+- Provenance: 実際に episode asset として取り込む素材は `MATERIAL_SOURCING_RULES.md` の `LICENSE.csv` / 生成記録で由来を残す。
+- Publish gate: `rights_manifest` は公開・episode asset gate 専用で、HTML/CSS/React の設計機能を直接止めない。
 
 ## 出力 artifact
 

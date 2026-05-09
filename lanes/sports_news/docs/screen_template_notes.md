@@ -44,6 +44,7 @@ The inning number must not look like another score. Team scores are larger and v
 - correct scoreboard hierarchy
 - reduce tiny side-panel text
 - move dense stats into separate cards
-- avoid image slots that imply third-party image use for the MVP
+- keep ambient/background slots subordinate to the pitch-event data and claim hierarchy
+- record provenance for any non-data visual material before it becomes an episode asset
 
 Do not treat `BaseballInfoGraphics/` as a production renderer or proof artifact for `sports_news`.

@@ -11,7 +11,7 @@ optional_fields:
   - trend_note
 visual_rules:
   max_major_values: 5
-  no_player_photo: true
-  no_ai_person_image: true
+  player_visual_dependency: none
+  provenance_required_for_non_data_visuals: true
 notes:
   - "Move dense splits or matchup history to a trend card instead of overfilling the side panel."

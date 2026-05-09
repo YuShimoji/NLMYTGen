@@ -9,6 +9,6 @@ required_fields:
 visual_rules:
   max_metrics: 2
   use_simple_chart: true
-  no_external_icon_pack: true
+  chart_assets: native_shapes_or_recorded_materials
 notes:
   - "Prefer bars, lines, deltas, and labels built from native shapes/SVG."

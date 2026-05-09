@@ -12,6 +12,6 @@ visual_rules:
   score_priority: dominant
   inning_priority: secondary_labeled
   format_hint: "TEAM_A 3 - 4 TEAM_B, then Top 7th / 7回表"
-  no_team_logos: true
+  team_identity_source: text_code_or_reviewed_asset
 notes:
-  - "Use generic text codes or reviewed team labels; do not use official marks decoratively."
+  - "Keep team identity secondary to score readability."

@@ -4,6 +4,7 @@
 <meta charset="utf-8" />
 <title>野球インフォグラフィック</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;600;700;900&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -22,7 +23,6 @@
 <div id="root"></div>
 
 <script src="data.js"></script>
-<script src="image-slot.js"></script>
 <script type="text/babel" src="design-canvas.jsx"></script>
 <script type="text/babel" src="tweaks-panel.jsx"></script>
 <script type="text/babel" src="components/strike-zone.jsx"></script>
@@ -31,8 +31,8 @@
 
 <script type="text/babel">
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "homeColor": "#F97316",
-  "awayColor": "#FACC15",
+  "homeColor": "#22C55E",
+  "awayColor": "#38BDF8",
   "accentTeam": "home",
   "density": "standard",
   "showRomaji": false,
@@ -41,22 +41,54 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 }/*EDITMODE-END*/;
 
 const TEAM_COLOR_OPTIONS = [
-  '#F97316', // ジャイアンツ オレンジ
-  '#FACC15', // タイガース 黄
-  '#DC2626', // カープ 赤
-  '#1E40AF', // ベイスターズ 青
-  '#0EA5E9', // スワローズ 水色
-  '#7C3AED', // バファローズ 紫
-  '#16A34A', // ヤクルト 緑(代替)
-  '#0F172A', // 黒系
-  '#BE185D', // ホークス
+  '#22C55E',
+  '#38BDF8',
+  '#FACC15',
+  '#F97316',
+  '#DC2626',
+  '#7C3AED',
+  '#0F172A',
+  '#BE185D',
 ];
 
+function clampNumber(value, min, max, fallback) {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return fallback;
+  return Math.max(min, Math.min(max, parsed));
+}
+
+function readBooleanParam(params, key, fallback) {
+  const value = params.get(key);
+  if (value == null) return fallback;
+  return value === '1' || value === 'true';
+}
+
+function readChoiceParam(params, key, choices, fallback) {
+  const value = params.get(key);
+  return choices.includes(value) ? value : fallback;
+}
+
+function readRuntimeConfig(totalPitches) {
+  const params = new URLSearchParams(window.location.search);
+  const tweakDefaults = { ...TWEAK_DEFAULTS };
+  tweakDefaults.autoPlay = readBooleanParam(params, 'autoplay', tweakDefaults.autoPlay);
+  tweakDefaults.density = readChoiceParam(params, 'density', ['compact', 'standard'], tweakDefaults.density);
+  tweakDefaults.statMode = readChoiceParam(params, 'statMode', ['simple', 'detailed'], tweakDefaults.statMode);
+  tweakDefaults.showRomaji = readBooleanParam(params, 'showRomaji', tweakDefaults.showRomaji);
+
+  return {
+    tweaks: tweakDefaults,
+    pitchIdx: Math.floor(clampNumber(params.get('pitch'), 0, Math.max(0, totalPitches - 1), 0)),
+    stepMs: clampNumber(params.get('stepMs'), 250, 10000, 2400),
+  };
+}
+
 function App() {
-  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
-  const [pitchIdx, setPitchIdx] = React.useState(0);
-  const [playing, setPlaying] = React.useState(tweaks.autoPlay);
   const totalPitches = window.GAME_DATA.atBat.pitches.length;
+  const runtimeConfig = React.useMemo(() => readRuntimeConfig(totalPitches), [totalPitches]);
+  const [tweaks, setTweak] = useTweaks(runtimeConfig.tweaks);
+  const [pitchIdx, setPitchIdx] = React.useState(runtimeConfig.pitchIdx);
+  const [playing, setPlaying] = React.useState(runtimeConfig.tweaks.autoPlay);
 
   // データを動的にチームカラーで上書き
   const data = React.useMemo(() => {
@@ -71,11 +103,35 @@ function App() {
   // リアルタイム更新シミュレーション
   React.useEffect(() => {
     if (!playing) return;
-    const t = setInterval(() => {
-      setPitchIdx(i => (i + 1) % totalPitches);
-    }, 2400);
-    return () => clearInterval(t);
-  }, [playing, totalPitches]);
+    const timerId = setInterval(() => {
+      setPitchIdx((currentIndex) => (currentIndex + 1) % totalPitches);
+    }, runtimeConfig.stepMs);
+    return () => clearInterval(timerId);
+  }, [playing, totalPitches, runtimeConfig.stepMs]);
+
+  React.useEffect(() => {
+    const ambientBackdrop = data.visual?.ambientBackdrop || {};
+    window.__BASEBALL_INFOGRAPHICS_STATE__ = {
+      pitchIdx,
+      totalPitches,
+      playing,
+      stepMs: runtimeConfig.stepMs,
+      density: tweaks.density,
+      statMode: tweaks.statMode,
+      showRomaji: tweaks.showRomaji,
+      ambientBackdrop: {
+        kind: ambientBackdrop.kind || 'css_grid',
+        provenance: ambientBackdrop.provenance || 'none',
+        usageStage: ambientBackdrop.usageStage || 'design_preview',
+        hasImage: Boolean(ambientBackdrop.imageUrl),
+      },
+      variant: 'detailed',
+    };
+  }, [data, pitchIdx, totalPitches, playing, runtimeConfig.stepMs, tweaks.density, tweaks.statMode, tweaks.showRomaji]);
+
+  const goToPitch = React.useCallback((nextPitchIdx) => {
+    setPitchIdx(Math.max(0, Math.min(totalPitches - 1, nextPitchIdx)));
+  }, [totalPitches]);
 
   return (
     <>
@@ -113,14 +169,15 @@ function App() {
           background: playing ? '#EF4444' : '#10B981', color: '#fff',
           cursor: 'pointer', fontSize: 12,
         }}>{playing ? '■' : '▶'}</button>
-        <button onClick={() => setPitchIdx(i => (i - 1 + totalPitches) % totalPitches)} style={btnStyle}>‹</button>
+        <button onClick={() => goToPitch((pitchIdx - 1 + totalPitches) % totalPitches)} style={btnStyle}>‹</button>
         <span style={{ minWidth: 80, textAlign: 'center', letterSpacing: '0.05em' }}>
           PITCH {pitchIdx + 1} / {totalPitches}
         </span>
-        <button onClick={() => setPitchIdx(i => (i + 1) % totalPitches)} style={btnStyle}>›</button>
+        <button onClick={() => goToPitch((pitchIdx + 1) % totalPitches)} style={btnStyle}>›</button>
         <span style={{ color: 'rgba(255,255,255,0.4)', marginLeft: 6 }}>
           {window.GAME_DATA.atBat.pitches[pitchIdx]?.kmh}km/h · {window.GAME_DATA.atBat.pitches[pitchIdx]?.typeJa}
         </span>
+        <span style={{ color: 'rgba(255,255,255,0.28)' }}>STEP {runtimeConfig.stepMs}ms</span>
       </div>
 
       <TweaksPanel title="Tweaks">

@@ -16,7 +16,7 @@ optional_fields:
 visual_rules:
   central_module: strike_zone_or_event_zone
   count_status_prominent: true
-  no_match_recreation: true
-  no_ken_burns_policy: true
+  event_zone_is_data_view: true
+  motion_role: ui_state_transition
 notes:
   - "Show only data-backed pitch markers. If intended zone is unavailable, label it as unavailable rather than inferring it."

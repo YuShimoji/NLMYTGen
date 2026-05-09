@@ -1,5 +1,5 @@
 card_type: reaction_digest_card
-purpose: "Display sourced reaction summaries without screenshots or fake profile images."
+purpose: "Display sourced reaction summaries as digest text."
 required_fields:
   - digest_headline
   - reaction_items
@@ -10,8 +10,8 @@ item_required_fields:
   - rendered_text
   - source_reference
 visual_rules:
-  no_screenshots: true
-  no_profile_icons: true
+  render_mode: digest_text
+  identity_image_dependency: none
   label_style: "FAN-01 / MEDIA-02 / ANALYST-01"
 notes:
   - "The video's own explanation remains dominant; reaction cards are supporting material."

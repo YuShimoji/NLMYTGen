@@ -1,61 +1,42 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://nlmytgen.local/sports_news/rights_manifest.schema.json",
-  "title": "sports_news rights manifest",
+  "title": "sports_news publish gate manifest",
   "type": "object",
-  "required": ["media_policy", "publish_gate"],
+  "required": ["scope", "usage_stage", "status", "checks"],
   "additionalProperties": false,
   "properties": {
-    "media_policy": {
-      "type": "object",
-      "required": [
-        "match_footage",
-        "official_video",
-        "official_video_screenshot",
-        "official_audio",
-        "x_screenshot",
-        "site_screenshot",
-        "ai_public_visuals",
-        "news_photo",
-        "team_logo",
-        "self_made_infographic",
-        "self_made_svg_badge",
-        "self_made_card_ui"
-      ],
-      "additionalProperties": false,
-      "properties": {
-        "match_footage": { "const": "blocked" },
-        "official_video": { "const": "not_used_as_asset" },
-        "official_video_screenshot": { "const": "blocked" },
-        "official_audio": { "const": "blocked" },
-        "x_screenshot": { "const": "blocked" },
-        "site_screenshot": { "const": "blocked" },
-        "ai_public_visuals": { "const": "blocked" },
-        "news_photo": { "const": "blocked" },
-        "team_logo": { "enum": ["blocked", "needs_review"] },
-        "self_made_infographic": { "const": "allowed" },
-        "self_made_svg_badge": { "const": "allowed" },
-        "self_made_card_ui": { "const": "allowed" }
-      }
+    "scope": { "const": "episode_publish_gate" },
+    "usage_stage": {
+      "type": "string",
+      "enum": ["before_asset_ingest", "before_publish"]
     },
-    "publish_gate": {
-      "type": "object",
-      "required": ["status", "checks"],
-      "additionalProperties": false,
-      "properties": {
-        "status": { "type": "string", "enum": ["passed", "blocked", "needs_review"] },
-        "checks": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": ["id", "status", "note"],
-            "additionalProperties": false,
-            "properties": {
-              "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
-              "status": { "type": "string", "enum": ["passed", "blocked", "needs_review"] },
-              "note": { "type": "string" }
-            }
-          }
+    "status": {
+      "type": "string",
+      "enum": ["passed", "blocked", "needs_review"]
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "gate", "status", "note"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+          "gate": {
+            "type": "string",
+            "enum": ["provenance", "claim_source", "episode_consistency", "manual_review"]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["passed", "blocked", "needs_review"]
+          },
+          "refs": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" }
+          },
+          "note": { "type": "string" }
         }
       }
     }

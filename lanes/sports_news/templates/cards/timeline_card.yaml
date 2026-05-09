@@ -9,6 +9,6 @@ beat_required_fields:
   - fact_ref
 visual_rules:
   max_beats: 5
-  no_footage_stills: true
+  beat_visual_source: text_and_geometric_markers
 notes:
-  - "Use geometric markers and text, not screenshots."
+  - "Use geometric markers and text as the default event-order view."

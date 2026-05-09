@@ -10,6 +10,18 @@
 
 ---
 
+## 0. 権限境界
+
+この文書は、素材の **provenance**（由来）と利用段階を記録する正本である。素材種別だけで UI / renderer / card layout の開発可否を決める禁止リストではない。
+
+- Core design: HTML/CSS/React、YMM4 テンプレート、カード階層、animation 制御は、視覚品質とデータ契約で判断する。
+- Provenance: 自作、AI 生成、フリー素材、外部素材はいずれも、利用段階に入る前に `LICENSE.csv` または生成記録へ由来を残す。
+- Publish gate: 公開直前の判定は episode 側の manifest / gate がこの記録を読む。未記録の素材は「記録不足」で止め、デザイン機能そのものを禁止扱いにしない。
+
+`BaseballInfoGraphics` の `ambientBackdrop` はこの扱いに従う。球場感・照明・芝・抽象スタジアムなどの雰囲気背景は、選手写真・公式映像・ニュース写真の代替証拠ではなく、カードを支える背景素材として由来記録で扱う。
+
+---
+
 ## 1. 保存場所
 
 現状: `samples/Mat/` にゆっくり立ち絵パーツを蓄積中 (haitatsuin 復旧で実証済み)。

@@ -7,6 +7,6 @@ item_required_fields:
   - source_ref
 visual_rules:
   short_text_only: true
-  no_claim_without_source: true
+  source_ref_required: true
 notes:
   - "Ticker text must not introduce new unsourced claims."

@@ -4,8 +4,8 @@ required_fields:
   - label
   - context
 visual_rules:
-  use_self_made_badge: true
-  no_profile_image: true
-  no_external_icon_pack: true
+  badge_source: card_ui
+  identity_image_dependency: none
+  provenance_required_for_non_data_visuals: true
 notes:
   - "Use labels such as FAN, MEDIA, ANALYST, FORUM, OFFICIAL."
