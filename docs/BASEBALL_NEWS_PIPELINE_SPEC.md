@@ -1,9 +1,11 @@
 # Baseball News Pipeline Spec
 
-Status: draft lane boundary (2026-05-07)
+Status: draft sidequest lane boundary (2026-05-10)
 
 この文書は、NLMYTGen 内で新しく扱う **野球速報系ゆっくり解説動画** レーンの正本仕様である。
 既存の「ゆっくり解説」制作パイプラインを再利用するが、題材・映像素材・データ契約はスポーツニュース向けに分離する。
+
+このレーンは大きなサイドクエストであり、NLMYTGen 本流の `runtime-state.md` `next_action` を置き換えない。Baseball を進める場合は、`docs/prompts/baseball-sidequest-lane-prompt.md` を使って明示的に別レーンとして起動する。
 
 ## 目的
 
@@ -160,5 +162,6 @@ Python 側が画像を生成・合成するのではなく、ブラウザのデ�
 
 ## 今後の扱い
 
-このレーンは現時点では draft frontier であり、既存の background skit / Real Estate DX レーンを置き換えない。
-ただし、このスレッド内では BN 系タスクを主対象として扱い、C 詳細デザインの改善・データ契約・PNG/animation export・YMM4 接続へ進める。
+このレーンは draft sidequest であり、既存の background skit / Real Estate DX レーンや、ゆっくり解説本流を置き換えない。
+
+通常の NLMYTGen 再開では、Baseball を主対象にしない。Baseball を進める場合は `docs/prompts/baseball-sidequest-lane-prompt.md` で明示起動し、C 詳細デザインの改善、データ契約、screen plan、PNG/animation export、YMM4 接続を Baseball lane 内で進める。

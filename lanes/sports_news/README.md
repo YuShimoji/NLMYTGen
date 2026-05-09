@@ -4,6 +4,8 @@
 
 Its value is speed, source discipline, factual structure, reaction digesting, original broadcast/data cards, and YMM4-compatible output.
 
+This is a large sidequest lane. It does not replace the main NLMYTGen flow for Yukkuri explainer video production, and it must be explicitly started with `docs/prompts/baseball-sidequest-lane-prompt.md` when worked as a separate task.
+
 ## Authority split
 
 This lane separates three decisions that must not collapse into one another:

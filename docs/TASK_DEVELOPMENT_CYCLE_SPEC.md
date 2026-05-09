@@ -4,6 +4,14 @@
 
 目的は、仕様・proof・YMM4 確認・GUI 操作が散逸し、何を見れば次に進めるか分からなくなる状態を防ぐこと。新しい実装を増やす前に、各タスクがどの surface で判断され、どの artifact で次へ進むかを固定する。
 
+## レーン優先度
+
+NLMYTGen の本流は、ゆっくり解説動画の制作ワークフローである。つまり、台本診断、CSV、YMM4 台本読込、Production IR、演出配置、茶番劇、サムネイル、投稿準備を、ゆっくり解説の完成動画へ接続することを主軸とする。
+
+Baseball Info / `sports_news` は大きなサイドクエストであり、本流の `runtime-state.md` `next_action` を置き換えない。Baseball を進める場合は、明示的に Baseball sidequest として依頼し、`docs/prompts/baseball-sidequest-lane-prompt.md` の境界に従う。
+
+サイドクエスト中でも、共通サイクルは本書を使う。ただし closeout では、本流へ戻すものと Baseball lane に閉じるものを分けて記録する。
+
 ## 共通サイクル
 
 | 段階 | 目的 | 必須 artifact | 見る場所 | 次に進める条件 |
@@ -41,6 +49,8 @@ G-27 の close gate は、全場面が次のいずれかに分類された状態
 ## Baseball Info / sports_news
 
 Baseball Info は InfoGraphics 駆動で進めるが、最初のレビュー単位は renderer や export ではなく **screen plan** とする。台本から動画全体の画面・情報量・構成が見えるまで、PNG export や YMM4 placement を最終 proof として扱わない。
+
+この節は、本流の現在タスクではなく、明示的に起動した Baseball sidequest の review cycle である。Baseball 側の変更は原則として `lanes/sports_news/`、`BaseballInfoGraphics/`、および Baseball 正本 docs に閉じ、本流の G-27 / ゆっくり解説制作導線を押し流さない。
 
 ### screen plan の最低項目
 
