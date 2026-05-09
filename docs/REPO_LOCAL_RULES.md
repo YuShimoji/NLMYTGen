@@ -1,149 +1,62 @@
-# REPO_LOCAL_RULES.md — repo-local 運用ルール（正本）
+# REPO_LOCAL_RULES.md — repo-local operating rules
 
-NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本。長い背景説明ではなく、毎ブロックで効かせる強制ルールだけを置く。vendor-neutral な AI ルールは引き続き `docs/ai/*.md`、非交渉境界は `docs/INVARIANTS.md`。
+NLMYTGen の通常再開で読む短い front-door。ここには毎回効く行動ルールだけを置く。事故履歴、報告テンプレート、個別 lane の手順、status snapshot は置かない。
 
-**`.claude/CLAUDE.md`** は Claude Code 等が慣例で読む入口用の **短いポインタ** に留める（本文の重複を避ける）。
+詳細の置き場:
 
----
+- 非交渉の product boundary: `docs/INVARIANTS.md`
+- 現在位置 / next action: `docs/runtime-state.md`
+- 対話・報告 failure class: `docs/INTERACTION_NOTES.md`
+- workflow pain / operator 手順: `docs/OPERATOR_WORKFLOW.md`
+- 決定履歴 / handoff history: `docs/project-context.md`
+- 迷子時の索引: `docs/NAV.md`
 
 ## Restart Read Budget
 
-通常再開では、読了対象を増やすこと自体を progress にしない。毎回読むのは次の 3 点まで。
+通常再開で読むのは次の 3 点まで。
 
-1. `AGENTS.md` — repo 入口ポインタ（詳細ルールを置かない）
-2. `docs/REPO_LOCAL_RULES.md` — 本ファイルの Hard Rules / Block-Start Checklist / Ask Hygiene
-3. `docs/runtime-state.md` — `slice` / `next_action` / `last_change_relation` / `last_verification`
+1. `AGENTS.md`
+2. `docs/REPO_LOCAL_RULES.md`
+3. `docs/runtime-state.md`
 
-追加で読むのは、作業接続に必要な場合だけ。
+追加で読むのは、今の作業を進める根拠が不足している場合だけ。読む範囲は該当節・該当 ID・該当 artifact に限定し、全文読了を progress にしない。
 
-- 迷子対策: `docs/NAV.md`
-- handoff / 決定履歴: `docs/project-context.md` の HANDOFF SNAPSHOT または該当 DECISION LOG だけ
-- status / backlog: `docs/FEATURE_REGISTRY.md` の該当 ID だけ
-- 非交渉境界: `docs/INVARIANTS.md` の該当節だけ
-- durable request: `docs/USER_REQUEST_LEDGER.md` の現在有効な要求 / 該当 backlog delta だけ
-- workflow pain: `docs/OPERATOR_WORKFLOW.md` の該当工程だけ
-- ask / manual verification / template formalism: `docs/INTERACTION_NOTES.md` の該当 failure class だけ
-- vendor-neutral rule: `docs/ai/*.md` の該当 gate / workflow 節だけ
+## Core Rules
 
-フル再アンカリングは `AGENTS.md` の例外手順を使う。全 canonical docs の存在は保つが、全文読了を通常再開の前提にしない。
+- Repo-local authority comes first. Global Codex files and prompt helpers are fallback only.
+- `AGENTS.md` is an entry pointer. Do not add procedures, status, roadmaps, report formats, option menus, or history there.
+- Stay inside this repo unless the user explicitly names a cross-project scope. If cross-project scope is explicit, touch only that scope.
+- Do not ask broad questions when repo evidence can decide the next move. If a question is necessary, ask only the decision that changes the bottleneck.
+- Prefer assistant-owned mechanical closure: dry-run, readback, gap report, drift check, docs sync, or focused tests before asking for manual proof.
+- Do not request repeated YMM4 visual proof. Use it for first E2E, changed review surfaces, or final creative judgement.
+- Keep task-specific scars out of this file. Put lane-specific constraints in the relevant spec, registry, handoff artifact, or `runtime-state`.
 
-## Hard Rules
+## Git And Tests
 
-- `AGENTS.md` is anti-growth by default. Do not add detailed procedures, status snapshots, closeout templates, history, plans, or option menus there. Put rule changes in this file or `docs/INTERACTION_NOTES.md`, current state in `docs/runtime-state.md`, and history in `docs/project-context.md`.
-- Git follow-through is assistant-owned by default. When a slice is validated and the recommended next Git action is non-destructive, run `git add` / `git commit` / `git push` without waiting for user approval. Stop only for destructive operations, pushed-history rewrites, ambiguous large deletions, cross-repo publication, or explicit user prohibition.
-- 通常はこの repo 以外の file / memory / docs を読まない・書かない。ユーザーが cross-project / 他 repo 作業を明示した場合は、その明示範囲だけ扱う。
-- HoloSync / NLMandSlideVideoGenerator / NarrativeGen / VastCore への逸脱は通常禁止。明示された cross-project scope に含まれる場合だけ例外にする。
-- repeated visual proof を要求しない。YMM4 visual proof は初回 E2E と最終制作物の品質判断だけ。
-- mechanical な確認は GUI の Dry Run または開発時のユニットテストで閉じる。コード変更がないときにテストを回さない。
-- `src/` または `gui/` のロジックを変えたブロックの終わりにだけ pytest 結果を示す。ドキュ / runtime-state のみのブロックでは不要。
-- 修正を指摘されたら止まらない。次を同じブロックで自分で確定して進める。
-  - 何が誤りだったか
-  - 何を修正するか
-  - 修正後にどう検証するか
-- `判断をお願いします` `何が足りないか教えてください` のような broad question で止まらない。
-- user に聞く前に、repo 内根拠で決められない理由を自分で確認する。
-- `assistant 側でやることがない` と安易に結論しない。まず次を検討する。
-  - fail-fast
-  - gap report
-  - quality gate
-  - drift detection
-  - docs sync
-  - operator の手動負荷削減
-- user-owned step を出すときは、`素材投入` / `入力を置く` / `GUIで進める` のような総称だけで止めない。assistant が停止中か並行作業可能か、必須・任意ファイルの exact path、各ファイルの state（既存 / missing / 後続生成）と作成元、成功・NG 時の戻り、受領後に assistant が閉じる検証を同じ handoff に含める。
-- user-owned step を `.md` / README / manifest への参照で成立扱いしない。`手順の正本は <file>.md:<line>` のような官僚的 handoff は **invalid handoff** として扱い、接続済み `next_action` / closeout に数えない。本文だけで実行できる必須ファイル・exact path・操作順・成功出力・NG返却・assistant next を必ず再掲する。docs は補足根拠であり、user が実行する導線ではない。
-- task-specific な傷跡 (茶番劇 / overlay review / Episode Pack 特有手順 / 特定 IR 形式) を Hard Rules に追加しない。個別 slice の制約は当該 slice の handoff doc / FEATURE_REGISTRY / runtime-state に残し、本ファイルは横断的に効く強制ルールだけに保つ。
-- 最終報告で file path / line / commit / test 名の列挙を、説明の代替にしない。file list は証跡であり説明ではない。ユーザーがファイルを開かなくても、何が変わったか、なぜ効くか、これで次に何が可能/禁止になるか、次に誰が何をするかが本文だけで分かるようにする。
-- 最終応答は `やったこと` だけで閉じない。根拠 / 残リスク / 次の owner / user 返答後に assistant が閉じる作業まで論理的に接続する。接続できない場合は、まず assistant 側の gap report / drift detection / fail-fast / docs sync を検討する。
-- `検証 pass` と `未追跡ファイル` だけを列挙して止まらない。未追跡が正式追加対象なら、stage/commit の owner、user が見るべき差分、OK/NG 後に assistant が何をするかまで書く。
+- Git follow-through is assistant-owned by default. After a validated slice, run non-destructive `git add` / `git commit` / `git push` without asking again.
+- Stop before destructive operations, pushed-history rewrites, ambiguous large deletions, cross-repo publication, or explicit user prohibition.
+- For `src/`, `gui/`, or CLI contract changes, run the narrow relevant test first; use `uv run pytest` as the normal repo-level Python check.
+- Use `NLMYTGEN_PYTEST_FULL=1 uv run pytest` only when subprocess/integration coverage is relevant.
+- Do not run pytest for docs-only or runtime-state-only edits unless the docs changed an executable contract.
+- Playwright and commit-history analysis are optional diagnostics, not default gates.
 
-## pytest（最小）
+## Reporting Rule
 
-テスト投資の判断は **Block-Start Checklist** と **Quality Priority** に委ね、手順を増やさない。
+Reports should make the work usable without forcing the user to open files. State what changed, why it matters, what remains uncertain, and what the next concrete move is.
 
-- 日次・短ループ: `uv run pytest`（`@pytest.mark.integration` は既定でスキップ。`tests/conftest.py`）
-- `src/` または CLI 契約を変えたマージ前など: `NLMYTGEN_PYTEST_FULL=1 uv run pytest` を追加で回す（マーカーは `pyproject.toml`）
-- 新規 `@pytest.mark.integration` は、ユニットだけでは subprocess 経路の契約が保てないときに限定する。似たケースは既存テストへのケース追加で統合を優先する。
-- 手動 E2E proof（`docs/verification/` 等）は Hard Rules の「repeated visual proof を要求しない」に従い、初回・フロンティア・手順変更時に寄せる。
-- **git のコミット傾向分析や Playwright を必須ゲートに含めない**（争点時のみ任意でよい）。
+Do not emit fixed closeout labels such as `summary`, `evidence`, `risk`, `next owner`, `assistant status`, or `assistant next` unless the user asks for that structure. Those concepts are internal checks, not output fields.
 
-## Block-Start Checklist
+If user action is required, include the executable details in normal language: exact path or artifact, required versus optional inputs, success signal, what to return on failure, and what the assistant will verify after receiving it. Do not replace those details with a docs link.
 
-各ブロックで次を短く確定してから進める。
-
-1. 今の bottleneck は何か
-2. これからやる作業はその bottleneck に直接効くか
-3. user に新しい manual proof を頼まずに閉じられるか
-4. user に聞く前に repo 内根拠で決められないか
-5. user-owned step を出す場合、assistant が停止しているのか・user が何を置く/返すのか・受領後に assistant が何をするのかが一読で分かるか
-6. `素材` や `artifact` という総称を使う場合、その内訳・置き先・戻り値・現在状態・作成元が直後に列挙されているか
-7. `.md` / README / manifest 参照を、user が実行する手順本文の代替にしていないか
-8. 最終報告が file list だけでなく、読まなくても分かる意味・効果・次動作を含んでいるか
-9. 残作業レビュー / 次回作業導線を出す場合、`P0/P1` や path 列挙だけでなく、作業ごとの目的・効果・必要条件・現在状態・owner・次の動きが表または同等の構造で分かるか
-10. 指摘を受けた直後に、根拠を確認する前に方針を反転していないか
-
-この 10 個に yes と言えない作業は、まず理由を明文化してから進める。
-
-## Block-End Closeout Contract
-
-ブロック終端の報告は固定テンプレートではなく、次の作業を破綻なく再開するための最低契約として扱う。少なくとも次の鎖を本文内で保つ。
-
-- `summary`: 完了したこと / 意図的に触っていないこと。
-- `evidence`: 検証・readback・確認した根拠、または確認しなかった理由。
-- `risk`: 残る不確実性、古い証跡、creative judgement。
-- `next owner`: 次に動くのが assistant / user / both のどれか。
-- `assistant next`: user 返答後に assistant が見る JSON / readback / gap、生成または修正する artifact。
-- `meaning`: file path を開かなくても分かる、今回の変更で実際に変わった挙動・制約・制作導線上の効果。
-
-この鎖を埋められないまま `確認してください` `次をお願いします` で終えない。file path / line number は根拠として添えるだけで、`meaning` の代替にしない。
-
-残作業レビュー・次回作業導線・複数候補の優先順位を出す場合は、短い箇条書きへ圧縮しすぎない。`P0` / `P1` / `P2` のような記号は補助ラベルに留め、少なくとも次の列を表または同等の構造で本文に含める。
-
-| 列 | 必須内容 |
-| --- | --- |
-| 作業 | 人間が認識できる具体名。記号だけにしない |
-| 目的 | 何を解く作業か。どの bottleneck に効くか |
-| 効果 | 完了すると制作導線・判断・安全性がどう軽くなるか |
-| 必要条件 | user artifact / repo artifact / creative judgement / validator pass など |
-| 現在の状態 | done / blocked / backlog / assistant 着手可 / user review 待ちを分ける |
-| owner | 次に動くのが assistant / user / both のどれか |
-| 次の動き | 直後の action。user 返答後に assistant が何を閉じるかも含める |
-
-この表は固定テンプレートではなく、`残作業` `次回` `優先順位` `レビューしてください` が出たときの情報欠落防止である。証跡 path / commit / test は表の後ろに根拠として添え、表の代替にしない。
-
-## User-Owned Handoff Contract
-
-user が次に動く必要がある場合は、短くても次を 1 セットで出す。
-
-- `assistant status`: blocked / parallel work available のどちらか。
-- `user action`: 必須 artifact、任意 artifact、置き先 path、GUI 操作順、完了判定。
-- `file contract`: 各 artifact について `state`（exists / missing / generated later）、`what`（何のファイルか）、`create`（作成元または生成手順）、`used by`（どの GUI ボタン / CLI が使うか）を省略しない。
-- `assistant next`: 受領後に見る JSON / readback / gap、次に生成または修正する artifact。
-- `do not`: NG 時に手編集してはいけない出力、まだ開かない YMM4 確認、混ぜてはいけない別 lane。
-- `doc route`: docs / README / manifest は裏付けとして添えてよいが、そこへ手順を転嫁しない。user action が必要な handoff は、この応答本文だけで実行できなければ invalid。
-
-例外なく、`素材` は file-kind ではなく説明語として扱う。`source script` / `Production IR` / `base .ymmp` / `bg_map` / `skit_group_registry` のように、実ファイル種別へ展開してから user へ渡す。
+When listing residual work or options, give each item enough context to choose: purpose, effect, prerequisite, current state, and next move. Avoid `P0/P1`, path lists, or test names as the explanation.
 
 ## Ask Hygiene
 
-- 質問は高位分岐だけ。
-- 質問が必要でも、2〜4 個程度の実質差分がある選択肢まで圧縮する。固定メニューではなく、異なる bottleneck を解く hook として出す。
-- 通常は「別 repo へ移動」「別 PJ の memory を参照」を選択肢に含めない。ユーザーが cross-project 作業を明示した場合だけ、その範囲内で候補にする。
-
-## Quality Priority
-
-- 進捗は「新機能が増えたか」ではなく、次で評価する。
-  - quality を落とす入力を早期に止められるか
-  - empty hit / unknown label / drift を可視化できるか
-  - operator の反復作業が減ったか
-  - artifact の品質に近づくか
+- Ask only high-level decisions with real tradeoffs.
+- Offer 2-4 options only when they solve different bottlenecks.
+- Do not include unrelated repos, memories, or tools as options unless the user made that scope explicit.
+- When corrected, verify the claim against repo evidence, then proceed with the smallest safe fix in the same block.
 
 ## Hooks
 
-機械的に判定できる違反は `.claude/hooks/guardrails.py` で reject する。対象:
-
-- 明示 scope なしの repo 外参照
-- broad question による停止
-- repeated visual proof の反復要求
-- `.md` / README / manifest を user-owned 手順本文の代替にする handoff laundering
-
-Hook で止められない低価値作業は、本ファイルの checklist で防ぐ。
+Machine-checkable violations belong in `.claude/hooks/guardrails.py`, not as more prose in this file. Keep this file short enough to read and apply every restart.

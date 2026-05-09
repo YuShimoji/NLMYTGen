@@ -32,11 +32,11 @@
 - `TEMPLATE_FORMALISM`: Prompt、チェックリスト、返却テンプレ、短い OK/NG 形式を、作業接続性より優先する。対象ファイル・作るもの・元にする object・判定主体が欠けたまま形式だけ整い、実作業が接続不能になる。
   - 予防: テンプレを出す前に `open target` / `create or modify target` / `source object` / `actor` / `owner artifact` / `acceptance meaning` / `replan condition` を埋める。1 つでも欠ける場合は、短い返却形式へ圧縮せず、まず欠落項目を repo 内で解決する。
 - `FILE_DIFF_CLOSEOUT`: 最終報告が「どのファイルに何を追加したか」の列挙に寄り、ユーザーがファイルを開かないと、実際に何が変わったのか、制作導線上の効果、次に誰が何をするのかを復元できない。これは evidence を explanation と取り違える closeout failure であり、認知負荷を user に押し戻す。
-  - 予防: file path / line number は根拠欄に限定し、先に `何が変わったか` / `なぜ効くか` / `これで次に何が可能または禁止になるか` / `まだ残る判断` / `次 owner と assistant next` を本文で説明する。ユーザーが「詳しく」「手順も」と追加依頼しなくても、通常 closeout にはこの意味層を含める。docs-only 変更でも「どの文章を足した」ではなく「次回からどの挙動が invalid / required になるか」を述べる。
-- `CLOSING_CHAIN_BREAK`: 最終応答が「やったこと」だけを述べ、根拠・残リスク・次の owner・user 返答後に assistant が閉じる作業のどれかを欠いたまま終わる。結果として、user に作業だけが振られ、次に何を返せば再開できるか、そもそも assistant が停止しているのかが分からなくなる。
-  - 予防: closeout 前に `summary -> evidence -> risk -> next owner -> assistant next` の鎖を確認する。鎖が切れている場合は、曖昧な「確認してください」で終えず、assistant 側で閉じる gap report / drift detection / fail-fast / docs sync を先に検討する。user action が必要なら、停止理由と返答後の assistant 作業を同じ段落で接続する。
-- `NEXT_WORK_SHORTHAND`: 残作業レビューや次回作業導線が `P0/P1`、commit/test/path、または「こちら側で未処理なし」の短文に縮退し、各作業の目的・効果・必要条件・現在状態・owner・次の動きが本文だけで分からない。ユーザーは何を選ぶと何が軽くなるか判断できず、次回の作業開始がまた status 確認から始まる。
-  - 予防: `残作業` / `次回` / `優先順位` / `レビューしてください` が出た場合は、作業ごとに `作業 / 目的 / 効果 / 必要条件 / 現在の状態 / owner / 次の動き` を表または同等の構造で出す。記号 priority は補助に留め、証跡 path は根拠として後置する。assistant が今すぐ動ける候補と user review 待ちを混ぜない。
+  - 予防: file path / line number は根拠欄に限定し、先に `何が変わったか` / `なぜ効くか` / `これで次に何が可能または禁止になるか` / `まだ残る判断` / `次に誰がどう動くか` を本文で説明する。ユーザーが「詳しく」「手順も」と追加依頼しなくても、通常 closeout にはこの意味層を含める。docs-only 変更でも「どの文章を足した」ではなく「次回からどの挙動が invalid / required になるか」を述べる。
+- `CLOSING_CHAIN_BREAK`: 最終応答が「やったこと」だけを述べ、根拠・残リスク・次に動く主体・返答後に閉じる作業のどれかを欠いたまま終わる。結果として、user に作業だけが振られ、次に何を返せば再開できるか、assistant が待機中なのかが分からなくなる。
+  - 予防: closeout 前に、完了内容・根拠・残る不確実性・次に動く主体・返答後に閉じる作業が自然文でつながっているか確認する。これは内部チェックであり、`summary` / `evidence` / `assistant next` のような見出しやラベルを出力する要求ではない。
+- `NEXT_WORK_SHORTHAND`: 残作業レビューや次回作業導線が `P0/P1`、commit/test/path、または「こちら側で未処理なし」の短文に縮退し、各作業の目的・効果・必要条件・現在状態・次の動きが本文だけで分からない。ユーザーは何を選ぶと何が軽くなるか判断できず、次回の作業開始がまた status 確認から始まる。
+  - 予防: `残作業` / `次回` / `優先順位` / `レビューしてください` が出た場合は、作業ごとに目的、効果、必要条件、現在状態、次の動きを説明する。表は任意であり、固定列名を出す必要はない。assistant が今すぐ動ける候補と user review 待ちを混ぜない。
 
 ## Ask Protocol
 - 質問前に、repo 内根拠で決められない理由を確認する。理由がない場合は質問せず進める。cross-project 指示がある場合は、明示された他 repo / docs も根拠範囲に含める。
@@ -53,8 +53,8 @@
 ## Report Protocol
 - 報告形式は固定見出しではなく安全柵として扱う。必要最小限は、何を変えた / 変えていない、根拠または readback、残るリスクや judgement、次に取り得る hook。
 - 報告の主語を file ではなく workflow / behavior / decision に置く。file path はクリック可能な証跡として後ろに置き、読者が開かなくても意味が通る本文を先に書く。
-- 最終応答では `summary -> evidence -> risk -> next owner -> assistant next` の論理鎖を切らない。見出し名は任意だが、次の作業が user に渡る場合でも assistant が次に何を閉じるかまで書く。
-- user action が次の blocker の場合は、`assistant status`（停止中 / 並行作業あり）・`user action`（対象 path と必要 artifact）・`assistant next after user action`（受領後に閉じる検証や生成）を分ける。
+- 最終応答では、完了内容、根拠、残る不確実性、次に動く主体、返答後に閉じる作業の論理鎖を切らない。ただし、これらを固定見出しや英語ラベルとして出力しない。
+- user action が次の blocker の場合は、対象 path、必要 artifact、完了判定、NG 時に返す情報、受領後に閉じる検証や生成を本文で分ける。`assistant status` などのラベルは内部整理に留める。
 - completion 報告では、`changed` / `not changed` / `verified` / `still blocked` の区別を保つ。docs 更新だけの場合は、実制作上の摩擦が何だけ減ったのかを明示する。
 - handoff では「何が抜けているか」「次にやってはいけないこと」「再オープン条件」を必要時に残す。ただし固定テンプレの穴埋めを進捗にしない。
 - 再開時の repeated context は、まず `docs/ai/*.md` と project-local canonical docs を読んでから扱う。prompt や古い handoff を正本より優先しない。
@@ -72,4 +72,4 @@
 - インシデント由来の task-specific class は追加しない。同じ問題が 3 回以上、複数 lane で観測された汎用 pattern だけを class 化する。task-specific な傷跡は当該 slice の handoff doc に残す。
 
 ## 常設ガード
-- `docs/REPO_LOCAL_RULES.md` の Block-Start Checklist を毎ブロックの入口にする。ここで扱う interaction failure は、その checklist が効かなくなる対話上の失敗を補足する。
+- `docs/REPO_LOCAL_RULES.md` を毎ブロックの短い入口にする。ここで扱う interaction failure は、その core rules が効かなくなる対話上の失敗を補足する。
