@@ -29,6 +29,7 @@ NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本
 
 ## Hard Rules
 
+- Git follow-through is assistant-owned by default. When a slice is validated and the recommended next Git action is non-destructive, run `git add` / `git commit` / `git push` without waiting for user approval. Stop only for destructive operations, pushed-history rewrites, ambiguous large deletions, cross-repo publication, or explicit user prohibition.
 - 通常はこの repo 以外の file / memory / docs を読まない・書かない。ユーザーが cross-project / 他 repo 作業を明示した場合は、その明示範囲だけ扱う。
 - HoloSync / NLMandSlideVideoGenerator / NarrativeGen / VastCore への逸脱は通常禁止。明示された cross-project scope に含まれる場合だけ例外にする。
 - repeated visual proof を要求しない。YMM4 visual proof は初回 E2E と最終制作物の品質判断だけ。

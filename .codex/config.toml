@@ -3,7 +3,7 @@
 # This file only stores local Codex tool defaults; behavior lives in visible docs.
 
 model = "gpt-5-codex"
-approval_policy = "on-request"
+approval_policy = "never"
 sandbox_mode = "workspace-write"
 
 # Add project-specific hooks or tool restrictions here if needed.

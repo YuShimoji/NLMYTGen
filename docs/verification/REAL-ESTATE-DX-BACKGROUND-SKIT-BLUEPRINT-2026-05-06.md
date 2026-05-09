@@ -178,7 +178,7 @@ This split now uses the passed CSV / VoiceItem row-to-time map. The earlier scen
 
 The old `samples/_probe/g24/real_estate_dx_skit_group_patched.ymmp` remains only transport/readback proof. It must not be promoted to creative acceptance.
 
-The validator-authorized overlay-only compact review has been generated and read back. The next step is user-side integration review and stage/commit separation, not YMM4 creative acceptance.
+The validator-authorized overlay-only compact review has been generated, read back, and committed. The next content step is user-side integration review, not stage/commit handoff and not YMM4 creative acceptance.
 
 Current authority chain:
 
