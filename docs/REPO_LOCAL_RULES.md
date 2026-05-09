@@ -10,7 +10,7 @@ NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本
 
 通常再開では、読了対象を増やすこと自体を progress にしない。毎回読むのは次の 3 点まで。
 
-1. `AGENTS.md` — repo 境界・入口責務
+1. `AGENTS.md` — repo 入口ポインタ（詳細ルールを置かない）
 2. `docs/REPO_LOCAL_RULES.md` — 本ファイルの Hard Rules / Block-Start Checklist / Ask Hygiene
 3. `docs/runtime-state.md` — `slice` / `next_action` / `last_change_relation` / `last_verification`
 
@@ -29,6 +29,7 @@ NLMYTGen の **日々の Hard Rules・再開読了予算・Checklist** の正本
 
 ## Hard Rules
 
+- `AGENTS.md` is anti-growth by default. Do not add detailed procedures, status snapshots, closeout templates, history, plans, or option menus there. Put rule changes in this file or `docs/INTERACTION_NOTES.md`, current state in `docs/runtime-state.md`, and history in `docs/project-context.md`.
 - Git follow-through is assistant-owned by default. When a slice is validated and the recommended next Git action is non-destructive, run `git add` / `git commit` / `git push` without waiting for user approval. Stop only for destructive operations, pushed-history rewrites, ambiguous large deletions, cross-repo publication, or explicit user prohibition.
 - 通常はこの repo 以外の file / memory / docs を読まない・書かない。ユーザーが cross-project / 他 repo 作業を明示した場合は、その明示範囲だけ扱う。
 - HoloSync / NLMandSlideVideoGenerator / NarrativeGen / VastCore への逸脱は通常禁止。明示された cross-project scope に含まれる場合だけ例外にする。

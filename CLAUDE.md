@@ -1,6 +1,6 @@
 # CLAUDE.md — NLMYTGen プロジェクト方針
 # このファイルはプロジェクトの方針・技術スタック・成功定義を定める。
-# 運用ルールの正本は docs/REPO_LOCAL_RULES.md。Claude Code 入口は .claude/CLAUDE.md（ポインタ）。全体の入口は AGENTS.md。
+# 運用ルールの正本は docs/REPO_LOCAL_RULES.md。Claude Code 入口は .claude/CLAUDE.md（ポインタ）。AGENTS.md も薄い入口ポインタであり、詳細手順は置かない。
 
 ## プロジェクト概要
 NotebookLM の台本を YMM4 用 CSV に変換し、さらに演出 IR (中間表現) を定義して S-6 (背景・演出設定) の半自動化を目指すパイプライン。音声・字幕投入は YMM4 台本読込が不動の主経路。視覚配置 (背景・立ち絵・素材) の効率化が現在の中心課題。
@@ -92,7 +92,7 @@ L1-L4 とは直交する概念。L2（Python変換工程）の内部で、IR の
 | ファイル | 責務 |
 |---------|------|
 | CLAUDE.md (ルート) | プロジェクト方針・技術スタック・成功定義・本書の「絶対的な制約」。日々の運用 Hard Rules の正本は `docs/REPO_LOCAL_RULES.md`（`.claude/CLAUDE.md` は入口ポインタ）、非交渉境界の正本は `docs/INVARIANTS.md` |
-| AGENTS.md | 入口・境界ルール・再アンカリング手順・read order 関係の正本 |
+| AGENTS.md | 薄い入口ポインタ。詳細手順・履歴・報告テンプレは置かない |
 | docs/ai/CORE_RULESET.md | AI 運用の canonical rules |
 | docs/ai/DECISION_GATES.md | 進路判断・gate・read-only ルール |
 | docs/ai/STATUS_AND_HANDOFF.md | status 語彙と handoff 要件 |
@@ -115,7 +115,7 @@ L1-L4 とは直交する概念。L2（Python変換工程）の内部で、IR の
 
 ## 再開時の正本順序
 
-再開時は `AGENTS.md` の通常再開手順を優先する。
+再開時は `AGENTS.md` を入口確認に留め、詳細は `docs/REPO_LOCAL_RULES.md` の read budget と `docs/runtime-state.md` の current state を優先する。
 要点だけ書くと、入口 → repo-local rules → `runtime-state.md` で止める。`docs/ai/*.md` / project-local canonical docs / registry / boundary は、現在の判断に必要な該当節だけ読む。
 resume prompt や外部メモより、repo 内 docs を常に優先する。
 
