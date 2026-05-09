@@ -32,6 +32,7 @@
 | `samples/_probe/g24/real_estate_dx_overlay_only_compact_review.ymmp` | ShapeItem-only YMM4 carrier for machine readback; not creative acceptance |
 | `samples/_probe/g24/real_estate_dx_overlay_only_compact_review.json` | compact review manifest |
 | `samples/_probe/g24/real_estate_dx_overlay_only_compact_review_readback.json` | compact review readback result |
+| `samples/_probe/g24/real_estate_dx_overlay_card_review_map.md` | reviewer-facing list/map for intent, granularity, rationale, and segment-level judgement |
 
 ## Validator Result
 
@@ -127,6 +128,16 @@ Readback guarantees:
 - The compact review uses **no cast motion IR**.
 - The YMM4 carrier contains only `ShapeItem` placeholders.
 - The YMM4 carrier contains no `skit_group:` remarks and no `delivery_` template reuse.
+
+Review packaging correction:
+
+- HTML is a visual preview surface, not sufficient by itself as a manager-facing report.
+- JSON/readback files are machine proof, not a human judgement surface.
+- `real_estate_dx_overlay_card_review_map.md` is the primary list view for user-side integration review.
+- The list view must show what each scene wants to display, how the card granularity was chosen, why this plan was preferred over alternatives, and what the reviewer should judge.
+- It must also name the candidate plans that were not chosen, so the selected compact overlay plan is not treated as the only rendered option or a strawman comparison.
+- Candid review is required: polished HTML does not imply acceptance, and weak rationale should be returned as `revise`, `reduce`, `split`, or `rationale missing`.
+- The map is a temporary review workbench until a GUI can unify the review surface; it does not advance cast motion IR, YMM4 creative acceptance, or production timing.
 
 ## Block Timetable
 
