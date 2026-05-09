@@ -1,0 +1,208 @@
+episode_id: baseball_pitch_event_screen_plan_v1
+status: draft_review_unit
+lane: sports_news
+sidequest_boundary:
+  mainline_policy: do_not_replace_runtime_next_action
+  current_mainline_next_action: G-27 Real Estate DX scene decision packet
+  allowed_change_scope:
+    - lanes/sports_news
+  out_of_scope:
+    - docs/runtime-state.md next_action update
+    - renderer implementation
+    - PNG export proof
+    - YMM4 creative acceptance
+source_episode: lanes/sports_news/examples/baseball_pitch_event_sample.yaml
+source_basis:
+  script_source: not_provided
+  range_basis: planned_from_sample_episode_visual_plan
+  data_status: sample_only
+  real_episode_requirement: replace sample:// sources before publish gate review
+review_surface: screen_plan
+review_goal: 短尺の野球ニュースで、カード順・情報量・YMM4配置方式が過密化せず読めるかを先に判定する。
+placement_policy:
+  phase_1: static_png_as_yymm4_image_item_after_screen_plan_review
+  phase_2: deterministic_clip_as_yymm4_video_item_after_export_contract
+  direct_html_in_yymm4: forbidden
+global_information_budget:
+  target_total_duration_sec: 84
+  max_total_screen_segments: 5
+  max_cards_per_segment: 3
+  max_primary_numbers_per_segment: 5
+  max_named_entities_per_segment: 4
+  reaction_digest_policy: sourced_digest_only_not_claim_evidence
+segments:
+  - segment_id: open_score_hook
+    voice_time_range: "00:00-00:12"
+    script_range: planned_intro_stub
+    viewer_question: 何が起き、試合状況としてどれだけ重要か。
+    story_role: スコアと局面を一読させ、ニュースの見る理由を作る。
+    card_sequence:
+      - opening_breaking_card
+      - scoreboard_card
+    information_budget:
+      primary_numbers:
+        - score_away_home
+        - inning
+        - outs
+      named_entities:
+        - Sample Eagles
+        - Sample Falcons
+      avoid:
+        - pitcher_batter_detail
+        - fan_reaction
+    primary_screen: card_template
+    visual_priority:
+      - score_hierarchy
+      - one_line_claim
+      - inning_status_as_subordinate_label
+    duration_sec: 12
+    ymm4_placement:
+      type: ImageItem
+      layer_hint: sports_news_overlay
+      asset_state: generated_later
+    reviewer_signal: 冒頭12秒でスコア、回、論点が同時に読めるか。数字が開幕から過密なら分割する。
+    next_artifact_if_accepted: opening_breaking_card_static_mock
+    revision_trigger: scoreよりinning/statusが強く見える、または主張見出しが読めない。
+  - segment_id: matchup_count_context
+    voice_time_range: "00:12-00:26"
+    script_range: planned_context_stub
+    viewer_question: この一球の前に、投手・打者・カウントはどんな状態だったか。
+    story_role: pitch event の前提だけを置き、詳細成績を先に出しすぎない。
+    card_sequence:
+      - scoreboard_card
+      - player_stat_card
+    information_budget:
+      primary_numbers:
+        - balls_strikes
+        - outs
+        - pitcher_pitch_count
+        - pitcher_strikeouts
+      named_entities:
+        - Sample Pitcher
+        - Sample Batter
+      avoid:
+        - ops_and_avg_same_weight_as_count
+        - previous_pitch_detail
+    primary_screen: card_template
+    visual_priority:
+      - count_state
+      - pitcher_batter_labels
+      - current_at_bat_context
+    duration_sec: 14
+    ymm4_placement:
+      type: ImageItem
+      layer_hint: sports_news_overlay
+      asset_state: generated_later
+    reviewer_signal: 投手・打者情報がカウント理解を助けているか。左右パネルがC詳細より先に過密なら削る。
+    next_artifact_if_accepted: player_stat_card_static_mock
+    revision_trigger: 成績カードが打席の文脈ではなく選手紹介に見える。
+  - segment_id: pitch_event_breakdown
+    voice_time_range: "00:26-00:48"
+    script_range: planned_pitch_event_stub
+    viewer_question: 勝負を分けた一球は、前球からどう変化したのか。
+    story_role: 中央のstrike zoneと球種・球速差を使い、解説の主張を一点に絞る。
+    card_sequence:
+      - pitch_event_card
+      - trend_comparison_card
+    information_budget:
+      primary_numbers:
+        - previous_pitch_velocity_kmh
+        - current_pitch_velocity_kmh
+        - velocity_delta_kmh
+        - pitch_number_in_plate_appearance
+      named_entities:
+        - FF
+        - SL
+        - low_outer
+      avoid:
+        - unsourced_pitch_intent
+        - multiple_unrelated_trends
+    primary_screen: BaseballInfoGraphics
+    visual_priority:
+      - central_strike_zone
+      - velocity_delta
+      - current_claim_headline
+    duration_sec: 22
+    ymm4_placement:
+      type: VideoItem
+      layer_hint: sports_news_overlay
+      asset_state: generated_later
+    reviewer_signal: C詳細の強みである中央strike zoneが主張理解に効くか。小さい数値欄が読み順を壊すなら別カードへ逃がす。
+    next_artifact_if_accepted: BaseballInfoGraphics_data_contract_draft
+    revision_trigger: 画面が「投球ログ全部」になり、一球の意味が埋もれる。
+  - segment_id: interpretation_guardrail
+    voice_time_range: "00:48-01:06"
+    script_range: planned_interpretation_stub
+    viewer_question: この配球解釈は、どこまでがデータでどこからが推測か。
+    story_role: 15km/h差と外角低めの事実を見せ、意図断定を避ける。
+    card_sequence:
+      - trend_comparison_card
+      - watch_point_card
+    information_budget:
+      primary_numbers:
+        - velocity_delta_kmh
+        - count_before_pitch
+      named_entities:
+        - low_outer_slider
+      avoid:
+        - catcher_intent_claim_without_source
+        - universal_praise_claim
+    primary_screen: card_template
+    visual_priority:
+      - fact_vs_interpretation_split
+      - one_watch_point
+      - compact_comparison
+    duration_sec: 18
+    ymm4_placement:
+      type: ImageItem
+      layer_hint: sports_news_overlay
+      asset_state: generated_later
+    reviewer_signal: 事実、解釈、次の注目点が混ざって見えないか。断定が強ければ文言を弱める。
+    next_artifact_if_accepted: trend_comparison_card_static_mock
+    revision_trigger: データカードが配球意図の証拠に見える。
+  - segment_id: reaction_and_next_watch
+    voice_time_range: "01:06-01:24"
+    script_range: planned_close_stub
+    viewer_question: 反応は何を見ていて、次に視聴者はどこを見るべきか。
+    story_role: 反応を根拠ではなく反響として整理し、締めの観察点へ接続する。
+    card_sequence:
+      - reaction_digest_card
+      - watch_point_card
+      - ticker
+    information_budget:
+      primary_numbers:
+        - reaction_item_count
+      named_entities:
+        - FAN-01
+        - MEDIA-01
+      avoid:
+        - direct_quote_without_source_review
+        - reaction_as_factual_confirmation
+    primary_screen: card_template
+    visual_priority:
+      - sourced_digest_label
+      - watch_point_takeaway
+      - low_noise_ticker
+    duration_sec: 18
+    ymm4_placement:
+      type: ImageItem
+      layer_hint: sports_news_overlay
+      asset_state: generated_later
+    reviewer_signal: 反応紹介が本文主張の裏取りに見えないか。次に見るポイントが一文で残るか。
+    next_artifact_if_accepted: reaction_digest_card_static_mock
+    revision_trigger: reaction_digestがニュース本文より目立つ、またはsource digest表示が弱い。
+open_questions:
+  - finished_script_lines: 実台本が入ったら voice_time_range と script_range を置き換える。
+  - renderer_choice: screen plan review後に static PNG mock から先に進めるか、BaseballInfoGraphics data contract を先に切るかを決める。
+  - yymm4_layer_contract: ImageItem / VideoItem の layer name と duration placement はBN-05で固定する。
+close_gate:
+  accepted_when:
+    - 全体84秒の画面リズムが、open/context/pitch/interpretation/reactionに分かれて見える。
+    - 各segmentの主張が一つに絞られている。
+    - BaseballInfoGraphicsを使う箇所とcard templateで十分な箇所が分離されている。
+    - YMM4 placementがImageItem/VideoItem/text-only noteのどれかとして明示されている。
+  remains_not:
+    - renderer implementation
+    - PNG export proof
+    - YMM4 placement proof
+    - publish gate pass for a real episode

@@ -46,6 +46,7 @@ The current visual reference is the repo-local `BaseballInfoGraphics/` draft des
 | --- | --- |
 | `schemas/` | Minimal machine-readable contracts for source, fact, reaction, publish-gate, and episode packets. |
 | `examples/` | Placeholder sample data, screen plan samples, and sample-only provenance notes. |
+| `screen_plans/` | Review-unit screen plans that keep Baseball sidequest planning separate from renderer/export/YMM4 proof. |
 | `docs/` | Visual language and screen template notes. |
 | `templates/cards/` | YAML card specs for original broadcast/data UI modules. |
 

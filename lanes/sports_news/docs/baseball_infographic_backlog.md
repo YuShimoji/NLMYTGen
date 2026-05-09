@@ -57,6 +57,15 @@ Status: BN-01 initial implementation slice
   - preview sample は repo-generated SVG と同階層の `LICENSE.csv` で provenance を示す。
   - 未設定時の暗色グリッド fallback と、設定時の雰囲気背景表示の両方が仕様上説明されている。
 
+## BN-01G screen plan review unit
+
+- State: draft review unit added.
+- Goal: renderer / PNG export / YMM4 proof の前に、短尺野球ニュース全体のカード順・情報量・配置方式をレビューできる形にする。
+- Done when:
+  - `lanes/sports_news/screen_plans/baseball_pitch_event_screen_plan_v1.yaml` が、segment ごとに viewer question / card sequence / information budget / primary screen / YMM4 placement / reviewer signal を持つ。
+  - `docs/runtime-state.md` の primary `next_action` を Baseball に置き換えない。
+  - 出力は screen plan review unit であり、renderer implementation / PNG export proof / YMM4 creative acceptance ではない。
+
 ## Next candidates
 
 - BN-02: `data.js` mock と `lanes/sports_news/examples/baseball_pitch_event_sample.yaml` の変換契約を作る。
