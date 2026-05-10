@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "screenshot_artifact": "samples/_probe/g24/real_estate_dx_overlay_only_compact_review_screenshot.png",
+  "screenshot_capture_method": "electron BrowserWindow.loadFile + webContents.capturePage(full-page rect)",
+  "source_html": "samples/_probe/g24/real_estate_dx_overlay_only_compact_review.html",
+  "source_readback": "samples/_probe/g24/real_estate_dx_overlay_only_compact_review_readback.json",
+  "validator_result": "samples/_probe/g24/real_estate_dx_background_skit_blueprint_validate.json",
+  "not_creative_acceptance": true,
+  "checks": {
+    "readback_status": "passed",
+    "readback_segments": 11,
+    "dom_segments": 11,
+    "segment_titles": [
+      "RE-01 自力検索",
+      "RE-02 REINS-VIPクラブ",
+      "RE-03 保護理由",
+      "RE-04 囲い込み",
+      "RE-05 QR透明化",
+      "RE-06 キュレーション",
+      "RE-07A Z世代ライフスタイルとSNS信頼",
+      "RE-07B SNS集客のグレーゾーン",
+      "RE-07C 2030年問題と攻めのDX",
+      "RE-07D AI逆説と見えないリスク",
+      "RE-07E 選び方の基準と最後の問い"
+    ],
+    "readback_placeholder_items_expected": 24,
+    "readback_placeholder_items_rendered": 24,
+    "dom_placeholders": 24,
+    "all_segments_visible_in_dom": true,
+    "all_placeholders_visible_in_dom": true,
+    "each_segment_has_blocker_notice": true,
+    "remaining_blockers_match_validator": true,
+    "screenshot_pixels": {
+      "width": 1625,
+      "height": 8762
+    },
+    "captured_page_pixels": {
+      "width": 1471,
+      "height": 7935
+    }
+  },
+  "allowed_next_actions": [
+    "overlay_only_compact_review"
+  ],
+  "forbidden_next_actions": [
+    "cast_motion_ir",
+    "ymm4_creative_acceptance",
+    "production_timing"
+  ],
+  "remaining_blockers": [
+    "ASSET_BLOCKED_REAL_ESTATE_CAST_TEMPLATES_MISSING: consumer/gatekeeper_agent/curator_risk_pro are not available as production templates",
+    "ASSET_BLOCKED_REAL_ESTATE_PROPS_MISSING: VIP door, REINS PC, QR/status board, card-sorting, SNS/AI/risk cards are missing or placeholder-only"
+  ]
+}

@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dev": "electron . --dev"
+    "dev": "electron . --dev",
+    "capture:g27-overlay-review": "electron capture_overlay_compact_review.js"
   },
   "devDependencies": {
     "electron": "^35.0.0"

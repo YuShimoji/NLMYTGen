@@ -106,6 +106,8 @@ Python 画像生成、動画生成、素材自動取得は含めない。
 | decision output | `samples/_probe/g24/real_estate_dx_review_decisions.json` |
 | detailed evidence | `samples/_probe/g24/real_estate_dx_overlay_card_review_map.md` |
 | compact preview | `samples/_probe/g24/real_estate_dx_overlay_only_compact_review.html` |
+| compact preview screenshot | `samples/_probe/g24/real_estate_dx_overlay_only_compact_review_screenshot.png` |
+| compact preview screenshot readback | `samples/_probe/g24/real_estate_dx_overlay_only_compact_review_screenshot_readback.json` |
 | validator authority | `samples/_probe/g24/real_estate_dx_background_skit_blueprint_validate.json` |
 
 ## Workflow
@@ -122,6 +124,22 @@ Python 画像生成、動画生成、素材自動取得は含めない。
 
 While the validator is `blocked`, forbidden next actions remain
 `cast_motion_ir`, `ymm4_creative_acceptance`, and `production_timing`.
+
+## Compact Preview Screenshot
+
+Browser Use may reject local `file://` HTML. The stable developer-owned visual
+evidence route is Electron capture:
+
+```powershell
+npm --prefix gui run capture:g27-overlay-review
+```
+
+The capture opens `real_estate_dx_overlay_only_compact_review.html` through
+Electron `BrowserWindow.loadFile`, validates the overlay readback, compares
+remaining blockers against the validator result, counts DOM segments/cards,
+and writes a full-page PNG plus screenshot readback JSON. This is still visual
+proof of placeholder visibility only. It is not creative acceptance, not
+cast motion IR, and not production timing.
 
 ## Completion Gate
 
@@ -148,4 +166,9 @@ This Review Console slice is complete when:
   contains no `???` or `�`.
 - GUI saves `review_decisions` to a repo-relative path and rejects path
   traversal or absolute paths.
+- Electron compact preview capture passes and writes
+  `real_estate_dx_overlay_only_compact_review_screenshot.png` plus
+  `real_estate_dx_overlay_only_compact_review_screenshot_readback.json`;
+  the readback must confirm overlay HTML readback `passed`, 11 visible segments,
+  24 visible placeholders, and remaining blockers matching the validator result.
 - `review_map.md` remains only as evidence/fallback detail.
