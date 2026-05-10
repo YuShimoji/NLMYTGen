@@ -709,6 +709,15 @@ main .hint strong {
   gap: 12px;
 }
 
+.review-context-panel,
+.review-outline-panel {
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-bg-panel);
+}
+
 .review-status-card,
 .review-focus-card,
 .review-reply-panel {
@@ -729,22 +738,111 @@ main .hint strong {
 
 .review-status-card h3,
 .review-focus-card h3,
-.review-reply-panel h3 {
+.review-reply-panel h3,
+.review-context-panel h3,
+.review-outline-panel h3 {
   margin-bottom: 8px;
   font-size: 15px;
 }
 
 .review-status-card p,
-.review-focus-card p {
+.review-focus-card p,
+.review-context-panel p,
+.review-outline-panel p {
   color: var(--color-text-muted);
   line-height: 1.55;
   font-size: 13px;
+}
+
+.review-context-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.review-context-label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--color-accent);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.review-outline-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 10px;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.review-outline-item {
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.review-outline-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: var(--color-text);
+  font-size: 13px;
+}
+
+.review-outline-head span {
+  flex-shrink: 0;
+  color: var(--color-text-hint);
+  font-size: 12px;
+}
+
+.review-outline-role {
+  color: #d7d9e1 !important;
 }
 
 .review-focus-id {
   color: var(--color-success-text);
   font-size: 12px;
   margin-bottom: 6px;
+}
+
+.review-local-context {
+  margin-top: 10px;
+  padding: 10px;
+  border-left: 3px solid rgba(83, 164, 255, 0.65);
+  background: rgba(83, 164, 255, 0.06);
+}
+
+.review-local-context p {
+  margin-bottom: 6px;
+}
+
+.review-local-context details {
+  margin-top: 8px;
+}
+
+.review-local-context summary {
+  cursor: pointer;
+  color: var(--color-accent);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.review-script-excerpt {
+  max-height: 260px;
+  margin-top: 8px;
+  padding: 10px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  background: var(--color-bg-dark);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: #d7d9e1;
+  font-family: 'Yu Gothic UI', 'Segoe UI', sans-serif;
+  font-size: 12px;
+  line-height: 1.55;
 }
 
 .review-card-detail {

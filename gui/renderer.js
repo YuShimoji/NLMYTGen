@@ -569,6 +569,69 @@ function reviewOptionFor(segment, label) {
   return (segment.options || []).find((opt) => opt.label === label) || null;
 }
 
+function formatReviewSeconds(value) {
+  if (typeof value !== 'number' || !Number.isFinite(value)) return '';
+  return `${Math.round(value)}秒`;
+}
+
+function formatScriptSpan(span) {
+  if (!span) return '';
+  const parts = [];
+  if (span.line_start && span.line_end) parts.push(`台本 ${span.line_start}-${span.line_end}行`);
+  if (span.csv_row_start && span.csv_row_end) parts.push(`CSV ${span.csv_row_start}-${span.csv_row_end}行`);
+  if (typeof span.time_start_sec === 'number' && typeof span.time_end_sec === 'number') {
+    parts.push(`${formatReviewSeconds(span.time_start_sec)}-${formatReviewSeconds(span.time_end_sec)}`);
+  }
+  return parts.join(' / ');
+}
+
+function renderReviewEpisodeContext(packet) {
+  const panel = document.getElementById('review-episode-context');
+  if (!panel) return;
+  const context = packet.episode_context;
+  if (!context) {
+    panel.innerHTML = '';
+    panel.classList.add('hidden');
+    return;
+  }
+  panel.classList.remove('hidden');
+  panel.innerHTML = (
+    `<h3>動画全体の概略</h3>`
+    + `<div class="review-context-grid">`
+    + `<div><span class="review-context-label">タイトル</span><p>${escapeHtml(context.title || packet.episode_id || '')}</p></div>`
+    + `<div><span class="review-context-label">台本/尺</span><p>${escapeHtml(context.source_script || '')} / ${escapeHtml(String(context.script_line_count || ''))}行 / ${escapeHtml(formatReviewSeconds(context.duration_sec))}</p></div>`
+    + `<div><span class="review-context-label">主題</span><p>${escapeHtml(context.thesis_ja || '')}</p></div>`
+    + `<div><span class="review-context-label">想定視聴者</span><p>${escapeHtml(context.audience_ja || '')}</p></div>`
+    + `<div><span class="review-context-label">結末の問い</span><p>${escapeHtml(context.ending_question_ja || '')}</p></div>`
+    + `<div><span class="review-context-label">この画面で判断すること</span><p>${escapeHtml(context.review_scope_note || '')}</p></div>`
+    + `</div>`
+  );
+}
+
+function renderReviewStoryOutline(packet) {
+  const panel = document.getElementById('review-story-outline');
+  if (!panel) return;
+  const outline = packet.story_outline || [];
+  if (!outline.length) {
+    panel.innerHTML = '';
+    panel.classList.add('hidden');
+    return;
+  }
+  panel.classList.remove('hidden');
+  panel.innerHTML = (
+    `<h3>全体構成</h3>`
+    + `<div class="review-outline-list">`
+    + outline.map((item) => (
+      `<div class="review-outline-item">`
+      + `<div class="review-outline-head"><strong>${escapeHtml(item.id || '')} ${escapeHtml(item.title || '')}</strong><span>${escapeHtml(formatReviewSeconds(item.time_start_sec))}-${escapeHtml(formatReviewSeconds(item.time_end_sec))}</span></div>`
+      + `<p class="review-outline-role">${escapeHtml(item.role_ja || '')}</p>`
+      + `<p>${escapeHtml(item.summary_ja || '')}</p>`
+      + `</div>`
+    )).join('')
+    + `</div>`
+  );
+}
+
 function renderReviewOverallActions(packet) {
   const select = document.getElementById('review-overall-action');
   if (!select) return;
@@ -584,6 +647,8 @@ function renderReviewPacket(packet, packetPath) {
   currentReviewDecisionPath = packet.default_decision_path || DEFAULT_REVIEW_DECISION_PATH;
   document.getElementById('review-packet-path').textContent = packetPath || DEFAULT_REVIEW_PACKET_PATH;
   document.getElementById('review-decision-path').textContent = currentReviewDecisionPath;
+  renderReviewEpisodeContext(packet);
+  renderReviewStoryOutline(packet);
   renderReviewOverallActions(packet);
 
   const list = document.getElementById('review-card-list');
@@ -597,6 +662,13 @@ function renderReviewPacket(packet, packetPath) {
       + `<div class="review-focus-id">${escapeHtml(String(index + 1))} · ${escapeHtml(segment.id)}</div>`
       + `<h3>${escapeHtml(segment.title)}</h3>`
       + `<p>${escapeHtml(segment.summary_ja || '')}</p>`
+      + `<div class="review-local-context">`
+      + `<p><strong>位置:</strong> ${escapeHtml(formatScriptSpan(segment.script_span))}</p>`
+      + `<p><strong>この場面の役割:</strong> ${escapeHtml(segment.scene_role_ja || '')}</p>`
+      + `<p><strong>直前:</strong> ${escapeHtml(segment.previous_context_ja || '')}</p>`
+      + `<p><strong>次:</strong> ${escapeHtml(segment.next_context_ja || '')}</p>`
+      + `<details><summary>該当台本抜粋を開く</summary><pre class="review-script-excerpt">${escapeHtml(segment.script_excerpt_ja || '')}</pre></details>`
+      + `</div>`
       + `<p class="review-card-detail"><strong>確認:</strong> ${escapeHtml(segment.decision_prompt || '')}</p>`
       + `<p class="review-card-detail"><strong>リスク:</strong> ${escapeHtml(segment.risk || '')}</p>`
       + `<label class="review-field-label">判断`
@@ -622,6 +694,8 @@ async function loadDefaultReviewPacket() {
     return;
   }
   currentReviewPacket = null;
+  renderReviewEpisodeContext({});
+  renderReviewStoryOutline({});
   panel.classList.add('error');
   panel.textContent = `review packet 読込失敗: ${res.error || 'unknown error'}`;
 }

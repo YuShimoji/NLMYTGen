@@ -103,10 +103,10 @@ pack定義の詳細は `docs/EPISODE_RUN_PACK.md` を内部参照とする。た
 | **L2（Python変換工程）** | CSV 変換・字幕リフロー | コード変更時のみユニットテスト | **開かない** |
 | **L3（YMM4内部工程）** | patch-ymmp / timeline adapter | GUI の Dry Run | **契約変更時のみ** |
 | **creative（創作判断）** | 表情の見え方・テンポ | 人判断 | 完成物を見るとき |
-| **G-27（Real Estate DX）** | GUI `デザインレビュー` / review packet / saved decisions | validator +根拠memo | validator が blocked の間は開かない |
+| **G-27（Real Estate DX）** | GUI `デザインレビュー` / 台本概略付き review packet / saved decisions | validator +根拠memo | validator が blocked の間は開かない |
 | **Baseball screen plan** | screen plan / card order / information budget | screen plan review | PNG/clip placement proof まで進んだ時だけ |
 
-G-24 skit_group は template-first 基盤として閉じている。`SKIT_TEMPLATE_SOURCE_MISSING` / `SKIT_TEMPLATE_ANALYSIS_INSUFFICIENT` は GUI 上の failure class として先に止め、YMM4 での手置き修正へ押し戻さない。Real Estate DX の場面判断は G-27 として扱い、GUI `デザインレビュー` タブで `samples/_probe/g24/real_estate_dx_review_packet.json` を読み、`samples/_probe/g24/real_estate_dx_review_decisions.json` を保存する。`production template exists` / `accepted proxy` / `cut from plan` の分類が済むまで新しい YMM4 placement に進めない。
+G-24 skit_group は template-first 基盤として閉じている。`SKIT_TEMPLATE_SOURCE_MISSING` / `SKIT_TEMPLATE_ANALYSIS_INSUFFICIENT` は GUI 上の failure class として先に止め、YMM4 での手置き修正へ押し戻さない。Real Estate DX の場面判断は G-27 として扱い、GUI `デザインレビュー` タブで `samples/_probe/g24/real_estate_dx_review_packet.json` を読み、動画全体の概略、RE-01〜RE-07E の全体構成、各 segment の台本抜粋と前後文脈を確認してから `samples/_probe/g24/real_estate_dx_review_decisions.json` を保存する。`production template exists` / `accepted proxy` / `cut from plan` の分類が済むまで新しい YMM4 placement に進めない。
 
 ---
 

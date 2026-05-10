@@ -1,15 +1,19 @@
 # G-27 Review Console Spec
 
 G-27 Real Estate DX の制作判断を Electron GUI の `デザインレビュー`
-タブに集約するための v1 仕様。Markdown / HTML / chat は補助に降格し、
+タブに集約するための v1.1 仕様。Markdown / HTML / chat は補助に降格し、
 判断結果は JSON として repo に戻す。
+
+v1.1 の主な修正点は、局所的な overlay/card 判断だけでなく、台本全体の
+概略、RE-01〜RE-07E の構成、各 segment の台本抜粋と前後文脈を GUI に
+載せること。ユーザーに演出カードだけを見せて演技指導を求める状態にしない。
 
 ## Responsibility Split
 
 | surface | role |
 | --- | --- |
-| GUI `デザインレビュー` | primary review surface。短い日本語カードで判断を受け、保存する |
-| `review_packet.json` | GUI が読む判断単位。segment、選択肢、source refs、gate を持つ |
+| GUI `デザインレビュー` | primary review surface。動画全体の概略、構成、短い日本語カード、台本抜粋を見せて判断を受け、保存する |
+| `review_packet.json` | GUI が読む判断単位。episode context、story outline、segment、選択肢、source refs、gate を持つ |
 | `review_decisions.json` | GUI が保存する差し戻し伝票。次の scene decision packet / gap report の入力 |
 | `*_review_map.md` | 根拠ログ。通常レビューでは読ませない |
 | compact HTML / readback JSON | proof / preview。最終品質や production timing の承認ではない |
@@ -28,14 +32,43 @@ Python 画像生成、動画生成、素材自動取得は含めない。
 - `default_decision_path`
 - `source_refs`
 - `gates`
+- `episode_context`
+- `story_outline[]`
 - `segments[]`
 - `overall_actions[]`
+
+`episode_context` の最小必須項目:
+
+- `title`
+- `source_script`
+- `script_line_count`
+- `duration_sec`
+- `thesis_ja`
+- `audience_ja`
+- `ending_question_ja`
+- `review_scope_note`
+
+`story_outline[]` の最小必須項目:
+
+- `id`
+- `title`
+- `role_ja`
+- `summary_ja`
+- `line_start`
+- `line_end`
+- `time_start_sec`
+- `time_end_sec`
 
 `segments[]` の最小必須項目:
 
 - `id`
 - `title`
 - `summary_ja`
+- `scene_role_ja`
+- `script_span`
+- `script_excerpt_ja`
+- `previous_context_ja`
+- `next_context_ja`
 - `decision_prompt`
 - `risk`
 - `options[]`
@@ -76,7 +109,8 @@ Python 画像生成、動画生成、素材自動取得は含めない。
 
 ## Workflow
 
-1. GUI loads the default `review_packet`.
+1. GUI loads the default `review_packet` and renders episode context, story
+   outline, local script context, and segment cards.
 2. User selects a decision per segment and may add comments.
 3. GUI saves `review_decisions` to the default decision path.
 4. Assistant reads `review_decisions` and creates the G-27 scene decision packet
@@ -94,6 +128,8 @@ This Review Console slice is complete when:
 - `FEATURE_REGISTRY.md`, `GUI_MINIMUM_PATH.md`, and `runtime-state.md` name the
   GUI Review Console as the G-27 primary review surface.
 - GUI loads `review_packet` from a repo-relative path.
+- GUI displays episode context, story outline, each segment's script span,
+  script excerpt, previous context, next context, and scene role.
 - GUI saves `review_decisions` to a repo-relative path and rejects path
   traversal or absolute paths.
 - `review_map.md` remains only as evidence/fallback detail.

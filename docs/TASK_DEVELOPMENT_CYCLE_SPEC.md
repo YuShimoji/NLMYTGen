@@ -34,7 +34,7 @@ G-24 は `skit_group` の template-first 基盤で閉じる。Real Estate DX 固
 | --- | --- | --- |
 | scene bible | block ごとの line range / cast continuity / props / screen placement | 背景劇が語り手リアクションではなく独立小場面になっているか |
 | validator | `background_skit_blueprint.json` + `validate-background-skit-blueprint` result | `passed` 以外は cast motion IR / production timing へ進めない |
-| GUI Review Console | `review_packet` を GUI で短縮カード化し、`review_decisions` を保存 | 画面内物語として意味が通るか、修正・統合・proxy 整理へ回すか |
+| GUI Review Console | `review_packet` を GUI で台本概略・全体構成・台本抜粋付きカード化し、`review_decisions` を保存 | 画面内物語として意味が通るか、修正・統合・proxy 整理へ回すか |
 | asset decision | `production template exists` / `accepted proxy` / `cut from plan` | 各場面を production に残すか、proxy で進めるか、削るか |
 | revised blueprint | asset decision を反映した blueprint / gap report | validator 再実行または明示 blocked closeout へ進めるか |
 
