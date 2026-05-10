@@ -26,6 +26,7 @@
 
 - [GUI_MINIMUM_PATH.md](GUI_MINIMUM_PATH.md) — **Electron GUI**: 最小ファイル集合・必須/任意・ウィザード範囲（S-3 / S-6b）・L2/L3/creative 検証ラダー
 - [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md) — **改善レビューサイクル正本**: タスクごとの review surface / machine proof / human signal / close gate / next artifact。G-27 Real Estate DX、本流/sidequest 境界、Baseball screen plan、GUI/YMM4 の見る場所を統一する
+- [PRODUCTION_PIPELINE_CONTRACT.md](PRODUCTION_PIPELINE_CONTRACT.md) — **量産pipeline契約**: NotebookLM script → Script Beat IR → Visual Direction → Shot Layout → Motion Beat → GUI Review → downstream artifacts の artifact authority / Definition of Done / multi-topic smoke 計画。GUI timeline を primary review surface とし、HTML/PNG/JSON を evidence に限定する
 - [EPISODE_RUN_PACK.md](EPISODE_RUN_PACK.md) — **1本通し制作パック**: `_tmp/episode_runs/<episode_id>/` の構成、GUI `Episode Pack Root` 導線、既定保存path、YMM4確認と gaps 記録の境界
 - [verification/PROJECT_INIT_CHECKLIST.md](verification/PROJECT_INIT_CHECKLIST.md) — **実案件投入**: palette → registry → validate-ir → apply-production の 5 ステップ
 - [verification/FAILURE_DIAGNOSIS_MATRIX.md](verification/FAILURE_DIAGNOSIS_MATRIX.md) — ERROR/WARNING 全 64 種の診断マトリクス
