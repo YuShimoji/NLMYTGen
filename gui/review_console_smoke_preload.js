@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repoRoot = path.resolve(__dirname, '..');
+let lastReviewDecisionSave = null;
 
 function readReviewPacket(packetPath) {
   const fullPath = path.resolve(repoRoot, packetPath);
@@ -23,7 +24,11 @@ const nullPath = async () => null;
 contextBridge.exposeInMainWorld('nlmytgen', {
   getPathForFile: () => '',
   loadReviewPacket: async (packetPath) => readReviewPacket(packetPath),
-  saveReviewDecisions: async (opts) => ({ ok: true, path: opts?.decisionPath || 'smoke.json' }),
+  saveReviewDecisions: async (opts) => {
+    lastReviewDecisionSave = opts;
+    return { ok: true, path: opts?.decisionPath || 'smoke.json' };
+  },
+  getLastReviewDecisionSave: async () => lastReviewDecisionSave,
   openRepoDoc: ok,
   openFolder: ok,
   loadSettings: async () => ({}),

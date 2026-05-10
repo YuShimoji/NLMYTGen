@@ -15,6 +15,9 @@ function switchMainTab(tabName, { alignWizard = true } = {}) {
   document.querySelectorAll('.tab-content').forEach((s) => {
     s.classList.toggle('active', s.id === `tab-${tabName}`);
   });
+  const reviewWorkbenchOn = tabName === 'review';
+  document.body.classList.toggle('review-workbench-active', reviewWorkbenchOn);
+  document.querySelector('.body-content')?.classList.toggle('review-workbench-active', reviewWorkbenchOn);
   if (tabName === 'scoring' || tabName === 'review') {
     clearWizardMainFocus();
   }
@@ -560,6 +563,8 @@ const DEFAULT_REVIEW_PACKET_PATH = 'samples/_probe/g24/real_estate_dx_review_pac
 const DEFAULT_REVIEW_DECISION_PATH = 'samples/_probe/g24/real_estate_dx_review_decisions.json';
 let currentReviewPacket = null;
 let currentReviewDecisionPath = DEFAULT_REVIEW_DECISION_PATH;
+let activeReviewIndex = 0;
+let reviewDecisionState = [];
 
 function escapeAttr(s) {
   return escapeHtml(s).replace(/"/g, '&quot;');
@@ -583,6 +588,48 @@ function formatScriptSpan(span) {
     parts.push(`${formatReviewSeconds(span.time_start_sec)}-${formatReviewSeconds(span.time_end_sec)}`);
   }
   return parts.join(' / ');
+}
+
+function getReviewSegments() {
+  return currentReviewPacket?.segments || [];
+}
+
+function getReviewDecisionState(index) {
+  return reviewDecisionState[index] || { decision: '', comment: '' };
+}
+
+function setReviewDecisionState(index, patch) {
+  if (!reviewDecisionState[index]) {
+    reviewDecisionState[index] = { decision: '', comment: '' };
+  }
+  reviewDecisionState[index] = { ...reviewDecisionState[index], ...patch };
+}
+
+function getReviewDecisionOption(segment, index) {
+  const state = getReviewDecisionState(index);
+  return reviewOptionFor(segment, state.decision);
+}
+
+function renderReviewProgress() {
+  const segments = getReviewSegments();
+  const progress = document.getElementById('review-progress-summary');
+  const missing = document.getElementById('review-missing-list');
+  if (!segments.length) {
+    if (progress) progress.textContent = '未読込';
+    if (missing) missing.textContent = '未読込';
+    return;
+  }
+  const missingIds = segments
+    .filter((_segment, index) => !getReviewDecisionState(index).decision)
+    .map((segment) => segment.id);
+  const doneCount = segments.length - missingIds.length;
+  if (progress) progress.textContent = `${doneCount}/${segments.length} 判断済み`;
+  if (missing) {
+    missing.textContent = missingIds.length
+      ? `未判断: ${missingIds.join(' / ')}`
+      : '全 segment 判断済みです。';
+    missing.classList.toggle('complete', missingIds.length === 0);
+  }
 }
 
 function renderReviewEpisodeContext(packet) {
@@ -632,6 +679,137 @@ function renderReviewStoryOutline(packet) {
   );
 }
 
+function renderReviewTimeline(packet) {
+  const timeline = document.getElementById('review-timeline');
+  if (!timeline) return;
+  const segments = packet?.segments || [];
+  const outline = packet?.story_outline || [];
+  if (!segments.length) {
+    timeline.innerHTML = '<p class="hint">review packet が未読込です。</p>';
+    return;
+  }
+  timeline.innerHTML = segments.map((segment, index) => {
+    const state = getReviewDecisionState(index);
+    const outlineItem = outline.find((item) => item.id === segment.id) || {};
+    const active = index === activeReviewIndex;
+    const statusClass = state.decision ? 'done' : 'pending';
+    const timeLabel = formatScriptSpan(segment.script_span)
+      || `${formatReviewSeconds(outlineItem.time_start_sec)}-${formatReviewSeconds(outlineItem.time_end_sec)}`;
+    return (
+      `<button type="button" class="review-timeline-segment ${statusClass}${active ? ' active' : ''}" data-review-index="${index}" aria-current="${active ? 'step' : 'false'}">`
+      + `<span class="review-timeline-id">${escapeHtml(segment.id || '')}</span>`
+      + `<span class="review-timeline-title">${escapeHtml(segment.title || '')}</span>`
+      + `<span class="review-timeline-time">${escapeHtml(timeLabel || '')}</span>`
+      + `<span class="review-timeline-status">${state.decision ? '判断済み' : '未選択'}</span>`
+      + `</button>`
+    );
+  }).join('');
+}
+
+function renderReviewSegmentDetail(packet) {
+  const detail = document.getElementById('review-segment-detail');
+  if (!detail) return;
+  const segments = packet?.segments || [];
+  const segment = segments[activeReviewIndex];
+  if (!segment) {
+    detail.innerHTML = '<p class="hint">segment が未選択です。</p>';
+    return;
+  }
+  const optionList = (segment.options || []).map((option) => (
+    `<li><strong>${escapeHtml(option.label || '')}</strong><span>${escapeHtml(option.next_effect || '')}</span></li>`
+  )).join('');
+  detail.innerHTML = (
+    `<div class="review-segment-detail-head">`
+    + `<div><p class="review-focus-id">${escapeHtml(String(activeReviewIndex + 1))} · ${escapeHtml(segment.id || '')}</p><h3>${escapeHtml(segment.title || '')}</h3></div>`
+    + `<span>${escapeHtml(formatScriptSpan(segment.script_span))}</span>`
+    + `</div>`
+    + `<p class="review-segment-summary-text">${escapeHtml(segment.summary_ja || '')}</p>`
+    + `<div class="review-local-context">`
+    + `<p><strong>この場面の役割:</strong> ${escapeHtml(segment.scene_role_ja || '')}</p>`
+    + `<p><strong>直前:</strong> ${escapeHtml(segment.previous_context_ja || '')}</p>`
+    + `<p><strong>次:</strong> ${escapeHtml(segment.next_context_ja || '')}</p>`
+    + `<details open><summary>該当台本抜粋</summary><pre class="review-script-excerpt">${escapeHtml(segment.script_excerpt_ja || '')}</pre></details>`
+    + `</div>`
+    + `<div class="review-decision-context">`
+    + `<p><strong>確認:</strong> ${escapeHtml(segment.decision_prompt || '')}</p>`
+    + `<p><strong>リスク:</strong> ${escapeHtml(segment.risk || '')}</p>`
+    + `<p><strong>未選択時の次工程:</strong> ${escapeHtml(segment.next_effect || '')}</p>`
+    + `</div>`
+    + `<div class="review-option-reference"><h4>選択肢の意味</h4><ul>${optionList}</ul></div>`
+  );
+}
+
+function renderReviewDecisionInspector(packet) {
+  const segments = packet?.segments || [];
+  const segment = segments[activeReviewIndex];
+  const label = document.getElementById('review-active-segment-label');
+  const select = document.getElementById('review-active-decision');
+  const comment = document.getElementById('review-active-comment');
+  const effect = document.getElementById('review-active-effect');
+  if (!segment || !select || !comment || !effect) {
+    if (label) label.textContent = 'segment 未選択';
+    return;
+  }
+  const state = getReviewDecisionState(activeReviewIndex);
+  const options = (segment.options || []).map((option) => (
+    `<option value="${escapeAttr(option.label)}">${escapeHtml(option.label)}</option>`
+  )).join('');
+  if (label) label.textContent = `${segment.id} · ${segment.title}`;
+  select.innerHTML = `<option value="">未選択</option>${options}`;
+  select.value = state.decision || '';
+  comment.value = state.comment || '';
+  const option = reviewOptionFor(segment, state.decision);
+  effect.textContent = option ? option.next_effect : '未選択';
+}
+
+function renderReviewSegmentSummary(packet) {
+  const list = document.getElementById('review-card-list');
+  if (!list) return;
+  const segments = packet?.segments || [];
+  if (!segments.length) {
+    list.innerHTML = '';
+    return;
+  }
+  list.innerHTML = segments.map((segment, index) => {
+    const state = getReviewDecisionState(index);
+    const active = index === activeReviewIndex;
+    return (
+      `<button type="button" class="review-summary-row review-segment-card${active ? ' active' : ''}" data-review-index="${index}">`
+      + `<span>${escapeHtml(segment.id || '')}</span>`
+      + `<strong>${escapeHtml(segment.title || '')}</strong>`
+      + `<em>${escapeHtml(state.decision || '未選択')}</em>`
+      + `</button>`
+    );
+  }).join('');
+}
+
+function renderReviewWorkbench(packet) {
+  renderReviewTimeline(packet);
+  renderReviewSegmentDetail(packet);
+  renderReviewDecisionInspector(packet);
+  renderReviewSegmentSummary(packet);
+  renderReviewProgress();
+}
+
+function selectReviewSegment(index) {
+  const segments = getReviewSegments();
+  if (!segments.length) return;
+  activeReviewIndex = Math.min(Math.max(index, 0), segments.length - 1);
+  renderReviewWorkbench(currentReviewPacket);
+}
+
+function refreshReviewDecisionViews() {
+  renderReviewTimeline(currentReviewPacket);
+  renderReviewSegmentSummary(currentReviewPacket);
+  renderReviewProgress();
+  const segment = getReviewSegments()[activeReviewIndex];
+  const effect = document.getElementById('review-active-effect');
+  if (segment && effect) {
+    const option = getReviewDecisionOption(segment, activeReviewIndex);
+    effect.textContent = option ? option.next_effect : '未選択';
+  }
+}
+
 function renderReviewOverallActions(packet) {
   const select = document.getElementById('review-overall-action');
   if (!select) return;
@@ -645,41 +823,15 @@ function renderReviewOverallActions(packet) {
 function renderReviewPacket(packet, packetPath) {
   currentReviewPacket = packet;
   currentReviewDecisionPath = packet.default_decision_path || DEFAULT_REVIEW_DECISION_PATH;
+  activeReviewIndex = 0;
   document.getElementById('review-packet-path').textContent = packetPath || DEFAULT_REVIEW_PACKET_PATH;
   document.getElementById('review-decision-path').textContent = currentReviewDecisionPath;
   renderReviewEpisodeContext(packet);
   renderReviewStoryOutline(packet);
   renderReviewOverallActions(packet);
-
-  const list = document.getElementById('review-card-list');
   const segments = packet.segments || [];
-  list.innerHTML = segments.map((segment, index) => {
-    const options = (segment.options || []).map((option) => (
-      `<option value="${escapeAttr(option.label)}">${escapeHtml(option.label)}</option>`
-    )).join('');
-    return (
-      `<article class="review-focus-card review-segment-card">`
-      + `<div class="review-focus-id">${escapeHtml(String(index + 1))} · ${escapeHtml(segment.id)}</div>`
-      + `<h3>${escapeHtml(segment.title)}</h3>`
-      + `<p>${escapeHtml(segment.summary_ja || '')}</p>`
-      + `<div class="review-local-context">`
-      + `<p><strong>位置:</strong> ${escapeHtml(formatScriptSpan(segment.script_span))}</p>`
-      + `<p><strong>この場面の役割:</strong> ${escapeHtml(segment.scene_role_ja || '')}</p>`
-      + `<p><strong>直前:</strong> ${escapeHtml(segment.previous_context_ja || '')}</p>`
-      + `<p><strong>次:</strong> ${escapeHtml(segment.next_context_ja || '')}</p>`
-      + `<details><summary>該当台本抜粋を開く</summary><pre class="review-script-excerpt">${escapeHtml(segment.script_excerpt_ja || '')}</pre></details>`
-      + `</div>`
-      + `<p class="review-card-detail"><strong>確認:</strong> ${escapeHtml(segment.decision_prompt || '')}</p>`
-      + `<p class="review-card-detail"><strong>リスク:</strong> ${escapeHtml(segment.risk || '')}</p>`
-      + `<label class="review-field-label">判断`
-      + `<select class="review-select review-decision-select" data-review-index="${index}">`
-      + `<option value="">未選択</option>${options}</select></label>`
-      + `<label class="review-field-label">コメント`
-      + `<textarea class="review-segment-comment" data-review-index="${index}" rows="3" placeholder="必要な場合だけ補足"></textarea></label>`
-      + `<p class="review-selected-effect">未選択</p>`
-      + `</article>`
-    );
-  }).join('');
+  reviewDecisionState = segments.map(() => ({ decision: '', comment: '' }));
+  renderReviewWorkbench(packet);
 }
 
 async function loadDefaultReviewPacket() {
@@ -694,8 +846,11 @@ async function loadDefaultReviewPacket() {
     return;
   }
   currentReviewPacket = null;
+  reviewDecisionState = [];
+  activeReviewIndex = 0;
   renderReviewEpisodeContext({});
   renderReviewStoryOutline({});
+  renderReviewWorkbench(null);
   panel.classList.add('error');
   panel.textContent = `review packet 読込失敗: ${res.error || 'unknown error'}`;
 }
@@ -704,14 +859,13 @@ function collectReviewDecisionPayload() {
   const packet = currentReviewPacket;
   const segments = packet?.segments || [];
   const decisions = segments.map((segment, index) => {
-    const select = document.querySelector(`.review-decision-select[data-review-index="${index}"]`);
-    const comment = document.querySelector(`.review-segment-comment[data-review-index="${index}"]`);
-    const decision = select?.value || '';
+    const state = getReviewDecisionState(index);
+    const decision = state.decision || '';
     const option = reviewOptionFor(segment, decision);
     return {
       segment_id: segment.id,
       decision,
-      comment: comment?.value || '',
+      comment: state.comment || '',
       classification_hint: option?.classification_hint || (decision ? 'needs_revision' : 'unselected'),
     };
   });
@@ -800,17 +954,27 @@ function initDesignReviewTab() {
     });
   }
 
-  document.getElementById('review-card-list')?.addEventListener('change', (event) => {
-    const select = event.target.closest('.review-decision-select');
-    if (!select || !currentReviewPacket) return;
-    const index = parseInt(select.dataset.reviewIndex, 10);
-    const segment = currentReviewPacket.segments[index];
-    if (!segment) return;
-    const option = reviewOptionFor(segment, select.value);
-    const effect = select.closest('.review-segment-card')?.querySelector('.review-selected-effect');
-    if (effect) {
-      effect.textContent = option ? option.next_effect : '未選択';
-    }
+  document.getElementById('review-timeline')?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-review-index]');
+    if (!button) return;
+    selectReviewSegment(parseInt(button.dataset.reviewIndex, 10));
+  });
+
+  document.getElementById('review-card-list')?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-review-index]');
+    if (!button) return;
+    selectReviewSegment(parseInt(button.dataset.reviewIndex, 10));
+  });
+
+  document.getElementById('review-active-decision')?.addEventListener('change', (event) => {
+    if (!currentReviewPacket) return;
+    setReviewDecisionState(activeReviewIndex, { decision: event.target.value || '' });
+    refreshReviewDecisionViews();
+  });
+
+  document.getElementById('review-active-comment')?.addEventListener('input', (event) => {
+    if (!currentReviewPacket) return;
+    setReviewDecisionState(activeReviewIndex, { comment: event.target.value || '' });
   });
 
   loadDefaultReviewPacket();

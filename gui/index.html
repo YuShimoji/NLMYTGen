@@ -264,12 +264,12 @@
 
     <!-- デザインレビュータブ -->
     <section id="tab-review" class="tab-content">
-      <div class="review-panel">
+      <div class="review-panel review-workbench-panel">
         <div class="review-heading">
           <div>
             <p class="review-kicker">Real Estate DX</p>
-            <h2>overlay/card デザインレビュー</h2>
-            <p class="hint">確認場所はこのタブに固定します。ここで見るのは動画の方針・比喩・情報密度で、YMM4 の最終品質判断や制作タイミング確定ではありません。</p>
+            <h2>G-27 タイムライン型デザインレビュー</h2>
+            <p class="hint">動画全体の流れから segment を選び、台本文脈・演出意図・次工程への影響を見て判断します。YMM4 の最終品質判断や制作タイミング確定ではありません。</p>
           </div>
           <div class="review-actions">
             <button type="button" id="btn-review-open-preview" class="primary">HTMLプレビューを開く</button>
@@ -311,28 +311,62 @@
         <div id="review-episode-context" class="review-context-panel"></div>
         <div id="review-story-outline" class="review-outline-panel"></div>
 
-        <div class="review-reply-panel">
-          <h3>全体判断</h3>
-          <p class="hint">ここで保存したJSONが、次の scene decision packet / asset-proxy gap report の入力になります。</p>
-          <label class="review-field-label">
-            全体の次動作
-            <select id="review-overall-action" class="review-select">
-              <option value="">未選択</option>
-            </select>
-          </label>
-          <label class="review-field-label">
-            全体コメント
-            <textarea id="review-overall-comment" class="review-reply-box" rows="3" placeholder="全体として重い箇所、先に素材/proxy整理へ回したい箇所など"></textarea>
-          </label>
-          <div class="review-actions">
-            <button type="button" id="btn-review-reload-packet">packet再読込</button>
-            <button type="button" id="btn-review-save-decisions" class="primary">判断JSONを保存</button>
-            <button type="button" id="btn-review-copy-reply">判断概要をコピー</button>
+        <div class="review-workbench" aria-label="G-27 review workbench">
+          <div class="review-timeline-panel">
+            <div class="review-section-head">
+              <div>
+                <h3>全体タイムライン</h3>
+                <p class="hint">segment を選ぶと、下の詳細と判断ペインが切り替わります。</p>
+              </div>
+              <div id="review-progress-summary" class="review-progress-summary">未読込</div>
+            </div>
+            <div id="review-timeline" class="review-timeline" role="list" aria-label="segment timeline"></div>
           </div>
-          <div id="review-decision-result" class="result-panel hidden"></div>
-        </div>
 
-        <div id="review-card-list" class="review-focus-list" aria-label="重点確認"></div>
+          <div class="review-workbench-grid">
+            <article id="review-segment-detail" class="review-segment-detail" aria-live="polite"></article>
+
+            <aside class="review-decision-inspector" aria-label="判断保存">
+              <h3>判断ペイン</h3>
+              <p id="review-active-segment-label" class="review-focus-id">segment 未選択</p>
+              <label class="review-field-label">
+                このsegmentの判断
+                <select id="review-active-decision" class="review-select">
+                  <option value="">未選択</option>
+                </select>
+              </label>
+              <label class="review-field-label">
+                コメント
+                <textarea id="review-active-comment" class="review-segment-comment" rows="4" placeholder="必要な場合だけ補足"></textarea>
+              </label>
+              <p id="review-active-effect" class="review-selected-effect">未選択</p>
+
+              <div class="review-reply-panel review-overall-panel">
+                <h3>全体判断</h3>
+                <p class="hint">ここで保存したJSONが、次の scene decision packet / asset-proxy gap report の入力になります。</p>
+                <label class="review-field-label">
+                  全体の次動作
+                  <select id="review-overall-action" class="review-select">
+                    <option value="">未選択</option>
+                  </select>
+                </label>
+                <label class="review-field-label">
+                  全体コメント
+                  <textarea id="review-overall-comment" class="review-reply-box" rows="3" placeholder="全体として重い箇所、先に素材/proxy整理へ回したい箇所など"></textarea>
+                </label>
+                <div id="review-missing-list" class="review-missing-list">未読込</div>
+                <div class="review-actions">
+                  <button type="button" id="btn-review-reload-packet">packet再読込</button>
+                  <button type="button" id="btn-review-save-decisions" class="primary">判断JSONを保存</button>
+                  <button type="button" id="btn-review-copy-reply">判断概要をコピー</button>
+                </div>
+                <div id="review-decision-result" class="result-panel hidden"></div>
+              </div>
+            </aside>
+          </div>
+
+          <div id="review-card-list" class="review-focus-list review-segment-summary" aria-label="segment summary"></div>
+        </div>
       </div>
     </section>
 
