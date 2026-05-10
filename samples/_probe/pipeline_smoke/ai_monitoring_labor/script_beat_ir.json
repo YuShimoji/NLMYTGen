@@ -1,0 +1,65 @@
+{
+  "version": "1.0",
+  "topic_id": "ai_monitoring_labor",
+  "source_script": "samples/_probe/pipeline_smoke/ai_monitoring_labor/source_script.txt",
+  "reversible_to_script": true,
+  "prohibited_fields_absent": [
+    "css",
+    "html",
+    "frame_coordinates",
+    "ymm4_parameters"
+  ],
+  "segments": [
+    {
+      "id": "ai-monitoring-labor",
+      "title": "AI monitoring labor",
+      "line_start": 1,
+      "line_end": 3,
+      "role_ja": "pipeline smoke segment",
+      "beats": [
+        {
+          "id": "ai-monitoring-labor-beginning",
+          "phase": "beginning",
+          "line_start": 1,
+          "line_end": 1,
+          "narration_cue": "語り手A：AIは作業を助ける一方で、働き方を細かく測る道具にもなります。",
+          "claim": "作業端末と明るい補助パネル",
+          "elements": [
+            "worker silhouette",
+            "device telemetry",
+            "procedure card",
+            "fatigue marker"
+          ]
+        },
+        {
+          "id": "ai-monitoring-labor-development",
+          "phase": "development",
+          "line_start": 2,
+          "line_end": 2,
+          "narration_cue": "語り手B：数字だけを見ると、なぜ人が疲弊するのかは見えにくくなります。",
+          "claim": "端末ログが人物の周囲に増える",
+          "elements": [
+            "worker silhouette",
+            "device telemetry",
+            "procedure card",
+            "fatigue marker"
+          ]
+        },
+        {
+          "id": "ai-monitoring-labor-turn",
+          "phase": "turn",
+          "line_start": 3,
+          "line_end": 3,
+          "narration_cue": "語り手A：必要なのは、効率の画面と人間の負荷を同時に見せることです。",
+          "claim": "人物の影と負荷マーカーを残す",
+          "elements": [
+            "worker silhouette",
+            "device telemetry",
+            "procedure card",
+            "fatigue marker"
+          ]
+        }
+      ]
+    }
+  ]
+}

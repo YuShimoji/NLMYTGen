@@ -1,0 +1,93 @@
+{
+  "version": "1.0",
+  "episode_id": "real_estate_dx_baseline",
+  "review_scope": "multi_topic_pipeline_smoke",
+  "default_decision_path": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/review_decisions.json",
+  "episode_context": {
+    "title": "Real Estate DX baseline",
+    "source_script": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/source_script.txt",
+    "thesis_ja": "量産pipelineの接続確認用fixture。完成動画品質は評価しない。",
+    "audience_ja": "pipeline設計者",
+    "review_scope_note": "GUI timelineでproof / beat table / warnings / blocked reason / next actionを見る。"
+  },
+  "source_refs": {
+    "script_beat_ir": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/script_beat_ir.json",
+    "visual_direction_contract": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/visual_direction_contract.json",
+    "shot_layout_plan": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/shot_layout_plan.json",
+    "motion_beat_plan": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/motion_beat_plan.json",
+    "proof_sidecar": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/visual_treatment_proof.json"
+  },
+  "gates": {
+    "current_state": "reviewable",
+    "blocked_reason": "production asset/proxy classification is unresolved; YMM4 remains blocked",
+    "next_action": "review the smoke proof in GUI, then classify accepted proxy / revise / defer",
+    "forbidden": [
+      "G-27 v3 proof",
+      "scene decision packet",
+      "asset/proxy gap report",
+      "YMM4 adapter output",
+      "render",
+      "production timing",
+      "creative acceptance"
+    ]
+  },
+  "story_outline": [
+    {
+      "id": "real-estate-dx-baseline",
+      "title": "Real Estate DX",
+      "role_ja": "pipeline smoke review unit",
+      "summary_ja": "スマホ検索と奥の業者DB → 公開ポータルへ出る一部情報 → 買わない理由も残す",
+      "line_start": 1,
+      "line_end": 3
+    }
+  ],
+  "segments": [
+    {
+      "id": "real-estate-dx-baseline",
+      "title": "Real Estate DX",
+      "summary_ja": "Real Estate DX baselineの最小3-beat smoke。",
+      "scene_role_ja": "工程接続確認。審美的完成度は評価しない。",
+      "previous_context_ja": "source_script fixtureから開始。",
+      "next_context_ja": "review the smoke proof in GUI, then classify accepted proxy / revise / defer",
+      "decision_prompt": "このtopicのpipeline接続はGUI上でreviewableか。",
+      "risk": "production asset/proxy classification is unresolved; YMM4 remains blocked",
+      "script_span": {
+        "line_start": 1,
+        "line_end": 3
+      },
+      "script_excerpt_ja": "語り手A：スマホで物件を探せるのに、なぜ仲介の価値が残るのでしょうか。\n語り手B：表に出ている情報と、業者側で見ている情報にはまだ差があります。\n語り手A：大事なのは、選ぶ理由だけでなく買わない理由まで整理できるかです。",
+      "next_effect": "review the smoke proof in GUI, then classify accepted proxy / revise / defer",
+      "options": [
+        {
+          "label": "接続OK",
+          "classification_hint": "reviewable",
+          "next_effect": "next smoke can reuse this path"
+        },
+        {
+          "label": "修正",
+          "classification_hint": "needs_revision",
+          "next_effect": "revise fixture contract"
+        },
+        {
+          "label": "保留",
+          "classification_hint": "defer",
+          "next_effect": "keep blocked reason visible"
+        }
+      ]
+    }
+  ],
+  "overall_actions": [
+    {
+      "label": "3テーマsmoke継続",
+      "value": "continue_multi_topic_smoke"
+    },
+    {
+      "label": "fixture修正",
+      "value": "revise_fixtures"
+    },
+    {
+      "label": "保留",
+      "value": "defer"
+    }
+  ]
+}

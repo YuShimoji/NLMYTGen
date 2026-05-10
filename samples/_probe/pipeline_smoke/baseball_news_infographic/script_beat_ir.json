@@ -1,0 +1,65 @@
+{
+  "version": "1.0",
+  "topic_id": "baseball_news_infographic",
+  "source_script": "samples/_probe/pipeline_smoke/baseball_news_infographic/source_script.txt",
+  "reversible_to_script": true,
+  "prohibited_fields_absent": [
+    "css",
+    "html",
+    "frame_coordinates",
+    "ymm4_parameters"
+  ],
+  "segments": [
+    {
+      "id": "baseball-news-infographic",
+      "title": "Baseball news infographic",
+      "line_start": 1,
+      "line_end": 3,
+      "role_ja": "pipeline smoke segment",
+      "beats": [
+        {
+          "id": "baseball-news-infographic-beginning",
+          "phase": "beginning",
+          "line_start": 1,
+          "line_end": 1,
+          "narration_cue": "語り手A：今日の試合は、一つの数字だけでは流れが見えません。",
+          "claim": "スコアボードと短い見出し",
+          "elements": [
+            "scoreboard",
+            "stat card",
+            "field map",
+            "provenance badge"
+          ]
+        },
+        {
+          "id": "baseball-news-infographic-development",
+          "phase": "development",
+          "line_start": 2,
+          "line_end": 2,
+          "narration_cue": "語り手B：得点、投球、守備位置を並べると、転機がどこだったか見えてきます。",
+          "claim": "得点カードと投球カードを分ける",
+          "elements": [
+            "scoreboard",
+            "stat card",
+            "field map",
+            "provenance badge"
+          ]
+        },
+        {
+          "id": "baseball-news-infographic-turn",
+          "phase": "turn",
+          "line_start": 3,
+          "line_end": 3,
+          "narration_cue": "語り手A：速報では、結論を急がず根拠の粒度を画面で分ける必要があります。",
+          "claim": "フィールド図と出典バッジを分離する",
+          "elements": [
+            "scoreboard",
+            "stat card",
+            "field map",
+            "provenance badge"
+          ]
+        }
+      ]
+    }
+  ]
+}

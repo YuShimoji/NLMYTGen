@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "topic_id": "baseball_news_infographic",
+  "topic_state": "blocked",
+  "frame_count": 3,
+  "proof_image": "samples/_probe/pipeline_smoke/baseball_news_infographic/visual_treatment_proof.png",
+  "screenshot_width": 1161,
+  "screenshot_height": 620,
+  "visible_in_gui_required": true,
+  "standalone_html_png_json_is_completion": false,
+  "blocked_reason": "data/provenance fixture and screen-plan acceptance are not complete",
+  "next_action": "create a provenance-safe screen-plan smoke before any renderer or YMM4 path"
+}

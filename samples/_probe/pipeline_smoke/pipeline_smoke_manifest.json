@@ -1,0 +1,83 @@
+{
+  "version": "1.0",
+  "purpose": "multi-topic production pipeline smoke; not finished video quality",
+  "primary_review_surface": "GUI timeline",
+  "standalone_html_png_json_is_completion": false,
+  "forbidden": [
+    "G-27 v3 proof",
+    "G-27 scene decision packet",
+    "asset/proxy gap report",
+    "YMM4 adapter output",
+    "render",
+    "production timing",
+    "creative acceptance"
+  ],
+  "topics": [
+    {
+      "id": "real_estate_dx_baseline",
+      "title": "Real Estate DX baseline",
+      "state": "reviewable",
+      "blocked_reason": "production asset/proxy classification is unresolved; YMM4 remains blocked",
+      "next_action": "review the smoke proof in GUI, then classify accepted proxy / revise / defer",
+      "artifacts": {
+        "source_script": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/source_script.txt",
+        "script_beat_ir": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/script_beat_ir.json",
+        "visual_direction_contract": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/visual_direction_contract.json",
+        "shot_layout_plan": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/shot_layout_plan.json",
+        "motion_beat_plan": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/motion_beat_plan.json",
+        "proof_html": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/visual_treatment_proof.html",
+        "proof_image": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/visual_treatment_proof.png",
+        "proof_sidecar": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/visual_treatment_proof.json",
+        "proof_readback": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/visual_treatment_proof_readback.json",
+        "review_packet": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/review_packet.json",
+        "review_decisions": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/review_decisions.json"
+      }
+    },
+    {
+      "id": "ai_monitoring_labor",
+      "title": "AI monitoring labor",
+      "state": "reviewable",
+      "blocked_reason": "generic labor/platform proxy vocabulary is not yet accepted",
+      "next_action": "review whether the workplace proxy is punitive, neutral, or too abstract",
+      "artifacts": {
+        "source_script": "samples/_probe/pipeline_smoke/ai_monitoring_labor/source_script.txt",
+        "script_beat_ir": "samples/_probe/pipeline_smoke/ai_monitoring_labor/script_beat_ir.json",
+        "visual_direction_contract": "samples/_probe/pipeline_smoke/ai_monitoring_labor/visual_direction_contract.json",
+        "shot_layout_plan": "samples/_probe/pipeline_smoke/ai_monitoring_labor/shot_layout_plan.json",
+        "motion_beat_plan": "samples/_probe/pipeline_smoke/ai_monitoring_labor/motion_beat_plan.json",
+        "proof_html": "samples/_probe/pipeline_smoke/ai_monitoring_labor/visual_treatment_proof.html",
+        "proof_image": "samples/_probe/pipeline_smoke/ai_monitoring_labor/visual_treatment_proof.png",
+        "proof_sidecar": "samples/_probe/pipeline_smoke/ai_monitoring_labor/visual_treatment_proof.json",
+        "proof_readback": "samples/_probe/pipeline_smoke/ai_monitoring_labor/visual_treatment_proof_readback.json",
+        "review_packet": "samples/_probe/pipeline_smoke/ai_monitoring_labor/review_packet.json",
+        "review_decisions": "samples/_probe/pipeline_smoke/ai_monitoring_labor/review_decisions.json"
+      }
+    },
+    {
+      "id": "baseball_news_infographic",
+      "title": "Baseball news infographic",
+      "state": "blocked",
+      "blocked_reason": "data/provenance fixture and screen-plan acceptance are not complete",
+      "next_action": "create a provenance-safe screen-plan smoke before any renderer or YMM4 path",
+      "artifacts": {
+        "source_script": "samples/_probe/pipeline_smoke/baseball_news_infographic/source_script.txt",
+        "script_beat_ir": "samples/_probe/pipeline_smoke/baseball_news_infographic/script_beat_ir.json",
+        "visual_direction_contract": "samples/_probe/pipeline_smoke/baseball_news_infographic/visual_direction_contract.json",
+        "shot_layout_plan": "samples/_probe/pipeline_smoke/baseball_news_infographic/shot_layout_plan.json",
+        "motion_beat_plan": "samples/_probe/pipeline_smoke/baseball_news_infographic/motion_beat_plan.json",
+        "proof_html": "samples/_probe/pipeline_smoke/baseball_news_infographic/visual_treatment_proof.html",
+        "proof_image": "samples/_probe/pipeline_smoke/baseball_news_infographic/visual_treatment_proof.png",
+        "proof_sidecar": "samples/_probe/pipeline_smoke/baseball_news_infographic/visual_treatment_proof.json",
+        "proof_readback": "samples/_probe/pipeline_smoke/baseball_news_infographic/visual_treatment_proof_readback.json",
+        "review_packet": "samples/_probe/pipeline_smoke/baseball_news_infographic/review_packet.json",
+        "review_decisions": "samples/_probe/pipeline_smoke/baseball_news_infographic/review_decisions.json"
+      }
+    }
+  ],
+  "self_diagnostics": {
+    "case_overfitting": "mitigated by three different topics and no further G-27 visual polish",
+    "local_optimization": "limited by checking stage connection rather than aesthetics",
+    "docs_only_loop": "closed by generating fixtures and GUI ingest path",
+    "standalone_proof_completion": "guarded by GUI-visible smoke panel and DOM smoke"
+  }
+}

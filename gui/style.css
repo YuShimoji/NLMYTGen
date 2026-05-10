@@ -948,6 +948,130 @@ main .hint strong {
   background: rgba(83, 164, 255, 0.055);
 }
 
+.pipeline-smoke-review {
+  padding: 14px;
+  border: 1px solid rgba(74, 222, 128, 0.28);
+  border-radius: 10px;
+  background: rgba(22, 163, 74, 0.045);
+}
+
+.pipeline-smoke-diagnostics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.pipeline-smoke-diagnostics span,
+.pipeline-smoke-chain {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--color-text-muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.pipeline-smoke-topic-list {
+  display: grid;
+  gap: 14px;
+}
+
+.pipeline-smoke-topic {
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: rgba(8, 13, 34, 0.35);
+}
+
+.pipeline-smoke-state {
+  align-self: start;
+  padding: 4px 9px;
+  border-radius: 999px;
+  color: var(--color-text);
+  background: rgba(83, 164, 255, 0.12);
+  border: 1px solid rgba(83, 164, 255, 0.35);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pipeline-smoke-state.blocked {
+  color: var(--color-warning-text);
+  background: rgba(251, 191, 36, 0.10);
+  border-color: rgba(251, 191, 36, 0.32);
+}
+
+.pipeline-smoke-state.passable,
+.pipeline-smoke-state.reviewable {
+  color: var(--color-success-text);
+  background: rgba(74, 222, 128, 0.10);
+  border-color: rgba(74, 222, 128, 0.30);
+}
+
+.pipeline-smoke-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.75fr);
+  gap: 12px;
+}
+
+.pipeline-smoke-meta {
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.pipeline-smoke-meta h5 {
+  margin: 0 0 5px;
+  color: var(--color-text);
+  font-size: 12px;
+}
+
+.pipeline-smoke-meta p,
+.pipeline-smoke-meta li {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.pipeline-smoke-meta p {
+  margin: 0 0 10px;
+}
+
+.pipeline-smoke-meta ul {
+  margin: 0 0 10px 18px;
+}
+
+.pipeline-smoke-timeline {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0;
+  overflow-x: auto;
+}
+
+.pipeline-smoke-beat {
+  flex: 1 0 220px;
+  min-height: 70px;
+  padding: 9px 10px;
+  border: 1px solid rgba(83, 164, 255, 0.25);
+  border-radius: 9px;
+  background: rgba(83, 164, 255, 0.07);
+  color: var(--color-text-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.pipeline-smoke-beat strong {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--color-text);
+  font-size: 12px;
+}
+
+.pipeline-smoke-table {
+  min-width: 860px;
+}
+
 .review-proof-summary {
   display: grid;
   justify-items: end;

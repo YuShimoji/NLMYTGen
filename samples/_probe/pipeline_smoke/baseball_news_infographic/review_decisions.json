@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "episode_id": "baseball_news_infographic",
+  "review_scope": "multi_topic_pipeline_smoke",
+  "source_packet": "samples/_probe/pipeline_smoke/baseball_news_infographic/review_packet.json",
+  "saved_at": "2026-05-11T00:00:00.000Z",
+  "save_origin": "pipeline_smoke_fixture",
+  "overall_action": "defer",
+  "overall_comment": "Fixture decision record proves the decision artifact path; it is not user creative acceptance.",
+  "decisions": [
+    {
+      "segment_id": "baseball-news-infographic",
+      "decision": "保留",
+      "comment": "data/provenance fixture and screen-plan acceptance are not complete",
+      "classification_hint": "blocked"
+    }
+  ]
+}

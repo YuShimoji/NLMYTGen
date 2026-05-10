@@ -1,0 +1,49 @@
+{
+  "version": "1.0",
+  "topic_id": "real_estate_dx_baseline",
+  "frame_contract": {
+    "canvas": "16:9 production frame",
+    "subtitle_clearance": "lower 20% reserved",
+    "max_labels_per_frame": 2,
+    "max_total_label_chars": 30,
+    "metadata_isolation": "no source/review/blocker/segment id/readback metadata inside frames"
+  },
+  "frames": [
+    {
+      "frame_id": "real-estate-dx-baseline-beginning",
+      "beat": "beginning",
+      "main_subject": "公開検索カードと閉じたDBの対比",
+      "composition": "left-to-right setup",
+      "text_on_frame": [
+        "検索",
+        "DB"
+      ],
+      "subtitle_clearance": "lower 20% reserved for subtitles",
+      "metadata_inside_frame": false
+    },
+    {
+      "frame_id": "real-estate-dx-baseline-development",
+      "beat": "development",
+      "main_subject": "DBから公開枠へ細いカードが流れる",
+      "composition": "center contrast",
+      "text_on_frame": [
+        "公開",
+        "一部"
+      ],
+      "subtitle_clearance": "lower 20% reserved for subtitles",
+      "metadata_inside_frame": false
+    },
+    {
+      "frame_id": "real-estate-dx-baseline-turn",
+      "beat": "turn",
+      "main_subject": "物件カード横に欠点ノートが残る",
+      "composition": "right-side implication",
+      "text_on_frame": [
+        "理由",
+        "注意"
+      ],
+      "subtitle_clearance": "lower 20% reserved for subtitles",
+      "metadata_inside_frame": false
+    }
+  ]
+}

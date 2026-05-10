@@ -52,9 +52,9 @@ repeatable.
 
 | smoke topic | why this topic | minimal script fixture | Script Beat IR check | 3-beat visual proof check | GUI ingest check | review decision save check | blocked reason / next action check |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Real Estate DX baseline | existing G-27 evidence stresses proxy visuals, hidden information, and risk motifs | `samples/_probe/pipeline_smoke/real_estate_dx/source_script.txt` derived from a small excerpt, not full G-27 production | 3 segments, line spans, narration cues, no visual coordinates | 3 segments × 3 beats, frame contract sidecar, no production-frame metadata | GUI timeline shows proof image, beat table, warnings, decisions | `review_decisions.json` stores accept/revise/defer per segment | blocked by unresolved production assets/proxies; next action remains gap classification, not YMM4 |
+| Real Estate DX baseline | existing G-27 evidence stresses proxy visuals, hidden information, and risk motifs | `samples/_probe/pipeline_smoke/real_estate_dx_baseline/source_script.txt` derived from a small excerpt, not full G-27 production | 3 segments, line spans, narration cues, no visual coordinates | 3 segments × 3 beats, frame contract sidecar, no production-frame metadata | GUI timeline shows proof image, beat table, warnings, decisions | `review_decisions.json` stores accept/revise/defer per segment | blocked by unresolved production assets/proxies; next action remains gap classification, not YMM4 |
 | AI monitoring labor | social/technical explainer stresses human stakes without real-estate motifs | `samples/_probe/pipeline_smoke/ai_monitoring_labor/source_script.txt` from a short fixture inspired by existing labor-monitoring sample | beats separate premise, mechanism, human cost | proof uses workplace/device/procedure proxies without becoming dashboard slides | GUI shows context and motion primitives | decisions capture whether visual metaphor is too punitive or too abstract | blocked by missing generic labor/platform proxy vocabulary; next action is proxy taxonomy, not render |
-| Baseball news infographic | sidequest/data topic stresses numbers, provenance, and information density | `samples/_probe/pipeline_smoke/baseball_news/source_script.txt` as a small invented fixture, not a live scrape | beats separate headline, stat contrast, implication | proof uses scoreboard/card/map proxies without raw data table overload | GUI shows proof and provenance warning area | decisions capture whether info density is acceptable | blocked by data/provenance fixture status and screen-plan approval; next action is screen-plan smoke, not YMM4 |
+| Baseball news infographic | sidequest/data topic stresses numbers, provenance, and information density | `samples/_probe/pipeline_smoke/baseball_news_infographic/source_script.txt` as a small invented fixture, not a live scrape | beats separate headline, stat contrast, implication | proof uses scoreboard/card/map proxies without raw data table overload | GUI shows proof and provenance warning area | decisions capture whether info density is acceptable | blocked by data/provenance fixture status and screen-plan approval; next action is screen-plan smoke, not YMM4 |
 
 Minimum smoke artifacts per topic:
 
@@ -68,9 +68,15 @@ Minimum smoke artifacts per topic:
 - `review_packet.json`
 - `review_decisions.json`
 
-The first smoke implementation should create only the smallest viable fixture
-for each topic. It should not import the full G-27 proof, should not generate a
-finished video, and should not attempt YMM4 output.
+The first smoke implementation uses only the smallest viable fixture for each
+topic. It does not import the full G-27 proof, does not generate a finished
+video, and does not attempt YMM4 output.
+
+Implemented fixture root:
+
+- `samples/_probe/pipeline_smoke/pipeline_smoke_manifest.json`
+- `samples/_probe/pipeline_smoke/pipeline_smoke_gui_screenshot.png`
+- `samples/_probe/pipeline_smoke/pipeline_smoke_gui_screenshot_readback.json`
 
 ## Definition of Done
 
@@ -92,10 +98,9 @@ A production-pipeline slice is done only when:
 Standalone HTML/PNG/JSON generation never completes a review slice by itself.
 It must be GUI-visible, GUI-ingestable, or explicitly marked as diagnostic-only.
 
-## Stop Condition For This Slice
+## Stop Condition
 
-This slice stops at contract and multi-topic smoke planning. Do not proceed here
-to:
+This contract and its smoke implementation do not authorize:
 
 - G-27 v3 proof.
 - G-27 scene decision packet.
@@ -105,5 +110,6 @@ to:
 - Production timing.
 - Creative acceptance.
 
-The next implementation slice should start with the multi-topic smoke fixtures
-and GUI ingest path, not with another Real Estate DX design-polish pass.
+Follow-up work should harden reusable checks or expand the smoke harness only
+after the GUI-visible smoke path is accepted. Do not resume Real Estate DX
+design-polish as a default continuation.

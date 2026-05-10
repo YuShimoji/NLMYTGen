@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "screenshot_artifact": "samples/_probe/pipeline_smoke/pipeline_smoke_gui_screenshot.png",
+  "screenshot_capture_method": "Electron offscreen GUI review tab + pipeline smoke panel + paint event PNG",
+  "not_standalone_html_png_json_review": true,
+  "not_ymm4_adapter_output": true,
+  "not_render_source": true,
+  "not_production_timing": true,
+  "not_creative_acceptance": true,
+  "topic_count": 3,
+  "image_count": 3,
+  "beat_row_count": 9,
+  "has_blocked": true,
+  "has_reviewable": true,
+  "has_decision_paths": true,
+  "has_standalone_guard": true,
+  "text_sample": "Multi-topic pipeline smoke\n\n完成動画品質ではなく、量産pipelineの工程接続をGUI上で確認するpanelです。\n\nsamples/_probe/pipeline_smoke/pipeline_smoke_manifest.json\n3 topics\nGUI timeline required\ncase overfitting: mitigated by three different topics and no further G-27 visual polish\nlocal optimization: limited by checking stage connection rather than aesthetics\ndocs-only loop: closed by generating fixtures and GUI ingest path\nstandalone proof completion: guarded by GUI-visible smoke panel and DOM smoke\nReal Estate DX baseline\n",
+  "screenshot_width": 1659,
+  "screenshot_height": 1081
+}

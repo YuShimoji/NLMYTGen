@@ -1,0 +1,93 @@
+{
+  "version": "1.0",
+  "episode_id": "baseball_news_infographic",
+  "review_scope": "multi_topic_pipeline_smoke",
+  "default_decision_path": "samples/_probe/pipeline_smoke/baseball_news_infographic/review_decisions.json",
+  "episode_context": {
+    "title": "Baseball news infographic",
+    "source_script": "samples/_probe/pipeline_smoke/baseball_news_infographic/source_script.txt",
+    "thesis_ja": "量産pipelineの接続確認用fixture。完成動画品質は評価しない。",
+    "audience_ja": "pipeline設計者",
+    "review_scope_note": "GUI timelineでproof / beat table / warnings / blocked reason / next actionを見る。"
+  },
+  "source_refs": {
+    "script_beat_ir": "samples/_probe/pipeline_smoke/baseball_news_infographic/script_beat_ir.json",
+    "visual_direction_contract": "samples/_probe/pipeline_smoke/baseball_news_infographic/visual_direction_contract.json",
+    "shot_layout_plan": "samples/_probe/pipeline_smoke/baseball_news_infographic/shot_layout_plan.json",
+    "motion_beat_plan": "samples/_probe/pipeline_smoke/baseball_news_infographic/motion_beat_plan.json",
+    "proof_sidecar": "samples/_probe/pipeline_smoke/baseball_news_infographic/visual_treatment_proof.json"
+  },
+  "gates": {
+    "current_state": "blocked",
+    "blocked_reason": "data/provenance fixture and screen-plan acceptance are not complete",
+    "next_action": "create a provenance-safe screen-plan smoke before any renderer or YMM4 path",
+    "forbidden": [
+      "G-27 v3 proof",
+      "scene decision packet",
+      "asset/proxy gap report",
+      "YMM4 adapter output",
+      "render",
+      "production timing",
+      "creative acceptance"
+    ]
+  },
+  "story_outline": [
+    {
+      "id": "baseball-news-infographic",
+      "title": "Baseball News",
+      "role_ja": "pipeline smoke review unit",
+      "summary_ja": "試合結果の入口 → 数字の対比 → 根拠の粒度",
+      "line_start": 1,
+      "line_end": 3
+    }
+  ],
+  "segments": [
+    {
+      "id": "baseball-news-infographic",
+      "title": "Baseball News",
+      "summary_ja": "Baseball news infographicの最小3-beat smoke。",
+      "scene_role_ja": "工程接続確認。審美的完成度は評価しない。",
+      "previous_context_ja": "source_script fixtureから開始。",
+      "next_context_ja": "create a provenance-safe screen-plan smoke before any renderer or YMM4 path",
+      "decision_prompt": "このtopicのpipeline接続はGUI上でreviewableか。",
+      "risk": "data/provenance fixture and screen-plan acceptance are not complete",
+      "script_span": {
+        "line_start": 1,
+        "line_end": 3
+      },
+      "script_excerpt_ja": "語り手A：今日の試合は、一つの数字だけでは流れが見えません。\n語り手B：得点、投球、守備位置を並べると、転機がどこだったか見えてきます。\n語り手A：速報では、結論を急がず根拠の粒度を画面で分ける必要があります。",
+      "next_effect": "create a provenance-safe screen-plan smoke before any renderer or YMM4 path",
+      "options": [
+        {
+          "label": "接続OK",
+          "classification_hint": "reviewable",
+          "next_effect": "next smoke can reuse this path"
+        },
+        {
+          "label": "修正",
+          "classification_hint": "needs_revision",
+          "next_effect": "revise fixture contract"
+        },
+        {
+          "label": "保留",
+          "classification_hint": "defer",
+          "next_effect": "keep blocked reason visible"
+        }
+      ]
+    }
+  ],
+  "overall_actions": [
+    {
+      "label": "3テーマsmoke継続",
+      "value": "continue_multi_topic_smoke"
+    },
+    {
+      "label": "fixture修正",
+      "value": "revise_fixtures"
+    },
+    {
+      "label": "保留",
+      "value": "defer"
+    }
+  ]
+}

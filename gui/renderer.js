@@ -562,8 +562,10 @@ document.addEventListener('click', (e) => {
 const DEFAULT_REVIEW_PACKET_PATH = 'samples/_probe/g24/real_estate_dx_review_packet.json';
 const DEFAULT_REVIEW_DECISION_PATH = 'samples/_probe/g24/real_estate_dx_review_decisions.json';
 const DEFAULT_REVIEW_TREATMENT_PROOF_PATH = 'samples/_probe/g24/real_estate_dx_visual_treatment_proof.json';
+const DEFAULT_PIPELINE_SMOKE_MANIFEST_PATH = 'samples/_probe/pipeline_smoke/pipeline_smoke_manifest.json';
 let currentReviewPacket = null;
 let currentReviewTreatmentProof = null;
+let currentPipelineSmoke = null;
 let currentReviewDecisionPath = DEFAULT_REVIEW_DECISION_PATH;
 let activeReviewIndex = 0;
 let reviewDecisionState = [];
@@ -849,6 +851,86 @@ function renderReviewTreatmentProof(packet) {
   );
 }
 
+function renderPipelineSmokeReview() {
+  const panel = document.getElementById('pipeline-smoke-review');
+  if (!panel) return;
+  if (!currentPipelineSmoke) {
+    panel.classList.remove('hidden');
+    panel.innerHTML = (
+      `<div class="review-section-head">`
+      + `<div><h3>Multi-topic pipeline smoke</h3><p class="hint">pipeline smoke manifest 読込中、または未生成です。</p></div>`
+      + `</div>`
+    );
+    return;
+  }
+  const topics = currentPipelineSmoke.topics || [];
+  const diagnostics = currentPipelineSmoke.self_diagnostics || {};
+  const cards = topics.map((entry) => {
+    const topic = entry.topic || entry;
+    const artifacts = topic.artifacts || {};
+    const sidecar = entry.sidecar || {};
+    const decisions = entry.decisions || {};
+    const readback = entry.readback || {};
+    const proofSrc = repoRelativeAssetSrc(artifacts.proof_image || sidecar.artifacts?.proof_image || '');
+    const beats = (sidecar.segments || []).flatMap((segment) => segment.beats || []);
+    const beatRows = beats.map((beat) => (
+      `<tr>`
+      + `<th>${escapeHtml(beat.phase || '')}</th>`
+      + `<td>${escapeHtml(beat.narration_cue || '')}</td>`
+      + `<td>${escapeHtml(beat.visual_subject || '')}</td>`
+      + `<td>${escapeHtml((beat.text_on_frame || []).join(' / ') || 'none')}</td>`
+      + `<td>${escapeHtml(formatMotionPrimitives(beat.motion_primitives))}</td>`
+      + `</tr>`
+    )).join('');
+    const timeline = beats.map((beat) => (
+      `<span class="pipeline-smoke-beat"><strong>${escapeHtml(beat.phase || '')}</strong>${escapeHtml(beat.narration_cue || '')}</span>`
+    )).join('');
+    return (
+      `<article class="pipeline-smoke-topic" data-pipeline-smoke-topic="${escapeHtml(topic.id || '')}">`
+      + `<div class="review-section-head">`
+      + `<div><h4>${escapeHtml(topic.title || '')}</h4><p class="hint">${escapeHtml(topic.id || '')}</p></div>`
+      + `<span class="pipeline-smoke-state ${escapeHtml(topic.state || '')}">${escapeHtml(topic.state || 'unknown')}</span>`
+      + `</div>`
+      + `<div class="pipeline-smoke-grid">`
+      + `<figure class="review-proof-image-card">`
+      + (proofSrc ? `<img src="${proofSrc}" alt="${escapeHtml(topic.title || '')} pipeline smoke proof">` : `<p class="hint">proof image path 未設定</p>`)
+      + `<figcaption>${escapeHtml(artifacts.proof_image || '')}</figcaption>`
+      + `</figure>`
+      + `<div class="pipeline-smoke-meta">`
+      + `<h5>blocked reason</h5><p>${escapeHtml(topic.blocked_reason || sidecar.blocked_reason || '')}</p>`
+      + `<h5>next action</h5><p>${escapeHtml(topic.next_action || sidecar.next_action || '')}</p>`
+      + `<h5>warnings</h5><ul>${(sidecar.sidecar_warnings || []).map((warning) => `<li>${escapeHtml(warning)}</li>`).join('')}</ul>`
+      + `<h5>decision artifact</h5><p>${escapeHtml(artifacts.review_decisions || '')} — ${(decisions.decisions || []).length} decision(s)</p>`
+      + `<h5>readback</h5><p>${escapeHtml(readback.status || 'not loaded')} / standalone completion: ${escapeHtml(String(currentPipelineSmoke.standalone_html_png_json_is_completion === false ? 'false' : 'unknown'))}</p>`
+      + `</div>`
+      + `</div>`
+      + `<div class="pipeline-smoke-timeline" aria-label="${escapeHtml(topic.title || '')} beat timeline">${timeline}</div>`
+      + `<div class="review-beat-table-wrap">`
+      + `<table class="review-beat-table pipeline-smoke-table">`
+      + `<thead><tr><th>beat</th><th>narration cue</th><th>visual subject</th><th>text</th><th>motion primitives</th></tr></thead>`
+      + `<tbody>${beatRows}</tbody>`
+      + `</table>`
+      + `</div>`
+      + `<div class="pipeline-smoke-chain">source_script.txt → script_beat_ir.json → visual_direction_contract.json → shot_layout_plan.json → motion_beat_plan.json → visual_treatment_proof → review_packet.json → review_decisions.json</div>`
+      + `</article>`
+    );
+  }).join('');
+  panel.classList.remove('hidden');
+  panel.innerHTML = (
+    `<div class="review-section-head">`
+    + `<div><h3>Multi-topic pipeline smoke</h3><p class="hint">完成動画品質ではなく、量産pipelineの工程接続をGUI上で確認するpanelです。</p></div>`
+    + `<div class="review-proof-summary"><span>${escapeHtml(DEFAULT_PIPELINE_SMOKE_MANIFEST_PATH)}</span><strong>${topics.length} topics</strong><em>GUI timeline required</em></div>`
+    + `</div>`
+    + `<div class="pipeline-smoke-diagnostics">`
+    + `<span>case overfitting: ${escapeHtml(diagnostics.case_overfitting || '')}</span>`
+    + `<span>local optimization: ${escapeHtml(diagnostics.local_optimization || '')}</span>`
+    + `<span>docs-only loop: ${escapeHtml(diagnostics.docs_only_loop || '')}</span>`
+    + `<span>standalone proof completion: ${escapeHtml(diagnostics.standalone_proof_completion || '')}</span>`
+    + `</div>`
+    + `<div class="pipeline-smoke-topic-list">${cards}</div>`
+  );
+}
+
 function renderReviewDecisionInspector(packet) {
   const segments = packet?.segments || [];
   const segment = segments[activeReviewIndex];
@@ -896,6 +978,7 @@ function renderReviewSegmentSummary(packet) {
 function renderReviewWorkbench(packet) {
   renderReviewTimeline(packet);
   renderReviewTreatmentProof(packet);
+  renderPipelineSmokeReview();
   renderReviewSegmentDetail(packet);
   renderReviewDecisionInspector(packet);
   renderReviewSegmentSummary(packet);
@@ -964,6 +1047,42 @@ async function loadDefaultReviewTreatmentProof() {
       + `</div>`
     );
   }
+}
+
+async function loadDefaultPipelineSmokeManifest() {
+  currentPipelineSmoke = null;
+  renderPipelineSmokeReview();
+  if (!window.nlmytgen.loadReviewProof) return;
+  const manifestRes = await window.nlmytgen.loadReviewProof(DEFAULT_PIPELINE_SMOKE_MANIFEST_PATH);
+  if (!manifestRes.ok) {
+    const panel = document.getElementById('pipeline-smoke-review');
+    if (panel) {
+      panel.classList.remove('hidden');
+      panel.innerHTML = (
+        `<div class="review-section-head">`
+        + `<div><h3>Multi-topic pipeline smoke</h3><p class="hint">manifest 読込失敗: ${escapeHtml(manifestRes.error || 'unknown error')}</p></div>`
+        + `</div>`
+      );
+    }
+    return;
+  }
+  const manifest = manifestRes.payload;
+  const topics = await Promise.all((manifest.topics || []).map(async (topic) => {
+    const artifacts = topic.artifacts || {};
+    const [sidecarRes, decisionsRes, readbackRes] = await Promise.all([
+      artifacts.proof_sidecar ? window.nlmytgen.loadReviewProof(artifacts.proof_sidecar) : Promise.resolve({ ok: false }),
+      artifacts.review_decisions ? window.nlmytgen.loadReviewProof(artifacts.review_decisions) : Promise.resolve({ ok: false }),
+      artifacts.proof_readback ? window.nlmytgen.loadReviewProof(artifacts.proof_readback) : Promise.resolve({ ok: false }),
+    ]);
+    return {
+      topic,
+      sidecar: sidecarRes.ok ? sidecarRes.payload : {},
+      decisions: decisionsRes.ok ? decisionsRes.payload : {},
+      readback: readbackRes.ok ? readbackRes.payload : {},
+    };
+  }));
+  currentPipelineSmoke = { ...manifest, topics };
+  renderPipelineSmokeReview();
 }
 
 async function loadDefaultReviewPacket() {
@@ -1112,6 +1231,7 @@ function initDesignReviewTab() {
   });
 
   loadDefaultReviewPacket();
+  loadDefaultPipelineSmokeManifest();
 }
 
 // --- CSV Tab ---

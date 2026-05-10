@@ -9,7 +9,9 @@
     "capture:g27-overlay-review": "electron capture_overlay_compact_review.js",
     "capture:g27-visual-storyboard": "electron capture_visual_storyboard_proof.js",
     "capture:g27-visual-treatment": "electron capture_visual_treatment_proof.js",
-    "capture:g27-gui-treatment-detail": "electron capture_review_treatment_detail_screenshot.js"
+    "capture:g27-gui-treatment-detail": "electron capture_review_treatment_detail_screenshot.js",
+    "capture:pipeline-smoke": "electron capture_pipeline_smoke_fixtures.js",
+    "capture:pipeline-smoke-gui": "electron capture_pipeline_smoke_review_screenshot.js"
   },
   "devDependencies": {
     "electron": "^35.0.0"

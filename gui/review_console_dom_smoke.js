@@ -6,6 +6,7 @@ const expectedProofFrameCount = 9;
 const expectedProofSegmentCount = 3;
 
 async function run() {
+  app.setPath('userData', path.join(__dirname, '..', '_tmp', 'electron_review_console_dom_smoke'));
   app.commandLine.appendSwitch('disable-gpu');
   await app.whenReady();
 
@@ -42,7 +43,11 @@ async function run() {
         const detail = document.getElementById('review-segment-detail');
         const inspector = document.querySelector('.review-decision-inspector');
         const proof = document.getElementById('review-treatment-proof');
+        const pipeline = document.getElementById('pipeline-smoke-review');
         const proofImage = proof?.querySelector('.review-proof-image-card img');
+        const pipelineTopics = Array.from(pipeline?.querySelectorAll('.pipeline-smoke-topic') || []);
+        const pipelineImages = Array.from(pipeline?.querySelectorAll('.review-proof-image-card img') || []);
+        const pipelineBeatRows = Array.from(pipeline?.querySelectorAll('.review-beat-table tbody tr') || []);
         const proofBadges = Array.from(document.querySelectorAll('#review-timeline .review-timeline-proof'));
         const beatRows = Array.from(document.querySelectorAll('#review-treatment-proof .review-beat-table tbody tr'));
         const wizard = document.getElementById('wizard-bar');
@@ -68,6 +73,11 @@ async function run() {
           proofExists: !!proof,
           proofText: proof?.innerText || '',
           proofImageSrc: proofImage?.getAttribute('src') || '',
+          pipelineExists: !!pipeline,
+          pipelineText: pipeline?.innerText || '',
+          pipelineTopicCount: pipelineTopics.length,
+          pipelineImageCount: pipelineImages.length,
+          pipelineBeatRowCount: pipelineBeatRows.length,
           proofBadgeCount: proofBadges.length,
           beatRowCount: beatRows.length,
           bodyReviewClass: !!bodyContent?.classList.contains('review-workbench-active'),
@@ -94,6 +104,14 @@ async function run() {
           hasMotionPrimitiveHeader: text.includes('motion primitives'),
           hasMotionPrimitiveActions: text.includes('enter:') && text.includes('reveal:') && text.includes('dim:'),
           hasAntiPatternCorpus: text.includes('anti-pattern corpus') && text.includes('Production assetでもlayout見本でもありません'),
+          hasPipelineSmokeLabel: text.includes('Multi-topic pipeline smoke'),
+          hasPipelineSmokeTopics: text.includes('Real Estate DX baseline') && text.includes('AI monitoring labor') && text.includes('Baseball news infographic'),
+          hasPipelineSmokeStatuses: text.includes('reviewable') && text.includes('blocked'),
+          hasPipelineBlockedReason: text.includes('blocked reason') && text.includes('production asset/proxy classification') && text.includes('data/provenance fixture'),
+          hasPipelineNextAction: text.includes('next action') && text.includes('screen-plan smoke'),
+          hasPipelineDecisionPaths: text.includes('review_decisions.json') && text.includes('decision artifact'),
+          hasPipelineDiagnostics: text.includes('case overfitting') && text.includes('docs-only loop') && text.includes('standalone proof completion'),
+          hasStandaloneGuard: text.includes('standalone completion: false'),
           hasCorruption: /\\?\\?\\?|�/.test(text),
           textSample: text.slice(0, 500),
         };
@@ -112,8 +130,12 @@ async function run() {
             && state.detailExists
             && state.inspectorExists
             && state.proofExists
+            && state.pipelineExists
             && state.proofBadgeCount === ${expectedProofSegmentCount}
             && state.proofImageSrc.includes('real_estate_dx_visual_treatment_proof.png')
+            && state.pipelineTopicCount === 3
+            && state.pipelineImageCount === 3
+            && state.pipelineBeatRowCount === 9
             && state.cardCount === ${expectedSegmentCount}
             && state.hasEpisodeContextLabel
             && state.hasStoryOutlineLabel
@@ -134,7 +156,15 @@ async function run() {
             && state.hasLabelOffStatus
             && state.hasTextureStatus
             && state.hasMotionPrimitiveHeader
-            && state.hasAntiPatternCorpus;
+            && state.hasAntiPatternCorpus
+            && state.hasPipelineSmokeLabel
+            && state.hasPipelineSmokeTopics
+            && state.hasPipelineSmokeStatuses
+            && state.hasPipelineBlockedReason
+            && state.hasPipelineNextAction
+            && state.hasPipelineDecisionPaths
+            && state.hasPipelineDiagnostics
+            && state.hasStandaloneGuard;
           if (ready) {
             clearInterval(timer);
             resolve(state);
@@ -177,6 +207,18 @@ async function run() {
   }
   if (!result.proofText.includes('sidecar warnings')) {
     throw new Error(`proof panel did not expose sidecar warnings: ${result.proofText.slice(0, 300)}`);
+  }
+  if (result.pipelineTopicCount !== 3 || result.pipelineImageCount !== 3 || result.pipelineBeatRowCount !== 9) {
+    throw new Error(`pipeline smoke panel did not expose 3 topics / images / 9 beat rows: ${JSON.stringify({
+      topics: result.pipelineTopicCount,
+      images: result.pipelineImageCount,
+      rows: result.pipelineBeatRowCount,
+    })}`);
+  }
+  for (const text of ['Real Estate DX baseline', 'AI monitoring labor', 'Baseball news infographic', 'blocked reason', 'next action', 'review_decisions.json']) {
+    if (!result.pipelineText.includes(text)) {
+      throw new Error(`pipeline smoke panel missing ${text}: ${result.pipelineText.slice(0, 500)}`);
+    }
   }
   for (const label of ['label-off check', 'narration competition check', 'real-estate texture check', 'motion-readiness check']) {
     if (!result.proofText.includes(label)) {
@@ -271,7 +313,7 @@ async function run() {
     throw new Error(`review_decisions version changed: ${saveResult.payload.version}`);
   }
 
-  console.log(`G-27 review console DOM smoke OK: ${result.timelineCount} timeline segments; ${expectedProofFrameCount} proof frames visible through GUI; save payload OK`);
+  console.log(`G-27 review console DOM smoke OK: ${result.timelineCount} timeline segments; ${expectedProofFrameCount} G-27 proof frames; ${result.pipelineTopicCount} pipeline smoke topics / ${result.pipelineBeatRowCount} smoke beats visible through GUI; save payload OK`);
 }
 
 run()

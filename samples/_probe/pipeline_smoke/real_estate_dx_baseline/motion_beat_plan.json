@@ -1,0 +1,72 @@
+{
+  "version": "1.0",
+  "topic_id": "real_estate_dx_baseline",
+  "beats": [
+    {
+      "beat_id": "real-estate-dx-baseline-beginning",
+      "phase": "beginning",
+      "motion_primitives": {
+        "enter": [
+          "property card proxy"
+        ],
+        "move": [
+          "main proxy shifts toward the next beat focus"
+        ],
+        "emphasize": [
+          "broker DB"
+        ],
+        "reveal": [
+          "payload: スマホ検索と奥の業者DB"
+        ],
+        "dim": [
+          "background details and nonessential labels"
+        ]
+      },
+      "not_production_timing": true
+    },
+    {
+      "beat_id": "real-estate-dx-baseline-development",
+      "phase": "development",
+      "motion_primitives": {
+        "enter": [
+          "broker DB proxy"
+        ],
+        "move": [
+          "main proxy shifts toward the next beat focus"
+        ],
+        "emphasize": [
+          "public portal"
+        ],
+        "reveal": [
+          "payload: 公開ポータルへ出る一部情報"
+        ],
+        "dim": [
+          "background details and nonessential labels"
+        ]
+      },
+      "not_production_timing": true
+    },
+    {
+      "beat_id": "real-estate-dx-baseline-turn",
+      "phase": "turn",
+      "motion_primitives": {
+        "enter": [
+          "public portal proxy"
+        ],
+        "move": [
+          "main proxy shifts toward the next beat focus"
+        ],
+        "emphasize": [
+          "drawback note"
+        ],
+        "reveal": [
+          "payload: 買わない理由も残す"
+        ],
+        "dim": [
+          "background details and nonessential labels"
+        ]
+      },
+      "not_production_timing": true
+    }
+  ]
+}

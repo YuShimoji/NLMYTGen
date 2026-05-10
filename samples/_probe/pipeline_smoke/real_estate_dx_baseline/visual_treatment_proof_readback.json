@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "topic_id": "real_estate_dx_baseline",
+  "topic_state": "reviewable",
+  "frame_count": 3,
+  "proof_image": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/visual_treatment_proof.png",
+  "screenshot_width": 1161,
+  "screenshot_height": 620,
+  "visible_in_gui_required": true,
+  "standalone_html_png_json_is_completion": false,
+  "blocked_reason": "production asset/proxy classification is unresolved; YMM4 remains blocked",
+  "next_action": "review the smoke proof in GUI, then classify accepted proxy / revise / defer"
+}

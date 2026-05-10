@@ -1,0 +1,72 @@
+{
+  "version": "1.0",
+  "topic_id": "baseball_news_infographic",
+  "beats": [
+    {
+      "beat_id": "baseball-news-infographic-beginning",
+      "phase": "beginning",
+      "motion_primitives": {
+        "enter": [
+          "scoreboard proxy"
+        ],
+        "move": [
+          "main proxy shifts toward the next beat focus"
+        ],
+        "emphasize": [
+          "stat card"
+        ],
+        "reveal": [
+          "payload: 試合結果の入口"
+        ],
+        "dim": [
+          "background details and nonessential labels"
+        ]
+      },
+      "not_production_timing": true
+    },
+    {
+      "beat_id": "baseball-news-infographic-development",
+      "phase": "development",
+      "motion_primitives": {
+        "enter": [
+          "stat card proxy"
+        ],
+        "move": [
+          "main proxy shifts toward the next beat focus"
+        ],
+        "emphasize": [
+          "field map"
+        ],
+        "reveal": [
+          "payload: 数字の対比"
+        ],
+        "dim": [
+          "background details and nonessential labels"
+        ]
+      },
+      "not_production_timing": true
+    },
+    {
+      "beat_id": "baseball-news-infographic-turn",
+      "phase": "turn",
+      "motion_primitives": {
+        "enter": [
+          "field map proxy"
+        ],
+        "move": [
+          "main proxy shifts toward the next beat focus"
+        ],
+        "emphasize": [
+          "provenance badge"
+        ],
+        "reveal": [
+          "payload: 根拠の粒度"
+        ],
+        "dim": [
+          "background details and nonessential labels"
+        ]
+      },
+      "not_production_timing": true
+    }
+  ]
+}

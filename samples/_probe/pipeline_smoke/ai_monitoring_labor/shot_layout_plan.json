@@ -1,0 +1,48 @@
+{
+  "version": "1.0",
+  "topic_id": "ai_monitoring_labor",
+  "frame_contract": {
+    "canvas": "16:9 production frame",
+    "subtitle_clearance": "lower 20% reserved",
+    "max_labels_per_frame": 2,
+    "max_total_label_chars": 30,
+    "metadata_isolation": "no source/review/blocker/segment id/readback metadata inside frames"
+  },
+  "frames": [
+    {
+      "frame_id": "ai-monitoring-labor-beginning",
+      "beat": "beginning",
+      "main_subject": "作業端末と明るい補助パネル",
+      "composition": "left-to-right setup",
+      "text_on_frame": [
+        "支援",
+        "AI"
+      ],
+      "subtitle_clearance": "lower 20% reserved for subtitles",
+      "metadata_inside_frame": false
+    },
+    {
+      "frame_id": "ai-monitoring-labor-development",
+      "beat": "development",
+      "main_subject": "端末ログが人物の周囲に増える",
+      "composition": "center contrast",
+      "text_on_frame": [
+        "測定",
+        "ログ"
+      ],
+      "subtitle_clearance": "lower 20% reserved for subtitles",
+      "metadata_inside_frame": false
+    },
+    {
+      "frame_id": "ai-monitoring-labor-turn",
+      "beat": "turn",
+      "main_subject": "人物の影と負荷マーカーを残す",
+      "composition": "right-side implication",
+      "text_on_frame": [
+        "負荷"
+      ],
+      "subtitle_clearance": "lower 20% reserved for subtitles",
+      "metadata_inside_frame": false
+    }
+  ]
+}
