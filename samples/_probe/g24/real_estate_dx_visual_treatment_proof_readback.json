@@ -21,6 +21,8 @@
     "visible_metadata_in_frame": false,
     "frame_contract_violations": 0,
     "sidecar_warnings": 3,
+    "visual_quality_checks": 4,
+    "anti_pattern_corpus_role": "anti_pattern_only",
     "screenshot_width": 1178,
     "screenshot_height": 1082
   },

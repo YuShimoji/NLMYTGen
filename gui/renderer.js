@@ -777,6 +777,8 @@ function renderReviewTreatmentProof(packet) {
   const proofImage = artifacts.proof_image || artifacts.screenshot_artifact || '';
   const proofSrc = repoRelativeAssetSrc(proofImage);
   const warnings = proof.sidecar_warnings || [];
+  const visualChecks = proof.visual_quality_checks || [];
+  const antiPattern = proof.anti_pattern_corpus || {};
   const violations = proof.frame_contract_violations || [];
   const targetSegments = proof.target_segments || [];
   const beats = proofSegment?.beats || [];
@@ -814,6 +816,12 @@ function renderReviewTreatmentProof(packet) {
     + `<div class="review-proof-sidecar">`
     + `<h4>sidecar warnings</h4>`
     + `<ul>${warnings.map((warning) => `<li>${escapeHtml(warning)}</li>`).join('') || '<li>warningなし</li>'}</ul>`
+    + `<h4>anti-pattern corpus</h4>`
+    + `<p>${escapeHtml(antiPattern.source_name || '未設定')} — ${escapeHtml(antiPattern.role || '')}. Production assetでもlayout見本でもありません。</p>`
+    + `<h4>additional checks</h4>`
+    + `<ul>${visualChecks.map((check) => (
+      `<li><strong>${escapeHtml(check.label || check.id || '')}</strong>: ${escapeHtml(check.current_status || '')}<br><span>${escapeHtml(check.current_read || '')}</span></li>`
+    )).join('') || '<li>追加チェックなし</li>'}</ul>`
     + `<h4>read-only decision context</h4>`
     + `<p>このproofは映像設計確認用です。判断保存は右側の判断ペインと <code>review_decisions.json</code> に戻します。YMM4化、render、production timing、creative acceptanceには進みません。</p>`
     + `</div>`

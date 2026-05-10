@@ -18,6 +18,56 @@ const FRAME_CONTRACT = {
   metadata_isolation: 'source/review/blocker/segment id/validator/readback metadata must not appear inside the frame',
 };
 
+const ANTI_PATTERN_CORPUS = {
+  source_name: 'Modern_Real_Estate_Strategic_Playbook.pdf',
+  role: 'anti_pattern_only',
+  not_production_asset: true,
+  not_layout_reference: true,
+  observed_failure_modes: [
+    'long-form lecture slide',
+    'dense comparison matrix',
+    'audit/checklist page',
+    'dashboard gauge page',
+    'flowchart that explains instead of stages action',
+  ],
+  usage: 'Use as a failure corpus to keep visual treatment proofs from drifting back into slide decks, tables, or compliance-checklist layouts.',
+};
+
+const VISUAL_QUALITY_CHECKS = [
+  {
+    id: 'label_off_check',
+    label: 'label-off check',
+    question: 'If half the labels are hidden, do closed DB, choice overload, and invisible risk still read through shapes and spatial change?',
+    current_status: 'needs_human_review',
+    current_read: 'partial: silhouettes, split walls, grids, and risk markers carry the idea, but labels still do important work.',
+    fail_if: 'The frame becomes just a generic UI card once labels are removed.',
+  },
+  {
+    id: 'narration_competition_check',
+    label: 'narration competition check',
+    question: 'Does in-frame text compete with narration subtitles?',
+    current_status: 'pass_for_text_amount',
+    current_read: 'Each frame uses at most two short labels and keeps the lower subtitle band clear.',
+    fail_if: 'A frame needs explanatory prose or labels near the subtitle band.',
+  },
+  {
+    id: 'real_estate_texture_check',
+    label: 'real-estate texture check',
+    question: 'Are real-estate-specific signs visible without turning into a lecture slide?',
+    current_status: 'partial',
+    current_read: 'Property cards, search screens, defect badges, hidden data, and risk markers are present; boundary/inheritance/neighborhood risk need stronger non-text motifs in later art.',
+    fail_if: 'The frame reads as generic SaaS, dashboard, or strategy-consulting UI.',
+  },
+  {
+    id: 'motion_readiness_check',
+    label: 'motion-readiness check',
+    question: 'Can the three frames become YMM4 appearance, movement, and emphasis rather than static slides?',
+    current_status: 'partial',
+    current_read: 'Each beat has a motion hint and spatial change; later proof should reduce static labels and map props to explicit enter/move/emphasize actions.',
+    fail_if: 'The only planned change is text replacement.',
+  },
+];
+
 const SEGMENTS = [
   {
     id: 'RE-02',
@@ -228,6 +278,8 @@ function buildSidecar(paths) {
       'YMM4 conversion, render, production timing, and production template use remain blocked.',
       'No Frame Contract violations are currently recorded; future exceptions must be added here.',
     ],
+    anti_pattern_corpus: ANTI_PATTERN_CORPUS,
+    visual_quality_checks: VISUAL_QUALITY_CHECKS,
     frame_contract_violations: violations,
     not_creative_acceptance: true,
     not_ymm4_adapter_output: true,
@@ -475,6 +527,8 @@ async function main() {
         visible_metadata_in_frame: captureResult.dom.visibleMetadataInFrame,
         frame_contract_violations: sidecar.frame_contract_violations.length,
         sidecar_warnings: sidecar.sidecar_warnings.length,
+        visual_quality_checks: sidecar.visual_quality_checks.length,
+        anti_pattern_corpus_role: sidecar.anti_pattern_corpus.role,
         screenshot_width: captureResult.size.width,
         screenshot_height: captureResult.size.height,
       },

@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "screenshot_artifact": "samples/_probe/g24/real_estate_dx_gui_treatment_detail_screenshot.png",
+  "capture_method": "Electron GUI Design Review tab scrolled to treatment proof + switchMainTab(review) + webContents.capturePage(rect)",
+  "active_review_tab": true,
+  "active_review_content": true,
+  "proof_image_visible": true,
+  "beat_table_visible": true,
+  "sidecar_warnings_visible": true,
+  "frame_contract_violation_count_visible": true,
+  "read_only_decision_context_visible": true,
+  "proof_targets_visible": true,
+  "additional_checks_visible": true,
+  "visible_is_design_review": true,
+  "visible_is_not_csv_tab": true,
+  "image_src": "../samples/_probe/g24/real_estate_dx_visual_treatment_proof.png",
+  "screenshot_width": 1906,
+  "screenshot_height": 1012
+}

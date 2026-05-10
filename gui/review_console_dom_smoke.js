@@ -84,6 +84,11 @@ async function run() {
           hasProofWarnings: text.includes('sidecar warnings'),
           hasFrameContract: text.includes('Frame Contract違反'),
           hasReadOnlyDecisionContext: text.includes('read-only decision context'),
+          hasLabelOffCheck: text.includes('label-off check'),
+          hasNarrationCompetitionCheck: text.includes('narration competition check'),
+          hasRealEstateTextureCheck: text.includes('real-estate texture check'),
+          hasMotionReadinessCheck: text.includes('motion-readiness check'),
+          hasAntiPatternCorpus: text.includes('anti-pattern corpus') && text.includes('Production assetでもlayout見本でもありません'),
           hasCorruption: /\\?\\?\\?|�/.test(text),
           textSample: text.slice(0, 500),
         };
@@ -115,7 +120,12 @@ async function run() {
             && state.hasProofTargets
             && state.hasProofWarnings
             && state.hasFrameContract
-            && state.hasReadOnlyDecisionContext;
+            && state.hasReadOnlyDecisionContext
+            && state.hasLabelOffCheck
+            && state.hasNarrationCompetitionCheck
+            && state.hasRealEstateTextureCheck
+            && state.hasMotionReadinessCheck
+            && state.hasAntiPatternCorpus;
           if (ready) {
             clearInterval(timer);
             resolve(state);
@@ -158,6 +168,11 @@ async function run() {
   }
   if (!result.proofText.includes('sidecar warnings')) {
     throw new Error(`proof panel did not expose sidecar warnings: ${result.proofText.slice(0, 300)}`);
+  }
+  for (const label of ['label-off check', 'narration competition check', 'real-estate texture check', 'motion-readiness check']) {
+    if (!result.proofText.includes(label)) {
+      throw new Error(`proof panel did not expose ${label}: ${result.proofText.slice(0, 500)}`);
+    }
   }
   if (!result.detailText.includes('該当台本抜粋')) {
     throw new Error(`review segment detail did not render script context: ${result.detailText.slice(0, 200)}`);

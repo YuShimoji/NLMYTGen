@@ -175,6 +175,8 @@ debug / evidence として提示できるが、判断結果は GUI timeline と 
 | visual treatment proof image | `samples/_probe/g24/real_estate_dx_visual_treatment_proof.png` |
 | visual treatment proof HTML | `samples/_probe/g24/real_estate_dx_visual_treatment_proof.html` |
 | visual treatment proof readback | `samples/_probe/g24/real_estate_dx_visual_treatment_proof_readback.json` |
+| GUI treatment ingest screenshot | `samples/_probe/g24/real_estate_dx_gui_treatment_detail_screenshot.png` |
+| GUI treatment ingest screenshot readback | `samples/_probe/g24/real_estate_dx_gui_treatment_detail_screenshot_readback.json` |
 | validator authority | `samples/_probe/g24/real_estate_dx_background_skit_blueprint_validate.json` |
 
 ## Workflow
@@ -355,3 +357,22 @@ RE-07D. The GUI `デザインレビュー` timeline loads its sidecar, displays 
 image, marks the three target segments with `3-beat proof`, and shows the
 selected segment's beat table, narration cue, sidecar warnings, Frame Contract
 violation count, and read-only decision context.
+
+The sidecar must also carry four qualitative checks before the proof is treated
+as reviewable in the GUI:
+
+- `label-off check`: if labels are hidden or reduced, the closed database,
+  choice overload, and invisible risk should still read from shapes and spatial
+  changes.
+- `narration competition check`: in-frame text must not compete with narration
+  subtitles.
+- `real-estate texture check`: real-estate-specific signs such as property cards,
+  search UI, defect cards, boundary/inheritance/neighborhood risk, or hidden data
+  should be visible without becoming a lecture slide.
+- `motion-readiness check`: the three beats should be convertible to appearance,
+  movement, and emphasis, not just static slide replacement.
+
+`Modern_Real_Estate_Strategic_Playbook.pdf` is a user-provided anti-pattern
+corpus only. It is not a production asset and not a layout reference. Use it to
+avoid drifting back into long-text slides, comparison matrices, dashboards,
+flowcharts, and audit/checklist pages.
