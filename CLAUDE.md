@@ -106,7 +106,7 @@ L1-L4 とは直交する概念。L2（Python変換工程）の内部で、IR の
 | docs/ARCHITECTURE.md | モジュール構成・データフロー |
 | docs/PIPELINE_SPEC.md | パイプラインの入出力仕様 |
 | docs/WORKFLOW.md | 動画制作の操作手順 |
-| docs/REPO_LOCAL_RULES.md | repo-local 運用（Hard Rules・再開読了予算・Checklist）の正本 |
+| docs/REPO_LOCAL_RULES.md | repo-local 運用の短い front-door（Core Rules / Reporting / Ask Hygiene / Hooks） |
 | docs/verification/README.md | 検証ディレクトリの索引・正本チェーン・読み方 |
 | docs/verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md | 立ち絵 複数体×顔差し替え準備（G-19 done / G-20 approved の履歴・調査パック） |
 | docs/NAV.md | ドキュメント地図（再開 3 枚・正本導線・テンプレと状態の区別） |

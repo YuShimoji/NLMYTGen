@@ -7,7 +7,7 @@
 ## 1. 通常再開の 3 点（最短）
 
 1. [AGENTS.md](../AGENTS.md) — 入口・境界・再アンカリング手順の正本
-2. [REPO_LOCAL_RULES.md](REPO_LOCAL_RULES.md) — Hard Rules・再開読了予算・Checklist の正本
+2. [REPO_LOCAL_RULES.md](REPO_LOCAL_RULES.md) — 短い front-door。Core Rules / Reporting / Ask Hygiene
 3. [runtime-state.md](runtime-state.md) — 現在位置・`next_action`・カウンターの正本
 
 通常再開はここで止める。フル再アンカリングは、境界不明・drift 検出・user 明示の REANCHOR / REFRESH / AUDIT などの例外時だけ `AGENTS.md` の例外手順を使う。

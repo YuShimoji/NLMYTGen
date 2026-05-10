@@ -1,6 +1,6 @@
 # CLAUDE.md（Claude Code 用入口）
 
-**運用ルールの正本:** [`docs/REPO_LOCAL_RULES.md`](../docs/REPO_LOCAL_RULES.md)（Hard Rules・再開読了予算・Checklist・Hooks 説明）
+**運用ルールの正本:** [`docs/REPO_LOCAL_RULES.md`](../docs/REPO_LOCAL_RULES.md)（短い front-door。Core Rules / Reporting / Ask Hygiene / Hooks）
 
 本ファイルはツールが慣例で読む **短い入口** に留める。`AGENTS.md` も入口ポインタであり、詳細手順・履歴・報告テンプレは置かない。
 
