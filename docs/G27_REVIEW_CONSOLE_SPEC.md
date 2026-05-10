@@ -108,6 +108,8 @@ Python 画像生成、動画生成、素材自動取得は含めない。
 | compact preview | `samples/_probe/g24/real_estate_dx_overlay_only_compact_review.html` |
 | compact preview screenshot | `samples/_probe/g24/real_estate_dx_overlay_only_compact_review_screenshot.png` |
 | compact preview screenshot readback | `samples/_probe/g24/real_estate_dx_overlay_only_compact_review_screenshot_readback.json` |
+| visual storyboard proof | `samples/_probe/g24/real_estate_dx_visual_storyboard_proof.png` |
+| visual storyboard proof readback | `samples/_probe/g24/real_estate_dx_visual_storyboard_proof_readback.json` |
 | validator authority | `samples/_probe/g24/real_estate_dx_background_skit_blueprint_validate.json` |
 
 ## Workflow
@@ -141,6 +143,25 @@ and writes a full-page PNG plus screenshot readback JSON. This is still visual
 proof of placeholder visibility only. It is not creative acceptance, not
 cast motion IR, and not production timing.
 
+## Visual Storyboard Proof
+
+The compact preview proves generation and DOM transport, but it is not enough
+to judge video-like rhythm or cognitive load. For that, use the separate visual
+proxy proof:
+
+```powershell
+npm --prefix gui run capture:g27-visual-storyboard
+```
+
+The storyboard generator reads the compact review manifest, then writes a 3×4
+contact sheet PNG with one 16:9 proxy keyframe per RE-01〜RE-07E segment.
+It renders proxy visuals for people, property documents, SNS screens, contracts,
+warning UI, AI panels, gates, and curation tables instead of plain text cards.
+The readback must confirm overlay readback `passed`, 11 storyboard segments,
+11 keyframes, 24 placeholder/proxy objects, and remaining blockers matching the
+validator result. This is `visual_proxy_proof`; it is still not creative
+acceptance and does not unlock cast motion IR or production timing.
+
 ## Completion Gate
 
 This Review Console slice is complete when:
@@ -171,4 +192,9 @@ This Review Console slice is complete when:
   `real_estate_dx_overlay_only_compact_review_screenshot_readback.json`;
   the readback must confirm overlay HTML readback `passed`, 11 visible segments,
   24 visible placeholders, and remaining blockers matching the validator result.
+- Electron visual storyboard capture passes and writes
+  `real_estate_dx_visual_storyboard_proof.png` plus
+  `real_estate_dx_visual_storyboard_proof_readback.json`; the readback must
+  confirm 3×4 contact sheet layout, 16:9 frame units, 11 proxy keyframes,
+  24 proxy placeholders, and remaining blockers matching the validator result.
 - `review_map.md` remains only as evidence/fallback detail.
