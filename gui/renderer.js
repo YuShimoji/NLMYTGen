@@ -15,7 +15,7 @@ function switchMainTab(tabName, { alignWizard = true } = {}) {
   document.querySelectorAll('.tab-content').forEach((s) => {
     s.classList.toggle('active', s.id === `tab-${tabName}`);
   });
-  if (tabName === 'scoring') {
+  if (tabName === 'scoring' || tabName === 'review') {
     clearWizardMainFocus();
   }
   if (alignWizard) {
@@ -51,14 +51,15 @@ const WIZARD_STEP_LABELS = {
   5: '手順 5 · 完了',
 };
 
-/** メイン上部の手順コンテキスト帯（品質診断タブでは非表示） */
+/** メイン上部の手順コンテキスト帯（品質診断・レビュータブでは非表示） */
 function refreshWizardMainContextStrip() {
   const strip = document.getElementById('wizard-main-context');
   const body = document.getElementById('wizard-main-context-body');
   const stepEl = document.getElementById('wizard-main-context-step');
   if (!strip || !body || !stepEl) return;
   const scoringOn = document.getElementById('tab-scoring')?.classList.contains('active');
-  if (scoringOn) {
+  const reviewOn = document.getElementById('tab-review')?.classList.contains('active');
+  if (scoringOn || reviewOn) {
     strip.classList.add('hidden');
     body.textContent = '';
     stepEl.textContent = '';
@@ -93,11 +94,15 @@ function clearWizardMainFocus() {
 
 /**
  * メイン領域の該当ブロックへスクロールし、アウトラインを付与する。
- * 品質診断タブ表示中は no-op（ウィザード表現の整理は別途）。
+ * 品質診断・レビュータブ表示中は no-op（ウィザード表現の整理は別途）。
  */
 function focusWizardMain(step) {
   const scoringSection = document.getElementById('tab-scoring');
   if (scoringSection && scoringSection.classList.contains('active')) {
+    return;
+  }
+  const reviewSection = document.getElementById('tab-review');
+  if (reviewSection && reviewSection.classList.contains('active')) {
     return;
   }
   let anchorId = WIZARD_MAIN_ANCHORS[step];
@@ -550,6 +555,44 @@ document.addEventListener('click', (e) => {
     }
   });
 });
+
+function setReviewReply(text) {
+  const reply = document.getElementById('review-reply-text');
+  if (reply) reply.value = text;
+}
+
+function initDesignReviewTab() {
+  const bindReviewOpen = (id, rel) => {
+    const button = document.getElementById(id);
+    if (!button) return;
+    button.addEventListener('click', async () => {
+      const res = await window.nlmytgen.openRepoDoc(rel);
+      if (!res.ok && res.message) {
+        document.getElementById('status').textContent = `レビュー資料を開けません: ${res.message}`;
+      }
+    });
+  };
+  bindReviewOpen('btn-review-open-preview', 'samples/_probe/g24/real_estate_dx_overlay_only_compact_review.html');
+  bindReviewOpen('btn-review-open-memo', 'samples/_probe/g24/real_estate_dx_overlay_card_review_map.md');
+
+  document.querySelectorAll('[data-review-reply]').forEach((button) => {
+    button.addEventListener('click', () => setReviewReply(button.dataset.reviewReply || ''));
+  });
+
+  const copyButton = document.getElementById('btn-review-copy-reply');
+  if (copyButton) {
+    copyButton.addEventListener('click', async () => {
+      const reply = document.getElementById('review-reply-text');
+      const text = reply?.value || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        document.getElementById('status').textContent = 'レビュー返答をコピーしました';
+      } catch {
+        document.getElementById('status').textContent = 'コピーできませんでした。テキストを選択してコピーしてください';
+      }
+    });
+  }
+}
 
 // --- CSV Tab ---
 const dropZone = document.getElementById('drop-zone');
@@ -1291,6 +1334,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   bindOpenDoc('btn-open-workflow-proof-template', 'docs/workflow-proof-template.md');
   bindOpenDoc('btn-open-b11-checkpoints', 'docs/B11-manual-checkpoints.md');
   bindOpenDoc('btn-open-gui-guide', 'docs/GUI_MINIMUM_PATH.md');
+  initDesignReviewTab();
 
   async function saveH01Template(format) {
     const status = document.getElementById('status');

@@ -12,6 +12,7 @@
     <nav>
       <button class="tab active" data-tab="csv">CSV 変換</button>
       <button class="tab" data-tab="production">演出適用</button>
+      <button class="tab" data-tab="review">デザインレビュー</button>
       <button class="tab" data-tab="scoring">品質診断</button>
     </nav>
     <div class="header-actions">
@@ -258,6 +259,86 @@
       <div id="validate-result" class="result-panel hidden"></div>
       <div id="production-result" class="result-panel hidden"></div>
       </div>
+      </div>
+    </section>
+
+    <!-- デザインレビュータブ -->
+    <section id="tab-review" class="tab-content">
+      <div class="review-panel">
+        <div class="review-heading">
+          <div>
+            <p class="review-kicker">Real Estate DX</p>
+            <h2>overlay/card デザインレビュー</h2>
+            <p class="hint">確認場所はこのタブに固定します。ここで見るのは動画の方針・比喩・情報密度で、YMM4 の最終品質判断や制作タイミング確定ではありません。</p>
+          </div>
+          <div class="review-actions">
+            <button type="button" id="btn-review-open-preview" class="primary">HTMLプレビューを開く</button>
+            <button type="button" id="btn-review-open-memo">詳細根拠を開く（必要時のみ）</button>
+          </div>
+        </div>
+
+        <div class="review-summary-grid">
+          <div class="review-status-card">
+            <h3>機械確認</h3>
+            <p><strong>読み戻し確認済み</strong>。11区間 / 24個の仮置き表示を確認したレビュー画面です。</p>
+          </div>
+          <div class="review-status-card">
+            <h3>今見てよい範囲</h3>
+            <p>overlay/card の比喩・密度・分割方針。制作前のデザインレビューとして扱います。</p>
+          </div>
+          <div class="review-status-card warning">
+            <h3>まだ禁止</h3>
+            <p>人物モーションIR、YMM4での創作受入判断、制作タイミングの確定。</p>
+          </div>
+          <div class="review-status-card warning">
+            <h3>残ブロッカー</h3>
+            <p>不動産DX用の人物テンプレートと小物素材が未整備。G-27 で作業単位へ分解します。</p>
+          </div>
+        </div>
+
+        <div class="review-focus-list" aria-label="重点確認">
+          <article class="review-focus-card">
+            <div class="review-focus-id">1 · RE-02</div>
+            <h3>REINS / VIPクラブ</h3>
+            <p>VIP比喩が強すぎるなら、REINS PC・データベースを主役にして、VIP/扉は補助へ下げます。</p>
+          </article>
+          <article class="review-focus-card">
+            <div class="review-focus-id">2 · RE-06</div>
+            <h3>キュレーション</h3>
+            <p>3-card 構成がスライド的・重すぎるなら、整理テーブル + 欠点カードへ圧縮します。</p>
+          </article>
+          <article class="review-focus-card">
+            <div class="review-focus-id">3 · RE-07C/D</div>
+            <h3>2030 / DX / AI の分割</h3>
+            <p>初期案では分けます。長すぎる場合だけ、DX と AI paradox を統合します。</p>
+          </article>
+          <article class="review-focus-card">
+            <div class="review-focus-id">4 · RE-03</div>
+            <h3>保護理由の見せ方</h3>
+            <p>影の演出が悪意を強く見せすぎるなら、小さい「利害」タグに弱めます。</p>
+          </article>
+          <article class="review-focus-card">
+            <div class="review-focus-id">5 · RE-07E</div>
+            <h3>専門家の選び方</h3>
+            <p>3条件が重いなら、「買ってはいけない理由を言える専門家」を中心に寄せます。</p>
+          </article>
+        </div>
+
+        <div class="review-reply-panel">
+          <h3>返答テンプレ</h3>
+          <p class="hint">下の文だけ返しても次へ進めます。細かく直したい場合は番号だけ指定してください。</p>
+          <div class="review-chip-row">
+            <button type="button" class="review-chip" data-review-reply="推奨初期対応で進めてよい">推奨初期対応</button>
+            <button type="button" class="review-chip" data-review-reply="素材/proxy整理を先にする">素材/proxy整理を先にする</button>
+            <button type="button" class="review-chip" data-review-reply="1だけ弱める">1だけ弱める</button>
+            <button type="button" class="review-chip" data-review-reply="2と5が重い">2と5が重い</button>
+            <button type="button" class="review-chip" data-review-reply="3は統合したい">3は統合したい</button>
+          </div>
+          <textarea id="review-reply-text" class="review-reply-box" rows="4">推奨初期対応で進めてよい</textarea>
+          <div class="review-actions">
+            <button type="button" id="btn-review-copy-reply" class="primary">コピー</button>
+          </div>
+        </div>
       </div>
     </section>
 

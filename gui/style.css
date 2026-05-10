@@ -670,6 +670,116 @@ main .hint strong {
   display: none;
 }
 
+/* Design review */
+.review-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.review-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 16px;
+  border: 1px solid rgba(91, 142, 255, 0.35);
+  border-radius: 10px;
+  background: rgba(91, 142, 255, 0.08);
+}
+
+.review-kicker {
+  color: var(--color-text-hint);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.review-heading h2 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.review-summary-grid,
+.review-focus-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.review-status-card,
+.review-focus-card,
+.review-reply-panel {
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-bg-panel);
+}
+
+.review-status-card.warning {
+  border-color: rgba(233, 69, 96, 0.45);
+  background: rgba(233, 69, 96, 0.08);
+}
+
+.review-status-card h3,
+.review-focus-card h3,
+.review-reply-panel h3 {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.review-status-card p,
+.review-focus-card p {
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  font-size: 13px;
+}
+
+.review-focus-id {
+  color: var(--color-success-text);
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.review-actions,
+.review-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.review-actions button:not(.primary),
+.review-chip {
+  background: var(--color-bg-panel);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.review-actions button:not(.primary):hover,
+.review-chip:hover {
+  color: #fff;
+  border-color: var(--color-border-hover);
+}
+
+.review-reply-box {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  background: var(--color-bg-dark);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text);
+  font-family: 'Yu Gothic UI', 'Segoe UI', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
 /* Action buttons */
 .action-row {
   margin-top: 16px;
