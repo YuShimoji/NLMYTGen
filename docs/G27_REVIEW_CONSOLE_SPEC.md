@@ -159,8 +159,84 @@ It renders proxy visuals for people, property documents, SNS screens, contracts,
 warning UI, AI panels, gates, and curation tables instead of plain text cards.
 The readback must confirm overlay readback `passed`, 11 storyboard segments,
 11 keyframes, 24 placeholder/proxy objects, and remaining blockers matching the
-validator result. This is `visual_proxy_proof`; it is still not creative
-acceptance and does not unlock cast motion IR or production timing.
+validator result.
+
+This artifact is diagnostic output only. `real_estate_dx_visual_storyboard_proof.png`
+belongs to the Evidence Layer and may be used to verify segment count, placeholder
+count, proxy visibility, and readback/blocker consistency. It must not be used as
+a production input, production template, YMM4 source, render source, production
+timing source, or creative acceptance substitute. Its current presentation-card
+look is explicitly not the intended production visual direction.
+
+## Visual Direction / Shot Layout Contract
+
+The next visual work is not a refinement of the existing diagnostic contact
+sheet. It is a new Visual Direction Layer plus Shot Layout Layer that designs
+actual 16:9 production frames before any YMM4 conversion, render, or production
+timing work.
+
+Layer responsibilities:
+
+| layer | purpose | allowed output | must not do |
+| --- | --- | --- | --- |
+| Evidence Layer | Prove artifact generation, readback, segment counts, placeholder counts, and blocker consistency | diagnostic screenshots/readback JSON | Provide production composition |
+| Visual Direction Layer | Define screen density, color, motif, character/UI abstraction, and visual hierarchy | design notes and treatment proof | Reuse diagnostic plate styling as production direction |
+| Shot Layout Layer | Define production-frame composition per beat | 16:9 frame treatment / still proof | Mix validation metadata into the picture |
+| Motion / Timing Layer | Map narration beats to beginning/development/turn motion ideas | beat plan only while validator is blocked | Start production timing, cast motion IR, or YMM4 creative acceptance |
+
+Production-frame contract:
+
+| item | contract |
+| --- | --- |
+| canvas | 16:9 production frame, planned at 1920x1080 even if proofs render smaller |
+| safe area | Keep primary subjects and readable text inside the central 90%; avoid critical content in the outer 5% on each edge |
+| subtitle clearance | Reserve the lower 18-22% of every frame for subtitles; UI proxy, characters, documents, and important labels must not collide with it |
+| text on frame | Use at most 2 labels per frame and keep total in-frame label text within 30 Japanese characters |
+| explanatory text | If the idea needs explanatory prose, split the shot or move the explanation to narration; do not pack prose into the frame |
+| font floor | Plan for smartphone viewing: primary label 42px+ at 1080p, secondary label 32px+; avoid tiny metadata-like text |
+| metadata isolation | Do not place `source`, `review`, `blocker`, segment IDs, validator status, readback counts, or other verification metadata inside production frames |
+| exception sidecar | If text amount, safe area, or subtitle clearance must be broken, record the exception reason in a sidecar artifact rather than silently normalizing it |
+| visual density | Prefer one main subject, one supporting object/UI, and one accent/risk marker per beat |
+
+Each 3-beat visual treatment must include:
+
+- `narration cue`: the script phrase or line range the beat answers.
+- `visual subject`: what appears on screen as the main readable subject.
+- `spatial composition`: where the subject, support object, and negative space sit.
+- `text on frame`: exact planned labels, or `none`.
+- `motion hint`: the visible change from the prior beat.
+- `subtitle clearance`: where the lower 18-22% reserved area remains open.
+- `risk`: why the beat could still fail visually or semantically.
+
+## Initial 3-Beat Visual Treatments
+
+These are design treatments for the first small visual proof only. They cover
+three important segments, not all 11 segments, and do not authorize YMM4 work,
+rendering, production timing, or creative acceptance.
+
+### RE-02 — REINS / VIPクラブ
+
+| beat | narration cue | visual subject | spatial composition | text on frame | motion hint | subtitle clearance | risk |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| beginning | Lines 13-14: `レインズっていう言葉。これ要するに何なんですか?` | Consumer-facing search screen facing a closed professional database beyond a glass partition | Viewer/consumer device on left foreground; dark database room in upper-right background; empty lower band reserved | `REINS?` | Search results dim while the database silhouette becomes visible | Bottom 20% stays empty except subtitle; no UI panels cross it | Could still feel like a security-system metaphor instead of a data-access gap |
+| development | Lines 15-19: `プロだけが入れる...巨大な物件データベース` / `一部の情報に過ぎない` | Professional REINS terminal as main subject, with public portal as a smaller filtered output | Large REINS monitor centered above subtitle-safe band; small public portal card to the right; character silhouettes stay small | `業者DB` / `公開ポータル` | Data cards flow from the central DB to a reduced public card | Lower 18-22% remains a plain dark gradient behind subtitle | VIP imagery can overstate exclusivity if the terminal is drawn as a luxury club |
+| turn | Lines 20-23: `なんで...隠されているんですか?` / `情報の非対称性` | Gap between visible portal card and hidden raw data stack | Split screen: left public listing card; right stacked raw-data cards behind translucent wall; question mark near consumer silhouette | `見える情報` / `見えない情報` | Wall opacity increases and the public card shrinks, making the asymmetry legible | Subtitle band is uninterrupted across the full width | Too many data cards can recreate the dense presentation-card problem |
+
+### RE-06 — キュレーション
+
+| beat | narration cue | visual subject | spatial composition | text on frame | motion hint | subtitle clearance | risk |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| beginning | Lines 61-64: `選択肢が多すぎること` | Overloaded property-choice grid | Dense but blurred property cards occupy top and side areas; one confused viewer silhouette sits center-left above subtitle band | `多すぎる選択肢` | Cards slide in from both sides until the center feels crowded | Bottom 20% remains clear; no card titles descend into subtitle space | Overcrowding is intentional but can still exceed readable density if labels are added |
+| development | Lines 65-75: `ノイズを排除` / `デメリット...包み隠さず提示` | Curated shortlist with honest drawback badge | Three noisy cards fade into one large selected property sheet at center; drawback badge sits upper-right; curator hand/pointer on left | `選ぶ理由` / `注意点` | Noise cards desaturate and collapse into one clean sheet; drawback badge appears last | Selected sheet stops above subtitle band; badge stays in upper half | The badge can look like an ad warning unless the property sheet remains calm and editorial |
+| turn | Lines 78-81: `独自の視点を買う` / `タイパと納得感` | Editorial lens transforming listings into meaning | Main frame shows a simple lens/curation table over one property; viewer silhouette on right nods toward selected option | `編集力` / `納得感` | Lens narrows the scene from many options to one coherent recommendation | Lower 22% left as a quiet floor/gradient for subtitles | Abstract lens motif may feel generic unless tied to property documents visually |
+
+### RE-07D — AI逆説と見えないリスク
+
+| beat | narration cue | visual subject | spatial composition | text on frame | motion hint | subtitle clearance | risk |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| beginning | Lines 130-132: `あなたに100%マッチする物件はこれです` | AI recommendation panel with a perfect-match property | Large AI panel upper-left; property card upper-right; human silhouette small and centered, not blocking subtitles | `100%マッチ` | AI panel snaps to a confident green match state | Bottom 20% remains empty; no AI chat text enters subtitle area | Can look like AI promotion if the next beat does not clearly reveal what is missing |
+| development | Lines 133-136: `データだけではない` / `目に見えないリスク` | Hidden risk layer under the recommended property | Property card remains visible above; below it, but above subtitle band, faint boundary dispute and inheritance relationship icons emerge | `見えないリスク` | Green match glow dims; risk icons fade in from behind the property card | Risk icons stay above the subtitle band; bottom reserved area remains blank | Risk icons can become too symbolic or horror-like if overdramatized |
+| turn | Lines 137-143: `対人コミュニケーション` / `キュレーターとリスク管理のプロ` | Human specialist mediating between AI data and people | Specialist silhouette center-left connecting AI panel and two human silhouettes; risk icons reduce to small managed markers | `調整するプロ` | Specialist line/gesture connects the AI panel to people; risk markers settle instead of disappearing | Subtitle band remains a clean dark strip across the bottom | Must avoid implying AI is useless; the picture should show complementarity, not rejection |
 
 ## Completion Gate
 
