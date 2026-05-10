@@ -243,7 +243,7 @@ clutter, the next assistant action is reduction, not production staging.
 
 ## Feedback The Assistant Can Act On
 
-| reviewer signal | assistant next |
+| reviewer signal | follow-up action if challenged |
 |---|---|
 | A metaphor feels misleading. | Rewrite that segment's visual claim and update placeholder labels before touching production paths. |
 | A segment is too dense. | Reduce or split the overlay/card plan and regenerate only the compact-review surface. |

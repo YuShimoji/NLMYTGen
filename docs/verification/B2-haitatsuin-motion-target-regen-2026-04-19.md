@@ -70,7 +70,7 @@ v3 IR の motion_target 付き utterance と Layer 10 への VideoEffects 適用
 
 ERROR はゼロ。
 
-## 次 user action (視覚確認 (a))
+## 次の確認作業 (視覚確認 (a))
 
 1. YMM4 を起動して `_tmp/b2_haitatsuin_motion_applied_v2.ymmp` を開く
 2. タイムラインで **Layer 10 の ImageItem** (配達員の絵) を探す。6 segment に分割されているはず

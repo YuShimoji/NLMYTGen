@@ -63,9 +63,12 @@ def test_init_episode_run_pack_creates_expected_layout(tmp_path) -> None:
 
     readme = (run_dir / "README.md").read_text(encoding="utf-8")
     assert "Episode Pack Root" in readme
-    assert "assistant status" in readme
-    assert "user action" in readme
-    assert "assistant next" in readme
+    assert "Current blocker" in readme
+    assert "Required operator action" in readme
+    assert "After a return" in readme
+    assert "assistant status" not in readme
+    assert "user action" not in readme
+    assert "assistant next" not in readme
     assert "episode-run-handoff" in readme
     assert "Initial input packet" in readme
     assert "csv/pilot_001.txt" in readme
@@ -185,6 +188,10 @@ def test_cli_episode_run_handoff_text_mentions_script_policy_and_base_generation
 
     assert code == 0
     text = capsys.readouterr().out
+    assert "Current blocker:" in text
+    assert "After a return:" in text
+    assert "Assistant status:" not in text
+    assert "Assistant next:" not in text
     assert "既存完成台本があれば新規作成不要" in text
     assert "base .ymmp はBuild CSV後に生成" in text
 

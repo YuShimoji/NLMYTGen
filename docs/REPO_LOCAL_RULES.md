@@ -46,7 +46,7 @@ Reports should make the work usable without forcing the user to open files. Stat
 
 Do not emit fixed closeout labels such as `summary`, `evidence`, `risk`, `next owner`, `assistant status`, or `assistant next` unless the user asks for that structure. Those concepts are internal checks, not output fields.
 
-If user action is required, include the executable details in normal language: exact path or artifact, required versus optional inputs, success signal, what to return on failure, and what the assistant will verify after receiving it. Do not replace those details with a docs link.
+If the next step requires user input, include the executable details in normal language: exact path or artifact, required versus optional inputs, success signal, what to return on failure, and what the assistant will verify after receiving it. Do not replace those details with a docs link.
 
 When listing residual work or options, give each item enough context to choose: purpose, effect, prerequisite, current state, and next move. Avoid `P0/P1`, path lists, or test names as the explanation.
 

@@ -66,17 +66,11 @@ A robust handoff should preserve:
 
 ## Closeout chain minimum
 Final responses should not merely summarize activity; they should make the next move executable.
-Do not force fixed section names, but preserve the logical chain:
-- summary: what is complete and what was deliberately not changed
-- meaning: what actually changed for the workflow, behavior, or decision space, understandable without opening changed files
-- evidence: validation, readback, or why validation was not run
-- risk: residual uncertainty, stale evidence, or judgement still needed
-- next owner: assistant, user, or both
-- assistant next: what the assistant will inspect, generate, or fix after any user-owned return
+Do not force fixed section names or emit internal labels. Preserve the logical chain in normal language: what is complete, what was deliberately not changed, what changed for the workflow or decision space, what evidence supports it, what uncertainty remains, who moves next, and what happens after any return from the user.
 
 File paths, line numbers, commits, and test names are evidence, not explanation. Put the user-readable meaning first, then cite files as support. Do not wait for the user to ask for "details" or "steps" before explaining what the change means and what happens next.
 
-If user action is the next blocker, explain why the assistant is blocked or what can still run in parallel. A response that ends with only "please check" or "continue from here" is incomplete unless the exact user action and assistant follow-up are already clear.
+If the next blocker depends on operator input, explain why work is waiting or what can still run in parallel. A response that ends with only "please check" or "continue from here" is incomplete unless the exact required input and follow-up work are already clear.
 
 ## User-owned artifact handoff
 When the next blocker is a user-owned action, the handoff must be concrete enough to execute without a follow-up clarification.
@@ -91,7 +85,7 @@ Include:
 - success outputs and NG return files/text
 - what the assistant will inspect or generate immediately after the user returns
 
-Docs, README files, and manifests may support the handoff, but they do not replace the handoff. If the user must place files, operate the GUI, or check YMM4, the response body must be executable on its own. Phrases like "the procedure source of truth is <file>.md:<line>" are invalid when they are used to avoid restating required files, exact paths, operation order, outputs, NG returns, and assistant next action.
+Docs, README files, and manifests may support the handoff, but they do not replace the handoff. If the user must place files, operate the GUI, or check YMM4, the response body must be executable on its own. Phrases like "the procedure source of truth is <file>.md:<line>" are invalid when they are used to avoid restating required files, exact paths, operation order, outputs, NG returns, and follow-up work.
 
 Bare placement bullets such as `put: <path>` / `置く: <path>` are invalid unless the same line or its immediate continuation explains `state`, `what`, `create`, and `used by`. Do not describe a downstream artifact as an initial placement merely because it is required later; for example, an Episode Pack base `.ymmp` is normally created after `Build CSV` by importing the generated CSV into YMM4 and saving the project.
 
@@ -103,7 +97,7 @@ Background skit explanation closeouts need to become design work, not only conce
 
 Self-contained background skit design answers must include script line ranges and block-level proof paths, not only block names and percentages. They must also separate IR intent from template names: `enter_from_left` is an intent, while `delivery_enter_from_left_v1` is a template name. Do not claim the design can go directly to IR/YMM4 review; the next assistant-owned step is validator-backed blueprint + gap report + template/proxy classification, then revised IR and compact review only after validator `passed`.
 
-Closeout reports that mention all checks passing and untracked/new files must also state the next owner and next action. Otherwise the report is only an activity log: the user still cannot tell whether to review, stage, commit, or return a specific artifact.
+Closeout reports that mention all checks passing and untracked/new files must also state who acts next and what happens next. Otherwise the report is only an activity log: the user still cannot tell whether to review, stage, commit, or return a specific artifact.
 
 ## No progress laundering
 Do not claim progress merely because:

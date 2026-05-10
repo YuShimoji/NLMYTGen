@@ -23,7 +23,7 @@ def _load_guardrails() -> ModuleType:
 def test_guardrails_reject_bare_file_placement_handoff() -> None:
     guardrails = _load_guardrails()
     text = (
-        "User Action\n\n"
+        "Required Operator Action\n\n"
         "置く: C:\\repo\\_tmp\\episode_runs\\pilot\\csv\\pilot.txt\n"
         "置く: C:\\repo\\_tmp\\episode_runs\\pilot\\ir\\pilot_production_ir.json\n"
     )
@@ -37,7 +37,7 @@ def test_guardrails_reject_bare_file_placement_handoff() -> None:
 def test_guardrails_allow_explained_file_placement_handoff() -> None:
     guardrails = _load_guardrails()
     text = """
-User Action
+Required Operator Action
 
 - source script: C:\\repo\\_tmp\\episode_runs\\pilot\\csv\\pilot.txt
   what: UTF-8 plain text source script.
@@ -160,8 +160,7 @@ def test_guardrails_allow_closeout_with_next_bridge() -> None:
     text = """
 検証はすべて pass です。
 未追跡は正式追加対象の e2e/daily-writing-proof.spec.js です。
-next owner: assistant.
-assistant next: OKなら stage/commit します。
+次に assistant が OK なら stage/commit します。
 """
 
     result = guardrails._check_stop_content([text])
@@ -233,7 +232,7 @@ def test_guardrails_reject_delivery_line_cue_allowance() -> None:
     assert "line-cue allowance" in result
 
 
-def test_guardrails_reject_scene_plan_needed_without_assistant_next() -> None:
+def test_guardrails_reject_scene_plan_needed_without_concrete_followup() -> None:
     guardrails = _load_guardrails()
     text = """
 茶番劇は合いの手ではありません。
@@ -488,7 +487,7 @@ asset / proof matrix:
 - 不足 / missing: 不動産業者、物件カード、PC画面。
 - owner / 担当: assistant-owned selection と user-owned authoring を分ける。
 - proof path: registry / template source / readback。
-assistant next: scene bible + time budget + cast continuity 由来の gap report を作ります。IR/YMM4配置にはまだ進めません。
+次に scene bible + time budget + cast continuity 由来の gap report を作ります。IR/YMM4配置にはまだ進めません。
 """
 
     result = guardrails._check_stop_content([text])
@@ -525,7 +524,7 @@ validate-background-skit-blueprint validator result:
 status: failed。
 errors: SCRIPT_SOURCE_MISMATCH, ASSET_CONTROL_UNBOUND。
 derived_metrics: script.line_count=152。
-assistant next: background_skit_blueprint artifact を直して再検証します。
+次に background_skit_blueprint artifact を直して再検証します。
 """
 
     result = guardrails._check_stop_content([text])
@@ -541,7 +540,7 @@ validate-background-skit-blueprint validator result:
 status: blocked。
 blockers: TIMETABLE_BLOCKED_TIMING_SOURCE_MISSING。
 derived_metrics: script.line_count=152。
-assistant next: ymmp source を受け取ったら duration_model を再計算します。
+ymmp source を受け取ったら duration_model を再計算します。
 """
 
     result = guardrails._check_stop_content([text])

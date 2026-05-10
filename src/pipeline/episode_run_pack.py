@@ -388,7 +388,7 @@ def render_episode_run_handoff_text(result: dict[str, Any]) -> str:
         f"Episode run handoff: {result.get('episode_id')}",
         f"Pack root: {result.get('run_dir')}",
         f"Phase: {result.get('phase')}",
-        f"Assistant status: {result.get('assistant_status')}",
+        f"Current blocker: {result.get('assistant_status')}",
         "",
         "Required inputs and generated-later artifacts:",
     ]
@@ -409,7 +409,7 @@ def render_episode_run_handoff_text(result: dict[str, Any]) -> str:
     lines.extend(["", "Do not:"])
     for entry in result.get("do_not", []):
         lines.append(f"- {entry}")
-    lines.extend(["", f"Assistant next: {result.get('assistant_next')}", ""])
+    lines.extend(["", f"After a return: {result.get('assistant_next')}", ""])
     return "\n".join(lines)
 
 
@@ -602,9 +602,9 @@ This pack keeps one full-through yukkuri theater pilot in one place.
 
 ## GUI hands-on route
 
-assistant status: blocked only on the user-owned pack inputs listed below; GUI writes review artifacts to fixed paths.
-user action: create or select the required files at the exact paths, use the GUI buttons below, then do one YMM4 review only after Apply succeeds.
-assistant next: if any step fails, return the saved JSON or panel text; assistant will inspect that artifact and keep `review/gaps.md` focused on the blocker.
+Current blocker: waiting only on the operator-owned pack inputs listed below; GUI writes review artifacts to fixed paths.
+Required operator action: create or select the required files at the exact paths, use the GUI buttons below, then do one YMM4 review only after Apply succeeds.
+After a return: if any step fails, return the saved JSON or panel text; the next pass will inspect that artifact and keep `review/gaps.md` focused on the blocker.
 assistant system aid: `episode-run-handoff --episode-id {episode_id}` prints the current exists/missing state plus what/create/used-by details for this pack.
 
 ## Initial input packet

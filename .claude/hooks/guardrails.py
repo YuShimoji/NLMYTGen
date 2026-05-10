@@ -99,7 +99,7 @@ CLOSEOUT_LOG_WITH_UNTRACKED_PATTERN = re.compile(
 )
 
 CLOSEOUT_NEXT_ACTION_PATTERN = re.compile(
-    r"(?:next owner|assistant next|user action|次\s*owner|次の担当|受領後|OKなら|stage|commit|ステージ|コミット)",
+    r"(?:次に|次の動き|返却後|受領後|OKなら|NGなら|stage|commit|ステージ|コミット|will inspect|will generate|will fix)",
     re.IGNORECASE,
 )
 
@@ -415,8 +415,8 @@ def _check_stop_content(strings: list[str]) -> str | None:
         )
     if _has_closeout_log_without_next_action(joined):
         return (
-            "closeout log ends without next-owner/action bridge; include next owner, "
-            "user action or assistant next before stopping"
+            "closeout log ends without next-action bridge; state who acts next "
+            "and what happens next in normal language before stopping"
         )
     background_skit_issue = _check_background_skit_role_drift(joined)
     if background_skit_issue:

@@ -2,12 +2,12 @@
 
 1本通しの「ゆっくり劇場風」pilot制作を、入力・中間成果物・確認結果ごとに混ぜないための作業パック。
 
-## Reporting Contract
+## Handoff Requirements
 
-- assistant status: GUI側に `Episode Pack Root` を選ばせ、CSV/IR検証/適用結果をpack内の既定pathへ保存する。
-- user action: 初期入力は `csv/<episode_id>.txt`（この動画で喋らせる完成会話台本）と `ir/<episode_id>_production_ir.json`（同じ台本に対応する Production IR）の2点として明示する。既存完成台本があれば新規作成不要で、pack path へ保存/コピーするだけでよい。`ymmp/<episode_id>_base.ymmp` は通常 `Build CSV` 後に YMM4 で CSV を読み込んで保存する `generated_later` artifact であり、最初に存在する前提で「置く」と書かない。必要mapは条件付きで列挙し、`素材投入` の一語で代替しない。
-- assistant next: NG時は保存済みJSONまたはGUIパネル文面を受け取り、機械側で原因を切り分ける。
-- route rule: 本ファイルは assistant / maintainer が読む pack 定義であり、user handoff の手順本文の代替ではない。`手順の正本は docs/EPISODE_RUN_PACK.md:<line>` のように参照して user action を成立扱いしない。pilot 操作を渡す応答では、初期入力2点、後続生成のbase `.ymmp`、任意map、GUI順、成功出力、NG返却、assistant next を本文に再掲する。
+- Current blocker: GUI側に `Episode Pack Root` を選ばせ、CSV/IR検証/適用結果をpack内の既定pathへ保存する。
+- Required operator action: 初期入力は `csv/<episode_id>.txt`（この動画で喋らせる完成会話台本）と `ir/<episode_id>_production_ir.json`（同じ台本に対応する Production IR）の2点として明示する。既存完成台本があれば新規作成不要で、pack path へ保存/コピーするだけでよい。`ymmp/<episode_id>_base.ymmp` は通常 `Build CSV` 後に YMM4 で CSV を読み込んで保存する `generated_later` artifact であり、最初に存在する前提で「置く」と書かない。必要mapは条件付きで列挙し、`素材投入` の一語で代替しない。
+- After a return: NG時は保存済みJSONまたはGUIパネル文面を受け取り、機械側で原因を切り分ける。
+- route rule: 本ファイルは assistant / maintainer が読む pack 定義であり、operator handoff の手順本文の代替ではない。`手順の正本は docs/EPISODE_RUN_PACK.md:<line>` のように参照して required action を成立扱いしない。pilot 操作を渡す応答では、初期入力2点、後続生成のbase `.ymmp`、任意map、GUI順、成功出力、NG返却、返却後に確認する内容を本文に再掲する。
 - system route: user-owned handoff 前に `uv run python -m src.cli.main episode-run-handoff --episode-id <episode_id>` を実行し、`state / what / create / used by` を本文へ反映する。`置く: <path>` の bare list は invalid。
 - existing pack rule: `_tmp/episode_runs/<episode_id>/` は ignored working artifact なので、README更新目的で安易に `init-episode-run --force` しない。まず `episode-run-handoff` で現在状態を読む。starter README を更新したい場合は既存の user artifact を上書きしない範囲だけ確認してから行う。
 
