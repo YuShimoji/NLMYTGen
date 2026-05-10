@@ -611,6 +611,18 @@ function getTreatmentProofFrameCount() {
   return Number(currentReviewTreatmentProof?.frame_count || 0);
 }
 
+function formatMotionPrimitives(primitives) {
+  if (!primitives || typeof primitives !== 'object') return '';
+  return ['enter', 'move', 'emphasize', 'reveal', 'dim']
+    .map((key) => {
+      const value = primitives[key];
+      const items = Array.isArray(value) ? value : (value ? [value] : []);
+      return items.length ? `${key}: ${items.join(' / ')}` : '';
+    })
+    .filter(Boolean)
+    .join(' | ');
+}
+
 function getReviewDecisionState(index) {
   return reviewDecisionState[index] || { decision: '', comment: '' };
 }
@@ -790,16 +802,17 @@ function renderReviewTreatmentProof(packet) {
       + `<td>${escapeHtml(beat.visual_subject || '')}</td>`
       + `<td>${escapeHtml((beat.text_on_frame || []).join(' / ') || 'none')}</td>`
       + `<td>${escapeHtml(beat.motion_hint || '')}</td>`
+      + `<td>${escapeHtml(formatMotionPrimitives(beat.motion_primitives))}</td>`
       + `<td>${escapeHtml(beat.subtitle_clearance || '')}</td>`
       + `<td>${escapeHtml(beat.frame_contract?.violations?.length ? beat.frame_contract.violations.join(', ') : '違反なし')}</td>`
       + `</tr>`
     )).join('')
-    : `<tr><td colspan="7">このsegmentは9-frame proof対象外です。RE-02 / RE-06 / RE-07Dを選択してください。</td></tr>`;
+    : `<tr><td colspan="8">このsegmentは9-frame proof対象外です。RE-02 / RE-06 / RE-07Dを選択してください。</td></tr>`;
   panel.classList.remove('hidden');
   panel.innerHTML = (
     `<div class="review-section-head">`
     + `<div>`
-    + `<h3>9-frame visual treatment proof</h3>`
+    + `<h3>9-frame visual treatment proof${proof.proof_revision ? ` ${escapeHtml(proof.proof_revision)}` : ''}</h3>`
     + `<p class="hint">GUI timelineで読むread-only proofです。単体PNG/HTML/JSON確認は完了扱いにしません。</p>`
     + `</div>`
     + `<div class="review-proof-summary">`
@@ -829,7 +842,7 @@ function renderReviewTreatmentProof(packet) {
     + `<div class="review-beat-table-wrap">`
     + `<h4>${escapeHtml(segment?.id || '')} beat table</h4>`
     + `<table class="review-beat-table">`
-    + `<thead><tr><th>beat</th><th>narration cue</th><th>visual subject</th><th>text on frame</th><th>motion hint</th><th>subtitle clearance</th><th>Frame Contract</th></tr></thead>`
+    + `<thead><tr><th>beat</th><th>narration cue</th><th>visual subject</th><th>text on frame</th><th>motion hint</th><th>motion primitives</th><th>subtitle clearance</th><th>Frame Contract</th></tr></thead>`
     + `<tbody>${beatRows}</tbody>`
     + `</table>`
     + `</div>`

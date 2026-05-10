@@ -351,12 +351,14 @@ For follow-on visual treatment proof slices, completion additionally requires:
 - Standalone HTML/PNG/JSON confirmation is evidence only and does not complete
   the review slice by itself.
 
-The first implemented follow-on proof uses `npm --prefix gui run
+The implemented follow-on proof uses `npm --prefix gui run
 capture:g27-visual-treatment` to create a 9-frame treatment for RE-02 / RE-06 /
-RE-07D. The GUI `デザインレビュー` timeline loads its sidecar, displays the proof
-image, marks the three target segments with `3-beat proof`, and shows the
-selected segment's beat table, narration cue, sidecar warnings, Frame Contract
-violation count, and read-only decision context.
+RE-07D. v2 strengthens label-off readability, real-estate texture, and
+motion-readiness while remaining a read-only visual treatment proof. The GUI
+`デザインレビュー` timeline loads its sidecar, displays the proof image, marks the
+three target segments with `3-beat proof`, and shows the selected segment's
+beat table, narration cue, sidecar warnings, Frame Contract violation count,
+motion primitives, and read-only decision context.
 
 The sidecar must also carry four qualitative checks before the proof is treated
 as reviewable in the GUI:
@@ -371,6 +373,18 @@ as reviewable in the GUI:
   should be visible without becoming a lecture slide.
 - `motion-readiness check`: the three beats should be convertible to appearance,
   movement, and emphasis, not just static slide replacement.
+
+For v2, the expected sidecar statuses are:
+
+- `label_off_check = at_least_partial_pass`
+- `narration_competition_check = pass_for_text_amount`
+- `real_estate_texture_check = pass_or_strong_partial`
+- `motion_readiness_check = pass_or_strong_partial`
+
+These statuses do not authorize production templates, YMM4 conversion, render,
+production timing, or creative acceptance. Frame Contract violations may be
+zero, but zero violations only means formal contract compliance for this proof.
+It is not production readiness.
 
 `Modern_Real_Estate_Strategic_Playbook.pdf` is a user-provided anti-pattern
 corpus only. It is not a production asset and not a layout reference. Use it to

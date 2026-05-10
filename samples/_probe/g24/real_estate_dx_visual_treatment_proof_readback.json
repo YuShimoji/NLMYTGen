@@ -18,10 +18,17 @@
     "dom_frames": 9,
     "dom_cells": 9,
     "subtitle_bands": 9,
+    "proxy_visuals": 32,
     "visible_metadata_in_frame": false,
     "frame_contract_violations": 0,
-    "sidecar_warnings": 3,
+    "sidecar_warnings": 4,
     "visual_quality_checks": 4,
+    "visual_quality_statuses": {
+      "label_off_check": "at_least_partial_pass",
+      "narration_competition_check": "pass_for_text_amount",
+      "real_estate_texture_check": "pass_or_strong_partial",
+      "motion_readiness_check": "pass_or_strong_partial"
+    },
     "anti_pattern_corpus_role": "anti_pattern_only",
     "screenshot_width": 1178,
     "screenshot_height": 1082

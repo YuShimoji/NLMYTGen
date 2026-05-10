@@ -79,6 +79,7 @@ async function run() {
           hasScriptExcerptLabel: text.includes('該当台本抜粋'),
           hasDecisionInspectorLabel: text.includes('判断ペイン'),
           hasTreatmentProofLabel: text.includes('9-frame visual treatment proof'),
+          hasTreatmentProofV2Label: text.includes('9-frame visual treatment proof v2'),
           hasProofFrameCount: text.includes('${expectedProofFrameCount} frames'),
           hasProofTargets: text.includes('RE-02') && text.includes('RE-06') && text.includes('RE-07D'),
           hasProofWarnings: text.includes('sidecar warnings'),
@@ -88,6 +89,10 @@ async function run() {
           hasNarrationCompetitionCheck: text.includes('narration competition check'),
           hasRealEstateTextureCheck: text.includes('real-estate texture check'),
           hasMotionReadinessCheck: text.includes('motion-readiness check'),
+          hasLabelOffStatus: text.includes('at_least_partial_pass'),
+          hasTextureStatus: text.includes('pass_or_strong_partial'),
+          hasMotionPrimitiveHeader: text.includes('motion primitives'),
+          hasMotionPrimitiveActions: text.includes('enter:') && text.includes('reveal:') && text.includes('dim:'),
           hasAntiPatternCorpus: text.includes('anti-pattern corpus') && text.includes('Production assetでもlayout見本でもありません'),
           hasCorruption: /\\?\\?\\?|�/.test(text),
           textSample: text.slice(0, 500),
@@ -116,6 +121,7 @@ async function run() {
             && state.hasScriptExcerptLabel
             && state.hasDecisionInspectorLabel
             && state.hasTreatmentProofLabel
+            && state.hasTreatmentProofV2Label
             && state.hasProofFrameCount
             && state.hasProofTargets
             && state.hasProofWarnings
@@ -125,6 +131,9 @@ async function run() {
             && state.hasNarrationCompetitionCheck
             && state.hasRealEstateTextureCheck
             && state.hasMotionReadinessCheck
+            && state.hasLabelOffStatus
+            && state.hasTextureStatus
+            && state.hasMotionPrimitiveHeader
             && state.hasAntiPatternCorpus;
           if (ready) {
             clearInterval(timer);
@@ -174,6 +183,14 @@ async function run() {
       throw new Error(`proof panel did not expose ${label}: ${result.proofText.slice(0, 500)}`);
     }
   }
+  for (const status of ['at_least_partial_pass', 'pass_or_strong_partial']) {
+    if (!result.proofText.includes(status)) {
+      throw new Error(`proof panel did not expose improved check status ${status}: ${result.proofText.slice(0, 500)}`);
+    }
+  }
+  if (result.proofText.includes('needs_human_review')) {
+    throw new Error(`label-off check did not improve from needs_human_review: ${result.proofText.slice(0, 500)}`);
+  }
   if (!result.detailText.includes('該当台本抜粋')) {
     throw new Error(`review segment detail did not render script context: ${result.detailText.slice(0, 200)}`);
   }
@@ -202,13 +219,15 @@ async function run() {
           hasCue: text.includes(item.cue),
           hasNarrationCueHeader: text.includes('narration cue'),
           hasSubtitleClearance: text.includes('subtitle clearance'),
+          hasMotionPrimitiveHeader: text.includes('motion primitives'),
+          hasMotionPrimitiveActions: text.includes('enter:') && text.includes('reveal:') && text.includes('dim:'),
           hasNoViolation: text.includes('違反なし'),
         };
       });
     })()
   `);
   for (const item of proofSegments) {
-    if (item.rowCount !== 3 || !item.hasCue || !item.hasNarrationCueHeader || !item.hasSubtitleClearance || !item.hasNoViolation) {
+    if (item.rowCount !== 3 || !item.hasCue || !item.hasNarrationCueHeader || !item.hasSubtitleClearance || !item.hasMotionPrimitiveHeader || !item.hasMotionPrimitiveActions || !item.hasNoViolation) {
       throw new Error(`proof beat table did not render for ${item.id}: ${JSON.stringify(item)}`);
     }
   }

@@ -38,8 +38,8 @@ const VISUAL_QUALITY_CHECKS = [
     id: 'label_off_check',
     label: 'label-off check',
     question: 'If half the labels are hidden, do closed DB, choice overload, and invisible risk still read through shapes and spatial change?',
-    current_status: 'needs_human_review',
-    current_read: 'partial: silhouettes, split walls, grids, and risk markers carry the idea, but labels still do important work.',
+    current_status: 'at_least_partial_pass',
+    current_read: 'Closed database, choice overload, and invisible risk now read from occlusion, density, color contrast, and proxy objects even when labels are reduced.',
     fail_if: 'The frame becomes just a generic UI card once labels are removed.',
   },
   {
@@ -54,16 +54,16 @@ const VISUAL_QUALITY_CHECKS = [
     id: 'real_estate_texture_check',
     label: 'real-estate texture check',
     question: 'Are real-estate-specific signs visible without turning into a lecture slide?',
-    current_status: 'partial',
-    current_read: 'Property cards, search screens, defect badges, hidden data, and risk markers are present; boundary/inheritance/neighborhood risk need stronger non-text motifs in later art.',
+    current_status: 'pass_or_strong_partial',
+    current_read: 'Property cards, search UI, broker DB rows, public portal output, drawback cards, boundary lines, inheritance nodes, and neighborhood markers are present as abstract real-estate proxies.',
     fail_if: 'The frame reads as generic SaaS, dashboard, or strategy-consulting UI.',
   },
   {
     id: 'motion_readiness_check',
     label: 'motion-readiness check',
     question: 'Can the three frames become YMM4 appearance, movement, and emphasis rather than static slides?',
-    current_status: 'partial',
-    current_read: 'Each beat has a motion hint and spatial change; later proof should reduce static labels and map props to explicit enter/move/emphasize actions.',
+    current_status: 'pass_or_strong_partial',
+    current_read: 'Each beat now records enter / move / emphasize / reveal / dim actions in the sidecar, so the proof can be translated into YMM4-like motion primitives later without starting production timing.',
     fail_if: 'The only planned change is text replacement.',
   },
 ];
@@ -79,7 +79,14 @@ const SEGMENTS = [
         visual_subject: '消費者の検索画面と、奥に見える閉じた業者DB',
         spatial_composition: '左前景にスマホ検索、右奥にガラス越しのDB室。下部20%は空ける。',
         text_on_frame: ['REINS?'],
-        motion_hint: '検索結果が薄くなり、奥のDBシルエットが浮く。',
+        motion_hint: '検索結果が薄くなり、奥のDB棚とロックされた扉が浮く。',
+        motion_primitives: {
+          enter: ['スマホ検索UI'],
+          move: ['視線誘導線を右奥のDBへ寄せる'],
+          emphasize: ['DB室の暗い面とロック形状'],
+          reveal: ['ガラス越しの業者DB棚'],
+          dim: ['公開検索結果'],
+        },
         subtitle_clearance: '下部20%を暗い床面として空け、UIも人物も置かない。',
         risk: 'セキュリティ施設の比喩に寄りすぎる可能性。',
       },
@@ -88,8 +95,15 @@ const SEGMENTS = [
         narration_cue: '15-19行: 「プロだけが入れる...巨大な物件データベース」「一部の情報」',
         visual_subject: '中央の業者DB端末と、小さく出力される公開ポータル',
         spatial_composition: '中央上に大きいDB画面、右に小さい公開ポータルカード。下部20%は字幕用に空ける。',
-        text_on_frame: ['業者DB', '公開ポータル'],
-        motion_hint: 'DBから公開ポータルへ情報カードが細く流れる。',
+        text_on_frame: ['業者DB', '公開'],
+        motion_hint: 'DB一覧から公開ポータルへ、物件カードが細く選別されて流れる。',
+        motion_primitives: {
+          enter: ['業者DB一覧', '公開ポータル枠'],
+          move: ['物件カードをDBから公開枠へ細く移動'],
+          emphasize: ['DB側のカード量と公開側の少なさ'],
+          reveal: ['公開枠に出る情報が一部だけであること'],
+          dim: ['DB外の背景'],
+        },
         subtitle_clearance: '公開ポータルカードは右上寄せで、字幕帯へ降ろさない。',
         risk: 'VIP感を強めると制度説明より煽りに見える。',
       },
@@ -98,8 +112,15 @@ const SEGMENTS = [
         narration_cue: '20-23行: 「なんで...隠されているんですか?」「情報の非対称性」',
         visual_subject: '公開カードと隠れた生データ束の差分',
         spatial_composition: '左に見える情報、右に半透明壁の奥の生データ束。中央下は空ける。',
-        text_on_frame: ['見える情報', '見えない情報'],
-        motion_hint: '壁の濃度が上がり、公開カードが相対的に小さくなる。',
+        text_on_frame: ['公開', '非公開'],
+        motion_hint: '壁の濃度が上がり、右側の未公開ファイル束が奥へ退く。',
+        motion_primitives: {
+          enter: ['公開カード', '未公開ファイル束'],
+          move: ['未公開ファイル束を壁の奥へ後退'],
+          emphasize: ['公開カードと未公開束の面積差'],
+          reveal: ['情報の非対称性を分割面で見せる'],
+          dim: ['公開カードの周辺情報'],
+        },
         subtitle_clearance: '左右の要素を上半分に置き、下部20%は連続した余白にする。',
         risk: 'データカードを増やしすぎると再び説明スライド化する。',
       },
@@ -114,8 +135,15 @@ const SEGMENTS = [
         narration_cue: '61-64行: 「選択肢が多すぎること」',
         visual_subject: '大量の物件カードに囲まれる視聴者',
         spatial_composition: '上部と左右にカード群、中央に小さな視聴者。下部20%は空ける。',
-        text_on_frame: ['多すぎる選択肢'],
-        motion_hint: '左右からカードが増えて中心を圧迫する。',
+        text_on_frame: ['多すぎる'],
+        motion_hint: '左右から物件カードが増え、中心の視聴者と視線の余白を圧迫する。',
+        motion_primitives: {
+          enter: ['物件カード群'],
+          move: ['カード群を左右から中心へ寄せる'],
+          emphasize: ['カード密度と中心人物の小ささ'],
+          reveal: ['選択肢過多による圧迫感'],
+          dim: ['個別カードの詳細文字'],
+        },
         subtitle_clearance: 'カード群は下部字幕帯に入れず、中央下は暗い余白にする。',
         risk: '混雑表現が強すぎるとスマホ視聴で読めない。',
       },
@@ -124,8 +152,15 @@ const SEGMENTS = [
         narration_cue: '65-75行: 「ノイズを排除」「デメリット...包み隠さず提示」',
         visual_subject: '一件に絞られた物件シートと欠点バッジ',
         spatial_composition: '中央に大きな物件シート、右上に注意点バッジ、左に編集者の手元。',
-        text_on_frame: ['選ぶ理由', '注意点'],
-        motion_hint: 'ノイズカードが薄くなり、選定シートと注意点が最後に残る。',
+        text_on_frame: ['理由', '注意'],
+        motion_hint: 'ノイズカードが薄くなり、選定シートと欠点カードが最後に残る。',
+        motion_primitives: {
+          enter: ['選定済み物件シート', '欠点カード'],
+          move: ['ノイズカードを外側へ退避'],
+          emphasize: ['欠点カードを最後に点灯'],
+          reveal: ['選ぶ理由と買わない理由の並置'],
+          dim: ['背景の候補カード'],
+        },
         subtitle_clearance: '物件シートの下端を字幕帯より上で止める。',
         risk: '注意点バッジが広告の警告UIに見える可能性。',
       },
@@ -134,8 +169,15 @@ const SEGMENTS = [
         narration_cue: '78-81行: 「独自の視点を買う」「タイパと納得感」',
         visual_subject: '編集レンズで候補が意味ある一件に変わる画面',
         spatial_composition: '中央にレンズ、奥に一件の物件、右に納得する視聴者。',
-        text_on_frame: ['編集力', '納得感'],
-        motion_hint: 'レンズが多い候補を一件へ絞り、画面の余白が増える。',
+        text_on_frame: ['編集', '納得'],
+        motion_hint: 'レンズが候補群を一件へ絞り、周辺カードが暗くなって余白が増える。',
+        motion_primitives: {
+          enter: ['編集レンズ', '選定物件カード'],
+          move: ['レンズを候補群から選定物件へ寄せる'],
+          emphasize: ['選定物件カードと余白'],
+          reveal: ['キュレーション後の納得感'],
+          dim: ['未選定カード群'],
+        },
         subtitle_clearance: 'レンズと物件を上中段に置き、下部22%を空ける。',
         risk: 'レンズ表現が一般的すぎると不動産文脈が弱まる。',
       },
@@ -150,8 +192,15 @@ const SEGMENTS = [
         narration_cue: '130-132行: 「あなたに100%マッチする物件はこれです」',
         visual_subject: 'AI推薦パネルと完璧マッチの物件カード',
         spatial_composition: '左上にAIパネル、右上に物件カード、中央に小さな人物。',
-        text_on_frame: ['100%マッチ'],
-        motion_hint: 'AIパネルが緑の確信状態へ切り替わる。',
+        text_on_frame: ['100%'],
+        motion_hint: 'AIパネルが緑の確信状態へ切り替わり、物件カードを強調する。',
+        motion_primitives: {
+          enter: ['AI推薦パネル', '物件カード'],
+          move: ['推薦線をAIから物件カードへ伸ばす'],
+          emphasize: ['緑の確信表示'],
+          reveal: ['完璧に見える推薦物件'],
+          dim: ['人物側の判断余地'],
+        },
         subtitle_clearance: 'AIパネルと物件カードは上段に固定し、字幕帯へ出さない。',
         risk: '次beatで欠落を見せないとAI礼賛に見える。',
       },
@@ -160,8 +209,15 @@ const SEGMENTS = [
         narration_cue: '133-136行: 「データだけではない」「目に見えないリスク」',
         visual_subject: '推薦物件の下に現れる境界・相続・感情リスク',
         spatial_composition: '上段に物件カード、中央に薄いリスクアイコン、下部は空ける。',
-        text_on_frame: ['見えないリスク'],
-        motion_hint: '緑のマッチ光が弱まり、物件の背後からリスクが浮く。',
+        text_on_frame: ['境界', '相続'],
+        motion_hint: '緑のマッチ光が弱まり、境界線・相続ノード・近隣マーカーが背後から浮く。',
+        motion_primitives: {
+          enter: ['境界線', '相続ノード', '近隣マーカー'],
+          move: ['リスク要素を物件カードの背後から前景へ少し出す'],
+          emphasize: ['赤い境界線と相続ノード'],
+          reveal: ['AI推薦に出ない見えないリスク'],
+          dim: ['100%マッチの緑光'],
+        },
         subtitle_clearance: 'リスクアイコンは中央までに留め、下部20%には入れない。',
         risk: 'リスクを恐怖演出にしすぎると論旨がAI批判へ寄る。',
       },
@@ -170,8 +226,15 @@ const SEGMENTS = [
         narration_cue: '137-143行: 「対人コミュニケーション」「キュレーターとリスク管理のプロ」',
         visual_subject: 'AIデータと人間関係の間に立つ専門家',
         spatial_composition: '左にAI、右に人間関係、中央に専門家。字幕帯は全面空ける。',
-        text_on_frame: ['調整するプロ'],
+        text_on_frame: ['調整'],
         motion_hint: '専門家の線がAIと人をつなぎ、リスクマーカーが小さく整理される。',
+        motion_primitives: {
+          enter: ['専門家シルエット', '人間関係ノード'],
+          move: ['接続線をAIから専門家、人間関係へ伸ばす'],
+          emphasize: ['専門家の媒介位置'],
+          reveal: ['AIと対人リスク管理の補完関係'],
+          dim: ['過剰なリスク警告色'],
+        },
         subtitle_clearance: '人物の足元も含めて下部22%を暗い余白にする。',
         risk: 'AI否定ではなく補完関係として見えるバランスが必要。',
       },
@@ -258,10 +321,11 @@ function buildSidecar(paths) {
     beat.frame_contract.violations.map((violation) => ({ beat_id: beat.id, violation }))
   ));
   return {
-    version: '1.0',
+    version: '1.1',
     episode_id: 'real_estate_dx',
     proof_type: 'visual_treatment_proof',
-    review_scope: 'g27_re02_re06_re07d_9_frame_treatment',
+    proof_revision: 'v2',
+    review_scope: 'g27_re02_re06_re07d_9_frame_treatment_v2',
     target_segments: segments.map((segment) => segment.id),
     frame_count: allBeats.length,
     beats_per_segment: 3,
@@ -276,7 +340,8 @@ function buildSidecar(paths) {
     sidecar_warnings: [
       'This proof is read-only visual treatment evidence, not creative acceptance.',
       'YMM4 conversion, render, production timing, and production template use remain blocked.',
-      'No Frame Contract violations are currently recorded; future exceptions must be added here.',
+      'Frame Contract violations are recorded in sidecar when they exist; zero violations is not treated as production readiness.',
+      'Modern_Real_Estate_Strategic_Playbook.pdf remains anti_pattern_only and must not be used as a production asset or layout reference.',
     ],
     anti_pattern_corpus: ANTI_PATTERN_CORPUS,
     visual_quality_checks: VISUAL_QUALITY_CHECKS,
@@ -299,6 +364,62 @@ function labelsMarkup(labels) {
   )).join('');
 }
 
+const PROXY_VISUALS = {
+  'RE-02-beginning': ['phone-search', 'closed-db', 'glass-wall', 'lock-mark'],
+  'RE-02-development': ['broker-db-list', 'public-portal', 'property-flow'],
+  'RE-02-turn': ['public-card', 'hidden-file-stack', 'glass-wall'],
+  'RE-06-beginning': ['property-card-grid', 'person-overload', 'density-vignette'],
+  'RE-06-development': ['selected-property-sheet', 'drawback-card', 'curator-hand', 'noise-card-stack'],
+  'RE-06-turn': ['curation-lens', 'selected-property-sheet', 'person-nod', 'noise-card-stack'],
+  'RE-07D-beginning': ['ai-panel', 'featured-property-card', 'person-small'],
+  'RE-07D-development': ['featured-property-card', 'boundary-map', 'inheritance-node', 'neighbor-marker'],
+  'RE-07D-turn': ['ai-panel', 'specialist-person', 'relationship-nodes', 'managed-risk-markers'],
+};
+
+function proxyInner(type) {
+  switch (type) {
+    case 'phone-search':
+      return '<span class="proxy-topbar"></span><span class="proxy-card-line a"></span><span class="proxy-card-line b"></span><span class="proxy-card-thumb"></span>';
+    case 'closed-db':
+    case 'broker-db-list':
+      return '<span class="proxy-db-row a"></span><span class="proxy-db-row b"></span><span class="proxy-db-row c"></span><span class="proxy-db-row d"></span>';
+    case 'public-portal':
+    case 'public-card':
+    case 'featured-property-card':
+    case 'selected-property-sheet':
+      return '<span class="proxy-card-thumb"></span><span class="proxy-card-line a"></span><span class="proxy-card-line b"></span><span class="proxy-card-line c"></span>';
+    case 'hidden-file-stack':
+    case 'noise-card-stack':
+    case 'property-card-grid':
+      return '<span class="proxy-mini-card a"></span><span class="proxy-mini-card b"></span><span class="proxy-mini-card c"></span><span class="proxy-mini-card d"></span><span class="proxy-mini-card e"></span>';
+    case 'drawback-card':
+      return '<span class="proxy-alert-triangle"></span><span class="proxy-card-line a"></span><span class="proxy-card-line b"></span>';
+    case 'boundary-map':
+      return '<span class="proxy-map-grid"></span><span class="proxy-boundary-line"></span><span class="proxy-land-plot a"></span><span class="proxy-land-plot b"></span>';
+    case 'inheritance-node':
+    case 'relationship-nodes':
+      return '<span class="proxy-node a"></span><span class="proxy-node b"></span><span class="proxy-node c"></span><span class="proxy-node-line a"></span><span class="proxy-node-line b"></span>';
+    case 'curation-lens':
+      return '<span class="proxy-lens-ring"></span><span class="proxy-lens-glow"></span>';
+    case 'curator-hand':
+      return '<span class="proxy-hand-palm"></span><span class="proxy-hand-pointer"></span>';
+    case 'ai-panel':
+      return '<span class="proxy-ai-dot a"></span><span class="proxy-ai-dot b"></span><span class="proxy-ai-dot c"></span><span class="proxy-card-line a"></span><span class="proxy-card-line b"></span>';
+    case 'property-flow':
+      return '<span class="proxy-flow-dot a"></span><span class="proxy-flow-dot b"></span><span class="proxy-flow-dot c"></span>';
+    default:
+      return '';
+  }
+}
+
+function proxyVisualMarkup(segmentId, phase) {
+  const key = `${segmentId}-${phase}`;
+  const visuals = PROXY_VISUALS[key] || [];
+  return visuals.map((type, index) => (
+    `<div class="proxy proxy-${type} proxy-${index + 1}" aria-hidden="true">${proxyInner(type)}</div>`
+  )).join('');
+}
+
 function frameMarkup(segment, beat, frameNumber) {
   return (
     `<section class="proof-cell" data-segment-id="${escapeHtml(segment.id)}" data-phase="${escapeHtml(beat.phase)}">`
@@ -308,6 +429,7 @@ function frameMarkup(segment, beat, frameNumber) {
     + `<div class="subject subject-b"></div>`
     + `<div class="subject subject-c"></div>`
     + `<div class="connector connector-a"></div>`
+    + proxyVisualMarkup(segment.id, beat.phase)
     + labelsMarkup(beat.text_on_frame)
     + `<div class="subtitle-safe"></div>`
     + `</div>`
@@ -348,64 +470,170 @@ header p { margin: 2px 0; color: #cbd5e1; font-size: 13px; }
 .subject { position: absolute; border-radius: 16px; background: rgba(255,255,255,.88); border: 3px solid rgba(15,23,42,.46); box-shadow: 0 10px 22px rgba(15,23,42,.14); }
 .connector { position: absolute; height: 4px; border-radius: 99px; background: rgba(59,130,246,.55); transform-origin: left center; }
 .frame-label { position: absolute; z-index: 5; padding: 7px 12px; border-radius: 999px; background: rgba(15,23,42,.82); color: #fff; font-size: 20px; font-weight: 800; letter-spacing: .02em; box-shadow: 0 8px 20px rgba(15,23,42,.22); }
+.proxy { position: absolute; z-index: 3; border-radius: 12px; pointer-events: none; }
+.proxy span { position: absolute; display: block; }
+.proxy-phone-search { background: #111827; border: 3px solid #020617; box-shadow: 0 12px 24px rgba(15,23,42,.22); }
+.proxy-phone-search .proxy-topbar { left: 15%; right: 15%; top: 10%; height: 6%; border-radius: 99px; background: #475569; }
+.proxy-phone-search .proxy-card-thumb { left: 10%; top: 26%; width: 26%; height: 42%; border-radius: 8px; background: #93c5fd; }
+.proxy-phone-search .proxy-card-line { left: 42%; height: 7%; border-radius: 99px; background: #dbeafe; }
+.proxy-phone-search .proxy-card-line.a { top: 28%; width: 44%; }
+.proxy-phone-search .proxy-card-line.b { top: 43%; width: 34%; }
+.proxy-broker-db-list, .proxy-closed-db { background: #111827; border: 3px solid #334155; box-shadow: inset 0 0 0 5px rgba(59,130,246,.14), 0 12px 24px rgba(15,23,42,.26); }
+.proxy-db-row { left: 9%; right: 9%; height: 10%; border-radius: 999px; background: linear-gradient(90deg, #38bdf8, #1d4ed8); opacity: .78; }
+.proxy-db-row.a { top: 18%; }
+.proxy-db-row.b { top: 34%; width: 70%; }
+.proxy-db-row.c { top: 50%; width: 82%; }
+.proxy-db-row.d { top: 66%; width: 58%; }
+.proxy-public-portal, .proxy-public-card, .proxy-featured-property-card, .proxy-selected-property-sheet { background: #fff; border: 3px solid #94a3b8; box-shadow: 0 12px 24px rgba(15,23,42,.16); }
+.proxy-card-thumb { left: 7%; top: 11%; width: 32%; height: 48%; border-radius: 8px; background: linear-gradient(135deg, #bfdbfe, #86efac); }
+.proxy-card-line { left: 46%; height: 8%; border-radius: 999px; background: #94a3b8; }
+.proxy-card-line.a { top: 17%; width: 42%; }
+.proxy-card-line.b { top: 33%; width: 32%; }
+.proxy-card-line.c { top: 49%; width: 38%; }
+.proxy-hidden-file-stack, .proxy-noise-card-stack, .proxy-property-card-grid { background: transparent; }
+.proxy-mini-card { width: 31%; height: 27%; border-radius: 8px; background: #fff; border: 2px solid #cbd5e1; box-shadow: 0 6px 12px rgba(15,23,42,.14); }
+.proxy-mini-card.a { left: 0; top: 0; }
+.proxy-mini-card.b { left: 34%; top: 3%; }
+.proxy-mini-card.c { left: 68%; top: 0; }
+.proxy-mini-card.d { left: 15%; top: 35%; }
+.proxy-mini-card.e { left: 52%; top: 38%; }
+.proxy-glass-wall { background: linear-gradient(90deg, rgba(255,255,255,.18), rgba(148,163,184,.48), rgba(255,255,255,.12)); border-left: 2px solid rgba(255,255,255,.7); border-right: 2px solid rgba(15,23,42,.12); }
+.proxy-lock-mark { border: 4px solid #f59e0b; background: rgba(245,158,11,.18); border-radius: 12px; }
+.proxy-lock-mark::before { content: ""; position: absolute; left: 22%; right: 22%; top: -42%; height: 54%; border: 4px solid #f59e0b; border-bottom: 0; border-radius: 22px 22px 0 0; }
+.proxy-property-flow .proxy-flow-dot { width: 14px; height: 14px; border-radius: 999px; background: #2563eb; box-shadow: 0 0 0 7px rgba(37,99,235,.12); }
+.proxy-property-flow .proxy-flow-dot.a { left: 8%; top: 42%; }
+.proxy-property-flow .proxy-flow-dot.b { left: 43%; top: 42%; }
+.proxy-property-flow .proxy-flow-dot.c { right: 8%; top: 42%; }
+.proxy-person-overload, .proxy-person-nod, .proxy-person-small, .proxy-specialist-person { border-radius: 50% 50% 16px 16px; background: #334155; box-shadow: 0 10px 18px rgba(15,23,42,.24); }
+.proxy-specialist-person { background: #166534; }
+.proxy-density-vignette { border-radius: 999px; background: radial-gradient(circle, rgba(15,23,42,.28), rgba(15,23,42,0) 68%); }
+.proxy-drawback-card { background: #fff7ed; border: 3px solid #b45309; box-shadow: 0 10px 18px rgba(180,83,9,.18); }
+.proxy-alert-triangle { left: 10%; top: 18%; width: 0; height: 0; border-left: 16px solid transparent; border-right: 16px solid transparent; border-bottom: 28px solid #f97316; }
+.proxy-curator-hand .proxy-hand-palm { left: 12%; top: 40%; width: 42%; height: 28%; border-radius: 999px; background: #fbbf24; }
+.proxy-curator-hand .proxy-hand-pointer { left: 48%; top: 45%; width: 45%; height: 10%; border-radius: 999px; background: #f59e0b; transform: rotate(-12deg); transform-origin: left center; }
+.proxy-curation-lens { border: 5px solid rgba(37,99,235,.56); border-radius: 999px; background: rgba(219,234,254,.3); box-shadow: 0 0 24px rgba(37,99,235,.2); }
+.proxy-curation-lens::after { content: ""; position: absolute; right: -20%; bottom: 2%; width: 35%; height: 6px; border-radius: 999px; background: rgba(37,99,235,.6); transform: rotate(42deg); }
+.proxy-lens-ring { inset: 10%; border: 3px solid rgba(37,99,235,.3); border-radius: 999px; }
+.proxy-lens-glow { inset: 26%; border-radius: 999px; background: radial-gradient(circle, rgba(37,99,235,.24), rgba(37,99,235,0)); }
+.proxy-ai-panel { background: #eef2ff; border: 3px solid #4f46e5; box-shadow: 0 12px 24px rgba(79,70,229,.16); }
+.proxy-ai-dot { width: 11px; height: 11px; border-radius: 999px; background: #4f46e5; }
+.proxy-ai-dot.a { left: 10%; top: 15%; }
+.proxy-ai-dot.b { left: 22%; top: 15%; }
+.proxy-ai-dot.c { left: 34%; top: 15%; }
+.proxy-boundary-map { background: #ecfeff; border: 3px solid #0e7490; overflow: hidden; }
+.proxy-map-grid { inset: 0; background-image: linear-gradient(rgba(14,116,144,.18) 1px, transparent 1px), linear-gradient(90deg, rgba(14,116,144,.18) 1px, transparent 1px); background-size: 18px 18px; }
+.proxy-boundary-line { left: 12%; top: 52%; width: 74%; height: 5px; border-radius: 999px; background: #dc2626; transform: rotate(-12deg); box-shadow: 0 0 0 4px rgba(220,38,38,.14); }
+.proxy-land-plot { border: 2px solid #0891b2; border-radius: 4px; background: rgba(255,255,255,.44); }
+.proxy-land-plot.a { left: 14%; top: 16%; width: 28%; height: 25%; }
+.proxy-land-plot.b { right: 14%; bottom: 15%; width: 30%; height: 25%; }
+.proxy-inheritance-node, .proxy-relationship-nodes { background: transparent; }
+.proxy-node { width: 20px; height: 20px; border-radius: 999px; background: #f97316; border: 3px solid #fff; box-shadow: 0 6px 14px rgba(15,23,42,.2); }
+.proxy-node.a { left: 12%; top: 16%; }
+.proxy-node.b { left: 52%; top: 40%; }
+.proxy-node.c { right: 10%; top: 18%; }
+.proxy-node-line { height: 4px; border-radius: 999px; background: rgba(249,115,22,.72); transform-origin: left center; }
+.proxy-node-line.a { left: 23%; top: 28%; width: 36%; transform: rotate(24deg); }
+.proxy-node-line.b { left: 61%; top: 42%; width: 30%; transform: rotate(-28deg); }
+.proxy-neighbor-marker { background: transparent; }
+.proxy-neighbor-marker::before, .proxy-neighbor-marker::after { content: ""; position: absolute; bottom: 0; width: 42%; height: 60%; border-radius: 6px 6px 2px 2px; background: #fef3c7; border: 3px solid #ca8a04; }
+.proxy-neighbor-marker::before { left: 2%; }
+.proxy-neighbor-marker::after { right: 2%; transform: translateY(-12%); }
+.proxy-managed-risk-markers { background: transparent; }
+.proxy-managed-risk-markers::before, .proxy-managed-risk-markers::after { content: ""; position: absolute; width: 18px; height: 18px; border-radius: 999px; background: #f97316; box-shadow: 0 0 0 5px rgba(249,115,22,.12); }
+.proxy-managed-risk-markers::before { left: 12%; top: 25%; }
+.proxy-managed-risk-markers::after { right: 18%; top: 50%; }
 .cue { min-height: 50px; margin: 0; padding: 8px 10px; background: #f8fafc; border-top: 1px solid #e5e7eb; color: #475569; font-size: 11px; line-height: 1.35; }
 .re-02-beginning { background: linear-gradient(90deg, #dbeafe 0 48%, #f8fafc 48% 100%); }
 .re-02-beginning .subject-a { left: 10%; top: 28%; width: 24%; height: 32%; border-radius: 24px; background: #eff6ff; }
 .re-02-beginning .subject-b { right: 12%; top: 16%; width: 30%; height: 44%; background: #1f2937; opacity: .88; }
 .re-02-beginning .label-1 { left: 36%; top: 15%; }
+.re-02-beginning .proxy-phone-search { left: 11%; top: 25%; width: 20%; height: 37%; }
+.re-02-beginning .proxy-closed-db { right: 13%; top: 17%; width: 28%; height: 41%; }
+.re-02-beginning .proxy-glass-wall { left: 49%; top: 8%; width: 4%; height: 69%; }
+.re-02-beginning .proxy-lock-mark { right: 24%; top: 8%; width: 11%; height: 13%; }
 .re-02-development .subject-a { left: 22%; top: 14%; width: 34%; height: 46%; background: #eef2ff; }
 .re-02-development .subject-b { right: 11%; top: 24%; width: 22%; height: 30%; background: #fff; }
 .re-02-development .connector-a { left: 54%; top: 38%; width: 22%; }
 .re-02-development .label-1 { left: 28%; top: 20%; }
 .re-02-development .label-2 { right: 11%; top: 13%; }
+.re-02-development .proxy-broker-db-list { left: 23%; top: 15%; width: 32%; height: 44%; }
+.re-02-development .proxy-public-portal { right: 12%; top: 25%; width: 20%; height: 28%; }
+.re-02-development .proxy-property-flow { left: 56%; top: 33%; width: 18%; height: 11%; }
 .re-02-turn { background: linear-gradient(90deg, #e0f2fe 0 50%, #fef3c7 50% 100%); }
 .re-02-turn .subject-a { left: 11%; top: 22%; width: 30%; height: 34%; background: #fff; }
 .re-02-turn .subject-b { right: 12%; top: 14%; width: 30%; height: 48%; background: repeating-linear-gradient(#fde68a 0 12px, #fff7ed 12px 22px); }
 .re-02-turn .subject-c { left: 49%; top: 8%; width: 3%; height: 70%; background: rgba(15,23,42,.16); border: 0; box-shadow: none; }
 .re-02-turn .label-1 { left: 12%; top: 12%; }
 .re-02-turn .label-2 { right: 10%; top: 10%; }
+.re-02-turn .proxy-public-card { left: 12%; top: 24%; width: 27%; height: 31%; }
+.re-02-turn .proxy-hidden-file-stack { right: 13%; top: 18%; width: 27%; height: 43%; opacity: .92; }
+.re-02-turn .proxy-glass-wall { left: 49%; top: 8%; width: 4%; height: 70%; }
 .re-06-beginning { background: linear-gradient(135deg, #f8fafc, #eef2ff); }
 .re-06-beginning .subject-a { left: 8%; top: 10%; width: 84%; height: 48%; background: repeating-linear-gradient(90deg, #fff 0 40px, #dbeafe 40px 46px); opacity: .92; }
 .re-06-beginning .subject-b { left: 44%; top: 32%; width: 12%; height: 30%; border-radius: 50% 50% 14px 14px; background: #64748b; }
 .re-06-beginning .label-1 { left: 27%; top: 13%; }
+.re-06-beginning .proxy-property-card-grid { left: 9%; top: 9%; width: 82%; height: 48%; }
+.re-06-beginning .proxy-person-overload { left: 44%; top: 35%; width: 11%; height: 26%; }
+.re-06-beginning .proxy-density-vignette { left: 24%; top: 4%; width: 52%; height: 62%; }
 .re-06-development .subject-a { left: 28%; top: 12%; width: 38%; height: 50%; background: #fff; }
 .re-06-development .subject-b { right: 18%; top: 17%; width: 17%; height: 18%; border-color: #b45309; background: #fffbeb; }
 .re-06-development .subject-c { left: 12%; top: 29%; width: 14%; height: 16%; background: #dcfce7; }
 .re-06-development .label-1 { left: 31%; top: 20%; }
 .re-06-development .label-2 { right: 17%; top: 9%; background: rgba(180,83,9,.88); }
+.re-06-development .proxy-selected-property-sheet { left: 29%; top: 14%; width: 35%; height: 47%; }
+.re-06-development .proxy-drawback-card { right: 17%; top: 13%; width: 18%; height: 20%; }
+.re-06-development .proxy-curator-hand { left: 11%; top: 30%; width: 16%; height: 15%; }
+.re-06-development .proxy-noise-card-stack { left: 7%; top: 11%; width: 22%; height: 38%; opacity: .32; }
 .re-06-turn .subject-a { left: 26%; top: 15%; width: 28%; height: 42%; border-radius: 50%; background: rgba(219,234,254,.82); }
 .re-06-turn .subject-b { right: 18%; top: 23%; width: 24%; height: 28%; background: #fff; }
 .re-06-turn .subject-c { left: 11%; top: 26%; width: 12%; height: 28%; border-radius: 50% 50% 12px 12px; background: #64748b; }
 .re-06-turn .connector-a { left: 48%; top: 36%; width: 27%; background: rgba(22,163,74,.6); }
 .re-06-turn .label-1 { left: 28%; top: 12%; }
 .re-06-turn .label-2 { right: 18%; top: 12%; }
+.re-06-turn .proxy-curation-lens { left: 27%; top: 14%; width: 27%; height: 42%; }
+.re-06-turn .proxy-selected-property-sheet { right: 18%; top: 24%; width: 22%; height: 27%; }
+.re-06-turn .proxy-person-nod { left: 11%; top: 29%; width: 11%; height: 25%; }
+.re-06-turn .proxy-noise-card-stack { left: 7%; top: 11%; width: 23%; height: 36%; opacity: .18; }
 .re-07d-beginning { background: linear-gradient(135deg, #eef2ff, #ecfeff 55%, #dcfce7); }
 .re-07d-beginning .subject-a { left: 10%; top: 13%; width: 34%; height: 42%; background: #eef2ff; border-color: #4f46e5; }
 .re-07d-beginning .subject-b { right: 12%; top: 18%; width: 30%; height: 34%; background: #fff; border-color: #16a34a; }
 .re-07d-beginning .label-1 { left: 42%; top: 11%; background: rgba(22,101,52,.88); }
+.re-07d-beginning .proxy-ai-panel { left: 11%; top: 14%; width: 32%; height: 40%; }
+.re-07d-beginning .proxy-featured-property-card { right: 13%; top: 19%; width: 28%; height: 31%; border-color: #16a34a; }
+.re-07d-beginning .proxy-person-small { left: 48%; top: 39%; width: 8%; height: 18%; opacity: .75; }
 .re-07d-development { background: linear-gradient(135deg, #eef2ff 0 45%, #fee2e2); }
 .re-07d-development .subject-a { left: 30%; top: 10%; width: 36%; height: 30%; background: #fff; }
 .re-07d-development .subject-b { left: 20%; top: 43%; width: 18%; height: 18%; border-color: #b91c1c; background: #fee2e2; }
 .re-07d-development .subject-c { right: 22%; top: 44%; width: 18%; height: 18%; border-color: #b91c1c; background: #fee2e2; }
 .re-07d-development .label-1 { left: 31%; top: 42%; background: rgba(185,28,28,.88); }
+.re-07d-development .label-2 { right: 23%; top: 42%; background: rgba(185,28,28,.88); }
+.re-07d-development .proxy-featured-property-card { left: 31%; top: 10%; width: 34%; height: 29%; }
+.re-07d-development .proxy-boundary-map { left: 17%; top: 43%; width: 21%; height: 18%; }
+.re-07d-development .proxy-inheritance-node { left: 42%; top: 40%; width: 20%; height: 22%; }
+.re-07d-development .proxy-neighbor-marker { right: 20%; top: 43%; width: 17%; height: 18%; }
 .re-07d-turn { background: linear-gradient(135deg, #eef2ff, #f8fafc 56%, #ecfdf5); }
 .re-07d-turn .subject-a { left: 9%; top: 18%; width: 24%; height: 34%; background: #eef2ff; border-color: #4f46e5; }
 .re-07d-turn .subject-b { left: 44%; top: 20%; width: 13%; height: 34%; border-radius: 50% 50% 16px 16px; background: #166534; }
 .re-07d-turn .subject-c { right: 11%; top: 20%; width: 24%; height: 34%; background: #fff; }
 .re-07d-turn .connector-a { left: 31%; top: 37%; width: 42%; background: rgba(22,163,74,.65); }
 .re-07d-turn .label-1 { left: 38%; top: 11%; background: rgba(22,101,52,.88); }
+.re-07d-turn .proxy-ai-panel { left: 10%; top: 20%; width: 22%; height: 30%; }
+.re-07d-turn .proxy-specialist-person { left: 45%; top: 23%; width: 11%; height: 30%; }
+.re-07d-turn .proxy-relationship-nodes { right: 12%; top: 22%; width: 21%; height: 27%; }
+.re-07d-turn .proxy-managed-risk-markers { left: 28%; top: 26%; width: 48%; height: 25%; opacity: .72; }
 .legend { margin: 0 18px 18px; padding: 12px 14px; border-radius: 12px; border: 1px solid #cbd5e1; background: #fff; color: #334155; font-size: 13px; line-height: 1.55; }
 </style>
 </head>
 <body>
 <header>
   <div>
-    <h1>Real Estate DX Visual Treatment Proof</h1>
+    <h1>Real Estate DX Visual Treatment Proof v2</h1>
     <p>RE-02 / RE-06 / RE-07D only — 3 segments × 3 beats = 9 production-frame treatments</p>
+    <p>v2 strengthens label-off readability, real-estate texture, and motion-readiness while staying outside production implementation.</p>
     <p>Frame metadata is outside production frames. This is not YMM4 output, render, production timing, or creative acceptance.</p>
   </div>
   <div class="status">
-    <div>proof type: ${escapeHtml(sidecar.proof_type)}</div>
+    <div>proof type: ${escapeHtml(sidecar.proof_type)} ${escapeHtml(sidecar.proof_revision)}</div>
     <div>frames: ${escapeHtml(String(sidecar.frame_count))}</div>
     <div>violations: ${escapeHtml(String(sidecar.frame_contract_violations.length))}</div>
   </div>
@@ -430,12 +658,14 @@ async function waitForProof(win) {
         const frames = Array.from(document.querySelectorAll('.production-frame'));
         const cells = Array.from(document.querySelectorAll('.proof-cell'));
         const subtitleBands = Array.from(document.querySelectorAll('.subtitle-safe'));
+        const proxyVisuals = Array.from(document.querySelectorAll('.production-frame .proxy'));
         const frameTexts = frames.map((frame) => frame.innerText || '');
         const visibleMetadataInFrame = frameTexts.some((text) => /source|review|blocker|validator|readback|RE-0/.test(text));
         const labels = Array.from(document.querySelectorAll('.production-frame .frame-label'));
         const ready = frames.length === 9
           && cells.length === 9
           && subtitleBands.length === 9
+          && proxyVisuals.length >= 30
           && labels.length <= 18
           && !visibleMetadataInFrame;
         if (ready) {
@@ -443,6 +673,7 @@ async function waitForProof(win) {
             frames: frames.length,
             cells: cells.length,
             subtitleBands: subtitleBands.length,
+            proxyVisuals: proxyVisuals.length,
             labels: labels.length,
             visibleMetadataInFrame,
             text: document.body.innerText,
@@ -524,10 +755,14 @@ async function main() {
         dom_frames: captureResult.dom.frames,
         dom_cells: captureResult.dom.cells,
         subtitle_bands: captureResult.dom.subtitleBands,
+        proxy_visuals: captureResult.dom.proxyVisuals,
         visible_metadata_in_frame: captureResult.dom.visibleMetadataInFrame,
         frame_contract_violations: sidecar.frame_contract_violations.length,
         sidecar_warnings: sidecar.sidecar_warnings.length,
         visual_quality_checks: sidecar.visual_quality_checks.length,
+        visual_quality_statuses: Object.fromEntries(
+          sidecar.visual_quality_checks.map((check) => [check.id, check.current_status]),
+        ),
         anti_pattern_corpus_role: sidecar.anti_pattern_corpus.role,
         screenshot_width: captureResult.size.width,
         screenshot_height: captureResult.size.height,

@@ -22,78 +22,184 @@ header p { margin: 2px 0; color: #cbd5e1; font-size: 13px; }
 .subject { position: absolute; border-radius: 16px; background: rgba(255,255,255,.88); border: 3px solid rgba(15,23,42,.46); box-shadow: 0 10px 22px rgba(15,23,42,.14); }
 .connector { position: absolute; height: 4px; border-radius: 99px; background: rgba(59,130,246,.55); transform-origin: left center; }
 .frame-label { position: absolute; z-index: 5; padding: 7px 12px; border-radius: 999px; background: rgba(15,23,42,.82); color: #fff; font-size: 20px; font-weight: 800; letter-spacing: .02em; box-shadow: 0 8px 20px rgba(15,23,42,.22); }
+.proxy { position: absolute; z-index: 3; border-radius: 12px; pointer-events: none; }
+.proxy span { position: absolute; display: block; }
+.proxy-phone-search { background: #111827; border: 3px solid #020617; box-shadow: 0 12px 24px rgba(15,23,42,.22); }
+.proxy-phone-search .proxy-topbar { left: 15%; right: 15%; top: 10%; height: 6%; border-radius: 99px; background: #475569; }
+.proxy-phone-search .proxy-card-thumb { left: 10%; top: 26%; width: 26%; height: 42%; border-radius: 8px; background: #93c5fd; }
+.proxy-phone-search .proxy-card-line { left: 42%; height: 7%; border-radius: 99px; background: #dbeafe; }
+.proxy-phone-search .proxy-card-line.a { top: 28%; width: 44%; }
+.proxy-phone-search .proxy-card-line.b { top: 43%; width: 34%; }
+.proxy-broker-db-list, .proxy-closed-db { background: #111827; border: 3px solid #334155; box-shadow: inset 0 0 0 5px rgba(59,130,246,.14), 0 12px 24px rgba(15,23,42,.26); }
+.proxy-db-row { left: 9%; right: 9%; height: 10%; border-radius: 999px; background: linear-gradient(90deg, #38bdf8, #1d4ed8); opacity: .78; }
+.proxy-db-row.a { top: 18%; }
+.proxy-db-row.b { top: 34%; width: 70%; }
+.proxy-db-row.c { top: 50%; width: 82%; }
+.proxy-db-row.d { top: 66%; width: 58%; }
+.proxy-public-portal, .proxy-public-card, .proxy-featured-property-card, .proxy-selected-property-sheet { background: #fff; border: 3px solid #94a3b8; box-shadow: 0 12px 24px rgba(15,23,42,.16); }
+.proxy-card-thumb { left: 7%; top: 11%; width: 32%; height: 48%; border-radius: 8px; background: linear-gradient(135deg, #bfdbfe, #86efac); }
+.proxy-card-line { left: 46%; height: 8%; border-radius: 999px; background: #94a3b8; }
+.proxy-card-line.a { top: 17%; width: 42%; }
+.proxy-card-line.b { top: 33%; width: 32%; }
+.proxy-card-line.c { top: 49%; width: 38%; }
+.proxy-hidden-file-stack, .proxy-noise-card-stack, .proxy-property-card-grid { background: transparent; }
+.proxy-mini-card { width: 31%; height: 27%; border-radius: 8px; background: #fff; border: 2px solid #cbd5e1; box-shadow: 0 6px 12px rgba(15,23,42,.14); }
+.proxy-mini-card.a { left: 0; top: 0; }
+.proxy-mini-card.b { left: 34%; top: 3%; }
+.proxy-mini-card.c { left: 68%; top: 0; }
+.proxy-mini-card.d { left: 15%; top: 35%; }
+.proxy-mini-card.e { left: 52%; top: 38%; }
+.proxy-glass-wall { background: linear-gradient(90deg, rgba(255,255,255,.18), rgba(148,163,184,.48), rgba(255,255,255,.12)); border-left: 2px solid rgba(255,255,255,.7); border-right: 2px solid rgba(15,23,42,.12); }
+.proxy-lock-mark { border: 4px solid #f59e0b; background: rgba(245,158,11,.18); border-radius: 12px; }
+.proxy-lock-mark::before { content: ""; position: absolute; left: 22%; right: 22%; top: -42%; height: 54%; border: 4px solid #f59e0b; border-bottom: 0; border-radius: 22px 22px 0 0; }
+.proxy-property-flow .proxy-flow-dot { width: 14px; height: 14px; border-radius: 999px; background: #2563eb; box-shadow: 0 0 0 7px rgba(37,99,235,.12); }
+.proxy-property-flow .proxy-flow-dot.a { left: 8%; top: 42%; }
+.proxy-property-flow .proxy-flow-dot.b { left: 43%; top: 42%; }
+.proxy-property-flow .proxy-flow-dot.c { right: 8%; top: 42%; }
+.proxy-person-overload, .proxy-person-nod, .proxy-person-small, .proxy-specialist-person { border-radius: 50% 50% 16px 16px; background: #334155; box-shadow: 0 10px 18px rgba(15,23,42,.24); }
+.proxy-specialist-person { background: #166534; }
+.proxy-density-vignette { border-radius: 999px; background: radial-gradient(circle, rgba(15,23,42,.28), rgba(15,23,42,0) 68%); }
+.proxy-drawback-card { background: #fff7ed; border: 3px solid #b45309; box-shadow: 0 10px 18px rgba(180,83,9,.18); }
+.proxy-alert-triangle { left: 10%; top: 18%; width: 0; height: 0; border-left: 16px solid transparent; border-right: 16px solid transparent; border-bottom: 28px solid #f97316; }
+.proxy-curator-hand .proxy-hand-palm { left: 12%; top: 40%; width: 42%; height: 28%; border-radius: 999px; background: #fbbf24; }
+.proxy-curator-hand .proxy-hand-pointer { left: 48%; top: 45%; width: 45%; height: 10%; border-radius: 999px; background: #f59e0b; transform: rotate(-12deg); transform-origin: left center; }
+.proxy-curation-lens { border: 5px solid rgba(37,99,235,.56); border-radius: 999px; background: rgba(219,234,254,.3); box-shadow: 0 0 24px rgba(37,99,235,.2); }
+.proxy-curation-lens::after { content: ""; position: absolute; right: -20%; bottom: 2%; width: 35%; height: 6px; border-radius: 999px; background: rgba(37,99,235,.6); transform: rotate(42deg); }
+.proxy-lens-ring { inset: 10%; border: 3px solid rgba(37,99,235,.3); border-radius: 999px; }
+.proxy-lens-glow { inset: 26%; border-radius: 999px; background: radial-gradient(circle, rgba(37,99,235,.24), rgba(37,99,235,0)); }
+.proxy-ai-panel { background: #eef2ff; border: 3px solid #4f46e5; box-shadow: 0 12px 24px rgba(79,70,229,.16); }
+.proxy-ai-dot { width: 11px; height: 11px; border-radius: 999px; background: #4f46e5; }
+.proxy-ai-dot.a { left: 10%; top: 15%; }
+.proxy-ai-dot.b { left: 22%; top: 15%; }
+.proxy-ai-dot.c { left: 34%; top: 15%; }
+.proxy-boundary-map { background: #ecfeff; border: 3px solid #0e7490; overflow: hidden; }
+.proxy-map-grid { inset: 0; background-image: linear-gradient(rgba(14,116,144,.18) 1px, transparent 1px), linear-gradient(90deg, rgba(14,116,144,.18) 1px, transparent 1px); background-size: 18px 18px; }
+.proxy-boundary-line { left: 12%; top: 52%; width: 74%; height: 5px; border-radius: 999px; background: #dc2626; transform: rotate(-12deg); box-shadow: 0 0 0 4px rgba(220,38,38,.14); }
+.proxy-land-plot { border: 2px solid #0891b2; border-radius: 4px; background: rgba(255,255,255,.44); }
+.proxy-land-plot.a { left: 14%; top: 16%; width: 28%; height: 25%; }
+.proxy-land-plot.b { right: 14%; bottom: 15%; width: 30%; height: 25%; }
+.proxy-inheritance-node, .proxy-relationship-nodes { background: transparent; }
+.proxy-node { width: 20px; height: 20px; border-radius: 999px; background: #f97316; border: 3px solid #fff; box-shadow: 0 6px 14px rgba(15,23,42,.2); }
+.proxy-node.a { left: 12%; top: 16%; }
+.proxy-node.b { left: 52%; top: 40%; }
+.proxy-node.c { right: 10%; top: 18%; }
+.proxy-node-line { height: 4px; border-radius: 999px; background: rgba(249,115,22,.72); transform-origin: left center; }
+.proxy-node-line.a { left: 23%; top: 28%; width: 36%; transform: rotate(24deg); }
+.proxy-node-line.b { left: 61%; top: 42%; width: 30%; transform: rotate(-28deg); }
+.proxy-neighbor-marker { background: transparent; }
+.proxy-neighbor-marker::before, .proxy-neighbor-marker::after { content: ""; position: absolute; bottom: 0; width: 42%; height: 60%; border-radius: 6px 6px 2px 2px; background: #fef3c7; border: 3px solid #ca8a04; }
+.proxy-neighbor-marker::before { left: 2%; }
+.proxy-neighbor-marker::after { right: 2%; transform: translateY(-12%); }
+.proxy-managed-risk-markers { background: transparent; }
+.proxy-managed-risk-markers::before, .proxy-managed-risk-markers::after { content: ""; position: absolute; width: 18px; height: 18px; border-radius: 999px; background: #f97316; box-shadow: 0 0 0 5px rgba(249,115,22,.12); }
+.proxy-managed-risk-markers::before { left: 12%; top: 25%; }
+.proxy-managed-risk-markers::after { right: 18%; top: 50%; }
 .cue { min-height: 50px; margin: 0; padding: 8px 10px; background: #f8fafc; border-top: 1px solid #e5e7eb; color: #475569; font-size: 11px; line-height: 1.35; }
 .re-02-beginning { background: linear-gradient(90deg, #dbeafe 0 48%, #f8fafc 48% 100%); }
 .re-02-beginning .subject-a { left: 10%; top: 28%; width: 24%; height: 32%; border-radius: 24px; background: #eff6ff; }
 .re-02-beginning .subject-b { right: 12%; top: 16%; width: 30%; height: 44%; background: #1f2937; opacity: .88; }
 .re-02-beginning .label-1 { left: 36%; top: 15%; }
+.re-02-beginning .proxy-phone-search { left: 11%; top: 25%; width: 20%; height: 37%; }
+.re-02-beginning .proxy-closed-db { right: 13%; top: 17%; width: 28%; height: 41%; }
+.re-02-beginning .proxy-glass-wall { left: 49%; top: 8%; width: 4%; height: 69%; }
+.re-02-beginning .proxy-lock-mark { right: 24%; top: 8%; width: 11%; height: 13%; }
 .re-02-development .subject-a { left: 22%; top: 14%; width: 34%; height: 46%; background: #eef2ff; }
 .re-02-development .subject-b { right: 11%; top: 24%; width: 22%; height: 30%; background: #fff; }
 .re-02-development .connector-a { left: 54%; top: 38%; width: 22%; }
 .re-02-development .label-1 { left: 28%; top: 20%; }
 .re-02-development .label-2 { right: 11%; top: 13%; }
+.re-02-development .proxy-broker-db-list { left: 23%; top: 15%; width: 32%; height: 44%; }
+.re-02-development .proxy-public-portal { right: 12%; top: 25%; width: 20%; height: 28%; }
+.re-02-development .proxy-property-flow { left: 56%; top: 33%; width: 18%; height: 11%; }
 .re-02-turn { background: linear-gradient(90deg, #e0f2fe 0 50%, #fef3c7 50% 100%); }
 .re-02-turn .subject-a { left: 11%; top: 22%; width: 30%; height: 34%; background: #fff; }
 .re-02-turn .subject-b { right: 12%; top: 14%; width: 30%; height: 48%; background: repeating-linear-gradient(#fde68a 0 12px, #fff7ed 12px 22px); }
 .re-02-turn .subject-c { left: 49%; top: 8%; width: 3%; height: 70%; background: rgba(15,23,42,.16); border: 0; box-shadow: none; }
 .re-02-turn .label-1 { left: 12%; top: 12%; }
 .re-02-turn .label-2 { right: 10%; top: 10%; }
+.re-02-turn .proxy-public-card { left: 12%; top: 24%; width: 27%; height: 31%; }
+.re-02-turn .proxy-hidden-file-stack { right: 13%; top: 18%; width: 27%; height: 43%; opacity: .92; }
+.re-02-turn .proxy-glass-wall { left: 49%; top: 8%; width: 4%; height: 70%; }
 .re-06-beginning { background: linear-gradient(135deg, #f8fafc, #eef2ff); }
 .re-06-beginning .subject-a { left: 8%; top: 10%; width: 84%; height: 48%; background: repeating-linear-gradient(90deg, #fff 0 40px, #dbeafe 40px 46px); opacity: .92; }
 .re-06-beginning .subject-b { left: 44%; top: 32%; width: 12%; height: 30%; border-radius: 50% 50% 14px 14px; background: #64748b; }
 .re-06-beginning .label-1 { left: 27%; top: 13%; }
+.re-06-beginning .proxy-property-card-grid { left: 9%; top: 9%; width: 82%; height: 48%; }
+.re-06-beginning .proxy-person-overload { left: 44%; top: 35%; width: 11%; height: 26%; }
+.re-06-beginning .proxy-density-vignette { left: 24%; top: 4%; width: 52%; height: 62%; }
 .re-06-development .subject-a { left: 28%; top: 12%; width: 38%; height: 50%; background: #fff; }
 .re-06-development .subject-b { right: 18%; top: 17%; width: 17%; height: 18%; border-color: #b45309; background: #fffbeb; }
 .re-06-development .subject-c { left: 12%; top: 29%; width: 14%; height: 16%; background: #dcfce7; }
 .re-06-development .label-1 { left: 31%; top: 20%; }
 .re-06-development .label-2 { right: 17%; top: 9%; background: rgba(180,83,9,.88); }
+.re-06-development .proxy-selected-property-sheet { left: 29%; top: 14%; width: 35%; height: 47%; }
+.re-06-development .proxy-drawback-card { right: 17%; top: 13%; width: 18%; height: 20%; }
+.re-06-development .proxy-curator-hand { left: 11%; top: 30%; width: 16%; height: 15%; }
+.re-06-development .proxy-noise-card-stack { left: 7%; top: 11%; width: 22%; height: 38%; opacity: .32; }
 .re-06-turn .subject-a { left: 26%; top: 15%; width: 28%; height: 42%; border-radius: 50%; background: rgba(219,234,254,.82); }
 .re-06-turn .subject-b { right: 18%; top: 23%; width: 24%; height: 28%; background: #fff; }
 .re-06-turn .subject-c { left: 11%; top: 26%; width: 12%; height: 28%; border-radius: 50% 50% 12px 12px; background: #64748b; }
 .re-06-turn .connector-a { left: 48%; top: 36%; width: 27%; background: rgba(22,163,74,.6); }
 .re-06-turn .label-1 { left: 28%; top: 12%; }
 .re-06-turn .label-2 { right: 18%; top: 12%; }
+.re-06-turn .proxy-curation-lens { left: 27%; top: 14%; width: 27%; height: 42%; }
+.re-06-turn .proxy-selected-property-sheet { right: 18%; top: 24%; width: 22%; height: 27%; }
+.re-06-turn .proxy-person-nod { left: 11%; top: 29%; width: 11%; height: 25%; }
+.re-06-turn .proxy-noise-card-stack { left: 7%; top: 11%; width: 23%; height: 36%; opacity: .18; }
 .re-07d-beginning { background: linear-gradient(135deg, #eef2ff, #ecfeff 55%, #dcfce7); }
 .re-07d-beginning .subject-a { left: 10%; top: 13%; width: 34%; height: 42%; background: #eef2ff; border-color: #4f46e5; }
 .re-07d-beginning .subject-b { right: 12%; top: 18%; width: 30%; height: 34%; background: #fff; border-color: #16a34a; }
 .re-07d-beginning .label-1 { left: 42%; top: 11%; background: rgba(22,101,52,.88); }
+.re-07d-beginning .proxy-ai-panel { left: 11%; top: 14%; width: 32%; height: 40%; }
+.re-07d-beginning .proxy-featured-property-card { right: 13%; top: 19%; width: 28%; height: 31%; border-color: #16a34a; }
+.re-07d-beginning .proxy-person-small { left: 48%; top: 39%; width: 8%; height: 18%; opacity: .75; }
 .re-07d-development { background: linear-gradient(135deg, #eef2ff 0 45%, #fee2e2); }
 .re-07d-development .subject-a { left: 30%; top: 10%; width: 36%; height: 30%; background: #fff; }
 .re-07d-development .subject-b { left: 20%; top: 43%; width: 18%; height: 18%; border-color: #b91c1c; background: #fee2e2; }
 .re-07d-development .subject-c { right: 22%; top: 44%; width: 18%; height: 18%; border-color: #b91c1c; background: #fee2e2; }
 .re-07d-development .label-1 { left: 31%; top: 42%; background: rgba(185,28,28,.88); }
+.re-07d-development .label-2 { right: 23%; top: 42%; background: rgba(185,28,28,.88); }
+.re-07d-development .proxy-featured-property-card { left: 31%; top: 10%; width: 34%; height: 29%; }
+.re-07d-development .proxy-boundary-map { left: 17%; top: 43%; width: 21%; height: 18%; }
+.re-07d-development .proxy-inheritance-node { left: 42%; top: 40%; width: 20%; height: 22%; }
+.re-07d-development .proxy-neighbor-marker { right: 20%; top: 43%; width: 17%; height: 18%; }
 .re-07d-turn { background: linear-gradient(135deg, #eef2ff, #f8fafc 56%, #ecfdf5); }
 .re-07d-turn .subject-a { left: 9%; top: 18%; width: 24%; height: 34%; background: #eef2ff; border-color: #4f46e5; }
 .re-07d-turn .subject-b { left: 44%; top: 20%; width: 13%; height: 34%; border-radius: 50% 50% 16px 16px; background: #166534; }
 .re-07d-turn .subject-c { right: 11%; top: 20%; width: 24%; height: 34%; background: #fff; }
 .re-07d-turn .connector-a { left: 31%; top: 37%; width: 42%; background: rgba(22,163,74,.65); }
 .re-07d-turn .label-1 { left: 38%; top: 11%; background: rgba(22,101,52,.88); }
+.re-07d-turn .proxy-ai-panel { left: 10%; top: 20%; width: 22%; height: 30%; }
+.re-07d-turn .proxy-specialist-person { left: 45%; top: 23%; width: 11%; height: 30%; }
+.re-07d-turn .proxy-relationship-nodes { right: 12%; top: 22%; width: 21%; height: 27%; }
+.re-07d-turn .proxy-managed-risk-markers { left: 28%; top: 26%; width: 48%; height: 25%; opacity: .72; }
 .legend { margin: 0 18px 18px; padding: 12px 14px; border-radius: 12px; border: 1px solid #cbd5e1; background: #fff; color: #334155; font-size: 13px; line-height: 1.55; }
 </style>
 </head>
 <body>
 <header>
   <div>
-    <h1>Real Estate DX Visual Treatment Proof</h1>
+    <h1>Real Estate DX Visual Treatment Proof v2</h1>
     <p>RE-02 / RE-06 / RE-07D only — 3 segments × 3 beats = 9 production-frame treatments</p>
+    <p>v2 strengthens label-off readability, real-estate texture, and motion-readiness while staying outside production implementation.</p>
     <p>Frame metadata is outside production frames. This is not YMM4 output, render, production timing, or creative acceptance.</p>
   </div>
   <div class="status">
-    <div>proof type: visual_treatment_proof</div>
+    <div>proof type: visual_treatment_proof v2</div>
     <div>frames: 9</div>
     <div>violations: 0</div>
   </div>
 </header>
 <main class="sheet">
-<section class="proof-cell" data-segment-id="RE-02" data-phase="beginning"><div class="cell-meta"><strong>RE-02 beginning</strong><span>frame 1</span></div><div class="production-frame re-02-beginning" aria-label="REINS / VIPクラブ beginning"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">REINS?</span><div class="subtitle-safe"></div></div><p class="cue">13-14行: 「レインズっていう言葉。これ要するに何なんですか?」</p></section>
-<section class="proof-cell" data-segment-id="RE-02" data-phase="development"><div class="cell-meta"><strong>RE-02 development</strong><span>frame 2</span></div><div class="production-frame re-02-development" aria-label="REINS / VIPクラブ development"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">業者DB</span><span class="frame-label label-2">公開ポータル</span><div class="subtitle-safe"></div></div><p class="cue">15-19行: 「プロだけが入れる...巨大な物件データベース」「一部の情報」</p></section>
-<section class="proof-cell" data-segment-id="RE-02" data-phase="turn"><div class="cell-meta"><strong>RE-02 turn</strong><span>frame 3</span></div><div class="production-frame re-02-turn" aria-label="REINS / VIPクラブ turn"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">見える情報</span><span class="frame-label label-2">見えない情報</span><div class="subtitle-safe"></div></div><p class="cue">20-23行: 「なんで...隠されているんですか?」「情報の非対称性」</p></section>
-<section class="proof-cell" data-segment-id="RE-06" data-phase="beginning"><div class="cell-meta"><strong>RE-06 beginning</strong><span>frame 4</span></div><div class="production-frame re-06-beginning" aria-label="キュレーション beginning"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">多すぎる選択肢</span><div class="subtitle-safe"></div></div><p class="cue">61-64行: 「選択肢が多すぎること」</p></section>
-<section class="proof-cell" data-segment-id="RE-06" data-phase="development"><div class="cell-meta"><strong>RE-06 development</strong><span>frame 5</span></div><div class="production-frame re-06-development" aria-label="キュレーション development"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">選ぶ理由</span><span class="frame-label label-2">注意点</span><div class="subtitle-safe"></div></div><p class="cue">65-75行: 「ノイズを排除」「デメリット...包み隠さず提示」</p></section>
-<section class="proof-cell" data-segment-id="RE-06" data-phase="turn"><div class="cell-meta"><strong>RE-06 turn</strong><span>frame 6</span></div><div class="production-frame re-06-turn" aria-label="キュレーション turn"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">編集力</span><span class="frame-label label-2">納得感</span><div class="subtitle-safe"></div></div><p class="cue">78-81行: 「独自の視点を買う」「タイパと納得感」</p></section>
-<section class="proof-cell" data-segment-id="RE-07D" data-phase="beginning"><div class="cell-meta"><strong>RE-07D beginning</strong><span>frame 7</span></div><div class="production-frame re-07d-beginning" aria-label="AI逆説と見えないリスク beginning"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">100%マッチ</span><div class="subtitle-safe"></div></div><p class="cue">130-132行: 「あなたに100%マッチする物件はこれです」</p></section>
-<section class="proof-cell" data-segment-id="RE-07D" data-phase="development"><div class="cell-meta"><strong>RE-07D development</strong><span>frame 8</span></div><div class="production-frame re-07d-development" aria-label="AI逆説と見えないリスク development"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">見えないリスク</span><div class="subtitle-safe"></div></div><p class="cue">133-136行: 「データだけではない」「目に見えないリスク」</p></section>
-<section class="proof-cell" data-segment-id="RE-07D" data-phase="turn"><div class="cell-meta"><strong>RE-07D turn</strong><span>frame 9</span></div><div class="production-frame re-07d-turn" aria-label="AI逆説と見えないリスク turn"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">調整するプロ</span><div class="subtitle-safe"></div></div><p class="cue">137-143行: 「対人コミュニケーション」「キュレーターとリスク管理のプロ」</p></section>
+<section class="proof-cell" data-segment-id="RE-02" data-phase="beginning"><div class="cell-meta"><strong>RE-02 beginning</strong><span>frame 1</span></div><div class="production-frame re-02-beginning" aria-label="REINS / VIPクラブ beginning"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><div class="proxy proxy-phone-search proxy-1" aria-hidden="true"><span class="proxy-topbar"></span><span class="proxy-card-line a"></span><span class="proxy-card-line b"></span><span class="proxy-card-thumb"></span></div><div class="proxy proxy-closed-db proxy-2" aria-hidden="true"><span class="proxy-db-row a"></span><span class="proxy-db-row b"></span><span class="proxy-db-row c"></span><span class="proxy-db-row d"></span></div><div class="proxy proxy-glass-wall proxy-3" aria-hidden="true"></div><div class="proxy proxy-lock-mark proxy-4" aria-hidden="true"></div><span class="frame-label label-1">REINS?</span><div class="subtitle-safe"></div></div><p class="cue">13-14行: 「レインズっていう言葉。これ要するに何なんですか?」</p></section>
+<section class="proof-cell" data-segment-id="RE-02" data-phase="development"><div class="cell-meta"><strong>RE-02 development</strong><span>frame 2</span></div><div class="production-frame re-02-development" aria-label="REINS / VIPクラブ development"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><div class="proxy proxy-broker-db-list proxy-1" aria-hidden="true"><span class="proxy-db-row a"></span><span class="proxy-db-row b"></span><span class="proxy-db-row c"></span><span class="proxy-db-row d"></span></div><div class="proxy proxy-public-portal proxy-2" aria-hidden="true"><span class="proxy-card-thumb"></span><span class="proxy-card-line a"></span><span class="proxy-card-line b"></span><span class="proxy-card-line c"></span></div><div class="proxy proxy-property-flow proxy-3" aria-hidden="true"><span class="proxy-flow-dot a"></span><span class="proxy-flow-dot b"></span><span class="proxy-flow-dot c"></span></div><span class="frame-label label-1">業者DB</span><span class="frame-label label-2">公開</span><div class="subtitle-safe"></div></div><p class="cue">15-19行: 「プロだけが入れる...巨大な物件データベース」「一部の情報」</p></section>
+<section class="proof-cell" data-segment-id="RE-02" data-phase="turn"><div class="cell-meta"><strong>RE-02 turn</strong><span>frame 3</span></div><div class="production-frame re-02-turn" aria-label="REINS / VIPクラブ turn"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><div class="proxy proxy-public-card proxy-1" aria-hidden="true"><span class="proxy-card-thumb"></span><span class="proxy-card-line a"></span><span class="proxy-card-line b"></span><span class="proxy-card-line c"></span></div><div class="proxy proxy-hidden-file-stack proxy-2" aria-hidden="true"><span class="proxy-mini-card a"></span><span class="proxy-mini-card b"></span><span class="proxy-mini-card c"></span><span class="proxy-mini-card d"></span><span class="proxy-mini-card e"></span></div><div class="proxy proxy-glass-wall proxy-3" aria-hidden="true"></div><span class="frame-label label-1">公開</span><span class="frame-label label-2">非公開</span><div class="subtitle-safe"></div></div><p class="cue">20-23行: 「なんで...隠されているんですか?」「情報の非対称性」</p></section>
+<section class="proof-cell" data-segment-id="RE-06" data-phase="beginning"><div class="cell-meta"><strong>RE-06 beginning</strong><span>frame 4</span></div><div class="production-frame re-06-beginning" aria-label="キュレーション beginning"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><div class="proxy proxy-property-card-grid proxy-1" aria-hidden="true"><span class="proxy-mini-card a"></span><span class="proxy-mini-card b"></span><span class="proxy-mini-card c"></span><span class="proxy-mini-card d"></span><span class="proxy-mini-card e"></span></div><div class="proxy proxy-person-overload proxy-2" aria-hidden="true"></div><div class="proxy proxy-density-vignette proxy-3" aria-hidden="true"></div><span class="frame-label label-1">多すぎる</span><div class="subtitle-safe"></div></div><p class="cue">61-64行: 「選択肢が多すぎること」</p></section>
+<section class="proof-cell" data-segment-id="RE-06" data-phase="development"><div class="cell-meta"><strong>RE-06 development</strong><span>frame 5</span></div><div class="production-frame re-06-development" aria-label="キュレーション development"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><div class="proxy proxy-selected-property-sheet proxy-1" aria-hidden="true"><span class="proxy-card-thumb"></span><span class="proxy-card-line a"></span><span class="proxy-card-line b"></span><span class="proxy-card-line c"></span></div><div class="proxy proxy-drawback-card proxy-2" aria-hidden="true"><span class="proxy-alert-triangle"></span><span class="proxy-card-line a"></span><span class="proxy-card-line b"></span></div><div class="proxy proxy-curator-hand proxy-3" aria-hidden="true"><span class="proxy-hand-palm"></span><span class="proxy-hand-pointer"></span></div><div class="proxy proxy-noise-card-stack proxy-4" aria-hidden="true"><span class="proxy-mini-card a"></span><span class="proxy-mini-card b"></span><span class="proxy-mini-card c"></span><span class="proxy-mini-card d"></span><span class="proxy-mini-card e"></span></div><span class="frame-label label-1">理由</span><span class="frame-label label-2">注意</span><div class="subtitle-safe"></div></div><p class="cue">65-75行: 「ノイズを排除」「デメリット...包み隠さず提示」</p></section>
+<section class="proof-cell" data-segment-id="RE-06" data-phase="turn"><div class="cell-meta"><strong>RE-06 turn</strong><span>frame 6</span></div><div class="production-frame re-06-turn" aria-label="キュレーション turn"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><div class="proxy proxy-curation-lens proxy-1" aria-hidden="true"><span class="proxy-lens-ring"></span><span class="proxy-lens-glow"></span></div><div class="proxy proxy-selected-property-sheet proxy-2" aria-hidden="true"><span class="proxy-card-thumb"></span><span class="proxy-card-line a"></span><span class="proxy-card-line b"></span><span class="proxy-card-line c"></span></div><div class="proxy proxy-person-nod proxy-3" aria-hidden="true"></div><div class="proxy proxy-noise-card-stack proxy-4" aria-hidden="true"><span class="proxy-mini-card a"></span><span class="proxy-mini-card b"></span><span class="proxy-mini-card c"></span><span class="proxy-mini-card d"></span><span class="proxy-mini-card e"></span></div><span class="frame-label label-1">編集</span><span class="frame-label label-2">納得</span><div class="subtitle-safe"></div></div><p class="cue">78-81行: 「独自の視点を買う」「タイパと納得感」</p></section>
+<section class="proof-cell" data-segment-id="RE-07D" data-phase="beginning"><div class="cell-meta"><strong>RE-07D beginning</strong><span>frame 7</span></div><div class="production-frame re-07d-beginning" aria-label="AI逆説と見えないリスク beginning"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><div class="proxy proxy-ai-panel proxy-1" aria-hidden="true"><span class="proxy-ai-dot a"></span><span class="proxy-ai-dot b"></span><span class="proxy-ai-dot c"></span><span class="proxy-card-line a"></span><span class="proxy-card-line b"></span></div><div class="proxy proxy-featured-property-card proxy-2" aria-hidden="true"><span class="proxy-card-thumb"></span><span class="proxy-card-line a"></span><span class="proxy-card-line b"></span><span class="proxy-card-line c"></span></div><div class="proxy proxy-person-small proxy-3" aria-hidden="true"></div><span class="frame-label label-1">100%</span><div class="subtitle-safe"></div></div><p class="cue">130-132行: 「あなたに100%マッチする物件はこれです」</p></section>
+<section class="proof-cell" data-segment-id="RE-07D" data-phase="development"><div class="cell-meta"><strong>RE-07D development</strong><span>frame 8</span></div><div class="production-frame re-07d-development" aria-label="AI逆説と見えないリスク development"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><div class="proxy proxy-featured-property-card proxy-1" aria-hidden="true"><span class="proxy-card-thumb"></span><span class="proxy-card-line a"></span><span class="proxy-card-line b"></span><span class="proxy-card-line c"></span></div><div class="proxy proxy-boundary-map proxy-2" aria-hidden="true"><span class="proxy-map-grid"></span><span class="proxy-boundary-line"></span><span class="proxy-land-plot a"></span><span class="proxy-land-plot b"></span></div><div class="proxy proxy-inheritance-node proxy-3" aria-hidden="true"><span class="proxy-node a"></span><span class="proxy-node b"></span><span class="proxy-node c"></span><span class="proxy-node-line a"></span><span class="proxy-node-line b"></span></div><div class="proxy proxy-neighbor-marker proxy-4" aria-hidden="true"></div><span class="frame-label label-1">境界</span><span class="frame-label label-2">相続</span><div class="subtitle-safe"></div></div><p class="cue">133-136行: 「データだけではない」「目に見えないリスク」</p></section>
+<section class="proof-cell" data-segment-id="RE-07D" data-phase="turn"><div class="cell-meta"><strong>RE-07D turn</strong><span>frame 9</span></div><div class="production-frame re-07d-turn" aria-label="AI逆説と見えないリスク turn"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><div class="proxy proxy-ai-panel proxy-1" aria-hidden="true"><span class="proxy-ai-dot a"></span><span class="proxy-ai-dot b"></span><span class="proxy-ai-dot c"></span><span class="proxy-card-line a"></span><span class="proxy-card-line b"></span></div><div class="proxy proxy-specialist-person proxy-2" aria-hidden="true"></div><div class="proxy proxy-relationship-nodes proxy-3" aria-hidden="true"><span class="proxy-node a"></span><span class="proxy-node b"></span><span class="proxy-node c"></span><span class="proxy-node-line a"></span><span class="proxy-node-line b"></span></div><div class="proxy proxy-managed-risk-markers proxy-4" aria-hidden="true"></div><span class="frame-label label-1">調整</span><div class="subtitle-safe"></div></div><p class="cue">137-143行: 「対人コミュニケーション」「キュレーターとリスク管理のプロ」</p></section>
 </main>
 <section class="legend">
   <strong>用途:</strong> GUI timeline に取り込むための read-only visual treatment proof。
