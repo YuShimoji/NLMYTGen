@@ -927,9 +927,128 @@ main .hint strong {
   background: rgba(255, 255, 255, 0.055);
 }
 
+.review-timeline-proof {
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: rgba(83, 164, 255, 0.12);
+  color: #bfdbfe;
+  font-size: 11px;
+  font-weight: 600;
+}
+
 .review-timeline-segment.done .review-timeline-status {
   color: var(--color-success-text);
   background: rgba(74, 222, 128, 0.10);
+}
+
+.review-treatment-proof {
+  padding: 14px;
+  border: 1px solid rgba(83, 164, 255, 0.35);
+  border-radius: 10px;
+  background: rgba(83, 164, 255, 0.055);
+}
+
+.review-proof-summary {
+  display: grid;
+  justify-items: end;
+  gap: 3px;
+  color: var(--color-text-hint);
+  font-size: 12px;
+}
+
+.review-proof-summary strong {
+  color: var(--color-text);
+  font-size: 14px;
+}
+
+.review-proof-summary em {
+  color: var(--color-success-text);
+  font-style: normal;
+}
+
+.review-proof-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.review-proof-image-card {
+  margin: 0;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.review-proof-image-card img {
+  display: block;
+  width: 100%;
+  max-height: 520px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #111827;
+}
+
+.review-proof-image-card figcaption {
+  margin-top: 8px;
+  color: var(--color-text-hint);
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.review-proof-sidecar {
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.review-proof-sidecar h4,
+.review-beat-table-wrap h4 {
+  margin-bottom: 8px;
+  color: var(--color-text);
+  font-size: 13px;
+}
+
+.review-proof-sidecar ul {
+  margin: 0 0 12px 18px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.review-proof-sidecar p {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.review-beat-table-wrap {
+  margin-top: 12px;
+  overflow-x: auto;
+}
+
+.review-beat-table {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.review-beat-table th,
+.review-beat-table td {
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  vertical-align: top;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+.review-beat-table th {
+  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.035);
+  text-align: left;
 }
 
 .review-workbench-grid {
@@ -1145,6 +1264,14 @@ main .hint strong {
 
   .review-decision-context {
     grid-template-columns: 1fr;
+  }
+
+  .review-proof-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .review-proof-summary {
+    justify-items: start;
   }
 }
 

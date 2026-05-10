@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Real Estate DX Visual Treatment Proof</title>
+<style>
+:root { color-scheme: light; font-family: "Yu Gothic UI", "Segoe UI", system-ui, sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #e9edf5; color: #172033; }
+header { padding: 18px 24px; background: #0f172a; color: #f8fafc; display: flex; justify-content: space-between; gap: 18px; align-items: end; }
+header h1 { margin: 0 0 6px; font-size: 24px; }
+header p { margin: 2px 0; color: #cbd5e1; font-size: 13px; }
+.status { text-align: right; color: #bfdbfe; font-size: 12px; }
+.sheet { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; padding: 18px; }
+.proof-cell { background: #fff; border: 1px solid #cbd5e1; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 24px rgba(15, 23, 42, .11); }
+.cell-meta { padding: 9px 11px; display: flex; justify-content: space-between; border-bottom: 1px solid #e5e7eb; color: #334155; font-size: 12px; }
+.cell-meta strong { color: #0f172a; font-size: 13px; }
+.production-frame { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: linear-gradient(135deg, #dbeafe, #f8fafc 54%, #fff7ed); }
+.production-frame::before { content: ""; position: absolute; inset: 5%; border: 2px dashed rgba(15, 23, 42, .11); border-radius: 14px; pointer-events: none; }
+.subtitle-safe { position: absolute; left: 0; right: 0; bottom: 0; height: 20%; background: linear-gradient(180deg, rgba(15,23,42,0), rgba(15,23,42,.22)); border-top: 1px solid rgba(15, 23, 42, .08); }
+.subject { position: absolute; border-radius: 16px; background: rgba(255,255,255,.88); border: 3px solid rgba(15,23,42,.46); box-shadow: 0 10px 22px rgba(15,23,42,.14); }
+.connector { position: absolute; height: 4px; border-radius: 99px; background: rgba(59,130,246,.55); transform-origin: left center; }
+.frame-label { position: absolute; z-index: 5; padding: 7px 12px; border-radius: 999px; background: rgba(15,23,42,.82); color: #fff; font-size: 20px; font-weight: 800; letter-spacing: .02em; box-shadow: 0 8px 20px rgba(15,23,42,.22); }
+.cue { min-height: 50px; margin: 0; padding: 8px 10px; background: #f8fafc; border-top: 1px solid #e5e7eb; color: #475569; font-size: 11px; line-height: 1.35; }
+.re-02-beginning { background: linear-gradient(90deg, #dbeafe 0 48%, #f8fafc 48% 100%); }
+.re-02-beginning .subject-a { left: 10%; top: 28%; width: 24%; height: 32%; border-radius: 24px; background: #eff6ff; }
+.re-02-beginning .subject-b { right: 12%; top: 16%; width: 30%; height: 44%; background: #1f2937; opacity: .88; }
+.re-02-beginning .label-1 { left: 36%; top: 15%; }
+.re-02-development .subject-a { left: 22%; top: 14%; width: 34%; height: 46%; background: #eef2ff; }
+.re-02-development .subject-b { right: 11%; top: 24%; width: 22%; height: 30%; background: #fff; }
+.re-02-development .connector-a { left: 54%; top: 38%; width: 22%; }
+.re-02-development .label-1 { left: 28%; top: 20%; }
+.re-02-development .label-2 { right: 11%; top: 13%; }
+.re-02-turn { background: linear-gradient(90deg, #e0f2fe 0 50%, #fef3c7 50% 100%); }
+.re-02-turn .subject-a { left: 11%; top: 22%; width: 30%; height: 34%; background: #fff; }
+.re-02-turn .subject-b { right: 12%; top: 14%; width: 30%; height: 48%; background: repeating-linear-gradient(#fde68a 0 12px, #fff7ed 12px 22px); }
+.re-02-turn .subject-c { left: 49%; top: 8%; width: 3%; height: 70%; background: rgba(15,23,42,.16); border: 0; box-shadow: none; }
+.re-02-turn .label-1 { left: 12%; top: 12%; }
+.re-02-turn .label-2 { right: 10%; top: 10%; }
+.re-06-beginning { background: linear-gradient(135deg, #f8fafc, #eef2ff); }
+.re-06-beginning .subject-a { left: 8%; top: 10%; width: 84%; height: 48%; background: repeating-linear-gradient(90deg, #fff 0 40px, #dbeafe 40px 46px); opacity: .92; }
+.re-06-beginning .subject-b { left: 44%; top: 32%; width: 12%; height: 30%; border-radius: 50% 50% 14px 14px; background: #64748b; }
+.re-06-beginning .label-1 { left: 27%; top: 13%; }
+.re-06-development .subject-a { left: 28%; top: 12%; width: 38%; height: 50%; background: #fff; }
+.re-06-development .subject-b { right: 18%; top: 17%; width: 17%; height: 18%; border-color: #b45309; background: #fffbeb; }
+.re-06-development .subject-c { left: 12%; top: 29%; width: 14%; height: 16%; background: #dcfce7; }
+.re-06-development .label-1 { left: 31%; top: 20%; }
+.re-06-development .label-2 { right: 17%; top: 9%; background: rgba(180,83,9,.88); }
+.re-06-turn .subject-a { left: 26%; top: 15%; width: 28%; height: 42%; border-radius: 50%; background: rgba(219,234,254,.82); }
+.re-06-turn .subject-b { right: 18%; top: 23%; width: 24%; height: 28%; background: #fff; }
+.re-06-turn .subject-c { left: 11%; top: 26%; width: 12%; height: 28%; border-radius: 50% 50% 12px 12px; background: #64748b; }
+.re-06-turn .connector-a { left: 48%; top: 36%; width: 27%; background: rgba(22,163,74,.6); }
+.re-06-turn .label-1 { left: 28%; top: 12%; }
+.re-06-turn .label-2 { right: 18%; top: 12%; }
+.re-07d-beginning { background: linear-gradient(135deg, #eef2ff, #ecfeff 55%, #dcfce7); }
+.re-07d-beginning .subject-a { left: 10%; top: 13%; width: 34%; height: 42%; background: #eef2ff; border-color: #4f46e5; }
+.re-07d-beginning .subject-b { right: 12%; top: 18%; width: 30%; height: 34%; background: #fff; border-color: #16a34a; }
+.re-07d-beginning .label-1 { left: 42%; top: 11%; background: rgba(22,101,52,.88); }
+.re-07d-development { background: linear-gradient(135deg, #eef2ff 0 45%, #fee2e2); }
+.re-07d-development .subject-a { left: 30%; top: 10%; width: 36%; height: 30%; background: #fff; }
+.re-07d-development .subject-b { left: 20%; top: 43%; width: 18%; height: 18%; border-color: #b91c1c; background: #fee2e2; }
+.re-07d-development .subject-c { right: 22%; top: 44%; width: 18%; height: 18%; border-color: #b91c1c; background: #fee2e2; }
+.re-07d-development .label-1 { left: 31%; top: 42%; background: rgba(185,28,28,.88); }
+.re-07d-turn { background: linear-gradient(135deg, #eef2ff, #f8fafc 56%, #ecfdf5); }
+.re-07d-turn .subject-a { left: 9%; top: 18%; width: 24%; height: 34%; background: #eef2ff; border-color: #4f46e5; }
+.re-07d-turn .subject-b { left: 44%; top: 20%; width: 13%; height: 34%; border-radius: 50% 50% 16px 16px; background: #166534; }
+.re-07d-turn .subject-c { right: 11%; top: 20%; width: 24%; height: 34%; background: #fff; }
+.re-07d-turn .connector-a { left: 31%; top: 37%; width: 42%; background: rgba(22,163,74,.65); }
+.re-07d-turn .label-1 { left: 38%; top: 11%; background: rgba(22,101,52,.88); }
+.legend { margin: 0 18px 18px; padding: 12px 14px; border-radius: 12px; border: 1px solid #cbd5e1; background: #fff; color: #334155; font-size: 13px; line-height: 1.55; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Real Estate DX Visual Treatment Proof</h1>
+    <p>RE-02 / RE-06 / RE-07D only — 3 segments × 3 beats = 9 production-frame treatments</p>
+    <p>Frame metadata is outside production frames. This is not YMM4 output, render, production timing, or creative acceptance.</p>
+  </div>
+  <div class="status">
+    <div>proof type: visual_treatment_proof</div>
+    <div>frames: 9</div>
+    <div>violations: 0</div>
+  </div>
+</header>
+<main class="sheet">
+<section class="proof-cell" data-segment-id="RE-02" data-phase="beginning"><div class="cell-meta"><strong>RE-02 beginning</strong><span>frame 1</span></div><div class="production-frame re-02-beginning" aria-label="REINS / VIPクラブ beginning"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">REINS?</span><div class="subtitle-safe"></div></div><p class="cue">13-14行: 「レインズっていう言葉。これ要するに何なんですか?」</p></section>
+<section class="proof-cell" data-segment-id="RE-02" data-phase="development"><div class="cell-meta"><strong>RE-02 development</strong><span>frame 2</span></div><div class="production-frame re-02-development" aria-label="REINS / VIPクラブ development"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">業者DB</span><span class="frame-label label-2">公開ポータル</span><div class="subtitle-safe"></div></div><p class="cue">15-19行: 「プロだけが入れる...巨大な物件データベース」「一部の情報」</p></section>
+<section class="proof-cell" data-segment-id="RE-02" data-phase="turn"><div class="cell-meta"><strong>RE-02 turn</strong><span>frame 3</span></div><div class="production-frame re-02-turn" aria-label="REINS / VIPクラブ turn"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">見える情報</span><span class="frame-label label-2">見えない情報</span><div class="subtitle-safe"></div></div><p class="cue">20-23行: 「なんで...隠されているんですか?」「情報の非対称性」</p></section>
+<section class="proof-cell" data-segment-id="RE-06" data-phase="beginning"><div class="cell-meta"><strong>RE-06 beginning</strong><span>frame 4</span></div><div class="production-frame re-06-beginning" aria-label="キュレーション beginning"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">多すぎる選択肢</span><div class="subtitle-safe"></div></div><p class="cue">61-64行: 「選択肢が多すぎること」</p></section>
+<section class="proof-cell" data-segment-id="RE-06" data-phase="development"><div class="cell-meta"><strong>RE-06 development</strong><span>frame 5</span></div><div class="production-frame re-06-development" aria-label="キュレーション development"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">選ぶ理由</span><span class="frame-label label-2">注意点</span><div class="subtitle-safe"></div></div><p class="cue">65-75行: 「ノイズを排除」「デメリット...包み隠さず提示」</p></section>
+<section class="proof-cell" data-segment-id="RE-06" data-phase="turn"><div class="cell-meta"><strong>RE-06 turn</strong><span>frame 6</span></div><div class="production-frame re-06-turn" aria-label="キュレーション turn"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">編集力</span><span class="frame-label label-2">納得感</span><div class="subtitle-safe"></div></div><p class="cue">78-81行: 「独自の視点を買う」「タイパと納得感」</p></section>
+<section class="proof-cell" data-segment-id="RE-07D" data-phase="beginning"><div class="cell-meta"><strong>RE-07D beginning</strong><span>frame 7</span></div><div class="production-frame re-07d-beginning" aria-label="AI逆説と見えないリスク beginning"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">100%マッチ</span><div class="subtitle-safe"></div></div><p class="cue">130-132行: 「あなたに100%マッチする物件はこれです」</p></section>
+<section class="proof-cell" data-segment-id="RE-07D" data-phase="development"><div class="cell-meta"><strong>RE-07D development</strong><span>frame 8</span></div><div class="production-frame re-07d-development" aria-label="AI逆説と見えないリスク development"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">見えないリスク</span><div class="subtitle-safe"></div></div><p class="cue">133-136行: 「データだけではない」「目に見えないリスク」</p></section>
+<section class="proof-cell" data-segment-id="RE-07D" data-phase="turn"><div class="cell-meta"><strong>RE-07D turn</strong><span>frame 9</span></div><div class="production-frame re-07d-turn" aria-label="AI逆説と見えないリスク turn"><div class="subject subject-a"></div><div class="subject subject-b"></div><div class="subject subject-c"></div><div class="connector connector-a"></div><span class="frame-label label-1">調整するプロ</span><div class="subtitle-safe"></div></div><p class="cue">137-143行: 「対人コミュニケーション」「キュレーターとリスク管理のプロ」</p></section>
+</main>
+<section class="legend">
+  <strong>用途:</strong> GUI timeline に取り込むための read-only visual treatment proof。
+  単体HTML/PNG/JSON確認では完了扱いにせず、GUI上で proof image / beat table / sidecar warnings / Frame Contract違反の有無を確認する。
+</section>
+</body>
+</html>

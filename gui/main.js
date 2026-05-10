@@ -231,6 +231,20 @@ ipcMain.handle('load-review-packet', async (_event, packetPath) => {
   }
 });
 
+ipcMain.handle('load-review-proof', async (_event, proofPath) => {
+  const resolved = resolveRepoRelativePath(proofPath);
+  if (!resolved.ok) return { ok: false, error: resolved.error };
+  if (!fs.existsSync(resolved.full)) {
+    return { ok: false, error: `not found: ${resolved.rel}` };
+  }
+  try {
+    const payload = JSON.parse(fs.readFileSync(resolved.full, 'utf8'));
+    return { ok: true, path: resolved.rel, payload };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+});
+
 ipcMain.handle('save-review-decisions', async (_event, opts) => {
   const decisionPath = opts && typeof opts.decisionPath === 'string' ? opts.decisionPath : '';
   const payload = opts && opts.payload && typeof opts.payload === 'object' ? opts.payload : null;

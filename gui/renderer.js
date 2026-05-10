@@ -561,7 +561,9 @@ document.addEventListener('click', (e) => {
 
 const DEFAULT_REVIEW_PACKET_PATH = 'samples/_probe/g24/real_estate_dx_review_packet.json';
 const DEFAULT_REVIEW_DECISION_PATH = 'samples/_probe/g24/real_estate_dx_review_decisions.json';
+const DEFAULT_REVIEW_TREATMENT_PROOF_PATH = 'samples/_probe/g24/real_estate_dx_visual_treatment_proof.json';
 let currentReviewPacket = null;
+let currentReviewTreatmentProof = null;
 let currentReviewDecisionPath = DEFAULT_REVIEW_DECISION_PATH;
 let activeReviewIndex = 0;
 let reviewDecisionState = [];
@@ -592,6 +594,21 @@ function formatScriptSpan(span) {
 
 function getReviewSegments() {
   return currentReviewPacket?.segments || [];
+}
+
+function repoRelativeAssetSrc(relPath) {
+  if (typeof relPath !== 'string' || !relPath || relPath.includes('..') || /^[a-zA-Z]:/.test(relPath)) {
+    return '';
+  }
+  return `../${relPath.split('/').map(encodeURIComponent).join('/')}`;
+}
+
+function getTreatmentProofSegment(segmentId) {
+  return (currentReviewTreatmentProof?.segments || []).find((segment) => segment.id === segmentId) || null;
+}
+
+function getTreatmentProofFrameCount() {
+  return Number(currentReviewTreatmentProof?.frame_count || 0);
 }
 
 function getReviewDecisionState(index) {
@@ -693,6 +710,7 @@ function renderReviewTimeline(packet) {
     const outlineItem = outline.find((item) => item.id === segment.id) || {};
     const active = index === activeReviewIndex;
     const statusClass = state.decision ? 'done' : 'pending';
+    const proofSegment = getTreatmentProofSegment(segment.id);
     const timeLabel = formatScriptSpan(segment.script_span)
       || `${formatReviewSeconds(outlineItem.time_start_sec)}-${formatReviewSeconds(outlineItem.time_end_sec)}`;
     return (
@@ -700,6 +718,7 @@ function renderReviewTimeline(packet) {
       + `<span class="review-timeline-id">${escapeHtml(segment.id || '')}</span>`
       + `<span class="review-timeline-title">${escapeHtml(segment.title || '')}</span>`
       + `<span class="review-timeline-time">${escapeHtml(timeLabel || '')}</span>`
+      + (proofSegment ? `<span class="review-timeline-proof">3-beat proof</span>` : '')
       + `<span class="review-timeline-status">${state.decision ? '判断済み' : '未選択'}</span>`
       + `</button>`
     );
@@ -736,6 +755,76 @@ function renderReviewSegmentDetail(packet) {
     + `<p><strong>未選択時の次工程:</strong> ${escapeHtml(segment.next_effect || '')}</p>`
     + `</div>`
     + `<div class="review-option-reference"><h4>選択肢の意味</h4><ul>${optionList}</ul></div>`
+  );
+}
+
+function renderReviewTreatmentProof(packet) {
+  const panel = document.getElementById('review-treatment-proof');
+  if (!panel) return;
+  const segment = packet?.segments?.[activeReviewIndex];
+  if (!currentReviewTreatmentProof) {
+    panel.classList.remove('hidden');
+    panel.innerHTML = (
+      `<div class="review-section-head">`
+      + `<div><h3>9-frame visual treatment proof</h3><p class="hint">proof sidecar 読込中、または未生成です。</p></div>`
+      + `</div>`
+    );
+    return;
+  }
+  const proof = currentReviewTreatmentProof;
+  const proofSegment = segment ? getTreatmentProofSegment(segment.id) : null;
+  const artifacts = proof.artifacts || {};
+  const proofImage = artifacts.proof_image || artifacts.screenshot_artifact || '';
+  const proofSrc = repoRelativeAssetSrc(proofImage);
+  const warnings = proof.sidecar_warnings || [];
+  const violations = proof.frame_contract_violations || [];
+  const targetSegments = proof.target_segments || [];
+  const beats = proofSegment?.beats || [];
+  const beatRows = beats.length
+    ? beats.map((beat) => (
+      `<tr>`
+      + `<th>${escapeHtml(beat.phase || '')}</th>`
+      + `<td>${escapeHtml(beat.narration_cue || '')}</td>`
+      + `<td>${escapeHtml(beat.visual_subject || '')}</td>`
+      + `<td>${escapeHtml((beat.text_on_frame || []).join(' / ') || 'none')}</td>`
+      + `<td>${escapeHtml(beat.motion_hint || '')}</td>`
+      + `<td>${escapeHtml(beat.subtitle_clearance || '')}</td>`
+      + `<td>${escapeHtml(beat.frame_contract?.violations?.length ? beat.frame_contract.violations.join(', ') : '違反なし')}</td>`
+      + `</tr>`
+    )).join('')
+    : `<tr><td colspan="7">このsegmentは9-frame proof対象外です。RE-02 / RE-06 / RE-07Dを選択してください。</td></tr>`;
+  panel.classList.remove('hidden');
+  panel.innerHTML = (
+    `<div class="review-section-head">`
+    + `<div>`
+    + `<h3>9-frame visual treatment proof</h3>`
+    + `<p class="hint">GUI timelineで読むread-only proofです。単体PNG/HTML/JSON確認は完了扱いにしません。</p>`
+    + `</div>`
+    + `<div class="review-proof-summary">`
+    + `<span>${escapeHtml(targetSegments.join(' / '))}</span>`
+    + `<strong>${escapeHtml(String(getTreatmentProofFrameCount()))} frames</strong>`
+    + `<em>Frame Contract違反: ${escapeHtml(String(violations.length))}</em>`
+    + `</div>`
+    + `</div>`
+    + `<div class="review-proof-grid">`
+    + `<figure class="review-proof-image-card">`
+    + (proofSrc ? `<img src="${proofSrc}" alt="RE-02 RE-06 RE-07D 9-frame visual treatment proof">` : `<p class="hint">proof image path が未設定です。</p>`)
+    + `<figcaption>proof image: ${escapeHtml(proofImage || '未設定')}</figcaption>`
+    + `</figure>`
+    + `<div class="review-proof-sidecar">`
+    + `<h4>sidecar warnings</h4>`
+    + `<ul>${warnings.map((warning) => `<li>${escapeHtml(warning)}</li>`).join('') || '<li>warningなし</li>'}</ul>`
+    + `<h4>read-only decision context</h4>`
+    + `<p>このproofは映像設計確認用です。判断保存は右側の判断ペインと <code>review_decisions.json</code> に戻します。YMM4化、render、production timing、creative acceptanceには進みません。</p>`
+    + `</div>`
+    + `</div>`
+    + `<div class="review-beat-table-wrap">`
+    + `<h4>${escapeHtml(segment?.id || '')} beat table</h4>`
+    + `<table class="review-beat-table">`
+    + `<thead><tr><th>beat</th><th>narration cue</th><th>visual subject</th><th>text on frame</th><th>motion hint</th><th>subtitle clearance</th><th>Frame Contract</th></tr></thead>`
+    + `<tbody>${beatRows}</tbody>`
+    + `</table>`
+    + `</div>`
   );
 }
 
@@ -785,6 +874,7 @@ function renderReviewSegmentSummary(packet) {
 
 function renderReviewWorkbench(packet) {
   renderReviewTimeline(packet);
+  renderReviewTreatmentProof(packet);
   renderReviewSegmentDetail(packet);
   renderReviewDecisionInspector(packet);
   renderReviewSegmentSummary(packet);
@@ -834,6 +924,27 @@ function renderReviewPacket(packet, packetPath) {
   renderReviewWorkbench(packet);
 }
 
+async function loadDefaultReviewTreatmentProof() {
+  currentReviewTreatmentProof = null;
+  renderReviewTreatmentProof(currentReviewPacket);
+  if (!window.nlmytgen.loadReviewProof) return;
+  const res = await window.nlmytgen.loadReviewProof(DEFAULT_REVIEW_TREATMENT_PROOF_PATH);
+  if (res.ok) {
+    currentReviewTreatmentProof = res.payload;
+    renderReviewWorkbench(currentReviewPacket);
+    return;
+  }
+  const panel = document.getElementById('review-treatment-proof');
+  if (panel) {
+    panel.classList.remove('hidden');
+    panel.innerHTML = (
+      `<div class="review-section-head">`
+      + `<div><h3>9-frame visual treatment proof</h3><p class="hint">proof sidecar 読込失敗: ${escapeHtml(res.error || 'unknown error')}</p></div>`
+      + `</div>`
+    );
+  }
+}
+
 async function loadDefaultReviewPacket() {
   const panel = document.getElementById('review-load-result');
   panel.classList.remove('hidden', 'success', 'error');
@@ -841,11 +952,13 @@ async function loadDefaultReviewPacket() {
   const res = await window.nlmytgen.loadReviewPacket(DEFAULT_REVIEW_PACKET_PATH);
   if (res.ok) {
     renderReviewPacket(res.payload, res.path);
+    await loadDefaultReviewTreatmentProof();
     panel.classList.add('success');
     panel.textContent = `読込完了: ${res.path}`;
     return;
   }
   currentReviewPacket = null;
+  currentReviewTreatmentProof = null;
   reviewDecisionState = [];
   activeReviewIndex = 0;
   renderReviewEpisodeContext({});

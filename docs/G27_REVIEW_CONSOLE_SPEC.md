@@ -171,6 +171,10 @@ debug / evidence として提示できるが、判断結果は GUI timeline と 
 | compact preview screenshot readback | `samples/_probe/g24/real_estate_dx_overlay_only_compact_review_screenshot_readback.json` |
 | visual storyboard proof | `samples/_probe/g24/real_estate_dx_visual_storyboard_proof.png` |
 | visual storyboard proof readback | `samples/_probe/g24/real_estate_dx_visual_storyboard_proof_readback.json` |
+| visual treatment proof sidecar | `samples/_probe/g24/real_estate_dx_visual_treatment_proof.json` |
+| visual treatment proof image | `samples/_probe/g24/real_estate_dx_visual_treatment_proof.png` |
+| visual treatment proof HTML | `samples/_probe/g24/real_estate_dx_visual_treatment_proof.html` |
+| visual treatment proof readback | `samples/_probe/g24/real_estate_dx_visual_treatment_proof_readback.json` |
 | validator authority | `samples/_probe/g24/real_estate_dx_background_skit_blueprint_validate.json` |
 
 ## Workflow
@@ -344,3 +348,10 @@ For follow-on visual treatment proof slices, completion additionally requires:
   `blocker`, segment ID, validator status, or readback counts inside the frame.
 - Standalone HTML/PNG/JSON confirmation is evidence only and does not complete
   the review slice by itself.
+
+The first implemented follow-on proof uses `npm --prefix gui run
+capture:g27-visual-treatment` to create a 9-frame treatment for RE-02 / RE-06 /
+RE-07D. The GUI `デザインレビュー` timeline loads its sidecar, displays the proof
+image, marks the three target segments with `3-beat proof`, and shows the
+selected segment's beat table, narration cue, sidecar warnings, Frame Contract
+violation count, and read-only decision context.

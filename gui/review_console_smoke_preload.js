@@ -5,8 +5,8 @@ const path = require('path');
 const repoRoot = path.resolve(__dirname, '..');
 let lastReviewDecisionSave = null;
 
-function readReviewPacket(packetPath) {
-  const fullPath = path.resolve(repoRoot, packetPath);
+function readRepoJson(repoPath) {
+  const fullPath = path.resolve(repoRoot, repoPath);
   const rel = path.relative(repoRoot, fullPath);
   if (rel.startsWith('..') || path.isAbsolute(rel)) {
     return { ok: false, error: 'path outside repo' };
@@ -23,7 +23,8 @@ const nullPath = async () => null;
 
 contextBridge.exposeInMainWorld('nlmytgen', {
   getPathForFile: () => '',
-  loadReviewPacket: async (packetPath) => readReviewPacket(packetPath),
+  loadReviewPacket: async (packetPath) => readRepoJson(packetPath),
+  loadReviewProof: async (proofPath) => readRepoJson(proofPath),
   saveReviewDecisions: async (opts) => {
     lastReviewDecisionSave = opts;
     return { ok: true, path: opts?.decisionPath || 'smoke.json' };

@@ -1,0 +1,281 @@
+{
+  "version": "1.0",
+  "episode_id": "real_estate_dx",
+  "proof_type": "visual_treatment_proof",
+  "review_scope": "g27_re02_re06_re07d_9_frame_treatment",
+  "target_segments": [
+    "RE-02",
+    "RE-06",
+    "RE-07D"
+  ],
+  "frame_count": 9,
+  "beats_per_segment": 3,
+  "frame_contract": {
+    "canvas": "16:9 production frame, planned at 1920x1080",
+    "safe_area": "primary subjects and readable labels stay inside central 90%",
+    "subtitle_clearance": "lower 18-22% is reserved in every frame",
+    "max_labels_per_frame": 2,
+    "max_total_label_chars": 30,
+    "metadata_isolation": "source/review/blocker/segment id/validator/readback metadata must not appear inside the frame"
+  },
+  "artifacts": {
+    "proof_html": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.html",
+    "proof_image": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.png",
+    "sidecar_json": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+    "readback_json": "samples/_probe/g24/real_estate_dx_visual_treatment_proof_readback.json"
+  },
+  "gui_ingest": {
+    "required": true,
+    "panel_id": "review-treatment-proof",
+    "shows": [
+      "proof image",
+      "beat table",
+      "narration cue",
+      "sidecar warnings",
+      "Frame Contract violations",
+      "read-only decision context"
+    ],
+    "standalone_html_png_json_review_is_completion": false
+  },
+  "sidecar_warnings": [
+    "This proof is read-only visual treatment evidence, not creative acceptance.",
+    "YMM4 conversion, render, production timing, and production template use remain blocked.",
+    "No Frame Contract violations are currently recorded; future exceptions must be added here."
+  ],
+  "frame_contract_violations": [],
+  "not_creative_acceptance": true,
+  "not_ymm4_adapter_output": true,
+  "not_render_source": true,
+  "not_production_timing": true,
+  "segments": [
+    {
+      "id": "RE-02",
+      "title": "REINS / VIPクラブ",
+      "beats": [
+        {
+          "phase": "beginning",
+          "narration_cue": "13-14行: 「レインズっていう言葉。これ要するに何なんですか?」",
+          "visual_subject": "消費者の検索画面と、奥に見える閉じた業者DB",
+          "spatial_composition": "左前景にスマホ検索、右奥にガラス越しのDB室。下部20%は空ける。",
+          "text_on_frame": [
+            "REINS?"
+          ],
+          "motion_hint": "検索結果が薄くなり、奥のDBシルエットが浮く。",
+          "subtitle_clearance": "下部20%を暗い床面として空け、UIも人物も置かない。",
+          "risk": "セキュリティ施設の比喩に寄りすぎる可能性。",
+          "id": "RE-02-beginning",
+          "frame_contract": {
+            "label_count": 1,
+            "total_label_chars": 6,
+            "max_labels_ok": true,
+            "text_amount_ok": true,
+            "safe_area_ok": true,
+            "subtitle_clearance_ok": true,
+            "metadata_isolated": true,
+            "violations": []
+          }
+        },
+        {
+          "phase": "development",
+          "narration_cue": "15-19行: 「プロだけが入れる...巨大な物件データベース」「一部の情報」",
+          "visual_subject": "中央の業者DB端末と、小さく出力される公開ポータル",
+          "spatial_composition": "中央上に大きいDB画面、右に小さい公開ポータルカード。下部20%は字幕用に空ける。",
+          "text_on_frame": [
+            "業者DB",
+            "公開ポータル"
+          ],
+          "motion_hint": "DBから公開ポータルへ情報カードが細く流れる。",
+          "subtitle_clearance": "公開ポータルカードは右上寄せで、字幕帯へ降ろさない。",
+          "risk": "VIP感を強めると制度説明より煽りに見える。",
+          "id": "RE-02-development",
+          "frame_contract": {
+            "label_count": 2,
+            "total_label_chars": 10,
+            "max_labels_ok": true,
+            "text_amount_ok": true,
+            "safe_area_ok": true,
+            "subtitle_clearance_ok": true,
+            "metadata_isolated": true,
+            "violations": []
+          }
+        },
+        {
+          "phase": "turn",
+          "narration_cue": "20-23行: 「なんで...隠されているんですか?」「情報の非対称性」",
+          "visual_subject": "公開カードと隠れた生データ束の差分",
+          "spatial_composition": "左に見える情報、右に半透明壁の奥の生データ束。中央下は空ける。",
+          "text_on_frame": [
+            "見える情報",
+            "見えない情報"
+          ],
+          "motion_hint": "壁の濃度が上がり、公開カードが相対的に小さくなる。",
+          "subtitle_clearance": "左右の要素を上半分に置き、下部20%は連続した余白にする。",
+          "risk": "データカードを増やしすぎると再び説明スライド化する。",
+          "id": "RE-02-turn",
+          "frame_contract": {
+            "label_count": 2,
+            "total_label_chars": 11,
+            "max_labels_ok": true,
+            "text_amount_ok": true,
+            "safe_area_ok": true,
+            "subtitle_clearance_ok": true,
+            "metadata_isolated": true,
+            "violations": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "RE-06",
+      "title": "キュレーション",
+      "beats": [
+        {
+          "phase": "beginning",
+          "narration_cue": "61-64行: 「選択肢が多すぎること」",
+          "visual_subject": "大量の物件カードに囲まれる視聴者",
+          "spatial_composition": "上部と左右にカード群、中央に小さな視聴者。下部20%は空ける。",
+          "text_on_frame": [
+            "多すぎる選択肢"
+          ],
+          "motion_hint": "左右からカードが増えて中心を圧迫する。",
+          "subtitle_clearance": "カード群は下部字幕帯に入れず、中央下は暗い余白にする。",
+          "risk": "混雑表現が強すぎるとスマホ視聴で読めない。",
+          "id": "RE-06-beginning",
+          "frame_contract": {
+            "label_count": 1,
+            "total_label_chars": 7,
+            "max_labels_ok": true,
+            "text_amount_ok": true,
+            "safe_area_ok": true,
+            "subtitle_clearance_ok": true,
+            "metadata_isolated": true,
+            "violations": []
+          }
+        },
+        {
+          "phase": "development",
+          "narration_cue": "65-75行: 「ノイズを排除」「デメリット...包み隠さず提示」",
+          "visual_subject": "一件に絞られた物件シートと欠点バッジ",
+          "spatial_composition": "中央に大きな物件シート、右上に注意点バッジ、左に編集者の手元。",
+          "text_on_frame": [
+            "選ぶ理由",
+            "注意点"
+          ],
+          "motion_hint": "ノイズカードが薄くなり、選定シートと注意点が最後に残る。",
+          "subtitle_clearance": "物件シートの下端を字幕帯より上で止める。",
+          "risk": "注意点バッジが広告の警告UIに見える可能性。",
+          "id": "RE-06-development",
+          "frame_contract": {
+            "label_count": 2,
+            "total_label_chars": 7,
+            "max_labels_ok": true,
+            "text_amount_ok": true,
+            "safe_area_ok": true,
+            "subtitle_clearance_ok": true,
+            "metadata_isolated": true,
+            "violations": []
+          }
+        },
+        {
+          "phase": "turn",
+          "narration_cue": "78-81行: 「独自の視点を買う」「タイパと納得感」",
+          "visual_subject": "編集レンズで候補が意味ある一件に変わる画面",
+          "spatial_composition": "中央にレンズ、奥に一件の物件、右に納得する視聴者。",
+          "text_on_frame": [
+            "編集力",
+            "納得感"
+          ],
+          "motion_hint": "レンズが多い候補を一件へ絞り、画面の余白が増える。",
+          "subtitle_clearance": "レンズと物件を上中段に置き、下部22%を空ける。",
+          "risk": "レンズ表現が一般的すぎると不動産文脈が弱まる。",
+          "id": "RE-06-turn",
+          "frame_contract": {
+            "label_count": 2,
+            "total_label_chars": 6,
+            "max_labels_ok": true,
+            "text_amount_ok": true,
+            "safe_area_ok": true,
+            "subtitle_clearance_ok": true,
+            "metadata_isolated": true,
+            "violations": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "RE-07D",
+      "title": "AI逆説と見えないリスク",
+      "beats": [
+        {
+          "phase": "beginning",
+          "narration_cue": "130-132行: 「あなたに100%マッチする物件はこれです」",
+          "visual_subject": "AI推薦パネルと完璧マッチの物件カード",
+          "spatial_composition": "左上にAIパネル、右上に物件カード、中央に小さな人物。",
+          "text_on_frame": [
+            "100%マッチ"
+          ],
+          "motion_hint": "AIパネルが緑の確信状態へ切り替わる。",
+          "subtitle_clearance": "AIパネルと物件カードは上段に固定し、字幕帯へ出さない。",
+          "risk": "次beatで欠落を見せないとAI礼賛に見える。",
+          "id": "RE-07D-beginning",
+          "frame_contract": {
+            "label_count": 1,
+            "total_label_chars": 7,
+            "max_labels_ok": true,
+            "text_amount_ok": true,
+            "safe_area_ok": true,
+            "subtitle_clearance_ok": true,
+            "metadata_isolated": true,
+            "violations": []
+          }
+        },
+        {
+          "phase": "development",
+          "narration_cue": "133-136行: 「データだけではない」「目に見えないリスク」",
+          "visual_subject": "推薦物件の下に現れる境界・相続・感情リスク",
+          "spatial_composition": "上段に物件カード、中央に薄いリスクアイコン、下部は空ける。",
+          "text_on_frame": [
+            "見えないリスク"
+          ],
+          "motion_hint": "緑のマッチ光が弱まり、物件の背後からリスクが浮く。",
+          "subtitle_clearance": "リスクアイコンは中央までに留め、下部20%には入れない。",
+          "risk": "リスクを恐怖演出にしすぎると論旨がAI批判へ寄る。",
+          "id": "RE-07D-development",
+          "frame_contract": {
+            "label_count": 1,
+            "total_label_chars": 7,
+            "max_labels_ok": true,
+            "text_amount_ok": true,
+            "safe_area_ok": true,
+            "subtitle_clearance_ok": true,
+            "metadata_isolated": true,
+            "violations": []
+          }
+        },
+        {
+          "phase": "turn",
+          "narration_cue": "137-143行: 「対人コミュニケーション」「キュレーターとリスク管理のプロ」",
+          "visual_subject": "AIデータと人間関係の間に立つ専門家",
+          "spatial_composition": "左にAI、右に人間関係、中央に専門家。字幕帯は全面空ける。",
+          "text_on_frame": [
+            "調整するプロ"
+          ],
+          "motion_hint": "専門家の線がAIと人をつなぎ、リスクマーカーが小さく整理される。",
+          "subtitle_clearance": "人物の足元も含めて下部22%を暗い余白にする。",
+          "risk": "AI否定ではなく補完関係として見えるバランスが必要。",
+          "id": "RE-07D-turn",
+          "frame_contract": {
+            "label_count": 1,
+            "total_label_chars": 6,
+            "max_labels_ok": true,
+            "text_amount_ok": true,
+            "safe_area_ok": true,
+            "subtitle_clearance_ok": true,
+            "metadata_isolated": true,
+            "violations": []
+          }
+        }
+      ]
+    }
+  ]
+}

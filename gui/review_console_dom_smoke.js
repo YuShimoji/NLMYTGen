@@ -2,6 +2,8 @@ const path = require('path');
 const { app, BrowserWindow } = require('electron');
 
 const expectedSegmentCount = 11;
+const expectedProofFrameCount = 9;
+const expectedProofSegmentCount = 3;
 
 async function run() {
   app.commandLine.appendSwitch('disable-gpu');
@@ -39,6 +41,10 @@ async function run() {
         const timeline = Array.from(document.querySelectorAll('#review-timeline .review-timeline-segment'));
         const detail = document.getElementById('review-segment-detail');
         const inspector = document.querySelector('.review-decision-inspector');
+        const proof = document.getElementById('review-treatment-proof');
+        const proofImage = proof?.querySelector('.review-proof-image-card img');
+        const proofBadges = Array.from(document.querySelectorAll('#review-timeline .review-timeline-proof'));
+        const beatRows = Array.from(document.querySelectorAll('#review-treatment-proof .review-beat-table tbody tr'));
         const wizard = document.getElementById('wizard-bar');
         const bodyContent = document.querySelector('.body-content');
         const load = document.getElementById('review-load-result');
@@ -59,6 +65,11 @@ async function run() {
           detailText: detail?.innerText || '',
           inspectorExists: !!inspector,
           inspectorText: inspector?.innerText || '',
+          proofExists: !!proof,
+          proofText: proof?.innerText || '',
+          proofImageSrc: proofImage?.getAttribute('src') || '',
+          proofBadgeCount: proofBadges.length,
+          beatRowCount: beatRows.length,
           bodyReviewClass: !!bodyContent?.classList.contains('review-workbench-active'),
           wizardDisplay: wizard ? getComputedStyle(wizard).display : '',
           loadText: load?.innerText || '',
@@ -67,6 +78,12 @@ async function run() {
           hasTimelineLabel: text.includes('全体タイムライン'),
           hasScriptExcerptLabel: text.includes('該当台本抜粋'),
           hasDecisionInspectorLabel: text.includes('判断ペイン'),
+          hasTreatmentProofLabel: text.includes('9-frame visual treatment proof'),
+          hasProofFrameCount: text.includes('${expectedProofFrameCount} frames'),
+          hasProofTargets: text.includes('RE-02') && text.includes('RE-06') && text.includes('RE-07D'),
+          hasProofWarnings: text.includes('sidecar warnings'),
+          hasFrameContract: text.includes('Frame Contract違反'),
+          hasReadOnlyDecisionContext: text.includes('read-only decision context'),
           hasCorruption: /\\?\\?\\?|�/.test(text),
           textSample: text.slice(0, 500),
         };
@@ -84,12 +101,21 @@ async function run() {
             && state.activeTimelineCount === 1
             && state.detailExists
             && state.inspectorExists
+            && state.proofExists
+            && state.proofBadgeCount === ${expectedProofSegmentCount}
+            && state.proofImageSrc.includes('real_estate_dx_visual_treatment_proof.png')
             && state.cardCount === ${expectedSegmentCount}
             && state.hasEpisodeContextLabel
             && state.hasStoryOutlineLabel
             && state.hasTimelineLabel
             && state.hasScriptExcerptLabel
-            && state.hasDecisionInspectorLabel;
+            && state.hasDecisionInspectorLabel
+            && state.hasTreatmentProofLabel
+            && state.hasProofFrameCount
+            && state.hasProofTargets
+            && state.hasProofWarnings
+            && state.hasFrameContract
+            && state.hasReadOnlyDecisionContext;
           if (ready) {
             clearInterval(timer);
             resolve(state);
@@ -121,6 +147,18 @@ async function run() {
   if (result.cardCount !== expectedSegmentCount) {
     throw new Error(`expected ${expectedSegmentCount} review summary rows, got ${result.cardCount}`);
   }
+  if (result.proofBadgeCount !== expectedProofSegmentCount) {
+    throw new Error(`expected ${expectedProofSegmentCount} proof timeline badges, got ${result.proofBadgeCount}`);
+  }
+  if (!result.proofImageSrc.includes('real_estate_dx_visual_treatment_proof.png')) {
+    throw new Error(`proof image did not render in GUI: ${result.proofImageSrc}`);
+  }
+  if (!result.proofText.includes('Frame Contract違反: 0')) {
+    throw new Error(`proof panel did not expose Frame Contract status: ${result.proofText.slice(0, 300)}`);
+  }
+  if (!result.proofText.includes('sidecar warnings')) {
+    throw new Error(`proof panel did not expose sidecar warnings: ${result.proofText.slice(0, 300)}`);
+  }
   if (!result.detailText.includes('該当台本抜粋')) {
     throw new Error(`review segment detail did not render script context: ${result.detailText.slice(0, 200)}`);
   }
@@ -130,6 +168,38 @@ async function run() {
   if (result.hasCorruption) {
     throw new Error(`review tab contains corrupted text marker: ${result.textSample}`);
   }
+
+  const proofSegments = await win.webContents.executeJavaScript(`
+    (() => {
+      const expected = [
+        { index: 1, id: 'RE-02', cue: 'レインズっていう言葉' },
+        { index: 5, id: 'RE-06', cue: '選択肢が多すぎること' },
+        { index: 9, id: 'RE-07D', cue: '100%マッチ' },
+      ];
+      return expected.map((item) => {
+        document.querySelector('[data-review-index="' + item.index + '"]')?.click();
+        const proof = document.getElementById('review-treatment-proof');
+        const rows = Array.from(proof.querySelectorAll('.review-beat-table tbody tr'));
+        const text = proof.innerText;
+        return {
+          id: item.id,
+          rowCount: rows.length,
+          hasCue: text.includes(item.cue),
+          hasNarrationCueHeader: text.includes('narration cue'),
+          hasSubtitleClearance: text.includes('subtitle clearance'),
+          hasNoViolation: text.includes('違反なし'),
+        };
+      });
+    })()
+  `);
+  for (const item of proofSegments) {
+    if (item.rowCount !== 3 || !item.hasCue || !item.hasNarrationCueHeader || !item.hasSubtitleClearance || !item.hasNoViolation) {
+      throw new Error(`proof beat table did not render for ${item.id}: ${JSON.stringify(item)}`);
+    }
+  }
+  await win.webContents.executeJavaScript(`
+    document.querySelector('[data-review-index="0"]')?.click();
+  `);
 
   const saveResult = await win.webContents.executeJavaScript(`
     (async () => {
@@ -167,7 +237,7 @@ async function run() {
     throw new Error(`review_decisions version changed: ${saveResult.payload.version}`);
   }
 
-  console.log(`G-27 review console DOM smoke OK: ${result.timelineCount} timeline segments; save payload OK`);
+  console.log(`G-27 review console DOM smoke OK: ${result.timelineCount} timeline segments; ${expectedProofFrameCount} proof frames visible through GUI; save payload OK`);
 }
 
 run()

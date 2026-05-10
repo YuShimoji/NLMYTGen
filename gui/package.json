@@ -7,7 +7,8 @@
     "start": "electron .",
     "dev": "electron . --dev",
     "capture:g27-overlay-review": "electron capture_overlay_compact_review.js",
-    "capture:g27-visual-storyboard": "electron capture_visual_storyboard_proof.js"
+    "capture:g27-visual-storyboard": "electron capture_visual_storyboard_proof.js",
+    "capture:g27-visual-treatment": "electron capture_visual_treatment_proof.js"
   },
   "devDependencies": {
     "electron": "^35.0.0"
