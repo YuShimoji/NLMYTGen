@@ -9,6 +9,12 @@ v1.2 の主な修正点は、`デザインレビュー`を既存制作ウィザ�
 動画全体の流れから segment を選び、台本文脈・演出意図・次工程への影響を
 同じ画面で確認してから判断を保存する。
 
+User-facing review must happen in the GUI timeline; HTML/PNG/JSON are
+evidence artifacts, not independent review surfaces.
+
+ユーザー向けレビューはGUIタイムラインに集約する。HTML/PNG/JSONは証跡であり、
+独立した判断面にしない。
+
 ## Responsibility Split
 
 | surface | role |
@@ -17,11 +23,66 @@ v1.2 の主な修正点は、`デザインレビュー`を既存制作ウィザ�
 | `review_packet.json` | GUI が読む判断単位。episode context、story outline、segment、選択肢、source refs、gate を持つ |
 | `review_decisions.json` | GUI が保存する差し戻し伝票。次の scene decision packet / gap report の入力 |
 | `*_review_map.md` | 根拠ログ。通常レビューでは読ませない |
-| compact HTML / readback JSON | proof / preview。最終品質や production timing の承認ではない |
+| compact HTML / proof PNG / readback JSON | GUI に取り込まれる evidence / proof / machine-readable artifact。ユーザーへ個別レビューを要求する判断面ではない |
 | YMM4 | validator 通過後、または明示 creative acceptance の時だけ使う |
 
 v1 は G-27 専用であり、F-01 / F-03 の復活ではない。YMM4 画面再現、
 Python 画像生成、動画生成、素材自動取得は含めない。
+
+## Production Design Spine
+
+NotebookLM から YMM4 へ渡る制作設計は、次の背骨に従属させる。各 artifact は
+自分の工程だけを完璧にするための独立成果物ではなく、GUI timeline で判断できる
+可逆的な設計図の一部として扱う。
+
+| layer | responsibility | user review role |
+| --- | --- | --- |
+| NotebookLM script | 元台本。発話、論旨、前後文脈の原典 | GUI が抜粋と構成として見せる。ユーザーに原文全体レビューを要求しない |
+| Script Beat IR | 脚本、時間軸、segment、beat、narration cue、登場要素、主張、前後文脈を可逆的に保持する | GUI timeline / beat table の入力。画面座標や見た目を持たせない |
+| Visual Direction Contract | 映像密度、色、モチーフ、人物表現、UI表現、抽象度、字幕領域の方針を定義する | GUI が要点と例外を表示する |
+| Shot Layout Plan | 16:9 frame の主被写体、背景、視線誘導、文字量、proxy visual、字幕クリアランスを定義する | GUI の selected beat / frame detail で確認する |
+| Motion Beat Plan | beginning / development / turn の変化、台本 cue との対応、動きの狙いを定義する | GUI の beat table で確認する |
+| Proof PNG / HTML | render/openability/readback の evidence。視覚証跡として GUI に取り込む | 単体レビュー対象にしない |
+| Review Decisions | GUI で保存する判断・コメント・分類 | 次の scene decision packet / gap report の入力 |
+| YMM4 Adapter Output | validator 通過後に YMM4 へ渡す変換出力 | blocked 中は生成しない。creative acceptance と production timing の代替にしない |
+
+## Script Beat IR Boundary
+
+Script Beat IR は脚本家側の可逆地図であり、次だけを持つ:
+
+- script line / CSV row / time span.
+- segment / beat / narration cue.
+- 登場要素、主張、前後文脈、論旨上の役割。
+
+Script Beat IR は次を持たない:
+
+- 画面座標、safe area、色、サイズ、CSS/HTML表現。
+- YMM4 配置、template 名、motion parameter。
+- proof PNG / HTML の都合に合わせた見た目。
+
+脚本家の責務は脚本と時間地図まで。画面構成は Director / Shot Layout の責務に
+分離する。
+
+## Director / Shot Layout Boundary
+
+Director / Shot Layout は一枚絵のアーティストではなく、破綻しない映像設計の
+鋳型を作る工場長として扱う。責務は次の通り:
+
+- 画面構成、主被写体、背景、視線誘導、文字量、字幕領域を決める。
+- proxy visual、人物 / UI / 資料の相対比率、beat 内の変化を決める。
+- 既存 HTML plate の微修正ではなく、Frame Contract に従う production frame を設計する。
+- 検証メタ情報を production frame 内へ混ぜず、sidecar / GUI inspector 側へ隔離する。
+
+## GUI Unification Rule
+
+次の proof 以降、PNG / HTML / JSON を生成しても、ユーザー向けレビューは GUI 上で
+行う。GUI には proof image、beat table、sidecar warnings、review controls を表示する。
+未実装の段階では、slice 完了条件に「GUIで見える」または「GUI read-only ingest path が
+定義されている」を含める。
+
+通常フローでユーザーに raw JSON、HTML、単体 PNG の直接確認を要求しない。必要な場合は
+debug / evidence として提示できるが、判断結果は GUI timeline と `review_decisions.json`
+へ戻す。9-frame proof 単体の HTML 確認は完了扱いにしない。
 
 ## Data Contracts
 
@@ -274,3 +335,12 @@ This Review Console slice is complete when:
   confirm 3×4 contact sheet layout, 16:9 frame units, 11 proxy keyframes,
   24 proxy placeholders, and remaining blockers matching the validator result.
 - `review_map.md` remains only as evidence/fallback detail.
+
+For follow-on visual treatment proof slices, completion additionally requires:
+
+- The proof image / HTML / sidecar JSON is visible in the GUI timeline or has a
+  defined GUI read-only ingest path before it is treated as user-reviewable.
+- The proof carries no production-frame metadata such as `source`, `review`,
+  `blocker`, segment ID, validator status, or readback counts inside the frame.
+- Standalone HTML/PNG/JSON confirmation is evidence only and does not complete
+  the review slice by itself.
