@@ -1,0 +1,370 @@
+{
+  "version": "1.0",
+  "episode_id": "real_estate_dx",
+  "review_scope": "g27_overlay_card_decision",
+  "default_decision_path": "samples/_probe/g24/real_estate_dx_review_decisions.json",
+  "source_refs": {
+    "memo_md": "samples/_probe/g24/real_estate_dx_overlay_card_review_map.md",
+    "compact_html": "samples/_probe/g24/real_estate_dx_overlay_only_compact_review.html",
+    "compact_json": "samples/_probe/g24/real_estate_dx_overlay_only_compact_review.json",
+    "readback_json": "samples/_probe/g24/real_estate_dx_overlay_only_compact_review_readback.json",
+    "validator_json": "samples/_probe/g24/real_estate_dx_background_skit_blueprint_validate.json"
+  },
+  "gates": {
+    "validator_status": "blocked",
+    "allowed_next_actions": [
+      "overlay_only_compact_review"
+    ],
+    "forbidden_next_actions": [
+      "cast_motion_ir",
+      "ymm4_creative_acceptance",
+      "production_timing"
+    ],
+    "remaining_blockers": [
+      "ASSET_BLOCKED_REAL_ESTATE_CAST_TEMPLATES_MISSING",
+      "ASSET_BLOCKED_REAL_ESTATE_PROPS_MISSING"
+    ],
+    "not_creative_acceptance": true
+  },
+  "overall_actions": [
+    {
+      "label": "推奨初期対応で進める",
+      "next_effect": "Saved decisions can feed the G-27 scene decision packet and asset/proxy gap report."
+    },
+    {
+      "label": "素材/proxy整理を先にする",
+      "next_effect": "Prioritize asset/proxy gap report before revising segment cards."
+    },
+    {
+      "label": "判断保留",
+      "next_effect": "Keep the lane blocked and ask for a narrower visual question."
+    }
+  ],
+  "segments": [
+    {
+      "id": "RE-01",
+      "title": "自力検索",
+      "summary_ja": "検索自由と物件カード増加を見せつつ、まだ閉じたゲートがあることを伏線化する。",
+      "decision_prompt": "閉じた扉の伏線を残すか、RE-02まで待つか。",
+      "risk": "gate_metaphor_too_early",
+      "next_effect": "残すならREINSへの導入を強める。弱めるならスマホと物件カード中心へ寄せる。",
+      "options": [
+        {
+          "label": "OK",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "Current placeholder direction can feed the scene decision packet."
+        },
+        {
+          "label": "弱める",
+          "classification_hint": "needs_revision",
+          "next_effect": "Demote the closed-door foreshadow."
+        },
+        {
+          "label": "保留",
+          "classification_hint": "defer",
+          "next_effect": "Revisit after RE-02 metaphor decision."
+        }
+      ]
+    },
+    {
+      "id": "RE-02",
+      "title": "REINS / VIPクラブ",
+      "summary_ja": "REINSの情報非対称を、内側DB・外側ポータル・アクセス境界で見せる。",
+      "decision_prompt": "VIPクラブ比喩が強すぎるか、制度的アクセス差として有効か。",
+      "risk": "metaphor_overreach",
+      "next_effect": "弱める場合はREINS PC / 生データDBを主役にし、VIP/扉は補助へ下げる。",
+      "options": [
+        {
+          "label": "OK",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "Keep the access-boundary metaphor."
+        },
+        {
+          "label": "弱める",
+          "classification_hint": "needs_revision",
+          "next_effect": "Make database/PC primary and demote VIP wording."
+        },
+        {
+          "label": "別比喩へ置換",
+          "classification_hint": "needs_revision",
+          "next_effect": "Replace VIP club with a neutral access-control metaphor."
+        },
+        {
+          "label": "素材proxy整理へ回す",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "Carry as proxy candidate and list required REINS props."
+        }
+      ]
+    },
+    {
+      "id": "RE-03",
+      "title": "保護理由",
+      "summary_ja": "プライバシー・リスク・秩序の正当性と、背後の利害を同時に見せる。",
+      "decision_prompt": "影の演出が悪意を強く見せすぎるか。",
+      "risk": "intent_overstatement",
+      "next_effect": "弱める場合は影を小さい「利害」タグに変更する。",
+      "options": [
+        {
+          "label": "OK",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "Keep protection/interest contrast."
+        },
+        {
+          "label": "弱める",
+          "classification_hint": "needs_revision",
+          "next_effect": "Replace shadow cue with a smaller interest tag."
+        },
+        {
+          "label": "分割",
+          "classification_hint": "needs_revision",
+          "next_effect": "Separate legitimate protection and interest conflict into two beats."
+        },
+        {
+          "label": "保留",
+          "classification_hint": "defer",
+          "next_effect": "Revisit after wording/source safety check."
+        }
+      ]
+    },
+    {
+      "id": "RE-04",
+      "title": "囲い込み",
+      "summary_ja": "売主・業者・買主の関係と、他社ルートが閉じる構造を見せる。",
+      "decision_prompt": "図解寄りでよいか、シーン性をもっと残すか。",
+      "risk": "legal_diagram_drift",
+      "next_effect": "重い場合はルート板と商談中ステータスへ圧縮する。",
+      "options": [
+        {
+          "label": "OK",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "Keep route-blocking diagram as current proxy."
+        },
+        {
+          "label": "弱める",
+          "classification_hint": "needs_revision",
+          "next_effect": "Reduce arrows/stamps and keep one route board."
+        },
+        {
+          "label": "分割",
+          "classification_hint": "needs_revision",
+          "next_effect": "Separate relationship and blocking into two beats."
+        },
+        {
+          "label": "素材proxy整理へ回す",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "Record route-board props as required assets."
+        }
+      ]
+    },
+    {
+      "id": "RE-05",
+      "title": "QR透明化",
+      "summary_ja": "QR / 公開ステータスと半分開いた扉で、閉鎖から部分透明化への状態変化を見せる。",
+      "decision_prompt": "半分開いた扉が制度改善を過大に見せていないか。",
+      "risk": "reform_overclaim",
+      "next_effect": "過大なら扉をやめ、ステータス変更ボードへ寄せる。",
+      "options": [
+        {
+          "label": "OK",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "Keep transparency state-change card."
+        },
+        {
+          "label": "弱める",
+          "classification_hint": "needs_revision",
+          "next_effect": "Use status board only or reduce door openness."
+        },
+        {
+          "label": "素材proxy整理へ回す",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "List QR/status board as required props."
+        },
+        {
+          "label": "保留",
+          "classification_hint": "defer",
+          "next_effect": "Revisit after source wording is locked."
+        }
+      ]
+    },
+    {
+      "id": "RE-06",
+      "title": "キュレーション",
+      "summary_ja": "専門家の価値を、物件を抱え込むことではなく、整理・欠点開示・意味ある候補に置く。",
+      "decision_prompt": "3-card構成がスライド的で重すぎるか。",
+      "risk": "visual_density_overload",
+      "next_effect": "重い場合は整理テーブル + 欠点カードへ圧縮する。",
+      "options": [
+        {
+          "label": "OK",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "Keep process/defect/outcome chain."
+        },
+        {
+          "label": "弱める",
+          "classification_hint": "needs_revision",
+          "next_effect": "Compress to table plus defect card."
+        },
+        {
+          "label": "分割",
+          "classification_hint": "needs_revision",
+          "next_effect": "Split sorting process and shortlist outcome."
+        },
+        {
+          "label": "素材proxy整理へ回す",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "Record table/card props as required production assets."
+        }
+      ]
+    },
+    {
+      "id": "RE-07A",
+      "title": "Z世代ライフスタイルとSNS信頼",
+      "summary_ja": "タイパ・推し活・TVなしの生活条件から、顔が見えるSNS信頼へつなぐ。",
+      "decision_prompt": "生活ラベルが多すぎる、またはステレオタイプに見えないか。",
+      "risk": "audience_stereotype",
+      "next_effect": "重い場合は代表ラベルを1つに減らし、SNS信頼を主役にする。",
+      "options": [
+        {
+          "label": "OK",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "Keep lifestyle/trust split."
+        },
+        {
+          "label": "弱める",
+          "classification_hint": "needs_revision",
+          "next_effect": "Reduce lifestyle markers."
+        },
+        {
+          "label": "統合",
+          "classification_hint": "needs_revision",
+          "next_effect": "Merge with RE-07B as one SNS trust/risk block."
+        },
+        {
+          "label": "保留",
+          "classification_hint": "defer",
+          "next_effect": "Revisit after target-audience wording is fixed."
+        }
+      ]
+    },
+    {
+      "id": "RE-07B",
+      "title": "SNS集客のグレーゾーン",
+      "summary_ja": "SNS信頼の裏側にある無免許・おとり広告リスクを、煽らず警告として示す。",
+      "decision_prompt": "警告が強すぎるか、逆に弱すぎるか。",
+      "risk": "source_safety_wording",
+      "next_effect": "強すぎる場合は資格確認 / 広告表示リスクへ言い換える。",
+      "options": [
+        {
+          "label": "OK",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "Keep one bounded warning card."
+        },
+        {
+          "label": "弱める",
+          "classification_hint": "needs_revision",
+          "next_effect": "Use safer risk-category wording."
+        },
+        {
+          "label": "統合",
+          "classification_hint": "needs_revision",
+          "next_effect": "Merge with RE-07A as SNS trust/risk block."
+        },
+        {
+          "label": "保留",
+          "classification_hint": "defer",
+          "next_effect": "Wait for source-safe wording."
+        }
+      ]
+    },
+    {
+      "id": "RE-07C",
+      "title": "2030年問題と攻めのDX",
+      "summary_ja": "空き家・ハザード・相続リスクとAIコンシェルジュをつなぎ、DXの必要性を見せる。",
+      "decision_prompt": "2030リスクとAIサービスが1区間に詰まりすぎていないか。",
+      "risk": "theme_split_needed",
+      "next_effect": "重い場合は2030リスクとAI応答を分けるか、AI側をRE-07Dへ寄せる。",
+      "options": [
+        {
+          "label": "OK",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "Keep macro risk plus DX response."
+        },
+        {
+          "label": "分割",
+          "classification_hint": "needs_revision",
+          "next_effect": "Separate macro risk and AI concierge response."
+        },
+        {
+          "label": "統合",
+          "classification_hint": "needs_revision",
+          "next_effect": "Merge AI service point with RE-07D."
+        },
+        {
+          "label": "素材proxy整理へ回す",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "List risk/AI cards as required assets."
+        }
+      ]
+    },
+    {
+      "id": "RE-07D",
+      "title": "AI逆説と見えないリスク",
+      "summary_ja": "AIが100%マッチしても、境界・相続・感情調整の見えないリスクは残る。",
+      "decision_prompt": "AI批判に寄りすぎず、人間専門家の価値へつながっているか。",
+      "risk": "ai_bad_overstatement",
+      "next_effect": "強すぎる場合はAI否定ではなく不可視リスクの補完に寄せる。",
+      "options": [
+        {
+          "label": "OK",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "Keep AI paradox setup."
+        },
+        {
+          "label": "弱める",
+          "classification_hint": "needs_revision",
+          "next_effect": "Reword toward invisible-risk complement."
+        },
+        {
+          "label": "統合",
+          "classification_hint": "needs_revision",
+          "next_effect": "Merge with RE-07C as one AI risk block."
+        },
+        {
+          "label": "素材proxy整理へ回す",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "List AI/risk cards as required props."
+        }
+      ]
+    },
+    {
+      "id": "RE-07E",
+      "title": "選び方の基準と最後の問い",
+      "summary_ja": "専門家を選ぶ基準を、買ってはいけない理由を言えるかに集約する。",
+      "decision_prompt": "3条件が重く、最後の問いが弱くなっていないか。",
+      "risk": "final_card_text_heavy",
+      "next_effect": "重い場合は「買ってはいけない理由を言える専門家」を中心にする。",
+      "options": [
+        {
+          "label": "OK",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "Keep current final criteria card."
+        },
+        {
+          "label": "弱める",
+          "classification_hint": "needs_revision",
+          "next_effect": "Center one memorable criterion."
+        },
+        {
+          "label": "分割",
+          "classification_hint": "needs_revision",
+          "next_effect": "Separate criteria and final question."
+        },
+        {
+          "label": "素材proxy整理へ回す",
+          "classification_hint": "accepted_proxy",
+          "next_effect": "Record final criteria card as a low-asset proxy."
+        }
+      ]
+    }
+  ]
+}

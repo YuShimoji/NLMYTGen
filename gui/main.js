@@ -65,6 +65,28 @@ function parseJsonLine(stdout) {
   return null;
 }
 
+function resolveRepoRelativePath(relPath) {
+  if (typeof relPath !== 'string' || !relPath.trim()) {
+    return { ok: false, error: 'repo-relative path is required' };
+  }
+  if (path.isAbsolute(relPath)) {
+    return { ok: false, error: 'absolute path is not allowed' };
+  }
+  if (/^[a-zA-Z]:/.test(relPath)) {
+    return { ok: false, error: 'drive-qualified path is not allowed' };
+  }
+  const normalized = path.normalize(relPath);
+  if (normalized === '..' || normalized.startsWith(`..${path.sep}`)) {
+    return { ok: false, error: 'path traversal is not allowed' };
+  }
+  const full = path.resolve(REPO_ROOT, normalized);
+  const relToRoot = path.relative(REPO_ROOT, full);
+  if (relToRoot.startsWith('..') || path.isAbsolute(relToRoot)) {
+    return { ok: false, error: 'path outside repo' };
+  }
+  return { ok: true, full, rel: relToRoot.replace(/\\/g, '/') };
+}
+
 function describeEpisodePack(rootPath) {
   const root = path.resolve(rootPath);
   const episodeId = path.basename(root);
@@ -193,6 +215,35 @@ ipcMain.handle('open-repo-doc', async (_event, relPath) => {
   }
   const errMsg = await shell.openPath(full);
   return errMsg ? { ok: false, message: errMsg } : { ok: true, path: full };
+});
+
+ipcMain.handle('load-review-packet', async (_event, packetPath) => {
+  const resolved = resolveRepoRelativePath(packetPath);
+  if (!resolved.ok) return { ok: false, error: resolved.error };
+  if (!fs.existsSync(resolved.full)) {
+    return { ok: false, error: `not found: ${resolved.rel}` };
+  }
+  try {
+    const payload = JSON.parse(fs.readFileSync(resolved.full, 'utf8'));
+    return { ok: true, path: resolved.rel, payload };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+});
+
+ipcMain.handle('save-review-decisions', async (_event, opts) => {
+  const decisionPath = opts && typeof opts.decisionPath === 'string' ? opts.decisionPath : '';
+  const payload = opts && opts.payload && typeof opts.payload === 'object' ? opts.payload : null;
+  const resolved = resolveRepoRelativePath(decisionPath);
+  if (!resolved.ok) return { ok: false, error: resolved.error };
+  if (!payload) return { ok: false, error: 'payload is required' };
+  try {
+    fs.mkdirSync(path.dirname(resolved.full), { recursive: true });
+    fs.writeFileSync(resolved.full, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
+    return { ok: true, path: resolved.rel };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
 });
 
 // --- Validate IR ---

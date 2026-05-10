@@ -133,10 +133,10 @@ Review packaging correction:
 
 - HTML is a visual preview surface, not sufficient by itself as a manager-facing report.
 - JSON/readback files are machine proof, not a human judgement surface.
-- `real_estate_dx_overlay_card_review_map.md` is the primary design memo for user-side integration review.
-- The memo must show each segment's purpose, alternatives considered, chosen rationale, weak assumptions, useful reviewer signal, and assistant action if challenged.
+- `real_estate_dx_overlay_card_review_map.md` is retained as design evidence and fallback detail for the GUI Review Console.
+- The GUI review packet should expose each segment's purpose, weak assumption, options, and next-effect without requiring the reviewer to read the full memo.
 - Candid review is required: polished HTML does not imply acceptance, and the reviewer does not need to answer with `OK/NG`, `pass/revise/blocked`, or forced `accept/reduce/replace` labels.
-- The memo is a temporary review workbench until a GUI can unify the review surface; it does not advance cast motion IR, YMM4 creative acceptance, or production timing.
+- The memo does not advance cast motion IR, YMM4 creative acceptance, or production timing.
 
 ## Block Timetable
 

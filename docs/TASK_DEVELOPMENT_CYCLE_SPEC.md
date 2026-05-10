@@ -34,7 +34,7 @@ G-24 は `skit_group` の template-first 基盤で閉じる。Real Estate DX 固
 | --- | --- | --- |
 | scene bible | block ごとの line range / cast continuity / props / screen placement | 背景劇が語り手リアクションではなく独立小場面になっているか |
 | validator | `background_skit_blueprint.json` + `validate-background-skit-blueprint` result | `passed` 以外は cast motion IR / production timing へ進めない |
-| overlay/card review | segment ごとの目的・代替案・弱い仮定・review signal | 画面内物語として意味が通るか |
+| GUI Review Console | `review_packet` を GUI で短縮カード化し、`review_decisions` を保存 | 画面内物語として意味が通るか、修正・統合・proxy 整理へ回すか |
 | asset decision | `production template exists` / `accepted proxy` / `cut from plan` | 各場面を production に残すか、proxy で進めるか、削るか |
 | revised blueprint | asset decision を反映した blueprint / gap report | validator 再実行または明示 blocked closeout へ進めるか |
 
@@ -82,7 +82,7 @@ GUI は artifact 作成、dry run、validator/readback の確認に使う。YMM4
 | --- | --- | --- | --- |
 | CSV / 台本診断 | CSV result / stats / diagnostic JSON | なし | 機械結果だけで判断できる |
 | IR / patch | validate / dry run / apply JSON / readback | final composition だけ | failure class が GUI で読める |
-| 茶番劇 review | memo / validator / overlay-card preview | accepted proxy 後の composition | validator が blocked |
+| 茶番劇 review | GUI Review Console / review packet / validator | accepted proxy 後の composition | validator が blocked |
 | Baseball screen plan | screen plan / card order / information budget | PNG/clip placement proof | screen plan が未レビュー |
 | Thumbnail | design JSON / slot audit / patch readback | final thumbnail composition | 実 template が存在しない |
 

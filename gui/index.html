@@ -296,49 +296,41 @@
           </div>
         </div>
 
-        <div class="review-focus-list" aria-label="重点確認">
-          <article class="review-focus-card">
-            <div class="review-focus-id">1 · RE-02</div>
-            <h3>REINS / VIPクラブ</h3>
-            <p>VIP比喩が強すぎるなら、REINS PC・データベースを主役にして、VIP/扉は補助へ下げます。</p>
-          </article>
-          <article class="review-focus-card">
-            <div class="review-focus-id">2 · RE-06</div>
-            <h3>キュレーション</h3>
-            <p>3-card 構成がスライド的・重すぎるなら、整理テーブル + 欠点カードへ圧縮します。</p>
-          </article>
-          <article class="review-focus-card">
-            <div class="review-focus-id">3 · RE-07C/D</div>
-            <h3>2030 / DX / AI の分割</h3>
-            <p>初期案では分けます。長すぎる場合だけ、DX と AI paradox を統合します。</p>
-          </article>
-          <article class="review-focus-card">
-            <div class="review-focus-id">4 · RE-03</div>
-            <h3>保護理由の見せ方</h3>
-            <p>影の演出が悪意を強く見せすぎるなら、小さい「利害」タグに弱めます。</p>
-          </article>
-          <article class="review-focus-card">
-            <div class="review-focus-id">5 · RE-07E</div>
-            <h3>専門家の選び方</h3>
-            <p>3条件が重いなら、「買ってはいけない理由を言える専門家」を中心に寄せます。</p>
-          </article>
+        <div class="review-console-meta">
+          <div class="review-status-card">
+            <h3>入力packet</h3>
+            <p id="review-packet-path">samples/_probe/g24/real_estate_dx_review_packet.json</p>
+          </div>
+          <div class="review-status-card">
+            <h3>保存先</h3>
+            <p id="review-decision-path">samples/_probe/g24/real_estate_dx_review_decisions.json</p>
+          </div>
         </div>
 
+        <div id="review-load-result" class="result-panel hidden"></div>
+
         <div class="review-reply-panel">
-          <h3>返答テンプレ</h3>
-          <p class="hint">下の文だけ返しても次へ進めます。細かく直したい場合は番号だけ指定してください。</p>
-          <div class="review-chip-row">
-            <button type="button" class="review-chip" data-review-reply="推奨初期対応で進めてよい">推奨初期対応</button>
-            <button type="button" class="review-chip" data-review-reply="素材/proxy整理を先にする">素材/proxy整理を先にする</button>
-            <button type="button" class="review-chip" data-review-reply="1だけ弱める">1だけ弱める</button>
-            <button type="button" class="review-chip" data-review-reply="2と5が重い">2と5が重い</button>
-            <button type="button" class="review-chip" data-review-reply="3は統合したい">3は統合したい</button>
-          </div>
-          <textarea id="review-reply-text" class="review-reply-box" rows="4">推奨初期対応で進めてよい</textarea>
+          <h3>全体判断</h3>
+          <p class="hint">ここで保存したJSONが、次の scene decision packet / asset-proxy gap report の入力になります。</p>
+          <label class="review-field-label">
+            全体の次動作
+            <select id="review-overall-action" class="review-select">
+              <option value="">未選択</option>
+            </select>
+          </label>
+          <label class="review-field-label">
+            全体コメント
+            <textarea id="review-overall-comment" class="review-reply-box" rows="3" placeholder="全体として重い箇所、先に素材/proxy整理へ回したい箇所など"></textarea>
+          </label>
           <div class="review-actions">
-            <button type="button" id="btn-review-copy-reply" class="primary">コピー</button>
+            <button type="button" id="btn-review-reload-packet">packet再読込</button>
+            <button type="button" id="btn-review-save-decisions" class="primary">判断JSONを保存</button>
+            <button type="button" id="btn-review-copy-reply">判断概要をコピー</button>
           </div>
+          <div id="review-decision-result" class="result-panel hidden"></div>
         </div>
+
+        <div id="review-card-list" class="review-focus-list" aria-label="重点確認"></div>
       </div>
     </section>
 

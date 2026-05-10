@@ -556,9 +556,144 @@ document.addEventListener('click', (e) => {
   });
 });
 
-function setReviewReply(text) {
-  const reply = document.getElementById('review-reply-text');
-  if (reply) reply.value = text;
+const DEFAULT_REVIEW_PACKET_PATH = 'samples/_probe/g24/real_estate_dx_review_packet.json';
+const DEFAULT_REVIEW_DECISION_PATH = 'samples/_probe/g24/real_estate_dx_review_decisions.json';
+let currentReviewPacket = null;
+let currentReviewDecisionPath = DEFAULT_REVIEW_DECISION_PATH;
+
+function escapeAttr(s) {
+  return escapeHtml(s).replace(/"/g, '&quot;');
+}
+
+function reviewOptionFor(segment, label) {
+  return (segment.options || []).find((opt) => opt.label === label) || null;
+}
+
+function renderReviewOverallActions(packet) {
+  const select = document.getElementById('review-overall-action');
+  if (!select) return;
+  const actions = packet.overall_actions || [];
+  select.innerHTML = '<option value="">未選択</option>' + actions.map((action) => (
+    `<option value="${escapeAttr(action.label)}">${escapeHtml(action.label)}</option>`
+  )).join('');
+  if (actions[0]) select.value = actions[0].label;
+}
+
+function renderReviewPacket(packet, packetPath) {
+  currentReviewPacket = packet;
+  currentReviewDecisionPath = packet.default_decision_path || DEFAULT_REVIEW_DECISION_PATH;
+  document.getElementById('review-packet-path').textContent = packetPath || DEFAULT_REVIEW_PACKET_PATH;
+  document.getElementById('review-decision-path').textContent = currentReviewDecisionPath;
+  renderReviewOverallActions(packet);
+
+  const list = document.getElementById('review-card-list');
+  const segments = packet.segments || [];
+  list.innerHTML = segments.map((segment, index) => {
+    const options = (segment.options || []).map((option) => (
+      `<option value="${escapeAttr(option.label)}">${escapeHtml(option.label)}</option>`
+    )).join('');
+    return (
+      `<article class="review-focus-card review-segment-card">`
+      + `<div class="review-focus-id">${escapeHtml(String(index + 1))} · ${escapeHtml(segment.id)}</div>`
+      + `<h3>${escapeHtml(segment.title)}</h3>`
+      + `<p>${escapeHtml(segment.summary_ja || '')}</p>`
+      + `<p class="review-card-detail"><strong>確認:</strong> ${escapeHtml(segment.decision_prompt || '')}</p>`
+      + `<p class="review-card-detail"><strong>リスク:</strong> ${escapeHtml(segment.risk || '')}</p>`
+      + `<label class="review-field-label">判断`
+      + `<select class="review-select review-decision-select" data-review-index="${index}">`
+      + `<option value="">未選択</option>${options}</select></label>`
+      + `<label class="review-field-label">コメント`
+      + `<textarea class="review-segment-comment" data-review-index="${index}" rows="3" placeholder="必要な場合だけ補足"></textarea></label>`
+      + `<p class="review-selected-effect">未選択</p>`
+      + `</article>`
+    );
+  }).join('');
+}
+
+async function loadDefaultReviewPacket() {
+  const panel = document.getElementById('review-load-result');
+  panel.classList.remove('hidden', 'success', 'error');
+  panel.textContent = 'review packet 読込中...';
+  const res = await window.nlmytgen.loadReviewPacket(DEFAULT_REVIEW_PACKET_PATH);
+  if (res.ok) {
+    renderReviewPacket(res.payload, res.path);
+    panel.classList.add('success');
+    panel.textContent = `読込完了: ${res.path}`;
+    return;
+  }
+  currentReviewPacket = null;
+  panel.classList.add('error');
+  panel.textContent = `review packet 読込失敗: ${res.error || 'unknown error'}`;
+}
+
+function collectReviewDecisionPayload() {
+  const packet = currentReviewPacket;
+  const segments = packet?.segments || [];
+  const decisions = segments.map((segment, index) => {
+    const select = document.querySelector(`.review-decision-select[data-review-index="${index}"]`);
+    const comment = document.querySelector(`.review-segment-comment[data-review-index="${index}"]`);
+    const decision = select?.value || '';
+    const option = reviewOptionFor(segment, decision);
+    return {
+      segment_id: segment.id,
+      decision,
+      comment: comment?.value || '',
+      classification_hint: option?.classification_hint || (decision ? 'needs_revision' : 'unselected'),
+    };
+  });
+  return {
+    payload: {
+      version: '1.0',
+      episode_id: packet?.episode_id || 'real_estate_dx',
+      review_scope: packet?.review_scope || 'g27_overlay_card_decision',
+      source_packet: DEFAULT_REVIEW_PACKET_PATH,
+      saved_at: new Date().toISOString(),
+      overall_action: document.getElementById('review-overall-action')?.value || '',
+      overall_comment: document.getElementById('review-overall-comment')?.value || '',
+      decisions,
+    },
+    missingCount: decisions.filter((item) => !item.decision).length,
+  };
+}
+
+function buildReviewSummaryText() {
+  if (!currentReviewPacket) return 'review packet が未読込です';
+  const { payload, missingCount } = collectReviewDecisionPayload();
+  const lines = [
+    `overall: ${payload.overall_action || '未選択'}`,
+    payload.overall_comment ? `comment: ${payload.overall_comment}` : '',
+    missingCount ? `未選択 segment: ${missingCount}` : '全 segment 判断済み',
+    ...payload.decisions.map((item) => {
+      const comment = item.comment ? ` / ${item.comment}` : '';
+      return `${item.segment_id}: ${item.decision || '未選択'} (${item.classification_hint})${comment}`;
+    }),
+  ];
+  return lines.filter(Boolean).join('\n');
+}
+
+async function saveReviewDecisions() {
+  const panel = document.getElementById('review-decision-result');
+  panel.classList.remove('hidden', 'success', 'error');
+  if (!currentReviewPacket) {
+    panel.classList.add('error');
+    panel.textContent = 'review packet が未読込です';
+    return;
+  }
+  const { payload, missingCount } = collectReviewDecisionPayload();
+  const res = await window.nlmytgen.saveReviewDecisions({
+    decisionPath: currentReviewDecisionPath,
+    payload,
+  });
+  if (res.ok) {
+    panel.classList.add('success');
+    panel.textContent = missingCount
+      ? `保存完了: ${res.path}\n未選択 segment が ${missingCount} 件あります。scene decision packet 作成前に確認してください。`
+      : `保存完了: ${res.path}\n全 segment 判断済みです。`;
+    document.getElementById('status').textContent = 'レビュー判断JSONを保存しました';
+  } else {
+    panel.classList.add('error');
+    panel.textContent = `保存失敗: ${res.error || 'unknown error'}`;
+  }
 }
 
 function initDesignReviewTab() {
@@ -575,23 +710,36 @@ function initDesignReviewTab() {
   bindReviewOpen('btn-review-open-preview', 'samples/_probe/g24/real_estate_dx_overlay_only_compact_review.html');
   bindReviewOpen('btn-review-open-memo', 'samples/_probe/g24/real_estate_dx_overlay_card_review_map.md');
 
-  document.querySelectorAll('[data-review-reply]').forEach((button) => {
-    button.addEventListener('click', () => setReviewReply(button.dataset.reviewReply || ''));
-  });
+  document.getElementById('btn-review-reload-packet')?.addEventListener('click', loadDefaultReviewPacket);
+  document.getElementById('btn-review-save-decisions')?.addEventListener('click', saveReviewDecisions);
 
   const copyButton = document.getElementById('btn-review-copy-reply');
   if (copyButton) {
     copyButton.addEventListener('click', async () => {
-      const reply = document.getElementById('review-reply-text');
-      const text = reply?.value || '';
+      const text = buildReviewSummaryText();
       try {
         await navigator.clipboard.writeText(text);
-        document.getElementById('status').textContent = 'レビュー返答をコピーしました';
+        document.getElementById('status').textContent = 'レビュー判断概要をコピーしました';
       } catch {
         document.getElementById('status').textContent = 'コピーできませんでした。テキストを選択してコピーしてください';
       }
     });
   }
+
+  document.getElementById('review-card-list')?.addEventListener('change', (event) => {
+    const select = event.target.closest('.review-decision-select');
+    if (!select || !currentReviewPacket) return;
+    const index = parseInt(select.dataset.reviewIndex, 10);
+    const segment = currentReviewPacket.segments[index];
+    if (!segment) return;
+    const option = reviewOptionFor(segment, select.value);
+    const effect = select.closest('.review-segment-card')?.querySelector('.review-selected-effect');
+    if (effect) {
+      effect.textContent = option ? option.next_effect : '未選択';
+    }
+  });
+
+  loadDefaultReviewPacket();
 }
 
 // --- CSV Tab ---
