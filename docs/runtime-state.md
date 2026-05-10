@@ -146,7 +146,7 @@
 
 ## 最終検証
 
-- last_verification: **2026-05-10 G-27 Review Console v1.1 script-context validation**. Ran `node --check gui/renderer.js`, `node --check gui/main.js`, a v1.1 JSON contract check for `samples/_probe/g24/real_estate_dx_review_packet.json` covering `episode_context`, `story_outline`, script spans, excerpts, previous/next context, and `git diff --check`. No pytest was run because this block did not change Python CLI behavior.
+- last_verification: **2026-05-10 G-27 Review Console v1.1 UTF-8 / DOM validation**. Ran `node --check gui/renderer.js`, `node --check gui/main.js`, `node --check scripts/check_g27_review_packet.js`, `node --check gui/review_console_smoke_preload.js`, `node --check gui/review_console_dom_smoke.js`, `node scripts/check_g27_review_packet.js`, Electron DOM smoke via `gui/review_console_dom_smoke.js`, and `git diff --check`. Confirmed `episode_context` / `story_outline` and all user-facing segment context fields contain no `???` or `�`. No pytest was run because this block did not change Python CLI behavior.
 
 ## Evidence（CLI artifact mode）
 

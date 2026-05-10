@@ -130,6 +130,13 @@ This Review Console slice is complete when:
 - GUI loads `review_packet` from a repo-relative path.
 - GUI displays episode context, story outline, each segment's script span,
   script excerpt, previous context, next context, and scene role.
+- `scripts/check_g27_review_packet.js` passes. The check must fail when
+  user-facing Japanese fields contain `???`, Unicode replacement characters,
+  or too few Japanese characters for the field.
+- `gui/review_console_dom_smoke.js` passes under Electron. The smoke must
+  confirm `review-episode-context` and `review-story-outline` are visible,
+  segment cards render for all 11 segments, and the review tab text contains
+  no `???` or `�`.
 - GUI saves `review_decisions` to a repo-relative path and rejects path
   traversal or absolute paths.
 - `review_map.md` remains only as evidence/fallback detail.
