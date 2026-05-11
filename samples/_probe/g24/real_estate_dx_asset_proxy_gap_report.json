@@ -1,0 +1,236 @@
+{
+  "version": "1.0",
+  "artifact_type": "asset_proxy_gap_report",
+  "episode_id": "real_estate_dx",
+  "scope": "G-27 RE-02 / RE-06 / RE-07D 9-beat proxy and asset readiness handoff",
+  "source": {
+    "thin_scene_decision_packet": "samples/_probe/g24/real_estate_dx_thin_scene_decision_packet.json"
+  },
+  "boundary": {
+    "no_g27_v3_proof": true,
+    "no_asset_collection": true,
+    "no_external_asset_acquisition": true,
+    "no_ymm4_adapter_output": true,
+    "no_render": true,
+    "no_production_timing": true,
+    "no_creative_acceptance": true,
+    "deferred_items_remain_deferred": true
+  },
+  "accepted_abstract_proxies": [
+    {
+      "beat_id": "RE-02-beginning",
+      "proxy": "non-official public-search versus broker-database access-gap proxy",
+      "asset_proxy_readiness": "ready",
+      "rights_risk": "low",
+      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "blocker_reason": "none",
+      "user_decision_still_needed": "none"
+    },
+    {
+      "beat_id": "RE-02-development",
+      "proxy": "abstract broker DB panel, public portal card, and property-card flow",
+      "asset_proxy_readiness": "ready",
+      "rights_risk": "low",
+      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "blocker_reason": "none",
+      "user_decision_still_needed": "none"
+    },
+    {
+      "beat_id": "RE-06-beginning",
+      "proxy": "generic property-card overload proxy",
+      "asset_proxy_readiness": "ready",
+      "rights_risk": "none",
+      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "blocker_reason": "none",
+      "user_decision_still_needed": "none"
+    },
+    {
+      "beat_id": "RE-06-development",
+      "proxy": "selected property sheet plus drawback marker",
+      "asset_proxy_readiness": "ready",
+      "rights_risk": "none",
+      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "blocker_reason": "none",
+      "user_decision_still_needed": "none"
+    },
+    {
+      "beat_id": "RE-07D-beginning",
+      "proxy": "abstract AI recommendation panel plus property card",
+      "asset_proxy_readiness": "ready",
+      "rights_risk": "none",
+      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "blocker_reason": "none",
+      "user_decision_still_needed": "none"
+    },
+    {
+      "beat_id": "RE-07D-development",
+      "proxy": "abstract boundary / inheritance / neighborhood risk marker set",
+      "asset_proxy_readiness": "ready",
+      "rights_risk": "low",
+      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "blocker_reason": "none",
+      "user_decision_still_needed": "none"
+    }
+  ],
+  "accepted_with_adjustment": [
+    {
+      "beat_id": "RE-02-turn",
+      "proxy": "public information layer / non-public data bundle opacity contrast",
+      "adjustment_condition": "Soften the prior hidden-data wall / occlusion metaphor into transparent layer contrast. Avoid security facility, locked-room, wall, gate, or conspiracy-coded visuals.",
+      "asset_proxy_readiness": "needs adjustment",
+      "rights_risk": "none",
+      "YMM4_adapter_readiness": "not adapter-ready until adjustment is reflected in adapter planning",
+      "blocker_reason": "Accepted meaning, but the production representation must be revised away from wall/occlusion language before adapter planning.",
+      "user_decision_still_needed": "none; user already approved the softened direction"
+    }
+  ],
+  "property_document_proxies": [
+    {
+      "beat_id": "RE-06-turn",
+      "proxy": "property-document proxy for curation value",
+      "required_representation": "property sheet, editorial comparison, or document-backed recommendation; avoid pure lens or generic strategy diagram",
+      "asset_proxy_readiness": "ready",
+      "rights_risk": "none",
+      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "blocker_reason": "none",
+      "user_decision_still_needed": "none"
+    }
+  ],
+  "deferred_items": [
+    {
+      "beat_id": "RE-07D-turn",
+      "deferred_item": "human specialist / cast / silhouette representation",
+      "asset_proxy_readiness": "deferred",
+      "rights_risk": "low if abstract silhouettes are later approved; needs review if real person/cast assets are requested",
+      "YMM4_adapter_readiness": "still blocked",
+      "blocker_reason": "Specialist / cast / silhouette representation policy remains undecided.",
+      "user_decision_still_needed": "Choose abstract silhouettes, real specialist/cast asset, cut/reframe, or keep deferred in a later decision cycle."
+    }
+  ],
+  "rows": [
+    {
+      "beat_id": "RE-02-beginning",
+      "state": "accepted_proxy",
+      "representation": "abstract proxy",
+      "asset_proxy_readiness": "ready",
+      "rights_risk": "low",
+      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "blocker_reason": "none",
+      "user_decision_still_needed": "none",
+      "next_recommended_artifact": "YMM4 adapter planning candidate list"
+    },
+    {
+      "beat_id": "RE-02-development",
+      "state": "accepted_proxy",
+      "representation": "abstract proxy",
+      "asset_proxy_readiness": "ready",
+      "rights_risk": "low",
+      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "blocker_reason": "none",
+      "user_decision_still_needed": "none",
+      "next_recommended_artifact": "YMM4 adapter planning candidate list"
+    },
+    {
+      "beat_id": "RE-02-turn",
+      "state": "accepted_with_adjustment",
+      "representation": "abstract proxy",
+      "asset_proxy_readiness": "needs adjustment",
+      "rights_risk": "none",
+      "YMM4_adapter_readiness": "not adapter-ready until adjustment is reflected in adapter planning",
+      "blocker_reason": "Must replace hidden-data wall / occlusion with public information layer / non-public data bundle opacity contrast.",
+      "user_decision_still_needed": "none",
+      "next_recommended_artifact": "adjusted adapter planning note"
+    },
+    {
+      "beat_id": "RE-06-beginning",
+      "state": "accepted_proxy",
+      "representation": "abstract proxy",
+      "asset_proxy_readiness": "ready",
+      "rights_risk": "none",
+      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "blocker_reason": "none",
+      "user_decision_still_needed": "none",
+      "next_recommended_artifact": "YMM4 adapter planning candidate list"
+    },
+    {
+      "beat_id": "RE-06-development",
+      "state": "accepted_proxy",
+      "representation": "abstract proxy",
+      "asset_proxy_readiness": "ready",
+      "rights_risk": "none",
+      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "blocker_reason": "none",
+      "user_decision_still_needed": "none",
+      "next_recommended_artifact": "YMM4 adapter planning candidate list"
+    },
+    {
+      "beat_id": "RE-06-turn",
+      "state": "accepted_proxy",
+      "representation": "property-document proxy",
+      "asset_proxy_readiness": "ready",
+      "rights_risk": "none",
+      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "blocker_reason": "none",
+      "user_decision_still_needed": "none",
+      "next_recommended_artifact": "YMM4 adapter planning candidate list"
+    },
+    {
+      "beat_id": "RE-07D-beginning",
+      "state": "accepted_proxy",
+      "representation": "abstract proxy",
+      "asset_proxy_readiness": "ready",
+      "rights_risk": "none",
+      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "blocker_reason": "none",
+      "user_decision_still_needed": "none",
+      "next_recommended_artifact": "YMM4 adapter planning candidate list"
+    },
+    {
+      "beat_id": "RE-07D-development",
+      "state": "accepted_proxy",
+      "representation": "abstract proxy",
+      "asset_proxy_readiness": "ready",
+      "rights_risk": "low",
+      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "blocker_reason": "none",
+      "user_decision_still_needed": "none",
+      "next_recommended_artifact": "YMM4 adapter planning candidate list"
+    },
+    {
+      "beat_id": "RE-07D-turn",
+      "state": "defer",
+      "representation": "defer",
+      "asset_proxy_readiness": "deferred",
+      "rights_risk": "low if abstract silhouettes are later approved; needs review if real person/cast assets are requested",
+      "YMM4_adapter_readiness": "still blocked",
+      "blocker_reason": "Specialist / cast / silhouette representation remains undecided.",
+      "user_decision_still_needed": "yes; choose abstract silhouettes, real/cast asset, cut/reframe, or keep deferred",
+      "next_recommended_artifact": "future user decision sheet, not adapter planning"
+    }
+  ],
+  "rollup": {
+    "asset_proxy_readiness_counts": {
+      "ready": 7,
+      "needs_adjustment": 1,
+      "deferred": 1,
+      "blocked": 0
+    },
+    "adapter_ready_items": [
+      "RE-02-beginning",
+      "RE-02-development",
+      "RE-06-beginning",
+      "RE-06-development",
+      "RE-06-turn",
+      "RE-07D-beginning",
+      "RE-07D-development"
+    ],
+    "not_adapter_ready_until_adjusted": [
+      "RE-02-turn"
+    ],
+    "still_blocked": [
+      "RE-07D-turn"
+    ],
+    "next_recommended_artifact": "YMM4 adapter planning candidate list",
+    "next_recommended_artifact_boundary": "Only list adapter-ready candidates and the adjustment/defer exclusions. Do not write YMM4 adapter output, render, production timing, or creative acceptance."
+  }
+}
