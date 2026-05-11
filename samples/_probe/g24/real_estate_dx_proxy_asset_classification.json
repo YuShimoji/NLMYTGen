@@ -1,0 +1,254 @@
+{
+  "version": "1.0",
+  "artifact_type": "proxy_asset_classification",
+  "episode_id": "real_estate_dx",
+  "scope": "G-27 RE-02 / RE-06 / RE-07D 9-frame visual treatment proof",
+  "source_visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+  "source_readback": "samples/_probe/g24/real_estate_dx_visual_treatment_proof_readback.json",
+  "schema": "docs/PROXY_ASSET_CLASSIFICATION_SCHEMA.md",
+  "boundary": {
+    "not_g27_v3_proof": true,
+    "not_scene_decision_packet": true,
+    "not_asset_proxy_gap_report": true,
+    "not_ymm4_conversion": true,
+    "not_render_source": true,
+    "not_production_timing": true,
+    "not_creative_acceptance": true
+  },
+  "allowed_next_consumers": [
+    "scene decision packet",
+    "asset-proxy gap report",
+    "YMM4 adapter"
+  ],
+  "rows": [
+    {
+      "segment_id": "RE-02",
+      "beat_id": "RE-02-beginning",
+      "phase": "beginning",
+      "meaning_payload": "REINS is introduced as information that exists behind ordinary consumer search, creating an access gap.",
+      "current_proxy_visual": "Smartphone search UI in the foreground, a dim broker database room behind glass, and a lock-like visual emphasis.",
+      "required_production_representation": "A non-official public-search proxy facing a closed professional database proxy; it must communicate access asymmetry without resembling a real REINS screen.",
+      "representation_type": "new abstract proxy",
+      "asset_categories": [
+        "UI",
+        "background",
+        "motion"
+      ],
+      "rights_risk": "low",
+      "YMM4_feasibility": "medium",
+      "blocker_reason": "Abstract REINS/public-search proxy vocabulary is not yet approved as a reusable production representation.",
+      "user_decision_needed": "Approve abstract REINS/search proxy, or require a reference-accurate asset route with rights review.",
+      "assistant_can_advance": false,
+      "next_consumer": "asset-proxy gap report"
+    },
+    {
+      "segment_id": "RE-02",
+      "beat_id": "RE-02-development",
+      "phase": "development",
+      "meaning_payload": "Professional database access contains more inventory than the public portal output.",
+      "current_proxy_visual": "Large broker DB terminal, small public portal card, and selected property cards flowing from DB to public output.",
+      "required_production_representation": "Reusable broker database panel plus reduced public-output card; no official REINS branding or screenshot unless rights are reviewed.",
+      "representation_type": "new abstract proxy",
+      "asset_categories": [
+        "UI",
+        "property card",
+        "document",
+        "motion"
+      ],
+      "rights_risk": "low",
+      "YMM4_feasibility": "medium",
+      "blocker_reason": "The proof establishes the metaphor, but the production proxy needs a named reusable DB/public-output component.",
+      "user_decision_needed": "Choose abstract DB/public portal proxy versus real/reference UI treatment.",
+      "assistant_can_advance": false,
+      "next_consumer": "asset-proxy gap report"
+    },
+    {
+      "segment_id": "RE-02",
+      "beat_id": "RE-02-turn",
+      "phase": "turn",
+      "meaning_payload": "The audience should understand information asymmetry: visible public information versus hidden raw data.",
+      "current_proxy_visual": "Split frame with a visible public card and hidden raw-data bundle behind a translucent wall.",
+      "required_production_representation": "Split information plane with public listing card, hidden data stack, and a controllable occlusion wall.",
+      "representation_type": "new abstract proxy",
+      "asset_categories": [
+        "UI",
+        "document",
+        "property card",
+        "motion"
+      ],
+      "rights_risk": "none",
+      "YMM4_feasibility": "medium",
+      "blocker_reason": "Needs a reusable hidden-data / occlusion proxy, not another one-off proof drawing.",
+      "user_decision_needed": "Approve the hidden-data wall metaphor as the production proxy for information asymmetry.",
+      "assistant_can_advance": false,
+      "next_consumer": "asset-proxy gap report"
+    },
+    {
+      "segment_id": "RE-06",
+      "beat_id": "RE-06-beginning",
+      "phase": "beginning",
+      "meaning_payload": "Too many property choices overload the viewer before curation starts.",
+      "current_proxy_visual": "Dense but simplified property cards entering from both sides around a small viewer silhouette.",
+      "required_production_representation": "Generic property-card overload proxy with controlled density and subtitle-safe lower band.",
+      "representation_type": "existing proxy",
+      "asset_categories": [
+        "property card",
+        "character",
+        "motion",
+        "background"
+      ],
+      "rights_risk": "none",
+      "YMM4_feasibility": "easy",
+      "blocker_reason": "none",
+      "user_decision_needed": "none",
+      "assistant_can_advance": true,
+      "next_consumer": "scene decision packet"
+    },
+    {
+      "segment_id": "RE-06",
+      "beat_id": "RE-06-development",
+      "phase": "development",
+      "meaning_payload": "Curation removes noise and keeps both the selection reason and the drawback visible.",
+      "current_proxy_visual": "One selected property sheet, a drawback badge, and surrounding noisy cards dimming away.",
+      "required_production_representation": "Selected property sheet with an honest drawback marker; no real listing image required.",
+      "representation_type": "existing proxy",
+      "asset_categories": [
+        "property card",
+        "risk marker",
+        "document",
+        "motion"
+      ],
+      "rights_risk": "none",
+      "YMM4_feasibility": "easy",
+      "blocker_reason": "none",
+      "user_decision_needed": "none",
+      "assistant_can_advance": true,
+      "next_consumer": "scene decision packet"
+    },
+    {
+      "segment_id": "RE-06",
+      "beat_id": "RE-06-turn",
+      "phase": "turn",
+      "meaning_payload": "The viewer is buying editorial judgment and納得感, not just a smaller list.",
+      "current_proxy_visual": "A lens narrows many candidates into one coherent property recommendation, with the viewer nodding nearby.",
+      "required_production_representation": "Real-estate-specific curation lens or editorial-frame proxy tied to property documents, not a generic strategy diagram.",
+      "representation_type": "new abstract proxy",
+      "asset_categories": [
+        "property card",
+        "UI",
+        "character",
+        "motion"
+      ],
+      "rights_risk": "none",
+      "YMM4_feasibility": "medium",
+      "blocker_reason": "The lens motif is readable but still generic; it needs approval or replacement as the production proxy for curation.",
+      "user_decision_needed": "Approve the curation-lens proxy, or request a more concrete property-document proxy.",
+      "assistant_can_advance": false,
+      "next_consumer": "asset-proxy gap report"
+    },
+    {
+      "segment_id": "RE-07D",
+      "beat_id": "RE-07D-beginning",
+      "phase": "beginning",
+      "meaning_payload": "AI recommends a property with overconfident perfect-match framing.",
+      "current_proxy_visual": "AI recommendation panel, green confidence state, recommendation line, and property card.",
+      "required_production_representation": "Abstract AI recommendation panel plus property card; no real service UI, logo, or model screenshot.",
+      "representation_type": "existing proxy",
+      "asset_categories": [
+        "UI",
+        "property card",
+        "motion"
+      ],
+      "rights_risk": "none",
+      "YMM4_feasibility": "easy",
+      "blocker_reason": "none",
+      "user_decision_needed": "none",
+      "assistant_can_advance": true,
+      "next_consumer": "scene decision packet"
+    },
+    {
+      "segment_id": "RE-07D",
+      "beat_id": "RE-07D-development",
+      "phase": "development",
+      "meaning_payload": "Important real-estate risks are invisible to the AI's data-only match score.",
+      "current_proxy_visual": "Boundary line, inheritance nodes, and neighborhood markers emerge behind the recommended property.",
+      "required_production_representation": "Approved risk-marker taxonomy for boundary, inheritance, neighborhood, and other non-obvious risks.",
+      "representation_type": "new abstract proxy",
+      "asset_categories": [
+        "risk marker",
+        "map",
+        "document",
+        "property card",
+        "motion"
+      ],
+      "rights_risk": "low",
+      "YMM4_feasibility": "medium",
+      "blocker_reason": "Risk markers are plausible, but the production pipeline needs a reusable taxonomy before this becomes adapter-ready.",
+      "user_decision_needed": "Approve boundary/inheritance/neighborhood risk markers as abstract proxies, or require real document/map references.",
+      "assistant_can_advance": false,
+      "next_consumer": "asset-proxy gap report"
+    },
+    {
+      "segment_id": "RE-07D",
+      "beat_id": "RE-07D-turn",
+      "phase": "turn",
+      "meaning_payload": "A human specialist mediates between AI data and interpersonal risk management.",
+      "current_proxy_visual": "Specialist silhouette connects an AI panel to human relationship nodes while risk markers settle.",
+      "required_production_representation": "Approved specialist/human-relationship representation, either as abstract silhouettes or as production character/template assets.",
+      "representation_type": "blocked",
+      "asset_categories": [
+        "character",
+        "UI",
+        "risk marker",
+        "motion"
+      ],
+      "rights_risk": "low",
+      "YMM4_feasibility": "unknown",
+      "blocker_reason": "This beat depends on a human/specialist representation, while the current Real Estate DX lane still has unresolved cast/proxy template decisions.",
+      "user_decision_needed": "Decide whether abstract silhouettes are acceptable, whether a real specialist/cast asset is required, or whether the beat should be cut/reframed.",
+      "assistant_can_advance": false,
+      "next_consumer": "asset-proxy gap report"
+    }
+  ],
+  "rollup": {
+    "total_rows": 9,
+    "assistant_ready_rows": [
+      "RE-06-beginning",
+      "RE-06-development",
+      "RE-07D-beginning"
+    ],
+    "needs_user_proxy_or_asset_decision": [
+      "RE-02-beginning",
+      "RE-02-development",
+      "RE-02-turn",
+      "RE-06-turn",
+      "RE-07D-development",
+      "RE-07D-turn"
+    ],
+    "blocked_rows": [
+      "RE-07D-turn"
+    ],
+    "rights_review_rows": [],
+    "medium_or_harder_ymm4_rows": [
+      "RE-02-beginning",
+      "RE-02-development",
+      "RE-02-turn",
+      "RE-06-turn",
+      "RE-07D-development",
+      "RE-07D-turn"
+    ],
+    "next_consumer_counts": {
+      "scene decision packet": 3,
+      "asset-proxy gap report": 6,
+      "YMM4 adapter": 0
+    },
+    "not_started": [
+      "G-27 v3 proof",
+      "scene decision packet",
+      "asset-proxy gap report",
+      "YMM4 conversion",
+      "render",
+      "creative acceptance"
+    ]
+  }
+}

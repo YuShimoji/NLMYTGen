@@ -32,6 +32,11 @@ pipeline gates pass; it is not the place to discover basic design structure.
 | Asset/Proxy Gap Report | Scene Decision Packet, template registry, asset/proxy inventory | `asset_proxy_gap_report.json` / `.md` | GUI gap panel or concise report | required asset/proxy coverage, blocked reason codes, replacement triggers | choose real asset, proxy, cut, or defer | every missing item is classified | no blocking unknowns remain for adapter planning | no automatic external asset acquisition, no rights laundering |
 | YMM4 Adapter Output | Scene Decision Packet, resolved Gap Report, existing YMM4 project/template sources | adapter IR / patch output / readback | YMM4 only after gate opens | dry-run/readback, route contract, no forbidden zero-generation | creative acceptance in YMM4 after adapter output exists | readback passes and validator allows this stage | YMM4 confirmation is needed for final creative acceptance | forbidden while validator blocks YMM4, render, production timing, or creative acceptance |
 
+Proxy / Asset Classification is a pre-consumer gate for visual treatment proof
+beats. Its reusable schema is [PROXY_ASSET_CLASSIFICATION_SCHEMA.md](PROXY_ASSET_CLASSIFICATION_SCHEMA.md).
+It may route beats toward a scene decision packet, asset/proxy gap report, or
+YMM4 adapter planning, but it is not any of those downstream artifacts.
+
 ## Artifact Authority Map
 
 | artifact surface | authority | user-facing role | allowed use | not allowed |
