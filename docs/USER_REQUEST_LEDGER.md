@@ -5,6 +5,7 @@
 
 ## 現在有効な要求
 
+- INT-02e must remain `baseline / in_progress` until a real URL operator smoke proves actual fetch, Python `wave` readback of `source.wav`, receipt / sidecar / `material_ledger` readback, `audit-material-ledger`, boundary grep, and scrubbed reporting. URL and rights / terms review are required before assistant-run smoke. Passing INT-02e does not authorize `fetch-source-video`, GUI fetch button, STT URL fetch, cut / concat, subtitle burn-in, render / encode, or Publishing / OAuth.
 - 痛点ドリブンで進める。FEATURE_REGISTRY の候補一覧や done 件数から機械的に次タスクを選ばない。
 - ハンドオフに全コンテキストが本当に残っているか検証し、抜け漏れは明示して報告する。
 - 実際には未完了なのに完了扱いになっている task、文書だけ存在して実体が弱い項目、古い正本風ドキュメントを継続的に是正する。
