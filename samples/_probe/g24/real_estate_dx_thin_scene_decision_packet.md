@@ -33,7 +33,7 @@ Forbidden next actions in this slice:
 | `RE-06-turn` | `accepted_proxy` | property-document proxy | User adopted property-document proxy instead of pure lens. | Carry as property sheet / editorial comparison / document-backed recommendation; avoid generic strategy diagram. | none | asset-proxy gap report |
 | `RE-07D-beginning` | `accepted_proxy` | abstract proxy | AI panel plus property card is accepted. | Record abstract AI recommendation panel; avoid real service UI or logo. | none | asset-proxy gap report |
 | `RE-07D-development` | `accepted_proxy` | abstract proxy | Abstract risk-marker set is accepted. | Record boundary, inheritance, and neighborhood markers as abstract risk proxies. | none | asset-proxy gap report |
-| `RE-07D-turn` | `defer` | defer | User deferred specialist / human-relationship representation. | Carry unresolved specialist/cast representation as deferred; do not mark adapter-ready. | Human specialist / cast / silhouette representation policy remains undecided. | asset-proxy gap report |
+| `RE-07D-turn` | `defer` | defer | User deferred specialist / human-relationship representation. | Carry unresolved specialist/cast representation as deferred; do not mark adapter-planning-ready. | Human specialist / cast / silhouette representation policy remains undecided. | asset-proxy gap report |
 
 ## Rollup
 

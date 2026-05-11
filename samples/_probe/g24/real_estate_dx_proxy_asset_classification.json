@@ -183,7 +183,7 @@
       ],
       "rights_risk": "low",
       "YMM4_feasibility": "medium",
-      "blocker_reason": "Risk markers are plausible, but the production pipeline needs a reusable taxonomy before this becomes adapter-ready.",
+      "blocker_reason": "Risk markers are plausible, but the production pipeline needs a reusable taxonomy before this becomes adapter-planning-ready.",
       "user_decision_needed": "Approve boundary/inheritance/neighborhood risk markers as abstract proxies, or require real document/map references.",
       "assistant_can_advance": false,
       "next_consumer": "asset-proxy gap report"

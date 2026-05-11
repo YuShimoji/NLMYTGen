@@ -5,7 +5,7 @@ Source: `samples/_probe/g24/real_estate_dx_asset_proxy_gap_report.json`
 This is a planning candidate list only. It does not create YMM4 adapter output,
 YMM4 patch files, render output, production timing, or creative acceptance.
 
-## Adapter-Ready Candidates
+## Adapter-Planning-Ready Candidates
 
 | beat | representation | proxy type | rights risk | required note |
 | --- | --- | --- | --- | --- |

@@ -83,5 +83,5 @@ A valid classification artifact must state that it is not:
 - Creative acceptance.
 
 If any row points to `YMM4 adapter`, it still must not write adapter output in
-the same step. The row only says that the beat is likely adapter-ready after the
-proper upstream gates pass.
+the same step. The row only says that the beat is likely adapter-planning-ready
+after the proper upstream gates pass.

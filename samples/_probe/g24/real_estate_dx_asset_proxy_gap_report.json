@@ -22,7 +22,7 @@
       "proxy": "non-official public-search versus broker-database access-gap proxy",
       "asset_proxy_readiness": "ready",
       "rights_risk": "low",
-      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "YMM4_adapter_readiness": "adapter-planning-ready after separate output authorization",
       "blocker_reason": "none",
       "user_decision_still_needed": "none"
     },
@@ -31,7 +31,7 @@
       "proxy": "abstract broker DB panel, public portal card, and property-card flow",
       "asset_proxy_readiness": "ready",
       "rights_risk": "low",
-      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "YMM4_adapter_readiness": "adapter-planning-ready after separate output authorization",
       "blocker_reason": "none",
       "user_decision_still_needed": "none"
     },
@@ -40,7 +40,7 @@
       "proxy": "generic property-card overload proxy",
       "asset_proxy_readiness": "ready",
       "rights_risk": "none",
-      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "YMM4_adapter_readiness": "adapter-planning-ready after separate output authorization",
       "blocker_reason": "none",
       "user_decision_still_needed": "none"
     },
@@ -49,7 +49,7 @@
       "proxy": "selected property sheet plus drawback marker",
       "asset_proxy_readiness": "ready",
       "rights_risk": "none",
-      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "YMM4_adapter_readiness": "adapter-planning-ready after separate output authorization",
       "blocker_reason": "none",
       "user_decision_still_needed": "none"
     },
@@ -58,7 +58,7 @@
       "proxy": "abstract AI recommendation panel plus property card",
       "asset_proxy_readiness": "ready",
       "rights_risk": "none",
-      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "YMM4_adapter_readiness": "adapter-planning-ready after separate output authorization",
       "blocker_reason": "none",
       "user_decision_still_needed": "none"
     },
@@ -67,7 +67,7 @@
       "proxy": "abstract boundary / inheritance / neighborhood risk marker set",
       "asset_proxy_readiness": "ready",
       "rights_risk": "low",
-      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "YMM4_adapter_readiness": "adapter-planning-ready after separate output authorization",
       "blocker_reason": "none",
       "user_decision_still_needed": "none"
     }
@@ -79,7 +79,7 @@
       "adjustment_condition": "Soften the prior hidden-data wall / occlusion metaphor into transparent layer contrast. Avoid security facility, locked-room, wall, gate, or conspiracy-coded visuals.",
       "asset_proxy_readiness": "needs adjustment",
       "rights_risk": "none",
-      "YMM4_adapter_readiness": "not adapter-ready until adjustment is reflected in adapter planning",
+      "YMM4_adapter_readiness": "not adapter-planning-ready until adjustment is reflected in adapter planning",
       "blocker_reason": "Accepted meaning, but the production representation must be revised away from wall/occlusion language before adapter planning.",
       "user_decision_still_needed": "none; user already approved the softened direction"
     }
@@ -91,7 +91,7 @@
       "required_representation": "property sheet, editorial comparison, or document-backed recommendation; avoid pure lens or generic strategy diagram",
       "asset_proxy_readiness": "ready",
       "rights_risk": "none",
-      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "YMM4_adapter_readiness": "adapter-planning-ready after separate output authorization",
       "blocker_reason": "none",
       "user_decision_still_needed": "none"
     }
@@ -114,7 +114,7 @@
       "representation": "abstract proxy",
       "asset_proxy_readiness": "ready",
       "rights_risk": "low",
-      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "YMM4_adapter_readiness": "adapter-planning-ready after separate output authorization",
       "blocker_reason": "none",
       "user_decision_still_needed": "none",
       "next_recommended_artifact": "YMM4 adapter planning candidate list"
@@ -125,7 +125,7 @@
       "representation": "abstract proxy",
       "asset_proxy_readiness": "ready",
       "rights_risk": "low",
-      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "YMM4_adapter_readiness": "adapter-planning-ready after separate output authorization",
       "blocker_reason": "none",
       "user_decision_still_needed": "none",
       "next_recommended_artifact": "YMM4 adapter planning candidate list"
@@ -136,7 +136,7 @@
       "representation": "abstract proxy",
       "asset_proxy_readiness": "needs adjustment",
       "rights_risk": "none",
-      "YMM4_adapter_readiness": "not adapter-ready until adjustment is reflected in adapter planning",
+      "YMM4_adapter_readiness": "not adapter-planning-ready until adjustment is reflected in adapter planning",
       "blocker_reason": "Must replace hidden-data wall / occlusion with public information layer / non-public data bundle opacity contrast.",
       "user_decision_still_needed": "none",
       "next_recommended_artifact": "adjusted adapter planning note"
@@ -147,7 +147,7 @@
       "representation": "abstract proxy",
       "asset_proxy_readiness": "ready",
       "rights_risk": "none",
-      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "YMM4_adapter_readiness": "adapter-planning-ready after separate output authorization",
       "blocker_reason": "none",
       "user_decision_still_needed": "none",
       "next_recommended_artifact": "YMM4 adapter planning candidate list"
@@ -158,7 +158,7 @@
       "representation": "abstract proxy",
       "asset_proxy_readiness": "ready",
       "rights_risk": "none",
-      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "YMM4_adapter_readiness": "adapter-planning-ready after separate output authorization",
       "blocker_reason": "none",
       "user_decision_still_needed": "none",
       "next_recommended_artifact": "YMM4 adapter planning candidate list"
@@ -169,7 +169,7 @@
       "representation": "property-document proxy",
       "asset_proxy_readiness": "ready",
       "rights_risk": "none",
-      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "YMM4_adapter_readiness": "adapter-planning-ready after separate output authorization",
       "blocker_reason": "none",
       "user_decision_still_needed": "none",
       "next_recommended_artifact": "YMM4 adapter planning candidate list"
@@ -180,7 +180,7 @@
       "representation": "abstract proxy",
       "asset_proxy_readiness": "ready",
       "rights_risk": "none",
-      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "YMM4_adapter_readiness": "adapter-planning-ready after separate output authorization",
       "blocker_reason": "none",
       "user_decision_still_needed": "none",
       "next_recommended_artifact": "YMM4 adapter planning candidate list"
@@ -191,7 +191,7 @@
       "representation": "abstract proxy",
       "asset_proxy_readiness": "ready",
       "rights_risk": "low",
-      "YMM4_adapter_readiness": "adapter-ready after separate adapter authorization",
+      "YMM4_adapter_readiness": "adapter-planning-ready after separate output authorization",
       "blocker_reason": "none",
       "user_decision_still_needed": "none",
       "next_recommended_artifact": "YMM4 adapter planning candidate list"
@@ -215,7 +215,7 @@
       "deferred": 1,
       "blocked": 0
     },
-    "adapter_ready_items": [
+    "adapter_planning_ready_items": [
       "RE-02-beginning",
       "RE-02-development",
       "RE-06-beginning",
@@ -224,13 +224,13 @@
       "RE-07D-beginning",
       "RE-07D-development"
     ],
-    "not_adapter_ready_until_adjusted": [
+    "not_adapter_planning_ready_until_adjusted": [
       "RE-02-turn"
     ],
     "still_blocked": [
       "RE-07D-turn"
     ],
     "next_recommended_artifact": "YMM4 adapter planning candidate list",
-    "next_recommended_artifact_boundary": "Only list adapter-ready candidates and the adjustment/defer exclusions. Do not write YMM4 adapter output, render, production timing, or creative acceptance."
+    "next_recommended_artifact_boundary": "Only list adapter-planning-ready candidates and the adjustment/defer exclusions. Do not write YMM4 adapter output, render, production timing, or creative acceptance."
   }
 }

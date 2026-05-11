@@ -15,7 +15,7 @@
     "no_creative_acceptance": true,
     "deferred_items_block_adapter_planning": true
   },
-  "adapter_ready_candidates": [
+  "adapter_planning_ready_candidates": [
     {
       "beat_id": "RE-02-beginning",
       "representation": "abstract proxy",
@@ -131,7 +131,7 @@
     ]
   },
   "rollup": {
-    "adapter_ready_candidate_count": 7,
+    "adapter_planning_ready_candidate_count": 7,
     "adjustment_required_count": 1,
     "deferred_adapter_blocked_count": 1,
     "note": "This list authorizes only adapter planning candidate selection. It does not authorize adapter IR, patch output, render, production timing, or creative acceptance."

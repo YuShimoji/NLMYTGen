@@ -53,6 +53,9 @@
 ## Report Protocol
 - 報告形式は固定見出しではなく安全柵として扱う。必要最小限は、何を変えた / 変えていない、根拠または readback、残るリスクや judgement、次に取り得る hook。
 - 報告の主語を file ではなく workflow / behavior / decision に置く。file path はクリック可能な証跡として後ろに置き、読者が開かなくても意味が通る本文を先に書く。
+- 報告の深さは `Micro report` / `Slice closeout` / `Handoff` で変える。Micro は短い作業確認でよいが、Slice closeout は差分の焦点、意図的に触っていない範囲、North Star 上の位置、evidence、残存リスク、drift self-check、recommended default、next owner を本文で復元できる必要がある。Handoff はさらに branch / commit / clean state / 次に読む artifact を含める。
+- `Drift self-check` は固定見出しとして毎回出す義務ではないが、slice closeout では少なくとも case overfitting、docs-only loop、standalone artifact completion、next-artifact continuity のどれが危ないかを確認してから出す。
+- `Recommended default` は「次に何をすべきか」だけでなく、なぜそれが安全か、代替は何か、誰が動くかを含める。assistant が今すぐ進められる候補と user decision 待ちを混ぜない。
 - 最終応答では、完了内容、根拠、残る不確実性、次に動く主体、返答後に閉じる作業の論理鎖を切らない。ただし、これらを固定見出しや英語ラベルとして出力しない。
 - user 側の入力や確認が次の blocker の場合は、対象 path、必要 artifact、完了判定、NG 時に返す情報、受領後に閉じる検証や生成を本文で分ける。固定ラベルは内部整理に留める。
 - completion 報告では、`changed` / `not changed` / `verified` / `still blocked` の区別を保つ。docs 更新だけの場合は、実制作上の摩擦が何だけ減ったのかを明示する。

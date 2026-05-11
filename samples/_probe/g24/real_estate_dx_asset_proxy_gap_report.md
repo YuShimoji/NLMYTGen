@@ -11,24 +11,24 @@ creative acceptance.
 
 | beat | proxy | readiness | rights risk | YMM4 adapter readiness | blocker | user decision still needed |
 | --- | --- | --- | --- | --- | --- | --- |
-| `RE-02-beginning` | non-official public-search vs broker-database access gap | ready | low | adapter-ready after separate adapter authorization | none | none |
-| `RE-02-development` | abstract broker DB panel, public portal card, property-card flow | ready | low | adapter-ready after separate adapter authorization | none | none |
-| `RE-06-beginning` | generic property-card overload | ready | none | adapter-ready after separate adapter authorization | none | none |
-| `RE-06-development` | selected property sheet plus drawback marker | ready | none | adapter-ready after separate adapter authorization | none | none |
-| `RE-07D-beginning` | abstract AI recommendation panel plus property card | ready | none | adapter-ready after separate adapter authorization | none | none |
-| `RE-07D-development` | boundary / inheritance / neighborhood risk marker set | ready | low | adapter-ready after separate adapter authorization | none | none |
+| `RE-02-beginning` | non-official public-search vs broker-database access gap | ready | low | adapter-planning-ready after separate output authorization | none | none |
+| `RE-02-development` | abstract broker DB panel, public portal card, property-card flow | ready | low | adapter-planning-ready after separate output authorization | none | none |
+| `RE-06-beginning` | generic property-card overload | ready | none | adapter-planning-ready after separate output authorization | none | none |
+| `RE-06-development` | selected property sheet plus drawback marker | ready | none | adapter-planning-ready after separate output authorization | none | none |
+| `RE-07D-beginning` | abstract AI recommendation panel plus property card | ready | none | adapter-planning-ready after separate output authorization | none | none |
+| `RE-07D-development` | boundary / inheritance / neighborhood risk marker set | ready | low | adapter-planning-ready after separate output authorization | none | none |
 
 ## Accepted With Adjustment
 
 | beat | adjustment | readiness | rights risk | YMM4 adapter readiness | blocker | user decision still needed |
 | --- | --- | --- | --- | --- | --- | --- |
-| `RE-02-turn` | Use public information layer / non-public data bundle opacity contrast. Avoid wall, gate, locked-room, security-facility, or conspiracy-coded visuals. | needs adjustment | none | not adapter-ready until adjustment is reflected in adapter planning | prior wall/occlusion language must be removed | none |
+| `RE-02-turn` | Use public information layer / non-public data bundle opacity contrast. Avoid wall, gate, locked-room, security-facility, or conspiracy-coded visuals. | needs adjustment | none | not adapter-planning-ready until adjustment is reflected in adapter planning | prior wall/occlusion language must be removed | none |
 
 ## Property-Document Proxy
 
 | beat | proxy | readiness | rights risk | YMM4 adapter readiness | blocker | user decision still needed |
 | --- | --- | --- | --- | --- | --- | --- |
-| `RE-06-turn` | property sheet / editorial comparison / document-backed recommendation | ready | none | adapter-ready after separate adapter authorization | none | none |
+| `RE-06-turn` | property sheet / editorial comparison / document-backed recommendation | ready | none | adapter-planning-ready after separate output authorization | none | none |
 
 ## Deferred Items
 
@@ -38,7 +38,7 @@ creative acceptance.
 
 ## Adapter Readiness Rollup
 
-Adapter-ready candidates after a separate adapter authorization:
+Adapter-planning-ready candidates after a separate output authorization:
 
 - `RE-02-beginning`
 - `RE-02-development`
@@ -48,7 +48,7 @@ Adapter-ready candidates after a separate adapter authorization:
 - `RE-07D-beginning`
 - `RE-07D-development`
 
-Not adapter-ready until adjusted:
+Not adapter-planning-ready until adjusted:
 
 - `RE-02-turn`
 

@@ -191,7 +191,7 @@
       "state": "defer",
       "representation": "defer",
       "rationale": "The user deferred the specialist / human-relationship representation instead of approving abstract silhouettes or requiring a real/cast asset.",
-      "carry_forward_note_for_asset_proxy_gap_report": "Carry as deferred. The gap report may list the unresolved specialist/cast representation, but it must not treat it as adapter-ready or production-accepted.",
+      "carry_forward_note_for_asset_proxy_gap_report": "Carry as deferred. The gap report may list the unresolved specialist/cast representation, but it must not treat it as adapter-planning-ready or production-accepted.",
       "blocked_defer_reason": "Human specialist / cast / silhouette representation policy remains undecided.",
       "next_consumer": "asset-proxy gap report",
       "forbidden_next_actions": [
