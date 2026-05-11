@@ -1,0 +1,226 @@
+{
+  "version": "1.0",
+  "artifact_type": "thin_scene_decision_packet",
+  "episode_id": "real_estate_dx",
+  "scope": "G-27 RE-02 / RE-06 / RE-07D 9-beat proxy normalization",
+  "not_production_execution_packet": true,
+  "sources": {
+    "proxy_asset_classification": "samples/_probe/g24/real_estate_dx_proxy_asset_classification.json",
+    "compact_decision_sheet": "samples/_probe/g24/real_estate_dx_proxy_asset_decision_sheet.md",
+    "user_decision": {
+      "captured_at": "2026-05-11",
+      "summary": [
+        "RE-02 beginning: abstract proxy accepted",
+        "RE-02 development: abstract proxy accepted",
+        "RE-02 turn: abstract proxy accepted with adjustment; soften hidden-data wall into public information layer / non-public data bundle opacity contrast",
+        "RE-06 beginning: accepted",
+        "RE-06 development: accepted",
+        "RE-06 turn: property-document proxy",
+        "RE-07D beginning: accepted",
+        "RE-07D development: abstract proxy accepted",
+        "RE-07D turn: defer"
+      ],
+      "boundary": "This answer only enables the next planning artifact selection and does not authorize G-27 v3 proof, asset-proxy gap report, YMM4 conversion, render, production timing, or creative acceptance."
+    }
+  },
+  "target": {
+    "segments": [
+      "RE-02",
+      "RE-06",
+      "RE-07D"
+    ],
+    "beat_count": 9
+  },
+  "global_forbidden_next_actions": [
+    "G-27 v3 proof",
+    "asset-proxy gap report in this slice",
+    "YMM4 adapter",
+    "YMM4 conversion",
+    "render",
+    "production timing",
+    "creative acceptance"
+  ],
+  "beats": [
+    {
+      "segment_id": "RE-02",
+      "beat_id": "RE-02-beginning",
+      "state": "accepted_proxy",
+      "representation": "abstract proxy",
+      "rationale": "The user accepted the non-official REINS/search abstraction as sufficient for planning, avoiding official UI or rights-dependent reference assets.",
+      "carry_forward_note_for_asset_proxy_gap_report": "Record an approved abstract public-search versus broker-database proxy. Keep branding generic and do not introduce real REINS screenshots.",
+      "blocked_defer_reason": "none",
+      "next_consumer": "asset-proxy gap report",
+      "forbidden_next_actions": [
+        "G-27 v3 proof",
+        "YMM4 adapter",
+        "YMM4 conversion",
+        "render",
+        "production timing",
+        "creative acceptance"
+      ]
+    },
+    {
+      "segment_id": "RE-02",
+      "beat_id": "RE-02-development",
+      "state": "accepted_proxy",
+      "representation": "abstract proxy",
+      "rationale": "The user accepted the abstract broker DB / public portal proxy route, so the beat can carry the inventory-depth contrast without a real UI asset.",
+      "carry_forward_note_for_asset_proxy_gap_report": "Record reusable abstract components: broker DB panel, public portal card, and property-card flow. Rights review is unnecessary unless later changed to real/reference UI.",
+      "blocked_defer_reason": "none",
+      "next_consumer": "asset-proxy gap report",
+      "forbidden_next_actions": [
+        "G-27 v3 proof",
+        "YMM4 adapter",
+        "YMM4 conversion",
+        "render",
+        "production timing",
+        "creative acceptance"
+      ]
+    },
+    {
+      "segment_id": "RE-02",
+      "beat_id": "RE-02-turn",
+      "state": "accepted_with_adjustment",
+      "representation": "abstract proxy",
+      "rationale": "The user accepted the information-asymmetry proxy but rejected a strong wall/security metaphor. The production meaning should be softened to opacity contrast between public information layer and non-public data bundle.",
+      "carry_forward_note_for_asset_proxy_gap_report": "Replace hidden-data wall / occlusion language with public information layer and non-public data bundle opacity difference. Avoid security facility, locked-room, or conspiracy-coded visuals.",
+      "blocked_defer_reason": "none",
+      "next_consumer": "asset-proxy gap report",
+      "forbidden_next_actions": [
+        "G-27 v3 proof",
+        "YMM4 adapter",
+        "YMM4 conversion",
+        "render",
+        "production timing",
+        "creative acceptance"
+      ]
+    },
+    {
+      "segment_id": "RE-06",
+      "beat_id": "RE-06-beginning",
+      "state": "accepted_proxy",
+      "representation": "abstract proxy",
+      "rationale": "The existing overload proxy is accepted as a planning representation for too many property choices.",
+      "carry_forward_note_for_asset_proxy_gap_report": "Record generic property-card overload as accepted. No real listing image is required; preserve density control and subtitle-safe band.",
+      "blocked_defer_reason": "none",
+      "next_consumer": "asset-proxy gap report",
+      "forbidden_next_actions": [
+        "G-27 v3 proof",
+        "YMM4 adapter",
+        "YMM4 conversion",
+        "render",
+        "production timing",
+        "creative acceptance"
+      ]
+    },
+    {
+      "segment_id": "RE-06",
+      "beat_id": "RE-06-development",
+      "state": "accepted_proxy",
+      "representation": "abstract proxy",
+      "rationale": "The selected property sheet plus drawback marker is accepted as the planning representation for curation removing noise while preserving caution.",
+      "carry_forward_note_for_asset_proxy_gap_report": "Record selected property sheet and drawback marker as accepted abstract proxies. Do not require real property photos or listing screenshots.",
+      "blocked_defer_reason": "none",
+      "next_consumer": "asset-proxy gap report",
+      "forbidden_next_actions": [
+        "G-27 v3 proof",
+        "YMM4 adapter",
+        "YMM4 conversion",
+        "render",
+        "production timing",
+        "creative acceptance"
+      ]
+    },
+    {
+      "segment_id": "RE-06",
+      "beat_id": "RE-06-turn",
+      "state": "accepted_proxy",
+      "representation": "property-document proxy",
+      "rationale": "The user adopted the assistant default to avoid a generic lens-only metaphor and anchor curation value in property-document representation.",
+      "carry_forward_note_for_asset_proxy_gap_report": "Carry forward as property-document proxy: property sheet, editorial comparison, or document-backed recommendation. Avoid pure lens/strategy-diagram treatment.",
+      "blocked_defer_reason": "none",
+      "next_consumer": "asset-proxy gap report",
+      "forbidden_next_actions": [
+        "G-27 v3 proof",
+        "YMM4 adapter",
+        "YMM4 conversion",
+        "render",
+        "production timing",
+        "creative acceptance"
+      ]
+    },
+    {
+      "segment_id": "RE-07D",
+      "beat_id": "RE-07D-beginning",
+      "state": "accepted_proxy",
+      "representation": "abstract proxy",
+      "rationale": "The AI recommendation panel plus property card is accepted as an abstract representation of overconfident match scoring.",
+      "carry_forward_note_for_asset_proxy_gap_report": "Record abstract AI panel and property card as accepted. Do not use real service UI, logo, model screenshot, or identifiable recommendation product.",
+      "blocked_defer_reason": "none",
+      "next_consumer": "asset-proxy gap report",
+      "forbidden_next_actions": [
+        "G-27 v3 proof",
+        "YMM4 adapter",
+        "YMM4 conversion",
+        "render",
+        "production timing",
+        "creative acceptance"
+      ]
+    },
+    {
+      "segment_id": "RE-07D",
+      "beat_id": "RE-07D-development",
+      "state": "accepted_proxy",
+      "representation": "abstract proxy",
+      "rationale": "The user accepted abstract risk markers for the gap between AI score and non-obvious real-estate risks.",
+      "carry_forward_note_for_asset_proxy_gap_report": "Record boundary, inheritance, and neighborhood markers as accepted abstract risk proxies. Real maps or registry documents are not required unless later requested.",
+      "blocked_defer_reason": "none",
+      "next_consumer": "asset-proxy gap report",
+      "forbidden_next_actions": [
+        "G-27 v3 proof",
+        "YMM4 adapter",
+        "YMM4 conversion",
+        "render",
+        "production timing",
+        "creative acceptance"
+      ]
+    },
+    {
+      "segment_id": "RE-07D",
+      "beat_id": "RE-07D-turn",
+      "state": "defer",
+      "representation": "defer",
+      "rationale": "The user deferred the specialist / human-relationship representation instead of approving abstract silhouettes or requiring a real/cast asset.",
+      "carry_forward_note_for_asset_proxy_gap_report": "Carry as deferred. The gap report may list the unresolved specialist/cast representation, but it must not treat it as adapter-ready or production-accepted.",
+      "blocked_defer_reason": "Human specialist / cast / silhouette representation policy remains undecided.",
+      "next_consumer": "asset-proxy gap report",
+      "forbidden_next_actions": [
+        "G-27 v3 proof",
+        "YMM4 adapter",
+        "YMM4 conversion",
+        "render",
+        "production timing",
+        "creative acceptance"
+      ]
+    }
+  ],
+  "rollup": {
+    "accepted_proxy": [
+      "RE-02-beginning",
+      "RE-02-development",
+      "RE-06-beginning",
+      "RE-06-development",
+      "RE-06-turn",
+      "RE-07D-beginning",
+      "RE-07D-development"
+    ],
+    "accepted_with_adjustment": [
+      "RE-02-turn"
+    ],
+    "defer": [
+      "RE-07D-turn"
+    ],
+    "recommended_next_artifact": "asset-proxy gap report",
+    "recommended_next_artifact_reason": "The thin decision packet now normalizes all 9 beats, so the next useful artifact is a gap report that inventories accepted abstract/property-document proxies and carries RE-07D-turn as deferred without unlocking YMM4."
+  }
+}
