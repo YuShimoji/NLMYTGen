@@ -20,6 +20,8 @@ by validator authority and are explicitly outside this contract.
   requirement, `RE-07D-turn` deferred / still-blocked status.
 - `samples/_probe/g24/real_estate_dx_ymm4_adapter_planning_candidates.json` /
   `.md` — narrowed candidate list with planning boundary and forbidden actions.
+- `samples/_probe/g24/real_estate_dx_adapter_authorization_gate.json` / `.md`
+  — current authorization decision gate for the 7 route-planning candidates.
 
 Validator authority remains
 `samples/_probe/g24/real_estate_dx_background_skit_blueprint_validate.json`
@@ -118,9 +120,23 @@ The current report status is `passed_for_planning_preflight`, with 7 route
 planning candidates, `RE-02-turn` still `excluded_until_adjusted`, and
 `RE-07D-turn` still `deferred_blocks_adapter_planning`.
 
+## Authorization Gate
+
+`scripts/check_g27_adapter_authorization_gate.js` machine-checks the current
+authorization surface and writes:
+
+- `samples/_probe/g24/real_estate_dx_adapter_authorization_gate.json`
+- `samples/_probe/g24/real_estate_dx_adapter_authorization_gate.md`
+
+The gate status is `awaiting_user_or_validator_authorization`. It may ask for
+authorization to start a later adapter IR dry-run contract for the 7 listed
+candidates, but it does not grant that authorization and keeps
+`output_generation_allowed=false`.
+
 ## Next Consumer
 
-The next gate is user or validator authorization before adapter IR or patch
-output. This contract and its preflight report do not perform the adapter call.
-Adapter output remains forbidden until a separate authorization slice outside
-this contract's scope unblocks that execution step.
+The next consumer is the authorization gate above. Adapter IR dry-run work may
+start only after a user or validator response authorizes
+`authorize_adapter_IR_dry_run_for_7_candidates_only`. YMM4 patch output,
+`.ymmp` writes, render, production timing, and creative acceptance remain
+forbidden until later gates separately authorize them.

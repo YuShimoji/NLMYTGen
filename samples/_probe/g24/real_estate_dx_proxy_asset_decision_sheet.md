@@ -8,6 +8,15 @@ asset-proxy gap report, not YMM4 conversion, not render, not production timing,
 and not creative acceptance. It exists only to collect short prerequisite
 decisions before those downstream artifacts can be made.
 
+Current status (2026-05-12): this sheet is historical input only. The decisions
+were already normalized into
+`samples/_probe/g24/real_estate_dx_thin_scene_decision_packet.json`, carried
+through `samples/_probe/g24/real_estate_dx_asset_proxy_gap_report.json`, and
+narrowed by `samples/_probe/g24/real_estate_dx_ymm4_adapter_route_preflight.json`.
+Use `samples/_probe/g24/real_estate_dx_adapter_authorization_gate.md` as the
+current decision surface. Do not use this sheet to authorize adapter IR, YMM4
+patch output, `.ymmp` writes, render, production timing, or creative acceptance.
+
 ## Decision Rows
 
 | beat id | meaning payload | current proxy visual | required production representation | current representation type | blocker / user decision needed | assistant default | user choices |
