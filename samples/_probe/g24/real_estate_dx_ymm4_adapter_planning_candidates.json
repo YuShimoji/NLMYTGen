@@ -1,0 +1,139 @@
+{
+  "version": "1.0",
+  "artifact_type": "YMM4_adapter_planning_candidate_list",
+  "episode_id": "real_estate_dx",
+  "scope": "G-27 RE-02 / RE-06 / RE-07D adapter planning candidates only",
+  "source": {
+    "asset_proxy_gap_report": "samples/_probe/g24/real_estate_dx_asset_proxy_gap_report.json"
+  },
+  "boundary": {
+    "candidate_list_only": true,
+    "no_YMM4_adapter_output": true,
+    "no_YMM4_patch": true,
+    "no_render": true,
+    "no_production_timing": true,
+    "no_creative_acceptance": true,
+    "deferred_items_block_adapter_planning": true
+  },
+  "adapter_ready_candidates": [
+    {
+      "beat_id": "RE-02-beginning",
+      "representation": "abstract proxy",
+      "proxy_type": "public-search vs broker-database access-gap proxy",
+      "rights_risk": "low",
+      "required_note": "Use a generic, non-official search UI and broker-database abstraction. Do not use a real REINS screenshot, logo, or service-identifiable UI.",
+      "adapter_planning_status": "candidate",
+      "excluded_from_output": false
+    },
+    {
+      "beat_id": "RE-02-development",
+      "representation": "abstract proxy",
+      "proxy_type": "broker DB panel / public portal card / property-card flow",
+      "rights_risk": "low",
+      "required_note": "Plan generic broker DB and public portal panels with selected property-card flow. Avoid official branding and real/reference UI unless separately reviewed.",
+      "adapter_planning_status": "candidate",
+      "excluded_from_output": false
+    },
+    {
+      "beat_id": "RE-06-beginning",
+      "representation": "abstract proxy",
+      "proxy_type": "property-card overload",
+      "rights_risk": "none",
+      "required_note": "Plan simplified property cards, density control, and subtitle-safe lower band. No real listing photo or external asset is required.",
+      "adapter_planning_status": "candidate",
+      "excluded_from_output": false
+    },
+    {
+      "beat_id": "RE-06-development",
+      "representation": "abstract proxy",
+      "proxy_type": "selected property sheet plus drawback marker",
+      "rights_risk": "none",
+      "required_note": "Plan a selected property sheet and a drawback marker as abstract UI/document shapes. Do not introduce real listing screenshots.",
+      "adapter_planning_status": "candidate",
+      "excluded_from_output": false
+    },
+    {
+      "beat_id": "RE-06-turn",
+      "representation": "property-document proxy",
+      "proxy_type": "property sheet / editorial comparison / document-backed recommendation",
+      "rights_risk": "none",
+      "required_note": "Anchor the curation value in property-document structure. Avoid pure lens, strategy diagram, or generic consulting visual treatment.",
+      "adapter_planning_status": "candidate",
+      "excluded_from_output": false
+    },
+    {
+      "beat_id": "RE-07D-beginning",
+      "representation": "abstract proxy",
+      "proxy_type": "AI recommendation panel plus property card",
+      "rights_risk": "none",
+      "required_note": "Use an abstract AI panel and property card only. Do not use real AI product UI, logos, model screenshots, or identifiable recommendation services.",
+      "adapter_planning_status": "candidate",
+      "excluded_from_output": false
+    },
+    {
+      "beat_id": "RE-07D-development",
+      "representation": "abstract proxy",
+      "proxy_type": "boundary / inheritance / neighborhood risk-marker set",
+      "rights_risk": "low",
+      "required_note": "Plan symbolic risk markers for boundary, inheritance, and neighborhood issues. Do not use real maps, registry documents, or identifiable records unless later rights-reviewed.",
+      "adapter_planning_status": "candidate",
+      "excluded_from_output": false
+    }
+  ],
+  "adjustment_required_items": [
+    {
+      "beat_id": "RE-02-turn",
+      "representation": "abstract proxy",
+      "proxy_type": "public information layer / non-public data bundle opacity contrast",
+      "rights_risk": "none",
+      "required_note": "Before adapter planning, replace wall / gate / locked-room / security-facility / conspiracy-coded occlusion language with transparent layer contrast.",
+      "adapter_planning_status": "excluded_until_adjusted",
+      "excluded_from_output": true,
+      "exclusion_reason": "Accepted meaning still needs representation adjustment before adapter planning."
+    }
+  ],
+  "deferred_adapter_blocked_items": [
+    {
+      "beat_id": "RE-07D-turn",
+      "representation": "defer",
+      "proxy_type": "human specialist / cast / silhouette representation",
+      "asset_proxy_readiness": "deferred",
+      "YMM4_adapter_readiness": "still blocked",
+      "rights_risk": "low if abstract silhouettes are later approved; needs review if real person/cast assets are requested",
+      "required_note": "Do not include in adapter planning. Deferred item blocks adapter planning until user chooses abstract silhouettes, real/cast asset, cut/reframe, or keeps it deferred.",
+      "adapter_planning_status": "deferred_blocks_adapter_planning",
+      "excluded_from_output": true,
+      "exclusion_reason": "Deferred item blocks adapter planning; this is distinct from asset_proxy_readiness_counts.blocked=0 in the gap report."
+    }
+  ],
+  "planning_boundary": {
+    "include_in_adapter_planning": [
+      "RE-02-beginning",
+      "RE-02-development",
+      "RE-06-beginning",
+      "RE-06-development",
+      "RE-06-turn",
+      "RE-07D-beginning",
+      "RE-07D-development"
+    ],
+    "exclude_until_adjusted": [
+      "RE-02-turn"
+    ],
+    "exclude_as_deferred_blocked": [
+      "RE-07D-turn"
+    ],
+    "forbidden_actions": [
+      "YMM4 adapter output",
+      "YMM4 patch",
+      "render",
+      "production timing",
+      "creative acceptance"
+    ]
+  },
+  "rollup": {
+    "adapter_ready_candidate_count": 7,
+    "adjustment_required_count": 1,
+    "deferred_adapter_blocked_count": 1,
+    "note": "This list authorizes only adapter planning candidate selection. It does not authorize adapter IR, patch output, render, production timing, or creative acceptance."
+  }
+}
