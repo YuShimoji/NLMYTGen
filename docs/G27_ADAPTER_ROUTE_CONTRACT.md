@@ -106,10 +106,21 @@ must be reported with the failing condition; it must not silently degrade to
 `output_generation_allowed=false` is the explicit boundary marker for any
 downstream slice that consumes this contract.
 
+## Preflight Report
+
+`scripts/check_g27_adapter_route_preflight.js` machine-checks the six
+preflight-gate conditions above against the source artifacts and writes:
+
+- `samples/_probe/g24/real_estate_dx_ymm4_adapter_route_preflight.json`
+- `samples/_probe/g24/real_estate_dx_ymm4_adapter_route_preflight.md`
+
+The current report status is `passed_for_planning_preflight`, with 7 route
+planning candidates, `RE-02-turn` still `excluded_until_adjusted`, and
+`RE-07D-turn` still `deferred_blocks_adapter_planning`.
+
 ## Next Consumer
 
-The next planning-zone artifact is a preflight implementation that
-machine-checks the six preflight-gate conditions above against the source
-artifacts. That preflight does not perform the adapter call. Adapter output
-remains forbidden until a separate authorization slice (outside this contract's
-scope) unblocks the validator gate.
+The next gate is user or validator authorization before adapter IR or patch
+output. This contract and its preflight report do not perform the adapter call.
+Adapter output remains forbidden until a separate authorization slice outside
+this contract's scope unblocks that execution step.
