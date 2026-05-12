@@ -149,6 +149,7 @@
       "layer": 9,
       "start_frame": 0,
       "duration_frames": 360,
+      "font_color": "#FFF5F8FF",
       "remark": "g27_minimal_patched_probe candidate_id=RE-02-beginning item_id=RE02_BEGIN_ACCESS_LABEL source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-beginning source_lines=13-24 not_creative_acceptance no_render",
       "source_reference_found": {
         "candidate_id": true,
@@ -194,6 +195,7 @@
       "layer": 9,
       "start_frame": 390,
       "duration_frames": 360,
+      "font_color": "#FFF5F8FF",
       "remark": "g27_minimal_patched_probe candidate_id=RE-02-development item_id=RE02_DEV_FLOW_LABEL source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 not_creative_acceptance no_render",
       "source_reference_found": {
         "candidate_id": true,
@@ -239,6 +241,7 @@
       "layer": 9,
       "start_frame": 780,
       "duration_frames": 360,
+      "font_color": "#FFF5F8FF",
       "remark": "g27_minimal_patched_probe candidate_id=RE-06-beginning item_id=RE06_BEGIN_OVERLOAD_LABEL source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-beginning source_lines=61-82 not_creative_acceptance no_render",
       "source_reference_found": {
         "candidate_id": true,
@@ -284,6 +287,7 @@
       "layer": 9,
       "start_frame": 1170,
       "duration_frames": 360,
+      "font_color": "#FFF5F8FF",
       "remark": "g27_minimal_patched_probe candidate_id=RE-06-development item_id=RE06_DEV_REASON_LABEL source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 not_creative_acceptance no_render",
       "source_reference_found": {
         "candidate_id": true,
@@ -329,6 +333,7 @@
       "layer": 9,
       "start_frame": 1560,
       "duration_frames": 360,
+      "font_color": "#FFF5F8FF",
       "remark": "g27_minimal_patched_probe candidate_id=RE-06-turn item_id=RE06_TURN_CURATION_LABEL source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-turn source_lines=61-82 not_creative_acceptance no_render",
       "source_reference_found": {
         "candidate_id": true,
@@ -374,6 +379,7 @@
       "layer": 9,
       "start_frame": 1950,
       "duration_frames": 360,
+      "font_color": "#FFF5F8FF",
       "remark": "g27_minimal_patched_probe candidate_id=RE-07D-beginning item_id=RE07D_BEGIN_CONFIDENCE_LABEL source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 not_creative_acceptance no_render",
       "source_reference_found": {
         "candidate_id": true,
@@ -419,6 +425,7 @@
       "layer": 9,
       "start_frame": 2340,
       "duration_frames": 360,
+      "font_color": "#FFF5F8FF",
       "remark": "g27_minimal_patched_probe candidate_id=RE-07D-development item_id=RE07D_DEV_RISK_LABEL source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-development source_lines=130-143 not_creative_acceptance no_render",
       "source_reference_found": {
         "candidate_id": true,

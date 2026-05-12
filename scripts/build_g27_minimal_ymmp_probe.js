@@ -24,6 +24,7 @@ const expectedCandidateIds = [
   'RE-07D-beginning',
   'RE-07D-development',
 ];
+const textFontColor = '#FFF5F8FF';
 
 function abs(relPath) {
   return path.join(root, relPath);
@@ -215,7 +216,7 @@ function makeTextItem(candidate, plannedItem, candidateIndex) {
     Text: label,
     Font: 'Yu Gothic UI',
     FontSize: animation(34),
-    FontColor: { A: 255, R: 245, G: 248, B: 255 },
+    FontColor: textFontColor,
     Style: 'Normal',
     X: animation(position.x),
     Y: animation(position.y),
@@ -318,6 +319,7 @@ function readbackProbe(compactReview, ymmp, carrierHashBefore, carrierHashAfter)
         layer: item.Layer,
         start_frame: item.Frame,
         duration_frames: item.Length,
+        font_color: item.FontColor,
         remark: item.Remark || '',
         source_reference_found: {
           candidate_id: Boolean(remark.candidate_id),
@@ -354,6 +356,9 @@ function readbackProbe(compactReview, ymmp, carrierHashBefore, carrierHashAfter)
     }
     if (!found.source_reference_found.source) {
       mismatches.push({ field: 'source_reference', expected: paths.compactReview, actual: parseRemark(found.remark).source || null });
+    }
+    if (expected.item_type === 'TextItem' && found.font_color !== textFontColor) {
+      mismatches.push({ field: 'FontColor', expected: textFontColor, actual: found.font_color ?? null });
     }
     if (mismatches.length) {
       malformed_items.push({ item_id: expected.item_id, candidate_id: expected.candidate_id, mismatches });

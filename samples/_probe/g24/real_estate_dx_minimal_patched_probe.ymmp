@@ -1,5 +1,5 @@
 ﻿{
-  "FilePath": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen\\samples\\_probe\\g24\\real_estate_dx_minimal_patched_probe.ymmp",
+  "FilePath": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\_probe\\g24\\real_estate_dx_minimal_patched_probe.ymmp",
   "SelectedTimelineIndex": 0,
   "Timelines": [
     {
@@ -1148,12 +1148,7 @@
               "IsQuadratic": false
             }
           },
-          "FontColor": {
-            "A": 255,
-            "R": 245,
-            "G": 248,
-            "B": 255
-          },
+          "FontColor": "#FFF5F8FF",
           "Style": "Normal",
           "X": {
             "Values": [
@@ -2553,12 +2548,7 @@
               "IsQuadratic": false
             }
           },
-          "FontColor": {
-            "A": 255,
-            "R": 245,
-            "G": 248,
-            "B": 255
-          },
+          "FontColor": "#FFF5F8FF",
           "Style": "Normal",
           "X": {
             "Values": [
@@ -3958,12 +3948,7 @@
               "IsQuadratic": false
             }
           },
-          "FontColor": {
-            "A": 255,
-            "R": 245,
-            "G": 248,
-            "B": 255
-          },
+          "FontColor": "#FFF5F8FF",
           "Style": "Normal",
           "X": {
             "Values": [
@@ -5363,12 +5348,7 @@
               "IsQuadratic": false
             }
           },
-          "FontColor": {
-            "A": 255,
-            "R": 245,
-            "G": 248,
-            "B": 255
-          },
+          "FontColor": "#FFF5F8FF",
           "Style": "Normal",
           "X": {
             "Values": [
@@ -6768,12 +6748,7 @@
               "IsQuadratic": false
             }
           },
-          "FontColor": {
-            "A": 255,
-            "R": 245,
-            "G": 248,
-            "B": 255
-          },
+          "FontColor": "#FFF5F8FF",
           "Style": "Normal",
           "X": {
             "Values": [
@@ -8173,12 +8148,7 @@
               "IsQuadratic": false
             }
           },
-          "FontColor": {
-            "A": 255,
-            "R": 245,
-            "G": 248,
-            "B": 255
-          },
+          "FontColor": "#FFF5F8FF",
           "Style": "Normal",
           "X": {
             "Values": [
@@ -9578,12 +9548,7 @@
               "IsQuadratic": false
             }
           },
-          "FontColor": {
-            "A": 255,
-            "R": 245,
-            "G": 248,
-            "B": 255
-          },
+          "FontColor": "#FFF5F8FF",
           "Style": "Normal",
           "X": {
             "Values": [
