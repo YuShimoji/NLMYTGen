@@ -264,6 +264,17 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ---
 
+## HANDOFF SNAPSHOT (2026-05-12 update)
+
+- Branch / remote state: `codex/g24-nod-sync-adoption` at `21ef759 docs: refresh g27 handoff snapshot`; probe generation commit is `3411413 feat(g27): generate minimal ymmp probe`; `HEAD...origin/codex/g24-nod-sync-adoption = 0 0` at handoff. Working tree should be clean after pulling this branch.
+- Restart path: read `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`. Current frontier is `runtime-state.md` `next_action`; this snapshot only preserves the executable handoff context.
+- Current G-27 artifact: `samples/_probe/g24/real_estate_dx_minimal_patched_probe.ymmp` generated from `samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json` by `scripts/build_g27_minimal_ymmp_probe.js`.
+- Machine readback: `samples/_probe/g24/real_estate_dx_minimal_patched_probe_readback.json` / `.md` reports `status=passed`, `ShapeItem=14`, `TextItem=7`, `candidate_ids_found=7/7`, `layer_values_found=[7,8,9]`, `missing_item_count=0`, `malformed_item_count=0`, `carrier_modified_in_place=false`, and `next_slice_can_safely_proceed_to_YMM4_GUI_readback_preview=true`.
+- Candidate scope: only `RE-02-beginning`, `RE-02-development`, `RE-06-beginning`, `RE-06-development`, `RE-06-turn`, `RE-07D-beginning`, and `RE-07D-development` are in the probe. `RE-02-turn` remains blocked outside the output; `RE-07D-turn` remains deferred outside the output.
+- Verification chain: `node --check scripts/build_g27_minimal_ymmp_probe.js`; `node scripts/build_g27_minimal_ymmp_probe.js --write`; `node scripts/build_g27_minimal_ymmp_probe.js`; Python openability guard with `success=True`, `is_project_canvas=True`, `item_count=21`; `node scripts/build_g27_ymmp_compact_patch_review.js`; `node scripts/build_g27_adapter_ir_dry_run.js`; `node scripts/check_g27_adapter_route_preflight.js`; `node scripts/check_g27_adapter_authorization_gate.js`; `git diff --check`.
+- Not done: no render, no YMM4 GUI preview capture, no production timing, no creative acceptance, no TTS, no URL fetch, no publishing, no `sports_news`, and no pipeline hardening.
+- Next concrete move: open or capture `samples/_probe/g24/real_estate_dx_minimal_patched_probe.ymmp` in YMM4 for GUI readback / preview. Treat PASS as file-openability / visible-placement evidence only; short render is a later slice after GUI readback succeeds.
+
 ## HANDOFF SNAPSHOT (2026-04-26 update)
 
 - Shared Focus: **G-24 template-analyzed placement after raw clone readback**. The v1 source contains all five templates and `--skit-group-only` can insert exact/fallback cues, but raw clone output is not production acceptance because user visual feedback found spacing/composition too rough. The current shared cycle is no longer motion authoring, alias planning, or user hand placement; it is adding template analyzer + placement planner so reusable YMM4 templates become generated production placement. Canonical current state: [runtime-state.md](runtime-state.md) slice / next_action.
