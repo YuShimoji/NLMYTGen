@@ -1,0 +1,434 @@
+{
+  "artifact_type": "g27_minimal_patched_ymmp_probe_readback",
+  "status": "passed",
+  "source": {
+    "compact_patch_review": "samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json",
+    "carrier_ymmp": "samples/canonical.ymmp",
+    "shape_template_ymmp": "samples/_probe/g24/real_estate_dx_overlay_only_compact_review.ymmp",
+    "generated_probe_ymmp": "samples/_probe/g24/real_estate_dx_minimal_patched_probe.ymmp"
+  },
+  "source_integrity": {
+    "carrier_sha256_before": "90bfc8623875a2dcf51baaf03d068aab5e2e2ef58a528451c80f4c622bf7d7a4",
+    "carrier_sha256_after": "90bfc8623875a2dcf51baaf03d068aab5e2e2ef58a528451c80f4c622bf7d7a4",
+    "carrier_modified_in_place": false
+  },
+  "boundary": {
+    "minimal_probe_only": true,
+    "production_or_source_ymmp_modified_in_place": false,
+    "real_render_performed": false,
+    "creative_acceptance_performed": false,
+    "scope_limited_to_7_ready_candidates": true,
+    "excluded_RE_02_turn": "blocked_outside_output",
+    "excluded_RE_07D_turn": "deferred_outside_output"
+  },
+  "totals": {
+    "expected_candidate_count": 7,
+    "expected_item_count": 21,
+    "inserted_probe_item_count": 21,
+    "inserted_shape_item_count": 14,
+    "inserted_text_item_count": 7,
+    "missing_item_count": 0,
+    "malformed_item_count": 0
+  },
+  "candidate_ids_found": [
+    "RE-02-beginning",
+    "RE-02-development",
+    "RE-06-beginning",
+    "RE-06-development",
+    "RE-06-turn",
+    "RE-07D-beginning",
+    "RE-07D-development"
+  ],
+  "missing_candidate_ids": [],
+  "layer_values_found": [
+    7,
+    8,
+    9
+  ],
+  "start_duration_values_found": [
+    {
+      "candidate_id": "RE-02-beginning",
+      "start_frames": [
+        0
+      ],
+      "duration_frames": [
+        360
+      ]
+    },
+    {
+      "candidate_id": "RE-02-development",
+      "start_frames": [
+        390
+      ],
+      "duration_frames": [
+        360
+      ]
+    },
+    {
+      "candidate_id": "RE-06-beginning",
+      "start_frames": [
+        780
+      ],
+      "duration_frames": [
+        360
+      ]
+    },
+    {
+      "candidate_id": "RE-06-development",
+      "start_frames": [
+        1170
+      ],
+      "duration_frames": [
+        360
+      ]
+    },
+    {
+      "candidate_id": "RE-06-turn",
+      "start_frames": [
+        1560
+      ],
+      "duration_frames": [
+        360
+      ]
+    },
+    {
+      "candidate_id": "RE-07D-beginning",
+      "start_frames": [
+        1950
+      ],
+      "duration_frames": [
+        360
+      ]
+    },
+    {
+      "candidate_id": "RE-07D-development",
+      "start_frames": [
+        2340
+      ],
+      "duration_frames": [
+        360
+      ]
+    }
+  ],
+  "items": [
+    {
+      "index": 0,
+      "item_type": "ShapeItem",
+      "candidate_id": "RE-02-beginning",
+      "item_id": "RE02_BEGIN_PUBLIC_SEARCH_PROXY",
+      "layer": 7,
+      "start_frame": 0,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-02-beginning item_id=RE02_BEGIN_PUBLIC_SEARCH_PROXY source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-beginning source_lines=13-24 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 1,
+      "item_type": "ShapeItem",
+      "candidate_id": "RE-02-beginning",
+      "item_id": "RE02_BEGIN_BROKER_DB_SHADOW",
+      "layer": 8,
+      "start_frame": 0,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-02-beginning item_id=RE02_BEGIN_BROKER_DB_SHADOW source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-beginning source_lines=13-24 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 2,
+      "item_type": "TextItem",
+      "candidate_id": "RE-02-beginning",
+      "item_id": "RE02_BEGIN_ACCESS_LABEL",
+      "layer": 9,
+      "start_frame": 0,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-02-beginning item_id=RE02_BEGIN_ACCESS_LABEL source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-beginning source_lines=13-24 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 3,
+      "item_type": "ShapeItem",
+      "candidate_id": "RE-02-development",
+      "item_id": "RE02_DEV_BROKER_DB_PANEL",
+      "layer": 7,
+      "start_frame": 390,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-02-development item_id=RE02_DEV_BROKER_DB_PANEL source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 4,
+      "item_type": "ShapeItem",
+      "candidate_id": "RE-02-development",
+      "item_id": "RE02_DEV_PUBLIC_PORTAL_CARD",
+      "layer": 8,
+      "start_frame": 390,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-02-development item_id=RE02_DEV_PUBLIC_PORTAL_CARD source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 5,
+      "item_type": "TextItem",
+      "candidate_id": "RE-02-development",
+      "item_id": "RE02_DEV_FLOW_LABEL",
+      "layer": 9,
+      "start_frame": 390,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-02-development item_id=RE02_DEV_FLOW_LABEL source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 6,
+      "item_type": "ShapeItem",
+      "candidate_id": "RE-06-beginning",
+      "item_id": "RE06_BEGIN_PROPERTY_CARD_CLUSTER",
+      "layer": 7,
+      "start_frame": 780,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-06-beginning item_id=RE06_BEGIN_PROPERTY_CARD_CLUSTER source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-beginning source_lines=61-82 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 7,
+      "item_type": "ShapeItem",
+      "candidate_id": "RE-06-beginning",
+      "item_id": "RE06_BEGIN_DENSITY_MARKER",
+      "layer": 8,
+      "start_frame": 780,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-06-beginning item_id=RE06_BEGIN_DENSITY_MARKER source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-beginning source_lines=61-82 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 8,
+      "item_type": "TextItem",
+      "candidate_id": "RE-06-beginning",
+      "item_id": "RE06_BEGIN_OVERLOAD_LABEL",
+      "layer": 9,
+      "start_frame": 780,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-06-beginning item_id=RE06_BEGIN_OVERLOAD_LABEL source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-beginning source_lines=61-82 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 9,
+      "item_type": "ShapeItem",
+      "candidate_id": "RE-06-development",
+      "item_id": "RE06_DEV_SELECTED_PROPERTY_SHEET",
+      "layer": 7,
+      "start_frame": 1170,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-06-development item_id=RE06_DEV_SELECTED_PROPERTY_SHEET source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 10,
+      "item_type": "ShapeItem",
+      "candidate_id": "RE-06-development",
+      "item_id": "RE06_DEV_DRAWBACK_MARKER",
+      "layer": 8,
+      "start_frame": 1170,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-06-development item_id=RE06_DEV_DRAWBACK_MARKER source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 11,
+      "item_type": "TextItem",
+      "candidate_id": "RE-06-development",
+      "item_id": "RE06_DEV_REASON_LABEL",
+      "layer": 9,
+      "start_frame": 1170,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-06-development item_id=RE06_DEV_REASON_LABEL source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 12,
+      "item_type": "ShapeItem",
+      "candidate_id": "RE-06-turn",
+      "item_id": "RE06_TURN_DOCUMENT_COMPARISON",
+      "layer": 7,
+      "start_frame": 1560,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-06-turn item_id=RE06_TURN_DOCUMENT_COMPARISON source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-turn source_lines=61-82 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 13,
+      "item_type": "ShapeItem",
+      "candidate_id": "RE-06-turn",
+      "item_id": "RE06_TURN_RECOMMENDATION_MARKER",
+      "layer": 8,
+      "start_frame": 1560,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-06-turn item_id=RE06_TURN_RECOMMENDATION_MARKER source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-turn source_lines=61-82 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 14,
+      "item_type": "TextItem",
+      "candidate_id": "RE-06-turn",
+      "item_id": "RE06_TURN_CURATION_LABEL",
+      "layer": 9,
+      "start_frame": 1560,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-06-turn item_id=RE06_TURN_CURATION_LABEL source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-turn source_lines=61-82 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 15,
+      "item_type": "ShapeItem",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "RE07D_BEGIN_AI_PANEL",
+      "layer": 7,
+      "start_frame": 1950,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-07D-beginning item_id=RE07D_BEGIN_AI_PANEL source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 16,
+      "item_type": "ShapeItem",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "RE07D_BEGIN_MATCH_PROPERTY_CARD",
+      "layer": 8,
+      "start_frame": 1950,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-07D-beginning item_id=RE07D_BEGIN_MATCH_PROPERTY_CARD source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 17,
+      "item_type": "TextItem",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "RE07D_BEGIN_CONFIDENCE_LABEL",
+      "layer": 9,
+      "start_frame": 1950,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-07D-beginning item_id=RE07D_BEGIN_CONFIDENCE_LABEL source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 18,
+      "item_type": "ShapeItem",
+      "candidate_id": "RE-07D-development",
+      "item_id": "RE07D_DEV_RISK_MARKER_SET",
+      "layer": 7,
+      "start_frame": 2340,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-07D-development item_id=RE07D_DEV_RISK_MARKER_SET source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-development source_lines=130-143 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 19,
+      "item_type": "ShapeItem",
+      "candidate_id": "RE-07D-development",
+      "item_id": "RE07D_DEV_PROPERTY_CONTEXT_CARD",
+      "layer": 8,
+      "start_frame": 2340,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-07D-development item_id=RE07D_DEV_PROPERTY_CONTEXT_CARD source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-development source_lines=130-143 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    },
+    {
+      "index": 20,
+      "item_type": "TextItem",
+      "candidate_id": "RE-07D-development",
+      "item_id": "RE07D_DEV_RISK_LABEL",
+      "layer": 9,
+      "start_frame": 2340,
+      "duration_frames": 360,
+      "remark": "g27_minimal_patched_probe candidate_id=RE-07D-development item_id=RE07D_DEV_RISK_LABEL source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-development source_lines=130-143 not_creative_acceptance no_render",
+      "source_reference_found": {
+        "candidate_id": true,
+        "item_id": true,
+        "source": true
+      }
+    }
+  ],
+  "missing_items": [],
+  "malformed_items": [],
+  "next_slice_can_safely_proceed_to_YMM4_GUI_readback_preview": true,
+  "next_slice_note": "Open the generated probe .ymmp in YMM4 for GUI readback / preview; do not render or treat it as creative acceptance."
+}
