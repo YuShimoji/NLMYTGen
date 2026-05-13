@@ -10,9 +10,9 @@ const paths = {
   compactReview: 'samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json',
   carrierYmmp: 'samples/canonical.ymmp',
   shapeTemplateYmmp: 'samples/_probe/g24/real_estate_dx_overlay_only_compact_review.ymmp',
-  outputYmmp: 'samples/_probe/g24/real_estate_dx_micro_scene_probe.ymmp',
-  readbackJson: 'samples/_probe/g24/real_estate_dx_micro_scene_probe_readback.json',
-  reportMd: 'samples/_probe/g24/real_estate_dx_micro_scene_probe_report.md',
+  outputYmmp: 'samples/_probe/g24/real_estate_dx_micro_scene_visibility_probe.ymmp',
+  readbackJson: 'samples/_probe/g24/real_estate_dx_micro_scene_visibility_probe_readback.json',
+  reportMd: 'samples/_probe/g24/real_estate_dx_micro_scene_visibility_probe_report.md',
 };
 
 const selectedCandidateIds = [
@@ -28,11 +28,12 @@ const notSelectedCandidateIds = [
   'RE-06-turn',
 ];
 
-const textColor = '#FFF8FAFF';
-const darkTextColor = '#FF152230';
-const warningTextColor = '#FFFFF2D0';
+const textColor = '#FFFFFFFF';
+const darkTextColor = '#FF111827';
+const warningTextColor = '#FFFFF7D6';
 const colorLikeTerms = ['color', 'brush', 'background', 'border', 'fill', 'stroke', 'shadow', 'foreground'];
 const hexColorPattern = /^#[0-9A-Fa-f]{8}$/;
+const shapeSizeMode = 'WidthHeight';
 
 const sceneBeats = [
   {
@@ -42,24 +43,25 @@ const sceneBeats = [
     duration_frames: 900,
     narrative_intent: 'Viewer understands that the same market has a public entrance and a deeper professional database, so visible information is structurally limited.',
     visual_composition: 'A large dark broker database slides into dominance behind a smaller public portal; a lock threshold appears between them and only a thin output card escapes.',
-    on_screen_copy: ['情報の入口が違う', '公開', '業者DB', 'LOCK'],
+    on_screen_copy: ['公開入口', '業者DB', 'LOCK'],
     why_avoids_whiteboard: 'The beat is staged as a door/threshold event with one focal split-screen system, not as separate note cards explaining the concept.',
     minimal_render_readiness_basis: 'access contrast reads through lock and depth relation',
     primitives: [
-      shape('backplate', 7, 0, -60, 1060, 420, '#FF0D1828', 100, 0, 900, 18),
-      shape('public_portal', 8, -335, -75, 360, 270, '#FFEAF7FF', 100, 0, 900, 18),
-      shape('public_search_bar', 8, -335, -175, 300, 42, '#FFFFFFFF', 100, 90, 810, 12),
-      shape('private_database', 8, 260, -75, 500, 320, '#FF142946', 100, 180, 720, 18),
-      shape('private_depth_1', 8, 295, -145, 360, 42, '#FF3D6092', 82, 270, 630, 8),
-      shape('private_depth_2', 8, 295, -75, 360, 42, '#FF3D6092', 66, 330, 570, 8),
-      shape('private_depth_3', 8, 295, -5, 360, 42, '#FF3D6092', 50, 390, 510, 8),
-      shape('lock_threshold', 8, -35, -70, 72, 320, '#FF060A12', 100, 420, 480, 10),
-      shape('lock_body', 8, -35, -4, 92, 82, '#FFFFC857', 100, 510, 390, 14),
-      shape('output_card', 8, 95, 90, 250, 74, '#FF8EE0A1', 100, 600, 300, 14),
-      text('headline', 9, 0, 266, 34, '情報の入口が違う', textColor, 0, 900),
-      text('public_label', 9, -335, -232, 28, '公開', darkTextColor, 60, 840),
-      text('db_label', 9, 260, -242, 28, '業者DB', textColor, 210, 690),
-      text('lock_label', 9, -35, -22, 28, 'LOCK', '#FF2A1E00', 520, 380),
+      shape('backplate', 7, 0, 0, 1500, 780, '#FF12233C', 100, 0, 900, 24),
+      shape('public_panel', 8, -450, -50, 590, 500, '#FFEAF7FF', 100, 0, 900, 24),
+      shape('public_search_bar', 8, -450, -190, 485, 74, '#FFFFFFFF', 100, 60, 840, 14),
+      shape('public_result_stack', 8, -450, 30, 420, 190, '#FFB8D9F2', 100, 120, 780, 18),
+      shape('private_panel', 8, 360, -50, 760, 560, '#FF1F4B7D', 100, 150, 750, 24),
+      shape('private_depth_1', 8, 360, -210, 600, 62, '#FF76A7E8', 100, 220, 680, 10),
+      shape('private_depth_2', 8, 360, -90, 600, 62, '#FF4F83C8', 100, 280, 620, 10),
+      shape('private_depth_3', 8, 360, 30, 600, 62, '#FF2F659F', 100, 340, 560, 10),
+      shape('access_arrow_body', 8, -210, 190, 420, 44, '#FF64D4FF', 100, 420, 480, 10),
+      shape('lock_boundary', 8, -40, -40, 125, 610, '#FFFFC857', 100, 450, 450, 14),
+      shape('lock_body', 8, -40, -40, 155, 132, '#FFFFD77A', 100, 500, 400, 18),
+      shape('output_card', 8, 135, 208, 410, 118, '#FF7BE28F', 100, 600, 300, 18),
+      text('public_label', 9, -450, -285, 42, '公開入口', darkTextColor, 30, 870),
+      text('db_label', 9, 360, -310, 42, '業者DB', textColor, 170, 730),
+      text('lock_label', 9, -40, -62, 36, 'LOCK', '#FF3A2800', 520, 380),
     ],
   },
   {
@@ -69,24 +71,25 @@ const sceneBeats = [
     duration_frames: 900,
     narrative_intent: 'Viewer understands that the service narrows many options into one recommended property while keeping the drawback visible.',
     visual_composition: 'Rejected cards slide to the edges, one property sheet remains center stage, and a warning callout attaches to the selected sheet.',
-    on_screen_copy: ['比較して一つ選ぶ', '候補', '選定', '注意点'],
+    on_screen_copy: ['一つに絞る', '選定', '注意点'],
     why_avoids_whiteboard: 'The screen is a selection event: cards are spatially rejected, one sheet is framed, and the drawback is attached to the chosen object.',
     minimal_render_readiness_basis: 'selection and drawback relation are event-like and focal',
     primitives: [
-      shape('backplate', 7, 0, -60, 1060, 420, '#FF151E2C', 100, 0, 900, 18),
-      shape('candidate_left', 8, -420, -90, 250, 115, '#FF586477', 62, 0, 540, 12),
-      shape('candidate_right', 8, 420, -90, 250, 115, '#FF586477', 62, 0, 540, 12),
-      shape('selected_sheet', 8, 0, -85, 560, 330, '#FFFFFEF4', 100, 180, 720, 18),
-      shape('sheet_header', 8, 0, -210, 500, 54, '#FF5A89C8', 100, 240, 660, 12),
-      shape('condition_axis_1', 8, -120, -110, 330, 28, '#FFDDE8F5', 100, 330, 570, 6),
-      shape('condition_axis_2', 8, -120, -50, 330, 28, '#FFDDE8F5', 82, 390, 510, 6),
-      shape('condition_axis_3', 8, -120, 10, 330, 28, '#FFDDE8F5', 68, 450, 450, 6),
-      shape('drawback_callout', 8, 270, 38, 250, 118, '#FFFFB14A', 100, 540, 360, 18),
-      shape('selection_frame', 8, 0, -85, 620, 382, '#3370FFB0', 55, 600, 300, 18),
-      text('headline', 9, 0, 266, 34, '比較して一つ選ぶ', textColor, 0, 900),
-      text('candidate_label', 9, -420, -112, 27, '候補', textColor, 0, 540),
-      text('selected_label', 9, 0, -223, 28, '選定', textColor, 260, 640),
-      text('drawback_label', 9, 270, 10, 29, '注意点', '#FF2A1E00', 560, 340),
+      shape('backplate', 7, 0, 0, 1500, 780, '#FF182235', 100, 0, 900, 24),
+      shape('candidate_left', 8, -545, -70, 360, 260, '#FF748095', 92, 0, 540, 18),
+      shape('candidate_right', 8, 545, -70, 360, 260, '#FF748095', 92, 0, 540, 18),
+      shape('selected_sheet', 8, 0, -30, 850, 560, '#FFFFFEF4', 100, 120, 780, 24),
+      shape('sheet_header', 8, 0, -270, 780, 82, '#FF3977C4', 100, 180, 720, 14),
+      shape('condition_axis_1', 8, -70, -145, 620, 44, '#FFE0EAF8', 100, 260, 640, 8),
+      shape('condition_axis_2', 8, -70, -45, 620, 44, '#FFCEDCF0', 100, 320, 580, 8),
+      shape('condition_axis_3', 8, -70, 55, 620, 44, '#FFBFD0E8', 100, 380, 520, 8),
+      shape('funnel_left', 8, -270, 175, 500, 46, '#FF63D48A', 100, 480, 420, 10),
+      shape('funnel_right', 8, 270, 175, 500, 46, '#FF63D48A', 100, 480, 420, 10),
+      shape('drawback_callout', 8, 360, 150, 380, 180, '#FFFFB14A', 100, 540, 360, 22),
+      shape('selection_overlay', 8, 0, -30, 920, 620, '#2270FFB0', 100, 600, 300, 24),
+      text('headline', 9, 0, 318, 46, '一つに絞る', textColor, 0, 900),
+      text('selected_label', 9, 0, -286, 40, '選定', textColor, 220, 680),
+      text('drawback_label', 9, 360, 120, 38, '注意点', '#FF302000', 560, 340),
     ],
   },
   {
@@ -96,24 +99,24 @@ const sceneBeats = [
     duration_frames: 900,
     narrative_intent: 'Viewer understands that an AI-like system can confidently highlight one property as the best match.',
     visual_composition: 'A dark AI system panel scans, a match arrow fires, and a single property card becomes the focal target with a confidence badge.',
-    on_screen_copy: ['AIが候補を選ぶ', 'AI', 'MATCH', '物件'],
+    on_screen_copy: ['照合して選ぶ', '推奨物件', '高一致'],
     why_avoids_whiteboard: 'The beat is a scanning and targeting event with one highlighted card, not a board of explanatory labels.',
     minimal_render_readiness_basis: 'AI targeting relation reads visually through scan bars, arrow, and match badge',
     primitives: [
-      shape('backplate', 7, 0, -60, 1060, 420, '#FF071020', 100, 0, 900, 18),
-      shape('ai_panel', 8, -330, -90, 450, 320, '#FF14243E', 100, 0, 900, 18),
-      shape('scan_bar_1', 8, -330, -150, 330, 24, '#FF6BFFB5', 100, 150, 500, 6),
-      shape('scan_bar_2', 8, -330, -88, 280, 24, '#FF6BFFB5', 80, 270, 500, 6),
-      shape('scan_bar_3', 8, -330, -26, 230, 24, '#FF6BFFB5', 62, 390, 500, 6),
-      shape('match_arrow_body', 8, 0, -84, 300, 32, '#FF6BFFB5', 96, 480, 420, 8),
-      shape('match_arrow_head', 8, 150, -84, 70, 70, '#FF6BFFB5', 96, 480, 420, 10),
-      shape('property_card', 8, 350, -88, 390, 300, '#FFFFFEF4', 100, 540, 360, 18),
-      shape('match_ring', 8, 350, -88, 460, 360, '#3370FFB0', 58, 600, 300, 18),
-      shape('confidence_badge', 8, 350, 80, 230, 72, '#FF63D48A', 100, 660, 240, 16),
-      text('headline', 9, 0, 266, 34, 'AIが候補を選ぶ', textColor, 0, 900),
-      text('ai_label', 9, -330, -230, 30, 'AI', textColor, 40, 860),
-      text('match_label', 9, 350, 63, 29, 'MATCH', '#FF0E2A17', 670, 230),
-      text('property_label', 9, 350, -199, 28, '物件', darkTextColor, 560, 340),
+      shape('backplate', 7, 0, 0, 1500, 780, '#FF07172A', 100, 0, 900, 24),
+      shape('ai_panel', 8, -440, -35, 640, 540, '#FF17304F', 100, 0, 900, 24),
+      shape('scan_bar_1', 8, -440, -205, 520, 48, '#FF6BFFB5', 100, 110, 580, 8),
+      shape('scan_bar_2', 8, -440, -85, 470, 48, '#FF54DCA0', 100, 230, 560, 8),
+      shape('scan_bar_3', 8, -440, 35, 410, 48, '#FF42B786', 100, 350, 540, 8),
+      shape('match_line', 8, 0, 30, 560, 52, '#FF6BFFB5', 100, 450, 450, 12),
+      shape('match_arrow_head', 8, 245, 30, 110, 110, '#FF6BFFB5', 100, 450, 450, 14),
+      shape('property_card', 8, 395, -35, 660, 510, '#FFFFFEF4', 100, 520, 380, 24),
+      shape('property_image_block', 8, 395, -135, 560, 190, '#FFCBD7E6', 100, 560, 340, 18),
+      shape('match_overlay', 8, 395, -35, 735, 585, '#2270FFB0', 100, 600, 300, 24),
+      shape('confidence_badge', 8, 395, 150, 300, 92, '#FF63D48A', 100, 660, 240, 18),
+      text('headline', 9, 0, 318, 46, '照合して選ぶ', textColor, 0, 900),
+      text('property_label', 9, 395, -286, 40, '推奨物件', darkTextColor, 540, 360),
+      text('confidence_label', 9, 395, 126, 38, '高一致', '#FF082614', 670, 230),
     ],
   },
   {
@@ -123,22 +126,23 @@ const sceneBeats = [
     duration_frames: 900,
     narrative_intent: 'Viewer understands that the AI recommendation is not final because hidden real-estate risks interrupt it and make the choice conditional.',
     visual_composition: 'The matched property remains in the center, then red/yellow risk zones cover it and a dark conditional strip overrides the previous recommendation.',
-    on_screen_copy: ['推薦は条件つき', '境界', '相続', '周辺'],
+    on_screen_copy: ['条件つき推薦', '境界', '相続', '周辺'],
     why_avoids_whiteboard: 'The beat uses interruption and occlusion: risk zones physically cover the recommendation instead of listing risk notes beside it.',
     minimal_render_readiness_basis: 'conditional recommendation reads as visual interruption, but needs GUI judgment before render smoke',
     primitives: [
-      shape('backplate', 7, 0, -60, 1060, 420, '#FF140B12', 100, 0, 900, 18),
-      shape('property_card', 8, 0, -85, 500, 300, '#FFFFFEF4', 95, 0, 900, 18),
-      shape('ai_ok_bar', 8, 0, -210, 480, 52, '#FF6BFFB5', 92, 0, 460, 12),
-      shape('risk_boundary', 8, -340, -95, 300, 108, '#FFFF5B5B', 96, 330, 570, 18),
-      shape('risk_inheritance', 8, 0, 20, 300, 108, '#FFFFB14A', 98, 450, 450, 18),
-      shape('risk_neighborhood', 8, 340, -95, 300, 108, '#FFFF5B5B', 96, 570, 330, 18),
-      shape('conditional_strip', 8, 0, 132, 650, 68, '#FF070A12', 100, 660, 240, 12),
-      shape('stop_overlay', 8, 0, -85, 570, 350, '#66210015', 58, 660, 240, 18),
-      text('headline', 9, 0, 266, 34, '推薦は条件つき', textColor, 0, 900),
-      text('boundary_label', 9, -340, -118, 28, '境界', warningTextColor, 340, 560),
-      text('inheritance_label', 9, 0, -2, 28, '相続', '#FF2A1E00', 460, 440),
-      text('neighborhood_label', 9, 340, -118, 28, '周辺', warningTextColor, 580, 320),
+      shape('backplate', 7, 0, 0, 1500, 780, '#FF1B0C14', 100, 0, 900, 24),
+      shape('property_card', 8, 0, -55, 800, 520, '#FFFFFEF4', 100, 0, 900, 24),
+      shape('ai_ok_bar', 8, 0, -285, 740, 82, '#FF6BFFB5', 100, 0, 420, 14),
+      shape('warning_band', 8, 0, -15, 1120, 170, '#FFFFD36A', 100, 300, 600, 24),
+      shape('risk_boundary', 8, -380, -60, 430, 190, '#FFFF5B5B', 100, 330, 570, 22),
+      shape('risk_inheritance', 8, 0, 75, 430, 190, '#FFFFB14A', 100, 430, 470, 22),
+      shape('risk_neighborhood', 8, 380, -60, 430, 190, '#FFFF5B5B', 100, 530, 370, 22),
+      shape('interruption_overlay', 8, 0, -55, 920, 590, '#88210015', 100, 600, 300, 24),
+      shape('conditional_strip', 8, 0, 255, 980, 102, '#FF070A12', 100, 660, 240, 14),
+      text('headline', 9, 0, 318, 46, '条件つき推薦', textColor, 0, 900),
+      text('boundary_label', 9, -380, -92, 38, '境界', warningTextColor, 340, 560),
+      text('inheritance_label', 9, 0, 43, 38, '相続', '#FF302000', 460, 440),
+      text('neighborhood_label', 9, 380, -92, 38, '周辺', warningTextColor, 580, 320),
     ],
   },
 ];
@@ -259,6 +263,16 @@ function setShapeBrushColor(shapeItem, color) {
   brush.Parameter.Color = color;
 }
 
+function setShapeSize(shapeItem, primitive) {
+  shapeItem.ShapeParameter.SizeMode = shapeSizeMode;
+  setShapeParameterValue(shapeItem, 'Size', Math.max(primitive.width, primitive.height));
+  setShapeParameterValue(shapeItem, 'AspectRate', primitive.width / primitive.height);
+  setShapeParameterValue(shapeItem, 'Width', primitive.width);
+  setShapeParameterValue(shapeItem, 'Height', primitive.height);
+  setShapeParameterValue(shapeItem, 'Round', primitive.round);
+  setShapeParameterValue(shapeItem, 'StrokeThickness', 0);
+}
+
 function validateInputs(compactReview) {
   const candidates = compactReview.candidates || [];
   const candidateIds = new Set(candidates.map((candidate) => candidate.candidate_id));
@@ -308,22 +322,26 @@ function sourceLineText(candidate) {
 }
 
 function scopedItemId(beat, primitive) {
-  return `${beat.beat_id}__${primitive.item_id}`;
+  const beatNumber = String(sceneBeats.indexOf(beat) + 1).padStart(2, '0');
+  return `b${beatNumber}_${primitive.item_id}`;
 }
 
 function buildRemark(candidate, beat, primitive) {
+  const beatNumber = String(sceneBeats.indexOf(beat) + 1).padStart(2, '0');
   return [
-    'g27_micro_scene_probe',
-    `beat_id=${beat.beat_id}`,
-    `candidate_id=${beat.candidate_id}`,
+    'g27vis',
+    `beat=${beatNumber}`,
+    `candidate=${beat.candidate_id}`,
     `item_id=${scopedItemId(beat, primitive)}`,
-    `source=${paths.compactReview}`,
-    `source_beat=${candidate.source_reference?.visual_treatment_beat_id || beat.candidate_id}`,
-    `source_lines=${sourceLineText(candidate)}`,
-    'shape_text_only',
-    'not_creative_acceptance',
-    'no_render',
+    `lines=${sourceLineText(candidate)}`,
   ].join(' ');
+}
+
+function shapeRole(itemId) {
+  if (itemId === 'backplate') return 'background';
+  if (/(public_panel|private_panel|selected_sheet|ai_panel|property_card)/.test(itemId)) return 'focal_panel';
+  if (/(arrow|lock|funnel|match|warning|risk|conditional|interruption|output_card|drawback)/.test(itemId)) return 'relation';
+  return 'support';
 }
 
 function makeShapeItem(template, candidate, beat, primitive) {
@@ -342,10 +360,7 @@ function makeShapeItem(template, candidate, beat, primitive) {
   setAnimatedValue(item, 'Opacity', primitive.opacity);
   setAnimatedValue(item, 'Zoom', 100);
   setAnimatedValue(item, 'Rotation', 0);
-  setShapeParameterValue(item, 'Width', primitive.width);
-  setShapeParameterValue(item, 'Height', primitive.height);
-  setShapeParameterValue(item, 'Round', primitive.round);
-  setShapeParameterValue(item, 'StrokeThickness', 0);
+  setShapeSize(item, primitive);
   setShapeBrushColor(item, primitive.color);
   return item;
 }
@@ -427,6 +442,14 @@ function parseRemark(remark) {
   return result;
 }
 
+function animationValue(item, key) {
+  return item?.[key]?.Values?.[0]?.Value;
+}
+
+function shapeParameterValue(item, key) {
+  return item?.ShapeParameter?.[key]?.Values?.[0]?.Value;
+}
+
 function valueType(value) {
   if (Array.isArray(value)) return 'array';
   if (value === null) return 'null';
@@ -495,6 +518,14 @@ function expectedItems() {
       layer: primitive.layer,
       start_frame: beat.start_frame + primitive.offset,
       duration_frames: primitive.duration,
+      primitive_id: primitive.item_id,
+      role: primitive.kind === 'ShapeItem' ? shapeRole(primitive.item_id) : 'copy',
+      x: primitive.x,
+      y: primitive.y,
+      opacity: primitive.opacity ?? 100,
+      width: primitive.width ?? null,
+      height: primitive.height ?? null,
+      font_size: primitive.fontSize ?? null,
     })),
   );
 }
@@ -504,25 +535,51 @@ function readbackProbe(compactReview, ymmp, carrierHashBefore, carrierHashAfter)
   const probeItems = timelineItems
     .map((item, index) => {
       const remark = parseRemark(item.Remark);
+      const itemId = remark.item_id || null;
+      const primitiveId = itemId ? itemId.replace(/^b\d+_/, '') : null;
+      const role = itemType(item) === 'ShapeItem' && primitiveId ? shapeRole(primitiveId) : 'copy';
+      const candidateId = remark.candidate || remark.candidate_id || null;
+      const beatNumber = remark.beat || null;
+      const beat = beatNumber ? sceneBeats[Number(beatNumber) - 1] : null;
+      const candidate = compactReview.candidates.find((entry) => entry.candidate_id === candidateId);
       return {
         index,
         item_type: itemType(item),
-        beat_id: remark.beat_id || null,
-        candidate_id: remark.candidate_id || null,
-        item_id: remark.item_id || null,
+        beat_id: beat?.beat_id || remark.beat_id || null,
+        candidate_id: candidateId,
+        item_id: itemId,
+        primitive_id: primitiveId,
+        role,
         layer: item.Layer,
         start_frame: item.Frame,
         duration_frames: item.Length,
+        x: animationValue(item, 'X') ?? null,
+        y: animationValue(item, 'Y') ?? null,
+        opacity: animationValue(item, 'Opacity') ?? null,
+        zoom: animationValue(item, 'Zoom') ?? null,
         text: item.Text || null,
         font_color: item.FontColor || null,
+        shape_size_mode: item.ShapeParameter?.SizeMode || null,
+        shape_size: shapeParameterValue(item, 'Size') ?? null,
+        shape_aspect_rate: shapeParameterValue(item, 'AspectRate') ?? null,
+        shape_width: shapeParameterValue(item, 'Width') ?? null,
+        shape_height: shapeParameterValue(item, 'Height') ?? null,
+        shape_brush_color: item.ShapeParameter?.Brush?.Parameter?.Color || null,
         remark: item.Remark || '',
         source_reference_found: {
-          source: remark.source === paths.compactReview,
-          source_lines: Boolean(remark.source_lines),
+          probe_marker: String(item.Remark || '').includes('g27vis'),
+          source_lines: Boolean(remark.lines || remark.source_lines),
+        },
+        detailed_provenance: {
+          compact_patch_review: paths.compactReview,
+          source_beat: candidate?.source_reference?.visual_treatment_beat_id || candidateId,
+          source_line_range: candidate?.source_reference?.source_line_range || null,
+          not_creative_acceptance: true,
+          render_performed: false,
         },
       };
     })
-    .filter((item) => item.remark.includes('g27_micro_scene_probe'));
+    .filter((item) => item.remark.includes('g27vis'));
 
   const missingItems = [];
   const malformedItems = [];
@@ -536,11 +593,33 @@ function readbackProbe(compactReview, ymmp, carrierHashBefore, carrierHashAfter)
     for (const field of ['beat_id', 'candidate_id', 'item_type', 'layer', 'start_frame', 'duration_frames']) {
       if (found[field] !== expected[field]) mismatches.push({ field, expected: expected[field], actual: found[field] });
     }
-    if (!found.source_reference_found.source || !found.source_reference_found.source_lines) {
+    if (!found.source_reference_found.probe_marker || !found.source_reference_found.source_lines) {
       mismatches.push({ field: 'source_reference', expected: 'compact review source and line range', actual: found.source_reference_found });
     }
     if (!['ShapeItem', 'TextItem'].includes(found.item_type)) {
       mismatches.push({ field: 'item_type_allowed', expected: 'ShapeItem/TextItem only', actual: found.item_type });
+    }
+    if (found.item_type === 'ShapeItem') {
+      if (found.shape_size_mode !== shapeSizeMode) {
+        mismatches.push({ field: 'ShapeParameter.SizeMode', expected: shapeSizeMode, actual: found.shape_size_mode });
+      }
+      if (found.shape_width !== expected.width || found.shape_height !== expected.height) {
+        mismatches.push({
+          field: 'ShapeParameter.WidthHeight',
+          expected: { width: expected.width, height: expected.height },
+          actual: { width: found.shape_width, height: found.shape_height },
+        });
+      }
+      if (found.shape_aspect_rate === 0 || found.shape_size === 100) {
+        mismatches.push({
+          field: 'ShapeParameter.SizeAspectFallback',
+          expected: 'Size/AspectRate should not be the old 100px square fallback',
+          actual: { size: found.shape_size, aspect_rate: found.shape_aspect_rate },
+        });
+      }
+      if (expected.role !== 'background' && found.opacity < 90) {
+        mismatches.push({ field: 'Opacity', expected: '>=90 for visible scene elements', actual: found.opacity });
+      }
     }
     if (found.item_type === 'TextItem' && !(typeof found.font_color === 'string' && hexColorPattern.test(found.font_color))) {
       mismatches.push({ field: 'FontColor', expected: '#AARRGGBB string', actual: found.font_color });
@@ -554,12 +633,24 @@ function readbackProbe(compactReview, ymmp, carrierHashBefore, carrierHashAfter)
     const candidate = compactReview.candidates.find((item) => item.candidate_id === beat.candidate_id);
     const shapeCount = items.filter((item) => item.item_type === 'ShapeItem').length;
     const textCount = items.filter((item) => item.item_type === 'TextItem').length;
+    const focalPanelCount = items.filter((item) => item.role === 'focal_panel').length;
+    const relationElementCount = items.filter((item) => item.role === 'relation').length;
+    const largestPanelArea = Math.max(
+      0,
+      ...items
+        .filter((item) => item.role === 'focal_panel')
+        .map((item) => (item.shape_width || 0) * (item.shape_height || 0)),
+    );
     const missing = missingItems.filter((item) => item.beat_id === beat.beat_id);
     const malformed = malformedItems.filter((item) => item.beat_id === beat.beat_id);
+    const visibilityIssues = [];
+    if (focalPanelCount < 1) visibilityIssues.push('missing focal panel');
+    if (relationElementCount < 2) visibilityIssues.push('insufficient relation elements');
+    if (largestPanelArea < 250000) visibilityIssues.push(`largest focal panel area too small: ${largestPanelArea}`);
     return {
       beat_id: beat.beat_id,
       candidate_id: beat.candidate_id,
-      classification: missing.length || malformed.length ? 'fix required' : 'pass',
+      classification: missing.length || malformed.length || visibilityIssues.length ? 'fix required' : 'pass',
       narrative_intent: beat.narrative_intent,
       visual_composition: beat.visual_composition,
       on_screen_copy: beat.on_screen_copy,
@@ -569,6 +660,10 @@ function readbackProbe(compactReview, ymmp, carrierHashBefore, carrierHashAfter)
       duration_frames: beat.duration_frames,
       shape_item_count: shapeCount,
       text_item_count: textCount,
+      focal_panel_count: focalPanelCount,
+      relation_element_count: relationElementCount,
+      largest_focal_panel_area: largestPanelArea,
+      visibility_issues: visibilityIssues,
       missing_item_count: missing.length,
       malformed_item_count: malformed.length,
     };
@@ -583,7 +678,7 @@ function readbackProbe(compactReview, ymmp, carrierHashBefore, carrierHashAfter)
       : 'failed';
 
   return {
-    artifact_type: 'g27_micro_scene_probe_readback',
+    artifact_type: 'g27_micro_scene_visibility_probe_readback',
     status,
     source: {
       compact_patch_review: paths.compactReview,
@@ -592,10 +687,19 @@ function readbackProbe(compactReview, ymmp, carrierHashBefore, carrierHashAfter)
       generated_probe_ymmp: paths.outputYmmp,
     },
     boundary: {
-      micro_scene_probe_only: true,
+      micro_scene_visibility_fix_only: true,
+      previous_gui_review_result: {
+        openability: 'pass',
+        timeline_placement: 'pass',
+        scene_visibility: 'fail',
+        minimal_render_readiness: 'no',
+      },
       selected_candidate_ids: selectedCandidateIds,
       not_selected_candidate_ids: notSelectedCandidateIds,
       shape_item_text_item_only: true,
+      same_4_beats_as_previous_micro_scene: true,
+      same_source_references: true,
+      shape_size_mode: shapeSizeMode,
       external_assets_used: false,
       tts_performed: false,
       url_fetch_performed: false,
@@ -633,20 +737,20 @@ function readbackProbe(compactReview, ymmp, carrierHashBefore, carrierHashAfter)
     missing_items: missingItems,
     malformed_items: malformedItems,
     minimal_render_smoke_recommendation:
-      status === 'passed'
-        ? 'ready_for_user_gui_readback_before_minimal_render_smoke'
-        : 'needs_visual_local_fix_before_any_render_smoke',
+      'not_ready_until_user_gui_review_confirms_visibility_fix',
   };
 }
 
 function renderMarkdown(readback) {
   const lines = [];
-  lines.push('# Real Estate DX Micro Video Scene Probe');
+  lines.push('# Real Estate DX Micro Scene Visibility Probe');
   lines.push('');
   lines.push(`Probe: \`${readback.source.generated_probe_ymmp}\``);
   lines.push(`Source compact review: \`${readback.source.compact_patch_review}\``);
   lines.push('');
-  lines.push('This bounded probe converts the G-27 visual proxy from a 7-candidate catalog into one short 4-beat narrative scene. It uses only ShapeItem/TextItem primitives from existing G-27 material. It is not rendered, not creative acceptance, and not production-ready.');
+  lines.push('This bounded probe fixes the GUI visibility failure from the previous micro scene without changing the 4 beats, source references, 60-second structure, or ShapeItem/TextItem-only boundary. It is not rendered, not creative acceptance, and not production-ready.');
+  lines.push('');
+  lines.push('Root cause addressed: the previous ShapeItems inherited `SizeMode=SizeAspect`, `Size=100`, and `AspectRate=0`, so large Width/Height values were not materially visible in YMM4 preview. This revision writes `SizeMode=WidthHeight`, large focal panels, high opacity, and explicit relation elements.');
   lines.push('');
   lines.push('## Rollup');
   lines.push('');
@@ -654,15 +758,16 @@ function renderMarkdown(readback) {
   lines.push(`- Timeline duration: \`${readback.timeline.duration_sec}\` sec`);
   lines.push(`- Inserted items: \`${readback.totals.inserted_probe_item_count}\` (` +
     `ShapeItem=\`${readback.totals.inserted_shape_item_count}\`, TextItem=\`${readback.totals.inserted_text_item_count}\`)`);
+  lines.push(`- Shape size mode: \`${readback.boundary.shape_size_mode}\``);
   lines.push(`- Color-like scan failures: \`${readback.totals.color_like_failure_count}\``);
   lines.push(`- Carrier modified in place: \`${readback.source_integrity.carrier_modified_in_place}\``);
   lines.push('');
   lines.push('## Beat Table');
   lines.push('');
-  lines.push('| beat | candidate | narrative intent | visual composition | on-screen copy | why it avoids slideshow / whiteboard effect |');
-  lines.push('| --- | --- | --- | --- | --- | --- |');
+  lines.push('| beat | candidate | focal / relation readback | narrative intent | visual composition | on-screen copy | why it avoids slideshow / whiteboard effect |');
+  lines.push('| --- | --- | --- | --- | --- | --- | --- |');
   readback.beat_summaries.forEach((beat) => {
-    lines.push(`| \`${beat.beat_id}\` | \`${beat.candidate_id}\` | ${beat.narrative_intent} | ${beat.visual_composition} | ${beat.on_screen_copy.join(' / ')} | ${beat.why_avoids_slideshow_whiteboard_effect} |`);
+    lines.push(`| \`${beat.beat_id}\` | \`${beat.candidate_id}\` | focal=\`${beat.focal_panel_count}\`, relation=\`${beat.relation_element_count}\`, max_area=\`${beat.largest_focal_panel_area}\` | ${beat.narrative_intent} | ${beat.visual_composition} | ${beat.on_screen_copy.join(' / ')} | ${beat.why_avoids_slideshow_whiteboard_effect} |`);
   });
   lines.push('');
   lines.push('## Candidate Selection');
@@ -673,9 +778,9 @@ function renderMarkdown(readback) {
   lines.push('');
   lines.push('## Completion Position');
   lines.push('');
-  lines.push('- Technical openability: machine structure is ready for user-side YMM4 GUI readback.');
-  lines.push('- Semantic proxy: local readback separates narrative intent, visual composition, and minimal on-screen copy.');
-  lines.push('- Video adequacy: not proven until GUI review confirms it feels like a short scene rather than another board.');
+  lines.push('- Technical openability: machine structure is ready for another user-side YMM4 GUI readback.');
+  lines.push('- Semantic proxy: local readback keeps narrative intent, visual composition, and minimal on-screen copy separate.');
+  lines.push('- Video adequacy: not proven until GUI review confirms each beat has one visible focal composition and reads as screen events.');
   lines.push('- Production readiness: no. No render, production timing, creative acceptance, external assets, URL fetch, TTS, or publishing.');
   lines.push(`- Minimal render smoke recommendation: \`${readback.minimal_render_smoke_recommendation}\`.`);
   return `${lines.join('\n')}\n`;
@@ -694,6 +799,9 @@ function assertReadback(readback, markdown = null) {
   for (const beat of readback.beat_summaries) {
     if (beat.on_screen_copy.length > 4) failures.push(`${beat.beat_id} has too much on-screen copy`);
     if (beat.text_item_count > 4) failures.push(`${beat.beat_id} has too many TextItems`);
+    if (beat.focal_panel_count < 1) failures.push(`${beat.beat_id} lacks focal panel`);
+    if (beat.relation_element_count < 2) failures.push(`${beat.beat_id} lacks relation elements`);
+    if (beat.largest_focal_panel_area < 250000) failures.push(`${beat.beat_id} focal panel area too small`);
     if (beat.classification !== 'pass') failures.push(`${beat.beat_id} classification=${beat.classification}`);
   }
   if (markdown) {
@@ -737,7 +845,7 @@ function main() {
     }
   }
 
-  console.log('G-27 micro scene probe OK: 4 beats, 60 sec, ShapeItem/TextItem only, no render');
+  console.log('G-27 micro scene visibility probe OK: 4 beats, 60 sec, ShapeItem/TextItem only, no render');
 }
 
 main();
