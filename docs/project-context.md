@@ -264,6 +264,19 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ---
 
+## HANDOFF SNAPSHOT (2026-05-14 update)
+
+- Branch / remote state: `codex/g24-nod-sync-adoption`; pull the latest branch and expect the active project changes to be committed. Confirm with `git status --short --branch` and `git rev-list --left-right --count HEAD...'@{u}'`.
+- Restart path: read `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`. The live `next_action` is waiting for a human-authored `G27_PublicVsBrokerDB` YMM4 carrier, not a scene-generation or render slice.
+- Current decision: G-27 direct dense `ShapeItem` / `TextItem` scene generation is stopped as a production route. Existing visual proxy v2/v2.1, minimal probe, micro scene, and micro scene visibility outputs are diagnostic-only and must not be promoted into stable carriers.
+- New handoff artifact: `docs/G27_PUBLIC_VS_BROKER_DB_CARRIER_CHECKLIST.md`. It tells the human exactly what to create in YMM4: 16:9 / 1920x1080 carrier, 5% outer safe margin, bottom 10-15% caption safe area, left public panel, right broker/private DB panel, center lock/threshold, fixed 2 public cards, fixed 3 broker cards, optional `G27PBD_Arrow`, short `G27PBD_*` item names, short Remarks, and no provenance in item names/Remarks.
+- User should return: carrier `.ymmp` path, preview screenshot, timeline screenshot, representative item property screenshots for `G27PBD_PublicPanel`, `G27PBD_PublicCard1`, `G27PBD_BrokerPanel`, and `G27PBD_Lock`, light/dark stage choice, and a short note that the caption safe area is clear.
+- Assistant next after receiving carrier: read back required item names, duplicate/missing items, short Remarks, fixed card counts, `G27PBD_Arrow` existence, and whether text / visibility / timing / sidecar provenance can be patched without touching geometry, anchors, colors, font hierarchy, or layout grid. Only then prepare an anchored slot contract.
+- Not done: no `.ymmp` carrier was created, no slot-fill contract was written, no patch script was implemented, no raw geometry was generated, no render, no production timing, no creative acceptance, no G-26, no `sports_news`, no INT-02e, no publishing, no master integration, no new gate, and no broad roadmap.
+- Local note: `docs/WritingPage.code-workspace` is an unrelated untracked editor workspace file with sibling-project references; do not commit it as NLMYTGen handoff context.
+
+---
+
 ## HANDOFF SNAPSHOT (2026-05-13 update)
 
 - Branch / remote state: `codex/g24-nod-sync-adoption`; pull the latest branch and expect a clean working tree. Confirm with `git status --short --branch` and `git rev-list --left-right --count HEAD...'@{u}'`.
