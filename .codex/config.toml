@@ -1,8 +1,8 @@
 # Minimal Codex project config scaffold.
 # Keep this file short and project-specific.
 # This file only stores local Codex tool defaults; behavior lives in visible docs.
+# Do not pin a model here; use Codex app/global model selection.
 
-model = "gpt-5-codex"
 approval_policy = "never"
 sandbox_mode = "workspace-write"
 
