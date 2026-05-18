@@ -43,7 +43,7 @@ const sceneFrame = {
 //   boundary  x=826-1094     -> center cx=0,    width=268
 //   right panel x=1094-1824  -> center cx=499,  width=730
 const grid = {
-  title_band: { cy: -455, height: 86 },
+  title_band: { cy: -443, height: 86 },
   main_canvas: { cy_top: -400, cy_bottom: 302, height: 702 },
   caption_safe_area: { cy_top: 302, cy_bottom: 486 },
   outer_safe_band_px: 96,

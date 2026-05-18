@@ -27,7 +27,7 @@ Diagnostic only. Not a production carrier. Render / creative acceptance / timing
 - reading_order: `G27PBD_PublicPanel` -> `G27PBD_Lock` -> `G27PBD_BrokerPanel`
 - shape_size_mode_check: `pass`
 - color_format_check: `pass`
-- safe_area_check: `warn`
+- safe_area_check: `pass`
 - subtitle_clearance_check: `pass`
 - typography_hierarchy_check: `pass`
 - in_frame_text_budget_check: `pass` (labels=3, chars=24)
@@ -36,14 +36,13 @@ Diagnostic only. Not a production carrier. Render / creative acceptance / timing
 
 - `SCS_3_supporting_per_frame_strict` (`spec_ambiguity`): split composition with 2 focal anchors needs per-focal supporting count limit. SCS v0.1 ambiguity recorded for v0.2 refinement.
 - `SCS_4_3_label_budget_strict` (`spec_ambiguity`): split composition needs global title + per-panel title (3 labels). SCS v0.1 ambiguity recorded for v0.2 refinement.
-- `SCS_1_outer_safe_band` (`warn`): one or more items intrude into outer 5% safe band
 
 ## 5. Item Table
 
 | item_name | role | type | layer | hidden | x,y | width x height (or font) | color |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `G27PBD_BG` | `decoration` | `ShapeItem` | `5` | `false` | `0, 0` | `1920x1080` | `#FFF0F4F8` |
-| `G27PBD_Title` | `label` | `TextItem` | `9` | `false` | `0, -455` | `font=64` | `#FF1A2B3C` |
+| `G27PBD_Title` | `label` | `TextItem` | `9` | `false` | `0, -443` | `font=64` | `#FF1A2B3C` |
 | `G27PBD_PublicPanel` | `focal_anchor` | `ShapeItem` | `8` | `false` | `-499, -49` | `730x620` | `#FF2563EB` |
 | `G27PBD_PublicTitle` | `label` | `TextItem` | `10` | `false` | `-499, -310` | `font=48` | `#FFFFFFFF` |
 | `G27PBD_PublicCard1` | `supporting` | `ShapeItem` | `11` | `true` | `-499, -150` | `600x130` | `#FFE0EBFE` |
@@ -61,7 +60,7 @@ Diagnostic only. Not a production carrier. Render / creative acceptance / timing
 - readback status: `passed`
 - carrier modified in place: `false`
 - composition hard failures: `0`
-- composition violation count (all severities): `3`
+- composition violation count (all severities): `2`
 
 ## 7. Boundary
 

@@ -37,7 +37,7 @@
     "composition_type": "split",
     "composition_grid": {
       "title_band": {
-        "cy": -455,
+        "cy": -443,
         "height": 86
       },
       "main_canvas": {
@@ -115,7 +115,7 @@
       "chars": 24
     },
     "in_frame_text_budget_check": "pass",
-    "safe_area_check": "warn",
+    "safe_area_check": "pass",
     "subtitle_clearance_check": "pass",
     "shape_size_mode_check": "pass",
     "color_format_check": "pass",
@@ -137,11 +137,6 @@
         "max_strict": 2,
         "severity": "spec_ambiguity",
         "note": "split composition needs global title + per-panel title (3 labels). SCS v0.1 ambiguity recorded for v0.2 refinement."
-      },
-      {
-        "rule": "SCS_1_outer_safe_band",
-        "severity": "warn",
-        "note": "one or more items intrude into outer 5% safe band"
       }
     ]
   },
@@ -160,7 +155,7 @@
     "malformed_item_count": 0,
     "item_name_length_failures": 0,
     "remark_length_failures": 0,
-    "composition_violation_count": 3,
+    "composition_violation_count": 2,
     "composition_hard_failure_count": 0
   },
   "items": [
@@ -215,7 +210,7 @@
       "duration_frames": 600,
       "is_hidden": false,
       "x": 0,
-      "y": -455,
+      "y": -443,
       "width": null,
       "height": null,
       "shape_size_mode": null,
