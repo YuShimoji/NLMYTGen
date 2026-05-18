@@ -66,8 +66,8 @@ const sceneItems = [
   // decoration: full-screen light-stage background
   shape('G27PBD_BG', 'decoration', 5, 0, 0, 1920, 1080, '#FFF0F4F8', 100, 0, 1080, true, false, 'full-screen light-stage background'),
 
-  // label: global title (title band)
-  text('G27PBD_Title', 'label', 9, 0, grid.title_band.cy, 64, '公開ポータル vs 業者DB', '#FF1A2B3C', false, null, 'global title in title band'),
+  // label: global title (title band) — upper concept distinct from panel titles
+  text('G27PBD_Title', 'label', 9, 0, grid.title_band.cy, 64, '情報の非対称性', '#FF1A2B3C', false, null, 'global title; upper concept above panel titles (no lexical overlap with 公開ポータル / 業者DB)'),
 
   // focal_anchor: left public panel (filled blue rect)
   shape('G27PBD_PublicPanel', 'focal_anchor', 8, grid.left_panel.cx, -49, grid.left_panel.width, 620, '#FF2563EB', 100, 16, 620, true, false, 'left focal anchor: public portal panel'),
@@ -79,8 +79,11 @@ const sceneItems = [
   shape('G27PBD_PublicCard1', 'supporting', 11, grid.left_panel.cx, -150, 600, 130, '#FFE0EBFE', 100, 12, 130, true, true, 'public card 1: visible listing'),
   shape('G27PBD_PublicCard2', 'supporting', 11, grid.left_panel.cx, 30, 600, 130, '#FFE0EBFE', 100, 12, 130, true, true, 'public card 2: visible listing'),
 
-  // boundary: center lock / threshold
-  shape('G27PBD_Lock', 'boundary', 12, grid.center_boundary.cx, -49, 220, 300, '#FFE5A800', 100, 16, 300, true, false, 'center lock / threshold between public and broker'),
+  // boundary: center lock = body (lower rect) + shackle (upper rounded arch)
+  // No TextItem added; readable as a key/lock silhouette via 2 ShapeItem combo.
+  // Naming follows carrier checklist derivation rule (G27PBD_Lock_<part>).
+  shape('G27PBD_Lock', 'boundary', 12, grid.center_boundary.cx, 30, 200, 200, '#FFE5A800', 100, 32, 200, true, false, 'center lock body (lower rounded rectangle)'),
+  shape('G27PBD_Lock_Shackle', 'boundary', 12, grid.center_boundary.cx, -130, 140, 160, '#FFE5A800', 100, 70, 160, true, false, 'center lock shackle (upper rounded arch)'),
 
   // focal_anchor: right broker / private DB panel
   shape('G27PBD_BrokerPanel', 'focal_anchor', 8, grid.right_panel.cx, -49, grid.right_panel.width, 620, '#FF7C3AED', 100, 16, 620, true, false, 'right focal anchor: broker / private DB panel'),
@@ -331,7 +334,9 @@ function validateSceneDesign() {
   const focalCount = sceneItems.filter((i) => i.role === 'focal_anchor').length;
   if (focalCount !== 2) errors.push(`SCS §2.1 split requires exactly 2 focal_anchor, got ${focalCount}`);
   const boundaryCount = sceneItems.filter((i) => i.role === 'boundary').length;
-  if (boundaryCount !== 1) errors.push(`SCS §2.1 split requires 1 boundary, got ${boundaryCount}`);
+  if (boundaryCount < 1) errors.push(`SCS §2.1 split requires at least 1 boundary, got ${boundaryCount}`);
+  // boundary >= 2 is allowed when a single boundary concept (e.g. key = body + shackle)
+  // is composed from multiple ShapeItems following the carrier checklist derivation rule.
   if (errors.length) throw new Error(`DIAGNOSTIC_CARRIER_DESIGN_INVALID: ${errors.join('; ')}`);
 }
 

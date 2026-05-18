@@ -15,7 +15,7 @@ Diagnostic only. Not a production carrier. Render / creative acceptance / timing
 
 - `focal_anchor`: 2 item(s) — `G27PBD_PublicPanel`, `G27PBD_BrokerPanel`
 - `supporting`: 5 item(s) — `G27PBD_PublicCard1`, `G27PBD_PublicCard2`, `G27PBD_BrokerCard1`, `G27PBD_BrokerCard2`, `G27PBD_BrokerCard3`
-- `boundary`: 1 item(s) — `G27PBD_Lock`
+- `boundary`: 2 item(s) — `G27PBD_Lock`, `G27PBD_Lock_Shackle`
 - `connector`: 1 item(s) — `G27PBD_Arrow`
 - `risk_marker`: 0 item(s) — (none)
 - `decoration`: 1 item(s) — `G27PBD_BG`
@@ -23,14 +23,14 @@ Diagnostic only. Not a production carrier. Render / creative acceptance / timing
 
 ## 3. SCS Compliance Rollup
 
-- element_count: `13` (`pass`)
+- element_count: `14` (`pass`)
 - reading_order: `G27PBD_PublicPanel` -> `G27PBD_Lock` -> `G27PBD_BrokerPanel`
 - shape_size_mode_check: `pass`
 - color_format_check: `pass`
 - safe_area_check: `pass`
 - subtitle_clearance_check: `pass`
 - typography_hierarchy_check: `pass`
-- in_frame_text_budget_check: `pass` (labels=3, chars=24)
+- in_frame_text_budget_check: `pass` (labels=3, chars=17)
 
 ## 4. Composition Violations
 
@@ -47,7 +47,8 @@ Diagnostic only. Not a production carrier. Render / creative acceptance / timing
 | `G27PBD_PublicTitle` | `label` | `TextItem` | `10` | `false` | `-499, -310` | `font=48` | `#FFFFFFFF` |
 | `G27PBD_PublicCard1` | `supporting` | `ShapeItem` | `11` | `true` | `-499, -150` | `600x130` | `#FFE0EBFE` |
 | `G27PBD_PublicCard2` | `supporting` | `ShapeItem` | `11` | `true` | `-499, 30` | `600x130` | `#FFE0EBFE` |
-| `G27PBD_Lock` | `boundary` | `ShapeItem` | `12` | `false` | `0, -49` | `220x300` | `#FFE5A800` |
+| `G27PBD_Lock` | `boundary` | `ShapeItem` | `12` | `false` | `0, 30` | `200x200` | `#FFE5A800` |
+| `G27PBD_Lock_Shackle` | `boundary` | `ShapeItem` | `12` | `false` | `0, -130` | `140x160` | `#FFE5A800` |
 | `G27PBD_BrokerPanel` | `focal_anchor` | `ShapeItem` | `8` | `false` | `499, -49` | `730x620` | `#FF7C3AED` |
 | `G27PBD_BrokerTitle` | `label` | `TextItem` | `10` | `false` | `499, -310` | `font=48` | `#FFFFFFFF` |
 | `G27PBD_BrokerCard1` | `supporting` | `ShapeItem` | `11` | `true` | `499, -190` | `600x110` | `#FFEDE9FE` |

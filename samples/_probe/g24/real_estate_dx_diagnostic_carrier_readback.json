@@ -87,7 +87,8 @@
         "G27PBD_BrokerCard3"
       ],
       "boundary": [
-        "G27PBD_Lock"
+        "G27PBD_Lock",
+        "G27PBD_Lock_Shackle"
       ],
       "connector": [
         "G27PBD_Arrow"
@@ -102,7 +103,7 @@
         "G27PBD_BrokerTitle"
       ]
     },
-    "element_count": 13,
+    "element_count": 14,
     "element_count_check": "pass",
     "reading_order": [
       "G27PBD_PublicPanel",
@@ -112,7 +113,7 @@
     "typography_hierarchy_check": "pass",
     "in_frame_text_budget": {
       "labels": 3,
-      "chars": 24
+      "chars": 17
     },
     "in_frame_text_budget_check": "pass",
     "safe_area_check": "pass",
@@ -146,9 +147,9 @@
     "carrier_modified_in_place": false
   },
   "totals": {
-    "item_count": 13,
-    "expected_item_count": 13,
-    "shape_item_count": 10,
+    "item_count": 14,
+    "expected_item_count": 14,
+    "shape_item_count": 11,
     "text_item_count": 3,
     "hidden_item_count": 6,
     "missing_item_count": 0,
@@ -220,7 +221,7 @@
       "opacity": 100,
       "fill_color": null,
       "text_color": "#FF1A2B3C",
-      "text": "公開ポータル vs 業者DB",
+      "text": "情報の非対称性",
       "font_size": 64,
       "display_name_length": 12,
       "item_name_length_check": "pass",
@@ -229,7 +230,7 @@
       "remark_length_check": "pass",
       "detailed_provenance": {
         "generator": "samples/_probe/g24/real_estate_dx_diagnostic_carrier.ymmp",
-        "design_description": "global title in title band",
+        "design_description": "global title; upper concept above panel titles (no lexical overlap with 公開ポータル / 業者DB)",
         "composition_type": "split",
         "composition_role": "label",
         "source": "G-27 diagnostic carrier for SCS §2.1 split adoption (not creative acceptance)",
@@ -405,13 +406,13 @@
       "duration_frames": 600,
       "is_hidden": false,
       "x": 0,
-      "y": -49,
-      "width": 220,
-      "height": 300,
+      "y": 30,
+      "width": 200,
+      "height": 200,
       "shape_size_mode": "WidthHeight",
-      "shape_size": 300,
-      "shape_aspect_rate": 0.7333333333333333,
-      "stroke_thickness": 300,
+      "shape_size": 200,
+      "shape_aspect_rate": 1,
+      "stroke_thickness": 200,
       "opacity": 100,
       "fill_color": "#FFE5A800",
       "text_color": null,
@@ -424,7 +425,7 @@
       "remark_length_check": "pass",
       "detailed_provenance": {
         "generator": "samples/_probe/g24/real_estate_dx_diagnostic_carrier.ymmp",
-        "design_description": "center lock / threshold between public and broker",
+        "design_description": "center lock body (lower rounded rectangle)",
         "composition_type": "split",
         "composition_role": "boundary",
         "source": "G-27 diagnostic carrier for SCS §2.1 split adoption (not creative acceptance)",
@@ -434,6 +435,45 @@
     },
     {
       "index": 7,
+      "display_name": "G27PBD_Lock_Shackle",
+      "item_name": "G27PBD_Lock_Shackle",
+      "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
+      "item_type": "ShapeItem",
+      "role": "boundary",
+      "layer": 12,
+      "frame": 0,
+      "duration_frames": 600,
+      "is_hidden": false,
+      "x": 0,
+      "y": -130,
+      "width": 140,
+      "height": 160,
+      "shape_size_mode": "WidthHeight",
+      "shape_size": 160,
+      "shape_aspect_rate": 0.875,
+      "stroke_thickness": 160,
+      "opacity": 100,
+      "fill_color": "#FFE5A800",
+      "text_color": null,
+      "text": null,
+      "font_size": null,
+      "display_name_length": 19,
+      "item_name_length_check": "pass",
+      "remark": "G27PBD_Lock_Shackle",
+      "remark_length": 19,
+      "remark_length_check": "pass",
+      "detailed_provenance": {
+        "generator": "samples/_probe/g24/real_estate_dx_diagnostic_carrier.ymmp",
+        "design_description": "center lock shackle (upper rounded arch)",
+        "composition_type": "split",
+        "composition_role": "boundary",
+        "source": "G-27 diagnostic carrier for SCS §2.1 split adoption (not creative acceptance)",
+        "not_video_scene": true,
+        "render_performed": false
+      }
+    },
+    {
+      "index": 8,
       "display_name": "G27PBD_BrokerPanel",
       "item_name": "G27PBD_BrokerPanel",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
@@ -472,7 +512,7 @@
       }
     },
     {
-      "index": 8,
+      "index": 9,
       "display_name": "G27PBD_BrokerTitle",
       "item_name": "G27PBD_BrokerTitle",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
@@ -511,7 +551,7 @@
       }
     },
     {
-      "index": 9,
+      "index": 10,
       "display_name": "G27PBD_BrokerCard1",
       "item_name": "G27PBD_BrokerCard1",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
@@ -550,7 +590,7 @@
       }
     },
     {
-      "index": 10,
+      "index": 11,
       "display_name": "G27PBD_BrokerCard2",
       "item_name": "G27PBD_BrokerCard2",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
@@ -589,7 +629,7 @@
       }
     },
     {
-      "index": 11,
+      "index": 12,
       "display_name": "G27PBD_BrokerCard3",
       "item_name": "G27PBD_BrokerCard3",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
@@ -628,7 +668,7 @@
       }
     },
     {
-      "index": 12,
+      "index": 13,
       "display_name": "G27PBD_Arrow",
       "item_name": "G27PBD_Arrow",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
