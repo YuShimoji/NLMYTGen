@@ -242,6 +242,14 @@ sheet. It is a new Visual Direction Layer plus Shot Layout Layer that designs
 actual 16:9 production frames before any YMM4 conversion, render, or production
 timing work.
 
+Shot Layout Layer の **実装手順 (composition grid / visual role / element primitives) は
+[`SCENE_COMPOSITION_SCHEMA.md`](SCENE_COMPOSITION_SCHEMA.md) (Scene Composition Schema v0.1)
+を正本とする。** 本節の Frame Contract / 3-beat treatment は SCS に対する案件固有 (Real Estate DX)
+の適用例として読む。SCS は 5 つの composition type (`split` / `center-focal` / `chain` /
+`reveal` / `mediator`) と visual role vocabulary、element primitive rules を定義し、
+`indexed whiteboard` / `grid-overload` / `drawing-semantics calibration` を anti-pattern として
+明示する。
+
 Layer responsibilities:
 
 | layer | purpose | allowed output | must not do |

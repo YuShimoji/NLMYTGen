@@ -11,6 +11,17 @@
 - agent は後続で carrier の実 item を readback してから、carrier に従属した slot contract を作る。
 - carrier 未作成のまま、抽象 slot contract や raw geometry 生成へ進まない。
 
+## 構図設計の理論的根拠
+
+本 carrier は [`docs/SCENE_COMPOSITION_SCHEMA.md`](SCENE_COMPOSITION_SCHEMA.md) (Scene Composition Schema v0.1) の **`split` composition type** に該当する。
+具体的な対応は次のとおり:
+
+- §1 Composition Grid: 下記「画面比率レイアウト」と一致。outer safe band 5% / title band 8-12% / main canvas / caption safe area 18-22% をすべて満たす。
+- §2.1 `split` composition type: 左 public panel (focal_anchor) / 中央 boundary (lock) / 右 broker panel (focal_anchor) の 3 領域構造。
+- §3 Visual Role: `G27PBD_PublicCard1` 等の focal_anchor / supporting / boundary / label / decoration の割当を後段 sidecar に出す。
+- §5.1 ShapeItem: `ShapeParameter.SizeMode=WidthHeight` 固定。`SizeAspect` + `Size=100` の anti-pattern は G-27 micro_scene_probe v1 で確認済みの失敗原因。
+- §9 Adapter Patch Boundary: 「agent が patch してよい / してはいけない」項目と SCS §9 が一対一で対応。
+
 ## 画面前提
 
 - フレームは 16:9 / 1920x1080。
