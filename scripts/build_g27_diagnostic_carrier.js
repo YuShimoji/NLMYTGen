@@ -79,12 +79,14 @@ const sceneItems = [
   shape('G27PBD_PublicCard1', 'supporting', 11, grid.left_panel.cx, -150, 600, 130, '#FFE0EBFE', 100, 12, 130, true, false, 'public card 1: visible listing'),
   shape('G27PBD_PublicCard2', 'supporting', 11, grid.left_panel.cx, 30, 600, 130, '#FFE0EBFE', 100, 12, 130, true, false, 'public card 2: visible listing'),
 
-  // boundary: center vertical divider (thin wall) between public and broker.
-  // Single ShapeItem with extreme aspect ratio (40x400 = 1:10) and small
-  // round=4 so the form cannot be read as a human silhouette. Replaces the
-  // previous body+shackle pair which YMM4 rendered as a human figure due to
-  // corner-radius interpretation. No TextItem added.
-  shape('G27PBD_Lock', 'boundary', 12, grid.center_boundary.cx, -49, 40, 400, '#FFE5A800', 100, 4, 400, true, false, 'center vertical wall / boundary divider'),
+  // boundary: center gate = 2 thin vertical pillars (left + right) forming
+  // a closed double-pillar barrier. Each pillar 30x400 (aspect 1:13), round=4,
+  // placed symmetrically at cx=-20 and cx=+20 with a 10px gap. The pair
+  // reads as a gate / double-pillar wall, never as a human silhouette
+  // (no oval head, no torso-like single mass). No TextItem added.
+  // Naming follows carrier checklist derivation rule (G27PBD_Lock_<part>).
+  shape('G27PBD_Lock', 'boundary', 12, -20, -49, 30, 400, '#FFE5A800', 100, 4, 400, true, false, 'center gate left pillar'),
+  shape('G27PBD_Lock_Right', 'boundary', 12, 20, -49, 30, 400, '#FFE5A800', 100, 4, 400, true, false, 'center gate right pillar'),
 
   // focal_anchor: right broker / private DB panel
   shape('G27PBD_BrokerPanel', 'focal_anchor', 8, grid.right_panel.cx, -49, grid.right_panel.width, 620, '#FF7C3AED', 100, 16, 620, true, false, 'right focal anchor: broker / private DB panel'),

@@ -87,7 +87,8 @@
         "G27PBD_BrokerCard3"
       ],
       "boundary": [
-        "G27PBD_Lock"
+        "G27PBD_Lock",
+        "G27PBD_Lock_Right"
       ],
       "connector": [
         "G27PBD_Arrow"
@@ -102,7 +103,7 @@
         "G27PBD_BrokerTitle"
       ]
     },
-    "element_count": 13,
+    "element_count": 14,
     "element_count_check": "pass",
     "reading_order": [
       "G27PBD_PublicPanel",
@@ -146,9 +147,9 @@
     "carrier_modified_in_place": false
   },
   "totals": {
-    "item_count": 13,
-    "expected_item_count": 13,
-    "shape_item_count": 10,
+    "item_count": 14,
+    "expected_item_count": 14,
+    "shape_item_count": 11,
     "text_item_count": 3,
     "hidden_item_count": 1,
     "missing_item_count": 0,
@@ -404,13 +405,13 @@
       "frame": 0,
       "duration_frames": 600,
       "is_hidden": false,
-      "x": 0,
+      "x": -20,
       "y": -49,
-      "width": 40,
+      "width": 30,
       "height": 400,
       "shape_size_mode": "WidthHeight",
       "shape_size": 400,
-      "shape_aspect_rate": 0.1,
+      "shape_aspect_rate": 0.075,
       "stroke_thickness": 400,
       "opacity": 100,
       "fill_color": "#FFE5A800",
@@ -424,7 +425,7 @@
       "remark_length_check": "pass",
       "detailed_provenance": {
         "generator": "samples/_probe/g24/real_estate_dx_diagnostic_carrier.ymmp",
-        "design_description": "center vertical wall / boundary divider",
+        "design_description": "center gate left pillar",
         "composition_type": "split",
         "composition_role": "boundary",
         "source": "G-27 diagnostic carrier for SCS §2.1 split adoption (not creative acceptance)",
@@ -434,6 +435,45 @@
     },
     {
       "index": 7,
+      "display_name": "G27PBD_Lock_Right",
+      "item_name": "G27PBD_Lock_Right",
+      "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
+      "item_type": "ShapeItem",
+      "role": "boundary",
+      "layer": 12,
+      "frame": 0,
+      "duration_frames": 600,
+      "is_hidden": false,
+      "x": 20,
+      "y": -49,
+      "width": 30,
+      "height": 400,
+      "shape_size_mode": "WidthHeight",
+      "shape_size": 400,
+      "shape_aspect_rate": 0.075,
+      "stroke_thickness": 400,
+      "opacity": 100,
+      "fill_color": "#FFE5A800",
+      "text_color": null,
+      "text": null,
+      "font_size": null,
+      "display_name_length": 17,
+      "item_name_length_check": "pass",
+      "remark": "G27PBD_Lock_Right",
+      "remark_length": 17,
+      "remark_length_check": "pass",
+      "detailed_provenance": {
+        "generator": "samples/_probe/g24/real_estate_dx_diagnostic_carrier.ymmp",
+        "design_description": "center gate right pillar",
+        "composition_type": "split",
+        "composition_role": "boundary",
+        "source": "G-27 diagnostic carrier for SCS §2.1 split adoption (not creative acceptance)",
+        "not_video_scene": true,
+        "render_performed": false
+      }
+    },
+    {
+      "index": 8,
       "display_name": "G27PBD_BrokerPanel",
       "item_name": "G27PBD_BrokerPanel",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
@@ -472,7 +512,7 @@
       }
     },
     {
-      "index": 8,
+      "index": 9,
       "display_name": "G27PBD_BrokerTitle",
       "item_name": "G27PBD_BrokerTitle",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
@@ -511,7 +551,7 @@
       }
     },
     {
-      "index": 9,
+      "index": 10,
       "display_name": "G27PBD_BrokerCard1",
       "item_name": "G27PBD_BrokerCard1",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
@@ -550,7 +590,7 @@
       }
     },
     {
-      "index": 10,
+      "index": 11,
       "display_name": "G27PBD_BrokerCard2",
       "item_name": "G27PBD_BrokerCard2",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
@@ -589,7 +629,7 @@
       }
     },
     {
-      "index": 11,
+      "index": 12,
       "display_name": "G27PBD_BrokerCard3",
       "item_name": "G27PBD_BrokerCard3",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
@@ -628,7 +668,7 @@
       }
     },
     {
-      "index": 12,
+      "index": 13,
       "display_name": "G27PBD_Arrow",
       "item_name": "G27PBD_Arrow",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
