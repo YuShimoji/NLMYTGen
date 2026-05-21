@@ -87,8 +87,7 @@
         "G27PBD_BrokerCard3"
       ],
       "boundary": [
-        "G27PBD_Lock",
-        "G27PBD_Lock_Shackle"
+        "G27PBD_Lock"
       ],
       "connector": [
         "G27PBD_Arrow"
@@ -103,7 +102,7 @@
         "G27PBD_BrokerTitle"
       ]
     },
-    "element_count": 14,
+    "element_count": 13,
     "element_count_check": "pass",
     "reading_order": [
       "G27PBD_PublicPanel",
@@ -147,11 +146,11 @@
     "carrier_modified_in_place": false
   },
   "totals": {
-    "item_count": 14,
-    "expected_item_count": 14,
-    "shape_item_count": 11,
+    "item_count": 13,
+    "expected_item_count": 13,
+    "shape_item_count": 10,
     "text_item_count": 3,
-    "hidden_item_count": 6,
+    "hidden_item_count": 1,
     "missing_item_count": 0,
     "malformed_item_count": 0,
     "item_name_length_failures": 0,
@@ -326,7 +325,7 @@
       "layer": 11,
       "frame": 0,
       "duration_frames": 600,
-      "is_hidden": true,
+      "is_hidden": false,
       "x": -499,
       "y": -150,
       "width": 600,
@@ -365,7 +364,7 @@
       "layer": 11,
       "frame": 0,
       "duration_frames": 600,
-      "is_hidden": true,
+      "is_hidden": false,
       "x": -499,
       "y": 30,
       "width": 600,
@@ -406,13 +405,13 @@
       "duration_frames": 600,
       "is_hidden": false,
       "x": 0,
-      "y": 30,
-      "width": 200,
-      "height": 200,
+      "y": -49,
+      "width": 40,
+      "height": 400,
       "shape_size_mode": "WidthHeight",
-      "shape_size": 200,
-      "shape_aspect_rate": 1,
-      "stroke_thickness": 200,
+      "shape_size": 400,
+      "shape_aspect_rate": 0.1,
+      "stroke_thickness": 400,
       "opacity": 100,
       "fill_color": "#FFE5A800",
       "text_color": null,
@@ -425,7 +424,7 @@
       "remark_length_check": "pass",
       "detailed_provenance": {
         "generator": "samples/_probe/g24/real_estate_dx_diagnostic_carrier.ymmp",
-        "design_description": "center lock body (lower rounded rectangle)",
+        "design_description": "center vertical wall / boundary divider",
         "composition_type": "split",
         "composition_role": "boundary",
         "source": "G-27 diagnostic carrier for SCS §2.1 split adoption (not creative acceptance)",
@@ -435,45 +434,6 @@
     },
     {
       "index": 7,
-      "display_name": "G27PBD_Lock_Shackle",
-      "item_name": "G27PBD_Lock_Shackle",
-      "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
-      "item_type": "ShapeItem",
-      "role": "boundary",
-      "layer": 12,
-      "frame": 0,
-      "duration_frames": 600,
-      "is_hidden": false,
-      "x": 0,
-      "y": -130,
-      "width": 140,
-      "height": 160,
-      "shape_size_mode": "WidthHeight",
-      "shape_size": 160,
-      "shape_aspect_rate": 0.875,
-      "stroke_thickness": 160,
-      "opacity": 100,
-      "fill_color": "#FFE5A800",
-      "text_color": null,
-      "text": null,
-      "font_size": null,
-      "display_name_length": 19,
-      "item_name_length_check": "pass",
-      "remark": "G27PBD_Lock_Shackle",
-      "remark_length": 19,
-      "remark_length_check": "pass",
-      "detailed_provenance": {
-        "generator": "samples/_probe/g24/real_estate_dx_diagnostic_carrier.ymmp",
-        "design_description": "center lock shackle (upper rounded arch)",
-        "composition_type": "split",
-        "composition_role": "boundary",
-        "source": "G-27 diagnostic carrier for SCS §2.1 split adoption (not creative acceptance)",
-        "not_video_scene": true,
-        "render_performed": false
-      }
-    },
-    {
-      "index": 8,
       "display_name": "G27PBD_BrokerPanel",
       "item_name": "G27PBD_BrokerPanel",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
@@ -512,7 +472,7 @@
       }
     },
     {
-      "index": 9,
+      "index": 8,
       "display_name": "G27PBD_BrokerTitle",
       "item_name": "G27PBD_BrokerTitle",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
@@ -551,7 +511,7 @@
       }
     },
     {
-      "index": 10,
+      "index": 9,
       "display_name": "G27PBD_BrokerCard1",
       "item_name": "G27PBD_BrokerCard1",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
@@ -560,7 +520,7 @@
       "layer": 11,
       "frame": 0,
       "duration_frames": 600,
-      "is_hidden": true,
+      "is_hidden": false,
       "x": 499,
       "y": -190,
       "width": 600,
@@ -590,7 +550,7 @@
       }
     },
     {
-      "index": 11,
+      "index": 10,
       "display_name": "G27PBD_BrokerCard2",
       "item_name": "G27PBD_BrokerCard2",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
@@ -599,7 +559,7 @@
       "layer": 11,
       "frame": 0,
       "duration_frames": 600,
-      "is_hidden": true,
+      "is_hidden": false,
       "x": 499,
       "y": -49,
       "width": 600,
@@ -629,7 +589,7 @@
       }
     },
     {
-      "index": 12,
+      "index": 11,
       "display_name": "G27PBD_BrokerCard3",
       "item_name": "G27PBD_BrokerCard3",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",
@@ -638,7 +598,7 @@
       "layer": 11,
       "frame": 0,
       "duration_frames": 600,
-      "is_hidden": true,
+      "is_hidden": false,
       "x": 499,
       "y": 92,
       "width": 600,
@@ -668,7 +628,7 @@
       }
     },
     {
-      "index": 13,
+      "index": 12,
       "display_name": "G27PBD_Arrow",
       "item_name": "G27PBD_Arrow",
       "item_name_source": "YMM4 Remark field; short G27PBD_ name, no long provenance on authoring surface",

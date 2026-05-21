@@ -75,15 +75,16 @@ const sceneItems = [
   // label: public panel title (inside panel)
   text('G27PBD_PublicTitle', 'label', 10, grid.left_panel.cx, -310, 48, '公開ポータル', '#FFFFFFFF', true, 'G27PBD_PublicPanel', 'public panel title'),
 
-  // supporting: public side cards (2 fixed)
-  shape('G27PBD_PublicCard1', 'supporting', 11, grid.left_panel.cx, -150, 600, 130, '#FFE0EBFE', 100, 12, 130, true, true, 'public card 1: visible listing'),
-  shape('G27PBD_PublicCard2', 'supporting', 11, grid.left_panel.cx, 30, 600, 130, '#FFE0EBFE', 100, 12, 130, true, true, 'public card 2: visible listing'),
+  // supporting: public side cards (2 fixed, visible)
+  shape('G27PBD_PublicCard1', 'supporting', 11, grid.left_panel.cx, -150, 600, 130, '#FFE0EBFE', 100, 12, 130, true, false, 'public card 1: visible listing'),
+  shape('G27PBD_PublicCard2', 'supporting', 11, grid.left_panel.cx, 30, 600, 130, '#FFE0EBFE', 100, 12, 130, true, false, 'public card 2: visible listing'),
 
-  // boundary: center lock = body (lower rect) + shackle (upper rounded arch)
-  // No TextItem added; readable as a key/lock silhouette via 2 ShapeItem combo.
-  // Naming follows carrier checklist derivation rule (G27PBD_Lock_<part>).
-  shape('G27PBD_Lock', 'boundary', 12, grid.center_boundary.cx, 30, 200, 200, '#FFE5A800', 100, 32, 200, true, false, 'center lock body (lower rounded rectangle)'),
-  shape('G27PBD_Lock_Shackle', 'boundary', 12, grid.center_boundary.cx, -130, 140, 160, '#FFE5A800', 100, 70, 160, true, false, 'center lock shackle (upper rounded arch)'),
+  // boundary: center vertical divider (thin wall) between public and broker.
+  // Single ShapeItem with extreme aspect ratio (40x400 = 1:10) and small
+  // round=4 so the form cannot be read as a human silhouette. Replaces the
+  // previous body+shackle pair which YMM4 rendered as a human figure due to
+  // corner-radius interpretation. No TextItem added.
+  shape('G27PBD_Lock', 'boundary', 12, grid.center_boundary.cx, -49, 40, 400, '#FFE5A800', 100, 4, 400, true, false, 'center vertical wall / boundary divider'),
 
   // focal_anchor: right broker / private DB panel
   shape('G27PBD_BrokerPanel', 'focal_anchor', 8, grid.right_panel.cx, -49, grid.right_panel.width, 620, '#FF7C3AED', 100, 16, 620, true, false, 'right focal anchor: broker / private DB panel'),
@@ -92,9 +93,9 @@ const sceneItems = [
   text('G27PBD_BrokerTitle', 'label', 10, grid.right_panel.cx, -310, 48, '業者DB', '#FFFFFFFF', true, 'G27PBD_BrokerPanel', 'broker panel title'),
 
   // supporting: broker side cards (3 fixed)
-  shape('G27PBD_BrokerCard1', 'supporting', 11, grid.right_panel.cx, -190, 600, 110, '#FFEDE9FE', 100, 12, 110, true, true, 'broker card 1: hidden listing'),
-  shape('G27PBD_BrokerCard2', 'supporting', 11, grid.right_panel.cx, -49, 600, 110, '#FFEDE9FE', 100, 12, 110, true, true, 'broker card 2: hidden listing'),
-  shape('G27PBD_BrokerCard3', 'supporting', 11, grid.right_panel.cx, 92, 600, 110, '#FFEDE9FE', 100, 12, 110, true, true, 'broker card 3: hidden listing'),
+  shape('G27PBD_BrokerCard1', 'supporting', 11, grid.right_panel.cx, -190, 600, 110, '#FFEDE9FE', 100, 12, 110, true, false, 'broker card 1: hidden listing'),
+  shape('G27PBD_BrokerCard2', 'supporting', 11, grid.right_panel.cx, -49, 600, 110, '#FFEDE9FE', 100, 12, 110, true, false, 'broker card 2: hidden listing'),
+  shape('G27PBD_BrokerCard3', 'supporting', 11, grid.right_panel.cx, 92, 600, 110, '#FFEDE9FE', 100, 12, 110, true, false, 'broker card 3: hidden listing'),
 
   // connector (hidden in initial state): arrow placeholder
   shape('G27PBD_Arrow', 'connector', 13, 0, 200, 120, 60, '#FFE5A800', 100, 8, 60, true, true, 'optional arrow placeholder (kept hidden)'),
