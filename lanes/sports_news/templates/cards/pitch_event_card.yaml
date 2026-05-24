@@ -1,0 +1,22 @@
+card_type: pitch_event_card
+purpose: "Explain one pitch or play event through structured data."
+required_fields:
+  - claim
+  - count_before_pitch
+  - pitch_number_in_plate_appearance
+  - current_pitch_type
+  - current_velocity
+  - result
+optional_fields:
+  - previous_pitch_type
+  - previous_velocity
+  - intended_zone
+  - actual_zone
+  - trajectory_marker
+visual_rules:
+  central_module: strike_zone_or_event_zone
+  count_status_prominent: true
+  event_zone_is_data_view: true
+  motion_role: ui_state_transition
+notes:
+  - "Show only data-backed pitch markers. If intended zone is unavailable, label it as unavailable rather than inferring it."

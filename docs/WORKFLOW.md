@@ -33,7 +33,25 @@ NLMYTGen (Python) は S-3 (CSV変換) を担当し、S-6 の演出設定を演�
 | S-2     | プロンプト入力 + テキストのコピー・保存 | NotebookLM が台本テキストを出力         |
 | S-3     | NLMYTGen GUI（CSV 変換タブ） | NLMYTGen が話者分離・マッピング・分割・CSV生成 |
 | S-4     | メニュー操作 + ファイル選択 + ボタン | YMM4 が全発話の音声合成 + 字幕配置を一括処理    |
-| S-5〜S-9 | 全て手動操作                | --                            |
+| S-5     | 読み上げ・字幕の確認           | --（必要に応じて B-17 残差を記録）          |
+| S-6     | GUI 演出適用 + YMM4 微調整    | `validate-ir` / `apply-production` が対応済み IR を ymmp へ部分反映 |
+| S-7〜S-9 | 最終確認・公開作業             | --                            |
+
+
+### 1本制作の工程表（Production / Development / Research の切り分け）
+
+| 工程 | ユーザー操作 | AI・CLI artifact | YMM4 acceptance | 混ぜないもの |
+|---|---|---|---|---|
+| S-1〜S-2 台本取得 | NotebookLM で素材投入、台本テキストを保存 | source script / refined script | なし | タイトル・サムネの越権決定 |
+| S-3 CSV 変換 | GUI CSV タブで speaker map、改行、必要なら YMM4 字幕 font / wrap 条件を指定 | YMM4 CSV、stats JSON、B-17 残差メモ | なし。YMM4 取込前の機械確認まで | YMM4 上の見た目判断、未知 route 調査 |
+| S-4/S-5 YMM4 台本読込・確認 | YMM4 で CSV を読み込み、読み・字幕の実害だけ直す | 必要時のみ B-17 paired evidence | 読み間違い・字幕実害が制作上許容 | G-24 acceptance、大量採寸 |
+| S-6a Production IR 取得 | C-07 v4 で本編 Production IR を生成・保存 | Production IR JSON | なし。`validate-ir` 前の入力 | サムネ copy / `thumbnail_design` / サムネ `.ymmp` 配置 |
+| S-6b GUI 演出適用 | GUI 演出適用タブで Validate IR → Dry Run → Apply Production | validate/apply JSON、patched production `.ymmp`、skit_group readback | 機械確認は readback / failure class で閉じる | 新テンプレ制作、未知 route probe、CLI-only map の標準化 |
+| S-6c/S-7 YMM4 通し確認 | patched `.ymmp` を開き、構図・間・最終レンダリングを確認 | session manifest に pending / accepted を記録 | composition acceptance / final preview | adapter の機械 failure を手置きで埋めること |
+| S-8 サムネ制作 | H-02 / `thumbnail_design` を別 artifact として扱い、必要なら YMM4 サムネ template copy を用意 | `thumbnail_design`、`thumb.*` slot audit/patch 結果 | サムネ PNG の人間判断 | 台本本文・Production IR・本編 `.ymmp` への混入 |
+| S-9 投稿 | YouTube Studio 等で投稿 | 必要ならメタデータ控え | 公開前チェック | E-01/E-02 自動投稿を制作パイプへ混ぜること |
+
+この表では、動画を進める作業を Production Lane、制作負荷を下げる実装を Development Lane、未知の YMM4 route を測る作業を Research Lane として分ける。`build-session-manifest` は各工程の artifact と未解決 acceptance を束ねるための handoff であり、工程そのものを自動化するものではない。
 
 
 ### NLMYTGen の責務範囲
@@ -42,12 +60,12 @@ NLMYTGen は以下を担当する:
 
 - **S-3 (テキスト→CSV変換)**: 台本テキストを YMM4 CSV に変換する (実装済み)
 - **S-6 支援 (三層責務構造)**:
-  - **Writer IR** (第1層): Custom GPT が台本から演出 IR (scene_preset + override) を出力 (G-05 done、proof 待ち)
-  - **Template Registry** (第2層): 制作環境の再利用資産辞書 (face_map/bg_map/slots/se_map + YMM4 native template 名参照)
-  - **YMM4 Adapter** (第3層): IR + Registry → ymmp の接着。face/bg の差し替えは実装済み (G-06 patch-ymmp)。motion/transition は YMM4 ネイティブに委ねる方針 (実測後に確定)
+  - **Writer IR** (第1層): Custom GPT が台本から演出 IR (scene_preset + override) を出力 (G-05 done)。G-24 skit_group actor を使う発話は `motion_target: "layer:9"` と v1/alias intent を出す
+  - **Template Registry** (第2層): 制作環境の再利用資産辞書 (face_map/bg_map/slots/se_map + YMM4 native template 名参照)。skit_group は registry で exact / fallback / manual_note を解決し、template 本体は repo-tracked `.ymmp` template source から読む
+  - **YMM4 Adapter** (第3層): IR + Registry → ymmp の接着。face/bg の差し替えに加え、skit_group は template source の GroupItem を対象発話の timeline へ自動配置する。`audit-skit-group` は補助 preflight であり成果本体ではない
   - 詳細: [PRODUCTION_IR_SPEC.md](PRODUCTION_IR_SPEC.md) セクション6、[AUTOMATION_BOUNDARY.md](AUTOMATION_BOUNDARY.md) 三層責務構造
 
-S-0, S-4〜S-9 の実操作は全て YMM4 または外部ツールの手動操作である。
+S-0, S-4, S-5, S-6c 以降, S-7〜S-9 の実操作は YMM4 または外部ツールの手動操作である。S-6b だけは、台本読込後 `.ymmp` に対して NLMYTGen GUI / adapter が限定的な後段適用を行う。
 このワークフロー文書は、NLMYTGen のスコープ外であっても動画制作に必要な全工程をカバーする。
 
 ---
@@ -122,13 +140,14 @@ S-0, S-4〜S-9 の実操作は全て YMM4 または外部ツールの手動操�
 ## S-2: 台本テキスト取得
 
 NotebookLM に「音声解説の元の台本を出力してください」と依頼し、台本テキストを取得する。
-これが主導線。音声書き起こしよりも誤字脱字が少なく、話者ラベル付きのクリーンな台本が得られる。
+これが主導線。ただし NotebookLM 出力は低信頼入力として扱う。誤字・誤変換・話者役割の崩れがそのまま CSV / IR に伝播するため、保存後に B-18 `diagnose-script` または C-09 constrained rewrite / manual QC を挟み、未確認のまま直接 IR 化しない。
 
 ### 手順
 
 1. Audio Overview が生成済みのノートブックを開く
 2. チャットで「音声解説の元の台本を出力してください」と依頼
 3. 出力されたテキストをコピーし `.txt` ファイルとして保存
+4. `diagnose-script` で話者マップ・NLM臭・役割崩れを確認し、必要なら事実を変えずに誤字・誤変換だけ補正する
 
 ### 出力形式
 
@@ -159,7 +178,11 @@ NotebookLM に「音声解説の元の台本を出力してください」と依
 3. 設定を確認:
    - **Speaker Map**: `スピーカー1=れいむ,スピーカー2=まりさ`（台本の話者名に合わせる）
    - **Max Lines**: `2`（2行字幕）
-   - **Chars/Line**: `20`〜`40`（字幕幅に合わせる）
+   - **Chars/Line**: `40`（標準。YMM4 実表示で狭いテンプレだと分かった時だけ下げる）
+   - **YMM4 Subtitle Font Source**: 字幕仕様の基準にする `.ymmp` がある場合は選択（字幕 `FontSize` から倍率を自動推定）
+   - **Subtitle Font Scale (%)**: `100`（`.ymmp` 未選択時の手動指定。YMM4 側で字幕フォントを大きくしたら `110` / `120` / `125` などに上げ、実効 Chars/Line を自動で狭める）
+   - **Wrap Width (px)**: YMM4 の字幕折り返し幅を固定している場合に指定（指定時は実測幅ベースの改行に切替）
+   - **Measure Backend**: Windows 側で WPF helper を使える場合は `WPF (Windows)`、未整備なら `EAW fallback`
    - **自然改行（balance-lines）**: ON（Max Lines 指定時のみ有効）
    - **Reflow v2**: ON
 4. **Dry Run** で行数・話者・話者統計とはみ出し候補を確認
@@ -189,6 +212,13 @@ python -m src.cli.main build-csv input.txt \
 | `--display-width`         | `--max-length` の値を表示幅 (全角=2, 半角=1) で判定                                                               |
 | `--max-lines N`           | 表示幅ベースで N 行以内に収まるよう分割 (`--chars-per-line` と併用)                                                       |
 | `--chars-per-line N`      | 1行あたりの表示幅 (デフォルト: 40、`--max-lines` 使用時)                                                              |
+| `--subtitle-font-scale PERCENT` | 字幕フォント倍率に応じて実効 `chars-per-line` を狭める (デフォルト: 100。例: 40 と 125% なら実効 32) |
+| `--subtitle-font-source-ymmp PATH` | YMM4 project の字幕 `FontSize` から倍率を自動推定する。複数候補は安全側として最大値を採用 |
+| `--subtitle-base-font-size N` | 自動推定時に `100%` とみなす基準 `FontSize` (デフォルト: 45) |
+| `--wrap-px PX` | YMM4 の字幕折り返し幅を px/計測単位で指定し、実測幅ベースで改行する (`--max-lines` 必須) |
+| `--measure-backend eaw\|wpf` | `wrap-px` 用の計測器。`wpf` は Windows WPF helper、`eaw` は従来の全角/半角 fallback |
+| `--font-family NAME` / `--font-size N` / `--letter-spacing N` | WPF 計測時の字幕フォント条件。`font-family` / `font-size` は `.ymmp` から推定可能な場合は省略可 |
+| `--wrap-safety RATIO` | 実測幅に掛ける安全率 (デフォルト: 0.94)。二重折り返しや縁取り差を避けるため少し狭める |
 | `--balance-lines`         | 2行字幕向けに自然な改行を入れつつ、句読点の少ない長文の節分割、短すぎる最終行回避、長い一文の aggressive chunking を行う opt-in 改善 (`--max-lines` 必須) |
 | `--dry-run`               | プレビューのみ (CSV 書き出しなし)                                                                                 |
 | `--stats`                 | 話者ごとの発話統計 + はみ出し候補警告を表示                                                                              |
@@ -198,6 +228,8 @@ python -m src.cli.main build-csv input.txt \
 ### 出力
 
 - YMM4 CSV: 2列 (キャラクター名, テキスト)、ヘッダーなし、UTF-8 (BOM 付き / utf-8-sig)
+
+> **YMM4 側の注意**: Python で明示改行を入れる運用では、YMM4 側の自動折り返しは OFF か十分広い値にする。Python 改行と YMM4 自動折り返しを両方効かせると、二重折り返しで 1 文字押し出しが再発しやすい。行頭位置が左右に動く場合は幅ではなく中央揃え/右揃えの問題なので、左揃えに固定する。
 
 ---
 
@@ -263,6 +295,8 @@ python -m src.cli.main build-csv input.txt \
 
 **視覚スタイル（挿絵コマ / 再現PV / 資料パネル）と演出 IR の対応**は [VISUAL_STYLE_PRESETS.md](VISUAL_STYLE_PRESETS.md) を参照。YMM4 側のテンプレ整備手順は [VISUAL_STYLE_YMM4_CHECKLIST.md](VISUAL_STYLE_YMM4_CHECKLIST.md)。
 
+S-6 は、(1) C-07 v4 による **本編 Production IR 生成**、(2) GUI 演出適用タブによる **IR 検証・部分反映**、(3) YMM4 上の **creative 微調整**に分ける。GUI の標準露出は face/bg/skit_group 中心で、overlay/se/motion map などの高度な adapter 入力は [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md) を正本とし、GUI 補完までは開発・切り分け用 CLI として扱う。
+
 ### a. 背景の配置
 
 1. 動画のトピック構成に合わせて背景画像を配置する
@@ -294,10 +328,51 @@ python -m src.cli.main build-csv input.txt \
 - 場面転換、強調、ツッコミ等に SE を配置 (必要に応じて)
 - 多用しすぎると騒がしくなるので注意
 
-### f. トランジション
+### f. skit_group actor template placement
+
+配達員などの外部茶番劇演者を使う場合、実制作 IR の該当 utterance は `motion_target: "layer:9"` を持ち、`motion` は v1 intent または alias intent に限定する。最小入力形は `samples/g24_skit_group_minimal_production_ir.json`。
+
+制作時の標準入口は GUI の **演出適用**タブ。`Skit Group Registry (G-24)` に `samples/registry_template/skit_group_registry.template.json`、`Skit Group Template Source` に `samples/templates/skit_group/delivery_v1_templates.ymmp` を指定し、`skit_group intent を registry に限定` を ON にして **Validate IR → Dry Run → Apply Production** の順で進める。G-24 だけを切り分ける場合は `skit_group 配置だけを適用` を ON にする。この場合、aligned IR の既存 row/index anchor を使うため CSV(row-range) はコマンドへ渡さない。
+
+CLI で切り分ける場合:
+
+```bash
+python -m src.cli.main patch-ymmp \
+  samples/_probe/g24/real_estate_dx_csv_import_base.ymmp \
+  samples/_probe/g24/real_estate_dx_skit_group_ir_aligned.json \
+  --skit-group-registry samples/registry_template/skit_group_registry.template.json \
+  --skit-group-template-source samples/templates/skit_group/delivery_v1_templates.ymmp \
+  --skit-group-only \
+  -o samples/_probe/g24/real_estate_dx_skit_group_patched.ymmp
+```
+
+`exact` / `fallback` は GroupItem 自動配置対象として扱う。`--skit-group-only` は face/bg/transition などの未解決をこの配置スライスから切り離す。YMM4 CSV 読込後に長文が分割される案件では aligned IR の `row_start` / `row_end` を使い、VoiceItem 順の `index` 直置きでズレたまま配置しない。`panic_shake` 等の未登録 intent は通常語彙から除外し、strict validation では ERROR にする。template source に存在しない将来テンプレートは `SKIT_TEMPLATE_SOURCE_MISSING` として fail-fast し、手順票で埋め合わせない。2026-04-28 以後の placement は template-analyzed placement であり、template source の GroupItem transform 中央値から rest pose を導出して `X` / `Y` / `Zoom` を正規化する。数値 transform を読めない場合は `SKIT_TEMPLATE_ANALYSIS_INSUFFICIENT` で止める。
+
+read-only 確認が必要な場合だけ `audit-skit-group` を使う。ただし preflight PASS は制作成果ではなく、成果認定は patched `.ymmp` に GroupItem が挿入されたこととする。
+
+### g. トランジション
 
 - 背景の切り替え時にトランジション (フェード、スライド等) を設定
 - ゆっくり解説では控えめなトランジションが標準
+
+### h. 制作セッション manifest
+
+S-3 CSV → S-6 IR 検証/適用 → YMM4 確認 → S-8 サムネ設計の状態は、必要に応じて `build-session-manifest` で 1 つの handoff artifact に束ねる。
+
+```bash
+python -m src.cli.main build-session-manifest \
+  --video-id VIDEO_ID \
+  --csv output.csv \
+  --ir-json production_ir.json \
+  --validate-result validate.json \
+  --apply-result apply.json \
+  --patched-ymmp production_patched.ymmp \
+  --thumbnail-design thumbnail_design.json \
+  --format markdown \
+  -o session_manifest.md
+```
+
+`thumbnail_design` は台本本文や Production IR には混ぜず、manifest 上でも記録対象として分離する。YMM4 目視確認・字幕確認・サムネ確認は `manual_acceptance` の pending として残し、CLI は画像生成やサムネ `.ymmp` 生成を行わない。
 
 ---
 
@@ -352,6 +427,8 @@ YouTube 動画のクリック率を最も左右する要素。テンプレート
   - 背景画像
 3. レイアウト・フォント・色使いはテンプレートで統一感を維持
 
+任意で、テンプレ copy の差し替え対象に `thumb.text.*` / `thumb.image.*` の `Remark` を付けておくと、NLMYTGen の `audit-thumbnail-template` / `patch-thumbnail-template` で文字列・画像パス・最小ジオメトリを限定 patch できる。これは既存 YMM4 item の更新だけであり、画像生成・PNG 書き出し・最終デザイン判断は YMM4 / 人間側に残す。
+
 ---
 
 ## S-9: YouTube 投稿
@@ -370,4 +447,3 @@ YouTube 動画のクリック率を最も左右する要素。テンプレート
 - ラベル付きモードで話者タグにマッチしない行は直前の発話に結合される (コピペ改行崩れ対応)
 - `--max-length` は文末 (。!?!?) でのみ分割する。文末のない長文はそのまま保持される
 - コピペ由来の `,。` 等のアーティファクトは NLMYTGen では修正しない (YMM4 側で修正)
-

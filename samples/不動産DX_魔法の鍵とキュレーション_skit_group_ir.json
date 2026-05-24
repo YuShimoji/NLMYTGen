@@ -1,0 +1,113 @@
+{
+  "ir_version": "1.0",
+  "video_id": "real_estate_dx_magic_key_curation",
+  "macro": {
+    "tone": "不動産DXの情報民主化から、キュレーション/CX/リスク管理へ価値が移る流れを解説する",
+    "pattern_mix": "A:B:C:D = 2:4:2:2",
+    "sections": [
+      {
+        "section_id": "S1",
+        "topic": "魔法の鍵と情報民主化",
+        "start_index": 1,
+        "end_index": 14,
+        "default_bg": "studio_blue"
+      },
+      {
+        "section_id": "S2",
+        "topic": "レインズと囲い込み",
+        "start_index": 15,
+        "end_index": 58,
+        "default_bg": "dark_board"
+      },
+      {
+        "section_id": "S3",
+        "topic": "キュレーションとZ世代",
+        "start_index": 59,
+        "end_index": 94,
+        "default_bg": "photo_indoor"
+      },
+      {
+        "section_id": "S4",
+        "topic": "SNSグレーゾーンと専門性",
+        "start_index": 95,
+        "end_index": 116,
+        "default_bg": "photo_city"
+      },
+      {
+        "section_id": "S5",
+        "topic": "AI時代の本当のガイド",
+        "start_index": 117,
+        "end_index": 152,
+        "default_bg": "diagram"
+      }
+    ]
+  },
+  "utterances": [
+    {
+      "index": 1,
+      "speaker": "語り手A",
+      "text": "もし街中の素晴らしい宝物が全部隠されたなんか秘密の図書館みたいな場所に入るための魔法の鍵があったとしたらどうでしょう?",
+      "section_id": "S1",
+      "template": "skit",
+      "face": "serious",
+      "motion": "enter_from_left",
+      "motion_target": "layer:9",
+      "_skit_note": "実案件: 魔法の鍵/秘密の図書館の案内人として登場"
+    },
+    {
+      "index": 15,
+      "speaker": "語り手A",
+      "text": "はい、レインズですね。機能的な面から言うと、えっと、不動産業界のプロだけが入れるプライベートなVIPクラブのような巨大な物件データベースと思ってください。",
+      "section_id": "S2",
+      "template": "skit",
+      "face": "thinking",
+      "motion": "nod",
+      "motion_target": "layer:9",
+      "_skit_note": "実案件: レインズ/VIPクラブ説明への同意リアクション"
+    },
+    {
+      "index": 35,
+      "speaker": "語り手A",
+      "text": "いや、鋭いご指摘ですね。実はそこが最大の闇だったんです。",
+      "section_id": "S2",
+      "template": "skit",
+      "face": "surprised",
+      "motion": "surprise_jump",
+      "motion_target": "layer:9",
+      "_skit_note": "実案件 alias: 最大の闇の露呈に驚く"
+    },
+    {
+      "index": 39,
+      "speaker": "語り手A",
+      "text": "日本の不動産取引では1つの業者が売主と買主の両方の仲介をすることが法律で認められているんです。これを両手仲介と呼びます。",
+      "section_id": "S2",
+      "template": "skit",
+      "face": "serious",
+      "motion": "deny_shake",
+      "motion_target": "layer:9",
+      "_skit_note": "実案件 alias: 両手仲介/利益相反への否定リアクション"
+    },
+    {
+      "index": 104,
+      "speaker": "語り手B",
+      "text": "そこなんですよ。資料でも非常に強い警鐘が鳴らされている部分でして、そこに巨大なグレーゾーンが存在しているんです。",
+      "section_id": "S4",
+      "template": "skit",
+      "face": "surprised",
+      "motion": "panic_shake",
+      "motion_target": "layer:9",
+      "_skit_note": "実案件 unresolved: SNSグレーゾーンへの警戒。manual_note分類対象"
+    },
+    {
+      "index": 143,
+      "speaker": "語り手A",
+      "text": "まさにその一言に尽きますね。ただ情報へのアクセス権を持っているだけのゲートキーパーは退場して、真に顧客の側に立つキュレーターとリスク管理のプロだけが残る時代への過渡期に私たちは生きているんですよ。",
+      "section_id": "S5",
+      "template": "skit",
+      "face": "smile",
+      "motion": "exit_left",
+      "motion_target": "layer:9",
+      "_skit_note": "実案件: ゲートキーパー退場/結論への締め退場"
+    }
+  ]
+}

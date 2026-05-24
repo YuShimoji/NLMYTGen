@@ -1,9 +1,11 @@
 # CLAUDE.md — NLMYTGen プロジェクト方針
 # このファイルはプロジェクトの方針・技術スタック・成功定義を定める。
-# 運用ルールの正本は docs/REPO_LOCAL_RULES.md。Claude Code 入口は .claude/CLAUDE.md（ポインタ）。全体の入口は AGENTS.md。
+# 運用ルールの正本は docs/REPO_LOCAL_RULES.md。Claude Code 入口は .claude/CLAUDE.md（ポインタ）。AGENTS.md も薄い入口ポインタであり、詳細手順は置かない。
 
 ## プロジェクト概要
 NotebookLM の台本を YMM4 用 CSV に変換し、さらに演出 IR (中間表現) を定義して S-6 (背景・演出設定) の半自動化を目指すパイプライン。音声・字幕投入は YMM4 台本読込が不動の主経路。視覚配置 (背景・立ち絵・素材) の効率化が現在の中心課題。
+
+現在の North Star は `docs/INVARIANTS.md` の **Production Value North Star** を正本とする。YMM4 が制作基盤、Python は接着層、成果認定は `.ymmp` patch への反映であり、手順票・preflight・read-only audit は成果ではない。
 
 ## 技術スタック
 - Python (stdlib のみ、外部ライブラリなし)
@@ -21,7 +23,8 @@ NotebookLM の台本を YMM4 用 CSV に変換し、さらに演出 IR (中間�
 - **Voicevox / 外部 TTS は使用しない** — 音声合成は YMM4 内蔵機能を使う
 - **動画生成・合成は YMM4 上で完結する**
 - **NotebookLM が台本品質の源泉** (ADR-0002) — LLM で主台本を生成しない
-- **他プロジェクトを参照しない** (AGENTS.md 境界ルール)
+- **Python は接着層であり生成主体ではない** — 詳細は `docs/INVARIANTS.md` の Production Value North Star
+- **通常は他プロジェクトを参照しない**。ユーザーが cross-project / 他 repo 作業を明示した場合は、AGENTS.md の明示範囲ルールに従う。
 
 ## 機能追加のルール
 - **docs/FEATURE_REGISTRY.md が全件把握の唯一のソース**
@@ -89,7 +92,7 @@ L1-L4 とは直交する概念。L2（Python変換工程）の内部で、IR の
 | ファイル | 責務 |
 |---------|------|
 | CLAUDE.md (ルート) | プロジェクト方針・技術スタック・成功定義・本書の「絶対的な制約」。日々の運用 Hard Rules の正本は `docs/REPO_LOCAL_RULES.md`（`.claude/CLAUDE.md` は入口ポインタ）、非交渉境界の正本は `docs/INVARIANTS.md` |
-| AGENTS.md | 入口・境界ルール・再アンカリング手順・read order 関係の正本 |
+| AGENTS.md | 薄い入口ポインタ。詳細手順・履歴・報告テンプレは置かない |
 | docs/ai/CORE_RULESET.md | AI 運用の canonical rules |
 | docs/ai/DECISION_GATES.md | 進路判断・gate・read-only ルール |
 | docs/ai/STATUS_AND_HANDOFF.md | status 語彙と handoff 要件 |
@@ -103,7 +106,7 @@ L1-L4 とは直交する概念。L2（Python変換工程）の内部で、IR の
 | docs/ARCHITECTURE.md | モジュール構成・データフロー |
 | docs/PIPELINE_SPEC.md | パイプラインの入出力仕様 |
 | docs/WORKFLOW.md | 動画制作の操作手順 |
-| docs/REPO_LOCAL_RULES.md | repo-local 運用（Hard Rules・再開読了予算・Checklist）の正本 |
+| docs/REPO_LOCAL_RULES.md | repo-local 運用の短い front-door（Core Rules / Reporting / Ask Hygiene / Hooks） |
 | docs/verification/README.md | 検証ディレクトリの索引・正本チェーン・読み方 |
 | docs/verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md | 立ち絵 複数体×顔差し替え準備（G-19 done / G-20 approved の履歴・調査パック） |
 | docs/NAV.md | ドキュメント地図（再開 3 枚・正本導線・テンプレと状態の区別） |
@@ -112,7 +115,7 @@ L1-L4 とは直交する概念。L2（Python変換工程）の内部で、IR の
 
 ## 再開時の正本順序
 
-再開時は `AGENTS.md` の通常再開手順を優先する。
+再開時は `AGENTS.md` を入口確認に留め、詳細は `docs/REPO_LOCAL_RULES.md` の read budget と `docs/runtime-state.md` の current state を優先する。
 要点だけ書くと、入口 → repo-local rules → `runtime-state.md` で止める。`docs/ai/*.md` / project-local canonical docs / registry / boundary は、現在の判断に必要な該当節だけ読む。
 resume prompt や外部メモより、repo 内 docs を常に優先する。
 

@@ -8,7 +8,7 @@ Python への SDK 組み込みは不要。
 
 v2 変更点: 「背景キーワード検索」から「演出アクション指示 (4パターン)」に転換。
 v3 変更点: マクロ演出設計 (動画全体のペーシング・テーマ統一・背景遷移) と素材調達ガイドを追加。ミクロ (発話単位) + マクロ (動画全体) の二層構造に拡張。
-v4 変更点 (G-05): 自然文出力に加えて、構造化 IR (JSON) 出力モードを追加。PRODUCTION_IR_SPEC.md v1.0 の語彙に準拠。
+v4 変更点 (G-05): 自然文出力に加えて、構造化 IR (JSON) 出力モードを追加。PRODUCTION_IR_SPEC.md v1.0 の語彙に準拠。v4 は **本編 Production IR 専用**で、サムネイルコピー / thumbnail_design は S-8/H-02 の別レーンで扱う。
 
 ## 使い方
 
@@ -234,7 +234,7 @@ Custom GPT に台本テキストを入力し、出力を目視レビューで検
 - Part 1 (マクロ): 全体トーン・パターン配分・視覚アーク・背景切替9箇所指定。方針決めに使える品質
 - Part 2 (ミクロ): 6セクション、発話単位の具体的演出指示。v2 から品質劣化なし
 - Part 3 (調達): 20行超、全セクションカバー、検索キーワード具体的、全行に代替演出併記
-- Part 4 (サムネイル): v2 と同等品質
+- サムネイル欄: v2 と同等品質（現在は S-8/H-02 の別レーンへ分離）
 
 ### 作業時間の実態
 
@@ -260,7 +260,8 @@ v3 との違い:
 - Part 1 (マクロ) → Macro IR JSON
 - Part 2 (ミクロ) → Micro IR JSON (発話単位)
 - Part 3 (素材調達) → 維持 (自然文のまま)
-- Part 4 (サムネイル) → 維持 (自然文のまま)
+- サムネイルコピー / thumbnail_design は出力しない。必要な場合は [S8-thumbnail-copy-prompt.md](S8-thumbnail-copy-prompt.md) または H-02 レーンで別途生成する
+- G-24 skit_group actor（配達員など）を使う発話では `motion_target: "layer:9"` を明示し、registry v1 intent または登録済み alias intent だけを `motion` に使う。未登録 motion を通常 IR に出さない
 
 ### v4 プロンプト本体
 
@@ -270,11 +271,12 @@ v3 との違い:
 以下の台本テキストを読み、演出 IR を JSON 形式で出力してください。
 IR は PRODUCTION_IR_SPEC v1.0 に準拠します。
 
-出力は4部構成です:
+出力は3部構成です:
 1. **Part 1: Macro IR (JSON)** -- 動画全体の演出設計
 2. **Part 2: Micro IR (JSON)** -- 発話単位の演出指示
 3. **Part 3: 素材調達ガイド** -- 要調査箇所の調達方法 (自然文)
-4. **Part 4: サムネイルコピー** -- キャッチコピー案 (自然文)
+
+サムネイルコピー、thumbnail_design、サムネイル用 `.ymmp` 配置指示はここでは出力しないでください。これらは S-8/H-02 の別レーンで扱います。
 
 ---
 
@@ -303,32 +305,48 @@ serious, smile, surprised, thinking, angry, sad
 ### bg (背景 -- 推奨ラベルから選ぶか、新しいラベルを snake_case で作成)
 推奨: studio_blue, studio_green, dark_board, photo_outdoor, photo_indoor, photo_city, map_world, map_region, diagram
 独自ラベル可 (例: factory_interior, surveillance_cam)
+Micro IR の `bg` は現在 `apply-production` / `patch-ymmp` で発話スパン背景として反映できます。背景素材パスは `bg_map` で解決されるため、IR にはファイルパスを書かないでください。
 
 ### bg_anim (背景アニメーション -- 必ず以下から選択)
 none, pan_left, pan_right, zoom_in, zoom_out, ken_burns
+上記は `bg_map` で解決された Layer 0 背景にキーフレーム preset として適用できます。VideoEffects 経路を使う場合は別途 `bg_anim_map` と `timeline_profile` が必要です。
 
 ### slot (立ち絵配置 -- 必ず以下から選択)
 left, right, center, off
 
-### motion (立ち絵アニメーション -- 必ず以下から選択)
+### motion (アニメーション意図 -- 対象別に必ず以下から選択)
+
+**speaker_tachie（ゆっくり立ち絵）向け:**
 none, pop_in, slide_in, shake_small, shake_big, bounce, fade_in, fade_out
+
+speaker_tachie の motion は、Production IR では意味ラベルです。実際に ymmp へ反映するには `tachie_motion_map` または `motion_map` の接続が必要です。GUI 標準導線で map が未接続なら、motion は提案ラベルとして扱われます。
+
+**skit_group actor（配達員などの外部茶番劇演者）向け:**
+- exact v1 intent: enter_from_left, surprise_oneshot, nod, deny_oneshot, exit_left
+- alias intent: surprise_jump, deny_shake
+
+skit_group actor 用 motion を使う発話では、必ず `motion_target: "layer:9"` を同じ utterance に入れること。`motion_target` を省略すると speaker_tachie 用 motion とみなされる。
+新しい skit_group motion ラベルは作らないこと。既存 intent で足りない場合は、最も近い登録済み intent に寄せるか、その発話の skit_group motion を省略し、Part 3 のメモに「新テンプレ候補」として自然文で書く。`panic_shake` など未登録ラベルを Part 2 の `motion` へ出力しない。
 
 ### overlay (オーバーレイ -- 推奨ラベルまたは独自ラベル、不要なら null)
 推奨: arrow_red, arrow_blue, circle_red, flash_red, text_box, speech_bubble
+単一ラベル文字列、または複数ラベル配列を使えます。配列は同一発話アンカーに複数 ImageItem を挿入する intent です。実際の素材パスは `overlay_map` 側で解決します。
 
 ### se (効果音 -- 推奨ラベルまたは独自ラベル、不要なら null)
 推奨: tension_hit, punchline, surprise, transition, correct, incorrect, click
 
 ### transition (トランジション -- 必ず以下から選択)
-none, fade, slide_left, slide_right, wipe, cut
+none, fade
+
+現行 adapter が production で機械処理する transition は `none` / `fade` のみです。`slide_left` / `slide_right` / `wipe` / `cut` などは Part 2 JSON に出さず、必要なら Part 3 の自然文メモに「YMM4 手動または将来 FEATURE」として書いてください。
 
 ### 視覚スタイル三種（template 振り分けの補助語彙）
 
 台本の見せ方を次の三スタイルに寄せて設計する。IR フィールドは既存の `template` / `overlay` 等のみ（新キーは追加しない）。正本・制約表は `docs/VISUAL_STYLE_PRESETS.md`。
 
 - **挿絵コマ風**: 寸劇・コマ割 → 主に `template=skit`。吹き出し・枠は `overlay=speech_bubble` または `overlay_map` に登録したコマ用ラベル。複数コマを重ねる場合は制作側で 1 枚 PNG に合成し 1 ラベルにまとめる。
-- **資料パネル風**: 数値・図表・整理 → `template=data` または `board`。`overlay=text_box` 等。背景の機械適用は Macro の `sections[].default_bg` が正本（発話単位 `bg` は carry-forward のみで `patch-ymmp` 未使用）。
-- **再現PV風**: テンポ・カット感 → 主に `template=mood`（＋ `intro` / `closing`）。細部のモーションは YMM4 アイテムテンプレに寄せる。IR の `motion` / `transition` / `bg_anim` は記載してよいが、現行 `patch-ymmp` では ymmp に書き込まない（ルート実測は G-12）。
+- **資料パネル風**: 数値・図表・整理 → `template=data` または `board`。`overlay=text_box` 等。背景は Macro 既定値と Micro `bg` の両方を使えるが、素材パスは必ず `bg_map` に逃がす。
+- **再現PV風**: テンポ・カット感 → 主に `template=mood`（＋ `intro` / `closing`）。`bg_anim` はキーフレーム preset、`transition` は `none` / `fade`、speaker_tachie `motion` は map 接続時の adapter 対象。強い PV テンポや non-fade transition は YMM4 側テンプレ / 手動メモへ寄せる。
 
 振り分け目安: 比較・ファクト提示 → data/board。感情・行動のドラマ → skit。場面転換・締めの空気 → mood/closing。PV 的な強いテンポは mood 帯を選び YMM4 側テンプレで補完する。
 
@@ -380,6 +398,8 @@ none, fade, slide_left, slide_right, wipe, cut
 - null は「このフィールドを無効にする」(例: overlay を消す)
 - `idle_face` は「この発話の間、発話していない側のキャラが表示する表情」。carry-forward するので最初に1回指定すれば十分
 - 最初の発話 (index=1) では全フィールドを明示すること
+- 配達員などの skit_group actor を動かす発話では、実際の voice speaker はそのままにして、`motion` に skit_group intent、`motion_target` に `"layer:9"` を入れること
+- skit_group actor の最小形は `samples/g24_skit_group_minimal_production_ir.json` を参照すること
 
 ```json
 {
@@ -411,6 +431,17 @@ none, fade, slide_left, slide_right, wipe, cut
       "row_end": 3,
       "face": "surprised",
       "motion": "pop_in"
+    },
+    {
+      "index": 3,
+      "speaker": "れいむ",
+      "text": "(配達員などの skit_group actor を画面上で反応させたい発話)",
+      "section_id": "S1",
+      "template": "skit",
+      "face": "thinking",
+      "motion": "surprise_jump",
+      "motion_target": "layer:9",
+      "_skit_note": "skit_group actor: surprise_jump は delivery_surprise_oneshot_v1 へ fallback"
     }
   ]
 }
@@ -425,12 +456,6 @@ Part 2 で使用した bg / overlay ラベルのうち、手元にないと思�
 
 代替演出を必ず併記すること。
 
-## Part 4: サムネイルコピー (自然文)
-
-動画の内容に基づき、サムネイル用のキャッチコピー5案とサブコピー3案を提案してください。
-
----
-
 ## 制約
 
 - 台本の内容を変更・要約しないでください
@@ -440,6 +465,8 @@ Part 2 で使用した bg / overlay ラベルのうち、手元にないと思�
 - 同じ bg が 8 発話以上連続する場合は背景を切り替えてください (60秒ルール)
 - LLM はピクセル座標やファイルパスを出力しないでください。意味ラベルのみ
 - Part 3 で代替演出を必ず併記してください
+- サムネイルコピー、thumbnail_design、サムネイル用 YMM4 配置案は出力しないでください
+- skit_group actor 用 utterance は `motion_target: "layer:9"` 必須。使える `motion` は `enter_from_left` / `surprise_oneshot` / `nod` / `deny_oneshot` / `exit_left` / `surprise_jump` / `deny_shake` のみ。`panic_shake` など未登録ラベルは Part 2 JSON へ出さず、必要なら Part 3 の新テンプレ候補メモに回すこと
 ```
 
 ### v4 使い方
@@ -448,7 +475,9 @@ Part 2 で使用した bg / overlay ラベルのうち、手元にないと思�
 2. 台本テキストを貼り付ける
 3. Part 1 (Macro IR JSON) + Part 2 (Micro IR JSON) を**1 つのテキストファイルに続けて**コピーし、`.json` として保存。`load_ir` が 2 オブジェクト連結形式を自動検出してマージする
 4. `python -m src.cli.main validate-ir ir.json --palette palette.ymmp` または `python -m src.cli.main apply-production production.ymmp ir.json --palette palette.ymmp --csv reflow.csv --dry-run` を実行し、face contract / palette drift / row-range failure を先に潰す
-5. Part 3 (素材調達) は YMM4 作業中の参照メモとして使用
+5. skit_group actor を含む IR は `python -m src.cli.main validate-ir ir.json --skit-group-registry samples/registry_template/skit_group_registry.template.json --strict-skit-group-intents --format text` を実行し、未登録 motion を ERROR として止める。配置確認は `patch-ymmp --skit-group-template-source samples/templates/skit_group/delivery_v1_templates.ymmp --dry-run` で行う
+6. Part 3 (素材調達) は YMM4 作業中の参照メモとして使用
+7. サムネイルコピーが必要な場合は、同じ H-01 brief / 台本を使って S-8/H-02 レーンで別途生成する
 
 v3 との切り替え:
 - v3 を使いたい場合は v3 プロンプト本体を Instructions に設定

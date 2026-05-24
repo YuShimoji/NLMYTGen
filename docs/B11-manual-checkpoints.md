@@ -32,7 +32,7 @@
 | ------------------------------------------------------ | -------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | `validate-ir` / Apply 前                                | オペレータ（補助: CLI） | palette / IR / row-range の機械ゲート。GUI の要約 JSON は **件数と先頭プレビュー**に留まるため、エラー全文はログを見る。                                                     |
 | patch 後の ymmp                                          | オペレータ          | 表情・背景の**見え方**・テンポ。創作判断。                                                                                                              |
-| `TIMELINE_ROUTE_MISS` / `SE_WRITE_ROUTE_UNSUPPORTED` 等 | オペレータ＋設計       | 多くは **その ymmp サンプルに経路が無い**という mechanical 区分。別テンプレで再測定するか、期待 route を更新するかの判断（[OPERATOR_WORKFLOW.md](OPERATOR_WORKFLOW.md) G-12/G-13）。 |
+| `TIMELINE_ROUTE_MISS` / map・template source 系 failure 等 | オペレータ＋設計       | 多くは **その ymmp サンプルに経路が無い**、または必要 registry / map / template source が揃っていない mechanical 区分。別テンプレで再測定するか、期待 route を更新するかの判断（[OPERATOR_WORKFLOW.md](OPERATOR_WORKFLOW.md) G-12/G-13）。 |
 
 
 ## 4. 品質診断（H-03 / H-04）
@@ -58,4 +58,3 @@
 1. **実案件 1 本**で [workflow-proof-template.md](workflow-proof-template.md) をコピーし、取込後表を**実数**で埋める（サンプル例は [verification/B11-workflow-proof-sample-example-dialogue.md](verification/B11-workflow-proof-sample-example-dialogue.md)）。
 2. 残修正が「例外」に寄ったかを [OPERATOR_WORKFLOW.md](OPERATOR_WORKFLOW.md) B-11 の判断ゲートに 1 行追記。
 3. 改行痛点が残るなら `tests/data/linebreak_forbidden_corpus.json` 等へ文例を足し、ルール改善の材料にする。
-

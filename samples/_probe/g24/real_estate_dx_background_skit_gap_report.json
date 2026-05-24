@@ -1,0 +1,251 @@
+{
+  "source_blueprint": "samples\\_probe\\g24\\real_estate_dx_background_skit_blueprint.json",
+  "purpose": "Resolve validator blockers by splitting RE-07 and classifying assets/templates before revised IR.",
+  "status": "assistant_gap_report_ready_with_actual_row_time_map_no_user_action_required_yet",
+  "re07_subbeats": [
+    {
+      "subbeat_id": "RE-07A",
+      "title": "Z世代ライフスタイルとSNS信頼",
+      "line_start": 83,
+      "line_end": 102,
+      "story_function": "AI後の価値論へ入る前に、消費者の条件軸が駅近/南向きからタイパ・推し活・SNS信頼へ移ったことを視覚化する。",
+      "visual_anchor": "SNS/推しスペース/アクセントウォールカードが並び、消費者が検索条件を切り替える。",
+      "required_assets": [
+        "consumer",
+        "sns_ai_cards",
+        "property_cards"
+      ],
+      "rest_note": "lines 99-102は怖さの予告なので、カード増殖を止めて余白を作る。",
+      "line_count": 20,
+      "timing_basis": "actual CSV/VoiceItem row-to-time map from real_estate_dx_row_time_map.json; previous scene-bible percentage estimate retained only as superseded evidence",
+      "start_sec_estimated_from_scene_bible_pct": 787.15,
+      "end_sec_estimated_from_scene_bible_pct": 862.116667,
+      "duration_sec_estimated_from_scene_bible_pct": 74.966667,
+      "start_sec": 531.7,
+      "end_sec": 653.716667,
+      "duration_sec": 122.016667,
+      "csv_row_start": 186,
+      "csv_row_end": 226,
+      "voice_index_start": 186,
+      "voice_index_end": 226
+    },
+    {
+      "subbeat_id": "RE-07B",
+      "title": "SNS集客のグレーゾーン",
+      "line_start": 103,
+      "line_end": 113,
+      "story_function": "顔が見える信頼と、無免許/おとり広告/契約責任の欠落を分離する。",
+      "visual_anchor": "SNSカードの裏に免許なし警告とおとり広告カードを出し、消費者が一歩止まる。",
+      "required_assets": [
+        "consumer",
+        "sns_ai_cards",
+        "risk_stop_card"
+      ],
+      "rest_note": "警告はpanic motionではなく、カードの裏返しと赤枠で読む。",
+      "line_count": 11,
+      "timing_basis": "actual CSV/VoiceItem row-to-time map from real_estate_dx_row_time_map.json; previous scene-bible percentage estimate retained only as superseded evidence",
+      "start_sec_estimated_from_scene_bible_pct": 862.116667,
+      "end_sec_estimated_from_scene_bible_pct": 903.348333,
+      "duration_sec_estimated_from_scene_bible_pct": 41.231667,
+      "start_sec": 653.716667,
+      "end_sec": 730.25,
+      "duration_sec": 76.533333,
+      "csv_row_start": 227,
+      "csv_row_end": 252,
+      "voice_index_start": 227,
+      "voice_index_end": 252
+    },
+    {
+      "subbeat_id": "RE-07C",
+      "title": "2030年問題と攻めのDX",
+      "line_start": 114,
+      "line_end": 129,
+      "story_function": "人口減少/空き家/専門性と、守りのDXから顧客体験DXへの転換をつなぐ。",
+      "visual_anchor": "空き家/ハザード/相続カードとAIコンシェルジュ画面を並べる。",
+      "required_assets": [
+        "consumer",
+        "curator_risk_pro",
+        "sns_ai_cards",
+        "defect_card"
+      ],
+      "rest_note": "数字・概念が多いので、人物移動よりカード分類を主にする。",
+      "line_count": 16,
+      "timing_basis": "actual CSV/VoiceItem row-to-time map from real_estate_dx_row_time_map.json; previous scene-bible percentage estimate retained only as superseded evidence",
+      "start_sec_estimated_from_scene_bible_pct": 903.348333,
+      "end_sec_estimated_from_scene_bible_pct": 963.321666,
+      "duration_sec_estimated_from_scene_bible_pct": 59.973333,
+      "start_sec": 730.25,
+      "end_sec": 864.116667,
+      "duration_sec": 133.866667,
+      "csv_row_start": 253,
+      "csv_row_end": 296,
+      "voice_index_start": 253,
+      "voice_index_end": 296
+    },
+    {
+      "subbeat_id": "RE-07D",
+      "title": "AI逆説と見えないリスク",
+      "line_start": 130,
+      "line_end": 143,
+      "story_function": "AI推薦が完璧になるほど、人間プロの泥臭い調整価値が残るという逆説を見せる。",
+      "visual_anchor": "AI推薦カードの前に、境界紛争/相続/感情調整カードを専門家が差し出す。",
+      "required_assets": [
+        "consumer",
+        "curator_risk_pro",
+        "risk_stop_card",
+        "defect_card"
+      ],
+      "rest_note": "line 143のゲートキーパー退場はdelivery exitではなく、背景影を退けるblockingにする。",
+      "line_count": 14,
+      "timing_basis": "actual CSV/VoiceItem row-to-time map from real_estate_dx_row_time_map.json; previous scene-bible percentage estimate retained only as superseded evidence",
+      "start_sec_estimated_from_scene_bible_pct": 963.321666,
+      "end_sec_estimated_from_scene_bible_pct": 1015.798333,
+      "duration_sec_estimated_from_scene_bible_pct": 52.476667,
+      "start_sec": 864.116667,
+      "end_sec": 979.95,
+      "duration_sec": 115.833333,
+      "csv_row_start": 297,
+      "csv_row_end": 331,
+      "voice_index_start": 297,
+      "voice_index_end": 331
+    },
+    {
+      "subbeat_id": "RE-07E",
+      "title": "選び方の基準と最後の問い",
+      "line_start": 144,
+      "line_end": 152,
+      "story_function": "視聴者へ、次に選ぶべき本当のガイド像を返す。",
+      "visual_anchor": "消費者の前に「専門的キュレーター」「リスク管理者」「買ってはいけない理由」カードを三枚残す。",
+      "required_assets": [
+        "consumer",
+        "curator_risk_pro",
+        "risk_stop_card"
+      ],
+      "rest_note": "締めは退場ではなく、画面を静止させてカードを読ませる。",
+      "line_count": 9,
+      "timing_basis": "actual CSV/VoiceItem row-to-time map from real_estate_dx_row_time_map.json; previous scene-bible percentage estimate retained only as superseded evidence",
+      "start_sec_estimated_from_scene_bible_pct": 1015.798333,
+      "end_sec_estimated_from_scene_bible_pct": 1049.533333,
+      "duration_sec_estimated_from_scene_bible_pct": 33.735,
+      "start_sec": 979.95,
+      "end_sec": 1049.533333,
+      "duration_sec": 69.583333,
+      "csv_row_start": 332,
+      "csv_row_end": 352,
+      "voice_index_start": 332,
+      "voice_index_end": 352
+    }
+  ],
+  "asset_proxy_classification": {
+    "consumer": {
+      "classification": "new_template_required",
+      "delivery_proxy": "not_allowed",
+      "minimum_control": [
+        "hold",
+        "search",
+        "choose",
+        "stop reaction"
+      ]
+    },
+    "gatekeeper_agent": {
+      "classification": "new_or_reskinned_template_required",
+      "delivery_proxy": "not_allowed_as_literal_cast",
+      "minimum_control": [
+        "hold",
+        "block route",
+        "retreat/shadow"
+      ]
+    },
+    "curator_risk_pro": {
+      "classification": "new_or_reskinned_template_required",
+      "delivery_proxy": "not_allowed_as_literal_cast",
+      "minimum_control": [
+        "sort cards",
+        "show defect",
+        "present stop-card"
+      ]
+    },
+    "property_cards": {
+      "classification": "overlay_or_card_template",
+      "placeholder_allowed_for_compact_review": true
+    },
+    "vip_door_reins_pc": {
+      "classification": "overlay_or_shape_group",
+      "placeholder_allowed_for_compact_review": true
+    },
+    "qr_status_board": {
+      "classification": "overlay_or_board_template",
+      "placeholder_allowed_for_compact_review": true
+    },
+    "sns_ai_risk_cards": {
+      "classification": "overlay_card_set",
+      "placeholder_allowed_for_compact_review": true
+    },
+    "delivery_v1_templates": {
+      "classification": "delivery_mini_scene_main_template",
+      "real_estate_use": "movement_proxy_only_if_symbolic_role_and_proxy_limitation_are_declared"
+    }
+  },
+  "legacy_cue_disposition": [
+    {
+      "source_ir_index": 1,
+      "source_line": 1,
+      "old_motion": "enter_from_left",
+      "disposition": "transport_only_not_scene_acceptance",
+      "replacement_design": "RE-01 consumer search setup and smartphone/property-card emergence"
+    },
+    {
+      "source_ir_index": 15,
+      "source_line": 15,
+      "old_motion": "nod",
+      "disposition": "invalid_as_reins_explanation_reaction",
+      "replacement_design": "RE-02 VIP door/PC barrier and outside consumer composition"
+    },
+    {
+      "source_ir_index": 35,
+      "source_line": 35,
+      "old_motion": "surprise_jump",
+      "disposition": "invalid_as_darkness_reaction",
+      "replacement_design": "RE-03 shield cards with shadow/fee-bag overlay"
+    },
+    {
+      "source_ir_index": 39,
+      "source_line": 39,
+      "old_motion": "deny_shake",
+      "disposition": "invalid_as_double_agency_explanation_reaction",
+      "replacement_design": "RE-04 gatekeeper physically blocks seller/buyer route and stamps deal-pending sign"
+    },
+    {
+      "source_ir_index": 104,
+      "source_line": 104,
+      "old_motion": "panic_shake",
+      "disposition": "manual_note_remains_unresolved",
+      "replacement_design": "RE-07B SNS risk warning card/license badge; no panic motion until a visual cause exists"
+    },
+    {
+      "source_ir_index": 143,
+      "source_line": 143,
+      "old_motion": "exit_left",
+      "disposition": "not_allowed_as_delivery_actor_exit_for_gatekeeper",
+      "replacement_design": "RE-07D gatekeeper shadow recedes while curator stands next to consumer"
+    }
+  ],
+  "revised_ir_gate": {
+    "can_generate_revised_ir_now": false,
+    "reason": "Real-estate cast templates are missing and old motions map to line reactions, not independent background blocking.",
+    "first_safe_ir_scope": "overlay/card-only compact review from existing placeholder map; no cast motion IR",
+    "can_generate_overlay_only_compact_review_now": true,
+    "validator_authority": "allowed_next_actions contains overlay_only_compact_review; cast_motion_ir remains forbidden"
+  },
+  "assistant_next": [
+    "Generate/plumb overlay-only compact review from real_estate_dx_overlay_card_placeholder_map.json.",
+    "Do not generate cast motion IR while ASSET_BLOCKED_REAL_ESTATE_CAST_TEMPLATES_MISSING remains.",
+    "Keep delivery_v1_templates reserved for delivery mini scene unless a proxy role is explicitly declared."
+  ],
+  "row_time_map": "samples\\_probe\\g24\\real_estate_dx_row_time_map.json",
+  "timing_correction": {
+    "reason": "scene-bible percentage timetable was internally useful for blueprint validation but not accurate for source-line timing",
+    "actual_source": "samples\\_probe\\g24\\real_estate_dx_row_time_map.json",
+    "result": "RE-07 subbeats now use actual VoiceItem windows"
+  }
+}

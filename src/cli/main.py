@@ -5,6 +5,7 @@ Usage:
     python -m src.cli.main build-cue-packet <input> [-o packet.md] [--format markdown|json] [--bundle-dir DIR]
     python -m src.cli.main build-diagram-packet <input> [-o packet.md] [--format markdown|json] [--bundle-dir DIR]
     python -m src.cli.main patch-ymmp <ymmp> <ir-json> --face-map face.json --bg-map bg.json [-o patched.ymmp]
+    python -m src.cli.main patch-ymmp <ymmp> <ir-json> --skit-group-registry registry.json --skit-group-template-source templates.ymmp [--skit-group-only] [-o patched.ymmp]
     python -m src.cli.main audit-skit-group <ymmp> <ir-json> --skit-group-registry registry.json [--format text|json]
     python -m src.cli.main validate <input>
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
@@ -12,7 +13,15 @@ Usage:
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
     python -m src.cli.main fetch-topics <URL>... [-n 20] [--after YYYY-MM-DD] [--format text|json]
     python -m src.cli.main validate-ir <ir.json> [--palette ...] [--format text|json]
+    python -m src.cli.main validate-background-skit-blueprint <blueprint.json> --script <txt> --ymmp <ymmp> [--fps 60] [--format text|json]
     python -m src.cli.main emit-packaging-brief-template [-o path] [--format markdown|json]
+    python -m src.cli.main init-episode-run --episode-id ID [--root DIR] [--force] [--format text|json]
+    python -m src.cli.main episode-run-handoff --episode-id ID [--root DIR] [--format text|json]
+    python -m src.cli.main build-session-manifest --video-id ID [artifact paths...] [--format markdown|json] [-o path]
+    python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
+    python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
+    python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
+    python -m src.cli.main build-motion-recipes [--brief brief.json] [--recipe-id goal_id] [--out-ymmp review.ymmp] [--out-readback readback.json] [--out-manifest manifest.md]
     python -m src.cli.main score-thumbnail-s8 --scores '{"single_claim":2,...}' [--payload ...] [--format text|json]
 """
 
@@ -20,8 +29,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from collections import Counter
+from math import ceil
 from pathlib import Path
 
 from src.pipeline.normalize import normalize, analyze_speaker_roles
@@ -42,9 +53,11 @@ from src.pipeline.assemble_csv import (
     estimate_display_lines,
     find_unmapped_speakers,
     reflow_subtitles,
+    reflow_subtitles_measured,
     reflow_subtitles_v2,
     split_long_utterances,
 )
+from src.pipeline.text_measure import EastAsianWidthMeasurer, TextMeasurer, WpfTextMeasurer
 from src.pipeline.validate_handoff import validate, has_errors, Severity
 from src.pipeline.script_diagnostics import (
     diagnose_script,
@@ -52,6 +65,12 @@ from src.pipeline.script_diagnostics import (
     has_error as diagnostics_has_error,
 )
 from src.pipeline.thumbnail_s8_score import score_thumbnail_s8
+
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8")
 
 
 def _parse_kv_pairs(lines: list[str]) -> dict[str, str]:
@@ -101,10 +120,211 @@ def _resolve_speaker_map(args: argparse.Namespace) -> dict[str, str] | None:
     return result or None
 
 
+def _positive_percent(raw: str) -> float:
+    """argparse 用: 0 より大きい倍率パーセントだけを受け付ける。"""
+    try:
+        value = float(raw)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("must be a positive number") from exc
+    if value <= 0:
+        raise argparse.ArgumentTypeError("must be greater than 0")
+    return value
+
+
+def _positive_float(raw: str) -> float:
+    """argparse 用: 0 より大きい数値だけを受け付ける。"""
+    try:
+        value = float(raw)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("must be a positive number") from exc
+    if value <= 0:
+        raise argparse.ArgumentTypeError("must be greater than 0")
+    return value
+
+
+def _wrap_safety_value(raw: str) -> float:
+    """argparse 用: wrap safety は 0 < value <= 1 の範囲に限定する。"""
+    value = _positive_float(raw)
+    if value > 1:
+        raise argparse.ArgumentTypeError("must be less than or equal to 1")
+    return value
+
+
+def _effective_chars_per_line(chars_per_line: int, subtitle_font_scale: float) -> int:
+    """基準 chars_per_line を字幕フォント倍率で補正する。"""
+    if chars_per_line <= 0:
+        return chars_per_line
+    return max(1, int(chars_per_line * 100 / subtitle_font_scale))
+
+
+def _animation_scalar_value(raw) -> float | None:
+    """YMM4 の Animation 型から代表値を取り出す。"""
+    if isinstance(raw, (int, float)):
+        return float(raw)
+    if not isinstance(raw, dict):
+        return None
+    values = raw.get("Values")
+    if not isinstance(values, list) or not values:
+        return None
+    first_value = values[0]
+    if not isinstance(first_value, dict):
+        return None
+    value = first_value.get("Value")
+    if isinstance(value, (int, float)):
+        return float(value)
+    return None
+
+
+def _iter_mapping_nodes(raw):
+    """YMM4 JSON 内の dict ノードを再帰走査する。"""
+    if isinstance(raw, dict):
+        yield raw
+        for value in raw.values():
+            yield from _iter_mapping_nodes(value)
+    elif isinstance(raw, list):
+        for value in raw:
+            yield from _iter_mapping_nodes(value)
+
+
+def _subtitle_font_size_entries_from_ymmp(data: dict) -> list[dict]:
+    """YMM4 project 内の字幕フォントサイズ候補を抽出する。"""
+    entries: list[dict] = []
+    for node in _iter_mapping_nodes(data):
+        if "FontSize" not in node:
+            continue
+        if not any(key in node for key in ("Font", "JimakuVisibility", "IsJimakuVisible")):
+            continue
+        font_size = _animation_scalar_value(node.get("FontSize"))
+        if font_size is None or font_size <= 0:
+            continue
+        node_type = str(node.get("$type", ""))
+        source = "voice_item" if "VoiceItem" in node_type or "Serif" in node else "character"
+        entries.append(
+            {
+                "font_size": font_size,
+                "font": node.get("Font"),
+                "character": node.get("CharacterName") or node.get("Name"),
+                "jimaku_visibility": node.get("JimakuVisibility"),
+                "source": source,
+            }
+        )
+    return entries
+
+
+def _infer_subtitle_font_scale_from_ymmp(path: Path, base_font_size: float) -> tuple[float, float, int, dict]:
+    """YMM4 project の字幕 FontSize から倍率を推定する。最大値を採用して安全側に倒す。"""
+    with path.open("r", encoding="utf-8-sig") as file:
+        data = json.load(file)
+    entries = _subtitle_font_size_entries_from_ymmp(data)
+    if not entries:
+        raise ValueError(f"Subtitle FontSize not found in YMM4 project: {path}")
+    selected = max(entries, key=lambda entry: entry["font_size"])
+    if selected.get("font") is None:
+        font_candidates = [entry for entry in entries if entry.get("font")]
+        if font_candidates:
+            selected = {**selected, "font": max(font_candidates, key=lambda entry: entry["font_size"]).get("font")}
+    font_size = selected["font_size"]
+    return font_size * 100 / base_font_size, font_size, len(entries), selected
+
+
+def _resolve_subtitle_font_scale(args: argparse.Namespace) -> tuple[float, dict]:
+    """明示倍率または YMM4 project から字幕フォント倍率を決める。"""
+    explicit_scale = getattr(args, "subtitle_font_scale", None)
+    if explicit_scale is not None:
+        return explicit_scale, {"source": "manual"}
+
+    source_ymmp = getattr(args, "subtitle_font_source_ymmp", None)
+    if source_ymmp:
+        base_font_size = getattr(args, "subtitle_base_font_size", 45.0)
+        inferred_scale, font_size, entry_count, selected = _infer_subtitle_font_scale_from_ymmp(
+            Path(source_ymmp),
+            base_font_size,
+        )
+        return inferred_scale, {
+            "source": "ymmp",
+            "font_size": font_size,
+            "font": selected.get("font"),
+            "character": selected.get("character"),
+            "base_font_size": base_font_size,
+            "font_entry_count": entry_count,
+            "source_ymmp": str(source_ymmp),
+        }
+
+    return 100.0, {"source": "default"}
+
+
+def _default_wpf_measure_exe() -> Path:
+    env_path = os.environ.get("NLMYTGEN_WPF_MEASURE_EXE")
+    if env_path:
+        return Path(env_path)
+    return (
+        Path(__file__).resolve().parents[2]
+        / "tools"
+        / "MeasureTextWpf"
+        / "bin"
+        / "Release"
+        / "net8.0-windows"
+        / "win-x64"
+        / "publish"
+        / "MeasureTextWpf.exe"
+    )
+
+
+def _resolve_text_measurer(
+    args: argparse.Namespace,
+    subtitle_font_info: dict,
+) -> tuple[TextMeasurer | None, dict | None]:
+    """--wrap-px 指定時の計測バックエンドを構築する。"""
+    wrap_px = getattr(args, "wrap_px", None)
+    if wrap_px is None:
+        return None, None
+
+    backend = getattr(args, "measure_backend", None)
+    font_family = getattr(args, "font_family", None) or subtitle_font_info.get("font")
+    font_size = getattr(args, "font_size", None) or subtitle_font_info.get("font_size")
+    letter_spacing = float(getattr(args, "letter_spacing", 0.0) or 0.0)
+    if backend is None:
+        backend = "wpf" if (font_family and font_size) else "eaw"
+
+    info = {
+        "backend": backend,
+        "wrap_px": wrap_px,
+        "wrap_safety": getattr(args, "wrap_safety", 0.94),
+        "effective_wrap_px": wrap_px * getattr(args, "wrap_safety", 0.94),
+        "font_family": font_family,
+        "font_size": font_size,
+        "letter_spacing": letter_spacing,
+    }
+
+    if backend == "eaw":
+        return EastAsianWidthMeasurer(), info
+
+    if backend != "wpf":
+        raise ValueError(f"Unsupported measure backend: {backend}")
+    if not font_family:
+        raise ValueError("--measure-backend wpf requires --font-family or --subtitle-font-source-ymmp with Font")
+    if not font_size:
+        raise ValueError("--measure-backend wpf requires --font-size or --subtitle-font-source-ymmp with FontSize")
+
+    exe_path = Path(getattr(args, "measure_exe", None) or _default_wpf_measure_exe())
+    if not exe_path.exists():
+        raise FileNotFoundError(
+            f"WPF measure helper not found: {exe_path}. "
+            "Build it with: dotnet publish tools/MeasureTextWpf -c Release -r win-x64 --self-contained false"
+        )
+    info["measure_exe"] = str(exe_path)
+    return WpfTextMeasurer(exe_path, font_family, float(font_size), letter_spacing), info
+
+
 def _build_stats_payload(
     output,
     chars_per_line: int = 0,
     max_display_lines: int = 0,
+    subtitle_font_scale: float = 100.0,
+    effective_chars_per_line: int | None = None,
+    subtitle_font_info: dict | None = None,
+    measure_info: dict | None = None,
+    measurer: TextMeasurer | None = None,
 ) -> dict:
     """話者統計とはみ出し候補を JSON 用 dict にまとめる（GUI / --format json 用）。"""
     speaker_counts = Counter(row.speaker for row in output.rows)
@@ -135,35 +355,91 @@ def _build_stats_payload(
     }
 
     if chars_per_line > 0 and max_display_lines > 0:
+        effective_cpl = (
+            effective_chars_per_line
+            if effective_chars_per_line is not None
+            else _effective_chars_per_line(chars_per_line, subtitle_font_scale)
+        )
         payload["overflow_params"] = {
             "chars_per_line": chars_per_line,
+            "subtitle_font_scale": subtitle_font_scale,
+            "effective_chars_per_line": effective_cpl,
             "max_display_lines": max_display_lines,
         }
+        if subtitle_font_info:
+            payload["overflow_params"]["subtitle_font_scale_source"] = subtitle_font_info.get("source")
+            if subtitle_font_info.get("font") is not None:
+                payload["overflow_params"]["subtitle_font"] = subtitle_font_info["font"]
+            if subtitle_font_info.get("font_size") is not None:
+                payload["overflow_params"]["subtitle_font_size"] = subtitle_font_info["font_size"]
+            if subtitle_font_info.get("base_font_size") is not None:
+                payload["overflow_params"]["subtitle_base_font_size"] = subtitle_font_info["base_font_size"]
+            if subtitle_font_info.get("font_entry_count") is not None:
+                payload["overflow_params"]["subtitle_font_entry_count"] = subtitle_font_info["font_entry_count"]
+            if subtitle_font_info.get("source_ymmp") is not None:
+                payload["overflow_params"]["subtitle_font_source_ymmp"] = subtitle_font_info["source_ymmp"]
+        if measure_info:
+            payload["overflow_params"]["measure_backend"] = measure_info.get("backend")
+            payload["overflow_params"]["wrap_px"] = measure_info.get("wrap_px")
+            payload["overflow_params"]["wrap_safety"] = measure_info.get("wrap_safety")
+            payload["overflow_params"]["effective_wrap_px"] = measure_info.get("effective_wrap_px")
+            payload["overflow_params"]["font_family"] = measure_info.get("font_family")
+            payload["overflow_params"]["font_size"] = measure_info.get("font_size")
+            payload["overflow_params"]["letter_spacing"] = measure_info.get("letter_spacing")
+            if measure_info.get("measure_exe") is not None:
+                payload["overflow_params"]["measure_exe"] = measure_info.get("measure_exe")
         overflow: list[dict] = []
         for i, row in enumerate(output.rows):
             w = display_width(row.text)
-            lines = estimate_display_lines(row.text, chars_per_line)
+            measured_width = None
+            if measurer is not None and measure_info:
+                line_limit = float(measure_info["effective_wrap_px"])
+                measured_widths = [measurer.width(chunk) for chunk in row.text.split("\n")]
+                lines = sum(max(1, ceil(width / line_limit)) for width in measured_widths)
+                measured_width = max(measured_widths) if measured_widths else 0.0
+            else:
+                lines = estimate_display_lines(row.text, effective_cpl)
             if lines > max_display_lines:
-                overflow.append(
-                    {
-                        "row": i + 1,
-                        "speaker": row.speaker,
-                        "estimated_lines": lines,
-                        "display_width": w,
-                    }
-                )
+                item = {
+                    "row": i + 1,
+                    "speaker": row.speaker,
+                    "estimated_lines": lines,
+                    "display_width": w,
+                }
+                if measured_width is not None:
+                    item["measured_width"] = round(measured_width, 2)
+                overflow.append(item)
         payload["overflow_candidates"] = overflow
 
     return payload
 
 
-def _print_stats(output, chars_per_line: int = 0, max_display_lines: int = 0, file=sys.stdout):
+def _print_stats(
+    output,
+    chars_per_line: int = 0,
+    max_display_lines: int = 0,
+    subtitle_font_scale: float = 100.0,
+    effective_chars_per_line: int | None = None,
+    subtitle_font_info: dict | None = None,
+    measure_info: dict | None = None,
+    measurer: TextMeasurer | None = None,
+    file=sys.stdout,
+):
     """話者ごとの発話統計を表示する。
 
     chars_per_line > 0 かつ max_display_lines > 0 のとき、
     推定行数が max_display_lines を超える行をはみ出し候補として警告する。
     """
-    payload = _build_stats_payload(output, chars_per_line, max_display_lines)
+    payload = _build_stats_payload(
+        output,
+        chars_per_line,
+        max_display_lines,
+        subtitle_font_scale=subtitle_font_scale,
+        effective_chars_per_line=effective_chars_per_line,
+        subtitle_font_info=subtitle_font_info,
+        measure_info=measure_info,
+        measurer=measurer,
+    )
 
     print("--- Stats ---", file=file)
     for entry in payload["speakers"]:
@@ -180,19 +456,49 @@ def _print_stats(output, chars_per_line: int = 0, max_display_lines: int = 0, fi
     op = payload["overflow_params"]
     if op:
         cpl = op["chars_per_line"]
+        effective_cpl = op["effective_chars_per_line"]
+        font_scale = op["subtitle_font_scale"]
         mdl = op["max_display_lines"]
         oc = payload["overflow_candidates"]
+        measure_backend = op.get("measure_backend")
         if oc:
-            print(f"--- Overflow candidates (>{mdl} lines at {cpl} chars/line) ---", file=file)
+            if measure_backend:
+                header = (
+                    f"--- Overflow candidates (>{mdl} lines at {op.get('effective_wrap_px'):g}px; "
+                    f"backend={measure_backend}) ---"
+                )
+            elif effective_cpl == cpl and font_scale == 100:
+                header = f"--- Overflow candidates (>{mdl} lines at {cpl} chars/line) ---"
+            else:
+                header = (
+                    f"--- Overflow candidates (>{mdl} lines at effective {effective_cpl} chars/line; "
+                    f"base={cpl}, font_scale={font_scale:g}%) ---"
+                )
+            print(header, file=file)
             for item in oc:
+                width_note = f"display_width={item['display_width']}"
+                if "measured_width" in item:
+                    width_note += f", measured_width={item['measured_width']}"
                 print(
                     f"  [WARN] row {item['row']}: {item['speaker']}, "
-                    f"推定{item['estimated_lines']}行 (display_width={item['display_width']})",
+                    f"推定{item['estimated_lines']}行 ({width_note})",
                     file=file,
                 )
         else:
+            if measure_backend:
+                fit_target = f"{op.get('effective_wrap_px'):g}px; backend={measure_backend}"
+            elif effective_cpl == cpl and font_scale == 100:
+                fit_target = f"{cpl} chars/line"
+            else:
+                fit_target = f"effective {effective_cpl} chars/line; base={cpl}, font_scale={font_scale:g}%"
             print(
-                f"--- No overflow candidates (all within {mdl} lines at {cpl} chars/line) ---",
+                f"--- No overflow candidates (all within {mdl} lines at {fit_target}) ---",
+                file=file,
+            )
+        if op.get("subtitle_font_scale_source") == "ymmp":
+            print(
+                f"Subtitle font scale inferred from YMM4: {font_scale:g}% "
+                f"(font_size={op.get('subtitle_font_size')}, base={op.get('subtitle_base_font_size')})",
                 file=file,
             )
 
@@ -224,24 +530,34 @@ def _build_one(
     max_length = getattr(args, "max_length", None)
     use_dw = getattr(args, "display_width", False)
     chars_per_line = getattr(args, "chars_per_line", 40)
+    subtitle_font_scale, subtitle_font_info = _resolve_subtitle_font_scale(args)
+    effective_chars_per_line = _effective_chars_per_line(chars_per_line, subtitle_font_scale)
+    text_measurer, measure_info = _resolve_text_measurer(args, subtitle_font_info)
     balance_lines = getattr(args, "balance_lines", False)
     reflow_v2 = getattr(args, "reflow_v2", False)
 
     if max_lines:
-        if reflow_v2:
+        if text_measurer is not None and measure_info is not None:
+            output = reflow_subtitles_measured(
+                output,
+                max_width=float(measure_info["effective_wrap_px"]),
+                max_lines=max_lines,
+                measurer=text_measurer,
+            )
+        elif reflow_v2:
             output = reflow_subtitles_v2(
                 output,
-                chars_per_line=chars_per_line,
+                chars_per_line=effective_chars_per_line,
                 max_lines=max_lines,
             )
         elif balance_lines:
             output = reflow_subtitles_v2(
                 output,
-                chars_per_line=chars_per_line,
+                chars_per_line=effective_chars_per_line,
                 max_lines=max_lines,
             )
         else:
-            effective_max = chars_per_line * max_lines
+            effective_max = effective_chars_per_line * max_lines
             output = split_long_utterances(output, max_length=effective_max, use_display_width=True)
     elif max_length:
         output = split_long_utterances(output, max_length=max_length, use_display_width=use_dw)
@@ -257,7 +573,16 @@ def _build_one(
         chars_per_line = getattr(args, "chars_per_line", 40)
         stats_cpl = chars_per_line if (use_dw or max_lines) else 0
         stats_lines = max_lines if max_lines else (2 if (use_dw or max_lines) else 0)
-        json_result["stats"] = _build_stats_payload(output, stats_cpl, stats_lines)
+        json_result["stats"] = _build_stats_payload(
+            output,
+            stats_cpl,
+            stats_lines,
+            subtitle_font_scale=subtitle_font_scale,
+            effective_chars_per_line=effective_chars_per_line if stats_cpl > 0 else None,
+            subtitle_font_info=subtitle_font_info,
+            measure_info=measure_info,
+            measurer=text_measurer,
+        )
 
     if has_errors(results):
         print(f"Validation errors found. CSV not written: {input_path.name}", file=sys.stderr)
@@ -268,7 +593,16 @@ def _build_one(
     if getattr(args, "stats", False) or getattr(args, "dry_run", False):
         stats_cpl = chars_per_line if (use_dw or max_lines) else 0
         stats_lines = max_lines if max_lines else (2 if (use_dw or max_lines) else 0)
-        _print_stats(output, chars_per_line=stats_cpl, max_display_lines=stats_lines)
+        _print_stats(
+            output,
+            chars_per_line=stats_cpl,
+            max_display_lines=stats_lines,
+            subtitle_font_scale=subtitle_font_scale,
+            effective_chars_per_line=effective_chars_per_line if stats_cpl > 0 else None,
+            subtitle_font_info=subtitle_font_info,
+            measure_info=measure_info,
+            measurer=text_measurer,
+        )
 
     if getattr(args, "dry_run", False):
         print("--- Preview (first 5 rows) ---")
@@ -305,6 +639,8 @@ def _cmd_build_csv(args: argparse.Namespace) -> int:
 
     if getattr(args, "balance_lines", False) and not args.max_lines:
         raise ValueError("--balance-lines requires --max-lines")
+    if getattr(args, "wrap_px", None) is not None and not args.max_lines:
+        raise ValueError("--wrap-px requires --max-lines")
 
     if len(inputs) == 1:
         input_path = inputs[0]
@@ -313,7 +649,15 @@ def _cmd_build_csv(args: argparse.Namespace) -> int:
         else:
             output_path = input_path.with_name(f"{input_path.stem}_ymm4.csv")
         jr: dict | None = {"input": str(input_path)} if fmt == "json" else None
-        success = _build_one(input_path, output_path, args, json_result=jr)
+        try:
+            success = _build_one(input_path, output_path, args, json_result=jr)
+        except (ValueError, FileNotFoundError) as exc:
+            if fmt == "json":
+                jr = {"input": str(input_path), "success": False, "error": str(exc)}
+                print(json.dumps(jr, ensure_ascii=False))
+            else:
+                print(f"Error: {exc}", file=sys.stderr)
+            return 1
         if fmt == "json":
             print(json.dumps(jr, ensure_ascii=False))
         return 0 if success else 1
@@ -747,6 +1091,26 @@ def main(argv: list[str] | None = None) -> int:
                          help="Split to fit within N display lines (uses --chars-per-line)")
     p_build.add_argument("--chars-per-line", type=int, default=40, metavar="N",
                          help="Display width per line for --max-lines (default: 40)")
+    p_build.add_argument("--subtitle-font-scale", type=_positive_percent, metavar="PERCENT",
+                         help="Subtitle font scale percent used to narrow effective chars/line (default: 100)")
+    p_build.add_argument("--subtitle-font-source-ymmp",
+                         help="YMM4 project to infer subtitle font scale from FontSize when scale is omitted")
+    p_build.add_argument("--subtitle-base-font-size", type=_positive_percent, default=45.0, metavar="N",
+                         help="Base YMM4 subtitle FontSize treated as 100%% for --subtitle-font-source-ymmp (default: 45)")
+    p_build.add_argument("--wrap-px", type=_positive_float, metavar="PX",
+                         help="Measured subtitle line width in pixels/units; enables measured reflow with --max-lines")
+    p_build.add_argument("--wrap-safety", type=_wrap_safety_value, default=0.94, metavar="RATIO",
+                         help="Safety factor applied to --wrap-px (default: 0.94)")
+    p_build.add_argument("--measure-backend", choices=["eaw", "wpf"],
+                         help="Measured reflow backend for --wrap-px (default: wpf when font data exists, otherwise eaw)")
+    p_build.add_argument("--font-family",
+                         help="Font family for --measure-backend wpf; inferred from --subtitle-font-source-ymmp when possible")
+    p_build.add_argument("--font-size", type=_positive_float, metavar="PX",
+                         help="Font size for --measure-backend wpf; inferred from --subtitle-font-source-ymmp when possible")
+    p_build.add_argument("--letter-spacing", type=float, default=0.0, metavar="PX",
+                         help="Additional per-character spacing for measured text width (default: 0)")
+    p_build.add_argument("--measure-exe",
+                         help="Path to MeasureTextWpf.exe (or set NLMYTGEN_WPF_MEASURE_EXE)")
     p_build.add_argument("--balance-lines", action="store_true",
                          help="Insert a natural line break for 2-line subtitles (requires --max-lines)")
     p_build.add_argument("--reflow-v2", action="store_true",
@@ -838,6 +1202,105 @@ def main(argv: list[str] | None = None) -> int:
     p_measure.add_argument("--format", choices=["text", "json"], default="text",
                            help="Output format (default: text)")
 
+    # probe-ymmp-variations
+    p_variation = subparsers.add_parser(
+        "probe-ymmp-variations",
+        help="Inspect manual YMM4 clips and optionally append conservative review variants",
+    )
+    p_variation.add_argument("ymmp", help="Input ymmp file path")
+    p_variation.add_argument(
+        "-o",
+        "--output",
+        help="Output review ymmp path; when omitted, no ymmp is written",
+    )
+    p_variation.add_argument(
+        "--review-seed",
+        help=(
+            "YMM4-saved full project canvas used for -o review output; "
+            "keeps source templates as extraction inputs only"
+        ),
+    )
+    p_variation.add_argument(
+        "--review-spacing",
+        type=int,
+        default=120,
+        help="Frame spacing between appended review variants (default: 120)",
+    )
+    p_variation.add_argument(
+        "--format",
+        choices=["json", "text"],
+        default="json",
+        help="Output report format (default: json)",
+    )
+
+    # build-motion-recipes
+    p_motion_recipes = subparsers.add_parser(
+        "build-motion-recipes",
+        help="G-26: build purpose-driven YMM4 motion recipe review artifacts",
+    )
+    p_motion_recipes.add_argument(
+        "--brief",
+        default="samples/recipe_briefs/g26_motion_recipe_brief.v1.json",
+        help="Motion recipe brief JSON (default: samples/recipe_briefs/g26_motion_recipe_brief.v1.json)",
+    )
+    p_motion_recipes.add_argument(
+        "--recipe-id",
+        help="Build only the matching recipe goal_id (default: build all brief recipes)",
+    )
+    p_motion_recipes.add_argument(
+        "--seed",
+        default="samples/canonical.ymmp",
+        help="YMM4-saved full project canvas seed (default: samples/canonical.ymmp)",
+    )
+    p_motion_recipes.add_argument(
+        "--template-source",
+        default="samples/templates/skit_group/delivery_v1_templates.ymmp",
+        help="YMM4 template source with GroupItem/ImageItem actor clips",
+    )
+    p_motion_recipes.add_argument(
+        "--effect-catalog",
+        default="samples/effect_catalog.json",
+        help="YMM4 effect catalog JSON (default: samples/effect_catalog.json)",
+    )
+    p_motion_recipes.add_argument(
+        "--effect-samples",
+        default="samples/_probe/b2/effect_full_samples.json",
+        help="Optional concrete effect sample JSON (default: samples/_probe/b2/effect_full_samples.json)",
+    )
+    p_motion_recipes.add_argument(
+        "--motion-library",
+        default="samples/tachie_motion_map_library.json",
+        help="Motion preset library JSON (default: samples/tachie_motion_map_library.json)",
+    )
+    p_motion_recipes.add_argument(
+        "--corpus-ymmp",
+        default="_tmp/g26/composition/演出_palette_v2.ymmp",
+        help="Optional candidate composition corpus ymmp (default: _tmp/g26/composition/演出_palette_v2.ymmp)",
+    )
+    p_motion_recipes.add_argument(
+        "--out-ymmp",
+        "--out-yMMP",
+        dest="out_ymmp",
+        default=None,
+        help="Output review ymmp path",
+    )
+    p_motion_recipes.add_argument(
+        "--out-readback",
+        default=None,
+        help="Output machine readback JSON path",
+    )
+    p_motion_recipes.add_argument(
+        "--out-manifest",
+        default=None,
+        help="Output review manifest markdown path",
+    )
+    p_motion_recipes.add_argument(
+        "--format",
+        choices=["json", "text"],
+        default="json",
+        help="Output summary format (default: json)",
+    )
+
     # patch-ymmp
     p_patch = subparsers.add_parser(
         "patch-ymmp",
@@ -886,6 +1349,26 @@ def main(argv: list[str] | None = None) -> int:
     p_patch.add_argument(
         "--skit-group-registry",
         help="G-24: skit_group canonical anchor / exact-fallback-manual_note registry JSON",
+    )
+    p_patch.add_argument(
+        "--skit-group-template-source",
+        help="G-24: repo-tracked ymmp template library for skit_group GroupItem placement",
+    )
+    p_patch.add_argument(
+        "--skit-group-only",
+        action="store_true",
+        help="G-24: apply only skit_group GroupItem placement; skip face/bg/timeline patch paths",
+    )
+    p_patch.add_argument(
+        "--skit-group-compact-review",
+        action="store_true",
+        help="G-24: place skit_group cues sequentially for compact visual review instead of production timing",
+    )
+    p_patch.add_argument(
+        "--skit-group-review-spacing",
+        type=int,
+        default=240,
+        help="G-24: frame spacing for --skit-group-compact-review (default: 240)",
     )
     p_patch.add_argument(
         "--timeline-contract",
@@ -945,6 +1428,31 @@ def main(argv: list[str] | None = None) -> int:
         help="G-24: skit_group canonical anchor / exact-fallback-manual_note registry JSON",
     )
     p_apply.add_argument(
+        "--skit-group-template-source",
+        help="G-24: repo-tracked ymmp template library for skit_group GroupItem placement",
+    )
+    p_apply.add_argument(
+        "--skit-group-only",
+        action="store_true",
+        help="G-24: apply only skit_group GroupItem placement; skip face/bg/timeline patch paths",
+    )
+    p_apply.add_argument(
+        "--skit-group-compact-review",
+        action="store_true",
+        help="G-24: place skit_group cues sequentially for compact visual review instead of production timing",
+    )
+    p_apply.add_argument(
+        "--skit-group-review-spacing",
+        type=int,
+        default=240,
+        help="G-24: frame spacing for --skit-group-compact-review (default: 240)",
+    )
+    p_apply.add_argument(
+        "--strict-skit-group-intents",
+        action="store_true",
+        help="Fail when motion_target layer entries use labels outside the skit_group registry",
+    )
+    p_apply.add_argument(
         "--timeline-contract",
         help="timeline_route_contract.json のパス",
     )
@@ -998,11 +1506,34 @@ def main(argv: list[str] | None = None) -> int:
         "--group-motion-map",
         help="A案: group_motion 台帳 JSON のラベル（GROUP_MOTION_UNKNOWN_LABEL 用）",
     )
+    p_valir.add_argument(
+        "--skit-group-registry",
+        help="G-24: skit_group intent vocabulary registry JSON",
+    )
+    p_valir.add_argument(
+        "--strict-skit-group-intents",
+        action="store_true",
+        help="Fail when motion_target layer entries use labels outside the skit_group registry",
+    )
     p_valir.add_argument("--prompt-doc",
                          help="Prompt markdown for face contract drift check"
                               " (default: docs/S6-production-memo-prompt.md)")
     p_valir.add_argument("--format", choices=["text", "json"], default="text",
                          help="text: human report to stdout; json: machine summary on stdout, meta on stderr")
+
+    # validate-background-skit-blueprint
+    p_skit_blueprint = subparsers.add_parser(
+        "validate-background-skit-blueprint",
+        help="Validate source-backed background skit blueprint before IR/YMM4 timing",
+    )
+    p_skit_blueprint.add_argument("blueprint_json", help="Background skit blueprint JSON")
+    p_skit_blueprint.add_argument("--script", required=True, help="Source script .txt")
+    p_skit_blueprint.add_argument(
+        "--ymmp",
+        help="YMM4 project used for total duration readback; missing path returns blocked",
+    )
+    p_skit_blueprint.add_argument("--fps", type=float, default=60.0, help="YMM4 fps (default: 60)")
+    p_skit_blueprint.add_argument("--format", choices=["text", "json"], default="text")
 
     # audit-skit-group
     p_skit_audit = subparsers.add_parser(
@@ -1067,6 +1598,24 @@ def main(argv: list[str] | None = None) -> int:
     )
     p_score_thumb.add_argument("--format", choices=["json", "text"], default="text")
 
+    # thumbnail template slot audit / patch
+    p_audit_thumb_template = subparsers.add_parser(
+        "audit-thumbnail-template",
+        help="Audit YMM4 thumbnail template thumb.* Remark slots",
+    )
+    p_audit_thumb_template.add_argument("ymmp", help="Thumbnail template .ymmp path")
+    p_audit_thumb_template.add_argument("--format", choices=["text", "json"], default="text")
+
+    p_patch_thumb_template = subparsers.add_parser(
+        "patch-thumbnail-template",
+        help="Patch YMM4 thumbnail template thumb.* slots from JSON",
+    )
+    p_patch_thumb_template.add_argument("ymmp", help="Thumbnail template .ymmp path")
+    p_patch_thumb_template.add_argument("--patch", required=True, help="Thumbnail patch JSON path")
+    p_patch_thumb_template.add_argument("-o", "--output", help="Output .ymmp path")
+    p_patch_thumb_template.add_argument("--dry-run", action="store_true", help="Preview changes without writing")
+    p_patch_thumb_template.add_argument("--format", choices=["text", "json"], default="text")
+
     # emit-packaging-brief-template (H-01)
     p_emit_brief = subparsers.add_parser(
         "emit-packaging-brief-template",
@@ -1080,6 +1629,80 @@ def main(argv: list[str] | None = None) -> int:
         "--format", choices=["markdown", "json"], default="markdown",
         help="markdown (default) or minimal JSON skeleton",
     )
+
+    # init-episode-run (one-video production pack scaffold)
+    p_episode_run = subparsers.add_parser(
+        "init-episode-run",
+        help="Create a one-video production pack under _tmp/episode_runs/<episode_id>",
+    )
+    p_episode_run.add_argument("--episode-id", required=True, help="Episode/run identifier")
+    p_episode_run.add_argument(
+        "--root",
+        default="_tmp/episode_runs",
+        help="Episode run root directory (default: _tmp/episode_runs)",
+    )
+    p_episode_run.add_argument(
+        "--force",
+        action="store_true",
+        help="Overwrite starter files if they already exist",
+    )
+    p_episode_run.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
+    p_episode_handoff = subparsers.add_parser(
+        "episode-run-handoff",
+        help="Print a self-contained user handoff for one episode run pack",
+    )
+    p_episode_handoff.add_argument("--episode-id", required=True, help="Episode/run identifier")
+    p_episode_handoff.add_argument(
+        "--root",
+        default="_tmp/episode_runs",
+        help="Episode run root directory (default: _tmp/episode_runs)",
+    )
+    p_episode_handoff.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
+    # build-session-manifest (production handoff)
+    p_session_manifest = subparsers.add_parser(
+        "build-session-manifest",
+        help="Build a production session manifest / operator handoff sheet",
+    )
+    p_session_manifest.add_argument("--video-id", required=True, help="Video/project identifier")
+    p_session_manifest.add_argument("--source-script", help="Refined/source script path")
+    p_session_manifest.add_argument("--csv", help="YMM4 CSV path")
+    p_session_manifest.add_argument("--script-diagnostics", help="diagnose-script --format json result path")
+    p_session_manifest.add_argument("--production-ymmp", help="Base production .ymmp path")
+    p_session_manifest.add_argument("--ir-json", help="Production IR JSON path")
+    p_session_manifest.add_argument("--face-map", help="face_map JSON path")
+    p_session_manifest.add_argument("--bg-map", help="bg_map JSON path")
+    p_session_manifest.add_argument("--overlay-map", help="overlay_map JSON path, if used")
+    p_session_manifest.add_argument("--se-map", help="se_map JSON path, if used")
+    p_session_manifest.add_argument("--motion-map", help="motion_map JSON path, if used")
+    p_session_manifest.add_argument("--bg-anim-map", help="bg_anim_map JSON path, if used")
+    p_session_manifest.add_argument("--skit-group-registry", help="skit_group registry JSON path")
+    p_session_manifest.add_argument("--skit-group-template-source", help="skit_group template source .ymmp path")
+    p_session_manifest.add_argument("--validate-result", help="validate-ir --format json result path")
+    p_session_manifest.add_argument("--apply-result", help="apply-production --format json result path")
+    p_session_manifest.add_argument("--patched-ymmp", help="Patched production .ymmp path")
+    p_session_manifest.add_argument("--ymm4-acceptance", help="YMM4 acceptance note path")
+    p_session_manifest.add_argument("--gaps", help="Episode gaps note path")
+    p_session_manifest.add_argument("--thumbnail-design", help="thumbnail_design sibling artifact path")
+    p_session_manifest.add_argument("--thumbnail-output", help="Exported thumbnail image path, if available")
+    p_session_manifest.add_argument(
+        "--format",
+        choices=["markdown", "json"],
+        default="markdown",
+        help="Output format (default: markdown)",
+    )
+    p_session_manifest.add_argument("-o", "--output", help="Output path (default: stdout)")
 
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
@@ -1147,6 +1770,10 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_extract_template(args)
         elif args.command == "measure-timeline-routes":
             return _cmd_measure_timeline_routes(args)
+        elif args.command == "probe-ymmp-variations":
+            return _cmd_probe_ymmp_variations(args)
+        elif args.command == "build-motion-recipes":
+            return _cmd_build_motion_recipes(args)
         elif args.command == "patch-ymmp":
             return _cmd_patch_ymmp(args)
         elif args.command == "apply-production":
@@ -1155,6 +1782,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_annotate_row_range(args)
         elif args.command == "validate-ir":
             return _cmd_validate_ir(args)
+        elif args.command == "validate-background-skit-blueprint":
+            return _cmd_validate_background_skit_blueprint(args)
         elif args.command == "audit-skit-group":
             return _cmd_audit_skit_group(args)
         elif args.command == "score-evidence":
@@ -1163,8 +1792,18 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_score_visual_density(args)
         elif args.command == "score-thumbnail-s8":
             return _cmd_score_thumbnail_s8(args)
+        elif args.command == "audit-thumbnail-template":
+            return _cmd_audit_thumbnail_template(args)
+        elif args.command == "patch-thumbnail-template":
+            return _cmd_patch_thumbnail_template(args)
         elif args.command == "emit-packaging-brief-template":
             return _cmd_emit_packaging_brief_template(args)
+        elif args.command == "init-episode-run":
+            return _cmd_init_episode_run(args)
+        elif args.command == "episode-run-handoff":
+            return _cmd_episode_run_handoff(args)
+        elif args.command == "build-session-manifest":
+            return _cmd_build_session_manifest(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -1286,6 +1925,118 @@ def _cmd_measure_timeline_routes(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_probe_ymmp_variations(args: argparse.Namespace) -> int:
+    """Probe manual YMM4 clips for conservative property-based variations."""
+    from src.pipeline.ymmp_openability import is_ymmp_project_canvas, save_openable_ymmp
+    from src.pipeline.ymmp_patch import load_ymmp
+    from src.pipeline.ymmp_variation import (
+        probe_ymmp_variations,
+        render_variation_probe_text,
+    )
+
+    data = load_ymmp(args.ymmp)
+    review_data = None
+    if getattr(args, "review_seed", None):
+        if not args.output:
+            raise ValueError("--review-seed requires -o/--output")
+        review_data = load_ymmp(args.review_seed)
+    elif args.output and not is_ymmp_project_canvas(data):
+        raise ValueError(
+            "YMM4_REVIEW_SEED_REQUIRED: -o review output requires a YMM4-saved "
+            "full project canvas. Pass --review-seed when the probe source is a "
+            "template/stub ymmp."
+        )
+    result = probe_ymmp_variations(
+        data,
+        create_review=bool(args.output),
+        review_data=review_data,
+        review_spacing=args.review_spacing,
+    )
+    if args.output and result["success"]:
+        out_path = Path(args.output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        output_data = review_data if review_data is not None else data
+        result["openability"] = save_openable_ymmp(output_data, out_path)
+        if review_data is not None:
+            result["review_seed"] = str(args.review_seed)
+        result["output"] = str(out_path)
+
+    if args.format == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        sys.stdout.write(render_variation_probe_text(result))
+        if args.output and result["success"]:
+            print(f"Written: {result['output']}")
+    return 0 if result["success"] else 1
+
+
+def _cmd_build_motion_recipes(args: argparse.Namespace) -> int:
+    """Build purpose-driven G-26 YMM4 motion recipe review artifacts."""
+    from src.pipeline.motion_recipe import (
+        MotionRecipeBuildPaths,
+        build_motion_recipe_review,
+    )
+
+    corpus_path = Path(args.corpus_ymmp) if getattr(args, "corpus_ymmp", None) else None
+    effect_samples_path = (
+        Path(args.effect_samples)
+        if getattr(args, "effect_samples", None)
+        else None
+    )
+    out_ymmp, out_readback, out_manifest = _motion_recipe_output_paths(args)
+    result = build_motion_recipe_review(
+        MotionRecipeBuildPaths(
+            brief=Path(args.brief),
+            seed=Path(args.seed),
+            template_source=Path(args.template_source),
+            effect_catalog=Path(args.effect_catalog),
+            effect_samples=effect_samples_path,
+            motion_library=Path(args.motion_library),
+            corpus_ymmp=corpus_path,
+            out_ymmp=out_ymmp,
+            out_readback=out_readback,
+            out_manifest=out_manifest,
+            recipe_id=args.recipe_id,
+        )
+    )
+
+    if args.format == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        print(f"Motion recipe review: {result['outputs']['ymmp']}")
+        print(f"Readback: {result['outputs']['readback']}")
+        print(f"Manifest: {result['outputs']['manifest']}")
+        print(
+            "Recipes: "
+            f"{result['recipe_count']} "
+            f"(GroupItems: {result['recipe_group_count']}, "
+            f"ImageItems: {result['recipe_image_count']})"
+        )
+        if result["warnings"]:
+            print("Warnings:")
+            for warning in result["warnings"]:
+                print(f"  - {warning}")
+    return 0 if result["success"] else 1
+
+
+def _motion_recipe_output_paths(args: argparse.Namespace) -> tuple[Path, Path, Path]:
+    recipe_id = getattr(args, "recipe_id", None)
+    if recipe_id:
+        default_dir = Path("_tmp/g26/recipe_pipeline/v2")
+        default_ymmp = default_dir / f"{recipe_id}_review.ymmp"
+        default_readback = default_dir / f"{recipe_id}_review_readback.json"
+        default_manifest = default_dir / f"{recipe_id}_review_manifest.md"
+    else:
+        default_ymmp = Path("_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1.ymmp")
+        default_readback = Path("_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1_readback.json")
+        default_manifest = Path("_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1_manifest.md")
+    return (
+        Path(args.out_ymmp) if getattr(args, "out_ymmp", None) else default_ymmp,
+        Path(args.out_readback) if getattr(args, "out_readback", None) else default_readback,
+        Path(args.out_manifest) if getattr(args, "out_manifest", None) else default_manifest,
+    )
+
+
 def _cmd_extract_template_labeled(
     args: argparse.Namespace,
     ymmp_data: dict,
@@ -1347,13 +2098,42 @@ def _cmd_extract_template_labeled(
 
 
 def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
-    from src.pipeline.ymmp_patch import load_ymmp, load_ir, save_ymmp, patch_ymmp
+    from src.pipeline.ymmp_patch import load_ymmp, load_ir, patch_ymmp
+
+    skit_group_only = bool(getattr(args, "skit_group_only", False))
+    if skit_group_only and (
+        not getattr(args, "skit_group_registry", None)
+        or not getattr(args, "skit_group_template_source", None)
+    ):
+        print(
+            "Error: --skit-group-only requires --skit-group-registry "
+            "and --skit-group-template-source",
+            file=sys.stderr,
+        )
+        return 1
 
     ymmp_data = load_ymmp(args.ymmp)
     ir_data = load_ir(args.ir_json)
 
     skit_audit_result = None
-    if getattr(args, "skit_group_registry", None):
+    skit_group_registry_data = None
+    skit_group_template_source_data = None
+    if getattr(args, "skit_group_template_source", None):
+        if not getattr(args, "skit_group_registry", None):
+            print(
+                "Error: --skit-group-template-source requires --skit-group-registry",
+                file=sys.stderr,
+            )
+            return 1
+        skit_group_registry_data, skit_labels = _load_skit_group_registry_contract(
+            args.skit_group_registry,
+        )
+        skit_group_template_source_data = load_ymmp(args.skit_group_template_source)
+        print(
+            f"skit_group_template_source: {args.skit_group_template_source} "
+            f"({len(skit_labels)} registry labels)"
+        )
+    elif getattr(args, "skit_group_registry", None):
         skit_audit_result = _run_skit_group_audit(
             ymmp_data,
             ir_data,
@@ -1448,6 +2228,11 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
         tachie_motion_effects_map=tachie_motion_effects_map,
         face_map_bundle=face_map_bundle,
         char_default_bodies=char_default_bodies,
+        skit_group_registry=skit_group_registry_data,
+        skit_group_template_source=skit_group_template_source_data,
+        skit_group_only=skit_group_only,
+        skit_group_compact_review=getattr(args, "skit_group_compact_review", False),
+        skit_group_review_spacing=getattr(args, "skit_group_review_spacing", 240),
     )
 
     print(f"Face changes: {result.face_changes}")
@@ -1464,6 +2249,11 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
     print(f"Transition VoiceItem writes: {result.transition_changes}")
     print(f"VideoEffects writes (motion): {result.motion_changes}")
     print(f"GroupItem geometry writes: {result.group_motion_changes}")
+    print(
+        "Skit group placements: "
+        f"{result.skit_group_placements} "
+        f"(GroupItems inserted: {result.skit_group_item_insertions})"
+    )
     if result.warnings:
         for w in result.warnings:
             print(f"  Warning: {w}", file=sys.stderr)
@@ -1485,7 +2275,9 @@ def _cmd_patch_ymmp(args: argparse.Namespace) -> int:
     if not out_path:
         stem = Path(args.ymmp).stem
         out_path = str(Path(args.ymmp).parent / f"{stem}_patched.ymmp")
-    save_ymmp(ymmp_data, out_path)
+    from src.pipeline.ymmp_openability import save_openable_ymmp
+
+    save_openable_ymmp(ymmp_data, out_path)
     print(f"Written: {out_path}")
     return 0
 
@@ -1772,6 +2564,13 @@ def _fatal_face_patch_warnings(warnings: list[str]) -> list[str]:
         "GROUP_MOTION_NO_GROUP_ITEM:",
         "GROUP_MOTION_TARGET_MISS:",
         "GROUP_MOTION_TARGET_AMBIGUOUS:",
+        "SKIT_TEMPLATE_SOURCE_MISSING:",
+        "SKIT_TEMPLATE_SOURCE_FORBIDDEN_ITEM:",
+        "SKIT_TEMPLATE_SOURCE_ASSET_MISSING:",
+        "SKIT_PLACEMENT_NO_VOICE_TIMING:",
+        "SKIT_PLACEMENT_GROUP_AMBIGUOUS:",
+        "SKIT_PLACEMENT_REGISTRY_INVALID:",
+        "SKIT_TEMPLATE_ANALYSIS_INSUFFICIENT:",
     )
     return [
         warning
@@ -1859,6 +2658,7 @@ def _ir_validate_json_summary(vr, ir_data: dict) -> dict:
         "preview_errors": vr.errors[:8],
         "preview_warnings": vr.warnings[:8],
         "face_distribution_top": [{"label": k, "count": v} for k, v in face_top],
+        "used_skit_group_motion_labels": vr.used_skit_group_motion_labels,
     }
 
 
@@ -1880,6 +2680,8 @@ def _apply_production_summary(result) -> dict:
         "transition_changes": result.transition_changes,
         "motion_changes": result.motion_changes,
         "group_motion_changes": result.group_motion_changes,
+        "skit_group_placements": result.skit_group_placements,
+        "skit_group_item_insertions": result.skit_group_item_insertions,
     }
 
 
@@ -1898,6 +2700,25 @@ def _run_skit_group_audit(ymmp_data: dict, ir_data: dict, registry_path: str):
 
     registry_data = load_skit_group_registry(registry_path)
     return audit_skit_group(ymmp_data, ir_data, registry_data)
+
+
+def _load_skit_group_registry_contract(registry_path: str) -> tuple[dict, set[str]]:
+    from src.pipeline.skit_group_audit import load_skit_group_registry
+
+    registry_data = load_skit_group_registry(registry_path)
+    templates = registry_data.get("templates", {})
+    if not isinstance(templates, dict):
+        return registry_data, set()
+    labels = {
+        raw.get("intent")
+        for raw in templates.values()
+        if isinstance(raw, dict) and isinstance(raw.get("intent"), str)
+    }
+    fallbacks = registry_data.get("intent_fallbacks", {})
+    if isinstance(fallbacks, dict):
+        labels.update(key for key in fallbacks if isinstance(key, str))
+    labels.discard(None)
+    return registry_data, {str(label) for label in labels}
 
 
 def _cmd_audit_skit_group(args: argparse.Namespace) -> int:
@@ -1933,6 +2754,7 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
     known_se = None
     known_motion_labels = None
     known_group_motion_labels = None
+    known_skit_group_motion_labels = None
     char_default_slots = None
     prompt_face_labels, prompt_doc_path = _load_prompt_face_contract(
         getattr(args, "prompt_doc", None)
@@ -1976,6 +2798,16 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
         known_group_motion_labels = set(
             _load_group_motion_map(args.group_motion_map).keys()
         )
+    if getattr(args, "skit_group_registry", None):
+        _, known_skit_group_motion_labels = _load_skit_group_registry_contract(
+            args.skit_group_registry
+        )
+    elif getattr(args, "strict_skit_group_intents", False):
+        print(
+            "Error: --strict-skit-group-intents requires --skit-group-registry",
+            file=sys.stderr,
+        )
+        return 1
 
     # G-19: face_map_bundle → known_body_ids
     known_body_ids: set[str] | None = None
@@ -2008,6 +2840,11 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
             f"group motion contract: {len(known_group_motion_labels)} labels",
             file=meta_stream,
         )
+    if known_skit_group_motion_labels is not None:
+        print(
+            f"skit_group intent contract: {len(known_skit_group_motion_labels)} labels",
+            file=meta_stream,
+        )
     if known_body_ids is not None:
         print(
             f"body_id contract: {len(known_body_ids)} bodies",
@@ -2023,6 +2860,8 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
         known_se_labels=known_se,
         known_motion_labels=known_motion_labels,
         known_group_motion_labels=known_group_motion_labels,
+        known_skit_group_motion_labels=known_skit_group_motion_labels,
+        strict_skit_group_intents=getattr(args, "strict_skit_group_intents", False),
         char_default_slots=char_default_slots,
         prompt_face_labels=prompt_face_labels,
         known_body_ids=known_body_ids,
@@ -2043,6 +2882,32 @@ def _cmd_validate_ir(args: argparse.Namespace) -> int:
     else:
         print("\nValidation PASSED")
         return 0
+
+
+def _cmd_validate_background_skit_blueprint(args: argparse.Namespace) -> int:
+    """Background skit blueprint gate."""
+    from src.pipeline.background_skit_blueprint import (
+        load_background_skit_blueprint,
+        render_background_skit_blueprint_text,
+        validate_background_skit_blueprint,
+    )
+
+    blueprint = load_background_skit_blueprint(args.blueprint_json)
+    result = validate_background_skit_blueprint(
+        blueprint,
+        script_path=args.script,
+        ymmp_path=getattr(args, "ymmp", None),
+        fps=args.fps,
+    )
+    if args.format == "json":
+        print(json.dumps(result.to_dict(), ensure_ascii=False, indent=2))
+    else:
+        sys.stdout.write(render_background_skit_blueprint_text(result))
+    if result.status == "passed":
+        return 0
+    if result.status == "blocked":
+        return 2
+    return 1
 
 
 def _load_csv_rows(csv_path: str) -> list[list[str]]:
@@ -2104,12 +2969,148 @@ def _cmd_annotate_row_range(args: argparse.Namespace) -> int:
 
 def _cmd_apply_production(args: argparse.Namespace) -> int:
     """S-6 ワンコマンド: extract-template → patch-ymmp をまとめて実行."""
-    from src.pipeline.ymmp_patch import load_ymmp, load_ir, save_ymmp, patch_ymmp
+    from src.pipeline.ymmp_openability import save_openable_ymmp
+    from src.pipeline.ymmp_patch import load_ymmp, load_ir, patch_ymmp
     from src.pipeline.ymmp_extract import (
         extract_template_labeled,
         generate_face_map_labeled,
         generate_bg_map_labeled,
     )
+
+    skit_group_only = bool(getattr(args, "skit_group_only", False))
+    if getattr(args, "strict_skit_group_intents", False) and not getattr(args, "skit_group_registry", None):
+        print(
+            "Error: --strict-skit-group-intents requires --skit-group-registry",
+            file=sys.stderr,
+        )
+        return 1
+    if skit_group_only:
+        if (
+            not getattr(args, "skit_group_registry", None)
+            or not getattr(args, "skit_group_template_source", None)
+        ):
+            print(
+                "Error: --skit-group-only requires --skit-group-registry "
+                "and --skit-group-template-source",
+                file=sys.stderr,
+            )
+            return 1
+        if getattr(args, "csv", None):
+            print(
+                "Error: --skit-group-only uses existing IR index anchors; "
+                "do not pass --csv",
+                file=sys.stderr,
+            )
+            return 1
+
+        skit_group_registry_data, skit_labels = _load_skit_group_registry_contract(
+            args.skit_group_registry,
+        )
+        skit_group_template_source_data = load_ymmp(args.skit_group_template_source)
+        ir_data = load_ir(args.ir_json)
+        fmt = getattr(args, "format", "text")
+        if getattr(args, "strict_skit_group_intents", False):
+            from src.pipeline.ir_validate import validate_ir
+            vr = validate_ir(
+                ir_data,
+                known_skit_group_motion_labels=skit_labels,
+                strict_skit_group_intents=True,
+            )
+            if vr.has_errors:
+                if fmt == "json":
+                    print(json.dumps({
+                        "success": False,
+                        "error": "validation_failed",
+                        "validation": _ir_validate_json_summary(vr, ir_data),
+                    }, ensure_ascii=False))
+                else:
+                    _print_validation(vr)
+                    print(
+                        f"\nValidation FAILED ({len(vr.errors)} errors). Patch aborted.",
+                        file=sys.stderr,
+                )
+                return 1
+        ymmp_data = load_ymmp(args.production_ymmp)
+        if fmt != "json":
+            print(
+                f"skit_group_registry: {args.skit_group_registry} "
+                f"({len(skit_labels)} labels)"
+            )
+            print(f"skit_group_template_source: {args.skit_group_template_source}")
+
+        result = patch_ymmp(
+            ymmp_data,
+            ir_data,
+            {},
+            {},
+            skit_group_registry=skit_group_registry_data,
+            skit_group_template_source=skit_group_template_source_data,
+            skit_group_only=True,
+            skit_group_compact_review=getattr(args, "skit_group_compact_review", False),
+            skit_group_review_spacing=getattr(args, "skit_group_review_spacing", 240),
+        )
+
+        if fmt != "json":
+            print(
+                "Skit group placements: "
+                f"{result.skit_group_placements} "
+                f"(GroupItems inserted: {result.skit_group_item_insertions})"
+            )
+        for warning in result.warnings:
+            print(f"  WARNING: {warning}", file=sys.stderr)
+
+        fatal_warnings = _fatal_face_patch_warnings(result.warnings)
+        if fatal_warnings:
+            if fmt != "json":
+                print(
+                    f"\nPatch FAILED ({len(fatal_warnings)} blocking issues)."
+                    " Partial output was not accepted.",
+                    file=sys.stderr,
+                )
+            else:
+                print(json.dumps({
+                    "success": False,
+                    "error": "fatal_warnings",
+                    "fatal_warnings": fatal_warnings,
+                    "skit_group_placements": result.skit_group_placements,
+                    "skit_group_item_insertions": result.skit_group_item_insertions,
+                    "warnings": result.warnings,
+                    "summary": _apply_production_summary(result),
+                }, ensure_ascii=False))
+            return 1
+
+        if args.dry_run:
+            if fmt == "json":
+                print(json.dumps({
+                    "success": True,
+                    "dry_run": True,
+                    "skit_group_placements": result.skit_group_placements,
+                    "skit_group_item_insertions": result.skit_group_item_insertions,
+                    "warnings": result.warnings,
+                    "summary": _apply_production_summary(result),
+                }, ensure_ascii=False))
+            else:
+                print("(dry-run: no file written)")
+            return 0
+
+        out_path = args.output
+        if not out_path:
+            stem = Path(args.production_ymmp).stem
+            out_path = str(Path(args.production_ymmp).parent / f"{stem}_patched.ymmp")
+        openability = save_openable_ymmp(ymmp_data, out_path)
+        if fmt == "json":
+            print(json.dumps({
+                "success": True,
+                "output": out_path,
+                "openability": openability,
+                "skit_group_placements": result.skit_group_placements,
+                "skit_group_item_insertions": result.skit_group_item_insertions,
+                "warnings": result.warnings,
+                "summary": _apply_production_summary(result),
+            }, ensure_ascii=False))
+        else:
+            print(f"Written: {out_path}")
+        return 0
 
     # --- G-19: face_map_bundle の解決 ---
     face_map_bundle: dict[str, dict] | None = None
@@ -2216,6 +3217,26 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
             f"group_motion_map: {args.group_motion_map} "
             f"({len(group_motion_map)} labels)"
         )
+    skit_group_registry_data = None
+    skit_group_template_source_data = None
+    known_skit_group_motion_labels = None
+    if getattr(args, "skit_group_registry", None):
+        skit_group_registry_data, known_skit_group_motion_labels = (
+            _load_skit_group_registry_contract(args.skit_group_registry)
+        )
+        print(
+            f"skit_group_registry: {args.skit_group_registry} "
+            f"({len(known_skit_group_motion_labels)} labels)"
+        )
+    if getattr(args, "skit_group_template_source", None):
+        if skit_group_registry_data is None:
+            print(
+                "Error: --skit-group-template-source requires --skit-group-registry",
+                file=sys.stderr,
+            )
+            return 1
+        skit_group_template_source_data = load_ymmp(args.skit_group_template_source)
+        print(f"skit_group_template_source: {args.skit_group_template_source}")
 
     # --- row-range annotation (--csv) ---
     ir_data = load_ir(args.ir_json)
@@ -2267,6 +3288,8 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         known_se_labels=known_se,
         known_motion_labels=known_motion_labels,
         known_group_motion_labels=known_group_motion_labels,
+        known_skit_group_motion_labels=known_skit_group_motion_labels,
+        strict_skit_group_intents=getattr(args, "strict_skit_group_intents", False),
         char_default_slots=char_default_slots or None,
         prompt_face_labels=prompt_face_labels,
     )
@@ -2281,7 +3304,7 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
     fmt = getattr(args, "format", "text")
 
     skit_audit_result = None
-    if getattr(args, "skit_group_registry", None):
+    if getattr(args, "skit_group_registry", None) and skit_group_template_source_data is None:
         skit_audit_result = _run_skit_group_audit(
             ymmp_data,
             ir_data,
@@ -2319,6 +3342,10 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         tachie_motion_effects_map=tachie_motion_effects_map,
         face_map_bundle=face_map_bundle,
         char_default_bodies=char_default_bodies,
+        skit_group_registry=skit_group_registry_data,
+        skit_group_template_source=skit_group_template_source_data,
+        skit_group_compact_review=getattr(args, "skit_group_compact_review", False),
+        skit_group_review_spacing=getattr(args, "skit_group_review_spacing", 240),
     )
 
     if fmt != "json":
@@ -2339,7 +3366,12 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         print(f"BG anim writes: {result.bg_anim_changes}")
         print(f"Transition VoiceItem writes: {result.transition_changes}")
         print(f"VideoEffects writes (motion): {result.motion_changes}")
-    print(f"GroupItem geometry writes: {result.group_motion_changes}")
+        print(f"GroupItem geometry writes: {result.group_motion_changes}")
+        print(
+            "Skit group placements: "
+            f"{result.skit_group_placements} "
+            f"(GroupItems inserted: {result.skit_group_item_insertions})"
+        )
     for warning in result.warnings:
         print(f"  WARNING: {warning}", file=sys.stderr)
 
@@ -2358,6 +3390,8 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
                 "fatal_warnings": fatal_warnings,
                 "face_changes": result.face_changes,
                 "slot_changes": result.slot_changes,
+                "skit_group_placements": result.skit_group_placements,
+                "skit_group_item_insertions": result.skit_group_item_insertions,
                 "warnings": result.warnings,
                 "summary": _apply_production_summary(result),
             }, ensure_ascii=False))
@@ -2378,6 +3412,8 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
                 "transition_changes": result.transition_changes,
                 "motion_changes": result.motion_changes,
                 "group_motion_changes": result.group_motion_changes,
+                "skit_group_placements": result.skit_group_placements,
+                "skit_group_item_insertions": result.skit_group_item_insertions,
                 "warnings": result.warnings,
                 "summary": _apply_production_summary(result),
             }
@@ -2394,11 +3430,12 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
         out_path = str(
             Path(args.production_ymmp).parent / f"{stem}_patched.ymmp"
         )
-    save_ymmp(ymmp_data, out_path)
+    openability = save_openable_ymmp(ymmp_data, out_path)
     if fmt == "json":
         payload = {
             "success": True,
             "output": out_path,
+            "openability": openability,
             "face_changes": result.face_changes,
             "slot_changes": result.slot_changes,
             "overlay_changes": result.overlay_changes,
@@ -2410,6 +3447,8 @@ def _cmd_apply_production(args: argparse.Namespace) -> int:
             "transition_changes": result.transition_changes,
             "motion_changes": result.motion_changes,
             "group_motion_changes": result.group_motion_changes,
+            "skit_group_placements": result.skit_group_placements,
+            "skit_group_item_insertions": result.skit_group_item_insertions,
             "warnings": result.warnings,
             "summary": _apply_production_summary(result),
         }
@@ -2439,6 +3478,117 @@ def _cmd_emit_packaging_brief_template(args: argparse.Namespace) -> int:
     else:
         sys.stdout.write(text)
     return 0
+
+
+def _cmd_build_session_manifest(args: argparse.Namespace) -> int:
+    """Production session manifest を stdout または -o に書き出す。"""
+    from src.pipeline.session_manifest import (
+        PATH_KEYS,
+        build_session_manifest,
+        emit_session_manifest_text,
+    )
+
+    paths = {
+        key: getattr(args, key, None)
+        for key in PATH_KEYS
+    }
+    manifest = build_session_manifest(video_id=args.video_id, paths=paths)
+    text = emit_session_manifest_text(manifest, getattr(args, "format", "markdown"))
+
+    output = getattr(args, "output", None)
+    if output:
+        out_path = Path(output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(text, encoding="utf-8")
+        print(f"Written: {out_path}")
+    else:
+        sys.stdout.write(text)
+    return 0
+
+
+def _cmd_init_episode_run(args: argparse.Namespace) -> int:
+    """Create the one-video production pack scaffold."""
+    from src.pipeline.episode_run_pack import (
+        emit_episode_run_pack_text,
+        init_episode_run_pack,
+    )
+
+    result = init_episode_run_pack(
+        episode_id=args.episode_id,
+        root=args.root,
+        force=bool(getattr(args, "force", False)),
+    )
+    sys.stdout.write(emit_episode_run_pack_text(result, getattr(args, "format", "text")))
+    return 0
+
+
+def _cmd_episode_run_handoff(args: argparse.Namespace) -> int:
+    """Print a self-contained user-facing handoff for an episode run pack."""
+    from src.pipeline.episode_run_pack import (
+        build_episode_run_handoff,
+        emit_episode_run_handoff_text,
+    )
+
+    result = build_episode_run_handoff(
+        episode_id=args.episode_id,
+        root=args.root,
+    )
+    sys.stdout.write(emit_episode_run_handoff_text(result, getattr(args, "format", "text")))
+    return 0
+
+
+def _cmd_audit_thumbnail_template(args: argparse.Namespace) -> int:
+    """YMM4 サムネテンプレの thumb.* slot を read-only 監査する。"""
+    from src.pipeline.thumbnail_template import (
+        audit_thumbnail_template,
+        render_thumbnail_template_audit_text,
+    )
+    from src.pipeline.ymmp_patch import load_ymmp
+
+    result = audit_thumbnail_template(load_ymmp(args.ymmp))
+    if args.format == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        sys.stdout.write(render_thumbnail_template_audit_text(result))
+    return 0 if result["success"] else 1
+
+
+def _cmd_patch_thumbnail_template(args: argparse.Namespace) -> int:
+    """YMM4 サムネテンプレの thumb.* slot だけを限定 patch する。"""
+    from src.pipeline.thumbnail_template import (
+        load_thumbnail_patch,
+        patch_thumbnail_template,
+        render_thumbnail_patch_text,
+        verify_thumbnail_patch_readback,
+    )
+    from src.pipeline.ymmp_openability import save_openable_ymmp
+    from src.pipeline.ymmp_patch import load_ymmp
+
+    data = load_ymmp(args.ymmp)
+    patch_payload = load_thumbnail_patch(args.patch)
+    result = patch_thumbnail_template(data, patch_payload)
+    if result["success"] and not args.dry_run:
+        if not args.output:
+            raise ValueError("patch-thumbnail-template requires -o/--output unless --dry-run is set")
+        out_path = Path(args.output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        result["openability"] = save_openable_ymmp(data, out_path)
+        result["output"] = str(out_path)
+        file_readback = verify_thumbnail_patch_readback(load_ymmp(out_path), patch_payload)
+        result["file_readback"] = file_readback
+        if not file_readback["success"]:
+            result["success"] = False
+            result["status"] = "error"
+            result["errors"].extend(file_readback["errors"])
+    result["dry_run"] = bool(args.dry_run)
+
+    if args.format == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        sys.stdout.write(render_thumbnail_patch_text(result))
+        if result["success"] and not args.dry_run:
+            print(f"Written: {result['output']}")
+    return 0 if result["success"] else 1
 
 
 def _cmd_score_evidence(args: argparse.Namespace) -> int:

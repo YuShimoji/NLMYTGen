@@ -64,10 +64,46 @@ A robust handoff should preserve:
 - what not to do next
 - new fossils created in the current thread
 
+## Closeout chain minimum
+Final responses should not merely summarize activity; they should make the next move executable.
+Do not force fixed section names or emit internal labels. Preserve the logical chain in normal language: what is complete, what was deliberately not changed, what changed for the workflow or decision space, what evidence supports it, what uncertainty remains, who moves next, and what happens after any return from the user.
+
+File paths, line numbers, commits, and test names are evidence, not explanation. Put the user-readable meaning first, then cite files as support. Do not wait for the user to ask for "details" or "steps" before explaining what the change means and what happens next.
+
+If the next blocker depends on operator input, explain why work is waiting or what can still run in parallel. A response that ends with only "please check" or "continue from here" is incomplete unless the exact required input and follow-up work are already clear.
+
+## User-owned artifact handoff
+When the next blocker is a user-owned action, the handoff must be concrete enough to execute without a follow-up clarification.
+Do not say only "place materials", "run the GUI", or "return the outputs".
+Include:
+- whether the assistant is blocked or can continue in parallel
+- exact required artifacts and their target paths
+- the current state of each artifact: already exists, missing/user-authored, or generated later by a GUI/YMM4 step
+- what each artifact is, how it is created or selected, and which GUI button/command consumes it
+- optional artifacts and the condition that makes each one necessary
+- the operation sequence, especially GUI tabs/buttons when GUI is the route
+- success outputs and NG return files/text
+- what the assistant will inspect or generate immediately after the user returns
+
+Docs, README files, and manifests may support the handoff, but they do not replace the handoff. If the user must place files, operate the GUI, or check YMM4, the response body must be executable on its own. Phrases like "the procedure source of truth is <file>.md:<line>" are invalid when they are used to avoid restating required files, exact paths, operation order, outputs, NG returns, and follow-up work.
+
+Bare placement bullets such as `put: <path>` / `置く: <path>` are invalid unless the same line or its immediate continuation explains `state`, `what`, `create`, and `used by`. Do not describe a downstream artifact as an initial placement merely because it is required later; for example, an Episode Pack base `.ymmp` is normally created after `Build CSV` by importing the generated CSV into YMM4 and saving the project.
+
+Script handoffs need the same clarity. Do not say only "prepare a new script" / `新しい台本を用意してください`. State whether an existing completed script can be used, what the script is, accepted format, why it must match the episode, and which build step consumes it.
+
+Background skit handoffs need an additional scene-bible gate. Do not present `skit_group` / 茶番劇 as narrator aitenote, line-by-line reactions, or a cue table that merely nods/jumps on script phrases. Before creative acceptance or production-quality review, state the independent scene bible: parallel layer / not aitenote / script line range / time budget / cast continuity / screen placement / visual situation / story logic / assets or templates / mechanical proof path. If that is absent, the handoff is invalid and any `.ymmp` output is transport/readback evidence only.
+
+Background skit explanation closeouts need to become design work, not only concept acknowledgement. If the answer says the whole structure is still undetermined, it must also state that the assistant-owned next action is to produce `background_skit_blueprint.json` and run `validate-background-skit-blueprint` before IR/YMM4 placement. The artifact must separate characters, placement, backgrounds, props, existing templates, missing templates/assets, owner, and proof path. For IR-like direction, field names and numeric tables are not enough: `total duration`, `mm:ss`, `duration sec`, density thresholds/audit, and script maturity must contain actual values that are recomputed into validator `derived_metrics`, or a `TIMETABLE_BLOCKED_*` code with exact missing source. Otherwise the response is `BACKGROUND_SKIT_UNDERSPECIFIED_ACK` or `BACKGROUND_SKIT_TIMETABLE_BYPASS`: useful as recognition, but incomplete as a next-step handoff.
+
+Self-contained background skit design answers must include script line ranges and block-level proof paths, not only block names and percentages. They must also separate IR intent from template names: `enter_from_left` is an intent, while `delivery_enter_from_left_v1` is a template name. Do not claim the design can go directly to IR/YMM4 review; the next assistant-owned step is validator-backed blueprint + gap report + template/proxy classification, then revised IR and compact review only after validator `passed`.
+
+Closeout reports that mention all checks passing and untracked/new files must also state who acts next and what happens next. Otherwise the report is only an activity log: the user still cannot tell whether to review, stage, commit, or return a specific artifact.
+
 ## No progress laundering
 Do not claim progress merely because:
 - a doc was created during refresh
 - a framework-compliant report was produced
+- a list of changed files was shown
 - a low-friction helper feature was specified
 Report what became easier, safer, or more real for the actual artifact path.
 

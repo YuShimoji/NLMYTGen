@@ -10,7 +10,7 @@
 
 - `patch-ymmp` の `se` は **`--se-map` まで label / timing anchor を解決**できる。
 - 当時 repo-local corpus の `.ymmp` には **タイムライン上の `AudioItem` が含まれておらず**、`measure-timeline-routes` でも **SE 用の確定 write JSON パスが観測できない**。
-- そのため実装は **`SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast** する境界とした（FEATURE_REGISTRY G-13）。
+- そのため当時の実装は **SE write-route unsupported failure で fail-fast** する境界とした（FEATURE_REGISTRY G-13）。
 
 ## 次に実装を進めるゲート
 

@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "g26_motion_recipe_brief",
+  "notes": "Slice 4 architecture proof: novel goal_ids defined ENTIRELY in this brief, with no DEFAULT_RECIPE_PRESETS extension in motion_recipe.py. Demonstrates that brief-supplied recipes work end-to-end after the _resolve_brief_recipes refactor.",
+  "review": {
+    "spacing_frames": 180,
+    "acceptance_classes": [
+      "pass",
+      "wrong motion",
+      "body-face drift",
+      "too subtle",
+      "too strong",
+      "too busy",
+      "screen spacing",
+      "asset path",
+      "openability"
+    ]
+  },
+  "recipes": [
+    {
+      "goal_id": "excited_double_jump",
+      "motion_goal": "Two consecutive jumps with mid-rest for excited / hyped reaction.",
+      "emotion": "happiness",
+      "intensity": "strong",
+      "duration_frames": 90,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": ["wrong motion", "too subtle"],
+      "y_delta_values": [0.0, -45.0, 5.0, -35.0, 0.0],
+      "effect_names": ["CenterPointEffect"],
+      "effect_candidates": ["CenterPointEffect", "JumpEffect", "RepeatMoveEffect"],
+      "scene_input": "わー、と二段階で跳ねてはしゃぐ"
+    },
+    {
+      "goal_id": "thinking_circle_pause",
+      "motion_goal": "Slight tilt with subtle zoom hold for pondering / inner monologue.",
+      "emotion": "thinking",
+      "intensity": "light",
+      "duration_frames": 80,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": ["wrong motion", "too subtle", "looks like nod"],
+      "rotation_values": [0.0, -5.0, -5.0, -5.0, 0.0],
+      "zoom_delta_values": [0.0, 1.5, 1.5, 1.5, 0.0],
+      "effect_names": ["CenterPointEffect"],
+      "effect_candidates": ["CenterPointEffect", "ZoomEffect", "RepeatRotateEffect"],
+      "scene_input": "ふむ、と少し傾けてしばらく考え込む"
+    }
+  ]
+}

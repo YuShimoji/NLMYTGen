@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "topic_id": "ai_monitoring_labor",
+  "topic_state": "reviewable",
+  "frame_count": 3,
+  "proof_image": "samples/_probe/pipeline_smoke/ai_monitoring_labor/visual_treatment_proof.png",
+  "screenshot_width": 1161,
+  "screenshot_height": 620,
+  "visible_in_gui_required": true,
+  "standalone_html_png_json_is_completion": false,
+  "blocked_reason": "generic labor/platform proxy vocabulary is not yet accepted",
+  "next_action": "review whether the workplace proxy is punitive, neutral, or too abstract"
+}

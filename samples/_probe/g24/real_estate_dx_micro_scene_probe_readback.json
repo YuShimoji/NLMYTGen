@@ -1,0 +1,1861 @@
+{
+  "artifact_type": "g27_micro_scene_probe_readback",
+  "status": "passed",
+  "source": {
+    "compact_patch_review": "samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json",
+    "carrier_ymmp": "samples/canonical.ymmp",
+    "shape_template_ymmp": "samples/_probe/g24/real_estate_dx_overlay_only_compact_review.ymmp",
+    "generated_probe_ymmp": "samples/_probe/g24/real_estate_dx_micro_scene_probe.ymmp"
+  },
+  "boundary": {
+    "micro_scene_probe_only": true,
+    "selected_candidate_ids": [
+      "RE-02-development",
+      "RE-06-development",
+      "RE-07D-beginning",
+      "RE-07D-development"
+    ],
+    "not_selected_candidate_ids": [
+      "RE-02-beginning",
+      "RE-06-beginning",
+      "RE-06-turn"
+    ],
+    "shape_item_text_item_only": true,
+    "external_assets_used": false,
+    "tts_performed": false,
+    "url_fetch_performed": false,
+    "publishing_performed": false,
+    "render_performed": false,
+    "creative_acceptance_performed": false,
+    "production_or_source_ymmp_modified_in_place": false,
+    "excluded_RE_02_turn": "blocked_outside_output",
+    "excluded_RE_07D_turn": "deferred_outside_output"
+  },
+  "source_integrity": {
+    "carrier_sha256_before": "90bfc8623875a2dcf51baaf03d068aab5e2e2ef58a528451c80f4c622bf7d7a4",
+    "carrier_sha256_after": "90bfc8623875a2dcf51baaf03d068aab5e2e2ef58a528451c80f4c622bf7d7a4",
+    "carrier_modified_in_place": false
+  },
+  "timeline": {
+    "fps": 60,
+    "beat_count": 4,
+    "duration_frames": 3600,
+    "duration_sec": 60
+  },
+  "totals": {
+    "expected_item_count": 54,
+    "inserted_probe_item_count": 54,
+    "inserted_shape_item_count": 38,
+    "inserted_text_item_count": 16,
+    "missing_item_count": 0,
+    "malformed_item_count": 0,
+    "color_like_occurrence_count": 130,
+    "color_like_failure_count": 0
+  },
+  "beat_summaries": [
+    {
+      "beat_id": "micro-01-access-contrast",
+      "candidate_id": "RE-02-development",
+      "classification": "pass",
+      "narrative_intent": "Viewer understands that the same market has a public entrance and a deeper professional database, so visible information is structurally limited.",
+      "visual_composition": "A large dark broker database slides into dominance behind a smaller public portal; a lock threshold appears between them and only a thin output card escapes.",
+      "on_screen_copy": [
+        "情報の入口が違う",
+        "公開",
+        "業者DB",
+        "LOCK"
+      ],
+      "why_avoids_slideshow_whiteboard_effect": "The beat is staged as a door/threshold event with one focal split-screen system, not as separate note cards explaining the concept.",
+      "source_line_range": {
+        "line_start": 13,
+        "line_end": 24
+      },
+      "start_frame": 0,
+      "duration_frames": 900,
+      "shape_item_count": 10,
+      "text_item_count": 4,
+      "missing_item_count": 0,
+      "malformed_item_count": 0
+    },
+    {
+      "beat_id": "micro-02-selection",
+      "candidate_id": "RE-06-development",
+      "classification": "pass",
+      "narrative_intent": "Viewer understands that the service narrows many options into one recommended property while keeping the drawback visible.",
+      "visual_composition": "Rejected cards slide to the edges, one property sheet remains center stage, and a warning callout attaches to the selected sheet.",
+      "on_screen_copy": [
+        "比較して一つ選ぶ",
+        "候補",
+        "選定",
+        "注意点"
+      ],
+      "why_avoids_slideshow_whiteboard_effect": "The screen is a selection event: cards are spatially rejected, one sheet is framed, and the drawback is attached to the chosen object.",
+      "source_line_range": {
+        "line_start": 61,
+        "line_end": 82
+      },
+      "start_frame": 900,
+      "duration_frames": 900,
+      "shape_item_count": 10,
+      "text_item_count": 4,
+      "missing_item_count": 0,
+      "malformed_item_count": 0
+    },
+    {
+      "beat_id": "micro-03-ai-match",
+      "candidate_id": "RE-07D-beginning",
+      "classification": "pass",
+      "narrative_intent": "Viewer understands that an AI-like system can confidently highlight one property as the best match.",
+      "visual_composition": "A dark AI system panel scans, a match arrow fires, and a single property card becomes the focal target with a confidence badge.",
+      "on_screen_copy": [
+        "AIが候補を選ぶ",
+        "AI",
+        "MATCH",
+        "物件"
+      ],
+      "why_avoids_slideshow_whiteboard_effect": "The beat is a scanning and targeting event with one highlighted card, not a board of explanatory labels.",
+      "source_line_range": {
+        "line_start": 130,
+        "line_end": 143
+      },
+      "start_frame": 1800,
+      "duration_frames": 900,
+      "shape_item_count": 10,
+      "text_item_count": 4,
+      "missing_item_count": 0,
+      "malformed_item_count": 0
+    },
+    {
+      "beat_id": "micro-04-conditional",
+      "candidate_id": "RE-07D-development",
+      "classification": "pass",
+      "narrative_intent": "Viewer understands that the AI recommendation is not final because hidden real-estate risks interrupt it and make the choice conditional.",
+      "visual_composition": "The matched property remains in the center, then red/yellow risk zones cover it and a dark conditional strip overrides the previous recommendation.",
+      "on_screen_copy": [
+        "推薦は条件つき",
+        "境界",
+        "相続",
+        "周辺"
+      ],
+      "why_avoids_slideshow_whiteboard_effect": "The beat uses interruption and occlusion: risk zones physically cover the recommendation instead of listing risk notes beside it.",
+      "source_line_range": {
+        "line_start": 130,
+        "line_end": 143
+      },
+      "start_frame": 2700,
+      "duration_frames": 900,
+      "shape_item_count": 8,
+      "text_item_count": 4,
+      "missing_item_count": 0,
+      "malformed_item_count": 0
+    }
+  ],
+  "items": [
+    {
+      "index": 0,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-01-access-contrast",
+      "candidate_id": "RE-02-development",
+      "item_id": "micro-01-access-contrast__backplate",
+      "layer": 7,
+      "start_frame": 0,
+      "duration_frames": 900,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-01-access-contrast candidate_id=RE-02-development item_id=micro-01-access-contrast__backplate source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 1,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-01-access-contrast",
+      "candidate_id": "RE-02-development",
+      "item_id": "micro-01-access-contrast__public_portal",
+      "layer": 8,
+      "start_frame": 0,
+      "duration_frames": 900,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-01-access-contrast candidate_id=RE-02-development item_id=micro-01-access-contrast__public_portal source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 2,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-01-access-contrast",
+      "candidate_id": "RE-02-development",
+      "item_id": "micro-01-access-contrast__public_search_bar",
+      "layer": 8,
+      "start_frame": 90,
+      "duration_frames": 810,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-01-access-contrast candidate_id=RE-02-development item_id=micro-01-access-contrast__public_search_bar source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 3,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-01-access-contrast",
+      "candidate_id": "RE-02-development",
+      "item_id": "micro-01-access-contrast__private_database",
+      "layer": 8,
+      "start_frame": 180,
+      "duration_frames": 720,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-01-access-contrast candidate_id=RE-02-development item_id=micro-01-access-contrast__private_database source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 4,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-01-access-contrast",
+      "candidate_id": "RE-02-development",
+      "item_id": "micro-01-access-contrast__private_depth_1",
+      "layer": 8,
+      "start_frame": 270,
+      "duration_frames": 630,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-01-access-contrast candidate_id=RE-02-development item_id=micro-01-access-contrast__private_depth_1 source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 5,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-01-access-contrast",
+      "candidate_id": "RE-02-development",
+      "item_id": "micro-01-access-contrast__private_depth_2",
+      "layer": 8,
+      "start_frame": 330,
+      "duration_frames": 570,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-01-access-contrast candidate_id=RE-02-development item_id=micro-01-access-contrast__private_depth_2 source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 6,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-01-access-contrast",
+      "candidate_id": "RE-02-development",
+      "item_id": "micro-01-access-contrast__private_depth_3",
+      "layer": 8,
+      "start_frame": 390,
+      "duration_frames": 510,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-01-access-contrast candidate_id=RE-02-development item_id=micro-01-access-contrast__private_depth_3 source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 7,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-01-access-contrast",
+      "candidate_id": "RE-02-development",
+      "item_id": "micro-01-access-contrast__lock_threshold",
+      "layer": 8,
+      "start_frame": 420,
+      "duration_frames": 480,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-01-access-contrast candidate_id=RE-02-development item_id=micro-01-access-contrast__lock_threshold source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 8,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-01-access-contrast",
+      "candidate_id": "RE-02-development",
+      "item_id": "micro-01-access-contrast__lock_body",
+      "layer": 8,
+      "start_frame": 510,
+      "duration_frames": 390,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-01-access-contrast candidate_id=RE-02-development item_id=micro-01-access-contrast__lock_body source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 9,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-01-access-contrast",
+      "candidate_id": "RE-02-development",
+      "item_id": "micro-01-access-contrast__output_card",
+      "layer": 8,
+      "start_frame": 600,
+      "duration_frames": 300,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-01-access-contrast candidate_id=RE-02-development item_id=micro-01-access-contrast__output_card source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 10,
+      "item_type": "TextItem",
+      "beat_id": "micro-01-access-contrast",
+      "candidate_id": "RE-02-development",
+      "item_id": "micro-01-access-contrast__headline",
+      "layer": 9,
+      "start_frame": 0,
+      "duration_frames": 900,
+      "text": "情報の入口が違う",
+      "font_color": "#FFF8FAFF",
+      "remark": "g27_micro_scene_probe beat_id=micro-01-access-contrast candidate_id=RE-02-development item_id=micro-01-access-contrast__headline source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 11,
+      "item_type": "TextItem",
+      "beat_id": "micro-01-access-contrast",
+      "candidate_id": "RE-02-development",
+      "item_id": "micro-01-access-contrast__public_label",
+      "layer": 9,
+      "start_frame": 60,
+      "duration_frames": 840,
+      "text": "公開",
+      "font_color": "#FF152230",
+      "remark": "g27_micro_scene_probe beat_id=micro-01-access-contrast candidate_id=RE-02-development item_id=micro-01-access-contrast__public_label source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 12,
+      "item_type": "TextItem",
+      "beat_id": "micro-01-access-contrast",
+      "candidate_id": "RE-02-development",
+      "item_id": "micro-01-access-contrast__db_label",
+      "layer": 9,
+      "start_frame": 210,
+      "duration_frames": 690,
+      "text": "業者DB",
+      "font_color": "#FFF8FAFF",
+      "remark": "g27_micro_scene_probe beat_id=micro-01-access-contrast candidate_id=RE-02-development item_id=micro-01-access-contrast__db_label source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 13,
+      "item_type": "TextItem",
+      "beat_id": "micro-01-access-contrast",
+      "candidate_id": "RE-02-development",
+      "item_id": "micro-01-access-contrast__lock_label",
+      "layer": 9,
+      "start_frame": 520,
+      "duration_frames": 380,
+      "text": "LOCK",
+      "font_color": "#FF2A1E00",
+      "remark": "g27_micro_scene_probe beat_id=micro-01-access-contrast candidate_id=RE-02-development item_id=micro-01-access-contrast__lock_label source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-02-development source_lines=13-24 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 14,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-02-selection",
+      "candidate_id": "RE-06-development",
+      "item_id": "micro-02-selection__backplate",
+      "layer": 7,
+      "start_frame": 900,
+      "duration_frames": 900,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-02-selection candidate_id=RE-06-development item_id=micro-02-selection__backplate source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 15,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-02-selection",
+      "candidate_id": "RE-06-development",
+      "item_id": "micro-02-selection__candidate_left",
+      "layer": 8,
+      "start_frame": 900,
+      "duration_frames": 540,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-02-selection candidate_id=RE-06-development item_id=micro-02-selection__candidate_left source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 16,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-02-selection",
+      "candidate_id": "RE-06-development",
+      "item_id": "micro-02-selection__candidate_right",
+      "layer": 8,
+      "start_frame": 900,
+      "duration_frames": 540,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-02-selection candidate_id=RE-06-development item_id=micro-02-selection__candidate_right source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 17,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-02-selection",
+      "candidate_id": "RE-06-development",
+      "item_id": "micro-02-selection__selected_sheet",
+      "layer": 8,
+      "start_frame": 1080,
+      "duration_frames": 720,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-02-selection candidate_id=RE-06-development item_id=micro-02-selection__selected_sheet source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 18,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-02-selection",
+      "candidate_id": "RE-06-development",
+      "item_id": "micro-02-selection__sheet_header",
+      "layer": 8,
+      "start_frame": 1140,
+      "duration_frames": 660,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-02-selection candidate_id=RE-06-development item_id=micro-02-selection__sheet_header source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 19,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-02-selection",
+      "candidate_id": "RE-06-development",
+      "item_id": "micro-02-selection__condition_axis_1",
+      "layer": 8,
+      "start_frame": 1230,
+      "duration_frames": 570,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-02-selection candidate_id=RE-06-development item_id=micro-02-selection__condition_axis_1 source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 20,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-02-selection",
+      "candidate_id": "RE-06-development",
+      "item_id": "micro-02-selection__condition_axis_2",
+      "layer": 8,
+      "start_frame": 1290,
+      "duration_frames": 510,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-02-selection candidate_id=RE-06-development item_id=micro-02-selection__condition_axis_2 source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 21,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-02-selection",
+      "candidate_id": "RE-06-development",
+      "item_id": "micro-02-selection__condition_axis_3",
+      "layer": 8,
+      "start_frame": 1350,
+      "duration_frames": 450,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-02-selection candidate_id=RE-06-development item_id=micro-02-selection__condition_axis_3 source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 22,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-02-selection",
+      "candidate_id": "RE-06-development",
+      "item_id": "micro-02-selection__drawback_callout",
+      "layer": 8,
+      "start_frame": 1440,
+      "duration_frames": 360,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-02-selection candidate_id=RE-06-development item_id=micro-02-selection__drawback_callout source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 23,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-02-selection",
+      "candidate_id": "RE-06-development",
+      "item_id": "micro-02-selection__selection_frame",
+      "layer": 8,
+      "start_frame": 1500,
+      "duration_frames": 300,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-02-selection candidate_id=RE-06-development item_id=micro-02-selection__selection_frame source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 24,
+      "item_type": "TextItem",
+      "beat_id": "micro-02-selection",
+      "candidate_id": "RE-06-development",
+      "item_id": "micro-02-selection__headline",
+      "layer": 9,
+      "start_frame": 900,
+      "duration_frames": 900,
+      "text": "比較して一つ選ぶ",
+      "font_color": "#FFF8FAFF",
+      "remark": "g27_micro_scene_probe beat_id=micro-02-selection candidate_id=RE-06-development item_id=micro-02-selection__headline source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 25,
+      "item_type": "TextItem",
+      "beat_id": "micro-02-selection",
+      "candidate_id": "RE-06-development",
+      "item_id": "micro-02-selection__candidate_label",
+      "layer": 9,
+      "start_frame": 900,
+      "duration_frames": 540,
+      "text": "候補",
+      "font_color": "#FFF8FAFF",
+      "remark": "g27_micro_scene_probe beat_id=micro-02-selection candidate_id=RE-06-development item_id=micro-02-selection__candidate_label source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 26,
+      "item_type": "TextItem",
+      "beat_id": "micro-02-selection",
+      "candidate_id": "RE-06-development",
+      "item_id": "micro-02-selection__selected_label",
+      "layer": 9,
+      "start_frame": 1160,
+      "duration_frames": 640,
+      "text": "選定",
+      "font_color": "#FFF8FAFF",
+      "remark": "g27_micro_scene_probe beat_id=micro-02-selection candidate_id=RE-06-development item_id=micro-02-selection__selected_label source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 27,
+      "item_type": "TextItem",
+      "beat_id": "micro-02-selection",
+      "candidate_id": "RE-06-development",
+      "item_id": "micro-02-selection__drawback_label",
+      "layer": 9,
+      "start_frame": 1460,
+      "duration_frames": 340,
+      "text": "注意点",
+      "font_color": "#FF2A1E00",
+      "remark": "g27_micro_scene_probe beat_id=micro-02-selection candidate_id=RE-06-development item_id=micro-02-selection__drawback_label source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-06-development source_lines=61-82 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 28,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-03-ai-match",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "micro-03-ai-match__backplate",
+      "layer": 7,
+      "start_frame": 1800,
+      "duration_frames": 900,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-03-ai-match candidate_id=RE-07D-beginning item_id=micro-03-ai-match__backplate source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 29,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-03-ai-match",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "micro-03-ai-match__ai_panel",
+      "layer": 8,
+      "start_frame": 1800,
+      "duration_frames": 900,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-03-ai-match candidate_id=RE-07D-beginning item_id=micro-03-ai-match__ai_panel source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 30,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-03-ai-match",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "micro-03-ai-match__scan_bar_1",
+      "layer": 8,
+      "start_frame": 1950,
+      "duration_frames": 500,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-03-ai-match candidate_id=RE-07D-beginning item_id=micro-03-ai-match__scan_bar_1 source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 31,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-03-ai-match",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "micro-03-ai-match__scan_bar_2",
+      "layer": 8,
+      "start_frame": 2070,
+      "duration_frames": 500,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-03-ai-match candidate_id=RE-07D-beginning item_id=micro-03-ai-match__scan_bar_2 source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 32,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-03-ai-match",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "micro-03-ai-match__scan_bar_3",
+      "layer": 8,
+      "start_frame": 2190,
+      "duration_frames": 500,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-03-ai-match candidate_id=RE-07D-beginning item_id=micro-03-ai-match__scan_bar_3 source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 33,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-03-ai-match",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "micro-03-ai-match__match_arrow_body",
+      "layer": 8,
+      "start_frame": 2280,
+      "duration_frames": 420,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-03-ai-match candidate_id=RE-07D-beginning item_id=micro-03-ai-match__match_arrow_body source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 34,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-03-ai-match",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "micro-03-ai-match__match_arrow_head",
+      "layer": 8,
+      "start_frame": 2280,
+      "duration_frames": 420,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-03-ai-match candidate_id=RE-07D-beginning item_id=micro-03-ai-match__match_arrow_head source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 35,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-03-ai-match",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "micro-03-ai-match__property_card",
+      "layer": 8,
+      "start_frame": 2340,
+      "duration_frames": 360,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-03-ai-match candidate_id=RE-07D-beginning item_id=micro-03-ai-match__property_card source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 36,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-03-ai-match",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "micro-03-ai-match__match_ring",
+      "layer": 8,
+      "start_frame": 2400,
+      "duration_frames": 300,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-03-ai-match candidate_id=RE-07D-beginning item_id=micro-03-ai-match__match_ring source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 37,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-03-ai-match",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "micro-03-ai-match__confidence_badge",
+      "layer": 8,
+      "start_frame": 2460,
+      "duration_frames": 240,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-03-ai-match candidate_id=RE-07D-beginning item_id=micro-03-ai-match__confidence_badge source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 38,
+      "item_type": "TextItem",
+      "beat_id": "micro-03-ai-match",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "micro-03-ai-match__headline",
+      "layer": 9,
+      "start_frame": 1800,
+      "duration_frames": 900,
+      "text": "AIが候補を選ぶ",
+      "font_color": "#FFF8FAFF",
+      "remark": "g27_micro_scene_probe beat_id=micro-03-ai-match candidate_id=RE-07D-beginning item_id=micro-03-ai-match__headline source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 39,
+      "item_type": "TextItem",
+      "beat_id": "micro-03-ai-match",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "micro-03-ai-match__ai_label",
+      "layer": 9,
+      "start_frame": 1840,
+      "duration_frames": 860,
+      "text": "AI",
+      "font_color": "#FFF8FAFF",
+      "remark": "g27_micro_scene_probe beat_id=micro-03-ai-match candidate_id=RE-07D-beginning item_id=micro-03-ai-match__ai_label source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 40,
+      "item_type": "TextItem",
+      "beat_id": "micro-03-ai-match",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "micro-03-ai-match__match_label",
+      "layer": 9,
+      "start_frame": 2470,
+      "duration_frames": 230,
+      "text": "MATCH",
+      "font_color": "#FF0E2A17",
+      "remark": "g27_micro_scene_probe beat_id=micro-03-ai-match candidate_id=RE-07D-beginning item_id=micro-03-ai-match__match_label source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 41,
+      "item_type": "TextItem",
+      "beat_id": "micro-03-ai-match",
+      "candidate_id": "RE-07D-beginning",
+      "item_id": "micro-03-ai-match__property_label",
+      "layer": 9,
+      "start_frame": 2360,
+      "duration_frames": 340,
+      "text": "物件",
+      "font_color": "#FF152230",
+      "remark": "g27_micro_scene_probe beat_id=micro-03-ai-match candidate_id=RE-07D-beginning item_id=micro-03-ai-match__property_label source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-beginning source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 42,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-04-conditional",
+      "candidate_id": "RE-07D-development",
+      "item_id": "micro-04-conditional__backplate",
+      "layer": 7,
+      "start_frame": 2700,
+      "duration_frames": 900,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-04-conditional candidate_id=RE-07D-development item_id=micro-04-conditional__backplate source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-development source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 43,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-04-conditional",
+      "candidate_id": "RE-07D-development",
+      "item_id": "micro-04-conditional__property_card",
+      "layer": 8,
+      "start_frame": 2700,
+      "duration_frames": 900,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-04-conditional candidate_id=RE-07D-development item_id=micro-04-conditional__property_card source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-development source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 44,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-04-conditional",
+      "candidate_id": "RE-07D-development",
+      "item_id": "micro-04-conditional__ai_ok_bar",
+      "layer": 8,
+      "start_frame": 2700,
+      "duration_frames": 460,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-04-conditional candidate_id=RE-07D-development item_id=micro-04-conditional__ai_ok_bar source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-development source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 45,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-04-conditional",
+      "candidate_id": "RE-07D-development",
+      "item_id": "micro-04-conditional__risk_boundary",
+      "layer": 8,
+      "start_frame": 3030,
+      "duration_frames": 570,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-04-conditional candidate_id=RE-07D-development item_id=micro-04-conditional__risk_boundary source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-development source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 46,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-04-conditional",
+      "candidate_id": "RE-07D-development",
+      "item_id": "micro-04-conditional__risk_inheritance",
+      "layer": 8,
+      "start_frame": 3150,
+      "duration_frames": 450,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-04-conditional candidate_id=RE-07D-development item_id=micro-04-conditional__risk_inheritance source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-development source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 47,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-04-conditional",
+      "candidate_id": "RE-07D-development",
+      "item_id": "micro-04-conditional__risk_neighborhood",
+      "layer": 8,
+      "start_frame": 3270,
+      "duration_frames": 330,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-04-conditional candidate_id=RE-07D-development item_id=micro-04-conditional__risk_neighborhood source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-development source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 48,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-04-conditional",
+      "candidate_id": "RE-07D-development",
+      "item_id": "micro-04-conditional__conditional_strip",
+      "layer": 8,
+      "start_frame": 3360,
+      "duration_frames": 240,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-04-conditional candidate_id=RE-07D-development item_id=micro-04-conditional__conditional_strip source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-development source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 49,
+      "item_type": "ShapeItem",
+      "beat_id": "micro-04-conditional",
+      "candidate_id": "RE-07D-development",
+      "item_id": "micro-04-conditional__stop_overlay",
+      "layer": 8,
+      "start_frame": 3360,
+      "duration_frames": 240,
+      "text": null,
+      "font_color": null,
+      "remark": "g27_micro_scene_probe beat_id=micro-04-conditional candidate_id=RE-07D-development item_id=micro-04-conditional__stop_overlay source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-development source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 50,
+      "item_type": "TextItem",
+      "beat_id": "micro-04-conditional",
+      "candidate_id": "RE-07D-development",
+      "item_id": "micro-04-conditional__headline",
+      "layer": 9,
+      "start_frame": 2700,
+      "duration_frames": 900,
+      "text": "推薦は条件つき",
+      "font_color": "#FFF8FAFF",
+      "remark": "g27_micro_scene_probe beat_id=micro-04-conditional candidate_id=RE-07D-development item_id=micro-04-conditional__headline source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-development source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 51,
+      "item_type": "TextItem",
+      "beat_id": "micro-04-conditional",
+      "candidate_id": "RE-07D-development",
+      "item_id": "micro-04-conditional__boundary_label",
+      "layer": 9,
+      "start_frame": 3040,
+      "duration_frames": 560,
+      "text": "境界",
+      "font_color": "#FFFFF2D0",
+      "remark": "g27_micro_scene_probe beat_id=micro-04-conditional candidate_id=RE-07D-development item_id=micro-04-conditional__boundary_label source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-development source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 52,
+      "item_type": "TextItem",
+      "beat_id": "micro-04-conditional",
+      "candidate_id": "RE-07D-development",
+      "item_id": "micro-04-conditional__inheritance_label",
+      "layer": 9,
+      "start_frame": 3160,
+      "duration_frames": 440,
+      "text": "相続",
+      "font_color": "#FF2A1E00",
+      "remark": "g27_micro_scene_probe beat_id=micro-04-conditional candidate_id=RE-07D-development item_id=micro-04-conditional__inheritance_label source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-development source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    },
+    {
+      "index": 53,
+      "item_type": "TextItem",
+      "beat_id": "micro-04-conditional",
+      "candidate_id": "RE-07D-development",
+      "item_id": "micro-04-conditional__neighborhood_label",
+      "layer": 9,
+      "start_frame": 3280,
+      "duration_frames": 320,
+      "text": "周辺",
+      "font_color": "#FFFFF2D0",
+      "remark": "g27_micro_scene_probe beat_id=micro-04-conditional candidate_id=RE-07D-development item_id=micro-04-conditional__neighborhood_label source=samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json source_beat=RE-07D-development source_lines=130-143 shape_text_only not_creative_acceptance no_render",
+      "source_reference_found": {
+        "source": true,
+        "source_lines": true
+      }
+    }
+  ],
+  "color_like_scan": {
+    "occurrences": [
+      {
+        "json_path": "$.Timelines[0].Items[0].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[0].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[0].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[1].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[1].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[1].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[2].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[2].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[2].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[3].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[3].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[3].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[4].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[4].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[4].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[5].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[5].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[5].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[6].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[6].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[6].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[7].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[7].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[7].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[8].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[8].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[8].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[9].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[9].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[9].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[10].FontColor",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[11].FontColor",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[12].FontColor",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[13].FontColor",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[14].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[14].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[14].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[15].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[15].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[15].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[16].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[16].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[16].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[17].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[17].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[17].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[18].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[18].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[18].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[19].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[19].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[19].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[20].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[20].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[20].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[21].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[21].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[21].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[22].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[22].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[22].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[23].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[23].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[23].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[24].FontColor",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[25].FontColor",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[26].FontColor",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[27].FontColor",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[28].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[28].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[28].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[29].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[29].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[29].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[30].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[30].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[30].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[31].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[31].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[31].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[32].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[32].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[32].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[33].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[33].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[33].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[34].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[34].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[34].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[35].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[35].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[35].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[36].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[36].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[36].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[37].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[37].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[37].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[38].FontColor",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[39].FontColor",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[40].FontColor",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[41].FontColor",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[42].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[42].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[42].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[43].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[43].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[43].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[44].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[44].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[44].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[45].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[45].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[45].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[46].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[46].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[46].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[47].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[47].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[47].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[48].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[48].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[48].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[49].ShapeParameter.StrokeThickness",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 animation object, not a color scalar",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[49].ShapeParameter.Brush",
+        "value_type": "object",
+        "observed_compatible_pattern": "YMM4 brush plugin object with nested #AARRGGBB Color",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[49].ShapeParameter.Brush.Parameter.Color",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[50].FontColor",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[51].FontColor",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[52].FontColor",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      },
+      {
+        "json_path": "$.Timelines[0].Items[53].FontColor",
+        "value_type": "string",
+        "observed_compatible_pattern": "#AARRGGBB string",
+        "status": "pass"
+      }
+    ],
+    "failures": []
+  },
+  "missing_items": [],
+  "malformed_items": [],
+  "minimal_render_smoke_recommendation": "ready_for_user_gui_readback_before_minimal_render_smoke"
+}

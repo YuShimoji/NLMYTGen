@@ -1,0 +1,6059 @@
+﻿{
+  "SelectedTimelineIndex": 0,
+  "Timelines": [
+    {
+      "Items": [
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+          "CharacterName": "marisa",
+          "Serif": "skit group placement fixture voice 1",
+          "Frame": 0,
+          "Layer": 0,
+          "Length": 90,
+          "Group": 0,
+          "Remark": ""
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.GroupItem, YukkuriMovieMaker",
+          "GroupRange": 2,
+          "IsGroupOnly": false,
+          "IsCompressFrame": false,
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "CompositeCenter": "ScreenCenter",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "X": {
+            "Values": [
+              {
+                "Value": -102.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": 462.5
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 103.8
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "VideoEffects": [
+            {
+              "$type": "YukkuriMovieMaker.Project.Effects.InOutMoveFromOutsideFrameEffect, YukkuriMovieMaker",
+              "Value": "Left",
+              "IsInEffect": true,
+              "IsOutEffect": false,
+              "EffectTimeSeconds": 1.0,
+              "EasingType": "Expo",
+              "EasingMode": "Out",
+              "IsEnabled": true,
+              "Remark": ""
+            }
+          ],
+          "Group": 0,
+          "Frame": 0,
+          "Layer": 9,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 174,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "skit_group:delivery_enter_from_left_v1 utt:1",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+          "FilePath": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\Gemini_Generated_Image_kfezhpkfezhpkfez-removebg-preview.png",
+          "X": {
+            "Values": [
+              {
+                "Value": 587.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": 174.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 172.82611563664636
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "VideoEffects": [],
+          "Group": 0,
+          "Frame": 0,
+          "Layer": 10,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 174,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+          "FilePath": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_easy.png",
+          "X": {
+            "Values": [
+              {
+                "Value": 587.5
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": -108.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 51.81687381751456
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "VideoEffects": [],
+          "Group": 0,
+          "Frame": 0,
+          "Layer": 11,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 174,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+          "CharacterName": "marisa",
+          "Serif": "skit group placement fixture voice 2",
+          "Frame": 120,
+          "Layer": 0,
+          "Length": 90,
+          "Group": 0,
+          "Remark": ""
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+          "CharacterName": "marisa",
+          "Serif": "skit group placement fixture voice 3",
+          "Frame": 240,
+          "Layer": 0,
+          "Length": 90,
+          "Group": 0,
+          "Remark": ""
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.GroupItem, YukkuriMovieMaker",
+          "GroupRange": 2,
+          "IsGroupOnly": false,
+          "IsCompressFrame": true,
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "CompositeCenter": "ScreenCenter",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "X": {
+            "Values": [
+              {
+                "Value": -102.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": 462.5
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 103.8
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              },
+              {
+                "Value": -6.2
+              },
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "直線移動",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "VideoEffects": [
+            {
+              "$type": "YukkuriMovieMaker.Project.Effects.CenterPointEffect, YukkuriMovieMaker",
+              "Horizontal": "Custom",
+              "Vertical": "Bottom",
+              "X": {
+                "Values": [
+                  {
+                    "Value": 524.566650390625
+                  }
+                ],
+                "Span": 0.0,
+                "AnimationType": "なし",
+                "Bezier": {
+                  "Points": [
+                    {
+                      "Point": {
+                        "X": 0.0,
+                        "Y": 0.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    },
+                    {
+                      "Point": {
+                        "X": 1.0,
+                        "Y": 1.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    }
+                  ],
+                  "IsQuadratic": false
+                }
+              },
+              "Y": {
+                "Values": [
+                  {
+                    "Value": 136.84947204589844
+                  }
+                ],
+                "Span": 0.0,
+                "AnimationType": "なし",
+                "Bezier": {
+                  "Points": [
+                    {
+                      "Point": {
+                        "X": 0.0,
+                        "Y": 0.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    },
+                    {
+                      "Point": {
+                        "X": 1.0,
+                        "Y": 1.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    }
+                  ],
+                  "IsQuadratic": false
+                }
+              },
+              "IsKeepPosition": false,
+              "IsEnabled": true,
+              "Remark": ""
+            }
+          ],
+          "Group": 0,
+          "Frame": 240,
+          "Layer": 9,
+          "KeyFrames": {
+            "Frames": [
+              14
+            ],
+            "Count": 1
+          },
+          "Length": 41,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "skit_group:delivery_nod_v1 utt:15",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+          "FilePath": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\Gemini_Generated_Image_kfezhpkfezhpkfez-removebg-preview.png",
+          "X": {
+            "Values": [
+              {
+                "Value": 587.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": 174.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 172.82611563664636
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "VideoEffects": [],
+          "Group": 0,
+          "Frame": 240,
+          "Layer": 10,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 41,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "delivery_nod_v1",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+          "FilePath": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_easy.png",
+          "X": {
+            "Values": [
+              {
+                "Value": 587.5
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": -108.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 51.81687381751456
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "VideoEffects": [],
+          "Group": 0,
+          "Frame": 240,
+          "Layer": 11,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 41,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "delivery_nod_v1",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker",
+          "CharacterName": "marisa",
+          "Serif": "skit group placement fixture voice 4",
+          "Frame": 360,
+          "Layer": 0,
+          "Length": 90,
+          "Group": 0,
+          "Remark": ""
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.GroupItem, YukkuriMovieMaker",
+          "GroupRange": 2,
+          "IsGroupOnly": false,
+          "IsCompressFrame": false,
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "CompositeCenter": "ScreenCenter",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "X": {
+            "Values": [
+              {
+                "Value": -102.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": 462.5
+              },
+              {
+                "Value": 412.5
+              },
+              {
+                "Value": 462.5
+              },
+              {
+                "Value": 462.5
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "直線移動",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 103.8
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "VideoEffects": [],
+          "Group": 0,
+          "Frame": 480,
+          "Layer": 9,
+          "KeyFrames": {
+            "Frames": [
+              6,
+              12
+            ],
+            "Count": 2
+          },
+          "Length": 174,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "skit_group:delivery_surprise_oneshot_v1 utt:35",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+          "FilePath": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\Gemini_Generated_Image_kfezhpkfezhpkfez-removebg-preview.png",
+          "X": {
+            "Values": [
+              {
+                "Value": 587.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": 174.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 172.82611563664636
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "VideoEffects": [],
+          "Group": 0,
+          "Frame": 480,
+          "Layer": 10,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 174,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+          "FilePath": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_easy.png",
+          "X": {
+            "Values": [
+              {
+                "Value": 587.5
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": -108.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 51.81687381751456
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "VideoEffects": [],
+          "Group": 0,
+          "Frame": 480,
+          "Layer": 11,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 174,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.GroupItem, YukkuriMovieMaker",
+          "GroupRange": 2,
+          "IsGroupOnly": false,
+          "IsCompressFrame": true,
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "CompositeCenter": "ScreenCenter",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "X": {
+            "Values": [
+              {
+                "Value": -102.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": 462.5
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 103.8
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              },
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "直線移動",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "VideoEffects": [
+            {
+              "$type": "YukkuriMovieMaker.Project.Effects.CenterPointEffect, YukkuriMovieMaker",
+              "Horizontal": "Custom",
+              "Vertical": "Bottom",
+              "X": {
+                "Values": [
+                  {
+                    "Value": 524.566650390625
+                  }
+                ],
+                "Span": 0.0,
+                "AnimationType": "なし",
+                "Bezier": {
+                  "Points": [
+                    {
+                      "Point": {
+                        "X": 0.0,
+                        "Y": 0.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    },
+                    {
+                      "Point": {
+                        "X": 1.0,
+                        "Y": 1.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    }
+                  ],
+                  "IsQuadratic": false
+                }
+              },
+              "Y": {
+                "Values": [
+                  {
+                    "Value": 136.84947204589844
+                  }
+                ],
+                "Span": 0.0,
+                "AnimationType": "なし",
+                "Bezier": {
+                  "Points": [
+                    {
+                      "Point": {
+                        "X": 0.0,
+                        "Y": 0.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    },
+                    {
+                      "Point": {
+                        "X": 1.0,
+                        "Y": 1.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    }
+                  ],
+                  "IsQuadratic": false
+                }
+              },
+              "IsKeepPosition": false,
+              "IsEnabled": true,
+              "Remark": ""
+            }
+          ],
+          "Group": 0,
+          "Frame": 720,
+          "Layer": 9,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 8,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "skit_group:delivery_deny_oneshot_v1 utt:39",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+          "FilePath": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\Gemini_Generated_Image_kfezhpkfezhpkfez-removebg-preview.png",
+          "X": {
+            "Values": [
+              {
+                "Value": 587.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": 174.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 172.82611563664636
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "VideoEffects": [],
+          "Group": 0,
+          "Frame": 720,
+          "Layer": 10,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 41,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "delivery_deny_oneshot_v1",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+          "FilePath": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_easy.png",
+          "X": {
+            "Values": [
+              {
+                "Value": 587.5
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": -108.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 51.81687381751456
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "VideoEffects": [],
+          "Group": 0,
+          "Frame": 720,
+          "Layer": 11,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 41,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "delivery_deny_oneshot_v1",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.GroupItem, YukkuriMovieMaker",
+          "GroupRange": 2,
+          "IsGroupOnly": false,
+          "IsCompressFrame": true,
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "CompositeCenter": "ScreenCenter",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "X": {
+            "Values": [
+              {
+                "Value": -118.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": 462.5
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 103.8
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              },
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "直線移動",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "VideoEffects": [
+            {
+              "$type": "YukkuriMovieMaker.Project.Effects.CenterPointEffect, YukkuriMovieMaker",
+              "Horizontal": "Custom",
+              "Vertical": "Bottom",
+              "X": {
+                "Values": [
+                  {
+                    "Value": 524.566650390625
+                  }
+                ],
+                "Span": 0.0,
+                "AnimationType": "なし",
+                "Bezier": {
+                  "Points": [
+                    {
+                      "Point": {
+                        "X": 0.0,
+                        "Y": 0.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    },
+                    {
+                      "Point": {
+                        "X": 1.0,
+                        "Y": 1.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    }
+                  ],
+                  "IsQuadratic": false
+                }
+              },
+              "Y": {
+                "Values": [
+                  {
+                    "Value": 136.84947204589844
+                  }
+                ],
+                "Span": 0.0,
+                "AnimationType": "なし",
+                "Bezier": {
+                  "Points": [
+                    {
+                      "Point": {
+                        "X": 0.0,
+                        "Y": 0.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    },
+                    {
+                      "Point": {
+                        "X": 1.0,
+                        "Y": 1.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    }
+                  ],
+                  "IsQuadratic": false
+                }
+              },
+              "IsKeepPosition": false,
+              "IsEnabled": true,
+              "Remark": ""
+            }
+          ],
+          "Group": 0,
+          "Frame": 728,
+          "Layer": 9,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 8,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "skit_group:delivery_deny_oneshot_v1 utt:39",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.GroupItem, YukkuriMovieMaker",
+          "GroupRange": 2,
+          "IsGroupOnly": false,
+          "IsCompressFrame": true,
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "CompositeCenter": "ScreenCenter",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "X": {
+            "Values": [
+              {
+                "Value": -102.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": 462.5
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 103.8
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              },
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "直線移動",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "VideoEffects": [
+            {
+              "$type": "YukkuriMovieMaker.Project.Effects.CenterPointEffect, YukkuriMovieMaker",
+              "Horizontal": "Custom",
+              "Vertical": "Bottom",
+              "X": {
+                "Values": [
+                  {
+                    "Value": 524.566650390625
+                  }
+                ],
+                "Span": 0.0,
+                "AnimationType": "なし",
+                "Bezier": {
+                  "Points": [
+                    {
+                      "Point": {
+                        "X": 0.0,
+                        "Y": 0.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    },
+                    {
+                      "Point": {
+                        "X": 1.0,
+                        "Y": 1.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    }
+                  ],
+                  "IsQuadratic": false
+                }
+              },
+              "Y": {
+                "Values": [
+                  {
+                    "Value": 136.84947204589844
+                  }
+                ],
+                "Span": 0.0,
+                "AnimationType": "なし",
+                "Bezier": {
+                  "Points": [
+                    {
+                      "Point": {
+                        "X": 0.0,
+                        "Y": 0.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    },
+                    {
+                      "Point": {
+                        "X": 1.0,
+                        "Y": 1.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    }
+                  ],
+                  "IsQuadratic": false
+                }
+              },
+              "IsKeepPosition": false,
+              "IsEnabled": true,
+              "Remark": ""
+            }
+          ],
+          "Group": 0,
+          "Frame": 736,
+          "Layer": 9,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 8,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "skit_group:delivery_deny_oneshot_v1 utt:39",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.GroupItem, YukkuriMovieMaker",
+          "GroupRange": 2,
+          "IsGroupOnly": false,
+          "IsCompressFrame": true,
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "CompositeCenter": "ScreenCenter",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "X": {
+            "Values": [
+              {
+                "Value": -118.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": 462.5
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 103.8
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              },
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "直線移動",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "VideoEffects": [
+            {
+              "$type": "YukkuriMovieMaker.Project.Effects.CenterPointEffect, YukkuriMovieMaker",
+              "Horizontal": "Custom",
+              "Vertical": "Bottom",
+              "X": {
+                "Values": [
+                  {
+                    "Value": 524.566650390625
+                  }
+                ],
+                "Span": 0.0,
+                "AnimationType": "なし",
+                "Bezier": {
+                  "Points": [
+                    {
+                      "Point": {
+                        "X": 0.0,
+                        "Y": 0.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    },
+                    {
+                      "Point": {
+                        "X": 1.0,
+                        "Y": 1.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    }
+                  ],
+                  "IsQuadratic": false
+                }
+              },
+              "Y": {
+                "Values": [
+                  {
+                    "Value": 136.84947204589844
+                  }
+                ],
+                "Span": 0.0,
+                "AnimationType": "なし",
+                "Bezier": {
+                  "Points": [
+                    {
+                      "Point": {
+                        "X": 0.0,
+                        "Y": 0.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    },
+                    {
+                      "Point": {
+                        "X": 1.0,
+                        "Y": 1.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    }
+                  ],
+                  "IsQuadratic": false
+                }
+              },
+              "IsKeepPosition": false,
+              "IsEnabled": true,
+              "Remark": ""
+            }
+          ],
+          "Group": 0,
+          "Frame": 744,
+          "Layer": 9,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 8,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "skit_group:delivery_deny_oneshot_v1 utt:39",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.GroupItem, YukkuriMovieMaker",
+          "GroupRange": 2,
+          "IsGroupOnly": false,
+          "IsCompressFrame": true,
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "CompositeCenter": "ScreenCenter",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "X": {
+            "Values": [
+              {
+                "Value": -102.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": 462.5
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 103.8
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              },
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "直線移動",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "VideoEffects": [
+            {
+              "$type": "YukkuriMovieMaker.Project.Effects.CenterPointEffect, YukkuriMovieMaker",
+              "Horizontal": "Custom",
+              "Vertical": "Bottom",
+              "X": {
+                "Values": [
+                  {
+                    "Value": 524.566650390625
+                  }
+                ],
+                "Span": 0.0,
+                "AnimationType": "なし",
+                "Bezier": {
+                  "Points": [
+                    {
+                      "Point": {
+                        "X": 0.0,
+                        "Y": 0.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    },
+                    {
+                      "Point": {
+                        "X": 1.0,
+                        "Y": 1.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    }
+                  ],
+                  "IsQuadratic": false
+                }
+              },
+              "Y": {
+                "Values": [
+                  {
+                    "Value": 136.84947204589844
+                  }
+                ],
+                "Span": 0.0,
+                "AnimationType": "なし",
+                "Bezier": {
+                  "Points": [
+                    {
+                      "Point": {
+                        "X": 0.0,
+                        "Y": 0.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    },
+                    {
+                      "Point": {
+                        "X": 1.0,
+                        "Y": 1.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    }
+                  ],
+                  "IsQuadratic": false
+                }
+              },
+              "IsKeepPosition": false,
+              "IsEnabled": true,
+              "Remark": ""
+            }
+          ],
+          "Group": 0,
+          "Frame": 752,
+          "Layer": 9,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 9,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "skit_group:delivery_deny_oneshot_v1 utt:39",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.GroupItem, YukkuriMovieMaker",
+          "GroupRange": 2,
+          "IsGroupOnly": false,
+          "IsCompressFrame": true,
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "CompositeCenter": "ScreenCenter",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "X": {
+            "Values": [
+              {
+                "Value": -102.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": 462.5
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 103.8
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              },
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "直線移動",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "VideoEffects": [
+            {
+              "$type": "YukkuriMovieMaker.Project.Effects.CenterPointEffect, YukkuriMovieMaker",
+              "Horizontal": "Custom",
+              "Vertical": "Bottom",
+              "X": {
+                "Values": [
+                  {
+                    "Value": 524.566650390625
+                  }
+                ],
+                "Span": 0.0,
+                "AnimationType": "なし",
+                "Bezier": {
+                  "Points": [
+                    {
+                      "Point": {
+                        "X": 0.0,
+                        "Y": 0.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    },
+                    {
+                      "Point": {
+                        "X": 1.0,
+                        "Y": 1.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    }
+                  ],
+                  "IsQuadratic": false
+                }
+              },
+              "Y": {
+                "Values": [
+                  {
+                    "Value": 136.84947204589844
+                  }
+                ],
+                "Span": 0.0,
+                "AnimationType": "なし",
+                "Bezier": {
+                  "Points": [
+                    {
+                      "Point": {
+                        "X": 0.0,
+                        "Y": 0.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    },
+                    {
+                      "Point": {
+                        "X": 1.0,
+                        "Y": 1.0
+                      },
+                      "ControlPoint1": {
+                        "X": -0.3,
+                        "Y": -0.3
+                      },
+                      "ControlPoint2": {
+                        "X": 0.3,
+                        "Y": 0.3
+                      }
+                    }
+                  ],
+                  "IsQuadratic": false
+                }
+              },
+              "IsKeepPosition": false,
+              "IsEnabled": true,
+              "Remark": ""
+            },
+            {
+              "$type": "YukkuriMovieMaker.Project.Effects.InOutMoveEffect, YukkuriMovieMaker",
+              "Value": -2000.0,
+              "Value2": 0.0,
+              "Value3": 0.0,
+              "IsInEffect": false,
+              "IsOutEffect": true,
+              "EffectTimeSeconds": 0.5,
+              "EasingType": "Sine",
+              "EasingMode": "Out",
+              "IsEnabled": true,
+              "Remark": ""
+            }
+          ],
+          "Group": 0,
+          "Frame": 960,
+          "Layer": 9,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 41,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "skit_group:delivery_exit_left_v1 utt:143",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+          "FilePath": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\Gemini_Generated_Image_kfezhpkfezhpkfez-removebg-preview.png",
+          "X": {
+            "Values": [
+              {
+                "Value": 587.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": 174.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 172.82611563664636
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "VideoEffects": [],
+          "Group": 0,
+          "Frame": 960,
+          "Layer": 10,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 41,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "delivery_exit_left_v1",
+          "IsLocked": false,
+          "IsHidden": false
+        },
+        {
+          "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
+          "FilePath": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_easy.png",
+          "X": {
+            "Values": [
+              {
+                "Value": 587.5
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Y": {
+            "Values": [
+              {
+                "Value": -108.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Z": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Opacity": {
+            "Values": [
+              {
+                "Value": 100.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Zoom": {
+            "Values": [
+              {
+                "Value": 51.81687381751456
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "Rotation": {
+            "Values": [
+              {
+                "Value": 0.0
+              }
+            ],
+            "Span": 0.0,
+            "AnimationType": "なし",
+            "Bezier": {
+              "Points": [
+                {
+                  "Point": {
+                    "X": 0.0,
+                    "Y": 0.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                },
+                {
+                  "Point": {
+                    "X": 1.0,
+                    "Y": 1.0
+                  },
+                  "ControlPoint1": {
+                    "X": -0.3,
+                    "Y": -0.3
+                  },
+                  "ControlPoint2": {
+                    "X": 0.3,
+                    "Y": 0.3
+                  }
+                }
+              ],
+              "IsQuadratic": false
+            }
+          },
+          "FadeIn": 0.0,
+          "FadeOut": 0.0,
+          "Blend": "Normal",
+          "IsInverted": false,
+          "IsClippingWithObjectAbove": false,
+          "IsAlwaysOnTop": false,
+          "IsZOrderEnabled": false,
+          "VideoEffects": [],
+          "Group": 0,
+          "Frame": 960,
+          "Layer": 11,
+          "KeyFrames": {
+            "Frames": [],
+            "Count": 0
+          },
+          "Length": 41,
+          "PlaybackRate": 100.0,
+          "ContentOffset": "00:00:00",
+          "Remark": "delivery_exit_left_v1",
+          "IsLocked": false,
+          "IsHidden": false
+        }
+      ],
+      "LayerSettings": []
+    }
+  ],
+  "Characters": [
+    {
+      "Name": "marisa"
+    }
+  ]
+}

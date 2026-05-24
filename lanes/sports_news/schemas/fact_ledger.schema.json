@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nlmytgen.local/sports_news/fact_ledger.schema.json",
+  "title": "sports_news fact ledger",
+  "type": "object",
+  "required": ["confirmed_facts", "numerical_claims", "uncertain_claims", "claims_to_avoid"],
+  "additionalProperties": false,
+  "properties": {
+    "confirmed_facts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/claim" }
+    },
+    "numerical_claims": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/claim" }
+    },
+    "uncertain_claims": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/claim" }
+    },
+    "claims_to_avoid": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/claim" }
+    }
+  },
+  "$defs": {
+    "claim": {
+      "type": "object",
+      "required": ["id", "text", "source_refs"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+        "text": { "type": "string", "minLength": 1 },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" }
+        },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}

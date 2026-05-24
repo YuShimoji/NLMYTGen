@@ -1,0 +1,39 @@
+{
+  "schema_version": "2.0",
+  "artifact_kind": "g26_motion_recipe_brief",
+  "notes": [
+    "G-26 nod_head_v1 is a native YMM4 template clone candidate.",
+    "Build this brief one recipe at a time; do not connect it to production before YMM4 visual acceptance."
+  ],
+  "review": {
+    "spacing_frames": 140,
+    "acceptance_classes": [
+      "pass",
+      "wrong motion",
+      "body-face drift",
+      "screen spacing",
+      "too subtle",
+      "too strong",
+      "asset path"
+    ]
+  },
+  "recipes": [
+    {
+      "goal_id": "nod_head_v1",
+      "source_goal_id": "nod_clear_v2",
+      "motion_source": "native_template",
+      "motion_goal": "Readable head-only nod for agreement, understanding, or confirmation.",
+      "emotion": "agreement",
+      "intensity": "medium",
+      "duration_frames": 60,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": [
+        "body-face drift",
+        "body moves too much",
+        "too subtle"
+      ],
+      "face_id": "easy",
+      "anchor_template_source": "nod_head_v1"
+    }
+  ]
+}

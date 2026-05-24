@@ -25,8 +25,8 @@ Python は **画像生成・合成をしない**（AUTOMATION_BOUNDARY 参照）
 | スタイル | 主な `template` | 典型の `overlay` / その他 | 細部の置き場所 |
 |----------|-----------------|---------------------------|----------------|
 | **資料パネル風** | `data`, `board` | `text_box`, 独自 `snake_case` ラベル | 図表・文字組みは **PNG 素材** または YMM4 上の手作業 |
-| **挿絵コマ風** | `skit` | `speech_bubble`, コマ枠用の独自ラベル | **1 発話あたり 1 ラベル → 1 ImageItem**。複数コマを機械投入したい場合は **1 枚に合成した PNG** を推奨 |
-| **再現PV風** | `mood`（＋必要なら `intro` / `closing`） | トランジション・テンポは IR で **ラベル指定可** | **テンポ・エフェクトの本体は YMM4 アイテムテンプレ** に寄せる。IR の `motion` / `transition` / `bg_anim` は **patch-ymmp では現状未書き込み**（G-12 でルート測定のみ） |
+| **挿絵コマ風** | `skit` | `speech_bubble`, コマ枠用の独自ラベル | `overlay` は単一ラベルまたは配列で ImageItem 挿入可。複雑なコマ割りは **1 枚に合成した PNG** か G-24 `skit_group` template-first を優先 |
+| **再現PV風** | `mood`（＋必要なら `intro` / `closing`） | トランジション・テンポは IR で **ラベル指定可** | `bg_anim` はキーフレーム preset / G-17 VideoEffects、`transition` は `none` / `fade`、`motion` は map 接続時の adapter 対象。強い PV テンポは YMM4 テンプレに寄せる |
 
 ---
 
@@ -38,12 +38,14 @@ Python は **画像生成・合成をしない**（AUTOMATION_BOUNDARY 参照）
 |------|------|
 | `face` / `idle_face` | 反映済み（row-range 対応） |
 | `slot` | `slot_map` 契約下で反映 |
-| `overlay` | **発話 1 つにつき最大 1 ラベル** → `ImageItem` 1 件。`--overlay-map` 必須 |
-| 背景 | **`macro.sections[].default_bg` のみ** から `bg_map` 解決。Micro の `bg` は carry-forward に載るが **本パッチでは未使用** |
-| `motion` / `transition` / `bg_anim` | IR 上は carry-forward されるが **ymmp への書き込みなし** |
-| `se` | ラベル検証は可。`AudioItem` 挿入は [G-13](verification/G13-overlay-se-insertion-packet.md) / [P2C](verification/P2C-se-audioitem-boundary.md) 境界 |
+| `overlay` | 文字列または配列を `--overlay-map` で解決し、発話アンカーへ `ImageItem` 挿入（G-13/G-16） |
+| 背景 | Macro の `sections[].default_bg` と Micro `bg`（carry-forward 解決後）を `bg_map` で解決し、Layer 0 の発話スパン背景として反映（G-15） |
+| `bg_anim` | G-14 の X/Y/Zoom キーフレーム preset、または G-17 の `--timeline-profile` + `--bg-anim-map` 経路で反映 |
+| `motion` | `--tachie-motion-map` の Phase2 区間分割、または G-17 `--timeline-profile` + `--motion-map` 経路で反映。G-24 茶番劇演者は `skit_group` template-first が主経路 |
+| `transition` | `none` / `fade` のみ Voice/Jimaku fade として反映。non-fade は別 FEATURE / YMM4 手動 |
+| `se` | `--se-map` でラベル・timing を解決し、G-18 で `AudioItem` 挿入 |
 
-発話ごとに背景を変えたい場合の現実的な運用は、(1) **Macro の `sections` を細かく分ける**、または (2) FEATURE 承認後の **発話スパン bg パケット**（台帳参照）。
+発話ごとに背景を変えたい場合は、Macro の `sections` を細かく分けるか、Micro `bg` を明示して G-15 の発話スパン背景として扱う。素材選定と視認性の creative judgement は YMM4 側で確認する。
 
 ---
 
@@ -53,7 +55,7 @@ Python は **画像生成・合成をしない**（AUTOMATION_BOUNDARY 参照）
 2. ファイルを所定フォルダに保存し、`overlay_map` にラベル → パスを登録。  
 3. IR の `overlay` にそのラベルを指定し、`apply-production` / `patch-ymmp` を実行。  
 
-これにより **複数レイヤーのコマ割り** を、現行の「単一 overlay」契約のまま運用できる。
+これにより **複数レイヤーのコマ割り** を、単一 PNG として安定運用できる。複数 `overlay` ラベルの配列挿入も可能だが、見た目の密度や重なりは最終的に YMM4 上で判断する。
 
 ---
 

@@ -5,6 +5,7 @@
 
 ## 現在有効な要求
 
+- INT-02e must remain `baseline / in_progress` until a real URL operator smoke proves actual fetch, Python `wave` readback of `source.wav`, receipt / sidecar / `material_ledger` readback, `audit-material-ledger`, boundary grep, and scrubbed reporting. URL and rights / terms review are required before assistant-run smoke. Passing INT-02e does not authorize `fetch-source-video`, GUI fetch button, STT URL fetch, cut / concat, subtitle burn-in, render / encode, or Publishing / OAuth.
 - 痛点ドリブンで進める。FEATURE_REGISTRY の候補一覧や done 件数から機械的に次タスクを選ばない。
 - ハンドオフに全コンテキストが本当に残っているか検証し、抜け漏れは明示して報告する。
 - 実際には未完了なのに完了扱いになっている task、文書だけ存在して実体が弱い項目、古い正本風ドキュメントを継続的に是正する。
@@ -12,7 +13,17 @@
 - project-local canonical docs を先に確認し、既知文脈の再質問を避ける。
 - `Prompt` / checklist / `OK` / `NG` / `PASS` / `FAIL` 返却テンプレを作業接続性より優先しない。人間に依頼する手順は、開く対象・作る対象・元 object・判定主体・返答の意味を先に明示する。
 - `INTERACTION_NOTES.md` は反応ラベルのメモではなく、既知文脈の再質問・broad question・manual proof 押し戻し・価値経路 drift など、プロジェクトが前に進まない構造的 failure mode の予防策として維持する。
+- 最終応答は summary だけで終えず、根拠・残リスク・次の owner・user 返答後に assistant が閉じる作業まで接続する。こちらに作業が振られる場合は、何を返せば再開できるかと assistant 側の次検証を同時に示す。
 - 茶番劇 G-24 を user-only の配置作業と表現しない。既存 sample / GroupItem / layer / target labeling が揃う案件では、assistant が rough placement・effect 適用・registry 下準備を先行し、user は YMM4 上の意図確認と canonical template authoring に集中できるようにする。
+- 手動作成済み YMM4 演出の `Remark` tag、座標、反転、拡大縮小、既存 `VideoEffects` から variation を自動生成できるかを、これ以上 docs-only で先送りしない。まず G-25 `probe-ymmp-variations` のような独立 review artifact で feasibility を見て、production placement への接続は結果を見て別スライスにする。
+- G-25 のYMM4確認により、`nudge / scale / rotate / effect_reuse` のような property 差分は、動きのvariationとしては不採用。以後は、うなずき・退場・小ジャンプ・傾きなどを motion primitive として扱い、開始姿勢・終了姿勢・方向意味・reset policy・相性を機械可読化してから候補生成する。傾いたまま退場、傾いた小ジャンプ、反対方向の傾きなどの accidental composition を避ける。
+- G-26 は docs-only / JSON-only で止めない。画面上でサンプルが見える状態を優先し、既存 YMM4-saved seed + repo-tracked template source から review `.ymmp` を作り、readback で openability / inserted GroupItems / asset path を確認してから次判断へ進める。サンプルは既存動作を散らすだけでなく、ユーザーが求める「うなずき」「ジャンプ」などの演出目標から assistant が候補を提案・作成する。
+- G-26 の目的別制作は `build-motion-recipes` を入口にし、brief / effect catalog / concrete effect samples / motion library / optional composition corpus を読ませてから review `.ymmp` を作る。毎回ゼロから考えず、演出意図と effect shortlist を machine-readable に残す。
+- G-26 の evidence gate は「contract へ昇格する条件」であり、「assistant が新しい目的別サンプルを作ってはいけない」という意味ではない。既存 YMM4-saved canvas と既存 GroupItem/ImageItem template をコピーして transform 値を調整する recipe lab は許可する。禁止は Python preview/rendering、`.ymmp` zero-generation、画像/effect type の合成、未受入 recipe の G-24 production 接続。
+- G-26 の `compatible_after` / `forbidden_after` は、観測済みのYMM4 chain source なしに推測で埋めない。tilt も `delivery_tilt_left_v1` / `delivery_tilt_right_v1` などの source Remark が観測されるまで contract 外に置く。
+- 手順票に従って人間が配置する作業を「制作自動化」と扱わない。G-24 の成果は、IR + registry + repo-tracked YMM4 template source から `.ymmp` timeline へ GroupItem が自動挿入されること。
+- Python 生成へ戻らない。YMM4 を制作基盤とし、Python は CSV / IR / registry / 台本読込後 `.ymmp` patch の接着層に限定する。
+- NotebookLM 出力は低信頼入力として扱う。誤字・誤変換・指示無視が後工程に組み込まれるため、CSV / IR 生成前に B-18 `diagnose-script` または C-09 / manual QC を挟む。
 - face 関連は独立サブクエストとして閉じ、以後は failure class 単位でのみ再オープンする。
 - サムネイルと packaging は、抽象煽りや固定テンプレ連打ではなく、本文根拠のある具体性・pattern rotation・タイトル/サムネ/台本の整合で扱う。
 - 手動作業が重くならないよう調整する。微調整や時間計測より、接続成立・失敗分類・差分証跡を優先する。
@@ -26,7 +37,10 @@
 
 ## Backlog Delta
 
-- 現行主軸は G-24（茶番劇 Group template-first 運用）であり、`delivery_nod_v1` の user-owned YMM4 author/export + manual acceptance を閉じることが次の接続点。
+- 現行主軸は G-24（茶番劇 Group template-first 運用）であり、v1 planned set 5 件（`enter_from_left` / `surprise_oneshot` / `nod` / `deny_oneshot` / `exit_left`）は user-owned YMM4 author/export または sample proof + manual acceptance の段階で閉じた。repo-tracked placement source `samples/templates/skit_group/delivery_v1_templates.ymmp` は v1 planned set 5/5 同梱済み。`patch-ymmp --skit-group-only` による real estate DX placement は `samples/_probe/g24/real_estate_dx_skit_group_ir_aligned.json` を入力に CSV-imported `.ymmp` copy へ実行済みで、出力は `samples/_probe/g24/real_estate_dx_skit_group_patched.ymmp`。ただしこれは raw clone transport/readback proof であり、user visual check では「置かれているが間隔が広すぎる」ため production acceptance ではない。次の接続点は、テンプレートを作り直すことではなく、template source から構造・基準位置・相対 motion・timing density を分析し、placement planner が normalized plan を生成して `.ymmp` へ再配置すること。`panic_shake` (index 104) は Part 2 JSON 語彙から除外して strict validation を維持する。本ファイルや他 canonical docs を更新するときは件数・取り込み有無・パス・raw clone と analyzed placement の区別を cross-audit し、`CANONICAL_FACT_DRIFT` / `TEMPLATE_ANALYSIS_BYPASS` を再発させない。
+- G-24 は「user が全テンプレート/全サンプルを作る」運用ではない。user は少数の reusable motion template を YMM4 native template として author/export し、assistant はそれらを template analyzer / placement planner / registry resolver で production-like `.ymmp` placement へ生成・整理し、user は最終的な意図確認と creative acceptance に集中する。
+- 汚染パッチ由来の `rejected` / `hold` を目的ごとの拒否として読まない。旧 `--emit-meta`、Python 画像生成、YMM4 GUI 万能制御、YMM4 表示エミュレーション等は `method-rejected` だが、診断 JSON / IR / manifest / H-01 brief / H-02 thumbnail slot patch / G-24 template placement / metadata draft successor は `goal-allowed` として扱う。
+- 外部分析で提案された `Visual Return Contract` は、方向性としては採用する。ただし現時点では新しい broad feature ではなく、既存の route-specific return path（G-24 registry/template source/readback、thumbnail `thumb.*` readback、`build-session-manifest` acceptance slots）で扱う。`delivery_nod_v1` はすでに superseded / direct_proven なので再オープンしない。汎用 `visual_return_manifest` は、G-24 と thumbnail など複数 route で同じ戻り値項目が反復してから、FEATURE_REGISTRY の下位タスクとして起票する。
 - G-21 / G-22 は現行主軸ではない。必要時のみ補助経路として再開し、通常 backlog に戻さない。
 - 汚染バッチ由来の D-02 / F-01 / F-02 は、個別再審査まで通常 backlog に戻さない。
 - S-5 字幕はみ出しは B-15/B-16/B-17 で解決済み。drift が見えたときだけ残差観測として扱う。

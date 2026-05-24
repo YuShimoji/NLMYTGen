@@ -9,6 +9,7 @@ NLMYTGen GUI（`start-gui.bat` / `gui/`）で「何を用意すればよいか�
 - 制作は GUI のみ。CLI が要る状態は GUI 不足として台帳・実装で潰す（`docs/INVARIANTS.md`）。
 - YMM4 は (1) テンプレ登録 (2) 全素材後の配置・書出 のみ。増分で繰り返し開かない。
 - 品質ゲートは INVARIANTS のとおり（速度優先で柔軟）。
+- タスクごとの primary review surface は [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md) で固定する。GUI と YMM4 の両方を同時に判断面として渡さない。
 
 ---
 
@@ -44,13 +45,31 @@ NLMYTGen GUI（`start-gui.bat` / `gui/`）で「何を用意すればよいか�
 |------|------|
 | 台本 `.txt` | はい |
 | Speaker Map | 台本の話者名と YMM4 表示名を合わせるとき |
-| Max lines / Chars per line | 2 行字幕にするとき |
+| Max lines / Chars per line | 2 行字幕にするとき。標準は `2` / `40` |
+| YMM4 Subtitle Font Source | 字幕仕様の `.ymmp` があるとき。字幕 `FontSize` から倍率を自動推定 |
+| Subtitle Font Scale (%) | `.ymmp` 未選択時の手動指定。標準は `100`、大きいほど早めに改行 |
+| Wrap Width (px) / Measure Backend | YMM4 の折り返し幅を固定しているとき。WPF helper がある場合は実測幅で改行 |
 | 自然改行（balance-lines） | 改行品質を使うとき（**Max lines 指定時のみ有効**） |
 | Reflow v2 | v2 リフロー経路を使うとき（balance-lines と併用可） |
 
 **話者統計・はみ出し候補**: Dry Run / Build CSV 後に結果パネル（F-04、`stats` JSON）。
 
+**字幕改行の運用**: NLMYTGen 側で明示改行する場合は、YMM4 側の自動折り返しを OFF か十分広くする。両方を有効にすると二重折り返しでズレる。
+
 ### 演出適用タブ — S-6b（演出適用工程）
+
+**Episode Pack Mode**: 1本通し制作では最初に `Episode Pack Root` で `_tmp/episode_runs/<episode_id>/` を選ぶ。GUIは episode_id をフォルダ名から推定し、`Build CSV`、`Validate IR`、`Dry Run`、`Apply Production` の保存先をpack内の既定pathへ固定する。
+
+初回入力として user に依頼するものは `素材投入` と総称しない。pack内ではまず `csv/<episode_id>.txt`（この動画で喋らせる完成会話台本。既存完成台本があれば新規作成不要）と `ir/<episode_id>_production_ir.json`（同じ台本に対応する演出IR）の2点を初期入力として案内する。`ymmp/<episode_id>_base.ymmp` は通常 `Build CSV` の後に YMM4 側で CSV を読み込んで Save As する `generated_later` artifact であり、最初から存在する前提で「置く」と書かない。`maps/bg_map.json`、`maps/skit_group_registry.json`、`samples/templates/skit_group/delivery_v1_templates.ymmp` は IR が該当機能を使う場合だけ選ぶ。
+
+| GUI操作 | 保存先 |
+|---|---|
+| `Build CSV` | `csv/<episode_id>.csv` |
+| `Validate IR` | `ir/<episode_id>_validate.json` |
+| `Dry Run` | `ymmp/<episode_id>_dry_run.json` |
+| `Apply Production` | `ymmp/<episode_id>_apply.json`、`ymmp/<episode_id>_patched.ymmp` |
+
+pack定義の詳細は `docs/EPISODE_RUN_PACK.md` を内部参照とする。ただし user handoff では、この md 参照を手順本文の代替にしない。pilot 操作を渡す応答は、初期入力2点、後続生成のbase `.ymmp`、任意map、GUI順、成功出力、NG返却を本文だけで実行できる粒度に展開する。assistant 側は必要に応じて `uv run python -m src.cli.main episode-run-handoff --episode-id <episode_id>` を使い、各ファイルの存在状態、何のファイルか、作成手順、使う GUI ボタンを確認してから本文へ落とす。
 
 | ファイル | 必須 / 任意 | なぜ必要か |
 |-----------|-------------|-----------|
@@ -60,6 +79,12 @@ NLMYTGen GUI（`start-gui.bat` / `gui/`）で「何を用意すればよいか�
 | CSV（row-range 用） | **row-range を使うとき必須** | CSV 変換タブで生成した CSV。発話と IR の対応付けに使う |
 | BG Map JSON | **IR に bg があるとき推奨** | 背景ラベル（studio_blue 等）を YMM4 の画像パスに変換する辞書 |
 | Face Map Bundle JSON | **複数キャラ運用時のみ** | キャラクターごとに異なる表情辞書を束ねるファイル |
+| Skit Group Registry JSON | **G-24 skit_group を使うとき必須** | 外部茶番劇演者の intent / fallback / template 名を解決する辞書 |
+| Skit Group Template Source `.ymmp` | **G-24 skit_group を配置するとき必須** | YMM4 で作った GroupItem テンプレート集。template-analyzed placement の入力 |
+
+**G-24 の標準手順**: `skit_group intent を registry に限定` を ON にして Validate IR → Dry Run → Apply Production。`skit_group 配置だけを適用` は face/bg 等を切り離す切り分け用で、ON のとき CSV(row-range) はコマンドへ渡さない。
+
+**現 GUI の露出範囲**: 制作導線として画面に出しているのは production `.ymmp` / IR / palette / CSV / BG map / face map bundle / G-24 skit_group registry・template source。`slot_map` / `overlay_map` / `se_map` / `motion_map` / `tachie_motion_map` / `transition_map` / `bg_anim_map` / `group_motion_map` / `timeline_profile` は adapter 側の能力として存在するが、現 GUI の入力欄にはまだ出していない。これらが制作上必須になった場合は、CLI 運用を標準化せず GUI 補完課題として扱う。
 
 ### 品質診断タブ
 
@@ -78,6 +103,10 @@ NLMYTGen GUI（`start-gui.bat` / `gui/`）で「何を用意すればよいか�
 | **L2（Python変換工程）** | CSV 変換・字幕リフロー | コード変更時のみユニットテスト | **開かない** |
 | **L3（YMM4内部工程）** | patch-ymmp / timeline adapter | GUI の Dry Run | **契約変更時のみ** |
 | **creative（創作判断）** | 表情の見え方・テンポ | 人判断 | 完成物を見るとき |
+| **G-27（Real Estate DX）** | GUI `デザインレビュー` のタイムライン型 Review Workbench / 台本概略付き review packet / saved decisions | validator +根拠memo | validator が blocked の間は開かない |
+| **Baseball screen plan** | screen plan / card order / information budget | screen plan review | PNG/clip placement proof まで進んだ時だけ |
+
+G-24 skit_group は template-first 基盤として閉じている。`SKIT_TEMPLATE_SOURCE_MISSING` / `SKIT_TEMPLATE_ANALYSIS_INSUFFICIENT` は GUI 上の failure class として先に止め、YMM4 での手置き修正へ押し戻さない。Real Estate DX の場面判断は G-27 として扱い、GUI `デザインレビュー` タブで `samples/_probe/g24/real_estate_dx_review_packet.json` を読み、動画全体の概略、RE-01〜RE-07E の全体構成、横タイムライン、選択 segment の台本抜粋と前後文脈を確認してから `samples/_probe/g24/real_estate_dx_review_decisions.json` を保存する。`production template exists` / `accepted proxy` / `cut from plan` の分類が済むまで新しい YMM4 placement に進めない。
 
 ---
 
@@ -92,6 +121,7 @@ NLMYTGen GUI（`start-gui.bat` / `gui/`）で「何を用意すればよいか�
 
 - [dev/CLI_REFERENCE.md](dev/CLI_REFERENCE.md) — 開発用 CLI 索引
 - [OPERATOR_WORKFLOW.md](OPERATOR_WORKFLOW.md) — 痛点・検証の境界
+- [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md) — タスク別 review surface / close gate の正本
 - [gui-llm-setup-guide.md](gui-llm-setup-guide.md) — Custom GPT 同期
 - [NAV.md](NAV.md) — ドキュメント地図
 - [WORKFLOW.md](WORKFLOW.md) — S-0〜S-9 全体

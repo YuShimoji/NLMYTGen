@@ -1,0 +1,511 @@
+{
+  "version": "1.0",
+  "artifact_type": "YMM4_adapter_IR_dry_run",
+  "episode_id": "real_estate_dx",
+  "scope": "G-27 adapter IR dry-run data for 7 authorized route candidates",
+  "source": {
+    "authorization_gate": "samples/_probe/g24/real_estate_dx_adapter_authorization_gate.json",
+    "route_preflight": "samples/_probe/g24/real_estate_dx_ymm4_adapter_route_preflight.json",
+    "adapter_planning_candidates": "samples/_probe/g24/real_estate_dx_ymm4_adapter_planning_candidates.json",
+    "asset_proxy_gap_report": "samples/_probe/g24/real_estate_dx_asset_proxy_gap_report.json",
+    "route_contract": "docs/G27_ADAPTER_ROUTE_CONTRACT.md"
+  },
+  "authorization": {
+    "source": "user_prompt",
+    "response": "authorize_adapter_IR_dry_run_for_7_candidates_only",
+    "effect": "Generate adapter IR dry-run data only for the 7 route candidates."
+  },
+  "boundary": {
+    "adapter_IR_dry_run_data_generated": true,
+    "YMM4_patch_generated": false,
+    "ymmp_generated": false,
+    "render_generated": false,
+    "preview_generated": false,
+    "production_timing_set": false,
+    "creative_acceptance_performed": false,
+    "output_generation_allowed": false,
+    "forbidden_actions": [
+      "YMM4 patch",
+      ".ymmp write",
+      "render",
+      "production timing",
+      "creative acceptance"
+    ]
+  },
+  "items": [
+    {
+      "source_beat": {
+        "beat_id": "RE-02-beginning",
+        "segment_id": "RE-02",
+        "phase": "beginning"
+      },
+      "route_types": [
+        "abstract_ui_route",
+        "motion_primitive_route"
+      ],
+      "primary_route_type": "abstract_ui_route",
+      "resolved_proxy_template_primitive": {
+        "primitive_id": "abstract_ui_public_search_vs_broker_db",
+        "primitive_family": "abstract UI",
+        "description": "Non-official public-search panel facing a broker-database abstraction.",
+        "components": [
+          "public-search panel",
+          "broker-database panel",
+          "access-gap contrast"
+        ],
+        "YMM4_candidate_surface": [
+          "ShapeItem",
+          "TextItem",
+          "motion primitive"
+        ]
+      },
+      "source_candidate": {
+        "representation": "abstract proxy",
+        "proxy_type": "public-search vs broker-database access-gap proxy",
+        "rights_risk": "low",
+        "required_note": "Use a generic, non-official search UI and broker-database abstraction. Do not use a real REINS screenshot, logo, or service-identifiable UI."
+      },
+      "forbidden_representation_check": {
+        "status": "pass",
+        "hits": [],
+        "checked_pattern_ids": [
+          "real_reins",
+          "reins_screenshot",
+          "official_logo",
+          "real_listing_photo",
+          "real_map",
+          "registry_document",
+          "identifiable_record_service_ui_brand",
+          "locked_room",
+          "security_facility",
+          "conspiracy_coded",
+          "pure_lens_substitute",
+          "real_specialist_cast_silhouette",
+          "zero_generation"
+        ]
+      },
+      "YMM4_patch_readiness": "ready",
+      "blocked_reason": "none",
+      "next_artifact_readiness": {
+        "compact_review_candidate": true,
+        "patch_output_candidate_after_separate_authorization": true,
+        "patch_output_generated": false,
+        "ymmp_generated": false
+      }
+    },
+    {
+      "source_beat": {
+        "beat_id": "RE-02-development",
+        "segment_id": "RE-02",
+        "phase": "development"
+      },
+      "route_types": [
+        "abstract_ui_route",
+        "property_card_route",
+        "motion_primitive_route"
+      ],
+      "primary_route_type": "abstract_ui_route",
+      "resolved_proxy_template_primitive": {
+        "primitive_id": "abstract_ui_broker_db_public_portal_property_flow",
+        "primitive_family": "abstract UI + property card",
+        "description": "Broker DB panel, public portal card, and property-card flow as generic abstractions.",
+        "components": [
+          "broker DB panel",
+          "public portal card",
+          "property-card flow"
+        ],
+        "YMM4_candidate_surface": [
+          "ShapeItem",
+          "TextItem",
+          "motion primitive"
+        ]
+      },
+      "source_candidate": {
+        "representation": "abstract proxy",
+        "proxy_type": "broker DB panel / public portal card / property-card flow",
+        "rights_risk": "low",
+        "required_note": "Plan generic broker DB and public portal panels with selected property-card flow. Avoid official branding and real/reference UI unless separately reviewed."
+      },
+      "forbidden_representation_check": {
+        "status": "pass",
+        "hits": [],
+        "checked_pattern_ids": [
+          "real_reins",
+          "reins_screenshot",
+          "official_logo",
+          "real_listing_photo",
+          "real_map",
+          "registry_document",
+          "identifiable_record_service_ui_brand",
+          "locked_room",
+          "security_facility",
+          "conspiracy_coded",
+          "pure_lens_substitute",
+          "real_specialist_cast_silhouette",
+          "zero_generation"
+        ]
+      },
+      "YMM4_patch_readiness": "ready",
+      "blocked_reason": "none",
+      "next_artifact_readiness": {
+        "compact_review_candidate": true,
+        "patch_output_candidate_after_separate_authorization": true,
+        "patch_output_generated": false,
+        "ymmp_generated": false
+      }
+    },
+    {
+      "source_beat": {
+        "beat_id": "RE-06-beginning",
+        "segment_id": "RE-06",
+        "phase": "beginning"
+      },
+      "route_types": [
+        "property_card_route",
+        "motion_primitive_route"
+      ],
+      "primary_route_type": "property_card_route",
+      "resolved_proxy_template_primitive": {
+        "primitive_id": "property_card_overload_cluster",
+        "primitive_family": "property card",
+        "description": "Generic property-card overload with density control and subtitle-safe lower band.",
+        "components": [
+          "property-card cluster",
+          "density control",
+          "subtitle-safe lower band"
+        ],
+        "YMM4_candidate_surface": [
+          "ShapeItem",
+          "TextItem",
+          "motion primitive"
+        ]
+      },
+      "source_candidate": {
+        "representation": "abstract proxy",
+        "proxy_type": "property-card overload",
+        "rights_risk": "none",
+        "required_note": "Plan simplified property cards, density control, and subtitle-safe lower band. No real listing photo or external asset is required."
+      },
+      "forbidden_representation_check": {
+        "status": "pass",
+        "hits": [],
+        "checked_pattern_ids": [
+          "real_reins",
+          "reins_screenshot",
+          "official_logo",
+          "real_listing_photo",
+          "real_map",
+          "registry_document",
+          "identifiable_record_service_ui_brand",
+          "locked_room",
+          "security_facility",
+          "conspiracy_coded",
+          "pure_lens_substitute",
+          "real_specialist_cast_silhouette",
+          "zero_generation"
+        ]
+      },
+      "YMM4_patch_readiness": "ready",
+      "blocked_reason": "none",
+      "next_artifact_readiness": {
+        "compact_review_candidate": true,
+        "patch_output_candidate_after_separate_authorization": true,
+        "patch_output_generated": false,
+        "ymmp_generated": false
+      }
+    },
+    {
+      "source_beat": {
+        "beat_id": "RE-06-development",
+        "segment_id": "RE-06",
+        "phase": "development"
+      },
+      "route_types": [
+        "document_proxy_route",
+        "property_card_route",
+        "risk_marker_route",
+        "motion_primitive_route"
+      ],
+      "primary_route_type": "document_proxy_route",
+      "resolved_proxy_template_primitive": {
+        "primitive_id": "selected_property_sheet_with_drawback_marker",
+        "primitive_family": "property card + risk marker",
+        "description": "Selected property sheet with drawback marker as abstract UI/document shapes.",
+        "components": [
+          "selected property sheet",
+          "drawback marker",
+          "dimmed alternatives"
+        ],
+        "YMM4_candidate_surface": [
+          "ShapeItem",
+          "TextItem",
+          "motion primitive"
+        ]
+      },
+      "source_candidate": {
+        "representation": "abstract proxy",
+        "proxy_type": "selected property sheet plus drawback marker",
+        "rights_risk": "none",
+        "required_note": "Plan a selected property sheet and a drawback marker as abstract UI/document shapes. Do not introduce real listing screenshots."
+      },
+      "forbidden_representation_check": {
+        "status": "pass",
+        "hits": [],
+        "checked_pattern_ids": [
+          "real_reins",
+          "reins_screenshot",
+          "official_logo",
+          "real_listing_photo",
+          "real_map",
+          "registry_document",
+          "identifiable_record_service_ui_brand",
+          "locked_room",
+          "security_facility",
+          "conspiracy_coded",
+          "pure_lens_substitute",
+          "real_specialist_cast_silhouette",
+          "zero_generation"
+        ]
+      },
+      "YMM4_patch_readiness": "ready",
+      "blocked_reason": "none",
+      "next_artifact_readiness": {
+        "compact_review_candidate": true,
+        "patch_output_candidate_after_separate_authorization": true,
+        "patch_output_generated": false,
+        "ymmp_generated": false
+      }
+    },
+    {
+      "source_beat": {
+        "beat_id": "RE-06-turn",
+        "segment_id": "RE-06",
+        "phase": "turn"
+      },
+      "route_types": [
+        "document_proxy_route",
+        "property_card_route",
+        "motion_primitive_route"
+      ],
+      "primary_route_type": "document_proxy_route",
+      "resolved_proxy_template_primitive": {
+        "primitive_id": "property_document_editorial_comparison",
+        "primitive_family": "document proxy",
+        "description": "Property sheet / editorial comparison / document-backed recommendation.",
+        "components": [
+          "property sheet",
+          "editorial comparison frame",
+          "recommendation marker"
+        ],
+        "YMM4_candidate_surface": [
+          "ShapeItem",
+          "TextItem",
+          "motion primitive"
+        ]
+      },
+      "source_candidate": {
+        "representation": "property-document proxy",
+        "proxy_type": "property sheet / editorial comparison / document-backed recommendation",
+        "rights_risk": "none",
+        "required_note": "Anchor the curation value in property-document structure. Avoid pure lens, strategy diagram, or generic consulting visual treatment."
+      },
+      "forbidden_representation_check": {
+        "status": "pass",
+        "hits": [],
+        "checked_pattern_ids": [
+          "real_reins",
+          "reins_screenshot",
+          "official_logo",
+          "real_listing_photo",
+          "real_map",
+          "registry_document",
+          "identifiable_record_service_ui_brand",
+          "locked_room",
+          "security_facility",
+          "conspiracy_coded",
+          "pure_lens_substitute",
+          "real_specialist_cast_silhouette",
+          "zero_generation"
+        ]
+      },
+      "YMM4_patch_readiness": "ready",
+      "blocked_reason": "none",
+      "next_artifact_readiness": {
+        "compact_review_candidate": true,
+        "patch_output_candidate_after_separate_authorization": true,
+        "patch_output_generated": false,
+        "ymmp_generated": false
+      }
+    },
+    {
+      "source_beat": {
+        "beat_id": "RE-07D-beginning",
+        "segment_id": "RE-07D",
+        "phase": "beginning"
+      },
+      "route_types": [
+        "ai_panel_route",
+        "property_card_route",
+        "motion_primitive_route"
+      ],
+      "primary_route_type": "ai_panel_route",
+      "resolved_proxy_template_primitive": {
+        "primitive_id": "abstract_ai_recommendation_panel_property_card",
+        "primitive_family": "AI panel + property card",
+        "description": "Abstract AI recommendation panel plus property card.",
+        "components": [
+          "AI recommendation panel",
+          "confidence indicator",
+          "property card"
+        ],
+        "YMM4_candidate_surface": [
+          "ShapeItem",
+          "TextItem",
+          "motion primitive"
+        ]
+      },
+      "source_candidate": {
+        "representation": "abstract proxy",
+        "proxy_type": "AI recommendation panel plus property card",
+        "rights_risk": "none",
+        "required_note": "Use an abstract AI panel and property card only. Do not use real AI product UI, logos, model screenshots, or identifiable recommendation services."
+      },
+      "forbidden_representation_check": {
+        "status": "pass",
+        "hits": [],
+        "checked_pattern_ids": [
+          "real_reins",
+          "reins_screenshot",
+          "official_logo",
+          "real_listing_photo",
+          "real_map",
+          "registry_document",
+          "identifiable_record_service_ui_brand",
+          "locked_room",
+          "security_facility",
+          "conspiracy_coded",
+          "pure_lens_substitute",
+          "real_specialist_cast_silhouette",
+          "zero_generation"
+        ]
+      },
+      "YMM4_patch_readiness": "ready",
+      "blocked_reason": "none",
+      "next_artifact_readiness": {
+        "compact_review_candidate": true,
+        "patch_output_candidate_after_separate_authorization": true,
+        "patch_output_generated": false,
+        "ymmp_generated": false
+      }
+    },
+    {
+      "source_beat": {
+        "beat_id": "RE-07D-development",
+        "segment_id": "RE-07D",
+        "phase": "development"
+      },
+      "route_types": [
+        "risk_marker_route",
+        "motion_primitive_route"
+      ],
+      "primary_route_type": "risk_marker_route",
+      "resolved_proxy_template_primitive": {
+        "primitive_id": "abstract_real_estate_risk_marker_set",
+        "primitive_family": "risk marker",
+        "description": "Boundary / inheritance / neighborhood risk markers as abstract symbols.",
+        "components": [
+          "boundary marker",
+          "inheritance marker",
+          "neighborhood marker"
+        ],
+        "YMM4_candidate_surface": [
+          "ShapeItem",
+          "TextItem",
+          "motion primitive"
+        ]
+      },
+      "source_candidate": {
+        "representation": "abstract proxy",
+        "proxy_type": "boundary / inheritance / neighborhood risk-marker set",
+        "rights_risk": "low",
+        "required_note": "Plan symbolic risk markers for boundary, inheritance, and neighborhood issues. Do not use real maps, registry documents, or identifiable records unless later rights-reviewed."
+      },
+      "forbidden_representation_check": {
+        "status": "pass",
+        "hits": [],
+        "checked_pattern_ids": [
+          "real_reins",
+          "reins_screenshot",
+          "official_logo",
+          "real_listing_photo",
+          "real_map",
+          "registry_document",
+          "identifiable_record_service_ui_brand",
+          "locked_room",
+          "security_facility",
+          "conspiracy_coded",
+          "pure_lens_substitute",
+          "real_specialist_cast_silhouette",
+          "zero_generation"
+        ]
+      },
+      "YMM4_patch_readiness": "ready",
+      "blocked_reason": "none",
+      "next_artifact_readiness": {
+        "compact_review_candidate": true,
+        "patch_output_candidate_after_separate_authorization": true,
+        "patch_output_generated": false,
+        "ymmp_generated": false
+      }
+    }
+  ],
+  "excluded_items": [
+    {
+      "source_beat": {
+        "beat_id": "RE-02-turn",
+        "segment_id": "RE-02",
+        "phase": "turn"
+      },
+      "status": "blocked",
+      "YMM4_patch_readiness": "blocked",
+      "blocked_reason": "Accepted-with-adjustment proxy has not yet been reflected as a route-planning candidate.",
+      "required_condition": "Use public information layer / non-public data bundle opacity contrast; avoid wall/gate/security-facility/conspiracy-coded occlusion."
+    },
+    {
+      "source_beat": {
+        "beat_id": "RE-07D-turn",
+        "segment_id": "RE-07D",
+        "phase": "turn"
+      },
+      "status": "deferred",
+      "YMM4_patch_readiness": "deferred",
+      "blocked_reason": "Specialist / cast / silhouette policy remains undecided.",
+      "required_condition": "Choose abstract silhouettes, real/cast asset, cut/reframe, or keep deferred before adapter planning."
+    }
+  ],
+  "rollup": {
+    "item_count": 7,
+    "ready_for_compact_review_count": 7,
+    "ready_for_patch_output_candidate_count": 7,
+    "blocked_count": 1,
+    "deferred_count": 1,
+    "ready_candidate_ids": [
+      "RE-02-beginning",
+      "RE-02-development",
+      "RE-06-beginning",
+      "RE-06-development",
+      "RE-06-turn",
+      "RE-07D-beginning",
+      "RE-07D-development"
+    ],
+    "blocked_candidate_ids": [],
+    "excluded_blocked_ids": [
+      "RE-02-turn"
+    ],
+    "excluded_deferred_ids": [
+      "RE-07D-turn"
+    ],
+    "next_possible_artifact": ".ymmp compact review candidate set or patch-output candidate review",
+    "patch_or_ymmp_generated": false
+  }
+}

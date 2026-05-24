@@ -5,7 +5,7 @@
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
 - 現在地の正本: 通常再開では `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md` で止める。本ファイル冒頭は状態スナップショットではなく、航海日誌への短い入口。
-- 現フェーズ: G-24 `delivery_nod_v1` cautious gate。assistant-owned readiness は PASS、user-owned YMM4 native GroupItem template author/export + manual acceptance 待ち。
+- 現フェーズ: G-24 skit_group placement は raw clone write/readback まで到達済み。ただし user visual check で spacing/composition が粗いことが分かったため、次は YMM4 template source を分析して normalized placement plan を生成する段階であり、追加 motion authoring や user 手配置ではない。
 - 古い roadmap / prompt / verification packet は現行判断に使わない。必要な履歴は DECISION LOG と HANDOFF SNAPSHOT の該当行だけ読む。
 - Python のスコープは「テキスト変換 + IR/registry + ymmp 限定後段適用」。動画レンダリング・画像生成・YMM4 GUI 操作は Python の責務ではない。
 
@@ -14,38 +14,41 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI artifact → CSV / registry / patched ymmp → YMM4 読込・確認・レンダリング
-- 現在のスライス: G-24 `delivery_nod_v1` の template-first gate。`audit-skit-group` の readiness と standalone export proof を混同しない。
-- 成功状態: `delivery_nod_v1` が user-owned YMM4 export + manual acceptance を通過し、`skit_group.intent.nod` を `direct_proven` へ昇格できること。
+- 現在のスライス: G-24 template-analyzed placement planner。v1 template source 5/5 と `--skit-group-only` raw clone transport は成立済みで、`panic_shake` は通常語彙から除外する。
+- 成功状態: template source から actor footprint / relative motion / timing density を分析し、real estate DX exact/fallback cues を手配置なしで production-like `.ymmp` に再配置し、readback と user creative acceptance の両方で閉じること。
 
 ---
 
 ## CURRENT LANE
 - 主レーン: Advance（G-24 template-first の実制作接続）。現行の優先は [runtime-state.md](runtime-state.md) の `next_action`。
-- 今このレーンを優先する理由: starter 2 件の成功を `nod` に安全に横展開し、template readiness を export proof と混同する status drift を閉じるため。
+- 今このレーンを優先する理由: v1 planned set の author/export は閉じたため、次は作成済みテンプレートが実制作の選択負荷を減らすかに接続するため。
 
 ---
 
 ## ROADMAP UPDATE (2026-04-27 post-cleanup prep)
 
-This section narrows the next roadmap after the legacy-document cleanup. It does not approve new implementation scope. The roadmap is intentionally gate-shaped: close the current G-24 `nod` proof, then widen only to the next catalog intents that have the same value path.
+This section narrows the next roadmap after the legacy-document cleanup. It does not approve new implementation scope. The gate-shaped author/export pass is now closed for the v1 planned set; the current value path is production-use validation with existing templates.
 
 ### 現行ロードマップの主軸
 
-1. **G-24 `delivery_nod_v1` cautious gate を閉じる**
+1. **G-24 `delivery_nod_v1` cautious gate を閉じる（完了）**
    - actor: user + assistant
    - owner artifact: YMM4 native template asset + `skit_group` registry / Capability Atlas state
-   - bottleneck: `audit-skit-group` readiness と standalone native template export proof がまだ分離されたまま
+   - bottleneck: `audit-skit-group` readiness と standalone native template export proof の分離
    - done condition: `delivery_nod_v1` が GroupItem + body/face の 2 `ImageItem` children + no `TachieItem` で export され、manual acceptance (`nod amplitude`, `does not dominate scene`) を PASS する
-2. **`nod` 昇格後、`deny_oneshot -> exit_left` を同じ gate で処理する**
+2. **`deny_oneshot -> exit_left` を同じ gate で処理する（完了）**
    - actor: shared
    - owner artifact: `skit_group.intent.*` の support level
    - bottleneck: starter 2 件の成功を remaining intent 群へ安全に横展開すること
-   - done condition: each intent is either `direct_proven` after export proof, or remains `template_catalog_only` with an explicit replan reason
-3. **P02 production adoption を template 解決の実戦運用へ寄せる**
+   - done condition: `deny_oneshot` / `exit_left` が `direct_proven` after export proof になること
+   - result: user completed both samples; repo inspection found ImageItem body/face + no `TachieItem`; both intents are now `direct_proven`
+3. **P02 production adoption を template 解決の実戦運用へ寄せる（現行）**
    - actor: assistant + user
    - owner artifact: production adoption proof / template resolution notes
-   - bottleneck: route contract や dry-run pass を production value path と混同しないこと
+   - bottleneck: 小演出 authoring 自体を progress と誤認せず、作った template が実制作の選択負荷を減らすかへ接続すること
    - done condition: exact / fallback / manual note が、実制作の S-6（背景・演出設定）でどの手作業を減らすかまで記録される
+   - loop stop: `exit_left` 後は追加 motion 作成へ進まず、実制作 IR の template 解決結果を見て production gap が出た時だけ新テンプレートを再起票する
+   - role split: user は少数の reusable native template を作り、assistant は組み合わせ・registry・fallback note で production-like sample / 解決結果を作る。user は全サンプル作成ではなく確認に集中する
 4. **メンテ層は on-demand に保つ**
    - actor: operator / assistant
    - owner artifact: B-18 台本診断、B-17 改行残差、H-01/H-02 packaging / thumbnail briefs
@@ -54,18 +57,18 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ### formal plan の分岐条件
 
-- **`delivery_nod_v1` export 未報告**: 次プランは YMM4 hands-on / acceptance を閉じる短い operation packet から始める。assistant 側の readiness 再検証は既に PASS のため、再度の proof 採掘を主目的にしない。
-- **`delivery_nod_v1: PASS` 報告済み**: 次プランは `skit_group.intent.nod` の `direct_proven` 昇格、Capability Atlas / registry / P02 / runtime-state 同期、続いて `deny_oneshot` packet 作成へ進む。
-- **`delivery_nod_v1: FAIL - <reason>` 報告**: 次プランは `fallback` / `manual_note` / `motion_target` / `group_motion` のどれが必要になったかを failure class として分け、G-24 template-first の範囲を再設計する。FAIL を代替成功にしない。
+- **通常**: 次プランは existing v1 template set を使った production-like sample / 解決結果作成から始める。assistant が exact / fallback / manual_note を整理し、user は YMM4 上で結果確認に集中する。
+- **十分**: exact coverage が制作負荷を減らすなら production-use hardening を続ける。追加 motion authoring はしない。
+- **不足**: `fallback` / `manual_note` / missing-template / body-face drift / `TachieItem` 混入 / repo bug を failure class として分け、追加テンプレート起票か修正かを選ぶ。FAIL を代替成功にしない。
 - **新規制作案件が先に来た場合**: G-24 の主軸は維持し、メンテ層は B-18 → H-01/H-02 on demand → B-17 drift-only の順で必要分だけ起動する。
 
 ### プラン作成前に揃えるもの
 
-- [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) は G-24 `delivery_nod_v1` を現行アンカーとして更新済み。
-- `runtime-state.md` と `verification/P02-production-adoption-proof.md` は、assistant-owned readiness と user-owned export proof を分離する現行参照先として更新済み。
+- [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) は G-24 production-use validation を現行アンカーとして更新済み。
+- `runtime-state.md` と `verification/P02-production-adoption-proof.md` は、v1 template completion と production-use validation を分離する現行参照先として更新済み。
 - 削除済みレガシードキュメント名への repo-local 参照は `git grep` で残存なし。
 - `formal plan の分岐条件` は本節に固定済み。次プランはこの分岐のどれに入ったかを冒頭で宣言してから書く。
-- 次の formal plan は、`delivery_nod_v1` の user export が未完なら **hands-on / acceptance packet**、PASS 済みなら **state promotion + `deny_oneshot` packet** から始める。
+- 次の formal plan は **production-like sample / 解決結果作成** から始める。追加 motion authoring は production gap が具体化した時だけ起票する。
 
 ### 今回やらないこと
 
@@ -78,6 +81,14 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 | 日付 | 決定事項 | 選択肢 | 決定理由 |
 |------|----------|--------|----------|
+| 2026-04-30 | **G-26 目的別演出制作を `build-motion-recipes` pipeline として実装**。brief `samples/recipe_briefs/g26_motion_recipe_brief.v1.json`、effect catalog / concrete samples / motion library / optional composition corpus を読み、`_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1.ymmp`、readback JSON、manifest MD を生成する。初期 recipe は `nod_*` / `jump_*` / `panic_crash` / `shocked_jump` / `surprised_chromatic` / `anger_outburst` / `shobon_droop` / `lean_curious` の 12 件。 | 都度手作業で試作 / 既存サンプル再配置だけ / intent-first recipe pipeline | ユーザーの負担は「毎回一から演出を作る」ことなので、IR 作業と同じく意図・候補・readback・採否を machine-readable artifact に固定する必要があるため。effect catalog を機械参照し、最終的な動きから逆算する経路を CLI に閉じる。 |
+| 2026-04-30 | **G-26 evidence gate の過剰解釈を修正し、目的別 recipe lab を正当な assistant 作業として扱う**。`_tmp/g26/recipe_lab/g26_goal_motion_recipe_lab.ymmp` は既存 YMM4-saved canvas `samples/canonical.ymmp` と既存 template source `samples/templates/skit_group/delivery_v1_templates.ymmp` から作成した、うなずき・ジャンプ・傾き・chain の review artifact。readback は openability pass / recipe GroupItems 12 / ImageItems 24 / POSIX asset paths 0。 | operator-authored source 待ちだけにする / 既存 sample を再配置するだけ / assistant が目的別 review lab を作る | ユーザーの要求は「既存動作の散布」ではなく「うなずき」「ジャンプ」のような目標を設定して試作すること。`compatible_after` / `forbidden_after` の推測禁止は contract 昇格条件であり、既存 YMM4 source をコピーして transform 値を調整する review sample 作成を止める理由ではないため。 |
+| 2026-04-30 | **G-26 Evidence Gate は machine pass / visual not recorded / tilt-chain source absent として扱う**。`_tmp/g26/screen_review/g26_motion_primitive_compact_review.ymmp` は openability pass、inserted GroupItems 3、POSIX asset paths 0。repo-local `.ymmp` 53 本の scan では tilt / chain Remark が見つからないため、`tilt` は contract 外、`compatible_after` / `forbidden_after` は `unknown` 維持。 | 推測で compatibility を埋める / machine pass だけで production 接続 / visual・tilt・chain を別 gate に分離 | 画面表示の真偽は YMM4 visual confirmation なしに判定できず、chain source なしで相性を埋めると G-25 の accidental composition failure を再発させるため。assistant 側で閉じられる machine readback は閉じ、観測不能部分だけを正確に残す。 |
+| 2026-04-30 | **G-26 Phase 3 仮 contract と screen review を強進行で作成**。`dominant_channels` は `VFX:<EffectType>` を含め、Rotation 系の `anchor_dependency` を一級フィールドにする。`_tmp/g26/draft_contracts/*.json` と `_tmp/g26/screen_review/g26_motion_primitive_compact_review.ymmp` を作成し、readback は openability pass / inserted GroupItems 3 / POSIX asset paths 0。 | 追加確認待ち / contract のみ / contract + screen review | ユーザー要望は別レーン報告の妥当性確認だけでなく、推奨対応の自動適用と「画面上でまともにサンプルが見えていない」問題の前進だったため。G-24 production へ接続せず、既存の YMM4-saved seed + skit_group compact review 経路で安全に画面確認 artifact を作るのが最短だった。 |
+| 2026-04-30 | **G-25 の creative acceptance を negative として閉じ、G-26 motion primitive grammar / compatibility probe を起票**。G-25 review はYMM4で開けるが、`nudge / scale / rotate / effect_reuse` は動きのvariationとして使えない。 | G-25候補を調整して継続 / productionへ接続 / G-26へ切替 | ユーザー確認で、うなずき・退場・小ジャンプ・傾きの機械的な組み合わせが、反対方向の傾き、傾いたままの退場、傾いた小ジャンプなどの不自然な動きを生むことが分かったため。次は座標差分ではなく、motion primitive の開始姿勢・終了姿勢・方向意味・reset policy・相性を扱う。 |
+| 2026-04-30 | **G-25 review `.ymmp` の openability 修復を C案ベースで実施**。`LayerSettings` は array ではなく `{ "Items": [...] }` object をYMM4期待形として扱い、`probe-ymmp-variations -o` は template/stub source を直接 review surface にせず、必要時に `--review-seed` で YMM4 保存済み full project canvas を使う。 | guard反転のみ / full seed化のみ / guard反転 + full seed化 | ユーザー環境のYMM4エラーは `YukkuriMovieMaker.Project.LayerSettings` object 要求を示しており、repo内 `.ymmp` も object 形が主流だったため。JSON可読性とYMM4実読込schemaを混同し、stubをopenable artifactへ昇格させたことが不安定化の本体だった。 |
+| 2026-04-29 | **G-25 YMM4 property-based variation probe を実装し、手動演出からの保守的な派生生成を初回検証へ進める**。`probe-ymmp-variations` は `Remark` clip、`X/Y/Zoom/Rotation`、反転 route、`VideoEffects` fingerprint を JSON report にし、`-o` 指定時だけ compact review `.ymmp` を追加生成する。 | さらに計画保留 / G-24 に直結 / 独立 probe として実装 | ユーザーの痛点は「手動演出のタグ・座標・反転・拡縮から variation を自動生成できるかが未試行」だったため。G-24 production placement に混ぜず、`.ymmp` ゼロ生成や Python 画像生成にも戻らない、限定 readback / derivative review として最小検証する。 |
+| 2026-04-29 | **汚染パッチ由来の rejected / hold を手段単位に再定義**。B-10 旧 `--emit-meta`、C-02/C-04/C-05 の Python 万能制御、D-01 の Python 画像生成、F-03 の YMM4 表示エミュレーションは `method-rejected`。一方、診断 JSON / IR / manifest / packaging brief、G-24 template source placement、H-02 thumbnail slot patch、H-01/H-02 由来の metadata draft は `goal-allowed` / `successor-lane` として扱う。 | 目的ごと拒否 / 手段単位で拒否 / 一括再有効化なし | 旧拒否理由が「動画品質を上げるためのメタデータ・演出制御・サムネ・YouTube metadata」まで萎縮させるリスクがあったため。禁止対象を危険な生成・エミュレーション手段に限定し、承認済み artifact 経路を邪魔しないため。 |
 | 2026-04-27 | **ドキュメント汚染を根絶し、再開時の入口を最小正本へ戻す**。resume 用プロンプト導線を削除し、`verification/` は証跡置き場に降格、`USER_REQUEST_LEDGER.md` は現在有効な要求だけへ圧縮、固定日付風のルール見出しと旧背景アニメ/S6 再採用を廃止する。 | テンプレ維持 / 古い証跡を正本化 / 最小正本へ集約 | 再スタート時の読了過多と「正本っぽい古い文書」による判断汚染が、G-24 `delivery_nod_v1` の作業接続性を落としていたため。 |
 | 2026-04-27 | **次期ロードマップは G-24 `delivery_nod_v1` gate-shaped sequence から始める**。formal plan は `delivery_nod_v1` 未報告 / PASS / FAIL / 新規制作案件のどれかを冒頭で宣言し、未報告なら hands-on acceptance、PASS なら `nod` 昇格 + `deny_oneshot`、FAIL なら failure class 分解から開始する。 | 背景アニメ/S6 に戻す / 新 FEATURE を増やす / G-24 gate 分岐で開始 | レガシードキュメント整理後の bottleneck は `audit-skit-group` readiness と user-owned export proof の分離であり、`exact` を export proof と読み替えると status drift が再発するため。根拠: `runtime-state.md` next_action + `verification/P02-production-adoption-proof.md` + `INTERACTION_NOTES.md` TEMPLATE_FORMALISM |
 | 2026-04-23 | **Keep the G-24 `nod` cycle at readiness-PASS, but do not promote to `direct_proven` yet**. Assistant rechecked `delivery_nod_v1` on the canonical/proof corpora and confirmed proof-corpus `group_motion_changes=0`. Because the repo still does not track a discrete canonical-project `delivery_nod_v1` copy, Phase 1 is corrected to YMM4 author/export from `samples/haitatsuin_2026-04-12_g24_proof.ymmp` or an equivalent local project, starting from Layer 9 `GroupItem` Remark `haitatsuin_delivery_main`. `skit_group.intent.nod` stays `template_catalog_only` until manual acceptance plus standalone export are confirmed. | Promote now / assume a tracked copy exists / keep the gate but correct the packet | Readiness is already proven, but assuming a nonexistent tracked copy would corrupt handoff. This keeps assistant-owned facts and user-owned export clearly separated while preserving the cautious-gate order. |
@@ -103,14 +114,14 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 | 2026-04-10 | レーン B（ファイル5）再検証: [LANE-B-execution-record-2026-04-09.md](verification/LANE-B-execution-record-2026-04-09.md) §7 を追記。正本コミット `fb0659a`、`validate-ir` / `apply-production --dry-run` を再実行し PASS。B-1/B-4/B-5 は 2026-04-09 方針継続。Custom GPT Instructions 突合はオペレータ（repo 外） | 再検証スキップ / 証跡のみ更新 | 当時のプロンプト同期記録要件を満たすため。現行判断には使わない |
 | 2026-04-10 | コア本開発の **フェーズ T0〜T3** と並行レーンの相性を旧文書で一時整理した。2026-04-27 の整理で旧設計文書・旧 Prompt ハブは削除済み。 | タスク設計なしで Prompt のみ / 設計ドキュメントを分離 | 履歴のみ残す。現行の作業接続は `runtime-state.md` / `verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md` / `verification/P02-production-adoption-proof.md` を使うため |
 | 2026-04-10 | 並行レーン証跡・H-05（`score-thumbnail-s8`）・旧視覚品質パケット文書を master に統合コミットし、当時は次期コア実装をプラン設計・起票から再開するゲートに固定した。 | 実装を続行 / プラン入口で一旦止める | 2026-04-27 の整理後は、旧プラン入口ではなく `runtime-state.md` の G-24 gate から再開するため |
-| 2026-04-09 | レーンB実施計画（Custom GPT / 2体分離）を実行し、運用固定を記録: [LANE-B-execution-record-2026-04-09.md](verification/LANE-B-execution-record-2026-04-09.md)。B-4 は「brief を会話ごとに先貼り」、B-5 は「H-02厳密時はS8、素案時はv4 Part 4」に固定 | 方針未固定のまま運用 / 連携方式を固定 | Instructions 側のドリフトを避け、案件ごとに迷わず切替できる最小運用を先に確立するため |
+| 2026-04-09 | レーンB実施計画（Custom GPT / 2体分離）を実行し、運用固定を記録: [LANE-B-execution-record-2026-04-09.md](verification/LANE-B-execution-record-2026-04-09.md)。B-4 は「brief を会話ごとに先貼り」。B-5 は後続整理で、H-02厳密時も素案時も S8 を別レーンに分離 | 方針未固定のまま運用 / 連携方式を固定 | Instructions 側のドリフトを避け、案件ごとに迷わず切替できる最小運用を先に確立するため |
 | 2026-04-09 | レーン E（サムネ S-8）の **repo 準備サイクルを完了・運用クローズ** とする: [LANE-E-S8-prep-2026-04-09.md](verification/LANE-E-S8-prep-2026-04-09.md) 運用クローズ節、P03 `lane_e_prep_2026-04-09_a`。公開直前の実 1 枚は P3・runbook トラック E で並行。**本開発幹へ復帰**（`runtime-state.md`） | 準備を開発ブロックに残す / クローズしてコアへ | 正本・チェックリスト・既定案件入力は repo 固定済み。YMM4 実書き出しは公開タイミングのオペレーションのためコア開発をブロックしない |
 | 2026-04-09 | レーン B（GUI LLM 正本同期）の **repo 側準備を完了** とする: [LANE-B-gui-llm-sync-checklist.md](verification/LANE-B-gui-llm-sync-checklist.md)、[samples/packaging_brief.template.md](../samples/packaging_brief.template.md)、[gui-llm-setup-guide.md](gui-llm-setup-guide.md) の v4 正本優先化、runbook B-1/B-4/B-5 の整合。以降の主作業は **本開発幹**（`runtime-state.md` のコア・P0・B-11 ゲート等）。Custom GPT 等への実貼り付けはオペレータがチェックリストで実施 | 文書のみ完了扱い / 貼り付け完了までブロック | 正本と手順は repo に固定済み。GUI 同期は人間作業のため開発レーンをブロックしない |
 | 2026-04-08 | P2 次サイクルで map 警告解消（`bg_anim_map` + `transition_map`）後に `test_verify_4_bg.ymmp` へ 4 セクション拡張適用を実施。`BG anim writes: 7` を確認 | 警告放置で拡張 / 先に警告ゼロ化 / bg_anim いったん停止 | 原因切り分けを明確化したうえで拡張でき、短サイクルの再現性を高められるため |
 | 2026-04-08 | B-11 を最小クローズ（半分確認時点）し、改行 Pass / 辞書 0 をもって Gate B（運用側移行）を仮確定。P2 背景アニメ小規模適用を先行 | Gate A 維持 / Gate B 仮確定 / B-11 完全完了待ち | ループ停止を避けて最短で演出実戦へ入るため。`test_verify_4_bg.ymmp` で route は profile contract pass、`p2_bg_anim_small_scope.ir.json` で `BG anim writes: 2` を確認 |
 | 2026-04-08 | B-11 AI監視 proof の取込後記録を集約し、Gate A（改行系支配）を確定。`runtime-state.md` の `next_action` / P0 説明を Gate 根拠付きへ更新 | 保留継続 / Gate 判定を先に固定 | 次プランを感覚で動かさず、4 区分実測（辞書 0 / 手動改行 5 / 再分割 10 / タイミング 0）で優先順位を固定するため |
 | 2026-04-08 | 次以降の推奨プランを `runtime-state.md` に正本化（P0 Phase1 本番 1 本・P1 H-01 運用・P2 演出実戦・P3 サムネ・Parking motion ブランチ）。GUI CSV 同梱診断 JSON を Phase 1 導線に明記 | 暗黙の優先 / 文書固定 | 実制作 bottleneck 軽減レーンを再アンカーし、未承認実装を増やさない |
-| 2026-04-07 | G-18 SE `AudioItem` 挿入を実装（`samples/AudioItem.ymmp` readback、`_apply_se_items`、テンプレート deepcopy または最小骨格）。`SE_WRITE_ROUTE_UNSUPPORTED` を廃止 | ゲート維持 / 実装 | サンプルと骨格で write route を確定し、G-13 の `se` を mechanical scope まで拡張 |
+| 2026-04-07 | G-18 SE `AudioItem` 挿入を実装（`samples/AudioItem.ymmp` readback、`_apply_se_items`、テンプレート deepcopy または最小骨格）。旧 SE unsupported failure class を廃止 | ゲート維持 / 実装 | サンプルと骨格で write route を確定し、G-13 の `se` を mechanical scope まで拡張 |
 | 2026-04-06 | G-15〜G-17 を実装（Micro `bg` 発話スパン / `overlay` 配列 / `--timeline-profile` + motion・transition・bg_anim マップ）。G-18 は AudioItem ymmp サンプル入手まで保留（verification に明記） | 一括 / ゲート付き | P2C に沿い SE write は corpus 確定後。G-12 `timeline_route_contract.json` と契約検証を先に置く |
 | 2026-04-06 | 視覚三スタイル（挿絵コマ / 再現PV / 資料パネル）を IR 既存語彙にマッピングし doc 正本化。延伸は G-15〜G-18 proposed | 一括実装 / 文書→テンプレ→Writer→台帳パケット | patch 制約（単一 overlay・セクション bg のみ・motion 未書込）を隠さず、`VISUAL_STYLE_PRESETS.md` と v4 プロンプトで Writer と運用を揃える |
 | 2026-04-06 | G-15〜G-18 のゲートと feat/phase2-motion-segmentation の保留判断を一度文書化。現在の正本は FEATURE_REGISTRY と各 verification 証跡に統合済み | 未承認を approved に昇格 / 文書のみ | プランに沿いゲートを明文化。実装は承認後のみ |
@@ -120,7 +131,7 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 | 2026-03-29 | B-10 (--emit-meta) を未承認で混入 | — | 未承認。後に rejected → コード除去 |
 | 2026-03-30 | FEATURE_REGISTRY + AUTOMATION_BOUNDARY で機能管理 | 台帳管理 / ad-hoc | 未承認機能混入の再発防止 |
 | 2026-03-30 | 自動化レイヤーを L1〜L4+GUI の5層で定義 | 5層 / 3層 / フラット | YMM4内部/外部の境界を明確化 |
-| 2026-03-30 | Python での生成・レンダリングを全面禁止 | 全面禁止 / 部分許容 | .ymmp は音声ファイル参照を含み外部生成不可能。この教訓を拡大適用。Python の責務はテキスト変換（CSV / テキストメタデータ文字列）のみに限定。rejected: B-10, C-02, C-03, C-04, C-05, D-01, F-03 |
+| 2026-03-30 | Python での生成・レンダリングを手段単位で禁止 | method-rejected / 全面禁止 / 部分許容 | .ymmp ゼロ生成・音声合成・画像生成・YMM4 表示エミュレーションは不可。この教訓は「目的の禁止」ではなく「危険な手段の禁止」として扱う。CSV / IR / registry / manifest / brief 生成と、台本読込後 `.ymmp` への限定 patch は許容する。rejected: B-10, C-02, C-03, C-04, C-05, D-01, F-03 |
 | 2026-03-30 | 外部メディア取得は分離設計で OK | L1拡張許容 / L2専念 | 取得機能と受け取り機能を分離すれば NLMYTGen に含めてよい。最終的に自動化する方針 |
 | 2026-03-30 | WORKFLOW.md を S-0〜S-9 の全工程に再設計 | 全面改訂 / 部分改訂 | 前作業者がrejectedで隔離しただけでYMM4側の代替ワークフローが欠落していた。S-5(演出)が5行だけだった。rejected工程の代替手段を全てWORKFLOW.mdに記載 |
 | 2026-03-30 | E-02 を先に仕様定義する | E-02 / A-04 / F-01 / 全件hold | ユーザーが選択。L2変換レイヤーで Python スコープ内に収まる唯一の候補 |
@@ -129,7 +140,7 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 | 2026-03-30 | S-6 トピック分析は stdlib 制約内では精度不足 | パターンマッチ / 軽量NLP / やらない | パターンマッチ30-50%、NLP 40-60%+CLAUDE.md違反。LLM アダプター方式に転換予定 |
 | 2026-03-30 | B-04 表示幅ベース分割を実装 | 表示幅 / 文字数維持 | 全角=2,半角=1 の display_width で YMM4 字幕はみ出しを事前防止。--display-width, --max-lines, --chars-per-line 追加 |
 | 2026-03-30 | S-6 トピック分析を LLM アダプター方式に転換 | LLM / パターンマッチ / やらない | ユーザー指示。コーパス分析ライブラリはレガシー化しており LLM に統一。モデル切替可能なアダプター設計 |
-| 2026-03-30 | サムネイルはYMM4テンプレートの文字・画像入れ替え | テンプレート手動 / Python自動生成 / 外部ツールのみ | 機械的な背景+文字の自動生成は不可。テンプレートの手動カスタマイズが必要。サムネイルは非常に重要 |
+| 2026-03-30 | サムネイルはYMM4テンプレートの文字・画像入れ替え | テンプレート手動 / Python自動生成 / 外部ツールのみ | Python 画像生成は不可。YMM4 テンプレートの手動カスタマイズを基本にし、後続 H-02 の `thumbnail_design` と `thumb.*` slot 限定 patch は successor-lane として許容する。サムネイルは非常に重要 |
 | 2026-03-30 | A-04 / D-02 / F-01 / F-02 を quarantined に移す | proposed維持 / hold / quarantined | B-10 混入時の汚染バッチ由来で、個別再審査前に通常 backlog として扱うと再発するため |
 | 2026-03-30 | A-04 を done に戻す | quarantined維持 / hold / done | RSS/Atom からタイトル抽出して NotebookLM 検索クエリへ渡す `fetch-topics` は Python のテキスト取得責務に収まり、実装と台帳が一致したため |
 | 2026-03-30 | E-02 を hold に移す | proposed維持 / hold / rejected | 価値検証の結果、単体では bottleneck を減らさず、今は進めない方が正確だから |
@@ -212,7 +223,7 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 | 2026-04-06 | G-12 の current contract は `test - marisaFX.ymmp` で通し、`production.ymmp` の `bg_anim` miss を failure class として扱う | gap を黙殺 / warning 扱い / failure class 化 | timeline quality 問題を visual impression に戻さず、route gap を mechanical failure として扱うため |
 | 2026-04-06 | G-12 measurement packet を追加し、current corpus で route narrowing を先に完了 | harness のみ / packet 化して route narrowing | `motion` / `bg_anim` は current corpus で狭め、manual frontier を `transition` probe 1 本へ縮めると、operator の判断負荷を最小化できるため |
 | 2026-04-06 | fade-family `transition` route を ymmp_measure で回収可能にし、G-12 contract を更新 | `transition` を route 不在扱い / fade-family route を corpus-derived contract 化 | repo-local corpus に既にある fade key を拾えば、手動 probe を増やさずに `transition` の主要 family を mechanical に確定できるため |
-| 2026-04-06 | G-13 overlay / se insertion packet を completed として閉じる | overlay/se を broad manual frontier に残す / packet として閉じる | `overlay` は registry + timing anchor から deterministic な `ImageItem` 挿入まで閉じた。当時 `se` は timing までで write route 不在を `SE_WRITE_ROUTE_UNSUPPORTED` で fail-fast（G-18 で挿入まで実装） |
+| 2026-04-06 | G-13 overlay / se insertion packet を completed として閉じる | overlay/se を broad manual frontier に残す / packet として閉じる | `overlay` は registry + timing anchor から deterministic な `ImageItem` 挿入まで閉じた。当時 `se` は timing までで write route 不在を旧 unsupported failure class で fail-fast（G-18 で挿入まで実装） |
 | 2026-04-06 | Phase 1 として B-18 台本機械診断と C-09 refinement プロンプトを実装完了 | 保留 / 実装 | `diagnose-script`・`script_diagnostics.py`・`S1-script-refinement-prompt.md`・GUI 品質タブ・B18 dry proof まで一括 |
 | 2026-04-06 | Next roadmap: P01 運用手順、P2A feat ブランチレビュー（一括マージ不採用）、P2B+G-14 production contract、P2C SE 境界、サムネ 1 枚チェックリスト | 未実施 / 実施 | Phase 2/3 の文書・contract 整備を master に反映 |
 | 2026-04-05 | サムネイル戦略は抽象煽りより具体数値・固有名詞優先 + rotation 管理 | 定型煽り / 具体性優先 / 各動画場当たり | 本文根拠とクリック訴求を両立し、固定パターン反復による疲労と硬直を避けるため |
@@ -231,14 +242,14 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 **禁止:**
 - 画像生成・画像合成（PIL/Pillow 含む）
-- .ymmp 生成・操作（音声ファイル参照を含むため外部生成不可能）
-- YMM4 テンプレート生成・演出指定（YMM4 内部の責務）
-- YMM4 出力の模倣・プレビュー
+- .ymmp ゼロ生成・YMM4 台本読込代替（音声ファイル参照・発音情報を外部生成できないため）
+- YMM4 native template 資産の Python 生成・YMM4 GUI 万能制御
+- YMM4 出力の模倣・Python preview
 - 動画レンダリング・音声合成
 - 外部 TTS（Voicevox 等）
 
 **根拠:**
-YMM4 の .ymmp プロジェクトファイルは音声ファイル（WAV 等）への参照を含む。その音声は YMM4 が台本 CSV を読み込む際に内蔵 TTS で自動合成するもの。NLMYTGen から音声ファイルを生成できないため、完全な .ymmp を外部から作ることは原理的に不可能。この制約から、YMM4 内部の操作（テンプレート・演出・素材配置）を Python から制御するアプローチ全般が成り立たない。
+YMM4 の .ymmp プロジェクトファイルは音声ファイル（WAV 等）への参照を含む。その音声は YMM4 が台本 CSV を読み込む際に内蔵 TTS で自動合成するもの。NLMYTGen から音声ファイルを生成できないため、完全な .ymmp を外部から作ることは原理的に不可能。ただしこの制約は、台本読込後 `.ymmp` に対する限定 patch、repo-tracked YMM4 template source の placement、thumbnail `thumb.*` slot patch、audit/readback/compact review artifact を禁止しない。
 
 ---
 
@@ -253,19 +264,60 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ---
 
+## HANDOFF SNAPSHOT (2026-05-14 update)
+
+- Branch / remote state: `codex/g24-nod-sync-adoption`; pull the latest branch and expect the active project changes to be committed. Confirm with `git status --short --branch` and `git rev-list --left-right --count HEAD...'@{u}'`.
+- Restart path: read `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`. The live `next_action` is waiting for a human-authored `G27_PublicVsBrokerDB` YMM4 carrier, not a scene-generation or render slice.
+- Current decision: G-27 direct dense `ShapeItem` / `TextItem` scene generation is stopped as a production route. Existing visual proxy v2/v2.1, minimal probe, micro scene, and micro scene visibility outputs are diagnostic-only and must not be promoted into stable carriers.
+- New handoff artifact: `docs/G27_PUBLIC_VS_BROKER_DB_CARRIER_CHECKLIST.md`. It tells the human exactly what to create in YMM4: 16:9 / 1920x1080 carrier, 5% outer safe margin, bottom 10-15% caption safe area, left public panel, right broker/private DB panel, center lock/threshold, fixed 2 public cards, fixed 3 broker cards, optional `G27PBD_Arrow`, short `G27PBD_*` item names, short Remarks, and no provenance in item names/Remarks.
+- User should return: carrier `.ymmp` path, preview screenshot, timeline screenshot, representative item property screenshots for `G27PBD_PublicPanel`, `G27PBD_PublicCard1`, `G27PBD_BrokerPanel`, and `G27PBD_Lock`, light/dark stage choice, and a short note that the caption safe area is clear.
+- Assistant next after receiving carrier: read back required item names, duplicate/missing items, short Remarks, fixed card counts, `G27PBD_Arrow` existence, and whether text / visibility / timing / sidecar provenance can be patched without touching geometry, anchors, colors, font hierarchy, or layout grid. Only then prepare an anchored slot contract.
+- Not done: no `.ymmp` carrier was created, no slot-fill contract was written, no patch script was implemented, no raw geometry was generated, no render, no production timing, no creative acceptance, no G-26, no `sports_news`, no INT-02e, no publishing, no master integration, no new gate, and no broad roadmap.
+- Local note: `docs/WritingPage.code-workspace` is an unrelated untracked editor workspace file with sibling-project references; do not commit it as NLMYTGen handoff context.
+
+---
+
+## HANDOFF SNAPSHOT (2026-05-13 update)
+
+- Branch / remote state: `codex/g24-nod-sync-adoption`; pull the latest branch and expect a clean working tree. Confirm with `git status --short --branch` and `git rev-list --left-right --count HEAD...'@{u}'`.
+- Restart path: read `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`. The live `next_action` is the G-27 primitive visibility calibration GUI readback wait; this snapshot only preserves the executable handoff context.
+- Current G-27 artifact: `samples/_probe/g24/real_estate_dx_primitive_visibility_calibration_probe.ymmp`, generated by `scripts/build_g27_primitive_visibility_calibration_probe.js`.
+- Companion artifacts: `samples/_probe/g24/real_estate_dx_primitive_visibility_calibration_probe_readback.json` and `samples/_probe/g24/real_estate_dx_primitive_visibility_calibration_probe_report.md`.
+- Calibration scope: this is a drawing-semantics calibration probe, not a video scene. It uses one light-stage tonal system, `ShapeItem` / `TextItem` only, 11 items, a full-screen BG, a 920x560 `Main Panel`, panel-contained title/body text, center/TL/BR anchor markers, and one thick connector.
+- Machine readback: `status=passed`, `ShapeItem=6`, `TextItem=5`, `missing_item_count=0`, `malformed_item_count=0`, `item_name_length_failures=0`, `remark_length_failures=0`, `suspicious_default_item_count=0`, `carrier_modified_in_place=false`, `render_performed=false`, and `creative_acceptance_performed=false`.
+- Previous micro scene status: `real_estate_dx_micro_scene_visibility_probe.ymmp` opens and has machine/timeline pass, but user GUI review found preview visibility, visual composition, and scene adequacy insufficient. Do not add more labels/cards/beats or create another micro scene variant before the calibration GUI review passes.
+- Verification chain: `node --check scripts/build_g27_primitive_visibility_calibration_probe.js`; `node scripts/build_g27_primitive_visibility_calibration_probe.js --write`; `node scripts/build_g27_primitive_visibility_calibration_probe.js`; `git diff --check`.
+- Not done: no minimal render smoke, no production timing, no creative acceptance, no external assets, no TTS, no URL fetch, no publishing, no `sports_news`, no G-26, no INT-02e, no master integration, no new gate/policy/roadmap/dry-run/visual atlas.
+- Next concrete move: open `samples/_probe/g24/real_estate_dx_primitive_visibility_calibration_probe.ymmp` in YMM4 and return whether the large panel is visible, title/body text are inside the panel, anchor markers are where expected, connector is visible, item names/Remarks are manageable, plus preview screenshot, one selected panel item property screenshot, and one selected text item property screenshot. Only after this GUI review passes should calibrated geometry/visibility grammar be applied back to the 4-beat micro scene.
+
+---
+
+## HANDOFF SNAPSHOT (2026-05-12 update)
+
+- Branch / remote state: `codex/g24-nod-sync-adoption` at `21ef759 docs: refresh g27 handoff snapshot`; probe generation commit is `3411413 feat(g27): generate minimal ymmp probe`; `HEAD...origin/codex/g24-nod-sync-adoption = 0 0` at handoff. Working tree should be clean after pulling this branch.
+- Restart path: read `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`. Current frontier is `runtime-state.md` `next_action`; this snapshot only preserves the executable handoff context.
+- Current G-27 artifact: `samples/_probe/g24/real_estate_dx_minimal_patched_probe.ymmp` generated from `samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json` by `scripts/build_g27_minimal_ymmp_probe.js`.
+- Machine readback: `samples/_probe/g24/real_estate_dx_minimal_patched_probe_readback.json` / `.md` reports `status=passed`, `ShapeItem=14`, `TextItem=7`, `candidate_ids_found=7/7`, `layer_values_found=[7,8,9]`, `missing_item_count=0`, `malformed_item_count=0`, `carrier_modified_in_place=false`, and `next_slice_can_safely_proceed_to_YMM4_GUI_readback_preview=true`.
+- Candidate scope: only `RE-02-beginning`, `RE-02-development`, `RE-06-beginning`, `RE-06-development`, `RE-06-turn`, `RE-07D-beginning`, and `RE-07D-development` are in the probe. `RE-02-turn` remains blocked outside the output; `RE-07D-turn` remains deferred outside the output.
+- Verification chain: `node --check scripts/build_g27_minimal_ymmp_probe.js`; `node scripts/build_g27_minimal_ymmp_probe.js --write`; `node scripts/build_g27_minimal_ymmp_probe.js`; Python openability guard with `success=True`, `is_project_canvas=True`, `item_count=21`; `node scripts/build_g27_ymmp_compact_patch_review.js`; `node scripts/build_g27_adapter_ir_dry_run.js`; `node scripts/check_g27_adapter_route_preflight.js`; `node scripts/check_g27_adapter_authorization_gate.js`; `git diff --check`.
+- Not done: no render, no YMM4 GUI preview capture, no production timing, no creative acceptance, no TTS, no URL fetch, no publishing, no `sports_news`, and no pipeline hardening.
+- Next concrete move: open or capture `samples/_probe/g24/real_estate_dx_minimal_patched_probe.ymmp` in YMM4 for GUI readback / preview. Treat PASS as file-openability / visible-placement evidence only; short render is a later slice after GUI readback succeeds.
+
 ## HANDOFF SNAPSHOT (2026-04-26 update)
 
-- Shared Focus: **G-24 `nod` cautious gate readiness + user export packet**. The old `skit_01` corpus is still not a gate because of `REFERENCE_MASTER_MISSING`, `PROOF_OUTPUT_PATH_DRIFT`, `CANONICAL_GROUP_REMARK_MISSING`, and `TEMPLATE_RESOLUTION_UNPROVEN`. The current shared cycle narrows to `delivery_nod_v1`: assistant rechecked `audit-skit-group` on `samples/canonical.ymmp` and `samples/haitatsuin_2026-04-12_g24_proof.ymmp`, confirmed `delivery_nod_v1` stays `exact`, and rechecked proof-corpus `group_motion_changes=0`. There is still no repo-tracked discrete `delivery_nod_v1` copy. Canonical docs: [G24-canonical-anchor-adoption-2026-04-20.md](verification/G24-canonical-anchor-adoption-2026-04-20.md) / [skit_01-workflow-breakage-audit-2026-04-20.md](verification/skit_01-workflow-breakage-audit-2026-04-20.md) / [P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md).
+- Shared Focus: **G-24 template-analyzed placement after raw clone readback**. The v1 source contains all five templates and `--skit-group-only` can insert exact/fallback cues, but raw clone output is not production acceptance because user visual feedback found spacing/composition too rough. The current shared cycle is no longer motion authoring, alias planning, or user hand placement; it is adding template analyzer + placement planner so reusable YMM4 templates become generated production placement. Canonical current state: [runtime-state.md](runtime-state.md) slice / next_action.
 - Restart Governance Delta: **2026-04-27** normal restart read budget is now capped at `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`. Protected/canonical docs remain sources of truth, but they are not all full-read requirements. Read `project-context` HANDOFF / DECISION LOG, FEATURE ID, invariant, ledger, workflow, interaction failure class, or AI gate only when the current decision needs that section. Full re-anchoring is an exception, not the default.
 - Interaction Governance Delta: **2026-04-27** template formalism is now a structural failure class. Obsolete prompts, archived packets, and superseded roadmap/setup docs remain deleted; `INTERACTION_NOTES.md` treats interaction failures as project risks, and now explicitly blocks prompt/checklist/OK-NG templates from replacing task connectivity. Manual/shared actions must state open target, created artifact, source object, actor, owner artifact, acceptance meaning, and replan condition before using short result codes.
-- Roadmap Prep Delta: **2026-04-27** next roadmap is narrowed to G-24 `delivery_nod_v1` cautious gate first, then `deny_oneshot -> exit_left` only after `nod` export/acceptance passes. [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) and [P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md) separate readiness from standalone export proof; no new FEATURE status or production route was changed.
-- Implementation Delta: **2026-04-27** assistant-owned readiness was rerun for `delivery_nod_v1`. `audit-skit-group` stayed `exact=5 / fallback=0 / manual_note=0` on canonical and proof corpora, and `apply-production --dry-run` stayed `success=true` / `motion_changes=8` / `group_motion_changes=0` when run with `--tachie-motion-map samples/tachie_motion_map_library.json`. This did not change support level; `nod` remains `template_catalog_only` until user-owned YMM4 author/export + manual acceptance are reported.
-- Safe Next Frontier Packet: **The next concrete move is to close `delivery_nod_v1` through manual acceptance plus standalone export**. Entry route stays [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md), and template-first validity still starts at `python -m src.cli.main audit-skit-group <ymmp> <ir.json> --skit-group-registry <json>`. Important distinction: `audit-skit-group` `exact` proves readiness, not the existence of a repo-tracked `delivery_nod_v1` copy. In YMM4, open `samples/haitatsuin_2026-04-12_g24_proof.ymmp` or the user's local equivalent, start from the Layer 9 GroupItem `haitatsuin_delivery_main`, and export a YMM4 native GroupItem template named `delivery_nod_v1` that includes body/face `ImageItem` children and no `TachieItem`. Manual acceptance means reporting whether that YMM4 result passes `nod amplitude (RepeatMove loop)` plus `does not dominate scene`. After a clean pass, promote `skit_group.intent.nod` to `direct_proven` and move next to `deny_oneshot -> exit_left`.
+- Roadmap Prep Delta: **2026-04-27** G-24 planned author/export is closed at the v1 set (`enter_from_left` / `surprise_oneshot` / `nod` / `deny_oneshot` / `exit_left`). [PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md](verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md) and [P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md) now point to production-use validation rather than another cautious authoring gate.
+- Implementation Delta: **2026-04-27** user completed `delivery_deny_oneshot_v1` and `delivery_exit_left_v1`. Repo inspection found the two target samples use plain body/face `ImageItem` children and no `TachieItem`; `deny_oneshot` is a short X-axis one-shot sway, and `exit_left` uses a leftward OUT `InOutMoveEffect`. `skit_group.intent.deny_oneshot` / `skit_group.intent.exit_left` are now `direct_proven`.
+- Validation Delta: **2026-04-27** repo-probe production-use validation PASS. `audit-skit-group` on `samples/canonical.ymmp` + `samples/_probe/skit_01/skit_01_ir.json` returned `exact=5 / fallback=0 / manual_note=0`. No confirmation `.ymmp` was generated.
+- Gap Classification Delta: **2026-04-27** production-like gap classification PASS. IR A returned `exact=3 / manual_note=1`; IR B returned `exact=1 / manual_note=3`; this was followed by alias registration for `surprise_jump` and `deny_shake`.
+- Safe Next Frontier Packet: **The next concrete move is template analyzer + placement planner for real-estate DX skit_group placement**. Entry route stays `patch-ymmp --skit-group-only`, but raw template clone must be treated as transport proof only. The next proof should show an analyzed placement plan, patched `.ymmp` readback, and no hand-placed cue correction.
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI → CSV → YMM4 台本読込 → IR (Custom GPT) → Registry (JSON) → Adapter (patch-ymmp) → 演出設定 → レンダリング
-- Last Change Relation: **2026-04-27** restart read budget correction. Normal restart is now a three-doc path plus targeted section reads; full canonical sweep is reserved for explicit re-anchoring, drift, or boundary uncertainty. No production artifact, FEATURE status, or G-24 route changed; `skit_group.intent.nod` remains `template_catalog_only` until manual acceptance plus standalone export are confirmed.
-- Handoff Focus (next): Resume from the user-owned `delivery_nod_v1` author/export step. Route reference stays [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md), canonical anchor confirmation stays in `samples/canonical.ymmp`, proof / hands-on project stays `samples/haitatsuin_2026-04-12_g24_proof.ymmp` or the user's local equivalent, and the concrete hands-on instructions live in [P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md) §G-24 `delivery_nod_v1` user hands-on correction. Keep the existing `group_motion` failure classes (`NO_GROUP_ITEM`, `TARGET_MISS`, `TARGET_AMBIGUOUS`), but do not escape into `motion_target` / `group_motion` substitution for this cycle. If the user can export `delivery_nod_v1` as a GroupItem template with 2 `ImageItem` children and no `TachieItem`, and the two manual acceptance points pass, promote `skit_group.intent.nod` to `direct_proven`. The next frontier after that remains `deny_oneshot -> exit_left`.
-- Evidence: Production E2E remains proven, and starter 2 remains Phase-3 PASS. On the 2026-04-27 readiness rerun, `audit-skit-group` returned `exact=5 / fallback=0 / manual_note=0` on both `samples/canonical.ymmp` and `samples/haitatsuin_2026-04-12_g24_proof.ymmp`, including `delivery_nod_v1`; `apply-production --dry-run` returned `success=true` / `motion_changes=8` / `group_motion_changes=0` when run with `--tachie-motion-map samples/tachie_motion_map_library.json`. Earlier collect-only observed 28 test files / 384 tests and FEATURE_REGISTRY parsing observed done=45 / approved=3 / hold=9 / info=2 / quarantined=2 / rejected=7. No `src` or `gui` production logic changed, so full pytest was not rerun.
+- Last Change Relation: **2026-04-28** G-24 raw clone placement and image-path readback PASS, followed by user correction that placement spacing/composition must be generated from template analysis rather than fixed by user hand placement.
+- Handoff Focus (next): Resume from template analyzer + placement planner. Keep `panic_shake` out of normal Part 2 JSON vocabulary; do not request template reauthoring unless diagnostics prove source data is missing.
+- Evidence: Production E2E remains proven, v1 G-24 planned templates are PASS / `direct_proven`, repo-tracked template source is 5/5, and raw clone placement readback inserted the expected Layer 9 cues. That readback is transport proof, not production acceptance.
 - 案件モード: CLI artifact
 - 現在の主レーン: 方向転換中 (実制作bottleneck直接軽減へ移行)
 - 成熟段階: Level 1 (限定変換器) 到達済み、Level 2 (演出IR適用エンジン) 形成中 → Level 3 接近
@@ -299,7 +351,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - Custom GPT v4 は 2オブジェクト連結形式 (Macro + Micro) で IR を出力する。load_ir() で対応済み
 - Authority Return Items:
   - YMM4 大版本更新時: `AudioItem` 構造差分が出たら readback のみ再確認（G-18）
-  - E-02: hold 継続。E-01 とセットでのみ再検討
+  - E-02: 旧 standalone template は hold 継続。H-01/H-02/H-04 を入力にした metadata draft は successor-lane として別起票可
   - F-01/F-02: quarantined 継続
 - What Not To Do Next:
   - spec/proof 整備をさらに積み増さない (一巡済み。実制作の手間軽減が先)
@@ -310,7 +362,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   - D-02 を主軸として扱わない (従属的補助論点)
   - quarantined 項目を通常候補としてそのまま spec 化しない
   - face 問題を broad な visual retry loop として再開しない
-  - E-01/E-02 を制作パイプラインと混ぜない (別タスクとして完全分離)
+  - E-01/旧 E-02 standalone を制作パイプラインへ自動注入しない（metadata draft は integration point 明示の successor-lane で扱う）
 - Expansion Risk: なし
 
 ## B-11 workflow proof chronicle (archive)

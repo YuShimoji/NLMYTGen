@@ -1,0 +1,82 @@
+{
+  "ir_version": "1.0",
+  "video_id": "g24_skit_group_minimal_production",
+  "macro": {
+    "sections": [
+      {
+        "section_id": "S1",
+        "default_bg": "studio_blue"
+      }
+    ]
+  },
+  "utterances": [
+    {
+      "index": 1,
+      "speaker": "ゆっくり魔理沙黄縁",
+      "text": "配送員が画面左から駆け込んできて、遅延の理由を説明します。",
+      "section_id": "S1",
+      "face": "serious",
+      "motion": "enter_from_left",
+      "motion_target": "layer:9",
+      "_skit_note": "実制作向け最小入力: 配達員 skit_group actor 登場"
+    },
+    {
+      "index": 2,
+      "speaker": "ゆっくり霊夢赤縁",
+      "text": "その通知、昨日からずっと更新されていませんよ。",
+      "section_id": "S1",
+      "face": "thinking",
+      "motion": "none"
+    },
+    {
+      "index": 3,
+      "speaker": "ゆっくり魔理沙黄縁",
+      "text": "えっ、追跡システムが止まっていたんですか。",
+      "section_id": "S1",
+      "face": "surprised",
+      "motion": "surprise_jump",
+      "motion_target": "layer:9",
+      "_skit_note": "alias validation: surprise_jump -> delivery_surprise_oneshot_v1"
+    },
+    {
+      "index": 4,
+      "speaker": "ゆっくり魔理沙黄縁",
+      "text": "まずい、集荷ルート全体が詰まっているかもしれません。",
+      "section_id": "S1",
+      "face": "sad",
+      "motion": "panic_shake",
+      "motion_target": "layer:9",
+      "_skit_note": "unresolved validation: panic_shake remains manual/new-template candidate"
+    },
+    {
+      "index": 5,
+      "speaker": "ゆっくり霊夢赤縁",
+      "text": "慌てて走るより、荷物の所在を先に確認してください。",
+      "section_id": "S1",
+      "face": "angry",
+      "motion": "deny_shake",
+      "motion_target": "layer:9",
+      "_skit_note": "alias validation: deny_shake -> delivery_deny_oneshot_v1"
+    },
+    {
+      "index": 6,
+      "speaker": "ゆっくり魔理沙黄縁",
+      "text": "了解です。倉庫に確認して、次の便で届けます。",
+      "section_id": "S1",
+      "face": "smile",
+      "motion": "nod",
+      "motion_target": "layer:9",
+      "_skit_note": "exact validation: delivery_nod_v1"
+    },
+    {
+      "index": 7,
+      "speaker": "ゆっくり魔理沙黄縁",
+      "text": "確認が取れ次第、すぐ戻ります。",
+      "section_id": "S1",
+      "face": "serious",
+      "motion": "exit_left",
+      "motion_target": "layer:9",
+      "_skit_note": "exact validation: delivery_exit_left_v1"
+    }
+  ]
+}

@@ -1,0 +1,276 @@
+{
+  "version": "1.0",
+  "artifact_type": "YMM4_adapter_authorization_gate",
+  "episode_id": "real_estate_dx",
+  "scope": "G-27 RE-02 / RE-06 / RE-07D adapter authorization gate only",
+  "source": {
+    "route_contract": "docs/G27_ADAPTER_ROUTE_CONTRACT.md",
+    "route_preflight": "samples/_probe/g24/real_estate_dx_ymm4_adapter_route_preflight.json",
+    "adapter_planning_candidates": "samples/_probe/g24/real_estate_dx_ymm4_adapter_planning_candidates.json",
+    "asset_proxy_gap_report": "samples/_probe/g24/real_estate_dx_asset_proxy_gap_report.json",
+    "thin_scene_decision_packet": "samples/_probe/g24/real_estate_dx_thin_scene_decision_packet.json",
+    "validator_authority": "samples/_probe/g24/real_estate_dx_background_skit_blueprint_validate.json"
+  },
+  "boundary": {
+    "authorization_gate_only": true,
+    "output_generation_allowed": false,
+    "no_adapter_IR": true,
+    "no_YMM4_adapter_output": true,
+    "no_YMM4_patch": true,
+    "no_ymmp_write": true,
+    "no_render": true,
+    "no_production_timing": true,
+    "no_creative_acceptance": true,
+    "no_external_asset_acquisition": true,
+    "current_slice_forbidden_actions": [
+      "adapter IR",
+      "YMM4 adapter output",
+      "YMM4 patch",
+      ".ymmp write",
+      "render",
+      "production timing",
+      "creative acceptance"
+    ]
+  },
+  "status": "awaiting_user_or_validator_authorization",
+  "source_state": {
+    "route_preflight_status": "passed_for_planning_preflight",
+    "route_preflight_candidate_count": 7,
+    "thin_scene_decision_rollup": {
+      "accepted_proxy": [
+        "RE-02-beginning",
+        "RE-02-development",
+        "RE-06-beginning",
+        "RE-06-development",
+        "RE-06-turn",
+        "RE-07D-beginning",
+        "RE-07D-development"
+      ],
+      "accepted_with_adjustment": [
+        "RE-02-turn"
+      ],
+      "defer": [
+        "RE-07D-turn"
+      ],
+      "recommended_next_artifact": "asset-proxy gap report",
+      "recommended_next_artifact_reason": "The thin decision packet now normalizes all 9 beats, so the next useful artifact is a gap report that inventories accepted abstract/property-document proxies and carries RE-07D-turn as deferred without unlocking YMM4."
+    },
+    "asset_proxy_gap_report_rollup": {
+      "asset_proxy_readiness_counts": {
+        "ready": 7,
+        "needs_adjustment": 1,
+        "deferred": 1,
+        "blocked": 0
+      },
+      "adapter_planning_ready_items": [
+        "RE-02-beginning",
+        "RE-02-development",
+        "RE-06-beginning",
+        "RE-06-development",
+        "RE-06-turn",
+        "RE-07D-beginning",
+        "RE-07D-development"
+      ],
+      "not_adapter_planning_ready_until_adjusted": [
+        "RE-02-turn"
+      ],
+      "still_blocked": [
+        "RE-07D-turn"
+      ],
+      "next_recommended_artifact": "YMM4 adapter planning candidate list",
+      "next_recommended_artifact_boundary": "Only list adapter-planning-ready candidates and the adjustment/defer exclusions. Do not write YMM4 adapter output, render, production timing, or creative acceptance."
+    },
+    "validator_status": "blocked"
+  },
+  "route_planning_candidates": [
+    {
+      "beat_id": "RE-02-beginning",
+      "authorization_scope": "adapter_IR_dry_run_candidate_only",
+      "route_types": [
+        "abstract_ui_route",
+        "motion_primitive_route"
+      ],
+      "representation": "abstract proxy",
+      "proxy_type": "public-search vs broker-database access-gap proxy",
+      "rights_risk": "low",
+      "required_note": "Use a generic, non-official search UI and broker-database abstraction. Do not use a real REINS screenshot, logo, or service-identifiable UI.",
+      "output_generation_allowed": false
+    },
+    {
+      "beat_id": "RE-02-development",
+      "authorization_scope": "adapter_IR_dry_run_candidate_only",
+      "route_types": [
+        "abstract_ui_route",
+        "property_card_route",
+        "motion_primitive_route"
+      ],
+      "representation": "abstract proxy",
+      "proxy_type": "broker DB panel / public portal card / property-card flow",
+      "rights_risk": "low",
+      "required_note": "Plan generic broker DB and public portal panels with selected property-card flow. Avoid official branding and real/reference UI unless separately reviewed.",
+      "output_generation_allowed": false
+    },
+    {
+      "beat_id": "RE-06-beginning",
+      "authorization_scope": "adapter_IR_dry_run_candidate_only",
+      "route_types": [
+        "property_card_route",
+        "motion_primitive_route"
+      ],
+      "representation": "abstract proxy",
+      "proxy_type": "property-card overload",
+      "rights_risk": "none",
+      "required_note": "Plan simplified property cards, density control, and subtitle-safe lower band. No real listing photo or external asset is required.",
+      "output_generation_allowed": false
+    },
+    {
+      "beat_id": "RE-06-development",
+      "authorization_scope": "adapter_IR_dry_run_candidate_only",
+      "route_types": [
+        "document_proxy_route",
+        "property_card_route",
+        "risk_marker_route",
+        "motion_primitive_route"
+      ],
+      "representation": "abstract proxy",
+      "proxy_type": "selected property sheet plus drawback marker",
+      "rights_risk": "none",
+      "required_note": "Plan a selected property sheet and a drawback marker as abstract UI/document shapes. Do not introduce real listing screenshots.",
+      "output_generation_allowed": false
+    },
+    {
+      "beat_id": "RE-06-turn",
+      "authorization_scope": "adapter_IR_dry_run_candidate_only",
+      "route_types": [
+        "document_proxy_route",
+        "property_card_route",
+        "motion_primitive_route"
+      ],
+      "representation": "property-document proxy",
+      "proxy_type": "property sheet / editorial comparison / document-backed recommendation",
+      "rights_risk": "none",
+      "required_note": "Anchor the curation value in property-document structure. Avoid pure lens, strategy diagram, or generic consulting visual treatment.",
+      "output_generation_allowed": false
+    },
+    {
+      "beat_id": "RE-07D-beginning",
+      "authorization_scope": "adapter_IR_dry_run_candidate_only",
+      "route_types": [
+        "ai_panel_route",
+        "property_card_route",
+        "motion_primitive_route"
+      ],
+      "representation": "abstract proxy",
+      "proxy_type": "AI recommendation panel plus property card",
+      "rights_risk": "none",
+      "required_note": "Use an abstract AI panel and property card only. Do not use real AI product UI, logos, model screenshots, or identifiable recommendation services.",
+      "output_generation_allowed": false
+    },
+    {
+      "beat_id": "RE-07D-development",
+      "authorization_scope": "adapter_IR_dry_run_candidate_only",
+      "route_types": [
+        "risk_marker_route",
+        "motion_primitive_route"
+      ],
+      "representation": "abstract proxy",
+      "proxy_type": "boundary / inheritance / neighborhood risk-marker set",
+      "rights_risk": "low",
+      "required_note": "Plan symbolic risk markers for boundary, inheritance, and neighborhood issues. Do not use real maps, registry documents, or identifiable records unless later rights-reviewed.",
+      "output_generation_allowed": false
+    }
+  ],
+  "exclusions": [
+    {
+      "beat_id": "RE-02-turn",
+      "status": "excluded_until_adjusted",
+      "reason": "Accepted-with-adjustment proxy has not yet been reflected as a route-planning candidate.",
+      "required_condition": "Use public information layer / non-public data bundle opacity contrast; avoid wall/gate/locked-room/security-facility/conspiracy-coded occlusion.",
+      "output_generation_allowed": false
+    },
+    {
+      "beat_id": "RE-07D-turn",
+      "status": "deferred_blocks_adapter_planning",
+      "reason": "Specialist / cast / silhouette policy remains undecided.",
+      "required_condition": "User or validator must choose abstract silhouettes, real/cast asset, cut/reframe, or keep deferred before this beat can enter adapter planning.",
+      "asset_proxy_readiness": "deferred",
+      "YMM4_adapter_readiness": "still blocked",
+      "output_generation_allowed": false
+    }
+  ],
+  "validator_boundary": {
+    "status": "blocked",
+    "allowed_next_actions": [
+      "overlay_only_compact_review"
+    ],
+    "forbidden_next_actions": [
+      "cast_motion_ir",
+      "ymm4_creative_acceptance",
+      "production_timing"
+    ],
+    "note": "This authorization gate does not open validator-blocked cast motion IR, creative acceptance, or production timing."
+  },
+  "authorization_request": {
+    "authorization_granted": false,
+    "requested_next_slice": "adapter_IR_dry_run_contract_for_7_candidates_only",
+    "response_owner": "user_or_validator",
+    "recommended_response": "authorize_adapter_IR_dry_run_for_7_candidates_only",
+    "allowed_responses": [
+      {
+        "value": "authorize_adapter_IR_dry_run_for_7_candidates_only",
+        "effect": "Next slice may define and generate adapter IR dry-run artifacts for the 7 route candidates only. YMM4 patch, .ymmp write, render, production timing, and creative acceptance remain forbidden."
+      },
+      {
+        "value": "hold_for_validator_review",
+        "effect": "No downstream dry-run starts. Assistant may prepare a validator-facing review of this gate and the route preflight."
+      },
+      {
+        "value": "revise_route_candidates_before_authorization",
+        "effect": "Return to scene decision, asset/proxy gap report, or route planning candidate correction before any adapter IR dry-run work."
+      },
+      {
+        "value": "reject_adapter_IR_dry_run",
+        "effect": "Close the current adapter route without proceeding to execution-zone dry-run work."
+      }
+    ],
+    "short_return_format": [
+      "G-27 adapter authorization: authorize_adapter_IR_dry_run_for_7_candidates_only",
+      "RE-02-turn: keep excluded_until_adjusted",
+      "RE-07D-turn: keep deferred_blocks_adapter_planning"
+    ]
+  },
+  "next_if_authorized": {
+    "next_slice": "adapter_IR_dry_run_contract",
+    "include_candidates": [
+      "RE-02-beginning",
+      "RE-02-development",
+      "RE-06-beginning",
+      "RE-06-development",
+      "RE-06-turn",
+      "RE-07D-beginning",
+      "RE-07D-development"
+    ],
+    "excluded_from_first_dry_run": [
+      "RE-02-turn",
+      "RE-07D-turn"
+    ],
+    "still_forbidden": [
+      "YMM4 adapter output",
+      "YMM4 patch",
+      ".ymmp write",
+      "render",
+      "production timing",
+      "creative acceptance"
+    ],
+    "adapter_IR_dry_run_only": true,
+    "YMM4_output_allowed": false
+  },
+  "next_if_not_authorized": {
+    "hold_for": "user_or_validator_authorization",
+    "assistant_safe_followups": [
+      "prepare validator-facing review",
+      "tighten checker coverage",
+      "sync runtime-state only"
+    ]
+  }
+}

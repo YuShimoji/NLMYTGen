@@ -1,0 +1,180 @@
+// 架空のサンプルデータ。
+// 実運用では lanes/sports_news の source / fact / visual plan から生成した
+// baseball visual data JSON を流し込む想定。
+
+window.GAME_DATA = {
+  visual: {
+    eventLabel: 'PITCH EVENT · SAMPLE DATA',
+    claim: '前球155km/hの速球から、低め外角の140km/hスライダーへ緩急',
+    sourceLabel: 'SAMPLE INFOGRAPHIC · PROVENANCE-GATED VISUALS',
+    watchPoint: '次に見るべきは、打者が外角低めを見極められるか',
+    ambientBackdrop: {
+      kind: 'repo_generated_svg',
+      label: 'Ambient ballpark backdrop',
+      imageUrl: 'assets/ambient/ballpark-night-grid.svg',
+      provenance: 'BaseballInfoGraphics/assets/ambient/LICENSE.csv',
+      usageStage: 'design_preview',
+      note: 'Abstract repo-generated SVG. Episode backdrops should keep LICENSE.csv or generation notes before ingest.',
+    },
+  },
+
+  meta: {
+    league: 'SAMPLE',
+    venue: 'Sample Dome',
+    date: 'sample-date',
+    weather: 'indoor',
+    attendance: 'sample',
+  },
+
+  teams: {
+    home: {
+      code: 'FAL',
+      name: 'Sample Falcons',
+      shortName: 'Falcons',
+      primary: '#22C55E',
+      secondary: '#0F172A',
+      logo: 'FAL',
+    },
+    away: {
+      code: 'EAG',
+      name: 'Sample Eagles',
+      shortName: 'Eagles',
+      primary: '#38BDF8',
+      secondary: '#111827',
+      logo: 'EAG',
+    },
+  },
+
+  score: {
+    home: 4,
+    away: 3,
+    inning: 7,
+    half: 'top',
+    outs: 1,
+    balls: 2,
+    strikes: 2,
+    bases: { first: true, second: false, third: true },
+    lineScore: {
+      away: [0, 1, 0, 0, 2, 0, 0, null, null],
+      home: [0, 0, 2, 0, 0, 2, null, null, null],
+      awayTotal: { r: 3, h: 7, e: 0 },
+      homeTotal: { r: 4, h: 6, e: 1 },
+    },
+  },
+
+  atBat: {
+    pitcher: {
+      id: 'sample_pitcher_01',
+      name: 'Sample Pitcher',
+      nameEn: 'Sample Pitcher',
+      number: 18,
+      throws: 'R',
+      season: { era: 2.18, w: 6, l: 1, k: 84, ip: '64.1' },
+      today: { ip: '6.1', h: 4, r: 3, er: 3, bb: 2, k: 8, pc: 98 },
+    },
+    batter: {
+      id: 'sample_batter_01',
+      name: 'Sample Batter',
+      nameEn: 'Sample Batter',
+      number: 8,
+      bats: 'L',
+      season: { avg: 0.302, hr: 12, rbi: 38, ops: 0.891 },
+      today: { ab: 3, h: 1, hr: 0, rbi: 1, k: 1, bb: 0 },
+      vsP: { ab: 8, h: 2, hr: 1, k: 3 },
+      todayAtBats: [
+        { inning: '1回表', vs: 'Sample Pitcher', pitches: 4, result: 'K', resultJa: '空振三振', detail: '4球三振' },
+        { inning: '3回表', vs: 'Sample Pitcher', pitches: 6, result: '1B', resultJa: 'ヒット', detail: 'センター前' },
+        { inning: '5回表', vs: 'Sample Pitcher', pitches: 5, result: 'GO', resultJa: 'ゴロ', detail: 'セカンドゴロ' },
+        { inning: '7回表', vs: 'Sample Pitcher', pitches: 5, result: '—', resultJa: '対戦中', detail: '5球目', current: true },
+      ],
+    },
+    onDeck: { name: 'Sample On Deck', number: 3, avg: 0.276 },
+    inHole: { name: 'Sample In Hole', number: 5, avg: 0.312 },
+    pitches: [
+      {
+        num: 1,
+        type: 'FF',
+        typeJa: 'フォーシーム',
+        mph: 96.4,
+        kmh: 155,
+        x: 0.15,
+        y: -0.4,
+        result: 'CalledStrike',
+        resultJa: '見逃しS',
+        claim: '初球は高め寄りの速球でストライクを先行',
+      },
+      {
+        num: 2,
+        type: 'SL',
+        typeJa: 'スライダー',
+        mph: 87.2,
+        kmh: 140,
+        x: -0.55,
+        y: 0.3,
+        result: 'Ball',
+        resultJa: 'ボール',
+        claim: '速球後に外角低めのスライダーへ落として目線を外す',
+      },
+      {
+        num: 3,
+        type: 'FF',
+        typeJa: 'フォーシーム',
+        mph: 95.8,
+        kmh: 154,
+        x: 0.6,
+        y: -0.2,
+        result: 'Foul',
+        resultJa: 'ファウル',
+        claim: '再び速球で押し込み、打者はファウルで粘る',
+      },
+      {
+        num: 4,
+        type: 'SP',
+        typeJa: 'スプリット',
+        mph: 89.1,
+        kmh: 143,
+        x: -0.2,
+        y: 0.95,
+        result: 'Ball',
+        resultJa: 'ボール',
+        claim: '低めの落ち球は見送られ、カウントが並ぶ',
+      },
+      {
+        num: 5,
+        type: 'CB',
+        typeJa: 'カーブ',
+        mph: 78.5,
+        kmh: 126,
+        x: 0.4,
+        y: -0.7,
+        result: 'SwingingStrike',
+        resultJa: '空振りS',
+        claim: '緩いカーブでタイミングを外し、空振りを誘う',
+      },
+    ],
+    upcoming: { num: 6, type: 'FF', typeJa: 'フォーシーム', mph: 97.3, kmh: 157, x: -0.1, y: 0.0, result: 'InPlay', resultJa: '打球' },
+  },
+
+  zone: {
+    halfWidth: 0.83,
+    top: -1.0,
+    bottom: 1.0,
+  },
+
+  scoringPlays: [
+    { inning: '5回表', team: 'away', desc: 'Sample Eagles の二塁打で2点先制', score: '0-2' },
+    { inning: '3回裏', team: 'home', desc: 'Sample Falcons の長打で逆転', score: '2-1' },
+    { inning: '6回裏', team: 'home', desc: 'Sample Falcons の犠牲フライで追加点', score: '4-2' },
+    { inning: '7回表', team: 'away', desc: 'Sample Eagles のソロ本塁打で1点差', score: '4-3' },
+  ],
+
+  lineup: {
+    away: [
+      { order: 1, num: 5, name: 'Sample Leadoff', pos: 'CF', avg: 0.312 },
+      { order: 2, num: 0, name: 'Sample Contact', pos: '2B', avg: 0.281 },
+      { order: 3, num: 1, name: 'Sample Runner', pos: 'RF', avg: 0.265 },
+      { order: 4, num: 8, name: 'Sample Batter', pos: '3B', avg: 0.302, current: true },
+      { order: 5, num: 3, name: 'Sample Power', pos: '1B', avg: 0.276 },
+    ],
+  },
+};

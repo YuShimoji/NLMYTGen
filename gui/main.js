@@ -4,6 +4,7 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 
 const SETTINGS_PATH = path.join(__dirname, 'project-settings.json');
+const REPO_ROOT = path.resolve(__dirname, '..');
 
 let mainWindow;
 
@@ -64,12 +65,78 @@ function parseJsonLine(stdout) {
   return null;
 }
 
+function resolveRepoRelativePath(relPath) {
+  if (typeof relPath !== 'string' || !relPath.trim()) {
+    return { ok: false, error: 'repo-relative path is required' };
+  }
+  if (path.isAbsolute(relPath)) {
+    return { ok: false, error: 'absolute path is not allowed' };
+  }
+  if (/^[a-zA-Z]:/.test(relPath)) {
+    return { ok: false, error: 'drive-qualified path is not allowed' };
+  }
+  const normalized = path.normalize(relPath);
+  if (normalized === '..' || normalized.startsWith(`..${path.sep}`)) {
+    return { ok: false, error: 'path traversal is not allowed' };
+  }
+  const full = path.resolve(REPO_ROOT, normalized);
+  const relToRoot = path.relative(REPO_ROOT, full);
+  if (relToRoot.startsWith('..') || path.isAbsolute(relToRoot)) {
+    return { ok: false, error: 'path outside repo' };
+  }
+  return { ok: true, full, rel: relToRoot.replace(/\\/g, '/') };
+}
+
+function describeEpisodePack(rootPath) {
+  const root = path.resolve(rootPath);
+  const episodeId = path.basename(root);
+  const paths = {
+    sourceScript: path.join(root, 'csv', `${episodeId}.txt`),
+    csv: path.join(root, 'csv', `${episodeId}.csv`),
+    irJson: path.join(root, 'ir', `${episodeId}_production_ir.json`),
+    validateResult: path.join(root, 'ir', `${episodeId}_validate.json`),
+    dryRunResult: path.join(root, 'ymmp', `${episodeId}_dry_run.json`),
+    applyResult: path.join(root, 'ymmp', `${episodeId}_apply.json`),
+    baseYmmp: path.join(root, 'ymmp', `${episodeId}_base.ymmp`),
+    patchedYmmp: path.join(root, 'ymmp', `${episodeId}_patched.ymmp`),
+    faceMap: path.join(root, 'maps', 'face_map.json'),
+    bgMap: path.join(root, 'maps', 'bg_map.json'),
+    skitGroupRegistry: path.join(root, 'maps', 'skit_group_registry.json'),
+    skitGroupTemplateSource: path.join(
+      REPO_ROOT,
+      'samples',
+      'templates',
+      'skit_group',
+      'delivery_v1_templates.ymmp',
+    ),
+    ymm4Acceptance: path.join(root, 'review', 'ymm4_acceptance.md'),
+    gaps: path.join(root, 'review', 'gaps.md'),
+    sessionManifest: path.join(root, 'manifest', 'session_manifest.md'),
+  };
+  const existing = {};
+  for (const [key, value] of Object.entries(paths)) {
+    existing[key] = fs.existsSync(value);
+  }
+  return { root, episodeId, paths, existing };
+}
+
 ipcMain.handle('build-csv', async (_event, opts) => {
   const args = ['build-csv', opts.input, '--format', 'json'];
   if (opts.output) { args.push('-o', opts.output); }
   if (opts.speakerMap) { args.push('--speaker-map', opts.speakerMap); }
   if (opts.maxLines) { args.push('--max-lines', String(opts.maxLines)); }
   if (opts.charsPerLine) { args.push('--chars-per-line', String(opts.charsPerLine)); }
+  if (opts.subtitleFontSourceYmmp) {
+    args.push('--subtitle-font-source-ymmp', opts.subtitleFontSourceYmmp);
+  } else if (opts.subtitleFontScale) {
+    args.push('--subtitle-font-scale', String(opts.subtitleFontScale));
+  }
+  if (opts.wrapPx) { args.push('--wrap-px', String(opts.wrapPx)); }
+  if (opts.wrapSafety) { args.push('--wrap-safety', String(opts.wrapSafety)); }
+  if (opts.measureBackend) { args.push('--measure-backend', opts.measureBackend); }
+  if (opts.fontFamily) { args.push('--font-family', opts.fontFamily); }
+  if (opts.fontSize) { args.push('--font-size', String(opts.fontSize)); }
+  if (opts.letterSpacing !== undefined) { args.push('--letter-spacing', String(opts.letterSpacing)); }
   if (opts.reflowV2) { args.push('--reflow-v2'); }
   if (opts.balanceLines) { args.push('--balance-lines'); }
   if (opts.dryRun) { args.push('--dry-run'); }
@@ -87,6 +154,10 @@ ipcMain.handle('apply-production', async (_event, opts) => {
   if (opts.faceMapBundle) { args.push('--face-map-bundle', opts.faceMapBundle); }
   if (opts.slotMap) { args.push('--slot-map', opts.slotMap); }
   if (opts.csv) { args.push('--csv', opts.csv); }
+  if (opts.skitGroupRegistry) { args.push('--skit-group-registry', opts.skitGroupRegistry); }
+  if (opts.skitGroupTemplateSource) { args.push('--skit-group-template-source', opts.skitGroupTemplateSource); }
+  if (opts.strictSkitGroupIntents) { args.push('--strict-skit-group-intents'); }
+  if (opts.skitGroupOnly) { args.push('--skit-group-only'); }
   if (opts.output) { args.push('-o', opts.output); }
   if (opts.dryRun) { args.push('--dry-run'); }
 
@@ -127,8 +198,6 @@ ipcMain.handle('open-folder', async (_event, filePath) => {
   shell.showItemInFolder(filePath);
 });
 
-const REPO_ROOT = path.resolve(__dirname, '..');
-
 /** リポジトリ内ドキュメントを既定アプリで開く (パストラバーサル防止) */
 ipcMain.handle('open-repo-doc', async (_event, relPath) => {
   const { shell } = require('electron');
@@ -148,6 +217,49 @@ ipcMain.handle('open-repo-doc', async (_event, relPath) => {
   return errMsg ? { ok: false, message: errMsg } : { ok: true, path: full };
 });
 
+ipcMain.handle('load-review-packet', async (_event, packetPath) => {
+  const resolved = resolveRepoRelativePath(packetPath);
+  if (!resolved.ok) return { ok: false, error: resolved.error };
+  if (!fs.existsSync(resolved.full)) {
+    return { ok: false, error: `not found: ${resolved.rel}` };
+  }
+  try {
+    const payload = JSON.parse(fs.readFileSync(resolved.full, 'utf8'));
+    return { ok: true, path: resolved.rel, payload };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+});
+
+ipcMain.handle('load-review-proof', async (_event, proofPath) => {
+  const resolved = resolveRepoRelativePath(proofPath);
+  if (!resolved.ok) return { ok: false, error: resolved.error };
+  if (!fs.existsSync(resolved.full)) {
+    return { ok: false, error: `not found: ${resolved.rel}` };
+  }
+  try {
+    const payload = JSON.parse(fs.readFileSync(resolved.full, 'utf8'));
+    return { ok: true, path: resolved.rel, payload };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+});
+
+ipcMain.handle('save-review-decisions', async (_event, opts) => {
+  const decisionPath = opts && typeof opts.decisionPath === 'string' ? opts.decisionPath : '';
+  const payload = opts && opts.payload && typeof opts.payload === 'object' ? opts.payload : null;
+  const resolved = resolveRepoRelativePath(decisionPath);
+  if (!resolved.ok) return { ok: false, error: resolved.error };
+  if (!payload) return { ok: false, error: 'payload is required' };
+  try {
+    fs.mkdirSync(path.dirname(resolved.full), { recursive: true });
+    fs.writeFileSync(resolved.full, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
+    return { ok: true, path: resolved.rel };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+});
+
 // --- Validate IR ---
 
 ipcMain.handle('validate-ir', async (_event, opts) => {
@@ -158,6 +270,8 @@ ipcMain.handle('validate-ir', async (_event, opts) => {
   if (opts.slotMap) { args.push('--slot-map', opts.slotMap); }
   if (opts.overlayMap) { args.push('--overlay-map', opts.overlayMap); }
   if (opts.seMap) { args.push('--se-map', opts.seMap); }
+  if (opts.skitGroupRegistry) { args.push('--skit-group-registry', opts.skitGroupRegistry); }
+  if (opts.strictSkitGroupIntents) { args.push('--strict-skit-group-intents'); }
 
   const result = await runCli(args);
   const json = parseJsonLine(result.stdout);
@@ -170,6 +284,39 @@ ipcMain.handle('select-folder', async () => {
     properties: ['openDirectory'],
   });
   return r.canceled ? null : r.filePaths[0];
+});
+
+ipcMain.handle('describe-episode-pack', async (_event, rootPath) => {
+  if (typeof rootPath !== 'string' || !rootPath) {
+    return null;
+  }
+  return describeEpisodePack(rootPath);
+});
+
+ipcMain.handle('select-episode-pack', async () => {
+  const r = await dialog.showOpenDialog(mainWindow, {
+    title: 'Episode Pack Root を選択',
+    properties: ['openDirectory'],
+  });
+  return r.canceled ? null : describeEpisodePack(r.filePaths[0]);
+});
+
+ipcMain.handle('save-json-artifact', async (_event, opts) => {
+  const outputPath = opts && typeof opts.path === 'string' ? opts.path : '';
+  if (!outputPath) {
+    return { ok: false, error: 'output path is required' };
+  }
+  try {
+    fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+    fs.writeFileSync(
+      outputPath,
+      `${JSON.stringify(opts.payload ?? {}, null, 2)}\n`,
+      'utf8',
+    );
+    return { ok: true, path: outputPath };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
 });
 
 ipcMain.handle('build-cue-packet-bundle', async (_event, opts) => {

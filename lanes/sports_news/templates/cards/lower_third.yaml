@@ -1,0 +1,11 @@
+card_type: lower_third
+purpose: "Provide compact speaker/source/context labels."
+required_fields:
+  - label
+  - context
+visual_rules:
+  badge_source: card_ui
+  identity_image_dependency: none
+  provenance_required_for_non_data_visuals: true
+notes:
+  - "Use labels such as FAN, MEDIA, ANALYST, FORUM, OFFICIAL."

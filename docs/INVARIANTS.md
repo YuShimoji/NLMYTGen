@@ -4,10 +4,17 @@
 ## Systemic Diagnosis
 - この repo の失敗は「未承認実装」そのものより、status 語彙の崩れと value path 不在が静かに混入することにある。
 - 「テンプレートを作る」「GUI を作る」といった命題先行は、実ワークフローの bottleneck を見失わせやすい。
+- 「手順票を渡す」「preflight が通る」「低推論 AI に演出判断を委任する」は制作自動化の成果ではない。制作価値は YMM4 artifact へ反映された自動配置・自動差し替えで測る。
+
+## Production Value North Star
+- **YMM4 が制作基盤であり、Python は接着層である。** Python は CSV / IR / registry / 台本読込後 `.ymmp` patch をつなぐが、動画・音声・素材・テンプレートの生成主体ではない。
+- **`.ymmp` patch に反映されない作業は production value とみなさない。** 手順票、operator-ready packet、read-only audit、preflight、テスト通過は接続証跡であり、成果そのものではない。
+- **配置自動化は timeline write capability で判定する。** skit_group actor の価値は、IR + registry + repo-tracked YMM4 template source から GroupItem が対象発話へ自動挿入されることで成立する。
+- **S-4 代替を Python に移さない。** Python は音声合成、発音情報生成、YMM4 台本読込相当処理、`.ymmp` ゼロ生成を行わない。
 
 ## UX / Algorithmic Invariants
 - **制作工程は全て GUI で完結させる。** 制作のために CLI を使う必要がある状態は設計の不備であり、GUI 側を改善する対象とする。CLI は開発・デバッグ用。
-- **YMM4 を開くのは 2 つのタイミングだけ**: (1) テンプレ用素材の登録時、(2) 全素材を集め終わって配置・書き出すとき。増分の中間確認で繰り返し開かない。
+- **YMM4 を開くのは 2 つのタイミングだけ**: (1) テンプレ用素材の登録時、(2) 全素材を集め終わって配置・書き出すとき。増分の中間確認で繰り返し開かない。G-24 compact review のような配置済み artifact の creative acceptance は (2) に寄せ、機械 readback で閉じられる確認を人間へ戻さない。
 - **品質ゲートは開発速度を優先して柔軟に運用する。** テストや proof が開発のブロッカーにならないようにする。
 - **具体的な現実の日時をドキュメントの方針・ルール記述に含めない。** 日付固定の宣言（「2026-xx-xx 固定」等）は使わない。
 - NotebookLM が主台本品質の源泉であり、Python/LLM は主台本を生成しない。
@@ -17,7 +24,7 @@
 - canonical rules が repo 内にある場合は、`docs/ai/*.md` を tool-specific helper docs や prompt より先に読む。
 
 ## Responsibility Boundaries
-- Python の責務はテキスト変換のみ。CSV とテキストメタデータ文字列までに限定する。
+- Python の責務は CSV / IR / registry / 台本読込後 `.ymmp` patch の接着層に限定する。YMM4 が持つ制作機能を Python 側で再生成しない。
 - 音声合成・字幕配置・演出指定・レンダリング・サムネイル最終判断は YMM4 または人間の責務。
 - `.ymmp` を直接編集しても音声合成は成立しない。音声合成は YMM4 の台本読込経由でのみ行う。
 - YMM4 / `.ymmp` の直接編集や画面効果の自動注入は高リスクなため、LLM や Automation を使う場合も、まずはテキスト補助・コピペ用メモ・プリセット候補提示に留める。direct edit は workflow proof なしに採用しない。
@@ -27,16 +34,17 @@
 - YMovieHelper は参照実装 (設計思想の観察対象)。「YMovieHelper を使う」「YMovieHelper に接続する」とは書かない。
 - 演出 IR (PRODUCTION_IR_SPEC.md) が視覚配置の中心課題。C-07 系 (演出判断支援) が主系統であり、D-02 (素材取得) は従属的補助論点。D-02 を主軸として扱わない。
 - 再開時に「CSV 変換専用ツール」という旧理解に引き戻されないよう、README / CLAUDE.md / WORKFLOW / AUTOMATION_BOUNDARY は演出 IR の役割を反映した状態を維持する。
-- patch-ymmp (G-06) は成熟段階モデルで評価する。「研究か実用か」の二択で早期に裁定しない。.ymmp のゼロからの生成 (不可能) と、台本読込後の限定的な後段適用 (patch-ymmp) は明確に区別する。成熟段階: Level 0 構造把握 / Level 1 限定変換器 (face+bg) / Level 2 演出IR適用エンジン / Level 3a face+bg 限定 E2E / Level 3b slot+motion 含む拡張 E2E / Level 4 制作標準装備。現在は Level 1 到達済み、Level 2 形成中。
-- IR 語彙に定義済みだが ymmp 適用が未実装のフィールド (motion/transition/overlay/slot/bg_anim) は「境界外」ではなく「正式スコープ内の未実装 frontier」。「未実装」と「境界外」を混同しない。
+- patch-ymmp (G-06) は成熟段階モデルで評価する。「研究か実用か」の二択で早期に裁定しない。.ymmp のゼロからの生成 (不可能) と、台本読込後の限定的な後段適用 (patch-ymmp) は明確に区別する。現在のフィールド別能力は [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md) と [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md) を正本とし、古い Level 名だけで判断しない。
+- IR 語彙は「Writer が出せる意味ラベル」「adapter が ymmp に書き込める範囲」「GUI に露出している入力」が一致しない場合がある。語彙が存在することを万能自動化と解釈せず、未露出・未実装・境界外を [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md) で分ける。
 - 演出パイプラインは Writer 工程 (LLM による IR 生成) と Editor 工程 (テンプレート解決 + ymmp 適用) に分離する。proof の際限なき拡張を防ぐため、Writer の品質はフィードバック駆動で scope を区切り、Editor の設計品質で吸収する。
 - 演出パイプラインは三層構造: 第1層 Writer IR (高水準の意味ラベル) / 第2層 Template Registry (素材・プリセット辞書 + YMM4 ネイティブテンプレート名参照) / 第3層 YMM4 Adapter (IR + Registry → ymmp の接着層)。詳細は PRODUCTION_IR_SPEC.md セクション6 を参照。
-- YMM4 ネイティブに解決できるもの (エフェクト、アニメーション、場面テンプレート) は YMM4 のアイテムテンプレート機能に委ね、Adapter (patch-ymmp) は face/bg/slot 等の JSON キー置換レベルの差し替えに集中する。YMM4 の既存機能を再発明しない。
+- YMM4 ネイティブに解決できるもの (エフェクト、アニメーション、場面テンプレート) は YMM4 のアイテムテンプレート機能に委ね、Adapter (patch-ymmp) は capability matrix で direct/proven な registry 解決・タイムライン挿入・限定的なキー差し替えに集中する。YMM4 の既存機能を再発明しない。
 - **外部素材ベースの茶番劇演者**（配達員・消防員等の body/顔合成）は、`speaker_tachie` と混同しない。`motion` / `face` / `idle_face` / `slot` は **ゆっくり立ち絵 (`TachieItem`)** の語彙として扱い、茶番劇演者の body 骨格は **GroupItem テンプレート資産**として扱う。正本: `SKIT_GROUP_TEMPLATE_SPEC.md`
 - **`TachieItem` は解説役のゆっくり立ち絵専用。** 外部茶番劇演者 (配達員・消防員・アイドル等) の GroupItem 配下には `TachieItem` を含めない。配下構成は **body `ImageItem` + 顔 `ImageItem` + (任意で装飾 `ImageItem`)** の重ね合わせに固定する。理由: 連番アニメ `TachieItem` の新規セットアップ (AnimationTachie プラグイン設定・パーツ分解・表情マッピング) は運用コストが過大で、既に非採用決定済。
 - **解説役のゆっくり立ち絵は新規セットアップしない。** 既存の「ゆっくり霊夢」「ゆっくり魔理沙」等の `TachieItem` を流用する。新キャラの連番アニメ立ち絵を増設しない。
 - **外部演者の顔感情差し替えは `ImageItem.Source` パス置換で行う。** `TachieFaceParameter` / 連番アニメパーツ分解は外部演者には適用しない。
 - **`skit_group` の主経路は canonical template である。** library (tachie_motion_map) / motion_target 直書き / group_motion は補助経路であり、茶番劇固有の所作の主体にはしない。根拠: SKIT_GROUP_TEMPLATE_SPEC §3.1-3.3
+- **背景茶番劇は語り手への合いの手ではない。** 語り手台本と並行する独立 visual story として、節・主張・比喩に説得力を足す。台本行を逐語理解して `はい` で頷く、`いや、鋭い` で飛ぶ、のような cue 反応は `BACKGROUND_SKIT_ROLE_DRIFT` として creative acceptance / production quality から除外する。scene bible が無い、または time budget / cast continuity / screen placement が無いまま `skit_group` IR / `.ymmp` handoff / YMM4 確認へ進めることは禁止。さらに IR / 演出指定へ進む場合、総尺・`mm:ss` 開始終了・演出秒数・density thresholds/audit・script maturity は実数値で必要であり、項目名列挙や雰囲気語では代替できない。数値入り表も `validate-background-skit-blueprint` の `status: passed` と `derived_metrics` が無ければ production timing へ進めない。根拠: SKIT_GROUP_TEMPLATE_SPEC §0 / PILOT_YUKKURI_THEATER_SCENE_BIBLE / BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW
 - IR は逐次属性の全指定ではなく、scene_preset による高水準バンドル参照 + optional override を基本とする。LLM にはプリセット一覧を渡し、個別フィールドの組み立てを強いない。
 - タイトル / サムネイル / 台本の約束 (promise) は central brief で統制し、台本単体が動画タイトルを越権決定しない。最終 owner は人間であり、assistant は判断材料と候補整理を支援する。
 - visual density score / evidence richness score は creative final judgement の代替ではなく、gate / diagnostic として使う。スコア最大化自体を目的化しない。

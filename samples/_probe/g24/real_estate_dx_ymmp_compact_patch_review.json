@@ -1,0 +1,941 @@
+{
+  "version": "1.0",
+  "artifact_type": "YMM4_compact_patch_review",
+  "episode_id": "real_estate_dx",
+  "scope": "G-27 compact YMM4 patch review for 7 adapter IR dry-run candidates",
+  "source": {
+    "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+    "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+    "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json"
+  },
+  "boundary": {
+    "compact_patch_review_only": true,
+    "no_real_ymmp_write": true,
+    "no_YMM4_patch_output": true,
+    "no_render": true,
+    "no_preview_capture": true,
+    "no_production_timing": true,
+    "no_creative_acceptance": true,
+    "no_new_gate_policy_or_contract": true
+  },
+  "timeline_model": {
+    "fps": 60,
+    "review_duration_sec": 6,
+    "review_gap_sec": 0.5,
+    "layout": "sequential compact review slots, not production timing"
+  },
+  "candidates": [
+    {
+      "source_beat": {
+        "candidate_id": "RE-02-beginning",
+        "segment_id": "RE-02",
+        "phase": "beginning"
+      },
+      "candidate_id": "RE-02-beginning",
+      "intended_YMM4_item_type": "ShapeItem/TextItem placeholder set",
+      "target_layer": 7,
+      "approximate_start_frame": 0,
+      "approximate_duration_frames": 360,
+      "approximate_start_sec": 0,
+      "approximate_duration_sec": 6,
+      "required_template_or_proxy_primitive": "abstract_ui_public_search_vs_broker_db",
+      "referenced_source_asset_or_placeholder": "generic_public_search_panel + broker_db_shadow_panel",
+      "expected_visible_effect": "A public search panel dims while a generic broker DB panel appears behind it; no official REINS UI is shown.",
+      "actual_ymmp_patch_output_readiness": "ready",
+      "blocked_reason": "none",
+      "source_reference": {
+        "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+        "dry_run_candidate_id": "RE-02-beginning",
+        "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+        "visual_treatment_beat_id": "RE-02-beginning",
+        "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+        "story_segment_id": "RE-02",
+        "source_line_range": {
+          "line_start": 13,
+          "line_end": 24
+        },
+        "source_timing_estimate": {
+          "start_sec": 112.933,
+          "end_sec": 142.289,
+          "duration_sec": 29.356,
+          "basis": "review_packet story_outline segment time split by beat phase"
+        },
+        "narration_cue": "13-14行: 「レインズっていう言葉。これ要するに何なんですか?」"
+      },
+      "planned_items": [
+        {
+          "item_id": "RE02_BEGIN_PUBLIC_SEARCH_PROXY",
+          "item_type": "ShapeItem",
+          "target_layer": 7,
+          "add": "generic public-search card placeholder",
+          "approximate_start_frame": 0,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 0,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-02-beginning",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-02-beginning",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-02",
+            "source_line_range": {
+              "line_start": 13,
+              "line_end": 24
+            },
+            "source_timing_estimate": {
+              "start_sec": 112.933,
+              "end_sec": 142.289,
+              "duration_sec": 29.356,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "13-14行: 「レインズっていう言葉。これ要するに何なんですか?」"
+          }
+        },
+        {
+          "item_id": "RE02_BEGIN_BROKER_DB_SHADOW",
+          "item_type": "ShapeItem",
+          "target_layer": 8,
+          "add": "dark broker-database abstraction behind the public card",
+          "approximate_start_frame": 0,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 0,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-02-beginning",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-02-beginning",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-02",
+            "source_line_range": {
+              "line_start": 13,
+              "line_end": 24
+            },
+            "source_timing_estimate": {
+              "start_sec": 112.933,
+              "end_sec": 142.289,
+              "duration_sec": 29.356,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "13-14行: 「レインズっていう言葉。これ要するに何なんですか?」"
+          }
+        },
+        {
+          "item_id": "RE02_BEGIN_ACCESS_LABEL",
+          "item_type": "TextItem",
+          "target_layer": 9,
+          "add": "short access-gap label",
+          "approximate_start_frame": 0,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 0,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-02-beginning",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-02-beginning",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-02",
+            "source_line_range": {
+              "line_start": 13,
+              "line_end": 24
+            },
+            "source_timing_estimate": {
+              "start_sec": 112.933,
+              "end_sec": 142.289,
+              "duration_sec": 29.356,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "13-14行: 「レインズっていう言葉。これ要するに何なんですか?」"
+          }
+        }
+      ]
+    },
+    {
+      "source_beat": {
+        "candidate_id": "RE-02-development",
+        "segment_id": "RE-02",
+        "phase": "development"
+      },
+      "candidate_id": "RE-02-development",
+      "intended_YMM4_item_type": "ShapeItem/TextItem placeholder set",
+      "target_layer": 7,
+      "approximate_start_frame": 390,
+      "approximate_duration_frames": 360,
+      "approximate_start_sec": 6.5,
+      "approximate_duration_sec": 6,
+      "required_template_or_proxy_primitive": "abstract_ui_broker_db_public_portal_property_flow",
+      "referenced_source_asset_or_placeholder": "broker_db_panel + public_portal_card + property_card_flow",
+      "expected_visible_effect": "Many generic property cards flow from the broker DB panel into a smaller public portal card.",
+      "actual_ymmp_patch_output_readiness": "ready",
+      "blocked_reason": "none",
+      "source_reference": {
+        "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+        "dry_run_candidate_id": "RE-02-development",
+        "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+        "visual_treatment_beat_id": "RE-02-development",
+        "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+        "story_segment_id": "RE-02",
+        "source_line_range": {
+          "line_start": 13,
+          "line_end": 24
+        },
+        "source_timing_estimate": {
+          "start_sec": 142.289,
+          "end_sec": 171.644,
+          "duration_sec": 29.356,
+          "basis": "review_packet story_outline segment time split by beat phase"
+        },
+        "narration_cue": "15-19行: 「プロだけが入れる...巨大な物件データベース」「一部の情報」"
+      },
+      "planned_items": [
+        {
+          "item_id": "RE02_DEV_BROKER_DB_PANEL",
+          "item_type": "ShapeItem",
+          "target_layer": 7,
+          "add": "large generic broker DB panel",
+          "approximate_start_frame": 390,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 6.5,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-02-development",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-02-development",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-02",
+            "source_line_range": {
+              "line_start": 13,
+              "line_end": 24
+            },
+            "source_timing_estimate": {
+              "start_sec": 142.289,
+              "end_sec": 171.644,
+              "duration_sec": 29.356,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "15-19行: 「プロだけが入れる...巨大な物件データベース」「一部の情報」"
+          }
+        },
+        {
+          "item_id": "RE02_DEV_PUBLIC_PORTAL_CARD",
+          "item_type": "ShapeItem",
+          "target_layer": 8,
+          "add": "smaller public portal card",
+          "approximate_start_frame": 390,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 6.5,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-02-development",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-02-development",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-02",
+            "source_line_range": {
+              "line_start": 13,
+              "line_end": 24
+            },
+            "source_timing_estimate": {
+              "start_sec": 142.289,
+              "end_sec": 171.644,
+              "duration_sec": 29.356,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "15-19行: 「プロだけが入れる...巨大な物件データベース」「一部の情報」"
+          }
+        },
+        {
+          "item_id": "RE02_DEV_FLOW_LABEL",
+          "item_type": "TextItem",
+          "target_layer": 9,
+          "add": "public/private volume contrast label",
+          "approximate_start_frame": 390,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 6.5,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-02-development",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-02-development",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-02",
+            "source_line_range": {
+              "line_start": 13,
+              "line_end": 24
+            },
+            "source_timing_estimate": {
+              "start_sec": 142.289,
+              "end_sec": 171.644,
+              "duration_sec": 29.356,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "15-19行: 「プロだけが入れる...巨大な物件データベース」「一部の情報」"
+          }
+        }
+      ]
+    },
+    {
+      "source_beat": {
+        "candidate_id": "RE-06-beginning",
+        "segment_id": "RE-06",
+        "phase": "beginning"
+      },
+      "candidate_id": "RE-06-beginning",
+      "intended_YMM4_item_type": "ShapeItem/TextItem placeholder set",
+      "target_layer": 7,
+      "approximate_start_frame": 780,
+      "approximate_duration_frames": 360,
+      "approximate_start_sec": 13,
+      "approximate_duration_sec": 6,
+      "required_template_or_proxy_primitive": "property_card_overload_cluster",
+      "referenced_source_asset_or_placeholder": "property_card_overload_cluster",
+      "expected_visible_effect": "A dense cluster of simple property cards crowds the upper frame while the subtitle band stays clear.",
+      "actual_ymmp_patch_output_readiness": "ready",
+      "blocked_reason": "none",
+      "source_reference": {
+        "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+        "dry_run_candidate_id": "RE-06-beginning",
+        "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+        "visual_treatment_beat_id": "RE-06-beginning",
+        "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+        "story_segment_id": "RE-06",
+        "source_line_range": {
+          "line_start": 61,
+          "line_end": 82
+        },
+        "source_timing_estimate": {
+          "start_sec": 408.1,
+          "end_sec": 449.3,
+          "duration_sec": 41.2,
+          "basis": "review_packet story_outline segment time split by beat phase"
+        },
+        "narration_cue": "61-64行: 「選択肢が多すぎること」"
+      },
+      "planned_items": [
+        {
+          "item_id": "RE06_BEGIN_PROPERTY_CARD_CLUSTER",
+          "item_type": "ShapeItem",
+          "target_layer": 7,
+          "add": "cluster of generic property cards",
+          "approximate_start_frame": 780,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 13,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-06-beginning",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-06-beginning",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-06",
+            "source_line_range": {
+              "line_start": 61,
+              "line_end": 82
+            },
+            "source_timing_estimate": {
+              "start_sec": 408.1,
+              "end_sec": 449.3,
+              "duration_sec": 41.2,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "61-64行: 「選択肢が多すぎること」"
+          }
+        },
+        {
+          "item_id": "RE06_BEGIN_DENSITY_MARKER",
+          "item_type": "ShapeItem",
+          "target_layer": 8,
+          "add": "density/overload emphasis marker",
+          "approximate_start_frame": 780,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 13,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-06-beginning",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-06-beginning",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-06",
+            "source_line_range": {
+              "line_start": 61,
+              "line_end": 82
+            },
+            "source_timing_estimate": {
+              "start_sec": 408.1,
+              "end_sec": 449.3,
+              "duration_sec": 41.2,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "61-64行: 「選択肢が多すぎること」"
+          }
+        },
+        {
+          "item_id": "RE06_BEGIN_OVERLOAD_LABEL",
+          "item_type": "TextItem",
+          "target_layer": 9,
+          "add": "short overload label",
+          "approximate_start_frame": 780,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 13,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-06-beginning",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-06-beginning",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-06",
+            "source_line_range": {
+              "line_start": 61,
+              "line_end": 82
+            },
+            "source_timing_estimate": {
+              "start_sec": 408.1,
+              "end_sec": 449.3,
+              "duration_sec": 41.2,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "61-64行: 「選択肢が多すぎること」"
+          }
+        }
+      ]
+    },
+    {
+      "source_beat": {
+        "candidate_id": "RE-06-development",
+        "segment_id": "RE-06",
+        "phase": "development"
+      },
+      "candidate_id": "RE-06-development",
+      "intended_YMM4_item_type": "ShapeItem/TextItem placeholder set",
+      "target_layer": 7,
+      "approximate_start_frame": 1170,
+      "approximate_duration_frames": 360,
+      "approximate_start_sec": 19.5,
+      "approximate_duration_sec": 6,
+      "required_template_or_proxy_primitive": "selected_property_sheet_with_drawback_marker",
+      "referenced_source_asset_or_placeholder": "selected_property_sheet + drawback_marker",
+      "expected_visible_effect": "Noisy cards fade back while one selected property sheet and a drawback marker remain visible.",
+      "actual_ymmp_patch_output_readiness": "ready",
+      "blocked_reason": "none",
+      "source_reference": {
+        "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+        "dry_run_candidate_id": "RE-06-development",
+        "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+        "visual_treatment_beat_id": "RE-06-development",
+        "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+        "story_segment_id": "RE-06",
+        "source_line_range": {
+          "line_start": 61,
+          "line_end": 82
+        },
+        "source_timing_estimate": {
+          "start_sec": 449.3,
+          "end_sec": 490.5,
+          "duration_sec": 41.2,
+          "basis": "review_packet story_outline segment time split by beat phase"
+        },
+        "narration_cue": "65-75行: 「ノイズを排除」「デメリット...包み隠さず提示」"
+      },
+      "planned_items": [
+        {
+          "item_id": "RE06_DEV_SELECTED_PROPERTY_SHEET",
+          "item_type": "ShapeItem",
+          "target_layer": 7,
+          "add": "selected property sheet placeholder",
+          "approximate_start_frame": 1170,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 19.5,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-06-development",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-06-development",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-06",
+            "source_line_range": {
+              "line_start": 61,
+              "line_end": 82
+            },
+            "source_timing_estimate": {
+              "start_sec": 449.3,
+              "end_sec": 490.5,
+              "duration_sec": 41.2,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "65-75行: 「ノイズを排除」「デメリット...包み隠さず提示」"
+          }
+        },
+        {
+          "item_id": "RE06_DEV_DRAWBACK_MARKER",
+          "item_type": "ShapeItem",
+          "target_layer": 8,
+          "add": "drawback/risk marker badge",
+          "approximate_start_frame": 1170,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 19.5,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-06-development",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-06-development",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-06",
+            "source_line_range": {
+              "line_start": 61,
+              "line_end": 82
+            },
+            "source_timing_estimate": {
+              "start_sec": 449.3,
+              "end_sec": 490.5,
+              "duration_sec": 41.2,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "65-75行: 「ノイズを排除」「デメリット...包み隠さず提示」"
+          }
+        },
+        {
+          "item_id": "RE06_DEV_REASON_LABEL",
+          "item_type": "TextItem",
+          "target_layer": 9,
+          "add": "reason plus drawback label",
+          "approximate_start_frame": 1170,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 19.5,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-06-development",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-06-development",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-06",
+            "source_line_range": {
+              "line_start": 61,
+              "line_end": 82
+            },
+            "source_timing_estimate": {
+              "start_sec": 449.3,
+              "end_sec": 490.5,
+              "duration_sec": 41.2,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "65-75行: 「ノイズを排除」「デメリット...包み隠さず提示」"
+          }
+        }
+      ]
+    },
+    {
+      "source_beat": {
+        "candidate_id": "RE-06-turn",
+        "segment_id": "RE-06",
+        "phase": "turn"
+      },
+      "candidate_id": "RE-06-turn",
+      "intended_YMM4_item_type": "ShapeItem/TextItem placeholder set",
+      "target_layer": 7,
+      "approximate_start_frame": 1560,
+      "approximate_duration_frames": 360,
+      "approximate_start_sec": 26,
+      "approximate_duration_sec": 6,
+      "required_template_or_proxy_primitive": "property_document_editorial_comparison",
+      "referenced_source_asset_or_placeholder": "property_document_editorial_comparison",
+      "expected_visible_effect": "A property-document comparison frame makes the recommendation feel editorial, not just a generic lens.",
+      "actual_ymmp_patch_output_readiness": "ready",
+      "blocked_reason": "none",
+      "source_reference": {
+        "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+        "dry_run_candidate_id": "RE-06-turn",
+        "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+        "visual_treatment_beat_id": "RE-06-turn",
+        "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+        "story_segment_id": "RE-06",
+        "source_line_range": {
+          "line_start": 61,
+          "line_end": 82
+        },
+        "source_timing_estimate": {
+          "start_sec": 490.5,
+          "end_sec": 531.7,
+          "duration_sec": 41.2,
+          "basis": "review_packet story_outline segment time split by beat phase"
+        },
+        "narration_cue": "78-81行: 「独自の視点を買う」「タイパと納得感」"
+      },
+      "planned_items": [
+        {
+          "item_id": "RE06_TURN_DOCUMENT_COMPARISON",
+          "item_type": "ShapeItem",
+          "target_layer": 7,
+          "add": "property-document comparison frame",
+          "approximate_start_frame": 1560,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 26,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-06-turn",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-06-turn",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-06",
+            "source_line_range": {
+              "line_start": 61,
+              "line_end": 82
+            },
+            "source_timing_estimate": {
+              "start_sec": 490.5,
+              "end_sec": 531.7,
+              "duration_sec": 41.2,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "78-81行: 「独自の視点を買う」「タイパと納得感」"
+          }
+        },
+        {
+          "item_id": "RE06_TURN_RECOMMENDATION_MARKER",
+          "item_type": "ShapeItem",
+          "target_layer": 8,
+          "add": "editorial recommendation marker",
+          "approximate_start_frame": 1560,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 26,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-06-turn",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-06-turn",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-06",
+            "source_line_range": {
+              "line_start": 61,
+              "line_end": 82
+            },
+            "source_timing_estimate": {
+              "start_sec": 490.5,
+              "end_sec": 531.7,
+              "duration_sec": 41.2,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "78-81行: 「独自の視点を買う」「タイパと納得感」"
+          }
+        },
+        {
+          "item_id": "RE06_TURN_CURATION_LABEL",
+          "item_type": "TextItem",
+          "target_layer": 9,
+          "add": "curation /納得 label",
+          "approximate_start_frame": 1560,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 26,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-06-turn",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-06-turn",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-06",
+            "source_line_range": {
+              "line_start": 61,
+              "line_end": 82
+            },
+            "source_timing_estimate": {
+              "start_sec": 490.5,
+              "end_sec": 531.7,
+              "duration_sec": 41.2,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "78-81行: 「独自の視点を買う」「タイパと納得感」"
+          }
+        }
+      ]
+    },
+    {
+      "source_beat": {
+        "candidate_id": "RE-07D-beginning",
+        "segment_id": "RE-07D",
+        "phase": "beginning"
+      },
+      "candidate_id": "RE-07D-beginning",
+      "intended_YMM4_item_type": "ShapeItem/TextItem placeholder set",
+      "target_layer": 7,
+      "approximate_start_frame": 1950,
+      "approximate_duration_frames": 360,
+      "approximate_start_sec": 32.5,
+      "approximate_duration_sec": 6,
+      "required_template_or_proxy_primitive": "abstract_ai_recommendation_panel_property_card",
+      "referenced_source_asset_or_placeholder": "abstract_ai_recommendation_panel + property_card",
+      "expected_visible_effect": "An abstract AI recommendation panel highlights a property card as a confident match without product branding.",
+      "actual_ymmp_patch_output_readiness": "ready",
+      "blocked_reason": "none",
+      "source_reference": {
+        "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+        "dry_run_candidate_id": "RE-07D-beginning",
+        "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+        "visual_treatment_beat_id": "RE-07D-beginning",
+        "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+        "story_segment_id": "RE-07D",
+        "source_line_range": {
+          "line_start": 130,
+          "line_end": 143
+        },
+        "source_timing_estimate": {
+          "start_sec": 864.117,
+          "end_sec": 902.728,
+          "duration_sec": 38.611,
+          "basis": "review_packet story_outline segment time split by beat phase"
+        },
+        "narration_cue": "130-132行: 「あなたに100%マッチする物件はこれです」"
+      },
+      "planned_items": [
+        {
+          "item_id": "RE07D_BEGIN_AI_PANEL",
+          "item_type": "ShapeItem",
+          "target_layer": 7,
+          "add": "abstract AI recommendation panel",
+          "approximate_start_frame": 1950,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 32.5,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-07D-beginning",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-07D-beginning",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-07D",
+            "source_line_range": {
+              "line_start": 130,
+              "line_end": 143
+            },
+            "source_timing_estimate": {
+              "start_sec": 864.117,
+              "end_sec": 902.728,
+              "duration_sec": 38.611,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "130-132行: 「あなたに100%マッチする物件はこれです」"
+          }
+        },
+        {
+          "item_id": "RE07D_BEGIN_MATCH_PROPERTY_CARD",
+          "item_type": "ShapeItem",
+          "target_layer": 8,
+          "add": "matched property card placeholder",
+          "approximate_start_frame": 1950,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 32.5,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-07D-beginning",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-07D-beginning",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-07D",
+            "source_line_range": {
+              "line_start": 130,
+              "line_end": 143
+            },
+            "source_timing_estimate": {
+              "start_sec": 864.117,
+              "end_sec": 902.728,
+              "duration_sec": 38.611,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "130-132行: 「あなたに100%マッチする物件はこれです」"
+          }
+        },
+        {
+          "item_id": "RE07D_BEGIN_CONFIDENCE_LABEL",
+          "item_type": "TextItem",
+          "target_layer": 9,
+          "add": "short confidence label",
+          "approximate_start_frame": 1950,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 32.5,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-07D-beginning",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-07D-beginning",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-07D",
+            "source_line_range": {
+              "line_start": 130,
+              "line_end": 143
+            },
+            "source_timing_estimate": {
+              "start_sec": 864.117,
+              "end_sec": 902.728,
+              "duration_sec": 38.611,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "130-132行: 「あなたに100%マッチする物件はこれです」"
+          }
+        }
+      ]
+    },
+    {
+      "source_beat": {
+        "candidate_id": "RE-07D-development",
+        "segment_id": "RE-07D",
+        "phase": "development"
+      },
+      "candidate_id": "RE-07D-development",
+      "intended_YMM4_item_type": "ShapeItem/TextItem placeholder set",
+      "target_layer": 7,
+      "approximate_start_frame": 2340,
+      "approximate_duration_frames": 360,
+      "approximate_start_sec": 39,
+      "approximate_duration_sec": 6,
+      "required_template_or_proxy_primitive": "abstract_real_estate_risk_marker_set",
+      "referenced_source_asset_or_placeholder": "boundary_inheritance_neighborhood_risk_markers",
+      "expected_visible_effect": "Boundary, inheritance, and neighborhood risk markers appear behind the matched property card.",
+      "actual_ymmp_patch_output_readiness": "ready",
+      "blocked_reason": "none",
+      "source_reference": {
+        "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+        "dry_run_candidate_id": "RE-07D-development",
+        "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+        "visual_treatment_beat_id": "RE-07D-development",
+        "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+        "story_segment_id": "RE-07D",
+        "source_line_range": {
+          "line_start": 130,
+          "line_end": 143
+        },
+        "source_timing_estimate": {
+          "start_sec": 902.728,
+          "end_sec": 941.339,
+          "duration_sec": 38.611,
+          "basis": "review_packet story_outline segment time split by beat phase"
+        },
+        "narration_cue": "133-136行: 「データだけではない」「目に見えないリスク」"
+      },
+      "planned_items": [
+        {
+          "item_id": "RE07D_DEV_RISK_MARKER_SET",
+          "item_type": "ShapeItem",
+          "target_layer": 7,
+          "add": "abstract boundary/inheritance/neighborhood marker set",
+          "approximate_start_frame": 2340,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 39,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-07D-development",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-07D-development",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-07D",
+            "source_line_range": {
+              "line_start": 130,
+              "line_end": 143
+            },
+            "source_timing_estimate": {
+              "start_sec": 902.728,
+              "end_sec": 941.339,
+              "duration_sec": 38.611,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "133-136行: 「データだけではない」「目に見えないリスク」"
+          }
+        },
+        {
+          "item_id": "RE07D_DEV_PROPERTY_CONTEXT_CARD",
+          "item_type": "ShapeItem",
+          "target_layer": 8,
+          "add": "property context card behind risk markers",
+          "approximate_start_frame": 2340,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 39,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-07D-development",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-07D-development",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-07D",
+            "source_line_range": {
+              "line_start": 130,
+              "line_end": 143
+            },
+            "source_timing_estimate": {
+              "start_sec": 902.728,
+              "end_sec": 941.339,
+              "duration_sec": 38.611,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "133-136行: 「データだけではない」「目に見えないリスク」"
+          }
+        },
+        {
+          "item_id": "RE07D_DEV_RISK_LABEL",
+          "item_type": "TextItem",
+          "target_layer": 9,
+          "add": "short invisible-risk label",
+          "approximate_start_frame": 2340,
+          "approximate_duration_frames": 360,
+          "approximate_start_sec": 39,
+          "approximate_duration_sec": 6,
+          "source_reference": {
+            "adapter_ir_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+            "dry_run_candidate_id": "RE-07D-development",
+            "visual_treatment_proof": "samples/_probe/g24/real_estate_dx_visual_treatment_proof.json",
+            "visual_treatment_beat_id": "RE-07D-development",
+            "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+            "story_segment_id": "RE-07D",
+            "source_line_range": {
+              "line_start": 130,
+              "line_end": 143
+            },
+            "source_timing_estimate": {
+              "start_sec": 902.728,
+              "end_sec": 941.339,
+              "duration_sec": 38.611,
+              "basis": "review_packet story_outline segment time split by beat phase"
+            },
+            "narration_cue": "133-136行: 「データだけではない」「目に見えないリスク」"
+          }
+        }
+      ]
+    }
+  ],
+  "excluded_items": [
+    {
+      "candidate_id": "RE-02-turn",
+      "actual_ymmp_patch_output_readiness": "blocked",
+      "blocked_reason": "Accepted-with-adjustment proxy is not in the 7 adapter IR dry-run candidates; the opacity-layer adjustment must be reflected before compact patch review."
+    },
+    {
+      "candidate_id": "RE-07D-turn",
+      "actual_ymmp_patch_output_readiness": "deferred",
+      "blocked_reason": "Specialist / cast / silhouette representation policy remains undecided; no compact patch review item is planned for this beat."
+    }
+  ],
+  "rollup": {
+    "candidate_count": 7,
+    "ready_for_actual_ymmp_patch_output_count": 7,
+    "ready_for_minimal_patched_ymmp_next_slice": true,
+    "blocked_count": 0,
+    "deferred_count": 0,
+    "excluded_blocked_count": 1,
+    "excluded_deferred_count": 1,
+    "missing_information_preventing_patch_output": [],
+    "next_safe_artifact": "minimal patched .ymmp for YMM4 readback"
+  }
+}

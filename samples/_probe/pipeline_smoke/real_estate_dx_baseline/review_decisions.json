@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "episode_id": "real_estate_dx_baseline",
+  "review_scope": "multi_topic_pipeline_smoke",
+  "source_packet": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/review_packet.json",
+  "saved_at": "2026-05-11T00:00:00.000Z",
+  "save_origin": "pipeline_smoke_fixture",
+  "overall_action": "continue_multi_topic_smoke",
+  "overall_comment": "Fixture decision record proves the decision artifact path; it is not user creative acceptance.",
+  "decisions": [
+    {
+      "segment_id": "real-estate-dx-baseline",
+      "decision": "接続OK",
+      "comment": "production asset/proxy classification is unresolved; YMM4 remains blocked",
+      "classification_hint": "reviewable"
+    }
+  ]
+}

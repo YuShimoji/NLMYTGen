@@ -5,6 +5,54 @@
 
 ---
 
+## 0. 背景茶番劇の役割定義
+
+背景茶番劇は、語り手台本への **合いの手 / リアクション track ではない**。語り手・ゆっくり立ち絵とは並行する別レイヤーであり、台本行を逐語理解して反応するのではなく、動画テーマに説得力を足す独立した小場面として設計する。
+
+たとえば不動産DXの pilot では、`はい` で頷く、`いや、鋭い` で飛び上がる、という発話同期の短尺反応は茶番劇の本義ではない。成立する方向は、`ベッドで何千もの物件情報を眺める人物`、`PCでREINS等の業務データベースを扱う不動産業者`、`情報独占からキュレーション/CXへ移る比喩場面` のように、背景側だけで見ても状況が分かる visual story である。
+
+背景茶番劇を Production IR / `.ymmp` placement へ進める前に、最低限次を scene bible として分ける。`scene plan + asset matrix` だけでは、時間配分・登場人物の継続性・画面内の読み順が未固定のため不十分である。さらに IR / 演出指定へ進める場合は [BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW.md](BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW.md) に従い、総尺・絶対時刻・演出秒数・タイムライン密度・台本成熟度を実数値で定量化し、`validate-background-skit-blueprint` の validator result と照合する。`総尺 / mm:ss / 演出秒数が必要` のような項目名列挙や validator result のない数値表は、設計図ではなく未完 checklist である。
+
+- `scene beat`: 背景側で何が起きるか
+- `script line range`: どの台本範囲を支える背景劇か
+- `time budget`: 各 beat に割く構成比
+- `cast continuity`: 主役・対立役・変化後の役が全編でどう継続/退場/交代するか
+- `visual situation`: 視聴者が一目で理解できる場所・人物・行動
+- `story logic`: その小場面が動画テーマへどう説得力を足すか
+- `script/theme anchor`: 台本のどの論点を支えるか。台本行への反応ではなく、節・主張・比喩への対応として書く
+- `needed assets or templates`: 必要な背景・人物・小道具・既存 YMM4 template
+- `characters`: 背景側に出す人物・役割・既存演者との対応
+- `placement` / `screen placement`: 画面内の位置関係・前景/背景・出入り方向
+- `props`: 端末、物件カード、扉、荷物など視聴者が状況を読むための小道具
+- `rest span`: 背景劇を休ませ、語りを邪魔しない区間
+- `asset availability`: 既存 / 不足 / user-owned authoring / assistant-owned selection の区別
+- `existing template reuse`: `delivery_v1_templates.ymmp` 等を使うなら、誰を何の比喩として演じるか
+- `missing template candidate`: 足りない場合に起票する新 template。曖昧なまま fallback しない
+- `mechanical proof path`: registry / template source / readback / compact review のどれで機械確認するか
+- `timetable`: IR へ進める場合の total duration / start-end time / duration sec / density audit。値を入れ、`script_source` / `line_count` / `range_basis` を添える
+
+この scene bible が無い `skit_group` / background skit handoff は **invalid**。発話行に合わせた cue 表だけで作った `.ymmp` は、GroupItem transport / readback proof にはなっても creative acceptance / production quality の証跡にはならない。役割理解がズレた artifact は YMM4 確認待ちへ渡さず、`BACKGROUND_SKIT_ROLE_DRIFT` として gap report と scene bible へ戻す。
+
+`pilot_yukkuri_theater_v1` の正本は [PILOT_YUKKURI_THEATER_SCENE_BIBLE.md](PILOT_YUKKURI_THEATER_SCENE_BIBLE.md)。不動産DXでは `消費者` / `ゲートキーパー業者` / `キュレーター・リスク管理プロ` の cast continuity と 7 ブロックの time budget を先に固定する。
+
+### 0.1 十分な返答の基準
+
+ユーザーに「茶番劇の認識」や「この台本ならどう演出するか」を説明する返答は、概念共有だけでは不足である。最低限、次を同じ返答内で接続する。
+
+- `認識`: 合いの手禁止、独立背景小場面、transport/readback proof と creative acceptance の分離
+- `不動産DX scene bible`: 7 ブロックの `script line range / time budget / cast continuity / screen placement / props / 休ませる区間 / block proof path`
+- `quantitative timetable`: IR / 演出指定に進むなら `total duration / mm:ss start-end / duration sec / density audit / sparse risk` を実数値で含めること。値を埋められない場合は `TIMETABLE_BLOCKED_*` と exact missing source を返すこと。IR/YMM4 へ接続するには validator `status: passed` と `derived_metrics` が必要
+- `配達 mini bible`: 台本行 cue ではなく、一本の小話として `setup → complication → reaction → resolution` が読める構成
+- `intent / template boundary`: IR intent (`enter_from_left` 等) と template 名 (`delivery_enter_from_left_v1` 等) を分けること
+- `asset / proof matrix`: 既存 template で足りるもの、不足素材、新 template candidate、user-owned / assistant-owned、proof path の区別
+- `next action`: assistant がまず scene bible に基づく gap report と template/proxy 分類を作ること。`このまま IR / YMM4 確認に接続できる` とは言わず、IR / YMM4 配置 / creative acceptance にはまだ進めないこと
+
+「未確定です」「設計表を作るべきです」「素材面が未整理です」「いま提示できるのは scene bible レベルです」で止めるのは未完 closeout である。未確定を認める場合でも、次に assistant が作る `background_skit_blueprint.json + validate-background-skit-blueprint result` へ接続する。雰囲気語や励ましで closeout しない。
+
+また、返答内で `Python は既存 GroupItem を配置するだけ` のように adapter の役割を潰して書いてはいけない。素材アートは生成しないが、IR validation、registry 解決、template source 解析、`.ymmp` patch、readback、gap report 生成を担う。
+
+---
+
 ## 1. この仕様が直す混同
 
 現行 repo では次の 3 つが混ざりやすい。
@@ -118,7 +166,22 @@ canonical template から次のような小演出を派生テンプレートと�
 - `delivery_enter_from_left_v1`
 - `delivery_surprise_oneshot_v1`
 
-上記 2 件は user report により standalone native template library export まで完了。次の拡張順は `nod` → `deny_oneshot` → `exit_left` を既定とする。
+上記 2 件は user report により standalone native template library export まで完了。
+
+**2026-04-27 `nod` export sync:**
+
+- `delivery_nod_v1`
+
+`delivery_nod_v1` は user report により GroupItem template として保存済み。body / face の 2 `ImageItem` が一緒に動き、nod は見えるが支配的ではなく、`TachieItem` 混入なし。`skit_group.intent.nod` は `direct_proven` へ昇格済み。
+
+**2026-04-27 v1 planned set completion sync:**
+
+- `delivery_deny_oneshot_v1`
+- `delivery_exit_left_v1`
+
+User completed the remaining 2 samples. Repo inspection of `samples/haitatsuin_2026-04-12_g24_proof.ymmp` confirmed body + face are plain `ImageItem` children, target motion is held by Layer 9 `GroupItem` snippets with matching Remarks, and `TachieItem` count is 0. `delivery_deny_oneshot_v1` is represented as a short X-axis one-shot sway; `delivery_exit_left_v1` uses an OUT `InOutMoveEffect` toward left. `skit_group.intent.deny_oneshot` and `skit_group.intent.exit_left` are now `direct_proven`.
+
+Note: the repo-tracked proof `.ymmp` is now a compact template/sample proof, not the earlier voice-anchored adoption corpus. Production-use validation should use `samples/canonical.ymmp` + real/probe IR for template resolution, then only create new motions if a concrete production gap appears.
 
 **未実証・将来候補** (skit_02 以降で起票):
 
@@ -135,9 +198,27 @@ canonical template から次のような小演出を派生テンプレートと�
 - canonical template 1 件
 - 初回スターターバッチ 2 件（`enter_from_left` / `surprise_oneshot`）
 - manual acceptance + 1 件の production adoption proof + standalone export
-- その後に派生テンプレート 6〜8 件へ拡張
+- 現行 v1 の planned author/export 5 件は完了済み
 - template registry 台帳
 - 「自動生成で触れた箇所 / 手動確認が必要な箇所」の注記
+
+### 3.5 ループ停止条件
+
+小演出テンプレート author/export は、動きの数を増やすこと自体を目的にしない。
+
+- v1 planned set は `enter_from_left` / `surprise_oneshot` / `nod` / `deny_oneshot` / `exit_left` の 5 件で一旦止める
+- 5 件が閉じたので、次は新規 motion 作成ではなく **実制作 IR で template 解決が手作業を減らすか**を見る
+- `happy_sway` / `sad_droop` / `thinking_zoom` / `nod_oneshot` / `reset_center` は、実制作で exact / fallback / manual note の不足が出た時だけ再起票する
+- 「それらしい動きをさらに作る」は、具体的な production gap がない限り G-24 の次 frontier にしない
+
+### 3.6 役割分担
+
+G-24 は user が全サンプルを手作りする運用ではない。
+
+- user: 少数の reusable YMM4 native GroupItem template を author/export し、見え方の PASS / FAIL を判断する
+- assistant: registry / audit / Capability Atlas を同期し、既存テンプレートの組み合わせと fallback / manual note で production-like sample を組み立てる
+- user: assistant が組み立てた sample / 解決結果を YMM4 上で確認し、template 不足や違和感だけを返す
+- 追加テンプレート作成は、この確認で concrete production gap が出た時にだけ再開する
 
 ---
 
@@ -155,6 +236,8 @@ canonical template から次のような小演出を派生テンプレートと�
 3. 汎用テンプレートで吸収できない
    - 未自動化として注記
    - 手動確認ポイントを明記
+
+重要: template 解決は、operator に named template を選ばせるための手順票ではない。現段階の主経路は、IR / registry / repo-tracked `.ymmp` template source を `patch-ymmp --skit-group-template-source --skit-group-only` へ渡し、YMM4 で作った GroupItem template を対象発話の timeline に自動挿入することである。`audit-skit-group` は read-only の補助診断に降格する。
 
 ### 4.2 自動生成側が返すべきもの
 
@@ -178,6 +261,19 @@ canonical template から次のような小演出を派生テンプレートと�
 - `note: multi-stage acting is not covered by current template set`
 - `manual_checks: second beat transition, exit timing`
 
+2026-04-27 時点の production-like alias:
+
+- `surprise_jump` -> `delivery_surprise_oneshot_v1`
+- `deny_shake` -> `delivery_deny_oneshot_v1`
+- `panic_shake` は通常の Writer IR 語彙に含めず、必要なら自然文メモ側の新テンプレ候補として扱う
+
+2026-04-27 時点の IR 生成フロー反映:
+
+- skit_group actor 用 utterance は `motion_target: "layer:9"` を必須にする
+- `motion` は v1 intent（`enter_from_left` / `surprise_oneshot` / `nod` / `deny_oneshot` / `exit_left`）または alias intent（`surprise_jump` / `deny_shake`）を使う
+- `panic_shake` など未登録 label は `validate-ir --strict-skit-group-intents` で止め、Part 2 JSON には出さない
+- 最小入力形は `samples/g24_skit_group_minimal_production_ir.json`
+
 ### 4.3 本番で主軸にしないもの
 
 - `motion` の direct write 拡張
@@ -193,9 +289,10 @@ canonical template から次のような小演出を派生テンプレートと�
 IR 側の責務は次の順にする。
 
 1. まず高水準の演出意図を出す
-2. その意図を template registry に解決する
-3. `intent_fallbacks` にあれば fallback template を返す
-4. それも無ければ manual note を返す
+2. skit_group actor 用発話なら `motion_target: "layer:9"` を入れ、既存 v1 intent または登録済み alias intent を `motion` に置く
+3. その意図を template registry に解決する
+4. `intent_fallbacks` にあれば fallback template を返す
+5. それも無ければ manual note を返す
 
 このため、将来 IR を拡張する場合も **raw effect の列挙ではなく template 解決を先に置く**。
 
@@ -215,8 +312,8 @@ IR 側の責務は次の順にする。
 - manual check
 - 適用対象 (`speaker_tachie` / `skit_group` / `overlay_render`)
 
-この registry は **patch-time resolver ではない**が、`audit-skit-group` / `patch-ymmp --skit-group-registry` / `apply-production --skit-group-registry` の **preflight 入力**として使う。
-先に canonical anchor / exact / fallback / manual note の成立可否を機械判定し、その後で必要なら resolver 実装へ広げる。
+この registry は GroupItem 本体を埋め込まない。GroupItem 本体は repo-tracked `.ymmp` template source に置き、registry は intent / fallback / template_name の解決表として `patch-ymmp --skit-group-registry --skit-group-template-source --skit-group-only` の patch-time resolver に渡す。
+`audit-skit-group` は canonical anchor / exact / fallback / manual note の read-only 確認に限り使う。
 
 ---
 
@@ -251,9 +348,37 @@ IR 側の責務は次の順にする。
 ### 8.1 直近の正規 frontier
 
 1. canonical skit_group template を 1 件固定する
-2. 小演出テンプレートを 6〜8 件量産する
-3. registry 台帳を埋める
-4. production では template 解決 + fallback note を返す
+2. v1 planned set（`enter_from_left` / `surprise_oneshot` / `nod` / `deny_oneshot` / `exit_left`）を閉じる（完了）
+3. registry / Capability Atlas を `direct_proven` へ同期する（完了）
+4. production-like alias を登録する（`surprise_jump` / `deny_shake` は完了、`panic_shake` は manual/new-template）
+5. production では template 解決 + fallback を `.ymmp` timeline へ自動配置し、manual note ではなく write capability の成立で評価する
+6. 追加 motion は production gap が出た時だけ再起票する
+
+実制作 IR 生成時の固定導線:
+
+```bash
+python -m src.cli.main validate-ir \
+  <production_skit_group_ir.json> \
+  --skit-group-registry samples/registry_template/skit_group_registry.template.json \
+  --strict-skit-group-intents \
+  --format text
+
+python -m src.cli.main patch-ymmp \
+  samples/_probe/g24/real_estate_dx_csv_import_base.ymmp \
+  samples/_probe/g24/real_estate_dx_skit_group_ir_aligned.json \
+  --skit-group-registry samples/registry_template/skit_group_registry.template.json \
+  --skit-group-template-source samples/templates/skit_group/delivery_v1_templates.ymmp \
+  --skit-group-only \
+  -o samples/_probe/g24/real_estate_dx_skit_group_patched.ymmp
+```
+
+`exact` / `fallback` は自動配置対象、未登録 label は strict validation で停止する。real estate DX スライスでは YMM4 CSV 読込後に長文が複数 VoiceItem へ分割されるため、`real_estate_dx_skit_group_ir_aligned.json` の `row_start` / `row_end` を placement anchor として使う。template source 欠落は `SKIT_TEMPLATE_SOURCE_MISSING` として fail-fast し、operator 手順で補完しない。
+
+template source 内で複数テンプレートが同一 frame/layer に重なる場合、GroupItem と同じ `Remark` を持つ ImageItem だけを同一 clip として扱う。古い絶対パス等で ImageItem の `FilePath` が repo-local asset に解決できない場合は `SKIT_TEMPLATE_SOURCE_ASSET_MISSING` として fail-fast する。
+
+2026-04-28 以後の placement は raw clone ではなく template-analyzed placement とする。`patch-ymmp` / `apply-production` は repo-tracked template source の GroupItem 群から rest pose を中央値で導出し、各 template の `X` / `Y` / `Zoom` を template-local baseline から rest pose へ平行移動して配置する。これにより authoring 用の外側座標を production timeline へそのまま持ち込まず、`surprise_oneshot` の Y ジャンプや `deny_oneshot` の X 揺れなどの相対 delta は維持する。数値 transform を導出できない場合は `SKIT_TEMPLATE_ANALYSIS_INSUFFICIENT` で fail-fast する。
+
+YMM4 での確認は production timing artifact と compact review artifact を分ける。production artifact は実発話 frame へ配置するため演出が動画全体に散る。visual acceptance では `--skit-group-compact-review` を使い、同じ IR / registry / template source から skit_group cue だけを短い間隔で並べた `samples/_probe/g24/real_estate_dx_skit_group_compact_review.ymmp` を見る。ImageItem の `FilePath` は YMM4 が読める Windows path として書き出し、WSL の `/mnt/c/...` path を production artifact に混入させない。
 
 ### 8.2 やらないこと
 

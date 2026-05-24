@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "screenshot_artifact": "samples/_probe/g24/real_estate_dx_gui_treatment_detail_screenshot.png",
+  "screenshot_capture_method": "Electron offscreen BrowserWindow.loadFile(gui/index.html) + switchMainTab(review, alignWizard=false) + select RE-02 + scroll to proof + paint event PNG",
+  "not_csv_tab": true,
+  "not_standalone_html_png_json_review": true,
+  "active_review_tab": true,
+  "active_review_content": true,
+  "visible_is_design_review": true,
+  "proof_image_visible": true,
+  "beat_table_visible": true,
+  "sidecar_warnings_visible": true,
+  "anti_pattern_visible": true,
+  "additional_checks_visible": true,
+  "motion_primitives_visible": true,
+  "frame_contract_violation_count_visible": true,
+  "read_only_decision_context_visible": true,
+  "proof_targets_visible": true,
+  "proof_revision_visible": true,
+  "has_corruption": false,
+  "screenshot_width": 1659,
+  "screenshot_height": 1081
+}

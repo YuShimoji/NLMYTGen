@@ -183,9 +183,9 @@ Step 5: 1 本の実案件で proof → P02 に 1 行追記
 }
 ```
 
-#### scene_presets (将来・G-21 承認後)
+#### scene_presets（generic template bundle）
 
-現状は proposed。承認後に assistant が `samples/registry_template/scene_presets.template.json` を作成する想定。
+`scene_presets` は generic な YMM4 template bundle を参照するための設計語彙。外部茶番劇演者は G-24 `skit_group` template-first が主経路なので、ここへ raw effect 名や未登録 skit_group intent を増やさない。
 
 ```json
 {
@@ -209,7 +209,7 @@ Step 5: 1 本の実案件で proof → P02 に 1 行追記
 ## 4. 境界線の再確認
 
 - **Python の役割はテキスト変換と registry 解決まで**。画像合成・レンダリングは禁止 ([AUTOMATION_BOUNDARY.md](AUTOMATION_BOUNDARY.md))
-- **`patch-ymmp` の現状書込み範囲**: face / idle_face / slot / overlay (ImageItem 挿入) / bg (section 単位) / se (AudioItem)。**motion / transition / bg_anim は未書き込み** (G-12 で route 測定のみ)
+- **`patch-ymmp` / `apply-production` の現在の書込み範囲**: face / idle_face / body_id / slot / bg / overlay / se / bg_anim / motion / group_motion / skit_group placement / transition (`none` / `fade`)。詳細な前提・必要 map・GUI 未露出の差分は [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md) を正本とする。
 - **視覚効果本体 (テンプレの作り込み・素材配置) は YMM4 上で user 作業**。assistant は registry 雛形と判断フレームワークを提供
 
 ---

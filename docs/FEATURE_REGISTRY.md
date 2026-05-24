@@ -20,6 +20,18 @@
 
 ---
 
+## 却下理由の補助用語
+
+`rejected` / `hold` は目的そのものを永久に塞ぐとは限らない。汚染パッチ由来の過剰ブロックを避けるため、以下の補助用語で「何が禁止され、何が後継経路として許可されるか」を分ける。
+
+| 用語 | 意味 |
+|------|------|
+| method-rejected | 当時の手段・実装経路は却下。目的は別手段で再起票できる |
+| goal-allowed | 同じ制作目的を、承認済み境界内の別経路で進めてよい |
+| successor-lane | 旧案の反省を踏まえ、別 ID / 別 artifact として成立した後継経路 |
+
+---
+
 ## 自動化レイヤー
 
 機能がどこで動作するかを明示する。詳細は [AUTOMATION_BOUNDARY.md](AUTOMATION_BOUNDARY.md) を参照。
@@ -58,14 +70,14 @@
 | B-07 | 入力分析 (inspect) | done | L2 | 話者統計・ロール推定 |
 | B-08 | 話者マップテンプレート生成 (generate-map) | done | L2 | |
 | B-09 | 複数ファイル一括処理 | done | L2 | build-csv に複数パス指定 |
-| B-10 | 編集支援メタデータ (--emit-meta) | rejected | L2 | 未承認で混入 → rejected (2026-03-30)。コード除去済み |
+| B-10 | 編集支援メタデータ (--emit-meta) | rejected | L2 | **method-rejected**: 旧 `build-csv --emit-meta` sidecar は未承認混入のため復活禁止・コード除去済み。ただし診断 JSON、Production IR、session manifest、packaging brief などの承認済み機械可読 artifact は **goal-allowed** |
 | B-11 | S-5 workflow proof パック（字幕 overflow triage + evidence capture） | done | L2 | `build-csv --max-lines --chars-per-line` + 統計（CLI `--stats` または GUI の JSON `stats` / F-04）を起点に、YMM4 取込前のはみ出し候補把握と取込後の修正量記録を repeatable にした。初回 proof で辞書 0 / timing 0 / 改行系 pain 優勢を確認 |
 | B-12 | 行バランス重視の字幕分割 | done | L2 | `--balance-lines` を追加。`--max-lines` 使用時に 2 行字幕へ自然な改行を opt-in で挿入し、読点・句点・カギカッコ付近を候補にしつつ行バランスを崩しにくい分割 heuristics を実装。`uv run pytest` 51 PASS。再観測では手動改行は減ったが、句読点の少ない長文と 1 文字最終行は残存。Electron GUI の CSV タブから同フラグを指定可能（新規 F-ID ではない表面化）。運用の正本: [GUI_MINIMUM_PATH.md](GUI_MINIMUM_PATH.md) |
 | B-13 | 節分割 + widow/orphan guard | done | L2 | `--balance-lines` の内部改善として、句読点が少ない一文を `、` や接続句で節分割する fallback と、1 文字最終行を避ける guard を追加。`uv run pytest` 54 PASS、sample dry-run で 57 発話 → 62 行に再編。post-import 再観測では手動改行 5 / 再分割 10 / 不自然な単語分割 5 で、改善はあるが決定打ではなかった |
 | B-14 | aggressive clause chunking | done | L2 | `--balance-lines` の内部改善として、複数文発話の中にある単一長文も sentence ごとに再展開し、通常候補が尽きた場合は引用句・機能語まで使った aggressive chunking fallback を適用。`uv run pytest` 56 PASS、sample dry-run で 57 発話 → 95 行、overflow candidates は 3 件まで減少 |
 | B-15 | トップダウン改行 Phase 1: ページ間分割 | done | L2 | ページ間 (話者行) 分割をトップダウン方式に再設計。大区切り限定、閉じ括弧+助詞保護、カタカナ語/数字/漢字連続/括弧ペア内の分断禁止、再帰的 reflow。67テストPASS。ユーザー検証でページ間バランス偏り解消を確認。行内折り返し制御は B-16 へ |
 | B-16 | トップダウン改行 Phase 2: 行内折り返し制御 | done | L2 | `insert_inline_breaks()` で chars_per_line ごとに大区切り候補で行内改行 `\n` を挿入。`reflow_subtitles()` の最終段に統合。候補がなければ YMM4 自動折り返しに委ねる。72テストPASS。手動検証待ち |
-| B-17 | 字幕改行アルゴリズム v2 (統合リフロー) | done | L2 | B-15/B-16 を統合リフローとして再設計。`reflow_utterance()` ベースの一貫したトップダウン方式。91テストPASS |
+| B-17 | 字幕改行アルゴリズム v2 (統合リフロー) | done | L2 | B-15/B-16 を統合リフローとして再設計。`reflow_utterance()` ベースの一貫したトップダウン方式。2026-04-28 に YMM4 表示条件へ寄せる opt-in 補正として `--subtitle-font-scale` / `--subtitle-font-source-ymmp` / `--wrap-px` / `--measure-backend` を追加し、GUI CSV タブにも露出。WPF helper は実測幅 backend、EAW は fallback。B-17 残差観測は実害行だけ paired evidence として扱う |
 | B-18 | 台本機械診断（NLM→ゆっくり前段） | done | L2 | `diagnose-script` CLI + `src/pipeline/script_diagnostics.py`。`--format json` / `--strict` / `--expected-explainer` / `--expected-listener`。仕様: `docs/SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md`。dry proof: `docs/verification/B18-script-diagnostics-ai-monitoring-sample.md` |
 
 ### C. YMM4 連携・演出 (L3-YMM4内部)
@@ -73,20 +85,20 @@
 | ID | 機能 | ステータス | レイヤー | 備考 |
 |----|------|-----------|---------|------|
 | C-01 | YMM4 台本読込（CSV インポート） | info | L3 | Python 機能ではなく手動工程。WORKFLOW.md S-4 の確認済み導線 |
-| C-02 | YMM4 演出テンプレート（Python 生成） | rejected | L3 | YMM4 テンプレートの外部生成・操作インターフェースが存在しない。NLMYTGen の責務（テキスト変換）を超える。**代替:** YMM4 の機能でテンプレートを手動作成・再利用する（WORKFLOW.md S-0） |
-| C-03 | YMM4 プロジェクトファイル (.ymmp) 自動生成 | rejected | L2→L3 | .ymmp は音声ファイル参照を含み、音声は YMM4 が台本読込時に内蔵 TTS で生成する。外部から完全な .ymmp を生成することは原理的に不可能 |
-| C-04 | 背景動画の配置自動化（Python 制御） | rejected | L3 | Python から YMM4 内部の配置を制御するインターフェースが存在しない。**代替:** YMM4 上で手動配置する（WORKFLOW.md S-6a） |
-| C-05 | 素材配置の自動指定（Python 制御） | rejected | L3 | Python から YMM4 内部の素材配置を制御するインターフェースが存在しない。**代替:** YMM4 テンプレートで初期配置を定型化する（WORKFLOW.md S-0） |
+| C-02 | YMM4 演出テンプレート（Python 生成） | rejected | L3 | **method-rejected**: Python が YMM4 native template を外部生成・再発明する案のみ却下。YMM4 で作った native template source を IR / registry で解決し `.ymmp` timeline へ配置する G-24 は **successor-lane / goal-allowed** |
+| C-03 | YMM4 プロジェクトファイル (.ymmp) 自動生成 | rejected | L2→L3 | **method-rejected**: 音声・発音情報・字幕配置を含む `.ymmp` のゼロ生成や YMM4 台本読込代替は不可。台本読込後 `.ymmp` に対する限定 patch は **goal-allowed** |
+| C-04 | 背景動画の配置自動化（Python 制御） | rejected | L3 | **method-rejected**: Python で YMM4 GUI / 内部配置を万能制御する案のみ却下。IR + `bg_map` / `bg_anim_map` / timeline profile による post-import 限定 patch は **goal-allowed** |
+| C-05 | 素材配置の自動指定（Python 制御） | rejected | L3 | **method-rejected**: 任意素材を Python 側判断で直接配置する万能制御は却下。registry / map / template source に固定された overlay・se・skit_group・thumbnail slot patch は **successor-lane / goal-allowed** |
 | C-06 | YMM4 演出・レンダリング工程（手動） | info | L3 | Python 機能ではなく手動工程の記録。読み上げ確認(S-5)・背景演出(S-6)・最終確認(S-7)。詳細は WORKFLOW.md 参照 |
 | C-07 | S-6 演出メモ生成（GUI LLM プロンプトテンプレート） | done | L3 補助 | v3 確定。Part 1: マクロ演出設計 (全体トーン/ペーシング/背景遷移)、Part 2: ミクロ演出指示 (4パターン/発話単位)、Part 3: 素材調達ガイド。`docs/S6-production-memo-prompt.md`。統合ガイド: `docs/gui-llm-setup-guide.md`。画像例由来のオペレータ意図の言語化正本: [C07-visual-pattern-operator-intent.md](C07-visual-pattern-operator-intent.md) |
-| C-08 | S-8 サムネイルコピー生成（GUI LLM プロンプトテンプレート） | done | L3 補助 | C-07 と同方式。キャッチコピー5案 + サブコピー3案 + 表情提案 + 背景方向性。`docs/S8-thumbnail-copy-prompt.md`。C-07 と統合して Custom GPT / Claude Project に1つのプロンプトとして固定化可能 |
+| C-08 | S-8 サムネイルコピー生成（GUI LLM プロンプトテンプレート） | done | L3 補助 | キャッチコピー5案 + サブコピー3案 + 表情提案 + 背景方向性。`docs/S8-thumbnail-copy-prompt.md`。現行 C-07 v4 は本編 Production IR 専用なので、サムネコピーは S8/H-02 として別ラウンドまたは別 GPT に分離する |
 | C-09 | S-1 台本 refinement 支援プロンプト（GUI LLM） | done | L3 補助 | `docs/S1-script-refinement-prompt.md`。`diagnose-script --format json` + 生台本を GUI LLM に渡す手順。`docs/gui-llm-setup-guide.md` に導線あり |
 
 ### D. 素材取得・生成 (L1 + L2)
 
 | ID | 機能 | ステータス | レイヤー | 備考 |
 |----|------|-----------|---------|------|
-| D-01 | サムネイル自動生成（Python 画像生成） | rejected | L2 | Python での画像生成は禁止。**代替:** YMM4 テンプレートの文字・画像入れ替えによる手動制作（WORKFLOW.md S-8） |
+| D-01 | サムネイル自動生成（Python 画像生成） | rejected | L2 | **method-rejected**: Python 画像生成・画像合成のみ却下。YMM4 サムネテンプレを複製し、H-02 `thumbnail_design` と `thumb.*` slot を `audit-thumbnail-template` / `patch-thumbnail-template` で限定 patch する経路は **successor-lane / goal-allowed** |
 | D-02 | 演出判断支援 (方向転換: 素材API → テキスト演出支援) | hold | L1 | 方向転換 (2026-04-01): 素材API検索 → 演出判断支援。C-07 v3 に L-macro + L-research として統合完了。v3 proof 成功 (4/5)。独立機能としては不要。C-07 v3 の改善要望が出た場合に再検討 |
 
 ### E. 出力・配信 (L4)
@@ -94,7 +106,7 @@
 | ID | 機能 | ステータス | レイヤー | 備考 |
 |----|------|-----------|---------|------|
 | E-01 | YouTube 投稿自動化 | hold | L4 | YouTube Data API v3 |
-| E-02 | YouTube メタデータ生成（タイトル・説明・タグ） | hold | L2 | 単体では YouTube Studio へのコピペ先が変わるだけ。E-01 または別の実 integration point とセットで再検討 |
+| E-02 | YouTube メタデータ生成（タイトル・説明・タグ） | hold | L2 | 旧 standalone metadata template は hold。H-01 / H-02 / H-04 を入力にした YouTube metadata draft は **successor-lane** として再起票可能。E-01 または別の実 integration point と接続するまで自動投稿・本線注入はしない |
 
 ### F. 開発インフラ・GUI
 
@@ -102,7 +114,7 @@
 |----|------|-----------|---------|------|
 | F-01 | 分割プレビュー GUI | quarantined | GUI | 前セッションの汚染バッチ由来。S-5 の痛点はあるが GUI が最短価値経路か未検証 |
 | F-02 | 設定管理 GUI | quarantined | GUI | 前セッションの汚染バッチ由来。設定固定点と F-01 の価値検証前に進めない |
-| F-03 | YMM4 出力プレビュー | rejected | GUI | YMM4 の見え方を Python で模倣することは視覚的生成に該当。YMM4 自体で確認すべき |
+| F-03 | YMM4 出力プレビュー | rejected | GUI | **method-rejected**: Python で YMM4 表示を模倣する preview のみ却下。YMM4 で開く compact review `.ymmp`、readback、audit、placement report は **goal-allowed** |
 | F-04 | CSV タブ話者統計・はみ出し候補表示（`build-csv` JSON `stats`） | done | GUI | `--stats` 相当を `--format json` 応答に含め、GUI の Dry Run / Build CSV 結果パネルで表形式表示。制作は GUI のみで取込前の把握が可能 |
 
 #### F-01 / F-02 再審査ゲート（2026-04-06）
@@ -136,19 +148,30 @@ G-15〜G-18 は **実装済み**。現行ステータスは本台帳の各行を
 | G-16 | 複数 overlay / スタック（1 発話複数 ImageItem） | done | L2/L3 | `overlay` を文字列または配列で受け、同一発話に複数 ImageItem。[G16-multi-overlay-patch.md](verification/G16-multi-overlay-patch.md) |
 | G-17 | motion / transition / bg_anim の ymmp 書き込み Adapter | done | L2/L3 | `--timeline-profile` + `--motion-map`（`video_effect` 辞書）等。契約失敗時は書き込みスキップ。[G17-motion-adapter-packet.md](verification/G17-motion-adapter-packet.md)。**Phase2（別フラグ）:** `--tachie-motion-map` で VideoEffects 配列台帳＋発話区間による `TachieItem` 分割（`--timeline-profile` 未指定時のみ）。G-14 列挙子 `bg_anim` の X/Y/Zoom キーフレームは micro bg 生成時に別経路で適用 |
 | G-18 | SE AudioItem タイムライン挿入（write route 実装） | done | L2/L3 | `patch-ymmp` の `_apply_se_items` が `AudioItem` を挿入。[G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)。履歴メモ [G18-se-audioitem-deferred.md](verification/G18-se-audioitem-deferred.md)。P2C 参照 |
-| G-19 | 立ち絵 複数体素材 × ゆっくり顔（body_variant / face_map 束ね） | done | L2/L3 | **スコープ注意（2026-04-15 明示）**: 本 FEATURE は **ゆっくり系立ち絵（TachieItem）内部の body パーツ束ね**。**外部人物素材（配達員・消防員等）の茶番劇演者**は別系統で扱い、現行主軸は **G-24 template-first**。混同しない。 / 複数の体素材それぞれに、同一系のゆっくり顔パーツを `face_map`（character-scoped 含む）で解決する運用を機械化。**方式**: Option A（ディレクトリ + マニフェスト）。IR に `body_id`（carry-forward）を追加し、`--face-map-bundle` CLI フラグでバンドルレジストリを指定。`validate-ir` に `BODY_ID_UNKNOWN` / `BODY_FACE_MAP_MISS` チェック追加。準備正本: [TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md](verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md)。**スコープ**: body_id はシーンレベル（V1）。キャラ別 body_id は別スライス。`--palette` 経路は single-body のまま |
+| G-19 | 立ち絵 複数体素材 × ゆっくり顔（body_variant / face_map 束ね） | done | L2/L3 | **スコープ注意（2026-04-15 明示）**: 本 FEATURE は **ゆっくり系立ち絵（TachieItem）内部の body パーツ束ね**。**外部人物素材（配達員・消防員等）の茶番劇演者**は別系統で扱い、closed G-24 template-first foundation / G-27 review cycle と混同しない。 / 複数の体素材それぞれに、同一系のゆっくり顔パーツを `face_map`（character-scoped 含む）で解決する運用を機械化。**方式**: Option A（ディレクトリ + マニフェスト）。IR に `body_id`（carry-forward）を追加し、`--face-map-bundle` CLI フラグでバンドルレジストリを指定。`validate-ir` に `BODY_ID_UNKNOWN` / `BODY_FACE_MAP_MISS` チェック追加。準備正本: [TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md](verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md)。**スコープ**: body_id はシーンレベル（V1）。キャラ別 body_id は別スライス。`--palette` 経路は single-body のまま |
 | G-21 | 茶番劇体テンプレ（旧 body_map / ImageItem 挿入案） | hold | L2/L3 | **旧主案。現行の主軸ではない。** 外部素材 body/head を patch 側で直接組み立てる案だったが、2026-04-17 に **template-first 運用**へ整理したため保留。茶番劇演者の正本は [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md)。再開条件: template-first で量産できず、body_map/insert 型の自動化が bottleneck と実証された場合のみ。 |
 | G-20 | 立ち絵 顔/体の幾何（反転・平行移動・相対オフセット）IR + patch | approved | L2/L3 | 体と顔をセットで反転・移動し視覚整合を保つ。運用前提は **中央基準 GroupItem テンプレ**（使い捨て Group 化は標準運用にしない）。A案（既存 GroupItem の `X/Y/Zoom` 操作）を優先し、B案（Group生成挿入）は将来比較対象として分離。**スライス1**: `validate-ir` で `group_target` の空・前後空白・改行含有を `GROUP_TARGET_*` として事前エラー化。**スライス2**: `group_motion_map` に `mode: "relative"` を追加（現在値への加算。テンプレ互換性向上）。`_load_group_motion_map` でモード値バリデーション。残候補（C: face_map_bundle 整合チェック、D: テンプレ監査標準化）は [G20 包括レビュー §8](verification/G20-group-and-asset-automation-comprehensive-review-2026-04.md) に起票済み。反転（IsFlipped）は実キー調査後に別スライス。 |
 | G-23 | Motion Preset Library | done | L2/L3 | `motion` ラベル → `tachie_motion_map_library.json` → VideoEffects の library。エフェクト原子は `samples/EffectsSamples_2026-04-15.ymmp` (111種) から抽出。仕様正本: [MOTION_PRESET_LIBRARY_SPEC.md](MOTION_PRESET_LIBRARY_SPEC.md)。**適用先は 2 経路**: (1) `motion_target` 未指定時は speaker の `TachieItem` (`_apply_motion_to_tachie_items`)、(2) `motion_target: "layer:N"` 指定時は該当レイヤーの `ImageItem`/`GroupItem` (`_apply_motion_to_layer_items`)。両経路とも同じ `tachie_motion_effects_map` を参照する。 |
 | G-22 | Dual-rendering scene_presets（補助経路） | hold | L2/L3 | 立ち絵 TachieItem と書き出し PNG overlay の両運用は **補助経路としては有効**だが、2026-04-17 時点の主軸ではない。茶番劇演者の正本は [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md) の GroupItem template-first。必要時に `overlay_render` 補助として再開する。 |
-| G-24 | 茶番劇 Group テンプレ生成・解決運用 | approved | L2/L3 | **現行の主軸 frontier。** 配達員などの外部素材演者を `speaker_tachie` と分離し、**1 canonical template → 小演出テンプレ量産 → production で template 解決 + fallback + 未自動化注記**の流れを正本化する。開発段階の成果物は YMM4 native template 資産と `skit_group_registry` 台帳。`motion` の direct write 拡張を主軸にしない。**2026-04-21 starter batch**: 初回 native template authoring は `enter_from_left` / `surprise_oneshot` の 2 件に固定し、manual acceptance + 1 件の production adoption proof + standalone export まで完了。`deny_oneshot` / `exit_left` / `nod` は canonical corpus 上の preflight exact を維持する catalog entry として残し、次の拡張順は `nod` → `deny_oneshot` → `exit_left`。正本: [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md)。shared registry 雛形: `samples/registry_template/skit_group_registry.template.json`。 |
+| G-24 | 茶番劇 Group テンプレ生成・解決運用 | done | L2/L3 | **基盤クローズ。** 配達員などの外部素材演者を `speaker_tachie` と分離し、**repo-tracked YMM4 template source → registry 解決 → patch-ymmp GroupItem 自動配置**の流れを正本化した。v1 planned set 5 件は `direct_proven`、`samples/templates/skit_group/delivery_v1_templates.ymmp` に 5/5 同梱済み、`--skit-group-only` で face/bg 未解決を切り離して exact / fallback を自動配置できる。G-24 は template-first skit_group 基盤の成果で閉じる。Real Estate DX 固有の cast/props 不足、proxy 採否、場面ごとの良し悪し判断は G-27 へ切り出す。正本: [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md)。運用サイクル: [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md)。shared registry 雛形: `samples/registry_template/skit_group_registry.template.json`。template source: `samples/templates/skit_group/delivery_v1_templates.ymmp`。 |
+| G-27 | Real Estate DX background skit review cycle | approved | L2/L3 | **G-24 後継の案件固有 review cycle。** `samples/_probe/g24/real_estate_dx_background_skit_blueprint_validate.json` は `status=blocked` のため、cast motion IR / YMM4 creative acceptance / production timing には進めない。G-27 は `scene bible → validator → GUI Review Console → proxy or asset decision → revised blueprint → cast motion IR` の順で、各場面を `production template exists` / `accepted proxy` / `cut from plan` に分類する。判断面は GUI `デザインレビュー` タブのタイムライン型 Review Workbench、入力は台本概略・全体構成・台本抜粋付き `samples/_probe/g24/real_estate_dx_review_packet.json`、出力は `samples/_probe/g24/real_estate_dx_review_decisions.json`。`samples/_probe/g24/real_estate_dx_overlay_card_review_map.md` は根拠ログ。close gate は validator `passed`、または production 継続しない明示 blocked closeout。**Shot Layout Plan / 1 frame の構図設計の実装手順** は [SCENE_COMPOSITION_SCHEMA.md](SCENE_COMPOSITION_SCHEMA.md) v0.1 (composition grid / 5 composition types / visual role vocabulary / element primitive rules / Beat → composition type mapping / SCS compliance check) を正本とする。`visual_proxy_v2` / `micro_scene_probe` / `micro_scene_visibility_probe` / `primitive_visibility_calibration_probe` の失敗は SCS の lens で `indexed_whiteboard` / `shape_size_mode_invalid` / `drawing_semantics_calibration` として分類済み。正本: [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md)、[G27_REVIEW_CONSOLE_SPEC.md](G27_REVIEW_CONSOLE_SPEC.md)、[SCENE_COMPOSITION_SCHEMA.md](SCENE_COMPOSITION_SCHEMA.md)。 |
+| G-25 | YMM4 property-based variation probe | done | L2/L3 | **successor-lane / goal-allowed / production-unusable**: 手動作成済み `.ymmp` の `Remark` 付き Group/Image/Text/Shape clip から、`X/Y/Zoom/Rotation`、反転系 route、`VideoEffects` stack fingerprint を読み取り、保守的な property 派生候補を JSON report 化する。CLI は `probe-ymmp-variations SOURCE.ymmp`。`-o REVIEW.ymmp` 指定時、source が template/stub の場合は `--review-seed` で YMM4 保存済み full project canvas を指定し、その末尾へ compact review 用 variation clip を追加する。2026-04-30 のYMM4確認では、出力は開けるが `nudge / scale / rotate / effect_reuse` は動きのvariationとして使えなかったため、G-24 production placement へ自動接続しない。正本: [G25-animation-variation-acceptance-2026-04-30.md](verification/G25-animation-variation-acceptance-2026-04-30.md)。 |
+| G-26 | Motion primitive grammar / compatibility probe | proposed | L2/L3 | G-25 の後継。手動作成済みの `うなずき` / `退場` / `小ジャンプ` / `傾き` などを、座標差分ではなく motion primitive として扱う。`primitive_id`、`motion_role`、`start_pose` / `end_pose`、`dominant_channels`、`reset_policy`、`direction_semantics`、`compatible_after` / `forbidden_after` を機械可読化し、自由な総当たり合成ではなく、ニュートラル復帰・方向意味・終端姿勢が成立する候補だけを JSON compatibility report 化する。最初は production placement に接続せず、review checklist までで止める。これらの primitive 語彙は G-26 preflight の initial candidate であり、手動 `.ymmp` の route readback と設計選択後に確定する。現時点では実装 schema ではない。 **2026-04-30 Route readback 観測 (3 motions)**: `nod` は GroupItem の Rotation 揺れ [0, -6.2, 0] と `CenterPointEffect` (Vertical=Bottom, Horizontal=Custom (X≈525, Y≈137)) anchor の組合せ、`exit_left` は VFX `InOutMoveEffect` 委譲 (route 値はすべて static)、`surprise_oneshot` は Y 揺れ [-57, -107, -57, -57]。motion ごとに dominant channel が異なるため単軸 variant 直積は構造的に却下、option B (motion primitive 一級市民) が第一候補、option C (hybrid + tilt modifier) は手動 tilt 重畳 `.ymmp` の登録待ち。**2026-04-30 Phase 3 仮 contract / screen review**: `_tmp/g26/draft_contracts/*.json` に `nod` / `exit_left` / `surprise_oneshot` の draft contract を作成し、`dominant_channels` の `VFX:<EffectType>` 拡張と `anchor_dependency` 新設を反映。画面確認用に YMM4 保存済み `samples/_probe/g24/real_estate_dx_csv_import_base.ymmp` を seed とし、`_tmp/g26/screen_review/g26_motion_primitive_compact_review.ymmp` を生成。readback は inserted GroupItems 3 / POSIX asset paths 0 / openability pass。正本: [G26-motion-primitive-contract-screen-review-2026-04-30.md](verification/G26-motion-primitive-contract-screen-review-2026-04-30.md)。 |
+
+G-26 evidence gate note (2026-04-30): current screen review is machine-pass, but visual acceptance is not recorded. A repo-local scan of 53 `.ymmp` files found no tilt or 2-motion chain source Remarks, so `tilt` remains out-of-contract and `compatible_after` / `forbidden_after` remain `unknown`.
+
+G-26 recipe lab correction (2026-04-30): absence of user-authored tilt/chain sources is not a creation ban. Assistant may create purpose-driven review artifacts from existing YMM4-saved canvas + existing GroupItem/ImageItem template source, as long as it does not Python-preview/render, zero-generate `.ymmp`, synthesize new image/effect types, or connect to G-24 production placement. Current lab: `_tmp/g26/recipe_lab/g26_goal_motion_recipe_lab.ymmp` with 12 goal recipes (`nod_*`, `jump_*`, `tilt_*`, `chain_*`), openability pass, POSIX asset paths 0. These are proposed review candidates; `compatible_after` / `forbidden_after` still require YMM4 visual acceptance.
+
+G-26 recipe pipeline v1 (2026-04-30): added CLI artifact route `build-motion-recipes` for intent-first sample creation. It consumes `samples/recipe_briefs/g26_motion_recipe_brief.v1.json`, YMM4 seed/template source, `samples/effect_catalog.json`, `samples/_probe/b2/effect_full_samples.json`, and `samples/tachie_motion_map_library.json`, then writes `_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1.{ymmp,md}` plus readback JSON. Initial set covers 12 proposed recipes (`nod_*`, `jump_*`, `panic_crash`, `shocked_jump`, `surprised_chromatic`, `anger_outburst`, `shobon_droop`, `lean_curious`). 正本: [G26-motion-recipe-pipeline-2026-04-30.md](verification/G26-motion-recipe-pipeline-2026-04-30.md)。
+
+G-26 Calibration phase 開始 (2026-05-01): v1/slice3_proof/slice4_proof 計 16 recipe を visual acceptance で defect 7 件 (face fixed / anchor reused / hold 退化 / 振幅不足 / effect parameter 弱小 / etc.) のため全 superseded、`_tmp/g26/recipe_pipeline/superseded_2026-05-01/` に物理移動。Anti-Shortcut Rules を R7-R13 へ拡張し、Phase 0 (Calibration: element 単位 baseline 観測) を pipeline 図に追加。`face_id` / `anchor_template_source` を recipe schema 必須化予定。次は calibration .ymmp 6-7 件で element threshold を確定 → `motion_recipe.py` 改修 → 段階 rebuild。正本: [MOTION_PRODUCTION_PIPELINE.md](MOTION_PRODUCTION_PIPELINE.md) Phase 0 + R7-R13。
 
 ### H. Packaging / 評価 / オーケストレーション (L2 + L4)
 
 | ID | 機能 | ステータス | レイヤー | 備考 |
 |----|------|-----------|---------|------|
-| H-01 | Packaging Orchestrator brief | approved | L2 | タイトル / サムネ / 台本の約束を中央制御する text-only brief。`docs/PACKAGING_ORCHESTRATOR_SPEC.md` v0.1 で schema を定義済み。`promise` / `audience_hook` / `required_evidence` / `forbidden_overclaim` / `alignment_check` を正本化し、台本単体がタイトルを越権決定しないようにする。`docs/verification/H01-packaging-orchestrator-ai-monitoring-dry-proof.md` で repo-local dry proof まで記録済み。旧 code orchestrator パターンの復活ではない。空テンプレ出力: CLI `emit-packaging-brief-template`、GUI 品質診断タブの「H-01 テンプレを保存」。**スコープ確定（2026-04）**: 現状の **機械化範囲はテンプレ生成・GUI 保存まで**とする。ブリーフを入力にした自動パイプライン連携（例: `build-csv` / `apply-production` への自動注入、スコア結果のクローズドループ反映）は **未承認**。**拡張する場合**は本行の「スコープ確定」を更新し、`approved` の下位タスクとして台帳に分割してから実装する。 |
-| H-02 | Thumbnail strategy v2 (具体数値優先 + pattern rotation) | done | L2 | C-08 の上位互換候補。`docs/THUMBNAIL_STRATEGY_SPEC.md` v0.1 で specificity-first / banned pattern / rotation policy / output contract を定義済み。dry proof + strict GUI rerun proof (2026-04-06) pass。仕様準拠確認済み (4/5案が preferred_specifics 使用、banned pattern なし、Specificity Ledger・Brief Compliance Check 出力)。コピー品質の実用改善は別課題 |
+| H-01 | Packaging Orchestrator brief | approved | L2 | タイトル / サムネ / 台本の約束を中央制御する text-only brief。`docs/PACKAGING_ORCHESTRATOR_SPEC.md` v0.1 で schema を定義済み。`promise` / `audience_hook` / `required_evidence` / `forbidden_overclaim` / `alignment_check` を正本化し、台本単体がタイトルを越権決定しないようにする。`docs/verification/H01-packaging-orchestrator-ai-monitoring-dry-proof.md` で repo-local dry proof まで記録済み。旧 code orchestrator パターンの復活ではない。空テンプレ出力: CLI `emit-packaging-brief-template`、GUI 品質診断タブの「H-01 テンプレを保存」。2026-04-28 に production handoff 補助として `build-session-manifest` を追加し、CSV / IR / validate/apply / patched ymmp / `thumbnail_design` の artifact と manual acceptance 状態を 1 枚に束ねられるようにした。**スコープ確定（2026-04）**: ブリーフや manifest は artifact/handoff であり、`build-csv` / `apply-production` への自動注入、スコア結果のクローズドループ反映は **未承認**。**拡張する場合**は本行の「スコープ確定」を更新し、`approved` の下位タスクとして台帳に分割してから実装する。 |
+| H-02 | Thumbnail strategy v2 (具体数値優先 + pattern rotation) | done | L2 | C-08 の上位互換候補。`docs/THUMBNAIL_STRATEGY_SPEC.md` v0.1 で specificity-first / banned pattern / rotation policy / output contract を定義済み。dry proof + strict GUI rerun proof (2026-04-06) pass。仕様準拠確認済み (4/5案が preferred_specifics 使用、banned pattern なし、Specificity Ledger・Brief Compliance Check 出力)。2026-04-28 に `thumbnail_design` companion JSON と YMM4 サムネ template slot 契約を分離し、`audit-thumbnail-template` / `patch-thumbnail-template` で既存 `thumb.text.*` / `thumb.image.*` item の限定 patch を実装済み。実サムネ template proof は未完了で、画像生成・PNG 書き出し・サムネ `.ymmp` 新規生成は含めない |
 | H-03 | Visual density score | done | L2/L3 | `docs/VISUAL_DENSITY_SCORE_SPEC.md` v0.1 準拠。`score-visual-density` CLI（`src/pipeline/visual_density_score.py`）と GUI の品質診断タブで category スコア集計・total・warning/repair を出力。dry proof は `docs/verification/H03-visual-density-ai-monitoring-proof.md`。ymmp readback 併用は将来拡張 |
 | H-04 | Evidence richness score | done | L1/L2 | `docs/EVIDENCE_RICHNESS_SCORE_SPEC.md` v0.1 準拠。`score-evidence` CLI（`src/pipeline/evidence_score.py`）と GUI の品質診断タブ。manual proof は `docs/verification/H04-evidence-richness-ai-monitoring-proof.md`。タイトル / サムネ約束と本文根拠のギャップ診断 |
 | H-05 | S-8 thumbnail probe score（レーンE補助判定） | done | L2 | Automation Probe。`score-thumbnail-s8` で手動採点 JSON を機械集約し、PASS/NEEDS_FIX を返す。画像生成・画像解析は行わない。運用正本: `docs/verification/LANE-E-S8-prep-2026-04-09.md`。**承認範囲（2026-04-09）**: CLI 集約と検証記録のみ（`src/pipeline/thumbnail_s8_score.py` / `tests/test_thumbnail_s8_score.py`）。サムネ生成自動化は含めない。**GUI**: 品質診断タブに「CLI のみ」の注記あり。コマンド例は制作手順本文に置かず [docs/dev/CLI_REFERENCE.md](dev/CLI_REFERENCE.md) に集約。 |

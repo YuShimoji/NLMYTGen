@@ -15,7 +15,10 @@ function switchMainTab(tabName, { alignWizard = true } = {}) {
   document.querySelectorAll('.tab-content').forEach((s) => {
     s.classList.toggle('active', s.id === `tab-${tabName}`);
   });
-  if (tabName === 'scoring') {
+  const reviewWorkbenchOn = tabName === 'review';
+  document.body.classList.toggle('review-workbench-active', reviewWorkbenchOn);
+  document.querySelector('.body-content')?.classList.toggle('review-workbench-active', reviewWorkbenchOn);
+  if (tabName === 'scoring' || tabName === 'review') {
     clearWizardMainFocus();
   }
   if (alignWizard) {
@@ -33,7 +36,7 @@ document.querySelectorAll('.tab').forEach((btn) => {
 
 // --- 制作ウィザード (1 本の動画向け導線) ---
 const WIZARD_HINTS = {
-  1: '台本 .txt を選び、Speaker Map・Max lines・自然改行（balance-lines）で B-11/B-12 手順に揃え、Reflow v2 を必要に応じて確認して Build CSV。出力 CSV は手順 4 で row-range 用に参照できます。',
+  1: '台本 .txt を選び、YMM4 の字幕 FontSize が分かる .ymmp と Wrap Width (px) を指定するか Subtitle Font Scale (%) を確認します。Speaker Map・Max lines・自然改行（balance-lines）で B-11/B-12 手順に揃え、Reflow v2 を必要に応じて確認して Build CSV。出力 CSV は手順 4 で row-range 用に参照できます。',
   2: 'Dry Run で行数・話者・話者統計とはみ出し候補（パネル下部）を確認し、問題なければ Build CSV で書き出します。',
   3: 'Production .ymmp と IR JSON（または貼り付け保存）を選び、IR に face があれば Palette 必須。Validate IR を実行します。',
   4: 'CSV(row-range) に手順 1 の出力が入っているか確認し、IR に bg があれば BG Map 推奨。Dry Run → Apply Production の順が安全です。',
@@ -51,14 +54,15 @@ const WIZARD_STEP_LABELS = {
   5: '手順 5 · 完了',
 };
 
-/** メイン上部の手順コンテキスト帯（品質診断タブでは非表示） */
+/** メイン上部の手順コンテキスト帯（品質診断・レビュータブでは非表示） */
 function refreshWizardMainContextStrip() {
   const strip = document.getElementById('wizard-main-context');
   const body = document.getElementById('wizard-main-context-body');
   const stepEl = document.getElementById('wizard-main-context-step');
   if (!strip || !body || !stepEl) return;
   const scoringOn = document.getElementById('tab-scoring')?.classList.contains('active');
-  if (scoringOn) {
+  const reviewOn = document.getElementById('tab-review')?.classList.contains('active');
+  if (scoringOn || reviewOn) {
     strip.classList.add('hidden');
     body.textContent = '';
     stepEl.textContent = '';
@@ -93,11 +97,15 @@ function clearWizardMainFocus() {
 
 /**
  * メイン領域の該当ブロックへスクロールし、アウトラインを付与する。
- * 品質診断タブ表示中は no-op（ウィザード表現の整理は別途）。
+ * 品質診断・レビュータブ表示中は no-op（ウィザード表現の整理は別途）。
  */
 function focusWizardMain(step) {
   const scoringSection = document.getElementById('tab-scoring');
   if (scoringSection && scoringSection.classList.contains('active')) {
+    return;
+  }
+  const reviewSection = document.getElementById('tab-review');
+  if (reviewSection && reviewSection.classList.contains('active')) {
     return;
   }
   let anchorId = WIZARD_MAIN_ANCHORS[step];
@@ -193,9 +201,23 @@ function formatBuildCsvStatsHtml(stats) {
   const op = stats.overflow_params;
   if (op) {
     const oc = stats.overflow_candidates || [];
+    const effectiveCpl = op.effective_chars_per_line || op.chars_per_line;
+    const fontScale = op.subtitle_font_scale || 100;
+    const scaleNote = effectiveCpl === op.chars_per_line && fontScale === 100
+      ? `${op.chars_per_line} 文字/行基準`
+      : `実効 ${effectiveCpl} 文字/行（基準 ${op.chars_per_line}・フォント ${fontScale}%）`;
+    const wrapNote = op.measure_backend
+      ? ` / 実測 ${op.effective_wrap_px}px（${op.measure_backend}）`
+      : '';
     parts.push(
-      `<h4 class="csv-stats-title">はみ出し候補（${op.max_display_lines} 行超・${op.chars_per_line} 文字/行基準）</h4>`,
+      `<h4 class="csv-stats-title">はみ出し候補（${op.max_display_lines} 行超・${escapeHtml(scaleNote + wrapNote)}）</h4>`,
     );
+    if (op.subtitle_font_scale_source === 'ymmp') {
+      parts.push(
+        `<p class="csv-stats-hint">字幕フォント倍率は YMM4 から推定: FontSize ${op.subtitle_font_size}`
+        + ` / 基準 ${op.subtitle_base_font_size}（候補 ${op.subtitle_font_entry_count} 件）</p>`,
+      );
+    }
     if (oc.length === 0) {
       parts.push('<p class="csv-stats-ok">候補なし（この設定では推定が閾値内）</p>');
     } else {
@@ -442,6 +464,36 @@ const FAILURE_HELP = {
     doc: 'docs/OPERATOR_WORKFLOW.md',
     docLabel: 'OPERATOR_WORKFLOW',
   },
+  SKIT_GROUP_UNKNOWN_INTENT: {
+    title: 'skit_group の motion が registry に無い',
+    action: 'IR を v1/alias intent に直すか、制作 gap として新テンプレート候補に分離してください。panic_shake は通常語彙に入れません。',
+    doc: 'docs/SKIT_GROUP_TEMPLATE_SPEC.md',
+    docLabel: 'SKIT_GROUP_TEMPLATE_SPEC',
+  },
+  SKIT_TEMPLATE_SOURCE_MISSING: {
+    title: '必要な GroupItem テンプレートが template source に無い',
+    action: 'repo-tracked template source に同名 Remark の GroupItem を同期してください。手順票で手置き補完しません。',
+    doc: 'docs/SKIT_GROUP_TEMPLATE_SPEC.md',
+    docLabel: 'SKIT_GROUP_TEMPLATE_SPEC',
+  },
+  SKIT_TEMPLATE_SOURCE_ASSET_MISSING: {
+    title: 'template source の画像パスが repo-local asset に解決できない',
+    action: 'ImageItem の FilePath を samples 配下の実在ファイルへ同期し、古い Windows 絶対パスのままにしないでください。',
+    doc: 'docs/SKIT_GROUP_TEMPLATE_SPEC.md',
+    docLabel: 'SKIT_GROUP_TEMPLATE_SPEC',
+  },
+  SKIT_TEMPLATE_ANALYSIS_INSUFFICIENT: {
+    title: 'template-analyzed placement に必要な数値 transform が足りない',
+    action: 'GroupItem の X/Y/Zoom keyframe を template source から読める状態に直してください。配置の手修正より先に source fact を確認します。',
+    doc: 'docs/SKIT_GROUP_TEMPLATE_SPEC.md',
+    docLabel: 'SKIT_GROUP_TEMPLATE_SPEC',
+  },
+  SKIT_PLACEMENT_NO_VOICE_TIMING: {
+    title: 'skit_group 配置先の VoiceItem タイミングが見つからない',
+    action: 'CSV 読込済み ymmp と aligned IR の row_start / row_end / index 対応を見直してください。',
+    doc: 'docs/WORKFLOW.md',
+    docLabel: 'WORKFLOW',
+  },
 };
 
 function blobContainsFailureCode(blob, code) {
@@ -507,6 +559,681 @@ document.addEventListener('click', (e) => {
   });
 });
 
+const DEFAULT_REVIEW_PACKET_PATH = 'samples/_probe/g24/real_estate_dx_review_packet.json';
+const DEFAULT_REVIEW_DECISION_PATH = 'samples/_probe/g24/real_estate_dx_review_decisions.json';
+const DEFAULT_REVIEW_TREATMENT_PROOF_PATH = 'samples/_probe/g24/real_estate_dx_visual_treatment_proof.json';
+const DEFAULT_PIPELINE_SMOKE_MANIFEST_PATH = 'samples/_probe/pipeline_smoke/pipeline_smoke_manifest.json';
+let currentReviewPacket = null;
+let currentReviewTreatmentProof = null;
+let currentPipelineSmoke = null;
+let currentReviewDecisionPath = DEFAULT_REVIEW_DECISION_PATH;
+let activeReviewIndex = 0;
+let reviewDecisionState = [];
+
+function escapeAttr(s) {
+  return escapeHtml(s).replace(/"/g, '&quot;');
+}
+
+function reviewOptionFor(segment, label) {
+  return (segment.options || []).find((opt) => opt.label === label) || null;
+}
+
+function formatReviewSeconds(value) {
+  if (typeof value !== 'number' || !Number.isFinite(value)) return '';
+  return `${Math.round(value)}秒`;
+}
+
+function formatScriptSpan(span) {
+  if (!span) return '';
+  const parts = [];
+  if (span.line_start && span.line_end) parts.push(`台本 ${span.line_start}-${span.line_end}行`);
+  if (span.csv_row_start && span.csv_row_end) parts.push(`CSV ${span.csv_row_start}-${span.csv_row_end}行`);
+  if (typeof span.time_start_sec === 'number' && typeof span.time_end_sec === 'number') {
+    parts.push(`${formatReviewSeconds(span.time_start_sec)}-${formatReviewSeconds(span.time_end_sec)}`);
+  }
+  return parts.join(' / ');
+}
+
+function getReviewSegments() {
+  return currentReviewPacket?.segments || [];
+}
+
+function repoRelativeAssetSrc(relPath) {
+  if (typeof relPath !== 'string' || !relPath || relPath.includes('..') || /^[a-zA-Z]:/.test(relPath)) {
+    return '';
+  }
+  return `../${relPath.split('/').map(encodeURIComponent).join('/')}`;
+}
+
+function getTreatmentProofSegment(segmentId) {
+  return (currentReviewTreatmentProof?.segments || []).find((segment) => segment.id === segmentId) || null;
+}
+
+function getTreatmentProofFrameCount() {
+  return Number(currentReviewTreatmentProof?.frame_count || 0);
+}
+
+function formatMotionPrimitives(primitives) {
+  if (!primitives || typeof primitives !== 'object') return '';
+  return ['enter', 'move', 'emphasize', 'reveal', 'dim']
+    .map((key) => {
+      const value = primitives[key];
+      const items = Array.isArray(value) ? value : (value ? [value] : []);
+      return items.length ? `${key}: ${items.join(' / ')}` : '';
+    })
+    .filter(Boolean)
+    .join(' | ');
+}
+
+function getReviewDecisionState(index) {
+  return reviewDecisionState[index] || { decision: '', comment: '' };
+}
+
+function setReviewDecisionState(index, patch) {
+  if (!reviewDecisionState[index]) {
+    reviewDecisionState[index] = { decision: '', comment: '' };
+  }
+  reviewDecisionState[index] = { ...reviewDecisionState[index], ...patch };
+}
+
+function getReviewDecisionOption(segment, index) {
+  const state = getReviewDecisionState(index);
+  return reviewOptionFor(segment, state.decision);
+}
+
+function renderReviewProgress() {
+  const segments = getReviewSegments();
+  const progress = document.getElementById('review-progress-summary');
+  const missing = document.getElementById('review-missing-list');
+  if (!segments.length) {
+    if (progress) progress.textContent = '未読込';
+    if (missing) missing.textContent = '未読込';
+    return;
+  }
+  const missingIds = segments
+    .filter((_segment, index) => !getReviewDecisionState(index).decision)
+    .map((segment) => segment.id);
+  const doneCount = segments.length - missingIds.length;
+  if (progress) progress.textContent = `${doneCount}/${segments.length} 判断済み`;
+  if (missing) {
+    missing.textContent = missingIds.length
+      ? `未判断: ${missingIds.join(' / ')}`
+      : '全 segment 判断済みです。';
+    missing.classList.toggle('complete', missingIds.length === 0);
+  }
+}
+
+function renderReviewEpisodeContext(packet) {
+  const panel = document.getElementById('review-episode-context');
+  if (!panel) return;
+  const context = packet.episode_context;
+  if (!context) {
+    panel.innerHTML = '';
+    panel.classList.add('hidden');
+    return;
+  }
+  panel.classList.remove('hidden');
+  panel.innerHTML = (
+    `<h3>動画全体の概略</h3>`
+    + `<div class="review-context-grid">`
+    + `<div><span class="review-context-label">タイトル</span><p>${escapeHtml(context.title || packet.episode_id || '')}</p></div>`
+    + `<div><span class="review-context-label">台本/尺</span><p>${escapeHtml(context.source_script || '')} / ${escapeHtml(String(context.script_line_count || ''))}行 / ${escapeHtml(formatReviewSeconds(context.duration_sec))}</p></div>`
+    + `<div><span class="review-context-label">主題</span><p>${escapeHtml(context.thesis_ja || '')}</p></div>`
+    + `<div><span class="review-context-label">想定視聴者</span><p>${escapeHtml(context.audience_ja || '')}</p></div>`
+    + `<div><span class="review-context-label">結末の問い</span><p>${escapeHtml(context.ending_question_ja || '')}</p></div>`
+    + `<div><span class="review-context-label">この画面で判断すること</span><p>${escapeHtml(context.review_scope_note || '')}</p></div>`
+    + `</div>`
+  );
+}
+
+function renderReviewStoryOutline(packet) {
+  const panel = document.getElementById('review-story-outline');
+  if (!panel) return;
+  const outline = packet.story_outline || [];
+  if (!outline.length) {
+    panel.innerHTML = '';
+    panel.classList.add('hidden');
+    return;
+  }
+  panel.classList.remove('hidden');
+  panel.innerHTML = (
+    `<h3>全体構成</h3>`
+    + `<div class="review-outline-list">`
+    + outline.map((item) => (
+      `<div class="review-outline-item">`
+      + `<div class="review-outline-head"><strong>${escapeHtml(item.id || '')} ${escapeHtml(item.title || '')}</strong><span>${escapeHtml(formatReviewSeconds(item.time_start_sec))}-${escapeHtml(formatReviewSeconds(item.time_end_sec))}</span></div>`
+      + `<p class="review-outline-role">${escapeHtml(item.role_ja || '')}</p>`
+      + `<p>${escapeHtml(item.summary_ja || '')}</p>`
+      + `</div>`
+    )).join('')
+    + `</div>`
+  );
+}
+
+function renderReviewTimeline(packet) {
+  const timeline = document.getElementById('review-timeline');
+  if (!timeline) return;
+  const segments = packet?.segments || [];
+  const outline = packet?.story_outline || [];
+  if (!segments.length) {
+    timeline.innerHTML = '<p class="hint">review packet が未読込です。</p>';
+    return;
+  }
+  timeline.innerHTML = segments.map((segment, index) => {
+    const state = getReviewDecisionState(index);
+    const outlineItem = outline.find((item) => item.id === segment.id) || {};
+    const active = index === activeReviewIndex;
+    const statusClass = state.decision ? 'done' : 'pending';
+    const proofSegment = getTreatmentProofSegment(segment.id);
+    const timeLabel = formatScriptSpan(segment.script_span)
+      || `${formatReviewSeconds(outlineItem.time_start_sec)}-${formatReviewSeconds(outlineItem.time_end_sec)}`;
+    return (
+      `<button type="button" class="review-timeline-segment ${statusClass}${active ? ' active' : ''}" data-review-index="${index}" aria-current="${active ? 'step' : 'false'}">`
+      + `<span class="review-timeline-id">${escapeHtml(segment.id || '')}</span>`
+      + `<span class="review-timeline-title">${escapeHtml(segment.title || '')}</span>`
+      + `<span class="review-timeline-time">${escapeHtml(timeLabel || '')}</span>`
+      + (proofSegment ? `<span class="review-timeline-proof">3-beat proof</span>` : '')
+      + `<span class="review-timeline-status">${state.decision ? '判断済み' : '未選択'}</span>`
+      + `</button>`
+    );
+  }).join('');
+}
+
+function renderReviewSegmentDetail(packet) {
+  const detail = document.getElementById('review-segment-detail');
+  if (!detail) return;
+  const segments = packet?.segments || [];
+  const segment = segments[activeReviewIndex];
+  if (!segment) {
+    detail.innerHTML = '<p class="hint">segment が未選択です。</p>';
+    return;
+  }
+  const optionList = (segment.options || []).map((option) => (
+    `<li><strong>${escapeHtml(option.label || '')}</strong><span>${escapeHtml(option.next_effect || '')}</span></li>`
+  )).join('');
+  detail.innerHTML = (
+    `<div class="review-segment-detail-head">`
+    + `<div><p class="review-focus-id">${escapeHtml(String(activeReviewIndex + 1))} · ${escapeHtml(segment.id || '')}</p><h3>${escapeHtml(segment.title || '')}</h3></div>`
+    + `<span>${escapeHtml(formatScriptSpan(segment.script_span))}</span>`
+    + `</div>`
+    + `<p class="review-segment-summary-text">${escapeHtml(segment.summary_ja || '')}</p>`
+    + `<div class="review-local-context">`
+    + `<p><strong>この場面の役割:</strong> ${escapeHtml(segment.scene_role_ja || '')}</p>`
+    + `<p><strong>直前:</strong> ${escapeHtml(segment.previous_context_ja || '')}</p>`
+    + `<p><strong>次:</strong> ${escapeHtml(segment.next_context_ja || '')}</p>`
+    + `<details open><summary>該当台本抜粋</summary><pre class="review-script-excerpt">${escapeHtml(segment.script_excerpt_ja || '')}</pre></details>`
+    + `</div>`
+    + `<div class="review-decision-context">`
+    + `<p><strong>確認:</strong> ${escapeHtml(segment.decision_prompt || '')}</p>`
+    + `<p><strong>リスク:</strong> ${escapeHtml(segment.risk || '')}</p>`
+    + `<p><strong>未選択時の次工程:</strong> ${escapeHtml(segment.next_effect || '')}</p>`
+    + `</div>`
+    + `<div class="review-option-reference"><h4>選択肢の意味</h4><ul>${optionList}</ul></div>`
+  );
+}
+
+function renderReviewTreatmentProof(packet) {
+  const panel = document.getElementById('review-treatment-proof');
+  if (!panel) return;
+  const segment = packet?.segments?.[activeReviewIndex];
+  if (!currentReviewTreatmentProof) {
+    panel.classList.remove('hidden');
+    panel.innerHTML = (
+      `<div class="review-section-head">`
+      + `<div><h3>9-frame visual treatment proof</h3><p class="hint">proof sidecar 読込中、または未生成です。</p></div>`
+      + `</div>`
+    );
+    return;
+  }
+  const proof = currentReviewTreatmentProof;
+  const proofSegment = segment ? getTreatmentProofSegment(segment.id) : null;
+  const artifacts = proof.artifacts || {};
+  const proofImage = artifacts.proof_image || artifacts.screenshot_artifact || '';
+  const proofSrc = repoRelativeAssetSrc(proofImage);
+  const warnings = proof.sidecar_warnings || [];
+  const visualChecks = proof.visual_quality_checks || [];
+  const antiPattern = proof.anti_pattern_corpus || {};
+  const violations = proof.frame_contract_violations || [];
+  const targetSegments = proof.target_segments || [];
+  const beats = proofSegment?.beats || [];
+  const beatRows = beats.length
+    ? beats.map((beat) => (
+      `<tr>`
+      + `<th>${escapeHtml(beat.phase || '')}</th>`
+      + `<td>${escapeHtml(beat.narration_cue || '')}</td>`
+      + `<td>${escapeHtml(beat.visual_subject || '')}</td>`
+      + `<td>${escapeHtml((beat.text_on_frame || []).join(' / ') || 'none')}</td>`
+      + `<td>${escapeHtml(beat.motion_hint || '')}</td>`
+      + `<td>${escapeHtml(formatMotionPrimitives(beat.motion_primitives))}</td>`
+      + `<td>${escapeHtml(beat.subtitle_clearance || '')}</td>`
+      + `<td>${escapeHtml(beat.frame_contract?.violations?.length ? beat.frame_contract.violations.join(', ') : '違反なし')}</td>`
+      + `</tr>`
+    )).join('')
+    : `<tr><td colspan="8">このsegmentは9-frame proof対象外です。RE-02 / RE-06 / RE-07Dを選択してください。</td></tr>`;
+  panel.classList.remove('hidden');
+  panel.innerHTML = (
+    `<div class="review-section-head">`
+    + `<div>`
+    + `<h3>9-frame visual treatment proof${proof.proof_revision ? ` ${escapeHtml(proof.proof_revision)}` : ''}</h3>`
+    + `<p class="hint">GUI timelineで読むread-only proofです。単体PNG/HTML/JSON確認は完了扱いにしません。</p>`
+    + `</div>`
+    + `<div class="review-proof-summary">`
+    + `<span>${escapeHtml(targetSegments.join(' / '))}</span>`
+    + `<strong>${escapeHtml(String(getTreatmentProofFrameCount()))} frames</strong>`
+    + `<em>Frame Contract違反: ${escapeHtml(String(violations.length))}</em>`
+    + `</div>`
+    + `</div>`
+    + `<div class="review-proof-grid">`
+    + `<figure class="review-proof-image-card">`
+    + (proofSrc ? `<img src="${proofSrc}" alt="RE-02 RE-06 RE-07D 9-frame visual treatment proof">` : `<p class="hint">proof image path が未設定です。</p>`)
+    + `<figcaption>proof image: ${escapeHtml(proofImage || '未設定')}</figcaption>`
+    + `</figure>`
+    + `<div class="review-proof-sidecar">`
+    + `<h4>sidecar warnings</h4>`
+    + `<ul>${warnings.map((warning) => `<li>${escapeHtml(warning)}</li>`).join('') || '<li>warningなし</li>'}</ul>`
+    + `<h4>anti-pattern corpus</h4>`
+    + `<p>${escapeHtml(antiPattern.source_name || '未設定')} — ${escapeHtml(antiPattern.role || '')}. Production assetでもlayout見本でもありません。</p>`
+    + `<h4>additional checks</h4>`
+    + `<ul>${visualChecks.map((check) => (
+      `<li><strong>${escapeHtml(check.label || check.id || '')}</strong>: ${escapeHtml(check.current_status || '')}<br><span>${escapeHtml(check.current_read || '')}</span></li>`
+    )).join('') || '<li>追加チェックなし</li>'}</ul>`
+    + `<h4>read-only decision context</h4>`
+    + `<p>このproofは映像設計確認用です。判断保存は右側の判断ペインと <code>review_decisions.json</code> に戻します。YMM4化、render、production timing、creative acceptanceには進みません。</p>`
+    + `</div>`
+    + `</div>`
+    + `<div class="review-beat-table-wrap">`
+    + `<h4>${escapeHtml(segment?.id || '')} beat table</h4>`
+    + `<table class="review-beat-table">`
+    + `<thead><tr><th>beat</th><th>narration cue</th><th>visual subject</th><th>text on frame</th><th>motion hint</th><th>motion primitives</th><th>subtitle clearance</th><th>Frame Contract</th></tr></thead>`
+    + `<tbody>${beatRows}</tbody>`
+    + `</table>`
+    + `</div>`
+  );
+}
+
+function renderPipelineSmokeReview() {
+  const panel = document.getElementById('pipeline-smoke-review');
+  if (!panel) return;
+  if (!currentPipelineSmoke) {
+    panel.classList.remove('hidden');
+    panel.innerHTML = (
+      `<div class="review-section-head">`
+      + `<div><h3>Multi-topic pipeline smoke</h3><p class="hint">pipeline smoke manifest 読込中、または未生成です。</p></div>`
+      + `</div>`
+    );
+    return;
+  }
+  const topics = currentPipelineSmoke.topics || [];
+  const diagnostics = currentPipelineSmoke.self_diagnostics || {};
+  const cards = topics.map((entry) => {
+    const topic = entry.topic || entry;
+    const artifacts = topic.artifacts || {};
+    const sidecar = entry.sidecar || {};
+    const decisions = entry.decisions || {};
+    const readback = entry.readback || {};
+    const proofSrc = repoRelativeAssetSrc(artifacts.proof_image || sidecar.artifacts?.proof_image || '');
+    const beats = (sidecar.segments || []).flatMap((segment) => segment.beats || []);
+    const beatRows = beats.map((beat) => (
+      `<tr>`
+      + `<th>${escapeHtml(beat.phase || '')}</th>`
+      + `<td>${escapeHtml(beat.narration_cue || '')}</td>`
+      + `<td>${escapeHtml(beat.visual_subject || '')}</td>`
+      + `<td>${escapeHtml((beat.text_on_frame || []).join(' / ') || 'none')}</td>`
+      + `<td>${escapeHtml(formatMotionPrimitives(beat.motion_primitives))}</td>`
+      + `</tr>`
+    )).join('');
+    const timeline = beats.map((beat) => (
+      `<span class="pipeline-smoke-beat"><strong>${escapeHtml(beat.phase || '')}</strong>${escapeHtml(beat.narration_cue || '')}</span>`
+    )).join('');
+    return (
+      `<article class="pipeline-smoke-topic" data-pipeline-smoke-topic="${escapeHtml(topic.id || '')}">`
+      + `<div class="review-section-head">`
+      + `<div><h4>${escapeHtml(topic.title || '')}</h4><p class="hint">${escapeHtml(topic.id || '')}</p></div>`
+      + `<span class="pipeline-smoke-state ${escapeHtml(topic.state || '')}">${escapeHtml(topic.state || 'unknown')}</span>`
+      + `</div>`
+      + `<div class="pipeline-smoke-grid">`
+      + `<figure class="review-proof-image-card">`
+      + (proofSrc ? `<img src="${proofSrc}" alt="${escapeHtml(topic.title || '')} pipeline smoke proof">` : `<p class="hint">proof image path 未設定</p>`)
+      + `<figcaption>${escapeHtml(artifacts.proof_image || '')}</figcaption>`
+      + `</figure>`
+      + `<div class="pipeline-smoke-meta">`
+      + `<h5>blocked reason</h5><p>${escapeHtml(topic.blocked_reason || sidecar.blocked_reason || '')}</p>`
+      + `<h5>next action</h5><p>${escapeHtml(topic.next_action || sidecar.next_action || '')}</p>`
+      + `<h5>warnings</h5><ul>${(sidecar.sidecar_warnings || []).map((warning) => `<li>${escapeHtml(warning)}</li>`).join('')}</ul>`
+      + `<h5>decision artifact</h5><p>${escapeHtml(artifacts.review_decisions || '')} — ${(decisions.decisions || []).length} decision(s)</p>`
+      + `<h5>readback</h5><p>${escapeHtml(readback.status || 'not loaded')} / standalone completion: ${escapeHtml(String(currentPipelineSmoke.standalone_html_png_json_is_completion === false ? 'false' : 'unknown'))}</p>`
+      + `</div>`
+      + `</div>`
+      + `<div class="pipeline-smoke-timeline" aria-label="${escapeHtml(topic.title || '')} beat timeline">${timeline}</div>`
+      + `<div class="review-beat-table-wrap">`
+      + `<table class="review-beat-table pipeline-smoke-table">`
+      + `<thead><tr><th>beat</th><th>narration cue</th><th>visual subject</th><th>text</th><th>motion primitives</th></tr></thead>`
+      + `<tbody>${beatRows}</tbody>`
+      + `</table>`
+      + `</div>`
+      + `<div class="pipeline-smoke-chain">source_script.txt → script_beat_ir.json → visual_direction_contract.json → shot_layout_plan.json → motion_beat_plan.json → visual_treatment_proof → review_packet.json → review_decisions.json</div>`
+      + `</article>`
+    );
+  }).join('');
+  panel.classList.remove('hidden');
+  panel.innerHTML = (
+    `<div class="review-section-head">`
+    + `<div><h3>Multi-topic pipeline smoke</h3><p class="hint">完成動画品質ではなく、量産pipelineの工程接続をGUI上で確認するpanelです。</p></div>`
+    + `<div class="review-proof-summary"><span>${escapeHtml(DEFAULT_PIPELINE_SMOKE_MANIFEST_PATH)}</span><strong>${topics.length} topics</strong><em>GUI timeline required</em></div>`
+    + `</div>`
+    + `<div class="pipeline-smoke-diagnostics">`
+    + `<span>case overfitting: ${escapeHtml(diagnostics.case_overfitting || '')}</span>`
+    + `<span>local optimization: ${escapeHtml(diagnostics.local_optimization || '')}</span>`
+    + `<span>docs-only loop: ${escapeHtml(diagnostics.docs_only_loop || '')}</span>`
+    + `<span>standalone proof completion: ${escapeHtml(diagnostics.standalone_proof_completion || '')}</span>`
+    + `</div>`
+    + `<div class="pipeline-smoke-topic-list">${cards}</div>`
+  );
+}
+
+function renderReviewDecisionInspector(packet) {
+  const segments = packet?.segments || [];
+  const segment = segments[activeReviewIndex];
+  const label = document.getElementById('review-active-segment-label');
+  const select = document.getElementById('review-active-decision');
+  const comment = document.getElementById('review-active-comment');
+  const effect = document.getElementById('review-active-effect');
+  if (!segment || !select || !comment || !effect) {
+    if (label) label.textContent = 'segment 未選択';
+    return;
+  }
+  const state = getReviewDecisionState(activeReviewIndex);
+  const options = (segment.options || []).map((option) => (
+    `<option value="${escapeAttr(option.label)}">${escapeHtml(option.label)}</option>`
+  )).join('');
+  if (label) label.textContent = `${segment.id} · ${segment.title}`;
+  select.innerHTML = `<option value="">未選択</option>${options}`;
+  select.value = state.decision || '';
+  comment.value = state.comment || '';
+  const option = reviewOptionFor(segment, state.decision);
+  effect.textContent = option ? option.next_effect : '未選択';
+}
+
+function renderReviewSegmentSummary(packet) {
+  const list = document.getElementById('review-card-list');
+  if (!list) return;
+  const segments = packet?.segments || [];
+  if (!segments.length) {
+    list.innerHTML = '';
+    return;
+  }
+  list.innerHTML = segments.map((segment, index) => {
+    const state = getReviewDecisionState(index);
+    const active = index === activeReviewIndex;
+    return (
+      `<button type="button" class="review-summary-row review-segment-card${active ? ' active' : ''}" data-review-index="${index}">`
+      + `<span>${escapeHtml(segment.id || '')}</span>`
+      + `<strong>${escapeHtml(segment.title || '')}</strong>`
+      + `<em>${escapeHtml(state.decision || '未選択')}</em>`
+      + `</button>`
+    );
+  }).join('');
+}
+
+function renderReviewWorkbench(packet) {
+  renderReviewTimeline(packet);
+  renderReviewTreatmentProof(packet);
+  renderPipelineSmokeReview();
+  renderReviewSegmentDetail(packet);
+  renderReviewDecisionInspector(packet);
+  renderReviewSegmentSummary(packet);
+  renderReviewProgress();
+}
+
+function selectReviewSegment(index) {
+  const segments = getReviewSegments();
+  if (!segments.length) return;
+  activeReviewIndex = Math.min(Math.max(index, 0), segments.length - 1);
+  renderReviewWorkbench(currentReviewPacket);
+}
+
+function refreshReviewDecisionViews() {
+  renderReviewTimeline(currentReviewPacket);
+  renderReviewSegmentSummary(currentReviewPacket);
+  renderReviewProgress();
+  const segment = getReviewSegments()[activeReviewIndex];
+  const effect = document.getElementById('review-active-effect');
+  if (segment && effect) {
+    const option = getReviewDecisionOption(segment, activeReviewIndex);
+    effect.textContent = option ? option.next_effect : '未選択';
+  }
+}
+
+function renderReviewOverallActions(packet) {
+  const select = document.getElementById('review-overall-action');
+  if (!select) return;
+  const actions = packet.overall_actions || [];
+  select.innerHTML = '<option value="">未選択</option>' + actions.map((action) => (
+    `<option value="${escapeAttr(action.label)}">${escapeHtml(action.label)}</option>`
+  )).join('');
+  if (actions[0]) select.value = actions[0].label;
+}
+
+function renderReviewPacket(packet, packetPath) {
+  currentReviewPacket = packet;
+  currentReviewDecisionPath = packet.default_decision_path || DEFAULT_REVIEW_DECISION_PATH;
+  activeReviewIndex = 0;
+  document.getElementById('review-packet-path').textContent = packetPath || DEFAULT_REVIEW_PACKET_PATH;
+  document.getElementById('review-decision-path').textContent = currentReviewDecisionPath;
+  renderReviewEpisodeContext(packet);
+  renderReviewStoryOutline(packet);
+  renderReviewOverallActions(packet);
+  const segments = packet.segments || [];
+  reviewDecisionState = segments.map(() => ({ decision: '', comment: '' }));
+  renderReviewWorkbench(packet);
+}
+
+async function loadDefaultReviewTreatmentProof() {
+  currentReviewTreatmentProof = null;
+  renderReviewTreatmentProof(currentReviewPacket);
+  if (!window.nlmytgen.loadReviewProof) return;
+  const res = await window.nlmytgen.loadReviewProof(DEFAULT_REVIEW_TREATMENT_PROOF_PATH);
+  if (res.ok) {
+    currentReviewTreatmentProof = res.payload;
+    renderReviewWorkbench(currentReviewPacket);
+    return;
+  }
+  const panel = document.getElementById('review-treatment-proof');
+  if (panel) {
+    panel.classList.remove('hidden');
+    panel.innerHTML = (
+      `<div class="review-section-head">`
+      + `<div><h3>9-frame visual treatment proof</h3><p class="hint">proof sidecar 読込失敗: ${escapeHtml(res.error || 'unknown error')}</p></div>`
+      + `</div>`
+    );
+  }
+}
+
+async function loadDefaultPipelineSmokeManifest() {
+  currentPipelineSmoke = null;
+  renderPipelineSmokeReview();
+  if (!window.nlmytgen.loadReviewProof) return;
+  const manifestRes = await window.nlmytgen.loadReviewProof(DEFAULT_PIPELINE_SMOKE_MANIFEST_PATH);
+  if (!manifestRes.ok) {
+    const panel = document.getElementById('pipeline-smoke-review');
+    if (panel) {
+      panel.classList.remove('hidden');
+      panel.innerHTML = (
+        `<div class="review-section-head">`
+        + `<div><h3>Multi-topic pipeline smoke</h3><p class="hint">manifest 読込失敗: ${escapeHtml(manifestRes.error || 'unknown error')}</p></div>`
+        + `</div>`
+      );
+    }
+    return;
+  }
+  const manifest = manifestRes.payload;
+  const topics = await Promise.all((manifest.topics || []).map(async (topic) => {
+    const artifacts = topic.artifacts || {};
+    const [sidecarRes, decisionsRes, readbackRes] = await Promise.all([
+      artifacts.proof_sidecar ? window.nlmytgen.loadReviewProof(artifacts.proof_sidecar) : Promise.resolve({ ok: false }),
+      artifacts.review_decisions ? window.nlmytgen.loadReviewProof(artifacts.review_decisions) : Promise.resolve({ ok: false }),
+      artifacts.proof_readback ? window.nlmytgen.loadReviewProof(artifacts.proof_readback) : Promise.resolve({ ok: false }),
+    ]);
+    return {
+      topic,
+      sidecar: sidecarRes.ok ? sidecarRes.payload : {},
+      decisions: decisionsRes.ok ? decisionsRes.payload : {},
+      readback: readbackRes.ok ? readbackRes.payload : {},
+    };
+  }));
+  currentPipelineSmoke = { ...manifest, topics };
+  renderPipelineSmokeReview();
+}
+
+async function loadDefaultReviewPacket() {
+  const panel = document.getElementById('review-load-result');
+  panel.classList.remove('hidden', 'success', 'error');
+  panel.textContent = 'review packet 読込中...';
+  const res = await window.nlmytgen.loadReviewPacket(DEFAULT_REVIEW_PACKET_PATH);
+  if (res.ok) {
+    renderReviewPacket(res.payload, res.path);
+    await loadDefaultReviewTreatmentProof();
+    panel.classList.add('success');
+    panel.textContent = `読込完了: ${res.path}`;
+    return;
+  }
+  currentReviewPacket = null;
+  currentReviewTreatmentProof = null;
+  reviewDecisionState = [];
+  activeReviewIndex = 0;
+  renderReviewEpisodeContext({});
+  renderReviewStoryOutline({});
+  renderReviewWorkbench(null);
+  panel.classList.add('error');
+  panel.textContent = `review packet 読込失敗: ${res.error || 'unknown error'}`;
+}
+
+function collectReviewDecisionPayload() {
+  const packet = currentReviewPacket;
+  const segments = packet?.segments || [];
+  const decisions = segments.map((segment, index) => {
+    const state = getReviewDecisionState(index);
+    const decision = state.decision || '';
+    const option = reviewOptionFor(segment, decision);
+    return {
+      segment_id: segment.id,
+      decision,
+      comment: state.comment || '',
+      classification_hint: option?.classification_hint || (decision ? 'needs_revision' : 'unselected'),
+    };
+  });
+  return {
+    payload: {
+      version: '1.0',
+      episode_id: packet?.episode_id || 'real_estate_dx',
+      review_scope: packet?.review_scope || 'g27_overlay_card_decision',
+      source_packet: DEFAULT_REVIEW_PACKET_PATH,
+      saved_at: new Date().toISOString(),
+      overall_action: document.getElementById('review-overall-action')?.value || '',
+      overall_comment: document.getElementById('review-overall-comment')?.value || '',
+      decisions,
+    },
+    missingCount: decisions.filter((item) => !item.decision).length,
+  };
+}
+
+function buildReviewSummaryText() {
+  if (!currentReviewPacket) return 'review packet が未読込です';
+  const { payload, missingCount } = collectReviewDecisionPayload();
+  const lines = [
+    `overall: ${payload.overall_action || '未選択'}`,
+    payload.overall_comment ? `comment: ${payload.overall_comment}` : '',
+    missingCount ? `未選択 segment: ${missingCount}` : '全 segment 判断済み',
+    ...payload.decisions.map((item) => {
+      const comment = item.comment ? ` / ${item.comment}` : '';
+      return `${item.segment_id}: ${item.decision || '未選択'} (${item.classification_hint})${comment}`;
+    }),
+  ];
+  return lines.filter(Boolean).join('\n');
+}
+
+async function saveReviewDecisions() {
+  const panel = document.getElementById('review-decision-result');
+  panel.classList.remove('hidden', 'success', 'error');
+  if (!currentReviewPacket) {
+    panel.classList.add('error');
+    panel.textContent = 'review packet が未読込です';
+    return;
+  }
+  const { payload, missingCount } = collectReviewDecisionPayload();
+  const res = await window.nlmytgen.saveReviewDecisions({
+    decisionPath: currentReviewDecisionPath,
+    payload,
+  });
+  if (res.ok) {
+    panel.classList.add('success');
+    panel.textContent = missingCount
+      ? `保存完了: ${res.path}\n未選択 segment が ${missingCount} 件あります。scene decision packet 作成前に確認してください。`
+      : `保存完了: ${res.path}\n全 segment 判断済みです。`;
+    document.getElementById('status').textContent = 'レビュー判断JSONを保存しました';
+  } else {
+    panel.classList.add('error');
+    panel.textContent = `保存失敗: ${res.error || 'unknown error'}`;
+  }
+}
+
+function initDesignReviewTab() {
+  const bindReviewOpen = (id, rel) => {
+    const button = document.getElementById(id);
+    if (!button) return;
+    button.addEventListener('click', async () => {
+      const res = await window.nlmytgen.openRepoDoc(rel);
+      if (!res.ok && res.message) {
+        document.getElementById('status').textContent = `レビュー資料を開けません: ${res.message}`;
+      }
+    });
+  };
+  bindReviewOpen('btn-review-open-preview', 'samples/_probe/g24/real_estate_dx_overlay_only_compact_review.html');
+  bindReviewOpen('btn-review-open-memo', 'samples/_probe/g24/real_estate_dx_overlay_card_review_map.md');
+
+  document.getElementById('btn-review-reload-packet')?.addEventListener('click', loadDefaultReviewPacket);
+  document.getElementById('btn-review-save-decisions')?.addEventListener('click', saveReviewDecisions);
+
+  const copyButton = document.getElementById('btn-review-copy-reply');
+  if (copyButton) {
+    copyButton.addEventListener('click', async () => {
+      const text = buildReviewSummaryText();
+      try {
+        await navigator.clipboard.writeText(text);
+        document.getElementById('status').textContent = 'レビュー判断概要をコピーしました';
+      } catch {
+        document.getElementById('status').textContent = 'コピーできませんでした。テキストを選択してコピーしてください';
+      }
+    });
+  }
+
+  document.getElementById('review-timeline')?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-review-index]');
+    if (!button) return;
+    selectReviewSegment(parseInt(button.dataset.reviewIndex, 10));
+  });
+
+  document.getElementById('review-card-list')?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-review-index]');
+    if (!button) return;
+    selectReviewSegment(parseInt(button.dataset.reviewIndex, 10));
+  });
+
+  document.getElementById('review-active-decision')?.addEventListener('change', (event) => {
+    if (!currentReviewPacket) return;
+    setReviewDecisionState(activeReviewIndex, { decision: event.target.value || '' });
+    refreshReviewDecisionViews();
+  });
+
+  document.getElementById('review-active-comment')?.addEventListener('input', (event) => {
+    if (!currentReviewPacket) return;
+    setReviewDecisionState(activeReviewIndex, { comment: event.target.value || '' });
+  });
+
+  loadDefaultReviewPacket();
+  loadDefaultPipelineSmokeManifest();
+}
+
 // --- CSV Tab ---
 const dropZone = document.getElementById('drop-zone');
 const selectedFile = document.getElementById('selected-file');
@@ -517,6 +1244,7 @@ const csvResult = document.getElementById('csv-result');
 let currentTxtPath = null;
 let lastOutputPath = null;
 let packetBundleDir = null;
+let episodePack = null;
 
 function updatePacketButtons() {
   const cue = document.getElementById('btn-build-cue-bundle');
@@ -582,12 +1310,32 @@ async function runBuildCsv(dryRun) {
   const maxLines = Number.isFinite(maxLinesRaw) && maxLinesRaw > 0 ? maxLinesRaw : undefined;
   const charsRaw = parseInt(document.getElementById('chars-per-line').value, 10);
   const charsPerLine = Number.isFinite(charsRaw) && charsRaw > 0 ? charsRaw : undefined;
+  const fontScaleRaw = parseFloat(document.getElementById('subtitle-font-scale').value);
+  const subtitleFontScale = Number.isFinite(fontScaleRaw) && fontScaleRaw > 0 ? fontScaleRaw : undefined;
+  const wrapPxRaw = parseFloat(document.getElementById('wrap-px').value);
+  const wrapPx = Number.isFinite(wrapPxRaw) && wrapPxRaw > 0 ? wrapPxRaw : undefined;
+  const wrapSafetyRaw = parseFloat(document.getElementById('wrap-safety').value);
+  const wrapSafety = Number.isFinite(wrapSafetyRaw) && wrapSafetyRaw > 0 ? wrapSafetyRaw : undefined;
+  const fontSizeRaw = parseFloat(document.getElementById('font-size').value);
+  const fontSize = Number.isFinite(fontSizeRaw) && fontSizeRaw > 0 ? fontSizeRaw : undefined;
+  const letterSpacingRaw = parseFloat(document.getElementById('letter-spacing').value);
+  const letterSpacing = Number.isFinite(letterSpacingRaw) ? letterSpacingRaw : undefined;
   const balanceChecked = document.getElementById('balance-lines').checked;
+  const subtitleFontSourceYmmp = filePaths['subtitle-font-source-ymmp'] || undefined;
   const opts = {
     input: currentTxtPath,
+    output: episodePack && !dryRun ? episodePack.paths.csv : undefined,
     speakerMap: document.getElementById('speaker-map').value || undefined,
     maxLines,
     charsPerLine,
+    subtitleFontScale,
+    subtitleFontSourceYmmp,
+    wrapPx,
+    wrapSafety,
+    measureBackend: document.getElementById('measure-backend').value || undefined,
+    fontFamily: document.getElementById('font-family').value || undefined,
+    fontSize,
+    letterSpacing,
     reflowV2: document.getElementById('reflow-v2').checked,
     balanceLines: balanceChecked && maxLines != null ? true : undefined,
     dryRun,
@@ -719,24 +1467,98 @@ document.getElementById('btn-build-diagram-bundle').addEventListener('click', ()
 
 // --- Production Tab ---
 const filePaths = {
+  'subtitle-font-source-ymmp': null,
   'prod-ymmp': null,
   'ir-json': null,
   'palette': null,
   'csv-file': null,
   'bg-map': null,
   'face-map-bundle': null,
+  'skit-group-registry': null,
+  'skit-group-template-source': null,
 };
 
 const fileFilters = {
+  'subtitle-font-source-ymmp': [{ name: 'YMM4 Project', extensions: ['ymmp'] }],
   'prod-ymmp': [{ name: 'YMM4 Project', extensions: ['ymmp'] }],
   'ir-json': [{ name: 'JSON', extensions: ['json'] }],
   'palette': [{ name: 'YMM4 Project', extensions: ['ymmp'] }],
   'csv-file': [{ name: 'CSV', extensions: ['csv'] }],
   'bg-map': [{ name: 'JSON', extensions: ['json'] }],
   'face-map-bundle': [{ name: 'JSON', extensions: ['json'] }],
+  'skit-group-registry': [{ name: 'JSON', extensions: ['json'] }],
+  'skit-group-template-source': [{ name: 'YMM4 Project', extensions: ['ymmp'] }],
 };
 
 let lastPatchedPath = null;
+
+function setFilePath(target, filePath, { save = true } = {}) {
+  if (!target || !Object.prototype.hasOwnProperty.call(filePaths, target)) return;
+  filePaths[target] = filePath;
+  const label = document.getElementById(`${target}-path`);
+  if (label) label.textContent = filePath || '未選択';
+  updateApplyButton();
+  if (save) autoSave();
+}
+
+function updateEpisodePackPanel() {
+  const rootLabel = document.getElementById('episode-pack-root-path');
+  const expected = document.getElementById('episode-pack-expected');
+  const openBtn = document.getElementById('btn-open-episode-pack');
+  if (!rootLabel || !expected || !openBtn) return;
+  if (!episodePack) {
+    rootLabel.textContent = '未選択';
+    expected.textContent = '';
+    expected.classList.add('hidden');
+    openBtn.classList.add('hidden');
+    return;
+  }
+  const p = episodePack.paths;
+  rootLabel.textContent = episodePack.root;
+  expected.textContent = [
+    `episode_id: ${episodePack.episodeId}`,
+    `Build CSV -> ${p.csv}`,
+    `Validate IR -> ${p.validateResult}`,
+    `Dry Run -> ${p.dryRunResult}`,
+    `Apply JSON -> ${p.applyResult}`,
+    `Patched .ymmp -> ${p.patchedYmmp}`,
+  ].join('\n');
+  expected.classList.remove('hidden');
+  openBtn.classList.remove('hidden');
+}
+
+function setEpisodePack(pack, { save = true } = {}) {
+  episodePack = pack || null;
+  updateEpisodePackPanel();
+  if (episodePack) {
+    const p = episodePack.paths;
+    const existing = episodePack.existing || {};
+    if (existing.csv) setFilePath('csv-file', p.csv, { save: false });
+    if (existing.irJson) setFilePath('ir-json', p.irJson, { save: false });
+    if (existing.baseYmmp) setFilePath('prod-ymmp', p.baseYmmp, { save: false });
+    if (existing.bgMap) setFilePath('bg-map', p.bgMap, { save: false });
+    if (existing.skitGroupRegistry) setFilePath('skit-group-registry', p.skitGroupRegistry, { save: false });
+    if (existing.skitGroupTemplateSource) {
+      setFilePath('skit-group-template-source', p.skitGroupTemplateSource, { save: false });
+    }
+  }
+  updateApplyButton();
+  if (save) autoSave();
+}
+
+async function saveEpisodePackJson(pathKey, payload, label) {
+  if (!episodePack || !episodePack.paths || !episodePack.paths[pathKey] || !payload) {
+    return '';
+  }
+  const saved = await window.nlmytgen.saveJsonArtifact({
+    path: episodePack.paths[pathKey],
+    payload,
+  });
+  if (saved && saved.ok) {
+    return `\nSaved ${label}: ${saved.path}`;
+  }
+  return `\n${label} save failed: ${(saved && saved.error) || 'unknown error'}`;
+}
 
 document.querySelectorAll('.btn-file').forEach(btn => {
   btn.addEventListener('click', async () => {
@@ -746,10 +1568,7 @@ document.querySelectorAll('.btn-file').forEach(btn => {
       filters: fileFilters[target] || [{ name: 'All', extensions: ['*'] }],
     });
     if (path) {
-      filePaths[target] = path;
-      document.getElementById(`${target}-path`).textContent = path;
-      updateApplyButton();
-      autoSave();
+      setFilePath(target, path);
     }
   });
 });
@@ -761,12 +1580,29 @@ function updateApplyButton() {
   document.getElementById('btn-validate-ir').disabled = !hasIr;
 }
 
+document.getElementById('btn-select-episode-pack')?.addEventListener('click', async () => {
+  const pack = await window.nlmytgen.selectEpisodePack();
+  if (pack) {
+    setEpisodePack(pack);
+    document.getElementById('status').textContent = `Episode Pack selected: ${pack.episodeId}`;
+  }
+});
+
+document.getElementById('btn-open-episode-pack')?.addEventListener('click', () => {
+  if (episodePack && episodePack.root) {
+    window.nlmytgen.openFolder(episodePack.root);
+  }
+});
+
 // --- IR paste ---
 document.getElementById('btn-save-ir').addEventListener('click', async () => {
   const content = document.getElementById('ir-paste').value.trim();
   if (!content) return;
 
-  const saved = await window.nlmytgen.saveIrPaste({ content, defaultPath: 'ir.json' });
+  const saved = await window.nlmytgen.saveIrPaste({
+    content,
+    defaultPath: episodePack ? episodePack.paths.irJson : 'ir.json',
+  });
   if (saved) {
     filePaths['ir-json'] = saved;
     document.getElementById('ir-json-path').textContent = saved;
@@ -788,6 +1624,9 @@ document.getElementById('btn-validate-ir').addEventListener('click', async () =>
     irJson: filePaths['ir-json'],
     palette: filePaths['palette'] || undefined,
     faceMapBundle: filePaths['face-map-bundle'] || undefined,
+    skitGroupRegistry: filePaths['skit-group-registry'] || undefined,
+    strictSkitGroupIntents: document.getElementById('strict-skit-group-intents').checked
+      && !!filePaths['skit-group-registry'],
   };
 
   const validatePanel = document.getElementById('validate-result');
@@ -813,6 +1652,7 @@ document.getElementById('btn-validate-ir').addEventListener('click', async () =>
         j.preview_warnings.forEach((w) => { text += `  ${w}\n`; });
       }
       if (result.stderr) text += `\n--- メタ情報 ---\n${result.stderr}`;
+      text += await saveEpisodePackJson('validateResult', result.json, 'Validate IR JSON');
       if (j.success && result.code === 0) {
         renderSuccessTextPanel(validatePanel, text);
         status.textContent = 'Validation passed';
@@ -855,9 +1695,17 @@ async function runApplyProduction(dryRun) {
     ymmp: filePaths['prod-ymmp'],
     irJson: filePaths['ir-json'],
     palette: filePaths['palette'] || undefined,
-    csv: filePaths['csv-file'] || undefined,
+    csv: document.getElementById('skit-group-only').checked
+      ? undefined
+      : filePaths['csv-file'] || undefined,
     bgMap: filePaths['bg-map'] || undefined,
     faceMapBundle: filePaths['face-map-bundle'] || undefined,
+    skitGroupRegistry: filePaths['skit-group-registry'] || undefined,
+    skitGroupTemplateSource: filePaths['skit-group-template-source'] || undefined,
+    strictSkitGroupIntents: document.getElementById('strict-skit-group-intents').checked
+      && !!filePaths['skit-group-registry'],
+    skitGroupOnly: document.getElementById('skit-group-only').checked,
+    output: episodePack && !dryRun ? episodePack.paths.patchedYmmp : undefined,
     dryRun,
   };
 
@@ -866,16 +1714,29 @@ async function runApplyProduction(dryRun) {
   try {
     const result = await window.nlmytgen.applyProduction(opts);
     resultPanel.classList.remove('hidden');
+    const savedResultLine = await saveEpisodePackJson(
+      dryRun ? 'dryRunResult' : 'applyResult',
+      result.json,
+      dryRun ? 'Dry Run JSON' : 'Apply Production JSON',
+    );
 
     if (result.json && result.json.success) {
       let text = '';
+      const summary = result.json.summary || {};
       if (result.json.summary) {
-        const s = result.json.summary;
-        text += `[要約] 警告 ${s.warning_count} 件 / face ${s.face_changes} / slot ${s.slot_changes} / BG −${s.bg_removed} +${s.bg_added}\n\n`;
+        text += `[要約] 警告 ${summary.warning_count} 件 / face ${summary.face_changes} / slot ${summary.slot_changes} / BG −${summary.bg_removed} +${summary.bg_added} / skit_group ${summary.skit_group_placements}\n\n`;
       }
-      text += `Face changes: ${result.json.face_changes}\n`;
-      text += `Slot changes: ${result.json.slot_changes}\n`;
-      text += `BG: removed ${result.json.bg_changes}, added ${result.json.bg_additions}\n`;
+      const faceChanges = result.json.face_changes ?? summary.face_changes ?? 0;
+      const slotChanges = result.json.slot_changes ?? summary.slot_changes ?? 0;
+      const bgRemoved = result.json.bg_changes ?? summary.bg_removed ?? 0;
+      const bgAdded = result.json.bg_additions ?? summary.bg_added ?? 0;
+      text += `Face changes: ${faceChanges}\n`;
+      text += `Slot changes: ${slotChanges}\n`;
+      text += `BG: removed ${bgRemoved}, added ${bgAdded}\n`;
+      if (result.json.skit_group_placements !== undefined) {
+        text += `Skit group placements: ${result.json.skit_group_placements}`;
+        text += ` (GroupItems inserted: ${result.json.skit_group_item_insertions || 0})\n`;
+      }
       if (result.json.tachie_syncs) {
         text += `Idle face inserts: ${result.json.tachie_syncs}\n`;
       }
@@ -891,6 +1752,7 @@ async function runApplyProduction(dryRun) {
       if (result.json.dry_run) {
         text += `\n(dry-run: no file written)`;
       }
+      text += savedResultLine;
       renderSuccessTextPanel(resultPanel, text);
       status.textContent = dryRun ? 'Dry run complete' : 'Production applied';
       if (!dryRun && result.json.output) {
@@ -911,6 +1773,7 @@ async function runApplyProduction(dryRun) {
       if (result.stderr) errText += result.stderr + '\n';
       if (result.stdout) errText += '[stdout] ' + result.stdout + '\n';
       errText += `[exit code] ${result.code}`;
+      errText += savedResultLine;
       renderFailurePanel(resultPanel, errText);
       status.textContent = 'Apply failed';
     }
@@ -940,18 +1803,31 @@ function collectSettings() {
     csv: {
       speakerMap: document.getElementById('speaker-map').value,
       maxLines: parseInt(document.getElementById('max-lines').value) || 2,
-      charsPerLine: parseInt(document.getElementById('chars-per-line').value) || 20,
+      charsPerLine: parseInt(document.getElementById('chars-per-line').value) || 40,
+      subtitleFontScale: parseFloat(document.getElementById('subtitle-font-scale').value) || 100,
+      subtitleFontSourceYmmp: filePaths['subtitle-font-source-ymmp'] || null,
+      wrapPx: parseFloat(document.getElementById('wrap-px').value) || null,
+      wrapSafety: parseFloat(document.getElementById('wrap-safety').value) || 0.94,
+      measureBackend: document.getElementById('measure-backend').value || '',
+      fontFamily: document.getElementById('font-family').value || '',
+      fontSize: parseFloat(document.getElementById('font-size').value) || null,
+      letterSpacing: parseFloat(document.getElementById('letter-spacing').value) || 0,
       reflowV2: document.getElementById('reflow-v2').checked,
       balanceLines: document.getElementById('balance-lines').checked,
       saveDiagnosticsWithCsv: document.getElementById('csv-save-diagnostics').checked,
     },
     production: {
+      episodePack,
       prodYmmp: filePaths['prod-ymmp'] || null,
       irJson: filePaths['ir-json'] || null,
       palette: filePaths['palette'] || null,
       bgMap: filePaths['bg-map'] || null,
       faceMapBundle: filePaths['face-map-bundle'] || null,
       csvFile: filePaths['csv-file'] || null,
+      skitGroupRegistry: filePaths['skit-group-registry'] || null,
+      skitGroupTemplateSource: filePaths['skit-group-template-source'] || null,
+      strictSkitGroupIntents: document.getElementById('strict-skit-group-intents').checked,
+      skitGroupOnly: document.getElementById('skit-group-only').checked,
     },
     packetAssist: {
       bundleDir: packetBundleDir || null,
@@ -974,6 +1850,23 @@ function applySettings(settings) {
     if (settings.csv.speakerMap) document.getElementById('speaker-map').value = settings.csv.speakerMap;
     if (settings.csv.maxLines) document.getElementById('max-lines').value = settings.csv.maxLines;
     if (settings.csv.charsPerLine) document.getElementById('chars-per-line').value = settings.csv.charsPerLine;
+    if (settings.csv.subtitleFontScale) {
+      document.getElementById('subtitle-font-scale').value = settings.csv.subtitleFontScale;
+    }
+    if (settings.csv.subtitleFontSourceYmmp) {
+      filePaths['subtitle-font-source-ymmp'] = settings.csv.subtitleFontSourceYmmp;
+      document.getElementById('subtitle-font-source-ymmp-path').textContent = settings.csv.subtitleFontSourceYmmp;
+    }
+    if (settings.csv.wrapPx) document.getElementById('wrap-px').value = settings.csv.wrapPx;
+    if (settings.csv.wrapSafety) document.getElementById('wrap-safety').value = settings.csv.wrapSafety;
+    if (settings.csv.measureBackend !== undefined) {
+      document.getElementById('measure-backend').value = settings.csv.measureBackend;
+    }
+    if (settings.csv.fontFamily) document.getElementById('font-family').value = settings.csv.fontFamily;
+    if (settings.csv.fontSize) document.getElementById('font-size').value = settings.csv.fontSize;
+    if (settings.csv.letterSpacing !== undefined) {
+      document.getElementById('letter-spacing').value = settings.csv.letterSpacing;
+    }
     if (settings.csv.reflowV2 !== undefined) document.getElementById('reflow-v2').checked = settings.csv.reflowV2;
     if (settings.csv.balanceLines !== undefined) {
       document.getElementById('balance-lines').checked = settings.csv.balanceLines;
@@ -983,6 +1876,9 @@ function applySettings(settings) {
     }
   }
   if (settings.production) {
+    if (settings.production.episodePack) {
+      setEpisodePack(settings.production.episodePack, { save: false });
+    }
     if (settings.production.prodYmmp) {
       filePaths['prod-ymmp'] = settings.production.prodYmmp;
       document.getElementById('prod-ymmp-path').textContent = settings.production.prodYmmp;
@@ -1007,6 +1903,20 @@ function applySettings(settings) {
       filePaths['csv-file'] = settings.production.csvFile;
       document.getElementById('csv-file-path').textContent = settings.production.csvFile;
     }
+    if (settings.production.skitGroupRegistry) {
+      filePaths['skit-group-registry'] = settings.production.skitGroupRegistry;
+      document.getElementById('skit-group-registry-path').textContent = settings.production.skitGroupRegistry;
+    }
+    if (settings.production.skitGroupTemplateSource) {
+      filePaths['skit-group-template-source'] = settings.production.skitGroupTemplateSource;
+      document.getElementById('skit-group-template-source-path').textContent = settings.production.skitGroupTemplateSource;
+    }
+    if (settings.production.strictSkitGroupIntents !== undefined) {
+      document.getElementById('strict-skit-group-intents').checked = settings.production.strictSkitGroupIntents;
+    }
+    if (settings.production.skitGroupOnly !== undefined) {
+      document.getElementById('skit-group-only').checked = settings.production.skitGroupOnly;
+    }
   }
   if (settings.packetAssist && settings.packetAssist.bundleDir) {
     packetBundleDir = settings.packetAssist.bundleDir;
@@ -1024,9 +1934,18 @@ function autoSave() {
 document.getElementById('speaker-map').addEventListener('change', autoSave);
 document.getElementById('max-lines').addEventListener('change', autoSave);
 document.getElementById('chars-per-line').addEventListener('change', autoSave);
+document.getElementById('subtitle-font-scale').addEventListener('change', autoSave);
+document.getElementById('wrap-px').addEventListener('change', autoSave);
+document.getElementById('wrap-safety').addEventListener('change', autoSave);
+document.getElementById('measure-backend').addEventListener('change', autoSave);
+document.getElementById('font-family').addEventListener('change', autoSave);
+document.getElementById('font-size').addEventListener('change', autoSave);
+document.getElementById('letter-spacing').addEventListener('change', autoSave);
 document.getElementById('reflow-v2').addEventListener('change', autoSave);
 document.getElementById('balance-lines').addEventListener('change', autoSave);
 document.getElementById('csv-save-diagnostics').addEventListener('change', autoSave);
+document.getElementById('strict-skit-group-intents').addEventListener('change', autoSave);
+document.getElementById('skit-group-only').addEventListener('change', autoSave);
 
 // --- Scoring Tab（DOMContentLoaded 内の H-01 テンプレ保存から参照するため先に宣言）---
 let scoringBriefPath = null;
@@ -1055,6 +1974,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   bindOpenDoc('btn-open-workflow-proof-template', 'docs/workflow-proof-template.md');
   bindOpenDoc('btn-open-b11-checkpoints', 'docs/B11-manual-checkpoints.md');
   bindOpenDoc('btn-open-gui-guide', 'docs/GUI_MINIMUM_PATH.md');
+  initDesignReviewTab();
 
   async function saveH01Template(format) {
     const status = document.getElementById('status');

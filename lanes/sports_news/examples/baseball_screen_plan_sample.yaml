@@ -1,0 +1,61 @@
+episode_id: sample_baseball_screen_plan_v1
+status: sample_only
+source_episode: lanes/sports_news/examples/baseball_pitch_event_sample.yaml
+review_surface: screen_plan
+placement_policy:
+  phase_1: static_png_as_yymm4_image_item
+  phase_2: deterministic_clip_as_yymm4_video_item
+  direct_html_in_yymm4: forbidden
+segments:
+  - segment_id: open_hook
+    script_range: intro_lines_1_8
+    viewer_question: この短いニュースで何が起き、なぜ今見るべきか
+    card_sequence:
+      - opening_breaking_card
+      - scoreboard_card
+    information_budget:
+      max_primary_numbers: 3
+      max_named_entities: 4
+      reaction_digest: none
+    primary_screen: card_template
+    duration_sec: 18
+    ymm4_placement:
+      type: ImageItem
+      layer_hint: sports_news_overlay
+      asset_state: generated_later
+    review_signal: 冒頭でスコアと論点が同時に読めるか、数字が多すぎないか
+  - segment_id: pitch_event_explain
+    script_range: body_lines_9_28
+    viewer_question: 勝負を分けた一球の意味は何か
+    card_sequence:
+      - pitch_event_card
+      - player_stat_card
+      - trend_comparison_card
+    information_budget:
+      max_primary_numbers: 5
+      max_named_entities: 4
+      reaction_digest: none
+    primary_screen: BaseballInfoGraphics
+    duration_sec: 42
+    ymm4_placement:
+      type: VideoItem
+      layer_hint: sports_news_overlay
+      asset_state: generated_later
+    review_signal: 投球情報と解説の順番が合うか、C詳細が過密にならないか
+  - segment_id: reaction_and_next
+    script_range: close_lines_29_40
+    viewer_question: 視聴者は次に何を見ればよいか
+    card_sequence:
+      - reaction_digest_card
+      - watch_point_card
+    information_budget:
+      max_primary_numbers: 2
+      max_named_entities: 3
+      reaction_digest: sourced_summary_required
+    primary_screen: card_template
+    duration_sec: 24
+    ymm4_placement:
+      type: ImageItem
+      layer_hint: sports_news_overlay
+      asset_state: generated_later
+    review_signal: 反応紹介が主張の根拠に化けていないか、締めの視点が明確か

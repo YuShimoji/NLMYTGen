@@ -1,0 +1,14 @@
+card_type: opening_breaking_card
+purpose: "Open the episode with one factual hook and one interpretive angle."
+required_fields:
+  - headline
+  - subheadline
+  - event_label
+  - source_refs
+visual_rules:
+  background: dark_broadcast
+  max_primary_claims: 1
+  ambient_backdrop_allowed: true
+  provenance_required_for_non_data_visuals: true
+notes:
+  - "Use typography, rule lines, restrained accent color, and optional atmosphere-only backdrops."

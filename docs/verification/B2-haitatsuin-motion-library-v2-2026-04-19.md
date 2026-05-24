@@ -84,7 +84,7 @@ uv run python -m src.cli.main apply-production \
 
 残 6 件 (index 2/4/6/7/9/10) は motion: "none" で配達員静止。
 
-## 次 user action
+## 次の確認作業
 
 1. YMM4 で `_tmp/b2_haitatsuin_motion_applied_v3.ymmp` を開く
 2. Layer 10 配達員 ImageItem の 6 segment の動きを視覚確認

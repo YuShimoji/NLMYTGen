@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>G-27 Diagnostic Carrier Proof (SCS §2.1 split)</title>
+  <style>
+    html, body { margin: 0; padding: 0; background: #1f2933; color: #e6edf3; font-family: 'Yu Gothic UI', sans-serif; }
+    .meta { padding: 12px 24px; font-size: 14px; line-height: 1.6; background: #0b1217; border-bottom: 1px solid #2b3640; }
+    .meta strong { color: #f0b429; }
+    .frame-wrap { width: 1920px; height: 1080px; margin: 0; position: relative; }
+    .frame-wrap svg { display: block; }
+    /* When opening this HTML in Electron with BrowserWindow size = 1920x1080,
+       use ?no_meta=1 to hide the top meta strip. */
+  </style>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(location.search);
+      if (params.get('no_meta') === '1') {
+        const meta = document.querySelector('.meta');
+        if (meta) meta.style.display = 'none';
+      }
+      if (params.get('guides') === '0') {
+        document.querySelectorAll('[data-guide]').forEach((el) => el.remove());
+      }
+    });
+  </script>
+</head>
+<body>
+  <div class="meta">
+    <div>diagnostic carrier visualization (SCS §2.1 split). not a render, not creative acceptance.</div>
+    <div><strong>composition_type</strong>: split / <strong>element_count</strong>: 14 / <strong>reading_order</strong>: G27PBD_PublicPanel → G27PBD_Lock → G27PBD_BrokerPanel</div>
+    <div><strong>safe_area</strong>: pass / <strong>subtitle_clearance</strong>: pass / <strong>shape_size_mode</strong>: pass / <strong>color_format</strong>: pass</div>
+    <div><strong>violations</strong>: SCS_3_supporting_per_frame_strict (spec_ambiguity), SCS_4_3_label_budget_strict (spec_ambiguity)</div>
+    <div>query: <code>?no_meta=1</code> to hide this strip; <code>?guides=0</code> to hide SCS grid guides.</div>
+  </div>
+  <div class="frame-wrap">
+    <svg viewBox="0 0 1920 1080" width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
+      <rect data-name="G27PBD_BG" data-role="decoration" x="0" y="0" width="1920" height="1080" fill="#F0F4F8" fill-opacity="1.000" />
+      <rect data-name="G27PBD_PublicPanel" data-role="focal_anchor" x="96" y="181" width="730" height="620" fill="#2563EB" fill-opacity="1.000" />
+      <rect data-name="G27PBD_BrokerPanel" data-role="focal_anchor" x="1094" y="181" width="730" height="620" fill="#7C3AED" fill-opacity="1.000" />
+      <text data-name="G27PBD_Title" data-role="label" x="960" y="97" font-size="64" fill="#1A2B3C" fill-opacity="1.000" text-anchor="middle" dominant-baseline="middle" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">情報の非対称性</text>
+      <text data-name="G27PBD_PublicTitle" data-role="label" x="461" y="230" font-size="48" fill="#FFFFFF" fill-opacity="1.000" text-anchor="middle" dominant-baseline="middle" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">公開ポータル</text>
+      <text data-name="G27PBD_BrokerTitle" data-role="label" x="1459" y="230" font-size="48" fill="#FFFFFF" fill-opacity="1.000" text-anchor="middle" dominant-baseline="middle" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">業者DB</text>
+      <rect data-name="G27PBD_PublicCard1" data-role="supporting" x="161" y="325" width="600" height="130" fill="#E0EBFE" fill-opacity="1.000" />
+      <rect data-name="G27PBD_PublicCard2" data-role="supporting" x="161" y="505" width="600" height="130" fill="#E0EBFE" fill-opacity="1.000" />
+      <rect data-name="G27PBD_BrokerCard1" data-role="supporting" x="1159" y="295" width="600" height="110" fill="#EDE9FE" fill-opacity="1.000" />
+      <rect data-name="G27PBD_BrokerCard2" data-role="supporting" x="1159" y="436" width="600" height="110" fill="#EDE9FE" fill-opacity="1.000" />
+      <rect data-name="G27PBD_BrokerCard3" data-role="supporting" x="1159" y="577" width="600" height="110" fill="#EDE9FE" fill-opacity="1.000" />
+      <rect data-name="G27PBD_Lock" data-role="boundary" x="925" y="291" width="30" height="400" fill="#E5A800" fill-opacity="1.000" />
+      <rect data-name="G27PBD_Lock_Right" data-role="boundary" x="965" y="291" width="30" height="400" fill="#E5A800" fill-opacity="1.000" />
+      <!-- hidden: G27PBD_Arrow (role=connector) -->
+      <rect data-guide="outer_safe_band" x="96" y="54" width="1728" height="972" fill="none" stroke="rgba(255, 240, 200, 0.35)" stroke-dasharray="6 6" stroke-width="2" />
+      <rect data-guide="caption_safe_area" x="0" y="842" width="1920" height="184" fill="rgba(255,80,80,0.05)" stroke="rgba(255, 240, 200, 0.35)" stroke-dasharray="3 3" stroke-width="1" />
+      <rect data-guide="title_band" x="96" y="54" width="1728" height="86" fill="none" stroke="rgba(255, 240, 200, 0.35)" stroke-dasharray="3 3" stroke-width="1" />
+    </svg>
+  </div>
+</body>
+</html>

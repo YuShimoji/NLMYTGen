@@ -1,0 +1,72 @@
+{
+  "version": "1.0",
+  "topic_id": "ai_monitoring_labor",
+  "beats": [
+    {
+      "beat_id": "ai-monitoring-labor-beginning",
+      "phase": "beginning",
+      "motion_primitives": {
+        "enter": [
+          "worker silhouette proxy"
+        ],
+        "move": [
+          "main proxy shifts toward the next beat focus"
+        ],
+        "emphasize": [
+          "device telemetry"
+        ],
+        "reveal": [
+          "payload: 支援ツールとしてのAI"
+        ],
+        "dim": [
+          "background details and nonessential labels"
+        ]
+      },
+      "not_production_timing": true
+    },
+    {
+      "beat_id": "ai-monitoring-labor-development",
+      "phase": "development",
+      "motion_primitives": {
+        "enter": [
+          "device telemetry proxy"
+        ],
+        "move": [
+          "main proxy shifts toward the next beat focus"
+        ],
+        "emphasize": [
+          "procedure card"
+        ],
+        "reveal": [
+          "payload: 測定される働き方"
+        ],
+        "dim": [
+          "background details and nonessential labels"
+        ]
+      },
+      "not_production_timing": true
+    },
+    {
+      "beat_id": "ai-monitoring-labor-turn",
+      "phase": "turn",
+      "motion_primitives": {
+        "enter": [
+          "procedure card proxy"
+        ],
+        "move": [
+          "main proxy shifts toward the next beat focus"
+        ],
+        "emphasize": [
+          "fatigue marker"
+        ],
+        "reveal": [
+          "payload: 数字に出ない負荷"
+        ],
+        "dim": [
+          "background details and nonessential labels"
+        ]
+      },
+      "not_production_timing": true
+    }
+  ]
+}

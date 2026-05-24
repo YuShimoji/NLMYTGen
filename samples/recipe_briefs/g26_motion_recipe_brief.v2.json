@@ -1,0 +1,53 @@
+{
+  "schema_version": "2.0",
+  "artifact_kind": "g26_motion_recipe_brief",
+  "notes": [
+    "G-26 v2 starts with one representative smoke only.",
+    "Do not expand this brief while nod_clear_v2 is awaiting YMM4 visual acceptance."
+  ],
+  "review": {
+    "spacing_frames": 140,
+    "acceptance_classes": [
+      "pass",
+      "wrong motion",
+      "body-face drift",
+      "screen spacing",
+      "too subtle",
+      "too strong",
+      "effect plugin",
+      "asset path"
+    ]
+  },
+  "recipes": [
+    {
+      "goal_id": "nod_clear_v2",
+      "source_goal_id": "nod_clear",
+      "motion_goal": "Readable nod for agreement, understanding, or confirmation.",
+      "emotion": "agreement",
+      "intensity": "medium",
+      "duration_frames": 60,
+      "reset_policy": "returns_to_neutral",
+      "forbidden_patterns": [
+        "body-face drift",
+        "too subtle"
+      ],
+      "face_id": "easy",
+      "anchor_template_source": "delivery_nod_v1",
+      "rotation_values": [
+        0.0,
+        -10.0,
+        0.0
+      ],
+      "keyframe_frames": [
+        30
+      ],
+      "effect_names": [
+        "CenterPointEffect"
+      ],
+      "effect_candidates": [
+        "CenterPointEffect",
+        "RepeatMoveEffect"
+      ]
+    }
+  ]
+}

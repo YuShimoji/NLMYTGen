@@ -1,0 +1,65 @@
+{
+  "status": "passed",
+  "proof_type": "visual_proxy_proof",
+  "not_creative_acceptance": true,
+  "source_manifest": "samples/_probe/g24/real_estate_dx_overlay_only_compact_review.json",
+  "source_overlay_readback": "samples/_probe/g24/real_estate_dx_overlay_only_compact_review_readback.json",
+  "validator_result": "samples/_probe/g24/real_estate_dx_background_skit_blueprint_validate.json",
+  "html_artifact": "samples/_probe/g24/real_estate_dx_visual_storyboard_proof.html",
+  "screenshot_artifact": "samples/_probe/g24/real_estate_dx_visual_storyboard_proof.png",
+  "screenshot_capture_method": "electron generated contact sheet HTML + BrowserWindow.loadFile + webContents.capturePage(full-page rect)",
+  "layout": {
+    "type": "contact_sheet",
+    "columns": 3,
+    "rows": 4,
+    "canvas_aspect_ratio": "16:9",
+    "keyframes_per_segment": 1,
+    "keyframe_phase": "middle proxy"
+  },
+  "checks": {
+    "overlay_readback_status": "passed",
+    "readback_segments": 11,
+    "storyboard_segments": 11,
+    "keyframe_count": 11,
+    "segment_ids": [
+      "RE-01",
+      "RE-02",
+      "RE-03",
+      "RE-04",
+      "RE-05",
+      "RE-06",
+      "RE-07A",
+      "RE-07B",
+      "RE-07C",
+      "RE-07D",
+      "RE-07E"
+    ],
+    "readback_placeholder_items_rendered": 24,
+    "storyboard_placeholders": 24,
+    "cast_proxy_count": 23,
+    "all_segments_visible_in_dom": true,
+    "all_placeholders_visible_in_dom": true,
+    "contact_sheet_3_columns": true,
+    "remaining_blockers_match_validator": true,
+    "screenshot_pixels": {
+      "width": 1888,
+      "height": 2012
+    },
+    "captured_page_pixels": {
+      "width": 1709,
+      "height": 1822
+    }
+  },
+  "allowed_next_actions": [
+    "overlay_only_compact_review"
+  ],
+  "forbidden_next_actions": [
+    "cast_motion_ir",
+    "ymm4_creative_acceptance",
+    "production_timing"
+  ],
+  "remaining_blockers": [
+    "ASSET_BLOCKED_REAL_ESTATE_CAST_TEMPLATES_MISSING: consumer/gatekeeper_agent/curator_risk_pro are not available as production templates",
+    "ASSET_BLOCKED_REAL_ESTATE_PROPS_MISSING: VIP door, REINS PC, QR/status board, card-sorting, SNS/AI/risk cards are missing or placeholder-only"
+  ]
+}

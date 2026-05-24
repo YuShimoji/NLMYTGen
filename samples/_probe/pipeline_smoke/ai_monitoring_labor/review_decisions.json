@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "episode_id": "ai_monitoring_labor",
+  "review_scope": "multi_topic_pipeline_smoke",
+  "source_packet": "samples/_probe/pipeline_smoke/ai_monitoring_labor/review_packet.json",
+  "saved_at": "2026-05-11T00:00:00.000Z",
+  "save_origin": "pipeline_smoke_fixture",
+  "overall_action": "continue_multi_topic_smoke",
+  "overall_comment": "Fixture decision record proves the decision artifact path; it is not user creative acceptance.",
+  "decisions": [
+    {
+      "segment_id": "ai-monitoring-labor",
+      "decision": "接続OK",
+      "comment": "generic labor/platform proxy vocabulary is not yet accepted",
+      "classification_hint": "reviewable"
+    }
+  ]
+}

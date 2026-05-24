@@ -1,0 +1,537 @@
+import json
+from pathlib import Path
+
+from src.cli.main import main
+from src.pipeline.motion_recipe import MotionRecipeBuildPaths, build_motion_recipe_review
+from src.pipeline.skit_group_placement import extract_skit_group_templates
+from src.pipeline.ymmp_patch import load_ymmp, _get_timeline_items, _item_type
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def _repo_paths(tmp_path: Path) -> MotionRecipeBuildPaths:
+    return MotionRecipeBuildPaths(
+        brief=ROOT / "samples/recipe_briefs/g26_motion_recipe_brief.v1.json",
+        seed=ROOT / "samples/canonical.ymmp",
+        template_source=ROOT / "samples/templates/skit_group/delivery_v1_templates.ymmp",
+        effect_catalog=ROOT / "samples/effect_catalog.json",
+        effect_samples=ROOT / "samples/_probe/b2/effect_full_samples.json",
+        motion_library=ROOT / "samples/tachie_motion_map_library.json",
+        corpus_ymmp=None,
+        out_ymmp=tmp_path / "review.ymmp",
+        out_readback=tmp_path / "readback.json",
+        out_manifest=tmp_path / "manifest.md",
+    )
+
+
+def _repo_v2_paths(tmp_path: Path, *, recipe_id: str | None = "nod_clear_v2") -> MotionRecipeBuildPaths:
+    return MotionRecipeBuildPaths(
+        brief=ROOT / "samples/recipe_briefs/g26_motion_recipe_brief.v2.json",
+        seed=ROOT / "samples/canonical.ymmp",
+        template_source=ROOT / "samples/templates/skit_group/delivery_v1_templates.ymmp",
+        effect_catalog=ROOT / "samples/effect_catalog.json",
+        effect_samples=ROOT / "samples/_probe/b2/effect_full_samples.json",
+        motion_library=ROOT / "samples/tachie_motion_map_library.json",
+        corpus_ymmp=None,
+        out_ymmp=tmp_path / "nod_clear_v2_review.ymmp",
+        out_readback=tmp_path / "nod_clear_v2_readback.json",
+        out_manifest=tmp_path / "nod_clear_v2_manifest.md",
+        recipe_id=recipe_id,
+    )
+
+
+def _nod_head_v1_paths(tmp_path: Path) -> MotionRecipeBuildPaths:
+    return MotionRecipeBuildPaths(
+        brief=ROOT / "samples/recipe_briefs/g26_nod_head_v1_brief.v2.json",
+        seed=ROOT / "samples/canonical.ymmp",
+        template_source=ROOT / "samples/nod_head.ymmp",
+        effect_catalog=ROOT / "samples/effect_catalog.json",
+        effect_samples=ROOT / "samples/_probe/b2/effect_full_samples.json",
+        motion_library=ROOT / "samples/tachie_motion_map_library.json",
+        corpus_ymmp=None,
+        out_ymmp=tmp_path / "nod_head_v1_review.ymmp",
+        out_readback=tmp_path / "nod_head_v1_readback.json",
+        out_manifest=tmp_path / "nod_head_v1_manifest.md",
+        recipe_id="nod_head_v1",
+    )
+
+
+def _effect_names(item: dict) -> list[str]:
+    return [
+        effect.get("$type", "").split(",")[0].split(".")[-1]
+        for effect in item.get("VideoEffects", [])
+        if isinstance(effect, dict)
+    ]
+
+
+def _route_values(item: dict, axis: str) -> list[float]:
+    return [
+        keyframe["Value"]
+        for keyframe in item[axis]["Values"]
+    ]
+
+
+def _recipe_group(path: Path, remark: str) -> dict:
+    data = load_ymmp(path)
+    items = _get_timeline_items(data)
+    return next(
+        item for item in items
+        if _item_type(item) == "GroupItem"
+        and item.get("Remark") == remark
+    )
+
+
+def _manifest_metadata(path: Path) -> dict:
+    text = path.read_text(encoding="utf-8")
+    marker = "## Metadata\n\n```json\n"
+    start = text.index(marker) + len(marker)
+    end = text.index("\n```", start)
+    return json.loads(text[start:end])
+
+
+def test_build_motion_recipe_review_from_brief(tmp_path: Path) -> None:
+    result = build_motion_recipe_review(_repo_paths(tmp_path))
+
+    assert result["success"] is True
+    assert result["recipe_count"] == 12
+    assert result["recipe_group_count"] == 12
+    assert result["recipe_image_count"] == 24
+    assert result["posix_asset_paths"] == 0
+    assert result["blank_asset_paths"] == 0
+    assert result["status_model"]["review_candidate"] == "proposed"
+    assert "EFFECT_REQUIRES_COMMUNITY_PLUGIN:CameraShakeEffect" in result["warnings"]
+    assert "EFFECT_OBJECT_FROM_CATALOG_ONLY:CameraShakeEffect" in result["warnings"]
+
+    by_goal = {recipe["goal_id"]: recipe for recipe in result["recipes"]}
+    assert by_goal["nod_clear"]["route_values"]["Rotation"] == [0.0, -10.0, 0.0]
+    assert by_goal["jump_high"]["route_values"]["Y"] == [462.5, 372.5, 462.5]
+    assert "CameraShakeEffect" in by_goal["panic_crash"]["used_effects"]
+    assert all(recipe["effect_shortlist"] for recipe in result["recipes"])
+
+    metadata = _manifest_metadata(tmp_path / "manifest.md")
+    assert metadata["recipe_count"] == 12
+    assert metadata["status_model"]["compatibility_evidence"] == (
+        "requires_yymm4_chain_visual_pass"
+    )
+
+
+def test_build_motion_recipe_review_writes_yymm_openable_project(tmp_path: Path) -> None:
+    build_motion_recipe_review(_repo_paths(tmp_path))
+
+    data = load_ymmp(tmp_path / "review.ymmp")
+    items = _get_timeline_items(data)
+    groups = [
+        item
+        for item in items
+        if _item_type(item) == "GroupItem"
+        and str(item.get("Remark", "")).startswith("recipe:")
+    ]
+    remarks = {item["Remark"]: item for item in groups}
+
+    assert isinstance(data["Timelines"][0]["LayerSettings"], dict)
+    assert isinstance(data["Timelines"][0]["LayerSettings"]["Items"], list)
+    assert len(groups) == 12
+    assert _route_values(remarks["recipe:shobon_droop"], "Y") == [462.5, 480.5, 480.5]
+    assert _effect_names(remarks["recipe:shocked_jump"]) == [
+        "CenterPointEffect",
+        "JumpEffect",
+    ]
+    assert "RepeatRotateEffect" in _effect_names(remarks["recipe:anger_outburst"])
+
+
+def test_brief_supplied_recipe_without_preset(tmp_path: Path) -> None:
+    """Slice 4: novel goal_id may be defined entirely in the brief, no preset extension required."""
+    brief = {
+        "schema_version": "1.0",
+        "artifact_kind": "g26_motion_recipe_brief",
+        "review": {"spacing_frames": 60},
+        "recipes": [
+            {
+                "goal_id": "test_brief_only_excited_pop",
+                "motion_goal": "Test recipe defined entirely in brief, no preset.",
+                "emotion": "happiness",
+                "intensity": "medium",
+                "duration_frames": 60,
+                "reset_policy": "returns_to_neutral",
+                "forbidden_patterns": ["wrong motion"],
+                "y_delta_values": [0.0, -30.0, -15.0, 0.0],
+                "rotation_values": [0.0, -3.0, 3.0, 0.0],
+                "effect_names": ["CenterPointEffect"],
+                "effect_candidates": ["CenterPointEffect", "JumpEffect"],
+            }
+        ],
+    }
+    brief_path = tmp_path / "brief_only.json"
+    brief_path.write_text(json.dumps(brief), encoding="utf-8")
+
+    paths = MotionRecipeBuildPaths(
+        brief=brief_path,
+        seed=ROOT / "samples/canonical.ymmp",
+        template_source=ROOT / "samples/templates/skit_group/delivery_v1_templates.ymmp",
+        effect_catalog=ROOT / "samples/effect_catalog.json",
+        effect_samples=ROOT / "samples/_probe/b2/effect_full_samples.json",
+        motion_library=ROOT / "samples/tachie_motion_map_library.json",
+        corpus_ymmp=None,
+        out_ymmp=tmp_path / "review.ymmp",
+        out_readback=tmp_path / "readback.json",
+        out_manifest=tmp_path / "manifest.md",
+    )
+    result = build_motion_recipe_review(paths)
+
+    assert result["success"] is True
+    assert result["recipe_count"] == 1
+    recipe = result["recipes"][0]
+    assert recipe["goal_id"] == "test_brief_only_excited_pop"
+    assert recipe["emotion"] == "happiness"
+    assert recipe["route_values"]["Rotation"] == [0.0, -3.0, 3.0, 0.0]
+    expected_y = [462.5 + delta for delta in (0.0, -30.0, -15.0, 0.0)]
+    assert recipe["route_values"]["Y"] == expected_y
+    assert recipe["route_point_count"] == 4
+    assert recipe["keyframe_count"] == 2
+    assert recipe["keyframe_frames"] == [20, 40]
+    assert recipe["used_effects"] == ["CenterPointEffect"]
+
+    data = load_ymmp(tmp_path / "review.ymmp")
+    items = _get_timeline_items(data)
+    group = next(
+        item for item in items
+        if _item_type(item) == "GroupItem"
+        and item.get("Remark") == "recipe:test_brief_only_excited_pop"
+    )
+    assert group["KeyFrames"] == {"Frames": [20, 40], "Count": 2}
+    assert group["Rotation"]["AnimationType"] == "直線移動"
+    assert group["Y"]["AnimationType"] == "直線移動"
+
+
+def test_brief_animated_route_point_mismatch_raises(tmp_path: Path) -> None:
+    """Animated routes must share one keyframe structure before visual review."""
+    import pytest
+
+    brief = {
+        "schema_version": "1.0",
+        "artifact_kind": "g26_motion_recipe_brief",
+        "recipes": [
+            {
+                "goal_id": "test_route_mismatch",
+                "motion_goal": "Mismatched animated route points should fail before YMM4.",
+                "emotion": "surprise",
+                "intensity": "medium",
+                "duration_frames": 60,
+                "reset_policy": "returns_to_neutral",
+                "forbidden_patterns": ["wrong motion"],
+                "y_delta_values": [0.0, -30.0, 0.0],
+                "rotation_values": [0.0, -3.0, 3.0, 0.0],
+                "effect_names": ["CenterPointEffect"],
+                "effect_candidates": ["CenterPointEffect"],
+            }
+        ],
+    }
+    brief_path = tmp_path / "mismatch.json"
+    brief_path.write_text(json.dumps(brief), encoding="utf-8")
+
+    paths = MotionRecipeBuildPaths(
+        brief=brief_path,
+        seed=ROOT / "samples/canonical.ymmp",
+        template_source=ROOT / "samples/templates/skit_group/delivery_v1_templates.ymmp",
+        effect_catalog=ROOT / "samples/effect_catalog.json",
+        effect_samples=ROOT / "samples/_probe/b2/effect_full_samples.json",
+        motion_library=ROOT / "samples/tachie_motion_map_library.json",
+        corpus_ymmp=None,
+        out_ymmp=tmp_path / "review.ymmp",
+        out_readback=tmp_path / "readback.json",
+        out_manifest=tmp_path / "manifest.md",
+    )
+
+    with pytest.raises(ValueError, match="MOTION_RECIPE_KEYFRAME_COUNT_MISMATCH"):
+        build_motion_recipe_review(paths)
+
+
+def test_brief_unknown_goal_without_required_fields_raises(tmp_path: Path) -> None:
+    """Brief entry without preset and missing required fields raises a clear error."""
+    import pytest
+    brief = {
+        "schema_version": "1.0",
+        "artifact_kind": "g26_motion_recipe_brief",
+        "recipes": [
+            {
+                "goal_id": "test_incomplete_novel",
+                "motion_goal": "Missing required fields.",
+                "emotion": "thinking",
+                # intensity / duration_frames / reset_policy / forbidden_patterns / effect_candidates 欠
+            }
+        ],
+    }
+    brief_path = tmp_path / "incomplete.json"
+    brief_path.write_text(json.dumps(brief), encoding="utf-8")
+
+    paths = MotionRecipeBuildPaths(
+        brief=brief_path,
+        seed=ROOT / "samples/canonical.ymmp",
+        template_source=ROOT / "samples/templates/skit_group/delivery_v1_templates.ymmp",
+        effect_catalog=ROOT / "samples/effect_catalog.json",
+        effect_samples=ROOT / "samples/_probe/b2/effect_full_samples.json",
+        motion_library=ROOT / "samples/tachie_motion_map_library.json",
+        corpus_ymmp=None,
+        out_ymmp=tmp_path / "review.ymmp",
+        out_readback=tmp_path / "readback.json",
+        out_manifest=tmp_path / "manifest.md",
+    )
+    with pytest.raises(ValueError, match="MOTION_RECIPE_FIELD_REQUIRED"):
+        build_motion_recipe_review(paths)
+
+
+def test_build_motion_recipe_review_filters_recipe_id_and_applies_v2_contract(tmp_path: Path) -> None:
+    result = build_motion_recipe_review(_repo_v2_paths(tmp_path))
+
+    assert result["success"] is True
+    assert result["schema_version"] == "2.0"
+    assert result["recipe_count"] == 1
+    assert result["recipe_group_count"] == 1
+    assert result["recipe_image_count"] == 2
+    assert result["posix_asset_paths"] == 0
+    assert result["blank_asset_paths"] == 0
+
+    recipe = result["recipes"][0]
+    assert recipe["goal_id"] == "nod_clear_v2"
+    assert recipe["face_id"] == "easy"
+    assert recipe["anchor_template_source"] == "delivery_nod_v1"
+    assert recipe["route_values"]["Rotation"] == [0.0, -10.0, 0.0]
+    assert recipe["keyframe_frames"] == [30]
+
+    group = _recipe_group(tmp_path / "nod_clear_v2_review.ymmp", "recipe:nod_clear_v2")
+    assert _route_values(group, "Rotation") == [0.0, -10.0, 0.0]
+    assert group["KeyFrames"] == {"Frames": [30], "Count": 1}
+    assert group["Rotation"]["AnimationType"] == "直線移動"
+
+    data = load_ymmp(tmp_path / "nod_clear_v2_review.ymmp")
+    face_item = next(
+        item for item in _get_timeline_items(data)
+        if _item_type(item) == "ImageItem"
+        and item.get("Remark") == "recipe:nod_clear_v2"
+        and item.get("Layer") == 11
+    )
+    assert str(face_item["FilePath"]).endswith(r"samples\characterAnimSample\reimu_easy.png")
+
+
+def test_nod_head_template_source_is_canonicalized() -> None:
+    data = load_ymmp(ROOT / "samples/nod_head.ymmp")
+    templates = extract_skit_group_templates(data)
+    assert sorted(templates) == ["nod_head_v1"]
+
+    items = _get_timeline_items(data)
+    groups = [
+        item for item in items
+        if _item_type(item) == "GroupItem"
+        and item.get("Remark") == "nod_head_v1"
+    ]
+    images = [
+        item for item in items
+        if _item_type(item) == "ImageItem"
+        and item.get("Remark") == "nod_head_v1"
+    ]
+    assert len(groups) == 2
+    assert len(images) == 2
+
+    by_layer = {group["Layer"]: group for group in groups}
+    assert _route_values(by_layer[9], "Rotation") == [0.0]
+    assert by_layer[9]["Rotation"]["AnimationType"] == "なし"
+    assert by_layer[9]["KeyFrames"] == {"Frames": [], "Count": 0}
+    assert _route_values(by_layer[11], "Rotation") == [0.0, -10.0, 0.0]
+    assert by_layer[11]["Rotation"]["AnimationType"] == "直線移動"
+    assert by_layer[11]["KeyFrames"] == {"Frames": [29], "Count": 1}
+
+
+def test_build_motion_recipe_review_native_template_preserves_head_group(tmp_path: Path) -> None:
+    result = build_motion_recipe_review(_nod_head_v1_paths(tmp_path))
+
+    assert result["success"] is True
+    assert result["recipe_count"] == 1
+    assert result["recipe_group_count"] == 2
+    assert result["recipe_image_count"] == 2
+    assert result["posix_asset_paths"] == 0
+    assert result["blank_asset_paths"] == 0
+    recipe = result["recipes"][0]
+    assert recipe["goal_id"] == "nod_head_v1"
+    assert recipe["motion_source"] == "native_template"
+    assert recipe["anchor_template_source"] == "nod_head_v1"
+    assert recipe["native_template_group_count"] == 2
+    assert recipe["native_template_image_count"] == 2
+    assert recipe["route_values"]["Rotation"] == [0.0, -10.0, 0.0]
+    assert recipe["keyframe_frames"] == [29]
+
+    data = load_ymmp(tmp_path / "nod_head_v1_review.ymmp")
+    items = _get_timeline_items(data)
+    groups = [
+        item for item in items
+        if _item_type(item) == "GroupItem"
+        and item.get("Remark") == "recipe:nod_head_v1"
+    ]
+    images = [
+        item for item in items
+        if _item_type(item) == "ImageItem"
+        and item.get("Remark") == "recipe:nod_head_v1"
+    ]
+    assert len(groups) == 2
+    assert len(images) == 2
+    by_layer = {group["Layer"]: group for group in groups}
+    assert _route_values(by_layer[9], "Rotation") == [0.0]
+    assert by_layer[9]["KeyFrames"] == {"Frames": [], "Count": 0}
+    assert _route_values(by_layer[11], "Rotation") == [0.0, -10.0, 0.0]
+    assert by_layer[11]["KeyFrames"] == {"Frames": [29], "Count": 1}
+
+
+def test_v2_brief_requires_face_id_and_anchor_template_source(tmp_path: Path) -> None:
+    import pytest
+
+    base_recipe = {
+        "goal_id": "test_missing_face",
+        "motion_goal": "Missing v2 contract fields should fail before writing.",
+        "emotion": "agreement",
+        "intensity": "medium",
+        "duration_frames": 60,
+        "reset_policy": "returns_to_neutral",
+        "forbidden_patterns": ["wrong motion"],
+        "rotation_values": [0.0, -10.0, 0.0],
+        "keyframe_frames": [30],
+        "effect_names": ["CenterPointEffect"],
+        "effect_candidates": ["CenterPointEffect"],
+        "anchor_template_source": "delivery_nod_v1",
+    }
+    brief_path = tmp_path / "missing_face.json"
+    brief_path.write_text(
+        json.dumps({
+            "schema_version": "2.0",
+            "artifact_kind": "g26_motion_recipe_brief",
+            "recipes": [base_recipe],
+        }),
+        encoding="utf-8",
+    )
+
+    paths = _repo_v2_paths(tmp_path)
+    paths = MotionRecipeBuildPaths(**{**paths.__dict__, "brief": brief_path})
+    with pytest.raises(
+        ValueError,
+        match=r"MOTION_RECIPE_FIELD_REQUIRED: test_missing_face\.face_id",
+    ):
+        build_motion_recipe_review(paths)
+
+    missing_anchor = {
+        **base_recipe,
+        "goal_id": "test_missing_anchor",
+        "face_id": "easy",
+    }
+    missing_anchor.pop("anchor_template_source")
+    brief_path = tmp_path / "missing_anchor.json"
+    brief_path.write_text(
+        json.dumps({
+            "schema_version": "2.0",
+            "artifact_kind": "g26_motion_recipe_brief",
+            "recipes": [missing_anchor],
+        }),
+        encoding="utf-8",
+    )
+
+    paths = _repo_v2_paths(tmp_path)
+    paths = MotionRecipeBuildPaths(**{**paths.__dict__, "brief": brief_path})
+    with pytest.raises(
+        ValueError,
+        match=r"MOTION_RECIPE_FIELD_REQUIRED: test_missing_anchor\.anchor_template_source",
+    ):
+        build_motion_recipe_review(paths)
+
+
+def test_build_motion_recipe_unknown_recipe_id_raises(tmp_path: Path) -> None:
+    import pytest
+
+    paths = _repo_v2_paths(tmp_path, recipe_id="missing_recipe")
+
+    with pytest.raises(ValueError, match="MOTION_RECIPE_ID_NOT_FOUND: missing_recipe"):
+        build_motion_recipe_review(paths)
+
+
+def test_cli_build_motion_recipes_writes_all_outputs(tmp_path: Path, capsys) -> None:
+    out_ymmp = tmp_path / "cli_review.ymmp"
+    out_readback = tmp_path / "cli_readback.json"
+    out_manifest = tmp_path / "cli_manifest.md"
+
+    code = main([
+        "build-motion-recipes",
+        "--brief",
+        str(ROOT / "samples/recipe_briefs/g26_motion_recipe_brief.v1.json"),
+        "--seed",
+        str(ROOT / "samples/canonical.ymmp"),
+        "--template-source",
+        str(ROOT / "samples/templates/skit_group/delivery_v1_templates.ymmp"),
+        "--effect-catalog",
+        str(ROOT / "samples/effect_catalog.json"),
+        "--effect-samples",
+        str(ROOT / "samples/_probe/b2/effect_full_samples.json"),
+        "--motion-library",
+        str(ROOT / "samples/tachie_motion_map_library.json"),
+        "--corpus-ymmp",
+        "",
+        "--out-yMMP",
+        str(out_ymmp),
+        "--out-readback",
+        str(out_readback),
+        "--out-manifest",
+        str(out_manifest),
+        "--format",
+        "json",
+    ])
+
+    assert code == 0
+    stdout = capsys.readouterr().out
+    payload = json.loads(stdout)
+    assert payload["outputs"]["ymmp"] == str(out_ymmp)
+    assert payload["recipe_count"] == 12
+    assert out_ymmp.exists()
+    assert out_readback.exists()
+    assert out_manifest.exists()
+    assert json.loads(out_readback.read_text(encoding="utf-8"))["success"] is True
+
+
+def test_cli_build_motion_recipes_recipe_id_writes_single_v2_output(tmp_path: Path, capsys) -> None:
+    out_ymmp = tmp_path / "cli_nod_clear_v2.ymmp"
+    out_readback = tmp_path / "cli_nod_clear_v2_readback.json"
+    out_manifest = tmp_path / "cli_nod_clear_v2_manifest.md"
+
+    code = main([
+        "build-motion-recipes",
+        "--recipe-id",
+        "nod_clear_v2",
+        "--brief",
+        str(ROOT / "samples/recipe_briefs/g26_motion_recipe_brief.v2.json"),
+        "--seed",
+        str(ROOT / "samples/canonical.ymmp"),
+        "--template-source",
+        str(ROOT / "samples/templates/skit_group/delivery_v1_templates.ymmp"),
+        "--effect-catalog",
+        str(ROOT / "samples/effect_catalog.json"),
+        "--effect-samples",
+        str(ROOT / "samples/_probe/b2/effect_full_samples.json"),
+        "--motion-library",
+        str(ROOT / "samples/tachie_motion_map_library.json"),
+        "--corpus-ymmp",
+        "",
+        "--out-yMMP",
+        str(out_ymmp),
+        "--out-readback",
+        str(out_readback),
+        "--out-manifest",
+        str(out_manifest),
+        "--format",
+        "json",
+    ])
+
+    assert code == 0
+    stdout = capsys.readouterr().out
+    payload = json.loads(stdout)
+    assert payload["outputs"]["ymmp"] == str(out_ymmp)
+    assert payload["inputs"]["recipe_id"] == "nod_clear_v2"
+    assert payload["recipe_count"] == 1
+    assert payload["recipes"][0]["goal_id"] == "nod_clear_v2"
+    assert out_ymmp.exists()
+    assert out_readback.exists()
+    assert out_manifest.exists()

@@ -1,0 +1,251 @@
+{
+  "version": "1.0",
+  "artifact_type": "YMM4_adapter_route_preflight_report",
+  "episode_id": "real_estate_dx",
+  "scope": "G-27 RE-02 / RE-06 / RE-07D route-contract preflight only",
+  "source": {
+    "route_contract": "docs/G27_ADAPTER_ROUTE_CONTRACT.md",
+    "adapter_planning_candidates": "samples/_probe/g24/real_estate_dx_ymm4_adapter_planning_candidates.json",
+    "asset_proxy_gap_report": "samples/_probe/g24/real_estate_dx_asset_proxy_gap_report.json",
+    "validator_authority": "samples/_probe/g24/real_estate_dx_background_skit_blueprint_validate.json"
+  },
+  "boundary": {
+    "preflight_only": true,
+    "output_generation_allowed": false,
+    "no_YMM4_adapter_output": true,
+    "no_adapter_IR": true,
+    "no_YMM4_patch": true,
+    "no_ymmp_write": true,
+    "no_render": true,
+    "no_production_timing": true,
+    "no_creative_acceptance": true,
+    "no_external_asset_acquisition": true
+  },
+  "status": "passed_for_planning_preflight",
+  "checks": [
+    {
+      "id": "candidate_set",
+      "description": "All 7 candidates remain adapter-planning-ready in the gap report.",
+      "status": "pass",
+      "evidence": {
+        "candidate_count": 7,
+        "candidate_ids": [
+          "RE-02-beginning",
+          "RE-02-development",
+          "RE-06-beginning",
+          "RE-06-development",
+          "RE-06-turn",
+          "RE-07D-beginning",
+          "RE-07D-development"
+        ],
+        "gap_rollup_ids": [
+          "RE-02-beginning",
+          "RE-02-development",
+          "RE-06-beginning",
+          "RE-06-development",
+          "RE-06-turn",
+          "RE-07D-beginning",
+          "RE-07D-development"
+        ]
+      },
+      "failure_reason": null
+    },
+    {
+      "id": "re02_turn_excluded_until_adjusted",
+      "description": "RE-02-turn remains excluded until opacity-layer adjustment is reflected.",
+      "status": "pass",
+      "evidence": {
+        "candidate_inclusion": false,
+        "candidate_status": "excluded_until_adjusted",
+        "proxy_type": "public information layer / non-public data bundle opacity contrast",
+        "gap_readiness": "not adapter-planning-ready until adjustment is reflected in adapter planning"
+      },
+      "failure_reason": null
+    },
+    {
+      "id": "re07d_turn_deferred_blocks_planning",
+      "description": "RE-07D-turn remains deferred and still blocks adapter planning.",
+      "status": "pass",
+      "evidence": {
+        "candidate_inclusion": false,
+        "candidate_status": "deferred_blocks_adapter_planning",
+        "asset_proxy_readiness": "deferred",
+        "ymm4_adapter_readiness": "still blocked"
+      },
+      "failure_reason": null
+    },
+    {
+      "id": "validator_boundary",
+      "description": "Validator authority still blocks execution-zone actions.",
+      "status": "pass",
+      "evidence": {
+        "status": "blocked",
+        "allowed_next_actions": [
+          "overlay_only_compact_review"
+        ],
+        "forbidden_next_actions": [
+          "cast_motion_ir",
+          "ymm4_creative_acceptance",
+          "production_timing"
+        ]
+      },
+      "failure_reason": null
+    },
+    {
+      "id": "no_forbidden_positive_representation",
+      "description": "No forbidden positive representation appears in planning candidate proxy fields.",
+      "status": "pass",
+      "evidence": {
+        "scanned_fields": [
+          "beat_id",
+          "representation",
+          "proxy_type"
+        ],
+        "hits": []
+      },
+      "failure_reason": null
+    },
+    {
+      "id": "output_generation_disabled",
+      "description": "output_generation_allowed=false is preserved and forbidden actions remain listed.",
+      "status": "pass",
+      "evidence": {
+        "route_contract_flag_present": true,
+        "no_YMM4_adapter_output": true,
+        "no_YMM4_patch": true,
+        "forbidden_actions": [
+          "YMM4 adapter output",
+          "YMM4 patch",
+          "render",
+          "production timing",
+          "creative acceptance"
+        ]
+      },
+      "failure_reason": null
+    }
+  ],
+  "route_planning_candidates": [
+    {
+      "beat_id": "RE-02-beginning",
+      "status": "route_planning_candidate",
+      "route_types": [
+        "abstract_ui_route",
+        "motion_primitive_route"
+      ],
+      "representation": "abstract proxy",
+      "proxy_type": "public-search vs broker-database access-gap proxy",
+      "rights_risk": "low",
+      "required_note": "Use a generic, non-official search UI and broker-database abstraction. Do not use a real REINS screenshot, logo, or service-identifiable UI.",
+      "output_generation_allowed": false
+    },
+    {
+      "beat_id": "RE-02-development",
+      "status": "route_planning_candidate",
+      "route_types": [
+        "abstract_ui_route",
+        "property_card_route",
+        "motion_primitive_route"
+      ],
+      "representation": "abstract proxy",
+      "proxy_type": "broker DB panel / public portal card / property-card flow",
+      "rights_risk": "low",
+      "required_note": "Plan generic broker DB and public portal panels with selected property-card flow. Avoid official branding and real/reference UI unless separately reviewed.",
+      "output_generation_allowed": false
+    },
+    {
+      "beat_id": "RE-06-beginning",
+      "status": "route_planning_candidate",
+      "route_types": [
+        "property_card_route",
+        "motion_primitive_route"
+      ],
+      "representation": "abstract proxy",
+      "proxy_type": "property-card overload",
+      "rights_risk": "none",
+      "required_note": "Plan simplified property cards, density control, and subtitle-safe lower band. No real listing photo or external asset is required.",
+      "output_generation_allowed": false
+    },
+    {
+      "beat_id": "RE-06-development",
+      "status": "route_planning_candidate",
+      "route_types": [
+        "document_proxy_route",
+        "property_card_route",
+        "risk_marker_route",
+        "motion_primitive_route"
+      ],
+      "representation": "abstract proxy",
+      "proxy_type": "selected property sheet plus drawback marker",
+      "rights_risk": "none",
+      "required_note": "Plan a selected property sheet and a drawback marker as abstract UI/document shapes. Do not introduce real listing screenshots.",
+      "output_generation_allowed": false
+    },
+    {
+      "beat_id": "RE-06-turn",
+      "status": "route_planning_candidate",
+      "route_types": [
+        "document_proxy_route",
+        "property_card_route",
+        "motion_primitive_route"
+      ],
+      "representation": "property-document proxy",
+      "proxy_type": "property sheet / editorial comparison / document-backed recommendation",
+      "rights_risk": "none",
+      "required_note": "Anchor the curation value in property-document structure. Avoid pure lens, strategy diagram, or generic consulting visual treatment.",
+      "output_generation_allowed": false
+    },
+    {
+      "beat_id": "RE-07D-beginning",
+      "status": "route_planning_candidate",
+      "route_types": [
+        "ai_panel_route",
+        "property_card_route",
+        "motion_primitive_route"
+      ],
+      "representation": "abstract proxy",
+      "proxy_type": "AI recommendation panel plus property card",
+      "rights_risk": "none",
+      "required_note": "Use an abstract AI panel and property card only. Do not use real AI product UI, logos, model screenshots, or identifiable recommendation services.",
+      "output_generation_allowed": false
+    },
+    {
+      "beat_id": "RE-07D-development",
+      "status": "route_planning_candidate",
+      "route_types": [
+        "risk_marker_route",
+        "motion_primitive_route"
+      ],
+      "representation": "abstract proxy",
+      "proxy_type": "boundary / inheritance / neighborhood risk-marker set",
+      "rights_risk": "low",
+      "required_note": "Plan symbolic risk markers for boundary, inheritance, and neighborhood issues. Do not use real maps, registry documents, or identifiable records unless later rights-reviewed.",
+      "output_generation_allowed": false
+    }
+  ],
+  "exclusions": [
+    {
+      "beat_id": "RE-02-turn",
+      "status": "excluded_until_adjusted",
+      "reason": "Accepted-with-adjustment proxy has not yet been reflected as a route-planning candidate.",
+      "required_condition": "Use public information layer / non-public data bundle opacity contrast; avoid wall/gate/security-facility/conspiracy-coded occlusion.",
+      "output_generation_allowed": false
+    },
+    {
+      "beat_id": "RE-07D-turn",
+      "status": "deferred_blocks_adapter_planning",
+      "reason": "Specialist / cast / silhouette policy remains undecided.",
+      "asset_proxy_readiness": "deferred",
+      "YMM4_adapter_readiness": "still blocked",
+      "output_generation_allowed": false
+    }
+  ],
+  "next_gate": {
+    "recommended_default": "user_or_validator_authorization_before_adapter_IR_or_patch_output",
+    "assistant_can_prepare": "authorization decision sheet or validator-facing preflight review",
+    "user_or_validator_must_authorize_before": [
+      "adapter IR",
+      "YMM4 patch output",
+      ".ymmp write"
+    ]
+  }
+}

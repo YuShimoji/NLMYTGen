@@ -1,0 +1,665 @@
+{
+  "status": "generated_overlay_only_compact_review",
+  "compact_review_artifact": "samples\\_probe\\g24\\real_estate_dx_overlay_only_compact_review.html",
+  "source_lock": {
+    "samples\\_probe\\g24\\real_estate_dx_background_skit_blueprint_validate.json": "c150793d8697aa345de4bcc0c1b2d1d90ec52e51b4ae321b94c8fd2832e72da8",
+    "samples\\_probe\\g24\\real_estate_dx_overlay_card_placeholder_map.json": "7246577d1dfa2dfdb2bab0e27d419a4185f4170accfc9a393b16b5b10cd55720",
+    "samples\\_probe\\g24\\real_estate_dx_row_time_map.json": "6002bdacecb6947e6913afccc97aed7676a7e0632e0b231678ef3ad4c70d5724",
+    "samples\\_probe\\g24\\real_estate_dx_script_maturity_diagnostic.json": "6971aba9b3076ea3eb1b88f2183074b8559e7ff5cf6df470f2da9b6650f828ab"
+  },
+  "validator_authority": {
+    "path": "samples\\_probe\\g24\\real_estate_dx_background_skit_blueprint_validate.json",
+    "status": "blocked",
+    "allowed_next_actions": [
+      "overlay_only_compact_review"
+    ],
+    "forbidden_next_actions": [
+      "cast_motion_ir",
+      "ymm4_creative_acceptance",
+      "production_timing"
+    ],
+    "remaining_blockers": [
+      "ASSET_BLOCKED_REAL_ESTATE_CAST_TEMPLATES_MISSING: consumer/gatekeeper_agent/curator_risk_pro are not available as production templates",
+      "ASSET_BLOCKED_REAL_ESTATE_PROPS_MISSING: VIP door, REINS PC, QR/status board, card-sorting, SNS/AI/risk cards are missing or placeholder-only"
+    ],
+    "resolved_blockers": [
+      "SCRIPT_BLOCKED_RE07_TOO_BROAD"
+    ]
+  },
+  "review_contract": {
+    "is_creative_acceptance": false,
+    "is_yymm4_creative_acceptance": false,
+    "is_production_timing": false,
+    "uses_cast_motion_ir": false,
+    "uses_delivery_template_cast_reuse": false,
+    "timing_mode": "compact_review_timing_6sec_per_segment_not_production_timing",
+    "allowed_scope": "overlay/card placeholder readability review only",
+    "ymmp_shape_carrier_is_machine_readback_only": true
+  },
+  "source_artifacts": {
+    "placeholder_map": "samples\\_probe\\g24\\real_estate_dx_overlay_card_placeholder_map.json",
+    "row_time_map": "samples\\_probe\\g24\\real_estate_dx_row_time_map.json",
+    "script_maturity_diagnostic": "samples\\_probe\\g24\\real_estate_dx_script_maturity_diagnostic.json"
+  },
+  "segments": [
+    {
+      "id": "RE-01",
+      "title": "自力検索",
+      "line_start": 1,
+      "line_end": 12,
+      "csv_row_start": 1,
+      "csv_row_end": 39,
+      "source_start_sec": 0.0,
+      "source_end_sec": 112.933333,
+      "source_duration_sec": 112.933333,
+      "review_start_sec": 0.0,
+      "review_end_sec": 6.0,
+      "review_duration_sec": 6.0,
+      "items": [
+        {
+          "id": "RE01_PHONE_KEY",
+          "label": "スマホ=魔法の鍵",
+          "kind": "phone_card",
+          "screen_role": "consumer access metaphor",
+          "normalized_box": {
+            "x": 0.18,
+            "y": 0.68,
+            "w": 0.18,
+            "h": 0.16
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 0.0,
+          "review_end_sec": 6.0,
+          "source_start_sec": 0.0,
+          "source_end_sec": 112.933333,
+          "production_asset_required_later": true
+        },
+        {
+          "id": "RE01_PROPERTY_CARDS",
+          "label": "物件カード増殖",
+          "kind": "card_cluster",
+          "screen_role": "search results",
+          "normalized_box": {
+            "x": 0.42,
+            "y": 0.32,
+            "w": 0.32,
+            "h": 0.28
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 0.0,
+          "review_end_sec": 6.0,
+          "source_start_sec": 0.0,
+          "source_end_sec": 112.933333,
+          "production_asset_required_later": true
+        },
+        {
+          "id": "RE01_CLOSED_DOOR",
+          "label": "遠景の閉じた扉",
+          "kind": "door_shape",
+          "screen_role": "future gatekeeper foreshadow",
+          "normalized_box": {
+            "x": 0.78,
+            "y": 0.35,
+            "w": 0.14,
+            "h": 0.32
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 0.0,
+          "review_end_sec": 6.0,
+          "source_start_sec": 0.0,
+          "source_end_sec": 112.933333,
+          "production_asset_required_later": true
+        }
+      ]
+    },
+    {
+      "id": "RE-02",
+      "title": "REINS-VIPクラブ",
+      "line_start": 13,
+      "line_end": 24,
+      "csv_row_start": 40,
+      "csv_row_end": 69,
+      "source_start_sec": 112.933333,
+      "source_end_sec": 201.0,
+      "source_duration_sec": 88.066667,
+      "review_start_sec": 6.5,
+      "review_end_sec": 12.5,
+      "review_duration_sec": 6.0,
+      "items": [
+        {
+          "id": "RE02_VIP_DOOR",
+          "label": "REINS / VIPクラブ",
+          "kind": "door_shape",
+          "screen_role": "private database barrier",
+          "normalized_box": {
+            "x": 0.66,
+            "y": 0.28,
+            "w": 0.2,
+            "h": 0.38
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 6.5,
+          "review_end_sec": 12.5,
+          "source_start_sec": 112.933333,
+          "source_end_sec": 201.0,
+          "production_asset_required_later": true
+        },
+        {
+          "id": "RE02_REINS_PC",
+          "label": "生データDB",
+          "kind": "monitor_card",
+          "screen_role": "inside information",
+          "normalized_box": {
+            "x": 0.72,
+            "y": 0.52,
+            "w": 0.18,
+            "h": 0.14
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 6.5,
+          "review_end_sec": 12.5,
+          "source_start_sec": 112.933333,
+          "source_end_sec": 201.0,
+          "production_asset_required_later": true
+        },
+        {
+          "id": "RE02_PUBLIC_PORTAL",
+          "label": "一般ポータル（一部情報）",
+          "kind": "card",
+          "screen_role": "outside partial information",
+          "normalized_box": {
+            "x": 0.23,
+            "y": 0.5,
+            "w": 0.24,
+            "h": 0.14
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 6.5,
+          "review_end_sec": 12.5,
+          "source_start_sec": 112.933333,
+          "source_end_sec": 201.0,
+          "production_asset_required_later": true
+        }
+      ]
+    },
+    {
+      "id": "RE-03",
+      "title": "保護理由",
+      "line_start": 25,
+      "line_end": 36,
+      "csv_row_start": 70,
+      "csv_row_end": 95,
+      "source_start_sec": 201.0,
+      "source_end_sec": 276.033333,
+      "source_duration_sec": 75.033333,
+      "review_start_sec": 13.0,
+      "review_end_sec": 19.0,
+      "review_duration_sec": 6.0,
+      "items": [
+        {
+          "id": "RE03_SHIELDS",
+          "label": "プライバシー / リスク / 秩序",
+          "kind": "three_cards",
+          "screen_role": "legitimate protection reasons",
+          "normalized_box": {
+            "x": 0.38,
+            "y": 0.34,
+            "w": 0.34,
+            "h": 0.2
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 13.0,
+          "review_end_sec": 19.0,
+          "source_start_sec": 201.0,
+          "source_end_sec": 276.033333,
+          "production_asset_required_later": true
+        },
+        {
+          "id": "RE03_SHADOW_FEE",
+          "label": "背後の利益の影",
+          "kind": "shadow_badge",
+          "screen_role": "dark-side hint",
+          "normalized_box": {
+            "x": 0.55,
+            "y": 0.54,
+            "w": 0.2,
+            "h": 0.16
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 13.0,
+          "review_end_sec": 19.0,
+          "source_start_sec": 201.0,
+          "source_end_sec": 276.033333,
+          "production_asset_required_later": true
+        }
+      ]
+    },
+    {
+      "id": "RE-04",
+      "title": "囲い込み",
+      "line_start": 37,
+      "line_end": 48,
+      "csv_row_start": 96,
+      "csv_row_end": 119,
+      "source_start_sec": 276.033333,
+      "source_end_sec": 342.633333,
+      "source_duration_sec": 66.6,
+      "review_start_sec": 19.5,
+      "review_end_sec": 25.5,
+      "review_duration_sec": 6.0,
+      "items": [
+        {
+          "id": "RE04_SELLER_BUYER",
+          "label": "売主 ⇄ 業者 ⇄ 買主",
+          "kind": "relationship_cards",
+          "screen_role": "double-agency relationship",
+          "normalized_box": {
+            "x": 0.28,
+            "y": 0.38,
+            "w": 0.44,
+            "h": 0.18
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 19.5,
+          "review_end_sec": 25.5,
+          "source_start_sec": 276.033333,
+          "source_end_sec": 342.633333,
+          "production_asset_required_later": true
+        },
+        {
+          "id": "RE04_PENDING_SIGN",
+          "label": "商談中",
+          "kind": "stamp_card",
+          "screen_role": "route blocking sign",
+          "normalized_box": {
+            "x": 0.63,
+            "y": 0.3,
+            "w": 0.15,
+            "h": 0.1
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 19.5,
+          "review_end_sec": 25.5,
+          "source_start_sec": 276.033333,
+          "source_end_sec": 342.633333,
+          "production_asset_required_later": true
+        },
+        {
+          "id": "RE04_ROUTE_GATE",
+          "label": "他社ルート閉鎖",
+          "kind": "gate_shape",
+          "screen_role": "blocked alternative path",
+          "normalized_box": {
+            "x": 0.7,
+            "y": 0.56,
+            "w": 0.18,
+            "h": 0.18
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 19.5,
+          "review_end_sec": 25.5,
+          "source_start_sec": 276.033333,
+          "source_end_sec": 342.633333,
+          "production_asset_required_later": true
+        }
+      ]
+    },
+    {
+      "id": "RE-05",
+      "title": "QR透明化",
+      "line_start": 49,
+      "line_end": 60,
+      "csv_row_start": 120,
+      "csv_row_end": 140,
+      "source_start_sec": 342.633333,
+      "source_end_sec": 408.1,
+      "source_duration_sec": 65.466667,
+      "review_start_sec": 26.0,
+      "review_end_sec": 32.0,
+      "review_duration_sec": 6.0,
+      "items": [
+        {
+          "id": "RE05_QR_BOARD",
+          "label": "QR / 公開ステータス",
+          "kind": "status_board",
+          "screen_role": "transparency state change",
+          "normalized_box": {
+            "x": 0.43,
+            "y": 0.34,
+            "w": 0.28,
+            "h": 0.22
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 26.0,
+          "review_end_sec": 32.0,
+          "source_start_sec": 342.633333,
+          "source_end_sec": 408.1,
+          "production_asset_required_later": true
+        },
+        {
+          "id": "RE05_HALF_OPEN_DOOR",
+          "label": "半分開いた扉",
+          "kind": "door_shape",
+          "screen_role": "barrier opening",
+          "normalized_box": {
+            "x": 0.73,
+            "y": 0.36,
+            "w": 0.16,
+            "h": 0.32
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 26.0,
+          "review_end_sec": 32.0,
+          "source_start_sec": 342.633333,
+          "source_end_sec": 408.1,
+          "production_asset_required_later": true
+        }
+      ]
+    },
+    {
+      "id": "RE-06",
+      "title": "キュレーション",
+      "line_start": 61,
+      "line_end": 82,
+      "csv_row_start": 141,
+      "csv_row_end": 185,
+      "source_start_sec": 408.1,
+      "source_end_sec": 531.7,
+      "source_duration_sec": 123.6,
+      "review_start_sec": 32.5,
+      "review_end_sec": 38.5,
+      "review_duration_sec": 6.0,
+      "items": [
+        {
+          "id": "RE06_SORT_TABLE",
+          "label": "候補を整理するテーブル",
+          "kind": "table_cards",
+          "screen_role": "curation process",
+          "normalized_box": {
+            "x": 0.35,
+            "y": 0.4,
+            "w": 0.34,
+            "h": 0.2
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 32.5,
+          "review_end_sec": 38.5,
+          "source_start_sec": 408.1,
+          "source_end_sec": 531.7,
+          "production_asset_required_later": true
+        },
+        {
+          "id": "RE06_DEFECT_CARD",
+          "label": "欠点も見せるカード",
+          "kind": "warning_card",
+          "screen_role": "honest defect disclosure",
+          "normalized_box": {
+            "x": 0.6,
+            "y": 0.58,
+            "w": 0.18,
+            "h": 0.12
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 32.5,
+          "review_end_sec": 38.5,
+          "source_start_sec": 408.1,
+          "source_end_sec": 531.7,
+          "production_asset_required_later": true
+        },
+        {
+          "id": "RE06_SHORTLIST",
+          "label": "少ないが意味のある候補",
+          "kind": "shortlist_cards",
+          "screen_role": "curated shortlist",
+          "normalized_box": {
+            "x": 0.25,
+            "y": 0.58,
+            "w": 0.22,
+            "h": 0.12
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 32.5,
+          "review_end_sec": 38.5,
+          "source_start_sec": 408.1,
+          "source_end_sec": 531.7,
+          "production_asset_required_later": true
+        }
+      ]
+    },
+    {
+      "id": "RE-07A",
+      "title": "Z世代ライフスタイルとSNS信頼",
+      "line_start": 83,
+      "line_end": 102,
+      "csv_row_start": 186,
+      "csv_row_end": 226,
+      "source_start_sec": 531.7,
+      "source_end_sec": 653.716667,
+      "source_duration_sec": 122.016667,
+      "review_start_sec": 39.0,
+      "review_end_sec": 45.0,
+      "review_duration_sec": 6.0,
+      "items": [
+        {
+          "id": "RE07A_OSHI_TAIPA",
+          "label": "タイパ / 推し活 / TVなし",
+          "kind": "lifestyle_cards",
+          "screen_role": "Gen-Z condition shift",
+          "normalized_box": {
+            "x": 0.32,
+            "y": 0.34,
+            "w": 0.36,
+            "h": 0.2
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 39.0,
+          "review_end_sec": 45.0,
+          "source_start_sec": 531.7,
+          "source_end_sec": 653.716667,
+          "production_asset_required_later": true
+        },
+        {
+          "id": "RE07A_SNS_TRUST",
+          "label": "SNSで顔が見える信頼",
+          "kind": "sns_card",
+          "screen_role": "influencer trust setup",
+          "normalized_box": {
+            "x": 0.58,
+            "y": 0.56,
+            "w": 0.24,
+            "h": 0.14
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 39.0,
+          "review_end_sec": 45.0,
+          "source_start_sec": 531.7,
+          "source_end_sec": 653.716667,
+          "production_asset_required_later": true
+        }
+      ]
+    },
+    {
+      "id": "RE-07B",
+      "title": "SNS集客のグレーゾーン",
+      "line_start": 103,
+      "line_end": 113,
+      "csv_row_start": 227,
+      "csv_row_end": 252,
+      "source_start_sec": 653.716667,
+      "source_end_sec": 730.25,
+      "source_duration_sec": 76.533333,
+      "review_start_sec": 45.5,
+      "review_end_sec": 51.5,
+      "review_duration_sec": 6.0,
+      "items": [
+        {
+          "id": "RE07B_SNS_RISK",
+          "label": "無免許 / おとり広告リスク",
+          "kind": "warning_cards",
+          "screen_role": "SNS gray-zone warning",
+          "normalized_box": {
+            "x": 0.42,
+            "y": 0.36,
+            "w": 0.34,
+            "h": 0.2
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 45.5,
+          "review_end_sec": 51.5,
+          "source_start_sec": 653.716667,
+          "source_end_sec": 730.25,
+          "production_asset_required_later": true
+        }
+      ]
+    },
+    {
+      "id": "RE-07C",
+      "title": "2030年問題と攻めのDX",
+      "line_start": 114,
+      "line_end": 129,
+      "csv_row_start": 253,
+      "csv_row_end": 296,
+      "source_start_sec": 730.25,
+      "source_end_sec": 864.116667,
+      "source_duration_sec": 133.866667,
+      "review_start_sec": 52.0,
+      "review_end_sec": 58.0,
+      "review_duration_sec": 6.0,
+      "items": [
+        {
+          "id": "RE07C_2030_RISKS",
+          "label": "空き家 / ハザード / 相続",
+          "kind": "risk_card_cluster",
+          "screen_role": "specialist risk domains",
+          "normalized_box": {
+            "x": 0.3,
+            "y": 0.35,
+            "w": 0.34,
+            "h": 0.2
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 52.0,
+          "review_end_sec": 58.0,
+          "source_start_sec": 730.25,
+          "source_end_sec": 864.116667,
+          "production_asset_required_later": true
+        },
+        {
+          "id": "RE07C_AI_CONCIERGE",
+          "label": "AIコンシェルジュ",
+          "kind": "ai_panel",
+          "screen_role": "DX customer experience",
+          "normalized_box": {
+            "x": 0.63,
+            "y": 0.42,
+            "w": 0.22,
+            "h": 0.16
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 52.0,
+          "review_end_sec": 58.0,
+          "source_start_sec": 730.25,
+          "source_end_sec": 864.116667,
+          "production_asset_required_later": true
+        }
+      ]
+    },
+    {
+      "id": "RE-07D",
+      "title": "AI逆説と見えないリスク",
+      "line_start": 130,
+      "line_end": 143,
+      "csv_row_start": 297,
+      "csv_row_end": 331,
+      "source_start_sec": 864.116667,
+      "source_end_sec": 979.95,
+      "source_duration_sec": 115.833333,
+      "review_start_sec": 58.5,
+      "review_end_sec": 64.5,
+      "review_duration_sec": 6.0,
+      "items": [
+        {
+          "id": "RE07D_AI_MATCH",
+          "label": "AIの100%マッチ物件",
+          "kind": "ai_recommendation_card",
+          "screen_role": "AI recommendation thesis",
+          "normalized_box": {
+            "x": 0.3,
+            "y": 0.36,
+            "w": 0.28,
+            "h": 0.16
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 58.5,
+          "review_end_sec": 64.5,
+          "source_start_sec": 864.116667,
+          "source_end_sec": 979.95,
+          "production_asset_required_later": true
+        },
+        {
+          "id": "RE07D_HUMAN_RISK",
+          "label": "境界紛争 / 相続 / 感情調整",
+          "kind": "human_risk_cards",
+          "screen_role": "invisible human risk",
+          "normalized_box": {
+            "x": 0.57,
+            "y": 0.34,
+            "w": 0.3,
+            "h": 0.2
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 58.5,
+          "review_end_sec": 64.5,
+          "source_start_sec": 864.116667,
+          "source_end_sec": 979.95,
+          "production_asset_required_later": true
+        }
+      ]
+    },
+    {
+      "id": "RE-07E",
+      "title": "選び方の基準と最後の問い",
+      "line_start": 144,
+      "line_end": 152,
+      "csv_row_start": 332,
+      "csv_row_end": 352,
+      "source_start_sec": 979.95,
+      "source_end_sec": 1049.533333,
+      "source_duration_sec": 69.583333,
+      "review_start_sec": 65.0,
+      "review_end_sec": 71.0,
+      "review_duration_sec": 6.0,
+      "items": [
+        {
+          "id": "RE07E_FINAL_GUIDE",
+          "label": "専門的キュレーター / リスク管理者 / 買ってはいけない理由",
+          "kind": "final_three_cards",
+          "screen_role": "final guide criteria",
+          "normalized_box": {
+            "x": 0.34,
+            "y": 0.38,
+            "w": 0.42,
+            "h": 0.24
+          },
+          "asset_state": "placeholder_text_or_shape",
+          "review_start_sec": 65.0,
+          "review_end_sec": 71.0,
+          "source_start_sec": 979.95,
+          "source_end_sec": 1049.533333,
+          "production_asset_required_later": true
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "segment_count": 11,
+    "placeholder_item_count": 24,
+    "source_duration_sec": 1049.533333,
+    "review_duration_sec": 71.0,
+    "ymmp_shape_item_count": 24
+  },
+  "compact_review_artifacts": {
+    "html": "samples\\_probe\\g24\\real_estate_dx_overlay_only_compact_review.html",
+    "ymmp_shape_carrier": "samples\\_probe\\g24\\real_estate_dx_overlay_only_compact_review.ymmp"
+  }
+}

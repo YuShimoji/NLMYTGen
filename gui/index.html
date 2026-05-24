@@ -12,6 +12,7 @@
     <nav>
       <button class="tab active" data-tab="csv">CSV 変換</button>
       <button class="tab" data-tab="production">演出適用</button>
+      <button class="tab" data-tab="review">デザインレビュー</button>
       <button class="tab" data-tab="scoring">品質診断</button>
     </nav>
     <div class="header-actions">
@@ -79,8 +80,47 @@
         </div>
         <div class="setting-row">
           <label for="chars-per-line">Chars/Line</label>
-          <input type="number" id="chars-per-line" value="20" min="20" max="80">
+          <input type="number" id="chars-per-line" value="40" min="20" max="80">
         </div>
+        <div class="setting-row">
+          <label for="subtitle-font-scale">Subtitle Font Scale (%)</label>
+          <input type="number" id="subtitle-font-scale" value="100" min="1" max="300">
+        </div>
+        <div class="file-row">
+          <label>YMM4 Subtitle Font Source</label>
+          <button class="btn-file" data-target="subtitle-font-source-ymmp">選択</button>
+          <span id="subtitle-font-source-ymmp-path" class="file-path">未選択</span>
+        </div>
+        <p class="file-row-hint">未選択なら上の倍率を使います。選択時は .ymmp 内の字幕 FontSize から倍率を自動推定します。</p>
+        <div class="setting-row">
+          <label for="wrap-px">Wrap Width (px)</label>
+          <input type="number" id="wrap-px" min="1" placeholder="例: 1180">
+        </div>
+        <div class="setting-row">
+          <label for="measure-backend">Measure Backend</label>
+          <select id="measure-backend">
+            <option value="">Auto</option>
+            <option value="wpf">WPF (Windows)</option>
+            <option value="eaw">EAW fallback</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label for="font-family">Font Family</label>
+          <input type="text" id="font-family" placeholder="例: けいふぉんと">
+        </div>
+        <div class="setting-row">
+          <label for="font-size">Font Size</label>
+          <input type="number" id="font-size" min="1" step="0.1" placeholder=".ymmp から推定可">
+        </div>
+        <div class="setting-row">
+          <label for="letter-spacing">Letter Spacing (px)</label>
+          <input type="number" id="letter-spacing" step="0.1" value="0">
+        </div>
+        <div class="setting-row">
+          <label for="wrap-safety">Wrap Safety</label>
+          <input type="number" id="wrap-safety" min="0.1" max="1" step="0.01" value="0.94">
+        </div>
+        <p class="file-row-hint">Wrap Width 指定時は実測幅ベースで改行します。WPF は Windows の計測ヘルパーを使うため、YMM4 表示に近い測量です。</p>
         <div class="setting-row">
           <label>
             <input type="checkbox" id="reflow-v2" checked> Reflow v2
@@ -129,6 +169,16 @@
     <section id="tab-production" class="tab-content">
       <div id="wizard-anchor-prod-ir" class="wizard-step-anchor">
       <p class="hint production-lane-intro">必須/任意の正本は <code>docs/GUI_MINIMUM_PATH.md</code> のレーン B。下は運用時の目安です。</p>
+      <div class="episode-pack-panel">
+        <div class="file-row">
+          <label>Episode Pack Root</label>
+          <button type="button" id="btn-select-episode-pack">選択</button>
+          <button type="button" id="btn-open-episode-pack" class="hidden">開く</button>
+          <span id="episode-pack-root-path" class="file-path">未選択</span>
+        </div>
+        <p class="file-row-hint">例: <code>_tmp/episode_runs/pilot_yukkuri_theater_v1/</code>。選択すると episode_id と既定pathを推定し、CSV/IR/適用結果の保存先をpack内へ固定します。</p>
+        <pre id="episode-pack-expected" class="episode-pack-expected hidden"></pre>
+      </div>
       <div class="file-select-group">
         <div class="file-row">
           <label>Production .ymmp</label>
@@ -173,6 +223,27 @@
           <span id="face-map-bundle-path" class="file-path">未選択</span>
         </div>
         <p class="file-row-hint">G-19 複数体運用時のみ。</p>
+        <div class="file-row">
+          <label>Skit Group Registry (G-24)</label>
+          <button class="btn-file" data-target="skit-group-registry">選択</button>
+          <span id="skit-group-registry-path" class="file-path">未選択</span>
+        </div>
+        <p class="file-row-hint">配達員などの外部茶番劇演者を自動配置するときに使う intent / fallback 台帳。</p>
+        <div class="file-row">
+          <label>Skit Group Template Source</label>
+          <button class="btn-file" data-target="skit-group-template-source">選択</button>
+          <span id="skit-group-template-source-path" class="file-path">未選択</span>
+        </div>
+        <p class="file-row-hint">YMM4 で作成した GroupItem テンプレート集。指定時は template-analyzed placement で配置します。</p>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="strict-skit-group-intents" checked>
+          skit_group intent を registry に限定（G-24 推奨）
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="skit-group-only">
+          skit_group 配置だけを適用（face/bg 等を切り離す）
+        </label>
+        <p class="file-row-hint">skit_group-only は aligned IR の既存 row/index anchor を使うため、CSV(row-range) はコマンドへ渡しません。</p>
       </div>
       </div>
 
@@ -188,6 +259,117 @@
       <div id="validate-result" class="result-panel hidden"></div>
       <div id="production-result" class="result-panel hidden"></div>
       </div>
+      </div>
+    </section>
+
+    <!-- デザインレビュータブ -->
+    <section id="tab-review" class="tab-content">
+      <div class="review-panel review-workbench-panel">
+        <div class="review-heading">
+          <div>
+            <p class="review-kicker">Real Estate DX</p>
+            <h2>G-27 タイムライン型デザインレビュー</h2>
+            <p class="hint">動画全体の流れから segment を選び、台本文脈・演出意図・次工程への影響を見て判断します。YMM4 の最終品質判断や制作タイミング確定ではありません。</p>
+          </div>
+          <div class="review-actions">
+            <button type="button" id="btn-review-open-preview" class="primary">HTMLプレビューを開く</button>
+            <button type="button" id="btn-review-open-memo">詳細根拠を開く（必要時のみ）</button>
+          </div>
+        </div>
+
+        <div class="review-summary-grid">
+          <div class="review-status-card">
+            <h3>機械確認</h3>
+            <p><strong>読み戻し確認済み</strong>。11区間 / 24個の仮置き表示を確認したレビュー画面です。</p>
+          </div>
+          <div class="review-status-card">
+            <h3>今見てよい範囲</h3>
+            <p>overlay/card の比喩・密度・分割方針。制作前のデザインレビューとして扱います。</p>
+          </div>
+          <div class="review-status-card warning">
+            <h3>まだ禁止</h3>
+            <p>人物モーションIR、YMM4での創作受入判断、制作タイミングの確定。</p>
+          </div>
+          <div class="review-status-card warning">
+            <h3>残ブロッカー</h3>
+            <p>不動産DX用の人物テンプレートと小物素材が未整備。G-27 で作業単位へ分解します。</p>
+          </div>
+        </div>
+
+        <div class="review-console-meta">
+          <div class="review-status-card">
+            <h3>入力packet</h3>
+            <p id="review-packet-path">samples/_probe/g24/real_estate_dx_review_packet.json</p>
+          </div>
+          <div class="review-status-card">
+            <h3>保存先</h3>
+            <p id="review-decision-path">samples/_probe/g24/real_estate_dx_review_decisions.json</p>
+          </div>
+        </div>
+
+        <div id="review-load-result" class="result-panel hidden"></div>
+        <div id="review-episode-context" class="review-context-panel"></div>
+        <div id="review-story-outline" class="review-outline-panel"></div>
+
+        <div class="review-workbench" aria-label="G-27 review workbench">
+          <div class="review-timeline-panel">
+            <div class="review-section-head">
+              <div>
+                <h3>全体タイムライン</h3>
+                <p class="hint">segment を選ぶと、下の詳細と判断ペインが切り替わります。</p>
+              </div>
+              <div id="review-progress-summary" class="review-progress-summary">未読込</div>
+            </div>
+            <div id="review-timeline" class="review-timeline" role="list" aria-label="segment timeline"></div>
+          </div>
+
+          <section id="review-treatment-proof" class="review-treatment-proof" aria-label="9-frame visual treatment proof"></section>
+          <section id="pipeline-smoke-review" class="pipeline-smoke-review" aria-label="multi-topic pipeline smoke review"></section>
+
+          <div class="review-workbench-grid">
+            <article id="review-segment-detail" class="review-segment-detail" aria-live="polite"></article>
+
+            <aside class="review-decision-inspector" aria-label="判断保存">
+              <h3>判断ペイン</h3>
+              <p id="review-active-segment-label" class="review-focus-id">segment 未選択</p>
+              <label class="review-field-label">
+                このsegmentの判断
+                <select id="review-active-decision" class="review-select">
+                  <option value="">未選択</option>
+                </select>
+              </label>
+              <label class="review-field-label">
+                コメント
+                <textarea id="review-active-comment" class="review-segment-comment" rows="4" placeholder="必要な場合だけ補足"></textarea>
+              </label>
+              <p id="review-active-effect" class="review-selected-effect">未選択</p>
+
+              <div class="review-reply-panel review-overall-panel">
+                <h3>全体判断</h3>
+                <p class="hint">ここで保存したJSONが、次の scene decision packet / asset-proxy gap report の入力になります。</p>
+                <label class="review-field-label">
+                  全体の次動作
+                  <select id="review-overall-action" class="review-select">
+                    <option value="">未選択</option>
+                  </select>
+                </label>
+                <label class="review-field-label">
+                  全体コメント
+                  <textarea id="review-overall-comment" class="review-reply-box" rows="3" placeholder="全体として重い箇所、先に素材/proxy整理へ回したい箇所など"></textarea>
+                </label>
+                <div id="review-missing-list" class="review-missing-list">未読込</div>
+                <div class="review-actions">
+                  <button type="button" id="btn-review-reload-packet">packet再読込</button>
+                  <button type="button" id="btn-review-save-decisions" class="primary">判断JSONを保存</button>
+                  <button type="button" id="btn-review-copy-reply">判断概要をコピー</button>
+                </div>
+                <div id="review-decision-result" class="result-panel hidden"></div>
+              </div>
+            </aside>
+          </div>
+
+          <div id="review-card-list" class="review-focus-list review-segment-summary" aria-label="segment summary"></div>
+        </div>
       </div>
     </section>
 

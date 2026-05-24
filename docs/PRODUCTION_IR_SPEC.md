@@ -82,6 +82,7 @@ IR の原子単位は **1発話 = 1エントリ**。意味的な発話単位で�
 - 配列の要素に不正が 1 つでも含まれる場合、validator は `MOTION_TARGET_INVALID` で要素位置付きで reject
 - 今回対象外: `"group:<remark>"` 指定 / speaker と layer の混在配列 (例: `["speaker","layer:10"]`)
 - `tachie_motion_effects_map` (G-23 プリセット) を共用する。VideoEffects の JSON 構造は item type に依存しない
+- **G-24 skit_group actor**: 配達員などの外部茶番劇演者を production IR に出す場合は、repo-tracked YMM4 template source の GroupItem を対象発話へ配置するため `motion_target: "layer:9"` を utterance ごとに明示する。省略時は speaker_tachie とみなされ、skit_group placement の対象外になる。配置限定スライスでは `patch-ymmp --skit-group-only` を使い、face/bg 未解決を配置成果から切り離す。
 
 ### 2.2 Macro IR (動画全体)
 
@@ -136,6 +137,10 @@ C-07 v3 の4演出パターンに intro/closing を加えた6値。
 | `mood` | 雰囲気演出 (パターン C) | 写真・背景で場面の空気感 |
 | `board` | 黒板型 (パターン D) | 暗背景にテキスト/リスト整理 |
 | `closing` | 結び | まとめ・チャンネル登録誘導 |
+
+`skit` / `skit_group` は語り手への合いの手ではない。Writer が発話行ごとに `はい → nod` / `いや、鋭い → jump` のようなリアクション cue を作ると、JSON は有効でも動画としては破綻する。背景茶番劇は、台本行を理解して反応する演者ではなく、語り手と並行する独立した小場面として、節・主張・比喩を支える scene bible から作る。配達台本のように台本自体が小話を持つ場合でも、許容されるのは「配達だから cue 化してよい」ではなく、背景側だけで `setup → complication → reaction → resolution` が読める場合に限る。scene bible / time budget / cast continuity / screen placement が無い場合は `BACKGROUND_SKIT_ROLE_UNSPECIFIED` として IR 生成・YMM4 creative acceptance の前に止める。
+
+IR / 演出指定へ進む場合は scene bible だけでは足りない。`BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW.md` の `script_diagnostic` / `duration_model` / `quantitative_timetable` / `density_thresholds` / `density_audit` / `asset_control_matrix` を `background_skit_blueprint` artifact にし、`validate-background-skit-blueprint` で `status: passed` を得てから revised IR へ進む。総尺、開始/終了時刻、演出秒数、意図的休止、スカスカ判定、台本成熟度は実数値と validator の `derived_metrics` で照合する。`time budget %` だけ、`総尺 / mm:ss / 演出秒数が必要` の項目名列挙だけ、または validator result のない数値表だけでの IR 生成は禁止。台本行範囲を使う場合は `script_source` / `line_count` / `range_basis` を同じ IR 前工程に含める。
 
 **オペレータが画像例から言語化した「再現目標」**（立ち絵＋フキダシ、列挙・黒板、地図整理、雰囲気ストック等）と上表の対応は [C07-visual-pattern-operator-intent.md](C07-visual-pattern-operator-intent.md) を正本とする（過去セッション文脈の回収用）。
 
@@ -207,6 +212,26 @@ S-6b (パン・ズーム / Ken Burns) に対応。
 | `bounce` | バウンス |
 | `fade_in` | フェードイン |
 | `fade_out` | フェードアウト |
+
+**G-24 skit_group actor 用 template intent:**
+
+配達員などの skit_group actor を production IR で扱う場合、`motion` は raw effect 名ではなく template 解決用の intent として使い、同じ utterance に `motion_target: "layer:9"` を入れる。
+
+`intent` と `template_name` は分ける。IR が持つ値は `enter_from_left` / `nod` / `surprise_oneshot` / `deny_oneshot` / `exit_left` であり、`delivery_enter_from_left_v1` などは registry / template source 側の template 名である。返答や設計表で template 名を `intent` 欄に入れると、Writer IR と YMM4 template 解決の境界が崩れる。
+
+| intent | 解決 |
+|----|----|
+| `enter_from_left` | exact: `delivery_enter_from_left_v1` |
+| `surprise_oneshot` | exact: `delivery_surprise_oneshot_v1` |
+| `nod` | exact: `delivery_nod_v1` |
+| `deny_oneshot` | exact: `delivery_deny_oneshot_v1` |
+| `exit_left` | exact: `delivery_exit_left_v1` |
+| `surprise_jump` | fallback alias: `delivery_surprise_oneshot_v1` |
+| `deny_shake` | fallback alias: `delivery_deny_oneshot_v1` |
+
+新しい skit_group intent は実制作 gap が出た時だけ registry 側で起票する。通常の IR 生成では上表以外を作らない。`panic_shake` など未登録ラベルは strict validation で `SKIT_GROUP_UNKNOWN_INTENT` として止め、必要なら自然文メモ側で新テンプレ候補に分類する。
+
+adapter / Python 側は素材アートを生成しない。ただし役割は「既存 GroupItem を置くだけ」ではなく、IR validation、registry 解決、template source 解析、`.ymmp` patch、readback、gap report 生成までを含む。scene bible / asset gap / template-proxy 分類が未完のまま、直接 YMM4 creative acceptance へ渡してはいけない。
 
 **patch-ymmp（G-16 Phase2 / G-17）:** **Phase2**（`--timeline-profile` を付けないとき）: `none` は `TachieItem.VideoEffects` を空配列にクリアする。それ以外の語彙は CLI の **`--tachie-motion-map`**（JSON）で `motion` ラベル → YMM4 効果オブジェクトの**配列**を定義する（[samples/tachie_motion_map.example.json](../samples/tachie_motion_map.example.json)）。発話アンカー（`row_start`/`row_end` 優先、未指定時 `index`）で `TachieItem` を区間分割し、区間ごとに `VideoEffects` を割り当てる。連続する同一 `motion` 区間は結合する。**G-17**（`--timeline-profile` 指定時）: Phase2 の区間分割は走らず、`--motion-map`（各ラベル → `video_effect` 辞書）で既存 `TachieItem` に効果を追記する（[samples/motion_map_g17.example.json](../samples/motion_map_g17.example.json)）。詳細は [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md)。
 
@@ -435,6 +460,7 @@ Micro IR (発話ごとに1つ)
 | transition | YMM4 Adapter (patch-ymmp) | `VoiceItem` Voice/Jimaku フェード（G-15、`none` / `fade` のみ）。G-17 プロファイル経路あり |
 | bg_anim | YMM4 Adapter (patch-ymmp) | Layer0 のキーフレームプリセット（G-14、micro bg 連動）および G-17 の `VideoEffects` 追記（プロファイル + `bg_anim_map`） |
 | se / overlay | YMM4 Adapter (patch-ymmp) | `--se-map` / `--overlay-map` 経由で `AudioItem` / `ImageItem` 挿入（G-13/G-18）。対照: [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md) |
+| skit_group placement | YMM4 Adapter (patch-ymmp) | `--skit-group-registry` + `--skit-group-template-source` + `--skit-group-only` で repo-tracked `.ymmp` template library の GroupItem を対象発話に挿入 |
 
 ### 6.4 Template Registry の構造
 

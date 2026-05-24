@@ -27,6 +27,7 @@ class IRValidationResult:
     used_slot_labels: list[str] = field(default_factory=list)
     used_overlay_labels: list[str] = field(default_factory=list)
     used_se_labels: list[str] = field(default_factory=list)
+    used_skit_group_motion_labels: list[str] = field(default_factory=list)
     active_face_gaps: dict[str, list[str]] = field(default_factory=dict)
     latent_face_gaps: dict[str, list[str]] = field(default_factory=dict)
     slot_distribution: dict[str, int] = field(default_factory=dict)
@@ -92,6 +93,8 @@ def validate_ir(
     known_se_labels: set[str] | None = None,
     known_motion_labels: set[str] | None = None,
     known_group_motion_labels: set[str] | None = None,
+    known_skit_group_motion_labels: set[str] | None = None,
+    strict_skit_group_intents: bool = False,
     char_default_slots: dict[str, str] | None = None,
     prompt_face_labels: set[str] | None = None,
     serious_threshold: float = 0.40,
@@ -138,6 +141,7 @@ def validate_ir(
         BG_ANIM_ALLOWED,
         MOTION_ALLOWED,
         TRANSITION_ALLOWED,
+        _parse_motion_target_layers,
         _resolve_carry_forward,
         iter_overlay_labels,
     )
@@ -150,6 +154,7 @@ def validate_ir(
     slot_usage: Counter = Counter()
     overlay_usage: Counter = Counter()
     se_usage: Counter = Counter()
+    skit_group_motion_usage: Counter = Counter()
     char_slot_usage: dict[str, set[str]] = {}
     for entry in resolved:
         speaker = entry.get("speaker", "")
@@ -216,12 +221,20 @@ def validate_ir(
     effective_motion_allowed = set(MOTION_ALLOWED)
     if known_motion_labels is not None:
         effective_motion_allowed |= known_motion_labels
+    if known_skit_group_motion_labels is not None:
+        effective_motion_allowed |= known_skit_group_motion_labels
 
     for entry in resolved:
         mo = entry.get("motion")
         if mo is None or mo == "":
             continue
         if mo not in effective_motion_allowed:
+            is_skit_group_target = bool(
+                known_skit_group_motion_labels is not None
+                and _parse_motion_target_layers(entry.get("motion_target"))
+            )
+            if is_skit_group_target and not strict_skit_group_intents:
+                continue
             result.errors.append(
                 "MOTION_UNKNOWN_LABEL: "
                 f"utterance index={entry.get('index', '?')}"
@@ -239,6 +252,23 @@ def validate_ir(
                     "MOTION_MAP_UNKNOWN_LABEL: "
                     f"utterance index={entry.get('index', '?')}"
                     f" uses motion '{mo}' not in motion_map registry"
+                )
+
+    for entry in resolved:
+        mo = entry.get("motion")
+        if mo is None or mo == "" or mo == "none":
+            continue
+        if _parse_motion_target_layers(entry.get("motion_target")):
+            skit_group_motion_usage[mo] += 1
+            if (
+                strict_skit_group_intents
+                and known_skit_group_motion_labels is not None
+                and mo not in known_skit_group_motion_labels
+            ):
+                result.errors.append(
+                    "SKIT_GROUP_UNKNOWN_INTENT: "
+                    f"utterance index={entry.get('index', '?')}"
+                    f" uses motion '{mo}' not in skit_group registry"
                 )
 
     # --- motion_target validation ---
@@ -372,6 +402,7 @@ def validate_ir(
     result.se_distribution = dict(se_usage)
     result.used_overlay_labels = sorted(overlay_usage)
     result.used_se_labels = sorted(se_usage)
+    result.used_skit_group_motion_labels = sorted(skit_group_motion_usage)
     result.character_slot_usage = {
         char: sorted(labels)
         for char, labels in sorted(char_slot_usage.items())

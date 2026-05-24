@@ -10,7 +10,7 @@
 
 | 方針             | 内容                                                                                                                                                                                                                                                                       |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **推奨（2 体）**    | **体 1**: Phase 1 台本 refinement（C-09）のみ → 正本 [S1-script-refinement-prompt.md](../S1-script-refinement-prompt.md)。**体 2**: 演出 IR・素材メモ・サムネ素案（C-07 v4 中心）→ 正本 [S6-production-memo-prompt.md](../S6-production-memo-prompt.md) の v4。runbook の A-2 / B-2 と B-3 が別 GPT でも矛盾しない。 |
+| **推奨（2 体）**    | **体 1**: Phase 1 台本 refinement（C-09）のみ → 正本 [S1-script-refinement-prompt.md](../S1-script-refinement-prompt.md)。**体 2**: 本編 Production IR・素材メモ（C-07 v4 中心）→ 正本 [S6-production-memo-prompt.md](../S6-production-memo-prompt.md) の v4。サムネコピーは S8/H-02 の別レーン。runbook の A-2 / B-2 と B-3 が別 GPT でも矛盾しない。 |
 | **1 体にまとめる場合** | Instructions を **C-07 v4（S6）** に寄せ、C-09 は **会話のたびに S1 のシステム節＋入力テンプレを先に貼る**など二段運用にする。トークンと取り違えリスクが上がるため非推奨。                                                                                                                                                               |
 
 
@@ -40,7 +40,7 @@
 
 （`bg_anim` を含む採用時の固定手順・期待ログ: [T1-P2-staged-bg-anim-verification.md](T1-P2-staged-bg-anim-verification.md)。runbook トラック C 補足と同一。）
 
-**正本**: [S6-production-memo-prompt.md](../S6-production-memo-prompt.md) の見出し **「### v4 プロンプト本体」**直下のコードフェンス **内の全文**（先頭は `あなたはゆっくり解説動画の演出 IR`、末尾は Part 4 制約まで）。
+**正本**: [S6-production-memo-prompt.md](../S6-production-memo-prompt.md) の見出し **「### v4 プロンプト本体」**直下のコードフェンス **内の全文**（先頭は `あなたはゆっくり解説動画の演出 IR`、末尾は skit_group 制約まで）。
 
 - 演出用 GPT の Instructions を **上記フェンス内だけ**で **丸ごと置換**した（v3 断片の混在なし）
 - フェンス内に **「視覚スタイル三種」**節が含まれることを目視確認した
@@ -60,7 +60,7 @@
 
 ---
 
-## B-5. サムネコピー（C-08）と v4 Part 4 の使い分け
+## B-5. サムネコピー（C-08 / S8）
 
 **C-08 正本**: [S8-thumbnail-copy-prompt.md](../S8-thumbnail-copy-prompt.md)
 
@@ -68,7 +68,7 @@
 | 状況                                                      | 推奨                                                                                                                                                 |
 | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **H-02 準拠**（Specificity Ledger / Brief Compliance 等）が必要 | 別ラウンドで S8 を適用するか、**サムネ専用 GPT**に S8 を載せる。workflow 観点は [H01-packaging-orchestrator-workflow-proof.md](H01-packaging-orchestrator-workflow-proof.md)。 |
-| **早い素案のみ**でよい                                           | C-07 v4 の **Part 4（サムネイルコピー）**だけで足りる場合あり。厳密な H-02 チェックは S8 側。                                                                                      |
+| **早い素案のみ**でよい                                           | S8 を簡略運用する。C-07 v4 にはサムネコピーを混ぜない。                                                                                      |
 
 
 - 上記のどちらで回すか **今回の案件で決めた**

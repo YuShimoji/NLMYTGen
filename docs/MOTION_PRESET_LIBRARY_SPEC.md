@@ -1,10 +1,12 @@
 # Motion Preset Library 仕様書
 
+> **位置づけ**: 本書は [MOTION_PRODUCTION_PIPELINE.md](MOTION_PRODUCTION_PIPELINE.md) (G-26 演出制作運用正本) の **data spec**。emotion ラベル → effect atom 組み合わせの正本テーブルを定義する。pipeline は本書の § 3 ラベル表を Phase B / C の reference として使う。
+>
 > **目的**: IR の `motion` ラベルに感情・演出パターン名を書くだけで、対応する YMM4 VideoEffects の組み合わせが TachieItem に自動適用される仕組みを定義する。
 >
 > **背景**: 現状 `tachie_motion_map` には `bounce` / `none` の2ラベルしかない。「驚く」「喜ぶ」「悲しむ」「怒る」「パニック」等の感情表現は、既存の YMM4 エフェクト (111種、`samples/effect_catalog.json`) の**組み合わせとパラメータ調整**で実現可能だが、手動で1つずつ YMM4 テンプレートを作るのは工数が爆発する。
 >
-> **解決策**: エフェクトカタログから `$type` + パラメータを引き、感情ラベルごとの VideoEffects 配列を `tachie_motion_map.json` として自動生成する。**人間は組み合わせ方針のみ決める**。
+> **解決策**: エフェクトカタログから `$type` + パラメータを引き、感情ラベルごとの VideoEffects 配列を `tachie_motion_map.json` として自動生成する。**人間は組み合わせ方針のみ決める**。CLI 実装は `build-motion-recipes` ([motion_recipe.py](../src/pipeline/motion_recipe.py)) として完成済み。
 
 ---
 

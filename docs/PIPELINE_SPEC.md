@@ -155,6 +155,10 @@ Host2=まりさ
 - NotebookLM 元台本は 1 発話が長くなる傾向があるため、YMM4 での音声合成に適した粒度に分割する用途を想定
 - `--display-width` を併用すると、`--max-length` を文字数ではなく表示幅（全角=2, 半角=1, Ambiguous=2）として解釈する
 - `--max-lines N --chars-per-line M` を使うと、`M * N` の表示幅を閾値として分割し、`--stats` では推定はみ出し候補も警告する
+- `--subtitle-font-scale PERCENT` を併用すると、`effective_chars_per_line = floor(M * 100 / PERCENT)` を改行と stats に使う。`100` は従来どおり、`125` はフォント拡大分だけ早めに改行する
+- `--subtitle-font-source-ymmp PATH` を使うと、YMM4 project 内の字幕 `FontSize` から倍率を自動推定する。既定では `FontSize=45` を `100%` とし、複数候補がある場合は安全側として最大 `FontSize` を採用する。基準値を変える場合は `--subtitle-base-font-size N` を併用する
+- `--wrap-px PX` を使うと、`display_width` ではなく計測器の実測幅で改行する。`--wrap-safety` は YMM4 の内部余白・縁取り・描画差を吸収する安全率で、既定は `0.94`
+- `--measure-backend wpf` は Windows WPF `FormattedText` で計測する。`tools/MeasureTextWpf` を `dotnet publish tools/MeasureTextWpf -c Release -r win-x64 --self-contained false` でビルドし、必要なら `--measure-exe` か `NLMYTGEN_WPF_MEASURE_EXE` で `MeasureTextWpf.exe` を指定する。`--measure-backend eaw` は従来の全角/半角近似を計測器として使う fallback
 - `--balance-lines` を併用すると、2行字幕向けに読点・句点・カギカッコ付近を候補にした自然改行を opt-in で挿入する
 - `--balance-lines` は、句点がない長文に対して `、` や接続句で節分割する fallback、1文字だけの最終行を避ける widow/orphan guard、複数文発話の中にある単一長文をより積極的に複数字幕へ落とす aggressive clause chunking を含む
 - `--balance-lines` は `--max-lines` 前提の best-effort 改善で、本文の削除は行わない
@@ -168,6 +172,15 @@ python -m src.cli.main build-csv input.txt --max-lines 2 --chars-per-line 40 --s
 
 # 2 行字幕向けに自然改行も入れる
 python -m src.cli.main build-csv input.txt --max-lines 2 --chars-per-line 40 --balance-lines --stats
+
+# YMM4 側の字幕フォントを 125% 相当に大きくした場合
+python -m src.cli.main build-csv input.txt --max-lines 2 --chars-per-line 40 --subtitle-font-scale 125 --reflow-v2 --stats
+
+# YMM4 project の字幕 FontSize から倍率を推定する場合
+python -m src.cli.main build-csv input.txt --max-lines 2 --chars-per-line 40 --subtitle-font-source-ymmp template.ymmp --reflow-v2 --stats
+
+# YMM4 表示条件に近い実測幅で改行する場合
+python -m src.cli.main build-csv input.txt --max-lines 2 --wrap-px 1180 --subtitle-font-source-ymmp template.ymmp --measure-backend wpf --wrap-safety 0.94 --reflow-v2 --stats
 ```
 
 ---
@@ -362,6 +375,42 @@ python -m src.cli.main build-diagram-packet input.txt --bundle-dir samples
 3. 人間が brief を見て図を作り、S-6 の演出へ反映する
 
 `--bundle-dir` を使うと、packet markdown/json に加えて workflow proof 記録用の Markdown 雛形、rerun prompt、rerun diff template、quickstart、baseline notes も同時に出力する。
+
+---
+
+## build-session-manifest サブコマンド
+
+S-3 CSV、B-18 診断、S-6 IR 検証/適用、YMM4 確認、サムネ設計の「今どこまで終わったか」を 1 つの handoff artifact に束ねる。YMM4 操作、サムネ `.ymmp` 生成、画像生成は行わない。
+
+### 使用方法
+
+```bash
+python -m src.cli.main build-session-manifest \
+  --video-id VIDEO_ID \
+  --csv output.csv \
+  --ir-json production_ir.json \
+  --validate-result validate.json \
+  --apply-result apply.json \
+  --thumbnail-design thumbnail_design.json \
+  --format markdown \
+  -o session_manifest.md
+```
+
+### 入力の境界
+
+- `thumbnail_design` は記録対象のみ。`validate-ir` / `apply-production` には渡さない。
+- 任意入力が無い項目は manifest に `not_recorded` として残す。
+- YMM4 の目視確認、字幕確認、サムネ確認は `manual_acceptance` の `manual_pending` placeholders に残す。
+
+### 出力内容
+
+- `paths`: 台本、CSV、診断、IR、base/patched ymmp、thumbnail_design などの記録状態
+- `csv`: CSV 行数、話者数、話者別行数、build options / stats summary
+- `script_diagnostics`: warning/error 件数と codes
+- `ir_validation`: `validate-ir --format json` の success / warning / error summary
+- `apply_production`: `apply-production --format json` の dry-run/write status、output、summary counts
+- `manual_acceptance`: subtitle / YMM4 composition / thumbnail check の placeholder
+- `next_action`: 次に見るべき一点
 
 ---
 

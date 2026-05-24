@@ -1,0 +1,173 @@
+{
+  "version": "1.0",
+  "proof_type": "pipeline_smoke_visual_treatment",
+  "episode_id": "baseball_news_infographic",
+  "review_scope": "multi_topic_pipeline_smoke",
+  "topic_state": "blocked",
+  "blocked_reason": "data/provenance fixture and screen-plan acceptance are not complete",
+  "next_action": "create a provenance-safe screen-plan smoke before any renderer or YMM4 path",
+  "target_segments": [
+    "baseball-news-infographic"
+  ],
+  "frame_count": 3,
+  "beats_per_segment": 3,
+  "frame_contract": {
+    "canvas": "16:9 production frame",
+    "subtitle_clearance": "lower 20% reserved",
+    "max_labels_per_frame": 2,
+    "max_total_label_chars": 30,
+    "metadata_isolation": "no source/review/blocker/segment id/readback metadata inside frames"
+  },
+  "artifacts": {
+    "proof_html": "samples/_probe/pipeline_smoke/baseball_news_infographic/visual_treatment_proof.html",
+    "proof_image": "samples/_probe/pipeline_smoke/baseball_news_infographic/visual_treatment_proof.png",
+    "sidecar_json": "samples/_probe/pipeline_smoke/baseball_news_infographic/visual_treatment_proof.json",
+    "readback_json": "samples/_probe/pipeline_smoke/baseball_news_infographic/visual_treatment_proof_readback.json"
+  },
+  "sidecar_warnings": [
+    "Pipeline smoke only; not production quality.",
+    "Standalone HTML/PNG/JSON does not complete review.",
+    "YMM4, render, production timing, and creative acceptance remain blocked.",
+    "data/provenance fixture and screen-plan acceptance are not complete"
+  ],
+  "visual_quality_checks": [
+    {
+      "id": "standalone_proof_completion",
+      "current_status": "guarded",
+      "current_read": "GUI ingest is required."
+    },
+    {
+      "id": "case_overfitting_check",
+      "current_status": "mitigated_by_multi_topic_smoke",
+      "current_read": "This topic is one of three minimal fixtures."
+    },
+    {
+      "id": "local_optimization_check",
+      "current_status": "limited_scope",
+      "current_read": "The proof verifies stage connection, not topic polish."
+    }
+  ],
+  "frame_contract_violations": [],
+  "not_creative_acceptance": true,
+  "not_ymm4_adapter_output": true,
+  "not_render_source": true,
+  "not_production_timing": true,
+  "segments": [
+    {
+      "id": "baseball-news-infographic",
+      "title": "Baseball news infographic",
+      "beats": [
+        {
+          "id": "baseball-news-infographic-beginning",
+          "phase": "beginning",
+          "narration_cue": "試合結果の入口",
+          "visual_subject": "スコアボードと短い見出し",
+          "text_on_frame": [
+            "試合",
+            "流れ"
+          ],
+          "motion_hint": "試合 / 流れ proxy changes from static card to staged beat 1.",
+          "motion_primitives": {
+            "enter": [
+              "scoreboard proxy"
+            ],
+            "move": [
+              "main proxy shifts toward the next beat focus"
+            ],
+            "emphasize": [
+              "stat card"
+            ],
+            "reveal": [
+              "payload: 試合結果の入口"
+            ],
+            "dim": [
+              "background details and nonessential labels"
+            ]
+          },
+          "subtitle_clearance": "lower 20% reserved for subtitles",
+          "frame_contract": {
+            "label_count": 2,
+            "total_label_chars": 4,
+            "safe_area_ok": true,
+            "subtitle_clearance_ok": true,
+            "metadata_isolated": true,
+            "violations": []
+          }
+        },
+        {
+          "id": "baseball-news-infographic-development",
+          "phase": "development",
+          "narration_cue": "数字の対比",
+          "visual_subject": "得点カードと投球カードを分ける",
+          "text_on_frame": [
+            "得点",
+            "投球"
+          ],
+          "motion_hint": "得点 / 投球 proxy changes from static card to staged beat 2.",
+          "motion_primitives": {
+            "enter": [
+              "stat card proxy"
+            ],
+            "move": [
+              "main proxy shifts toward the next beat focus"
+            ],
+            "emphasize": [
+              "field map"
+            ],
+            "reveal": [
+              "payload: 数字の対比"
+            ],
+            "dim": [
+              "background details and nonessential labels"
+            ]
+          },
+          "subtitle_clearance": "lower 20% reserved for subtitles",
+          "frame_contract": {
+            "label_count": 2,
+            "total_label_chars": 4,
+            "safe_area_ok": true,
+            "subtitle_clearance_ok": true,
+            "metadata_isolated": true,
+            "violations": []
+          }
+        },
+        {
+          "id": "baseball-news-infographic-turn",
+          "phase": "turn",
+          "narration_cue": "根拠の粒度",
+          "visual_subject": "フィールド図と出典バッジを分離する",
+          "text_on_frame": [
+            "根拠"
+          ],
+          "motion_hint": "根拠 proxy changes from static card to staged beat 3.",
+          "motion_primitives": {
+            "enter": [
+              "field map proxy"
+            ],
+            "move": [
+              "main proxy shifts toward the next beat focus"
+            ],
+            "emphasize": [
+              "provenance badge"
+            ],
+            "reveal": [
+              "payload: 根拠の粒度"
+            ],
+            "dim": [
+              "background details and nonessential labels"
+            ]
+          },
+          "subtitle_clearance": "lower 20% reserved for subtitles",
+          "frame_contract": {
+            "label_count": 1,
+            "total_label_chars": 2,
+            "safe_area_ok": true,
+            "subtitle_clearance_ok": true,
+            "metadata_isolated": true,
+            "violations": []
+          }
+        }
+      ]
+    }
+  ]
+}

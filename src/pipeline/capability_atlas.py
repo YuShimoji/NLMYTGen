@@ -18,7 +18,10 @@ DEFAULT_MOTION_LIBRARY_PATH = Path("samples/tachie_motion_map_library.json")
 DEFAULT_SKIT_REGISTRY_PATH = Path("samples/registry_template/skit_group_registry.template.json")
 DEFAULT_OUTPUT_PATH = Path("samples/_generated/capability_atlas.json")
 EXPORTED_SKIT_TEMPLATE_INTENTS = frozenset({
+    "deny_oneshot",
     "enter_from_left",
+    "exit_left",
+    "nod",
     "surprise_oneshot",
 })
 
@@ -164,7 +167,7 @@ def _static_entries() -> list[dict[str, Any]]:
         _entry(
             "skit_group.canonical_anchor",
             "skit_group",
-            "canonical ymmp -> audit-skit-group",
+            "canonical ymmp -> audit-skit-group / template-source readback",
             "direct_proven",
             [
                 _evidence("samples/canonical.ymmp", "Canonical skit_group artifact contains GroupItem remark 'haitatsuin_delivery_main' on Layer 9 with ImageItem-only children"),
@@ -175,6 +178,23 @@ def _static_entries() -> list[dict[str, Any]]:
             ],
             [
                 "Derived native template assets are still pending; this proves the anchor, not the full template set",
+            ],
+        ),
+        _entry(
+            "skit_group.placement",
+            "skit_group",
+            "IR skit_group intent -> registry -> ymmp template source -> GroupItem timeline insertion",
+            "probe_only",
+            [
+                _evidence("src/pipeline/skit_group_placement.py", "Patch-time skit_group placement copies repo-tracked GroupItem template clips into the target ymmp and normalizes GroupItem X/Y/Zoom from template analysis"),
+                _evidence("samples/templates/skit_group/delivery_v1_templates.ymmp", "Repo-tracked template source contains available delivery_v1 GroupItem clips"),
+                _evidence("samples/_probe/g24/real_estate_dx_skit_group_patched.ymmp", "Real-estate DX readback contains normalized G-24 GroupItem insertions"),
+            ],
+            [
+                "Confirm the analyzed patched ymmp composition in YMM4 before final render",
+            ],
+            [
+                "Machine readback passes; final composition acceptance remains a creative YMM4 check",
             ],
         ),
         _entry(
@@ -347,11 +367,12 @@ def _skit_template_entries(skit_registry: dict[str, Any]) -> list[dict[str, Any]
         if intent in EXPORTED_SKIT_TEMPLATE_INTENTS:
             support_level = "direct_proven"
             evidence.extend([
-                _evidence("docs/verification/P02-production-adoption-proof.md", "Starter manual acceptance, production adoption proof, and standalone export sync are recorded here"),
-                _evidence("samples/haitatsuin_2026-04-12_g24_proof.ymmp", "Voice-anchored production proof corpus resolves the exported starter templates as exact without group_motion substitution"),
+                _evidence("docs/verification/P02-production-adoption-proof.md", "Manual acceptance, production adoption proof, and standalone export sync are recorded here"),
+                _evidence("samples/canonical.ymmp", "Canonical anchor plus skit registry resolves the v1 template set as exact in audit-skit-group"),
+                _evidence("samples/haitatsuin_2026-04-12_g24_proof.ymmp", "Repo-tracked proof sample stores exported native GroupItem snippets for completed v1 intents"),
             ])
             limitations.extend([
-                "Promotion is limited to the exported starter batch only; remaining skit intents stay template_catalog_only until their own export/proof is synced",
+                "Promotion is limited to exported skit intents only; future skit intents stay template_catalog_only until their own export/proof is synced",
                 "Target ymmp still needs a compatible skit_group actor setup and preflight should be run before production use",
             ])
         else:

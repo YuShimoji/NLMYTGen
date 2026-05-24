@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nlmytgen.local/sports_news/reaction_digest.schema.json",
+  "title": "sports_news reaction digest",
+  "type": "object",
+  "required": ["items"],
+  "additionalProperties": false,
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "source_reference",
+          "source_type",
+          "mode",
+          "original_language",
+          "rendered_text",
+          "category",
+          "display_label"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+          "source_url": { "type": "string" },
+          "source_reference": { "type": "string", "minLength": 1 },
+          "source_type": {
+            "type": "string",
+            "enum": ["fan", "journalist", "media", "forum", "official", "other"]
+          },
+          "mode": { "type": "string", "enum": ["paraphrase", "short_quote"] },
+          "original_language": { "type": "string", "minLength": 1 },
+          "original_text": { "type": "string" },
+          "translation_draft": { "type": "string" },
+          "rendered_text": { "type": "string", "minLength": 1 },
+          "category": { "type": "string", "minLength": 1 },
+          "sentiment": { "type": "string" },
+          "display_label": { "type": "string", "pattern": "^[A-Z]+-[0-9]{2}$" }
+        }
+      }
+    }
+  }
+}

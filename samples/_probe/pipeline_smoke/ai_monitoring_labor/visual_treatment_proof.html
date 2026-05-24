@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; background: #e5e7eb; color: #0f172a; font-family: "Yu Gothic UI", "Segoe UI", sans-serif; }
+header { background: #0f172a; color: #f8fafc; padding: 18px 24px; display: flex; justify-content: space-between; gap: 16px; }
+h1 { margin: 0 0 6px; font-size: 22px; }
+p { margin: 0; }
+.meta { color: #bfdbfe; font-size: 12px; text-align: right; }
+main { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 18px; }
+.frame { background: #fff; border: 1px solid #cbd5e1; border-radius: 14px; overflow: hidden; box-shadow: 0 12px 24px rgba(15,23,42,.12); }
+.frame p { min-height: 48px; padding: 9px 11px; color: #475569; font-size: 12px; line-height: 1.45; background: #f8fafc; }
+.visual { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: linear-gradient(135deg, #dbeafe, #f8fafc 55%, #fff7ed); }
+.visual::before { content: ""; position: absolute; inset: 5%; border: 2px dashed rgba(15,23,42,.12); border-radius: 14px; }
+.shape { position: absolute; border-radius: 14px; border: 3px solid rgba(15,23,42,.42); background: #fff; box-shadow: 0 10px 22px rgba(15,23,42,.16); }
+.shape-a { left: 10%; top: 20%; width: 28%; height: 34%; }
+.shape-b { right: 11%; top: 18%; width: 29%; height: 34%; }
+.shape-c { left: 42%; top: 36%; width: 14%; height: 20%; border-radius: 50% 50% 14px 14px; background: #334155; }
+.flow { position: absolute; left: 38%; top: 36%; width: 27%; height: 5px; background: #2563eb; border-radius: 999px; box-shadow: 0 0 0 6px rgba(37,99,235,.12); }
+.label { position: absolute; z-index: 3; top: 13%; padding: 7px 12px; border-radius: 999px; background: rgba(15,23,42,.85); color: white; font-size: 20px; font-weight: 800; }
+.label-1 { left: 25%; }
+.label-2 { right: 16%; }
+.subtitle { position: absolute; left: 0; right: 0; bottom: 0; height: 20%; background: linear-gradient(180deg, rgba(15,23,42,0), rgba(15,23,42,.22)); border-top: 1px solid rgba(15,23,42,.08); }
+.visual-real_estate_dx_baseline .shape-a { background: linear-gradient(135deg, #fff, #dbeafe); }
+.visual-real_estate_dx_baseline .shape-b { background: repeating-linear-gradient(#fde68a 0 10px, #fff 10px 20px); }
+.visual-ai_monitoring_labor { background: linear-gradient(135deg, #f1f5f9, #e0f2fe 58%, #fee2e2); }
+.visual-ai_monitoring_labor .shape-a { background: #e0f2fe; }
+.visual-ai_monitoring_labor .shape-b { background: repeating-linear-gradient(90deg, #fff 0 22px, #bae6fd 22px 26px); }
+.visual-ai_monitoring_labor .shape-c { background: #64748b; }
+.visual-baseball_news_infographic { background: linear-gradient(135deg, #ecfdf5, #f8fafc 58%, #dbeafe); }
+.visual-baseball_news_infographic .shape-a { background: #022c22; border-color: #16a34a; }
+.visual-baseball_news_infographic .shape-b { background: #fff; border-color: #2563eb; }
+.visual-baseball_news_infographic .shape-c { background: #16a34a; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>AI monitoring labor — pipeline smoke proof</h1>
+    <p>3-beat visual treatment proof for GUI ingest. Not production quality.</p>
+  </div>
+  <div class="meta">
+    <div>state: reviewable</div>
+    <div>frames: 3</div>
+    <div>violations: 0</div>
+  </div>
+</header>
+<main>
+    <section class="frame frame-1">
+      <div class="visual visual-ai_monitoring_labor visual-1">
+        <div class="shape shape-a"></div>
+        <div class="shape shape-b"></div>
+        <div class="shape shape-c"></div>
+        <div class="flow"></div>
+        <span class="label label-1">支援</span><span class="label label-2">AI</span>
+        <div class="subtitle"></div>
+      </div>
+      <p>支援ツールとしてのAI</p>
+    </section>
+    <section class="frame frame-2">
+      <div class="visual visual-ai_monitoring_labor visual-2">
+        <div class="shape shape-a"></div>
+        <div class="shape shape-b"></div>
+        <div class="shape shape-c"></div>
+        <div class="flow"></div>
+        <span class="label label-1">測定</span><span class="label label-2">ログ</span>
+        <div class="subtitle"></div>
+      </div>
+      <p>測定される働き方</p>
+    </section>
+    <section class="frame frame-3">
+      <div class="visual visual-ai_monitoring_labor visual-3">
+        <div class="shape shape-a"></div>
+        <div class="shape shape-b"></div>
+        <div class="shape shape-c"></div>
+        <div class="flow"></div>
+        <span class="label label-1">負荷</span>
+        <div class="subtitle"></div>
+      </div>
+      <p>数字に出ない負荷</p>
+    </section></main>
+</body>
+</html>

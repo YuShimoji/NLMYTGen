@@ -1,0 +1,14 @@
+card_type: trend_comparison_card
+purpose: "Compare one relevant trend without turning the screen into a data dictionary."
+required_fields:
+  - comparison_label
+  - metric_a
+  - metric_b
+  - interpretation
+  - source_refs
+visual_rules:
+  max_metrics: 2
+  use_simple_chart: true
+  chart_assets: native_shapes_or_recorded_materials
+notes:
+  - "Prefer bars, lines, deltas, and labels built from native shapes/SVG."

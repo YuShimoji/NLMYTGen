@@ -1,0 +1,48 @@
+{
+  "version": "1.0",
+  "topic_id": "baseball_news_infographic",
+  "frame_contract": {
+    "canvas": "16:9 production frame",
+    "subtitle_clearance": "lower 20% reserved",
+    "max_labels_per_frame": 2,
+    "max_total_label_chars": 30,
+    "metadata_isolation": "no source/review/blocker/segment id/readback metadata inside frames"
+  },
+  "frames": [
+    {
+      "frame_id": "baseball-news-infographic-beginning",
+      "beat": "beginning",
+      "main_subject": "スコアボードと短い見出し",
+      "composition": "left-to-right setup",
+      "text_on_frame": [
+        "試合",
+        "流れ"
+      ],
+      "subtitle_clearance": "lower 20% reserved for subtitles",
+      "metadata_inside_frame": false
+    },
+    {
+      "frame_id": "baseball-news-infographic-development",
+      "beat": "development",
+      "main_subject": "得点カードと投球カードを分ける",
+      "composition": "center contrast",
+      "text_on_frame": [
+        "得点",
+        "投球"
+      ],
+      "subtitle_clearance": "lower 20% reserved for subtitles",
+      "metadata_inside_frame": false
+    },
+    {
+      "frame_id": "baseball-news-infographic-turn",
+      "beat": "turn",
+      "main_subject": "フィールド図と出典バッジを分離する",
+      "composition": "right-side implication",
+      "text_on_frame": [
+        "根拠"
+      ],
+      "subtitle_clearance": "lower 20% reserved for subtitles",
+      "metadata_inside_frame": false
+    }
+  ]
+}

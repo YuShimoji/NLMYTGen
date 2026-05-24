@@ -1,0 +1,65 @@
+{
+  "version": "1.0",
+  "topic_id": "real_estate_dx_baseline",
+  "source_script": "samples/_probe/pipeline_smoke/real_estate_dx_baseline/source_script.txt",
+  "reversible_to_script": true,
+  "prohibited_fields_absent": [
+    "css",
+    "html",
+    "frame_coordinates",
+    "ymm4_parameters"
+  ],
+  "segments": [
+    {
+      "id": "real-estate-dx-baseline",
+      "title": "Real Estate DX baseline",
+      "line_start": 1,
+      "line_end": 3,
+      "role_ja": "pipeline smoke segment",
+      "beats": [
+        {
+          "id": "real-estate-dx-baseline-beginning",
+          "phase": "beginning",
+          "line_start": 1,
+          "line_end": 1,
+          "narration_cue": "語り手A：スマホで物件を探せるのに、なぜ仲介の価値が残るのでしょうか。",
+          "claim": "公開検索カードと閉じたDBの対比",
+          "elements": [
+            "property card",
+            "broker DB",
+            "public portal",
+            "drawback note"
+          ]
+        },
+        {
+          "id": "real-estate-dx-baseline-development",
+          "phase": "development",
+          "line_start": 2,
+          "line_end": 2,
+          "narration_cue": "語り手B：表に出ている情報と、業者側で見ている情報にはまだ差があります。",
+          "claim": "DBから公開枠へ細いカードが流れる",
+          "elements": [
+            "property card",
+            "broker DB",
+            "public portal",
+            "drawback note"
+          ]
+        },
+        {
+          "id": "real-estate-dx-baseline-turn",
+          "phase": "turn",
+          "line_start": 3,
+          "line_end": 3,
+          "narration_cue": "語り手A：大事なのは、選ぶ理由だけでなく買わない理由まで整理できるかです。",
+          "claim": "物件カード横に欠点ノートが残る",
+          "elements": [
+            "property card",
+            "broker DB",
+            "public portal",
+            "drawback note"
+          ]
+        }
+      ]
+    }
+  ]
+}
