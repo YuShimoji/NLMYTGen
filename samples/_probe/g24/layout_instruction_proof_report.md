@@ -9,6 +9,7 @@ Diagnostic-only layout proof. Not a scene composition, not a render, not creativ
 - `canvas_16_9_1920_1080`: `pass`
 - `title_band_top`: `pass`
 - `title_slot_width_for_18_chars`: `pass`
+- `title_text_within_band`: `pass`
 - `grid_2x2_cells`: `pass`
 - `grid_boundary_visible`: `pass`
 - `char_a_bust_left_bottom`: `pass`
@@ -27,7 +28,7 @@ Diagnostic-only layout proof. Not a scene composition, not a render, not creativ
 - font size: 64
 - current text: "レイアウト指示遵守の検証" (12 chars)
 - max chars assumption: 18
-- slot width required for 18 chars: 715px
+- slot width required for 18 chars: 1152px
 
 ## Grid 2x2 Slots
 

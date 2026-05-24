@@ -92,6 +92,7 @@
       "canvas_16_9_1920_1080": "pass",
       "title_band_top": "pass",
       "title_slot_width_for_18_chars": "pass",
+      "title_text_within_band": "pass",
       "grid_2x2_cells": "pass",
       "grid_boundary_visible": "pass",
       "char_a_bust_left_bottom": "pass",
@@ -112,7 +113,7 @@
       "current_text": "レイアウト指示遵守の検証",
       "current_chars": 12,
       "max_chars_assumption": 18,
-      "slot_width_required_for_max_chars_px": 715
+      "slot_width_required_for_max_chars_px": 1152
     },
     "grid_2x2_slots": [
       {
@@ -206,31 +207,51 @@
         "name": "LIP_Label_Title",
         "text": "[title band]",
         "cx": -800,
-        "cy": -480
+        "cy": -480,
+        "ymmp_top_left_x": -872.5,
+        "ymmp_top_left_y": -491,
+        "bbox_width": 145,
+        "bbox_height": 22
       },
       {
         "name": "LIP_Label_Grid",
         "text": "[grid 2x2]",
         "cx": -800,
-        "cy": -400
+        "cy": -400,
+        "ymmp_top_left_x": -860.5,
+        "ymmp_top_left_y": -411,
+        "bbox_width": 121,
+        "bbox_height": 22
       },
       {
         "name": "LIP_Label_CharA",
         "text": "[character A bust]",
         "cx": -800,
-        "cy": -20
+        "cy": -20,
+        "ymmp_top_left_x": -909,
+        "ymmp_top_left_y": -31,
+        "bbox_width": 218,
+        "bbox_height": 22
       },
       {
         "name": "LIP_Label_CharB",
         "text": "[character B bust]",
         "cx": 800,
-        "cy": -20
+        "cy": -20,
+        "ymmp_top_left_x": 691,
+        "ymmp_top_left_y": -31,
+        "bbox_width": 218,
+        "bbox_height": 22
       },
       {
         "name": "LIP_Label_Caption",
         "text": "[caption safe area / empty]",
         "cx": 0,
-        "cy": 310
+        "cy": 310,
+        "ymmp_top_left_x": -163.5,
+        "ymmp_top_left_y": 299,
+        "bbox_width": 327,
+        "bbox_height": 22
       }
     ],
     "violations": []
@@ -259,6 +280,10 @@
       "text_color": null,
       "text": null,
       "font_size": null,
+      "text_bbox_width": null,
+      "text_bbox_height": null,
+      "text_intent_cx": null,
+      "text_intent_cy": null,
       "description": "full-screen light-stage background"
     },
     {
@@ -279,6 +304,10 @@
       "text_color": null,
       "text": null,
       "font_size": null,
+      "text_bbox_width": null,
+      "text_bbox_height": null,
+      "text_intent_cx": null,
+      "text_intent_cy": null,
       "description": "title band background strip"
     },
     {
@@ -287,8 +316,8 @@
       "item_type": "TextItem",
       "layer": 3,
       "is_hidden": false,
-      "x": 0,
-      "y": -443,
+      "x": -384,
+      "y": -475,
       "width": null,
       "height": null,
       "shape_size_mode": null,
@@ -299,7 +328,11 @@
       "text_color": "#FF1A2B3C",
       "text": "レイアウト指示遵守の検証",
       "font_size": 64,
-      "description": "title text (current 12 chars; slot designed for 18 chars / 715px wide)"
+      "text_bbox_width": 768,
+      "text_bbox_height": 64,
+      "text_intent_cx": 0,
+      "text_intent_cy": -443,
+      "description": "title text (current 12 chars; slot designed for 18 chars / 1152px wide)"
     },
     {
       "display_name": "LIP_GridCell_0_0",
@@ -319,6 +352,10 @@
       "text_color": null,
       "text": null,
       "font_size": null,
+      "text_bbox_width": null,
+      "text_bbox_height": null,
+      "text_intent_cx": null,
+      "text_intent_cy": null,
       "description": "grid cell row=0 col=0 (boundary visible via gap=16px + alternating fill)"
     },
     {
@@ -339,6 +376,10 @@
       "text_color": null,
       "text": null,
       "font_size": null,
+      "text_bbox_width": null,
+      "text_bbox_height": null,
+      "text_intent_cx": null,
+      "text_intent_cy": null,
       "description": "grid cell row=0 col=1 (boundary visible via gap=16px + alternating fill)"
     },
     {
@@ -359,6 +400,10 @@
       "text_color": null,
       "text": null,
       "font_size": null,
+      "text_bbox_width": null,
+      "text_bbox_height": null,
+      "text_intent_cx": null,
+      "text_intent_cy": null,
       "description": "grid cell row=1 col=0 (boundary visible via gap=16px + alternating fill)"
     },
     {
@@ -379,6 +424,10 @@
       "text_color": null,
       "text": null,
       "font_size": null,
+      "text_bbox_width": null,
+      "text_bbox_height": null,
+      "text_intent_cx": null,
+      "text_intent_cy": null,
       "description": "grid cell row=1 col=1 (boundary visible via gap=16px + alternating fill)"
     },
     {
@@ -399,6 +448,10 @@
       "text_color": null,
       "text": null,
       "font_size": null,
+      "text_bbox_width": null,
+      "text_bbox_height": null,
+      "text_intent_cx": null,
+      "text_intent_cy": null,
       "description": "character A head (left-bottom bust placeholder)"
     },
     {
@@ -419,6 +472,10 @@
       "text_color": null,
       "text": null,
       "font_size": null,
+      "text_bbox_width": null,
+      "text_bbox_height": null,
+      "text_intent_cx": null,
+      "text_intent_cy": null,
       "description": "character A shoulders (bust cut at shoulder line)"
     },
     {
@@ -439,6 +496,10 @@
       "text_color": null,
       "text": null,
       "font_size": null,
+      "text_bbox_width": null,
+      "text_bbox_height": null,
+      "text_intent_cx": null,
+      "text_intent_cy": null,
       "description": "character B head (right-bottom bust placeholder)"
     },
     {
@@ -459,6 +520,10 @@
       "text_color": null,
       "text": null,
       "font_size": null,
+      "text_bbox_width": null,
+      "text_bbox_height": null,
+      "text_intent_cx": null,
+      "text_intent_cy": null,
       "description": "character B shoulders (bust cut at shoulder line)"
     },
     {
@@ -479,6 +544,10 @@
       "text_color": null,
       "text": null,
       "font_size": null,
+      "text_bbox_width": null,
+      "text_bbox_height": null,
+      "text_intent_cx": null,
+      "text_intent_cy": null,
       "description": "thin line marking the top edge of the bottom 20% caption safe area (area itself is empty)"
     },
     {
@@ -487,8 +556,8 @@
       "item_type": "TextItem",
       "layer": 7,
       "is_hidden": false,
-      "x": -800,
-      "y": -480,
+      "x": -872.5,
+      "y": -491,
       "width": null,
       "height": null,
       "shape_size_mode": null,
@@ -499,6 +568,10 @@
       "text_color": "#FF6B7280",
       "text": "[title band]",
       "font_size": 22,
+      "text_bbox_width": 145,
+      "text_bbox_height": 22,
+      "text_intent_cx": -800,
+      "text_intent_cy": -480,
       "description": "region label: title band"
     },
     {
@@ -507,8 +580,8 @@
       "item_type": "TextItem",
       "layer": 7,
       "is_hidden": false,
-      "x": -800,
-      "y": -400,
+      "x": -860.5,
+      "y": -411,
       "width": null,
       "height": null,
       "shape_size_mode": null,
@@ -519,6 +592,10 @@
       "text_color": "#FF6B7280",
       "text": "[grid 2x2]",
       "font_size": 22,
+      "text_bbox_width": 121,
+      "text_bbox_height": 22,
+      "text_intent_cx": -800,
+      "text_intent_cy": -400,
       "description": "region label: 2x2 grid"
     },
     {
@@ -527,8 +604,8 @@
       "item_type": "TextItem",
       "layer": 7,
       "is_hidden": false,
-      "x": -800,
-      "y": -20,
+      "x": -909,
+      "y": -31,
       "width": null,
       "height": null,
       "shape_size_mode": null,
@@ -539,6 +616,10 @@
       "text_color": "#FF6B7280",
       "text": "[character A bust]",
       "font_size": 22,
+      "text_bbox_width": 218,
+      "text_bbox_height": 22,
+      "text_intent_cx": -800,
+      "text_intent_cy": -20,
       "description": "region label: character A area"
     },
     {
@@ -547,8 +628,8 @@
       "item_type": "TextItem",
       "layer": 7,
       "is_hidden": false,
-      "x": 800,
-      "y": -20,
+      "x": 691,
+      "y": -31,
       "width": null,
       "height": null,
       "shape_size_mode": null,
@@ -559,6 +640,10 @@
       "text_color": "#FF6B7280",
       "text": "[character B bust]",
       "font_size": 22,
+      "text_bbox_width": 218,
+      "text_bbox_height": 22,
+      "text_intent_cx": 800,
+      "text_intent_cy": -20,
       "description": "region label: character B area"
     },
     {
@@ -567,8 +652,8 @@
       "item_type": "TextItem",
       "layer": 7,
       "is_hidden": false,
-      "x": 0,
-      "y": 310,
+      "x": -163.5,
+      "y": 299,
       "width": null,
       "height": null,
       "shape_size_mode": null,
@@ -579,6 +664,10 @@
       "text_color": "#FF6B7280",
       "text": "[caption safe area / empty]",
       "font_size": 22,
+      "text_bbox_width": 327,
+      "text_bbox_height": 22,
+      "text_intent_cx": 0,
+      "text_intent_cy": 310,
       "description": "region label: caption safe area top edge"
     }
   ],

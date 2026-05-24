@@ -1,5 +1,5 @@
 ﻿{
-  "FilePath": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\_probe\\g24\\layout_instruction_proof.ymmp",
+  "FilePath": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen\\.claude\\worktrees\\jolly-albattani-d6dd78\\samples\\_probe\\g24\\layout_instruction_proof.ymmp",
   "SelectedTimelineIndex": 0,
   "Timelines": [
     {
@@ -1153,7 +1153,7 @@
           "X": {
             "Values": [
               {
-                "Value": 0
+                "Value": -384
               }
             ],
             "Span": 0,
@@ -1195,7 +1195,7 @@
           "Y": {
             "Values": [
               {
-                "Value": -443
+                "Value": -475
               }
             ],
             "Span": 0,
@@ -6333,7 +6333,7 @@
           "X": {
             "Values": [
               {
-                "Value": -800
+                "Value": -872.5
               }
             ],
             "Span": 0,
@@ -6375,7 +6375,7 @@
           "Y": {
             "Values": [
               {
-                "Value": -480
+                "Value": -491
               }
             ],
             "Span": 0,
@@ -6653,7 +6653,7 @@
           "X": {
             "Values": [
               {
-                "Value": -800
+                "Value": -860.5
               }
             ],
             "Span": 0,
@@ -6695,7 +6695,7 @@
           "Y": {
             "Values": [
               {
-                "Value": -400
+                "Value": -411
               }
             ],
             "Span": 0,
@@ -6973,7 +6973,7 @@
           "X": {
             "Values": [
               {
-                "Value": -800
+                "Value": -909
               }
             ],
             "Span": 0,
@@ -7015,7 +7015,7 @@
           "Y": {
             "Values": [
               {
-                "Value": -20
+                "Value": -31
               }
             ],
             "Span": 0,
@@ -7293,7 +7293,7 @@
           "X": {
             "Values": [
               {
-                "Value": 800
+                "Value": 691
               }
             ],
             "Span": 0,
@@ -7335,7 +7335,7 @@
           "Y": {
             "Values": [
               {
-                "Value": -20
+                "Value": -31
               }
             ],
             "Span": 0,
@@ -7613,7 +7613,7 @@
           "X": {
             "Values": [
               {
-                "Value": 0
+                "Value": -163.5
               }
             ],
             "Span": 0,
@@ -7655,7 +7655,7 @@
           "Y": {
             "Values": [
               {
-                "Value": 310
+                "Value": 299
               }
             ],
             "Span": 0,

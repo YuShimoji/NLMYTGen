@@ -26,7 +26,7 @@
   <div class="meta">
     <div>Layout Instruction Compliance Proof — diagnostic-only layout/slot proof, not a scene composition.</div>
     <div><strong>status</strong>: passed / <strong>items</strong>: 17 (Shape=11, Text=6) / <strong>hard_fail</strong>: 0</div>
-    <div><strong>checks</strong>: canvas_16_9_1920_1080=pass / title_band_top=pass / title_slot_width_for_18_chars=pass / grid_2x2_cells=pass / grid_boundary_visible=pass / char_a_bust_left_bottom=pass / char_b_bust_right_bottom=pass / bust_up_no_intrusion_into_caption_safe=pass / caption_safe_area_empty_of_major_items=pass / region_labels_present=pass / caption_indicator_present=pass / shape_size_mode_widthheight=pass / color_format_aarrggbb=pass</div>
+    <div><strong>checks</strong>: canvas_16_9_1920_1080=pass / title_band_top=pass / title_slot_width_for_18_chars=pass / title_text_within_band=pass / grid_2x2_cells=pass / grid_boundary_visible=pass / char_a_bust_left_bottom=pass / char_b_bust_right_bottom=pass / bust_up_no_intrusion_into_caption_safe=pass / caption_safe_area_empty_of_major_items=pass / region_labels_present=pass / caption_indicator_present=pass / shape_size_mode_widthheight=pass / color_format_aarrggbb=pass</div>
     <div><strong>violations</strong>: none</div>
     <div>query: <code>?no_meta=1</code> hide this strip; <code>?guides=0</code> hide grid guides.</div>
   </div>
@@ -34,7 +34,7 @@
     <svg viewBox="0 0 1920 1080" width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
       <rect data-name="LIP_BG" data-role="background" x="0" y="0" width="1920" height="1080" rx="0" ry="0" fill="#F5F7FA" fill-opacity="1.000" />
       <rect data-name="LIP_TitleBandBG" data-role="title_band" x="96" y="54" width="1728" height="86" rx="8" ry="8" fill="#E0E7EF" fill-opacity="1.000" />
-      <text data-name="LIP_Title" data-role="title_text" x="960" y="97" font-size="64" fill="#1A2B3C" fill-opacity="1.000" text-anchor="middle" dominant-baseline="middle" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">レイアウト指示遵守の検証</text>
+      <text data-name="LIP_Title" data-role="title_text" x="576" y="65" font-size="64" fill="#1A2B3C" fill-opacity="1.000" text-anchor="start" dominant-baseline="hanging" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">レイアウト指示遵守の検証</text>
       <rect data-name="LIP_GridCell_0_0" data-role="grid_cell" x="96" y="140" width="856" height="192" rx="8" ry="8" fill="#E7ECF1" fill-opacity="1.000" />
       <rect data-name="LIP_GridCell_0_1" data-role="grid_cell" x="968" y="140" width="856" height="192" rx="8" ry="8" fill="#CFD8E0" fill-opacity="1.000" />
       <rect data-name="LIP_GridCell_1_0" data-role="grid_cell" x="96" y="348" width="856" height="192" rx="8" ry="8" fill="#CFD8E0" fill-opacity="1.000" />
@@ -44,11 +44,11 @@
       <rect data-name="LIP_CharB_Head" data-role="character_bust" x="1590" y="530" width="140" height="160" rx="70" ry="70" fill="#99765B" fill-opacity="1.000" />
       <rect data-name="LIP_CharB_Shoulders" data-role="character_bust" x="1520" y="700" width="280" height="100" rx="20" ry="20" fill="#99765B" fill-opacity="1.000" />
       <rect data-name="LIP_CaptionSafeIndicator" data-role="caption_safe_indicator" x="96" y="862" width="1728" height="4" rx="2" ry="2" fill="#AAB3BD" fill-opacity="1.000" />
-      <text data-name="LIP_Label_Title" data-role="region_label" x="160" y="60" font-size="22" fill="#6B7280" fill-opacity="1.000" text-anchor="middle" dominant-baseline="middle" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">[title band]</text>
-      <text data-name="LIP_Label_Grid" data-role="region_label" x="160" y="140" font-size="22" fill="#6B7280" fill-opacity="1.000" text-anchor="middle" dominant-baseline="middle" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">[grid 2x2]</text>
-      <text data-name="LIP_Label_CharA" data-role="region_label" x="160" y="520" font-size="22" fill="#6B7280" fill-opacity="1.000" text-anchor="middle" dominant-baseline="middle" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">[character A bust]</text>
-      <text data-name="LIP_Label_CharB" data-role="region_label" x="1760" y="520" font-size="22" fill="#6B7280" fill-opacity="1.000" text-anchor="middle" dominant-baseline="middle" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">[character B bust]</text>
-      <text data-name="LIP_Label_Caption" data-role="region_label" x="960" y="850" font-size="22" fill="#6B7280" fill-opacity="1.000" text-anchor="middle" dominant-baseline="middle" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">[caption safe area / empty]</text>
+      <text data-name="LIP_Label_Title" data-role="region_label" x="87.5" y="49" font-size="22" fill="#6B7280" fill-opacity="1.000" text-anchor="start" dominant-baseline="hanging" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">[title band]</text>
+      <text data-name="LIP_Label_Grid" data-role="region_label" x="99.5" y="129" font-size="22" fill="#6B7280" fill-opacity="1.000" text-anchor="start" dominant-baseline="hanging" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">[grid 2x2]</text>
+      <text data-name="LIP_Label_CharA" data-role="region_label" x="51" y="509" font-size="22" fill="#6B7280" fill-opacity="1.000" text-anchor="start" dominant-baseline="hanging" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">[character A bust]</text>
+      <text data-name="LIP_Label_CharB" data-role="region_label" x="1651" y="509" font-size="22" fill="#6B7280" fill-opacity="1.000" text-anchor="start" dominant-baseline="hanging" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">[character B bust]</text>
+      <text data-name="LIP_Label_Caption" data-role="region_label" x="796.5" y="839" font-size="22" fill="#6B7280" fill-opacity="1.000" text-anchor="start" dominant-baseline="hanging" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">[caption safe area / empty]</text>
       <rect data-guide="outer_safe_band" x="96" y="54" width="1728" height="972" fill="none" stroke="rgba(255, 240, 200, 0.35)" stroke-dasharray="6 6" stroke-width="2" />
       <rect data-guide="caption_safe_area" x="0" y="864" width="1920" height="216" fill="rgba(255,80,80,0.04)" stroke="rgba(255, 240, 200, 0.35)" stroke-dasharray="3 3" stroke-width="1" />
       <rect data-guide="title_band" x="96" y="97" width="1728" height="86" fill="none" stroke="rgba(255, 240, 200, 0.35)" stroke-dasharray="3 3" stroke-width="1" />

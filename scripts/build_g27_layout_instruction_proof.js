@@ -96,8 +96,32 @@ const CELL_COLORS = ['#FFE7ECF1', '#FFCFD8E0', '#FFCFD8E0', '#FFE7ECF1'];
 // Title text — chosen short, but slot width must accommodate max 18 chars.
 const TITLE_TEXT = 'レイアウト指示遵守の検証';
 const TITLE_TEXT_LENGTH = [...TITLE_TEXT].length; // 12 codepoints
-// Slot width design: 18 chars * font 64 * 0.62 ≈ 715 px
-const TITLE_SLOT_WIDTH_DESIGN = Math.ceil(SPEC.title_band.max_chars_assumption * SPEC.title_band.font_size * 0.62);
+// Slot width design: 18 chars * font 64 (full-width Japanese ≒ 1em) = 1152 px.
+// Latin-leaning estimate 0.62em was incorrect for Japanese 全角 chars and underestimated width.
+const TITLE_SLOT_WIDTH_DESIGN = SPEC.title_band.max_chars_assumption * SPEC.title_band.font_size;
+
+// Text bbox estimation — Yu Gothic UI:
+//   full-width CJK / Hiragana / Katakana / Fullwidth Forms ≒ 1.0 em per char
+//   Latin / half-width chars ≒ 0.55 em per char
+// YMM4 TextItem stores X / Y as the top-left of the bbox (no built-in alignment), so
+// the build helper converts authoring-intent center (cx, cy) into the top-left actually
+// written to the .ymmp. HTML renderer mirrors the same top-left anchor.
+function estimateTextWidth(text, fontSize) {
+  let widthEm = 0;
+  for (const ch of String(text)) {
+    const cp = ch.codePointAt(0) ?? 0;
+    const isFullWidth = (
+      (cp >= 0x3000 && cp <= 0x303F) ||
+      (cp >= 0x3040 && cp <= 0x309F) ||
+      (cp >= 0x30A0 && cp <= 0x30FF) ||
+      (cp >= 0x4E00 && cp <= 0x9FFF) ||
+      (cp >= 0xFF00 && cp <= 0xFFEF)
+    );
+    widthEm += isFullWidth ? 1.0 : 0.55;
+  }
+  return Math.round(widthEm * fontSize);
+}
+function estimateTextHeight(fontSize) { return fontSize; }
 
 // =====================================================================
 // Layout items
@@ -174,14 +198,25 @@ function shape(displayName, role, layer, x, y, width, height, color, opacity, ro
   };
 }
 
-function text(displayName, role, layer, x, y, fontSize, content, color, isHidden, description) {
+function text(displayName, role, layer, cx, cy, fontSize, content, color, isHidden, description) {
+  // Authoring intent: cx, cy is the visual center of the text bbox.
+  // YMM4 TextItem stores X / Y as top-left; convert here so the .ymmp value reflects
+  // what YMM4 actually renders, and the HTML proof can use the same anchor.
+  const bboxWidth = estimateTextWidth(content, fontSize);
+  const bboxHeight = estimateTextHeight(fontSize);
   return {
     kind: 'TextItem',
     display_name: displayName,
     role,
     layer,
-    x,
-    y,
+    // top-left coordinates written to YMM4
+    x: cx - bboxWidth / 2,
+    y: cy - bboxHeight / 2,
+    // authoring intent center (kept for readback / HTML cross-checks)
+    intent_cx: cx,
+    intent_cy: cy,
+    bbox_width: bboxWidth,
+    bbox_height: bboxHeight,
     font_size: fontSize,
     content,
     color,
@@ -380,6 +415,10 @@ function readbackItem(item, primitive) {
   const type = itemType(item);
   const isShape = type === 'ShapeItem';
   const isText = type === 'TextItem';
+  // For ShapeItem, X/Y is the center of the geometry (YMM4 default).
+  // For TextItem, X/Y is the top-left of the text bbox (YMM4 default — no center alignment property).
+  // Readback preserves the raw stored value; intent_center / bbox fields below let
+  // consumers reconstruct the visual center deterministically.
   return {
     display_name: displayName,
     role: primitive?.role || null,
@@ -398,6 +437,10 @@ function readbackItem(item, primitive) {
     text_color: isText ? item.FontColor : null,
     text: isText ? item.Text : null,
     font_size: isText ? item.FontSize?.Values?.[0]?.Value ?? null : null,
+    text_bbox_width: isText ? (primitive?.bbox_width ?? null) : null,
+    text_bbox_height: isText ? (primitive?.bbox_height ?? null) : null,
+    text_intent_cx: isText ? (primitive?.intent_cx ?? null) : null,
+    text_intent_cy: isText ? (primitive?.intent_cy ?? null) : null,
     description: primitive?.description || null,
   };
 }
@@ -420,11 +463,45 @@ function complianceFromItems(items) {
   const title_band_check = (titleBand && titleBand.y < -350) ? 'pass' : 'fail';
   if (title_band_check !== 'pass') violations.push({ rule: 'TITLE_BAND_POSITION', severity: 'fail' });
 
-  // Title max-chars assumption
-  const title_slot_width_required = Math.ceil(SPEC.title_band.max_chars_assumption * SPEC.title_band.font_size * 0.62);
+  // Title max-chars assumption (full-width Japanese: 1em per char)
+  const title_slot_width_required = SPEC.title_band.max_chars_assumption * SPEC.title_band.font_size;
   const title_band_width = titleBand?.width ?? 0;
   const title_slot_width_ok = title_band_width >= title_slot_width_required;
   if (!title_slot_width_ok) violations.push({ rule: 'TITLE_SLOT_WIDTH_INSUFFICIENT_FOR_MAX_CHARS', severity: 'fail', required_px: title_slot_width_required, actual_px: title_band_width });
+
+  // Title text bbox must stay inside the title band rectangle (covers YMM4's actual top-left rendering).
+  const title_text_within_band = (() => {
+    if (!titleText || !titleBand) return false;
+    const tx = titleText.x ?? 0; // top-left x
+    const ty = titleText.y ?? 0; // top-left y
+    const tw = titleText.text_bbox_width ?? 0;
+    const th = titleText.text_bbox_height ?? 0;
+    const textLeft = tx;
+    const textRight = tx + tw;
+    const textTop = ty;
+    const textBottom = ty + th;
+    const bandLeft = (titleBand.x ?? 0) - (titleBand.width ?? 0) / 2;
+    const bandRight = (titleBand.x ?? 0) + (titleBand.width ?? 0) / 2;
+    const bandTop = (titleBand.y ?? 0) - (titleBand.height ?? 0) / 2;
+    const bandBottom = (titleBand.y ?? 0) + (titleBand.height ?? 0) / 2;
+    return textLeft >= bandLeft && textRight <= bandRight && textTop >= bandTop && textBottom <= bandBottom;
+  })();
+  if (!title_text_within_band) violations.push({
+    rule: 'TITLE_TEXT_OUTSIDE_BAND',
+    severity: 'fail',
+    title_text_bbox: titleText ? {
+      left: (titleText.x ?? 0),
+      right: (titleText.x ?? 0) + (titleText.text_bbox_width ?? 0),
+      top: (titleText.y ?? 0),
+      bottom: (titleText.y ?? 0) + (titleText.text_bbox_height ?? 0),
+    } : null,
+    title_band_bbox: titleBand ? {
+      left: (titleBand.x ?? 0) - (titleBand.width ?? 0) / 2,
+      right: (titleBand.x ?? 0) + (titleBand.width ?? 0) / 2,
+      top: (titleBand.y ?? 0) - (titleBand.height ?? 0) / 2,
+      bottom: (titleBand.y ?? 0) + (titleBand.height ?? 0) / 2,
+    } : null,
+  });
 
   // Grid 2x2 check: 4 cells with boundary visible (alternate fill colors or gap)
   const grid_2x2_check = gridCells.length === 4 ? 'pass' : 'fail';
@@ -453,10 +530,18 @@ function complianceFromItems(items) {
   if (bust_up_check !== 'pass') violations.push({ rule: 'CHAR_INTRUDES_CAPTION_SAFE_AREA', severity: 'fail', max_char_bottom_a, max_char_bottom_b, caption_top: SPEC.caption_safe_area.cy_top });
 
   // Caption safe area check: no major item (role != region_label && role != caption_safe_indicator) crosses cy=324..540
+  // ShapeItem uses centered geometry; TextItem stores top-left in x/y with bbox dims.
   const major_items = items.filter((it) => !['region_label', 'caption_safe_indicator', 'background'].includes(it.role));
   const safe_area_violators = major_items.filter((it) => {
-    const bottom = (it.y ?? 0) + (it.height || (it.font_size ? it.font_size * 1.3 : 0)) / 2;
-    const top = (it.y ?? 0) - (it.height || (it.font_size ? it.font_size * 1.3 : 0)) / 2;
+    if (it.item_type === 'TextItem') {
+      const h = it.text_bbox_height ?? (it.font_size ?? 0);
+      const top = it.y ?? 0;
+      const bottom = top + h;
+      return bottom > SPEC.caption_safe_area.cy_top && top < SPEC.caption_safe_area.cy_bottom;
+    }
+    const h = it.height ?? 0;
+    const bottom = (it.y ?? 0) + h / 2;
+    const top = (it.y ?? 0) - h / 2;
     return bottom > SPEC.caption_safe_area.cy_top && top < SPEC.caption_safe_area.cy_bottom;
   });
   const caption_safe_area_check = safe_area_violators.length === 0 ? 'pass' : 'fail';
@@ -492,6 +577,7 @@ function complianceFromItems(items) {
       canvas_16_9_1920_1080: canvas_check,
       title_band_top: title_band_check,
       title_slot_width_for_18_chars: title_slot_width_ok ? 'pass' : 'fail',
+      title_text_within_band: title_text_within_band ? 'pass' : 'fail',
       grid_2x2_cells: grid_2x2_check,
       grid_boundary_visible: grid_boundary_visible ? 'pass' : 'fail',
       char_a_bust_left_bottom: charA_bust_check,
@@ -566,7 +652,16 @@ function complianceFromItems(items) {
       height_pct: SPEC.caption_safe_area.height_pct,
       indicator_present: caption_indicator_check === 'pass',
     },
-    region_labels: regionLabels.map((it) => ({ name: it.display_name, text: it.text, cx: it.x, cy: it.y })),
+    region_labels: regionLabels.map((it) => ({
+      name: it.display_name,
+      text: it.text,
+      cx: it.text_intent_cx ?? it.x,
+      cy: it.text_intent_cy ?? it.y,
+      ymmp_top_left_x: it.x,
+      ymmp_top_left_y: it.y,
+      bbox_width: it.text_bbox_width,
+      bbox_height: it.text_bbox_height,
+    })),
     violations,
   };
 }
