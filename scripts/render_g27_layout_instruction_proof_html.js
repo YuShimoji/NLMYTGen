@@ -29,8 +29,9 @@ function escapeXml(s) {
 
 function renderItem(item) {
   if (item.is_hidden) return `      <!-- hidden: ${item.display_name} -->`;
-  const { sx, sy } = ymmpToSvg(item.x ?? 0, item.y ?? 0);
   if (item.item_type === 'ShapeItem') {
+    // ShapeItem: YMM4 X/Y is geometry center.
+    const { sx, sy } = ymmpToSvg(item.x ?? 0, item.y ?? 0);
     const fill = argbCss(item.fill_color);
     const alpha = argbAlpha(item.fill_color);
     const opacity = ((item.opacity ?? 100) / 100) * alpha;
@@ -40,10 +41,13 @@ function renderItem(item) {
     return `      <rect data-name="${escapeXml(item.display_name)}" data-role="${escapeXml(item.role || '')}" x="${left}" y="${top}" width="${item.width}" height="${item.height}" rx="${rx}" ry="${rx}" fill="${fill}" fill-opacity="${opacity.toFixed(3)}" />`;
   }
   if (item.item_type === 'TextItem') {
+    // TextItem: YMM4 X/Y is the top-left of the text bbox (no built-in center alignment).
+    // Mirror that anchor in SVG so the HTML proof and YMM4 GUI agree on visual positioning.
+    const { sx, sy } = ymmpToSvg(item.x ?? 0, item.y ?? 0);
     const fill = argbCss(item.text_color);
     const alpha = argbAlpha(item.text_color);
     const opacity = ((item.opacity ?? 100) / 100) * alpha;
-    return `      <text data-name="${escapeXml(item.display_name)}" data-role="${escapeXml(item.role || '')}" x="${sx}" y="${sy}" font-size="${item.font_size}" fill="${fill}" fill-opacity="${opacity.toFixed(3)}" text-anchor="middle" dominant-baseline="middle" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">${escapeXml(item.text)}</text>`;
+    return `      <text data-name="${escapeXml(item.display_name)}" data-role="${escapeXml(item.role || '')}" x="${sx}" y="${sy}" font-size="${item.font_size}" fill="${fill}" fill-opacity="${opacity.toFixed(3)}" text-anchor="start" dominant-baseline="hanging" font-family="'Yu Gothic UI','Hiragino Sans','Noto Sans CJK JP',sans-serif" font-weight="600">${escapeXml(item.text)}</text>`;
   }
   return '';
 }
