@@ -2,7 +2,7 @@
 // 実運用では lanes/sports_news の source / fact / visual plan から生成した
 // baseball visual data JSON を流し込む想定。
 
-window.GAME_DATA = {
+window.BASEBALL_SAMPLE_GAME_DATA = {
   visual: {
     eventLabel: 'PITCH EVENT · SAMPLE DATA',
     claim: '前球155km/hの速球から、低め外角の140km/hスライダーへ緩急',
@@ -178,3 +178,5 @@ window.GAME_DATA = {
     ],
   },
 };
+
+window.GAME_DATA = window.BASEBALL_VISUAL_DATA || window.BASEBALL_SAMPLE_GAME_DATA;

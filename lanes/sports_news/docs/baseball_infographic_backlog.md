@@ -66,9 +66,19 @@ Status: BN-01 initial implementation slice
   - `docs/runtime-state.md` の primary `next_action` を Baseball に置き換えない。
   - 出力は screen plan review unit であり、renderer implementation / PNG export proof / YMM4 creative acceptance ではない。
 
+## BN-02 baseball visual data contract
+
+- State: implemented in BN-02 slice.
+- Goal: `lanes/sports_news` の episode dict から `BaseballInfoGraphics` が読める visual data JSON を作る。
+- Done when:
+  - `lanes/sports_news/schemas/baseball_visual_data.schema.json` が `baseball_visual_data.v1` の必須 top-level を固定する。
+  - `src/pipeline/baseball_visual_data.py` が dict input から C 詳細用 dict output を生成・検証する。
+  - `lanes/sports_news/examples/baseball_pitch_event_visual_data_sample.json` が sample-only の変換結果として置かれる。
+  - `BaseballInfoGraphics/data.js` が `window.BASEBALL_VISUAL_DATA` を任意 override として受け、未設定時は fallback sample を表示する。
+  - PNG export / animation export / YMM4 placement proof は BN-03 以降に残す。
+
 ## Next candidates
 
-- BN-02: `data.js` mock と `lanes/sports_news/examples/baseball_pitch_event_sample.yaml` の変換契約を作る。
 - BN-03: 1280x720 PNG export と render manifest を deterministic にする。
 - BN-04: animation capture 用の frame sequence / clip export contract を作る。
 - BN-05: YMM4 placement note の最小 contract を作る。

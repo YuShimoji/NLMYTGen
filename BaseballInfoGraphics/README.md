@@ -25,7 +25,7 @@
 | File | 役割 |
 | --- | --- |
 | `Baseball Infographic.html` | ブラウザで開くエントリポイント、Tweaks、再生制御 |
-| `data.js` | 現在の mock game data |
+| `data.js` | fallback mock game data と `window.BASEBALL_VISUAL_DATA` override 入口 |
 | `variants/detailed.jsx` | C 詳細デザイン本体 |
 | `components/strike-zone.jsx` | ストライクゾーン表示 |
 | `components/diamond.jsx` | 塁状況表示 |
@@ -53,6 +53,12 @@
 - `showRomaji=0|1`
 
 現在状態は `window.__BASEBALL_INFOGRAPHICS_STATE__` に公開される。
+
+## Visual data override
+
+BN-02 以降、`data.js` は `window.BASEBALL_VISUAL_DATA` が先に定義されている場合だけ外部データを優先する。未定義の場合は従来どおり repo-local fallback sample を `window.GAME_DATA` として表示する。
+
+外部データの契約は `../lanes/sports_news/schemas/baseball_visual_data.schema.json`、sample output は `../lanes/sports_news/examples/baseball_pitch_event_visual_data_sample.json` に置く。これは design source への入力契約であり、PNG export / animation export / YMM4 proof の完了を意味しない。
 
 ## 今後の開発単位
 

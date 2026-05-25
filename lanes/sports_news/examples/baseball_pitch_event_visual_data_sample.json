@@ -1,0 +1,143 @@
+{
+  "schema_version": "baseball_visual_data.v1",
+  "visual": {
+    "eventLabel": "PITCH EVENT · SAMPLE DATA",
+    "claim": "前球155km/h FFから140km/h SLへ緩急",
+    "sourceLabel": "SAMPLE INFOGRAPHIC · PROVENANCE-GATED VISUALS",
+    "watchPoint": "次に見るべきは外角スライダーの見極め",
+    "ambientBackdrop": {
+      "kind": "repo_generated_svg",
+      "label": "ballpark_night_grid",
+      "imageUrl": "assets/ambient/ballpark-night-grid.svg",
+      "provenance": "BaseballInfoGraphics/assets/ambient/LICENSE.csv",
+      "usageStage": "design_preview",
+      "note": "Repo-generated abstract SVG preview; real episode backdrops should keep provenance records before asset ingest."
+    }
+  },
+  "meta": {
+    "league": "SAMPLE",
+    "venue": "sample venue",
+    "date": "sample-date",
+    "weather": "unknown",
+    "attendance": "unknown",
+    "sourceEpisodeId": "baseball_pitch_event_sample"
+  },
+  "teams": {
+    "home": {
+      "code": "FAL",
+      "name": "Sample Falcons",
+      "shortName": "Falcons",
+      "primary": "#22C55E",
+      "secondary": "#0F172A",
+      "logo": "FAL"
+    },
+    "away": {
+      "code": "EAG",
+      "name": "Sample Eagles",
+      "shortName": "Eagles",
+      "primary": "#38BDF8",
+      "secondary": "#0F172A",
+      "logo": "EAG"
+    }
+  },
+  "score": {
+    "home": 4,
+    "away": 3,
+    "inning": 7,
+    "half": "top",
+    "outs": 1,
+    "balls": 2,
+    "strikes": 2,
+    "bases": {
+      "first": false,
+      "second": false,
+      "third": false
+    }
+  },
+  "atBat": {
+    "pitcher": {
+      "id": "sample_pitcher",
+      "name": "Sample Pitcher",
+      "nameEn": "Sample Pitcher",
+      "number": null,
+      "throws": "R",
+      "season": {
+        "era": 2.18
+      },
+      "today": {
+        "ip": "—",
+        "h": null,
+        "r": null,
+        "er": null,
+        "bb": null,
+        "k": 7,
+        "pc": 87
+      }
+    },
+    "batter": {
+      "id": "sample_batter",
+      "name": "Sample Batter",
+      "nameEn": "Sample Batter",
+      "number": null,
+      "bats": "L",
+      "season": {
+        "avg": 0.302,
+        "ops": 0.891,
+        "hr": null,
+        "rbi": null
+      },
+      "today": {
+        "ab": 3,
+        "h": 1,
+        "hr": 0,
+        "rbi": 0,
+        "k": 1,
+        "bb": 0
+      },
+      "vsP": {
+        "ab": 0,
+        "h": 0,
+        "hr": 0,
+        "k": 0
+      }
+    },
+    "pitches": [
+      {
+        "num": 4,
+        "type": "FF",
+        "typeJa": "フォーシーム",
+        "mph": 96.3,
+        "kmh": 155,
+        "x": 0.52,
+        "y": -0.58,
+        "result": "Foul",
+        "resultJa": "ファウル",
+        "zone": "upper_outer",
+        "intendedZone": null,
+        "actualZone": null,
+        "claim": "前球は155km/hのFFでファウル"
+      },
+      {
+        "num": 5,
+        "type": "SL",
+        "typeJa": "スライダー",
+        "mph": 87.0,
+        "kmh": 140,
+        "x": -0.55,
+        "y": 0.52,
+        "result": "Strike",
+        "resultJa": "ストライク",
+        "zone": "low_outer",
+        "intendedZone": "low_outer",
+        "actualZone": "low_outer",
+        "claim": "前球155km/h FFから140km/h SLへ緩急"
+      }
+    ],
+    "currentPitchIndex": 1
+  },
+  "zone": {
+    "halfWidth": 0.83,
+    "top": -1.0,
+    "bottom": 1.0
+  }
+}
