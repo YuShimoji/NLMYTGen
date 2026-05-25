@@ -87,6 +87,10 @@ Status: BN-01 initial implementation slice
   - manifest が input data path / hash、variant、export settings、output path、1280x720、`not_yymm4_proof=true` を持つ。
   - PNG export は YMM4 creative acceptance、animation export、publish gate pass のいずれでもない。
 
+Handoff: `lanes/sports_news/docs/baseball_bn03_static_export_handoff_2026-05-25.md`
+records the branch, commits, artifacts, verification results, known uncertainty,
+and the next restart entry points after BN-03.
+
 ## Next candidates
 
 - BN-04: animation capture 用の frame sequence / clip export contract を作る。
