@@ -55,7 +55,7 @@
 | A-01 | NotebookLM 元台本テキスト取得（手動コピペ） | done | L1 | 主導線。WORKFLOW.md S-2 |
 | A-02 | 音声書き起こし fallback（Whisper / Google Docs） | done | L1 | --unlabeled で対応 |
 | A-03 | NotebookLM API 連携（台本自動取得） | hold | L1 | API 未公開。公開時に検討 |
-| A-04 | RSS フィード連携（トピック候補取得） | done | L1 | `fetch-topics` サブコマンド。RSS/Atom からタイトル抽出 → NotebookLM 検索クエリとして使用。再審査済み (2026-03-30)、実装完了 |
+| A-04 | RSS フィード連携（トピック候補取得） | done | L1 | `fetch-topics` サブコマンド。RSS/Atom URL 直接取得 + OPML購読一覧同期に対応し、タイトル・記事URL・概要・フィード名・カテゴリを NotebookLM 検索クエリ / 台本テーマ候補へ渡せる。再審査済み (2026-03-30)、OPML同期 v1 実装済み (2026-05-25) |
 
 ### B. 台本変換 (L2-変換)
 

@@ -7,63 +7,120 @@ import xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
 
 from src.contracts.feed_entry import FeedEntry
+from src.contracts.feed_source import FeedSource
 
 _ATOM_NS = "{http://www.w3.org/2005/Atom}"
 _USER_AGENT = "NLMYTGen/1.0"
 
 
-def fetch_feed(url: str, *, timeout: int = 10) -> list[FeedEntry]:
+def fetch_feed(
+    url: str,
+    *,
+    timeout: int = 10,
+    source: FeedSource | None = None,
+) -> list[FeedEntry]:
     """Fetch a feed from *url* and return parsed entries."""
     req = urllib.request.Request(url, headers={"User-Agent": _USER_AGENT})
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         xml_bytes: bytes = resp.read()
-    return parse_feed_xml(xml_bytes, source_url=url)
+    return parse_feed_xml(
+        xml_bytes,
+        source_url=source.feed_url if source else url,
+        source_title=source.title if source else None,
+        source_categories=source.categories if source else (),
+    )
 
 
-def parse_feed_xml(xml_bytes: bytes, *, source_url: str | None = None) -> list[FeedEntry]:
+def parse_feed_xml(
+    xml_bytes: bytes,
+    *,
+    source_url: str | None = None,
+    source_title: str | None = None,
+    source_categories: tuple[str, ...] = (),
+) -> list[FeedEntry]:
     """Parse RSS 2.0 or Atom 1.0 XML bytes into a list of `FeedEntry`."""
     root = ET.fromstring(xml_bytes)
 
     tag = root.tag.split("}")[-1] if "}" in root.tag else root.tag
     if tag == "rss":
-        return _parse_rss(root, source_url)
+        return _parse_rss(root, source_url, source_title, source_categories)
     if tag == "feed":
-        return _parse_atom(root, source_url)
+        return _parse_atom(root, source_url, source_title, source_categories)
     raise ValueError(f"Unrecognised feed format: root element <{root.tag}>")
 
 
-def _parse_rss(root: ET.Element, source_url: str | None) -> list[FeedEntry]:
+def _parse_rss(
+    root: ET.Element,
+    source_url: str | None,
+    source_title: str | None,
+    source_categories: tuple[str, ...],
+) -> list[FeedEntry]:
     entries: list[FeedEntry] = []
     for item in root.iter("item"):
-        title_el = item.find("title")
-        if title_el is None or not (title_el.text or "").strip():
+        title = _child_text(item, "title")
+        if not title:
             continue
-        pub_el = item.find("pubDate")
-        published = _parse_rfc822(pub_el.text) if pub_el is not None and pub_el.text else None
+        pub_date = _child_text(item, "pubDate")
+        published = _parse_rfc822(pub_date) if pub_date else None
         entries.append(FeedEntry(
-            title=title_el.text.strip(),
+            title=title,
             published=published,
             source_url=source_url,
+            url=_child_text(item, "link"),
+            summary=_child_text(item, "description"),
+            source_title=source_title,
+            source_categories=source_categories,
         ))
     return entries
 
 
-def _parse_atom(root: ET.Element, source_url: str | None) -> list[FeedEntry]:
+def _parse_atom(
+    root: ET.Element,
+    source_url: str | None,
+    source_title: str | None,
+    source_categories: tuple[str, ...],
+) -> list[FeedEntry]:
     entries: list[FeedEntry] = []
     for entry in root.findall(f"{_ATOM_NS}entry"):
-        title_el = entry.find(f"{_ATOM_NS}title")
-        if title_el is None or not (title_el.text or "").strip():
+        title = _child_text(entry, "title")
+        if not title:
             continue
-        pub_el = entry.find(f"{_ATOM_NS}published")
-        if pub_el is None:
-            pub_el = entry.find(f"{_ATOM_NS}updated")
-        published = _parse_iso8601_date(pub_el.text) if pub_el is not None and pub_el.text else None
+        pub_date = _child_text(entry, "published") or _child_text(entry, "updated")
+        published = _parse_iso8601_date(pub_date) if pub_date else None
         entries.append(FeedEntry(
-            title=title_el.text.strip(),
+            title=title,
             published=published,
             source_url=source_url,
+            url=_atom_link(entry),
+            summary=_child_text(entry, "summary") or _child_text(entry, "content"),
+            source_title=source_title,
+            source_categories=source_categories,
         ))
     return entries
+
+
+def _child_text(parent: ET.Element, child_name: str) -> str | None:
+    for child in list(parent):
+        tag = child.tag.split("}")[-1] if "}" in child.tag else child.tag
+        if tag != child_name:
+            continue
+        text = "".join(child.itertext()).strip()
+        return text or None
+    return None
+
+
+def _atom_link(entry: ET.Element) -> str | None:
+    fallback: str | None = None
+    for link in entry.findall(f"{_ATOM_NS}link"):
+        href = (link.attrib.get("href") or "").strip()
+        if not href:
+            continue
+        rel = (link.attrib.get("rel") or "alternate").strip()
+        if rel == "alternate":
+            return href
+        if fallback is None:
+            fallback = href
+    return fallback
 
 
 def _parse_rfc822(value: str) -> str | None:

@@ -11,7 +11,8 @@ Usage:
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
     python -m src.cli.main diagnose-script <input> [--speaker-map ...] [--format text|json] [--strict]
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
-    python -m src.cli.main fetch-topics <URL>... [-n 20] [--after YYYY-MM-DD] [--format text|json]
+    python -m src.cli.main fetch-topics [URL...] [--opml feeds.opml] [-n 20] [--after YYYY-MM-DD] [--format text|json|markdown]
+    python -m src.cli.main list-feed-sources --opml feeds.opml [--format markdown|json]
     python -m src.cli.main validate-ir <ir.json> [--palette ...] [--format text|json]
     python -m src.cli.main validate-background-skit-blueprint <blueprint.json> --script <txt> --ymmp <ymmp> [--fps 60] [--format text|json]
     python -m src.cli.main emit-packaging-brief-template [-o path] [--format markdown|json]
@@ -816,7 +817,9 @@ def _cmd_diagnose_script(args: argparse.Namespace) -> int:
 def _cmd_fetch_topics(args: argparse.Namespace) -> int:
     """fetch-topics: RSS/Atom フィードからトピック候補を取得する。"""
     from datetime import date
+    from src.contracts.feed_source import FeedSource
     from src.feed.fetch import fetch_feed
+    from src.feed.sources import load_opml_sources
 
     after_date: str | None = None
     if getattr(args, "after", None):
@@ -828,9 +831,22 @@ def _cmd_fetch_topics(args: argparse.Namespace) -> int:
             return 1
 
     all_entries = []
-    for url in args.urls:
+    targets: list[tuple[str, FeedSource | None]] = []
+    if getattr(args, "opml", None):
+        sources = load_opml_sources(args.opml)
+        if not sources and not args.urls:
+            print("No feed sources found in OPML.", file=sys.stderr)
+            return 0
+        targets.extend((source.feed_url, source) for source in sources)
+    targets.extend((url, None) for url in args.urls)
+
+    if not targets:
+        print("Error: fetch-topics requires at least one URL or --opml.", file=sys.stderr)
+        return 1
+
+    for url, source in targets:
         try:
-            entries = fetch_feed(url, timeout=args.timeout)
+            entries = fetch_feed(url, timeout=args.timeout, source=source)
         except (ValueError, OSError) as e:
             print(f"Error fetching {url}: {e}", file=sys.stderr)
             continue
@@ -849,18 +865,20 @@ def _cmd_fetch_topics(args: argparse.Namespace) -> int:
     output_lines: list[str] = []
 
     if fmt == "json":
-        data = [
-            {"title": e.title, "published": e.published, "source": e.source_url}
-            for e in all_entries
-        ]
+        data = [_feed_entry_to_json(e) for e in all_entries]
         output_lines.append(json.dumps(data, ensure_ascii=False, indent=2))
+    elif fmt == "markdown":
+        output_lines.append(_render_feed_entries_markdown(all_entries))
     else:
         seen_sources: set[str | None] = set()
         for entry in all_entries:
             if entry.source_url not in seen_sources:
                 seen_sources.add(entry.source_url)
                 today = date.today().isoformat()
-                output_lines.append(f"# Source: {entry.source_url} ({today})")
+                if entry.source_title:
+                    output_lines.append(f"# Source: {entry.source_title} <{entry.source_url}> ({today})")
+                else:
+                    output_lines.append(f"# Source: {entry.source_url} ({today})")
             output_lines.append(entry.title)
 
     text = "\n".join(output_lines) + "\n"
@@ -874,6 +892,94 @@ def _cmd_fetch_topics(args: argparse.Namespace) -> int:
         sys.stdout.write(text)
 
     return 0
+
+
+def _cmd_list_feed_sources(args: argparse.Namespace) -> int:
+    """list-feed-sources: OPML から AI 側の購読一覧を表示する。"""
+    from src.feed.sources import load_opml_sources
+
+    sources = load_opml_sources(args.opml)
+    fmt = getattr(args, "format", "markdown")
+    if fmt == "json":
+        sys.stdout.write(json.dumps([_feed_source_to_json(s) for s in sources], ensure_ascii=False, indent=2) + "\n")
+    else:
+        sys.stdout.write(_render_feed_sources_markdown(sources) + "\n")
+    return 0
+
+
+def _feed_entry_to_json(entry) -> dict[str, object]:
+    return {
+        "title": entry.title,
+        "published": entry.published,
+        "source": entry.source_url,
+        "url": entry.url,
+        "summary": entry.summary,
+        "source_title": entry.source_title,
+        "source_categories": list(entry.source_categories),
+    }
+
+
+def _feed_source_to_json(source) -> dict[str, object]:
+    return {
+        "feed_url": source.feed_url,
+        "title": source.title,
+        "html_url": source.html_url,
+        "categories": list(source.categories),
+        "reader": source.reader,
+        "reader_feed_id": source.reader_feed_id,
+        "icon_url": source.icon_url,
+    }
+
+
+def _render_feed_entries_markdown(entries) -> str:
+    lines = [
+        "| categories | source | published | title | url |",
+        "|---|---|---|---|---|",
+    ]
+    for entry in entries:
+        lines.append(
+            "| "
+            + " | ".join(
+                [
+                    _markdown_cell(" / ".join(entry.source_categories)),
+                    _markdown_cell(entry.source_title or entry.source_url),
+                    _markdown_cell(entry.published),
+                    _markdown_cell(entry.title),
+                    _markdown_cell(entry.url),
+                ]
+            )
+            + " |"
+        )
+    return "\n".join(lines)
+
+
+def _render_feed_sources_markdown(sources) -> str:
+    lines = [
+        "| categories | title | feed_url | html_url | reader |",
+        "|---|---|---|---|---|",
+    ]
+    for source in sources:
+        lines.append(
+            "| "
+            + " | ".join(
+                [
+                    _markdown_cell(" / ".join(source.categories)),
+                    _markdown_cell(source.title),
+                    _markdown_cell(source.feed_url),
+                    _markdown_cell(source.html_url),
+                    _markdown_cell(source.reader),
+                ]
+            )
+            + " |"
+        )
+    return "\n".join(lines)
+
+
+def _markdown_cell(value: object) -> str:
+    if value is None or value == "":
+        return "-"
+    text = str(value).replace("\r", " ").replace("\n", " ").strip()
+    return text.replace("|", "\\|") or "-"
 
 
 def _cmd_generate_map(args: argparse.Namespace) -> int:
@@ -1161,12 +1267,18 @@ def main(argv: list[str] | None = None) -> int:
 
     # fetch-topics
     p_fetch = subparsers.add_parser("fetch-topics", help="Fetch topic candidates from RSS/Atom feeds")
-    p_fetch.add_argument("urls", nargs="+", metavar="URL", help="RSS/Atom feed URL(s)")
+    p_fetch.add_argument("urls", nargs="*", metavar="URL", help="RSS/Atom feed URL(s)")
+    p_fetch.add_argument("--opml", help="OPML subscription list exported from a human RSS reader")
     p_fetch.add_argument("-o", "--output", help="Output file path (default: stdout)")
     p_fetch.add_argument("-n", "--limit", type=int, default=20, help="Max entries to show (default: 20)")
     p_fetch.add_argument("--after", metavar="YYYY-MM-DD", help="Only entries published after this date")
-    p_fetch.add_argument("--format", choices=["text", "json"], default="text", help="Output format (default: text)")
+    p_fetch.add_argument("--format", choices=["text", "json", "markdown"], default="text", help="Output format (default: text)")
     p_fetch.add_argument("--timeout", type=int, default=10, help="HTTP timeout in seconds (default: 10)")
+
+    # list-feed-sources
+    p_sources = subparsers.add_parser("list-feed-sources", help="List feed subscriptions from OPML")
+    p_sources.add_argument("--opml", required=True, help="OPML subscription list exported from a human RSS reader")
+    p_sources.add_argument("--format", choices=["markdown", "json"], default="markdown", help="Output format (default: markdown)")
 
     # generate-map
     p_genmap = subparsers.add_parser("generate-map", help="Generate speaker map template from input")
@@ -1766,6 +1878,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_generate_map(args)
         elif args.command == "fetch-topics":
             return _cmd_fetch_topics(args)
+        elif args.command == "list-feed-sources":
+            return _cmd_list_feed_sources(args)
         elif args.command == "extract-template":
             return _cmd_extract_template(args)
         elif args.command == "measure-timeline-routes":
