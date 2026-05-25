@@ -31,6 +31,7 @@
 - [PROXY_ASSET_CLASSIFICATION_SCHEMA.md](PROXY_ASSET_CLASSIFICATION_SCHEMA.md) — **proxy / asset 分類 schema**: visual treatment proof の beat を scene decision packet / asset-proxy gap report / YMM4 adapter のどこへ渡すか分類する関所。分類のみで downstream artifact は作らない
 - [INT02E_REAL_URL_OPERATOR_SMOKE_GATE.md](INT02E_REAL_URL_OPERATOR_SMOKE_GATE.md) — **INT-02e real URL operator smoke gate**: `baseline / in_progress` 固定。`done` は actual fetch、`source.wav` Python `wave` readback、receipt / sidecar / `material_ledger`、ledger audit、boundary grep、scrub 済み report まで揃ってから。real URL smoke 前に target commit、clean status、`HEAD...origin/main = 0 0` を確認し、`fetch-source-video` / GUI fetch / STT URL / cut-concat / render / Publishing-OAuth へ広げない
 - [EPISODE_RUN_PACK.md](EPISODE_RUN_PACK.md) — **1本通し制作パック**: `_tmp/episode_runs/<episode_id>/` の構成、GUI `Episode Pack Root` 導線、既定保存path、YMM4確認と gaps 記録の境界
+- [RSS_READER_SYNC_SPEC.md](RSS_READER_SYNC_SPEC.md) — **A-04 RSS Reader Sync**: OPML export を人間側 RSS 一覧と AI 側 `fetch-topics` 対象の共通正本にする。Inoreader OAuth/API は後続 read-only adapter 候補で、この v1 では実装しない
 - [verification/PROJECT_INIT_CHECKLIST.md](verification/PROJECT_INIT_CHECKLIST.md) — **実案件投入**: palette → registry → validate-ir → apply-production の 5 ステップ
 - [verification/FAILURE_DIAGNOSIS_MATRIX.md](verification/FAILURE_DIAGNOSIS_MATRIX.md) — ERROR/WARNING 全 64 種の診断マトリクス
 - `samples/registry_template/` — 6 種の registry JSON 雛形（overlay/se/bg/slot/face/group_motion_map）
