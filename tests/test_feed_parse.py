@@ -10,6 +10,8 @@ RSS_SAMPLE = b"""\
     <title>Tech News</title>
     <item>
       <title>AI\xe3\x81\x8c\xe5\xa4\x89\xe3\x81\x88\xe3\x82\x8b\xe6\x9c\xaa\xe6\x9d\xa5</title>
+      <link>https://example.com/ai-future</link>
+      <description>AI summary</description>
       <pubDate>Mon, 28 Mar 2026 09:00:00 +0900</pubDate>
     </item>
     <item>
@@ -29,6 +31,8 @@ ATOM_SAMPLE = b"""\
   <title>Science Blog</title>
   <entry>
     <title>Dark Matter Research</title>
+    <link href="https://example.com/dark-matter" rel="alternate" />
+    <summary>Dark matter summary</summary>
     <published>2026-03-29T10:00:00Z</published>
   </entry>
   <entry>
@@ -62,6 +66,23 @@ def test_parse_rss_source_url():
     assert all(e.source_url == "https://example.com/rss" for e in entries)
 
 
+def test_parse_rss_article_url_and_summary():
+    entries = parse_feed_xml(RSS_SAMPLE)
+    assert entries[0].url == "https://example.com/ai-future"
+    assert entries[0].summary == "AI summary"
+
+
+def test_parse_source_metadata():
+    entries = parse_feed_xml(
+        RSS_SAMPLE,
+        source_url="https://example.com/rss",
+        source_title="Tech News",
+        source_categories=("Tech", "AI"),
+    )
+    assert entries[0].source_title == "Tech News"
+    assert entries[0].source_categories == ("Tech", "AI")
+
+
 def test_parse_atom_titles():
     entries = parse_feed_xml(ATOM_SAMPLE, source_url="https://example.com/atom")
     assert len(entries) == 2
@@ -73,6 +94,12 @@ def test_parse_atom_dates():
     entries = parse_feed_xml(ATOM_SAMPLE)
     assert entries[0].published == "2026-03-29"
     assert entries[1].published == "2026-03-25"
+
+
+def test_parse_atom_article_url_and_summary():
+    entries = parse_feed_xml(ATOM_SAMPLE)
+    assert entries[0].url == "https://example.com/dark-matter"
+    assert entries[0].summary == "Dark matter summary"
 
 
 def test_parse_atom_skips_blank_titles():

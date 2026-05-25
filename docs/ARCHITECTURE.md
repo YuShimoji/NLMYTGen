@@ -52,13 +52,15 @@ src/
     notebooklm_input.py      # 入力契約: RawTranscript
     structured_script.py     # 内部契約: Utterance, StructuredScript
     ymm4_csv_schema.py       # 出力契約: YMM4CsvRow, YMM4CsvOutput
-    feed_entry.py            # フィード契約: FeedEntry
+    feed_entry.py            # フィード記事契約: FeedEntry
+    feed_source.py           # フィード購読契約: FeedSource
   pipeline/                  # 変換ロジック (L2)
     normalize.py             # 入力 → StructuredScript
     assemble_csv.py          # StructuredScript → YMM4CsvOutput
     validate_handoff.py      # 出力前検証
   feed/                      # フィード取得 (L1)
     fetch.py                 # RSS/Atom 取得・パース → FeedEntry リスト
+    sources.py               # OPML 購読一覧 → FeedSource リスト
   cli/
     main.py                  # 単一エントリポイント
 ```
@@ -72,6 +74,7 @@ src/
 | `pipeline/assemble_csv.py` | 話者マッピングと CSV 組立、長文分割、表示幅計測 | 画像取得、アニメーション割当 |
 | `pipeline/validate_handoff.py` | 出力前の整合性チェック | エラー修正、自動補完 |
 | `feed/fetch.py` | RSS/Atom フィード取得・パース (L1) | CSV 変換、pipeline への直接結合 |
+| `feed/sources.py` | OPML 購読一覧パース (L1) | RSS リーダー API 認証、既読/未読同期、購読変更 |
 | `cli/main.py` | 引数解析と実行制御 | 直接的なデータ変換 |
 
 ## 禁止される越境

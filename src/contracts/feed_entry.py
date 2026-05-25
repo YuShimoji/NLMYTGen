@@ -12,3 +12,7 @@ class FeedEntry:
     title: str
     published: str | None = None
     source_url: str | None = None
+    url: str | None = None
+    summary: str | None = None
+    source_title: str | None = None
+    source_categories: tuple[str, ...] = ()
