@@ -1,4 +1,4 @@
-function DetailedVariant({ data, currentPitchIdx, teamColor, density, showRomaji = false, statMode = 'simple' }) {
+function DetailedVariant({ data, currentPitchIdx, teamColor, density, showRomaji = false, statMode = 'simple', animateLatest = true }) {
   const { teams, score, atBat, visual = {} } = data;
   const pitches = atBat.pitches || [];
   const safePitchIdx = Math.max(0, Math.min(pitches.length - 1, currentPitchIdx));
@@ -239,7 +239,7 @@ const claimTextStyle = {
   letterSpacing: '-0.03em',
 };
 
-function PitchStage({ pitches, currentPitch, previousPitch, currentPitchIdx, teamColor, compact, ambientBackdrop }) {
+function PitchStage({ pitches, currentPitch, previousPitch, currentPitchIdx, teamColor, compact, ambientBackdrop, animateLatest = true }) {
   const backdrop = ambientBackdrop || {};
   return (
     <section style={pitchStageStyle}>
@@ -261,7 +261,7 @@ function PitchStage({ pitches, currentPitch, previousPitch, currentPitchIdx, tea
           variant="detailed"
           width={compact ? 480 : 520}
           height={compact ? 330 : 360}
-          animateLatest={true}
+          animateLatest={animateLatest}
           showHeatmap={false}
           showBatterSilhouette={false}
         />

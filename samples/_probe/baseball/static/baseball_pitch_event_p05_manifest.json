@@ -1,0 +1,38 @@
+{
+  "schema_version": "baseball_static_render_manifest.v1",
+  "artifact_type": "baseball_static_png_export",
+  "input": {
+    "visual_data_path": "lanes/sports_news/examples/baseball_pitch_event_visual_data_sample.json",
+    "visual_data_schema_version": "baseball_visual_data.v1",
+    "sha256": "2ce23a726752d6f8978cc5b9b1b989c6f316a05c136d88d189080873a05a1c23"
+  },
+  "output": {
+    "png_path": "samples/_probe/baseball/static/baseball_pitch_event_p05.png",
+    "sha256": "dde1714f748979e433efb1c00ca7457a4ee1f8b75d610e07bf3869c446d72b68",
+    "width": 1280,
+    "height": 720
+  },
+  "variant": "detailed",
+  "export_settings": {
+    "width": 1280,
+    "height": 720,
+    "pitchIdx": 1,
+    "density": "standard",
+    "statMode": "simple",
+    "showRomaji": false,
+    "accentTeam": "home",
+    "autoplay": false,
+    "currentPitchNumber": 5,
+    "currentPitchType": "SL"
+  },
+  "capture": {
+    "method": "Electron offscreen BrowserWindow + generated C detailed harness + webContents.capturePage",
+    "tmp_html": "_tmp/baseball_static_capture/baseball_static_capture.html"
+  },
+  "boundaries": {
+    "not_yymm4_proof": true,
+    "not_animation_export": true,
+    "not_creative_acceptance": true,
+    "not_publish_gate": true
+  }
+}

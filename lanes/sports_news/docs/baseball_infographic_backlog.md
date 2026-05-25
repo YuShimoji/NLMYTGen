@@ -77,8 +77,17 @@ Status: BN-01 initial implementation slice
   - `BaseballInfoGraphics/data.js` が `window.BASEBALL_VISUAL_DATA` を任意 override として受け、未設定時は fallback sample を表示する。
   - PNG export / animation export / YMM4 placement proof は BN-03 以降に残す。
 
+## BN-03 static PNG export contract
+
+- State: implemented in BN-03 slice.
+- Goal: `baseball_visual_data.v1` から C 詳細の 1280x720 PNG と render manifest を deterministic に出す。
+- Done when:
+  - `gui/capture_baseball_infographic_static.js` が Electron offscreen で C 詳細のみを描画し、DesignCanvas / Tweaks UI を写さない。
+  - `samples/_probe/baseball/static/` に PNG / manifest / readback が揃う。
+  - manifest が input data path / hash、variant、export settings、output path、1280x720、`not_yymm4_proof=true` を持つ。
+  - PNG export は YMM4 creative acceptance、animation export、publish gate pass のいずれでもない。
+
 ## Next candidates
 
-- BN-03: 1280x720 PNG export と render manifest を deterministic にする。
 - BN-04: animation capture 用の frame sequence / clip export contract を作る。
 - BN-05: YMM4 placement note の最小 contract を作る。
