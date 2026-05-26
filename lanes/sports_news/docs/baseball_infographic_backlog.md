@@ -93,9 +93,9 @@ and the next restart entry points after BN-03.
 
 ## BN-05 YMM4 placement contract
 
-- State: implemented as a contract-only BN-05 slice.
+- State: implemented through contract plus minimal insertion proof.
 - Goal: connect the BN-03 static PNG to a YMM4 narration span without writing a
-  `.ymmp` or claiming creative acceptance.
+  production `.ymmp` or claiming creative acceptance.
 - Done when:
   - `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_contract.json`
     defines the PNG path, ImageItem placement, 00:26-00:48 timing, layer,
@@ -104,6 +104,12 @@ and the next restart entry points after BN-03.
     records hash/timing/item-type/boundary checks.
   - `tests/test_baseball_yymm4_placement_contract.py` verifies that the
     placement contract still matches the BN-03 PNG manifest.
+  - `lanes/sports_news/scripts/build_baseball_yymm4_placement_proof.js` builds
+    a minimal YMM4 transport proof from the contract.
+  - `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof.ymmp`
+    contains exactly one Baseball PNG `ImageItem`.
+  - `tests/test_baseball_yymm4_placement_proof.py` verifies proof item timing,
+    layer, path, hashes, and boundary flags.
   - The slice remains not a YMM4 proof, not animation export, not creative
     acceptance, and not a publish gate.
 
@@ -126,8 +132,8 @@ restart entry points.
 
 ## Next candidates
 
-- BN-05 insertion proof: use the placement contract to generate or patch a
-  minimal YMM4 ImageItem proof, still without creative acceptance.
+- BN-05 manual preview: open the placement proof `.ymmp` in YMM4 and return one
+  screenshot plus PASS/FIX note.
 - BN-04 frame sequence capture: implement the planned frame-sequence command and
   manifest/readback.
 - Real episode source audit: replace sample-only facts after source/provenance

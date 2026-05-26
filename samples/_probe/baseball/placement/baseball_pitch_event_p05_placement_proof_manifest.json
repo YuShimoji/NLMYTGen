@@ -1,0 +1,53 @@
+{
+  "schema_version": "baseball_yymm4_placement_proof_manifest.v1",
+  "artifact_type": "baseball_static_png_yymm4_insertion_proof",
+  "input": {
+    "placement_contract_path": "samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_contract.json",
+    "placement_contract_sha256": "94db9c4faa11e171863ab8c0914c12b9a9b161aa805c42a8a174eaf052cb3512",
+    "static_manifest_path": "samples/_probe/baseball/static/baseball_pitch_event_p05_manifest.json",
+    "static_manifest_sha256": "31586b8ce0f53069c74586c666c703c15920588bfa4a22455cb02ed1df9109e0",
+    "png_path": "samples/_probe/baseball/static/baseball_pitch_event_p05.png",
+    "png_sha256": "dde1714f748979e433efb1c00ca7457a4ee1f8b75d610e07bf3869c446d72b68",
+    "static_manifest_png_sha256": "dde1714f748979e433efb1c00ca7457a4ee1f8b75d610e07bf3869c446d72b68",
+    "seed_ymmp_path": "samples/canonical.ymmp",
+    "seed_ymmp_sha256": "90bfc8623875a2dcf51baaf03d068aab5e2e2ef58a528451c80f4c622bf7d7a4"
+  },
+  "output": {
+    "proof_ymmp_path": "samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof.ymmp",
+    "proof_ymmp_sha256": "69e4b0f6b03fa66116a9f8f480576f894d3adb094774227cb2b1b7c441be8983",
+    "readback_path": "samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_readback.json",
+    "handoff_path": "samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_handoff.md"
+  },
+  "placement": {
+    "segment_id": "pitch_event_breakdown",
+    "voice_time_range": "00:26-00:48",
+    "fps": 60,
+    "start_frame": 1560,
+    "length_frames": 1320,
+    "end_frame_exclusive": 2880,
+    "target_canvas": {
+      "width": 1920,
+      "height": 1080
+    },
+    "yymm4_item": {
+      "item_type": "ImageItem",
+      "layer_name": "sports_news_overlay",
+      "proposed_layer": 12,
+      "file_path": "samples/_probe/baseball/static/baseball_pitch_event_p05.png",
+      "x": 0,
+      "y": 0,
+      "zoom_percent": 150,
+      "opacity_percent": 100,
+      "anchor": "center",
+      "fit": "contain_16_9_png_to_1920x1080"
+    }
+  },
+  "boundaries": {
+    "not_production_project": true,
+    "not_creative_acceptance": true,
+    "not_render_proof": true,
+    "not_publish_gate": true,
+    "not_animation_export": true,
+    "not_real_episode_source": true
+  }
+}

@@ -17,6 +17,8 @@ mainline or writing a YMM4 project file.
 | --- | --- |
 | `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_contract.json` | Defines the ImageItem placement for the BN-03 PNG. |
 | `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_readback.json` | Records mechanical checks for hashes, timing, item type, and boundaries. |
+| `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof.ymmp` | Minimal YMM4 transport proof with one Baseball `ImageItem`. |
+| `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_readback.json` | Verifies the proof `.ymmp` matches the contract mechanically. |
 | `samples/_probe/baseball/static/baseball_pitch_event_p05.png` | Source visual asset placed by the contract. |
 
 The contract places the static PNG on the screen-plan `pitch_event_breakdown`
@@ -31,6 +33,23 @@ span (`00:26-00:48`) as an `ImageItem`, using a 60fps timeline:
 
 This is a placement contract and preview gate, not proof that YMM4 has rendered
 or accepted the asset.
+
+## Insertion proof
+
+`lanes/sports_news/scripts/build_baseball_yymm4_placement_proof.js` builds the
+minimal proof `.ymmp` directly from the placement contract. It uses
+`samples/canonical.ymmp` only as a YMM4 project shell, clears the timeline, and
+inserts one Baseball `ImageItem`.
+
+Mechanical readback status: `passed`.
+
+- proof `.ymmp`: `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof.ymmp`
+- manifest: `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_manifest.json`
+- readback: `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_readback.json`
+- preview handoff: `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_handoff.md`
+
+The proof remains a transport/readback artifact. It is still not a render proof,
+not creative acceptance, not a publish gate, and not real episode sourcing.
 
 ## Manual preview gate
 
