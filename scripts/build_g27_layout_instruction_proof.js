@@ -36,13 +36,15 @@ const SPEC = {
     height: 86,
     cx: 0,
     max_chars_assumption: 18,
-    font_size: 64,
+    font_size: 60,
+    text_center_offset_y: -8,
   },
+  title_grid_gap_min_px: 32,
   grid_2x2: {
     overall_cx: 0,
-    overall_cy: -200,
+    overall_cy: -180,
     overall_width: 1728,
-    overall_height: 400,
+    overall_height: 360,
     rows: 2,
     cols: 2,
     gap_px: 16,
@@ -56,15 +58,15 @@ const SPEC = {
   character_a: {
     side: 'left',
     cx: -700,
-    head: { cy: 70, w: 140, h: 160, round: 70 },
-    shoulders: { cy: 210, w: 280, h: 100, round: 20 },
+    head: { cy: 95, w: 140, h: 160, round: 70 },
+    shoulders: { cy: 245, w: 280, h: 100, round: 20 },
     color: '#FF5B7A99',
   },
   character_b: {
     side: 'right',
     cx: 700,
-    head: { cy: 70, w: 140, h: 160, round: 70 },
-    shoulders: { cy: 210, w: 280, h: 100, round: 20 },
+    head: { cy: 95, w: 140, h: 160, round: 70 },
+    shoulders: { cy: 245, w: 280, h: 100, round: 20 },
     color: '#FF99765B',
   },
 };
@@ -96,7 +98,7 @@ const CELL_COLORS = ['#FFE7ECF1', '#FFCFD8E0', '#FFCFD8E0', '#FFE7ECF1'];
 // Title text — chosen short, but slot width must accommodate max 18 chars.
 const TITLE_TEXT = 'レイアウト指示遵守の検証';
 const TITLE_TEXT_LENGTH = [...TITLE_TEXT].length; // 12 codepoints
-// Slot width design: 18 chars * font 64 (full-width Japanese ≒ 1em) = 1152 px.
+// Slot width design: 18 chars * font size (full-width Japanese ≒ 1em).
 // Latin-leaning estimate 0.62em was incorrect for Japanese 全角 chars and underestimated width.
 const TITLE_SLOT_WIDTH_DESIGN = SPEC.title_band.max_chars_assumption * SPEC.title_band.font_size;
 
@@ -134,7 +136,7 @@ const layoutItems = [
   shape('LIP_TitleBandBG', 'title_band', 2, SPEC.title_band.cx, SPEC.title_band.cy, 1728, SPEC.title_band.height, '#FFE0E7EF', 100, 8, SPEC.title_band.height, false, 'title band background strip'),
 
   // 3. Title text (slot designed for 18 chars max)
-  text('LIP_Title', 'title_text', 3, SPEC.title_band.cx, SPEC.title_band.cy, SPEC.title_band.font_size, TITLE_TEXT, '#FF1A2B3C', false, `title text (current ${TITLE_TEXT_LENGTH} chars; slot designed for ${SPEC.title_band.max_chars_assumption} chars / ${TITLE_SLOT_WIDTH_DESIGN}px wide)`),
+  text('LIP_Title', 'title_text', 3, SPEC.title_band.cx, SPEC.title_band.cy + SPEC.title_band.text_center_offset_y, SPEC.title_band.font_size, TITLE_TEXT, '#FF1A2B3C', false, `title text (current ${TITLE_TEXT_LENGTH} chars; slot designed for ${SPEC.title_band.max_chars_assumption} chars / ${TITLE_SLOT_WIDTH_DESIGN}px wide; center_y_offset=${SPEC.title_band.text_center_offset_y})`),
 
   // 4-7. 2x2 grid cells
   ...GRID_CELLS.map((cell, idx) => shape(
@@ -169,11 +171,11 @@ const layoutItems = [
   shape('LIP_CaptionSafeIndicator', 'caption_safe_indicator', 6, 0, SPEC.caption_safe_area.cy_top, 1728, 4, '#FFAAB3BD', 100, 2, 4, false, 'thin line marking the top edge of the bottom 20% caption safe area (area itself is empty)'),
 
   // 13-17. Minimal region labels
-  text('LIP_Label_Title', 'region_label', 7, -800, -480, 22, '[title band]', '#FF6B7280', false, 'region label: title band'),
-  text('LIP_Label_Grid', 'region_label', 7, -800, -400, 22, '[grid 2x2]', '#FF6B7280', false, 'region label: 2x2 grid'),
-  text('LIP_Label_CharA', 'region_label', 7, -800, -20, 22, '[character A bust]', '#FF6B7280', false, 'region label: character A area'),
-  text('LIP_Label_CharB', 'region_label', 7, 800, -20, 22, '[character B bust]', '#FF6B7280', false, 'region label: character B area'),
-  text('LIP_Label_Caption', 'region_label', 7, 0, 310, 22, '[caption safe area / empty]', '#FF6B7280', false, 'region label: caption safe area top edge'),
+  label('LIP_Label_Title', 'region_label', 7, -845, -520, 18, '[title band]', '#FF6B7280', false, 'region label: title band (fixed top-left anchor above band)'),
+  label('LIP_Label_Grid', 'region_label', 7, -845, -388, 18, '[grid 2x2]', '#FF6B7280', false, 'region label: 2x2 grid (fixed top-left anchor in title-grid gap)'),
+  label('LIP_Label_CharA', 'region_label', 7, -950, 16, 18, '[character A bust]', '#FF6B7280', false, 'region label: character A area (fixed side anchor)'),
+  label('LIP_Label_CharB', 'region_label', 7, 772, 16, 18, '[character B bust]', '#FF6B7280', false, 'region label: character B area (fixed side anchor)'),
+  label('LIP_Label_Caption', 'region_label', 7, -150, 298, 18, '[caption safe area / empty]', '#FF6B7280', false, 'region label: caption safe area top edge (above indicator)'),
 ];
 
 // =====================================================================
@@ -224,6 +226,23 @@ function text(displayName, role, layer, cx, cy, fontSize, content, color, isHidd
     is_hidden: Boolean(isHidden),
     description,
   };
+}
+
+function label(displayName, role, layer, topLeftX, topLeftY, fontSize, content, color, isHidden, description) {
+  const bboxWidth = estimateTextWidth(content, fontSize);
+  const bboxHeight = estimateTextHeight(fontSize);
+  return text(
+    displayName,
+    role,
+    layer,
+    topLeftX + bboxWidth / 2,
+    topLeftY + bboxHeight / 2,
+    fontSize,
+    content,
+    color,
+    isHidden,
+    description,
+  );
 }
 
 // =====================================================================
@@ -445,6 +464,44 @@ function readbackItem(item, primitive) {
   };
 }
 
+function itemBounds(item) {
+  if (!item) return null;
+  if (item.item_type === 'TextItem') {
+    const width = item.text_bbox_width ?? 0;
+    const height = item.text_bbox_height ?? (item.font_size ?? 0);
+    return {
+      left: item.x ?? 0,
+      right: (item.x ?? 0) + width,
+      top: item.y ?? 0,
+      bottom: (item.y ?? 0) + height,
+    };
+  }
+  const width = item.width ?? 0;
+  const height = item.height ?? 0;
+  return {
+    left: (item.x ?? 0) - width / 2,
+    right: (item.x ?? 0) + width / 2,
+    top: (item.y ?? 0) - height / 2,
+    bottom: (item.y ?? 0) + height / 2,
+  };
+}
+
+function unionBounds(boundsList) {
+  const bounds = boundsList.filter(Boolean);
+  if (bounds.length === 0) return null;
+  return {
+    left: Math.min(...bounds.map((b) => b.left)),
+    right: Math.max(...bounds.map((b) => b.right)),
+    top: Math.min(...bounds.map((b) => b.top)),
+    bottom: Math.max(...bounds.map((b) => b.bottom)),
+  };
+}
+
+function overlaps(a, b) {
+  if (!a || !b) return false;
+  return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+}
+
 function complianceFromItems(items) {
   const violations = [];
 
@@ -503,6 +560,17 @@ function complianceFromItems(items) {
     } : null,
   });
 
+  const gridBounds = unionBounds(gridCells.map(itemBounds));
+  const titleBandBounds = itemBounds(titleBand);
+  const actualTitleGridGapPx = gridBounds && titleBandBounds ? gridBounds.top - titleBandBounds.bottom : null;
+  const title_grid_gap_check = actualTitleGridGapPx !== null && actualTitleGridGapPx >= SPEC.title_grid_gap_min_px;
+  if (!title_grid_gap_check) violations.push({
+    rule: 'TITLE_GRID_GAP_TOO_SMALL',
+    severity: 'fail',
+    min_gap_px: SPEC.title_grid_gap_min_px,
+    actual_gap_px: actualTitleGridGapPx,
+  });
+
   // Grid 2x2 check: 4 cells with boundary visible (alternate fill colors or gap)
   const grid_2x2_check = gridCells.length === 4 ? 'pass' : 'fail';
   if (grid_2x2_check !== 'pass') violations.push({ rule: 'GRID_2X2_CELL_COUNT', severity: 'fail', actual: gridCells.length });
@@ -550,6 +618,22 @@ function complianceFromItems(items) {
   // Region labels: at least 4 (title, grid, character_a or character_b, caption)
   const region_label_check = regionLabels.length >= 4 ? 'pass' : 'fail';
   if (region_label_check !== 'pass') violations.push({ rule: 'INSUFFICIENT_REGION_LABELS', severity: 'fail', actual: regionLabels.length });
+  const label_clearance_offenders = [];
+  const labelBlockers = items.filter((it) => !['region_label', 'background'].includes(it.role));
+  for (const labelItem of regionLabels) {
+    const labelBox = itemBounds(labelItem);
+    for (const blocker of labelBlockers) {
+      if (overlaps(labelBox, itemBounds(blocker))) {
+        label_clearance_offenders.push(`${labelItem.display_name}->${blocker.display_name}`);
+      }
+    }
+  }
+  const region_label_clearance_check = label_clearance_offenders.length === 0 ? 'pass' : 'fail';
+  if (region_label_clearance_check !== 'pass') violations.push({
+    rule: 'REGION_LABEL_OVERLAPS_MAJOR_ITEM',
+    severity: 'fail',
+    offenders: label_clearance_offenders,
+  });
 
   // Caption indicator present
   const caption_indicator_check = captionIndicator ? 'pass' : 'fail';
@@ -578,6 +662,7 @@ function complianceFromItems(items) {
       title_band_top: title_band_check,
       title_slot_width_for_18_chars: title_slot_width_ok ? 'pass' : 'fail',
       title_text_within_band: title_text_within_band ? 'pass' : 'fail',
+      title_grid_gap_visible: title_grid_gap_check ? 'pass' : 'fail',
       grid_2x2_cells: grid_2x2_check,
       grid_boundary_visible: grid_boundary_visible ? 'pass' : 'fail',
       char_a_bust_left_bottom: charA_bust_check,
@@ -585,6 +670,7 @@ function complianceFromItems(items) {
       bust_up_no_intrusion_into_caption_safe: bust_up_check,
       caption_safe_area_empty_of_major_items: caption_safe_area_check,
       region_labels_present: region_label_check,
+      region_labels_clear_major_items: region_label_clearance_check,
       caption_indicator_present: caption_indicator_check,
       shape_size_mode_widthheight: shape_size_mode_check,
       color_format_aarrggbb: color_format_check,
@@ -595,10 +681,14 @@ function complianceFromItems(items) {
       band_width: titleBand?.width ?? null,
       band_height: titleBand?.height ?? null,
       font_size: titleText?.font_size ?? null,
+      text_center_y: titleText?.text_intent_cy ?? null,
+      text_center_offset_y: SPEC.title_band.text_center_offset_y,
       current_text: titleText?.text ?? null,
       current_chars: titleText?.text ? [...titleText.text].length : 0,
       max_chars_assumption: SPEC.title_band.max_chars_assumption,
       slot_width_required_for_max_chars_px: title_slot_width_required,
+      title_grid_gap_px: actualTitleGridGapPx,
+      title_grid_gap_min_px: SPEC.title_grid_gap_min_px,
     },
     grid_2x2_slots: gridCells.map((c) => ({
       id: c.display_name,
@@ -741,9 +831,11 @@ function renderReport(rb) {
   lines.push(`- center: cx=${t.cx}, cy=${t.cy}`);
   lines.push(`- band size: ${t.band_width}x${t.band_height}`);
   lines.push(`- font size: ${t.font_size}`);
+  lines.push(`- title text center y: ${t.text_center_y} (offset ${t.text_center_offset_y}px from band center)`);
   lines.push(`- current text: "${t.current_text}" (${t.current_chars} chars)`);
   lines.push(`- max chars assumption: ${t.max_chars_assumption}`);
   lines.push(`- slot width required for ${t.max_chars_assumption} chars: ${t.slot_width_required_for_max_chars_px}px`);
+  lines.push(`- title-grid gap: ${t.title_grid_gap_px}px (min ${t.title_grid_gap_min_px}px)`);
   lines.push('');
   lines.push('## Grid 2x2 Slots');
   lines.push('');

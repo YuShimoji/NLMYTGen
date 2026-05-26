@@ -26,13 +26,15 @@
       "height": 86,
       "cx": 0,
       "max_chars_assumption": 18,
-      "font_size": 64
+      "font_size": 60,
+      "text_center_offset_y": -8
     },
+    "title_grid_gap_min_px": 32,
     "grid_2x2": {
       "overall_cx": 0,
-      "overall_cy": -200,
+      "overall_cy": -180,
       "overall_width": 1728,
-      "overall_height": 400,
+      "overall_height": 360,
       "rows": 2,
       "cols": 2,
       "gap_px": 16
@@ -47,13 +49,13 @@
       "side": "left",
       "cx": -700,
       "head": {
-        "cy": 70,
+        "cy": 95,
         "w": 140,
         "h": 160,
         "round": 70
       },
       "shoulders": {
-        "cy": 210,
+        "cy": 245,
         "w": 280,
         "h": 100,
         "round": 20
@@ -64,13 +66,13 @@
       "side": "right",
       "cx": 700,
       "head": {
-        "cy": 70,
+        "cy": 95,
         "w": 140,
         "h": 160,
         "round": 70
       },
       "shoulders": {
-        "cy": 210,
+        "cy": 245,
         "w": 280,
         "h": 100,
         "round": 20
@@ -93,6 +95,7 @@
       "title_band_top": "pass",
       "title_slot_width_for_18_chars": "pass",
       "title_text_within_band": "pass",
+      "title_grid_gap_visible": "pass",
       "grid_2x2_cells": "pass",
       "grid_boundary_visible": "pass",
       "char_a_bust_left_bottom": "pass",
@@ -100,6 +103,7 @@
       "bust_up_no_intrusion_into_caption_safe": "pass",
       "caption_safe_area_empty_of_major_items": "pass",
       "region_labels_present": "pass",
+      "region_labels_clear_major_items": "pass",
       "caption_indicator_present": "pass",
       "shape_size_mode_widthheight": "pass",
       "color_format_aarrggbb": "pass"
@@ -109,11 +113,15 @@
       "cy": -443,
       "band_width": 1728,
       "band_height": 86,
-      "font_size": 64,
+      "font_size": 60,
+      "text_center_y": -451,
+      "text_center_offset_y": -8,
       "current_text": "レイアウト指示遵守の検証",
       "current_chars": 12,
       "max_chars_assumption": 18,
-      "slot_width_required_for_max_chars_px": 1152
+      "slot_width_required_for_max_chars_px": 1080,
+      "title_grid_gap_px": 40,
+      "title_grid_gap_min_px": 32
     },
     "grid_2x2_slots": [
       {
@@ -122,9 +130,9 @@
         "row": 0,
         "col": 0,
         "cx": -436,
-        "cy": -304,
+        "cy": -274,
         "width": 856,
-        "height": 192,
+        "height": 172,
         "fill_color": "#FFE7ECF1"
       },
       {
@@ -133,9 +141,9 @@
         "row": 0,
         "col": 1,
         "cx": 436,
-        "cy": -304,
+        "cy": -274,
         "width": 856,
-        "height": 192,
+        "height": 172,
         "fill_color": "#FFCFD8E0"
       },
       {
@@ -144,9 +152,9 @@
         "row": 1,
         "col": 0,
         "cx": -436,
-        "cy": -96,
+        "cy": -86,
         "width": 856,
-        "height": 192,
+        "height": 172,
         "fill_color": "#FFCFD8E0"
       },
       {
@@ -155,9 +163,9 @@
         "row": 1,
         "col": 1,
         "cx": 436,
-        "cy": -96,
+        "cy": -86,
         "width": 856,
-        "height": 192,
+        "height": 172,
         "fill_color": "#FFE7ECF1"
       }
     ],
@@ -167,13 +175,13 @@
         "cx": -700,
         "head": {
           "cx": -700,
-          "cy": 70,
+          "cy": 95,
           "w": 140,
           "h": 160
         },
         "shoulders": {
           "cx": -700,
-          "cy": 210,
+          "cy": 245,
           "w": 280,
           "h": 100
         }
@@ -183,13 +191,13 @@
         "cx": 700,
         "head": {
           "cx": 700,
-          "cy": 70,
+          "cy": 95,
           "w": 140,
           "h": 160
         },
         "shoulders": {
           "cx": 700,
-          "cy": 210,
+          "cy": 245,
           "w": 280,
           "h": 100
         }
@@ -206,52 +214,52 @@
       {
         "name": "LIP_Label_Title",
         "text": "[title band]",
-        "cx": -800,
-        "cy": -480,
-        "ymmp_top_left_x": -872.5,
-        "ymmp_top_left_y": -491,
-        "bbox_width": 145,
-        "bbox_height": 22
+        "cx": -785.5,
+        "cy": -511,
+        "ymmp_top_left_x": -845,
+        "ymmp_top_left_y": -520,
+        "bbox_width": 119,
+        "bbox_height": 18
       },
       {
         "name": "LIP_Label_Grid",
         "text": "[grid 2x2]",
-        "cx": -800,
-        "cy": -400,
-        "ymmp_top_left_x": -860.5,
-        "ymmp_top_left_y": -411,
-        "bbox_width": 121,
-        "bbox_height": 22
+        "cx": -795.5,
+        "cy": -379,
+        "ymmp_top_left_x": -845,
+        "ymmp_top_left_y": -388,
+        "bbox_width": 99,
+        "bbox_height": 18
       },
       {
         "name": "LIP_Label_CharA",
         "text": "[character A bust]",
-        "cx": -800,
-        "cy": -20,
-        "ymmp_top_left_x": -909,
-        "ymmp_top_left_y": -31,
-        "bbox_width": 218,
-        "bbox_height": 22
+        "cx": -861,
+        "cy": 25,
+        "ymmp_top_left_x": -950,
+        "ymmp_top_left_y": 16,
+        "bbox_width": 178,
+        "bbox_height": 18
       },
       {
         "name": "LIP_Label_CharB",
         "text": "[character B bust]",
-        "cx": 800,
-        "cy": -20,
-        "ymmp_top_left_x": 691,
-        "ymmp_top_left_y": -31,
-        "bbox_width": 218,
-        "bbox_height": 22
+        "cx": 861,
+        "cy": 25,
+        "ymmp_top_left_x": 772,
+        "ymmp_top_left_y": 16,
+        "bbox_width": 178,
+        "bbox_height": 18
       },
       {
         "name": "LIP_Label_Caption",
         "text": "[caption safe area / empty]",
-        "cx": 0,
-        "cy": 310,
-        "ymmp_top_left_x": -163.5,
-        "ymmp_top_left_y": 299,
-        "bbox_width": 327,
-        "bbox_height": 22
+        "cx": -16.5,
+        "cy": 307,
+        "ymmp_top_left_x": -150,
+        "ymmp_top_left_y": 298,
+        "bbox_width": 267,
+        "bbox_height": 18
       }
     ],
     "violations": []
@@ -316,8 +324,8 @@
       "item_type": "TextItem",
       "layer": 3,
       "is_hidden": false,
-      "x": -384,
-      "y": -475,
+      "x": -360,
+      "y": -481,
       "width": null,
       "height": null,
       "shape_size_mode": null,
@@ -327,12 +335,12 @@
       "fill_color": null,
       "text_color": "#FF1A2B3C",
       "text": "レイアウト指示遵守の検証",
-      "font_size": 64,
-      "text_bbox_width": 768,
-      "text_bbox_height": 64,
+      "font_size": 60,
+      "text_bbox_width": 720,
+      "text_bbox_height": 60,
       "text_intent_cx": 0,
-      "text_intent_cy": -443,
-      "description": "title text (current 12 chars; slot designed for 18 chars / 1152px wide)"
+      "text_intent_cy": -451,
+      "description": "title text (current 12 chars; slot designed for 18 chars / 1080px wide; center_y_offset=-8)"
     },
     {
       "display_name": "LIP_GridCell_0_0",
@@ -341,11 +349,11 @@
       "layer": 4,
       "is_hidden": false,
       "x": -436,
-      "y": -304,
+      "y": -274,
       "width": 856,
-      "height": 192,
+      "height": 172,
       "shape_size_mode": "WidthHeight",
-      "stroke_thickness": 192,
+      "stroke_thickness": 172,
       "round": 8,
       "opacity": 100,
       "fill_color": "#FFE7ECF1",
@@ -365,11 +373,11 @@
       "layer": 4,
       "is_hidden": false,
       "x": 436,
-      "y": -304,
+      "y": -274,
       "width": 856,
-      "height": 192,
+      "height": 172,
       "shape_size_mode": "WidthHeight",
-      "stroke_thickness": 192,
+      "stroke_thickness": 172,
       "round": 8,
       "opacity": 100,
       "fill_color": "#FFCFD8E0",
@@ -389,11 +397,11 @@
       "layer": 4,
       "is_hidden": false,
       "x": -436,
-      "y": -96,
+      "y": -86,
       "width": 856,
-      "height": 192,
+      "height": 172,
       "shape_size_mode": "WidthHeight",
-      "stroke_thickness": 192,
+      "stroke_thickness": 172,
       "round": 8,
       "opacity": 100,
       "fill_color": "#FFCFD8E0",
@@ -413,11 +421,11 @@
       "layer": 4,
       "is_hidden": false,
       "x": 436,
-      "y": -96,
+      "y": -86,
       "width": 856,
-      "height": 192,
+      "height": 172,
       "shape_size_mode": "WidthHeight",
-      "stroke_thickness": 192,
+      "stroke_thickness": 172,
       "round": 8,
       "opacity": 100,
       "fill_color": "#FFE7ECF1",
@@ -437,7 +445,7 @@
       "layer": 5,
       "is_hidden": false,
       "x": -700,
-      "y": 70,
+      "y": 95,
       "width": 140,
       "height": 160,
       "shape_size_mode": "WidthHeight",
@@ -461,7 +469,7 @@
       "layer": 5,
       "is_hidden": false,
       "x": -700,
-      "y": 210,
+      "y": 245,
       "width": 280,
       "height": 100,
       "shape_size_mode": "WidthHeight",
@@ -485,7 +493,7 @@
       "layer": 5,
       "is_hidden": false,
       "x": 700,
-      "y": 70,
+      "y": 95,
       "width": 140,
       "height": 160,
       "shape_size_mode": "WidthHeight",
@@ -509,7 +517,7 @@
       "layer": 5,
       "is_hidden": false,
       "x": 700,
-      "y": 210,
+      "y": 245,
       "width": 280,
       "height": 100,
       "shape_size_mode": "WidthHeight",
@@ -556,8 +564,8 @@
       "item_type": "TextItem",
       "layer": 7,
       "is_hidden": false,
-      "x": -872.5,
-      "y": -491,
+      "x": -845,
+      "y": -520,
       "width": null,
       "height": null,
       "shape_size_mode": null,
@@ -567,12 +575,12 @@
       "fill_color": null,
       "text_color": "#FF6B7280",
       "text": "[title band]",
-      "font_size": 22,
-      "text_bbox_width": 145,
-      "text_bbox_height": 22,
-      "text_intent_cx": -800,
-      "text_intent_cy": -480,
-      "description": "region label: title band"
+      "font_size": 18,
+      "text_bbox_width": 119,
+      "text_bbox_height": 18,
+      "text_intent_cx": -785.5,
+      "text_intent_cy": -511,
+      "description": "region label: title band (fixed top-left anchor above band)"
     },
     {
       "display_name": "LIP_Label_Grid",
@@ -580,8 +588,8 @@
       "item_type": "TextItem",
       "layer": 7,
       "is_hidden": false,
-      "x": -860.5,
-      "y": -411,
+      "x": -845,
+      "y": -388,
       "width": null,
       "height": null,
       "shape_size_mode": null,
@@ -591,12 +599,12 @@
       "fill_color": null,
       "text_color": "#FF6B7280",
       "text": "[grid 2x2]",
-      "font_size": 22,
-      "text_bbox_width": 121,
-      "text_bbox_height": 22,
-      "text_intent_cx": -800,
-      "text_intent_cy": -400,
-      "description": "region label: 2x2 grid"
+      "font_size": 18,
+      "text_bbox_width": 99,
+      "text_bbox_height": 18,
+      "text_intent_cx": -795.5,
+      "text_intent_cy": -379,
+      "description": "region label: 2x2 grid (fixed top-left anchor in title-grid gap)"
     },
     {
       "display_name": "LIP_Label_CharA",
@@ -604,8 +612,8 @@
       "item_type": "TextItem",
       "layer": 7,
       "is_hidden": false,
-      "x": -909,
-      "y": -31,
+      "x": -950,
+      "y": 16,
       "width": null,
       "height": null,
       "shape_size_mode": null,
@@ -615,12 +623,12 @@
       "fill_color": null,
       "text_color": "#FF6B7280",
       "text": "[character A bust]",
-      "font_size": 22,
-      "text_bbox_width": 218,
-      "text_bbox_height": 22,
-      "text_intent_cx": -800,
-      "text_intent_cy": -20,
-      "description": "region label: character A area"
+      "font_size": 18,
+      "text_bbox_width": 178,
+      "text_bbox_height": 18,
+      "text_intent_cx": -861,
+      "text_intent_cy": 25,
+      "description": "region label: character A area (fixed side anchor)"
     },
     {
       "display_name": "LIP_Label_CharB",
@@ -628,8 +636,8 @@
       "item_type": "TextItem",
       "layer": 7,
       "is_hidden": false,
-      "x": 691,
-      "y": -31,
+      "x": 772,
+      "y": 16,
       "width": null,
       "height": null,
       "shape_size_mode": null,
@@ -639,12 +647,12 @@
       "fill_color": null,
       "text_color": "#FF6B7280",
       "text": "[character B bust]",
-      "font_size": 22,
-      "text_bbox_width": 218,
-      "text_bbox_height": 22,
-      "text_intent_cx": 800,
-      "text_intent_cy": -20,
-      "description": "region label: character B area"
+      "font_size": 18,
+      "text_bbox_width": 178,
+      "text_bbox_height": 18,
+      "text_intent_cx": 861,
+      "text_intent_cy": 25,
+      "description": "region label: character B area (fixed side anchor)"
     },
     {
       "display_name": "LIP_Label_Caption",
@@ -652,8 +660,8 @@
       "item_type": "TextItem",
       "layer": 7,
       "is_hidden": false,
-      "x": -163.5,
-      "y": 299,
+      "x": -150,
+      "y": 298,
       "width": null,
       "height": null,
       "shape_size_mode": null,
@@ -663,12 +671,12 @@
       "fill_color": null,
       "text_color": "#FF6B7280",
       "text": "[caption safe area / empty]",
-      "font_size": 22,
-      "text_bbox_width": 327,
-      "text_bbox_height": 22,
-      "text_intent_cx": 0,
-      "text_intent_cy": 310,
-      "description": "region label: caption safe area top edge"
+      "font_size": 18,
+      "text_bbox_width": 267,
+      "text_bbox_height": 18,
+      "text_intent_cx": -16.5,
+      "text_intent_cy": 307,
+      "description": "region label: caption safe area top edge (above indicator)"
     }
   ],
   "missing_items": []
