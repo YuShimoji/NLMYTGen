@@ -91,7 +91,44 @@ Handoff: `lanes/sports_news/docs/baseball_bn03_static_export_handoff_2026-05-25.
 records the branch, commits, artifacts, verification results, known uncertainty,
 and the next restart entry points after BN-03.
 
+## BN-05 YMM4 placement contract
+
+- State: implemented as a contract-only BN-05 slice.
+- Goal: connect the BN-03 static PNG to a YMM4 narration span without writing a
+  `.ymmp` or claiming creative acceptance.
+- Done when:
+  - `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_contract.json`
+    defines the PNG path, ImageItem placement, 00:26-00:48 timing, layer,
+    duration, and manual preview gate.
+  - `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_readback.json`
+    records hash/timing/item-type/boundary checks.
+  - `tests/test_baseball_yymm4_placement_contract.py` verifies that the
+    placement contract still matches the BN-03 PNG manifest.
+  - The slice remains not a YMM4 proof, not animation export, not creative
+    acceptance, and not a publish gate.
+
+Handoff: `lanes/sports_news/docs/baseball_bn05_yymm4_placement_handoff_2026-05-26.md`
+records the placement contract, manual preview gate, validation, and next
+restart entry points.
+
+## BN-04 animation export contract
+
+- State: design contract recorded, export not implemented in this slice.
+- Goal: define frame-sequence-first animation export before adding a clip or
+  YMM4 video placement path.
+- Done when:
+  - `lanes/sports_news/docs/baseball_bn04_animation_export_design_2026-05-26.md`
+    records the frame sequence default, planned output paths, and failure
+    conditions.
+  - `samples/_probe/baseball/animation/baseball_pitch_event_p05_animation_export_plan.json`
+    defines I/O, frame count, state sequence, and boundaries.
+  - The contract clearly says no frames or clip are exported yet.
+
 ## Next candidates
 
-- BN-04: animation capture 用の frame sequence / clip export contract を作る。
-- BN-05: YMM4 placement note の最小 contract を作る。
+- BN-05 insertion proof: use the placement contract to generate or patch a
+  minimal YMM4 ImageItem proof, still without creative acceptance.
+- BN-04 frame sequence capture: implement the planned frame-sequence command and
+  manifest/readback.
+- Real episode source audit: replace sample-only facts after source/provenance
+  review is ready.

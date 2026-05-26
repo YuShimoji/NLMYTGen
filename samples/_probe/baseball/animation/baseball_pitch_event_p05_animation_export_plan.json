@@ -1,0 +1,61 @@
+{
+  "schema_version": "baseball_animation_export_plan.v1",
+  "artifact_type": "baseball_frame_sequence_export_contract_plan",
+  "status": "contract_defined_not_exported",
+  "source": {
+    "visual_data_path": "lanes/sports_news/examples/baseball_pitch_event_visual_data_sample.json",
+    "visual_data_sha256": "2ce23a726752d6f8978cc5b9b1b989c6f316a05c136d88d189080873a05a1c23",
+    "static_capture_script": "gui/capture_baseball_infographic_static.js",
+    "static_manifest_path": "samples/_probe/baseball/static/baseball_pitch_event_p05_manifest.json"
+  },
+  "export_decision": {
+    "mode": "frame_sequence_first",
+    "reason": "A short frame sequence is easier to hash, inspect, and place into YMM4 than a codec-dependent clip while the Baseball renderer remains sample-only.",
+    "clip_export": "defer_until_frame_sequence_readback_passes"
+  },
+  "planned_outputs": {
+    "frame_dir": "samples/_probe/baseball/animation/frames/baseball_pitch_event_p05",
+    "frame_pattern": "baseball_pitch_event_p05_f%03d.png",
+    "manifest_path": "samples/_probe/baseball/animation/baseball_pitch_event_p05_animation_manifest.json",
+    "readback_path": "samples/_probe/baseball/animation/baseball_pitch_event_p05_animation_readback.json",
+    "width": 1280,
+    "height": 720,
+    "fps": 30,
+    "duration_ms": 1200,
+    "frame_count": 5
+  },
+  "state_sequence": [
+    {
+      "frame": 0,
+      "label": "previous_pitch_context",
+      "pitch_index": 0,
+      "expected_focus": "previous FF pitch context is readable"
+    },
+    {
+      "frame": 2,
+      "label": "delta_transition",
+      "pitch_index": 1,
+      "expected_focus": "velocity delta and current SL pitch begin to dominate"
+    },
+    {
+      "frame": 4,
+      "label": "current_pitch_lock",
+      "pitch_index": 1,
+      "expected_focus": "current P05 slider state is stable and readable"
+    }
+  ],
+  "failure_conditions": [
+    "visual data has fewer than two pitches",
+    "any frame is not 1280x720 PNG",
+    "manifest frame count does not match generated files",
+    "frame hashes are missing from the manifest",
+    "DesignCanvas or Tweaks UI appears in any frame",
+    "animation export is described as YMM4 proof or creative acceptance"
+  ],
+  "boundaries": {
+    "not_exported_in_this_slice": true,
+    "not_yymm4_placement": true,
+    "not_creative_acceptance": true,
+    "not_publish_gate": true
+  }
+}

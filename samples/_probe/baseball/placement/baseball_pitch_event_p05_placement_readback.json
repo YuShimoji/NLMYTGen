@@ -1,0 +1,28 @@
+{
+  "schema_version": "baseball_yymm4_placement_readback.v1",
+  "status": "passed",
+  "contract_path": "samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_contract.json",
+  "source_static_manifest_path": "samples/_probe/baseball/static/baseball_pitch_event_p05_manifest.json",
+  "png_path": "samples/_probe/baseball/static/baseball_pitch_event_p05.png",
+  "checks": {
+    "static_manifest_exists": true,
+    "png_exists": true,
+    "png_hash_matches_static_manifest": true,
+    "contract_hashes_match_current_files": true,
+    "item_type_is_image_item": true,
+    "placement_uses_full_16_9_canvas": true,
+    "timeline_math_matches_voice_range": true,
+    "manual_preview_gate_present": true,
+    "not_yymm4_file_write": true,
+    "not_creative_acceptance": true
+  },
+  "derived": {
+    "fps": 60,
+    "start_frame": 1560,
+    "length_frames": 1320,
+    "end_frame_exclusive": 2880,
+    "duration_sec": 22,
+    "zoom_percent_for_1280x720_to_1920x1080": 150
+  },
+  "next_safe_action": "Use this contract to create a YMM4 ImageItem insertion proof or manual preview gate; do not treat this readback as YMM4 creative acceptance."
+}
