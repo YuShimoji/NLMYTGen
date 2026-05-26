@@ -15,6 +15,24 @@ Raw OPML exports and access tokens must not be committed. The repo ignores
 `*.opml`, `*.opml.xml`, and `_local/rss/`; use those for live smoke inputs and
 scratch output.
 
+## Restart From Another Terminal
+
+Use the clean RSS worktree/branch and fast-forward it before running live
+smoke:
+
+```powershell
+cd C:\Users\PLANNER007\NLMYTGen-rss-clean
+git fetch --all --prune
+git checkout codex/rss-reader-sync-clean
+git pull --ff-only
+```
+
+The implementation commits through `91b97f3` are already pushed to
+`origin/codex/rss-reader-sync-clean`. If this worktree is not available on the
+machine, clone or add a worktree for that remote branch, then use this runbook
+as the entry point. The only expected manual input is a real OPML export or a
+temporary Inoreader access token.
+
 ## OPML Smoke
 
 Place the exported OPML somewhere ignored, for example:
@@ -91,8 +109,8 @@ field-presence signals rather than raw subscription data:
 - raw input location: not committed (`_local/rss/...` or environment token)
 - source count: N
 - category count: N
-- source-list match: pass / needs_fix
-- fetch status counts: fetched=N, empty=N, error=N
+- source-list match: manual_required / needs_fix
+- fetch status counts: fetched=N, empty=N, error=N, listed=N
 - representative entry fields: url=present, summary=present/partial, source_title=present, source_categories=present
 - notable fixes needed: feed URL mismatch / duplicate category / dead feed / token scope / rate limit / none
 - next move: keep OPML as source of truth / clean feed list / run Inoreader smoke / defer Inoreader
