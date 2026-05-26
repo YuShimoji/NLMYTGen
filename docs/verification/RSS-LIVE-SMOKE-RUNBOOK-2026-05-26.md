@@ -24,6 +24,12 @@ New-Item -ItemType Directory -Force _local/rss
 $opml = "_local/rss/feeds.opml"
 ```
 
+Generate sanitized evidence in one command:
+
+```powershell
+python -m src.cli.main rss-smoke --opml $opml --format markdown -o docs/verification/RSS-LIVE-SMOKE-EVIDENCE-YYYY-MM-DD.md
+```
+
 Review the source list that NLMYTGen will use:
 
 ```powershell
@@ -54,6 +60,7 @@ token is supplied by environment variable and is not persisted by NLMYTGen.
 
 ```powershell
 $env:NLMYTGEN_INOREADER_ACCESS_TOKEN = "..."
+python -m src.cli.main rss-smoke --reader inoreader --format markdown -o docs/verification/RSS-INOREADER-SMOKE-EVIDENCE-YYYY-MM-DD.md
 python -m src.cli.main list-feed-sources --reader inoreader --format markdown
 python -m src.cli.main list-feed-sources --reader inoreader --format json > _tmp/rss_inoreader_sources.json
 python -m src.cli.main fetch-topics --reader inoreader --format json --with-fetch-report > _tmp/rss_inoreader_fetch_report.json
@@ -72,9 +79,10 @@ Success signal:
 
 ## Sanitized Evidence Template
 
-When recording the smoke result in repo, do not paste raw OPML, tokens, private
-feed URLs, or full article bodies. Record only the minimum evidence needed to
-decide the next move:
+`rss-smoke` emits this shape directly. When recording the smoke result in repo,
+do not paste raw OPML, tokens, private feed URLs, or full article bodies. Commit
+only the generated sanitized evidence after checking that it contains counts and
+field-presence signals rather than raw subscription data:
 
 ```markdown
 # RSS Live Smoke Evidence (YYYY-MM-DD)

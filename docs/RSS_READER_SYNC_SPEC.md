@@ -24,6 +24,9 @@ store refresh tokens or reader state.
   entries, or failed.
 - `fetch-topics --reader inoreader` loads Inoreader subscriptions and recent
   reading-list contents through the read-only adapter.
+- `rss-smoke --opml feeds.opml` or `rss-smoke --reader inoreader` runs the
+  source/fetch smoke and emits sanitized evidence that is safe to commit after
+  review.
 - `list-feed-sources --opml feeds.opml` prints the feed list NLMYTGen will use,
   so the operator can compare it with the RSS reader export before article
   fetching.
@@ -96,6 +99,12 @@ Review Inoreader sources or fetch recent Inoreader reading-list entries:
 set NLMYTGEN_INOREADER_ACCESS_TOKEN=...
 python -m src.cli.main list-feed-sources --reader inoreader --format markdown
 python -m src.cli.main fetch-topics --reader inoreader --format json --with-fetch-report
+```
+
+Generate sanitized live-smoke evidence:
+
+```bash
+python -m src.cli.main rss-smoke --opml feeds.opml --format markdown -o docs/verification/RSS-LIVE-SMOKE-EVIDENCE-YYYY-MM-DD.md
 ```
 
 For the next live-smoke entry point, use

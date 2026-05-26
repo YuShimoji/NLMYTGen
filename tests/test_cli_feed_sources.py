@@ -143,6 +143,26 @@ def test_cli_fetch_topics_with_fetch_report_json(tmp_path, capsys):
     assert "Error fetching" in captured.err
 
 
+def test_cli_rss_smoke_opml_json_is_sanitized(tmp_path, capsys):
+    opml = _write_mixed_opml(tmp_path)
+
+    code = main(["rss-smoke", "--opml", str(opml), "--format", "json"])
+
+    assert code == 0
+    captured = capsys.readouterr()
+    data = json.loads(captured.out)
+    assert data["input_kind"] == "OPML export"
+    assert data["source_count"] == 3
+    assert data["category_count"] == 1
+    assert data["source_list_match"] == "manual_required"
+    assert data["fetch_status_counts"] == {"fetched": 1, "empty": 1, "error": 1, "listed": 0}
+    assert data["representative_entry_fields"]["url"] == "present"
+    assert data["representative_entry_fields"]["summary"] == "present"
+    assert "one or more feeds failed to fetch" in data["notable_fixes_needed"]
+    assert "https://example.com/smoke" not in captured.out
+    assert "Smoke Topic" not in captured.out
+
+
 def test_cli_fetch_topics_from_opml_markdown(tmp_path, capsys):
     opml = _write_opml(tmp_path)
 
@@ -226,3 +246,42 @@ def test_cli_fetch_topics_from_inoreader_with_report(monkeypatch, capsys):
     assert data["entries"][0]["source_title"] == "Inoreader Feed"
     assert data["sources"][0]["status"] == "fetched"
     assert data["sources"][0]["entry_count"] == 1
+
+
+def test_cli_rss_smoke_inoreader_markdown(monkeypatch, capsys):
+    import src.feed.inoreader as inoreader
+
+    source = FeedSource(
+        feed_url="https://example.com/feed.xml",
+        title="Inoreader Feed",
+        categories=("Tech",),
+        reader="inoreader",
+        reader_feed_id="feed/https://example.com/feed.xml",
+    )
+    monkeypatch.setattr(inoreader, "load_inoreader_sources", lambda: [source])
+    monkeypatch.setattr(
+        inoreader,
+        "fetch_inoreader_entries",
+        lambda *, limit, sources: [
+            FeedEntry(
+                title="Inoreader Article",
+                published="2026-05-26",
+                source_url="https://example.com/feed.xml",
+                url="https://example.com/article",
+                summary="Summary",
+                source_title="Inoreader Feed",
+                source_categories=("Tech",),
+            )
+        ],
+    )
+
+    code = main(["rss-smoke", "--reader", "inoreader", "--format", "markdown"])
+
+    assert code == 0
+    out = capsys.readouterr().out
+    assert "# RSS Live Smoke Evidence" in out
+    assert "input kind: Inoreader read-only" in out
+    assert "source count: 1" in out
+    assert "fetched=1" in out
+    assert "Manual Hands-On" in out
+    assert "Inoreader Article" not in out
