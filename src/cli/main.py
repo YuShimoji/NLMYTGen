@@ -11,8 +11,8 @@ Usage:
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
     python -m src.cli.main diagnose-script <input> [--speaker-map ...] [--format text|json] [--strict]
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
-    python -m src.cli.main fetch-topics [URL...] [--opml feeds.opml] [-n 20] [--after YYYY-MM-DD] [--format text|json|markdown]
-    python -m src.cli.main list-feed-sources --opml feeds.opml [--format markdown|json]
+    python -m src.cli.main fetch-topics [URL...] [--opml feeds.opml] [--reader opml|inoreader] [-n 20] [--after YYYY-MM-DD] [--format text|json|markdown]
+    python -m src.cli.main list-feed-sources [--opml feeds.opml] [--reader opml|inoreader] [--format markdown|json]
     python -m src.cli.main validate-ir <ir.json> [--palette ...] [--format text|json]
     python -m src.cli.main validate-background-skit-blueprint <blueprint.json> --script <txt> --ymmp <ymmp> [--fps 60] [--format text|json]
     python -m src.cli.main emit-packaging-brief-template [-o path] [--format markdown|json]
@@ -819,8 +819,10 @@ def _cmd_fetch_topics(args: argparse.Namespace) -> int:
     from datetime import date
     from src.contracts.feed_source import FeedSource
     from src.feed.fetch import fetch_feed
+    from src.feed.inoreader import fetch_inoreader_entries, load_inoreader_sources
     from src.feed.sources import load_opml_sources
 
+    reader = getattr(args, "reader", "opml")
     after_date: str | None = None
     if getattr(args, "after", None):
         try:
@@ -830,34 +832,65 @@ def _cmd_fetch_topics(args: argparse.Namespace) -> int:
             print(f"Error: invalid date format: {args.after} (expected YYYY-MM-DD)", file=sys.stderr)
             return 1
 
-    all_entries = []
+    fetched_entries = []
+    source_reports: list[dict[str, object]] = []
     targets: list[tuple[str, FeedSource | None]] = []
-    if getattr(args, "opml", None):
-        sources = load_opml_sources(args.opml)
-        if not sources and not args.urls:
-            print("No feed sources found in OPML.", file=sys.stderr)
-            return 0
-        targets.extend((source.feed_url, source) for source in sources)
-    targets.extend((url, None) for url in args.urls)
 
-    if not targets:
-        print("Error: fetch-topics requires at least one URL or --opml.", file=sys.stderr)
-        return 1
-
-    for url, source in targets:
+    if reader == "inoreader":
+        if getattr(args, "opml", None) or args.urls:
+            print("Error: --reader inoreader cannot be combined with URL arguments or --opml.", file=sys.stderr)
+            return 1
         try:
-            entries = fetch_feed(url, timeout=args.timeout, source=source)
+            sources = load_inoreader_sources()
+            fetched_entries = fetch_inoreader_entries(limit=args.limit, sources=sources)
         except (ValueError, OSError) as e:
-            print(f"Error fetching {url}: {e}", file=sys.stderr)
-            continue
-        all_entries.extend(entries)
+            print(f"Error fetching Inoreader stream: {e}", file=sys.stderr)
+            return 1
+        source_reports = [_feed_fetch_report(source.feed_url, source, status="listed") for source in sources]
+        entry_counts = Counter(entry.source_url for entry in fetched_entries)
+        for report in source_reports:
+            count = entry_counts.get(report.get("feed_url"), 0)
+            report["entry_count"] = count
+            if count:
+                report["status"] = "fetched"
+    else:
+        if getattr(args, "opml", None):
+            sources = load_opml_sources(args.opml)
+            if not sources and not args.urls:
+                print("No feed sources found in OPML.", file=sys.stderr)
+                return 0
+            targets.extend((source.feed_url, source) for source in sources)
+        targets.extend((url, None) for url in args.urls)
+
+        if not targets:
+            print("Error: fetch-topics requires at least one URL, --opml, or --reader inoreader.", file=sys.stderr)
+            return 1
+
+        for url, source in targets:
+            report = _feed_fetch_report(url, source)
+            try:
+                entries = fetch_feed(url, timeout=args.timeout, source=source)
+            except (ValueError, OSError) as e:
+                report["status"] = "error"
+                report["error"] = str(e)
+                source_reports.append(report)
+                print(f"Error fetching {url}: {e}", file=sys.stderr)
+                continue
+            report["status"] = "fetched" if entries else "empty"
+            report["entry_count"] = len(entries)
+            source_reports.append(report)
+            fetched_entries.extend(entries)
+
+    all_entries = fetched_entries
 
     if after_date:
         all_entries = [e for e in all_entries if e.published and e.published >= after_date]
 
+    matched_entries = all_entries
     all_entries = all_entries[:args.limit]
+    _annotate_feed_fetch_reports(source_reports, matched_entries, all_entries)
 
-    if not all_entries:
+    if not all_entries and not getattr(args, "with_fetch_report", False):
         print("No entries found.", file=sys.stderr)
         return 0
 
@@ -865,10 +898,19 @@ def _cmd_fetch_topics(args: argparse.Namespace) -> int:
     output_lines: list[str] = []
 
     if fmt == "json":
-        data = [_feed_entry_to_json(e) for e in all_entries]
+        if getattr(args, "with_fetch_report", False):
+            data = {
+                "entries": [_feed_entry_to_json(e) for e in all_entries],
+                "sources": source_reports,
+            }
+        else:
+            data = [_feed_entry_to_json(e) for e in all_entries]
         output_lines.append(json.dumps(data, ensure_ascii=False, indent=2))
     elif fmt == "markdown":
         output_lines.append(_render_feed_entries_markdown(all_entries))
+        if getattr(args, "with_fetch_report", False):
+            output_lines.append("")
+            output_lines.append(_render_feed_fetch_report_markdown(source_reports))
     else:
         seen_sources: set[str | None] = set()
         for entry in all_entries:
@@ -880,6 +922,9 @@ def _cmd_fetch_topics(args: argparse.Namespace) -> int:
                 else:
                     output_lines.append(f"# Source: {entry.source_url} ({today})")
             output_lines.append(entry.title)
+        if getattr(args, "with_fetch_report", False):
+            output_lines.append("")
+            output_lines.append(_render_feed_fetch_report_text(source_reports))
 
     text = "\n".join(output_lines) + "\n"
 
@@ -896,9 +941,24 @@ def _cmd_fetch_topics(args: argparse.Namespace) -> int:
 
 def _cmd_list_feed_sources(args: argparse.Namespace) -> int:
     """list-feed-sources: OPML から AI 側の購読一覧を表示する。"""
+    from src.feed.inoreader import load_inoreader_sources
     from src.feed.sources import load_opml_sources
 
-    sources = load_opml_sources(args.opml)
+    reader = getattr(args, "reader", "opml")
+    if reader == "inoreader":
+        if getattr(args, "opml", None):
+            print("Error: --reader inoreader cannot be combined with --opml.", file=sys.stderr)
+            return 1
+        try:
+            sources = load_inoreader_sources()
+        except (ValueError, OSError) as e:
+            print(f"Error loading Inoreader subscriptions: {e}", file=sys.stderr)
+            return 1
+    else:
+        if not getattr(args, "opml", None):
+            print("Error: list-feed-sources requires --opml or --reader inoreader.", file=sys.stderr)
+            return 1
+        sources = load_opml_sources(args.opml)
     fmt = getattr(args, "format", "markdown")
     if fmt == "json":
         sys.stdout.write(json.dumps([_feed_source_to_json(s) for s in sources], ensure_ascii=False, indent=2) + "\n")
@@ -931,6 +991,30 @@ def _feed_source_to_json(source) -> dict[str, object]:
     }
 
 
+def _feed_fetch_report(url: str, source=None, *, status: str = "pending") -> dict[str, object]:
+    return {
+        "feed_url": source.feed_url if source else url,
+        "title": source.title if source else None,
+        "categories": list(source.categories) if source else [],
+        "reader": source.reader if source else "url",
+        "reader_feed_id": source.reader_feed_id if source else None,
+        "status": status,
+        "entry_count": 0,
+        "matched_count": 0,
+        "shown_count": 0,
+        "error": None,
+    }
+
+
+def _annotate_feed_fetch_reports(reports: list[dict[str, object]], matched_entries, shown_entries) -> None:
+    matched_counts = Counter(entry.source_url for entry in matched_entries)
+    shown_counts = Counter(entry.source_url for entry in shown_entries)
+    for report in reports:
+        feed_url = report.get("feed_url")
+        report["matched_count"] = matched_counts.get(feed_url, 0)
+        report["shown_count"] = shown_counts.get(feed_url, 0)
+
+
 def _render_feed_entries_markdown(entries) -> str:
     lines = [
         "| categories | source | published | title | url |",
@@ -950,6 +1034,47 @@ def _render_feed_entries_markdown(entries) -> str:
             )
             + " |"
         )
+    return "\n".join(lines)
+
+
+def _render_feed_fetch_report_markdown(reports: list[dict[str, object]]) -> str:
+    lines = [
+        "## Fetch report",
+        "",
+        "| status | entries | matched | shown | categories | title | feed_url | error |",
+        "|---|---:|---:|---:|---|---|---|---|",
+    ]
+    for report in reports:
+        lines.append(
+            "| "
+            + " | ".join(
+                [
+                    _markdown_cell(report.get("status")),
+                    _markdown_cell(report.get("entry_count")),
+                    _markdown_cell(report.get("matched_count")),
+                    _markdown_cell(report.get("shown_count")),
+                    _markdown_cell(" / ".join(report.get("categories") or [])),
+                    _markdown_cell(report.get("title")),
+                    _markdown_cell(report.get("feed_url")),
+                    _markdown_cell(report.get("error")),
+                ]
+            )
+            + " |"
+        )
+    return "\n".join(lines)
+
+
+def _render_feed_fetch_report_text(reports: list[dict[str, object]]) -> str:
+    lines = ["# Fetch report"]
+    for report in reports:
+        feed_url = report.get("feed_url")
+        status = report.get("status")
+        entry_count = report.get("entry_count")
+        matched_count = report.get("matched_count")
+        shown_count = report.get("shown_count")
+        error = report.get("error")
+        suffix = f" error={error}" if error else ""
+        lines.append(f"{status}: {feed_url} entries={entry_count} matched={matched_count} shown={shown_count}{suffix}")
     return "\n".join(lines)
 
 
@@ -1269,15 +1394,18 @@ def main(argv: list[str] | None = None) -> int:
     p_fetch = subparsers.add_parser("fetch-topics", help="Fetch topic candidates from RSS/Atom feeds")
     p_fetch.add_argument("urls", nargs="*", metavar="URL", help="RSS/Atom feed URL(s)")
     p_fetch.add_argument("--opml", help="OPML subscription list exported from a human RSS reader")
+    p_fetch.add_argument("--reader", choices=["opml", "inoreader"], default="opml", help="Feed reader source (default: opml/direct URL)")
     p_fetch.add_argument("-o", "--output", help="Output file path (default: stdout)")
     p_fetch.add_argument("-n", "--limit", type=int, default=20, help="Max entries to show (default: 20)")
     p_fetch.add_argument("--after", metavar="YYYY-MM-DD", help="Only entries published after this date")
     p_fetch.add_argument("--format", choices=["text", "json", "markdown"], default="text", help="Output format (default: text)")
     p_fetch.add_argument("--timeout", type=int, default=10, help="HTTP timeout in seconds (default: 10)")
+    p_fetch.add_argument("--with-fetch-report", action="store_true", help="Include per-feed fetch coverage report")
 
     # list-feed-sources
     p_sources = subparsers.add_parser("list-feed-sources", help="List feed subscriptions from OPML")
-    p_sources.add_argument("--opml", required=True, help="OPML subscription list exported from a human RSS reader")
+    p_sources.add_argument("--opml", help="OPML subscription list exported from a human RSS reader")
+    p_sources.add_argument("--reader", choices=["opml", "inoreader"], default="opml", help="Feed reader source (default: opml)")
     p_sources.add_argument("--format", choices=["markdown", "json"], default="markdown", help="Output format (default: markdown)")
 
     # generate-map
