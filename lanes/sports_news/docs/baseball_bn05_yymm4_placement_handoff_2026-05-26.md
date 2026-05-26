@@ -65,12 +65,14 @@ FIX means crop, text size, layer overlap, or timing drift is visible. A FIX
 result should tune this placement contract before any render or creative
 acceptance claim.
 
-## BN-04 animation design bridge
+## BN-04 animation bridge
 
-BN-04 is not implemented here, but its first contract is now recorded in
-`samples/_probe/baseball/animation/baseball_pitch_event_p05_animation_export_plan.json`.
-The default is `frame_sequence_first`, not clip-first, because frame hashes and
-per-frame readback are easier to verify before YMM4 placement.
+BN-04 now has a deterministic frame-sequence export recorded in
+`samples/_probe/baseball/animation/baseball_pitch_event_p05_animation_manifest.json`
+and
+`samples/_probe/baseball/animation/baseball_pitch_event_p05_animation_readback.json`.
+The default remains `frame_sequence_first`, not clip-first, because frame hashes
+and per-frame readback are easier to verify before YMM4 placement.
 
 ## Next entry points
 
@@ -78,5 +80,5 @@ per-frame readback are easier to verify before YMM4 placement.
 | --- | --- | --- |
 | Verify BN-05 preview | Crop, readability, and layer collision uncertainty | Decide whether placement is usable before `.ymmp` write automation. |
 | Implement BN-05 insertion proof | Manual ImageItem placement drift | Generate or patch a minimal YMM4 proof from this contract. |
-| Implement BN-04 frame sequence capture | Animation export uncertainty | Produce hashed frames and later decide whether clip export is needed. |
+| Inspect BN-04 frame sequence | Animation export readability uncertainty | Decide whether a clip export is worth adding. |
 | Audit real source replacement | Sample-only confidence gap | Prepare to swap `sample://` data for real sourced episode facts. |
