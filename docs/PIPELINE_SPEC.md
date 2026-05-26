@@ -207,8 +207,9 @@ OPML export を指定すると、人間側RSSリーダーの購読一覧と AI �
 ### 使用方法
 
 ```bash
-python -m src.cli.main fetch-topics [URL...] [--opml feeds.opml] [-n 20] [--after YYYY-MM-DD] [--format text|json|markdown] [--timeout 10] [-o output.txt]
-python -m src.cli.main list-feed-sources --opml feeds.opml [--format markdown|json]
+python -m src.cli.main fetch-topics [URL...] [--opml feeds.opml] [--reader opml|inoreader] [-n 20] [--after YYYY-MM-DD] [--format text|json|markdown] [--with-fetch-report] [--timeout 10] [-o output.txt]
+python -m src.cli.main list-feed-sources [--opml feeds.opml] [--reader opml|inoreader] [--format markdown|json]
+python -m src.cli.main rss-smoke [--opml feeds.opml] [--reader opml|inoreader] [--format markdown|json] [-o evidence.md]
 ```
 
 ### 引数
@@ -217,9 +218,11 @@ python -m src.cli.main list-feed-sources --opml feeds.opml [--format markdown|js
 |------|------|--------|------|
 | URL | 条件付き | — | RSS/Atom フィード URL（複数指定可）。`fetch-topics` は URL または `--opml` のどちらかが必要 |
 | --opml | 条件付き | — | RSS リーダーから export した OPML ファイル |
+| --reader | 任意 | opml | `opml` は URL / OPML 入力、`inoreader` は環境変数 `NLMYTGEN_INOREADER_ACCESS_TOKEN` を使う read-only 入力 |
 | -n, --limit | 任意 | 20 | 表示するエントリ数の上限 |
 | --after | 任意 | — | この日付以降のエントリのみ抽出（YYYY-MM-DD 形式） |
-| --format | 任意 | text | `fetch-topics`: text / json / markdown。`list-feed-sources`: markdown / json |
+| --format | 任意 | text | `fetch-topics`: text / json / markdown。`list-feed-sources` と `rss-smoke`: markdown / json |
+| --with-fetch-report | 任意 | false | `fetch-topics` の JSON / markdown 出力に feed 別の fetched / empty / error / listed 集計を追加する |
 | --timeout | 任意 | 10 | HTTP タイムアウト秒数 |
 | -o, --output | 任意 | stdout | 出力先ファイルパス |
 

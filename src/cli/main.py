@@ -11,8 +11,9 @@ Usage:
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
     python -m src.cli.main diagnose-script <input> [--speaker-map ...] [--format text|json] [--strict]
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
-    python -m src.cli.main fetch-topics [URL...] [--opml feeds.opml] [--reader opml|inoreader] [-n 20] [--after YYYY-MM-DD] [--format text|json|markdown]
+    python -m src.cli.main fetch-topics [URL...] [--opml feeds.opml] [--reader opml|inoreader] [-n 20] [--after YYYY-MM-DD] [--format text|json|markdown] [--with-fetch-report]
     python -m src.cli.main list-feed-sources [--opml feeds.opml] [--reader opml|inoreader] [--format markdown|json]
+    python -m src.cli.main rss-smoke [--opml feeds.opml] [--reader opml|inoreader] [--format markdown|json]
     python -m src.cli.main validate-ir <ir.json> [--palette ...] [--format text|json]
     python -m src.cli.main validate-background-skit-blueprint <blueprint.json> --script <txt> --ymmp <ymmp> [--fps 60] [--format text|json]
     python -m src.cli.main emit-packaging-brief-template [-o path] [--format markdown|json]
@@ -967,6 +968,103 @@ def _cmd_list_feed_sources(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_rss_smoke(args: argparse.Namespace) -> int:
+    """rss-smoke: live RSS source/fetch smoke with sanitized evidence output."""
+    from datetime import date
+    from src.feed.fetch import fetch_feed
+    from src.feed.inoreader import fetch_inoreader_entries, load_inoreader_sources
+    from src.feed.sources import load_opml_sources
+
+    reader = getattr(args, "reader", "opml")
+    after_date: str | None = None
+    if getattr(args, "after", None):
+        try:
+            date.fromisoformat(args.after)
+            after_date = args.after
+        except ValueError:
+            print(f"Error: invalid date format: {args.after} (expected YYYY-MM-DD)", file=sys.stderr)
+            return 1
+
+    source_reports: list[dict[str, object]] = []
+    entries = []
+    raw_input_location = "environment token"
+
+    if reader == "inoreader":
+        if getattr(args, "opml", None):
+            print("Error: --reader inoreader cannot be combined with --opml.", file=sys.stderr)
+            return 1
+        try:
+            sources = load_inoreader_sources()
+            entries = fetch_inoreader_entries(limit=args.limit, sources=sources)
+        except (ValueError, OSError) as e:
+            print(f"Error fetching Inoreader smoke data: {e}", file=sys.stderr)
+            return 1
+        source_reports = [_feed_fetch_report(source.feed_url, source, status="listed") for source in sources]
+        entry_counts = Counter(entry.source_url for entry in entries)
+        for report in source_reports:
+            count = entry_counts.get(report.get("feed_url"), 0)
+            report["entry_count"] = count
+            if count:
+                report["status"] = "fetched"
+    else:
+        if not getattr(args, "opml", None):
+            print("Error: rss-smoke requires --opml or --reader inoreader.", file=sys.stderr)
+            return 1
+        raw_input_location = f"not committed ({args.opml})"
+        try:
+            sources = load_opml_sources(args.opml)
+        except (ValueError, OSError) as e:
+            print(f"Error loading OPML smoke data: {e}", file=sys.stderr)
+            return 1
+        for source in sources:
+            report = _feed_fetch_report(source.feed_url, source)
+            try:
+                source_entries = fetch_feed(source.feed_url, timeout=args.timeout, source=source)
+            except (ValueError, OSError) as e:
+                report["status"] = "error"
+                report["error"] = str(e)
+                source_reports.append(report)
+                continue
+            report["status"] = "fetched" if source_entries else "empty"
+            report["entry_count"] = len(source_entries)
+            source_reports.append(report)
+            entries.extend(source_entries)
+
+    matched_entries = entries
+    if after_date:
+        matched_entries = [entry for entry in entries if entry.published and entry.published >= after_date]
+    shown_entries = matched_entries[:args.limit]
+    _annotate_feed_fetch_reports(source_reports, matched_entries, shown_entries)
+
+    evidence = _build_rss_smoke_evidence(
+        input_kind="Inoreader read-only" if reader == "inoreader" else "OPML export",
+        raw_input_location=raw_input_location,
+        sources=sources,
+        reports=source_reports,
+        entries=shown_entries,
+        after_date=after_date,
+        limit=args.limit,
+    )
+
+    fmt = getattr(args, "format", "markdown")
+    text = (
+        json.dumps(evidence, ensure_ascii=False, indent=2)
+        if fmt == "json"
+        else _render_rss_smoke_evidence_markdown(evidence)
+    )
+    text += "\n"
+
+    if getattr(args, "output", None):
+        out_path = Path(args.output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(text, encoding="utf-8")
+        print(f"Written: {out_path}")
+    else:
+        sys.stdout.write(text)
+
+    return 0
+
+
 def _feed_entry_to_json(entry) -> dict[str, object]:
     return {
         "title": entry.title,
@@ -1013,6 +1111,107 @@ def _annotate_feed_fetch_reports(reports: list[dict[str, object]], matched_entri
         feed_url = report.get("feed_url")
         report["matched_count"] = matched_counts.get(feed_url, 0)
         report["shown_count"] = shown_counts.get(feed_url, 0)
+
+
+def _build_rss_smoke_evidence(
+    *,
+    input_kind: str,
+    raw_input_location: str,
+    sources,
+    reports: list[dict[str, object]],
+    entries,
+    after_date: str | None,
+    limit: int,
+) -> dict[str, object]:
+    status_counts = Counter(str(report.get("status")) for report in reports)
+    categories = {
+        category
+        for source in sources
+        for category in getattr(source, "categories", ())
+    }
+    has_errors = status_counts.get("error", 0) > 0
+    has_sources = len(sources) > 0
+    has_entries = len(entries) > 0
+
+    return {
+        "input_kind": input_kind,
+        "raw_input_location": raw_input_location,
+        "source_count": len(sources),
+        "category_count": len(categories),
+        "source_list_match": "manual_required" if has_sources else "needs_fix",
+        "fetch_status_counts": {key: status_counts.get(key, 0) for key in ("fetched", "empty", "error", "listed")},
+        "representative_entry_fields": {
+            "url": _entry_field_presence(entries, "url"),
+            "summary": _entry_field_presence(entries, "summary"),
+            "source_title": _entry_field_presence(entries, "source_title"),
+            "source_categories": _entry_categories_presence(entries),
+        },
+        "notable_fixes_needed": _rss_smoke_fix_notes(has_sources, has_entries, has_errors),
+        "after": after_date,
+        "limit": limit,
+        "next_move": _rss_smoke_next_move(input_kind, has_sources, has_entries, has_errors),
+        "manual_hands_on": _rss_smoke_manual_hands_on(input_kind),
+    }
+
+
+def _entry_field_presence(entries, attr: str) -> str:
+    if not entries:
+        return "absent"
+    present = sum(1 for entry in entries if getattr(entry, attr, None))
+    if present == 0:
+        return "absent"
+    if present == len(entries):
+        return "present"
+    return "partial"
+
+
+def _entry_categories_presence(entries) -> str:
+    if not entries:
+        return "absent"
+    present = sum(1 for entry in entries if getattr(entry, "source_categories", ()))
+    if present == 0:
+        return "absent"
+    if present == len(entries):
+        return "present"
+    return "partial"
+
+
+def _rss_smoke_fix_notes(has_sources: bool, has_entries: bool, has_errors: bool) -> list[str]:
+    notes: list[str] = []
+    if not has_sources:
+        notes.append("source list is empty")
+    if has_errors:
+        notes.append("one or more feeds failed to fetch")
+    if has_sources and not has_entries:
+        notes.append("no representative entries were returned")
+    return notes or ["none"]
+
+
+def _rss_smoke_next_move(input_kind: str, has_sources: bool, has_entries: bool, has_errors: bool) -> str:
+    if not has_sources:
+        return "export a subscription OPML or verify the Inoreader token scope"
+    if has_errors:
+        return "clean failed feeds or rerun after confirming network/token access"
+    if not has_entries:
+        return "keep the source list, then rerun with a wider date window or later feed activity"
+    if input_kind.startswith("OPML"):
+        return "compare source list with the human RSS reader; if it matches, keep OPML as source of truth"
+    return "compare source list with the human Inoreader view; if it matches, keep the read-only adapter path"
+
+
+def _rss_smoke_manual_hands_on(input_kind: str) -> list[str]:
+    if input_kind.startswith("OPML"):
+        return [
+            "Export OPML from the human RSS reader into _local/rss/feeds.opml.",
+            "Compare source_count/category_count and spot-check feed titles/categories against the reader UI.",
+            "Commit only this sanitized evidence, not the raw OPML or full article bodies.",
+        ]
+    return [
+        "Create or retrieve a temporary Inoreader OAuth access token outside this repo.",
+        "Set NLMYTGEN_INOREADER_ACCESS_TOKEN only for the smoke command, then remove it from the shell.",
+        "Compare source_count/category_count and spot-check feed titles/categories against the Inoreader UI.",
+        "Commit only this sanitized evidence, not tokens or full article bodies.",
+    ]
 
 
 def _render_feed_entries_markdown(entries) -> str:
@@ -1075,6 +1274,44 @@ def _render_feed_fetch_report_text(reports: list[dict[str, object]]) -> str:
         error = report.get("error")
         suffix = f" error={error}" if error else ""
         lines.append(f"{status}: {feed_url} entries={entry_count} matched={matched_count} shown={shown_count}{suffix}")
+    return "\n".join(lines)
+
+
+def _render_rss_smoke_evidence_markdown(evidence: dict[str, object]) -> str:
+    status_counts = evidence["fetch_status_counts"]
+    fields = evidence["representative_entry_fields"]
+    manual_steps = evidence["manual_hands_on"]
+    lines = [
+        "# RSS Live Smoke Evidence",
+        "",
+        f"- input kind: {evidence['input_kind']}",
+        f"- raw input location: {evidence['raw_input_location']}",
+        f"- source count: {evidence['source_count']}",
+        f"- category count: {evidence['category_count']}",
+        f"- source-list match: {evidence['source_list_match']}",
+        (
+            "- fetch status counts: "
+            f"fetched={status_counts['fetched']}, "
+            f"empty={status_counts['empty']}, "
+            f"error={status_counts['error']}, "
+            f"listed={status_counts['listed']}"
+        ),
+        (
+            "- representative entry fields: "
+            f"url={fields['url']}, "
+            f"summary={fields['summary']}, "
+            f"source_title={fields['source_title']}, "
+            f"source_categories={fields['source_categories']}"
+        ),
+        f"- notable fixes needed: {', '.join(evidence['notable_fixes_needed'])}",
+        f"- after: {_markdown_cell(evidence.get('after'))}",
+        f"- limit: {evidence['limit']}",
+        f"- next move: {evidence['next_move']}",
+        "",
+        "## Manual Hands-On",
+        "",
+    ]
+    lines.extend(f"{index}. {step}" for index, step in enumerate(manual_steps, start=1))
     return "\n".join(lines)
 
 
@@ -1407,6 +1644,16 @@ def main(argv: list[str] | None = None) -> int:
     p_sources.add_argument("--opml", help="OPML subscription list exported from a human RSS reader")
     p_sources.add_argument("--reader", choices=["opml", "inoreader"], default="opml", help="Feed reader source (default: opml)")
     p_sources.add_argument("--format", choices=["markdown", "json"], default="markdown", help="Output format (default: markdown)")
+
+    # rss-smoke
+    p_rss_smoke = subparsers.add_parser("rss-smoke", help="Run RSS source/fetch smoke and emit sanitized evidence")
+    p_rss_smoke.add_argument("--opml", help="OPML subscription list exported from a human RSS reader")
+    p_rss_smoke.add_argument("--reader", choices=["opml", "inoreader"], default="opml", help="Feed reader source (default: opml)")
+    p_rss_smoke.add_argument("-o", "--output", help="Output evidence file path (default: stdout)")
+    p_rss_smoke.add_argument("-n", "--limit", type=int, default=20, help="Max entries to inspect (default: 20)")
+    p_rss_smoke.add_argument("--after", metavar="YYYY-MM-DD", help="Only entries published after this date")
+    p_rss_smoke.add_argument("--format", choices=["markdown", "json"], default="markdown", help="Output format (default: markdown)")
+    p_rss_smoke.add_argument("--timeout", type=int, default=10, help="HTTP timeout in seconds (default: 10)")
 
     # generate-map
     p_genmap = subparsers.add_parser("generate-map", help="Generate speaker map template from input")
@@ -2008,6 +2255,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_fetch_topics(args)
         elif args.command == "list-feed-sources":
             return _cmd_list_feed_sources(args)
+        elif args.command == "rss-smoke":
+            return _cmd_rss_smoke(args)
         elif args.command == "extract-template":
             return _cmd_extract_template(args)
         elif args.command == "measure-timeline-routes":
