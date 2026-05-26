@@ -98,6 +98,11 @@ python -m src.cli.main list-feed-sources --reader inoreader --format markdown
 python -m src.cli.main fetch-topics --reader inoreader --format json --with-fetch-report
 ```
 
+For the next live-smoke entry point, use
+[RSS-LIVE-SMOKE-RUNBOOK-2026-05-26.md](verification/RSS-LIVE-SMOKE-RUNBOOK-2026-05-26.md).
+It fixes where to place raw OPML/token inputs, which commands to run, what
+counts as success, and what sanitized evidence is safe to commit.
+
 ## Fetch Report
 
 `--with-fetch-report` is opt-in. Without it, `fetch-topics --format json`
