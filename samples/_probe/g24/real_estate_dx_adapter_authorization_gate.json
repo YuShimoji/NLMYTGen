@@ -14,7 +14,8 @@
   "boundary": {
     "authorization_gate_only": true,
     "output_generation_allowed": false,
-    "no_adapter_IR": true,
+    "adapter_IR_dry_run_allowed": true,
+    "adapter_IR_dry_run_scope": "7_candidates_only",
     "no_YMM4_adapter_output": true,
     "no_YMM4_patch": true,
     "no_ymmp_write": true,
@@ -23,7 +24,6 @@
     "no_creative_acceptance": true,
     "no_external_asset_acquisition": true,
     "current_slice_forbidden_actions": [
-      "adapter IR",
       "YMM4 adapter output",
       "YMM4 patch",
       ".ymmp write",
@@ -32,7 +32,7 @@
       "creative acceptance"
     ]
   },
-  "status": "awaiting_user_or_validator_authorization",
+  "status": "authorized_adapter_IR_dry_run_for_7_candidates_only",
   "source_state": {
     "route_preflight_status": "passed_for_planning_preflight",
     "route_preflight_candidate_count": 7,
@@ -211,7 +211,13 @@
     "note": "This authorization gate does not open validator-blocked cast motion IR, creative acceptance, or production timing."
   },
   "authorization_request": {
-    "authorization_granted": false,
+    "authorization_granted": true,
+    "selected_response": "authorize_adapter_IR_dry_run_for_7_candidates_only",
+    "selected_response_source": "user_chat_2026-05-25_recommended_action",
+    "selected_exclusion_policy": {
+      "RE-02-turn": "keep_excluded_until_adjusted",
+      "RE-07D-turn": "keep_deferred_blocks_adapter_planning"
+    },
     "requested_next_slice": "adapter_IR_dry_run_contract_for_7_candidates_only",
     "response_owner": "user_or_validator",
     "recommended_response": "authorize_adapter_IR_dry_run_for_7_candidates_only",

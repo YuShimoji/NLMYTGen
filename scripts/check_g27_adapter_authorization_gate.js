@@ -28,7 +28,6 @@ const expectedCandidateIds = [
 const expectedExcludedIds = ['RE-02-turn', 'RE-07D-turn'];
 
 const currentSliceForbiddenActions = [
-  'adapter IR',
   'YMM4 adapter output',
   'YMM4 patch',
   '.ymmp write',
@@ -143,7 +142,8 @@ function buildGate() {
     boundary: {
       authorization_gate_only: true,
       output_generation_allowed: false,
-      no_adapter_IR: true,
+      adapter_IR_dry_run_allowed: true,
+      adapter_IR_dry_run_scope: '7_candidates_only',
       no_YMM4_adapter_output: true,
       no_YMM4_patch: true,
       no_ymmp_write: true,
@@ -153,7 +153,7 @@ function buildGate() {
       no_external_asset_acquisition: true,
       current_slice_forbidden_actions: currentSliceForbiddenActions,
     },
-    status: 'awaiting_user_or_validator_authorization',
+    status: 'authorized_adapter_IR_dry_run_for_7_candidates_only',
     source_state: {
       route_preflight_status: routePreflight.status,
       route_preflight_candidate_count: routeCandidates.length,
@@ -187,7 +187,13 @@ function buildGate() {
       note: 'This authorization gate does not open validator-blocked cast motion IR, creative acceptance, or production timing.',
     },
     authorization_request: {
-      authorization_granted: false,
+      authorization_granted: true,
+      selected_response: 'authorize_adapter_IR_dry_run_for_7_candidates_only',
+      selected_response_source: 'user_chat_2026-05-25_recommended_action',
+      selected_exclusion_policy: {
+        'RE-02-turn': 'keep_excluded_until_adjusted',
+        'RE-07D-turn': 'keep_deferred_blocks_adapter_planning',
+      },
       requested_next_slice: 'adapter_IR_dry_run_contract_for_7_candidates_only',
       response_owner: 'user_or_validator',
       recommended_response: 'authorize_adapter_IR_dry_run_for_7_candidates_only',
@@ -242,8 +248,10 @@ function renderMarkdown(payload) {
   lines.push('');
   lines.push(`Status: \`${payload.status}\``);
   lines.push('');
-  lines.push('This is an authorization decision gate only. `output_generation_allowed=false` remains in force.');
-  lines.push('It does not create adapter IR, YMM4 adapter output, YMM4 patch files, `.ymmp` output, render output, production timing, or creative acceptance.');
+  lines.push('Selected response: `authorize_adapter_IR_dry_run_for_7_candidates_only`.');
+  lines.push('');
+  lines.push('This gate authorizes only adapter IR dry-run planning for the 7 listed candidates. `output_generation_allowed=false` remains in force for YMM4-facing output.');
+  lines.push('It does not create YMM4 adapter output, YMM4 patch files, `.ymmp` output, render output, production timing, or creative acceptance.');
   lines.push('');
   lines.push('## Candidate Scope');
   lines.push('');
@@ -278,6 +286,13 @@ function renderMarkdown(payload) {
   lines.push('```text');
   payload.authorization_request.short_return_format.forEach((line) => lines.push(line));
   lines.push('```');
+  lines.push('');
+  lines.push('## Selected Response');
+  lines.push('');
+  lines.push(`- authorization_granted: \`${payload.authorization_request.authorization_granted}\``);
+  lines.push(`- selected_response: \`${payload.authorization_request.selected_response}\``);
+  lines.push('- `RE-02-turn`: keep excluded until adjusted.');
+  lines.push('- `RE-07D-turn`: keep deferred / adapter-planning blocked.');
   lines.push('');
   lines.push('## Downstream Boundary');
   lines.push('');
@@ -339,7 +354,8 @@ const exclusionsOk =
 const boundaryOk =
   gate.boundary?.authorization_gate_only === true &&
   gate.boundary?.output_generation_allowed === false &&
-  gate.boundary?.no_adapter_IR === true &&
+  gate.boundary?.adapter_IR_dry_run_allowed === true &&
+  gate.boundary?.adapter_IR_dry_run_scope === '7_candidates_only' &&
   gate.boundary?.no_YMM4_adapter_output === true &&
   gate.boundary?.no_YMM4_patch === true &&
   gate.boundary?.no_ymmp_write === true &&
@@ -356,8 +372,16 @@ const validatorOk =
   (gate.validator_boundary?.allowed_next_actions || []).includes('overlay_only_compact_review');
 
 const authorizationOk =
-  gate.status === 'awaiting_user_or_validator_authorization' &&
-  gate.authorization_request?.authorization_granted === false &&
+  gate.status === 'authorized_adapter_IR_dry_run_for_7_candidates_only' &&
+  gate.authorization_request?.authorization_granted === true &&
+  gate.authorization_request?.selected_response ===
+    'authorize_adapter_IR_dry_run_for_7_candidates_only' &&
+  gate.authorization_request?.selected_response_source ===
+    'user_chat_2026-05-25_recommended_action' &&
+  gate.authorization_request?.selected_exclusion_policy?.['RE-02-turn'] ===
+    'keep_excluded_until_adjusted' &&
+  gate.authorization_request?.selected_exclusion_policy?.['RE-07D-turn'] ===
+    'keep_deferred_blocks_adapter_planning' &&
   gate.authorization_request?.requested_next_slice ===
     'adapter_IR_dry_run_contract_for_7_candidates_only' &&
   gate.authorization_request?.recommended_response ===
@@ -397,7 +421,7 @@ const checks = [
     gate_validator_boundary: gate.validator_boundary || {},
     validator_status: validator.status,
   }),
-  makeCheck('authorization_choices', 'Gate exposes the allowed user/validator responses without granting authorization.', authorizationOk, {
+  makeCheck('authorization_choices', 'Gate records the selected recommended response and preserves the dry-run-only boundary.', authorizationOk, {
     status: gate.status,
     authorization_request: gate.authorization_request || {},
     next_if_authorized: gate.next_if_authorized || {},
@@ -414,4 +438,4 @@ if (failedChecks.length) {
   process.exit(1);
 }
 
-console.log(`G-27 adapter authorization gate OK: ${expectedCandidateIds.length} candidates, output_generation_allowed=false, authorization_granted=false`);
+console.log(`G-27 adapter authorization gate OK: ${expectedCandidateIds.length} candidates, output_generation_allowed=false, authorization_granted=true`);

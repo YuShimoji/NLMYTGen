@@ -2,10 +2,12 @@
 
 Source preflight: `samples/_probe/g24/real_estate_dx_ymm4_adapter_route_preflight.json`
 
-Status: `awaiting_user_or_validator_authorization`
+Status: `authorized_adapter_IR_dry_run_for_7_candidates_only`
 
-This is an authorization decision gate only. `output_generation_allowed=false` remains in force.
-It does not create adapter IR, YMM4 adapter output, YMM4 patch files, `.ymmp` output, render output, production timing, or creative acceptance.
+Selected response: `authorize_adapter_IR_dry_run_for_7_candidates_only`.
+
+This gate authorizes only adapter IR dry-run planning for the 7 listed candidates. `output_generation_allowed=false` remains in force for YMM4-facing output.
+It does not create YMM4 adapter output, YMM4 patch files, `.ymmp` output, render output, production timing, or creative acceptance.
 
 ## Candidate Scope
 
@@ -44,6 +46,13 @@ G-27 adapter authorization: authorize_adapter_IR_dry_run_for_7_candidates_only
 RE-02-turn: keep excluded_until_adjusted
 RE-07D-turn: keep deferred_blocks_adapter_planning
 ```
+
+## Selected Response
+
+- authorization_granted: `true`
+- selected_response: `authorize_adapter_IR_dry_run_for_7_candidates_only`
+- `RE-02-turn`: keep excluded until adjusted.
+- `RE-07D-turn`: keep deferred / adapter-planning blocked.
 
 ## Downstream Boundary
 

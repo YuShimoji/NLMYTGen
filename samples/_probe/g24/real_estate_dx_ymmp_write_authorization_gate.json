@@ -1,0 +1,218 @@
+{
+  "version": "1.0",
+  "artifact_type": "YMM4_ymmp_write_authorization_gate",
+  "episode_id": "real_estate_dx",
+  "scope": "G-27 RE-02 / RE-06 / RE-07D minimal patched .ymmp write authorization gate only",
+  "status": "authorized_minimal_patched_ymmp_for_readback_only",
+  "source": {
+    "adapter_IR_dry_run": "samples/_probe/g24/real_estate_dx_adapter_ir_dry_run.json",
+    "compact_review_reference": "samples/_probe/g24/real_estate_dx_ymmp_compact_patch_review.json",
+    "historical_minimal_probe_reference": "samples/_probe/g24/real_estate_dx_minimal_patched_probe_readback.json",
+    "compact_review_candidate_gate": "docs/verification/G27-COMPACT-REVIEW-CANDIDATE-GATE-2026-05-26.md"
+  },
+  "boundary": {
+    "authorization_gate_only": true,
+    "reference_evidence_only": true,
+    "output_generation_allowed": false,
+    "YMM4_adapter_output_allowed": false,
+    "YMM4_patch_allowed": false,
+    "ymmp_write_allowed": false,
+    "render_allowed": false,
+    "preview_capture_allowed": false,
+    "production_timing_allowed": false,
+    "creative_acceptance_allowed": false,
+    "external_asset_acquisition_allowed": false,
+    "compact_review_reference_regenerated": false,
+    "minimal_probe_reference_promoted": false,
+    "actual_ymmp_write_executed": false,
+    "current_slice_forbidden_actions": [
+      "YMM4 adapter output",
+      "YMM4 patch",
+      ".ymmp write",
+      "render",
+      "preview capture",
+      "production timing",
+      "creative acceptance"
+    ]
+  },
+  "candidate_scope": {
+    "scope_id": "7_ready_candidates_only",
+    "candidate_count": 7,
+    "candidate_ids": [
+      "RE-02-beginning",
+      "RE-02-development",
+      "RE-06-beginning",
+      "RE-06-development",
+      "RE-06-turn",
+      "RE-07D-beginning",
+      "RE-07D-development"
+    ],
+    "candidates": [
+      {
+        "candidate_id": "RE-02-beginning",
+        "write_authorization_readiness": "candidate_for_next_gate_only",
+        "intended_review_surface": "minimal patched .ymmp readback only",
+        "compact_review_layer_set": [
+          7,
+          8,
+          9
+        ],
+        "duration_frames": 360,
+        "placeholder": "generic_public_search_panel + broker_db_shadow_panel"
+      },
+      {
+        "candidate_id": "RE-02-development",
+        "write_authorization_readiness": "candidate_for_next_gate_only",
+        "intended_review_surface": "minimal patched .ymmp readback only",
+        "compact_review_layer_set": [
+          7,
+          8,
+          9
+        ],
+        "duration_frames": 360,
+        "placeholder": "broker_db_panel + public_portal_card + property_card_flow"
+      },
+      {
+        "candidate_id": "RE-06-beginning",
+        "write_authorization_readiness": "candidate_for_next_gate_only",
+        "intended_review_surface": "minimal patched .ymmp readback only",
+        "compact_review_layer_set": [
+          7,
+          8,
+          9
+        ],
+        "duration_frames": 360,
+        "placeholder": "property_card_overload_cluster"
+      },
+      {
+        "candidate_id": "RE-06-development",
+        "write_authorization_readiness": "candidate_for_next_gate_only",
+        "intended_review_surface": "minimal patched .ymmp readback only",
+        "compact_review_layer_set": [
+          7,
+          8,
+          9
+        ],
+        "duration_frames": 360,
+        "placeholder": "selected_property_sheet + drawback_marker"
+      },
+      {
+        "candidate_id": "RE-06-turn",
+        "write_authorization_readiness": "candidate_for_next_gate_only",
+        "intended_review_surface": "minimal patched .ymmp readback only",
+        "compact_review_layer_set": [
+          7,
+          8,
+          9
+        ],
+        "duration_frames": 360,
+        "placeholder": "property_document_editorial_comparison"
+      },
+      {
+        "candidate_id": "RE-07D-beginning",
+        "write_authorization_readiness": "candidate_for_next_gate_only",
+        "intended_review_surface": "minimal patched .ymmp readback only",
+        "compact_review_layer_set": [
+          7,
+          8,
+          9
+        ],
+        "duration_frames": 360,
+        "placeholder": "abstract_ai_recommendation_panel + property_card"
+      },
+      {
+        "candidate_id": "RE-07D-development",
+        "write_authorization_readiness": "candidate_for_next_gate_only",
+        "intended_review_surface": "minimal patched .ymmp readback only",
+        "compact_review_layer_set": [
+          7,
+          8,
+          9
+        ],
+        "duration_frames": 360,
+        "placeholder": "boundary_inheritance_neighborhood_risk_markers"
+      }
+    ]
+  },
+  "exclusions": [
+    {
+      "candidate_id": "RE-02-turn",
+      "status": "blocked",
+      "mixing_allowed": false,
+      "reason": "Opacity-layer adjustment has not yet been reflected as a route candidate.",
+      "required_condition": "Reflect the public information layer / non-public data bundle opacity contrast as a route candidate before any write gate includes this beat."
+    },
+    {
+      "candidate_id": "RE-07D-turn",
+      "status": "deferred",
+      "mixing_allowed": false,
+      "reason": "Specialist / cast / silhouette policy remains undecided.",
+      "required_condition": "Choose defer, cut, abstract silhouette, or real asset / cast policy before any write gate includes this beat."
+    }
+  ],
+  "authorization_request": {
+    "authorization_granted": true,
+    "response_selected": true,
+    "selected_response": "authorize_minimal_patched_ymmp_for_readback_only",
+    "selected_response_source": "user_chat_recommended_action",
+    "recommended_response": "authorize_minimal_patched_ymmp_for_readback_only",
+    "response_owner": "user_or_validator",
+    "allowed_responses": [
+      {
+        "value": "authorize_minimal_patched_ymmp_for_readback_only",
+        "effect": "A later slice may write a minimal patched .ymmp for readback only, limited to the 7 candidate set. Render, production timing, and creative acceptance remain forbidden."
+      },
+      {
+        "value": "hold_for_write_gate_review",
+        "effect": "No .ymmp write starts. The assistant may refine gate evidence, checker coverage, or the two exclusion plans."
+      },
+      {
+        "value": "revise_candidate_scope_before_write_gate",
+        "effect": "Return to route adjustment or policy decision before any minimal patched .ymmp write is authorized."
+      },
+      {
+        "value": "reject_minimal_patched_ymmp_write",
+        "effect": "Close this output path without writing a minimal patched .ymmp."
+      }
+    ],
+    "short_return_format": [
+      "G-27 write authorization: authorize_minimal_patched_ymmp_for_readback_only",
+      "Scope: 7 ready candidates only",
+      "RE-02-turn: keep blocked until route adjustment",
+      "RE-07D-turn: keep deferred until policy decision"
+    ]
+  },
+  "next_if_authorized": {
+    "next_slice": "minimal_patched_ymmp_readback_only",
+    "authorization_scope": "readback_only_write_in_later_slice",
+    "include_candidates": [
+      "RE-02-beginning",
+      "RE-02-development",
+      "RE-06-beginning",
+      "RE-06-development",
+      "RE-06-turn",
+      "RE-07D-beginning",
+      "RE-07D-development"
+    ],
+    "excluded_from_write": [
+      "RE-02-turn",
+      "RE-07D-turn"
+    ],
+    "readback_required": true,
+    "still_forbidden": [
+      "render",
+      "preview capture",
+      "production timing",
+      "creative acceptance"
+    ]
+  },
+  "next_if_not_authorized": {
+    "hold_for": "user_or_validator_authorization",
+    "assistant_safe_followups": [
+      "prepare RE-02-turn route adjustment plan",
+      "prepare RE-07D-turn policy decision packet",
+      "tighten write gate checker coverage",
+      "sync runtime-state only"
+    ]
+  }
+}

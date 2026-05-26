@@ -71,6 +71,15 @@ Diagnostic-only layout proof. Not a scene composition, not a render, not creativ
 
 - (none)
 
+## YMM4 Preview Gate
+
+Primary surface: open `samples/_probe/g24/layout_instruction_proof.ymmp` in YMM4 and check the frame-0 preview.
+
+- Pass signal: title band is near the top and not clipped, the 2x2 grid has four visible cells, both bust placeholders sit left/right above the caption safe area, and the bottom caption area remains visually empty.
+- Fix signal: any obvious TextItem anchor drift, clipped title, collapsed grid cell, character overlap into the caption area, or major object inside the caption safe area.
+- Return payload: one preview screenshot plus a short PASS/FIX note. If FIX, name the failing region: title, grid, character A/B, caption safe area, or labels.
+- Boundary: this is still a layout-instruction proof only; it is not render proof, scene composition acceptance, or production readiness.
+
 ## Status
 
 - readback status: `passed`
