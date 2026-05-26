@@ -3,7 +3,7 @@ status: draft_review_unit
 lane: sports_news
 sidequest_boundary:
   mainline_policy: do_not_replace_runtime_next_action
-  current_mainline_next_action: G-27 Real Estate DX scene decision packet
+  current_mainline_next_action: G-27 Layout Instruction Compliance Proof screenshot return
   allowed_change_scope:
     - lanes/sports_news
   out_of_scope:
