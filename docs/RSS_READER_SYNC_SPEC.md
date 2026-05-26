@@ -81,6 +81,15 @@ python -m src.cli.main fetch-topics --opml feeds.opml --after 2026-05-01 --forma
 | Miniflux | later alternative | Good if self-hosting is acceptable and an API token flow is preferred. Reference: [Miniflux API](https://miniflux.app/docs/api.html). |
 | FreshRSS | later alternative | Good if a self-hosted Google Reader API-compatible reader is preferred. Reference: [FreshRSS Google Reader API](https://freshrss.github.io/FreshRSS/en/developers/06_GoogleReader_API.html). |
 
+## Operational Follow-ups
+
+- `docs/RSS_OPML_OPERATIONAL_VERIFICATION_2026-05-26.md` records the
+  recommended OPML verification flow, expected mismatch classes, and v1
+  acceptance signal.
+- `docs/RSS_READ_ONLY_ADAPTER_PREFLIGHT_2026-05-26.md` records the read-only API
+  adapter preflight. It keeps Inoreader-style OAuth/token work blocked until
+  secret storage, callback, rate-limit, and summary policies are selected.
+
 ## Boundaries
 
 This slice does not implement Inoreader OAuth, token persistence, unread/read
