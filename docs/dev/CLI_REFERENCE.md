@@ -5,6 +5,7 @@
 | 用途 | コマンド |
 |------|----------|
 | build-csv（手元） | `python -m src.cli.main build-csv ...` — `--format json` で `stats`（話者・はみ出し候補） |
+| fetch-topics (A-04) | `python -m src.cli.main fetch-topics <RSS_OR_ATOM_URL>... [-n 20] [--after YYYY-MM-DD] [--format text\|json]` — L1 のトピック候補取得のみ。RSS/Atom タイトルを NotebookLM 検索クエリ候補にするだけで、NotebookLM 台本取得、`source.wav`、`material_ledger`、`sports_news` provenance は生成しない |
 | apply-production | `python -m src.cli.main apply-production ...` — GUI の演出適用タブと同じ |
 | validate-ir | `python -m src.cli.main validate-ir ...` |
 | validate-background-skit-blueprint | `python -m src.cli.main validate-background-skit-blueprint blueprint.json --script script.txt --ymmp base.ymmp --fps 60 --format json` — 茶番劇の数値表を source-backed artifact として再計算し、IR/YMM4 前に `passed / failed / blocked` を返す |

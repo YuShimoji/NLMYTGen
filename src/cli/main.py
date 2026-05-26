@@ -818,6 +818,13 @@ def _cmd_fetch_topics(args: argparse.Namespace) -> int:
     from datetime import date
     from src.feed.fetch import fetch_feed
 
+    if args.limit < 1:
+        print("Error: --limit must be a positive integer", file=sys.stderr)
+        return 1
+    if args.timeout < 1:
+        print("Error: --timeout must be a positive integer", file=sys.stderr)
+        return 1
+
     after_date: str | None = None
     if getattr(args, "after", None):
         try:

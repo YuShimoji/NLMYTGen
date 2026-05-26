@@ -203,6 +203,12 @@ python -m src.cli.main build-csv input.txt --max-lines 2 --wrap-px 1180 --subtit
 RSS 2.0 / Atom 1.0 フィードからトピック候補（エントリタイトル）を取得する。
 取得したタイトルは NotebookLM の検索クエリや台本テーマ候補として使用する想定。
 
+### 境界
+
+`fetch-topics` は L1 の入力取得であり、RSS/Atom HTTP 取得とタイトル・日付パースだけを行う。
+NotebookLM 台本自動取得、素材ダウンロード、`source.wav`、`material_ledger`、INT-02e real URL smoke、`sports_news` の `source_ledger` / `fact_ledger` 生成は行わない。
+`sports_news` に接続する場合は、ユーザー確認済みの URL・利用条件メモ・候補タイトルを別途 ledger 境界へ渡す。
+
 ### 使用方法
 
 ```bash

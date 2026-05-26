@@ -2,14 +2,17 @@
 
 from __future__ import annotations
 
+import re
 import urllib.request
 import xml.etree.ElementTree as ET
+from datetime import date, datetime
 from email.utils import parsedate_to_datetime
 
 from src.contracts.feed_entry import FeedEntry
 
 _ATOM_NS = "{http://www.w3.org/2005/Atom}"
 _USER_AGENT = "NLMYTGen/1.0"
+_ISO_DATE_PREFIX_RE = re.compile(r"^\d{4}-\d{2}-\d{2}(?:$|[T\s])")
 
 
 def fetch_feed(url: str, *, timeout: int = 10) -> list[FeedEntry]:
@@ -34,14 +37,16 @@ def parse_feed_xml(xml_bytes: bytes, *, source_url: str | None = None) -> list[F
 
 def _parse_rss(root: ET.Element, source_url: str | None) -> list[FeedEntry]:
     entries: list[FeedEntry] = []
-    for item in root.iter("item"):
-        title_el = item.find("title")
-        if title_el is None or not (title_el.text or "").strip():
+    channel = root.find("channel")
+    items = channel.findall("item") if channel is not None else root.findall("item")
+    for item in items:
+        title = _child_text(item, "title")
+        if not title:
             continue
-        pub_el = item.find("pubDate")
-        published = _parse_rfc822(pub_el.text) if pub_el is not None and pub_el.text else None
+        pub_value = _child_text(item, "pubDate")
+        published = _parse_rfc822(pub_value) if pub_value else None
         entries.append(FeedEntry(
-            title=title_el.text.strip(),
+            title=title,
             published=published,
             source_url=source_url,
         ))
@@ -51,19 +56,27 @@ def _parse_rss(root: ET.Element, source_url: str | None) -> list[FeedEntry]:
 def _parse_atom(root: ET.Element, source_url: str | None) -> list[FeedEntry]:
     entries: list[FeedEntry] = []
     for entry in root.findall(f"{_ATOM_NS}entry"):
-        title_el = entry.find(f"{_ATOM_NS}title")
-        if title_el is None or not (title_el.text or "").strip():
+        title = _child_text(entry, "title", namespace=_ATOM_NS)
+        if not title:
             continue
-        pub_el = entry.find(f"{_ATOM_NS}published")
-        if pub_el is None:
-            pub_el = entry.find(f"{_ATOM_NS}updated")
-        published = _parse_iso8601_date(pub_el.text) if pub_el is not None and pub_el.text else None
+        pub_value = _child_text(entry, "published", namespace=_ATOM_NS)
+        if pub_value is None:
+            pub_value = _child_text(entry, "updated", namespace=_ATOM_NS)
+        published = _parse_iso8601_date(pub_value) if pub_value else None
         entries.append(FeedEntry(
-            title=title_el.text.strip(),
+            title=title,
             published=published,
             source_url=source_url,
         ))
     return entries
+
+
+def _child_text(parent: ET.Element, local_name: str, *, namespace: str = "") -> str | None:
+    child = parent.find(f"{namespace}{local_name}")
+    if child is None:
+        return None
+    text = " ".join(part.strip() for part in child.itertext() if part and part.strip())
+    return text or None
 
 
 def _parse_rfc822(value: str) -> str | None:
@@ -78,6 +91,12 @@ def _parse_rfc822(value: str) -> str | None:
 def _parse_iso8601_date(value: str) -> str | None:
     """Extract YYYY-MM-DD from an ISO 8601 datetime string."""
     value = value.strip()
-    if len(value) >= 10:
-        return value[:10]
-    return None
+    if not _ISO_DATE_PREFIX_RE.match(value):
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00")).date().isoformat()
+    except ValueError:
+        try:
+            return date.fromisoformat(value[:10]).isoformat()
+        except ValueError:
+            return None

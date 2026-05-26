@@ -62,6 +62,23 @@ def test_parse_rss_source_url():
     assert all(e.source_url == "https://example.com/rss" for e in entries)
 
 
+def test_parse_rss_nested_title_text():
+    xml = b"""\
+<?xml version="1.0"?>
+<rss version="2.0">
+  <channel>
+    <title>Example</title>
+    <item>
+      <title>Sports <b>Market</b> Update</title>
+      <pubDate>not a date</pubDate>
+    </item>
+  </channel>
+</rss>
+"""
+    entries = parse_feed_xml(xml)
+    assert entries == [FeedEntry(title="Sports Market Update", published=None, source_url=None)]
+
+
 def test_parse_atom_titles():
     entries = parse_feed_xml(ATOM_SAMPLE, source_url="https://example.com/atom")
     assert len(entries) == 2
@@ -80,6 +97,21 @@ def test_parse_atom_skips_blank_titles():
     titles = [e.title for e in entries]
     assert "  " not in titles
     assert len(entries) == 2
+
+
+def test_parse_atom_invalid_date_returns_none():
+    xml = b"""\
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Example</title>
+  <entry>
+    <title>Bad Date</title>
+    <published>not-a-date-value</published>
+  </entry>
+</feed>
+"""
+    entries = parse_feed_xml(xml)
+    assert entries == [FeedEntry(title="Bad Date", published=None, source_url=None)]
 
 
 def test_parse_empty_rss():
