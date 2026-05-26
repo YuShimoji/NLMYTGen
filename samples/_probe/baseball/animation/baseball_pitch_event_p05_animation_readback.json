@@ -1,0 +1,198 @@
+{
+  "schema_version": "baseball_frame_sequence_readback.v1",
+  "status": "passed",
+  "manifest_path": "samples/_probe/baseball/animation/baseball_pitch_event_p05_animation_manifest.json",
+  "plan_path": "samples/_probe/baseball/animation/baseball_pitch_event_p05_animation_export_plan.json",
+  "frame_dir": "samples/_probe/baseball/animation/frames/baseball_pitch_event_p05",
+  "checks": {
+    "frame_count_matches_plan": true,
+    "all_frames_exist": true,
+    "all_frames_1280x720": true,
+    "hashes_match_manifest": true,
+    "visual_data_hash_matches_plan": true,
+    "no_design_canvas_or_tweaks": true,
+    "no_clip_export": true,
+    "not_yymm4_placement": true,
+    "not_creative_acceptance": true,
+    "not_publish_gate": true
+  },
+  "failed_checks": [],
+  "frame_hashes": [
+    {
+      "frame": 0,
+      "path": "samples/_probe/baseball/animation/frames/baseball_pitch_event_p05/baseball_pitch_event_p05_f000.png",
+      "sha256": "b145d0f884ebabdad59684ce0137d7bee91630b5f3f609950d485a13b662ff3f"
+    },
+    {
+      "frame": 1,
+      "path": "samples/_probe/baseball/animation/frames/baseball_pitch_event_p05/baseball_pitch_event_p05_f001.png",
+      "sha256": "c19eb74a4d8f5d78baf358beb7df5a32838b1137c42d7c8f8ed441f568d91e4b"
+    },
+    {
+      "frame": 2,
+      "path": "samples/_probe/baseball/animation/frames/baseball_pitch_event_p05/baseball_pitch_event_p05_f002.png",
+      "sha256": "c19eb74a4d8f5d78baf358beb7df5a32838b1137c42d7c8f8ed441f568d91e4b"
+    },
+    {
+      "frame": 3,
+      "path": "samples/_probe/baseball/animation/frames/baseball_pitch_event_p05/baseball_pitch_event_p05_f003.png",
+      "sha256": "c19eb74a4d8f5d78baf358beb7df5a32838b1137c42d7c8f8ed441f568d91e4b"
+    },
+    {
+      "frame": 4,
+      "path": "samples/_probe/baseball/animation/frames/baseball_pitch_event_p05/baseball_pitch_event_p05_f004.png",
+      "sha256": "c19eb74a4d8f5d78baf358beb7df5a32838b1137c42d7c8f8ed441f568d91e4b"
+    }
+  ],
+  "unique_frame_hash_count": 2,
+  "dom_states": [
+    {
+      "status": "ready",
+      "variant": "detailed",
+      "frameNumber": 0,
+      "frameLabel": "previous_pitch_context",
+      "pitchIdx": 0,
+      "totalPitches": 2,
+      "currentPitchNumber": 4,
+      "playing": false,
+      "width": 1280,
+      "height": 720,
+      "density": "standard",
+      "statMode": "simple",
+      "showRomaji": false,
+      "ambientBackdrop": {
+        "kind": "repo_generated_svg",
+        "provenance": "BaseballInfoGraphics/assets/ambient/LICENSE.csv",
+        "usageStage": "design_preview",
+        "hasImage": true
+      },
+      "frame_rect": {
+        "width": 1280,
+        "height": 720
+      },
+      "design_canvas_visible": false,
+      "tweaks_visible": false,
+      "text_sample_length": 410
+    },
+    {
+      "status": "ready",
+      "variant": "detailed",
+      "frameNumber": 1,
+      "frameLabel": "delta_transition_in",
+      "pitchIdx": 1,
+      "totalPitches": 2,
+      "currentPitchNumber": 5,
+      "playing": false,
+      "width": 1280,
+      "height": 720,
+      "density": "standard",
+      "statMode": "simple",
+      "showRomaji": false,
+      "ambientBackdrop": {
+        "kind": "repo_generated_svg",
+        "provenance": "BaseballInfoGraphics/assets/ambient/LICENSE.csv",
+        "usageStage": "design_preview",
+        "hasImage": true
+      },
+      "frame_rect": {
+        "width": 1280,
+        "height": 720
+      },
+      "design_canvas_visible": false,
+      "tweaks_visible": false,
+      "text_sample_length": 442
+    },
+    {
+      "status": "ready",
+      "variant": "detailed",
+      "frameNumber": 2,
+      "frameLabel": "delta_transition",
+      "pitchIdx": 1,
+      "totalPitches": 2,
+      "currentPitchNumber": 5,
+      "playing": false,
+      "width": 1280,
+      "height": 720,
+      "density": "standard",
+      "statMode": "simple",
+      "showRomaji": false,
+      "ambientBackdrop": {
+        "kind": "repo_generated_svg",
+        "provenance": "BaseballInfoGraphics/assets/ambient/LICENSE.csv",
+        "usageStage": "design_preview",
+        "hasImage": true
+      },
+      "frame_rect": {
+        "width": 1280,
+        "height": 720
+      },
+      "design_canvas_visible": false,
+      "tweaks_visible": false,
+      "text_sample_length": 442
+    },
+    {
+      "status": "ready",
+      "variant": "detailed",
+      "frameNumber": 3,
+      "frameLabel": "current_pitch_settle",
+      "pitchIdx": 1,
+      "totalPitches": 2,
+      "currentPitchNumber": 5,
+      "playing": false,
+      "width": 1280,
+      "height": 720,
+      "density": "standard",
+      "statMode": "simple",
+      "showRomaji": false,
+      "ambientBackdrop": {
+        "kind": "repo_generated_svg",
+        "provenance": "BaseballInfoGraphics/assets/ambient/LICENSE.csv",
+        "usageStage": "design_preview",
+        "hasImage": true
+      },
+      "frame_rect": {
+        "width": 1280,
+        "height": 720
+      },
+      "design_canvas_visible": false,
+      "tweaks_visible": false,
+      "text_sample_length": 442
+    },
+    {
+      "status": "ready",
+      "variant": "detailed",
+      "frameNumber": 4,
+      "frameLabel": "current_pitch_lock",
+      "pitchIdx": 1,
+      "totalPitches": 2,
+      "currentPitchNumber": 5,
+      "playing": false,
+      "width": 1280,
+      "height": 720,
+      "density": "standard",
+      "statMode": "simple",
+      "showRomaji": false,
+      "ambientBackdrop": {
+        "kind": "repo_generated_svg",
+        "provenance": "BaseballInfoGraphics/assets/ambient/LICENSE.csv",
+        "usageStage": "design_preview",
+        "hasImage": true
+      },
+      "frame_rect": {
+        "width": 1280,
+        "height": 720
+      },
+      "design_canvas_visible": false,
+      "tweaks_visible": false,
+      "text_sample_length": 442
+    }
+  ],
+  "boundaries": {
+    "not_yymm4_placement": true,
+    "not_clip_export": true,
+    "not_creative_acceptance": true,
+    "not_publish_gate": true,
+    "not_real_episode_source": true
+  },
+  "next_safe_action": "Use the BN-05 manual YMM4 preview gate before claiming creative acceptance; decide clip export only after frame sequence inspection."
+}

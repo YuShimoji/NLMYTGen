@@ -43,6 +43,7 @@ function DetailedVariant({ data, currentPitchIdx, teamColor, density, showRomaji
             teamColor={teamColor}
             compact={compact}
             ambientBackdrop={visual.ambientBackdrop}
+            animateLatest={animateLatest}
           />
         </main>
 

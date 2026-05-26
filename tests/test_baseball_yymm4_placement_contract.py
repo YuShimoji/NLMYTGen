@@ -109,23 +109,30 @@ def test_baseball_bn05_readback_keeps_boundaries_and_preview_gate() -> None:
     assert contract["boundaries"]["not_creative_acceptance"] is True
 
 
-def test_baseball_bn04_animation_export_plan_is_defined_but_not_exported() -> None:
+def test_baseball_bn04_animation_export_plan_is_frame_sequence_exported_without_clip() -> None:
     plan = _load_json(ANIMATION_PLAN_PATH)
     readback = _load_json(ANIMATION_READBACK_PATH)
 
     assert plan["schema_version"] == "baseball_animation_export_plan.v1"
-    assert plan["status"] == "contract_defined_not_exported"
+    assert plan["status"] == "frame_sequence_exported"
     assert plan["export_decision"]["mode"] == "frame_sequence_first"
     assert plan["planned_outputs"]["width"] == 1280
     assert plan["planned_outputs"]["height"] == 720
     assert plan["planned_outputs"]["fps"] == 30
     assert plan["planned_outputs"]["frame_count"] == 5
-    assert len(plan["state_sequence"]) == 3
+    assert plan["planned_outputs"]["manifest_path"] == (
+        "samples/_probe/baseball/animation/baseball_pitch_event_p05_animation_manifest.json"
+    )
+    assert len(plan["state_sequence"]) == 5
     assert "visual data has fewer than two pitches" in plan["failure_conditions"]
-    assert plan["boundaries"]["not_exported_in_this_slice"] is True
+    assert plan["boundaries"]["frame_sequence_exported"] is True
     assert plan["boundaries"]["not_yymm4_placement"] is True
+    assert plan["boundaries"]["not_clip_export"] is True
     assert plan["boundaries"]["not_creative_acceptance"] is True
 
-    assert readback["status"] == "passed_contract_only"
+    assert readback["status"] == "superseded_by_frame_sequence_export"
+    assert readback["superseded_by"] == (
+        "samples/_probe/baseball/animation/baseball_pitch_event_p05_animation_readback.json"
+    )
     assert readback["checks"]["mode_is_frame_sequence_first"] is True
-    assert readback["checks"]["not_exported_in_this_slice"] is True
+    assert readback["checks"]["frame_sequence_exported_in_later_slice"] is True

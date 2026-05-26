@@ -119,16 +119,20 @@ restart entry points.
 
 ## BN-04 animation export contract
 
-- State: design contract recorded, export not implemented in this slice.
-- Goal: define frame-sequence-first animation export before adding a clip or
-  YMM4 video placement path.
+- State: frame-sequence export implemented; clip export remains deferred.
+- Goal: define and generate frame-sequence-first animation material before
+  adding a codec clip or YMM4 video placement path.
 - Done when:
-  - `lanes/sports_news/docs/baseball_bn04_animation_export_design_2026-05-26.md`
-    records the frame sequence default, planned output paths, and failure
-    conditions.
+  - `gui/capture_baseball_infographic_frames.js` captures the C detailed
+    renderer as five 1280x720 PNG frames.
   - `samples/_probe/baseball/animation/baseball_pitch_event_p05_animation_export_plan.json`
     defines I/O, frame count, state sequence, and boundaries.
-  - The contract clearly says no frames or clip are exported yet.
+  - `samples/_probe/baseball/animation/baseball_pitch_event_p05_animation_manifest.json`
+    records frame paths, hashes, size, fps metadata, and source hashes.
+  - `samples/_probe/baseball/animation/baseball_pitch_event_p05_animation_readback.json`
+    verifies frame count, dimensions, hashes, and no DesignCanvas/Tweaks UI.
+  - The artifact remains not a clip export, not YMM4 placement, not creative
+    acceptance, and not a publish gate.
 
 ## Next candidates
 

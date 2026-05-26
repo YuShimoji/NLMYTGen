@@ -12,7 +12,8 @@
     "capture:g27-gui-treatment-detail": "electron capture_review_treatment_detail_screenshot.js",
     "capture:pipeline-smoke": "electron capture_pipeline_smoke_fixtures.js",
     "capture:pipeline-smoke-gui": "electron capture_pipeline_smoke_review_screenshot.js",
-    "capture:baseball-static": "electron capture_baseball_infographic_static.js"
+    "capture:baseball-static": "electron capture_baseball_infographic_static.js",
+    "capture:baseball-frames": "electron capture_baseball_infographic_frames.js"
   },
   "devDependencies": {
     "electron": "^35.0.0"
