@@ -5,7 +5,7 @@
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
 - 現在地の正本: 通常再開では `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md` で止める。本ファイル冒頭は状態スナップショットではなく、航海日誌への短い入口。
-- 現フェーズ: G-24 skit_group placement は raw clone write/readback まで到達済み。ただし user visual check で spacing/composition が粗いことが分かったため、次は YMM4 template source を分析して normalized placement plan を生成する段階であり、追加 motion authoring や user 手配置ではない。
+- 現フェーズ: G-27 Real Estate DX。Layout Instruction Compliance Proof は machine readback + YMM4 GUI proof まで閉じた。次は `runtime-state.md` の通り、`G27_PublicVsBrokerDB` carrier / slot-fill path に戻る。
 - 古い roadmap / prompt / verification packet は現行判断に使わない。必要な履歴は DECISION LOG と HANDOFF SNAPSHOT の該当行だけ読む。
 - Python のスコープは「テキスト変換 + IR/registry + ymmp 限定後段適用」。動画レンダリング・画像生成・YMM4 GUI 操作は Python の責務ではない。
 
@@ -14,14 +14,14 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI artifact → CSV / registry / patched ymmp → YMM4 読込・確認・レンダリング
-- 現在のスライス: G-24 template-analyzed placement planner。v1 template source 5/5 と `--skit-group-only` raw clone transport は成立済みで、`panic_shake` は通常語彙から除外する。
-- 成功状態: template source から actor footprint / relative motion / timing density を分析し、real estate DX exact/fallback cues を手配置なしで production-like `.ymmp` に再配置し、readback と user creative acceptance の両方で閉じること。
+- 現在のスライス: G-27 Layout Instruction Compliance Proof は閉じた。次スライスは人間作成の `G27_PublicVsBrokerDB` carrier を受け取ってから readback → anchored slot contract → minimal slot-fill patch へ進む。
+- 成功状態: machine readback、YMM4 GUI proof、creative acceptance、production readiness を混同せず、承認済み G-27 範囲内で制作価値に直結する carrier / slot-fill 接続へ戻すこと。
 
 ---
 
 ## CURRENT LANE
-- 主レーン: Advance（G-24 template-first の実制作接続）。現行の優先は [runtime-state.md](runtime-state.md) の `next_action`。
-- 今このレーンを優先する理由: v1 planned set の author/export は閉じたため、次は作成済みテンプレートが実制作の選択負荷を減らすかに接続するため。
+- 主レーン: Advance（G-27 Real Estate DX carrier / slot-fill path）。現行の優先は [runtime-state.md](runtime-state.md) の `next_action`。
+- 今このレーンを優先する理由: Layout Instruction Compliance Proof で固定 layout instruction の YMM4 GUI visibility は確認できたため、次は production carrier / slot-fill 接続へ戻す必要がある。
 
 ---
 
@@ -261,6 +261,17 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 |----|----------|--------|
 | IP-02 | Web UI 化 | CLAUDE.md スコープ外 |
 | IP-03 | YouTube 自動アップロード | FEATURE_REGISTRY E-01 (hold) |
+
+---
+
+## HANDOFF SNAPSHOT (2026-05-27 update)
+
+- Branch / remote state: `master`. Pull latest `origin/master`; expected sync check is `git rev-list --left-right --count "HEAD...@{u}" = 0 0`. Working tree may still show pre-existing untracked local files `.claude/worktrees/` and `samples/2026-05-16.ymmp`; they are not part of this handoff.
+- Restart path: read `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`. `runtime-state.md` is the live frontier authority.
+- Closed diagnostic slice: `samples/_probe/g24/layout_instruction_proof.ymmp` now has machine readback pass and user-side YMM4 v4.52.0.8 GUI proof pass. The visible issues found in the first GUI pass (bottom-looking title alignment, no title/grid gap, unstable labels) were corrected by `4631f89 fix(g27): stabilize layout instruction proof spacing`.
+- Current proof facts: `layout_instruction_proof_readback.json` reports `status=passed`, 17 items, hard_fail=0, violations=[], `title_grid_gap_visible=pass`, and `region_labels_clear_major_items=pass`. Narrow checks run: `node scripts\build_g27_layout_instruction_proof.js --write`, `node scripts\build_g27_layout_instruction_proof.js`, `node scripts\render_g27_layout_instruction_proof_html.js`, and `git diff --check`.
+- Boundary: this is a diagnostic layout/slot proof only. It is not a render, creative acceptance, production carrier replacement, slot-fill readiness, or production readiness claim.
+- Next frontier: return to the `G27_PublicVsBrokerDB` carrier / slot-fill path. Do not design an anchored slot contract or implement slot-fill before a human-authored carrier exists. After carrier receipt, assistant should read back required `G27PBD_*` item names, short Remarks, fixed card counts, `G27PBD_Arrow` existence, and geometry-free patch feasibility.
 
 ---
 
