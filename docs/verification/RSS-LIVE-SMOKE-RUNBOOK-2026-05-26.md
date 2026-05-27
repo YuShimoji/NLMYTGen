@@ -17,21 +17,21 @@ scratch output.
 
 ## Restart From Another Terminal
 
-Use the clean RSS worktree/branch and fast-forward it before running live
-smoke:
+Use the latest-master integration branch and fast-forward it before running
+live smoke:
 
 ```powershell
-cd C:\Users\PLANNER007\NLMYTGen-rss-clean
+cd C:\Users\PLANNER007\NLMYTGen
 git fetch --all --prune
-git checkout codex/rss-reader-sync-clean
+git checkout codex/rss-reader-sync-master-integrate
 git pull --ff-only
 ```
 
-The implementation commits through `91b97f3` are already pushed to
-`origin/codex/rss-reader-sync-clean`. If this worktree is not available on the
-machine, clone or add a worktree for that remote branch, then use this runbook
-as the entry point. The only expected manual input is a real OPML export or a
-temporary Inoreader access token.
+The integration branch is pushed to
+`origin/codex/rss-reader-sync-master-integrate`. If the main worktree is not
+available on the machine, clone or add a worktree for that remote branch, then
+use this runbook as the entry point. The only expected manual input is a real
+OPML export or a temporary Inoreader access token.
 
 ## OPML Smoke
 
