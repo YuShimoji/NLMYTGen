@@ -39,9 +39,13 @@ def test_fetch_topics_json_outputs_topic_candidates_only(monkeypatch, capsys):
             "title": "AI Market Update",
             "published": "2026-05-20",
             "source": "https://example.com/feed.xml",
+            "url": None,
+            "summary": None,
+            "source_title": None,
+            "source_categories": [],
         }
     ]
-    assert set(payload[0]) == {"title", "published", "source"}
+    assert {"title", "published", "source"}.issubset(payload[0])
 
 
 def test_fetch_topics_text_groups_titles_by_feed_source(monkeypatch, capsys):

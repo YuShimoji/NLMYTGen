@@ -877,7 +877,10 @@ def _cmd_fetch_topics(args: argparse.Namespace) -> int:
         for url, source in targets:
             report = _feed_fetch_report(url, source)
             try:
-                entries = fetch_feed(url, timeout=args.timeout, source=source)
+                if source is None:
+                    entries = fetch_feed(url, timeout=args.timeout)
+                else:
+                    entries = fetch_feed(url, timeout=args.timeout, source=source)
             except (ValueError, OSError) as e:
                 report["status"] = "error"
                 report["error"] = str(e)
