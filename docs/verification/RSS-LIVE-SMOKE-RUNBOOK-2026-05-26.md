@@ -17,21 +17,20 @@ scratch output.
 
 ## Restart From Another Terminal
 
-Use the latest-master integration branch and fast-forward it before running
-live smoke:
+Use `master`, which already contains the RSS Reader Sync v1.1 fast-forward
+integration, and fast-forward it before running live smoke:
 
 ```powershell
 cd C:\Users\PLANNER007\NLMYTGen
 git fetch --all --prune
-git checkout codex/rss-reader-sync-master-integrate
-git pull --ff-only
+git checkout master
+git pull --ff-only origin master
 ```
 
-The integration branch is pushed to
-`origin/codex/rss-reader-sync-master-integrate`. If the main worktree is not
-available on the machine, clone or add a worktree for that remote branch, then
-use this runbook as the entry point. The only expected manual input is a real
-OPML export or a temporary Inoreader access token.
+The RSS integration range is already in `origin/master`; use this runbook as
+the entry point after `git status --short --branch` reports a clean master
+worktree. The only expected manual input is a real OPML export or a temporary
+Inoreader access token.
 
 ## OPML Smoke
 
