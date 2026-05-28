@@ -267,6 +267,19 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ---
 
+## HANDOFF SNAPSHOT (2026-05-28 RSS cleanup handoff)
+
+- Branch/remote: `master` is pushed to `origin/master`; restart with `cd C:\Users\PLANNER007\NLMYTGen && git fetch --all --prune && git checkout master && git pull --ff-only origin master`. The cleanup audit commit immediately before this handoff is `b98afac`; after pulling, use the latest `origin/master` commit and read this snapshot.
+- RSS OPML status: RSS UI comparison matched NLMYTGen's OPML view at `147` sources and `7` categories, so the ignored OPML export can be treated as the current operational source of truth until the reader list changes.
+- Committed RSS evidence to read first: `docs/verification/RSS-LIVE-SMOKE-EVIDENCE-2026-05-28.md` for the smoke/diagnostic baseline, then `docs/verification/RSS-FAILED-FEED-CLEANUP-SUMMARY-2026-05-28.md` for the cleanup audit summary. `docs/runtime-state.md` has the active top-line state.
+- Local-only artifacts: `_local/rss/feeds.opml.xml` is the raw OPML input and must stay uncommitted. `_tmp/rss_failed_feed_cleanup_candidates.md` and `_tmp/rss_failed_feed_cleanup_candidates.json` contain the detailed failed-feed titles/URLs for human Inoreader UI cleanup and must also stay uncommitted.
+- Latest local cleanup audit: status counts were `fetched=121`, `empty=0`, `error=26`, `listed=0`; error breakdown was `http_404=2`, `parse_or_non_feed=15`, `ssl_error=2`, `timeout=3`, `http_403=4`. Prior live diagnostics varied around `31/32` errors, so treat exact failure count as live-network variable and use categories for cleanup planning.
+- Cleanup order for the human UI pass: review `http_404` first, then `parse_or_non_feed`, `ssl_error`, `timeout`, and `http_403`. Delete/replace/keep decisions happen in Inoreader manually; repo code and OPML files are not mutated by this audit.
+- Duplicate handling: duplicate feed URL count is `0`; duplicate title count is `1` and remains `manual_review`. Do not auto-merge or auto-delete the duplicate title.
+- Boundaries not crossed: Inoreader API, token use, subscription mutation, DB/background sync, G-27 carrier work, Baseball, Thumbnail, GUI work, NotebookLM API, video generation, and YouTube posting were not run.
+- Validation before handoff: CLI help smoke for `rss-smoke`, `list-feed-sources`, and `fetch-topics` passed; `git diff --check` passed; added committed lines had no URL/token/raw OPML marker hits. The ignored local files remain outside git.
+- Next safe restart choices: `Verify` the local-only failed-feed list in Inoreader UI and rerun `rss-smoke` after manual cleanup; `Audit` the one duplicate title manually; or `Advance` source category representative selection so categorized entries can appear in the shown sample. Do not start Inoreader live API smoke without an explicit new instruction.
+
 ## HANDOFF SNAPSHOT (2026-05-27 update)
 
 - Branch / remote state: `master`. Pull latest `origin/master`; expected sync check is `git rev-list --left-right --count "HEAD...@{u}" = 0 0`. Working tree may still show pre-existing untracked local files `.claude/worktrees/` and `samples/2026-05-16.ymmp`; they are not part of this handoff.
