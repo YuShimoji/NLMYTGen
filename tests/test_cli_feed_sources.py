@@ -158,6 +158,21 @@ def test_cli_rss_smoke_opml_json_is_sanitized(tmp_path, capsys):
     assert data["fetch_status_counts"] == {"fetched": 1, "empty": 1, "error": 1, "listed": 0}
     assert data["representative_entry_fields"]["url"] == "present"
     assert data["representative_entry_fields"]["summary"] == "present"
+    assert data["representative_entry_fields"]["source_categories"] == "present"
+    assert data["fetch_error_breakdown"] == {"parse_or_non_feed": 1}
+    assert data["duplicate_source_summary"] == {
+        "duplicate_feed_url_count": 0,
+        "duplicate_title_count": 0,
+        "handling": "none",
+    }
+    assert data["source_categories_propagation"] == {
+        "source_records_with_categories": 3,
+        "source_records_without_categories": 0,
+        "fetched_sources_with_categories": 1,
+        "matched_entries_from_categorized_sources": 1,
+        "shown_entries_from_categorized_sources": 1,
+        "diagnosis": "propagated_to_representative_entries",
+    }
     assert "one or more feeds failed to fetch" in data["notable_fixes_needed"]
     assert "https://example.com/smoke" not in captured.out
     assert "Smoke Topic" not in captured.out
@@ -283,5 +298,7 @@ def test_cli_rss_smoke_inoreader_markdown(monkeypatch, capsys):
     assert "input kind: Inoreader read-only" in out
     assert "source count: 1" in out
     assert "fetched=1" in out
+    assert "fetch error breakdown: none" in out
+    assert "source_categories propagation:" in out
     assert "Manual Hands-On" in out
     assert "Inoreader Article" not in out

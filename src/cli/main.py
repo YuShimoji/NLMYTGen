@@ -32,6 +32,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 from collections import Counter
 from math import ceil
@@ -1142,6 +1143,8 @@ def _build_rss_smoke_evidence(
     has_errors = status_counts.get("error", 0) > 0
     has_sources = len(sources) > 0
     has_entries = len(entries) > 0
+    duplicate_title_count = _duplicate_source_title_count(sources)
+    duplicate_feed_url_count = _duplicate_source_url_count(sources)
 
     return {
         "input_kind": input_kind,
@@ -1150,17 +1153,114 @@ def _build_rss_smoke_evidence(
         "category_count": len(categories),
         "source_list_match": "manual_required" if has_sources else "needs_fix",
         "fetch_status_counts": {key: status_counts.get(key, 0) for key in ("fetched", "empty", "error", "listed")},
+        "fetch_error_breakdown": _fetch_error_breakdown(reports),
+        "duplicate_source_summary": {
+            "duplicate_feed_url_count": duplicate_feed_url_count,
+            "duplicate_title_count": duplicate_title_count,
+            "handling": "manual_review" if duplicate_title_count else "none",
+        },
         "representative_entry_fields": {
             "url": _entry_field_presence(entries, "url"),
             "summary": _entry_field_presence(entries, "summary"),
             "source_title": _entry_field_presence(entries, "source_title"),
             "source_categories": _entry_categories_presence(entries),
         },
+        "source_categories_propagation": _source_categories_propagation_summary(sources, reports, entries),
         "notable_fixes_needed": _rss_smoke_fix_notes(has_sources, has_entries, has_errors),
         "after": after_date,
         "limit": limit,
         "next_move": _rss_smoke_next_move(input_kind, has_sources, has_entries, has_errors),
         "manual_hands_on": _rss_smoke_manual_hands_on(input_kind),
+    }
+
+
+def _duplicate_source_title_count(sources) -> int:
+    titles = Counter(
+        getattr(source, "title", None)
+        for source in sources
+        if getattr(source, "title", None)
+    )
+    return sum(1 for count in titles.values() if count > 1)
+
+
+def _duplicate_source_url_count(sources) -> int:
+    urls = Counter(
+        getattr(source, "feed_url", None)
+        for source in sources
+        if getattr(source, "feed_url", None)
+    )
+    return sum(1 for count in urls.values() if count > 1)
+
+
+def _fetch_error_breakdown(reports: list[dict[str, object]]) -> dict[str, int]:
+    categories = Counter(
+        _fetch_error_category(str(report.get("error") or ""))
+        for report in reports
+        if report.get("status") == "error"
+    )
+    return dict(sorted(categories.items()))
+
+
+def _fetch_error_category(error: str) -> str:
+    text = error.lower()
+    if "timed out" in text or "timeout" in text:
+        return "timeout"
+    if "ssl" in text or "certificate" in text:
+        return "ssl_error"
+    if "http error 403" in text:
+        return "http_403"
+    if "http error 404" in text:
+        return "http_404"
+    if "http error" in text:
+        match = re.search(r"http error (\d+)", text)
+        return f"http_{match.group(1)}" if match else "http_error"
+    if (
+        "not well-formed" in text
+        or "unrecognised feed format" in text
+        or "mismatched tag" in text
+        or "syntax error" in text
+    ):
+        return "parse_or_non_feed"
+    if "forcibly closed" in text or "connection reset" in text or "remote end closed" in text:
+        return "connection_closed"
+    if "temporary failure" in text or "name or service not known" in text or "getaddrinfo failed" in text:
+        return "dns_resolution"
+    if "urlopen error" in text:
+        return "urlopen_error_other"
+    return "other"
+
+
+def _source_categories_propagation_summary(sources, reports: list[dict[str, object]], entries) -> dict[str, object]:
+    source_records_with_categories = sum(1 for source in sources if getattr(source, "categories", ()))
+    source_records_without_categories = len(sources) - source_records_with_categories
+    fetched_sources_with_categories = sum(
+        1
+        for report in reports
+        if report.get("status") == "fetched" and report.get("categories")
+    )
+    matched_entries_from_categorized_sources = sum(
+        int(report.get("matched_count") or 0)
+        for report in reports
+        if report.get("categories")
+    )
+    shown_entries_from_categorized_sources = sum(
+        1 for entry in entries if getattr(entry, "source_categories", ())
+    )
+    if source_records_with_categories == 0:
+        diagnosis = "parser_has_no_categories"
+    elif matched_entries_from_categorized_sources > 0 and shown_entries_from_categorized_sources == 0:
+        diagnosis = "representative_sample_from_uncategorized_sources"
+    elif shown_entries_from_categorized_sources > 0:
+        diagnosis = "propagated_to_representative_entries"
+    else:
+        diagnosis = "no_categorized_entries_matched"
+    return {
+        "source_records_with_categories": source_records_with_categories,
+        "source_records_without_categories": source_records_without_categories,
+        "fetched_sources_with_categories": fetched_sources_with_categories,
+        "matched_entries_from_categorized_sources": matched_entries_from_categorized_sources,
+        "shown_entries_from_categorized_sources": shown_entries_from_categorized_sources,
+        "diagnosis": diagnosis,
     }
 
 
@@ -1212,7 +1312,7 @@ def _rss_smoke_next_move(input_kind: str, has_sources: bool, has_entries: bool, 
 def _rss_smoke_manual_hands_on(input_kind: str) -> list[str]:
     if input_kind.startswith("OPML"):
         return [
-            "Export OPML from the human RSS reader into _local/rss/feeds.opml.",
+            "Export OPML from the human RSS reader into an ignored path such as _local/rss/feeds.opml.xml.",
             "Compare source_count/category_count and spot-check feed titles/categories against the reader UI.",
             "Commit only this sanitized evidence, not the raw OPML or full article bodies.",
         ]
@@ -1289,8 +1389,14 @@ def _render_feed_fetch_report_text(reports: list[dict[str, object]]) -> str:
 
 def _render_rss_smoke_evidence_markdown(evidence: dict[str, object]) -> str:
     status_counts = evidence["fetch_status_counts"]
+    error_breakdown = evidence.get("fetch_error_breakdown", {})
+    duplicate_summary = evidence.get("duplicate_source_summary", {})
     fields = evidence["representative_entry_fields"]
+    category_propagation = evidence.get("source_categories_propagation", {})
     manual_steps = evidence["manual_hands_on"]
+    error_breakdown_text = ", ".join(
+        f"{category}={count}" for category, count in error_breakdown.items()
+    ) or "none"
     lines = [
         "# RSS Live Smoke Evidence",
         "",
@@ -1312,6 +1418,22 @@ def _render_rss_smoke_evidence_markdown(evidence: dict[str, object]) -> str:
             f"summary={fields['summary']}, "
             f"source_title={fields['source_title']}, "
             f"source_categories={fields['source_categories']}"
+        ),
+        f"- fetch error breakdown: {error_breakdown_text}",
+        (
+            "- duplicate source summary: "
+            f"feed_url_duplicates={duplicate_summary.get('duplicate_feed_url_count', 0)}, "
+            f"title_duplicates={duplicate_summary.get('duplicate_title_count', 0)}, "
+            f"handling={duplicate_summary.get('handling', 'none')}"
+        ),
+        (
+            "- source_categories propagation: "
+            f"source_records_with_categories={category_propagation.get('source_records_with_categories', 0)}, "
+            f"source_records_without_categories={category_propagation.get('source_records_without_categories', 0)}, "
+            f"fetched_sources_with_categories={category_propagation.get('fetched_sources_with_categories', 0)}, "
+            f"matched_entries_from_categorized_sources={category_propagation.get('matched_entries_from_categorized_sources', 0)}, "
+            f"shown_entries_from_categorized_sources={category_propagation.get('shown_entries_from_categorized_sources', 0)}, "
+            f"diagnosis={category_propagation.get('diagnosis', 'unknown')}"
         ),
         f"- notable fixes needed: {', '.join(evidence['notable_fixes_needed'])}",
         f"- after: {_markdown_cell(evidence.get('after'))}",
