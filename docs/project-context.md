@@ -267,6 +267,15 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ---
 
+## HANDOFF SNAPSHOT (2026-05-29 RSS cleanup decision)
+
+- Branch/remote: continue on `master` and pull latest `origin/master` before work. This decision builds on cleanup handoff commit `f6db81e`.
+- RSS cleanup decision: user accepted deletion for all failed-feed categories from the audit (`http_404`, `parse_or_non_feed`, `ssl_error`, `timeout`, and `http_403`) because RSS feed resources do not need strict completeness and the sample count is sufficient.
+- Committed decision record: `docs/verification/RSS-FAILED-FEED-CLEANUP-DECISION-2026-05-29.md`. It contains only counts, categories, and policy; it does not include feed URLs, raw OPML, tokens, article titles, or article bodies.
+- Duplicate handling: duplicate feed URL remains `0`; duplicate title remains `1` and stays `manual_review` because no specific duplicate-title action was supplied.
+- Post-cleanup validation state: Inoreader-side changed count is unknown, and the local OPML export has not been refreshed after the deletion decision. Do not rerun post-cleanup smoke as proof until a fresh OPML export replaces `_local/rss/feeds.opml.xml`.
+- Next safe restart move: ask for or wait for a fresh OPML export at `_local/rss/feeds.opml.xml`, then rerun `list-feed-sources` and `rss-smoke` with sanitized evidence only. Do not use Inoreader API or tokens unless explicitly re-scoped.
+
 ## HANDOFF SNAPSHOT (2026-05-28 RSS cleanup handoff)
 
 - Branch/remote: `master` is pushed to `origin/master`; restart with `cd C:\Users\PLANNER007\NLMYTGen && git fetch --all --prune && git checkout master && git pull --ff-only origin master`. The cleanup audit commit immediately before this handoff is `b98afac`; after pulling, use the latest `origin/master` commit and read this snapshot.
