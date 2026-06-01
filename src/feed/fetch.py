@@ -42,7 +42,10 @@ def parse_feed_xml(
     source_categories: tuple[str, ...] = (),
 ) -> list[FeedEntry]:
     """Parse RSS 2.0 or Atom 1.0 XML bytes into a list of `FeedEntry`."""
-    root = ET.fromstring(xml_bytes)
+    try:
+        root = ET.fromstring(xml_bytes)
+    except ET.ParseError as exc:
+        raise ValueError(f"Invalid feed XML: {exc}") from exc
 
     tag = root.tag.split("}")[-1] if "}" in root.tag else root.tag
     if tag == "rss":

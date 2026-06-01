@@ -168,6 +168,15 @@ def test_unrecognised_format():
         assert "Unrecognised feed format" in str(e)
 
 
+def test_malformed_xml_raises_value_error():
+    xml = b"<rss><channel><item><title>Broken</title></item></channel>"
+    try:
+        parse_feed_xml(xml)
+        assert False, "Should raise ValueError"
+    except ValueError as e:
+        assert "Invalid feed XML" in str(e)
+
+
 def test_date_filtering():
     entries = parse_feed_xml(RSS_SAMPLE)
     after = "2026-03-28"
