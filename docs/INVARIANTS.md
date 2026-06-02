@@ -25,6 +25,7 @@
 
 ## Responsibility Boundaries
 - Python の責務は CSV / IR / registry / 台本読込後 `.ymmp` patch の接着層に限定する。YMM4 が持つ制作機能を Python 側で再生成しない。
+- RSS / OPML / Inoreader / topic clustering / NotebookLM source-pack selection は NLMYTGen の active 責務外とし、`newsroom-yt-pipeline` 側の上流編集責務として扱う。NLMYTGen は newsroom-produced packet / transcript / ScriptIR / VisualIR / export bundle を受け取ってから、YMM4 CSV / adapter / review / proof ingest へ接続する downstream adapter である。
 - 音声合成・字幕配置・演出指定・レンダリング・サムネイル最終判断は YMM4 または人間の責務。
 - `.ymmp` を直接編集しても音声合成は成立しない。音声合成は YMM4 の台本読込経由でのみ行う。
 - YMM4 / `.ymmp` の直接編集や画面効果の自動注入は高リスクなため、LLM や Automation を使う場合も、まずはテキスト補助・コピペ用メモ・プリセット候補提示に留める。direct edit は workflow proof なしに採用しない。

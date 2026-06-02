@@ -28,6 +28,7 @@ NotebookLM の出力を YMM4 (ゆっくりMovieMaker4) 用 CSV に変換し、�
 - NotebookLM を迂回した LLM による主台本生成
 - ブラウザ向け **Web UI** / **API サーバー**（デスクトップの Electron GUI はスコープ内。[`gui/`](gui/)）
 - YouTube 連携 / アップロード自動化 (台帳上は hold)
+- RSS / OPML / Inoreader / topic clustering / NotebookLM source-pack selection (`newsroom-yt-pipeline` 側の上流編集責務)
 - 自前の音声合成 / TTS
 - サムネイル生成
 - .ymmp のゼロからの生成 (音声ファイル参照を含むため外部生成不可能。台本読込後の限定的な後段適用は patch-ymmp で実施)
