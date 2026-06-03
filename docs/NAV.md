@@ -65,6 +65,8 @@
 
 汎用 Prompt ハブ・ファイル番号式のコア計画・パケット別短文 Prompt は削除済み。テンプレは状態正本ではなく、`open target` / `create target` / `source object` / `actor` / `acceptance meaning` が接続済みのときだけ、該当する詳細手順ファイルを使う。
 
+- [USER_COPYPASTE_BLOCKS.md](USER_COPYPASTE_BLOCKS.md) — **ユーザー用コピペ資産**。ChatGPT / Codex 間で毎回組み立て直していた長文 Prompt / PowerShell / 停止文 / 報告文の保存版。これは通常再開で読む正本でも、次 Agent への実行マニュアルでもない。
+
 **いまどこまで終わっているか**は、次を見る。
 
 - [runtime-state.md](runtime-state.md) の `next_action` / `parallel_replan_*`
