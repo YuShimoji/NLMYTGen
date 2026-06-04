@@ -46,7 +46,7 @@ not render, and does not claim creative final acceptance.
 ## Variant Semantics
 
 - variant_id: g28_ldc_real_estate_information_gap
-- composition_type: chain
+- composition_type: center-focal
 - focal_chain: 元付情報 -> ポータル掲載 -> 借主判断
 - callouts: 情報遅延, 掲載粒度の欠落, 仲介インセンティブ
 - host_role: non-focal lower-corner decoration

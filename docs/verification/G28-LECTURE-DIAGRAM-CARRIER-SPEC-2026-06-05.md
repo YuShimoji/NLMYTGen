@@ -161,7 +161,7 @@ without changing the generic skeleton output path.
 - output HTML: `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap.html`
 - output report: `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_report.md`
 - variant id: `g28_ldc_real_estate_information_gap`
-- composition type: `chain`
+- composition type: `center-focal`
 - focal chain: `元付情報` -> `ポータル掲載` -> `借主判断`
 - callout semantics: `情報遅延`, `掲載粒度の欠落`, `仲介インセンティブ`
 - visible in-frame text budget: two text items / 15 chars

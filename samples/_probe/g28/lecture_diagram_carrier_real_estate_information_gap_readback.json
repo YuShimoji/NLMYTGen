@@ -42,7 +42,7 @@
     "variant_production_candidate_false": true,
     "variant_production_render_false": true,
     "variant_slot_fill_false": true,
-    "variant_composition_chain": true,
+    "variant_composition_center_focal": true,
     "focal_chain_node_count_3": true,
     "focal_chain_labels_expected": true,
     "callout_count_2_to_3": true,
@@ -168,7 +168,7 @@
   },
   "focal_area_readback": {
     "id": "G28_LDC_FocalGroup",
-    "composition_type": "chain",
+    "composition_type": "center-focal",
     "focal_core_rect": {
       "x": 560,
       "y": 240,
@@ -211,7 +211,7 @@
   "variant_readback": {
     "variant_id": "g28_ldc_real_estate_information_gap",
     "source_skeleton_artifact_id": "g28_lecture_diagram_carrier_skeleton_v1",
-    "composition_type": "chain",
+    "composition_type": "center-focal",
     "focal_chain": [
       {
         "id": "G28_LDC_Node_Left",

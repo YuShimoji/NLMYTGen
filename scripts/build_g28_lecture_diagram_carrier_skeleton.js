@@ -195,7 +195,7 @@ function applyRealEstateInformationGapVariant(artifact) {
     slot_fill: false,
     production_render: false,
     creative_final_acceptance: false,
-    composition_type: 'chain',
+    composition_type: 'center-focal',
     focal_chain: [
       { id: 'G28_LDC_Node_Left', label: '元付情報', role: 'source' },
       { id: 'G28_LDC_Focal_Core', label: 'ポータル掲載', role: 'publication_surface' },
@@ -223,7 +223,7 @@ function applyRealEstateInformationGapVariant(artifact) {
     ],
   };
 
-  artifact.scs_mapping.composition_type = 'chain';
+  artifact.scs_mapping.composition_type = 'center-focal';
   artifact.scs_mapping.reading_order = [
     'G28_LDC_Title_Text',
     'G28_LDC_Node_Left',
@@ -378,7 +378,7 @@ function validate() {
       variant_production_candidate_false: variant?.production_candidate === false,
       variant_production_render_false: variant?.production_render === false,
       variant_slot_fill_false: variant?.slot_fill === false,
-      variant_composition_chain: variant?.composition_type === 'chain' && SKELETON.scs_mapping.composition_type === 'chain',
+      variant_composition_center_focal: variant?.composition_type === 'center-focal' && SKELETON.scs_mapping.composition_type === 'center-focal',
       focal_chain_node_count_3: focalChainLabels.length === 3,
       focal_chain_labels_expected: ['元付情報', 'ポータル掲載', '借主判断'].every((label) => focalChainLabels.includes(label)),
       callout_count_2_to_3: calloutLabels.length >= 2 && calloutLabels.length <= 3,
