@@ -5,7 +5,7 @@
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
 - 現在地の正本: 通常再開では `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md` で止める。本ファイル冒頭は状態スナップショットではなく、航海日誌への短い入口。
-- 現フェーズ: G-27 Real Estate DX。Layout Instruction Compliance Proof は machine readback + YMM4 GUI proof まで閉じた。次は `runtime-state.md` の通り、`G27_PublicVsBrokerDB` carrier / slot-fill path に戻る。
+- 現フェーズ: G-27 Real Estate DX の production carrier 待ちは active blocker から外し、case-specific evidence として保持する。次は `runtime-state.md` の通り、newsroom-produced bundle の downstream adapter intake、または G-28 Reference-Driven Generic Screen Carrier の仕様化 / 参照画像受領へ進む。
 - 古い roadmap / prompt / verification packet は現行判断に使わない。必要な履歴は DECISION LOG と HANDOFF SNAPSHOT の該当行だけ読む。
 - Python のスコープは「テキスト変換 + IR/registry + ymmp 限定後段適用」。動画レンダリング・画像生成・YMM4 GUI 操作は Python の責務ではない。
 
@@ -14,14 +14,14 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI artifact → CSV / registry / patched ymmp → YMM4 読込・確認・レンダリング
-- 現在のスライス: G-27 Layout Instruction Compliance Proof は閉じた。次スライスは人間作成の `G27_PublicVsBrokerDB` carrier を受け取ってから readback → anchored slot contract → minimal slot-fill patch へ進む。
-- 成功状態: machine readback、YMM4 GUI proof、creative acceptance、production readiness を混同せず、承認済み G-27 範囲内で制作価値に直結する carrier / slot-fill 接続へ戻すこと。
+- 現在のスライス: G-27 は diagnostic carrier / review console / SCS lessons を証跡として残し、active production carrier blocker としては閉じる。G-28 は proposed であり、参照画像から構図原理を抽出する汎用 screen carrier 設計の入口に留める。
+- 成功状態: G-27 の失敗と学びを捨てずに、production 昇格・slot-fill・render へ飛躍しないまま、次の人間入力を「不動産DX carrier」ではなく「参照画像 3-7 枚 + 参考対象メモ」に変えること。
 
 ---
 
 ## CURRENT LANE
-- 主レーン: Advance（G-27 Real Estate DX carrier / slot-fill path）。現行の優先は [runtime-state.md](runtime-state.md) の `next_action`。
-- 今このレーンを優先する理由: Layout Instruction Compliance Proof で固定 layout instruction の YMM4 GUI visibility は確認できたため、次は production carrier / slot-fill 接続へ戻す必要がある。
+- 主レーン: Explore / Audit（G-28 Reference-Driven Generic Screen Carrier）。現行の優先は [runtime-state.md](runtime-state.md) の `next_action`。
+- 今このレーンを優先する理由: G-27 の carrier 待ちが不動産DX固有の production blocker として長期化したため、既存 evidence を参照資産に畳み、構図・密度・余白・色階層・視線誘導・UI感を汎用化する方が次の制作摩擦を減らせる。
 
 ---
 
@@ -81,6 +81,7 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 | 日付 | 決定事項 | 選択肢 | 決定理由 |
 |------|----------|--------|----------|
+| 2026-06-04 | **G-27 を active production carrier blocker から外し、case-specific legacy / reference evidence として保持する。後継として G-28 Reference-Driven Generic Screen Carrier を proposed 登録する。** | G-27 carrier 待ちを継続 / diagnostic carrier を production 昇格 / G-27 を削除 / 汎用 screen carrier issue へ再生成 | G-27 の diagnostic carrier、review console、SCS lessons は有用だが、不動産DX固有の carrier 未受領を active next action として延命すると制作摩擦が増える。画像丸コピーではなく、参照画像から構図・密度・余白・色階層・視線誘導・UI感を抽出して SCS / YMM4 carrier handoff へ変換する汎用能力に再定義する方が、NLMYTGen の downstream adapter / YMM4 接着層の責務に合う。根拠: INVARIANTS §Responsibility Boundaries + FEATURE_REGISTRY G-27/G-28 + docs/REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md |
 | 2026-06-04 | **Codex 側の作業完了・停止・確認報告は、ChatGPT へ一発コピーできる単一コードブロックを最後に含める。** 正本の通常再開は引き続き `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md` で、詳細テンプレは `docs/USER_COPYPASTE_BLOCKS.md`、対話上の report contract は `docs/INTERACTION_NOTES.md` に置く。 | チャットだけで運用 / AGENTS.md に長いテンプレを追加 / interaction note + reusable copypaste block に分ける | ユーザーは Codex の報告を ChatGPT 側へ毎回貼り付けて監修するため、ドラッグ選択なしでコピーできる唯一の正本が必要。一方で `AGENTS.md` を運用マニュアル化すると再開入口が重くなるため、入口・現状態・対話契約・ユーザー用テンプレを分離する。 |
 | 2026-06-03 | **ChatGPT / Codex 間で再利用する長文 Prompt / PowerShell / 停止文 / 報告文を、Agent再開マニュアルではなくユーザー用コピペ資産として保存する。** 正本は `docs/USER_COPYPASTE_BLOCKS.md`。通常再開で読む3点は増やさず、active next action や runtime-state の代替にも使わない。 | 次Agentへのキックスタートとして扱う / repoに残さない / ユーザー用保存版として残す | ユーザーの目的は次Agentへ作業を実行させることではなく、毎回長文を手で組み立てる摩擦を減らすことだったため。RSS / OPML / NotebookLM source-pack selection は NLMYTGen では旧水路であり、保存版内でも downstream adapter 境界と G-27 分離を保つ必要がある。 |
 | 2026-06-03 | **RSS / OPML / Inoreader / topic clustering / NotebookLM source-pack selection を NLMYTGen の active lane から外し、`newsroom-yt-pipeline` 側の上流編集責務として扱う。** NLMYTGen 側の既存 RSS 実装や過去証跡は削除せず、legacy / reference-only として残す。今後の NLMYTGen は newsroom-produced packet / transcript / ScriptIR / VisualIR / export bundle を受け取ってから、YMM4 CSV、YMM4 adapter、Review Console、proof ingest へ落とす。 | NLMYTGenでOPML復元とsource-pack選定を継続 / RSS実装を削除 / active laneからretireしてnewsroomへ寄せる | newsroom-yt-pipeline が source ingest、article ledger、story clustering、scoring、NotebookLM packet preparation、script workbench interfaces、visual planning interfaces、rights manifests を持つ上流編集repoであり、NLMYTGen の価値経路は downstream adapter と YMM4 production proof にあるため。根拠: INVARIANTS §Responsibility Boundaries + runtime-state 2026-06-03 handoff |

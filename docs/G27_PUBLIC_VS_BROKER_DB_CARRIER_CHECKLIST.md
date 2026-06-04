@@ -3,6 +3,12 @@
 このチェックリストは、人間が YMM4 で `G27_PublicVsBrokerDB` の stable carrier `.ymmp` を作るための最小仕様です。  
 これは template-first / slot-fill へ移行するための carrier 作成指示であり、slot contract、patch script、render、production readiness ではありません。
 
+> Current status: this checklist is retained as G-27 case-specific reference
+> evidence. Active generic screen-carrier work is superseded by
+> [REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md](REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md).
+> The diagnostic G-27 carrier remains diagnostic-only unless a future operator
+> explicitly reopens this case-specific path.
+
 ## 目的と境界
 
 - 目的は、公開ポータルと業者 / private DB の情報差を、安定した二面構図として YMM4 上に固定すること。
