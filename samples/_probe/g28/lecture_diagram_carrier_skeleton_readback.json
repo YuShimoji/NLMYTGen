@@ -1,0 +1,194 @@
+{
+  "artifact_id": "g28_lecture_diagram_carrier_skeleton_v1",
+  "status": "passed",
+  "diagnostic_only": true,
+  "production_candidate": false,
+  "generated_files": {
+    "skeletonJson": "samples/_probe/g28/lecture_diagram_carrier_skeleton.json",
+    "readbackJson": "samples/_probe/g28/lecture_diagram_carrier_skeleton_readback.json",
+    "html": "samples/_probe/g28/lecture_diagram_carrier_skeleton.html",
+    "reportMd": "samples/_probe/g28/lecture_diagram_carrier_skeleton_report.md"
+  },
+  "totals": {
+    "primitive_item_count": 14,
+    "shape_item_count": 12,
+    "text_item_count": 2,
+    "semantic_group_count": 5,
+    "semantic_element_count": 8,
+    "active_callout_slot_count": 3,
+    "caption_overlap_count": 0,
+    "text_chars": 16
+  },
+  "checks": {
+    "diagnostic_only": true,
+    "production_candidate_false": true,
+    "no_external_image_or_url": true,
+    "ymmp_not_generated": true,
+    "frame_16_9_1920_1080": true,
+    "title_area_top_short": true,
+    "caption_reserve_bottom_20pct": true,
+    "caption_reserve_clear": true,
+    "focal_area_in_main_canvas": true,
+    "host_placeholders_above_caption": true,
+    "active_callout_slot_count_2_to_3": true,
+    "semantic_element_count_8_to_14": true,
+    "primitive_item_count_bounded": true,
+    "shape_size_mode_widthheight": true,
+    "in_frame_text_budget": true,
+    "no_indexed_whiteboard": true,
+    "no_main_content_outside_main_canvas_except_hosts": true
+  },
+  "failures": [],
+  "layer_order": [
+    {
+      "layer": 1,
+      "id": "G28_LDC_BG_Stage",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_Stage",
+      "semantic_role": "decoration"
+    },
+    {
+      "layer": 2,
+      "id": "G28_LDC_TitleBand_BG",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_TitleBand",
+      "semantic_role": "label"
+    },
+    {
+      "layer": 3,
+      "id": "G28_LDC_Title_Text",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_TitleBand",
+      "semantic_role": "label"
+    },
+    {
+      "layer": 4,
+      "id": "G28_LDC_Focal_Core",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "semantic_role": "focal_anchor"
+    },
+    {
+      "layer": 5,
+      "id": "G28_LDC_Focal_Label",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "semantic_role": "label"
+    },
+    {
+      "layer": 6,
+      "id": "G28_LDC_Node_Left",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "semantic_role": "internal_node"
+    },
+    {
+      "layer": 6,
+      "id": "G28_LDC_Node_Right",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "semantic_role": "internal_node"
+    },
+    {
+      "layer": 7,
+      "id": "G28_LDC_Connector_Left",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "semantic_role": "connector"
+    },
+    {
+      "layer": 7,
+      "id": "G28_LDC_Connector_Right",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "semantic_role": "connector"
+    },
+    {
+      "layer": 8,
+      "id": "G28_LDC_CalloutSlot_1",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "semantic_role": "supporting"
+    },
+    {
+      "layer": 8,
+      "id": "G28_LDC_CalloutSlot_2",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "semantic_role": "supporting"
+    },
+    {
+      "layer": 8,
+      "id": "G28_LDC_CalloutSlot_3",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "semantic_role": "supporting"
+    },
+    {
+      "layer": 9,
+      "id": "G28_LDC_Host_Left",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_Hosts",
+      "semantic_role": "decoration"
+    },
+    {
+      "layer": 9,
+      "id": "G28_LDC_Host_Right",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_Hosts",
+      "semantic_role": "decoration"
+    }
+  ],
+  "caption_reserve_readback": {
+    "rect": {
+      "x": 0,
+      "y": 810,
+      "width": 1920,
+      "height": 216
+    },
+    "clear": true,
+    "overlaps": []
+  },
+  "focal_area_readback": {
+    "id": "G28_LDC_FocalGroup",
+    "composition_type": "center-focal",
+    "focal_core_rect": {
+      "x": 560,
+      "y": 240,
+      "width": 800,
+      "height": 360
+    },
+    "focal_core_in_main_canvas": true
+  },
+  "host_role_readback": {
+    "left": {
+      "x": 112,
+      "y": 655,
+      "width": 204,
+      "height": 145
+    },
+    "right": {
+      "x": 1604,
+      "y": 655,
+      "width": 204,
+      "height": 145
+    },
+    "role": "lower-corner decoration / emotional anchor, not focal",
+    "above_caption_reserve": true
+  },
+  "callout_count_readback": {
+    "count": 3,
+    "allowed_min": 2,
+    "allowed_max": 3,
+    "ids": [
+      "G28_LDC_CalloutSlot_1",
+      "G28_LDC_CalloutSlot_2",
+      "G28_LDC_CalloutSlot_3"
+    ]
+  },
+  "limitations": [
+    "No YMM4 .ymmp file generated in this slice because G-28 v0.1 still excludes zero-generation.",
+    "HTML is visualization-only and not a render or creative final acceptance.",
+    "Callout slots are empty placeholders until a theme-specific slot-fill slice exists."
+  ]
+}
