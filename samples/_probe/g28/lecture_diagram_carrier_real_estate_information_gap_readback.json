@@ -37,7 +37,7 @@
     "in_frame_text_budget": true,
     "no_indexed_whiteboard": true,
     "no_main_content_outside_main_canvas_except_hosts": true,
-    "variant_id_real_estate_information_gap": true,
+    "variant_id_g28_ldc_real_estate_information_gap": true,
     "variant_diagnostic_only": true,
     "variant_production_candidate_false": true,
     "variant_production_render_false": true,
@@ -209,7 +209,7 @@
     "Callout slots are empty placeholders until a theme-specific slot-fill slice exists."
   ],
   "variant_readback": {
-    "variant_id": "real_estate_information_gap",
+    "variant_id": "g28_ldc_real_estate_information_gap",
     "source_skeleton_artifact_id": "g28_lecture_diagram_carrier_skeleton_v1",
     "composition_type": "chain",
     "focal_chain": [

@@ -160,7 +160,7 @@ without changing the generic skeleton output path.
 - output readback: `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_readback.json`
 - output HTML: `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap.html`
 - output report: `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_report.md`
-- variant id: `real_estate_information_gap`
+- variant id: `g28_ldc_real_estate_information_gap`
 - composition type: `chain`
 - focal chain: `元付情報` -> `ポータル掲載` -> `借主判断`
 - callout semantics: `情報遅延`, `掲載粒度の欠落`, `仲介インセンティブ`

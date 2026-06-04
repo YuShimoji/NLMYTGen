@@ -477,11 +477,11 @@
       "promote G-27 diagnostic evidence into G-28"
     ]
   },
-  "variant_id": "real_estate_information_gap",
+  "variant_id": "g28_ldc_real_estate_information_gap",
   "source_skeleton_artifact_id": "g28_lecture_diagram_carrier_skeleton_v1",
   "theme_variant": {
-    "id": "real_estate_information_gap",
-    "topic": "real_estate_information_gap",
+    "id": "g28_ldc_real_estate_information_gap",
+    "theme": "real_estate_information_gap",
     "diagnostic_only": true,
     "production_candidate": false,
     "slot_fill": false,

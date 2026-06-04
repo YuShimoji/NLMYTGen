@@ -185,11 +185,11 @@ function parseVariantArg(argv) {
 function applyRealEstateInformationGapVariant(artifact) {
   artifact.artifact_id = 'g28_lecture_diagram_carrier_real_estate_information_gap_v1';
   artifact.artifact_type = 'diagnostic_carrier_theme_variant';
-  artifact.variant_id = 'real_estate_information_gap';
+  artifact.variant_id = 'g28_ldc_real_estate_information_gap';
   artifact.source_skeleton_artifact_id = 'g28_lecture_diagram_carrier_skeleton_v1';
   artifact.theme_variant = {
-    id: 'real_estate_information_gap',
-    topic: 'real_estate_information_gap',
+    id: 'g28_ldc_real_estate_information_gap',
+    theme: 'real_estate_information_gap',
     diagnostic_only: true,
     production_candidate: false,
     slot_fill: false,
@@ -373,7 +373,7 @@ function validate() {
     const focalChainLabels = (variant?.focal_chain || []).map((entry) => entry.label);
     const calloutLabels = (variant?.callouts || []).map((entry) => entry.label);
     Object.assign(checks, {
-      variant_id_real_estate_information_gap: SKELETON.variant_id === 'real_estate_information_gap',
+      variant_id_g28_ldc_real_estate_information_gap: SKELETON.variant_id === 'g28_ldc_real_estate_information_gap',
       variant_diagnostic_only: variant?.diagnostic_only === true,
       variant_production_candidate_false: variant?.production_candidate === false,
       variant_production_render_false: variant?.production_render === false,
