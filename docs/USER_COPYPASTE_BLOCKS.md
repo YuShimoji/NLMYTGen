@@ -447,5 +447,128 @@ BEGIN_COPY_BLOCK_FOR_CHATGPT
 
 END_COPY_BLOCK_FOR_CHATGPT
 
+===== SECTION 15: G-28 parked / input-wait ChatGPT貼付用コードブロック =====
+用途: G-28 Reference-Driven Generic Screen Carrier を「参照画像待ち」として安全に駐車し、別作業へ移れる状態を ChatGPT 監修へそのまま貼るための単一コードブロック形式。G-28 を実装完了のように書かない。raw OPML、URL、token、article body、private data、reference image URL は入れない。
+
+BEGIN_COPY_BLOCK_FOR_CHATGPT
+
+# NLMYTGen G-28 区切り報告
+
+## authority / lane
+- repo:
+- branch / HEAD:
+- origin同期:
+- tracked working tree:
+- known untracked:
+- active lane:
+- parked lane:
+- owner:
+- authority docs read:
+
+## 実施したこと
+-
+-
+-
+
+## 変更ファイル
+- なし / あり
+- 変更した場合:
+  - path:
+  - 目的:
+  - commit:
+
+## G-28 parking
+- status: parked / input-wait
+- parked reason: 参照画像と per-image memo が未受領
+- next input: 人間が用意する参照画像 3-7 枚 + 各画像の参考対象メモ
+- return condition: 画像を素材ではなく principle source として読み、reference style brief / SCS mapping / generic carrier archetype を作れる状態
+- not doing now: `.ymmp` ゼロ生成、YMM4 carrier authoring、adapter patch、render、production timing、creative final acceptance
+
+## G-27 の扱い
+- active blocker に戻したか:
+- retained evidence:
+- diagnostic carrier production 昇格:
+- review_decisions.json の扱い:
+
+## 人間側作業
+- 必要な操作: 参照画像を 3-7 枚選ぶ
+- 必要な入力: 各画像に「何を参考にしたいか」の短いメモを付ける
+- 画像の扱い: 素材ではなく、構図・余白・密度・色階層・視線誘導・UI感の参照標本として扱う
+- OK条件:
+- NG時に返す情報:
+
+## 参照画像メモの推奨テンプレート
+G-28 参照画像入力
+
+画像1:
+- 参考対象:
+- 使いたい理由:
+- 避けたい要素:
+
+画像2:
+- 参考対象:
+- 使いたい理由:
+- 避けたい要素:
+
+画像3:
+- 参考対象:
+- 使いたい理由:
+- 避けたい要素:
+
+全体方針:
+- light / dark の希望:
+- 情報密度:
+- YouTube解説感:
+- DB / dashboard 感:
+- lock / gated information 感:
+- 最初に試したい題材:
+  - 不動産DX
+  - newsroom explainer
+  - AI monitoring
+  - baseball / sports news
+  - その他
+
+## 別作業へ移る条件
+- 進めてよいこと:
+- 混ぜてはいけないこと:
+- 次にユーザーから受け取るもの:
+
+## 検証
+- command:
+  result:
+- command:
+  result:
+- full pytest:
+  実行 / 省略
+  理由:
+
+## 境界維持
+- RSS / OPML / Inoreader / topic clustering:
+  実行していない / 実行した場合は理由
+- NotebookLM API / 実投入:
+  実行していない
+- G-27 diagnostic carrier production 昇格:
+  実行していない
+- G-28 image / URL / raw reference commit:
+  実行していない
+- YMM4 .ymmp ゼロ生成 / render / production timing / creative final acceptance:
+  実行していない
+- known untracked:
+  触っていない
+
+## そもそも論チェック
+- 長期 blocker 化の有無:
+- human work transfer の有無:
+- docs-only drift の危険:
+- case-specific / generic capability の分離:
+- evidence / authority の分離:
+
+## 次に返すもの / 次の入力
+- 人間が返すもの:
+- Agentが次にできること:
+- 進んではいけない作業:
+
+END_COPY_BLOCK_FOR_CHATGPT
+
 ===== END =====
 ```
