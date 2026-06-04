@@ -150,6 +150,33 @@ carrier or slot-fill adapter can reuse the same mapping.
 - in-frame text budget passes
 - no `indexed_whiteboard`
 
+## Theme Variant v1: `real_estate_information_gap`
+
+The first theme-specific diagnostic variant is generated from the same skeleton,
+without changing the generic skeleton output path.
+
+- generator: `node scripts\build_g28_lecture_diagram_carrier_skeleton.js --write --variant real_estate_information_gap`
+- output JSON: `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap.json`
+- output readback: `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_readback.json`
+- output HTML: `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap.html`
+- output report: `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_report.md`
+- variant id: `real_estate_information_gap`
+- composition type: `chain`
+- focal chain: `元付情報` -> `ポータル掲載` -> `借主判断`
+- callout semantics: `情報遅延`, `掲載粒度の欠落`, `仲介インセンティブ`
+- visible in-frame text budget: two text items / 15 chars
+- slot-fill state: semantic labels only; callout slots are not text-filled claims
+- host role: non-focal lower-corner decoration
+- dense table: false
+- indexed whiteboard: false
+- external image count: 0
+- external URL count: 0
+- token-like pattern count: 0
+
+This variant is still diagnostic-only. It does not approve a production carrier,
+does not revive G-27, does not generate `.ymmp`, does not render, does not use
+source footage, and does not create or record image paths or external URLs.
+
 ## Failure Modes
 
 - `indexed_whiteboard`: equal-weight cards or bullet rows replace focal hierarchy
