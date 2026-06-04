@@ -373,5 +373,79 @@ render / creative acceptance / production timing には進まないでくださ�
 _tmp、OPML、NotebookLM出力、G-27 carrier のどれも揃っていません。
 仮データで進めず、repoを変更せず、次に必要な入力だけ短く返してください。
 
+===== SECTION 14: ChatGPT貼付用 Codex作業報告コードブロック =====
+用途: Codex の最終報告を ChatGPT 側へそのまま貼り、監修できるようにするための単一コードブロック形式。毎回の確認・停止・作業完了で、通常文の短い要約の後にこの形を使う。ブロック内に記事URL、feed URL、raw OPML、token、article body、private data は入れない。
+
+BEGIN_COPY_BLOCK_FOR_CHATGPT
+
+# NLMYTGen 作業報告
+
+## authority / lane
+- repo:
+- branch / HEAD:
+- origin同期:
+- tracked working tree:
+- known untracked:
+- active lane:
+- owner:
+- authority docs read:
+
+## 実施したこと
+-
+-
+-
+
+## 変更ファイル
+- なし / あり
+- 変更した場合:
+  - path:
+  - 目的:
+  - commit:
+
+## 検証
+- command:
+  result:
+- command:
+  result:
+- full pytest:
+  実行 / 省略
+  理由:
+
+## 境界維持
+- RSS / OPML / Inoreader / topic clustering:
+  実行していない / 実行した場合は理由
+- NotebookLM API / 実投入:
+  実行していない
+- G-27 carrierなしslot-fill/render/creative:
+  実行していない
+- raw OPML / URL / token / article body:
+  commitしていない
+- known untracked:
+  触っていない
+
+## 欠けているartifact
+- newsroom bundle:
+- G-27 carrier:
+- review_decisions.json:
+- その他:
+
+## 判断
+- 現在できること:
+- まだできないこと:
+- blocker:
+- 非blocker:
+
+## 次に返すもの / 次の入力
+- 人間が返すもの:
+- newsroom側から返すもの:
+- G-27側で返すもの:
+- Agentが次にできること:
+
+## 注意
+- 次に進んでよい作業:
+- 進んではいけない作業:
+
+END_COPY_BLOCK_FOR_CHATGPT
+
 ===== END =====
 ```
