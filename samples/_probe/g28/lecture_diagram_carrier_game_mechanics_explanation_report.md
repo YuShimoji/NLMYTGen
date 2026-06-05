@@ -1,6 +1,6 @@
-# G-28 Lecture Diagram Carrier g28_ldc_real_estate_information_gap Variant Report
+# G-28 Lecture Diagram Carrier g28_ldc_game_mechanics_explanation Variant Report
 
-- artifact: g28_lecture_diagram_carrier_real_estate_information_gap_v1
+- artifact: g28_lecture_diagram_carrier_game_mechanics_explanation_v1
 - status: passed
 - diagnostic_only: true
 - production_candidate: false
@@ -45,12 +45,12 @@ not render, and does not claim creative final acceptance.
 
 ## Variant Semantics
 
-- variant_id: g28_ldc_real_estate_information_gap
+- variant_id: g28_ldc_game_mechanics_explanation
 - composition_type: center-focal
-- focal_chain: 元付情報 -> ポータル掲載 -> 借主判断
-- callouts: 情報遅延, 掲載粒度の欠落, 仲介インセンティブ
+- focal_chain: 入力操作 -> 内部ルール -> 画面上の結果
+- callouts: 操作感, 判定 / 当たり判定, リスクとリターン
 - host_role: non-focal lower-corner decoration
-- failure_modes: dense_table, indexed_whiteboard, host_as_focal, subtitle_collision, source_over_decoration
+- failure_modes: gameplay_screenshot_overload, dense_table, indexed_whiteboard, host_as_focal, subtitle_collision
 - dense_table: false
 - indexed_whiteboard: false
 - source_footage_carrier: false

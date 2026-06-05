@@ -177,6 +177,38 @@ This variant is still diagnostic-only. It does not approve a production carrier,
 does not revive G-27, does not generate `.ymmp`, does not render, does not use
 source footage, and does not create or record image paths or external URLs.
 
+## Theme Variant v2: `game_mechanics_explanation`
+
+The second theme-specific diagnostic variant checks whether the same Lecture
+Diagram Carrier can explain game review / game mechanics topics without moving
+into Source-Footage Carrier or gameplay screenshot handling.
+
+- generator: `node scripts\build_g28_lecture_diagram_carrier_skeleton.js --write --variant game_mechanics_explanation`
+- output JSON: `samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation.json`
+- output readback: `samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_readback.json`
+- output HTML: `samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation.html`
+- output report: `samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_report.md`
+- variant id: `g28_ldc_game_mechanics_explanation`
+- theme: game mechanics explanation
+- composition type: `center-focal`
+- focal chain: `入力操作` -> `内部ルール` -> `画面上の結果`
+- callout semantics: `操作感`, `判定 / 当たり判定`, `リスクとリターン`
+- visible in-frame text budget: two text items / 13 chars
+- slot-fill state: semantic labels only; callout slots are not text-filled claims
+- host role: non-focal lower-corner decoration
+- failure modes: `gameplay_screenshot_overload`, `dense_table`, `indexed_whiteboard`, `host_as_focal`, `subtitle_collision`
+- dense table: false
+- indexed whiteboard: false
+- source footage carrier: false
+- external image count: 0
+- external URL count: 0
+- token-like pattern count: 0
+
+This variant is still diagnostic-only. It does not approve a production carrier,
+does not become a source-footage carrier, does not ingest gameplay screenshots,
+does not generate `.ymmp`, does not render, and does not create or record image
+paths or external URLs.
+
 ## Failure Modes
 
 - `indexed_whiteboard`: equal-weight cards or bullet rows replace focal hierarchy

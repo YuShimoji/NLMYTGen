@@ -1,5 +1,5 @@
 {
-  "artifact_id": "g28_lecture_diagram_carrier_real_estate_information_gap_v1",
+  "artifact_id": "g28_lecture_diagram_carrier_game_mechanics_explanation_v1",
   "artifact_type": "diagnostic_carrier_theme_variant",
   "diagnostic_only": true,
   "production_candidate": false,
@@ -91,7 +91,9 @@
       "information_overload",
       "host_as_focal",
       "subtitle_collision",
-      "source_over_decoration"
+      "source_over_decoration",
+      "gameplay_screenshot_overload",
+      "dense_table"
     ]
   },
   "groups": [
@@ -198,7 +200,7 @@
         "y": -434
       },
       "style": {
-        "text": "情報非対称の流れ",
+        "text": "操作と結果の関係",
         "font_size": 56,
         "fill": "#FFF9FAFB"
       }
@@ -242,7 +244,7 @@
         "y": -130
       },
       "style": {
-        "text": "判断までの遅れ",
+        "text": "内部ルール",
         "font_size": 56,
         "fill": "#FFE0F2FE"
       }
@@ -474,83 +476,86 @@
       "claim creative final acceptance",
       "render production output",
       "treat this theme variant as a production carrier",
+      "promote this into a source-footage carrier without a separate scope",
       "promote G-27 diagnostic evidence into G-28"
     ]
   },
-  "variant_id": "g28_ldc_real_estate_information_gap",
+  "variant_id": "g28_ldc_game_mechanics_explanation",
   "source_skeleton_artifact_id": "g28_lecture_diagram_carrier_skeleton_v1",
   "theme_variant": {
-    "id": "g28_ldc_real_estate_information_gap",
-    "theme": "real_estate_information_gap",
+    "id": "g28_ldc_game_mechanics_explanation",
+    "theme": "game_mechanics_explanation",
     "diagnostic_only": true,
     "production_candidate": false,
     "slot_fill": false,
     "production_render": false,
     "creative_final_acceptance": false,
     "composition_type": "center-focal",
-    "title_text": "情報非対称の流れ",
-    "focal_label_text": "判断までの遅れ",
+    "title_text": "操作と結果の関係",
+    "focal_label_text": "内部ルール",
     "focal_chain": [
       {
         "id": "G28_LDC_Node_Left",
-        "label": "元付情報",
-        "role": "source"
+        "label": "入力操作",
+        "role": "player_input"
       },
       {
         "id": "G28_LDC_Focal_Core",
-        "label": "ポータル掲載",
-        "role": "publication_surface"
+        "label": "内部ルール",
+        "role": "rule_system"
       },
       {
         "id": "G28_LDC_Node_Right",
-        "label": "借主判断",
-        "role": "viewer_decision"
+        "label": "画面上の結果",
+        "role": "screen_result"
       }
     ],
     "callouts": [
       {
         "slot": "G28_LDC_CalloutSlot_1",
-        "label": "情報遅延"
+        "label": "操作感"
       },
       {
         "slot": "G28_LDC_CalloutSlot_2",
-        "label": "掲載粒度の欠落"
+        "label": "判定 / 当たり判定"
       },
       {
         "slot": "G28_LDC_CalloutSlot_3",
-        "label": "仲介インセンティブ"
+        "label": "リスクとリターン"
       }
     ],
     "callout_text_policy": "semantic labels only; slots are not text-filled in this diagnostic variant",
     "expected_focal_chain_labels": [
-      "元付情報",
-      "ポータル掲載",
-      "借主判断"
+      "入力操作",
+      "内部ルール",
+      "画面上の結果"
     ],
     "expected_callout_labels": [
-      "情報遅延",
-      "掲載粒度の欠落",
-      "仲介インセンティブ"
+      "操作感",
+      "判定 / 当たり判定",
+      "リスクとリターン"
     ],
     "failure_modes": [
+      "gameplay_screenshot_overload",
       "dense_table",
       "indexed_whiteboard",
       "host_as_focal",
-      "subtitle_collision",
-      "source_over_decoration"
+      "subtitle_collision"
     ],
     "dense_table": false,
     "indexed_whiteboard": false,
+    "source_footage_carrier": false,
     "external_image_count": 0,
     "external_url_count": 0,
     "token_like_pattern_count": 0,
     "forbidden_scope": [
-      "G-27 carrier promotion",
+      "source footage carrier promotion",
+      "gameplay screenshot intake",
       "production render",
       "creative final acceptance",
       "YMM4 project generation",
-      "source footage intake",
       "external image or URL use",
+      "G-27 carrier promotion",
       "RSS or NotebookLM source-pack work"
     ]
   }

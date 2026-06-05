@@ -1,13 +1,13 @@
 {
-  "artifact_id": "g28_lecture_diagram_carrier_real_estate_information_gap_v1",
+  "artifact_id": "g28_lecture_diagram_carrier_game_mechanics_explanation_v1",
   "status": "passed",
   "diagnostic_only": true,
   "production_candidate": false,
   "generated_files": {
-    "skeletonJson": "samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap.json",
-    "readbackJson": "samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_readback.json",
-    "html": "samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap.html",
-    "reportMd": "samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_report.md"
+    "skeletonJson": "samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation.json",
+    "readbackJson": "samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_readback.json",
+    "html": "samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation.html",
+    "reportMd": "samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_report.md"
   },
   "totals": {
     "primitive_item_count": 14,
@@ -17,7 +17,7 @@
     "semantic_element_count": 8,
     "active_callout_slot_count": 3,
     "caption_overlap_count": 0,
-    "text_chars": 15
+    "text_chars": 13
   },
   "checks": {
     "diagnostic_only": true,
@@ -211,49 +211,49 @@
     "Callout slots are empty placeholders until a theme-specific slot-fill slice exists."
   ],
   "variant_readback": {
-    "variant_id": "g28_ldc_real_estate_information_gap",
+    "variant_id": "g28_ldc_game_mechanics_explanation",
     "source_skeleton_artifact_id": "g28_lecture_diagram_carrier_skeleton_v1",
     "composition_type": "center-focal",
     "focal_chain": [
       {
         "id": "G28_LDC_Node_Left",
-        "label": "元付情報",
-        "role": "source"
+        "label": "入力操作",
+        "role": "player_input"
       },
       {
         "id": "G28_LDC_Focal_Core",
-        "label": "ポータル掲載",
-        "role": "publication_surface"
+        "label": "内部ルール",
+        "role": "rule_system"
       },
       {
         "id": "G28_LDC_Node_Right",
-        "label": "借主判断",
-        "role": "viewer_decision"
+        "label": "画面上の結果",
+        "role": "screen_result"
       }
     ],
     "focal_chain_node_count": 3,
     "callouts": [
       {
         "slot": "G28_LDC_CalloutSlot_1",
-        "label": "情報遅延"
+        "label": "操作感"
       },
       {
         "slot": "G28_LDC_CalloutSlot_2",
-        "label": "掲載粒度の欠落"
+        "label": "判定 / 当たり判定"
       },
       {
         "slot": "G28_LDC_CalloutSlot_3",
-        "label": "仲介インセンティブ"
+        "label": "リスクとリターン"
       }
     ],
     "callout_count": 3,
     "host_role": "non-focal lower-corner decoration",
     "failure_modes": [
+      "gameplay_screenshot_overload",
       "dense_table",
       "indexed_whiteboard",
       "host_as_focal",
-      "subtitle_collision",
-      "source_over_decoration"
+      "subtitle_collision"
     ],
     "dense_table": false,
     "indexed_whiteboard": false,
@@ -271,17 +271,17 @@
   },
   "text_budget_readback": {
     "labels": 2,
-    "chars": 15,
+    "chars": 13,
     "dense": false,
     "dense_table": false,
     "visible_text_items": [
       {
         "id": "G28_LDC_Title_Text",
-        "text": "情報非対称の流れ"
+        "text": "操作と結果の関係"
       },
       {
         "id": "G28_LDC_Focal_Label",
-        "text": "判断までの遅れ"
+        "text": "内部ルール"
       }
     ]
   },
