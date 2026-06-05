@@ -570,5 +570,73 @@ G-28 参照画像入力
 
 END_COPY_BLOCK_FOR_CHATGPT
 
+===== SECTION 16: G-28 Map / Evidence Carrier 完了後の再開Prompt =====
+用途: G-28 Reference-Driven Generic Screen Carrier が Lecture Diagram generic skeleton、2つの theme diagnostic variants、Map / Evidence Carrier diagnostic skeleton まで進んだ後、次の ChatGPT / Codex へ bounded context を渡すためのPrompt。G-28をproduction完了のように書かない。画像、URL、raw reference、source footage、RSS、NotebookLM、G-27復帰を混ぜない。
+
+NLMYTGen の G-28 Reference-Driven Generic Screen Carrier を続けてください。
+
+repo:
+C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
+
+開始前:
+1. git status --porcelain=v1 -uno
+2. git fetch --all --prune
+3. git pull --ff-only
+4. git rev-list --left-right --count HEAD...origin/master
+5. AGENTS.md -> docs/REPO_LOCAL_RULES.md -> docs/runtime-state.md を読む。
+
+現状:
+- G-28 Reference-Driven Generic Screen Carrier は diagnostic-only の refinement lane。
+- Lecture Diagram Carrier generic skeleton は生成済みで readback-passed。
+- Lecture Diagram theme variants は `real_estate_information_gap` と `game_mechanics_explanation` の2つだけ生成済みで、どちらも readback-passed。
+- Map / Evidence Carrier は Lecture Diagram の追加 theme variant ではなく、別 archetype の diagnostic skeleton として生成済みで readback-passed。
+- Map / Evidence output:
+  - samples/_probe/g28/map_evidence_carrier_skeleton.json
+  - samples/_probe/g28/map_evidence_carrier_skeleton_readback.json
+  - samples/_probe/g28/map_evidence_carrier_skeleton.html
+  - samples/_probe/g28/map_evidence_carrier_skeleton_report.md
+- Map / Evidence spec:
+  - docs/verification/G28-MAP-EVIDENCE-CARRIER-SPEC-2026-06-05.md
+- artifact commit:
+  - d1a421a docs: add G-28 map evidence carrier skeleton
+- 最新remote handoff commit は `git log -1 --oneline` で確認する。
+
+readback境界:
+- diagnostic_only=true
+- production_candidate=false
+- frame=1920x1080 / 16:9
+- composition_type=center-focal
+- caption reserve clear
+- annotation slots=3
+- source note bounded
+- host role non-focal
+- dense_table=false
+- indexed_whiteboard=false
+- tiny_text=false
+- external_image_count=0
+- external_url_count=0
+- token_like_pattern_count=0
+- image_path=false
+- image_url=false
+- raw_reference=false
+
+やらないこと:
+- Lecture Diagram theme variant をこれ以上量産しない。
+- G-28をproduction完了扱いしない。
+- G-27 production carrier pathへ戻らない。
+- 実地図画像、衛星画像、image path、URL、raw referenceをrepoに入れない。
+- source footage / gameplay screenshot intakeへ進まない。
+- .ymmp generation、render、production timing、creative final acceptance、実素材slot-fillをしない。
+- RSS / OPML / Inoreader / NotebookLM source-pack workへ戻らない。
+
+次にやるなら:
+- G-28 archetype群の整理、frame contract比較、または human review packet の最小設計に限定する。
+- 実装する場合は `docs/runtime-state.md` と `docs/project-context.md` に短く現在位置を残し、commit/push後に `HEAD...origin/master = 0 0` を確認する。
+
+報告条件:
+- ChatGPT監修へ貼れる単一コードブロックで返す。
+- G-28をproduction完了のように書かない。
+- 次に渡すPrompt欄を必ず含める。
+
 ===== END =====
 ```
