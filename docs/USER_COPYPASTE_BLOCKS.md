@@ -638,5 +638,62 @@ readback境界:
 - G-28をproduction完了のように書かない。
 - 次に渡すPrompt欄を必ず含める。
 
+===== SECTION 17: G-28 Game Mechanics Human Review Packet Resume Prompt =====
+Use when resuming G-28 after the game-mechanics carrier selection and human review packet. This prompt keeps G-28 diagnostic-only and does not reopen Source-Footage, G-27, RSS, NotebookLM, YMM4 generation, render, production timing, or creative final acceptance.
+
+NLMYTGen の G-28 Reference-Driven Generic Screen Carrier を続けてください。
+
+repo:
+C:\Users\PLANNER007\NLMYTGen
+
+開始前:
+1. git status --porcelain=v1 -uno
+2. git fetch --all --prune
+3. git pull --ff-only
+4. git rev-list --left-right --count HEAD...origin/master
+5. AGENTS.md -> docs/REPO_LOCAL_RULES.md -> docs/runtime-state.md を読む。
+
+現状:
+- latest remote handoff is after `c638992 docs: add G-28 game mechanics review packet`; confirm current latest with `git log -1 --oneline`.
+- `docs/verification/G28-CARRIER-ARCHETYPE-TOOLBOX-2026-06-05.md` で Lecture Diagram / Map Evidence / Source-Footage / Conversation Buffer の4 archetype を整理済み。
+- `docs/verification/G28-SHOT-CARRIER-SELECTION-WORKSHEET-2026-06-05.md` で次の1 shot の carrier selection worksheet を作成済み。
+- `docs/verification/G28-SHOT-CARRIER-SELECTION-GAME-MECHANICS-2026-06-05.md` で game mechanics shot は Lecture Diagram Carrier primary、Source-Footage Carrier future-only backup と判定済み。
+- `docs/verification/G28-GAME-MECHANICS-HUMAN-REVIEW-PACKET-2026-06-05.md` で human design review packet 作成済み。
+- 対象 precedent は `samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation.*`。
+- Lecture Diagram generic skeleton、`real_estate_information_gap`、`game_mechanics_explanation` は readback-passed。
+- Map / Evidence Carrier skeleton も readback-passed。
+- すべて `diagnostic_only=true` / `production_candidate=false`。
+- Source-Footage Carrier と Conversation / Buffer Carrier は definition-only。generator / JSON / readback / HTML / report は未着手。
+- G-28 を production 完了扱いしない。
+- Source-Footage へ進んだ扱いにしない。
+
+次の最小候補:
+- human review の返答を受けて `accept` / `revise` / `reject` を docs artifact に記録する。
+- `accept` なら scoped YMM4-saved carrier review を検討可能。ただし `.ymmp` 生成、render、creative final acceptance ではない。
+- `revise` なら diagram semantics の修正指示 artifact を作る。新しい theme variant は明示されるまで作らない。
+- Source-Footage が必要と判断された場合だけ、別 slice で design-only checklist を作る。footage / screenshot intake はしない。
+
+禁止:
+- 新しい theme variant / carrier skeleton / generator を追加しない。
+- Source-Footage Carrier generator を作らない。
+- gameplay screenshot intake / source footage intake をしない。
+- image path、URL、raw reference を repo に入れない。
+- `.ymmp` 生成、render、production timing、creative final acceptance に進まない。
+- G-27 active blocker に戻らない。
+- RSS / OPML / Inoreader / NotebookLM に戻らない。
+- 既存 JSON / HTML / readback / report / generator を変更しない。
+- AGENTS.md は変更しない。
+
+検証:
+- docs-only なら `git diff --check`、`git diff --cached --check`、staged forbidden scan。
+- `src/` / `gui/` / Python package / tests を変更していなければ pytest は省略可。
+- commit / push 後 `HEAD...origin/master` を `0 0` にする。
+
+最終報告:
+- G-28 を production 完了のように書かない。
+- Source-Footage へ進んだように書かない。
+- 変更内容、残る不確実性、次の取っ掛かりを自然文と必要な比較表で返す。
+- 次に渡すPrompt欄を含める。
+
 ===== END =====
 ```
