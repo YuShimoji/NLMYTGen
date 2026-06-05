@@ -638,13 +638,13 @@ readback境界:
 - G-28をproduction完了のように書かない。
 - 次に渡すPrompt欄を必ず含める。
 
-===== SECTION 17: G-28 Game Mechanics Human Review Packet Resume Prompt =====
-Use when resuming G-28 after the game-mechanics carrier selection and human review packet. This prompt keeps G-28 diagnostic-only and does not reopen Source-Footage, G-27, RSS, NotebookLM, YMM4 generation, render, production timing, or creative final acceptance.
+===== SECTION 17: G-28 Game Mechanics Diagram Semantics Resume Prompt =====
+Use when resuming G-28 after the game-mechanics human review returned `decision: revise` and the diagram semantics note was recorded. This prompt keeps G-28 diagnostic-only and does not reopen Source-Footage, G-27, RSS, NotebookLM, YMM4 generation, render, production timing, or creative final acceptance.
 
 NLMYTGen の G-28 Reference-Driven Generic Screen Carrier を続けてください。
 
 repo:
-C:\Users\PLANNER007\NLMYTGen
+C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
 
 開始前:
 1. git status --porcelain=v1 -uno
@@ -654,12 +654,18 @@ C:\Users\PLANNER007\NLMYTGen
 5. AGENTS.md -> docs/REPO_LOCAL_RULES.md -> docs/runtime-state.md を読む。
 
 現状:
-- latest remote handoff is after `c638992 docs: add G-28 game mechanics review packet`; confirm current latest with `git log -1 --oneline`.
+- latest remote handoff should be after the G-28 game-mechanics diagram semantics note; confirm current latest with `git log -1 --oneline`.
 - `docs/verification/G28-CARRIER-ARCHETYPE-TOOLBOX-2026-06-05.md` で Lecture Diagram / Map Evidence / Source-Footage / Conversation Buffer の4 archetype を整理済み。
 - `docs/verification/G28-SHOT-CARRIER-SELECTION-WORKSHEET-2026-06-05.md` で次の1 shot の carrier selection worksheet を作成済み。
 - `docs/verification/G28-SHOT-CARRIER-SELECTION-GAME-MECHANICS-2026-06-05.md` で game mechanics shot は Lecture Diagram Carrier primary、Source-Footage Carrier future-only backup と判定済み。
 - `docs/verification/G28-GAME-MECHANICS-HUMAN-REVIEW-PACKET-2026-06-05.md` で human design review packet 作成済み。
+- human response は `decision=revise`, `carrier=Lecture Diagram Carrier`。
+- `docs/verification/G28-GAME-MECHANICS-DIAGRAM-SEMANTICS-NOTE-2026-06-05.md` で diagram semantics note 記録済み。
 - 対象 precedent は `samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation.*`。
+- chain direction は `入力操作 -> 内部ルール / 判定 -> 画面上の結果` のまま。
+- middle node は抽象的な `内部ルール` 固定ではなく、first-review では `判定 / 当たり判定` を主軸にし、`無敵時間` / `硬直` は later substitution 候補として残す。
+- callout は `判定 / 当たり判定` primary、`操作感` と `リスクとリターン` は supporting。
+- host は non-focal のまま。medium caption 前提なので画面内 text は短く保つ。
 - Lecture Diagram generic skeleton、`real_estate_information_gap`、`game_mechanics_explanation` は readback-passed。
 - Map / Evidence Carrier skeleton も readback-passed。
 - すべて `diagnostic_only=true` / `production_candidate=false`。
@@ -668,9 +674,9 @@ C:\Users\PLANNER007\NLMYTGen
 - Source-Footage へ進んだ扱いにしない。
 
 次の最小候補:
-- human review の返答を受けて `accept` / `revise` / `reject` を docs artifact に記録する。
-- `accept` なら scoped YMM4-saved carrier review を検討可能。ただし `.ymmp` 生成、render、creative final acceptance ではない。
-- `revise` なら diagram semantics の修正指示 artifact を作る。新しい theme variant は明示されるまで作らない。
+- diagram semantics note を使い、必要なら narrow semantics plan を作る。
+- `判定 / 当たり判定` を主軸にする label / callout hierarchy を整理する。
+- `accept` が後で返った場合だけ scoped YMM4-saved carrier review を検討可能。ただし `.ymmp` 生成、render、creative final acceptance ではない。
 - Source-Footage が必要と判断された場合だけ、別 slice で design-only checklist を作る。footage / screenshot intake はしない。
 
 禁止:
