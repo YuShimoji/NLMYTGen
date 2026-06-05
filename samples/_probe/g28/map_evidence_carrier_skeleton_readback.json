@@ -1,0 +1,291 @@
+{
+  "artifact_id": "g28_map_evidence_carrier_skeleton_v1",
+  "status": "passed",
+  "diagnostic_only": true,
+  "production_candidate": false,
+  "generated_files": {
+    "skeletonJson": "samples/_probe/g28/map_evidence_carrier_skeleton.json",
+    "readbackJson": "samples/_probe/g28/map_evidence_carrier_skeleton_readback.json",
+    "html": "samples/_probe/g28/map_evidence_carrier_skeleton.html",
+    "reportMd": "samples/_probe/g28/map_evidence_carrier_skeleton_report.md"
+  },
+  "totals": {
+    "primitive_item_count": 14,
+    "shape_item_count": 12,
+    "text_item_count": 2,
+    "semantic_group_count": 6,
+    "semantic_element_count": 11,
+    "annotation_slot_count": 3,
+    "caption_overlap_count": 0,
+    "text_chars": 15,
+    "smallest_text_size": 32
+  },
+  "checks": {
+    "diagnostic_only": true,
+    "production_candidate_false": true,
+    "no_external_image_or_url": true,
+    "ymmp_not_generated": true,
+    "frame_16_9_1920_1080": true,
+    "caption_reserve_bottom_20pct": true,
+    "caption_reserve_clear": true,
+    "evidence_area_in_main_canvas": true,
+    "annotation_slot_count_2_to_4": true,
+    "source_note_area_exists": true,
+    "source_note_text_budget_bounded": true,
+    "host_role_non_focal": true,
+    "dense_table_false": true,
+    "indexed_whiteboard_false": true,
+    "tiny_text_false_or_bounded": true,
+    "decorative_map_without_argument_false": true,
+    "primitive_item_count_bounded": true,
+    "semantic_element_count_bounded": true,
+    "shape_size_mode_widthheight": true,
+    "in_frame_text_budget": true,
+    "no_main_content_outside_main_canvas_except_hosts": true,
+    "external_image_count_zero": true,
+    "external_url_count_zero": true,
+    "token_like_pattern_count_zero": true,
+    "image_path_false": true,
+    "image_url_false": true,
+    "raw_reference_false": true
+  },
+  "failures": [],
+  "scs_readback": {
+    "archetype": "Map / Evidence Carrier",
+    "composition_type": "center-focal",
+    "composition_rationale": "A single map/evidence surface is the focal argument surface; annotation slots support it without becoming equal-weight cards.",
+    "visual_roles": {
+      "focal_anchor": [
+        "G28_MEC_EvidenceSurface"
+      ],
+      "supporting": [
+        "G28_MEC_AnnotationSlot_1",
+        "G28_MEC_AnnotationSlot_2",
+        "G28_MEC_AnnotationSlot_3",
+        "G28_MEC_SourceNote"
+      ],
+      "boundary": [],
+      "connector": [
+        "G28_MEC_LabelAnchor_1",
+        "G28_MEC_LabelAnchor_2",
+        "G28_MEC_LeaderLine_1"
+      ],
+      "risk_marker": [],
+      "decoration": [
+        "G28_MEC_Stage",
+        "G28_MEC_Host_Left",
+        "G28_MEC_Host_Right"
+      ],
+      "label": [
+        "G28_MEC_Title_Text",
+        "G28_MEC_SourceNote_Text"
+      ]
+    },
+    "reading_order": [
+      "G28_MEC_Title_Text",
+      "G28_MEC_EvidenceSurface",
+      "G28_MEC_LabelAnchor_1",
+      "G28_MEC_LabelAnchor_2",
+      "G28_MEC_AnnotationSlot_1",
+      "G28_MEC_AnnotationSlot_2",
+      "G28_MEC_AnnotationSlot_3",
+      "G28_MEC_SourceNote_Text"
+    ]
+  },
+  "layer_order": [
+    {
+      "layer": 1,
+      "id": "G28_MEC_BG_Stage",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Stage",
+      "semantic_role": "decoration"
+    },
+    {
+      "layer": 2,
+      "id": "G28_MEC_TitleBand_BG",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_TitleBand",
+      "semantic_role": "label"
+    },
+    {
+      "layer": 3,
+      "id": "G28_MEC_Title_Text",
+      "item_type": "TextItem",
+      "group_id": "G28_MEC_TitleBand",
+      "semantic_role": "label"
+    },
+    {
+      "layer": 4,
+      "id": "G28_MEC_EvidenceSurface",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_EvidenceSurface",
+      "semantic_role": "focal_anchor"
+    },
+    {
+      "layer": 5,
+      "id": "G28_MEC_LabelAnchor_1",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "semantic_role": "connector"
+    },
+    {
+      "layer": 5,
+      "id": "G28_MEC_LabelAnchor_2",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "semantic_role": "connector"
+    },
+    {
+      "layer": 6,
+      "id": "G28_MEC_LeaderLine_1",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "semantic_role": "connector"
+    },
+    {
+      "layer": 7,
+      "id": "G28_MEC_AnnotationSlot_1",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "semantic_role": "supporting"
+    },
+    {
+      "layer": 7,
+      "id": "G28_MEC_AnnotationSlot_2",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "semantic_role": "supporting"
+    },
+    {
+      "layer": 7,
+      "id": "G28_MEC_AnnotationSlot_3",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "semantic_role": "supporting"
+    },
+    {
+      "layer": 8,
+      "id": "G28_MEC_SourceNote_BG",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_SourceNote",
+      "semantic_role": "supporting"
+    },
+    {
+      "layer": 9,
+      "id": "G28_MEC_SourceNote_Text",
+      "item_type": "TextItem",
+      "group_id": "G28_MEC_SourceNote",
+      "semantic_role": "label"
+    },
+    {
+      "layer": 10,
+      "id": "G28_MEC_Host_Left",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Hosts",
+      "semantic_role": "decoration"
+    },
+    {
+      "layer": 10,
+      "id": "G28_MEC_Host_Right",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Hosts",
+      "semantic_role": "decoration"
+    }
+  ],
+  "caption_reserve_readback": {
+    "rect": {
+      "x": 0,
+      "y": 810,
+      "width": 1920,
+      "height": 216
+    },
+    "clear": true,
+    "overlaps": []
+  },
+  "focal_evidence_area_readback": {
+    "id": "G28_MEC_EvidenceSurface",
+    "composition_type": "center-focal",
+    "rect": {
+      "x": 240,
+      "y": 180,
+      "width": 1440,
+      "height": 500
+    },
+    "in_main_canvas": true
+  },
+  "annotation_readback": {
+    "count": 3,
+    "allowed_min": 2,
+    "allowed_max": 4,
+    "ids": [
+      "G28_MEC_AnnotationSlot_1",
+      "G28_MEC_AnnotationSlot_2",
+      "G28_MEC_AnnotationSlot_3"
+    ]
+  },
+  "source_note_readback": {
+    "exists": true,
+    "text": "出典確認済み",
+    "chars": 6,
+    "font_size": 32,
+    "bounded": true
+  },
+  "host_role_readback": {
+    "left": {
+      "x": 112,
+      "y": 655,
+      "width": 204,
+      "height": 145
+    },
+    "right": {
+      "x": 1604,
+      "y": 655,
+      "width": 204,
+      "height": 145
+    },
+    "role": "lower-corner decoration / emotional anchor, not focal",
+    "above_caption_reserve": true
+  },
+  "safety_readback": {
+    "external_image_count": 0,
+    "external_url_count": 0,
+    "token_like_pattern_count": 0,
+    "image_binary": false,
+    "image_path": false,
+    "image_url": false,
+    "raw_reference": false
+  },
+  "text_budget_readback": {
+    "labels": 2,
+    "chars": 15,
+    "dense": false,
+    "tiny_text": false,
+    "smallest_text_size": 32,
+    "visible_text_items": [
+      {
+        "id": "G28_MEC_Title_Text",
+        "text": "地域差を証拠で見る",
+        "font_size": 56
+      },
+      {
+        "id": "G28_MEC_SourceNote_Text",
+        "text": "出典確認済み",
+        "font_size": 32
+      }
+    ]
+  },
+  "failure_modes": [
+    "map_label_overload",
+    "source_note_overload",
+    "indexed_whiteboard",
+    "tiny_text",
+    "subtitle_collision",
+    "decorative_map_without_argument"
+  ],
+  "limitations": [
+    "No real map, satellite image, image path, or URL is used in this diagnostic skeleton.",
+    "HTML is visualization-only and not a render or creative final acceptance.",
+    "Annotation slots are empty placeholders until a later scoped slot-fill slice exists.",
+    "No YMM4 .ymmp file is generated in this slice."
+  ]
+}

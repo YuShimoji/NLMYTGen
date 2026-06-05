@@ -5,7 +5,7 @@
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
 - 現在地の正本: 通常再開では `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md` で止める。本ファイル冒頭は状態スナップショットではなく、航海日誌への短い入口。
-- 現フェーズ: G-27 Real Estate DX の production carrier 待ちは active blocker から外し、case-specific evidence として保持する。次は `runtime-state.md` の通り、newsroom-produced bundle の downstream adapter intake、または G-28 Reference-Driven Generic Screen Carrier の Lecture Diagram diagnostic skeleton / `real_estate_information_gap` diagnostic variant 済み状態からの refinement へ進む。
+- 現フェーズ: G-27 Real Estate DX の production carrier 待ちは active blocker から外し、case-specific evidence として保持する。次は `runtime-state.md` の通り、newsroom-produced bundle の downstream adapter intake、または G-28 Reference-Driven Generic Screen Carrier の Lecture Diagram diagnostic skeleton / theme variants / Map-Evidence diagnostic skeleton 済み状態からの refinement へ進む。
 - 古い roadmap / prompt / verification packet は現行判断に使わない。必要な履歴は DECISION LOG と HANDOFF SNAPSHOT の該当行だけ読む。
 - Python のスコープは「テキスト変換 + IR/registry + ymmp 限定後段適用」。動画レンダリング・画像生成・YMM4 GUI 操作は Python の責務ではない。
 
@@ -14,8 +14,8 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI artifact → CSV / registry / patched ymmp → YMM4 読込・確認・レンダリング
-- 現在のスライス: G-27 は diagnostic carrier / review console / SCS lessons を証跡として残し、active production carrier blocker としては閉じる。G-28 は proposed であり、受領済み参照画像から構図原理を抽出した `docs/verification/G28-REFERENCE-STYLE-BRIEF-2026-06-05.md`、Lecture Diagram の concrete spec / diagnostic skeleton / readback artifact、`real_estate_information_gap` diagnostic variant を refinement の入口にする。
-- 成功状態: G-27 の失敗と学びを捨てずに、production 昇格・slot-fill・render へ飛躍しないまま、参照画像の principle extraction を SCS mapping / generic carrier archetype / diagnostic skeleton / theme-specific diagnostic variant / readback artifact / future YMM4 carrier review へ段階変換できる状態にすること。
+- 現在のスライス: G-27 は diagnostic carrier / review console / SCS lessons を証跡として残し、active production carrier blocker としては閉じる。G-28 は proposed であり、受領済み参照画像から構図原理を抽出した `docs/verification/G28-REFERENCE-STYLE-BRIEF-2026-06-05.md`、Lecture Diagram の concrete spec / diagnostic skeleton / readback artifact、`real_estate_information_gap` と `game_mechanics_explanation` diagnostic variants、Map / Evidence の concrete spec / diagnostic skeleton / readback artifact を refinement の入口にする。
+- 成功状態: G-27 の失敗と学びを捨てずに、production 昇格・slot-fill・render へ飛躍しないまま、参照画像の principle extraction を SCS mapping / generic carrier archetype / diagnostic skeleton / theme-specific diagnostic variant / Map-Evidence archetype / readback artifact / future YMM4 carrier review へ段階変換できる状態にすること。
 
 ---
 
@@ -81,6 +81,7 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 | 日付 | 決定事項 | 選択肢 | 決定理由 |
 |------|----------|--------|----------|
+| 2026-06-05 | **G-28 Map / Evidence Carrier は、Lecture Diagram Carrier の追加 theme variant ではなく、別 archetype の diagnostic skeleton として生成する。** | Lecture Diagram variant を量産する / 実地図や衛星画像を取り込む / 新しいSCS typeを増やす / 既存SCSの `center-focal` に写像した Map-Evidence skeletonを追加 | ユーザーが地図・統計・産業立地・企業分布・人口・市場・地域差・出典付き論証を「飾りではなく論証装置」として扱う carrier archetype を1つだけ作るよう指定したため。今回の skeleton は `G28_MEC_EvidenceSurface` を focal anchor、3つの annotation slot、bounded source note、non-focal hosts を持つが、real map / satellite image / image path / URL / raw reference / `.ymmp` / render / production timing / creative final acceptance / source footage / gameplay screenshot intake には進まない。SCS mapping は `center-focal` で、新しい composition type は増やさない。 |
 | 2026-06-05 | **G-28 `game_mechanics_explanation` は、Source-Footage Carrier へ進まず、Lecture Diagram Carrier の2つ目の theme-specific diagnostic variant として生成する。** | 不動産variantだけで止める / gameplay screenshot や source footage を取り込む / Lecture Diagram上の `center-focal` diagnostic variantを追加 | ユーザーが G-28 generic capability の確認として、ゲームレビュー / ゲームメカニクス解説へ転用できるかを1variantだけ検証するよう指定したため。今回のvariantは `入力操作` -> `内部ルール` -> `画面上の結果` の focal-chain semantics と、`操作感` / `判定 / 当たり判定` / `リスクとリターン` の callout semantics を持つが、source footage carrier ではなく、画像・URL・raw reference・production render・creative final acceptance・`.ymmp` 生成には進まない。 |
 | 2026-06-05 | **G-28 `real_estate_information_gap` variant 完了後の全コンテキストを repo-local handoff として保持し、`origin/master` に反映する。** | チャット報告だけで止める / AGENTS.md に長文追記 / `runtime-state.md` と decision log に最小追記して push | ユーザーが「全コンテキストをプロジェクトに保持しつつ、ローカルをリモートに反映」を明示したため。通常再開入口を肥大化させないため `AGENTS.md` は触らず、現在位置は `runtime-state.md`、判断履歴は本 decision log に限定して保存する。既知未追跡 `.claude/worktrees/` と `samples/2026-05-16.ymmp` は local residue のまま触らない。 |
 | 2026-06-05 | **G-28 `real_estate_information_gap` は、G-27 復帰や production carrier 昇格ではなく、既存 Lecture Diagram skeleton の theme-specific diagnostic variant として生成する。** | 汎用 skeleton のまま停止 / G-27 carrier path へ戻る / `.ymmp` production carrier へ飛ぶ / `--variant real_estate_information_gap` で JSON/HTML/readback/MD を生成 | ユーザーが theme を `real_estate_information_gap`、readback variant id を `g28_ldc_real_estate_information_gap` に固定し、approved carrier 不在で止めないこと、production / render / creative acceptance / source footage / image path / URL / RSS / NotebookLM に進まないことを明示したため。variant は `center-focal` の Lecture Diagram 上で `元付情報` -> `ポータル掲載` -> `借主判断` の3ノード focal-chain semantics と、`情報遅延` / `掲載粒度の欠落` / `仲介インセンティブ` の3 callout semantics を持つが、slot-fill済み production text ではない。根拠: user prompt + G28 Lecture Diagram spec + generated readback `status=passed` |
