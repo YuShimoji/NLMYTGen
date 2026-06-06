@@ -107,7 +107,8 @@ not generator behavior:
 - supporting callouts:
   `操作感`, `リスクとリターン`
 - current slice action:
-  record the decision and revise target only
+  decision recorded; diagnostic semantics clarification is owned by
+  `docs/verification/G28-GAME-MECHANICS-DIAGRAM-SEMANTICS-NOTE-2026-06-05.md`
 - not in this slice:
   generator changes, new variant generation, diagnostic JSON/readback/report
   changes, `.ymmp`, render, production promotion, or creative final acceptance
