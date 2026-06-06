@@ -7,6 +7,11 @@
   "logs_dir": ".agent/logs",
   "needs_human_path": ".agent/needs_human.json",
   "notify_stub_log": ".agent/logs/notify_stub.log",
+  "execution_policy": {
+    "codex_exec_enabled": false,
+    "max_steps": 1,
+    "timeout_seconds": 600
+  },
   "gate_policy": {
     "allowed_changed_path_prefixes": [
       ".agent/",

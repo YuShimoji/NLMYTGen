@@ -30,7 +30,7 @@ Repo-local orchestrator は `scripts/agent_orchestrator.py` で、現時点で�
 
 - `.agent/state.json` を読む。
 - `--worker advance|audit|fix|summarize` に対応する prompt の存在を確認する。
-- `--dry-run` で将来の `codex exec` コマンド案を表示する。
+- `--dry-run` で将来の `codex exec` execution plan / command argv 案を表示する。
 - `--report <path>` で既存 report を gate に渡す。
 - `needs_human=true` のときだけ notify stub を呼ぶ。
 
@@ -62,6 +62,17 @@ uv run python scripts/agent_orchestrator.py --worker audit --dry-run
 
 このコマンドは prompt catalog の存在を確認し、将来実行する `codex exec`
 コマンド案を表示するだけで、Codex 実行は開始しない。
+
+Dry-run の command builder は preview contract だけを持つ。現在の想定 argv は
+次の形で、prompt file を `--prompt-file` で渡す前提にはしない。
+
+```powershell
+codex exec - --output-schema .agent/schemas/worker_report.schema.json -o .agent/reports/{timestamp}-{worker}.report.json
+```
+
+将来の実行 slice では、orchestrator が `.agent/prompt_catalog/{worker}.md` を読み、
+その内容を `codex exec -` の stdin に渡す。現時点では stdin へ渡す処理も
+`codex exec` の subprocess 起動も実装しない。
 
 ## Worker Report Schema
 
@@ -163,19 +174,31 @@ Worker report 側で risk または human question として明示する。
 現時点の `agent_orchestrator.py` は dry-run と report 判定だけを行う。
 次段階で実行に接続する場合は、次の順で進める。
 
-1. `codex exec --output-schema .agent/schemas/worker_report.schema.json` が
-   現在の Codex CLI で期待どおり JSON report を返すことを手動確認する。
-2. dry-run が表示する prompt path、schema path、report path を実 CLI 形式に
-   合わせる。
-3. 実行結果を `.agent/reports/` に保存する。
-4. 保存した report を `scripts/agent_gate.py` に渡す。
-5. `needs_human=true` の場合だけ `scripts/agent_notify_stub.py` を呼ぶ。
-6. 外部通知を追加する場合も、まず stub の出力 payload を正本にし、API key や
+1. command builder が返す execution plan を検証する。現時点の preview contract は
+   `codex exec - --output-schema <schema> -o <report>` で、prompt は stdin 入力を
+   想定する。
+2. `--output-schema .agent/schemas/worker_report.schema.json` と
+   `-o` / `--output-last-message .agent/reports/{timestamp}-{worker}.report.json`
+   が現在の Codex CLI で期待どおり JSON report を保存できることを手動確認する。
+3. `.agent/state.json` の `execution_policy.codex_exec_enabled=false`、
+   `max_steps=1`、`timeout_seconds=600` を default disabled policy として維持した
+   まま、実行 slice の preflight 条件を先に test する。
+4. 実行を有効化する場合も、prompt path は `.agent/prompt_catalog/`、schema path は
+   `.agent/schemas/`、report path は `.agent/reports/` の下に限定する。
+5. 実行結果を `.agent/reports/` に保存する。
+6. 保存した report を `scripts/agent_gate.py` に渡す。
+7. `needs_human=true` の場合だけ `scripts/agent_notify_stub.py` を呼ぶ。
+8. 外部通知を追加する場合も、まず stub の出力 payload を正本にし、API key や
    service token は repo に置かない。
+
+`--prompt-file` や未検証の `--output` 形は、Codex CLI 側で明示確認するまで
+primary preview contract にしない。
 
 ## Deliberately Unimplemented
 
 - Real `codex exec` execution
+- Passing prompt file contents to `codex exec -` stdin
+- Runtime worker loop / multi-step execution
 - External push notification
 - API key / notification service token handling
 - main/master への自動 push

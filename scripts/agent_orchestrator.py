@@ -3,8 +3,8 @@ from __future__ import annotations
 
 import argparse
 import json
-import subprocess
 import sys
+from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -13,6 +13,26 @@ from agent_gate import DEFAULT_STATE_PATH, REPO_ROOT, GateInputError, evaluate_r
 from agent_notify_stub import NotifyInputError, write_notification
 
 WORKERS = ("advance", "audit", "fix", "summarize")
+PROMPT_ROOT = REPO_ROOT / ".agent" / "prompt_catalog"
+SCHEMA_ROOT = REPO_ROOT / ".agent" / "schemas"
+REPORT_ROOT = REPO_ROOT / ".agent" / "reports"
+
+
+@dataclass(frozen=True)
+class ExecutionPlan:
+    worker: str
+    cwd: str
+    prompt_path: str
+    schema_path: str
+    report_path: str
+    argv: list[str]
+    stdin_source: str
+    prompt_input_mode: str
+    codex_execution_started: bool
+    execution_policy: dict[str, Any]
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
 
 
 def utc_stamp() -> str:
@@ -24,33 +44,98 @@ def _state_string(state: dict[str, Any], key: str, fallback: str) -> str:
     return value if isinstance(value, str) else fallback
 
 
+def _repo_relative(path: Path) -> str:
+    return path.relative_to(REPO_ROOT).as_posix()
+
+
+def _ensure_under(path: Path, parent: Path, label: str) -> Path:
+    resolved_parent = parent.resolve()
+    try:
+        path.relative_to(resolved_parent)
+    except ValueError as exc:
+        raise GateInputError(f"{label} must stay under {_repo_relative(resolved_parent)}: {path}") from exc
+    return path
+
+
+def execution_policy_from_state(state: dict[str, Any]) -> dict[str, Any]:
+    raw_policy = state.get("execution_policy", {})
+    if not isinstance(raw_policy, dict):
+        raw_policy = {}
+    max_steps = raw_policy.get("max_steps")
+    timeout_seconds = raw_policy.get("timeout_seconds")
+    return {
+        "codex_exec_enabled": raw_policy.get("codex_exec_enabled") is True,
+        "max_steps": max_steps if isinstance(max_steps, int) and not isinstance(max_steps, bool) else 1,
+        "timeout_seconds": (
+            timeout_seconds if isinstance(timeout_seconds, int) and not isinstance(timeout_seconds, bool) else 600
+        ),
+    }
+
+
 def prompt_path_for_worker(state: dict[str, Any], worker: str) -> Path:
+    if worker not in WORKERS:
+        raise GateInputError(f"invalid worker: {worker}")
     catalog_dir = _state_string(state, "prompt_catalog_dir", ".agent/prompt_catalog")
-    return resolve_repo_path(Path(catalog_dir) / f"{worker}.md", must_exist=True)
+    prompt_path = resolve_repo_path(Path(catalog_dir) / f"{worker}.md", must_exist=True)
+    return _ensure_under(prompt_path, PROMPT_ROOT, "prompt_path")
 
 
-def build_dry_run_command(state: dict[str, Any], worker: str, prompt_path: Path) -> dict[str, Any]:
+def schema_path_from_state(state: dict[str, Any]) -> Path:
     schema_path = _state_string(state, "worker_report_schema", ".agent/schemas/worker_report.schema.json")
+    resolved_schema_path = resolve_repo_path(schema_path, must_exist=True)
+    return _ensure_under(resolved_schema_path, SCHEMA_ROOT, "schema_path")
+
+
+def report_path_for_worker(state: dict[str, Any], worker: str, timestamp: str | None = None) -> Path:
+    if worker not in WORKERS:
+        raise GateInputError(f"invalid worker: {worker}")
+    stamp = timestamp or utc_stamp()
     template = _state_string(state, "report_output_template", ".agent/reports/{timestamp}-{worker}.report.json")
-    report_path = template.format(timestamp=utc_stamp(), worker=worker)
-    command = [
+    if template:
+        report_path = template.format(timestamp=stamp, worker=worker)
+    else:
+        report_dir = _state_string(state, "report_dir", ".agent/reports")
+        report_path = str(Path(report_dir) / f"{stamp}-{worker}.report.json")
+    resolved_report_path = resolve_repo_path(report_path)
+    return _ensure_under(resolved_report_path, REPORT_ROOT, "report_path")
+
+
+def powershell_preview(argv: list[str]) -> str:
+    def quote(arg: str) -> str:
+        if arg and all(char.isalnum() or char in "-_./:\\" for char in arg):
+            return arg
+        return "'" + arg.replace("'", "''") + "'"
+
+    return " ".join(quote(arg) for arg in argv)
+
+
+def build_execution_plan(state: dict[str, Any], worker: str, timestamp: str | None = None) -> ExecutionPlan:
+    prompt_path = prompt_path_for_worker(state, worker)
+    schema_path = schema_path_from_state(state)
+    report_path = report_path_for_worker(state, worker, timestamp)
+    schema_arg = _repo_relative(schema_path)
+    report_arg = _repo_relative(report_path)
+    argv = [
         "codex",
         "exec",
+        "-",
         "--output-schema",
-        schema_path,
-        "--prompt-file",
-        prompt_path.relative_to(REPO_ROOT).as_posix(),
-        "--output",
-        report_path,
+        schema_arg,
+        "-o",
+        report_arg,
     ]
-    return {
-        "codex_execution_started": False,
-        "worker": worker,
-        "prompt": prompt_path.relative_to(REPO_ROOT).as_posix(),
-        "expected_report": report_path,
-        "command": command,
-        "powershell": subprocess.list2cmdline(command),
-    }
+    return ExecutionPlan(
+        worker=worker,
+        cwd=str(REPO_ROOT),
+        prompt_path=_repo_relative(prompt_path),
+        schema_path=schema_arg,
+        report_path=report_arg,
+        argv=argv,
+        stdin_source=_repo_relative(prompt_path),
+        prompt_input_mode="stdin_from_prompt_file",
+        codex_execution_started=False,
+        execution_policy=execution_policy_from_state(state),
+    )
 
 
 def run(args: argparse.Namespace) -> dict[str, Any]:
@@ -65,7 +150,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     }
 
     if args.dry_run:
-        result["dry_run"] = build_dry_run_command(state, args.worker, prompt_path)
+        execution_plan = build_execution_plan(state, args.worker).to_dict()
+        execution_plan["powershell"] = powershell_preview(execution_plan["argv"])
+        result["dry_run"] = execution_plan
 
     if args.report:
         gate_result = evaluate_report(args.report, state_path)

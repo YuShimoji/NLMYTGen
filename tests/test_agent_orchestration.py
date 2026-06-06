@@ -74,6 +74,11 @@ def _evaluate(report_path: Path) -> dict[str, Any]:
     return agent_gate.evaluate_report(report_path, ".agent/state.json")
 
 
+def _load_state() -> dict[str, Any]:
+    with open(REPO_ROOT / ".agent" / "state.json", encoding="utf-8") as handle:
+        return json.load(handle)
+
+
 def test_gate_valid_pass_report_allows_continuation(repo_agent_tmp: Path) -> None:
     result = _evaluate(_report(repo_agent_tmp, "pass"))
 
@@ -208,6 +213,63 @@ def test_notify_stub_refuses_non_needs_human_without_artifacts(repo_agent_tmp: P
     assert not (repo_agent_tmp / "notify_stub.log").exists()
 
 
+def test_execution_plan_builds_stdin_based_codex_exec_preview() -> None:
+    plan = agent_orchestrator.build_execution_plan(_load_state(), "audit", timestamp="20260606T000000Z")
+    payload = plan.to_dict()
+
+    assert payload["worker"] == "audit"
+    assert payload["cwd"] == str(REPO_ROOT)
+    assert payload["prompt_path"] == ".agent/prompt_catalog/audit.md"
+    assert payload["schema_path"] == ".agent/schemas/worker_report.schema.json"
+    assert payload["report_path"] == ".agent/reports/20260606T000000Z-audit.report.json"
+    assert payload["stdin_source"] == ".agent/prompt_catalog/audit.md"
+    assert payload["prompt_input_mode"] == "stdin_from_prompt_file"
+    assert payload["codex_execution_started"] is False
+    assert payload["argv"] == [
+        "codex",
+        "exec",
+        "-",
+        "--output-schema",
+        ".agent/schemas/worker_report.schema.json",
+        "-o",
+        ".agent/reports/20260606T000000Z-audit.report.json",
+    ]
+    assert "--prompt-file" not in payload["argv"]
+    assert "--output" not in payload["argv"]
+
+
+def test_execution_policy_defaults_are_inert() -> None:
+    policy = agent_orchestrator.execution_policy_from_state(_load_state())
+
+    assert policy["codex_exec_enabled"] is False
+    assert policy["max_steps"] == 1
+    assert policy["timeout_seconds"] == 600
+
+
+def test_execution_plan_rejects_invalid_worker_name() -> None:
+    with pytest.raises(agent_gate.GateInputError):
+        agent_orchestrator.build_execution_plan(_load_state(), "../outside", timestamp="20260606T000000Z")
+
+
+@pytest.mark.parametrize(
+    "override",
+    [
+        {"prompt_catalog_dir": "../outside"},
+        {"worker_report_schema": "../outside/schema.json"},
+        {"report_output_template": "../outside/{timestamp}-{worker}.json"},
+        {"prompt_catalog_dir": "docs"},
+        {"worker_report_schema": "docs/AGENT_ORCHESTRATION.md"},
+        {"report_output_template": "docs/{timestamp}-{worker}.report.json"},
+    ],
+)
+def test_execution_plan_rejects_repo_external_or_out_of_contract_paths(override: dict[str, Any]) -> None:
+    state = _load_state()
+    state.update(override)
+
+    with pytest.raises(agent_gate.GateInputError):
+        agent_orchestrator.build_execution_plan(state, "audit", timestamp="20260606T000000Z")
+
+
 def test_orchestrator_dry_run_does_not_start_codex() -> None:
     result = agent_orchestrator.run(
         argparse.Namespace(
@@ -219,5 +281,20 @@ def test_orchestrator_dry_run_does_not_start_codex() -> None:
     )
 
     assert result["dry_run"]["codex_execution_started"] is False
-    assert result["dry_run"]["command"][:2] == ["codex", "exec"]
+    assert result["dry_run"]["argv"][:3] == ["codex", "exec", "-"]
+    assert result["dry_run"]["prompt_input_mode"] == "stdin_from_prompt_file"
     assert "gate_result" not in result
+
+
+def test_orchestrator_without_dry_run_or_report_still_cannot_execute_codex() -> None:
+    result = agent_orchestrator.run(
+        argparse.Namespace(
+            worker="audit",
+            dry_run=False,
+            report=None,
+            state=".agent/state.json",
+        )
+    )
+
+    assert result["codex_execution_started"] is False
+    assert "No Codex execution is performed" in result["message"]
