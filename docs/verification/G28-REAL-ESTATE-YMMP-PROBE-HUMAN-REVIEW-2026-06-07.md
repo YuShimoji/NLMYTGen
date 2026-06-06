@@ -19,7 +19,7 @@ or permission to set `production_candidate=true`.
 | readback | `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe_readback.json` |
 | report | `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe_report.md` |
 | readback status | `passed` |
-| readback classification | `pass_ymmp_probe_created` |
+| readback classification | `pass_probe_polished` |
 | diagnostic_only | `true` |
 | production_candidate | `false` |
 
@@ -118,6 +118,63 @@ Preserved boundary:
 - no render, production approval, creative final acceptance, rights automation,
   source footage, audio, TTS, image, URL, raw reference, slot-fill, G-27 revival,
   ClipPipeGen access, RSS work, or NotebookLM work
+
+## Human GUI Re-review Result After Polish
+
+```text
+openability: pass
+notes: YMM4で開ける。probeとして成立。
+
+focal_chain_readability: pass
+notes: 元付情報 -> ポータル掲載 -> 借主判断 の流れは読める。
+
+caption_reserve: pass
+notes: 下部20%の字幕帯は概ね確保されている。
+
+yellow_connector_treatment: pass_partial
+notes: 以前よりかなり直っている。線の長さ・位置・太さは改善しているが、座標規則が定式化されているかは不明。
+
+rectangle_text_alignment: pass_partial
+notes: 前回よりかなり改善しているが、矩形内テキストの中心位置が font / box / window size に基づく計算式で安定しているかは未確認。目分量の微調整に見える懸念がある。
+
+callout_readability: pass
+notes: callout は読みやすくなっている。過密感は大きくない。
+
+host_role: pass
+notes: hostは主役化していない。
+
+real_service_or_property_look: safe
+notes: 実在サービス・実在物件感は強くない。
+
+diagnostic_boundary: clear
+notes: production完成品ではなく診断用probeとして理解できる。
+
+overall_decision: accept_as_diagnostic_gui_probe_with_layout_contract_followup
+production_boundary_acknowledged: true
+```
+
+## Re-review Interpretation
+
+The polished probe is accepted as a diagnostic GUI probe, not as production
+approval. The human review confirms that openability, focal-chain readability,
+caption reserve, callout readability, host role, real-service/property safety,
+and diagnostic boundary are sufficient for probe use.
+
+The remaining concern is not another few-pixel polish pass. The next safe action
+is a layout contract audit that makes the reusable placement rules explicit:
+
+- rectangle text centering formula
+- connector positioning formula
+- callout slot layout rule
+- manual offset registry
+- tolerance readback
+- decision after audit: Review Console ingest versus one bounded layout-system
+  revision
+
+No `.ymmp` regeneration, builder change, new variant, render, production
+approval, creative final acceptance, rights automation, source footage, audio,
+TTS, external image, URL, raw reference, G-27 revival, ClipPipeGen access, RSS
+work, or NotebookLM work is approved by this re-review.
 
 ## Boundaries
 
