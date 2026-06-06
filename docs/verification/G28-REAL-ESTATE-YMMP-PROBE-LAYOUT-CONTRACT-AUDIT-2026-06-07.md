@@ -3,9 +3,10 @@
 This audit records the layout contract status of the polished
 `real_estate_information_gap` YMM4 diagnostic probe.
 
-It is an audit record only. It does not change the `.ymmp`, builder, readback
-JSON, report, generated artifacts, production status, rights status, or creative
-acceptance.
+The original audit pass was docs-only. A later bounded implementation slice in
+this same file records the diagnostic builder/readback contract update. Neither
+slice approves production status, rights status, slot-fill, render output, or
+creative acceptance.
 
 ## Scope
 
@@ -214,7 +215,7 @@ Risk judgement:
 
 ## Next Decision
 
-Recommended next decision: `needs_layout_contract_implementation`.
+Original audit recommendation: `needs_layout_contract_implementation`.
 
 Operationally, this should be handled as one bounded layout-system revision
 before Review Console ingest. The next slice should not be another visual
@@ -231,12 +232,63 @@ ready for Review Console ingest. This recommendation does not approve production
 rendering, production carrier approval, creative final acceptance, rights
 automation, slot-fill, or external material intake.
 
+## Implementation Result
+
+Implementation revision: `g28_real_estate_information_gap_layout_contract_v1`.
+
+Post-implementation classification:
+`pass_layout_contract_implemented`.
+
+Post-implementation next decision:
+`ready_for_human_gui_recheck_before_review_console_ingest`.
+
+Implemented in `scripts/build_g28_real_estate_ymmp_probe.js`:
+
+- connector geometry is now derived from the left/focal/right rectangles
+- the text offset registry is serialized into item/readback metadata
+- the three-callout row is represented as a 2-3 callout contract with an
+  explicit four-callout risk note
+- readback now records layout contract metrics and tolerance pass/fail checks
+- the report now includes layout contract revision and readback sections
+
+Readback after `node scripts\build_g28_real_estate_ymmp_probe.js --write`:
+
+- `diagnostic_only=true`
+- `production_candidate=false`
+- `layout_contract_metrics_present=true`
+- `layout_contract_tolerances_pass=true`
+- `text_center_error_px=0`
+- `registered_optical_offset_max_px=4`
+- `connector_alignment_error_px=0`
+- `caption_reserve_overlap_px=0`
+- `callout_density.max_width_ratio=0.818`
+- `callout_density.max_height_ratio=0.333`
+- `host_focality_risk=low`
+- external image / URL / source footage / audio / TTS / token-like counts remain
+  `0`
+
+This closes the original `needs_layout_contract_implementation` recommendation
+for the diagnostic probe only. It does not approve Review Console ingest by
+itself; the next human-facing step is a YMM4 GUI recheck of the updated
+diagnostic probe/readback pair.
+
 ## Boundary
+
+Original audit slice:
 
 - No `.ymmp` regeneration.
 - No builder or generator change.
 - No readback JSON change.
 - No probe report change.
+
+Implementation slice:
+
+- The same diagnostic builder was updated.
+- The same diagnostic probe/readback/report paths were regenerated or checked.
+- No new variant was created.
+
+Both slices:
+
 - No new variant generation.
 - No render, MP4, production carrier approval, or creative final acceptance.
 - No rights automation or `production_candidate=true`.

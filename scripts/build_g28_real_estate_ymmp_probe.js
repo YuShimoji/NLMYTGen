@@ -43,21 +43,127 @@ const polishRevision = {
   ],
   boundary_note: 'Diagnostic-only polish revision; no production approval, render, slot-fill, image, URL, audio, TTS, or source footage.',
 };
-const polishedShapeRects = {
-  G28_LDC_Connector_Left: { x: 490, y: 394, width: 70, height: 12 },
-  G28_LDC_Connector_Right: { x: 1360, y: 394, width: 70, height: 12 },
-  G28_LDC_CalloutSlot_1: { x: 375, y: 642, width: 330, height: 90 },
-  G28_LDC_CalloutSlot_2: { x: 795, y: 642, width: 330, height: 90 },
-  G28_LDC_CalloutSlot_3: { x: 1215, y: 642, width: 330, height: 90 },
+const layoutContractRevision = {
+  revision_id: 'g28_real_estate_information_gap_layout_contract_v1',
+  source_audit: 'docs/verification/G28-REAL-ESTATE-YMMP-PROBE-LAYOUT-CONTRACT-AUDIT-2026-06-07.md',
+  classification: 'pass_layout_contract_implemented',
+  next_decision: 'ready_for_human_gui_recheck_before_review_console_ingest',
 };
-const textVisualOffsets = {
-  G28_LDC_Title_Text: { x: 0, y: -2 },
-  G28_LDC_Node_Left_Label: { x: 0, y: -4 },
-  G28_LDC_Node_Center_Label: { x: 0, y: -4 },
-  G28_LDC_Node_Right_Label: { x: 0, y: -4 },
-  G28_LDC_CalloutSlot_1_Label: { x: 0, y: -3 },
-  G28_LDC_CalloutSlot_2_Label: { x: 0, y: -3 },
-  G28_LDC_CalloutSlot_3_Label: { x: 0, y: -3 },
+const layoutThresholds = {
+  text_center_error_px: 1,
+  registered_optical_offset_px: 6,
+  connector_alignment_error_px: 2,
+  caption_reserve_overlap_px: 0,
+  callout_density_width_ratio: 0.85,
+  callout_density_height_ratio: 0.45,
+  host_area_ratio: 0.03,
+};
+const connectorLayoutRule = {
+  thickness: 12,
+  left: {
+    from: 'G28_LDC_Node_Left',
+    to: 'G28_LDC_Focal_Core',
+    from_edge: 'right',
+    to_edge: 'left',
+    y_reference: 'from_center',
+  },
+  right: {
+    from: 'G28_LDC_Focal_Core',
+    to: 'G28_LDC_Node_Right',
+    from_edge: 'right',
+    to_edge: 'left',
+    y_reference: 'to_center',
+  },
+};
+const calloutSlotLayoutRule = {
+  supported_counts: [2, 3],
+  active_count: 3,
+  start_x: 375,
+  row_y: 642,
+  width: 330,
+  height: 90,
+  gap: 90,
+  text_offset: { x: 0, y: -3 },
+  four_callout_risk: 'Four callouts at this slot width and gap would consume too much host-side breathing room; split or reduce text instead.',
+};
+const manualOffsetRegistry = {
+  G28_LDC_Title_Text: {
+    target: 'title text',
+    value: { x: 0, y: -2 },
+    reason: 'Optical centering correction for YMM4 TextItem top-left placement inside the source title rect.',
+    allowed_range: { x_abs_max: 4, y_abs_max: 4 },
+    reuse_risk: 'medium',
+  },
+  G28_LDC_Node_Left_Label: {
+    target: 'focal node label',
+    value: { x: 0, y: -4 },
+    reason: 'Optical centering correction for Japanese node labels.',
+    allowed_range: { x_abs_max: 4, y_abs_max: 6 },
+    reuse_risk: 'medium',
+  },
+  G28_LDC_Node_Center_Label: {
+    target: 'focal node label',
+    value: { x: 0, y: -4 },
+    reason: 'Optical centering correction for Japanese node labels.',
+    allowed_range: { x_abs_max: 4, y_abs_max: 6 },
+    reuse_risk: 'medium',
+  },
+  G28_LDC_Node_Right_Label: {
+    target: 'focal node label',
+    value: { x: 0, y: -4 },
+    reason: 'Optical centering correction for Japanese node labels.',
+    allowed_range: { x_abs_max: 4, y_abs_max: 6 },
+    reuse_risk: 'medium',
+  },
+  G28_LDC_CalloutSlot_1_Label: {
+    target: 'callout label',
+    value: calloutSlotLayoutRule.text_offset,
+    reason: 'Optical centering correction inside compact callout slot.',
+    allowed_range: { x_abs_max: 4, y_abs_max: 5 },
+    reuse_risk: 'medium',
+  },
+  G28_LDC_CalloutSlot_2_Label: {
+    target: 'callout label',
+    value: calloutSlotLayoutRule.text_offset,
+    reason: 'Optical centering correction inside compact callout slot.',
+    allowed_range: { x_abs_max: 4, y_abs_max: 5 },
+    reuse_risk: 'medium',
+  },
+  G28_LDC_CalloutSlot_3_Label: {
+    target: 'callout label',
+    value: calloutSlotLayoutRule.text_offset,
+    reason: 'Optical centering correction inside compact callout slot.',
+    allowed_range: { x_abs_max: 4, y_abs_max: 5 },
+    reuse_risk: 'medium',
+  },
+  G28_LDC_Connector_Left: {
+    target: 'left connector',
+    value: connectorLayoutRule.left,
+    reason: 'Derived edge-to-edge bar from left node right edge to focal core left edge.',
+    allowed_range: { endpoint_gap_abs_max: 2, y_error_abs_max: 2 },
+    reuse_risk: 'low_after_derivation',
+  },
+  G28_LDC_Connector_Right: {
+    target: 'right connector',
+    value: connectorLayoutRule.right,
+    reason: 'Derived edge-to-edge bar from focal core right edge to right node left edge.',
+    allowed_range: { endpoint_gap_abs_max: 2, y_error_abs_max: 2 },
+    reuse_risk: 'low_after_derivation',
+  },
+  G28_LDC_CalloutSlots: {
+    target: 'three-callout row',
+    value: calloutSlotLayoutRule,
+    reason: 'Bounded 3-callout row that preserves host-side breathing room and caption clearance.',
+    allowed_range: { max_width_ratio: 0.85, max_height_ratio: 0.45, caption_gap_min: 60 },
+    reuse_risk: 'medium_high_for_four_callouts',
+  },
+  G28_LDC_Hosts: {
+    target: 'lower-corner hosts',
+    value: 'source rectangles retained',
+    reason: 'Hosts remain non-focal emotional anchors and are not part of layout-system polish.',
+    allowed_range: { area_ratio_max_each: 0.03, caption_overlap_px: 0 },
+    reuse_risk: 'medium_across_themes',
+  },
 };
 
 function abs(rel) { return path.join(root, rel); }
@@ -225,8 +331,52 @@ function rectCenter(rect) {
     y: rect.y + rect.height / 2,
   };
 }
-function polishedRectFor(item) {
-  return polishedShapeRects[item.id] || item.rect;
+function rectForId(byId, id) {
+  const item = byId.get(id);
+  if (!item) throw new Error(`LAYOUT_SOURCE_ITEM_MISSING: ${id}`);
+  return layoutRectFor(item, byId);
+}
+function edgeValue(rect, edge) {
+  if (edge === 'left') return rect.x;
+  if (edge === 'right') return rectRight(rect);
+  if (edge === 'top') return rect.y;
+  if (edge === 'bottom') return rectBottom(rect);
+  throw new Error(`UNSUPPORTED_EDGE: ${edge}`);
+}
+function connectorRectFor(item, byId) {
+  const side = item.id === 'G28_LDC_Connector_Left' ? 'left' :
+    item.id === 'G28_LDC_Connector_Right' ? 'right' : null;
+  if (!side) return null;
+  const rule = connectorLayoutRule[side];
+  const fromRect = rectForId(byId, rule.from);
+  const toRect = rectForId(byId, rule.to);
+  const startX = edgeValue(fromRect, rule.from_edge);
+  const endX = edgeValue(toRect, rule.to_edge);
+  const yReferenceRect = rule.y_reference === 'to_center' ? toRect : fromRect;
+  const thickness = connectorLayoutRule.thickness;
+  return {
+    x: startX,
+    y: rectCenter(yReferenceRect).y - thickness / 2,
+    width: endX - startX,
+    height: thickness,
+  };
+}
+function calloutSlotRectFor(item) {
+  const match = /^G28_LDC_CalloutSlot_(\d)$/.exec(item.id);
+  if (!match) return null;
+  const index = Number(match[1]) - 1;
+  if (index < 0 || index >= calloutSlotLayoutRule.active_count) {
+    throw new Error(`CALLOUT_SLOT_INDEX_OUT_OF_CONTRACT: ${item.id}`);
+  }
+  return {
+    x: calloutSlotLayoutRule.start_x + index * (calloutSlotLayoutRule.width + calloutSlotLayoutRule.gap),
+    y: calloutSlotLayoutRule.row_y,
+    width: calloutSlotLayoutRule.width,
+    height: calloutSlotLayoutRule.height,
+  };
+}
+function layoutRectFor(item, byId) {
+  return connectorRectFor(item, byId) || calloutSlotRectFor(item) || item.rect;
 }
 function screenRectToYmm4Center(rect) {
   const center = rectCenter(rect);
@@ -289,8 +439,8 @@ function layerForShape(item) {
   return item.layer;
 }
 
-function shapePrimitive(item) {
-  const rect = polishedRectFor(item);
+function shapePrimitive(item, byId) {
+  const rect = layoutRectFor(item, byId);
   const center = screenRectToYmm4Center(rect);
   return {
     kind: 'ShapeItem',
@@ -307,14 +457,22 @@ function shapePrimitive(item) {
     opacity: 100,
     round: roundFor(item),
     stroke_thickness: rect.height,
+    layout_contract: {
+      rect_source: item.rect === rect ? 'source_rect' : 'derived_layout_contract',
+      source_rect: item.rect,
+      derived_rect: rect,
+      manual_registry_entry: manualOffsetRegistry[item.id] || null,
+    },
     description: `G-28 source carrier primitive ${item.id}`,
   };
 }
 
-function centeredTextPrimitive(displayName, groupId, role, layer, centerScreen, fontSize, content, color, description) {
+function centeredTextPrimitive(displayName, groupId, role, layer, targetBox, fontSize, content, color, description) {
   const bboxWidth = estimateTextWidth(content, fontSize);
   const bboxHeight = fontSize;
-  const visualOffset = textVisualOffsets[displayName] || { x: 0, y: 0 };
+  const registryEntry = manualOffsetRegistry[displayName] || null;
+  const visualOffset = registryEntry?.value || { x: 0, y: 0 };
+  const centerScreen = rectCenter(targetBox.rect);
   const adjustedCenter = {
     x: centerScreen.x + visualOffset.x,
     y: centerScreen.y + visualOffset.y,
@@ -343,6 +501,19 @@ function centeredTextPrimitive(displayName, groupId, role, layer, centerScreen, 
     source_intent_screen_cx: centerScreen.x,
     source_intent_screen_cy: centerScreen.y,
     visual_offset_px: visualOffset,
+    layout_contract: {
+      target_box_id: targetBox.id,
+      target_box_rect: targetBox.rect,
+      estimated_text_width: bboxWidth,
+      estimated_text_height: bboxHeight,
+      box_center_x: centerScreen.x,
+      box_center_y: centerScreen.y,
+      baseline_adjust: visualOffset.y,
+      visual_offset_x: visualOffset.x,
+      visual_offset_y: visualOffset.y,
+      text_center_error_px: 0,
+      manual_registry_entry: registryEntry,
+    },
     bbox_width: bboxWidth,
     bbox_height: bboxHeight,
     font_size: fontSize,
@@ -375,7 +546,7 @@ function buildPrimitivePlan(source, sourceReadback) {
   const byId = new Map(sourceItems.map((item) => [item.id, item]));
   const shapes = sourceItems
     .filter((item) => item.item_type === 'ShapeItem')
-    .map(shapePrimitive);
+    .map((item) => shapePrimitive(item, byId));
 
   const title = byId.get('G28_LDC_Title_Text');
   const focalChain = sourceReadback.variant_readback.focal_chain;
@@ -391,7 +562,7 @@ function buildPrimitivePlan(source, sourceReadback) {
       'G28_LDC_TitleBand',
       'label',
       3,
-      rectCenter(polishedRectFor(title)),
+      { id: 'G28_LDC_Title_Text_SourceRect', rect: layoutRectFor(title, byId) },
       52,
       titleText,
       labelColor,
@@ -413,7 +584,7 @@ function buildPrimitivePlan(source, sourceReadback) {
       'G28_LDC_FocalGroup',
       'focal_chain_label',
       7,
-      rectCenter(polishedRectFor(target.item)),
+      { id: target.item.id, rect: layoutRectFor(target.item, byId) },
       42,
       target.label,
       nodeColor,
@@ -428,7 +599,7 @@ function buildPrimitivePlan(source, sourceReadback) {
       'G28_LDC_CalloutSlots',
       'callout_label',
       9,
-      rectCenter(polishedRectFor(slot)),
+      { id: slot.id, rect: layoutRectFor(slot, byId) },
       30,
       callout.label,
       calloutColor,
@@ -443,6 +614,13 @@ function buildPrimitivePlan(source, sourceReadback) {
     frame_contract: source.frame_contract,
     scs_mapping: source.scs_mapping,
     polish_revision: polishRevision,
+    layout_contract_revision: layoutContractRevision,
+    layout_contract_rules: {
+      connector_layout_rule: connectorLayoutRule,
+      callout_slot_layout_rule: calloutSlotLayoutRule,
+      manual_offset_registry: manualOffsetRegistry,
+      thresholds: layoutThresholds,
+    },
     primitives: [...shapes, ...textPrimitives],
   };
 }
@@ -517,6 +695,7 @@ function readbackItem(item, primitive) {
     text: isText ? item.Text : null,
     text_color: isText ? item.FontColor : null,
     font_size: isText ? item.FontSize?.Values?.[0]?.Value ?? null : null,
+    layout_contract: primitive?.layout_contract || null,
     description: primitive?.description || null,
   };
 }
@@ -541,6 +720,179 @@ function layerStats(items, filterFn) {
   const layers = items.filter(filterFn).map((item) => item.layer);
   if (!layers.length) return null;
   return { min: Math.min(...layers), max: Math.max(...layers), layers };
+}
+function roundMetric(value) {
+  return Math.round(value * 1000) / 1000;
+}
+function distance(a, b) {
+  const dx = a.x - b.x;
+  const dy = a.y - b.y;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+function rectArea(rect) {
+  return rect.width * rect.height;
+}
+function intersectionRect(a, b) {
+  const x1 = Math.max(a.x, b.x);
+  const y1 = Math.max(a.y, b.y);
+  const x2 = Math.min(rectRight(a), rectRight(b));
+  const y2 = Math.min(rectBottom(a), rectBottom(b));
+  if (x2 <= x1 || y2 <= y1) return { x: x1, y: y1, width: 0, height: 0 };
+  return { x: x1, y: y1, width: x2 - x1, height: y2 - y1 };
+}
+function maxOf(values) {
+  return values.length ? Math.max(...values) : 0;
+}
+function textCenteringMetrics(textItems) {
+  const items = textItems
+    .filter((item) => item.layout_contract?.target_box_rect)
+    .map((item) => {
+      const boxCenter = rectCenter(item.layout_contract.target_box_rect);
+      const expectedCenter = {
+        x: boxCenter.x + item.layout_contract.visual_offset_x,
+        y: boxCenter.y + item.layout_contract.visual_offset_y,
+      };
+      const actualCenter = rectCenter(item.screen_rect);
+      const implementationError = distance(actualCenter, expectedCenter);
+      const registeredOffset = distance(boxCenter, expectedCenter);
+      return {
+        id: item.display_name,
+        text: item.text,
+        target_box_id: item.layout_contract.target_box_id,
+        font_size: item.font_size,
+        estimated_text_width: item.layout_contract.estimated_text_width,
+        estimated_text_height: item.layout_contract.estimated_text_height,
+        box_center_x: item.layout_contract.box_center_x,
+        box_center_y: item.layout_contract.box_center_y,
+        baseline_adjust: item.layout_contract.baseline_adjust,
+        visual_offset_x: item.layout_contract.visual_offset_x,
+        visual_offset_y: item.layout_contract.visual_offset_y,
+        implementation_error_px: roundMetric(implementationError),
+        registered_optical_offset_px: roundMetric(registeredOffset),
+        pass: implementationError <= layoutThresholds.text_center_error_px &&
+          registeredOffset <= layoutThresholds.registered_optical_offset_px,
+      };
+    });
+  return {
+    formula: 'top_left = center(target_box) + registered_visual_offset - estimated_text_bbox / 2',
+    character_width_model: 'Japanese full-width ranges count as 1.0em; other characters count as 0.55em; height is font_size.',
+    threshold_px: layoutThresholds.text_center_error_px,
+    registered_optical_offset_threshold_px: layoutThresholds.registered_optical_offset_px,
+    text_center_error_px: roundMetric(maxOf(items.map((item) => item.implementation_error_px))),
+    registered_optical_offset_max_px: roundMetric(maxOf(items.map((item) => item.registered_optical_offset_px))),
+    pass: items.every((item) => item.pass),
+    items,
+  };
+}
+function connectorAlignmentMetrics(items) {
+  const byName = new Map(items.map((item) => [item.display_name, item]));
+  const leftNode = byName.get('G28_LDC_Node_Left')?.screen_rect;
+  const focalCore = byName.get('G28_LDC_Focal_Core')?.screen_rect;
+  const rightNode = byName.get('G28_LDC_Node_Right')?.screen_rect;
+  const leftConnector = byName.get('G28_LDC_Connector_Left')?.screen_rect;
+  const rightConnector = byName.get('G28_LDC_Connector_Right')?.screen_rect;
+  const metrics = [];
+  if (leftNode && focalCore && leftConnector) {
+    metrics.push({
+      id: 'G28_LDC_Connector_Left',
+      start_gap_px: roundMetric(leftConnector.x - rectRight(leftNode)),
+      end_gap_px: roundMetric(focalCore.x - rectRight(leftConnector)),
+      y_center_error_px: roundMetric(rectCenter(leftConnector).y - rectCenter(leftNode).y),
+    });
+  }
+  if (focalCore && rightNode && rightConnector) {
+    metrics.push({
+      id: 'G28_LDC_Connector_Right',
+      start_gap_px: roundMetric(rightConnector.x - rectRight(focalCore)),
+      end_gap_px: roundMetric(rightNode.x - rectRight(rightConnector)),
+      y_center_error_px: roundMetric(rectCenter(rightConnector).y - rectCenter(rightNode).y),
+    });
+  }
+  const maxError = maxOf(metrics.flatMap((item) => [
+    Math.abs(item.start_gap_px),
+    Math.abs(item.end_gap_px),
+    Math.abs(item.y_center_error_px),
+  ]));
+  return {
+    formula: 'connector spans from source edge to target edge, with y centered on the adjacent side node and fixed thickness.',
+    threshold_px: layoutThresholds.connector_alignment_error_px,
+    connector_alignment_error_px: roundMetric(maxError),
+    pass: maxError <= layoutThresholds.connector_alignment_error_px,
+    items: metrics,
+  };
+}
+function captionReserveOverlapMetric(items, captionReserve) {
+  const overlapsReadback = items
+    .filter((item) => item.display_name !== 'G28_LDC_BG_Stage' && item.screen_rect)
+    .map((item) => ({ item, intersection: intersectionRect(item.screen_rect, captionReserve) }))
+    .filter(({ intersection }) => intersection.width > 0 && intersection.height > 0)
+    .map(({ item, intersection }) => ({
+      id: item.display_name,
+      overlap_area_px: roundMetric(rectArea(intersection)),
+      overlap_height_px: roundMetric(intersection.height),
+    }));
+  return {
+    threshold_px: layoutThresholds.caption_reserve_overlap_px,
+    caption_reserve_overlap_px: roundMetric(maxOf(overlapsReadback.map((item) => item.overlap_height_px))),
+    overlap_area_px: roundMetric(overlapsReadback.reduce((sum, item) => sum + item.overlap_area_px, 0)),
+    pass: overlapsReadback.length === 0,
+    items: overlapsReadback,
+  };
+}
+function calloutDensityMetrics(calloutShapes, calloutLabels) {
+  const labelsBySlot = new Map(calloutLabels.map((item) => [item.display_name.replace('_Label', ''), item]));
+  const items = calloutShapes.map((slot) => {
+    const label = labelsBySlot.get(slot.display_name);
+    const widthRatio = label ? label.screen_rect.width / slot.screen_rect.width : 0;
+    const heightRatio = label ? label.screen_rect.height / slot.screen_rect.height : 0;
+    return {
+      slot: slot.display_name,
+      label: label?.display_name || null,
+      text: label?.text || null,
+      width_ratio: roundMetric(widthRatio),
+      height_ratio: roundMetric(heightRatio),
+      pass: widthRatio <= layoutThresholds.callout_density_width_ratio &&
+        heightRatio <= layoutThresholds.callout_density_height_ratio,
+    };
+  });
+  return {
+    supported_counts: calloutSlotLayoutRule.supported_counts,
+    active_count: calloutSlotLayoutRule.active_count,
+    four_callout_risk: calloutSlotLayoutRule.four_callout_risk,
+    width_ratio_threshold: layoutThresholds.callout_density_width_ratio,
+    height_ratio_threshold: layoutThresholds.callout_density_height_ratio,
+    max_width_ratio: roundMetric(maxOf(items.map((item) => item.width_ratio))),
+    max_height_ratio: roundMetric(maxOf(items.map((item) => item.height_ratio))),
+    pass: items.every((item) => item.pass),
+    items,
+  };
+}
+function hostFocalityRiskMetrics(hosts, focalCore, captionReserve) {
+  const frameArea = FRAME.width * FRAME.height;
+  const items = hosts.map((host) => {
+    const areaRatio = rectArea(host.screen_rect) / frameArea;
+    const belowFocal = focalCore ? host.screen_rect.y > focalCore.screen_rect.y : false;
+    const aboveCaption = rectBottom(host.screen_rect) <= captionReserve.y;
+    const lowRisk = host.role === 'decoration' &&
+      areaRatio <= layoutThresholds.host_area_ratio &&
+      belowFocal &&
+      aboveCaption &&
+      !host.text;
+    return {
+      id: host.display_name,
+      area_ratio: roundMetric(areaRatio),
+      role: host.role,
+      below_focal: belowFocal,
+      above_caption_reserve: aboveCaption,
+      risk: lowRisk ? 'low' : 'review',
+    };
+  });
+  return {
+    area_ratio_threshold_each: layoutThresholds.host_area_ratio,
+    host_focality_risk: items.every((item) => item.risk === 'low') ? 'low' : 'review',
+    pass: items.every((item) => item.risk === 'low'),
+    items,
+  };
 }
 
 function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter) {
@@ -593,6 +945,43 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
   const audioItemCount = itemTypes.filter((type) => ['AudioItem'].includes(type)).length;
   const ttsOrVoiceItemCount = itemTypes.filter((type) => ['VoiceItem'].includes(type)).length;
   const tokenLikePatternCount = countMatches(serialized, tokenLikePattern());
+  const textCenteringReadback = textCenteringMetrics(textItems);
+  const connectorAlignmentReadback = connectorAlignmentMetrics(items);
+  const captionReserveOverlapReadback = captionReserveOverlapMetric(items, captionReserve);
+  const calloutDensityReadback = calloutDensityMetrics(calloutShapes, calloutLabels);
+  const hostFocalityRiskReadback = hostFocalityRiskMetrics(hosts, focalCore, captionReserve);
+  const layoutContractReadback = {
+    revision: primitivePlan.layout_contract_revision,
+    rules: primitivePlan.layout_contract_rules,
+    next_decision: primitivePlan.layout_contract_revision.next_decision,
+    rectangle_text_centering: textCenteringReadback,
+    connector_positioning: connectorAlignmentReadback,
+    callout_slot_layout: calloutDensityReadback,
+    manual_offset_registry: primitivePlan.layout_contract_rules.manual_offset_registry,
+    tolerance_metrics: {
+      text_center_error_px: textCenteringReadback.text_center_error_px,
+      registered_optical_offset_max_px: textCenteringReadback.registered_optical_offset_max_px,
+      connector_alignment_error_px: connectorAlignmentReadback.connector_alignment_error_px,
+      caption_reserve_overlap_px: captionReserveOverlapReadback.caption_reserve_overlap_px,
+      callout_density: {
+        max_width_ratio: calloutDensityReadback.max_width_ratio,
+        max_height_ratio: calloutDensityReadback.max_height_ratio,
+      },
+      host_focality_risk: hostFocalityRiskReadback.host_focality_risk,
+    },
+    caption_reserve_overlap: captionReserveOverlapReadback,
+    host_focality_risk: hostFocalityRiskReadback,
+    limitations: [
+      'Text width remains an approximation and should not be treated as font-engine proof.',
+      'Manual optical offsets are now registered and bounded, not removed.',
+      'Callout row formula is intended for 2-3 callouts; 4 callouts should fail fast or use another layout.',
+    ],
+  };
+  const layoutContractPass = textCenteringReadback.pass &&
+    connectorAlignmentReadback.pass &&
+    captionReserveOverlapReadback.pass &&
+    calloutDensityReadback.pass &&
+    hostFocalityRiskReadback.pass;
   const checks = {
     diagnostic_only: true,
     production_candidate_false: true,
@@ -624,6 +1013,8 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
     carrier_not_modified_in_place: carrierHashBefore === carrierHashAfter,
     polish_revision_bounded: primitivePlan.polish_revision.source_human_decision === 'revise_probe' &&
       primitivePlan.polish_revision.classification === 'pass_probe_polished',
+    layout_contract_metrics_present: true,
+    layout_contract_tolerances_pass: layoutContractPass,
   };
   const failures = Object.entries(checks)
     .filter(([, ok]) => ok !== true)
@@ -656,6 +1047,7 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
       rss_or_notebooklm_work: false,
     },
     polish_revision: primitivePlan.polish_revision,
+    layout_contract_revision: primitivePlan.layout_contract_revision,
     frame_contract: {
       width: frameContract.width,
       height: frameContract.height,
@@ -727,6 +1119,7 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
         role: item.role,
       })),
     },
+    layout_contract_readback: layoutContractReadback,
     layer_order_readback: {
       contract: [
         'stage',
@@ -804,6 +1197,14 @@ function renderReport(readback) {
   lines.push(`- bounded scope: ${readback.polish_revision.bounded_scope.map((item) => `\`${item}\``).join(', ')}`);
   lines.push(`- boundary note: ${readback.polish_revision.boundary_note}`);
   lines.push('');
+  lines.push('## Layout Contract Revision');
+  lines.push('');
+  lines.push(`- revision id: \`${readback.layout_contract_revision.revision_id}\``);
+  lines.push(`- classification: \`${readback.layout_contract_revision.classification}\``);
+  lines.push(`- next decision: \`${readback.layout_contract_revision.next_decision}\``);
+  lines.push('- scope: derived connector geometry, registered text offsets, callout row rule, and tolerance readback metrics.');
+  lines.push('- boundary: diagnostic-only implementation improvement; not production approval, render approval, rights approval, creative final acceptance, or slot-fill.');
+  lines.push('');
   lines.push('## Generated Files');
   lines.push('');
   lines.push(`- YMM4 probe: \`${readback.generated_files.ymmp}\``);
@@ -826,6 +1227,19 @@ function renderReport(readback) {
   lines.push(`- callout labels: ${readback.callout_readback.labels.map((item) => item.text).join(' / ')}`);
   lines.push(`- host role: \`${readback.host_role_readback.role}\``);
   lines.push(`- visible text: ${readback.text_budget_readback.visible_text_item_count} items / ${readback.text_budget_readback.visible_text_chars} chars`);
+  lines.push('');
+  lines.push('## Layout Contract Readback');
+  lines.push('');
+  lines.push(`- text_center_error_px: ${readback.layout_contract_readback.tolerance_metrics.text_center_error_px} (threshold ${readback.layout_contract_readback.rectangle_text_centering.threshold_px})`);
+  lines.push(`- registered_optical_offset_max_px: ${readback.layout_contract_readback.tolerance_metrics.registered_optical_offset_max_px} (threshold ${readback.layout_contract_readback.rectangle_text_centering.registered_optical_offset_threshold_px})`);
+  lines.push(`- connector_alignment_error_px: ${readback.layout_contract_readback.tolerance_metrics.connector_alignment_error_px} (threshold ${readback.layout_contract_readback.connector_positioning.threshold_px})`);
+  lines.push(`- caption_reserve_overlap_px: ${readback.layout_contract_readback.tolerance_metrics.caption_reserve_overlap_px}`);
+  lines.push(`- callout_density: width=${readback.layout_contract_readback.tolerance_metrics.callout_density.max_width_ratio}, height=${readback.layout_contract_readback.tolerance_metrics.callout_density.max_height_ratio}`);
+  lines.push(`- host_focality_risk: \`${readback.layout_contract_readback.tolerance_metrics.host_focality_risk}\``);
+  lines.push(`- formula: ${readback.layout_contract_readback.rectangle_text_centering.formula}`);
+  lines.push(`- connector rule: ${readback.layout_contract_readback.connector_positioning.formula}`);
+  lines.push(`- callout supported counts: ${readback.layout_contract_readback.callout_slot_layout.supported_counts.join(', ')}`);
+  lines.push('- 4-callout handling: fail fast or change layout; do not squeeze into the current 3-slot row.');
   lines.push('');
   lines.push('## Checks');
   lines.push('');

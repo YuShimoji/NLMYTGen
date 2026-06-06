@@ -13,6 +13,14 @@ This is a self-contained YMM4-compatible diagnostic probe. It is not a render, p
 - bounded scope: `yellow connector alignment`, `rectangle text centering`, `callout spacing`, `small visual offsets`
 - boundary note: Diagnostic-only polish revision; no production approval, render, slot-fill, image, URL, audio, TTS, or source footage.
 
+## Layout Contract Revision
+
+- revision id: `g28_real_estate_information_gap_layout_contract_v1`
+- classification: `pass_layout_contract_implemented`
+- next decision: `ready_for_human_gui_recheck_before_review_console_ingest`
+- scope: derived connector geometry, registered text offsets, callout row rule, and tolerance readback metrics.
+- boundary: diagnostic-only implementation improvement; not production approval, render approval, rights approval, creative final acceptance, or slot-fill.
+
 ## Generated Files
 
 - YMM4 probe: `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe.ymmp`
@@ -46,6 +54,19 @@ This is a self-contained YMM4-compatible diagnostic probe. It is not a render, p
 - host role: `non_focal_lower_corner_decoration_emotional_anchor`
 - visible text: 7 items / 42 chars
 
+## Layout Contract Readback
+
+- text_center_error_px: 0 (threshold 1)
+- registered_optical_offset_max_px: 4 (threshold 6)
+- connector_alignment_error_px: 0 (threshold 2)
+- caption_reserve_overlap_px: 0
+- callout_density: width=0.818, height=0.333
+- host_focality_risk: `low`
+- formula: top_left = center(target_box) + registered_visual_offset - estimated_text_bbox / 2
+- connector rule: connector spans from source edge to target edge, with y centered on the adjacent side node and fixed thickness.
+- callout supported counts: 2, 3
+- 4-callout handling: fail fast or change layout; do not squeeze into the current 3-slot row.
+
 ## Checks
 
 - `diagnostic_only`: `true`
@@ -77,6 +98,8 @@ This is a self-contained YMM4-compatible diagnostic probe. It is not a render, p
 - `token_like_pattern_count_zero`: `true`
 - `carrier_not_modified_in_place`: `true`
 - `polish_revision_bounded`: `true`
+- `layout_contract_metrics_present`: `true`
+- `layout_contract_tolerances_pass`: `true`
 
 ## YMM4 Mapping
 

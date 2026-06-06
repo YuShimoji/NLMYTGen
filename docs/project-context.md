@@ -79,6 +79,20 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest G-28 decision (2026-06-07): `g28_real_estate_information_gap_layout_contract_v1`
+is implemented for the existing real-estate YMM4 diagnostic probe. The builder
+now records derived connector geometry, manual text offset registry, a bounded
+2-3 callout formula with four-callout risk, and tolerance readback. Verification
+passed as `pass_probe_polished` with
+`layout_contract_metrics_present=true` and
+`layout_contract_tolerances_pass=true`. This remains diagnostic-only
+(`production_candidate=false`); the next safe move is human YMM4 GUI recheck
+before any Review Console ingest decision. No production render, production
+approval, creative final acceptance, rights automation, slot-fill, external
+image/URL/raw reference, source footage/audio/TTS, G-27 revival, ClipPipeGen,
+RSS / NotebookLM, or common foundation / Codex Worker Orchestration work is
+approved by this decision.
+
 | 日付 | 決定事項 | 選択肢 | 決定理由 |
 |------|----------|--------|----------|
 | 2026-06-07 | **G-28 real-estate polished YMM4 diagnostic probe の layout contract audit は `needs_layout_contract_implementation` を推奨する。** | Review Console ingestへ即進む / さらに目分量polishを続ける / probe pathを延期する / layout contractを1回だけbounded revisionする | `docs/verification/G28-REAL-ESTATE-YMMP-PROBE-LAYOUT-CONTRACT-AUDIT-2026-06-07.md` により、現在probeは diagnostic GUI surface としては accept 済みだが、再利用可能なlayout systemとしては未実装部分が残ると判断した。TextItemはtop-left formulaで説明できるがmanual optical offsetに依存し、connectorはedge-to-edge barとして説明できるがhard-coded override、callout rowは3件専用で4件以上の破綻リスクがある。次は追加polishではなく、derived connector geometry、explicit offset registry、2-3 callout formula、tolerance readbackを入れる bounded layout-system revision が妥当。今回 `.ymmp`、builder/generator、readback/report、render、production approval、creative final acceptance、rights automation、source footage/audio/TTS、外部画像/URL/raw reference、G-27、ClipPipeGen、RSS / NotebookLM には進めない。 |
