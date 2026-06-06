@@ -6,6 +6,13 @@ Variant id: `g28_ldc_real_estate_information_gap`
 
 This is a self-contained YMM4-compatible diagnostic probe. It is not a render, production carrier approval, creative final acceptance, rights approval, source-footage intake, or slot-fill.
 
+## Polish Revision
+
+- revision id: `g28_real_estate_information_gap_ymmp_polish_v1`
+- source human decision: `revise_probe`
+- bounded scope: `yellow connector alignment`, `rectangle text centering`, `callout spacing`, `small visual offsets`
+- boundary note: Diagnostic-only polish revision; no production approval, render, slot-fill, image, URL, audio, TTS, or source footage.
+
 ## Generated Files
 
 - YMM4 probe: `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe.ymmp`
@@ -31,7 +38,7 @@ This is a self-contained YMM4-compatible diagnostic probe. It is not a render, p
 ## Readback Rollup
 
 - status: `passed`
-- classification: `pass_ymmp_probe_created`
+- classification: `pass_probe_polished`
 - frame: 1920x1080 / 16:9
 - caption reserve: y=810, h=216, clear=`true`
 - focal chain labels: 元付情報 -> ポータル掲載 -> 借主判断
@@ -69,6 +76,7 @@ This is a self-contained YMM4-compatible diagnostic probe. It is not a render, p
 - `production_approval_false`: `true`
 - `token_like_pattern_count_zero`: `true`
 - `carrier_not_modified_in_place`: `true`
+- `polish_revision_bounded`: `true`
 
 ## YMM4 Mapping
 
@@ -90,5 +98,6 @@ This is a self-contained YMM4-compatible diagnostic probe. It is not a render, p
 ## Limitations
 
 - This is a self-contained diagnostic probe, not production carrier approval.
+- This revision addresses bounded human-review polish only after revise_probe; it does not change the diagnostic-only boundary.
 - It uses visible node/callout labels for GUI review; this does not approve production text density.
 - No render, video, audio, source footage, external image, URL, raw reference, rights automation, or slot-fill is included.

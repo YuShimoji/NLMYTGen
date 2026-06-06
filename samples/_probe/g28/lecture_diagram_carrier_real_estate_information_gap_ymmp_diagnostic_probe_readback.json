@@ -4,7 +4,7 @@
   "source_artifact_id": "g28_lecture_diagram_carrier_real_estate_information_gap_v1",
   "variant_id": "g28_ldc_real_estate_information_gap",
   "status": "passed",
-  "classification": "pass_ymmp_probe_created",
+  "classification": "pass_probe_polished",
   "generated_files": {
     "ymmp": "samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe.ymmp",
     "readback_json": "samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe_readback.json",
@@ -24,6 +24,18 @@
     "image_or_url_or_raw_reference": false,
     "g27_revival": false,
     "rss_or_notebooklm_work": false
+  },
+  "polish_revision": {
+    "revision_id": "g28_real_estate_information_gap_ymmp_polish_v1",
+    "source_human_decision": "revise_probe",
+    "classification": "pass_probe_polished",
+    "bounded_scope": [
+      "yellow connector alignment",
+      "rectangle text centering",
+      "callout spacing",
+      "small visual offsets"
+    ],
+    "boundary_note": "Diagnostic-only polish revision; no production approval, render, slot-fill, image, URL, audio, TTS, or source footage."
   },
   "frame_contract": {
     "width": 1920,
@@ -81,7 +93,8 @@
     "creative_final_acceptance_false": true,
     "production_approval_false": true,
     "token_like_pattern_count_zero": true,
-    "carrier_not_modified_in_place": true
+    "carrier_not_modified_in_place": true,
+    "polish_revision_bounded": true
   },
   "failures": [],
   "missing_items": [],
@@ -128,7 +141,7 @@
         "text": "元付情報",
         "rect": {
           "x": 276,
-          "y": 379,
+          "y": 375,
           "width": 168,
           "height": 42
         }
@@ -138,7 +151,7 @@
         "text": "ポータル掲載",
         "rect": {
           "x": 834,
-          "y": 399,
+          "y": 395,
           "width": 252,
           "height": 42
         }
@@ -148,7 +161,7 @@
         "text": "借主判断",
         "rect": {
           "x": 1476,
-          "y": 379,
+          "y": 375,
           "width": 168,
           "height": 42
         }
@@ -162,8 +175,8 @@
         "id": "G28_LDC_CalloutSlot_1_Label",
         "text": "情報遅延",
         "rect": {
-          "x": 485,
-          "y": 678,
+          "x": 480,
+          "y": 669,
           "width": 120,
           "height": 30
         }
@@ -173,7 +186,7 @@
         "text": "掲載粒度の欠落",
         "rect": {
           "x": 855,
-          "y": 678,
+          "y": 669,
           "width": 210,
           "height": 30
         }
@@ -182,8 +195,8 @@
         "id": "G28_LDC_CalloutSlot_3_Label",
         "text": "仲介インセンティブ",
         "rect": {
-          "x": 1240,
-          "y": 678,
+          "x": 1245,
+          "y": 669,
           "width": 270,
           "height": 30
         }
@@ -545,19 +558,19 @@
       "group_id": "G28_LDC_FocalGroup",
       "role": "connector",
       "layer": 6,
-      "x": -415,
+      "x": -435,
       "y": -140,
       "screen_rect": {
-        "x": 500,
-        "y": 395,
-        "width": 90,
-        "height": 10
+        "x": 490,
+        "y": 394,
+        "width": 70,
+        "height": 12
       },
-      "width": 90,
-      "height": 10,
+      "width": 70,
+      "height": 12,
       "shape_size_mode": "WidthHeight",
-      "stroke_thickness": 10,
-      "round": 4,
+      "stroke_thickness": 12,
+      "round": 6,
       "opacity": 100,
       "fill_color": "#FFFBBF24",
       "text": null,
@@ -571,19 +584,19 @@
       "group_id": "G28_LDC_FocalGroup",
       "role": "connector",
       "layer": 6,
-      "x": 415,
+      "x": 435,
       "y": -140,
       "screen_rect": {
-        "x": 1330,
-        "y": 395,
-        "width": 90,
-        "height": 10
+        "x": 1360,
+        "y": 394,
+        "width": 70,
+        "height": 12
       },
-      "width": 90,
-      "height": 10,
+      "width": 70,
+      "height": 12,
       "shape_size_mode": "WidthHeight",
-      "stroke_thickness": 10,
-      "round": 4,
+      "stroke_thickness": 12,
+      "round": 6,
       "opacity": 100,
       "fill_color": "#FFFBBF24",
       "text": null,
@@ -597,18 +610,18 @@
       "group_id": "G28_LDC_CalloutSlots",
       "role": "supporting",
       "layer": 8,
-      "x": -415,
-      "y": 153,
+      "x": -420,
+      "y": 147,
       "screen_rect": {
-        "x": 395,
-        "y": 650,
-        "width": 300,
-        "height": 86
+        "x": 375,
+        "y": 642,
+        "width": 330,
+        "height": 90
       },
-      "width": 300,
-      "height": 86,
+      "width": 330,
+      "height": 90,
       "shape_size_mode": "WidthHeight",
-      "stroke_thickness": 86,
+      "stroke_thickness": 90,
       "round": 16,
       "opacity": 100,
       "fill_color": "#FF1E3A5F",
@@ -624,17 +637,17 @@
       "role": "supporting",
       "layer": 8,
       "x": 0,
-      "y": 153,
+      "y": 147,
       "screen_rect": {
-        "x": 810,
-        "y": 650,
-        "width": 300,
-        "height": 86
+        "x": 795,
+        "y": 642,
+        "width": 330,
+        "height": 90
       },
-      "width": 300,
-      "height": 86,
+      "width": 330,
+      "height": 90,
       "shape_size_mode": "WidthHeight",
-      "stroke_thickness": 86,
+      "stroke_thickness": 90,
       "round": 16,
       "opacity": 100,
       "fill_color": "#FF1E3A5F",
@@ -649,18 +662,18 @@
       "group_id": "G28_LDC_CalloutSlots",
       "role": "supporting",
       "layer": 8,
-      "x": 415,
-      "y": 153,
+      "x": 420,
+      "y": 147,
       "screen_rect": {
-        "x": 1225,
-        "y": 650,
-        "width": 300,
-        "height": 86
+        "x": 1215,
+        "y": 642,
+        "width": 330,
+        "height": 90
       },
-      "width": 300,
-      "height": 86,
+      "width": 330,
+      "height": 90,
       "shape_size_mode": "WidthHeight",
-      "stroke_thickness": 86,
+      "stroke_thickness": 90,
       "round": 16,
       "opacity": 100,
       "fill_color": "#FF1E3A5F",
@@ -728,10 +741,10 @@
       "role": "label",
       "layer": 3,
       "x": -208,
-      "y": -460,
+      "y": -462,
       "screen_rect": {
         "x": 752,
-        "y": 80,
+        "y": 78,
         "width": 416,
         "height": 52
       },
@@ -754,10 +767,10 @@
       "role": "focal_chain_label",
       "layer": 7,
       "x": -684,
-      "y": -161,
+      "y": -165,
       "screen_rect": {
         "x": 276,
-        "y": 379,
+        "y": 375,
         "width": 168,
         "height": 42
       },
@@ -780,10 +793,10 @@
       "role": "focal_chain_label",
       "layer": 7,
       "x": -126,
-      "y": -141,
+      "y": -145,
       "screen_rect": {
         "x": 834,
-        "y": 399,
+        "y": 395,
         "width": 252,
         "height": 42
       },
@@ -806,10 +819,10 @@
       "role": "focal_chain_label",
       "layer": 7,
       "x": 516,
-      "y": -161,
+      "y": -165,
       "screen_rect": {
         "x": 1476,
-        "y": 379,
+        "y": 375,
         "width": 168,
         "height": 42
       },
@@ -831,11 +844,11 @@
       "group_id": "G28_LDC_CalloutSlots",
       "role": "callout_label",
       "layer": 9,
-      "x": -475,
-      "y": 138,
+      "x": -480,
+      "y": 129,
       "screen_rect": {
-        "x": 485,
-        "y": 678,
+        "x": 480,
+        "y": 669,
         "width": 120,
         "height": 30
       },
@@ -858,10 +871,10 @@
       "role": "callout_label",
       "layer": 9,
       "x": -105,
-      "y": 138,
+      "y": 129,
       "screen_rect": {
         "x": 855,
-        "y": 678,
+        "y": 669,
         "width": 210,
         "height": 30
       },
@@ -883,11 +896,11 @@
       "group_id": "G28_LDC_CalloutSlots",
       "role": "callout_label",
       "layer": 9,
-      "x": 280,
-      "y": 138,
+      "x": 285,
+      "y": 129,
       "screen_rect": {
-        "x": 1240,
-        "y": 678,
+        "x": 1245,
+        "y": 669,
         "width": 270,
         "height": 30
       },
@@ -906,6 +919,7 @@
   ],
   "limitations": [
     "This is a self-contained diagnostic probe, not production carrier approval.",
+    "This revision addresses bounded human-review polish only after revise_probe; it does not change the diagnostic-only boundary.",
     "It uses visible node/callout labels for GUI review; this does not approve production text density.",
     "No render, video, audio, source footage, external image, URL, raw reference, rights automation, or slot-fill is included."
   ]

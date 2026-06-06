@@ -31,6 +31,34 @@ const diagnosticTextBudget = {
   max_visible_chars: 60,
   production_text_budget_claimed: false,
 };
+const polishRevision = {
+  revision_id: 'g28_real_estate_information_gap_ymmp_polish_v1',
+  source_human_decision: 'revise_probe',
+  classification: 'pass_probe_polished',
+  bounded_scope: [
+    'yellow connector alignment',
+    'rectangle text centering',
+    'callout spacing',
+    'small visual offsets',
+  ],
+  boundary_note: 'Diagnostic-only polish revision; no production approval, render, slot-fill, image, URL, audio, TTS, or source footage.',
+};
+const polishedShapeRects = {
+  G28_LDC_Connector_Left: { x: 490, y: 394, width: 70, height: 12 },
+  G28_LDC_Connector_Right: { x: 1360, y: 394, width: 70, height: 12 },
+  G28_LDC_CalloutSlot_1: { x: 375, y: 642, width: 330, height: 90 },
+  G28_LDC_CalloutSlot_2: { x: 795, y: 642, width: 330, height: 90 },
+  G28_LDC_CalloutSlot_3: { x: 1215, y: 642, width: 330, height: 90 },
+};
+const textVisualOffsets = {
+  G28_LDC_Title_Text: { x: 0, y: -2 },
+  G28_LDC_Node_Left_Label: { x: 0, y: -4 },
+  G28_LDC_Node_Center_Label: { x: 0, y: -4 },
+  G28_LDC_Node_Right_Label: { x: 0, y: -4 },
+  G28_LDC_CalloutSlot_1_Label: { x: 0, y: -3 },
+  G28_LDC_CalloutSlot_2_Label: { x: 0, y: -3 },
+  G28_LDC_CalloutSlot_3_Label: { x: 0, y: -3 },
+};
 
 function abs(rel) { return path.join(root, rel); }
 function readText(rel) { return fs.readFileSync(abs(rel), 'utf8').replace(/^\uFEFF/, ''); }
@@ -197,6 +225,9 @@ function rectCenter(rect) {
     y: rect.y + rect.height / 2,
   };
 }
+function polishedRectFor(item) {
+  return polishedShapeRects[item.id] || item.rect;
+}
 function screenRectToYmm4Center(rect) {
   const center = rectCenter(rect);
   return {
@@ -241,7 +272,7 @@ function roundFor(item) {
   if (item.id === 'G28_LDC_TitleBand_BG') return 8;
   if (item.id === 'G28_LDC_Focal_Core') return 28;
   if (item.id.startsWith('G28_LDC_Node_')) return 22;
-  if (item.id.startsWith('G28_LDC_Connector_')) return 4;
+  if (item.id.startsWith('G28_LDC_Connector_')) return 6;
   if (item.id.startsWith('G28_LDC_CalloutSlot_')) return 16;
   if (item.id.startsWith('G28_LDC_Host_')) return 42;
   return 10;
@@ -259,7 +290,8 @@ function layerForShape(item) {
 }
 
 function shapePrimitive(item) {
-  const center = screenRectToYmm4Center(item.rect);
+  const rect = polishedRectFor(item);
+  const center = screenRectToYmm4Center(rect);
   return {
     kind: 'ShapeItem',
     display_name: item.id,
@@ -268,13 +300,13 @@ function shapePrimitive(item) {
     layer: layerForShape(item),
     x: center.x,
     y: center.y,
-    width: item.rect.width,
-    height: item.rect.height,
-    screen_rect: item.rect,
+    width: rect.width,
+    height: rect.height,
+    screen_rect: rect,
     color: item.style.fill,
     opacity: 100,
     round: roundFor(item),
-    stroke_thickness: item.rect.height,
+    stroke_thickness: rect.height,
     description: `G-28 source carrier primitive ${item.id}`,
   };
 }
@@ -282,9 +314,14 @@ function shapePrimitive(item) {
 function centeredTextPrimitive(displayName, groupId, role, layer, centerScreen, fontSize, content, color, description) {
   const bboxWidth = estimateTextWidth(content, fontSize);
   const bboxHeight = fontSize;
+  const visualOffset = textVisualOffsets[displayName] || { x: 0, y: 0 };
+  const adjustedCenter = {
+    x: centerScreen.x + visualOffset.x,
+    y: centerScreen.y + visualOffset.y,
+  };
   const screenTopLeft = {
-    x: centerScreen.x - bboxWidth / 2,
-    y: centerScreen.y - bboxHeight / 2,
+    x: adjustedCenter.x - bboxWidth / 2,
+    y: adjustedCenter.y - bboxHeight / 2,
   };
   const ymm4TopLeft = screenTopLeftToYmm4(screenTopLeft);
   return {
@@ -301,8 +338,11 @@ function centeredTextPrimitive(displayName, groupId, role, layer, centerScreen, 
       width: bboxWidth,
       height: bboxHeight,
     },
-    intent_screen_cx: centerScreen.x,
-    intent_screen_cy: centerScreen.y,
+    intent_screen_cx: adjustedCenter.x,
+    intent_screen_cy: adjustedCenter.y,
+    source_intent_screen_cx: centerScreen.x,
+    source_intent_screen_cy: centerScreen.y,
+    visual_offset_px: visualOffset,
     bbox_width: bboxWidth,
     bbox_height: bboxHeight,
     font_size: fontSize,
@@ -351,7 +391,7 @@ function buildPrimitivePlan(source, sourceReadback) {
       'G28_LDC_TitleBand',
       'label',
       3,
-      rectCenter(title.rect),
+      rectCenter(polishedRectFor(title)),
       52,
       titleText,
       labelColor,
@@ -373,7 +413,7 @@ function buildPrimitivePlan(source, sourceReadback) {
       'G28_LDC_FocalGroup',
       'focal_chain_label',
       7,
-      rectCenter(target.item.rect),
+      rectCenter(polishedRectFor(target.item)),
       42,
       target.label,
       nodeColor,
@@ -388,7 +428,7 @@ function buildPrimitivePlan(source, sourceReadback) {
       'G28_LDC_CalloutSlots',
       'callout_label',
       9,
-      rectCenter(slot.rect),
+      rectCenter(polishedRectFor(slot)),
       30,
       callout.label,
       calloutColor,
@@ -402,6 +442,7 @@ function buildPrimitivePlan(source, sourceReadback) {
     source_theme_variant: source.theme_variant,
     frame_contract: source.frame_contract,
     scs_mapping: source.scs_mapping,
+    polish_revision: polishRevision,
     primitives: [...shapes, ...textPrimitives],
   };
 }
@@ -581,6 +622,8 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
     production_approval_false: true,
     token_like_pattern_count_zero: tokenLikePatternCount === 0,
     carrier_not_modified_in_place: carrierHashBefore === carrierHashAfter,
+    polish_revision_bounded: primitivePlan.polish_revision.source_human_decision === 'revise_probe' &&
+      primitivePlan.polish_revision.classification === 'pass_probe_polished',
   };
   const failures = Object.entries(checks)
     .filter(([, ok]) => ok !== true)
@@ -591,7 +634,7 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
     source_artifact_id: primitivePlan.source_artifact_id,
     variant_id: primitivePlan.variant_id,
     status: failures.length === 0 && missing.length === 0 ? 'passed' : 'failed',
-    classification: failures.length === 0 && missing.length === 0 ? 'pass_ymmp_probe_created' : 'fail_ymmp_probe_readback',
+    classification: failures.length === 0 && missing.length === 0 ? primitivePlan.polish_revision.classification : 'fail_ymmp_probe_readback',
     generated_files: {
       ymmp: paths.outputYmmp,
       readback_json: paths.readbackJson,
@@ -612,6 +655,7 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
       g27_revival: false,
       rss_or_notebooklm_work: false,
     },
+    polish_revision: primitivePlan.polish_revision,
     frame_contract: {
       width: frameContract.width,
       height: frameContract.height,
@@ -736,6 +780,7 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
     items,
     limitations: [
       'This is a self-contained diagnostic probe, not production carrier approval.',
+      'This revision addresses bounded human-review polish only after revise_probe; it does not change the diagnostic-only boundary.',
       'It uses visible node/callout labels for GUI review; this does not approve production text density.',
       'No render, video, audio, source footage, external image, URL, raw reference, rights automation, or slot-fill is included.',
     ],
@@ -751,6 +796,13 @@ function renderReport(readback) {
   lines.push(`Variant id: \`${readback.variant_id}\``);
   lines.push('');
   lines.push('This is a self-contained YMM4-compatible diagnostic probe. It is not a render, production carrier approval, creative final acceptance, rights approval, source-footage intake, or slot-fill.');
+  lines.push('');
+  lines.push('## Polish Revision');
+  lines.push('');
+  lines.push(`- revision id: \`${readback.polish_revision.revision_id}\``);
+  lines.push(`- source human decision: \`${readback.polish_revision.source_human_decision}\``);
+  lines.push(`- bounded scope: ${readback.polish_revision.bounded_scope.map((item) => `\`${item}\``).join(', ')}`);
+  lines.push(`- boundary note: ${readback.polish_revision.boundary_note}`);
   lines.push('');
   lines.push('## Generated Files');
   lines.push('');

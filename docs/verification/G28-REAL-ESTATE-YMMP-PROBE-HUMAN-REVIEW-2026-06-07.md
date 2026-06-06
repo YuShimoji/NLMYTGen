@@ -98,6 +98,27 @@ existing diagnostic probe output in place or create a clearly versioned v2 probe
 as long as the report states that the previous human result was `revise_probe`
 and the new output remains diagnostic-only.
 
+## Bounded Polish Revision Generated
+
+The bounded diagnostic polish revision was generated in place after this
+`revise_probe` result. The updated builder/readback/report classify the revised
+probe as `pass_probe_polished`.
+
+Revision scope:
+
+- yellow connector alignment
+- rectangle text centering through existing TextItem top-left conventions
+- callout slot spacing and readability
+- small visual offsets only
+
+Preserved boundary:
+
+- `diagnostic_only=true`
+- `production_candidate=false`
+- no render, production approval, creative final acceptance, rights automation,
+  source footage, audio, TTS, image, URL, raw reference, slot-fill, G-27 revival,
+  ClipPipeGen access, RSS work, or NotebookLM work
+
 ## Boundaries
 
 - No production carrier approval.
