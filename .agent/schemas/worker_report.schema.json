@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.nlmytgen/agent/worker_report.schema.json",
+  "title": "NLMYTGen Codex worker report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "lane",
+    "severity",
+    "summary",
+    "changed_files",
+    "tests_run",
+    "tests_status",
+    "risks",
+    "next_recommended_worker",
+    "human_question",
+    "copyable_next_prompt"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "continue",
+        "auto_fix",
+        "needs_human",
+        "blocked"
+      ]
+    },
+    "lane": {
+      "type": "string",
+      "enum": [
+        "advance",
+        "audit",
+        "fix",
+        "summarize",
+        "escalate"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "none",
+        "P3",
+        "P2",
+        "P1",
+        "P0"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "changed_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tests_run": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tests_status": {
+      "type": "string",
+      "enum": [
+        "not_run",
+        "passed",
+        "failed"
+      ]
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next_recommended_worker": {
+      "type": "string"
+    },
+    "human_question": {
+      "type": "string"
+    },
+    "copyable_next_prompt": {
+      "type": "string"
+    }
+  }
+}
