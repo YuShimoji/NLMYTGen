@@ -64,6 +64,34 @@ example that sharpens the existing `内部ルール / 判定` middle node. A lat
 diagnostic JSON/report revision may rename or emphasize the middle label, but
 this semantics clarification does not require a generator change or new variant.
 
+## Hit / Collision / Rule-Check Semantics
+
+`当たり判定` should be read as the game's internal rule-check surface, not as a
+simple visual-contact claim. The important diagnostic point is that the visible
+sprite, attack effect, enemy body, or obstacle can appear to touch on screen
+while the actual collision / hitbox / invulnerability / state rule resolves a
+different result.
+
+For this carrier, the middle node answers:
+
+- did the player action or state enter a valid judgement window?
+- did the collision / hitbox / rule check resolve as hit, miss, blocked, or
+  ignored?
+- did the resolved judgement produce the feedback shown in the right node?
+
+This keeps the diagram focused on cause and effect:
+
+```text
+visible/player state -> hidden rule-check surface -> feedback the player sees
+```
+
+The variant should therefore avoid implying that "what looks like contact" is
+the same as "what the game judged." That mismatch is the teaching value of the
+game-mechanics carrier. If a later diagnostic artifact revision is opened, the
+middle label can move from generic `内部ルール` toward a short label such as
+`判定 / 当たり判定`, while the existing readback remains the current diagnostic
+precedent.
+
 ## Callout Priority
 
 The current three callouts are directionally valid, but the first review should
