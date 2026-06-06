@@ -79,6 +79,11 @@ def _load_state() -> dict[str, Any]:
         return json.load(handle)
 
 
+def _load_adapter() -> dict[str, Any]:
+    with open(REPO_ROOT / ".agent" / "repo_adapter.json", encoding="utf-8") as handle:
+        return json.load(handle)
+
+
 def _execution_enabled_state() -> dict[str, Any]:
     state = _load_state()
     state["execution_policy"] = {
@@ -96,6 +101,87 @@ def _clean_repo_status() -> dict[str, Any]:
         "untracked": [],
         "allowed_untracked": [],
     }
+
+
+def test_repo_adapter_exists_and_identifies_reference_host() -> None:
+    adapter_path = REPO_ROOT / ".agent" / "repo_adapter.json"
+
+    assert adapter_path.exists()
+    adapter = _load_adapter()
+    assert adapter["adapter_version"] == 1
+    assert adapter["repo_id"] == "nlmytgen"
+    assert adapter["repo_kind"]
+
+
+def test_repo_adapter_records_authority_docs_and_known_untracked_allowlist() -> None:
+    adapter = _load_adapter()
+
+    assert adapter["authority_docs"] == [
+        "AGENTS.md",
+        "docs/REPO_LOCAL_RULES.md",
+        "docs/runtime-state.md",
+    ]
+    assert ".claude/worktrees/" in adapter["known_untracked_allowlist"]
+    assert "samples/2026-05-16.ymmp" in adapter["known_untracked_allowlist"]
+
+
+def test_repo_adapter_records_scope_and_forbidden_domains() -> None:
+    adapter = _load_adapter()
+    state = _load_state()
+
+    assert adapter["allowed_change_roots"]
+    assert adapter["blocked_change_roots"]
+    assert adapter["allowed_change_roots"] == state["gate_policy"]["allowed_changed_path_prefixes"]
+    assert adapter["blocked_change_roots"] == state["gate_policy"]["blocked_changed_path_prefixes"]
+    for domain in (
+        "publish",
+        "release",
+        "rights_status",
+        "production_candidate",
+        "external_notification",
+    ):
+        assert domain in adapter["forbidden_automation_domains"]
+
+
+def test_repo_adapter_worker_groups_and_report_artifacts_are_inert() -> None:
+    adapter = _load_adapter()
+
+    assert adapter["worker_groups"]["default"] == ["advance", "audit", "fix", "summarize"]
+    assert adapter["worker_groups"]["inert"] is True
+    report_policy = adapter["report_artifact_policy"]
+    assert report_policy["runtime_report_glob"] == ".agent/reports/*.report.json"
+    assert report_policy["local_runtime_artifacts"] is True
+    assert report_policy["commit_by_default"] is False
+    assert report_policy["external_notification"] is False
+
+
+def test_repo_adapter_does_not_enable_execution_or_migrate_policy() -> None:
+    adapter = _load_adapter()
+
+    assert adapter["runtime_effect"]["inert"] is True
+    assert adapter["runtime_effect"]["runtime_policy_source"] == ".agent/state.json"
+    assert adapter["runtime_effect"]["enables_codex_exec"] is False
+    assert adapter["runtime_effect"]["migrates_gate_policy"] is False
+    assert "execution_policy" not in adapter
+
+
+def test_repo_adapter_does_not_resume_mainline_or_implement_clippipegen() -> None:
+    adapter = _load_adapter()
+
+    assert adapter["mainline_resume_contract"]["does_not_resume_mainline"] is True
+    assert adapter["mainline_resume_contract"]["reference_host_only"] is True
+    assert adapter["portability_notes"]["clip_pipe_gen_implemented"] is False
+    assert "ClipPipeGen adapter should supply its own" in adapter["portability_notes"]["clip_pipe_gen_design_goal"]
+
+
+def test_repo_adapter_keeps_nlmytgen_artifact_terms_out_of_common_runtime() -> None:
+    adapter = _load_adapter()
+
+    vocabulary = adapter["portability_notes"]["nlmytgen_specific_vocabulary"]
+    for term in ("YMM4", "ymmp", "rights_status", "production_candidate", "diagnostic proof", "visual proof"):
+        assert term in vocabulary
+    for term in ("YMM4", "ymmp", "G-28", "production_candidate"):
+        assert term in adapter["portability_notes"]["common_core_should_not_assume"]
 
 
 def test_gate_valid_pass_report_allows_continuation(repo_agent_tmp: Path) -> None:

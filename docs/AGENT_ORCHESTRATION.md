@@ -39,11 +39,46 @@ Future `codex exec` integration は別 slice で行う。現時点では実行�
 ## Repo-local 正本
 
 - `.agent/state.json`: prompt、schema、report、log、gate policy の現在設定
+- `.agent/repo_adapter.json`: current repo を reference host として記述する inert adapter 設定
 - `.agent/prompt_catalog/*.md`: Worker ごとの固定 Prompt
 - `.agent/schemas/worker_report.schema.json`: Worker report の JSON Schema
 - `scripts/agent_gate.py`: schema validation と policy gate
 - `scripts/agent_notify_stub.py`: 外部通知なしの needs-human stub
 - `scripts/agent_orchestrator.py`: prompt 選択、dry-run、report 判定の入口
+
+## Common Core / Repo Adapter
+
+Common core は repo をまたいでも変えない契約だけを持つ。
+
+- Worker report schema
+- Gate の fail-closed 判定
+- `needs_human` notification stub の payload shape
+- dry-run command preview
+- disabled execution preflight
+- Worker lane の抽象名
+
+Repo adapter は repo ごとの差分だけを持つ。現在は
+`.agent/repo_adapter.json` が NLMYTGen reference host の adapter である。
+この file は inert configuration であり、この slice では runtime decision に使わない。
+現行の gate / preflight の runtime policy source は引き続き `.agent/state.json` である。
+
+Adapter に置く repo-specific 情報は次のようなものに限定する。
+
+- authority docs と read order
+- known untracked allowlist
+- allowed / blocked change roots
+- forbidden automation domains
+- worker group の構成
+- report artifact policy
+- mainline resume boundary
+- portability notes
+
+NLMYTGen は最初の reference host であり、universal common core ではない。YMM4、
+`.ymmp`、`rights_status`、`production_candidate`、diagnostic proof / visual proof
+のような NLMYTGen-specific artifact vocabulary は adapter 側の語彙として扱う。
+
+ClipPipeGen portability は設計目標に留める。ClipPipeGen adapter、ClipPipeGen
+prompt catalog、ClipPipeGen runtime policy はこの repo ではまだ実装しない。
 
 ## Prompt Catalog の使い方
 
@@ -214,6 +249,8 @@ fixture または docs example として置く。
 - Passing prompt file contents to `codex exec -` stdin
 - Fake runner / subprocess runner
 - Runtime worker loop / multi-step execution
+- Migrating runtime decisions from `.agent/state.json` to `.agent/repo_adapter.json`
+- ClipPipeGen adapter implementation
 - External push notification
 - API key / notification service token handling
 - main/master への自動 push

@@ -1,0 +1,99 @@
+{
+  "adapter_version": 1,
+  "repo_id": "nlmytgen",
+  "repo_kind": "media_content_pipeline_reference_host",
+  "runtime_effect": {
+    "inert": true,
+    "runtime_policy_source": ".agent/state.json",
+    "enables_codex_exec": false,
+    "migrates_gate_policy": false
+  },
+  "authority_docs": [
+    "AGENTS.md",
+    "docs/REPO_LOCAL_RULES.md",
+    "docs/runtime-state.md"
+  ],
+  "known_untracked_allowlist": [
+    ".claude/worktrees/",
+    "samples/2026-05-16.ymmp"
+  ],
+  "allowed_change_roots": [
+    ".agent/",
+    "docs/",
+    "scripts/",
+    "src/",
+    "tests/",
+    "samples/_probe/"
+  ],
+  "blocked_change_roots": [
+    ".git/",
+    ".env",
+    "release/",
+    "releases/",
+    "publish/",
+    "published/",
+    "dist/",
+    "build/",
+    "samples/production",
+    "samples/final",
+    "samples/release"
+  ],
+  "forbidden_automation_domains": [
+    "publish",
+    "release",
+    "rights_status",
+    "production_candidate",
+    "external_notification",
+    "secret",
+    "destructive",
+    "repo_external_write",
+    "real_codex_exec_execution"
+  ],
+  "worker_groups": {
+    "default": [
+      "advance",
+      "audit",
+      "fix",
+      "summarize"
+    ],
+    "inert": true
+  },
+  "report_artifact_policy": {
+    "runtime_report_glob": ".agent/reports/*.report.json",
+    "needs_human_path": ".agent/needs_human.json",
+    "notify_stub_log": ".agent/logs/notify_stub.log",
+    "local_runtime_artifacts": true,
+    "commit_by_default": false,
+    "external_notification": false
+  },
+  "mainline_resume_contract": {
+    "does_not_resume_mainline": true,
+    "reference_host_only": true,
+    "read_order": [
+      "AGENTS.md",
+      "docs/REPO_LOCAL_RULES.md",
+      "docs/runtime-state.md"
+    ],
+    "boundary": "This adapter describes NLMYTGen policy shape for common-foundation work; it does not resume or advance NLMYTGen production/mainline work."
+  },
+  "portability_notes": {
+    "nlmytgen_specific_vocabulary": [
+      "YMM4",
+      "ymmp",
+      "rights_status",
+      "production_candidate",
+      "diagnostic proof",
+      "visual proof",
+      "G-28",
+      "carrier"
+    ],
+    "clip_pipe_gen_design_goal": "A future ClipPipeGen adapter should supply its own authority docs, artifact roots, readiness vocabulary, and blocked automation domains instead of inheriting NLMYTGen artifact terms.",
+    "clip_pipe_gen_implemented": false,
+    "common_core_should_not_assume": [
+      "YMM4",
+      "ymmp",
+      "G-28",
+      "production_candidate"
+    ]
+  }
+}
