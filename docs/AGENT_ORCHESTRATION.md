@@ -243,6 +243,26 @@ primary preview contract にしない。
 commit しない。durable な例が必要な場合は runtime report ではなく、明示的な
 fixture または docs example として置く。
 
+## Runtime Artifact Retention
+
+`.agent/reports/` と `.agent/logs/` は runtime output の置き場であり、directory
+placeholder だけを repo に残す。
+
+- `.agent/reports/.gitkeep`: tracked placeholder
+- `.agent/logs/.gitkeep`: tracked placeholder
+- `.agent/reports/*.report.json`: local runtime artifact。default では commit しない
+- `.agent/needs_human.json`: local runtime state。default では commit しない
+- `.agent/logs/notify_stub.log`: local runtime output。default では commit しない
+
+Durable な report example や fixture が必要な場合は `.agent/reports/` ではなく、
+`tests/fixtures/agent_orchestration/` のような明示的な fixture path に置く。
+
+Local runtime artifact を掃除する PowerShell 例:
+
+```powershell
+Remove-Item -Force .agent/needs_human.json, .agent/logs/notify_stub.log -ErrorAction SilentlyContinue; Get-ChildItem .agent/reports -Force | Where-Object { $_.Name -ne '.gitkeep' } | Remove-Item -Recurse -Force
+```
+
 ## Deliberately Unimplemented
 
 - Real `codex exec` execution

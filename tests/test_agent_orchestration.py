@@ -84,6 +84,27 @@ def _load_adapter() -> dict[str, Any]:
         return json.load(handle)
 
 
+def _load_gitignore_lines() -> list[str]:
+    with open(REPO_ROOT / ".gitignore", encoding="utf-8") as handle:
+        return [line.strip() for line in handle if line.strip() and not line.lstrip().startswith("#")]
+
+
+def _agent_runtime_gitignore_decision(path: str) -> bool:
+    ignored = False
+    for pattern in _load_gitignore_lines():
+        if pattern == ".agent/reports/*" and path.startswith(".agent/reports/"):
+            ignored = True
+        elif pattern == ".agent/logs/*" and path.startswith(".agent/logs/"):
+            ignored = True
+        elif pattern == ".agent/needs_human.json" and path == ".agent/needs_human.json":
+            ignored = True
+        elif pattern == "!.agent/reports/.gitkeep" and path == ".agent/reports/.gitkeep":
+            ignored = False
+        elif pattern == "!.agent/logs/.gitkeep" and path == ".agent/logs/.gitkeep":
+            ignored = False
+    return ignored
+
+
 def _execution_enabled_state() -> dict[str, Any]:
     state = _load_state()
     state["execution_policy"] = {
@@ -182,6 +203,43 @@ def test_repo_adapter_keeps_nlmytgen_artifact_terms_out_of_common_runtime() -> N
         assert term in vocabulary
     for term in ("YMM4", "ymmp", "G-28", "production_candidate"):
         assert term in adapter["portability_notes"]["common_core_should_not_assume"]
+
+
+def test_agent_runtime_artifacts_are_gitignored_by_policy() -> None:
+    lines = _load_gitignore_lines()
+
+    for pattern in (
+        ".agent/reports/*",
+        ".agent/logs/*",
+        ".agent/needs_human.json",
+    ):
+        assert pattern in lines
+
+
+def test_agent_runtime_gitkeep_files_remain_trackable() -> None:
+    lines = _load_gitignore_lines()
+
+    assert "!.agent/reports/.gitkeep" in lines
+    assert "!.agent/logs/.gitkeep" in lines
+    assert (REPO_ROOT / ".agent" / "reports" / ".gitkeep").exists()
+    assert (REPO_ROOT / ".agent" / "logs" / ".gitkeep").exists()
+    assert _agent_runtime_gitignore_decision(".agent/reports/.gitkeep") is False
+    assert _agent_runtime_gitignore_decision(".agent/logs/.gitkeep") is False
+
+
+def test_report_artifact_policy_keeps_generated_outputs_local() -> None:
+    adapter = _load_adapter()
+    report_policy = adapter["report_artifact_policy"]
+    ignored_runtime_paths = {
+        ".agent/reports/example.report.json",
+        ".agent/needs_human.json",
+        ".agent/logs/notify_stub.log",
+    }
+
+    assert report_policy["commit_by_default"] is False
+    assert report_policy["local_runtime_artifacts"] is True
+    assert report_policy["runtime_report_glob"] == ".agent/reports/*.report.json"
+    assert all(_agent_runtime_gitignore_decision(path) for path in ignored_runtime_paths)
 
 
 def test_gate_valid_pass_report_allows_continuation(repo_agent_tmp: Path) -> None:

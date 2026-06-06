@@ -20,6 +20,13 @@ gui/node_modules/
 gui/package-lock.json
 gui/project-settings.json
 
+# Codex worker orchestration runtime artifacts
+.agent/reports/*
+!.agent/reports/.gitkeep
+.agent/logs/*
+!.agent/logs/.gitkeep
+.agent/needs_human.json
+
 # Lane C: オペレータが絶対パスを書いたレジストリ JSON（repo に載せない）
 _local/
 
