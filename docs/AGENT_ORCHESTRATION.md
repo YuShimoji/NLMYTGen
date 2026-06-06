@@ -74,6 +74,16 @@ codex exec - --output-schema .agent/schemas/worker_report.schema.json -o .agent/
 その内容を `codex exec -` の stdin に渡す。現時点では stdin へ渡す処理も
 `codex exec` の subprocess 起動も実装しない。
 
+Dry-run には disabled execution preflight も含める。これは将来の実行可否を
+構造化して返すだけで、実行はしない。default では
+`.agent/state.json` の `execution_policy.codex_exec_enabled=false` により
+preflight は blocked になる。`max_steps` は loop semantics を別設計するまで `1`
+だけを許可し、`timeout_seconds` は正の integer でなければ blocked にする。
+
+Preflight は prompt path、schema path、report path、repo state policy を
+fail-closed で確認する。tracked dirty state、staged files、明示 allowlist 外の
+untracked files、既存 report output の上書きは、実行前に止める。
+
 ## Worker Report Schema
 
 `.agent/schemas/worker_report.schema.json` は Worker が返す JSON の最小契約で、
@@ -194,10 +204,15 @@ Worker report 側で risk または human question として明示する。
 `--prompt-file` や未検証の `--output` 形は、Codex CLI 側で明示確認するまで
 primary preview contract にしない。
 
+`.agent/reports/*.report.json` は local runtime artifact として扱い、default では
+commit しない。durable な例が必要な場合は runtime report ではなく、明示的な
+fixture または docs example として置く。
+
 ## Deliberately Unimplemented
 
 - Real `codex exec` execution
 - Passing prompt file contents to `codex exec -` stdin
+- Fake runner / subprocess runner
 - Runtime worker loop / multi-step execution
 - External push notification
 - API key / notification service token handling

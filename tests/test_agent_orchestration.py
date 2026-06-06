@@ -79,6 +79,25 @@ def _load_state() -> dict[str, Any]:
         return json.load(handle)
 
 
+def _execution_enabled_state() -> dict[str, Any]:
+    state = _load_state()
+    state["execution_policy"] = {
+        "codex_exec_enabled": True,
+        "max_steps": 1,
+        "timeout_seconds": 600,
+    }
+    return state
+
+
+def _clean_repo_status() -> dict[str, Any]:
+    return {
+        "tracked_dirty": [],
+        "staged": [],
+        "untracked": [],
+        "allowed_untracked": [],
+    }
+
+
 def test_gate_valid_pass_report_allows_continuation(repo_agent_tmp: Path) -> None:
     result = _evaluate(_report(repo_agent_tmp, "pass"))
 
@@ -246,6 +265,202 @@ def test_execution_policy_defaults_are_inert() -> None:
     assert policy["timeout_seconds"] == 600
 
 
+def test_preflight_blocks_default_disabled_execution_policy() -> None:
+    result = agent_orchestrator.build_execution_preflight(
+        _load_state(),
+        "audit",
+        repo_status=_clean_repo_status(),
+    )
+
+    assert result["allowed"] is False
+    assert result["execution_enabled"] is False
+    assert "execution_policy.codex_exec_enabled:false" in result["reasons"]
+    assert result["worker"] == "audit"
+    assert result["prompt_path"] == ".agent/prompt_catalog/audit.md"
+    assert result["schema_path"] == ".agent/schemas/worker_report.schema.json"
+    assert result["report_path"].startswith(".agent/reports/")
+    assert result["max_steps"] == 1
+    assert result["timeout_seconds"] == 600
+    assert result["repo_status"]["provided"] is True
+
+
+def test_preflight_rejects_invalid_worker_name() -> None:
+    result = agent_orchestrator.build_execution_preflight(
+        _execution_enabled_state(),
+        "../outside",
+        repo_status=_clean_repo_status(),
+    )
+
+    assert result["allowed"] is False
+    assert any("invalid worker" in reason for reason in result["reasons"])
+
+
+def test_preflight_rejects_missing_prompt_file() -> None:
+    state = _execution_enabled_state()
+    state["prompt_catalog_dir"] = ".agent/prompt_catalog/missing"
+
+    result = agent_orchestrator.build_execution_preflight(state, "audit", repo_status=_clean_repo_status())
+
+    assert result["allowed"] is False
+    assert any("path does not exist" in reason for reason in result["reasons"])
+
+
+def test_preflight_rejects_missing_schema_file() -> None:
+    state = _execution_enabled_state()
+    state["worker_report_schema"] = ".agent/schemas/missing.schema.json"
+
+    result = agent_orchestrator.build_execution_preflight(state, "audit", repo_status=_clean_repo_status())
+
+    assert result["allowed"] is False
+    assert any("path does not exist" in reason for reason in result["reasons"])
+
+
+def test_preflight_rejects_prompt_outside_prompt_catalog(repo_agent_tmp: Path) -> None:
+    outside_prompt_dir = repo_agent_tmp / "outside_prompt_catalog"
+    outside_prompt_dir.mkdir(parents=True)
+    (outside_prompt_dir / "audit.md").write_text("outside prompt\n", encoding="utf-8")
+    state = _execution_enabled_state()
+    state["prompt_catalog_dir"] = outside_prompt_dir.relative_to(REPO_ROOT).as_posix()
+
+    result = agent_orchestrator.build_execution_preflight(state, "audit", repo_status=_clean_repo_status())
+
+    assert result["allowed"] is False
+    assert any("prompt_path must stay under .agent/prompt_catalog" in reason for reason in result["reasons"])
+
+
+def test_preflight_rejects_schema_outside_schema_dir() -> None:
+    state = _execution_enabled_state()
+    state["worker_report_schema"] = "docs/AGENT_ORCHESTRATION.md"
+
+    result = agent_orchestrator.build_execution_preflight(state, "audit", repo_status=_clean_repo_status())
+
+    assert result["allowed"] is False
+    assert any("schema_path must stay under .agent/schemas" in reason for reason in result["reasons"])
+
+
+def test_preflight_rejects_report_path_outside_report_dir() -> None:
+    state = _execution_enabled_state()
+    state["report_output_template"] = "docs/{timestamp}-{worker}.report.json"
+
+    result = agent_orchestrator.build_execution_preflight(state, "audit", repo_status=_clean_repo_status())
+
+    assert result["allowed"] is False
+    assert any("report_path must stay under .agent/reports" in reason for reason in result["reasons"])
+
+
+def test_preflight_rejects_existing_report_output_path(repo_agent_tmp: Path) -> None:
+    existing_report = repo_agent_tmp / "existing.report.json"
+    existing_report.write_text("{}\n", encoding="utf-8")
+    state = _execution_enabled_state()
+    state["report_output_template"] = existing_report.relative_to(REPO_ROOT).as_posix()
+
+    result = agent_orchestrator.build_execution_preflight(state, "audit", repo_status=_clean_repo_status())
+
+    assert result["allowed"] is False
+    assert f"report_path:already_exists:{existing_report.relative_to(REPO_ROOT).as_posix()}" in result["reasons"]
+
+
+def test_preflight_rejects_max_steps_greater_than_one() -> None:
+    state = _execution_enabled_state()
+    state["execution_policy"]["max_steps"] = 2
+
+    result = agent_orchestrator.build_execution_preflight(state, "audit", repo_status=_clean_repo_status())
+
+    assert result["allowed"] is False
+    assert "execution_policy.max_steps:greater_than_1" in result["reasons"]
+
+
+@pytest.mark.parametrize("max_steps", [None, "1", True, 0])
+def test_preflight_rejects_missing_invalid_boolean_or_low_max_steps(max_steps: Any) -> None:
+    state = _execution_enabled_state()
+    if max_steps is None:
+        state["execution_policy"].pop("max_steps")
+        expected_reason = "execution_policy.max_steps:missing"
+    elif max_steps == 0:
+        state["execution_policy"]["max_steps"] = max_steps
+        expected_reason = "execution_policy.max_steps:less_than_1"
+    else:
+        state["execution_policy"]["max_steps"] = max_steps
+        expected_reason = "execution_policy.max_steps:invalid"
+
+    result = agent_orchestrator.build_execution_preflight(state, "audit", repo_status=_clean_repo_status())
+
+    assert result["allowed"] is False
+    assert expected_reason in result["reasons"]
+
+
+@pytest.mark.parametrize("timeout_seconds", [None, "600", True, 0, -1])
+def test_preflight_rejects_missing_invalid_boolean_or_non_positive_timeout(timeout_seconds: Any) -> None:
+    state = _execution_enabled_state()
+    if timeout_seconds is None:
+        state["execution_policy"].pop("timeout_seconds")
+        expected_reason = "execution_policy.timeout_seconds:missing"
+    elif isinstance(timeout_seconds, int) and timeout_seconds <= 0:
+        state["execution_policy"]["timeout_seconds"] = timeout_seconds
+        expected_reason = "execution_policy.timeout_seconds:non_positive"
+    else:
+        state["execution_policy"]["timeout_seconds"] = timeout_seconds
+        expected_reason = "execution_policy.timeout_seconds:invalid"
+
+    result = agent_orchestrator.build_execution_preflight(state, "audit", repo_status=_clean_repo_status())
+
+    assert result["allowed"] is False
+    assert expected_reason in result["reasons"]
+
+
+def test_preflight_rejects_staged_files() -> None:
+    repo_status = _clean_repo_status()
+    repo_status["staged"] = ["scripts/agent_orchestrator.py"]
+
+    result = agent_orchestrator.build_execution_preflight(_execution_enabled_state(), "audit", repo_status=repo_status)
+
+    assert result["allowed"] is False
+    assert "repo_status:staged_files_present" in result["reasons"]
+
+
+def test_preflight_rejects_dirty_tracked_state() -> None:
+    repo_status = _clean_repo_status()
+    repo_status["tracked_dirty"] = ["docs/AGENT_ORCHESTRATION.md"]
+
+    result = agent_orchestrator.build_execution_preflight(_execution_enabled_state(), "audit", repo_status=repo_status)
+
+    assert result["allowed"] is False
+    assert "repo_status:tracked_dirty" in result["reasons"]
+
+
+def test_preflight_allows_known_untracked_only_with_explicit_allowlist() -> None:
+    repo_status = _clean_repo_status()
+    repo_status["untracked"] = [".claude/worktrees/example/", "samples/2026-05-16.ymmp"]
+    repo_status["allowed_untracked"] = [".claude/worktrees/", "samples/2026-05-16.ymmp"]
+
+    result = agent_orchestrator.build_execution_preflight(_execution_enabled_state(), "audit", repo_status=repo_status)
+
+    assert result["allowed"] is True
+    assert result["repo_status"]["unknown_untracked"] == []
+
+
+def test_preflight_rejects_unknown_untracked_files() -> None:
+    repo_status = _clean_repo_status()
+    repo_status["untracked"] = ["unexpected.tmp"]
+
+    result = agent_orchestrator.build_execution_preflight(_execution_enabled_state(), "audit", repo_status=repo_status)
+
+    assert result["allowed"] is False
+    assert "repo_status:unknown_untracked_files" in result["reasons"]
+
+
+def test_preflight_only_checks_do_not_write_notification_artifacts(repo_agent_tmp: Path) -> None:
+    state = _execution_enabled_state()
+    state["needs_human_path"] = (repo_agent_tmp / "needs_human.json").relative_to(REPO_ROOT).as_posix()
+    state["notify_stub_log"] = (repo_agent_tmp / "notify_stub.log").relative_to(REPO_ROOT).as_posix()
+
+    result = agent_orchestrator.build_execution_preflight(state, "audit", repo_status=_clean_repo_status())
+
+    assert result["allowed"] is True
+    assert not (repo_agent_tmp / "needs_human.json").exists()
+    assert not (repo_agent_tmp / "notify_stub.log").exists()
+
+
 def test_execution_plan_rejects_invalid_worker_name() -> None:
     with pytest.raises(agent_gate.GateInputError):
         agent_orchestrator.build_execution_plan(_load_state(), "../outside", timestamp="20260606T000000Z")
@@ -283,6 +498,8 @@ def test_orchestrator_dry_run_does_not_start_codex() -> None:
     assert result["dry_run"]["codex_execution_started"] is False
     assert result["dry_run"]["argv"][:3] == ["codex", "exec", "-"]
     assert result["dry_run"]["prompt_input_mode"] == "stdin_from_prompt_file"
+    assert result["dry_run"]["preflight"]["allowed"] is False
+    assert "execution_policy.codex_exec_enabled:false" in result["dry_run"]["preflight"]["reasons"]
     assert "gate_result" not in result
 
 

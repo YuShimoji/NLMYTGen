@@ -16,6 +16,14 @@ WORKERS = ("advance", "audit", "fix", "summarize")
 PROMPT_ROOT = REPO_ROOT / ".agent" / "prompt_catalog"
 SCHEMA_ROOT = REPO_ROOT / ".agent" / "schemas"
 REPORT_ROOT = REPO_ROOT / ".agent" / "reports"
+DEFAULT_REPO_STATUS = {
+    "provided": False,
+    "tracked_dirty": [],
+    "staged": [],
+    "untracked": [],
+    "allowed_untracked": [],
+    "unknown_untracked": [],
+}
 
 
 @dataclass(frozen=True)
@@ -42,6 +50,12 @@ def utc_stamp() -> str:
 def _state_string(state: dict[str, Any], key: str, fallback: str) -> str:
     value = state.get(key, fallback)
     return value if isinstance(value, str) else fallback
+
+
+def _string_list(value: Any) -> list[str]:
+    if not isinstance(value, list):
+        return []
+    return [item for item in value if isinstance(item, str)]
 
 
 def _repo_relative(path: Path) -> str:
@@ -138,6 +152,142 @@ def build_execution_plan(state: dict[str, Any], worker: str, timestamp: str | No
     )
 
 
+def _path_allowed_by_prefix(path_value: str, allowed_values: list[str]) -> bool:
+    normalized = path_value.replace("\\", "/")
+    for allowed_value in allowed_values:
+        allowed = allowed_value.replace("\\", "/")
+        if allowed.endswith("/"):
+            if normalized.startswith(allowed):
+                return True
+        elif normalized == allowed:
+            return True
+    return False
+
+
+def repo_status_policy_result(repo_status: dict[str, Any] | None) -> dict[str, Any]:
+    if repo_status is None:
+        return dict(DEFAULT_REPO_STATUS)
+
+    tracked_dirty = _string_list(repo_status.get("tracked_dirty", repo_status.get("dirty_tracked", [])))
+    staged = _string_list(repo_status.get("staged", repo_status.get("staged_files", [])))
+    untracked = _string_list(repo_status.get("untracked", repo_status.get("untracked_files", [])))
+    allowed_untracked = _string_list(
+        repo_status.get("allowed_untracked", repo_status.get("allowed_untracked_paths", []))
+    )
+    unknown_untracked = [
+        path_value for path_value in untracked if not _path_allowed_by_prefix(path_value, allowed_untracked)
+    ]
+    return {
+        "provided": True,
+        "tracked_dirty": tracked_dirty,
+        "staged": staged,
+        "untracked": untracked,
+        "allowed_untracked": allowed_untracked,
+        "unknown_untracked": unknown_untracked,
+    }
+
+
+def _preflight_path_reason(path_value: str, parent: Path, label: str, *, must_exist: bool = False) -> str | None:
+    try:
+        path = resolve_repo_path(path_value, must_exist=must_exist)
+        _ensure_under(path, parent, label)
+    except GateInputError as exc:
+        return f"{label}:{exc}"
+    return None
+
+
+def _execution_policy_reasons(state: dict[str, Any]) -> tuple[list[str], bool, Any, Any]:
+    reasons: list[str] = []
+    raw_policy = state.get("execution_policy")
+    if not isinstance(raw_policy, dict):
+        reasons.append("execution_policy:missing_or_invalid")
+        raw_policy = {}
+
+    execution_enabled = raw_policy.get("codex_exec_enabled") is True
+    if not execution_enabled:
+        reasons.append("execution_policy.codex_exec_enabled:false")
+
+    max_steps = raw_policy.get("max_steps")
+    if "max_steps" not in raw_policy:
+        reasons.append("execution_policy.max_steps:missing")
+    elif isinstance(max_steps, bool) or not isinstance(max_steps, int):
+        reasons.append("execution_policy.max_steps:invalid")
+    elif max_steps < 1:
+        reasons.append("execution_policy.max_steps:less_than_1")
+    elif max_steps > 1:
+        reasons.append("execution_policy.max_steps:greater_than_1")
+
+    timeout_seconds = raw_policy.get("timeout_seconds")
+    if "timeout_seconds" not in raw_policy:
+        reasons.append("execution_policy.timeout_seconds:missing")
+    elif isinstance(timeout_seconds, bool) or not isinstance(timeout_seconds, int):
+        reasons.append("execution_policy.timeout_seconds:invalid")
+    elif timeout_seconds <= 0:
+        reasons.append("execution_policy.timeout_seconds:non_positive")
+
+    return reasons, execution_enabled, max_steps, timeout_seconds
+
+
+def build_execution_preflight(
+    state: dict[str, Any],
+    worker: str,
+    plan: ExecutionPlan | None = None,
+    repo_status: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    reasons, execution_enabled, max_steps, timeout_seconds = _execution_policy_reasons(state)
+    repo_status_result = repo_status_policy_result(repo_status)
+    plan_error = ""
+
+    if plan is None:
+        try:
+            plan = build_execution_plan(state, worker)
+        except GateInputError as exc:
+            plan_error = str(exc)
+            reasons.append(f"execution_plan:{plan_error}")
+
+    prompt_path = plan.prompt_path if plan else ""
+    schema_path = plan.schema_path if plan else ""
+    report_path = plan.report_path if plan else ""
+
+    if plan is not None:
+        for maybe_reason in (
+            _preflight_path_reason(plan.prompt_path, PROMPT_ROOT, "prompt_path", must_exist=True),
+            _preflight_path_reason(plan.schema_path, SCHEMA_ROOT, "schema_path", must_exist=True),
+            _preflight_path_reason(plan.report_path, REPORT_ROOT, "report_path"),
+        ):
+            if maybe_reason:
+                reasons.append(maybe_reason)
+        try:
+            report_exists = resolve_repo_path(plan.report_path).exists()
+        except GateInputError:
+            report_exists = False
+        if report_exists:
+            reasons.append(f"report_path:already_exists:{plan.report_path}")
+
+    if not repo_status_result["provided"]:
+        reasons.append("repo_status:not_provided")
+    if repo_status_result["tracked_dirty"]:
+        reasons.append("repo_status:tracked_dirty")
+    if repo_status_result["staged"]:
+        reasons.append("repo_status:staged_files_present")
+    if repo_status_result["unknown_untracked"]:
+        reasons.append("repo_status:unknown_untracked_files")
+
+    return {
+        "allowed": not reasons,
+        "reasons": reasons,
+        "execution_enabled": execution_enabled,
+        "worker": worker,
+        "prompt_path": prompt_path,
+        "schema_path": schema_path,
+        "report_path": report_path,
+        "max_steps": max_steps,
+        "timeout_seconds": timeout_seconds,
+        "repo_status": repo_status_result,
+        "plan_error": plan_error,
+    }
+
+
 def run(args: argparse.Namespace) -> dict[str, Any]:
     state_path = resolve_repo_path(args.state, must_exist=True)
     state = load_json(state_path)
@@ -150,8 +300,10 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     }
 
     if args.dry_run:
-        execution_plan = build_execution_plan(state, args.worker).to_dict()
+        execution_plan_obj = build_execution_plan(state, args.worker)
+        execution_plan = execution_plan_obj.to_dict()
         execution_plan["powershell"] = powershell_preview(execution_plan["argv"])
+        execution_plan["preflight"] = build_execution_preflight(state, args.worker, execution_plan_obj)
         result["dry_run"] = execution_plan
 
     if args.report:
