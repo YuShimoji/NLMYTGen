@@ -1,0 +1,912 @@
+{
+  "artifact_type": "g28_real_estate_information_gap_ymmp_diagnostic_probe_readback",
+  "probe_artifact_id": "g28_lecture_diagram_carrier_real_estate_information_gap_ymmp_probe_v1",
+  "source_artifact_id": "g28_lecture_diagram_carrier_real_estate_information_gap_v1",
+  "variant_id": "g28_ldc_real_estate_information_gap",
+  "status": "passed",
+  "classification": "pass_ymmp_probe_created",
+  "generated_files": {
+    "ymmp": "samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe.ymmp",
+    "readback_json": "samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe_readback.json",
+    "report_md": "samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe_report.md"
+  },
+  "boundary": {
+    "diagnostic_only": true,
+    "production_candidate": false,
+    "self_contained_ymmp_probe": true,
+    "production_render": false,
+    "render_output": false,
+    "creative_final_acceptance": false,
+    "production_carrier_approval": false,
+    "slot_fill": false,
+    "source_footage_intake": false,
+    "audio_or_tts": false,
+    "image_or_url_or_raw_reference": false,
+    "g27_revival": false,
+    "rss_or_notebooklm_work": false
+  },
+  "frame_contract": {
+    "width": 1920,
+    "height": 1080,
+    "aspect_ratio": "16:9",
+    "caption_reserve": {
+      "x": 0,
+      "y": 810,
+      "width": 1920,
+      "height": 216
+    },
+    "main_canvas": {
+      "x": 96,
+      "y": 150,
+      "width": 1728,
+      "height": 660
+    }
+  },
+  "totals": {
+    "item_count": 19,
+    "expected_item_count": 19,
+    "shape_item_count": 12,
+    "text_item_count": 7,
+    "visible_text_chars": 42,
+    "missing_item_count": 0,
+    "callout_count": 3,
+    "callout_label_count": 3,
+    "focal_chain_label_count": 3
+  },
+  "checks": {
+    "diagnostic_only": true,
+    "production_candidate_false": true,
+    "source_artifact_id_expected": true,
+    "variant_id_expected": true,
+    "self_contained_ymmp_probe_created": true,
+    "frame_16_9_1920_1080": true,
+    "caption_reserve_bottom_20pct": true,
+    "caption_reserve_clear": true,
+    "focal_area_in_main_canvas": true,
+    "focal_chain_nodes_3": true,
+    "focal_chain_labels_expected": true,
+    "callout_count_3": true,
+    "callout_labels_expected": true,
+    "host_role_non_focal": true,
+    "layer_order_matches_contract": true,
+    "diagnostic_text_budget_bounded": true,
+    "dense_table_false": true,
+    "indexed_whiteboard_false": true,
+    "external_image_count_zero": true,
+    "external_url_count_zero": true,
+    "source_footage_count_zero": true,
+    "audio_item_count_zero": true,
+    "tts_or_voice_item_count_zero": true,
+    "render_output_false": true,
+    "creative_final_acceptance_false": true,
+    "production_approval_false": true,
+    "token_like_pattern_count_zero": true,
+    "carrier_not_modified_in_place": true
+  },
+  "failures": [],
+  "missing_items": [],
+  "caption_reserve_readback": {
+    "rect": {
+      "x": 0,
+      "y": 810,
+      "width": 1920,
+      "height": 216
+    },
+    "bottom_percent": 20,
+    "clear": true,
+    "overlaps": []
+  },
+  "focal_area_readback": {
+    "composition_type": "center-focal",
+    "focal_core_rect": {
+      "x": 560,
+      "y": 240,
+      "width": 800,
+      "height": 360
+    },
+    "focal_core_in_main_canvas": true,
+    "focal_chain": [
+      {
+        "id": "G28_LDC_Node_Left",
+        "label": "元付情報",
+        "role": "source"
+      },
+      {
+        "id": "G28_LDC_Focal_Core",
+        "label": "ポータル掲載",
+        "role": "publication_surface"
+      },
+      {
+        "id": "G28_LDC_Node_Right",
+        "label": "借主判断",
+        "role": "viewer_decision"
+      }
+    ],
+    "visible_node_labels": [
+      {
+        "id": "G28_LDC_Node_Left_Label",
+        "text": "元付情報",
+        "rect": {
+          "x": 276,
+          "y": 379,
+          "width": 168,
+          "height": 42
+        }
+      },
+      {
+        "id": "G28_LDC_Node_Center_Label",
+        "text": "ポータル掲載",
+        "rect": {
+          "x": 834,
+          "y": 399,
+          "width": 252,
+          "height": 42
+        }
+      },
+      {
+        "id": "G28_LDC_Node_Right_Label",
+        "text": "借主判断",
+        "rect": {
+          "x": 1476,
+          "y": 379,
+          "width": 168,
+          "height": 42
+        }
+      }
+    ]
+  },
+  "callout_readback": {
+    "count": 3,
+    "labels": [
+      {
+        "id": "G28_LDC_CalloutSlot_1_Label",
+        "text": "情報遅延",
+        "rect": {
+          "x": 485,
+          "y": 678,
+          "width": 120,
+          "height": 30
+        }
+      },
+      {
+        "id": "G28_LDC_CalloutSlot_2_Label",
+        "text": "掲載粒度の欠落",
+        "rect": {
+          "x": 855,
+          "y": 678,
+          "width": 210,
+          "height": 30
+        }
+      },
+      {
+        "id": "G28_LDC_CalloutSlot_3_Label",
+        "text": "仲介インセンティブ",
+        "rect": {
+          "x": 1240,
+          "y": 678,
+          "width": 270,
+          "height": 30
+        }
+      }
+    ],
+    "allowed_min": 2,
+    "allowed_max": 3
+  },
+  "host_role_readback": {
+    "role": "non_focal_lower_corner_decoration_emotional_anchor",
+    "hosts": [
+      {
+        "id": "G28_LDC_Host_Left",
+        "rect": {
+          "x": 112,
+          "y": 655,
+          "width": 204,
+          "height": 145
+        },
+        "below_focal": true,
+        "above_caption_reserve": true
+      },
+      {
+        "id": "G28_LDC_Host_Right",
+        "rect": {
+          "x": 1604,
+          "y": 655,
+          "width": 204,
+          "height": 145
+        },
+        "below_focal": true,
+        "above_caption_reserve": true
+      }
+    ]
+  },
+  "text_budget_readback": {
+    "visible_text_item_count": 7,
+    "visible_text_chars": 42,
+    "max_visible_text_items": 8,
+    "max_visible_chars": 60,
+    "dense": false,
+    "production_text_budget_claimed": false,
+    "note": "Diagnostic probe labels are visible for YMM4 GUI review only and do not approve a production in-frame text budget.",
+    "visible_text_items": [
+      {
+        "id": "G28_LDC_Title_Text",
+        "text": "情報非対称の流れ",
+        "role": "label"
+      },
+      {
+        "id": "G28_LDC_Node_Left_Label",
+        "text": "元付情報",
+        "role": "focal_chain_label"
+      },
+      {
+        "id": "G28_LDC_Node_Center_Label",
+        "text": "ポータル掲載",
+        "role": "focal_chain_label"
+      },
+      {
+        "id": "G28_LDC_Node_Right_Label",
+        "text": "借主判断",
+        "role": "focal_chain_label"
+      },
+      {
+        "id": "G28_LDC_CalloutSlot_1_Label",
+        "text": "情報遅延",
+        "role": "callout_label"
+      },
+      {
+        "id": "G28_LDC_CalloutSlot_2_Label",
+        "text": "掲載粒度の欠落",
+        "role": "callout_label"
+      },
+      {
+        "id": "G28_LDC_CalloutSlot_3_Label",
+        "text": "仲介インセンティブ",
+        "role": "callout_label"
+      }
+    ]
+  },
+  "layer_order_readback": {
+    "contract": [
+      "stage",
+      "title",
+      "focal surfaces",
+      "connectors",
+      "focal labels",
+      "callouts",
+      "hosts"
+    ],
+    "matches_contract": true,
+    "phases": {
+      "stage": {
+        "min": 1,
+        "max": 1,
+        "layers": [
+          1
+        ]
+      },
+      "title": {
+        "min": 2,
+        "max": 3,
+        "layers": [
+          2,
+          3
+        ]
+      },
+      "focal_surfaces": {
+        "min": 4,
+        "max": 5,
+        "layers": [
+          4,
+          5,
+          5
+        ]
+      },
+      "connectors": {
+        "min": 6,
+        "max": 6,
+        "layers": [
+          6,
+          6
+        ]
+      },
+      "focal_labels": {
+        "min": 7,
+        "max": 7,
+        "layers": [
+          7,
+          7,
+          7
+        ]
+      },
+      "callouts": {
+        "min": 8,
+        "max": 9,
+        "layers": [
+          8,
+          8,
+          8,
+          9,
+          9,
+          9
+        ]
+      },
+      "hosts": {
+        "min": 10,
+        "max": 10,
+        "layers": [
+          10,
+          10
+        ]
+      }
+    }
+  },
+  "safety_readback": {
+    "external_image_count": 0,
+    "external_url_count": 0,
+    "source_footage_count": 0,
+    "audio_item_count": 0,
+    "tts_or_voice_item_count": 0,
+    "token_like_pattern_count": 0,
+    "image_binary": false,
+    "image_path": false,
+    "image_url": false,
+    "raw_reference": false
+  },
+  "ymm4_mapping": {
+    "note": "YMM4 Group remains 0; logical groups are recorded in readback and item Remarks for a simple static diagnostic probe.",
+    "groups": [
+      {
+        "group_id": "G28_LDC_Stage",
+        "ymm4_items": [
+          "G28_LDC_BG_Stage"
+        ]
+      },
+      {
+        "group_id": "G28_LDC_TitleBand",
+        "ymm4_items": [
+          "G28_LDC_TitleBand_BG",
+          "G28_LDC_Title_Text"
+        ]
+      },
+      {
+        "group_id": "G28_LDC_FocalGroup",
+        "ymm4_items": [
+          "G28_LDC_Focal_Core",
+          "G28_LDC_Node_Left",
+          "G28_LDC_Node_Right",
+          "G28_LDC_Connector_Left",
+          "G28_LDC_Connector_Right",
+          "G28_LDC_Node_Left_Label",
+          "G28_LDC_Node_Center_Label",
+          "G28_LDC_Node_Right_Label"
+        ]
+      },
+      {
+        "group_id": "G28_LDC_CalloutSlots",
+        "ymm4_items": [
+          "G28_LDC_CalloutSlot_1",
+          "G28_LDC_CalloutSlot_2",
+          "G28_LDC_CalloutSlot_3",
+          "G28_LDC_CalloutSlot_1_Label",
+          "G28_LDC_CalloutSlot_2_Label",
+          "G28_LDC_CalloutSlot_3_Label"
+        ]
+      },
+      {
+        "group_id": "G28_LDC_Hosts",
+        "ymm4_items": [
+          "G28_LDC_Host_Left",
+          "G28_LDC_Host_Right"
+        ]
+      }
+    ]
+  },
+  "source_integrity": {
+    "carrier_ymmp": "samples/canonical.ymmp",
+    "shape_template_ymmp": "samples/_probe/g24/real_estate_dx_overlay_only_compact_review.ymmp",
+    "carrier_sha256_before": "90bfc8623875a2dcf51baaf03d068aab5e2e2ef58a528451c80f4c622bf7d7a4",
+    "carrier_sha256_after": "90bfc8623875a2dcf51baaf03d068aab5e2e2ef58a528451c80f4c622bf7d7a4",
+    "carrier_modified_in_place": false
+  },
+  "items": [
+    {
+      "display_name": "G28_LDC_BG_Stage",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_Stage",
+      "role": "decoration",
+      "layer": 1,
+      "x": 0,
+      "y": 0,
+      "screen_rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1080
+      },
+      "width": 1920,
+      "height": 1080,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 1080,
+      "round": 0,
+      "opacity": 100,
+      "fill_color": "#FF111827",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "description": "G-28 source carrier primitive G28_LDC_BG_Stage"
+    },
+    {
+      "display_name": "G28_LDC_TitleBand_BG",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_TitleBand",
+      "role": "label",
+      "layer": 2,
+      "x": 0,
+      "y": -438,
+      "screen_rect": {
+        "x": 96,
+        "y": 54,
+        "width": 1728,
+        "height": 96
+      },
+      "width": 1728,
+      "height": 96,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 96,
+      "round": 8,
+      "opacity": 100,
+      "fill_color": "#FF1F2937",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "description": "G-28 source carrier primitive G28_LDC_TitleBand_BG"
+    },
+    {
+      "display_name": "G28_LDC_Focal_Core",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "role": "focal_anchor",
+      "layer": 4,
+      "x": 0,
+      "y": -120,
+      "screen_rect": {
+        "x": 560,
+        "y": 240,
+        "width": 800,
+        "height": 360
+      },
+      "width": 800,
+      "height": 360,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 360,
+      "round": 28,
+      "opacity": 100,
+      "fill_color": "#FF22324A",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "description": "G-28 source carrier primitive G28_LDC_Focal_Core"
+    },
+    {
+      "display_name": "G28_LDC_Node_Left",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "role": "internal_node",
+      "layer": 5,
+      "x": -600,
+      "y": -140,
+      "screen_rect": {
+        "x": 230,
+        "y": 330,
+        "width": 260,
+        "height": 140
+      },
+      "width": 260,
+      "height": 140,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 140,
+      "round": 22,
+      "opacity": 100,
+      "fill_color": "#FF374151",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "description": "G-28 source carrier primitive G28_LDC_Node_Left"
+    },
+    {
+      "display_name": "G28_LDC_Node_Right",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "role": "internal_node",
+      "layer": 5,
+      "x": 600,
+      "y": -140,
+      "screen_rect": {
+        "x": 1430,
+        "y": 330,
+        "width": 260,
+        "height": 140
+      },
+      "width": 260,
+      "height": 140,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 140,
+      "round": 22,
+      "opacity": 100,
+      "fill_color": "#FF374151",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "description": "G-28 source carrier primitive G28_LDC_Node_Right"
+    },
+    {
+      "display_name": "G28_LDC_Connector_Left",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "role": "connector",
+      "layer": 6,
+      "x": -415,
+      "y": -140,
+      "screen_rect": {
+        "x": 500,
+        "y": 395,
+        "width": 90,
+        "height": 10
+      },
+      "width": 90,
+      "height": 10,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 10,
+      "round": 4,
+      "opacity": 100,
+      "fill_color": "#FFFBBF24",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "description": "G-28 source carrier primitive G28_LDC_Connector_Left"
+    },
+    {
+      "display_name": "G28_LDC_Connector_Right",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "role": "connector",
+      "layer": 6,
+      "x": 415,
+      "y": -140,
+      "screen_rect": {
+        "x": 1330,
+        "y": 395,
+        "width": 90,
+        "height": 10
+      },
+      "width": 90,
+      "height": 10,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 10,
+      "round": 4,
+      "opacity": 100,
+      "fill_color": "#FFFBBF24",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "description": "G-28 source carrier primitive G28_LDC_Connector_Right"
+    },
+    {
+      "display_name": "G28_LDC_CalloutSlot_1",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "role": "supporting",
+      "layer": 8,
+      "x": -415,
+      "y": 153,
+      "screen_rect": {
+        "x": 395,
+        "y": 650,
+        "width": 300,
+        "height": 86
+      },
+      "width": 300,
+      "height": 86,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 86,
+      "round": 16,
+      "opacity": 100,
+      "fill_color": "#FF1E3A5F",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "description": "G-28 source carrier primitive G28_LDC_CalloutSlot_1"
+    },
+    {
+      "display_name": "G28_LDC_CalloutSlot_2",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "role": "supporting",
+      "layer": 8,
+      "x": 0,
+      "y": 153,
+      "screen_rect": {
+        "x": 810,
+        "y": 650,
+        "width": 300,
+        "height": 86
+      },
+      "width": 300,
+      "height": 86,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 86,
+      "round": 16,
+      "opacity": 100,
+      "fill_color": "#FF1E3A5F",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "description": "G-28 source carrier primitive G28_LDC_CalloutSlot_2"
+    },
+    {
+      "display_name": "G28_LDC_CalloutSlot_3",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "role": "supporting",
+      "layer": 8,
+      "x": 415,
+      "y": 153,
+      "screen_rect": {
+        "x": 1225,
+        "y": 650,
+        "width": 300,
+        "height": 86
+      },
+      "width": 300,
+      "height": 86,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 86,
+      "round": 16,
+      "opacity": 100,
+      "fill_color": "#FF1E3A5F",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "description": "G-28 source carrier primitive G28_LDC_CalloutSlot_3"
+    },
+    {
+      "display_name": "G28_LDC_Host_Left",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_Hosts",
+      "role": "decoration",
+      "layer": 10,
+      "x": -746,
+      "y": 187.5,
+      "screen_rect": {
+        "x": 112,
+        "y": 655,
+        "width": 204,
+        "height": 145
+      },
+      "width": 204,
+      "height": 145,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 145,
+      "round": 42,
+      "opacity": 100,
+      "fill_color": "#FF4B5563",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "description": "G-28 source carrier primitive G28_LDC_Host_Left"
+    },
+    {
+      "display_name": "G28_LDC_Host_Right",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_Hosts",
+      "role": "decoration",
+      "layer": 10,
+      "x": 746,
+      "y": 187.5,
+      "screen_rect": {
+        "x": 1604,
+        "y": 655,
+        "width": 204,
+        "height": 145
+      },
+      "width": 204,
+      "height": 145,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 145,
+      "round": 42,
+      "opacity": 100,
+      "fill_color": "#FF4B5563",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "description": "G-28 source carrier primitive G28_LDC_Host_Right"
+    },
+    {
+      "display_name": "G28_LDC_Title_Text",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_TitleBand",
+      "role": "label",
+      "layer": 3,
+      "x": -208,
+      "y": -460,
+      "screen_rect": {
+        "x": 752,
+        "y": 80,
+        "width": 416,
+        "height": 52
+      },
+      "width": 416,
+      "height": 52,
+      "shape_size_mode": null,
+      "stroke_thickness": null,
+      "round": null,
+      "opacity": 100,
+      "fill_color": null,
+      "text": "情報非対称の流れ",
+      "text_color": "#FFF9FAFB",
+      "font_size": 52,
+      "description": "short title label from accepted diagnostic variant"
+    },
+    {
+      "display_name": "G28_LDC_Node_Left_Label",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "role": "focal_chain_label",
+      "layer": 7,
+      "x": -684,
+      "y": -161,
+      "screen_rect": {
+        "x": 276,
+        "y": 379,
+        "width": 168,
+        "height": 42
+      },
+      "width": 168,
+      "height": 42,
+      "shape_size_mode": null,
+      "stroke_thickness": null,
+      "round": null,
+      "opacity": 100,
+      "fill_color": null,
+      "text": "元付情報",
+      "text_color": "#FFFFF7D6",
+      "font_size": 42,
+      "description": "visible node label for YMM4 GUI diagnostic probe"
+    },
+    {
+      "display_name": "G28_LDC_Node_Center_Label",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "role": "focal_chain_label",
+      "layer": 7,
+      "x": -126,
+      "y": -141,
+      "screen_rect": {
+        "x": 834,
+        "y": 399,
+        "width": 252,
+        "height": 42
+      },
+      "width": 252,
+      "height": 42,
+      "shape_size_mode": null,
+      "stroke_thickness": null,
+      "round": null,
+      "opacity": 100,
+      "fill_color": null,
+      "text": "ポータル掲載",
+      "text_color": "#FFFFF7D6",
+      "font_size": 42,
+      "description": "visible node label for YMM4 GUI diagnostic probe"
+    },
+    {
+      "display_name": "G28_LDC_Node_Right_Label",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "role": "focal_chain_label",
+      "layer": 7,
+      "x": 516,
+      "y": -161,
+      "screen_rect": {
+        "x": 1476,
+        "y": 379,
+        "width": 168,
+        "height": 42
+      },
+      "width": 168,
+      "height": 42,
+      "shape_size_mode": null,
+      "stroke_thickness": null,
+      "round": null,
+      "opacity": 100,
+      "fill_color": null,
+      "text": "借主判断",
+      "text_color": "#FFFFF7D6",
+      "font_size": 42,
+      "description": "visible node label for YMM4 GUI diagnostic probe"
+    },
+    {
+      "display_name": "G28_LDC_CalloutSlot_1_Label",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "role": "callout_label",
+      "layer": 9,
+      "x": -475,
+      "y": 138,
+      "screen_rect": {
+        "x": 485,
+        "y": 678,
+        "width": 120,
+        "height": 30
+      },
+      "width": 120,
+      "height": 30,
+      "shape_size_mode": null,
+      "stroke_thickness": null,
+      "round": null,
+      "opacity": 100,
+      "fill_color": null,
+      "text": "情報遅延",
+      "text_color": "#FFDBEAFE",
+      "font_size": 30,
+      "description": "visible callout label for YMM4 GUI diagnostic probe"
+    },
+    {
+      "display_name": "G28_LDC_CalloutSlot_2_Label",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "role": "callout_label",
+      "layer": 9,
+      "x": -105,
+      "y": 138,
+      "screen_rect": {
+        "x": 855,
+        "y": 678,
+        "width": 210,
+        "height": 30
+      },
+      "width": 210,
+      "height": 30,
+      "shape_size_mode": null,
+      "stroke_thickness": null,
+      "round": null,
+      "opacity": 100,
+      "fill_color": null,
+      "text": "掲載粒度の欠落",
+      "text_color": "#FFDBEAFE",
+      "font_size": 30,
+      "description": "visible callout label for YMM4 GUI diagnostic probe"
+    },
+    {
+      "display_name": "G28_LDC_CalloutSlot_3_Label",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "role": "callout_label",
+      "layer": 9,
+      "x": 280,
+      "y": 138,
+      "screen_rect": {
+        "x": 1240,
+        "y": 678,
+        "width": 270,
+        "height": 30
+      },
+      "width": 270,
+      "height": 30,
+      "shape_size_mode": null,
+      "stroke_thickness": null,
+      "round": null,
+      "opacity": 100,
+      "fill_color": null,
+      "text": "仲介インセンティブ",
+      "text_color": "#FFDBEAFE",
+      "font_size": 30,
+      "description": "visible callout label for YMM4 GUI diagnostic probe"
+    }
+  ],
+  "limitations": [
+    "This is a self-contained diagnostic probe, not production carrier approval.",
+    "It uses visible node/callout labels for GUI review; this does not approve production text density.",
+    "No render, video, audio, source footage, external image, URL, raw reference, rights automation, or slot-fill is included."
+  ]
+}
