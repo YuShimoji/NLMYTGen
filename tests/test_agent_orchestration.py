@@ -124,6 +124,30 @@ def _clean_repo_status() -> dict[str, Any]:
     }
 
 
+def _fake_runner_state(tmp_dir: Path) -> tuple[dict[str, Any], Path]:
+    state = _execution_enabled_state()
+    state["report_output_template"] = (
+        f"{tmp_dir.relative_to(REPO_ROOT).as_posix()}/{{timestamp}}-{{worker}}.report.json"
+    )
+    state["needs_human_path"] = (tmp_dir / "needs_human.json").relative_to(REPO_ROOT).as_posix()
+    state["notify_stub_log"] = (tmp_dir / "notify_stub.log").relative_to(REPO_ROOT).as_posix()
+    state_path = _write_json(tmp_dir / "state.fake.json", state)
+    return state, state_path
+
+
+def _fake_plan(tmp_dir: Path, scenario: str = "pass") -> tuple[dict[str, Any], Path, agent_orchestrator.ExecutionPlan]:
+    state, state_path = _fake_runner_state(tmp_dir)
+    plan = agent_orchestrator.build_execution_plan(state, "audit", timestamp=f"fake-{scenario}")
+    preflight = agent_orchestrator.build_execution_preflight(
+        state,
+        "audit",
+        plan,
+        repo_status=_clean_repo_status(),
+    )
+    assert preflight["allowed"] is True
+    return state, state_path, plan
+
+
 def test_repo_adapter_exists_and_identifies_reference_host() -> None:
     adapter_path = REPO_ROOT / ".agent" / "repo_adapter.json"
 
@@ -627,6 +651,122 @@ def test_execution_plan_rejects_repo_external_or_out_of_contract_paths(override:
 
     with pytest.raises(agent_gate.GateInputError):
         agent_orchestrator.build_execution_plan(state, "audit", timestamp="20260606T000000Z")
+
+
+def test_fake_runner_pass_report_flows_through_gate_without_notify(repo_agent_tmp: Path) -> None:
+    _, state_path, plan = _fake_plan(repo_agent_tmp, "pass")
+
+    result = agent_orchestrator.run_fake_runner(plan, "pass", state_path).to_dict()
+
+    assert result["mode"] == "fake"
+    assert result["scenario"] == "pass"
+    assert result["report_written"] is True
+    assert result["report_path"].startswith(".agent/reports/_tmp_pytest_agent_orchestration/")
+    assert result["gate_result"]["decision"] == "pass"
+    assert result["gate_result"]["needs_human"] is False
+    assert result["notify_stub"] is None
+    assert result["codex_execution_started"] is False
+    assert result["real_subprocess_started"] is False
+    assert not (repo_agent_tmp / "needs_human.json").exists()
+    assert not (repo_agent_tmp / "notify_stub.log").exists()
+
+
+def test_fake_runner_needs_human_report_writes_only_local_notify_stub(repo_agent_tmp: Path) -> None:
+    _, state_path, plan = _fake_plan(repo_agent_tmp, "needs-human")
+
+    result = agent_orchestrator.run_fake_runner(plan, "needs_human", state_path).to_dict()
+
+    assert result["gate_result"]["needs_human"] is True
+    assert "status:needs_human" in result["gate_result"]["reasons"]
+    assert result["notify_stub"]["payload"]["notification_sent"] is False
+    assert result["notify_stub"]["needs_human_path"] == (
+        repo_agent_tmp / "needs_human.json"
+    ).relative_to(REPO_ROOT).as_posix()
+    assert result["notify_stub"]["notify_stub_log"] == (
+        repo_agent_tmp / "notify_stub.log"
+    ).relative_to(REPO_ROOT).as_posix()
+    assert (repo_agent_tmp / "needs_human.json").exists()
+    assert (repo_agent_tmp / "notify_stub.log").exists()
+
+
+def test_fake_runner_blocked_report_escalates_through_gate(repo_agent_tmp: Path) -> None:
+    _, state_path, plan = _fake_plan(repo_agent_tmp, "blocked")
+
+    result = agent_orchestrator.run_fake_runner(plan, "blocked", state_path).to_dict()
+
+    assert result["gate_result"]["needs_human"] is True
+    assert "status:blocked" in result["gate_result"]["reasons"]
+    assert result["notify_stub"]["payload"]["notification_sent"] is False
+
+
+@pytest.mark.parametrize(
+    ("scenario", "expected_error_kind", "expected_exit_code", "expected_timed_out"),
+    [
+        ("invalid_json", "invalid_json", 0, False),
+        ("missing_report", "missing_report", 0, False),
+        ("nonzero_exit", "nonzero_exit", 2, False),
+        ("timeout", "timeout", None, True),
+    ],
+)
+def test_fake_runner_failure_scenarios_fail_closed(
+    repo_agent_tmp: Path,
+    scenario: str,
+    expected_error_kind: str,
+    expected_exit_code: int | None,
+    expected_timed_out: bool,
+) -> None:
+    _, state_path, plan = _fake_plan(repo_agent_tmp, scenario)
+
+    result = agent_orchestrator.run_fake_runner(plan, scenario, state_path).to_dict()
+
+    assert result["gate_result"]["needs_human"] is True
+    assert result["fail_closed"] is True
+    assert result["error_kind"] == expected_error_kind
+    assert result["exit_code"] == expected_exit_code
+    assert result["timed_out"] is expected_timed_out
+    assert result["notify_stub"] is None
+    assert result["codex_execution_started"] is False
+    assert result["real_subprocess_started"] is False
+    assert not (repo_agent_tmp / "needs_human.json").exists()
+    assert not (repo_agent_tmp / "notify_stub.log").exists()
+
+
+def test_fake_runner_uses_repo_local_tmp_artifacts_and_cleanup_removes_them(repo_agent_tmp: Path) -> None:
+    _, state_path, plan = _fake_plan(repo_agent_tmp, "cleanup")
+
+    result = agent_orchestrator.run_fake_runner(plan, "needs_human", state_path).to_dict()
+
+    for artifact in result["artifacts_written"]:
+        assert artifact.startswith(".agent/reports/_tmp_pytest_agent_orchestration/")
+        assert (REPO_ROOT / artifact).exists()
+
+    shutil.rmtree(repo_agent_tmp)
+    assert not repo_agent_tmp.exists()
+    repo_agent_tmp.mkdir(parents=True)
+
+
+def test_fake_runner_is_not_reachable_from_default_orchestrator_path() -> None:
+    result = agent_orchestrator.run(
+        argparse.Namespace(
+            worker="audit",
+            dry_run=False,
+            report=None,
+            state=".agent/state.json",
+        )
+    )
+
+    assert "fake_runner" not in result
+    assert result["codex_execution_started"] is False
+    assert "No Codex execution is performed" in result["message"]
+
+
+def test_common_orchestration_scripts_do_not_use_subprocess_run() -> None:
+    for path in (
+        REPO_ROOT / "scripts" / "agent_gate.py",
+        REPO_ROOT / "scripts" / "agent_notify_stub.py",
+        REPO_ROOT / "scripts" / "agent_orchestrator.py",
+    ):
+        assert "subprocess.run" not in path.read_text(encoding="utf-8")
 
 
 def test_orchestrator_dry_run_does_not_start_codex() -> None:

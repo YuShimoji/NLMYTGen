@@ -43,6 +43,30 @@ class ExecutionPlan:
         return asdict(self)
 
 
+@dataclass(frozen=True)
+class FakeRunnerResult:
+    mode: str
+    scenario: str
+    worker: str
+    plan: dict[str, Any]
+    exit_code: int | None
+    timed_out: bool
+    report_path: str
+    report_written: bool
+    stdout: str
+    stderr: str
+    error_kind: str
+    codex_execution_started: bool
+    real_subprocess_started: bool
+    artifacts_written: list[str]
+    fail_closed: bool
+    gate_result: dict[str, Any] | None = None
+    notify_stub: dict[str, Any] | None = None
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
 def utc_stamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
@@ -286,6 +310,136 @@ def build_execution_preflight(
         "repo_status": repo_status_result,
         "plan_error": plan_error,
     }
+
+
+def _fake_report_payload(worker: str, scenario: str) -> dict[str, Any]:
+    status = "pass"
+    summary = f"fake runner {scenario} report"
+    human_question = ""
+    if scenario == "needs_human":
+        status = "needs_human"
+        human_question = "Fake runner needs human review."
+    elif scenario == "blocked":
+        status = "blocked"
+        human_question = "Fake runner blocked the worker."
+
+    return {
+        "status": status,
+        "lane": worker,
+        "severity": "none",
+        "summary": summary,
+        "changed_files": [".agent/state.json"],
+        "tests_run": ["fake runner synthetic report"],
+        "tests_status": "passed",
+        "risks": [],
+        "next_recommended_worker": "summarize",
+        "human_question": human_question,
+        "copyable_next_prompt": "",
+    }
+
+
+def _write_fake_report(report_path: Path, payload: dict[str, Any]) -> None:
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(report_path, "w", encoding="utf-8", newline="\n") as handle:
+        json.dump(payload, handle, ensure_ascii=False, indent=2)
+        handle.write("\n")
+
+
+def _fail_closed_gate_result(report_path: str, reason: str) -> dict[str, Any]:
+    return {
+        "decision": "needs_human",
+        "needs_human": True,
+        "reasons": [reason],
+        "report_path": report_path,
+        "schema_path": "",
+        "lane": "",
+        "status": "",
+        "severity": "",
+        "tests_status": "",
+        "summary": "",
+        "next_recommended_worker": "",
+        "human_question": "",
+        "copyable_next_prompt": "",
+    }
+
+
+def run_fake_runner(
+    plan: ExecutionPlan,
+    scenario: str,
+    state_path: str | Path = DEFAULT_STATE_PATH,
+) -> FakeRunnerResult:
+    if scenario not in {"pass", "needs_human", "blocked", "invalid_json", "missing_report", "nonzero_exit", "timeout"}:
+        raise GateInputError(f"invalid fake runner scenario: {scenario}")
+
+    report_path = resolve_repo_path(plan.report_path)
+    artifacts_written: list[str] = []
+    report_written = False
+    exit_code: int | None = 0
+    timed_out = False
+    stdout = ""
+    stderr = ""
+    error_kind = ""
+    gate_result: dict[str, Any] | None = None
+    notify_stub: dict[str, Any] | None = None
+
+    if scenario in {"pass", "needs_human", "blocked"}:
+        _write_fake_report(report_path, _fake_report_payload(plan.worker, scenario))
+        report_written = True
+        artifacts_written.append(plan.report_path)
+        gate_result = evaluate_report(report_path, state_path)
+        if gate_result["needs_human"]:
+            notify_stub = write_notification(report_path, gate_result, state_path)
+            artifacts_written.extend(
+                [notify_stub["needs_human_path"], notify_stub["notify_stub_log"]]
+            )
+    elif scenario == "invalid_json":
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(report_path, "w", encoding="utf-8", newline="\n") as handle:
+            handle.write("{ invalid json\n")
+        report_written = True
+        artifacts_written.append(plan.report_path)
+        error_kind = "invalid_json"
+        stderr = "fake runner wrote invalid JSON"
+        try:
+            gate_result = evaluate_report(report_path, state_path)
+        except json.JSONDecodeError as exc:
+            gate_result = _fail_closed_gate_result(plan.report_path, f"invalid_json:{exc.msg}")
+    elif scenario == "missing_report":
+        error_kind = "missing_report"
+        stderr = "fake runner did not write a report"
+        gate_result = _fail_closed_gate_result(plan.report_path, "missing_report")
+    elif scenario == "nonzero_exit":
+        exit_code = 2
+        error_kind = "nonzero_exit"
+        stderr = "fake runner simulated nonzero exit"
+        gate_result = _fail_closed_gate_result(plan.report_path, "nonzero_exit")
+    elif scenario == "timeout":
+        exit_code = None
+        timed_out = True
+        error_kind = "timeout"
+        stderr = "fake runner simulated timeout"
+        gate_result = _fail_closed_gate_result(plan.report_path, "timeout")
+
+    fail_closed = bool(gate_result and gate_result.get("needs_human") is True)
+    return FakeRunnerResult(
+        mode="fake",
+        scenario=scenario,
+        worker=plan.worker,
+        plan=plan.to_dict(),
+        exit_code=exit_code,
+        timed_out=timed_out,
+        report_path=plan.report_path,
+        report_written=report_written,
+        stdout=stdout,
+        stderr=stderr,
+        error_kind=error_kind,
+        codex_execution_started=False,
+        real_subprocess_started=False,
+        artifacts_written=artifacts_written,
+        fail_closed=fail_closed,
+        gate_result=gate_result,
+        notify_stub=notify_stub,
+    )
 
 
 def run(args: argparse.Namespace) -> dict[str, Any]:

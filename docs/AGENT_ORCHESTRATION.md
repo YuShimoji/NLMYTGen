@@ -243,6 +243,28 @@ primary preview contract にしない。
 commit しない。durable な例が必要な場合は runtime report ではなく、明示的な
 fixture または docs example として置く。
 
+## Fake Runner Scaffold
+
+`scripts/agent_orchestrator.py` には tests-only の fake runner helper がある。これは
+`ExecutionPlan.report_path` に synthetic report を書き、valid report は必ず
+`scripts/agent_gate.py` で判定する。`needs_human=true` の場合だけ local notify stub
+を呼ぶ。
+
+Fake runner は次の失敗形を fail-closed で再現するための scaffold であり、real
+`codex exec` 実行経路ではない。
+
+- valid pass report
+- valid needs-human report
+- valid blocked report
+- invalid JSON
+- missing report
+- nonzero exit
+- timeout
+
+Fake runner でも `codex_execution_started=false` と
+`real_subprocess_started=false` を返す。`subprocess.run`、stdin piping、runtime
+worker loop、外部通知 service はまだ実装しない。
+
 ## Runtime Artifact Retention
 
 `.agent/reports/` と `.agent/logs/` は runtime output の置き場であり、directory
@@ -267,7 +289,7 @@ Remove-Item -Force .agent/needs_human.json, .agent/logs/notify_stub.log -ErrorAc
 
 - Real `codex exec` execution
 - Passing prompt file contents to `codex exec -` stdin
-- Fake runner / subprocess runner
+- Real subprocess runner
 - Runtime worker loop / multi-step execution
 - Migrating runtime decisions from `.agent/state.json` to `.agent/repo_adapter.json`
 - ClipPipeGen adapter implementation
