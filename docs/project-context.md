@@ -79,6 +79,17 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest G-28 decision (2026-06-08): `remote_handoff_sealed_after_review_console_ingest`
+keeps the latest context in-project for another terminal. The durable restart
+packet is now `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`
+plus `docs/USER_COPYPASTE_BLOCKS.md` SECTION 18. The next safe work is only
+screenshot / Electron smoke evidence or human GUI confirmation of the read-only
+G-28 Review Console panel; this does not reopen `.ymmp` generation, builders,
+readback/report artifacts, production carrier approval, creative final
+acceptance, render, rights/public-use automation, slot-fill, G-27 authority,
+ClipPipeGen, RSS, NotebookLM, or common foundation work. Local residue remains
+explicitly outside this handoff scope.
+
 Latest G-28 decision (2026-06-08): `pass_review_console_ingest_implemented`
 is recorded for the calibrated real-estate YMM4 diagnostic probe. The Review
 Console now has a read-only G-28 panel that references the existing `.ymmp`,

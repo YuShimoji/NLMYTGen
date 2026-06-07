@@ -703,3 +703,123 @@ C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
 
 ===== END =====
 ```
+
+===== SECTION 18: G-28 Review Console Read-only Ingest Resume Prompt =====
+用途: G-28 `real_estate_information_gap` YMM4 diagnostic probe が Review Console の read-only panel まで実装・push済みになった後、次の ChatGPT / Codex へ bounded context を渡すためのPrompt。production、render、rights、creative final acceptance、slot-fill、G-27 authority reuse、ClipPipeGen、RSS、NotebookLM、common foundation work へ進めない。
+
+```text
+NLMYTGen の G-28 `real_estate_information_gap` Review Console read-only ingest 後の確認作業を続けてください。
+
+repo:
+C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
+
+開始前:
+1. git status --porcelain=v1
+2. git status --porcelain=v1 -uno
+3. git fetch --prune origin
+4. git pull --ff-only origin master
+5. git rev-list --left-right --count "HEAD...@{u}"
+6. git log --oneline -n 5
+7. AGENTS.md -> docs/REPO_LOCAL_RULES.md -> docs/runtime-state.md を読む。
+
+期待される最新remote:
+- `708b9e9 feat: add G-28 Review Console read-only panel`
+- その後にこの handoff refresh commit がある場合は、それを最新HEADとして扱う。
+- `HEAD...@{u}` は `0 0` にする。
+
+現在の状態:
+- G-28 `real_estate_information_gap` YMM4 diagnostic probe は作成済み。
+- YMM4 GUI recheck は pass。
+- Review Console ingest plan は作成済み。
+- Review Console read-only ingest implementation は `708b9e9` で実装済み。
+- `gui/index.html` に `#g28-review-console-ingest` が追加済み。
+- `gui/renderer.js` は既存readback JSONを読み、artifact inventory / status badges / readback summary / human GUI summary / caveats / allowed diagnostic decisions を表示する。
+- `gui/main.js` / `gui/preload.js` は repo-relative artifact existence check の `check-review-artifacts` を持つ。
+- `gui/review_console_dom_smoke.js` は G-28 panel、badge、artifact paths、readback summary、human GUI summary、caveats、allowed diagnostic decision schema、production approval label 不在を検査する。
+
+対象artifact:
+- `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe.ymmp`
+- `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe_readback.json`
+- `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe_report.md`
+- `docs/verification/G28-REAL-ESTATE-YMMP-PROBE-HUMAN-REVIEW-2026-06-07.md`
+- `docs/verification/G28-REAL-ESTATE-REVIEW-CONSOLE-INGEST-PLAN-2026-06-07.md`
+
+Review Consoleで確認する内容:
+- `G-28 real_estate_information_gap YMM4 diagnostic probe` panel が読める。
+- artifact inventory が5件表示される。
+- `diagnostic_only=true`
+- `production_candidate=false`
+- `human_calibrated_override=true`
+- `layout_metric_debt=true`
+- `host_placeholder=true`
+- `render=false`
+- `rights_public_use=false`
+- `classification=pass_callout_label_human_calibrated`
+- `caption_reserve_clear=true`
+- `focal_chain_count=3`
+- `callout_count=3`
+- `host_role=non_focal...`
+- external image / URL / source footage / audio / TTS count が0
+- `actual_x=313`
+- human GUI summary が表示される。
+- caveats に X=313 human override、title readback debt、host placeholder diagnostic-only、glyph optical center not directly measured が明示される。
+- allowed diagnostic decisions は次の5件だけ:
+  - `accept_as_diagnostic_review_surface`
+  - `request_readback_fix`
+  - `request_layout_system_redesign`
+  - `defer_review_console_ingest`
+  - `reject_probe_path`
+- production approval系の decision label は表示しない:
+  - `production_approve`
+  - `creative_final_acceptance`
+  - `render_approve`
+  - `rights_approve`
+  - `public_use_approve`
+
+次の最小作業:
+- screenshot / Electron smoke evidence / human GUI confirmation のどれかに限定する。
+- まず可能なら `.\gui\node_modules\.bin\electron.cmd .\gui\review_console_dom_smoke.js` を実行する。
+- 必要なら Review Console のスクリーンショット取得だけを行う。
+- 人間確認へ渡す場合は「read-only diagnostic review surfaceとして読めるか」だけを聞く。
+
+禁止:
+- `.ymmp` regeneration
+- builder/generator変更
+- readback JSON変更
+- probe report変更
+- new variant generation
+- production render / MP4
+- production carrier approval
+- creative final acceptance
+- rights / public-use automation
+- source footage / audio / TTS
+- external image / URL / raw reference intake
+- G-27復帰
+- G-27 `review_decisions` authority の利用
+- ClipPipeGen access
+- RSS / OPML / Inoreader / NotebookLM work
+- common foundation / Codex Worker Orchestration implementation
+- known local residue のstage / commit
+
+known local residue:
+- この checkout では out-of-scope tracked residue が残っている可能性がある:
+  - `docs/AGENT_ORCHESTRATION.md`
+  - `scripts/agent_orchestrator.py`
+  - `tests/test_agent_orchestration.py`
+- known untracked:
+  - `.claude/worktrees/`
+  - `samples/2026-05-16.ymmp`
+- これらはG-28 Review Console確認作業では編集・stage・commitしない。
+- `git add -A` は使わない。
+
+検証:
+- DOM smokeを実行した場合は結果を報告する。
+- docs-only / screenshot-only の場合は `git diff --check` と `git status --porcelain=v1` を確認する。
+- commit/pushが必要な変更をした場合は対象ファイルだけ明示stageし、`git diff --cached --check`、staged scope check、forbidden scanを行う。
+- push後 `HEAD...@{u}` を `0 0` にする。
+
+完了報告:
+- branch / HEAD / origin同期 / dirty state を明記する。
+- G-28をproduction完了のように書かない。
+- Review Console panel確認の結果、残るcaveat、次の人間確認項目を短く書く。
+```
