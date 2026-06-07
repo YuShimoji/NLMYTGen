@@ -79,6 +79,18 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest common foundation decision (2026-06-08): `fake_runner_scaffold_committed`
+adds a tests-only fake runner scaffold in `da254ff feat: add fake runner
+scaffold`. The helper writes synthetic reports to `ExecutionPlan.report_path`,
+keeps valid report authority in `agent_gate.evaluate_report`, invokes the local
+notify stub only after `gate_result.needs_human=true`, and fails closed for
+invalid JSON, missing report, nonzero exit, and timeout. This does not enable
+real `codex exec`, stdin piping, subprocess runner behavior, runtime worker
+loop, external notification service, ClipPipeGen support, publish/release,
+rights automation, or `production_candidate` handling. It also does not resume
+G-28 mainline work. The next common-foundation slice should keep the same
+boundary unless real runner support is explicitly authorized.
+
 Latest G-28 decision (2026-06-08): `remote_handoff_sealed_after_review_console_ingest`
 keeps the latest context in-project for another terminal. The durable restart
 packet is now `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`

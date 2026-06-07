@@ -704,6 +704,97 @@ C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
 ===== END =====
 ```
 
+===== SECTION 19: Common Foundation Fake Runner Scaffold Resume Prompt =====
+用途: common foundation fake runner scaffold が commit / push 済みになった後、次の ChatGPT / Codex へ bounded context を渡すためのPrompt。real codex exec、subprocess runner、stdin piping、runtime worker loop、external notification service、ClipPipeGen、G-28 mainline work へ進めない。
+
+```text
+NLMYTGen common foundation fake runner scaffold 後の確認または次slice設計を続けてください。
+
+repo:
+C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
+
+開始前:
+1. git status --porcelain=v1
+2. git status --porcelain=v1 -uno
+3. git fetch --prune origin
+4. git pull --ff-only origin master
+5. git rev-list --left-right --count "HEAD...@{u}"
+6. git log --oneline -n 8
+7. AGENTS.md -> docs/REPO_LOCAL_RULES.md -> docs/runtime-state.md を読む。
+
+期待される最新remote:
+- `a6f99b9 docs: seal G-28 Review Console handoff`
+- `da254ff feat: add fake runner scaffold`
+- その後に handoff refresh commit がある場合は、それを最新HEADとして扱う。
+- `HEAD...@{u}` は `0 0` にする。
+
+現在のcommon foundation状態:
+- Codex worker policy gate scaffold exists.
+- Codex exec command preview plan exists.
+- disabled execution preflight exists.
+- inert NLMYTGen repo adapter exists.
+- runtime artifact ignore policy exists.
+- fake runner scaffold exists as tests-only helper in `scripts/agent_orchestrator.py`.
+- `.agent/state.json` remains runtime policy source.
+- `.agent/repo_adapter.json` remains inert.
+- `.agent/reports/.gitkeep` and `.agent/logs/.gitkeep` remain tracked.
+
+Fake runner contract:
+- `run_fake_runner(plan, scenario, state_path)` writes synthetic reports only to `ExecutionPlan.report_path`.
+- supported scenarios:
+  - `pass`
+  - `needs_human`
+  - `blocked`
+  - `invalid_json`
+  - `missing_report`
+  - `nonzero_exit`
+  - `timeout`
+- valid synthetic reports go through `agent_gate.evaluate_report`.
+- local notify stub is called only after `gate_result.needs_human=true`.
+- invalid JSON, missing report, nonzero exit, and timeout fail closed.
+- `codex_execution_started=false`.
+- `real_subprocess_started=false`.
+- default orchestrator path still does not expose fake runner execution.
+
+Verification baseline:
+- `uv run pytest tests/test_agent_orchestration.py`
+- `uv run pytest tests/test_guardrails.py`
+- `uv run python -m py_compile scripts/agent_gate.py scripts/agent_notify_stub.py scripts/agent_orchestrator.py tests/test_agent_orchestration.py`
+- `git diff --check`
+
+禁止:
+- real codex exec execution
+- subprocess.run runner
+- stdin piping to codex exec
+- runtime worker loop
+- external notification service
+- secrets / API key handling
+- publish / release
+- rights_status changes
+- production_candidate automation
+- G-28 / NLMYTGen mainline work
+- ClipPipeGen support
+- `.ymmp` generation or render
+- `.claude/worktrees/` or `samples/2026-05-16.ymmp` staging
+- `git add -A`
+
+known local residue:
+- `.claude/worktrees/`
+- `samples/2026-05-16.ymmp`
+- These are unrelated and should remain untracked unless the user gives explicit scope.
+
+次の最小候補:
+- common foundation: design-only review for the boundary between fake runner and a future real runner.
+- common foundation: add more preflight-only tests before any real runner slice.
+- G-28 lane: separately verify the Review Console read-only panel with screenshot / Electron smoke evidence or human GUI confirmation.
+
+完了報告:
+- branch / HEAD / origin同期 / dirty state を明記する。
+- real codex exec を実行・有効化したように書かない。
+- fake runner を runtime worker loop として扱わない。
+- G-28 mainline と common foundation の作業台を混ぜない。
+```
+
 ===== SECTION 18: G-28 Review Console Read-only Ingest Resume Prompt =====
 用途: G-28 `real_estate_information_gap` YMM4 diagnostic probe が Review Console の read-only panel まで実装・push済みになった後、次の ChatGPT / Codex へ bounded context を渡すためのPrompt。production、render、rights、creative final acceptance、slot-fill、G-27 authority reuse、ClipPipeGen、RSS、NotebookLM、common foundation work へ進めない。
 
