@@ -320,6 +320,40 @@ estimated text box. It is not proof of rendered YMM4 glyph optical center.
 Human GUI review remains the authority for whether this callout-label visual fix
 is sufficient before any Review Console ingest decision.
 
+## Human-Calibrated Callout Override And Layout System Debt
+
+Human GUI recheck after `g28_real_estate_information_gap_callout_label_alignment_v1`
+reported that the lower-right callout label `仲介インセンティブ` still read
+left-shifted. The human-measured correct YMM4 TextItem X is `313.0`.
+
+Follow-up implementation:
+
+- revision: `g28_real_estate_information_gap_callout_label_human_calibration_v1`
+- classification: `pass_callout_label_human_calibrated`
+- target: `G28_LDC_CalloutSlot_3_Label`
+- computed X before human calibration: `289`
+- previous polished X: `289`
+- human calibrated X: `313.0`
+- calibration delta X: `24`
+- formula change: none as a reusable success claim; the generated YMM4 TextItem
+  X is overridden once with the human-calibrated value
+- scope: lower-right callout label only
+
+Debt interpretation:
+
+- reason: the estimated text box plus registered offset can report centered
+  placement while the rendered YMM4 glyph still appears left-shifted to a human
+  reviewer
+- metric/perception gap: `text_center_error_px` verifies registered placement,
+  not rendered glyph optical center
+- reuse risk: high; `x=313.0` must not be generalized to other labels, themes,
+  fonts, or callout counts
+- future fix direction: replace per-label overrides with a callout text layout
+  model that accounts for YMM4 font rendering, target text width, and visual
+  centering acceptance
+- stop condition: if this still reads off in YMM4, stop individual offset
+  tuning and redesign the callout text layout system
+
 ## Boundary
 
 Original audit slice:

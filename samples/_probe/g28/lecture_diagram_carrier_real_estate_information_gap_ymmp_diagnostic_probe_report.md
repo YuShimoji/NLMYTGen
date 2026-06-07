@@ -44,6 +44,23 @@ This is a self-contained YMM4-compatible diagnostic probe. It is not a render, p
 - formula change: No common callout formula change; the third callout label gets a bounded x-axis optical offset.
 - boundary note: Diagnostic-only callout label alignment fix; no render, production approval, slot-fill, image, URL, audio, TTS, or source footage.
 
+## Callout Label Human Calibration
+
+- revision id: `g28_real_estate_information_gap_callout_label_human_calibration_v1`
+- source human decision: `apply_one_time_human_calibrated_callout_x_and_record_layout_debt`
+- classification: `pass_callout_label_human_calibrated`
+- target label: `G28_LDC_CalloutSlot_3_Label`
+- observed issue: Human GUI recheck still saw the lower-right callout label as left-shifted after the bounded offset fix.
+- computed x before human calibration: 289
+- previous polished x: 289
+- human calibrated x: 313
+- calibration delta x: 24
+- cause classification: `callout_text_layout_model_debt`
+- formula change: No formula success claim; the existing formula output is overridden once with the human-calibrated YMM4 X value.
+- reuse risk: `high_do_not_generalize`
+- boundary note: Diagnostic-only human calibration; no render, production approval, Review Console ingest, slot-fill, image, URL, audio, TTS, or source footage.
+- no more pixel tuning boundary: If this remains visually off, stop individual offset changes and redesign the callout text layout system.
+
 ## Generated Files
 
 - YMM4 probe: `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe.ymmp`
@@ -69,7 +86,7 @@ This is a self-contained YMM4-compatible diagnostic probe. It is not a render, p
 ## Readback Rollup
 
 - status: `passed`
-- classification: `pass_callout_label_alignment_fixed`
+- classification: `pass_callout_label_human_calibrated`
 - frame: 1920x1080 / 16:9
 - caption reserve: y=810, h=216, clear=`true`
 - focal chain labels: 元付情報 -> ポータル掲載 -> 借主判断
@@ -91,6 +108,10 @@ This is a self-contained YMM4-compatible diagnostic probe. It is not a render, p
 - right node caveat: text_center_error_px=0 means the label was placed exactly at the registered offset; the human GUI recheck is the authority for rendered optical centering.
 - callout label applied offset: x=4, y=-3
 - callout label caveat: text_center_error_px=0 means the callout label was placed exactly at the registered offset; the human GUI correction is the authority for rendered optical centering.
+- callout human calibrated override: `true`
+- callout human calibrated x: computed=289, previous=289, human=313, delta=24
+- callout human calibration caveat: This pass records a one-time human-calibrated YMM4 X override. It is not a proof that the callout text formula is reusable.
+- layout system debt: g28_callout_text_layout_model_debt_v1
 - connector rule: connector spans from source edge to target edge, with y centered on the adjacent side node and fixed thickness.
 - callout supported counts: 2, 3
 - 4-callout handling: fail fast or change layout; do not squeeze into the current 3-slot row.
@@ -130,6 +151,7 @@ This is a self-contained YMM4-compatible diagnostic probe. It is not a render, p
 - `layout_contract_tolerances_pass`: `true`
 - `right_node_alignment_fix_recorded`: `true`
 - `callout_label_alignment_fix_recorded`: `true`
+- `callout_label_human_calibration_recorded`: `true`
 
 ## YMM4 Mapping
 

@@ -79,6 +79,23 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest G-28 decision (2026-06-08): `g28_real_estate_information_gap_callout_label_human_calibration_v1`
+is implemented after human GUI recheck found the lower-right callout label
+`仲介インセンティブ` still visually left-shifted after the bounded alignment fix.
+The previous computed/polished YMM4 TextItem X was `289`; the human-measured
+correct X is `313.0`, so the builder now applies a one-time
+`human_calibrated_x=313` and records `calibration_delta_x=24`. This decision
+does not claim formula success. It records callout text layout system debt:
+`text_center_error_px` remains registered-placement proof only, and a remaining
+visual mismatch after this slice should move to callout text layout system
+redesign rather than another individual pixel/offset adjustment. Readback passes
+as `pass_callout_label_human_calibrated` while the boundary remains
+`diagnostic_only=true` / `production_candidate=false`; Review Console ingest,
+production render, production approval, creative final acceptance, rights
+automation, slot-fill, external materials, G-27 revival, ClipPipeGen, RSS /
+NotebookLM, and common foundation / Codex Worker Orchestration remain
+unapproved.
+
 Latest G-28 decision (2026-06-07): `g28_real_estate_information_gap_callout_label_alignment_v1`
 is implemented after human GUI correction clarified that the actual remaining
 visual target is the lower-right callout label `仲介インセンティブ`, not the

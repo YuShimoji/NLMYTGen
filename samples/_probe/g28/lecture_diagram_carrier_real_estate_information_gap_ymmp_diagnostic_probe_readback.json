@@ -4,7 +4,7 @@
   "source_artifact_id": "g28_lecture_diagram_carrier_real_estate_information_gap_v1",
   "variant_id": "g28_ldc_real_estate_information_gap",
   "status": "passed",
-  "classification": "pass_callout_label_alignment_fixed",
+  "classification": "pass_callout_label_human_calibrated",
   "generated_files": {
     "ymmp": "samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe.ymmp",
     "readback_json": "samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe_readback.json",
@@ -63,6 +63,31 @@
     "cause_classification": "callout_label_registered_optical_offset_needed",
     "formula_change": "No common callout formula change; the third callout label gets a bounded x-axis optical offset.",
     "boundary_note": "Diagnostic-only callout label alignment fix; no render, production approval, slot-fill, image, URL, audio, TTS, or source footage."
+  },
+  "callout_label_human_calibration_revision": {
+    "revision_id": "g28_real_estate_information_gap_callout_label_human_calibration_v1",
+    "source_human_decision": "apply_one_time_human_calibrated_callout_x_and_record_layout_debt",
+    "classification": "pass_callout_label_human_calibrated",
+    "target_label": "G28_LDC_CalloutSlot_3_Label",
+    "target_text": "仲介インセンティブ",
+    "observed_issue": "Human GUI recheck still saw the lower-right callout label as left-shifted after the bounded offset fix.",
+    "computed_x_before_human_calibration": 289,
+    "previous_polished_x": 289,
+    "human_calibrated_x": 313,
+    "calibration_delta_x": 24,
+    "cause_classification": "callout_text_layout_model_debt",
+    "formula_change": "No formula success claim; the existing formula output is overridden once with the human-calibrated YMM4 X value.",
+    "reason": "YMM4 GUI inspection measured the visually correct lower-right callout label X as 313.0, not the previous computed 289.",
+    "reuse_risk": "high_do_not_generalize",
+    "boundary_note": "Diagnostic-only human calibration; no render, production approval, Review Console ingest, slot-fill, image, URL, audio, TTS, or source footage.",
+    "no_more_pixel_tuning_boundary": "If this remains visually off, stop individual offset changes and redesign the callout text layout system.",
+    "layout_system_debt": {
+      "debt_id": "g28_callout_text_layout_model_debt_v1",
+      "why_formula_was_insufficient": "The estimated text box and registered offset can report centered placement while YMM4 glyph rendering still reads left-shifted in the GUI.",
+      "metric_perception_gap": "text_center_error_px remains a registered-placement metric, not rendered glyph optical-center proof.",
+      "future_fix_direction": "Replace per-label overrides with a callout text layout model that accounts for YMM4 font rendering, target text width, and visual centering acceptance.",
+      "reuse_warning": "Do not reuse x=313.0 for other labels, themes, fonts, or callout counts."
+    }
   },
   "frame_contract": {
     "width": 1920,
@@ -125,7 +150,8 @@
     "layout_contract_metrics_present": true,
     "layout_contract_tolerances_pass": true,
     "right_node_alignment_fix_recorded": true,
-    "callout_label_alignment_fix_recorded": true
+    "callout_label_alignment_fix_recorded": true,
+    "callout_label_human_calibration_recorded": true
   },
   "failures": [],
   "missing_items": [],
@@ -226,7 +252,7 @@
         "id": "G28_LDC_CalloutSlot_3_Label",
         "text": "仲介インセンティブ",
         "rect": {
-          "x": 1249,
+          "x": 1273,
           "y": 669,
           "width": 270,
           "height": 30
@@ -441,7 +467,15 @@
             "x_abs_max": 4,
             "y_abs_max": 5
           },
-          "reuse_risk": "medium_callout_specific"
+          "reuse_risk": "medium_callout_specific",
+          "human_calibrated_override": {
+            "x": 313,
+            "previous_polished_x": 289,
+            "calibration_delta_x": 24,
+            "reason": "YMM4 GUI inspection measured the visually correct lower-right callout label X as 313.0, not the previous computed 289.",
+            "reuse_risk": "high_do_not_generalize",
+            "debt_id": "g28_callout_text_layout_model_debt_v1"
+          }
         },
         "G28_LDC_Connector_Left": {
           "target": "left connector",
@@ -513,6 +547,9 @@
           "reuse_risk": "medium_across_themes"
         }
       },
+      "human_calibrated_text_x_overrides": {
+        "G28_LDC_CalloutSlot_3_Label": 313
+      },
       "thresholds": {
         "text_center_error_px": 1,
         "registered_optical_offset_px": 6,
@@ -532,6 +569,21 @@
       "registered_optical_offset_threshold_px": 6,
       "text_center_error_px": 0,
       "registered_optical_offset_max_px": 5.657,
+      "human_calibrated_override_count": 1,
+      "human_calibrated_override_max_delta_px": 24,
+      "human_calibrated_overrides": [
+        {
+          "id": "G28_LDC_CalloutSlot_3_Label",
+          "text": "仲介インセンティブ",
+          "computed_x_before_human_calibration": 289,
+          "previous_polished_x": 289,
+          "human_calibrated_x": 313,
+          "calibration_delta_x": 24,
+          "implementation_error_px": 24,
+          "metric_pass_basis": "human_calibrated_override_recorded",
+          "revision_id": "g28_real_estate_information_gap_callout_label_human_calibration_v1"
+        }
+      ],
       "pass": true,
       "items": [
         {
@@ -546,9 +598,16 @@
           "baseline_adjust": -2,
           "visual_offset_x": 0,
           "visual_offset_y": -2,
+          "computed_x_before_human_calibration": null,
+          "previous_polished_x": null,
+          "human_calibrated_x": null,
+          "calibration_delta_x": null,
+          "human_calibrated_override": false,
+          "human_calibration_revision_id": null,
           "implementation_error_px": 0,
           "registered_optical_offset_px": 2,
-          "pass": true
+          "pass": true,
+          "metric_pass_basis": "registered_formula_within_threshold"
         },
         {
           "id": "G28_LDC_Node_Left_Label",
@@ -562,9 +621,16 @@
           "baseline_adjust": -4,
           "visual_offset_x": 0,
           "visual_offset_y": -4,
+          "computed_x_before_human_calibration": null,
+          "previous_polished_x": null,
+          "human_calibrated_x": null,
+          "calibration_delta_x": null,
+          "human_calibrated_override": false,
+          "human_calibration_revision_id": null,
           "implementation_error_px": 0,
           "registered_optical_offset_px": 4,
-          "pass": true
+          "pass": true,
+          "metric_pass_basis": "registered_formula_within_threshold"
         },
         {
           "id": "G28_LDC_Node_Center_Label",
@@ -578,9 +644,16 @@
           "baseline_adjust": -4,
           "visual_offset_x": 0,
           "visual_offset_y": -4,
+          "computed_x_before_human_calibration": null,
+          "previous_polished_x": null,
+          "human_calibrated_x": null,
+          "calibration_delta_x": null,
+          "human_calibrated_override": false,
+          "human_calibration_revision_id": null,
           "implementation_error_px": 0,
           "registered_optical_offset_px": 4,
-          "pass": true
+          "pass": true,
+          "metric_pass_basis": "registered_formula_within_threshold"
         },
         {
           "id": "G28_LDC_Node_Right_Label",
@@ -594,9 +667,16 @@
           "baseline_adjust": -4,
           "visual_offset_x": 4,
           "visual_offset_y": -4,
+          "computed_x_before_human_calibration": null,
+          "previous_polished_x": null,
+          "human_calibrated_x": null,
+          "calibration_delta_x": null,
+          "human_calibrated_override": false,
+          "human_calibration_revision_id": null,
           "implementation_error_px": 0,
           "registered_optical_offset_px": 5.657,
-          "pass": true
+          "pass": true,
+          "metric_pass_basis": "registered_formula_within_threshold"
         },
         {
           "id": "G28_LDC_CalloutSlot_1_Label",
@@ -610,9 +690,16 @@
           "baseline_adjust": -3,
           "visual_offset_x": 0,
           "visual_offset_y": -3,
+          "computed_x_before_human_calibration": null,
+          "previous_polished_x": null,
+          "human_calibrated_x": null,
+          "calibration_delta_x": null,
+          "human_calibrated_override": false,
+          "human_calibration_revision_id": null,
           "implementation_error_px": 0,
           "registered_optical_offset_px": 3,
-          "pass": true
+          "pass": true,
+          "metric_pass_basis": "registered_formula_within_threshold"
         },
         {
           "id": "G28_LDC_CalloutSlot_2_Label",
@@ -626,9 +713,16 @@
           "baseline_adjust": -3,
           "visual_offset_x": 0,
           "visual_offset_y": -3,
+          "computed_x_before_human_calibration": null,
+          "previous_polished_x": null,
+          "human_calibrated_x": null,
+          "calibration_delta_x": null,
+          "human_calibrated_override": false,
+          "human_calibration_revision_id": null,
           "implementation_error_px": 0,
           "registered_optical_offset_px": 3,
-          "pass": true
+          "pass": true,
+          "metric_pass_basis": "registered_formula_within_threshold"
         },
         {
           "id": "G28_LDC_CalloutSlot_3_Label",
@@ -642,9 +736,16 @@
           "baseline_adjust": -3,
           "visual_offset_x": 4,
           "visual_offset_y": -3,
-          "implementation_error_px": 0,
+          "computed_x_before_human_calibration": 289,
+          "previous_polished_x": 289,
+          "human_calibrated_x": 313,
+          "calibration_delta_x": 24,
+          "human_calibrated_override": true,
+          "human_calibration_revision_id": "g28_real_estate_information_gap_callout_label_human_calibration_v1",
+          "implementation_error_px": 24,
           "registered_optical_offset_px": 5,
-          "pass": true
+          "pass": true,
+          "metric_pass_basis": "human_calibrated_override_recorded"
         }
       ]
     },
@@ -712,14 +813,22 @@
           "x_abs_max": 4,
           "y_abs_max": 5
         },
-        "reuse_risk": "medium_callout_specific"
+        "reuse_risk": "medium_callout_specific",
+        "human_calibrated_override": {
+          "x": 313,
+          "previous_polished_x": 289,
+          "calibration_delta_x": 24,
+          "reason": "YMM4 GUI inspection measured the visually correct lower-right callout label X as 313.0, not the previous computed 289.",
+          "reuse_risk": "high_do_not_generalize",
+          "debt_id": "g28_callout_text_layout_model_debt_v1"
+        }
       },
       "applied_visual_offset_px": {
         "x": 4,
         "y": -3
       },
       "screen_rect": {
-        "x": 1249,
+        "x": 1273,
         "y": 669,
         "width": 270,
         "height": 30
@@ -734,6 +843,70 @@
         "retained": true,
         "note": "The prior right-node offset is not rolled back because the target correction did not report an adverse side effect."
       },
+      "pass": true
+    },
+    "callout_label_human_calibration": {
+      "revision_id": "g28_real_estate_information_gap_callout_label_human_calibration_v1",
+      "source_human_decision": "apply_one_time_human_calibrated_callout_x_and_record_layout_debt",
+      "classification": "pass_callout_label_human_calibrated",
+      "target_label": "G28_LDC_CalloutSlot_3_Label",
+      "target_text": "仲介インセンティブ",
+      "observed_issue": "Human GUI recheck still saw the lower-right callout label as left-shifted after the bounded offset fix.",
+      "computed_x_before_human_calibration": 289,
+      "previous_polished_x": 289,
+      "human_calibrated_x": 313,
+      "calibration_delta_x": 24,
+      "cause_classification": "callout_text_layout_model_debt",
+      "formula_change": "No formula success claim; the existing formula output is overridden once with the human-calibrated YMM4 X value.",
+      "reason": "YMM4 GUI inspection measured the visually correct lower-right callout label X as 313.0, not the previous computed 289.",
+      "reuse_risk": "high_do_not_generalize",
+      "boundary_note": "Diagnostic-only human calibration; no render, production approval, Review Console ingest, slot-fill, image, URL, audio, TTS, or source footage.",
+      "no_more_pixel_tuning_boundary": "If this remains visually off, stop individual offset changes and redesign the callout text layout system.",
+      "layout_system_debt": {
+        "debt_id": "g28_callout_text_layout_model_debt_v1",
+        "why_formula_was_insufficient": "The estimated text box and registered offset can report centered placement while YMM4 glyph rendering still reads left-shifted in the GUI.",
+        "metric_perception_gap": "text_center_error_px remains a registered-placement metric, not rendered glyph optical-center proof.",
+        "future_fix_direction": "Replace per-label overrides with a callout text layout model that accounts for YMM4 font rendering, target text width, and visual centering acceptance.",
+        "reuse_warning": "Do not reuse x=313.0 for other labels, themes, fonts, or callout counts."
+      },
+      "target_box_id": "G28_LDC_CalloutSlot_3",
+      "actual_x": 313,
+      "actual_y": 129,
+      "screen_rect": {
+        "x": 1273,
+        "y": 669,
+        "width": 270,
+        "height": 30
+      },
+      "human_calibrated_override": true,
+      "human_calibration_revision_id": "g28_real_estate_information_gap_callout_label_human_calibration_v1",
+      "manual_offset_registry_entry": {
+        "target": "callout label",
+        "value": {
+          "x": 4,
+          "y": -3
+        },
+        "reason": "Lower-right callout-only optical centering correction after human GUI target correction; readback placement metrics did not capture the rendered glyph-center perception.",
+        "allowed_range": {
+          "x_abs_max": 4,
+          "y_abs_max": 5
+        },
+        "reuse_risk": "medium_callout_specific",
+        "human_calibrated_override": {
+          "x": 313,
+          "previous_polished_x": 289,
+          "calibration_delta_x": 24,
+          "reason": "YMM4 GUI inspection measured the visually correct lower-right callout label X as 313.0, not the previous computed 289.",
+          "reuse_risk": "high_do_not_generalize",
+          "debt_id": "g28_callout_text_layout_model_debt_v1"
+        }
+      },
+      "previous_alignment_revision": {
+        "revision_id": "g28_real_estate_information_gap_callout_label_alignment_v1",
+        "retained": true,
+        "classification": "pass_callout_label_alignment_fixed"
+      },
+      "readback_metric_caveat": "This pass records a one-time human-calibrated YMM4 X override. It is not a proof that the callout text formula is reusable.",
       "pass": true
     },
     "connector_positioning": {
@@ -885,7 +1058,15 @@
           "x_abs_max": 4,
           "y_abs_max": 5
         },
-        "reuse_risk": "medium_callout_specific"
+        "reuse_risk": "medium_callout_specific",
+        "human_calibrated_override": {
+          "x": 313,
+          "previous_polished_x": 289,
+          "calibration_delta_x": 24,
+          "reason": "YMM4 GUI inspection measured the visually correct lower-right callout label X as 313.0, not the previous computed 289.",
+          "reuse_risk": "high_do_not_generalize",
+          "debt_id": "g28_callout_text_layout_model_debt_v1"
+        }
       },
       "G28_LDC_Connector_Left": {
         "target": "left connector",
@@ -1003,6 +1184,7 @@
       "Manual optical offsets are now registered and bounded, not removed.",
       "Right-node rendered optical centering still requires human GUI review; readback verifies the registered correction, not YMM4 glyph pixels.",
       "Callout-label rendered optical centering still requires human GUI review; readback verifies the registered correction, not YMM4 glyph pixels.",
+      "The lower-right callout label now uses a one-time human-calibrated X override; this is layout system debt, not reusable formula proof.",
       "Callout row formula is intended for 2-3 callouts; 4 callouts should fail fast or use another layout."
     ]
   },
@@ -1736,7 +1918,14 @@
             "y_abs_max": 4
           },
           "reuse_risk": "medium"
-        }
+        },
+        "computed_x_before_human_calibration": null,
+        "previous_polished_x": null,
+        "human_calibrated_x": null,
+        "calibration_delta_x": null,
+        "human_calibrated_override": false,
+        "human_calibration_revision_id": null,
+        "layout_system_debt": null
       },
       "description": "short title label from accepted diagnostic variant"
     },
@@ -1792,7 +1981,14 @@
             "y_abs_max": 6
           },
           "reuse_risk": "medium"
-        }
+        },
+        "computed_x_before_human_calibration": null,
+        "previous_polished_x": null,
+        "human_calibrated_x": null,
+        "calibration_delta_x": null,
+        "human_calibrated_override": false,
+        "human_calibration_revision_id": null,
+        "layout_system_debt": null
       },
       "description": "visible node label for YMM4 GUI diagnostic probe"
     },
@@ -1848,7 +2044,14 @@
             "y_abs_max": 6
           },
           "reuse_risk": "medium"
-        }
+        },
+        "computed_x_before_human_calibration": null,
+        "previous_polished_x": null,
+        "human_calibrated_x": null,
+        "calibration_delta_x": null,
+        "human_calibrated_override": false,
+        "human_calibration_revision_id": null,
+        "layout_system_debt": null
       },
       "description": "visible node label for YMM4 GUI diagnostic probe"
     },
@@ -1904,7 +2107,14 @@
             "y_abs_max": 6
           },
           "reuse_risk": "medium_right_node_specific"
-        }
+        },
+        "computed_x_before_human_calibration": null,
+        "previous_polished_x": null,
+        "human_calibrated_x": null,
+        "calibration_delta_x": null,
+        "human_calibrated_override": false,
+        "human_calibration_revision_id": null,
+        "layout_system_debt": null
       },
       "description": "visible node label for YMM4 GUI diagnostic probe"
     },
@@ -1960,7 +2170,14 @@
             "y_abs_max": 5
           },
           "reuse_risk": "medium"
-        }
+        },
+        "computed_x_before_human_calibration": null,
+        "previous_polished_x": null,
+        "human_calibrated_x": null,
+        "calibration_delta_x": null,
+        "human_calibrated_override": false,
+        "human_calibration_revision_id": null,
+        "layout_system_debt": null
       },
       "description": "visible callout label for YMM4 GUI diagnostic probe"
     },
@@ -2016,7 +2233,14 @@
             "y_abs_max": 5
           },
           "reuse_risk": "medium"
-        }
+        },
+        "computed_x_before_human_calibration": null,
+        "previous_polished_x": null,
+        "human_calibrated_x": null,
+        "calibration_delta_x": null,
+        "human_calibrated_override": false,
+        "human_calibration_revision_id": null,
+        "layout_system_debt": null
       },
       "description": "visible callout label for YMM4 GUI diagnostic probe"
     },
@@ -2026,10 +2250,10 @@
       "group_id": "G28_LDC_CalloutSlots",
       "role": "callout_label",
       "layer": 9,
-      "x": 289,
+      "x": 313,
       "y": 129,
       "screen_rect": {
-        "x": 1249,
+        "x": 1273,
         "y": 669,
         "width": 270,
         "height": 30
@@ -2071,7 +2295,28 @@
             "x_abs_max": 4,
             "y_abs_max": 5
           },
-          "reuse_risk": "medium_callout_specific"
+          "reuse_risk": "medium_callout_specific",
+          "human_calibrated_override": {
+            "x": 313,
+            "previous_polished_x": 289,
+            "calibration_delta_x": 24,
+            "reason": "YMM4 GUI inspection measured the visually correct lower-right callout label X as 313.0, not the previous computed 289.",
+            "reuse_risk": "high_do_not_generalize",
+            "debt_id": "g28_callout_text_layout_model_debt_v1"
+          }
+        },
+        "computed_x_before_human_calibration": 289,
+        "previous_polished_x": 289,
+        "human_calibrated_x": 313,
+        "calibration_delta_x": 24,
+        "human_calibrated_override": true,
+        "human_calibration_revision_id": "g28_real_estate_information_gap_callout_label_human_calibration_v1",
+        "layout_system_debt": {
+          "debt_id": "g28_callout_text_layout_model_debt_v1",
+          "why_formula_was_insufficient": "The estimated text box and registered offset can report centered placement while YMM4 glyph rendering still reads left-shifted in the GUI.",
+          "metric_perception_gap": "text_center_error_px remains a registered-placement metric, not rendered glyph optical-center proof.",
+          "future_fix_direction": "Replace per-label overrides with a callout text layout model that accounts for YMM4 font rendering, target text width, and visual centering acceptance.",
+          "reuse_warning": "Do not reuse x=313.0 for other labels, themes, fonts, or callout counts."
         }
       },
       "description": "visible callout label for YMM4 GUI diagnostic probe"

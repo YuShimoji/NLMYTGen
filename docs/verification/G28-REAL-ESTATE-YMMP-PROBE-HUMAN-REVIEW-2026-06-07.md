@@ -273,6 +273,49 @@ Readback caveat:
 registered offset. It does not claim rendered YMM4 glyph-pixel optical proof;
 human GUI review remains the authority for final visual centering.
 
+## Human GUI Calibration After Callout Fix
+
+```text
+openability: pass
+focal_chain_readability: pass
+connector_treatment: pass
+caption_reserve: pass
+host_role: pass
+callout_label_alignment:
+  status: fail_after_previous_fix
+  target_label: 仲介インセンティブ
+  current_observed_issue: previous X=289 still reads left-shifted
+  human_measured_correct_x: 313.0
+overall_decision: apply_one_time_human_calibrated_callout_x_and_record_layout_debt
+production_boundary_acknowledged: true
+```
+
+Interpretation:
+
+- The lower-right callout label misalignment persisted after the bounded
+  `x=289` correction.
+- The human-measured correct YMM4 TextItem X is `313.0`.
+- This value is a one-time human-calibrated override, not proof that the callout
+  label formula is reusable.
+- The delta from the previous polished X is `24px`; this is recorded as callout
+  text layout system debt.
+- If the label still reads off after this calibration, stop individual
+  pixel/offset tuning and switch to callout text layout system redesign.
+
+Result:
+
+- revision: `g28_real_estate_information_gap_callout_label_human_calibration_v1`
+- classification: `pass_callout_label_human_calibrated`
+- target label: `G28_LDC_CalloutSlot_3_Label`
+- target text: `仲介インセンティブ`
+- computed X before human calibration: `289`
+- previous polished X: `289`
+- human calibrated X: `313.0`
+- calibration delta X: `24`
+- no common callout formula success claim
+- no other node label, callout slot, connector, host, caption reserve,
+  production, or external-material change
+
 ## Boundaries
 
 - No production carrier approval.

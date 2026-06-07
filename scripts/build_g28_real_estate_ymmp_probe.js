@@ -70,6 +70,34 @@ const calloutLabelAlignmentRevision = {
   formula_change: 'No common callout formula change; the third callout label gets a bounded x-axis optical offset.',
   boundary_note: 'Diagnostic-only callout label alignment fix; no render, production approval, slot-fill, image, URL, audio, TTS, or source footage.',
 };
+const calloutLabelHumanCalibrationRevision = {
+  revision_id: 'g28_real_estate_information_gap_callout_label_human_calibration_v1',
+  source_human_decision: 'apply_one_time_human_calibrated_callout_x_and_record_layout_debt',
+  classification: 'pass_callout_label_human_calibrated',
+  target_label: 'G28_LDC_CalloutSlot_3_Label',
+  target_text: '仲介インセンティブ',
+  observed_issue: 'Human GUI recheck still saw the lower-right callout label as left-shifted after the bounded offset fix.',
+  computed_x_before_human_calibration: 289,
+  previous_polished_x: 289,
+  human_calibrated_x: 313,
+  calibration_delta_x: 24,
+  cause_classification: 'callout_text_layout_model_debt',
+  formula_change: 'No formula success claim; the existing formula output is overridden once with the human-calibrated YMM4 X value.',
+  reason: 'YMM4 GUI inspection measured the visually correct lower-right callout label X as 313.0, not the previous computed 289.',
+  reuse_risk: 'high_do_not_generalize',
+  boundary_note: 'Diagnostic-only human calibration; no render, production approval, Review Console ingest, slot-fill, image, URL, audio, TTS, or source footage.',
+  no_more_pixel_tuning_boundary: 'If this remains visually off, stop individual offset changes and redesign the callout text layout system.',
+  layout_system_debt: {
+    debt_id: 'g28_callout_text_layout_model_debt_v1',
+    why_formula_was_insufficient: 'The estimated text box and registered offset can report centered placement while YMM4 glyph rendering still reads left-shifted in the GUI.',
+    metric_perception_gap: 'text_center_error_px remains a registered-placement metric, not rendered glyph optical-center proof.',
+    future_fix_direction: 'Replace per-label overrides with a callout text layout model that accounts for YMM4 font rendering, target text width, and visual centering acceptance.',
+    reuse_warning: 'Do not reuse x=313.0 for other labels, themes, fonts, or callout counts.',
+  },
+};
+const humanCalibratedTextXOverrides = {
+  [calloutLabelHumanCalibrationRevision.target_label]: calloutLabelHumanCalibrationRevision.human_calibrated_x,
+};
 const layoutThresholds = {
   text_center_error_px: 1,
   registered_optical_offset_px: 6,
@@ -156,6 +184,14 @@ const manualOffsetRegistry = {
     reason: 'Lower-right callout-only optical centering correction after human GUI target correction; readback placement metrics did not capture the rendered glyph-center perception.',
     allowed_range: { x_abs_max: 4, y_abs_max: 5 },
     reuse_risk: 'medium_callout_specific',
+    human_calibrated_override: {
+      x: calloutLabelHumanCalibrationRevision.human_calibrated_x,
+      previous_polished_x: calloutLabelHumanCalibrationRevision.previous_polished_x,
+      calibration_delta_x: calloutLabelHumanCalibrationRevision.calibration_delta_x,
+      reason: calloutLabelHumanCalibrationRevision.reason,
+      reuse_risk: calloutLabelHumanCalibrationRevision.reuse_risk,
+      debt_id: calloutLabelHumanCalibrationRevision.layout_system_debt.debt_id,
+    },
   },
   G28_LDC_Connector_Left: {
     target: 'left connector',
@@ -498,11 +534,25 @@ function centeredTextPrimitive(displayName, groupId, role, layer, targetBox, fon
     x: centerScreen.x + visualOffset.x,
     y: centerScreen.y + visualOffset.y,
   };
-  const screenTopLeft = {
+  let screenTopLeft = {
     x: adjustedCenter.x - bboxWidth / 2,
     y: adjustedCenter.y - bboxHeight / 2,
   };
-  const ymm4TopLeft = screenTopLeftToYmm4(screenTopLeft);
+  let ymm4TopLeft = screenTopLeftToYmm4(screenTopLeft);
+  const computedXBeforeHumanCalibration = ymm4TopLeft.x;
+  const humanCalibratedX = humanCalibratedTextXOverrides[displayName];
+  const humanCalibratedOverride = Number.isFinite(humanCalibratedX);
+  const calibrationDeltaX = humanCalibratedOverride ? humanCalibratedX - computedXBeforeHumanCalibration : 0;
+  if (humanCalibratedOverride) {
+    ymm4TopLeft = { ...ymm4TopLeft, x: humanCalibratedX };
+    screenTopLeft = { ...screenTopLeft, x: humanCalibratedX + FRAME.width / 2 };
+  }
+  const finalScreenCenter = rectCenter({
+    x: screenTopLeft.x,
+    y: screenTopLeft.y,
+    width: bboxWidth,
+    height: bboxHeight,
+  });
   return {
     kind: 'TextItem',
     display_name: displayName,
@@ -519,6 +569,8 @@ function centeredTextPrimitive(displayName, groupId, role, layer, targetBox, fon
     },
     intent_screen_cx: adjustedCenter.x,
     intent_screen_cy: adjustedCenter.y,
+    final_screen_cx: finalScreenCenter.x,
+    final_screen_cy: finalScreenCenter.y,
     source_intent_screen_cx: centerScreen.x,
     source_intent_screen_cy: centerScreen.y,
     visual_offset_px: visualOffset,
@@ -534,6 +586,13 @@ function centeredTextPrimitive(displayName, groupId, role, layer, targetBox, fon
       visual_offset_y: visualOffset.y,
       text_center_error_px: 0,
       manual_registry_entry: registryEntry,
+      computed_x_before_human_calibration: humanCalibratedOverride ? computedXBeforeHumanCalibration : null,
+      previous_polished_x: humanCalibratedOverride ? calloutLabelHumanCalibrationRevision.previous_polished_x : null,
+      human_calibrated_x: humanCalibratedOverride ? humanCalibratedX : null,
+      calibration_delta_x: humanCalibratedOverride ? calibrationDeltaX : null,
+      human_calibrated_override: humanCalibratedOverride,
+      human_calibration_revision_id: humanCalibratedOverride ? calloutLabelHumanCalibrationRevision.revision_id : null,
+      layout_system_debt: humanCalibratedOverride ? calloutLabelHumanCalibrationRevision.layout_system_debt : null,
     },
     bbox_width: bboxWidth,
     bbox_height: bboxHeight,
@@ -638,10 +697,12 @@ function buildPrimitivePlan(source, sourceReadback) {
     layout_contract_revision: layoutContractRevision,
     right_node_alignment_revision: rightNodeAlignmentRevision,
     callout_label_alignment_revision: calloutLabelAlignmentRevision,
+    callout_label_human_calibration_revision: calloutLabelHumanCalibrationRevision,
     layout_contract_rules: {
       connector_layout_rule: connectorLayoutRule,
       callout_slot_layout_rule: calloutSlotLayoutRule,
       manual_offset_registry: manualOffsetRegistry,
+      human_calibrated_text_x_overrides: humanCalibratedTextXOverrides,
       thresholds: layoutThresholds,
     },
     primitives: [...shapes, ...textPrimitives],
@@ -778,6 +839,9 @@ function textCenteringMetrics(textItems) {
       const actualCenter = rectCenter(item.screen_rect);
       const implementationError = distance(actualCenter, expectedCenter);
       const registeredOffset = distance(boxCenter, expectedCenter);
+      const humanCalibratedOverride = item.layout_contract.human_calibrated_override === true;
+      const normalPlacementPass = implementationError <= layoutThresholds.text_center_error_px &&
+        registeredOffset <= layoutThresholds.registered_optical_offset_px;
       return {
         id: item.display_name,
         text: item.text,
@@ -790,20 +854,41 @@ function textCenteringMetrics(textItems) {
         baseline_adjust: item.layout_contract.baseline_adjust,
         visual_offset_x: item.layout_contract.visual_offset_x,
         visual_offset_y: item.layout_contract.visual_offset_y,
+        computed_x_before_human_calibration: item.layout_contract.computed_x_before_human_calibration,
+        previous_polished_x: item.layout_contract.previous_polished_x,
+        human_calibrated_x: item.layout_contract.human_calibrated_x,
+        calibration_delta_x: item.layout_contract.calibration_delta_x,
+        human_calibrated_override: humanCalibratedOverride,
+        human_calibration_revision_id: item.layout_contract.human_calibration_revision_id,
         implementation_error_px: roundMetric(implementationError),
         registered_optical_offset_px: roundMetric(registeredOffset),
-        pass: implementationError <= layoutThresholds.text_center_error_px &&
-          registeredOffset <= layoutThresholds.registered_optical_offset_px,
+        pass: humanCalibratedOverride ? true : normalPlacementPass,
+        metric_pass_basis: humanCalibratedOverride ? 'human_calibrated_override_recorded' : 'registered_formula_within_threshold',
       };
     });
+  const normalItems = items.filter((item) => item.human_calibrated_override !== true);
+  const humanOverrideItems = items.filter((item) => item.human_calibrated_override === true);
   return {
     formula: 'top_left = center(target_box) + registered_visual_offset - estimated_text_bbox / 2',
     metric_scope: 'Measures implementation placement against the registered offset and estimated text box; it is not a rendered YMM4 glyph optical-center measurement.',
     character_width_model: 'Japanese full-width ranges count as 1.0em; other characters count as 0.55em; height is font_size.',
     threshold_px: layoutThresholds.text_center_error_px,
     registered_optical_offset_threshold_px: layoutThresholds.registered_optical_offset_px,
-    text_center_error_px: roundMetric(maxOf(items.map((item) => item.implementation_error_px))),
+    text_center_error_px: roundMetric(maxOf(normalItems.map((item) => item.implementation_error_px))),
     registered_optical_offset_max_px: roundMetric(maxOf(items.map((item) => item.registered_optical_offset_px))),
+    human_calibrated_override_count: humanOverrideItems.length,
+    human_calibrated_override_max_delta_px: roundMetric(maxOf(humanOverrideItems.map((item) => Math.abs(item.calibration_delta_x || 0)))),
+    human_calibrated_overrides: humanOverrideItems.map((item) => ({
+      id: item.id,
+      text: item.text,
+      computed_x_before_human_calibration: item.computed_x_before_human_calibration,
+      previous_polished_x: item.previous_polished_x,
+      human_calibrated_x: item.human_calibrated_x,
+      calibration_delta_x: item.calibration_delta_x,
+      implementation_error_px: item.implementation_error_px,
+      metric_pass_basis: item.metric_pass_basis,
+      revision_id: item.human_calibration_revision_id,
+    })),
     pass: items.every((item) => item.pass),
     items,
   };
@@ -870,6 +955,45 @@ function calloutLabelAlignmentMetrics(textItems) {
       item.layout_contract?.visual_offset_y === entry.value.y &&
       Math.abs(entry.value.x) <= entry.allowed_range.x_abs_max &&
       Math.abs(entry.value.y) <= entry.allowed_range.y_abs_max),
+  };
+}
+function calloutLabelHumanCalibrationMetrics(textItems) {
+  const item = textItems.find((candidate) => candidate.display_name === calloutLabelHumanCalibrationRevision.target_label);
+  if (!item) {
+    return {
+      ...calloutLabelHumanCalibrationRevision,
+      pass: false,
+      failure: 'target_label_missing',
+    };
+  }
+  const contract = item.layout_contract || {};
+  const entry = manualOffsetRegistry[calloutLabelHumanCalibrationRevision.target_label];
+  return {
+    ...calloutLabelHumanCalibrationRevision,
+    target_text: item.text,
+    target_box_id: contract.target_box_id || null,
+    actual_x: item.x,
+    actual_y: item.y,
+    screen_rect: item.screen_rect,
+    computed_x_before_human_calibration: contract.computed_x_before_human_calibration,
+    previous_polished_x: contract.previous_polished_x,
+    human_calibrated_x: contract.human_calibrated_x,
+    calibration_delta_x: contract.calibration_delta_x,
+    human_calibrated_override: contract.human_calibrated_override === true,
+    human_calibration_revision_id: contract.human_calibration_revision_id,
+    manual_offset_registry_entry: entry,
+    previous_alignment_revision: {
+      revision_id: calloutLabelAlignmentRevision.revision_id,
+      retained: true,
+      classification: calloutLabelAlignmentRevision.classification,
+    },
+    layout_system_debt: calloutLabelHumanCalibrationRevision.layout_system_debt,
+    readback_metric_caveat: 'This pass records a one-time human-calibrated YMM4 X override. It is not a proof that the callout text formula is reusable.',
+    pass: contract.human_calibrated_override === true &&
+      item.x === calloutLabelHumanCalibrationRevision.human_calibrated_x &&
+      contract.computed_x_before_human_calibration === calloutLabelHumanCalibrationRevision.computed_x_before_human_calibration &&
+      contract.previous_polished_x === calloutLabelHumanCalibrationRevision.previous_polished_x &&
+      contract.calibration_delta_x === calloutLabelHumanCalibrationRevision.calibration_delta_x,
   };
 }
 function connectorAlignmentMetrics(items) {
@@ -1036,6 +1160,7 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
   const textCenteringReadback = textCenteringMetrics(textItems);
   const rightNodeAlignmentReadback = rightNodeAlignmentMetrics(textItems);
   const calloutLabelAlignmentReadback = calloutLabelAlignmentMetrics(textItems);
+  const calloutLabelHumanCalibrationReadback = calloutLabelHumanCalibrationMetrics(textItems);
   const connectorAlignmentReadback = connectorAlignmentMetrics(items);
   const captionReserveOverlapReadback = captionReserveOverlapMetric(items, captionReserve);
   const calloutDensityReadback = calloutDensityMetrics(calloutShapes, calloutLabels);
@@ -1047,6 +1172,7 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
     rectangle_text_centering: textCenteringReadback,
     right_node_alignment: rightNodeAlignmentReadback,
     callout_label_alignment: calloutLabelAlignmentReadback,
+    callout_label_human_calibration: calloutLabelHumanCalibrationReadback,
     connector_positioning: connectorAlignmentReadback,
     callout_slot_layout: calloutDensityReadback,
     manual_offset_registry: primitivePlan.layout_contract_rules.manual_offset_registry,
@@ -1068,12 +1194,14 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
       'Manual optical offsets are now registered and bounded, not removed.',
       'Right-node rendered optical centering still requires human GUI review; readback verifies the registered correction, not YMM4 glyph pixels.',
       'Callout-label rendered optical centering still requires human GUI review; readback verifies the registered correction, not YMM4 glyph pixels.',
+      'The lower-right callout label now uses a one-time human-calibrated X override; this is layout system debt, not reusable formula proof.',
       'Callout row formula is intended for 2-3 callouts; 4 callouts should fail fast or use another layout.',
     ],
   };
   const layoutContractPass = textCenteringReadback.pass &&
     rightNodeAlignmentReadback.pass &&
     calloutLabelAlignmentReadback.pass &&
+    calloutLabelHumanCalibrationReadback.pass &&
     connectorAlignmentReadback.pass &&
     captionReserveOverlapReadback.pass &&
     calloutDensityReadback.pass &&
@@ -1113,6 +1241,7 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
     layout_contract_tolerances_pass: layoutContractPass,
     right_node_alignment_fix_recorded: rightNodeAlignmentReadback.pass,
     callout_label_alignment_fix_recorded: calloutLabelAlignmentReadback.pass,
+    callout_label_human_calibration_recorded: calloutLabelHumanCalibrationReadback.pass,
   };
   const failures = Object.entries(checks)
     .filter(([, ok]) => ok !== true)
@@ -1123,7 +1252,7 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
     source_artifact_id: primitivePlan.source_artifact_id,
     variant_id: primitivePlan.variant_id,
     status: failures.length === 0 && missing.length === 0 ? 'passed' : 'failed',
-    classification: failures.length === 0 && missing.length === 0 ? primitivePlan.callout_label_alignment_revision.classification : 'fail_ymmp_probe_readback',
+    classification: failures.length === 0 && missing.length === 0 ? primitivePlan.callout_label_human_calibration_revision.classification : 'fail_ymmp_probe_readback',
     generated_files: {
       ymmp: paths.outputYmmp,
       readback_json: paths.readbackJson,
@@ -1148,6 +1277,7 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
     layout_contract_revision: primitivePlan.layout_contract_revision,
     right_node_alignment_revision: primitivePlan.right_node_alignment_revision,
     callout_label_alignment_revision: primitivePlan.callout_label_alignment_revision,
+    callout_label_human_calibration_revision: primitivePlan.callout_label_human_calibration_revision,
     frame_contract: {
       width: frameContract.width,
       height: frameContract.height,
@@ -1328,6 +1458,23 @@ function renderReport(readback) {
   lines.push(`- formula change: ${readback.callout_label_alignment_revision.formula_change}`);
   lines.push(`- boundary note: ${readback.callout_label_alignment_revision.boundary_note}`);
   lines.push('');
+  lines.push('## Callout Label Human Calibration');
+  lines.push('');
+  lines.push(`- revision id: \`${readback.callout_label_human_calibration_revision.revision_id}\``);
+  lines.push(`- source human decision: \`${readback.callout_label_human_calibration_revision.source_human_decision}\``);
+  lines.push(`- classification: \`${readback.callout_label_human_calibration_revision.classification}\``);
+  lines.push(`- target label: \`${readback.callout_label_human_calibration_revision.target_label}\``);
+  lines.push(`- observed issue: ${readback.callout_label_human_calibration_revision.observed_issue}`);
+  lines.push(`- computed x before human calibration: ${readback.callout_label_human_calibration_revision.computed_x_before_human_calibration}`);
+  lines.push(`- previous polished x: ${readback.callout_label_human_calibration_revision.previous_polished_x}`);
+  lines.push(`- human calibrated x: ${readback.callout_label_human_calibration_revision.human_calibrated_x}`);
+  lines.push(`- calibration delta x: ${readback.callout_label_human_calibration_revision.calibration_delta_x}`);
+  lines.push(`- cause classification: \`${readback.callout_label_human_calibration_revision.cause_classification}\``);
+  lines.push(`- formula change: ${readback.callout_label_human_calibration_revision.formula_change}`);
+  lines.push(`- reuse risk: \`${readback.callout_label_human_calibration_revision.reuse_risk}\``);
+  lines.push(`- boundary note: ${readback.callout_label_human_calibration_revision.boundary_note}`);
+  lines.push(`- no more pixel tuning boundary: ${readback.callout_label_human_calibration_revision.no_more_pixel_tuning_boundary}`);
+  lines.push('');
   lines.push('## Generated Files');
   lines.push('');
   lines.push(`- YMM4 probe: \`${readback.generated_files.ymmp}\``);
@@ -1365,6 +1512,10 @@ function renderReport(readback) {
   lines.push(`- right node caveat: ${readback.layout_contract_readback.right_node_alignment.readback_metric_caveat}`);
   lines.push(`- callout label applied offset: x=${readback.layout_contract_readback.callout_label_alignment.applied_visual_offset_px.x}, y=${readback.layout_contract_readback.callout_label_alignment.applied_visual_offset_px.y}`);
   lines.push(`- callout label caveat: ${readback.layout_contract_readback.callout_label_alignment.readback_metric_caveat}`);
+  lines.push(`- callout human calibrated override: \`${readback.layout_contract_readback.callout_label_human_calibration.human_calibrated_override}\``);
+  lines.push(`- callout human calibrated x: computed=${readback.layout_contract_readback.callout_label_human_calibration.computed_x_before_human_calibration}, previous=${readback.layout_contract_readback.callout_label_human_calibration.previous_polished_x}, human=${readback.layout_contract_readback.callout_label_human_calibration.human_calibrated_x}, delta=${readback.layout_contract_readback.callout_label_human_calibration.calibration_delta_x}`);
+  lines.push(`- callout human calibration caveat: ${readback.layout_contract_readback.callout_label_human_calibration.readback_metric_caveat}`);
+  lines.push(`- layout system debt: ${readback.layout_contract_readback.callout_label_human_calibration.layout_system_debt.debt_id}`);
   lines.push(`- connector rule: ${readback.layout_contract_readback.connector_positioning.formula}`);
   lines.push(`- callout supported counts: ${readback.layout_contract_readback.callout_slot_layout.supported_counts.join(', ')}`);
   lines.push('- 4-callout handling: fail fast or change layout; do not squeeze into the current 3-slot row.');
