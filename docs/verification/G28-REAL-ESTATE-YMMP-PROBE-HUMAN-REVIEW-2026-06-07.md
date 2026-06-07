@@ -316,6 +316,55 @@ Result:
 - no other node label, callout slot, connector, host, caption reserve,
   production, or external-material change
 
+## Human GUI Recheck After X=313 Calibration
+
+```text
+openability: pass
+openability_notes: YMM4で開ける。diagnostic probeとして成立。
+
+callout_label_alignment_仲介インセンティブ: pass
+callout_label_alignment_notes: 大きなズレはなく、一旦これで進められる。細かな光学中心の検出精度には不安が残るため、layout metric debt は保持する。
+
+title_position: pass_with_metric_caveat
+title_position_notes: 上部タイトルは視認上は問題ない。YMM4上のタイトル位置は y=-474.5。現時点で修正対象ではないが、title anchor / title text center / safe area を後続readback項目として検出できるようにしたい。
+
+host_placeholders: pass_as_diagnostic_placeholder
+host_placeholders_notes: 左右下のグレー角丸矩形は host placeholder として診断probe上は正常。ただし production ではこのまま使わず、キャラ素材・AI画像・別表現への置換または非表示判断が必要。
+
+focal_chain_readability: pass
+connector_treatment: pass
+other_callout_side_effect: none
+right_node_side_effect: none
+caption_reserve: pass
+diagnostic_boundary: clear
+overall_decision: accept_for_review_console_ingest_candidate_with_layout_metric_caveat
+production_boundary_acknowledged: true
+```
+
+Interpretation:
+
+- The X=313 human-calibrated lower-right callout label is accepted for moving
+  from GUI probe review into Review Console ingest candidate planning.
+- This is not actual Review Console ingest, production carrier approval,
+  creative final acceptance, render approval, or rights/production automation.
+- The title is visually acceptable for the current diagnostic probe, but later
+  readback should add title anchor, title text center, and title safe-area
+  checks instead of continuing manual YMM4 coordinate tuning.
+- The lower-corner host rectangles are diagnostic placeholders only. A later
+  production path must decide whether to replace them with character material,
+  AI-generated/static visual treatment, another representation, or hide them.
+- The callout X=313 remains a human-calibrated override and layout metric debt,
+  not a reusable callout text formula success.
+
+Review Console ingest candidate caveats:
+
+- Carry `diagnostic_only=true` and `production_candidate=false` forward.
+- Treat YMM4 glyph optical center as not directly measured by current readback.
+- Add title anchor / title text center / title safe-area readback before relying
+  on this pattern as a reusable Review Console screen input.
+- Keep host placeholders as diagnostic-only evidence; do not treat them as
+  production-ready character or visual assets.
+
 ## Boundaries
 
 - No production carrier approval.

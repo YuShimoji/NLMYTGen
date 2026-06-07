@@ -79,6 +79,22 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest G-28 decision (2026-06-08): `accept_for_review_console_ingest_candidate_with_layout_metric_caveat`
+is recorded for the calibrated real-estate YMM4 diagnostic probe. Human GUI
+recheck accepted the X=313.0 lower-right callout label `仲介インセンティブ`:
+openability, focal-chain readability, connector treatment, caption reserve,
+diagnostic boundary, and major side-effect checks pass. This authorizes only a
+Review Console ingest candidate record / ingest plan. It does not authorize
+actual Review Console ingest implementation, production render, production
+carrier approval, creative final acceptance, rights automation, slot-fill,
+external material intake, G-27 revival, ClipPipeGen, RSS / NotebookLM, or common
+foundation / Codex Worker Orchestration work. Layout metric debt remains part of
+the candidate: current readback does not directly measure YMM4 glyph optical
+center, title y=`-474.5` is visually acceptable but should become a future title
+anchor/text-center/safe-area readback check, host placeholders are
+diagnostic-only and not production character/visual assets, and X=313 remains a
+human-calibrated override rather than reusable formula proof.
+
 Latest G-28 decision (2026-06-08): `g28_real_estate_information_gap_callout_label_human_calibration_v1`
 is implemented after human GUI recheck found the lower-right callout label
 `仲介インセンティブ` still visually left-shifted after the bounded alignment fix.
