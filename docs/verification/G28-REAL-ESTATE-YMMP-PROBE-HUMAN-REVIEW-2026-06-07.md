@@ -176,6 +176,54 @@ approval, creative final acceptance, rights automation, source footage, audio,
 TTS, external image, URL, raw reference, G-27 revival, ClipPipeGen access, RSS
 work, or NotebookLM work is approved by this re-review.
 
+## Human GUI Recheck Result After Layout Contract
+
+```text
+openability: pass
+focal_chain_readability: pass
+connector_treatment: pass
+caption_reserve: pass
+callout_readability: pass
+host_role: pass
+rectangle_text_alignment: partial
+layout_metrics_trust: partial
+overall_decision: revise_probe_again_narrow_right_node_text_alignment
+production_boundary_acknowledged: true
+```
+
+Interpretation:
+
+- The probe still opens in YMM4 and remains valid as a diagnostic probe.
+- The focal chain, connector treatment, caption reserve, callouts, and host role
+  all pass.
+- The only remaining GUI concern is the right-side node label `借主判断`,
+  which appears optically off-center inside its rectangle.
+- The existing readback reported `text_center_error_px=0`, so the mismatch is
+  between registered placement metrics and rendered YMM4 optical perception.
+
+## Narrow Right-Node Alignment Fix
+
+The diagnostic builder was updated after the recheck with
+`g28_real_estate_information_gap_right_node_alignment_v1`.
+
+Result:
+
+- classification: `pass_right_node_alignment_fixed`
+- target label: `G28_LDC_Node_Right_Label`
+- target text: `借主判断`
+- previous registered offset: `{ x: 0, y: -4 }`
+- new registered offset: `{ x: 4, y: -4 }`
+- scope: right-node label only
+- no common text-centering formula change
+- no other node label, callout, connector, host, caption reserve, production, or
+  external-material change
+
+Readback caveat:
+
+`text_center_error_px=0` now means the right label was placed exactly at the
+registered offset. It does not claim rendered YMM4 glyph-pixel optical proof;
+human GUI review remains the authority for final visual centering.
+
 ## Boundaries
 
 - No production carrier approval.

@@ -272,6 +272,30 @@ for the diagnostic probe only. It does not approve Review Console ingest by
 itself; the next human-facing step is a YMM4 GUI recheck of the updated
 diagnostic probe/readback pair.
 
+## Right-Node Alignment Follow-up
+
+The YMM4 GUI recheck after layout-contract implementation returned
+`revise_probe_again_narrow_right_node_text_alignment`. All major diagnostic
+checks passed, but the right-side node label `借主判断` still appeared optically
+off-center to the human reviewer.
+
+Follow-up implementation:
+
+- revision: `g28_real_estate_information_gap_right_node_alignment_v1`
+- classification: `pass_right_node_alignment_fixed`
+- target: `G28_LDC_Node_Right_Label`
+- previous registered offset: `{ x: 0, y: -4 }`
+- applied registered offset: `{ x: 4, y: -4 }`
+- formula change: none; the common TextItem top-left formula is unchanged
+- scope: right-node label only
+
+Metric caveat:
+
+`text_center_error_px=0` measures placement against the registered offset and
+estimated text box. It is not proof of rendered YMM4 glyph optical center.
+Human GUI review remains the authority for whether this right-node visual fix is
+sufficient before any Review Console ingest decision.
+
 ## Boundary
 
 Original audit slice:

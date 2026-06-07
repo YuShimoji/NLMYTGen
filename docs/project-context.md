@@ -79,6 +79,18 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest G-28 decision (2026-06-07): `g28_real_estate_information_gap_right_node_alignment_v1`
+is implemented for the existing real-estate YMM4 diagnostic probe after human
+GUI recheck returned `revise_probe_again_narrow_right_node_text_alignment`.
+Only `G28_LDC_Node_Right_Label` changed: its registered optical offset moved
+from `{x:0,y:-4}` to `{x:4,y:-4}`. The shared text-centering formula,
+connectors, callouts, hosts, caption reserve, variant id, and diagnostic
+boundary are unchanged. Readback passes as `pass_right_node_alignment_fixed`.
+This decision also records the metrics caveat that `text_center_error_px=0`
+checks registered placement, not rendered YMM4 glyph optical center. Next safe
+move is human YMM4 GUI recheck of this right-node-only fix; Review Console
+ingest and all production/rights/render/slot-fill work remain unapproved.
+
 Latest G-28 decision (2026-06-07): `g28_real_estate_information_gap_layout_contract_v1`
 is implemented for the existing real-estate YMM4 diagnostic probe. The builder
 now records derived connector geometry, manual text offset registry, a bounded

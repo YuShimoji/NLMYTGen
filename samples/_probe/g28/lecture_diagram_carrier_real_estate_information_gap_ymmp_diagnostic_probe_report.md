@@ -21,6 +21,17 @@ This is a self-contained YMM4-compatible diagnostic probe. It is not a render, p
 - scope: derived connector geometry, registered text offsets, callout row rule, and tolerance readback metrics.
 - boundary: diagnostic-only implementation improvement; not production approval, render approval, rights approval, creative final acceptance, or slot-fill.
 
+## Right Node Alignment Revision
+
+- revision id: `g28_real_estate_information_gap_right_node_alignment_v1`
+- source human decision: `revise_probe_again_narrow_right_node_text_alignment`
+- classification: `pass_right_node_alignment_fixed`
+- target label: `G28_LDC_Node_Right_Label`
+- observed issue: Human GUI recheck saw only the right node label as visually off-center inside its rectangle.
+- cause classification: `right_node_registered_optical_offset_needed`
+- formula change: No common text-centering formula change; the right node label gets a bounded x-axis optical offset.
+- boundary note: Diagnostic-only right-node alignment fix; no render, production approval, slot-fill, image, URL, audio, TTS, or source footage.
+
 ## Generated Files
 
 - YMM4 probe: `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe.ymmp`
@@ -46,7 +57,7 @@ This is a self-contained YMM4-compatible diagnostic probe. It is not a render, p
 ## Readback Rollup
 
 - status: `passed`
-- classification: `pass_probe_polished`
+- classification: `pass_right_node_alignment_fixed`
 - frame: 1920x1080 / 16:9
 - caption reserve: y=810, h=216, clear=`true`
 - focal chain labels: 元付情報 -> ポータル掲載 -> 借主判断
@@ -57,12 +68,15 @@ This is a self-contained YMM4-compatible diagnostic probe. It is not a render, p
 ## Layout Contract Readback
 
 - text_center_error_px: 0 (threshold 1)
-- registered_optical_offset_max_px: 4 (threshold 6)
+- registered_optical_offset_max_px: 5.657 (threshold 6)
 - connector_alignment_error_px: 0 (threshold 2)
 - caption_reserve_overlap_px: 0
 - callout_density: width=0.818, height=0.333
 - host_focality_risk: `low`
 - formula: top_left = center(target_box) + registered_visual_offset - estimated_text_bbox / 2
+- metric scope: Measures implementation placement against the registered offset and estimated text box; it is not a rendered YMM4 glyph optical-center measurement.
+- right node applied offset: x=4, y=-4
+- right node caveat: text_center_error_px=0 means the label was placed exactly at the registered offset; the human GUI recheck is the authority for rendered optical centering.
 - connector rule: connector spans from source edge to target edge, with y centered on the adjacent side node and fixed thickness.
 - callout supported counts: 2, 3
 - 4-callout handling: fail fast or change layout; do not squeeze into the current 3-slot row.
@@ -100,6 +114,7 @@ This is a self-contained YMM4-compatible diagnostic probe. It is not a render, p
 - `polish_revision_bounded`: `true`
 - `layout_contract_metrics_present`: `true`
 - `layout_contract_tolerances_pass`: `true`
+- `right_node_alignment_fix_recorded`: `true`
 
 ## YMM4 Mapping
 

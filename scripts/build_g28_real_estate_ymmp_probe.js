@@ -49,6 +49,16 @@ const layoutContractRevision = {
   classification: 'pass_layout_contract_implemented',
   next_decision: 'ready_for_human_gui_recheck_before_review_console_ingest',
 };
+const rightNodeAlignmentRevision = {
+  revision_id: 'g28_real_estate_information_gap_right_node_alignment_v1',
+  source_human_decision: 'revise_probe_again_narrow_right_node_text_alignment',
+  classification: 'pass_right_node_alignment_fixed',
+  target_label: 'G28_LDC_Node_Right_Label',
+  observed_issue: 'Human GUI recheck saw only the right node label as visually off-center inside its rectangle.',
+  cause_classification: 'right_node_registered_optical_offset_needed',
+  formula_change: 'No common text-centering formula change; the right node label gets a bounded x-axis optical offset.',
+  boundary_note: 'Diagnostic-only right-node alignment fix; no render, production approval, slot-fill, image, URL, audio, TTS, or source footage.',
+};
 const layoutThresholds = {
   text_center_error_px: 1,
   registered_optical_offset_px: 6,
@@ -110,10 +120,10 @@ const manualOffsetRegistry = {
   },
   G28_LDC_Node_Right_Label: {
     target: 'focal node label',
-    value: { x: 0, y: -4 },
-    reason: 'Optical centering correction for Japanese node labels.',
+    value: { x: 4, y: -4 },
+    reason: 'Right-node-only optical centering correction after human GUI recheck; readback placement metrics did not capture the rendered glyph-center perception.',
     allowed_range: { x_abs_max: 4, y_abs_max: 6 },
-    reuse_risk: 'medium',
+    reuse_risk: 'medium_right_node_specific',
   },
   G28_LDC_CalloutSlot_1_Label: {
     target: 'callout label',
@@ -615,6 +625,7 @@ function buildPrimitivePlan(source, sourceReadback) {
     scs_mapping: source.scs_mapping,
     polish_revision: polishRevision,
     layout_contract_revision: layoutContractRevision,
+    right_node_alignment_revision: rightNodeAlignmentRevision,
     layout_contract_rules: {
       connector_layout_rule: connectorLayoutRule,
       callout_slot_layout_rule: calloutSlotLayoutRule,
@@ -775,6 +786,7 @@ function textCenteringMetrics(textItems) {
     });
   return {
     formula: 'top_left = center(target_box) + registered_visual_offset - estimated_text_bbox / 2',
+    metric_scope: 'Measures implementation placement against the registered offset and estimated text box; it is not a rendered YMM4 glyph optical-center measurement.',
     character_width_model: 'Japanese full-width ranges count as 1.0em; other characters count as 0.55em; height is font_size.',
     threshold_px: layoutThresholds.text_center_error_px,
     registered_optical_offset_threshold_px: layoutThresholds.registered_optical_offset_px,
@@ -782,6 +794,35 @@ function textCenteringMetrics(textItems) {
     registered_optical_offset_max_px: roundMetric(maxOf(items.map((item) => item.registered_optical_offset_px))),
     pass: items.every((item) => item.pass),
     items,
+  };
+}
+function rightNodeAlignmentMetrics(textItems) {
+  const item = textItems.find((candidate) => candidate.display_name === rightNodeAlignmentRevision.target_label);
+  if (!item) {
+    return {
+      ...rightNodeAlignmentRevision,
+      pass: false,
+      failure: 'target_label_missing',
+    };
+  }
+  const entry = manualOffsetRegistry[rightNodeAlignmentRevision.target_label];
+  return {
+    ...rightNodeAlignmentRevision,
+    target_text: item.text,
+    target_box_id: item.layout_contract?.target_box_id || null,
+    manual_offset_registry_update: entry,
+    applied_visual_offset_px: {
+      x: item.layout_contract?.visual_offset_x ?? null,
+      y: item.layout_contract?.visual_offset_y ?? null,
+    },
+    screen_rect: item.screen_rect,
+    readback_metric_caveat: 'text_center_error_px=0 means the label was placed exactly at the registered offset; the human GUI recheck is the authority for rendered optical centering.',
+    previous_registered_offset_px: { x: 0, y: -4 },
+    pass: Boolean(entry &&
+      item.layout_contract?.visual_offset_x === entry.value.x &&
+      item.layout_contract?.visual_offset_y === entry.value.y &&
+      Math.abs(entry.value.x) <= entry.allowed_range.x_abs_max &&
+      Math.abs(entry.value.y) <= entry.allowed_range.y_abs_max),
   };
 }
 function connectorAlignmentMetrics(items) {
@@ -946,6 +987,7 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
   const ttsOrVoiceItemCount = itemTypes.filter((type) => ['VoiceItem'].includes(type)).length;
   const tokenLikePatternCount = countMatches(serialized, tokenLikePattern());
   const textCenteringReadback = textCenteringMetrics(textItems);
+  const rightNodeAlignmentReadback = rightNodeAlignmentMetrics(textItems);
   const connectorAlignmentReadback = connectorAlignmentMetrics(items);
   const captionReserveOverlapReadback = captionReserveOverlapMetric(items, captionReserve);
   const calloutDensityReadback = calloutDensityMetrics(calloutShapes, calloutLabels);
@@ -955,6 +997,7 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
     rules: primitivePlan.layout_contract_rules,
     next_decision: primitivePlan.layout_contract_revision.next_decision,
     rectangle_text_centering: textCenteringReadback,
+    right_node_alignment: rightNodeAlignmentReadback,
     connector_positioning: connectorAlignmentReadback,
     callout_slot_layout: calloutDensityReadback,
     manual_offset_registry: primitivePlan.layout_contract_rules.manual_offset_registry,
@@ -974,10 +1017,12 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
     limitations: [
       'Text width remains an approximation and should not be treated as font-engine proof.',
       'Manual optical offsets are now registered and bounded, not removed.',
+      'Right-node rendered optical centering still requires human GUI review; readback verifies the registered correction, not YMM4 glyph pixels.',
       'Callout row formula is intended for 2-3 callouts; 4 callouts should fail fast or use another layout.',
     ],
   };
   const layoutContractPass = textCenteringReadback.pass &&
+    rightNodeAlignmentReadback.pass &&
     connectorAlignmentReadback.pass &&
     captionReserveOverlapReadback.pass &&
     calloutDensityReadback.pass &&
@@ -1015,6 +1060,7 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
       primitivePlan.polish_revision.classification === 'pass_probe_polished',
     layout_contract_metrics_present: true,
     layout_contract_tolerances_pass: layoutContractPass,
+    right_node_alignment_fix_recorded: rightNodeAlignmentReadback.pass,
   };
   const failures = Object.entries(checks)
     .filter(([, ok]) => ok !== true)
@@ -1025,7 +1071,7 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
     source_artifact_id: primitivePlan.source_artifact_id,
     variant_id: primitivePlan.variant_id,
     status: failures.length === 0 && missing.length === 0 ? 'passed' : 'failed',
-    classification: failures.length === 0 && missing.length === 0 ? primitivePlan.polish_revision.classification : 'fail_ymmp_probe_readback',
+    classification: failures.length === 0 && missing.length === 0 ? primitivePlan.right_node_alignment_revision.classification : 'fail_ymmp_probe_readback',
     generated_files: {
       ymmp: paths.outputYmmp,
       readback_json: paths.readbackJson,
@@ -1048,6 +1094,7 @@ function readbackProbe(ymmp, primitivePlan, carrierHashBefore, carrierHashAfter)
     },
     polish_revision: primitivePlan.polish_revision,
     layout_contract_revision: primitivePlan.layout_contract_revision,
+    right_node_alignment_revision: primitivePlan.right_node_alignment_revision,
     frame_contract: {
       width: frameContract.width,
       height: frameContract.height,
@@ -1205,6 +1252,17 @@ function renderReport(readback) {
   lines.push('- scope: derived connector geometry, registered text offsets, callout row rule, and tolerance readback metrics.');
   lines.push('- boundary: diagnostic-only implementation improvement; not production approval, render approval, rights approval, creative final acceptance, or slot-fill.');
   lines.push('');
+  lines.push('## Right Node Alignment Revision');
+  lines.push('');
+  lines.push(`- revision id: \`${readback.right_node_alignment_revision.revision_id}\``);
+  lines.push(`- source human decision: \`${readback.right_node_alignment_revision.source_human_decision}\``);
+  lines.push(`- classification: \`${readback.right_node_alignment_revision.classification}\``);
+  lines.push(`- target label: \`${readback.right_node_alignment_revision.target_label}\``);
+  lines.push(`- observed issue: ${readback.right_node_alignment_revision.observed_issue}`);
+  lines.push(`- cause classification: \`${readback.right_node_alignment_revision.cause_classification}\``);
+  lines.push(`- formula change: ${readback.right_node_alignment_revision.formula_change}`);
+  lines.push(`- boundary note: ${readback.right_node_alignment_revision.boundary_note}`);
+  lines.push('');
   lines.push('## Generated Files');
   lines.push('');
   lines.push(`- YMM4 probe: \`${readback.generated_files.ymmp}\``);
@@ -1237,6 +1295,9 @@ function renderReport(readback) {
   lines.push(`- callout_density: width=${readback.layout_contract_readback.tolerance_metrics.callout_density.max_width_ratio}, height=${readback.layout_contract_readback.tolerance_metrics.callout_density.max_height_ratio}`);
   lines.push(`- host_focality_risk: \`${readback.layout_contract_readback.tolerance_metrics.host_focality_risk}\``);
   lines.push(`- formula: ${readback.layout_contract_readback.rectangle_text_centering.formula}`);
+  lines.push(`- metric scope: ${readback.layout_contract_readback.rectangle_text_centering.metric_scope}`);
+  lines.push(`- right node applied offset: x=${readback.layout_contract_readback.right_node_alignment.applied_visual_offset_px.x}, y=${readback.layout_contract_readback.right_node_alignment.applied_visual_offset_px.y}`);
+  lines.push(`- right node caveat: ${readback.layout_contract_readback.right_node_alignment.readback_metric_caveat}`);
   lines.push(`- connector rule: ${readback.layout_contract_readback.connector_positioning.formula}`);
   lines.push(`- callout supported counts: ${readback.layout_contract_readback.callout_slot_layout.supported_counts.join(', ')}`);
   lines.push('- 4-callout handling: fail fast or change layout; do not squeeze into the current 3-slot row.');
