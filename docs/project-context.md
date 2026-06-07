@@ -79,6 +79,20 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest G-28 decision (2026-06-08): `pass_review_console_ingest_implemented`
+is recorded for the calibrated real-estate YMM4 diagnostic probe. The Review
+Console now has a read-only G-28 panel that references the existing `.ymmp`,
+readback JSON, report MD, human review record, and ingest plan in place, checks
+repo-relative artifact existence, shows diagnostic boundary badges, summarizes
+readback/human GUI results, exposes caveats for X=313, title readback debt, host
+placeholders, and glyph optical-center limits, and limits visible decisions to
+diagnostic review-surface outcomes. DOM smoke verifies the panel and the absence
+of production approval labels. This does not change `.ymmp`, builder,
+readback/report artifacts, render, production carrier approval, creative final
+acceptance, rights/public-use automation, slot-fill, G-27 authority, common
+foundation, ClipPipeGen, RSS, or NotebookLM work. Next safe action is screenshot
+/ Electron smoke evidence or human GUI confirmation of the read-only panel.
+
 Latest G-28 decision (2026-06-08): `G28-REAL-ESTATE-REVIEW-CONSOLE-INGEST-PLAN-2026-06-07`
 is added as the docs-only plan for read-only Review Console ingest of the
 accepted real-estate YMM4 diagnostic probe. The plan defines the input artifact

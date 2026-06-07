@@ -1,10 +1,11 @@
 # G-28 Real Estate Review Console Ingest Plan - 2026-06-07
 
 This plan defines a read-only Review Console ingest path for the G-28
-`real_estate_information_gap` YMM4 diagnostic probe. It is a planning artifact
-only. It does not implement GUI ingest, change the GUI, regenerate `.ymmp`,
-rewrite readback, approve production, approve render, approve rights, or perform
-creative final acceptance.
+`real_estate_information_gap` YMM4 diagnostic probe. It began as a planning
+artifact; the 2026-06-08 result below records the bounded read-only GUI ingest
+implementation. It does not regenerate `.ymmp`, rewrite readback, approve
+production, approve render, approve rights, or perform creative final
+acceptance.
 
 ## Classification
 
@@ -14,7 +15,19 @@ creative final acceptance.
 - target variant: `g28_ldc_real_estate_information_gap`
 - input status: `pass_callout_label_human_calibrated`
 - human status: `accept_for_review_console_ingest_candidate_with_layout_metric_caveat`
-- implementation status: not started
+- implementation status: `pass_review_console_ingest_implemented`
+
+## Implementation Result - 2026-06-08
+
+- classification: `pass_review_console_ingest_implemented`
+- GUI surface: `gui/index.html` adds `#g28-review-console-ingest`; `gui/renderer.js` renders the read-only G-28 panel; `gui/style.css` adds compact Review Console styling.
+- artifact handling: existing `.ymmp`, readback JSON, report MD, human review record, and this ingest plan are referenced in place with repo-relative paths; no artifact is copied, regenerated, or converted.
+- existence handling: `check-review-artifacts` verifies repo-relative artifact existence without parsing Markdown or touching unrelated paths.
+- readback handling: the panel reads the existing readback JSON and displays classification, diagnostic boundary, frame/caption/focal/callout/host/text/safety fields, `actual_x=313`, and human-calibrated override state.
+- human GUI handling: the panel displays the accepted GUI recheck summary as fixed review context, including the title metric caveat and diagnostic-only host placeholder caveat.
+- decision handling: the panel displays only diagnostic review-surface decision labels and does not connect to G-27 `review_decisions` or production approval flows.
+- smoke: `gui/review_console_dom_smoke.js` verifies the G-28 panel, artifact rows, badges, readback summary, human GUI summary, caveats, allowed diagnostic decisions, and absence of production approval labels.
+- boundary: no `.ymmp`, builder, readback JSON, report MD, render, rights/public-use automation, production carrier approval, creative final acceptance, slot-fill, external material intake, G-27 revival, ClipPipeGen, RSS, NotebookLM, or common foundation work is included.
 
 ## Ingest Objective
 

@@ -1072,6 +1072,86 @@ main .hint strong {
   min-width: 860px;
 }
 
+.g28-review-console-ingest {
+  padding: 14px;
+  border: 1px solid rgba(251, 191, 36, 0.30);
+  border-radius: 10px;
+  background: rgba(251, 191, 36, 0.045);
+}
+
+.g28-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.g28-review-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.g28-review-card {
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: rgba(8, 13, 34, 0.35);
+}
+
+.g28-review-card.warning {
+  border-color: rgba(251, 191, 36, 0.28);
+  background: rgba(251, 191, 36, 0.055);
+}
+
+.g28-review-card h4 {
+  margin: 0 0 10px;
+  color: var(--color-text);
+  font-size: 13px;
+}
+
+.g28-review-card ul {
+  margin: 0 0 0 18px;
+  padding: 0;
+}
+
+.g28-review-card li,
+.g28-review-card p,
+.g28-artifact-table td,
+.g28-artifact-table th {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.g28-kv-grid {
+  display: grid;
+  gap: 7px;
+}
+
+.g28-kv {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.38fr) minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+}
+
+.g28-kv span {
+  color: var(--color-text-hint);
+  font-size: 11px;
+}
+
+.g28-kv strong {
+  color: var(--color-text);
+  font-size: 12px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.g28-artifact-table {
+  min-width: 760px;
+}
+
 .review-proof-summary {
   display: grid;
   justify-items: end;

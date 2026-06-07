@@ -563,9 +563,31 @@ const DEFAULT_REVIEW_PACKET_PATH = 'samples/_probe/g24/real_estate_dx_review_pac
 const DEFAULT_REVIEW_DECISION_PATH = 'samples/_probe/g24/real_estate_dx_review_decisions.json';
 const DEFAULT_REVIEW_TREATMENT_PROOF_PATH = 'samples/_probe/g24/real_estate_dx_visual_treatment_proof.json';
 const DEFAULT_PIPELINE_SMOKE_MANIFEST_PATH = 'samples/_probe/pipeline_smoke/pipeline_smoke_manifest.json';
+const G28_REVIEW_CONSOLE_ARTIFACTS = {
+  ymmp: 'samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe.ymmp',
+  readback: 'samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe_readback.json',
+  report: 'samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe_report.md',
+  humanReview: 'docs/verification/G28-REAL-ESTATE-YMMP-PROBE-HUMAN-REVIEW-2026-06-07.md',
+  ingestPlan: 'docs/verification/G28-REAL-ESTATE-REVIEW-CONSOLE-INGEST-PLAN-2026-06-07.md',
+};
+const G28_ALLOWED_REVIEW_DECISIONS = [
+  'accept_as_diagnostic_review_surface',
+  'request_readback_fix',
+  'request_layout_system_redesign',
+  'defer_review_console_ingest',
+  'reject_probe_path',
+];
+const G28_HUMAN_GUI_SUMMARY = [
+  ['openability', 'pass'],
+  ['callout_label_alignment_仲介インセンティブ', 'pass'],
+  ['title_position', 'pass_with_metric_caveat'],
+  ['host_placeholders', 'pass_as_diagnostic_placeholder'],
+  ['overall_decision', 'accept_for_review_console_ingest_candidate_with_layout_metric_caveat'],
+];
 let currentReviewPacket = null;
 let currentReviewTreatmentProof = null;
 let currentPipelineSmoke = null;
+let currentG28ReviewIngest = null;
 let currentReviewDecisionPath = DEFAULT_REVIEW_DECISION_PATH;
 let activeReviewIndex = 0;
 let reviewDecisionState = [];
@@ -931,6 +953,194 @@ function renderPipelineSmokeReview() {
   );
 }
 
+function numberOrZero(value) {
+  const numberValue = Number(value);
+  return Number.isFinite(numberValue) ? numberValue : 0;
+}
+
+function boolLabel(value) {
+  if (value === true) return 'true';
+  if (value === false) return 'false';
+  return 'unknown';
+}
+
+function buildG28ReviewSummary(readback = {}) {
+  const boundary = readback.boundary || {};
+  const checks = readback.checks || {};
+  const frame = readback.frame_contract || {};
+  const focal = readback.focal_area_readback || {};
+  const callout = readback.callout_readback || {};
+  const host = readback.host_role_readback || {};
+  const textBudget = readback.text_budget_readback || {};
+  const safety = readback.safety_readback || {};
+  const layout = readback.layout_contract_readback || {};
+  const calibration = layout.callout_label_human_calibration || {};
+  const rectangleText = layout.rectangle_text_centering || {};
+  return {
+    variantId: readback.variant_id || '',
+    classification: readback.classification || 'unknown',
+    diagnosticOnly: boundary.diagnostic_only === true || checks.diagnostic_only === true,
+    productionCandidate: boundary.production_candidate === true
+      ? true
+      : (checks.production_candidate_false === true ? false : boundary.production_candidate),
+    frameContract: `${frame.width || '?'}x${frame.height || '?'} / ${frame.aspect_ratio || '?'}`,
+    captionReserveClear: checks.caption_reserve_clear === true || readback.caption_reserve_readback?.clear === true,
+    captionReserve: readback.caption_reserve_readback?.bottom_percent
+      ? `bottom ${readback.caption_reserve_readback.bottom_percent}%`
+      : 'bottom 20%',
+    focalArea: focal.focal_core_in_main_canvas === true ? 'in_main_canvas' : 'unknown',
+    focalChainCount: Array.isArray(focal.focal_chain) ? focal.focal_chain.length : numberOrZero(readback.totals?.focal_chain_label_count),
+    focalChain: Array.isArray(focal.focal_chain)
+      ? focal.focal_chain.map((node) => node.label || node.id || '').filter(Boolean).join(' -> ')
+      : '',
+    calloutCount: numberOrZero(callout.count || readback.totals?.callout_count),
+    callouts: Array.isArray(callout.labels)
+      ? callout.labels.map((label) => label.text || label.id || '').filter(Boolean).join(' / ')
+      : '',
+    hostRole: host.role || 'unknown',
+    hostPlaceholder: true,
+    humanCalibratedOverride: calibration.human_calibrated_override === true
+      || numberOrZero(rectangleText.human_calibrated_override_count) > 0,
+    layoutMetricDebt: Boolean(calibration.layout_system_debt || readback.callout_label_human_calibration_revision?.layout_system_debt),
+    actualX: calibration.actual_x ?? calibration.human_calibrated_x ?? readback.callout_label_human_calibration_revision?.human_calibrated_x ?? '',
+    denseTable: checks.dense_table_false === true ? false : undefined,
+    indexedWhiteboard: checks.indexed_whiteboard_false === true ? false : undefined,
+    textBudget: `${numberOrZero(textBudget.visible_text_item_count)} items / ${numberOrZero(textBudget.visible_text_chars)} chars / dense=${boolLabel(textBudget.dense)}`,
+    externalImageCount: numberOrZero(safety.external_image_count),
+    externalUrlCount: numberOrZero(safety.external_url_count),
+    sourceFootageCount: numberOrZero(safety.source_footage_count),
+    audioCount: numberOrZero(safety.audio_item_count),
+    ttsCount: numberOrZero(safety.tts_or_voice_item_count),
+    renderOutputCount: boundary.render_output === true ? 1 : 0,
+    tokenLikePatternCount: numberOrZero(safety.token_like_pattern_count),
+    render: boundary.render_output === true || boundary.production_render === true,
+    rightsPublicUse: false,
+  };
+}
+
+function buildArtifactLookup(artifactCheck) {
+  const lookup = new Map();
+  for (const artifact of artifactCheck?.artifacts || []) {
+    lookup.set(artifact.path, artifact);
+  }
+  return lookup;
+}
+
+function renderG28Badge(label, pass) {
+  return `<span class="pipeline-smoke-state ${pass ? 'passable' : 'blocked'}">${escapeHtml(label)}</span>`;
+}
+
+function renderG28ArtifactInventory(artifactCheck) {
+  const lookup = buildArtifactLookup(artifactCheck);
+  return Object.entries(G28_REVIEW_CONSOLE_ARTIFACTS).map(([kind, artifactPath]) => {
+    const artifact = lookup.get(artifactPath);
+    const exists = artifact?.exists === true;
+    const status = artifact ? (exists ? 'exists' : 'missing') : 'unchecked';
+    const stateClass = exists ? 'passable' : 'blocked';
+    return (
+      `<tr>`
+      + `<th>${escapeHtml(kind)}</th>`
+      + `<td><code>${escapeHtml(artifactPath)}</code></td>`
+      + `<td><span class="pipeline-smoke-state ${stateClass}">${escapeHtml(status)}</span></td>`
+      + `</tr>`
+    );
+  }).join('');
+}
+
+function buildG28BoundaryAlerts(summary, artifactCheck, loadError) {
+  const alerts = [];
+  if (loadError) alerts.push(`readback load failed: ${loadError}`);
+  const lookup = buildArtifactLookup(artifactCheck);
+  for (const kind of ['ymmp', 'readback', 'report']) {
+    const pathValue = G28_REVIEW_CONSOLE_ARTIFACTS[kind];
+    const artifact = lookup.get(pathValue);
+    if (artifact && artifact.exists !== true) alerts.push(`missing ${kind}`);
+  }
+  if (summary.diagnosticOnly !== true) alerts.push('diagnostic_only=false block');
+  if (summary.productionCandidate === true) alerts.push('production_candidate=true block');
+  if (summary.externalImageCount > 0 || summary.externalUrlCount > 0 || summary.sourceFootageCount > 0) {
+    alerts.push('external assets warning/block');
+  }
+  if (summary.render || summary.renderOutputCount > 0) alerts.push('render output warning/block');
+  return alerts;
+}
+
+function renderG28KeyValues(rows) {
+  return rows.map(([key, value]) => (
+    `<div class="g28-kv"><span>${escapeHtml(key)}</span><strong>${escapeHtml(String(value))}</strong></div>`
+  )).join('');
+}
+
+function renderG28ReviewConsoleIngest() {
+  const panel = document.getElementById('g28-review-console-ingest');
+  if (!panel) return;
+  const readback = currentG28ReviewIngest?.readback || null;
+  const artifactCheck = currentG28ReviewIngest?.artifactCheck || null;
+  const loadError = currentG28ReviewIngest?.loadError || '';
+  const summary = readback ? buildG28ReviewSummary(readback) : buildG28ReviewSummary({});
+  const alerts = buildG28BoundaryAlerts(summary, artifactCheck, loadError);
+  const badges = [
+    [`diagnostic_only=${boolLabel(summary.diagnosticOnly)}`, summary.diagnosticOnly === true],
+    [`production_candidate=${boolLabel(summary.productionCandidate)}`, summary.productionCandidate === false],
+    [`human_calibrated_override=${boolLabel(summary.humanCalibratedOverride)}`, summary.humanCalibratedOverride === true],
+    [`layout_metric_debt=${boolLabel(summary.layoutMetricDebt)}`, summary.layoutMetricDebt === true],
+    [`host_placeholder=${boolLabel(summary.hostPlaceholder)}`, summary.hostPlaceholder === true],
+    [`render=${boolLabel(summary.render)}`, summary.render === false],
+    [`rights_public_use=${boolLabel(summary.rightsPublicUse)}`, summary.rightsPublicUse === false],
+  ].map(([label, pass]) => renderG28Badge(label, pass)).join('');
+  const readbackRows = renderG28KeyValues([
+    ['variant_id', summary.variantId],
+    ['classification', summary.classification],
+    ['frame', summary.frameContract],
+    ['caption_reserve_clear', boolLabel(summary.captionReserveClear)],
+    ['caption_reserve', summary.captionReserve],
+    ['focal_area', summary.focalArea],
+    ['focal_chain_count', summary.focalChainCount],
+    ['focal_chain', summary.focalChain],
+    ['callout_count', summary.calloutCount],
+    ['callouts', summary.callouts],
+    ['host_role', summary.hostRole],
+    ['text_budget', summary.textBudget],
+    ['dense_table', boolLabel(summary.denseTable)],
+    ['indexed_whiteboard', boolLabel(summary.indexedWhiteboard)],
+    ['external_image_count', summary.externalImageCount],
+    ['external_url_count', summary.externalUrlCount],
+    ['source_footage_count', summary.sourceFootageCount],
+    ['audio_count', summary.audioCount],
+    ['tts_count', summary.ttsCount],
+    ['render_output_count', summary.renderOutputCount],
+    ['actual_x', summary.actualX],
+    ['human_calibrated_override', boolLabel(summary.humanCalibratedOverride)],
+  ]);
+  const humanRows = renderG28KeyValues(G28_HUMAN_GUI_SUMMARY);
+  const alertHtml = alerts.length
+    ? `<ul>${alerts.map((alert) => `<li>${escapeHtml(alert)}</li>`).join('')}</ul>`
+    : '<p class="hint">blocking alert はありません。表示は診断review surface候補としての確認に限定します。</p>';
+  panel.classList.remove('hidden');
+  panel.innerHTML = (
+    `<div class="review-section-head">`
+    + `<div><h3>G-28 real_estate_information_gap YMM4 diagnostic probe</h3><p class="hint">read-only Review Console ingest candidate。G-27判断保存、render、production、rights、slot-fillには接続しません。</p></div>`
+    + `<div class="review-proof-summary"><span>${escapeHtml(G28_REVIEW_CONSOLE_ARTIFACTS.readback)}</span><strong>${escapeHtml(summary.classification)}</strong><em>read-only</em></div>`
+    + `</div>`
+    + `<div class="g28-badge-row">${badges}</div>`
+    + `<div class="g28-review-grid">`
+    + `<section class="g28-review-card"><h4>artifact inventory</h4><table class="review-beat-table g28-artifact-table"><tbody>${renderG28ArtifactInventory(artifactCheck)}</tbody></table></section>`
+    + `<section class="g28-review-card"><h4>readback summary</h4><div class="g28-kv-grid">${readbackRows}</div></section>`
+    + `<section class="g28-review-card"><h4>human GUI summary</h4><div class="g28-kv-grid">${humanRows}</div></section>`
+    + `<section class="g28-review-card warning"><h4>caveats / guards</h4>`
+    + `<ul>`
+    + `<li>X=313 is a human-calibrated override, not formula success.</li>`
+    + `<li>title y=-474.5 is not the current fix target; future title anchor, text center, and safe-area readback is still needed.</li>`
+    + `<li>host placeholders are diagnostic-only and are not production material.</li>`
+    + `<li>YMM4 glyph optical center is not directly measured by current readback.</li>`
+    + `<li>This surface is not production, render, creative, rights, or public-use approval.</li>`
+    + `</ul></section>`
+    + `<section class="g28-review-card"><h4>allowed diagnostic decisions</h4><ul>${G28_ALLOWED_REVIEW_DECISIONS.map((decision) => `<li><code>${escapeHtml(decision)}</code></li>`).join('')}</ul></section>`
+    + `<section class="g28-review-card warning"><h4>blocking / warning state</h4>${alertHtml}</section>`
+    + `</div>`
+  );
+}
+
 function renderReviewDecisionInspector(packet) {
   const segments = packet?.segments || [];
   const segment = segments[activeReviewIndex];
@@ -979,6 +1189,7 @@ function renderReviewWorkbench(packet) {
   renderReviewTimeline(packet);
   renderReviewTreatmentProof(packet);
   renderPipelineSmokeReview();
+  renderG28ReviewConsoleIngest();
   renderReviewSegmentDetail(packet);
   renderReviewDecisionInspector(packet);
   renderReviewSegmentSummary(packet);
@@ -1083,6 +1294,24 @@ async function loadDefaultPipelineSmokeManifest() {
   }));
   currentPipelineSmoke = { ...manifest, topics };
   renderPipelineSmokeReview();
+}
+
+async function loadG28ReviewConsoleIngest() {
+  currentG28ReviewIngest = { readback: null, artifactCheck: null, loadError: '' };
+  renderG28ReviewConsoleIngest();
+  const readbackPromise = window.nlmytgen.loadReviewProof
+    ? window.nlmytgen.loadReviewProof(G28_REVIEW_CONSOLE_ARTIFACTS.readback)
+    : Promise.resolve({ ok: false, error: 'loadReviewProof unavailable' });
+  const artifactPromise = window.nlmytgen.checkReviewArtifacts
+    ? window.nlmytgen.checkReviewArtifacts(Object.values(G28_REVIEW_CONSOLE_ARTIFACTS))
+    : Promise.resolve({ ok: false, artifacts: [], error: 'checkReviewArtifacts unavailable' });
+  const [readbackRes, artifactCheck] = await Promise.all([readbackPromise, artifactPromise]);
+  currentG28ReviewIngest = {
+    readback: readbackRes.ok ? readbackRes.payload : null,
+    artifactCheck,
+    loadError: readbackRes.ok ? '' : (readbackRes.error || 'unknown error'),
+  };
+  renderG28ReviewConsoleIngest();
 }
 
 async function loadDefaultReviewPacket() {
@@ -1232,6 +1461,7 @@ function initDesignReviewTab() {
 
   loadDefaultReviewPacket();
   loadDefaultPipelineSmokeManifest();
+  loadG28ReviewConsoleIngest();
 }
 
 // --- CSV Tab ---

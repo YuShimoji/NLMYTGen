@@ -44,10 +44,12 @@ async function run() {
         const inspector = document.querySelector('.review-decision-inspector');
         const proof = document.getElementById('review-treatment-proof');
         const pipeline = document.getElementById('pipeline-smoke-review');
+        const g28 = document.getElementById('g28-review-console-ingest');
         const proofImage = proof?.querySelector('.review-proof-image-card img');
         const pipelineTopics = Array.from(pipeline?.querySelectorAll('.pipeline-smoke-topic') || []);
         const pipelineImages = Array.from(pipeline?.querySelectorAll('.review-proof-image-card img') || []);
         const pipelineBeatRows = Array.from(pipeline?.querySelectorAll('.review-beat-table tbody tr') || []);
+        const g28ArtifactRows = Array.from(g28?.querySelectorAll('.g28-artifact-table tbody tr') || []);
         const proofBadges = Array.from(document.querySelectorAll('#review-timeline .review-timeline-proof'));
         const beatRows = Array.from(document.querySelectorAll('#review-treatment-proof .review-beat-table tbody tr'));
         const wizard = document.getElementById('wizard-bar');
@@ -55,6 +57,14 @@ async function run() {
         const load = document.getElementById('review-load-result');
         const reviewTab = document.getElementById('tab-review');
         const text = reviewTab ? reviewTab.innerText : '';
+        const g28Text = g28?.innerText || '';
+        const forbiddenG28DecisionLabels = [
+          'production_approve',
+          'creative_final_acceptance',
+          'render_approve',
+          'rights_approve',
+          'public_use_approve',
+        ];
         return {
           readyState: document.readyState,
           nlmytgenType: typeof window.nlmytgen,
@@ -78,6 +88,9 @@ async function run() {
           pipelineTopicCount: pipelineTopics.length,
           pipelineImageCount: pipelineImages.length,
           pipelineBeatRowCount: pipelineBeatRows.length,
+          g28Exists: !!g28,
+          g28Text,
+          g28ArtifactRowCount: g28ArtifactRows.length,
           proofBadgeCount: proofBadges.length,
           beatRowCount: beatRows.length,
           bodyReviewClass: !!bodyContent?.classList.contains('review-workbench-active'),
@@ -112,6 +125,49 @@ async function run() {
           hasPipelineDecisionPaths: text.includes('review_decisions.json') && text.includes('decision artifact'),
           hasPipelineDiagnostics: text.includes('case overfitting') && text.includes('docs-only loop') && text.includes('standalone proof completion'),
           hasStandaloneGuard: text.includes('standalone completion: false'),
+          hasG28Label: g28Text.includes('G-28 real_estate_information_gap YMM4 diagnostic probe'),
+          hasG28Artifacts: g28Text.includes('lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe.ymmp')
+            && g28Text.includes('lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe_readback.json')
+            && g28Text.includes('G28-REAL-ESTATE-YMMP-PROBE-HUMAN-REVIEW-2026-06-07.md')
+            && g28Text.includes('G28-REAL-ESTATE-REVIEW-CONSOLE-INGEST-PLAN-2026-06-07.md'),
+          hasG28Badges: g28Text.includes('diagnostic_only=true')
+            && g28Text.includes('production_candidate=false')
+            && g28Text.includes('human_calibrated_override=true')
+            && g28Text.includes('layout_metric_debt=true')
+            && g28Text.includes('host_placeholder=true')
+            && g28Text.includes('render=false')
+            && g28Text.includes('rights_public_use=false'),
+          hasG28ReadbackSummary: g28Text.includes('variant_id')
+            && g28Text.includes('g28_ldc_real_estate_information_gap')
+            && g28Text.includes('classification')
+            && g28Text.includes('pass_callout_label_human_calibrated')
+            && g28Text.includes('caption_reserve_clear')
+            && g28Text.includes('focal_chain_count')
+            && g28Text.includes('callout_count')
+            && g28Text.includes('host_role')
+            && g28Text.includes('external_image_count')
+            && g28Text.includes('external_url_count')
+            && g28Text.includes('source_footage_count')
+            && g28Text.includes('audio_count')
+            && g28Text.includes('tts_count')
+            && g28Text.includes('render_output_count')
+            && g28Text.includes('actual_x')
+            && g28Text.includes('313'),
+          hasG28HumanSummary: g28Text.includes('openability')
+            && g28Text.includes('callout_label_alignment_仲介インセンティブ')
+            && g28Text.includes('title_position')
+            && g28Text.includes('host_placeholders')
+            && g28Text.includes('accept_for_review_console_ingest_candidate_with_layout_metric_caveat'),
+          hasG28AllowedDecisions: g28Text.includes('accept_as_diagnostic_review_surface')
+            && g28Text.includes('request_readback_fix')
+            && g28Text.includes('request_layout_system_redesign')
+            && g28Text.includes('defer_review_console_ingest')
+            && g28Text.includes('reject_probe_path'),
+          hasG28Caveats: g28Text.includes('human-calibrated override')
+            && g28Text.includes('title y=-474.5')
+            && g28Text.includes('host placeholders are diagnostic-only')
+            && g28Text.includes('glyph optical center'),
+          hasG28ForbiddenDecisionLabels: forbiddenG28DecisionLabels.some((label) => g28Text.includes(label)),
           hasCorruption: /\\?\\?\\?|�/.test(text),
           textSample: text.slice(0, 500),
         };
@@ -136,6 +192,8 @@ async function run() {
             && state.pipelineTopicCount === 3
             && state.pipelineImageCount === 3
             && state.pipelineBeatRowCount === 9
+            && state.g28Exists
+            && state.g28ArtifactRowCount === 5
             && state.cardCount === ${expectedSegmentCount}
             && state.hasEpisodeContextLabel
             && state.hasStoryOutlineLabel
@@ -164,7 +222,15 @@ async function run() {
             && state.hasPipelineNextAction
             && state.hasPipelineDecisionPaths
             && state.hasPipelineDiagnostics
-            && state.hasStandaloneGuard;
+            && state.hasStandaloneGuard
+            && state.hasG28Label
+            && state.hasG28Artifacts
+            && state.hasG28Badges
+            && state.hasG28ReadbackSummary
+            && state.hasG28HumanSummary
+            && state.hasG28AllowedDecisions
+            && state.hasG28Caveats
+            && !state.hasG28ForbiddenDecisionLabels;
           if (ready) {
             clearInterval(timer);
             resolve(state);
@@ -219,6 +285,36 @@ async function run() {
     if (!result.pipelineText.includes(text)) {
       throw new Error(`pipeline smoke panel missing ${text}: ${result.pipelineText.slice(0, 500)}`);
     }
+  }
+  if (!result.g28Exists || result.g28ArtifactRowCount !== 5) {
+    throw new Error(`G-28 ingest panel did not expose five artifacts: ${JSON.stringify({
+      exists: result.g28Exists,
+      rows: result.g28ArtifactRowCount,
+    })}`);
+  }
+  for (const text of [
+    'G-28 real_estate_information_gap YMM4 diagnostic probe',
+    'diagnostic_only=true',
+    'production_candidate=false',
+    'human_calibrated_override=true',
+    'layout_metric_debt=true',
+    'host_placeholder=true',
+    'render=false',
+    'rights_public_use=false',
+    'g28_ldc_real_estate_information_gap',
+    'pass_callout_label_human_calibrated',
+    'actual_x',
+    '313',
+    'accept_as_diagnostic_review_surface',
+    'request_layout_system_redesign',
+    'accept_for_review_console_ingest_candidate_with_layout_metric_caveat',
+  ]) {
+    if (!result.g28Text.includes(text)) {
+      throw new Error(`G-28 ingest panel missing ${text}: ${result.g28Text.slice(0, 800)}`);
+    }
+  }
+  if (result.hasG28ForbiddenDecisionLabels) {
+    throw new Error(`G-28 ingest panel exposed a forbidden production decision label: ${result.g28Text.slice(0, 800)}`);
   }
   for (const label of ['label-off check', 'narration competition check', 'real-estate texture check', 'motion-readiness check']) {
     if (!result.proofText.includes(label)) {
@@ -313,7 +409,7 @@ async function run() {
     throw new Error(`review_decisions version changed: ${saveResult.payload.version}`);
   }
 
-  console.log(`G-27 review console DOM smoke OK: ${result.timelineCount} timeline segments; ${expectedProofFrameCount} G-27 proof frames; ${result.pipelineTopicCount} pipeline smoke topics / ${result.pipelineBeatRowCount} smoke beats visible through GUI; save payload OK`);
+  console.log(`G-27 review console DOM smoke OK: ${result.timelineCount} timeline segments; ${expectedProofFrameCount} G-27 proof frames; ${result.pipelineTopicCount} pipeline smoke topics / ${result.pipelineBeatRowCount} smoke beats visible through GUI; G-28 diagnostic ingest panel visible; save payload OK`);
 }
 
 run()
