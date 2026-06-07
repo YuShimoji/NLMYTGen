@@ -79,6 +79,20 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest G-28 decision (2026-06-08): `G28-REAL-ESTATE-REVIEW-CONSOLE-INGEST-PLAN-2026-06-07`
+is added as the docs-only plan for read-only Review Console ingest of the
+accepted real-estate YMM4 diagnostic probe. The plan defines the input artifact
+inventory, diagnostic status badges, readback summary, human GUI result summary,
+title readback follow-up requirements, host placeholder boundary,
+human-calibrated callout caveat, diagnostic-only decision schema, future GUI
+implementation surfaces, error states, and next-slice acceptance criteria. It
+does not implement GUI ingest, modify GUI files, regenerate `.ymmp`, change the
+builder, rewrite readback/report artifacts, approve production, approve render,
+approve rights/public use, slot-fill, revive G-27, access ClipPipeGen, restart
+RSS / NotebookLM work, or implement common foundation / Codex Worker
+Orchestration. Next safe action is an explicitly authorized read-only Review
+Console ingest implementation slice based on this plan.
+
 Latest G-28 decision (2026-06-08): `accept_for_review_console_ingest_candidate_with_layout_metric_caveat`
 is recorded for the calibrated real-estate YMM4 diagnostic probe. Human GUI
 recheck accepted the X=313.0 lower-right callout label `仲介インセンティブ`:
