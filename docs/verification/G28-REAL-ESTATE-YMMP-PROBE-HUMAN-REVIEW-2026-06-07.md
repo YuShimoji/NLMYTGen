@@ -224,6 +224,55 @@ Readback caveat:
 registered offset. It does not claim rendered YMM4 glyph-pixel optical proof;
 human GUI review remains the authority for final visual centering.
 
+## Human GUI Target Correction After Right-Node Fix
+
+```text
+openability: pass
+focal_chain_readability: pass
+connector_treatment: pass
+caption_reserve: pass
+host_role: pass
+previous_target_correction: the actual concern is the lower-right callout, not the right node
+callout_label_alignment: partial
+target_label: 仲介インセンティブ
+layout_metrics_trust: partial
+overall_decision: revise_probe_again_narrow_callout_label_alignment
+production_boundary_acknowledged: true
+```
+
+Interpretation:
+
+- The previous right-node alignment fix was a target-identification miss, but no
+  adverse side effect was reported, so it is retained.
+- The corrected human target is the lower-right callout label
+  `仲介インセンティブ`.
+- Other callouts, node labels, connector treatment, host role, and caption
+  reserve are treated as acceptable.
+
+## Narrow Callout Label Alignment Fix
+
+The diagnostic builder was updated after the target correction with
+`g28_real_estate_information_gap_callout_label_alignment_v1`.
+
+Result:
+
+- classification: `pass_callout_label_alignment_fixed`
+- target label: `G28_LDC_CalloutSlot_3_Label`
+- target text: `仲介インセンティブ`
+- previous registered offset: `{ x: 0, y: -3 }`
+- new registered offset: `{ x: 4, y: -3 }`
+- previous right-node fix: retained
+- scope: lower-right callout label only
+- no common callout formula change
+- no other node label, callout slot, connector, host, caption reserve,
+  production, or external-material change
+
+Readback caveat:
+
+`text_center_error_px=0` now means the callout label was placed exactly at the
+registered offset. It does not claim rendered YMM4 glyph-pixel optical proof;
+human GUI review remains the authority for final visual centering.
+
 ## Boundaries
 
 - No production carrier approval.

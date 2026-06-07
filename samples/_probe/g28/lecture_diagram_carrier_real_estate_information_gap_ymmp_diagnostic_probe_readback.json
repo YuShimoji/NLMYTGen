@@ -4,7 +4,7 @@
   "source_artifact_id": "g28_lecture_diagram_carrier_real_estate_information_gap_v1",
   "variant_id": "g28_ldc_real_estate_information_gap",
   "status": "passed",
-  "classification": "pass_right_node_alignment_fixed",
+  "classification": "pass_callout_label_alignment_fixed",
   "generated_files": {
     "ymmp": "samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe.ymmp",
     "readback_json": "samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe_readback.json",
@@ -52,6 +52,17 @@
     "cause_classification": "right_node_registered_optical_offset_needed",
     "formula_change": "No common text-centering formula change; the right node label gets a bounded x-axis optical offset.",
     "boundary_note": "Diagnostic-only right-node alignment fix; no render, production approval, slot-fill, image, URL, audio, TTS, or source footage."
+  },
+  "callout_label_alignment_revision": {
+    "revision_id": "g28_real_estate_information_gap_callout_label_alignment_v1",
+    "source_human_decision": "revise_probe_again_narrow_callout_label_alignment",
+    "classification": "pass_callout_label_alignment_fixed",
+    "target_label": "G28_LDC_CalloutSlot_3_Label",
+    "observed_issue": "Human GUI correction identified the lower-right callout label as the actual off-center target, not the right node label.",
+    "target_correction": "Previous right-node alignment fix is retained; the corrected target is the third callout label.",
+    "cause_classification": "callout_label_registered_optical_offset_needed",
+    "formula_change": "No common callout formula change; the third callout label gets a bounded x-axis optical offset.",
+    "boundary_note": "Diagnostic-only callout label alignment fix; no render, production approval, slot-fill, image, URL, audio, TTS, or source footage."
   },
   "frame_contract": {
     "width": 1920,
@@ -113,7 +124,8 @@
     "polish_revision_bounded": true,
     "layout_contract_metrics_present": true,
     "layout_contract_tolerances_pass": true,
-    "right_node_alignment_fix_recorded": true
+    "right_node_alignment_fix_recorded": true,
+    "callout_label_alignment_fix_recorded": true
   },
   "failures": [],
   "missing_items": [],
@@ -214,7 +226,7 @@
         "id": "G28_LDC_CalloutSlot_3_Label",
         "text": "仲介インセンティブ",
         "rect": {
-          "x": 1245,
+          "x": 1249,
           "y": 669,
           "width": 270,
           "height": 30
@@ -421,15 +433,15 @@
         "G28_LDC_CalloutSlot_3_Label": {
           "target": "callout label",
           "value": {
-            "x": 0,
+            "x": 4,
             "y": -3
           },
-          "reason": "Optical centering correction inside compact callout slot.",
+          "reason": "Lower-right callout-only optical centering correction after human GUI target correction; readback placement metrics did not capture the rendered glyph-center perception.",
           "allowed_range": {
             "x_abs_max": 4,
             "y_abs_max": 5
           },
-          "reuse_risk": "medium"
+          "reuse_risk": "medium_callout_specific"
         },
         "G28_LDC_Connector_Left": {
           "target": "left connector",
@@ -628,10 +640,10 @@
           "box_center_x": 1380,
           "box_center_y": 687,
           "baseline_adjust": -3,
-          "visual_offset_x": 0,
+          "visual_offset_x": 4,
           "visual_offset_y": -3,
           "implementation_error_px": 0,
-          "registered_optical_offset_px": 3,
+          "registered_optical_offset_px": 5,
           "pass": true
         }
       ]
@@ -674,6 +686,53 @@
       "previous_registered_offset_px": {
         "x": 0,
         "y": -4
+      },
+      "pass": true
+    },
+    "callout_label_alignment": {
+      "revision_id": "g28_real_estate_information_gap_callout_label_alignment_v1",
+      "source_human_decision": "revise_probe_again_narrow_callout_label_alignment",
+      "classification": "pass_callout_label_alignment_fixed",
+      "target_label": "G28_LDC_CalloutSlot_3_Label",
+      "observed_issue": "Human GUI correction identified the lower-right callout label as the actual off-center target, not the right node label.",
+      "target_correction": "Previous right-node alignment fix is retained; the corrected target is the third callout label.",
+      "cause_classification": "callout_label_registered_optical_offset_needed",
+      "formula_change": "No common callout formula change; the third callout label gets a bounded x-axis optical offset.",
+      "boundary_note": "Diagnostic-only callout label alignment fix; no render, production approval, slot-fill, image, URL, audio, TTS, or source footage.",
+      "target_text": "仲介インセンティブ",
+      "target_box_id": "G28_LDC_CalloutSlot_3",
+      "manual_offset_registry_update": {
+        "target": "callout label",
+        "value": {
+          "x": 4,
+          "y": -3
+        },
+        "reason": "Lower-right callout-only optical centering correction after human GUI target correction; readback placement metrics did not capture the rendered glyph-center perception.",
+        "allowed_range": {
+          "x_abs_max": 4,
+          "y_abs_max": 5
+        },
+        "reuse_risk": "medium_callout_specific"
+      },
+      "applied_visual_offset_px": {
+        "x": 4,
+        "y": -3
+      },
+      "screen_rect": {
+        "x": 1249,
+        "y": 669,
+        "width": 270,
+        "height": 30
+      },
+      "readback_metric_caveat": "text_center_error_px=0 means the callout label was placed exactly at the registered offset; the human GUI correction is the authority for rendered optical centering.",
+      "previous_registered_offset_px": {
+        "x": 0,
+        "y": -3
+      },
+      "previous_right_node_fix": {
+        "revision_id": "g28_real_estate_information_gap_right_node_alignment_v1",
+        "retained": true,
+        "note": "The prior right-node offset is not rolled back because the target correction did not report an adverse side effect."
       },
       "pass": true
     },
@@ -818,15 +877,15 @@
       "G28_LDC_CalloutSlot_3_Label": {
         "target": "callout label",
         "value": {
-          "x": 0,
+          "x": 4,
           "y": -3
         },
-        "reason": "Optical centering correction inside compact callout slot.",
+        "reason": "Lower-right callout-only optical centering correction after human GUI target correction; readback placement metrics did not capture the rendered glyph-center perception.",
         "allowed_range": {
           "x_abs_max": 4,
           "y_abs_max": 5
         },
-        "reuse_risk": "medium"
+        "reuse_risk": "medium_callout_specific"
       },
       "G28_LDC_Connector_Left": {
         "target": "left connector",
@@ -943,6 +1002,7 @@
       "Text width remains an approximation and should not be treated as font-engine proof.",
       "Manual optical offsets are now registered and bounded, not removed.",
       "Right-node rendered optical centering still requires human GUI review; readback verifies the registered correction, not YMM4 glyph pixels.",
+      "Callout-label rendered optical centering still requires human GUI review; readback verifies the registered correction, not YMM4 glyph pixels.",
       "Callout row formula is intended for 2-3 callouts; 4 callouts should fail fast or use another layout."
     ]
   },
@@ -1966,10 +2026,10 @@
       "group_id": "G28_LDC_CalloutSlots",
       "role": "callout_label",
       "layer": 9,
-      "x": 285,
+      "x": 289,
       "y": 129,
       "screen_rect": {
-        "x": 1245,
+        "x": 1249,
         "y": 669,
         "width": 270,
         "height": 30
@@ -1997,21 +2057,21 @@
         "box_center_x": 1380,
         "box_center_y": 687,
         "baseline_adjust": -3,
-        "visual_offset_x": 0,
+        "visual_offset_x": 4,
         "visual_offset_y": -3,
         "text_center_error_px": 0,
         "manual_registry_entry": {
           "target": "callout label",
           "value": {
-            "x": 0,
+            "x": 4,
             "y": -3
           },
-          "reason": "Optical centering correction inside compact callout slot.",
+          "reason": "Lower-right callout-only optical centering correction after human GUI target correction; readback placement metrics did not capture the rendered glyph-center perception.",
           "allowed_range": {
             "x_abs_max": 4,
             "y_abs_max": 5
           },
-          "reuse_risk": "medium"
+          "reuse_risk": "medium_callout_specific"
         }
       },
       "description": "visible callout label for YMM4 GUI diagnostic probe"

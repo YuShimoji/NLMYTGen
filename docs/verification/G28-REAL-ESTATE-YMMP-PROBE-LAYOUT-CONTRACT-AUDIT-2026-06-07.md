@@ -296,6 +296,30 @@ estimated text box. It is not proof of rendered YMM4 glyph optical center.
 Human GUI review remains the authority for whether this right-node visual fix is
 sufficient before any Review Console ingest decision.
 
+## Callout Label Alignment Follow-up
+
+A later human GUI correction clarified that the actual remaining visual target
+was not the right node label but the lower-right callout label
+`仲介インセンティブ`.
+
+Follow-up implementation:
+
+- revision: `g28_real_estate_information_gap_callout_label_alignment_v1`
+- classification: `pass_callout_label_alignment_fixed`
+- target: `G28_LDC_CalloutSlot_3_Label`
+- previous registered offset: `{ x: 0, y: -3 }`
+- applied registered offset: `{ x: 4, y: -3 }`
+- previous right-node fix: retained
+- formula change: none; the common callout label placement formula is unchanged
+- scope: lower-right callout label only
+
+Metric caveat:
+
+`text_center_error_px=0` measures placement against the registered offset and
+estimated text box. It is not proof of rendered YMM4 glyph optical center.
+Human GUI review remains the authority for whether this callout-label visual fix
+is sufficient before any Review Console ingest decision.
+
 ## Boundary
 
 Original audit slice:

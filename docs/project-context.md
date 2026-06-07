@@ -79,6 +79,20 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest G-28 decision (2026-06-07): `g28_real_estate_information_gap_callout_label_alignment_v1`
+is implemented after human GUI correction clarified that the actual remaining
+visual target is the lower-right callout label `仲介インセンティブ`, not the
+right node `借主判断`. Only `G28_LDC_CalloutSlot_3_Label` changed: its
+registered optical offset moved from `{x:0,y:-3}` to `{x:4,y:-3}`. The previous
+right-node fix is retained because no adverse side effect was reported. The
+shared callout formula, node labels, connectors, hosts, caption reserve, variant
+id, and diagnostic boundary are unchanged. Readback passes as
+`pass_callout_label_alignment_fixed`. This decision also records the metrics
+caveat that `text_center_error_px=0` checks registered placement, not rendered
+YMM4 glyph optical center. Next safe move is human YMM4 GUI recheck of this
+callout-label-only fix; Review Console ingest and all production/rights/render/
+slot-fill work remain unapproved.
+
 Latest G-28 decision (2026-06-07): `g28_real_estate_information_gap_right_node_alignment_v1`
 is implemented for the existing real-estate YMM4 diagnostic probe after human
 GUI recheck returned `revise_probe_again_narrow_right_node_text_alignment`.
