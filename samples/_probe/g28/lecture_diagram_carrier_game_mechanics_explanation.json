@@ -558,5 +558,56 @@
       "G-27 carrier promotion",
       "RSS or NotebookLM source-pack work"
     ]
+  },
+  "review_surface": {
+    "purpose": "human reviewability repair for existing diagnostic artifact",
+    "production_text_budget_is_separate": true,
+    "production_visible_text_item_ids": [
+      "G28_LDC_Title_Text",
+      "G28_LDC_Focal_Label"
+    ],
+    "review_label_layer_or_inspector_exists": true,
+    "review_label_layer": "html_review_only_overlay",
+    "inspector": "readback.review_surface_readback",
+    "semantic_labels_human_visible": true,
+    "visualization_only_note": "HTML is visualization-only / review-only, not render, production timing, or creative final acceptance.",
+    "visible_semantic_labels": [
+      {
+        "target_id": "G28_LDC_Node_Left",
+        "label": "入力操作",
+        "role": "player_input",
+        "kind": "focal_chain_node"
+      },
+      {
+        "target_id": "G28_LDC_Focal_Core",
+        "label": "内部ルール",
+        "role": "rule_system",
+        "kind": "focal_chain_node"
+      },
+      {
+        "target_id": "G28_LDC_Node_Right",
+        "label": "画面上の結果",
+        "role": "screen_result",
+        "kind": "focal_chain_node"
+      },
+      {
+        "target_id": "G28_LDC_CalloutSlot_1",
+        "label": "操作感",
+        "role": "control_feel",
+        "kind": "callout_slot"
+      },
+      {
+        "target_id": "G28_LDC_CalloutSlot_2",
+        "label": "判定 / 当たり判定",
+        "role": "judgement_hit_detection",
+        "kind": "callout_slot"
+      },
+      {
+        "target_id": "G28_LDC_CalloutSlot_3",
+        "label": "リスクとリターン",
+        "role": "risk_reward",
+        "kind": "callout_slot"
+      }
+    ]
   }
 }

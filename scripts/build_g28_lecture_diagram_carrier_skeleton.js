@@ -326,6 +326,24 @@ function applyGameMechanicsExplanationVariant(artifact) {
       'RSS or NotebookLM source-pack work',
     ],
   };
+  artifact.review_surface = {
+    purpose: 'human reviewability repair for existing diagnostic artifact',
+    production_text_budget_is_separate: true,
+    production_visible_text_item_ids: ['G28_LDC_Title_Text', 'G28_LDC_Focal_Label'],
+    review_label_layer_or_inspector_exists: true,
+    review_label_layer: 'html_review_only_overlay',
+    inspector: 'readback.review_surface_readback',
+    semantic_labels_human_visible: true,
+    visualization_only_note: 'HTML is visualization-only / review-only, not render, production timing, or creative final acceptance.',
+    visible_semantic_labels: [
+      { target_id: 'G28_LDC_Node_Left', label: '入力操作', role: 'player_input', kind: 'focal_chain_node' },
+      { target_id: 'G28_LDC_Focal_Core', label: '内部ルール', role: 'rule_system', kind: 'focal_chain_node' },
+      { target_id: 'G28_LDC_Node_Right', label: '画面上の結果', role: 'screen_result', kind: 'focal_chain_node' },
+      { target_id: 'G28_LDC_CalloutSlot_1', label: '操作感', role: 'control_feel', kind: 'callout_slot' },
+      { target_id: 'G28_LDC_CalloutSlot_2', label: '判定 / 当たり判定', role: 'judgement_hit_detection', kind: 'callout_slot' },
+      { target_id: 'G28_LDC_CalloutSlot_3', label: 'リスクとリターン', role: 'risk_reward', kind: 'callout_slot' },
+    ],
+  };
 
   artifact.scs_mapping.composition_type = 'center-focal';
   artifact.scs_mapping.reading_order = [
@@ -452,6 +470,9 @@ function validate() {
   const shapeItems = items.filter((entry) => entry.item_type === 'ShapeItem');
   const textItems = items.filter((entry) => entry.item_type === 'TextItem');
   const textChars = textItems.reduce((sum, entry) => sum + [...(entry.style.text || '')].length, 0);
+  const reviewSurface = SKELETON.review_surface;
+  const reviewLabels = reviewSurface?.visible_semantic_labels || [];
+  const expectedReviewLabels = ['入力操作', '画面上の結果', '操作感', '判定 / 当たり判定', 'リスクとリターン'];
   const groupCount = semanticGroups.size;
   const semanticElementCount = SKELETON.semantic_elements.length;
   const serializedArtifact = JSON.stringify(SKELETON);
@@ -503,6 +524,14 @@ function validate() {
       token_like_pattern_count_zero: tokenLikePatternCount === 0 && variant?.token_like_pattern_count === 0,
       text_budget_not_dense: textItems.length === 2 && textChars <= 30 && variant?.dense_table === false,
     });
+    if (reviewSurface) {
+      Object.assign(checks, {
+        review_label_layer_or_inspector_exists: reviewSurface.review_label_layer_or_inspector_exists === true,
+        semantic_labels_human_visible: reviewSurface.semantic_labels_human_visible === true,
+        review_visible_semantic_labels_expected: expectedReviewLabels.every((label) => reviewLabels.some((entry) => entry.label === label)),
+        production_text_budget_separate_from_review_labels: reviewSurface.production_text_budget_is_separate === true && textItems.length === reviewSurface.production_visible_text_item_ids.length,
+      });
+    }
   }
   const failed = Object.entries(checks).filter(([, ok]) => !ok).map(([name]) => name);
   const readback = {
@@ -595,6 +624,27 @@ function validate() {
         text: entry.style.text,
       })),
     };
+    if (reviewSurface) {
+      readback.review_surface_readback = {
+        production_visible_text_items: textItems.map((entry) => ({
+          id: entry.id,
+          text: entry.style.text,
+        })),
+        review_visible_semantic_labels: reviewLabels.map((entry) => ({
+          ...entry,
+          human_visible: true,
+          surface: reviewSurface.review_label_layer,
+        })),
+        review_label_layer_or_inspector_exists: reviewSurface.review_label_layer_or_inspector_exists,
+        semantic_labels_human_visible: reviewSurface.semantic_labels_human_visible,
+        production_text_budget_is_separate: reviewSurface.production_text_budget_is_separate,
+        visualization_only_note: reviewSurface.visualization_only_note,
+      };
+      readback.production_visible_text_items = readback.review_surface_readback.production_visible_text_items;
+      readback.review_visible_semantic_labels = readback.review_surface_readback.review_visible_semantic_labels;
+      readback.review_label_layer_or_inspector_exists = readback.review_surface_readback.review_label_layer_or_inspector_exists;
+      readback.semantic_labels_human_visible = readback.review_surface_readback.semantic_labels_human_visible;
+    }
     readback.layer_order_intent = [
       'low-salience stage',
       'title band boundary',
@@ -630,10 +680,15 @@ function renderHtml(readback) {
   const ariaLabel = selectedVariant
     ? `G-28 Lecture Diagram Carrier ${readback.variant_readback.variant_id} diagnostic variant`
     : 'G-28 Lecture Diagram Carrier diagnostic skeleton';
+  const reviewSurfaceMeta = readback.review_surface_readback
+    ? `
+    <div>Review-only labels: <code>${escapeHtml(readback.review_surface_readback.review_visible_semantic_labels.map((entry) => entry.label).join(' / '))}</code></div>
+    <div>Review layer: <code>${escapeHtml(readback.review_surface_readback.review_label_layer_or_inspector_exists ? 'html overlay + readback inspector' : 'missing')}</code> / semantic_labels_human_visible=${readback.review_surface_readback.semantic_labels_human_visible}</div>`
+    : '';
   const variantMeta = selectedVariant
     ? `
     <div>Variant: <code>${escapeHtml(readback.variant_readback.variant_id)}</code> / focal chain: <code>${escapeHtml(readback.variant_readback.focal_chain.map((entry) => entry.label).join(' -> '))}</code></div>
-    <div>Callouts: <code>${escapeHtml(readback.variant_readback.callouts.map((entry) => entry.label).join(' / '))}</code> / semantic labels only, no slot-fill.</div>`
+    <div>Callouts: <code>${escapeHtml(readback.variant_readback.callouts.map((entry) => entry.label).join(' / '))}</code> / semantic labels only, no slot-fill.</div>${reviewSurfaceMeta}`
     : '';
   const itemSvg = SKELETON.items
     .slice()
@@ -652,6 +707,13 @@ function renderHtml(readback) {
     guideRect('main-canvas', REGIONS.main_canvas, '#38BDF8', '5 5'),
     guideRect('caption-reserve', REGIONS.caption_reserve, '#F87171', '5 5', 'rgba(248,113,113,0.08)'),
   ].join('\n');
+  const reviewOverlay = renderReviewOverlay(readback);
+  const reviewCss = readback.review_surface_readback
+    ? `
+    .review-label-bg { fill: rgba(15, 23, 42, 0.9); stroke: #fbbf24; stroke-width: 2; }
+    .review-label { fill: #fff7ed; font: 700 30px 'Yu Gothic UI','Noto Sans CJK JP',sans-serif; dominant-baseline: middle; text-anchor: middle; }
+    .review-label.callout { font-size: 28px; }`
+    : '';
   return `<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -661,7 +723,7 @@ function renderHtml(readback) {
     body { margin: 0; background: #0b1120; color: #e5e7eb; font-family: 'Yu Gothic UI', sans-serif; }
     .meta { padding: 12px 20px; background: #111827; border-bottom: 1px solid #374151; font-size: 14px; line-height: 1.5; }
     svg { display: block; width: 1920px; height: 1080px; }
-    code { color: #fbbf24; }
+${reviewCss ? `${reviewCss}\n` : ''}    code { color: #fbbf24; }
   </style>
 </head>
 <body>
@@ -672,10 +734,32 @@ function renderHtml(readback) {
   </div>
   <svg viewBox="0 0 1920 1080" aria-label="${ariaLabel}">
 ${itemSvg}
-${guides}
+${reviewOverlay ? `${reviewOverlay}\n` : ''}${guides}
   </svg>
 </body>
 </html>`;
+}
+
+function renderReviewOverlay(readback) {
+  const labels = readback.review_surface_readback?.review_visible_semantic_labels || [];
+  if (!labels.length) return '';
+  return labels.map((label) => {
+    const target = SKELETON.items.find((entry) => entry.id === label.target_id);
+    if (!target) return '';
+    const r = target.rect;
+    const cx = r.x + r.width / 2;
+    const cy = r.y + r.height / 2;
+    const isCallout = label.kind === 'callout_slot';
+    const bgWidth = isCallout ? r.width - 24 : Math.max(r.width - 28, 220);
+    const bgHeight = isCallout ? 54 : 58;
+    const bgX = cx - bgWidth / 2;
+    const bgY = cy - bgHeight / 2;
+    const className = isCallout ? 'review-label callout' : 'review-label';
+    return `    <g data-review-label="${escapeHtml(label.label)}" data-target="${escapeHtml(label.target_id)}" data-review-only="true">
+      <rect class="review-label-bg" x="${bgX}" y="${bgY}" width="${bgWidth}" height="${bgHeight}" rx="10" />
+      <text class="${className}" x="${cx}" y="${cy}">${escapeHtml(label.label)}</text>
+    </g>`;
+  }).filter(Boolean).join('\n');
 }
 
 function guideRect(id, r, stroke, dash, fill = 'none') {
@@ -704,7 +788,13 @@ function renderReport(readback) {
 - external_url_count: ${readback.safety_readback.external_url_count}
 - token_like_pattern_count: ${readback.safety_readback.token_like_pattern_count}
 - text_budget_dense: ${readback.text_budget_readback.dense}
-
+${readback.review_surface_readback ? `
+- production_visible_text_items: ${readback.review_surface_readback.production_visible_text_items.map((entry) => entry.id).join(', ')}
+- review_visible_semantic_labels: ${readback.review_surface_readback.review_visible_semantic_labels.map((entry) => entry.label).join(', ')}
+- review_label_layer_or_inspector_exists: ${readback.review_surface_readback.review_label_layer_or_inspector_exists}
+- semantic_labels_human_visible: ${readback.review_surface_readback.semantic_labels_human_visible}
+- review_surface_note: ${readback.review_surface_readback.visualization_only_note}
+` : ''}
 `
     : '\n\n';
   return `${reportTitle}

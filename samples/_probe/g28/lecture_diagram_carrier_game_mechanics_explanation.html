@@ -7,6 +7,10 @@
     body { margin: 0; background: #0b1120; color: #e5e7eb; font-family: 'Yu Gothic UI', sans-serif; }
     .meta { padding: 12px 20px; background: #111827; border-bottom: 1px solid #374151; font-size: 14px; line-height: 1.5; }
     svg { display: block; width: 1920px; height: 1080px; }
+
+    .review-label-bg { fill: rgba(15, 23, 42, 0.9); stroke: #fbbf24; stroke-width: 2; }
+    .review-label { fill: #fff7ed; font: 700 30px 'Yu Gothic UI','Noto Sans CJK JP',sans-serif; dominant-baseline: middle; text-anchor: middle; }
+    .review-label.callout { font-size: 28px; }
     code { color: #fbbf24; }
   </style>
 </head>
@@ -17,6 +21,8 @@
     <div>Checks failed: <code>none</code></div>
     <div>Variant: <code>g28_ldc_game_mechanics_explanation</code> / focal chain: <code>入力操作 -&gt; 内部ルール -&gt; 画面上の結果</code></div>
     <div>Callouts: <code>操作感 / 判定 / 当たり判定 / リスクとリターン</code> / semantic labels only, no slot-fill.</div>
+    <div>Review-only labels: <code>入力操作 / 内部ルール / 画面上の結果 / 操作感 / 判定 / 当たり判定 / リスクとリターン</code></div>
+    <div>Review layer: <code>html overlay + readback inspector</code> / semantic_labels_human_visible=true</div>
   </div>
   <svg viewBox="0 0 1920 1080" aria-label="G-28 Lecture Diagram Carrier g28_ldc_game_mechanics_explanation diagnostic variant">
     <rect data-id="G28_LDC_BG_Stage" data-role="decoration" x="0" y="0" width="1920" height="1080" rx="14" fill="#111827" stroke="#111827" stroke-width="4" />
@@ -33,6 +39,30 @@
     <rect data-id="G28_LDC_CalloutSlot_3" data-role="supporting" x="1225" y="650" width="300" height="86" rx="14" fill="#1E3A5F" stroke="#60A5FA" stroke-width="4" />
     <rect data-id="G28_LDC_Host_Left" data-role="decoration" x="112" y="655" width="204" height="145" rx="14" fill="#4B5563" stroke="#D1D5DB" stroke-width="4" />
     <rect data-id="G28_LDC_Host_Right" data-role="decoration" x="1604" y="655" width="204" height="145" rx="14" fill="#4B5563" stroke="#D1D5DB" stroke-width="4" />
+    <g data-review-label="入力操作" data-target="G28_LDC_Node_Left" data-review-only="true">
+      <rect class="review-label-bg" x="244" y="371" width="232" height="58" rx="10" />
+      <text class="review-label" x="360" y="400">入力操作</text>
+    </g>
+    <g data-review-label="内部ルール" data-target="G28_LDC_Focal_Core" data-review-only="true">
+      <rect class="review-label-bg" x="574" y="391" width="772" height="58" rx="10" />
+      <text class="review-label" x="960" y="420">内部ルール</text>
+    </g>
+    <g data-review-label="画面上の結果" data-target="G28_LDC_Node_Right" data-review-only="true">
+      <rect class="review-label-bg" x="1444" y="371" width="232" height="58" rx="10" />
+      <text class="review-label" x="1560" y="400">画面上の結果</text>
+    </g>
+    <g data-review-label="操作感" data-target="G28_LDC_CalloutSlot_1" data-review-only="true">
+      <rect class="review-label-bg" x="407" y="666" width="276" height="54" rx="10" />
+      <text class="review-label callout" x="545" y="693">操作感</text>
+    </g>
+    <g data-review-label="判定 / 当たり判定" data-target="G28_LDC_CalloutSlot_2" data-review-only="true">
+      <rect class="review-label-bg" x="822" y="666" width="276" height="54" rx="10" />
+      <text class="review-label callout" x="960" y="693">判定 / 当たり判定</text>
+    </g>
+    <g data-review-label="リスクとリターン" data-target="G28_LDC_CalloutSlot_3" data-review-only="true">
+      <rect class="review-label-bg" x="1237" y="666" width="276" height="54" rx="10" />
+      <text class="review-label callout" x="1375" y="693">リスクとリターン</text>
+    </g>
     <rect data-guide="outer-safe" x="96" y="54" width="1728" height="972" fill="none" stroke="#E5E7EB" stroke-width="2" stroke-dasharray="8 8" />
     <rect data-guide="title-area" x="96" y="54" width="1728" height="96" fill="none" stroke="#FBBF24" stroke-width="2" stroke-dasharray="5 5" />
     <rect data-guide="main-canvas" x="96" y="150" width="1728" height="660" fill="none" stroke="#38BDF8" stroke-width="2" stroke-dasharray="5 5" />

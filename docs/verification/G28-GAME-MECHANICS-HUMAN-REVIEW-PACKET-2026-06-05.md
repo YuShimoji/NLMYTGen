@@ -16,6 +16,28 @@ or creative final acceptance artifact.
 | diagnostic precedent | `samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation.*` |
 | readback state | Passed; `diagnostic_only=true`, `production_candidate=false`, no `.ymmp`, no render, no external image or URL. |
 
+## Reviewability Repair - 2026-06-08
+
+Human review returned `decision: revise` while keeping Lecture Diagram Carrier
+as the correct carrier. The issue was not carrier selection; the existing HTML
+did not make the semantic labels visible enough for a human to judge the left
+and right nodes or the callout slots.
+
+The existing `game_mechanics_explanation` diagnostic artifact has now been
+repaired in place rather than regenerated as a new variant. The HTML includes a
+review-only overlay, and the readback/report include an inspector layer for the
+same labels. Production visible text budget remains separate from review labels.
+
+| Review surface | Human-visible labels now exposed | Boundary |
+| --- | --- | --- |
+| diagram chain | `入力操作`, `内部ルール`, `画面上の結果` | Review-only semantic labels; not production slot-fill. |
+| callout slots | `操作感`, `判定 / 当たり判定`, `リスクとリターン` | Review-only callout meaning labels; not production copy approval. |
+| readback inspector | `production_visible_text_items`, `review_visible_semantic_labels`, `review_label_layer_or_inspector_exists=true`, `semantic_labels_human_visible=true` | Diagnostic readback only. |
+
+The repaired HTML remains visualization-only / review-only. It is not a render,
+not production timing, not creative final acceptance, and not a Source-Footage
+Carrier promotion.
+
 ## What To Judge
 
 | Review question | Accept signal | Revise signal |
@@ -68,8 +90,8 @@ shot should not use this diagnostic Lecture Diagram precedent.
 - Do not create a Source-Footage Carrier generator.
 - Do not create a new carrier skeleton.
 - Do not add a new theme variant by default.
-- Do not modify existing JSON, HTML, readback JSON, generated reports, or
-  generators.
+- Do not make further JSON, HTML, readback JSON, generated report, or generator
+  changes unless the scope is another bounded diagnostic repair.
 - Do not revive G-27 as an active blocker.
 - Do not route back into RSS / OPML / Inoreader / NotebookLM work.
 

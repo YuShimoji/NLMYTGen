@@ -55,7 +55,11 @@
     "external_image_count_zero": true,
     "external_url_count_zero": true,
     "token_like_pattern_count_zero": true,
-    "text_budget_not_dense": true
+    "text_budget_not_dense": true,
+    "review_label_layer_or_inspector_exists": true,
+    "semantic_labels_human_visible": true,
+    "review_visible_semantic_labels_expected": true,
+    "production_text_budget_separate_from_review_labels": true
   },
   "failures": [],
   "layer_order": [
@@ -285,6 +289,134 @@
       }
     ]
   },
+  "review_surface_readback": {
+    "production_visible_text_items": [
+      {
+        "id": "G28_LDC_Title_Text",
+        "text": "操作と結果の関係"
+      },
+      {
+        "id": "G28_LDC_Focal_Label",
+        "text": "内部ルール"
+      }
+    ],
+    "review_visible_semantic_labels": [
+      {
+        "target_id": "G28_LDC_Node_Left",
+        "label": "入力操作",
+        "role": "player_input",
+        "kind": "focal_chain_node",
+        "human_visible": true,
+        "surface": "html_review_only_overlay"
+      },
+      {
+        "target_id": "G28_LDC_Focal_Core",
+        "label": "内部ルール",
+        "role": "rule_system",
+        "kind": "focal_chain_node",
+        "human_visible": true,
+        "surface": "html_review_only_overlay"
+      },
+      {
+        "target_id": "G28_LDC_Node_Right",
+        "label": "画面上の結果",
+        "role": "screen_result",
+        "kind": "focal_chain_node",
+        "human_visible": true,
+        "surface": "html_review_only_overlay"
+      },
+      {
+        "target_id": "G28_LDC_CalloutSlot_1",
+        "label": "操作感",
+        "role": "control_feel",
+        "kind": "callout_slot",
+        "human_visible": true,
+        "surface": "html_review_only_overlay"
+      },
+      {
+        "target_id": "G28_LDC_CalloutSlot_2",
+        "label": "判定 / 当たり判定",
+        "role": "judgement_hit_detection",
+        "kind": "callout_slot",
+        "human_visible": true,
+        "surface": "html_review_only_overlay"
+      },
+      {
+        "target_id": "G28_LDC_CalloutSlot_3",
+        "label": "リスクとリターン",
+        "role": "risk_reward",
+        "kind": "callout_slot",
+        "human_visible": true,
+        "surface": "html_review_only_overlay"
+      }
+    ],
+    "review_label_layer_or_inspector_exists": true,
+    "semantic_labels_human_visible": true,
+    "production_text_budget_is_separate": true,
+    "visualization_only_note": "HTML is visualization-only / review-only, not render, production timing, or creative final acceptance."
+  },
+  "production_visible_text_items": [
+    {
+      "id": "G28_LDC_Title_Text",
+      "text": "操作と結果の関係"
+    },
+    {
+      "id": "G28_LDC_Focal_Label",
+      "text": "内部ルール"
+    }
+  ],
+  "review_visible_semantic_labels": [
+    {
+      "target_id": "G28_LDC_Node_Left",
+      "label": "入力操作",
+      "role": "player_input",
+      "kind": "focal_chain_node",
+      "human_visible": true,
+      "surface": "html_review_only_overlay"
+    },
+    {
+      "target_id": "G28_LDC_Focal_Core",
+      "label": "内部ルール",
+      "role": "rule_system",
+      "kind": "focal_chain_node",
+      "human_visible": true,
+      "surface": "html_review_only_overlay"
+    },
+    {
+      "target_id": "G28_LDC_Node_Right",
+      "label": "画面上の結果",
+      "role": "screen_result",
+      "kind": "focal_chain_node",
+      "human_visible": true,
+      "surface": "html_review_only_overlay"
+    },
+    {
+      "target_id": "G28_LDC_CalloutSlot_1",
+      "label": "操作感",
+      "role": "control_feel",
+      "kind": "callout_slot",
+      "human_visible": true,
+      "surface": "html_review_only_overlay"
+    },
+    {
+      "target_id": "G28_LDC_CalloutSlot_2",
+      "label": "判定 / 当たり判定",
+      "role": "judgement_hit_detection",
+      "kind": "callout_slot",
+      "human_visible": true,
+      "surface": "html_review_only_overlay"
+    },
+    {
+      "target_id": "G28_LDC_CalloutSlot_3",
+      "label": "リスクとリターン",
+      "role": "risk_reward",
+      "kind": "callout_slot",
+      "human_visible": true,
+      "surface": "html_review_only_overlay"
+    }
+  ],
+  "review_label_layer_or_inspector_exists": true,
+  "semantic_labels_human_visible": true,
   "layer_order_intent": [
     "low-salience stage",
     "title band boundary",

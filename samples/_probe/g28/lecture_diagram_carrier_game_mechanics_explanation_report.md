@@ -59,6 +59,12 @@ not render, and does not claim creative final acceptance.
 - token_like_pattern_count: 0
 - text_budget_dense: false
 
+- production_visible_text_items: G28_LDC_Title_Text, G28_LDC_Focal_Label
+- review_visible_semantic_labels: 入力操作, 内部ルール, 画面上の結果, 操作感, 判定 / 当たり判定, リスクとリターン
+- review_label_layer_or_inspector_exists: true
+- semantic_labels_human_visible: true
+- review_surface_note: HTML is visualization-only / review-only, not render, production timing, or creative final acceptance.
+
 ## Limitations
 
 - No YMM4 .ymmp file generated in this slice because G-28 v0.1 still excludes zero-generation.
