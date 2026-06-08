@@ -79,6 +79,17 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest G-28 decision (2026-06-08): `g28_game_mechanics_ymmp_saved_carrier_review_conditions`
+adds the scoped condition checklist for moving the accepted
+`game_mechanics_explanation` Lecture Diagram review surface toward a later
+YMM4-saved carrier review. The required inputs are explicit human selection of
+that review mode, a carrier path, preview screenshot, timeline screenshot,
+item/layer confirmation, and bottom caption safe-area evidence. This is
+conditions-only documentation: no `.ymmp` generation, render, production timing,
+creative final acceptance, Source-Footage intake, gameplay screenshot intake,
+image path/URL/raw reference intake, G-27 revival, RSS, NotebookLM, generated
+artifact rewrite, or generator change is approved.
+
 Latest G-28 decision (2026-06-08): `g28_game_mechanics_review_surface_accept`
 records human `decision: accept` for the repaired `game_mechanics_explanation`
 Lecture Diagram review surface. The accepted scope is reviewability only:
