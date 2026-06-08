@@ -23,10 +23,11 @@ as the correct carrier. The issue was not carrier selection; the existing HTML
 did not make the semantic labels visible enough for a human to judge the left
 and right nodes or the callout slots.
 
-The existing `game_mechanics_explanation` diagnostic artifact has now been
-repaired in place rather than regenerated as a new variant. The HTML includes a
-review-only overlay, and the readback/report include an inspector layer for the
-same labels. Production visible text budget remains separate from review labels.
+The existing `game_mechanics_explanation` diagnostic artifact was repaired in
+place rather than regenerated as a new variant. That intermediate repair made
+semantic labels human-visible, but it used in-frame review label boxes and was
+later superseded by the inspector-first review surface below. Production visible
+text budget remains separate from review labels.
 
 | Review surface | Human-visible labels now exposed | Boundary |
 | --- | --- | --- |
