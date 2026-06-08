@@ -79,6 +79,20 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+G-28 real-estate diagnostic review surface acceptance (2026-06-08):
+Record `overall_decision=accept_as_diagnostic_review_surface_with_title_metric_caveat`
+for the YMM4 diagnostic probe and stop the individual pixel-tuning loop for
+this artifact. The accepted scope is diagnostic review surface use only:
+openability, focal chain, connector treatment, X=313.0 lower-right callout
+alignment, caption reserve, diagnostic host placeholders, and diagnostic
+boundary pass, while title metric debt and layout-system debt remain. Do not
+continue title-Y / callout / right-node micro-offset fixes; any future visual
+centering problem should become a text/layout system redesign slice. This does
+not approve Review Console implementation changes, production render,
+production carrier approval, creative final acceptance, rights automation,
+source footage, G-27 authority reuse, common foundation work, or ClipPipeGen
+access.
+
 G-28 real-estate evidence note (2026-06-08):
 `pass_dom_evidence_needs_manual_screenshot` is recorded in
 `docs/verification/G28-REAL-ESTATE-REVIEW-CONSOLE-INGEST-EVIDENCE-2026-06-07.md`

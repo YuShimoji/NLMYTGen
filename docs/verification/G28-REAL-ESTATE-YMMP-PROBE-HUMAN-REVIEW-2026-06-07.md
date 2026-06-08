@@ -365,6 +365,64 @@ Review Console ingest candidate caveats:
 - Keep host placeholders as diagnostic-only evidence; do not treat them as
   production-ready character or visual assets.
 
+## Final Human GUI Confirmation - Diagnostic Review Surface Accepted
+
+```text
+openability: pass
+notes: YMM4で開ける。diagnostic probeとして成立。
+
+focal_chain_readability: pass
+notes: 元付情報 -> ポータル掲載 -> 借主判断 の流れは読める。
+
+connector_treatment: pass
+notes: 黄色connectorはうまく繋がっている。偶然でなければ高い精度。
+
+callout_label_alignment_仲介インセンティブ: pass
+notes: X=313.0 human-calibrated override 後、大きなズレはない。一旦これで進められる。
+
+title_position: pass_with_minor_metric_caveat
+notes: 上部タイトルは、見た目としては大きな問題ではないが、ボックス内でやや下揃えっぽく見える。今回は修正対象にせず、title_anchor / title_text_center / safe-area readback debt として残す。
+
+host_placeholders: pass_as_diagnostic_placeholder
+notes: 左右下のグレー角丸矩形は host placeholder として diagnostic probe 上は正常。ただし production visual/material ではない。後続の material / AI image / character visual slice で replace / hide / accept を判断する。
+
+caption_reserve: pass
+notes: 下部字幕帯の余白は保たれている。
+
+diagnostic_boundary: clear
+notes: production完成品ではなく、diagnostic probeとして理解できる。
+
+overall_decision: accept_as_diagnostic_review_surface_with_title_metric_caveat
+production_boundary_acknowledged: true
+```
+
+Interpretation:
+
+- The `real_estate_information_gap` YMM4 probe is accepted as a diagnostic
+  review surface with title metric caveat retained.
+- This closes the individual YMM4 pixel-tuning loop for this probe. Do not make
+  more one-off title Y, callout, right-node, X/Y, or optical offset corrections
+  for this artifact.
+- If future visual-centering problems remain material, handle them as a separate
+  text/layout system redesign slice instead of continuing per-label offsets.
+- The X=313.0 callout position remains a human-calibrated override and layout
+  metric debt, not formula success.
+- Title positioning is visually acceptable for this diagnostic review surface,
+  but `title_anchor`, `title_text_center`, and title safe-area readback remain
+  future metric items.
+- Lower-corner host rectangles are valid diagnostic placeholders only. They are
+  not production character material, AI image material, or final visual assets.
+- Existing Review Console ingest evidence remains consistent with this result:
+  it is evidence for the read-only diagnostic panel and does not approve
+  production, render, rights/public use, or creative final acceptance.
+
+Next safe action:
+
+- Treat the real-estate side evidence as closed for the current diagnostic
+  review surface and return to the active runtime-state lane.
+- If needed later, open a separate Review Console human confirmation record or
+  diagnostic render planning slice only by explicit request.
+
 ## Boundaries
 
 - No production carrier approval.
