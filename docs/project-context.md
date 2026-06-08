@@ -79,6 +79,21 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest G-28 decision (2026-06-08): `remote_handoff_sealed_after_g28_game_mechanics_inspector_accept`
+keeps the accepted `game_mechanics_explanation` inspector-first diagnostic
+review surface context in-project for another terminal. The restart owner is
+`AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md` plus
+`docs/USER_COPYPASTE_BLOCKS.md` SECTION 20. The accepted contract remains
+`review_surface=inspector_first`, `in_frame_review_overlay=false`,
+`clean_frame_available=true`, `semantic_labels_human_visible=true`,
+`diagnostic_only=true`, and `production_candidate=false`. This handoff does not
+authorize Source-Footage, `.ymmp` generation, render, production timing,
+creative final acceptance, G-27 revival, RSS / OPML / Inoreader / NotebookLM,
+common foundation, ClipPipeGen, generated artifact rewrites, or generator
+changes. The next safe input is human-supplied evidence for the already scoped
+YMM4-saved carrier review conditions, or a decision to stay with the accepted
+HTML/readback diagnostic precedent.
+
 Latest G-28 decision (2026-06-08): `g28_game_mechanics_ymmp_saved_carrier_review_conditions`
 adds the scoped condition checklist for moving the accepted
 `game_mechanics_explanation` Lecture Diagram review surface toward a later

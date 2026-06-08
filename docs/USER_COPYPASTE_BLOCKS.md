@@ -914,3 +914,109 @@ known local residue:
 - G-28をproduction完了のように書かない。
 - Review Console panel確認の結果、残るcaveat、次の人間確認項目を短く書く。
 ```
+
+===== SECTION 20: G-28 Game Mechanics Inspector-first Accept Remote Handoff =====
+Use this prompt when resuming the current G-28 game mechanics lane from another
+terminal. Keep the scope to this repo and to diagnostic reviewability / scoped
+YMM4-saved carrier review conditions only.
+
+```text
+NLMYTGen の G-28 game_mechanics_explanation inspector-first diagnostic review surface accept 後の作業を続けてください。
+
+repo:
+C:\Users\PLANNER007\NLMYTGen
+
+開始前:
+1. git status --porcelain=v1
+2. git status --porcelain=v1 -uno
+3. git fetch --all --prune
+4. git pull --ff-only origin master
+5. git rev-list --left-right --count HEAD...origin/master
+6. git log -1 --oneline
+7. AGENTS.md -> docs/REPO_LOCAL_RULES.md -> docs/runtime-state.md を読む。
+
+期待する状態:
+- latest remote commit は、この handoff commit 以降の `git log -1 --oneline` で確認する。
+- `HEAD...origin/master` は `0 0` にする。
+- tracked working tree は clean にする。
+- active lane は G-28 game mechanics diagnostic reviewability / scoped YMM4-saved carrier review conditions。
+
+現在の確定事項:
+- Human review decision: accept.
+- Carrier: Lecture Diagram Carrier.
+- Accepted artifact precedent:
+  - samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation.html
+  - samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_readback.json
+  - samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_report.md
+- Current accepted surface is inspector-first, not an in-frame overlay.
+- HTML/readback contract:
+  - review_surface=inspector_first
+  - in_frame_review_overlay=false
+  - review_overlay_default=false
+  - clean_frame_available=true
+  - semantic_labels_human_visible=true
+  - review_label_layer_or_inspector_exists=true
+  - production_text_budget_separate_from_review_labels=true
+- Semantic labels are visible in the Review Inspector below the 16:9 frame:
+  - 入力操作
+  - 内部ルール
+  - 画面上の結果
+  - 操作感
+  - 判定 / 当たり判定
+  - リスクとリターン
+- The default 16:9 frame remains clean. Review-only labels are separated from production-visible frame text.
+- Boundary remains diagnostic_only=true / production_candidate=false.
+
+Current owner docs:
+- docs/verification/G28-GAME-MECHANICS-HUMAN-REVIEW-PACKET-2026-06-05.md
+- docs/verification/G28-GAME-MECHANICS-YMM4-SAVED-CARRIER-REVIEW-CONDITIONS-2026-06-08.md
+- docs/runtime-state.md
+- docs/project-context.md
+- docs/USER_COPYPASTE_BLOCKS.md SECTION 20
+
+Next safe work:
+- Collect human-supplied inputs for the scoped YMM4-saved carrier review conditions:
+  - explicit human selection of that review mode
+  - carrier path
+  - preview screenshot
+  - timeline screenshot
+  - item/layer confirmation
+  - bottom caption safe-area evidence
+- Or stay with the accepted HTML/readback diagnostic precedent and only update handoff/decision docs if a new human decision is supplied.
+
+Do not:
+- Do not generate a new theme variant.
+- Do not add a new carrier skeleton.
+- Do not change generator/scripts unless the user explicitly asks for a narrow wording or readback/report correction.
+- Do not generate Source-Footage Carrier work.
+- Do not intake gameplay screenshots, source footage, image paths, URLs, or raw references.
+- Do not generate `.ymmp`.
+- Do not render.
+- Do not perform production timing.
+- Do not mark production_candidate.
+- Do not approve production or creative final acceptance.
+- Do not change rights_status.
+- Do not return to the G-27 active blocker.
+- Do not return to RSS / OPML / Inoreader / NotebookLM.
+- Do not touch common foundation / `.agent` work.
+- Do not touch ClipPipeGen.
+- Do not modify AGENTS.md.
+
+Verification for docs-only continuation:
+- git status --porcelain=v1
+- git status --porcelain=v1 -uno
+- git diff --name-only
+- git diff --check
+- git diff --cached --check
+- staged forbidden scan before commit
+- pytest may be omitted if src / gui / Python package / tests are unchanged
+- after commit and push, verify `git rev-list --left-right --count HEAD...origin/master` is `0 0`
+
+Completion report:
+- Summarize branch / HEAD / origin alignment.
+- List changed files.
+- State that inspector-first / clean-frame contract remains recorded.
+- State diagnostic_only=true / production_candidate=false.
+- State Source-Footage / .ymmp / render / production timing / creative final acceptance remained untouched.
+- Provide the next prompt or next human input needed.
+```
