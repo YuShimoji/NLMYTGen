@@ -331,7 +331,12 @@ function applyGameMechanicsExplanationVariant(artifact) {
     production_text_budget_is_separate: true,
     production_visible_text_item_ids: ['G28_LDC_Title_Text', 'G28_LDC_Focal_Label'],
     review_label_layer_or_inspector_exists: true,
-    review_label_layer: 'html_review_only_overlay',
+    review_label_layer: 'html_review_inspector_table',
+    review_surface_mode: 'inspector_first',
+    in_frame_review_overlay: false,
+    review_overlay_default: false,
+    clean_frame_available: true,
+    default_frame_surface: 'clean_16_9_frame_without_review_labels',
     inspector: 'readback.review_surface_readback',
     semantic_labels_human_visible: true,
     visualization_only_note: 'HTML is visualization-only / review-only, not render, production timing, or creative final acceptance.',
@@ -530,6 +535,9 @@ function validate() {
         semantic_labels_human_visible: reviewSurface.semantic_labels_human_visible === true,
         review_visible_semantic_labels_expected: expectedReviewLabels.every((label) => reviewLabels.some((entry) => entry.label === label)),
         production_text_budget_separate_from_review_labels: reviewSurface.production_text_budget_is_separate === true && textItems.length === reviewSurface.production_visible_text_item_ids.length,
+        in_frame_review_overlay_false: reviewSurface.in_frame_review_overlay === false,
+        review_overlay_default_false: reviewSurface.review_overlay_default === false,
+        clean_frame_available: reviewSurface.clean_frame_available === true,
       });
     }
   }
@@ -638,12 +646,22 @@ function validate() {
         review_label_layer_or_inspector_exists: reviewSurface.review_label_layer_or_inspector_exists,
         semantic_labels_human_visible: reviewSurface.semantic_labels_human_visible,
         production_text_budget_is_separate: reviewSurface.production_text_budget_is_separate,
+        production_text_budget_separate_from_review_labels: reviewSurface.production_text_budget_is_separate,
+        review_surface_mode: reviewSurface.review_surface_mode,
+        in_frame_review_overlay: reviewSurface.in_frame_review_overlay,
+        review_overlay_default: reviewSurface.review_overlay_default,
+        clean_frame_available: reviewSurface.clean_frame_available,
+        default_frame_surface: reviewSurface.default_frame_surface,
         visualization_only_note: reviewSurface.visualization_only_note,
       };
       readback.production_visible_text_items = readback.review_surface_readback.production_visible_text_items;
       readback.review_visible_semantic_labels = readback.review_surface_readback.review_visible_semantic_labels;
       readback.review_label_layer_or_inspector_exists = readback.review_surface_readback.review_label_layer_or_inspector_exists;
       readback.semantic_labels_human_visible = readback.review_surface_readback.semantic_labels_human_visible;
+      readback.production_text_budget_separate_from_review_labels = readback.review_surface_readback.production_text_budget_separate_from_review_labels;
+      readback.in_frame_review_overlay = readback.review_surface_readback.in_frame_review_overlay;
+      readback.review_overlay_default = readback.review_surface_readback.review_overlay_default;
+      readback.clean_frame_available = readback.review_surface_readback.clean_frame_available;
     }
     readback.layer_order_intent = [
       'low-salience stage',
@@ -683,7 +701,8 @@ function renderHtml(readback) {
   const reviewSurfaceMeta = readback.review_surface_readback
     ? `
     <div>Review-only labels: <code>${escapeHtml(readback.review_surface_readback.review_visible_semantic_labels.map((entry) => entry.label).join(' / '))}</code></div>
-    <div>Review layer: <code>${escapeHtml(readback.review_surface_readback.review_label_layer_or_inspector_exists ? 'html overlay + readback inspector' : 'missing')}</code> / semantic_labels_human_visible=${readback.review_surface_readback.semantic_labels_human_visible}</div>`
+    <div>Review surface: <code>${escapeHtml(readback.review_surface_readback.review_surface_mode)}</code> / in_frame_review_overlay=${readback.review_surface_readback.in_frame_review_overlay} / clean_frame_available=${readback.review_surface_readback.clean_frame_available}</div>
+    <div>Semantic labels stay human-visible in the inspector below; the 16:9 frame is clean by default.</div>`
     : '';
   const variantMeta = selectedVariant
     ? `
@@ -707,12 +726,24 @@ function renderHtml(readback) {
     guideRect('main-canvas', REGIONS.main_canvas, '#38BDF8', '5 5'),
     guideRect('caption-reserve', REGIONS.caption_reserve, '#F87171', '5 5', 'rgba(248,113,113,0.08)'),
   ].join('\n');
-  const reviewOverlay = renderReviewOverlay(readback);
-  const reviewCss = readback.review_surface_readback
-    ? `
-    .review-label-bg { fill: rgba(15, 23, 42, 0.9); stroke: #fbbf24; stroke-width: 2; }
-    .review-label { fill: #fff7ed; font: 700 30px 'Yu Gothic UI','Noto Sans CJK JP',sans-serif; dominant-baseline: middle; text-anchor: middle; }
-    .review-label.callout { font-size: 28px; }`
+  const reviewInspector = renderReviewInspector(readback);
+  const hasReviewInspector = Boolean(reviewInspector);
+  const frameWrapOpen = hasReviewInspector
+    ? `  <div class="frame-wrap" data-clean-frame-available="${readback.clean_frame_available === true}" data-in-frame-review-overlay="${readback.in_frame_review_overlay === true}">
+`
+    : '';
+  const frameWrapClose = hasReviewInspector ? '  </div>\n' : '';
+  const afterSvg = hasReviewInspector ? `${frameWrapClose}${reviewInspector}\n` : '';
+  const inspectorCss = hasReviewInspector
+    ? `    .frame-wrap { padding: 0 0 18px; background: #0b1120; }
+    .inspector { padding: 16px 20px 24px; border-top: 1px solid #374151; background: #111827; }
+    .inspector h2 { margin: 0 0 8px; font-size: 18px; }
+    .inspector p { margin: 0 0 12px; color: #cbd5e1; font-size: 14px; }
+    .inspector table { border-collapse: collapse; width: 100%; max-width: 1320px; font-size: 14px; }
+    .inspector th, .inspector td { border: 1px solid #334155; padding: 8px 10px; text-align: left; vertical-align: top; }
+    .inspector th { background: #1f2937; color: #f9fafb; }
+    .inspector td { background: #0f172a; }
+`
     : '';
   return `<!DOCTYPE html>
 <html lang="ja">
@@ -723,7 +754,7 @@ function renderHtml(readback) {
     body { margin: 0; background: #0b1120; color: #e5e7eb; font-family: 'Yu Gothic UI', sans-serif; }
     .meta { padding: 12px 20px; background: #111827; border-bottom: 1px solid #374151; font-size: 14px; line-height: 1.5; }
     svg { display: block; width: 1920px; height: 1080px; }
-${reviewCss ? `${reviewCss}\n` : ''}    code { color: #fbbf24; }
+${inspectorCss}    code { color: #fbbf24; }
   </style>
 </head>
 <body>
@@ -732,34 +763,35 @@ ${reviewCss ? `${reviewCss}\n` : ''}    code { color: #fbbf24; }
     <div>Visualization-only. No image assets, no URL, no render, no creative final acceptance, no slot-fill.</div>
     <div>Checks failed: <code>${readback.failures.length ? readback.failures.join(', ') : 'none'}</code></div>${variantMeta}
   </div>
-  <svg viewBox="0 0 1920 1080" aria-label="${ariaLabel}">
+${frameWrapOpen}  <svg viewBox="0 0 1920 1080" aria-label="${ariaLabel}">
 ${itemSvg}
-${reviewOverlay ? `${reviewOverlay}\n` : ''}${guides}
+${guides}
   </svg>
-</body>
+${afterSvg}</body>
 </html>`;
 }
 
-function renderReviewOverlay(readback) {
+function renderReviewInspector(readback) {
   const labels = readback.review_surface_readback?.review_visible_semantic_labels || [];
   if (!labels.length) return '';
-  return labels.map((label) => {
-    const target = SKELETON.items.find((entry) => entry.id === label.target_id);
-    if (!target) return '';
-    const r = target.rect;
-    const cx = r.x + r.width / 2;
-    const cy = r.y + r.height / 2;
-    const isCallout = label.kind === 'callout_slot';
-    const bgWidth = isCallout ? r.width - 24 : Math.max(r.width - 28, 220);
-    const bgHeight = isCallout ? 54 : 58;
-    const bgX = cx - bgWidth / 2;
-    const bgY = cy - bgHeight / 2;
-    const className = isCallout ? 'review-label callout' : 'review-label';
-    return `    <g data-review-label="${escapeHtml(label.label)}" data-target="${escapeHtml(label.target_id)}" data-review-only="true">
-      <rect class="review-label-bg" x="${bgX}" y="${bgY}" width="${bgWidth}" height="${bgHeight}" rx="10" />
-      <text class="${className}" x="${cx}" y="${cy}">${escapeHtml(label.label)}</text>
-    </g>`;
-  }).filter(Boolean).join('\n');
+  const rows = labels.map((label) => `      <tr>
+        <td><code>${escapeHtml(label.target_id)}</code></td>
+        <td>${escapeHtml(label.kind)}</td>
+        <td>${escapeHtml(label.role)}</td>
+        <td>${escapeHtml(label.label)}</td>
+      </tr>`).join('\n');
+  return `  <section class="inspector" data-review-inspector="semantic-labels">
+    <h2>Review Inspector: Semantic Labels</h2>
+    <p>These labels are review-only and human-visible here, outside the 16:9 frame. They are not production slot-fill text, not render output, and not creative final acceptance.</p>
+    <table>
+      <thead>
+        <tr><th>Target</th><th>Kind</th><th>Role</th><th>Review label</th></tr>
+      </thead>
+      <tbody>
+${rows}
+      </tbody>
+    </table>
+  </section>`;
 }
 
 function guideRect(id, r, stroke, dash, fill = 'none') {
@@ -793,6 +825,10 @@ ${readback.review_surface_readback ? `
 - review_visible_semantic_labels: ${readback.review_surface_readback.review_visible_semantic_labels.map((entry) => entry.label).join(', ')}
 - review_label_layer_or_inspector_exists: ${readback.review_surface_readback.review_label_layer_or_inspector_exists}
 - semantic_labels_human_visible: ${readback.review_surface_readback.semantic_labels_human_visible}
+- production_text_budget_separate_from_review_labels: ${readback.review_surface_readback.production_text_budget_separate_from_review_labels}
+- in_frame_review_overlay: ${readback.review_surface_readback.in_frame_review_overlay}
+- review_overlay_default: ${readback.review_surface_readback.review_overlay_default}
+- clean_frame_available: ${readback.review_surface_readback.clean_frame_available}
 - review_surface_note: ${readback.review_surface_readback.visualization_only_note}
 ` : ''}
 `

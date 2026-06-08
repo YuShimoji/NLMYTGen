@@ -63,6 +63,10 @@ not render, and does not claim creative final acceptance.
 - review_visible_semantic_labels: 入力操作, 内部ルール, 画面上の結果, 操作感, 判定 / 当たり判定, リスクとリターン
 - review_label_layer_or_inspector_exists: true
 - semantic_labels_human_visible: true
+- production_text_budget_separate_from_review_labels: true
+- in_frame_review_overlay: false
+- review_overlay_default: false
+- clean_frame_available: true
 - review_surface_note: HTML is visualization-only / review-only, not render, production timing, or creative final acceptance.
 
 ## Limitations

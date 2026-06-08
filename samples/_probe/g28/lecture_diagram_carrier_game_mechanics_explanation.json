@@ -567,7 +567,12 @@
       "G28_LDC_Focal_Label"
     ],
     "review_label_layer_or_inspector_exists": true,
-    "review_label_layer": "html_review_only_overlay",
+    "review_label_layer": "html_review_inspector_table",
+    "review_surface_mode": "inspector_first",
+    "in_frame_review_overlay": false,
+    "review_overlay_default": false,
+    "clean_frame_available": true,
+    "default_frame_surface": "clean_16_9_frame_without_review_labels",
     "inspector": "readback.review_surface_readback",
     "semantic_labels_human_visible": true,
     "visualization_only_note": "HTML is visualization-only / review-only, not render, production timing, or creative final acceptance.",

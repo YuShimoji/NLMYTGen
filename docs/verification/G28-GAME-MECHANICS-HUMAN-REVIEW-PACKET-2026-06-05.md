@@ -38,6 +38,28 @@ The repaired HTML remains visualization-only / review-only. It is not a render,
 not production timing, not creative final acceptance, and not a Source-Footage
 Carrier promotion.
 
+## Reviewability Re-Repair - 2026-06-08
+
+Human review then returned `decision: further revise`: the labels were visible,
+but the HTML drew them as in-frame boxed overlays, making the left/right nodes,
+callouts, and especially the center focal label look double-boxed. That problem
+was review surface noise, not a carrier-selection failure.
+
+The existing `game_mechanics_explanation` diagnostic artifact has now been
+repaired in place again. The default 16:9 frame is clean: no review-only label
+boxes are drawn over the diagram. Semantic labels remain human-visible in the
+HTML review inspector below the frame and in readback fields.
+
+| Review surface | Current behavior | Boundary |
+| --- | --- | --- |
+| 16:9 frame | Clean diagram frame; no in-frame review label overlay. | Diagnostic visualization only; not render output. |
+| review inspector | Shows focal-chain and callout semantic labels in a table outside the frame. | Review-only labels; not production slot-fill. |
+| readback inspector | Records `production_visible_text_items`, `review_visible_semantic_labels`, `review_label_layer_or_inspector_exists=true`, `semantic_labels_human_visible=true`, `production_text_budget_separate_from_review_labels=true`, `in_frame_review_overlay=false`, `review_overlay_default=false`, and `clean_frame_available=true`. | Diagnostic readback only. |
+
+This re-repair does not create a new theme variant, carrier skeleton,
+Source-Footage generator, `.ymmp`, render, production timing, or creative final
+acceptance artifact.
+
 ## What To Judge
 
 | Review question | Accept signal | Revise signal |

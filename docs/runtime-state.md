@@ -1,5 +1,7 @@
 # Runtime State — NLMYTGen
 
+- **Current G-28 game mechanics note (2026-06-08)**: `game_mechanics_explanation` was re-repaired in place after human `decision: further revise`. The default HTML 16:9 frame is now clean, in-frame review label boxes are removed, and semantic labels are human-visible through the lower review inspector plus readback/report fields. Required readback flags are present: `production_visible_text_items`, `review_visible_semantic_labels`, `review_label_layer_or_inspector_exists=true`, `semantic_labels_human_visible=true`, `production_text_budget_separate_from_review_labels=true`, `in_frame_review_overlay=false`, `review_overlay_default=false`, and `clean_frame_available=true`. Boundary remains `diagnostic_only=true` / `production_candidate=false`; no new variant, Source-Footage, `.ymmp`, render, production timing, or creative final acceptance.
+
 # BLOCK SUMMARY のたびに更新する。
 
 # compact 後の再アンカリングではこのファイルを読む。

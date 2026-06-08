@@ -59,7 +59,10 @@
     "review_label_layer_or_inspector_exists": true,
     "semantic_labels_human_visible": true,
     "review_visible_semantic_labels_expected": true,
-    "production_text_budget_separate_from_review_labels": true
+    "production_text_budget_separate_from_review_labels": true,
+    "in_frame_review_overlay_false": true,
+    "review_overlay_default_false": true,
+    "clean_frame_available": true
   },
   "failures": [],
   "layer_order": [
@@ -307,7 +310,7 @@
         "role": "player_input",
         "kind": "focal_chain_node",
         "human_visible": true,
-        "surface": "html_review_only_overlay"
+        "surface": "html_review_inspector_table"
       },
       {
         "target_id": "G28_LDC_Focal_Core",
@@ -315,7 +318,7 @@
         "role": "rule_system",
         "kind": "focal_chain_node",
         "human_visible": true,
-        "surface": "html_review_only_overlay"
+        "surface": "html_review_inspector_table"
       },
       {
         "target_id": "G28_LDC_Node_Right",
@@ -323,7 +326,7 @@
         "role": "screen_result",
         "kind": "focal_chain_node",
         "human_visible": true,
-        "surface": "html_review_only_overlay"
+        "surface": "html_review_inspector_table"
       },
       {
         "target_id": "G28_LDC_CalloutSlot_1",
@@ -331,7 +334,7 @@
         "role": "control_feel",
         "kind": "callout_slot",
         "human_visible": true,
-        "surface": "html_review_only_overlay"
+        "surface": "html_review_inspector_table"
       },
       {
         "target_id": "G28_LDC_CalloutSlot_2",
@@ -339,7 +342,7 @@
         "role": "judgement_hit_detection",
         "kind": "callout_slot",
         "human_visible": true,
-        "surface": "html_review_only_overlay"
+        "surface": "html_review_inspector_table"
       },
       {
         "target_id": "G28_LDC_CalloutSlot_3",
@@ -347,12 +350,18 @@
         "role": "risk_reward",
         "kind": "callout_slot",
         "human_visible": true,
-        "surface": "html_review_only_overlay"
+        "surface": "html_review_inspector_table"
       }
     ],
     "review_label_layer_or_inspector_exists": true,
     "semantic_labels_human_visible": true,
     "production_text_budget_is_separate": true,
+    "production_text_budget_separate_from_review_labels": true,
+    "review_surface_mode": "inspector_first",
+    "in_frame_review_overlay": false,
+    "review_overlay_default": false,
+    "clean_frame_available": true,
+    "default_frame_surface": "clean_16_9_frame_without_review_labels",
     "visualization_only_note": "HTML is visualization-only / review-only, not render, production timing, or creative final acceptance."
   },
   "production_visible_text_items": [
@@ -372,7 +381,7 @@
       "role": "player_input",
       "kind": "focal_chain_node",
       "human_visible": true,
-      "surface": "html_review_only_overlay"
+      "surface": "html_review_inspector_table"
     },
     {
       "target_id": "G28_LDC_Focal_Core",
@@ -380,7 +389,7 @@
       "role": "rule_system",
       "kind": "focal_chain_node",
       "human_visible": true,
-      "surface": "html_review_only_overlay"
+      "surface": "html_review_inspector_table"
     },
     {
       "target_id": "G28_LDC_Node_Right",
@@ -388,7 +397,7 @@
       "role": "screen_result",
       "kind": "focal_chain_node",
       "human_visible": true,
-      "surface": "html_review_only_overlay"
+      "surface": "html_review_inspector_table"
     },
     {
       "target_id": "G28_LDC_CalloutSlot_1",
@@ -396,7 +405,7 @@
       "role": "control_feel",
       "kind": "callout_slot",
       "human_visible": true,
-      "surface": "html_review_only_overlay"
+      "surface": "html_review_inspector_table"
     },
     {
       "target_id": "G28_LDC_CalloutSlot_2",
@@ -404,7 +413,7 @@
       "role": "judgement_hit_detection",
       "kind": "callout_slot",
       "human_visible": true,
-      "surface": "html_review_only_overlay"
+      "surface": "html_review_inspector_table"
     },
     {
       "target_id": "G28_LDC_CalloutSlot_3",
@@ -412,11 +421,15 @@
       "role": "risk_reward",
       "kind": "callout_slot",
       "human_visible": true,
-      "surface": "html_review_only_overlay"
+      "surface": "html_review_inspector_table"
     }
   ],
   "review_label_layer_or_inspector_exists": true,
   "semantic_labels_human_visible": true,
+  "production_text_budget_separate_from_review_labels": true,
+  "in_frame_review_overlay": false,
+  "review_overlay_default": false,
+  "clean_frame_available": true,
   "layer_order_intent": [
     "low-salience stage",
     "title band boundary",

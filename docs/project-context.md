@@ -79,6 +79,18 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest G-28 decision (2026-06-08): `g28_game_mechanics_review_surface_inspector_first`
+is implemented for the existing `game_mechanics_explanation` Lecture Diagram
+diagnostic artifact after human `decision: further revise`. The previous
+review-only labels were visible but appeared as in-frame boxed overlays, making
+the left/right nodes, callouts, and center focal look double-boxed. The artifact
+is repaired in place: default HTML keeps the 16:9 frame clean, moves semantic
+labels into the lower review inspector, and records
+`in_frame_review_overlay=false`, `review_overlay_default=false`, and
+`clean_frame_available=true` in readback. This remains diagnostic-only:
+`production_candidate=false`, no new theme variant, no Source-Footage generator,
+no `.ymmp`, no render, no production timing, and no creative final acceptance.
+
 Latest common foundation decision (2026-06-08): `fake_runner_scaffold_committed`
 adds a tests-only fake runner scaffold in `da254ff feat: add fake runner
 scaffold`. The helper writes synthetic reports to `ExecutionPlan.report_path`,
