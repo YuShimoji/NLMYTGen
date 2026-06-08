@@ -79,6 +79,18 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest G-28 decision (2026-06-08): `g28_game_mechanics_review_surface_accept`
+records human `decision: accept` for the repaired `game_mechanics_explanation`
+Lecture Diagram review surface. The accepted scope is reviewability only:
+the clean 16:9 frame and lower Review Inspector are separated, the frame no
+longer has double-box review overlays, semantic labels remain visible through
+the inspector, host remains non-focal, and caption reserve / density are
+acceptable for this diagnostic surface. This does not approve production:
+`diagnostic_only=true`, `production_candidate=false`, no Source-Footage, no
+`.ymmp` generation, no render, no production timing, and no creative final
+acceptance. Next safe work, only if needed, is scoped condition planning for a
+YMM4-saved carrier review.
+
 Latest G-28 decision (2026-06-08): `g28_game_mechanics_review_surface_inspector_first`
 is implemented for the existing `game_mechanics_explanation` Lecture Diagram
 diagnostic artifact after human `decision: further revise`. The previous

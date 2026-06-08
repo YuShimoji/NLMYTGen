@@ -60,6 +60,29 @@ This re-repair does not create a new theme variant, carrier skeleton,
 Source-Footage generator, `.ymmp`, render, production timing, or creative final
 acceptance artifact.
 
+## Review Surface Acceptance - 2026-06-08
+
+Human review returned `decision: accept` for the repaired review surface while
+keeping `carrier: Lecture Diagram Carrier`.
+
+The accepted scope is review-surface usability only. The 16:9 frame no longer
+has the double-box review overlay, and the clean frame is separated from the
+Review Inspector. The frame alone does not show the left node, right node, or
+callout meaning labels, but this is acceptable because the current design makes
+semantic labels human-visible in the Review Inspector table.
+
+| Review area | Accepted result | Still separate |
+| --- | --- | --- |
+| diagram chain | `入力操作 -> 内部ルール -> 画面上の結果` can be verified through the inspector table. | This is not production copy approval. |
+| callouts | `操作感`, `判定 / 当たり判定`, and `リスクとリターン` are confirmable in the inspector without dirtying the frame. | The frame remains clean by default. |
+| host | Hosts remain non-focal and do not become the main evidence. | Host visual acceptance for production is not claimed. |
+| caption / density | Caption reserve is protected, and production-visible text is separated from review labels. | Production caption density remains a later slice. |
+
+Accepted next action: record this as review surface accept. If needed, the next
+safe work is only scoped condition planning for a YMM4-saved carrier review. Do
+not proceed to Source-Footage, `.ymmp` generation, render, production timing, or
+creative final acceptance from this acceptance record.
+
 ## What To Judge
 
 | Review question | Accept signal | Revise signal |
