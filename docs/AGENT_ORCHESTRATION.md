@@ -245,10 +245,12 @@ fixture または docs example として置く。
 
 ## Fake Runner Scaffold
 
-`scripts/agent_orchestrator.py` には tests-only の fake runner helper がある。これは
-`ExecutionPlan.report_path` に synthetic report を書き、valid report は必ず
-`scripts/agent_gate.py` で判定する。`needs_human=true` の場合だけ local notify stub
-を呼ぶ。
+`scripts/agent_orchestrator.py` には tests-only の fake runner helper と、tests-only
+の single fake execution flow helper がある。single fake flow は `ExecutionPlan` を
+作り、explicit `repo_status` 付きの `build_execution_preflight` を通過した場合だけ
+fake runner を呼ぶ。fake runner は `ExecutionPlan.report_path` に synthetic report
+を書き、valid report は必ず `scripts/agent_gate.py` で判定する。`needs_human=true`
+の場合だけ local notify stub を呼ぶ。
 
 Fake runner は次の失敗形を fail-closed で再現するための scaffold であり、real
 `codex exec` 実行経路ではない。
@@ -261,9 +263,10 @@ Fake runner は次の失敗形を fail-closed で再現するための scaffold 
 - nonzero exit
 - timeout
 
-Fake runner でも `codex_execution_started=false` と
-`real_subprocess_started=false` を返す。`subprocess.run`、stdin piping、runtime
-worker loop、外部通知 service はまだ実装しない。
+Fake runner / single fake flow でも `codex_execution_started=false` と
+`real_subprocess_started=false` を返す。これらは runtime loop ではなく、
+real `codex exec` を有効化しない pre-real-execution safety scaffold である。
+`subprocess.run`、stdin piping、runtime worker loop、外部通知 service はまだ実装しない。
 
 ## Runtime Artifact Retention
 

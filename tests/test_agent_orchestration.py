@@ -745,6 +745,229 @@ def test_fake_runner_uses_repo_local_tmp_artifacts_and_cleanup_removes_them(repo
     repo_agent_tmp.mkdir(parents=True)
 
 
+def test_single_fake_execution_flow_pass_builds_plan_preflights_runs_gate_without_notify(
+    repo_agent_tmp: Path,
+) -> None:
+    state, state_path = _fake_runner_state(repo_agent_tmp)
+
+    result = agent_orchestrator.run_single_fake_execution_flow_for_test(
+        state,
+        "audit",
+        "pass",
+        repo_status=_clean_repo_status(),
+        state_path=state_path,
+        timestamp="single-pass",
+    )
+
+    assert result["status"] == "completed"
+    assert result["preflight"]["allowed"] is True
+    assert result["preflight"]["report_path"].startswith(
+        ".agent/reports/_tmp_pytest_agent_orchestration/"
+    )
+    assert result["runner_started"] is True
+    assert result["runner_result"]["gate_result"]["decision"] == "pass"
+    assert result["runner_result"]["notify_stub"] is None
+    assert result["codex_execution_started"] is False
+    assert result["real_subprocess_started"] is False
+    assert not (repo_agent_tmp / "needs_human.json").exists()
+    assert not (repo_agent_tmp / "notify_stub.log").exists()
+
+
+def test_single_fake_execution_flow_needs_human_writes_only_local_notify_stub(
+    repo_agent_tmp: Path,
+) -> None:
+    state, state_path = _fake_runner_state(repo_agent_tmp)
+
+    result = agent_orchestrator.run_single_fake_execution_flow_for_test(
+        state,
+        "audit",
+        "needs_human",
+        repo_status=_clean_repo_status(),
+        state_path=state_path,
+        timestamp="single-needs-human",
+    )
+
+    runner = result["runner_result"]
+    assert result["status"] == "completed"
+    assert runner["gate_result"]["needs_human"] is True
+    assert "status:needs_human" in runner["gate_result"]["reasons"]
+    assert runner["notify_stub"]["payload"]["notification_sent"] is False
+    assert runner["notify_stub"]["needs_human_path"] == (
+        repo_agent_tmp / "needs_human.json"
+    ).relative_to(REPO_ROOT).as_posix()
+    assert runner["notify_stub"]["notify_stub_log"] == (
+        repo_agent_tmp / "notify_stub.log"
+    ).relative_to(REPO_ROOT).as_posix()
+    assert result["codex_execution_started"] is False
+    assert result["real_subprocess_started"] is False
+
+
+def test_single_fake_execution_flow_blocked_escalates_through_gate_only(
+    repo_agent_tmp: Path,
+) -> None:
+    state, state_path = _fake_runner_state(repo_agent_tmp)
+
+    result = agent_orchestrator.run_single_fake_execution_flow_for_test(
+        state,
+        "audit",
+        "blocked",
+        repo_status=_clean_repo_status(),
+        state_path=state_path,
+        timestamp="single-blocked",
+    )
+
+    runner = result["runner_result"]
+    assert result["status"] == "completed"
+    assert runner["gate_result"]["needs_human"] is True
+    assert "status:blocked" in runner["gate_result"]["reasons"]
+    assert runner["notify_stub"]["payload"]["notification_sent"] is False
+    assert result["codex_execution_started"] is False
+    assert result["real_subprocess_started"] is False
+
+
+@pytest.mark.parametrize(
+    ("scenario", "expected_error_kind"),
+    [
+        ("invalid_json", "invalid_json"),
+        ("missing_report", "missing_report"),
+        ("nonzero_exit", "nonzero_exit"),
+        ("timeout", "timeout"),
+    ],
+)
+def test_single_fake_execution_flow_failure_scenarios_fail_closed_without_real_execution(
+    repo_agent_tmp: Path,
+    scenario: str,
+    expected_error_kind: str,
+) -> None:
+    state, state_path = _fake_runner_state(repo_agent_tmp)
+
+    result = agent_orchestrator.run_single_fake_execution_flow_for_test(
+        state,
+        "audit",
+        scenario,
+        repo_status=_clean_repo_status(),
+        state_path=state_path,
+        timestamp=f"single-{scenario}",
+    )
+
+    runner = result["runner_result"]
+    assert result["status"] == "completed"
+    assert runner["gate_result"]["needs_human"] is True
+    assert runner["fail_closed"] is True
+    assert runner["error_kind"] == expected_error_kind
+    assert runner["notify_stub"] is None
+    assert result["codex_execution_started"] is False
+    assert result["real_subprocess_started"] is False
+    assert not (repo_agent_tmp / "needs_human.json").exists()
+    assert not (repo_agent_tmp / "notify_stub.log").exists()
+
+
+def test_single_fake_execution_flow_refuses_default_disabled_execution_policy(
+    repo_agent_tmp: Path,
+) -> None:
+    state = _load_state()
+    state["report_output_template"] = (
+        f"{repo_agent_tmp.relative_to(REPO_ROOT).as_posix()}/{{timestamp}}-{{worker}}.report.json"
+    )
+
+    result = agent_orchestrator.run_single_fake_execution_flow_for_test(
+        state,
+        "audit",
+        "pass",
+        repo_status=_clean_repo_status(),
+        timestamp="single-disabled-policy",
+    )
+
+    assert result["status"] == "preflight_blocked"
+    assert result["runner_started"] is False
+    assert result["runner_result"] is None
+    assert "execution_policy.codex_exec_enabled:false" in result["preflight"]["reasons"]
+    assert not any(repo_agent_tmp.glob("*.report.json"))
+    assert result["codex_execution_started"] is False
+    assert result["real_subprocess_started"] is False
+
+
+@pytest.mark.parametrize(
+    ("repo_status", "expected_reason"),
+    [
+        (
+            {"tracked_dirty": ["scripts/agent_orchestrator.py"], "staged": [], "untracked": []},
+            "repo_status:tracked_dirty",
+        ),
+        (
+            {"tracked_dirty": [], "staged": ["scripts/agent_orchestrator.py"], "untracked": []},
+            "repo_status:staged_files_present",
+        ),
+        (
+            {"tracked_dirty": [], "staged": [], "untracked": ["unexpected.tmp"]},
+            "repo_status:unknown_untracked_files",
+        ),
+    ],
+)
+def test_single_fake_execution_flow_refuses_dirty_or_staged_repo_status(
+    repo_agent_tmp: Path,
+    repo_status: dict[str, Any],
+    expected_reason: str,
+) -> None:
+    state, state_path, plan = _fake_plan(repo_agent_tmp, "blocked-preflight")
+
+    result = agent_orchestrator.run_single_fake_execution_flow_for_test(
+        state,
+        "audit",
+        "pass",
+        repo_status=repo_status,
+        state_path=state_path,
+        plan=plan,
+    )
+
+    assert result["status"] == "preflight_blocked"
+    assert result["runner_started"] is False
+    assert expected_reason in result["preflight"]["reasons"]
+    assert not (REPO_ROOT / plan.report_path).exists()
+
+
+def test_single_fake_execution_flow_refuses_existing_report_path(repo_agent_tmp: Path) -> None:
+    state, state_path, plan = _fake_plan(repo_agent_tmp, "existing-report")
+    _write_json(REPO_ROOT / plan.report_path, BASE_REPORT)
+
+    result = agent_orchestrator.run_single_fake_execution_flow_for_test(
+        state,
+        "audit",
+        "pass",
+        repo_status=_clean_repo_status(),
+        state_path=state_path,
+        plan=plan,
+    )
+
+    assert result["status"] == "preflight_blocked"
+    assert result["runner_started"] is False
+    assert f"report_path:already_exists:{plan.report_path}" in result["preflight"]["reasons"]
+
+
+def test_single_fake_execution_flow_refuses_invalid_report_path_policy(
+    repo_agent_tmp: Path,
+) -> None:
+    state, state_path = _fake_runner_state(repo_agent_tmp)
+    state["report_output_template"] = "docs/{timestamp}-{worker}.report.json"
+
+    result = agent_orchestrator.run_single_fake_execution_flow_for_test(
+        state,
+        "audit",
+        "pass",
+        repo_status=_clean_repo_status(),
+        state_path=state_path,
+        timestamp="single-invalid-path",
+    )
+
+    assert result["status"] == "preflight_blocked"
+    assert result["runner_started"] is False
+    assert any(
+        "report_path must stay under .agent/reports" in reason
+        for reason in result["preflight"]["reasons"]
+    )
+    assert not (REPO_ROOT / "docs" / "single-invalid-path-audit.report.json").exists()
+
+
 def test_fake_runner_is_not_reachable_from_default_orchestrator_path() -> None:
     result = agent_orchestrator.run(
         argparse.Namespace(
@@ -756,17 +979,27 @@ def test_fake_runner_is_not_reachable_from_default_orchestrator_path() -> None:
     )
 
     assert "fake_runner" not in result
+    assert "single_fake_execution_flow" not in result
     assert result["codex_execution_started"] is False
     assert "No Codex execution is performed" in result["message"]
 
 
-def test_common_orchestration_scripts_do_not_use_subprocess_run() -> None:
+def test_no_cli_flag_exposes_single_fake_execution_flow() -> None:
+    with pytest.raises(SystemExit):
+        agent_orchestrator.main(["--worker", "audit", "--single-fake-flow"])
+
+
+def test_common_orchestration_scripts_do_not_use_real_execution_or_notification_sentinels() -> None:
     for path in (
         REPO_ROOT / "scripts" / "agent_gate.py",
         REPO_ROOT / "scripts" / "agent_notify_stub.py",
         REPO_ROOT / "scripts" / "agent_orchestrator.py",
     ):
-        assert "subprocess.run" not in path.read_text(encoding="utf-8")
+        text = path.read_text(encoding="utf-8")
+        assert "subprocess.run" not in text
+        assert "codex_execution_started=True" not in text
+        assert "real_subprocess_started=True" not in text
+        assert "notification_sent=True" not in text
 
 
 def test_orchestrator_dry_run_does_not_start_codex() -> None:

@@ -442,6 +442,59 @@ def run_fake_runner(
     )
 
 
+def run_single_fake_execution_flow_for_test(
+    state: dict[str, Any],
+    worker: str,
+    scenario: str,
+    *,
+    repo_status: dict[str, Any],
+    state_path: str | Path = DEFAULT_STATE_PATH,
+    plan: ExecutionPlan | None = None,
+    timestamp: str | None = None,
+) -> dict[str, Any]:
+    if plan is None:
+        try:
+            plan = build_execution_plan(state, worker, timestamp)
+        except GateInputError:
+            plan = None
+
+    preflight = build_execution_preflight(
+        state,
+        worker,
+        plan,
+        repo_status=repo_status,
+    )
+    result: dict[str, Any] = {
+        "mode": "single_fake_execution_flow_for_test",
+        "scenario": scenario,
+        "worker": worker,
+        "preflight": preflight,
+        "runner_started": False,
+        "runner_result": None,
+        "codex_execution_started": False,
+        "real_subprocess_started": False,
+    }
+
+    if not preflight["allowed"]:
+        result["status"] = "preflight_blocked"
+        return result
+
+    if plan is None:
+        raise GateInputError("preflight unexpectedly allowed without an execution plan")
+
+    runner_result = run_fake_runner(plan, scenario, state_path).to_dict()
+    result.update(
+        {
+            "status": "completed",
+            "runner_started": True,
+            "runner_result": runner_result,
+            "codex_execution_started": runner_result["codex_execution_started"],
+            "real_subprocess_started": runner_result["real_subprocess_started"],
+        }
+    )
+    return result
+
+
 def run(args: argparse.Namespace) -> dict[str, Any]:
     state_path = resolve_repo_path(args.state, must_exist=True)
     state = load_json(state_path)
