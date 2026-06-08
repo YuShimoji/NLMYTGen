@@ -79,6 +79,20 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+G-28 real-estate evidence note (2026-06-08):
+`pass_dom_evidence_needs_manual_screenshot` is recorded in
+`docs/verification/G28-REAL-ESTATE-REVIEW-CONSOLE-INGEST-EVIDENCE-2026-06-07.md`
+for the earlier `real_estate_information_gap` read-only Review Console panel.
+Existing Electron DOM smoke confirmed `#g28-review-console-ingest`, artifact
+inventory, diagnostic badges, readback summary, human GUI summary, caveats,
+allowed diagnostic decisions, and absence of production approval labels. No
+Review Console implementation files, generated probe artifacts, builders,
+readback/report files, render, production approval, creative final acceptance,
+rights automation, G-27 authority, ClipPipeGen, RSS / NotebookLM, or common
+foundation work changed. A manual screenshot or separately authorized
+G-28-specific capture slice remains optional if visual screenshot evidence is
+still required.
+
 Latest G-28 decision (2026-06-08): `remote_handoff_sealed_after_g28_game_mechanics_inspector_accept`
 keeps the accepted `game_mechanics_explanation` inspector-first diagnostic
 review surface context in-project for another terminal. The restart owner is
