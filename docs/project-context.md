@@ -80,6 +80,21 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 ## DECISION LOG
 
 Latest common foundation decision (2026-06-09):
+`remote_handoff_sealed_after_preflight_operator_surface_parking_001` records
+the repo-local handoff for the parked common foundation state. The restart entry
+is `docs/USER_COPYPASTE_BLOCKS.md` SECTION 22, and it points the next terminal
+back to `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, `docs/runtime-state.md`,
+`docs/project-context.md`, `docs/AGENT_ORCHESTRATION.md`, and
+`docs/AGENT_OPERATOR_SURFACE.md`. This handoff preserves the human-confirmed
+review-surface state after `cde00ca feat: add preflight preview card` and the
+parking note after `f7d4733 docs: park preflight operator surface`, while
+keeping real execution closed. It does not authorize real `codex exec`,
+`subprocess.run`, stdin piping, runtime worker loops, external notification,
+`.agent` runtime artifacts, `.ymmp`, render, rights, production, publishing,
+release automation, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader, or
+NotebookLM work.
+
+Latest common foundation decision (2026-06-09):
 `preflight_operator_surface_parking_001` records human acceptance of
 `cde00ca feat: add preflight preview card` as sufficient for the current
 review-surface need. The common foundation is parked with two read-only

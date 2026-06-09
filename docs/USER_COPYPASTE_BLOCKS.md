@@ -1037,6 +1037,101 @@ Completion report:
 - Provide the next prompt or next human input needed.
 ```
 
+===== SECTION 22: Common Foundation Preflight Operator Surface Parked Handoff =====
+Use this prompt when resuming the common foundation after the standalone
+preflight preview card was human-reviewed as sufficient and the lane was parked.
+This is a restart / handoff prompt, not permission to implement real execution.
+
+BEGIN_COPY_BLOCK_FOR_AGENT
+
+NLMYTGen common foundation is parked after human review of the standalone
+preflight preview card. Preserve the parked state, confirm remote parity, and do
+not open a real execution path.
+
+repo:
+C:\Users\PLANNER007\NLMYTGen
+
+Start by running:
+git status --porcelain=v1
+git status --porcelain=v1 -uno
+git fetch --prune origin
+git pull --ff-only origin master
+git branch --show-current
+git rev-parse --short HEAD
+git rev-list --left-right --count "HEAD...@{u}"
+
+Read in this order:
+AGENTS.md
+docs/REPO_LOCAL_RULES.md
+docs/runtime-state.md
+docs/project-context.md
+docs/AGENT_ORCHESTRATION.md
+docs/AGENT_OPERATOR_SURFACE.md
+docs/USER_COPYPASTE_BLOCKS.md SECTION 22
+
+Expected state:
+- branch: master
+- upstream parity: 0 0
+- working tree: clean before new work
+- the parking decision after `f7d4733 docs: park preflight operator surface` is
+  the current common-foundation state unless a newer remote commit says
+  otherwise
+
+Current decision:
+- `cde00ca feat: add preflight preview card` implemented the standalone raw
+  preflight preview card.
+- Human review accepted the preflight preview card as sufficient for the
+  current operator review surface.
+- Operator Review Surface MVP now has two read-only faces:
+  - an orchestration flow-result card
+  - a standalone raw preflight preview card
+- A human can inspect preflight status, `safe_to_start_real_runner`, reasons,
+  inspected paths, authority summary, execution boundary, and human next action.
+- The common foundation is parked at usable preflight / operator review-surface
+  coverage.
+
+Boundary:
+- `safe_to_start_real_runner=true` is not execution permission.
+- Any real runner still requires a separate, explicitly authorized runner slice.
+- Do not implement real `codex exec`.
+- Do not add `subprocess.run`.
+- Do not add stdin piping.
+- Do not add a runtime worker loop.
+- Do not add an external notification service.
+- Do not create `.agent/reports`, `.agent/logs`, or `.agent/needs_human.json`
+  runtime artifacts.
+- Do not touch `.ymmp`, render, production, rights, publishing, G-28, Newsroom,
+  G-27, ClipPipeGen, RSS, OPML, Inoreader, or NotebookLM unless a new user
+  request explicitly changes scope.
+
+Allowed next common-foundation entry, only with explicit user approval:
+- docs-only runner consumption design
+- pre-execution dry-run flow design
+- a narrow audit that verifies the parked review-surface contract without
+  opening execution
+
+If the user only asks to preserve context and sync remote:
+- update only docs/runtime-state.md, docs/project-context.md, and, if useful,
+  docs/USER_COPYPASTE_BLOCKS.md
+- run `git diff --check`
+- run `git diff --cached --check`
+- run a staged forbidden scan before commit
+- omit pytest for docs-only changes unless scripts/tests/src/gui changed
+- stage explicit files only; do not use `git add -A`
+- commit and push
+- verify `git rev-list --left-right --count "HEAD...@{u}"` returns `0 0`
+
+Completion report should state:
+- branch, HEAD, and upstream parity
+- changed files
+- commands run and outcomes
+- whether artifacts were generated
+- that scripts/tests/.agent/gui/src/samples were untouched
+- that real execution remains closed
+- the next safe entry point
+
+END_COPY_BLOCK_FOR_AGENT
+
 ===== SECTION 21: Newsroom Handoff Supervision Gate Request Authority =====
 Use this prompt when resuming after the Newsroom handoff supervision gate. The
 current decision is request_authority / no-op_wait. The Newsroom repo and export

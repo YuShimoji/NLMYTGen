@@ -1,5 +1,12 @@
 # Runtime State — NLMYTGen
 
+- **Remote handoff sealed for parked common foundation (2026-06-09)**:
+  The reusable restart prompt for this exact parked state is recorded in
+  `docs/USER_COPYPASTE_BLOCKS.md` SECTION 22. Use it only when the next operator
+  explicitly resumes common foundation handoff / parking context from another
+  terminal. The parked state remains docs-only: no real runner, subprocess,
+  stdin piping, runtime worker loop, external notification, or `.agent` runtime
+  artifact path is opened by this handoff.
 - **Common foundation preflight / operator surface parked after human review (2026-06-09)**:
   Human review accepts the standalone preflight preview card from
   `cde00ca feat: add preflight preview card` as sufficient for the current
