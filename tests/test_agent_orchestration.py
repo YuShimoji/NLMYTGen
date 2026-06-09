@@ -820,6 +820,7 @@ def test_operator_review_card_summarizes_needs_human_single_fake_flow(
     card = agent_operator_surface.render_operator_review_card(result)
 
     for section in (
+        "## Summary",
         "## Status",
         "## What happened",
         "## Human decision needed",
@@ -829,15 +830,30 @@ def test_operator_review_card_summarizes_needs_human_single_fake_flow(
         "## Raw identifiers",
     ):
         assert section in card
+    assert card.index("## Summary") < card.index("## Status")
     assert "- Human action required: yes" in card
-    assert "- Worker / scenario: audit / needs_human" in card
-    assert "- Gate decision: needs_human" in card
+    assert "- Card mode: real result" in card
+    assert "- Attempted work: Review an existing local simulation result" in card
+    assert "- Worker / scenario: Audit worker / Needs human review" in card
+    assert "- Gate result: needs human review" in card
+    assert "- Decision to make: Inspect the listed artifacts" in card
     assert "- status:needs_human" in card
-    assert "Fake runner needs human review." in card
     assert ".agent/reports/_tmp_pytest_agent_orchestration/single-needs-human-card-audit.report.json" in card
     assert ".agent/reports/_tmp_pytest_agent_orchestration/needs_human.json" in card
     assert "- Real Codex execution: not started" in card
     assert "- External notification service: not implemented" in card
+    assert "- fail_closed:" not in card
+
+
+def test_operator_review_card_marks_example_paths_as_illustrative() -> None:
+    card = agent_operator_surface.render_operator_review_card(
+        agent_operator_surface.EXAMPLE_SINGLE_FAKE_FLOW
+    )
+
+    assert "- Card mode: example" in card
+    assert "This is a deterministic sample card" in card
+    assert "Example paths only; this example command does not check whether these files exist." in card
+    assert "single_fake_execution_flow_for_test" in card.split("## Raw identifiers", 1)[1]
 
 
 def test_operator_review_card_surfaces_preflight_block_without_runner(
@@ -858,8 +874,8 @@ def test_operator_review_card_surfaces_preflight_block_without_runner(
 
     card = agent_operator_surface.render_operator_review_card(result)
 
-    assert "- Preflight: blocked" in card
-    assert "- Runner started: no" in card
+    assert "- Preflight check: blocked" in card
+    assert "- Local simulation runner started: no" in card
     assert "- Runner report written: no" in card
     assert "- Human action required: yes" in card
     assert "- execution_policy.codex_exec_enabled:false" in card

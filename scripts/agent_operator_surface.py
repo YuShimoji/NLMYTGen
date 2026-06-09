@@ -11,6 +11,7 @@ from typing import Any
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 EXAMPLE_SINGLE_FAKE_FLOW: dict[str, Any] = {
+    "card_mode": "example",
     "mode": "single_fake_execution_flow_for_test",
     "scenario": "needs_human",
     "worker": "audit",
@@ -59,7 +60,10 @@ EXAMPLE_SINGLE_FAKE_FLOW: dict[str, Any] = {
             "tests_status": "passed",
             "summary": "fake runner needs_human report",
             "next_recommended_worker": "summarize",
-            "human_question": "Fake runner needs human review.",
+            "human_question": (
+                "Review the example report shape and decide whether the next real "
+                "worker result should be summarized, fixed, or held for more human input."
+            ),
             "copyable_next_prompt": "",
         },
         "notify_stub": {
@@ -104,6 +108,74 @@ def _bullet_list(values: list[str], *, fallback: str) -> list[str]:
     return [f"- {value}" for value in values]
 
 
+def _card_mode(flow_result: dict[str, Any]) -> str:
+    return "example" if flow_result.get("card_mode") == "example" else "real result"
+
+
+def _worker_label(worker: Any) -> str:
+    labels = {
+        "advance": "Advance worker",
+        "audit": "Audit worker",
+        "fix": "Fix worker",
+        "summarize": "Summarize worker",
+        "escalate": "Escalation lane",
+    }
+    text = _text(worker)
+    return labels.get(text, text)
+
+
+def _scenario_label(scenario: Any) -> str:
+    labels = {
+        "pass": "No human stop",
+        "needs_human": "Needs human review",
+        "blocked": "Blocked",
+        "invalid_json": "Invalid report JSON",
+        "missing_report": "Missing report",
+        "nonzero_exit": "Runner returned an error",
+        "timeout": "Timed out",
+    }
+    text = _text(scenario)
+    return labels.get(text, text)
+
+
+def _flow_label(mode: Any) -> str:
+    labels = {
+        "single_fake_execution_flow_for_test": "Review an existing local simulation result",
+    }
+    text = _text(mode)
+    return labels.get(text, text)
+
+
+def _gate_label(decision: str) -> str:
+    labels = {
+        "needs_human": "needs human review",
+        "pass": "passed",
+        "blocked": "blocked",
+        "not_run": "not run",
+    }
+    return labels.get(decision, decision)
+
+
+def _plain_result(
+    worker: Any,
+    preflight: dict[str, Any],
+    runner_started: bool,
+    gate: dict[str, Any],
+    runner: dict[str, Any],
+    gate_decision: str,
+) -> str:
+    worker_label = _worker_label(worker)
+    if preflight.get("allowed") is False:
+        return f"{worker_label} stopped at preflight before any runner output."
+    if gate.get("needs_human") is True:
+        return f"{worker_label} reached a human-review stop."
+    if runner.get("error_kind"):
+        return f"{worker_label} produced an abnormal runner result."
+    if runner_started and gate:
+        return f"{worker_label} completed with gate result: {_gate_label(gate_decision)}."
+    return f"{worker_label} has no complete gate result to review."
+
+
 def _unique_preserve_order(values: list[str]) -> list[str]:
     seen: set[str] = set()
     result: list[str] = []
@@ -144,14 +216,31 @@ def _human_decision_line(
     runner: dict[str, Any],
 ) -> str:
     if preflight.get("allowed") is False:
-        return "Human action required: yes, because preflight blocked the worker before any runner output."
+        return "Human action required: yes. Decide whether to fix the preflight reason before trying again."
     if gate.get("needs_human") is True:
-        return "Human action required: yes, because the gate decision is needs_human."
+        return (
+            "Human action required: yes. Decide whether to continue with the suggested next worker, "
+            "send the result back for a fix, or keep the run stopped for more human input."
+        )
     if runner.get("fail_closed") is True:
-        return "Human action required: yes, because the flow failed closed."
+        return "Human action required: yes. Decide how to handle the abnormal runner result before continuing."
     if runner_started and gate:
         return "Human action required: no immediate gate-required action."
     return "Human action required: unknown; no gate result is present."
+
+
+def _decision_to_make(preflight: dict[str, Any], gate: dict[str, Any], runner: dict[str, Any]) -> str:
+    if preflight.get("allowed") is False:
+        return "Fix or intentionally leave the preflight block; do not proceed until it is understood."
+    if gate.get("needs_human") is True:
+        next_worker = _text(gate.get("next_recommended_worker"), "the next worker")
+        return f"Inspect the listed artifacts, then choose whether to run {next_worker}, request a fix, or stop."
+    if runner.get("error_kind"):
+        return "Inspect the runner error and choose a fix or audit path before any continuation."
+    if gate:
+        next_worker = _text(gate.get("next_recommended_worker"), "the next worker")
+        return f"No required stop is shown; the safe continuation is {next_worker} after optional review."
+    return "No decision can be made from this card alone because gate data is missing."
 
 
 def _human_action_required(preflight: dict[str, Any], runner_started: bool, gate: dict[str, Any], runner: dict[str, Any]) -> str:
@@ -177,8 +266,8 @@ def _next_actions(preflight: dict[str, Any], runner_started: bool, runner: dict[
         ]
     if gate.get("needs_human") is True:
         return [
-            "Open the report and needs-human stub paths listed above.",
-            "Answer the human question or choose the next worker after inspecting the gate reasons.",
+            "Open the listed report and local needs-human artifacts if this is a real result.",
+            "Choose whether to continue with the suggested worker, request a fix, or keep the run stopped.",
             "Treat this as a local review stop, not a production or release approval.",
         ]
     if runner.get("error_kind"):
@@ -216,24 +305,57 @@ def render_operator_review_card(flow_result: dict[str, Any]) -> str:
     gate_reasons = _as_strings(gate.get("reasons"))
     preflight_reasons = _as_strings(preflight.get("reasons"))
     runner_report_written = runner.get("report_written") if runner_started else False
+    card_mode = _card_mode(flow_result)
+    is_example = card_mode == "example"
+    human_action = _human_action_required(preflight, runner_started, gate, runner)
     codex_started = flow_result.get("codex_execution_started") is True or runner.get("codex_execution_started") is True
     real_process_started = (
         flow_result.get("real_subprocess_started") is True or runner.get("real_subprocess_started") is True
     )
+    file_note = (
+        "Example paths only; this example command does not check whether these files exist."
+        if is_example
+        else "Paths reported by the flow result; open them before making the decision."
+    )
+
+    summary_lines = [
+        f"- Card mode: {card_mode}",
+        f"- Plain-language result: {_plain_result(flow_result.get('worker'), preflight, runner_started, gate, runner, gate_decision)}",
+        f"- Human action required: {human_action}",
+        f"- Decision to make: {_decision_to_make(preflight, gate, runner)}",
+    ]
+    if is_example:
+        summary_lines.append("- This is a deterministic sample card; it did not run or verify any worker artifacts.")
+
+    raw_lines = [
+        f"- mode: {_text(flow_result.get('mode'))}",
+        f"- worker: {_text(flow_result.get('worker'))}",
+        f"- scenario: {_text(flow_result.get('scenario'))}",
+        f"- preflight_allowed: {_text(preflight.get('allowed'))}",
+        f"- runner_started: {_yes_no(runner_started)}",
+        f"- gate_decision: {gate_decision}",
+        f"- report_path: {_text(runner.get('report_path'), _text(preflight.get('report_path')))}",
+    ]
+    abnormal_runner = bool(runner.get("error_kind")) or runner.get("timed_out") is True or runner.get("exit_code") not in (0, None)
+    if preflight.get("allowed") is False or abnormal_runner:
+        raw_lines.append(f"- fail_closed: {_yes_no(runner.get('fail_closed'))}")
 
     lines: list[str] = [
         "# NLMYTGen Operator Review Card",
         "",
+        "## Summary",
+        *summary_lines,
+        "",
         "## Status",
         f"- Flow status: {_text(flow_result.get('status'))}",
-        f"- Preflight: {preflight_state}",
-        f"- Runner started: {_yes_no(runner_started)}",
-        f"- Gate decision: {gate_decision}",
-        f"- Human action required: {_human_action_required(preflight, runner_started, gate, runner)}",
+        f"- Preflight check: {preflight_state}",
+        f"- Local simulation runner started: {_yes_no(runner_started)}",
+        f"- Gate result: {_gate_label(gate_decision)}",
+        f"- Human action required: {human_action}",
         "",
         "## What happened",
-        f"- Attempted flow: {_text(flow_result.get('mode'))}",
-        f"- Worker / scenario: {_text(flow_result.get('worker'))} / {_text(flow_result.get('scenario'))}",
+        f"- Attempted work: {_flow_label(flow_result.get('mode'))}",
+        f"- Worker / scenario: {_worker_label(flow_result.get('worker'))} / {_scenario_label(flow_result.get('scenario'))}",
         f"- Prompt: {_text(preflight.get('prompt_path'))}",
         f"- Schema: {_text(preflight.get('schema_path'))}",
         f"- Planned report: {_text(preflight.get('report_path'))}",
@@ -244,13 +366,15 @@ def render_operator_review_card(flow_result: dict[str, Any]) -> str:
         "",
         "## Human decision needed",
         f"- {_human_decision_line(preflight, runner_started, gate, runner)}",
-        f"- Human question: {_text(gate.get('human_question'), 'none')}",
+        f"- Decision to make: {_decision_to_make(preflight, gate, runner)}",
+        f"- Report note: {_text(gate.get('human_question'), 'none')}",
         "- Gate reasons:",
         *_bullet_list(gate_reasons, fallback="none"),
         "- Preflight reasons:",
         *_bullet_list(preflight_reasons, fallback="none"),
         "",
         "## Files to inspect",
+        f"- Note: {file_note}",
         *_bullet_list(files, fallback="No inspectable files were reported."),
         "",
         "## Safety boundary",
@@ -265,14 +389,7 @@ def render_operator_review_card(flow_result: dict[str, Any]) -> str:
         *_bullet_list(_next_actions(preflight, runner_started, runner, gate), fallback="none"),
         "",
         "## Raw identifiers",
-        f"- mode: {_text(flow_result.get('mode'))}",
-        f"- worker: {_text(flow_result.get('worker'))}",
-        f"- scenario: {_text(flow_result.get('scenario'))}",
-        f"- preflight_allowed: {_text(preflight.get('allowed'))}",
-        f"- runner_started: {_yes_no(runner_started)}",
-        f"- gate_decision: {gate_decision}",
-        f"- fail_closed: {_yes_no(runner.get('fail_closed'))}",
-        f"- report_path: {_text(runner.get('report_path'), _text(preflight.get('report_path')))}",
+        *raw_lines,
     ]
     return "\n".join(lines) + "\n"
 
