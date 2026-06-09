@@ -1039,8 +1039,10 @@ Completion report:
 
 ===== SECTION 21: Newsroom Handoff Supervision Gate Request Authority =====
 Use this prompt when resuming after the Newsroom handoff supervision gate. The
-current decision is request_authority / no-op_wait. Do not implement until the
-missing cross-repo authority and concrete export paths are supplied.
+current decision is request_authority / no-op_wait. The Newsroom repo and export
+paths were verified read-only on 2026-06-09, but do not implement until the
+human explicitly chooses copy-in versus read-only reference and explicitly
+authorizes pausing or superseding the G-28 game_mechanics lane.
 
 For ChatGPT copy/paste reports, wrap the whole report in one outer Markdown
 code fence. Keep `BEGIN_COPY_BLOCK_FOR_CHATGPT` and
@@ -1069,29 +1071,43 @@ git diff --cached --name-only
 - docs/REPO_LOCAL_RULES.md
 - docs/runtime-state.md
 - docs/project-context.md の Latest supervision gate
+- docs/verification/NEWSROOM-HANDOFF-SUPERVISION-GATE-2026-06-09.md
 - docs/USER_COPYPASTE_BLOCKS.md SECTION 21
 
 現在の判定:
 - NLMYTGen active lane は G-28 game_mechanics diagnostic reviewability / later scoped YMM4-saved carrier review conditions。
 - active artifact は g28_lecture_diagram_carrier_game_mechanics_explanation_v1。
 - Newsroom handoff は candidate downstream input であり、NLMYTGen authority ではない。
-- Newsroom export path は prompt 内では data\exports\episode_756343df9853 という repo-relative path だけ。
-- NLMYTGen 環境から data\exports\episode_756343df9853 は見えていない。
-- Newsroom repo full path / export full path / handoff filenames / copy-vs-read-only decision が未提供。
+- Newsroom repo は read-only 確認済み: C:\Users\thank\Storage\Media Contents Projects\newsroom-yt-pipeline
+- Newsroom repo state は main / 1296b8e / HEAD...origin/main=0 0。
+- Newsroom export folder は read-only 確認済み: C:\Users\thank\Storage\Media Contents Projects\newsroom-yt-pipeline\data\exports\episode_756343df9853
+- 確認済み handoff files:
+  - export_manifest.json
+  - script.csv
+  - script_ir.json
+  - visual_ir.json
+  - visual_plan.md
+  - source_list.md
+  - quote_manifest.yml
+  - asset_manifest.yml
+  - ymm4_notes.md
+- export_manifest は episode_756343df9853 / story_20260603_503c39418f15862d / script_d2a46430e084 / packet_20260603_2de578dcd4b0 / warnings=[] / deferred=[]。
+- source_list は primary Microsoft Blog / critical NIST。
+- ymm4_notes は speaker=ナレーター / warningsなし / human_required 0。
+- ただし copy-vs-read-only decision と G-28 lane pause/supersede decision は未提供。
 
 次に必要な human authority:
-1. Newsroom repo のフルパス
-2. export folder のフルパス
-3. manifest / CSV / JSON / Markdown handoff のファイル名
-4. NLMYTGen側へコピーするか、read-only path参照にするかの人間判断
-5. G-28 game_mechanics active lane を一時停止/上書きして Newsroom downstream intake に入るかの明示判断
+1. NLMYTGen側へコピーするか、read-only path参照にするかの人間判断
+2. G-28 game_mechanics active lane を一時停止/上書きして Newsroom downstream intake に入るかの明示判断
+3. downstream intake を開始する場合の最初の成果物範囲: docs-only intake plan / manifest mapping / adapter implementation のどれか
 
 許可:
-- 上記が揃った場合のみ、read-onlyで存在確認・manifest整合・raw/private/copyright-unclear assetなしを確認する。
+- 上記が揃った場合のみ、read-onlyで再確認・manifest整合・raw/private/copyright-unclear assetなしを確認する。
 - read-only確認で十分なら docs/runtime-state.md / docs/project-context.md / docs/verification の狭い記録だけ検討する。
 
 禁止:
 - 実装
+- export files の自動 copy-in
 - Newsroom subprocess/path/pip dependency
 - full .ymmp generation
 - render / production / rights / creative approval

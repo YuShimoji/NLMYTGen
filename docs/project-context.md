@@ -80,26 +80,33 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 ## DECISION LOG
 
 Latest supervision gate (2026-06-09): `newsroom_handoff_request_authority_no_op_wait`
-records the cross-repo review of the supplied `newsroom-yt-pipeline` handoff.
-The handoff is candidate downstream input, not active NLMYTGen authority yet.
-NLMYTGen remains on the G-28 `game_mechanics_explanation` diagnostic lane. The
-Newsroom export was only identified as repo-relative
-`data\exports\episode_756343df9853`; it was not visible from this checkout, and
-the Newsroom repo full path, export folder full path, handoff filenames, and
-copy-in versus read-only reference decision were not supplied. Therefore the
-selected decision is `request_authority / no-op_wait`. Do not infer paths, do
-not couple to Newsroom by subprocess/path/pip dependency, do not start
+records the refreshed cross-repo review of the supplied `newsroom-yt-pipeline`
+handoff. The handoff is candidate downstream input, not active NLMYTGen
+authority yet. NLMYTGen remains on the G-28 `game_mechanics_explanation`
+diagnostic lane. This refresh did verify the Newsroom repo and export read-only:
+`C:\Users\thank\Storage\Media Contents Projects\newsroom-yt-pipeline` was on
+`main` / `1296b8e` with `HEAD...origin/main=0 0`, and
+`C:\Users\thank\Storage\Media Contents Projects\newsroom-yt-pipeline\data\exports\episode_756343df9853`
+contained `export_manifest.json`, `script.csv`, `script_ir.json`,
+`visual_ir.json`, `visual_plan.md`, `source_list.md`, `quote_manifest.yml`,
+`asset_manifest.yml`, and `ymm4_notes.md`. The selected decision still remains
+`request_authority / no-op_wait` because no human decision has authorized
+copy-in versus read-only reference, no human decision has paused or superseded
+the current G-28 game_mechanics lane, and the inspected Newsroom export is not
+NLMYTGen production proof. Do not couple to Newsroom by subprocess/path/pip
+dependency, copy runtime export files into tracked artifacts, start
 implementation, Review Console changes, context visual plugin work, `.ymmp`
 generation, render, production timing, rights approval, creative final
 acceptance, G-27 revival, ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, common
 foundation, or real `codex exec` work from this gate. If the user wants
-Newsroom downstream intake, first collect the Newsroom repo full path, export
-folder full path, manifest / CSV / JSON / Markdown filenames, copy-in versus
-read-only reference decision, and explicit authority to pause/supersede the
-current G-28 game_mechanics lane. Reporting format scar: for ChatGPT handoff
-blocks, wrap the whole copy block in one outer Markdown code fence, keep
-`BEGIN_COPY_BLOCK_FOR_CHATGPT` and `END_COPY_BLOCK_FOR_CHATGPT` inside it, and
-do not use nested code fences in the `next prompt` field.
+Newsroom downstream intake, first collect explicit authority for copy-in versus
+read-only reference and explicit authority to pause/supersede the current G-28
+game_mechanics lane. Detailed gate evidence is in
+`docs/verification/NEWSROOM-HANDOFF-SUPERVISION-GATE-2026-06-09.md`.
+Reporting format scar: for ChatGPT handoff blocks, wrap the whole copy block in
+one outer Markdown code fence, keep `BEGIN_COPY_BLOCK_FOR_CHATGPT` and
+`END_COPY_BLOCK_FOR_CHATGPT` inside it, and do not use nested code fences in the
+`next prompt` field.
 
 Latest common foundation decision (2026-06-09): `single_fake_execution_flow_committed_audited`
 records that `post_commit_audit_single_fake_execution_flow_001` passed for
