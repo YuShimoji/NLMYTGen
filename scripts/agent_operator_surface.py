@@ -75,6 +75,32 @@ EXAMPLE_SINGLE_FAKE_FLOW: dict[str, Any] = {
 }
 
 
+EXAMPLE_PREFLIGHT_RESULT: dict[str, Any] = {
+    "allowed": False,
+    "mode": "real_runner",
+    "worker": "audit",
+    "reasons": [
+        "execution_policy.codex_exec_enabled:false",
+        "missing_explicit_human_authority",
+    ],
+    "safe_to_start_real_runner": False,
+    "codex_execution_started": False,
+    "real_subprocess_started": False,
+    "report_path": ".agent/reports/example-audit.report.json",
+    "inspected_paths": [
+        ".agent/prompt_catalog/audit.md",
+        ".agent/schemas/worker_report.schema.json",
+        ".agent/reports/example-audit.report.json",
+    ],
+    "authority_summary": {
+        "execution_policy_enabled": False,
+        "human_real_execution_authority": False,
+        "notification_policy": "ambiguous",
+        "environment_policy": "not_inspected",
+    },
+}
+
+
 def _as_dict(value: Any) -> dict[str, Any]:
     return value if isinstance(value, dict) else {}
 
@@ -94,6 +120,28 @@ def _text(value: Any, fallback: str = "unknown") -> str:
     return text if text else fallback
 
 
+def _has_credential_marker(value: str) -> bool:
+    token_markers = (
+        "s" + "k-",
+        "g" + "hp_",
+        "github" + "_pat_",
+        "A" + "KIA",
+        "xox" + "b-",
+        "xox" + "p-",
+        "xox" + "a-",
+        "xox" + "r-",
+        "AI" + "za",
+    )
+    return any(marker in value for marker in token_markers)
+
+
+def _safe_text(value: Any, fallback: str = "unknown") -> str:
+    text = _text(value, fallback)
+    if _has_credential_marker(text):
+        return "[redacted credential-like value]"
+    return text
+
+
 def _yes_no(value: Any) -> str:
     if value is True:
         return "yes"
@@ -106,6 +154,12 @@ def _bullet_list(values: list[str], *, fallback: str) -> list[str]:
     if not values:
         return [f"- {fallback}"]
     return [f"- {value}" for value in values]
+
+
+def _safe_bullet_list(values: list[str], *, fallback: str) -> list[str]:
+    if not values:
+        return [f"- {fallback}"]
+    return [f"- {_safe_text(value)}" for value in values]
 
 
 def _card_mode(flow_result: dict[str, Any]) -> str:
@@ -394,6 +448,122 @@ def render_operator_review_card(flow_result: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
+def _preflight_state(preflight: dict[str, Any]) -> str:
+    allowed = preflight.get("allowed")
+    if allowed is True:
+        return "allowed"
+    if allowed is False:
+        return "blocked"
+    return "unknown"
+
+
+def _preflight_paths(preflight: dict[str, Any]) -> list[str]:
+    paths = _as_strings(preflight.get("inspected_paths"))
+    for key in ("prompt_path", "schema_path", "report_path"):
+        value = preflight.get(key)
+        if isinstance(value, str):
+            paths.append(value)
+    return _unique_preserve_order(paths)
+
+
+def _authority_summary_lines(preflight: dict[str, Any]) -> list[str]:
+    authority = _as_dict(preflight.get("authority_summary"))
+    if not authority:
+        return ["- none"]
+    preferred_order = [
+        "execution_policy_enabled",
+        "human_real_execution_authority",
+        "notification_policy",
+        "environment_policy",
+    ]
+    keys = [key for key in preferred_order if key in authority]
+    keys.extend(sorted(key for key in authority if key not in keys))
+    return [f"- {key}: {_safe_text(authority.get(key))}" for key in keys]
+
+
+def _preflight_next_actions(preflight: dict[str, Any]) -> list[str]:
+    if preflight.get("allowed") is False:
+        return [
+            "Compare the listed reasons against authority, path, and repo-state inputs before rerunning preflight.",
+            "Keep this as a preview card; do not infer execution authority from the card.",
+        ]
+    if preflight.get("safe_to_start_real_runner") is True:
+        return [
+            "Verify the authority summary, inspected paths, and clean execution boundary before a separate runner step.",
+            "Treat this as start permission only for a separately authorized real-runner slice.",
+        ]
+    if preflight.get("allowed") is True:
+        return [
+            "Use this as a read-only preview; dry-run and fake-helper allows still cannot start a real runner.",
+            "Inspect the paths and authority summary before deciding the next adapter or review step.",
+        ]
+    return [
+        "Regenerate the preflight result with complete mode, worker, authority, path, and safety fields.",
+        "Do not start any runner from an unknown preflight state.",
+    ]
+
+
+def render_preflight_preview_card(preflight_result: dict[str, Any]) -> str:
+    """Render a read-only Markdown preview card from a raw preflight result."""
+    if not isinstance(preflight_result, dict):
+        raise TypeError("preflight_result must be a dict")
+
+    state = _preflight_state(preflight_result)
+    reasons = _as_strings(preflight_result.get("reasons"))
+    inspected_paths = _preflight_paths(preflight_result)
+    codex_started = preflight_result.get("codex_execution_started") is True
+    real_process_started = preflight_result.get("real_subprocess_started") is True
+    safe_to_start = preflight_result.get("safe_to_start_real_runner")
+    human_action = "yes" if preflight_result.get("allowed") is False else "review"
+    if safe_to_start is True:
+        human_next_action = "Confirm explicit authority and hand this to a separate real-runner slice only if that slice is authorized."
+    elif preflight_result.get("allowed") is True:
+        human_next_action = "Inspect the preview and keep real runner start disabled for this card."
+    else:
+        human_next_action = "Fix or intentionally hold the listed block reasons before any runner step."
+
+    lines: list[str] = [
+        "# NLMYTGen Preflight Preview Card",
+        "",
+        "## Summary",
+        f"- Preflight status: {state}",
+        f"- Mode / worker: {_safe_text(preflight_result.get('mode'))} / {_safe_text(preflight_result.get('worker'))}",
+        f"- Allowed: {_yes_no(preflight_result.get('allowed'))}",
+        f"- Safe to start real runner: {_yes_no(safe_to_start)}",
+        f"- Human action required: {human_action}",
+        "- This card is read-only; it did not start a runner or validate a worker report.",
+        "",
+        "## Reasons",
+        *_safe_bullet_list(reasons, fallback="none"),
+        "",
+        "## Files / Paths Inspected",
+        *_safe_bullet_list(inspected_paths, fallback="No inspected paths were reported."),
+        "",
+        "## Authority Summary",
+        *_authority_summary_lines(preflight_result),
+        "",
+        "## Execution Boundary",
+        f"- Real Codex execution: {'started' if codex_started else 'not started'}",
+        f"- Real subprocess runner: {'started' if real_process_started else 'not started'}",
+        "- Codex stdin piping: not implemented",
+        "- Runtime worker loop: not implemented",
+        "- External notification service: not implemented",
+        "- Runtime artifacts: not written by preflight preview",
+        "",
+        "## Human Next Action",
+        f"- {human_next_action}",
+        *_safe_bullet_list(_preflight_next_actions(preflight_result), fallback="none"),
+        "",
+        "## Raw Identifiers",
+        f"- mode: {_safe_text(preflight_result.get('mode'))}",
+        f"- worker: {_safe_text(preflight_result.get('worker'))}",
+        f"- preflight_allowed: {_yes_no(preflight_result.get('allowed'))}",
+        f"- safe_to_start_real_runner: {_yes_no(safe_to_start)}",
+        f"- report_path: {_safe_text(preflight_result.get('report_path'))}",
+    ]
+    return "\n".join(lines) + "\n"
+
+
 def _load_json(path: Path) -> dict[str, Any]:
     if not path.is_absolute():
         path = REPO_ROOT / path
@@ -418,15 +588,21 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("flow_result", nargs="?", help="Path to an existing flow result JSON.")
     parser.add_argument("--example", action="store_true", help="Print a deterministic example card.")
+    parser.add_argument("--preflight-example", action="store_true", help="Print a deterministic preflight preview card.")
     args = parser.parse_args(argv)
 
     try:
+        selected_inputs = sum(1 for selected in (args.example, args.preflight_example, bool(args.flow_result)) if selected)
+        if selected_inputs != 1:
+            parser.error("provide one of flow_result, --example, or --preflight-example")
+
+        if args.preflight_example:
+            print(render_preflight_preview_card(EXAMPLE_PREFLIGHT_RESULT), end="")
+            return 0
         if args.example:
             payload = EXAMPLE_SINGLE_FAKE_FLOW
-        elif args.flow_result:
-            payload = _load_json(Path(args.flow_result))
         else:
-            parser.error("provide a flow_result JSON path or use --example")
+            payload = _load_json(Path(args.flow_result))
 
         print(render_operator_review_card(payload), end="")
     except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:

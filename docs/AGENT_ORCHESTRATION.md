@@ -192,13 +192,13 @@ the gate decided, whether human action is required, which artifacts to inspect,
 what is explicitly not happening, and the next safe action. The human-readable
 contract and example live in `docs/AGENT_OPERATOR_SURFACE.md`.
 
-The current renderer consumes preflight data when it is embedded in a complete
-flow result, such as the single fake execution flow. It is not yet a standalone
-preflight preview adapter. A future dry-run or real-runner preview adapter must
-wrap a raw preflight result with `runner_started=false`, gate placeholders, and
-the safety fields needed by the card, including `safe_to_start_real_runner` and
-`authority_summary`. Until that adapter exists, an operator card remains a
-downstream review surface, not permission to start a real runner.
+The renderer also has a standalone preflight preview card for raw preflight
+results. It shows whether the preflight is blocked or allowed, whether
+`safe_to_start_real_runner` is true, which paths were inspected, the authority
+summary, and the execution boundary. This preview adapter is read-only: it does
+not run Codex, start the fake runner, create runtime artifacts, validate a worker
+report, or grant permission by itself. A real runner still requires a separate
+authorized execution slice after a reviewed preflight result.
 
 ## Scope Policy
 

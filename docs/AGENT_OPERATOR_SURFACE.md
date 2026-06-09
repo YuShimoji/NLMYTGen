@@ -1,8 +1,8 @@
 # Agent Operator Surface
 
 This page defines the smallest human-readable review surface for the current
-common foundation fake / single-fake flow. It is a review card, not an execution
-entry point.
+common foundation fake / single-fake flow and standalone preflight preview. It is
+a review card, not an execution entry point.
 
 The card exists so an operator can answer these questions without reading test
 output or Python implementation:
@@ -33,10 +33,23 @@ To render a real card, pass an existing repo-local orchestration flow JSON:
 uv run python scripts/agent_operator_surface.py path\to\flow-result.json
 ```
 
+To render a deterministic raw preflight preview card:
+
+```powershell
+uv run python scripts/agent_operator_surface.py --preflight-example
+```
+
 The script only reads a JSON file inside this repo and prints Markdown. It does
 not run Codex, does not run the local simulation runner, does not create a
 subprocess, does not pipe stdin, does not start a worker loop, and does not send
 external notifications.
+
+The preflight preview adapter takes an already-created preflight result and
+renders it as a read-only Markdown card. It shows the preflight status, mode,
+worker, allow decision, `safe_to_start_real_runner`, reasons, inspected paths,
+authority summary, execution boundary, and human next action. It does not wrap a
+raw preflight result into a runner flow, does not validate a worker report, and
+does not authorize real execution by itself.
 
 ## Example Card
 
@@ -111,11 +124,15 @@ external notifications.
 ## Boundary
 
 The operator card is deliberately downstream of existing outputs. It can make a
-flow understandable, but it is not authority to continue through a gate.
+flow or preflight preview understandable, but it is not authority to continue
+through a gate or start a real runner.
 
 - `needs_human=true` remains a local review stop.
 - `codex_execution_started=false` and `real_subprocess_started=false` remain the
   expected state for the fake and single-fake flow.
+- A preflight preview with `safe_to_start_real_runner=true` is only a readable
+  preview of a preflight result; real execution still belongs to a separate
+  authorized runner slice.
 - Real runner boundary design is still a separate future slice.
 - External notification remains unimplemented; the local notify stub is the only
   visible notification artifact.

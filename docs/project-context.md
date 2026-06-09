@@ -80,6 +80,22 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 ## DECISION LOG
 
 Latest common foundation decision (2026-06-09):
+`standalone_preflight_preview_adapter_mvp_001` implements the read-only adapter
+that converts a raw preflight result into a Markdown preview card. The new
+`render_preflight_preview_card(preflight_result)` and `--preflight-example`
+surface preflight status, mode / worker, allowed, `safe_to_start_real_runner`,
+reasons, inspected paths, authority summary, execution boundary, and human next
+action without wrapping the result into a runner flow. Tests cover blocked raw
+preflight, allowed dry-run preview, authorized real-runner preflight preview,
+the deterministic CLI example, existing flow-card compatibility, and
+credential-like value redaction. This does not implement real `codex exec`,
+`subprocess.run`, stdin piping, runtime worker loop, external notification,
+worker report validation, `.agent` runtime artifact creation, or permission to
+start a real runner. It also does not resume G-28, Newsroom, G-27, ClipPipeGen,
+RSS, OPML, Inoreader, NotebookLM, `.ymmp`, render, rights, production,
+publishing, or release automation.
+
+Latest common foundation decision (2026-06-09):
 `disabled_real_runner_preflight_audit_001` reviewed the implemented preflight
 boundary without opening any real runner path. The audit found the mode split,
 execution boundary, fail-closed path checks, and result shape suitable for the

@@ -1,5 +1,21 @@
 # Runtime State — NLMYTGen
 
+- **Common foundation standalone preflight preview adapter MVP implemented (2026-06-09)**:
+  `scripts/agent_operator_surface.py` now has
+  `render_preflight_preview_card(preflight_result)` plus
+  `--preflight-example` for a deterministic Markdown preview of a raw preflight
+  result. The card shows preflight status, mode / worker, allowed,
+  `safe_to_start_real_runner`, reasons, inspected paths, authority summary,
+  execution boundary, and human next action. It redacts obvious credential-like
+  raw values if they appear in display fields. Existing flow-result operator
+  cards remain intact. This is a read-only adapter: it does not run Codex, start
+  the fake runner, validate a worker report, create `.agent` runtime artifacts,
+  pipe stdin, start a runtime worker loop, or send external notifications. A
+  preview with `safe_to_start_real_runner=true` is still only reviewable
+  preflight output; real execution remains a separate authorized future slice.
+  No G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader, NotebookLM,
+  `.ymmp`, render, rights, production, publishing, or release automation work
+  changed.
 - **Common foundation disabled real runner preflight audit tightened (2026-06-09)**:
   The implemented preflight was audited as the current common-foundation
   boundary before any real runner slice. A narrow regression test now confirms

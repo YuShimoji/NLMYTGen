@@ -1091,6 +1091,106 @@ def test_operator_review_card_surfaces_preflight_block_without_runner(
     assert not any(repo_agent_tmp.glob("*.report.json"))
 
 
+def test_preflight_preview_card_surfaces_blocked_raw_result() -> None:
+    preflight = agent_orchestrator.build_execution_preflight(
+        _load_state(),
+        "audit",
+        repo_status=_clean_repo_status(),
+        notification_policy="local_stub_only",
+    )
+
+    card = agent_operator_surface.render_preflight_preview_card(preflight)
+
+    assert "# NLMYTGen Preflight Preview Card" in card
+    assert "- Preflight status: blocked" in card
+    assert "- Mode / worker: real_runner / audit" in card
+    assert "- Allowed: no" in card
+    assert "- Safe to start real runner: no" in card
+    assert "- execution_policy.codex_exec_enabled:false" in card
+    assert "- missing_explicit_human_authority" in card
+    assert ".agent/prompt_catalog/audit.md" in card
+    assert ".agent/schemas/worker_report.schema.json" in card
+    assert "- execution_policy_enabled: no" in card
+    assert "- human_real_execution_authority: no" in card
+    assert "- notification_policy: local_stub_only" in card
+    assert "- Real Codex execution: not started" in card
+    assert "- Real subprocess runner: not started" in card
+    assert "- Runtime artifacts: not written by preflight preview" in card
+
+
+def test_preflight_preview_card_surfaces_allowed_dry_run_without_real_runner() -> None:
+    preflight = agent_orchestrator.build_execution_preflight(
+        _load_state(),
+        "audit",
+        repo_status=_clean_repo_status(),
+        mode="dry_run_preview",
+    )
+
+    card = agent_operator_surface.render_preflight_preview_card(preflight)
+
+    assert "- Preflight status: allowed" in card
+    assert "- Mode / worker: dry_run_preview / audit" in card
+    assert "- Allowed: yes" in card
+    assert "- Safe to start real runner: no" in card
+    assert "dry-run and fake-helper allows still cannot start a real runner" in card
+    assert "- Real Codex execution: not started" in card
+    assert "- Real subprocess runner: not started" in card
+
+
+def test_preflight_preview_card_surfaces_authorized_real_runner_preview() -> None:
+    preflight = agent_orchestrator.build_execution_preflight(
+        _execution_enabled_state(),
+        "audit",
+        repo_status=_clean_repo_status(),
+        human_real_execution_authority=True,
+        notification_policy="local_stub_only",
+    )
+
+    card = agent_operator_surface.render_preflight_preview_card(preflight)
+
+    assert "- Preflight status: allowed" in card
+    assert "- Safe to start real runner: yes" in card
+    assert "- execution_policy_enabled: yes" in card
+    assert "- human_real_execution_authority: yes" in card
+    assert "separate real-runner slice" in card
+    assert "- Real Codex execution: not started" in card
+    assert "- Real subprocess runner: not started" in card
+
+
+def test_preflight_preview_card_redacts_credential_like_raw_values() -> None:
+    secret_value = "s" + "k-preview-secret-value"
+    preflight = {
+        "allowed": False,
+        "mode": "real_runner",
+        "worker": "audit",
+        "reasons": [f"credential_like_value:{secret_value}"],
+        "safe_to_start_real_runner": False,
+        "codex_execution_started": False,
+        "real_subprocess_started": False,
+        "report_path": ".agent/reports/example-audit.report.json",
+        "inspected_paths": [f".agent/reports/{secret_value}.report.json"],
+        "authority_summary": {"notification_policy": secret_value},
+    }
+
+    card = agent_operator_surface.render_preflight_preview_card(preflight)
+
+    assert secret_value not in card
+    assert "[redacted credential-like value]" in card
+
+
+def test_operator_surface_cli_preflight_example_outputs_markdown(capsys: pytest.CaptureFixture[str]) -> None:
+    exit_code = agent_operator_surface.main(["--preflight-example"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert "# NLMYTGen Preflight Preview Card" in captured.out
+    assert "- Preflight status: blocked" in captured.out
+    assert "- Safe to start real runner: no" in captured.out
+    assert "- Real Codex execution: not started" in captured.out
+    assert "- Runtime artifacts: not written by preflight preview" in captured.out
+    assert captured.err == ""
+
+
 def test_operator_surface_cli_refuses_repo_external_json(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     outside_flow = tmp_path / "flow.json"
     outside_flow.write_text("{}\n", encoding="utf-8")
