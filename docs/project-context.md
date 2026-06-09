@@ -80,6 +80,25 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 ## DECISION LOG
 
 Latest common foundation decision (2026-06-09):
+`disabled_by_default_real_runner_preflight_001_test_first` implements the
+preflight helper only. `scripts/agent_orchestrator.py` now distinguishes
+`real_runner`, `dry_run_preview`, and `fake_runner_helper` modes and returns a
+JSON-serializable result with allow/block reasons, inspected paths,
+`safe_to_start_real_runner`, and authority summary while keeping
+`codex_execution_started=false` and `real_subprocess_started=false` inside
+preflight. `tests/test_agent_orchestration.py` fixes fail-closed cases for
+missing authority, disabled policy, dirty/staged state, unsafe paths, existing
+report overwrite, shell command shape, missing timeout, invalid worker, missing
+schema, prompt ambiguity, notification ambiguity, dry-run preview allow,
+fake-helper allow, and the narrow authorized future real-runner allow case.
+`docs/AGENT_ORCHESTRATION.md` records the updated contract. This does not
+implement real `codex exec`, `subprocess.run`, stdin piping, runtime worker
+loop, external notification, or `.agent` runtime artifact creation. It also
+does not resume G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader,
+NotebookLM, `.ymmp`, render, rights, production, publishing, or release
+automation. Any real runner remains a separate future slice after review.
+
+Latest common foundation decision (2026-06-09):
 `real_runner_preflight_implementation_plan_001_docs_only` accepts
 `docs/verification/REAL-RUNNER-BOUNDARY-DESIGN-2026-06-09.md` as sufficient for
 the next design step and adds

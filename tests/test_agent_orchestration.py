@@ -144,8 +144,10 @@ def _fake_plan(tmp_dir: Path, scenario: str = "pass") -> tuple[dict[str, Any], P
         "audit",
         plan,
         repo_status=_clean_repo_status(),
+        mode="fake_runner_helper",
     )
     assert preflight["allowed"] is True
+    assert preflight["safe_to_start_real_runner"] is False
     return state, state_path, plan
 
 
@@ -439,18 +441,188 @@ def test_preflight_blocks_default_disabled_execution_policy() -> None:
         _load_state(),
         "audit",
         repo_status=_clean_repo_status(),
+        human_real_execution_authority=True,
+        notification_policy="local_stub_only",
     )
 
     assert result["allowed"] is False
+    assert result["safe_to_start_real_runner"] is False
+    assert result["codex_execution_started"] is False
+    assert result["real_subprocess_started"] is False
     assert result["execution_enabled"] is False
     assert "execution_policy.codex_exec_enabled:false" in result["reasons"]
+    assert result["mode"] == "real_runner"
     assert result["worker"] == "audit"
     assert result["prompt_path"] == ".agent/prompt_catalog/audit.md"
     assert result["schema_path"] == ".agent/schemas/worker_report.schema.json"
     assert result["report_path"].startswith(".agent/reports/")
+    assert result["inspected_paths"] == [
+        ".agent/prompt_catalog/audit.md",
+        ".agent/schemas/worker_report.schema.json",
+        result["report_path"],
+    ]
+    assert result["authority_summary"]["execution_policy_enabled"] is False
+    assert result["authority_summary"]["human_real_execution_authority"] is True
+    assert result["authority_summary"]["notification_policy"] == "local_stub_only"
     assert result["max_steps"] == 1
     assert result["timeout_seconds"] == 600
     assert result["repo_status"]["provided"] is True
+
+
+def test_preflight_blocks_real_runner_without_explicit_human_authority() -> None:
+    result = agent_orchestrator.build_execution_preflight(
+        _execution_enabled_state(),
+        "audit",
+        repo_status=_clean_repo_status(),
+        notification_policy="local_stub_only",
+    )
+
+    assert result["allowed"] is False
+    assert result["safe_to_start_real_runner"] is False
+    assert "missing_explicit_human_authority" in result["reasons"]
+    assert result["authority_summary"]["human_real_execution_authority"] is False
+    assert result["codex_execution_started"] is False
+    assert result["real_subprocess_started"] is False
+
+
+def test_preflight_dry_run_preview_allows_without_real_runner_start() -> None:
+    result = agent_orchestrator.build_execution_preflight(
+        _load_state(),
+        "audit",
+        repo_status=_clean_repo_status(),
+        mode="dry_run_preview",
+    )
+
+    assert result["allowed"] is True
+    assert result["safe_to_start_real_runner"] is False
+    assert result["mode"] == "dry_run_preview"
+    assert result["authority_summary"]["execution_policy_enabled"] is False
+    assert result["authority_summary"]["human_real_execution_authority"] is False
+    assert result["codex_execution_started"] is False
+    assert result["real_subprocess_started"] is False
+
+
+def test_preflight_fake_runner_helper_allows_without_real_runner_start() -> None:
+    result = agent_orchestrator.build_execution_preflight(
+        _execution_enabled_state(),
+        "audit",
+        repo_status=_clean_repo_status(),
+        mode="fake_runner_helper",
+    )
+
+    assert result["allowed"] is True
+    assert result["safe_to_start_real_runner"] is False
+    assert result["mode"] == "fake_runner_helper"
+    assert result["authority_summary"]["human_real_execution_authority"] is False
+    assert result["codex_execution_started"] is False
+    assert result["real_subprocess_started"] is False
+
+
+def test_preflight_authorized_future_real_runner_can_start_only_after_all_gates_pass() -> None:
+    result = agent_orchestrator.build_execution_preflight(
+        _execution_enabled_state(),
+        "audit",
+        repo_status=_clean_repo_status(),
+        human_real_execution_authority=True,
+        notification_policy="local_stub_only",
+    )
+
+    assert result["allowed"] is True
+    assert result["safe_to_start_real_runner"] is True
+    assert result["mode"] == "real_runner"
+    assert result["reasons"] == []
+    assert result["authority_summary"] == {
+        "execution_policy_enabled": True,
+        "human_real_execution_authority": True,
+        "notification_policy": "local_stub_only",
+        "environment_policy": "not_inspected",
+    }
+    assert result["inspected_paths"] == [
+        ".agent/prompt_catalog/audit.md",
+        ".agent/schemas/worker_report.schema.json",
+        result["report_path"],
+    ]
+    assert result["codex_execution_started"] is False
+    assert result["real_subprocess_started"] is False
+
+
+def test_preflight_rejects_shell_command_string_shape() -> None:
+    plan = agent_orchestrator.build_execution_plan(
+        _execution_enabled_state(),
+        "audit",
+        timestamp="shell-shape",
+    )
+    unsafe_plan = agent_orchestrator.ExecutionPlan(
+        worker=plan.worker,
+        cwd=plan.cwd,
+        prompt_path=plan.prompt_path,
+        schema_path=plan.schema_path,
+        report_path=plan.report_path,
+        argv="codex exec - --output-schema schema -o report",  # type: ignore[arg-type]
+        stdin_source=plan.stdin_source,
+        prompt_input_mode=plan.prompt_input_mode,
+        codex_execution_started=False,
+        execution_policy=plan.execution_policy,
+    )
+
+    result = agent_orchestrator.build_execution_preflight(
+        _execution_enabled_state(),
+        "audit",
+        unsafe_plan,
+        repo_status=_clean_repo_status(),
+        human_real_execution_authority=True,
+        notification_policy="local_stub_only",
+    )
+
+    assert result["allowed"] is False
+    assert result["safe_to_start_real_runner"] is False
+    assert "command_shape:shell_string" in result["reasons"]
+
+
+def test_preflight_rejects_prompt_source_ambiguity() -> None:
+    plan = agent_orchestrator.build_execution_plan(
+        _execution_enabled_state(),
+        "audit",
+        timestamp="ambiguous-prompt",
+    )
+    ambiguous_plan = agent_orchestrator.ExecutionPlan(
+        worker=plan.worker,
+        cwd=plan.cwd,
+        prompt_path=plan.prompt_path,
+        schema_path=plan.schema_path,
+        report_path=plan.report_path,
+        argv=plan.argv,
+        stdin_source="",
+        prompt_input_mode="",
+        codex_execution_started=False,
+        execution_policy=plan.execution_policy,
+    )
+
+    result = agent_orchestrator.build_execution_preflight(
+        _execution_enabled_state(),
+        "audit",
+        ambiguous_plan,
+        repo_status=_clean_repo_status(),
+        human_real_execution_authority=True,
+        notification_policy="local_stub_only",
+    )
+
+    assert result["allowed"] is False
+    assert result["safe_to_start_real_runner"] is False
+    assert "prompt_source:ambiguous" in result["reasons"]
+
+
+def test_preflight_rejects_notification_ambiguity_for_real_runner() -> None:
+    result = agent_orchestrator.build_execution_preflight(
+        _execution_enabled_state(),
+        "audit",
+        repo_status=_clean_repo_status(),
+        human_real_execution_authority=True,
+    )
+
+    assert result["allowed"] is False
+    assert result["safe_to_start_real_runner"] is False
+    assert "notification_policy:ambiguous" in result["reasons"]
 
 
 def test_preflight_rejects_invalid_worker_name() -> None:
@@ -602,9 +774,16 @@ def test_preflight_allows_known_untracked_only_with_explicit_allowlist() -> None
     repo_status["untracked"] = [".claude/worktrees/example/", "samples/2026-05-16.ymmp"]
     repo_status["allowed_untracked"] = [".claude/worktrees/", "samples/2026-05-16.ymmp"]
 
-    result = agent_orchestrator.build_execution_preflight(_execution_enabled_state(), "audit", repo_status=repo_status)
+    result = agent_orchestrator.build_execution_preflight(
+        _execution_enabled_state(),
+        "audit",
+        repo_status=repo_status,
+        human_real_execution_authority=True,
+        notification_policy="local_stub_only",
+    )
 
     assert result["allowed"] is True
+    assert result["safe_to_start_real_runner"] is True
     assert result["repo_status"]["unknown_untracked"] == []
 
 
@@ -623,9 +802,16 @@ def test_preflight_only_checks_do_not_write_notification_artifacts(repo_agent_tm
     state["needs_human_path"] = (repo_agent_tmp / "needs_human.json").relative_to(REPO_ROOT).as_posix()
     state["notify_stub_log"] = (repo_agent_tmp / "notify_stub.log").relative_to(REPO_ROOT).as_posix()
 
-    result = agent_orchestrator.build_execution_preflight(state, "audit", repo_status=_clean_repo_status())
+    result = agent_orchestrator.build_execution_preflight(
+        state,
+        "audit",
+        repo_status=_clean_repo_status(),
+        human_real_execution_authority=True,
+        notification_policy="local_stub_only",
+    )
 
     assert result["allowed"] is True
+    assert result["safe_to_start_real_runner"] is True
     assert not (repo_agent_tmp / "needs_human.json").exists()
     assert not (repo_agent_tmp / "notify_stub.log").exists()
 
@@ -868,7 +1054,11 @@ def test_operator_review_card_surfaces_preflight_block_without_runner(
         state,
         "audit",
         "pass",
-        repo_status=_clean_repo_status(),
+        repo_status={
+            "tracked_dirty": ["scripts/agent_orchestrator.py"],
+            "staged": [],
+            "untracked": [],
+        },
         timestamp="single-preflight-card",
     )
 
@@ -878,7 +1068,7 @@ def test_operator_review_card_surfaces_preflight_block_without_runner(
     assert "- Local simulation runner started: no" in card
     assert "- Runner report written: no" in card
     assert "- Human action required: yes" in card
-    assert "- execution_policy.codex_exec_enabled:false" in card
+    assert "- repo_status:tracked_dirty" in card
     assert "Resolve the listed preflight reason" in card
     assert not any(repo_agent_tmp.glob("*.report.json"))
 
@@ -954,7 +1144,7 @@ def test_single_fake_execution_flow_failure_scenarios_fail_closed_without_real_e
     assert not (repo_agent_tmp / "notify_stub.log").exists()
 
 
-def test_single_fake_execution_flow_refuses_default_disabled_execution_policy(
+def test_single_fake_execution_flow_allows_default_disabled_execution_policy_without_real_runner(
     repo_agent_tmp: Path,
 ) -> None:
     state = _load_state()
@@ -970,11 +1160,12 @@ def test_single_fake_execution_flow_refuses_default_disabled_execution_policy(
         timestamp="single-disabled-policy",
     )
 
-    assert result["status"] == "preflight_blocked"
-    assert result["runner_started"] is False
-    assert result["runner_result"] is None
-    assert "execution_policy.codex_exec_enabled:false" in result["preflight"]["reasons"]
-    assert not any(repo_agent_tmp.glob("*.report.json"))
+    assert result["status"] == "completed"
+    assert result["preflight"]["allowed"] is True
+    assert result["preflight"]["safe_to_start_real_runner"] is False
+    assert result["preflight"]["mode"] == "fake_runner_helper"
+    assert result["runner_started"] is True
+    assert result["runner_result"]["gate_result"]["decision"] == "pass"
     assert result["codex_execution_started"] is False
     assert result["real_subprocess_started"] is False
 
@@ -1108,8 +1299,9 @@ def test_orchestrator_dry_run_does_not_start_codex() -> None:
     assert result["dry_run"]["codex_execution_started"] is False
     assert result["dry_run"]["argv"][:3] == ["codex", "exec", "-"]
     assert result["dry_run"]["prompt_input_mode"] == "stdin_from_prompt_file"
-    assert result["dry_run"]["preflight"]["allowed"] is False
-    assert "execution_policy.codex_exec_enabled:false" in result["dry_run"]["preflight"]["reasons"]
+    assert result["dry_run"]["preflight"]["allowed"] is True
+    assert result["dry_run"]["preflight"]["safe_to_start_real_runner"] is False
+    assert result["dry_run"]["preflight"]["mode"] == "dry_run_preview"
     assert "gate_result" not in result
 
 

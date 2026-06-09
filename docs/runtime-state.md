@@ -1,5 +1,27 @@
 # Runtime State — NLMYTGen
 
+- **Common foundation disabled-by-default real runner preflight implemented test-first (2026-06-09)**:
+  `scripts/agent_orchestrator.py` now returns a structured preflight result for
+  `real_runner`, `dry_run_preview`, and `fake_runner_helper` modes before any
+  runner can start. The result includes `allowed`, `mode`, `worker`, `reasons`,
+  `safe_to_start_real_runner`, `codex_execution_started=false`,
+  `real_subprocess_started=false`, `report_path`, `inspected_paths`, and an
+  `authority_summary`. Future real runner mode is fail-closed unless execution
+  policy is enabled, explicit human real-execution authority is present, repo
+  status is clean or allowlisted, timeout and paths are valid, command argv is
+  shell-free, prompt source is unambiguous, and notification policy is clear.
+  Dry-run preview and fake runner helper flow can be allowed while still keeping
+  `safe_to_start_real_runner=false`. Tests in `tests/test_agent_orchestration.py`
+  now cover missing authority, disabled policy, dirty/staged state,
+  repo-external/traversal/overwrite paths, shell command string shape, missing
+  timeout, invalid worker, missing schema, prompt ambiguity, notification
+  ambiguity, dry-run allow, fake-helper allow, and authorized future real-runner
+  allow. Real `codex exec`, `subprocess.run`, stdin piping, runtime worker loop,
+  external notification, `.agent` runtime artifact creation, G-28, Newsroom,
+  G-27, ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, `.ymmp`, render, rights,
+  production, publishing, and release automation remain unimplemented and
+  untouched. Next common-foundation move is review of the preflight
+  implementation result before any separate real runner slice.
 - **Common foundation disabled-by-default real runner preflight implementation plan added (2026-06-09)**:
   `docs/verification/REAL-RUNNER-PREFLIGHT-IMPLEMENTATION-PLAN-2026-06-09.md`
   now records the docs-only implementation plan for a future real runner

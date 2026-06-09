@@ -13,6 +13,8 @@ from agent_gate import DEFAULT_STATE_PATH, REPO_ROOT, GateInputError, evaluate_r
 from agent_notify_stub import NotifyInputError, write_notification
 
 WORKERS = ("advance", "audit", "fix", "summarize")
+PREFLIGHT_MODES = ("dry_run_preview", "fake_runner_helper", "real_runner")
+LOCAL_NOTIFICATION_POLICY = "local_stub_only"
 PROMPT_ROOT = REPO_ROOT / ".agent" / "prompt_catalog"
 SCHEMA_ROOT = REPO_ROOT / ".agent" / "schemas"
 REPORT_ROOT = REPO_ROOT / ".agent" / "reports"
@@ -252,13 +254,119 @@ def _execution_policy_reasons(state: dict[str, Any]) -> tuple[list[str], bool, A
     return reasons, execution_enabled, max_steps, timeout_seconds
 
 
+def _preflight_mode_reasons(mode: str) -> list[str]:
+    if mode in PREFLIGHT_MODES:
+        return []
+    return [f"mode:invalid:{mode}"]
+
+
+def _command_shape_reasons(plan: ExecutionPlan) -> list[str]:
+    argv = plan.argv
+    if isinstance(argv, str):
+        return ["command_shape:shell_string"]
+    if not isinstance(argv, list) or any(not isinstance(arg, str) for arg in argv):
+        return ["command_shape:invalid_argv"]
+    if len(argv) < 3 or argv[:3] != ["codex", "exec", "-"]:
+        return ["command_shape:invalid_argv"]
+    shell_markers = ("|", "&&", "||", ";", ">", "<")
+    if any(any(marker in arg for marker in shell_markers) for arg in argv):
+        return ["command_shape:shell_dependent_argument"]
+    return []
+
+
+def _prompt_source_reasons(plan: ExecutionPlan) -> list[str]:
+    if not isinstance(plan.stdin_source, str) or not plan.stdin_source:
+        return ["prompt_source:ambiguous"]
+    if not isinstance(plan.prompt_input_mode, str) or not plan.prompt_input_mode:
+        return ["prompt_source:ambiguous"]
+    if plan.prompt_input_mode != "stdin_from_prompt_file":
+        return [f"prompt_source:unsupported_mode:{plan.prompt_input_mode}"]
+    if plan.stdin_source != plan.prompt_path:
+        return ["prompt_source:mismatch"]
+    return []
+
+
+def _notification_policy_reason(mode: str, notification_policy: str | None) -> str | None:
+    if mode != "real_runner":
+        return None
+    if notification_policy != LOCAL_NOTIFICATION_POLICY:
+        return "notification_policy:ambiguous"
+    return None
+
+
+def _credential_like_reason(value: str) -> bool:
+    token_markers = (
+        "sk-",
+        "ghp_",
+        "github_pat_",
+        "AKIA",
+        "xoxb-",
+        "xoxp-",
+        "xoxa-",
+        "xoxr-",
+        "AIza",
+    )
+    return any(marker in value for marker in token_markers)
+
+
+def _credential_reasons(credential_like_values: Any) -> list[str]:
+    if credential_like_values is None:
+        return []
+    if isinstance(credential_like_values, dict):
+        items = credential_like_values.items()
+    elif isinstance(credential_like_values, list):
+        items = ((f"value_{index}", value) for index, value in enumerate(credential_like_values))
+    else:
+        items = (("value", credential_like_values),)
+    reasons: list[str] = []
+    for label, value in items:
+        if isinstance(value, str) and _credential_like_reason(value):
+            reasons.append(f"credential_like_value:{label}")
+    return reasons
+
+
+def _preflight_inspected_paths(plan: ExecutionPlan | None) -> list[str]:
+    if plan is None:
+        return []
+    values = [plan.prompt_path, plan.schema_path, plan.report_path]
+    result: list[str] = []
+    for value in values:
+        if value and value not in result:
+            result.append(value)
+    return result
+
+
 def build_execution_preflight(
     state: dict[str, Any],
     worker: str,
     plan: ExecutionPlan | None = None,
     repo_status: dict[str, Any] | None = None,
+    *,
+    mode: str = "real_runner",
+    human_real_execution_authority: bool = False,
+    notification_policy: str | None = None,
+    environment_policy: str = "not_inspected",
+    credential_like_values: Any = None,
 ) -> dict[str, Any]:
-    reasons, execution_enabled, max_steps, timeout_seconds = _execution_policy_reasons(state)
+    reasons: list[str] = []
+    mode_reasons = _preflight_mode_reasons(mode)
+    reasons.extend(mode_reasons)
+    policy_reasons, execution_enabled, max_steps, timeout_seconds = _execution_policy_reasons(state)
+    if mode == "real_runner":
+        reasons.extend(policy_reasons)
+        if not human_real_execution_authority:
+            reasons.append("missing_explicit_human_authority")
+    else:
+        reasons.extend(reason for reason in policy_reasons if reason != "execution_policy.codex_exec_enabled:false")
+
+    effective_notification_policy = notification_policy
+    if effective_notification_policy is None and mode in {"dry_run_preview", "fake_runner_helper"}:
+        effective_notification_policy = LOCAL_NOTIFICATION_POLICY
+    notification_reason = _notification_policy_reason(mode, effective_notification_policy)
+    if notification_reason:
+        reasons.append(notification_reason)
+    reasons.extend(_credential_reasons(credential_like_values))
+
     repo_status_result = repo_status_policy_result(repo_status)
     plan_error = ""
 
@@ -274,6 +382,8 @@ def build_execution_preflight(
     report_path = plan.report_path if plan else ""
 
     if plan is not None:
+        reasons.extend(_command_shape_reasons(plan))
+        reasons.extend(_prompt_source_reasons(plan))
         for maybe_reason in (
             _preflight_path_reason(plan.prompt_path, PROMPT_ROOT, "prompt_path", must_exist=True),
             _preflight_path_reason(plan.schema_path, SCHEMA_ROOT, "schema_path", must_exist=True),
@@ -288,7 +398,7 @@ def build_execution_preflight(
         if report_exists:
             reasons.append(f"report_path:already_exists:{plan.report_path}")
 
-    if not repo_status_result["provided"]:
+    if not repo_status_result["provided"] and mode != "dry_run_preview":
         reasons.append("repo_status:not_provided")
     if repo_status_result["tracked_dirty"]:
         reasons.append("repo_status:tracked_dirty")
@@ -297,14 +407,27 @@ def build_execution_preflight(
     if repo_status_result["unknown_untracked"]:
         reasons.append("repo_status:unknown_untracked_files")
 
+    allowed = not reasons
+    safe_to_start_real_runner = allowed and mode == "real_runner"
     return {
-        "allowed": not reasons,
+        "allowed": allowed,
+        "mode": mode,
         "reasons": reasons,
+        "safe_to_start_real_runner": safe_to_start_real_runner,
+        "codex_execution_started": False,
+        "real_subprocess_started": False,
         "execution_enabled": execution_enabled,
         "worker": worker,
         "prompt_path": prompt_path,
         "schema_path": schema_path,
         "report_path": report_path,
+        "inspected_paths": _preflight_inspected_paths(plan),
+        "authority_summary": {
+            "execution_policy_enabled": execution_enabled,
+            "human_real_execution_authority": human_real_execution_authority,
+            "notification_policy": effective_notification_policy or "ambiguous",
+            "environment_policy": environment_policy,
+        },
         "max_steps": max_steps,
         "timeout_seconds": timeout_seconds,
         "repo_status": repo_status_result,
@@ -463,6 +586,7 @@ def run_single_fake_execution_flow_for_test(
         worker,
         plan,
         repo_status=repo_status,
+        mode="fake_runner_helper",
     )
     result: dict[str, Any] = {
         "mode": "single_fake_execution_flow_for_test",
@@ -510,7 +634,12 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         execution_plan_obj = build_execution_plan(state, args.worker)
         execution_plan = execution_plan_obj.to_dict()
         execution_plan["powershell"] = powershell_preview(execution_plan["argv"])
-        execution_plan["preflight"] = build_execution_preflight(state, args.worker, execution_plan_obj)
+        execution_plan["preflight"] = build_execution_preflight(
+            state,
+            args.worker,
+            execution_plan_obj,
+            mode="dry_run_preview",
+        )
         result["dry_run"] = execution_plan
 
     if args.report:

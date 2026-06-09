@@ -112,15 +112,23 @@ codex exec - --output-schema .agent/schemas/worker_report.schema.json -o .agent/
 その内容を `codex exec -` の stdin に渡す。現時点では stdin へ渡す処理も
 `codex exec` の subprocess 起動も実装しない。
 
-Dry-run には disabled execution preflight も含める。これは将来の実行可否を
-構造化して返すだけで、実行はしない。default では
-`.agent/state.json` の `execution_policy.codex_exec_enabled=false` により
-preflight は blocked になる。`max_steps` は loop semantics を別設計するまで `1`
-だけを許可し、`timeout_seconds` は正の integer でなければ blocked にする。
+Dry-run には disabled-by-default real runner preflight preview も含める。
+これは将来の実行可否を構造化して返すだけで、実行はしない。dry-run preview
+と fake runner helper flow は `allowed=true` になり得るが、
+`safe_to_start_real_runner=false` のままにする。future real runner mode だけは、
+`.agent/state.json` の `execution_policy.codex_exec_enabled=true` と explicit
+human real-execution authority と clear notification policy が揃わない限り
+`safe_to_start_real_runner=true` にならない。`max_steps` は loop semantics を別設計
+するまで `1` だけを許可し、`timeout_seconds` は正の integer でなければ blocked に
+する。
 
-Preflight は prompt path、schema path、report path、repo state policy を
+Preflight は mode、worker、prompt path、schema path、report path、command argv
+shape、prompt source、repo state policy、authority、notification policy を
 fail-closed で確認する。tracked dirty state、staged files、明示 allowlist 外の
-untracked files、既存 report output の上書きは、実行前に止める。
+untracked files、既存 report output の上書き、shell string command shape、
+prompt source ambiguity、notification ambiguity は、実行前に止める。Preflight
+自体は常に `codex_execution_started=false` と `real_subprocess_started=false` を
+返し、runner を起動しない。
 
 ## Worker Report Schema
 
@@ -285,6 +293,9 @@ Fake runner / single fake flow でも `codex_execution_started=false` と
 `real_subprocess_started=false` を返す。これらは runtime loop ではなく、
 real `codex exec` を有効化しない pre-real-execution safety scaffold である。
 `subprocess.run`、stdin piping、runtime worker loop、外部通知 service はまだ実装しない。
+Fake runner helper flow の preflight は local simulation の開始可否だけを判定し、
+real runner start permission ではないため `safe_to_start_real_runner=false` のまま
+である。
 
 ## Runtime Artifact Retention
 
