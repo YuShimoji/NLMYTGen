@@ -704,11 +704,11 @@ C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
 ===== END =====
 ```
 
-===== SECTION 19: Common Foundation Fake Runner Scaffold Resume Prompt =====
-用途: common foundation fake runner scaffold が commit / push 済みになった後、次の ChatGPT / Codex へ bounded context を渡すためのPrompt。real codex exec、subprocess runner、stdin piping、runtime worker loop、external notification service、ClipPipeGen、G-28 mainline work へ進めない。
+===== SECTION 19: Common Foundation Single Fake Execution Flow Resume Prompt =====
+用途: common foundation single fake execution flow が commit / push / audit 済みになった後、次の ChatGPT / Codex へ bounded context を渡すためのPrompt。古い staged-diff / stage prompt に戻らず、real codex exec、subprocess runner、stdin piping、runtime worker loop、external notification service、ClipPipeGen、G-28 / NLMYTGen mainline work へ進めない。
 
 ```text
-NLMYTGen common foundation fake runner scaffold 後の確認または次slice設計を続けてください。
+NLMYTGen common foundation single fake execution flow handoff 後の確認または次slice設計を続けてください。
 
 repo:
 C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
@@ -723,10 +723,21 @@ C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
 7. AGENTS.md -> docs/REPO_LOCAL_RULES.md -> docs/runtime-state.md を読む。
 
 期待される最新remote:
-- `a6f99b9 docs: seal G-28 Review Console handoff`
-- `da254ff feat: add fake runner scaffold`
-- その後に handoff refresh commit がある場合は、それを最新HEADとして扱う。
+- `e509863 feat: update orchestration scaffold`
+- その後に this handoff seal commit がある場合は、それを最新HEADとして扱う。
 - `HEAD...@{u}` は `0 0` にする。
+
+完了済みaudit:
+- `post_commit_audit_single_fake_execution_flow_001` passed.
+- audited commit: `e509863 feat: update orchestration scaffold`.
+- changed files in audited commit were only:
+  - `docs/AGENT_ORCHESTRATION.md`
+  - `scripts/agent_orchestrator.py`
+  - `tests/test_agent_orchestration.py`
+- stale prompts retired:
+  - `stage_single_fake_execution_flow_001`
+  - `single_fake_execution_flow_staged_diff_review_001`
+  - any fake runner scaffold stage/commit prompt
 
 現在のcommon foundation状態:
 - Codex worker policy gate scaffold exists.
@@ -735,6 +746,9 @@ C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
 - inert NLMYTGen repo adapter exists.
 - runtime artifact ignore policy exists.
 - fake runner scaffold exists as tests-only helper in `scripts/agent_orchestrator.py`.
+- single fake execution flow helper exists as test/helper-only.
+- default CLI/runtime path does not expose the fake flow.
+- there is no `--single-fake-flow` CLI flag.
 - `.agent/state.json` remains runtime policy source.
 - `.agent/repo_adapter.json` remains inert.
 - `.agent/reports/.gitkeep` and `.agent/logs/.gitkeep` remain tracked.
@@ -751,6 +765,7 @@ Fake runner contract:
   - `timeout`
 - valid synthetic reports go through `agent_gate.evaluate_report`.
 - local notify stub is called only after `gate_result.needs_human=true`.
+- pass writes no notify artifact.
 - invalid JSON, missing report, nonzero exit, and timeout fail closed.
 - `codex_execution_started=false`.
 - `real_subprocess_started=false`.
@@ -784,9 +799,10 @@ known local residue:
 - These are unrelated and should remain untracked unless the user gives explicit scope.
 
 次の最小候補:
-- common foundation: design-only review for the boundary between fake runner and a future real runner.
-- common foundation: add more preflight-only tests before any real runner slice.
-- G-28 lane: separately verify the Review Console read-only panel with screenshot / Electron smoke evidence or human GUI confirmation.
+- Do not proceed directly to real execution.
+- If explicitly authorized, the next common foundation slice is design-only `real_runner_boundary_design_001`.
+- That design must cover explicit opt-in execution policy, subprocess boundary, stdin piping boundary, timeout / cancellation, report path containment, gate authority, notify boundary, runtime artifact hygiene, and no external notification without separate authorization.
+- If not explicitly authorized, stop after reporting the sealed state and do not reopen fake runner scaffold staging.
 
 完了報告:
 - branch / HEAD / origin同期 / dirty state を明記する。

@@ -79,6 +79,29 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest common foundation decision (2026-06-09): `single_fake_execution_flow_committed_audited`
+records that `post_commit_audit_single_fake_execution_flow_001` passed for
+`e509863 feat: update orchestration scaffold`, with the commit pushed to
+`master` and upstream parity verified as `HEAD...@{u}=0 0`. This retires
+stale staged-work prompts for the slice: `stage_single_fake_execution_flow_001`,
+`single_fake_execution_flow_staged_diff_review_001`, and any fake runner
+scaffold stage/commit prompt. The active common foundation state is committed
+and audited: fake runner scaffold exists, the single fake execution flow helper
+exists, the helper is test/helper-only, and normal CLI/runtime behavior does
+not expose the fake flow. There is no `--single-fake-flow` flag. Valid fake
+reports go through `agent_gate.evaluate_report`; the local notify stub is only
+after `gate_result.needs_human=true`; pass writes no notify artifact; invalid
+JSON, missing report, nonzero exit, and timeout fail closed. Real `codex exec`
+remains disabled/unimplemented: `codex_execution_started=false`,
+`real_subprocess_started=false`, no `subprocess.run`, no stdin piping, no
+runtime worker loop, and no external notification service. The next common
+foundation work is not immediate real execution. If explicitly authorized
+later, use design-only `real_runner_boundary_design_001`, covering explicit
+opt-in execution policy, subprocess boundary, stdin piping boundary,
+timeout/cancellation, report path containment, gate authority, notify boundary,
+runtime artifact hygiene, and no external notification without separate
+authorization.
+
 G-28 real-estate diagnostic review surface acceptance (2026-06-08):
 Record `overall_decision=accept_as_diagnostic_review_surface_with_title_metric_caveat`
 for the YMM4 diagnostic probe and stop the individual pixel-tuning loop for
