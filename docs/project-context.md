@@ -80,6 +80,25 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 ## DECISION LOG
 
 Latest common foundation decision (2026-06-09):
+`preflight_operator_surface_parking_001` records human acceptance of
+`cde00ca feat: add preflight preview card` as sufficient for the current
+review-surface need. The common foundation is parked with two read-only
+Operator Review Surface faces: the existing flow-result card and the standalone
+raw preflight preview card. This means a human can inspect preflight status,
+`safe_to_start_real_runner`, reasons, inspected paths, authority summary,
+execution boundary, and next action before any runner is considered. The parking
+decision deliberately does not move to real execution: `safe_to_start_real_runner=true`
+is only an eligibility signal for a separately authorized future runner slice,
+not execution permission. Real `codex exec`, `subprocess.run`, stdin piping,
+runtime worker loop, external notification, worker report validation from a
+real run, and `.agent` runtime artifact creation remain unimplemented. If common
+foundation work resumes, the next allowed entry is a separately authorized
+runner consumption design or pre-execution dry-run flow; do not jump straight to
+real runner implementation or mix this with G-28, Newsroom, G-27, ClipPipeGen,
+RSS, OPML, Inoreader, NotebookLM, `.ymmp`, render, rights, production,
+publishing, or release automation.
+
+Latest common foundation decision (2026-06-09):
 `standalone_preflight_preview_adapter_mvp_001` implements the read-only adapter
 that converts a raw preflight result into a Markdown preview card. The new
 `render_preflight_preview_card(preflight_result)` and `--preflight-example`

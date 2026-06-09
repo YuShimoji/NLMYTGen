@@ -1,5 +1,24 @@
 # Runtime State — NLMYTGen
 
+- **Common foundation preflight / operator surface parked after human review (2026-06-09)**:
+  Human review accepts the standalone preflight preview card from
+  `cde00ca feat: add preflight preview card` as sufficient for the current
+  review surface. The common foundation now has two read-only Operator Review
+  Surface faces: a flow-result card for existing orchestration flow JSON and a
+  raw preflight preview card for `build_execution_preflight` results. Preflight
+  results are readable without starting a runner, and the preview card exposes
+  preflight status, `safe_to_start_real_runner`, reasons, inspected paths,
+  authority summary, execution boundary, and human next action. This parks the
+  common foundation at usable preflight / review-surface coverage, not real
+  execution. `safe_to_start_real_runner=true` remains only preflight start
+  eligibility for a separately authorized future runner slice; it is not itself
+  execution permission. Real `codex exec`, `subprocess.run`, stdin piping,
+  runtime worker loop, external notification, and `.agent` runtime artifact
+  creation remain unimplemented. Next common-foundation work, only if explicitly
+  resumed, should be a separately authorized runner consumption design or
+  pre-execution dry-run flow, not immediate real runner implementation. No G-28,
+  Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, `.ymmp`,
+  render, rights, production, publishing, or release automation work changed.
 - **Common foundation standalone preflight preview adapter MVP implemented (2026-06-09)**:
   `scripts/agent_operator_surface.py` now has
   `render_preflight_preview_card(preflight_result)` plus
