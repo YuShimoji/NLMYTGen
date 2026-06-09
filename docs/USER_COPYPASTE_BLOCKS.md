@@ -1037,6 +1037,108 @@ Completion report:
 - Provide the next prompt or next human input needed.
 ```
 
+===== SECTION 23: Common Foundation Pre-execution Dry-run Flow Design Handoff =====
+Use this prompt when resuming after the pre-execution dry-run flow design.
+This is a restart / handoff prompt for design review or a future preview-only
+implementation slice. It is not permission to implement or run real execution.
+
+BEGIN_COPY_BLOCK_FOR_AGENT
+
+NLMYTGen common foundation has a docs-only pre-execution dry-run flow design.
+Review the design and preserve the execution boundary. Do not open a real
+runner path from this prompt.
+
+repo:
+C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
+
+Start by running:
+git status --porcelain=v1
+git status --porcelain=v1 -uno
+git fetch --prune origin
+git pull --ff-only origin master
+git branch --show-current
+git rev-parse --short HEAD
+git rev-list --left-right --count "HEAD...@{u}"
+git diff --name-only
+git diff --cached --name-only
+
+Read in this order:
+AGENTS.md
+docs/REPO_LOCAL_RULES.md
+docs/runtime-state.md
+docs/project-context.md
+docs/AGENT_ORCHESTRATION.md
+docs/AGENT_OPERATOR_SURFACE.md
+docs/verification/PRE-EXECUTION-DRY-RUN-FLOW-DESIGN-2026-06-10.md
+docs/USER_COPYPASTE_BLOCKS.md SECTION 23
+
+Expected state:
+- branch: master
+- upstream parity: 0 0
+- tracked working tree: clean before new work
+- known untracked residue may remain:
+  - .claude/worktrees/
+  - samples/2026-05-16.ymmp
+- latest remote should include the docs-only dry-run flow design commit or a
+  later approved handoff commit
+
+Current decision:
+- `pre_execution_dry_run_flow_design_001` is docs-only.
+- The design explains how a human reviews a future execution attempt before
+  anything real runs.
+- The human-visible dry-run flow shows:
+  - selected worker
+  - prompt source
+  - schema path
+  - planned report path
+  - working directory
+  - timeout
+  - shell-free command argv preview
+  - `build_execution_preflight` result
+  - raw preflight preview card
+  - inspected files
+  - stop reasons
+  - human decision options
+- `safe_to_start_real_runner=true` remains an eligibility signal only. It is
+  not execution permission.
+
+Boundary:
+- Do not implement real `codex exec`.
+- Do not add `subprocess.run`.
+- Do not add stdin piping.
+- Do not add a runtime worker loop.
+- Do not add an external notification service.
+- Do not create `.agent/reports`, `.agent/logs`, or `.agent/needs_human.json`
+  runtime artifacts.
+- Do not modify Python code or tests unless a later prompt explicitly opens a
+  preview-only implementation slice.
+- Do not touch GUI, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader,
+  NotebookLM, `.ymmp`, render, rights, production, publishing, or release
+  automation unless a new user request explicitly changes scope.
+
+Allowed next common-foundation entry, only with explicit user approval:
+- human review of the dry-run flow design
+- docs-only design correction if the preview flow is unclear
+- preview-only implementation planning
+- preview-only implementation that prints inputs, command argv, preflight
+  result, and operator card, then stops
+
+Still not allowed by this prompt:
+- starting a real runner
+- treating `safe_to_start_real_runner=true` as permission
+- writing runtime reports/logs/needs-human artifacts
+- sending external notification
+
+Completion report should state:
+- branch, HEAD, and upstream parity
+- changed files, if any
+- whether code/tests/runtime artifacts changed
+- whether real execution remains closed
+- verification commands and outcomes
+- next safe entry point
+
+END_COPY_BLOCK_FOR_AGENT
+
 ===== SECTION 22: Common Foundation Preflight Operator Surface Parked Handoff =====
 Use this prompt when resuming the common foundation after the standalone
 preflight preview card was human-reviewed as sufficient and the lane was parked.

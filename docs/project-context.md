@@ -79,6 +79,24 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest common foundation decision (2026-06-10):
+`pre_execution_dry_run_flow_design_001_docs_only` adds
+`docs/verification/PRE-EXECUTION-DRY-RUN-FLOW-DESIGN-2026-06-10.md` as the
+human-visible design for a future pre-execution dry-run flow after the parked
+preflight / operator-surface state. The design shows what a human must see
+before any real runner exists or starts: selected worker, prompt source,
+schema, planned report path, shell-free argv preview, working directory,
+timeout, repo state, authority summary, `build_execution_preflight` result, raw
+preflight preview card, inspected files, stop conditions, and decision options.
+It explicitly keeps `safe_to_start_real_runner=true` as eligibility for a
+separately authorized future runner slice, not execution permission. This
+decision does not implement real `codex exec`, `subprocess.run`, stdin piping,
+runtime worker loops, external notification, `.agent` runtime artifacts,
+Python/test changes, GUI, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML,
+Inoreader, NotebookLM, `.ymmp`, render, rights, production, publishing, or
+release automation. Next safe action is human review of this design; any
+preview-only implementation remains a separate explicitly authorized slice.
+
 Latest common foundation decision (2026-06-09):
 `remote_handoff_sealed_after_preflight_operator_surface_parking_001` records
 the repo-local handoff for the parked common foundation state. The restart entry

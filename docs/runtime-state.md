@@ -1,5 +1,21 @@
 # Runtime State — NLMYTGen
 
+- **Common foundation pre-execution dry-run flow designed (2026-06-10)**:
+  `docs/verification/PRE-EXECUTION-DRY-RUN-FLOW-DESIGN-2026-06-10.md`
+  defines the next safe common-foundation step after the parked preflight /
+  operator-surface state. The design is human-review-first: it shows selected
+  worker, prompt source, schema, planned report path, shell-free command argv,
+  `build_execution_preflight` result, raw preflight preview card, inspected
+  files, stop reasons, and human decision options before any runner exists or
+  starts. `safe_to_start_real_runner=true` remains labeled as preflight
+  eligibility only, not execution permission. This slice is docs-only and does
+  not implement real `codex exec`, `subprocess.run`, stdin piping, runtime
+  worker loop, external notification, `.agent` runtime artifact creation,
+  Python/test changes, GUI, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML,
+  Inoreader, NotebookLM, `.ymmp`, render, rights, production, publishing, or
+  release automation. Next safe action is human review of the design; only
+  after explicit authorization should a preview-only dry-run implementation
+  slice be considered.
 - **Remote handoff sealed for parked common foundation (2026-06-09)**:
   The reusable restart prompt for this exact parked state is recorded in
   `docs/USER_COPYPASTE_BLOCKS.md` SECTION 22. Use it only when the next operator
