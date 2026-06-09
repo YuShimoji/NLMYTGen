@@ -79,6 +79,21 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest common foundation decision (2026-06-09):
+`real_runner_preflight_implementation_plan_001_docs_only` accepts
+`docs/verification/REAL-RUNNER-BOUNDARY-DESIGN-2026-06-09.md` as sufficient for
+the next design step and adds
+`docs/verification/REAL-RUNNER-PREFLIGHT-IMPLEMENTATION-PLAN-2026-06-09.md` as
+the active pre-implementation plan. The plan defines what a future
+disabled-by-default preflight must inspect, refuse, allow, and return before any
+real runner can start. It keeps real `codex exec`, `subprocess.run`, stdin
+piping, runtime worker loop, external notification, and `.agent` runtime
+artifact creation unimplemented. The next common-foundation move is human
+review of the plan; code/test implementation must remain a separate slice and
+must not mix with G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader,
+NotebookLM, `.ymmp`, render, rights, production, publishing, or release
+automation.
+
 Latest common foundation decision (2026-06-09): `real_runner_boundary_design_001_docs_only`
 records that `docs/verification/REAL-RUNNER-BOUNDARY-DESIGN-2026-06-09.md`
 defines the boundary required before any real runner implementation. The

@@ -1,5 +1,19 @@
 # Runtime State — NLMYTGen
 
+- **Common foundation disabled-by-default real runner preflight implementation plan added (2026-06-09)**:
+  `docs/verification/REAL-RUNNER-PREFLIGHT-IMPLEMENTATION-PLAN-2026-06-09.md`
+  now records the docs-only implementation plan for a future real runner
+  preflight after human acceptance of the boundary design. The plan defines the
+  future preflight inputs, fail-closed refusal cases, narrow allow cases,
+  structured result shape, operator-card mapping, implementation sequence,
+  future tests, and stop conditions. This does not implement real `codex exec`,
+  `subprocess.run`, stdin piping, a runtime worker loop, external notification,
+  or `.agent` runtime artifact creation. No scripts, tests, `.agent`, GUI,
+  source, samples, `.ymmp`, render, rights, production, publishing, G-28,
+  Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader, or NotebookLM work changed.
+  Next common-foundation move is review of this preflight plan; only after
+  acceptance should a separate disabled-by-default implementation slice edit
+  code/tests.
 - **Common foundation real runner boundary design added (2026-06-09)**:
   `docs/verification/REAL-RUNNER-BOUNDARY-DESIGN-2026-06-09.md` now defines the
   pre-implementation boundary for a future real runner. This is docs-only
