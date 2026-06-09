@@ -1,5 +1,20 @@
 # Runtime State — NLMYTGen
 
+- **Common foundation disabled real runner preflight audit tightened (2026-06-09)**:
+  The implemented preflight was audited as the current common-foundation
+  boundary before any real runner slice. A narrow regression test now confirms
+  that supplied credential-like metadata blocks preflight without echoing the
+  secret value into the result. `docs/AGENT_ORCHESTRATION.md` now clarifies that
+  the Operator Review Surface can consume preflight data when it is embedded in
+  a complete flow result, but a standalone dry-run / real-runner preflight
+  preview still needs a future adapter that wraps raw preflight with
+  `runner_started=false`, gate placeholders, `safe_to_start_real_runner`, and
+  `authority_summary`. This audit did not implement real `codex exec`,
+  `subprocess.run`, stdin piping, a runtime worker loop, external notification,
+  `.agent` runtime artifact creation, G-28, Newsroom, G-27, ClipPipeGen, RSS,
+  OPML, Inoreader, NotebookLM, `.ymmp`, render, rights, production, publishing,
+  or release automation. Next common-foundation move is review of this audited
+  preflight boundary, not real runner implementation.
 - **Common foundation disabled-by-default real runner preflight implemented test-first (2026-06-09)**:
   `scripts/agent_orchestrator.py` now returns a structured preflight result for
   `real_runner`, `dry_run_preview`, and `fake_runner_helper` modes before any

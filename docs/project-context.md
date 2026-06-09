@@ -80,6 +80,23 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 ## DECISION LOG
 
 Latest common foundation decision (2026-06-09):
+`disabled_real_runner_preflight_audit_001` reviewed the implemented preflight
+boundary without opening any real runner path. The audit found the mode split,
+execution boundary, fail-closed path checks, and result shape suitable for the
+current pre-run gate, then tightened one coverage gap: supplied credential-like
+metadata now has an explicit regression test that blocks preflight and does not
+echo the secret-like value in the returned result. `docs/AGENT_ORCHESTRATION.md`
+also records that the current operator card reads preflight only when embedded
+in a complete flow result; a standalone dry-run / real-runner preflight preview
+still needs a future adapter that wraps raw preflight with runner/gate placeholder
+state and surfaces `safe_to_start_real_runner` plus `authority_summary`. This
+audit does not implement real `codex exec`, `subprocess.run`, stdin piping,
+runtime worker loop, external notification, or `.agent` runtime artifact
+creation, and it does not resume G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML,
+Inoreader, NotebookLM, `.ymmp`, render, rights, production, publishing, or
+release automation.
+
+Latest common foundation decision (2026-06-09):
 `disabled_by_default_real_runner_preflight_001_test_first` implements the
 preflight helper only. `scripts/agent_orchestrator.py` now distinguishes
 `real_runner`, `dry_run_preview`, and `fake_runner_helper` modes and returns a

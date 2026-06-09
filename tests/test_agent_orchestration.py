@@ -625,6 +625,24 @@ def test_preflight_rejects_notification_ambiguity_for_real_runner() -> None:
     assert "notification_policy:ambiguous" in result["reasons"]
 
 
+def test_preflight_rejects_credential_like_metadata_without_echoing_secret() -> None:
+    secret_value = "s" + "k-test-secret-value"
+
+    result = agent_orchestrator.build_execution_preflight(
+        _execution_enabled_state(),
+        "audit",
+        repo_status=_clean_repo_status(),
+        human_real_execution_authority=True,
+        notification_policy="local_stub_only",
+        credential_like_values={"environment.OPENAI_API_KEY": secret_value},
+    )
+
+    assert result["allowed"] is False
+    assert result["safe_to_start_real_runner"] is False
+    assert "credential_like_value:environment.OPENAI_API_KEY" in result["reasons"]
+    assert secret_value not in json.dumps(result)
+
+
 def test_preflight_rejects_invalid_worker_name() -> None:
     result = agent_orchestrator.build_execution_preflight(
         _execution_enabled_state(),
