@@ -45,6 +45,9 @@ Future `codex exec` integration は別 slice で行う。現時点では実行�
 - `scripts/agent_gate.py`: schema validation と policy gate
 - `scripts/agent_notify_stub.py`: 外部通知なしの needs-human stub
 - `scripts/agent_orchestrator.py`: prompt 選択、dry-run、report 判定の入口
+- `scripts/agent_operator_surface.py`: 既存 flow JSON から operator review card を出す
+  read-only renderer
+- `docs/AGENT_OPERATOR_SURFACE.md`: card の読み方と deterministic example
 
 ## Common Core / Repo Adapter
 
@@ -165,6 +168,21 @@ Regression coverage lives in `tests/test_agent_orchestration.py`: both
 tested as escalation-worthy worker report risks. This does not inspect chat UI
 rendering directly; it fixes the report/gate contract that a Worker must use
 when the single-code-block completion contract is violated.
+
+## Operator Review Surface
+
+`scripts/agent_operator_surface.py` renders an existing orchestration flow JSON
+as a Markdown operator card. It is a read-only review surface: it can print a
+deterministic example with `--example`, or render a JSON file that already
+exists inside this repo, but it does not run Codex, start the fake runner, start
+any real process, pipe stdin, create a worker loop, or send external
+notifications.
+
+The card must let a non-implementer see what was attempted, which
+worker/scenario ran, whether preflight passed, whether the runner started, what
+the gate decided, whether human action is required, which artifacts to inspect,
+what is explicitly not happening, and the next safe action. The human-readable
+contract and example live in `docs/AGENT_OPERATOR_SURFACE.md`.
 
 ## Scope Policy
 

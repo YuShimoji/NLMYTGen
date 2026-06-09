@@ -17,6 +17,7 @@ if str(SCRIPTS_DIR) not in sys.path:
 import agent_gate  # noqa: E402
 import agent_notify_stub  # noqa: E402
 import agent_orchestrator  # noqa: E402
+import agent_operator_surface  # noqa: E402
 
 TMP_AGENT_DIR = REPO_ROOT / ".agent" / "reports" / "_tmp_pytest_agent_orchestration"
 
@@ -802,6 +803,81 @@ def test_single_fake_execution_flow_needs_human_writes_only_local_notify_stub(
     assert result["real_subprocess_started"] is False
 
 
+def test_operator_review_card_summarizes_needs_human_single_fake_flow(
+    repo_agent_tmp: Path,
+) -> None:
+    state, state_path = _fake_runner_state(repo_agent_tmp)
+
+    result = agent_orchestrator.run_single_fake_execution_flow_for_test(
+        state,
+        "audit",
+        "needs_human",
+        repo_status=_clean_repo_status(),
+        state_path=state_path,
+        timestamp="single-needs-human-card",
+    )
+
+    card = agent_operator_surface.render_operator_review_card(result)
+
+    for section in (
+        "## Status",
+        "## What happened",
+        "## Human decision needed",
+        "## Files to inspect",
+        "## Safety boundary",
+        "## Next safe actions",
+        "## Raw identifiers",
+    ):
+        assert section in card
+    assert "- Human action required: yes" in card
+    assert "- Worker / scenario: audit / needs_human" in card
+    assert "- Gate decision: needs_human" in card
+    assert "- status:needs_human" in card
+    assert "Fake runner needs human review." in card
+    assert ".agent/reports/_tmp_pytest_agent_orchestration/single-needs-human-card-audit.report.json" in card
+    assert ".agent/reports/_tmp_pytest_agent_orchestration/needs_human.json" in card
+    assert "- Real Codex execution: not started" in card
+    assert "- External notification service: not implemented" in card
+
+
+def test_operator_review_card_surfaces_preflight_block_without_runner(
+    repo_agent_tmp: Path,
+) -> None:
+    state = _load_state()
+    state["report_output_template"] = (
+        f"{repo_agent_tmp.relative_to(REPO_ROOT).as_posix()}/{{timestamp}}-{{worker}}.report.json"
+    )
+
+    result = agent_orchestrator.run_single_fake_execution_flow_for_test(
+        state,
+        "audit",
+        "pass",
+        repo_status=_clean_repo_status(),
+        timestamp="single-preflight-card",
+    )
+
+    card = agent_operator_surface.render_operator_review_card(result)
+
+    assert "- Preflight: blocked" in card
+    assert "- Runner started: no" in card
+    assert "- Runner report written: no" in card
+    assert "- Human action required: yes" in card
+    assert "- execution_policy.codex_exec_enabled:false" in card
+    assert "Resolve the listed preflight reason" in card
+    assert not any(repo_agent_tmp.glob("*.report.json"))
+
+
+def test_operator_surface_cli_refuses_repo_external_json(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    outside_flow = tmp_path / "flow.json"
+    outside_flow.write_text("{}\n", encoding="utf-8")
+
+    exit_code = agent_operator_surface.main([str(outside_flow)])
+
+    captured = capsys.readouterr()
+    assert exit_code == 2
+    assert "flow_result must stay inside this repo" in captured.err
+
+
 def test_single_fake_execution_flow_blocked_escalates_through_gate_only(
     repo_agent_tmp: Path,
 ) -> None:
@@ -994,6 +1070,7 @@ def test_common_orchestration_scripts_do_not_use_real_execution_or_notification_
         REPO_ROOT / "scripts" / "agent_gate.py",
         REPO_ROOT / "scripts" / "agent_notify_stub.py",
         REPO_ROOT / "scripts" / "agent_orchestrator.py",
+        REPO_ROOT / "scripts" / "agent_operator_surface.py",
     ):
         text = path.read_text(encoding="utf-8")
         assert "subprocess.run" not in text
