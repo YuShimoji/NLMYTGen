@@ -1,5 +1,18 @@
 # Runtime State — NLMYTGen
 
+- **Common foundation real runner boundary design added (2026-06-09)**:
+  `docs/verification/REAL-RUNNER-BOUNDARY-DESIGN-2026-06-09.md` now defines the
+  pre-implementation boundary for a future real runner. This is docs-only
+  `real_runner_boundary_design_001`: it records the sealed fake runner, single
+  fake flow, and Operator Review Surface MVP state, then fixes the future
+  opt-in authority, subprocess, stdin, timeout/cancellation, report containment,
+  gate/notify sequence, operator-card integration, runtime artifact hygiene,
+  implementation checklist, and stop conditions. No implementation files,
+  tests, `.agent` runtime artifacts, `.ymmp`, render, production, rights,
+  publishing, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader, or
+  NotebookLM work changed. Next common-foundation move is review of the boundary
+  design; only after acceptance should a separate disabled-by-default real
+  runner implementation plan be considered.
 - **Common foundation Operator Review Surface MVP implemented (2026-06-09)**:
   `scripts/agent_operator_surface.py` now renders an existing repo-local
   orchestration flow JSON into a Markdown operator card, and `docs/AGENT_OPERATOR_SURFACE.md`

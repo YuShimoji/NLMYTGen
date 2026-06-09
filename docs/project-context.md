@@ -79,6 +79,23 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest common foundation decision (2026-06-09): `real_runner_boundary_design_001_docs_only`
+records that `docs/verification/REAL-RUNNER-BOUNDARY-DESIGN-2026-06-09.md`
+defines the boundary required before any real runner implementation. The
+Operator Review Surface MVP is treated as sufficient to proceed to boundary
+design, but not as execution authority. The sealed state remains fake runner
+scaffold plus test/helper-only single fake execution flow plus read-only
+operator card, with `codex_execution_started=false` and
+`real_subprocess_started=false`. This decision does not implement real
+`codex exec`, `subprocess.run`, stdin piping, runtime worker loop, cancellation
+code, external notification, or `.agent` runtime artifact generation. Future
+work must first review the documented opt-in authority, subprocess, stdin,
+timeout/cancellation, report containment, gate/notify sequence, operator-card
+integration, runtime artifact hygiene, implementation checklist, and stop
+conditions. Do not mix this common-foundation path with G-28, Newsroom, G-27,
+ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, `.ymmp`, render, rights,
+production, publishing, or release automation.
+
 Latest supervision gate (2026-06-09): `newsroom_handoff_request_authority_no_op_wait`
 records the refreshed cross-repo review of the supplied `newsroom-yt-pipeline`
 handoff. The handoff is candidate downstream input, not active NLMYTGen
