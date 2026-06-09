@@ -1036,3 +1036,78 @@ Completion report:
 - State Source-Footage / .ymmp / render / production timing / creative final acceptance remained untouched.
 - Provide the next prompt or next human input needed.
 ```
+
+===== SECTION 21: Newsroom Handoff Supervision Gate Request Authority =====
+Use this prompt when resuming after the Newsroom handoff supervision gate. The
+current decision is request_authority / no-op_wait. Do not implement until the
+missing cross-repo authority and concrete export paths are supplied.
+
+For ChatGPT copy/paste reports, wrap the whole report in one outer Markdown
+code fence. Keep `BEGIN_COPY_BLOCK_FOR_CHATGPT` and
+`END_COPY_BLOCK_FOR_CHATGPT` inside that fence. Do not put any nested Markdown
+code fences inside the copy block, including the next prompt section.
+
+```text
+NLMYTGen / Newsroom handoff は request_authority / no-op_wait として扱ってください。実装せず、まず cross-repo authority と export availability を確認するだけに限定してください。
+
+repo:
+C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
+
+開始時に必ず実行:
+git status --porcelain=v1
+git status --porcelain=v1 -uno
+git fetch --prune origin
+git pull --ff-only
+git branch --show-current
+git rev-parse --short HEAD
+git rev-list --left-right --count "HEAD...@{u}"
+git diff --name-only
+git diff --cached --name-only
+
+読む:
+- AGENTS.md
+- docs/REPO_LOCAL_RULES.md
+- docs/runtime-state.md
+- docs/project-context.md の Latest supervision gate
+- docs/USER_COPYPASTE_BLOCKS.md SECTION 21
+
+現在の判定:
+- NLMYTGen active lane は G-28 game_mechanics diagnostic reviewability / later scoped YMM4-saved carrier review conditions。
+- active artifact は g28_lecture_diagram_carrier_game_mechanics_explanation_v1。
+- Newsroom handoff は candidate downstream input であり、NLMYTGen authority ではない。
+- Newsroom export path は prompt 内では data\exports\episode_756343df9853 という repo-relative path だけ。
+- NLMYTGen 環境から data\exports\episode_756343df9853 は見えていない。
+- Newsroom repo full path / export full path / handoff filenames / copy-vs-read-only decision が未提供。
+
+次に必要な human authority:
+1. Newsroom repo のフルパス
+2. export folder のフルパス
+3. manifest / CSV / JSON / Markdown handoff のファイル名
+4. NLMYTGen側へコピーするか、read-only path参照にするかの人間判断
+5. G-28 game_mechanics active lane を一時停止/上書きして Newsroom downstream intake に入るかの明示判断
+
+許可:
+- 上記が揃った場合のみ、read-onlyで存在確認・manifest整合・raw/private/copyright-unclear assetなしを確認する。
+- read-only確認で十分なら docs/runtime-state.md / docs/project-context.md / docs/verification の狭い記録だけ検討する。
+
+禁止:
+- 実装
+- Newsroom subprocess/path/pip dependency
+- full .ymmp generation
+- render / production / rights / creative approval
+- Review Console implementation
+- context visual plugin
+- G-27 revival
+- ClipPipeGen
+- RSS / OPML / Inoreader / NotebookLM
+- common foundation / real codex exec
+- git add -A
+- AGENTS.md への手順追記
+
+完了報告:
+- 全体を単一の外側 Markdown code block で囲む。
+- ブロック内は BEGIN_COPY_BLOCK_FOR_CHATGPT で始め、END_COPY_BLOCK_FOR_CHATGPT で終える。
+- next prompt 欄に内側の ```text や ``` を使わない。
+- branch / HEAD / origin alignment / tracked dirty state を明記する。
+- request_authority / no-op_wait のままなら、必要な human authority を明記して止める。
+```
