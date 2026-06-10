@@ -80,6 +80,29 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 ## DECISION LOG
 
 Latest common foundation decision (2026-06-10):
+`pre_execution_dry_run_preview_surface_and_repo_status_audit_001` verified the
+preview-only dry-run surface and repo-status input handling after
+`cf5df6c feat: add pre-execution dry-run preview`. The audit confirmed the
+surface shows the selected worker, prompt source, schema, planned report path,
+working directory, timeout, shell-free argv, repo-status summary, authority
+summary, preflight pass/block state, reasons, inspected paths, embedded
+preflight preview card, explicit boundary, and human next action, and that it
+stops at stdout without writing runtime artifacts. It also confirmed dirty,
+staged, and unknown-untracked status can be rendered as blocked reasons,
+simultaneous repo-status inputs are rejected, and repo-external status JSON
+paths fail closed. The audit tightened one safety gap: the outer Markdown
+renderer now redacts credential-like values from operator-controlled display
+fields such as timestamp-derived report paths and repo-status paths, matching
+the raw preflight card's redaction posture. This does not implement real
+`codex exec`, `subprocess.run`, stdin piping, runtime worker loop, external
+notification, worker report validation from a real run, `.agent` runtime
+artifact creation, GUI, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader,
+NotebookLM, `.ymmp`, render, rights, production, publishing, or release
+automation. Remaining review note: stdout currently says `Source:
+operator-provided`; docs make clear this is not a Git check, but a future
+wording pass may make that label more explicit in the preview itself.
+
+Latest common foundation decision (2026-06-10):
 `pre_execution_dry_run_preview_mvp_001` implements the preview-only CLI allowed
 by the prior design review. `scripts/agent_orchestrator.py --pre-execution-dry-run`
 now builds the existing shell-free execution plan, runs

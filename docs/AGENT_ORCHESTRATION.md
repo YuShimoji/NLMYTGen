@@ -145,6 +145,8 @@ CLI 自身は Git subprocess を起動しない。必要なら `--repo-status-js
 事前に作った repo status object を渡せる。どちらの場合も `.agent/reports`、
 `.agent/logs`、`.agent/needs_human.json` は作らず、worker report の gate 評価にも進まない。
 表示される `safe_to_start_real_runner` は eligibility signal であり、実行許可ではない。
+operator-provided input に credential-like 文字列が混じった場合、outer preview と
+preflight card の表示では raw value を redaction する。
 
 ## Worker Report Schema
 

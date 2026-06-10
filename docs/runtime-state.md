@@ -1,5 +1,21 @@
 # Runtime State — NLMYTGen
 
+- **Common foundation preview-surface / repo-status audit tightened redaction (2026-06-10)**:
+  `pre_execution_dry_run_preview_surface_and_repo_status_audit_001` found that
+  the preview-only surface was readable and stopped at stdout, but the outer
+  Markdown renderer needed the same credential-like display hardening as the raw
+  preflight card for operator-supplied values such as `--timestamp` and
+  `--repo-status-json` paths. `scripts/agent_orchestrator.py` now redacts
+  credential-like strings in the outer preview plan, argv, repo-status summary,
+  reasons, inspected paths, and raw identifiers before printing. A regression
+  test covers token-like timestamp / untracked status display. No real
+  `codex exec`, `subprocess.run`, stdin piping, runtime worker loop, external
+  notification, worker report validation from a real run, `.agent` runtime
+  artifact creation, GUI, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML,
+  Inoreader, NotebookLM, `.ymmp`, render, rights, production, publishing, or
+  release automation was opened. Next safe action is human review of the
+  preview wording, especially whether `Source: operator-provided` should be
+  made more explicit in stdout.
 - **Common foundation pre-execution dry-run preview-only MVP implemented (2026-06-10)**:
   `scripts/agent_orchestrator.py --pre-execution-dry-run` now prints a
   human-readable Markdown preview that composes the existing execution plan,

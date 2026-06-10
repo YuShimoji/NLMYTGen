@@ -1092,6 +1092,8 @@ Current decision:
   git checks. The CLI itself does not spawn Git.
 - `--repo-status-json` can pass a repo-local status object for blocked/dirty
   preview review.
+- Operator-provided credential-like values in preview display fields are
+  redacted before printing.
 - `safe_to_start_real_runner=true` remains eligibility only, not execution
   permission.
 

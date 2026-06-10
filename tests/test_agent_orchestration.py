@@ -1481,6 +1481,24 @@ def test_pre_execution_dry_run_preview_surfaces_blocked_repo_status() -> None:
     assert "- real codex exec: not started" in card
 
 
+def test_pre_execution_dry_run_preview_redacts_credential_like_display_values() -> None:
+    marker_value = "s" + "k-preview-surface-marker"
+    repo_status = _clean_repo_status()
+    repo_status["untracked"] = [f"_tmp/{marker_value}.json"]
+
+    preview = agent_orchestrator.build_pre_execution_dry_run_preview(
+        _load_state(),
+        "audit",
+        timestamp=marker_value,
+        repo_status=repo_status,
+    )
+    card = agent_orchestrator.render_pre_execution_dry_run_preview(preview)
+
+    assert marker_value not in card
+    assert "[redacted credential-like value]" in card
+    assert "repo_status:unknown_untracked_files" in card
+
+
 def test_orchestrator_cli_pre_execution_dry_run_outputs_markdown(
     capsys: pytest.CaptureFixture[str],
 ) -> None:

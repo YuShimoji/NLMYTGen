@@ -463,6 +463,8 @@ def _markdown_bool(value: Any) -> str:
 
 def _markdown_text(value: Any, fallback: str = "unknown") -> str:
     if isinstance(value, str) and value:
+        if _credential_like_reason(value):
+            return "[redacted credential-like value]"
         return value
     if isinstance(value, int) and not isinstance(value, bool):
         return str(value)
@@ -472,18 +474,23 @@ def _markdown_text(value: Any, fallback: str = "unknown") -> str:
 def _markdown_bullets(values: list[str], fallback: str) -> list[str]:
     if not values:
         return [f"- {fallback}"]
-    return [f"- {value}" for value in values]
+    return [f"- {_markdown_text(value)}" for value in values]
+
+
+def _markdown_join(values: list[str]) -> str:
+    rendered = [_markdown_text(value) for value in values]
+    return ", ".join(rendered)
 
 
 def _repo_status_lines(repo_status: dict[str, Any]) -> list[str]:
     source = "operator-provided" if repo_status.get("provided") is True else "not provided to preview CLI"
     return [
         f"- Source: {source}",
-        f"- Tracked dirty: {', '.join(_string_list(repo_status.get('tracked_dirty'))) or 'none'}",
-        f"- Staged files: {', '.join(_string_list(repo_status.get('staged'))) or 'none'}",
-        f"- Untracked files: {', '.join(_string_list(repo_status.get('untracked'))) or 'none'}",
-        f"- Allowed untracked: {', '.join(_string_list(repo_status.get('allowed_untracked'))) or 'none'}",
-        f"- Unknown untracked: {', '.join(_string_list(repo_status.get('unknown_untracked'))) or 'none'}",
+        f"- Tracked dirty: {_markdown_join(_string_list(repo_status.get('tracked_dirty'))) or 'none'}",
+        f"- Staged files: {_markdown_join(_string_list(repo_status.get('staged'))) or 'none'}",
+        f"- Untracked files: {_markdown_join(_string_list(repo_status.get('untracked'))) or 'none'}",
+        f"- Allowed untracked: {_markdown_join(_string_list(repo_status.get('allowed_untracked'))) or 'none'}",
+        f"- Unknown untracked: {_markdown_join(_string_list(repo_status.get('unknown_untracked'))) or 'none'}",
     ]
 
 
