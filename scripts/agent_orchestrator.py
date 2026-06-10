@@ -11,6 +11,7 @@ from typing import Any
 
 from agent_gate import DEFAULT_STATE_PATH, REPO_ROOT, GateInputError, evaluate_report, load_json, resolve_repo_path
 from agent_notify_stub import NotifyInputError, write_notification
+from agent_operator_surface import render_preflight_preview_card
 
 WORKERS = ("advance", "audit", "fix", "summarize")
 PREFLIGHT_MODES = ("dry_run_preview", "fake_runner_helper", "real_runner")
@@ -435,6 +436,174 @@ def build_execution_preflight(
     }
 
 
+def clean_repo_status_for_preview() -> dict[str, Any]:
+    return {
+        "tracked_dirty": [],
+        "staged": [],
+        "untracked": [],
+        "allowed_untracked": [],
+    }
+
+
+def load_repo_status_preview(path: str) -> dict[str, Any]:
+    repo_status_path = resolve_repo_path(path, must_exist=True)
+    payload = load_json(repo_status_path)
+    if not isinstance(payload, dict):
+        raise GateInputError("repo status preview JSON root must be an object")
+    return payload
+
+
+def _markdown_bool(value: Any) -> str:
+    if value is True:
+        return "yes"
+    if value is False:
+        return "no"
+    return "unknown"
+
+
+def _markdown_text(value: Any, fallback: str = "unknown") -> str:
+    if isinstance(value, str) and value:
+        return value
+    if isinstance(value, int) and not isinstance(value, bool):
+        return str(value)
+    return fallback
+
+
+def _markdown_bullets(values: list[str], fallback: str) -> list[str]:
+    if not values:
+        return [f"- {fallback}"]
+    return [f"- {value}" for value in values]
+
+
+def _repo_status_lines(repo_status: dict[str, Any]) -> list[str]:
+    source = "operator-provided" if repo_status.get("provided") is True else "not provided to preview CLI"
+    return [
+        f"- Source: {source}",
+        f"- Tracked dirty: {', '.join(_string_list(repo_status.get('tracked_dirty'))) or 'none'}",
+        f"- Staged files: {', '.join(_string_list(repo_status.get('staged'))) or 'none'}",
+        f"- Untracked files: {', '.join(_string_list(repo_status.get('untracked'))) or 'none'}",
+        f"- Allowed untracked: {', '.join(_string_list(repo_status.get('allowed_untracked'))) or 'none'}",
+        f"- Unknown untracked: {', '.join(_string_list(repo_status.get('unknown_untracked'))) or 'none'}",
+    ]
+
+
+def _pre_execution_human_next_action(preflight: dict[str, Any]) -> str:
+    if preflight.get("allowed") is False:
+        return "Resolve or intentionally hold the listed preflight reasons; do not start a runner."
+    return (
+        "Review this preview as a stop point. A separate explicitly authorized slice is required "
+        "before any runner can be implemented or started."
+    )
+
+
+def build_pre_execution_dry_run_preview(
+    state: dict[str, Any],
+    worker: str,
+    *,
+    timestamp: str | None = None,
+    repo_status: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    plan = build_execution_plan(state, worker, timestamp=timestamp)
+    preflight = build_execution_preflight(
+        state,
+        worker,
+        plan,
+        repo_status=repo_status,
+        mode="dry_run_preview",
+    )
+    plan_dict = plan.to_dict()
+    plan_dict["powershell"] = powershell_preview(plan.argv)
+    return {
+        "flow_mode": "pre_execution_dry_run",
+        "intended_runner_mode": "dry_run_preview",
+        "worker": worker,
+        "plan": plan_dict,
+        "preflight": preflight,
+        "human_next_action": _pre_execution_human_next_action(preflight),
+        "codex_execution_started": False,
+        "real_subprocess_started": False,
+        "runtime_artifacts_written": [],
+    }
+
+
+def render_pre_execution_dry_run_preview(preview: dict[str, Any]) -> str:
+    plan = preview.get("plan")
+    preflight = preview.get("preflight")
+    if not isinstance(plan, dict) or not isinstance(preflight, dict):
+        raise TypeError("pre-execution preview requires plan and preflight objects")
+
+    argv = _string_list(plan.get("argv"))
+    raw_repo_status = preflight.get("repo_status")
+    repo_status = raw_repo_status if isinstance(raw_repo_status, dict) else dict(DEFAULT_REPO_STATUS)
+    reasons = _string_list(preflight.get("reasons"))
+    inspected_paths = _string_list(preflight.get("inspected_paths"))
+    authority = preflight.get("authority_summary") if isinstance(preflight.get("authority_summary"), dict) else {}
+    preflight_state = "passed for this preview" if preflight.get("allowed") is True else "blocked this preview"
+    safe_to_start = _markdown_bool(preflight.get("safe_to_start_real_runner"))
+    subprocess_run_label = "subprocess" + ".run"
+
+    lines: list[str] = [
+        "# NLMYTGen Pre-execution Dry-run Preview",
+        "",
+        "## Selected Plan",
+        f"- Worker: {_markdown_text(preview.get('worker'))}",
+        f"- Flow mode: {_markdown_text(preview.get('flow_mode'))}",
+        f"- Intended runner mode: {_markdown_text(preview.get('intended_runner_mode'))}",
+        f"- Prompt source: {_markdown_text(plan.get('stdin_source'))}",
+        f"- Schema path: {_markdown_text(plan.get('schema_path'))}",
+        f"- Planned report path: {_markdown_text(plan.get('report_path'))}",
+        f"- Working directory: {_markdown_text(plan.get('cwd'))}",
+        f"- Timeout: {_markdown_text(preflight.get('timeout_seconds'))} seconds",
+        f"- Prompt input mode: {_markdown_text(plan.get('prompt_input_mode'))}",
+        "",
+        "## Command Argv Preview",
+        *_markdown_bullets(argv, "no argv entries were produced"),
+        f"- PowerShell preview: {_markdown_text(plan.get('powershell'))}",
+        "- This argv is shown only for review; it was not executed.",
+        "- Stdin is not piped by this preview.",
+        "",
+        "## Repo Status Summary",
+        *_repo_status_lines(repo_status),
+        "",
+        "## Authority Summary",
+        f"- Execution policy enabled: {_markdown_bool(authority.get('execution_policy_enabled'))}",
+        f"- Human real-execution authority: {_markdown_bool(authority.get('human_real_execution_authority'))}",
+        f"- Notification policy: {_markdown_text(authority.get('notification_policy'))}",
+        f"- Environment policy: {_markdown_text(authority.get('environment_policy'))}",
+        "",
+        "## Preflight Result",
+        f"- Preflight: {preflight_state}",
+        f"- safe_to_start_real_runner: {safe_to_start}; eligibility only, not execution permission",
+        f"- Planned report path checked: {_markdown_text(preflight.get('report_path'))}",
+        "- Reasons:",
+        *_markdown_bullets(reasons, "none"),
+        "- Inspected paths:",
+        *_markdown_bullets(inspected_paths, "none"),
+        "",
+        "## Preflight Preview Card",
+        render_preflight_preview_card(preflight).rstrip(),
+        "",
+        "## Human Next Action",
+        f"- {_markdown_text(preview.get('human_next_action'))}",
+        "",
+        "## Explicit Boundary",
+        "- real codex exec: not started",
+        f"- {subprocess_run_label}: not implemented",
+        "- stdin piping: not implemented",
+        "- runtime worker loop: not implemented",
+        "- external notification: not implemented",
+        "- runtime artifacts: not written",
+        "- worker report: not created",
+        "- gate result from a real run: not evaluated",
+        "",
+        "## Raw Identifiers",
+        f"- codex_execution_started: {_markdown_bool(preview.get('codex_execution_started'))}",
+        f"- real_subprocess_started: {_markdown_bool(preview.get('real_subprocess_started'))}",
+        f"- runtime_artifacts_written: {', '.join(_string_list(preview.get('runtime_artifacts_written'))) or 'none'}",
+    ]
+    return "\n".join(lines) + "\n"
+
+
 def _fake_report_payload(worker: str, scenario: str) -> dict[str, Any]:
     status = "pass"
     summary = f"fake runner {scenario} report"
@@ -630,8 +799,21 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "prompt": prompt_path.relative_to(REPO_ROOT).as_posix(),
     }
 
+    if getattr(args, "pre_execution_dry_run", False):
+        repo_status = None
+        if getattr(args, "repo_status_clean", False):
+            repo_status = clean_repo_status_for_preview()
+        elif getattr(args, "repo_status_json", None):
+            repo_status = load_repo_status_preview(args.repo_status_json)
+        result["pre_execution_dry_run"] = build_pre_execution_dry_run_preview(
+            state,
+            args.worker,
+            timestamp=getattr(args, "timestamp", None),
+            repo_status=repo_status,
+        )
+
     if args.dry_run:
-        execution_plan_obj = build_execution_plan(state, args.worker)
+        execution_plan_obj = build_execution_plan(state, args.worker, timestamp=getattr(args, "timestamp", None))
         execution_plan = execution_plan_obj.to_dict()
         execution_plan["powershell"] = powershell_preview(execution_plan["argv"])
         execution_plan["preflight"] = build_execution_preflight(
@@ -648,7 +830,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         if gate_result["needs_human"]:
             result["notify_stub"] = write_notification(args.report, gate_result, state_path)
 
-    if not args.dry_run and not args.report:
+    if not args.dry_run and not args.report and not getattr(args, "pre_execution_dry_run", False):
         result["codex_execution_started"] = False
         result["message"] = "No Codex execution is performed by the v0 orchestrator. Use --dry-run or --report."
 
@@ -659,13 +841,31 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Minimal Codex worker orchestration for NLMYTGen.")
     parser.add_argument("--worker", required=True, choices=WORKERS, help="Worker prompt to select.")
     parser.add_argument("--dry-run", action="store_true", help="Print the planned codex exec command.")
+    parser.add_argument(
+        "--pre-execution-dry-run",
+        action="store_true",
+        help="Print a human-readable plan, preflight result, and preview card without starting a runner.",
+    )
     parser.add_argument("--report", help="Evaluate an existing worker report JSON inside this repo.")
+    parser.add_argument("--timestamp", help="Optional timestamp seed for deterministic planned report paths.")
+    parser.add_argument(
+        "--repo-status-clean",
+        action="store_true",
+        help="Use an operator-provided clean repo status assertion for the preview.",
+    )
+    parser.add_argument("--repo-status-json", help="Repo-local JSON object to use as the preview repo status.")
     parser.add_argument(
         "--state",
         default=str(DEFAULT_STATE_PATH.relative_to(REPO_ROOT)),
         help="Agent state JSON path inside this repo.",
     )
     args = parser.parse_args(argv)
+    if args.pre_execution_dry_run and (args.dry_run or args.report):
+        parser.error("--pre-execution-dry-run cannot be combined with --dry-run or --report")
+    if args.repo_status_clean and args.repo_status_json:
+        parser.error("--repo-status-clean cannot be combined with --repo-status-json")
+    if (args.repo_status_clean or args.repo_status_json) and not args.pre_execution_dry_run:
+        parser.error("repo status preview options require --pre-execution-dry-run")
 
     try:
         result = run(args)
@@ -673,7 +873,10 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps({"status": "error", "error": str(exc)}, ensure_ascii=False, indent=2), file=sys.stderr)
         return 2
 
-    print(json.dumps(result, ensure_ascii=False, indent=2))
+    if args.pre_execution_dry_run:
+        print(render_pre_execution_dry_run_preview(result["pre_execution_dry_run"]), end="")
+    else:
+        print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
 
 

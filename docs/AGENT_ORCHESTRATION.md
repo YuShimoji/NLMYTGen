@@ -31,6 +31,8 @@ Repo-local orchestrator は `scripts/agent_orchestrator.py` で、現時点で�
 - `.agent/state.json` を読む。
 - `--worker advance|audit|fix|summarize` に対応する prompt の存在を確認する。
 - `--dry-run` で将来の `codex exec` execution plan / command argv 案を表示する。
+- `--pre-execution-dry-run` で plan、preflight、preflight preview card、人間の次判断を
+  Markdown で表示して止める。
 - `--report <path>` で既存 report を gate に渡す。
 - `needs_human=true` のときだけ notify stub を呼ぶ。
 
@@ -44,7 +46,7 @@ Future `codex exec` integration は別 slice で行う。現時点では実行�
 - `.agent/schemas/worker_report.schema.json`: Worker report の JSON Schema
 - `scripts/agent_gate.py`: schema validation と policy gate
 - `scripts/agent_notify_stub.py`: 外部通知なしの needs-human stub
-- `scripts/agent_orchestrator.py`: prompt 選択、dry-run、report 判定の入口
+- `scripts/agent_orchestrator.py`: prompt 選択、dry-run、pre-execution preview、report 判定の入口
 - `scripts/agent_operator_surface.py`: 既存 flow JSON から operator review card を出す
   read-only renderer
 - `docs/AGENT_OPERATOR_SURFACE.md`: card の読み方と deterministic example
@@ -129,6 +131,20 @@ untracked files、既存 report output の上書き、shell string command shape
 prompt source ambiguity、notification ambiguity は、実行前に止める。Preflight
 自体は常に `codex_execution_started=false` と `real_subprocess_started=false` を
 返し、runner を起動しない。
+
+pre-execution dry-run preview 例:
+
+```powershell
+uv run python scripts/agent_orchestrator.py --worker audit --pre-execution-dry-run --repo-status-clean
+```
+
+この preview は `build_execution_plan`、`build_execution_preflight`、既存の
+`render_preflight_preview_card` を組み合わせ、Markdown を stdout に出すだけで止まる。
+`--repo-status-clean` は operator が直前に確認した clean 状態を明示するための入力であり、
+CLI 自身は Git subprocess を起動しない。必要なら `--repo-status-json <repo-local-json>` で
+事前に作った repo status object を渡せる。どちらの場合も `.agent/reports`、
+`.agent/logs`、`.agent/needs_human.json` は作らず、worker report の gate 評価にも進まない。
+表示される `safe_to_start_real_runner` は eligibility signal であり、実行許可ではない。
 
 ## Worker Report Schema
 
@@ -250,7 +266,7 @@ Worker report 側で risk または human question として明示する。
 
 ## Codex exec への接続手順
 
-現時点の `agent_orchestrator.py` は dry-run と report 判定だけを行う。
+現時点の `agent_orchestrator.py` は dry-run、pre-execution dry-run preview、report 判定だけを行う。
 次段階で実行に接続する場合は、次の順で進める。
 
 1. command builder が返す execution plan を検証する。現時点の preview contract は
@@ -354,5 +370,6 @@ authority を置き換えない。
   優先する。
 - 人間判断が必要なときは `.agent/needs_human.json` を見る。
 
-最小運用では、Automation は `agent_orchestrator.py --worker <name> --dry-run`
-または `--report <path>` を起点にし、判定結果を repo 内 artifact として残す。
+最小運用では、Automation は `agent_orchestrator.py --worker <name> --dry-run`、
+`--pre-execution-dry-run`、または `--report <path>` を起点にする。preview-only path は
+stdout の確認面であり、repo 内 runtime artifact は残さない。

@@ -1409,7 +1409,11 @@ def test_orchestrator_dry_run_does_not_start_codex() -> None:
         argparse.Namespace(
             worker="audit",
             dry_run=True,
+            pre_execution_dry_run=False,
             report=None,
+            timestamp=None,
+            repo_status_clean=False,
+            repo_status_json=None,
             state=".agent/state.json",
         )
     )
@@ -1423,12 +1427,95 @@ def test_orchestrator_dry_run_does_not_start_codex() -> None:
     assert "gate_result" not in result
 
 
+def test_pre_execution_dry_run_preview_renders_plan_preflight_card_without_artifacts() -> None:
+    report_path = REPO_ROOT / ".agent" / "reports" / "preview-mvp-audit.report.json"
+    assert not report_path.exists()
+
+    preview = agent_orchestrator.build_pre_execution_dry_run_preview(
+        _load_state(),
+        "audit",
+        timestamp="preview-mvp",
+        repo_status=_clean_repo_status(),
+    )
+    card = agent_orchestrator.render_pre_execution_dry_run_preview(preview)
+
+    assert preview["preflight"]["allowed"] is True
+    assert preview["preflight"]["safe_to_start_real_runner"] is False
+    assert preview["runtime_artifacts_written"] == []
+    assert "# NLMYTGen Pre-execution Dry-run Preview" in card
+    assert "- Worker: audit" in card
+    assert "- Prompt source: .agent/prompt_catalog/audit.md" in card
+    assert "- Schema path: .agent/schemas/worker_report.schema.json" in card
+    assert "- Planned report path: .agent/reports/preview-mvp-audit.report.json" in card
+    assert "- codex" in card
+    assert "- exec" in card
+    assert "- This argv is shown only for review; it was not executed." in card
+    assert "- Source: operator-provided" in card
+    assert "- Preflight: passed for this preview" in card
+    assert "- safe_to_start_real_runner: no; eligibility only, not execution permission" in card
+    assert "# NLMYTGen Preflight Preview Card" in card
+    assert "- subprocess.run: not implemented" in card
+    assert "- runtime artifacts: not written" in card
+    assert "gate result from a real run: not evaluated" in card
+    assert not report_path.exists()
+
+
+def test_pre_execution_dry_run_preview_surfaces_blocked_repo_status() -> None:
+    repo_status = _clean_repo_status()
+    repo_status["tracked_dirty"] = ["scripts/agent_orchestrator.py"]
+
+    preview = agent_orchestrator.build_pre_execution_dry_run_preview(
+        _load_state(),
+        "audit",
+        timestamp="preview-blocked",
+        repo_status=repo_status,
+    )
+    card = agent_orchestrator.render_pre_execution_dry_run_preview(preview)
+
+    assert preview["preflight"]["allowed"] is False
+    assert "repo_status:tracked_dirty" in preview["preflight"]["reasons"]
+    assert "- Preflight: blocked this preview" in card
+    assert "- Tracked dirty: scripts/agent_orchestrator.py" in card
+    assert "- repo_status:tracked_dirty" in card
+    assert "Resolve or intentionally hold the listed preflight reasons" in card
+    assert "- real codex exec: not started" in card
+
+
+def test_orchestrator_cli_pre_execution_dry_run_outputs_markdown(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    exit_code = agent_orchestrator.main(
+        [
+            "--worker",
+            "audit",
+            "--pre-execution-dry-run",
+            "--timestamp",
+            "cli-preview",
+            "--repo-status-clean",
+        ]
+    )
+    captured = capsys.readouterr()
+
+    assert exit_code == 0
+    assert captured.err == ""
+    assert captured.out.startswith("# NLMYTGen Pre-execution Dry-run Preview")
+    assert ".agent/reports/cli-preview-audit.report.json" in captured.out
+    assert "# NLMYTGen Preflight Preview Card" in captured.out
+    assert "safe_to_start_real_runner: no; eligibility only, not execution permission" in captured.out
+    assert "- codex_execution_started: no" in captured.out
+    assert "- real_subprocess_started: no" in captured.out
+
+
 def test_orchestrator_without_dry_run_or_report_still_cannot_execute_codex() -> None:
     result = agent_orchestrator.run(
         argparse.Namespace(
             worker="audit",
             dry_run=False,
+            pre_execution_dry_run=False,
             report=None,
+            timestamp=None,
+            repo_status_clean=False,
+            repo_status_json=None,
             state=".agent/state.json",
         )
     )

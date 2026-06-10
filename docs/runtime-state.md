@@ -1,5 +1,23 @@
 # Runtime State — NLMYTGen
 
+- **Common foundation pre-execution dry-run preview-only MVP implemented (2026-06-10)**:
+  `scripts/agent_orchestrator.py --pre-execution-dry-run` now prints a
+  human-readable Markdown preview that composes the existing execution plan,
+  `build_execution_preflight(..., mode="dry_run_preview")`, and
+  `render_preflight_preview_card`. The preview shows selected worker, prompt
+  source, schema path, planned report path, working directory, timeout,
+  shell-free argv preview, repo status summary, authority summary, preflight
+  allow/block state, reasons, inspected paths, raw preflight preview card, human
+  next action, and explicit execution boundary. It stops at stdout: no real
+  `codex exec`, no `subprocess.run`, no stdin piping, no runtime worker loop, no
+  external notification, no worker report validation from a real run, and no
+  `.agent/reports`, `.agent/logs`, or `.agent/needs_human.json` runtime artifact
+  creation. `--repo-status-clean` is an operator-provided clean assertion after
+  external git checks; the CLI itself does not spawn Git. Tests cover allowed
+  preview output, blocked repo-status reasons, CLI Markdown output, existing
+  dry-run compatibility, and the no-real-execution sentinel. Next safe action is
+  human review of the preview surface or a narrow audit of the operator-provided
+  repo-status input shape, not real runner implementation.
 - **Common foundation pre-execution dry-run flow designed (2026-06-10)**:
   `docs/verification/PRE-EXECUTION-DRY-RUN-FLOW-DESIGN-2026-06-10.md`
   defines the next safe common-foundation step after the parked preflight /

@@ -80,6 +80,28 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 ## DECISION LOG
 
 Latest common foundation decision (2026-06-10):
+`pre_execution_dry_run_preview_mvp_001` implements the preview-only CLI allowed
+by the prior design review. `scripts/agent_orchestrator.py --pre-execution-dry-run`
+now builds the existing shell-free execution plan, runs
+`build_execution_preflight` in `dry_run_preview` mode, embeds the existing raw
+preflight preview card, and prints one Markdown review surface to stdout. The
+surface shows worker, prompt source, schema, planned report path, working
+directory, timeout, argv preview, repo status summary, authority summary,
+preflight pass/block state, `safe_to_start_real_runner`, reasons, inspected
+paths, human next action, and the explicit boundary. The CLI may accept
+`--repo-status-clean` as an operator-provided clean assertion after external git
+checks, or `--repo-status-json` for a repo-local status object; it does not spawn
+Git itself. This does not implement real `codex exec`, `subprocess.run`, stdin
+piping, runtime worker loop, external notification, worker report validation
+from a real run, `.agent` runtime artifact creation, GUI, G-28, Newsroom, G-27,
+ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, `.ymmp`, render, rights,
+production, publishing, or release automation. Tests now cover the allowed
+preview, blocked repo-status reasons, CLI Markdown output, and preservation of
+the no-real-execution sentinel. Next safe action is human review of the preview
+surface or a focused audit of repo-status input handling; real runner work still
+requires a separate explicit authorization.
+
+Latest common foundation decision (2026-06-10):
 `pre_execution_dry_run_flow_design_001_docs_only` adds
 `docs/verification/PRE-EXECUTION-DRY-RUN-FLOW-DESIGN-2026-06-10.md` as the
 human-visible design for a future pre-execution dry-run flow after the parked

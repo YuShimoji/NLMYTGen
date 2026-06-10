@@ -1037,6 +1037,110 @@ Completion report:
 - Provide the next prompt or next human input needed.
 ```
 
+===== SECTION 24: Common Foundation Pre-execution Dry-run Preview MVP Handoff =====
+Use this prompt when resuming after the preview-only pre-execution dry-run CLI
+implementation. This is not permission to implement or run real execution.
+
+BEGIN_COPY_BLOCK_FOR_AGENT
+
+NLMYTGen common foundation has a preview-only pre-execution dry-run CLI. Review
+or audit the preview surface, and preserve the execution boundary. Do not open a
+real runner path from this prompt.
+
+repo:
+C:\Users\PLANNER007\NLMYTGen
+
+Start by running:
+git status --porcelain=v1
+git status --porcelain=v1 -uno
+git fetch --prune origin
+git pull --ff-only
+git branch --show-current
+git rev-parse --short HEAD
+git rev-list --left-right --count "HEAD...@{u}"
+git diff --name-only
+git diff --cached --name-only
+
+Read in this order:
+AGENTS.md
+docs/REPO_LOCAL_RULES.md
+docs/runtime-state.md
+docs/project-context.md
+docs/AGENT_ORCHESTRATION.md
+docs/AGENT_OPERATOR_SURFACE.md
+docs/verification/PRE-EXECUTION-DRY-RUN-FLOW-DESIGN-2026-06-10.md
+docs/USER_COPYPASTE_BLOCKS.md SECTION 24
+
+Expected state:
+- branch: master
+- upstream parity: 0 0
+- tracked working tree: clean before new work
+- latest remote should include `pre_execution_dry_run_preview_mvp_001` or a
+  later approved handoff
+
+Current decision:
+- `scripts/agent_orchestrator.py --pre-execution-dry-run` exists.
+- It builds the existing execution plan, runs `build_execution_preflight` in
+  `dry_run_preview` mode, embeds `render_preflight_preview_card`, prints
+  Markdown to stdout, and stops.
+- The preview shows selected worker, prompt source, schema path, planned report
+  path, working directory, timeout, shell-free argv preview, repo status
+  summary, authority summary, preflight allowed/blocked state,
+  `safe_to_start_real_runner`, reasons, inspected paths, preflight preview card,
+  human next action, and explicit execution boundary.
+- `--repo-status-clean` is an operator-provided clean assertion after external
+  git checks. The CLI itself does not spawn Git.
+- `--repo-status-json` can pass a repo-local status object for blocked/dirty
+  preview review.
+- `safe_to_start_real_runner=true` remains eligibility only, not execution
+  permission.
+
+Smoke command:
+uv run python scripts/agent_orchestrator.py --worker audit --pre-execution-dry-run --timestamp handoff-smoke --repo-status-clean
+
+Boundary:
+- Do not implement real `codex exec`.
+- Do not add `subprocess.run`.
+- Do not add stdin piping.
+- Do not add a runtime worker loop.
+- Do not add an external notification service.
+- Do not create `.agent/reports`, `.agent/logs`, or `.agent/needs_human.json`
+  runtime artifacts from the preview path.
+- Do not evaluate a worker report from a real run.
+- Do not touch GUI, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader,
+  NotebookLM, `.ymmp`, render, rights, production, publishing, or release
+  automation unless a new user request explicitly changes scope.
+
+Allowed next common-foundation entry:
+- human review of the preview Markdown surface
+- audit of repo-status input handling
+- docs/readback correction if the preview wording is unclear
+- separate real-runner design only after explicit human authorization
+
+Verification before any handoff commit:
+- uv run pytest tests/test_agent_orchestration.py
+- uv run pytest tests/test_guardrails.py
+- uv run python -m py_compile scripts/agent_gate.py scripts/agent_notify_stub.py scripts/agent_orchestrator.py scripts/agent_operator_surface.py
+- uv run python scripts/agent_orchestrator.py --worker audit --pre-execution-dry-run --timestamp handoff-smoke --repo-status-clean
+- git diff --check
+- git diff --cached --check
+- staged forbidden scan:
+  - no .agent runtime artifacts
+  - no samples / .ymmp
+  - no gui / src
+  - no Newsroom / ClipPipeGen paths
+  - no credentials / token-like strings
+
+Completion report should state:
+- branch, HEAD, and upstream parity
+- changed files
+- verification commands and outcomes
+- whether runtime artifacts were generated
+- whether real execution remains closed
+- next safe entry point
+
+END_COPY_BLOCK_FOR_AGENT
+
 ===== SECTION 23: Common Foundation Pre-execution Dry-run Flow Design Handoff =====
 Use this prompt when resuming after the pre-execution dry-run flow design.
 This is a restart / handoff prompt for design review or a future preview-only

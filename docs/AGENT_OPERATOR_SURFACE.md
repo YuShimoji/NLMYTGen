@@ -39,6 +39,14 @@ To render a deterministic raw preflight preview card:
 uv run python scripts/agent_operator_surface.py --preflight-example
 ```
 
+To print the current pre-execution dry-run preview, use the orchestrator. This
+builds the plan, runs preflight in preview mode, embeds the raw preflight card,
+and stops:
+
+```powershell
+uv run python scripts/agent_orchestrator.py --worker audit --pre-execution-dry-run --repo-status-clean
+```
+
 The script only reads a JSON file inside this repo and prints Markdown. It does
 not run Codex, does not run the local simulation runner, does not create a
 subprocess, does not pipe stdin, does not start a worker loop, and does not send
@@ -50,6 +58,12 @@ worker, allow decision, `safe_to_start_real_runner`, reasons, inspected paths,
 authority summary, execution boundary, and human next action. It does not wrap a
 raw preflight result into a runner flow, does not validate a worker report, and
 does not authorize real execution by itself.
+
+The orchestrator's pre-execution dry-run preview reuses that same card inside a
+larger Markdown review surface with selected worker, prompt source, schema path,
+planned report path, working directory, timeout, argv preview, repo status
+summary, authority summary, and an explicit stop boundary. It still does not
+write runtime artifacts or evaluate a worker report from a real run.
 
 ## Example Card
 
@@ -133,6 +147,8 @@ through a gate or start a real runner.
 - A preflight preview with `safe_to_start_real_runner=true` is only a readable
   preview of a preflight result; real execution still belongs to a separate
   authorized runner slice.
+- The pre-execution dry-run preview can show an allowed preview result, but it
+  stops after stdout and does not consume that result by starting any runner.
 - Real runner boundary design is still a separate future slice.
 - External notification remains unimplemented; the local notify stub is the only
   visible notification artifact.
