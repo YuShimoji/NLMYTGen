@@ -79,6 +79,24 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest G-28 decision (2026-06-10): `g28_game_mechanics_ymmp_diagnostic_carrier_created`
+creates a self-contained YMM4 diagnostic carrier candidate for the accepted
+`game_mechanics_explanation` Lecture Diagram review surface. The generated
+candidate lives at
+`samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe.ymmp`
+with readback/report siblings and verification record
+`docs/verification/G28-GAME-MECHANICS-YMMP-DIAGNOSTIC-CARRIER-PROBE-2026-06-10.md`.
+The readback passed as diagnostic-only / production-candidate false, ShapeItem
+and TextItem only, with focal chain `入力操作` -> `内部ルール / 判定` -> `画面上の結果`,
+callouts `操作感`, `判定 / 当たり判定`, `リスクとリターン`, non-focal hosts, bottom
+caption reserve clear, external image / URL / source-footage / audio / TTS
+counts all zero, and no render or production approval. This does not reopen
+real-estate evidence, process Newsroom handoff material, revive G-27, advance
+common foundation, or approve production / rights / creative final acceptance.
+Next safe action is human YMM4 review intake only: carrier path, preview
+screenshot, timeline screenshot, item/layer confirmation, bottom caption
+safe-area evidence, and `accept` / `revise` / `reject`.
+
 Latest common foundation decision (2026-06-10):
 `pre_execution_dry_run_preview_hold_001` accepts the wording-refined preview as
 holdable for cross-terminal restart. The check ran

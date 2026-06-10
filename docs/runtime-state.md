@@ -1,5 +1,25 @@
 # Runtime State — NLMYTGen
 
+- **G-28 game mechanics YMM4 diagnostic carrier candidate created (2026-06-10)**:
+  `scripts/build_g28_game_mechanics_ymmp_probe.js --write` now creates a
+  self-contained ShapeItem/TextItem-only diagnostic carrier candidate at
+  `samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe.ymmp`
+  plus readback JSON and a human-readable report. The readback passed with
+  `diagnostic_only=true`, `production_candidate=false`,
+  `carrier_kind=lecture_diagram_carrier`, `variant=game_mechanics_explanation`,
+  focal chain `入力操作` -> `内部ルール / 判定` -> `画面上の結果`, callouts
+  `操作感` / `判定 / 当たり判定` / `リスクとリターン`, bottom caption reserve
+  clear, non-focal hosts, external image / URL / source-footage / audio / TTS
+  counts all zero, `render_output=false`, and `production_approval=false`.
+  Verification record:
+  `docs/verification/G28-GAME-MECHANICS-YMMP-DIAGNOSTIC-CARRIER-PROBE-2026-06-10.md`.
+  This is the next reviewable YMM4 diagnostic candidate only; it is not render,
+  production carrier approval, rights approval, creative final acceptance,
+  source-footage intake, gameplay screenshot intake, Newsroom intake, G-27
+  revival, real-estate reopening, or common-foundation progress. The next safe
+  action is human YMM4 review intake: open the carrier path, return preview and
+  timeline screenshots, item/layer confirmation, bottom caption safe-area
+  evidence, and `accept` / `revise` / `reject`.
 - **Common foundation dry-run preview wording accepted for Hold (2026-06-10)**:
   The refined pre-execution dry-run preview has been checked as holdable after
   `8006349 fix: clarify dry-run preview wording`. The hold check used
