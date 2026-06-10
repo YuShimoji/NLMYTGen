@@ -528,8 +528,8 @@ def render_preflight_preview_card(preflight_result: dict[str, Any]) -> str:
         "## Summary",
         f"- Preflight status: {state}",
         f"- Mode / worker: {_safe_text(preflight_result.get('mode'))} / {_safe_text(preflight_result.get('worker'))}",
-        f"- Allowed: {_yes_no(preflight_result.get('allowed'))}",
-        f"- Safe to start real runner: {_yes_no(safe_to_start)}",
+        f"- Allowed for preflight review only: {_yes_no(preflight_result.get('allowed'))}",
+        f"- Real-runner start eligibility: {_yes_no(safe_to_start)} (not execution permission)",
         f"- Human action required: {human_action}",
         "- This card is read-only; it did not start a runner or validate a worker report.",
         "",
@@ -557,8 +557,8 @@ def render_preflight_preview_card(preflight_result: dict[str, Any]) -> str:
         "## Raw Identifiers",
         f"- mode: {_safe_text(preflight_result.get('mode'))}",
         f"- worker: {_safe_text(preflight_result.get('worker'))}",
-        f"- preflight_allowed: {_yes_no(preflight_result.get('allowed'))}",
-        f"- safe_to_start_real_runner: {_yes_no(safe_to_start)}",
+        f"- preflight_allowed: {_yes_no(preflight_result.get('allowed'))} (preflight result only; not execution permission)",
+        f"- safe_to_start_real_runner: {_yes_no(safe_to_start)} (eligibility only; not execution permission)",
         f"- report_path: {_safe_text(preflight_result.get('report_path'))}",
     ]
     return "\n".join(lines) + "\n"

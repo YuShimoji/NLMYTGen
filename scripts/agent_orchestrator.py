@@ -483,9 +483,13 @@ def _markdown_join(values: list[str]) -> str:
 
 
 def _repo_status_lines(repo_status: dict[str, Any]) -> list[str]:
-    source = "operator-provided" if repo_status.get("provided") is True else "not provided to preview CLI"
+    source = (
+        "operator-provided assertion after external git checks; not checked by this CLI"
+        if repo_status.get("provided") is True
+        else "not provided to preview CLI"
+    )
     return [
-        f"- Source: {source}",
+        f"- Repo status source: {source}",
         f"- Tracked dirty: {_markdown_join(_string_list(repo_status.get('tracked_dirty'))) or 'none'}",
         f"- Staged files: {_markdown_join(_string_list(repo_status.get('staged'))) or 'none'}",
         f"- Untracked files: {_markdown_join(_string_list(repo_status.get('untracked'))) or 'none'}",
@@ -545,7 +549,9 @@ def render_pre_execution_dry_run_preview(preview: dict[str, Any]) -> str:
     reasons = _string_list(preflight.get("reasons"))
     inspected_paths = _string_list(preflight.get("inspected_paths"))
     authority = preflight.get("authority_summary") if isinstance(preflight.get("authority_summary"), dict) else {}
-    preflight_state = "passed for this preview" if preflight.get("allowed") is True else "blocked this preview"
+    preflight_state = (
+        "passed for this preview only" if preflight.get("allowed") is True else "blocked this preview before any runner"
+    )
     safe_to_start = _markdown_bool(preflight.get("safe_to_start_real_runner"))
     subprocess_run_label = "subprocess" + ".run"
 
@@ -553,12 +559,14 @@ def render_pre_execution_dry_run_preview(preview: dict[str, Any]) -> str:
         "# NLMYTGen Pre-execution Dry-run Preview",
         "",
         "## Selected Plan",
+        "- Preview role: outer plan-level review of the would-be worker run",
         f"- Worker: {_markdown_text(preview.get('worker'))}",
         f"- Flow mode: {_markdown_text(preview.get('flow_mode'))}",
         f"- Intended runner mode: {_markdown_text(preview.get('intended_runner_mode'))}",
         f"- Prompt source: {_markdown_text(plan.get('stdin_source'))}",
         f"- Schema path: {_markdown_text(plan.get('schema_path'))}",
         f"- Planned report path: {_markdown_text(plan.get('report_path'))}",
+        "- Report file status: planned only; not written by this preview",
         f"- Working directory: {_markdown_text(plan.get('cwd'))}",
         f"- Timeout: {_markdown_text(preflight.get('timeout_seconds'))} seconds",
         f"- Prompt input mode: {_markdown_text(plan.get('prompt_input_mode'))}",
@@ -587,7 +595,8 @@ def render_pre_execution_dry_run_preview(preview: dict[str, Any]) -> str:
         "- Inspected paths:",
         *_markdown_bullets(inspected_paths, "none"),
         "",
-        "## Preflight Preview Card",
+        "## Embedded Raw Preflight Preview Card",
+        "The outer preview explains the would-be plan; the embedded card explains the raw preflight result.",
         render_preflight_preview_card(preflight).rstrip(),
         "",
         "## Human Next Action",

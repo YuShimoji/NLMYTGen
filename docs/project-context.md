@@ -80,6 +80,25 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 ## DECISION LOG
 
 Latest common foundation decision (2026-06-10):
+`pre_execution_dry_run_preview_wording_refine_001` keeps the preview-only CLI
+contract but tightens stdout wording so a human can review it without opening
+supporting docs. The repo-status section now says an input is an
+operator-provided assertion after external git checks and is not checked by this
+CLI. The selected-plan section states that the report path is planned only and
+is not written by the preview. The outer preview is described as a plan-level
+review of the would-be worker run, while the embedded card is labeled as the raw
+preflight result. The standalone raw preflight card now phrases `allowed` as
+preflight-review-only and `safe_to_start_real_runner` as eligibility-only, not
+execution permission. Redaction remains in place. This does not implement real
+`codex exec`, `subprocess.run`, stdin piping, runtime worker loop, external
+notification, worker report validation from a real run, `.agent` runtime
+artifact creation, GUI, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader,
+NotebookLM, `.ymmp`, render, rights, production, publishing, or release
+automation. Next safe action is human acceptance of the wording or a separate
+repo-status input handling audit; real runner work still requires explicit
+authorization.
+
+Latest common foundation decision (2026-06-10):
 `pre_execution_dry_run_preview_surface_and_repo_status_audit_001` verified the
 preview-only dry-run surface and repo-status input handling after
 `cf5df6c feat: add pre-execution dry-run preview`. The audit confirmed the
@@ -98,9 +117,9 @@ the raw preflight card's redaction posture. This does not implement real
 notification, worker report validation from a real run, `.agent` runtime
 artifact creation, GUI, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader,
 NotebookLM, `.ymmp`, render, rights, production, publishing, or release
-automation. Remaining review note: stdout currently says `Source:
-operator-provided`; docs make clear this is not a Git check, but a future
-wording pass may make that label more explicit in the preview itself.
+automation. A later wording pass makes the operator-provided repo-status source,
+planned-only report path, preview/card role split, and review-only preflight
+allowance explicit in stdout.
 
 Latest common foundation decision (2026-06-10):
 `pre_execution_dry_run_preview_mvp_001` implements the preview-only CLI allowed

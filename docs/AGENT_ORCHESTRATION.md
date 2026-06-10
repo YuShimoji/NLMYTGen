@@ -141,10 +141,14 @@ uv run python scripts/agent_orchestrator.py --worker audit --pre-execution-dry-r
 この preview は `build_execution_plan`、`build_execution_preflight`、既存の
 `render_preflight_preview_card` を組み合わせ、Markdown を stdout に出すだけで止まる。
 `--repo-status-clean` は operator が直前に確認した clean 状態を明示するための入力であり、
-CLI 自身は Git subprocess を起動しない。必要なら `--repo-status-json <repo-local-json>` で
+stdout でも operator-provided assertion であって CLI が Git check した結果ではないと
+表示する。CLI 自身は Git subprocess を起動しない。必要なら `--repo-status-json <repo-local-json>` で
 事前に作った repo status object を渡せる。どちらの場合も `.agent/reports`、
 `.agent/logs`、`.agent/needs_human.json` は作らず、worker report の gate 評価にも進まない。
-表示される `safe_to_start_real_runner` は eligibility signal であり、実行許可ではない。
+planned report path は予定 path として表示されるだけで、この preview では書き込まない。
+outer preview は would-be worker run の plan-level review、embedded preflight card は raw
+preflight result の表示として分けて読む。表示される `safe_to_start_real_runner` と
+preflight allowed は review / eligibility signal であり、実行許可ではない。
 operator-provided input に credential-like 文字列が混じった場合、outer preview と
 preflight card の表示では raw value を redaction する。
 

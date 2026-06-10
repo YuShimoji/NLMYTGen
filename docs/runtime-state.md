@@ -1,5 +1,21 @@
 # Runtime State — NLMYTGen
 
+- **Common foundation dry-run preview stdout wording refined (2026-06-10)**:
+  The pre-execution dry-run preview still stops at stdout, but its labels now
+  reduce four review-time misreads. The repo status section says the status is
+  an operator-provided assertion after external git checks and was not checked
+  by this CLI. The selected-plan section says the report path is planned only
+  and is not written by the preview. The outer review surface is labeled as a
+  plan-level preview, while the embedded raw preflight card is labeled as the
+  raw preflight result. Preflight allowed / real-runner eligibility wording now
+  says review-only / eligibility-only, not execution permission. Redaction of
+  credential-like display values remains in place. No real `codex exec`,
+  `subprocess.run`, stdin piping, runtime worker loop, external notification,
+  worker report validation from a real run, `.agent` runtime artifact creation,
+  GUI, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader, NotebookLM,
+  `.ymmp`, render, rights, production, publishing, or release automation was
+  opened. Next safe action is human acceptance of the refined preview surface
+  or a separate repo-status input audit.
 - **Common foundation preview-surface / repo-status audit tightened redaction (2026-06-10)**:
   `pre_execution_dry_run_preview_surface_and_repo_status_audit_001` found that
   the preview-only surface was readable and stopped at stdout, but the outer
@@ -13,9 +29,8 @@
   notification, worker report validation from a real run, `.agent` runtime
   artifact creation, GUI, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML,
   Inoreader, NotebookLM, `.ymmp`, render, rights, production, publishing, or
-  release automation was opened. Next safe action is human review of the
-  preview wording, especially whether `Source: operator-provided` should be
-  made more explicit in stdout.
+  release automation was opened. A later stdout wording pass makes the
+  operator-provided repo status source explicit inside the preview itself.
 - **Common foundation pre-execution dry-run preview-only MVP implemented (2026-06-10)**:
   `scripts/agent_orchestrator.py --pre-execution-dry-run` now prints a
   human-readable Markdown preview that composes the existing execution plan,

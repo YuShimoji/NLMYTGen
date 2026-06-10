@@ -1075,7 +1075,7 @@ Expected state:
 - branch: master
 - upstream parity: 0 0
 - tracked working tree: clean before new work
-- latest remote should include `pre_execution_dry_run_preview_mvp_001` or a
+- latest remote should include `pre_execution_dry_run_preview_wording_refine_001` or a
   later approved handoff
 
 Current decision:
@@ -1089,13 +1089,18 @@ Current decision:
   `safe_to_start_real_runner`, reasons, inspected paths, preflight preview card,
   human next action, and explicit execution boundary.
 - `--repo-status-clean` is an operator-provided clean assertion after external
-  git checks. The CLI itself does not spawn Git.
+  git checks. The CLI itself does not spawn Git, and stdout labels this as not
+  checked by the preview CLI.
 - `--repo-status-json` can pass a repo-local status object for blocked/dirty
   preview review.
+- The planned report path is displayed as planned only and not written by this
+  preview.
+- The outer preview is the plan-level review surface; the embedded preflight
+  card is the raw preflight result.
 - Operator-provided credential-like values in preview display fields are
   redacted before printing.
-- `safe_to_start_real_runner=true` remains eligibility only, not execution
-  permission.
+- `safe_to_start_real_runner=true` and preflight allowed remain eligibility /
+  review signals only, not execution permission.
 
 Smoke command:
 uv run python scripts/agent_orchestrator.py --worker audit --pre-execution-dry-run --timestamp handoff-smoke --repo-status-clean

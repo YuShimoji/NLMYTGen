@@ -54,16 +54,20 @@ external notifications.
 
 The preflight preview adapter takes an already-created preflight result and
 renders it as a read-only Markdown card. It shows the preflight status, mode,
-worker, allow decision, `safe_to_start_real_runner`, reasons, inspected paths,
-authority summary, execution boundary, and human next action. It does not wrap a
-raw preflight result into a runner flow, does not validate a worker report, and
-does not authorize real execution by itself.
+worker, review-only allow decision, `safe_to_start_real_runner` as eligibility
+only, reasons, inspected paths, authority summary, execution boundary, and
+human next action. It does not wrap a raw preflight result into a runner flow,
+does not validate a worker report, and does not authorize real execution by
+itself.
 
 The orchestrator's pre-execution dry-run preview reuses that same card inside a
 larger Markdown review surface with selected worker, prompt source, schema path,
 planned report path, working directory, timeout, argv preview, repo status
-summary, authority summary, and an explicit stop boundary. It still does not
-write runtime artifacts or evaluate a worker report from a real run.
+summary, authority summary, and an explicit stop boundary. In that outer
+surface, the report path is labeled as planned only, the repo-status source is
+labeled as operator-provided and not checked by the CLI, and the embedded card
+is labeled as the raw preflight result. It still does not write runtime
+artifacts or evaluate a worker report from a real run.
 
 ## Example Card
 
@@ -149,6 +153,8 @@ through a gate or start a real runner.
   authorized runner slice.
 - The pre-execution dry-run preview can show an allowed preview result, but it
   stops after stdout and does not consume that result by starting any runner.
+- `--repo-status-clean` is an operator assertion after external checks, not a
+  Git check performed by the preview CLI.
 - Real runner boundary design is still a separate future slice.
 - External notification remains unimplemented; the local notify stub is the only
   visible notification artifact.

@@ -1104,8 +1104,8 @@ def test_preflight_preview_card_surfaces_blocked_raw_result() -> None:
     assert "# NLMYTGen Preflight Preview Card" in card
     assert "- Preflight status: blocked" in card
     assert "- Mode / worker: real_runner / audit" in card
-    assert "- Allowed: no" in card
-    assert "- Safe to start real runner: no" in card
+    assert "- Allowed for preflight review only: no" in card
+    assert "- Real-runner start eligibility: no (not execution permission)" in card
     assert "- execution_policy.codex_exec_enabled:false" in card
     assert "- missing_explicit_human_authority" in card
     assert ".agent/prompt_catalog/audit.md" in card
@@ -1130,8 +1130,8 @@ def test_preflight_preview_card_surfaces_allowed_dry_run_without_real_runner() -
 
     assert "- Preflight status: allowed" in card
     assert "- Mode / worker: dry_run_preview / audit" in card
-    assert "- Allowed: yes" in card
-    assert "- Safe to start real runner: no" in card
+    assert "- Allowed for preflight review only: yes" in card
+    assert "- Real-runner start eligibility: no (not execution permission)" in card
     assert "dry-run and fake-helper allows still cannot start a real runner" in card
     assert "- Real Codex execution: not started" in card
     assert "- Real subprocess runner: not started" in card
@@ -1149,7 +1149,7 @@ def test_preflight_preview_card_surfaces_authorized_real_runner_preview() -> Non
     card = agent_operator_surface.render_preflight_preview_card(preflight)
 
     assert "- Preflight status: allowed" in card
-    assert "- Safe to start real runner: yes" in card
+    assert "- Real-runner start eligibility: yes (not execution permission)" in card
     assert "- execution_policy_enabled: yes" in card
     assert "- human_real_execution_authority: yes" in card
     assert "separate real-runner slice" in card
@@ -1185,7 +1185,7 @@ def test_operator_surface_cli_preflight_example_outputs_markdown(capsys: pytest.
     assert exit_code == 0
     assert "# NLMYTGen Preflight Preview Card" in captured.out
     assert "- Preflight status: blocked" in captured.out
-    assert "- Safe to start real runner: no" in captured.out
+    assert "- Real-runner start eligibility: no (not execution permission)" in captured.out
     assert "- Real Codex execution: not started" in captured.out
     assert "- Runtime artifacts: not written by preflight preview" in captured.out
     assert captured.err == ""
@@ -1447,13 +1447,15 @@ def test_pre_execution_dry_run_preview_renders_plan_preflight_card_without_artif
     assert "- Prompt source: .agent/prompt_catalog/audit.md" in card
     assert "- Schema path: .agent/schemas/worker_report.schema.json" in card
     assert "- Planned report path: .agent/reports/preview-mvp-audit.report.json" in card
+    assert "- Report file status: planned only; not written by this preview" in card
     assert "- codex" in card
     assert "- exec" in card
     assert "- This argv is shown only for review; it was not executed." in card
-    assert "- Source: operator-provided" in card
-    assert "- Preflight: passed for this preview" in card
+    assert "- Repo status source: operator-provided assertion after external git checks; not checked by this CLI" in card
+    assert "- Preflight: passed for this preview only" in card
     assert "- safe_to_start_real_runner: no; eligibility only, not execution permission" in card
-    assert "# NLMYTGen Preflight Preview Card" in card
+    assert "## Embedded Raw Preflight Preview Card" in card
+    assert "The outer preview explains the would-be plan; the embedded card explains the raw preflight result." in card
     assert "- subprocess.run: not implemented" in card
     assert "- runtime artifacts: not written" in card
     assert "gate result from a real run: not evaluated" in card
@@ -1474,7 +1476,7 @@ def test_pre_execution_dry_run_preview_surfaces_blocked_repo_status() -> None:
 
     assert preview["preflight"]["allowed"] is False
     assert "repo_status:tracked_dirty" in preview["preflight"]["reasons"]
-    assert "- Preflight: blocked this preview" in card
+    assert "- Preflight: blocked this preview before any runner" in card
     assert "- Tracked dirty: scripts/agent_orchestrator.py" in card
     assert "- repo_status:tracked_dirty" in card
     assert "Resolve or intentionally hold the listed preflight reasons" in card
@@ -1518,7 +1520,7 @@ def test_orchestrator_cli_pre_execution_dry_run_outputs_markdown(
     assert captured.err == ""
     assert captured.out.startswith("# NLMYTGen Pre-execution Dry-run Preview")
     assert ".agent/reports/cli-preview-audit.report.json" in captured.out
-    assert "# NLMYTGen Preflight Preview Card" in captured.out
+    assert "## Embedded Raw Preflight Preview Card" in captured.out
     assert "safe_to_start_real_runner: no; eligibility only, not execution permission" in captured.out
     assert "- codex_execution_started: no" in captured.out
     assert "- real_subprocess_started: no" in captured.out
