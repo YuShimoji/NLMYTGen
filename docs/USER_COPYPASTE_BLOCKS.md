@@ -1037,15 +1037,16 @@ Completion report:
 - Provide the next prompt or next human input needed.
 ```
 
-===== SECTION 24: Common Foundation Pre-execution Dry-run Preview MVP Handoff =====
+===== SECTION 24: Common Foundation Pre-execution Dry-run Preview Hold Handoff =====
 Use this prompt when resuming after the preview-only pre-execution dry-run CLI
-implementation. This is not permission to implement or run real execution.
+implementation, wording refine, and hold check. This is not permission to
+implement or run real execution.
 
 BEGIN_COPY_BLOCK_FOR_AGENT
 
 NLMYTGen common foundation has a preview-only pre-execution dry-run CLI. Review
-or audit the preview surface, and preserve the execution boundary. Do not open a
-real runner path from this prompt.
+or audit the preview surface only if needed; otherwise preserve the Hold state
+and execution boundary. Do not open a real runner path from this prompt.
 
 repo:
 C:\Users\PLANNER007\NLMYTGen
@@ -1075,7 +1076,7 @@ Expected state:
 - branch: master
 - upstream parity: 0 0
 - tracked working tree: clean before new work
-- latest remote should include `pre_execution_dry_run_preview_wording_refine_001` or a
+- latest remote should include `pre_execution_dry_run_preview_hold_001` or a
   later approved handoff
 
 Current decision:
@@ -1101,9 +1102,15 @@ Current decision:
   redacted before printing.
 - `safe_to_start_real_runner=true` and preflight allowed remain eligibility /
   review signals only, not execution permission.
+- A hold check after `8006349 fix: clarify dry-run preview wording` accepted
+  the refined stdout as self-contained enough to park. Runtime artifacts were
+  not generated: `.agent/reports` and `.agent/logs` should contain only
+  `.gitkeep`, and `.agent/needs_human.json` should be absent.
+- Default next action is Hold. Do not keep refining the preview unless a new
+  drift or concrete reader confusion is found.
 
 Smoke command:
-uv run python scripts/agent_orchestrator.py --worker audit --pre-execution-dry-run --timestamp handoff-smoke --repo-status-clean
+uv run python scripts/agent_orchestrator.py --worker audit --pre-execution-dry-run --timestamp hold-check --repo-status-clean
 
 Boundary:
 - Do not implement real `codex exec`.
@@ -1119,6 +1126,7 @@ Boundary:
   automation unless a new user request explicitly changes scope.
 
 Allowed next common-foundation entry:
+- preserve Hold and move to another explicitly requested lane
 - human review of the preview Markdown surface
 - audit of repo-status input handling
 - docs/readback correction if the preview wording is unclear

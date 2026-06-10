@@ -80,6 +80,26 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 ## DECISION LOG
 
 Latest common foundation decision (2026-06-10):
+`pre_execution_dry_run_preview_hold_001` accepts the wording-refined preview as
+holdable for cross-terminal restart. The check ran
+`uv run python scripts/agent_orchestrator.py --worker audit --pre-execution-dry-run --timestamp hold-check --repo-status-clean`
+after `8006349 fix: clarify dry-run preview wording` and found the stdout
+review surface sufficient without opening files: repo-status source is labeled
+as an operator-provided assertion not checked by the CLI, the report path is
+planned only and not written, the outer plan-level preview and embedded raw
+preflight card are distinct, and preflight allowed / `safe_to_start_real_runner`
+remain review / eligibility signals rather than execution permission. Runtime
+artifact state remains clean with only `.agent/reports/.gitkeep` and
+`.agent/logs/.gitkeep`; `.agent/needs_human.json` is absent. This does not
+implement real `codex exec`, `subprocess.run`, stdin piping, runtime worker
+loop, external notification, worker report validation from a real run, `.agent`
+runtime artifact creation, GUI, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML,
+Inoreader, NotebookLM, `.ymmp`, render, rights, production, publishing, or
+release automation. Default next action is Hold; future work should enter
+through a repo-status input audit, a narrow wording/readback correction if drift
+appears, or a separately authorized docs-only real-runner consumption design.
+
+Latest common foundation decision (2026-06-10):
 `pre_execution_dry_run_preview_wording_refine_001` keeps the preview-only CLI
 contract but tightens stdout wording so a human can review it without opening
 supporting docs. The repo-status section now says an input is an

@@ -1,5 +1,23 @@
 # Runtime State — NLMYTGen
 
+- **Common foundation dry-run preview wording accepted for Hold (2026-06-10)**:
+  The refined pre-execution dry-run preview has been checked as holdable after
+  `8006349 fix: clarify dry-run preview wording`. The hold check used
+  `uv run python scripts/agent_orchestrator.py --worker audit --pre-execution-dry-run --timestamp hold-check --repo-status-clean`
+  and confirmed the stdout labels are self-contained: repo status is an
+  operator-provided assertion not checked by the CLI, the report path is planned
+  only and not written, the outer preview and embedded raw preflight card have
+  distinct roles, and preflight allowed / `safe_to_start_real_runner` remain
+  review / eligibility signals rather than execution permission. The preview
+  still writes no `.agent/reports`, `.agent/logs`, or `.agent/needs_human.json`
+  runtime artifacts and does not open real `codex exec`, `subprocess.run`,
+  stdin piping, a runtime worker loop, external notification, worker report
+  validation from a real run, GUI, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML,
+  Inoreader, NotebookLM, `.ymmp`, render, rights, production, publishing, or
+  release automation. Default next action is Hold. Safe future entries are a
+  repo-status input audit, a wording/readback correction if new drift is found,
+  or a separate docs-only real-runner consumption design after explicit human
+  authorization.
 - **Common foundation dry-run preview stdout wording refined (2026-06-10)**:
   The pre-execution dry-run preview still stops at stdout, but its labels now
   reduce four review-time misreads. The repo status section says the status is
