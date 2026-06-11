@@ -80,6 +80,28 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 ## DECISION LOG
 
 Latest G-28 decision (2026-06-11):
+`g28_map_evidence_ymmp_diagnostic_carrier_created_001` advances the next
+reviewable artifact after the game-mechanics `layout_system_debt` decision.
+The game-mechanics YMM4 carrier is not tuned again. Instead,
+`scripts/build_g28_map_evidence_ymmp_probe.js` converts the existing passed Map
+/ Evidence skeleton into a self-contained ShapeItem/TextItem-only YMM4
+diagnostic carrier candidate at
+`samples/_probe/g28/map_evidence_carrier_ymmp_diagnostic_probe.ymmp`, with
+readback and report siblings. The readback passes as
+`classification=pass_map_evidence_ymmp_diagnostic_carrier_created`,
+`diagnostic_only=true`, `production_candidate=false`, caption reserve clear,
+evidence surface in main canvas, three annotation slots, bounded source note,
+non-focal hosts, external image / URL / source-footage / audio / TTS counts
+zero, `render_output=false`, production / creative / rights approvals false,
+and failures empty. The verification record is
+`docs/verification/G28-MAP-EVIDENCE-YMMP-DIAGNOSTIC-CARRIER-PROBE-2026-06-11.md`.
+This does not modify the game-mechanics carrier, create a production candidate,
+render, approve rights, claim creative final acceptance, process Newsroom,
+resume common foundation, revive G-27, touch ClipPipeGen, RSS, OPML, Inoreader,
+NotebookLM, real runner / `codex exec`, GUI, or `src`. Next safe action is human
+YMM4 review intake for the new Map / Evidence carrier.
+
+Latest G-28 decision (2026-06-11):
 `g28_game_mechanics_ymmp_batch_review_layout_system_debt_001` records the human
 batch review result for
 `samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe.ymmp`

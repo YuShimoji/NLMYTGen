@@ -27,6 +27,16 @@ Map / Evidence Carrier は、地図・統計・産業立地・企業分布・人
 `.ymmp` は今回生成しない。まず JSON / HTML / readback artifact で、地理・
 統計・出典付き論証を支える carrier archetype としての frame contract を固定する。
 
+## Later Diagnostic Carrier Slice
+
+The 2026-06-05 slice intentionally stopped at JSON / HTML / readback
+artifacts. A later speed-first G-28 slice on 2026-06-11 created a separate
+diagnostic-only YMM4 carrier candidate at
+`samples/_probe/g28/map_evidence_carrier_ymmp_diagnostic_probe.ymmp`, with
+readback and report siblings. That later slice does not change this original
+skeleton boundary and does not approve production, render, rights, source
+intake, or creative final acceptance.
+
 ## Output Artifacts
 
 - generator: `node scripts\build_g28_map_evidence_carrier_skeleton.js --write`

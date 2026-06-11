@@ -1,5 +1,25 @@
 # Runtime State — NLMYTGen
 
+- **G-28 Map / Evidence YMM4 diagnostic carrier candidate created (2026-06-11)**:
+  After classifying the game-mechanics YMM4 carrier as `layout_system_debt`,
+  same-screen tuning remains stopped. The speed-first next reviewable artifact
+  is now the Map / Evidence YMM4 diagnostic carrier candidate at
+  `samples/_probe/g28/map_evidence_carrier_ymmp_diagnostic_probe.ymmp`.
+  `scripts/build_g28_map_evidence_ymmp_probe.js --write` converts the existing
+  passed Map / Evidence skeleton into a ShapeItem/TextItem-only `.ymmp`, plus
+  readback JSON and report. Readback classifies the result as
+  `pass_map_evidence_ymmp_diagnostic_carrier_created` with
+  `diagnostic_only=true`, `production_candidate=false`, caption reserve clear,
+  evidence area in main canvas, three annotation slots, bounded source note,
+  non-focal hosts, external image / URL / source-footage / audio / TTS counts
+  zero, `render_output=false`, production / creative / rights approvals false,
+  and no failures. Verification record:
+  `docs/verification/G28-MAP-EVIDENCE-YMMP-DIAGNOSTIC-CARRIER-PROBE-2026-06-11.md`.
+  This did not modify the game-mechanics carrier, production state, render,
+  rights, creative final acceptance, Newsroom, common foundation, G-27,
+  ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, real runner / `codex exec`,
+  GUI, or `src`. Next safe action is human YMM4 review intake for the new Map /
+  Evidence carrier path.
 - **G-28 game mechanics batch review classified as layout-system debt (2026-06-11)**:
   Human review of the current
   `game_mechanics_explanation` YMM4 diagnostic carrier is recorded as
