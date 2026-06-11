@@ -1,5 +1,30 @@
 # Runtime State — NLMYTGen
 
+- **G-28 game mechanics one-pass label layout fix applied (2026-06-11)**:
+  Human YMM4 visual review accepted the diagnostic carrier structure but found
+  two label-placement issues: `画面上の結果` was cramped in the right focal
+  node, and the lower `判定 / 当たり判定` / `リスクとリターン` callouts looked
+  left-aligned. The fix is intentionally one-pass only in
+  `scripts/build_g28_game_mechanics_ymmp_probe.js`: the right focal label keeps
+  the same text and node geometry while its inherited rightward nudge is removed
+  and its font size is reduced to 38; all callout labels use the same centered
+  rule at font size 28. Regenerated artifacts are
+  `samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe.ymmp`,
+  its readback JSON, and its report. Readback now records
+  `classification=pass_game_mechanics_ymmp_label_layout_fixed`,
+  `one_pass_targeted_fix=true`, `no_further_micro_tuning_recommended=true`,
+  `right_focal_label_fit_status.status=fits_after_one_pass_targeted_fix`,
+  `callout_label_alignment_status.status=common_centering_rule_applied`, and
+  `label_overflow_check.passed=true`. Boundary remains `diagnostic_only=true` /
+  `production_candidate=false`; external image / URL / source-footage / audio /
+  TTS counts remain zero, and render, rights, production approval, creative
+  final acceptance, Newsroom, real-estate, G-27, ClipPipeGen, RSS, NotebookLM,
+  and common-foundation work remain closed. Do not continue same-screen
+  micro-tuning. Next human review is limited to two checks: whether
+  `画面上の結果` fits inside the right node, and whether `判定 / 当たり判定` plus
+  `リスクとリターン` look centered. If either still fails, classify as
+  `layout_system_debt` or `redesign_required` rather than starting another
+  pixel-tuning loop.
 - **G-28 game mechanics YMM4 diagnostic carrier candidate created (2026-06-10)**:
   `scripts/build_g28_game_mechanics_ymmp_probe.js --write` now creates a
   self-contained ShapeItem/TextItem-only diagnostic carrier candidate at

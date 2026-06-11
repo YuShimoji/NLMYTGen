@@ -7469,7 +7469,7 @@
           "FontSize": {
             "Values": [
               {
-                "Value": 42
+                "Value": 38
               }
             ],
             "Span": 0,
@@ -7513,7 +7513,7 @@
           "X": {
             "Values": [
               {
-                "Value": 478
+                "Value": 486
               }
             ],
             "Span": 0,
@@ -7555,7 +7555,7 @@
           "Y": {
             "Values": [
               {
-                "Value": -165
+                "Value": -163
               }
             ],
             "Span": 0,
@@ -7789,7 +7789,7 @@
           "FontSize": {
             "Values": [
               {
-                "Value": 30
+                "Value": 28
               }
             ],
             "Span": 0,
@@ -7833,7 +7833,7 @@
           "X": {
             "Values": [
               {
-                "Value": -460
+                "Value": -457
               }
             ],
             "Span": 0,
@@ -7875,7 +7875,7 @@
           "Y": {
             "Values": [
               {
-                "Value": 135
+                "Value": 136
               }
             ],
             "Span": 0,
@@ -8109,7 +8109,7 @@
           "FontSize": {
             "Values": [
               {
-                "Value": 30
+                "Value": 28
               }
             ],
             "Span": 0,
@@ -8153,7 +8153,7 @@
           "X": {
             "Values": [
               {
-                "Value": -129.5
+                "Value": -121
               }
             ],
             "Span": 0,
@@ -8195,7 +8195,7 @@
           "Y": {
             "Values": [
               {
-                "Value": 135
+                "Value": 136
               }
             ],
             "Span": 0,
@@ -8429,7 +8429,7 @@
           "FontSize": {
             "Values": [
               {
-                "Value": 30
+                "Value": 28
               }
             ],
             "Span": 0,
@@ -8473,7 +8473,7 @@
           "X": {
             "Values": [
               {
-                "Value": 295
+                "Value": 303
               }
             ],
             "Span": 0,
@@ -8515,7 +8515,7 @@
           "Y": {
             "Values": [
               {
-                "Value": 135
+                "Value": 136
               }
             ],
             "Span": 0,

@@ -79,6 +79,25 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest G-28 decision (2026-06-11):
+`g28_game_mechanics_ymmp_label_layout_fix_001` applies exactly one targeted
+layout fix to the existing YMM4 diagnostic carrier candidate after human visual
+review. The carrier path remains
+`samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe.ymmp`.
+The fix preserves the same carrier, variant, meaning structure, focal chain,
+callouts, host role, and bottom caption reserve. It only removes the right
+focal label's inherited rightward nudge, reduces that label to font size 38,
+and applies one common centered callout label rule at font size 28. The
+regenerated readback classifies the result as
+`pass_game_mechanics_ymmp_label_layout_fixed`, records
+`one_pass_targeted_fix=true`,
+`no_further_micro_tuning_recommended=true`, and sets the next decision gate to
+`accept_with_layout_caveat`. This remains diagnostic-only:
+`production_candidate=false`, no render, no rights approval, no creative final
+acceptance, and no external image / URL / source footage / audio / TTS. If the
+two targeted labels still fail visual review, the next decision should be
+`layout_system_debt` or `redesign_required`; do not keep tuning the same screen.
+
 Latest G-28 decision (2026-06-10): `g28_game_mechanics_ymmp_diagnostic_carrier_created`
 creates a self-contained YMM4 diagnostic carrier candidate for the accepted
 `game_mechanics_explanation` Lecture Diagram review surface. The generated

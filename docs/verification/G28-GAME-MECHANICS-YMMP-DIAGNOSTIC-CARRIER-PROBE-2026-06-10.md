@@ -72,6 +72,56 @@ readback:
 A second no-`--write` run verified the stored `.ymmp` and readback JSON do not
 drift from the builder.
 
+## One-pass Targeted Layout Fix - 2026-06-11
+
+Human YMM4 visual review found two layout issues while accepting the overall
+diagnostic carrier structure:
+
+- `画面上の結果` looked cramped in the right focal node.
+- Lower callouts `判定 / 当たり判定` and `リスクとリターン` looked left-aligned.
+
+The fix keeps the same carrier, variant, focal chain, callouts, host role, and
+caption reserve. It is not a new variant, redesign, render, production
+approval, rights approval, or creative final acceptance.
+
+Implemented one-pass changes:
+
+- `G28_LDC_Node_Right_Label`: removed the inherited rightward nudge and reduced
+  font size from 42 to 38 while preserving text `画面上の結果` and the existing
+  right-node box.
+- `G28_LDC_CalloutSlot_1_Label` / `2_Label` / `3_Label`: applied one shared
+  callout label rule with font size 28, zero horizontal offset, and centered
+  placement inside the existing callout slots.
+
+Updated readback now records:
+
+- `classification=pass_game_mechanics_ymmp_label_layout_fixed`
+- `one_pass_targeted_fix=true`
+- `no_further_micro_tuning_recommended=true`
+- `next_decision_gate=accept_with_layout_caveat`
+- `right_focal_label_fit_status.status=fits_after_one_pass_targeted_fix`
+- `callout_label_alignment_status.status=common_centering_rule_applied`
+- `label_overflow_check.passed=true`
+
+Readback margins after the fix:
+
+- `画面上の結果`: 16px estimated horizontal margin on each side of the right
+  focal node.
+- `判定 / 当たり判定`: 29px estimated horizontal margin on each side of its
+  callout box.
+- `リスクとリターン`: 38px estimated horizontal margin on each side of its
+  callout box.
+
+Do not continue same-screen micro-tuning from this record. The next human review
+is limited to these two checks:
+
+- Does `画面上の結果` fit inside the right focal node?
+- Do `判定 / 当たり判定` and `リスクとリターン` look centered in their callout boxes?
+
+If either still fails visually, classify the remaining problem as
+`layout_system_debt` or `redesign_required` rather than starting another
+pixel-tuning loop.
+
 ## Boundaries
 
 This probe does not:

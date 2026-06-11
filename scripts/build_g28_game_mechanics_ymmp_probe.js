@@ -47,10 +47,10 @@ const nextReviewInputsRequired = [
   'bottom caption safe-area evidence',
 ];
 const creationRecord = {
-  revision_id: 'g28_game_mechanics_ymmp_diagnostic_probe_v1',
-  source_human_need: 'missing YMM4-saved carrier evidence for game_mechanics review',
-  classification: 'pass_game_mechanics_ymmp_diagnostic_carrier_created',
-  boundary_note: 'Diagnostic-only YMM4 carrier candidate; no render, production approval, rights approval, creative final acceptance, source footage, gameplay screenshot, URL, image, audio, or TTS.',
+  revision_id: 'g28_game_mechanics_ymmp_label_layout_fix_v1',
+  source_human_need: 'one-pass YMM4 visual fix for right focal label fit and lower callout centering',
+  classification: 'pass_game_mechanics_ymmp_label_layout_fixed',
+  boundary_note: 'Diagnostic-only YMM4 carrier candidate; one-pass label layout fix only; no render, production approval, rights approval, creative final acceptance, source footage, gameplay screenshot, URL, image, audio, or TTS.',
 };
 const diagnosticTextBudget = {
   max_visible_text_items: 8,
@@ -61,10 +61,39 @@ const manualOffsetRegistry = {
   G28_LDC_Title_Text: { value: { x: 0, y: -2 }, reason: 'Title optical centering inside the source title band.' },
   G28_LDC_Node_Left_Label: { value: { x: 0, y: -4 }, reason: 'Node label optical centering.' },
   G28_LDC_Node_Center_Label: { value: { x: 0, y: -4 }, reason: 'Center node label optical centering.' },
-  G28_LDC_Node_Right_Label: { value: { x: 4, y: -4 }, reason: 'Bounded right-node optical centering inherited as a placement heuristic only.' },
-  G28_LDC_CalloutSlot_1_Label: { value: { x: 0, y: -3 }, reason: 'Callout label optical centering.' },
-  G28_LDC_CalloutSlot_2_Label: { value: { x: 0, y: -3 }, reason: 'Callout label optical centering.' },
-  G28_LDC_CalloutSlot_3_Label: { value: { x: 0, y: -3 }, reason: 'Callout label optical centering.' },
+  G28_LDC_Node_Right_Label: { value: { x: 0, y: -4 }, reason: 'One-pass right-node fit correction: remove inherited rightward nudge and rely on reduced font size.' },
+  G28_LDC_CalloutSlot_1_Label: { value: { x: 0, y: -3 }, reason: 'One-pass common callout centering rule.' },
+  G28_LDC_CalloutSlot_2_Label: { value: { x: 0, y: -3 }, reason: 'One-pass common callout centering rule.' },
+  G28_LDC_CalloutSlot_3_Label: { value: { x: 0, y: -3 }, reason: 'One-pass common callout centering rule.' },
+};
+const fontSizeOverrideRegistry = {
+  G28_LDC_Node_Right_Label: {
+    value: 38,
+    reason: 'Keep the right focal label text unchanged while adding horizontal breathing room inside the existing node box.',
+  },
+  G28_LDC_CalloutSlot_1_Label: {
+    value: 28,
+    reason: 'Use one common callout label size so all callouts center visually inside the same slot rule.',
+  },
+  G28_LDC_CalloutSlot_2_Label: {
+    value: 28,
+    reason: 'Use one common callout label size so the long judgement label has visible side margins.',
+  },
+  G28_LDC_CalloutSlot_3_Label: {
+    value: 28,
+    reason: 'Use one common callout label size so the risk/reward label has visible side margins.',
+  },
+};
+const layoutOutcome = {
+  one_pass_targeted_fix: true,
+  no_further_micro_tuning_recommended: true,
+  next_decision_gate: 'accept_with_layout_caveat',
+  next_decision_gate_options: [
+    'accept_as_diagnostic_review_surface',
+    'accept_with_layout_caveat',
+    'layout_system_debt',
+    'redesign_required',
+  ],
 };
 
 function abs(rel) { return path.join(root, rel); }
@@ -311,8 +340,10 @@ function shapePrimitive(item) {
 }
 
 function centeredTextPrimitive(displayName, groupId, role, layer, targetBox, fontSize, content, color, description) {
-  const bboxWidth = estimateTextWidth(content, fontSize);
-  const bboxHeight = fontSize;
+  const fontSizeOverride = fontSizeOverrideRegistry[displayName] || null;
+  const effectiveFontSize = fontSizeOverride?.value || fontSize;
+  const bboxWidth = estimateTextWidth(content, effectiveFontSize);
+  const bboxHeight = effectiveFontSize;
   const offset = manualOffsetRegistry[displayName]?.value || { x: 0, y: 0 };
   const centerScreen = rectCenter(targetBox.rect);
   const adjustedCenter = {
@@ -344,13 +375,17 @@ function centeredTextPrimitive(displayName, groupId, role, layer, targetBox, fon
     layout_contract: {
       target_box_id: targetBox.id,
       target_box_rect: targetBox.rect,
+      requested_font_size: fontSize,
+      effective_font_size: effectiveFontSize,
+      font_size_override: fontSizeOverride,
       estimated_text_width: bboxWidth,
       estimated_text_height: bboxHeight,
+      estimated_horizontal_margin_each_side_px: Math.round((targetBox.rect.width - bboxWidth) / 2),
       manual_registry_entry: manualOffsetRegistry[displayName] || null,
     },
     bbox_width: bboxWidth,
     bbox_height: bboxHeight,
-    font_size: fontSize,
+    font_size: effectiveFontSize,
     content,
     color,
     opacity: 100,
@@ -547,6 +582,49 @@ function imageReferencePattern() {
   return /\.(?:png|jpe?g|webp|gif|bmp|svg)\b/gi;
 }
 
+function centerDelta(item) {
+  const target = item.layout_contract?.target_box_rect;
+  if (!target) return null;
+  const itemCenter = rectCenter(item.screen_rect);
+  const targetCenter = rectCenter(target);
+  return {
+    x: Math.round((itemCenter.x - targetCenter.x) * 10) / 10,
+    y: Math.round((itemCenter.y - targetCenter.y) * 10) / 10,
+  };
+}
+
+function labelFitRecord(item) {
+  const target = item.layout_contract?.target_box_rect;
+  const estimatedWidth = item.layout_contract?.estimated_text_width ?? item.width;
+  const margin = target ? Math.round((target.width - estimatedWidth) / 2) : null;
+  const delta = centerDelta(item);
+  return {
+    id: item.display_name,
+    text: item.text,
+    font_size: item.font_size,
+    target_box_id: item.layout_contract?.target_box_id || null,
+    target_box_rect: target || null,
+    text_rect: item.screen_rect,
+    estimated_text_width: estimatedWidth,
+    horizontal_margin_each_side_px: margin,
+    center_delta_px: delta,
+    fits_target_box: Boolean(target && item.screen_rect.x >= target.x && rectRight(item.screen_rect) <= rectRight(target)),
+    center_aligned: Boolean(delta && Math.abs(delta.x) <= 1 && Math.abs(delta.y) <= 4),
+  };
+}
+
+function targetedLabelStatus(records, minimumMarginPx) {
+  const passed = records.length > 0 && records.every((record) =>
+    record.fits_target_box &&
+    record.horizontal_margin_each_side_px >= minimumMarginPx &&
+    record.center_aligned);
+  return {
+    passed,
+    minimum_margin_px: minimumMarginPx,
+    records,
+  };
+}
+
 function readbackProbe(project, primitivePlan, carrierHashBefore, carrierHashAfter) {
   const primitivesByName = new Map(primitivePlan.primitives.map((primitive) => [primitive.display_name, primitive]));
   const timeline = project.Timelines?.[0] || {};
@@ -579,6 +657,14 @@ function readbackProbe(project, primitivePlan, carrierHashBefore, carrierHashAft
   const tokenLikePatternCount = countMatches(projectText, tokenLikePattern());
   const labelTexts = focalLabels.map((item) => item.text);
   const calloutTexts = calloutLabelsReadback.map((item) => item.text);
+  const rightFocalLabel = focalLabels.find((item) => item.display_name === 'G28_LDC_Node_Right_Label');
+  const rightFocalFit = targetedLabelStatus(rightFocalLabel ? [labelFitRecord(rightFocalLabel)] : [], 12);
+  const calloutAlignment = targetedLabelStatus(calloutLabelsReadback.map(labelFitRecord), 18);
+  const overflowTargets = [
+    ...(rightFocalLabel ? [rightFocalLabel] : []),
+    ...calloutLabelsReadback,
+  ].map(labelFitRecord);
+  const labelOverflowPassed = overflowTargets.every((record) => record.fits_target_box);
   const checks = {
     diagnostic_only: true,
     production_candidate_false: true,
@@ -609,6 +695,9 @@ function readbackProbe(project, primitivePlan, carrierHashBefore, carrierHashAft
     rights_approval_false: true,
     token_like_pattern_count_zero: tokenLikePatternCount === 0,
     carrier_not_modified_in_place: carrierHashBefore === carrierHashAfter,
+    right_focal_label_fit: rightFocalFit.passed,
+    callout_label_alignment: calloutAlignment.passed,
+    label_overflow_absent: labelOverflowPassed,
   };
   const failures = Object.entries(checks)
     .filter(([, ok]) => ok !== true)
@@ -682,6 +771,27 @@ function readbackProbe(project, primitivePlan, carrierHashBefore, carrierHashAft
     tts_or_voice_item_count: ttsOrVoiceItemCount,
     render_output: false,
     production_approval: false,
+    one_pass_targeted_fix: layoutOutcome.one_pass_targeted_fix,
+    no_further_micro_tuning_recommended: layoutOutcome.no_further_micro_tuning_recommended,
+    next_decision_gate: layoutOutcome.next_decision_gate,
+    next_decision_gate_options: layoutOutcome.next_decision_gate_options,
+    right_focal_label_fit_status: {
+      status: rightFocalFit.passed ? 'fits_after_one_pass_targeted_fix' : 'fit_unverified_or_failed',
+      issue_addressed: '`画面上の結果` was visually cramped in the right focal node.',
+      correction: 'Removed the inherited rightward nudge and reduced only the right focal label font size from 42 to 38 while keeping the label text and node geometry unchanged.',
+      ...rightFocalFit,
+    },
+    callout_label_alignment_status: {
+      status: calloutAlignment.passed ? 'common_centering_rule_applied' : 'alignment_unverified_or_failed',
+      issue_addressed: '`判定 / 当たり判定` and `リスクとリターン` looked left-aligned in the lower callout boxes.',
+      correction: 'Applied one common callout label rule with font size 28, zero horizontal offset, and centered placement inside each unchanged callout slot.',
+      ...calloutAlignment,
+    },
+    label_overflow_check: {
+      passed: labelOverflowPassed,
+      scope: 'right focal label plus three lower callout labels',
+      records: overflowTargets,
+    },
     checks,
     failures,
     missing_items: missing,
@@ -742,9 +852,10 @@ function readbackProbe(project, primitivePlan, carrierHashBefore, carrierHashAft
     next_review_inputs_required: nextReviewInputsRequired,
     known_caveats: [
       'This is a self-contained YMM4 diagnostic carrier candidate, not a production carrier.',
-      'It has not been visually accepted in the YMM4 GUI; human preview and timeline screenshots are still required.',
+      'The one-pass targeted layout fix is verified by builder/readback geometry; final YMM4 visual recheck remains human-owned.',
       'Visible node and callout labels are review aids and do not approve production slot-fill or final copy.',
       'No render, video, audio, source footage, gameplay screenshot, external image, URL, raw reference, rights automation, or creative final acceptance is included.',
+      'Do not continue same-screen micro-tuning. If the two targeted labels still fail visually, classify the remaining problem as layout_system_debt or redesign_required.',
     ],
     items,
   };
@@ -773,6 +884,14 @@ function renderReport(readback) {
   lines.push('- This probe turns that diagnostic shape into a YMM4-openable, ShapeItem/TextItem-only carrier candidate so the next human review can inspect YMM4 preview/timeline evidence.');
   lines.push('- The middle node is visible as `内部ルール / 判定` to carry the semantics-note emphasis; this is diagnostic review text, not production copy approval.');
   lines.push('');
+  lines.push('## One-pass Targeted Layout Fix');
+  lines.push('');
+  lines.push('- This update is a one-pass targeted layout fix for the current YMM4 diagnostic carrier candidate.');
+  lines.push('- It does not change the carrier variant, focal-chain meaning, callout meaning, host role, bottom caption reserve, or diagnostic-only boundary.');
+  lines.push('- Right focal label fix: `画面上の結果` keeps the same text and node, but the inherited rightward nudge was removed and the right-label font size was reduced from 42 to 38.');
+  lines.push('- Lower callout fix: all callout labels now use one common centered rule with font size 28 and zero horizontal offset.');
+  lines.push('- Do not continue same-screen micro-tuning. The next human review is only the two targeted fit/alignment checks below.');
+  lines.push('');
   lines.push('## Boundary');
   lines.push('');
   for (const [key, value] of Object.entries(readback.boundary)) {
@@ -791,6 +910,21 @@ function renderReport(readback) {
   lines.push(`- callout labels: ${readback.callout_readback.labels.join(' / ')}`);
   lines.push(`- host role: \`${readback.host_role_readback.role}\``);
   lines.push(`- visible text: ${readback.text_budget_readback.visible_text_item_count} items / ${readback.text_budget_readback.visible_text_chars} chars`);
+  lines.push(`- one-pass targeted fix: \`${readback.one_pass_targeted_fix}\``);
+  lines.push(`- no further micro-tuning recommended: \`${readback.no_further_micro_tuning_recommended}\``);
+  lines.push(`- next decision gate: \`${readback.next_decision_gate}\``);
+  lines.push('');
+  lines.push('## Layout Fix Readback');
+  lines.push('');
+  lines.push(`- right focal label fit: \`${readback.right_focal_label_fit_status.status}\``);
+  for (const record of readback.right_focal_label_fit_status.records) {
+    lines.push(`  - ${record.id}: font=${record.font_size}, margin_each_side=${record.horizontal_margin_each_side_px}px, center_delta=(${record.center_delta_px.x}, ${record.center_delta_px.y}), fits=${record.fits_target_box}`);
+  }
+  lines.push(`- callout label alignment: \`${readback.callout_label_alignment_status.status}\``);
+  for (const record of readback.callout_label_alignment_status.records) {
+    lines.push(`  - ${record.id}: font=${record.font_size}, margin_each_side=${record.horizontal_margin_each_side_px}px, center_delta=(${record.center_delta_px.x}, ${record.center_delta_px.y}), fits=${record.fits_target_box}`);
+  }
+  lines.push(`- label overflow check: \`${readback.label_overflow_check.passed}\``);
   lines.push('');
   lines.push('## Checks');
   lines.push('');
@@ -807,6 +941,8 @@ function renderReport(readback) {
   lines.push('- Confirm the callouts read `操作感`, `判定 / 当たり判定`, and `リスクとリターン` without becoming a dense table.');
   lines.push('- Confirm the hosts stay non-focal lower-corner decoration.');
   lines.push('- Confirm the bottom caption reserve is visually clear.');
+  lines.push('- Targeted recheck only: confirm `画面上の結果` is inside the right node.');
+  lines.push('- Targeted recheck only: confirm `判定 / 当たり判定` and `リスクとリターン` look centered in their callout boxes.');
   lines.push('');
   lines.push('## Next Review Inputs Required');
   lines.push('');
@@ -835,6 +971,11 @@ function assertReadback(readback) {
   if (readback.source_footage_count !== 0) failures.push(`source_footage_count=${readback.source_footage_count}`);
   if (readback.audio_item_count !== 0) failures.push(`audio_item_count=${readback.audio_item_count}`);
   if (readback.tts_or_voice_item_count !== 0) failures.push(`tts_or_voice_item_count=${readback.tts_or_voice_item_count}`);
+  if (readback.one_pass_targeted_fix !== true) failures.push('one_pass_targeted_fix is not true');
+  if (readback.no_further_micro_tuning_recommended !== true) failures.push('no_further_micro_tuning_recommended is not true');
+  if (readback.right_focal_label_fit_status?.passed !== true) failures.push('right focal label fit did not pass');
+  if (readback.callout_label_alignment_status?.passed !== true) failures.push('callout label alignment did not pass');
+  if (readback.label_overflow_check?.passed !== true) failures.push('label overflow check did not pass');
   if (readback.totals.missing_item_count !== 0) failures.push(`missing items: ${readback.missing_items.join(', ')}`);
   if (readback.failures.length) failures.push(`failed checks: ${readback.failures.join(', ')}`);
   if (failures.length) throw new Error(`G28_GAME_MECHANICS_YMMP_PROBE_READBACK_FAILED: ${failures.join('; ')}`);
