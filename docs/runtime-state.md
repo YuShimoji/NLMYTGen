@@ -1,5 +1,24 @@
 # Runtime State — NLMYTGen
 
+- **G-28 game mechanics batch visual review packet added (2026-06-11)**:
+  The next human YMM4 review for
+  `samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe.ymmp`
+  is no longer a two-point label recheck. It now uses
+  `docs/verification/G28-GAME-MECHANICS-YMMP-BATCH-VISUAL-REVIEW-PACKET-2026-06-11.md`
+  as the review protocol. The one-pass targeted layout fix in `27b4736` remains
+  accepted as the current known state (`画面上の結果` at font size 38 with the
+  inherited rightward nudge removed, lower callouts centered with font size 28,
+  readback `classification=pass_game_mechanics_ymmp_label_layout_fixed`,
+  `one_pass_targeted_fix=true`, and
+  `no_further_micro_tuning_recommended=true`), but those labels are now only
+  part of a full-screen batch checklist. Human review should return
+  `accept`, `accept_with_caveats`, `revise_once`, `layout_system_debt`, or
+  `redesign_required`, with `must_fix` items as the only driver for one
+  consolidated follow-up fix. This slice is docs-only and does not modify
+  `.ymmp`, the builder, samples, render, production, rights, creative final
+  acceptance, Newsroom, common foundation, real-estate work, G-27, GUI,
+  ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, `.claude/worktrees/`,
+  `samples/2026-05-16.ymmp`, or any real runner / `codex exec` path.
 - **G-28 game mechanics one-pass label layout fix applied (2026-06-11)**:
   Human YMM4 visual review accepted the diagnostic carrier structure but found
   two label-placement issues: `画面上の結果` was cramped in the right focal
@@ -20,11 +39,9 @@
   TTS counts remain zero, and render, rights, production approval, creative
   final acceptance, Newsroom, real-estate, G-27, ClipPipeGen, RSS, NotebookLM,
   and common-foundation work remain closed. Do not continue same-screen
-  micro-tuning. Next human review is limited to two checks: whether
-  `画面上の結果` fits inside the right node, and whether `判定 / 当たり判定` plus
-  `リスクとリターン` look centered. If either still fails, classify as
-  `layout_system_debt` or `redesign_required` rather than starting another
-  pixel-tuning loop.
+  micro-tuning. A later batch visual review packet supersedes the old two-check
+  loop and asks the human to judge the whole preview surface at once; only
+  `must_fix` items can drive one consolidated follow-up fix.
 - **G-28 game mechanics YMM4 diagnostic carrier candidate created (2026-06-10)**:
   `scripts/build_g28_game_mechanics_ymmp_probe.js --write` now creates a
   self-contained ShapeItem/TextItem-only diagnostic carrier candidate at

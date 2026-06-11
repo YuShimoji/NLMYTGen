@@ -704,6 +704,123 @@ C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
 ===== END =====
 ```
 
+===== SECTION 25: G-28 Game Mechanics YMM4 Batch Visual Review Handoff =====
+Use this prompt when resuming the NLMYTGen mainline G-28 game mechanics lane
+after the YMM4 diagnostic carrier switched from targeted label recheck to
+whole-screen batch visual review. This is not common foundation work.
+
+BEGIN_COPY_BLOCK_FOR_AGENT
+
+NLMYTGen本流の G-28 game_mechanics YMM4 diagnostic carrier を、画面全体の
+batch visual review 方式で確認してください。個別ラベルの再微調整ループには戻らないでください。
+
+This is not NLMYTGen common foundation work. Do not touch preflight, operator
+surface, real runner, subprocess, Codex execution foundation, or any real
+runner / codex exec path.
+
+repo:
+C:\Users\PLANNER007\NLMYTGen
+
+Start by confirming:
+git status --porcelain=v1
+git status --porcelain=v1 -uno
+git fetch --prune origin
+git pull --ff-only origin master
+git branch --show-current
+git rev-parse --short HEAD
+git rev-list --left-right --count "HEAD...@{u}"
+git log -1 --oneline
+git diff --name-only
+git diff --cached --name-only
+
+Expected:
+- branch: master
+- upstream parity: 0 0
+- tracked working tree clean
+- staged files empty
+- latest remote should include `g28_game_mechanics_ymmp_batch_visual_review_protocol_001`
+  or a later approved handoff
+
+Read in this order:
+- AGENTS.md
+- docs/REPO_LOCAL_RULES.md
+- docs/runtime-state.md
+- docs/project-context.md
+- docs/verification/G28-GAME-MECHANICS-YMMP-BATCH-VISUAL-REVIEW-PACKET-2026-06-11.md
+- docs/verification/G28-GAME-MECHANICS-YMMP-DIAGNOSTIC-CARRIER-PROBE-2026-06-10.md
+- samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe_readback.json
+- samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe_report.md
+
+Target carrier:
+samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe.ymmp
+
+Current decision:
+- `27b4736 fix: align G-28 game mechanics YMM4 labels` remains the current known
+  state for the one-pass targeted layout fix.
+- `画面上の結果` uses font size 38 and its inherited rightward nudge is removed.
+- Lower callouts use one centered callout rule at font size 28.
+- Readback remains
+  `classification=pass_game_mechanics_ymmp_label_layout_fixed`,
+  `one_pass_targeted_fix=true`, and
+  `no_further_micro_tuning_recommended=true`.
+- These points are no longer the only human review points. They are rows inside
+  the batch visual review checklist.
+
+Human review should return exactly:
+decision: accept / accept_with_caveats / revise_once / layout_system_debt / redesign_required
+
+overall:
+-
+
+must_fix:
+-
+
+nice_to_have:
+-
+
+do_not_fix_now:
+-
+
+notes:
+-
+
+Boundaries:
+- do not modify `.ymmp`
+- do not modify builder
+- do not regenerate artifacts
+- do not create a new variant
+- do not render
+- do not mark the carrier as a production candidate
+- do not change rights status
+- do not claim creative final acceptance
+- do not process Newsroom
+- do not touch common foundation
+- do not reopen real-estate work
+- do not revive G-27
+- do not touch GUI
+- do not touch ClipPipeGen
+- do not touch RSS / OPML / Inoreader / NotebookLM
+- do not touch `.claude/worktrees/`
+- do not touch `samples/2026-05-16.ymmp`
+- do not run or enable real runner / codex exec
+
+Allowed next entry:
+- human YMM4 batch visual review using the packet
+- record the returned decision without changing the carrier
+- if and only if decision is `revise_once`, plan one consolidated fix for all
+  `must_fix` items; do not start same-screen pixel tuning
+
+Completion report should state:
+- branch / HEAD / upstream parity
+- whether working tree is clean
+- review packet path
+- whether `.ymmp`, builder, samples, production, render, rights, GUI, common
+  foundation, and real runner paths remained untouched
+- human next action
+- next safe entry point
+
+END_COPY_BLOCK_FOR_AGENT
+
 ===== SECTION 19: Common Foundation Single Fake Execution Flow Resume Prompt =====
 用途: common foundation single fake execution flow が commit / push / audit 済みになった後、次の ChatGPT / Codex へ bounded context を渡すためのPrompt。古い staged-diff / stage prompt に戻らず、real codex exec、subprocess runner、stdin piping、runtime worker loop、external notification service、ClipPipeGen、G-28 / NLMYTGen mainline work へ進めない。
 

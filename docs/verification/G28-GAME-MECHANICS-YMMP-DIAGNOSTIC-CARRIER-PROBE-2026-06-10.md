@@ -112,15 +112,19 @@ Readback margins after the fix:
 - `リスクとリターン`: 38px estimated horizontal margin on each side of its
   callout box.
 
-Do not continue same-screen micro-tuning from this record. The next human review
-is limited to these two checks:
+Do not continue same-screen micro-tuning from this record. The two checks below
+were the immediate follow-up after the one-pass fix:
 
 - Does `画面上の結果` fit inside the right focal node?
 - Do `判定 / 当たり判定` and `リスクとリターン` look centered in their callout boxes?
 
-If either still fails visually, classify the remaining problem as
-`layout_system_debt` or `redesign_required` rather than starting another
-pixel-tuning loop.
+They are now superseded by the batch visual review protocol in
+`docs/verification/G28-GAME-MECHANICS-YMMP-BATCH-VISUAL-REVIEW-PACKET-2026-06-11.md`.
+That packet treats these labels as two rows in a full-screen checklist rather
+than as a reason to continue single-label pixel tuning. If the human returns
+`revise_once`, all `must_fix` items must be handled in one consolidated fix. If
+issues remain after that, classify the result as `layout_system_debt` or
+`redesign_required`.
 
 ## Boundaries
 
@@ -141,18 +145,22 @@ This probe does not:
 
 ## Next Human Review Inputs
 
-The next safe slice is human YMM4 review intake only. The human should open:
+The next safe slice is human YMM4 batch visual review intake only. The human
+should use
+`docs/verification/G28-GAME-MECHANICS-YMMP-BATCH-VISUAL-REVIEW-PACKET-2026-06-11.md`
+and open:
 
 `samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe.ymmp`
 
 Return:
 
 - carrier path
-- preview screenshot
-- timeline screenshot
-- item/layer confirmation for title, focal chain, callouts, hosts, and caption reserve
-- bottom caption safe-area evidence
-- decision: `accept`, `revise`, or `reject`
+- optional preview screenshot
+- optional timeline screenshot
+- whole-screen batch decision:
+  `accept`, `accept_with_caveats`, `revise_once`, `layout_system_debt`, or
+  `redesign_required`
+- `overall`, `must_fix`, `nice_to_have`, `do_not_fix_now`, and `notes` fields
 
 Still do not render, approve production, approve rights, claim creative final
 acceptance, import source footage, import gameplay screenshots, or convert this

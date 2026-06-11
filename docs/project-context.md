@@ -80,6 +80,32 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 ## DECISION LOG
 
 Latest G-28 decision (2026-06-11):
+`g28_game_mechanics_ymmp_batch_visual_review_protocol_001` switches the next
+review of
+`samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe.ymmp`
+from individual label checking to a full-screen batch visual review protocol.
+The durable packet is
+`docs/verification/G28-GAME-MECHANICS-YMMP-BATCH-VISUAL-REVIEW-PACKET-2026-06-11.md`.
+It preserves `27b4736 fix: align G-28 game mechanics YMM4 labels` as the
+current known state: `画面上の結果` uses font size 38 with the inherited
+rightward nudge removed; lower callouts use a common centered rule at font size
+28; readback remains
+`classification=pass_game_mechanics_ymmp_label_layout_fixed`,
+`one_pass_targeted_fix=true`, and
+`no_further_micro_tuning_recommended=true`. Those facts are no longer the whole
+review request; they are checklist rows inside a batch decision surface covering
+overall composition, focal-chain meaning, central priority, label fit,
+callouts, readability, spacing, density, host role, caption reserve, eye flow,
+generic transferability, YMM4 maintainability, and diagnostic usefulness. Human
+return decisions are `accept`, `accept_with_caveats`, `revise_once`,
+`layout_system_debt`, or `redesign_required`; only `must_fix` items can justify
+one consolidated follow-up fix. This is docs-only and does not modify `.ymmp`,
+builder, samples, render, production, rights, creative final acceptance,
+Newsroom, common foundation, real-estate work, G-27, GUI, ClipPipeGen, RSS,
+OPML, Inoreader, NotebookLM, `.claude/worktrees/`,
+`samples/2026-05-16.ymmp`, or real runner / `codex exec` paths.
+
+Latest G-28 decision (2026-06-11):
 `g28_game_mechanics_ymmp_label_layout_fix_001` applies exactly one targeted
 layout fix to the existing YMM4 diagnostic carrier candidate after human visual
 review. The carrier path remains
@@ -94,9 +120,10 @@ regenerated readback classifies the result as
 `no_further_micro_tuning_recommended=true`, and sets the next decision gate to
 `accept_with_layout_caveat`. This remains diagnostic-only:
 `production_candidate=false`, no render, no rights approval, no creative final
-acceptance, and no external image / URL / source footage / audio / TTS. If the
-two targeted labels still fail visual review, the next decision should be
-`layout_system_debt` or `redesign_required`; do not keep tuning the same screen.
+acceptance, and no external image / URL / source footage / audio / TTS. A later
+batch visual review protocol supersedes the old two-target check and treats
+those labels as part of the whole-screen checklist; do not keep tuning the same
+screen.
 
 Latest G-28 decision (2026-06-10): `g28_game_mechanics_ymmp_diagnostic_carrier_created`
 creates a self-contained YMM4 diagnostic carrier candidate for the accepted
