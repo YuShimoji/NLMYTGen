@@ -80,6 +80,28 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 ## DECISION LOG
 
 Latest G-28 decision (2026-06-11):
+`g28_ymmp_coordinate_generation_method_blocker_001` records the human YMM4
+review result for
+`samples/_probe/g28/map_evidence_carrier_ymmp_diagnostic_probe.ymmp`.
+The decision is `redesign_required_generation_method_blocker`: the Map /
+Evidence carrier is not accepted as a diagnostic candidate, and `revise_once`
+is not appropriate. The issue is not a single carrier's local spacing defect.
+It is a visual-authoring method blocker: direct script-coordinate `.ymmp`
+construction can pass structural readback while still producing a weak review
+surface. The tracked builder, `.ymmp`, readback, and report remain as negative
+evidence / failed sample, but they must not be regenerated, micro-tuned, or used
+as proof that this generation method is good enough for more G-28 carriers.
+Readback pass is now explicitly limited to boundary / structure confirmation,
+not visual-quality assurance. Stop the same coordinate-only YMM4 carrier
+generation route as a visual authoring source. Safe future entries are a
+human-authored YMM4 seed carrier, an HTML/SVG visual prototype approved before
+YMM4 transfer, or a later bounded cross-screen layout-normalization review.
+This is docs-only and does not change `.ymmp`, builders, samples, render,
+production candidate state, rights, creative final acceptance, Newsroom, common
+foundation, G-27, ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, real runner,
+GUI, or `src`.
+
+Latest G-28 decision (2026-06-11):
 `g28_map_evidence_ymmp_diagnostic_carrier_created_001` advances the next
 reviewable artifact after the game-mechanics `layout_system_debt` decision.
 The game-mechanics YMM4 carrier is not tuned again. Instead,

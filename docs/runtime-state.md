@@ -1,5 +1,24 @@
 # Runtime State — NLMYTGen
 
+- **G-28 YMM4 coordinate-generation method blocker recorded (2026-06-11)**:
+  Human YMM4 review of
+  `samples/_probe/g28/map_evidence_carrier_ymmp_diagnostic_probe.ymmp`
+  classifies the Map / Evidence carrier as
+  `redesign_required_generation_method_blocker`. The carrier is not accepted
+  as a diagnostic candidate and should not receive `revise_once`. The dominant
+  finding is stronger than the earlier game-mechanics `layout_system_debt`:
+  direct coordinate-generated `.ymmp` visual construction produces weak review
+  surfaces even when structural readback passes. The current file, builder,
+  readback, and report remain tracked as negative evidence / failed sample, but
+  they must not be regenerated or micro-tuned. Treat readback pass as a
+  boundary / structure check only, not a visual-quality guarantee. Stop using
+  the same script-coordinate method as the visual authoring source for new G-28
+  YMM4 carriers. Safe next entries are a human-authored YMM4 seed carrier, an
+  HTML/SVG visual prototype approved before YMM4 transfer, or a later bounded
+  cross-screen layout-normalization review. Speed-first remains valid only when
+  it creates useful review surfaces; producing more low-quality artifacts by
+  this method is debt, not velocity. Record:
+  `docs/verification/G28-YMMP-CARRIER-GENERATION-METHOD-BLOCKER-2026-06-11.md`.
 - **G-28 Map / Evidence YMM4 diagnostic carrier candidate created (2026-06-11)**:
   After classifying the game-mechanics YMM4 carrier as `layout_system_debt`,
   same-screen tuning remains stopped. The speed-first next reviewable artifact

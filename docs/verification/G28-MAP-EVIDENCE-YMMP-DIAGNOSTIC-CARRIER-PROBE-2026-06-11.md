@@ -14,6 +14,47 @@ pixel / label micro-tuning. The next safe direction is speed-first: add another
 reviewable G-28 artifact and revisit centering / spacing / split-layout debt in
 a later cross-screen layout-normalization slice.
 
+## Human Review Result - 2026-06-11
+
+Human YMM4 review classified this Map / Evidence carrier as
+`redesign_required_generation_method_blocker`.
+
+| Field | Result |
+| --- | --- |
+| diagnostic candidate acceptance | not accepted |
+| `revise_once` | no |
+| failed-sample status | keep as negative evidence |
+| dominant issue | generation method blocker |
+| stronger than layout debt | yes |
+| same-screen tuning | stop |
+| same-method carrier generation | stop |
+
+The visual review found that this `.ymmp` is not practical as a review surface
+at first glance. It has too few meaningful display elements for a Map / Evidence
+carrier, the evidence surface and annotation surface are weak, and the element
+centering, spacing regularity, split layout, and eye-flow stability are
+systemically doubtful. The issue is not one label, one coordinate, or one
+carrier-specific polish pass.
+
+The important correction is that readback pass is not visual-quality assurance.
+The readback confirms structural and boundary facts: diagnostic-only status,
+caption reserve, item counts, no external assets, no render, and no production /
+rights / creative approval. It does not prove that the YMM4 preview is visually
+useful, centered, balanced, well-spaced, or reviewable as a carrier.
+
+Do not continue using direct script-coordinate `.ymmp` generation as the visual
+authoring source for new G-28 YMM4 carriers. The tracked builder and generated
+files remain useful as negative evidence, but they should not be regenerated,
+micro-tuned, or used as a template for additional carrier mass production.
+
+The safe direction is to switch to one of these routes:
+
+| Route | Why it is safer |
+| --- | --- |
+| human-authored YMM4 seed carrier | Start from a YMM4-native visual surface that a human can already judge. |
+| HTML/SVG visual prototype before YMM4 transfer | Approve visual composition before translating into YMM4 constraints. |
+| later layout-normalization review | Treat centering / spacing / split-layout issues across multiple screens, not as per-screen coordinate polishing. |
+
 ## Generated Artifacts
 
 | Artifact | Path |
@@ -117,23 +158,19 @@ This probe does not:
 - touch GUI / `src`
 - continue common foundation or real runner / `codex exec` work
 
-## Next Human Review Inputs
+## Superseded Human Review Intake
 
-The next safe slice is human YMM4 review intake only. The human should open:
+The previous next safe slice was human YMM4 review intake only. That intake has
+now been completed and resulted in
+`redesign_required_generation_method_blocker`.
 
 `samples/_probe/g28/map_evidence_carrier_ymmp_diagnostic_probe.ymmp`
 
-Return:
+Do not render, approve production, approve rights, claim creative final
+acceptance, import source footage, import real map imagery, regenerate this
+candidate, micro-tune it, or convert this diagnostic candidate into production
+output.
 
-- carrier path
-- preview screenshot
-- timeline screenshot
-- item/layer confirmation for evidence surface, annotation slots, source note,
-  hosts, and caption reserve
-- caption reserve visual confirmation
-- decision: `accept`, `accept_with_caveats`, `revise_once`,
-  `layout_system_debt`, or `redesign_required`
-
-Still do not render, approve production, approve rights, claim creative final
-acceptance, import source footage, import real map imagery, or convert this
-diagnostic candidate into production output without a separate explicit slice.
+Next safe entries are human-authored YMM4 seed carrier planning, HTML/SVG
+visual prototyping before YMM4 transfer, or a later bounded cross-screen
+layout-normalization review.
