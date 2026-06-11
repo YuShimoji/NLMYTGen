@@ -43,6 +43,24 @@ targeted layout fix for the existing YMM4 diagnostic carrier:
 These fixed labels are now part of the batch review checklist. They should not
 drive a new single-label tuning loop by themselves.
 
+## Human Batch Review Result - 2026-06-11
+
+| Field | Result |
+| --- | --- |
+| decision | `layout_system_debt` |
+| current screen | Reviewable as a diagnostic artifact |
+| dominant issue | Layout-system debt, not single-label fitting |
+| debt areas | Element centering, spacing regularity, split-layout generalizability |
+| same-screen tuning | Stop |
+| operating direction | Speed-first: produce more reviewable artifacts before normalization |
+| later revisit | Bounded cross-screen batch review or layout-normalization slice |
+
+The human review does not ask for another targeted fix to this carrier. The
+screen can still be used as a diagnostic artifact, but its remaining weakness
+belongs to layout rules shared across screens. The next useful work is to see
+more reviewable surfaces, then audit layout normalization across those surfaces
+instead of continuing this screen's pixel-level loop.
+
 ## Batch Visual Review Checklist
 
 | Review row | What to check | Accept condition | Revise trigger | Default severity |
@@ -147,8 +165,11 @@ Do not:
 
 ## Next Safe Entry
 
-The next safe action is human YMM4 batch visual review using the return format
-above. If the decision is `revise_once`, do exactly one consolidated fix for
-the listed `must_fix` items. If the decision is `accept`,
-`accept_with_caveats`, `layout_system_debt`, or `redesign_required`, do not
-start pixel tuning from this packet.
+The human decision is now `layout_system_debt`, so do not start pixel tuning
+from this packet. Safe next entries are:
+
+| Entry | Purpose | Next move |
+| --- | --- | --- |
+| Advance | Keep velocity by adding another G-28 artifact or reviewable screen. | Work on a separate artifact without modifying this carrier. |
+| Audit later | Treat centering, spacing, and split-layout consistency as cross-screen normalization debt. | Collect more screens, then run a bounded layout-normalization review. |
+| Hold | Preserve this screen as known diagnostic evidence with layout-system debt. | Do nothing to the carrier unless a later bounded normalization slice is opened. |

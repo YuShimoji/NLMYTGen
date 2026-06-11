@@ -80,6 +80,24 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 ## DECISION LOG
 
 Latest G-28 decision (2026-06-11):
+`g28_game_mechanics_ymmp_batch_review_layout_system_debt_001` records the human
+batch review result for
+`samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe.ymmp`
+as `layout_system_debt`. The current screen remains reviewable as a diagnostic
+artifact, but the dominant issue is not single-label fitting. The issue is
+layout-system debt: element centering, spacing regularity, and split-layout
+generalizability are not stable enough to keep solving with same-screen
+micro-tuning. The chosen direction is speed-first: stop further tuning on this
+screen, produce more reviewable G-28 artifacts, and revisit the issue later in
+a bounded cross-screen batch review or layout-normalization slice. Safe next
+entries are Advance to another G-28 artifact / reviewable screen, Audit later
+for layout normalization across screens, or Hold this screen as known
+`layout_system_debt`. This is docs-only and does not modify `.ymmp`, builder,
+samples, production candidate state, render, rights, creative final acceptance,
+Newsroom, common foundation, G-27, ClipPipeGen, RSS, OPML, Inoreader,
+NotebookLM, real runner / `codex exec`, GUI, or `src`.
+
+Latest G-28 decision (2026-06-11):
 `g28_game_mechanics_ymmp_batch_visual_review_protocol_001` switches the next
 review of
 `samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe.ymmp`

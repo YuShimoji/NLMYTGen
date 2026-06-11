@@ -1,5 +1,20 @@
 # Runtime State — NLMYTGen
 
+- **G-28 game mechanics batch review classified as layout-system debt (2026-06-11)**:
+  Human review of the current
+  `game_mechanics_explanation` YMM4 diagnostic carrier is recorded as
+  `layout_system_debt`. The screen remains reviewable as a diagnostic artifact,
+  but the dominant issue is no longer single-label fitting. The concern is the
+  layout system itself: element centering, spacing regularity, and split-layout
+  generalizability. Do not continue same-screen micro-tuning for this carrier.
+  Proceed speed-first by producing more reviewable artifacts, then revisit this
+  as a bounded cross-screen batch review or layout-normalization slice. Safe
+  entries are Advance to another G-28 artifact / reviewable screen, Audit later
+  for cross-screen layout normalization, or Hold this screen as known
+  `layout_system_debt`. This slice is docs-only and does not modify `.ymmp`,
+  builder, samples, production candidate state, render, rights, creative final
+  acceptance, Newsroom, common foundation, G-27, ClipPipeGen, RSS, OPML,
+  Inoreader, NotebookLM, real runner / `codex exec`, GUI, or `src`.
 - **G-28 game mechanics batch visual review packet added (2026-06-11)**:
   The next human YMM4 review for
   `samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe.ymmp`
