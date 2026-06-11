@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>G-28 Prototype - conversation_board</title>
+  <style>
+    html, body { margin: 0; min-width: 1920px; min-height: 1080px; background: #05070a; font-family: Arial, Helvetica, sans-serif; }
+    .canvas { width: 1920px; height: 1080px; background: #0b0f14; }
+  </style>
+</head>
+<body>
+<main class="canvas" aria-label="conversation board reference layout prototype">
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+    <title id="title">conversation_board prototype</title>
+    <desc id="desc">Central board with abstract host placeholders, dialogue pacing space, grid, margins, and subtitle reserve.</desc>
+
+    <rect x="0" y="0" width="1920" height="1080" fill="#0b0f14"/>
+    <g stroke="#273543" stroke-width="1" opacity="0.45">
+      <line x1="160" y1="0" x2="160" y2="1080"/>
+      <line x1="480" y1="0" x2="480" y2="1080"/>
+      <line x1="960" y1="0" x2="960" y2="1080"/>
+      <line x1="1440" y1="0" x2="1440" y2="1080"/>
+      <line x1="1760" y1="0" x2="1760" y2="1080"/>
+      <line x1="0" y1="90" x2="1920" y2="90"/>
+      <line x1="0" y1="540" x2="1920" y2="540"/>
+      <line x1="0" y1="920" x2="1920" y2="920"/>
+    </g>
+    <rect x="160" y="90" width="1600" height="830" fill="none" stroke="#43576b" stroke-width="2" stroke-dasharray="18 14"/>
+    <line x1="960" y1="90" x2="960" y2="920" stroke="#6ad4ff" stroke-width="2" stroke-dasharray="12 16"/>
+
+    <text x="160" y="76" fill="#eaf2fb" font-size="34" font-weight="700">conversation_board</text>
+    <text x="160" y="124" fill="#9fb1c0" font-size="20">Central board with left/right abstract hosts and visible dialogue pacing lanes.</text>
+
+    <g transform="translate(210 170)">
+      <rect x="370" y="0" width="800" height="560" rx="8" fill="#121922" stroke="#3b4b5d" stroke-width="2"/>
+      <rect x="410" y="44" width="720" height="92" rx="8" fill="#1b2530" stroke="#6ad4ff" stroke-width="2"/>
+      <text x="448" y="102" fill="#e8eef4" font-size="30" font-weight="700">BOARD TITLE / current question</text>
+      <g transform="translate(420 170)">
+        <rect x="0" y="0" width="700" height="70" rx="8" fill="#18232d" stroke="#536474"/>
+        <text x="24" y="44" fill="#f8c567" font-size="22" font-weight="700">Beat 1</text>
+        <text x="130" y="44" fill="#e8eef4" font-size="22">Setup space for a short line.</text>
+        <rect x="0" y="96" width="700" height="70" rx="8" fill="#18232d" stroke="#536474"/>
+        <text x="24" y="140" fill="#f8c567" font-size="22" font-weight="700">Beat 2</text>
+        <text x="130" y="140" fill="#e8eef4" font-size="22">Counterpoint or reaction line.</text>
+        <rect x="0" y="192" width="700" height="70" rx="8" fill="#18232d" stroke="#536474"/>
+        <text x="24" y="236" fill="#f8c567" font-size="22" font-weight="700">Beat 3</text>
+        <text x="130" y="236" fill="#e8eef4" font-size="22">Conclusion line stays readable.</text>
+      </g>
+      <rect x="410" y="468" width="720" height="54" rx="8" fill="#221f16" stroke="#f8c567"/>
+      <text x="438" y="503" fill="#f8c567" font-size="20" font-weight="700">PACING SPACE</text>
+      <text x="602" y="503" fill="#e8eef4" font-size="20">Board accepts one idea per beat, not dense paragraphs.</text>
+
+      <g transform="translate(0 214)">
+        <circle cx="120" cy="120" r="94" fill="#18212b" stroke="#52677a" stroke-width="5"/>
+        <rect x="72" y="214" width="96" height="112" rx="34" fill="#18212b" stroke="#52677a" stroke-width="5"/>
+        <text x="32" y="366" fill="#aab7c4" font-size="18">left host placeholder</text>
+        <line x1="238" y1="158" x2="370" y2="220" stroke="#6ad4ff" stroke-width="4"/>
+        <polygon points="370,220 342,202 348,232" fill="#6ad4ff"/>
+      </g>
+      <g transform="translate(1298 214)">
+        <circle cx="120" cy="120" r="94" fill="#18212b" stroke="#52677a" stroke-width="5"/>
+        <rect x="72" y="214" width="96" height="112" rx="34" fill="#18212b" stroke="#52677a" stroke-width="5"/>
+        <text x="24" y="366" fill="#aab7c4" font-size="18">right host placeholder</text>
+        <line x1="2" y1="220" x2="-128" y2="158" stroke="#6ad4ff" stroke-width="4"/>
+        <polygon points="-128,158 -100,140 -106,170" fill="#6ad4ff"/>
+      </g>
+    </g>
+
+    <g transform="translate(210 780)">
+      <rect x="0" y="0" width="1540" height="82" rx="8" fill="#131c26" stroke="#344454"/>
+      <text x="24" y="34" fill="#6ad4ff" font-size="17" font-weight="700">ON-PAGE NOTE</text>
+      <text x="180" y="34" fill="#e8eef4" font-size="17">Abstracts: Yukkuri-style board rhythm with non-focal abstract hosts and alternating dialogue beats.</text>
+      <text x="180" y="62" fill="#aab7c4" font-size="17">Does not copy character designs, faces, logos, backgrounds, or source footage. Review host scale, board focus, and subtitle clearance.</text>
+    </g>
+
+    <rect x="0" y="920" width="1920" height="120" fill="#090d12" stroke="#344454" stroke-width="2"/>
+    <text x="160" y="970" fill="#6ad4ff" font-size="20" font-weight="700">SUBTITLE RESERVE</text>
+    <text x="160" y="1006" fill="#aab7c4" font-size="18">Dialogue board and hosts stay above the lower caption reserve.</text>
+  </svg>
+</main>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>G-28 Prototype - evidence_table</title>
+  <style>
+    html, body { margin: 0; min-width: 1920px; min-height: 1080px; background: #05070a; font-family: Arial, Helvetica, sans-serif; }
+    .canvas { width: 1920px; height: 1080px; background: #0b0f14; }
+  </style>
+</head>
+<body>
+<main class="canvas" aria-label="evidence table reference layout prototype">
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+    <title id="title">evidence_table prototype</title>
+    <desc id="desc">Dark evidence table layout with multi-column information, lower claim, grid, margins, and subtitle reserve.</desc>
+
+    <rect x="0" y="0" width="1920" height="1080" fill="#0b0f14"/>
+    <g stroke="#273543" stroke-width="1" opacity="0.45">
+      <line x1="160" y1="0" x2="160" y2="1080"/>
+      <line x1="480" y1="0" x2="480" y2="1080"/>
+      <line x1="960" y1="0" x2="960" y2="1080"/>
+      <line x1="1440" y1="0" x2="1440" y2="1080"/>
+      <line x1="1760" y1="0" x2="1760" y2="1080"/>
+      <line x1="0" y1="90" x2="1920" y2="90"/>
+      <line x1="0" y1="540" x2="1920" y2="540"/>
+      <line x1="0" y1="920" x2="1920" y2="920"/>
+    </g>
+    <rect x="160" y="90" width="1600" height="830" fill="none" stroke="#43576b" stroke-width="2" stroke-dasharray="18 14"/>
+    <line x1="960" y1="90" x2="960" y2="920" stroke="#6ad4ff" stroke-width="2" stroke-dasharray="12 16"/>
+
+    <text x="160" y="76" fill="#eaf2fb" font-size="34" font-weight="700">evidence_table</text>
+    <text x="160" y="124" fill="#9fb1c0" font-size="20">Dark evidence table grammar: multi-column density, scannable rows, lower short claim.</text>
+
+    <g transform="translate(190 168)">
+      <rect x="0" y="0" width="1540" height="610" rx="8" fill="#111821" stroke="#3b4b5d" stroke-width="2"/>
+      <rect x="32" y="32" width="1476" height="72" rx="8" fill="#1b2530" stroke="#344454"/>
+      <text x="60" y="78" fill="#f8c567" font-size="28" font-weight="700">Evidence Matrix / readable density target</text>
+
+      <g transform="translate(32 130)">
+        <rect x="0" y="0" width="1476" height="54" fill="#22303b" stroke="#536474"/>
+        <text x="24" y="36" fill="#6ad4ff" font-size="20" font-weight="700">ID</text>
+        <text x="170" y="36" fill="#6ad4ff" font-size="20" font-weight="700">Signal</text>
+        <text x="520" y="36" fill="#6ad4ff" font-size="20" font-weight="700">Evidence cue</text>
+        <text x="930" y="36" fill="#6ad4ff" font-size="20" font-weight="700">Risk</text>
+        <text x="1220" y="36" fill="#6ad4ff" font-size="20" font-weight="700">Narration use</text>
+
+        <g font-size="20">
+          <rect x="0" y="54" width="1476" height="72" fill="#141d26" stroke="#344454"/>
+          <text x="24" y="99" fill="#e8eef4">01</text>
+          <text x="170" y="99" fill="#e8eef4">Delay gap</text>
+          <text x="520" y="99" fill="#aab7c4">before / after contrast</text>
+          <text x="930" y="99" fill="#f8c567">medium</text>
+          <text x="1220" y="99" fill="#8ee0a1">setup</text>
+
+          <rect x="0" y="126" width="1476" height="72" fill="#101820" stroke="#344454"/>
+          <text x="24" y="171" fill="#e8eef4">02</text>
+          <text x="170" y="171" fill="#e8eef4">Missing context</text>
+          <text x="520" y="171" fill="#aab7c4">incomplete public view</text>
+          <text x="930" y="171" fill="#ff7b7b">high</text>
+          <text x="1220" y="171" fill="#8ee0a1">main claim</text>
+
+          <rect x="0" y="198" width="1476" height="72" fill="#141d26" stroke="#344454"/>
+          <text x="24" y="243" fill="#e8eef4">03</text>
+          <text x="170" y="243" fill="#e8eef4">Hidden incentive</text>
+          <text x="520" y="243" fill="#aab7c4">actor mismatch</text>
+          <text x="930" y="243" fill="#ff7b7b">high</text>
+          <text x="1220" y="243" fill="#8ee0a1">turn</text>
+
+          <rect x="0" y="270" width="1476" height="72" fill="#101820" stroke="#344454"/>
+          <text x="24" y="315" fill="#e8eef4">04</text>
+          <text x="170" y="315" fill="#e8eef4">User decision</text>
+          <text x="520" y="315" fill="#aab7c4">choice under uncertainty</text>
+          <text x="930" y="315" fill="#f8c567">medium</text>
+          <text x="1220" y="315" fill="#8ee0a1">conclusion</text>
+        </g>
+        <g stroke="#536474" stroke-width="1">
+          <line x1="120" y1="0" x2="120" y2="342"/>
+          <line x1="480" y1="0" x2="480" y2="342"/>
+          <line x1="890" y1="0" x2="890" y2="342"/>
+          <line x1="1170" y1="0" x2="1170" y2="342"/>
+        </g>
+      </g>
+
+      <g transform="translate(32 520)">
+        <rect x="0" y="0" width="1476" height="64" rx="8" fill="#221f16" stroke="#f8c567"/>
+        <text x="24" y="40" fill="#f8c567" font-size="22" font-weight="700">LOWER SHORT CLAIM</text>
+        <text x="330" y="40" fill="#e8eef4" font-size="22">The table must support one short spoken conclusion, not become the whole script.</text>
+      </g>
+    </g>
+
+    <g transform="translate(190 805)">
+      <rect x="0" y="0" width="1540" height="82" rx="8" fill="#131c26" stroke="#344454"/>
+      <text x="24" y="34" fill="#6ad4ff" font-size="17" font-weight="700">ON-PAGE NOTE</text>
+      <text x="180" y="34" fill="#e8eef4" font-size="17">Abstracts: dark evidence-table grammar, column rhythm, alternating rows, lower claim band.</text>
+      <text x="180" y="62" fill="#aab7c4" font-size="17">Does not copy source tables, brand marks, article bodies, characters, maps, or footage. Review row density and legibility before YMM4 transfer.</text>
+    </g>
+
+    <rect x="0" y="920" width="1920" height="120" fill="#090d12" stroke="#344454" stroke-width="2"/>
+    <text x="160" y="970" fill="#6ad4ff" font-size="20" font-weight="700">SUBTITLE RESERVE</text>
+    <text x="160" y="1006" fill="#aab7c4" font-size="18">Dense table remains above reserve; bottom claim is not a subtitle replacement.</text>
+  </svg>
+</main>
+</body>
+</html>

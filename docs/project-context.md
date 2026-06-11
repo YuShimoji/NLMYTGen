@@ -80,6 +80,26 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 ## DECISION LOG
 
 Latest G-28 decision (2026-06-11):
+`g28_reference_layout_prototype_pack_created_001` implements the safe
+HTML/SVG visual-prototype-first route after the YMM4 coordinate-generation
+method blocker. The created review hub is
+`samples/_probe/g28/reference_layout_prototypes/index.html`, with seven fixed
+1920x1080 self-contained prototypes: `lecture_list`, `mechanism_diagram`,
+`map_evidence`, `cluster_map`, `evidence_table`, `conversation_board`, and
+`source_footage_frame`. The packet owner is
+`docs/verification/G28-REFERENCE-LAYOUT-PROTOTYPE-PACK-2026-06-11.md`.
+The prototypes abstract layout grammar only; they do not include external
+links, image paths, raw reference images, logos, third-party character
+reproduction, real map or satellite imagery, source footage, audio, or TTS.
+The route remains pre-YMM4-transfer and diagnostic: no `.ymmp` generation,
+builder creation, existing carrier regeneration, render, production candidate,
+rights approval, creative final acceptance, Newsroom, common foundation, G-27,
+ClipPipeGen, RSS / OPML / Inoreader / NotebookLM, or real runner work is
+approved by this decision. Next safe action is human browser review of the
+HTML pack and a decision of `accept`, `accept_with_caveats`, `revise_once`,
+`reject`, or `redesign_required`.
+
+Latest G-28 decision (2026-06-11):
 `g28_ymmp_coordinate_generation_method_blocker_001` records the human YMM4
 review result for
 `samples/_probe/g28/map_evidence_carrier_ymmp_diagnostic_probe.ymmp`.

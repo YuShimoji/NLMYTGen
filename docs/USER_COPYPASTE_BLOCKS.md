@@ -12,6 +12,98 @@ NLMYTGen ユーザー用コピペ資産集
 目的: ChatGPT / Codex 間で毎回組み立てていた長文回答・Prompt・PowerShell・停止テンプレート・報告テンプレートを、必要な時に該当ブロックだけコピーして使える形にまとめる。
 注意: これは「次のAgentへの再開マニュアル」ではなく、ユーザーが保存して使うPromptライブラリ。実装、commit、push、NotebookLM投入、YMM4作業、G-27作業はこの文書だけでは行わない。
 
+===== SECTION 26: G-28 Reference Layout Prototype Pack Review Handoff =====
+Use this prompt when resuming after the G-28 route switched from direct YMM4
+coordinate generation to HTML/SVG visual prototype first. Keep the scope to
+browser review of the static prototype pack and do not transfer to YMM4 until
+human review accepts the screen grammar.
+
+BEGIN_COPY_BLOCK_FOR_AGENT
+
+NLMYTGen本流 G-28 の reference layout prototype pack を確認してください。
+
+repo:
+C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
+
+Start by confirming:
+- `git status --porcelain=v1`
+- `git fetch --prune origin`
+- `git pull --ff-only origin master`
+- `git branch --show-current`
+- `git rev-parse --short HEAD`
+- `git rev-list --left-right --count "HEAD...@{u}"`
+- `git log -1 --oneline`
+
+Read:
+- `AGENTS.md`
+- `docs/REPO_LOCAL_RULES.md`
+- `docs/runtime-state.md`
+- `docs/verification/G28-REFERENCE-LAYOUT-PROTOTYPE-PACK-2026-06-11.md`
+
+Open in a browser:
+- `samples/_probe/g28/reference_layout_prototypes/index.html`
+
+Prototype set:
+- `lecture_list`
+- `mechanism_diagram`
+- `map_evidence`
+- `cluster_map`
+- `evidence_table`
+- `conversation_board`
+- `source_footage_frame`
+
+Current boundary:
+- Direct script-coordinate `.ymmp` visual generation is stopped as a visual
+  authoring source.
+- Existing Map / Evidence `.ymmp`, builder, readback, and report remain tracked
+  negative evidence / failed sample.
+- Readback pass is boundary / structure confirmation, not visual-quality
+  assurance.
+- The HTML/SVG pack is visual grammar only and does not copy reference images,
+  logos, characters, maps, satellite imagery, company materials, or source
+  footage.
+
+Do not:
+- generate or modify any `.ymmp`
+- create a YMM4 builder
+- regenerate generated YMM4 artifacts
+- modify existing game-mechanics or map-evidence carriers
+- render
+- mark anything as production candidate
+- approve rights or creative final acceptance
+- touch Newsroom, common foundation, G-27, ClipPipeGen, RSS, OPML, Inoreader,
+  NotebookLM, or real runner paths
+
+Return this human review format:
+
+decision: accept / accept_with_caveats / revise_once / reject / redesign_required
+
+overall:
+-
+
+prototype_notes:
+- lecture_list:
+- mechanism_diagram:
+- map_evidence:
+- cluster_map:
+- evidence_table:
+- conversation_board:
+- source_footage_frame:
+
+must_fix:
+-
+
+nice_to_have:
+-
+
+do_not_fix_now:
+-
+
+next_requested_action:
+-
+
+END_COPY_BLOCK_FOR_AGENT
+
 ===== SECTION 1: repo同期・現在地確認 PowerShell =====
 用途: NLMYTGen の実在repoを確認し、tracked dirty が無い場合だけ master を origin/master に揃え、runtime-state / RSS summary / local-only artifact の有無を見るための確認コマンド。
 

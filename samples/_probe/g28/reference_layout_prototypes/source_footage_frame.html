@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>G-28 Prototype - source_footage_frame</title>
+  <style>
+    html, body { margin: 0; min-width: 1920px; min-height: 1080px; background: #05070a; font-family: Arial, Helvetica, sans-serif; }
+    .canvas { width: 1920px; height: 1080px; background: #0b0f14; }
+  </style>
+</head>
+<body>
+<main class="canvas" aria-label="source footage frame reference layout prototype">
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+    <title id="title">source_footage_frame prototype</title>
+    <desc id="desc">Central source-footage placeholder with top title, lower telop, frame safe area, grid, margins, and subtitle reserve.</desc>
+
+    <rect x="0" y="0" width="1920" height="1080" fill="#0b0f14"/>
+    <g stroke="#273543" stroke-width="1" opacity="0.45">
+      <line x1="160" y1="0" x2="160" y2="1080"/>
+      <line x1="480" y1="0" x2="480" y2="1080"/>
+      <line x1="960" y1="0" x2="960" y2="1080"/>
+      <line x1="1440" y1="0" x2="1440" y2="1080"/>
+      <line x1="1760" y1="0" x2="1760" y2="1080"/>
+      <line x1="0" y1="90" x2="1920" y2="90"/>
+      <line x1="0" y1="540" x2="1920" y2="540"/>
+      <line x1="0" y1="920" x2="1920" y2="920"/>
+    </g>
+    <rect x="160" y="90" width="1600" height="830" fill="none" stroke="#43576b" stroke-width="2" stroke-dasharray="18 14"/>
+    <line x1="960" y1="90" x2="960" y2="920" stroke="#6ad4ff" stroke-width="2" stroke-dasharray="12 16"/>
+
+    <text x="160" y="76" fill="#eaf2fb" font-size="34" font-weight="700">source_footage_frame</text>
+    <text x="160" y="124" fill="#9fb1c0" font-size="20">Central placeholder and telop grammar only. No actual source footage or image asset.</text>
+
+    <g transform="translate(270 166)">
+      <rect x="0" y="0" width="1380" height="682" rx="8" fill="#101820" stroke="#3b4b5d" stroke-width="2"/>
+      <rect x="52" y="42" width="1276" height="82" rx="8" fill="#1b2530" stroke="#344454"/>
+      <text x="84" y="94" fill="#e8eef4" font-size="30" font-weight="700">TOP TITLE / footage context placeholder</text>
+
+      <rect x="118" y="158" width="1144" height="392" rx="8" fill="#151d26" stroke="#6ad4ff" stroke-width="4"/>
+      <rect x="158" y="198" width="1064" height="312" fill="none" stroke="#536474" stroke-width="2" stroke-dasharray="16 12"/>
+      <line x1="690" y1="158" x2="690" y2="550" stroke="#536474" stroke-width="2" stroke-dasharray="12 12"/>
+      <line x1="118" y1="354" x2="1262" y2="354" stroke="#536474" stroke-width="2" stroke-dasharray="12 12"/>
+      <text x="488" y="338" fill="#e8eef4" font-size="34" font-weight="700">SOURCE-FOOTAGE PLACEHOLDER</text>
+      <text x="452" y="386" fill="#aab7c4" font-size="22">abstract frame only; no still, video, screenshot, or reference image</text>
+
+      <rect x="190" y="578" width="1000" height="70" rx="8" fill="#221f16" stroke="#f8c567"/>
+      <text x="220" y="622" fill="#f8c567" font-size="24" font-weight="700">LOWER TELOP</text>
+      <text x="410" y="622" fill="#e8eef4" font-size="24">short claim sits above subtitle reserve</text>
+    </g>
+
+    <g transform="translate(270 865)">
+      <rect x="0" y="0" width="1380" height="42" rx="8" fill="#131c26" stroke="#344454"/>
+      <text x="18" y="27" fill="#6ad4ff" font-size="15" font-weight="700">NOTE</text>
+      <text x="80" y="27" fill="#e8eef4" font-size="15">Abstracts: source-footage frame grammar. Does not copy: footage, screenshot, logo, character, map, or raw reference. Review safe area and telop balance.</text>
+    </g>
+
+    <rect x="0" y="920" width="1920" height="120" fill="#090d12" stroke="#344454" stroke-width="2"/>
+    <text x="160" y="970" fill="#6ad4ff" font-size="20" font-weight="700">SUBTITLE RESERVE</text>
+    <text x="160" y="1006" fill="#aab7c4" font-size="18">Lower telop sits above reserve; reserve is not treated as footage or claim space.</text>
+  </svg>
+</main>
+</body>
+</html>

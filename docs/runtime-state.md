@@ -1,5 +1,24 @@
 # Runtime State — NLMYTGen
 
+- **G-28 reference layout prototype pack created (2026-06-11)**:
+  The visual authoring route now has a static HTML/SVG prototype-first packet
+  at `samples/_probe/g28/reference_layout_prototypes/index.html` with seven
+  fixed 1920x1080 review screens: `lecture_list`, `mechanism_diagram`,
+  `map_evidence`, `cluster_map`, `evidence_table`, `conversation_board`, and
+  `source_footage_frame`. The verification owner is
+  `docs/verification/G28-REFERENCE-LAYOUT-PROTOTYPE-PACK-2026-06-11.md`.
+  This pack abstracts layout grammar only from the previously supplied
+  ゆっくり解説系 references; it does not copy reference images, logos,
+  characters, maps, satellite imagery, company materials, or source footage.
+  Each prototype is self-contained HTML/CSS/SVG, marks grid / center / margins
+  / density intention, and shows subtitle reserve. This is a prototype review
+  surface before any YMM4 transfer: no `.ymmp`, no YMM4 builder, no existing
+  carrier rewrite/regeneration, no render, no production candidate, no rights
+  approval, no creative final acceptance, no Newsroom, no common foundation,
+  no G-27, no ClipPipeGen, no RSS / OPML / Inoreader / NotebookLM, and no real
+  runner path was opened. Next safe action is human browser review of the HTML
+  pack and a returned decision: `accept`, `accept_with_caveats`, `revise_once`,
+  `reject`, or `redesign_required`.
 - **G-28 YMM4 coordinate-generation method blocker recorded (2026-06-11)**:
   Human YMM4 review of
   `samples/_probe/g28/map_evidence_carrier_ymmp_diagnostic_probe.ymmp`

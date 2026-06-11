@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>G-28 Prototype - map_evidence</title>
+  <style>
+    html, body { margin: 0; min-width: 1920px; min-height: 1080px; background: #05070a; font-family: Arial, Helvetica, sans-serif; }
+    .canvas { width: 1920px; height: 1080px; background: #0b0f14; }
+  </style>
+</head>
+<body>
+<main class="canvas" aria-label="map evidence reference layout prototype">
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+    <title id="title">map_evidence prototype</title>
+    <desc id="desc">Abstract map and evidence surface with location labels, source note, bottom claim band, grid, margins, and subtitle reserve.</desc>
+
+    <rect x="0" y="0" width="1920" height="1080" fill="#0b0f14"/>
+    <g stroke="#273543" stroke-width="1" opacity="0.45">
+      <line x1="160" y1="0" x2="160" y2="1080"/>
+      <line x1="480" y1="0" x2="480" y2="1080"/>
+      <line x1="960" y1="0" x2="960" y2="1080"/>
+      <line x1="1440" y1="0" x2="1440" y2="1080"/>
+      <line x1="1760" y1="0" x2="1760" y2="1080"/>
+      <line x1="0" y1="90" x2="1920" y2="90"/>
+      <line x1="0" y1="540" x2="1920" y2="540"/>
+      <line x1="0" y1="920" x2="1920" y2="920"/>
+    </g>
+    <rect x="160" y="90" width="1600" height="830" fill="none" stroke="#43576b" stroke-width="2" stroke-dasharray="18 14"/>
+    <line x1="960" y1="90" x2="960" y2="920" stroke="#6ad4ff" stroke-width="2" stroke-dasharray="12 16"/>
+
+    <text x="160" y="76" fill="#eaf2fb" font-size="34" font-weight="700">map_evidence</text>
+    <text x="160" y="124" fill="#9fb1c0" font-size="20">Abstract geography-like evidence surface with labels and source note. No real map image.</text>
+
+    <g transform="translate(210 170)">
+      <rect x="0" y="0" width="1030" height="660" rx="8" fill="#101820" stroke="#3b4b5d" stroke-width="2"/>
+      <rect x="34" y="34" width="962" height="500" rx="8" fill="#16242d" stroke="#536474" stroke-width="2"/>
+      <path d="M95 132 L230 72 L366 140 L512 96 L704 152 L900 100" fill="none" stroke="#284253" stroke-width="44" opacity="0.7"/>
+      <path d="M92 310 L220 244 L352 318 L520 258 L690 332 L900 268" fill="none" stroke="#263b43" stroke-width="52" opacity="0.75"/>
+      <path d="M108 430 L278 390 L420 452 L590 402 L770 462 L918 420" fill="none" stroke="#20343d" stroke-width="50" opacity="0.85"/>
+      <g fill="#1f3039" stroke="#6ad4ff" stroke-width="2" opacity="0.95">
+        <circle cx="238" cy="250" r="12"/>
+        <circle cx="455" cy="318" r="12"/>
+        <circle cx="670" cy="240" r="12"/>
+        <circle cx="780" cy="406" r="12"/>
+      </g>
+      <g stroke="#f8c567" stroke-width="2">
+        <line x1="238" y1="250" x2="160" y2="202"/>
+        <line x1="455" y1="318" x2="545" y2="280"/>
+        <line x1="670" y1="240" x2="742" y2="190"/>
+        <line x1="780" y1="406" x2="852" y2="458"/>
+      </g>
+      <g font-size="20" font-weight="700">
+        <rect x="74" y="168" width="160" height="40" rx="6" fill="#111821" stroke="#f8c567"/>
+        <text x="92" y="195" fill="#e8eef4">Label A</text>
+        <rect x="546" y="246" width="160" height="40" rx="6" fill="#111821" stroke="#f8c567"/>
+        <text x="564" y="273" fill="#e8eef4">Label B</text>
+        <rect x="742" y="156" width="160" height="40" rx="6" fill="#111821" stroke="#f8c567"/>
+        <text x="760" y="183" fill="#e8eef4">Label C</text>
+        <rect x="818" y="458" width="160" height="40" rx="6" fill="#111821" stroke="#f8c567"/>
+        <text x="836" y="485" fill="#e8eef4">Label D</text>
+      </g>
+      <rect x="34" y="552" width="962" height="70" rx="8" fill="#1b2530" stroke="#344454"/>
+      <text x="62" y="596" fill="#aab7c4" font-size="20">Source note area: abstract verification note, not a live source or file path.</text>
+    </g>
+
+    <g transform="translate(1295 170)">
+      <rect x="0" y="0" width="425" height="660" rx="8" fill="#111821" stroke="#3b4b5d"/>
+      <text x="28" y="50" fill="#6ad4ff" font-size="22" font-weight="700">EVIDENCE STACK</text>
+      <g transform="translate(28 82)">
+        <rect x="0" y="0" width="369" height="92" rx="8" fill="#1b2530" stroke="#536474"/>
+        <text x="24" y="38" fill="#e8eef4" font-size="22" font-weight="700">Observation 01</text>
+        <text x="24" y="68" fill="#aab7c4" font-size="17">Short evidence sentence.</text>
+        <rect x="0" y="118" width="369" height="92" rx="8" fill="#1b2530" stroke="#536474"/>
+        <text x="24" y="156" fill="#e8eef4" font-size="22" font-weight="700">Observation 02</text>
+        <text x="24" y="186" fill="#aab7c4" font-size="17">Comparison point.</text>
+        <rect x="0" y="236" width="369" height="92" rx="8" fill="#1b2530" stroke="#536474"/>
+        <text x="24" y="274" fill="#e8eef4" font-size="22" font-weight="700">Observation 03</text>
+        <text x="24" y="304" fill="#aab7c4" font-size="17">Claim support.</text>
+      </g>
+      <rect x="28" y="468" width="369" height="120" rx="8" fill="#221f16" stroke="#f8c567"/>
+      <text x="52" y="512" fill="#f8c567" font-size="22" font-weight="700">BOTTOM CLAIM BAND</text>
+      <text x="52" y="548" fill="#e8eef4" font-size="20">The map-like surface supports</text>
+      <text x="52" y="576" fill="#e8eef4" font-size="20">one short narrated claim.</text>
+    </g>
+
+    <g transform="translate(1295 850)">
+      <rect x="0" y="0" width="425" height="58" rx="8" fill="#131c26" stroke="#344454"/>
+      <text x="20" y="24" fill="#6ad4ff" font-size="15" font-weight="700">NOTE</text>
+      <text x="78" y="24" fill="#e8eef4" font-size="15">Abstracts: map/evidence grammar. Does not copy: map, logo, character, or footage.</text>
+      <text x="20" y="47" fill="#f8c567" font-size="15">Review: labels, claim band, source-note boundary.</text>
+    </g>
+
+    <rect x="0" y="920" width="1920" height="120" fill="#090d12" stroke="#344454" stroke-width="2"/>
+    <text x="160" y="970" fill="#6ad4ff" font-size="20" font-weight="700">SUBTITLE RESERVE</text>
+    <text x="160" y="1006" fill="#aab7c4" font-size="18">Bottom caption band is separate from the claim band and remains clear for later YMM4 transfer review.</text>
+  </svg>
+</main>
+</body>
+</html>
