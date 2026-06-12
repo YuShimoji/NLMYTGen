@@ -1,5 +1,29 @@
 # Runtime State — NLMYTGen
 
+- **G-28 chat-first visual review protocol recorded (2026-06-12)**:
+  Human review of the reference layout prototype pack keeps the HTML/SVG
+  visual-authoring-first route useful, but changes future review operations:
+  every G-28 visual artifact report now needs a chat-readable digest before
+  asking the human to open HTML, YMM4, or screenshot evidence. The protocol
+  owner is
+  `docs/verification/G28-CHAT-FIRST-VISUAL-REVIEW-PROTOCOL-2026-06-11.md`.
+  Future reports must include artifact id, visible summary, primary focus,
+  layout grammar, object slots, fulfilled specs, known weak points,
+  open-file trigger, accumulated review tags, and next decision options.
+  Review levels are Level 1 chat-first digest, Level 2 optional visual check,
+  and Level 3 accumulated rich review after multiple artifacts accumulate.
+  `mechanism_diagram` is now recorded as `causal_diagram_grammar_debt`: it is
+  reviewable as a prototype, but should be treated as a must-fix blocker before
+  YMM4 transfer planning because arrows, boxes, and causal payload are not yet
+  semantically coupled enough. This slice is docs-only: no HTML prototype
+  mutation, no `.ymmp`, no YMM4 builder, no existing carrier edit, no render,
+  no production / rights / creative acceptance, no Newsroom, no common
+  foundation, no G-27, no ClipPipeGen, no RSS / OPML / Inoreader / NotebookLM,
+  and no real runner work. Next safe action is to use the digest protocol for
+  the next G-28 visual artifact report, or later open accumulated rich review
+  by tags such as `causal_diagram_grammar_debt`, `layout_system_debt`,
+  `density_debt`, `content_slot_gap`, `subtitle_reserve_risk`, and
+  `transfer_candidate`.
 - **G-28 reference layout prototype path / checkout audit sealed (2026-06-12)**:
   The current working checkout is `C:\Users\PLANNER007\NLMYTGen` on `master`
   at `c6f17b5 feat: add G-28 reference layout prototypes`, with

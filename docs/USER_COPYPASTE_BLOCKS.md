@@ -12,11 +12,12 @@ NLMYTGen ユーザー用コピペ資産集
 目的: ChatGPT / Codex 間で毎回組み立てていた長文回答・Prompt・PowerShell・停止テンプレート・報告テンプレートを、必要な時に該当ブロックだけコピーして使える形にまとめる。
 注意: これは「次のAgentへの再開マニュアル」ではなく、ユーザーが保存して使うPromptライブラリ。実装、commit、push、NotebookLM投入、YMM4作業、G-27作業はこの文書だけでは行わない。
 
-===== SECTION 26: G-28 Reference Layout Prototype Pack Review Handoff =====
+===== SECTION 26: G-28 Reference Layout Prototype Pack Chat-first Review Handoff =====
 Use this prompt when resuming after the G-28 route switched from direct YMM4
-coordinate generation to HTML/SVG visual prototype first. Keep the scope to
-browser review of the static prototype pack and do not transfer to YMM4 until
-human review accepts the screen grammar.
+coordinate generation to HTML/SVG visual prototype first, and after human
+review changed future visual reporting to chat-first / accumulated review.
+Keep the scope to docs review operations and do not transfer to YMM4 until a
+separate accepted transfer plan exists.
 
 BEGIN_COPY_BLOCK_FOR_AGENT
 
@@ -42,9 +43,13 @@ Read:
 - `AGENTS.md`
 - `docs/REPO_LOCAL_RULES.md`
 - `docs/runtime-state.md`
+- `docs/project-context.md`
+- `docs/verification/G28-CHAT-FIRST-VISUAL-REVIEW-PROTOCOL-2026-06-11.md`
 - `docs/verification/G28-REFERENCE-LAYOUT-PROTOTYPE-PACK-2026-06-11.md`
+- `docs/verification/G28-YMMP-CARRIER-GENERATION-METHOD-BLOCKER-2026-06-11.md`
 
-Open in a browser:
+Open in a browser only when the chat digest is insufficient or transfer
+readiness needs spatial judgement:
 - `C:\Users\PLANNER007\NLMYTGen\samples\_probe\g28\reference_layout_prototypes\index.html`
 
 Prototype set:
@@ -76,6 +81,27 @@ Current boundary:
 - Existing proof images are prior pipeline / storyboard / GUI proof, not the
   `reference_layout_prototypes` pack itself.
 
+Current review method:
+- Every future G-28 visual artifact report must include a chat-readable review
+  digest before asking the human to open HTML, YMM4, or screenshot evidence.
+- Required digest fields: artifact id, visible summary, primary focus, layout
+  grammar, object slots, fulfilled specs, known weak points, open-file trigger,
+  accumulated review tags, and next decision options.
+- Review levels are Level 1 chat-first digest, Level 2 optional visual check,
+  and Level 3 accumulated rich review.
+- Rich visual review should group issues by tags across multiple artifacts,
+  not only by individual file.
+- Use tags such as `layout_system_debt`, `causal_diagram_grammar_debt`,
+  `density_debt`, `content_slot_gap`, `subtitle_reserve_risk`, and
+  `transfer_candidate`.
+
+Current mechanism_diagram note:
+- `mechanism_diagram` is recorded as `causal_diagram_grammar_debt`.
+- The arrows and boxes are not semantically coupled enough, and the causal
+  payload is not visible enough for transfer.
+- Treat it as a must-fix blocker before YMM4 transfer planning, but do not fix
+  it immediately in this slice.
+
 Do not:
 - generate or modify any `.ymmp`
 - create a YMM4 builder
@@ -94,6 +120,9 @@ decision: accept / accept_with_caveats / revise_once / reject / redesign_require
 overall:
 -
 
+chat_digest_sufficient:
+- yes / no
+
 prototype_notes:
 - lecture_list:
 - mechanism_diagram:
@@ -110,6 +139,9 @@ nice_to_have:
 -
 
 do_not_fix_now:
+-
+
+accumulated_review_tags:
 -
 
 next_requested_action:

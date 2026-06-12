@@ -80,6 +80,33 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 ## DECISION LOG
 
 Latest G-28 decision (2026-06-12):
+`g28_chat_first_visual_review_protocol_001` records the human review result for
+the G-28 reference layout prototype pack and changes future visual review
+reporting to a chat-first / accumulated review model. The HTML/SVG
+visual-authoring-first route remains useful, but future G-28 visual artifact
+reports must include a digest before asking the human to open HTML, YMM4, or
+screenshot evidence. The digest must state artifact id, visible summary,
+primary focus, layout grammar, object slots, fulfilled specs, known weak
+points, open-file trigger, accumulated review tags, and next decision options.
+The durable protocol is
+`docs/verification/G28-CHAT-FIRST-VISUAL-REVIEW-PROTOCOL-2026-06-11.md`, and
+the existing prototype pack record now points to it. Review levels are Level 1
+chat-first digest, Level 2 optional visual check, and Level 3 accumulated rich
+review grouped by tags / issue families after multiple artifacts accumulate.
+`mechanism_diagram` is recorded as `causal_diagram_grammar_debt`: it is a
+reviewable prototype, but not a YMM4 transfer candidate without later revision
+or explicit accepted caveat because arrows, boxes, and causal payload are not
+semantically coupled enough. This decision is docs-only: it does not edit HTML,
+create or modify `.ymmp`, build YMM4 tooling, touch existing game-mechanics or
+map-evidence carriers, render, approve production / rights / creative final
+acceptance, process Newsroom, touch common foundation, reopen G-27, touch
+ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, import external assets, or run a
+real runner. Next safe action is to use the chat-first digest contract for the
+next G-28 visual artifact report, or open accumulated rich review later by tags
+such as `causal_diagram_grammar_debt`, `layout_system_debt`, `density_debt`,
+`content_slot_gap`, `subtitle_reserve_risk`, and `transfer_candidate`.
+
+Latest G-28 decision (2026-06-12):
 `g28_reference_layout_prototype_path_checkout_audit_001` resolves the reported
 missing `reference_layout_prototypes` folder as a local checkout / path sync
 issue, not an artifact absence in the current repository state. In

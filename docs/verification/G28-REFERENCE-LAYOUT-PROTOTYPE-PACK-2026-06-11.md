@@ -46,6 +46,62 @@ must not be regenerated or micro-tuned.
   is intentionally not copied, and what should be reviewed before YMM4
   transfer.
 
+## Human Review Result - Chat-first Intake
+
+| Field | Result |
+| --- | --- |
+| review classification | `accept_with_caveats_for_chat_first_review_protocol` |
+| route judgement | HTML/SVG visual authoring first is useful after the YMM4 coordinate-generation method blocker. |
+| review-method change | Future visual artifact reports need a chat-readable digest; a file path alone is not enough. |
+| rich-review timing | Detailed visual review can be deferred until multiple artifacts accumulate, then reviewed by tag / issue family. |
+| protocol owner | `docs/verification/G28-CHAT-FIRST-VISUAL-REVIEW-PROTOCOL-2026-06-11.md` |
+
+The pack remains useful as a visual grammar reference, but the review process
+should not require the human to open every HTML file before forming a light
+decision. Future G-28 visual reports must summarize what is visible, what the
+artifact is testing, what is already satisfied, what is weak, and exactly when
+opening HTML / YMM4 / screenshot evidence becomes necessary.
+
+### `mechanism_diagram` Caveat
+
+`mechanism_diagram` is recorded as `causal_diagram_grammar_debt`.
+
+The screen is reviewable as a prototype, but it is not a YMM4 transfer
+candidate without later revision or explicit accepted caveat. The arrows and
+boxes are not yet semantically coupled enough: the diagram structure implies
+"important elements first, abstract statement last," while the middle of the
+screen lacks enough concrete causal payload to make the relationship visible.
+
+Do not fix this immediately in this slice. Treat it as a must-fix blocker only
+if `mechanism_diagram` is selected for YMM4 transfer planning.
+
+## Required Chat-first Digest For Future G-28 Visual Reports
+
+Every future G-28 visual artifact report must include:
+
+- artifact id
+- visible summary
+- primary focus
+- layout grammar
+- object slots
+- fulfilled specs
+- known weak points
+- open-file trigger
+- accumulated review tags
+- next decision options
+
+Review levels are:
+
+| Level | Meaning |
+| --- | --- |
+| Level 1 | Chat-first digest for light decisions without opening files. |
+| Level 2 | Optional visual check in browser, YMM4, or screenshot when spatial judgement is needed. |
+| Level 3 | Accumulated rich review after multiple artifacts are available. |
+
+Use accumulated tags such as `layout_system_debt`,
+`causal_diagram_grammar_debt`, `density_debt`, `content_slot_gap`,
+`subtitle_reserve_risk`, and `transfer_candidate` to group later rich review.
+
 ## Human Review Viewpoints
 
 | Prototype | Look For |
@@ -123,6 +179,8 @@ Do not proceed to YMM4 transfer when:
 
 - The human decision is `reject` or `redesign_required`.
 - Any `must_fix` item remains unresolved after a `revise_once` pass.
+- `mechanism_diagram` is selected while its
+  `causal_diagram_grammar_debt` remains unresolved or unaccepted as a caveat.
 - The proposed transfer would regenerate the failed Map / Evidence `.ymmp`,
   modify the game-mechanics carrier, create a builder, or resume direct
   coordinate-generated `.ymmp` visual authoring.
@@ -141,6 +199,9 @@ decision: accept / accept_with_caveats / revise_once / reject / redesign_require
 overall:
 -
 
+chat_digest_sufficient:
+- yes / no
+
 prototype_notes:
 - lecture_list:
 - mechanism_diagram:
@@ -157,6 +218,9 @@ nice_to_have:
 -
 
 do_not_fix_now:
+-
+
+accumulated_review_tags:
 -
 
 next_requested_action:
