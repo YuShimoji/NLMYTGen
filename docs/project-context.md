@@ -79,6 +79,33 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest G-28 decision (2026-06-12):
+`g28_reference_layout_prototype_path_checkout_audit_001` resolves the reported
+missing `reference_layout_prototypes` folder as a local checkout / path sync
+issue, not an artifact absence in the current repository state. In
+`C:\Users\PLANNER007\NLMYTGen`, `git fetch --prune origin` advanced
+`origin/master` from `1ab3903` to `c6f17b5`, and
+`git pull --ff-only origin master` fast-forwarded `master` to
+`c6f17b5 feat: add G-28 reference layout prototypes`. After the pull, branch
+`master`, `HEAD=c6f17b5`, and `HEAD...@{u}=0 0`; `git status --porcelain=v1`,
+`git status --porcelain=v1 -uno`, `git diff --name-only`, and
+`git diff --cached --name-only` are empty. `git ls-tree` and `Get-ChildItem`
+both show the eight expected files under
+`samples/_probe/g28/reference_layout_prototypes/`: `index.html`,
+`lecture_list.html`, `mechanism_diagram.html`, `map_evidence.html`,
+`cluster_map.html`, `evidence_table.html`, `conversation_board.html`, and
+`source_footage_frame.html`. The wrong `samples_probe` path is absent. The
+old `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen` checkout path
+was not present in this environment. The correct local review hub is
+`C:\Users\PLANNER007\NLMYTGen\samples\_probe\g28\reference_layout_prototypes\index.html`.
+Existing proof images should still be treated as earlier pipeline /
+storyboard / GUI proof, not as the reference layout prototype pack. This audit
+did not regenerate prototypes, edit HTML, create `.ymmp`, build a YMM4
+builder, touch existing carriers, render, approve production / rights /
+creative final acceptance, or touch Newsroom, common foundation, G-27,
+ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, or real runner paths. Next safe
+action is human browser review of the HTML pack.
+
 Latest G-28 decision (2026-06-11):
 `g28_reference_layout_prototype_pack_created_001` implements the safe
 HTML/SVG visual-prototype-first route after the YMM4 coordinate-generation
@@ -913,6 +940,18 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 | IP-03 | YouTube 自動アップロード | FEATURE_REGISTRY E-01 (hold) |
 
 ---
+
+## HANDOFF SNAPSHOT (2026-06-12 G-28 reference layout path sync)
+
+- Branch / remote state: `master` at `c6f17b5 feat: add G-28 reference layout prototypes`; after sync, `HEAD...@{u}=0 0`.
+- Working tree state: clean before and after the docs-only context seal; no generated artifacts were created in this handoff.
+- Current repo path for this machine: `C:\Users\PLANNER007\NLMYTGen`.
+- Correct G-28 prototype hub to open: `C:\Users\PLANNER007\NLMYTGen\samples\_probe\g28\reference_layout_prototypes\index.html`.
+- Git tree / working tree artifact state: the eight HTML files are present under `samples/_probe/g28/reference_layout_prototypes/`; the wrong `samples_probe` path is absent.
+- Path-confusion finding: `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen` was not present in this environment, so resume from the PLANNER007 checkout unless the human explicitly points to another synced clone.
+- Current interpretation: the reported missing folder was caused by checkout freshness / local path confusion before the fast-forward to `c6f17b5`; the artifact now exists in the active checkout.
+- Boundary: do not regenerate HTML prototypes, do not make `.ymmp`, do not build YMM4 tooling, do not touch existing game-mechanics / map-evidence carriers, and do not enter render, production, rights, creative final acceptance, Newsroom, common foundation, G-27, ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, or real runner paths.
+- Next concrete move: perform human browser review of the static HTML pack and return `accept`, `accept_with_caveats`, `revise_once`, `reject`, or `redesign_required` with per-screen notes.
 
 ## HANDOFF SNAPSHOT (2026-05-29 RSS cleanup decision)
 

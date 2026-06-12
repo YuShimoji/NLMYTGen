@@ -23,16 +23,20 @@ BEGIN_COPY_BLOCK_FOR_AGENT
 NLMYTGen本流 G-28 の reference layout prototype pack を確認してください。
 
 repo:
-C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
+C:\Users\PLANNER007\NLMYTGen
 
 Start by confirming:
 - `git status --porcelain=v1`
+- `git status --porcelain=v1 -uno`
 - `git fetch --prune origin`
 - `git pull --ff-only origin master`
 - `git branch --show-current`
 - `git rev-parse --short HEAD`
 - `git rev-list --left-right --count "HEAD...@{u}"`
 - `git log -1 --oneline`
+- `git ls-tree -r --name-only HEAD -- samples/_probe/g28/reference_layout_prototypes`
+- `git diff --name-only`
+- `git diff --cached --name-only`
 
 Read:
 - `AGENTS.md`
@@ -41,7 +45,7 @@ Read:
 - `docs/verification/G28-REFERENCE-LAYOUT-PROTOTYPE-PACK-2026-06-11.md`
 
 Open in a browser:
-- `samples/_probe/g28/reference_layout_prototypes/index.html`
+- `C:\Users\PLANNER007\NLMYTGen\samples\_probe\g28\reference_layout_prototypes\index.html`
 
 Prototype set:
 - `lecture_list`
@@ -62,6 +66,15 @@ Current boundary:
 - The HTML/SVG pack is visual grammar only and does not copy reference images,
   logos, characters, maps, satellite imagery, company materials, or source
   footage.
+- On 2026-06-12 the active checkout was verified as `master` at `c6f17b5`
+  with `HEAD...@{u}=0 0`; the eight prototype HTML files existed in both the
+  Git tree and working tree under `samples/_probe/...`; `samples_probe` was
+  absent.
+- `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen` was not present
+  in that environment. Treat `C:\Users\PLANNER007\NLMYTGen` as the correct
+  local path unless the human explicitly points to another synced clone.
+- Existing proof images are prior pipeline / storyboard / GUI proof, not the
+  `reference_layout_prototypes` pack itself.
 
 Do not:
 - generate or modify any `.ymmp`

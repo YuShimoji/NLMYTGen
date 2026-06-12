@@ -1,5 +1,25 @@
 # Runtime State — NLMYTGen
 
+- **G-28 reference layout prototype path / checkout audit sealed (2026-06-12)**:
+  The current working checkout is `C:\Users\PLANNER007\NLMYTGen` on `master`
+  at `c6f17b5 feat: add G-28 reference layout prototypes`, with
+  `HEAD...@{u}=0 0` after `git fetch --prune origin` and
+  `git pull --ff-only origin master`. The reference layout prototype pack is
+  present in both the Git tree and working tree under the correct path
+  `samples/_probe/g28/reference_layout_prototypes/`; `samples_probe` is not
+  present. The correct local review hub is
+  `C:\Users\PLANNER007\NLMYTGen\samples\_probe\g28\reference_layout_prototypes\index.html`.
+  The old candidate checkout path
+  `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen` was not present in
+  this environment, so the missing-folder report was a checkout / path sync
+  issue rather than an artifact absence after the fast-forward. Existing proof
+  images remain prior pipeline / storyboard / GUI proof, not the
+  `reference_layout_prototypes` pack itself. This context-seal is docs-only:
+  no prototype regeneration, no HTML edits, no `.ymmp`, no YMM4 builder, no
+  render, no production / rights / creative acceptance, no Newsroom, no common
+  foundation, no G-27, no ClipPipeGen, no RSS / OPML / Inoreader /
+  NotebookLM, and no real runner work. Next safe action is human browser
+  review of the HTML pack from the path above.
 - **G-28 reference layout prototype pack created (2026-06-11)**:
   The visual authoring route now has a static HTML/SVG prototype-first packet
   at `samples/_probe/g28/reference_layout_prototypes/index.html` with seven
