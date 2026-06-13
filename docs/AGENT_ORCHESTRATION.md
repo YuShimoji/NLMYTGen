@@ -60,6 +60,7 @@ Common core は repo をまたいでも変えない契約だけを持つ。
 - `needs_human` notification stub の payload shape
 - dry-run command preview
 - disabled execution preflight
+- live repo status JSON input contract
 - Worker lane の抽象名
 
 Repo adapter は repo ごとの差分だけを持つ。現在は
@@ -151,6 +152,18 @@ preflight result の表示として分けて読む。表示される `safe_to_st
 preflight allowed は review / eligibility signal であり、実行許可ではない。
 operator-provided input に credential-like 文字列が混じった場合、outer preview と
 preflight card の表示では raw value を redaction する。
+
+Future live repo status JSON is defined by
+`docs/verification/LIVE-REPO-STATUS-JSON-PRODUCER-DESIGN-2026-06-13.md`.
+That design replaces a bare `--repo-status-clean` assertion with a
+machine-collected status object containing branch, HEAD, upstream parity,
+tracked / staged / untracked state, known-untracked allowlist matching, runtime
+artifact state, needs-human presence, inspected paths, command provenance,
+timestamp, source provenance, adapter id, and confidence / trust boundary. The
+producer is only an observer and serializer. It cannot grant real-runner
+permission, cannot set `safe_to_start_real_runner=true`, and cannot write
+runtime reports, logs, or needs-human state. Unknown, missing, parse-error, or
+command-failure state must fail closed as `needs_human` or `blocked`.
 
 ## Worker Report Schema
 

@@ -841,6 +841,105 @@ C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
 ===== END =====
 ```
 
+===== SECTION 27: Common Foundation Live Repo Status JSON Producer Design Handoff =====
+Use this prompt when resuming after the docs-only live repo status JSON producer
+design. This is not permission to implement or run real execution.
+
+BEGIN_COPY_BLOCK_FOR_AGENT
+
+You are continuing NLMYTGen common foundation / Codex Worker Orchestration.
+The current slice is after the docs-only live repo status JSON producer design.
+Do not implement or run a real runner from this prompt.
+
+repo:
+C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
+
+Start by running:
+git branch --show-current
+git status --porcelain=v1
+git status --porcelain=v1 -uno
+git fetch --prune origin
+git pull --ff-only origin master
+git log -1 --oneline
+git rev-list --left-right --count "HEAD...@{u}"
+git diff --name-only
+git diff --cached --name-only
+
+Read in this order:
+AGENTS.md
+docs/REPO_LOCAL_RULES.md
+docs/runtime-state.md
+docs/AGENT_ORCHESTRATION.md
+docs/AGENT_OPERATOR_SURFACE.md
+docs/verification/LIVE-REPO-STATUS-JSON-PRODUCER-DESIGN-2026-06-13.md
+docs/USER_COPYPASTE_BLOCKS.md SECTION 27
+
+Expected state:
+- branch: master
+- upstream parity: 0 0 after fetch / fast-forward pull
+- tracked and staged diff: clean before new work
+- known untracked residue may remain:
+  - .claude/worktrees/
+  - samples/2026-05-16.ymmp
+- .agent/reports and .agent/logs should contain only .gitkeep
+- .agent/needs_human.json should be absent
+
+Current decision:
+- `live_repo_status_json_producer_design_001` is docs-only.
+- The design defines a future machine-collected status object with repo_root,
+  branch, head_commit, upstream_ref, ahead_behind, tracked_dirty,
+  staged_dirty, untracked_entries, known_untracked_allowlist_match,
+  runtime_artifacts_state, needs_human_present, inspected_paths,
+  commands_used, generated_at, source_provenance, adapter_id, confidence,
+  status, and reasons.
+- The future producer is only an observer and serializer.
+- It cannot grant execution permission, cannot set
+  `safe_to_start_real_runner=true`, and cannot write runtime reports, logs, or
+  needs-human state.
+- Unknown, missing, parse-error, command-failure, dirty, staged,
+  unknown-untracked, unexpected runtime-artifact, or needs-human-present state
+  must surface as `needs_human` or `blocked`, not pass.
+- Common core owns the status schema contract, fail-closed semantics,
+  redaction, provenance, timestamp, and operator readback fields.
+- Repo adapter owns authority docs, known untracked allowlist, allowed /
+  blocked paths, runtime artifact paths, repo-specific vocabulary, and
+  forbidden automation domains.
+- NLMYTGen-specific YMM4 / .ymmp / G-28 / production vocabulary stays out of
+  the common core.
+
+Allowed next common-foundation entries:
+- Hold / no-op.
+- Review the docs-only status JSON contract for clarity.
+- Separately authorize a stdout-only producer implementation that proves it
+  creates no .agent/reports, .agent/logs, or .agent/needs_human.json artifacts.
+- Separately authorize a real-runner consumption design, still without running
+  a real runner.
+
+Forbidden:
+- real `codex exec` runner implementation
+- `subprocess.run` runner implementation
+- prompt stdin piping
+- runtime worker loop
+- external notification
+- .agent/reports, .agent/logs, or .agent/needs_human.json runtime artifact
+  generation
+- main/master auto-push behavior
+- repo-external writes
+- API key / token / credential storage
+- G-28 / G-27 / Newsroom / ClipPipeGen / RSS / OPML / Inoreader / NotebookLM /
+  .ymmp / render / rights / production / publishing work
+- promoting diagnostic artifacts to production_candidate
+
+Completion report should state:
+- branch, HEAD, and upstream parity
+- changed files
+- verification commands and outcomes
+- whether runtime artifacts were generated
+- whether real execution remains closed
+- next safe entry point
+
+END_COPY_BLOCK_FOR_AGENT
+
 ===== SECTION 25: G-28 Game Mechanics YMM4 Batch Visual Review Handoff =====
 Use this prompt when resuming the NLMYTGen mainline G-28 game mechanics lane
 after the YMM4 diagnostic carrier switched from targeted label recheck to

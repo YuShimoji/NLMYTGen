@@ -1,5 +1,26 @@
 # Runtime State — NLMYTGen
 
+- **Common foundation live repo status JSON producer design recorded (2026-06-13)**:
+  `docs/verification/LIVE-REPO-STATUS-JSON-PRODUCER-DESIGN-2026-06-13.md`
+  defines the docs-only contract for replacing a bare human
+  `--repo-status-clean` assertion with future machine-collected live repo status
+  JSON. The contract covers repo root, branch, HEAD, upstream parity,
+  tracked/staged/untracked state, adapter allowlist matching, runtime artifact
+  state, `.agent/needs_human.json` presence, inspected paths, command
+  provenance, timestamp, source provenance, adapter id, confidence/trust
+  boundary, and fail-closed status. The producer is only an observer/serializer
+  and cannot grant execution permission, cannot set
+  `safe_to_start_real_runner=true`, cannot start real `codex exec`, cannot add
+  `subprocess.run`, cannot pipe stdin, cannot create a runtime worker loop,
+  cannot send external notification, and cannot write `.agent/reports`,
+  `.agent/logs`, or `.agent/needs_human.json`. Unknown, missing, parse-error,
+  command-failure, dirty, staged, unknown-untracked, unexpected runtime-artifact,
+  or needs-human-present state must surface as `needs_human` or `blocked`, not
+  pass. This slice is docs-only and does not touch G-28, G-27, Newsroom,
+  ClipPipeGen, RSS / OPML / Inoreader / NotebookLM, `.ymmp`, render, rights,
+  production, or publishing. Next safe action is Hold, or a separately
+  authorized stdout-only producer implementation that proves it creates no
+  runtime artifacts.
 - **G-28 chat-first visual review protocol recorded (2026-06-12)**:
   Human review of the reference layout prototype pack keeps the HTML/SVG
   visual-authoring-first route useful, but changes future review operations:

@@ -279,6 +279,34 @@ Next safe action is human YMM4 review intake only: carrier path, preview
 screenshot, timeline screenshot, item/layer confirmation, bottom caption
 safe-area evidence, and `accept` / `revise` / `reject`.
 
+Latest common foundation decision (2026-06-13):
+`live_repo_status_json_producer_design_001` records a docs-only contract for a
+future machine-collected live repo status JSON producer. The design lives in
+`docs/verification/LIVE-REPO-STATUS-JSON-PRODUCER-DESIGN-2026-06-13.md` and
+defines fields for repo root, branch, HEAD, upstream parity, tracked/staged
+dirty state, untracked entries, known-untracked allowlist match, runtime
+artifact state, `.agent/needs_human.json` presence, inspected paths, command
+provenance, timestamp, source provenance, adapter id, confidence/trust boundary,
+and fail-closed status. This narrows the older `--repo-status-clean` operator
+assertion by requiring future machine-collected evidence before a status object
+is treated as preflight input. The producer remains only an observer/serializer:
+it cannot grant execution permission, cannot set `safe_to_start_real_runner=true`,
+cannot start real `codex exec`, cannot add `subprocess.run`, cannot pipe stdin,
+cannot create a runtime worker loop, cannot send external notification, and
+cannot write `.agent/reports`, `.agent/logs`, or `.agent/needs_human.json`.
+Unknown, missing, parse-error, command-failure, dirty, staged,
+unknown-untracked, unexpected runtime artifact, or needs-human-present state
+must surface as `needs_human` or `blocked`, not pass. Common core keeps schema,
+fail-closed semantics, redaction, provenance, timestamp, and operator readback;
+repo adapter keeps authority docs, known untracked allowlist, allowed/blocked
+paths, runtime artifact paths, repo-specific vocabulary, and forbidden domains.
+NLMYTGen-specific YMM4 / `.ymmp` / G-28 / production vocabulary stays out of the
+common core. This slice did not implement Python, runner behavior, runtime
+artifact generation, G-28 / G-27 / Newsroom / ClipPipeGen / RSS / OPML /
+Inoreader / NotebookLM / `.ymmp` / render / rights / production / publishing
+work. Next safe action is Hold or a separately authorized stdout-only producer
+implementation proof.
+
 Latest common foundation decision (2026-06-10):
 `pre_execution_dry_run_preview_hold_001` accepts the wording-refined preview as
 holdable for cross-terminal restart. The check ran

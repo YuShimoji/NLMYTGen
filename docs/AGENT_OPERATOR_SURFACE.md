@@ -155,6 +155,13 @@ through a gate or start a real runner.
   stops after stdout and does not consume that result by starting any runner.
 - `--repo-status-clean` is an operator assertion after external checks, not a
   Git check performed by the preview CLI.
+- Future live repo status JSON readback should follow
+  `docs/verification/LIVE-REPO-STATUS-JSON-PRODUCER-DESIGN-2026-06-13.md`.
+  The card should show branch, HEAD, upstream parity, tracked / staged /
+  untracked state, allowlist match, runtime artifact state, needs-human
+  presence, inspected paths, command provenance, timestamp, source provenance,
+  adapter id, and confidence / trust boundary. Machine-collected status is
+  still only input evidence; it is not execution permission.
 - Real runner boundary design is still a separate future slice.
 - External notification remains unimplemented; the local notify stub is the only
   visible notification artifact.
