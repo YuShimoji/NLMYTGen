@@ -38,6 +38,21 @@
   high confidence proceeds into the next reversible 1-3 agent-side actions
   before reporting, while low confidence gets a Review Clarification Card only
   once if a wrong interpretation would materially change the artifact.
+- **Common foundation pre-execution human review packet tightened (2026-06-15)**:
+  `scripts/agent_orchestrator.py --pre-execution-dry-run` now makes the
+  operator preview packet slightly more explicit for human review: it states
+  that preview output is stdout only, says no real execution happened because
+  the flow stops after rendering the preview, and repeats that no `.agent`
+  report, log, or needs-human artifact is written. The active review command is
+  `uv run python scripts/agent_orchestrator.py --worker audit --pre-execution-dry-run --timestamp human-review-packet --repo-status-clean`.
+  The packet remains preview-only: it does not start `codex exec`, add or run a
+  real subprocess runner, pipe stdin, create a runtime worker loop, send
+  external notification, create `.agent/reports`, `.agent/logs`, or
+  `.agent/needs_human.json`, evaluate a real worker report, or grant execution
+  authority from `safe_to_start_real_runner`. Focused coverage in
+  `tests/test_agent_orchestration.py` asserts the stdout-only/no-artifact
+  readback. Next safe action is human review of the stdout packet, hold, or a
+  separately authorized runner consumption design.
 - **Common foundation repo-status input audit design recorded (2026-06-15)**:
   `docs/verification/COMMON-FOUNDATION-STATUS-INPUT-AUDIT-DESIGN-2026-06-15.md`
   refines the prior live status producer contract with the exact audit-facing

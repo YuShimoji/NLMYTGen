@@ -1443,6 +1443,7 @@ def test_pre_execution_dry_run_preview_renders_plan_preflight_card_without_artif
     assert preview["preflight"]["safe_to_start_real_runner"] is False
     assert preview["runtime_artifacts_written"] == []
     assert "# NLMYTGen Pre-execution Dry-run Preview" in card
+    assert "- Preview output location: stdout only" in card
     assert "- Worker: audit" in card
     assert "- Prompt source: .agent/prompt_catalog/audit.md" in card
     assert "- Schema path: .agent/schemas/worker_report.schema.json" in card
@@ -1451,6 +1452,7 @@ def test_pre_execution_dry_run_preview_renders_plan_preflight_card_without_artif
     assert "- codex" in card
     assert "- exec" in card
     assert "- This argv is shown only for review; it was not executed." in card
+    assert "- No real execution happened because this flow stops after rendering the preview." in card
     assert "- Repo status source: operator-provided assertion after external git checks; not checked by this CLI" in card
     assert "- Preflight: passed for this preview only" in card
     assert "- safe_to_start_real_runner: no; eligibility only, not execution permission" in card
@@ -1458,6 +1460,7 @@ def test_pre_execution_dry_run_preview_renders_plan_preflight_card_without_artif
     assert "The outer preview explains the would-be plan; the embedded card explains the raw preflight result." in card
     assert "- subprocess.run: not implemented" in card
     assert "- runtime artifacts: not written" in card
+    assert "- preview output: stdout only; no .agent report, log, or needs-human artifact is written" in card
     assert "gate result from a real run: not evaluated" in card
     assert not report_path.exists()
 
@@ -1519,11 +1522,13 @@ def test_orchestrator_cli_pre_execution_dry_run_outputs_markdown(
     assert exit_code == 0
     assert captured.err == ""
     assert captured.out.startswith("# NLMYTGen Pre-execution Dry-run Preview")
+    assert "- Preview output location: stdout only" in captured.out
     assert ".agent/reports/cli-preview-audit.report.json" in captured.out
     assert "## Embedded Raw Preflight Preview Card" in captured.out
     assert "safe_to_start_real_runner: no; eligibility only, not execution permission" in captured.out
     assert "- codex_execution_started: no" in captured.out
     assert "- real_subprocess_started: no" in captured.out
+    assert "no .agent report, log, or needs-human artifact is written" in captured.out
 
 
 def test_orchestrator_without_dry_run_or_report_still_cannot_execute_codex() -> None:

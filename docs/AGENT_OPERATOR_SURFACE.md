@@ -64,9 +64,11 @@ The orchestrator's pre-execution dry-run preview reuses that same card inside a
 larger Markdown review surface with selected worker, prompt source, schema path,
 planned report path, working directory, timeout, argv preview, repo status
 summary, authority summary, and an explicit stop boundary. In that outer
-surface, the report path is labeled as planned only, the repo-status source is
-labeled as operator-provided and not checked by the CLI, and the embedded card
-is labeled as the raw preflight result. It still does not write runtime
+surface, the preview output location is labeled as stdout only, the report path
+is labeled as planned only, the repo-status source is labeled as
+operator-provided and not checked by the CLI, and the embedded card is labeled
+as the raw preflight result. It states that no real execution happened because
+the flow stops after rendering the preview. It still does not write runtime
 artifacts or evaluate a worker report from a real run.
 
 ## Example Card
