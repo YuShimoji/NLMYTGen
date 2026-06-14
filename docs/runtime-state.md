@@ -1,5 +1,26 @@
 # Runtime State — NLMYTGen
 
+- **Common foundation repo-status input audit design recorded (2026-06-15)**:
+  `docs/verification/COMMON-FOUNDATION-STATUS-INPUT-AUDIT-DESIGN-2026-06-15.md`
+  refines the prior live status producer contract with the exact audit-facing
+  status object fields that preflight, gate, and operator surfaces should read:
+  branch, head commit, upstream, remote parity, tracked-only porcelain status,
+  full porcelain status, known-untracked allowlist match, dirty state, staged
+  diff, unstaged tracked diff, runtime artifact state, needs-human state,
+  checked authority docs, execution policy snapshot, repo adapter id,
+  fail-closed reasons, observed timestamp, source provenance, command
+  provenance, and observer mode. The status object remains observed input only:
+  it cannot grant runner permission, cannot set real-runner authority, and does
+  not start `codex exec`, add `subprocess.run`, pipe stdin, create a runtime
+  loop, send notification, or write `.agent/reports`, `.agent/logs`, or
+  `.agent/needs_human.json`. The live pre-edit audit found `master`,
+  upstream parity `0 0`, tracked/staged diffs empty, known untracked residue
+  limited to `.claude/worktrees/` and `samples/2026-05-16.ymmp`, reports/logs
+  containing only `.gitkeep`, and no needs-human state. The old assumption that
+  HEAD was `66be70d` is stale; current evidence before this docs edit was
+  `4746d81 docs: design live repo status producer`. Next safe action is Hold,
+  or a separately authorized stdout-only producer implementation that proves it
+  creates no runtime artifacts and still cannot grant real-runner permission.
 - **Common foundation live repo status JSON producer design recorded (2026-06-13)**:
   `docs/verification/LIVE-REPO-STATUS-JSON-PRODUCER-DESIGN-2026-06-13.md`
   defines the docs-only contract for replacing a bare human

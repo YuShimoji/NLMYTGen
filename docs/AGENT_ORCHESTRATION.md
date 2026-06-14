@@ -155,6 +155,9 @@ preflight card の表示では raw value を redaction する。
 
 Future live repo status JSON is defined by
 `docs/verification/LIVE-REPO-STATUS-JSON-PRODUCER-DESIGN-2026-06-13.md`.
+The repo-status input audit and exact operator/preflight field mapping are
+defined by
+`docs/verification/COMMON-FOUNDATION-STATUS-INPUT-AUDIT-DESIGN-2026-06-15.md`.
 That design replaces a bare `--repo-status-clean` assertion with a
 machine-collected status object containing branch, HEAD, upstream parity,
 tracked / staged / untracked state, known-untracked allowlist matching, runtime

@@ -279,6 +279,35 @@ Next safe action is human YMM4 review intake only: carrier path, preview
 screenshot, timeline screenshot, item/layer confirmation, bottom caption
 safe-area evidence, and `accept` / `revise` / `reject`.
 
+Latest common foundation decision (2026-06-15):
+`common_foundation_status_input_audit_design_001` records a docs-only
+repo-status input audit design on top of the earlier live status producer
+contract. The design lives in
+`docs/verification/COMMON-FOUNDATION-STATUS-INPUT-AUDIT-DESIGN-2026-06-15.md`
+and defines the audit-facing common status object fields for branch, HEAD,
+upstream, remote parity, tracked-only porcelain status, full porcelain status,
+known-untracked allowlist matching, dirty state, staged diff, unstaged tracked
+diff, runtime artifact state, needs-human state, checked authority docs,
+execution policy snapshot, adapter id, observed timestamp, observer mode,
+source/command provenance, and fail-closed reasons. It also records the
+repo-adapter boundary: common core owns schema, normalization, provenance,
+redaction, timestamp/staleness handling, fail-closed reason vocabulary, and the
+rule that status input is not execution authority; NLMYTGen adapter policy owns
+authority docs, known untracked residue, runtime artifact paths, execution
+policy source, forbidden domains, and local artifact vocabulary. Live pre-edit
+readback found `master`, upstream parity `0 0`, no tracked or staged diff,
+known untracked residue limited to `.claude/worktrees/` and
+`samples/2026-05-16.ymmp`, `.agent/reports/` and `.agent/logs/` containing only
+`.gitkeep`, and no `.agent/needs_human.json`; the old `66be70d` HEAD assumption
+was stale because this checkout was already at
+`4746d81 docs: design live repo status producer`. This slice remains docs-only:
+no real `codex exec`, `subprocess.run`, stdin piping, runtime worker loop,
+external notification, runtime artifact creation, G-28 / G-27 / Newsroom /
+ClipPipeGen / RSS / OPML / Inoreader / NotebookLM / `.ymmp` / render / rights /
+production / publishing work was opened. Next safe action is Hold, or a
+separately authorized stdout-only producer implementation proof that creates no
+runtime artifacts and still cannot grant real-runner permission.
+
 Latest common foundation decision (2026-06-13):
 `live_repo_status_json_producer_design_001` records a docs-only contract for a
 future machine-collected live repo status JSON producer. The design lives in

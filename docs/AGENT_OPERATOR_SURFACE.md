@@ -157,6 +157,9 @@ through a gate or start a real runner.
   Git check performed by the preview CLI.
 - Future live repo status JSON readback should follow
   `docs/verification/LIVE-REPO-STATUS-JSON-PRODUCER-DESIGN-2026-06-13.md`.
+  The audit-facing field mapping and status-input fail-closed contract should
+  follow
+  `docs/verification/COMMON-FOUNDATION-STATUS-INPUT-AUDIT-DESIGN-2026-06-15.md`.
   The card should show branch, HEAD, upstream parity, tracked / staged /
   untracked state, allowlist match, runtime artifact state, needs-human
   presence, inspected paths, command provenance, timestamp, source provenance,

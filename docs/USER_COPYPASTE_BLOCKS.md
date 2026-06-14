@@ -841,6 +841,113 @@ C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
 ===== END =====
 ```
 
+===== SECTION 28: Common Foundation Status Input Audit Design Handoff =====
+Use this prompt when resuming after the docs-only repo-status input audit
+design. This is not permission to implement or run real execution.
+
+BEGIN_COPY_BLOCK_FOR_AGENT
+
+You are continuing NLMYTGen common foundation / Codex Worker Orchestration
+after the docs-only status input audit design. Do not implement or run a real
+runner from this prompt.
+
+repo:
+C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
+
+Start by running:
+git branch --show-current
+git status --porcelain=v1
+git status --porcelain=v1 -uno
+git fetch --prune origin
+git pull --ff-only origin master
+git log -1 --oneline
+git rev-list --left-right --count "HEAD...@{u}"
+git diff --name-only
+git diff --cached --name-only
+
+Also confirm:
+- .agent/reports contains only .gitkeep
+- .agent/logs contains only .gitkeep
+- .agent/needs_human.json is absent unless the current task explicitly says
+  needs-human state is expected
+
+Read in this order:
+AGENTS.md
+docs/REPO_LOCAL_RULES.md
+docs/runtime-state.md
+docs/AGENT_ORCHESTRATION.md
+docs/AGENT_OPERATOR_SURFACE.md
+docs/verification/LIVE-REPO-STATUS-JSON-PRODUCER-DESIGN-2026-06-13.md
+docs/verification/COMMON-FOUNDATION-STATUS-INPUT-AUDIT-DESIGN-2026-06-15.md
+docs/USER_COPYPASTE_BLOCKS.md SECTION 28
+
+Expected state:
+- branch: master
+- upstream parity: 0 0 after fetch / fast-forward pull
+- tracked and staged diff: clean before new work
+- known untracked residue may remain:
+  - .claude/worktrees/
+  - samples/2026-05-16.ymmp
+- .agent/reports and .agent/logs should contain only .gitkeep
+- .agent/needs_human.json should be absent
+
+Current decision:
+- `common_foundation_status_input_audit_design_001` is docs-only.
+- It refines the live repo status producer design with audit-facing common
+  fields: branch, head_commit, upstream, remote_parity,
+  porcelain_status_tracked, porcelain_status_all,
+  known_untracked_matches_allowlist, dirty_state, staged_diff, unstaged_diff,
+  runtime_artifact_state, needs_human_state, authority_docs_checked,
+  execution_policy_snapshot, repo_adapter_id, fail_closed_reasons,
+  observed_at, observer_mode, source provenance, and command provenance.
+- The status object is observed input for preflight, gate, and operator
+  surfaces. It is not execution authority.
+- `safe_to_start_real_runner` or any similar eligibility signal is not runner
+  permission.
+- `--repo-status-clean` remains an operator assertion, not a live Git check.
+- `--repo-status-json` is stronger only when it is repo-local, schema-valid,
+  machine-collected, redacted, and backed by command/authority provenance.
+- `codex_exec_enabled=false` means real runner consumption must be blocked or
+  needs-human.
+- NLMYTGen-specific YMM4 / .ymmp / G-28 / production vocabulary stays out of
+  the common core and remains adapter/repo-local vocabulary.
+
+Allowed next common-foundation entries:
+- Hold / no-op.
+- Review the docs-only audit design for clarity.
+- Separately authorize a stdout-only producer implementation that proves it
+  creates no .agent/reports, .agent/logs, or .agent/needs_human.json artifacts.
+- Separately authorize a runner consumption design, still without running a
+  real runner.
+
+Forbidden:
+- real `codex exec` runner implementation
+- `codex exec` execution
+- `subprocess.run` runner implementation
+- prompt stdin piping
+- runtime worker loop
+- external notification
+- .agent/reports, .agent/logs, or .agent/needs_human.json runtime artifact
+  generation
+- main/master auto-push behavior implementation
+- repo-external writes
+- API key / token / credential storage
+- G-28 / G-27 / Newsroom / ClipPipeGen / RSS / OPML / Inoreader / NotebookLM /
+  .ymmp / render / rights / production / publishing work
+- promoting diagnostic artifacts to production_candidate
+
+Completion report should state:
+- branch, HEAD, and upstream parity
+- changed files
+- status object design decision
+- common core / adapter boundary
+- verification commands and outcomes
+- whether runtime artifacts were generated
+- whether real execution remains closed
+- next safe entry point
+
+END_COPY_BLOCK_FOR_AGENT
+
 ===== SECTION 27: Common Foundation Live Repo Status JSON Producer Design Handoff =====
 Use this prompt when resuming after the docs-only live repo status JSON producer
 design. This is not permission to implement or run real execution.
