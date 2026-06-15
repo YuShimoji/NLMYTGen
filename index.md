@@ -15,6 +15,11 @@ python -m mkdocs serve
 ```
 
 Open <http://127.0.0.1:8000/> after the server starts.
+If port 8000 is already in use, choose another local port:
+
+```powershell
+python -m mkdocs serve --dev-addr 127.0.0.1:8006
+```
 
 Primary starting points:
 
