@@ -51,6 +51,9 @@ RUNTIME_FILES = {
 OVERVIEW_ORDER = [
     "index.md",
     "docs/index.md",
+    "docs/PROJECT_OVERVIEW.md",
+    "docs/PROGRESS_SCREENSHOT_INDEX.md",
+    "docs/TURN_BASED_DEVELOPMENT_PLAN.md",
     "README.md",
     "AGENTS.md",
     "CLAUDE.md",
@@ -69,6 +72,21 @@ CATEGORY_ORDER = [
     "Artifacts",
     "Misc",
 ]
+
+ASSET_SUFFIXES = {
+    ".gif",
+    ".jpeg",
+    ".jpg",
+    ".png",
+    ".svg",
+    ".webp",
+}
+
+PROGRESS_ASSET_PREFIXES = (
+    "samples/_probe/baseball/",
+    "samples/_probe/g24/",
+    "samples/_probe/pipeline_smoke/",
+)
 
 SUBGROUP_ORDER = {
     "Development Notes": [
@@ -179,6 +197,27 @@ def markdown_files(root: Path) -> list[Path]:
             continue
         files.append(path)
     return sorted(files, key=lambda p: rel_posix(p, root).lower())
+
+
+def should_copy_progress_asset(rel: str) -> bool:
+    path = Path(rel)
+    if path.suffix.lower() not in ASSET_SUFFIXES:
+        return False
+    if any(rel.startswith(prefix) for prefix in PROGRESS_ASSET_PREFIXES):
+        return True
+    return rel.startswith("samples/") and "thumb" in path.name.lower()
+
+
+def progress_asset_files(root: Path) -> list[Path]:
+    files = []
+    for suffix in ASSET_SUFFIXES:
+        for path in root.rglob(f"*{suffix}"):
+            if not path.is_file() or is_excluded(path.relative_to(root)):
+                continue
+            rel = rel_posix(path, root)
+            if should_copy_progress_asset(rel):
+                files.append(path)
+    return sorted(set(files), key=lambda p: rel_posix(p, root).lower())
 
 
 def yaml_quote(value: str) -> str:
@@ -294,6 +333,12 @@ def prepare_docs_dir(root: Path, target: Path) -> None:
     target.mkdir(parents=True, exist_ok=True)
 
     for source in markdown_files(root):
+        rel = Path(view_rel(source.relative_to(root).as_posix()))
+        destination = target / rel
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, destination)
+
+    for source in progress_asset_files(root):
         rel = Path(view_rel(source.relative_to(root).as_posix()))
         destination = target / rel
         destination.parent.mkdir(parents=True, exist_ok=True)

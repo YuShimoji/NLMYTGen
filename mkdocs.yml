@@ -48,6 +48,9 @@ nav:
   - 'Overview':
     - 'NLMYTGen Local Document View': 'index.md'
     - 'Local Document View Note': 'docs/index.md'
+    - 'Project Overview': 'docs/PROJECT_OVERVIEW.md'
+    - 'Progress Screenshot Index': 'docs/PROGRESS_SCREENSHOT_INDEX.md'
+    - 'Turn-Based Development Plan': 'docs/TURN_BASED_DEVELOPMENT_PLAN.md'
     - 'NLMYTGen': '_root/README.md'
     - 'AGENTS.md — NLMYTGen entry pointer': 'AGENTS.md'
     - 'CLAUDE.md — NLMYTGen プロジェクト方針': 'CLAUDE.md'
