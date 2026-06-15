@@ -245,6 +245,32 @@ ipcMain.handle('load-review-proof', async (_event, proofPath) => {
   }
 });
 
+ipcMain.handle('check-review-artifacts', async (_event, artifactPaths) => {
+  const paths = Array.isArray(artifactPaths) ? artifactPaths : [];
+  const artifacts = paths.map((artifactPath) => {
+    const resolved = resolveRepoRelativePath(artifactPath);
+    if (!resolved.ok) {
+      return {
+        ok: false,
+        exists: false,
+        path: typeof artifactPath === 'string' ? artifactPath : '',
+        error: resolved.error,
+      };
+    }
+    return {
+      ok: true,
+      exists: fs.existsSync(resolved.full),
+      path: resolved.rel,
+    };
+  });
+  return {
+    ok: artifacts.every((artifact) => artifact.ok),
+    artifacts,
+    missing_count: artifacts.filter((artifact) => artifact.ok && !artifact.exists).length,
+    blocked_count: artifacts.filter((artifact) => !artifact.ok).length,
+  };
+});
+
 ipcMain.handle('save-review-decisions', async (_event, opts) => {
   const decisionPath = opts && typeof opts.decisionPath === 'string' ? opts.decisionPath : '';
   const payload = opts && opts.payload && typeof opts.payload === 'object' ? opts.payload : null;

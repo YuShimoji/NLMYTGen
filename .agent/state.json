@@ -1,0 +1,83 @@
+{
+  "orchestration_version": 1,
+  "default_worker": "audit",
+  "prompt_catalog_dir": ".agent/prompt_catalog",
+  "worker_report_schema": ".agent/schemas/worker_report.schema.json",
+  "report_dir": ".agent/reports",
+  "logs_dir": ".agent/logs",
+  "needs_human_path": ".agent/needs_human.json",
+  "notify_stub_log": ".agent/logs/notify_stub.log",
+  "execution_policy": {
+    "codex_exec_enabled": false,
+    "max_steps": 1,
+    "timeout_seconds": 600
+  },
+  "gate_policy": {
+    "allowed_changed_path_prefixes": [
+      ".agent/",
+      "docs/",
+      "scripts/",
+      "src/",
+      "tests/",
+      "samples/_probe/"
+    ],
+    "blocked_changed_path_prefixes": [
+      ".git/",
+      ".env",
+      "release/",
+      "releases/",
+      "publish/",
+      "published/",
+      "dist/",
+      "build/",
+      "samples/production",
+      "samples/final",
+      "samples/release"
+    ],
+    "blocked_changed_path_patterns": [
+      "(^|/)\\.env(\\.|$)",
+      "(^|/)secrets?(/|\\.|$)",
+      "(^|/)tokens?(/|\\.|$)",
+      "production_candidate",
+      "rights_status",
+      "(^|/)samples/(production|final|release)",
+      "(^|/)release(s)?(/|$)",
+      "(^|/)publish(ed|ing)?(/|$)",
+      "(^|/)dist(/|$)",
+      "(^|/)build(/|$)"
+    ],
+    "risk_keywords": [
+      "scope",
+      "rights",
+      "publish",
+      "release",
+      "secret",
+      "destructive",
+      "production_candidate",
+      "external_notification",
+      "format_contract_violation",
+      "completion_report_not_single_code_block"
+    ],
+    "path_examples": {
+      "allowed": [
+        ".agent/state.json",
+        ".agent/prompt_catalog/audit.md",
+        "docs/AGENT_ORCHESTRATION.md",
+        "scripts/agent_gate.py",
+        "tests/test_agent_gate.py",
+        "samples/_probe/example/report.json"
+      ],
+      "blocked": [
+        "../outside.json",
+        "C:/outside/repo.json",
+        ".env",
+        ".git/config",
+        "release/package.json",
+        "published/video_metadata.json",
+        "samples/production.ymmp",
+        "docs/production_candidate_notes.md"
+      ]
+    }
+  },
+  "report_output_template": ".agent/reports/{timestamp}-{worker}.report.json"
+}

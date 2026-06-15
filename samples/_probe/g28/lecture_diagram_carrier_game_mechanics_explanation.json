@@ -1,0 +1,618 @@
+{
+  "artifact_id": "g28_lecture_diagram_carrier_game_mechanics_explanation_v1",
+  "artifact_type": "diagnostic_carrier_theme_variant",
+  "diagnostic_only": true,
+  "production_candidate": false,
+  "creative_final_acceptance": false,
+  "production_render": false,
+  "slot_fill": false,
+  "ymmp_generation": "not_generated_boundary",
+  "external_assets": {
+    "image_binary": false,
+    "image_path": false,
+    "image_url": false,
+    "raw_reference": false
+  },
+  "frame_contract": {
+    "aspect_ratio": "16:9",
+    "width": 1920,
+    "height": 1080,
+    "outer_safe_margin_pct": 5,
+    "caption_reserve_pct": 20,
+    "title_area": {
+      "x": 96,
+      "y": 54,
+      "width": 1728,
+      "height": 96
+    },
+    "main_canvas": {
+      "x": 96,
+      "y": 150,
+      "width": 1728,
+      "height": 660
+    },
+    "caption_reserve": {
+      "x": 0,
+      "y": 810,
+      "width": 1920,
+      "height": 216
+    }
+  },
+  "scs_mapping": {
+    "archetype": "Lecture Diagram Carrier",
+    "composition_type": "center-focal",
+    "visual_roles": {
+      "focal_anchor": [
+        "G28_LDC_FocalGroup"
+      ],
+      "supporting": [
+        "G28_LDC_CalloutSlot_1",
+        "G28_LDC_CalloutSlot_2",
+        "G28_LDC_CalloutSlot_3"
+      ],
+      "boundary": [],
+      "connector": [
+        "G28_LDC_Connector_Left",
+        "G28_LDC_Connector_Right"
+      ],
+      "risk_marker": [],
+      "decoration": [
+        "G28_LDC_Stage",
+        "G28_LDC_Host_Left",
+        "G28_LDC_Host_Right"
+      ],
+      "label": [
+        "G28_LDC_Title_Text",
+        "G28_LDC_Focal_Label"
+      ]
+    },
+    "reading_order": [
+      "G28_LDC_Title_Text",
+      "G28_LDC_Node_Left",
+      "G28_LDC_Focal_Core",
+      "G28_LDC_Node_Right",
+      "G28_LDC_CalloutSlot_1",
+      "G28_LDC_CalloutSlot_2",
+      "G28_LDC_CalloutSlot_3"
+    ],
+    "in_frame_text_budget": {
+      "labels": 2,
+      "chars": 15,
+      "active_text_items": [
+        "G28_LDC_Title_Text",
+        "G28_LDC_Focal_Label"
+      ],
+      "callout_slots_are_empty_until_slot_fill": true,
+      "theme_semantic_labels_are_not_slot_fill": true
+    },
+    "expected_anti_patterns": [
+      "indexed_whiteboard",
+      "grid_overload",
+      "information_overload",
+      "host_as_focal",
+      "subtitle_collision",
+      "source_over_decoration",
+      "gameplay_screenshot_overload",
+      "dense_table"
+    ]
+  },
+  "groups": [
+    {
+      "id": "G28_LDC_Stage",
+      "role": "decoration",
+      "layer": 1,
+      "note": "dark low-salience stage and safe frame"
+    },
+    {
+      "id": "G28_LDC_TitleBand",
+      "role": "label",
+      "layer": 2,
+      "note": "one-line chapter/title area"
+    },
+    {
+      "id": "G28_LDC_FocalGroup",
+      "role": "focal_anchor",
+      "layer": 3,
+      "note": "central mechanism diagram and two internal nodes"
+    },
+    {
+      "id": "G28_LDC_CalloutSlots",
+      "role": "supporting",
+      "layer": 4,
+      "note": "three optional callout slots, empty in diagnostic skeleton"
+    },
+    {
+      "id": "G28_LDC_Hosts",
+      "role": "decoration",
+      "layer": 5,
+      "note": "lower-corner host placeholders, not focal"
+    }
+  ],
+  "semantic_elements": [
+    "G28_LDC_Stage",
+    "G28_LDC_Title_Text",
+    "G28_LDC_FocalGroup",
+    "G28_LDC_CalloutSlot_1",
+    "G28_LDC_CalloutSlot_2",
+    "G28_LDC_CalloutSlot_3",
+    "G28_LDC_Host_Left",
+    "G28_LDC_Host_Right"
+  ],
+  "items": [
+    {
+      "id": "G28_LDC_BG_Stage",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_Stage",
+      "semantic_role": "decoration",
+      "layer": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1080
+      },
+      "ymm4_center_origin": {
+        "x": 0,
+        "y": 0
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF111827",
+        "stroke": "#FF111827"
+      }
+    },
+    {
+      "id": "G28_LDC_TitleBand_BG",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_TitleBand",
+      "semantic_role": "label",
+      "layer": 2,
+      "rect": {
+        "x": 96,
+        "y": 54,
+        "width": 1728,
+        "height": 96
+      },
+      "ymm4_center_origin": {
+        "x": 0,
+        "y": -438
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF1F2937",
+        "stroke": "#FF6B7280"
+      }
+    },
+    {
+      "id": "G28_LDC_Title_Text",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_TitleBand",
+      "semantic_role": "label",
+      "layer": 3,
+      "rect": {
+        "x": 706,
+        "y": 78,
+        "width": 508,
+        "height": 56
+      },
+      "ymm4_center_origin": {
+        "x": 0,
+        "y": -434
+      },
+      "style": {
+        "text": "操作と結果の関係",
+        "font_size": 56,
+        "fill": "#FFF9FAFB"
+      }
+    },
+    {
+      "id": "G28_LDC_Focal_Core",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "semantic_role": "focal_anchor",
+      "layer": 4,
+      "rect": {
+        "x": 560,
+        "y": 240,
+        "width": 800,
+        "height": 360
+      },
+      "ymm4_center_origin": {
+        "x": 0,
+        "y": -120
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF22324A",
+        "stroke": "#FF93C5FD"
+      }
+    },
+    {
+      "id": "G28_LDC_Focal_Label",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "semantic_role": "label",
+      "layer": 5,
+      "rect": {
+        "x": 820,
+        "y": 382,
+        "width": 280,
+        "height": 56
+      },
+      "ymm4_center_origin": {
+        "x": 0,
+        "y": -130
+      },
+      "style": {
+        "text": "内部ルール",
+        "font_size": 56,
+        "fill": "#FFE0F2FE"
+      }
+    },
+    {
+      "id": "G28_LDC_Node_Left",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "semantic_role": "internal_node",
+      "layer": 6,
+      "rect": {
+        "x": 230,
+        "y": 330,
+        "width": 260,
+        "height": 140
+      },
+      "ymm4_center_origin": {
+        "x": -600,
+        "y": -140
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF374151",
+        "stroke": "#FFFBBF24"
+      }
+    },
+    {
+      "id": "G28_LDC_Node_Right",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "semantic_role": "internal_node",
+      "layer": 6,
+      "rect": {
+        "x": 1430,
+        "y": 330,
+        "width": 260,
+        "height": 140
+      },
+      "ymm4_center_origin": {
+        "x": 600,
+        "y": -140
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF374151",
+        "stroke": "#FFFBBF24"
+      }
+    },
+    {
+      "id": "G28_LDC_Connector_Left",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "semantic_role": "connector",
+      "layer": 7,
+      "rect": {
+        "x": 500,
+        "y": 395,
+        "width": 90,
+        "height": 10
+      },
+      "ymm4_center_origin": {
+        "x": -415,
+        "y": -140
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FFFBBF24",
+        "stroke": "#FFFBBF24"
+      }
+    },
+    {
+      "id": "G28_LDC_Connector_Right",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "semantic_role": "connector",
+      "layer": 7,
+      "rect": {
+        "x": 1330,
+        "y": 395,
+        "width": 90,
+        "height": 10
+      },
+      "ymm4_center_origin": {
+        "x": 415,
+        "y": -140
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FFFBBF24",
+        "stroke": "#FFFBBF24"
+      }
+    },
+    {
+      "id": "G28_LDC_CalloutSlot_1",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "semantic_role": "supporting",
+      "layer": 8,
+      "rect": {
+        "x": 395,
+        "y": 650,
+        "width": 300,
+        "height": 86
+      },
+      "ymm4_center_origin": {
+        "x": -415,
+        "y": 153
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF1E3A5F",
+        "stroke": "#FF60A5FA"
+      }
+    },
+    {
+      "id": "G28_LDC_CalloutSlot_2",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "semantic_role": "supporting",
+      "layer": 8,
+      "rect": {
+        "x": 810,
+        "y": 650,
+        "width": 300,
+        "height": 86
+      },
+      "ymm4_center_origin": {
+        "x": 0,
+        "y": 153
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF1E3A5F",
+        "stroke": "#FF60A5FA"
+      }
+    },
+    {
+      "id": "G28_LDC_CalloutSlot_3",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "semantic_role": "supporting",
+      "layer": 8,
+      "rect": {
+        "x": 1225,
+        "y": 650,
+        "width": 300,
+        "height": 86
+      },
+      "ymm4_center_origin": {
+        "x": 415,
+        "y": 153
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF1E3A5F",
+        "stroke": "#FF60A5FA"
+      }
+    },
+    {
+      "id": "G28_LDC_Host_Left",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_Hosts",
+      "semantic_role": "decoration",
+      "layer": 9,
+      "rect": {
+        "x": 112,
+        "y": 655,
+        "width": 204,
+        "height": 145
+      },
+      "ymm4_center_origin": {
+        "x": -746,
+        "y": 187.5
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF4B5563",
+        "stroke": "#FFD1D5DB"
+      }
+    },
+    {
+      "id": "G28_LDC_Host_Right",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_Hosts",
+      "semantic_role": "decoration",
+      "layer": 9,
+      "rect": {
+        "x": 1604,
+        "y": 655,
+        "width": 204,
+        "height": 145
+      },
+      "ymm4_center_origin": {
+        "x": 746,
+        "y": 187.5
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF4B5563",
+        "stroke": "#FFD1D5DB"
+      }
+    }
+  ],
+  "reserved_areas": [
+    {
+      "id": "G28_LDC_CaptionReserve",
+      "role": "caption_reserve",
+      "rect": {
+        "x": 0,
+        "y": 810,
+        "width": 1920,
+        "height": 216
+      },
+      "patch_forbidden": true,
+      "note": "Bottom 20% reserved for YMM4 captions / thesis band. Main items must not overlap."
+    }
+  ],
+  "patch_boundary": {
+    "allowed_in_diagnostic_next_slice": [
+      "review semantic labels against narration beat",
+      "toggle callout slot visibility",
+      "fill at most two in-frame text slots after text-budget validation"
+    ],
+    "forbidden_until_production_carrier": [
+      "change frame grid",
+      "move focal geometry",
+      "move caption reserve",
+      "add external image assets",
+      "claim creative final acceptance",
+      "render production output",
+      "treat this theme variant as a production carrier",
+      "promote this into a source-footage carrier without a separate scope",
+      "promote G-27 diagnostic evidence into G-28"
+    ]
+  },
+  "variant_id": "g28_ldc_game_mechanics_explanation",
+  "source_skeleton_artifact_id": "g28_lecture_diagram_carrier_skeleton_v1",
+  "theme_variant": {
+    "id": "g28_ldc_game_mechanics_explanation",
+    "theme": "game_mechanics_explanation",
+    "diagnostic_only": true,
+    "production_candidate": false,
+    "slot_fill": false,
+    "production_render": false,
+    "creative_final_acceptance": false,
+    "composition_type": "center-focal",
+    "title_text": "操作と結果の関係",
+    "focal_label_text": "内部ルール",
+    "focal_chain": [
+      {
+        "id": "G28_LDC_Node_Left",
+        "label": "入力操作",
+        "role": "player_input"
+      },
+      {
+        "id": "G28_LDC_Focal_Core",
+        "label": "内部ルール",
+        "role": "rule_system"
+      },
+      {
+        "id": "G28_LDC_Node_Right",
+        "label": "画面上の結果",
+        "role": "screen_result"
+      }
+    ],
+    "callouts": [
+      {
+        "slot": "G28_LDC_CalloutSlot_1",
+        "label": "操作感"
+      },
+      {
+        "slot": "G28_LDC_CalloutSlot_2",
+        "label": "判定 / 当たり判定"
+      },
+      {
+        "slot": "G28_LDC_CalloutSlot_3",
+        "label": "リスクとリターン"
+      }
+    ],
+    "callout_text_policy": "semantic labels only; slots are not text-filled in this diagnostic variant",
+    "expected_focal_chain_labels": [
+      "入力操作",
+      "内部ルール",
+      "画面上の結果"
+    ],
+    "expected_callout_labels": [
+      "操作感",
+      "判定 / 当たり判定",
+      "リスクとリターン"
+    ],
+    "failure_modes": [
+      "gameplay_screenshot_overload",
+      "dense_table",
+      "indexed_whiteboard",
+      "host_as_focal",
+      "subtitle_collision"
+    ],
+    "dense_table": false,
+    "indexed_whiteboard": false,
+    "source_footage_carrier": false,
+    "external_image_count": 0,
+    "external_url_count": 0,
+    "token_like_pattern_count": 0,
+    "forbidden_scope": [
+      "source footage carrier promotion",
+      "gameplay screenshot intake",
+      "production render",
+      "creative final acceptance",
+      "YMM4 project generation",
+      "external image or URL use",
+      "G-27 carrier promotion",
+      "RSS or NotebookLM source-pack work"
+    ]
+  },
+  "review_surface": {
+    "purpose": "human reviewability repair for existing diagnostic artifact",
+    "production_text_budget_is_separate": true,
+    "production_visible_text_item_ids": [
+      "G28_LDC_Title_Text",
+      "G28_LDC_Focal_Label"
+    ],
+    "review_label_layer_or_inspector_exists": true,
+    "review_label_layer": "html_review_inspector_table",
+    "review_surface_mode": "inspector_first",
+    "in_frame_review_overlay": false,
+    "review_overlay_default": false,
+    "clean_frame_available": true,
+    "default_frame_surface": "clean_16_9_frame_without_review_labels",
+    "inspector": "readback.review_surface_readback",
+    "semantic_labels_human_visible": true,
+    "visualization_only_note": "HTML is visualization-only / review-only, not render, production timing, or creative final acceptance.",
+    "visible_semantic_labels": [
+      {
+        "target_id": "G28_LDC_Node_Left",
+        "label": "入力操作",
+        "role": "player_input",
+        "kind": "focal_chain_node"
+      },
+      {
+        "target_id": "G28_LDC_Focal_Core",
+        "label": "内部ルール",
+        "role": "rule_system",
+        "kind": "focal_chain_node"
+      },
+      {
+        "target_id": "G28_LDC_Node_Right",
+        "label": "画面上の結果",
+        "role": "screen_result",
+        "kind": "focal_chain_node"
+      },
+      {
+        "target_id": "G28_LDC_CalloutSlot_1",
+        "label": "操作感",
+        "role": "control_feel",
+        "kind": "callout_slot"
+      },
+      {
+        "target_id": "G28_LDC_CalloutSlot_2",
+        "label": "判定 / 当たり判定",
+        "role": "judgement_hit_detection",
+        "kind": "callout_slot"
+      },
+      {
+        "target_id": "G28_LDC_CalloutSlot_3",
+        "label": "リスクとリターン",
+        "role": "risk_reward",
+        "kind": "callout_slot"
+      }
+    ]
+  }
+}

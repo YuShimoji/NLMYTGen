@@ -28,9 +28,13 @@
 - [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md) — **改善レビューサイクル正本**: タスクごとの review surface / machine proof / human signal / close gate / next artifact。G-27 Real Estate DX、本流/sidequest 境界、Baseball screen plan、GUI/YMM4 の見る場所を統一する
 - [PRODUCTION_PIPELINE_CONTRACT.md](PRODUCTION_PIPELINE_CONTRACT.md) — **量産pipeline契約**: NotebookLM script → Script Beat IR → Visual Direction → Shot Layout → Motion Beat → GUI Review → downstream artifacts の artifact authority / Definition of Done / multi-topic smoke 計画。GUI timeline を primary review surface とし、HTML/PNG/JSON を evidence に限定する
 - [G27_ADAPTER_ROUTE_CONTRACT.md](G27_ADAPTER_ROUTE_CONTRACT.md) — **G-27 YMM4 adapter route 契約 (planning zone)**: Real Estate DX の 7 adapter-planning-ready candidates、`RE-02-turn` excluded_until_adjusted、`RE-07D-turn` deferred_blocks_planning、route 分類 (abstract UI / document proxy / property card / risk marker / AI panel)、forbidden representation、preflight report、`output_generation_allowed=false`。adapter output / patch / render / production timing / creative acceptance は範囲外
+- [REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md](REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md) — **G-28 参照画像ベース汎用画面 carrier 設計**: G-27 の case-specific lessons を引き継ぎ、参照画像 3-7 枚から構図・密度・余白・色階層・視線誘導・UI感を抽出して SCS mapping / generic carrier archetype / YMM4 item group 案へ落とす。画像丸コピー、raw image/URL/private data commit、`.ymmp` ゼロ生成、render、creative final acceptance は含めない
+- [verification/G28-REFERENCE-INPUT-WAIT-HANDOFF-2026-06-04.md](verification/G28-REFERENCE-INPUT-WAIT-HANDOFF-2026-06-04.md) — **G-28 parked / input-wait handoff**: 参照画像待ちの戻る条件、禁止事項、meta-review trigger、ChatGPT copy-block requirement を保存した詳細 handoff。通常再開では読まない
 - [PROXY_ASSET_CLASSIFICATION_SCHEMA.md](PROXY_ASSET_CLASSIFICATION_SCHEMA.md) — **proxy / asset 分類 schema**: visual treatment proof の beat を scene decision packet / asset-proxy gap report / YMM4 adapter のどこへ渡すか分類する関所。分類のみで downstream artifact は作らない
 - [INT02E_REAL_URL_OPERATOR_SMOKE_GATE.md](INT02E_REAL_URL_OPERATOR_SMOKE_GATE.md) — **INT-02e real URL operator smoke gate**: `baseline / in_progress` 固定。`done` は actual fetch、`source.wav` Python `wave` readback、receipt / sidecar / `material_ledger`、ledger audit、boundary grep、scrub 済み report まで揃ってから。real URL smoke 前に target commit、clean status、`HEAD...origin/main = 0 0` を確認し、`fetch-source-video` / GUI fetch / STT URL / cut-concat / render / Publishing-OAuth へ広げない
 - [EPISODE_RUN_PACK.md](EPISODE_RUN_PACK.md) — **1本通し制作パック**: `_tmp/episode_runs/<episode_id>/` の構成、GUI `Episode Pack Root` 導線、既定保存path、YMM4確認と gaps 記録の境界
+- [RSS_READER_SYNC_SPEC.md](RSS_READER_SYNC_SPEC.md) — **A-04 RSS Reader Sync**: OPML export を人間側 RSS 一覧と AI 側 `fetch-topics` 対象の共通正本にする。Inoreader は read-only adapter まで実装済み、OAuth/token 永続化は実装しない
+- [verification/RSS-LIVE-SMOKE-RUNBOOK-2026-05-26.md](verification/RSS-LIVE-SMOKE-RUNBOOK-2026-05-26.md) — **A-04 RSS live smoke entry**: raw OPML/token 置き場、`rss-smoke` の one-command evidence、OPML/Inoreader smoke コマンド、次の判断表
 - [verification/PROJECT_INIT_CHECKLIST.md](verification/PROJECT_INIT_CHECKLIST.md) — **実案件投入**: palette → registry → validate-ir → apply-production の 5 ステップ
 - [verification/FAILURE_DIAGNOSIS_MATRIX.md](verification/FAILURE_DIAGNOSIS_MATRIX.md) — ERROR/WARNING 全 64 種の診断マトリクス
 - `samples/registry_template/` — 6 種の registry JSON 雛形（overlay/se/bg/slot/face/group_motion_map）
@@ -62,6 +66,8 @@
 ## 4. テンプレと状態（混同しやすい点）
 
 汎用 Prompt ハブ・ファイル番号式のコア計画・パケット別短文 Prompt は削除済み。テンプレは状態正本ではなく、`open target` / `create target` / `source object` / `actor` / `acceptance meaning` が接続済みのときだけ、該当する詳細手順ファイルを使う。
+
+- [USER_COPYPASTE_BLOCKS.md](USER_COPYPASTE_BLOCKS.md) — **ユーザー用コピペ資産**。ChatGPT / Codex 間で毎回組み立て直していた長文 Prompt / PowerShell / 停止文 / 報告文の保存版。これは通常再開で読む正本でも、次 Agent への実行マニュアルでもない。
 
 **いまどこまで終わっているか**は、次を見る。
 

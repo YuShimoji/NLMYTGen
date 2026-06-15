@@ -1,0 +1,513 @@
+{
+  "artifact_id": "g28_map_evidence_carrier_skeleton_v1",
+  "artifact_type": "diagnostic_carrier_skeleton",
+  "archetype": "Map / Evidence Carrier",
+  "diagnostic_only": true,
+  "production_candidate": false,
+  "creative_final_acceptance": false,
+  "production_render": false,
+  "slot_fill": false,
+  "ymmp_generation": "not_generated_boundary",
+  "external_assets": {
+    "image_binary": false,
+    "image_path": false,
+    "image_url": false,
+    "raw_reference": false
+  },
+  "frame_contract": {
+    "aspect_ratio": "16:9",
+    "width": 1920,
+    "height": 1080,
+    "outer_safe_margin_pct": 5,
+    "caption_reserve_pct": 20,
+    "title_area": {
+      "x": 96,
+      "y": 54,
+      "width": 1728,
+      "height": 96
+    },
+    "main_canvas": {
+      "x": 96,
+      "y": 150,
+      "width": 1728,
+      "height": 660
+    },
+    "caption_reserve": {
+      "x": 0,
+      "y": 810,
+      "width": 1920,
+      "height": 216
+    }
+  },
+  "scs_mapping": {
+    "archetype": "Map / Evidence Carrier",
+    "composition_type": "center-focal",
+    "composition_rationale": "A single map/evidence surface is the focal argument surface; annotation slots support it without becoming equal-weight cards.",
+    "visual_roles": {
+      "focal_anchor": [
+        "G28_MEC_EvidenceSurface"
+      ],
+      "supporting": [
+        "G28_MEC_AnnotationSlot_1",
+        "G28_MEC_AnnotationSlot_2",
+        "G28_MEC_AnnotationSlot_3",
+        "G28_MEC_SourceNote"
+      ],
+      "boundary": [],
+      "connector": [
+        "G28_MEC_LabelAnchor_1",
+        "G28_MEC_LabelAnchor_2",
+        "G28_MEC_LeaderLine_1"
+      ],
+      "risk_marker": [],
+      "decoration": [
+        "G28_MEC_Stage",
+        "G28_MEC_Host_Left",
+        "G28_MEC_Host_Right"
+      ],
+      "label": [
+        "G28_MEC_Title_Text",
+        "G28_MEC_SourceNote_Text"
+      ]
+    },
+    "reading_order": [
+      "G28_MEC_Title_Text",
+      "G28_MEC_EvidenceSurface",
+      "G28_MEC_LabelAnchor_1",
+      "G28_MEC_LabelAnchor_2",
+      "G28_MEC_AnnotationSlot_1",
+      "G28_MEC_AnnotationSlot_2",
+      "G28_MEC_AnnotationSlot_3",
+      "G28_MEC_SourceNote_Text"
+    ],
+    "in_frame_text_budget": {
+      "labels": 2,
+      "chars": 16,
+      "active_text_items": [
+        "G28_MEC_Title_Text",
+        "G28_MEC_SourceNote_Text"
+      ],
+      "annotation_slots_are_empty_until_slot_fill": true
+    },
+    "expected_anti_patterns": [
+      "map_label_overload",
+      "source_note_overload",
+      "indexed_whiteboard",
+      "tiny_text",
+      "subtitle_collision",
+      "decorative_map_without_argument"
+    ]
+  },
+  "groups": [
+    {
+      "id": "G28_MEC_Stage",
+      "role": "decoration",
+      "layer": 1,
+      "note": "dark low-salience stage and safe frame"
+    },
+    {
+      "id": "G28_MEC_TitleBand",
+      "role": "label",
+      "layer": 2,
+      "note": "one-line map/evidence claim area"
+    },
+    {
+      "id": "G28_MEC_EvidenceSurface",
+      "role": "focal_anchor",
+      "layer": 3,
+      "note": "abstract map/evidence surface, not an image asset"
+    },
+    {
+      "id": "G28_MEC_Annotations",
+      "role": "supporting",
+      "layer": 4,
+      "note": "three bounded annotation slots and label anchors"
+    },
+    {
+      "id": "G28_MEC_SourceNote",
+      "role": "supporting",
+      "layer": 5,
+      "note": "short bounded source note area"
+    },
+    {
+      "id": "G28_MEC_Hosts",
+      "role": "decoration",
+      "layer": 6,
+      "note": "lower-corner host placeholders, not focal"
+    }
+  ],
+  "semantic_elements": [
+    "G28_MEC_Stage",
+    "G28_MEC_Title_Text",
+    "G28_MEC_EvidenceSurface",
+    "G28_MEC_LabelAnchor_1",
+    "G28_MEC_LabelAnchor_2",
+    "G28_MEC_AnnotationSlot_1",
+    "G28_MEC_AnnotationSlot_2",
+    "G28_MEC_AnnotationSlot_3",
+    "G28_MEC_SourceNote",
+    "G28_MEC_Host_Left",
+    "G28_MEC_Host_Right"
+  ],
+  "items": [
+    {
+      "id": "G28_MEC_BG_Stage",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Stage",
+      "semantic_role": "decoration",
+      "layer": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1080
+      },
+      "ymm4_center_origin": {
+        "x": 0,
+        "y": 0
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF0F172A",
+        "stroke": "#FF0F172A"
+      }
+    },
+    {
+      "id": "G28_MEC_TitleBand_BG",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_TitleBand",
+      "semantic_role": "label",
+      "layer": 2,
+      "rect": {
+        "x": 96,
+        "y": 54,
+        "width": 1728,
+        "height": 96
+      },
+      "ymm4_center_origin": {
+        "x": 0,
+        "y": -438
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF1F2937",
+        "stroke": "#FF64748B"
+      }
+    },
+    {
+      "id": "G28_MEC_Title_Text",
+      "item_type": "TextItem",
+      "group_id": "G28_MEC_TitleBand",
+      "semantic_role": "label",
+      "layer": 3,
+      "rect": {
+        "x": 706,
+        "y": 78,
+        "width": 508,
+        "height": 56
+      },
+      "ymm4_center_origin": {
+        "x": 0,
+        "y": -434
+      },
+      "style": {
+        "text": "地域差を証拠で見る",
+        "font_size": 56,
+        "fill": "#FFF8FAFC"
+      }
+    },
+    {
+      "id": "G28_MEC_EvidenceSurface",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_EvidenceSurface",
+      "semantic_role": "focal_anchor",
+      "layer": 4,
+      "rect": {
+        "x": 240,
+        "y": 180,
+        "width": 1440,
+        "height": 500
+      },
+      "ymm4_center_origin": {
+        "x": 0,
+        "y": -110
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF12263A",
+        "stroke": "#FF7DD3FC"
+      }
+    },
+    {
+      "id": "G28_MEC_LabelAnchor_1",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "semantic_role": "connector",
+      "layer": 5,
+      "rect": {
+        "x": 620,
+        "y": 350,
+        "width": 24,
+        "height": 24
+      },
+      "ymm4_center_origin": {
+        "x": -328,
+        "y": -178
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FFFACC15",
+        "stroke": "#FFFEF08A"
+      }
+    },
+    {
+      "id": "G28_MEC_LabelAnchor_2",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "semantic_role": "connector",
+      "layer": 5,
+      "rect": {
+        "x": 1210,
+        "y": 430,
+        "width": 24,
+        "height": 24
+      },
+      "ymm4_center_origin": {
+        "x": 262,
+        "y": -98
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FFFACC15",
+        "stroke": "#FFFEF08A"
+      }
+    },
+    {
+      "id": "G28_MEC_LeaderLine_1",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "semantic_role": "connector",
+      "layer": 6,
+      "rect": {
+        "x": 645,
+        "y": 360,
+        "width": 320,
+        "height": 8
+      },
+      "ymm4_center_origin": {
+        "x": -155,
+        "y": -176
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FFFEF08A",
+        "stroke": "#FFFEF08A"
+      }
+    },
+    {
+      "id": "G28_MEC_AnnotationSlot_1",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "semantic_role": "supporting",
+      "layer": 7,
+      "rect": {
+        "x": 270,
+        "y": 710,
+        "width": 300,
+        "height": 72
+      },
+      "ymm4_center_origin": {
+        "x": -540,
+        "y": 206
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF1E3A5F",
+        "stroke": "#FF60A5FA"
+      }
+    },
+    {
+      "id": "G28_MEC_AnnotationSlot_2",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "semantic_role": "supporting",
+      "layer": 7,
+      "rect": {
+        "x": 610,
+        "y": 710,
+        "width": 300,
+        "height": 72
+      },
+      "ymm4_center_origin": {
+        "x": -200,
+        "y": 206
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF1E3A5F",
+        "stroke": "#FF60A5FA"
+      }
+    },
+    {
+      "id": "G28_MEC_AnnotationSlot_3",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "semantic_role": "supporting",
+      "layer": 7,
+      "rect": {
+        "x": 950,
+        "y": 710,
+        "width": 300,
+        "height": 72
+      },
+      "ymm4_center_origin": {
+        "x": 140,
+        "y": 206
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF1E3A5F",
+        "stroke": "#FF60A5FA"
+      }
+    },
+    {
+      "id": "G28_MEC_SourceNote_BG",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_SourceNote",
+      "semantic_role": "supporting",
+      "layer": 8,
+      "rect": {
+        "x": 1290,
+        "y": 718,
+        "width": 300,
+        "height": 56
+      },
+      "ymm4_center_origin": {
+        "x": 480,
+        "y": 206
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF111827",
+        "stroke": "#FF94A3B8"
+      }
+    },
+    {
+      "id": "G28_MEC_SourceNote_Text",
+      "item_type": "TextItem",
+      "group_id": "G28_MEC_SourceNote",
+      "semantic_role": "label",
+      "layer": 9,
+      "rect": {
+        "x": 1334,
+        "y": 732,
+        "width": 212,
+        "height": 36
+      },
+      "ymm4_center_origin": {
+        "x": 480,
+        "y": 210
+      },
+      "style": {
+        "text": "出典確認済み",
+        "font_size": 32,
+        "fill": "#FFE2E8F0"
+      }
+    },
+    {
+      "id": "G28_MEC_Host_Left",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Hosts",
+      "semantic_role": "decoration",
+      "layer": 10,
+      "rect": {
+        "x": 112,
+        "y": 655,
+        "width": 204,
+        "height": 145
+      },
+      "ymm4_center_origin": {
+        "x": -746,
+        "y": 187.5
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF4B5563",
+        "stroke": "#FFD1D5DB"
+      }
+    },
+    {
+      "id": "G28_MEC_Host_Right",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Hosts",
+      "semantic_role": "decoration",
+      "layer": 10,
+      "rect": {
+        "x": 1604,
+        "y": 655,
+        "width": 204,
+        "height": 145
+      },
+      "ymm4_center_origin": {
+        "x": 746,
+        "y": 187.5
+      },
+      "size_mode": "WidthHeight",
+      "style": {
+        "fill": "#FF4B5563",
+        "stroke": "#FFD1D5DB"
+      }
+    }
+  ],
+  "reserved_areas": [
+    {
+      "id": "G28_MEC_CaptionReserve",
+      "role": "caption_reserve",
+      "rect": {
+        "x": 0,
+        "y": 810,
+        "width": 1920,
+        "height": 216
+      },
+      "patch_forbidden": true,
+      "note": "Bottom 20% reserved for YMM4 captions / thesis band. Main items must not overlap."
+    }
+  ],
+  "diagnostic_semantics": {
+    "primary_uses": [
+      "map",
+      "statistics",
+      "industrial_location",
+      "company_distribution",
+      "population_market_regional_difference",
+      "source_backed_argument"
+    ],
+    "annotation_slot_count_min": 2,
+    "annotation_slot_count_max": 4,
+    "source_note_area_exists": true,
+    "source_note_policy": "short bounded provenance note only; not a source body or URL field",
+    "dense_table": false,
+    "indexed_whiteboard": false,
+    "tiny_text": false,
+    "decorative_map_without_argument": false,
+    "external_image_count": 0,
+    "external_url_count": 0,
+    "token_like_pattern_count": 0
+  },
+  "patch_boundary": {
+    "allowed_in_diagnostic_next_slice": [
+      "review annotation slot semantics",
+      "toggle annotation slot visibility",
+      "fill at most two in-frame text slots after text-budget validation"
+    ],
+    "forbidden_until_production_carrier": [
+      "add real map or satellite image assets",
+      "record image paths or URLs",
+      "change caption reserve",
+      "claim creative final acceptance",
+      "render production output",
+      "generate a YMM4 project file",
+      "promote G-27 diagnostic evidence into G-28"
+    ]
+  }
+}

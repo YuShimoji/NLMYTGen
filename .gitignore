@@ -20,6 +20,13 @@ gui/node_modules/
 gui/package-lock.json
 gui/project-settings.json
 
+# Codex worker orchestration runtime artifacts
+.agent/reports/*
+!.agent/reports/.gitkeep
+.agent/logs/*
+!.agent/logs/.gitkeep
+.agent/needs_human.json
+
 # Lane C: オペレータが絶対パスを書いたレジストリ JSON（repo に載せない）
 _local/
 
@@ -28,3 +35,8 @@ debug-*.log
 
 # 作業中の ymmp・中間生成物（セッション作業スクラッチ）
 _tmp/
+
+# RSS local reader exports and live-smoke scratch data
+*.opml
+*.opml.xml
+_local/rss/

@@ -1109,7 +1109,7 @@
           "FontSize": {
             "Values": [
               {
-                "Value": 64
+                "Value": 60
               }
             ],
             "Span": 0,
@@ -1153,7 +1153,7 @@
           "X": {
             "Values": [
               {
-                "Value": -384
+                "Value": -360
               }
             ],
             "Span": 0,
@@ -1195,7 +1195,7 @@
           "Y": {
             "Values": [
               {
-                "Value": -475
+                "Value": -481
               }
             ],
             "Span": 0,
@@ -1515,7 +1515,7 @@
             "AspectRate": {
               "Values": [
                 {
-                  "Value": 4.458333333333333
+                  "Value": 4.976744186046512
                 }
               ],
               "Span": 0,
@@ -1599,7 +1599,7 @@
             "Height": {
               "Values": [
                 {
-                  "Value": 192
+                  "Value": 172
                 }
               ],
               "Span": 0,
@@ -1641,7 +1641,7 @@
             "StrokeThickness": {
               "Values": [
                 {
-                  "Value": 192
+                  "Value": 172
                 }
               ],
               "Span": 0,
@@ -1733,7 +1733,7 @@
           "Y": {
             "Values": [
               {
-                "Value": -304
+                "Value": -274
               }
             ],
             "Span": 0,
@@ -2055,7 +2055,7 @@
             "AspectRate": {
               "Values": [
                 {
-                  "Value": 4.458333333333333
+                  "Value": 4.976744186046512
                 }
               ],
               "Span": 0,
@@ -2139,7 +2139,7 @@
             "Height": {
               "Values": [
                 {
-                  "Value": 192
+                  "Value": 172
                 }
               ],
               "Span": 0,
@@ -2181,7 +2181,7 @@
             "StrokeThickness": {
               "Values": [
                 {
-                  "Value": 192
+                  "Value": 172
                 }
               ],
               "Span": 0,
@@ -2273,7 +2273,7 @@
           "Y": {
             "Values": [
               {
-                "Value": -304
+                "Value": -274
               }
             ],
             "Span": 0,
@@ -2595,7 +2595,7 @@
             "AspectRate": {
               "Values": [
                 {
-                  "Value": 4.458333333333333
+                  "Value": 4.976744186046512
                 }
               ],
               "Span": 0,
@@ -2679,7 +2679,7 @@
             "Height": {
               "Values": [
                 {
-                  "Value": 192
+                  "Value": 172
                 }
               ],
               "Span": 0,
@@ -2721,7 +2721,7 @@
             "StrokeThickness": {
               "Values": [
                 {
-                  "Value": 192
+                  "Value": 172
                 }
               ],
               "Span": 0,
@@ -2813,7 +2813,7 @@
           "Y": {
             "Values": [
               {
-                "Value": -96
+                "Value": -86
               }
             ],
             "Span": 0,
@@ -3135,7 +3135,7 @@
             "AspectRate": {
               "Values": [
                 {
-                  "Value": 4.458333333333333
+                  "Value": 4.976744186046512
                 }
               ],
               "Span": 0,
@@ -3219,7 +3219,7 @@
             "Height": {
               "Values": [
                 {
-                  "Value": 192
+                  "Value": 172
                 }
               ],
               "Span": 0,
@@ -3261,7 +3261,7 @@
             "StrokeThickness": {
               "Values": [
                 {
-                  "Value": 192
+                  "Value": 172
                 }
               ],
               "Span": 0,
@@ -3353,7 +3353,7 @@
           "Y": {
             "Values": [
               {
-                "Value": -96
+                "Value": -86
               }
             ],
             "Span": 0,
@@ -3893,7 +3893,7 @@
           "Y": {
             "Values": [
               {
-                "Value": 70
+                "Value": 95
               }
             ],
             "Span": 0,
@@ -4433,7 +4433,7 @@
           "Y": {
             "Values": [
               {
-                "Value": 210
+                "Value": 245
               }
             ],
             "Span": 0,
@@ -4973,7 +4973,7 @@
           "Y": {
             "Values": [
               {
-                "Value": 70
+                "Value": 95
               }
             ],
             "Span": 0,
@@ -5513,7 +5513,7 @@
           "Y": {
             "Values": [
               {
-                "Value": 210
+                "Value": 245
               }
             ],
             "Span": 0,
@@ -6289,7 +6289,7 @@
           "FontSize": {
             "Values": [
               {
-                "Value": 22
+                "Value": 18
               }
             ],
             "Span": 0,
@@ -6333,7 +6333,7 @@
           "X": {
             "Values": [
               {
-                "Value": -872.5
+                "Value": -845
               }
             ],
             "Span": 0,
@@ -6375,7 +6375,7 @@
           "Y": {
             "Values": [
               {
-                "Value": -491
+                "Value": -520
               }
             ],
             "Span": 0,
@@ -6609,7 +6609,7 @@
           "FontSize": {
             "Values": [
               {
-                "Value": 22
+                "Value": 18
               }
             ],
             "Span": 0,
@@ -6653,7 +6653,7 @@
           "X": {
             "Values": [
               {
-                "Value": -860.5
+                "Value": -845
               }
             ],
             "Span": 0,
@@ -6695,7 +6695,7 @@
           "Y": {
             "Values": [
               {
-                "Value": -411
+                "Value": -388
               }
             ],
             "Span": 0,
@@ -6929,7 +6929,7 @@
           "FontSize": {
             "Values": [
               {
-                "Value": 22
+                "Value": 18
               }
             ],
             "Span": 0,
@@ -6973,7 +6973,7 @@
           "X": {
             "Values": [
               {
-                "Value": -909
+                "Value": -950
               }
             ],
             "Span": 0,
@@ -7015,7 +7015,7 @@
           "Y": {
             "Values": [
               {
-                "Value": -31
+                "Value": 16
               }
             ],
             "Span": 0,
@@ -7249,7 +7249,7 @@
           "FontSize": {
             "Values": [
               {
-                "Value": 22
+                "Value": 18
               }
             ],
             "Span": 0,
@@ -7293,7 +7293,7 @@
           "X": {
             "Values": [
               {
-                "Value": 691
+                "Value": 772
               }
             ],
             "Span": 0,
@@ -7335,7 +7335,7 @@
           "Y": {
             "Values": [
               {
-                "Value": -31
+                "Value": 16
               }
             ],
             "Span": 0,
@@ -7569,7 +7569,7 @@
           "FontSize": {
             "Values": [
               {
-                "Value": 22
+                "Value": 18
               }
             ],
             "Span": 0,
@@ -7613,7 +7613,7 @@
           "X": {
             "Values": [
               {
-                "Value": -163.5
+                "Value": -150
               }
             ],
             "Span": 0,
@@ -7655,7 +7655,7 @@
           "Y": {
             "Values": [
               {
-                "Value": 299
+                "Value": 298
               }
             ],
             "Span": 0,

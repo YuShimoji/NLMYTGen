@@ -8,6 +8,7 @@
 - INT-02e must remain `baseline / in_progress` until a real URL operator smoke proves actual fetch, Python `wave` readback of `source.wav`, receipt / sidecar / `material_ledger` readback, `audit-material-ledger`, boundary grep, and scrubbed reporting. URL and rights / terms review are required before assistant-run smoke. Passing INT-02e does not authorize `fetch-source-video`, GUI fetch button, STT URL fetch, cut / concat, subtitle burn-in, render / encode, or Publishing / OAuth.
 - 痛点ドリブンで進める。FEATURE_REGISTRY の候補一覧や done 件数から機械的に次タスクを選ばない。
 - ハンドオフに全コンテキストが本当に残っているか検証し、抜け漏れは明示して報告する。
+- ChatGPT / Codex 間で毎回組み立てていた長文 Prompt、PowerShell、停止文、報告文は、作業実行用の再開マニュアルではなく、ユーザーが必要時にコピーする保存版として扱う。正本は `docs/USER_COPYPASTE_BLOCKS.md`。通常再開の読了対象には増やさない。
 - 実際には未完了なのに完了扱いになっている task、文書だけ存在して実体が弱い項目、古い正本風ドキュメントを継続的に是正する。
 - 通常再開の読了対象を増やさない。`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md` で止め、必要な該当節だけ読む。
 - project-local canonical docs を先に確認し、既知文脈の再質問を避ける。

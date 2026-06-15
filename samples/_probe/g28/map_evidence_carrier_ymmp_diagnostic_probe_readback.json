@@ -1,0 +1,642 @@
+{
+  "artifact_type": "g28_map_evidence_ymmp_diagnostic_probe_readback",
+  "probe_artifact_id": "g28_map_evidence_carrier_ymmp_probe_v1",
+  "source_artifact_id": "g28_map_evidence_carrier_skeleton_v1",
+  "carrier_kind": "map_evidence_carrier",
+  "variant": "map_evidence",
+  "diagnostic_only": true,
+  "production_candidate": false,
+  "status": "passed",
+  "classification": "pass_map_evidence_ymmp_diagnostic_carrier_created",
+  "generated_files": {
+    "ymmp": "samples/_probe/g28/map_evidence_carrier_ymmp_diagnostic_probe.ymmp",
+    "readback_json": "samples/_probe/g28/map_evidence_carrier_ymmp_diagnostic_probe_readback.json",
+    "report_md": "samples/_probe/g28/map_evidence_carrier_ymmp_diagnostic_probe_report.md"
+  },
+  "creation_record": {
+    "revision_id": "g28_map_evidence_ymmp_diagnostic_probe_v1",
+    "source_decision": "advance_speed_first_after_game_mechanics_layout_system_debt",
+    "classification": "pass_map_evidence_ymmp_diagnostic_carrier_created",
+    "boundary_note": "Diagnostic-only YMM4 carrier candidate; no real map, image, URL, source footage, audio, TTS, render, production approval, rights approval, or creative final acceptance."
+  },
+  "boundary": {
+    "diagnostic_only": true,
+    "production_candidate": false,
+    "self_contained_ymmp_probe": true,
+    "production_render": false,
+    "render_output": false,
+    "creative_final_acceptance": false,
+    "production_carrier_approval": false,
+    "rights_approval": false,
+    "slot_fill": false,
+    "source_footage_intake": false,
+    "real_map_or_satellite_image_intake": false,
+    "external_material_intake": false,
+    "audio_or_tts": false,
+    "image_or_url_or_raw_reference": false,
+    "game_mechanics_same_screen_tuning": false,
+    "common_foundation_work": false
+  },
+  "frame_contract": {
+    "width": 1920,
+    "height": 1080,
+    "aspect_ratio": "16:9",
+    "caption_reserve": {
+      "x": 0,
+      "y": 810,
+      "width": 1920,
+      "height": 216
+    },
+    "main_canvas": {
+      "x": 96,
+      "y": 150,
+      "width": 1728,
+      "height": 660
+    }
+  },
+  "totals": {
+    "item_count": 14,
+    "expected_item_count": 14,
+    "shape_item_count": 12,
+    "text_item_count": 2,
+    "visible_text_chars": 15,
+    "missing_item_count": 0,
+    "annotation_slot_count": 3
+  },
+  "checks": {
+    "diagnostic_only": true,
+    "production_candidate_false": true,
+    "carrier_kind_expected": true,
+    "variant_expected": true,
+    "self_contained_ymmp_probe_created": true,
+    "frame_16_9_1920_1080": true,
+    "caption_reserve_bottom_20pct": true,
+    "caption_reserve_clear": true,
+    "evidence_area_in_main_canvas": true,
+    "annotation_slot_count_2_to_4": true,
+    "source_note_area_exists": true,
+    "source_note_text_budget_bounded": true,
+    "host_role_non_focal": true,
+    "dense_table_false": true,
+    "indexed_whiteboard_false": true,
+    "tiny_text_false_or_bounded": true,
+    "primitive_item_count_bounded": true,
+    "shape_item_count_expected": true,
+    "text_item_count_expected": true,
+    "external_image_count_zero": true,
+    "external_url_count_zero": true,
+    "source_footage_count_zero": true,
+    "audio_item_count_zero": true,
+    "tts_or_voice_item_count_zero": true,
+    "render_output_false": true,
+    "production_approval_false": true,
+    "creative_final_acceptance_false": true,
+    "rights_approval_false": true,
+    "token_like_pattern_count_zero": true,
+    "carrier_not_modified_in_place": true
+  },
+  "failures": [],
+  "missing_items": [],
+  "scs_readback": {
+    "archetype": "Map / Evidence Carrier",
+    "composition_type": "center-focal",
+    "composition_rationale": "A single map/evidence surface is the focal argument surface; annotation slots support it without becoming equal-weight cards.",
+    "visual_roles": {
+      "focal_anchor": [
+        "G28_MEC_EvidenceSurface"
+      ],
+      "supporting": [
+        "G28_MEC_AnnotationSlot_1",
+        "G28_MEC_AnnotationSlot_2",
+        "G28_MEC_AnnotationSlot_3",
+        "G28_MEC_SourceNote"
+      ],
+      "boundary": [],
+      "connector": [
+        "G28_MEC_LabelAnchor_1",
+        "G28_MEC_LabelAnchor_2",
+        "G28_MEC_LeaderLine_1"
+      ],
+      "risk_marker": [],
+      "decoration": [
+        "G28_MEC_Stage",
+        "G28_MEC_Host_Left",
+        "G28_MEC_Host_Right"
+      ],
+      "label": [
+        "G28_MEC_Title_Text",
+        "G28_MEC_SourceNote_Text"
+      ]
+    },
+    "reading_order": [
+      "G28_MEC_Title_Text",
+      "G28_MEC_EvidenceSurface",
+      "G28_MEC_LabelAnchor_1",
+      "G28_MEC_LabelAnchor_2",
+      "G28_MEC_AnnotationSlot_1",
+      "G28_MEC_AnnotationSlot_2",
+      "G28_MEC_AnnotationSlot_3",
+      "G28_MEC_SourceNote_Text"
+    ],
+    "in_frame_text_budget": {
+      "labels": 2,
+      "chars": 16,
+      "active_text_items": [
+        "G28_MEC_Title_Text",
+        "G28_MEC_SourceNote_Text"
+      ],
+      "annotation_slots_are_empty_until_slot_fill": true
+    },
+    "expected_anti_patterns": [
+      "map_label_overload",
+      "source_note_overload",
+      "indexed_whiteboard",
+      "tiny_text",
+      "subtitle_collision",
+      "decorative_map_without_argument"
+    ]
+  },
+  "caption_reserve_readback": {
+    "rect": {
+      "x": 0,
+      "y": 810,
+      "width": 1920,
+      "height": 216
+    },
+    "clear": true,
+    "overlaps": []
+  },
+  "evidence_surface_readback": {
+    "id": "G28_MEC_EvidenceSurface",
+    "rect": {
+      "x": 240,
+      "y": 180,
+      "width": 1440,
+      "height": 500
+    },
+    "in_main_canvas": true
+  },
+  "annotation_readback": {
+    "count": 3,
+    "ids": [
+      "G28_MEC_AnnotationSlot_1",
+      "G28_MEC_AnnotationSlot_2",
+      "G28_MEC_AnnotationSlot_3"
+    ],
+    "empty_placeholders_until_slot_fill": true
+  },
+  "source_note_readback": {
+    "exists": true,
+    "text": "出典確認済み",
+    "bounded": true
+  },
+  "host_role_readback": {
+    "role": "non_focal_lower_corner_decoration_emotional_anchor",
+    "ids": [
+      "G28_MEC_Host_Left",
+      "G28_MEC_Host_Right"
+    ]
+  },
+  "text_budget_readback": {
+    "visible_text_item_count": 2,
+    "visible_text_chars": 15,
+    "smallest_text_size": 32,
+    "production_text_budget_claimed": false
+  },
+  "safety_readback": {
+    "external_image_count": 0,
+    "external_url_count": 0,
+    "source_footage_count": 0,
+    "audio_item_count": 0,
+    "tts_or_voice_item_count": 0,
+    "image_path": false,
+    "image_url": false,
+    "raw_reference": false,
+    "token_like_pattern_count": 0
+  },
+  "items": [
+    {
+      "id": "G28_MEC_BG_Stage",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Stage",
+      "role": "decoration",
+      "layer": 1,
+      "x": 0,
+      "y": 0,
+      "width": 1920,
+      "height": 1080,
+      "text": null,
+      "font_size": null,
+      "screen_rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1080
+      },
+      "layout_contract": {
+        "rect_source": "map_evidence_skeleton_rect",
+        "source_rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        }
+      },
+      "description": "G-28 Map / Evidence source skeleton primitive G28_MEC_BG_Stage"
+    },
+    {
+      "id": "G28_MEC_TitleBand_BG",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_TitleBand",
+      "role": "label",
+      "layer": 2,
+      "x": 0,
+      "y": -438,
+      "width": 1728,
+      "height": 96,
+      "text": null,
+      "font_size": null,
+      "screen_rect": {
+        "x": 96,
+        "y": 54,
+        "width": 1728,
+        "height": 96
+      },
+      "layout_contract": {
+        "rect_source": "map_evidence_skeleton_rect",
+        "source_rect": {
+          "x": 96,
+          "y": 54,
+          "width": 1728,
+          "height": 96
+        }
+      },
+      "description": "G-28 Map / Evidence source skeleton primitive G28_MEC_TitleBand_BG"
+    },
+    {
+      "id": "G28_MEC_Title_Text",
+      "item_type": "TextItem",
+      "group_id": "G28_MEC_TitleBand",
+      "role": "label",
+      "layer": 3,
+      "x": -254,
+      "y": -462,
+      "width": 508,
+      "height": 56,
+      "text": "地域差を証拠で見る",
+      "font_size": 56,
+      "screen_rect": {
+        "x": 706,
+        "y": 78,
+        "width": 508,
+        "height": 56
+      },
+      "layout_contract": {
+        "rect_source": "map_evidence_skeleton_rect",
+        "source_rect": {
+          "x": 706,
+          "y": 78,
+          "width": 508,
+          "height": 56
+        },
+        "text_budget_role": "title"
+      },
+      "description": "G-28 Map / Evidence source skeleton text G28_MEC_Title_Text"
+    },
+    {
+      "id": "G28_MEC_EvidenceSurface",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_EvidenceSurface",
+      "role": "focal_anchor",
+      "layer": 4,
+      "x": 0,
+      "y": -110,
+      "width": 1440,
+      "height": 500,
+      "text": null,
+      "font_size": null,
+      "screen_rect": {
+        "x": 240,
+        "y": 180,
+        "width": 1440,
+        "height": 500
+      },
+      "layout_contract": {
+        "rect_source": "map_evidence_skeleton_rect",
+        "source_rect": {
+          "x": 240,
+          "y": 180,
+          "width": 1440,
+          "height": 500
+        }
+      },
+      "description": "G-28 Map / Evidence source skeleton primitive G28_MEC_EvidenceSurface"
+    },
+    {
+      "id": "G28_MEC_LabelAnchor_1",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "role": "connector",
+      "layer": 5,
+      "x": -328,
+      "y": -178,
+      "width": 24,
+      "height": 24,
+      "text": null,
+      "font_size": null,
+      "screen_rect": {
+        "x": 620,
+        "y": 350,
+        "width": 24,
+        "height": 24
+      },
+      "layout_contract": {
+        "rect_source": "map_evidence_skeleton_rect",
+        "source_rect": {
+          "x": 620,
+          "y": 350,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "description": "G-28 Map / Evidence source skeleton primitive G28_MEC_LabelAnchor_1"
+    },
+    {
+      "id": "G28_MEC_LabelAnchor_2",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "role": "connector",
+      "layer": 5,
+      "x": 262,
+      "y": -98,
+      "width": 24,
+      "height": 24,
+      "text": null,
+      "font_size": null,
+      "screen_rect": {
+        "x": 1210,
+        "y": 430,
+        "width": 24,
+        "height": 24
+      },
+      "layout_contract": {
+        "rect_source": "map_evidence_skeleton_rect",
+        "source_rect": {
+          "x": 1210,
+          "y": 430,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "description": "G-28 Map / Evidence source skeleton primitive G28_MEC_LabelAnchor_2"
+    },
+    {
+      "id": "G28_MEC_LeaderLine_1",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "role": "connector",
+      "layer": 6,
+      "x": -155,
+      "y": -176,
+      "width": 320,
+      "height": 8,
+      "text": null,
+      "font_size": null,
+      "screen_rect": {
+        "x": 645,
+        "y": 360,
+        "width": 320,
+        "height": 8
+      },
+      "layout_contract": {
+        "rect_source": "map_evidence_skeleton_rect",
+        "source_rect": {
+          "x": 645,
+          "y": 360,
+          "width": 320,
+          "height": 8
+        }
+      },
+      "description": "G-28 Map / Evidence source skeleton primitive G28_MEC_LeaderLine_1"
+    },
+    {
+      "id": "G28_MEC_AnnotationSlot_1",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "role": "supporting",
+      "layer": 7,
+      "x": -540,
+      "y": 206,
+      "width": 300,
+      "height": 72,
+      "text": null,
+      "font_size": null,
+      "screen_rect": {
+        "x": 270,
+        "y": 710,
+        "width": 300,
+        "height": 72
+      },
+      "layout_contract": {
+        "rect_source": "map_evidence_skeleton_rect",
+        "source_rect": {
+          "x": 270,
+          "y": 710,
+          "width": 300,
+          "height": 72
+        }
+      },
+      "description": "G-28 Map / Evidence source skeleton primitive G28_MEC_AnnotationSlot_1"
+    },
+    {
+      "id": "G28_MEC_AnnotationSlot_2",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "role": "supporting",
+      "layer": 7,
+      "x": -200,
+      "y": 206,
+      "width": 300,
+      "height": 72,
+      "text": null,
+      "font_size": null,
+      "screen_rect": {
+        "x": 610,
+        "y": 710,
+        "width": 300,
+        "height": 72
+      },
+      "layout_contract": {
+        "rect_source": "map_evidence_skeleton_rect",
+        "source_rect": {
+          "x": 610,
+          "y": 710,
+          "width": 300,
+          "height": 72
+        }
+      },
+      "description": "G-28 Map / Evidence source skeleton primitive G28_MEC_AnnotationSlot_2"
+    },
+    {
+      "id": "G28_MEC_AnnotationSlot_3",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Annotations",
+      "role": "supporting",
+      "layer": 7,
+      "x": 140,
+      "y": 206,
+      "width": 300,
+      "height": 72,
+      "text": null,
+      "font_size": null,
+      "screen_rect": {
+        "x": 950,
+        "y": 710,
+        "width": 300,
+        "height": 72
+      },
+      "layout_contract": {
+        "rect_source": "map_evidence_skeleton_rect",
+        "source_rect": {
+          "x": 950,
+          "y": 710,
+          "width": 300,
+          "height": 72
+        }
+      },
+      "description": "G-28 Map / Evidence source skeleton primitive G28_MEC_AnnotationSlot_3"
+    },
+    {
+      "id": "G28_MEC_SourceNote_BG",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_SourceNote",
+      "role": "supporting",
+      "layer": 8,
+      "x": 480,
+      "y": 206,
+      "width": 300,
+      "height": 56,
+      "text": null,
+      "font_size": null,
+      "screen_rect": {
+        "x": 1290,
+        "y": 718,
+        "width": 300,
+        "height": 56
+      },
+      "layout_contract": {
+        "rect_source": "map_evidence_skeleton_rect",
+        "source_rect": {
+          "x": 1290,
+          "y": 718,
+          "width": 300,
+          "height": 56
+        }
+      },
+      "description": "G-28 Map / Evidence source skeleton primitive G28_MEC_SourceNote_BG"
+    },
+    {
+      "id": "G28_MEC_SourceNote_Text",
+      "item_type": "TextItem",
+      "group_id": "G28_MEC_SourceNote",
+      "role": "label",
+      "layer": 9,
+      "x": 374,
+      "y": 192,
+      "width": 212,
+      "height": 36,
+      "text": "出典確認済み",
+      "font_size": 32,
+      "screen_rect": {
+        "x": 1334,
+        "y": 732,
+        "width": 212,
+        "height": 36
+      },
+      "layout_contract": {
+        "rect_source": "map_evidence_skeleton_rect",
+        "source_rect": {
+          "x": 1334,
+          "y": 732,
+          "width": 212,
+          "height": 36
+        },
+        "text_budget_role": "bounded_source_note"
+      },
+      "description": "G-28 Map / Evidence source skeleton text G28_MEC_SourceNote_Text"
+    },
+    {
+      "id": "G28_MEC_Host_Left",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Hosts",
+      "role": "decoration",
+      "layer": 10,
+      "x": -746,
+      "y": 187.5,
+      "width": 204,
+      "height": 145,
+      "text": null,
+      "font_size": null,
+      "screen_rect": {
+        "x": 112,
+        "y": 655,
+        "width": 204,
+        "height": 145
+      },
+      "layout_contract": {
+        "rect_source": "map_evidence_skeleton_rect",
+        "source_rect": {
+          "x": 112,
+          "y": 655,
+          "width": 204,
+          "height": 145
+        }
+      },
+      "description": "G-28 Map / Evidence source skeleton primitive G28_MEC_Host_Left"
+    },
+    {
+      "id": "G28_MEC_Host_Right",
+      "item_type": "ShapeItem",
+      "group_id": "G28_MEC_Hosts",
+      "role": "decoration",
+      "layer": 10,
+      "x": 746,
+      "y": 187.5,
+      "width": 204,
+      "height": 145,
+      "text": null,
+      "font_size": null,
+      "screen_rect": {
+        "x": 1604,
+        "y": 655,
+        "width": 204,
+        "height": 145
+      },
+      "layout_contract": {
+        "rect_source": "map_evidence_skeleton_rect",
+        "source_rect": {
+          "x": 1604,
+          "y": 655,
+          "width": 204,
+          "height": 145
+        }
+      },
+      "description": "G-28 Map / Evidence source skeleton primitive G28_MEC_Host_Right"
+    }
+  ],
+  "next_review_inputs_required": [
+    "carrier path",
+    "preview screenshot",
+    "timeline screenshot",
+    "item/layer confirmation",
+    "caption reserve visual confirmation",
+    "human decision: accept / accept_with_caveats / revise_once / layout_system_debt / redesign_required"
+  ],
+  "known_caveats": [
+    "This is a self-contained YMM4 diagnostic carrier candidate, not a production carrier.",
+    "The evidence surface is abstract and uses no real map, satellite image, image path, URL, or raw reference.",
+    "Annotation slots are empty placeholders until a later scoped slot-fill slice exists.",
+    "No render, video, audio, source footage, external image, rights automation, or creative final acceptance is included.",
+    "Game-mechanics same-screen micro-tuning remains stopped; this advances a separate reviewable artifact."
+  ]
+}

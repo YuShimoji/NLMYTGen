@@ -23,6 +23,10 @@ function argbAlpha(argb) {
   return parseInt(argb.slice(1, 3), 16) / 255;
 }
 function ymmpToSvg(cx, cy) { return { sx: 960 + cx, sy: 540 + cy }; }
+function rectFromCenter(cx, cy, width, height) {
+  const { sx, sy } = ymmpToSvg(cx, cy);
+  return { x: sx - width / 2, y: sy - height / 2, width, height };
+}
 function escapeXml(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
@@ -52,12 +56,36 @@ function renderItem(item) {
   return '';
 }
 
-function guidesOverlay(stroke) {
-  // outer safe band (5%), title band, grid bbox, character regions, caption safe area
-  return [
+function guidesOverlay(readback, stroke) {
+  const spec = readback.spec || {};
+  const title = spec.title_band || {};
+  const caption = spec.caption_safe_area || {};
+  const gridSlots = readback.layout_compliance?.grid_2x2_slots || [];
+  const gridEdges = gridSlots.map((slot) => ({
+    left: (slot.cx ?? 0) - (slot.width ?? 0) / 2,
+    right: (slot.cx ?? 0) + (slot.width ?? 0) / 2,
+    top: (slot.cy ?? 0) - (slot.height ?? 0) / 2,
+    bottom: (slot.cy ?? 0) + (slot.height ?? 0) / 2,
+  }));
+  const grid = gridEdges.length > 0 ? {
+    left: Math.min(...gridEdges.map((e) => e.left)),
+    right: Math.max(...gridEdges.map((e) => e.right)),
+    top: Math.min(...gridEdges.map((e) => e.top)),
+    bottom: Math.max(...gridEdges.map((e) => e.bottom)),
+  } : null;
+  const titleRect = rectFromCenter(title.cx ?? 0, title.cy ?? -443, 1728, title.height ?? 86);
+  const captionTopLeft = ymmpToSvg(-960, caption.cy_top ?? 324);
+  const guideLines = [
     `      <rect data-guide="outer_safe_band" x="96" y="54" width="1728" height="972" fill="none" stroke="${stroke}" stroke-dasharray="6 6" stroke-width="2" />`,
-    `      <rect data-guide="caption_safe_area" x="0" y="864" width="1920" height="216" fill="rgba(255,80,80,0.04)" stroke="${stroke}" stroke-dasharray="3 3" stroke-width="1" />`,
-    `      <rect data-guide="title_band" x="96" y="97" width="1728" height="86" fill="none" stroke="${stroke}" stroke-dasharray="3 3" stroke-width="1" />`,
+    `      <rect data-guide="caption_safe_area" x="0" y="${captionTopLeft.sy}" width="1920" height="${caption.height_px ?? 216}" fill="rgba(255,80,80,0.04)" stroke="${stroke}" stroke-dasharray="3 3" stroke-width="1" />`,
+    `      <rect data-guide="title_band" x="${titleRect.x}" y="${titleRect.y}" width="${titleRect.width}" height="${titleRect.height}" fill="none" stroke="${stroke}" stroke-dasharray="3 3" stroke-width="1" />`,
+  ];
+  if (grid) {
+    const gridTopLeft = ymmpToSvg(grid.left, grid.top);
+    guideLines.push(`      <rect data-guide="grid_bbox" x="${gridTopLeft.sx}" y="${gridTopLeft.sy}" width="${grid.right - grid.left}" height="${grid.bottom - grid.top}" fill="none" stroke="${stroke}" stroke-dasharray="3 3" stroke-width="1" />`);
+  }
+  return [
+    ...guideLines,
   ].join('\n');
 }
 
@@ -104,7 +132,7 @@ function main() {
   <div class="frame-wrap">
     <svg viewBox="0 0 1920 1080" width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
 ${svgItems}
-${guidesOverlay('rgba(255, 240, 200, 0.35)')}
+${guidesOverlay(readback, 'rgba(255, 240, 200, 0.35)')}
     </svg>
   </div>
 </body>

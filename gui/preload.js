@@ -25,6 +25,7 @@ contextBridge.exposeInMainWorld('nlmytgen', {
   saveScriptDiagnostics: (opts) => ipcRenderer.invoke('save-script-diagnostics', opts),
   loadReviewPacket: (packetPath) => ipcRenderer.invoke('load-review-packet', packetPath),
   loadReviewProof: (proofPath) => ipcRenderer.invoke('load-review-proof', proofPath),
+  checkReviewArtifacts: (artifactPaths) => ipcRenderer.invoke('check-review-artifacts', artifactPaths),
   saveReviewDecisions: (opts) => ipcRenderer.invoke('save-review-decisions', opts),
   selectFile: (opts) => ipcRenderer.invoke('select-file', opts),
   openFolder: (path) => ipcRenderer.invoke('open-folder', path),

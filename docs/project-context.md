@@ -5,7 +5,7 @@
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
 - 現在地の正本: 通常再開では `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md` で止める。本ファイル冒頭は状態スナップショットではなく、航海日誌への短い入口。
-- 現フェーズ: G-24 skit_group placement は raw clone write/readback まで到達済み。ただし user visual check で spacing/composition が粗いことが分かったため、次は YMM4 template source を分析して normalized placement plan を生成する段階であり、追加 motion authoring や user 手配置ではない。
+- 現フェーズ: G-27 Real Estate DX の production carrier 待ちは active blocker から外し、case-specific evidence として保持する。次は `runtime-state.md` の通り、newsroom-produced bundle の downstream adapter intake、または G-28 Reference-Driven Generic Screen Carrier の Lecture Diagram diagnostic skeleton / theme variants / Map-Evidence diagnostic skeleton 済み状態からの refinement へ進む。
 - 古い roadmap / prompt / verification packet は現行判断に使わない。必要な履歴は DECISION LOG と HANDOFF SNAPSHOT の該当行だけ読む。
 - Python のスコープは「テキスト変換 + IR/registry + ymmp 限定後段適用」。動画レンダリング・画像生成・YMM4 GUI 操作は Python の責務ではない。
 
@@ -14,14 +14,14 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI artifact → CSV / registry / patched ymmp → YMM4 読込・確認・レンダリング
-- 現在のスライス: G-24 template-analyzed placement planner。v1 template source 5/5 と `--skit-group-only` raw clone transport は成立済みで、`panic_shake` は通常語彙から除外する。
-- 成功状態: template source から actor footprint / relative motion / timing density を分析し、real estate DX exact/fallback cues を手配置なしで production-like `.ymmp` に再配置し、readback と user creative acceptance の両方で閉じること。
+- 現在のスライス: G-27 は diagnostic carrier / review console / SCS lessons を証跡として残し、active production carrier blocker としては閉じる。G-28 は proposed であり、受領済み参照画像から構図原理を抽出した `docs/verification/G28-REFERENCE-STYLE-BRIEF-2026-06-05.md`、Lecture Diagram の concrete spec / diagnostic skeleton / readback artifact、`real_estate_information_gap` と `game_mechanics_explanation` diagnostic variants、Map / Evidence の concrete spec / diagnostic skeleton / readback artifact を refinement の入口にする。
+- 成功状態: G-27 の失敗と学びを捨てずに、production 昇格・slot-fill・render へ飛躍しないまま、参照画像の principle extraction を SCS mapping / generic carrier archetype / diagnostic skeleton / theme-specific diagnostic variant / Map-Evidence archetype / readback artifact / future YMM4 carrier review へ段階変換できる状態にすること。
 
 ---
 
 ## CURRENT LANE
-- 主レーン: Advance（G-24 template-first の実制作接続）。現行の優先は [runtime-state.md](runtime-state.md) の `next_action`。
-- 今このレーンを優先する理由: v1 planned set の author/export は閉じたため、次は作成済みテンプレートが実制作の選択負荷を減らすかに接続するため。
+- 主レーン: Explore / Audit（G-28 Reference-Driven Generic Screen Carrier）。現行の優先は [runtime-state.md](runtime-state.md) の `next_action`。
+- 今このレーンを優先する理由: G-27 の carrier 待ちが不動産DX固有の production blocker として長期化したため、既存 evidence を参照資産に畳み、構図・密度・余白・色階層・視線誘導・UI感を汎用化する方が次の制作摩擦を減らせる。
 
 ---
 
@@ -79,8 +79,769 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest G-28 decision (2026-06-12):
+`g28_chat_first_visual_review_protocol_001` records the human review result for
+the G-28 reference layout prototype pack and changes future visual review
+reporting to a chat-first / accumulated review model. The HTML/SVG
+visual-authoring-first route remains useful, but future G-28 visual artifact
+reports must include a digest before asking the human to open HTML, YMM4, or
+screenshot evidence. The digest must state artifact id, visible summary,
+primary focus, layout grammar, object slots, fulfilled specs, known weak
+points, open-file trigger, accumulated review tags, and next decision options.
+The durable protocol is
+`docs/verification/G28-CHAT-FIRST-VISUAL-REVIEW-PROTOCOL-2026-06-11.md`, and
+the existing prototype pack record now points to it. Review levels are Level 1
+chat-first digest, Level 2 optional visual check, and Level 3 accumulated rich
+review grouped by tags / issue families after multiple artifacts accumulate.
+`mechanism_diagram` is recorded as `causal_diagram_grammar_debt`: it is a
+reviewable prototype, but not a YMM4 transfer candidate without later revision
+or explicit accepted caveat because arrows, boxes, and causal payload are not
+semantically coupled enough. This decision is docs-only: it does not edit HTML,
+create or modify `.ymmp`, build YMM4 tooling, touch existing game-mechanics or
+map-evidence carriers, render, approve production / rights / creative final
+acceptance, process Newsroom, touch common foundation, reopen G-27, touch
+ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, import external assets, or run a
+real runner. Next safe action is to use the chat-first digest contract for the
+next G-28 visual artifact report, or open accumulated rich review later by tags
+such as `causal_diagram_grammar_debt`, `layout_system_debt`, `density_debt`,
+`content_slot_gap`, `subtitle_reserve_risk`, and `transfer_candidate`.
+
+Latest G-28 decision (2026-06-12):
+`g28_reference_layout_prototype_path_checkout_audit_001` resolves the reported
+missing `reference_layout_prototypes` folder as a local checkout / path sync
+issue, not an artifact absence in the current repository state. In
+`C:\Users\PLANNER007\NLMYTGen`, `git fetch --prune origin` advanced
+`origin/master` from `1ab3903` to `c6f17b5`, and
+`git pull --ff-only origin master` fast-forwarded `master` to
+`c6f17b5 feat: add G-28 reference layout prototypes`. After the pull, branch
+`master`, `HEAD=c6f17b5`, and `HEAD...@{u}=0 0`; `git status --porcelain=v1`,
+`git status --porcelain=v1 -uno`, `git diff --name-only`, and
+`git diff --cached --name-only` are empty. `git ls-tree` and `Get-ChildItem`
+both show the eight expected files under
+`samples/_probe/g28/reference_layout_prototypes/`: `index.html`,
+`lecture_list.html`, `mechanism_diagram.html`, `map_evidence.html`,
+`cluster_map.html`, `evidence_table.html`, `conversation_board.html`, and
+`source_footage_frame.html`. The wrong `samples_probe` path is absent. The
+old `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen` checkout path
+was not present in this environment. The correct local review hub is
+`C:\Users\PLANNER007\NLMYTGen\samples\_probe\g28\reference_layout_prototypes\index.html`.
+Existing proof images should still be treated as earlier pipeline /
+storyboard / GUI proof, not as the reference layout prototype pack. This audit
+did not regenerate prototypes, edit HTML, create `.ymmp`, build a YMM4
+builder, touch existing carriers, render, approve production / rights /
+creative final acceptance, or touch Newsroom, common foundation, G-27,
+ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, or real runner paths. Next safe
+action is human browser review of the HTML pack.
+
+Latest G-28 decision (2026-06-11):
+`g28_reference_layout_prototype_pack_created_001` implements the safe
+HTML/SVG visual-prototype-first route after the YMM4 coordinate-generation
+method blocker. The created review hub is
+`samples/_probe/g28/reference_layout_prototypes/index.html`, with seven fixed
+1920x1080 self-contained prototypes: `lecture_list`, `mechanism_diagram`,
+`map_evidence`, `cluster_map`, `evidence_table`, `conversation_board`, and
+`source_footage_frame`. The packet owner is
+`docs/verification/G28-REFERENCE-LAYOUT-PROTOTYPE-PACK-2026-06-11.md`.
+The prototypes abstract layout grammar only; they do not include external
+links, image paths, raw reference images, logos, third-party character
+reproduction, real map or satellite imagery, source footage, audio, or TTS.
+The route remains pre-YMM4-transfer and diagnostic: no `.ymmp` generation,
+builder creation, existing carrier regeneration, render, production candidate,
+rights approval, creative final acceptance, Newsroom, common foundation, G-27,
+ClipPipeGen, RSS / OPML / Inoreader / NotebookLM, or real runner work is
+approved by this decision. Next safe action is human browser review of the
+HTML pack and a decision of `accept`, `accept_with_caveats`, `revise_once`,
+`reject`, or `redesign_required`.
+
+Latest G-28 decision (2026-06-11):
+`g28_ymmp_coordinate_generation_method_blocker_001` records the human YMM4
+review result for
+`samples/_probe/g28/map_evidence_carrier_ymmp_diagnostic_probe.ymmp`.
+The decision is `redesign_required_generation_method_blocker`: the Map /
+Evidence carrier is not accepted as a diagnostic candidate, and `revise_once`
+is not appropriate. The issue is not a single carrier's local spacing defect.
+It is a visual-authoring method blocker: direct script-coordinate `.ymmp`
+construction can pass structural readback while still producing a weak review
+surface. The tracked builder, `.ymmp`, readback, and report remain as negative
+evidence / failed sample, but they must not be regenerated, micro-tuned, or used
+as proof that this generation method is good enough for more G-28 carriers.
+Readback pass is now explicitly limited to boundary / structure confirmation,
+not visual-quality assurance. Stop the same coordinate-only YMM4 carrier
+generation route as a visual authoring source. Safe future entries are a
+human-authored YMM4 seed carrier, an HTML/SVG visual prototype approved before
+YMM4 transfer, or a later bounded cross-screen layout-normalization review.
+This is docs-only and does not change `.ymmp`, builders, samples, render,
+production candidate state, rights, creative final acceptance, Newsroom, common
+foundation, G-27, ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, real runner,
+GUI, or `src`.
+
+Latest G-28 decision (2026-06-11):
+`g28_map_evidence_ymmp_diagnostic_carrier_created_001` advances the next
+reviewable artifact after the game-mechanics `layout_system_debt` decision.
+The game-mechanics YMM4 carrier is not tuned again. Instead,
+`scripts/build_g28_map_evidence_ymmp_probe.js` converts the existing passed Map
+/ Evidence skeleton into a self-contained ShapeItem/TextItem-only YMM4
+diagnostic carrier candidate at
+`samples/_probe/g28/map_evidence_carrier_ymmp_diagnostic_probe.ymmp`, with
+readback and report siblings. The readback passes as
+`classification=pass_map_evidence_ymmp_diagnostic_carrier_created`,
+`diagnostic_only=true`, `production_candidate=false`, caption reserve clear,
+evidence surface in main canvas, three annotation slots, bounded source note,
+non-focal hosts, external image / URL / source-footage / audio / TTS counts
+zero, `render_output=false`, production / creative / rights approvals false,
+and failures empty. The verification record is
+`docs/verification/G28-MAP-EVIDENCE-YMMP-DIAGNOSTIC-CARRIER-PROBE-2026-06-11.md`.
+This does not modify the game-mechanics carrier, create a production candidate,
+render, approve rights, claim creative final acceptance, process Newsroom,
+resume common foundation, revive G-27, touch ClipPipeGen, RSS, OPML, Inoreader,
+NotebookLM, real runner / `codex exec`, GUI, or `src`. Next safe action is human
+YMM4 review intake for the new Map / Evidence carrier.
+
+Latest G-28 decision (2026-06-11):
+`g28_game_mechanics_ymmp_batch_review_layout_system_debt_001` records the human
+batch review result for
+`samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe.ymmp`
+as `layout_system_debt`. The current screen remains reviewable as a diagnostic
+artifact, but the dominant issue is not single-label fitting. The issue is
+layout-system debt: element centering, spacing regularity, and split-layout
+generalizability are not stable enough to keep solving with same-screen
+micro-tuning. The chosen direction is speed-first: stop further tuning on this
+screen, produce more reviewable G-28 artifacts, and revisit the issue later in
+a bounded cross-screen batch review or layout-normalization slice. Safe next
+entries are Advance to another G-28 artifact / reviewable screen, Audit later
+for layout normalization across screens, or Hold this screen as known
+`layout_system_debt`. This is docs-only and does not modify `.ymmp`, builder,
+samples, production candidate state, render, rights, creative final acceptance,
+Newsroom, common foundation, G-27, ClipPipeGen, RSS, OPML, Inoreader,
+NotebookLM, real runner / `codex exec`, GUI, or `src`.
+
+Latest G-28 decision (2026-06-11):
+`g28_game_mechanics_ymmp_batch_visual_review_protocol_001` switches the next
+review of
+`samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe.ymmp`
+from individual label checking to a full-screen batch visual review protocol.
+The durable packet is
+`docs/verification/G28-GAME-MECHANICS-YMMP-BATCH-VISUAL-REVIEW-PACKET-2026-06-11.md`.
+It preserves `27b4736 fix: align G-28 game mechanics YMM4 labels` as the
+current known state: `画面上の結果` uses font size 38 with the inherited
+rightward nudge removed; lower callouts use a common centered rule at font size
+28; readback remains
+`classification=pass_game_mechanics_ymmp_label_layout_fixed`,
+`one_pass_targeted_fix=true`, and
+`no_further_micro_tuning_recommended=true`. Those facts are no longer the whole
+review request; they are checklist rows inside a batch decision surface covering
+overall composition, focal-chain meaning, central priority, label fit,
+callouts, readability, spacing, density, host role, caption reserve, eye flow,
+generic transferability, YMM4 maintainability, and diagnostic usefulness. Human
+return decisions are `accept`, `accept_with_caveats`, `revise_once`,
+`layout_system_debt`, or `redesign_required`; only `must_fix` items can justify
+one consolidated follow-up fix. This is docs-only and does not modify `.ymmp`,
+builder, samples, render, production, rights, creative final acceptance,
+Newsroom, common foundation, real-estate work, G-27, GUI, ClipPipeGen, RSS,
+OPML, Inoreader, NotebookLM, `.claude/worktrees/`,
+`samples/2026-05-16.ymmp`, or real runner / `codex exec` paths.
+
+Latest G-28 decision (2026-06-11):
+`g28_game_mechanics_ymmp_label_layout_fix_001` applies exactly one targeted
+layout fix to the existing YMM4 diagnostic carrier candidate after human visual
+review. The carrier path remains
+`samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe.ymmp`.
+The fix preserves the same carrier, variant, meaning structure, focal chain,
+callouts, host role, and bottom caption reserve. It only removes the right
+focal label's inherited rightward nudge, reduces that label to font size 38,
+and applies one common centered callout label rule at font size 28. The
+regenerated readback classifies the result as
+`pass_game_mechanics_ymmp_label_layout_fixed`, records
+`one_pass_targeted_fix=true`,
+`no_further_micro_tuning_recommended=true`, and sets the next decision gate to
+`accept_with_layout_caveat`. This remains diagnostic-only:
+`production_candidate=false`, no render, no rights approval, no creative final
+acceptance, and no external image / URL / source footage / audio / TTS. A later
+batch visual review protocol supersedes the old two-target check and treats
+those labels as part of the whole-screen checklist; do not keep tuning the same
+screen.
+
+Latest G-28 decision (2026-06-10): `g28_game_mechanics_ymmp_diagnostic_carrier_created`
+creates a self-contained YMM4 diagnostic carrier candidate for the accepted
+`game_mechanics_explanation` Lecture Diagram review surface. The generated
+candidate lives at
+`samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe.ymmp`
+with readback/report siblings and verification record
+`docs/verification/G28-GAME-MECHANICS-YMMP-DIAGNOSTIC-CARRIER-PROBE-2026-06-10.md`.
+The readback passed as diagnostic-only / production-candidate false, ShapeItem
+and TextItem only, with focal chain `入力操作` -> `内部ルール / 判定` -> `画面上の結果`,
+callouts `操作感`, `判定 / 当たり判定`, `リスクとリターン`, non-focal hosts, bottom
+caption reserve clear, external image / URL / source-footage / audio / TTS
+counts all zero, and no render or production approval. This does not reopen
+real-estate evidence, process Newsroom handoff material, revive G-27, advance
+common foundation, or approve production / rights / creative final acceptance.
+Next safe action is human YMM4 review intake only: carrier path, preview
+screenshot, timeline screenshot, item/layer confirmation, bottom caption
+safe-area evidence, and `accept` / `revise` / `reject`.
+
+Latest common foundation decision (2026-06-15):
+`common_foundation_status_input_audit_design_001` records a docs-only
+repo-status input audit design on top of the earlier live status producer
+contract. The design lives in
+`docs/verification/COMMON-FOUNDATION-STATUS-INPUT-AUDIT-DESIGN-2026-06-15.md`
+and defines the audit-facing common status object fields for branch, HEAD,
+upstream, remote parity, tracked-only porcelain status, full porcelain status,
+known-untracked allowlist matching, dirty state, staged diff, unstaged tracked
+diff, runtime artifact state, needs-human state, checked authority docs,
+execution policy snapshot, adapter id, observed timestamp, observer mode,
+source/command provenance, and fail-closed reasons. It also records the
+repo-adapter boundary: common core owns schema, normalization, provenance,
+redaction, timestamp/staleness handling, fail-closed reason vocabulary, and the
+rule that status input is not execution authority; NLMYTGen adapter policy owns
+authority docs, known untracked residue, runtime artifact paths, execution
+policy source, forbidden domains, and local artifact vocabulary. Live pre-edit
+readback found `master`, upstream parity `0 0`, no tracked or staged diff,
+known untracked residue limited to `.claude/worktrees/` and
+`samples/2026-05-16.ymmp`, `.agent/reports/` and `.agent/logs/` containing only
+`.gitkeep`, and no `.agent/needs_human.json`; the old `66be70d` HEAD assumption
+was stale because this checkout was already at
+`4746d81 docs: design live repo status producer`. This slice remains docs-only:
+no real `codex exec`, `subprocess.run`, stdin piping, runtime worker loop,
+external notification, runtime artifact creation, G-28 / G-27 / Newsroom /
+ClipPipeGen / RSS / OPML / Inoreader / NotebookLM / `.ymmp` / render / rights /
+production / publishing work was opened. Next safe action is Hold, or a
+separately authorized stdout-only producer implementation proof that creates no
+runtime artifacts and still cannot grant real-runner permission.
+
+Latest common foundation decision (2026-06-13):
+`live_repo_status_json_producer_design_001` records a docs-only contract for a
+future machine-collected live repo status JSON producer. The design lives in
+`docs/verification/LIVE-REPO-STATUS-JSON-PRODUCER-DESIGN-2026-06-13.md` and
+defines fields for repo root, branch, HEAD, upstream parity, tracked/staged
+dirty state, untracked entries, known-untracked allowlist match, runtime
+artifact state, `.agent/needs_human.json` presence, inspected paths, command
+provenance, timestamp, source provenance, adapter id, confidence/trust boundary,
+and fail-closed status. This narrows the older `--repo-status-clean` operator
+assertion by requiring future machine-collected evidence before a status object
+is treated as preflight input. The producer remains only an observer/serializer:
+it cannot grant execution permission, cannot set `safe_to_start_real_runner=true`,
+cannot start real `codex exec`, cannot add `subprocess.run`, cannot pipe stdin,
+cannot create a runtime worker loop, cannot send external notification, and
+cannot write `.agent/reports`, `.agent/logs`, or `.agent/needs_human.json`.
+Unknown, missing, parse-error, command-failure, dirty, staged,
+unknown-untracked, unexpected runtime artifact, or needs-human-present state
+must surface as `needs_human` or `blocked`, not pass. Common core keeps schema,
+fail-closed semantics, redaction, provenance, timestamp, and operator readback;
+repo adapter keeps authority docs, known untracked allowlist, allowed/blocked
+paths, runtime artifact paths, repo-specific vocabulary, and forbidden domains.
+NLMYTGen-specific YMM4 / `.ymmp` / G-28 / production vocabulary stays out of the
+common core. This slice did not implement Python, runner behavior, runtime
+artifact generation, G-28 / G-27 / Newsroom / ClipPipeGen / RSS / OPML /
+Inoreader / NotebookLM / `.ymmp` / render / rights / production / publishing
+work. Next safe action is Hold or a separately authorized stdout-only producer
+implementation proof.
+
+Latest common foundation decision (2026-06-10):
+`pre_execution_dry_run_preview_hold_001` accepts the wording-refined preview as
+holdable for cross-terminal restart. The check ran
+`uv run python scripts/agent_orchestrator.py --worker audit --pre-execution-dry-run --timestamp hold-check --repo-status-clean`
+after `8006349 fix: clarify dry-run preview wording` and found the stdout
+review surface sufficient without opening files: repo-status source is labeled
+as an operator-provided assertion not checked by the CLI, the report path is
+planned only and not written, the outer plan-level preview and embedded raw
+preflight card are distinct, and preflight allowed / `safe_to_start_real_runner`
+remain review / eligibility signals rather than execution permission. Runtime
+artifact state remains clean with only `.agent/reports/.gitkeep` and
+`.agent/logs/.gitkeep`; `.agent/needs_human.json` is absent. This does not
+implement real `codex exec`, `subprocess.run`, stdin piping, runtime worker
+loop, external notification, worker report validation from a real run, `.agent`
+runtime artifact creation, GUI, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML,
+Inoreader, NotebookLM, `.ymmp`, render, rights, production, publishing, or
+release automation. Default next action is Hold; future work should enter
+through a repo-status input audit, a narrow wording/readback correction if drift
+appears, or a separately authorized docs-only real-runner consumption design.
+
+Latest common foundation decision (2026-06-10):
+`pre_execution_dry_run_preview_wording_refine_001` keeps the preview-only CLI
+contract but tightens stdout wording so a human can review it without opening
+supporting docs. The repo-status section now says an input is an
+operator-provided assertion after external git checks and is not checked by this
+CLI. The selected-plan section states that the report path is planned only and
+is not written by the preview. The outer preview is described as a plan-level
+review of the would-be worker run, while the embedded card is labeled as the raw
+preflight result. The standalone raw preflight card now phrases `allowed` as
+preflight-review-only and `safe_to_start_real_runner` as eligibility-only, not
+execution permission. Redaction remains in place. This does not implement real
+`codex exec`, `subprocess.run`, stdin piping, runtime worker loop, external
+notification, worker report validation from a real run, `.agent` runtime
+artifact creation, GUI, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader,
+NotebookLM, `.ymmp`, render, rights, production, publishing, or release
+automation. Next safe action is human acceptance of the wording or a separate
+repo-status input handling audit; real runner work still requires explicit
+authorization.
+
+Latest common foundation decision (2026-06-10):
+`pre_execution_dry_run_preview_surface_and_repo_status_audit_001` verified the
+preview-only dry-run surface and repo-status input handling after
+`cf5df6c feat: add pre-execution dry-run preview`. The audit confirmed the
+surface shows the selected worker, prompt source, schema, planned report path,
+working directory, timeout, shell-free argv, repo-status summary, authority
+summary, preflight pass/block state, reasons, inspected paths, embedded
+preflight preview card, explicit boundary, and human next action, and that it
+stops at stdout without writing runtime artifacts. It also confirmed dirty,
+staged, and unknown-untracked status can be rendered as blocked reasons,
+simultaneous repo-status inputs are rejected, and repo-external status JSON
+paths fail closed. The audit tightened one safety gap: the outer Markdown
+renderer now redacts credential-like values from operator-controlled display
+fields such as timestamp-derived report paths and repo-status paths, matching
+the raw preflight card's redaction posture. This does not implement real
+`codex exec`, `subprocess.run`, stdin piping, runtime worker loop, external
+notification, worker report validation from a real run, `.agent` runtime
+artifact creation, GUI, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader,
+NotebookLM, `.ymmp`, render, rights, production, publishing, or release
+automation. A later wording pass makes the operator-provided repo-status source,
+planned-only report path, preview/card role split, and review-only preflight
+allowance explicit in stdout.
+
+Latest common foundation decision (2026-06-10):
+`pre_execution_dry_run_preview_mvp_001` implements the preview-only CLI allowed
+by the prior design review. `scripts/agent_orchestrator.py --pre-execution-dry-run`
+now builds the existing shell-free execution plan, runs
+`build_execution_preflight` in `dry_run_preview` mode, embeds the existing raw
+preflight preview card, and prints one Markdown review surface to stdout. The
+surface shows worker, prompt source, schema, planned report path, working
+directory, timeout, argv preview, repo status summary, authority summary,
+preflight pass/block state, `safe_to_start_real_runner`, reasons, inspected
+paths, human next action, and the explicit boundary. The CLI may accept
+`--repo-status-clean` as an operator-provided clean assertion after external git
+checks, or `--repo-status-json` for a repo-local status object; it does not spawn
+Git itself. This does not implement real `codex exec`, `subprocess.run`, stdin
+piping, runtime worker loop, external notification, worker report validation
+from a real run, `.agent` runtime artifact creation, GUI, G-28, Newsroom, G-27,
+ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, `.ymmp`, render, rights,
+production, publishing, or release automation. Tests now cover the allowed
+preview, blocked repo-status reasons, CLI Markdown output, and preservation of
+the no-real-execution sentinel. Next safe action is human review of the preview
+surface or a focused audit of repo-status input handling; real runner work still
+requires a separate explicit authorization.
+
+Latest common foundation decision (2026-06-10):
+`pre_execution_dry_run_flow_design_001_docs_only` adds
+`docs/verification/PRE-EXECUTION-DRY-RUN-FLOW-DESIGN-2026-06-10.md` as the
+human-visible design for a future pre-execution dry-run flow after the parked
+preflight / operator-surface state. The design shows what a human must see
+before any real runner exists or starts: selected worker, prompt source,
+schema, planned report path, shell-free argv preview, working directory,
+timeout, repo state, authority summary, `build_execution_preflight` result, raw
+preflight preview card, inspected files, stop conditions, and decision options.
+It explicitly keeps `safe_to_start_real_runner=true` as eligibility for a
+separately authorized future runner slice, not execution permission. This
+decision does not implement real `codex exec`, `subprocess.run`, stdin piping,
+runtime worker loops, external notification, `.agent` runtime artifacts,
+Python/test changes, GUI, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML,
+Inoreader, NotebookLM, `.ymmp`, render, rights, production, publishing, or
+release automation. Next safe action is human review of this design; any
+preview-only implementation remains a separate explicitly authorized slice.
+
+Latest common foundation decision (2026-06-09):
+`remote_handoff_sealed_after_preflight_operator_surface_parking_001` records
+the repo-local handoff for the parked common foundation state. The restart entry
+is `docs/USER_COPYPASTE_BLOCKS.md` SECTION 22, and it points the next terminal
+back to `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, `docs/runtime-state.md`,
+`docs/project-context.md`, `docs/AGENT_ORCHESTRATION.md`, and
+`docs/AGENT_OPERATOR_SURFACE.md`. This handoff preserves the human-confirmed
+review-surface state after `cde00ca feat: add preflight preview card` and the
+parking note after `f7d4733 docs: park preflight operator surface`, while
+keeping real execution closed. It does not authorize real `codex exec`,
+`subprocess.run`, stdin piping, runtime worker loops, external notification,
+`.agent` runtime artifacts, `.ymmp`, render, rights, production, publishing,
+release automation, G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader, or
+NotebookLM work.
+
+Latest common foundation decision (2026-06-09):
+`preflight_operator_surface_parking_001` records human acceptance of
+`cde00ca feat: add preflight preview card` as sufficient for the current
+review-surface need. The common foundation is parked with two read-only
+Operator Review Surface faces: the existing flow-result card and the standalone
+raw preflight preview card. This means a human can inspect preflight status,
+`safe_to_start_real_runner`, reasons, inspected paths, authority summary,
+execution boundary, and next action before any runner is considered. The parking
+decision deliberately does not move to real execution: `safe_to_start_real_runner=true`
+is only an eligibility signal for a separately authorized future runner slice,
+not execution permission. Real `codex exec`, `subprocess.run`, stdin piping,
+runtime worker loop, external notification, worker report validation from a
+real run, and `.agent` runtime artifact creation remain unimplemented. If common
+foundation work resumes, the next allowed entry is a separately authorized
+runner consumption design or pre-execution dry-run flow; do not jump straight to
+real runner implementation or mix this with G-28, Newsroom, G-27, ClipPipeGen,
+RSS, OPML, Inoreader, NotebookLM, `.ymmp`, render, rights, production,
+publishing, or release automation.
+
+Latest common foundation decision (2026-06-09):
+`standalone_preflight_preview_adapter_mvp_001` implements the read-only adapter
+that converts a raw preflight result into a Markdown preview card. The new
+`render_preflight_preview_card(preflight_result)` and `--preflight-example`
+surface preflight status, mode / worker, allowed, `safe_to_start_real_runner`,
+reasons, inspected paths, authority summary, execution boundary, and human next
+action without wrapping the result into a runner flow. Tests cover blocked raw
+preflight, allowed dry-run preview, authorized real-runner preflight preview,
+the deterministic CLI example, existing flow-card compatibility, and
+credential-like value redaction. This does not implement real `codex exec`,
+`subprocess.run`, stdin piping, runtime worker loop, external notification,
+worker report validation, `.agent` runtime artifact creation, or permission to
+start a real runner. It also does not resume G-28, Newsroom, G-27, ClipPipeGen,
+RSS, OPML, Inoreader, NotebookLM, `.ymmp`, render, rights, production,
+publishing, or release automation.
+
+Latest common foundation decision (2026-06-09):
+`disabled_real_runner_preflight_audit_001` reviewed the implemented preflight
+boundary without opening any real runner path. The audit found the mode split,
+execution boundary, fail-closed path checks, and result shape suitable for the
+current pre-run gate, then tightened one coverage gap: supplied credential-like
+metadata now has an explicit regression test that blocks preflight and does not
+echo the secret-like value in the returned result. `docs/AGENT_ORCHESTRATION.md`
+also records that the current operator card reads preflight only when embedded
+in a complete flow result; a standalone dry-run / real-runner preflight preview
+still needs a future adapter that wraps raw preflight with runner/gate placeholder
+state and surfaces `safe_to_start_real_runner` plus `authority_summary`. This
+audit does not implement real `codex exec`, `subprocess.run`, stdin piping,
+runtime worker loop, external notification, or `.agent` runtime artifact
+creation, and it does not resume G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML,
+Inoreader, NotebookLM, `.ymmp`, render, rights, production, publishing, or
+release automation.
+
+Latest common foundation decision (2026-06-09):
+`disabled_by_default_real_runner_preflight_001_test_first` implements the
+preflight helper only. `scripts/agent_orchestrator.py` now distinguishes
+`real_runner`, `dry_run_preview`, and `fake_runner_helper` modes and returns a
+JSON-serializable result with allow/block reasons, inspected paths,
+`safe_to_start_real_runner`, and authority summary while keeping
+`codex_execution_started=false` and `real_subprocess_started=false` inside
+preflight. `tests/test_agent_orchestration.py` fixes fail-closed cases for
+missing authority, disabled policy, dirty/staged state, unsafe paths, existing
+report overwrite, shell command shape, missing timeout, invalid worker, missing
+schema, prompt ambiguity, notification ambiguity, dry-run preview allow,
+fake-helper allow, and the narrow authorized future real-runner allow case.
+`docs/AGENT_ORCHESTRATION.md` records the updated contract. This does not
+implement real `codex exec`, `subprocess.run`, stdin piping, runtime worker
+loop, external notification, or `.agent` runtime artifact creation. It also
+does not resume G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader,
+NotebookLM, `.ymmp`, render, rights, production, publishing, or release
+automation. Any real runner remains a separate future slice after review.
+
+Latest common foundation decision (2026-06-09):
+`real_runner_preflight_implementation_plan_001_docs_only` accepts
+`docs/verification/REAL-RUNNER-BOUNDARY-DESIGN-2026-06-09.md` as sufficient for
+the next design step and adds
+`docs/verification/REAL-RUNNER-PREFLIGHT-IMPLEMENTATION-PLAN-2026-06-09.md` as
+the active pre-implementation plan. The plan defines what a future
+disabled-by-default preflight must inspect, refuse, allow, and return before any
+real runner can start. It keeps real `codex exec`, `subprocess.run`, stdin
+piping, runtime worker loop, external notification, and `.agent` runtime
+artifact creation unimplemented. The next common-foundation move is human
+review of the plan; code/test implementation must remain a separate slice and
+must not mix with G-28, Newsroom, G-27, ClipPipeGen, RSS, OPML, Inoreader,
+NotebookLM, `.ymmp`, render, rights, production, publishing, or release
+automation.
+
+Latest common foundation decision (2026-06-09): `real_runner_boundary_design_001_docs_only`
+records that `docs/verification/REAL-RUNNER-BOUNDARY-DESIGN-2026-06-09.md`
+defines the boundary required before any real runner implementation. The
+Operator Review Surface MVP is treated as sufficient to proceed to boundary
+design, but not as execution authority. The sealed state remains fake runner
+scaffold plus test/helper-only single fake execution flow plus read-only
+operator card, with `codex_execution_started=false` and
+`real_subprocess_started=false`. This decision does not implement real
+`codex exec`, `subprocess.run`, stdin piping, runtime worker loop, cancellation
+code, external notification, or `.agent` runtime artifact generation. Future
+work must first review the documented opt-in authority, subprocess, stdin,
+timeout/cancellation, report containment, gate/notify sequence, operator-card
+integration, runtime artifact hygiene, implementation checklist, and stop
+conditions. Do not mix this common-foundation path with G-28, Newsroom, G-27,
+ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, `.ymmp`, render, rights,
+production, publishing, or release automation.
+
+Latest supervision gate (2026-06-09): `newsroom_handoff_request_authority_no_op_wait`
+records the refreshed cross-repo review of the supplied `newsroom-yt-pipeline`
+handoff. The handoff is candidate downstream input, not active NLMYTGen
+authority yet. NLMYTGen remains on the G-28 `game_mechanics_explanation`
+diagnostic lane. This refresh did verify the Newsroom repo and export read-only:
+`C:\Users\thank\Storage\Media Contents Projects\newsroom-yt-pipeline` was on
+`main` / `1296b8e` with `HEAD...origin/main=0 0`, and
+`C:\Users\thank\Storage\Media Contents Projects\newsroom-yt-pipeline\data\exports\episode_756343df9853`
+contained `export_manifest.json`, `script.csv`, `script_ir.json`,
+`visual_ir.json`, `visual_plan.md`, `source_list.md`, `quote_manifest.yml`,
+`asset_manifest.yml`, and `ymm4_notes.md`. The selected decision still remains
+`request_authority / no-op_wait` because no human decision has authorized
+copy-in versus read-only reference, no human decision has paused or superseded
+the current G-28 game_mechanics lane, and the inspected Newsroom export is not
+NLMYTGen production proof. Do not couple to Newsroom by subprocess/path/pip
+dependency, copy runtime export files into tracked artifacts, start
+implementation, Review Console changes, context visual plugin work, `.ymmp`
+generation, render, production timing, rights approval, creative final
+acceptance, G-27 revival, ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, common
+foundation, or real `codex exec` work from this gate. If the user wants
+Newsroom downstream intake, first collect explicit authority for copy-in versus
+read-only reference and explicit authority to pause/supersede the current G-28
+game_mechanics lane. Detailed gate evidence is in
+`docs/verification/NEWSROOM-HANDOFF-SUPERVISION-GATE-2026-06-09.md`.
+Reporting format scar: for ChatGPT handoff blocks, wrap the whole copy block in
+one outer Markdown code fence, keep `BEGIN_COPY_BLOCK_FOR_CHATGPT` and
+`END_COPY_BLOCK_FOR_CHATGPT` inside it, and do not use nested code fences in the
+`next prompt` field.
+
+Latest common foundation decision (2026-06-09): `single_fake_execution_flow_committed_audited`
+records that `post_commit_audit_single_fake_execution_flow_001` passed for
+`e509863 feat: update orchestration scaffold`, with the commit pushed to
+`master` and upstream parity verified as `HEAD...@{u}=0 0`. This retires
+stale staged-work prompts for the slice: `stage_single_fake_execution_flow_001`,
+`single_fake_execution_flow_staged_diff_review_001`, and any fake runner
+scaffold stage/commit prompt. The active common foundation state is committed
+and audited: fake runner scaffold exists, the single fake execution flow helper
+exists, the helper is test/helper-only, and normal CLI/runtime behavior does
+not expose the fake flow. There is no `--single-fake-flow` flag. Valid fake
+reports go through `agent_gate.evaluate_report`; the local notify stub is only
+after `gate_result.needs_human=true`; pass writes no notify artifact; invalid
+JSON, missing report, nonzero exit, and timeout fail closed. Real `codex exec`
+remains disabled/unimplemented: `codex_execution_started=false`,
+`real_subprocess_started=false`, no `subprocess.run`, no stdin piping, no
+runtime worker loop, and no external notification service. The next common
+foundation work is not immediate real execution. If explicitly authorized
+later, use design-only `real_runner_boundary_design_001`, covering explicit
+opt-in execution policy, subprocess boundary, stdin piping boundary,
+timeout/cancellation, report path containment, gate authority, notify boundary,
+runtime artifact hygiene, and no external notification without separate
+authorization.
+
+G-28 real-estate diagnostic review surface acceptance (2026-06-08):
+Record `overall_decision=accept_as_diagnostic_review_surface_with_title_metric_caveat`
+for the YMM4 diagnostic probe and stop the individual pixel-tuning loop for
+this artifact. The accepted scope is diagnostic review surface use only:
+openability, focal chain, connector treatment, X=313.0 lower-right callout
+alignment, caption reserve, diagnostic host placeholders, and diagnostic
+boundary pass, while title metric debt and layout-system debt remain. Do not
+continue title-Y / callout / right-node micro-offset fixes; any future visual
+centering problem should become a text/layout system redesign slice. This does
+not approve Review Console implementation changes, production render,
+production carrier approval, creative final acceptance, rights automation,
+source footage, G-27 authority reuse, common foundation work, or ClipPipeGen
+access.
+
+G-28 real-estate evidence note (2026-06-08):
+`pass_dom_evidence_needs_manual_screenshot` is recorded in
+`docs/verification/G28-REAL-ESTATE-REVIEW-CONSOLE-INGEST-EVIDENCE-2026-06-07.md`
+for the earlier `real_estate_information_gap` read-only Review Console panel.
+Existing Electron DOM smoke confirmed `#g28-review-console-ingest`, artifact
+inventory, diagnostic badges, readback summary, human GUI summary, caveats,
+allowed diagnostic decisions, and absence of production approval labels. No
+Review Console implementation files, generated probe artifacts, builders,
+readback/report files, render, production approval, creative final acceptance,
+rights automation, G-27 authority, ClipPipeGen, RSS / NotebookLM, or common
+foundation work changed. A manual screenshot or separately authorized
+G-28-specific capture slice remains optional if visual screenshot evidence is
+still required.
+
+Latest G-28 decision (2026-06-08): `remote_handoff_sealed_after_g28_game_mechanics_inspector_accept`
+keeps the accepted `game_mechanics_explanation` inspector-first diagnostic
+review surface context in-project for another terminal. The restart owner is
+`AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md` plus
+`docs/USER_COPYPASTE_BLOCKS.md` SECTION 20. The accepted contract remains
+`review_surface=inspector_first`, `in_frame_review_overlay=false`,
+`clean_frame_available=true`, `semantic_labels_human_visible=true`,
+`diagnostic_only=true`, and `production_candidate=false`. This handoff does not
+authorize Source-Footage, `.ymmp` generation, render, production timing,
+creative final acceptance, G-27 revival, RSS / OPML / Inoreader / NotebookLM,
+common foundation, ClipPipeGen, generated artifact rewrites, or generator
+changes. The next safe input is human-supplied evidence for the already scoped
+YMM4-saved carrier review conditions, or a decision to stay with the accepted
+HTML/readback diagnostic precedent.
+
+Latest G-28 decision (2026-06-08): `g28_game_mechanics_ymmp_saved_carrier_review_conditions`
+adds the scoped condition checklist for moving the accepted
+`game_mechanics_explanation` Lecture Diagram review surface toward a later
+YMM4-saved carrier review. The required inputs are explicit human selection of
+that review mode, a carrier path, preview screenshot, timeline screenshot,
+item/layer confirmation, and bottom caption safe-area evidence. This is
+conditions-only documentation: no `.ymmp` generation, render, production timing,
+creative final acceptance, Source-Footage intake, gameplay screenshot intake,
+image path/URL/raw reference intake, G-27 revival, RSS, NotebookLM, generated
+artifact rewrite, or generator change is approved.
+
+Latest G-28 decision (2026-06-08): `g28_game_mechanics_review_surface_accept`
+records human `decision: accept` for the repaired `game_mechanics_explanation`
+Lecture Diagram review surface. The accepted scope is reviewability only:
+the clean 16:9 frame and lower Review Inspector are separated, the frame no
+longer has double-box review overlays, semantic labels remain visible through
+the inspector, host remains non-focal, and caption reserve / density are
+acceptable for this diagnostic surface. This does not approve production:
+`diagnostic_only=true`, `production_candidate=false`, no Source-Footage, no
+`.ymmp` generation, no render, no production timing, and no creative final
+acceptance. Next safe work, only if needed, is scoped condition planning for a
+YMM4-saved carrier review.
+
+Latest G-28 decision (2026-06-08): `g28_game_mechanics_review_surface_inspector_first`
+is implemented for the existing `game_mechanics_explanation` Lecture Diagram
+diagnostic artifact after human `decision: further revise`. The previous
+review-only labels were visible but appeared as in-frame boxed overlays, making
+the left/right nodes, callouts, and center focal look double-boxed. The artifact
+is repaired in place: default HTML keeps the 16:9 frame clean, moves semantic
+labels into the lower review inspector, and records
+`in_frame_review_overlay=false`, `review_overlay_default=false`, and
+`clean_frame_available=true` in readback. This remains diagnostic-only:
+`production_candidate=false`, no new theme variant, no Source-Footage generator,
+no `.ymmp`, no render, no production timing, and no creative final acceptance.
+
+Latest common foundation decision (2026-06-08): `fake_runner_scaffold_committed`
+adds a tests-only fake runner scaffold in `da254ff feat: add fake runner
+scaffold`. The helper writes synthetic reports to `ExecutionPlan.report_path`,
+keeps valid report authority in `agent_gate.evaluate_report`, invokes the local
+notify stub only after `gate_result.needs_human=true`, and fails closed for
+invalid JSON, missing report, nonzero exit, and timeout. This does not enable
+real `codex exec`, stdin piping, subprocess runner behavior, runtime worker
+loop, external notification service, ClipPipeGen support, publish/release,
+rights automation, or `production_candidate` handling. It also does not resume
+G-28 mainline work. The next common-foundation slice should keep the same
+boundary unless real runner support is explicitly authorized.
+
+Latest G-28 decision (2026-06-08): `remote_handoff_sealed_after_review_console_ingest`
+keeps the latest context in-project for another terminal. The durable restart
+packet is now `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`
+plus `docs/USER_COPYPASTE_BLOCKS.md` SECTION 18. The next safe work is only
+screenshot / Electron smoke evidence or human GUI confirmation of the read-only
+G-28 Review Console panel; this does not reopen `.ymmp` generation, builders,
+readback/report artifacts, production carrier approval, creative final
+acceptance, render, rights/public-use automation, slot-fill, G-27 authority,
+ClipPipeGen, RSS, NotebookLM, or common foundation work. Local residue remains
+explicitly outside this handoff scope.
+
+Latest G-28 decision (2026-06-08): `pass_review_console_ingest_implemented`
+is recorded for the calibrated real-estate YMM4 diagnostic probe. The Review
+Console now has a read-only G-28 panel that references the existing `.ymmp`,
+readback JSON, report MD, human review record, and ingest plan in place, checks
+repo-relative artifact existence, shows diagnostic boundary badges, summarizes
+readback/human GUI results, exposes caveats for X=313, title readback debt, host
+placeholders, and glyph optical-center limits, and limits visible decisions to
+diagnostic review-surface outcomes. DOM smoke verifies the panel and the absence
+of production approval labels. This does not change `.ymmp`, builder,
+readback/report artifacts, render, production carrier approval, creative final
+acceptance, rights/public-use automation, slot-fill, G-27 authority, common
+foundation, ClipPipeGen, RSS, or NotebookLM work. Next safe action is screenshot
+/ Electron smoke evidence or human GUI confirmation of the read-only panel.
+
+Latest G-28 decision (2026-06-08): `G28-REAL-ESTATE-REVIEW-CONSOLE-INGEST-PLAN-2026-06-07`
+is added as the docs-only plan for read-only Review Console ingest of the
+accepted real-estate YMM4 diagnostic probe. The plan defines the input artifact
+inventory, diagnostic status badges, readback summary, human GUI result summary,
+title readback follow-up requirements, host placeholder boundary,
+human-calibrated callout caveat, diagnostic-only decision schema, future GUI
+implementation surfaces, error states, and next-slice acceptance criteria. It
+does not implement GUI ingest, modify GUI files, regenerate `.ymmp`, change the
+builder, rewrite readback/report artifacts, approve production, approve render,
+approve rights/public use, slot-fill, revive G-27, access ClipPipeGen, restart
+RSS / NotebookLM work, or implement common foundation / Codex Worker
+Orchestration. Next safe action is an explicitly authorized read-only Review
+Console ingest implementation slice based on this plan.
+
+Latest G-28 decision (2026-06-08): `accept_for_review_console_ingest_candidate_with_layout_metric_caveat`
+is recorded for the calibrated real-estate YMM4 diagnostic probe. Human GUI
+recheck accepted the X=313.0 lower-right callout label `仲介インセンティブ`:
+openability, focal-chain readability, connector treatment, caption reserve,
+diagnostic boundary, and major side-effect checks pass. This authorizes only a
+Review Console ingest candidate record / ingest plan. It does not authorize
+actual Review Console ingest implementation, production render, production
+carrier approval, creative final acceptance, rights automation, slot-fill,
+external material intake, G-27 revival, ClipPipeGen, RSS / NotebookLM, or common
+foundation / Codex Worker Orchestration work. Layout metric debt remains part of
+the candidate: current readback does not directly measure YMM4 glyph optical
+center, title y=`-474.5` is visually acceptable but should become a future title
+anchor/text-center/safe-area readback check, host placeholders are
+diagnostic-only and not production character/visual assets, and X=313 remains a
+human-calibrated override rather than reusable formula proof.
+
+Latest G-28 decision (2026-06-08): `g28_real_estate_information_gap_callout_label_human_calibration_v1`
+is implemented after human GUI recheck found the lower-right callout label
+`仲介インセンティブ` still visually left-shifted after the bounded alignment fix.
+The previous computed/polished YMM4 TextItem X was `289`; the human-measured
+correct X is `313.0`, so the builder now applies a one-time
+`human_calibrated_x=313` and records `calibration_delta_x=24`. This decision
+does not claim formula success. It records callout text layout system debt:
+`text_center_error_px` remains registered-placement proof only, and a remaining
+visual mismatch after this slice should move to callout text layout system
+redesign rather than another individual pixel/offset adjustment. Readback passes
+as `pass_callout_label_human_calibrated` while the boundary remains
+`diagnostic_only=true` / `production_candidate=false`; Review Console ingest,
+production render, production approval, creative final acceptance, rights
+automation, slot-fill, external materials, G-27 revival, ClipPipeGen, RSS /
+NotebookLM, and common foundation / Codex Worker Orchestration remain
+unapproved.
+
+Latest G-28 decision (2026-06-07): `g28_real_estate_information_gap_callout_label_alignment_v1`
+is implemented after human GUI correction clarified that the actual remaining
+visual target is the lower-right callout label `仲介インセンティブ`, not the
+right node `借主判断`. Only `G28_LDC_CalloutSlot_3_Label` changed: its
+registered optical offset moved from `{x:0,y:-3}` to `{x:4,y:-3}`. The previous
+right-node fix is retained because no adverse side effect was reported. The
+shared callout formula, node labels, connectors, hosts, caption reserve, variant
+id, and diagnostic boundary are unchanged. Readback passes as
+`pass_callout_label_alignment_fixed`. This decision also records the metrics
+caveat that `text_center_error_px=0` checks registered placement, not rendered
+YMM4 glyph optical center. Next safe move is human YMM4 GUI recheck of this
+callout-label-only fix; Review Console ingest and all production/rights/render/
+slot-fill work remain unapproved.
+
+Latest G-28 decision (2026-06-07): `g28_real_estate_information_gap_right_node_alignment_v1`
+is implemented for the existing real-estate YMM4 diagnostic probe after human
+GUI recheck returned `revise_probe_again_narrow_right_node_text_alignment`.
+Only `G28_LDC_Node_Right_Label` changed: its registered optical offset moved
+from `{x:0,y:-4}` to `{x:4,y:-4}`. The shared text-centering formula,
+connectors, callouts, hosts, caption reserve, variant id, and diagnostic
+boundary are unchanged. Readback passes as `pass_right_node_alignment_fixed`.
+This decision also records the metrics caveat that `text_center_error_px=0`
+checks registered placement, not rendered YMM4 glyph optical center. Next safe
+move is human YMM4 GUI recheck of this right-node-only fix; Review Console
+ingest and all production/rights/render/slot-fill work remain unapproved.
+
+Latest G-28 decision (2026-06-07): `g28_real_estate_information_gap_layout_contract_v1`
+is implemented for the existing real-estate YMM4 diagnostic probe. The builder
+now records derived connector geometry, manual text offset registry, a bounded
+2-3 callout formula with four-callout risk, and tolerance readback. Verification
+passed as `pass_probe_polished` with
+`layout_contract_metrics_present=true` and
+`layout_contract_tolerances_pass=true`. This remains diagnostic-only
+(`production_candidate=false`); the next safe move is human YMM4 GUI recheck
+before any Review Console ingest decision. No production render, production
+approval, creative final acceptance, rights automation, slot-fill, external
+image/URL/raw reference, source footage/audio/TTS, G-27 revival, ClipPipeGen,
+RSS / NotebookLM, or common foundation / Codex Worker Orchestration work is
+approved by this decision.
+
 | 日付 | 決定事項 | 選択肢 | 決定理由 |
 |------|----------|--------|----------|
+| 2026-06-07 | **G-28 real-estate polished YMM4 diagnostic probe の layout contract audit は `needs_layout_contract_implementation` を推奨する。** | Review Console ingestへ即進む / さらに目分量polishを続ける / probe pathを延期する / layout contractを1回だけbounded revisionする | `docs/verification/G28-REAL-ESTATE-YMMP-PROBE-LAYOUT-CONTRACT-AUDIT-2026-06-07.md` により、現在probeは diagnostic GUI surface としては accept 済みだが、再利用可能なlayout systemとしては未実装部分が残ると判断した。TextItemはtop-left formulaで説明できるがmanual optical offsetに依存し、connectorはedge-to-edge barとして説明できるがhard-coded override、callout rowは3件専用で4件以上の破綻リスクがある。次は追加polishではなく、derived connector geometry、explicit offset registry、2-3 callout formula、tolerance readbackを入れる bounded layout-system revision が妥当。今回 `.ymmp`、builder/generator、readback/report、render、production approval、creative final acceptance、rights automation、source footage/audio/TTS、外部画像/URL/raw reference、G-27、ClipPipeGen、RSS / NotebookLM には進めない。 |
+| 2026-06-07 | **G-28 real-estate polished YMM4 diagnostic probe の GUI re-review は `accept_as_diagnostic_gui_probe_with_layout_contract_followup` として受け、次工程を layout contract audit に限定する。** | production approvalへ進む / さらに目分量polishを続ける / Review Console ingestへ即進む / re-review結果を記録し layout contract audit へ進む | 人間reviewでは YMM4 openability、focal chain、caption reserve、callout readability、host role、実在サービス/物件感、diagnostic boundary は pass/clear。yellow connector treatment と rectangle text alignment は見た目として改善したが `pass_partial` であり、残課題は数pxの再polishではなく、text centering formula、connector positioning formula、callout slot rule、manual offset registry、tolerance readback を明示する layout contract 問題として扱う。今回 `.ymmp`、builder/generator、readback/report再生成、render、production carrier approval、creative final acceptance、rights automation、source footage/audio/TTS、外部画像/URL/raw reference、G-27、ClipPipeGen、RSS / NotebookLM には進めない。 |
+| 2026-06-07 | **G-28 real-estate YMM4 diagnostic probe bounded polish revision は `pass_probe_polished` として通過した。** | `revise_probe` を未処理に残す / production promotion に進む / 新variantに逃がす / 同一diagnostic probeを最小更新する | Human GUI review の `revise_probe` に対して、`scripts/build_g28_real_estate_ymmp_probe.js` は yellow connector alignment、callout slot spacing、TextItem visual offset の bounded polish だけを行うようになった。`samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe.{ymmp,readback.json,report.md}` を同一pathに再生成し、readback は `diagnostic_only=true` / `production_candidate=false` / 1920x1080 / bottom 20% caption reserve clear / focal chain 3 / callout count 3 / non-focal hosts / bounded text budget / external image・URL・source footage・audio・TTS・token-like counts 0 を満たす。今回も diagnostic polish only であり、production render、creative final acceptance、production carrier approval、rights automation、real material slot-fill、G-27復帰、ClipPipeGen、RSS / NotebookLM には進めない。 |
+| 2026-06-07 | **G-28 real-estate YMM4 diagnostic probe の human GUI review は `revise_probe` として受け、次は bounded polish revision に限定する。** | production 承認へ進む / probe を完了扱いにする / 新variantへ逃がす / human review result を記録し、同一probeのpolish revisionへ限定する | ユーザー確認では YMM4 openability、focal chain、caption reserve、host role、実在サービス/物件感、diagnostic boundary は pass/clear だが、callout readability は `pass_partial`、alignment/polish は `partial` であり、黄色い線の処理・矩形内テキスト整列・微妙な視覚ズレが認知摩擦として残ったため。`docs/verification/G28-REAL-ESTATE-YMMP-PROBE-HUMAN-REVIEW-2026-06-07.md` に記録し、次の許可範囲は同じ `variant_id=g28_ldc_real_estate_information_gap` / diagnostic-only / production-candidate-false 境界を保つ polish revision のみ。production render、creative final acceptance、production carrier approval、rights automation、real material slot-fill、外部画像/URL/raw reference、G-27復帰、ClipPipeGen、RSS / NotebookLM には進めない。 |
+| 2026-06-07 | **G-28 `real_estate_information_gap` accepted diagnostic variant を self-contained YMM4-compatible probe へ進める。** | plan のまま待つ / production carrier approval へ進む / new G-28 variant を作る / accepted済み variant から shapes/text only の `.ymmp` diagnostic probe を作る | `g28_lecture_diagram_carrier_real_estate_information_gap_v1` は human decision が `accept_as_diagnostic_direction`、readback が `passed` であり、直前 plan が YMM4-compatible probe を次 slice として許可しているため。今回の成果は `scripts/build_g28_real_estate_ymmp_probe.js` と `samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe.{ymmp,readback.json,report.md}` に限定し、classification `pass_ymmp_probe_created` まで確認する。これは diagnostic GUI review surface であり、production render、creative final acceptance、production carrier approval、rights automation、real material slot-fill、external image/URL/raw reference、G-27復帰、common foundation、ClipPipeGen、RSS / NotebookLM には進めない。 |
+| 2026-06-07 | **G-28 `real_estate_information_gap` を最初の YMM4-compatible diagnostic probe 候補として計画する。** | すぐ `.ymmp` を作る / production carrier approvalへ進む / deferred carrierを先にprobe化する / accepted済み Lecture Diagram variant の probe plan だけ作る | `g28_lecture_diagram_carrier_real_estate_information_gap_v1` は `accept_as_diagnostic_direction` 済みで、readback も `diagnostic_only=true` / `production_candidate=false` / caption reserve clear / 3-node focal chain / 3 callouts を満たしているため、最初の YMM4-compatible probe 候補として最も摩擦が少ない。一方で今回の目的は plan 作成のみなので、`docs/verification/G28-REAL-ESTATE-YMM4-COMPATIBLE-PROBE-PLAN-2026-06-07.md` に item/group mapping、layer order、readback requirements、human GUI checklist、next slice options を固定し、`.ymmp`、render、production approval、creative final acceptance、rights automation、new variant、generator変更、G-27復帰、common foundation、ClipPipeGen、RSS / NotebookLM には進めない。 |
+| 2026-06-07 | **G-28 game-mechanics の `revise` は、まず diagnostic semantics clarification で閉じる。** | すぐ generator / JSON を変更する / 新variantを作る / YMM4 probeへ進む / 既存 semantics note で `判定 / 当たり判定` 中心の因果構造を明確化する | `g28_lecture_diagram_carrier_game_mechanics_explanation_v1` の人間decisionは `revise` だが、求められている修正は production 昇格ではなく「何を説明する carrier か」の明確化であるため。既存 3-node chain は維持し、`入力操作` -> `内部ルール / 判定` -> `画面上の結果` の middle node を first-review では `判定 / 当たり判定` として読む。`操作感` / `リスクとリターン` は補助 callout に留め、caption reserve、non-focal host、dense table回避、indexed whiteboard回避を維持する。今回 generator、new variant、JSON/readback/report rewrite、`.ymmp`、render、production carrier approval、creative final acceptance、G-27復帰、common foundation、RSS / NotebookLM には進めない。 |
+| 2026-06-07 | **G-28 diagnostic artifacts 6件の human decision を記録し、production には進めない。** | 全件accept扱いにする / reviseからgenerator変更へ進む / deferをproduction probe扱いにする / supplied human decisions だけを decision record に記録する | 人間decision が明示されたため、`docs/verification/G28-DIAGNOSTIC-HUMAN-DECISION-RECORD-2026-06-07.md` にそのまま記録する。generic Lecture Diagram skeleton と `real_estate_information_gap` は `accept_as_diagnostic_direction`、`game_mechanics_explanation` は `revise`、Map / Evidence・Source-Footage definition-only・Conversation / Buffer definition-only は `defer_to_ymmp_carrier_probe`。accept は diagnostic direction の承認のみであり、production carrier approval、creative final acceptance、`.ymmp`、render、G-27復帰、common foundation実装、RSS / NotebookLM には進まない。 |
+| 2026-06-07 | **G-28 human decision record は、判断を捏造せず pending intake surface として作る。** | accept / revise / reject / defer をAgent判断で埋める / 新variantやgenerator変更へ進む / pending_human_decision の decision record を作る | 今回の prompt では人間側の accept / revise / reject / defer 判断がまだ明示されていないため。既存 diagnostic artifacts は readback-passed / diagnostic_only=true / production_candidate=false なので、次の成果物は `docs/verification/G28-DIAGNOSTIC-HUMAN-DECISION-RECORD-2026-06-07.md` に human input fields と allowed decisions を固定することに限定する。production carrier approval、creative final acceptance、`.ymmp`、render、G-27 revival、common foundation 実装、RSS / NotebookLM には進めない。 |
+| 2026-06-07 | **G-28 は追加 variant 量産ではなく、既存 diagnostic artifact を人間が判定する review packet に進める。** | さらに Lecture Diagram variant を追加する / production carrier や `.ymmp` probe へ飛ぶ / common foundation 実装へ戻る / 汎用 diagnostic human review packet を作る | 現存する Lecture Diagram generic skeleton、`real_estate_information_gap`、`game_mechanics_explanation`、Map / Evidence skeleton は readback-passed diagnostic-only であり、次の摩擦は生成不足ではなく人間が `accept_as_diagnostic_direction` / `revise` / `reject` / `defer_to_ymmp_carrier_probe` を返す decision surface の不足にあるため。今回の artifact は `docs/verification/G28-DIAGNOSTIC-HUMAN-REVIEW-PACKET-2026-06-07.md` に限定し、新しい JSON/HTML/readback/generator、production carrier approval、creative final acceptance、`.ymmp`、render、G-27 revival、RSS / NotebookLM、Codex Worker Orchestration 実装には進めない。 |
+| 2026-06-05 | **G-28 game-mechanics human review は `revise` として受け、Lecture Diagram Carrier の diagram semantics note に落とす。** | acceptとして次へ進む / Source-Footageへ切り替える / 新variantを生成する / 既存carrierのsemantics noteに限定する | ユーザーが「入力操作 -> 内部ルール / 判定 -> 画面上の結果」は正しいが、`内部ルール` が抽象的なので `判定 / 当たり判定`、`無敵時間`、`硬直` のような具体内部処理例を1つ選べる余地を残したい、と返したため。最初のreview主軸は `判定 / 当たり判定`、`操作感` と `リスクとリターン` は補助扱いにする。host は non-focal、medium caption 前提、画面内textは短く保つ。新variant、Source-Footage、`.ymmp`、render、production timing、creative final acceptance には進めない。 |
+| 2026-06-05 | **G-28 game-mechanics review packet までの文脈を repo-local handoff として保持し、別端末再開用 prompt を更新する。** | チャット報告だけで止める / AGENTS.md に長文追記 / runtime-state・decision log・USER_COPYPASTE_BLOCKS に最小追記して push | ユーザーが「全コンテキストをプロジェクトに保持しつつ、ローカルをリモートに反映」「別端末からすぐ再開」を明示したため。最新の実体は `docs/verification/G28-GAME-MECHANICS-HUMAN-REVIEW-PACKET-2026-06-05.md` までで、G-28 は diagnostic-only、Source-Footage は future-only backup、次は human `accept` / `revise` / `reject` 記録または design-only checklist に限る。AGENTS.md と既存 generated artifact は触らず、`.ymmp`、render、production timing、creative final acceptance、G-27、RSS / NotebookLM へは進めない。 |
+| 2026-06-05 | **G-28 toolbox を、次の1 shot の carrier selection worksheet に落とす。** | 実際の shot が来るまで待つ / 新しい skeleton や theme variant を増やす / 既存 generated artifact を変更する / 空テンプレートと判定規則だけを verification artifact にする | 次の制作時の摩擦は「Lecture / Map / Source-Footage / Conversation のどれを選ぶか」なので、現存 toolbox に基づき shot purpose、source material、visual evidence type、claim type、required viewer action、caption density を埋めれば carrier を選べる worksheet を作るのが最小で有効。Source-Footage と Conversation / Buffer は未着手のまま進む条件だけを明示し、source intake、image path/URL、`.ymmp`、render、production timing、creative final acceptance、G-27 復帰、RSS / NotebookLM には進めない。 |
+| 2026-06-05 | **G-28 archetype 群は、追加サンプルではなく画面設計の道具箱として整理する。** | 新しい theme variant を増やす / 新しい carrier skeleton を増やす / 既存 artifact を変更する / 4 archetype の目的・適用範囲・readback 状態・production 前判断を1つの verification artifact にまとめる | G-28 の次の詰まりは標本数ではなく、次の shot でどの carrier を選ぶかの判断摩擦に移ったため。Lecture Diagram と Map / Evidence は readback-passed の diagnostic-only、Source-Footage と Conversation / Buffer は definition-only と明示し、source intake、image path、URL、`.ymmp`、render、production timing、creative final acceptance、G-27 復帰、RSS / NotebookLM には進まない境界を維持する。 |
+| 2026-06-05 | **G-28 Map / Evidence Carrier 完了後の全コンテキストを repo-local handoff として保持し、`origin/master` に反映する。** | チャット報告だけで止める / AGENTS.md に長文追記 / runtime-state・decision log・USER_COPYPASTE_BLOCKS に最小追記して push | ユーザーが「上記までで全コンテキストをプロジェクトに反映してプッシュ」を明示したため。通常再開入口を肥大化させないため `AGENTS.md` は触らず、現在位置は `docs/runtime-state.md`、判断履歴は本 decision log、ChatGPT へ貼る最新再開 prompt は `docs/USER_COPYPASTE_BLOCKS.md` に分離する。Map / Evidence は diagnostic skeleton であり、production carrier approval、`.ymmp`、render、creative final acceptance、G-27 promotion、RSS / NotebookLM へは進めない。 |
+| 2026-06-05 | **G-28 Map / Evidence Carrier は、Lecture Diagram Carrier の追加 theme variant ではなく、別 archetype の diagnostic skeleton として生成する。** | Lecture Diagram variant を量産する / 実地図や衛星画像を取り込む / 新しいSCS typeを増やす / 既存SCSの `center-focal` に写像した Map-Evidence skeletonを追加 | ユーザーが地図・統計・産業立地・企業分布・人口・市場・地域差・出典付き論証を「飾りではなく論証装置」として扱う carrier archetype を1つだけ作るよう指定したため。今回の skeleton は `G28_MEC_EvidenceSurface` を focal anchor、3つの annotation slot、bounded source note、non-focal hosts を持つが、real map / satellite image / image path / URL / raw reference / `.ymmp` / render / production timing / creative final acceptance / source footage / gameplay screenshot intake には進まない。SCS mapping は `center-focal` で、新しい composition type は増やさない。 |
+| 2026-06-05 | **G-28 `game_mechanics_explanation` は、Source-Footage Carrier へ進まず、Lecture Diagram Carrier の2つ目の theme-specific diagnostic variant として生成する。** | 不動産variantだけで止める / gameplay screenshot や source footage を取り込む / Lecture Diagram上の `center-focal` diagnostic variantを追加 | ユーザーが G-28 generic capability の確認として、ゲームレビュー / ゲームメカニクス解説へ転用できるかを1variantだけ検証するよう指定したため。今回のvariantは `入力操作` -> `内部ルール` -> `画面上の結果` の focal-chain semantics と、`操作感` / `判定 / 当たり判定` / `リスクとリターン` の callout semantics を持つが、source footage carrier ではなく、画像・URL・raw reference・production render・creative final acceptance・`.ymmp` 生成には進まない。 |
+| 2026-06-05 | **G-28 `real_estate_information_gap` variant 完了後の全コンテキストを repo-local handoff として保持し、`origin/master` に反映する。** | チャット報告だけで止める / AGENTS.md に長文追記 / `runtime-state.md` と decision log に最小追記して push | ユーザーが「全コンテキストをプロジェクトに保持しつつ、ローカルをリモートに反映」を明示したため。通常再開入口を肥大化させないため `AGENTS.md` は触らず、現在位置は `runtime-state.md`、判断履歴は本 decision log に限定して保存する。既知未追跡 `.claude/worktrees/` と `samples/2026-05-16.ymmp` は local residue のまま触らない。 |
+| 2026-06-05 | **G-28 `real_estate_information_gap` は、G-27 復帰や production carrier 昇格ではなく、既存 Lecture Diagram skeleton の theme-specific diagnostic variant として生成する。** | 汎用 skeleton のまま停止 / G-27 carrier path へ戻る / `.ymmp` production carrier へ飛ぶ / `--variant real_estate_information_gap` で JSON/HTML/readback/MD を生成 | ユーザーが theme を `real_estate_information_gap`、readback variant id を `g28_ldc_real_estate_information_gap` に固定し、approved carrier 不在で止めないこと、production / render / creative acceptance / source footage / image path / URL / RSS / NotebookLM に進まないことを明示したため。variant は `center-focal` の Lecture Diagram 上で `元付情報` -> `ポータル掲載` -> `借主判断` の3ノード focal-chain semantics と、`情報遅延` / `掲載粒度の欠落` / `仲介インセンティブ` の3 callout semantics を持つが、slot-fill済み production text ではない。根拠: user prompt + G28 Lecture Diagram spec + generated readback `status=passed` |
+| 2026-06-05 | **G-28 Lecture Diagram Carrier は、production approval 待ちで停止せず、Agent-owned diagnostic skeleton / readback artifact まで進める。** | 人間がcarrierを作るまで停止 / `.ymmp` zero-generationへ飛ぶ / JSON/HTML/readback skeletonで実体化 | ユーザーが Human Authority 化 / carrier 官僚制の再発防止を明示したため、creative final acceptance と diagnostic skeleton generation を分離する。現行 G-28 v0.1 は `.ymmp` zero-generation を非目的に置くので、このスライスでは `docs/verification/G28-LECTURE-DIAGRAM-CARRIER-SPEC-2026-06-05.md` と `samples/_probe/g28/lecture_diagram_carrier_skeleton_*` の machine-readable artifact で frame contract / layer order / caption reserve / focal area / host role / callout count を閉じる。根拠: user prompt + REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md + SCENE_COMPOSITION_SCHEMA.md |
+| 2026-06-05 | **G-28 の初回参照画像入力を受領済みとして扱い、画像丸コピーではなく reference style brief へ抽出する。** | input-wait 継続 / 画像を素材化 / G-27 carrier 待ちへ戻す / G-28 style brief に抽出 | ユーザーが 7 枚の参照画像と extraction 方針を渡したため、G-28 の parked 状態を解除し、`docs/REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md` と SCS に沿って per-image extraction、共通画面文法、generic carrier archetype、YMM4 item/group 構成案へ変換するのが最小前進。根拠: runtime-state 2026-06-05 handoff + docs/REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md + SCENE_COMPOSITION_SCHEMA.md |
+| 2026-06-04 | **G-28 を parked / input-wait として保持し、詳細 handoff と ChatGPT 貼付用 block を repo 内に保存する。** | runtime-state の短文だけに留める / AGENTS.md に長文手順を追加 / verification handoff + USER_COPYPASTE_BLOCKS に分離 | ユーザーは全コンテキストを project に保持したうえで remote 反映を求めている。一方で通常再開入口を重くすると drift するため、現状態は `runtime-state.md`、詳細な G-28 parking context は `docs/verification/G28-REFERENCE-INPUT-WAIT-HANDOFF-2026-06-04.md`、ユーザーが ChatGPT へ貼る reusable block は `docs/USER_COPYPASTE_BLOCKS.md` に分離する。 |
+| 2026-06-04 | **G-27 を active production carrier blocker から外し、case-specific legacy / reference evidence として保持する。後継として G-28 Reference-Driven Generic Screen Carrier を proposed 登録する。** | G-27 carrier 待ちを継続 / diagnostic carrier を production 昇格 / G-27 を削除 / 汎用 screen carrier issue へ再生成 | G-27 の diagnostic carrier、review console、SCS lessons は有用だが、不動産DX固有の carrier 未受領を active next action として延命すると制作摩擦が増える。画像丸コピーではなく、参照画像から構図・密度・余白・色階層・視線誘導・UI感を抽出して SCS / YMM4 carrier handoff へ変換する汎用能力に再定義する方が、NLMYTGen の downstream adapter / YMM4 接着層の責務に合う。根拠: INVARIANTS §Responsibility Boundaries + FEATURE_REGISTRY G-27/G-28 + docs/REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md |
+| 2026-06-04 | **Codex 側の作業完了・停止・確認報告は、ChatGPT へ一発コピーできる単一コードブロックを最後に含める。** 正本の通常再開は引き続き `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md` で、詳細テンプレは `docs/USER_COPYPASTE_BLOCKS.md`、対話上の report contract は `docs/INTERACTION_NOTES.md` に置く。 | チャットだけで運用 / AGENTS.md に長いテンプレを追加 / interaction note + reusable copypaste block に分ける | ユーザーは Codex の報告を ChatGPT 側へ毎回貼り付けて監修するため、ドラッグ選択なしでコピーできる唯一の正本が必要。一方で `AGENTS.md` を運用マニュアル化すると再開入口が重くなるため、入口・現状態・対話契約・ユーザー用テンプレを分離する。 |
+| 2026-06-03 | **ChatGPT / Codex 間で再利用する長文 Prompt / PowerShell / 停止文 / 報告文を、Agent再開マニュアルではなくユーザー用コピペ資産として保存する。** 正本は `docs/USER_COPYPASTE_BLOCKS.md`。通常再開で読む3点は増やさず、active next action や runtime-state の代替にも使わない。 | 次Agentへのキックスタートとして扱う / repoに残さない / ユーザー用保存版として残す | ユーザーの目的は次Agentへ作業を実行させることではなく、毎回長文を手で組み立てる摩擦を減らすことだったため。RSS / OPML / NotebookLM source-pack selection は NLMYTGen では旧水路であり、保存版内でも downstream adapter 境界と G-27 分離を保つ必要がある。 |
+| 2026-06-03 | **RSS / OPML / Inoreader / topic clustering / NotebookLM source-pack selection を NLMYTGen の active lane から外し、`newsroom-yt-pipeline` 側の上流編集責務として扱う。** NLMYTGen 側の既存 RSS 実装や過去証跡は削除せず、legacy / reference-only として残す。今後の NLMYTGen は newsroom-produced packet / transcript / ScriptIR / VisualIR / export bundle を受け取ってから、YMM4 CSV、YMM4 adapter、Review Console、proof ingest へ落とす。 | NLMYTGenでOPML復元とsource-pack選定を継続 / RSS実装を削除 / active laneからretireしてnewsroomへ寄せる | newsroom-yt-pipeline が source ingest、article ledger、story clustering、scoring、NotebookLM packet preparation、script workbench interfaces、visual planning interfaces、rights manifests を持つ上流編集repoであり、NLMYTGen の価値経路は downstream adapter と YMM4 production proof にあるため。根拠: INVARIANTS §Responsibility Boundaries + runtime-state 2026-06-03 handoff |
+| 2026-06-01 | **G-27 `G27_PublicVsBrokerDB` carrier は production slot-fill へ進む前の境界物として必要。ただし user が明示すれば既存 diagnostic carrier を production carrier に昇格する選択肢もある。** デフォルトは人間が YMM4 で最小 stable carrier を作る。速度優先なら `samples/_probe/g24/real_estate_dx_diagnostic_carrier.ymmp` を昇格対象にできるが、runtime-state と readback/boundary 記録を更新してから進む。`samples/2026-05-16.ymmp` は item 3 件のみで不可。 | 新規最小 carrier / diagnostic carrier 明示昇格 / carrier なし diagnostic 継続 | YMM4 が制作基盤で Python/assistant は CSV/IR/registry/post-import `.ymmp` patch の接着層であるため、assistant が diagnostic raw geometry を黙って production layout にしてはいけない。carrier は美麗な完成画面ではなく、固定 `G27PBD_*` item 名、card 数、caption safe area、短 Remark、後段 patch で触らない geometry/color/font/layout を固定する台座であるため。 |
+| 2026-05-27 | **A-04 RSS Reader Sync v1.1 は `master` / `origin/master` に fast-forward 統合済み**。統合範囲は `da30ff2..1599cf5` で、OPML source sync、fetch coverage、Inoreader read-only adapter、`rss-smoke` sanitized evidence、live-smoke runbook、RSS tests を含む。PR は個人開発のため省略し、merge 前後に RSS narrow tests `41 passed`、full `uv run pytest` `525 passed, 25 skipped`、CLI help smoke、`git diff --check` を確認した。 | PR 作成 / master へ fast-forward / RSS branch 継続 | branch diff が RSS docs/code/tests + `.gitignore` に閉じ、G-27 / Baseball / Thumbnail / GUI / unrelated path と raw OPML / token / private feed URL / article body / live smoke evidence の混入がなかったため。OPML は v1 source of truth、Inoreader は read-only adapter のままで、DB・OAuth refresh・既読同期・購読変更・background polling は実装しない。 |
+| 2026-05-26 | **A-04 RSS lane は `codex/rss-reader-sync-clean` を remote handoff 正本にする**。OPML sync v1、fetch coverage、Inoreader read-only adapter、`rss-smoke` one-command sanitized evidence、live-smoke runbook までを `origin/codex/rss-reader-sync-clean` に push 済み。別端末では `docs/runtime-state.md` と `docs/verification/RSS-LIVE-SMOKE-RUNBOOK-2026-05-26.md` から再開する。 | clean RSS branch を正本化 / G-27 差分混在 branch を継続 / master 直作業 | 既存作業ツリーには G-27 差分が残っているため、RSS PR/再開経路を汚さないには `origin/master` ベースの clean branch が安全。RSSの残作業は実OPMLまたは一時 Inoreader token による live smoke だけで、raw OPML/token/private URL/full body は commit しない。 |
+| 2026-05-25 | **A-04 RSS Reader Sync v1 は OPML export を先に共通正本化する**。`fetch-topics` は URL 直接指定を維持しつつ `--opml` で人間側RSSリーダーの購読一覧をそのままAI側取得対象へ使い、`list-feed-sources` でAIが見る一覧を確認できるようにする。Inoreader OAuth / API 直結は後続の read-only adapter 候補として文脈だけ保存し、このスライスでは認証・DB・既読同期を増やさない。 | Inoreader 直結から開始 / OPML 正本化から開始 / 既存URL指定のみ維持 | Inoreader はOAuth app・token保管・利用条件・rate limit を伴うため、先に依存追加なしで「人間一覧とAI取得一覧が一致する」土台を閉じる方が安全。A-04 はL1入力取得であり、NotebookLM代替や制作artifact生成へ広げないため |
 | 2026-04-30 | **G-26 目的別演出制作を `build-motion-recipes` pipeline として実装**。brief `samples/recipe_briefs/g26_motion_recipe_brief.v1.json`、effect catalog / concrete samples / motion library / optional composition corpus を読み、`_tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1.ymmp`、readback JSON、manifest MD を生成する。初期 recipe は `nod_*` / `jump_*` / `panic_crash` / `shocked_jump` / `surprised_chromatic` / `anger_outburst` / `shobon_droop` / `lean_curious` の 12 件。 | 都度手作業で試作 / 既存サンプル再配置だけ / intent-first recipe pipeline | ユーザーの負担は「毎回一から演出を作る」ことなので、IR 作業と同じく意図・候補・readback・採否を machine-readable artifact に固定する必要があるため。effect catalog を機械参照し、最終的な動きから逆算する経路を CLI に閉じる。 |
 | 2026-04-30 | **G-26 evidence gate の過剰解釈を修正し、目的別 recipe lab を正当な assistant 作業として扱う**。`_tmp/g26/recipe_lab/g26_goal_motion_recipe_lab.ymmp` は既存 YMM4-saved canvas `samples/canonical.ymmp` と既存 template source `samples/templates/skit_group/delivery_v1_templates.ymmp` から作成した、うなずき・ジャンプ・傾き・chain の review artifact。readback は openability pass / recipe GroupItems 12 / ImageItems 24 / POSIX asset paths 0。 | operator-authored source 待ちだけにする / 既存 sample を再配置するだけ / assistant が目的別 review lab を作る | ユーザーの要求は「既存動作の散布」ではなく「うなずき」「ジャンプ」のような目標を設定して試作すること。`compatible_after` / `forbidden_after` の推測禁止は contract 昇格条件であり、既存 YMM4 source をコピーして transform 値を調整する review sample 作成を止める理由ではないため。 |
 | 2026-04-30 | **G-26 Evidence Gate は machine pass / visual not recorded / tilt-chain source absent として扱う**。`_tmp/g26/screen_review/g26_motion_primitive_compact_review.ymmp` は openability pass、inserted GroupItems 3、POSIX asset paths 0。repo-local `.ymmp` 53 本の scan では tilt / chain Remark が見つからないため、`tilt` は contract 外、`compatible_after` / `forbidden_after` は `unknown` 維持。 | 推測で compatibility を埋める / machine pass だけで production 接続 / visual・tilt・chain を別 gate に分離 | 画面表示の真偽は YMM4 visual confirmation なしに判定できず、chain source なしで相性を埋めると G-25 の accidental composition failure を再発させるため。assistant 側で閉じられる machine readback は閉じ、観測不能部分だけを正確に残す。 |
@@ -261,6 +1022,51 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 |----|----------|--------|
 | IP-02 | Web UI 化 | CLAUDE.md スコープ外 |
 | IP-03 | YouTube 自動アップロード | FEATURE_REGISTRY E-01 (hold) |
+
+---
+
+## HANDOFF SNAPSHOT (2026-06-12 G-28 reference layout path sync)
+
+- Branch / remote state: `master` at `c6f17b5 feat: add G-28 reference layout prototypes`; after sync, `HEAD...@{u}=0 0`.
+- Working tree state: clean before and after the docs-only context seal; no generated artifacts were created in this handoff.
+- Current repo path for this machine: `C:\Users\PLANNER007\NLMYTGen`.
+- Correct G-28 prototype hub to open: `C:\Users\PLANNER007\NLMYTGen\samples\_probe\g28\reference_layout_prototypes\index.html`.
+- Git tree / working tree artifact state: the eight HTML files are present under `samples/_probe/g28/reference_layout_prototypes/`; the wrong `samples_probe` path is absent.
+- Path-confusion finding: `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen` was not present in this environment, so resume from the PLANNER007 checkout unless the human explicitly points to another synced clone.
+- Current interpretation: the reported missing folder was caused by checkout freshness / local path confusion before the fast-forward to `c6f17b5`; the artifact now exists in the active checkout.
+- Boundary: do not regenerate HTML prototypes, do not make `.ymmp`, do not build YMM4 tooling, do not touch existing game-mechanics / map-evidence carriers, and do not enter render, production, rights, creative final acceptance, Newsroom, common foundation, G-27, ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, or real runner paths.
+- Next concrete move: perform human browser review of the static HTML pack and return `accept`, `accept_with_caveats`, `revise_once`, `reject`, or `redesign_required` with per-screen notes.
+
+## HANDOFF SNAPSHOT (2026-05-29 RSS cleanup decision)
+
+- Branch/remote: continue on `master` and pull latest `origin/master` before work. This decision builds on cleanup handoff commit `f6db81e`.
+- RSS cleanup decision: user accepted deletion for all failed-feed categories from the audit (`http_404`, `parse_or_non_feed`, `ssl_error`, `timeout`, and `http_403`) because RSS feed resources do not need strict completeness and the sample count is sufficient.
+- Committed decision record: `docs/verification/RSS-FAILED-FEED-CLEANUP-DECISION-2026-05-29.md`. It contains only counts, categories, and policy; it does not include feed URLs, raw OPML, tokens, article titles, or article bodies.
+- Duplicate handling: duplicate feed URL remains `0`; duplicate title remains `1` and stays `manual_review` because no specific duplicate-title action was supplied.
+- Post-cleanup validation state: Inoreader-side changed count is unknown, and the local OPML export has not been refreshed after the deletion decision. Do not rerun post-cleanup smoke as proof until a fresh OPML export replaces `_local/rss/feeds.opml.xml`.
+- Next safe restart move: ask for or wait for a fresh OPML export at `_local/rss/feeds.opml.xml`, then rerun `list-feed-sources` and `rss-smoke` with sanitized evidence only. Do not use Inoreader API or tokens unless explicitly re-scoped.
+
+## HANDOFF SNAPSHOT (2026-05-28 RSS cleanup handoff)
+
+- Branch/remote: `master` is pushed to `origin/master`; restart with `cd C:\Users\PLANNER007\NLMYTGen && git fetch --all --prune && git checkout master && git pull --ff-only origin master`. The cleanup audit commit immediately before this handoff is `b98afac`; after pulling, use the latest `origin/master` commit and read this snapshot.
+- RSS OPML status: RSS UI comparison matched NLMYTGen's OPML view at `147` sources and `7` categories, so the ignored OPML export can be treated as the current operational source of truth until the reader list changes.
+- Committed RSS evidence to read first: `docs/verification/RSS-LIVE-SMOKE-EVIDENCE-2026-05-28.md` for the smoke/diagnostic baseline, then `docs/verification/RSS-FAILED-FEED-CLEANUP-SUMMARY-2026-05-28.md` for the cleanup audit summary. `docs/runtime-state.md` has the active top-line state.
+- Local-only artifacts: `_local/rss/feeds.opml.xml` is the raw OPML input and must stay uncommitted. `_tmp/rss_failed_feed_cleanup_candidates.md` and `_tmp/rss_failed_feed_cleanup_candidates.json` contain the detailed failed-feed titles/URLs for human Inoreader UI cleanup and must also stay uncommitted.
+- Latest local cleanup audit: status counts were `fetched=121`, `empty=0`, `error=26`, `listed=0`; error breakdown was `http_404=2`, `parse_or_non_feed=15`, `ssl_error=2`, `timeout=3`, `http_403=4`. Prior live diagnostics varied around `31/32` errors, so treat exact failure count as live-network variable and use categories for cleanup planning.
+- Cleanup order for the human UI pass: review `http_404` first, then `parse_or_non_feed`, `ssl_error`, `timeout`, and `http_403`. Delete/replace/keep decisions happen in Inoreader manually; repo code and OPML files are not mutated by this audit.
+- Duplicate handling: duplicate feed URL count is `0`; duplicate title count is `1` and remains `manual_review`. Do not auto-merge or auto-delete the duplicate title.
+- Boundaries not crossed: Inoreader API, token use, subscription mutation, DB/background sync, G-27 carrier work, Baseball, Thumbnail, GUI work, NotebookLM API, video generation, and YouTube posting were not run.
+- Validation before handoff: CLI help smoke for `rss-smoke`, `list-feed-sources`, and `fetch-topics` passed; `git diff --check` passed; added committed lines had no URL/token/raw OPML marker hits. The ignored local files remain outside git.
+- Next safe restart choices: `Verify` the local-only failed-feed list in Inoreader UI and rerun `rss-smoke` after manual cleanup; `Audit` the one duplicate title manually; or `Advance` source category representative selection so categorized entries can appear in the shown sample. Do not start Inoreader live API smoke without an explicit new instruction.
+
+## HANDOFF SNAPSHOT (2026-05-27 update)
+
+- Branch / remote state: `master`. Pull latest `origin/master`; expected sync check is `git rev-list --left-right --count "HEAD...@{u}" = 0 0`. Working tree may still show pre-existing untracked local files `.claude/worktrees/` and `samples/2026-05-16.ymmp`; they are not part of this handoff.
+- Restart path: read `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`. `runtime-state.md` is the live frontier authority.
+- Closed diagnostic slice: `samples/_probe/g24/layout_instruction_proof.ymmp` now has machine readback pass and user-side YMM4 v4.52.0.8 GUI proof pass. The visible issues found in the first GUI pass (bottom-looking title alignment, no title/grid gap, unstable labels) were corrected by `4631f89 fix(g27): stabilize layout instruction proof spacing`.
+- Current proof facts: `layout_instruction_proof_readback.json` reports `status=passed`, 17 items, hard_fail=0, violations=[], `title_grid_gap_visible=pass`, and `region_labels_clear_major_items=pass`. Narrow checks run: `node scripts\build_g27_layout_instruction_proof.js --write`, `node scripts\build_g27_layout_instruction_proof.js`, `node scripts\render_g27_layout_instruction_proof_html.js`, and `git diff --check`.
+- Boundary: this is a diagnostic layout/slot proof only. It is not a render, creative acceptance, production carrier replacement, slot-fill readiness, or production readiness claim.
+- Next frontier: return to the `G27_PublicVsBrokerDB` carrier / slot-fill path. Do not design an anchored slot contract or implement slot-fill before a human-authored carrier exists. After carrier receipt, assistant should read back required `G27PBD_*` item names, short Remarks, fixed card counts, `G27PBD_Arrow` existence, and geometry-free patch feasibility.
 
 ---
 

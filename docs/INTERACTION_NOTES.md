@@ -52,6 +52,7 @@
 
 ## Report Protocol
 - 報告形式は固定見出しではなく安全柵として扱う。必要最小限は、何を変えた / 変えていない、根拠または readback、残るリスクや judgement、次に取り得る hook。
+- user が ChatGPT 監修へ貼る前提で単一コードブロック報告を明示要求している場合は、通常文の短い要約に続けて、`BEGIN_COPY_BLOCK_FOR_CHATGPT` から `END_COPY_BLOCK_FOR_CHATGPT` までを 1 つの copyable code block に入れる。ブロック内は自己完結させ、branch / HEAD / clean state / known untracked / active lane / 変更有無 / 検証 / 境界維持 / 欠けている artifact / 次に返すものを含める。ただし raw OPML、URL、token、article body、private data は入れない。
 - 報告の主語を file ではなく workflow / behavior / decision に置く。file path はクリック可能な証跡として後ろに置き、読者が開かなくても意味が通る本文を先に書く。
 - 報告の深さは `Micro report` / `Slice closeout` / `Handoff` で変える。Micro は短い作業確認でよいが、Slice closeout は差分の焦点、意図的に触っていない範囲、North Star 上の位置、evidence、残存リスク、drift self-check、recommended default、next owner を本文で復元できる必要がある。Handoff はさらに branch / commit / clean state / 次に読む artifact を含める。
 - `Drift self-check` は固定見出しとして毎回出す義務ではないが、slice closeout では少なくとも case overfitting、docs-only loop、standalone artifact completion、next-artifact continuity のどれが危ないかを確認してから出す。

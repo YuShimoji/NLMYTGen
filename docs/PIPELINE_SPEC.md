@@ -198,36 +198,62 @@ python -m src.cli.main build-csv input.txt --max-lines 2 --wrap-px 1180 --subtit
 
 ---
 
-## fetch-topics サブコマンド (A-04)
+## fetch-topics / list-feed-sources サブコマンド (A-04)
 
 RSS 2.0 / Atom 1.0 フィードからトピック候補（エントリタイトル）を取得する。
 取得したタイトルは NotebookLM の検索クエリや台本テーマ候補として使用する想定。
+OPML export を指定すると、人間側RSSリーダーの購読一覧と AI 側の記事取得対象を同じ一覧に揃えられる。
+
+### 境界
+
+`fetch-topics` は L1 の入力取得であり、RSS/Atom HTTP 取得とタイトル・日付パースだけを行う。
+NotebookLM 台本自動取得、素材ダウンロード、`source.wav`、`material_ledger`、INT-02e real URL smoke、`sports_news` の `source_ledger` / `fact_ledger` 生成は行わない。
+`sports_news` に接続する場合は、ユーザー確認済みの URL・利用条件メモ・候補タイトルを別途 ledger 境界へ渡す。
 
 ### 使用方法
 
 ```bash
-python -m src.cli.main fetch-topics <URL>... [-n 20] [--after YYYY-MM-DD] [--format text|json] [--timeout 10] [-o output.txt]
+python -m src.cli.main fetch-topics [URL...] [--opml feeds.opml] [--reader opml|inoreader] [-n 20] [--after YYYY-MM-DD] [--format text|json|markdown] [--with-fetch-report] [--timeout 10] [-o output.txt]
+python -m src.cli.main list-feed-sources [--opml feeds.opml] [--reader opml|inoreader] [--format markdown|json]
+python -m src.cli.main rss-smoke [--opml feeds.opml] [--reader opml|inoreader] [--format markdown|json] [-o evidence.md]
 ```
 
 ### 引数
 
 | 引数 | 必須 | 既定値 | 説明 |
 |------|------|--------|------|
-| URL | 必須 | — | RSS/Atom フィード URL（複数指定可） |
+| URL | 条件付き | — | RSS/Atom フィード URL（複数指定可）。`fetch-topics` は URL または `--opml` のどちらかが必要 |
+| --opml | 条件付き | — | RSS リーダーから export した OPML ファイル |
+| --reader | 任意 | opml | `opml` は URL / OPML 入力、`inoreader` は環境変数 `NLMYTGEN_INOREADER_ACCESS_TOKEN` を使う read-only 入力 |
 | -n, --limit | 任意 | 20 | 表示するエントリ数の上限 |
 | --after | 任意 | — | この日付以降のエントリのみ抽出（YYYY-MM-DD 形式） |
-| --format | 任意 | text | 出力形式（text / json） |
+| --format | 任意 | text | `fetch-topics`: text / json / markdown。`list-feed-sources` と `rss-smoke`: markdown / json |
+| --with-fetch-report | 任意 | false | `fetch-topics` の JSON / markdown 出力に feed 別の fetched / empty / error / listed 集計を追加する |
 | --timeout | 任意 | 10 | HTTP タイムアウト秒数 |
 | -o, --output | 任意 | stdout | 出力先ファイルパス |
 
-### 内部表現: FeedEntry
+### 内部表現: FeedSource / FeedEntry
 
 ```python
+@dataclass(frozen=True)
+class FeedSource:
+    feed_url: str
+    title: str | None = None
+    html_url: str | None = None
+    categories: tuple[str, ...] = ()
+    reader: str = "opml"
+    reader_feed_id: str | None = None
+    icon_url: str | None = None
+
 @dataclass(frozen=True)
 class FeedEntry:
     title: str
     published: str | None = None   # ISO 8601 日付文字列
     source_url: str | None = None  # フィード URL
+    url: str | None = None
+    summary: str | None = None
+    source_title: str | None = None
+    source_categories: tuple[str, ...] = ()
 ```
 
 ### 出力仕様
@@ -246,15 +272,28 @@ class FeedEntry:
 
 ```json
 [
-  {"title": "記事タイトル1", "published": "2026-03-30", "source": "https://example.com/feed.xml"},
-  {"title": "記事タイトル2", "published": "2026-03-29", "source": "https://example.com/feed.xml"}
+  {
+    "title": "記事タイトル1",
+    "published": "2026-03-30",
+    "source": "https://example.com/feed.xml",
+    "url": "https://example.com/article1",
+    "summary": "記事概要",
+    "source_title": "Example Feed",
+    "source_categories": ["Tech"]
+  }
 ]
 ```
+
+#### markdown 形式
+
+`fetch-topics --format markdown` はカテゴリ、フィード名、公開日、記事タイトル、記事 URL の表を出す。
+`list-feed-sources --format markdown` は OPML から抽出されたカテゴリ、フィード名、feed URL、site URL、reader を表にする。
 
 ### 対応フィード形式
 
 - RSS 2.0（`<channel>/<item>/<title>`, `<pubDate>`）
 - Atom 1.0（`<feed>/<entry>/<title>`, `<published>` or `<updated>`）
+- OPML 2.0 相当の購読一覧（`outline[@xmlUrl]`）。親 outline の `text` / `title` をカテゴリとして保持し、同一 `xmlUrl` は先勝ちで重複排除する。
 
 ### エラーハンドリング
 

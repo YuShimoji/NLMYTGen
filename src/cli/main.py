@@ -11,7 +11,9 @@ Usage:
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
     python -m src.cli.main diagnose-script <input> [--speaker-map ...] [--format text|json] [--strict]
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
-    python -m src.cli.main fetch-topics <URL>... [-n 20] [--after YYYY-MM-DD] [--format text|json]
+    python -m src.cli.main fetch-topics [URL...] [--opml feeds.opml] [--reader opml|inoreader] [-n 20] [--after YYYY-MM-DD] [--format text|json|markdown] [--with-fetch-report]
+    python -m src.cli.main list-feed-sources [--opml feeds.opml] [--reader opml|inoreader] [--format markdown|json]
+    python -m src.cli.main rss-smoke [--opml feeds.opml] [--reader opml|inoreader] [--format markdown|json]
     python -m src.cli.main validate-ir <ir.json> [--palette ...] [--format text|json]
     python -m src.cli.main validate-background-skit-blueprint <blueprint.json> --script <txt> --ymmp <ymmp> [--fps 60] [--format text|json]
     python -m src.cli.main emit-packaging-brief-template [-o path] [--format markdown|json]
@@ -30,6 +32,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 from collections import Counter
 from math import ceil
@@ -816,8 +819,19 @@ def _cmd_diagnose_script(args: argparse.Namespace) -> int:
 def _cmd_fetch_topics(args: argparse.Namespace) -> int:
     """fetch-topics: RSS/Atom フィードからトピック候補を取得する。"""
     from datetime import date
+    from src.contracts.feed_source import FeedSource
     from src.feed.fetch import fetch_feed
+    from src.feed.inoreader import fetch_inoreader_entries, load_inoreader_sources
+    from src.feed.sources import load_opml_sources
 
+    if args.limit < 1:
+        print("Error: --limit must be a positive integer", file=sys.stderr)
+        return 1
+    if args.timeout < 1:
+        print("Error: --timeout must be a positive integer", file=sys.stderr)
+        return 1
+
+    reader = getattr(args, "reader", "opml")
     after_date: str | None = None
     if getattr(args, "after", None):
         try:
@@ -827,21 +841,68 @@ def _cmd_fetch_topics(args: argparse.Namespace) -> int:
             print(f"Error: invalid date format: {args.after} (expected YYYY-MM-DD)", file=sys.stderr)
             return 1
 
-    all_entries = []
-    for url in args.urls:
+    fetched_entries = []
+    source_reports: list[dict[str, object]] = []
+    targets: list[tuple[str, FeedSource | None]] = []
+
+    if reader == "inoreader":
+        if getattr(args, "opml", None) or args.urls:
+            print("Error: --reader inoreader cannot be combined with URL arguments or --opml.", file=sys.stderr)
+            return 1
         try:
-            entries = fetch_feed(url, timeout=args.timeout)
+            sources = load_inoreader_sources()
+            fetched_entries = fetch_inoreader_entries(limit=args.limit, sources=sources)
         except (ValueError, OSError) as e:
-            print(f"Error fetching {url}: {e}", file=sys.stderr)
-            continue
-        all_entries.extend(entries)
+            print(f"Error fetching Inoreader stream: {e}", file=sys.stderr)
+            return 1
+        source_reports = [_feed_fetch_report(source.feed_url, source, status="listed") for source in sources]
+        entry_counts = Counter(entry.source_url for entry in fetched_entries)
+        for report in source_reports:
+            count = entry_counts.get(report.get("feed_url"), 0)
+            report["entry_count"] = count
+            if count:
+                report["status"] = "fetched"
+    else:
+        if getattr(args, "opml", None):
+            sources = load_opml_sources(args.opml)
+            if not sources and not args.urls:
+                print("No feed sources found in OPML.", file=sys.stderr)
+                return 0
+            targets.extend((source.feed_url, source) for source in sources)
+        targets.extend((url, None) for url in args.urls)
+
+        if not targets:
+            print("Error: fetch-topics requires at least one URL, --opml, or --reader inoreader.", file=sys.stderr)
+            return 1
+
+        for url, source in targets:
+            report = _feed_fetch_report(url, source)
+            try:
+                if source is None:
+                    entries = fetch_feed(url, timeout=args.timeout)
+                else:
+                    entries = fetch_feed(url, timeout=args.timeout, source=source)
+            except (ValueError, OSError) as e:
+                report["status"] = "error"
+                report["error"] = str(e)
+                source_reports.append(report)
+                print(f"Error fetching {url}: {e}", file=sys.stderr)
+                continue
+            report["status"] = "fetched" if entries else "empty"
+            report["entry_count"] = len(entries)
+            source_reports.append(report)
+            fetched_entries.extend(entries)
+
+    all_entries = fetched_entries
 
     if after_date:
         all_entries = [e for e in all_entries if e.published and e.published >= after_date]
 
+    matched_entries = all_entries
     all_entries = all_entries[:args.limit]
+    _annotate_feed_fetch_reports(source_reports, matched_entries, all_entries)
 
-    if not all_entries:
+    if not all_entries and not getattr(args, "with_fetch_report", False):
         print("No entries found.", file=sys.stderr)
         return 0
 
@@ -849,19 +910,33 @@ def _cmd_fetch_topics(args: argparse.Namespace) -> int:
     output_lines: list[str] = []
 
     if fmt == "json":
-        data = [
-            {"title": e.title, "published": e.published, "source": e.source_url}
-            for e in all_entries
-        ]
+        if getattr(args, "with_fetch_report", False):
+            data = {
+                "entries": [_feed_entry_to_json(e) for e in all_entries],
+                "sources": source_reports,
+            }
+        else:
+            data = [_feed_entry_to_json(e) for e in all_entries]
         output_lines.append(json.dumps(data, ensure_ascii=False, indent=2))
+    elif fmt == "markdown":
+        output_lines.append(_render_feed_entries_markdown(all_entries))
+        if getattr(args, "with_fetch_report", False):
+            output_lines.append("")
+            output_lines.append(_render_feed_fetch_report_markdown(source_reports))
     else:
         seen_sources: set[str | None] = set()
         for entry in all_entries:
             if entry.source_url not in seen_sources:
                 seen_sources.add(entry.source_url)
                 today = date.today().isoformat()
-                output_lines.append(f"# Source: {entry.source_url} ({today})")
+                if entry.source_title:
+                    output_lines.append(f"# Source: {entry.source_title} <{entry.source_url}> ({today})")
+                else:
+                    output_lines.append(f"# Source: {entry.source_url} ({today})")
             output_lines.append(entry.title)
+        if getattr(args, "with_fetch_report", False):
+            output_lines.append("")
+            output_lines.append(_render_feed_fetch_report_text(source_reports))
 
     text = "\n".join(output_lines) + "\n"
 
@@ -874,6 +949,531 @@ def _cmd_fetch_topics(args: argparse.Namespace) -> int:
         sys.stdout.write(text)
 
     return 0
+
+
+def _cmd_list_feed_sources(args: argparse.Namespace) -> int:
+    """list-feed-sources: OPML から AI 側の購読一覧を表示する。"""
+    from src.feed.inoreader import load_inoreader_sources
+    from src.feed.sources import load_opml_sources
+
+    reader = getattr(args, "reader", "opml")
+    if reader == "inoreader":
+        if getattr(args, "opml", None):
+            print("Error: --reader inoreader cannot be combined with --opml.", file=sys.stderr)
+            return 1
+        try:
+            sources = load_inoreader_sources()
+        except (ValueError, OSError) as e:
+            print(f"Error loading Inoreader subscriptions: {e}", file=sys.stderr)
+            return 1
+    else:
+        if not getattr(args, "opml", None):
+            print("Error: list-feed-sources requires --opml or --reader inoreader.", file=sys.stderr)
+            return 1
+        sources = load_opml_sources(args.opml)
+    fmt = getattr(args, "format", "markdown")
+    if fmt == "json":
+        sys.stdout.write(json.dumps([_feed_source_to_json(s) for s in sources], ensure_ascii=False, indent=2) + "\n")
+    else:
+        sys.stdout.write(_render_feed_sources_markdown(sources) + "\n")
+    return 0
+
+
+def _cmd_rss_smoke(args: argparse.Namespace) -> int:
+    """rss-smoke: live RSS source/fetch smoke with sanitized evidence output."""
+    from datetime import date
+    from src.feed.fetch import fetch_feed
+    from src.feed.inoreader import fetch_inoreader_entries, load_inoreader_sources
+    from src.feed.sources import load_opml_sources
+
+    reader = getattr(args, "reader", "opml")
+    after_date: str | None = None
+    if getattr(args, "after", None):
+        try:
+            date.fromisoformat(args.after)
+            after_date = args.after
+        except ValueError:
+            print(f"Error: invalid date format: {args.after} (expected YYYY-MM-DD)", file=sys.stderr)
+            return 1
+
+    source_reports: list[dict[str, object]] = []
+    entries = []
+    raw_input_location = "environment token"
+
+    if reader == "inoreader":
+        if getattr(args, "opml", None):
+            print("Error: --reader inoreader cannot be combined with --opml.", file=sys.stderr)
+            return 1
+        try:
+            sources = load_inoreader_sources()
+            entries = fetch_inoreader_entries(limit=args.limit, sources=sources)
+        except (ValueError, OSError) as e:
+            print(f"Error fetching Inoreader smoke data: {e}", file=sys.stderr)
+            return 1
+        source_reports = [_feed_fetch_report(source.feed_url, source, status="listed") for source in sources]
+        entry_counts = Counter(entry.source_url for entry in entries)
+        for report in source_reports:
+            count = entry_counts.get(report.get("feed_url"), 0)
+            report["entry_count"] = count
+            if count:
+                report["status"] = "fetched"
+    else:
+        if not getattr(args, "opml", None):
+            print("Error: rss-smoke requires --opml or --reader inoreader.", file=sys.stderr)
+            return 1
+        raw_input_location = f"not committed ({args.opml})"
+        try:
+            sources = load_opml_sources(args.opml)
+        except (ValueError, OSError) as e:
+            print(f"Error loading OPML smoke data: {e}", file=sys.stderr)
+            return 1
+        for source in sources:
+            report = _feed_fetch_report(source.feed_url, source)
+            try:
+                source_entries = fetch_feed(source.feed_url, timeout=args.timeout, source=source)
+            except (ValueError, OSError) as e:
+                report["status"] = "error"
+                report["error"] = str(e)
+                source_reports.append(report)
+                continue
+            report["status"] = "fetched" if source_entries else "empty"
+            report["entry_count"] = len(source_entries)
+            source_reports.append(report)
+            entries.extend(source_entries)
+
+    matched_entries = entries
+    if after_date:
+        matched_entries = [entry for entry in entries if entry.published and entry.published >= after_date]
+    shown_entries = matched_entries[:args.limit]
+    _annotate_feed_fetch_reports(source_reports, matched_entries, shown_entries)
+
+    evidence = _build_rss_smoke_evidence(
+        input_kind="Inoreader read-only" if reader == "inoreader" else "OPML export",
+        raw_input_location=raw_input_location,
+        sources=sources,
+        reports=source_reports,
+        entries=shown_entries,
+        after_date=after_date,
+        limit=args.limit,
+    )
+
+    fmt = getattr(args, "format", "markdown")
+    text = (
+        json.dumps(evidence, ensure_ascii=False, indent=2)
+        if fmt == "json"
+        else _render_rss_smoke_evidence_markdown(evidence)
+    )
+    text += "\n"
+
+    if getattr(args, "output", None):
+        out_path = Path(args.output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(text, encoding="utf-8")
+        print(f"Written: {out_path}")
+    else:
+        sys.stdout.write(text)
+
+    return 0
+
+
+def _feed_entry_to_json(entry) -> dict[str, object]:
+    return {
+        "title": entry.title,
+        "published": entry.published,
+        "source": entry.source_url,
+        "url": entry.url,
+        "summary": entry.summary,
+        "source_title": entry.source_title,
+        "source_categories": list(entry.source_categories),
+    }
+
+
+def _feed_source_to_json(source) -> dict[str, object]:
+    return {
+        "feed_url": source.feed_url,
+        "title": source.title,
+        "html_url": source.html_url,
+        "categories": list(source.categories),
+        "reader": source.reader,
+        "reader_feed_id": source.reader_feed_id,
+        "icon_url": source.icon_url,
+    }
+
+
+def _feed_fetch_report(url: str, source=None, *, status: str = "pending") -> dict[str, object]:
+    return {
+        "feed_url": source.feed_url if source else url,
+        "title": source.title if source else None,
+        "categories": list(source.categories) if source else [],
+        "reader": source.reader if source else "url",
+        "reader_feed_id": source.reader_feed_id if source else None,
+        "status": status,
+        "entry_count": 0,
+        "matched_count": 0,
+        "shown_count": 0,
+        "error": None,
+    }
+
+
+def _annotate_feed_fetch_reports(reports: list[dict[str, object]], matched_entries, shown_entries) -> None:
+    matched_counts = Counter(entry.source_url for entry in matched_entries)
+    shown_counts = Counter(entry.source_url for entry in shown_entries)
+    for report in reports:
+        feed_url = report.get("feed_url")
+        report["matched_count"] = matched_counts.get(feed_url, 0)
+        report["shown_count"] = shown_counts.get(feed_url, 0)
+
+
+def _build_rss_smoke_evidence(
+    *,
+    input_kind: str,
+    raw_input_location: str,
+    sources,
+    reports: list[dict[str, object]],
+    entries,
+    after_date: str | None,
+    limit: int,
+) -> dict[str, object]:
+    status_counts = Counter(str(report.get("status")) for report in reports)
+    categories = {
+        category
+        for source in sources
+        for category in getattr(source, "categories", ())
+    }
+    has_errors = status_counts.get("error", 0) > 0
+    has_sources = len(sources) > 0
+    has_entries = len(entries) > 0
+    duplicate_title_count = _duplicate_source_title_count(sources)
+    duplicate_feed_url_count = _duplicate_source_url_count(sources)
+
+    return {
+        "input_kind": input_kind,
+        "raw_input_location": raw_input_location,
+        "source_count": len(sources),
+        "category_count": len(categories),
+        "source_list_match": "manual_required" if has_sources else "needs_fix",
+        "fetch_status_counts": {key: status_counts.get(key, 0) for key in ("fetched", "empty", "error", "listed")},
+        "fetch_error_breakdown": _fetch_error_breakdown(reports),
+        "duplicate_source_summary": {
+            "duplicate_feed_url_count": duplicate_feed_url_count,
+            "duplicate_title_count": duplicate_title_count,
+            "handling": "manual_review" if duplicate_title_count else "none",
+        },
+        "representative_entry_fields": {
+            "url": _entry_field_presence(entries, "url"),
+            "summary": _entry_field_presence(entries, "summary"),
+            "source_title": _entry_field_presence(entries, "source_title"),
+            "source_categories": _entry_categories_presence(entries),
+        },
+        "source_categories_propagation": _source_categories_propagation_summary(sources, reports, entries),
+        "notable_fixes_needed": _rss_smoke_fix_notes(has_sources, has_entries, has_errors),
+        "after": after_date,
+        "limit": limit,
+        "next_move": _rss_smoke_next_move(input_kind, has_sources, has_entries, has_errors),
+        "manual_hands_on": _rss_smoke_manual_hands_on(input_kind),
+    }
+
+
+def _duplicate_source_title_count(sources) -> int:
+    titles = Counter(
+        getattr(source, "title", None)
+        for source in sources
+        if getattr(source, "title", None)
+    )
+    return sum(1 for count in titles.values() if count > 1)
+
+
+def _duplicate_source_url_count(sources) -> int:
+    urls = Counter(
+        getattr(source, "feed_url", None)
+        for source in sources
+        if getattr(source, "feed_url", None)
+    )
+    return sum(1 for count in urls.values() if count > 1)
+
+
+def _fetch_error_breakdown(reports: list[dict[str, object]]) -> dict[str, int]:
+    categories = Counter(
+        _fetch_error_category(str(report.get("error") or ""))
+        for report in reports
+        if report.get("status") == "error"
+    )
+    return dict(sorted(categories.items()))
+
+
+def _fetch_error_category(error: str) -> str:
+    text = error.lower()
+    if "timed out" in text or "timeout" in text:
+        return "timeout"
+    if "ssl" in text or "certificate" in text:
+        return "ssl_error"
+    if "http error 403" in text:
+        return "http_403"
+    if "http error 404" in text:
+        return "http_404"
+    if "http error" in text:
+        match = re.search(r"http error (\d+)", text)
+        return f"http_{match.group(1)}" if match else "http_error"
+    if (
+        "not well-formed" in text
+        or "unrecognised feed format" in text
+        or "mismatched tag" in text
+        or "syntax error" in text
+    ):
+        return "parse_or_non_feed"
+    if "forcibly closed" in text or "connection reset" in text or "remote end closed" in text:
+        return "connection_closed"
+    if "temporary failure" in text or "name or service not known" in text or "getaddrinfo failed" in text:
+        return "dns_resolution"
+    if "urlopen error" in text:
+        return "urlopen_error_other"
+    return "other"
+
+
+def _source_categories_propagation_summary(sources, reports: list[dict[str, object]], entries) -> dict[str, object]:
+    source_records_with_categories = sum(1 for source in sources if getattr(source, "categories", ()))
+    source_records_without_categories = len(sources) - source_records_with_categories
+    fetched_sources_with_categories = sum(
+        1
+        for report in reports
+        if report.get("status") == "fetched" and report.get("categories")
+    )
+    matched_entries_from_categorized_sources = sum(
+        int(report.get("matched_count") or 0)
+        for report in reports
+        if report.get("categories")
+    )
+    shown_entries_from_categorized_sources = sum(
+        1 for entry in entries if getattr(entry, "source_categories", ())
+    )
+    if source_records_with_categories == 0:
+        diagnosis = "parser_has_no_categories"
+    elif matched_entries_from_categorized_sources > 0 and shown_entries_from_categorized_sources == 0:
+        diagnosis = "representative_sample_from_uncategorized_sources"
+    elif shown_entries_from_categorized_sources > 0:
+        diagnosis = "propagated_to_representative_entries"
+    else:
+        diagnosis = "no_categorized_entries_matched"
+    return {
+        "source_records_with_categories": source_records_with_categories,
+        "source_records_without_categories": source_records_without_categories,
+        "fetched_sources_with_categories": fetched_sources_with_categories,
+        "matched_entries_from_categorized_sources": matched_entries_from_categorized_sources,
+        "shown_entries_from_categorized_sources": shown_entries_from_categorized_sources,
+        "diagnosis": diagnosis,
+    }
+
+
+def _entry_field_presence(entries, attr: str) -> str:
+    if not entries:
+        return "absent"
+    present = sum(1 for entry in entries if getattr(entry, attr, None))
+    if present == 0:
+        return "absent"
+    if present == len(entries):
+        return "present"
+    return "partial"
+
+
+def _entry_categories_presence(entries) -> str:
+    if not entries:
+        return "absent"
+    present = sum(1 for entry in entries if getattr(entry, "source_categories", ()))
+    if present == 0:
+        return "absent"
+    if present == len(entries):
+        return "present"
+    return "partial"
+
+
+def _rss_smoke_fix_notes(has_sources: bool, has_entries: bool, has_errors: bool) -> list[str]:
+    notes: list[str] = []
+    if not has_sources:
+        notes.append("source list is empty")
+    if has_errors:
+        notes.append("one or more feeds failed to fetch")
+    if has_sources and not has_entries:
+        notes.append("no representative entries were returned")
+    return notes or ["none"]
+
+
+def _rss_smoke_next_move(input_kind: str, has_sources: bool, has_entries: bool, has_errors: bool) -> str:
+    if not has_sources:
+        return "export a subscription OPML or verify the Inoreader token scope"
+    if has_errors:
+        return "clean failed feeds or rerun after confirming network/token access"
+    if not has_entries:
+        return "keep the source list, then rerun with a wider date window or later feed activity"
+    if input_kind.startswith("OPML"):
+        return "compare source list with the human RSS reader; if it matches, keep OPML as source of truth"
+    return "compare source list with the human Inoreader view; if it matches, keep the read-only adapter path"
+
+
+def _rss_smoke_manual_hands_on(input_kind: str) -> list[str]:
+    if input_kind.startswith("OPML"):
+        return [
+            "Export OPML from the human RSS reader into an ignored path such as _local/rss/feeds.opml.xml.",
+            "Compare source_count/category_count and spot-check feed titles/categories against the reader UI.",
+            "Commit only this sanitized evidence, not the raw OPML or full article bodies.",
+        ]
+    return [
+        "Create or retrieve a temporary Inoreader OAuth access token outside this repo.",
+        "Set NLMYTGEN_INOREADER_ACCESS_TOKEN only for the smoke command, then remove it from the shell.",
+        "Compare source_count/category_count and spot-check feed titles/categories against the Inoreader UI.",
+        "Commit only this sanitized evidence, not tokens or full article bodies.",
+    ]
+
+
+def _render_feed_entries_markdown(entries) -> str:
+    lines = [
+        "| categories | source | published | title | url |",
+        "|---|---|---|---|---|",
+    ]
+    for entry in entries:
+        lines.append(
+            "| "
+            + " | ".join(
+                [
+                    _markdown_cell(" / ".join(entry.source_categories)),
+                    _markdown_cell(entry.source_title or entry.source_url),
+                    _markdown_cell(entry.published),
+                    _markdown_cell(entry.title),
+                    _markdown_cell(entry.url),
+                ]
+            )
+            + " |"
+        )
+    return "\n".join(lines)
+
+
+def _render_feed_fetch_report_markdown(reports: list[dict[str, object]]) -> str:
+    lines = [
+        "## Fetch report",
+        "",
+        "| status | entries | matched | shown | categories | title | feed_url | error |",
+        "|---|---:|---:|---:|---|---|---|---|",
+    ]
+    for report in reports:
+        lines.append(
+            "| "
+            + " | ".join(
+                [
+                    _markdown_cell(report.get("status")),
+                    _markdown_cell(report.get("entry_count")),
+                    _markdown_cell(report.get("matched_count")),
+                    _markdown_cell(report.get("shown_count")),
+                    _markdown_cell(" / ".join(report.get("categories") or [])),
+                    _markdown_cell(report.get("title")),
+                    _markdown_cell(report.get("feed_url")),
+                    _markdown_cell(report.get("error")),
+                ]
+            )
+            + " |"
+        )
+    return "\n".join(lines)
+
+
+def _render_feed_fetch_report_text(reports: list[dict[str, object]]) -> str:
+    lines = ["# Fetch report"]
+    for report in reports:
+        feed_url = report.get("feed_url")
+        status = report.get("status")
+        entry_count = report.get("entry_count")
+        matched_count = report.get("matched_count")
+        shown_count = report.get("shown_count")
+        error = report.get("error")
+        suffix = f" error={error}" if error else ""
+        lines.append(f"{status}: {feed_url} entries={entry_count} matched={matched_count} shown={shown_count}{suffix}")
+    return "\n".join(lines)
+
+
+def _render_rss_smoke_evidence_markdown(evidence: dict[str, object]) -> str:
+    status_counts = evidence["fetch_status_counts"]
+    error_breakdown = evidence.get("fetch_error_breakdown", {})
+    duplicate_summary = evidence.get("duplicate_source_summary", {})
+    fields = evidence["representative_entry_fields"]
+    category_propagation = evidence.get("source_categories_propagation", {})
+    manual_steps = evidence["manual_hands_on"]
+    error_breakdown_text = ", ".join(
+        f"{category}={count}" for category, count in error_breakdown.items()
+    ) or "none"
+    lines = [
+        "# RSS Live Smoke Evidence",
+        "",
+        f"- input kind: {evidence['input_kind']}",
+        f"- raw input location: {evidence['raw_input_location']}",
+        f"- source count: {evidence['source_count']}",
+        f"- category count: {evidence['category_count']}",
+        f"- source-list match: {evidence['source_list_match']}",
+        (
+            "- fetch status counts: "
+            f"fetched={status_counts['fetched']}, "
+            f"empty={status_counts['empty']}, "
+            f"error={status_counts['error']}, "
+            f"listed={status_counts['listed']}"
+        ),
+        (
+            "- representative entry fields: "
+            f"url={fields['url']}, "
+            f"summary={fields['summary']}, "
+            f"source_title={fields['source_title']}, "
+            f"source_categories={fields['source_categories']}"
+        ),
+        f"- fetch error breakdown: {error_breakdown_text}",
+        (
+            "- duplicate source summary: "
+            f"feed_url_duplicates={duplicate_summary.get('duplicate_feed_url_count', 0)}, "
+            f"title_duplicates={duplicate_summary.get('duplicate_title_count', 0)}, "
+            f"handling={duplicate_summary.get('handling', 'none')}"
+        ),
+        (
+            "- source_categories propagation: "
+            f"source_records_with_categories={category_propagation.get('source_records_with_categories', 0)}, "
+            f"source_records_without_categories={category_propagation.get('source_records_without_categories', 0)}, "
+            f"fetched_sources_with_categories={category_propagation.get('fetched_sources_with_categories', 0)}, "
+            f"matched_entries_from_categorized_sources={category_propagation.get('matched_entries_from_categorized_sources', 0)}, "
+            f"shown_entries_from_categorized_sources={category_propagation.get('shown_entries_from_categorized_sources', 0)}, "
+            f"diagnosis={category_propagation.get('diagnosis', 'unknown')}"
+        ),
+        f"- notable fixes needed: {', '.join(evidence['notable_fixes_needed'])}",
+        f"- after: {_markdown_cell(evidence.get('after'))}",
+        f"- limit: {evidence['limit']}",
+        f"- next move: {evidence['next_move']}",
+        "",
+        "## Manual Hands-On",
+        "",
+    ]
+    lines.extend(f"{index}. {step}" for index, step in enumerate(manual_steps, start=1))
+    return "\n".join(lines)
+
+
+def _render_feed_sources_markdown(sources) -> str:
+    lines = [
+        "| categories | title | feed_url | html_url | reader |",
+        "|---|---|---|---|---|",
+    ]
+    for source in sources:
+        lines.append(
+            "| "
+            + " | ".join(
+                [
+                    _markdown_cell(" / ".join(source.categories)),
+                    _markdown_cell(source.title),
+                    _markdown_cell(source.feed_url),
+                    _markdown_cell(source.html_url),
+                    _markdown_cell(source.reader),
+                ]
+            )
+            + " |"
+        )
+    return "\n".join(lines)
+
+
+def _markdown_cell(value: object) -> str:
+    if value is None or value == "":
+        return "-"
+    text = str(value).replace("\r", " ").replace("\n", " ").strip()
+    return text.replace("|", "\\|") or "-"
 
 
 def _cmd_generate_map(args: argparse.Namespace) -> int:
@@ -1161,12 +1761,31 @@ def main(argv: list[str] | None = None) -> int:
 
     # fetch-topics
     p_fetch = subparsers.add_parser("fetch-topics", help="Fetch topic candidates from RSS/Atom feeds")
-    p_fetch.add_argument("urls", nargs="+", metavar="URL", help="RSS/Atom feed URL(s)")
+    p_fetch.add_argument("urls", nargs="*", metavar="URL", help="RSS/Atom feed URL(s)")
+    p_fetch.add_argument("--opml", help="OPML subscription list exported from a human RSS reader")
+    p_fetch.add_argument("--reader", choices=["opml", "inoreader"], default="opml", help="Feed reader source (default: opml/direct URL)")
     p_fetch.add_argument("-o", "--output", help="Output file path (default: stdout)")
     p_fetch.add_argument("-n", "--limit", type=int, default=20, help="Max entries to show (default: 20)")
     p_fetch.add_argument("--after", metavar="YYYY-MM-DD", help="Only entries published after this date")
-    p_fetch.add_argument("--format", choices=["text", "json"], default="text", help="Output format (default: text)")
+    p_fetch.add_argument("--format", choices=["text", "json", "markdown"], default="text", help="Output format (default: text)")
     p_fetch.add_argument("--timeout", type=int, default=10, help="HTTP timeout in seconds (default: 10)")
+    p_fetch.add_argument("--with-fetch-report", action="store_true", help="Include per-feed fetch coverage report")
+
+    # list-feed-sources
+    p_sources = subparsers.add_parser("list-feed-sources", help="List feed subscriptions from OPML")
+    p_sources.add_argument("--opml", help="OPML subscription list exported from a human RSS reader")
+    p_sources.add_argument("--reader", choices=["opml", "inoreader"], default="opml", help="Feed reader source (default: opml)")
+    p_sources.add_argument("--format", choices=["markdown", "json"], default="markdown", help="Output format (default: markdown)")
+
+    # rss-smoke
+    p_rss_smoke = subparsers.add_parser("rss-smoke", help="Run RSS source/fetch smoke and emit sanitized evidence")
+    p_rss_smoke.add_argument("--opml", help="OPML subscription list exported from a human RSS reader")
+    p_rss_smoke.add_argument("--reader", choices=["opml", "inoreader"], default="opml", help="Feed reader source (default: opml)")
+    p_rss_smoke.add_argument("-o", "--output", help="Output evidence file path (default: stdout)")
+    p_rss_smoke.add_argument("-n", "--limit", type=int, default=20, help="Max entries to inspect (default: 20)")
+    p_rss_smoke.add_argument("--after", metavar="YYYY-MM-DD", help="Only entries published after this date")
+    p_rss_smoke.add_argument("--format", choices=["markdown", "json"], default="markdown", help="Output format (default: markdown)")
+    p_rss_smoke.add_argument("--timeout", type=int, default=10, help="HTTP timeout in seconds (default: 10)")
 
     # generate-map
     p_genmap = subparsers.add_parser("generate-map", help="Generate speaker map template from input")
@@ -1766,6 +2385,10 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_generate_map(args)
         elif args.command == "fetch-topics":
             return _cmd_fetch_topics(args)
+        elif args.command == "list-feed-sources":
+            return _cmd_list_feed_sources(args)
+        elif args.command == "rss-smoke":
+            return _cmd_rss_smoke(args)
         elif args.command == "extract-template":
             return _cmd_extract_template(args)
         elif args.command == "measure-timeline-routes":

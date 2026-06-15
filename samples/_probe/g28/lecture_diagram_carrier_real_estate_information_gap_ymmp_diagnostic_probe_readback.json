@@ -1,0 +1,2331 @@
+{
+  "artifact_type": "g28_real_estate_information_gap_ymmp_diagnostic_probe_readback",
+  "probe_artifact_id": "g28_lecture_diagram_carrier_real_estate_information_gap_ymmp_probe_v1",
+  "source_artifact_id": "g28_lecture_diagram_carrier_real_estate_information_gap_v1",
+  "variant_id": "g28_ldc_real_estate_information_gap",
+  "status": "passed",
+  "classification": "pass_callout_label_human_calibrated",
+  "generated_files": {
+    "ymmp": "samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe.ymmp",
+    "readback_json": "samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe_readback.json",
+    "report_md": "samples/_probe/g28/lecture_diagram_carrier_real_estate_information_gap_ymmp_diagnostic_probe_report.md"
+  },
+  "boundary": {
+    "diagnostic_only": true,
+    "production_candidate": false,
+    "self_contained_ymmp_probe": true,
+    "production_render": false,
+    "render_output": false,
+    "creative_final_acceptance": false,
+    "production_carrier_approval": false,
+    "slot_fill": false,
+    "source_footage_intake": false,
+    "audio_or_tts": false,
+    "image_or_url_or_raw_reference": false,
+    "g27_revival": false,
+    "rss_or_notebooklm_work": false
+  },
+  "polish_revision": {
+    "revision_id": "g28_real_estate_information_gap_ymmp_polish_v1",
+    "source_human_decision": "revise_probe",
+    "classification": "pass_probe_polished",
+    "bounded_scope": [
+      "yellow connector alignment",
+      "rectangle text centering",
+      "callout spacing",
+      "small visual offsets"
+    ],
+    "boundary_note": "Diagnostic-only polish revision; no production approval, render, slot-fill, image, URL, audio, TTS, or source footage."
+  },
+  "layout_contract_revision": {
+    "revision_id": "g28_real_estate_information_gap_layout_contract_v1",
+    "source_audit": "docs/verification/G28-REAL-ESTATE-YMMP-PROBE-LAYOUT-CONTRACT-AUDIT-2026-06-07.md",
+    "classification": "pass_layout_contract_implemented",
+    "next_decision": "ready_for_human_gui_recheck_before_review_console_ingest"
+  },
+  "right_node_alignment_revision": {
+    "revision_id": "g28_real_estate_information_gap_right_node_alignment_v1",
+    "source_human_decision": "revise_probe_again_narrow_right_node_text_alignment",
+    "classification": "pass_right_node_alignment_fixed",
+    "target_label": "G28_LDC_Node_Right_Label",
+    "observed_issue": "Human GUI recheck saw only the right node label as visually off-center inside its rectangle.",
+    "cause_classification": "right_node_registered_optical_offset_needed",
+    "formula_change": "No common text-centering formula change; the right node label gets a bounded x-axis optical offset.",
+    "boundary_note": "Diagnostic-only right-node alignment fix; no render, production approval, slot-fill, image, URL, audio, TTS, or source footage."
+  },
+  "callout_label_alignment_revision": {
+    "revision_id": "g28_real_estate_information_gap_callout_label_alignment_v1",
+    "source_human_decision": "revise_probe_again_narrow_callout_label_alignment",
+    "classification": "pass_callout_label_alignment_fixed",
+    "target_label": "G28_LDC_CalloutSlot_3_Label",
+    "observed_issue": "Human GUI correction identified the lower-right callout label as the actual off-center target, not the right node label.",
+    "target_correction": "Previous right-node alignment fix is retained; the corrected target is the third callout label.",
+    "cause_classification": "callout_label_registered_optical_offset_needed",
+    "formula_change": "No common callout formula change; the third callout label gets a bounded x-axis optical offset.",
+    "boundary_note": "Diagnostic-only callout label alignment fix; no render, production approval, slot-fill, image, URL, audio, TTS, or source footage."
+  },
+  "callout_label_human_calibration_revision": {
+    "revision_id": "g28_real_estate_information_gap_callout_label_human_calibration_v1",
+    "source_human_decision": "apply_one_time_human_calibrated_callout_x_and_record_layout_debt",
+    "classification": "pass_callout_label_human_calibrated",
+    "target_label": "G28_LDC_CalloutSlot_3_Label",
+    "target_text": "仲介インセンティブ",
+    "observed_issue": "Human GUI recheck still saw the lower-right callout label as left-shifted after the bounded offset fix.",
+    "computed_x_before_human_calibration": 289,
+    "previous_polished_x": 289,
+    "human_calibrated_x": 313,
+    "calibration_delta_x": 24,
+    "cause_classification": "callout_text_layout_model_debt",
+    "formula_change": "No formula success claim; the existing formula output is overridden once with the human-calibrated YMM4 X value.",
+    "reason": "YMM4 GUI inspection measured the visually correct lower-right callout label X as 313.0, not the previous computed 289.",
+    "reuse_risk": "high_do_not_generalize",
+    "boundary_note": "Diagnostic-only human calibration; no render, production approval, Review Console ingest, slot-fill, image, URL, audio, TTS, or source footage.",
+    "no_more_pixel_tuning_boundary": "If this remains visually off, stop individual offset changes and redesign the callout text layout system.",
+    "layout_system_debt": {
+      "debt_id": "g28_callout_text_layout_model_debt_v1",
+      "why_formula_was_insufficient": "The estimated text box and registered offset can report centered placement while YMM4 glyph rendering still reads left-shifted in the GUI.",
+      "metric_perception_gap": "text_center_error_px remains a registered-placement metric, not rendered glyph optical-center proof.",
+      "future_fix_direction": "Replace per-label overrides with a callout text layout model that accounts for YMM4 font rendering, target text width, and visual centering acceptance.",
+      "reuse_warning": "Do not reuse x=313.0 for other labels, themes, fonts, or callout counts."
+    }
+  },
+  "frame_contract": {
+    "width": 1920,
+    "height": 1080,
+    "aspect_ratio": "16:9",
+    "caption_reserve": {
+      "x": 0,
+      "y": 810,
+      "width": 1920,
+      "height": 216
+    },
+    "main_canvas": {
+      "x": 96,
+      "y": 150,
+      "width": 1728,
+      "height": 660
+    }
+  },
+  "totals": {
+    "item_count": 19,
+    "expected_item_count": 19,
+    "shape_item_count": 12,
+    "text_item_count": 7,
+    "visible_text_chars": 42,
+    "missing_item_count": 0,
+    "callout_count": 3,
+    "callout_label_count": 3,
+    "focal_chain_label_count": 3
+  },
+  "checks": {
+    "diagnostic_only": true,
+    "production_candidate_false": true,
+    "source_artifact_id_expected": true,
+    "variant_id_expected": true,
+    "self_contained_ymmp_probe_created": true,
+    "frame_16_9_1920_1080": true,
+    "caption_reserve_bottom_20pct": true,
+    "caption_reserve_clear": true,
+    "focal_area_in_main_canvas": true,
+    "focal_chain_nodes_3": true,
+    "focal_chain_labels_expected": true,
+    "callout_count_3": true,
+    "callout_labels_expected": true,
+    "host_role_non_focal": true,
+    "layer_order_matches_contract": true,
+    "diagnostic_text_budget_bounded": true,
+    "dense_table_false": true,
+    "indexed_whiteboard_false": true,
+    "external_image_count_zero": true,
+    "external_url_count_zero": true,
+    "source_footage_count_zero": true,
+    "audio_item_count_zero": true,
+    "tts_or_voice_item_count_zero": true,
+    "render_output_false": true,
+    "creative_final_acceptance_false": true,
+    "production_approval_false": true,
+    "token_like_pattern_count_zero": true,
+    "carrier_not_modified_in_place": true,
+    "polish_revision_bounded": true,
+    "layout_contract_metrics_present": true,
+    "layout_contract_tolerances_pass": true,
+    "right_node_alignment_fix_recorded": true,
+    "callout_label_alignment_fix_recorded": true,
+    "callout_label_human_calibration_recorded": true
+  },
+  "failures": [],
+  "missing_items": [],
+  "caption_reserve_readback": {
+    "rect": {
+      "x": 0,
+      "y": 810,
+      "width": 1920,
+      "height": 216
+    },
+    "bottom_percent": 20,
+    "clear": true,
+    "overlaps": []
+  },
+  "focal_area_readback": {
+    "composition_type": "center-focal",
+    "focal_core_rect": {
+      "x": 560,
+      "y": 240,
+      "width": 800,
+      "height": 360
+    },
+    "focal_core_in_main_canvas": true,
+    "focal_chain": [
+      {
+        "id": "G28_LDC_Node_Left",
+        "label": "元付情報",
+        "role": "source"
+      },
+      {
+        "id": "G28_LDC_Focal_Core",
+        "label": "ポータル掲載",
+        "role": "publication_surface"
+      },
+      {
+        "id": "G28_LDC_Node_Right",
+        "label": "借主判断",
+        "role": "viewer_decision"
+      }
+    ],
+    "visible_node_labels": [
+      {
+        "id": "G28_LDC_Node_Left_Label",
+        "text": "元付情報",
+        "rect": {
+          "x": 276,
+          "y": 375,
+          "width": 168,
+          "height": 42
+        }
+      },
+      {
+        "id": "G28_LDC_Node_Center_Label",
+        "text": "ポータル掲載",
+        "rect": {
+          "x": 834,
+          "y": 395,
+          "width": 252,
+          "height": 42
+        }
+      },
+      {
+        "id": "G28_LDC_Node_Right_Label",
+        "text": "借主判断",
+        "rect": {
+          "x": 1480,
+          "y": 375,
+          "width": 168,
+          "height": 42
+        }
+      }
+    ]
+  },
+  "callout_readback": {
+    "count": 3,
+    "labels": [
+      {
+        "id": "G28_LDC_CalloutSlot_1_Label",
+        "text": "情報遅延",
+        "rect": {
+          "x": 480,
+          "y": 669,
+          "width": 120,
+          "height": 30
+        }
+      },
+      {
+        "id": "G28_LDC_CalloutSlot_2_Label",
+        "text": "掲載粒度の欠落",
+        "rect": {
+          "x": 855,
+          "y": 669,
+          "width": 210,
+          "height": 30
+        }
+      },
+      {
+        "id": "G28_LDC_CalloutSlot_3_Label",
+        "text": "仲介インセンティブ",
+        "rect": {
+          "x": 1273,
+          "y": 669,
+          "width": 270,
+          "height": 30
+        }
+      }
+    ],
+    "allowed_min": 2,
+    "allowed_max": 3
+  },
+  "host_role_readback": {
+    "role": "non_focal_lower_corner_decoration_emotional_anchor",
+    "hosts": [
+      {
+        "id": "G28_LDC_Host_Left",
+        "rect": {
+          "x": 112,
+          "y": 655,
+          "width": 204,
+          "height": 145
+        },
+        "below_focal": true,
+        "above_caption_reserve": true
+      },
+      {
+        "id": "G28_LDC_Host_Right",
+        "rect": {
+          "x": 1604,
+          "y": 655,
+          "width": 204,
+          "height": 145
+        },
+        "below_focal": true,
+        "above_caption_reserve": true
+      }
+    ]
+  },
+  "text_budget_readback": {
+    "visible_text_item_count": 7,
+    "visible_text_chars": 42,
+    "max_visible_text_items": 8,
+    "max_visible_chars": 60,
+    "dense": false,
+    "production_text_budget_claimed": false,
+    "note": "Diagnostic probe labels are visible for YMM4 GUI review only and do not approve a production in-frame text budget.",
+    "visible_text_items": [
+      {
+        "id": "G28_LDC_Title_Text",
+        "text": "情報非対称の流れ",
+        "role": "label"
+      },
+      {
+        "id": "G28_LDC_Node_Left_Label",
+        "text": "元付情報",
+        "role": "focal_chain_label"
+      },
+      {
+        "id": "G28_LDC_Node_Center_Label",
+        "text": "ポータル掲載",
+        "role": "focal_chain_label"
+      },
+      {
+        "id": "G28_LDC_Node_Right_Label",
+        "text": "借主判断",
+        "role": "focal_chain_label"
+      },
+      {
+        "id": "G28_LDC_CalloutSlot_1_Label",
+        "text": "情報遅延",
+        "role": "callout_label"
+      },
+      {
+        "id": "G28_LDC_CalloutSlot_2_Label",
+        "text": "掲載粒度の欠落",
+        "role": "callout_label"
+      },
+      {
+        "id": "G28_LDC_CalloutSlot_3_Label",
+        "text": "仲介インセンティブ",
+        "role": "callout_label"
+      }
+    ]
+  },
+  "layout_contract_readback": {
+    "revision": {
+      "revision_id": "g28_real_estate_information_gap_layout_contract_v1",
+      "source_audit": "docs/verification/G28-REAL-ESTATE-YMMP-PROBE-LAYOUT-CONTRACT-AUDIT-2026-06-07.md",
+      "classification": "pass_layout_contract_implemented",
+      "next_decision": "ready_for_human_gui_recheck_before_review_console_ingest"
+    },
+    "rules": {
+      "connector_layout_rule": {
+        "thickness": 12,
+        "left": {
+          "from": "G28_LDC_Node_Left",
+          "to": "G28_LDC_Focal_Core",
+          "from_edge": "right",
+          "to_edge": "left",
+          "y_reference": "from_center"
+        },
+        "right": {
+          "from": "G28_LDC_Focal_Core",
+          "to": "G28_LDC_Node_Right",
+          "from_edge": "right",
+          "to_edge": "left",
+          "y_reference": "to_center"
+        }
+      },
+      "callout_slot_layout_rule": {
+        "supported_counts": [
+          2,
+          3
+        ],
+        "active_count": 3,
+        "start_x": 375,
+        "row_y": 642,
+        "width": 330,
+        "height": 90,
+        "gap": 90,
+        "text_offset": {
+          "x": 0,
+          "y": -3
+        },
+        "four_callout_risk": "Four callouts at this slot width and gap would consume too much host-side breathing room; split or reduce text instead."
+      },
+      "manual_offset_registry": {
+        "G28_LDC_Title_Text": {
+          "target": "title text",
+          "value": {
+            "x": 0,
+            "y": -2
+          },
+          "reason": "Optical centering correction for YMM4 TextItem top-left placement inside the source title rect.",
+          "allowed_range": {
+            "x_abs_max": 4,
+            "y_abs_max": 4
+          },
+          "reuse_risk": "medium"
+        },
+        "G28_LDC_Node_Left_Label": {
+          "target": "focal node label",
+          "value": {
+            "x": 0,
+            "y": -4
+          },
+          "reason": "Optical centering correction for Japanese node labels.",
+          "allowed_range": {
+            "x_abs_max": 4,
+            "y_abs_max": 6
+          },
+          "reuse_risk": "medium"
+        },
+        "G28_LDC_Node_Center_Label": {
+          "target": "focal node label",
+          "value": {
+            "x": 0,
+            "y": -4
+          },
+          "reason": "Optical centering correction for Japanese node labels.",
+          "allowed_range": {
+            "x_abs_max": 4,
+            "y_abs_max": 6
+          },
+          "reuse_risk": "medium"
+        },
+        "G28_LDC_Node_Right_Label": {
+          "target": "focal node label",
+          "value": {
+            "x": 4,
+            "y": -4
+          },
+          "reason": "Right-node-only optical centering correction after human GUI recheck; readback placement metrics did not capture the rendered glyph-center perception.",
+          "allowed_range": {
+            "x_abs_max": 4,
+            "y_abs_max": 6
+          },
+          "reuse_risk": "medium_right_node_specific"
+        },
+        "G28_LDC_CalloutSlot_1_Label": {
+          "target": "callout label",
+          "value": {
+            "x": 0,
+            "y": -3
+          },
+          "reason": "Optical centering correction inside compact callout slot.",
+          "allowed_range": {
+            "x_abs_max": 4,
+            "y_abs_max": 5
+          },
+          "reuse_risk": "medium"
+        },
+        "G28_LDC_CalloutSlot_2_Label": {
+          "target": "callout label",
+          "value": {
+            "x": 0,
+            "y": -3
+          },
+          "reason": "Optical centering correction inside compact callout slot.",
+          "allowed_range": {
+            "x_abs_max": 4,
+            "y_abs_max": 5
+          },
+          "reuse_risk": "medium"
+        },
+        "G28_LDC_CalloutSlot_3_Label": {
+          "target": "callout label",
+          "value": {
+            "x": 4,
+            "y": -3
+          },
+          "reason": "Lower-right callout-only optical centering correction after human GUI target correction; readback placement metrics did not capture the rendered glyph-center perception.",
+          "allowed_range": {
+            "x_abs_max": 4,
+            "y_abs_max": 5
+          },
+          "reuse_risk": "medium_callout_specific",
+          "human_calibrated_override": {
+            "x": 313,
+            "previous_polished_x": 289,
+            "calibration_delta_x": 24,
+            "reason": "YMM4 GUI inspection measured the visually correct lower-right callout label X as 313.0, not the previous computed 289.",
+            "reuse_risk": "high_do_not_generalize",
+            "debt_id": "g28_callout_text_layout_model_debt_v1"
+          }
+        },
+        "G28_LDC_Connector_Left": {
+          "target": "left connector",
+          "value": {
+            "from": "G28_LDC_Node_Left",
+            "to": "G28_LDC_Focal_Core",
+            "from_edge": "right",
+            "to_edge": "left",
+            "y_reference": "from_center"
+          },
+          "reason": "Derived edge-to-edge bar from left node right edge to focal core left edge.",
+          "allowed_range": {
+            "endpoint_gap_abs_max": 2,
+            "y_error_abs_max": 2
+          },
+          "reuse_risk": "low_after_derivation"
+        },
+        "G28_LDC_Connector_Right": {
+          "target": "right connector",
+          "value": {
+            "from": "G28_LDC_Focal_Core",
+            "to": "G28_LDC_Node_Right",
+            "from_edge": "right",
+            "to_edge": "left",
+            "y_reference": "to_center"
+          },
+          "reason": "Derived edge-to-edge bar from focal core right edge to right node left edge.",
+          "allowed_range": {
+            "endpoint_gap_abs_max": 2,
+            "y_error_abs_max": 2
+          },
+          "reuse_risk": "low_after_derivation"
+        },
+        "G28_LDC_CalloutSlots": {
+          "target": "three-callout row",
+          "value": {
+            "supported_counts": [
+              2,
+              3
+            ],
+            "active_count": 3,
+            "start_x": 375,
+            "row_y": 642,
+            "width": 330,
+            "height": 90,
+            "gap": 90,
+            "text_offset": {
+              "x": 0,
+              "y": -3
+            },
+            "four_callout_risk": "Four callouts at this slot width and gap would consume too much host-side breathing room; split or reduce text instead."
+          },
+          "reason": "Bounded 3-callout row that preserves host-side breathing room and caption clearance.",
+          "allowed_range": {
+            "max_width_ratio": 0.85,
+            "max_height_ratio": 0.45,
+            "caption_gap_min": 60
+          },
+          "reuse_risk": "medium_high_for_four_callouts"
+        },
+        "G28_LDC_Hosts": {
+          "target": "lower-corner hosts",
+          "value": "source rectangles retained",
+          "reason": "Hosts remain non-focal emotional anchors and are not part of layout-system polish.",
+          "allowed_range": {
+            "area_ratio_max_each": 0.03,
+            "caption_overlap_px": 0
+          },
+          "reuse_risk": "medium_across_themes"
+        }
+      },
+      "human_calibrated_text_x_overrides": {
+        "G28_LDC_CalloutSlot_3_Label": 313
+      },
+      "thresholds": {
+        "text_center_error_px": 1,
+        "registered_optical_offset_px": 6,
+        "connector_alignment_error_px": 2,
+        "caption_reserve_overlap_px": 0,
+        "callout_density_width_ratio": 0.85,
+        "callout_density_height_ratio": 0.45,
+        "host_area_ratio": 0.03
+      }
+    },
+    "next_decision": "ready_for_human_gui_recheck_before_review_console_ingest",
+    "rectangle_text_centering": {
+      "formula": "top_left = center(target_box) + registered_visual_offset - estimated_text_bbox / 2",
+      "metric_scope": "Measures implementation placement against the registered offset and estimated text box; it is not a rendered YMM4 glyph optical-center measurement.",
+      "character_width_model": "Japanese full-width ranges count as 1.0em; other characters count as 0.55em; height is font_size.",
+      "threshold_px": 1,
+      "registered_optical_offset_threshold_px": 6,
+      "text_center_error_px": 0,
+      "registered_optical_offset_max_px": 5.657,
+      "human_calibrated_override_count": 1,
+      "human_calibrated_override_max_delta_px": 24,
+      "human_calibrated_overrides": [
+        {
+          "id": "G28_LDC_CalloutSlot_3_Label",
+          "text": "仲介インセンティブ",
+          "computed_x_before_human_calibration": 289,
+          "previous_polished_x": 289,
+          "human_calibrated_x": 313,
+          "calibration_delta_x": 24,
+          "implementation_error_px": 24,
+          "metric_pass_basis": "human_calibrated_override_recorded",
+          "revision_id": "g28_real_estate_information_gap_callout_label_human_calibration_v1"
+        }
+      ],
+      "pass": true,
+      "items": [
+        {
+          "id": "G28_LDC_Title_Text",
+          "text": "情報非対称の流れ",
+          "target_box_id": "G28_LDC_Title_Text_SourceRect",
+          "font_size": 52,
+          "estimated_text_width": 416,
+          "estimated_text_height": 52,
+          "box_center_x": 960,
+          "box_center_y": 106,
+          "baseline_adjust": -2,
+          "visual_offset_x": 0,
+          "visual_offset_y": -2,
+          "computed_x_before_human_calibration": null,
+          "previous_polished_x": null,
+          "human_calibrated_x": null,
+          "calibration_delta_x": null,
+          "human_calibrated_override": false,
+          "human_calibration_revision_id": null,
+          "implementation_error_px": 0,
+          "registered_optical_offset_px": 2,
+          "pass": true,
+          "metric_pass_basis": "registered_formula_within_threshold"
+        },
+        {
+          "id": "G28_LDC_Node_Left_Label",
+          "text": "元付情報",
+          "target_box_id": "G28_LDC_Node_Left",
+          "font_size": 42,
+          "estimated_text_width": 168,
+          "estimated_text_height": 42,
+          "box_center_x": 360,
+          "box_center_y": 400,
+          "baseline_adjust": -4,
+          "visual_offset_x": 0,
+          "visual_offset_y": -4,
+          "computed_x_before_human_calibration": null,
+          "previous_polished_x": null,
+          "human_calibrated_x": null,
+          "calibration_delta_x": null,
+          "human_calibrated_override": false,
+          "human_calibration_revision_id": null,
+          "implementation_error_px": 0,
+          "registered_optical_offset_px": 4,
+          "pass": true,
+          "metric_pass_basis": "registered_formula_within_threshold"
+        },
+        {
+          "id": "G28_LDC_Node_Center_Label",
+          "text": "ポータル掲載",
+          "target_box_id": "G28_LDC_Focal_Core",
+          "font_size": 42,
+          "estimated_text_width": 252,
+          "estimated_text_height": 42,
+          "box_center_x": 960,
+          "box_center_y": 420,
+          "baseline_adjust": -4,
+          "visual_offset_x": 0,
+          "visual_offset_y": -4,
+          "computed_x_before_human_calibration": null,
+          "previous_polished_x": null,
+          "human_calibrated_x": null,
+          "calibration_delta_x": null,
+          "human_calibrated_override": false,
+          "human_calibration_revision_id": null,
+          "implementation_error_px": 0,
+          "registered_optical_offset_px": 4,
+          "pass": true,
+          "metric_pass_basis": "registered_formula_within_threshold"
+        },
+        {
+          "id": "G28_LDC_Node_Right_Label",
+          "text": "借主判断",
+          "target_box_id": "G28_LDC_Node_Right",
+          "font_size": 42,
+          "estimated_text_width": 168,
+          "estimated_text_height": 42,
+          "box_center_x": 1560,
+          "box_center_y": 400,
+          "baseline_adjust": -4,
+          "visual_offset_x": 4,
+          "visual_offset_y": -4,
+          "computed_x_before_human_calibration": null,
+          "previous_polished_x": null,
+          "human_calibrated_x": null,
+          "calibration_delta_x": null,
+          "human_calibrated_override": false,
+          "human_calibration_revision_id": null,
+          "implementation_error_px": 0,
+          "registered_optical_offset_px": 5.657,
+          "pass": true,
+          "metric_pass_basis": "registered_formula_within_threshold"
+        },
+        {
+          "id": "G28_LDC_CalloutSlot_1_Label",
+          "text": "情報遅延",
+          "target_box_id": "G28_LDC_CalloutSlot_1",
+          "font_size": 30,
+          "estimated_text_width": 120,
+          "estimated_text_height": 30,
+          "box_center_x": 540,
+          "box_center_y": 687,
+          "baseline_adjust": -3,
+          "visual_offset_x": 0,
+          "visual_offset_y": -3,
+          "computed_x_before_human_calibration": null,
+          "previous_polished_x": null,
+          "human_calibrated_x": null,
+          "calibration_delta_x": null,
+          "human_calibrated_override": false,
+          "human_calibration_revision_id": null,
+          "implementation_error_px": 0,
+          "registered_optical_offset_px": 3,
+          "pass": true,
+          "metric_pass_basis": "registered_formula_within_threshold"
+        },
+        {
+          "id": "G28_LDC_CalloutSlot_2_Label",
+          "text": "掲載粒度の欠落",
+          "target_box_id": "G28_LDC_CalloutSlot_2",
+          "font_size": 30,
+          "estimated_text_width": 210,
+          "estimated_text_height": 30,
+          "box_center_x": 960,
+          "box_center_y": 687,
+          "baseline_adjust": -3,
+          "visual_offset_x": 0,
+          "visual_offset_y": -3,
+          "computed_x_before_human_calibration": null,
+          "previous_polished_x": null,
+          "human_calibrated_x": null,
+          "calibration_delta_x": null,
+          "human_calibrated_override": false,
+          "human_calibration_revision_id": null,
+          "implementation_error_px": 0,
+          "registered_optical_offset_px": 3,
+          "pass": true,
+          "metric_pass_basis": "registered_formula_within_threshold"
+        },
+        {
+          "id": "G28_LDC_CalloutSlot_3_Label",
+          "text": "仲介インセンティブ",
+          "target_box_id": "G28_LDC_CalloutSlot_3",
+          "font_size": 30,
+          "estimated_text_width": 270,
+          "estimated_text_height": 30,
+          "box_center_x": 1380,
+          "box_center_y": 687,
+          "baseline_adjust": -3,
+          "visual_offset_x": 4,
+          "visual_offset_y": -3,
+          "computed_x_before_human_calibration": 289,
+          "previous_polished_x": 289,
+          "human_calibrated_x": 313,
+          "calibration_delta_x": 24,
+          "human_calibrated_override": true,
+          "human_calibration_revision_id": "g28_real_estate_information_gap_callout_label_human_calibration_v1",
+          "implementation_error_px": 24,
+          "registered_optical_offset_px": 5,
+          "pass": true,
+          "metric_pass_basis": "human_calibrated_override_recorded"
+        }
+      ]
+    },
+    "right_node_alignment": {
+      "revision_id": "g28_real_estate_information_gap_right_node_alignment_v1",
+      "source_human_decision": "revise_probe_again_narrow_right_node_text_alignment",
+      "classification": "pass_right_node_alignment_fixed",
+      "target_label": "G28_LDC_Node_Right_Label",
+      "observed_issue": "Human GUI recheck saw only the right node label as visually off-center inside its rectangle.",
+      "cause_classification": "right_node_registered_optical_offset_needed",
+      "formula_change": "No common text-centering formula change; the right node label gets a bounded x-axis optical offset.",
+      "boundary_note": "Diagnostic-only right-node alignment fix; no render, production approval, slot-fill, image, URL, audio, TTS, or source footage.",
+      "target_text": "借主判断",
+      "target_box_id": "G28_LDC_Node_Right",
+      "manual_offset_registry_update": {
+        "target": "focal node label",
+        "value": {
+          "x": 4,
+          "y": -4
+        },
+        "reason": "Right-node-only optical centering correction after human GUI recheck; readback placement metrics did not capture the rendered glyph-center perception.",
+        "allowed_range": {
+          "x_abs_max": 4,
+          "y_abs_max": 6
+        },
+        "reuse_risk": "medium_right_node_specific"
+      },
+      "applied_visual_offset_px": {
+        "x": 4,
+        "y": -4
+      },
+      "screen_rect": {
+        "x": 1480,
+        "y": 375,
+        "width": 168,
+        "height": 42
+      },
+      "readback_metric_caveat": "text_center_error_px=0 means the label was placed exactly at the registered offset; the human GUI recheck is the authority for rendered optical centering.",
+      "previous_registered_offset_px": {
+        "x": 0,
+        "y": -4
+      },
+      "pass": true
+    },
+    "callout_label_alignment": {
+      "revision_id": "g28_real_estate_information_gap_callout_label_alignment_v1",
+      "source_human_decision": "revise_probe_again_narrow_callout_label_alignment",
+      "classification": "pass_callout_label_alignment_fixed",
+      "target_label": "G28_LDC_CalloutSlot_3_Label",
+      "observed_issue": "Human GUI correction identified the lower-right callout label as the actual off-center target, not the right node label.",
+      "target_correction": "Previous right-node alignment fix is retained; the corrected target is the third callout label.",
+      "cause_classification": "callout_label_registered_optical_offset_needed",
+      "formula_change": "No common callout formula change; the third callout label gets a bounded x-axis optical offset.",
+      "boundary_note": "Diagnostic-only callout label alignment fix; no render, production approval, slot-fill, image, URL, audio, TTS, or source footage.",
+      "target_text": "仲介インセンティブ",
+      "target_box_id": "G28_LDC_CalloutSlot_3",
+      "manual_offset_registry_update": {
+        "target": "callout label",
+        "value": {
+          "x": 4,
+          "y": -3
+        },
+        "reason": "Lower-right callout-only optical centering correction after human GUI target correction; readback placement metrics did not capture the rendered glyph-center perception.",
+        "allowed_range": {
+          "x_abs_max": 4,
+          "y_abs_max": 5
+        },
+        "reuse_risk": "medium_callout_specific",
+        "human_calibrated_override": {
+          "x": 313,
+          "previous_polished_x": 289,
+          "calibration_delta_x": 24,
+          "reason": "YMM4 GUI inspection measured the visually correct lower-right callout label X as 313.0, not the previous computed 289.",
+          "reuse_risk": "high_do_not_generalize",
+          "debt_id": "g28_callout_text_layout_model_debt_v1"
+        }
+      },
+      "applied_visual_offset_px": {
+        "x": 4,
+        "y": -3
+      },
+      "screen_rect": {
+        "x": 1273,
+        "y": 669,
+        "width": 270,
+        "height": 30
+      },
+      "readback_metric_caveat": "text_center_error_px=0 means the callout label was placed exactly at the registered offset; the human GUI correction is the authority for rendered optical centering.",
+      "previous_registered_offset_px": {
+        "x": 0,
+        "y": -3
+      },
+      "previous_right_node_fix": {
+        "revision_id": "g28_real_estate_information_gap_right_node_alignment_v1",
+        "retained": true,
+        "note": "The prior right-node offset is not rolled back because the target correction did not report an adverse side effect."
+      },
+      "pass": true
+    },
+    "callout_label_human_calibration": {
+      "revision_id": "g28_real_estate_information_gap_callout_label_human_calibration_v1",
+      "source_human_decision": "apply_one_time_human_calibrated_callout_x_and_record_layout_debt",
+      "classification": "pass_callout_label_human_calibrated",
+      "target_label": "G28_LDC_CalloutSlot_3_Label",
+      "target_text": "仲介インセンティブ",
+      "observed_issue": "Human GUI recheck still saw the lower-right callout label as left-shifted after the bounded offset fix.",
+      "computed_x_before_human_calibration": 289,
+      "previous_polished_x": 289,
+      "human_calibrated_x": 313,
+      "calibration_delta_x": 24,
+      "cause_classification": "callout_text_layout_model_debt",
+      "formula_change": "No formula success claim; the existing formula output is overridden once with the human-calibrated YMM4 X value.",
+      "reason": "YMM4 GUI inspection measured the visually correct lower-right callout label X as 313.0, not the previous computed 289.",
+      "reuse_risk": "high_do_not_generalize",
+      "boundary_note": "Diagnostic-only human calibration; no render, production approval, Review Console ingest, slot-fill, image, URL, audio, TTS, or source footage.",
+      "no_more_pixel_tuning_boundary": "If this remains visually off, stop individual offset changes and redesign the callout text layout system.",
+      "layout_system_debt": {
+        "debt_id": "g28_callout_text_layout_model_debt_v1",
+        "why_formula_was_insufficient": "The estimated text box and registered offset can report centered placement while YMM4 glyph rendering still reads left-shifted in the GUI.",
+        "metric_perception_gap": "text_center_error_px remains a registered-placement metric, not rendered glyph optical-center proof.",
+        "future_fix_direction": "Replace per-label overrides with a callout text layout model that accounts for YMM4 font rendering, target text width, and visual centering acceptance.",
+        "reuse_warning": "Do not reuse x=313.0 for other labels, themes, fonts, or callout counts."
+      },
+      "target_box_id": "G28_LDC_CalloutSlot_3",
+      "actual_x": 313,
+      "actual_y": 129,
+      "screen_rect": {
+        "x": 1273,
+        "y": 669,
+        "width": 270,
+        "height": 30
+      },
+      "human_calibrated_override": true,
+      "human_calibration_revision_id": "g28_real_estate_information_gap_callout_label_human_calibration_v1",
+      "manual_offset_registry_entry": {
+        "target": "callout label",
+        "value": {
+          "x": 4,
+          "y": -3
+        },
+        "reason": "Lower-right callout-only optical centering correction after human GUI target correction; readback placement metrics did not capture the rendered glyph-center perception.",
+        "allowed_range": {
+          "x_abs_max": 4,
+          "y_abs_max": 5
+        },
+        "reuse_risk": "medium_callout_specific",
+        "human_calibrated_override": {
+          "x": 313,
+          "previous_polished_x": 289,
+          "calibration_delta_x": 24,
+          "reason": "YMM4 GUI inspection measured the visually correct lower-right callout label X as 313.0, not the previous computed 289.",
+          "reuse_risk": "high_do_not_generalize",
+          "debt_id": "g28_callout_text_layout_model_debt_v1"
+        }
+      },
+      "previous_alignment_revision": {
+        "revision_id": "g28_real_estate_information_gap_callout_label_alignment_v1",
+        "retained": true,
+        "classification": "pass_callout_label_alignment_fixed"
+      },
+      "readback_metric_caveat": "This pass records a one-time human-calibrated YMM4 X override. It is not a proof that the callout text formula is reusable.",
+      "pass": true
+    },
+    "connector_positioning": {
+      "formula": "connector spans from source edge to target edge, with y centered on the adjacent side node and fixed thickness.",
+      "threshold_px": 2,
+      "connector_alignment_error_px": 0,
+      "pass": true,
+      "items": [
+        {
+          "id": "G28_LDC_Connector_Left",
+          "start_gap_px": 0,
+          "end_gap_px": 0,
+          "y_center_error_px": 0
+        },
+        {
+          "id": "G28_LDC_Connector_Right",
+          "start_gap_px": 0,
+          "end_gap_px": 0,
+          "y_center_error_px": 0
+        }
+      ]
+    },
+    "callout_slot_layout": {
+      "supported_counts": [
+        2,
+        3
+      ],
+      "active_count": 3,
+      "four_callout_risk": "Four callouts at this slot width and gap would consume too much host-side breathing room; split or reduce text instead.",
+      "width_ratio_threshold": 0.85,
+      "height_ratio_threshold": 0.45,
+      "max_width_ratio": 0.818,
+      "max_height_ratio": 0.333,
+      "pass": true,
+      "items": [
+        {
+          "slot": "G28_LDC_CalloutSlot_1",
+          "label": "G28_LDC_CalloutSlot_1_Label",
+          "text": "情報遅延",
+          "width_ratio": 0.364,
+          "height_ratio": 0.333,
+          "pass": true
+        },
+        {
+          "slot": "G28_LDC_CalloutSlot_2",
+          "label": "G28_LDC_CalloutSlot_2_Label",
+          "text": "掲載粒度の欠落",
+          "width_ratio": 0.636,
+          "height_ratio": 0.333,
+          "pass": true
+        },
+        {
+          "slot": "G28_LDC_CalloutSlot_3",
+          "label": "G28_LDC_CalloutSlot_3_Label",
+          "text": "仲介インセンティブ",
+          "width_ratio": 0.818,
+          "height_ratio": 0.333,
+          "pass": true
+        }
+      ]
+    },
+    "manual_offset_registry": {
+      "G28_LDC_Title_Text": {
+        "target": "title text",
+        "value": {
+          "x": 0,
+          "y": -2
+        },
+        "reason": "Optical centering correction for YMM4 TextItem top-left placement inside the source title rect.",
+        "allowed_range": {
+          "x_abs_max": 4,
+          "y_abs_max": 4
+        },
+        "reuse_risk": "medium"
+      },
+      "G28_LDC_Node_Left_Label": {
+        "target": "focal node label",
+        "value": {
+          "x": 0,
+          "y": -4
+        },
+        "reason": "Optical centering correction for Japanese node labels.",
+        "allowed_range": {
+          "x_abs_max": 4,
+          "y_abs_max": 6
+        },
+        "reuse_risk": "medium"
+      },
+      "G28_LDC_Node_Center_Label": {
+        "target": "focal node label",
+        "value": {
+          "x": 0,
+          "y": -4
+        },
+        "reason": "Optical centering correction for Japanese node labels.",
+        "allowed_range": {
+          "x_abs_max": 4,
+          "y_abs_max": 6
+        },
+        "reuse_risk": "medium"
+      },
+      "G28_LDC_Node_Right_Label": {
+        "target": "focal node label",
+        "value": {
+          "x": 4,
+          "y": -4
+        },
+        "reason": "Right-node-only optical centering correction after human GUI recheck; readback placement metrics did not capture the rendered glyph-center perception.",
+        "allowed_range": {
+          "x_abs_max": 4,
+          "y_abs_max": 6
+        },
+        "reuse_risk": "medium_right_node_specific"
+      },
+      "G28_LDC_CalloutSlot_1_Label": {
+        "target": "callout label",
+        "value": {
+          "x": 0,
+          "y": -3
+        },
+        "reason": "Optical centering correction inside compact callout slot.",
+        "allowed_range": {
+          "x_abs_max": 4,
+          "y_abs_max": 5
+        },
+        "reuse_risk": "medium"
+      },
+      "G28_LDC_CalloutSlot_2_Label": {
+        "target": "callout label",
+        "value": {
+          "x": 0,
+          "y": -3
+        },
+        "reason": "Optical centering correction inside compact callout slot.",
+        "allowed_range": {
+          "x_abs_max": 4,
+          "y_abs_max": 5
+        },
+        "reuse_risk": "medium"
+      },
+      "G28_LDC_CalloutSlot_3_Label": {
+        "target": "callout label",
+        "value": {
+          "x": 4,
+          "y": -3
+        },
+        "reason": "Lower-right callout-only optical centering correction after human GUI target correction; readback placement metrics did not capture the rendered glyph-center perception.",
+        "allowed_range": {
+          "x_abs_max": 4,
+          "y_abs_max": 5
+        },
+        "reuse_risk": "medium_callout_specific",
+        "human_calibrated_override": {
+          "x": 313,
+          "previous_polished_x": 289,
+          "calibration_delta_x": 24,
+          "reason": "YMM4 GUI inspection measured the visually correct lower-right callout label X as 313.0, not the previous computed 289.",
+          "reuse_risk": "high_do_not_generalize",
+          "debt_id": "g28_callout_text_layout_model_debt_v1"
+        }
+      },
+      "G28_LDC_Connector_Left": {
+        "target": "left connector",
+        "value": {
+          "from": "G28_LDC_Node_Left",
+          "to": "G28_LDC_Focal_Core",
+          "from_edge": "right",
+          "to_edge": "left",
+          "y_reference": "from_center"
+        },
+        "reason": "Derived edge-to-edge bar from left node right edge to focal core left edge.",
+        "allowed_range": {
+          "endpoint_gap_abs_max": 2,
+          "y_error_abs_max": 2
+        },
+        "reuse_risk": "low_after_derivation"
+      },
+      "G28_LDC_Connector_Right": {
+        "target": "right connector",
+        "value": {
+          "from": "G28_LDC_Focal_Core",
+          "to": "G28_LDC_Node_Right",
+          "from_edge": "right",
+          "to_edge": "left",
+          "y_reference": "to_center"
+        },
+        "reason": "Derived edge-to-edge bar from focal core right edge to right node left edge.",
+        "allowed_range": {
+          "endpoint_gap_abs_max": 2,
+          "y_error_abs_max": 2
+        },
+        "reuse_risk": "low_after_derivation"
+      },
+      "G28_LDC_CalloutSlots": {
+        "target": "three-callout row",
+        "value": {
+          "supported_counts": [
+            2,
+            3
+          ],
+          "active_count": 3,
+          "start_x": 375,
+          "row_y": 642,
+          "width": 330,
+          "height": 90,
+          "gap": 90,
+          "text_offset": {
+            "x": 0,
+            "y": -3
+          },
+          "four_callout_risk": "Four callouts at this slot width and gap would consume too much host-side breathing room; split or reduce text instead."
+        },
+        "reason": "Bounded 3-callout row that preserves host-side breathing room and caption clearance.",
+        "allowed_range": {
+          "max_width_ratio": 0.85,
+          "max_height_ratio": 0.45,
+          "caption_gap_min": 60
+        },
+        "reuse_risk": "medium_high_for_four_callouts"
+      },
+      "G28_LDC_Hosts": {
+        "target": "lower-corner hosts",
+        "value": "source rectangles retained",
+        "reason": "Hosts remain non-focal emotional anchors and are not part of layout-system polish.",
+        "allowed_range": {
+          "area_ratio_max_each": 0.03,
+          "caption_overlap_px": 0
+        },
+        "reuse_risk": "medium_across_themes"
+      }
+    },
+    "tolerance_metrics": {
+      "text_center_error_px": 0,
+      "registered_optical_offset_max_px": 5.657,
+      "connector_alignment_error_px": 0,
+      "caption_reserve_overlap_px": 0,
+      "callout_density": {
+        "max_width_ratio": 0.818,
+        "max_height_ratio": 0.333
+      },
+      "host_focality_risk": "low"
+    },
+    "caption_reserve_overlap": {
+      "threshold_px": 0,
+      "caption_reserve_overlap_px": 0,
+      "overlap_area_px": 0,
+      "pass": true,
+      "items": []
+    },
+    "host_focality_risk": {
+      "area_ratio_threshold_each": 0.03,
+      "host_focality_risk": "low",
+      "pass": true,
+      "items": [
+        {
+          "id": "G28_LDC_Host_Left",
+          "area_ratio": 0.014,
+          "role": "decoration",
+          "below_focal": true,
+          "above_caption_reserve": true,
+          "risk": "low"
+        },
+        {
+          "id": "G28_LDC_Host_Right",
+          "area_ratio": 0.014,
+          "role": "decoration",
+          "below_focal": true,
+          "above_caption_reserve": true,
+          "risk": "low"
+        }
+      ]
+    },
+    "limitations": [
+      "Text width remains an approximation and should not be treated as font-engine proof.",
+      "Manual optical offsets are now registered and bounded, not removed.",
+      "Right-node rendered optical centering still requires human GUI review; readback verifies the registered correction, not YMM4 glyph pixels.",
+      "Callout-label rendered optical centering still requires human GUI review; readback verifies the registered correction, not YMM4 glyph pixels.",
+      "The lower-right callout label now uses a one-time human-calibrated X override; this is layout system debt, not reusable formula proof.",
+      "Callout row formula is intended for 2-3 callouts; 4 callouts should fail fast or use another layout."
+    ]
+  },
+  "layer_order_readback": {
+    "contract": [
+      "stage",
+      "title",
+      "focal surfaces",
+      "connectors",
+      "focal labels",
+      "callouts",
+      "hosts"
+    ],
+    "matches_contract": true,
+    "phases": {
+      "stage": {
+        "min": 1,
+        "max": 1,
+        "layers": [
+          1
+        ]
+      },
+      "title": {
+        "min": 2,
+        "max": 3,
+        "layers": [
+          2,
+          3
+        ]
+      },
+      "focal_surfaces": {
+        "min": 4,
+        "max": 5,
+        "layers": [
+          4,
+          5,
+          5
+        ]
+      },
+      "connectors": {
+        "min": 6,
+        "max": 6,
+        "layers": [
+          6,
+          6
+        ]
+      },
+      "focal_labels": {
+        "min": 7,
+        "max": 7,
+        "layers": [
+          7,
+          7,
+          7
+        ]
+      },
+      "callouts": {
+        "min": 8,
+        "max": 9,
+        "layers": [
+          8,
+          8,
+          8,
+          9,
+          9,
+          9
+        ]
+      },
+      "hosts": {
+        "min": 10,
+        "max": 10,
+        "layers": [
+          10,
+          10
+        ]
+      }
+    }
+  },
+  "safety_readback": {
+    "external_image_count": 0,
+    "external_url_count": 0,
+    "source_footage_count": 0,
+    "audio_item_count": 0,
+    "tts_or_voice_item_count": 0,
+    "token_like_pattern_count": 0,
+    "image_binary": false,
+    "image_path": false,
+    "image_url": false,
+    "raw_reference": false
+  },
+  "ymm4_mapping": {
+    "note": "YMM4 Group remains 0; logical groups are recorded in readback and item Remarks for a simple static diagnostic probe.",
+    "groups": [
+      {
+        "group_id": "G28_LDC_Stage",
+        "ymm4_items": [
+          "G28_LDC_BG_Stage"
+        ]
+      },
+      {
+        "group_id": "G28_LDC_TitleBand",
+        "ymm4_items": [
+          "G28_LDC_TitleBand_BG",
+          "G28_LDC_Title_Text"
+        ]
+      },
+      {
+        "group_id": "G28_LDC_FocalGroup",
+        "ymm4_items": [
+          "G28_LDC_Focal_Core",
+          "G28_LDC_Node_Left",
+          "G28_LDC_Node_Right",
+          "G28_LDC_Connector_Left",
+          "G28_LDC_Connector_Right",
+          "G28_LDC_Node_Left_Label",
+          "G28_LDC_Node_Center_Label",
+          "G28_LDC_Node_Right_Label"
+        ]
+      },
+      {
+        "group_id": "G28_LDC_CalloutSlots",
+        "ymm4_items": [
+          "G28_LDC_CalloutSlot_1",
+          "G28_LDC_CalloutSlot_2",
+          "G28_LDC_CalloutSlot_3",
+          "G28_LDC_CalloutSlot_1_Label",
+          "G28_LDC_CalloutSlot_2_Label",
+          "G28_LDC_CalloutSlot_3_Label"
+        ]
+      },
+      {
+        "group_id": "G28_LDC_Hosts",
+        "ymm4_items": [
+          "G28_LDC_Host_Left",
+          "G28_LDC_Host_Right"
+        ]
+      }
+    ]
+  },
+  "source_integrity": {
+    "carrier_ymmp": "samples/canonical.ymmp",
+    "shape_template_ymmp": "samples/_probe/g24/real_estate_dx_overlay_only_compact_review.ymmp",
+    "carrier_sha256_before": "90bfc8623875a2dcf51baaf03d068aab5e2e2ef58a528451c80f4c622bf7d7a4",
+    "carrier_sha256_after": "90bfc8623875a2dcf51baaf03d068aab5e2e2ef58a528451c80f4c622bf7d7a4",
+    "carrier_modified_in_place": false
+  },
+  "items": [
+    {
+      "display_name": "G28_LDC_BG_Stage",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_Stage",
+      "role": "decoration",
+      "layer": 1,
+      "x": 0,
+      "y": 0,
+      "screen_rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1080
+      },
+      "width": 1920,
+      "height": 1080,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 1080,
+      "round": 0,
+      "opacity": 100,
+      "fill_color": "#FF111827",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "layout_contract": {
+        "rect_source": "source_rect",
+        "source_rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "derived_rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "manual_registry_entry": null
+      },
+      "description": "G-28 source carrier primitive G28_LDC_BG_Stage"
+    },
+    {
+      "display_name": "G28_LDC_TitleBand_BG",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_TitleBand",
+      "role": "label",
+      "layer": 2,
+      "x": 0,
+      "y": -438,
+      "screen_rect": {
+        "x": 96,
+        "y": 54,
+        "width": 1728,
+        "height": 96
+      },
+      "width": 1728,
+      "height": 96,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 96,
+      "round": 8,
+      "opacity": 100,
+      "fill_color": "#FF1F2937",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "layout_contract": {
+        "rect_source": "source_rect",
+        "source_rect": {
+          "x": 96,
+          "y": 54,
+          "width": 1728,
+          "height": 96
+        },
+        "derived_rect": {
+          "x": 96,
+          "y": 54,
+          "width": 1728,
+          "height": 96
+        },
+        "manual_registry_entry": null
+      },
+      "description": "G-28 source carrier primitive G28_LDC_TitleBand_BG"
+    },
+    {
+      "display_name": "G28_LDC_Focal_Core",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "role": "focal_anchor",
+      "layer": 4,
+      "x": 0,
+      "y": -120,
+      "screen_rect": {
+        "x": 560,
+        "y": 240,
+        "width": 800,
+        "height": 360
+      },
+      "width": 800,
+      "height": 360,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 360,
+      "round": 28,
+      "opacity": 100,
+      "fill_color": "#FF22324A",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "layout_contract": {
+        "rect_source": "source_rect",
+        "source_rect": {
+          "x": 560,
+          "y": 240,
+          "width": 800,
+          "height": 360
+        },
+        "derived_rect": {
+          "x": 560,
+          "y": 240,
+          "width": 800,
+          "height": 360
+        },
+        "manual_registry_entry": null
+      },
+      "description": "G-28 source carrier primitive G28_LDC_Focal_Core"
+    },
+    {
+      "display_name": "G28_LDC_Node_Left",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "role": "internal_node",
+      "layer": 5,
+      "x": -600,
+      "y": -140,
+      "screen_rect": {
+        "x": 230,
+        "y": 330,
+        "width": 260,
+        "height": 140
+      },
+      "width": 260,
+      "height": 140,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 140,
+      "round": 22,
+      "opacity": 100,
+      "fill_color": "#FF374151",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "layout_contract": {
+        "rect_source": "source_rect",
+        "source_rect": {
+          "x": 230,
+          "y": 330,
+          "width": 260,
+          "height": 140
+        },
+        "derived_rect": {
+          "x": 230,
+          "y": 330,
+          "width": 260,
+          "height": 140
+        },
+        "manual_registry_entry": null
+      },
+      "description": "G-28 source carrier primitive G28_LDC_Node_Left"
+    },
+    {
+      "display_name": "G28_LDC_Node_Right",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "role": "internal_node",
+      "layer": 5,
+      "x": 600,
+      "y": -140,
+      "screen_rect": {
+        "x": 1430,
+        "y": 330,
+        "width": 260,
+        "height": 140
+      },
+      "width": 260,
+      "height": 140,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 140,
+      "round": 22,
+      "opacity": 100,
+      "fill_color": "#FF374151",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "layout_contract": {
+        "rect_source": "source_rect",
+        "source_rect": {
+          "x": 1430,
+          "y": 330,
+          "width": 260,
+          "height": 140
+        },
+        "derived_rect": {
+          "x": 1430,
+          "y": 330,
+          "width": 260,
+          "height": 140
+        },
+        "manual_registry_entry": null
+      },
+      "description": "G-28 source carrier primitive G28_LDC_Node_Right"
+    },
+    {
+      "display_name": "G28_LDC_Connector_Left",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "role": "connector",
+      "layer": 6,
+      "x": -435,
+      "y": -140,
+      "screen_rect": {
+        "x": 490,
+        "y": 394,
+        "width": 70,
+        "height": 12
+      },
+      "width": 70,
+      "height": 12,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 12,
+      "round": 6,
+      "opacity": 100,
+      "fill_color": "#FFFBBF24",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "layout_contract": {
+        "rect_source": "derived_layout_contract",
+        "source_rect": {
+          "x": 500,
+          "y": 395,
+          "width": 90,
+          "height": 10
+        },
+        "derived_rect": {
+          "x": 490,
+          "y": 394,
+          "width": 70,
+          "height": 12
+        },
+        "manual_registry_entry": {
+          "target": "left connector",
+          "value": {
+            "from": "G28_LDC_Node_Left",
+            "to": "G28_LDC_Focal_Core",
+            "from_edge": "right",
+            "to_edge": "left",
+            "y_reference": "from_center"
+          },
+          "reason": "Derived edge-to-edge bar from left node right edge to focal core left edge.",
+          "allowed_range": {
+            "endpoint_gap_abs_max": 2,
+            "y_error_abs_max": 2
+          },
+          "reuse_risk": "low_after_derivation"
+        }
+      },
+      "description": "G-28 source carrier primitive G28_LDC_Connector_Left"
+    },
+    {
+      "display_name": "G28_LDC_Connector_Right",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "role": "connector",
+      "layer": 6,
+      "x": 435,
+      "y": -140,
+      "screen_rect": {
+        "x": 1360,
+        "y": 394,
+        "width": 70,
+        "height": 12
+      },
+      "width": 70,
+      "height": 12,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 12,
+      "round": 6,
+      "opacity": 100,
+      "fill_color": "#FFFBBF24",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "layout_contract": {
+        "rect_source": "derived_layout_contract",
+        "source_rect": {
+          "x": 1330,
+          "y": 395,
+          "width": 90,
+          "height": 10
+        },
+        "derived_rect": {
+          "x": 1360,
+          "y": 394,
+          "width": 70,
+          "height": 12
+        },
+        "manual_registry_entry": {
+          "target": "right connector",
+          "value": {
+            "from": "G28_LDC_Focal_Core",
+            "to": "G28_LDC_Node_Right",
+            "from_edge": "right",
+            "to_edge": "left",
+            "y_reference": "to_center"
+          },
+          "reason": "Derived edge-to-edge bar from focal core right edge to right node left edge.",
+          "allowed_range": {
+            "endpoint_gap_abs_max": 2,
+            "y_error_abs_max": 2
+          },
+          "reuse_risk": "low_after_derivation"
+        }
+      },
+      "description": "G-28 source carrier primitive G28_LDC_Connector_Right"
+    },
+    {
+      "display_name": "G28_LDC_CalloutSlot_1",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "role": "supporting",
+      "layer": 8,
+      "x": -420,
+      "y": 147,
+      "screen_rect": {
+        "x": 375,
+        "y": 642,
+        "width": 330,
+        "height": 90
+      },
+      "width": 330,
+      "height": 90,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 90,
+      "round": 16,
+      "opacity": 100,
+      "fill_color": "#FF1E3A5F",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "layout_contract": {
+        "rect_source": "derived_layout_contract",
+        "source_rect": {
+          "x": 395,
+          "y": 650,
+          "width": 300,
+          "height": 86
+        },
+        "derived_rect": {
+          "x": 375,
+          "y": 642,
+          "width": 330,
+          "height": 90
+        },
+        "manual_registry_entry": null
+      },
+      "description": "G-28 source carrier primitive G28_LDC_CalloutSlot_1"
+    },
+    {
+      "display_name": "G28_LDC_CalloutSlot_2",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "role": "supporting",
+      "layer": 8,
+      "x": 0,
+      "y": 147,
+      "screen_rect": {
+        "x": 795,
+        "y": 642,
+        "width": 330,
+        "height": 90
+      },
+      "width": 330,
+      "height": 90,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 90,
+      "round": 16,
+      "opacity": 100,
+      "fill_color": "#FF1E3A5F",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "layout_contract": {
+        "rect_source": "derived_layout_contract",
+        "source_rect": {
+          "x": 810,
+          "y": 650,
+          "width": 300,
+          "height": 86
+        },
+        "derived_rect": {
+          "x": 795,
+          "y": 642,
+          "width": 330,
+          "height": 90
+        },
+        "manual_registry_entry": null
+      },
+      "description": "G-28 source carrier primitive G28_LDC_CalloutSlot_2"
+    },
+    {
+      "display_name": "G28_LDC_CalloutSlot_3",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "role": "supporting",
+      "layer": 8,
+      "x": 420,
+      "y": 147,
+      "screen_rect": {
+        "x": 1215,
+        "y": 642,
+        "width": 330,
+        "height": 90
+      },
+      "width": 330,
+      "height": 90,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 90,
+      "round": 16,
+      "opacity": 100,
+      "fill_color": "#FF1E3A5F",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "layout_contract": {
+        "rect_source": "derived_layout_contract",
+        "source_rect": {
+          "x": 1225,
+          "y": 650,
+          "width": 300,
+          "height": 86
+        },
+        "derived_rect": {
+          "x": 1215,
+          "y": 642,
+          "width": 330,
+          "height": 90
+        },
+        "manual_registry_entry": null
+      },
+      "description": "G-28 source carrier primitive G28_LDC_CalloutSlot_3"
+    },
+    {
+      "display_name": "G28_LDC_Host_Left",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_Hosts",
+      "role": "decoration",
+      "layer": 10,
+      "x": -746,
+      "y": 187.5,
+      "screen_rect": {
+        "x": 112,
+        "y": 655,
+        "width": 204,
+        "height": 145
+      },
+      "width": 204,
+      "height": 145,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 145,
+      "round": 42,
+      "opacity": 100,
+      "fill_color": "#FF4B5563",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "layout_contract": {
+        "rect_source": "source_rect",
+        "source_rect": {
+          "x": 112,
+          "y": 655,
+          "width": 204,
+          "height": 145
+        },
+        "derived_rect": {
+          "x": 112,
+          "y": 655,
+          "width": 204,
+          "height": 145
+        },
+        "manual_registry_entry": null
+      },
+      "description": "G-28 source carrier primitive G28_LDC_Host_Left"
+    },
+    {
+      "display_name": "G28_LDC_Host_Right",
+      "item_type": "ShapeItem",
+      "group_id": "G28_LDC_Hosts",
+      "role": "decoration",
+      "layer": 10,
+      "x": 746,
+      "y": 187.5,
+      "screen_rect": {
+        "x": 1604,
+        "y": 655,
+        "width": 204,
+        "height": 145
+      },
+      "width": 204,
+      "height": 145,
+      "shape_size_mode": "WidthHeight",
+      "stroke_thickness": 145,
+      "round": 42,
+      "opacity": 100,
+      "fill_color": "#FF4B5563",
+      "text": null,
+      "text_color": null,
+      "font_size": null,
+      "layout_contract": {
+        "rect_source": "source_rect",
+        "source_rect": {
+          "x": 1604,
+          "y": 655,
+          "width": 204,
+          "height": 145
+        },
+        "derived_rect": {
+          "x": 1604,
+          "y": 655,
+          "width": 204,
+          "height": 145
+        },
+        "manual_registry_entry": null
+      },
+      "description": "G-28 source carrier primitive G28_LDC_Host_Right"
+    },
+    {
+      "display_name": "G28_LDC_Title_Text",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_TitleBand",
+      "role": "label",
+      "layer": 3,
+      "x": -208,
+      "y": -462,
+      "screen_rect": {
+        "x": 752,
+        "y": 78,
+        "width": 416,
+        "height": 52
+      },
+      "width": 416,
+      "height": 52,
+      "shape_size_mode": null,
+      "stroke_thickness": null,
+      "round": null,
+      "opacity": 100,
+      "fill_color": null,
+      "text": "情報非対称の流れ",
+      "text_color": "#FFF9FAFB",
+      "font_size": 52,
+      "layout_contract": {
+        "target_box_id": "G28_LDC_Title_Text_SourceRect",
+        "target_box_rect": {
+          "x": 706,
+          "y": 78,
+          "width": 508,
+          "height": 56
+        },
+        "estimated_text_width": 416,
+        "estimated_text_height": 52,
+        "box_center_x": 960,
+        "box_center_y": 106,
+        "baseline_adjust": -2,
+        "visual_offset_x": 0,
+        "visual_offset_y": -2,
+        "text_center_error_px": 0,
+        "manual_registry_entry": {
+          "target": "title text",
+          "value": {
+            "x": 0,
+            "y": -2
+          },
+          "reason": "Optical centering correction for YMM4 TextItem top-left placement inside the source title rect.",
+          "allowed_range": {
+            "x_abs_max": 4,
+            "y_abs_max": 4
+          },
+          "reuse_risk": "medium"
+        },
+        "computed_x_before_human_calibration": null,
+        "previous_polished_x": null,
+        "human_calibrated_x": null,
+        "calibration_delta_x": null,
+        "human_calibrated_override": false,
+        "human_calibration_revision_id": null,
+        "layout_system_debt": null
+      },
+      "description": "short title label from accepted diagnostic variant"
+    },
+    {
+      "display_name": "G28_LDC_Node_Left_Label",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "role": "focal_chain_label",
+      "layer": 7,
+      "x": -684,
+      "y": -165,
+      "screen_rect": {
+        "x": 276,
+        "y": 375,
+        "width": 168,
+        "height": 42
+      },
+      "width": 168,
+      "height": 42,
+      "shape_size_mode": null,
+      "stroke_thickness": null,
+      "round": null,
+      "opacity": 100,
+      "fill_color": null,
+      "text": "元付情報",
+      "text_color": "#FFFFF7D6",
+      "font_size": 42,
+      "layout_contract": {
+        "target_box_id": "G28_LDC_Node_Left",
+        "target_box_rect": {
+          "x": 230,
+          "y": 330,
+          "width": 260,
+          "height": 140
+        },
+        "estimated_text_width": 168,
+        "estimated_text_height": 42,
+        "box_center_x": 360,
+        "box_center_y": 400,
+        "baseline_adjust": -4,
+        "visual_offset_x": 0,
+        "visual_offset_y": -4,
+        "text_center_error_px": 0,
+        "manual_registry_entry": {
+          "target": "focal node label",
+          "value": {
+            "x": 0,
+            "y": -4
+          },
+          "reason": "Optical centering correction for Japanese node labels.",
+          "allowed_range": {
+            "x_abs_max": 4,
+            "y_abs_max": 6
+          },
+          "reuse_risk": "medium"
+        },
+        "computed_x_before_human_calibration": null,
+        "previous_polished_x": null,
+        "human_calibrated_x": null,
+        "calibration_delta_x": null,
+        "human_calibrated_override": false,
+        "human_calibration_revision_id": null,
+        "layout_system_debt": null
+      },
+      "description": "visible node label for YMM4 GUI diagnostic probe"
+    },
+    {
+      "display_name": "G28_LDC_Node_Center_Label",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "role": "focal_chain_label",
+      "layer": 7,
+      "x": -126,
+      "y": -145,
+      "screen_rect": {
+        "x": 834,
+        "y": 395,
+        "width": 252,
+        "height": 42
+      },
+      "width": 252,
+      "height": 42,
+      "shape_size_mode": null,
+      "stroke_thickness": null,
+      "round": null,
+      "opacity": 100,
+      "fill_color": null,
+      "text": "ポータル掲載",
+      "text_color": "#FFFFF7D6",
+      "font_size": 42,
+      "layout_contract": {
+        "target_box_id": "G28_LDC_Focal_Core",
+        "target_box_rect": {
+          "x": 560,
+          "y": 240,
+          "width": 800,
+          "height": 360
+        },
+        "estimated_text_width": 252,
+        "estimated_text_height": 42,
+        "box_center_x": 960,
+        "box_center_y": 420,
+        "baseline_adjust": -4,
+        "visual_offset_x": 0,
+        "visual_offset_y": -4,
+        "text_center_error_px": 0,
+        "manual_registry_entry": {
+          "target": "focal node label",
+          "value": {
+            "x": 0,
+            "y": -4
+          },
+          "reason": "Optical centering correction for Japanese node labels.",
+          "allowed_range": {
+            "x_abs_max": 4,
+            "y_abs_max": 6
+          },
+          "reuse_risk": "medium"
+        },
+        "computed_x_before_human_calibration": null,
+        "previous_polished_x": null,
+        "human_calibrated_x": null,
+        "calibration_delta_x": null,
+        "human_calibrated_override": false,
+        "human_calibration_revision_id": null,
+        "layout_system_debt": null
+      },
+      "description": "visible node label for YMM4 GUI diagnostic probe"
+    },
+    {
+      "display_name": "G28_LDC_Node_Right_Label",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_FocalGroup",
+      "role": "focal_chain_label",
+      "layer": 7,
+      "x": 520,
+      "y": -165,
+      "screen_rect": {
+        "x": 1480,
+        "y": 375,
+        "width": 168,
+        "height": 42
+      },
+      "width": 168,
+      "height": 42,
+      "shape_size_mode": null,
+      "stroke_thickness": null,
+      "round": null,
+      "opacity": 100,
+      "fill_color": null,
+      "text": "借主判断",
+      "text_color": "#FFFFF7D6",
+      "font_size": 42,
+      "layout_contract": {
+        "target_box_id": "G28_LDC_Node_Right",
+        "target_box_rect": {
+          "x": 1430,
+          "y": 330,
+          "width": 260,
+          "height": 140
+        },
+        "estimated_text_width": 168,
+        "estimated_text_height": 42,
+        "box_center_x": 1560,
+        "box_center_y": 400,
+        "baseline_adjust": -4,
+        "visual_offset_x": 4,
+        "visual_offset_y": -4,
+        "text_center_error_px": 0,
+        "manual_registry_entry": {
+          "target": "focal node label",
+          "value": {
+            "x": 4,
+            "y": -4
+          },
+          "reason": "Right-node-only optical centering correction after human GUI recheck; readback placement metrics did not capture the rendered glyph-center perception.",
+          "allowed_range": {
+            "x_abs_max": 4,
+            "y_abs_max": 6
+          },
+          "reuse_risk": "medium_right_node_specific"
+        },
+        "computed_x_before_human_calibration": null,
+        "previous_polished_x": null,
+        "human_calibrated_x": null,
+        "calibration_delta_x": null,
+        "human_calibrated_override": false,
+        "human_calibration_revision_id": null,
+        "layout_system_debt": null
+      },
+      "description": "visible node label for YMM4 GUI diagnostic probe"
+    },
+    {
+      "display_name": "G28_LDC_CalloutSlot_1_Label",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "role": "callout_label",
+      "layer": 9,
+      "x": -480,
+      "y": 129,
+      "screen_rect": {
+        "x": 480,
+        "y": 669,
+        "width": 120,
+        "height": 30
+      },
+      "width": 120,
+      "height": 30,
+      "shape_size_mode": null,
+      "stroke_thickness": null,
+      "round": null,
+      "opacity": 100,
+      "fill_color": null,
+      "text": "情報遅延",
+      "text_color": "#FFDBEAFE",
+      "font_size": 30,
+      "layout_contract": {
+        "target_box_id": "G28_LDC_CalloutSlot_1",
+        "target_box_rect": {
+          "x": 375,
+          "y": 642,
+          "width": 330,
+          "height": 90
+        },
+        "estimated_text_width": 120,
+        "estimated_text_height": 30,
+        "box_center_x": 540,
+        "box_center_y": 687,
+        "baseline_adjust": -3,
+        "visual_offset_x": 0,
+        "visual_offset_y": -3,
+        "text_center_error_px": 0,
+        "manual_registry_entry": {
+          "target": "callout label",
+          "value": {
+            "x": 0,
+            "y": -3
+          },
+          "reason": "Optical centering correction inside compact callout slot.",
+          "allowed_range": {
+            "x_abs_max": 4,
+            "y_abs_max": 5
+          },
+          "reuse_risk": "medium"
+        },
+        "computed_x_before_human_calibration": null,
+        "previous_polished_x": null,
+        "human_calibrated_x": null,
+        "calibration_delta_x": null,
+        "human_calibrated_override": false,
+        "human_calibration_revision_id": null,
+        "layout_system_debt": null
+      },
+      "description": "visible callout label for YMM4 GUI diagnostic probe"
+    },
+    {
+      "display_name": "G28_LDC_CalloutSlot_2_Label",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "role": "callout_label",
+      "layer": 9,
+      "x": -105,
+      "y": 129,
+      "screen_rect": {
+        "x": 855,
+        "y": 669,
+        "width": 210,
+        "height": 30
+      },
+      "width": 210,
+      "height": 30,
+      "shape_size_mode": null,
+      "stroke_thickness": null,
+      "round": null,
+      "opacity": 100,
+      "fill_color": null,
+      "text": "掲載粒度の欠落",
+      "text_color": "#FFDBEAFE",
+      "font_size": 30,
+      "layout_contract": {
+        "target_box_id": "G28_LDC_CalloutSlot_2",
+        "target_box_rect": {
+          "x": 795,
+          "y": 642,
+          "width": 330,
+          "height": 90
+        },
+        "estimated_text_width": 210,
+        "estimated_text_height": 30,
+        "box_center_x": 960,
+        "box_center_y": 687,
+        "baseline_adjust": -3,
+        "visual_offset_x": 0,
+        "visual_offset_y": -3,
+        "text_center_error_px": 0,
+        "manual_registry_entry": {
+          "target": "callout label",
+          "value": {
+            "x": 0,
+            "y": -3
+          },
+          "reason": "Optical centering correction inside compact callout slot.",
+          "allowed_range": {
+            "x_abs_max": 4,
+            "y_abs_max": 5
+          },
+          "reuse_risk": "medium"
+        },
+        "computed_x_before_human_calibration": null,
+        "previous_polished_x": null,
+        "human_calibrated_x": null,
+        "calibration_delta_x": null,
+        "human_calibrated_override": false,
+        "human_calibration_revision_id": null,
+        "layout_system_debt": null
+      },
+      "description": "visible callout label for YMM4 GUI diagnostic probe"
+    },
+    {
+      "display_name": "G28_LDC_CalloutSlot_3_Label",
+      "item_type": "TextItem",
+      "group_id": "G28_LDC_CalloutSlots",
+      "role": "callout_label",
+      "layer": 9,
+      "x": 313,
+      "y": 129,
+      "screen_rect": {
+        "x": 1273,
+        "y": 669,
+        "width": 270,
+        "height": 30
+      },
+      "width": 270,
+      "height": 30,
+      "shape_size_mode": null,
+      "stroke_thickness": null,
+      "round": null,
+      "opacity": 100,
+      "fill_color": null,
+      "text": "仲介インセンティブ",
+      "text_color": "#FFDBEAFE",
+      "font_size": 30,
+      "layout_contract": {
+        "target_box_id": "G28_LDC_CalloutSlot_3",
+        "target_box_rect": {
+          "x": 1215,
+          "y": 642,
+          "width": 330,
+          "height": 90
+        },
+        "estimated_text_width": 270,
+        "estimated_text_height": 30,
+        "box_center_x": 1380,
+        "box_center_y": 687,
+        "baseline_adjust": -3,
+        "visual_offset_x": 4,
+        "visual_offset_y": -3,
+        "text_center_error_px": 0,
+        "manual_registry_entry": {
+          "target": "callout label",
+          "value": {
+            "x": 4,
+            "y": -3
+          },
+          "reason": "Lower-right callout-only optical centering correction after human GUI target correction; readback placement metrics did not capture the rendered glyph-center perception.",
+          "allowed_range": {
+            "x_abs_max": 4,
+            "y_abs_max": 5
+          },
+          "reuse_risk": "medium_callout_specific",
+          "human_calibrated_override": {
+            "x": 313,
+            "previous_polished_x": 289,
+            "calibration_delta_x": 24,
+            "reason": "YMM4 GUI inspection measured the visually correct lower-right callout label X as 313.0, not the previous computed 289.",
+            "reuse_risk": "high_do_not_generalize",
+            "debt_id": "g28_callout_text_layout_model_debt_v1"
+          }
+        },
+        "computed_x_before_human_calibration": 289,
+        "previous_polished_x": 289,
+        "human_calibrated_x": 313,
+        "calibration_delta_x": 24,
+        "human_calibrated_override": true,
+        "human_calibration_revision_id": "g28_real_estate_information_gap_callout_label_human_calibration_v1",
+        "layout_system_debt": {
+          "debt_id": "g28_callout_text_layout_model_debt_v1",
+          "why_formula_was_insufficient": "The estimated text box and registered offset can report centered placement while YMM4 glyph rendering still reads left-shifted in the GUI.",
+          "metric_perception_gap": "text_center_error_px remains a registered-placement metric, not rendered glyph optical-center proof.",
+          "future_fix_direction": "Replace per-label overrides with a callout text layout model that accounts for YMM4 font rendering, target text width, and visual centering acceptance.",
+          "reuse_warning": "Do not reuse x=313.0 for other labels, themes, fonts, or callout counts."
+        }
+      },
+      "description": "visible callout label for YMM4 GUI diagnostic probe"
+    }
+  ],
+  "limitations": [
+    "This is a self-contained diagnostic probe, not production carrier approval.",
+    "This revision addresses bounded human-review polish only after revise_probe; it does not change the diagnostic-only boundary.",
+    "It uses visible node/callout labels for GUI review; this does not approve production text density.",
+    "No render, video, audio, source footage, external image, URL, raw reference, rights automation, or slot-fill is included."
+  ]
+}

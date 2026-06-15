@@ -18,6 +18,27 @@ function readRepoJson(repoPath) {
   };
 }
 
+function checkRepoArtifacts(repoPaths) {
+  const artifacts = (Array.isArray(repoPaths) ? repoPaths : []).map((repoPath) => {
+    const fullPath = path.resolve(repoRoot, repoPath);
+    const rel = path.relative(repoRoot, fullPath);
+    if (rel.startsWith('..') || path.isAbsolute(rel)) {
+      return { ok: false, exists: false, path: repoPath, error: 'path outside repo' };
+    }
+    return {
+      ok: true,
+      exists: fs.existsSync(fullPath),
+      path: rel.replace(/\\/g, '/'),
+    };
+  });
+  return {
+    ok: artifacts.every((artifact) => artifact.ok),
+    artifacts,
+    missing_count: artifacts.filter((artifact) => artifact.ok && !artifact.exists).length,
+    blocked_count: artifacts.filter((artifact) => !artifact.ok).length,
+  };
+}
+
 const ok = async () => ({ ok: true });
 const nullPath = async () => null;
 
@@ -25,6 +46,7 @@ contextBridge.exposeInMainWorld('nlmytgen', {
   getPathForFile: () => '',
   loadReviewPacket: async (packetPath) => readRepoJson(packetPath),
   loadReviewProof: async (proofPath) => readRepoJson(proofPath),
+  checkReviewArtifacts: async (artifactPaths) => checkRepoArtifacts(artifactPaths),
   saveReviewDecisions: async (opts) => {
     lastReviewDecisionSave = opts;
     return { ok: true, path: opts?.decisionPath || 'smoke.json' };
