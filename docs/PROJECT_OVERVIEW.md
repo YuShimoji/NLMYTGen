@@ -11,6 +11,7 @@ to look next, then read the linked owner document for the actual wording.
 | Where can past feature implementation be seen? | [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md) | Itemized feature IDs, status, layer, and notes for A/B/C/D/E/F/G/H areas. | It is a registry, not a quick narrative; dense rows may need follow-up in verification docs. |
 | Where can future features and progress be seen? | [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md), [runtime-state.md](runtime-state.md), [TURN_BASED_DEVELOPMENT_PLAN.md](TURN_BASED_DEVELOPMENT_PLAN.md) | Registry status (`approved`, `proposed`, `hold`, `rejected`), current slice, and turn-count planning lanes. | `runtime-state.md` is current-position authority, but it is intentionally history-heavy. |
 | How are mainline and Baseball sidequest separated? | [BRANCH_THREAD_SUPERVISION.md](BRANCH_THREAD_SUPERVISION.md), [BASEBALL_SUPERVISOR_REVIEW_PROMPT.md](BASEBALL_SUPERVISOR_REVIEW_PROMPT.md) | Same repository, separate branch, separate development thread, and separate supervisor prompt rules. | Baseball branch changes are not mainline policy until explicitly integrated. |
+| How do I review the current Baseball foundation state? | [FOUNDATION_REBASELINE_2026-06-15.md](baseball/FOUNDATION_REBASELINE_2026-06-15.md) | Branch/upstream inventory, current artifact chain, single review procedure, screenshot evidence path, and remaining uncertainty before BN-05/manual preview work. | It is a rebaseline report, not a new feature implementation or production acceptance record. |
 | Are implementation items grouped by topic? | [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md) and the implementation map below | A-H feature groups plus Baseball sidequest BN slices and common foundation work. | Some verification docs are evidence records, not feature owners. |
 | Where are progress screenshots or visual proof images? | [PROGRESS_SCREENSHOT_INDEX.md](PROGRESS_SCREENSHOT_INDEX.md) | Existing proof images, preview screenshots, frame exports, and their source paths. | The BN-05 YMM4 manual preview screenshot is still missing until a human captures it in YMM4. |
 | Is future planning split by turn count instead of date? | [TURN_BASED_DEVELOPMENT_PLAN.md](TURN_BASED_DEVELOPMENT_PLAN.md) | Turn bands, lane choices, done signals, and default Baseball next turns. | It is a planning route, not a replacement for `runtime-state.md` or human decisions. |
@@ -25,21 +26,23 @@ to look next, then read the linked owner document for the actual wording.
 | GUI and operator surface | F-04 CSV stats display is done; older F-01/F-02 GUI directions are quarantined; F-03 Python preview route is rejected. | GUI revival must be tied to a narrow workflow proof, not broad UI expansion. | [GUI_MINIMUM_PATH.md](GUI_MINIMUM_PATH.md), [AGENT_OPERATOR_SURFACE.md](AGENT_OPERATOR_SURFACE.md), F rows in [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md). |
 | Visual/YMM4 automation | G-24 template-first skit group route is done; G-25 property variation probe is done; G-27 is held as case evidence; G-28 is the current reference-driven successor direction. | G-28 needs review surfaces and transfer decisions before production claims. | [REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md](REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md), [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md), G verification docs. |
 | Packaging, thumbnail, and quality scoring | H-01 packaging brief is approved; H-02 through H-05 cover thumbnail strategy and scoring support. | Generated thumbnail/media production is still bounded; scoring is diagnostic, not creative acceptance. | [PACKAGING_ORCHESTRATOR_SPEC.md](PACKAGING_ORCHESTRATOR_SPEC.md), [THUMBNAIL_STRATEGY_SPEC.md](THUMBNAIL_STRATEGY_SPEC.md), H verification docs. |
-| Baseball sidequest | BN-01 through BN-05 describe the baseball infographic route, visual data contract, static PNG export, frame sequence export, and YMM4 placement proof. | BN-05 manual YMM4 preview screenshot and PASS/FIX note remain the clearest next human proof. Keep this on the Baseball branch unless mainline integration is explicitly requested. | [BRANCH_THREAD_SUPERVISION.md](BRANCH_THREAD_SUPERVISION.md), [BASEBALL_NEWS_PIPELINE_SPEC.md](BASEBALL_NEWS_PIPELINE_SPEC.md), [baseball_infographic_backlog.md](../lanes/sports_news/docs/baseball_infographic_backlog.md), [baseball_sidequest_restart_handoff_2026-05-26.md](../lanes/sports_news/docs/baseball_sidequest_restart_handoff_2026-05-26.md). |
+| Baseball sidequest | BN-01 through BN-05 describe the baseball infographic route, visual data contract, static PNG export, frame sequence export, and YMM4 placement proof. BN-R0 adds a foundation rebaseline report for review routing. | BN-05 manual YMM4 preview screenshot and PASS/FIX note remain the clearest next human proof. Keep this on the Baseball branch unless mainline integration is explicitly requested. | [FOUNDATION_REBASELINE_2026-06-15.md](baseball/FOUNDATION_REBASELINE_2026-06-15.md), [BRANCH_THREAD_SUPERVISION.md](BRANCH_THREAD_SUPERVISION.md), [BASEBALL_NEWS_PIPELINE_SPEC.md](BASEBALL_NEWS_PIPELINE_SPEC.md), [baseball_infographic_backlog.md](../lanes/sports_news/docs/baseball_infographic_backlog.md), [baseball_sidequest_restart_handoff_2026-05-26.md](../lanes/sports_news/docs/baseball_sidequest_restart_handoff_2026-05-26.md). |
 | Common foundation / agent orchestration | Recent docs define repo-status input audits, live status JSON producer design, and preflight boundaries. | These are observer/design contracts unless separately authorized for stdout-only implementation. | [runtime-state.md](runtime-state.md), [AGENT_ORCHESTRATION.md](AGENT_ORCHESTRATION.md), common-foundation verification docs. |
 
 ## How to Read the Local Docs View
 
 1. Start here for orientation.
-2. Open [PROGRESS_SCREENSHOT_INDEX.md](PROGRESS_SCREENSHOT_INDEX.md) when the
+2. Open [FOUNDATION_REBASELINE_2026-06-15.md](baseball/FOUNDATION_REBASELINE_2026-06-15.md)
+   when the question is the current Baseball branch/artifact/review baseline.
+3. Open [PROGRESS_SCREENSHOT_INDEX.md](PROGRESS_SCREENSHOT_INDEX.md) when the
    question is visual progress or screenshot placement.
-3. Open [BRANCH_THREAD_SUPERVISION.md](BRANCH_THREAD_SUPERVISION.md) when the
+4. Open [BRANCH_THREAD_SUPERVISION.md](BRANCH_THREAD_SUPERVISION.md) when the
    question is whether the current work belongs to mainline or Baseball.
-4. Open [TURN_BASED_DEVELOPMENT_PLAN.md](TURN_BASED_DEVELOPMENT_PLAN.md) when
+5. Open [TURN_BASED_DEVELOPMENT_PLAN.md](TURN_BASED_DEVELOPMENT_PLAN.md) when
    the question is "what should the next few turns close?"
-5. Open [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md) for itemized status.
-6. Open [GLOSSARY.md](GLOSSARY.md) when S-n, L-n, or layer terms are unclear.
-7. Open [runtime-state.md](runtime-state.md) only after that, when you need the
+6. Open [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md) for itemized status.
+7. Open [GLOSSARY.md](GLOSSARY.md) when S-n, L-n, or layer terms are unclear.
+8. Open [runtime-state.md](runtime-state.md) only after that, when you need the
    exact current slice and latest handoff chain.
 
 The MkDocs tree groups files into Overview, Specs, Runtime State, Development

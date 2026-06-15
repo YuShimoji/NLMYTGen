@@ -100,7 +100,7 @@ agent:
 次Codex用Prompt（Baseball sidequest実装再開用）
 ```
 
-Do not use `次に渡すPrompt` without naming the recipient.
+Do not use an unnamed handoff-prompt label. Name the recipient and purpose.
 
 ## Current Caveat
 

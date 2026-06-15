@@ -5,8 +5,7 @@ review by a supervising AI. This is not an implementation prompt for the next
 Codex session.
 
 ```text
-監修役AIに渡すPrompt
-（Baseball sidequest Codex完了報告レビュー用。実装指示ではありません）
+監修役AIに渡すPrompt（Baseball sidequest報告レビュー用。実装指示ではありません）
 
 以下は Codex が NLMYTGen の Baseball sidequest branch で行った作業報告です。
 あなたは実装担当ではなく監修役AIとして、報告内容の妥当性・混線リスク・次回改善点をレビューしてください。

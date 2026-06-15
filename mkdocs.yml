@@ -49,6 +49,7 @@ nav:
     - 'NLMYTGen Local Document View': 'index.md'
     - 'Local Document View Note': 'docs/index.md'
     - 'Project Overview': 'docs/PROJECT_OVERVIEW.md'
+    - 'BN-R0 - Baseball Foundation Rebaseline': 'docs/baseball/FOUNDATION_REBASELINE_2026-06-15.md'
     - 'Branch / Thread / Supervision Routing': 'docs/BRANCH_THREAD_SUPERVISION.md'
     - 'Baseball Supervisor Review Prompt': 'docs/BASEBALL_SUPERVISOR_REVIEW_PROMPT.md'
     - 'Progress Screenshot Index': 'docs/PROGRESS_SCREENSHOT_INDEX.md'

@@ -773,7 +773,7 @@ readback境界:
 報告条件:
 - ChatGPT監修へ貼れる単一コードブロックで返す。
 - G-28をproduction完了のように書かない。
-- 次に渡すPrompt欄を必ず含める。
+- 宛先と用途を明記した Prompt 欄を必ず含める。
 
 ===== SECTION 17: G-28 Game Mechanics Diagram Semantics Resume Prompt =====
 Use when resuming G-28 after the game-mechanics human review returned `decision: revise` and the diagram semantics note was recorded. This prompt keeps G-28 diagnostic-only and does not reopen Source-Footage, G-27, RSS, NotebookLM, YMM4 generation, render, production timing, or creative final acceptance.
@@ -836,7 +836,7 @@ C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
 - G-28 を production 完了のように書かない。
 - Source-Footage へ進んだように書かない。
 - 変更内容、残る不確実性、次の取っ掛かりを自然文と必要な比較表で返す。
-- 次に渡すPrompt欄を含める。
+- 宛先と用途を明記した Prompt 欄を含める。
 
 ===== END =====
 ```
