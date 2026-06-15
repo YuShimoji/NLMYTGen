@@ -1,9 +1,0 @@
-# Minimal Codex project config scaffold.
-# Keep this file short and project-specific.
-# This file only stores local Codex tool defaults; behavior lives in visible docs.
-# Do not pin a model here; use Codex app/global model selection.
-
-approval_policy = "never"
-sandbox_mode = "workspace-write"
-
-# Add project-specific hooks or tool restrictions here if needed.
