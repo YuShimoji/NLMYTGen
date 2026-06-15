@@ -53,6 +53,8 @@ OVERVIEW_ORDER = [
     "index.md",
     "docs/index.md",
     "docs/PROJECT_OVERVIEW.md",
+    "docs/BRANCH_THREAD_SUPERVISION.md",
+    "docs/BASEBALL_SUPERVISOR_REVIEW_PROMPT.md",
     "docs/PROGRESS_SCREENSHOT_INDEX.md",
     "docs/TURN_BASED_DEVELOPMENT_PLAN.md",
     "docs/GLOSSARY.md",

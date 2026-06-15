@@ -8,11 +8,16 @@ artifacts, shared API/auth/DB, or dependency contracts.
 
 - Worktree: `C:\Users\PLANNER007\NLMYTGen-baseball-sidequest`
 - Branch: `codex/baseball-bn02-visual-data`
-- Latest commit: `8546310 Add baseball frame sequence export`
+- Historical handoff commit: `8546310 Add baseball frame sequence export`
 - Remote: pushed to `origin/codex/baseball-bn02-visual-data`
 - Local status at handoff time: clean and equal to remote
 - Main worktree scope: read-only; do not stage or edit G-27/RSS changes from
   `C:\Users\PLANNER007\NLMYTGen`
+
+Branch / thread / supervisor routing is now owned by
+`docs/BRANCH_THREAD_SUPERVISION.md`. For current HEAD, run `git log -1
+--oneline`; do not treat the historical handoff commit above as the latest
+branch state.
 
 Use this to resume:
 
@@ -22,6 +27,7 @@ git fetch --all --prune
 git checkout codex/baseball-bn02-visual-data
 git pull --ff-only
 git status --short --branch
+git rev-list --left-right --count "HEAD...@{u}"
 ```
 
 The expected status is a clean
