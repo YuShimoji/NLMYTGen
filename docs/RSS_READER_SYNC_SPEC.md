@@ -5,6 +5,16 @@
 A-04 is still an L1 input-acquisition helper. It does not replace
 NotebookLM, write scripts, call an LLM, or produce video artifacts.
 
+Current lane handling is defined in
+[`RSS_LANE_EXIT_BOUNDARY.md`](RSS_LANE_EXIT_BOUNDARY.md). Treat this worktree as
+a transition / compatibility lane, not as a new long-lived NLMYTGen product
+lane.
+
+Newsroom is the successor for active RSS / Reader work. OPML import, source
+list readback, sanitized source smoke, RSS fetch, and read-only Inoreader fetch
+now belong to `newsroom-yt-pipeline`; keep this spec only as compatibility
+reference until deletion or archive.
+
 The 2026-05-25 RSS Reader Sync v1 slice makes an OPML subscription export the
 shared source of truth between the human RSS reader view and NLMYTGen's AI-side
 feed fetch. The existing direct-URL `fetch-topics` path remains supported.
