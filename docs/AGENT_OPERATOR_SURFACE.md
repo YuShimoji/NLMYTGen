@@ -1,8 +1,8 @@
 # Agent Operator Surface
 
 This page defines the smallest human-readable review surface for the current
-common foundation fake / single-fake flow and standalone preflight preview. It is
-a review card, not an execution entry point.
+common foundation fake/evaluation-only helper flow and standalone preflight
+preview. It is a review card, not an execution entry point.
 
 The card exists so an operator can answer these questions without reading test
 output or Python implementation:
@@ -11,7 +11,7 @@ output or Python implementation:
 - which worker and scenario were used
 - whether this is a deterministic example or a real result card
 - whether preflight passed
-- whether the local simulation runner started
+- whether the fake/evaluation-only helper was invoked
 - what the gate decided
 - whether human action is required
 - what decision the human should make
@@ -27,7 +27,7 @@ Open this document for the static example, or print the deterministic example:
 uv run python scripts/agent_operator_surface.py --example
 ```
 
-To render a real card, pass an existing repo-local orchestration flow JSON:
+To render a card from an existing repo-local orchestration flow JSON:
 
 ```powershell
 uv run python scripts/agent_operator_surface.py path\to\flow-result.json
@@ -48,7 +48,7 @@ uv run python scripts/agent_orchestrator.py --worker audit --pre-execution-dry-r
 ```
 
 The script only reads a JSON file inside this repo and prints Markdown. It does
-not run Codex, does not run the local simulation runner, does not create a
+not run Codex, does not run the fake/evaluation-only helper, does not create a
 subprocess, does not pipe stdin, does not start a worker loop, and does not send
 external notifications.
 
@@ -76,40 +76,43 @@ artifacts or evaluate a worker report from a real run.
 
 ## Summary
 - Card mode: example
-- Plain-language result: Audit worker reached a human-review stop.
+- Boundary label: fake/evaluation-only helper; not real Codex execution
+- Plain-language result: Synthetic audit-helper output reached a human-review stop.
 - Human action required: yes
-- Decision to make: Inspect the listed artifacts, then choose whether to run summarize, request a fix, or stop.
-- This is a deterministic sample card; it did not run or verify any worker artifacts.
+- Decision to make: Inspect only if these paths came from an explicit fake/report evaluation result, then choose whether to summarize, request a fix, or stop.
+- This is a deterministic sample card; it did not run Codex, grant runner permission, or authorize hold-state runtime artifacts.
 
 ## Status
 - Flow status: completed
 - Preflight check: passed
-- Local simulation runner started: yes
+- Fake/evaluation-only helper invoked: yes
 - Gate result: needs human review
 - Human action required: yes
 
 ## What happened
-- Attempted work: Review an existing local simulation result
+- Attempted work: Review an existing fake/evaluation-only helper result
 - Worker / scenario: Audit worker / Needs human review
 - Prompt: .agent/prompt_catalog/audit.md
 - Schema: .agent/schemas/worker_report.schema.json
 - Planned report: .agent/reports/example-audit.report.json
-- Runner report written: yes
-- Runner exit: 0
-- Runner timed out: no
-- Runner error kind: none
+- Report path boundary: runtime-looking fake/evaluation-only output path; not a normal authorized hold-state artifact
+- Synthetic helper report written: yes, in this deterministic fake/evaluation-only example only
+- Synthetic helper exit: 0
+- Synthetic helper timed out: no
+- Synthetic helper error kind: none
 
 ## Human decision needed
-- Human action required: yes. Decide whether to continue with the suggested next worker, send the result back for a fix, or keep the run stopped for more human input.
-- Decision to make: Inspect the listed artifacts, then choose whether to run summarize, request a fix, or stop.
-- Report note: Review the example report shape and decide whether the next real worker result should be summarized, fixed, or held for more human input.
+- Human action required: yes. Decide whether to continue with the suggested next worker, send the result back for a fix, or keep the evaluation stopped for more human input.
+- Decision to make: Inspect only if these paths came from an explicit fake/report evaluation result, then choose whether to summarize, request a fix, or stop.
+- Report note: Review the example report shape and decide whether a future separately authorized worker result should be summarized, fixed, or held for more human input.
 - Gate reasons:
 - status:needs_human
 - Preflight reasons:
 - none
 
 ## Files to inspect
-- Note: Example paths only; this example command does not check whether these files exist.
+- Note: Example paths only; this example command does not check whether these files exist or create them.
+- Boundary: `.agent/reports/*.report.json`, `.agent/needs_human.json`, and `.agent/logs/notify_stub.log` are runtime-looking local outputs. They are not created or authorized by hold-state previews.
 - .agent/prompt_catalog/audit.md
 - .agent/schemas/worker_report.schema.json
 - .agent/reports/example-audit.report.json
@@ -122,10 +125,13 @@ artifacts or evaluate a worker report from a real run.
 - Codex stdin piping: not implemented
 - Runtime worker loop: not implemented
 - External notification service: not implemented
-- Local notify stub: only written after gate_result.needs_human=true
+- Local notify stub: local stub log only; not external notification
+- .agent/reports/*.report.json: runtime-looking fake/evaluation-only output path; not normal hold-state output
+- .agent/needs_human.json: not created or authorized by hold-state previews
+- .agent/logs/notify_stub.log: local stub log only after needs_human in fake/report evaluation
 
 ## Next safe actions
-- Open the report and needs-human stub paths listed above.
+- If this came from an explicit fake/report evaluation result, inspect the report and local needs-human stub paths listed above.
 - Answer the human question or choose the next worker after inspecting the gate reasons.
 - Treat this as a local review stop, not a production or release approval.
 
@@ -134,9 +140,10 @@ artifacts or evaluate a worker report from a real run.
 - worker: audit
 - scenario: needs_human
 - preflight_allowed: yes
-- runner_started: yes
+- fake_helper_invoked: yes
 - gate_decision: needs_human
 - report_path: .agent/reports/example-audit.report.json
+- operator_boundary: fake/evaluation-only helper; not runner permission
 ```
 
 ## Boundary
@@ -145,9 +152,14 @@ The operator card is deliberately downstream of existing outputs. It can make a
 flow or preflight preview understandable, but it is not authority to continue
 through a gate or start a real runner.
 
-- `needs_human=true` remains a local review stop.
+- `needs_human=true` remains a local review stop, not permission to continue
+  into real execution.
 - `codex_execution_started=false` and `real_subprocess_started=false` remain the
   expected state for the fake and single-fake flow.
+- Fake / single-fake flow examples are fake/evaluation-only helper surfaces.
+  They are not real Codex execution, not runner permission, not runtime worker
+  operation, and not hold-state authorization to create `.agent` runtime
+  artifacts.
 - A preflight preview with `safe_to_start_real_runner=true` is only a readable
   preview of a preflight result; real execution still belongs to a separate
   authorized runner slice.
@@ -165,6 +177,9 @@ through a gate or start a real runner.
   presence, inspected paths, command provenance, timestamp, source provenance,
   adapter id, and confidence / trust boundary. Machine-collected status is
   still only input evidence; it is not execution permission.
-- Real runner boundary design is still a separate future slice.
-- External notification remains unimplemented; the local notify stub is the only
-  visible notification artifact.
+- Any future real runner requires a separately authorized and audited slice
+  covering subprocess launch, stdin handling, timeout, cancellation, report
+  artifact containment, notification policy, gate authority, and operator card
+  readback boundaries.
+- External notification remains unimplemented; `notify_stub.log` is only a local
+  stub log and must not be read as an external notification result.

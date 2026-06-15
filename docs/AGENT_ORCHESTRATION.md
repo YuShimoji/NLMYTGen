@@ -14,11 +14,15 @@ Codex 作業を次の流れで管理する。
    report を返す。
 3. `scripts/agent_gate.py` が report を schema と policy で判定する。
 4. Gate が続行可能なら次 Worker を選ぶ。
-5. Gate が人間確認を要求する場合だけ、実通知ではなく
-   `.agent/needs_human.json` と `.agent/logs/notify_stub.log` を生成する。
+5. 既存 report の evaluation-only path で Gate が人間確認を要求する場合だけ、
+   実通知ではなく local stub output として `.agent/needs_human.json` と
+   `.agent/logs/notify_stub.log` を生成し得る。
 
-この初期版は dry-run、report validation、policy gate、notify stub までを担当する。
-Codex 実行そのものや外部 notification service 送信は意図的に未実装のままにする。
+この初期版は dry-run、pre-execution preview、既存 report の evaluation-only
+validation、policy gate、local notify stub までを担当する。hold-state preview は
+`.agent/reports/*.report.json`、`.agent/needs_human.json`、`.agent/logs/notify_stub.log`
+を作らない。Codex 実行そのものや外部 notification service 送信は意図的に未実装の
+ままにする。
 
 ## Automation / Orchestrator / Codex exec の違い
 
@@ -33,8 +37,9 @@ Repo-local orchestrator は `scripts/agent_orchestrator.py` で、現時点で�
 - `--dry-run` で将来の `codex exec` execution plan / command argv 案を表示する。
 - `--pre-execution-dry-run` で plan、preflight、preflight preview card、人間の次判断を
   Markdown で表示して止める。
-- `--report <path>` で既存 report を gate に渡す。
-- `needs_human=true` のときだけ notify stub を呼ぶ。
+- `--report <path>` で既存 report を gate に渡す。これは evaluation-only path
+  であり、real Codex execution や runner permission ではない。
+- `--report` evaluation で `needs_human=true` のときだけ local notify stub を呼ぶ。
 
 Future `codex exec` integration は別 slice で行う。現時点では実行しない。
 
@@ -57,7 +62,7 @@ Common core は repo をまたいでも変えない契約だけを持つ。
 
 - Worker report schema
 - Gate の fail-closed 判定
-- `needs_human` notification stub の payload shape
+- local needs-human stub の payload shape。これは外部 notification ではない
 - dry-run command preview
 - disabled execution preflight
 - live repo status JSON input contract
@@ -110,6 +115,10 @@ Dry-run の command builder は preview contract だけを持つ。現在の想�
 ```powershell
 codex exec - --output-schema .agent/schemas/worker_report.schema.json -o .agent/reports/{timestamp}-{worker}.report.json
 ```
+
+この `.agent/reports/{timestamp}-{worker}.report.json` は runtime-looking planned
+path の表示であり、dry-run や hold-state preview では書き込まない。ここに path が
+出ることは report artifact creation の許可ではない。
 
 将来の実行 slice では、orchestrator が `.agent/prompt_catalog/{worker}.md` を読み、
 その内容を `codex exec -` の stdin に渡す。現時点では stdin へ渡す処理も
@@ -289,7 +298,13 @@ Worker report 側で risk または human question として明示する。
 ## Codex exec への接続手順
 
 現時点の `agent_orchestrator.py` は dry-run、pre-execution dry-run preview、report 判定だけを行う。
-次段階で実行に接続する場合は、次の順で進める。
+次段階で実行に接続する場合でも、この節だけでは実行を許可しない。必ず別の
+authorized / audited slice として、subprocess launch、stdin handling、timeout、
+cancellation、report artifact containment、notification policy、gate authority、
+operator card readback boundary を先に設計・検証する。real runner implementation
+remains No until that slice is explicitly approved.
+
+その別 slice で検討する順序は次の通り。
 
 1. command builder が返す execution plan を検証する。現時点の preview contract は
    `codex exec - --output-schema <schema> -o <report>` で、prompt は stdin 入力を
@@ -302,9 +317,11 @@ Worker report 側で risk または human question として明示する。
    まま、実行 slice の preflight 条件を先に test する。
 4. 実行を有効化する場合も、prompt path は `.agent/prompt_catalog/`、schema path は
    `.agent/schemas/`、report path は `.agent/reports/` の下に限定する。
-5. 実行結果を `.agent/reports/` に保存する。
+5. 別途承認された real runner slice の中だけで、実行結果を `.agent/reports/` に
+   保存する。
 6. 保存した report を `scripts/agent_gate.py` に渡す。
-7. `needs_human=true` の場合だけ `scripts/agent_notify_stub.py` を呼ぶ。
+7. `needs_human=true` の場合だけ local stub として `scripts/agent_notify_stub.py` を
+   呼ぶ。これは外部 notification ではない。
 8. 外部通知を追加する場合も、まず stub の出力 payload を正本にし、API key や
    service token は repo に置かない。
 
@@ -312,20 +329,22 @@ Worker report 側で risk または human question として明示する。
 primary preview contract にしない。
 
 `.agent/reports/*.report.json` は local runtime artifact として扱い、default では
-commit しない。durable な例が必要な場合は runtime report ではなく、明示的な
-fixture または docs example として置く。
+commit しない。hold-state preview や docs-only slice では生成しない。durable な例が
+必要な場合は runtime report ではなく、明示的な fixture または docs example として
+置く。
 
 ## Fake Runner Scaffold
 
-`scripts/agent_orchestrator.py` には tests-only の fake runner helper と、tests-only
-の single fake execution flow helper がある。single fake flow は `ExecutionPlan` を
+`scripts/agent_orchestrator.py` には tests-only の fake/evaluation-only runner
+helper と、tests-only の single fake execution flow helper がある。single fake flow は `ExecutionPlan` を
 作り、explicit `repo_status` 付きの `build_execution_preflight` を通過した場合だけ
-fake runner を呼ぶ。fake runner は `ExecutionPlan.report_path` に synthetic report
+fake/evaluation-only helper を呼ぶ。fake helper は `ExecutionPlan.report_path` に synthetic report
 を書き、valid report は必ず `scripts/agent_gate.py` で判定する。`needs_human=true`
-の場合だけ local notify stub を呼ぶ。
+の場合だけ local notify stub を呼ぶ。この path は test/helper surface であり、
+hold-state operation の runtime artifact 作成許可ではない。
 
-Fake runner は次の失敗形を fail-closed で再現するための scaffold であり、real
-`codex exec` 実行経路ではない。
+Fake/evaluation-only helper は次の失敗形を fail-closed で再現するための scaffold
+であり、real `codex exec` 実行経路ではない。
 
 - valid pass report
 - valid needs-human report
@@ -335,29 +354,30 @@ Fake runner は次の失敗形を fail-closed で再現するための scaffold 
 - nonzero exit
 - timeout
 
-Fake runner / single fake flow でも `codex_execution_started=false` と
+Fake/evaluation-only helper / single fake flow でも `codex_execution_started=false` と
 `real_subprocess_started=false` を返す。これらは runtime loop ではなく、
 real `codex exec` を有効化しない pre-real-execution safety scaffold である。
 `subprocess.run`、stdin piping、runtime worker loop、外部通知 service はまだ実装しない。
-Fake runner helper flow の preflight は local simulation の開始可否だけを判定し、
-real runner start permission ではないため `safe_to_start_real_runner=false` のまま
-である。
+Fake/evaluation-only helper flow の preflight は synthetic helper の開始可否だけを
+判定し、real runner start permission ではないため
+`safe_to_start_real_runner=false` のままである。
 
 ## Runtime Artifact Retention
 
-`.agent/reports/` と `.agent/logs/` は runtime output の置き場であり、directory
-placeholder だけを repo に残す。
+`.agent/reports/` と `.agent/logs/` は runtime-looking local output の置き場であり、
+hold-state operation では directory placeholder だけを repo に残す。
 
 - `.agent/reports/.gitkeep`: tracked placeholder
 - `.agent/logs/.gitkeep`: tracked placeholder
-- `.agent/reports/*.report.json`: local runtime artifact。default では commit しない
-- `.agent/needs_human.json`: local runtime state。default では commit しない
-- `.agent/logs/notify_stub.log`: local runtime output。default では commit しない
+- `.agent/reports/*.report.json`: local runtime artifact。hold-state preview では作らない。default では commit しない
+- `.agent/needs_human.json`: local runtime state。hold-state preview では作らない。default では commit しない
+- `.agent/logs/notify_stub.log`: local stub log。外部 notification ではない。hold-state preview では作らない。default では commit しない
 
 Durable な report example や fixture が必要な場合は `.agent/reports/` ではなく、
 `tests/fixtures/agent_orchestration/` のような明示的な fixture path に置く。
 
-Local runtime artifact を掃除する PowerShell 例:
+Local runtime artifact を掃除する PowerShell 例。これは明示的な fake/report
+evaluation 後の手動 cleanup 用であり、docs-only / hold-state slice の通常手順ではない:
 
 ```powershell
 Remove-Item -Force .agent/needs_human.json, .agent/logs/notify_stub.log -ErrorAction SilentlyContinue; Get-ChildItem .agent/reports -Force | Where-Object { $_.Name -ne '.gitkeep' } | Remove-Item -Recurse -Force
@@ -390,8 +410,11 @@ authority を置き換えない。
 - API key や通知 service token を要求しない。
 - 大規模改変より、固定 Prompt、JSON report、gate、local stub の小さい単位を
   優先する。
-- 人間判断が必要なときは `.agent/needs_human.json` を見る。
+- 既存 report の evaluation-only path で local stub が作られた場合だけ、
+  `.agent/needs_human.json` を local review stop として見る。hold-state preview
+  はこの file を作らない。
 
 最小運用では、Automation は `agent_orchestrator.py --worker <name> --dry-run`、
-`--pre-execution-dry-run`、または `--report <path>` を起点にする。preview-only path は
-stdout の確認面であり、repo 内 runtime artifact は残さない。
+`--pre-execution-dry-run`、または既存 report を読む `--report <path>` を起点にする。
+preview-only path は stdout の確認面であり、repo 内 runtime artifact は残さない。
+`--report` は evaluation-only path であり、runner permission ではない。
