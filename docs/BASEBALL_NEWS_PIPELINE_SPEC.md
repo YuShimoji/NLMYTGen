@@ -5,7 +5,7 @@ Status: draft sidequest lane boundary (2026-05-10)
 この文書は、NLMYTGen 内で新しく扱う **野球速報系ゆっくり解説動画** レーンの正本仕様である。
 既存の「ゆっくり解説」制作パイプラインを再利用するが、題材・映像素材・データ契約はスポーツニュース向けに分離する。
 
-このレーンは大きなサイドクエストであり、NLMYTGen 本流の `runtime-state.md` `next_action` を置き換えない。Baseball を進める場合は、チャットで明示的に別レーンとして起動する。開発スレッド、監修役AIへの報告Prompt、remote branch は本流と分ける。具体的な分岐ルールは [BRANCH_THREAD_SUPERVISION.md](BRANCH_THREAD_SUPERVISION.md) を正とする。専用 Prompt md は作らない。
+このレーンは大きなサイドクエストであり、NLMYTGen 本流の `runtime-state.md` `next_action` を置き換えない。Baseball を進める場合は、チャットで明示的に別レーンとして起動する。開発スレッド、監修役AIへの報告Prompt、remote branch は本流と分ける。具体的な分岐ルールは [BRANCH_THREAD_SUPERVISION.md](BRANCH_THREAD_SUPERVISION.md) を正とする。次 Codex 用の実装再開専用 Prompt md は作らない。監修役AIへの報告レビューPromptは [BASEBALL_SUPERVISOR_REVIEW_PROMPT.md](BASEBALL_SUPERVISOR_REVIEW_PROMPT.md) を再利用可能な監査補助として扱い、実装再開指示や lane 状態正本にしない。
 
 ## 目的
 

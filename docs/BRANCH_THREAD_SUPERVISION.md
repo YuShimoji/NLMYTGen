@@ -72,18 +72,26 @@ When the report is about Baseball sidequest work, label the prompt as:
 ```
 
 The reusable supervisor prompt is [BASEBALL_SUPERVISOR_REVIEW_PROMPT.md](BASEBALL_SUPERVISOR_REVIEW_PROMPT.md).
+That file is allowed as a report-review aid. It is separate from the banned
+pattern of creating a dedicated implementation-restart prompt file for the next
+Codex session.
 
 The prompt should ask the supervisor to check:
 
 - whether the report stayed on the Baseball branch and did not assume
   `origin/master`;
+- whether multiple commits are reported separately by purpose, touched files,
+  and untouched boundaries;
 - whether Baseball work remained a sidequest and did not replace mainline
   `runtime-state.md` authority;
 - whether screenshots, frame exports, manifests, and YMM4 placement evidence
   are placed under the Baseball artifact paths;
 - whether the report separates human final judgement from assistant/tool
   candidate generation, placement preparation, readback, and gap reports;
-- whether commit / push / clean state are stated against the Baseball branch.
+- whether commit / push / clean state and local build results are stated against
+  the Baseball branch;
+- whether mainline `master` integration remains a separate explicit human
+  decision.
 
 Use a separate label only when a prompt is meant for a future implementation
 agent:
