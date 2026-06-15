@@ -55,7 +55,7 @@ Before applying a prompt template, checklist, or short response contract to a ma
 If any field is missing, do not collapse the task into a template. Resolve the missing field first.
 
 ## Workflow-Proof Gate
-If the project depends on a human-authored production workflow, do not jump to quantity expansion (content writing, asset proliferation, mass production) before the workflow has been proven once end-to-end.
+If the project depends on an operator-approved production workflow, do not jump to quantity expansion (content writing, asset proliferation, mass production) before the workflow has been proven once end-to-end.
 Examples of workflow proof:
 - author → validate → generate → preview
 - operator edits → tool runs → result observed

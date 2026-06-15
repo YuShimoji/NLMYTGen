@@ -13,8 +13,9 @@ proof / diagnostic carrier / Review Console / SCS lessons を汎用 screen carri
 - 抽出結果を [SCENE_COMPOSITION_SCHEMA.md](SCENE_COMPOSITION_SCHEMA.md) の
   composition type、visual role、text budget、safe area、subtitle clearance
   へ変換する。
-- YMM4 で人間が作れる generic screen carrier archetype と item/group 構成案を
-  出す。
+- YMM4 で成立する generic screen carrier archetype と item/group 構成案を
+  出す。final creative judgement は人間が持つが、design artifact、候補生成、
+  readback checklist、bounded prototype は assistant/tool 側で先に閉じる。
 
 ## 非目的
 
@@ -84,10 +85,13 @@ URL、人物・組織・個人情報、記事本文、private data は成果物�
 ## YMM4 handoff boundary
 
 Assistant may prepare the design artifact, item naming proposal, group structure
-proposal, readback checklist, and SCS mapping. Human/YMM4 remains responsible
-for native carrier authoring, material registration, final layout judgement, and
-creative acceptance. Adapter work starts only after an approved YMM4-saved
-carrier or an explicit scoped implementation slice exists.
+proposal, readback checklist, SCS mapping, and bounded review prototypes. YMM4
+remains the production surface; human ownership is final layout judgement,
+material/source approval, and creative acceptance. Do not use that human-owned
+judgement boundary to push assistant-owned generation, placement planning,
+readback, or gap classification back to the user. Adapter work starts after an
+approved YMM4-saved carrier, an explicitly promoted diagnostic carrier, or an
+explicit scoped implementation slice exists.
 
 ## First pilot candidates
 

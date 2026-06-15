@@ -51,7 +51,7 @@ The safe direction is to switch to one of these routes:
 
 | Route | Why it is safer |
 | --- | --- |
-| human-authored YMM4 seed carrier | Start from a YMM4-native visual surface that a human can already judge. |
+| YMM4-native seed or explicitly promoted carrier | Start from a YMM4-native visual surface that an operator can already judge. |
 | HTML/SVG visual prototype before YMM4 transfer | Approve visual composition before translating into YMM4 constraints. |
 | later layout-normalization review | Treat centering / spacing / split-layout issues across multiple screens, not as per-screen coordinate polishing. |
 
@@ -171,6 +171,6 @@ acceptance, import source footage, import real map imagery, regenerate this
 candidate, micro-tune it, or convert this diagnostic candidate into production
 output.
 
-Next safe entries are human-authored YMM4 seed carrier planning, HTML/SVG
+Next safe entries are YMM4-native seed or explicitly promoted carrier planning, HTML/SVG
 visual prototyping before YMM4 transfer, or a later bounded cross-screen
 layout-normalization review.

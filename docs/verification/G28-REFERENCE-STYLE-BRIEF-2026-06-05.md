@@ -155,7 +155,7 @@ production timing、creative final acceptance には進まない。
 - top band は chapter / claim anchor に使い、長文説明を置かない。
 - host は lower left / lower right の emotional anchor に留める。source footage や map
   evidence が強い画面では省く。
-- 高密度画面は「map surface / table surface」として人間が pre-authored する。
+- 高密度画面は「map surface / table surface」として operator-approved YMM4-native surface を先に用意する。
   adapter が小ラベルを大量 patch する carrier にはしない。
 - 図解画面は focal 1 個または pair 1 組を中心にし、supporting は 3 個程度まで。
 - dense evidence と conversation buffer を数秒単位で切り替え、毎 frame を同じ密度にしない。
@@ -326,7 +326,7 @@ production timing、creative final acceptance には進まない。
 - source over-decoration: strong game / property / GUI footage gets buried under diagrams
 - map-as-wallpaper: geographic evidence becomes background decoration instead of proof
 - adapter-overpatching: carrier depends on patching many tiny labels instead of using
-  a human-authored evidence surface
+  an operator-approved YMM4-native evidence surface
 
 ## Next Frontier
 

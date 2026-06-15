@@ -10,7 +10,7 @@ NLMYTGen の自動化がどこで動作するかを明確にする。
 > - **L2（Python変換工程）が停滞** → CSV も IR も生成できず、S-3（CSV変換）以降の全工程が止まる
 > - **第2層（Template Registry）が停滞** → 演出自動配置（face/bg）が止まるが、基本的な動画制作（手動演出）は続行できる
 >
-> 略語のグロサリー: `CLAUDE.md`（プロジェクトルート）の「工程・レイヤー略語の読み方」表を参照。
+> 略語のグロサリー: [GLOSSARY.md](GLOSSARY.md) を参照。
 
 ### YMM4 と patch の確認
 
@@ -95,9 +95,9 @@ YMM4 上での操作。音声合成・字幕配置・動画レンダリングは
 | 字幕配置 | YMM4 | 台本読込で自動配置 | S-4 |
 | 読み間違い修正 | 人間 | YMM4 辞書登録で定型化 | S-5a |
 | 字幕はみ出し調整 | 人間 | テンプレートで初期設定を統一 | S-5b-c |
-| 背景画像の配置・Animation | 人間 | -- | S-6a-b |
-| 立ち絵の表情切り替え | 人間 | テンプレートで表情パターンを事前定義 | S-6c |
-| BGM・SE 配置 | 人間 | テンプレートで基本 BGM を事前配置 | S-6d-e |
+| 背景画像の配置・Animation | NLMYTGen adapter / 人間 | bg_map / bg_anim_map / template source で解決できるものは patch-ymmp。未登録素材と最終見え方は人間 | S-6a-b |
+| 立ち絵の表情切り替え | NLMYTGen adapter / 人間 | face_map / idle_face / palette で patch。ラベル名と最終見え方は人間 | S-6c |
+| BGM・SE 配置 | NLMYTGen adapter / 人間 | se_map + timing anchor で AudioItem 挿入。音量・密度・最終ミックスは人間 | S-6d-e |
 | 最終プレビュー確認 | 人間 | -- | S-7a |
 | 動画レンダリング | YMM4 | YMM4 が実行 | S-7b-c |
 
@@ -153,7 +153,7 @@ YMM4 のプロジェクトテンプレート（S-0 で構築）を毎回複製�
 2. **それは「画像・音声・映像を生成する」作業か？** → Python ではやらない
    - 画像合成、音声合成、字幕レンダリング、動画エンコード → YMM4 (L3) または外部ツール
 3. **それは「YMM4 の設定を決める」作業か？** → YMM4 内部 (L3)
-   - native template authoring、素材登録、最終レイアウト判断は YMM4 / 人間の責務
+   - native template authoring、素材登録、最終レイアウト判断は YMM4 / 人間の責務。ただし registry / adapter / CLI / GUI で安全に生成・配置・readback できる部分は人間の手作業へ戻さない
    - Python から .ymmp をゼロから生成する経路は存在しない。S-4（CSV 台本読込・音声合成・字幕配置・発音情報生成）を Python で置き換えない。ただし台本読込後の ymmp に対する限定的な後段適用 (IR に基づく face/bg/slot/se/overlay/skit_group placement、thumbnail `thumb.*` slot patch 等) は patch-ymmp 系で実施する
 4. **それは「外部サービスと通信する」作業か？** → L1 or L4
    - 入力取得なら L1、配信なら L4

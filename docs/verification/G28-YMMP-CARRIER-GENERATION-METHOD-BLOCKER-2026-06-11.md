@@ -70,7 +70,7 @@ evidence / failed sample.
 
 | Entry | Use when | Next move |
 | --- | --- | --- |
-| human-authored YMM4 seed carrier | The next review should start from a YMM4-native surface. | Human creates or returns a minimal seed carrier, then the assistant audits names, slots, and boundaries. |
+| YMM4-native seed or promoted carrier | The next review should start from a YMM4-native surface instead of the rejected coordinate-generation method. | Use an existing YMM4-saved seed, an explicitly promoted diagnostic carrier, or a separately scoped implementation artifact; the assistant audits names, slots, boundaries, and readback. |
 | HTML/SVG visual prototype first | The team needs speed without multiplying low-quality `.ymmp` artifacts. | Build a visual prototype, approve composition, then separately plan YMM4 transfer. |
 | layout-normalization review | Multiple existing screens need centering / spacing / split-layout diagnosis. | Review screens together and define bounded normalization rules before any further YMM4 generation. |
 

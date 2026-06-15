@@ -409,7 +409,7 @@ failed feed cleanup を blocker にしない。Inoreader 完全同期を目標�
 G-27 carrier判断へ戻ります。RSS / OPML / NotebookLM source-pack selection とは混ぜないでください。
 
 前提:
-- G-27 は human-authored G27_PublicVsBrokerDB carrier 待ち。
+- G-27 は stable YMM4-native G27_PublicVsBrokerDB carrier、または既存 diagnostic carrier の明示昇格判断待ち。
 - diagnostic proof / GUI proof は production carrier readiness ではない。
 - samples/2026-05-16.ymmp は3 itemだけの不完全 .ymmp であり carrier ではない。
 - 進めるには carrier .ymmp、preview screenshot、timeline screenshot、G27PBD_PublicPanel / G27PBD_PublicCard1 / G27PBD_BrokerPanel / G27PBD_Lock の property screenshot、light/dark stage、caption safe area メモが必要。

@@ -41,7 +41,7 @@ Thumbnail strategy v2 は、ゆっくり解説動画のサムネイル訴求を
 - C-08 / H-02: サムネコピー候補、表情、背景方向性、rotation recommendation
 - H-03 / H-04: 本文側でサムネ / タイトル promise を回収できているかの手動スコア集約
 - H-05: 完成サムネに対する手動採点の CLI 集約
-- `THUMBNAIL_ONE_SHEET_WORKFLOW`: YMM4 テンプレを人間が複製し、文字・立ち絵・背景を差し替えて PNG 書き出しする手順
+- `THUMBNAIL_ONE_SHEET_WORKFLOW`: YMM4 テンプレの slot を使い、文字・立ち絵・背景の差し替え候補、readback、PNG 書き出し確認を扱う手順
 
 未定義または未実装だったもの:
 

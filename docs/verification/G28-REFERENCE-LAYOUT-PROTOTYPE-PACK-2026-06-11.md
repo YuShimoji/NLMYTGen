@@ -171,7 +171,7 @@ YMM4 transfer may be considered only after:
 - The selected prototype(s) have a clear visual grammar, safe areas, text
   budgets, and non-copied abstract assets.
 - The transfer is opened as a separate bounded slice that defines what YMM4
-  items, names, and human-authored surfaces are allowed.
+  items, names, and operator-approved YMM4-native surfaces are allowed.
 - The transfer plan preserves diagnostic-only boundaries until a later explicit
   production decision.
 

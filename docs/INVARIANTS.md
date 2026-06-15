@@ -26,7 +26,7 @@
 ## Responsibility Boundaries
 - Python の責務は CSV / IR / registry / 台本読込後 `.ymmp` patch の接着層に限定する。YMM4 が持つ制作機能を Python 側で再生成しない。
 - RSS / OPML / Inoreader / topic clustering / NotebookLM source-pack selection は NLMYTGen の active 責務外とし、`newsroom-yt-pipeline` 側の上流編集責務として扱う。NLMYTGen は newsroom-produced packet / transcript / ScriptIR / VisualIR / export bundle を受け取ってから、YMM4 CSV / adapter / review / proof ingest へ接続する downstream adapter である。
-- 音声合成・字幕配置・演出指定・レンダリング・サムネイル最終判断は YMM4 または人間の責務。
+- 音声合成・YMM4 台本読込・レンダリング・サムネイル最終判断・creative final judgement は YMM4 または人間の責務。演出指定、素材/slot/SE/overlay/skit_group の生成・配置・readback は、approved な registry / adapter / CLI / GUI がある場合は assistant/tool が先に閉じる。人間側へ戻すのは最終見え方、未登録素材、権利/公開判断、または adapter が未成立な native YMM4 操作だけ。
 - `.ymmp` を直接編集しても音声合成は成立しない。音声合成は YMM4 の台本読込経由でのみ行う。
 - YMM4 / `.ymmp` の直接編集や画面効果の自動注入は高リスクなため、LLM や Automation を使う場合も、まずはテキスト補助・コピペ用メモ・プリセット候補提示に留める。direct edit は workflow proof なしに採用しない。
 - GUI/API/SDK 追加は、value path と境界違反の有無を確認し、必要なら ADR を通してから扱う。
@@ -34,7 +34,7 @@
 - 新しい自動化経路を提案する際は、現行ロードマップ (YMM4-AUTOMATION-RESEARCH.md セクション4) の段階構成との整合を示すこと。根拠なしに経路を増やさない。
 - YMovieHelper は参照実装 (設計思想の観察対象)。「YMovieHelper を使う」「YMovieHelper に接続する」とは書かない。
 - 演出 IR (PRODUCTION_IR_SPEC.md) が視覚配置の中心課題。C-07 系 (演出判断支援) が主系統であり、D-02 (素材取得) は従属的補助論点。D-02 を主軸として扱わない。
-- 再開時に「CSV 変換専用ツール」という旧理解に引き戻されないよう、README / CLAUDE.md / WORKFLOW / AUTOMATION_BOUNDARY は演出 IR の役割を反映した状態を維持する。
+- 再開時に「CSV 変換専用ツール」という旧理解に引き戻されないよう、README / AGENTS.md / WORKFLOW / AUTOMATION_BOUNDARY / GLOSSARY は演出 IR の役割を反映した状態を維持する。
 - patch-ymmp (G-06) は成熟段階モデルで評価する。「研究か実用か」の二択で早期に裁定しない。.ymmp のゼロからの生成 (不可能) と、台本読込後の限定的な後段適用 (patch-ymmp) は明確に区別する。現在のフィールド別能力は [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md) と [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md) を正本とし、古い Level 名だけで判断しない。
 - IR 語彙は「Writer が出せる意味ラベル」「adapter が ymmp に書き込める範囲」「GUI に露出している入力」が一致しない場合がある。語彙が存在することを万能自動化と解釈せず、未露出・未実装・境界外を [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md) で分ける。
 - 演出パイプラインは Writer 工程 (LLM による IR 生成) と Editor 工程 (テンプレート解決 + ymmp 適用) に分離する。proof の際限なき拡張を防ぐため、Writer の品質はフィードバック駆動で scope を区切り、Editor の設計品質で吸収する。
@@ -47,7 +47,7 @@
 - **`skit_group` の主経路は canonical template である。** library (tachie_motion_map) / motion_target 直書き / group_motion は補助経路であり、茶番劇固有の所作の主体にはしない。根拠: SKIT_GROUP_TEMPLATE_SPEC §3.1-3.3
 - **背景茶番劇は語り手への合いの手ではない。** 語り手台本と並行する独立 visual story として、節・主張・比喩に説得力を足す。台本行を逐語理解して `はい` で頷く、`いや、鋭い` で飛ぶ、のような cue 反応は `BACKGROUND_SKIT_ROLE_DRIFT` として creative acceptance / production quality から除外する。scene bible が無い、または time budget / cast continuity / screen placement が無いまま `skit_group` IR / `.ymmp` handoff / YMM4 確認へ進めることは禁止。さらに IR / 演出指定へ進む場合、総尺・`mm:ss` 開始終了・演出秒数・density thresholds/audit・script maturity は実数値で必要であり、項目名列挙や雰囲気語では代替できない。数値入り表も `validate-background-skit-blueprint` の `status: passed` と `derived_metrics` が無ければ production timing へ進めない。根拠: SKIT_GROUP_TEMPLATE_SPEC §0 / PILOT_YUKKURI_THEATER_SCENE_BIBLE / BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW
 - IR は逐次属性の全指定ではなく、scene_preset による高水準バンドル参照 + optional override を基本とする。LLM にはプリセット一覧を渡し、個別フィールドの組み立てを強いない。
-- タイトル / サムネイル / 台本の約束 (promise) は central brief で統制し、台本単体が動画タイトルを越権決定しない。最終 owner は人間であり、assistant は判断材料と候補整理を支援する。
+- タイトル / サムネイル / 台本の約束 (promise) は central brief で統制し、台本単体が動画タイトルを越権決定しない。最終 owner は人間であり、assistant は判断材料、候補、template/slot/readback、必要な生成物の下準備を作る。最終 owner が人間であることを理由に、assistant/tool が閉じられる生成・配置・検証まで人間へ戻さない。
 - visual density score / evidence richness score は creative final judgement の代替ではなく、gate / diagnostic として使う。スコア最大化自体を目的化しない。
 
 ## Prohibited Interpretations / Shortcuts

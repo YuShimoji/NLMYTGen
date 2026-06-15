@@ -22,13 +22,13 @@
 ## 工程ごとの痛点
 - 最も重いのは S-5（読み上げ確認・字幕修正）と S-6（背景・演出設定）。
 - S-5（読み上げ確認）の字幕はみ出しは YMM4 で都度直せるが、S-3（CSV変換）の分割品質が低いと手戻りが増える。
-- S-6（背景・演出設定）は人間の判断が中心で、単純なパターンマッチでは省力化になりにくい。
+- S-6（背景・演出設定）は final creative judgement が人間中心だが、生成・配置・readback まで人間に戻す工程ではない。IR / registry / patch-ymmp / GUI で閉じられる配置は assistant/tool が先に閉じる。
 - E-02 単体の metadata template は、YouTube Studio への手入力が残るため bottleneck 解消として弱い。
 
 ## 品質目標
 - S-3（CSV変換）の出力を YMM4 に読み込んだ時点で、話者名の不一致や極端な長文が少なく、修正が「例外処理」に留まる。
 - 字幕は通常ケースで 2 行以内に収まり、はみ出し候補は事前警告で把握できる。
-- 人間が行うのは、読み・演出・サムネイルなど創造判断を要する工程に寄る。
+- 人間が行うのは、読み・演出・サムネイルなど創造判断を要する工程に寄る。adapter が成立している生成・配置・機械確認は人間の手作業に戻さない。
 
 ## workflow proof / 残差観測条件
 - B-11 は S-5 pain を取込前にどこまで減らせるかを実証した履歴テンプレートであり、現在の主軸 frontier ではない。通常は B-18 診断、必要時の C-09 constrained rewrite、B-17 系リフローを前提にメンテ観測として回す。
@@ -41,13 +41,13 @@
 - 残修正は最低でも「辞書登録」「手動改行」「再分割したい長文」「タイミングのみ」の 4 区分で分類する。
 
 ## Actor Boundaries (三層責務構造対応)
-- `user`: NotebookLM 操作、Custom GPT で Writer IR 生成 (第1層)、Template Registry のラベル付け・素材準備 (第2層)、YMM4 内の判断・微調整、サムネイル、投稿判断、YMM4 native template の登録
-- `assistant`: CSV 変換、IR 語彙定義 (PRODUCTION_IR_SPEC)、YMM4 Adapter 実装 (第3層: patch-ymmp)、Template Registry の JSON 構造、台帳整備、仕様化
+- `user`: NotebookLM 操作、Custom GPT で Writer IR 生成 (第1層)、Template Registry のラベル付け・素材準備 (第2層)、YMM4 内の最終判断・微調整、サムネイル、投稿判断、YMM4 native template の登録
+- `assistant`: CSV 変換、IR 語彙定義 (PRODUCTION_IR_SPEC)、YMM4 Adapter 実装 (第3層: patch-ymmp)、Template Registry の JSON 構造、配置候補・patch/readback・gap report の生成、台帳整備、仕様化
 - `tool`: 分割、統計、入力検証、speaker-map 生成、警告表示、extract-template、patch-ymmp (YMM4 Adapter)
 - `shared`: どの pain を次に削るかの優先判断、frontier の approval、三層の責務境界の更新
 
 ## 手動工程 / 自動化禁止工程
-- YMM4 内の演出指定、背景配置、表情切り替え、BGM/SE の最終判断 (Adapter で face/bg は半自動化するが、最終判断は人間)
+- YMM4 内の演出指定、背景配置、表情切り替え、BGM/SE は、adapter / registry / CLI / GUI で閉じられる生成・配置・readback を先に assistant/tool が閉じる。人間に残すのは最終見え方、native template 登録、未登録素材、音量・テンポ・公開判断
 - サムネイルの訴求判断と最終デザイン
 - 実機での読み上げ確認、通しプレビュー、公開判断
 - GUI やテンプレートを作ること自体を目的化して、手動工程の本質的判断を隠さない

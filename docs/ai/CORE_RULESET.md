@@ -5,7 +5,7 @@ Audience: Claude Code, Codex, and any adapter that reads project-local AI rules.
 
 ## Purpose
 This ruleset exists to keep a single vendor-neutral source of truth for AI-assisted development.
-Adapters such as `AGENTS.md` and `.claude/CLAUDE.md` (pointer) must stay thin. Repo-local restart scope, core behavior, git-test policy, and reporting intent are canonical in `docs/REPO_LOCAL_RULES.md`. Vendor-neutral rules defer to `docs/ai/*.md` (this file set).
+Adapters such as `AGENTS.md` must stay thin. Repo-local restart scope, core behavior, git-test policy, and reporting intent are canonical in `docs/REPO_LOCAL_RULES.md`. Vendor-neutral rules defer to `docs/ai/*.md` (this file set).
 
 ## Source-of-truth policy
 - Vendor-neutral canonical rules live in `docs/ai/*.md`.
@@ -76,8 +76,8 @@ L2（Python変換工程）が停滞すると CSV も IR も生成できず、S-3
 
 ### 因果関係の明示
 工程やレイヤーに言及するときは、「進めると何が実現されるか / 止まると何が詰まるか」を可能な限り併記する。
-グロサリーの正本は `CLAUDE.md`（プロジェクトルート）の「工程・レイヤー略語の読み方」表。
+グロサリーの正本は `docs/GLOSSARY.md`。
 
 ### 適用範囲
-- 適用する: 生きているドキュメント（CLAUDE.md、CORE_RULESET.md、OPERATOR_WORKFLOW.md、GUI_MINIMUM_PATH.md、AUTOMATION_BOUNDARY.md、runtime-state.md）
+- 適用する: 生きているドキュメント（GLOSSARY.md、CORE_RULESET.md、OPERATOR_WORKFLOW.md、GUI_MINIMUM_PATH.md、AUTOMATION_BOUNDARY.md、runtime-state.md）
 - 適用しない: docs/verification/* の過去証跡、git 履歴、日付入りジャーナル（ただし今後の追記にはペア形式を適用）

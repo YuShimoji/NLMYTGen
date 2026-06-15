@@ -2574,7 +2574,7 @@
     {
       "expression_id": "skit_group.canonical_anchor",
       "scope": "skit_group",
-      "preferred_route": "canonical ymmp -> audit-skit-group",
+      "preferred_route": "canonical ymmp -> audit-skit-group / template-source readback",
       "support_level": "direct_proven",
       "evidence": [
         {
@@ -2828,6 +2828,32 @@
       ]
     },
     {
+      "expression_id": "skit_group.placement",
+      "scope": "skit_group",
+      "preferred_route": "IR skit_group intent -> registry -> ymmp template source -> GroupItem timeline insertion",
+      "support_level": "probe_only",
+      "evidence": [
+        {
+          "path": "src/pipeline/skit_group_placement.py",
+          "reason": "Patch-time skit_group placement copies repo-tracked GroupItem template clips into the target ymmp and normalizes GroupItem X/Y/Zoom from template analysis"
+        },
+        {
+          "path": "samples/templates/skit_group/delivery_v1_templates.ymmp",
+          "reason": "Repo-tracked template source contains available delivery_v1 GroupItem clips"
+        },
+        {
+          "path": "samples/_probe/g24/real_estate_dx_skit_group_patched.ymmp",
+          "reason": "Real-estate DX readback contains normalized G-24 GroupItem insertions"
+        }
+      ],
+      "manual_checks": [
+        "Confirm the analyzed patched ymmp composition in YMM4 before final render"
+      ],
+      "limitations": [
+        "Machine readback passes; final composition acceptance remains a creative YMM4 check"
+      ]
+    },
+    {
       "expression_id": "speaker_tachie.face",
       "scope": "speaker_tachie",
       "preferred_route": "IR face -> face_map/palette -> patch-ymmp",
@@ -2846,7 +2872,7 @@
         "Confirm the chosen label still reads correctly as a human expression in YMM4"
       ],
       "limitations": [
-        "Label naming remains human-authored; patch only resolves existing registry labels"
+        "Label naming remains registry-owned / operator-approved; patch only resolves existing registry labels"
       ]
     },
     {

@@ -36,7 +36,7 @@
 
 | expression_id | preferred_route | evidence | manual_checks | limitations |
 |---|---|---|---|---|
-| `speaker_tachie.face` | `face -> face_map/palette -> patch-ymmp` | G-06 / 茶番劇 E2E | 表情ラベルの見え方 | label 名は human-authored |
+| `speaker_tachie.face` | `face -> face_map/palette -> patch-ymmp` | G-06 / 茶番劇 E2E | 表情ラベルの見え方 | label 名は registry-owned / operator-approved |
 | `speaker_tachie.idle_face` | `idle_face -> face_map/palette -> patch-ymmp` | G-07 / 茶番劇 E2E | 非話者の待機顔がうるさくないか | palette coverage 前提 |
 | `speaker_tachie.slot` | `slot -> slot_map -> patch-ymmp` | G-11 / 茶番劇 E2E | 左右配置の読みやすさ | registry 駆動 |
 | `speaker_tachie.motion` | `motion -> tachie_motion_map_library or motion_map` | route contract / G-17 / motion library | 強すぎないか、反復が長すぎないか | `speaker_tachie` 専用 |

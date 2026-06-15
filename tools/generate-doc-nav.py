@@ -9,6 +9,7 @@ from pathlib import Path
 
 EXCLUDED_PARTS = {
     ".git",
+    ".claude",
     ".mkdocs-docs",
     ".mkdocs-site",
     ".mypy_cache",
@@ -54,10 +55,9 @@ OVERVIEW_ORDER = [
     "docs/PROJECT_OVERVIEW.md",
     "docs/PROGRESS_SCREENSHOT_INDEX.md",
     "docs/TURN_BASED_DEVELOPMENT_PLAN.md",
+    "docs/GLOSSARY.md",
     "README.md",
     "AGENTS.md",
-    "CLAUDE.md",
-    ".claude/CLAUDE.md",
     "docs/REPO_LOCAL_RULES.md",
     "docs/runtime-state.md",
     "docs/NAV.md",

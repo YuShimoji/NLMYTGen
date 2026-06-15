@@ -68,7 +68,7 @@ def build_capability_atlas(
 
 def write_capability_atlas(atlas: dict[str, Any], output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(output_path, "w", encoding="utf-8") as f:
+    with open(output_path, "w", encoding="utf-8", newline="\n") as f:
         json.dump(atlas, f, ensure_ascii=False, indent=2)
         f.write("\n")
 
@@ -244,7 +244,7 @@ def _static_entries() -> list[dict[str, Any]]:
                 "Confirm the chosen label still reads correctly as a human expression in YMM4",
             ],
             [
-                "Label naming remains human-authored; patch only resolves existing registry labels",
+                "Label naming remains registry-owned / operator-approved; patch only resolves existing registry labels",
             ],
         ),
         _entry(

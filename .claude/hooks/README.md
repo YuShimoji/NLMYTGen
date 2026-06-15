@@ -11,5 +11,5 @@
 ## Scope
 Hook は「悪い挙動を通さない」ための最低限の装置で、入口ファイルの代替ではない。
 ユーザーが cross-project 作業を明示した場合、repo 外参照はその明示範囲内で扱う。
-低価値な作業選択そのものまでは完全には防げないため、[../../docs/REPO_LOCAL_RULES.md](../../docs/REPO_LOCAL_RULES.md) の
-core rules とセットで運用する（`../CLAUDE.md` は入口ポインタ）。
+低価値な作業選択そのものまでは完全には防げないため、[../../AGENTS.md](../../AGENTS.md) と
+[../../docs/REPO_LOCAL_RULES.md](../../docs/REPO_LOCAL_RULES.md) の core rules とセットで運用する。

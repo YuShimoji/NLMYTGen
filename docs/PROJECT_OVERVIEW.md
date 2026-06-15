@@ -20,7 +20,7 @@ to look next, then read the linked owner document for the actual wording.
 | --- | --- | --- | --- |
 | Source intake and upstream material | NotebookLM / text intake and RSS-related work are tracked under A rows. | NotebookLM API and external posting remain held or outside current scope. | [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md), [RSS_READER_SYNC_SPEC.md](RSS_READER_SYNC_SPEC.md), verification RSS docs. |
 | Script conversion and diagnostics | B-01 through B-18 cover CSV conversion, speaker mapping, line wrapping, reflow, cue packets, diagram briefs, and script diagnostics. | Residual improvements should extend existing B rows or start as proposed registry rows. | [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md), [SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md](SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md), B verification docs. |
-| YMM4/manual support and prompt surface | C-07 through C-09 are done prompt/helper surfaces; several direct Python/YMM4 generation ideas are rejected or info-only boundaries. | Native YMM4 actions remain human/YMM4-side unless a bounded successor lane is approved. | [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md), [WORKFLOW.md](WORKFLOW.md), [INVARIANTS.md](INVARIANTS.md). |
+| YMM4/operator support and prompt surface | C-07 through C-09 are done prompt/helper surfaces; several direct Python/YMM4 generation ideas are rejected or info-only boundaries. | Final GUI/save/render judgement remains operator/YMM4-side, but slot naming, candidate generation, registry alignment, readback, and gap reports should be closed by assistant/tool when a bounded route exists. | [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md), [WORKFLOW.md](WORKFLOW.md), [INVARIANTS.md](INVARIANTS.md). |
 | GUI and operator surface | F-04 CSV stats display is done; older F-01/F-02 GUI directions are quarantined; F-03 Python preview route is rejected. | GUI revival must be tied to a narrow workflow proof, not broad UI expansion. | [GUI_MINIMUM_PATH.md](GUI_MINIMUM_PATH.md), [AGENT_OPERATOR_SURFACE.md](AGENT_OPERATOR_SURFACE.md), F rows in [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md). |
 | Visual/YMM4 automation | G-24 template-first skit group route is done; G-25 property variation probe is done; G-27 is held as case evidence; G-28 is the current reference-driven successor direction. | G-28 needs review surfaces and transfer decisions before production claims. | [REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md](REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md), [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md), G verification docs. |
 | Packaging, thumbnail, and quality scoring | H-01 packaging brief is approved; H-02 through H-05 cover thumbnail strategy and scoring support. | Generated thumbnail/media production is still bounded; scoring is diagnostic, not creative acceptance. | [PACKAGING_ORCHESTRATOR_SPEC.md](PACKAGING_ORCHESTRATOR_SPEC.md), [THUMBNAIL_STRATEGY_SPEC.md](THUMBNAIL_STRATEGY_SPEC.md), H verification docs. |
@@ -35,7 +35,8 @@ to look next, then read the linked owner document for the actual wording.
 3. Open [TURN_BASED_DEVELOPMENT_PLAN.md](TURN_BASED_DEVELOPMENT_PLAN.md) when
    the question is "what should the next few turns close?"
 4. Open [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md) for itemized status.
-5. Open [runtime-state.md](runtime-state.md) only after that, when you need the
+5. Open [GLOSSARY.md](GLOSSARY.md) when S-n, L-n, or layer terms are unclear.
+6. Open [runtime-state.md](runtime-state.md) only after that, when you need the
    exact current slice and latest handoff chain.
 
 The MkDocs tree groups files into Overview, Specs, Runtime State, Development

@@ -1,7 +1,14 @@
 # G27_PublicVsBrokerDB Carrier 作成チェックリスト
 
-このチェックリストは、人間が YMM4 で `G27_PublicVsBrokerDB` の stable carrier `.ymmp` を作るための最小仕様です。  
-これは template-first / slot-fill へ移行するための carrier 作成指示であり、slot contract、patch script、render、production readiness ではありません。
+このチェックリストは、`G27_PublicVsBrokerDB` の stable carrier `.ymmp` を
+YMM4-native な台座として成立させるための最小仕様です。新規作成を人間へ
+固定する文書ではありません。既存 diagnostic carrier の明示昇格、YMM4 で
+保存済みの seed、または別途承認された bounded implementation slice で
+reviewable carrier を用意できる場合は、その artifact を起点に assistant が
+readback、slot contract、placement 境界を閉じます。
+
+これは template-first / slot-fill へ移行するための carrier 境界仕様であり、
+slot contract、patch script、render、production readiness ではありません。
 
 > Current status: this checklist is retained as G-27 case-specific reference
 > evidence. Active generic screen-carrier work is superseded by
@@ -15,7 +22,7 @@
 - 初回 carrier は美麗さより安定性を優先する。
 - 既存 visual proxy / micro scene / minimal probe は diagnostic-only であり、この carrier の代替にしない。
 - agent は後続で carrier の実 item を readback してから、carrier に従属した slot contract を作る。
-- carrier 未作成のまま、抽象 slot contract や raw geometry 生成へ進まない。
+- carrier 不在のまま、抽象 slot contract や raw geometry 生成へ進まない。ただしこれは「人間が毎回手作業で作る」要求ではなく、reviewable な YMM4-native carrier artifact が先に必要という境界である。
 
 ## 構図設計の理論的根拠
 
@@ -46,7 +53,7 @@
 | right broker panel | `x=0.56〜0.58`, `y=0.18`, `w=0.36〜0.40`, `h=0.60` 前後 | 業者 / private DB 側。broker card 3枚を入れる |
 | bottom caption safe area | 下 10–15% | 字幕・caption 用。carrier item を置かない |
 
-YMM4 内の座標やサイズ値は、上記比率に近い見た目になるよう人間が調整する。agent は後で panel geometry、anchor、layout grid を変更しない。
+YMM4 内の座標やサイズ値は、上記比率に近い見た目になるよう carrier 作成時に固定する。agent は後で panel geometry、anchor、layout grid を変更しない。assistant が生成・整理できるのは item name、slot/readback、候補値、gap report、または明示承認された review artifact までで、final layout judgement は人間が行う。
 
 ## 必須 item name
 
@@ -104,7 +111,7 @@ YMM4 内の座標やサイズ値は、上記比率に近い見た目になるよ
 - lock / boundary の配置。
 - stage の light / dark 方針。
 
-## carrier 作成後にユーザーが返す情報
+## carrier artifact が用意された後に返す情報
 
 - carrier `.ymmp` path。
 - preview screenshot。
@@ -131,5 +138,5 @@ YMM4 内の座標やサイズ値は、上記比率に近い見た目になるよ
 
 ## 完了の合図
 
-この carrier 作成段階の完了は、carrier `.ymmp` path と指定 screenshot 一式が返された時点。  
+この carrier 準備段階の完了は、carrier `.ymmp` path と指定 screenshot 一式が返された時点。
 その後に初めて、assistant は readback と anchored slot contract の準備に進む。
