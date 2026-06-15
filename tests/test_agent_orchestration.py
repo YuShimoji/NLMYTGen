@@ -872,6 +872,10 @@ def test_fake_runner_pass_report_flows_through_gate_without_notify(repo_agent_tm
     assert result["notify_stub"] is None
     assert result["codex_execution_started"] is False
     assert result["real_subprocess_started"] is False
+    assert result["operator_boundary"]["operator_label"] == "fake/evaluation-only helper"
+    assert result["operator_boundary"]["not_real_codex_execution"] is True
+    assert result["operator_boundary"]["not_runner_permission"] is True
+    assert result["operator_boundary"]["runtime_artifact_authorized_for_hold_state"] is False
     assert not (repo_agent_tmp / "needs_human.json").exists()
     assert not (repo_agent_tmp / "notify_stub.log").exists()
 
@@ -969,6 +973,8 @@ def test_single_fake_execution_flow_pass_builds_plan_preflights_runs_gate_withou
     assert result["preflight"]["report_path"].startswith(
         ".agent/reports/_tmp_pytest_agent_orchestration/"
     )
+    assert result["operator_boundary"]["operator_label"] == "fake/evaluation-only helper"
+    assert result["operator_boundary"]["not_runner_permission"] is True
     assert result["runner_started"] is True
     assert result["runner_result"]["gate_result"]["decision"] == "pass"
     assert result["runner_result"]["notify_stub"] is None
@@ -1385,6 +1391,35 @@ def test_fake_runner_is_not_reachable_from_default_orchestrator_path() -> None:
     assert "No Codex execution is performed" in result["message"]
 
 
+def test_orchestrator_report_mode_labels_evaluation_only_boundary(repo_agent_tmp: Path) -> None:
+    report_path = _report(repo_agent_tmp, "report_mode_boundary")
+
+    result = agent_orchestrator.run(
+        argparse.Namespace(
+            worker="audit",
+            dry_run=False,
+            pre_execution_dry_run=False,
+            report=report_path.relative_to(REPO_ROOT).as_posix(),
+            timestamp=None,
+            repo_status_clean=False,
+            repo_status_json=None,
+            state=".agent/state.json",
+        )
+    )
+
+    boundary = result["report_evaluation_boundary"]
+    assert boundary["operator_label"] == "--report evaluation-only path"
+    assert boundary["not_real_codex_execution"] is True
+    assert boundary["not_runner_permission"] is True
+    assert boundary["not_runtime_worker_loop"] is True
+    assert boundary["not_external_notification"] is True
+    assert boundary["runtime_artifact_authorized_for_hold_state"] is False
+    assert result["gate_result"]["decision"] == "pass"
+    assert "notify_stub" not in result
+    assert not (repo_agent_tmp / "needs_human.json").exists()
+    assert not (repo_agent_tmp / "notify_stub.log").exists()
+
+
 def test_no_cli_flag_exposes_single_fake_execution_flow() -> None:
     with pytest.raises(SystemExit):
         agent_orchestrator.main(["--worker", "audit", "--single-fake-flow"])
@@ -1441,6 +1476,8 @@ def test_pre_execution_dry_run_preview_renders_plan_preflight_card_without_artif
 
     assert preview["preflight"]["allowed"] is True
     assert preview["preflight"]["safe_to_start_real_runner"] is False
+    assert preview["operator_boundary"]["operator_label"] == "pre-execution dry-run preview"
+    assert preview["operator_boundary"]["runtime_artifact_authorized_for_hold_state"] is False
     assert preview["runtime_artifacts_written"] == []
     assert "# NLMYTGen Pre-execution Dry-run Preview" in card
     assert "- Worker: audit" in card
@@ -1448,6 +1485,7 @@ def test_pre_execution_dry_run_preview_renders_plan_preflight_card_without_artif
     assert "- Schema path: .agent/schemas/worker_report.schema.json" in card
     assert "- Planned report path: .agent/reports/preview-mvp-audit.report.json" in card
     assert "- Report file status: planned only; not written by this preview" in card
+    assert "- Boundary label: pre-execution dry-run preview; stdout-only review surface" in card
     assert "- codex" in card
     assert "- exec" in card
     assert "- This argv is shown only for review; it was not executed." in card
@@ -1458,6 +1496,9 @@ def test_pre_execution_dry_run_preview_renders_plan_preflight_card_without_artif
     assert "The outer preview explains the would-be plan; the embedded card explains the raw preflight result." in card
     assert "- subprocess.run: not implemented" in card
     assert "- runtime artifacts: not written" in card
+    assert "- .agent/reports/*.report.json: runtime-looking output; planned path only" in card
+    assert "- .agent/needs_human.json: not created or authorized by this preview" in card
+    assert "- .agent/logs/notify_stub.log: not created; no external notification is sent" in card
     assert "gate result from a real run: not evaluated" in card
     assert not report_path.exists()
 

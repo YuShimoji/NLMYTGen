@@ -27,6 +27,37 @@ DEFAULT_REPO_STATUS = {
     "allowed_untracked": [],
     "unknown_untracked": [],
 }
+PRE_EXECUTION_DRY_RUN_BOUNDARY = {
+    "operator_label": "pre-execution dry-run preview",
+    "not_real_codex_execution": True,
+    "not_runner_permission": True,
+    "not_runtime_worker_loop": True,
+    "not_external_notification": True,
+    "writes_repo_root_agent_runtime_artifacts": False,
+    "runtime_artifact_authorized_for_hold_state": False,
+}
+FAKE_RUNNER_BOUNDARY = {
+    "operator_label": "fake/evaluation-only helper",
+    "not_real_codex_execution": True,
+    "not_runner_permission": True,
+    "not_runtime_worker_loop": True,
+    "not_external_notification": True,
+    "writes_repo_root_agent_runtime_artifacts": "only configured repo-local synthetic outputs when explicitly invoked",
+    "runtime_artifact_authorized_for_hold_state": False,
+}
+REPORT_EVALUATION_BOUNDARY = {
+    "operator_label": "--report evaluation-only path",
+    "not_real_codex_execution": True,
+    "not_runner_permission": True,
+    "not_runtime_worker_loop": True,
+    "not_external_notification": True,
+    "may_write_local_notify_stub_only_when_needs_human": True,
+    "runtime_artifact_authorized_for_hold_state": False,
+}
+
+
+def _boundary_copy(boundary: dict[str, Any]) -> dict[str, Any]:
+    return dict(boundary)
 
 
 @dataclass(frozen=True)
@@ -63,6 +94,7 @@ class FakeRunnerResult:
     real_subprocess_started: bool
     artifacts_written: list[str]
     fail_closed: bool
+    operator_boundary: dict[str, Any]
     gate_result: dict[str, Any] | None = None
     notify_stub: dict[str, Any] | None = None
 
@@ -531,6 +563,7 @@ def build_pre_execution_dry_run_preview(
         "plan": plan_dict,
         "preflight": preflight,
         "human_next_action": _pre_execution_human_next_action(preflight),
+        "operator_boundary": _boundary_copy(PRE_EXECUTION_DRY_RUN_BOUNDARY),
         "codex_execution_started": False,
         "real_subprocess_started": False,
         "runtime_artifacts_written": [],
@@ -560,6 +593,7 @@ def render_pre_execution_dry_run_preview(preview: dict[str, Any]) -> str:
         "",
         "## Selected Plan",
         "- Preview role: outer plan-level review of the would-be worker run",
+        "- Boundary label: pre-execution dry-run preview; stdout-only review surface",
         f"- Worker: {_markdown_text(preview.get('worker'))}",
         f"- Flow mode: {_markdown_text(preview.get('flow_mode'))}",
         f"- Intended runner mode: {_markdown_text(preview.get('intended_runner_mode'))}",
@@ -609,6 +643,9 @@ def render_pre_execution_dry_run_preview(preview: dict[str, Any]) -> str:
         "- runtime worker loop: not implemented",
         "- external notification: not implemented",
         "- runtime artifacts: not written",
+        "- .agent/reports/*.report.json: runtime-looking output; planned path only",
+        "- .agent/needs_human.json: not created or authorized by this preview",
+        "- .agent/logs/notify_stub.log: not created; no external notification is sent",
         "- worker report: not created",
         "- gate result from a real run: not evaluated",
         "",
@@ -622,7 +659,7 @@ def render_pre_execution_dry_run_preview(preview: dict[str, Any]) -> str:
 
 def _fake_report_payload(worker: str, scenario: str) -> dict[str, Any]:
     status = "pass"
-    summary = f"fake runner {scenario} report"
+    summary = f"fake/evaluation-only runner {scenario} synthetic report"
     human_question = ""
     if scenario == "needs_human":
         status = "needs_human"
@@ -745,6 +782,7 @@ def run_fake_runner(
         real_subprocess_started=False,
         artifacts_written=artifacts_written,
         fail_closed=fail_closed,
+        operator_boundary=_boundary_copy(FAKE_RUNNER_BOUNDARY),
         gate_result=gate_result,
         notify_stub=notify_stub,
     )
@@ -778,6 +816,7 @@ def run_single_fake_execution_flow_for_test(
         "scenario": scenario,
         "worker": worker,
         "preflight": preflight,
+        "operator_boundary": _boundary_copy(FAKE_RUNNER_BOUNDARY),
         "runner_started": False,
         "runner_result": None,
         "codex_execution_started": False,
@@ -832,6 +871,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         execution_plan_obj = build_execution_plan(state, args.worker, timestamp=getattr(args, "timestamp", None))
         execution_plan = execution_plan_obj.to_dict()
         execution_plan["powershell"] = powershell_preview(execution_plan["argv"])
+        execution_plan["operator_boundary"] = _boundary_copy(PRE_EXECUTION_DRY_RUN_BOUNDARY)
         execution_plan["preflight"] = build_execution_preflight(
             state,
             args.worker,
@@ -841,6 +881,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         result["dry_run"] = execution_plan
 
     if args.report:
+        result["report_evaluation_boundary"] = _boundary_copy(REPORT_EVALUATION_BOUNDARY)
         gate_result = evaluate_report(args.report, state_path)
         result["gate_result"] = gate_result
         if gate_result["needs_human"]:
@@ -848,7 +889,10 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 
     if not args.dry_run and not args.report and not getattr(args, "pre_execution_dry_run", False):
         result["codex_execution_started"] = False
-        result["message"] = "No Codex execution is performed by the v0 orchestrator. Use --dry-run or --report."
+        result["message"] = (
+            "No Codex execution is performed by the v0 orchestrator. Use --dry-run for a preview, "
+            "or --report to evaluate an existing repo-local report without starting a runner."
+        )
 
     return result
 
@@ -856,13 +900,20 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Minimal Codex worker orchestration for NLMYTGen.")
     parser.add_argument("--worker", required=True, choices=WORKERS, help="Worker prompt to select.")
-    parser.add_argument("--dry-run", action="store_true", help="Print the planned codex exec command.")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print planned codex exec argv only; does not run Codex or write a report.",
+    )
     parser.add_argument(
         "--pre-execution-dry-run",
         action="store_true",
-        help="Print a human-readable plan, preflight result, and preview card without starting a runner.",
+        help="Print a human-readable plan, preflight result, and preview card without starting a runner or writing runtime artifacts.",
     )
-    parser.add_argument("--report", help="Evaluate an existing worker report JSON inside this repo.")
+    parser.add_argument(
+        "--report",
+        help="Evaluate an existing worker report JSON inside this repo; not real Codex execution.",
+    )
     parser.add_argument("--timestamp", help="Optional timestamp seed for deterministic planned report paths.")
     parser.add_argument(
         "--repo-status-clean",
