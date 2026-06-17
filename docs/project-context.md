@@ -79,6 +79,53 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest remote-sync decision (2026-06-17):
+`remote_sync_handoff_2026_06_17` preserves the local continuation context in
+tracked project files before publishing `master` for resume from another
+terminal. The committed context includes the G-28 object catalog and review
+protocol, Freeform Review / Long-Run Autonomy rules, docs cockpit cleanup,
+`docs/LANE_REGISTRY.md`, `docs/LANE_ALIGNMENT_PROMPTS.md`, the local MkDocs
+browser entry pages, and this handoff record. The root `CLAUDE.md` standalone
+entry is removed; Claude Code now uses `.claude/CLAUDE.md` as a thin pointer
+back to `docs/REPO_LOCAL_RULES.md`, while `AGENTS.md` remains the repo entry
+pointer. The local MkDocs files are browsing aids only: `_local/` outputs stay
+ignored and are not canonical source. The remaining `stash@{0}` is a local
+duplicate of residue already applied into tracked files, so a different
+terminal should not need it after pulling `master`. This decision does not
+authorize `.ymmp` edits, renders, media / TTS, publishing, rights approval,
+external asset intake, DB/auth/API contract changes, or real-runner execution.
+Next safe restart is `git fetch --prune origin`, `git checkout master`,
+`git pull --ff-only origin master`, then `AGENTS.md` ->
+`docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`.
+
+Latest G-28 decision (2026-06-12):
+`g28_reference_layout_object_preset_revise_once_001` expands the reference
+layout prototype pack from static screen mock review toward reusable layout
+presets, object presets, and content slots. The new verification owner is
+`docs/verification/G28-LAYOUT-PRESET-OBJECT-CATALOG-2026-06-11.md`. The review
+hub `samples/_probe/g28/reference_layout_prototypes/index.html` now links to
+`object_catalog.html` plus six content-first prototypes:
+`image_annotation_simple`, `screenshot_callout`, `two_image_compare`,
+`article_quote_card`, `asset_plus_caption`, and
+`source_footage_annotated`. The object catalog records visual presets for
+`image_slot`, `screenshot_slot`, `footage_slot`, `highlight_box`, `arrow`,
+`leader_line`, `label_chip`, `callout_box`, `lower_third_telop`,
+`source_note`, `quote_card`, `comparison_panel`, `table_row`,
+`host_placeholder`, and `caption_reserve`, including allowed layout families,
+parameters, YMM4 transfer cautions, and misuse risks. The additions are
+self-contained HTML/CSS/SVG with explicit theme tokens, fixed `1920x1080`
+canvases, visible subtitle reserve, local navigation, and no external images,
+URLs, raw reference files, real screenshots, real map / satellite / company /
+character / footage assets, audio, or TTS. `mechanism_diagram` remains
+`causal_diagram_grammar_debt` and was not revised. This is not YMM4 transfer:
+no `.ymmp`, builder, existing game-mechanics carrier, existing map-evidence
+carrier, generated YMM4 artifact, render, production candidate, rights
+approval, creative final acceptance, Newsroom, common foundation, G-27,
+ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, external asset intake, or real
+runner path was opened. Next safe action is human browser review from
+`index.html`, then `object_catalog.html` if the chat-first digest is sufficient
+to judge the preset system.
+
 Latest G-28 decision (2026-06-12):
 `g28_chat_first_visual_review_protocol_001` records the human review result for
 the G-28 reference layout prototype pack and changes future visual review
@@ -898,7 +945,7 @@ approved by this decision.
 | 2026-03-30 | E-02 を先に仕様定義する | E-02 / A-04 / F-01 / 全件hold | ユーザーが選択。L2変換レイヤーで Python スコープ内に収まる唯一の候補 |
 | 2026-03-30 | E-02 は単体では価値が薄い | 着手 / 先送り / E-01とセット | YouTube Studio へのコピペが CLI テンプレートに変わるだけ。E-01 (API投稿) とセットでないと実質的効率化にならない |
 | 2026-03-30 | S-5 (字幕はみ出し) が最優先の痛点 | S-5 / S-6 / S-2 | ユーザーフィードバック。S-5/S-6 が最も時間がかかる工程 |
-| 2026-03-30 | S-6 トピック分析は stdlib 制約内では精度不足 | パターンマッチ / 軽量NLP / やらない | パターンマッチ30-50%、NLP 40-60%+CLAUDE.md違反。LLM アダプター方式に転換予定 |
+| 2026-03-30 | S-6 トピック分析は stdlib 制約内では精度不足 | パターンマッチ / 軽量NLP / やらない | パターンマッチ30-50%、NLP 40-60%+当時の root agent doc 違反。LLM アダプター方式に転換予定 |
 | 2026-03-30 | B-04 表示幅ベース分割を実装 | 表示幅 / 文字数維持 | 全角=2,半角=1 の display_width で YMM4 字幕はみ出しを事前防止。--display-width, --max-lines, --chars-per-line 追加 |
 | 2026-03-30 | S-6 トピック分析を LLM アダプター方式に転換 | LLM / パターンマッチ / やらない | ユーザー指示。コーパス分析ライブラリはレガシー化しており LLM に統一。モデル切替可能なアダプター設計 |
 | 2026-03-30 | サムネイルはYMM4テンプレートの文字・画像入れ替え | テンプレート手動 / Python自動生成 / 外部ツールのみ | Python 画像生成は不可。YMM4 テンプレートの手動カスタマイズを基本にし、後続 H-02 の `thumbnail_design` と `thumb.*` slot 限定 patch は successor-lane として許容する。サムネイルは非常に重要 |
@@ -953,7 +1000,7 @@ approved by this decision.
 | 2026-04-01 | G カテゴリ再定義: G-02=IR語彙定義, G-05=IR出力プロンプト, G-06=接続方式決定 | 再定義 / 据置 | G-01/G-03 は hold。G-02 を YMovieHelper 調査 → IR 語彙定義に変更。build-ymh (旧G-05) は廃止し、IR 出力プロンプト (新G-05) に置換 |
 | 2026-04-01 | YMovieHelper に言及する際のルール: 「使う」「接続する」ではなく「参考にする」「観察する」と書く | 記録 | 今後のドキュメントでの勘違い防止 |
 | 2026-04-01 | G-02 演出 IR 語彙定義 v1.0 完了 | 完了 | `docs/PRODUCTION_IR_SPEC.md` 作成。9フィールド (template/face/bg/bg_anim/slot/motion/overlay/se/transition)、Macro+Micro 二層構造、JSON/CSV 二重表現、carry-forward ルール。S-6 の6手動工程を全カバー |
-| 2026-04-02 | 正本ドキュメント5件を演出IR主軸に更新 | 修正 | README/CLAUDE.md/WORKFLOW/AUTOMATION_BOUNDARY/INVARIANTS から「CSV変換専用ツール」旧理解を除去。再開時の旧理解引き戻しを構造的に防止 |
+| 2026-04-02 | 正本ドキュメントを演出IR主軸に更新 | 修正 | README/WORKFLOW/AUTOMATION_BOUNDARY/INVARIANTS から「CSV変換専用ツール」旧理解を除去。再開時の旧理解引き戻しを構造的に防止 |
 | 2026-04-02 | G-05 C-07 v4 IR 出力プロンプト作成 | 完了 (proof待ち) | `docs/S6-production-memo-prompt.md` v4 セクション。Custom GPT が PRODUCTION_IR_SPEC v1.0 準拠の Macro+Micro IR JSON を出力するプロンプト。v3 (自然文) との切替可能。proof はユーザーが Custom GPT で実施 |
 | 2026-04-02 | ymmp 後処理の実機検証: 表情パーツ差し替えが動作することを確認 | 実証済み | Python で ymmp JSON のパーツパスを書き換え→YMM4で正常に開ける。音声・字幕は台本読込で確保済みのまま維持。二段階方式 (台本読込→ymmp後処理) が実現可能と確定 |
 | 2026-04-03 | YMM4 テンプレートは独立ファイルではなく ItemSettings.json 内の Templates 配列に保存 | 実測確定 | テンプレートの Items 構造は ymmp Items と同一。Adapter ロジック再利用可能。エフェクト・VoiceCache もテンプレートに完全保持 |
@@ -1020,7 +1067,7 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 | ID | 旧アイデア | 移行先 |
 |----|----------|--------|
-| IP-02 | Web UI 化 | CLAUDE.md スコープ外 |
+| IP-02 | Web UI 化 | docs/INVARIANTS.md / docs/FEATURE_REGISTRY.md の現スコープ外 |
 | IP-03 | YouTube 自動アップロード | FEATURE_REGISTRY E-01 (hold) |
 
 ---

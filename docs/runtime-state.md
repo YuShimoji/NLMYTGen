@@ -1,17 +1,31 @@
 # Runtime State — NLMYTGen
 
-- **Current capsule after G-28 rebase / stash-residue apply (2026-06-17)**:
-  Current checkout is `master` at
+- **Remote-sync handoff capsule prepared (2026-06-17)**:
+  The context needed to resume from another terminal is now preserved in tracked
+  repository docs for the remote sync of `master`: the G-28 object catalog,
+  Freeform Review / Long-Run Autonomy rules, docs cockpit cleanup, lane
+  registry / lane-alignment prompts, local MkDocs browser, and this handoff
+  note. After pulling the pushed `master`, the next terminal should read
+  `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, and this file first, then use
+  `docs/project-context.md`, `docs/LANE_REGISTRY.md`, and the G-28 verification
+  docs only as needed. No stash apply is required for resume; `stash@{0}`
+  remains a local duplicate of residue that was applied into tracked files and
+  was intentionally not dropped. This sync does not open `.ymmp`, render,
+  media, TTS, publishing, rights approval, external asset intake, DB/auth/API
+  contracts, or a real runner path.
+- **Prior capsule after G-28 rebase / stash-residue apply (2026-06-17)**:
+  At that checkpoint, checkout was `master` at
   `55da8ae docs(g28): expand reference layout object catalog`, with
   `HEAD...origin/master=1 0` after integrating upstream common-foundation
   status docs (`4746d81`, `2495584`) and rebasing the G-28 object catalog
   commit. The active layers are both present: common foundation owns the
   repo-status/status-input audit design, and G-28 owns the current visual
-  review artifact layer. Worktree is intentionally not clean while stash
+  review artifact layer. The worktree was intentionally not clean while stash
   residue is being classified: docs cockpit cleanup and MkDocs/nav local
   browsing files remain separate from the committed G-28 artifact. `stash@{0}`
   remains `g28-post-commit-residue-20260617-154920` and must not be dropped
-  until residue classification is complete. No push has been run.
+  until residue classification is complete. No push had been run at that
+  checkpoint.
 - **Freeform Review / Long-Run Autonomy operation update consumed (2026-06-17)**:
   User freeform review text is now treated as the source of truth for review
   intake. Fixed labels such as `accept`, `reject`, `revise_once`, or

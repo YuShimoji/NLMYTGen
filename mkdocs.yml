@@ -1,0 +1,173 @@
+site_name: NLMYTGen Local Doc View
+site_description: Local-only Markdown browser for audit and browser translation checks.
+docs_dir: _local/mkdocs-src
+site_dir: _local/mkdocs-site
+use_directory_urls: true
+
+theme:
+  name: material
+  language: ja
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - search.highlight
+    - toc.follow
+
+plugins:
+  - search:
+      lang: ja
+
+markdown_extensions:
+  - admonition
+  - def_list
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+
+hooks:
+  - tools/mkdocs_local_filter.py
+
+validation:
+  nav:
+    omitted_files: ignore
+    not_found: warn
+    absolute_links: relative_to_docs
+  links:
+    not_found: ignore
+    absolute_links: relative_to_docs
+    unrecognized_links: ignore
+    anchors: ignore
+
+exclude_docs: |
+  .agent/**
+  .claude/**
+  .codex/**
+  .git/**
+  .pytest_cache/**
+  .venv/**
+  __pycache__/**
+  _local/**
+  _tmp/**
+  build/**
+  dist/**
+  node_modules/**
+  venv/**
+  **/node_modules/**
+  **/__pycache__/**
+  nlmytgen.egg-info/**
+
+nav:
+  - Overview:
+      - Local Doc View Home: index.md
+      - Project Overview: docs/project-overview.md
+      - Visual Proof Index: docs/visual-proof-index.md
+      - Turn-Based Development Map: docs/turn-based-development-map.md
+      - Viewing Guide: docs/index.md
+      - Markdown Inventory: docs/markdown-inventory.md
+      - Repository README: repo-root/README.md
+      - Agents Entry Pointer: AGENTS.md
+      - Document Map: docs/NAV.md
+  - Runtime State:
+      - Runtime State: docs/runtime-state.md
+      - Project Context: docs/project-context.md
+      - Feature Registry: docs/FEATURE_REGISTRY.md
+      - User Request Ledger: docs/USER_REQUEST_LEDGER.md
+      - User Copypaste Blocks: docs/USER_COPYPASTE_BLOCKS.md
+      - Migration Ledger: docs/MIGRATION_LEDGER.md
+  - Rules And Boundaries:
+      - Repo Local Rules: docs/REPO_LOCAL_RULES.md
+      - Invariants: docs/INVARIANTS.md
+      - Interaction Notes: docs/INTERACTION_NOTES.md
+      - Automation Boundary: docs/AUTOMATION_BOUNDARY.md
+      - Material Sourcing Rules: docs/MATERIAL_SOURCING_RULES.md
+      - Visual Tool Decision: docs/VISUAL_TOOL_DECISION.md
+  - Specs:
+      - Core:
+          - Architecture: docs/ARCHITECTURE.md
+          - Workflow: docs/WORKFLOW.md
+          - Pipeline Spec: docs/PIPELINE_SPEC.md
+          - Production Pipeline Contract: docs/PRODUCTION_PIPELINE_CONTRACT.md
+          - Production IR Spec: docs/PRODUCTION_IR_SPEC.md
+          - Production IR Capability Matrix: docs/PRODUCTION_IR_CAPABILITY_MATRIX.md
+          - GUI Minimum Path: docs/GUI_MINIMUM_PATH.md
+      - Motion And Visual:
+          - Motion Production Pipeline: docs/MOTION_PRODUCTION_PIPELINE.md
+          - Motion Preset Library Spec: docs/MOTION_PRESET_LIBRARY_SPEC.md
+          - Motion Calibration Guide: docs/MOTION_CALIBRATION_GUIDE.md
+          - Motion Recipe Loop Timing: docs/MOTION_RECIPE_LOOP_TIMING.md
+          - Visual Density Score Spec: docs/VISUAL_DENSITY_SCORE_SPEC.md
+          - Visual Effect Selection Guide: docs/VISUAL_EFFECT_SELECTION_GUIDE.md
+          - Visual Style Presets: docs/VISUAL_STYLE_PRESETS.md
+          - Visual Style YMM4 Checklist: docs/VISUAL_STYLE_YMM4_CHECKLIST.md
+      - Production Surfaces:
+          - Packaging Orchestrator Spec: docs/PACKAGING_ORCHESTRATOR_SPEC.md
+          - Thumbnail Strategy Spec: docs/THUMBNAIL_STRATEGY_SPEC.md
+          - Thumbnail One Sheet Workflow: docs/THUMBNAIL_ONE_SHEET_WORKFLOW.md
+          - Scene Composition Schema: docs/SCENE_COMPOSITION_SCHEMA.md
+          - Skit Group Template Spec: docs/SKIT_GROUP_TEMPLATE_SPEC.md
+          - Reference Driven Screen Carrier Spec: docs/REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md
+          - G27 Adapter Route Contract: docs/G27_ADAPTER_ROUTE_CONTRACT.md
+          - G27 Review Console Spec: docs/G27_REVIEW_CONSOLE_SPEC.md
+      - AI Rules:
+          - Core Ruleset: docs/ai/CORE_RULESET.md
+          - Decision Gates: docs/ai/DECISION_GATES.md
+          - Status And Handoff: docs/ai/STATUS_AND_HANDOFF.md
+          - Workflows And Phases: docs/ai/WORKFLOWS_AND_PHASES.md
+      - ADR:
+          - ADR 0001 Single Path A: docs/ADR/0001-single-path-a.md
+          - ADR 0002 NotebookLM Is Upstream: docs/ADR/0002-notebooklm-is-upstream.md
+          - ADR 0003 No Direct Video Generation: docs/ADR/0003-no-direct-video-generation-in-v1.md
+          - ADR 0004 LLM Text Assist Boundary: docs/ADR/0004-llm-text-assist-boundary.md
+  - Development Notes:
+      - CLI Reference: docs/dev/CLI_REFERENCE.md
+      - Agent Orchestration: docs/AGENT_ORCHESTRATION.md
+      - Agent Operator Surface: docs/AGENT_OPERATOR_SURFACE.md
+      - Operator Workflow: docs/OPERATOR_WORKFLOW.md
+      - Operator Parallel Work Runbook: docs/OPERATOR_PARALLEL_WORK_RUNBOOK.md
+      - Task Development Cycle Spec: docs/TASK_DEVELOPMENT_CYCLE_SPEC.md
+      - GUI LLM Setup Guide: docs/gui-llm-setup-guide.md
+      - Workflow Proof Template: docs/workflow-proof-template.md
+      - Prompts:
+          - H01 Packaging Brief Prompt: docs/prompts/H01-packaging-brief-prompt.md
+          - H02 Thumbnail One Sheet Prompt: docs/prompts/H02-thumbnail-one-sheet-prompt.md
+          - B17 Reflow Residue Observation Prompt: docs/prompts/B17-reflow-residue-observation-prompt.md
+          - B18 Script Diagnostics Observation Prompt: docs/prompts/B18-script-diagnostics-observation-prompt.md
+  - Artifacts:
+      - Verification Index: docs/verification/README.md
+      - Current G28:
+          - Chat First Visual Review Protocol: docs/verification/G28-CHAT-FIRST-VISUAL-REVIEW-PROTOCOL-2026-06-11.md
+          - Layout Preset Object Catalog: docs/verification/G28-LAYOUT-PRESET-OBJECT-CATALOG-2026-06-11.md
+          - Reference Layout Prototype Pack: docs/verification/G28-REFERENCE-LAYOUT-PROTOTYPE-PACK-2026-06-11.md
+          - YMM4 Carrier Generation Method Blocker: docs/verification/G28-YMMP-CARRIER-GENERATION-METHOD-BLOCKER-2026-06-11.md
+          - Map Evidence Carrier Probe: docs/verification/G28-MAP-EVIDENCE-YMMP-DIAGNOSTIC-CARRIER-PROBE-2026-06-11.md
+          - Game Mechanics Batch Review Packet: docs/verification/G28-GAME-MECHANICS-YMMP-BATCH-VISUAL-REVIEW-PACKET-2026-06-11.md
+      - Runner And RSS:
+          - Real Runner Boundary Design: docs/verification/REAL-RUNNER-BOUNDARY-DESIGN-2026-06-09.md
+          - Real Runner Preflight Implementation Plan: docs/verification/REAL-RUNNER-PREFLIGHT-IMPLEMENTATION-PLAN-2026-06-09.md
+          - Pre Execution Dry Run Flow Design: docs/verification/PRE-EXECUTION-DRY-RUN-FLOW-DESIGN-2026-06-10.md
+          - RSS Live Smoke Runbook: docs/verification/RSS-LIVE-SMOKE-RUNBOOK-2026-05-26.md
+          - RSS Live Smoke Evidence: docs/verification/RSS-LIVE-SMOKE-EVIDENCE-2026-05-28.md
+      - Samples:
+          - Cue Packet: "samples/AI監視が追い詰める生身の労働_cue_packet.md"
+          - Cue Workflow Proof: "samples/AI監視が追い詰める生身の労働_cue_workflow_proof.md"
+          - Diagram Packet: "samples/AI監視が追い詰める生身の労働_diagram_packet.md"
+          - Diagram Workflow Proof: "samples/AI監視が追い詰める生身の労働_diagram_workflow_proof.md"
+          - Packaging Brief Template: samples/packaging_brief.template.md
+          - Registry Template README: samples/registry_template/README.md
+  - Lanes And Side Materials:
+      - Baseball Info Graphics README: BaseballInfoGraphics/README.md
+      - Sports News README: lanes/sports_news/README.md
+      - Sports News Visual Language: lanes/sports_news/docs/visual_language.md
+      - Sports News Screen Template Notes: lanes/sports_news/docs/screen_template_notes.md
+      - Sports News Backlog: lanes/sports_news/docs/baseball_infographic_backlog.md
+      - Baseball News Pipeline Spec: docs/BASEBALL_NEWS_PIPELINE_SPEC.md
+  - Misc:
+      - B11 Manual Checkpoints: docs/B11-manual-checkpoints.md
+      - C07 Visual Pattern Operator Intent: docs/C07-visual-pattern-operator-intent.md
+      - Episode Run Pack: docs/EPISODE_RUN_PACK.md
+      - Evidence Richness Score Spec: docs/EVIDENCE_RICHNESS_SCORE_SPEC.md
+      - Script Quality Diagnostics Spec: docs/SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md
+      - YMM4 Automation Research: docs/YMM4-AUTOMATION-RESEARCH.md

@@ -190,8 +190,8 @@ G-26 Calibration phase 開始 (2026-05-01): v1/slice3_proof/slice4_proof 計 16 
 | MoviePy / ffmpeg (合成目的) | YMM4 の責務 | ADR-0003 |
 | PIL / Pillow (画像合成目的) | 視覚的成果物の生成は Python の責務外 | ユーザー指示 (2026-03-30) |
 | LLM による主台本生成 | NotebookLM の責務 | ADR-0002 |
-| Web UI (現時点) | コアパイプライン優先 | CLAUDE.md |
-| API サーバー (現時点) | コアパイプライン優先 | CLAUDE.md |
+| Web UI (現時点) | コアパイプライン優先 | docs/INVARIANTS.md / docs/FEATURE_REGISTRY.md |
+| API サーバー (現時点) | コアパイプライン優先 | docs/INVARIANTS.md / docs/FEATURE_REGISTRY.md |
 
 ---
 

@@ -9,6 +9,7 @@ NLMYTGen の通常再開で読む短い front-door。ここには毎回効く行
 - 対話・報告 failure class: `docs/INTERACTION_NOTES.md`
 - workflow pain / operator 手順: `docs/OPERATOR_WORKFLOW.md`
 - 決定履歴 / handoff history: `docs/project-context.md`
+- 複数レーン管理 / repo split boundary: `docs/LANE_REGISTRY.md`
 - 迷子時の索引: `docs/NAV.md`
 
 ## Restart Read Budget

@@ -76,8 +76,8 @@ L2（Python変換工程）が停滞すると CSV も IR も生成できず、S-3
 
 ### 因果関係の明示
 工程やレイヤーに言及するときは、「進めると何が実現されるか / 止まると何が詰まるか」を可能な限り併記する。
-グロサリーの正本は `CLAUDE.md`（プロジェクトルート）の「工程・レイヤー略語の読み方」表。
+制作工程の一覧は `docs/WORKFLOW.md`、自動化レイヤーの一覧は `docs/AUTOMATION_BOUNDARY.md` を正とする。
 
 ### 適用範囲
-- 適用する: 生きているドキュメント（CLAUDE.md、CORE_RULESET.md、OPERATOR_WORKFLOW.md、GUI_MINIMUM_PATH.md、AUTOMATION_BOUNDARY.md、runtime-state.md）
+- 適用する: 生きているドキュメント（CORE_RULESET.md、OPERATOR_WORKFLOW.md、GUI_MINIMUM_PATH.md、AUTOMATION_BOUNDARY.md、WORKFLOW.md、runtime-state.md）
 - 適用しない: docs/verification/* の過去証跡、git 履歴、日付入りジャーナル（ただし今後の追記にはペア形式を適用）

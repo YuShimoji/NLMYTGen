@@ -9,6 +9,7 @@ NotebookLM の出力を YMM4 (ゆっくりMovieMaker4) 用 CSV に変換し、�
 1. [AGENTS.md](AGENTS.md) — 境界と再アンカリングの正本  
 2. [docs/runtime-state.md](docs/runtime-state.md) — いまの位置と `next_action`  
 3. [docs/FEATURE_REGISTRY.md](docs/FEATURE_REGISTRY.md) — 機能の全件台帳  
+4. [docs/LANE_REGISTRY.md](docs/LANE_REGISTRY.md) — NLMYTGen 周辺 repo / worktree / sidequest の責務台帳
 
 詳細な読み順・運用ルールは AGENTS の「再アンカリング手順」と [docs/REPO_LOCAL_RULES.md](docs/REPO_LOCAL_RULES.md) を参照（Claude Code 入口は [.claude/CLAUDE.md](.claude/CLAUDE.md)）。
 

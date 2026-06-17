@@ -34,7 +34,7 @@
 - 新しい自動化経路を提案する際は、現行ロードマップ (YMM4-AUTOMATION-RESEARCH.md セクション4) の段階構成との整合を示すこと。根拠なしに経路を増やさない。
 - YMovieHelper は参照実装 (設計思想の観察対象)。「YMovieHelper を使う」「YMovieHelper に接続する」とは書かない。
 - 演出 IR (PRODUCTION_IR_SPEC.md) が視覚配置の中心課題。C-07 系 (演出判断支援) が主系統であり、D-02 (素材取得) は従属的補助論点。D-02 を主軸として扱わない。
-- 再開時に「CSV 変換専用ツール」という旧理解に引き戻されないよう、README / CLAUDE.md / WORKFLOW / AUTOMATION_BOUNDARY は演出 IR の役割を反映した状態を維持する。
+- 再開時に「CSV 変換専用ツール」という旧理解に引き戻されないよう、README / WORKFLOW / AUTOMATION_BOUNDARY は演出 IR の役割を反映した状態を維持する。
 - patch-ymmp (G-06) は成熟段階モデルで評価する。「研究か実用か」の二択で早期に裁定しない。.ymmp のゼロからの生成 (不可能) と、台本読込後の限定的な後段適用 (patch-ymmp) は明確に区別する。現在のフィールド別能力は [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md) と [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md) を正本とし、古い Level 名だけで判断しない。
 - IR 語彙は「Writer が出せる意味ラベル」「adapter が ymmp に書き込める範囲」「GUI に露出している入力」が一致しない場合がある。語彙が存在することを万能自動化と解釈せず、未露出・未実装・境界外を [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md) で分ける。
 - 演出パイプラインは Writer 工程 (LLM による IR 生成) と Editor 工程 (テンプレート解決 + ymmp 適用) に分離する。proof の際限なき拡張を防ぐため、Writer の品質はフィードバック駆動で scope を区切り、Editor の設計品質で吸収する。

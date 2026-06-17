@@ -10,7 +10,7 @@ NLMYTGen の自動化がどこで動作するかを明確にする。
 > - **L2（Python変換工程）が停滞** → CSV も IR も生成できず、S-3（CSV変換）以降の全工程が止まる
 > - **第2層（Template Registry）が停滞** → 演出自動配置（face/bg）が止まるが、基本的な動画制作（手動演出）は続行できる
 >
-> 略語のグロサリー: `CLAUDE.md`（プロジェクトルート）の「工程・レイヤー略語の読み方」表を参照。
+> 略語のグロサリー: `docs/ai/CORE_RULESET.md` §Terminology、制作工程の一覧は `WORKFLOW.md`、自動化レイヤーの一覧は本ファイルを参照。
 
 ### YMM4 と patch の確認
 

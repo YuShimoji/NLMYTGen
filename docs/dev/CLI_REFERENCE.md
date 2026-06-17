@@ -17,6 +17,6 @@
 | H-05 集約 | `python -m src.cli.main score-thumbnail-s8 ...` — GUIボタンなし、必要時のみ |
 | B-18 | `python -m src.cli.main diagnose-script ...` — GUI の品質診断からも可 |
 | テスト（通常） | `uv run pytest` — **`src/` または `gui/` のロジックを変えたブロックの終わりにだけ**根拠として示す |
-| テスト（全件） | `NLMYTGEN_PYTEST_FULL=1 uv run pytest` — 任意（`CLAUDE.md`） |
+| テスト（全件） | `NLMYTGEN_PYTEST_FULL=1 uv run pytest` — 任意（`docs/REPO_LOCAL_RULES.md` の Git And Tests） |
 
 `python -m src.cli.main <subcommand> --help` でオプション詳細。
