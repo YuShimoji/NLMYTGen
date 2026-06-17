@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>G-28 Prototype - two_image_compare</title>
+  <style>
+    :root { --background:#101318; --panel:#18212b; --panel2:#202b36; --text:#edf3f8; --muted:#a8b5c0; --accent:#4fb7d8; --warning:#e4b356; --grid:#344454; --subtitle:#080b0f; }
+    html, body { margin:0; min-width:1920px; min-height:1080px; background:#05070a; font-family:Arial, Helvetica, sans-serif; }
+    .canvas { width:1920px; height:1080px; background:var(--background); }
+  </style>
+</head>
+<body>
+<main class="canvas" aria-label="two image compare content-first prototype">
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+    <title id="title">two_image_compare prototype</title>
+    <desc id="desc">Two placeholder images with comparison labels, difference chips, lower claim, and subtitle reserve.</desc>
+    <rect width="1920" height="1080" fill="var(--background)"/>
+    <g stroke="var(--grid)" stroke-width="1" opacity="0.42">
+      <line x1="160" y1="0" x2="160" y2="1080"/><line x1="960" y1="0" x2="960" y2="1080"/><line x1="1760" y1="0" x2="1760" y2="1080"/>
+      <line x1="0" y1="90" x2="1920" y2="90"/><line x1="0" y1="540" x2="1920" y2="540"/><line x1="0" y1="920" x2="1920" y2="920"/>
+    </g>
+    <rect x="160" y="90" width="1600" height="830" fill="none" stroke="#536474" stroke-width="2" stroke-dasharray="18 14"/>
+    <line x1="960" y1="90" x2="960" y2="920" stroke="var(--accent)" stroke-width="2" stroke-dasharray="12 16"/>
+    <text x="160" y="76" fill="var(--text)" font-size="34" font-weight="700">two_image_compare</text>
+    <text x="160" y="124" fill="var(--muted)" font-size="20">Before/after or left/right placeholders at matched scale. No real images.</text>
+    <a href="index.html"><text x="1588" y="76" fill="var(--accent)" font-size="20" font-weight="700">Back to index</text></a>
+
+    <g transform="translate(180 170)">
+      <g>
+        <rect x="0" y="0" width="750" height="560" rx="8" fill="var(--panel)" stroke="#43576b" stroke-width="2"/>
+        <rect x="46" y="64" width="658" height="390" rx="8" fill="#14212a" stroke="var(--accent)" stroke-width="4"/>
+        <path d="M94 390 L220 256 L352 332 L502 214 L650 310" fill="none" stroke="#2f4c58" stroke-width="40" opacity="0.75"/>
+        <text x="46" y="42" fill="var(--warning)" font-size="24" font-weight="700">LEFT / BEFORE</text>
+        <rect x="46" y="480" width="300" height="52" rx="6" fill="var(--panel2)" stroke="var(--warning)"/>
+        <text x="68" y="514" fill="var(--text)" font-size="20">difference label A</text>
+      </g>
+      <g transform="translate(810 0)">
+        <rect x="0" y="0" width="750" height="560" rx="8" fill="var(--panel)" stroke="#43576b" stroke-width="2"/>
+        <rect x="46" y="64" width="658" height="390" rx="8" fill="#14212a" stroke="var(--accent)" stroke-width="4"/>
+        <path d="M94 342 L230 286 L350 218 L506 344 L650 238" fill="none" stroke="#2f4c58" stroke-width="40" opacity="0.75"/>
+        <text x="46" y="42" fill="var(--warning)" font-size="24" font-weight="700">RIGHT / AFTER</text>
+        <rect x="46" y="480" width="300" height="52" rx="6" fill="var(--panel2)" stroke="var(--warning)"/>
+        <text x="68" y="514" fill="var(--text)" font-size="20">difference label B</text>
+      </g>
+      <g transform="translate(568 595)">
+        <rect x="0" y="0" width="430" height="70" rx="8" fill="#231f14" stroke="var(--warning)" stroke-width="2"/>
+        <text x="28" y="44" fill="var(--warning)" font-size="24" font-weight="700">BOTTOM CLAIM</text>
+        <text x="226" y="44" fill="var(--text)" font-size="22">one short takeaway</text>
+      </g>
+    </g>
+
+    <g transform="translate(180 850)">
+      <rect x="0" y="0" width="1560" height="52" rx="8" fill="var(--panel2)" stroke="var(--grid)"/>
+      <text x="18" y="33" fill="var(--accent)" font-size="16" font-weight="700">NOTE</text>
+      <text x="82" y="33" fill="var(--text)" font-size="16">Layout uses comparison_panel, image_slot, label_chip, lower_third_telop, source_note optional, and caption_reserve.</text>
+    </g>
+    <rect x="0" y="920" width="1920" height="120" fill="var(--subtitle)" stroke="var(--grid)" stroke-width="2"/>
+    <text x="160" y="970" fill="var(--accent)" font-size="20" font-weight="700">SUBTITLE RESERVE</text>
+    <text x="160" y="1006" fill="var(--muted)" font-size="18">The comparison claim sits above subtitles and does not become a production lower third.</text>
+  </svg>
+</main>
+</body>
+</html>

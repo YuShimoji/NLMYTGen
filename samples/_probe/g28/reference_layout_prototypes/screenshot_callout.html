@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>G-28 Prototype - screenshot_callout</title>
+  <style>
+    :root { --background:#101318; --panel:#18212b; --panel2:#202b36; --text:#edf3f8; --muted:#a8b5c0; --accent:#4fb7d8; --warning:#e4b356; --grid:#344454; --subtitle:#080b0f; }
+    html, body { margin:0; min-width:1920px; min-height:1080px; background:#05070a; font-family:Arial, Helvetica, sans-serif; }
+    .canvas { width:1920px; height:1080px; background:var(--background); }
+  </style>
+</head>
+<body>
+<main class="canvas" aria-label="screenshot callout content-first prototype">
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+    <title id="title">screenshot_callout prototype</title>
+    <desc id="desc">Web or UI screenshot placeholder with marker dots, callout boxes, source note, grid, and subtitle reserve.</desc>
+    <rect width="1920" height="1080" fill="var(--background)"/>
+    <g stroke="var(--grid)" stroke-width="1" opacity="0.42">
+      <line x1="160" y1="0" x2="160" y2="1080"/><line x1="960" y1="0" x2="960" y2="1080"/><line x1="1760" y1="0" x2="1760" y2="1080"/>
+      <line x1="0" y1="90" x2="1920" y2="90"/><line x1="0" y1="540" x2="1920" y2="540"/><line x1="0" y1="920" x2="1920" y2="920"/>
+    </g>
+    <rect x="160" y="90" width="1600" height="830" fill="none" stroke="#536474" stroke-width="2" stroke-dasharray="18 14"/>
+    <line x1="960" y1="90" x2="960" y2="920" stroke="var(--accent)" stroke-width="2" stroke-dasharray="12 16"/>
+    <text x="160" y="76" fill="var(--text)" font-size="34" font-weight="700">screenshot_callout</text>
+    <text x="160" y="124" fill="var(--muted)" font-size="20">UI or webpage screenshot placeholder with marker dots and callout boxes. No real screenshot or URL.</text>
+    <a href="index.html"><text x="1588" y="76" fill="var(--accent)" font-size="20" font-weight="700">Back to index</text></a>
+
+    <g transform="translate(200 168)">
+      <rect x="0" y="0" width="1030" height="654" rx="8" fill="var(--panel)" stroke="#43576b" stroke-width="2"/>
+      <rect x="52" y="46" width="926" height="504" rx="8" fill="#141d25" stroke="var(--accent)" stroke-width="4"/>
+      <rect x="52" y="46" width="926" height="58" rx="8" fill="#22303b"/>
+      <circle cx="92" cy="75" r="10" fill="#ff7b7b"/><circle cx="124" cy="75" r="10" fill="#e4b356"/><circle cx="156" cy="75" r="10" fill="#72d08a"/>
+      <rect x="94" y="142" width="794" height="58" rx="6" fill="#202b36" stroke="#536474"/>
+      <rect x="94" y="232" width="310" height="230" rx="6" fill="#1a2530" stroke="#536474"/>
+      <rect x="438" y="232" width="450" height="64" rx="6" fill="#1a2530" stroke="#536474"/>
+      <rect x="438" y="324" width="450" height="64" rx="6" fill="#1a2530" stroke="#536474"/>
+      <rect x="438" y="416" width="450" height="46" rx="6" fill="#1a2530" stroke="#536474"/>
+      <circle cx="374" cy="250" r="16" fill="var(--warning)" stroke="#101318" stroke-width="4"/>
+      <circle cx="812" cy="354" r="16" fill="var(--warning)" stroke="#101318" stroke-width="4"/>
+      <circle cx="205" cy="170" r="16" fill="var(--accent)" stroke="#101318" stroke-width="4"/>
+      <text x="328" y="605" fill="var(--muted)" font-size="21">SCREENSHOT SLOT PLACEHOLDER - no real capture</text>
+    </g>
+
+    <g transform="translate(1295 180)">
+      <rect x="0" y="0" width="425" height="132" rx="8" fill="var(--panel2)" stroke="#43576b"/>
+      <text x="24" y="39" fill="var(--warning)" font-size="22" font-weight="700">callout 01</text>
+      <text x="24" y="72" fill="var(--text)" font-size="20">Identify the marked UI area.</text>
+      <line x1="0" y1="100" x2="-470" y2="70" stroke="var(--warning)" stroke-width="4"/>
+    </g>
+    <g transform="translate(1295 378)">
+      <rect x="0" y="0" width="425" height="132" rx="8" fill="var(--panel2)" stroke="#43576b"/>
+      <text x="24" y="39" fill="var(--accent)" font-size="22" font-weight="700">callout 02</text>
+      <text x="24" y="72" fill="var(--text)" font-size="20">Name the comparison point.</text>
+      <line x1="0" y1="65" x2="-480" y2="-24" stroke="var(--accent)" stroke-width="4"/>
+    </g>
+    <g transform="translate(1295 576)">
+      <rect x="0" y="0" width="425" height="104" rx="8" fill="var(--panel2)" stroke="#43576b"/>
+      <text x="24" y="39" fill="var(--warning)" font-size="22" font-weight="700">source_note</text>
+      <text x="24" y="72" fill="var(--text)" font-size="19">Bounded note, no URL or token.</text>
+    </g>
+
+    <g transform="translate(200 850)">
+      <rect x="0" y="0" width="1520" height="52" rx="8" fill="var(--panel2)" stroke="var(--grid)"/>
+      <text x="18" y="33" fill="var(--accent)" font-size="16" font-weight="700">NOTE</text>
+      <text x="82" y="33" fill="var(--text)" font-size="16">Layout uses screenshot_slot, marker dots, callout_box, leader_line, source_note, and caption_reserve.</text>
+    </g>
+    <rect x="0" y="920" width="1920" height="120" fill="var(--subtitle)" stroke="var(--grid)" stroke-width="2"/>
+    <text x="160" y="970" fill="var(--accent)" font-size="20" font-weight="700">SUBTITLE RESERVE</text>
+    <text x="160" y="1006" fill="var(--muted)" font-size="18">Callouts and screenshot placeholder stay above the reserved caption band.</text>
+  </svg>
+</main>
+</body>
+</html>

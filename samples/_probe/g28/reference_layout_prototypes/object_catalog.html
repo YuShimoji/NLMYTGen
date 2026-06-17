@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>G-28 Object Preset Catalog</title>
+  <style>
+    :root {
+      --background: #101318;
+      --card: #18212b;
+      --card-2: #202b36;
+      --text: #edf3f8;
+      --muted: #a8b5c0;
+      --accent: #4fb7d8;
+      --warning: #e4b356;
+      --grid: #344454;
+      --subtitle: #080b0f;
+    }
+    html, body { margin: 0; min-width: 1920px; min-height: 1080px; background: #05070a; font-family: Arial, Helvetica, sans-serif; }
+    .canvas { width: 1920px; height: 1080px; background: var(--background); }
+  </style>
+</head>
+<body>
+<main class="canvas" aria-label="G-28 object preset catalog">
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+    <title id="title">G-28 object preset catalog</title>
+    <desc id="desc">Visual authoring catalog for reusable object slots, cautions, and misuse risks.</desc>
+    <rect x="0" y="0" width="1920" height="1080" fill="var(--background)"/>
+    <g stroke="var(--grid)" stroke-width="1" opacity="0.42">
+      <line x1="160" y1="0" x2="160" y2="1080"/>
+      <line x1="480" y1="0" x2="480" y2="1080"/>
+      <line x1="960" y1="0" x2="960" y2="1080"/>
+      <line x1="1440" y1="0" x2="1440" y2="1080"/>
+      <line x1="1760" y1="0" x2="1760" y2="1080"/>
+      <line x1="0" y1="90" x2="1920" y2="90"/>
+      <line x1="0" y1="540" x2="1920" y2="540"/>
+      <line x1="0" y1="920" x2="1920" y2="920"/>
+    </g>
+    <rect x="160" y="90" width="1600" height="830" fill="none" stroke="#536474" stroke-width="2" stroke-dasharray="18 14"/>
+    <line x1="960" y1="90" x2="960" y2="920" stroke="var(--accent)" stroke-width="2" stroke-dasharray="12 16"/>
+    <text x="160" y="76" fill="var(--text)" font-size="34" font-weight="700">object_catalog</text>
+    <text x="160" y="124" fill="var(--muted)" font-size="20">Visual preset catalog. Not an implementation schema. No external image, map, screenshot, footage, logo, or character asset.</text>
+    <a href="index.html"><text x="1572" y="76" fill="var(--accent)" font-size="20" font-weight="700">Back to index</text></a>
+
+    <g transform="translate(130 155)" font-size="13">
+      <g>
+        <rect x="0" y="0" width="310" height="200" rx="8" fill="var(--card)" stroke="#43576b"/>
+        <text x="18" y="31" fill="var(--accent)" font-size="20" font-weight="700">image_slot</text>
+        <text x="18" y="62" fill="var(--text)">Purpose: abstract asset area</text>
+        <text x="18" y="88" fill="var(--muted)">Layouts: image, compare, asset</text>
+        <text x="18" y="114" fill="var(--muted)">Params: crop, safe inset</text>
+        <text x="18" y="140" fill="var(--warning)">YMM4: replace only after rights</text>
+        <text x="18" y="166" fill="var(--muted)">Risk: fake real media</text>
+      </g>
+      <g transform="translate(330 0)">
+        <rect x="0" y="0" width="310" height="200" rx="8" fill="var(--card)" stroke="#43576b"/>
+        <text x="18" y="31" fill="var(--accent)" font-size="20" font-weight="700">screenshot_slot</text>
+        <text x="18" y="62" fill="var(--text)">Purpose: UI capture frame</text>
+        <text x="18" y="88" fill="var(--muted)">Layouts: screenshot_callout</text>
+        <text x="18" y="114" fill="var(--muted)">Params: markers, crop label</text>
+        <text x="18" y="140" fill="var(--warning)">YMM4: verify source rights</text>
+        <text x="18" y="166" fill="var(--muted)">Risk: implying real capture</text>
+      </g>
+      <g transform="translate(660 0)">
+        <rect x="0" y="0" width="310" height="200" rx="8" fill="var(--card)" stroke="#43576b"/>
+        <text x="18" y="31" fill="var(--accent)" font-size="20" font-weight="700">footage_slot</text>
+        <text x="18" y="62" fill="var(--text)">Purpose: video frame region</text>
+        <text x="18" y="88" fill="var(--muted)">Layouts: footage, source frame</text>
+        <text x="18" y="114" fill="var(--muted)">Params: safe area, telop</text>
+        <text x="18" y="140" fill="var(--warning)">YMM4: no footage in prototype</text>
+        <text x="18" y="166" fill="var(--muted)">Risk: source-footage claim</text>
+      </g>
+      <g transform="translate(990 0)">
+        <rect x="0" y="0" width="310" height="200" rx="8" fill="var(--card)" stroke="#43576b"/>
+        <text x="18" y="31" fill="var(--accent)" font-size="20" font-weight="700">highlight_box</text>
+        <text x="18" y="62" fill="var(--text)">Purpose: mark content area</text>
+        <text x="18" y="88" fill="var(--muted)">Layouts: screenshot, image</text>
+        <text x="18" y="114" fill="var(--muted)">Params: stroke, opacity</text>
+        <text x="18" y="140" fill="var(--warning)">YMM4: keep above media</text>
+        <text x="18" y="166" fill="var(--muted)">Risk: covers key text</text>
+      </g>
+      <g transform="translate(1320 0)">
+        <rect x="0" y="0" width="310" height="200" rx="8" fill="var(--card)" stroke="#43576b"/>
+        <text x="18" y="31" fill="var(--accent)" font-size="20" font-weight="700">arrow</text>
+        <text x="18" y="62" fill="var(--text)">Purpose: direct attention</text>
+        <text x="18" y="88" fill="var(--muted)">Layouts: image, compare, footage</text>
+        <text x="18" y="114" fill="var(--muted)">Params: head, weight, color</text>
+        <text x="18" y="140" fill="var(--warning)">YMM4: avoid causal overclaim</text>
+        <text x="18" y="166" fill="var(--muted)">Risk: false relation</text>
+      </g>
+
+      <g transform="translate(0 220)">
+        <rect x="0" y="0" width="310" height="200" rx="8" fill="var(--card)" stroke="#43576b"/>
+        <text x="18" y="31" fill="var(--accent)" font-size="20" font-weight="700">leader_line</text>
+        <text x="18" y="62" fill="var(--text)">Purpose: label attachment</text>
+        <text x="18" y="88" fill="var(--muted)">Layouts: map, screenshot, footage</text>
+        <text x="18" y="114" fill="var(--muted)">Params: anchor, bend, length</text>
+        <text x="18" y="140" fill="var(--warning)">YMM4: preserve anchor target</text>
+        <text x="18" y="166" fill="var(--muted)">Risk: label drift</text>
+      </g>
+      <g transform="translate(330 220)">
+        <rect x="0" y="0" width="310" height="200" rx="8" fill="var(--card)" stroke="#43576b"/>
+        <text x="18" y="31" fill="var(--accent)" font-size="20" font-weight="700">label_chip</text>
+        <text x="18" y="62" fill="var(--text)">Purpose: short tag</text>
+        <text x="18" y="88" fill="var(--muted)">Layouts: all annotation pages</text>
+        <text x="18" y="114" fill="var(--muted)">Params: tone, max chars</text>
+        <text x="18" y="140" fill="var(--warning)">YMM4: cap text length</text>
+        <text x="18" y="166" fill="var(--muted)">Risk: becomes paragraph</text>
+      </g>
+      <g transform="translate(660 220)">
+        <rect x="0" y="0" width="310" height="200" rx="8" fill="var(--card)" stroke="#43576b"/>
+        <text x="18" y="31" fill="var(--accent)" font-size="20" font-weight="700">callout_box</text>
+        <text x="18" y="62" fill="var(--text)">Purpose: explain a marked area</text>
+        <text x="18" y="88" fill="var(--muted)">Layouts: screenshot, footage</text>
+        <text x="18" y="114" fill="var(--muted)">Params: title, body, anchor</text>
+        <text x="18" y="140" fill="var(--warning)">YMM4: do not crowd reserve</text>
+        <text x="18" y="166" fill="var(--muted)">Risk: mini slide deck</text>
+      </g>
+      <g transform="translate(990 220)">
+        <rect x="0" y="0" width="310" height="200" rx="8" fill="var(--card)" stroke="#43576b"/>
+        <text x="18" y="31" fill="var(--accent)" font-size="20" font-weight="700">lower_third_telop</text>
+        <text x="18" y="62" fill="var(--text)">Purpose: short narrated claim</text>
+        <text x="18" y="88" fill="var(--muted)">Layouts: asset, footage, compare</text>
+        <text x="18" y="114" fill="var(--muted)">Params: one line, contrast</text>
+        <text x="18" y="140" fill="var(--warning)">YMM4: keep above subtitles</text>
+        <text x="18" y="166" fill="var(--muted)">Risk: subtitle collision</text>
+      </g>
+      <g transform="translate(1320 220)">
+        <rect x="0" y="0" width="310" height="200" rx="8" fill="var(--card)" stroke="#43576b"/>
+        <text x="18" y="31" fill="var(--accent)" font-size="20" font-weight="700">source_note</text>
+        <text x="18" y="62" fill="var(--text)">Purpose: bounded provenance</text>
+        <text x="18" y="88" fill="var(--muted)">Layouts: quote, screenshot, map</text>
+        <text x="18" y="114" fill="var(--muted)">Params: label, date, scope</text>
+        <text x="18" y="140" fill="var(--warning)">YMM4: never paste URL token</text>
+        <text x="18" y="166" fill="var(--muted)">Risk: fake source authority</text>
+      </g>
+
+      <g transform="translate(0 440)">
+        <rect x="0" y="0" width="310" height="200" rx="8" fill="var(--card)" stroke="#43576b"/>
+        <text x="18" y="31" fill="var(--accent)" font-size="20" font-weight="700">quote_card</text>
+        <text x="18" y="62" fill="var(--text)">Purpose: excerpt container</text>
+        <text x="18" y="88" fill="var(--muted)">Layouts: article_quote_card</text>
+        <text x="18" y="114" fill="var(--muted)">Params: quote, emphasis</text>
+        <text x="18" y="140" fill="var(--warning)">YMM4: keep quote short</text>
+        <text x="18" y="166" fill="var(--muted)">Risk: full article copy</text>
+      </g>
+      <g transform="translate(330 440)">
+        <rect x="0" y="0" width="310" height="200" rx="8" fill="var(--card)" stroke="#43576b"/>
+        <text x="18" y="31" fill="var(--accent)" font-size="20" font-weight="700">comparison_panel</text>
+        <text x="18" y="62" fill="var(--text)">Purpose: before/after pair</text>
+        <text x="18" y="88" fill="var(--muted)">Layouts: two_image_compare</text>
+        <text x="18" y="114" fill="var(--muted)">Params: left, right, delta</text>
+        <text x="18" y="140" fill="var(--warning)">YMM4: same visual scale</text>
+        <text x="18" y="166" fill="var(--muted)">Risk: unfair comparison</text>
+      </g>
+      <g transform="translate(660 440)">
+        <rect x="0" y="0" width="310" height="200" rx="8" fill="var(--card)" stroke="#43576b"/>
+        <text x="18" y="31" fill="var(--accent)" font-size="20" font-weight="700">table_row</text>
+        <text x="18" y="62" fill="var(--text)">Purpose: compact evidence row</text>
+        <text x="18" y="88" fill="var(--muted)">Layouts: evidence_table</text>
+        <text x="18" y="114" fill="var(--muted)">Params: label, value, note</text>
+        <text x="18" y="140" fill="var(--warning)">YMM4: avoid tiny text</text>
+        <text x="18" y="166" fill="var(--muted)">Risk: unreadable density</text>
+      </g>
+      <g transform="translate(990 440)">
+        <rect x="0" y="0" width="310" height="200" rx="8" fill="var(--card)" stroke="#43576b"/>
+        <text x="18" y="31" fill="var(--accent)" font-size="20" font-weight="700">host_placeholder</text>
+        <text x="18" y="62" fill="var(--text)">Purpose: pacing anchor</text>
+        <text x="18" y="88" fill="var(--muted)">Layouts: list, board, simple</text>
+        <text x="18" y="114" fill="var(--muted)">Params: side, size, opacity</text>
+        <text x="18" y="140" fill="var(--warning)">YMM4: not character approval</text>
+        <text x="18" y="166" fill="var(--muted)">Risk: steals focus</text>
+      </g>
+      <g transform="translate(1320 440)">
+        <rect x="0" y="0" width="310" height="200" rx="8" fill="var(--card)" stroke="#43576b"/>
+        <text x="18" y="31" fill="var(--accent)" font-size="20" font-weight="700">caption_reserve</text>
+        <text x="18" y="62" fill="var(--text)">Purpose: bottom subtitle band</text>
+        <text x="18" y="88" fill="var(--muted)">Layouts: every prototype</text>
+        <text x="18" y="114" fill="var(--muted)">Params: y=920, height=120</text>
+        <text x="18" y="140" fill="var(--warning)">YMM4: never place content here</text>
+        <text x="18" y="166" fill="var(--muted)">Risk: caption collision</text>
+      </g>
+    </g>
+
+    <g transform="translate(160 840)">
+      <rect x="0" y="0" width="1600" height="68" rx="8" fill="var(--card-2)" stroke="var(--grid)"/>
+      <text x="24" y="25" fill="var(--accent)" font-size="17" font-weight="700">LOCAL LAYOUT LINKS</text>
+      <a href="image_annotation_simple.html"><text x="24" y="52" fill="var(--accent)" font-size="15">image_annotation_simple</text></a>
+      <a href="screenshot_callout.html"><text x="220" y="52" fill="var(--accent)" font-size="15">screenshot_callout</text></a>
+      <a href="two_image_compare.html"><text x="392" y="52" fill="var(--accent)" font-size="15">two_image_compare</text></a>
+      <a href="article_quote_card.html"><text x="575" y="52" fill="var(--accent)" font-size="15">article_quote_card</text></a>
+      <a href="asset_plus_caption.html"><text x="755" y="52" fill="var(--accent)" font-size="15">asset_plus_caption</text></a>
+      <a href="source_footage_annotated.html"><text x="940" y="52" fill="var(--accent)" font-size="15">source_footage_annotated</text></a>
+      <text x="1190" y="52" fill="var(--text)" font-size="15">Theme tokens are explicit; no auto mode.</text>
+    </g>
+    <rect x="0" y="920" width="1920" height="120" fill="var(--subtitle)" stroke="var(--grid)" stroke-width="2"/>
+    <text x="160" y="970" fill="var(--accent)" font-size="20" font-weight="700">SUBTITLE RESERVE</text>
+    <text x="160" y="1006" fill="var(--muted)" font-size="18">Catalog entries describe reusable visual presets only. They do not authorize YMM4 transfer or production use.</text>
+  </svg>
+</main>
+</body>
+</html>

@@ -34,6 +34,11 @@ screen is transfer-ready. In particular, `mechanism_diagram` carries causal
 diagram grammar debt and must not become a YMM4 transfer candidate without a
 later revision or explicit accepted caveat.
 
+The later revise-once expansion adds `object_catalog` and six content-first
+simple layouts. Those additions follow the same digest contract and are
+recorded in
+`G28-LAYOUT-PRESET-OBJECT-CATALOG-2026-06-11.md`.
+
 ## Mechanism Diagram Note
 
 | Field | Value |
@@ -139,6 +144,13 @@ prototype_notes:
 - evidence_table:
 - conversation_board:
 - source_footage_frame:
+- object_catalog:
+- image_annotation_simple:
+- screenshot_callout:
+- two_image_compare:
+- article_quote_card:
+- asset_plus_caption:
+- source_footage_annotated:
 
 must_fix:
 -

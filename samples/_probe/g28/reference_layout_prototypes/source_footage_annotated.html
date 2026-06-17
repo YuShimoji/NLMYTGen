@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>G-28 Prototype - source_footage_annotated</title>
+  <style>
+    :root { --background:#101318; --panel:#18212b; --panel2:#202b36; --text:#edf3f8; --muted:#a8b5c0; --accent:#4fb7d8; --warning:#e4b356; --grid:#344454; --subtitle:#080b0f; }
+    html, body { margin:0; min-width:1920px; min-height:1080px; background:#05070a; font-family:Arial, Helvetica, sans-serif; }
+    .canvas { width:1920px; height:1080px; background:var(--background); }
+  </style>
+</head>
+<body>
+<main class="canvas" aria-label="source footage annotated content-first prototype">
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+    <title id="title">source_footage_annotated prototype</title>
+    <desc id="desc">Footage frame placeholder with safe-area marks, arrows, labels, lower telop, and subtitle reserve.</desc>
+    <rect width="1920" height="1080" fill="var(--background)"/>
+    <g stroke="var(--grid)" stroke-width="1" opacity="0.42">
+      <line x1="160" y1="0" x2="160" y2="1080"/><line x1="960" y1="0" x2="960" y2="1080"/><line x1="1760" y1="0" x2="1760" y2="1080"/>
+      <line x1="0" y1="90" x2="1920" y2="90"/><line x1="0" y1="540" x2="1920" y2="540"/><line x1="0" y1="920" x2="1920" y2="920"/>
+    </g>
+    <rect x="160" y="90" width="1600" height="830" fill="none" stroke="#536474" stroke-width="2" stroke-dasharray="18 14"/>
+    <line x1="960" y1="90" x2="960" y2="920" stroke="var(--accent)" stroke-width="2" stroke-dasharray="12 16"/>
+    <text x="160" y="76" fill="var(--text)" font-size="34" font-weight="700">source_footage_annotated</text>
+    <text x="160" y="124" fill="var(--muted)" font-size="20">Footage placeholder with labels and safe-area marks. No actual video, still, screenshot, or source footage.</text>
+    <a href="index.html"><text x="1588" y="76" fill="var(--accent)" font-size="20" font-weight="700">Back to index</text></a>
+
+    <g transform="translate(240 165)">
+      <rect x="0" y="0" width="1440" height="665" rx="8" fill="var(--panel)" stroke="#43576b" stroke-width="2"/>
+      <rect x="82" y="62" width="1040" height="455" rx="8" fill="#141d25" stroke="var(--accent)" stroke-width="4"/>
+      <rect x="122" y="102" width="960" height="375" fill="none" stroke="#536474" stroke-width="2" stroke-dasharray="16 12"/>
+      <line x1="602" y1="62" x2="602" y2="517" stroke="#536474" stroke-width="2" stroke-dasharray="12 12"/>
+      <line x1="82" y1="289" x2="1122" y2="289" stroke="#536474" stroke-width="2" stroke-dasharray="12 12"/>
+      <text x="376" y="276" fill="var(--text)" font-size="34" font-weight="700">FOOTAGE SLOT</text>
+      <text x="318" y="319" fill="var(--muted)" font-size="22">annotated placeholder only</text>
+      <rect x="180" y="140" width="248" height="72" rx="8" fill="none" stroke="var(--warning)" stroke-width="6"/>
+      <circle cx="830" cy="385" r="52" fill="none" stroke="var(--warning)" stroke-width="6"/>
+      <rect x="82" y="545" width="1040" height="78" rx="8" fill="#231f14" stroke="var(--warning)" stroke-width="2"/>
+      <text x="112" y="594" fill="var(--warning)" font-size="25" font-weight="700">LOWER TELOP</text>
+      <text x="302" y="594" fill="var(--text)" font-size="25">short explanation above subtitle reserve</text>
+      <g transform="translate(1180 70)">
+        <rect x="0" y="0" width="208" height="110" rx="8" fill="var(--panel2)" stroke="#43576b"/>
+        <text x="20" y="38" fill="var(--warning)" font-size="20" font-weight="700">label A</text>
+        <text x="20" y="70" fill="var(--text)" font-size="17">Object note</text>
+        <line x1="0" y1="72" x2="-770" y2="100" stroke="var(--warning)" stroke-width="4"/>
+      </g>
+      <g transform="translate(1180 230)">
+        <rect x="0" y="0" width="208" height="110" rx="8" fill="var(--panel2)" stroke="#43576b"/>
+        <text x="20" y="38" fill="var(--accent)" font-size="20" font-weight="700">label B</text>
+        <text x="20" y="70" fill="var(--text)" font-size="17">Motion note</text>
+        <line x1="0" y1="70" x2="-292" y2="155" stroke="var(--accent)" stroke-width="4"/>
+      </g>
+    </g>
+
+    <g transform="translate(240 850)">
+      <rect x="0" y="0" width="1440" height="52" rx="8" fill="var(--panel2)" stroke="var(--grid)"/>
+      <text x="18" y="33" fill="var(--accent)" font-size="16" font-weight="700">NOTE</text>
+      <text x="82" y="33" fill="var(--text)" font-size="16">Layout uses footage_slot, safe-area marks, highlight_box, arrow, label_chip, lower_third_telop, and caption_reserve.</text>
+    </g>
+    <rect x="0" y="920" width="1920" height="120" fill="var(--subtitle)" stroke="var(--grid)" stroke-width="2"/>
+    <text x="160" y="970" fill="var(--accent)" font-size="20" font-weight="700">SUBTITLE RESERVE</text>
+    <text x="160" y="1006" fill="var(--muted)" font-size="18">No footage, still, screenshot, logo, map, or raw reference asset is embedded.</text>
+  </svg>
+</main>
+</body>
+</html>

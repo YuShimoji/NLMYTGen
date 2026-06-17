@@ -22,7 +22,7 @@ must not be regenerated or micro-tuned.
 
 | Prototype | HTML | Purpose |
 | --- | --- | --- |
-| `index` | `samples/_probe/g28/reference_layout_prototypes/index.html` | Review hub linking the seven fixed-canvas prototypes. |
+| `index` | `samples/_probe/g28/reference_layout_prototypes/index.html` | Review hub linking the original fixed-canvas prototypes, object catalog, and content-first additions. |
 | `lecture_list` | `samples/_probe/g28/reference_layout_prototypes/lecture_list.html` | Dark explainer list with icon rhythm, numbers, short terms, dot leaders, host placeholder, and subtitle reserve. |
 | `mechanism_diagram` | `samples/_probe/g28/reference_layout_prototypes/mechanism_diagram.html` | Two schematic panels with arrows, OK/NG comparison, and central explanation. |
 | `map_evidence` | `samples/_probe/g28/reference_layout_prototypes/map_evidence.html` | Abstract map/evidence surface with labels, source note area, and bottom claim band. |
@@ -30,6 +30,13 @@ must not be regenerated or micro-tuned.
 | `evidence_table` | `samples/_probe/g28/reference_layout_prototypes/evidence_table.html` | Dark multi-column evidence table with readable density and lower short claim. |
 | `conversation_board` | `samples/_probe/g28/reference_layout_prototypes/conversation_board.html` | Central board, left/right abstract host placeholders, subtitle reserve, and dialogue pacing space. |
 | `source_footage_frame` | `samples/_probe/g28/reference_layout_prototypes/source_footage_frame.html` | Central footage placeholder with top title, lower telop, frame/safe area, and no actual footage. |
+| `object_catalog` | `samples/_probe/g28/reference_layout_prototypes/object_catalog.html` | Visual object preset catalog for reusable slots, parameters, transfer cautions, and misuse risks. |
+| `image_annotation_simple` | `samples/_probe/g28/reference_layout_prototypes/image_annotation_simple.html` | Large image placeholder with two or three annotation labels, arrows, highlight boxes, and subtitle reserve. |
+| `screenshot_callout` | `samples/_probe/g28/reference_layout_prototypes/screenshot_callout.html` | UI / webpage screenshot placeholder with marker dots, callout boxes, source note, and subtitle reserve. |
+| `two_image_compare` | `samples/_probe/g28/reference_layout_prototypes/two_image_compare.html` | Left / right or before / after placeholders with difference labels and one short bottom claim. |
+| `article_quote_card` | `samples/_probe/g28/reference_layout_prototypes/article_quote_card.html` | Document / article placeholder with a short quote highlight, source note, and interpretation label. |
+| `asset_plus_caption` | `samples/_probe/g28/reference_layout_prototypes/asset_plus_caption.html` | One dominant asset placeholder with a strong lower telop and optional side note. |
+| `source_footage_annotated` | `samples/_probe/g28/reference_layout_prototypes/source_footage_annotated.html` | Footage placeholder with safe-area marks, arrows, labels, lower telop, and no actual footage. |
 
 ## Prototype Contract
 
@@ -45,6 +52,10 @@ must not be regenerated or micro-tuned.
 - Each prototype includes an on-page note naming the abstracted grammar, what
   is intentionally not copied, and what should be reviewed before YMM4
   transfer.
+- Content-first additions use explicit CSS variables for background, panel,
+  text, muted text, accent, warning, grid, and subtitle reserve surfaces.
+- The object catalog is a visual authoring catalog only; it is not an
+  implementation schema or YMM4 transfer plan.
 
 ## Human Review Result - Chat-first Intake
 
@@ -113,12 +124,20 @@ Use accumulated tags such as `layout_system_debt`,
 | `evidence_table` | Whether the table is dense enough to feel evidence-rich while remaining legible as a screen. |
 | `conversation_board` | Whether the central board stays dominant and abstract hosts remain pacing anchors, not character approvals. |
 | `source_footage_frame` | Whether the frame, title, telop, and safe area read as a footage-carrier grammar without actual footage. |
+| `object_catalog` | Whether the object presets are understandable as reusable visual slots with cautions and misuse risks. |
+| `image_annotation_simple` | Whether a dominant image placeholder can carry two or three annotations without becoming a static mock. |
+| `screenshot_callout` | Whether marker dots, callout boxes, and source note create a usable screenshot annotation grammar without a real capture. |
+| `two_image_compare` | Whether two placeholders can be compared at matched scale with a short bottom claim. |
+| `article_quote_card` | Whether quote, source note, and interpretation label work without copying source text. |
+| `asset_plus_caption` | Whether one dominant asset plus lower telop gives a practical YouTube-simple layout. |
+| `source_footage_annotated` | Whether footage-safe areas and annotation labels are readable without actual source footage. |
 
 ## Review Decision Conditions
 
 ### Accept
 
-Use `accept` when all seven prototypes are usable as visual grammar references:
+Use `accept` when the original prototypes and content-first additions are
+usable as visual grammar references:
 
 - The screen reads as an intentional 16:9 composition at first glance.
 - The grammar is clear enough to plan a later YMM4 transfer.
@@ -210,6 +229,13 @@ prototype_notes:
 - evidence_table:
 - conversation_board:
 - source_footage_frame:
+- object_catalog:
+- image_annotation_simple:
+- screenshot_callout:
+- two_image_compare:
+- article_quote_card:
+- asset_plus_caption:
+- source_footage_annotated:
 
 must_fix:
 -
