@@ -26,6 +26,7 @@ Primary starting points:
 - [Repository rules](docs/REPO_LOCAL_RULES.md)
 - [Project overview](docs/PROJECT_OVERVIEW.md)
 - [Baseball foundation rebaseline](docs/baseball/FOUNDATION_REBASELINE_2026-06-15.md)
+- [Baseball BN-05 manual preview gate handoff](lanes/sports_news/docs/baseball_bn05_manual_preview_gate_handoff_2026-06-17.md)
 - [Progress screenshot index](docs/PROGRESS_SCREENSHOT_INDEX.md)
 - [Turn-based development plan](docs/TURN_BASED_DEVELOPMENT_PLAN.md)
 - [Runtime state](docs/runtime-state.md)

@@ -357,6 +357,7 @@ nav:
     - 'Sports News Lane':
       - 'Baseball BN-03 static export handoff (2026-05-25)': 'lanes/sports_news/docs/baseball_bn03_static_export_handoff_2026-05-25.md'
       - 'Baseball BN-04 frame sequence export (2026-05-26)': 'lanes/sports_news/docs/baseball_bn04_animation_export_design_2026-05-26.md'
+      - 'Baseball BN-05 manual preview gate handoff (2026-06-17)': 'lanes/sports_news/docs/baseball_bn05_manual_preview_gate_handoff_2026-06-17.md'
       - 'Baseball BN-05 YMM4 placement contract handoff (2026-05-26)': 'lanes/sports_news/docs/baseball_bn05_yymm4_placement_handoff_2026-05-26.md'
       - 'baseball infographic backlog': 'lanes/sports_news/docs/baseball_infographic_backlog.md'
       - 'Baseball manual preview hands-on (2026-05-26)': 'lanes/sports_news/docs/baseball_manual_preview_hands_on_2026-05-26.md'

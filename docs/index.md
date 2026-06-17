@@ -24,6 +24,7 @@ Useful first checks:
 - [REPO_LOCAL_RULES.md](REPO_LOCAL_RULES.md)
 - [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md)
 - [Baseball foundation rebaseline](baseball/FOUNDATION_REBASELINE_2026-06-15.md)
+- [Baseball BN-05 manual preview gate handoff](../lanes/sports_news/docs/baseball_bn05_manual_preview_gate_handoff_2026-06-17.md)
 - [BRANCH_THREAD_SUPERVISION.md](BRANCH_THREAD_SUPERVISION.md)
 - [BASEBALL_SUPERVISOR_REVIEW_PROMPT.md](BASEBALL_SUPERVISOR_REVIEW_PROMPT.md)
 - [PROGRESS_SCREENSHOT_INDEX.md](PROGRESS_SCREENSHOT_INDEX.md)

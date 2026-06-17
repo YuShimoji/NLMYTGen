@@ -4,6 +4,17 @@ This handoff keeps the Baseball work restartable from another terminal without
 changing the G-27 mainline, RSS worktree, runtime state, production YMM4
 artifacts, shared API/auth/DB, or dependency contracts.
 
+## Current handoff update
+
+For the latest verified restart state, read
+`lanes/sports_news/docs/baseball_bn05_manual_preview_gate_handoff_2026-06-17.md`
+first. It records the 2026-06-17 re-anchor on
+`codex/baseball-bn02-visual-data`, confirms upstream parity `0 0`, confirms
+BN-05 placement proof/readback still pass mechanically, and preserves the
+remaining manual YMM4 preview request. This 2026-05-26 file remains useful as
+the historical handoff for BN-03 through BN-04 and the original BN-05 placement
+contract setup.
+
 ## Restart position
 
 - Worktree: `C:\Users\PLANNER007\NLMYTGen-baseball-sidequest`
