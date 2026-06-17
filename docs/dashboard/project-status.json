@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-06-17T00:00:00+09:00",
+  "branch": "codex/common-foundation-hold-state-audit",
+  "remote_branch": "origin/codex/common-foundation-hold-state-audit",
+  "head_before_bootstrap": "1559f41 docs(common-foundation): align operator surface docs",
+  "active_artifact": "docs/dashboard/project-status.json",
+  "primary_review_surface": "docs/dashboard/index.html",
+  "review_evidence": [
+    {
+      "artifact_id": "COMMON-FOUNDATION-DASHBOARD-SCREENSHOT-2026-06-17",
+      "repo_relative_path": "docs/review/common-foundation-dashboard-2026-06-17.png",
+      "source_of_truth": "static docs preview screenshot",
+      "access": "Open docs/review/common-foundation-dashboard-2026-06-17.png or follow the dashboard link.",
+      "validation": "Captured through Playwright CLI against local http://127.0.0.1:8765/dashboard/index.html after file:// was blocked."
+    }
+  ],
+  "launcher_validation": {
+    "powershell": {
+      "path": "scripts/operator/open_dashboard.ps1",
+      "status": "verified_print_path",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/operator/open_dashboard.ps1 -PrintPath"
+    },
+    "bash": {
+      "path": "scripts/operator/open_dashboard.sh",
+      "status": "not_executed_in_this_windows_environment",
+      "attempted_command": "bash scripts/operator/open_dashboard.sh --print-path",
+      "reason": "bash.exe routed to WSL, but no WSL distribution is installed."
+    }
+  },
+  "metadata_schema": {
+    "entry_required_fields": [
+      "id",
+      "title",
+      "type",
+      "status",
+      "health",
+      "progress_pct",
+      "last_touched",
+      "active_artifact",
+      "source_of_truth",
+      "next_action"
+    ],
+    "health_values": [
+      "good",
+      "watch",
+      "blocked"
+    ],
+    "status_contract": "Status entries are review inputs for the common foundation cockpit. They do not grant real-runner permission."
+  },
+  "entries": [
+    {
+      "id": "common_foundation_hold_state_audit",
+      "title": "Common Foundation hold-state audit",
+      "type": "verification_artifact",
+      "status": "recorded_historical_evidence",
+      "health": "watch",
+      "progress_pct": 100,
+      "last_touched": "2026-06-15",
+      "active_artifact": "docs/verification/COMMON-FOUNDATION-HOLD-STATE-AUDIT-2026-06-15.md",
+      "source_of_truth": "docs/verification/COMMON-FOUNDATION-HOLD-STATE-AUDIT-2026-06-15.md",
+      "next_action": "Use as evidence for the hold-state boundary; rely on the dashboard JSON for current cockpit status."
+    },
+    {
+      "id": "common_foundation_operator_surface_readback",
+      "title": "Common Foundation operator surface readback",
+      "type": "verification_artifact",
+      "status": "corrected",
+      "health": "good",
+      "progress_pct": 100,
+      "last_touched": "2026-06-15",
+      "active_artifact": "docs/verification/COMMON-FOUNDATION-OPERATOR-SURFACE-READBACK-CORRECTION-2026-06-15.md",
+      "source_of_truth": "docs/verification/COMMON-FOUNDATION-OPERATOR-SURFACE-READBACK-CORRECTION-2026-06-15.md",
+      "next_action": "Keep fake/evaluation-only, report-evaluation, and real-runner wording separated in future reports."
+    },
+    {
+      "id": "common_foundation_docs_operator_surface_alignment",
+      "title": "Common Foundation docs operator surface alignment",
+      "type": "verification_artifact",
+      "status": "aligned",
+      "health": "good",
+      "progress_pct": 100,
+      "last_touched": "2026-06-15",
+      "active_artifact": "docs/verification/COMMON-FOUNDATION-DOCS-OPERATOR-SURFACE-ALIGNMENT-2026-06-15.md",
+      "source_of_truth": "docs/verification/COMMON-FOUNDATION-DOCS-OPERATOR-SURFACE-ALIGNMENT-2026-06-15.md",
+      "next_action": "Use the aligned docs as the reader-facing explanation; do not rewrite historical verification logs into Wiki pages."
+    },
+    {
+      "id": "common_foundation_wiki_dashboard_bootstrap",
+      "title": "Common Foundation Wiki/Dashboard bootstrap",
+      "type": "cockpit_bootstrap",
+      "status": "added",
+      "health": "watch",
+      "progress_pct": 85,
+      "last_touched": "2026-06-17",
+      "active_artifact": "docs/dashboard/project-status.json",
+      "source_of_truth": "docs/dashboard/index.html",
+      "next_action": "Open the dashboard through scripts/operator/open_dashboard.ps1, then choose the next documentation or producer slice."
+    },
+    {
+      "id": "common_foundation_status_input_audit_design",
+      "title": "Common Foundation status input audit design",
+      "type": "design_artifact",
+      "status": "recorded_design",
+      "health": "watch",
+      "progress_pct": 100,
+      "last_touched": "2026-06-15",
+      "active_artifact": "docs/verification/COMMON-FOUNDATION-STATUS-INPUT-AUDIT-DESIGN-2026-06-15.md",
+      "source_of_truth": "docs/verification/COMMON-FOUNDATION-STATUS-INPUT-AUDIT-DESIGN-2026-06-15.md",
+      "next_action": "Keep as design evidence; implement a stdout-only producer only in a separate authorized slice."
+    }
+  ],
+  "artifact_coverage": [
+    {
+      "artifact_id": "COMMON-FOUNDATION-HOLD-STATE-AUDIT-2026-06-15",
+      "repo_relative_path": "docs/verification/COMMON-FOUNDATION-HOLD-STATE-AUDIT-2026-06-15.md",
+      "source_of_truth": "verification artifact",
+      "coverage_status": "linked_from_dashboard_and_docs_index"
+    },
+    {
+      "artifact_id": "COMMON-FOUNDATION-OPERATOR-SURFACE-READBACK-CORRECTION-2026-06-15",
+      "repo_relative_path": "docs/verification/COMMON-FOUNDATION-OPERATOR-SURFACE-READBACK-CORRECTION-2026-06-15.md",
+      "source_of_truth": "verification artifact",
+      "coverage_status": "linked_from_dashboard_and_docs_index"
+    },
+    {
+      "artifact_id": "COMMON-FOUNDATION-DOCS-OPERATOR-SURFACE-ALIGNMENT-2026-06-15",
+      "repo_relative_path": "docs/verification/COMMON-FOUNDATION-DOCS-OPERATOR-SURFACE-ALIGNMENT-2026-06-15.md",
+      "source_of_truth": "verification artifact",
+      "coverage_status": "linked_from_dashboard_and_docs_index"
+    },
+    {
+      "artifact_id": "COMMON-FOUNDATION-WIKI-DASHBOARD-BOOTSTRAP-2026-06-17",
+      "repo_relative_path": "docs/dashboard/index.html",
+      "source_of_truth": "cockpit dashboard",
+      "coverage_status": "primary_review_surface"
+    },
+    {
+      "artifact_id": "COMMON-FOUNDATION-DASHBOARD-SCREENSHOT-2026-06-17",
+      "repo_relative_path": "docs/review/common-foundation-dashboard-2026-06-17.png",
+      "source_of_truth": "static docs preview screenshot",
+      "coverage_status": "linked_from_dashboard"
+    }
+  ],
+  "docs_review": [
+    {
+      "path": "docs/AGENT_ORCHESTRATION.md",
+      "classification": "unclear_when_skimmed",
+      "reason": "It correctly separates fake/evaluation-only and future runner work, but runtime-looking paths can still look operational without the dashboard context.",
+      "next_action": "Keep linked from dashboard and reserve wording cleanup for a narrow docs-only slice."
+    },
+    {
+      "path": "docs/verification/COMMON-FOUNDATION-STATUS-INPUT-AUDIT-DESIGN-2026-06-15.md",
+      "classification": "historical_observed_state",
+      "reason": "The live preconditions section records the state observed on 2026-06-15 and should not be treated as current repo status.",
+      "next_action": "Use as design evidence; use fresh Git checks or future producer output for current state."
+    },
+    {
+      "path": "docs/verification/COMMON-FOUNDATION-HOLD-STATE-AUDIT-2026-06-15.md",
+      "classification": "historical_log_not_wiki",
+      "reason": "The artifact is useful evidence but too detailed to be the current project ledger.",
+      "next_action": "Link it from the dashboard instead of rewriting it."
+    }
+  ],
+  "user_side_work": {
+    "status": "open_only",
+    "one_touch_action": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/operator/open_dashboard.ps1",
+    "completion_signal": "Dashboard opens and shows topic progress, artifact coverage, stale docs, and next actions.",
+    "fallback": "Open docs/dashboard/index.html directly from the checkout."
+  },
+  "agent_side_next_actions": [
+    "Keep project-status JSON updated after the next common foundation docs change.",
+    "If approved later, implement a stdout-only live repo status producer with no runtime artifact writes.",
+    "Tighten one unclear doc section only after the dashboard identifies it as the current bottleneck."
+  ],
+  "boundaries": {
+    "real_runner": "No",
+    "codex_exec": "not_started",
+    "subprocess_runner": "not_added",
+    "stdin_piping": "not_added",
+    "runtime_loop": "not_added",
+    "external_notification": "not_added",
+    "agent_runtime_artifacts_created": false,
+    "production_lanes_touched": false
+  }
+}
