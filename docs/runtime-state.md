@@ -1,5 +1,29 @@
 # Runtime State — NLMYTGen
 
+- **Current capsule after G-28 rebase / stash-residue apply (2026-06-17)**:
+  Current checkout is `master` at
+  `55da8ae docs(g28): expand reference layout object catalog`, with
+  `HEAD...origin/master=1 0` after integrating upstream common-foundation
+  status docs (`4746d81`, `2495584`) and rebasing the G-28 object catalog
+  commit. The active layers are both present: common foundation owns the
+  repo-status/status-input audit design, and G-28 owns the current visual
+  review artifact layer. Worktree is intentionally not clean while stash
+  residue is being classified: docs cockpit cleanup and MkDocs/nav local
+  browsing files remain separate from the committed G-28 artifact. `stash@{0}`
+  remains `g28-post-commit-residue-20260617-154920` and must not be dropped
+  until residue classification is complete. No push has been run.
+- **Freeform Review / Long-Run Autonomy operation update consumed (2026-06-17)**:
+  User freeform review text is now treated as the source of truth for review
+  intake. Fixed labels such as `accept`, `reject`, `revise_once`, or
+  `hold` are internal normalization targets only; the user should not be asked
+  to re-answer with a fixed phrase. When review is needed, the agent should
+  place a Review Card near the artifact or immediately after Artifacts, with
+  target, at most three things to inspect, explicit freeform acceptance,
+  examples, interpretation method, and completion signal. The agent parses
+  freeform review into target / intent / constraints / confidence; medium or
+  high confidence proceeds into the next reversible 1-3 agent-side actions
+  before reporting, while low confidence gets a Review Clarification Card only
+  once if a wrong interpretation would materially change the artifact.
 - **Common foundation repo-status input audit design recorded (2026-06-15)**:
   `docs/verification/COMMON-FOUNDATION-STATUS-INPUT-AUDIT-DESIGN-2026-06-15.md`
   refines the prior live status producer contract with the exact audit-facing
@@ -42,6 +66,33 @@
   production, or publishing. Next safe action is Hold, or a separately
   authorized stdout-only producer implementation that proves it creates no
   runtime artifacts.
+- **G-28 reference layout pack object-preset revise-once added (2026-06-12)**:
+  The HTML/SVG prototype-first route now includes a content-first expansion
+  under `samples/_probe/g28/reference_layout_prototypes/`: `object_catalog`,
+  `image_annotation_simple`, `screenshot_callout`, `two_image_compare`,
+  `article_quote_card`, `asset_plus_caption`, and
+  `source_footage_annotated`. The verification owner is
+  `docs/verification/G28-LAYOUT-PRESET-OBJECT-CATALOG-2026-06-11.md`.
+  `index.html` links the object catalog and the new content-first pages by
+  local file navigation. The added object presets are `image_slot`,
+  `screenshot_slot`, `footage_slot`, `highlight_box`, `arrow`, `leader_line`,
+  `label_chip`, `callout_box`, `lower_third_telop`, `source_note`,
+  `quote_card`, `comparison_panel`, `table_row`, `host_placeholder`, and
+  `caption_reserve`. The purpose is to make the pack readable as reusable
+  layout / object / content slots, not only static screen mocks. The new pages
+  are self-contained HTML/CSS/SVG, use explicit theme tokens, keep fixed
+  `1920x1080` canvases and visible subtitle reserve, and contain no external
+  images, URLs, real screenshots, map / satellite / company / character /
+  footage assets, audio, or TTS. `mechanism_diagram` remains
+  `causal_diagram_grammar_debt` and was not modified in this slice. No YMM4
+  `.ymmp`, YMM4 builder, existing game-mechanics carrier, existing map-evidence
+  carrier, generated YMM4 artifact, render, production / rights / creative
+  acceptance, Newsroom, common foundation, G-27, ClipPipeGen, RSS / OPML /
+  Inoreader / NotebookLM, or real runner path was opened. Next safe human
+  review entry is `index.html`; open `object_catalog.html` next if the digest
+  is not enough to judge the preset system. Human feedback can be freeform; the
+  agent normalizes it internally to options such as `accept_with_caveats`,
+  `revise_once`, `reject`, or `hold` only when useful.
 - **G-28 chat-first visual review protocol recorded (2026-06-12)**:
   Human review of the reference layout prototype pack keeps the HTML/SVG
   visual-authoring-first route useful, but changes future review operations:
@@ -103,8 +154,9 @@
   approval, no creative final acceptance, no Newsroom, no common foundation,
   no G-27, no ClipPipeGen, no RSS / OPML / Inoreader / NotebookLM, and no real
   runner path was opened. Next safe action is human browser review of the HTML
-  pack and a returned decision: `accept`, `accept_with_caveats`, `revise_once`,
-  `reject`, or `redesign_required`.
+  pack and freeform review that the agent can internally normalize to
+  `accept`, `accept_with_caveats`, `revise_once`, `reject`, or
+  `redesign_required` when useful.
 - **G-28 YMM4 coordinate-generation method blocker recorded (2026-06-11)**:
   Human YMM4 review of
   `samples/_probe/g28/map_evidence_carrier_ymmp_diagnostic_probe.ymmp`
@@ -574,7 +626,7 @@
 - **G-24 roadmap loop-stop correction (2026-04-27)**: User flagged that the current source of truth could imply endless “make another plausible motion” work and did not clearly answer what happens after a motion is authored. Canonical docs now state that planned author/export stops after `deny_oneshot` -> `exit_left`; after `exit_left`, the next move is production-use validation, where real IR resolves to exact / fallback / manual note and the result is judged by whether it reduces S-6（背景・演出設定）selection work. New skit motions are only re-opened when a concrete production gap appears.
 - **G-24 role clarification (2026-04-27)**: User clarified the intended flow: user authors a small reusable motion set, then assistant uses those templates plus registry/know-how to generate or organize production-like samples, and user reviews the output. This is not a workflow where user manually creates every sample/template.
 - **G-24 `delivery_nod_v1` PASS sync (2026-04-27)**: User reported that `delivery_nod_v1` was created, saved as a YMM4 native GroupItem template, and given the same Remark. User acceptance also confirmed body + face move together, the nod is visible but not scene-dominating, and no `TachieItem` is included. This closes the `nod` cautious gate and promotes `skit_group.intent.nod` to `direct_proven`; the next frontier was `deny_oneshot` followed by `exit_left`, later superseded by the v1 planned set completion sync above.
-- **strong doc-excision follow-up (2026-04-27)**: A second deletion pass removed stale roadmap authority from the top of `docs/project-context.md` and deleted the old "copy into another thread" prompt block from `docs/verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md`. `CLAUDE.md` now aligns GUI/YMM4 with CLI artifact mode, and `AGENTS.md` now states that `runtime-state.md` `next_action` is the current frontier source while `project-context.md` is a targeted log. No production artifact, FEATURE status, or G-24 `next_action` changed.
+- **strong doc-excision follow-up (2026-04-27)**: A second deletion pass removed stale roadmap authority from the top of `docs/project-context.md` and deleted the old "copy into another thread" prompt block from `docs/verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md`. The then-current root agent doc aligned GUI/YMM4 with CLI artifact mode, and `AGENTS.md` stated that `runtime-state.md` `next_action` is the current frontier source while `project-context.md` is a targeted log. No production artifact, FEATURE status, or G-24 `next_action` changed.
 - **next roadmap branch prep (2026-04-27)**: After the legacy-document cleanup and template-formalism correction, the next roadmap was fixed as a gate-shaped G-24 sequence: close `delivery_nod_v1` author/export first, promote `nod` only after user-owned PASS, then widen to `deny_oneshot -> exit_left`. `docs/project-context.md` recorded the formal-plan entry branches (未報告 / PASS / FAIL / 新規制作案件), and `docs/verification/PRE-PLAN-LANES-AND-CORE-DEV-2026-04-09.md` §2.3.1 mirrored the same pre-plan decision point. This state was superseded first by the `delivery_nod_v1` PASS sync, then by the v1 planned set completion sync above.
 - **strong legacy-plan deletion (2026-04-27)**: Old core-dev, lane prompt, parallel prompt-hub, and visual-quality packet files were deleted instead of bannered. Current state must be recovered from `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> this file, then from `P02` / `PRE-PLAN` only when the current G-24 gate needs detail.
 - **documentation pollution excision (2026-04-27)**: Resume-prompt authority was removed; `verification/` is now evidence storage rather than a current-canonical table; `USER_REQUEST_LEDGER.md` keeps only active durable requirements; date-fixed rule headings and old background-animation/S6 front-facing language were demoted. Current restart remains `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> this file.

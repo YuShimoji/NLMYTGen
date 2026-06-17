@@ -83,7 +83,7 @@ switcher.
 | known weak points | The new content-first layouts are still schematic; `mechanism_diagram` remains `causal_diagram_grammar_debt` and outside this revision. |
 | open-file trigger | Open `index.html` and `object_catalog.html` if the digest is enough to start visual review or if transfer-candidate tagging is being considered. |
 | accumulated review tags | `content_slot_gap`, `transfer_candidate`, `density_debt`, `subtitle_reserve_risk`. |
-| next decision options | `accept_with_caveats`, `revise_once`, `reject`, or `hold`. |
+| next decision options | Internal normalization may use `accept_with_caveats`, `revise_once`, `reject`, or `hold`; reviewer freeform text is valid and no fixed phrase is required. |
 
 ## Boundary Confirmation
 

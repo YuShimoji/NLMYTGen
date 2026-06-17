@@ -45,12 +45,14 @@ Read:
 - `docs/runtime-state.md`
 - `docs/project-context.md`
 - `docs/verification/G28-CHAT-FIRST-VISUAL-REVIEW-PROTOCOL-2026-06-11.md`
+- `docs/verification/G28-LAYOUT-PRESET-OBJECT-CATALOG-2026-06-11.md`
 - `docs/verification/G28-REFERENCE-LAYOUT-PROTOTYPE-PACK-2026-06-11.md`
 - `docs/verification/G28-YMMP-CARRIER-GENERATION-METHOD-BLOCKER-2026-06-11.md`
 
 Open in a browser only when the chat digest is insufficient or transfer
 readiness needs spatial judgement:
 - `C:\Users\PLANNER007\NLMYTGen\samples\_probe\g28\reference_layout_prototypes\index.html`
+- `C:\Users\PLANNER007\NLMYTGen\samples\_probe\g28\reference_layout_prototypes\object_catalog.html`
 
 Prototype set:
 - `lecture_list`
@@ -60,6 +62,13 @@ Prototype set:
 - `evidence_table`
 - `conversation_board`
 - `source_footage_frame`
+- `object_catalog`
+- `image_annotation_simple`
+- `screenshot_callout`
+- `two_image_compare`
+- `article_quote_card`
+- `asset_plus_caption`
+- `source_footage_annotated`
 
 Current boundary:
 - Direct script-coordinate `.ymmp` visual generation is stopped as a visual
@@ -86,7 +95,11 @@ Current review method:
   digest before asking the human to open HTML, YMM4, or screenshot evidence.
 - Required digest fields: artifact id, visible summary, primary focus, layout
   grammar, object slots, fulfilled specs, known weak points, open-file trigger,
-  accumulated review tags, and next decision options.
+  accumulated review tags, and internal next decision options.
+- Do not require the human to reply with fixed labels. Freeform feedback is the
+  source of truth. Normalize it internally into target / intent / constraints /
+  confidence and, if useful, internal labels such as accept_with_caveats,
+  revise_once, reject, or hold.
 - Review levels are Level 1 chat-first digest, Level 2 optional visual check,
   and Level 3 accumulated rich review.
 - Rich visual review should group issues by tags across multiple artifacts,
@@ -94,6 +107,13 @@ Current review method:
 - Use tags such as `layout_system_debt`, `causal_diagram_grammar_debt`,
   `density_debt`, `content_slot_gap`, `subtitle_reserve_risk`, and
   `transfer_candidate`.
+- The current revise-once expansion adds content-first simple layouts for
+  image annotation, screenshot callout, two-image comparison, quote card,
+  asset plus caption, and annotated footage.
+- The object catalog records `image_slot`, `screenshot_slot`, `footage_slot`,
+  `highlight_box`, `arrow`, `leader_line`, `label_chip`, `callout_box`,
+  `lower_third_telop`, `source_note`, `quote_card`, `comparison_panel`,
+  `table_row`, `host_placeholder`, and `caption_reserve`.
 
 Current mechanism_diagram note:
 - `mechanism_diagram` is recorded as `causal_diagram_grammar_debt`.
@@ -113,39 +133,31 @@ Do not:
 - touch Newsroom, common foundation, G-27, ClipPipeGen, RSS, OPML, Inoreader,
   NotebookLM, or real runner paths
 
-Return this human review format:
+If review is needed, show a Review Card near the artifact digest:
 
-decision: accept / accept_with_caveats / revise_once / reject / redesign_required
+target:
+- G-28 reference layout prototype pack, a named prototype, or an issue tag
 
-overall:
--
+what to look at:
+- at most three concrete points
 
-chat_digest_sufficient:
-- yes / no
+freeform review allowed:
+- yes
 
-prototype_notes:
-- lecture_list:
-- mechanism_diagram:
-- map_evidence:
-- cluster_map:
-- evidence_table:
-- conversation_board:
-- source_footage_frame:
+examples:
+- "object_catalog is usable, but source_note needs stronger caution"
+- "mechanism_diagram is not transfer-ready; keep it as debt"
+- "digest is enough; hold this and make another artifact"
 
-must_fix:
--
+how Agent will interpret it:
+- parse target / intent / constraints / confidence
+- medium or high confidence means continue with reversible scoped work
+- low confidence gets one Review Clarification Card only when a wrong
+  interpretation would materially change the artifact
 
-nice_to_have:
--
-
-do_not_fix_now:
--
-
-accumulated_review_tags:
--
-
-next_requested_action:
--
+completion signal:
+- any clear freeform review that states direction, concern, or next constraint
+  is enough; fixed phrase required: no
 
 END_COPY_BLOCK_FOR_AGENT
 
@@ -1109,23 +1121,31 @@ Current decision:
 - These points are no longer the only human review points. They are rows inside
   the batch visual review checklist.
 
-Human review should return exactly:
-decision: accept / accept_with_caveats / revise_once / layout_system_debt / redesign_required
+Human review may be freeform. Do not require exact fixed labels. The Agent may
+internally normalize the reply to accept / accept_with_caveats / revise_once /
+layout_system_debt / redesign_required if that helps routing.
 
-overall:
--
+Review Card:
+target:
+- G-28 game mechanics YMM4 diagnostic carrier batch review
 
-must_fix:
--
+what to look at:
+- screen-level layout system, not one-label pixel tuning
+- whether any must-fix item blocks reviewability
+- whether this should remain layout_system_debt or move toward acceptance
 
-nice_to_have:
--
+freeform review allowed:
+- yes
 
-do_not_fix_now:
--
+examples:
+- "全体の間隔がまだ弱いので layout debt として保留"
+- "右ラベルは読める。次は別artifactを増やして"
+- "must-fix は中央揃えだけ。1回だけ直して"
 
-notes:
--
+how Agent will interpret it:
+- parse target / intent / constraints / confidence
+- medium/high confidence continues with the next reversible scoped action
+- low confidence gets one clarification only if direction would change
 
 Boundaries:
 - do not modify `.ymmp`

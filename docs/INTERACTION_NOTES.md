@@ -31,6 +31,8 @@
   - 予防: `docs/ai/STATUS_AND_HANDOFF.md` の status semantics に戻し、status 変更には根拠と承認状態を明記する。
 - `TEMPLATE_FORMALISM`: Prompt、チェックリスト、返却テンプレ、短い OK/NG 形式を、作業接続性より優先する。対象ファイル・作るもの・元にする object・判定主体が欠けたまま形式だけ整い、実作業が接続不能になる。
   - 予防: テンプレを出す前に `open target` / `create or modify target` / `source object` / `actor` / `owner artifact` / `acceptance meaning` / `replan condition` を埋める。1 つでも欠ける場合は、短い返却形式へ圧縮せず、まず欠落項目を repo 内で解決する。
+- `FIXED_LABEL_REVIEW_LOCK`: user review を `accept` / `reject` / `revise_once` などの固定ラベル入力に閉じ込め、自由文に含まれる意図・制約・優先度を捨てる。固定語彙は agent 側の内部正規化には有効だが、user 側の必須返答形式にすると review が止まり、実際の判断材料が失われる。
+  - 予防: review が必要な場合は、対象・見る点・自由文可・例・agent がどう解釈するか・完了シグナルを含む Review Card を出す。受け取った自由文は `target` / `intent` / `constraints` / `confidence` へ内部 parse し、confidence が medium/high なら reversible な修正・docs 反映・artifact 生成・validation へ進む。low confidence かつ誤解が artifact 方向を変える場合だけ、Review Clarification Card を 1 回だけ出す。
 - `FILE_DIFF_CLOSEOUT`: 最終報告が「どのファイルに何を追加したか」の列挙に寄り、ユーザーがファイルを開かないと、実際に何が変わったのか、制作導線上の効果、次に誰が何をするのかを復元できない。これは evidence を explanation と取り違える closeout failure であり、認知負荷を user に押し戻す。
   - 予防: file path / line number は根拠欄に限定し、先に `何が変わったか` / `なぜ効くか` / `これで次に何が可能または禁止になるか` / `まだ残る判断` / `次に誰がどう動くか` を本文で説明する。ユーザーが「詳しく」「手順も」と追加依頼しなくても、通常 closeout にはこの意味層を含める。docs-only 変更でも「どの文章を足した」ではなく「次回からどの挙動が invalid / required になるか」を述べる。
 - `CLOSING_CHAIN_BREAK`: 最終応答が「やったこと」だけを述べ、根拠・残リスク・次に動く主体・返答後に閉じる作業のどれかを欠いたまま終わる。結果として、user に作業だけが振られ、次に何を返せば再開できるか、assistant が待機中なのかが分からなくなる。
@@ -44,11 +46,14 @@
 - AskUserQuestion の `question` に Markdown テーブルや長い仕様説明を入れない。ただし短い `OK / NG` や `PASS / FAIL` 形式は、作業対象・判定主体・返答の意味が本文で接続済みの場合に限る。未接続なら短縮せず、先に操作内容を具体化する。
 - 選択肢は 2〜4 個程度に圧縮し、各選択肢が異なる bottleneck を解く場合だけ提示する。commit / しない、続ける / 止めるだけの yes/no を主軸にしない。`Advance` / `Audit` / `Excise` / `Explore` / `Verify` などは固定メニューではなく、次の返答を誘発する hook として使う。
 - 既知文脈を「詳細を教えてください」で再質問しない。必要なら「repo 内で確認した既知情報」と「不足している delta」を明示して、delta だけ聞く。
+- Review Card は review が必要な artifact の近く、または Artifacts 節の直後に置く。内容は、target、見る点は最大 3 つ、自由文 review 可、自由文例、agent 側の解釈方法、完了シグナルに絞る。固定 phrase は要求しない。
+- user の自由文 review は正本入力として扱う。agent は内部で固定ラベルへ正規化してよいが、user に固定ラベルでの再回答を求めない。
 
 ## Manual Verification Protocol
 - 手動確認項目は本文で提示し、確認の目的、見る対象、OK 条件、NG 時に返す番号を分ける。返却テンプレは最後に置くラベルであり、手順説明の代替にしない。
 - 同じ確認点の YMM4 visual proof を繰り返し要求しない。初回 E2E、手順変更時、最終制作物の creative judgement に必要な場合だけ使う。
 - repo 側 handoff が欠落 `_tmp/*.ymmp` を指しているときは、先に assistant 側で tracked artifact / sample / proof を探索し、user に正確なファイル名や ManualSample 再作成を求めない。
+- Review Card で自由文を受け取った場合は、まず `target` / `intent` / `constraints` / `confidence` を内部化する。medium/high confidence なら、次の 1〜3 個の reversible な agent-side action を実行してから報告する。low confidence で誤解が artifact 方向を変えるときだけ clarification を 1 回に限定する。
 
 ## Report Protocol
 - 報告形式は固定見出しではなく安全柵として扱う。必要最小限は、何を変えた / 変えていない、根拠または readback、残るリスクや judgement、次に取り得る hook。
@@ -59,6 +64,8 @@
 - `Recommended default` は「次に何をすべきか」だけでなく、なぜそれが安全か、代替は何か、誰が動くかを含める。assistant が今すぐ進められる候補と user decision 待ちを混ぜない。
 - 最終応答では、完了内容、根拠、残る不確実性、次に動く主体、返答後に閉じる作業の論理鎖を切らない。ただし、これらを固定見出しや英語ラベルとして出力しない。
 - user 側の入力や確認が次の blocker の場合は、対象 path、必要 artifact、完了判定、NG 時に返す情報、受領後に閉じる検証や生成を本文で分ける。固定ラベルは内部整理に留める。
+- Review Card を出した場合や自由文 review を消費した場合は、必要に応じて Freeform Review Intake Result を報告へ含める。これは user に再入力を求めるためではなく、agent がどう解釈し、どの reversible action へ進んだかを見える化するためのもの。
+- Review Debt が残る場合は、何をまだ人間が見ればよいかを自然文で示す。固定 phrase required は常に no とし、例はあくまで自由文の例に留める。
 - completion 報告では、`changed` / `not changed` / `verified` / `still blocked` の区別を保つ。docs 更新だけの場合は、実制作上の摩擦が何だけ減ったのかを明示する。
 - handoff では「何が抜けているか」「次にやってはいけないこと」「再オープン条件」を必要時に残す。ただし固定テンプレの穴埋めを進捗にしない。
 - 再開時の repeated context は、まず `docs/ai/*.md` と project-local canonical docs を読んでから扱う。prompt や古い handoff を正本より優先しない。

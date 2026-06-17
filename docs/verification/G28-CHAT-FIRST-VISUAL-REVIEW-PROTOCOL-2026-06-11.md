@@ -73,7 +73,7 @@ the human to open a file.
 | known weak points | Caveats, debts, or suspected failure modes. |
 | open-file trigger | The exact condition that makes HTML, YMM4, or screenshot inspection necessary. |
 | accumulated review tags | Tags that should be carried into later cross-artifact review. |
-| next decision options | The bounded decisions available next. |
+| next decision options | The bounded internal decisions available next, plus a clear note that freeform review text is accepted and no fixed phrase is required. |
 
 File paths remain evidence, not the whole review surface. A report that only
 links an HTML file, `.ymmp`, screenshot, or generated artifact is incomplete for
@@ -125,48 +125,34 @@ Opening a file is optional when:
 - the artifact is only being logged as negative evidence
 - the next action is accumulated review rather than immediate revision
 
-## Human Return Format
+## Review Card / Freeform Review Intake
 
-```text
-decision: accept / accept_with_caveats / revise_once / reject / redesign_required
+When human review is needed, ask with a Review Card near the artifact digest.
+Do not require the reviewer to type a fixed label. The agent may normalize the
+freeform reply into internal options such as `accept_with_caveats`,
+`revise_once`, `reject`, or `hold`, but that normalization belongs to the
+agent side.
 
-overall:
--
+Review Card must include:
 
-chat_digest_sufficient:
-- yes / no
+- target
+- what to look at, at most three points
+- freeform review allowed: yes
+- examples of useful freeform feedback
+- how the agent will interpret the feedback
+- completion signal
 
-prototype_notes:
-- lecture_list:
-- mechanism_diagram:
-- map_evidence:
-- cluster_map:
-- evidence_table:
-- conversation_board:
-- source_footage_frame:
-- object_catalog:
-- image_annotation_simple:
-- screenshot_callout:
-- two_image_compare:
-- article_quote_card:
-- asset_plus_caption:
-- source_footage_annotated:
+Example freeform replies:
 
-must_fix:
--
+- `object_catalog は方向性OK。source_note の注意だけもう少し強めて。`
+- `mechanism_diagram はまだ因果が読めないので、転送候補から外して。`
+- `HTMLは開かなくてよい。digestだけで hold 扱いにして次へ進めて。`
 
-nice_to_have:
--
-
-do_not_fix_now:
--
-
-accumulated_review_tags:
--
-
-next_requested_action:
--
-```
+Agent-side intake result should parse the reply into `target`, `intent`,
+`constraints`, and `confidence`. If confidence is medium or high, continue with
+the next reversible scoped action. Ask a Review Clarification Card only once
+when confidence is low and a wrong interpretation would materially change the
+artifact direction.
 
 ## Boundary Confirmation
 

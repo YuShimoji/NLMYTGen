@@ -134,6 +134,11 @@ Use accumulated tags such as `layout_system_debt`,
 
 ## Review Decision Conditions
 
+The labels below are internal normalization targets, not required user reply
+phrases. Human review may be freeform; the agent should parse it into target,
+intent, constraints, and confidence, then map it to the closest internal
+decision only when useful.
+
 ### Accept
 
 Use `accept` when the original prototypes and content-first additions are
@@ -185,8 +190,8 @@ Examples:
 
 YMM4 transfer may be considered only after:
 
-- Human review returns `accept` or `accept_with_caveats`, or a completed
-  `revise_once` pass is accepted.
+- Human freeform review is confidently normalized to `accept` or
+  `accept_with_caveats`, or a completed `revise_once` pass is accepted.
 - The selected prototype(s) have a clear visual grammar, safe areas, text
   budgets, and non-copied abstract assets.
 - The transfer is opened as a separate bounded slice that defines what YMM4
@@ -210,48 +215,28 @@ Do not proceed to YMM4 transfer when:
   approval, creative final acceptance, Newsroom intake, common foundation work,
   G-27, ClipPipeGen, RSS, OPML, Inoreader, NotebookLM, or real runner work.
 
-## Human Return Format
+## Review Card / Freeform Review Intake
 
-```text
-decision: accept / accept_with_caveats / revise_once / reject / redesign_required
+When this pack needs human review, place a Review Card next to the artifact
+digest instead of requiring a fixed return template. Freeform review is valid
+input. The agent may normalize it internally to `accept`,
+`accept_with_caveats`, `revise_once`, `reject`, or `redesign_required`.
 
-overall:
--
+Review Card contents:
 
-chat_digest_sufficient:
-- yes / no
+- target: the prototype pack, a named prototype, or a tag family
+- what to look at: at most three concrete points
+- freeform review allowed: yes
+- examples: short natural-language comments that mention direction, concern,
+  or constraint
+- how the agent will interpret it: target / intent / constraints / confidence
+- completion signal: the agent can proceed when confidence is medium or high
 
-prototype_notes:
-- lecture_list:
-- mechanism_diagram:
-- map_evidence:
-- cluster_map:
-- evidence_table:
-- conversation_board:
-- source_footage_frame:
-- object_catalog:
-- image_annotation_simple:
-- screenshot_callout:
-- two_image_compare:
-- article_quote_card:
-- asset_plus_caption:
-- source_footage_annotated:
+Example freeform replies:
 
-must_fix:
--
-
-nice_to_have:
--
-
-do_not_fix_now:
--
-
-accumulated_review_tags:
--
-
-next_requested_action:
--
-```
+- `object catalog は使えそう。source_note と footage_slot の誤用注意だけ強めて。`
+- `mechanism_diagram は因果が弱いので transfer_candidate から外して。`
+- `全体は hold。HTMLをさらに開くより次の artifact を増やして。`
 
 ## Boundary Confirmation
 
