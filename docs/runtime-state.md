@@ -1,5 +1,22 @@
 # Runtime State — NLMYTGen
 
+- **Local residue quarantine / remote handoff refreshed (2026-06-18)**:
+  After `edbdc45 fix: clarify pre-execution preview packet` was pushed,
+  `master` is at `HEAD...origin/master=0 0` and the tracked working tree is
+  clean. Local-only residue is quarantined in `.git/info/exclude`, not in
+  repo history: `.claude/worktrees/`, `.codex/hooks.json`, `.codex/hooks/`,
+  `docs/verification/COMMON-FOUNDATION-REVIEW-INDEX-2026-06-15.md`, and
+  `samples/2026-05-16.ymmp`. Classification: `.claude/worktrees/` is a local
+  agent worktree area; `.codex/hooks*` is a local Codex hook mirror of tracked
+  `.claude/hooks`; the common-foundation review index is stale against
+  `origin/codex/common-foundation-hold-state-audit` at `1b1cc8e` and should be
+  refreshed or discarded only in a later explicit docs slice; `samples/2026-05-16.ymmp`
+  has only three YMM4 item-like entries and external absolute paths, so it is
+  not a production carrier. No untracked file was deleted, no stash was applied
+  or dropped, and no `.ymmp`, render, media, TTS, publishing, rights,
+  external-asset, DB/auth/API, or real-runner work was opened. Next restart:
+  `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> this file, then choose a
+  separate lane before touching any quarantined residue.
 - **Remote-sync handoff capsule prepared (2026-06-17)**:
   The context needed to resume from another terminal is now preserved in tracked
   repository docs for the remote sync of `master`: the G-28 object catalog,

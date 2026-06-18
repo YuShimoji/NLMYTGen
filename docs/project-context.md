@@ -79,6 +79,22 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest local-residue decision (2026-06-18):
+`local_residue_quarantine_2026_06_18` keeps post-push local state out of
+source history while preserving the re-entry context in tracked docs.
+`edbdc45 fix: clarify pre-execution preview packet` is already on
+`origin/master` (`HEAD...origin/master=0 0`). The local checkout now hides the
+known residue in `.git/info/exclude`: `.claude/worktrees/` (local agent
+worktree area), `.codex/hooks.json` and `.codex/hooks/` (local Codex hook
+mirror; guardrails match tracked `.claude/hooks`), the stale
+`docs/verification/COMMON-FOUNDATION-REVIEW-INDEX-2026-06-15.md` (later
+refresh/discard candidate; current common-foundation branch head observed as
+`1b1cc8e`), and `samples/2026-05-16.ymmp` (partial YMM4 sample with external
+absolute paths, not a production carrier). None of these files should be
+committed by `git add .`; none were deleted. If a future terminal needs one of
+them, open a separate explicit lane first: common-foundation review refresh,
+Codex hook policy, Claude worktree cleanup, or YMM4 artifact review.
+
 Latest remote-sync decision (2026-06-17):
 `remote_sync_handoff_2026_06_17` preserves the local continuation context in
 tracked project files before publishing `master` for resume from another
