@@ -5,7 +5,7 @@
   "proof_ymmp_path": "samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof.ymmp",
   "manifest_path": "samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_manifest.json",
   "static_manifest_path": "samples/_probe/baseball/static/baseball_pitch_event_p05_manifest.json",
-  "proof_ymmp_sha256": "69e4b0f6b03fa66116a9f8f480576f894d3adb094774227cb2b1b7c441be8983",
+  "proof_ymmp_sha256": "6fde310052ae642e6cec062f64d0d1b5f589d73188983eacbdb6ea287b550a7a",
   "checks": {
     "proof_has_single_baseball_image_item": true,
     "timeline_length_matches_contract": true,
@@ -15,12 +15,17 @@
     "length_matches_contract": true,
     "layer_matches_contract": true,
     "file_path_matches_contract": true,
+    "media_path_is_relative": true,
+    "media_path_resolution_base_is_proof_ymmp_directory": true,
+    "media_path_resolves_to_source_png": true,
+    "media_file_exists_from_proof_dir": true,
     "x_matches_contract": true,
     "y_matches_contract": true,
     "zoom_matches_contract": true,
     "opacity_matches_contract": true,
     "png_hash_matches_static_manifest": true,
     "png_hash_matches_current_file": true,
+    "png_hash_matches_proof_dir_resolved_file": true,
     "not_creative_acceptance": true,
     "not_render_proof": true,
     "not_publish_gate": true
@@ -28,7 +33,10 @@
   "failed_checks": [],
   "placement_item": {
     "item_type": "ImageItem",
-    "file_path": "samples/_probe/baseball/static/baseball_pitch_event_p05.png",
+    "file_path": "../static/baseball_pitch_event_p05.png",
+    "path_resolution_base": "proof_ymmp_directory",
+    "resolved_repo_relative_path": "samples/_probe/baseball/static/baseball_pitch_event_p05.png",
+    "source_png_path": "samples/_probe/baseball/static/baseball_pitch_event_p05.png",
     "frame": 1560,
     "length": 1320,
     "layer": 12,
@@ -46,5 +54,5 @@
     "not_animation_export": true,
     "not_real_episode_source": true
   },
-  "next_safe_action": "Open the proof .ymmp in YMM4 for the BN-05 manual preview gate; return one screenshot plus PASS/FIX note."
+  "next_safe_action": "Open the proof .ymmp in YMM4 for the BN-05 manual preview gate; return one screenshot plus any short freeform comment."
 }

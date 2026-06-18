@@ -137,7 +137,7 @@ restart entry points.
 ## Next candidates
 
 - BN-05 manual preview: open the placement proof `.ymmp` in YMM4 and return one
-  screenshot plus PASS/FIX note.
+  screenshot plus a short freeform note.
 - BN-04 frame sequence inspection: review the exported PNG frames and decide
   whether clip export is needed.
 - BN-04 clip export: add codec/timing proof only after frame sequence and BN-05

@@ -9,7 +9,9 @@ publish gate.
 ## What was generated
 
 - One `ImageItem` at frame `1560`, length `1320`, layer `12`.
-- Source PNG: `samples/_probe/baseball/static/baseball_pitch_event_p05.png`
+- YMM4 item FilePath: `../static/baseball_pitch_event_p05.png`
+- FilePath resolution base: `proof_ymmp_directory`
+- Resolved source PNG: `samples/_probe/baseball/static/baseball_pitch_event_p05.png`
 - Canvas: `1920x1080`
 - Timeline FPS: `60`
 - Timeline end frame: `2880`
@@ -17,13 +19,14 @@ publish gate.
 ## Mechanical readback
 
 - status: `passed`
-- proof ymmp sha256: `69e4b0f6b03fa66116a9f8f480576f894d3adb094774227cb2b1b7c441be8983`
+- proof ymmp sha256: `6fde310052ae642e6cec062f64d0d1b5f589d73188983eacbdb6ea287b550a7a`
 - failed checks: (none)
 
 ## Manual preview gate
 
-Open `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof.ymmp` in YMM4 and inspect the preview at the Baseball
-placement span. PASS means the infographic fills the 16:9 frame without crop,
-the scoreboard / strike zone / pitch log / claim remain readable, and no
-subtitle or character layer covers the claim. Return one preview screenshot plus
-PASS/FIX note.
+Open `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof.ymmp` in YMM4 from the repo checkout. If your YMM4
+installation does not resolve relative media paths, run
+`lanes/sports_news/scripts/open_baseball_bn05_preview.ps1`; it creates an ignored local preview copy with an absolute
+PNG path resolved from the current repo root. Inspect frame `1560` /
+`00:26.00`. Return one preview screenshot plus any short freeform comment.
+Fixed labels are not required.

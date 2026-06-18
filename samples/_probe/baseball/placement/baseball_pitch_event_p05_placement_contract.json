@@ -25,7 +25,8 @@
       "item_type": "ImageItem",
       "layer_name": "sports_news_overlay",
       "proposed_layer": 12,
-      "file_path": "samples/_probe/baseball/static/baseball_pitch_event_p05.png",
+      "file_path": "../static/baseball_pitch_event_p05.png",
+      "path_resolution_base": "proof_ymmp_directory",
       "x": 0,
       "y": 0,
       "zoom_percent": 150,
@@ -50,7 +51,7 @@
       "caption or character layers obscure the strike-zone or claim",
       "start or end frame drifts from the narration segment"
     ],
-    "return_payload": "one YMM4 preview screenshot plus PASS/FIX note; no render is required"
+    "return_payload": "one YMM4 preview screenshot plus any short freeform comment; no render is required"
   },
   "boundaries": {
     "not_yymm4_file_write": true,

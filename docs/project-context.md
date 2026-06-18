@@ -1025,6 +1025,16 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ---
 
+## HANDOFF SNAPSHOT (2026-06-18 Baseball BN-05 asset resolution)
+
+- Branch / remote state: Baseball sidequest branch `codex/baseball-bn02-visual-data`; this snapshot is not a mainline `master` next-action change.
+- Restart owner: `lanes/sports_news/docs/baseball_bn05_manual_preview_gate_handoff_2026-06-17.md`.
+- Closed slice: BN-05 YMM4 placement proof path resolution was tightened after a manual preview attempt showed note-like item text instead of the Baseball PNG. The tracked proof now uses proof-directory-relative media path `../static/baseball_pitch_event_p05.png`, and readback fails if that path does not resolve to `samples/_probe/baseball/static/baseball_pitch_event_p05.png` with the expected hash.
+- Local YMM4 fallback: `lanes/sports_news/scripts/open_baseball_bn05_preview.ps1` creates an ignored `_tmp/baseball_bn05_preview/baseball_pitch_event_p05_placement_proof.local.ymmp` with an absolute PNG path for installations that do not resolve relative media paths.
+- Validation: regenerated BN-05 proof/manifest/readback/handoff, launcher `-NoOpen` passed, `pytest tests/test_baseball_yymm4_placement_contract.py tests/test_baseball_yymm4_placement_proof.py` passed with `8 passed`, and `git diff --check` passed.
+- Still open: human YMM4 manual preview at frame `1560` / `00:26.00`; return one screenshot plus a short freeform comment. Fixed PASS/FIX labels are not required.
+- Boundaries: no render, production proof, creative final acceptance, publish readiness, real source intake, clip export, G-27, RSS, NotebookLM, or mainline integration.
+
 ## HANDOFF SNAPSHOT (2026-06-12 G-28 reference layout path sync)
 
 - Branch / remote state: `master` at `c6f17b5 feat: add G-28 reference layout prototypes`; after sync, `HEAD...@{u}=0 0`.

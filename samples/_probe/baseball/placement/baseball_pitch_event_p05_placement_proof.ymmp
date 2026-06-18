@@ -1,5 +1,5 @@
 ﻿{
-  "FilePath": "C:\\Users\\PLANNER007\\NLMYTGen-baseball-sidequest\\samples\\_probe\\baseball\\placement\\baseball_pitch_event_p05_placement_proof.ymmp",
+  "FilePath": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen\\_tmp\\bn05_asset_resolution_fix_repo\\samples\\_probe\\baseball\\placement\\baseball_pitch_event_p05_placement_proof.ymmp",
   "SelectedTimelineIndex": 0,
   "Timelines": [
     {
@@ -24,7 +24,7 @@
       "Items": [
         {
           "$type": "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker",
-          "FilePath": "samples/_probe/baseball/static/baseball_pitch_event_p05.png",
+          "FilePath": "../static/baseball_pitch_event_p05.png",
           "X": {
             "Values": [
               {

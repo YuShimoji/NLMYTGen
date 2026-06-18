@@ -55,7 +55,7 @@ The expected status is a clean
 
 The most important manual blocker is BN-05 preview. Open the proof `.ymmp` in
 YMM4, inspect frame `1560` / `00:26.00`, and return one screenshot plus a
-`PASS` or `FIX` note. The exact hands-on checklist is in
+short freeform note. Fixed labels are not required. The exact hands-on checklist is in
 `lanes/sports_news/docs/baseball_manual_preview_hands_on_2026-05-26.md`.
 
 ## Latest validation

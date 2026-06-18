@@ -61,6 +61,13 @@ SCRIPT_PATH = (
     / "scripts"
     / "build_baseball_yymm4_placement_proof.js"
 )
+LAUNCHER_PATH = (
+    REPO_ROOT
+    / "lanes"
+    / "sports_news"
+    / "scripts"
+    / "open_baseball_bn05_preview.ps1"
+)
 
 
 def _load_json(path: Path) -> dict:
@@ -81,6 +88,7 @@ def _animated_value(item: dict, key: str):
 
 def test_baseball_placement_proof_script_exists() -> None:
     assert SCRIPT_PATH.exists()
+    assert LAUNCHER_PATH.exists()
 
 
 def test_baseball_placement_proof_ymmp_contains_one_image_item() -> None:
@@ -107,6 +115,11 @@ def test_baseball_placement_proof_ymmp_contains_one_image_item() -> None:
     assert timeline["Length"] == 2880
 
     assert item["FilePath"] == expected["file_path"]
+    assert expected["path_resolution_base"] == "proof_ymmp_directory"
+    assert not Path(item["FilePath"]).is_absolute()
+    assert (PROOF_YMMP_PATH.parent / item["FilePath"]).resolve() == (
+        REPO_ROOT / contract["source"]["png_path"]
+    ).resolve()
     assert item["Frame"] == contract["placement"]["start_frame"] == 1560
     assert item["Length"] == contract["placement"]["length_frames"] == 1320
     assert item["Layer"] == expected["proposed_layer"] == 12
@@ -134,10 +147,16 @@ def test_baseball_placement_proof_manifest_and_readback_match_hashes() -> None:
     assert readback["proof_ymmp_sha256"] == _sha256(PROOF_YMMP_PATH)
     assert readback["checks"]["proof_has_single_baseball_image_item"] is True
     assert readback["checks"]["png_hash_matches_static_manifest"] is True
+    assert readback["checks"]["media_path_is_relative"] is True
+    assert readback["checks"]["media_path_resolution_base_is_proof_ymmp_directory"] is True
+    assert readback["checks"]["media_path_resolves_to_source_png"] is True
+    assert readback["checks"]["media_file_exists_from_proof_dir"] is True
+    assert readback["checks"]["png_hash_matches_proof_dir_resolved_file"] is True
     assert readback["checks"]["file_path_matches_contract"] is True
     assert readback["checks"]["frame_matches_contract"] is True
     assert readback["checks"]["layer_matches_contract"] is True
     assert readback["failed_checks"] == []
+    assert readback["placement_item"]["resolved_repo_relative_path"] == contract["source"]["png_path"]
 
 
 def test_baseball_placement_proof_boundaries_and_handoff() -> None:
@@ -154,4 +173,5 @@ def test_baseball_placement_proof_boundaries_and_handoff() -> None:
     assert "not production placement" in handoff
     assert "not a render proof" in handoff
     assert "not creative acceptance" in handoff
-    assert "PASS/FIX" in handoff
+    assert "Fixed labels are not required" in handoff
+    assert "open_baseball_bn05_preview.ps1" in handoff

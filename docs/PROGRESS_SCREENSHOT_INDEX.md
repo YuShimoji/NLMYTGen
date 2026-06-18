@@ -58,7 +58,7 @@ ignored `.mkdocs-docs/` staging folder so the browser view can render them.
 
 | Needed proof | Suggested path | Return signal |
 | --- | --- | --- |
-| BN-05 YMM4 manual preview screenshot | `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png` | One screenshot from YMM4 at frame `1560` / `00:26.00`, plus `PASS` or `FIX` with the reason. |
+| BN-05 YMM4 manual preview screenshot | `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png` | One screenshot from YMM4 at frame `1560` / `00:26.00`, plus any short freeform comment. Fixed labels are not required. |
 
 The checklist for that manual step is
 [baseball_manual_preview_hands_on_2026-05-26.md](../lanes/sports_news/docs/baseball_manual_preview_hands_on_2026-05-26.md).

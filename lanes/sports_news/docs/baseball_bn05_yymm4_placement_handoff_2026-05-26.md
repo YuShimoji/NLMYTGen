@@ -53,17 +53,17 @@ not creative acceptance, not a publish gate, and not real episode sourcing.
 
 ## Manual preview gate
 
-The next YMM4-facing check should return one preview screenshot plus a PASS/FIX
-note. PASS means:
+The next YMM4-facing check should return one preview screenshot plus a short
+freeform note. Fixed labels are not required. An acceptable review means:
 
 - the infographic fills the 16:9 frame without crop;
 - scoreboard, strike zone, pitch log, and current pitch claim remain readable;
 - subtitles or narrator layers do not obscure the pitch claim;
 - the item starts at `00:26` and clears at `00:48`.
 
-FIX means crop, text size, layer overlap, or timing drift is visible. A FIX
-result should tune this placement contract before any render or creative
-acceptance claim.
+A problem report means missing image display, crop, text size, layer overlap,
+or timing drift is visible. That result should tune this placement contract
+before any render or creative acceptance claim.
 
 ## BN-04 animation bridge
 

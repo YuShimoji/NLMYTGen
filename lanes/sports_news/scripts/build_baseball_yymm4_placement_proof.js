@@ -12,6 +12,7 @@ const paths = {
   manifest: 'samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_manifest.json',
   readback: 'samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_readback.json',
   handoff: 'samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_handoff.md',
+  launcher: 'lanes/sports_news/scripts/open_baseball_bn05_preview.ps1',
 };
 
 const PROOF_REMARK = 'baseball_bn05_placement_proof segment=pitch_event_breakdown not_creative_acceptance no_render no_publish_gate';
@@ -45,6 +46,23 @@ function writeYmmp(relPath, payload) {
 
 function sha256(relPath) {
   return crypto.createHash('sha256').update(fs.readFileSync(abs(relPath))).digest('hex');
+}
+
+function normalizeRepoPath(value) {
+  return value.split(path.sep).join('/');
+}
+
+function pathFromProofDir(filePath) {
+  if (path.isAbsolute(filePath)) {
+    throw new Error(`BASEBALL_PLACEMENT_MEDIA_PATH_ABSOLUTE: ${filePath}`);
+  }
+  const proofDir = path.dirname(paths.outputYmmp);
+  const resolved = normalizeRepoPath(path.normalize(path.join(proofDir, filePath)));
+  const normalized = normalizeRepoPath(path.relative(repoRoot, abs(resolved)));
+  if (normalized.startsWith('..')) {
+    throw new Error(`BASEBALL_PLACEMENT_MEDIA_PATH_OUTSIDE_REPO: ${filePath}`);
+  }
+  return resolved;
 }
 
 function clone(value) {
@@ -114,6 +132,12 @@ function validateInputs(contract, staticManifest) {
   const placement = contract.placement || {};
   const item = placement.yymm4_item || {};
   if (item.item_type !== 'ImageItem') errors.push('placement item_type must be ImageItem');
+  if (item.path_resolution_base !== 'proof_ymmp_directory') {
+    errors.push('placement path_resolution_base must be proof_ymmp_directory');
+  }
+  if (pathFromProofDir(item.file_path) !== contract.source.png_path) {
+    errors.push('placement file_path must resolve from proof .ymmp directory to source PNG');
+  }
   if (placement.fps !== 60) errors.push('placement fps must be 60');
   if (placement.start_frame !== 1560) errors.push('placement start_frame must be 1560');
   if (placement.length_frames !== 1320) errors.push('placement length_frames must be 1320');
@@ -191,6 +215,8 @@ function readbackProject(project, contract, staticManifest, outputYmmpHash) {
   const item = baseballItems[0] || null;
   const placement = contract.placement;
   const spec = placement.yymm4_item;
+  const mediaPathFromProofDir = pathFromProofDir(spec.file_path);
+  const mediaExistsFromProofDir = fs.existsSync(abs(mediaPathFromProofDir));
   const checks = {
     proof_has_single_baseball_image_item: baseballItems.length === 1,
     timeline_length_matches_contract: timeline.Length === placement.start_frame + placement.length_frames,
@@ -203,12 +229,19 @@ function readbackProject(project, contract, staticManifest, outputYmmpHash) {
     length_matches_contract: item?.Length === placement.length_frames,
     layer_matches_contract: item?.Layer === spec.proposed_layer,
     file_path_matches_contract: item?.FilePath === spec.file_path,
+    media_path_is_relative: item ? !path.isAbsolute(item.FilePath) : false,
+    media_path_resolution_base_is_proof_ymmp_directory: spec.path_resolution_base === 'proof_ymmp_directory',
+    media_path_resolves_to_source_png: mediaPathFromProofDir === contract.source.png_path,
+    media_file_exists_from_proof_dir: mediaExistsFromProofDir,
     x_matches_contract: animatedValue(item, 'X') === spec.x,
     y_matches_contract: animatedValue(item, 'Y') === spec.y,
     zoom_matches_contract: animatedValue(item, 'Zoom') === spec.zoom_percent,
     opacity_matches_contract: animatedValue(item, 'Opacity') === spec.opacity_percent,
     png_hash_matches_static_manifest: contract.source.png_sha256 === staticManifest.output.sha256,
-    png_hash_matches_current_file: contract.source.png_sha256 === sha256(spec.file_path),
+    png_hash_matches_current_file: contract.source.png_sha256 === sha256(contract.source.png_path),
+    png_hash_matches_proof_dir_resolved_file: (
+      mediaExistsFromProofDir && contract.source.png_sha256 === sha256(mediaPathFromProofDir)
+    ),
     not_creative_acceptance: true,
     not_render_proof: true,
     not_publish_gate: true,
@@ -227,6 +260,9 @@ function readbackProject(project, contract, staticManifest, outputYmmpHash) {
     placement_item: item ? {
       item_type: itemType(item),
       file_path: item.FilePath,
+      path_resolution_base: spec.path_resolution_base,
+      resolved_repo_relative_path: mediaPathFromProofDir,
+      source_png_path: contract.source.png_path,
       frame: item.Frame,
       length: item.Length,
       layer: item.Layer,
@@ -244,7 +280,7 @@ function readbackProject(project, contract, staticManifest, outputYmmpHash) {
       not_animation_export: true,
       not_real_episode_source: true,
     },
-    next_safe_action: 'Open the proof .ymmp in YMM4 for the BN-05 manual preview gate; return one screenshot plus PASS/FIX note.',
+    next_safe_action: 'Open the proof .ymmp in YMM4 for the BN-05 manual preview gate; return one screenshot plus any short freeform comment.',
   };
 }
 
@@ -269,6 +305,7 @@ function renderManifest(contract, staticManifest, outputYmmpHash) {
       proof_ymmp_sha256: outputYmmpHash,
       readback_path: paths.readback,
       handoff_path: paths.handoff,
+      launcher_path: paths.launcher,
     },
     placement: {
       segment_id: placement.segment_id,
@@ -279,6 +316,7 @@ function renderManifest(contract, staticManifest, outputYmmpHash) {
       end_frame_exclusive: placement.start_frame + placement.length_frames,
       target_canvas: placement.target_canvas,
       yymm4_item: placement.yymm4_item,
+      source_png_path: contract.source.png_path,
     },
     boundaries: {
       not_production_project: true,
@@ -303,7 +341,9 @@ publish gate.
 ## What was generated
 
 - One \`ImageItem\` at frame \`${readback.placement_item.frame}\`, length \`${readback.placement_item.length}\`, layer \`${readback.placement_item.layer}\`.
-- Source PNG: \`${readback.placement_item.file_path}\`
+- YMM4 item FilePath: \`${readback.placement_item.file_path}\`
+- FilePath resolution base: \`${readback.placement_item.path_resolution_base}\`
+- Resolved source PNG: \`${readback.placement_item.resolved_repo_relative_path}\`
 - Canvas: \`${manifest.placement.target_canvas.width}x${manifest.placement.target_canvas.height}\`
 - Timeline FPS: \`${manifest.placement.fps}\`
 - Timeline end frame: \`${manifest.placement.end_frame_exclusive}\`
@@ -316,11 +356,12 @@ publish gate.
 
 ## Manual preview gate
 
-Open \`${paths.outputYmmp}\` in YMM4 and inspect the preview at the Baseball
-placement span. PASS means the infographic fills the 16:9 frame without crop,
-the scoreboard / strike zone / pitch log / claim remain readable, and no
-subtitle or character layer covers the claim. Return one preview screenshot plus
-PASS/FIX note.
+Open \`${paths.outputYmmp}\` in YMM4 from the repo checkout. If your YMM4
+installation does not resolve relative media paths, run
+\`${paths.launcher}\`; it creates an ignored local preview copy with an absolute
+PNG path resolved from the current repo root. Inspect frame \`1560\` /
+\`00:26.00\`. Return one preview screenshot plus any short freeform comment.
+Fixed labels are not required.
 `;
 }
 

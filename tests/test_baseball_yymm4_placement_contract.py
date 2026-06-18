@@ -83,7 +83,9 @@ def test_baseball_bn05_placement_contract_fixes_yymm4_image_item_span() -> None:
     assert item["item_type"] == "ImageItem"
     assert item["layer_name"] == "sports_news_overlay"
     assert item["proposed_layer"] == 12
-    assert item["file_path"] == "samples/_probe/baseball/static/baseball_pitch_event_p05.png"
+    assert item["file_path"] == "../static/baseball_pitch_event_p05.png"
+    assert item["path_resolution_base"] == "proof_ymmp_directory"
+    assert (PLACEMENT_CONTRACT_PATH.parent / item["file_path"]).resolve() == PNG_PATH.resolve()
     assert item["x"] == 0
     assert item["y"] == 0
     assert item["zoom_percent"] == 150
