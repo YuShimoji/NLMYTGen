@@ -1,5 +1,26 @@
 # Runtime State — NLMYTGen
 
+- **Common foundation cockpit remote verification sealed (2026-06-18)**:
+  Live GitHub access was restored and
+  `git ls-remote origin refs/heads/codex/common-foundation-hold-state-audit`
+  returned
+  `1b1cc8e4f6d0f43dd4662d9efd64887653862b5c`. The feature branch already
+  contained the Cockpit Dashboard commit, so no feature-branch push was needed.
+  `master` was fetched and was at `HEAD...origin/master=0 0` before this
+  handoff-doc update. This confirms that another terminal can fetch
+  `origin/codex/common-foundation-hold-state-audit` and inspect
+  `docs/dashboard/index.html`, `docs/dashboard/project-status.json`,
+  `docs/review/common-foundation-dashboard-2026-06-17.png`,
+  `scripts/operator/open_dashboard.ps1`, and
+  `docs/_templates/operation-cockpit-report.md`. The dashboard remains a
+  review surface only: no real `codex exec`, subprocess runner, stdin piping,
+  runtime loop, external notification, `.agent/reports`, `.agent/logs`,
+  `.agent/needs_human.json`, G-28, G-27, GUI, YMM4, render, rights,
+  production, publishing, ClipPipeGen, Newsroom, RSS, OPML, Inoreader,
+  NotebookLM, or `.ymmp` work was opened. Next restart is still
+  `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> this file; use the feature
+  branch only when reviewing the common-foundation cockpit, otherwise stay on
+  `master`.
 - **Local residue quarantine / remote handoff refreshed (2026-06-18)**:
   After `edbdc45 fix: clarify pre-execution preview packet` was pushed,
   `master` is at `HEAD...origin/master=0 0` and the tracked working tree is
