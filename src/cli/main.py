@@ -15,6 +15,7 @@ Usage:
     python -m src.cli.main list-feed-sources [--opml feeds.opml] [--reader opml|inoreader] [--format markdown|json]
     python -m src.cli.main rss-smoke [--opml feeds.opml] [--reader opml|inoreader] [--format markdown|json]
     python -m src.cli.main validate-ir <ir.json> [--palette ...] [--format text|json]
+    python -m src.cli.main validate-newsroom-handoff [packet.json] [--format text|json]
     python -m src.cli.main validate-background-skit-blueprint <blueprint.json> --script <txt> --ymmp <ymmp> [--fps 60] [--format text|json]
     python -m src.cli.main emit-packaging-brief-template [-o path] [--format markdown|json]
     python -m src.cli.main init-episode-run --episode-id ID [--root DIR] [--force] [--format text|json]
@@ -2140,6 +2141,19 @@ def main(argv: list[str] | None = None) -> int:
     p_valir.add_argument("--format", choices=["text", "json"], default="text",
                          help="text: human report to stdout; json: machine summary on stdout, meta on stderr")
 
+    # validate-newsroom-handoff
+    p_newsroom_handoff = subparsers.add_parser(
+        "validate-newsroom-handoff",
+        help="Validate a newsroom -> NLMYTGen portable packet boundary",
+    )
+    p_newsroom_handoff.add_argument(
+        "packet_json",
+        nargs="?",
+        default="samples/_probe/newsroom_handoff/minimal_episode_packet.json",
+        help="Newsroom handoff packet JSON",
+    )
+    p_newsroom_handoff.add_argument("--format", choices=["text", "json"], default="text")
+
     # validate-background-skit-blueprint
     p_skit_blueprint = subparsers.add_parser(
         "validate-background-skit-blueprint",
@@ -2405,6 +2419,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_annotate_row_range(args)
         elif args.command == "validate-ir":
             return _cmd_validate_ir(args)
+        elif args.command == "validate-newsroom-handoff":
+            return _cmd_validate_newsroom_handoff(args)
         elif args.command == "validate-background-skit-blueprint":
             return _cmd_validate_background_skit_blueprint(args)
         elif args.command == "audit-skit-group":
@@ -3531,6 +3547,26 @@ def _cmd_validate_background_skit_blueprint(args: argparse.Namespace) -> int:
     if result.status == "blocked":
         return 2
     return 1
+
+
+def _cmd_validate_newsroom_handoff(args: argparse.Namespace) -> int:
+    """Validate a newsroom -> NLMYTGen packet boundary."""
+    from src.pipeline.newsroom_handoff_validator import (
+        load_newsroom_handoff_packet,
+        render_newsroom_handoff_validation_text,
+        validate_newsroom_handoff_packet,
+    )
+
+    packet = load_newsroom_handoff_packet(args.packet_json)
+    result = validate_newsroom_handoff_packet(
+        packet,
+        packet_path=args.packet_json,
+    )
+    if args.format == "json":
+        print(json.dumps(result.to_dict(), ensure_ascii=False, indent=2))
+    else:
+        sys.stdout.write(render_newsroom_handoff_validation_text(result))
+    return 1 if result.has_errors else 0
 
 
 def _load_csv_rows(csv_path: str) -> list[list[str]]:

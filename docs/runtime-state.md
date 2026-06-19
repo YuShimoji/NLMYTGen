@@ -1,5 +1,21 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom handoff validator v1 completed (2026-06-20)**:
+  The NLMYTGen-side receiving contract now has a lightweight fail-closed
+  validator for the synthetic fixture. The implementation lives in
+  `src/pipeline/newsroom_handoff_validator.py`, the CLI entry is
+  `uv run python -m src.cli.main validate-newsroom-handoff --format text`, and
+  focused coverage lives in `tests/test_newsroom_handoff_validator.py`.
+  Verification readback is
+  `docs/verification/NEWSROOM_HANDOFF_VALIDATOR_V1_2026-06-20.md`. The current
+  fixture passes structure validation while keeping YMM4 transfer blocked
+  because the packet is synthetic-only, has no approved media assets, and
+  carries explicit review/readiness blockers. This is not a production ingest
+  adapter and does not fetch sources, touch `newsroom-yt-pipeline`, edit
+  `.ymmp`, render, approve rights, or change publication state. Next safe
+  follow-up is either a deeper G-28 slot-linkage proof using the synthetic
+  packet, or a Review Console/readback surface that consumes this validator
+  result.
 - **Newsroom handoff contract remote publication merge capsule (2026-06-19)**:
   Local commit `468d227 docs: define newsroom handoff contract` was integrated
   with the fetched `origin/master` commits `edbdc45`, `4788648`, and `f456817`
