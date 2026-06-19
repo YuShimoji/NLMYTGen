@@ -19,7 +19,7 @@ publish gate.
 ## Mechanical readback
 
 - status: `passed`
-- proof ymmp sha256: `6fde310052ae642e6cec062f64d0d1b5f589d73188983eacbdb6ea287b550a7a`
+- proof ymmp sha256: `58ec8bdd9ffd7a72a61f710533e4c36d79ad005d7a647cd871556f6a56dcdb71`
 - failed checks: (none)
 
 ## Manual preview gate

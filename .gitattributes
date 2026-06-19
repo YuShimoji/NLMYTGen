@@ -1,0 +1,7 @@
+# BN-05 proof/readback hashes are byte-sensitive; keep these stable on Windows.
+samples/_probe/baseball/static/baseball_pitch_event_p05_manifest.json text eol=lf
+samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_contract.json text eol=lf
+samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof.ymmp text eol=lf
+samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_handoff.md text eol=lf
+samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_manifest.json text eol=lf
+samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_readback.json text eol=lf
