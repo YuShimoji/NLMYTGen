@@ -1,5 +1,17 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom handoff contract slice completed (2026-06-19)**:
+  NLMYTGen-side intake for `newsroom-yt-pipeline` output is now represented by
+  `docs/integration/NEWSROOM_TO_NLMYTGEN_HANDOFF_CONTRACT.md`,
+  `samples/_probe/newsroom_handoff/minimal_episode_packet.json`, and
+  `docs/verification/NEWSROOM_HANDOFF_MAPPING_2026-06-19.md`. The boundary is
+  downstream-only: NLMYTGen receives a portable packet / read-only reference and
+  maps it to NotebookLM seed context, ScriptIR-like beats, VisualIR concepts,
+  G-28 semantic slots, review warnings, and YMM4 readiness gates. RSS / OPML /
+  Inoreader, source discovery, topic clustering, source fetching, raw media,
+  rights clearance, rendering, `.ymmp` edits, and publication remain out of
+  scope. Next safe follow-up is either a lightweight validator for the fixture
+  contract or a deeper G-28 slot-linkage proof using the synthetic packet.
 - **Remote-sync handoff capsule prepared (2026-06-17)**:
   The context needed to resume from another terminal is now preserved in tracked
   repository docs for the remote sync of `master`: the G-28 object catalog,
