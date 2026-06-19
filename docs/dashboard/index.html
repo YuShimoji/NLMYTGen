@@ -245,8 +245,8 @@
           <strong>codex/common-foundation-hold-state-audit</strong>
         </div>
         <div class="summary-box">
-          <span>Active Artifact</span>
-          <strong>docs/dashboard/project-status.json</strong>
+          <span>Cockpit Contract</span>
+          <strong>Operation Cockpit v1.11</strong>
         </div>
         <div class="summary-box">
           <span>Review Surface</span>
@@ -262,8 +262,182 @@
 
   <main>
     <section>
+      <h2>Operation Cockpit v1.11</h2>
+      <p>The dashboard registry now records v1.11 reporting fields in <a href="project-status.json">project-status.json</a>. Completion Matrix values use <code>done</code>, <code>total</code>, <code>unknown</code>, and <code>missing</code> as source of truth; ASCII meters are derived display only.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Gate Group</th>
+              <th>Done</th>
+              <th>Total</th>
+              <th>Unknown</th>
+              <th>ASCII_SAFE Meter</th>
+              <th>Missing / Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Artifact readiness</td>
+              <td>6</td>
+              <td>6</td>
+              <td>0</td>
+              <td><code>[######] 6/6</code></td>
+              <td>Identity, access, validation, review status, and user action classification are present.</td>
+            </tr>
+            <tr>
+              <td>Report hygiene contract</td>
+              <td>15</td>
+              <td>15</td>
+              <td>0</td>
+              <td><code>[##########] 15/15</code></td>
+              <td>Template includes routing, matrix, turn calendar, ledgers, review/debt, estimates, metric note, and continuation state.</td>
+            </tr>
+            <tr>
+              <td>Runtime boundary</td>
+              <td>8</td>
+              <td>8</td>
+              <td>0</td>
+              <td><code>[########] 8/8</code></td>
+              <td>Real runner, codex exec, subprocess runner, stdin piping, runtime loop, external notification, .agent runtime artifacts, and production lanes remain closed.</td>
+            </tr>
+            <tr>
+              <td>Screenshot currency</td>
+              <td>1</td>
+              <td>2</td>
+              <td>0</td>
+              <td><code>[#-] 1/2</code></td>
+              <td>Screenshot remains 2026-06-17 evidence; open this dashboard for current v1.11 fields.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Turn Calendar</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Turn</th>
+              <th>Owner</th>
+              <th>Weight</th>
+              <th>Estimate</th>
+              <th>Goal</th>
+              <th>Deliverable</th>
+              <th>Gate</th>
+              <th>Status</th>
+              <th>Branch</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>T+0</td>
+              <td>Agent</td>
+              <td><code>W2 [##---]</code></td>
+              <td>~5-10 min</td>
+              <td>re-verify checkout and branch</td>
+              <td>clean verified state</td>
+              <td>5/5</td>
+              <td>completed</td>
+              <td>codex/common-foundation-hold-state-audit</td>
+            </tr>
+            <tr>
+              <td>T+1</td>
+              <td>Agent</td>
+              <td><code>W3 [###--]</code></td>
+              <td>~10-20 min</td>
+              <td>v1.11 minimal alignment</td>
+              <td>dashboard/template/status updates</td>
+              <td>6/7</td>
+              <td>current</td>
+              <td>codex/common-foundation-hold-state-audit</td>
+            </tr>
+            <tr>
+              <td>T+2</td>
+              <td>Agent</td>
+              <td><code>W2 [##---]</code></td>
+              <td>~5-10 min</td>
+              <td>validate and commit</td>
+              <td>local commit if changed</td>
+              <td>5/5</td>
+              <td>planned</td>
+              <td>codex/common-foundation-hold-state-audit</td>
+            </tr>
+            <tr>
+              <td>T+3</td>
+              <td>Agent</td>
+              <td><code>W2 [##---]</code></td>
+              <td>~5-10 min</td>
+              <td>push feature branch</td>
+              <td>remote parity 0 0</td>
+              <td>4/4</td>
+              <td>planned</td>
+              <td>codex/common-foundation-hold-state-audit</td>
+            </tr>
+            <tr>
+              <td>T+4</td>
+              <td>Supervisor</td>
+              <td><code>W2 [##---]</code></td>
+              <td>~5-10 min</td>
+              <td>review Operation Cockpit</td>
+              <td>next direction</td>
+              <td>0/5</td>
+              <td>future</td>
+              <td>none</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Report Contract</h2>
+      <div class="split">
+        <div class="panel">
+          <h3>Routing Header</h3>
+          <code class="command">[ROUTE: NLMYTGen | AGENT-&gt;SUPERVISOR | common-foundation-v1.11-cockpit-dashboard-alignment-push | T+1 | target:ChatGPT監修スレッド | artifact:docs/dashboard/project-status.json | reply:ChatGPT監修スレッド | confidence:&lt;high/medium/low&gt;]</code>
+          <p>Reports should include Current State, Completion Matrix, Expected vs Actual, Changed Files, Artifacts / Review Access, Review Card / Debt, Command / Action Ledger, User-Side Work, Agent-Side Work, Goal Stack, Turn Calendar, Metric Change Note, and Continuation State.</p>
+        </div>
+        <div class="panel">
+          <h3>Estimates / Metric Change</h3>
+          <ul>
+            <li>Next agent run: ~10-20 min for scoped alignment, ~5-10 min for push-only verification.</li>
+            <li>User work: none during agent run; ~5-10 min USER_OPEN_ONLY if dashboard review is requested.</li>
+            <li>Metric change: gate reporting now prefers Completion Matrix values over historical <code>progress_pct</code>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Review / Handoff State</h2>
+      <div class="split">
+        <div class="panel">
+          <h3>Review Card / Debt</h3>
+          <p>Status: debt. Target: dashboard. Input mode: freeform. Fixed labels are not required.</p>
+          <ul>
+            <li>Look for progress visibility.</li>
+            <li>Look for artifact access clarity.</li>
+            <li>Look for stale or over-guarded docs.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Continuation State</h3>
+          <p>Handoff Gate: agent-report-owned. Treat this dashboard as handoff-ready together with the current agent report's post-push parity readback.</p>
+          <ul>
+            <li>Use the agent report for validation, commit, push, and parity evidence.</li>
+            <li>Continue from this dashboard or the report template after parity <code>0 0</code>.</li>
+            <li>Keep later dashboard review freeform and open-only.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
       <h2>Topic Progress</h2>
-      <p>The status ledger uses the required fields in <a href="project-status.json">project-status.json</a>: id, title, type, status, health, progress_pct, last_touched, active_artifact, source_of_truth, and next_action.</p>
+      <p>The topic ledger keeps historical <code>progress_pct</code> for continuity. For v1.11 gate reporting, use the Completion Matrix in <a href="project-status.json">project-status.json</a>.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -369,7 +543,7 @@
               <td>COMMON-FOUNDATION-DASHBOARD-SCREENSHOT-2026-06-17</td>
               <td><code>docs/review/common-foundation-dashboard-2026-06-17.png</code></td>
               <td><a href="../review/common-foundation-dashboard-2026-06-17.png">open screenshot</a></td>
-              <td>Captured from the static docs preview at <code>http://127.0.0.1:8765/dashboard/index.html</code>.</td>
+              <td>Legacy visual evidence captured from the static docs preview. Open this dashboard for current v1.11 fields.</td>
             </tr>
           </tbody>
         </table>
@@ -445,6 +619,11 @@
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td>2026-06-20</td>
+              <td>Aligned dashboard metadata, report template, and visible cockpit tables with Operation Cockpit v1.11.</td>
+              <td>Reports now have a stable Routing Header, Completion Matrix, Turn Calendar, ASCII_SAFE meters, Review Card / Debt, Metric Change Note, and continuation fields.</td>
+            </tr>
             <tr>
               <td>2026-06-17</td>
               <td>Added dashboard, status JSON, docs entry point, Wiki indices, launchers, and Operation Cockpit template.</td>

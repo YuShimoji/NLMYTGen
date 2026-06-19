@@ -1,18 +1,140 @@
 {
-  "schema_version": 1,
-  "generated_at": "2026-06-17T00:00:00+09:00",
+  "schema_version": 2,
+  "generated_at": "2026-06-20T00:00:00+09:00",
   "branch": "codex/common-foundation-hold-state-audit",
   "remote_branch": "origin/codex/common-foundation-hold-state-audit",
   "head_before_bootstrap": "1559f41 docs(common-foundation): align operator surface docs",
   "active_artifact": "docs/dashboard/project-status.json",
   "primary_review_surface": "docs/dashboard/index.html",
+  "operation_cockpit": {
+    "contract_version": "v1.11",
+    "routing_header_pattern": "[ROUTE: NLMYTGen | AGENT->SUPERVISOR | common-foundation-v1.11-cockpit-dashboard-alignment-push | T+1 | target:ChatGPT監修スレッド | artifact:docs/dashboard/project-status.json | reply:ChatGPT監修スレッド | confidence:<high/medium/low>]",
+    "meter_contract": "ASCII_SAFE",
+    "meter_source_of_truth": "completion_matrix.done / completion_matrix.total / completion_matrix.unknown / completion_matrix.missing",
+    "meter_examples": {
+      "exact_total_12_or_less": "[#####-] 5/6",
+      "scaled_total_over_12": "[########--] 14/18",
+      "weight": "W3 [###--]"
+    },
+    "estimate_next_agent_run": "~10-20 min for a scoped dashboard/template/status update; ~5-10 min for push-only verification",
+    "estimate_user_work": "none during agent run; ~5-10 min USER_OPEN_ONLY if dashboard review is requested"
+  },
+  "completion_matrix": [
+    {
+      "id": "artifact_readiness",
+      "title": "Artifact readiness",
+      "done": 6,
+      "total": 6,
+      "unknown": 0,
+      "missing": [],
+      "meter": "[######] 6/6",
+      "source_of_truth": "dashboard/status/template artifacts exist with identity, access, validation, review status, and user action classification."
+    },
+    {
+      "id": "report_hygiene_contract",
+      "title": "Operation Cockpit report hygiene",
+      "done": 15,
+      "total": 15,
+      "unknown": 0,
+      "missing": [],
+      "meter": "[##########] 15/15",
+      "source_of_truth": "docs/_templates/operation-cockpit-report.md includes routing, matrix, turn calendar, ledgers, review/debt, estimates, metric note, and continuation state."
+    },
+    {
+      "id": "runtime_boundary",
+      "title": "Fail-closed runtime boundary",
+      "done": 8,
+      "total": 8,
+      "unknown": 0,
+      "missing": [],
+      "meter": "[########] 8/8",
+      "source_of_truth": "boundaries object records real runner, codex exec, subprocess runner, stdin piping, runtime loop, external notification, .agent runtime artifacts, and production lanes as closed."
+    },
+    {
+      "id": "screenshot_currency",
+      "title": "Screenshot currency",
+      "done": 1,
+      "total": 2,
+      "unknown": 0,
+      "missing": [
+        "Current screenshot is retained as 2026-06-17 evidence and was not regenerated for this v1.11 text-only alignment."
+      ],
+      "meter": "[#-] 1/2",
+      "source_of_truth": "Open docs/dashboard/index.html for current v1.11 fields; use the screenshot as legacy visual evidence only."
+    }
+  ],
+  "turn_calendar": [
+    {
+      "turn": "T+0",
+      "owner": "Agent",
+      "weight": "W2 [##---]",
+      "estimate": "~5-10 min",
+      "goal": "re-verify checkout and branch",
+      "deliverable": "clean verified state",
+      "gate": "5/5",
+      "status": "completed",
+      "branch": "codex/common-foundation-hold-state-audit"
+    },
+    {
+      "turn": "T+1",
+      "owner": "Agent",
+      "weight": "W3 [###--]",
+      "estimate": "~10-20 min",
+      "goal": "v1.11 minimal alignment",
+      "deliverable": "dashboard/template/status updates",
+      "gate": "6/7",
+      "status": "current",
+      "branch": "codex/common-foundation-hold-state-audit"
+    },
+    {
+      "turn": "T+2",
+      "owner": "Agent",
+      "weight": "W2 [##---]",
+      "estimate": "~5-10 min",
+      "goal": "validate and commit",
+      "deliverable": "local commit if changed",
+      "gate": "5/5",
+      "status": "planned",
+      "branch": "codex/common-foundation-hold-state-audit"
+    },
+    {
+      "turn": "T+3",
+      "owner": "Agent",
+      "weight": "W2 [##---]",
+      "estimate": "~5-10 min",
+      "goal": "push feature branch",
+      "deliverable": "remote parity 0 0",
+      "gate": "4/4",
+      "status": "planned",
+      "branch": "codex/common-foundation-hold-state-audit"
+    },
+    {
+      "turn": "T+4",
+      "owner": "Supervisor",
+      "weight": "W2 [##---]",
+      "estimate": "~5-10 min",
+      "goal": "review Operation Cockpit",
+      "deliverable": "next direction",
+      "gate": "0/5",
+      "status": "future",
+      "branch": "none"
+    }
+  ],
+  "metric_change_note": {
+    "status": "changed",
+    "changed": "Progress display now prefers Completion Matrix done/total/unknown/missing over progress_pct for cockpit gates.",
+    "reason": "v1.11 reports need stable ASCII_SAFE meters across ChatGPT, Markdown, and code blocks.",
+    "comparability": "Old progress_pct fields remain for historical topic rows; Completion Matrix is authoritative for gate reporting after this alignment."
+  },
   "review_evidence": [
     {
       "artifact_id": "COMMON-FOUNDATION-DASHBOARD-SCREENSHOT-2026-06-17",
       "repo_relative_path": "docs/review/common-foundation-dashboard-2026-06-17.png",
       "source_of_truth": "static docs preview screenshot",
       "access": "Open docs/review/common-foundation-dashboard-2026-06-17.png or follow the dashboard link.",
-      "validation": "Captured through Playwright CLI against local http://127.0.0.1:8765/dashboard/index.html after file:// was blocked."
+      "validation": "Captured through Playwright CLI against local http://127.0.0.1:8765/dashboard/index.html after file:// was blocked.",
+      "review_status": "legacy_visual_evidence",
+      "user_action": "REFERENCE_ONLY; open docs/dashboard/index.html for current v1.11 cockpit fields."
     }
   ],
   "launcher_validation": {
@@ -40,6 +162,16 @@
       "active_artifact",
       "source_of_truth",
       "next_action"
+    ],
+    "completion_matrix_required_fields": [
+      "id",
+      "title",
+      "done",
+      "total",
+      "unknown",
+      "missing",
+      "meter",
+      "source_of_truth"
     ],
     "health_values": [
       "good",
@@ -163,16 +295,53 @@
     }
   ],
   "user_side_work": {
-    "status": "open_only",
+    "status": "none_during_agent_run",
+    "type": "USER_OPEN_ONLY if review is requested after push",
+    "estimate": "~5-10 min",
     "one_touch_action": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/operator/open_dashboard.ps1",
     "completion_signal": "Dashboard opens and shows topic progress, artifact coverage, stale docs, and next actions.",
+    "fixed_phrase_required": false,
     "fallback": "Open docs/dashboard/index.html directly from the checkout."
+  },
+  "review_card": {
+    "status": "debt",
+    "target": "dashboard",
+    "look_for": [
+      "progress visibility",
+      "artifact access",
+      "stale or over-guarded docs"
+    ],
+    "input_mode": "freeform",
+    "completion_signal": "Any concrete impression, approval, concern, or adjustment request.",
+    "fixed_labels_required": false
+  },
+  "freeform_review_intake": {
+    "status": "none",
+    "parsed_fields": [
+      "target",
+      "intent",
+      "constraints",
+      "confidence"
+    ],
+    "user_rewrite_required": false
   },
   "agent_side_next_actions": [
     "Keep project-status JSON updated after the next common foundation docs change.",
     "If approved later, implement a stdout-only live repo status producer with no runtime artifact writes.",
     "Tighten one unclear doc section only after the dashboard identifies it as the current bottleneck."
   ],
+  "handoff_gate": {
+    "status": "agent_report_owned",
+    "next_actions": [
+      "Use the current agent report for validation, commit, push, and parity readback.",
+      "After parity 0 0 is recorded, continue from this dashboard or the report template.",
+      "Keep any later dashboard review freeform and open-only."
+    ],
+    "remaining_uncertainty": [
+      "Screenshot was not regenerated for the v1.11 text-only dashboard changes."
+    ],
+    "true_blockers": []
+  },
   "boundaries": {
     "real_runner": "No",
     "codex_exec": "not_started",
