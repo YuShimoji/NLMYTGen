@@ -141,6 +141,8 @@ uv run python scripts/agent_orchestrator.py --worker audit --pre-execution-dry-r
 
 この preview は `build_execution_plan`、`build_execution_preflight`、既存の
 `render_preflight_preview_card` を組み合わせ、Markdown を stdout に出すだけで止まる。
+outer preview は output location を stdout only と明示し、real execution が起きなかった
+理由も preview rendering 後に停止する flow であることとして表示する。
 `--repo-status-clean` は operator が直前に確認した clean 状態を明示するための入力であり、
 stdout でも operator-provided assertion であって CLI が Git check した結果ではないと
 表示する。CLI 自身は Git subprocess を起動しない。必要なら `--repo-status-json <repo-local-json>` で

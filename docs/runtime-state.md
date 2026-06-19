@@ -1,5 +1,19 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom handoff contract remote publication merge capsule (2026-06-19)**:
+  Local commit `468d227 docs: define newsroom handoff contract` was integrated
+  with the fetched `origin/master` commits `edbdc45`, `4788648`, and `f456817`
+  before publishing `master`. The only merge conflict was this top runtime-state
+  capsule area; resolution preserves the newsroom contract capsule, the common
+  foundation cockpit remote verification capsule, and the local residue
+  quarantine capsule. Validation for this merge path includes
+  `uv run pytest tests/test_agent_orchestration.py`, JSON fixture parse /
+  reference checks for
+  `samples/_probe/newsroom_handoff/minimal_episode_packet.json`, Git diff
+  whitespace checks, conflict-marker scans, and forbidden-file scans. After
+  syncing another terminal, restart with `AGENTS.md` ->
+  `docs/REPO_LOCAL_RULES.md` -> this file, then open the contract, fixture, and
+  mapping artifacts named in the next capsule for the newsroom handoff work.
 - **Newsroom handoff contract slice completed (2026-06-19)**:
   NLMYTGen-side intake for `newsroom-yt-pipeline` output is now represented by
   `docs/integration/NEWSROOM_TO_NLMYTGEN_HANDOFF_CONTRACT.md`,
@@ -12,6 +26,44 @@
   rights clearance, rendering, `.ymmp` edits, and publication remain out of
   scope. Next safe follow-up is either a lightweight validator for the fixture
   contract or a deeper G-28 slot-linkage proof using the synthetic packet.
+- **Common foundation cockpit remote verification sealed (2026-06-18)**:
+  Live GitHub access was restored and
+  `git ls-remote origin refs/heads/codex/common-foundation-hold-state-audit`
+  returned
+  `1b1cc8e4f6d0f43dd4662d9efd64887653862b5c`. The feature branch already
+  contained the Cockpit Dashboard commit, so no feature-branch push was needed.
+  `master` was fetched and was at `HEAD...origin/master=0 0` before this
+  handoff-doc update. This confirms that another terminal can fetch
+  `origin/codex/common-foundation-hold-state-audit` and inspect
+  `docs/dashboard/index.html`, `docs/dashboard/project-status.json`,
+  `docs/review/common-foundation-dashboard-2026-06-17.png`,
+  `scripts/operator/open_dashboard.ps1`, and
+  `docs/_templates/operation-cockpit-report.md`. The dashboard remains a
+  review surface only: no real `codex exec`, subprocess runner, stdin piping,
+  runtime loop, external notification, `.agent/reports`, `.agent/logs`,
+  `.agent/needs_human.json`, G-28, G-27, GUI, YMM4, render, rights,
+  production, publishing, ClipPipeGen, Newsroom, RSS, OPML, Inoreader,
+  NotebookLM, or `.ymmp` work was opened. Next restart is still
+  `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> this file; use the feature
+  branch only when reviewing the common-foundation cockpit, otherwise stay on
+  `master`.
+- **Local residue quarantine / remote handoff refreshed (2026-06-18)**:
+  After `edbdc45 fix: clarify pre-execution preview packet` was pushed,
+  `master` is at `HEAD...origin/master=0 0` and the tracked working tree is
+  clean. Local-only residue is quarantined in `.git/info/exclude`, not in
+  repo history: `.claude/worktrees/`, `.codex/hooks.json`, `.codex/hooks/`,
+  `docs/verification/COMMON-FOUNDATION-REVIEW-INDEX-2026-06-15.md`, and
+  `samples/2026-05-16.ymmp`. Classification: `.claude/worktrees/` is a local
+  agent worktree area; `.codex/hooks*` is a local Codex hook mirror of tracked
+  `.claude/hooks`; the common-foundation review index is stale against
+  `origin/codex/common-foundation-hold-state-audit` at `1b1cc8e` and should be
+  refreshed or discarded only in a later explicit docs slice; `samples/2026-05-16.ymmp`
+  has only three YMM4 item-like entries and external absolute paths, so it is
+  not a production carrier. No untracked file was deleted, no stash was applied
+  or dropped, and no `.ymmp`, render, media, TTS, publishing, rights,
+  external-asset, DB/auth/API, or real-runner work was opened. Next restart:
+  `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> this file, then choose a
+  separate lane before touching any quarantined residue.
 - **Remote-sync handoff capsule prepared (2026-06-17)**:
   The context needed to resume from another terminal is now preserved in tracked
   repository docs for the remote sync of `master`: the G-28 object catalog,
@@ -50,6 +102,21 @@
   high confidence proceeds into the next reversible 1-3 agent-side actions
   before reporting, while low confidence gets a Review Clarification Card only
   once if a wrong interpretation would materially change the artifact.
+- **Common foundation pre-execution human review packet tightened (2026-06-15)**:
+  `scripts/agent_orchestrator.py --pre-execution-dry-run` now makes the
+  operator preview packet slightly more explicit for human review: it states
+  that preview output is stdout only, says no real execution happened because
+  the flow stops after rendering the preview, and repeats that no `.agent`
+  report, log, or needs-human artifact is written. The active review command is
+  `uv run python scripts/agent_orchestrator.py --worker audit --pre-execution-dry-run --timestamp human-review-packet --repo-status-clean`.
+  The packet remains preview-only: it does not start `codex exec`, add or run a
+  real subprocess runner, pipe stdin, create a runtime worker loop, send
+  external notification, create `.agent/reports`, `.agent/logs`, or
+  `.agent/needs_human.json`, evaluate a real worker report, or grant execution
+  authority from `safe_to_start_real_runner`. Focused coverage in
+  `tests/test_agent_orchestration.py` asserts the stdout-only/no-artifact
+  readback. Next safe action is human review of the stdout packet, hold, or a
+  separately authorized runner consumption design.
 - **Common foundation repo-status input audit design recorded (2026-06-15)**:
   `docs/verification/COMMON-FOUNDATION-STATUS-INPUT-AUDIT-DESIGN-2026-06-15.md`
   refines the prior live status producer contract with the exact audit-facing

@@ -79,6 +79,42 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest common-foundation cockpit remote decision (2026-06-18):
+`common_foundation_cockpit_remote_verified_2026_06_18` closes the repeated
+network-blocked retry loop. Live `ls-remote` now confirms
+`origin/codex/common-foundation-hold-state-audit` at
+`1b1cc8e4f6d0f43dd4662d9efd64887653862b5c`
+(`docs(common-foundation): add cockpit dashboard review surface`). No
+feature-branch push was needed because the remote already contained the
+expected commit. The remote-review identity/access split is: dashboard
+`docs/dashboard/index.html` via `scripts/operator/open_dashboard.ps1`; status
+JSON `docs/dashboard/project-status.json` linked from the dashboard; screenshot
+`docs/review/common-foundation-dashboard-2026-06-17.png` linked from the
+dashboard/docs index; report template
+`docs/_templates/operation-cockpit-report.md` as repo-relative reference. User
+Git work remains none; later dashboard review, if requested, should be
+freeform review only. This decision does not authorize real `codex exec`,
+subprocess runner, stdin piping, runtime loop, external notification,
+repo-root `.agent` runtime artifacts, `.agent/needs_human.json`, G-28, G-27,
+GUI, YMM4, render, rights, production, publishing, ClipPipeGen, Newsroom, RSS,
+OPML, Inoreader, NotebookLM, or `.ymmp` work.
+
+Latest local-residue decision (2026-06-18):
+`local_residue_quarantine_2026_06_18` keeps post-push local state out of
+source history while preserving the re-entry context in tracked docs.
+`edbdc45 fix: clarify pre-execution preview packet` is already on
+`origin/master` (`HEAD...origin/master=0 0`). The local checkout now hides the
+known residue in `.git/info/exclude`: `.claude/worktrees/` (local agent
+worktree area), `.codex/hooks.json` and `.codex/hooks/` (local Codex hook
+mirror; guardrails match tracked `.claude/hooks`), the stale
+`docs/verification/COMMON-FOUNDATION-REVIEW-INDEX-2026-06-15.md` (later
+refresh/discard candidate; current common-foundation branch head observed as
+`1b1cc8e`), and `samples/2026-05-16.ymmp` (partial YMM4 sample with external
+absolute paths, not a production carrier). None of these files should be
+committed by `git add .`; none were deleted. If a future terminal needs one of
+them, open a separate explicit lane first: common-foundation review refresh,
+Codex hook policy, Claude worktree cleanup, or YMM4 artifact review.
+
 Latest remote-sync decision (2026-06-17):
 `remote_sync_handoff_2026_06_17` preserves the local continuation context in
 tracked project files before publishing `master` for resume from another
