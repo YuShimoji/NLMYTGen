@@ -88,6 +88,72 @@ class NewsroomHandoffValidationResult:
         return payload
 
 
+@dataclass
+class NewsroomG28SlotLinkageProof:
+    """Readback linking newsroom visual metadata to G-28 review slots."""
+
+    status: str
+    packet_path: str | None = None
+    artifact_id: str | None = None
+    episode_id: str | None = None
+    contract_version: str | None = None
+    validator_status: str = "not_run"
+    transfer_status: str = "blocked"
+    ymm4_transfer_ready: bool | None = None
+    errors: list[str] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
+    blockers: list[str] = field(default_factory=list)
+    linkages: list[dict[str, Any]] = field(default_factory=list)
+    visual_slot_gaps: list[dict[str, Any]] = field(default_factory=list)
+    review_surface_index: dict[str, str] = field(default_factory=dict)
+    next_use: str = (
+        "Use this proof as a UI-independent readback before a future Review "
+        "Console consumer or G-28 transfer-planning slice."
+    )
+
+    @property
+    def has_errors(self) -> bool:
+        return bool(self.errors)
+
+    def to_dict(self) -> dict[str, Any]:
+        payload = asdict(self)
+        payload["has_errors"] = self.has_errors
+        return payload
+
+
+G28_REVIEW_SURFACE_INDEX: dict[str, str] = {
+    "object_catalog": "samples/_probe/g28/reference_layout_prototypes/object_catalog.html",
+    "screenshot_callout": "samples/_probe/g28/reference_layout_prototypes/screenshot_callout.html",
+    "article_quote_card": "samples/_probe/g28/reference_layout_prototypes/article_quote_card.html",
+    "image_annotation_simple": (
+        "samples/_probe/g28/reference_layout_prototypes/image_annotation_simple.html"
+    ),
+    "two_image_compare": "samples/_probe/g28/reference_layout_prototypes/two_image_compare.html",
+    "asset_plus_caption": "samples/_probe/g28/reference_layout_prototypes/asset_plus_caption.html",
+    "source_footage_annotated": (
+        "samples/_probe/g28/reference_layout_prototypes/source_footage_annotated.html"
+    ),
+}
+
+SLOT_DEFAULT_LAYOUT_HINTS: dict[str, str] = {
+    "image_slot": "image_annotation_simple",
+    "screenshot_slot": "screenshot_callout",
+    "footage_slot": "source_footage_annotated",
+    "highlight_box": "image_annotation_simple",
+    "arrow": "image_annotation_simple",
+    "leader_line": "source_footage_annotated",
+    "label_chip": "article_quote_card",
+    "callout_box": "screenshot_callout",
+    "lower_third_telop": "asset_plus_caption",
+    "source_note": "screenshot_callout",
+    "quote_card": "article_quote_card",
+    "comparison_panel": "two_image_compare",
+    "table_row": "object_catalog",
+    "host_placeholder": "object_catalog",
+    "caption_reserve": "object_catalog",
+}
+
+
 def load_newsroom_handoff_packet(path: str | Path) -> dict[str, Any]:
     """Load a newsroom handoff packet and require a JSON object root."""
     packet_path = Path(path)
@@ -403,4 +469,270 @@ def render_newsroom_handoff_validation_text(
 
     lines.append("")
     lines.append(f"next_use: {result.next_use}")
+    return "\n".join(lines) + "\n"
+
+
+def _dicts_by_id(items: list[Any], id_field: str) -> dict[str, dict[str, Any]]:
+    return {
+        item[id_field]: item
+        for item in items
+        if isinstance(item, dict)
+        and isinstance(item.get(id_field), str)
+        and item[id_field].strip()
+    }
+
+
+def _source_refs_for_visual(
+    beat: dict[str, Any] | None,
+    hints: list[Any],
+) -> list[str]:
+    refs: set[str] = set()
+    if beat and isinstance(beat.get("evidence_refs"), list):
+        refs.update(ref for ref in beat["evidence_refs"] if isinstance(ref, str))
+    for hint in hints:
+        if not isinstance(hint, dict):
+            continue
+        source_ref = hint.get("source_ref")
+        if isinstance(source_ref, str) and source_ref:
+            refs.add(source_ref)
+    return sorted(refs)
+
+
+def _review_surface_for_slot(layout_candidate: str | None, slot_name: str) -> dict[str, str]:
+    layout_key = layout_candidate if layout_candidate in G28_REVIEW_SURFACE_INDEX else None
+    slot_layout = SLOT_DEFAULT_LAYOUT_HINTS.get(slot_name, "object_catalog")
+    selected_key = layout_key or slot_layout
+    return {
+        "object_catalog": G28_REVIEW_SURFACE_INDEX["object_catalog"],
+        "reference_layout": G28_REVIEW_SURFACE_INDEX.get(
+            selected_key,
+            G28_REVIEW_SURFACE_INDEX["object_catalog"],
+        ),
+        "future_review_console": "read_only_slot_linkage_consumer",
+    }
+
+
+def build_g28_slot_linkage_proof(
+    packet: dict[str, Any],
+    *,
+    packet_path: str | Path | None = None,
+    allowed_g28_slots: set[str] | None = None,
+) -> NewsroomG28SlotLinkageProof:
+    """Build a UI-independent readback from visual_plan to G-28 slot hints."""
+    allowed_slots = allowed_g28_slots or set(ALLOWED_G28_SLOT_SET)
+    validation = validate_newsroom_handoff_packet(
+        packet,
+        packet_path=packet_path,
+        allowed_g28_slots=allowed_slots,
+    )
+    errors = list(validation.errors)
+    warnings = list(validation.warnings)
+
+    source_notes = packet.get("source_notes") if isinstance(packet.get("source_notes"), list) else []
+    script_beats = packet.get("script_beats") if isinstance(packet.get("script_beats"), list) else []
+    visual_plan = packet.get("visual_plan") if isinstance(packet.get("visual_plan"), list) else []
+    g28_slot_hints = (
+        packet.get("g28_slot_hints") if isinstance(packet.get("g28_slot_hints"), list) else []
+    )
+
+    source_by_id = _dicts_by_id(source_notes, "source_id")
+    beat_by_id = _dicts_by_id(script_beats, "beat_id")
+    visual_by_id = _dicts_by_id(visual_plan, "visual_id")
+    hints_by_visual: dict[str, list[dict[str, Any]]] = {}
+    for hint in g28_slot_hints:
+        if not isinstance(hint, dict):
+            continue
+        visual_id = hint.get("visual_id")
+        if isinstance(visual_id, str) and visual_id:
+            hints_by_visual.setdefault(visual_id, []).append(hint)
+
+    linkages: list[dict[str, Any]] = []
+    visual_slot_gaps: list[dict[str, Any]] = []
+    for visual in visual_plan:
+        if not isinstance(visual, dict):
+            continue
+        visual_id = visual.get("visual_id")
+        if not isinstance(visual_id, str) or not visual_id:
+            continue
+        beat_id = visual.get("beat_id")
+        beat = beat_by_id.get(beat_id) if isinstance(beat_id, str) else None
+        visual_hints = hints_by_visual.get(visual_id, [])
+        hinted_slots = {
+            hint.get("object_catalog_slot")
+            for hint in visual_hints
+            if isinstance(hint.get("object_catalog_slot"), str)
+        }
+        content_slots = visual.get("content_slots")
+        if isinstance(content_slots, list):
+            missing_slots = sorted(
+                slot
+                for slot in content_slots
+                if isinstance(slot, str) and slot not in hinted_slots
+            )
+            if missing_slots:
+                gap = {
+                    "visual_id": visual_id,
+                    "beat_id": beat_id,
+                    "missing_g28_slot_hints": missing_slots,
+                    "severity": "warning",
+                    "review_implication": (
+                        "Review Console should show these visual content slots as "
+                        "unhinted before transfer planning."
+                    ),
+                }
+                visual_slot_gaps.append(gap)
+                warnings.append(
+                    f"MISSING_G28_SLOT_HINT: {visual_id}->{','.join(missing_slots)}"
+                )
+
+        if not visual_hints:
+            continue
+
+        source_refs = _source_refs_for_visual(beat, visual_hints)
+        unknown_sources = [ref for ref in source_refs if ref not in source_by_id]
+        if unknown_sources:
+            warnings.append(
+                f"LINKAGE_UNKNOWN_SOURCE_REF: {visual_id}->{','.join(unknown_sources)}"
+            )
+
+        seen_slots: set[str] = set()
+        for hint in visual_hints:
+            slot_id = hint.get("slot_id")
+            slot_name = hint.get("object_catalog_slot")
+            if isinstance(slot_name, str):
+                if slot_name in seen_slots:
+                    warnings.append(f"DUPLICATE_G28_SLOT_HINT_FOR_VISUAL: {visual_id}->{slot_name}")
+                seen_slots.add(slot_name)
+            slot_allowed = isinstance(slot_name, str) and slot_name in allowed_slots
+            review_surface = _review_surface_for_slot(
+                visual.get("layout_candidate") if isinstance(visual.get("layout_candidate"), str) else None,
+                slot_name if isinstance(slot_name, str) else "",
+            )
+            linkages.append({
+                "beat_id": beat_id,
+                "beat_intent": beat.get("intent") if beat else None,
+                "visual_id": visual_id,
+                "visualir_concept": visual.get("visualir_concept"),
+                "layout_candidate": visual.get("layout_candidate"),
+                "source_note_ids": source_refs,
+                "source_refs_resolved": not unknown_sources,
+                "slot_id": slot_id,
+                "selected_g28_slot": slot_name,
+                "slot_allowed": slot_allowed,
+                "semantic_role": hint.get("semantic_role"),
+                "text_budget": hint.get("text_budget"),
+                "review_surface": review_surface,
+                "review_implication": (
+                    "Check object catalog role/caution, then use the reference layout "
+                    "as a future read-only Review Console input."
+                ),
+                "downstream_readiness_implication": validation.transfer_status,
+                "transfer_note": hint.get("transfer_note"),
+                "production_visual_approval": False,
+            })
+
+    status = "failed" if errors else ("passed_with_warnings" if warnings else "passed")
+    return NewsroomG28SlotLinkageProof(
+        status=status,
+        packet_path=str(packet_path) if packet_path is not None else None,
+        artifact_id=validation.artifact_id,
+        episode_id=validation.episode_id,
+        contract_version=validation.contract_version,
+        validator_status=validation.status,
+        transfer_status=validation.transfer_status,
+        ymm4_transfer_ready=validation.ymm4_transfer_ready,
+        errors=errors,
+        warnings=sorted(set(warnings)),
+        blockers=validation.blockers,
+        linkages=linkages,
+        visual_slot_gaps=visual_slot_gaps,
+        review_surface_index=G28_REVIEW_SURFACE_INDEX,
+    )
+
+
+def render_g28_slot_linkage_proof_markdown(
+    proof: NewsroomG28SlotLinkageProof,
+) -> str:
+    """Render a compact Markdown proof for supervisor review."""
+    lines: list[str] = [
+        "# Newsroom G-28 Slot Linkage Proof",
+        "",
+        f"status: {proof.status}",
+        f"validator_status: {proof.validator_status}",
+        f"transfer_status: {proof.transfer_status}",
+    ]
+    if proof.packet_path:
+        lines.append(f"packet_path: {proof.packet_path}")
+    if proof.artifact_id:
+        lines.append(f"artifact_id: {proof.artifact_id}")
+    if proof.episode_id:
+        lines.append(f"episode_id: {proof.episode_id}")
+    if proof.contract_version:
+        lines.append(f"contract_version: {proof.contract_version}")
+
+    lines.extend([
+        "",
+        "## Linkages",
+        "",
+        "| Beat | Visual | Slot | Sources | Slot ok | Review surface | Transfer |",
+        "| --- | --- | --- | --- | --- | --- | --- |",
+    ])
+    for item in proof.linkages:
+        sources = ", ".join(item["source_note_ids"]) if item["source_note_ids"] else "none"
+        slot_ok = "yes" if item["slot_allowed"] else "no"
+        surface = item["review_surface"]["reference_layout"]
+        lines.append(
+            "| {beat} | {visual} | {slot} | {sources} | {slot_ok} | {surface} | {transfer} |".format(
+                beat=item.get("beat_id") or "missing",
+                visual=item.get("visual_id") or "missing",
+                slot=item.get("selected_g28_slot") or "missing",
+                sources=sources,
+                slot_ok=slot_ok,
+                surface=surface,
+                transfer=item.get("downstream_readiness_implication") or "blocked",
+            )
+        )
+
+    lines.extend(["", "## Visual Slot Gaps"])
+    if proof.visual_slot_gaps:
+        for gap in proof.visual_slot_gaps:
+            lines.append(
+                "- {visual_id}: missing hints for {slots}".format(
+                    visual_id=gap["visual_id"],
+                    slots=", ".join(gap["missing_g28_slot_hints"]),
+                )
+            )
+    else:
+        lines.append("- none")
+
+    lines.extend(["", "## Warnings"])
+    if proof.warnings:
+        for warning in proof.warnings:
+            lines.append(f"- {warning}")
+    else:
+        lines.append("- none")
+
+    lines.extend(["", "## Errors"])
+    if proof.errors:
+        for error in proof.errors:
+            lines.append(f"- {error}")
+    else:
+        lines.append("- none")
+
+    lines.extend(["", "## YMM4 Transfer Blockers"])
+    if proof.blockers:
+        for blocker in proof.blockers:
+            lines.append(f"- {blocker}")
+    else:
+        lines.append("- none")
+
+    lines.extend([
+        "",
+        "## Boundary",
+        "",
+        "This is diagnostic/readback only. It does not implement Review Console UI, "
+        "create YMM4 artifacts, approve production visuals, fetch sources, or change rights state.",
+        "",
+        f"next_use: {proof.next_use}",
+    ])
     return "\n".join(lines) + "\n"

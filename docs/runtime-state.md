@@ -1,5 +1,22 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom G-28 slot-linkage proof v1 completed (2026-06-20)**:
+  The synthetic newsroom handoff fixture now has a UI-independent proof that
+  links `visual_plan` entries and `g28_slot_hints` to G-28 object catalog slots,
+  reference review surfaces, and downstream readiness gates. Implementation
+  lives in `src/pipeline/newsroom_handoff_validator.py`; the CLI entry is
+  `uv run python -m src.cli.main prove-newsroom-g28-slot-linkage --format json`.
+  JSON readback is
+  `samples/_probe/newsroom_handoff/g28_slot_linkage_readback.json`, and the
+  supervisor-facing readback is
+  `docs/verification/NEWSROOM_G28_SLOT_LINKAGE_PROOF_V1_2026-06-20.md`. The
+  fixture status is `passed_with_warnings`: all hinted slots are allowed, YMM4
+  transfer remains blocked, and the proof intentionally reports unhinted visual
+  content slots for future Review Console / transfer-planning work. This slice
+  does not implement Review Console UI, touch `newsroom-yt-pipeline`, fetch
+  sources, edit `.ymmp`, render media, approve rights, or change publication
+  state. Next safe follow-up is a read-only Review Console consumer or a
+  separate G-28 transfer-planning slice that consumes this proof.
 - **Newsroom handoff validator v1 completed (2026-06-20)**:
   The NLMYTGen-side receiving contract now has a lightweight fail-closed
   validator for the synthetic fixture. The implementation lives in

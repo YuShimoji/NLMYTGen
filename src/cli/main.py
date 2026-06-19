@@ -16,6 +16,7 @@ Usage:
     python -m src.cli.main rss-smoke [--opml feeds.opml] [--reader opml|inoreader] [--format markdown|json]
     python -m src.cli.main validate-ir <ir.json> [--palette ...] [--format text|json]
     python -m src.cli.main validate-newsroom-handoff [packet.json] [--format text|json]
+    python -m src.cli.main prove-newsroom-g28-slot-linkage [packet.json] [--format markdown|json] [-o readback]
     python -m src.cli.main validate-background-skit-blueprint <blueprint.json> --script <txt> --ymmp <ymmp> [--fps 60] [--format text|json]
     python -m src.cli.main emit-packaging-brief-template [-o path] [--format markdown|json]
     python -m src.cli.main init-episode-run --episode-id ID [--root DIR] [--force] [--format text|json]
@@ -2154,6 +2155,20 @@ def main(argv: list[str] | None = None) -> int:
     )
     p_newsroom_handoff.add_argument("--format", choices=["text", "json"], default="text")
 
+    # prove-newsroom-g28-slot-linkage
+    p_g28_linkage = subparsers.add_parser(
+        "prove-newsroom-g28-slot-linkage",
+        help="Build a UI-independent readback from newsroom visuals to G-28 slots",
+    )
+    p_g28_linkage.add_argument(
+        "packet_json",
+        nargs="?",
+        default="samples/_probe/newsroom_handoff/minimal_episode_packet.json",
+        help="Newsroom handoff packet JSON",
+    )
+    p_g28_linkage.add_argument("-o", "--output", help="Output readback path")
+    p_g28_linkage.add_argument("--format", choices=["markdown", "json"], default="markdown")
+
     # validate-background-skit-blueprint
     p_skit_blueprint = subparsers.add_parser(
         "validate-background-skit-blueprint",
@@ -2421,6 +2436,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_validate_ir(args)
         elif args.command == "validate-newsroom-handoff":
             return _cmd_validate_newsroom_handoff(args)
+        elif args.command == "prove-newsroom-g28-slot-linkage":
+            return _cmd_prove_newsroom_g28_slot_linkage(args)
         elif args.command == "validate-background-skit-blueprint":
             return _cmd_validate_background_skit_blueprint(args)
         elif args.command == "audit-skit-group":
@@ -3567,6 +3584,35 @@ def _cmd_validate_newsroom_handoff(args: argparse.Namespace) -> int:
     else:
         sys.stdout.write(render_newsroom_handoff_validation_text(result))
     return 1 if result.has_errors else 0
+
+
+def _cmd_prove_newsroom_g28_slot_linkage(args: argparse.Namespace) -> int:
+    """Build a G-28 slot-linkage proof from a newsroom handoff packet."""
+    from src.pipeline.newsroom_handoff_validator import (
+        build_g28_slot_linkage_proof,
+        load_newsroom_handoff_packet,
+        render_g28_slot_linkage_proof_markdown,
+    )
+
+    packet = load_newsroom_handoff_packet(args.packet_json)
+    proof = build_g28_slot_linkage_proof(
+        packet,
+        packet_path=args.packet_json,
+    )
+    if args.format == "json":
+        text = json.dumps(proof.to_dict(), ensure_ascii=False, indent=2) + "\n"
+    else:
+        text = render_g28_slot_linkage_proof_markdown(proof)
+
+    output = getattr(args, "output", None)
+    if output:
+        out_path = Path(output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(text, encoding="utf-8")
+        print(f"Written: {out_path}")
+    else:
+        sys.stdout.write(text)
+    return 1 if proof.has_errors else 0
 
 
 def _load_csv_rows(csv_path: str) -> list[list[str]]:
