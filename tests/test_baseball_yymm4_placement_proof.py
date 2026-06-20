@@ -54,6 +54,22 @@ PROOF_HANDOFF_PATH = (
     / "placement"
     / "baseball_pitch_event_p05_placement_proof_handoff.md"
 )
+PREVIEW_SCREENSHOT_PATH = (
+    REPO_ROOT
+    / "samples"
+    / "_probe"
+    / "baseball"
+    / "placement"
+    / "baseball_pitch_event_p05_yymm4_preview_screenshot.png"
+)
+PREVIEW_REVIEW_PATH = (
+    REPO_ROOT
+    / "samples"
+    / "_probe"
+    / "baseball"
+    / "placement"
+    / "baseball_pitch_event_p05_yymm4_preview_review.json"
+)
 SCRIPT_PATH = (
     REPO_ROOT
     / "lanes"
@@ -173,5 +189,24 @@ def test_baseball_placement_proof_boundaries_and_handoff() -> None:
     assert "not production placement" in handoff
     assert "not a render proof" in handoff
     assert "not creative acceptance" in handoff
-    assert "Fixed labels are not required" in handoff
-    assert "open_baseball_bn05_preview.ps1" in handoff
+    assert "accepted_gate_only" in handoff
+    assert "not production proof" in handoff
+
+
+def test_baseball_placement_manual_preview_gate_acceptance_recorded() -> None:
+    review = _load_json(PREVIEW_REVIEW_PATH)
+
+    assert PREVIEW_SCREENSHOT_PATH.exists()
+    assert _sha256(PREVIEW_SCREENSHOT_PATH) == review["screenshot"]["sha256"]
+    assert review["status"] == "accepted_gate_only"
+    assert review["target"]["frame"] == 1560
+    assert review["target"]["timecode"] == "00:26.00"
+    assert review["freeform_review_interpretation"]["interpreted_intent"] == "accept_gate_only"
+    assert review["freeform_review_interpretation"]["confidence"] == "high"
+    assert review["freeform_review_interpretation"]["user_rewrite_required"] is False
+    assert review["acceptance_scope"]["manual_preview_gate_closed"] is True
+    assert review["acceptance_scope"]["diagnostic_review_only"] is True
+    assert review["acceptance_scope"]["not_render_completion"] is True
+    assert review["acceptance_scope"]["not_production_proof"] is True
+    assert review["acceptance_scope"]["not_creative_final_acceptance"] is True
+    assert review["acceptance_scope"]["future_visual_redesign_is_separate"] is True

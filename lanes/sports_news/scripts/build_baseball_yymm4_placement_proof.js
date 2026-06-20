@@ -13,6 +13,8 @@ const paths = {
   readback: 'samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_readback.json',
   handoff: 'samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_handoff.md',
   launcher: 'lanes/sports_news/scripts/open_baseball_bn05_preview.ps1',
+  previewScreenshot: 'samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png',
+  previewReview: 'samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_review.json',
 };
 
 const PROOF_REMARK = 'baseball_bn05_placement_proof segment=pitch_event_breakdown not_creative_acceptance no_render no_publish_gate';
@@ -27,6 +29,11 @@ function readText(relPath) {
 
 function readJson(relPath) {
   return JSON.parse(readText(relPath));
+}
+
+function readJsonIfExists(relPath) {
+  if (!fs.existsSync(abs(relPath))) return null;
+  return readJson(relPath);
 }
 
 function writeJson(relPath, payload) {
@@ -329,6 +336,30 @@ function renderManifest(contract, staticManifest, outputYmmpHash) {
   };
 }
 
+function renderManualPreviewGate() {
+  const review = readJsonIfExists(paths.previewReview);
+  if (review?.status === 'accepted_gate_only') {
+    return `The BN-05 YMM4 manual preview gate is accepted as gate-only review evidence.
+
+- screenshot: \`${paths.previewScreenshot}\`
+- review record: \`${paths.previewReview}\`
+- reviewed frame/time: \`${review.target.frame}\` / \`${review.target.timecode}\`
+- review status: \`${review.status}\`
+
+This acceptance only closes the BN-05 manual preview gate. It is not render
+completion, not production proof, not creative final acceptance, not publish
+readiness, and not real episode suitability. Future visual or layout redesign is
+a separate later decision, not a blocker for this BN-05 gate.`;
+  }
+
+  return `Open \`${paths.outputYmmp}\` in YMM4 from the repo checkout. If your YMM4
+installation does not resolve relative media paths, run
+\`${paths.launcher}\`; it creates an ignored local preview copy with an absolute
+PNG path resolved from the current repo root. Inspect frame \`1560\` /
+\`00:26.00\`. Return one preview screenshot plus any short freeform comment.
+Fixed labels are not required.`;
+}
+
 function renderHandoff(readback, manifest) {
   return `# Baseball BN-05 insertion proof handoff
 
@@ -356,12 +387,7 @@ publish gate.
 
 ## Manual preview gate
 
-Open \`${paths.outputYmmp}\` in YMM4 from the repo checkout. If your YMM4
-installation does not resolve relative media paths, run
-\`${paths.launcher}\`; it creates an ignored local preview copy with an absolute
-PNG path resolved from the current repo root. Inspect frame \`1560\` /
-\`00:26.00\`. Return one preview screenshot plus any short freeform comment.
-Fixed labels are not required.
+${renderManualPreviewGate()}
 `;
 }
 

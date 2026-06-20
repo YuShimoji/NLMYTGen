@@ -11,6 +11,7 @@ explicitly says so.
 | --- | --- | --- | --- | --- |
 | Baseball static infographic | `samples/_probe/baseball/static/baseball_pitch_event_p05.png` | One-screen pitch-event layout, score hierarchy, zone, side panels. | [baseball_infographic_backlog.md](../lanes/sports_news/docs/baseball_infographic_backlog.md), BN-03. | Static PNG export only; not YMM4 creative acceptance. |
 | Baseball frame sequence | `samples/_probe/baseball/animation/frames/baseball_pitch_event_p05/` | Whether exported frames communicate the pitch update clearly. | [baseball_bn04_animation_export_design_2026-05-26.md](../lanes/sports_news/docs/baseball_bn04_animation_export_design_2026-05-26.md). | Frame sequence only; not codec clip or YMM4 placement. |
+| Baseball BN-05 YMM4 manual preview | `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png` | Frame `1560` / `00:26.00` YMM4 preview fit, readability, and layer overlap. | `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_review.json`, BN-05. | Gate-only manual preview acceptance; not render proof, not production proof, not creative final acceptance. |
 | Baseball foundation rebaseline docs view | `samples/_probe/baseball/foundation_rebaseline_2026-06-15/baseball_foundation_rebaseline_docs_view.png` | Whether the local docs view reaches the BN-R0 rebaseline report from the index/Overview route. | [FOUNDATION_REBASELINE_2026-06-15.md](baseball/FOUNDATION_REBASELINE_2026-06-15.md). | Navigation and report evidence only; not Baseball visual production proof. |
 | Baseball pipeline smoke visual | `samples/_probe/pipeline_smoke/baseball_news_infographic/visual_treatment_proof.png` | Earlier smoke-style visual treatment for baseball news. | Pipeline smoke artifacts. | Visual treatment proof, not the BN-03/BN-04 owner. |
 | Pipeline GUI smoke | `samples/_probe/pipeline_smoke/pipeline_smoke_gui_screenshot.png` | GUI smoke surface and operator flow. | Pipeline smoke artifacts and GUI docs. | Smoke screenshot, not a full GUI acceptance record. |
@@ -26,6 +27,10 @@ explicitly says so.
 ![Baseball frame 0](../samples/_probe/baseball/animation/frames/baseball_pitch_event_p05/baseball_pitch_event_p05_f000.png)
 
 ![Baseball frame 1](../samples/_probe/baseball/animation/frames/baseball_pitch_event_p05/baseball_pitch_event_p05_f001.png)
+
+### Baseball BN-05 YMM4 Manual Preview
+
+![Baseball BN-05 YMM4 manual preview](../samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png)
 
 ### Baseball Foundation Rebaseline Docs View
 
@@ -54,11 +59,11 @@ When a new screenshot is added, link it here instead of moving the source image
 into `docs/`. The local MkDocs generator copies selected proof images into the
 ignored `.mkdocs-docs/` staging folder so the browser view can render them.
 
-## Missing Visual Proof To Capture
+## Manual Visual Proof Captured
 
-| Needed proof | Suggested path | Return signal |
+| Captured proof | Path | Review signal |
 | --- | --- | --- |
-| BN-05 YMM4 manual preview screenshot | `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png` | One screenshot from YMM4 at frame `1560` / `00:26.00`, plus any short freeform comment. Fixed labels are not required. |
+| BN-05 YMM4 manual preview screenshot | `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png` | Freeform review consumed as `accepted_gate_only`; future visual/layout redesign is a separate later decision. |
 
-The checklist for that manual step is
-[baseball_manual_preview_hands_on_2026-05-26.md](../lanes/sports_news/docs/baseball_manual_preview_hands_on_2026-05-26.md).
+The review record for that manual step is
+`samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_review.json`.

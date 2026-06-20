@@ -13,7 +13,7 @@ to look next, then read the linked owner document for the actual wording.
 | How are mainline and Baseball sidequest separated? | [BRANCH_THREAD_SUPERVISION.md](BRANCH_THREAD_SUPERVISION.md), [BASEBALL_SUPERVISOR_REVIEW_PROMPT.md](BASEBALL_SUPERVISOR_REVIEW_PROMPT.md) | Same repository, separate branch, separate development thread, and separate supervisor prompt rules. | Baseball branch changes are not mainline policy until explicitly integrated. |
 | How do I review the current Baseball foundation state? | [FOUNDATION_REBASELINE_2026-06-15.md](baseball/FOUNDATION_REBASELINE_2026-06-15.md) | Branch/upstream inventory, current artifact chain, single review procedure, screenshot evidence path, and remaining uncertainty before BN-05/manual preview work. | It is a rebaseline report, not a new feature implementation or production acceptance record. |
 | Are implementation items grouped by topic? | [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md) and the implementation map below | A-H feature groups plus Baseball sidequest BN slices and common foundation work. | Some verification docs are evidence records, not feature owners. |
-| Where are progress screenshots or visual proof images? | [PROGRESS_SCREENSHOT_INDEX.md](PROGRESS_SCREENSHOT_INDEX.md) | Existing proof images, preview screenshots, frame exports, and their source paths. | The BN-05 YMM4 manual preview screenshot is still missing until a human captures it in YMM4. |
+| Where are progress screenshots or visual proof images? | [PROGRESS_SCREENSHOT_INDEX.md](PROGRESS_SCREENSHOT_INDEX.md) | Existing proof images, preview screenshots, frame exports, and their source paths. | The BN-05 YMM4 manual preview screenshot is recorded as gate-only acceptance, not render proof or creative final acceptance. |
 | Is future planning split by turn count instead of date? | [TURN_BASED_DEVELOPMENT_PLAN.md](TURN_BASED_DEVELOPMENT_PLAN.md) | Turn bands, lane choices, done signals, and default Baseball next turns. | It is a planning route, not a replacement for `runtime-state.md` or human decisions. |
 
 ## Implementation Map
@@ -55,5 +55,5 @@ Artifacts or Development Notes rather than being promoted to canonical status.
 | --- | --- | --- |
 | One visual gallery for progress review | Added as [PROGRESS_SCREENSHOT_INDEX.md](PROGRESS_SCREENSHOT_INDEX.md). | Keep image files in `samples/_probe/...`; keep the index as a pointer. |
 | Turn-count development plan | Added as [TURN_BASED_DEVELOPMENT_PLAN.md](TURN_BASED_DEVELOPMENT_PLAN.md). | Update it only when planning bands change, not for every status note. |
-| BN-05 YMM4 preview screenshot | Not present in repo yet. | Capture beside the Baseball placement proof and link it from [PROGRESS_SCREENSHOT_INDEX.md](PROGRESS_SCREENSHOT_INDEX.md). |
+| BN-05 YMM4 preview screenshot | Present as gate-only acceptance evidence. | Keep the screenshot and review JSON beside the Baseball placement proof and link them from [PROGRESS_SCREENSHOT_INDEX.md](PROGRESS_SCREENSHOT_INDEX.md). |
 | Dense historical runtime entries | Still dense by design. | Use this page and [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md) before reading `runtime-state.md`. |

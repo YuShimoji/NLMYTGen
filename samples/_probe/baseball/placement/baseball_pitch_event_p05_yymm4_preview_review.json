@@ -1,0 +1,32 @@
+{
+  "artifact_id": "baseball_pitch_event_p05_yymm4_preview",
+  "status": "accepted_gate_only",
+  "reviewed_at": "2026-06-20",
+  "target": {
+    "proof_ymmp_path": "samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof.ymmp",
+    "frame": 1560,
+    "timecode": "00:26.00",
+    "active_artifact": "baseball_pitch_event_p05_placement_proof"
+  },
+  "screenshot": {
+    "path": "samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png",
+    "sha256": "d898ebcf8c23f4871d5cb855f54c9d64f8c0cd0f068d094c6e53884a2cbd7d7b",
+    "bytes": 948210
+  },
+  "freeform_review_interpretation": {
+    "interpreted_intent": "accept_gate_only",
+    "confidence": "high",
+    "summary": "The YMM4 preview fits the frame and the text is readable enough for the BN-05 QA gate. Future visual or layout redesign should be handled as a separate later decision.",
+    "user_rewrite_required": false
+  },
+  "acceptance_scope": {
+    "manual_preview_gate_closed": true,
+    "diagnostic_review_only": true,
+    "not_render_completion": true,
+    "not_production_proof": true,
+    "not_creative_final_acceptance": true,
+    "not_publish_gate": true,
+    "not_real_episode_suitability": true,
+    "future_visual_redesign_is_separate": true
+  }
+}

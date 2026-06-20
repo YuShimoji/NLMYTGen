@@ -67,12 +67,11 @@ powershell -ExecutionPolicy Bypass -File .\lanes\sports_news\scripts\open_baseba
 | Placement manifest | `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_manifest.json` exists | BN-03 static PNG was inserted into a minimal proof project as planned |
 | Placement readback | `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_readback.json` has `status: passed` and no failed checks | Timing, layer, canvas, zoom, file path, and hashes match the contract mechanically |
 | Proof project | `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof.ymmp` exists | This is the review target for YMM4 manual preview only |
-| Manual screenshot | `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png` is absent | Human preview is still required before placement acceptance |
-| Freeform review memo | not recorded | The gate cannot be closed from mechanical readback alone |
+| Manual screenshot | `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png` exists | Human preview evidence is recorded for BN-05 gate-only acceptance |
+| Freeform review memo | `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_review.json` records `accepted_gate_only` | The BN-05 manual preview gate is closed without claiming render, production, publishing, or creative final acceptance |
 
-The current blocker is narrow: open the proof `.ymmp` in YMM4, inspect frame
-`1560` / `00:26.00`, and return one screenshot plus any short freeform comment.
-Fixed labels are not required.
+The current BN-05 manual preview blocker is closed. Future visual or layout
+redesign remains a separate later decision, not part of this gate closure.
 
 ## Review artifact identity and access
 
@@ -83,17 +82,18 @@ Fixed labels are not required.
 | BN-05 manifest | `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_manifest.json` | Reference-only; read it from repo | Connects contract, static PNG, seed `.ymmp`, proof `.ymmp`, readback, and handoff |
 | BN-05 readback | `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_readback.json` | Reference-only; read it from repo | All checks true, failed checks empty |
 | Manual checklist | `lanes/sports_news/docs/baseball_manual_preview_hands_on_2026-05-26.md` | Open as Markdown before YMM4 review | Defines frame `1560`, time `00:26.00`, image-visible check, and freeform return payload |
-| Progress screenshot slot | `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png` | Not present yet | Capture here when the manual preview is returned |
+| Progress screenshot | `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png` | Open as screenshot evidence | Captured YMM4 v4.53.0.5 preview at the BN-05 manual gate |
+| Freeform review record | `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_review.json` | Reference-only; read it from repo | Records `accepted_gate_only` and keeps future redesign separate |
 
-## Required human return
+## Human return consumed on 2026-06-20
 
-Return exactly the minimum needed to close or tune BN-05:
+The returned screenshot and freeform review were consumed as high-confidence
+`accepted_gate_only` for the BN-05 manual preview target:
 
-1. One YMM4 preview screenshot at frame `1560` / time `00:26.00`.
-2. A short freeform memo. Fixed labels are not required.
-3. If the proof is acceptable, state that naturally.
-4. If something is wrong, identify the smallest visible issue to tune: image
-   still missing, crop, text size, layer overlap, or timing drift.
+1. Screenshot: `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png`.
+2. Review record: `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_review.json`.
+3. Interpretation: frame fit and readability are acceptable for the BN-05 QA gate.
+4. Constraint: future visual redesign or layout improvement is a separate later decision.
 
 Acceptance does not mean render completion, production proof, creative final
 acceptance, publish readiness, or real episode suitability.
@@ -102,7 +102,7 @@ acceptance, publish readiness, or real episode suitability.
 
 | Returned signal | Next agent move | What stays closed |
 | --- | --- | --- |
-| Acceptable freeform review plus screenshot | Record the screenshot in `docs/PROGRESS_SCREENSHOT_INDEX.md`, preserve diagnostic/review-only wording, and mark BN-05 placement acceptance as gate-only | render, production, publishing, YouTube, real source, clip export |
+| Acceptable freeform review plus screenshot | Completed on 2026-06-20: screenshot indexed, review JSON recorded, and BN-05 placement acceptance marked as gate-only | render, production, publishing, YouTube, real source, clip export |
 | Problem report plus screenshot/memo | Tune the placement contract once, rebuild proof/readback, run BN-05 tests, and ask for one recheck only if needed | unrelated layout redesign, animation export, production claims |
 | No screenshot | Keep this handoff as the restart point and do not claim BN-05 acceptance | all production and publish lanes |
 
@@ -127,6 +127,14 @@ acceptance, publish readiness, or real episode suitability.
 | `powershell -ExecutionPolicy Bypass -File lanes/sports_news/scripts/open_baseball_bn05_preview.ps1 -NoOpen` | passed; created ignored local proof copy with absolute PNG path |
 | `pytest tests/test_baseball_yymm4_placement_contract.py tests/test_baseball_yymm4_placement_proof.py` | `8 passed` |
 | `git diff --check` | passed after line-ending cleanup |
+
+## Validation already run on 2026-06-20
+
+| Check | Result |
+| --- | --- |
+| `Test-Path samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png` | `True` |
+| BN-05 freeform review intake | `accepted_gate_only`, high confidence |
+| BN-05 future redesign boundary | recorded as separate later decision |
 
 ## Boundaries preserved
 

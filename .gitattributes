@@ -5,3 +5,5 @@ samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof.ymmp 
 samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_handoff.md text eol=lf
 samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_manifest.json text eol=lf
 samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof_readback.json text eol=lf
+samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_review.json text eol=lf
+samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png binary

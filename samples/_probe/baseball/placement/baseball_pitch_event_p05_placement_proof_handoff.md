@@ -24,9 +24,14 @@ publish gate.
 
 ## Manual preview gate
 
-Open `samples/_probe/baseball/placement/baseball_pitch_event_p05_placement_proof.ymmp` in YMM4 from the repo checkout. If your YMM4
-installation does not resolve relative media paths, run
-`lanes/sports_news/scripts/open_baseball_bn05_preview.ps1`; it creates an ignored local preview copy with an absolute
-PNG path resolved from the current repo root. Inspect frame `1560` /
-`00:26.00`. Return one preview screenshot plus any short freeform comment.
-Fixed labels are not required.
+The BN-05 YMM4 manual preview gate is accepted as gate-only review evidence.
+
+- screenshot: `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png`
+- review record: `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_review.json`
+- reviewed frame/time: `1560` / `00:26.00`
+- review status: `accepted_gate_only`
+
+This acceptance only closes the BN-05 manual preview gate. It is not render
+completion, not production proof, not creative final acceptance, not publish
+readiness, and not real episode suitability. Future visual or layout redesign is
+a separate later decision, not a blocker for this BN-05 gate.

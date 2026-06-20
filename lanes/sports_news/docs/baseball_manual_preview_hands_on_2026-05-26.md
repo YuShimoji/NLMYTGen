@@ -3,6 +3,16 @@
 この手順は、BN-05 の YMM4 preview gate だけを人間側で確認するためのものです。
 レンダー、creative acceptance、publish gate の判定は含めません。
 
+## 2026-06-20 result
+
+The BN-05 manual preview return was consumed on 2026-06-20 as
+`accepted_gate_only`.
+
+- screenshot: `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png`
+- review record: `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_review.json`
+- boundary: this closes only the BN-05 QA/manual preview gate; future visual or
+  layout redesign is a separate later decision.
+
 ## 開くファイル
 
 YMM4 で次の proof project を開きます。
