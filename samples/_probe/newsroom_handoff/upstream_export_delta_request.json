@@ -1,0 +1,677 @@
+{
+  "artifact_id": "newsroom_upstream_export_delta_request_v1_2026_06_20",
+  "repo_relative_path": "samples/_probe/newsroom_handoff/upstream_export_delta_request.json",
+  "status": "request_spec_only",
+  "review_status": "ready_for_supervisor_review",
+  "request_owner": "NLMYTGen",
+  "target_repo": "newsroom-yt-pipeline",
+  "target_lane": "upstream_export_bundle",
+  "current_packet_state": "synthetic_fixture_only",
+  "real_packet_accepted": false,
+  "production_approval": false,
+  "rights_approval": false,
+  "ymm4_transfer_ready": false,
+  "diagnostic_only": true,
+  "source_artifacts": {
+    "handoff_contract": "docs/integration/NEWSROOM_TO_NLMYTGEN_HANDOFF_CONTRACT.md",
+    "synthetic_packet": "samples/_probe/newsroom_handoff/minimal_episode_packet.json",
+    "real_packet_readiness_checklist": "samples/_probe/newsroom_handoff/real_packet_readiness_checklist.json",
+    "mapping_readback": "docs/verification/NEWSROOM_HANDOFF_MAPPING_2026-06-19.md",
+    "slot_linkage_readback": "samples/_probe/newsroom_handoff/g28_slot_linkage_readback.json",
+    "transfer_planning_readback": "samples/_probe/newsroom_handoff/transfer_planning_readback.json",
+    "review_console_planning_panel": "docs/verification/NEWSROOM_REVIEW_CONSOLE_PLANNING_PANEL_V1_2026-06-20.md"
+  },
+  "consumer_vocabulary": [
+    "validator",
+    "slot-linkage proof",
+    "transfer-planning proof",
+    "Review Console planning panel",
+    "not covered yet"
+  ],
+  "request_items": [
+    {
+      "field_name": "artifact_id",
+      "required_before": "NLMYTGen ingest",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Identifies the export bundle and lets NLMYTGen record artifact provenance without inferring identity from file names.",
+      "current_consumer": "validator",
+      "current_NLMYTGen_consumer": "validator",
+      "failure_behavior": "fail",
+      "request_priority": "required",
+      "delta_from_synthetic_fixture": "already_represented"
+    },
+    {
+      "field_name": "contract_version",
+      "required_before": "NLMYTGen ingest",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Pins the exporter contract so future packet changes fail visibly instead of drifting through downstream review.",
+      "current_consumer": "validator",
+      "current_NLMYTGen_consumer": "validator",
+      "failure_behavior": "fail",
+      "request_priority": "required",
+      "delta_from_synthetic_fixture": "already_represented"
+    },
+    {
+      "field_name": "episode_id",
+      "required_before": "NLMYTGen ingest",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Provides stable episode identity for validation, readbacks, and later review surfaces.",
+      "current_consumer": "validator",
+      "current_NLMYTGen_consumer": "validator",
+      "failure_behavior": "fail",
+      "request_priority": "required",
+      "delta_from_synthetic_fixture": "represented_but_synthetic_only"
+    },
+    {
+      "field_name": "title",
+      "required_before": "NLMYTGen ingest",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Gives review surfaces a bounded working title without requiring NLMYTGen to inspect upstream sources.",
+      "current_consumer": "validator",
+      "current_NLMYTGen_consumer": "validator",
+      "failure_behavior": "fail",
+      "request_priority": "required",
+      "delta_from_synthetic_fixture": "represented_but_synthetic_only"
+    },
+    {
+      "field_name": "topic_summary",
+      "required_before": "NLMYTGen ingest",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Carries the editorial topic summary while keeping source discovery and expansion upstream-owned.",
+      "current_consumer": "validator",
+      "current_NLMYTGen_consumer": "validator",
+      "failure_behavior": "fail",
+      "request_priority": "required",
+      "delta_from_synthetic_fixture": "represented_but_synthetic_only"
+    },
+    {
+      "field_name": "episode_metadata",
+      "required_before": "NLMYTGen ingest",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Preserves language, lane, duration, and package context needed for review without creating production approval.",
+      "current_consumer": "validator",
+      "current_NLMYTGen_consumer": "validator",
+      "failure_behavior": "fail",
+      "request_priority": "required",
+      "delta_from_synthetic_fixture": "represented_but_synthetic_only"
+    },
+    {
+      "field_name": "source_notes",
+      "required_before": "NLMYTGen ingest",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Supplies sanitized source ids, source summaries, and quote policy for beat evidence refs without live fetching.",
+      "current_consumer": "validator",
+      "current_NLMYTGen_consumer": "validator",
+      "failure_behavior": "fail",
+      "request_priority": "required",
+      "delta_from_synthetic_fixture": "represented_but_synthetic_only"
+    },
+    {
+      "field_name": "provenance",
+      "required_before": "NLMYTGen ingest",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "States source collection owner, raw material inclusion, and source-discovery owner so NLMYTGen does not infer provenance.",
+      "current_consumer": "transfer-planning proof",
+      "current_NLMYTGen_consumer": "transfer-planning proof",
+      "related_consumers": [
+        "validator"
+      ],
+      "failure_behavior": "block transfer",
+      "request_priority": "required",
+      "delta_from_synthetic_fixture": "represented_but_synthetic_only"
+    },
+    {
+      "field_name": "rights_summary",
+      "required_before": "NLMYTGen ingest",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Carries clearance state, allowed uses, blocked uses, and risk flags before any transfer candidate can be discussed.",
+      "current_consumer": "transfer-planning proof",
+      "current_NLMYTGen_consumer": "transfer-planning proof",
+      "related_consumers": [
+        "validator"
+      ],
+      "failure_behavior": "block transfer",
+      "request_priority": "required",
+      "delta_from_synthetic_fixture": "represented_but_synthetic_only"
+    },
+    {
+      "field_name": "notebooklm_packet_or_transcript_seed",
+      "required_before": "NLMYTGen ingest",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Provides bounded downstream script seed material without asking NLMYTGen to fetch or expand source text.",
+      "current_consumer": "validator",
+      "current_NLMYTGen_consumer": "validator",
+      "failure_behavior": "fail",
+      "request_priority": "required",
+      "delta_from_synthetic_fixture": "represented_but_synthetic_only"
+    },
+    {
+      "field_name": "script_beats",
+      "required_before": "NLMYTGen ingest",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Provides stable beat ids, claims, intents, and evidence refs for ScriptIR-like mapping.",
+      "current_consumer": "validator",
+      "current_NLMYTGen_consumer": "validator",
+      "failure_behavior": "fail",
+      "request_priority": "required",
+      "delta_from_synthetic_fixture": "represented_but_synthetic_only"
+    },
+    {
+      "field_name": "visual_plan",
+      "required_before": "NLMYTGen ingest",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Provides stable visual ids, beat links, layout candidates, content slots, and asset policy for VisualIR and G-28 checks.",
+      "current_consumer": "slot-linkage proof",
+      "current_NLMYTGen_consumer": "slot-linkage proof",
+      "related_consumers": [
+        "validator"
+      ],
+      "failure_behavior": "fail",
+      "request_priority": "required",
+      "delta_from_synthetic_fixture": "represented_but_synthetic_only"
+    },
+    {
+      "field_name": "g28_slot_hints",
+      "required_before": "NLMYTGen ingest",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Links upstream visual concepts to known G-28 object catalog slots before transfer planning.",
+      "current_consumer": "slot-linkage proof",
+      "current_NLMYTGen_consumer": "slot-linkage proof",
+      "failure_behavior": "warn",
+      "request_priority": "required",
+      "delta_from_synthetic_fixture": "represented_but_synthetic_only"
+    },
+    {
+      "field_name": "review_warnings",
+      "required_before": "NLMYTGen ingest",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Surfaces blocker and caution state as data so Review Console and transfer planning do not infer approval.",
+      "current_consumer": "transfer-planning proof",
+      "current_NLMYTGen_consumer": "transfer-planning proof",
+      "related_consumers": [
+        "validator"
+      ],
+      "failure_behavior": "block transfer",
+      "request_priority": "required",
+      "delta_from_synthetic_fixture": "represented_but_synthetic_only"
+    },
+    {
+      "field_name": "downstream_readiness",
+      "required_before": "NLMYTGen ingest",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "States readiness booleans and blocking reasons, especially that YMM4 transfer remains false until every gate is cleared.",
+      "current_consumer": "transfer-planning proof",
+      "current_NLMYTGen_consumer": "transfer-planning proof",
+      "failure_behavior": "block transfer",
+      "request_priority": "required",
+      "delta_from_synthetic_fixture": "represented_but_synthetic_only"
+    },
+    {
+      "field_name": "rights_provenance_clearance",
+      "required_before": "transfer candidate",
+      "owner": "human reviewer",
+      "why_needed": "Requires explicit rights and provenance clearance before any future packet can become a transfer candidate.",
+      "current_consumer": "transfer-planning proof",
+      "current_NLMYTGen_consumer": "transfer-planning proof",
+      "related_consumers": [
+        "Review Console planning panel"
+      ],
+      "failure_behavior": "block transfer",
+      "request_priority": "transfer_gate",
+      "delta_from_synthetic_fixture": "missing_for_transfer_candidate"
+    },
+    {
+      "field_name": "media_source_availability",
+      "required_before": "transfer candidate",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "States whether approved media metadata, approved abstract replacement, or a no-media route exists.",
+      "current_consumer": "transfer-planning proof",
+      "current_NLMYTGen_consumer": "transfer-planning proof",
+      "related_consumers": [
+        "Review Console planning panel"
+      ],
+      "failure_behavior": "block transfer",
+      "request_priority": "transfer_gate",
+      "delta_from_synthetic_fixture": "missing_for_transfer_candidate"
+    },
+    {
+      "field_name": "review_approval_status",
+      "required_before": "transfer candidate",
+      "owner": "human reviewer",
+      "why_needed": "Captures the human planning outcome separately from production approval and publish approval.",
+      "current_consumer": "Review Console planning panel",
+      "current_NLMYTGen_consumer": "Review Console planning panel",
+      "failure_behavior": "hold for review",
+      "request_priority": "transfer_gate",
+      "delta_from_synthetic_fixture": "missing_for_transfer_candidate"
+    },
+    {
+      "field_name": "visual_readiness",
+      "required_before": "transfer candidate",
+      "owner": "NLMYTGen",
+      "why_needed": "Confirms visual plan, content slots, asset policy, and G-28 hints are complete enough for review.",
+      "current_consumer": "slot-linkage proof",
+      "current_NLMYTGen_consumer": "slot-linkage proof",
+      "related_consumers": [
+        "transfer-planning proof"
+      ],
+      "failure_behavior": "block transfer",
+      "request_priority": "transfer_gate",
+      "delta_from_synthetic_fixture": "missing_for_transfer_candidate"
+    },
+    {
+      "field_name": "blocked_prohibited_actions_resolved",
+      "required_before": "transfer candidate",
+      "owner": "human reviewer",
+      "why_needed": "Ensures no blocked use still forbids transfer, render, publication, source fetch, or production approval.",
+      "current_consumer": "transfer-planning proof",
+      "current_NLMYTGen_consumer": "transfer-planning proof",
+      "failure_behavior": "block transfer",
+      "request_priority": "transfer_gate",
+      "delta_from_synthetic_fixture": "missing_for_transfer_candidate"
+    },
+    {
+      "field_name": "no_readiness_blocker_contradiction",
+      "required_before": "transfer candidate",
+      "owner": "NLMYTGen",
+      "why_needed": "Prevents packets from claiming transfer readiness while rights, media, review, visual, or transfer blockers remain.",
+      "current_consumer": "transfer-planning proof",
+      "current_NLMYTGen_consumer": "transfer-planning proof",
+      "related_consumers": [
+        "validator"
+      ],
+      "failure_behavior": "fail",
+      "request_priority": "transfer_gate",
+      "delta_from_synthetic_fixture": "missing_for_transfer_candidate"
+    },
+    {
+      "field_name": "editorial_priority",
+      "required_before": "human review",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Helps order review and planning work without blocking packet ingest by itself.",
+      "current_consumer": "not covered yet",
+      "current_NLMYTGen_consumer": "not covered yet",
+      "failure_behavior": "warn",
+      "request_priority": "optional",
+      "delta_from_synthetic_fixture": "missing_for_real_packet"
+    },
+    {
+      "field_name": "visual_treatment_preference",
+      "required_before": "human review",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Carries an advisory treatment family for later visual review without becoming final design approval.",
+      "current_consumer": "not covered yet",
+      "current_NLMYTGen_consumer": "not covered yet",
+      "failure_behavior": "warn",
+      "request_priority": "optional",
+      "delta_from_synthetic_fixture": "missing_for_real_packet"
+    },
+    {
+      "field_name": "source_confidence",
+      "required_before": "human review",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Gives reviewers a confidence marker for sanitized source notes and quote policy.",
+      "current_consumer": "not covered yet",
+      "current_NLMYTGen_consumer": "not covered yet",
+      "failure_behavior": "warn",
+      "request_priority": "optional",
+      "delta_from_synthetic_fixture": "missing_for_real_packet"
+    },
+    {
+      "field_name": "reviewer_notes",
+      "required_before": "human review",
+      "owner": "human reviewer",
+      "why_needed": "Carries freeform planning notes without requiring rigid response labels.",
+      "current_consumer": "Review Console planning panel",
+      "current_NLMYTGen_consumer": "Review Console planning panel",
+      "failure_behavior": "warn",
+      "request_priority": "optional",
+      "delta_from_synthetic_fixture": "missing_for_real_packet"
+    },
+    {
+      "field_name": "localization_notes",
+      "required_before": "human review",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Preserves language, market, or audience notes for future script adaptation.",
+      "current_consumer": "not covered yet",
+      "current_NLMYTGen_consumer": "not covered yet",
+      "failure_behavior": "warn",
+      "request_priority": "optional",
+      "delta_from_synthetic_fixture": "missing_for_real_packet"
+    },
+    {
+      "field_name": "channel_package_metadata",
+      "required_before": "human review",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Preserves channel lane, package name, or bundle id metadata for organization and review routing.",
+      "current_consumer": "not covered yet",
+      "current_NLMYTGen_consumer": "not covered yet",
+      "failure_behavior": "warn",
+      "request_priority": "optional",
+      "delta_from_synthetic_fixture": "missing_for_real_packet"
+    },
+    {
+      "field_name": "ambiguous_rights",
+      "required_before": "human review",
+      "owner": "human reviewer",
+      "why_needed": "Marks ambiguous rights as a review hold, never as transfer readiness.",
+      "current_consumer": "transfer-planning proof",
+      "current_NLMYTGen_consumer": "transfer-planning proof",
+      "failure_behavior": "hold for review",
+      "request_priority": "human_review_hold",
+      "delta_from_synthetic_fixture": "missing_for_transfer_candidate"
+    },
+    {
+      "field_name": "unclear_media_availability",
+      "required_before": "human review",
+      "owner": "newsroom-yt-pipeline",
+      "why_needed": "Prevents unclear screenshots, footage, or media availability from becoming a transfer candidate.",
+      "current_consumer": "transfer-planning proof",
+      "current_NLMYTGen_consumer": "transfer-planning proof",
+      "failure_behavior": "hold for review",
+      "request_priority": "human_review_hold",
+      "delta_from_synthetic_fixture": "missing_for_transfer_candidate"
+    },
+    {
+      "field_name": "real_screenshots_footage",
+      "required_before": "human review",
+      "owner": "external/manual",
+      "why_needed": "Separates real screenshots or footage from placeholder visuals and routes them to manual rights/material review.",
+      "current_consumer": "not covered yet",
+      "current_NLMYTGen_consumer": "not covered yet",
+      "failure_behavior": "hold for review",
+      "request_priority": "human_review_hold",
+      "delta_from_synthetic_fixture": "missing_for_real_packet"
+    },
+    {
+      "field_name": "brand_risk",
+      "required_before": "human review",
+      "owner": "human reviewer",
+      "why_needed": "Flags brand-sensitive content for manual planning before any downstream transfer candidate is considered.",
+      "current_consumer": "not covered yet",
+      "current_NLMYTGen_consumer": "not covered yet",
+      "failure_behavior": "hold for review",
+      "request_priority": "human_review_hold",
+      "delta_from_synthetic_fixture": "missing_for_real_packet"
+    },
+    {
+      "field_name": "uncertain_citation_quote_usage",
+      "required_before": "human review",
+      "owner": "human reviewer",
+      "why_needed": "Keeps citation and quote uncertainty out of transfer readiness and source clearance.",
+      "current_consumer": "validator",
+      "current_NLMYTGen_consumer": "validator",
+      "related_consumers": [
+        "transfer-planning proof"
+      ],
+      "failure_behavior": "hold for review",
+      "request_priority": "human_review_hold",
+      "delta_from_synthetic_fixture": "missing_for_transfer_candidate"
+    },
+    {
+      "field_name": "visual_approval",
+      "required_before": "human review",
+      "owner": "human reviewer",
+      "why_needed": "Records visual planning approval as a human review outcome, not as production approval.",
+      "current_consumer": "Review Console planning panel",
+      "current_NLMYTGen_consumer": "Review Console planning panel",
+      "failure_behavior": "hold for review",
+      "request_priority": "human_review_hold",
+      "delta_from_synthetic_fixture": "missing_for_transfer_candidate"
+    }
+  ],
+  "optional_enrichment_fields": [
+    "editorial_priority",
+    "visual_treatment_preference",
+    "source_confidence",
+    "reviewer_notes",
+    "localization_notes",
+    "channel_package_metadata"
+  ],
+  "hold_review_fields": [
+    "ambiguous_rights",
+    "unclear_media_availability",
+    "real_screenshots_footage",
+    "brand_risk",
+    "uncertain_citation_quote_usage",
+    "visual_approval"
+  ],
+  "prohibited_upstream_assumptions": [
+    {
+      "assumption": "NLMYTGen performs RSS/source discovery",
+      "owner": "newsroom-yt-pipeline",
+      "nlmytgen_behavior": "fail"
+    },
+    {
+      "assumption": "NLMYTGen scrapes article pages or expands raw source text",
+      "owner": "external/manual",
+      "nlmytgen_behavior": "fail"
+    },
+    {
+      "assumption": "NLMYTGen operates Inoreader or any external reader account",
+      "owner": "external/manual",
+      "nlmytgen_behavior": "fail"
+    },
+    {
+      "assumption": "NLMYTGen downloads live source material, screenshots, footage, or media",
+      "owner": "external/manual",
+      "nlmytgen_behavior": "fail"
+    },
+    {
+      "assumption": "NLMYTGen acquires rights or clears source usage",
+      "owner": "external/manual",
+      "nlmytgen_behavior": "hold for review"
+    },
+    {
+      "assumption": "NLMYTGen grants production approval",
+      "owner": "human reviewer",
+      "nlmytgen_behavior": "block transfer"
+    },
+    {
+      "assumption": "NLMYTGen publishes or uploads output",
+      "owner": "external/manual",
+      "nlmytgen_behavior": "fail"
+    },
+    {
+      "assumption": "NLMYTGen silently infers missing approvals",
+      "owner": "human reviewer",
+      "nlmytgen_behavior": "hold for review"
+    },
+    {
+      "assumption": "NLMYTGen creates YMM4 transfer artifacts or edits .ymmp files",
+      "owner": "NLMYTGen",
+      "nlmytgen_behavior": "block transfer"
+    },
+    {
+      "assumption": "NLMYTGen creates render or media outputs during packet readiness",
+      "owner": "NLMYTGen",
+      "nlmytgen_behavior": "block transfer"
+    }
+  ],
+  "proposed_newsroom_export_fixture_shape": {
+    "artifact_id": "fake_real_export_bundle_0001",
+    "contract_version": "newsroom-to-nlmytgen-handoff-v1.11",
+    "episode_id": "episode_placeholder_0001",
+    "title": "Placeholder real-export title",
+    "topic_summary": "Sanitized summary supplied by newsroom export.",
+    "episode_metadata": {
+      "series": "newsroom_lane_placeholder",
+      "language": "ja-JP",
+      "channel_package": "package_placeholder",
+      "editorial_status": "ready_for_nlmytgen_intake_review"
+    },
+    "source_notes": [
+      {
+        "source_id": "src_placeholder_001",
+        "source_kind": "sanitized_article_note",
+        "non_fetching_reference": "SOURCE_REF_DO_NOT_FETCH",
+        "summary": "Sanitized source summary only.",
+        "quote_policy": "paraphrase_or_short_quote_pending_review",
+        "rights_note": "Rights state supplied separately; no raw source material in this fixture."
+      }
+    ],
+    "provenance": {
+      "source_collection_owner": "newsroom-yt-pipeline",
+      "raw_source_material_included": false,
+      "external_fetch_allowed_by_nlmytgen": false,
+      "source_discovery_owner": "newsroom-yt-pipeline"
+    },
+    "rights_summary": {
+      "clearance_state": "pending_review",
+      "allowed_uses": [
+        "nlmytgen_review"
+      ],
+      "blocked_uses": [
+        "publication",
+        "render",
+        "YMM4_transfer"
+      ],
+      "risk_flags": [
+        "manual_rights_review_required"
+      ]
+    },
+    "notebooklm_packet": {
+      "packet_id": "notebooklm_seed_placeholder",
+      "transcript_seed": "Bounded seed text supplied by newsroom export.",
+      "constraints": [
+        "do_not_fetch",
+        "do_not_publish_without_review"
+      ]
+    },
+    "script_beats": [
+      {
+        "beat_id": "beat_placeholder_001",
+        "intent": "setup",
+        "claim": "Sanitized claim placeholder.",
+        "evidence_refs": [
+          "src_placeholder_001"
+        ]
+      }
+    ],
+    "visual_plan": [
+      {
+        "visual_id": "vis_placeholder_001",
+        "beat_id": "beat_placeholder_001",
+        "visualir_concept": "abstract_callout_pending_review",
+        "layout_candidate": "screenshot_callout",
+        "asset_policy": "approved_media_or_abstract_replacement_required",
+        "content_slots": [
+          "screenshot_slot",
+          "source_note",
+          "caption_reserve"
+        ]
+      }
+    ],
+    "g28_slot_hints": [
+      {
+        "visual_id": "vis_placeholder_001",
+        "slot_id": "slot_placeholder_source_note",
+        "object_catalog_slot": "source_note",
+        "semantic_role": "bounded_provenance_note",
+        "source_ref": "src_placeholder_001",
+        "transfer_note": "Requires rights and visual review before transfer."
+      }
+    ],
+    "review_warnings": [
+      {
+        "warning_id": "rw_placeholder_001",
+        "severity": "blocker",
+        "surface": "rights_summary",
+        "message": "Manual rights and media review required before transfer.",
+        "blocks_ymm4_transfer": true
+      }
+    ],
+    "downstream_readiness": {
+      "notebooklm_seed_ready": true,
+      "scriptir_mapping_ready": true,
+      "visualir_mapping_ready": true,
+      "g28_slot_mapping_ready": true,
+      "review_surface_ready": true,
+      "ymm4_transfer_ready": false,
+      "blocking_reasons": [
+        "rights_review_required",
+        "media_review_required"
+      ]
+    }
+  },
+  "delta_from_current_synthetic_fixture": {
+    "already_represented": [
+      "artifact_id",
+      "contract_version"
+    ],
+    "represented_but_synthetic_only": [
+      "episode_id",
+      "title",
+      "topic_summary",
+      "episode_metadata",
+      "source_notes",
+      "provenance",
+      "rights_summary",
+      "notebooklm_packet_or_transcript_seed",
+      "script_beats",
+      "visual_plan",
+      "g28_slot_hints",
+      "review_warnings",
+      "downstream_readiness"
+    ],
+    "missing_for_real_packet": [
+      "editorial_priority",
+      "visual_treatment_preference",
+      "source_confidence",
+      "reviewer_notes",
+      "localization_notes",
+      "channel_package_metadata",
+      "real_screenshots_footage",
+      "brand_risk"
+    ],
+    "missing_for_transfer_candidate": [
+      "rights_provenance_clearance",
+      "media_source_availability",
+      "review_approval_status",
+      "visual_readiness",
+      "blocked_prohibited_actions_resolved",
+      "no_readiness_blocker_contradiction",
+      "ambiguous_rights",
+      "unclear_media_availability",
+      "uncertain_citation_quote_usage",
+      "visual_approval"
+    ],
+    "not_nlmytgen_owned": [
+      "RSS/source discovery",
+      "article scraping",
+      "Inoreader operation",
+      "live source download",
+      "rights acquisition",
+      "production approval",
+      "publishing/upload",
+      "silent approval inference"
+    ]
+  },
+  "next_implementation_handoff": {
+    "target_repo": "newsroom-yt-pipeline",
+    "summary": "Create or adjust the newsroom export fixture so it emits the required bundle fields, transfer gates, optional enrichments, and human-review holds listed here, using fake placeholders for any fixture data.",
+    "nlmytgen_ready_to_consume": false,
+    "do_not": [
+      "do not send real source material in a fixture",
+      "do not require NLMYTGen to fetch or scrape upstream sources",
+      "do not mark rights, production, publication, render, or YMM4 transfer approved",
+      "do not include external account operations"
+    ]
+  },
+  "validation_expectations": {
+    "json_parse_required": true,
+    "request_item_required_fields": [
+      "field_name",
+      "owner",
+      "required_before",
+      "current_consumer",
+      "failure_behavior",
+      "request_priority",
+      "why_needed"
+    ],
+    "no_real_urls": true,
+    "no_real_packet_acceptance": true,
+    "no_external_fetch": true,
+    "no_ymmp_or_render_output": true
+  }
+}

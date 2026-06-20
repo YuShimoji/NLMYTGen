@@ -1,5 +1,22 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom upstream export delta request v1 completed (2026-06-20)**:
+  Added an NLMYTGen-side upstream request for the next
+  `newsroom-yt-pipeline` export bundle delta. Human readback:
+  `docs/verification/NEWSROOM_UPSTREAM_EXPORT_DELTA_REQUEST_V1_2026-06-20.md`;
+  machine-readable request:
+  `samples/_probe/newsroom_handoff/upstream_export_delta_request.json`;
+  focused coverage:
+  `tests/test_newsroom_upstream_export_delta_request.py`. The request maps
+  required-before-ingest fields, transfer-candidate gates, optional
+  enrichments, human-review holds, current NLMYTGen consumers, failure
+  behavior, and delta from the current synthetic fixture. This slice does not
+  touch `newsroom-yt-pipeline`, accept a real packet, fetch sources, open
+  RSS/Inoreader, access live source material, download media, edit `.ymmp`,
+  generate YMM4 carriers, render media, approve rights, approve production, or
+  publish/upload output. Next safe follow-up is a separate
+  `newsroom-yt-pipeline` fixture/export slice if the supervisor promotes this
+  request upstream.
 - **Newsroom real-packet readiness checklist v1 completed (2026-06-20)**:
   Added a read-only policy/readback gate for future real
   `newsroom-yt-pipeline` export packets before NLMYTGen ingest or transfer
