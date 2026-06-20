@@ -1,5 +1,20 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom real-packet readiness checklist v1 completed (2026-06-20)**:
+  Added a read-only policy/readback gate for future real
+  `newsroom-yt-pipeline` export packets before NLMYTGen ingest or transfer
+  planning. Machine-readable checklist:
+  `samples/_probe/newsroom_handoff/real_packet_readiness_checklist.json`;
+  human readback:
+  `docs/verification/NEWSROOM_REAL_PACKET_READINESS_CHECKLIST_V1_2026-06-20.md`.
+  The checklist classifies required-before-ingest fields,
+  required-before-transfer gates, optional enrichments, prohibited/out-of-scope
+  responsibilities, and human-review holds. It maps every item to owner,
+  current coverage, failure behavior, and next action. This slice does not
+  accept a real packet, fetch sources, open RSS/Inoreader, access real URLs,
+  download media, edit `.ymmp`, generate YMM4 carriers, render media, approve
+  rights, approve production, or mark YMM4 transfer ready. Next safe follow-up
+  is an upstream export delta request doc if supervisor review identifies gaps.
 - **Newsroom Review Console planning panel v1 completed (2026-06-20)**:
   The existing read-only `#newsroom-handoff-review` panel now also loads
   `samples/_probe/newsroom_handoff/transfer_planning_readback.json` and exposes

@@ -1,0 +1,481 @@
+{
+  "artifact_id": "newsroom_real_packet_readiness_checklist_v1_2026_06_20",
+  "repo_relative_path": "samples/_probe/newsroom_handoff/real_packet_readiness_checklist.json",
+  "review_status": "ready_for_supervisor_review",
+  "status": "checklist_only",
+  "current_packet_state": "synthetic_fixture_only",
+  "diagnostic_only": true,
+  "real_packet_accepted": false,
+  "production_approval": false,
+  "rights_approval": false,
+  "ymm4_transfer_ready": false,
+  "source_artifacts": {
+    "handoff_contract": "docs/integration/NEWSROOM_TO_NLMYTGEN_HANDOFF_CONTRACT.md",
+    "synthetic_packet": "samples/_probe/newsroom_handoff/minimal_episode_packet.json",
+    "slot_linkage_readback": "samples/_probe/newsroom_handoff/g28_slot_linkage_readback.json",
+    "transfer_planning_readback": "samples/_probe/newsroom_handoff/transfer_planning_readback.json",
+    "review_console_planning_panel": "docs/verification/NEWSROOM_REVIEW_CONSOLE_PLANNING_PANEL_V1_2026-06-20.md"
+  },
+  "coverage_summary": [
+    {
+      "coverage": "validator",
+      "role": "Fail-closed structure, reference, required-field, and readiness contradiction checks for the packet boundary."
+    },
+    {
+      "coverage": "slot-linkage proof",
+      "role": "G-28 object slot vocabulary and visual-to-slot linkage readback."
+    },
+    {
+      "coverage": "transfer-planning proof",
+      "role": "Grouped blockers, unlock requirements, prohibited actions, and transfer-candidate status."
+    },
+    {
+      "coverage": "Review Console planning panel",
+      "role": "Read-only human-facing display of blocked transfer state and checklist context."
+    },
+    {
+      "coverage": "not covered yet",
+      "role": "Policy-only or future real-packet checks that must not imply ingest, approval, or production readiness."
+    }
+  ],
+  "categories": [
+    {
+      "category_id": "required_before_nlmytgen_ingest",
+      "title": "Required before NLMYTGen ingest",
+      "items": [
+        {
+          "id": "episode_id",
+          "label": "episode_id",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "validator",
+          "related_coverage": ["Review Console planning panel"],
+          "failure_behavior": "fail",
+          "next_action": "request upstream field",
+          "requirement": "Stable packet episode identity."
+        },
+        {
+          "id": "title",
+          "label": "title",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "validator",
+          "related_coverage": ["Review Console planning panel"],
+          "failure_behavior": "fail",
+          "next_action": "request upstream field",
+          "requirement": "Working episode title suitable for review surfaces."
+        },
+        {
+          "id": "topic_summary",
+          "label": "topic_summary",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "validator",
+          "related_coverage": ["Review Console planning panel"],
+          "failure_behavior": "fail",
+          "next_action": "request upstream field",
+          "requirement": "Bounded editorial topic summary without raw source expansion."
+        },
+        {
+          "id": "source_notes",
+          "label": "source_notes",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "validator",
+          "related_coverage": ["transfer-planning proof"],
+          "failure_behavior": "fail",
+          "next_action": "request upstream field",
+          "requirement": "Sanitized source ids and summaries for beat evidence refs."
+        },
+        {
+          "id": "provenance",
+          "label": "provenance",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "validator",
+          "related_coverage": ["transfer-planning proof", "Review Console planning panel"],
+          "failure_behavior": "block transfer",
+          "next_action": "request upstream field",
+          "requirement": "Source ownership, raw material inclusion state, and source-discovery owner."
+        },
+        {
+          "id": "rights_summary",
+          "label": "rights_summary",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "validator",
+          "related_coverage": ["transfer-planning proof", "Review Console planning panel"],
+          "failure_behavior": "block transfer",
+          "next_action": "request upstream field",
+          "requirement": "Clearance state, allowed uses, blocked uses, and risk flags."
+        },
+        {
+          "id": "notebooklm_packet_or_transcript_seed",
+          "label": "notebooklm_packet or transcript seed",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "validator",
+          "related_coverage": [],
+          "failure_behavior": "fail",
+          "next_action": "request upstream field",
+          "requirement": "Bounded seed material for downstream script planning."
+        },
+        {
+          "id": "script_beats_stable_ids",
+          "label": "script_beats with stable ids",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "validator",
+          "related_coverage": ["Review Console planning panel"],
+          "failure_behavior": "fail",
+          "next_action": "request upstream field",
+          "requirement": "Beat ids, claims, intents, and evidence refs that resolve to source notes."
+        },
+        {
+          "id": "visual_plan_stable_ids",
+          "label": "visual_plan with stable ids",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "validator",
+          "related_coverage": ["slot-linkage proof", "Review Console planning panel"],
+          "failure_behavior": "fail",
+          "next_action": "request upstream field",
+          "requirement": "Visual ids, beat links, layout candidates, content slots, and asset policy."
+        },
+        {
+          "id": "g28_slot_hints",
+          "label": "g28_slot_hints",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "slot-linkage proof",
+          "related_coverage": ["validator", "Review Console planning panel"],
+          "failure_behavior": "warn",
+          "next_action": "add validator check later",
+          "requirement": "Known G-28 object catalog slots tied to visual ids and source refs."
+        },
+        {
+          "id": "review_warnings",
+          "label": "review_warnings",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "validator",
+          "related_coverage": ["transfer-planning proof", "Review Console planning panel"],
+          "failure_behavior": "block transfer",
+          "next_action": "request upstream field",
+          "requirement": "Human-readable warnings, severity, surface, and transfer-blocking effect."
+        },
+        {
+          "id": "downstream_readiness",
+          "label": "downstream_readiness",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "transfer-planning proof",
+          "related_coverage": ["validator", "Review Console planning panel"],
+          "failure_behavior": "block transfer",
+          "next_action": "request upstream field",
+          "requirement": "Layer readiness booleans and blocking reasons, especially YMM4 readiness false until all gates clear."
+        }
+      ]
+    },
+    {
+      "category_id": "required_before_transfer_candidate",
+      "title": "Required before transfer candidate",
+      "items": [
+        {
+          "id": "rights_provenance_clearance",
+          "label": "rights/provenance clearance",
+          "owner": "human reviewer",
+          "current_coverage": "transfer-planning proof",
+          "related_coverage": ["Review Console planning panel"],
+          "failure_behavior": "block transfer",
+          "next_action": "Review Card later",
+          "requirement": "Explicit cleared or limited-use rights/provenance outcome before any transfer-candidate review."
+        },
+        {
+          "id": "media_source_availability",
+          "label": "media/source availability",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "transfer-planning proof",
+          "related_coverage": ["Review Console planning panel"],
+          "failure_behavior": "block transfer",
+          "next_action": "request upstream field",
+          "requirement": "Approved media metadata, approved abstract replacement, or explicit no-media route."
+        },
+        {
+          "id": "review_approval_status",
+          "label": "review approval status",
+          "owner": "human reviewer",
+          "current_coverage": "Review Console planning panel",
+          "related_coverage": ["transfer-planning proof"],
+          "failure_behavior": "hold for review",
+          "next_action": "Review Card later",
+          "requirement": "Freeform human planning outcome separate from production approval."
+        },
+        {
+          "id": "visual_readiness",
+          "label": "visual readiness",
+          "owner": "NLMYTGen",
+          "current_coverage": "slot-linkage proof",
+          "related_coverage": ["transfer-planning proof", "Review Console planning panel"],
+          "failure_behavior": "block transfer",
+          "next_action": "add validator check later",
+          "requirement": "Visual plan, content slots, asset policy, and G-28 hints are complete enough for review."
+        },
+        {
+          "id": "blocked_prohibited_actions_resolved",
+          "label": "blocked/prohibited actions resolved",
+          "owner": "human reviewer",
+          "current_coverage": "transfer-planning proof",
+          "related_coverage": ["Review Console planning panel"],
+          "failure_behavior": "block transfer",
+          "next_action": "block transfer",
+          "requirement": "No blocked use still forbids transfer, render, publication, source fetch, or production approval."
+        },
+        {
+          "id": "no_readiness_blocker_contradiction",
+          "label": "no contradiction between readiness and blockers",
+          "owner": "NLMYTGen",
+          "current_coverage": "transfer-planning proof",
+          "related_coverage": ["validator"],
+          "failure_behavior": "fail",
+          "next_action": "add validator check later",
+          "requirement": "Readiness cannot claim true while rights, media, review, visual, or transfer blockers remain."
+        }
+      ]
+    },
+    {
+      "category_id": "optional_enrichments",
+      "title": "Optional / enrichments",
+      "items": [
+        {
+          "id": "editorial_priority",
+          "label": "editorial priority",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "not covered yet",
+          "related_coverage": [],
+          "failure_behavior": "ignore",
+          "next_action": "accept",
+          "requirement": "Priority or urgency tag for planning order only."
+        },
+        {
+          "id": "visual_treatment_preference",
+          "label": "visual treatment preference",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "not covered yet",
+          "related_coverage": ["slot-linkage proof"],
+          "failure_behavior": "ignore",
+          "next_action": "accept",
+          "requirement": "Preferred visual treatment family; advisory until a future design review."
+        },
+        {
+          "id": "source_confidence",
+          "label": "source confidence",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "not covered yet",
+          "related_coverage": [],
+          "failure_behavior": "warn",
+          "next_action": "add validator check later",
+          "requirement": "Confidence marker for sanitized source notes."
+        },
+        {
+          "id": "reviewer_notes",
+          "label": "reviewer notes",
+          "owner": "human reviewer",
+          "current_coverage": "Review Console planning panel",
+          "related_coverage": [],
+          "failure_behavior": "ignore",
+          "next_action": "accept",
+          "requirement": "Freeform notes for later planning, not fixed response labels."
+        },
+        {
+          "id": "localization_notes",
+          "label": "localization notes",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "not covered yet",
+          "related_coverage": [],
+          "failure_behavior": "ignore",
+          "next_action": "accept",
+          "requirement": "Audience or language notes for future script adaptation."
+        },
+        {
+          "id": "channel_package_metadata",
+          "label": "channel/package metadata",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "not covered yet",
+          "related_coverage": [],
+          "failure_behavior": "ignore",
+          "next_action": "accept",
+          "requirement": "Package naming, channel lane, or bundle id metadata for organization."
+        }
+      ]
+    },
+    {
+      "category_id": "prohibited_or_out_of_scope_for_nlmytgen",
+      "title": "Prohibited or out-of-scope for NLMYTGen",
+      "items": [
+        {
+          "id": "rss_source_discovery",
+          "label": "RSS/source discovery",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "not covered yet",
+          "related_coverage": [],
+          "failure_behavior": "fail",
+          "next_action": "block transfer",
+          "requirement": "NLMYTGen must not perform feed discovery or source selection."
+        },
+        {
+          "id": "article_scraping",
+          "label": "article scraping",
+          "owner": "external/manual",
+          "current_coverage": "not covered yet",
+          "related_coverage": [],
+          "failure_behavior": "fail",
+          "next_action": "block transfer",
+          "requirement": "NLMYTGen must not scrape article pages or expand source text."
+        },
+        {
+          "id": "inoreader_operation",
+          "label": "Inoreader operation",
+          "owner": "external/manual",
+          "current_coverage": "not covered yet",
+          "related_coverage": [],
+          "failure_behavior": "fail",
+          "next_action": "block transfer",
+          "requirement": "NLMYTGen must not operate external reader accounts."
+        },
+        {
+          "id": "live_source_download",
+          "label": "source fetching / live source download",
+          "owner": "external/manual",
+          "current_coverage": "transfer-planning proof",
+          "related_coverage": ["Review Console planning panel"],
+          "failure_behavior": "fail",
+          "next_action": "block transfer",
+          "requirement": "NLMYTGen must not download live source media, screenshots, footage, or raw source material."
+        },
+        {
+          "id": "rights_acquisition",
+          "label": "rights acquisition",
+          "owner": "external/manual",
+          "current_coverage": "transfer-planning proof",
+          "related_coverage": [],
+          "failure_behavior": "hold for review",
+          "next_action": "Review Card later",
+          "requirement": "Rights acquisition remains outside NLMYTGen."
+        },
+        {
+          "id": "production_approval",
+          "label": "production approval",
+          "owner": "human reviewer",
+          "current_coverage": "Review Console planning panel",
+          "related_coverage": ["transfer-planning proof"],
+          "failure_behavior": "block transfer",
+          "next_action": "Review Card later",
+          "requirement": "Planning readbacks must not imply production approval."
+        },
+        {
+          "id": "publishing_upload",
+          "label": "publishing/upload",
+          "owner": "external/manual",
+          "current_coverage": "not covered yet",
+          "related_coverage": [],
+          "failure_behavior": "fail",
+          "next_action": "block transfer",
+          "requirement": "Publishing and upload are not NLMYTGen intake actions."
+        },
+        {
+          "id": "external_account_operations",
+          "label": "external account operations",
+          "owner": "external/manual",
+          "current_coverage": "not covered yet",
+          "related_coverage": [],
+          "failure_behavior": "fail",
+          "next_action": "block transfer",
+          "requirement": "NLMYTGen must not operate external accounts for intake."
+        },
+        {
+          "id": "ymmp_generation_or_yymm4_transfer",
+          "label": "YMM4 transfer or .ymmp generation",
+          "owner": "NLMYTGen",
+          "current_coverage": "transfer-planning proof",
+          "related_coverage": ["Review Console planning panel"],
+          "failure_behavior": "block transfer",
+          "next_action": "block transfer",
+          "requirement": "Real-packet readiness must not create `.ymmp` files or YMM4 transfer artifacts."
+        },
+        {
+          "id": "render_generation",
+          "label": "render generation",
+          "owner": "NLMYTGen",
+          "current_coverage": "transfer-planning proof",
+          "related_coverage": ["Review Console planning panel"],
+          "failure_behavior": "block transfer",
+          "next_action": "block transfer",
+          "requirement": "Readiness review must not create render outputs."
+        }
+      ]
+    },
+    {
+      "category_id": "hold_requires_human_review",
+      "title": "Hold / requires human review",
+      "items": [
+        {
+          "id": "ambiguous_rights",
+          "label": "ambiguous rights",
+          "owner": "human reviewer",
+          "current_coverage": "transfer-planning proof",
+          "related_coverage": ["Review Console planning panel"],
+          "failure_behavior": "hold for review",
+          "next_action": "Review Card later",
+          "requirement": "Ambiguous rights cannot become transfer readiness."
+        },
+        {
+          "id": "unclear_media_availability",
+          "label": "unclear media availability",
+          "owner": "newsroom-yt-pipeline",
+          "current_coverage": "transfer-planning proof",
+          "related_coverage": ["Review Console planning panel"],
+          "failure_behavior": "hold for review",
+          "next_action": "request upstream field",
+          "requirement": "Media availability must be explicit before transfer-candidate review."
+        },
+        {
+          "id": "real_screenshots_footage",
+          "label": "real screenshots/footage",
+          "owner": "external/manual",
+          "current_coverage": "not covered yet",
+          "related_coverage": [],
+          "failure_behavior": "hold for review",
+          "next_action": "Review Card later",
+          "requirement": "Real screenshots or footage require manual rights/material review."
+        },
+        {
+          "id": "brand_risk",
+          "label": "brand risk",
+          "owner": "human reviewer",
+          "current_coverage": "not covered yet",
+          "related_coverage": [],
+          "failure_behavior": "hold for review",
+          "next_action": "Review Card later",
+          "requirement": "Brand-sensitive content must be reviewed outside automatic intake."
+        },
+        {
+          "id": "uncertain_citation_quote_usage",
+          "label": "uncertain citation/quote usage",
+          "owner": "human reviewer",
+          "current_coverage": "validator",
+          "related_coverage": ["transfer-planning proof"],
+          "failure_behavior": "hold for review",
+          "next_action": "Review Card later",
+          "requirement": "Citation and quote usage uncertainty must not be treated as cleared media or rights."
+        },
+        {
+          "id": "visual_approval",
+          "label": "visual approval",
+          "owner": "human reviewer",
+          "current_coverage": "Review Console planning panel",
+          "related_coverage": ["slot-linkage proof"],
+          "failure_behavior": "hold for review",
+          "next_action": "Review Card later",
+          "requirement": "Visual approval is a human planning outcome, not production approval."
+        }
+      ]
+    }
+  ],
+  "validation_expectations": [
+    "JSON parses as a single object.",
+    "Every category has checklist items.",
+    "Every item has owner, current_coverage, failure_behavior, and next_action.",
+    "Prohibited items include RSS/source discovery, article scraping, Inoreader operation, live source download, YMM4 transfer or .ymmp generation, render generation, and publishing/upload.",
+    "No real URL, external fetch requirement, production approval, or real packet acceptance is implied."
+  ],
+  "downstream_next_use": "Use this checklist as the policy/readback gate before asking newsroom-yt-pipeline for a real export delta or before adding future validator checks."
+}
