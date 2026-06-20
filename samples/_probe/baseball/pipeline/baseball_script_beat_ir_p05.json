@@ -1,0 +1,49 @@
+{
+  "schema_version": "baseball_script_beat_ir.v1",
+  "artifact_id": "baseball_script_beat_ir_p05",
+  "source_data_capsule": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05.json",
+  "script_owner": "ScriptBeatIR",
+  "narrative_angle": "The pitcher slows the hitter down by moving from a 155 km/h four-seam fastball to a 140 km/h slider.",
+  "beats": [
+    {
+      "beat_id": "beat_context",
+      "order": 1,
+      "purpose": "establish_game_state",
+      "spoken_intent": "Set the inning, score, and count before explaining the pitch change.",
+      "data_refs": ["fact_score_state", "fact_count_state"],
+      "screen_text": "7th top, 1 out, B2-S2"
+    },
+    {
+      "beat_id": "beat_change",
+      "order": 2,
+      "purpose": "explain_pitch_change",
+      "spoken_intent": "Compare the previous fastball and current slider without inventing extra scouting claims.",
+      "data_refs": ["fact_pitch_04_velocity", "fact_pitch_05_velocity", "fact_velocity_delta", "fact_pitch_type_change"],
+      "screen_text": "155 km/h FF -> 140 km/h SL"
+    },
+    {
+      "beat_id": "beat_result",
+      "order": 3,
+      "purpose": "name_result",
+      "spoken_intent": "Tie the pitch change to the recorded strike result.",
+      "data_refs": ["fact_pitch_05_result", "fact_pitch_05_zone"],
+      "screen_text": "P05 slider, strike, low outer"
+    },
+    {
+      "beat_id": "beat_watch_next",
+      "order": 4,
+      "purpose": "viewer_watch_point",
+      "spoken_intent": "Point the viewer to the next slider target as a watch point, keeping it sample-only.",
+      "data_refs": ["fact_pitch_05_zone"],
+      "screen_text": "Watch the low-outer slider target"
+    }
+  ],
+  "boundaries": {
+    "must_reference_data_refs": true,
+    "must_not_invent_facts": true,
+    "not_visual_layout_authority": true,
+    "not_yymm4_transport": true,
+    "not_creative_final_acceptance": true,
+    "not_publish_gate": true
+  }
+}

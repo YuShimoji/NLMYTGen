@@ -1,0 +1,122 @@
+{
+  "schema_version": "baseball_visual_scene_plan.v1",
+  "artifact_id": "baseball_visual_scene_plan_p05",
+  "source_data_capsule": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05.json",
+  "source_script_beat_ir": "samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05.json",
+  "visual_owner": "VisualScenePlan",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 60
+  },
+  "timebase": {
+    "start_frame": 1560,
+    "duration_frames": 1320,
+    "end_frame_exclusive": 2880
+  },
+  "semantic_slots": [
+    {
+      "slot_id": "score_context",
+      "role": "context",
+      "data_refs": ["fact_score_state", "fact_count_state"],
+      "script_refs": ["beat_context"],
+      "yymm4_hint": {
+        "item_family": "TextItem_or_ImageItem",
+        "layer_band": "upper_context"
+      }
+    },
+    {
+      "slot_id": "pitch_event_claim",
+      "role": "primary_claim",
+      "data_refs": ["fact_velocity_delta", "fact_pitch_type_change"],
+      "script_refs": ["beat_change"],
+      "yymm4_hint": {
+        "item_family": "TextItem_or_ImageItem",
+        "layer_band": "center_claim"
+      }
+    },
+    {
+      "slot_id": "current_pitch_card",
+      "role": "current_event",
+      "data_refs": ["fact_pitch_05_velocity", "fact_pitch_05_result"],
+      "script_refs": ["beat_result"],
+      "yymm4_hint": {
+        "item_family": "ImageItem",
+        "layer_band": "center_card"
+      }
+    },
+    {
+      "slot_id": "pitch_log",
+      "role": "comparison_log",
+      "data_refs": ["fact_pitch_04_velocity", "fact_pitch_05_velocity"],
+      "script_refs": ["beat_change", "beat_result"],
+      "yymm4_hint": {
+        "item_family": "ImageItem",
+        "layer_band": "right_panel"
+      }
+    },
+    {
+      "slot_id": "strike_zone_trace",
+      "role": "spatial_evidence",
+      "data_refs": ["fact_pitch_05_zone"],
+      "script_refs": ["beat_result", "beat_watch_next"],
+      "yymm4_hint": {
+        "item_family": "ShapeItem_or_ImageItem",
+        "layer_band": "center_zone"
+      }
+    },
+    {
+      "slot_id": "caption_reserve",
+      "role": "safe_area",
+      "data_refs": [],
+      "script_refs": [],
+      "yymm4_hint": {
+        "item_family": "none",
+        "layer_band": "bottom_reserved"
+      }
+    }
+  ],
+  "scene_timeline": [
+    {
+      "scene_id": "scene_context_hold",
+      "frame_start": 1560,
+      "frame_end_exclusive": 1860,
+      "active_slots": ["score_context", "caption_reserve"],
+      "motion_primitives": ["score_context_hold", "caption_reserve_hold"]
+    },
+    {
+      "scene_id": "scene_pitch_change",
+      "frame_start": 1860,
+      "frame_end_exclusive": 2340,
+      "active_slots": ["score_context", "pitch_event_claim", "pitch_log", "caption_reserve"],
+      "motion_primitives": ["pitch_log_focus_shift", "claim_emphasis_pulse", "caption_reserve_hold"]
+    },
+    {
+      "scene_id": "scene_zone_result",
+      "frame_start": 2340,
+      "frame_end_exclusive": 2880,
+      "active_slots": ["score_context", "current_pitch_card", "pitch_log", "strike_zone_trace", "caption_reserve"],
+      "motion_primitives": ["zone_trace_reveal", "caption_reserve_hold"]
+    }
+  ],
+  "review_gate": {
+    "required_gate": "diagnostic_manual_preview",
+    "current_bn05_review_record": "samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_review.json",
+    "must_not_claim": [
+      "render_completion",
+      "production_proof",
+      "creative_final_acceptance",
+      "publish_readiness",
+      "real_episode_suitability"
+    ]
+  },
+  "boundaries": {
+    "not_renderer_output": true,
+    "not_yymm4_file": true,
+    "not_animation_export": true,
+    "not_render_proof": true,
+    "not_production_ready": true,
+    "not_creative_final_acceptance": true,
+    "not_publish_gate": true
+  }
+}

@@ -138,6 +138,17 @@ Python 側が画像を生成・合成するのではなく、ブラウザのデ�
 - アニメーション export 方式は未実装。PNG 書き出しだけでレーン完了扱いにしない。
 - YMM4 での animated clip 読み込み、尺合わせ、音声との同期はまだ proof なし。
 
+## BN-06 contract note
+
+BN-06 is now narrowed to a pipeline layer contract. Use
+`docs/baseball/BASEBALL_PIPELINE_CONTRACT.md` as the owner for the
+BaseballDataCapsule -> ScriptBeatIR -> VisualScenePlan -> YMM4Adapter ->
+ReviewGate handoff. This supersedes the older "sports news script
+segmentation" wording for BN-06 until a separate script-authoring slice is
+opened. BN-06 remains sample-only and does not claim render proof, production
+readiness, creative final acceptance, publish readiness, clip export, TTS, or
+thumbnail work.
+
 ## 初期タスク
 
 | ID | Task | 完了条件 |

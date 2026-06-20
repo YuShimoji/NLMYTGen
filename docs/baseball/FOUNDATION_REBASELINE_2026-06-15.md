@@ -41,6 +41,7 @@ not claim production, render, rights, publishing, or creative acceptance.
 | Docs / index / MkDocs view | Root `index.md`, `docs/index.md`, `docs/PROJECT_OVERVIEW.md`, `docs/PROGRESS_SCREENSHOT_INDEX.md`, `mkdocs.yml`, and this report. | Rebaseline is reachable from the root index and MkDocs Overview nav. | The generated MkDocs staging folder is ignored and must be regenerated locally before browser review. |
 | Screenshots / samples / probe artifacts | Static PNG, five animation frames, placement proof `.ymmp`, BN-R0 docs-view screenshot, and BN-05 YMM4 preview screenshot path under `samples/_probe/baseball/`. | Evidence remains lane-local and marked as review/navigation/gate-only proof, not production proof. | BN-04 motion-design acceptance is still separate. |
 | YMM4 placement proof | `baseball_pitch_event_p05_placement_proof.ymmp`, proof manifest, proof readback, proof handoff, BN-05 preview screenshot, and review JSON. | Mechanical transport/readback proof passed and the manual YMM4 preview gate is accepted as `accepted_gate_only`. | There is still no render proof, production proof, creative final acceptance, publish readiness, or real episode suitability. |
+| BN-06 pipeline contract | `docs/baseball/BASEBALL_PIPELINE_CONTRACT.md` and `samples/_probe/baseball/pipeline/`. | Contract chain is defined for sample-only BaseballDataCapsule, ScriptBeatIR, VisualScenePlan, YMM4Adapter, and ReviewGate ownership. | It does not implement adapter generation, rendering, source replacement, clip export, TTS, thumbnail work, publishing, or creative acceptance. |
 | Render manifest / readback / gap report | Static manifest/readback and animation manifest/readback exist; placement proof manifest/readback exist. This file records the rebaseline gap report. | Manifest/readback chain is enough to audit current sample artifacts. | No separate production gap report exists because no production or real-source gate has been opened. |
 | Branch-local cleanup / docs routing | `git log origin/master..HEAD` shows Baseball commits plus docs routing/cleanup commits, including `25b74f8 docs: prune legacy claude entrypoints`. | Cleanup and docs routing are branch-local sidequest state. | Whether those cleanup/routing changes should move to `master` is an explicit human integration decision, not part of BN-R0. |
 
@@ -52,6 +53,7 @@ not claim production, render, rights, publishing, or creative acceptance.
 | BN-03 static export | `gui/capture_baseball_infographic_static.js`, `samples/_probe/baseball/static/baseball_pitch_event_p05.png` | 1280x720 static PNG, manifest, and readback passed. | Not YMM4 proof, not animation export, not creative acceptance. |
 | BN-04 frame sequence | `gui/capture_baseball_infographic_frames.js`, `samples/_probe/baseball/animation/frames/baseball_pitch_event_p05/` | Five 1280x720 frames, manifest, and readback passed; unique visual states are two hashes. | Not codec clip export, not YMM4 placement, not publish gate. |
 | BN-05 placement contract/proof | `lanes/sports_news/scripts/build_baseball_yymm4_placement_proof.js`, `samples/_probe/baseball/placement/` | Contract and minimal YMM4 transport proof passed mechanical readback; manual preview screenshot and freeform review are recorded as gate-only acceptance. | Future visual/layout redesign is separate from BN-05 gate closure. |
+| BN-06 pipeline contract | `docs/baseball/BASEBALL_PIPELINE_CONTRACT.md`, `samples/_probe/baseball/pipeline/baseball_pipeline_contract_manifest.json` | Defines layer ownership and sample P05 handoff data from fact capsule to script beats, visual scene plan, adapter boundary, and review gate. | Contract-only; not a render proof, not production readiness, not creative final acceptance, and not a publish gate. |
 
 ## Verification Commands And BN-R0 Start Results
 
@@ -111,13 +113,15 @@ implementation restart prompt. The reusable supervisor prompt owner remains
 | Uncertainty | Why it matters | Where to resolve it | Next enabled move |
 | --- | --- | --- | --- |
 | BN-05 manual YMM4 preview is accepted gate-only | Screenshot and freeform review close crop/readability/layer-overlap uncertainty for this QA gate only. | `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_screenshot.png` and `samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_review.json`. | Treat future visual/layout redesign as a separate later decision. |
+| BN-06 adapter behavior is only contracted | The layer boundary now says what the adapter may consume and emit, but no generated `.ymmp` readback is added by BN-06. | `docs/baseball/BASEBALL_PIPELINE_CONTRACT.md` and `samples/_probe/baseball/pipeline/`. | Choose a separate follow-up for adapter readback design or motion export proof. |
 | BN-04 frames have not been accepted as motion design | Frame hashes prove deterministic capture, but not whether the pitch update communicates enough value. | `samples/_probe/baseball/animation/frames/baseball_pitch_event_p05/`. | Decide whether clip export is worth building. |
 | Real source/provenance replacement is unopened | Current sample facts are intentionally fake/sample data. | `lanes/sports_news/schemas/` and future source/right manifests. | Plan real episode ingest only after sample route review is accepted. |
 | Branch-local docs cleanup is not mainline policy | This branch contains docs routing and cleanup changes not automatically present on `origin/master`. | `docs/BRANCH_THREAD_SUPERVISION.md` and `git diff --name-status origin/master...HEAD`. | Make a separate human integration decision, or keep the changes sidequest-local. |
 
 ## What BN-R0 Does Not Change
 
-BN-R0 does not implement BN-05 placement tuning, does not implement clip export,
-does not start BN-06 or BN-07, does
-not start RSS, NotebookLM, source collection, publishing, YouTube upload, or
-G-27 work, and does not merge, cherry-pick, or push anything to `master`.
+BN-R0 did not implement BN-05 placement tuning, clip export, BN-06, BN-07,
+RSS, NotebookLM, source collection, publishing, YouTube upload, or G-27 work,
+and did not merge, cherry-pick, or push anything to `master`. BN-06 later adds
+only the sample pipeline contract and does not change those production,
+publishing, source, or mainline boundaries.

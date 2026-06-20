@@ -73,6 +73,16 @@ powershell -ExecutionPolicy Bypass -File .\lanes\sports_news\scripts\open_baseba
 The current BN-05 manual preview blocker is closed. Future visual or layout
 redesign remains a separate later decision, not part of this gate closure.
 
+## Post-BN-05 continuation
+
+BN-06 is the next contract-only layer after this gate. It is recorded in
+`docs/baseball/BASEBALL_PIPELINE_CONTRACT.md` with sample artifacts under
+`samples/_probe/baseball/pipeline/`. It defines how BaseballDataCapsule,
+ScriptBeatIR, VisualScenePlan, YMM4Adapter, and ReviewGate hand off ownership.
+It does not reopen BN-05, does not add render proof, does not claim production
+readiness or creative final acceptance, and does not start publishing, real
+source intake, clip export, TTS, thumbnail work, or mainline integration.
+
 ## Review artifact identity and access
 
 | Artifact | Identity | Access | Validation |

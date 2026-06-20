@@ -1,0 +1,47 @@
+{
+  "schema_version": "baseball_pipeline_contract_manifest.v1",
+  "artifact_id": "baseball_news_pipeline_contract",
+  "slice": "BN-06",
+  "status": "contract_defined",
+  "contract_doc": "docs/baseball/BASEBALL_PIPELINE_CONTRACT.md",
+  "artifacts": {
+    "data_capsule": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05.json",
+    "script_beat_ir": "samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05.json",
+    "visual_scene_plan": "samples/_probe/baseball/pipeline/baseball_visual_scene_plan_p05.json",
+    "bn05_review_record": "samples/_probe/baseball/placement/baseball_pitch_event_p05_yymm4_preview_review.json"
+  },
+  "layer_order": [
+    "BaseballDataCapsule",
+    "ScriptBeatIR",
+    "VisualScenePlan",
+    "YMM4Adapter",
+    "ReviewGate"
+  ],
+  "validation": {
+    "test_path": "tests/test_baseball_pipeline_contract.py",
+    "expected_result": "passed",
+    "checks": [
+      "script data_refs resolve to BaseballDataCapsule facts",
+      "visual data_refs resolve to BaseballDataCapsule facts",
+      "visual script_refs resolve to ScriptBeatIR beats",
+      "scene timeline covers the BN-05 placement range without overlap",
+      "boundaries do not claim render, production proof, creative final acceptance, publishing, real source, clip export, TTS, or thumbnail completion"
+    ]
+  },
+  "next_action": "Choose a separate BN-07+ slice for adapter readback design or motion export proof. Do not treat BN-06 as render, production, creative final, publish, real-source, TTS, thumbnail, or clip-export completion.",
+  "boundaries": {
+    "sample_only": true,
+    "not_real_source": true,
+    "not_official_material": true,
+    "not_player_image_source": true,
+    "not_clip_export": true,
+    "not_video_generation": true,
+    "not_tts": true,
+    "not_thumbnail_work": true,
+    "not_render_proof": true,
+    "not_production_ready": true,
+    "not_creative_final_acceptance": true,
+    "not_publish_gate": true,
+    "not_mainline_integration": true
+  }
+}
