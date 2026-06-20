@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nlmytgen.local/baseball/baseball_script_beat_ir_p05_schema.json",
+  "title": "ScriptBeatIR P05 linkage fixture",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "fixture_version",
+    "artifact_id",
+    "artifact_kind",
+    "repo_relative_path",
+    "schema_path",
+    "readback_path",
+    "manifest_path",
+    "source_data_capsule",
+    "script_owner",
+    "linkage_policy",
+    "narrative_angle",
+    "beats",
+    "beat_ref_index",
+    "readiness",
+    "boundaries"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "schema_version": { "const": "baseball_script_beat_ir.v1" },
+    "fixture_version": { "const": "BN-08" },
+    "artifact_kind": { "const": "ScriptBeatIR" },
+    "script_owner": { "const": "ScriptBeatIR" },
+    "source_data_capsule": { "type": "string", "minLength": 1 },
+    "linkage_policy": {
+      "type": "object",
+      "required": ["data_ref_source", "consumer_rule", "no_invented_fact_rule", "visual_boundary_rule"]
+    },
+    "narrative_angle": {
+      "type": "object",
+      "required": ["angle_id", "summary", "source_highlight_id", "data_refs", "emphasis"]
+    },
+    "beats": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/beat" }
+    },
+    "beat_ref_index": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/beat_ref_index_entry" }
+    }
+  },
+  "$defs": {
+    "beat": {
+      "type": "object",
+      "required": [
+        "beat_id",
+        "order",
+        "purpose",
+        "spoken_intent",
+        "data_refs",
+        "supported_claims",
+        "emphasis",
+        "timing_hint",
+        "visual_intent"
+      ],
+      "properties": {
+        "beat_id": { "type": "string", "pattern": "^beat_[a-z0-9_]+$" },
+        "order": { "type": "integer", "minimum": 1 },
+        "purpose": { "type": "string", "minLength": 1 },
+        "spoken_intent": { "type": "string", "minLength": 1 },
+        "data_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "pattern": "^fact_[a-z0-9_]+$" }
+        },
+        "supported_claims": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/supported_claim" }
+        },
+        "timing_hint": { "$ref": "#/$defs/timing_hint" },
+        "visual_intent": { "$ref": "#/$defs/visual_intent" }
+      }
+    },
+    "supported_claim": {
+      "type": "object",
+      "required": ["claim_id", "claim_text", "data_refs"],
+      "properties": {
+        "claim_id": { "type": "string", "pattern": "^claim_[a-z0-9_]+$" },
+        "claim_text": { "type": "string", "minLength": 1 },
+        "data_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "pattern": "^fact_[a-z0-9_]+$" }
+        }
+      }
+    },
+    "timing_hint": {
+      "type": "object",
+      "required": ["relative_order", "suggested_duration_frames"],
+      "properties": {
+        "relative_order": { "type": "integer", "minimum": 1 },
+        "suggested_duration_frames": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "visual_intent": {
+      "type": "object",
+      "required": ["intent_id", "role", "preferred_focus", "must_not_decide"],
+      "properties": {
+        "intent_id": { "type": "string", "pattern": "^intent_[a-z0-9_]+$" },
+        "role": { "type": "string", "minLength": 1 },
+        "preferred_focus": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "must_not_decide": {
+          "type": "array",
+          "contains": { "enum": ["layout_slot", "layer", "keyframe", "render"] }
+        }
+      }
+    },
+    "beat_ref_index_entry": {
+      "type": "object",
+      "required": ["order", "data_refs", "visual_intent_id"]
+    }
+  }
+}

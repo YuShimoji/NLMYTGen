@@ -9,6 +9,7 @@
     "schema": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05_schema.json",
     "readback": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05_readback.json",
     "script_beat_ir_consumer": "samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05.json",
+    "script_beat_ir_readback": "samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05_readback.json",
     "visual_scene_plan_consumer": "samples/_probe/baseball/pipeline/baseball_visual_scene_plan_p05.json"
   },
   "validation": {
@@ -27,7 +28,7 @@
       "no render, production, creative, publish, real-source, clip export, TTS, or thumbnail completion claim"
     ]
   },
-  "next_action": "Open BN-08 ScriptBeatIR linkage as a separate slice; do not use BN-07 for script generation, visual redesign, motion transport, render, production, or publishing.",
+  "next_action": "BN-08 ScriptBeatIR linkage is represented by the script readback. Open BN-09 VisualScenePlan timing linkage as a separate slice; do not use BN-07 for script generation, visual redesign, motion transport, render, production, or publishing.",
   "boundaries": {
     "sample_only": true,
     "synthetic_fixture": true,

@@ -1,0 +1,51 @@
+{
+  "schema_version": "baseball_script_beat_ir_manifest.v1",
+  "artifact_id": "baseball_script_beat_ir_p05_linkage",
+  "slice": "BN-08",
+  "status": "script_linkage_validated",
+  "script_owner": "ScriptBeatIR",
+  "artifacts": {
+    "script_beat_ir": "samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05.json",
+    "script_beat_ir_schema": "samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05_schema.json",
+    "script_beat_ir_readback": "samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05_readback.json",
+    "source_data_capsule": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05.json",
+    "source_data_capsule_readback": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05_readback.json",
+    "pipeline_manifest": "samples/_probe/baseball/pipeline/baseball_pipeline_contract_manifest.json"
+  },
+  "validation": {
+    "test_path": "tests/test_baseball_script_beat_ir_linkage.py",
+    "expected_result": "passed",
+    "checks": [
+      "JSON parse validity",
+      "required ScriptBeatIR linkage fields",
+      "stable beat_id values",
+      "beat_ref_index matches beats",
+      "all ScriptBeatIR data_refs resolve to Data Capsule data_ref_index",
+      "supported narrative claims have fact refs",
+      "speed, count, score, pitch type, result, and zone claims are fact-backed",
+      "timing hints exist for BN-09",
+      "visual intent exists without final layout authority",
+      "synthetic provenance boundary remains clear",
+      "no render, production, creative, publish, real-source, clip export, TTS, or thumbnail completion claim"
+    ]
+  },
+  "next_action": "Open BN-09 VisualScenePlan timing linkage as a separate slice; do not use BN-08 for visual redesign, YMM4 motion transport, render, production, or publishing.",
+  "boundaries": {
+    "not_visual_scene_plan": true,
+    "not_visual_redesign": true,
+    "not_yymm4_motion_transport": true,
+    "not_render_proof": true,
+    "not_production_ready": true,
+    "not_creative_final_acceptance": true,
+    "not_publish_gate": true,
+    "not_real_source": true,
+    "not_official_material": true,
+    "not_player_image_source": true,
+    "not_ai_generated_player_image": true,
+    "not_clip_export": true,
+    "not_video_generation": true,
+    "not_tts": true,
+    "not_thumbnail_work": true,
+    "not_mainline_integration": true
+  }
+}

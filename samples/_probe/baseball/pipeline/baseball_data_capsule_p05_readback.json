@@ -33,6 +33,7 @@
     "highlight_candidate_count": 1,
     "consumer_paths_checked": [
       "samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05.json",
+      "samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05_readback.json",
       "samples/_probe/baseball/pipeline/baseball_visual_scene_plan_p05.json"
     ]
   },
@@ -53,5 +54,5 @@
     "not_publish_gate": true,
     "not_mainline_integration": true
   },
-  "next_action": "BN-08 should link ScriptBeatIR to the validated Data Capsule refs without adding new facts outside BaseballDataCapsule."
+  "next_action": "BN-08 links ScriptBeatIR to the validated Data Capsule refs. BN-09 should map linked beats to VisualScenePlan timing/slots without adding new facts outside BaseballDataCapsule."
 }

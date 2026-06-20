@@ -160,6 +160,16 @@ does not generate scripts, redesign visuals, create YMM4 motion transport,
 render output, production proof, publishing readiness, clip export, TTS, or
 thumbnail work.
 
+## BN-08 linkage note
+
+BN-08 is now narrowed to ScriptBeatIR linkage against the P05 Data Capsule.
+Use `samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05_manifest.json`
+and `samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05_readback.json`
+as the script linkage readiness records. This slice may expose timing hints and
+visual intent for BN-09, but it does not create a VisualScenePlan storyboard,
+redesign visuals, create YMM4 motion transport, render output, production
+proof, publishing readiness, clip export, TTS, or thumbnail work.
+
 ## 初期タスク
 
 | ID | Task | 完了条件 |

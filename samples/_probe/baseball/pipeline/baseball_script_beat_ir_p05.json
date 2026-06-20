@@ -1,49 +1,237 @@
 {
   "schema_version": "baseball_script_beat_ir.v1",
+  "fixture_version": "BN-08",
   "artifact_id": "baseball_script_beat_ir_p05",
+  "artifact_kind": "ScriptBeatIR",
+  "repo_relative_path": "samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05.json",
+  "schema_path": "samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05_schema.json",
+  "readback_path": "samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05_readback.json",
+  "manifest_path": "samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05_manifest.json",
   "source_data_capsule": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05.json",
+  "source_data_capsule_readback": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05_readback.json",
   "script_owner": "ScriptBeatIR",
-  "narrative_angle": "The pitcher slows the hitter down by moving from a 155 km/h four-seam fastball to a 140 km/h slider.",
+  "linkage_policy": {
+    "data_ref_source": "BaseballDataCapsule.data_ref_index",
+    "consumer_rule": "Every beat and supported claim must reference only fact ids present in the Data Capsule data_ref_index.",
+    "no_invented_fact_rule": "ScriptBeatIR may choose emphasis and order, but any score, count, speed, pitch type, result, zone, or participant statement must be backed by data_refs.",
+    "visual_boundary_rule": "ScriptBeatIR may expose visual intent and timing hints for BN-09, but must not decide final layout, YMM4 layers, keyframes, or render state."
+  },
+  "narrative_angle": {
+    "angle_id": "angle_velocity_pitch_type_shift",
+    "summary": "The pitcher slows the hitter down by moving from a 155 km/h four-seam fastball to a 140 km/h slider.",
+    "source_highlight_id": "highlight_velocity_pitch_type_shift",
+    "data_refs": [
+      "fact_pitch_04_velocity",
+      "fact_pitch_05_velocity",
+      "fact_velocity_delta",
+      "fact_pitch_type_change",
+      "fact_highlight_p04_p05_sequence"
+    ],
+    "emphasis": "primary"
+  },
   "beats": [
     {
       "beat_id": "beat_context",
       "order": 1,
       "purpose": "establish_game_state",
-      "spoken_intent": "Set the inning, score, and count before explaining the pitch change.",
-      "data_refs": ["fact_score_state", "fact_count_state"],
-      "screen_text": "7th top, 1 out, B2-S2"
+      "spoken_intent": "Set the inning, score, count, and empty-base state before explaining the pitch change.",
+      "data_refs": ["fact_score_state", "fact_count_state", "fact_runners_empty"],
+      "screen_text": "7th top, 1 out, B2-S2, bases empty",
+      "supported_claims": [
+        {
+          "claim_id": "claim_context_score_count",
+          "claim_text": "The sample event starts with EAG trailing FAL 3-4 in the top of the 7th, one out, count B2-S2.",
+          "data_refs": ["fact_score_state", "fact_count_state"]
+        },
+        {
+          "claim_id": "claim_context_runners",
+          "claim_text": "No runners are on base.",
+          "data_refs": ["fact_runners_empty"]
+        }
+      ],
+      "emphasis": {
+        "rank": 4,
+        "kind": "context",
+        "why": "Sets the state needed to interpret the pitch result."
+      },
+      "timing_hint": {
+        "relative_order": 1,
+        "suggested_duration_frames": 300,
+        "handoff_to": "beat_change"
+      },
+      "visual_intent": {
+        "intent_id": "intent_hold_score_context",
+        "role": "context_anchor",
+        "preferred_focus": ["score", "count", "runners"],
+        "must_not_decide": ["layout_slot", "layer", "keyframe", "render"]
+      }
     },
     {
       "beat_id": "beat_change",
       "order": 2,
       "purpose": "explain_pitch_change",
-      "spoken_intent": "Compare the previous fastball and current slider without inventing extra scouting claims.",
-      "data_refs": ["fact_pitch_04_velocity", "fact_pitch_05_velocity", "fact_velocity_delta", "fact_pitch_type_change"],
-      "screen_text": "155 km/h FF -> 140 km/h SL"
+      "spoken_intent": "Compare the previous fastball and current slider without inventing scouting claims.",
+      "data_refs": [
+        "fact_pitch_04_type",
+        "fact_pitch_04_velocity",
+        "fact_pitch_05_type",
+        "fact_pitch_05_velocity",
+        "fact_velocity_delta",
+        "fact_pitch_type_change",
+        "fact_highlight_p04_p05_sequence"
+      ],
+      "screen_text": "155 km/h FF -> 140 km/h SL",
+      "supported_claims": [
+        {
+          "claim_id": "claim_velocity_change",
+          "claim_text": "The pitch speed drops from 155 km/h to 140 km/h.",
+          "data_refs": ["fact_pitch_04_velocity", "fact_pitch_05_velocity", "fact_velocity_delta"]
+        },
+        {
+          "claim_id": "claim_pitch_type_change",
+          "claim_text": "The sequence changes from four-seam fastball to slider.",
+          "data_refs": ["fact_pitch_04_type", "fact_pitch_05_type", "fact_pitch_type_change"]
+        }
+      ],
+      "emphasis": {
+        "rank": 1,
+        "kind": "primary_narrative_angle",
+        "why": "This is the sample's strongest fact-backed explanation point."
+      },
+      "timing_hint": {
+        "relative_order": 2,
+        "suggested_duration_frames": 480,
+        "handoff_to": "beat_result"
+      },
+      "visual_intent": {
+        "intent_id": "intent_compare_pitch_change",
+        "role": "comparison_emphasis",
+        "preferred_focus": ["previous_pitch", "current_pitch", "velocity_delta"],
+        "must_not_decide": ["layout_slot", "layer", "keyframe", "render"]
+      }
     },
     {
       "beat_id": "beat_result",
       "order": 3,
       "purpose": "name_result",
-      "spoken_intent": "Tie the pitch change to the recorded strike result.",
-      "data_refs": ["fact_pitch_05_result", "fact_pitch_05_zone"],
-      "screen_text": "P05 slider, strike, low outer"
+      "spoken_intent": "Tie the pitch change to the recorded strike result and low-outer location.",
+      "data_refs": ["fact_pitch_05_type", "fact_pitch_05_velocity", "fact_pitch_05_result", "fact_pitch_05_zone"],
+      "screen_text": "P05 slider, 140 km/h, strike, low outer",
+      "supported_claims": [
+        {
+          "claim_id": "claim_current_pitch_result",
+          "claim_text": "The current P05 pitch is a 140 km/h slider recorded as a strike.",
+          "data_refs": ["fact_pitch_05_type", "fact_pitch_05_velocity", "fact_pitch_05_result"]
+        },
+        {
+          "claim_id": "claim_current_pitch_zone",
+          "claim_text": "The current pitch location is low outer.",
+          "data_refs": ["fact_pitch_05_zone"]
+        }
+      ],
+      "emphasis": {
+        "rank": 2,
+        "kind": "result_evidence",
+        "why": "Connects the comparison to the sample event result."
+      },
+      "timing_hint": {
+        "relative_order": 3,
+        "suggested_duration_frames": 360,
+        "handoff_to": "beat_watch_next"
+      },
+      "visual_intent": {
+        "intent_id": "intent_show_result_evidence",
+        "role": "result_evidence",
+        "preferred_focus": ["current_pitch", "result", "zone"],
+        "must_not_decide": ["layout_slot", "layer", "keyframe", "render"]
+      }
     },
     {
       "beat_id": "beat_watch_next",
       "order": 4,
       "purpose": "viewer_watch_point",
-      "spoken_intent": "Point the viewer to the next slider target as a watch point, keeping it sample-only.",
-      "data_refs": ["fact_pitch_05_zone"],
-      "screen_text": "Watch the low-outer slider target"
+      "spoken_intent": "Point the viewer to the slider target as a watch point, keeping the inference sample-only.",
+      "data_refs": ["fact_pitch_05_type", "fact_pitch_05_zone", "fact_highlight_p04_p05_sequence"],
+      "screen_text": "Watch the low-outer slider target",
+      "supported_claims": [
+        {
+          "claim_id": "claim_watch_low_outer",
+          "claim_text": "The low-outer location is the fact-backed watch point for the sample slider.",
+          "data_refs": ["fact_pitch_05_type", "fact_pitch_05_zone", "fact_highlight_p04_p05_sequence"]
+        }
+      ],
+      "emphasis": {
+        "rank": 3,
+        "kind": "viewer_handoff",
+        "why": "Turns the fact-backed sequence into a viewer-facing next observation."
+      },
+      "timing_hint": {
+        "relative_order": 4,
+        "suggested_duration_frames": 180,
+        "handoff_to": null
+      },
+      "visual_intent": {
+        "intent_id": "intent_watch_zone_target",
+        "role": "viewer_handoff",
+        "preferred_focus": ["zone", "watch_point"],
+        "must_not_decide": ["layout_slot", "layer", "keyframe", "render"]
+      }
     }
   ],
+  "beat_ref_index": {
+    "beat_context": {
+      "order": 1,
+      "data_refs": ["fact_score_state", "fact_count_state", "fact_runners_empty"],
+      "visual_intent_id": "intent_hold_score_context"
+    },
+    "beat_change": {
+      "order": 2,
+      "data_refs": [
+        "fact_pitch_04_type",
+        "fact_pitch_04_velocity",
+        "fact_pitch_05_type",
+        "fact_pitch_05_velocity",
+        "fact_velocity_delta",
+        "fact_pitch_type_change",
+        "fact_highlight_p04_p05_sequence"
+      ],
+      "visual_intent_id": "intent_compare_pitch_change"
+    },
+    "beat_result": {
+      "order": 3,
+      "data_refs": ["fact_pitch_05_type", "fact_pitch_05_velocity", "fact_pitch_05_result", "fact_pitch_05_zone"],
+      "visual_intent_id": "intent_show_result_evidence"
+    },
+    "beat_watch_next": {
+      "order": 4,
+      "data_refs": ["fact_pitch_05_type", "fact_pitch_05_zone", "fact_highlight_p04_p05_sequence"],
+      "visual_intent_id": "intent_watch_zone_target"
+    }
+  },
+  "readiness": {
+    "bn08_linkage_status": "linked_to_data_capsule",
+    "bn09_ready": true,
+    "next_action": "BN-09 should map ScriptBeatIR beats to VisualScenePlan timing/slots without adding new facts outside BaseballDataCapsule."
+  },
   "boundaries": {
     "must_reference_data_refs": true,
     "must_not_invent_facts": true,
+    "not_visual_scene_plan": true,
     "not_visual_layout_authority": true,
     "not_yymm4_transport": true,
+    "not_yymm4_motion_transport": true,
+    "not_render_proof": true,
+    "not_production_ready": true,
     "not_creative_final_acceptance": true,
-    "not_publish_gate": true
+    "not_publish_gate": true,
+    "not_real_source": true,
+    "not_official_material": true,
+    "not_player_image_source": true,
+    "not_ai_generated_player_image": true,
+    "not_clip_export": true,
+    "not_video_generation": true,
+    "not_tts": true,
+    "not_thumbnail_work": true,
+    "not_mainline_integration": true
   }
 }
