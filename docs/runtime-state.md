@@ -1,5 +1,23 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom export fixture compatibility v1 completed (2026-06-20)**:
+  Added a diagnostic cross-repo compatibility readback for the fake
+  `newsroom-yt-pipeline` export fixture at commit `912ce3b`. Human readback:
+  `docs/verification/NEWSROOM_EXPORT_FIXTURE_COMPATIBILITY_V1_2026-06-20.md`;
+  machine-readable readback:
+  `samples/_probe/newsroom_handoff/newsroom_export_fixture_compatibility_readback.json`;
+  focused coverage:
+  `tests/test_newsroom_export_fixture_compatibility.py`. Result:
+  `passed_with_adapter_warnings_transfer_blocked`. The fake fixture has direct
+  matches for identity/topic fields, adapter-required fields for artifact and
+  contract naming, metadata, source/provenance, NotebookLM seed, script/visual
+  mappings, G-28 hints, warnings, and downstream readiness, plus human-review
+  holds for rights/media/review/visual approval. This slice reads the
+  newsroom checkout only; it does not modify `newsroom-yt-pipeline`, accept a
+  real packet, fetch sources, open RSS/Inoreader, access live source material,
+  download media, edit `.ymmp`, generate YMM4 carriers, render media, approve
+  rights, approve production, or publish/upload output. Next safe follow-up is
+  a narrow NLMYTGen adapter proof if the supervisor promotes this bridge.
 - **Newsroom upstream export delta request v1 completed (2026-06-20)**:
   Added an NLMYTGen-side upstream request for the next
   `newsroom-yt-pipeline` export bundle delta. Human readback:

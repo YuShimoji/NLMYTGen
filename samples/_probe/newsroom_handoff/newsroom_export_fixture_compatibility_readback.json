@@ -1,0 +1,520 @@
+{
+  "artifact_id": "newsroom_export_fixture_compatibility_v1_2026_06_20",
+  "repo_relative_path": "samples/_probe/newsroom_handoff/newsroom_export_fixture_compatibility_readback.json",
+  "status": "passed_with_adapter_warnings_transfer_blocked",
+  "review_status": "ready_for_supervisor_review",
+  "diagnostic_only": true,
+  "target_repo": "newsroom-yt-pipeline",
+  "target_fixture_commit": "912ce3b",
+  "target_fixture_path": "samples/_probe/newsroom_handoff/newsroom_export_fixture_v1.json",
+  "target_fixture_doc": "docs/integration/NEWSROOM_EXPORT_FIXTURE_FOR_NLMYTGEN_V1.md",
+  "nlmytgen_head_expected": "e39ca3c",
+  "current_packet_state": "fake_fixture_only",
+  "real_packet_accepted": false,
+  "rights_approval": false,
+  "media_approval": false,
+  "review_approval": false,
+  "production_approval": false,
+  "ymm4_transfer_ready": false,
+  "raw_fixture_direct_ingest": "not_accepted_requires_adapter",
+  "source_artifacts": {
+    "handoff_contract": "docs/integration/NEWSROOM_TO_NLMYTGEN_HANDOFF_CONTRACT.md",
+    "upstream_export_delta_request": "samples/_probe/newsroom_handoff/upstream_export_delta_request.json",
+    "real_packet_readiness_checklist": "samples/_probe/newsroom_handoff/real_packet_readiness_checklist.json",
+    "nlmytgen_synthetic_packet": "samples/_probe/newsroom_handoff/minimal_episode_packet.json",
+    "slot_linkage_readback": "samples/_probe/newsroom_handoff/g28_slot_linkage_readback.json",
+    "transfer_planning_readback": "samples/_probe/newsroom_handoff/transfer_planning_readback.json",
+    "review_console_planning_panel": "docs/verification/NEWSROOM_REVIEW_CONSOLE_PLANNING_PANEL_V1_2026-06-20.md"
+  },
+  "compatibility_status_categories": [
+    "direct_match",
+    "transform_required",
+    "missing_required",
+    "missing_transfer_candidate",
+    "hold_for_human_review",
+    "upstream_only",
+    "downstream_only"
+  ],
+  "summary_counts": {
+    "direct_match": 9,
+    "transform_required": 13,
+    "missing_required": 0,
+    "missing_transfer_candidate": 3,
+    "hold_for_human_review": 8,
+    "upstream_only": 10,
+    "downstream_only": 2,
+    "total_checks": 45
+  },
+  "compatibility_items": [
+    {
+      "field_name": "artifact_id",
+      "newsroom_path": "fixture_id",
+      "nlmytgen_expected_path": "artifact_id",
+      "compatibility_status": "transform_required",
+      "owner": "NLMYTGen",
+      "failure_behavior": "fail",
+      "consumer": "validator",
+      "next_action": "adapter map fixture_id to artifact_id before validator intake"
+    },
+    {
+      "field_name": "contract_version",
+      "newsroom_path": "schema_version",
+      "nlmytgen_expected_path": "contract_version",
+      "compatibility_status": "transform_required",
+      "owner": "NLMYTGen",
+      "failure_behavior": "fail",
+      "consumer": "validator",
+      "next_action": "adapter map schema_version to contract_version or request an explicit upstream contract_version"
+    },
+    {
+      "field_name": "episode_id",
+      "newsroom_path": "episode_id",
+      "nlmytgen_expected_path": "episode_id",
+      "compatibility_status": "direct_match",
+      "owner": "newsroom-yt-pipeline",
+      "failure_behavior": "fail",
+      "consumer": "validator",
+      "next_action": "no action for fake fixture shape"
+    },
+    {
+      "field_name": "title",
+      "newsroom_path": "title",
+      "nlmytgen_expected_path": "title",
+      "compatibility_status": "direct_match",
+      "owner": "newsroom-yt-pipeline",
+      "failure_behavior": "fail",
+      "consumer": "validator",
+      "next_action": "no action for fake fixture shape"
+    },
+    {
+      "field_name": "topic_summary",
+      "newsroom_path": "topic_summary",
+      "nlmytgen_expected_path": "topic_summary",
+      "compatibility_status": "direct_match",
+      "owner": "newsroom-yt-pipeline",
+      "failure_behavior": "fail",
+      "consumer": "validator",
+      "next_action": "no action for fake fixture shape"
+    },
+    {
+      "field_name": "episode_metadata",
+      "newsroom_path": "export_metadata + localization_notes + channel_metadata",
+      "nlmytgen_expected_path": "episode_metadata",
+      "compatibility_status": "transform_required",
+      "owner": "NLMYTGen",
+      "failure_behavior": "fail",
+      "consumer": "validator",
+      "next_action": "adapter compose episode_metadata or request direct upstream episode_metadata"
+    },
+    {
+      "field_name": "source_notes",
+      "newsroom_path": "source_notes",
+      "nlmytgen_expected_path": "source_notes",
+      "compatibility_status": "transform_required",
+      "owner": "NLMYTGen",
+      "failure_behavior": "fail",
+      "consumer": "validator",
+      "next_action": "adapter normalize role/title/url_status into sanitized summary and non-fetching reference fields"
+    },
+    {
+      "field_name": "provenance",
+      "newsroom_path": "provenance",
+      "nlmytgen_expected_path": "provenance.raw_source_material_included + provenance.external_fetch_allowed_by_nlmytgen",
+      "compatibility_status": "transform_required",
+      "owner": "NLMYTGen",
+      "failure_behavior": "block transfer",
+      "consumer": "transfer-planning proof",
+      "next_action": "adapter map raw_article_body_included and external download flags into NLMYTGen provenance booleans"
+    },
+    {
+      "field_name": "rights_summary",
+      "newsroom_path": "rights_summary",
+      "nlmytgen_expected_path": "rights_summary.clearance_state + rights_summary.blocked_uses",
+      "compatibility_status": "hold_for_human_review",
+      "owner": "human reviewer",
+      "failure_behavior": "block transfer",
+      "consumer": "transfer-planning proof",
+      "next_action": "hold until rights status is reviewed; adapter may map hold_for_review to non-cleared clearance"
+    },
+    {
+      "field_name": "notebooklm_packet_or_transcript_seed",
+      "newsroom_path": "notebooklm_packet.transcript_seed.summary",
+      "nlmytgen_expected_path": "notebooklm_packet.transcript_seed",
+      "compatibility_status": "transform_required",
+      "owner": "NLMYTGen",
+      "failure_behavior": "fail",
+      "consumer": "validator",
+      "next_action": "adapter flatten transcript_seed.summary or request direct string seed"
+    },
+    {
+      "field_name": "script_beats",
+      "newsroom_path": "script_beats",
+      "nlmytgen_expected_path": "script_beats[].intent + claim + evidence_refs",
+      "compatibility_status": "transform_required",
+      "owner": "NLMYTGen",
+      "failure_behavior": "fail",
+      "consumer": "validator",
+      "next_action": "adapter map summary to claim and source_refs to evidence_refs; add intent from chapter or unit role"
+    },
+    {
+      "field_name": "visual_plan",
+      "newsroom_path": "visual_plan",
+      "nlmytgen_expected_path": "visual_plan[].visualir_concept + layout_candidate + content_slots",
+      "compatibility_status": "transform_required",
+      "owner": "NLMYTGen",
+      "failure_behavior": "fail",
+      "consumer": "slot-linkage proof",
+      "next_action": "adapter map unit_type and stable visual ids into VisualIR fields and G-28 content slots"
+    },
+    {
+      "field_name": "g28_slot_hints",
+      "newsroom_path": "g28_slot_hints[].hint_type + recommended_role",
+      "nlmytgen_expected_path": "g28_slot_hints[].object_catalog_slot",
+      "compatibility_status": "transform_required",
+      "owner": "NLMYTGen",
+      "failure_behavior": "warn",
+      "consumer": "slot-linkage proof",
+      "next_action": "adapter map newsroom intent hints to allowed G-28 object catalog slots while keeping geometry downstream"
+    },
+    {
+      "field_name": "review_warnings",
+      "newsroom_path": "review_warnings",
+      "nlmytgen_expected_path": "review_warnings[].blocks_ymm4_transfer",
+      "compatibility_status": "transform_required",
+      "owner": "NLMYTGen",
+      "failure_behavior": "block transfer",
+      "consumer": "transfer-planning proof",
+      "next_action": "adapter map severity block_transfer or hold_for_review into explicit blocks_ymm4_transfer"
+    },
+    {
+      "field_name": "downstream_readiness",
+      "newsroom_path": "downstream_readiness",
+      "nlmytgen_expected_path": "downstream_readiness.ymm4_transfer_ready + blocking_reasons",
+      "compatibility_status": "transform_required",
+      "owner": "NLMYTGen",
+      "failure_behavior": "block transfer",
+      "consumer": "transfer-planning proof",
+      "next_action": "adapter map production_ymm4 fail and transfer_candidate block_transfer into ymm4_transfer_ready=false with blockers"
+    },
+    {
+      "field_name": "rights_provenance_clearance",
+      "newsroom_path": "rights_summary.status + provenance",
+      "nlmytgen_expected_path": "transfer candidate gate",
+      "compatibility_status": "hold_for_human_review",
+      "owner": "human reviewer",
+      "failure_behavior": "block transfer",
+      "consumer": "transfer-planning proof",
+      "next_action": "hold transfer; fake fixture does not clear rights or provenance"
+    },
+    {
+      "field_name": "media_source_availability",
+      "newsroom_path": "rights_summary.media_availability",
+      "nlmytgen_expected_path": "transfer candidate gate",
+      "compatibility_status": "missing_transfer_candidate",
+      "owner": "newsroom-yt-pipeline",
+      "failure_behavior": "block transfer",
+      "consumer": "transfer-planning proof",
+      "next_action": "upstream must supply approved media metadata, approved abstract replacement, or explicit no-media route for real packets"
+    },
+    {
+      "field_name": "review_approval_status",
+      "newsroom_path": "review_status + reviewer_notes",
+      "nlmytgen_expected_path": "human review gate",
+      "compatibility_status": "hold_for_human_review",
+      "owner": "human reviewer",
+      "failure_behavior": "hold for review",
+      "consumer": "Review Console panel",
+      "next_action": "hold; fake_only_contract_probe is not a review approval"
+    },
+    {
+      "field_name": "visual_readiness",
+      "newsroom_path": "visual_plan[].approval_state",
+      "nlmytgen_expected_path": "transfer candidate visual gate",
+      "compatibility_status": "missing_transfer_candidate",
+      "owner": "NLMYTGen",
+      "failure_behavior": "block transfer",
+      "consumer": "slot-linkage proof",
+      "next_action": "keep transfer blocked until visual approvals and mapped G-28 slots are reviewed"
+    },
+    {
+      "field_name": "blocked_prohibited_actions_resolved",
+      "newsroom_path": "boundary_assertions + rights_summary.failure_behavior",
+      "nlmytgen_expected_path": "transfer candidate gate",
+      "compatibility_status": "missing_transfer_candidate",
+      "owner": "human reviewer",
+      "failure_behavior": "block transfer",
+      "consumer": "transfer-planning proof",
+      "next_action": "hold transfer; fake fixture intentionally retains block_transfer and fail states"
+    },
+    {
+      "field_name": "no_readiness_blocker_contradiction",
+      "newsroom_path": "downstream_readiness",
+      "nlmytgen_expected_path": "downstream_readiness",
+      "compatibility_status": "direct_match",
+      "owner": "NLMYTGen",
+      "failure_behavior": "fail",
+      "consumer": "transfer-planning proof",
+      "next_action": "no action; readiness states consistently block transfer"
+    },
+    {
+      "field_name": "editorial_priority",
+      "newsroom_path": "editorial_priority",
+      "nlmytgen_expected_path": "optional enrichment",
+      "compatibility_status": "direct_match",
+      "owner": "newsroom-yt-pipeline",
+      "failure_behavior": "warn",
+      "consumer": "checklist only",
+      "next_action": "use as optional planning metadata only"
+    },
+    {
+      "field_name": "visual_treatment_preference",
+      "newsroom_path": "visual_plan[].unit_type",
+      "nlmytgen_expected_path": "optional enrichment",
+      "compatibility_status": "transform_required",
+      "owner": "NLMYTGen",
+      "failure_behavior": "warn",
+      "consumer": "checklist only",
+      "next_action": "adapter may derive advisory treatment preference from visual unit types"
+    },
+    {
+      "field_name": "source_confidence",
+      "newsroom_path": "source_confidence",
+      "nlmytgen_expected_path": "optional enrichment",
+      "compatibility_status": "direct_match",
+      "owner": "newsroom-yt-pipeline",
+      "failure_behavior": "warn",
+      "consumer": "checklist only",
+      "next_action": "use as optional confidence readback only"
+    },
+    {
+      "field_name": "reviewer_notes",
+      "newsroom_path": "reviewer_notes",
+      "nlmytgen_expected_path": "optional enrichment",
+      "compatibility_status": "direct_match",
+      "owner": "human reviewer",
+      "failure_behavior": "warn",
+      "consumer": "Review Console panel",
+      "next_action": "display as freeform notes only"
+    },
+    {
+      "field_name": "localization_notes",
+      "newsroom_path": "localization_notes",
+      "nlmytgen_expected_path": "optional enrichment",
+      "compatibility_status": "direct_match",
+      "owner": "newsroom-yt-pipeline",
+      "failure_behavior": "warn",
+      "consumer": "checklist only",
+      "next_action": "use as optional localization metadata"
+    },
+    {
+      "field_name": "channel_package_metadata",
+      "newsroom_path": "channel_metadata",
+      "nlmytgen_expected_path": "channel_package_metadata",
+      "compatibility_status": "transform_required",
+      "owner": "NLMYTGen",
+      "failure_behavior": "warn",
+      "consumer": "checklist only",
+      "next_action": "adapter rename channel_metadata to channel_package_metadata"
+    },
+    {
+      "field_name": "ambiguous_rights",
+      "newsroom_path": "rights_summary.status",
+      "nlmytgen_expected_path": "human review hold",
+      "compatibility_status": "hold_for_human_review",
+      "owner": "human reviewer",
+      "failure_behavior": "hold for review",
+      "consumer": "transfer-planning proof",
+      "next_action": "hold; fake fixture status is hold_for_review"
+    },
+    {
+      "field_name": "unclear_media_availability",
+      "newsroom_path": "rights_summary.media_availability",
+      "nlmytgen_expected_path": "human review hold",
+      "compatibility_status": "hold_for_human_review",
+      "owner": "newsroom-yt-pipeline",
+      "failure_behavior": "hold for review",
+      "consumer": "transfer-planning proof",
+      "next_action": "hold; fixture has no approved media availability"
+    },
+    {
+      "field_name": "real_screenshots_footage",
+      "newsroom_path": "export_metadata.contains_media",
+      "nlmytgen_expected_path": "human review hold",
+      "compatibility_status": "direct_match",
+      "owner": "external/manual",
+      "failure_behavior": "hold for review",
+      "consumer": "checklist only",
+      "next_action": "no action; fixture explicitly contains no real media"
+    },
+    {
+      "field_name": "brand_risk",
+      "newsroom_path": "not present in fake fixture",
+      "nlmytgen_expected_path": "human review hold",
+      "compatibility_status": "hold_for_human_review",
+      "owner": "human reviewer",
+      "failure_behavior": "hold for review",
+      "consumer": "checklist only",
+      "next_action": "real packets should add brand-risk review if applicable; absence is not approval"
+    },
+    {
+      "field_name": "uncertain_citation_quote_usage",
+      "newsroom_path": "rights_summary.quote_clearance",
+      "nlmytgen_expected_path": "human review hold",
+      "compatibility_status": "hold_for_human_review",
+      "owner": "human reviewer",
+      "failure_behavior": "hold for review",
+      "consumer": "validator",
+      "next_action": "hold; quote clearance is not_requested"
+    },
+    {
+      "field_name": "visual_approval",
+      "newsroom_path": "visual_plan[].approval_state",
+      "nlmytgen_expected_path": "human review hold",
+      "compatibility_status": "hold_for_human_review",
+      "owner": "human reviewer",
+      "failure_behavior": "hold for review",
+      "consumer": "Review Console panel",
+      "next_action": "hold; fake_only and hold_for_review visual states are not approval"
+    }
+  ],
+  "prohibited_assumption_checks": [
+    {
+      "field_name": "rss_source_discovery",
+      "newsroom_path": "boundary_assertions.rss_source_discovery_owner",
+      "nlmytgen_expected_path": "not implemented in NLMYTGen",
+      "compatibility_status": "upstream_only",
+      "owner": "newsroom-yt-pipeline",
+      "failure_behavior": "fail",
+      "consumer": "checklist only",
+      "next_action": "keep RSS/source discovery upstream"
+    },
+    {
+      "field_name": "article_scraping",
+      "newsroom_path": "boundary_assertions.nlmytgen_must_not",
+      "nlmytgen_expected_path": "not implemented in NLMYTGen",
+      "compatibility_status": "upstream_only",
+      "owner": "external/manual",
+      "failure_behavior": "fail",
+      "consumer": "checklist only",
+      "next_action": "keep scraping out of NLMYTGen"
+    },
+    {
+      "field_name": "inoreader_operation",
+      "newsroom_path": "provenance.inoreader_fetch",
+      "nlmytgen_expected_path": "not implemented in NLMYTGen",
+      "compatibility_status": "upstream_only",
+      "owner": "external/manual",
+      "failure_behavior": "fail",
+      "consumer": "checklist only",
+      "next_action": "keep Inoreader operation outside NLMYTGen"
+    },
+    {
+      "field_name": "live_source_download",
+      "newsroom_path": "provenance.external_downloads + export_metadata.contains_external_downloads",
+      "nlmytgen_expected_path": "not implemented in NLMYTGen",
+      "compatibility_status": "upstream_only",
+      "owner": "external/manual",
+      "failure_behavior": "fail",
+      "consumer": "transfer-planning proof",
+      "next_action": "do not fetch or download external material"
+    },
+    {
+      "field_name": "rights_acquisition",
+      "newsroom_path": "rights_summary.status",
+      "nlmytgen_expected_path": "not implemented in NLMYTGen",
+      "compatibility_status": "upstream_only",
+      "owner": "external/manual",
+      "failure_behavior": "hold for review",
+      "consumer": "transfer-planning proof",
+      "next_action": "keep rights acquisition external or human-owned"
+    },
+    {
+      "field_name": "production_approval",
+      "newsroom_path": "rights_summary.publication_approval + boundary_assertions.production_readiness_implied",
+      "nlmytgen_expected_path": "not implemented in NLMYTGen",
+      "compatibility_status": "upstream_only",
+      "owner": "human reviewer",
+      "failure_behavior": "block transfer",
+      "consumer": "Review Console panel",
+      "next_action": "do not infer production approval"
+    },
+    {
+      "field_name": "publishing_upload",
+      "newsroom_path": "boundary_assertions.nlmytgen_must_not",
+      "nlmytgen_expected_path": "not implemented in NLMYTGen",
+      "compatibility_status": "upstream_only",
+      "owner": "external/manual",
+      "failure_behavior": "fail",
+      "consumer": "checklist only",
+      "next_action": "keep publishing/upload outside NLMYTGen"
+    },
+    {
+      "field_name": "external_account_operations",
+      "newsroom_path": "export_metadata.contains_credentials",
+      "nlmytgen_expected_path": "not implemented in NLMYTGen",
+      "compatibility_status": "upstream_only",
+      "owner": "external/manual",
+      "failure_behavior": "fail",
+      "consumer": "checklist only",
+      "next_action": "do not require credentials or external accounts"
+    },
+    {
+      "field_name": "ymmp_generation_or_yymm4_transfer",
+      "newsroom_path": "downstream_readiness.production_ymm4",
+      "nlmytgen_expected_path": "blocked downstream action",
+      "compatibility_status": "upstream_only",
+      "owner": "NLMYTGen",
+      "failure_behavior": "block transfer",
+      "consumer": "transfer-planning proof",
+      "next_action": "keep YMM4 transfer blocked"
+    },
+    {
+      "field_name": "render_generation",
+      "newsroom_path": "export_metadata.contains_media",
+      "nlmytgen_expected_path": "blocked downstream action",
+      "compatibility_status": "upstream_only",
+      "owner": "NLMYTGen",
+      "failure_behavior": "block transfer",
+      "consumer": "transfer-planning proof",
+      "next_action": "do not create renders or media outputs"
+    }
+  ],
+  "downstream_only_checks": [
+    {
+      "field_name": "g28_geometry_authority",
+      "newsroom_path": "boundary_assertions.ymm4_geometry_authority",
+      "nlmytgen_expected_path": "NLMYTGen/YMM4 geometry planning",
+      "compatibility_status": "downstream_only",
+      "owner": "NLMYTGen",
+      "failure_behavior": "block transfer",
+      "consumer": "slot-linkage proof",
+      "next_action": "keep newsroom hints semantic only; geometry remains downstream"
+    },
+    {
+      "field_name": "production_yymm4_readiness",
+      "newsroom_path": "downstream_readiness.production_ymm4",
+      "nlmytgen_expected_path": "YMM4 transfer gate",
+      "compatibility_status": "downstream_only",
+      "owner": "NLMYTGen",
+      "failure_behavior": "block transfer",
+      "consumer": "transfer-planning proof",
+      "next_action": "keep production/YMM4 readiness false until a later approved transfer slice"
+    }
+  ],
+  "validation_result": {
+    "newsroom_fixture_json_parse": "passed",
+    "nlmytgen_readback_json_parse": "passed",
+    "raw_newsroom_fixture_direct_validator": "failed_as_expected_requires_adapter",
+    "raw_newsroom_fixture_direct_validator_errors": 20,
+    "newsroom_fixture_real_url_scan": "passed_none_found",
+    "readback_real_url_scan": "passed_none_found",
+    "focused_compatibility_tests": "6 passed",
+    "combined_newsroom_focused_tests": "35 passed",
+    "transfer_readiness": "blocked",
+    "rights_approval": "not_granted",
+    "media_approval": "not_granted",
+    "review_approval": "not_granted",
+    "production_approval": "not_granted",
+    "next_use": "Use this readback to decide whether the next slice is an NLMYTGen adapter mapper or an upstream fixture adjustment."
+  }
+}
