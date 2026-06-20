@@ -1,6 +1,7 @@
 # Baseball Pipeline Contract
 
-Status: BN-06 sidequest contract, sample-only, not production ready.
+Status: BN-06 pipeline contract plus BN-07 Data Capsule fixture, sample-only,
+not production ready.
 
 This document defines how the Baseball sidequest connects factual baseball data,
 script emphasis, visual scene timing, YMM4 transport, and human review. It
@@ -29,14 +30,34 @@ BaseballDataCapsule
 | YMM4Adapter | layer hints, item families, frame ranges, keyframe intent, captions, and review artifact routing | VisualScenePlan | facts, narrative emphasis, final creative judgment |
 | ReviewGate | human judgment records and gate scope | proof artifacts and review returns | render completion, production proof, rights, publishing, real-source approval |
 
-## BN-06 Sample Artifacts
+## Pipeline Sample Artifacts
 
 | Artifact | Path | Role |
 | --- | --- | --- |
 | Data capsule | `samples/_probe/baseball/pipeline/baseball_data_capsule_p05.json` | Sample-only P05 slider event facts and derived deltas |
+| Data capsule schema | `samples/_probe/baseball/pipeline/baseball_data_capsule_p05_schema.json` | Minimal BN-07 fixture contract for required fields and stable refs |
+| Data capsule readback | `samples/_probe/baseball/pipeline/baseball_data_capsule_p05_readback.json` | BN-07 validation result and machine-check summary |
+| Data capsule fixture manifest | `samples/_probe/baseball/pipeline/baseball_data_capsule_p05_fixture_manifest.json` | BN-07 artifact index, validation scope, and next action |
 | Script Beat IR | `samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05.json` | Narrative explanation order that references data ids |
 | Visual Scene Plan | `samples/_probe/baseball/pipeline/baseball_visual_scene_plan_p05.json` | Time-based semantic slots and motion primitives |
 | Manifest | `samples/_probe/baseball/pipeline/baseball_pipeline_contract_manifest.json` | Artifact index, validation expectations, and boundaries |
+
+## BN-07 Data Capsule Fixture Rules
+
+BN-07 makes the BaseballDataCapsule concrete for the P05 sample sequence. The
+fixture owns event, game-state, participant, pitch-sequence, derived-fact,
+highlight-candidate, and provenance fields. It also owns `data_ref_index`.
+
+Stable data refs must follow these rules:
+
+1. Every consumer-facing data ref uses the `fact_` prefix.
+2. Every `fact_` id appears in both `derived_facts` and `data_ref_index`.
+3. Pitch entries and highlight candidates may reference only ids in
+   `data_ref_index`.
+4. ScriptBeatIR and VisualScenePlan may consume refs but must not create facts
+   outside the Data Capsule.
+5. Synthetic provenance flags stay true until a separate real-source ingest and
+   rights slice is opened.
 
 ## P05 Default Flow
 
@@ -86,16 +107,17 @@ keyframes. The sample Visual Scene Plan may use:
 The focused validation is:
 
 ```powershell
-uv run pytest tests/test_baseball_pipeline_contract.py
+uv run pytest tests/test_baseball_data_capsule_fixture.py tests/test_baseball_pipeline_contract.py
 ```
 
-That test confirms the layer chain, sample references, scope boundaries,
-manifest paths, and next action remain contract-only.
+Those tests confirm the layer chain, sample references, stable data refs, pitch
+sequence consistency, scope boundaries, manifest paths, and next action remain
+contract-only.
 
 ## Next Action
 
-The next Baseball-sidequest move after BN-06 is to choose one bounded follow-up:
-turn the Visual Scene Plan into an adapter readback design, or define a motion
-export proof for the named primitives. Either path remains separate from render,
-production proof, creative final acceptance, publishing, real-source ingest,
-TTS, and thumbnail work.
+The next Baseball-sidequest move after BN-07 is BN-08 ScriptBeatIR linkage
+against the validated Data Capsule refs. Adapter readback design and motion
+export proof remain separate later slices. All paths remain separate from
+render, production proof, creative final acceptance, publishing, real-source
+ingest, TTS, and thumbnail work.

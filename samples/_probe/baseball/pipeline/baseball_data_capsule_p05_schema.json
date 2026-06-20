@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nlmytgen.local/baseball/baseball_data_capsule_p05_schema.json",
+  "title": "BaseballDataCapsule P05 fixture",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "fixture_version",
+    "artifact_id",
+    "artifact_kind",
+    "repo_relative_path",
+    "source_status",
+    "event_id",
+    "data_owner",
+    "current_pitch_id",
+    "source_provenance",
+    "data_ref_policy",
+    "game_state",
+    "participants",
+    "pitch_sequence",
+    "derived_facts",
+    "data_ref_index",
+    "highlight_candidates",
+    "fixture_validation",
+    "boundaries"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "schema_version": { "const": "baseball_data_capsule.v1" },
+    "fixture_version": { "const": "BN-07" },
+    "artifact_kind": { "const": "BaseballDataCapsule" },
+    "source_status": { "const": "sample_only" },
+    "data_owner": { "const": "BaseballDataCapsule" },
+    "event_id": { "type": "string", "minLength": 1 },
+    "current_pitch_id": { "type": "string", "minLength": 1 },
+    "source_provenance": {
+      "type": "object",
+      "required": ["source_type", "not_real_source", "not_official_material", "not_player_image_source", "not_ai_generated_player_image"],
+      "properties": {
+        "source_type": { "const": "synthetic_fixture" },
+        "not_real_source": { "const": true },
+        "not_official_material": { "const": true },
+        "not_player_image_source": { "const": true },
+        "not_ai_generated_player_image": { "const": true }
+      }
+    },
+    "game_state": {
+      "type": "object",
+      "required": ["state_id", "inning", "half", "outs", "count", "score", "runners"]
+    },
+    "pitch_sequence": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/pitch" }
+    },
+    "derived_facts": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/fact" }
+    },
+    "data_ref_index": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/data_ref_index_entry" }
+    },
+    "highlight_candidates": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/highlight" }
+    }
+  },
+  "$defs": {
+    "pitch": {
+      "type": "object",
+      "required": ["pitch_id", "pitch_number", "pitch_type", "velocity_kmh", "result", "zone_id", "data_refs"],
+      "properties": {
+        "pitch_id": { "type": "string", "minLength": 1 },
+        "pitch_number": { "type": "integer", "minimum": 1 },
+        "pitch_type": { "type": "string", "minLength": 1 },
+        "velocity_kmh": { "type": "number" },
+        "result": { "type": "string", "minLength": 1 },
+        "zone_id": { "type": "string", "minLength": 1 },
+        "data_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "pattern": "^fact_[a-z0-9_]+$" }
+        }
+      }
+    },
+    "fact": {
+      "type": "object",
+      "required": ["fact_id", "kind"],
+      "properties": {
+        "fact_id": { "type": "string", "pattern": "^fact_[a-z0-9_]+$" },
+        "kind": { "type": "string", "minLength": 1 }
+      }
+    },
+    "data_ref_index_entry": {
+      "type": "object",
+      "required": ["kind", "source_path", "stable_for"],
+      "properties": {
+        "kind": { "type": "string", "minLength": 1 },
+        "source_path": { "type": "string", "minLength": 1 },
+        "stable_for": {
+          "type": "array",
+          "items": { "enum": ["ScriptBeatIR", "VisualScenePlan"] }
+        }
+      }
+    },
+    "highlight": {
+      "type": "object",
+      "required": ["highlight_id", "claim", "data_refs", "script_safe", "visual_safe"],
+      "properties": {
+        "highlight_id": { "type": "string", "minLength": 1 },
+        "claim": { "type": "string", "minLength": 1 },
+        "data_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "pattern": "^fact_[a-z0-9_]+$" }
+        },
+        "script_safe": { "type": "boolean" },
+        "visual_safe": { "type": "boolean" }
+      }
+    }
+  }
+}

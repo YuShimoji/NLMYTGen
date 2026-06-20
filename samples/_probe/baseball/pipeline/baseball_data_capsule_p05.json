@@ -1,19 +1,43 @@
 {
   "schema_version": "baseball_data_capsule.v1",
+  "fixture_version": "BN-07",
   "artifact_id": "baseball_data_capsule_p05",
+  "artifact_kind": "BaseballDataCapsule",
+  "repo_relative_path": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05.json",
+  "schema_path": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05_schema.json",
   "source_status": "sample_only",
   "event_id": "baseball_pitch_event_p05",
   "sport": "baseball",
   "data_owner": "BaseballDataCapsule",
+  "current_pitch_id": "pitch_05",
+  "source_provenance": {
+    "source_type": "synthetic_fixture",
+    "source_label": "P05 sample sequence",
+    "source_owner": "NLMYTGen Baseball sidequest",
+    "provenance_note": "Synthetic sample facts created for pipeline contract validation only.",
+    "not_real_source": true,
+    "not_official_material": true,
+    "not_player_image_source": true,
+    "not_ai_generated_player_image": true
+  },
+  "data_ref_policy": {
+    "id_prefix": "fact_",
+    "stable_for_consumers": ["ScriptBeatIR", "VisualScenePlan"],
+    "consumer_rule": "Consumers may reference only ids present in data_ref_index and derived_facts.",
+    "no_invented_fact_rule": "Any new script or visual assertion must add or point to a BaseballDataCapsule fact id first."
+  },
   "game_state": {
+    "state_id": "game_state_p05_before_pitch",
     "inning": 7,
     "half": "top",
     "outs": 1,
     "count": {
+      "state_id": "count_p05_before_pitch",
       "balls": 2,
       "strikes": 2
     },
     "score": {
+      "state_id": "score_p05_before_pitch",
       "away": {
         "team_code": "EAG",
         "runs": 3
@@ -24,6 +48,7 @@
       }
     },
     "runners": {
+      "state_id": "runners_p05_before_pitch",
       "first": false,
       "second": false,
       "third": false
@@ -31,6 +56,7 @@
   },
   "participants": {
     "pitcher": {
+      "participant_ref": "fact_pitcher_placeholder",
       "id": "sample_pitcher",
       "display_name": "Sample Pitcher",
       "throws": "R",
@@ -39,6 +65,7 @@
       "strikeouts": 7
     },
     "batter": {
+      "participant_ref": "fact_batter_placeholder",
       "id": "sample_batter",
       "display_name": "Sample Batter",
       "bats": "L",
@@ -55,7 +82,13 @@
       "pitch_name": "four-seam",
       "velocity_kmh": 155,
       "result": "foul",
-      "zone_id": "upper_outer"
+      "zone_id": "upper_outer",
+      "data_refs": [
+        "fact_pitch_04_type",
+        "fact_pitch_04_velocity",
+        "fact_pitch_04_result",
+        "fact_pitch_04_zone"
+      ]
     },
     {
       "pitch_id": "pitch_05",
@@ -64,19 +97,60 @@
       "pitch_name": "slider",
       "velocity_kmh": 140,
       "result": "strike",
-      "zone_id": "low_outer"
+      "zone_id": "low_outer",
+      "data_refs": [
+        "fact_pitch_05_type",
+        "fact_pitch_05_velocity",
+        "fact_pitch_05_result",
+        "fact_pitch_05_zone",
+        "fact_velocity_delta",
+        "fact_pitch_type_change",
+        "fact_highlight_p04_p05_sequence"
+      ],
+      "delta_from_previous": {
+        "previous_pitch_id": "pitch_04",
+        "velocity_delta_kmh": -15,
+        "pitch_type_changed": true,
+        "data_refs": ["fact_velocity_delta", "fact_pitch_type_change"]
+      }
     }
   ],
   "derived_facts": [
     {
       "fact_id": "fact_score_state",
       "kind": "score_context",
-      "value": "EAG 3 - 4 FAL"
+      "value": "EAG 3 - 4 FAL",
+      "source_path": "game_state.score"
     },
     {
       "fact_id": "fact_count_state",
       "kind": "count_context",
-      "value": "7th top, 1 out, B2-S2"
+      "value": "7th top, 1 out, B2-S2",
+      "source_path": "game_state.count"
+    },
+    {
+      "fact_id": "fact_runners_empty",
+      "kind": "runner_context",
+      "value": "bases empty",
+      "source_path": "game_state.runners"
+    },
+    {
+      "fact_id": "fact_pitcher_placeholder",
+      "kind": "participant_placeholder",
+      "participant_id": "sample_pitcher",
+      "value": "Sample Pitcher, throws R, ERA 2.18, 87 pitches, 7 strikeouts"
+    },
+    {
+      "fact_id": "fact_batter_placeholder",
+      "kind": "participant_placeholder",
+      "participant_id": "sample_batter",
+      "value": "Sample Batter, bats L, AVG .302, OPS .891, today 1-3"
+    },
+    {
+      "fact_id": "fact_pitch_04_type",
+      "kind": "pitch_type",
+      "pitch_id": "pitch_04",
+      "value": "FF"
     },
     {
       "fact_id": "fact_pitch_04_velocity",
@@ -85,23 +159,28 @@
       "value_kmh": 155
     },
     {
+      "fact_id": "fact_pitch_04_result",
+      "kind": "pitch_result",
+      "pitch_id": "pitch_04",
+      "value": "foul"
+    },
+    {
+      "fact_id": "fact_pitch_04_zone",
+      "kind": "pitch_zone",
+      "pitch_id": "pitch_04",
+      "value": "upper_outer"
+    },
+    {
+      "fact_id": "fact_pitch_05_type",
+      "kind": "pitch_type",
+      "pitch_id": "pitch_05",
+      "value": "SL"
+    },
+    {
       "fact_id": "fact_pitch_05_velocity",
       "kind": "pitch_velocity",
       "pitch_id": "pitch_05",
       "value_kmh": 140
-    },
-    {
-      "fact_id": "fact_velocity_delta",
-      "kind": "velocity_delta",
-      "from_pitch_id": "pitch_04",
-      "to_pitch_id": "pitch_05",
-      "value_kmh": -15
-    },
-    {
-      "fact_id": "fact_pitch_type_change",
-      "kind": "pitch_type_change",
-      "from": "FF",
-      "to": "SL"
     },
     {
       "fact_id": "fact_pitch_05_result",
@@ -114,15 +193,148 @@
       "kind": "pitch_zone",
       "pitch_id": "pitch_05",
       "value": "low_outer"
+    },
+    {
+      "fact_id": "fact_velocity_delta",
+      "kind": "velocity_delta",
+      "from_pitch_id": "pitch_04",
+      "to_pitch_id": "pitch_05",
+      "value_kmh": -15
+    },
+    {
+      "fact_id": "fact_pitch_type_change",
+      "kind": "pitch_type_change",
+      "from_pitch_id": "pitch_04",
+      "to_pitch_id": "pitch_05",
+      "from": "FF",
+      "to": "SL"
+    },
+    {
+      "fact_id": "fact_highlight_p04_p05_sequence",
+      "kind": "highlight_candidate",
+      "source_pitch_ids": ["pitch_04", "pitch_05"],
+      "value": "155 km/h four-seam fastball followed by 140 km/h slider",
+      "data_refs": ["fact_pitch_04_velocity", "fact_pitch_05_velocity", "fact_velocity_delta", "fact_pitch_type_change"]
     }
   ],
+  "data_ref_index": {
+    "fact_score_state": {
+      "kind": "score_context",
+      "source_path": "derived_facts.fact_score_state",
+      "stable_for": ["ScriptBeatIR", "VisualScenePlan"]
+    },
+    "fact_count_state": {
+      "kind": "count_context",
+      "source_path": "derived_facts.fact_count_state",
+      "stable_for": ["ScriptBeatIR", "VisualScenePlan"]
+    },
+    "fact_runners_empty": {
+      "kind": "runner_context",
+      "source_path": "derived_facts.fact_runners_empty",
+      "stable_for": ["ScriptBeatIR", "VisualScenePlan"]
+    },
+    "fact_pitcher_placeholder": {
+      "kind": "participant_placeholder",
+      "source_path": "derived_facts.fact_pitcher_placeholder",
+      "stable_for": ["ScriptBeatIR", "VisualScenePlan"]
+    },
+    "fact_batter_placeholder": {
+      "kind": "participant_placeholder",
+      "source_path": "derived_facts.fact_batter_placeholder",
+      "stable_for": ["ScriptBeatIR", "VisualScenePlan"]
+    },
+    "fact_pitch_04_type": {
+      "kind": "pitch_type",
+      "source_path": "derived_facts.fact_pitch_04_type",
+      "stable_for": ["ScriptBeatIR", "VisualScenePlan"]
+    },
+    "fact_pitch_04_velocity": {
+      "kind": "pitch_velocity",
+      "source_path": "derived_facts.fact_pitch_04_velocity",
+      "stable_for": ["ScriptBeatIR", "VisualScenePlan"]
+    },
+    "fact_pitch_04_result": {
+      "kind": "pitch_result",
+      "source_path": "derived_facts.fact_pitch_04_result",
+      "stable_for": ["ScriptBeatIR", "VisualScenePlan"]
+    },
+    "fact_pitch_04_zone": {
+      "kind": "pitch_zone",
+      "source_path": "derived_facts.fact_pitch_04_zone",
+      "stable_for": ["ScriptBeatIR", "VisualScenePlan"]
+    },
+    "fact_pitch_05_type": {
+      "kind": "pitch_type",
+      "source_path": "derived_facts.fact_pitch_05_type",
+      "stable_for": ["ScriptBeatIR", "VisualScenePlan"]
+    },
+    "fact_pitch_05_velocity": {
+      "kind": "pitch_velocity",
+      "source_path": "derived_facts.fact_pitch_05_velocity",
+      "stable_for": ["ScriptBeatIR", "VisualScenePlan"]
+    },
+    "fact_pitch_05_result": {
+      "kind": "pitch_result",
+      "source_path": "derived_facts.fact_pitch_05_result",
+      "stable_for": ["ScriptBeatIR", "VisualScenePlan"]
+    },
+    "fact_pitch_05_zone": {
+      "kind": "pitch_zone",
+      "source_path": "derived_facts.fact_pitch_05_zone",
+      "stable_for": ["ScriptBeatIR", "VisualScenePlan"]
+    },
+    "fact_velocity_delta": {
+      "kind": "velocity_delta",
+      "source_path": "derived_facts.fact_velocity_delta",
+      "stable_for": ["ScriptBeatIR", "VisualScenePlan"]
+    },
+    "fact_pitch_type_change": {
+      "kind": "pitch_type_change",
+      "source_path": "derived_facts.fact_pitch_type_change",
+      "stable_for": ["ScriptBeatIR", "VisualScenePlan"]
+    },
+    "fact_highlight_p04_p05_sequence": {
+      "kind": "highlight_candidate",
+      "source_path": "derived_facts.fact_highlight_p04_p05_sequence",
+      "stable_for": ["ScriptBeatIR", "VisualScenePlan"]
+    }
+  },
+  "highlight_candidates": [
+    {
+      "highlight_id": "highlight_velocity_pitch_type_shift",
+      "rank": 1,
+      "claim": "155 km/h four-seam fastball followed by 140 km/h slider",
+      "data_refs": [
+        "fact_pitch_04_velocity",
+        "fact_pitch_05_velocity",
+        "fact_velocity_delta",
+        "fact_pitch_type_change",
+        "fact_highlight_p04_p05_sequence"
+      ],
+      "script_safe": true,
+      "visual_safe": true
+    }
+  ],
+  "fixture_validation": {
+    "readback_path": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05_readback.json",
+    "manifest_path": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05_fixture_manifest.json",
+    "test_path": "tests/test_baseball_data_capsule_fixture.py"
+  },
   "boundaries": {
     "sample_only": true,
+    "synthetic_fixture": true,
     "not_real_source": true,
     "not_official_material": true,
     "not_player_image_source": true,
+    "not_ai_generated_player_image": true,
+    "not_clip_export": true,
+    "not_video_generation": true,
+    "not_tts": true,
+    "not_thumbnail_work": true,
     "not_render_proof": true,
     "not_production_ready": true,
-    "not_publish_gate": true
+    "not_creative_final_acceptance": true,
+    "not_publish_gate": true,
+    "not_mainline_integration": true
   }
 }

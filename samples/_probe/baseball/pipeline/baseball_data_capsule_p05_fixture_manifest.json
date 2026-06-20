@@ -1,0 +1,51 @@
+{
+  "schema_version": "baseball_data_capsule_fixture_manifest.v1",
+  "artifact_id": "baseball_data_capsule_p05_fixture",
+  "slice": "BN-07",
+  "status": "fixture_validated",
+  "data_owner": "BaseballDataCapsule",
+  "artifacts": {
+    "data_capsule": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05.json",
+    "schema": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05_schema.json",
+    "readback": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05_readback.json",
+    "script_beat_ir_consumer": "samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05.json",
+    "visual_scene_plan_consumer": "samples/_probe/baseball/pipeline/baseball_visual_scene_plan_p05.json"
+  },
+  "validation": {
+    "test_path": "tests/test_baseball_data_capsule_fixture.py",
+    "expected_result": "passed",
+    "checks": [
+      "JSON parse validity",
+      "required Data Capsule fields",
+      "stable data_ref ids",
+      "pitch sequence consistency",
+      "current pitch delta consistency",
+      "highlight candidate refs resolve",
+      "ScriptBeatIR refs resolve to Data Capsule",
+      "VisualScenePlan refs resolve to Data Capsule",
+      "synthetic provenance boundary",
+      "no render, production, creative, publish, real-source, clip export, TTS, or thumbnail completion claim"
+    ]
+  },
+  "next_action": "Open BN-08 ScriptBeatIR linkage as a separate slice; do not use BN-07 for script generation, visual redesign, motion transport, render, production, or publishing.",
+  "boundaries": {
+    "sample_only": true,
+    "synthetic_fixture": true,
+    "not_real_source": true,
+    "not_official_material": true,
+    "not_player_image_source": true,
+    "not_ai_generated_player_image": true,
+    "not_script_generation": true,
+    "not_visual_redesign": true,
+    "not_yymm4_motion_transport": true,
+    "not_clip_export": true,
+    "not_video_generation": true,
+    "not_tts": true,
+    "not_thumbnail_work": true,
+    "not_render_proof": true,
+    "not_production_ready": true,
+    "not_creative_final_acceptance": true,
+    "not_publish_gate": true,
+    "not_mainline_integration": true
+  }
+}

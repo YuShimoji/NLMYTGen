@@ -1,0 +1,57 @@
+{
+  "schema_version": "baseball_data_capsule_readback.v1",
+  "artifact_id": "baseball_data_capsule_p05_readback",
+  "source_data_capsule": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05.json",
+  "schema_path": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05_schema.json",
+  "fixture_manifest_path": "samples/_probe/baseball/pipeline/baseball_data_capsule_p05_fixture_manifest.json",
+  "status": "passed",
+  "validated_at": "2026-06-20",
+  "checks": {
+    "json_parse_valid": true,
+    "schema_reference_present": true,
+    "required_top_level_fields_present": true,
+    "event_id_present": true,
+    "game_state_id_present": true,
+    "current_pitch_resolves_to_sequence": true,
+    "pitch_sequence_ids_unique": true,
+    "pitch_sequence_numbers_consecutive": true,
+    "current_pitch_delta_matches_previous": true,
+    "derived_fact_ids_unique": true,
+    "data_ref_index_matches_derived_facts": true,
+    "pitch_data_refs_resolve": true,
+    "highlight_data_refs_resolve": true,
+    "script_data_refs_resolve": true,
+    "visual_data_refs_resolve": true,
+    "synthetic_provenance_boundary": true,
+    "no_render_or_publish_claims": true
+  },
+  "failed_checks": [],
+  "metrics": {
+    "pitch_count": 2,
+    "derived_fact_count": 16,
+    "data_ref_count": 16,
+    "highlight_candidate_count": 1,
+    "consumer_paths_checked": [
+      "samples/_probe/baseball/pipeline/baseball_script_beat_ir_p05.json",
+      "samples/_probe/baseball/pipeline/baseball_visual_scene_plan_p05.json"
+    ]
+  },
+  "boundaries": {
+    "sample_only": true,
+    "synthetic_fixture": true,
+    "not_real_source": true,
+    "not_official_material": true,
+    "not_player_image_source": true,
+    "not_ai_generated_player_image": true,
+    "not_clip_export": true,
+    "not_video_generation": true,
+    "not_tts": true,
+    "not_thumbnail_work": true,
+    "not_render_proof": true,
+    "not_production_ready": true,
+    "not_creative_final_acceptance": true,
+    "not_publish_gate": true,
+    "not_mainline_integration": true
+  },
+  "next_action": "BN-08 should link ScriptBeatIR to the validated Data Capsule refs without adding new facts outside BaseballDataCapsule."
+}

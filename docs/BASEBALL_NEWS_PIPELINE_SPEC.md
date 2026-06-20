@@ -149,6 +149,17 @@ opened. BN-06 remains sample-only and does not claim render proof, production
 readiness, creative final acceptance, publish readiness, clip export, TTS, or
 thumbnail work.
 
+## BN-07 fixture note
+
+BN-07 is now narrowed to the P05 BaseballDataCapsule fixture. Use
+`samples/_probe/baseball/pipeline/baseball_data_capsule_p05_fixture_manifest.json`
+and `samples/_probe/baseball/pipeline/baseball_data_capsule_p05_readback.json`
+as the data fixture readiness records. This supersedes the older operator
+workflow wording for BN-07 until a separate operator slice is opened. BN-07
+does not generate scripts, redesign visuals, create YMM4 motion transport,
+render output, production proof, publishing readiness, clip export, TTS, or
+thumbnail work.
+
 ## 初期タスク
 
 | ID | Task | 完了条件 |
