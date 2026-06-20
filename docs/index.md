@@ -8,6 +8,7 @@ foundation cockpit/dashboard slice without hunting through folders.
 ## Common Foundation Cockpit
 
 - [Cockpit dashboard](dashboard/index.html)
+- [Dashboard access guide](dashboard/README.md)
 - [Project status JSON](dashboard/project-status.json)
 - [Dashboard screenshot evidence](review/common-foundation-dashboard-2026-06-17.png)
 - [PowerShell dashboard launcher](../scripts/operator/open_dashboard.ps1)
@@ -18,6 +19,12 @@ One-touch local access:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/operator/open_dashboard.ps1
+```
+
+If automatic browser open fails, print the resolved local file path:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/operator/open_dashboard.ps1 -PrintPath
 ```
 
 ## Common Foundation Topic Docs

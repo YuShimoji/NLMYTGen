@@ -94,6 +94,174 @@
       font-size: 16px;
     }
 
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+      min-width: 260px;
+    }
+
+    .action-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #ffffff;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    .action-link.primary {
+      border-color: #1f5b88;
+      background: #1f5b88;
+      color: #ffffff;
+    }
+
+    .cockpit-deck {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr 1fr 1fr;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .state-card {
+      min-height: 132px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--accent);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .state-card.good {
+      border-top-color: var(--good);
+    }
+
+    .state-card.watch {
+      border-top-color: var(--watch);
+    }
+
+    .state-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .state-card strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .state-card p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .access-bar {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .access-item {
+      display: block;
+      min-height: 74px;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      text-decoration: none;
+    }
+
+    .access-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .access-item strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .priority-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 1fr;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .status-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .status-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .status-line:last-child {
+      border-bottom: 0;
+    }
+
+    .metric-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #f8fafc;
+      color: #394451;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .section-note {
+      color: var(--muted);
+    }
+
+    .detail-section {
+      margin-top: 30px;
+      padding-top: 4px;
+      border-top: 1px solid var(--line);
+    }
+
     .summary-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -224,8 +392,21 @@
 
     @media (max-width: 820px) {
       .summary-grid,
-      .split {
+      .split,
+      .cockpit-deck,
+      .access-bar,
+      .priority-grid {
         grid-template-columns: 1fr;
+      }
+
+      .header-row {
+        display: block;
+      }
+
+      .header-actions {
+        justify-content: flex-start;
+        min-width: 0;
+        margin-top: 12px;
       }
 
       h1 {
@@ -237,33 +418,83 @@
 <body>
   <header>
     <div class="inner">
-      <h1>NLMYTGen Common Foundation Cockpit</h1>
-      <p class="lede">Remote-first review surface for the common foundation branch. This page links current state, historical verification evidence, dashboard metadata, and one-touch local access without opening production lanes.</p>
-      <div class="summary-grid" aria-label="Cockpit summary">
-        <div class="summary-box">
-          <span>Branch</span>
-          <strong>codex/common-foundation-hold-state-audit</strong>
+      <p class="eyebrow">Common Foundation / Dashboard Access / IA Polish</p>
+      <div class="header-row">
+        <div>
+          <h1>NLMYTGen Common Foundation Cockpit</h1>
+          <p class="lede">Remote-first review surface for the common foundation branch. The first screen now keeps current state, next action, health, artifacts, and topic status visible before detailed evidence tables.</p>
         </div>
-        <div class="summary-box">
-          <span>Cockpit Contract</span>
-          <strong>Operation Cockpit v1.11</strong>
-        </div>
-        <div class="summary-box">
-          <span>Review Surface</span>
-          <strong>docs/dashboard/index.html</strong>
-        </div>
-        <div class="summary-box">
-          <span>Real Runner</span>
-          <strong>No</strong>
-        </div>
+        <nav class="header-actions" aria-label="Primary dashboard actions">
+          <a class="action-link primary" href="README.md">Open guide</a>
+          <a class="action-link" href="project-status.json">Status JSON</a>
+          <a class="action-link" href="../index.md">Docs index</a>
+        </nav>
+      </div>
+      <div class="cockpit-deck" aria-label="First screen cockpit status">
+        <article class="state-card good">
+          <span>Current State</span>
+          <strong>Dashboard access and cockpit layout are ready for freeform review.</strong>
+          <p>Branch: <code>codex/common-foundation-hold-state-audit</code>. Active artifact: <code>docs/dashboard/index.html</code>.</p>
+        </article>
+        <article class="state-card watch">
+          <span>Next Action</span>
+          <strong>USER_OPEN_ONLY review</strong>
+          <p>Open through <code>scripts/operator/open_dashboard.ps1</code>; return freeform impressions, concerns, or adjustment requests.</p>
+        </article>
+        <article class="state-card good">
+          <span>Health</span>
+          <strong>Runner boundary closed</strong>
+          <p>No real runner, subprocess runner, stdin piping, runtime loop, external notification, or production lane is opened here.</p>
+        </article>
+        <article class="state-card">
+          <span>Artifact Access</span>
+          <strong>4 primary surfaces</strong>
+          <p>Dashboard, status JSON, screenshot evidence, and report template are linked below with repo-relative identities.</p>
+        </article>
+      </div>
+      <div class="access-bar" aria-label="Primary artifact access">
+        <a class="access-item" href="index.html"><span>Dashboard</span><strong>docs/dashboard/index.html</strong></a>
+        <a class="access-item" href="project-status.json"><span>Status JSON</span><strong>docs/dashboard/project-status.json</strong></a>
+        <a class="access-item" href="../review/common-foundation-dashboard-2026-06-17.png"><span>Screenshot</span><strong>docs/review/common-foundation-dashboard-2026-06-17.png</strong></a>
+        <a class="access-item" href="../_templates/operation-cockpit-report.md"><span>Report Template</span><strong>docs/_templates/operation-cockpit-report.md</strong></a>
       </div>
     </div>
   </header>
 
   <main>
     <section>
-      <h2>Operation Cockpit v1.11</h2>
-      <p>The dashboard registry now records v1.11 reporting fields in <a href="project-status.json">project-status.json</a>. Completion Matrix values use <code>done</code>, <code>total</code>, <code>unknown</code>, and <code>missing</code> as source of truth; ASCII meters are derived display only.</p>
+      <h2>Cockpit At A Glance</h2>
+      <p class="section-note">Use this opening section for review. The longer Operation Cockpit tables remain below as evidence, not as the first thing a reviewer must parse.</p>
+      <div class="priority-grid">
+        <div class="panel">
+          <h3>Completion Matrix</h3>
+          <div class="status-list">
+            <div class="status-line"><span>Slice acceptance</span><span class="metric-pill">9/9</span></div>
+            <div class="status-line"><span>Artifact readiness</span><span class="metric-pill">6/6</span></div>
+            <div class="status-line"><span>Runtime boundary</span><span class="metric-pill">8/8</span></div>
+            <div class="status-line"><span>Screenshot currency</span><span class="metric-pill">2/2</span></div>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Topic Status</h3>
+          <div class="status-list">
+            <div class="status-line"><span>Operator surface readback</span><span class="status good">good</span></div>
+            <div class="status-line"><span>Docs operator alignment</span><span class="status good">good</span></div>
+            <div class="status-line"><span>Hold-state audit</span><span class="status watch">watch</span></div>
+            <div class="status-line"><span>Status input design</span><span class="status watch">watch</span></div>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Review Loop</h3>
+          <p>Status: revised dashboard ready. Input mode: freeform review. Fixed labels are not required.</p>
+          <code class="command">powershell -NoProfile -ExecutionPolicy Bypass -File scripts/operator/open_dashboard.ps1</code>
+        </div>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <h2>Detailed Completion Matrix</h2>
+      <p>The dashboard registry now records v1.12 access/IA polish fields in <a href="project-status.json">project-status.json</a>. Completion Matrix values use <code>done</code>, <code>total</code>, <code>unknown</code>, and <code>missing</code> as source of truth; ASCII meters are derived display only.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -277,6 +508,14 @@
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td>Slice acceptance</td>
+              <td>9</td>
+              <td>9</td>
+              <td>0</td>
+              <td><code>[#########] 9/9</code></td>
+              <td>Branch verified, feedback consumed, access and IA addressed, screenshot refreshed, validation/commit/push agent-owned.</td>
+            </tr>
             <tr>
               <td>Artifact readiness</td>
               <td>6</td>
@@ -303,11 +542,11 @@
             </tr>
             <tr>
               <td>Screenshot currency</td>
-              <td>1</td>
+              <td>2</td>
               <td>2</td>
               <td>0</td>
-              <td><code>[#-] 1/2</code></td>
-              <td>Screenshot remains 2026-06-17 evidence; open this dashboard for current v1.11 fields.</td>
+              <td><code>[##] 2/2</code></td>
+              <td>Screenshot evidence is refreshed for this access/IA-polished dashboard.</td>
             </tr>
           </tbody>
         </table>
@@ -348,10 +587,10 @@
               <td>Agent</td>
               <td><code>W3 [###--]</code></td>
               <td>~10-20 min</td>
-              <td>v1.11 minimal alignment</td>
-              <td>dashboard/template/status updates</td>
-              <td>6/7</td>
-              <td>current</td>
+              <td>access and dashboard IA polish</td>
+              <td>cockpit-first dashboard, access guide, launcher guidance</td>
+              <td>7/7</td>
+              <td>completed</td>
               <td>codex/common-foundation-hold-state-audit</td>
             </tr>
             <tr>
@@ -359,10 +598,10 @@
               <td>Agent</td>
               <td><code>W2 [##---]</code></td>
               <td>~5-10 min</td>
-              <td>validate and commit</td>
-              <td>local commit if changed</td>
+              <td>screenshot/readback and validation</td>
+              <td>refreshed screenshot and validation ledger</td>
               <td>5/5</td>
-              <td>planned</td>
+              <td>agent_owned</td>
               <td>codex/common-foundation-hold-state-audit</td>
             </tr>
             <tr>
@@ -370,21 +609,21 @@
               <td>Agent</td>
               <td><code>W2 [##---]</code></td>
               <td>~5-10 min</td>
-              <td>push feature branch</td>
+              <td>commit and push feature branch</td>
               <td>remote parity 0 0</td>
               <td>4/4</td>
-              <td>planned</td>
+              <td>agent_owned</td>
               <td>codex/common-foundation-hold-state-audit</td>
             </tr>
             <tr>
               <td>T+4</td>
-              <td>Supervisor</td>
-              <td><code>W2 [##---]</code></td>
-              <td>~5-10 min</td>
-              <td>review Operation Cockpit</td>
-              <td>next direction</td>
-              <td>0/5</td>
-              <td>future</td>
+              <td>User</td>
+              <td><code>W1 [#----]</code></td>
+              <td>~3-10 min</td>
+              <td>optional freeform dashboard review</td>
+              <td>impression, concern, approval, or adjustment request</td>
+              <td>0/1</td>
+              <td>optional_review</td>
               <td>none</td>
             </tr>
           </tbody>
@@ -397,15 +636,15 @@
       <div class="split">
         <div class="panel">
           <h3>Routing Header</h3>
-          <code class="command">[ROUTE: NLMYTGen | AGENT-&gt;SUPERVISOR | common-foundation-v1.11-cockpit-dashboard-alignment-push | T+1 | target:ChatGPT監修スレッド | artifact:docs/dashboard/project-status.json | reply:ChatGPT監修スレッド | confidence:&lt;high/medium/low&gt;]</code>
+          <code class="command">[ROUTE: NLMYTGen | AGENT-&gt;SUPERVISOR | common-foundation-dashboard-access-ia-polish | T+3 | target:ChatGPT監修スレッド | artifact:docs/dashboard/index.html | reply:ChatGPT監修スレッド | confidence:&lt;high/medium/low&gt;]</code>
           <p>Reports should include Current State, Completion Matrix, Expected vs Actual, Changed Files, Artifacts / Review Access, Review Card / Debt, Command / Action Ledger, User-Side Work, Agent-Side Work, Goal Stack, Turn Calendar, Metric Change Note, and Continuation State.</p>
         </div>
         <div class="panel">
           <h3>Estimates / Metric Change</h3>
           <ul>
-            <li>Next agent run: ~10-20 min for scoped alignment, ~5-10 min for push-only verification.</li>
-            <li>User work: none during agent run; ~5-10 min USER_OPEN_ONLY if dashboard review is requested.</li>
-            <li>Metric change: gate reporting now prefers Completion Matrix values over historical <code>progress_pct</code>.</li>
+            <li>Next agent run: ~5-10 min for freeform dashboard review intake.</li>
+            <li>User work: ~3-10 min USER_OPEN_ONLY / USER_REVIEW_FREEFORM if dashboard review is requested.</li>
+            <li>Metric change: first-screen reporting now prioritizes current state, next action, health, artifact access, topic status, and completion gates.</li>
           </ul>
         </div>
       </div>
@@ -416,16 +655,16 @@
       <div class="split">
         <div class="panel">
           <h3>Review Card / Debt</h3>
-          <p>Status: debt. Target: dashboard. Input mode: freeform. Fixed labels are not required.</p>
+          <p>Status: required. Target: dashboard. Input mode: freeform. Fixed labels are not required.</p>
           <ul>
-            <li>Look for progress visibility.</li>
+            <li>Look for first-screen clarity.</li>
+            <li>Look for feature list usability.</li>
             <li>Look for artifact access clarity.</li>
-            <li>Look for stale or over-guarded docs.</li>
           </ul>
         </div>
         <div class="panel">
           <h3>Continuation State</h3>
-          <p>Handoff Gate: agent-report-owned. Treat this dashboard as handoff-ready together with the current agent report's post-push parity readback.</p>
+          <p>Handoff Gate: review-ready after remote parity. Treat this dashboard as handoff-ready together with the current agent report's post-push parity readback.</p>
           <ul>
             <li>Use the agent report for validation, commit, push, and parity evidence.</li>
             <li>Continue from this dashboard or the report template after parity <code>0 0</code>.</li>
@@ -437,7 +676,7 @@
 
     <section>
       <h2>Topic Progress</h2>
-      <p>The topic ledger keeps historical <code>progress_pct</code> for continuity. For v1.11 gate reporting, use the Completion Matrix in <a href="project-status.json">project-status.json</a>.</p>
+      <p>The topic ledger keeps historical <code>progress_pct</code> for continuity. For access/IA polish reporting, use the Completion Matrix in <a href="project-status.json">project-status.json</a>.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -480,13 +719,13 @@
               <td>Use aligned docs as the reader-facing explanation; keep logs historical.</td>
             </tr>
             <tr>
-              <td>Wiki/Dashboard bootstrap</td>
-              <td>added</td>
-              <td><span class="status watch">watch</span></td>
-              <td>85%</td>
-              <td>2026-06-17</td>
-              <td><a href="project-status.json">project-status.json</a></td>
-              <td>Open this dashboard through the launcher, then choose the next common foundation slice.</td>
+              <td>Dashboard access and IA polish</td>
+              <td>access_and_ia_polished</td>
+              <td><span class="status good">good</span></td>
+              <td>95%</td>
+              <td>2026-06-20</td>
+              <td><a href="README.md">dashboard access guide</a></td>
+              <td>Use the launcher or access guide for open-only freeform review.</td>
             </tr>
             <tr>
               <td>Status input audit design</td>
@@ -543,7 +782,13 @@
               <td>COMMON-FOUNDATION-DASHBOARD-SCREENSHOT-2026-06-17</td>
               <td><code>docs/review/common-foundation-dashboard-2026-06-17.png</code></td>
               <td><a href="../review/common-foundation-dashboard-2026-06-17.png">open screenshot</a></td>
-              <td>Legacy visual evidence captured from the static docs preview. Open this dashboard for current v1.11 fields.</td>
+              <td>Current visual evidence refreshed from the static docs preview after access/IA polish.</td>
+            </tr>
+            <tr>
+              <td>COMMON-FOUNDATION-DASHBOARD-ACCESS-GUIDE-2026-06-20</td>
+              <td><code>docs/dashboard/README.md</code></td>
+              <td><a href="README.md">open access guide</a></td>
+              <td>Linked from dashboard and docs entry point.</td>
             </tr>
           </tbody>
         </table>
@@ -591,10 +836,10 @@
       <div class="split">
         <div class="panel">
           <h3>User-side work</h3>
-          <p>Status: open-only. No Git, tests, runner, publish, or production work is required from the user.</p>
+          <p>Status: open-only or freeform review. No Git, tests, runner, publish, or production work is required from the user.</p>
           <code class="command">powershell -NoProfile -ExecutionPolicy Bypass -File scripts/operator/open_dashboard.ps1</code>
-          <p>PowerShell launcher path resolution was verified with <code>-PrintPath</code>. Bash launcher exists for portable checkouts, but this Windows environment has no installed WSL distribution for local execution.</p>
-          <p>Fallback: open <code>docs/dashboard/index.html</code> directly from the checkout.</p>
+          <p>PowerShell launcher path resolution is verified with <code>-PrintPath</code>. Bash launcher exists for portable checkouts, but this Windows environment has no installed WSL distribution for local execution.</p>
+          <p>Fallback: open the path printed by <code>powershell -NoProfile -ExecutionPolicy Bypass -File scripts/operator/open_dashboard.ps1 -PrintPath</code>.</p>
         </div>
         <div class="panel">
           <h3>Agent-side next actions</h3>
@@ -621,8 +866,8 @@
           <tbody>
             <tr>
               <td>2026-06-20</td>
-              <td>Aligned dashboard metadata, report template, and visible cockpit tables with Operation Cockpit v1.11.</td>
-              <td>Reports now have a stable Routing Header, Completion Matrix, Turn Calendar, ASCII_SAFE meters, Review Card / Debt, Metric Change Note, and continuation fields.</td>
+              <td>Improved dashboard access guidance and moved current state, next action, health, artifact access, and topic status into the first screen.</td>
+              <td>The surface now behaves more like a cockpit before the detailed Operation Cockpit evidence tables.</td>
             </tr>
             <tr>
               <td>2026-06-17</td>

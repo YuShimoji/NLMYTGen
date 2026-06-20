@@ -44,4 +44,13 @@ if ($PrintPath) {
     exit 0
 }
 
-Start-Process -FilePath $target
+Write-Host "Opening NLMYTGen common foundation dashboard:"
+Write-Host "  $target"
+Write-Host "If the browser does not open, rerun with -PrintPath and open the printed file directly."
+
+try {
+    Start-Process -FilePath $target -ErrorAction Stop
+} catch {
+    Write-Error "Failed to open dashboard automatically. Open this file manually: $target"
+    throw
+}

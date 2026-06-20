@@ -27,6 +27,9 @@ if [ "${1:-}" = "--print-path" ]; then
   exit 0
 fi
 
+printf 'Opening NLMYTGen common foundation dashboard:\n  %s\n' "$TARGET"
+printf 'If the browser does not open, rerun with --print-path and open the printed file directly.\n'
+
 case "$(uname -s 2>/dev/null || printf unknown)" in
   Darwin*) open "$TARGET" ;;
   MINGW*|MSYS*|CYGWIN*) cmd.exe /c start "" "$TARGET" ;;
