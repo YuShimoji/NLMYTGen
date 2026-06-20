@@ -1,5 +1,24 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom export adapter proof v1 completed (2026-06-20)**:
+  Added a deterministic, diagnostic NLMYTGen-side adapter proof for the fake
+  `newsroom-yt-pipeline` export fixture at commit `912ce3b`. Implementation:
+  `src/pipeline/newsroom_export_adapter.py`; adapted packet:
+  `samples/_probe/newsroom_handoff/adapted_newsroom_export_packet.json`;
+  adapter readback:
+  `samples/_probe/newsroom_handoff/newsroom_export_adapter_readback.json`;
+  human verification:
+  `docs/verification/NEWSROOM_EXPORT_ADAPTER_PROOF_V1_2026-06-20.md`;
+  focused tests: `tests/test_newsroom_export_adapter.py`. Result: the raw
+  newsroom fixture still requires an adapter, while the adapted packet passes
+  NLMYTGen structure validation and remains transfer-blocked. Slot-linkage is
+  `passed_with_warnings`, and transfer planning remains `blocked` with explicit
+  blockers/unlock requirements. This proof preserves rights/media/review holds
+  and does not accept a real packet, fetch sources, open RSS/Inoreader, access
+  live source material, download media, edit `.ymmp`, generate YMM4 carriers,
+  render media, approve rights, approve production, or publish/upload output.
+  Next safe follow-up is adapter visibility in a review surface or a scoped CLI
+  only after this adapter shape is accepted.
 - **Newsroom export fixture compatibility v1 completed (2026-06-20)**:
   Added a diagnostic cross-repo compatibility readback for the fake
   `newsroom-yt-pipeline` export fixture at commit `912ce3b`. Human readback:

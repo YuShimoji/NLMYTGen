@@ -1,0 +1,203 @@
+{
+  "artifact_id": "newsroom_export_adapter_proof_v1_2026_06_20",
+  "repo_relative_path": "samples/_probe/newsroom_handoff/newsroom_export_adapter_readback.json",
+  "status": "passed_with_adapter_warnings_transfer_blocked",
+  "review_status": "ready_for_supervisor_review",
+  "diagnostic_only": true,
+  "adapter_version": "newsroom-export-adapter-proof-v1",
+  "source_fixture": {
+    "repo": "newsroom-yt-pipeline",
+    "commit": "912ce3b",
+    "path": "../newsroom-yt-pipeline/samples/_probe/newsroom_handoff/newsroom_export_fixture_v1.json",
+    "fixture_id": "newsroom_export_fixture_for_nlmytgen_v1",
+    "review_status": "fake_only_contract_probe"
+  },
+  "adapted_packet_path": "samples/_probe/newsroom_handoff/adapted_newsroom_export_packet.json",
+  "real_packet_accepted": false,
+  "rights_approval": false,
+  "media_approval": false,
+  "review_approval": false,
+  "production_approval": false,
+  "ymm4_transfer_ready": false,
+  "raw_fixture_direct_ingest": "not_accepted_requires_adapter",
+  "transform_counts": {
+    "direct_count": 9,
+    "transform_count": 13,
+    "held_for_review_count": 8,
+    "missing_required_count": 0,
+    "missing_transfer_candidate_count": 3,
+    "downstream_only_count": 2
+  },
+  "adapter_owned_fields": [
+    "artifact_id",
+    "contract_version",
+    "episode_metadata",
+    "source_notes",
+    "provenance",
+    "notebooklm_packet",
+    "script_beats",
+    "visual_plan",
+    "g28_slot_hints",
+    "review_warnings",
+    "downstream_readiness",
+    "visual_treatment_preference",
+    "channel_package_metadata"
+  ],
+  "direct_fields": [
+    "episode_id",
+    "title",
+    "topic_summary",
+    "editorial_priority",
+    "source_confidence",
+    "reviewer_notes",
+    "localization_notes",
+    "real_screenshots_footage",
+    "no_readiness_blocker_contradiction"
+  ],
+  "held_for_review_fields": [
+    "rights_summary",
+    "rights_provenance_clearance",
+    "review_approval_status",
+    "ambiguous_rights",
+    "unclear_media_availability",
+    "brand_risk",
+    "uncertain_citation_quote_usage",
+    "visual_approval"
+  ],
+  "transfer_candidate_gap_fields": [
+    "media_source_availability",
+    "visual_readiness",
+    "blocked_prohibited_actions_resolved"
+  ],
+  "upstream_gap_fields": [
+    "media_source_availability"
+  ],
+  "downstream_only_fields": [
+    "g28_geometry_authority",
+    "production_yymm4_readiness"
+  ],
+  "upstream_adjustment_still_needed": false,
+  "upstream_adjustment_note": "No upstream adjustment is needed for structural adapter validation. Media availability remains an upstream requirement before any transfer candidate.",
+  "transform_ownership": [
+    {
+      "field_name": "artifact_id",
+      "newsroom_path": "fixture_id",
+      "nlmytgen_path": "artifact_id",
+      "owner": "NLMYTGen adapter",
+      "mapping": "rename"
+    },
+    {
+      "field_name": "contract_version",
+      "newsroom_path": "schema_version",
+      "nlmytgen_path": "contract_version",
+      "owner": "NLMYTGen adapter",
+      "mapping": "rename"
+    },
+    {
+      "field_name": "episode_metadata",
+      "newsroom_path": "export_metadata + localization_notes + channel_metadata",
+      "nlmytgen_path": "episode_metadata",
+      "owner": "NLMYTGen adapter",
+      "mapping": "compose"
+    },
+    {
+      "field_name": "source_notes",
+      "newsroom_path": "source_notes",
+      "nlmytgen_path": "source_notes",
+      "owner": "NLMYTGen adapter",
+      "mapping": "normalize"
+    },
+    {
+      "field_name": "provenance",
+      "newsroom_path": "provenance + boundary_assertions",
+      "nlmytgen_path": "provenance",
+      "owner": "NLMYTGen adapter",
+      "mapping": "normalize booleans"
+    },
+    {
+      "field_name": "rights_summary",
+      "newsroom_path": "rights_summary",
+      "nlmytgen_path": "rights_summary",
+      "owner": "NLMYTGen adapter + human reviewer",
+      "mapping": "preserve hold, never approve"
+    },
+    {
+      "field_name": "notebooklm_packet",
+      "newsroom_path": "notebooklm_packet.transcript_seed.summary",
+      "nlmytgen_path": "notebooklm_packet.transcript_seed",
+      "owner": "NLMYTGen adapter",
+      "mapping": "flatten"
+    },
+    {
+      "field_name": "script_beats",
+      "newsroom_path": "script_beats[].summary/source_refs",
+      "nlmytgen_path": "script_beats[].claim/evidence_refs",
+      "owner": "NLMYTGen adapter",
+      "mapping": "rename and preserve stable ids"
+    },
+    {
+      "field_name": "visual_plan",
+      "newsroom_path": "visual_plan[].unit_type",
+      "nlmytgen_path": "visual_plan[].visualir_concept/content_slots",
+      "owner": "NLMYTGen adapter",
+      "mapping": "map unit type to known content slots"
+    },
+    {
+      "field_name": "g28_slot_hints",
+      "newsroom_path": "g28_slot_hints[].hint_type",
+      "nlmytgen_path": "g28_slot_hints[].object_catalog_slot",
+      "owner": "NLMYTGen adapter",
+      "mapping": "alias map only when unambiguous"
+    },
+    {
+      "field_name": "review_warnings",
+      "newsroom_path": "review_warnings[].severity",
+      "nlmytgen_path": "review_warnings[].blocks_ymm4_transfer",
+      "owner": "NLMYTGen adapter",
+      "mapping": "explicit blocker boolean"
+    },
+    {
+      "field_name": "downstream_readiness",
+      "newsroom_path": "downstream_readiness",
+      "nlmytgen_path": "downstream_readiness",
+      "owner": "NLMYTGen adapter",
+      "mapping": "fail-closed booleans and blockers"
+    },
+    {
+      "field_name": "visual_treatment_preference",
+      "newsroom_path": "visual_plan[].unit_type",
+      "nlmytgen_path": "optional_enrichments.visual_treatment_preference",
+      "owner": "NLMYTGen adapter",
+      "mapping": "derive advisory values"
+    },
+    {
+      "field_name": "channel_package_metadata",
+      "newsroom_path": "channel_metadata",
+      "nlmytgen_path": "optional_enrichments.channel_package_metadata",
+      "owner": "NLMYTGen adapter",
+      "mapping": "rename"
+    }
+  ],
+  "warnings": [
+    "raw_newsroom_fixture_requires_adapter_before_validator",
+    "rights_summary_status_hold_for_review_preserved",
+    "media_availability_none_in_fixture_preserved",
+    "production_and_ymm4_readiness_not_approved",
+    "slot_linkage_passed_with_expected_warnings",
+    "quote_clearance_not_requested_preserved"
+  ],
+  "validation_result": {
+    "adapter_packet_validator_status": "passed",
+    "adapter_packet_transfer_status": "blocked",
+    "adapter_packet_errors": 0,
+    "adapter_packet_warnings": 0,
+    "slot_linkage_status": "passed_with_warnings",
+    "slot_linkage_transfer_status": "blocked",
+    "slot_linkage_warning_count": 2,
+    "transfer_planning_status": "blocked",
+    "transfer_planning_transfer_status": "blocked",
+    "transfer_planning_blocker_count": 13,
+    "transfer_planning_unlock_requirement_count": 13,
+    "next_use": "Use this proof as the seed for a later adapter visibility slice or real-packet adapter implementation, without enabling transfer."
+  }
+}

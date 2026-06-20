@@ -1,0 +1,278 @@
+{
+  "artifact_id": "newsroom_export_fixture_for_nlmytgen_v1",
+  "contract_version": "newsroom_export_fixture.v1",
+  "adapter_version": "newsroom-export-adapter-proof-v1",
+  "fixture_kind": "newsroom_fake_export_adapter_proof",
+  "source_fixture": {
+    "repo": "newsroom-yt-pipeline",
+    "commit": "912ce3b",
+    "path": "../newsroom-yt-pipeline/samples/_probe/newsroom_handoff/newsroom_export_fixture_v1.json",
+    "review_status": "fake_only_contract_probe"
+  },
+  "episode_id": "episode_fake_nlmytgen_delta_v1",
+  "title": "Fake upstream export delta for NLMYTGen",
+  "topic_summary": "Fake placeholder summary for validating the newsroom to NLMYTGen export contract shape.",
+  "episode_metadata": {
+    "series": "series_fake_nlmytgen_delta",
+    "package_id": "package_fake_nlmytgen_delta_v1",
+    "language": "ja-JP",
+    "audience": "downstream_adapter_probe",
+    "editorial_status": "fake_only_contract_probe",
+    "created_by": "newsroom-yt-pipeline fake fixture",
+    "source_repo": "newsroom-yt-pipeline",
+    "intended_consumer": "NLMYTGen downstream adapter readiness probe"
+  },
+  "source_export_metadata": {
+    "created_at": "2026-06-20T00:00:00Z",
+    "created_by": "newsroom-yt-pipeline fake fixture",
+    "source_repo": "newsroom-yt-pipeline",
+    "intended_consumer": "NLMYTGen downstream adapter readiness probe",
+    "contains_real_news": false,
+    "contains_credentials": false,
+    "contains_media": false,
+    "contains_external_downloads": false
+  },
+  "source_notes": [
+    {
+      "source_id": "source_fake_primary_001",
+      "source_kind": "primary_source",
+      "non_fetching_reference": "omitted_fake_fixture",
+      "summary": "Fake Official Source: Fake primary source placeholder (primary_source).",
+      "quote_policy": "quote_clearance:not_requested",
+      "rights_note": "Fake fixture source note; no raw body, URL, screenshot, or footage included.",
+      "source_confidence": "medium_fake",
+      "review_status": "fake_only"
+    },
+    {
+      "source_id": "source_fake_critical_001",
+      "source_kind": "critical_view",
+      "non_fetching_reference": "omitted_fake_fixture",
+      "summary": "Fake Critical View: Fake critical source placeholder (critical_view).",
+      "quote_policy": "quote_clearance:not_requested",
+      "rights_note": "Fake fixture source note; no raw body, URL, screenshot, or footage included.",
+      "source_confidence": "low_fake",
+      "review_status": "hold_for_review"
+    }
+  ],
+  "provenance": {
+    "source_collection_owner": "newsroom-yt-pipeline",
+    "raw_source_material_included": false,
+    "external_fetch_allowed_by_nlmytgen": false,
+    "source_discovery_owner": "newsroom-yt-pipeline",
+    "rss_fetch": "not_performed",
+    "inoreader_fetch": "not_performed",
+    "web_access": "not_performed",
+    "external_downloads": "not_performed",
+    "real_urls_included": false,
+    "contains_credentials": false,
+    "notes": "Fixture exists only to stabilize field ownership and failure behavior before real packet work."
+  },
+  "rights_summary": {
+    "clearance_state": "hold_for_review",
+    "allowed_uses": [
+      "adapter_proof",
+      "contract_validation"
+    ],
+    "blocked_uses": [
+      "publication",
+      "render",
+      "YMM4_transfer",
+      "external_source_fetch"
+    ],
+    "risk_flags": [
+      "fake_fixture_only",
+      "media_availability:none_in_fixture",
+      "quote_clearance:not_requested",
+      "publication_approval:not_granted"
+    ],
+    "media_availability": "none_in_fixture",
+    "external_assets": "not_included",
+    "failure_behavior": "block_transfer"
+  },
+  "notebooklm_packet": {
+    "packet_id": "packet_fake_nlmytgen_delta_v1",
+    "format_hint": "manual_bridge_seed",
+    "source_refs": [
+      "source_fake_primary_001",
+      "source_fake_critical_001"
+    ],
+    "transcript_seed": "Fake transcript seed only; not NotebookLM output and not approved narration.",
+    "source_pack_summary": "Fake source pack summary from newsroom export adapter proof.",
+    "constraints": [
+      "do_not_fetch",
+      "do_not_quote_real_sources",
+      "do_not_publish",
+      "do_not_treat_as_notebooklm_output"
+    ],
+    "notebooklm_api_status": "not_performed"
+  },
+  "script_beats": [
+    {
+      "beat_id": "beat_fake_intro_001",
+      "stable_id": "scriptbeat_fake_intro_001",
+      "intent": "intro",
+      "claim": "Introduce the fake topic and promise a review-safe handoff.",
+      "evidence_refs": [],
+      "visual_refs": [
+        "visual_fake_title_card_001"
+      ],
+      "review_status": "fake_only",
+      "scriptir_hint": {
+        "chapter_id": "chapter_fake_intro",
+        "source": "newsroom_export_adapter"
+      },
+      "no_evidence_reason": "Fake intro beat carries no source refs in upstream fixture."
+    },
+    {
+      "beat_id": "beat_fake_claim_001",
+      "stable_id": "scriptbeat_fake_claim_001",
+      "intent": "claim",
+      "claim": "Present a fake claim with fake primary and fake critical source coverage.",
+      "evidence_refs": [
+        "source_fake_primary_001",
+        "source_fake_critical_001"
+      ],
+      "visual_refs": [
+        "visual_fake_evidence_card_001"
+      ],
+      "review_status": "hold_for_review",
+      "scriptir_hint": {
+        "chapter_id": "chapter_fake_claim",
+        "source": "newsroom_export_adapter"
+      }
+    }
+  ],
+  "visual_plan": [
+    {
+      "visual_id": "visual_fake_title_card_001",
+      "stable_id": "visualslot_fake_title_card_001",
+      "beat_id": "beat_fake_intro_001",
+      "visualir_concept": "title_card",
+      "layout_candidate": "title_card",
+      "asset_policy": "local_template_only",
+      "approval_state": "fake_only",
+      "content_slots": [
+        "lower_third_telop",
+        "caption_reserve"
+      ],
+      "source_unit_type": "title_card",
+      "notes": "Fake visual unit for adapter field coverage."
+    },
+    {
+      "visual_id": "visual_fake_evidence_card_001",
+      "stable_id": "visualslot_fake_evidence_card_001",
+      "beat_id": "beat_fake_claim_001",
+      "visualir_concept": "article_quote_card",
+      "layout_candidate": "article_quote_card",
+      "asset_policy": "local_template_only",
+      "approval_state": "hold_for_review",
+      "content_slots": [
+        "quote_card",
+        "source_note",
+        "caption_reserve"
+      ],
+      "source_unit_type": "claim_evidence_card",
+      "notes": "No screenshot or external media is supplied."
+    }
+  ],
+  "g28_slot_hints": [
+    {
+      "visual_id": "visual_fake_title_card_001",
+      "slot_id": "g28_slot_fake_title_001",
+      "object_catalog_slot": "caption_reserve",
+      "semantic_role": "title_safe_readback",
+      "source_ref": null,
+      "text_budget": "empty",
+      "alias_source": "text_safe_area",
+      "geometry_authority": "downstream_nlmytgen",
+      "transfer_note": "Semantic hint only; NLMYTGen keeps geometry and YMM4 transfer blocked."
+    },
+    {
+      "visual_id": "visual_fake_evidence_card_001",
+      "slot_id": "g28_slot_fake_evidence_001",
+      "object_catalog_slot": "source_note",
+      "semantic_role": "source_and_counterpoint_readback",
+      "source_ref": "source_fake_primary_001",
+      "text_budget": "short_label_only",
+      "alias_source": "evidence_label_group",
+      "geometry_authority": "downstream_nlmytgen",
+      "transfer_note": "Semantic hint only; NLMYTGen keeps geometry and YMM4 transfer blocked."
+    }
+  ],
+  "review_warnings": [
+    {
+      "warning_id": "warning_fake_rights_hold",
+      "severity": "hold_for_review",
+      "surface": "newsroom_export_fixture",
+      "message": "Rights, provenance, and media availability are fake-only and must be reviewed before transfer.",
+      "blocks_ymm4_transfer": true
+    },
+    {
+      "warning_id": "warning_fake_no_production_readiness",
+      "severity": "block_transfer",
+      "surface": "newsroom_export_fixture",
+      "message": "Fixture validates shape only; it does not imply production or YMM4 readiness.",
+      "blocks_ymm4_transfer": true
+    }
+  ],
+  "downstream_readiness": {
+    "notebooklm_seed_ready": true,
+    "scriptir_mapping_ready": true,
+    "visualir_mapping_ready": true,
+    "g28_slot_mapping_ready": true,
+    "review_surface_ready": true,
+    "ymm4_transfer_ready": false,
+    "blocking_reasons": [
+      "fake_fixture_not_real_packet",
+      "transfer_candidate:block_transfer",
+      "human_review:hold_for_review",
+      "production_ymm4:fail",
+      "rights_summary_hold_for_review",
+      "media_availability_none_in_fixture"
+    ]
+  },
+  "optional_enrichments": {
+    "editorial_priority": {
+      "level": "medium_fake",
+      "reason": "Placeholder for downstream prioritization tests."
+    },
+    "visual_treatment_preference": [
+      "title_card",
+      "claim_evidence_card"
+    ],
+    "source_confidence": {
+      "overall": "fake_only",
+      "primary_source_coverage": "fake_placeholder",
+      "critical_view_coverage": "fake_placeholder",
+      "notes": "Confidence values exist to stabilize contract fields, not to evaluate real reporting."
+    },
+    "reviewer_notes": [
+      {
+        "note_id": "reviewer_note_fake_001",
+        "status": "reference_only",
+        "text": "Freeform reviewer notes are allowed; fixed response labels are not required."
+      }
+    ],
+    "localization_notes": {
+      "language": "ja-JP",
+      "speaker_label_policy": "fake_anchor_label_only",
+      "translation_status": "not_requested"
+    },
+    "channel_package_metadata": {
+      "series_id": "series_fake_nlmytgen_delta",
+      "package_id": "package_fake_nlmytgen_delta_v1",
+      "channel_context_status": "fake_only"
+    }
+  },
+  "adapter_readiness": {
+    "real_packet_accepted": false,
+    "rights_approval": false,
+    "media_approval": false,
+    "review_approval": false,
+    "production_approval": false,
+    "ymm4_transfer_ready": false,
+    "external_fetch_performed": false,
+    "render_generated": false,
+    "ymmp_generated": false
+  }
+}
