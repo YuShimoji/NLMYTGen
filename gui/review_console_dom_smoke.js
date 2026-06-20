@@ -45,11 +45,14 @@ async function run() {
         const proof = document.getElementById('review-treatment-proof');
         const pipeline = document.getElementById('pipeline-smoke-review');
         const g28 = document.getElementById('g28-review-console-ingest');
+        const newsroom = document.getElementById('newsroom-handoff-review');
         const proofImage = proof?.querySelector('.review-proof-image-card img');
         const pipelineTopics = Array.from(pipeline?.querySelectorAll('.pipeline-smoke-topic') || []);
         const pipelineImages = Array.from(pipeline?.querySelectorAll('.review-proof-image-card img') || []);
         const pipelineBeatRows = Array.from(pipeline?.querySelectorAll('.review-beat-table tbody tr') || []);
         const g28ArtifactRows = Array.from(g28?.querySelectorAll('.g28-artifact-table tbody tr') || []);
+        const newsroomArtifactRows = Array.from(newsroom?.querySelectorAll('.newsroom-artifact-table tbody tr') || []);
+        const newsroomLinkageRows = Array.from(newsroom?.querySelectorAll('[data-newsroom-linkage-row]') || []);
         const proofBadges = Array.from(document.querySelectorAll('#review-timeline .review-timeline-proof'));
         const beatRows = Array.from(document.querySelectorAll('#review-treatment-proof .review-beat-table tbody tr'));
         const wizard = document.getElementById('wizard-bar');
@@ -58,9 +61,20 @@ async function run() {
         const reviewTab = document.getElementById('tab-review');
         const text = reviewTab ? reviewTab.innerText : '';
         const g28Text = g28?.innerText || '';
+        const newsroomText = newsroom?.innerText || '';
         const forbiddenG28DecisionLabels = [
           'production_approve',
           'creative_final_acceptance',
+          'render_approve',
+          'rights_approve',
+          'public_use_approve',
+        ];
+        const forbiddenNewsroomStates = [
+          'production_visual_approval=true',
+          'ymm4_transfer_ready=true',
+          'external_fetch=true',
+          'raw_source_material=true',
+          'production_approve',
           'render_approve',
           'rights_approve',
           'public_use_approve',
@@ -91,6 +105,10 @@ async function run() {
           g28Exists: !!g28,
           g28Text,
           g28ArtifactRowCount: g28ArtifactRows.length,
+          newsroomExists: !!newsroom,
+          newsroomText,
+          newsroomArtifactRowCount: newsroomArtifactRows.length,
+          newsroomLinkageRowCount: newsroomLinkageRows.length,
           proofBadgeCount: proofBadges.length,
           beatRowCount: beatRows.length,
           bodyReviewClass: !!bodyContent?.classList.contains('review-workbench-active'),
@@ -168,6 +186,48 @@ async function run() {
             && g28Text.includes('host placeholders are diagnostic-only')
             && g28Text.includes('glyph optical center'),
           hasG28ForbiddenDecisionLabels: forbiddenG28DecisionLabels.some((label) => g28Text.includes(label)),
+          hasNewsroomLabel: newsroomText.includes('Newsroom handoff diagnostics'),
+          hasNewsroomEpisode: newsroomText.includes('fake-newsroom-episode-0001')
+            && newsroomText.includes('Placeholder Policy Explainer Episode'),
+          hasNewsroomStatuses: newsroomText.includes('validator_status=passed')
+            && newsroomText.includes('transfer_status=blocked')
+            && newsroomText.includes('ymm4_transfer_ready=false')
+            && newsroomText.includes('review_surface_ready=true')
+            && newsroomText.includes('production_visual_approval=false'),
+          hasNewsroomRights: newsroomText.includes('clearance_state')
+            && newsroomText.includes('synthetic_fixture_only')
+            && newsroomText.includes('blocked_uses')
+            && newsroomText.includes('YMM4_transfer')
+            && newsroomText.includes('external_source_fetch')
+            && newsroomText.includes('external_fetch=false')
+            && newsroomText.includes('raw_source_material=false'),
+          hasNewsroomWarnings: newsroomText.includes('rw_001 / blocker')
+            && newsroomText.includes('rw_002 / caution')
+            && newsroomText.includes('MISSING_G28_SLOT_HINT: vis_001->callout_box,caption_reserve')
+            && newsroomText.includes('downstream_blocking_reason:no_approved_media_assets'),
+          hasNewsroomCounts: newsroomText.includes('script_beat_count')
+            && newsroomText.includes('3')
+            && newsroomText.includes('visual_plan_count')
+            && newsroomText.includes('2')
+            && newsroomText.includes('slot_linkage_rows')
+            && newsroomText.includes('4'),
+          hasNewsroomSlotRows: newsroomText.includes('screenshot_slot')
+            && newsroomText.includes('source_note')
+            && newsroomText.includes('quote_card')
+            && newsroomText.includes('caption_reserve')
+            && newsroomText.includes('screenshot_callout.html')
+            && newsroomText.includes('article_quote_card.html'),
+          hasNewsroomReferences: newsroomText.includes('minimal_episode_packet.json')
+            && newsroomText.includes('g28_slot_linkage_readback.json')
+            && newsroomText.includes('NEWSROOM_HANDOFF_VALIDATOR_V1_2026-06-20.md')
+            && newsroomText.includes('NEWSROOM_G28_SLOT_LINKAGE_PROOF_V1_2026-06-20.md'),
+          hasNewsroomBoundary: (newsroomText.includes('read-only consumer')
+            && newsroomText.includes('YMM4 transfer')
+            && newsroomText.includes('production visual approval')
+            && newsroomText.includes('external fetch')
+            && newsroomText.includes('blocked transfer is intentional'))
+            || newsroomText.includes('blocked transfer は意図した安全停止です'),
+          hasNewsroomForbiddenStates: forbiddenNewsroomStates.some((label) => newsroomText.includes(label)),
           hasCorruption: /\\?\\?\\?|�/.test(text),
           textSample: text.slice(0, 500),
         };
@@ -194,6 +254,9 @@ async function run() {
             && state.pipelineBeatRowCount === 9
             && state.g28Exists
             && state.g28ArtifactRowCount === 5
+            && state.newsroomExists
+            && state.newsroomArtifactRowCount === 5
+            && state.newsroomLinkageRowCount === 4
             && state.cardCount === ${expectedSegmentCount}
             && state.hasEpisodeContextLabel
             && state.hasStoryOutlineLabel
@@ -230,7 +293,17 @@ async function run() {
             && state.hasG28HumanSummary
             && state.hasG28AllowedDecisions
             && state.hasG28Caveats
-            && !state.hasG28ForbiddenDecisionLabels;
+            && !state.hasG28ForbiddenDecisionLabels
+            && state.hasNewsroomLabel
+            && state.hasNewsroomEpisode
+            && state.hasNewsroomStatuses
+            && state.hasNewsroomRights
+            && state.hasNewsroomWarnings
+            && state.hasNewsroomCounts
+            && state.hasNewsroomSlotRows
+            && state.hasNewsroomReferences
+            && state.hasNewsroomBoundary
+            && !state.hasNewsroomForbiddenStates;
           if (ready) {
             clearInterval(timer);
             resolve(state);
@@ -315,6 +388,41 @@ async function run() {
   }
   if (result.hasG28ForbiddenDecisionLabels) {
     throw new Error(`G-28 ingest panel exposed a forbidden production decision label: ${result.g28Text.slice(0, 800)}`);
+  }
+  if (!result.newsroomExists || result.newsroomArtifactRowCount !== 5 || result.newsroomLinkageRowCount !== 4) {
+    throw new Error(`newsroom handoff panel did not expose artifacts and slot rows: ${JSON.stringify({
+      exists: result.newsroomExists,
+      artifacts: result.newsroomArtifactRowCount,
+      linkages: result.newsroomLinkageRowCount,
+    })}`);
+  }
+  for (const text of [
+    'Newsroom handoff diagnostics',
+    'fake-newsroom-episode-0001',
+    'Placeholder Policy Explainer Episode',
+    'validator_status=passed',
+    'transfer_status=blocked',
+    'ymm4_transfer_ready=false',
+    'production_visual_approval=false',
+    'synthetic_fixture_only',
+    'YMM4_transfer',
+    'rw_001 / blocker',
+    'MISSING_G28_SLOT_HINT: vis_001->callout_box,caption_reserve',
+    'downstream_blocking_reason:no_approved_media_assets',
+    'script_beat_count',
+    'visual_plan_count',
+    'slot_linkage_rows',
+    'screenshot_slot',
+    'article_quote_card.html',
+    'minimal_episode_packet.json',
+    'NEWSROOM_G28_SLOT_LINKAGE_PROOF_V1_2026-06-20.md',
+  ]) {
+    if (!result.newsroomText.includes(text)) {
+      throw new Error(`newsroom handoff panel missing ${text}: ${result.newsroomText.slice(0, 1000)}`);
+    }
+  }
+  if (result.hasNewsroomForbiddenStates) {
+    throw new Error(`newsroom handoff panel exposed a forbidden production/fetch state: ${result.newsroomText.slice(0, 1000)}`);
   }
   for (const label of ['label-off check', 'narration competition check', 'real-estate texture check', 'motion-readiness check']) {
     if (!result.proofText.includes(label)) {
@@ -409,7 +517,7 @@ async function run() {
     throw new Error(`review_decisions version changed: ${saveResult.payload.version}`);
   }
 
-  console.log(`G-27 review console DOM smoke OK: ${result.timelineCount} timeline segments; ${expectedProofFrameCount} G-27 proof frames; ${result.pipelineTopicCount} pipeline smoke topics / ${result.pipelineBeatRowCount} smoke beats visible through GUI; G-28 diagnostic ingest panel visible; save payload OK`);
+  console.log(`G-27 review console DOM smoke OK: ${result.timelineCount} timeline segments; ${expectedProofFrameCount} G-27 proof frames; ${result.pipelineTopicCount} pipeline smoke topics / ${result.pipelineBeatRowCount} smoke beats visible through GUI; G-28 diagnostic ingest panel visible; newsroom handoff diagnostics visible; save payload OK`);
 }
 
 run()

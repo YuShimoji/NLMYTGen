@@ -584,10 +584,18 @@ const G28_HUMAN_GUI_SUMMARY = [
   ['host_placeholders', 'pass_as_diagnostic_placeholder'],
   ['overall_decision', 'accept_for_review_console_ingest_candidate_with_layout_metric_caveat'],
 ];
+const NEWSROOM_HANDOFF_ARTIFACTS = {
+  packet: 'samples/_probe/newsroom_handoff/minimal_episode_packet.json',
+  slotLinkage: 'samples/_probe/newsroom_handoff/g28_slot_linkage_readback.json',
+  validatorDoc: 'docs/verification/NEWSROOM_HANDOFF_VALIDATOR_V1_2026-06-20.md',
+  slotLinkageDoc: 'docs/verification/NEWSROOM_G28_SLOT_LINKAGE_PROOF_V1_2026-06-20.md',
+  contract: 'docs/integration/NEWSROOM_TO_NLMYTGEN_HANDOFF_CONTRACT.md',
+};
 let currentReviewPacket = null;
 let currentReviewTreatmentProof = null;
 let currentPipelineSmoke = null;
 let currentG28ReviewIngest = null;
+let currentNewsroomHandoffReview = null;
 let currentReviewDecisionPath = DEFAULT_REVIEW_DECISION_PATH;
 let activeReviewIndex = 0;
 let reviewDecisionState = [];
@@ -964,6 +972,15 @@ function boolLabel(value) {
   return 'unknown';
 }
 
+function listOrEmpty(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function joinedList(value, fallback = 'none') {
+  const items = listOrEmpty(value).filter((item) => item != null && item !== '');
+  return items.length ? items.join(' / ') : fallback;
+}
+
 function buildG28ReviewSummary(readback = {}) {
   const boundary = readback.boundary || {};
   const checks = readback.checks || {};
@@ -1141,6 +1158,180 @@ function renderG28ReviewConsoleIngest() {
   );
 }
 
+function renderNewsroomArtifactInventory(artifactCheck) {
+  const lookup = buildArtifactLookup(artifactCheck);
+  return Object.entries(NEWSROOM_HANDOFF_ARTIFACTS).map(([kind, artifactPath]) => {
+    const artifact = lookup.get(artifactPath);
+    const exists = artifact?.exists === true;
+    const status = artifact ? (exists ? 'exists' : 'missing') : 'unchecked';
+    const stateClass = exists ? 'passable' : 'blocked';
+    return (
+      `<tr>`
+      + `<th>${escapeHtml(kind)}</th>`
+      + `<td><code>${escapeHtml(artifactPath)}</code></td>`
+      + `<td><span class="pipeline-smoke-state ${stateClass}">${escapeHtml(status)}</span></td>`
+      + `</tr>`
+    );
+  }).join('');
+}
+
+function buildNewsroomBoundaryAlerts(packet, slotLinkage, artifactCheck, loadErrors) {
+  const alerts = [];
+  for (const error of loadErrors.filter(Boolean)) {
+    alerts.push(error);
+  }
+  const lookup = buildArtifactLookup(artifactCheck);
+  for (const [kind, artifactPath] of Object.entries(NEWSROOM_HANDOFF_ARTIFACTS)) {
+    const artifact = lookup.get(artifactPath);
+    if (artifact && artifact.exists !== true) alerts.push(`missing ${kind}`);
+  }
+  if (slotLinkage?.validator_status && slotLinkage.validator_status !== 'passed') {
+    alerts.push(`validator_status=${slotLinkage.validator_status}`);
+  }
+  if (slotLinkage?.transfer_status && slotLinkage.transfer_status !== 'blocked') {
+    alerts.push(`unexpected transfer_status=${slotLinkage.transfer_status}`);
+  }
+  if (slotLinkage?.ymm4_transfer_ready === true) {
+    alerts.push('ymm4_transfer_ready=true is not allowed for this diagnostic surface');
+  }
+  if (packet?.provenance?.external_fetch_allowed_by_nlmytgen !== false) {
+    alerts.push('external_fetch_allowed_by_nlmytgen is not false');
+  }
+  if (packet?.provenance?.raw_source_material_included !== false) {
+    alerts.push('raw_source_material_included is not false');
+  }
+  return alerts;
+}
+
+function renderNewsroomWarningList(items, emptyText) {
+  const list = listOrEmpty(items);
+  if (!list.length) return `<p class="hint">${escapeHtml(emptyText)}</p>`;
+  return `<ul>${list.map((item) => {
+    if (typeof item === 'string') return `<li>${escapeHtml(item)}</li>`;
+    const id = item.warning_id || item.id || item.surface || 'warning';
+    const severity = item.severity ? ` / ${item.severity}` : '';
+    const message = item.message || JSON.stringify(item);
+    return `<li><strong>${escapeHtml(id)}${escapeHtml(severity)}</strong><br>${escapeHtml(message)}</li>`;
+  }).join('')}</ul>`;
+}
+
+function renderNewsroomSlotRows(slotLinkage) {
+  const rows = listOrEmpty(slotLinkage?.linkages);
+  if (!rows.length) {
+    return '<tr><td colspan="8">slot linkage readback が未読込です。</td></tr>';
+  }
+  return rows.map((item) => (
+    `<tr data-newsroom-linkage-row="${escapeAttr(item.slot_id || item.selected_g28_slot || '')}">`
+    + `<th>${escapeHtml(item.beat_id || 'missing')}</th>`
+    + `<td>${escapeHtml(item.visual_id || 'missing')}</td>`
+    + `<td>${escapeHtml(item.selected_g28_slot || 'missing')}</td>`
+    + `<td>${escapeHtml(joinedList(item.source_note_ids))}</td>`
+    + `<td>${escapeHtml(boolLabel(item.slot_allowed))}</td>`
+    + `<td><code>${escapeHtml(item.review_surface?.reference_layout || '')}</code></td>`
+    + `<td>${escapeHtml(item.downstream_readiness_implication || 'blocked')}</td>`
+    + `<td>${escapeHtml(boolLabel(item.production_visual_approval === true))}</td>`
+    + `</tr>`
+  )).join('');
+}
+
+function renderNewsroomHandoffReview() {
+  const panel = document.getElementById('newsroom-handoff-review');
+  if (!panel) return;
+  if (!currentNewsroomHandoffReview) {
+    panel.classList.remove('hidden');
+    panel.innerHTML = (
+      `<div class="review-section-head">`
+      + `<div><h3>Newsroom handoff diagnostics</h3><p class="hint">synthetic packet と slot-linkage readback を読込中です。</p></div>`
+      + `</div>`
+    );
+    return;
+  }
+  const packet = currentNewsroomHandoffReview.packet || {};
+  const slotLinkage = currentNewsroomHandoffReview.slotLinkage || {};
+  const artifactCheck = currentNewsroomHandoffReview.artifactCheck || null;
+  const loadErrors = currentNewsroomHandoffReview.loadErrors || [];
+  const sourceNotes = listOrEmpty(packet.source_notes);
+  const scriptBeats = listOrEmpty(packet.script_beats);
+  const visualPlan = listOrEmpty(packet.visual_plan);
+  const g28SlotHints = listOrEmpty(packet.g28_slot_hints);
+  const reviewWarnings = listOrEmpty(packet.review_warnings);
+  const rights = packet.rights_summary || {};
+  const provenance = packet.provenance || {};
+  const downstream = packet.downstream_readiness || {};
+  const slotLinkages = listOrEmpty(slotLinkage.linkages);
+  const productionVisualApproval = slotLinkages.some((item) => item.production_visual_approval === true);
+  const alerts = buildNewsroomBoundaryAlerts(packet, slotLinkage, artifactCheck, loadErrors);
+  const badges = [
+    [`validator_status=${slotLinkage.validator_status || 'not_loaded'}`, slotLinkage.validator_status === 'passed'],
+    [`transfer_status=${slotLinkage.transfer_status || 'not_loaded'}`, slotLinkage.transfer_status === 'blocked'],
+    [`ymm4_transfer_ready=${boolLabel(slotLinkage.ymm4_transfer_ready)}`, slotLinkage.ymm4_transfer_ready === false],
+    [`review_surface_ready=${boolLabel(downstream.review_surface_ready)}`, downstream.review_surface_ready === true],
+    [`production_visual_approval=${boolLabel(productionVisualApproval)}`, productionVisualApproval === false],
+    [`external_fetch=${boolLabel(provenance.external_fetch_allowed_by_nlmytgen)}`, provenance.external_fetch_allowed_by_nlmytgen === false],
+    [`raw_source_material=${boolLabel(provenance.raw_source_material_included)}`, provenance.raw_source_material_included === false],
+  ].map(([label, pass]) => renderG28Badge(label, pass)).join('');
+  const countRows = renderG28KeyValues([
+    ['source_note_count', sourceNotes.length],
+    ['script_beat_count', scriptBeats.length],
+    ['visual_plan_count', visualPlan.length],
+    ['g28_slot_hint_count', g28SlotHints.length],
+    ['slot_linkage_rows', slotLinkages.length],
+    ['visual_slot_gap_count', listOrEmpty(slotLinkage.visual_slot_gaps).length],
+  ]);
+  const rightsRows = renderG28KeyValues([
+    ['clearance_state', rights.clearance_state || 'unknown'],
+    ['allowed_uses', joinedList(rights.allowed_uses)],
+    ['blocked_uses', joinedList(rights.blocked_uses)],
+    ['risk_flags', joinedList(rights.risk_flags)],
+    ['source_owner', provenance.source_collection_owner || 'unknown'],
+    ['source_discovery_owner', provenance.source_discovery_owner || 'unknown'],
+  ]);
+  const downstreamRows = renderG28KeyValues([
+    ['notebooklm_seed_ready', boolLabel(downstream.notebooklm_seed_ready)],
+    ['scriptir_mapping_ready', boolLabel(downstream.scriptir_mapping_ready)],
+    ['visualir_mapping_ready', boolLabel(downstream.visualir_mapping_ready)],
+    ['g28_slot_mapping_ready', boolLabel(downstream.g28_slot_mapping_ready)],
+    ['review_surface_ready', boolLabel(downstream.review_surface_ready)],
+    ['ymm4_transfer_ready', boolLabel(downstream.ymm4_transfer_ready)],
+    ['blocking_reasons', joinedList(downstream.blocking_reasons)],
+  ]);
+  const alertHtml = alerts.length
+    ? `<ul>${alerts.map((alert) => `<li>${escapeHtml(alert)}</li>`).join('')}</ul>`
+    : '<p class="hint">unexpected load/boundary alert はありません。blocked transfer は意図した安全停止です。</p>';
+  panel.classList.remove('hidden');
+  panel.innerHTML = (
+    `<div class="review-section-head">`
+    + `<div><h3>Newsroom handoff diagnostics</h3><p class="hint">read-only consumer。synthetic fixture の状態確認だけを行い、YMM4 transfer、production visual approval、real ingest、external fetch には接続しません。</p></div>`
+    + `<div class="review-proof-summary"><span>${escapeHtml(NEWSROOM_HANDOFF_ARTIFACTS.packet)}</span><strong>${escapeHtml(slotLinkage.transfer_status || 'blocked')}</strong><em>review-only</em></div>`
+    + `</div>`
+    + `<div class="g28-badge-row newsroom-badge-row">${badges}</div>`
+    + `<div class="newsroom-review-grid">`
+    + `<section class="g28-review-card newsroom-review-card"><h4>episode / packet</h4><div class="g28-kv-grid">${renderG28KeyValues([
+      ['episode_id', packet.episode_id || slotLinkage.episode_id || 'unknown'],
+      ['title', packet.title || 'unknown'],
+      ['artifact_id', packet.artifact_id || slotLinkage.artifact_id || 'unknown'],
+      ['contract_version', packet.contract_version || slotLinkage.contract_version || 'unknown'],
+      ['fixture_kind', packet.fixture_kind || 'unknown'],
+      ['editorial_status', packet.episode_metadata?.editorial_status || 'unknown'],
+    ])}</div></section>`
+    + `<section class="g28-review-card newsroom-review-card warning"><h4>rights / provenance</h4><div class="g28-kv-grid">${rightsRows}</div></section>`
+    + `<section class="g28-review-card newsroom-review-card"><h4>counts</h4><div class="g28-kv-grid">${countRows}</div></section>`
+    + `<section class="g28-review-card newsroom-review-card warning"><h4>review warnings</h4>${renderNewsroomWarningList(reviewWarnings, 'review_warnings はありません。')}</section>`
+    + `<section class="g28-review-card newsroom-review-card warning"><h4>downstream readiness</h4><div class="g28-kv-grid">${downstreamRows}</div></section>`
+    + `<section class="g28-review-card newsroom-review-card warning"><h4>slot-linkage warnings / blockers</h4>${renderNewsroomWarningList(slotLinkage.warnings, 'slot-linkage warning はありません。')}${renderNewsroomWarningList(slotLinkage.blockers, 'YMM4 transfer blocker はありません。')}</section>`
+    + `<section class="g28-review-card newsroom-review-card"><h4>artifact inventory</h4><table class="review-beat-table newsroom-artifact-table"><tbody>${renderNewsroomArtifactInventory(artifactCheck)}</tbody></table></section>`
+    + `<section class="g28-review-card newsroom-review-card warning"><h4>boundary alerts</h4>${alertHtml}</section>`
+    + `</div>`
+    + `<div class="review-beat-table-wrap newsroom-slot-linkage-wrap">`
+    + `<h4>G-28 slot linkage rows</h4>`
+    + `<table class="review-beat-table newsroom-slot-linkage-table">`
+    + `<thead><tr><th>beat</th><th>visual</th><th>slot</th><th>sources</th><th>slot ok</th><th>review surface</th><th>transfer</th><th>production approval</th></tr></thead>`
+    + `<tbody>${renderNewsroomSlotRows(slotLinkage)}</tbody>`
+    + `</table>`
+    + `</div>`
+  );
+}
+
 function renderReviewDecisionInspector(packet) {
   const segments = packet?.segments || [];
   const segment = segments[activeReviewIndex];
@@ -1314,6 +1505,37 @@ async function loadG28ReviewConsoleIngest() {
   renderG28ReviewConsoleIngest();
 }
 
+async function loadNewsroomHandoffReview() {
+  currentNewsroomHandoffReview = null;
+  renderNewsroomHandoffReview();
+  const loader = window.nlmytgen.loadReviewProof;
+  const checker = window.nlmytgen.checkReviewArtifacts;
+  const packetPromise = loader
+    ? loader(NEWSROOM_HANDOFF_ARTIFACTS.packet)
+    : Promise.resolve({ ok: false, error: 'loadReviewProof unavailable' });
+  const slotLinkagePromise = loader
+    ? loader(NEWSROOM_HANDOFF_ARTIFACTS.slotLinkage)
+    : Promise.resolve({ ok: false, error: 'loadReviewProof unavailable' });
+  const artifactPromise = checker
+    ? checker(Object.values(NEWSROOM_HANDOFF_ARTIFACTS))
+    : Promise.resolve({ ok: false, artifacts: [], error: 'checkReviewArtifacts unavailable' });
+  const [packetRes, slotLinkageRes, artifactCheck] = await Promise.all([
+    packetPromise,
+    slotLinkagePromise,
+    artifactPromise,
+  ]);
+  currentNewsroomHandoffReview = {
+    packet: packetRes.ok ? packetRes.payload : null,
+    slotLinkage: slotLinkageRes.ok ? slotLinkageRes.payload : null,
+    artifactCheck,
+    loadErrors: [
+      packetRes.ok ? '' : `packet load failed: ${packetRes.error || 'unknown error'}`,
+      slotLinkageRes.ok ? '' : `slot-linkage load failed: ${slotLinkageRes.error || 'unknown error'}`,
+    ].filter(Boolean),
+  };
+  renderNewsroomHandoffReview();
+}
+
 async function loadDefaultReviewPacket() {
   const panel = document.getElementById('review-load-result');
   panel.classList.remove('hidden', 'success', 'error');
@@ -1462,6 +1684,7 @@ function initDesignReviewTab() {
   loadDefaultReviewPacket();
   loadDefaultPipelineSmokeManifest();
   loadG28ReviewConsoleIngest();
+  loadNewsroomHandoffReview();
 }
 
 // --- CSV Tab ---

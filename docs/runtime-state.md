@@ -1,5 +1,21 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom Review Console consumer v1 completed (2026-06-20)**:
+  The Review tab now includes a read-only `#newsroom-handoff-review` panel that
+  loads the synthetic newsroom handoff packet and G-28 slot-linkage readback via
+  the existing Review Console JSON-read path. It surfaces episode identity,
+  validator status, intentionally blocked transfer state, rights/provenance,
+  review warnings, readiness blockers, script/visual/slot counts, slot-linkage
+  rows, artifact inventory, and positive guardrails for
+  `production_visual_approval=false`, `ymm4_transfer_ready=false`,
+  `external_fetch=false`, and `raw_source_material=false`. Implementation lives
+  in `gui/index.html`, `gui/renderer.js`, `gui/style.css`, and
+  `gui/review_console_dom_smoke.js`; verification readback is
+  `docs/verification/NEWSROOM_REVIEW_CONSOLE_CONSUMER_V1_2026-06-20.md`. This
+  slice does not touch `newsroom-yt-pipeline`, fetch sources, edit `.ymmp`,
+  render media, approve rights, or change publication/YMM4 transfer state. Next
+  safe follow-up is a separate non-YMM4 transfer-planning proof that consumes
+  this Review Console readback.
 - **Newsroom G-28 slot-linkage proof v1 completed (2026-06-20)**:
   The synthetic newsroom handoff fixture now has a UI-independent proof that
   links `visual_plan` entries and `g28_slot_hints` to G-28 object catalog slots,
