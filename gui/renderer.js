@@ -587,8 +587,10 @@ const G28_HUMAN_GUI_SUMMARY = [
 const NEWSROOM_HANDOFF_ARTIFACTS = {
   packet: 'samples/_probe/newsroom_handoff/minimal_episode_packet.json',
   slotLinkage: 'samples/_probe/newsroom_handoff/g28_slot_linkage_readback.json',
+  transferPlanning: 'samples/_probe/newsroom_handoff/transfer_planning_readback.json',
   validatorDoc: 'docs/verification/NEWSROOM_HANDOFF_VALIDATOR_V1_2026-06-20.md',
   slotLinkageDoc: 'docs/verification/NEWSROOM_G28_SLOT_LINKAGE_PROOF_V1_2026-06-20.md',
+  transferPlanningDoc: 'docs/verification/NEWSROOM_TRANSFER_PLANNING_PROOF_V1_2026-06-20.md',
   contract: 'docs/integration/NEWSROOM_TO_NLMYTGEN_HANDOFF_CONTRACT.md',
 };
 let currentReviewPacket = null;
@@ -1175,7 +1177,7 @@ function renderNewsroomArtifactInventory(artifactCheck) {
   }).join('');
 }
 
-function buildNewsroomBoundaryAlerts(packet, slotLinkage, artifactCheck, loadErrors) {
+function buildNewsroomBoundaryAlerts(packet, slotLinkage, transferPlanning, artifactCheck, loadErrors) {
   const alerts = [];
   for (const error of loadErrors.filter(Boolean)) {
     alerts.push(error);
@@ -1193,6 +1195,15 @@ function buildNewsroomBoundaryAlerts(packet, slotLinkage, artifactCheck, loadErr
   }
   if (slotLinkage?.ymm4_transfer_ready === true) {
     alerts.push('ymm4_transfer_ready=true is not allowed for this diagnostic surface');
+  }
+  if (transferPlanning?.status && transferPlanning.status !== 'blocked') {
+    alerts.push(`unexpected transfer_planning_status=${transferPlanning.status}`);
+  }
+  if (transferPlanning?.transfer_status && transferPlanning.transfer_status !== 'blocked') {
+    alerts.push(`unexpected planning transfer_status=${transferPlanning.transfer_status}`);
+  }
+  if (listOrEmpty(transferPlanning?.errors).length > 0) {
+    alerts.push(`transfer_planning_errors=${listOrEmpty(transferPlanning.errors).length}`);
   }
   if (packet?.provenance?.external_fetch_allowed_by_nlmytgen !== false) {
     alerts.push('external_fetch_allowed_by_nlmytgen is not false');
@@ -1234,6 +1245,41 @@ function renderNewsroomSlotRows(slotLinkage) {
   )).join('');
 }
 
+function renderNewsroomPlanningBlockers(transferPlanning) {
+  const groups = transferPlanning?.transfer_blockers || {};
+  const entries = Object.entries(groups);
+  if (!entries.length) return '<p class="hint">transfer blocker はありません。</p>';
+  return entries.map(([category, blockers]) => {
+    const rows = listOrEmpty(blockers);
+    return (
+      `<div class="newsroom-planning-blocker-group" data-newsroom-planning-blocker-group="${escapeAttr(category)}">`
+      + `<h5>${escapeHtml(category)}</h5>`
+      + `<ul>${rows.map((item) => (
+        `<li><strong>${escapeHtml(item.code || 'blocker')}</strong><br>${escapeHtml(item.detail || '')}</li>`
+      )).join('')}</ul>`
+      + `</div>`
+    );
+  }).join('');
+}
+
+function renderNewsroomUnlockRequirements(transferPlanning) {
+  const rows = listOrEmpty(transferPlanning?.unlock_requirements);
+  if (!rows.length) return '<p class="hint">unlock requirement はありません。</p>';
+  return `<ul>${rows.map((item) => (
+    `<li data-newsroom-unlock-requirement="${escapeAttr(item.category || 'unlock')}">`
+    + `<strong>${escapeHtml(item.category || 'unlock')}</strong><br>${escapeHtml(item.requirement || '')}`
+    + `</li>`
+  )).join('')}</ul>`;
+}
+
+function renderNewsroomActionList(actions, emptyText, dataAttr) {
+  const rows = listOrEmpty(actions);
+  if (!rows.length) return `<p class="hint">${escapeHtml(emptyText)}</p>`;
+  return `<ul>${rows.map((action) => (
+    `<li ${dataAttr}="${escapeAttr(String(action))}">${escapeHtml(String(action))}</li>`
+  )).join('')}</ul>`;
+}
+
 function renderNewsroomHandoffReview() {
   const panel = document.getElementById('newsroom-handoff-review');
   if (!panel) return;
@@ -1248,6 +1294,7 @@ function renderNewsroomHandoffReview() {
   }
   const packet = currentNewsroomHandoffReview.packet || {};
   const slotLinkage = currentNewsroomHandoffReview.slotLinkage || {};
+  const transferPlanning = currentNewsroomHandoffReview.transferPlanning || {};
   const artifactCheck = currentNewsroomHandoffReview.artifactCheck || null;
   const loadErrors = currentNewsroomHandoffReview.loadErrors || [];
   const sourceNotes = listOrEmpty(packet.source_notes);
@@ -1260,10 +1307,18 @@ function renderNewsroomHandoffReview() {
   const downstream = packet.downstream_readiness || {};
   const slotLinkages = listOrEmpty(slotLinkage.linkages);
   const productionVisualApproval = slotLinkages.some((item) => item.production_visual_approval === true);
-  const alerts = buildNewsroomBoundaryAlerts(packet, slotLinkage, artifactCheck, loadErrors);
+  const planningWarnings = listOrEmpty(transferPlanning.warnings);
+  const allowedNextActions = Array.from(new Set([
+    ...listOrEmpty(transferPlanning.allowed_next_actions),
+    'read-only planning panel review',
+  ]));
+  const alerts = buildNewsroomBoundaryAlerts(packet, slotLinkage, transferPlanning, artifactCheck, loadErrors);
   const badges = [
-    [`validator_status=${slotLinkage.validator_status || 'not_loaded'}`, slotLinkage.validator_status === 'passed'],
+    [`validator_status=${transferPlanning.validator_status || slotLinkage.validator_status || 'not_loaded'}`, (transferPlanning.validator_status || slotLinkage.validator_status) === 'passed'],
+    [`slot_linkage_status=${transferPlanning.slot_linkage_status || slotLinkage.status || 'not_loaded'}`, Boolean(transferPlanning.slot_linkage_status || slotLinkage.status)],
+    [`transfer_planning_status=${transferPlanning.status || 'not_loaded'}`, transferPlanning.status === 'blocked'],
     [`transfer_status=${slotLinkage.transfer_status || 'not_loaded'}`, slotLinkage.transfer_status === 'blocked'],
+    [`planning_transfer_status=${transferPlanning.transfer_status || 'not_loaded'}`, transferPlanning.transfer_status === 'blocked'],
     [`ymm4_transfer_ready=${boolLabel(slotLinkage.ymm4_transfer_ready)}`, slotLinkage.ymm4_transfer_ready === false],
     [`review_surface_ready=${boolLabel(downstream.review_surface_ready)}`, downstream.review_surface_ready === true],
     [`production_visual_approval=${boolLabel(productionVisualApproval)}`, productionVisualApproval === false],
@@ -1277,6 +1332,9 @@ function renderNewsroomHandoffReview() {
     ['g28_slot_hint_count', g28SlotHints.length],
     ['slot_linkage_rows', slotLinkages.length],
     ['visual_slot_gap_count', listOrEmpty(slotLinkage.visual_slot_gaps).length],
+    ['transfer_blocker_count', transferPlanning.blocker_count ?? 0],
+    ['unlock_requirement_count', transferPlanning.unlock_requirement_count ?? 0],
+    ['transfer_warning_count', planningWarnings.length],
   ]);
   const rightsRows = renderG28KeyValues([
     ['clearance_state', rights.clearance_state || 'unknown'],
@@ -1295,6 +1353,18 @@ function renderNewsroomHandoffReview() {
     ['ymm4_transfer_ready', boolLabel(downstream.ymm4_transfer_ready)],
     ['blocking_reasons', joinedList(downstream.blocking_reasons)],
   ]);
+  const transferPlanningRows = renderG28KeyValues([
+    ['transfer_planning_status', transferPlanning.status || 'not_loaded'],
+    ['transfer_status', transferPlanning.transfer_status || 'not_loaded'],
+    ['validator_status', transferPlanning.validator_status || 'not_loaded'],
+    ['slot_linkage_status', transferPlanning.slot_linkage_status || 'not_loaded'],
+    ['review_console_visibility_status', transferPlanning.review_console_visibility_status || 'not_loaded'],
+    ['production/YMM4 approval', 'not_approved'],
+    ['blocker_count', transferPlanning.blocker_count ?? 0],
+    ['unlock_requirement_count', transferPlanning.unlock_requirement_count ?? 0],
+    ['warning_count', planningWarnings.length],
+  ]);
+  const planningSummary = transferPlanning.transfer_candidate_summary || 'transfer planning readback が未読込です。';
   const alertHtml = alerts.length
     ? `<ul>${alerts.map((alert) => `<li>${escapeHtml(alert)}</li>`).join('')}</ul>`
     : '<p class="hint">unexpected load/boundary alert はありません。blocked transfer は意図した安全停止です。</p>';
@@ -1314,10 +1384,16 @@ function renderNewsroomHandoffReview() {
       ['fixture_kind', packet.fixture_kind || 'unknown'],
       ['editorial_status', packet.episode_metadata?.editorial_status || 'unknown'],
     ])}</div></section>`
+    + `<section class="g28-review-card newsroom-review-card warning newsroom-planning-card"><h4>transfer planning state</h4><div class="g28-kv-grid">${transferPlanningRows}</div><p>${escapeHtml(planningSummary)}</p></section>`
+    + `<section class="g28-review-card newsroom-review-card warning newsroom-planning-card"><h4>transfer blockers</h4>${renderNewsroomPlanningBlockers(transferPlanning)}</section>`
     + `<section class="g28-review-card newsroom-review-card warning"><h4>rights / provenance</h4><div class="g28-kv-grid">${rightsRows}</div></section>`
     + `<section class="g28-review-card newsroom-review-card"><h4>counts</h4><div class="g28-kv-grid">${countRows}</div></section>`
+    + `<section class="g28-review-card newsroom-review-card warning newsroom-planning-card"><h4>unlock requirements</h4>${renderNewsroomUnlockRequirements(transferPlanning)}</section>`
+    + `<section class="g28-review-card newsroom-review-card warning newsroom-planning-card"><h4>prohibited next actions</h4>${renderNewsroomActionList(transferPlanning.prohibited_next_actions, 'prohibited action はありません。', 'data-newsroom-prohibited-action')}</section>`
+    + `<section class="g28-review-card newsroom-review-card newsroom-planning-card"><h4>allowed next actions</h4>${renderNewsroomActionList(allowedNextActions, 'allowed action はありません。', 'data-newsroom-allowed-action')}</section>`
     + `<section class="g28-review-card newsroom-review-card warning"><h4>review warnings</h4>${renderNewsroomWarningList(reviewWarnings, 'review_warnings はありません。')}</section>`
     + `<section class="g28-review-card newsroom-review-card warning"><h4>downstream readiness</h4><div class="g28-kv-grid">${downstreamRows}</div></section>`
+    + `<section class="g28-review-card newsroom-review-card warning newsroom-planning-card"><h4>transfer planning warnings</h4>${renderNewsroomWarningList(planningWarnings, 'transfer planning warning はありません。')}</section>`
     + `<section class="g28-review-card newsroom-review-card warning"><h4>slot-linkage warnings / blockers</h4>${renderNewsroomWarningList(slotLinkage.warnings, 'slot-linkage warning はありません。')}${renderNewsroomWarningList(slotLinkage.blockers, 'YMM4 transfer blocker はありません。')}</section>`
     + `<section class="g28-review-card newsroom-review-card"><h4>artifact inventory</h4><table class="review-beat-table newsroom-artifact-table"><tbody>${renderNewsroomArtifactInventory(artifactCheck)}</tbody></table></section>`
     + `<section class="g28-review-card newsroom-review-card warning"><h4>boundary alerts</h4>${alertHtml}</section>`
@@ -1516,21 +1592,27 @@ async function loadNewsroomHandoffReview() {
   const slotLinkagePromise = loader
     ? loader(NEWSROOM_HANDOFF_ARTIFACTS.slotLinkage)
     : Promise.resolve({ ok: false, error: 'loadReviewProof unavailable' });
+  const transferPlanningPromise = loader
+    ? loader(NEWSROOM_HANDOFF_ARTIFACTS.transferPlanning)
+    : Promise.resolve({ ok: false, error: 'loadReviewProof unavailable' });
   const artifactPromise = checker
     ? checker(Object.values(NEWSROOM_HANDOFF_ARTIFACTS))
     : Promise.resolve({ ok: false, artifacts: [], error: 'checkReviewArtifacts unavailable' });
-  const [packetRes, slotLinkageRes, artifactCheck] = await Promise.all([
+  const [packetRes, slotLinkageRes, transferPlanningRes, artifactCheck] = await Promise.all([
     packetPromise,
     slotLinkagePromise,
+    transferPlanningPromise,
     artifactPromise,
   ]);
   currentNewsroomHandoffReview = {
     packet: packetRes.ok ? packetRes.payload : null,
     slotLinkage: slotLinkageRes.ok ? slotLinkageRes.payload : null,
+    transferPlanning: transferPlanningRes.ok ? transferPlanningRes.payload : null,
     artifactCheck,
     loadErrors: [
       packetRes.ok ? '' : `packet load failed: ${packetRes.error || 'unknown error'}`,
       slotLinkageRes.ok ? '' : `slot-linkage load failed: ${slotLinkageRes.error || 'unknown error'}`,
+      transferPlanningRes.ok ? '' : `transfer-planning load failed: ${transferPlanningRes.error || 'unknown error'}`,
     ].filter(Boolean),
   };
   renderNewsroomHandoffReview();

@@ -53,6 +53,10 @@ async function run() {
         const g28ArtifactRows = Array.from(g28?.querySelectorAll('.g28-artifact-table tbody tr') || []);
         const newsroomArtifactRows = Array.from(newsroom?.querySelectorAll('.newsroom-artifact-table tbody tr') || []);
         const newsroomLinkageRows = Array.from(newsroom?.querySelectorAll('[data-newsroom-linkage-row]') || []);
+        const newsroomPlanningGroups = Array.from(newsroom?.querySelectorAll('[data-newsroom-planning-blocker-group]') || []);
+        const newsroomUnlockRows = Array.from(newsroom?.querySelectorAll('[data-newsroom-unlock-requirement]') || []);
+        const newsroomProhibitedActions = Array.from(newsroom?.querySelectorAll('[data-newsroom-prohibited-action]') || []);
+        const newsroomAllowedActions = Array.from(newsroom?.querySelectorAll('[data-newsroom-allowed-action]') || []);
         const proofBadges = Array.from(document.querySelectorAll('#review-timeline .review-timeline-proof'));
         const beatRows = Array.from(document.querySelectorAll('#review-treatment-proof .review-beat-table tbody tr'));
         const wizard = document.getElementById('wizard-bar');
@@ -109,6 +113,10 @@ async function run() {
           newsroomText,
           newsroomArtifactRowCount: newsroomArtifactRows.length,
           newsroomLinkageRowCount: newsroomLinkageRows.length,
+          newsroomPlanningGroupCount: newsroomPlanningGroups.length,
+          newsroomUnlockRowCount: newsroomUnlockRows.length,
+          newsroomProhibitedActionCount: newsroomProhibitedActions.length,
+          newsroomAllowedActionCount: newsroomAllowedActions.length,
           proofBadgeCount: proofBadges.length,
           beatRowCount: beatRows.length,
           bodyReviewClass: !!bodyContent?.classList.contains('review-workbench-active'),
@@ -191,9 +199,39 @@ async function run() {
             && newsroomText.includes('Placeholder Policy Explainer Episode'),
           hasNewsroomStatuses: newsroomText.includes('validator_status=passed')
             && newsroomText.includes('transfer_status=blocked')
+            && newsroomText.includes('slot_linkage_status=passed_with_warnings')
+            && newsroomText.includes('transfer_planning_status=blocked')
+            && newsroomText.includes('planning_transfer_status=blocked')
             && newsroomText.includes('ymm4_transfer_ready=false')
             && newsroomText.includes('review_surface_ready=true')
             && newsroomText.includes('production_visual_approval=false'),
+          hasNewsroomPlanningState: newsroomText.includes('transfer planning state')
+            && newsroomText.includes('blocker_count')
+            && newsroomText.includes('14')
+            && newsroomText.includes('unlock_requirement_count')
+            && newsroomText.includes('warning_count')
+            && newsroomText.includes('Not a transfer candidate yet'),
+          hasNewsroomPlanningBlockers: newsroomText.includes('transfer blockers')
+            && newsroomText.includes('rights/provenance')
+            && newsroomText.includes('media/source availability')
+            && newsroomText.includes('review approval')
+            && newsroomText.includes('visual readiness')
+            && newsroomText.includes('downstream/YMM4 readiness')
+            && newsroomText.includes('rights_summary_blocks_ymm4_transfer')
+            && newsroomText.includes('visual_slot_gaps_present'),
+          hasNewsroomUnlockRequirements: newsroomText.includes('unlock requirements')
+            && newsroomText.includes('Record cleared rights')
+            && newsroomText.includes('Replace placeholder-only visual plans')
+            && newsroomText.includes('Keep YMM4 transfer closed'),
+          hasNewsroomPlanningActions: newsroomText.includes('prohibited next actions')
+            && newsroomText.includes('.ymmp generation')
+            && newsroomText.includes('render generation')
+            && newsroomText.includes('external fetch')
+            && newsroomText.includes('production approval')
+            && newsroomText.includes('allowed next actions')
+            && newsroomText.includes('real packet readiness checklist')
+            && newsroomText.includes('fixture/schema refinement')
+            && newsroomText.includes('read-only planning panel review'),
           hasNewsroomRights: newsroomText.includes('clearance_state')
             && newsroomText.includes('synthetic_fixture_only')
             && newsroomText.includes('blocked_uses')
@@ -219,8 +257,10 @@ async function run() {
             && newsroomText.includes('article_quote_card.html'),
           hasNewsroomReferences: newsroomText.includes('minimal_episode_packet.json')
             && newsroomText.includes('g28_slot_linkage_readback.json')
+            && newsroomText.includes('transfer_planning_readback.json')
             && newsroomText.includes('NEWSROOM_HANDOFF_VALIDATOR_V1_2026-06-20.md')
-            && newsroomText.includes('NEWSROOM_G28_SLOT_LINKAGE_PROOF_V1_2026-06-20.md'),
+            && newsroomText.includes('NEWSROOM_G28_SLOT_LINKAGE_PROOF_V1_2026-06-20.md')
+            && newsroomText.includes('NEWSROOM_TRANSFER_PLANNING_PROOF_V1_2026-06-20.md'),
           hasNewsroomBoundary: (newsroomText.includes('read-only consumer')
             && newsroomText.includes('YMM4 transfer')
             && newsroomText.includes('production visual approval')
@@ -255,8 +295,12 @@ async function run() {
             && state.g28Exists
             && state.g28ArtifactRowCount === 5
             && state.newsroomExists
-            && state.newsroomArtifactRowCount === 5
+            && state.newsroomArtifactRowCount === 7
             && state.newsroomLinkageRowCount === 4
+            && state.newsroomPlanningGroupCount === 5
+            && state.newsroomUnlockRowCount === 14
+            && state.newsroomProhibitedActionCount >= 4
+            && state.newsroomAllowedActionCount >= 3
             && state.cardCount === ${expectedSegmentCount}
             && state.hasEpisodeContextLabel
             && state.hasStoryOutlineLabel
@@ -297,6 +341,10 @@ async function run() {
             && state.hasNewsroomLabel
             && state.hasNewsroomEpisode
             && state.hasNewsroomStatuses
+            && state.hasNewsroomPlanningState
+            && state.hasNewsroomPlanningBlockers
+            && state.hasNewsroomUnlockRequirements
+            && state.hasNewsroomPlanningActions
             && state.hasNewsroomRights
             && state.hasNewsroomWarnings
             && state.hasNewsroomCounts
@@ -389,11 +437,23 @@ async function run() {
   if (result.hasG28ForbiddenDecisionLabels) {
     throw new Error(`G-28 ingest panel exposed a forbidden production decision label: ${result.g28Text.slice(0, 800)}`);
   }
-  if (!result.newsroomExists || result.newsroomArtifactRowCount !== 5 || result.newsroomLinkageRowCount !== 4) {
+  if (!result.newsroomExists || result.newsroomArtifactRowCount !== 7 || result.newsroomLinkageRowCount !== 4) {
     throw new Error(`newsroom handoff panel did not expose artifacts and slot rows: ${JSON.stringify({
       exists: result.newsroomExists,
       artifacts: result.newsroomArtifactRowCount,
       linkages: result.newsroomLinkageRowCount,
+    })}`);
+  }
+  if (result.newsroomPlanningGroupCount !== 5 || result.newsroomUnlockRowCount !== 14) {
+    throw new Error(`newsroom transfer planning panel did not expose blocker groups and unlock rows: ${JSON.stringify({
+      groups: result.newsroomPlanningGroupCount,
+      unlocks: result.newsroomUnlockRowCount,
+    })}`);
+  }
+  if (result.newsroomProhibitedActionCount < 4 || result.newsroomAllowedActionCount < 3) {
+    throw new Error(`newsroom transfer planning panel did not expose expected next actions: ${JSON.stringify({
+      prohibited: result.newsroomProhibitedActionCount,
+      allowed: result.newsroomAllowedActionCount,
     })}`);
   }
   for (const text of [
@@ -401,7 +461,31 @@ async function run() {
     'fake-newsroom-episode-0001',
     'Placeholder Policy Explainer Episode',
     'validator_status=passed',
+    'slot_linkage_status=passed_with_warnings',
+    'transfer_planning_status=blocked',
     'transfer_status=blocked',
+    'planning_transfer_status=blocked',
+    'blocker_count',
+    'unlock_requirement_count',
+    'warning_count',
+    'Not a transfer candidate yet',
+    'rights/provenance',
+    'media/source availability',
+    'review approval',
+    'visual readiness',
+    'downstream/YMM4 readiness',
+    'rights_summary_blocks_ymm4_transfer',
+    'visual_slot_gaps_present',
+    'Record cleared rights',
+    'Replace placeholder-only visual plans',
+    'Keep YMM4 transfer closed',
+    '.ymmp generation',
+    'render generation',
+    'external fetch',
+    'production approval',
+    'real packet readiness checklist',
+    'fixture/schema refinement',
+    'read-only planning panel review',
     'ymm4_transfer_ready=false',
     'production_visual_approval=false',
     'synthetic_fixture_only',
@@ -415,7 +499,9 @@ async function run() {
     'screenshot_slot',
     'article_quote_card.html',
     'minimal_episode_packet.json',
+    'transfer_planning_readback.json',
     'NEWSROOM_G28_SLOT_LINKAGE_PROOF_V1_2026-06-20.md',
+    'NEWSROOM_TRANSFER_PLANNING_PROOF_V1_2026-06-20.md',
   ]) {
     if (!result.newsroomText.includes(text)) {
       throw new Error(`newsroom handoff panel missing ${text}: ${result.newsroomText.slice(0, 1000)}`);
@@ -517,7 +603,7 @@ async function run() {
     throw new Error(`review_decisions version changed: ${saveResult.payload.version}`);
   }
 
-  console.log(`G-27 review console DOM smoke OK: ${result.timelineCount} timeline segments; ${expectedProofFrameCount} G-27 proof frames; ${result.pipelineTopicCount} pipeline smoke topics / ${result.pipelineBeatRowCount} smoke beats visible through GUI; G-28 diagnostic ingest panel visible; newsroom handoff diagnostics visible; save payload OK`);
+  console.log(`G-27 review console DOM smoke OK: ${result.timelineCount} timeline segments; ${expectedProofFrameCount} G-27 proof frames; ${result.pipelineTopicCount} pipeline smoke topics / ${result.pipelineBeatRowCount} smoke beats visible through GUI; G-28 diagnostic ingest panel visible; newsroom transfer planning panel visible; save payload OK`);
 }
 
 run()

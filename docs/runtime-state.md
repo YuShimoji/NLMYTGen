@@ -1,5 +1,19 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom Review Console planning panel v1 completed (2026-06-20)**:
+  The existing read-only `#newsroom-handoff-review` panel now also loads
+  `samples/_probe/newsroom_handoff/transfer_planning_readback.json` and exposes
+  the non-YMM4 transfer-planning state in the Review tab. It shows
+  `transfer_status=blocked`, blocker/unlock/warning counts, grouped blockers,
+  unlock requirements, prohibited next actions, allowed next actions, artifact
+  references, and a candidate summary that keeps the synthetic packet out of
+  transfer-candidate status. Verification readback is
+  `docs/verification/NEWSROOM_REVIEW_CONSOLE_PLANNING_PANEL_V1_2026-06-20.md`.
+  This slice does not create `.ymmp`, YMM4 carriers, renders, external fetches,
+  production approval, rights approval, or publication output. Next safe
+  follow-up is a real-packet readiness checklist that remains read-only until
+  rights, media/source availability, review approval, visual readiness, and
+  downstream/YMM4 blockers are cleared.
 - **Newsroom transfer-planning proof v1 completed (2026-06-20)**:
   The synthetic newsroom packet now has a non-YMM4 transfer-planning proof that
   consumes the handoff validator result, G-28 slot-linkage readback, and
