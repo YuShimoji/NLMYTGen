@@ -1,5 +1,19 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom transfer-planning proof v1 completed (2026-06-20)**:
+  The synthetic newsroom packet now has a non-YMM4 transfer-planning proof that
+  consumes the handoff validator result, G-28 slot-linkage readback, and
+  read-only Review Console consumer assumption. CLI entry:
+  `uv run python -m src.cli.main plan-newsroom-transfer --format json`. JSON
+  readback is `samples/_probe/newsroom_handoff/transfer_planning_readback.json`;
+  human readback is
+  `docs/verification/NEWSROOM_TRANSFER_PLANNING_PROOF_V1_2026-06-20.md`. The
+  current result is intentionally `status=blocked` / `transfer_status=blocked`
+  with grouped blockers for rights/provenance, media/source availability,
+  review approval, visual readiness, and downstream/YMM4 readiness. This slice
+  does not create `.ymmp`, YMM4 carriers, renders, external fetches, production
+  approval, rights approval, or publication output. Next safe follow-up is a
+  read-only Review Console planning panel that displays this proof.
 - **Newsroom Review Console consumer v1 completed (2026-06-20)**:
   The Review tab now includes a read-only `#newsroom-handoff-review` panel that
   loads the synthetic newsroom handoff packet and G-28 slot-linkage readback via

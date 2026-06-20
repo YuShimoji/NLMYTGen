@@ -6,17 +6,26 @@ from src.cli import main as cli_main
 from src.pipeline.newsroom_handoff_validator import (
     ALLOWED_G28_SLOT_SET,
     build_g28_slot_linkage_proof,
+    build_newsroom_transfer_planning_proof,
     load_newsroom_handoff_packet,
+    load_newsroom_slot_linkage_readback,
     validate_newsroom_handoff_packet,
 )
 
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE_PATH = ROOT / "samples" / "_probe" / "newsroom_handoff" / "minimal_episode_packet.json"
+SLOT_LINKAGE_PATH = (
+    ROOT / "samples" / "_probe" / "newsroom_handoff" / "g28_slot_linkage_readback.json"
+)
 
 
 def _fixture() -> dict:
     return load_newsroom_handoff_packet(FIXTURE_PATH)
+
+
+def _slot_linkage() -> dict:
+    return load_newsroom_slot_linkage_readback(SLOT_LINKAGE_PATH)
 
 
 def test_minimal_newsroom_handoff_fixture_passes_structure_and_blocks_transfer() -> None:
@@ -235,3 +244,117 @@ def test_cli_prove_newsroom_g28_slot_linkage_writes_markdown(tmp_path, capsys) -
     assert "# Newsroom G-28 Slot Linkage Proof" in text
     assert "screenshot_slot" in text
     assert "transfer_status: blocked" in text
+
+
+def test_transfer_planning_proof_blocks_fixture_and_groups_unlocks() -> None:
+    proof = build_newsroom_transfer_planning_proof(
+        _fixture(),
+        _slot_linkage(),
+        packet_path=FIXTURE_PATH,
+        slot_linkage_path=SLOT_LINKAGE_PATH,
+    )
+
+    assert proof.status == "blocked"
+    assert proof.transfer_status == "blocked"
+    assert proof.validator_status == "passed"
+    assert proof.slot_linkage_status == "passed_with_warnings"
+    assert proof.review_console_visibility_status == "documented_read_only"
+    assert "Not a transfer candidate yet" in proof.transfer_candidate_summary
+    assert set(proof.transfer_blockers) >= {
+        "rights/provenance",
+        "media/source availability",
+        "review approval",
+        "visual readiness",
+        "downstream/YMM4 readiness",
+    }
+    assert any(
+        item["code"] == "rights_clearance_not_cleared"
+        for item in proof.transfer_blockers["rights/provenance"]
+    )
+    assert any(
+        item["code"] == "visual_slot_gaps_present"
+        for item in proof.transfer_blockers["visual readiness"]
+    )
+    assert ".ymmp generation" in proof.prohibited_next_actions
+    assert "Review Console planning panel" in proof.allowed_next_actions
+    assert proof.input_counts["slot_linkage_rows"] == 4
+
+
+def test_transfer_planning_proof_rejects_ready_claim_with_blockers() -> None:
+    packet = _fixture()
+    packet["downstream_readiness"]["ymm4_transfer_ready"] = True
+    slot_linkage = _slot_linkage()
+    slot_linkage["ymm4_transfer_ready"] = True
+
+    proof = build_newsroom_transfer_planning_proof(packet, slot_linkage)
+
+    assert proof.status == "failed"
+    assert proof.transfer_status == "blocked"
+    assert "TRANSFER_READY_CONTRADICTS_BLOCKERS" in proof.errors
+    assert any(
+        check["check"] == "transfer_ready_with_blockers" and check["status"] == "fail"
+        for check in proof.contradiction_checks
+    )
+
+
+def test_transfer_planning_proof_fails_closed_without_slot_linkage_status() -> None:
+    slot_linkage = _slot_linkage()
+    slot_linkage.pop("status")
+    slot_linkage.pop("validator_status")
+
+    proof = build_newsroom_transfer_planning_proof(_fixture(), slot_linkage)
+
+    assert proof.status == "failed"
+    assert "SLOT_LINKAGE_STATUS_MISSING" in proof.errors
+    assert "SLOT_LINKAGE_VALIDATOR_STATUS_MISSING" in proof.errors
+    assert any(
+        check["check"] == "slot_linkage_readback_required" and check["status"] == "fail"
+        for check in proof.contradiction_checks
+    )
+
+
+def test_cli_plan_newsroom_transfer_outputs_json(capsys) -> None:
+    exit_code = cli_main.main(
+        [
+            "plan-newsroom-transfer",
+            str(FIXTURE_PATH),
+            "--slot-linkage",
+            str(SLOT_LINKAGE_PATH),
+            "--format",
+            "json",
+        ]
+    )
+
+    payload = json.loads(capsys.readouterr().out)
+    assert exit_code == 0
+    assert payload["status"] == "blocked"
+    assert payload["transfer_status"] == "blocked"
+    assert payload["transfer_blockers"]["downstream/YMM4 readiness"]
+    assert payload["unlock_requirement_count"] > 0
+
+
+def test_cli_plan_newsroom_transfer_writes_markdown_without_ymmp_generation(
+    tmp_path,
+    capsys,
+) -> None:
+    output_path = tmp_path / "transfer_planning.md"
+
+    exit_code = cli_main.main(
+        [
+            "plan-newsroom-transfer",
+            str(FIXTURE_PATH),
+            "--slot-linkage",
+            str(SLOT_LINKAGE_PATH),
+            "-o",
+            str(output_path),
+        ]
+    )
+
+    captured = capsys.readouterr()
+    text = output_path.read_text(encoding="utf-8")
+    assert exit_code == 0
+    assert "Written:" in captured.out
+    assert "# Newsroom Transfer Planning Proof" in text
+    assert "transfer_status: blocked" in text
+    assert "Not a transfer candidate yet" in text
+    assert list(tmp_path.glob("*.ymmp")) == []

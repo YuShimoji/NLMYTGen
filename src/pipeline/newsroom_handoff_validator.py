@@ -121,6 +121,49 @@ class NewsroomG28SlotLinkageProof:
         return payload
 
 
+@dataclass
+class NewsroomTransferPlanningProof:
+    """Non-YMM4 transfer-planning readback for newsroom handoff packets."""
+
+    status: str
+    transfer_status: str = "blocked"
+    packet_path: str | None = None
+    slot_linkage_path: str | None = None
+    review_console_doc_path: str | None = None
+    artifact_id: str | None = None
+    episode_id: str | None = None
+    title: str | None = None
+    contract_version: str | None = None
+    validator_status: str = "not_run"
+    slot_linkage_status: str = "not_loaded"
+    review_console_visibility_status: str = "not_checked"
+    ymm4_transfer_ready: bool | None = None
+    transfer_candidate_summary: str = ""
+    transfer_blockers: dict[str, list[dict[str, Any]]] = field(default_factory=dict)
+    unlock_requirements: list[dict[str, Any]] = field(default_factory=list)
+    contradiction_checks: list[dict[str, Any]] = field(default_factory=list)
+    prohibited_next_actions: list[str] = field(default_factory=list)
+    allowed_next_actions: list[str] = field(default_factory=list)
+    input_counts: dict[str, int] = field(default_factory=dict)
+    errors: list[str] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
+    next_use: str = (
+        "Use this proof as a non-YMM4 planning gate before a future read-only "
+        "Review Console planning panel or real-packet readiness checklist."
+    )
+
+    @property
+    def has_errors(self) -> bool:
+        return bool(self.errors)
+
+    def to_dict(self) -> dict[str, Any]:
+        payload = asdict(self)
+        payload["has_errors"] = self.has_errors
+        payload["blocker_count"] = sum(len(items) for items in self.transfer_blockers.values())
+        payload["unlock_requirement_count"] = len(self.unlock_requirements)
+        return payload
+
+
 G28_REVIEW_SURFACE_INDEX: dict[str, str] = {
     "object_catalog": "samples/_probe/g28/reference_layout_prototypes/object_catalog.html",
     "screenshot_callout": "samples/_probe/g28/reference_layout_prototypes/screenshot_callout.html",
@@ -134,6 +177,28 @@ G28_REVIEW_SURFACE_INDEX: dict[str, str] = {
         "samples/_probe/g28/reference_layout_prototypes/source_footage_annotated.html"
     ),
 }
+
+DEFAULT_REVIEW_CONSOLE_CONSUMER_DOC = (
+    "docs/verification/NEWSROOM_REVIEW_CONSOLE_CONSUMER_V1_2026-06-20.md"
+)
+
+NEWSROOM_TRANSFER_PROHIBITED_NEXT_ACTIONS: tuple[str, ...] = (
+    ".ymmp generation",
+    "YMM4 carrier generation",
+    "render generation",
+    "external fetch",
+    "production approval",
+    "rights approval",
+    "public-use approval",
+)
+
+NEWSROOM_TRANSFER_ALLOWED_NEXT_ACTIONS: tuple[str, ...] = (
+    "Review Console planning panel",
+    "real packet readiness checklist",
+    "fixture/schema refinement",
+    "rights/provenance field review",
+    "approved media or abstract replacement planning",
+)
 
 SLOT_DEFAULT_LAYOUT_HINTS: dict[str, str] = {
     "image_slot": "image_annotation_simple",
@@ -164,8 +229,26 @@ def load_newsroom_handoff_packet(path: str | Path) -> dict[str, Any]:
     return data
 
 
+def load_newsroom_slot_linkage_readback(path: str | Path) -> dict[str, Any]:
+    """Load a G-28 slot-linkage readback and require a JSON object root."""
+    readback_path = Path(path)
+    with readback_path.open("r", encoding="utf-8") as handle:
+        data = json.load(handle)
+    if not isinstance(data, dict):
+        raise ValueError(f"newsroom slot-linkage readback must be a JSON object: {readback_path}")
+    return data
+
+
 def _is_non_empty_string(value: Any) -> bool:
     return isinstance(value, str) and value.strip() != ""
+
+
+def _bool_label(value: Any) -> str:
+    if value is True:
+        return "true"
+    if value is False:
+        return "false"
+    return "unknown"
 
 
 def _append_required_field_errors(
@@ -732,6 +815,538 @@ def render_g28_slot_linkage_proof_markdown(
         "",
         "This is diagnostic/readback only. It does not implement Review Console UI, "
         "create YMM4 artifacts, approve production visuals, fetch sources, or change rights state.",
+        "",
+        f"next_use: {proof.next_use}",
+    ])
+    return "\n".join(lines) + "\n"
+
+
+def _append_transfer_blocker(
+    blockers: dict[str, list[dict[str, Any]]],
+    unlocks: list[dict[str, Any]],
+    seen: set[tuple[str, str]],
+    *,
+    category: str,
+    code: str,
+    detail: str,
+    source_fields: list[str],
+    unlock_requirement: str,
+) -> None:
+    key = (category, code)
+    if key in seen:
+        return
+    seen.add(key)
+    blockers.setdefault(category, []).append({
+        "code": code,
+        "detail": detail,
+        "source_fields": source_fields,
+    })
+    unlocks.append({
+        "category": category,
+        "requirement": unlock_requirement,
+        "current_state": detail,
+        "source_fields": source_fields,
+    })
+
+
+def _readiness_true_fields(downstream_readiness: dict[str, Any]) -> list[str]:
+    return sorted(
+        key
+        for key, value in downstream_readiness.items()
+        if key.endswith("_ready") and value is True
+    )
+
+
+def build_newsroom_transfer_planning_proof(
+    packet: dict[str, Any],
+    slot_linkage_readback: dict[str, Any] | None,
+    *,
+    packet_path: str | Path | None = None,
+    slot_linkage_path: str | Path | None = None,
+    review_console_doc_path: str | Path | None = DEFAULT_REVIEW_CONSOLE_CONSUMER_DOC,
+) -> NewsroomTransferPlanningProof:
+    """Build a non-YMM4 transfer-planning proof from validated readbacks."""
+    validation = validate_newsroom_handoff_packet(packet, packet_path=packet_path)
+    errors = list(validation.errors)
+    warnings = list(validation.warnings)
+    blockers: dict[str, list[dict[str, Any]]] = {}
+    unlocks: list[dict[str, Any]] = []
+    seen_blockers: set[tuple[str, str]] = set()
+    slot_linkage = slot_linkage_readback if isinstance(slot_linkage_readback, dict) else {}
+
+    slot_linkage_status = slot_linkage.get("status")
+    slot_linkage_transfer = slot_linkage.get("transfer_status")
+    slot_validator_status = slot_linkage.get("validator_status")
+    linkages = slot_linkage.get("linkages")
+    if not slot_linkage:
+        errors.append("SLOT_LINKAGE_READBACK_MISSING")
+    if not isinstance(slot_linkage_status, str) or not slot_linkage_status:
+        errors.append("SLOT_LINKAGE_STATUS_MISSING")
+        slot_linkage_status = "missing"
+    if not isinstance(slot_validator_status, str) or not slot_validator_status:
+        errors.append("SLOT_LINKAGE_VALIDATOR_STATUS_MISSING")
+    if not isinstance(slot_linkage_transfer, str) or not slot_linkage_transfer:
+        errors.append("SLOT_LINKAGE_TRANSFER_STATUS_MISSING")
+        slot_linkage_transfer = "blocked"
+    if not isinstance(linkages, list):
+        errors.append("SLOT_LINKAGE_ROWS_MISSING")
+        linkages = []
+
+    review_console_visibility_status = "not_checked"
+    if review_console_doc_path:
+        review_console_visibility_status = (
+            "documented_read_only"
+            if Path(review_console_doc_path).exists()
+            else "doc_missing"
+        )
+        if review_console_visibility_status == "doc_missing":
+            warnings.append(f"REVIEW_CONSOLE_CONSUMER_DOC_MISSING: {review_console_doc_path}")
+
+    rights = packet.get("rights_summary") if isinstance(packet.get("rights_summary"), dict) else {}
+    provenance = packet.get("provenance") if isinstance(packet.get("provenance"), dict) else {}
+    downstream = (
+        packet.get("downstream_readiness")
+        if isinstance(packet.get("downstream_readiness"), dict)
+        else {}
+    )
+    review_warnings = packet.get("review_warnings") if isinstance(packet.get("review_warnings"), list) else []
+    visual_plan = packet.get("visual_plan") if isinstance(packet.get("visual_plan"), list) else []
+    source_notes = packet.get("source_notes") if isinstance(packet.get("source_notes"), list) else []
+
+    clearance_state = rights.get("clearance_state")
+    if clearance_state != "cleared":
+        _append_transfer_blocker(
+            blockers,
+            unlocks,
+            seen_blockers,
+            category="rights/provenance",
+            code="rights_clearance_not_cleared",
+            detail=f"rights_summary.clearance_state={clearance_state or 'missing'}",
+            source_fields=["rights_summary.clearance_state"],
+            unlock_requirement=(
+                "Record cleared rights or an explicit limited-use clearance before "
+                "any transfer candidate review."
+            ),
+        )
+    blocked_uses = rights.get("blocked_uses")
+    if isinstance(blocked_uses, list) and "YMM4_transfer" in blocked_uses:
+        _append_transfer_blocker(
+            blockers,
+            unlocks,
+            seen_blockers,
+            category="rights/provenance",
+            code="rights_summary_blocks_ymm4_transfer",
+            detail="rights_summary.blocked_uses includes YMM4_transfer",
+            source_fields=["rights_summary.blocked_uses"],
+            unlock_requirement=(
+                "Remove YMM4_transfer from blocked uses only after rights/provenance "
+                "review permits a limited downstream handoff."
+            ),
+        )
+    risk_flags = rights.get("risk_flags")
+    if isinstance(risk_flags, list) and risk_flags:
+        _append_transfer_blocker(
+            blockers,
+            unlocks,
+            seen_blockers,
+            category="rights/provenance",
+            code="rights_risk_flags_present",
+            detail=f"rights_summary.risk_flags={','.join(str(flag) for flag in risk_flags)}",
+            source_fields=["rights_summary.risk_flags"],
+            unlock_requirement="Resolve or explicitly waive rights risk flags before transfer planning.",
+        )
+    if provenance.get("raw_source_material_included") is not True:
+        _append_transfer_blocker(
+            blockers,
+            unlocks,
+            seen_blockers,
+            category="media/source availability",
+            code="raw_source_material_not_included",
+            detail="provenance.raw_source_material_included is false or missing",
+            source_fields=["provenance.raw_source_material_included"],
+            unlock_requirement=(
+                "Provide approved source media metadata or approved abstract replacement "
+                "evidence before limited transfer can be considered."
+            ),
+        )
+    placeholder_sources = [
+        note.get("source_id", "<missing>")
+        for note in source_notes
+        if isinstance(note, dict)
+        and (
+            str(note.get("source_kind", "")).startswith("placeholder")
+            or _is_non_empty_string(note.get("non_fetching_reference"))
+        )
+    ]
+    if placeholder_sources:
+        _append_transfer_blocker(
+            blockers,
+            unlocks,
+            seen_blockers,
+            category="media/source availability",
+            code="placeholder_source_notes_only",
+            detail=f"placeholder source notes: {','.join(placeholder_sources)}",
+            source_fields=["source_notes"],
+            unlock_requirement=(
+                "Replace placeholder-only source notes with approved, sanitized packet "
+                "metadata from the upstream newsroom export."
+            ),
+        )
+
+    for warning in review_warnings:
+        if not isinstance(warning, dict):
+            continue
+        if warning.get("blocks_ymm4_transfer") is True:
+            warning_id = warning.get("warning_id", "<missing>")
+            _append_transfer_blocker(
+                blockers,
+                unlocks,
+                seen_blockers,
+                category="review approval",
+                code=f"review_warning_blocks_transfer:{warning_id}",
+                detail=str(warning.get("message") or warning_id),
+                source_fields=[f"review_warnings.{warning_id}"],
+                unlock_requirement=(
+                    "Resolve the blocking review warning and record a freeform human "
+                    "review outcome before transfer-candidate review."
+                ),
+            )
+    _append_transfer_blocker(
+        blockers,
+        unlocks,
+        seen_blockers,
+        category="review approval",
+        code="review_console_is_read_only",
+        detail=f"review_console_visibility_status={review_console_visibility_status}",
+        source_fields=[str(review_console_doc_path) if review_console_doc_path else "review_console"],
+        unlock_requirement=(
+            "Add a separate planning approval/readiness outcome; the current Review "
+            "Console consumer is visibility only."
+        ),
+    )
+
+    placeholder_visuals = [
+        visual.get("visual_id", "<missing>")
+        for visual in visual_plan
+        if isinstance(visual, dict) and visual.get("asset_policy") == "placeholder_only"
+    ]
+    if placeholder_visuals:
+        _append_transfer_blocker(
+            blockers,
+            unlocks,
+            seen_blockers,
+            category="visual readiness",
+            code="visual_assets_placeholder_only",
+            detail=f"placeholder visuals: {','.join(placeholder_visuals)}",
+            source_fields=["visual_plan.asset_policy"],
+            unlock_requirement=(
+                "Replace placeholder-only visual plans with approved media, approved "
+                "abstract replacements, or an explicit no-media visual route."
+            ),
+        )
+    visual_slot_gaps = (
+        slot_linkage.get("visual_slot_gaps")
+        if isinstance(slot_linkage.get("visual_slot_gaps"), list)
+        else []
+    )
+    if visual_slot_gaps:
+        gap_ids = [
+            gap.get("visual_id", "<missing>")
+            for gap in visual_slot_gaps
+            if isinstance(gap, dict)
+        ]
+        _append_transfer_blocker(
+            blockers,
+            unlocks,
+            seen_blockers,
+            category="visual readiness",
+            code="visual_slot_gaps_present",
+            detail=f"visuals with unhinted slots: {','.join(gap_ids)}",
+            source_fields=["g28_slot_linkage_readback.visual_slot_gaps"],
+            unlock_requirement=(
+                "Close or explicitly defer unhinted visual content slots before "
+                "transfer-candidate review."
+            ),
+        )
+    if linkages and any(item.get("production_visual_approval") is not False for item in linkages if isinstance(item, dict)):
+        warnings.append("PRODUCTION_VISUAL_APPROVAL_FIELD_NOT_FALSE")
+
+    if validation.transfer_status == "blocked":
+        _append_transfer_blocker(
+            blockers,
+            unlocks,
+            seen_blockers,
+            category="downstream/YMM4 readiness",
+            code="validator_transfer_status_blocked",
+            detail="validator transfer_status=blocked",
+            source_fields=["validator.transfer_status"],
+            unlock_requirement="Clear validator blockers before any limited transfer can be considered.",
+        )
+    if slot_linkage_transfer == "blocked":
+        _append_transfer_blocker(
+            blockers,
+            unlocks,
+            seen_blockers,
+            category="downstream/YMM4 readiness",
+            code="slot_linkage_transfer_status_blocked",
+            detail="slot-linkage transfer_status=blocked",
+            source_fields=["g28_slot_linkage_readback.transfer_status"],
+            unlock_requirement="Clear slot-linkage blockers and warnings before transfer-candidate review.",
+        )
+    downstream_ready = downstream.get("ymm4_transfer_ready")
+    if downstream_ready is not True:
+        _append_transfer_blocker(
+            blockers,
+            unlocks,
+            seen_blockers,
+            category="downstream/YMM4 readiness",
+            code="ymm4_transfer_ready_false",
+            detail=f"downstream_readiness.ymm4_transfer_ready={_bool_label(downstream_ready)}",
+            source_fields=["downstream_readiness.ymm4_transfer_ready"],
+            unlock_requirement=(
+                "Keep YMM4 transfer closed until all upstream rights, media, review, "
+                "visual, and slot-linkage blockers are resolved."
+            ),
+        )
+    blocking_reasons = downstream.get("blocking_reasons")
+    if isinstance(blocking_reasons, list) and blocking_reasons:
+        _append_transfer_blocker(
+            blockers,
+            unlocks,
+            seen_blockers,
+            category="downstream/YMM4 readiness",
+            code="downstream_blocking_reasons_present",
+            detail=f"blocking_reasons={','.join(str(reason) for reason in blocking_reasons)}",
+            source_fields=["downstream_readiness.blocking_reasons"],
+            unlock_requirement="Remove downstream blocking reasons only after their source blockers are resolved.",
+        )
+
+    proof_ready_claim = (
+        validation.ymm4_transfer_ready is True
+        or slot_linkage.get("ymm4_transfer_ready") is True
+        or slot_linkage_transfer == "ready"
+        or downstream_ready is True
+    )
+    has_any_blockers = any(blockers.values())
+    contradiction_checks: list[dict[str, Any]] = []
+    def add_check(name: str, status: str, severity: str, detail: str) -> None:
+        contradiction_checks.append({
+            "check": name,
+            "status": status,
+            "severity": severity,
+            "detail": detail,
+        })
+
+    if proof_ready_claim and has_any_blockers:
+        errors.append("TRANSFER_READY_CONTRADICTS_BLOCKERS")
+        add_check(
+            "transfer_ready_with_blockers",
+            "fail",
+            "error",
+            "A ready transfer claim exists while transfer blockers remain.",
+        )
+    else:
+        add_check(
+            "transfer_ready_with_blockers",
+            "pass",
+            "info",
+            "No ready transfer claim conflicts with current blockers.",
+        )
+
+    rights_media_blocked = bool(blockers.get("rights/provenance")) or bool(
+        blockers.get("media/source availability")
+    )
+    true_readiness_fields = _readiness_true_fields(downstream)
+    if rights_media_blocked and true_readiness_fields:
+        warning = "READINESS_TRUE_WITH_RIGHTS_OR_MEDIA_BLOCKERS"
+        if warning not in warnings:
+            warnings.append(warning)
+        add_check(
+            "rights_media_missing_but_readiness_claims_true",
+            "warn",
+            "warning",
+            f"Readiness fields true while rights/media blockers remain: {','.join(true_readiness_fields)}",
+        )
+    else:
+        add_check(
+            "rights_media_missing_but_readiness_claims_true",
+            "pass",
+            "info",
+            "No rights/media contradiction detected.",
+        )
+
+    production_implied = any(
+        isinstance(item, dict) and item.get("production_visual_approval") is True
+        for item in linkages
+    )
+    if production_implied and blockers.get("review approval"):
+        errors.append("PRODUCTION_TRANSFER_IMPLIED_WITHOUT_REVIEW_APPROVAL")
+        add_check(
+            "review_approval_absent_but_production_transfer_implied",
+            "fail",
+            "error",
+            "A production visual approval claim exists while review approval blockers remain.",
+        )
+    else:
+        add_check(
+            "review_approval_absent_but_production_transfer_implied",
+            "pass",
+            "info",
+            "No production transfer approval is implied.",
+        )
+
+    slot_linkage_invalid = any(
+        error.startswith("SLOT_LINKAGE_")
+        for error in errors
+    )
+    add_check(
+        "slot_linkage_readback_required",
+        "fail" if slot_linkage_invalid else "pass",
+        "error" if slot_linkage_invalid else "info",
+        "Slot-linkage readback is missing required status fields."
+        if slot_linkage_invalid
+        else "Slot-linkage readback exposes status, transfer status, and rows.",
+    )
+
+    unique_errors = sorted(set(errors))
+    unique_warnings = sorted(set(warnings + list(slot_linkage.get("warnings", []))))
+    transfer_status = "blocked" if unique_errors or has_any_blockers else "candidate"
+    status = "failed" if unique_errors else transfer_status
+    candidate_summary = (
+        "Not a transfer candidate yet: transfer remains blocked until rights, "
+        "media/source availability, review approval, visual readiness, and "
+        "downstream/YMM4 readiness blockers are cleared."
+        if transfer_status == "blocked"
+        else "Candidate for limited transfer review; no current blockers were found."
+    )
+
+    return NewsroomTransferPlanningProof(
+        status=status,
+        transfer_status=transfer_status,
+        packet_path=str(packet_path) if packet_path is not None else None,
+        slot_linkage_path=str(slot_linkage_path) if slot_linkage_path is not None else None,
+        review_console_doc_path=(
+            str(review_console_doc_path) if review_console_doc_path is not None else None
+        ),
+        artifact_id=validation.artifact_id,
+        episode_id=validation.episode_id,
+        title=packet.get("title") if isinstance(packet.get("title"), str) else None,
+        contract_version=validation.contract_version,
+        validator_status=validation.status,
+        slot_linkage_status=str(slot_linkage_status),
+        review_console_visibility_status=review_console_visibility_status,
+        ymm4_transfer_ready=validation.ymm4_transfer_ready,
+        transfer_candidate_summary=candidate_summary,
+        transfer_blockers=blockers,
+        unlock_requirements=unlocks,
+        contradiction_checks=contradiction_checks,
+        prohibited_next_actions=list(NEWSROOM_TRANSFER_PROHIBITED_NEXT_ACTIONS),
+        allowed_next_actions=list(NEWSROOM_TRANSFER_ALLOWED_NEXT_ACTIONS),
+        input_counts={
+            **validation.counts,
+            "slot_linkage_rows": len(linkages),
+            "visual_slot_gaps": len(visual_slot_gaps),
+        },
+        errors=unique_errors,
+        warnings=unique_warnings,
+    )
+
+
+def render_newsroom_transfer_planning_markdown(
+    proof: NewsroomTransferPlanningProof,
+) -> str:
+    """Render a human-readable transfer-planning proof."""
+    lines: list[str] = [
+        "# Newsroom Transfer Planning Proof",
+        "",
+        f"status: {proof.status}",
+        f"transfer_status: {proof.transfer_status}",
+        f"validator_status: {proof.validator_status}",
+        f"slot_linkage_status: {proof.slot_linkage_status}",
+        f"review_console_visibility_status: {proof.review_console_visibility_status}",
+    ]
+    if proof.packet_path:
+        lines.append(f"packet_path: {proof.packet_path}")
+    if proof.slot_linkage_path:
+        lines.append(f"slot_linkage_path: {proof.slot_linkage_path}")
+    if proof.review_console_doc_path:
+        lines.append(f"review_console_doc_path: {proof.review_console_doc_path}")
+    if proof.artifact_id:
+        lines.append(f"artifact_id: {proof.artifact_id}")
+    if proof.episode_id:
+        lines.append(f"episode_id: {proof.episode_id}")
+    if proof.title:
+        lines.append(f"title: {proof.title}")
+    if proof.contract_version:
+        lines.append(f"contract_version: {proof.contract_version}")
+
+    lines.extend([
+        "",
+        "## Transfer Candidate Summary",
+        "",
+        proof.transfer_candidate_summary,
+        "",
+        "## Input Counts",
+    ])
+    for key, value in sorted(proof.input_counts.items()):
+        lines.append(f"- {key}: {value}")
+
+    lines.extend(["", "## Transfer Blockers"])
+    if proof.transfer_blockers:
+        for category, items in proof.transfer_blockers.items():
+            lines.append(f"### {category}")
+            for item in items:
+                fields = ", ".join(item.get("source_fields", []))
+                lines.append(f"- {item['code']}: {item['detail']} ({fields})")
+    else:
+        lines.append("- none")
+
+    lines.extend(["", "## Unlock Requirements"])
+    if proof.unlock_requirements:
+        for item in proof.unlock_requirements:
+            fields = ", ".join(item.get("source_fields", []))
+            lines.append(
+                f"- [{item['category']}] {item['requirement']} "
+                f"(current: {item['current_state']}; fields: {fields})"
+            )
+    else:
+        lines.append("- none")
+
+    lines.extend(["", "## Contradiction Checks"])
+    for check in proof.contradiction_checks:
+        lines.append(
+            f"- {check['check']}: {check['status']} / {check['severity']} - {check['detail']}"
+        )
+
+    lines.extend(["", "## Prohibited Next Actions"])
+    for action in proof.prohibited_next_actions:
+        lines.append(f"- {action}")
+
+    lines.extend(["", "## Allowed Next Actions"])
+    for action in proof.allowed_next_actions:
+        lines.append(f"- {action}")
+
+    lines.extend(["", "## Errors"])
+    if proof.errors:
+        for error in proof.errors:
+            lines.append(f"- {error}")
+    else:
+        lines.append("- none")
+
+    lines.extend(["", "## Warnings"])
+    if proof.warnings:
+        for warning in proof.warnings:
+            lines.append(f"- {warning}")
+    else:
+        lines.append("- none")
+
+    lines.extend([
+        "",
+        "## Boundary",
+        "",
+        "This proof is diagnostic planning only. It does not generate `.ymmp`, "
+        "YMM4 carriers, renders, external fetches, production approvals, rights "
+        "approvals, or publication outputs.",
         "",
         f"next_use: {proof.next_use}",
     ])
