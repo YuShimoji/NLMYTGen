@@ -18,6 +18,7 @@ Usage:
     python -m src.cli.main validate-newsroom-handoff [packet.json] [--format text|json]
     python -m src.cli.main prove-newsroom-g28-slot-linkage [packet.json] [--format markdown|json] [-o readback]
     python -m src.cli.main plan-newsroom-transfer [packet.json] [--slot-linkage readback.json] [--format markdown|json] [-o readback]
+    python -m src.cli.main adapt-newsroom-export-fixture <fixture.json> [--out-packet packet.json] [--out-readback readback.json] [--format text|json]
     python -m src.cli.main validate-background-skit-blueprint <blueprint.json> --script <txt> --ymmp <ymmp> [--fps 60] [--format text|json]
     python -m src.cli.main emit-packaging-brief-template [-o path] [--format markdown|json]
     python -m src.cli.main init-episode-run --episode-id ID [--root DIR] [--force] [--format text|json]
@@ -2194,6 +2195,25 @@ def main(argv: list[str] | None = None) -> int:
     p_newsroom_transfer.add_argument("-o", "--output", help="Output readback path")
     p_newsroom_transfer.add_argument("--format", choices=["markdown", "json"], default="markdown")
 
+    # adapt-newsroom-export-fixture
+    p_newsroom_adapter = subparsers.add_parser(
+        "adapt-newsroom-export-fixture",
+        help="Adapt a fake newsroom export fixture into a fail-closed NLMYTGen packet",
+    )
+    p_newsroom_adapter.add_argument(
+        "newsroom_fixture_path",
+        help="Fake newsroom export fixture JSON",
+    )
+    p_newsroom_adapter.add_argument(
+        "--out-packet",
+        help="Output adapted NLMYTGen packet JSON path",
+    )
+    p_newsroom_adapter.add_argument(
+        "--out-readback",
+        help="Output adapter proof readback JSON path",
+    )
+    p_newsroom_adapter.add_argument("--format", choices=["text", "json"], default="text")
+
     # validate-background-skit-blueprint
     p_skit_blueprint = subparsers.add_parser(
         "validate-background-skit-blueprint",
@@ -2465,6 +2485,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_prove_newsroom_g28_slot_linkage(args)
         elif args.command == "plan-newsroom-transfer":
             return _cmd_plan_newsroom_transfer(args)
+        elif args.command == "adapt-newsroom-export-fixture":
+            return _cmd_adapt_newsroom_export_fixture(args)
         elif args.command == "validate-background-skit-blueprint":
             return _cmd_validate_background_skit_blueprint(args)
         elif args.command == "audit-skit-group":
@@ -3674,6 +3696,105 @@ def _cmd_plan_newsroom_transfer(args: argparse.Namespace) -> int:
     else:
         sys.stdout.write(text)
     return 1 if proof.has_errors else 0
+
+
+def _cmd_adapt_newsroom_export_fixture(args: argparse.Namespace) -> int:
+    """Adapt a fake newsroom export fixture and emit a fail-closed status summary."""
+    from src.pipeline.newsroom_export_adapter import (
+        adapt_newsroom_export_fixture,
+        build_newsroom_export_adapter_readback,
+        load_newsroom_export_fixture,
+    )
+
+    fixture_path = args.newsroom_fixture_path
+    packet_path = getattr(args, "out_packet", None)
+    readback_path = getattr(args, "out_readback", None)
+
+    fixture = load_newsroom_export_fixture(fixture_path)
+    packet = adapt_newsroom_export_fixture(
+        fixture,
+        source_path=fixture_path,
+    )
+    readback = build_newsroom_export_adapter_readback(
+        fixture,
+        packet,
+        fixture_path=fixture_path,
+        packet_path=packet_path,
+    )
+
+    if packet_path:
+        out_packet = Path(packet_path)
+        out_packet.parent.mkdir(parents=True, exist_ok=True)
+        out_packet.write_text(
+            json.dumps(packet, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+            newline="\n",
+        )
+
+    if readback_path:
+        out_readback = Path(readback_path)
+        out_readback.parent.mkdir(parents=True, exist_ok=True)
+        out_readback.write_text(
+            json.dumps(readback, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+            newline="\n",
+        )
+
+    validation = readback["validation_result"]
+    summary = {
+        "status": readback["status"],
+        "adapter_version": readback["adapter_version"],
+        "source_fixture_path": fixture_path,
+        "out_packet": packet_path,
+        "out_readback": readback_path,
+        "adapter_packet_validator_status": validation["adapter_packet_validator_status"],
+        "adapter_packet_transfer_status": validation["adapter_packet_transfer_status"],
+        "adapter_packet_errors": validation["adapter_packet_errors"],
+        "slot_linkage_status": validation["slot_linkage_status"],
+        "transfer_planning_status": validation["transfer_planning_status"],
+        "transfer_planning_transfer_status": validation["transfer_planning_transfer_status"],
+        "transfer_planning_blocker_count": validation["transfer_planning_blocker_count"],
+        "real_packet_accepted": readback["real_packet_accepted"],
+        "rights_approval": readback["rights_approval"],
+        "media_approval": readback["media_approval"],
+        "review_approval": readback["review_approval"],
+        "production_approval": readback["production_approval"],
+        "ymm4_transfer_ready": readback["ymm4_transfer_ready"],
+        "diagnostic_only": readback["diagnostic_only"],
+    }
+
+    if args.format == "json":
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+    else:
+        lines = [
+            f"status: {summary['status']}",
+            f"adapter_packet_validator_status: {summary['adapter_packet_validator_status']}",
+            f"adapter_packet_transfer_status: {summary['adapter_packet_transfer_status']}",
+            f"slot_linkage_status: {summary['slot_linkage_status']}",
+            f"transfer_planning_status: {summary['transfer_planning_status']}",
+            f"transfer_planning_transfer_status: {summary['transfer_planning_transfer_status']}",
+            f"real_packet_accepted: {str(summary['real_packet_accepted']).lower()}",
+            f"rights_approval: {str(summary['rights_approval']).lower()}",
+            f"production_approval: {str(summary['production_approval']).lower()}",
+            f"ymm4_transfer_ready: {str(summary['ymm4_transfer_ready']).lower()}",
+        ]
+        if packet_path:
+            lines.append(f"written_packet: {packet_path}")
+        if readback_path:
+            lines.append(f"written_readback: {readback_path}")
+        sys.stdout.write("\n".join(lines) + "\n")
+
+    expected_fail_closed = (
+        validation["adapter_packet_validator_status"] == "passed"
+        and validation["adapter_packet_transfer_status"] == "blocked"
+        and validation["adapter_packet_errors"] == 0
+        and validation["transfer_planning_transfer_status"] == "blocked"
+        and readback["real_packet_accepted"] is False
+        and readback["rights_approval"] is False
+        and readback["production_approval"] is False
+        and readback["ymm4_transfer_ready"] is False
+    )
+    return 0 if expected_fail_closed else 1
 
 
 def _load_csv_rows(csv_path: str) -> list[list[str]]:

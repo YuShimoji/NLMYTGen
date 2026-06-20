@@ -1,5 +1,24 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom export adapter CLI v1 completed (2026-06-20)**:
+  Exposed the existing fake-fixture adapter proof as
+  `adapt-newsroom-export-fixture`, with operator form
+  `uv run python -m src.cli.main adapt-newsroom-export-fixture <fixture.json> --out-packet <packet.json> --out-readback <readback.json> --format json`.
+  Human verification:
+  `docs/verification/NEWSROOM_EXPORT_ADAPTER_CLI_V1_2026-06-20.md`;
+  implementation: `src/cli/main.py`; focused coverage:
+  `tests/test_newsroom_export_adapter.py`. The command reads an already
+  provided fake newsroom export fixture, writes adapted packet/readback JSON
+  only when output paths are supplied, and succeeds only while the adapter
+  remains fail-closed: validator `passed`, transfer `blocked`,
+  slot-linkage `passed_with_warnings`, transfer planning `blocked`, and
+  real-packet/rights/media/review/production/YMM4 approvals all false. This
+  slice does not modify `newsroom-yt-pipeline`, accept a real packet, fetch
+  sources, open RSS/Inoreader, access live source material, download media,
+  edit `.ymmp`, generate YMM4 carriers, render media, approve rights, approve
+  production, or publish/upload output. Next safe follow-up is adapter
+  visibility in a review surface, or a separate real-packet adapter design only
+  after supervisor acceptance.
 - **Newsroom export adapter proof v1 completed (2026-06-20)**:
   Added a deterministic, diagnostic NLMYTGen-side adapter proof for the fake
   `newsroom-yt-pipeline` export fixture at commit `912ce3b`. Implementation:

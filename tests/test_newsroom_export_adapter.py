@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pytest
 
+from src.cli.main import main as cli_main
 from src.pipeline.newsroom_export_adapter import (
     ADAPTER_VERSION,
     adapt_newsroom_export_fixture,
@@ -309,3 +310,87 @@ def test_sibling_newsroom_fixture_adapts_when_checkout_exists() -> None:
     assert packet["artifact_id"] == "newsroom_export_fixture_for_nlmytgen_v1"
     assert readback["validation_result"]["adapter_packet_validator_status"] == "passed"
     assert readback["validation_result"]["transfer_planning_transfer_status"] == "blocked"
+
+
+def test_adapter_cli_writes_packet_and_readback_summary(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    fixture_path = tmp_path / "newsroom_export_fixture_v1.json"
+    packet_path = tmp_path / "adapted_packet.json"
+    readback_path = tmp_path / "adapter_readback.json"
+    fixture_path.write_text(json.dumps(_inline_fixture(), ensure_ascii=False, indent=2), encoding="utf-8")
+
+    exit_code = cli_main([
+        "adapt-newsroom-export-fixture",
+        str(fixture_path),
+        "--out-packet",
+        str(packet_path),
+        "--out-readback",
+        str(readback_path),
+        "--format",
+        "json",
+    ])
+
+    captured = capsys.readouterr()
+    summary = json.loads(captured.out)
+    packet = _json(packet_path)
+    readback = _json(readback_path)
+
+    assert exit_code == 0
+    assert captured.err == ""
+    assert summary["status"] == "passed_with_adapter_warnings_transfer_blocked"
+    assert summary["adapter_packet_validator_status"] == "passed"
+    assert summary["adapter_packet_transfer_status"] == "blocked"
+    assert summary["transfer_planning_transfer_status"] == "blocked"
+    assert summary["real_packet_accepted"] is False
+    assert summary["rights_approval"] is False
+    assert summary["production_approval"] is False
+    assert summary["ymm4_transfer_ready"] is False
+    assert packet["artifact_id"] == "newsroom_export_fixture_for_nlmytgen_v1"
+    assert readback["validation_result"]["adapter_packet_validator_status"] == "passed"
+    assert _real_url_pattern().search(packet_path.read_text(encoding="utf-8")) is None
+    assert _real_url_pattern().search(readback_path.read_text(encoding="utf-8")) is None
+    assert not list(tmp_path.glob("*.ymmp"))
+
+
+def test_adapter_cli_missing_fixture_fails_without_outputs(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    packet_path = tmp_path / "adapted_packet.json"
+    readback_path = tmp_path / "adapter_readback.json"
+
+    exit_code = cli_main([
+        "adapt-newsroom-export-fixture",
+        str(tmp_path / "missing_fixture.json"),
+        "--out-packet",
+        str(packet_path),
+        "--out-readback",
+        str(readback_path),
+        "--format",
+        "json",
+    ])
+
+    captured = capsys.readouterr()
+
+    assert exit_code == 1
+    assert captured.out == ""
+    assert "Error:" in captured.err
+    assert not packet_path.exists()
+    assert not readback_path.exists()
+
+
+def test_adapter_cli_does_not_modify_sibling_newsroom_fixture(tmp_path: Path) -> None:
+    if not NEWSROOM_FIXTURE_PATH.exists():
+        pytest.skip("newsroom-yt-pipeline checkout is not available")
+
+    before = NEWSROOM_FIXTURE_PATH.read_bytes()
+    exit_code = cli_main([
+        "adapt-newsroom-export-fixture",
+        str(NEWSROOM_FIXTURE_PATH),
+        "--out-packet",
+        str(tmp_path / "adapted_packet.json"),
+        "--out-readback",
+        str(tmp_path / "adapter_readback.json"),
+        "--format",
+        "json",
+    ])
+    after = NEWSROOM_FIXTURE_PATH.read_bytes()
+
+    assert exit_code == 0
+    assert after == before
