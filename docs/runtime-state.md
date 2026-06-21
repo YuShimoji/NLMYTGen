@@ -1,5 +1,24 @@
 # Runtime State — NLMYTGen
 
+- **Common foundation dashboard freshness audit completed (2026-06-22)**:
+  Recorded the freshness / status producer / update-boundary audit for the
+  master-adopted Common Foundation Cockpit. Human verification:
+  `docs/verification/COMMON-FOUNDATION-DASHBOARD-FRESHNESS-AUDIT-V1-2026-06-22.md`.
+  The audit classifies `docs/dashboard/project-status.json` and
+  `docs/dashboard/index.html` into generated repo facts, derived display
+  values, manual editorial status, historical evidence, static access shell,
+  and static dashboard layout. It recommends a future minimal status producer
+  only as a separate slice, starting with stdout-only observed JSON and
+  preserving manual editorial fields unless explicitly patched. Stale detection
+  gates now include branch/upstream/parity mismatch, missing links, JSON parse
+  failure, launcher failure, missing/invalid screenshot, contradiction with
+  this runtime-state file, and forbidden staged residue. This slice does not
+  implement a generator, start a real runner, run `codex exec`, add a
+  subprocess runner, pipe stdin, create runtime loops, send notifications,
+  write `.agent` runtime artifacts, or open G-27/G-28, Newsroom, ClipPipeGen,
+  RSS/OPML/Inoreader/NotebookLM, `.ymmp`, render, rights, production,
+  publishing, or media output work. Next safe action is supervisor review or a
+  separately authorized stdout-only minimal status producer slice.
 - **Common foundation dashboard mainline adoption completed (2026-06-22)**:
   Adopted the common foundation cockpit/dashboard surface onto `master` using
   `origin/codex/common-foundation-hold-state-audit` at
