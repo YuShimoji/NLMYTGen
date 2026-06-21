@@ -12,6 +12,13 @@
 - [Runtime State](runtime-state.md): 現在位置や次の安全な作業入口を確認する文書です。
 - [Repo Local Rules](REPO_LOCAL_RULES.md): このリポジトリでの作業ルールと報告・検証の境界です。
 
+## Common Foundation Cockpit
+
+- [Common Foundation Cockpit](dashboard/index.html): common-foundation の現在状態、次アクション、artifact access、topic status を確認する master 上の review surface です。
+- [Dashboard Access Guide](dashboard/README.md): `scripts/operator/open_dashboard.ps1` を使う開き方と fallback を確認できます。
+- [Project Status JSON](dashboard/project-status.json): dashboard が読む repo-relative status registry です。
+- [Feature Index](features/index.md) / [Workflow Index](workflows/index.md) / [Decision Index](decisions/index.md): common-foundation 関連の補助索引です。
+
 ## ローカル起動
 
 PowerShell で、リポジトリ直下から次のどちらかを使います。

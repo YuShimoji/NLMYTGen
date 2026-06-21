@@ -1,0 +1,388 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-06-22T03:01:18+09:00",
+  "branch": "master",
+  "remote_branch": "origin/master",
+  "head_before_bootstrap": "f4bff12 feat: expose newsroom export adapter CLI",
+  "active_artifact": "docs/dashboard/index.html",
+  "primary_review_surface": "docs/dashboard/index.html",
+  "operation_cockpit": {
+    "contract_version": "v1.12",
+    "routing_header_pattern": "[ROUTE: NLMYTGen | AGENT->SUPERVISOR | common-foundation-dashboard-mainline-adoption | T+3 | target:ChatGPT?????? | artifact:docs/dashboard/index.html | reply:ChatGPT?????? | confidence:<high/medium/low>]",
+    "meter_contract": "ASCII_SAFE",
+    "meter_source_of_truth": "completion_matrix.done / completion_matrix.total / completion_matrix.unknown / completion_matrix.missing",
+    "meter_examples": {
+      "exact_total_12_or_less": "[#####-] 5/6",
+      "scaled_total_over_12": "[########--] 14/18",
+      "weight": "W3 [###--]"
+    },
+    "estimate_next_agent_run": "~5-10 min for freeform dashboard review intake; ~10-20 min for a later scoped docs/status producer slice",
+    "estimate_user_work": "~3-10 min USER_OPEN_ONLY / USER_REVIEW_FREEFORM for dashboard review"
+  },
+  "completion_matrix": [
+    {
+      "id": "slice_acceptance",
+      "title": "Slice acceptance",
+      "done": 9,
+      "total": 9,
+      "unknown": 0,
+      "missing": [],
+      "meter": "[#########] 9/9",
+      "source_of_truth": "Master verified, source branch reference consumed, dashboard/access files adopted, mainline identity regenerated, validation completed, commit/push agent-owned, and Operation Cockpit report prepared."
+    },
+    {
+      "id": "artifact_readiness",
+      "title": "Artifact readiness",
+      "done": 6,
+      "total": 6,
+      "unknown": 0,
+      "missing": [],
+      "meter": "[######] 6/6",
+      "source_of_truth": "Dashboard, status JSON, screenshot, access guide, launcher, report template, and linked verification dependencies have repo-relative identities and access paths on master."
+    },
+    {
+      "id": "report_hygiene_contract",
+      "title": "Operation Cockpit report hygiene",
+      "done": 15,
+      "total": 15,
+      "unknown": 0,
+      "missing": [],
+      "meter": "[##########] 15/15",
+      "source_of_truth": "Report output remains Operation Cockpit v1.10+ with routing, matrix, turn calendar, ledgers, review/debt, estimates, metric note, and continuation state."
+    },
+    {
+      "id": "runtime_boundary",
+      "title": "Fail-closed runtime boundary",
+      "done": 8,
+      "total": 8,
+      "unknown": 0,
+      "missing": [],
+      "meter": "[########] 8/8",
+      "source_of_truth": "Real runner, codex exec, subprocess runner, stdin piping, runtime loop, external notification, .agent runtime artifacts, and production lanes remain closed."
+    },
+    {
+      "id": "screenshot_currency",
+      "title": "Screenshot currency",
+      "done": 2,
+      "total": 2,
+      "unknown": 0,
+      "missing": [],
+      "meter": "[##] 2/2",
+      "source_of_truth": "Screenshot evidence is refreshed for the master-adopted dashboard through the local static preview route."
+    }
+  ],
+  "turn_calendar": [
+    {
+      "turn": "T+0",
+      "owner": "Agent",
+      "weight": "W2 [##---]",
+      "estimate": "~5-10 min",
+      "goal": "verify master and source branch state",
+      "deliverable": "remote-aligned clean checkout",
+      "gate": "5/5",
+      "status": "completed",
+      "branch": "master"
+    },
+    {
+      "turn": "T+1",
+      "owner": "Agent",
+      "weight": "W3 [###--]",
+      "estimate": "~10-20 min",
+      "goal": "master-native dashboard adoption",
+      "deliverable": "cockpit dashboard, access guide, launchers, dependencies",
+      "gate": "7/7",
+      "status": "completed",
+      "branch": "master"
+    },
+    {
+      "turn": "T+2",
+      "owner": "Agent",
+      "weight": "W2 [##---]",
+      "estimate": "~5-10 min",
+      "goal": "screenshot/readback and validation on master",
+      "deliverable": "refreshed screenshot and validation ledger",
+      "gate": "5/5",
+      "status": "agent_owned",
+      "branch": "master"
+    },
+    {
+      "turn": "T+3",
+      "owner": "Agent",
+      "weight": "W2 [##---]",
+      "estimate": "~5-10 min",
+      "goal": "commit and push master adoption",
+      "deliverable": "origin/master parity 0 0",
+      "gate": "4/4",
+      "status": "agent_owned",
+      "branch": "master"
+    },
+    {
+      "turn": "T+4",
+      "owner": "User",
+      "weight": "W1 [#----]",
+      "estimate": "~3-10 min",
+      "goal": "optional freeform dashboard review",
+      "deliverable": "impression, concern, approval, or adjustment request",
+      "gate": "0/1",
+      "status": "optional_review",
+      "branch": "none"
+    }
+  ],
+  "metric_change_note": {
+    "status": "changed",
+    "changed": "Dashboard first-screen reporting now prioritizes current state, next action, health, artifact access, topic status, and completion gates before long detail tables.",
+    "reason": "User freeform review said the page felt like a vertically segmented report rather than a cockpit/dashboard.",
+    "comparability": "Detailed Completion Matrix and historical progress_pct remain available lower on the page; the top cards are the preferred review entry."
+  },
+  "review_evidence": [
+    {
+      "artifact_id": "COMMON-FOUNDATION-DASHBOARD-SCREENSHOT-2026-06-17",
+      "repo_relative_path": "docs/review/common-foundation-dashboard-2026-06-17.png",
+      "source_of_truth": "static docs preview screenshot",
+      "access": "Open docs/review/common-foundation-dashboard-2026-06-17.png or follow the dashboard link.",
+      "validation": "Refreshed through Chrome headless against local http://127.0.0.1:8765/dashboard/index.html after master-native adoption.",
+      "review_status": "current_master_visual_evidence",
+      "user_action": "USER_OPEN_ONLY / USER_REVIEW_FREEFORM; use the launcher or access guide for review."
+    }
+  ],
+  "launcher_validation": {
+    "powershell": {
+      "path": "scripts/operator/open_dashboard.ps1",
+      "status": "verified_print_path_and_open_guidance",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/operator/open_dashboard.ps1 -PrintPath",
+      "fallback_command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/operator/open_dashboard.ps1 -PrintPath"
+    },
+    "bash": {
+      "path": "scripts/operator/open_dashboard.sh",
+      "status": "not_executed_in_this_windows_environment",
+      "attempted_command": "bash scripts/operator/open_dashboard.sh --print-path",
+      "reason": "bash.exe is present but not accessible in this Windows environment."
+    }
+  },
+  "metadata_schema": {
+    "entry_required_fields": [
+      "id",
+      "title",
+      "type",
+      "status",
+      "health",
+      "progress_pct",
+      "last_touched",
+      "active_artifact",
+      "source_of_truth",
+      "next_action"
+    ],
+    "completion_matrix_required_fields": [
+      "id",
+      "title",
+      "done",
+      "total",
+      "unknown",
+      "missing",
+      "meter",
+      "source_of_truth"
+    ],
+    "health_values": [
+      "good",
+      "watch",
+      "blocked"
+    ],
+    "status_contract": "Status entries are review inputs for the common foundation cockpit. They do not grant real-runner permission."
+  },
+  "entries": [
+    {
+      "id": "common_foundation_hold_state_audit",
+      "title": "Common Foundation hold-state audit",
+      "type": "verification_artifact",
+      "status": "recorded_historical_evidence",
+      "health": "watch",
+      "progress_pct": 100,
+      "last_touched": "2026-06-15",
+      "active_artifact": "docs/verification/COMMON-FOUNDATION-HOLD-STATE-AUDIT-2026-06-15.md",
+      "source_of_truth": "docs/verification/COMMON-FOUNDATION-HOLD-STATE-AUDIT-2026-06-15.md",
+      "next_action": "Use as evidence for the hold-state boundary; rely on the dashboard JSON for current cockpit status."
+    },
+    {
+      "id": "common_foundation_operator_surface_readback",
+      "title": "Common Foundation operator surface readback",
+      "type": "verification_artifact",
+      "status": "corrected",
+      "health": "good",
+      "progress_pct": 100,
+      "last_touched": "2026-06-15",
+      "active_artifact": "docs/verification/COMMON-FOUNDATION-OPERATOR-SURFACE-READBACK-CORRECTION-2026-06-15.md",
+      "source_of_truth": "docs/verification/COMMON-FOUNDATION-OPERATOR-SURFACE-READBACK-CORRECTION-2026-06-15.md",
+      "next_action": "Keep fake/evaluation-only, report-evaluation, and real-runner wording separated in future reports."
+    },
+    {
+      "id": "common_foundation_docs_operator_surface_alignment",
+      "title": "Common Foundation docs operator surface alignment",
+      "type": "verification_artifact",
+      "status": "aligned",
+      "health": "good",
+      "progress_pct": 100,
+      "last_touched": "2026-06-15",
+      "active_artifact": "docs/verification/COMMON-FOUNDATION-DOCS-OPERATOR-SURFACE-ALIGNMENT-2026-06-15.md",
+      "source_of_truth": "docs/verification/COMMON-FOUNDATION-DOCS-OPERATOR-SURFACE-ALIGNMENT-2026-06-15.md",
+      "next_action": "Use the aligned docs as the reader-facing explanation; do not rewrite historical verification logs into Wiki pages."
+    },
+    {
+      "id": "common_foundation_wiki_dashboard_bootstrap",
+      "title": "Common Foundation dashboard mainline adoption",
+      "type": "cockpit_bootstrap",
+      "status": "mainline_adopted",
+      "health": "good",
+      "progress_pct": 95,
+      "last_touched": "2026-06-22",
+      "active_artifact": "docs/dashboard/index.html",
+      "source_of_truth": "docs/dashboard/index.html",
+      "next_action": "Use scripts/operator/open_dashboard.ps1 or docs/dashboard/README.md for open-only freeform review from master."
+    },
+    {
+      "id": "common_foundation_status_input_audit_design",
+      "title": "Common Foundation status input audit design",
+      "type": "design_artifact",
+      "status": "recorded_design",
+      "health": "watch",
+      "progress_pct": 100,
+      "last_touched": "2026-06-15",
+      "active_artifact": "docs/verification/COMMON-FOUNDATION-STATUS-INPUT-AUDIT-DESIGN-2026-06-15.md",
+      "source_of_truth": "docs/verification/COMMON-FOUNDATION-STATUS-INPUT-AUDIT-DESIGN-2026-06-15.md",
+      "next_action": "Keep as design evidence; implement a stdout-only producer only in a separate authorized slice."
+    }
+  ],
+  "artifact_coverage": [
+    {
+      "artifact_id": "COMMON-FOUNDATION-HOLD-STATE-AUDIT-2026-06-15",
+      "repo_relative_path": "docs/verification/COMMON-FOUNDATION-HOLD-STATE-AUDIT-2026-06-15.md",
+      "source_of_truth": "verification artifact",
+      "coverage_status": "linked_from_dashboard_and_docs_index"
+    },
+    {
+      "artifact_id": "COMMON-FOUNDATION-OPERATOR-SURFACE-READBACK-CORRECTION-2026-06-15",
+      "repo_relative_path": "docs/verification/COMMON-FOUNDATION-OPERATOR-SURFACE-READBACK-CORRECTION-2026-06-15.md",
+      "source_of_truth": "verification artifact",
+      "coverage_status": "linked_from_dashboard_and_docs_index"
+    },
+    {
+      "artifact_id": "COMMON-FOUNDATION-DOCS-OPERATOR-SURFACE-ALIGNMENT-2026-06-15",
+      "repo_relative_path": "docs/verification/COMMON-FOUNDATION-DOCS-OPERATOR-SURFACE-ALIGNMENT-2026-06-15.md",
+      "source_of_truth": "verification artifact",
+      "coverage_status": "linked_from_dashboard_and_docs_index"
+    },
+    {
+      "artifact_id": "COMMON-FOUNDATION-WIKI-DASHBOARD-BOOTSTRAP-2026-06-17",
+      "repo_relative_path": "docs/dashboard/index.html",
+      "source_of_truth": "cockpit dashboard",
+      "coverage_status": "primary_review_surface"
+    },
+    {
+      "artifact_id": "COMMON-FOUNDATION-DASHBOARD-SCREENSHOT-2026-06-17",
+      "repo_relative_path": "docs/review/common-foundation-dashboard-2026-06-17.png",
+      "source_of_truth": "static docs preview screenshot",
+      "coverage_status": "linked_from_dashboard"
+    },
+    {
+      "artifact_id": "COMMON-FOUNDATION-DASHBOARD-ACCESS-GUIDE-2026-06-20",
+      "repo_relative_path": "docs/dashboard/README.md",
+      "source_of_truth": "dashboard access guidance",
+      "coverage_status": "linked_from_dashboard_and_docs_index"
+    }
+  ],
+  "docs_review": [
+    {
+      "path": "docs/AGENT_ORCHESTRATION.md",
+      "classification": "unclear_when_skimmed",
+      "reason": "It correctly separates fake/evaluation-only and future runner work, but runtime-looking paths can still look operational without the dashboard context.",
+      "next_action": "Keep linked from dashboard and reserve wording cleanup for a narrow docs-only slice."
+    },
+    {
+      "path": "docs/verification/COMMON-FOUNDATION-STATUS-INPUT-AUDIT-DESIGN-2026-06-15.md",
+      "classification": "historical_observed_state",
+      "reason": "The live preconditions section records the state observed on 2026-06-15 and should not be treated as current repo status.",
+      "next_action": "Use as design evidence; use fresh Git checks or future producer output for current state."
+    },
+    {
+      "path": "docs/verification/COMMON-FOUNDATION-HOLD-STATE-AUDIT-2026-06-15.md",
+      "classification": "historical_log_not_wiki",
+      "reason": "The artifact is useful evidence but too detailed to be the current project ledger.",
+      "next_action": "Link it from the dashboard instead of rewriting it."
+    }
+  ],
+  "user_side_work": {
+    "status": "open_only_or_freeform_review",
+    "type": "USER_OPEN_ONLY / USER_REVIEW_FREEFORM",
+    "estimate": "~3-10 min",
+    "one_touch_action": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/operator/open_dashboard.ps1",
+    "fallback_action": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/operator/open_dashboard.ps1 -PrintPath",
+    "completion_signal": "Dashboard opens and the first screen makes current state, next action, health, artifact access, and topic status understandable.",
+    "fixed_phrase_required": false
+  },
+  "review_card": {
+    "status": "required",
+    "target": "dashboard",
+    "look_for": [
+      "first-screen clarity",
+      "feature list usability",
+      "artifact access"
+    ],
+    "input_mode": "freeform",
+    "completion_signal": "Any concrete impression, approval, concern, or adjustment request.",
+    "fixed_labels_required": false
+  },
+  "freeform_review_intake": {
+    "status": "consumed",
+    "parsed_fields": [
+      "target: docs/dashboard/index.html and dashboard access flow",
+      "intent: adopt recommended master-native regeneration path",
+      "constraints: common_foundation only, real runner closed, no user Git",
+      "confidence: high"
+    ],
+    "user_rewrite_required": false
+  },
+  "agent_side_next_actions": [
+    "Push the validated master adoption commit and verify remote parity.",
+    "Consume the next dashboard review as freeform feedback if the user provides it.",
+    "Keep any future status producer or docs wording work in a separately authorized common foundation slice."
+  ],
+  "handoff_gate": {
+    "status": "review_ready_after_master_remote_parity",
+    "next_actions": [
+      "Open docs/dashboard/index.html through scripts/operator/open_dashboard.ps1.",
+      "Review first-screen cockpit clarity, topic status, and artifact access using freeform comments.",
+      "If changes are requested, keep them scoped to the common foundation dashboard/access surface."
+    ],
+    "remaining_uncertainty": [
+      "Human visual judgement of the revised dashboard first screen is still optional and freeform."
+    ],
+    "true_blockers": []
+  },
+  "boundaries": {
+    "real_runner": "No",
+    "codex_exec": "not_started",
+    "subprocess_runner": "not_added",
+    "stdin_piping": "not_added",
+    "runtime_loop": "not_added",
+    "external_notification": "not_added",
+    "agent_runtime_artifacts_created": false,
+    "production_lanes_touched": false
+  },
+  "access_guidance": {
+    "status": "mainline_adopted",
+    "identity": "docs/dashboard/README.md",
+    "primary_launcher": "scripts/operator/open_dashboard.ps1",
+    "one_touch_command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/operator/open_dashboard.ps1",
+    "fallback_command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/operator/open_dashboard.ps1 -PrintPath",
+    "user_side_work": "USER_OPEN_ONLY / USER_REVIEW_FREEFORM",
+    "fixed_phrase_required": false,
+    "note": "Launcher resolves the dashboard from the active checkout; printed full paths are local convenience, not canonical project state."
+  },
+  "mainline_adoption": {
+    "status": "adopted_on_master",
+    "source_branch": "origin/codex/common-foundation-hold-state-audit",
+    "source_commit": "b2c2cb46cfd0790cb028d8dacb493ab34d751e2f",
+    "adoption_mode": "master_native_regeneration_selective_adoption",
+    "full_merge": false,
+    "full_cherry_pick": false
+  }
+}

@@ -1,5 +1,26 @@
 # Runtime State — NLMYTGen
 
+- **Common foundation dashboard mainline adoption completed (2026-06-22)**:
+  Adopted the common foundation cockpit/dashboard surface onto `master` using
+  `origin/codex/common-foundation-hold-state-audit` at
+  `b2c2cb46cfd0790cb028d8dacb493ab34d751e2f` as a reference only. Human
+  verification:
+  `docs/verification/COMMON-FOUNDATION-DASHBOARD-MAINLINE-ADOPTION-2026-06-22.md`;
+  primary review surface: `docs/dashboard/index.html`; status registry:
+  `docs/dashboard/project-status.json`; access guide:
+  `docs/dashboard/README.md`; launcher:
+  `scripts/operator/open_dashboard.ps1`; screenshot evidence:
+  `docs/review/common-foundation-dashboard-2026-06-17.png`. This was a
+  master-native regeneration/selective adoption: no full branch merge, no full
+  cherry-pick, no replacement of existing `docs/index.md`, and no overwrite of
+  master runner/docs files. The dashboard now reports `branch=master`, links
+  required template and verification dependencies, and has refreshed Chrome
+  headless screenshot evidence. This slice does not start a real runner, run
+  `codex exec`, add a subprocess runner, pipe stdin, create runtime loops,
+  send notifications, write `.agent` runtime artifacts, or open G-28, G-27,
+  Newsroom, ClipPipeGen, RSS/OPML/Inoreader/NotebookLM, `.ymmp`, render,
+  rights, production, publishing, or media output work. Next safe action is
+  open-only/freeform dashboard review from `master`.
 - **Newsroom export adapter CLI v1 completed (2026-06-20)**:
   Exposed the existing fake-fixture adapter proof as
   `adapt-newsroom-export-fixture`, with operator form
