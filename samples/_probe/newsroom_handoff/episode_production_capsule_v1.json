@@ -1,0 +1,506 @@
+{
+  "artifact_id": "newsroom_episode_production_capsule_v1_2026_06_22",
+  "schema_version": "newsroom_episode_production_capsule.v1",
+  "review_status": "ready_for_supervisor_review",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_only",
+  "source": {
+    "capsule_source": "adapted_packet_current_recomputed_readbacks",
+    "packet_path": "samples/_probe/newsroom_handoff/adapted_newsroom_export_packet.json",
+    "adapter_readback_path": "samples/_probe/newsroom_handoff/newsroom_export_adapter_readback.json",
+    "readiness_checklist_path": "samples/_probe/newsroom_handoff/real_packet_readiness_checklist.json",
+    "source_fixture_kind": "newsroom_fake_export_adapter_proof",
+    "source_fixture": {
+      "repo": "newsroom-yt-pipeline",
+      "commit": "912ce3b",
+      "path": "../newsroom-yt-pipeline/samples/_probe/newsroom_handoff/newsroom_export_fixture_v1.json",
+      "review_status": "fake_only_contract_probe"
+    },
+    "adapter_status": "passed_with_adapter_warnings_transfer_blocked",
+    "inspected_prior_readbacks": [
+      {
+        "kind": "prior_slot_linkage",
+        "path": "samples/_probe/newsroom_handoff/g28_slot_linkage_readback.json",
+        "artifact_id": "newsroom_handoff_minimal_episode_packet_v1",
+        "episode_id": "fake-newsroom-episode-0001",
+        "status": "passed_with_warnings",
+        "transfer_status": "blocked",
+        "relationship": "inspected as earlier newsroom chain evidence; capsule identity uses the adapted packet and recomputed readbacks"
+      },
+      {
+        "kind": "prior_transfer_planning",
+        "path": "samples/_probe/newsroom_handoff/transfer_planning_readback.json",
+        "artifact_id": "newsroom_handoff_minimal_episode_packet_v1",
+        "episode_id": "fake-newsroom-episode-0001",
+        "status": "blocked",
+        "transfer_status": "blocked",
+        "relationship": "inspected as earlier newsroom chain evidence; capsule identity uses the adapted packet and recomputed readbacks"
+      }
+    ]
+  },
+  "episode": {
+    "episode_id": "episode_fake_nlmytgen_delta_v1",
+    "title": "Fake upstream export delta for NLMYTGen",
+    "contract_version": "newsroom_export_fixture.v1",
+    "source": "synthetic/adapted packet",
+    "topic_summary": "Fake placeholder summary for validating the newsroom to NLMYTGen export contract shape.",
+    "source_fixture": {
+      "repo": "newsroom-yt-pipeline",
+      "commit": "912ce3b",
+      "path": "../newsroom-yt-pipeline/samples/_probe/newsroom_handoff/newsroom_export_fixture_v1.json",
+      "review_status": "fake_only_contract_probe"
+    }
+  },
+  "video_readiness": {
+    "script_structure": "diagnostic_capsule_ready",
+    "visual_structure": "diagnostic_capsule_ready",
+    "caption_reserve": "mapped_with_unhinted_slot_warnings",
+    "timing": "provisional",
+    "audio_readiness": "not_started",
+    "validator_status": "passed",
+    "slot_linkage_status": "passed_with_warnings",
+    "transfer_planning_status": "blocked",
+    "transfer_status": "blocked",
+    "ymm4_transfer_ready": false,
+    "production_approval": false,
+    "public_use": false
+  },
+  "script_structure": [
+    {
+      "order": 1,
+      "beat_id": "beat_fake_intro_001",
+      "stable_id": "scriptbeat_fake_intro_001",
+      "purpose": "intro",
+      "expected_narration_placeholder": "Introduce the fake topic and promise a review-safe handoff.",
+      "source_note_refs": [],
+      "visual_refs": [
+        "visual_fake_title_card_001"
+      ],
+      "review_status": "fake_only",
+      "scriptir_hint": {
+        "chapter_id": "chapter_fake_intro",
+        "source": "newsroom_export_adapter"
+      },
+      "no_evidence_reason": "Fake intro beat carries no source refs in upstream fixture.",
+      "rough_duration_seconds": 24
+    },
+    {
+      "order": 2,
+      "beat_id": "beat_fake_claim_001",
+      "stable_id": "scriptbeat_fake_claim_001",
+      "purpose": "claim",
+      "expected_narration_placeholder": "Present a fake claim with fake primary and fake critical source coverage.",
+      "source_note_refs": [
+        "source_fake_primary_001",
+        "source_fake_critical_001"
+      ],
+      "visual_refs": [
+        "visual_fake_evidence_card_001"
+      ],
+      "review_status": "hold_for_review",
+      "scriptir_hint": {
+        "chapter_id": "chapter_fake_claim",
+        "source": "newsroom_export_adapter"
+      },
+      "no_evidence_reason": null,
+      "rough_duration_seconds": 44
+    }
+  ],
+  "visual_structure": [
+    {
+      "order": 1,
+      "visual_id": "visual_fake_title_card_001",
+      "stable_id": "visualslot_fake_title_card_001",
+      "beat_id": "beat_fake_intro_001",
+      "visualir_concept": "title_card",
+      "layout_candidate": "title_card",
+      "asset_policy": "local_template_only",
+      "approval_state": "fake_only",
+      "source_unit_type": "title_card",
+      "visual_plan_ref": "visual_plan[0]",
+      "g28_slot_refs": [
+        {
+          "slot_id": "g28_slot_fake_title_001",
+          "object_catalog_slot": "caption_reserve",
+          "semantic_role": "title_safe_readback",
+          "text_budget": "empty",
+          "geometry_authority": "downstream_nlmytgen",
+          "transfer_note": "Semantic hint only; NLMYTGen keeps geometry and YMM4 transfer blocked."
+        }
+      ],
+      "review_surface_refs": [
+        {
+          "kind": "object_catalog",
+          "path": "samples/_probe/g28/reference_layout_prototypes/object_catalog.html"
+        },
+        {
+          "kind": "reference_layout",
+          "path": "samples/_probe/g28/reference_layout_prototypes/object_catalog.html"
+        },
+        {
+          "kind": "future_review_console",
+          "path": "read_only_slot_linkage_consumer"
+        }
+      ],
+      "caption_reserve": {
+        "status": "present",
+        "subtitle_safety_note": "Caption reserve is semantic only; geometry remains downstream/YMM4 blocked."
+      },
+      "schematic_proxy_warning": "Schematic/template-only visual; no screenshot, footage, or approved media is included.",
+      "unhinted_content_slots": [
+        "lower_third_telop"
+      ]
+    },
+    {
+      "order": 2,
+      "visual_id": "visual_fake_evidence_card_001",
+      "stable_id": "visualslot_fake_evidence_card_001",
+      "beat_id": "beat_fake_claim_001",
+      "visualir_concept": "article_quote_card",
+      "layout_candidate": "article_quote_card",
+      "asset_policy": "local_template_only",
+      "approval_state": "hold_for_review",
+      "source_unit_type": "claim_evidence_card",
+      "visual_plan_ref": "visual_plan[1]",
+      "g28_slot_refs": [
+        {
+          "slot_id": "g28_slot_fake_evidence_001",
+          "object_catalog_slot": "source_note",
+          "semantic_role": "source_and_counterpoint_readback",
+          "text_budget": "short_label_only",
+          "geometry_authority": "downstream_nlmytgen",
+          "transfer_note": "Semantic hint only; NLMYTGen keeps geometry and YMM4 transfer blocked."
+        }
+      ],
+      "review_surface_refs": [
+        {
+          "kind": "object_catalog",
+          "path": "samples/_probe/g28/reference_layout_prototypes/object_catalog.html"
+        },
+        {
+          "kind": "reference_layout",
+          "path": "samples/_probe/g28/reference_layout_prototypes/article_quote_card.html"
+        },
+        {
+          "kind": "future_review_console",
+          "path": "read_only_slot_linkage_consumer"
+        }
+      ],
+      "caption_reserve": {
+        "status": "present",
+        "subtitle_safety_note": "Caption reserve is semantic only; geometry remains downstream/YMM4 blocked."
+      },
+      "schematic_proxy_warning": "Schematic/template-only visual; no screenshot, footage, or approved media is included.",
+      "unhinted_content_slots": [
+        "caption_reserve",
+        "quote_card"
+      ]
+    }
+  ],
+  "timing_approximation": {
+    "status": "provisional",
+    "method": "Deterministic rough diagnostic duration from beat order, evidence refs, and visual refs; not narration timing.",
+    "segments": [
+      {
+        "beat_id": "beat_fake_intro_001",
+        "rough_duration_seconds": 24
+      },
+      {
+        "beat_id": "beat_fake_claim_001",
+        "rough_duration_seconds": 44
+      }
+    ],
+    "total_duration_seconds": 68
+  },
+  "audio_voice_status": {
+    "voice_source": "absent_synthetic_placeholder",
+    "audio_readiness": "not_started",
+    "tts_generation": "not_performed",
+    "narration_approval": false
+  },
+  "transfer_status": {
+    "validator_status": "passed",
+    "validator_transfer_status": "blocked",
+    "slot_linkage_status": "passed_with_warnings",
+    "slot_linkage_transfer_status": "blocked",
+    "transfer_planning_status": "blocked",
+    "transfer_status": "blocked",
+    "blocker_count": 13,
+    "unlock_requirement_count": 13,
+    "blockers": {
+      "rights/provenance": [
+        {
+          "code": "rights_clearance_not_cleared",
+          "detail": "rights_summary.clearance_state=hold_for_review",
+          "source_fields": [
+            "rights_summary.clearance_state"
+          ]
+        },
+        {
+          "code": "rights_summary_blocks_ymm4_transfer",
+          "detail": "rights_summary.blocked_uses includes YMM4_transfer",
+          "source_fields": [
+            "rights_summary.blocked_uses"
+          ]
+        },
+        {
+          "code": "rights_risk_flags_present",
+          "detail": "rights_summary.risk_flags=fake_fixture_only,media_availability:none_in_fixture,quote_clearance:not_requested,publication_approval:not_granted",
+          "source_fields": [
+            "rights_summary.risk_flags"
+          ]
+        }
+      ],
+      "media/source availability": [
+        {
+          "code": "raw_source_material_not_included",
+          "detail": "provenance.raw_source_material_included is false or missing",
+          "source_fields": [
+            "provenance.raw_source_material_included"
+          ]
+        },
+        {
+          "code": "placeholder_source_notes_only",
+          "detail": "placeholder source notes: source_fake_primary_001,source_fake_critical_001",
+          "source_fields": [
+            "source_notes"
+          ]
+        }
+      ],
+      "review approval": [
+        {
+          "code": "review_warning_blocks_transfer:warning_fake_rights_hold",
+          "detail": "Rights, provenance, and media availability are fake-only and must be reviewed before transfer.",
+          "source_fields": [
+            "review_warnings.warning_fake_rights_hold"
+          ]
+        },
+        {
+          "code": "review_warning_blocks_transfer:warning_fake_no_production_readiness",
+          "detail": "Fixture validates shape only; it does not imply production or YMM4 readiness.",
+          "source_fields": [
+            "review_warnings.warning_fake_no_production_readiness"
+          ]
+        },
+        {
+          "code": "review_console_is_read_only",
+          "detail": "review_console_visibility_status=documented_read_only",
+          "source_fields": [
+            "docs/verification/NEWSROOM_REVIEW_CONSOLE_CONSUMER_V1_2026-06-20.md"
+          ]
+        }
+      ],
+      "visual readiness": [
+        {
+          "code": "visual_slot_gaps_present",
+          "detail": "visuals with unhinted slots: visual_fake_title_card_001,visual_fake_evidence_card_001",
+          "source_fields": [
+            "g28_slot_linkage_readback.visual_slot_gaps"
+          ]
+        }
+      ],
+      "downstream/YMM4 readiness": [
+        {
+          "code": "validator_transfer_status_blocked",
+          "detail": "validator transfer_status=blocked",
+          "source_fields": [
+            "validator.transfer_status"
+          ]
+        },
+        {
+          "code": "slot_linkage_transfer_status_blocked",
+          "detail": "slot-linkage transfer_status=blocked",
+          "source_fields": [
+            "g28_slot_linkage_readback.transfer_status"
+          ]
+        },
+        {
+          "code": "ymm4_transfer_ready_false",
+          "detail": "downstream_readiness.ymm4_transfer_ready=false",
+          "source_fields": [
+            "downstream_readiness.ymm4_transfer_ready"
+          ]
+        },
+        {
+          "code": "downstream_blocking_reasons_present",
+          "detail": "blocking_reasons=fake_fixture_not_real_packet,transfer_candidate:block_transfer,human_review:hold_for_review,production_ymm4:fail,rights_summary_hold_for_review,media_availability_none_in_fixture",
+          "source_fields": [
+            "downstream_readiness.blocking_reasons"
+          ]
+        }
+      ]
+    },
+    "unlock_requirements": [
+      {
+        "category": "rights/provenance",
+        "requirement": "Record cleared rights or an explicit limited-use clearance before any transfer candidate review.",
+        "current_state": "rights_summary.clearance_state=hold_for_review",
+        "source_fields": [
+          "rights_summary.clearance_state"
+        ]
+      },
+      {
+        "category": "rights/provenance",
+        "requirement": "Remove YMM4_transfer from blocked uses only after rights/provenance review permits a limited downstream handoff.",
+        "current_state": "rights_summary.blocked_uses includes YMM4_transfer",
+        "source_fields": [
+          "rights_summary.blocked_uses"
+        ]
+      },
+      {
+        "category": "rights/provenance",
+        "requirement": "Resolve or explicitly waive rights risk flags before transfer planning.",
+        "current_state": "rights_summary.risk_flags=fake_fixture_only,media_availability:none_in_fixture,quote_clearance:not_requested,publication_approval:not_granted",
+        "source_fields": [
+          "rights_summary.risk_flags"
+        ]
+      },
+      {
+        "category": "media/source availability",
+        "requirement": "Provide approved source media metadata or approved abstract replacement evidence before limited transfer can be considered.",
+        "current_state": "provenance.raw_source_material_included is false or missing",
+        "source_fields": [
+          "provenance.raw_source_material_included"
+        ]
+      },
+      {
+        "category": "media/source availability",
+        "requirement": "Replace placeholder-only source notes with approved, sanitized packet metadata from the upstream newsroom export.",
+        "current_state": "placeholder source notes: source_fake_primary_001,source_fake_critical_001",
+        "source_fields": [
+          "source_notes"
+        ]
+      },
+      {
+        "category": "review approval",
+        "requirement": "Resolve the blocking review warning and record a freeform human review outcome before transfer-candidate review.",
+        "current_state": "Rights, provenance, and media availability are fake-only and must be reviewed before transfer.",
+        "source_fields": [
+          "review_warnings.warning_fake_rights_hold"
+        ]
+      },
+      {
+        "category": "review approval",
+        "requirement": "Resolve the blocking review warning and record a freeform human review outcome before transfer-candidate review.",
+        "current_state": "Fixture validates shape only; it does not imply production or YMM4 readiness.",
+        "source_fields": [
+          "review_warnings.warning_fake_no_production_readiness"
+        ]
+      },
+      {
+        "category": "review approval",
+        "requirement": "Add a separate planning approval/readiness outcome; the current Review Console consumer is visibility only.",
+        "current_state": "review_console_visibility_status=documented_read_only",
+        "source_fields": [
+          "docs/verification/NEWSROOM_REVIEW_CONSOLE_CONSUMER_V1_2026-06-20.md"
+        ]
+      },
+      {
+        "category": "visual readiness",
+        "requirement": "Close or explicitly defer unhinted visual content slots before transfer-candidate review.",
+        "current_state": "visuals with unhinted slots: visual_fake_title_card_001,visual_fake_evidence_card_001",
+        "source_fields": [
+          "g28_slot_linkage_readback.visual_slot_gaps"
+        ]
+      },
+      {
+        "category": "downstream/YMM4 readiness",
+        "requirement": "Clear validator blockers before any limited transfer can be considered.",
+        "current_state": "validator transfer_status=blocked",
+        "source_fields": [
+          "validator.transfer_status"
+        ]
+      },
+      {
+        "category": "downstream/YMM4 readiness",
+        "requirement": "Clear slot-linkage blockers and warnings before transfer-candidate review.",
+        "current_state": "slot-linkage transfer_status=blocked",
+        "source_fields": [
+          "g28_slot_linkage_readback.transfer_status"
+        ]
+      },
+      {
+        "category": "downstream/YMM4 readiness",
+        "requirement": "Keep YMM4 transfer closed until all upstream rights, media, review, visual, and slot-linkage blockers are resolved.",
+        "current_state": "downstream_readiness.ymm4_transfer_ready=false",
+        "source_fields": [
+          "downstream_readiness.ymm4_transfer_ready"
+        ]
+      },
+      {
+        "category": "downstream/YMM4 readiness",
+        "requirement": "Remove downstream blocking reasons only after their source blockers are resolved.",
+        "current_state": "blocking_reasons=fake_fixture_not_real_packet,transfer_candidate:block_transfer,human_review:hold_for_review,production_ymm4:fail,rights_summary_hold_for_review,media_availability_none_in_fixture",
+        "source_fields": [
+          "downstream_readiness.blocking_reasons"
+        ]
+      }
+    ],
+    "warnings": [
+      "MISSING_G28_SLOT_HINT: visual_fake_evidence_card_001->caption_reserve,quote_card",
+      "MISSING_G28_SLOT_HINT: visual_fake_title_card_001->lower_third_telop",
+      "READINESS_TRUE_WITH_RIGHTS_OR_MEDIA_BLOCKERS"
+    ]
+  },
+  "review_console_summary": {
+    "review_surface_ready": true,
+    "planning_panel_doc": "docs/verification/NEWSROOM_REVIEW_CONSOLE_PLANNING_PANEL_V1_2026-06-20.md",
+    "candidate_summary": "Not a transfer candidate yet: transfer remains blocked until rights, media/source availability, review approval, visual readiness, and downstream/YMM4 readiness blockers are cleared.",
+    "next_review_surface": "future_read_only_episode_preview"
+  },
+  "next_allowed_steps": [
+    "Review Console episode preview",
+    "caption/timing refinement",
+    "YMM4 transfer candidate proof only after blockers are resolved"
+  ],
+  "prohibited_steps": [
+    "real source fetch",
+    ".ymmp generation",
+    "YMM4 carrier generation",
+    "render generation",
+    "production approval",
+    "publishing",
+    "RSS/Inoreader operation",
+    "real URL access",
+    "media download",
+    "external fetch",
+    "rights approval",
+    "public-use approval"
+  ],
+  "remaining_gaps_before_importable_proof": [
+    "rights and provenance are not cleared",
+    "approved source media or approved abstract replacements are absent",
+    "human review and production approval are absent",
+    "audio voice, TTS, and narration timing are not started",
+    "caption timing is only provisionally reserved",
+    "YMM4 transfer remains blocked",
+    "visual G-28 slot warnings remain before transfer-candidate review",
+    "13 unlock requirements remain open"
+  ],
+  "readiness_checklist_reference": {
+    "path": "samples/_probe/newsroom_handoff/real_packet_readiness_checklist.json",
+    "artifact_id": "newsroom_real_packet_readiness_checklist_v1_2026_06_20",
+    "status": "checklist_only",
+    "real_packet_accepted": false,
+    "production_approval": false,
+    "ymm4_transfer_ready": false
+  },
+  "boundary_assertions": {
+    "diagnostic_only": true,
+    "public_video": false,
+    "usable_public_video": false,
+    "real_source_fetch_performed": false,
+    "rss_inoreader_access_performed": false,
+    "real_urls_accessed": false,
+    "contains_real_urls": false,
+    "contains_media": false,
+    "external_media_downloaded": false,
+    "tts_generated": false,
+    "ymmp_generated": false,
+    "ymm4_carrier_generated": false,
+    "render_generated": false,
+    "production_approval": false,
+    "publishing_ready": false,
+    "modifies_source_fixture_or_readbacks": false
+  }
+}

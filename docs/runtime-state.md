@@ -1,5 +1,27 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom episode production capsule v1 completed (2026-06-22)**:
+  Created the diagnostic-only bridge from the adapted fake newsroom export
+  packet toward one video structure. Machine artifact:
+  `samples/_probe/newsroom_handoff/episode_production_capsule_v1.json`;
+  human readback:
+  `docs/verification/NEWSROOM_EPISODE_PRODUCTION_CAPSULE_V1_2026-06-22.md`;
+  implementation:
+  `src/pipeline/newsroom_episode_production_capsule.py`; focused coverage:
+  `tests/test_newsroom_episode_production_capsule.py`. The capsule uses the
+  adapted packet as the episode identity and recomputes the current validator,
+  G-28 slot-linkage, and transfer-planning state: validator `passed`,
+  slot-linkage `passed_with_warnings`, transfer planning `blocked`,
+  `transfer_status=blocked`, blocker count `13`, unlock requirement count
+  `13`. It records ScriptIR-like beats, VisualIR units, G-28 slot refs,
+  caption reserve notes, provisional timing, audio/voice `not_started`,
+  Review Console next use, and explicit prohibited steps. This slice does not
+  continue dashboard freshness/status producer work; it does not accept a real
+  packet, fetch sources, open RSS/Inoreader, access real URLs, download media,
+  edit or generate `.ymmp`, generate YMM4 carriers, render media, generate TTS,
+  approve rights, approve production, or publish/upload output. Next safe
+  action is supervisor capsule review or a separate read-only Review Console
+  episode preview slice.
 - **Common foundation dashboard freshness audit completed (2026-06-22)**:
   Recorded the freshness / status producer / update-boundary audit for the
   master-adopted Common Foundation Cockpit. Human verification:
