@@ -1,5 +1,33 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom YMM4 manual import result readback v1 completed (2026-06-23)**:
+  Recorded the user/operator YMM4 manual import observation for the committed
+  tiny script CSV as repo readback, without launching YMM4 from the agent,
+  creating or editing `.ymmp`, rendering, generating TTS/audio, importing real
+  media, fetching external sources, or changing dashboard/governance/freshness
+  work. Machine readback:
+  `samples/_probe/newsroom_handoff/yym4_manual_import_result_readback_v1.json`;
+  human readback:
+  `docs/verification/NEWSROOM_YYM4_MANUAL_IMPORT_RESULT_READBACK_V1_2026-06-23.md`;
+  implementation:
+  `src/pipeline/newsroom_yym4_manual_import_result.py`; focused coverage:
+  `tests/test_newsroom_yym4_manual_import_result.py`. The recorded result is
+  `pass_with_warnings`: the target CSV
+  `samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv` showed
+  `4/4` dialogue rows in YMM4, all text was visible, no encoding/text/header/
+  column/error issue was reported, and the existing character `ゆっくり霊夢`
+  was selected when YMM4 requested speaker/character binding. The warning is
+  intentional and non-production: speaker binding required manual selection, and
+  the operator did not explicitly perform a separate TTS generation
+  (`operator_did_not_explicitly_generate_tts`). Accepted scope is limited to
+  tiny `speaker,text` CSV import visibility, row text visibility, and manual
+  speaker binding observation. Not accepted: automatic speaker binding, TTS
+  readiness, render readiness, `.ymmp` readiness, production readiness, and
+  public video readiness. Next safe axes are
+  `newsroom-speaker-binding-policy-v1`,
+  `newsroom-yym4-import-readiness-after-manual-result-v1`, or
+  `newsroom-minimal-ymmp-boundary-decision-v1`; do not re-request general
+  timing/caption/copy/tiny-proof review for this same observation.
 - **Newsroom YMM4 manual import check packet v1 completed (2026-06-22)**:
   Created a diagnostic-only manual YMM4 import check packet for the committed
   tiny script CSV without launching YMM4 or claiming any import result. Machine

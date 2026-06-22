@@ -79,6 +79,32 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom/YMM4 manual-result decision (2026-06-23):
+`newsroom_yym4_manual_import_result_readback_v1_2026_06_23` records the
+user/operator YMM4 manual import observation for the committed tiny script CSV
+as a diagnostic-only repo readback. The result is `pass_with_warnings`, not a
+production pass: YMM4 showed `4/4` dialogue rows and all text was visible after
+manual speaker/character selection, using existing `ゆっくり霊夢`, with no
+reported encoding/text/header/column issue and no reported error. Screenshot
+evidence is referenced only as `provided_in_supervisor_thread`; no screenshot
+file is introduced into the repo. The warning classification is
+`manual_speaker_binding_required` with next axis `speaker_binding_policy`; TTS
+remains non-ready because the operator did not explicitly perform a separate
+TTS generation (`operator_did_not_explicitly_generate_tts`). Accepted scope is
+only tiny `speaker,text` CSV import visibility, row text visibility, and manual
+speaker binding observation. Not accepted: automatic speaker binding, TTS
+readiness, render readiness, `.ymmp` readiness, production readiness, or public
+video readiness. This decision introduces
+`samples/_probe/newsroom_handoff/yym4_manual_import_result_readback_v1.json`,
+`docs/verification/NEWSROOM_YYM4_MANUAL_IMPORT_RESULT_READBACK_V1_2026-06-23.md`,
+`src/pipeline/newsroom_yym4_manual_import_result.py`, and focused coverage in
+`tests/test_newsroom_yym4_manual_import_result.py`. The agent did not launch
+YMM4, create/edit `.ymmp`, render, generate TTS/audio, import real media, fetch
+external sources, or modify dashboard/governance/freshness work. Next
+non-redundant axes are `newsroom-speaker-binding-policy-v1`,
+`newsroom-yym4-import-readiness-after-manual-result-v1`, and
+`newsroom-minimal-ymmp-boundary-decision-v1`.
+
 Latest newsroom/YMM4 manual-check decision (2026-06-22):
 `newsroom_yym4_manual_import_check_packet_v1_2026_06_22` closes the next
 diagnostic handoff step after the tiny importable proof without launching YMM4
@@ -1154,6 +1180,48 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 |----|----------|--------|
 | IP-02 | Web UI 化 | docs/INVARIANTS.md / docs/FEATURE_REGISTRY.md の現スコープ外 |
 | IP-03 | YouTube 自動アップロード | FEATURE_REGISTRY E-01 (hold) |
+
+---
+
+## HANDOFF SNAPSHOT (2026-06-23 newsroom YMM4 manual import result readback)
+
+- Branch/remote before commit: `master` at
+  `8c4260e docs: seal newsroom YMM4 manual import handoff`, with
+  `HEAD...origin/master = 0 0`. The expected restart sync is
+  `git fetch --all --prune`, `git checkout master`, `git pull --ff-only origin
+  master`, then `git rev-list --left-right --count "HEAD...origin/master" = 0
+  0`.
+- Current repo path for this machine:
+  `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen-mainline-slot-linkage`.
+- Restart read path remains intentionally short:
+  `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`.
+  Read this snapshot only if branch/commit or manual-result routing context is
+  needed.
+- Current active artifact chain: tiny importable proof -> YMM4 manual import
+  check packet -> manual import result readback. The source CSV is
+  `samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv`; the
+  packet is
+  `samples/_probe/newsroom_handoff/yym4_manual_import_check_packet_v1.json`;
+  the result readback is
+  `samples/_probe/newsroom_handoff/yym4_manual_import_result_readback_v1.json`;
+  the human readback is
+  `docs/verification/NEWSROOM_YYM4_MANUAL_IMPORT_RESULT_READBACK_V1_2026-06-23.md`.
+- Current status: result is `pass_with_warnings`, with `4/4` rows visible and
+  all text visible after manual speaker/character selection of existing
+  `ゆっくり霊夢`. This is not production approval, render approval, TTS
+  readiness, `.ymmp` readiness, automatic speaker binding, or public video
+  readiness.
+- Next executable handoff steps are one of three bounded axes:
+  `newsroom-speaker-binding-policy-v1`,
+  `newsroom-yym4-import-readiness-after-manual-result-v1`, or
+  `newsroom-minimal-ymmp-boundary-decision-v1`. Do not ask the user to repeat
+  general timing/caption/copy/tiny-proof review for this same manual import
+  observation.
+- Explicit non-scope: do not launch YMM4 from the agent, do not create/edit or
+  commit `.ymmp`, do not create carriers, render, generate TTS/audio, import
+  real media, fetch external sources, ingest a real newsroom packet, approve
+  production/public video, revive RSS/Inoreader/NotebookLM source selection, or
+  expand dashboard/governance/freshness work from this handoff.
 
 ---
 

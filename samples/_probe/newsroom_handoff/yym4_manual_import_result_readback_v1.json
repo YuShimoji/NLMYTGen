@@ -1,0 +1,250 @@
+{
+  "artifact_id": "newsroom_yym4_manual_import_result_readback_v1_2026_06_23",
+  "result_id": "newsroom_yym4_manual_import_result_readback_v1_2026_06_23",
+  "schema_version": "newsroom_yym4_manual_import_result_readback.v1",
+  "review_status": "ready_for_supervisor_review",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_only",
+  "manual_check_status": "observed",
+  "result": "pass_with_warnings",
+  "source_packet_path": "samples/_probe/newsroom_handoff/yym4_manual_import_check_packet_v1.json",
+  "target_csv_path": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv",
+  "source": {
+    "source_packet_path": "samples/_probe/newsroom_handoff/yym4_manual_import_check_packet_v1.json",
+    "source_template_path": "samples/_probe/newsroom_handoff/yym4_manual_import_result_template_v1.json",
+    "target_csv_path": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv",
+    "packet_id": "newsroom_yym4_manual_import_check_packet_v1_2026_06_22",
+    "template_id": "newsroom_yym4_manual_import_result_template_v1_2026_06_22",
+    "manual_check_status_before_result": "not_run"
+  },
+  "review_memory": {
+    "review_source": "user_freeform_manual_import_result",
+    "prior_user_review_count": 1,
+    "accepted_scope": {
+      "tiny_csv_shape_observed_in_YMM4": true,
+      "row_text_import_observed": true,
+      "manual_speaker_binding_observed": true
+    },
+    "not_accepted_scope": {
+      "automatic_speaker_binding": false,
+      "TTS_ready": false,
+      "render_ready": false,
+      "production_ready": false,
+      "YMM4_project_ready": false,
+      "production_subtitle_design": false,
+      "production_narration": false,
+      "public_video": false
+    },
+    "next_nonredundant_axis": [
+      "speaker_binding_policy",
+      "YMM4_import_readiness_after_manual_result",
+      "minimal_ymmp_boundary_decision"
+    ],
+    "repeated_general_review_allowed": false
+  },
+  "operator_result": {
+    "result": "pass_with_warnings",
+    "target_csv": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv",
+    "observed_line_count": 4,
+    "expected_line_count": 4,
+    "all_text_visible": "yes",
+    "speaker_behavior": "mapped_after_manual_selection",
+    "selected_speaker_or_character": "ゆっくり霊夢",
+    "encoding_or_text_issues": "no",
+    "header_or_column_issues": "no",
+    "error_message": "none",
+    "screenshot_reference": "provided_in_supervisor_thread",
+    "operator_notes_freeform": "YMM4 requested speaker/character selection; existing ゆっくり霊夢 was selected and import succeeded; 4 dialogue items were visible in YMM4.",
+    "did_not_render": "yes",
+    "did_not_generate_tts": "operator_did_not_explicitly_generate_tts",
+    "did_not_import_real_media": "yes",
+    "did_not_commit_ymmp": "yes",
+    "normalized_result": "pass_with_warnings",
+    "screenshot_path_or_none": "provided_in_supervisor_thread"
+  },
+  "observation": {
+    "observed_line_count": 4,
+    "expected_line_count": 4,
+    "all_text_visible": true,
+    "speaker_behavior": "mapped_after_manual_selection",
+    "selected_speaker_or_character": "ゆっくり霊夢",
+    "encoding_or_text_issues": false,
+    "header_or_column_issues": false,
+    "error_message": null,
+    "screenshot_reference": "provided_in_supervisor_thread",
+    "operator_notes_freeform": "YMM4 requested speaker/character selection; existing ゆっくり霊夢 was selected and import succeeded; 4 dialogue items were visible in YMM4."
+  },
+  "safety": {
+    "render_created": false,
+    "explicit_tts_generation_by_operator": false,
+    "did_not_generate_tts_interpretation": "operator_did_not_explicitly_generate_tts",
+    "real_media_imported": false,
+    "ymmp_committed": false,
+    "production_approval": false,
+    "public_video_ready": false
+  },
+  "warning_classification": [
+    {
+      "warning_id": "manual_speaker_binding_required",
+      "severity": "medium",
+      "meaning": "YMM4 accepted rows/text but required manual binding to an existing character.",
+      "next_axis": "speaker_binding_policy"
+    },
+    {
+      "warning_id": "operator_tts_generation_not_explicitly_confirmed",
+      "severity": "low",
+      "meaning": "The operator did not explicitly perform a separate TTS generation; no TTS readiness is implied.",
+      "next_axis": "YMM4_import_readiness_after_manual_result"
+    }
+  ],
+  "accepted_scope": {
+    "tiny_csv_shape_observed_in_YMM4": true,
+    "row_text_import_observed": true,
+    "manual_speaker_binding_observed": true
+  },
+  "not_accepted_scope": {
+    "automatic_speaker_binding": false,
+    "TTS_ready": false,
+    "render_ready": false,
+    "production_ready": false,
+    "YMM4_project_ready": false,
+    "production_subtitle_design": false,
+    "production_narration": false,
+    "public_video": false
+  },
+  "recommended_next_slices": [
+    "newsroom-speaker-binding-policy-v1",
+    "newsroom-yym4-import-readiness-after-manual-result-v1",
+    "newsroom-minimal-ymmp-boundary-decision-v1"
+  ],
+  "result_classification": {
+    "result": "pass_with_warnings",
+    "line_count_matches": true,
+    "text_import_passed": true,
+    "speaker_required_manual_selection": true,
+    "selected_speaker_or_character": "ゆっくり霊夢",
+    "primary_warning_id": "manual_speaker_binding_required",
+    "warnings": [
+      "manual_speaker_binding_required",
+      "operator_tts_generation_not_explicitly_confirmed"
+    ],
+    "blocking_failures": [],
+    "classification_summary": "Tiny speaker,text CSV import was observed in YMM4 with all four rows visible, but speaker binding required manual selection. This is not production, render, TTS, .ymmp, or public-video approval."
+  },
+  "target_csv_readback": {
+    "path": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv",
+    "bom_verified": true,
+    "row_count": 4,
+    "all_rows_two_columns": true,
+    "has_header": false,
+    "rows": [
+      {
+        "row_number": 1,
+        "speaker": "synthetic_newsroom_placeholder",
+        "text": "Fake topic, review only.",
+        "column_count": 2
+      },
+      {
+        "row_number": 2,
+        "speaker": "synthetic_newsroom_placeholder",
+        "text": "Review-only handoff stays.",
+        "column_count": 2
+      },
+      {
+        "row_number": 3,
+        "speaker": "synthetic_newsroom_placeholder",
+        "text": "A fake claim is shown.",
+        "column_count": 2
+      },
+      {
+        "row_number": 4,
+        "speaker": "synthetic_newsroom_placeholder",
+        "text": "Fake source checks are noted.",
+        "column_count": 2
+      }
+    ]
+  },
+  "readiness_delta": {
+    "manual_check_before": "not_run",
+    "manual_check_after": "observed_pass_with_warnings",
+    "tiny_csv_text_import_observed": true,
+    "speaker_mapping_observed_after_manual_selection": true,
+    "automatic_speaker_binding_observed": false,
+    "timing_import_observed": false,
+    "explicit_tts_generation_by_operator": false,
+    "render_observed": false,
+    "real_media_import_observed": false,
+    "ymmp_committed": false,
+    "transfer_status": "blocked",
+    "production_status": "diagnostic_only",
+    "public_video_ready": false
+  },
+  "next_actions_by_classification": {
+    "recommended_next": "Use this readback to decide speaker-binding policy or a bounded YMM4 import-readiness follow-up. Do not re-request general timing/caption/copy/tiny-proof review.",
+    "allowed": [
+      "speaker-binding policy slice",
+      "YMM4 import-readiness after manual result slice",
+      "minimal .ymmp boundary decision slice"
+    ],
+    "prohibited": [
+      ".ymmp generation",
+      "render generation",
+      "TTS/audio generation",
+      "real media import",
+      "production approval",
+      "publishing"
+    ]
+  },
+  "review_card": {
+    "status": "warnings_only",
+    "fixed_phrase_required": false,
+    "warnings": [
+      {
+        "warning_id": "manual_speaker_binding_required",
+        "severity": "medium",
+        "meaning": "YMM4 accepted rows/text but required manual binding to an existing character.",
+        "next_axis": "speaker_binding_policy"
+      },
+      {
+        "warning_id": "operator_tts_generation_not_explicitly_confirmed",
+        "severity": "low",
+        "meaning": "The operator did not explicitly perform a separate TTS generation; no TTS readiness is implied.",
+        "next_axis": "YMM4_import_readiness_after_manual_result"
+      }
+    ],
+    "review_debt": [
+      "Speaker/character binding is manual, not automatic.",
+      "The operator did not explicitly perform a separate TTS generation."
+    ]
+  },
+  "safety_boundary": {
+    "render_created": false,
+    "explicit_tts_generation_by_operator": false,
+    "did_not_generate_tts_interpretation": "operator_did_not_explicitly_generate_tts",
+    "real_media_imported": false,
+    "ymmp_committed": false,
+    "production_approval": false,
+    "public_video_ready": false,
+    "agent_launched_yym4": false,
+    "agent_created_or_edited_ymmp": false,
+    "agent_rendered_media": false,
+    "agent_generated_tts": false,
+    "dashboard_governance_freshness_changed": false,
+    "external_fetch_performed": false
+  },
+  "boundary_assertions": {
+    "render_created": false,
+    "explicit_tts_generation_by_operator": false,
+    "did_not_generate_tts_interpretation": "operator_did_not_explicitly_generate_tts",
+    "real_media_imported": false,
+    "ymmp_committed": false,
+    "production_approval": false,
+    "public_video_ready": false,
+    "agent_launched_yym4": false,
+    "agent_created_or_edited_ymmp": false,
+    "agent_rendered_media": false,
+    "agent_generated_tts": false,
+    "dashboard_governance_freshness_changed": false,
+    "external_fetch_performed": false
+  }
+}
