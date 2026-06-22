@@ -79,6 +79,28 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom/video-readiness decision (2026-06-22):
+`newsroom_episode_production_capsule_v1_2026_06_22` closes the pivot from
+dashboard/governance maintenance back toward video-readiness without opening
+real ingest or YMM4 transfer. Commit
+`bbe5528 feat: define newsroom episode production capsule` is on
+`origin/master` and records the diagnostic capsule in
+`samples/_probe/newsroom_handoff/episode_production_capsule_v1.json`, the human
+readback in
+`docs/verification/NEWSROOM_EPISODE_PRODUCTION_CAPSULE_V1_2026-06-22.md`, the
+builder in `src/pipeline/newsroom_episode_production_capsule.py`, and focused
+coverage in `tests/test_newsroom_episode_production_capsule.py`. The adapted
+packet is the episode identity; older slot/transfer readbacks were inspected
+only as earlier chain evidence. The current recomputed state is validator
+`passed`, G-28 slot-linkage `passed_with_warnings`, transfer planning
+`blocked`, transfer status `blocked`, blocker count `13`, and unlock
+requirement count `13`. This decision does not continue dashboard freshness or
+status producer work, does not accept a real packet, fetch sources, open
+RSS/Inoreader, access real URLs, download media, edit or generate `.ymmp`,
+generate YMM4 carriers, render media, generate TTS/audio, approve rights,
+approve production, or publish/upload output. Next safe action is supervisor
+capsule review or a separate read-only Review Console episode preview slice.
+
 Latest common-foundation cockpit remote decision (2026-06-18):
 `common_foundation_cockpit_remote_verified_2026_06_18` closes the repeated
 network-blocked retry loop. Live `ls-remote` now confirms
@@ -1107,6 +1129,43 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 | IP-03 | YouTube 自動アップロード | FEATURE_REGISTRY E-01 (hold) |
 
 ---
+
+## HANDOFF SNAPSHOT (2026-06-22 newsroom episode capsule)
+
+- Branch / remote state: `master` at
+  `bbe5528 feat: define newsroom episode production capsule`; after pulling,
+  expected sync check is
+  `git rev-list --left-right --count "HEAD...origin/master" = 0 0`.
+- Current repo path for this machine:
+  `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen-mainline-slot-linkage`.
+- Restart path: read `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` ->
+  `docs/runtime-state.md`; then open the episode capsule readback if the
+  next task is newsroom/video-readiness.
+- Primary capsule artifact:
+  `samples/_probe/newsroom_handoff/episode_production_capsule_v1.json`.
+- Human readback:
+  `docs/verification/NEWSROOM_EPISODE_PRODUCTION_CAPSULE_V1_2026-06-22.md`.
+- Implementation/test anchors:
+  `src/pipeline/newsroom_episode_production_capsule.py` and
+  `tests/test_newsroom_episode_production_capsule.py`.
+- Current capsule facts: adapted fake newsroom packet identity
+  `episode_fake_nlmytgen_delta_v1`; 2 script beats; 2 visual units; provisional
+  duration 68 seconds; validator `passed`; G-28 slot-linkage
+  `passed_with_warnings`; transfer planning `blocked`; blocker count `13`;
+  unlock requirement count `13`; audio/voice `not_started`; production status
+  `diagnostic_only`.
+- Validation already run for this handoff chain: new capsule tests `7 passed`;
+  focused newsroom suite `52 passed`; JSON parse pass; `git diff --check`
+  pass; `git diff --cached --check` pass before commit; no real URLs in the new
+  capsule/readback; forbidden staged path scan pass.
+- Boundary: do not continue dashboard freshness/status producer work in this
+  lane; do not accept a real packet, fetch sources, open RSS/Inoreader, access
+  real URLs, download media, edit or generate `.ymmp`, generate YMM4 carriers,
+  render media, generate TTS/audio, approve rights, approve production, or
+  publish/upload output.
+- Next concrete move: supervisor capsule review. If accepted, create a
+  separate read-only Review Console episode preview slice; if rejected, adjust
+  only the capsule/readback fields that the review names.
 
 ## HANDOFF SNAPSHOT (2026-06-12 G-28 reference layout path sync)
 
