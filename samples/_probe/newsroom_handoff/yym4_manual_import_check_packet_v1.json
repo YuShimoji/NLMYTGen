@@ -1,0 +1,281 @@
+{
+  "artifact_id": "newsroom_yym4_manual_import_check_packet_v1_2026_06_22",
+  "packet_id": "newsroom_yym4_manual_import_check_packet_v1_2026_06_22",
+  "schema_version": "newsroom_yym4_manual_import_check_packet.v1",
+  "review_status": "ready_for_operator_manual_check",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_only",
+  "manual_check_status": "not_run",
+  "identity": {
+    "packet_id": "newsroom_yym4_manual_import_check_packet_v1_2026_06_22",
+    "source_tiny_csv_path": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv",
+    "source_tiny_proof_path": "samples/_probe/newsroom_handoff/tiny_importable_proof_v1.json",
+    "source_tiny_proof_id": "newsroom_tiny_importable_proof_v1_2026_06_22",
+    "source_tiny_importable_status": "passed_with_warnings",
+    "source_episode_id": "episode_fake_nlmytgen_delta_v1",
+    "source_commit_or_status": "worktree_verified_before_generation",
+    "production_status": "diagnostic_only",
+    "manual_check_status": "not_run"
+  },
+  "review_memory": {
+    "prior_user_review_count": 0,
+    "accepted_scope": [
+      "diagnostic_script_import_candidate",
+      "YMM4_adjacent_no_media_import_shape",
+      "tiny_importable_artifact_shape"
+    ],
+    "not_accepted_scope": [
+      "production YMM4 transfer",
+      "production subtitle design",
+      "production narration",
+      ".ymmp",
+      "render",
+      "TTS/audio",
+      "real media",
+      "public video"
+    ],
+    "current_axis": "YMM4_manual_import_check_packet",
+    "repeated_general_review_allowed": false
+  },
+  "preconditions": {
+    "items": [
+      {
+        "requirement": "YMM4 is opened manually by the user/operator only; the agent does not launch or automate YMM4.",
+        "required": true
+      },
+      {
+        "requirement": "Use no production project, no render, no TTS/audio, and no real media during this check.",
+        "required": true
+      },
+      {
+        "requirement": "Do not commit any `.ymmp` produced by manual experimentation unless a later explicit slice requests it.",
+        "required": true
+      },
+      {
+        "requirement": "Treat the tiny CSV as synthetic diagnostic-only data, not as production newsroom content.",
+        "required": true
+      },
+      {
+        "requirement": "If the available YMM4 flow necessarily generates voice, audio, media, render output, or a production project, stop and record blocked_by_operator_uncertainty.",
+        "required": true
+      }
+    ],
+    "YMM4_manual_open_only": true,
+    "no_production_project": true,
+    "no_render": true,
+    "no_TTS": true,
+    "no_real_media": true,
+    "do_not_commit_experimental_ymmp": true,
+    "tiny_csv_synthetic_diagnostic_only": true
+  },
+  "target_artifact": {
+    "path": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv",
+    "filename": "tiny_script_import_candidate_v1.csv",
+    "artifact_role": "manual_import_check_target",
+    "encoding": "utf-8-sig",
+    "encoding_verified": true,
+    "encoding_verification": {
+      "bom_verified": true,
+      "tiny_proof_schema_encoding": "utf-8-sig",
+      "readback_encoding": "utf-8-sig"
+    },
+    "has_header": false,
+    "header_expectation": "no_header",
+    "surface": [
+      "speaker",
+      "text"
+    ],
+    "expected_rows": 4,
+    "observed_rows_before_manual_check": 4,
+    "all_rows_two_columns": true,
+    "timing_columns_expected": false,
+    "production_ready_flags_expected": false,
+    "diagnostic_only": true,
+    "synthetic_only": true,
+    "rows": [
+      {
+        "row_number": 1,
+        "speaker": "synthetic_newsroom_placeholder",
+        "text": "Fake topic, review only."
+      },
+      {
+        "row_number": 2,
+        "speaker": "synthetic_newsroom_placeholder",
+        "text": "Review-only handoff stays."
+      },
+      {
+        "row_number": 3,
+        "speaker": "synthetic_newsroom_placeholder",
+        "text": "A fake claim is shown."
+      },
+      {
+        "row_number": 4,
+        "speaker": "synthetic_newsroom_placeholder",
+        "text": "Fake source checks are noted."
+      }
+    ]
+  },
+  "manual_procedure": [
+    {
+      "step": 1,
+      "action": "Locate the committed target CSV: samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv."
+    },
+    {
+      "step": 2,
+      "action": "Open YMM4 manually as the user/operator, not via this agent."
+    },
+    {
+      "step": 3,
+      "action": "Use the repo-documented YMM4 script import / 台本読み込み function: ツール -> 台本読み込み. If the operator's YMM4 version differs, record operator_menu_unknown rather than inventing alternate menu names."
+    },
+    {
+      "step": 4,
+      "action": "Select CSV import settings matching the repo contract when YMM4 exposes them: UTF-8 BOM / utf-8-sig, comma-delimited, headerless, two columns: speaker,text."
+    },
+    {
+      "step": 5,
+      "action": "Import the CSV only far enough to observe the script rows or import preview; do not proceed into render, TTS/audio, real media, or production save flows."
+    },
+    {
+      "step": 6,
+      "action": "Observe whether exactly 4 lines/rows appear."
+    },
+    {
+      "step": 7,
+      "action": "If screenshot-only operator evidence is needed, record a placeholder path in the result template; do not save a production project."
+    },
+    {
+      "step": 8,
+      "action": "Close without render and without committing any `.ymmp`."
+    }
+  ],
+  "expected_successful_observation": {
+    "imported_line_count": 4,
+    "speaker_placeholder_behavior": "synthetic_newsroom_placeholder appears as a speaker placeholder or is safely unmapped/manual-bindable without data loss",
+    "text_behavior": "all 4 target CSV texts appear in order",
+    "expected_texts": [
+      "Fake topic, review only.",
+      "Review-only handoff stays.",
+      "A fake claim is shown.",
+      "Fake source checks are noted."
+    ],
+    "timing_import_expected": false,
+    "audio_media_render_expected": false,
+    "audio_expected": false,
+    "media_expected": false,
+    "render_expected": false
+  },
+  "failure_categories": [
+    {
+      "category": "encoding_error",
+      "meaning": "CSV cannot be read as the expected UTF-8 BOM text."
+    },
+    {
+      "category": "header_or_column_mismatch",
+      "meaning": "YMM4 treats the file as having the wrong header or column count."
+    },
+    {
+      "category": "speaker_binding_error",
+      "meaning": "The synthetic speaker placeholder cannot appear, stay unmapped, or be manually bound safely."
+    },
+    {
+      "category": "text_import_error",
+      "meaning": "One or more of the 4 diagnostic texts is missing or altered."
+    },
+    {
+      "category": "row_count_mismatch",
+      "meaning": "YMM4 does not show exactly 4 lines/rows."
+    },
+    {
+      "category": "unsupported_csv_shape",
+      "meaning": "YMM4 rejects the two-column headerless speaker,text CSV shape."
+    },
+    {
+      "category": "operator_menu_unknown",
+      "meaning": "The operator cannot locate the YMM4 script import / 台本読み込み function."
+    },
+    {
+      "category": "unexpected_YMM4_behavior",
+      "meaning": "YMM4 behavior crosses or threatens the diagnostic boundary."
+    }
+  ],
+  "evidence_template": {
+    "screenshot_path_placeholder": "operator_screenshot_path_placeholder",
+    "observed_line_count": null,
+    "observed_speaker_behavior": null,
+    "observed_text_behavior": null,
+    "error_message": null,
+    "operator_notes_freeform": "",
+    "result": null,
+    "allowed_results": [
+      "pass",
+      "pass_with_warnings",
+      "fail",
+      "blocked_by_operator_uncertainty"
+    ]
+  },
+  "result_recording_contract": {
+    "result_template_path": "samples/_probe/newsroom_handoff/yym4_manual_import_result_template_v1.json",
+    "required_fields": [
+      "screenshot_path_placeholder",
+      "observed_line_count",
+      "observed_speaker_behavior",
+      "observed_text_behavior",
+      "error_message",
+      "operator_notes_freeform",
+      "result"
+    ],
+    "allowed_results": [
+      "pass",
+      "pass_with_warnings",
+      "fail",
+      "blocked_by_operator_uncertainty"
+    ],
+    "manual_check_status_before_operator_run": "not_run",
+    "accepts_only_human_operator_observation": true,
+    "no_agent_claim_of_YMM4_result_without_operator_evidence": true
+  },
+  "next_actions_by_result": {
+    "pass": "Create a result readback and consider a tiny YMM4 import-readiness proof.",
+    "pass_with_warnings": "Classify warnings before changing the CSV or expanding the pipeline.",
+    "fail": "Adjust CSV shape or encoding in a bounded follow-up slice.",
+    "blocked_by_operator_uncertainty": "Improve manual instructions, not the pipeline."
+  },
+  "safety_boundary": {
+    "ymmp_created_by_agent": false,
+    "YMM4_launched_by_agent": false,
+    "render_created": false,
+    "TTS_generated": false,
+    "real_media_imported": false,
+    "production_approval": false,
+    "public_video_ready": false
+  },
+  "validation": {
+    "target_csv_bom_verified": true,
+    "target_csv_has_no_header": true,
+    "target_csv_row_count_matches_expected": true,
+    "target_csv_all_rows_two_columns": true,
+    "source_tiny_proof_id_matches": true,
+    "source_tiny_status": "passed_with_warnings",
+    "manual_check_not_run": true,
+    "review_card_required": false
+  },
+  "review_card": {
+    "status": "none",
+    "axis_if_needed": "YMM4_manual_import_check_packet",
+    "reason": "This slice only defines the manual check packet and result contract; no repeated timing, caption, CSV, script, YMM4-adjacent, tiny proof, render, TTS, media, or production approval review is needed."
+  },
+  "boundary_assertions": {
+    "ymmp_created_by_agent": false,
+    "YMM4_launched_by_agent": false,
+    "render_created": false,
+    "TTS_generated": false,
+    "real_media_imported": false,
+    "production_approval": false,
+    "public_video_ready": false,
+    "agent_import_observation_claimed": false,
+    "external_fetch_performed": false,
+    "dashboard_governance_freshness_changed": false,
+    "real_newsroom_ingest_performed": false
+  }
+}

@@ -1,5 +1,46 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom YMM4 manual import check packet v1 completed (2026-06-22)**:
+  Created a diagnostic-only manual YMM4 import check packet for the committed
+  tiny script CSV without launching YMM4 or claiming any import result. Machine
+  packet:
+  `samples/_probe/newsroom_handoff/yym4_manual_import_check_packet_v1.json`;
+  blank operator result template:
+  `samples/_probe/newsroom_handoff/yym4_manual_import_result_template_v1.json`;
+  human readback:
+  `docs/verification/NEWSROOM_YYM4_MANUAL_IMPORT_CHECK_PACKET_V1_2026-06-22.md`;
+  implementation:
+  `src/pipeline/newsroom_yym4_manual_import_check_packet.py`; focused
+  coverage: `tests/test_newsroom_yym4_manual_import_check_packet.py`. The
+  packet binds the existing target
+  `samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv` and
+  source proof `samples/_probe/newsroom_handoff/tiny_importable_proof_v1.json`,
+  verifies the target CSV as UTF-8 BOM, headerless, two-column `speaker,text`,
+  and exactly four rows, and sets `manual_check_status=not_run` throughout. The
+  manual procedure uses only the repo-known YMM4 script import / 台本読み込み
+  route and tells the operator to stop at row visibility/preview, record
+  uncertainty instead of guessing menu names, avoid production projects, avoid
+  render/TTS/audio/real media, and not commit any experimental `.ymmp` unless a
+  later explicit slice requests it. The expected pass observation is four
+  visible rows, a visible or safely unmapped synthetic speaker placeholder, all
+  four texts present, no timing import, and no audio/media/render. Failure
+  categories are bounded to encoding, header/column mismatch, speaker binding,
+  text import, row count, unsupported shape, operator menu uncertainty, and
+  unexpected YMM4 behavior. Result recording is limited to the blank template
+  fields (`screenshot_path_placeholder`, observed line count, speaker/text
+  behavior, error message, operator notes, and
+  `pass|pass_with_warnings|fail|blocked_by_operator_uncertainty`). Safety
+  boundary remains closed (`ymmp_created_by_agent=false`,
+  `YMM4_launched_by_agent=false`, `render_created=false`,
+  `TTS_generated=false`, `real_media_imported=false`,
+  `production_approval=false`, `public_video_ready=false`), and no real packet
+  ingest, external fetch, source URL access, media download,
+  dashboard/governance/freshness expansion, production approval, or publishing
+  work was performed. Verification observed manual import check packet, tiny
+  importable proof, YMM4-adjacent shape, and CSV handoff tests `27 passed`.
+  Next safe action is a human/operator result readback after manual YMM4
+  observation, or a bounded instruction/CSV-shape follow-up based only on that
+  recorded result.
 - **Newsroom tiny importable proof v1 completed (2026-06-22)**:
   Created the first diagnostic-only tiny import artifact from the committed
   YMM4-adjacent no-media import-shape proof. Import artifact:

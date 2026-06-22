@@ -1,0 +1,74 @@
+{
+  "artifact_id": "newsroom_yym4_manual_import_result_template_v1_2026_06_22",
+  "template_id": "newsroom_yym4_manual_import_result_template_v1_2026_06_22",
+  "schema_version": "newsroom_yym4_manual_import_result_template.v1",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_only",
+  "manual_check_status": "not_run",
+  "packet_id": "newsroom_yym4_manual_import_check_packet_v1_2026_06_22",
+  "source_packet_path": "samples/_probe/newsroom_handoff/yym4_manual_import_check_packet_v1.json",
+  "source_tiny_csv_path": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv",
+  "source_tiny_proof_path": "samples/_probe/newsroom_handoff/tiny_importable_proof_v1.json",
+  "required_fields": [
+    "screenshot_path_placeholder",
+    "observed_line_count",
+    "observed_speaker_behavior",
+    "observed_text_behavior",
+    "error_message",
+    "operator_notes_freeform",
+    "result"
+  ],
+  "allowed_results": [
+    "pass",
+    "pass_with_warnings",
+    "fail",
+    "blocked_by_operator_uncertainty"
+  ],
+  "evidence_template": {
+    "screenshot_path_placeholder": "operator_screenshot_path_placeholder",
+    "observed_line_count": null,
+    "observed_speaker_behavior": null,
+    "observed_text_behavior": null,
+    "error_message": null,
+    "operator_notes_freeform": "",
+    "result": null,
+    "allowed_results": [
+      "pass",
+      "pass_with_warnings",
+      "fail",
+      "blocked_by_operator_uncertainty"
+    ]
+  },
+  "failure_categories": [
+    "encoding_error",
+    "header_or_column_mismatch",
+    "speaker_binding_error",
+    "text_import_error",
+    "row_count_mismatch",
+    "unsupported_csv_shape",
+    "operator_menu_unknown",
+    "unexpected_YMM4_behavior"
+  ],
+  "next_actions_by_result": {
+    "pass": "Create a result readback and consider a tiny YMM4 import-readiness proof.",
+    "pass_with_warnings": "Classify warnings before changing the CSV or expanding the pipeline.",
+    "fail": "Adjust CSV shape or encoding in a bounded follow-up slice.",
+    "blocked_by_operator_uncertainty": "Improve manual instructions, not the pipeline."
+  },
+  "safety_boundary": {
+    "ymmp_created_by_agent": false,
+    "YMM4_launched_by_agent": false,
+    "render_created": false,
+    "TTS_generated": false,
+    "real_media_imported": false,
+    "production_approval": false,
+    "public_video_ready": false
+  },
+  "operator_fill_contract": {
+    "fill_after_human_operator_manual_run_only": true,
+    "leave_result_null_until_observed": true,
+    "do_not_commit_experimental_ymmp_without_later_slice": true,
+    "do_not_record_render_TTS_or_media_as_part_of_this_template": true,
+    "record_operator_uncertainty_as_blocked_by_operator_uncertainty": true
+  }
+}
