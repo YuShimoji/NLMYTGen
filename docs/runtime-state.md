@@ -1,5 +1,42 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom YMM4-adjacent no-media import-shape proof v1 completed (2026-06-22)**:
+  Created a diagnostic-only YMM4-adjacent no-media import-shape proof from the
+  committed script import candidate without changing the source script
+  candidate, caption CSV, or neutral timeline. Machine artifact:
+  `samples/_probe/newsroom_handoff/yym4_adjacent_no_media_import_shape_v1.json`;
+  human readback:
+  `docs/verification/NEWSROOM_YYM4_ADJACENT_NO_MEDIA_PROOF_V1_2026-06-22.md`;
+  implementation:
+  `src/pipeline/newsroom_yym4_adjacent_no_media_import_shape.py`; focused
+  coverage: `tests/test_newsroom_yym4_adjacent_no_media_import_shape.py`.
+  The proof maps the four diagnostic `script_lines` into exactly four
+  tool-adjacent rows with `row_kind=dialogue_caption`, preserving source line
+  id, caption id, beat id, timing metadata, speaker placeholder, voice
+  placeholder, and text. Each row exposes the repo's known YMM4 CSV-adjacent
+  surface (`speaker`, `text`) while keeping `start_sec`, `end_sec`, and
+  `duration_sec` as metadata because they are not part of the accepted
+  two-column YMM4 CSV row minimum. Result:
+  `no_media_import_shape_status=passed_with_warnings`,
+  `yym4_status=passed_with_warnings`, with warnings only for static contract
+  scope: YMM4 was not launched and timing fields are metadata, not known YMM4
+  CSV columns. No-media policy is explicit (`captions_and_script_rows_only`,
+  `no_render`, `no_TTS`, `no_real_assets`), visual/audio placeholders are
+  reference-only, production transfer remains `blocked`, and YMM4 boundary
+  remains closed (`ymmp_created=false`, `YMM4_launched=false`,
+  `YMM4_carrier_created=false`, `YMM4_approval=false`). Diagnostic safety also
+  remains clear (`real_urls=false`, `real_media_paths=false`,
+  `TTS_generated=false`, `render_created=false`,
+  `production_approval=false`). Verification observed YMM4-adjacent proof,
+  script import, caption CSV import, neutral timeline, and CSV handoff tests
+  `34 passed`; JSON parse succeeded. This slice does not ingest a real packet,
+  fetch sources, access real URLs, download media, generate TTS/audio, edit or
+  generate `.ymmp`, generate YMM4 carriers, launch YMM4, render, approve rights,
+  approve production, publish/upload output, or expand
+  dashboard/governance/freshness work. Next safe action is
+  `newsroom-tiny-importable-proof-v1`, gated on whether to emit a real repo
+  YMM4 CSV artifact and how to bind the synthetic speaker placeholder to an
+  accepted YMM4 character name.
 - **Newsroom script import candidate v1 completed (2026-06-22)**:
   Created the diagnostic-only script import candidate from the existing caption
   CSV and neutral timeline proof without changing either source artifact.

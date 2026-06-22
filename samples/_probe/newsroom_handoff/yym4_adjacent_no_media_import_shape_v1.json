@@ -1,0 +1,442 @@
+{
+  "artifact_id": "newsroom_yym4_adjacent_no_media_import_shape_v1_2026_06_22",
+  "proof_id": "newsroom_yym4_adjacent_no_media_import_shape_v1_2026_06_22",
+  "schema_version": "newsroom_yym4_adjacent_no_media_import_shape.v1",
+  "review_status": "ready_for_supervisor_review",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_only",
+  "yym4_status": "passed_with_warnings",
+  "production_transfer_status": "blocked",
+  "no_media_import_shape_status": "passed_with_warnings",
+  "identity": {
+    "proof_id": "newsroom_yym4_adjacent_no_media_import_shape_v1_2026_06_22",
+    "source_script_candidate_path": "samples/_probe/newsroom_handoff/script_import_candidate_v1.json",
+    "source_caption_csv_path": "samples/_probe/newsroom_handoff/caption_import_candidate_v1.csv",
+    "source_neutral_timeline_path": "samples/_probe/newsroom_handoff/neutral_timeline_import_proof_v1.json",
+    "source_commit_or_status": "worktree_verified_before_generation",
+    "source_episode_id": "episode_fake_nlmytgen_delta_v1",
+    "source_script_candidate_id": "newsroom_script_import_candidate_v1_2026_06_22",
+    "source_script_import_status": "passed",
+    "source_neutral_timeline_id": "newsroom_neutral_timeline_import_proof_v1_2026_06_22",
+    "production_status": "diagnostic_only",
+    "yym4_status": "passed_with_warnings"
+  },
+  "review_memory": {
+    "prior_user_review_count": 0,
+    "accepted_scope": [
+      "diagnostic_timing_panel_surface_by_validation",
+      "diagnostic_caption_copy_refinement_by_validation",
+      "diagnostic_transfer_candidate_classification",
+      "neutral_timeline_import_proof",
+      "caption_csv_import_candidate_schema",
+      "diagnostic_script_import_candidate"
+    ],
+    "not_accepted_scope": [
+      "production subtitle design",
+      "production narration",
+      "TTS-ready script",
+      "YMM4 transfer approval",
+      ".ymmp",
+      "render",
+      "public video"
+    ],
+    "current_axis": "YMM4_adjacent_no_media_import_shape",
+    "next_nonredundant_axis": [
+      "script_line_to_tool_row_mapping",
+      "no_media_placeholder_policy",
+      "tiny_importable_proof"
+    ],
+    "repeated_general_review_allowed": false
+  },
+  "known_yym4_script_import_conventions": {
+    "found_in_repo": true,
+    "sources": [
+      "src/contracts/ymm4_csv_schema.py",
+      "src/pipeline/assemble_csv.py",
+      "tests/test_csv_handoff_contract.py",
+      "docs/YMM4-AUTOMATION-RESEARCH.md"
+    ],
+    "static_summary": [
+      "Repo YMM4 CSV row minimum is speaker,text.",
+      "YMM4CsvOutput.write emits UTF-8 BOM and no header.",
+      "build-csv is the repo-supported route toward YMM4 script import.",
+      "start/end/duration are not part of the known CSV row minimum."
+    ],
+    "compatible_surface": "speaker_text_two_column_static_match_only",
+    "YMM4_verified": false,
+    "YMM4_verification_reason": "This slice does not launch YMM4, create .ymmp, import CSV, render, or generate TTS/audio."
+  },
+  "mapping_rows": [
+    {
+      "row_id": "yym4_adjacent_row_01",
+      "source_line_id": "line_01_cap_beat_fake_intro_001_01",
+      "source_caption_id": "cap_beat_fake_intro_001_01",
+      "beat_id": "beat_fake_intro_001",
+      "start_sec": 0,
+      "end_sec": 12,
+      "duration_sec": 12,
+      "speaker_id": "synthetic_newsroom_placeholder",
+      "voice_profile": {
+        "voice_profile_id": "voice_placeholder_not_generated",
+        "voice_status": "placeholder_not_generated",
+        "TTS_generated": false,
+        "audio_file": null,
+        "audio_required_for_this_candidate": false
+      },
+      "text": "Fake topic, review only.",
+      "row_kind": "dialogue_caption",
+      "media_dependency": "none",
+      "audio_dependency": "none_for_this_proof",
+      "tts_required": false,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "tool_adjacent_row": {
+        "format_family": "repo_ymm4_csv_two_column_static_contract",
+        "columns": [
+          "speaker",
+          "text"
+        ],
+        "speaker": "synthetic_newsroom_placeholder",
+        "text": "Fake topic, review only.",
+        "known_import_contract": "speaker_text_no_header_utf8_bom_when_written",
+        "timing_metadata_not_csv_column": true,
+        "YMM4_verified": false
+      },
+      "notes": [
+        "Derived from diagnostic script import candidate script_lines.",
+        "Timing is retained as metadata only, not as known YMM4 CSV columns.",
+        "No media, audio, TTS, render, .ymmp, or YMM4 carrier is created."
+      ]
+    },
+    {
+      "row_id": "yym4_adjacent_row_02",
+      "source_line_id": "line_02_cap_beat_fake_intro_001_02",
+      "source_caption_id": "cap_beat_fake_intro_001_02",
+      "beat_id": "beat_fake_intro_001",
+      "start_sec": 12,
+      "end_sec": 24,
+      "duration_sec": 12,
+      "speaker_id": "synthetic_newsroom_placeholder",
+      "voice_profile": {
+        "voice_profile_id": "voice_placeholder_not_generated",
+        "voice_status": "placeholder_not_generated",
+        "TTS_generated": false,
+        "audio_file": null,
+        "audio_required_for_this_candidate": false
+      },
+      "text": "Review-only handoff stays.",
+      "row_kind": "dialogue_caption",
+      "media_dependency": "none",
+      "audio_dependency": "none_for_this_proof",
+      "tts_required": false,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "tool_adjacent_row": {
+        "format_family": "repo_ymm4_csv_two_column_static_contract",
+        "columns": [
+          "speaker",
+          "text"
+        ],
+        "speaker": "synthetic_newsroom_placeholder",
+        "text": "Review-only handoff stays.",
+        "known_import_contract": "speaker_text_no_header_utf8_bom_when_written",
+        "timing_metadata_not_csv_column": true,
+        "YMM4_verified": false
+      },
+      "notes": [
+        "Derived from diagnostic script import candidate script_lines.",
+        "Timing is retained as metadata only, not as known YMM4 CSV columns.",
+        "No media, audio, TTS, render, .ymmp, or YMM4 carrier is created."
+      ]
+    },
+    {
+      "row_id": "yym4_adjacent_row_03",
+      "source_line_id": "line_03_cap_beat_fake_claim_001_01",
+      "source_caption_id": "cap_beat_fake_claim_001_01",
+      "beat_id": "beat_fake_claim_001",
+      "start_sec": 24,
+      "end_sec": 46,
+      "duration_sec": 22,
+      "speaker_id": "synthetic_newsroom_placeholder",
+      "voice_profile": {
+        "voice_profile_id": "voice_placeholder_not_generated",
+        "voice_status": "placeholder_not_generated",
+        "TTS_generated": false,
+        "audio_file": null,
+        "audio_required_for_this_candidate": false
+      },
+      "text": "A fake claim is shown.",
+      "row_kind": "dialogue_caption",
+      "media_dependency": "none",
+      "audio_dependency": "none_for_this_proof",
+      "tts_required": false,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "tool_adjacent_row": {
+        "format_family": "repo_ymm4_csv_two_column_static_contract",
+        "columns": [
+          "speaker",
+          "text"
+        ],
+        "speaker": "synthetic_newsroom_placeholder",
+        "text": "A fake claim is shown.",
+        "known_import_contract": "speaker_text_no_header_utf8_bom_when_written",
+        "timing_metadata_not_csv_column": true,
+        "YMM4_verified": false
+      },
+      "notes": [
+        "Derived from diagnostic script import candidate script_lines.",
+        "Timing is retained as metadata only, not as known YMM4 CSV columns.",
+        "No media, audio, TTS, render, .ymmp, or YMM4 carrier is created."
+      ]
+    },
+    {
+      "row_id": "yym4_adjacent_row_04",
+      "source_line_id": "line_04_cap_beat_fake_claim_001_02",
+      "source_caption_id": "cap_beat_fake_claim_001_02",
+      "beat_id": "beat_fake_claim_001",
+      "start_sec": 46,
+      "end_sec": 68,
+      "duration_sec": 22,
+      "speaker_id": "synthetic_newsroom_placeholder",
+      "voice_profile": {
+        "voice_profile_id": "voice_placeholder_not_generated",
+        "voice_status": "placeholder_not_generated",
+        "TTS_generated": false,
+        "audio_file": null,
+        "audio_required_for_this_candidate": false
+      },
+      "text": "Fake source checks are noted.",
+      "row_kind": "dialogue_caption",
+      "media_dependency": "none",
+      "audio_dependency": "none_for_this_proof",
+      "tts_required": false,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "tool_adjacent_row": {
+        "format_family": "repo_ymm4_csv_two_column_static_contract",
+        "columns": [
+          "speaker",
+          "text"
+        ],
+        "speaker": "synthetic_newsroom_placeholder",
+        "text": "Fake source checks are noted.",
+        "known_import_contract": "speaker_text_no_header_utf8_bom_when_written",
+        "timing_metadata_not_csv_column": true,
+        "YMM4_verified": false
+      },
+      "notes": [
+        "Derived from diagnostic script import candidate script_lines.",
+        "Timing is retained as metadata only, not as known YMM4 CSV columns.",
+        "No media, audio, TTS, render, .ymmp, or YMM4 carrier is created."
+      ]
+    }
+  ],
+  "source_validation": {
+    "script_import_status": "passed",
+    "script_line_count": 4,
+    "csv_row_count": 4,
+    "neutral_timeline_id": "newsroom_neutral_timeline_import_proof_v1_2026_06_22",
+    "source_artifacts_identified": true,
+    "errors": [],
+    "warnings": []
+  },
+  "mapping_validation": {
+    "mapping_row_count": 4,
+    "expected_mapping_row_count": 4,
+    "script_line_count": 4,
+    "every_script_line_mapped": true,
+    "source_line_ids_are_unique": true,
+    "all_rows_valid": true,
+    "rows": [
+      {
+        "row_id": "yym4_adjacent_row_01",
+        "source_line_id": "line_01_cap_beat_fake_intro_001_01",
+        "source_caption_id": "cap_beat_fake_intro_001_01",
+        "source_caption_id_exists_in_csv": true,
+        "matches_source_script_line": true,
+        "required_fields_present": true,
+        "no_media": true,
+        "no_audio": true,
+        "tts_not_required": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_id": "yym4_adjacent_row_02",
+        "source_line_id": "line_02_cap_beat_fake_intro_001_02",
+        "source_caption_id": "cap_beat_fake_intro_001_02",
+        "source_caption_id_exists_in_csv": true,
+        "matches_source_script_line": true,
+        "required_fields_present": true,
+        "no_media": true,
+        "no_audio": true,
+        "tts_not_required": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_id": "yym4_adjacent_row_03",
+        "source_line_id": "line_03_cap_beat_fake_claim_001_01",
+        "source_caption_id": "cap_beat_fake_claim_001_01",
+        "source_caption_id_exists_in_csv": true,
+        "matches_source_script_line": true,
+        "required_fields_present": true,
+        "no_media": true,
+        "no_audio": true,
+        "tts_not_required": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_id": "yym4_adjacent_row_04",
+        "source_line_id": "line_04_cap_beat_fake_claim_001_02",
+        "source_caption_id": "cap_beat_fake_claim_001_02",
+        "source_caption_id_exists_in_csv": true,
+        "matches_source_script_line": true,
+        "required_fields_present": true,
+        "no_media": true,
+        "no_audio": true,
+        "tts_not_required": true,
+        "status": "passed",
+        "errors": []
+      }
+    ],
+    "errors": [],
+    "warnings": []
+  },
+  "no_media_placeholder_policy": {
+    "visual_placeholders_consumed": "reference_only",
+    "audio_placeholder_consumed": "reference_only",
+    "no_media_policy": [
+      "captions_and_script_rows_only",
+      "no_render",
+      "no_TTS",
+      "no_real_assets"
+    ],
+    "intentionally_not_represented": [
+      "YMM4 timeline geometry",
+      "YMM4 character binding",
+      "YMM4 native voice synthesis",
+      "visual media files",
+      "audio media files",
+      "render settings",
+      "production approval state"
+    ]
+  },
+  "no_media_validation": {
+    "all_rows_no_media": true,
+    "all_rows_no_audio": true,
+    "all_rows_no_tts": true,
+    "all_voice_profiles_placeholder_not_generated": true,
+    "rows": [
+      {
+        "row_id": "yym4_adjacent_row_01",
+        "media_dependency_none": true,
+        "audio_dependency_none_for_this_proof": true,
+        "tts_required_false": true,
+        "voice_profile_not_generated": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_id": "yym4_adjacent_row_02",
+        "media_dependency_none": true,
+        "audio_dependency_none_for_this_proof": true,
+        "tts_required_false": true,
+        "voice_profile_not_generated": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_id": "yym4_adjacent_row_03",
+        "media_dependency_none": true,
+        "audio_dependency_none_for_this_proof": true,
+        "tts_required_false": true,
+        "voice_profile_not_generated": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_id": "yym4_adjacent_row_04",
+        "media_dependency_none": true,
+        "audio_dependency_none_for_this_proof": true,
+        "tts_required_false": true,
+        "voice_profile_not_generated": true,
+        "status": "passed",
+        "errors": []
+      }
+    ],
+    "errors": [],
+    "warnings": []
+  },
+  "YMM4_boundary": {
+    "ymmp_created": false,
+    "YMM4_launched": false,
+    "YMM4_carrier_created": false,
+    "YMM4_approval": false,
+    "production_transfer_status": "blocked",
+    "compatibility_statement": "Static compatibility only: rows expose speaker/text like the repo YMM4 CSV contract, while timing remains metadata and no YMM4 import or .ymmp readback was performed.",
+    "known_convention_reference": "src/contracts/ymm4_csv_schema.py"
+  },
+  "diagnostic_safety": {
+    "real_urls": false,
+    "real_media_paths": false,
+    "TTS_generated": false,
+    "render_created": false,
+    "ymmp_created": false,
+    "production_approval": false,
+    "external_fetch_performed": false,
+    "errors": [],
+    "warnings": []
+  },
+  "result": {
+    "no_media_import_shape_status": "passed_with_warnings",
+    "warnings": [
+      "YMM4_NOT_LAUNCHED_STATIC_REPO_CONTRACT_ONLY",
+      "TIMING_FIELDS_ARE_METADATA_NOT_KNOWN_YMM4_CSV_COLUMNS"
+    ],
+    "errors": [],
+    "missing_for_tiny_importable_proof": [
+      "Decide whether to emit a real repo YMM4 CSV artifact.",
+      "Bind synthetic speaker placeholder to accepted YMM4 character names.",
+      "Keep timing metadata out of CSV unless a consumer contract accepts it.",
+      "Run a later no-production import/readback gate without TTS/render."
+    ],
+    "recommended_next_slice": "newsroom-tiny-importable-proof-v1",
+    "prohibited_next_artifacts": [
+      "production .ymmp",
+      "render output",
+      "TTS output",
+      "real media"
+    ]
+  },
+  "review_card": {
+    "status": "none",
+    "axis_if_needed": "YMM4_adjacent_no_media_import_shape",
+    "reason": "The checker validates the no-media import shape directly; no fresh user judgement is needed for timing, caption copy, blocker, neutral timeline, CSV, or script candidate review.",
+    "not_asking": "No repeated timing/caption/copy/blocker/neutral timeline/CSV/script candidate review, YMM4 approval, TTS, media, render, or production judgement is requested."
+  },
+  "boundary_assertions": {
+    "diagnostic_only": true,
+    "YMM4_adjacent_no_media_import_shape": true,
+    "tool_adjacent_not_YMM4_verified": true,
+    "source_script_candidate_changed": false,
+    "source_caption_csv_changed": false,
+    "source_neutral_timeline_changed": false,
+    "opens_production_transfer": false,
+    "opens_YMM4_transfer": false,
+    "ymmp_created": false,
+    "YMM4_launched": false,
+    "YMM4_carrier_created": false,
+    "YMM4_approval": false,
+    "real_urls": false,
+    "real_media_paths": false,
+    "TTS_generated": false,
+    "render_created": false,
+    "production_approval": false,
+    "public_video": false,
+    "external_fetch_performed": false,
+    "dashboard_governance_freshness_changed": false
+  }
+}
