@@ -1,5 +1,37 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom tiny importable proof v1 completed (2026-06-22)**:
+  Created the first diagnostic-only tiny import artifact from the committed
+  YMM4-adjacent no-media import-shape proof. Import artifact:
+  `samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv`;
+  machine proof:
+  `samples/_probe/newsroom_handoff/tiny_importable_proof_v1.json`; human
+  readback:
+  `docs/verification/NEWSROOM_TINY_IMPORTABLE_PROOF_V1_2026-06-22.md`;
+  implementation: `src/pipeline/newsroom_tiny_importable_proof.py`; focused
+  coverage: `tests/test_newsroom_tiny_importable_proof.py`. The CSV follows
+  the repo-known YMM4 script CSV surface from `src/contracts/ymm4_csv_schema.py`:
+  UTF-8 BOM, no header, two columns only (`speaker`, `text`), and four rows.
+  Each CSV row maps exactly one source YMM4-adjacent mapping row and preserves
+  source row id, script line id, caption id, beat id, and start/end/duration
+  timing as proof JSON metadata only. The tiny CSV intentionally contains no
+  timing columns and no `production_ready` flags. Result:
+  `tiny_importable_status=passed_with_warnings`, with warnings only for the
+  expected boundary: not YMM4-verified, timing metadata not imported, no audio,
+  no media, and the synthetic speaker placeholder is not yet bound to an
+  accepted YMM4 character name. Diagnostic safety remains clear
+  (`real_urls=false`, `real_media_paths=false`, `TTS_generated=false`,
+  `render_created=false`, `ymmp_created=false`, `production_approval=false`);
+  YMM4 boundary remains closed (`YMM4_launched=false`,
+  `YMM4_carrier_created=false`, `YMM4_approval=false`), production transfer
+  remains `blocked`, and `public_video_ready=false`. Verification observed tiny
+  importable proof tests `8 passed`. This slice does not ingest a real packet,
+  fetch sources, access real URLs, download media, generate TTS/audio, edit or
+  generate `.ymmp`, generate YMM4 carriers, launch YMM4, render, approve rights,
+  approve production, publish/upload output, or expand
+  dashboard/governance/freshness work. Next safe action is
+  `newsroom-import-readiness-review-surface-v1`, or a separately gated manual
+  import-check packet only if explicitly authorized.
 - **Newsroom YMM4-adjacent no-media import-shape proof v1 completed (2026-06-22)**:
   Created a diagnostic-only YMM4-adjacent no-media import-shape proof from the
   committed script import candidate without changing the source script

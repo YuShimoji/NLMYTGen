@@ -1,0 +1,310 @@
+{
+  "artifact_id": "newsroom_tiny_importable_proof_v1_2026_06_22",
+  "proof_id": "newsroom_tiny_importable_proof_v1_2026_06_22",
+  "schema_version": "newsroom_tiny_importable_proof.v1",
+  "review_status": "ready_for_supervisor_review",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_only",
+  "tiny_importable_status": "passed_with_warnings",
+  "identity": {
+    "proof_id": "newsroom_tiny_importable_proof_v1_2026_06_22",
+    "source_yym4_adjacent_shape_path": "samples/_probe/newsroom_handoff/yym4_adjacent_no_media_import_shape_v1.json",
+    "source_script_candidate_path": "samples/_probe/newsroom_handoff/script_import_candidate_v1.json",
+    "import_artifact_path": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv",
+    "source_commit_or_status": "worktree_verified_before_generation",
+    "source_episode_id": "episode_fake_nlmytgen_delta_v1",
+    "source_yym4_adjacent_proof_id": "newsroom_yym4_adjacent_no_media_import_shape_v1_2026_06_22",
+    "source_no_media_import_shape_status": "passed_with_warnings",
+    "production_status": "diagnostic_only",
+    "import_artifact_type": "tool_adjacent_csv",
+    "repo_consistent_value": "speaker_text_no_header_utf8_bom_when_written"
+  },
+  "review_memory": {
+    "prior_user_review_count": 0,
+    "accepted_scope": [
+      "diagnostic_timing_panel_surface_by_validation",
+      "diagnostic_caption_copy_refinement_by_validation",
+      "diagnostic_transfer_classification",
+      "neutral_timeline_import_proof",
+      "caption_csv_import_candidate_schema",
+      "diagnostic_script_import_candidate",
+      "YMM4_adjacent_no_media_import_shape"
+    ],
+    "not_accepted_scope": [
+      "production subtitle design",
+      "production narration",
+      "TTS-ready script",
+      "YMM4 transfer approval",
+      ".ymmp",
+      "render",
+      "public video"
+    ],
+    "current_axis": "tiny_importable_artifact_shape",
+    "next_nonredundant_axis": [
+      "import_readiness_review_surface",
+      "manual_import_check_packet",
+      "speaker_binding_policy"
+    ],
+    "repeated_general_review_allowed": false
+  },
+  "import_artifact_schema": {
+    "format_family": "repo_ymm4_csv_two_column_static_contract",
+    "columns": [
+      "speaker",
+      "text"
+    ],
+    "has_header": false,
+    "encoding": "utf-8-sig",
+    "delimiter": ",",
+    "row_count": 4,
+    "import_artifact_type": "tool_adjacent_csv",
+    "repo_consistent_value": "speaker_text_no_header_utf8_bom_when_written",
+    "production_ready_flags_in_csv": false,
+    "timing_columns_in_csv": false
+  },
+  "import_artifact_rows": [
+    {
+      "csv_row_number": 1,
+      "speaker": "synthetic_newsroom_placeholder",
+      "text": "Fake topic, review only.",
+      "source_row_id": "yym4_adjacent_row_01",
+      "source_line_id": "line_01_cap_beat_fake_intro_001_01",
+      "source_caption_id": "cap_beat_fake_intro_001_01"
+    },
+    {
+      "csv_row_number": 2,
+      "speaker": "synthetic_newsroom_placeholder",
+      "text": "Review-only handoff stays.",
+      "source_row_id": "yym4_adjacent_row_02",
+      "source_line_id": "line_02_cap_beat_fake_intro_001_02",
+      "source_caption_id": "cap_beat_fake_intro_001_02"
+    },
+    {
+      "csv_row_number": 3,
+      "speaker": "synthetic_newsroom_placeholder",
+      "text": "A fake claim is shown.",
+      "source_row_id": "yym4_adjacent_row_03",
+      "source_line_id": "line_03_cap_beat_fake_claim_001_01",
+      "source_caption_id": "cap_beat_fake_claim_001_01"
+    },
+    {
+      "csv_row_number": 4,
+      "speaker": "synthetic_newsroom_placeholder",
+      "text": "Fake source checks are noted.",
+      "source_row_id": "yym4_adjacent_row_04",
+      "source_line_id": "line_04_cap_beat_fake_claim_001_02",
+      "source_caption_id": "cap_beat_fake_claim_001_02"
+    }
+  ],
+  "source_mapping": [
+    {
+      "csv_row_number": 1,
+      "source_row_id": "yym4_adjacent_row_01",
+      "source_line_id": "line_01_cap_beat_fake_intro_001_01",
+      "source_caption_id": "cap_beat_fake_intro_001_01",
+      "beat_id": "beat_fake_intro_001",
+      "start_sec": 0,
+      "end_sec": 12,
+      "duration_sec": 12,
+      "speaker": "synthetic_newsroom_placeholder",
+      "text": "Fake topic, review only.",
+      "timing_policy": "metadata_only_not_in_script_csv"
+    },
+    {
+      "csv_row_number": 2,
+      "source_row_id": "yym4_adjacent_row_02",
+      "source_line_id": "line_02_cap_beat_fake_intro_001_02",
+      "source_caption_id": "cap_beat_fake_intro_001_02",
+      "beat_id": "beat_fake_intro_001",
+      "start_sec": 12,
+      "end_sec": 24,
+      "duration_sec": 12,
+      "speaker": "synthetic_newsroom_placeholder",
+      "text": "Review-only handoff stays.",
+      "timing_policy": "metadata_only_not_in_script_csv"
+    },
+    {
+      "csv_row_number": 3,
+      "source_row_id": "yym4_adjacent_row_03",
+      "source_line_id": "line_03_cap_beat_fake_claim_001_01",
+      "source_caption_id": "cap_beat_fake_claim_001_01",
+      "beat_id": "beat_fake_claim_001",
+      "start_sec": 24,
+      "end_sec": 46,
+      "duration_sec": 22,
+      "speaker": "synthetic_newsroom_placeholder",
+      "text": "A fake claim is shown.",
+      "timing_policy": "metadata_only_not_in_script_csv"
+    },
+    {
+      "csv_row_number": 4,
+      "source_row_id": "yym4_adjacent_row_04",
+      "source_line_id": "line_04_cap_beat_fake_claim_001_02",
+      "source_caption_id": "cap_beat_fake_claim_001_02",
+      "beat_id": "beat_fake_claim_001",
+      "start_sec": 46,
+      "end_sec": 68,
+      "duration_sec": 22,
+      "speaker": "synthetic_newsroom_placeholder",
+      "text": "Fake source checks are noted.",
+      "timing_policy": "metadata_only_not_in_script_csv"
+    }
+  ],
+  "source_validation": {
+    "source_yym4_adjacent_status": "passed_with_warnings",
+    "source_mapping_row_count": 4,
+    "source_script_import_status": "passed",
+    "source_artifacts_identified": true,
+    "errors": [],
+    "warnings": []
+  },
+  "row_validation": {
+    "row_count": 4,
+    "expected_row_count": 4,
+    "every_row_maps_exactly_one_source_row": true,
+    "all_rows_valid": true,
+    "no_real_names_detected": true,
+    "no_real_urls_detected": true,
+    "no_media_paths_detected": true,
+    "rows": [
+      {
+        "csv_row_number": 1,
+        "source_row_id": "yym4_adjacent_row_01",
+        "source_row_exists": true,
+        "speaker_non_empty": true,
+        "text_non_empty": true,
+        "text_matches_source_row": true,
+        "no_real_names": true,
+        "no_real_urls": true,
+        "no_media_paths": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "csv_row_number": 2,
+        "source_row_id": "yym4_adjacent_row_02",
+        "source_row_exists": true,
+        "speaker_non_empty": true,
+        "text_non_empty": true,
+        "text_matches_source_row": true,
+        "no_real_names": true,
+        "no_real_urls": true,
+        "no_media_paths": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "csv_row_number": 3,
+        "source_row_id": "yym4_adjacent_row_03",
+        "source_row_exists": true,
+        "speaker_non_empty": true,
+        "text_non_empty": true,
+        "text_matches_source_row": true,
+        "no_real_names": true,
+        "no_real_urls": true,
+        "no_media_paths": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "csv_row_number": 4,
+        "source_row_id": "yym4_adjacent_row_04",
+        "source_row_exists": true,
+        "speaker_non_empty": true,
+        "text_non_empty": true,
+        "text_matches_source_row": true,
+        "no_real_names": true,
+        "no_real_urls": true,
+        "no_media_paths": true,
+        "status": "passed",
+        "errors": []
+      }
+    ],
+    "errors": [],
+    "warnings": []
+  },
+  "timing_policy": {
+    "policy": "metadata_only",
+    "not_in_script_csv": true,
+    "metadata_fields": [
+      "start_sec",
+      "end_sec",
+      "duration_sec"
+    ]
+  },
+  "no_media_policy": [
+    "captions_and_script_rows_only",
+    "no_render",
+    "no_TTS",
+    "no_real_assets"
+  ],
+  "boundary_status": {
+    "ymmp_created": false,
+    "YMM4_launched": false,
+    "YMM4_carrier_created": false,
+    "YMM4_approval": false,
+    "TTS_generated": false,
+    "render_created": false,
+    "production_approval": false,
+    "public_video_ready": false,
+    "production_transfer_status": "blocked"
+  },
+  "diagnostic_safety": {
+    "real_urls": false,
+    "real_media_paths": false,
+    "TTS_generated": false,
+    "render_created": false,
+    "ymmp_created": false,
+    "production_approval": false,
+    "external_fetch_performed": false,
+    "row_audio_dependency_present": false,
+    "row_media_dependency_present": false,
+    "errors": [],
+    "warnings": []
+  },
+  "result": {
+    "tiny_importable_status": "passed_with_warnings",
+    "warnings": [
+      "not_YMM4_verified",
+      "timing_metadata_not_imported",
+      "no_audio",
+      "no_media",
+      "synthetic_speaker_not_bound_to_YMM4_character"
+    ],
+    "errors": [],
+    "recommended_next_slice": "newsroom-import-readiness-review-surface-v1",
+    "prohibited_next_artifacts": [
+      "production .ymmp",
+      "render output",
+      "TTS output",
+      "real media"
+    ]
+  },
+  "review_card": {
+    "status": "none",
+    "axis_if_needed": "tiny_importable_artifact_shape",
+    "reason": "The checker validates the tiny CSV artifact directly; no fresh user judgement is needed for timing, caption copy, blocker, neutral timeline, CSV, script, or YMM4-adjacent proof review.",
+    "not_asking": "No repeated timing/caption/copy/blocker/neutral timeline/CSV/script/YMM4-adjacent proof review, YMM4 approval, TTS, media, render, or production judgement is requested."
+  },
+  "boundary_assertions": {
+    "diagnostic_only": true,
+    "tiny_importable_artifact_shape": true,
+    "tool_adjacent_not_YMM4_verified": true,
+    "source_yym4_adjacent_shape_changed": false,
+    "source_script_candidate_changed": false,
+    "opens_production_transfer": false,
+    "opens_YMM4_transfer": false,
+    "ymmp_created": false,
+    "YMM4_launched": false,
+    "YMM4_carrier_created": false,
+    "YMM4_approval": false,
+    "TTS_generated": false,
+    "render_created": false,
+    "production_approval": false,
+    "public_video_ready": false,
+    "real_urls": false,
+    "real_media_paths": false,
+    "external_fetch_performed": false,
+    "dashboard_governance_freshness_changed": false
+  }
+}
