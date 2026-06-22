@@ -1,5 +1,28 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom caption / timing plan v1 completed (2026-06-22)**:
+  Created a deterministic caption and timing refinement layer from the existing
+  diagnostic episode production capsule without opening transfer or media
+  production. Machine artifact:
+  `samples/_probe/newsroom_handoff/episode_caption_timing_plan_v1.json`;
+  human readback:
+  `docs/verification/NEWSROOM_CAPTION_TIMING_PLAN_V1_2026-06-22.md`;
+  implementation: `src/pipeline/newsroom_caption_timing_plan.py`; focused
+  coverage: `tests/test_newsroom_caption_timing_plan.py`. The plan preserves
+  the capsule duration at `68` seconds, splits the structure into two
+  contiguous beats, maps four semantic caption units to those beat ranges, and
+  links the two VisualIR / G-28 rows to visible timing slots and caption-risk
+  notes. Timing confidence remains low/provisional because no audio, TTS, or
+  rendered timeline exists. Verification observed caption/timing tests
+  `7 passed`, existing capsule tests `7 passed`, JSON parse success, and clean
+  whitespace checks. Transfer remains blocked, `YMM4_candidate=false`,
+  audio/voice is still `not_started`, and this slice does not fetch external
+  sources, access real URLs, download media, generate TTS/audio, edit or
+  generate `.ymmp`, generate YMM4 carriers, render, approve rights, approve
+  production, publish/upload output, or expand dashboard/governance/freshness
+  work. Next safe action is supervisor readback review, copy-level caption
+  refinement, a read-only Review Console timing panel extension, or a separate
+  transfer-candidate proof only after the recorded blockers are resolved.
 - **Newsroom Review Console episode preview v1 completed (2026-06-22)**:
   The Review tab now reads the diagnostic episode production capsule and shows
   one video-structure preview inside `#newsroom-handoff-review`. Implementation:
