@@ -1,5 +1,32 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom caption CSV import candidate v1 completed (2026-06-22)**:
+  Validated the existing derived caption CSV as a caption-only diagnostic import
+  candidate without regenerating the neutral timeline or CSV. Machine readback:
+  `samples/_probe/newsroom_handoff/caption_csv_import_candidate_readback_v1.json`;
+  human readback:
+  `docs/verification/NEWSROOM_CAPTION_CSV_IMPORT_CANDIDATE_V1_2026-06-22.md`;
+  implementation:
+  `src/pipeline/newsroom_caption_csv_import_candidate.py`; focused coverage:
+  `tests/test_newsroom_caption_csv_import_candidate.py`. The checker reads
+  `samples/_probe/newsroom_handoff/caption_import_candidate_v1.csv` against
+  `samples/_probe/newsroom_handoff/neutral_timeline_import_proof_v1.json` and
+  confirms the caption-only minimum: required columns are present in order, no
+  YMM4-specific columns are required, row count is `4`, caption ids and beat ids
+  are non-empty, each row has `start_sec < end_sec`, duration equals the timing
+  span, text is non-empty, `diagnostic_only=true`, and `production_ready=false`.
+  The readback also confirms every CSV caption id exists in the neutral
+  timeline caption items, timing and text match, no CSV caption rows are missing
+  or extra, and diagnostic safety remains clear (`real_urls=false`,
+  `real_media_paths=false`, `TTS_generated=false`, `render_created=false`,
+  `ymmp_created=false`, `production_approval=false`). Result:
+  `caption_csv_import_status=passed`; recommended next slice:
+  `newsroom-script-import-candidate-v1`. Verification observed caption CSV
+  import candidate tests `7 passed`. This slice does not ingest a real packet,
+  fetch sources, access real URLs, download media, generate TTS/audio, edit or
+  generate `.ymmp`, generate YMM4 carriers, render, approve rights, approve
+  production, publish/upload output, or expand dashboard/governance/freshness
+  work.
 - **Newsroom neutral timeline import proof v1 completed (2026-06-22)**:
   Created the first actual synthetic neutral import proof for the diagnostic
   newsroom episode without opening production/YMM4 transfer. Source-of-truth

@@ -1,0 +1,224 @@
+{
+  "artifact_id": "newsroom_caption_csv_import_candidate_v1_2026_06_22",
+  "schema_version": "newsroom_caption_csv_import_candidate.v1",
+  "review_status": "ready_for_supervisor_review",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_only",
+  "source": {
+    "source_csv_path": "samples/_probe/newsroom_handoff/caption_import_candidate_v1.csv",
+    "source_neutral_timeline_path": "samples/_probe/newsroom_handoff/neutral_timeline_import_proof_v1.json",
+    "source_commit_or_status": "worktree_verified_before_generation",
+    "neutral_timeline_id": "newsroom_neutral_timeline_import_proof_v1_2026_06_22",
+    "source_episode_id": "episode_fake_nlmytgen_delta_v1"
+  },
+  "review_memory": {
+    "prior_user_review_count": 0,
+    "accepted_scope": [
+      "diagnostic_timing_panel_surface_by_validation",
+      "diagnostic_caption_copy_refinement_by_validation",
+      "diagnostic_transfer_candidate_classification",
+      "neutral_timeline_import_proof"
+    ],
+    "not_accepted_scope": [
+      "production subtitle design",
+      "production narration",
+      "TTS-ready script",
+      "YMM4 transfer approval",
+      ".ymmp",
+      "render",
+      "public video"
+    ],
+    "current_axis": "caption_csv_import_candidate_schema",
+    "next_nonredundant_axis": [
+      "csv_consumer_readback",
+      "caption_only_import_minimum"
+    ],
+    "repeated_general_review_allowed": false
+  },
+  "caption_csv_import_status": "passed",
+  "schema_validation": {
+    "required_columns": [
+      "caption_id",
+      "beat_id",
+      "start_sec",
+      "end_sec",
+      "duration_sec",
+      "text",
+      "diagnostic_only",
+      "production_ready"
+    ],
+    "actual_columns": [
+      "caption_id",
+      "beat_id",
+      "start_sec",
+      "end_sec",
+      "duration_sec",
+      "text",
+      "diagnostic_only",
+      "production_ready"
+    ],
+    "missing_columns": [],
+    "extra_columns": [],
+    "required_columns_present": true,
+    "column_order_matches_required": true,
+    "extra_columns_blocking": false,
+    "required_YMM4_columns": [],
+    "YMM4_columns_required": false,
+    "errors": [],
+    "warnings": []
+  },
+  "row_validation": {
+    "row_count": 4,
+    "expected_row_count": 4,
+    "all_rows_valid": true,
+    "rows": [
+      {
+        "row_number": 1,
+        "caption_id": "cap_beat_fake_intro_001_01",
+        "beat_id": "beat_fake_intro_001",
+        "start_sec": 0.0,
+        "end_sec": 12.0,
+        "duration_sec": 12.0,
+        "text": "Fake topic, review only.",
+        "diagnostic_only_is_true": true,
+        "production_ready_is_false": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_number": 2,
+        "caption_id": "cap_beat_fake_intro_001_02",
+        "beat_id": "beat_fake_intro_001",
+        "start_sec": 12.0,
+        "end_sec": 24.0,
+        "duration_sec": 12.0,
+        "text": "Review-only handoff stays.",
+        "diagnostic_only_is_true": true,
+        "production_ready_is_false": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_number": 3,
+        "caption_id": "cap_beat_fake_claim_001_01",
+        "beat_id": "beat_fake_claim_001",
+        "start_sec": 24.0,
+        "end_sec": 46.0,
+        "duration_sec": 22.0,
+        "text": "A fake claim is shown.",
+        "diagnostic_only_is_true": true,
+        "production_ready_is_false": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_number": 4,
+        "caption_id": "cap_beat_fake_claim_001_02",
+        "beat_id": "beat_fake_claim_001",
+        "start_sec": 46.0,
+        "end_sec": 68.0,
+        "duration_sec": 22.0,
+        "text": "Fake source checks are noted.",
+        "diagnostic_only_is_true": true,
+        "production_ready_is_false": true,
+        "status": "passed",
+        "errors": []
+      }
+    ],
+    "errors": [],
+    "warnings": []
+  },
+  "neutral_timeline_consistency": {
+    "neutral_timeline_caption_count": 4,
+    "csv_caption_count": 4,
+    "every_csv_caption_id_exists": true,
+    "timing_matches": true,
+    "text_matches": true,
+    "missing_caption_rows": [],
+    "extra_caption_rows": [],
+    "rows": [
+      {
+        "caption_id": "cap_beat_fake_intro_001_01",
+        "exists_in_neutral_timeline": true,
+        "neutral_timeline_item_id": "item_caption_cap_beat_fake_intro_001_01",
+        "timing_matches": true,
+        "text_matches": true
+      },
+      {
+        "caption_id": "cap_beat_fake_intro_001_02",
+        "exists_in_neutral_timeline": true,
+        "neutral_timeline_item_id": "item_caption_cap_beat_fake_intro_001_02",
+        "timing_matches": true,
+        "text_matches": true
+      },
+      {
+        "caption_id": "cap_beat_fake_claim_001_01",
+        "exists_in_neutral_timeline": true,
+        "neutral_timeline_item_id": "item_caption_cap_beat_fake_claim_001_01",
+        "timing_matches": true,
+        "text_matches": true
+      },
+      {
+        "caption_id": "cap_beat_fake_claim_001_02",
+        "exists_in_neutral_timeline": true,
+        "neutral_timeline_item_id": "item_caption_cap_beat_fake_claim_001_02",
+        "timing_matches": true,
+        "text_matches": true
+      }
+    ],
+    "errors": [],
+    "warnings": []
+  },
+  "diagnostic_safety": {
+    "real_urls": false,
+    "real_media_paths": false,
+    "TTS_generated": false,
+    "render_created": false,
+    "ymmp_created": false,
+    "production_approval": false,
+    "external_fetch_performed": false,
+    "errors": [],
+    "warnings": []
+  },
+  "import_candidate_result": {
+    "caption_csv_import_status": "passed",
+    "recommended_next_slice": "newsroom-script-import-candidate-v1",
+    "allowed_next_artifacts": [
+      "script import candidate",
+      "neutral timeline consumer proof",
+      "YMM4-adjacent no-media proof"
+    ],
+    "prohibited_next_artifacts": [
+      "production .ymmp",
+      "render output",
+      "TTS output",
+      "real media"
+    ],
+    "errors": [],
+    "warnings": []
+  },
+  "review_card": {
+    "status": "none",
+    "axis_if_needed": "caption_csv_import_candidate_schema",
+    "reason": "No user judgement is required because the checker validates the caption-only CSV import minimum directly.",
+    "not_asking": "No repeated timing, caption copy, blocker, or neutral timeline review is requested."
+  },
+  "boundary_assertions": {
+    "diagnostic_only": true,
+    "caption_only_import_candidate": true,
+    "neutral_timeline_json_is_source_of_truth": true,
+    "source_csv_changed": false,
+    "opens_production_transfer": false,
+    "opens_YMM4_transfer": false,
+    "requires_YMM4_columns": false,
+    "real_urls": false,
+    "real_media_paths": false,
+    "TTS_generated": false,
+    "render_created": false,
+    "ymmp_created": false,
+    "production_approval": false,
+    "public_video": false,
+    "external_fetch_performed": false,
+    "dashboard_governance_freshness_changed": false
+  }
+}
