@@ -1,5 +1,25 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom Review Console timing panel v1 completed (2026-06-22)**:
+  Added a read-only Review Console timing panel for the existing diagnostic
+  caption/timing plan. Implementation: `gui/renderer.js`, `gui/style.css`, and
+  `gui/review_console_dom_smoke.js`; human verification:
+  `docs/verification/NEWSROOM_REVIEW_CONSOLE_TIMING_PANEL_V1_2026-06-22.md`.
+  The panel loads
+  `samples/_probe/newsroom_handoff/episode_caption_timing_plan_v1.json` through
+  the existing Review Console read path and displays `68` seconds, two beat
+  timing rows, four caption unit rows, two visual timing / caption-risk rows,
+  audio/voice `not_started`, `TTS_generated=false`, transfer `blocked`, and
+  `YMM4_candidate=false`. It also shows prohibited next actions for `.ymmp`,
+  render, TTS, and production approval, plus allowed review actions for caption
+  copy refinement, Review Console timing review, and a later transfer-candidate
+  proof only after blockers are resolved. This remains diagnostic-only and
+  read-only: no timing JSON mutation, real packet ingest, external fetch, real
+  URL access, media download, `.ymmp` edit/generation, YMM4 carrier generation,
+  render, TTS/audio, rights approval, production approval, public-use approval,
+  publishing, dashboard freshness producer, status producer, or governance work
+  was opened. Next safe action is supervisor timing-panel review or caption
+  copy refinement if the panel readback is accepted.
 - **Newsroom caption / timing plan v1 completed (2026-06-22)**:
   Created a deterministic caption and timing refinement layer from the existing
   diagnostic episode production capsule without opening transfer or media

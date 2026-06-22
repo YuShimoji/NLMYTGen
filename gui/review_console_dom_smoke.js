@@ -4,9 +4,11 @@ const { app, BrowserWindow } = require('electron');
 const expectedSegmentCount = 11;
 const expectedProofFrameCount = 9;
 const expectedProofSegmentCount = 3;
-const expectedNewsroomArtifactCount = 13;
+const expectedNewsroomArtifactCount = 16;
 const expectedNewsroomEpisodeBeatCount = 2;
 const expectedNewsroomEpisodeVisualCount = 2;
+const expectedNewsroomCaptionUnitCount = 4;
+const expectedNewsroomTimingVisualCount = 2;
 
 async function run() {
   app.setPath('userData', path.join(__dirname, '..', '_tmp', 'electron_review_console_dom_smoke'));
@@ -68,6 +70,14 @@ async function run() {
         const newsroomCapsuleGaps = Array.from(newsroom?.querySelectorAll('[data-newsroom-capsule-gap]') || []);
         const newsroomCapsuleNextSteps = Array.from(newsroom?.querySelectorAll('[data-newsroom-capsule-next-step]') || []);
         const newsroomCapsuleProhibitedSteps = Array.from(newsroom?.querySelectorAll('[data-newsroom-capsule-prohibited-step]') || []);
+        const newsroomTimingPanel = newsroom?.querySelector('[data-newsroom-caption-timing-panel="ready"]');
+        const newsroomTimingBadges = Array.from(newsroom?.querySelectorAll('[data-newsroom-timing-badge]') || []);
+        const newsroomTimingBeatRows = Array.from(newsroom?.querySelectorAll('[data-newsroom-timing-beat]') || []);
+        const newsroomCaptionUnitRows = Array.from(newsroom?.querySelectorAll('[data-newsroom-caption-unit]') || []);
+        const newsroomVisualTimingRows = Array.from(newsroom?.querySelectorAll('[data-newsroom-visual-timing]') || []);
+        const newsroomTimingTimelineBeats = Array.from(newsroom?.querySelectorAll('[data-newsroom-timing-timeline-beat]') || []);
+        const newsroomTimingProhibitedActions = Array.from(newsroom?.querySelectorAll('[data-newsroom-timing-prohibited-action]') || []);
+        const newsroomTimingAllowedActions = Array.from(newsroom?.querySelectorAll('[data-newsroom-timing-allowed-action]') || []);
         const proofBadges = Array.from(document.querySelectorAll('#review-timeline .review-timeline-proof'));
         const beatRows = Array.from(document.querySelectorAll('#review-treatment-proof .review-beat-table tbody tr'));
         const wizard = document.getElementById('wizard-bar');
@@ -136,6 +146,14 @@ async function run() {
           newsroomCapsuleGapCount: newsroomCapsuleGaps.length,
           newsroomCapsuleNextStepCount: newsroomCapsuleNextSteps.length,
           newsroomCapsuleProhibitedStepCount: newsroomCapsuleProhibitedSteps.length,
+          newsroomTimingPanelExists: !!newsroomTimingPanel,
+          newsroomTimingBadgeCount: newsroomTimingBadges.length,
+          newsroomTimingBeatRowCount: newsroomTimingBeatRows.length,
+          newsroomCaptionUnitRowCount: newsroomCaptionUnitRows.length,
+          newsroomVisualTimingRowCount: newsroomVisualTimingRows.length,
+          newsroomTimingTimelineBeatCount: newsroomTimingTimelineBeats.length,
+          newsroomTimingProhibitedActionCount: newsroomTimingProhibitedActions.length,
+          newsroomTimingAllowedActionCount: newsroomTimingAllowedActions.length,
           proofBadgeCount: proofBadges.length,
           beatRowCount: beatRows.length,
           bodyReviewClass: !!bodyContent?.classList.contains('review-workbench-active'),
@@ -279,8 +297,11 @@ async function run() {
             && newsroomText.includes('transfer_planning_readback.json')
             && newsroomText.includes('adapted_newsroom_export_packet.json')
             && newsroomText.includes('episode_production_capsule_v1.json')
+            && newsroomText.includes('episode_caption_timing_plan_v1.json')
             && newsroomText.includes('NEWSROOM_EPISODE_PRODUCTION_CAPSULE_V1_2026-06-22.md')
             && newsroomText.includes('NEWSROOM_REVIEW_CONSOLE_EPISODE_PREVIEW_V1_2026-06-22.md')
+            && newsroomText.includes('NEWSROOM_CAPTION_TIMING_PLAN_V1_2026-06-22.md')
+            && newsroomText.includes('NEWSROOM_REVIEW_CONSOLE_TIMING_PANEL_V1_2026-06-22.md')
             && newsroomText.includes('NEWSROOM_HANDOFF_VALIDATOR_V1_2026-06-20.md')
             && newsroomText.includes('NEWSROOM_G28_SLOT_LINKAGE_PROOF_V1_2026-06-20.md')
             && newsroomText.includes('NEWSROOM_TRANSFER_PLANNING_PROOF_V1_2026-06-20.md'),
@@ -320,6 +341,38 @@ async function run() {
             && newsroomText.includes('real source fetch')
             && newsroomText.includes('YMM4 carrier generation')
             && newsroomText.includes('public-use approval'),
+          hasNewsroomTimingPanel: newsroomText.includes('Newsroom caption / timing panel')
+            && newsroomText.includes('newsroom_caption_timing_plan.v1')
+            && newsroomText.includes('timing summary')
+            && newsroomText.includes('total_duration_sec')
+            && newsroomText.includes('68')
+            && newsroomText.includes('beat_count=2')
+            && newsroomText.includes('caption_unit_count=4')
+            && newsroomText.includes('visual_count=2')
+            && newsroomText.includes('low_provisional_from_capsule')
+            && newsroomText.includes('Beat timing rows')
+            && newsroomText.includes('Caption unit timing')
+            && newsroomText.includes('Visual timing / caption risk')
+            && newsroomText.includes('cap_beat_fake_intro_001_01')
+            && newsroomText.includes('cap_beat_fake_claim_001_02')
+            && newsroomText.includes('Introduce the fake topic.')
+            && newsroomText.includes('Fake primary and fake critical source coverage.')
+            && newsroomText.includes('max_chars=34')
+            && newsroomText.includes('lines=2')
+            && newsroomText.includes('placeholder_copy_only_not_final_narration')
+            && newsroomText.includes('caption_interference_risk')
+            && newsroomText.includes('medium_unhinted_caption_reserve')
+            && newsroomText.includes('voice_status=not_started')
+            && newsroomText.includes('TTS_generated=false')
+            && newsroomText.includes('transfer_status=blocked')
+            && newsroomText.includes('YMM4_candidate=false')
+            && newsroomText.includes('.ymmp generation')
+            && newsroomText.includes('render generation')
+            && newsroomText.includes('TTS generation')
+            && newsroomText.includes('production approval')
+            && newsroomText.includes('caption copy refinement')
+            && newsroomText.includes('YMM4 transfer candidate proof only after blockers are resolved')
+            && newsroomText.includes('Review Console timing review'),
           hasNewsroomForbiddenStates: forbiddenNewsroomStates.some((label) => newsroomText.includes(label)),
           hasCorruption: /\\?\\?\\?|�/.test(text),
           textSample: text.slice(0, 500),
@@ -362,6 +415,14 @@ async function run() {
             && state.newsroomCapsuleGapCount >= 8
             && state.newsroomCapsuleNextStepCount >= 3
             && state.newsroomCapsuleProhibitedStepCount >= 9
+            && state.newsroomTimingPanelExists
+            && state.newsroomTimingBadgeCount >= 10
+            && state.newsroomTimingBeatRowCount === ${expectedNewsroomEpisodeBeatCount}
+            && state.newsroomCaptionUnitRowCount === ${expectedNewsroomCaptionUnitCount}
+            && state.newsroomVisualTimingRowCount === ${expectedNewsroomTimingVisualCount}
+            && state.newsroomTimingTimelineBeatCount === ${expectedNewsroomEpisodeBeatCount}
+            && state.newsroomTimingProhibitedActionCount >= 4
+            && state.newsroomTimingAllowedActionCount >= 3
             && state.cardCount === ${expectedSegmentCount}
             && state.hasEpisodeContextLabel
             && state.hasStoryOutlineLabel
@@ -416,6 +477,7 @@ async function run() {
             && state.hasNewsroomCapsuleReadiness
             && state.hasNewsroomCapsuleStructure
             && state.hasNewsroomCapsuleActions
+            && state.hasNewsroomTimingPanel
             && !state.hasNewsroomForbiddenStates;
           if (ready) {
             clearInterval(timer);
@@ -530,6 +592,27 @@ async function run() {
       prohibited: result.newsroomCapsuleProhibitedStepCount,
     })}`);
   }
+  if (
+    !result.newsroomTimingPanelExists
+    || result.newsroomTimingBadgeCount < 10
+    || result.newsroomTimingBeatRowCount !== expectedNewsroomEpisodeBeatCount
+    || result.newsroomCaptionUnitRowCount !== expectedNewsroomCaptionUnitCount
+    || result.newsroomVisualTimingRowCount !== expectedNewsroomTimingVisualCount
+    || result.newsroomTimingTimelineBeatCount !== expectedNewsroomEpisodeBeatCount
+    || result.newsroomTimingProhibitedActionCount < 4
+    || result.newsroomTimingAllowedActionCount < 3
+  ) {
+    throw new Error(`newsroom timing panel did not expose expected caption/timing structure: ${JSON.stringify({
+      exists: result.newsroomTimingPanelExists,
+      badges: result.newsroomTimingBadgeCount,
+      beats: result.newsroomTimingBeatRowCount,
+      captions: result.newsroomCaptionUnitRowCount,
+      visuals: result.newsroomVisualTimingRowCount,
+      timeline: result.newsroomTimingTimelineBeatCount,
+      prohibited: result.newsroomTimingProhibitedActionCount,
+      allowed: result.newsroomTimingAllowedActionCount,
+    })}`);
+  }
   if (result.newsroomPlanningGroupCount !== 5 || result.newsroomUnlockRowCount !== 14) {
     throw new Error(`newsroom transfer planning panel did not expose blocker groups and unlock rows: ${JSON.stringify({
       groups: result.newsroomPlanningGroupCount,
@@ -587,9 +670,12 @@ async function run() {
     'minimal_episode_packet.json',
     'adapted_newsroom_export_packet.json',
     'episode_production_capsule_v1.json',
+    'episode_caption_timing_plan_v1.json',
     'transfer_planning_readback.json',
     'NEWSROOM_EPISODE_PRODUCTION_CAPSULE_V1_2026-06-22.md',
     'NEWSROOM_REVIEW_CONSOLE_EPISODE_PREVIEW_V1_2026-06-22.md',
+    'NEWSROOM_CAPTION_TIMING_PLAN_V1_2026-06-22.md',
+    'NEWSROOM_REVIEW_CONSOLE_TIMING_PANEL_V1_2026-06-22.md',
     'NEWSROOM_G28_SLOT_LINKAGE_PROOF_V1_2026-06-20.md',
     'NEWSROOM_TRANSFER_PLANNING_PROOF_V1_2026-06-20.md',
     'Newsroom episode preview',
@@ -616,6 +702,18 @@ async function run() {
     'YMM4 transfer candidate proof only after blockers are resolved',
     'YMM4 carrier generation',
     'public-use approval',
+    'Newsroom caption / timing panel',
+    'newsroom_caption_timing_plan.v1',
+    'Beat timing rows',
+    'Caption unit timing',
+    'Visual timing / caption risk',
+    'caption_unit_count=4',
+    'voice_status=not_started',
+    'TTS_generated=false',
+    'YMM4_candidate=false',
+    'cap_beat_fake_claim_001_02',
+    'medium_unhinted_caption_reserve',
+    'Review Console timing review',
   ]) {
     if (!result.newsroomText.includes(text)) {
       throw new Error(`newsroom handoff panel missing ${text}: ${result.newsroomText.slice(0, 1000)}`);
@@ -717,7 +815,7 @@ async function run() {
     throw new Error(`review_decisions version changed: ${saveResult.payload.version}`);
   }
 
-  console.log(`G-27 review console DOM smoke OK: ${result.timelineCount} timeline segments; ${expectedProofFrameCount} G-27 proof frames; ${result.pipelineTopicCount} pipeline smoke topics / ${result.pipelineBeatRowCount} smoke beats visible through GUI; G-28 diagnostic ingest panel visible; newsroom transfer planning panel visible; newsroom episode preview visible with ${result.newsroomEpisodeBeatRowCount} beats / ${result.newsroomEpisodeVisualRowCount} visuals; save payload OK`);
+  console.log(`G-27 review console DOM smoke OK: ${result.timelineCount} timeline segments; ${expectedProofFrameCount} G-27 proof frames; ${result.pipelineTopicCount} pipeline smoke topics / ${result.pipelineBeatRowCount} smoke beats visible through GUI; G-28 diagnostic ingest panel visible; newsroom transfer planning panel visible; newsroom episode preview visible with ${result.newsroomEpisodeBeatRowCount} beats / ${result.newsroomEpisodeVisualRowCount} visuals; newsroom timing panel visible with ${result.newsroomTimingBeatRowCount} beats / ${result.newsroomCaptionUnitRowCount} captions / ${result.newsroomVisualTimingRowCount} visuals; save payload OK`);
 }
 
 run()

@@ -1181,7 +1181,21 @@ main .hint strong {
   background: rgba(8, 13, 34, 0.28);
 }
 
+.newsroom-caption-timing-panel {
+  margin-bottom: 12px;
+  padding: 14px;
+  border: 1px solid rgba(83, 164, 255, 0.28);
+  border-radius: 10px;
+  background: rgba(83, 164, 255, 0.045);
+}
+
 .newsroom-episode-preview h4 {
+  margin-bottom: 8px;
+  color: var(--color-text);
+  font-size: 14px;
+}
+
+.newsroom-caption-timing-panel h4 {
   margin-bottom: 8px;
   color: var(--color-text);
   font-size: 14px;
@@ -1253,6 +1267,18 @@ main .hint strong {
 
 .newsroom-episode-visual-table {
   min-width: 1180px;
+}
+
+.newsroom-timing-beat-table {
+  min-width: 1100px;
+}
+
+.newsroom-caption-unit-table {
+  min-width: 1180px;
+}
+
+.newsroom-visual-timing-table {
+  min-width: 1120px;
 }
 
 .review-proof-summary {

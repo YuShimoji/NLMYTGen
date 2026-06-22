@@ -592,11 +592,14 @@ const NEWSROOM_HANDOFF_ARTIFACTS = {
   transferPlanning: 'samples/_probe/newsroom_handoff/transfer_planning_readback.json',
   readinessChecklist: 'samples/_probe/newsroom_handoff/real_packet_readiness_checklist.json',
   episodeCapsule: 'samples/_probe/newsroom_handoff/episode_production_capsule_v1.json',
+  captionTimingPlan: 'samples/_probe/newsroom_handoff/episode_caption_timing_plan_v1.json',
   validatorDoc: 'docs/verification/NEWSROOM_HANDOFF_VALIDATOR_V1_2026-06-20.md',
   slotLinkageDoc: 'docs/verification/NEWSROOM_G28_SLOT_LINKAGE_PROOF_V1_2026-06-20.md',
   transferPlanningDoc: 'docs/verification/NEWSROOM_TRANSFER_PLANNING_PROOF_V1_2026-06-20.md',
   episodeCapsuleDoc: 'docs/verification/NEWSROOM_EPISODE_PRODUCTION_CAPSULE_V1_2026-06-22.md',
   episodePreviewDoc: 'docs/verification/NEWSROOM_REVIEW_CONSOLE_EPISODE_PREVIEW_V1_2026-06-22.md',
+  captionTimingDoc: 'docs/verification/NEWSROOM_CAPTION_TIMING_PLAN_V1_2026-06-22.md',
+  timingPanelDoc: 'docs/verification/NEWSROOM_REVIEW_CONSOLE_TIMING_PANEL_V1_2026-06-22.md',
   contract: 'docs/integration/NEWSROOM_TO_NLMYTGEN_HANDOFF_CONTRACT.md',
 };
 let currentReviewPacket = null;
@@ -1183,7 +1186,7 @@ function renderNewsroomArtifactInventory(artifactCheck) {
   }).join('');
 }
 
-function buildNewsroomBoundaryAlerts(packet, slotLinkage, transferPlanning, artifactCheck, loadErrors, capsule) {
+function buildNewsroomBoundaryAlerts(packet, slotLinkage, transferPlanning, artifactCheck, loadErrors, capsule, captionTimingPlan) {
   const alerts = [];
   for (const error of loadErrors.filter(Boolean)) {
     alerts.push(error);
@@ -1240,6 +1243,38 @@ function buildNewsroomBoundaryAlerts(packet, slotLinkage, transferPlanning, arti
       ['publishing_ready', false],
     ]) {
       if (boundary[key] !== expected) alerts.push(`capsule boundary ${key}=${boolLabel(boundary[key])}`);
+    }
+  }
+  if (captionTimingPlan) {
+    const audio = captionTimingPlan.audio_readiness || {};
+    const transfer = captionTimingPlan.transfer_status || {};
+    const boundary = captionTimingPlan.boundary_assertions || {};
+    if (captionTimingPlan.diagnostic_only !== true) alerts.push('caption timing diagnostic_only is not true');
+    if (captionTimingPlan.production_status !== 'diagnostic_timing_plan_only') {
+      alerts.push(`unexpected caption timing production_status=${captionTimingPlan.production_status || 'missing'}`);
+    }
+    if (transfer.transfer_status && transfer.transfer_status !== 'blocked') {
+      alerts.push(`unexpected caption timing transfer_status=${transfer.transfer_status}`);
+    }
+    if (transfer.YMM4_candidate !== false) {
+      alerts.push(`caption timing YMM4_candidate=${boolLabel(transfer.YMM4_candidate)}`);
+    }
+    if (audio.TTS_generated !== false) {
+      alerts.push(`caption timing TTS_generated=${boolLabel(audio.TTS_generated)}`);
+    }
+    for (const [key, expected] of [
+      ['public_video', false],
+      ['real_source_fetch_performed', false],
+      ['real_urls_accessed', false],
+      ['external_media_downloaded', false],
+      ['tts_generated', false],
+      ['ymmp_generated', false],
+      ['ymm4_carrier_generated', false],
+      ['render_generated', false],
+      ['production_approval', false],
+      ['publishing_ready', false],
+    ]) {
+      if (boundary[key] !== expected) alerts.push(`caption timing boundary ${key}=${boolLabel(boundary[key])}`);
     }
   }
   return alerts;
@@ -1351,6 +1386,172 @@ function renderNewsroomEpisodeVisualRows(capsule) {
       + `</tr>`
     );
   }).join('');
+}
+
+function formatNewsroomRange(row) {
+  return `${Number(row?.start_sec ?? 0)}-${Number(row?.end_sec ?? 0)}s`;
+}
+
+function renderNewsroomTimingBeatRows(plan) {
+  const rows = listOrEmpty(plan?.beat_timing);
+  if (!rows.length) {
+    return '<tr><td colspan="7">caption/timing plan beat_timing not loaded.</td></tr>';
+  }
+  return rows.map((beat) => (
+    `<tr data-newsroom-timing-beat="${escapeAttr(beat.beat_id || '')}">`
+    + `<th><code>${escapeHtml(beat.beat_id || '')}</code></th>`
+    + `<td>${escapeHtml(formatNewsroomRange(beat))}</td>`
+    + `<td>${escapeHtml(String(beat.duration_sec ?? 0))}s</td>`
+    + `<td>${escapeHtml(beat.narration_placeholder || '')}</td>`
+    + `<td>${escapeHtml(joinedList(beat.caption_units))}</td>`
+    + `<td>${escapeHtml(joinedList(beat.visual_refs))}</td>`
+    + `<td>${escapeHtml(joinedList(beat.source_refs))}</td>`
+    + `</tr>`
+  )).join('');
+}
+
+function renderNewsroomCaptionUnitRows(plan) {
+  const rows = listOrEmpty(plan?.caption_units);
+  if (!rows.length) {
+    return '<tr><td colspan="8">caption/timing plan caption_units not loaded.</td></tr>';
+  }
+  return rows.map((unit) => (
+    `<tr data-newsroom-caption-unit="${escapeAttr(unit.caption_id || '')}">`
+    + `<th><code>${escapeHtml(unit.caption_id || '')}</code></th>`
+    + `<td>${escapeHtml(unit.beat_id || '')}</td>`
+    + `<td>${escapeHtml(formatNewsroomRange(unit))}</td>`
+    + `<td>${escapeHtml(unit.text_placeholder || '')}</td>`
+    + `<td>max_chars=${escapeHtml(String(unit.max_chars_target ?? 'unknown'))}</td>`
+    + `<td>lines=${escapeHtml(String(unit.line_count_target ?? 'unknown'))}</td>`
+    + `<td>${escapeHtml(unit.reading_speed_note || 'reading_speed_note missing')}</td>`
+    + `<td>${escapeHtml(unit.caption_reserve_status || 'unknown')}</td>`
+    + `</tr>`
+  )).join('');
+}
+
+function renderNewsroomVisualTimingRows(plan) {
+  const rows = listOrEmpty(plan?.visual_timing);
+  if (!rows.length) {
+    return '<tr><td colspan="7">caption/timing plan visual_timing not loaded.</td></tr>';
+  }
+  return rows.map((visual) => (
+    `<tr data-newsroom-visual-timing="${escapeAttr(visual.visual_id || '')}">`
+    + `<th><code>${escapeHtml(visual.visual_id || '')}</code></th>`
+    + `<td>${escapeHtml(visual.beat_id || '')}</td>`
+    + `<td>${escapeHtml(formatNewsroomRange(visual))}</td>`
+    + `<td>${escapeHtml(visual.g28_slot || '')}</td>`
+    + `<td>${escapeHtml(visual.layout_hint || '')}</td>`
+    + `<td>${escapeHtml(visual.caption_interference_risk || 'caption_interference_risk missing')}</td>`
+    + `<td><code>${escapeHtml(visual.review_surface_ref || '')}</code></td>`
+    + `</tr>`
+  )).join('');
+}
+
+function renderNewsroomCaptionTimingPanel(plan) {
+  if (!plan) {
+    return (
+      `<section class="newsroom-caption-timing-panel" data-newsroom-caption-timing-panel="loading">`
+      + `<div class="review-section-head">`
+      + `<div><h4>Newsroom caption / timing panel</h4><p class="hint">caption/timing plan is loading.</p></div>`
+      + `</div>`
+      + `</section>`
+    );
+  }
+  const source = plan.source || {};
+  const summary = plan.episode_timing_summary || {};
+  const audio = plan.audio_readiness || {};
+  const transfer = plan.transfer_status || {};
+  const boundary = plan.boundary_assertions || {};
+  const prohibitedActions = Array.from(new Set([
+    ...listOrEmpty(transfer.prohibited_next_actions),
+    'TTS generation',
+  ]));
+  const allowedActions = Array.from(new Set([
+    ...listOrEmpty(plan.next_allowed_steps),
+    'Review Console timing review',
+  ]));
+  const badges = [
+    [`diagnostic_only=${boolLabel(plan.diagnostic_only)}`, plan.diagnostic_only === true],
+    [`review_status=${plan.review_status || 'unknown'}`, Boolean(plan.review_status)],
+    [`total_duration_sec=${summary.total_duration_sec ?? 'unknown'}`, Number(summary.total_duration_sec) === 68],
+    [`beat_count=${summary.beat_count ?? 0}`, Number(summary.beat_count) === 2],
+    [`caption_unit_count=${summary.caption_unit_count ?? 0}`, Number(summary.caption_unit_count) === 4],
+    [`visual_count=${summary.visual_count ?? 0}`, Number(summary.visual_count) === 2],
+    [`voice_status=${audio.voice_status || 'unknown'}`, audio.voice_status === 'not_started'],
+    [`TTS_generated=${boolLabel(audio.TTS_generated)}`, audio.TTS_generated === false],
+    [`transfer_status=${transfer.transfer_status || 'unknown'}`, transfer.transfer_status === 'blocked'],
+    [`YMM4_candidate=${boolLabel(transfer.YMM4_candidate)}`, transfer.YMM4_candidate === false],
+    [`ymmp_generated=${boolLabel(boundary.ymmp_generated)}`, boundary.ymmp_generated === false],
+    [`render_generated=${boolLabel(boundary.render_generated)}`, boundary.render_generated === false],
+  ].map(([label, pass]) => (
+    `<span class="pipeline-smoke-state ${pass ? 'passable' : 'blocked'}" data-newsroom-timing-badge="${escapeAttr(label)}">${escapeHtml(label)}</span>`
+  )).join('');
+  const summaryRows = renderG28KeyValues([
+    ['artifact_id', plan.artifact_id || 'unknown'],
+    ['schema_version', plan.schema_version || 'unknown'],
+    ['episode_id', source.episode_id || 'unknown'],
+    ['source_capsule', source.capsule_path || 'unknown'],
+    ['production_status', plan.production_status || 'unknown'],
+    ['total_duration_sec', summary.total_duration_sec ?? 'unknown'],
+    ['covered_range_sec', summary.covered_range_sec ?? 'unknown'],
+    ['timing_confidence', summary.timing_confidence || 'unknown'],
+    ['provisional_timing', boolLabel(summary.provisional_timing)],
+  ]);
+  const readinessRows = renderG28KeyValues([
+    ['voice_status', audio.voice_status || 'unknown'],
+    ['voice_source', audio.voice_source || 'unknown'],
+    ['TTS_generated', boolLabel(audio.TTS_generated)],
+    ['audio_timing_confidence', audio.audio_timing_confidence || 'unknown'],
+    ['transfer_status', transfer.transfer_status || 'unknown'],
+    ['YMM4_candidate', boolLabel(transfer.YMM4_candidate)],
+    ['blocker_count', transfer.blocker_count ?? 'unknown'],
+    ['unlock_requirement_count', transfer.unlock_requirement_count ?? 'unknown'],
+  ]);
+  return (
+    `<section class="newsroom-caption-timing-panel" data-newsroom-caption-timing-panel="ready">`
+    + `<div class="review-section-head">`
+    + `<div><h4>Newsroom caption / timing panel</h4><p class="hint">Read-only timing-axis review for the 68 sec diagnostic episode. It does not open YMM4 transfer, render, TTS, production approval, real ingest, or external fetch.</p></div>`
+    + `<div class="review-proof-summary"><span>${escapeHtml(NEWSROOM_HANDOFF_ARTIFACTS.captionTimingPlan)}</span><strong>${escapeHtml(transfer.transfer_status || 'blocked')}</strong><em>read-only timing</em></div>`
+    + `</div>`
+    + `<div class="g28-badge-row newsroom-badge-row">${badges}</div>`
+    + `<div class="newsroom-review-grid">`
+    + `<section class="g28-review-card newsroom-review-card"><h4>timing summary</h4><div class="g28-kv-grid">${summaryRows}</div></section>`
+    + `<section class="g28-review-card newsroom-review-card warning"><h4>audio / transfer readiness</h4><div class="g28-kv-grid">${readinessRows}</div><p>blocked transfer is expected for this diagnostic timing review.</p></section>`
+    + `<section class="g28-review-card newsroom-review-card warning newsroom-planning-card"><h4>timing prohibited next actions</h4>${renderNewsroomActionList(prohibitedActions, 'prohibited action not loaded.', 'data-newsroom-timing-prohibited-action')}</section>`
+    + `<section class="g28-review-card newsroom-review-card newsroom-planning-card"><h4>timing allowed next actions</h4>${renderNewsroomActionList(allowedActions, 'allowed action not loaded.', 'data-newsroom-timing-allowed-action')}</section>`
+    + `</div>`
+    + `<div class="newsroom-episode-timeline" aria-label="Newsroom caption timing beat ranges">`
+    + `${listOrEmpty(plan.beat_timing).map((beat) => (
+      `<div class="newsroom-episode-beat" data-newsroom-timing-timeline-beat="${escapeAttr(beat.beat_id || '')}">`
+      + `<strong>${escapeHtml(beat.beat_id || '')}</strong>`
+      + `<span>${escapeHtml(formatNewsroomRange(beat))} / ${escapeHtml(String(beat.duration_sec ?? 0))}s</span>`
+      + `<p>${escapeHtml(joinedList(beat.caption_units, 'caption units missing'))}</p>`
+      + `</div>`
+    )).join('')}`
+    + `</div>`
+    + `<div class="review-beat-table-wrap newsroom-timing-beat-wrap">`
+    + `<h4>Beat timing rows</h4>`
+    + `<table class="review-beat-table newsroom-timing-beat-table">`
+    + `<thead><tr><th>beat</th><th>range</th><th>duration</th><th>narration placeholder</th><th>caption units</th><th>visual refs</th><th>source refs</th></tr></thead>`
+    + `<tbody>${renderNewsroomTimingBeatRows(plan)}</tbody>`
+    + `</table>`
+    + `</div>`
+    + `<div class="review-beat-table-wrap newsroom-caption-unit-wrap">`
+    + `<h4>Caption unit timing</h4>`
+    + `<table class="review-beat-table newsroom-caption-unit-table">`
+    + `<thead><tr><th>caption</th><th>beat</th><th>range</th><th>placeholder</th><th>max chars</th><th>lines</th><th>reading speed</th><th>reserve</th></tr></thead>`
+    + `<tbody>${renderNewsroomCaptionUnitRows(plan)}</tbody>`
+    + `</table>`
+    + `</div>`
+    + `<div class="review-beat-table-wrap newsroom-visual-timing-wrap">`
+    + `<h4>Visual timing / caption risk</h4>`
+    + `<table class="review-beat-table newsroom-visual-timing-table">`
+    + `<thead><tr><th>visual</th><th>beat</th><th>range</th><th>G-28 slot</th><th>layout</th><th>caption_interference_risk</th><th>review surface</th></tr></thead>`
+    + `<tbody>${renderNewsroomVisualTimingRows(plan)}</tbody>`
+    + `</table>`
+    + `</div>`
+    + `</section>`
+  );
 }
 
 function renderNewsroomCapsuleBlockerGroups(transfer) {
@@ -1475,6 +1676,7 @@ function renderNewsroomHandoffReview() {
   const slotLinkage = currentNewsroomHandoffReview.slotLinkage || {};
   const transferPlanning = currentNewsroomHandoffReview.transferPlanning || {};
   const episodeCapsule = currentNewsroomHandoffReview.episodeCapsule || null;
+  const captionTimingPlan = currentNewsroomHandoffReview.captionTimingPlan || null;
   const artifactCheck = currentNewsroomHandoffReview.artifactCheck || null;
   const loadErrors = currentNewsroomHandoffReview.loadErrors || [];
   const sourceNotes = listOrEmpty(packet.source_notes);
@@ -1499,6 +1701,7 @@ function renderNewsroomHandoffReview() {
     artifactCheck,
     loadErrors,
     episodeCapsule,
+    captionTimingPlan,
   );
   const badges = [
     [`validator_status=${transferPlanning.validator_status || slotLinkage.validator_status || 'not_loaded'}`, (transferPlanning.validator_status || slotLinkage.validator_status) === 'passed'],
@@ -1563,6 +1766,7 @@ function renderNewsroomHandoffReview() {
     + `</div>`
     + `<div class="g28-badge-row newsroom-badge-row">${badges}</div>`
     + renderNewsroomEpisodePreview(episodeCapsule)
+    + renderNewsroomCaptionTimingPanel(captionTimingPlan)
     + `<div class="newsroom-review-grid">`
     + `<section class="g28-review-card newsroom-review-card"><h4>episode / packet</h4><div class="g28-kv-grid">${renderG28KeyValues([
       ['episode_id', packet.episode_id || slotLinkage.episode_id || 'unknown'],
@@ -1786,14 +1990,18 @@ async function loadNewsroomHandoffReview() {
   const episodeCapsulePromise = loader
     ? loader(NEWSROOM_HANDOFF_ARTIFACTS.episodeCapsule)
     : Promise.resolve({ ok: false, error: 'loadReviewProof unavailable' });
+  const captionTimingPlanPromise = loader
+    ? loader(NEWSROOM_HANDOFF_ARTIFACTS.captionTimingPlan)
+    : Promise.resolve({ ok: false, error: 'loadReviewProof unavailable' });
   const artifactPromise = checker
     ? checker(Object.values(NEWSROOM_HANDOFF_ARTIFACTS))
     : Promise.resolve({ ok: false, artifacts: [], error: 'checkReviewArtifacts unavailable' });
-  const [packetRes, slotLinkageRes, transferPlanningRes, episodeCapsuleRes, artifactCheck] = await Promise.all([
+  const [packetRes, slotLinkageRes, transferPlanningRes, episodeCapsuleRes, captionTimingPlanRes, artifactCheck] = await Promise.all([
     packetPromise,
     slotLinkagePromise,
     transferPlanningPromise,
     episodeCapsulePromise,
+    captionTimingPlanPromise,
     artifactPromise,
   ]);
   currentNewsroomHandoffReview = {
@@ -1801,12 +2009,14 @@ async function loadNewsroomHandoffReview() {
     slotLinkage: slotLinkageRes.ok ? slotLinkageRes.payload : null,
     transferPlanning: transferPlanningRes.ok ? transferPlanningRes.payload : null,
     episodeCapsule: episodeCapsuleRes.ok ? episodeCapsuleRes.payload : null,
+    captionTimingPlan: captionTimingPlanRes.ok ? captionTimingPlanRes.payload : null,
     artifactCheck,
     loadErrors: [
       packetRes.ok ? '' : `packet load failed: ${packetRes.error || 'unknown error'}`,
       slotLinkageRes.ok ? '' : `slot-linkage load failed: ${slotLinkageRes.error || 'unknown error'}`,
       transferPlanningRes.ok ? '' : `transfer-planning load failed: ${transferPlanningRes.error || 'unknown error'}`,
       episodeCapsuleRes.ok ? '' : `episode capsule load failed: ${episodeCapsuleRes.error || 'unknown error'}`,
+      captionTimingPlanRes.ok ? '' : `caption timing plan load failed: ${captionTimingPlanRes.error || 'unknown error'}`,
     ].filter(Boolean),
   };
   renderNewsroomHandoffReview();
