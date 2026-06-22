@@ -1,5 +1,35 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom script import candidate v1 completed (2026-06-22)**:
+  Created the diagnostic-only script import candidate from the existing caption
+  CSV and neutral timeline proof without changing either source artifact.
+  Machine artifact:
+  `samples/_probe/newsroom_handoff/script_import_candidate_v1.json`; human
+  readback:
+  `docs/verification/NEWSROOM_SCRIPT_IMPORT_CANDIDATE_V1_2026-06-22.md`;
+  implementation:
+  `src/pipeline/newsroom_script_import_candidate.py`; focused coverage:
+  `tests/test_newsroom_script_import_candidate.py`. The candidate maps the
+  four committed caption CSV rows into exactly four `script_lines`, preserving
+  `source_caption_id`, `beat_id`, `start_sec`, `end_sec`, `duration_sec`, and
+  `text` for each row, and cross-checks each line against the neutral timeline
+  caption item id. Each line is diagnostic-only, `production_ready=false`,
+  `tts_ready=false`, uses the synthetic placeholder speaker
+  `synthetic_newsroom_placeholder`, and carries a
+  `voice_status=placeholder_not_generated` voice profile with
+  `TTS_generated=false` and no audio file. Result:
+  `script_import_status=passed`, `import_status=candidate_with_placeholders`,
+  no mapping errors, no missing CSV captions, no extra script lines, and
+  diagnostic safety remains clear (`real_urls=false`,
+  `real_media_paths=false`, `TTS_generated=false`, `render_created=false`,
+  `ymmp_created=false`, `production_approval=false`). Verification observed
+  script import, caption CSV import, and neutral timeline tests `22 passed`;
+  JSON parse succeeded. This slice does not ingest a real packet, fetch
+  sources, access real URLs, download media, generate TTS/audio, edit or
+  generate `.ymmp`, generate YMM4 carriers, render, approve rights, approve
+  production, publish/upload output, or expand dashboard/governance/freshness
+  work. Next safe action is a `YMM4-adjacent no-media proof`, a script import
+  mapping proof, or a tiny importable proof only after another gate.
 - **Newsroom caption CSV import candidate v1 completed (2026-06-22)**:
   Validated the existing derived caption CSV as a caption-only diagnostic import
   candidate without regenerating the neutral timeline or CSV. Machine readback:

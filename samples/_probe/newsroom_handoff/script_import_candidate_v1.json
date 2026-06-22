@@ -1,0 +1,381 @@
+{
+  "artifact_id": "newsroom_script_import_candidate_v1_2026_06_22",
+  "script_candidate_id": "newsroom_script_import_candidate_v1_2026_06_22",
+  "schema_version": "newsroom_script_import_candidate.v1",
+  "review_status": "ready_for_supervisor_review",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_only",
+  "import_status": "candidate_with_placeholders",
+  "script_import_status": "passed",
+  "line_count": 4,
+  "identity": {
+    "script_candidate_id": "newsroom_script_import_candidate_v1_2026_06_22",
+    "source_csv_path": "samples/_probe/newsroom_handoff/caption_import_candidate_v1.csv",
+    "source_neutral_timeline_path": "samples/_probe/newsroom_handoff/neutral_timeline_import_proof_v1.json",
+    "source_caption_csv_readback_path": "samples/_probe/newsroom_handoff/caption_csv_import_candidate_readback_v1.json",
+    "source_commit_or_status": "worktree_verified_before_generation",
+    "source_episode_id": "episode_fake_nlmytgen_delta_v1",
+    "neutral_timeline_id": "newsroom_neutral_timeline_import_proof_v1_2026_06_22",
+    "caption_csv_import_status": "passed",
+    "production_status": "diagnostic_only",
+    "import_status": "candidate_with_placeholders"
+  },
+  "review_memory": {
+    "prior_user_review_count": 0,
+    "accepted_scope": [
+      "diagnostic_timing_panel_surface_by_validation",
+      "diagnostic_caption_copy_refinement_by_validation",
+      "diagnostic_transfer_candidate_classification",
+      "neutral_timeline_import_proof",
+      "caption_csv_import_candidate_schema"
+    ],
+    "not_accepted_scope": [
+      "production subtitle design",
+      "production narration",
+      "TTS-ready script",
+      "YMM4 transfer approval",
+      ".ymmp",
+      "render",
+      "public video"
+    ],
+    "current_axis": "script_import_candidate_schema",
+    "next_nonredundant_axis": [
+      "script_import_mapping_proof",
+      "YMM4-adjacent no-media proof",
+      "tiny importable proof after another gate"
+    ],
+    "repeated_general_review_allowed": false
+  },
+  "source_policy": {
+    "csv_rows_are_source_of_script_lines": true,
+    "neutral_timeline_caption_items_are_cross_check_only": true,
+    "speaker_assignment_policy": "single_synthetic_placeholder",
+    "voice_profile_policy": "placeholder_not_generated_no_tts",
+    "real_source_dependency": "none"
+  },
+  "script_lines": [
+    {
+      "line_id": "line_01_cap_beat_fake_intro_001_01",
+      "source_caption_id": "cap_beat_fake_intro_001_01",
+      "beat_id": "beat_fake_intro_001",
+      "start_sec": 0,
+      "end_sec": 12,
+      "duration_sec": 12,
+      "text": "Fake topic, review only.",
+      "speaker_id": "synthetic_newsroom_placeholder",
+      "voice_profile": {
+        "voice_profile_id": "voice_placeholder_not_generated",
+        "voice_status": "placeholder_not_generated",
+        "TTS_generated": false,
+        "audio_file": null,
+        "audio_required_for_this_candidate": false
+      },
+      "diagnostic_only": true,
+      "production_ready": false,
+      "tts_ready": false,
+      "source_ref": "caption_csv.caption_id:cap_beat_fake_intro_001_01",
+      "source_neutral_timeline_item_id": "item_caption_cap_beat_fake_intro_001_01",
+      "notes": [
+        "Synthetic script line derived from caption CSV row.",
+        "Voice profile is a placeholder only; no TTS or audio was generated."
+      ]
+    },
+    {
+      "line_id": "line_02_cap_beat_fake_intro_001_02",
+      "source_caption_id": "cap_beat_fake_intro_001_02",
+      "beat_id": "beat_fake_intro_001",
+      "start_sec": 12,
+      "end_sec": 24,
+      "duration_sec": 12,
+      "text": "Review-only handoff stays.",
+      "speaker_id": "synthetic_newsroom_placeholder",
+      "voice_profile": {
+        "voice_profile_id": "voice_placeholder_not_generated",
+        "voice_status": "placeholder_not_generated",
+        "TTS_generated": false,
+        "audio_file": null,
+        "audio_required_for_this_candidate": false
+      },
+      "diagnostic_only": true,
+      "production_ready": false,
+      "tts_ready": false,
+      "source_ref": "caption_csv.caption_id:cap_beat_fake_intro_001_02",
+      "source_neutral_timeline_item_id": "item_caption_cap_beat_fake_intro_001_02",
+      "notes": [
+        "Synthetic script line derived from caption CSV row.",
+        "Voice profile is a placeholder only; no TTS or audio was generated."
+      ]
+    },
+    {
+      "line_id": "line_03_cap_beat_fake_claim_001_01",
+      "source_caption_id": "cap_beat_fake_claim_001_01",
+      "beat_id": "beat_fake_claim_001",
+      "start_sec": 24,
+      "end_sec": 46,
+      "duration_sec": 22,
+      "text": "A fake claim is shown.",
+      "speaker_id": "synthetic_newsroom_placeholder",
+      "voice_profile": {
+        "voice_profile_id": "voice_placeholder_not_generated",
+        "voice_status": "placeholder_not_generated",
+        "TTS_generated": false,
+        "audio_file": null,
+        "audio_required_for_this_candidate": false
+      },
+      "diagnostic_only": true,
+      "production_ready": false,
+      "tts_ready": false,
+      "source_ref": "caption_csv.caption_id:cap_beat_fake_claim_001_01",
+      "source_neutral_timeline_item_id": "item_caption_cap_beat_fake_claim_001_01",
+      "notes": [
+        "Synthetic script line derived from caption CSV row.",
+        "Voice profile is a placeholder only; no TTS or audio was generated."
+      ]
+    },
+    {
+      "line_id": "line_04_cap_beat_fake_claim_001_02",
+      "source_caption_id": "cap_beat_fake_claim_001_02",
+      "beat_id": "beat_fake_claim_001",
+      "start_sec": 46,
+      "end_sec": 68,
+      "duration_sec": 22,
+      "text": "Fake source checks are noted.",
+      "speaker_id": "synthetic_newsroom_placeholder",
+      "voice_profile": {
+        "voice_profile_id": "voice_placeholder_not_generated",
+        "voice_status": "placeholder_not_generated",
+        "TTS_generated": false,
+        "audio_file": null,
+        "audio_required_for_this_candidate": false
+      },
+      "diagnostic_only": true,
+      "production_ready": false,
+      "tts_ready": false,
+      "source_ref": "caption_csv.caption_id:cap_beat_fake_claim_001_02",
+      "source_neutral_timeline_item_id": "item_caption_cap_beat_fake_claim_001_02",
+      "notes": [
+        "Synthetic script line derived from caption CSV row.",
+        "Voice profile is a placeholder only; no TTS or audio was generated."
+      ]
+    }
+  ],
+  "schema_validation": {
+    "script_lines_array_present": true,
+    "required_line_fields": [
+      "line_id",
+      "source_caption_id",
+      "beat_id",
+      "start_sec",
+      "end_sec",
+      "duration_sec",
+      "text",
+      "speaker_id",
+      "voice_profile",
+      "diagnostic_only",
+      "production_ready",
+      "tts_ready",
+      "source_ref"
+    ],
+    "line_count": 4,
+    "expected_line_count": 4,
+    "required_line_fields_present": true,
+    "rows": [
+      {
+        "line_id": "line_01_cap_beat_fake_intro_001_01",
+        "missing_fields": [],
+        "required_fields_present": true
+      },
+      {
+        "line_id": "line_02_cap_beat_fake_intro_001_02",
+        "missing_fields": [],
+        "required_fields_present": true
+      },
+      {
+        "line_id": "line_03_cap_beat_fake_claim_001_01",
+        "missing_fields": [],
+        "required_fields_present": true
+      },
+      {
+        "line_id": "line_04_cap_beat_fake_claim_001_02",
+        "missing_fields": [],
+        "required_fields_present": true
+      }
+    ],
+    "errors": [],
+    "warnings": []
+  },
+  "csv_to_script_mapping": {
+    "line_count": 4,
+    "csv_row_count": 4,
+    "every_line_maps_exactly_one_csv_caption_row": true,
+    "every_csv_row_mapped": true,
+    "source_caption_ids_are_unique": true,
+    "timing_matches": true,
+    "text_matches": true,
+    "missing_csv_caption_rows": [],
+    "extra_script_lines": [],
+    "duplicate_source_caption_ids": [],
+    "rows": [
+      {
+        "line_id": "line_01_cap_beat_fake_intro_001_01",
+        "source_caption_id": "cap_beat_fake_intro_001_01",
+        "source_caption_id_exists_in_csv": true,
+        "one_line_for_csv_caption": true,
+        "timing_matches_csv": true,
+        "text_matches_csv": true,
+        "csv_row_number": 1
+      },
+      {
+        "line_id": "line_02_cap_beat_fake_intro_001_02",
+        "source_caption_id": "cap_beat_fake_intro_001_02",
+        "source_caption_id_exists_in_csv": true,
+        "one_line_for_csv_caption": true,
+        "timing_matches_csv": true,
+        "text_matches_csv": true,
+        "csv_row_number": 2
+      },
+      {
+        "line_id": "line_03_cap_beat_fake_claim_001_01",
+        "source_caption_id": "cap_beat_fake_claim_001_01",
+        "source_caption_id_exists_in_csv": true,
+        "one_line_for_csv_caption": true,
+        "timing_matches_csv": true,
+        "text_matches_csv": true,
+        "csv_row_number": 3
+      },
+      {
+        "line_id": "line_04_cap_beat_fake_claim_001_02",
+        "source_caption_id": "cap_beat_fake_claim_001_02",
+        "source_caption_id_exists_in_csv": true,
+        "one_line_for_csv_caption": true,
+        "timing_matches_csv": true,
+        "text_matches_csv": true,
+        "csv_row_number": 4
+      }
+    ],
+    "errors": [],
+    "warnings": []
+  },
+  "line_validation": {
+    "line_count": 4,
+    "expected_line_count": 4,
+    "all_lines_valid": true,
+    "all_lines_diagnostic_only": true,
+    "all_lines_production_not_ready": true,
+    "all_lines_tts_not_ready": true,
+    "all_speakers_are_synthetic_placeholders": true,
+    "all_voice_profiles_are_placeholders": true,
+    "rows": [
+      {
+        "line_id": "line_01_cap_beat_fake_intro_001_01",
+        "source_caption_id": "cap_beat_fake_intro_001_01",
+        "source_caption_id_exists_in_csv": true,
+        "timing_matches_csv": true,
+        "text_matches_csv": true,
+        "diagnostic_only_is_true": true,
+        "production_ready_is_false": true,
+        "tts_ready_is_false": true,
+        "speaker_id_is_synthetic_placeholder": true,
+        "voice_profile_is_placeholder_not_generated": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "line_id": "line_02_cap_beat_fake_intro_001_02",
+        "source_caption_id": "cap_beat_fake_intro_001_02",
+        "source_caption_id_exists_in_csv": true,
+        "timing_matches_csv": true,
+        "text_matches_csv": true,
+        "diagnostic_only_is_true": true,
+        "production_ready_is_false": true,
+        "tts_ready_is_false": true,
+        "speaker_id_is_synthetic_placeholder": true,
+        "voice_profile_is_placeholder_not_generated": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "line_id": "line_03_cap_beat_fake_claim_001_01",
+        "source_caption_id": "cap_beat_fake_claim_001_01",
+        "source_caption_id_exists_in_csv": true,
+        "timing_matches_csv": true,
+        "text_matches_csv": true,
+        "diagnostic_only_is_true": true,
+        "production_ready_is_false": true,
+        "tts_ready_is_false": true,
+        "speaker_id_is_synthetic_placeholder": true,
+        "voice_profile_is_placeholder_not_generated": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "line_id": "line_04_cap_beat_fake_claim_001_02",
+        "source_caption_id": "cap_beat_fake_claim_001_02",
+        "source_caption_id_exists_in_csv": true,
+        "timing_matches_csv": true,
+        "text_matches_csv": true,
+        "diagnostic_only_is_true": true,
+        "production_ready_is_false": true,
+        "tts_ready_is_false": true,
+        "speaker_id_is_synthetic_placeholder": true,
+        "voice_profile_is_placeholder_not_generated": true,
+        "status": "passed",
+        "errors": []
+      }
+    ],
+    "errors": [],
+    "warnings": []
+  },
+  "diagnostic_safety": {
+    "real_urls": false,
+    "real_media_paths": false,
+    "TTS_generated": false,
+    "render_created": false,
+    "ymmp_created": false,
+    "production_approval": false,
+    "external_fetch_performed": false,
+    "script_line_audio_files": [],
+    "errors": [],
+    "warnings": []
+  },
+  "import_candidate_result": {
+    "script_import_status": "passed",
+    "allowed_next_artifacts": [
+      "YMM4-adjacent no-media proof",
+      "script import mapping proof",
+      "tiny importable proof after another gate"
+    ],
+    "prohibited_next_artifacts": [
+      "production .ymmp",
+      "render output",
+      "TTS output",
+      "real media"
+    ],
+    "errors": [],
+    "warnings": []
+  },
+  "review_card": {
+    "status": "none",
+    "axis_if_needed": "script_import_candidate_schema",
+    "reason": "No user judgement is required because the checker validates the caption CSV to script-line mapping directly.",
+    "not_asking": "No repeated timing, caption copy, blocker, neutral timeline, YMM4, TTS, media, or production review is requested."
+  },
+  "boundary_assertions": {
+    "diagnostic_only": true,
+    "script_import_candidate": true,
+    "source_csv_changed": false,
+    "source_neutral_timeline_changed": false,
+    "opens_production_transfer": false,
+    "opens_YMM4_transfer": false,
+    "requires_YMM4_columns": false,
+    "real_urls": false,
+    "real_media_paths": false,
+    "TTS_generated": false,
+    "render_created": false,
+    "ymmp_created": false,
+    "production_approval": false,
+    "public_video": false,
+    "external_fetch_performed": false,
+    "dashboard_governance_freshness_changed": false
+  }
+}
