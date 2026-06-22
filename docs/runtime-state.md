@@ -1,5 +1,29 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom caption copy refinement v1 completed (2026-06-22)**:
+  Created a diagnostic caption-copy refinement layer for the existing
+  caption/timing plan without changing timing or opening production paths.
+  Machine artifact:
+  `samples/_probe/newsroom_handoff/episode_caption_copy_refinement_v1.json`;
+  human readback:
+  `docs/verification/NEWSROOM_CAPTION_COPY_REFINEMENT_V1_2026-06-22.md`;
+  implementation: `src/pipeline/newsroom_caption_copy_refinement.py`; focused
+  coverage: `tests/test_newsroom_caption_copy_refinement.py`. The refinement
+  keeps the `68` second plan unchanged, preserves two beats and four caption
+  units, replaces placeholder copy with four short synthetic captions, records
+  char counts, line targets, max-char targets, reading-density bands, beat
+  alignment notes, and visual-interference notes, and keeps Review Card status
+  `none` to avoid repeating the already validated timing-panel review.
+  Verification observed caption-copy tests `6 passed`, existing caption/timing
+  tests `7 passed`, existing capsule tests `7 passed`, JSON parse success, and
+  clean whitespace checks. Audio/voice remains `not_started`,
+  `TTS_generated=false`, transfer remains `blocked`, and
+  `YMM4_candidate=false`. This slice does not mutate timing JSON, fetch
+  external sources, access real URLs, download media, generate TTS/audio, edit
+  or generate `.ymmp`, generate YMM4 carriers, render, approve rights, approve
+  production, publish/upload output, or expand dashboard/governance/freshness
+  work. Next safe action is supervisor caption readability review or a later
+  non-production transfer-candidate proof only after blockers are resolved.
 - **Newsroom Review Console timing panel v1 completed (2026-06-22)**:
   Added a read-only Review Console timing panel for the existing diagnostic
   caption/timing plan. Implementation: `gui/renderer.js`, `gui/style.css`, and
