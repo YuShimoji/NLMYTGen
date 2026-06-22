@@ -586,11 +586,17 @@ const G28_HUMAN_GUI_SUMMARY = [
 ];
 const NEWSROOM_HANDOFF_ARTIFACTS = {
   packet: 'samples/_probe/newsroom_handoff/minimal_episode_packet.json',
+  adaptedPacket: 'samples/_probe/newsroom_handoff/adapted_newsroom_export_packet.json',
+  adapterReadback: 'samples/_probe/newsroom_handoff/newsroom_export_adapter_readback.json',
   slotLinkage: 'samples/_probe/newsroom_handoff/g28_slot_linkage_readback.json',
   transferPlanning: 'samples/_probe/newsroom_handoff/transfer_planning_readback.json',
+  readinessChecklist: 'samples/_probe/newsroom_handoff/real_packet_readiness_checklist.json',
+  episodeCapsule: 'samples/_probe/newsroom_handoff/episode_production_capsule_v1.json',
   validatorDoc: 'docs/verification/NEWSROOM_HANDOFF_VALIDATOR_V1_2026-06-20.md',
   slotLinkageDoc: 'docs/verification/NEWSROOM_G28_SLOT_LINKAGE_PROOF_V1_2026-06-20.md',
   transferPlanningDoc: 'docs/verification/NEWSROOM_TRANSFER_PLANNING_PROOF_V1_2026-06-20.md',
+  episodeCapsuleDoc: 'docs/verification/NEWSROOM_EPISODE_PRODUCTION_CAPSULE_V1_2026-06-22.md',
+  episodePreviewDoc: 'docs/verification/NEWSROOM_REVIEW_CONSOLE_EPISODE_PREVIEW_V1_2026-06-22.md',
   contract: 'docs/integration/NEWSROOM_TO_NLMYTGEN_HANDOFF_CONTRACT.md',
 };
 let currentReviewPacket = null;
@@ -1177,7 +1183,7 @@ function renderNewsroomArtifactInventory(artifactCheck) {
   }).join('');
 }
 
-function buildNewsroomBoundaryAlerts(packet, slotLinkage, transferPlanning, artifactCheck, loadErrors) {
+function buildNewsroomBoundaryAlerts(packet, slotLinkage, transferPlanning, artifactCheck, loadErrors, capsule) {
   const alerts = [];
   for (const error of loadErrors.filter(Boolean)) {
     alerts.push(error);
@@ -1210,6 +1216,31 @@ function buildNewsroomBoundaryAlerts(packet, slotLinkage, transferPlanning, arti
   }
   if (packet?.provenance?.raw_source_material_included !== false) {
     alerts.push('raw_source_material_included is not false');
+  }
+  if (capsule) {
+    const boundary = capsule.boundary_assertions || {};
+    const transfer = capsule.transfer_status || {};
+    if (capsule.diagnostic_only !== true) alerts.push('capsule diagnostic_only is not true');
+    if (capsule.production_status !== 'diagnostic_only') {
+      alerts.push(`unexpected capsule production_status=${capsule.production_status || 'missing'}`);
+    }
+    if (transfer.transfer_status && transfer.transfer_status !== 'blocked') {
+      alerts.push(`unexpected capsule transfer_status=${transfer.transfer_status}`);
+    }
+    for (const [key, expected] of [
+      ['public_video', false],
+      ['real_source_fetch_performed', false],
+      ['real_urls_accessed', false],
+      ['external_media_downloaded', false],
+      ['tts_generated', false],
+      ['ymmp_generated', false],
+      ['ymm4_carrier_generated', false],
+      ['render_generated', false],
+      ['production_approval', false],
+      ['publishing_ready', false],
+    ]) {
+      if (boundary[key] !== expected) alerts.push(`capsule boundary ${key}=${boolLabel(boundary[key])}`);
+    }
   }
   return alerts;
 }
@@ -1280,6 +1311,154 @@ function renderNewsroomActionList(actions, emptyText, dataAttr) {
   )).join('')}</ul>`;
 }
 
+function renderNewsroomEpisodeBeatRows(capsule) {
+  const rows = listOrEmpty(capsule?.script_structure);
+  if (!rows.length) {
+    return '<tr><td colspan="7">episode capsule の script_structure が未読込です。</td></tr>';
+  }
+  return rows.map((beat) => (
+    `<tr data-newsroom-episode-beat="${escapeAttr(beat.beat_id || '')}">`
+    + `<th>${escapeHtml(String(beat.order || ''))}</th>`
+    + `<td><code>${escapeHtml(beat.beat_id || '')}</code></td>`
+    + `<td>${escapeHtml(beat.purpose || '')}</td>`
+    + `<td>${escapeHtml(String(beat.rough_duration_seconds || 0))}s</td>`
+    + `<td>${escapeHtml(beat.expected_narration_placeholder || '')}</td>`
+    + `<td>${escapeHtml(joinedList(beat.source_note_refs))}</td>`
+    + `<td>${escapeHtml(joinedList(beat.visual_refs))}</td>`
+    + `</tr>`
+  )).join('');
+}
+
+function renderNewsroomEpisodeVisualRows(capsule) {
+  const rows = listOrEmpty(capsule?.visual_structure);
+  if (!rows.length) {
+    return '<tr><td colspan="8">episode capsule の visual_structure が未読込です。</td></tr>';
+  }
+  return rows.map((visual) => {
+    const slotRefs = listOrEmpty(visual.g28_slot_refs)
+      .map((slot) => slot.object_catalog_slot || slot.slot_id)
+      .filter(Boolean);
+    return (
+      `<tr data-newsroom-episode-visual="${escapeAttr(visual.visual_id || '')}">`
+      + `<th><code>${escapeHtml(visual.visual_id || '')}</code></th>`
+      + `<td>${escapeHtml(visual.beat_id || '')}</td>`
+      + `<td>${escapeHtml(visual.visualir_concept || '')}</td>`
+      + `<td>${escapeHtml(visual.layout_candidate || '')}</td>`
+      + `<td>${escapeHtml(joinedList(slotRefs))}</td>`
+      + `<td>${escapeHtml(visual.caption_reserve?.status || 'unknown')}</td>`
+      + `<td>${escapeHtml(joinedList(visual.unhinted_content_slots))}</td>`
+      + `<td>${escapeHtml(visual.schematic_proxy_warning || '')}</td>`
+      + `</tr>`
+    );
+  }).join('');
+}
+
+function renderNewsroomCapsuleBlockerGroups(transfer) {
+  const groups = transfer?.blockers || {};
+  const entries = Object.entries(groups);
+  if (!entries.length) return '<p class="hint">capsule blocker はありません。</p>';
+  return entries.map(([category, blockers]) => (
+    `<div class="newsroom-planning-blocker-group" data-newsroom-capsule-blocker-group="${escapeAttr(category)}">`
+    + `<h5>${escapeHtml(category)}</h5>`
+    + `<ul>${listOrEmpty(blockers).map((item) => (
+      `<li><strong>${escapeHtml(item.code || 'blocker')}</strong><br>${escapeHtml(item.detail || '')}</li>`
+    )).join('')}</ul>`
+    + `</div>`
+  )).join('');
+}
+
+function renderNewsroomEpisodePreview(capsule) {
+  if (!capsule) {
+    return (
+      `<section class="newsroom-episode-preview">`
+      + `<div class="review-section-head">`
+      + `<div><h4>Newsroom episode preview</h4><p class="hint">episode production capsule を読込中、または未生成です。</p></div>`
+      + `</div>`
+      + `</section>`
+    );
+  }
+  const episode = capsule.episode || {};
+  const readiness = capsule.video_readiness || {};
+  const timing = capsule.timing_approximation || {};
+  const audio = capsule.audio_voice_status || {};
+  const transfer = capsule.transfer_status || {};
+  const boundary = capsule.boundary_assertions || {};
+  const badges = [
+    [`diagnostic_only=${boolLabel(capsule.diagnostic_only)}`, capsule.diagnostic_only === true],
+    [`production_status=${capsule.production_status || 'unknown'}`, capsule.production_status === 'diagnostic_only'],
+    [`capsule_transfer_status=${transfer.transfer_status || readiness.transfer_status || 'unknown'}`, (transfer.transfer_status || readiness.transfer_status) === 'blocked'],
+    [`audio_readiness=${audio.audio_readiness || 'unknown'}`, audio.audio_readiness === 'not_started'],
+    [`public_video=${boolLabel(boundary.public_video)}`, boundary.public_video === false],
+    [`ymmp_generated=${boolLabel(boundary.ymmp_generated)}`, boundary.ymmp_generated === false],
+    [`render_generated=${boolLabel(boundary.render_generated)}`, boundary.render_generated === false],
+    [`real_source_fetch=${boolLabel(boundary.real_source_fetch_performed)}`, boundary.real_source_fetch_performed === false],
+  ].map(([label, pass]) => (
+    `<span class="pipeline-smoke-state ${pass ? 'passable' : 'blocked'}" data-newsroom-capsule-badge="${escapeAttr(label)}">${escapeHtml(label)}</span>`
+  )).join('');
+  const summaryRows = renderG28KeyValues([
+    ['episode_id', episode.episode_id || 'unknown'],
+    ['title', episode.title || 'unknown'],
+    ['schema_version', capsule.schema_version || 'unknown'],
+    ['source', episode.source || 'unknown'],
+    ['review_status', capsule.review_status || 'unknown'],
+    ['script_beats', listOrEmpty(capsule.script_structure).length],
+    ['visual_units', listOrEmpty(capsule.visual_structure).length],
+    ['total_approx_duration_seconds', timing.total_duration_seconds ?? 'unknown'],
+  ]);
+  const readinessRows = renderG28KeyValues([
+    ['script_structure', readiness.script_structure || 'unknown'],
+    ['visual_structure', readiness.visual_structure || 'unknown'],
+    ['caption_reserve', readiness.caption_reserve || 'unknown'],
+    ['timing', readiness.timing || timing.status || 'unknown'],
+    ['voice_source', audio.voice_source || 'unknown'],
+    ['validator_status', readiness.validator_status || transfer.validator_status || 'unknown'],
+    ['slot_linkage_status', readiness.slot_linkage_status || transfer.slot_linkage_status || 'unknown'],
+    ['transfer_planning_status', readiness.transfer_planning_status || transfer.transfer_planning_status || 'unknown'],
+    ['blocker_count', transfer.blocker_count ?? 'unknown'],
+    ['unlock_requirement_count', transfer.unlock_requirement_count ?? 'unknown'],
+  ]);
+  return (
+    `<section class="newsroom-episode-preview">`
+    + `<div class="review-section-head">`
+    + `<div><h4>Newsroom episode preview</h4><p class="hint">episode production capsule を read-only で表示します。ここは1本分の構造プレビューで、YMM4 transfer、render、production approval には接続しません。</p></div>`
+    + `<div class="review-proof-summary"><span>${escapeHtml(NEWSROOM_HANDOFF_ARTIFACTS.episodeCapsule)}</span><strong>${escapeHtml(transfer.transfer_status || 'blocked')}</strong><em>diagnostic-only</em></div>`
+    + `</div>`
+    + `<div class="g28-badge-row newsroom-badge-row">${badges}</div>`
+    + `<div class="newsroom-review-grid">`
+    + `<section class="g28-review-card newsroom-review-card"><h4>episode capsule summary</h4><div class="g28-kv-grid">${summaryRows}</div></section>`
+    + `<section class="g28-review-card newsroom-review-card warning"><h4>video readiness</h4><div class="g28-kv-grid">${readinessRows}</div></section>`
+    + `<section class="g28-review-card newsroom-review-card warning newsroom-planning-card"><h4>remaining gaps before importable proof</h4>${renderNewsroomActionList(capsule.remaining_gaps_before_importable_proof, 'gap はありません。', 'data-newsroom-capsule-gap')}</section>`
+    + `<section class="g28-review-card newsroom-review-card newsroom-planning-card"><h4>next allowed steps</h4>${renderNewsroomActionList(capsule.next_allowed_steps, 'allowed step はありません。', 'data-newsroom-capsule-next-step')}</section>`
+    + `<section class="g28-review-card newsroom-review-card warning newsroom-planning-card"><h4>prohibited steps</h4>${renderNewsroomActionList(capsule.prohibited_steps, 'prohibited step はありません。', 'data-newsroom-capsule-prohibited-step')}</section>`
+    + `<section class="g28-review-card newsroom-review-card warning newsroom-planning-card"><h4>capsule transfer blockers</h4>${renderNewsroomCapsuleBlockerGroups(transfer)}</section>`
+    + `</div>`
+    + `<div class="newsroom-episode-timeline" aria-label="Newsroom episode beat preview">`
+    + `${listOrEmpty(capsule.script_structure).map((beat) => (
+      `<div class="newsroom-episode-beat" data-newsroom-episode-timeline-beat="${escapeAttr(beat.beat_id || '')}">`
+      + `<strong>${escapeHtml(beat.beat_id || '')}</strong>`
+      + `<span>${escapeHtml(beat.purpose || '')} / ${escapeHtml(String(beat.rough_duration_seconds || 0))}s / ${escapeHtml(beat.review_status || '')}</span>`
+      + `<p>${escapeHtml(joinedList(beat.visual_refs, 'visual refs missing'))}</p>`
+      + `</div>`
+    )).join('')}`
+    + `</div>`
+    + `<div class="review-beat-table-wrap newsroom-episode-beat-wrap">`
+    + `<h4>ScriptIR-like beat preview</h4>`
+    + `<table class="review-beat-table newsroom-episode-beat-table">`
+    + `<thead><tr><th>order</th><th>beat</th><th>purpose</th><th>duration</th><th>narration placeholder</th><th>sources</th><th>visual refs</th></tr></thead>`
+    + `<tbody>${renderNewsroomEpisodeBeatRows(capsule)}</tbody>`
+    + `</table>`
+    + `</div>`
+    + `<div class="review-beat-table-wrap newsroom-episode-visual-wrap">`
+    + `<h4>VisualIR / G-28 slot preview</h4>`
+    + `<table class="review-beat-table newsroom-episode-visual-table">`
+    + `<thead><tr><th>visual</th><th>beat</th><th>concept</th><th>layout</th><th>G-28 slots</th><th>caption reserve</th><th>unhinted slots</th><th>proxy warning</th></tr></thead>`
+    + `<tbody>${renderNewsroomEpisodeVisualRows(capsule)}</tbody>`
+    + `</table>`
+    + `</div>`
+    + `</section>`
+  );
+}
+
 function renderNewsroomHandoffReview() {
   const panel = document.getElementById('newsroom-handoff-review');
   if (!panel) return;
@@ -1295,6 +1474,7 @@ function renderNewsroomHandoffReview() {
   const packet = currentNewsroomHandoffReview.packet || {};
   const slotLinkage = currentNewsroomHandoffReview.slotLinkage || {};
   const transferPlanning = currentNewsroomHandoffReview.transferPlanning || {};
+  const episodeCapsule = currentNewsroomHandoffReview.episodeCapsule || null;
   const artifactCheck = currentNewsroomHandoffReview.artifactCheck || null;
   const loadErrors = currentNewsroomHandoffReview.loadErrors || [];
   const sourceNotes = listOrEmpty(packet.source_notes);
@@ -1312,7 +1492,14 @@ function renderNewsroomHandoffReview() {
     ...listOrEmpty(transferPlanning.allowed_next_actions),
     'read-only planning panel review',
   ]));
-  const alerts = buildNewsroomBoundaryAlerts(packet, slotLinkage, transferPlanning, artifactCheck, loadErrors);
+  const alerts = buildNewsroomBoundaryAlerts(
+    packet,
+    slotLinkage,
+    transferPlanning,
+    artifactCheck,
+    loadErrors,
+    episodeCapsule,
+  );
   const badges = [
     [`validator_status=${transferPlanning.validator_status || slotLinkage.validator_status || 'not_loaded'}`, (transferPlanning.validator_status || slotLinkage.validator_status) === 'passed'],
     [`slot_linkage_status=${transferPlanning.slot_linkage_status || slotLinkage.status || 'not_loaded'}`, Boolean(transferPlanning.slot_linkage_status || slotLinkage.status)],
@@ -1375,6 +1562,7 @@ function renderNewsroomHandoffReview() {
     + `<div class="review-proof-summary"><span>${escapeHtml(NEWSROOM_HANDOFF_ARTIFACTS.packet)}</span><strong>${escapeHtml(slotLinkage.transfer_status || 'blocked')}</strong><em>review-only</em></div>`
     + `</div>`
     + `<div class="g28-badge-row newsroom-badge-row">${badges}</div>`
+    + renderNewsroomEpisodePreview(episodeCapsule)
     + `<div class="newsroom-review-grid">`
     + `<section class="g28-review-card newsroom-review-card"><h4>episode / packet</h4><div class="g28-kv-grid">${renderG28KeyValues([
       ['episode_id', packet.episode_id || slotLinkage.episode_id || 'unknown'],
@@ -1595,24 +1783,30 @@ async function loadNewsroomHandoffReview() {
   const transferPlanningPromise = loader
     ? loader(NEWSROOM_HANDOFF_ARTIFACTS.transferPlanning)
     : Promise.resolve({ ok: false, error: 'loadReviewProof unavailable' });
+  const episodeCapsulePromise = loader
+    ? loader(NEWSROOM_HANDOFF_ARTIFACTS.episodeCapsule)
+    : Promise.resolve({ ok: false, error: 'loadReviewProof unavailable' });
   const artifactPromise = checker
     ? checker(Object.values(NEWSROOM_HANDOFF_ARTIFACTS))
     : Promise.resolve({ ok: false, artifacts: [], error: 'checkReviewArtifacts unavailable' });
-  const [packetRes, slotLinkageRes, transferPlanningRes, artifactCheck] = await Promise.all([
+  const [packetRes, slotLinkageRes, transferPlanningRes, episodeCapsuleRes, artifactCheck] = await Promise.all([
     packetPromise,
     slotLinkagePromise,
     transferPlanningPromise,
+    episodeCapsulePromise,
     artifactPromise,
   ]);
   currentNewsroomHandoffReview = {
     packet: packetRes.ok ? packetRes.payload : null,
     slotLinkage: slotLinkageRes.ok ? slotLinkageRes.payload : null,
     transferPlanning: transferPlanningRes.ok ? transferPlanningRes.payload : null,
+    episodeCapsule: episodeCapsuleRes.ok ? episodeCapsuleRes.payload : null,
     artifactCheck,
     loadErrors: [
       packetRes.ok ? '' : `packet load failed: ${packetRes.error || 'unknown error'}`,
       slotLinkageRes.ok ? '' : `slot-linkage load failed: ${slotLinkageRes.error || 'unknown error'}`,
       transferPlanningRes.ok ? '' : `transfer-planning load failed: ${transferPlanningRes.error || 'unknown error'}`,
+      episodeCapsuleRes.ok ? '' : `episode capsule load failed: ${episodeCapsuleRes.error || 'unknown error'}`,
     ].filter(Boolean),
   };
   renderNewsroomHandoffReview();

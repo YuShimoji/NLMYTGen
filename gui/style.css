@@ -1173,6 +1173,54 @@ main .hint strong {
   border-color: rgba(45, 212, 191, 0.16);
 }
 
+.newsroom-episode-preview {
+  margin-bottom: 12px;
+  padding: 14px;
+  border: 1px solid rgba(45, 212, 191, 0.22);
+  border-radius: 10px;
+  background: rgba(8, 13, 34, 0.28);
+}
+
+.newsroom-episode-preview h4 {
+  margin-bottom: 8px;
+  color: var(--color-text);
+  font-size: 14px;
+}
+
+.newsroom-episode-timeline {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0;
+  overflow-x: auto;
+}
+
+.newsroom-episode-beat {
+  flex: 1 0 240px;
+  min-height: 82px;
+  padding: 10px;
+  border: 1px solid rgba(45, 212, 191, 0.20);
+  border-radius: 9px;
+  background: rgba(45, 212, 191, 0.06);
+}
+
+.newsroom-episode-beat strong {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--color-text);
+  font-size: 12px;
+}
+
+.newsroom-episode-beat span,
+.newsroom-episode-beat p {
+  color: var(--color-text-muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.newsroom-episode-beat p {
+  margin-top: 6px;
+}
+
 .newsroom-planning-card {
   align-content: start;
 }
@@ -1197,6 +1245,14 @@ main .hint strong {
 
 .newsroom-slot-linkage-table {
   min-width: 980px;
+}
+
+.newsroom-episode-beat-table {
+  min-width: 1120px;
+}
+
+.newsroom-episode-visual-table {
+  min-width: 1180px;
 }
 
 .review-proof-summary {

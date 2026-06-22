@@ -1,5 +1,26 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom Review Console episode preview v1 completed (2026-06-22)**:
+  The Review tab now reads the diagnostic episode production capsule and shows
+  one video-structure preview inside `#newsroom-handoff-review`. Implementation:
+  `gui/renderer.js`, `gui/style.css`, and
+  `gui/review_console_dom_smoke.js`; human verification:
+  `docs/verification/NEWSROOM_REVIEW_CONSOLE_EPISODE_PREVIEW_V1_2026-06-22.md`.
+  The panel loads
+  `samples/_probe/newsroom_handoff/episode_production_capsule_v1.json` and
+  displays `episode_fake_nlmytgen_delta_v1`, two ScriptIR-like beats, two
+  VisualIR / G-28 rows, caption reserve state, provisional `68` second timing,
+  audio/voice `not_started`, remaining gaps, allowed next steps, prohibited
+  steps, and capsule transfer blockers. DOM smoke observed
+  `newsroom episode preview visible with 2 beats / 2 visuals`; focused capsule
+  tests observed `7 passed`. This remains read-only and diagnostic-only: no
+  real packet ingest, external fetch, real URL access, media download, `.ymmp`
+  edit/generation, YMM4 carrier generation, render, TTS/audio, rights approval,
+  production approval, public-use approval, publishing, dashboard freshness
+  producer, status producer, or governance/reporting expansion was opened.
+  Next safe action is supervisor review of the episode preview, caption/timing
+  refinement against the capsule, or a separately gated transfer-candidate
+  proof only after the recorded blockers are resolved.
 - **Newsroom episode production capsule v1 completed (2026-06-22)**:
   Created the diagnostic-only bridge from the adapted fake newsroom export
   packet toward one video structure. Machine artifact:
