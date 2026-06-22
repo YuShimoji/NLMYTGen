@@ -79,6 +79,33 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom/YMM4 manual-check decision (2026-06-22):
+`newsroom_yym4_manual_import_check_packet_v1_2026_06_22` closes the next
+diagnostic handoff step after the tiny importable proof without launching YMM4
+or claiming any operator result. Commit
+`3dfafd2 docs: define newsroom YMM4 manual import check packet` is on
+`origin/master` and records the manual check packet in
+`samples/_probe/newsroom_handoff/yym4_manual_import_check_packet_v1.json`, the
+blank operator result template in
+`samples/_probe/newsroom_handoff/yym4_manual_import_result_template_v1.json`,
+the human readback in
+`docs/verification/NEWSROOM_YYM4_MANUAL_IMPORT_CHECK_PACKET_V1_2026-06-22.md`,
+the builder in `src/pipeline/newsroom_yym4_manual_import_check_packet.py`, and
+focused coverage in `tests/test_newsroom_yym4_manual_import_check_packet.py`.
+The target remains the committed tiny CSV
+`samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv`: UTF-8
+BOM, no header, two columns (`speaker,text`), and four synthetic diagnostic
+rows. `manual_check_status` remains `not_run`; no `.ymmp`, carrier, render,
+TTS/audio, real media, real newsroom ingest, external fetch, production
+approval, or public video readiness was created. The safe next move is human
+operator evidence only: manually open YMM4, use the repo-known script import /
+台本読み込み route only far enough to observe whether four rows/texts appear,
+then fill the result template with `pass`, `pass_with_warnings`, `fail`, or
+`blocked_by_operator_uncertainty`. If the operator cannot locate the import
+route or YMM4 would require crossing into TTS/render/project-save work, record
+operator uncertainty and improve the instructions instead of expanding the
+pipeline.
+
 Latest newsroom/video-readiness decision (2026-06-22):
 `newsroom_episode_production_capsule_v1_2026_06_22` closes the pivot from
 dashboard/governance maintenance back toward video-readiness without opening
@@ -1127,6 +1154,51 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 |----|----------|--------|
 | IP-02 | Web UI 化 | docs/INVARIANTS.md / docs/FEATURE_REGISTRY.md の現スコープ外 |
 | IP-03 | YouTube 自動アップロード | FEATURE_REGISTRY E-01 (hold) |
+
+---
+
+## HANDOFF SNAPSHOT (2026-06-22 newsroom YMM4 manual import check packet)
+
+- Branch/remote: `master` at
+  `3dfafd2 docs: define newsroom YMM4 manual import check packet`; expected
+  restart sync is `git fetch --all --prune`, `git checkout master`,
+  `git pull --ff-only origin master`, then
+  `git rev-list --left-right --count HEAD...origin/master = 0 0`.
+- Working tree state at this handoff: clean locally; `HEAD`, `origin/master`,
+  and `origin/HEAD` all point to `3dfafd2`.
+- Restart read path remains intentionally short:
+  `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`.
+  Read this snapshot only if branch/commit or operator-result context is
+  needed.
+- Current active artifact chain: tiny importable proof ->
+  YMM4 manual import check packet. The source CSV is
+  `samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv`; the
+  latest packet is
+  `samples/_probe/newsroom_handoff/yym4_manual_import_check_packet_v1.json`;
+  the blank result template is
+  `samples/_probe/newsroom_handoff/yym4_manual_import_result_template_v1.json`.
+- Current status: `manual_check_status=not_run`. The agent has not opened YMM4
+  and must not claim pass/fail without operator evidence.
+- Next executable handoff step: a human/operator manually checks whether YMM4
+  can show the four synthetic rows/texts through the script import /
+  台本読み込み route without saving a production project, rendering, generating
+  TTS/audio, importing real media, or committing `.ymmp`. The operator then
+  records observed line count, speaker behavior, text behavior, error message
+  if any, freeform notes, and one result value in the result template.
+- Result routing: `pass` can move to result readback and a tiny YMM4
+  import-readiness proof; `pass_with_warnings` should classify warnings first;
+  `fail` should trigger only bounded CSV shape/encoding adjustment;
+  `blocked_by_operator_uncertainty` should improve manual instructions, not the
+  pipeline.
+- Validation already run before this handoff: focused manual packet tests
+  `7 passed`; focused proof chain tests `27 passed`; repo-level `uv run pytest`
+  `743 passed, 28 skipped`; JSON parse, compileall, and `git diff --check`
+  passed. `ruff` was unavailable in this environment (`program not found`).
+- Explicit non-scope: do not launch YMM4 from the agent, do not create or
+  commit `.ymmp`, do not create carriers, render, generate TTS/audio, import
+  real media, fetch external sources, ingest a real newsroom packet, approve
+  production/public video, revive RSS/Inoreader/NotebookLM source selection,
+  or expand dashboard/governance/freshness work from this handoff.
 
 ---
 
