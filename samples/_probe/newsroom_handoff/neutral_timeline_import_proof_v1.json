@@ -1,0 +1,416 @@
+{
+  "timeline_id": "newsroom_neutral_timeline_import_proof_v1_2026_06_22",
+  "artifact_id": "newsroom_neutral_timeline_import_proof_v1_2026_06_22",
+  "schema_version": "newsroom_neutral_timeline_import_proof.v1",
+  "review_status": "ready_for_supervisor_review",
+  "diagnostic_only": true,
+  "identity": {
+    "timeline_id": "newsroom_neutral_timeline_import_proof_v1_2026_06_22",
+    "source_episode_id": "episode_fake_nlmytgen_delta_v1",
+    "source_artifacts": {
+      "episode_capsule": {
+        "path": "samples/_probe/newsroom_handoff/episode_production_capsule_v1.json",
+        "artifact_id": "newsroom_episode_production_capsule_v1_2026_06_22",
+        "schema_version": "newsroom_episode_production_capsule.v1"
+      },
+      "caption_timing_plan": {
+        "path": "samples/_probe/newsroom_handoff/episode_caption_timing_plan_v1.json",
+        "artifact_id": "newsroom_caption_timing_plan_v1_2026_06_22",
+        "schema_version": "newsroom_caption_timing_plan.v1"
+      },
+      "caption_copy_refinement": {
+        "path": "samples/_probe/newsroom_handoff/episode_caption_copy_refinement_v1.json",
+        "artifact_id": "newsroom_caption_copy_refinement_v1_2026_06_22",
+        "schema_version": "newsroom_caption_copy_refinement.v1"
+      },
+      "diagnostic_transfer_candidate_proof": {
+        "path": "samples/_probe/newsroom_handoff/diagnostic_transfer_candidate_proof_v1.json",
+        "artifact_id": "newsroom_diagnostic_transfer_candidate_proof_v1_2026_06_22",
+        "schema_version": "newsroom_diagnostic_transfer_candidate_proof.v1"
+      }
+    },
+    "production_status": "diagnostic_only",
+    "import_status": "diagnostic_candidate_with_placeholders"
+  },
+  "source_episode_id": "episode_fake_nlmytgen_delta_v1",
+  "production_status": "diagnostic_only",
+  "import_status": "diagnostic_candidate_with_placeholders",
+  "review_memory": {
+    "prior_user_review_count": 0,
+    "accepted_scope": [
+      "diagnostic_timing_panel_surface_by_validation",
+      "diagnostic_caption_copy_refinement_by_validation",
+      "diagnostic_transfer_candidate_classification"
+    ],
+    "not_accepted_scope": [
+      "production subtitle design",
+      "production narration",
+      "TTS-ready script",
+      "YMM4 transfer approval",
+      ".ymmp",
+      "render",
+      "public video"
+    ],
+    "next_nonredundant_axis": [
+      "neutral_timeline_import_proof",
+      "import_field_schema",
+      "placeholder_policy"
+    ],
+    "repeated_general_review_allowed": false
+  },
+  "global_timing": {
+    "total_duration_sec": 68,
+    "timebase": "seconds",
+    "fps_policy": {
+      "fps": null,
+      "placeholder": false,
+      "policy": "not_required_for_neutral_timeline"
+    },
+    "timing_confidence": "provisional",
+    "timing_source": "caption_timing_plan.episode_timing_summary"
+  },
+  "tracks": [
+    {
+      "track_id": "track_captions_main",
+      "track_kind": "captions",
+      "diagnostic_only": true,
+      "production_ready": false,
+      "notes": [
+        "refined caption rows"
+      ]
+    },
+    {
+      "track_id": "track_visual_placeholders",
+      "track_kind": "visuals",
+      "diagnostic_only": true,
+      "production_ready": false,
+      "notes": [
+        "no-media visual placeholders"
+      ]
+    },
+    {
+      "track_id": "track_markers",
+      "track_kind": "markers",
+      "diagnostic_only": true,
+      "production_ready": false,
+      "notes": [
+        "beat boundary markers"
+      ]
+    },
+    {
+      "track_id": "track_audio_placeholder",
+      "track_kind": "audio_placeholder",
+      "diagnostic_only": true,
+      "production_ready": false,
+      "notes": [
+        "explicit no-audio placeholder"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "item_id": "item_caption_cap_beat_fake_intro_001_01",
+      "track_id": "track_captions_main",
+      "item_kind": "caption",
+      "caption_id": "cap_beat_fake_intro_001_01",
+      "start_sec": 0,
+      "end_sec": 12,
+      "duration_sec": 12,
+      "source_ref": "caption_copy.refined_caption_units.cap_beat_fake_intro_001_01",
+      "text": "Fake topic, review only.",
+      "beat_id": "beat_fake_intro_001",
+      "char_count": 24,
+      "reading_density": "medium",
+      "line_count_target": 2,
+      "max_chars_target": 34,
+      "contains_real_names": false,
+      "contains_real_claims": false,
+      "contains_urls": false,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "blocked_for_production": true,
+      "diagnostic_import_allowed": true,
+      "notes": [
+        "Synthetic refined caption copied from diagnostic caption copy.",
+        "Timing is inherited unchanged from the caption/timing plan."
+      ]
+    },
+    {
+      "item_id": "item_caption_cap_beat_fake_intro_001_02",
+      "track_id": "track_captions_main",
+      "item_kind": "caption",
+      "caption_id": "cap_beat_fake_intro_001_02",
+      "start_sec": 12,
+      "end_sec": 24,
+      "duration_sec": 12,
+      "source_ref": "caption_copy.refined_caption_units.cap_beat_fake_intro_001_02",
+      "text": "Review-only handoff stays.",
+      "beat_id": "beat_fake_intro_001",
+      "char_count": 26,
+      "reading_density": "medium",
+      "line_count_target": 2,
+      "max_chars_target": 34,
+      "contains_real_names": false,
+      "contains_real_claims": false,
+      "contains_urls": false,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "blocked_for_production": true,
+      "diagnostic_import_allowed": true,
+      "notes": [
+        "Synthetic refined caption copied from diagnostic caption copy.",
+        "Timing is inherited unchanged from the caption/timing plan."
+      ]
+    },
+    {
+      "item_id": "item_caption_cap_beat_fake_claim_001_01",
+      "track_id": "track_captions_main",
+      "item_kind": "caption",
+      "caption_id": "cap_beat_fake_claim_001_01",
+      "start_sec": 24,
+      "end_sec": 46,
+      "duration_sec": 22,
+      "source_ref": "caption_copy.refined_caption_units.cap_beat_fake_claim_001_01",
+      "text": "A fake claim is shown.",
+      "beat_id": "beat_fake_claim_001",
+      "char_count": 22,
+      "reading_density": "low",
+      "line_count_target": 2,
+      "max_chars_target": 34,
+      "contains_real_names": false,
+      "contains_real_claims": false,
+      "contains_urls": false,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "blocked_for_production": true,
+      "diagnostic_import_allowed": true,
+      "notes": [
+        "Synthetic refined caption copied from diagnostic caption copy.",
+        "Timing is inherited unchanged from the caption/timing plan."
+      ]
+    },
+    {
+      "item_id": "item_caption_cap_beat_fake_claim_001_02",
+      "track_id": "track_captions_main",
+      "item_kind": "caption",
+      "caption_id": "cap_beat_fake_claim_001_02",
+      "start_sec": 46,
+      "end_sec": 68,
+      "duration_sec": 22,
+      "source_ref": "caption_copy.refined_caption_units.cap_beat_fake_claim_001_02",
+      "text": "Fake source checks are noted.",
+      "beat_id": "beat_fake_claim_001",
+      "char_count": 29,
+      "reading_density": "low",
+      "line_count_target": 2,
+      "max_chars_target": 34,
+      "contains_real_names": false,
+      "contains_real_claims": false,
+      "contains_urls": false,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "blocked_for_production": true,
+      "diagnostic_import_allowed": true,
+      "notes": [
+        "Synthetic refined caption copied from diagnostic caption copy.",
+        "Timing is inherited unchanged from the caption/timing plan."
+      ]
+    },
+    {
+      "item_id": "item_visual_placeholder_visual_fake_title_card_001",
+      "track_id": "track_visual_placeholders",
+      "item_kind": "visual_placeholder",
+      "visual_id": "visual_fake_title_card_001",
+      "start_sec": 0,
+      "end_sec": 24,
+      "duration_sec": 24,
+      "source_ref": "caption_timing_plan.visual_timing.visual_fake_title_card_001",
+      "placeholder_label": "visual placeholder: title_card",
+      "beat_id": "beat_fake_intro_001",
+      "g28_slot": "caption_reserve",
+      "layout_hint": "title_card",
+      "caption_interference_note": "low_semantic_reserve_present",
+      "media_file_dependency": "none",
+      "media_required": false,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "blocked_for_production": true,
+      "diagnostic_import_allowed": true,
+      "notes": [
+        "No media file, screenshot, footage, or external source is required.",
+        "Geometry remains downstream/YMM4 blocked."
+      ]
+    },
+    {
+      "item_id": "item_visual_placeholder_visual_fake_evidence_card_001",
+      "track_id": "track_visual_placeholders",
+      "item_kind": "visual_placeholder",
+      "visual_id": "visual_fake_evidence_card_001",
+      "start_sec": 24,
+      "end_sec": 68,
+      "duration_sec": 44,
+      "source_ref": "caption_timing_plan.visual_timing.visual_fake_evidence_card_001",
+      "placeholder_label": "visual placeholder: article_quote_card",
+      "beat_id": "beat_fake_claim_001",
+      "g28_slot": "source_note",
+      "layout_hint": "article_quote_card",
+      "caption_interference_note": "medium_unhinted_caption_reserve",
+      "media_file_dependency": "none",
+      "media_required": false,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "blocked_for_production": true,
+      "diagnostic_import_allowed": true,
+      "notes": [
+        "No media file, screenshot, footage, or external source is required.",
+        "Geometry remains downstream/YMM4 blocked."
+      ]
+    },
+    {
+      "item_id": "item_marker_beat_fake_intro_001",
+      "track_id": "track_markers",
+      "item_kind": "marker",
+      "start_sec": 0,
+      "end_sec": 24,
+      "duration_sec": 24,
+      "source_ref": "caption_timing_plan.beat_timing.beat_fake_intro_001",
+      "placeholder_label": "beat marker: beat_fake_intro_001",
+      "beat_id": "beat_fake_intro_001",
+      "diagnostic_only": true,
+      "production_ready": false,
+      "blocked_for_production": true,
+      "diagnostic_import_allowed": true,
+      "notes": [
+        "Marker row preserves beat boundaries only.",
+        "Marker row is not a rendered timeline object."
+      ]
+    },
+    {
+      "item_id": "item_marker_beat_fake_claim_001",
+      "track_id": "track_markers",
+      "item_kind": "marker",
+      "start_sec": 24,
+      "end_sec": 68,
+      "duration_sec": 44,
+      "source_ref": "caption_timing_plan.beat_timing.beat_fake_claim_001",
+      "placeholder_label": "beat marker: beat_fake_claim_001",
+      "beat_id": "beat_fake_claim_001",
+      "diagnostic_only": true,
+      "production_ready": false,
+      "blocked_for_production": true,
+      "diagnostic_import_allowed": true,
+      "notes": [
+        "Marker row preserves beat boundaries only.",
+        "Marker row is not a rendered timeline object."
+      ]
+    },
+    {
+      "item_id": "item_audio_placeholder_not_started",
+      "track_id": "track_audio_placeholder",
+      "item_kind": "audio_placeholder",
+      "start_sec": 0,
+      "end_sec": 68,
+      "duration_sec": 68,
+      "source_ref": "caption_copy.audio_readiness",
+      "placeholder_label": "audio placeholder: no TTS generated",
+      "beat_id": "all_beats",
+      "voice_status": "not_started",
+      "TTS_generated": false,
+      "audio_required_for_this_proof": false,
+      "media_file_dependency": "none",
+      "diagnostic_only": true,
+      "production_ready": false,
+      "blocked_for_production": true,
+      "diagnostic_import_allowed": true,
+      "notes": [
+        "Audio is explicitly absent for this proof.",
+        "The neutral timeline can be parsed without narration or waveform timing."
+      ]
+    }
+  ],
+  "caption_csv": {
+    "status": "created",
+    "path": "samples/_probe/newsroom_handoff/caption_import_candidate_v1.csv",
+    "derived_from": "items where item_kind=caption",
+    "columns": [
+      "caption_id",
+      "beat_id",
+      "start_sec",
+      "end_sec",
+      "duration_sec",
+      "text",
+      "diagnostic_only",
+      "production_ready"
+    ],
+    "row_count": 4,
+    "diagnostic_only": true,
+    "production_ready": false
+  },
+  "blocker_carry_forward": {
+    "production_transfer_status": "blocked",
+    "diagnostic_import_status": "candidate_with_placeholders",
+    "blocker_summary": {
+      "production_only": 7,
+      "diagnostic_hard_blocker": 0,
+      "diagnostic_soft_warning": 5,
+      "already_satisfied_for_synthetic": 1,
+      "total_blockers": 13,
+      "diagnostic_hard_blocker_codes": []
+    },
+    "YMM4_candidate": false,
+    "production_approval": false
+  },
+  "placeholder_policy": {
+    "visual_media_dependency": "none",
+    "audio_media_dependency": "none",
+    "real_source_dependency": "none",
+    "caption_text_policy": "synthetic_refined_caption_copy_only",
+    "visual_policy": "placeholder_metadata_only_no_media_file",
+    "marker_policy": "diagnostic_beat_boundaries_only"
+  },
+  "next_mapping_policy": {
+    "recommended_next_slice": "newsroom-caption-csv-import-candidate-v1",
+    "allowed_next_artifacts": [
+      "neutral timeline JSON",
+      "caption CSV",
+      "script-import candidate"
+    ],
+    "prohibited_next_artifacts": [
+      "production .ymmp",
+      "render output",
+      "TTS output",
+      "real media",
+      "real packet ingest",
+      "external fetch"
+    ],
+    "next_required_decision": "Choose whether the caption CSV remains the next proof target or whether a script-import candidate should consume the neutral JSON."
+  },
+  "review_card": {
+    "status": "none",
+    "axis_if_needed": "neutral_timeline_import_schema",
+    "reason": "No user judgement is required because the slice creates the validated neutral timeline proof directly.",
+    "not_asking": "No repeated timing, caption copy, or blocker classification review is requested."
+  },
+  "boundary_assertions": {
+    "diagnostic_only": true,
+    "neutral_timeline_json_is_source_of_truth": true,
+    "caption_csv_derived_from_json": true,
+    "opens_production_transfer": false,
+    "opens_YMM4_transfer": false,
+    "contains_real_news_claims": false,
+    "contains_real_names": false,
+    "contains_real_urls": false,
+    "real_packet_ingested": false,
+    "real_source_fetch_performed": false,
+    "rss_inoreader_access_performed": false,
+    "external_media_downloaded": false,
+    "media_file_dependency": false,
+    "tts_generated": false,
+    "ymmp_generated": false,
+    "ymm4_carrier_generated": false,
+    "render_generated": false,
+    "production_approval": false,
+    "public_video": false,
+    "dashboard_governance_freshness_changed": false
+  }
+}

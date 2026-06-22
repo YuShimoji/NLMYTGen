@@ -1,5 +1,34 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom neutral timeline import proof v1 completed (2026-06-22)**:
+  Created the first actual synthetic neutral import proof for the diagnostic
+  newsroom episode without opening production/YMM4 transfer. Source-of-truth
+  machine artifact:
+  `samples/_probe/newsroom_handoff/neutral_timeline_import_proof_v1.json`;
+  derived caption CSV:
+  `samples/_probe/newsroom_handoff/caption_import_candidate_v1.csv`; human
+  readback:
+  `docs/verification/NEWSROOM_NEUTRAL_TIMELINE_IMPORT_PROOF_V1_2026-06-22.md`;
+  implementation:
+  `src/pipeline/newsroom_neutral_timeline_import_proof.py`; focused coverage:
+  `tests/test_newsroom_neutral_timeline_import_proof.py`. The timeline uses
+  `seconds` timebase, `68` seconds total duration, provisional timing, no FPS
+  requirement, and four diagnostic tracks: captions, visual placeholders,
+  markers, and an audio placeholder. It carries `4` refined caption items with
+  unchanged timing, `2` no-media visual placeholder items with G-28/layout
+  hints, `2` beat marker rows, and `1` audio placeholder row with
+  `voice_status=not_started`, `TTS_generated=false`, and
+  `audio_required_for_this_proof=false`. The caption CSV is derived only from
+  JSON caption items and contains `4` rows. Production transfer remains
+  `blocked`, `YMM4_candidate=false`, blocker summary remains `7/5/1/0`, and
+  Review Card remains `none` to avoid repeated timing/caption/copy/blocker
+  review. Verification observed neutral timeline tests `8 passed`. This slice
+  does not ingest a real packet, fetch sources, access real URLs, download
+  media, generate TTS/audio, edit or generate `.ymmp`, generate YMM4 carriers,
+  render, approve rights, approve production, publish/upload output, or expand
+  dashboard/governance/freshness work. Next safe action is
+  `newsroom-caption-csv-import-candidate-v1` or a script-import candidate that
+  consumes the neutral timeline JSON without media.
 - **Newsroom diagnostic transfer candidate proof v1 completed (2026-06-22)**:
   Created a synthetic, non-production diagnostic transfer-candidate proof that
   separates production/YMM4 blockage from the next allowable neutral import

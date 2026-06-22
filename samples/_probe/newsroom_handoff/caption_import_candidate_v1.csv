@@ -1,0 +1,5 @@
+caption_id,beat_id,start_sec,end_sec,duration_sec,text,diagnostic_only,production_ready
+cap_beat_fake_intro_001_01,beat_fake_intro_001,0,12,12,"Fake topic, review only.",true,false
+cap_beat_fake_intro_001_02,beat_fake_intro_001,12,24,12,Review-only handoff stays.,true,false
+cap_beat_fake_claim_001_01,beat_fake_claim_001,24,46,22,A fake claim is shown.,true,false
+cap_beat_fake_claim_001_02,beat_fake_claim_001,46,68,22,Fake source checks are noted.,true,false
