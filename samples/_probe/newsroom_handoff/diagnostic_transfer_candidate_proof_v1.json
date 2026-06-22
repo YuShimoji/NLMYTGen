@@ -1,0 +1,378 @@
+{
+  "artifact_id": "newsroom_diagnostic_transfer_candidate_proof_v1_2026_06_22",
+  "schema_version": "newsroom_diagnostic_transfer_candidate_proof.v1",
+  "review_status": "ready_for_supervisor_review",
+  "review_axis": "diagnostic_transfer_candidate_scope",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_transfer_candidate_proof_only",
+  "source": {
+    "capsule_path": "samples/_probe/newsroom_handoff/episode_production_capsule_v1.json",
+    "capsule_artifact_id": "newsroom_episode_production_capsule_v1_2026_06_22",
+    "timing_plan_path": "samples/_probe/newsroom_handoff/episode_caption_timing_plan_v1.json",
+    "timing_plan_artifact_id": "newsroom_caption_timing_plan_v1_2026_06_22",
+    "caption_copy_path": "samples/_probe/newsroom_handoff/episode_caption_copy_refinement_v1.json",
+    "caption_copy_artifact_id": "newsroom_caption_copy_refinement_v1_2026_06_22",
+    "prior_transfer_planning_path": "samples/_probe/newsroom_handoff/transfer_planning_readback.json",
+    "prior_transfer_planning_status": "blocked",
+    "prior_transfer_planning_blocker_count": 14,
+    "episode_id": "episode_fake_nlmytgen_delta_v1"
+  },
+  "review_memory": {
+    "prior_user_review_count": 0,
+    "accepted_scopes": [
+      "diagnostic episode capsule",
+      "diagnostic caption/timing plan",
+      "diagnostic caption copy refinement"
+    ],
+    "not_accepted_scope": [
+      "production transfer",
+      "YMM4 transfer",
+      "render",
+      "TTS or narration approval",
+      "real packet ingest",
+      "public video"
+    ],
+    "current_review_axis": "diagnostic_transfer_candidate_scope",
+    "next_nonredundant_axis": "neutral_import_field_mapping",
+    "repeated_general_caption_or_timing_review_allowed": false
+  },
+  "decision_split": {
+    "question": "Can a synthetic, non-production diagnostic import proof be opened next without violating current blockers?",
+    "answer": "yes_for_synthetic_neutral_timeline_candidate",
+    "production_transfer_status": "blocked",
+    "production_YMM4_candidate": false,
+    "diagnostic_import_status": "candidate_with_placeholders",
+    "diagnostic_import_candidate": true,
+    "diagnostic_import_scope": "neutral timeline JSON or caption CSV only",
+    "why": [
+      "Existing blockers still close production and YMM4 transfer.",
+      "Caption units, timing windows, refined copy, and visual placeholder refs exist.",
+      "No real media, audio, external fetch, render, or project carrier is needed."
+    ]
+  },
+  "video_readiness": {
+    "episode_id": "episode_fake_nlmytgen_delta_v1",
+    "total_duration_sec": 68,
+    "beat_count": 2,
+    "caption_unit_count": 4,
+    "visual_count": 2,
+    "timing_status": "low_provisional_from_capsule",
+    "caption_copy_status": "refined_diagnostic_placeholders",
+    "audio_status": "not_started",
+    "TTS_generated": false,
+    "production_video_ready": false,
+    "diagnostic_neutral_import_candidate": true
+  },
+  "production_transfer_blockage": {
+    "transfer_status": "blocked",
+    "YMM4_candidate": false,
+    "blocker_count": 13,
+    "unlock_requirement_count": 13,
+    "kept_closed_reason": "Rights/provenance, media/source, review, visual, and downstream transfer blockers remain active for production and YMM4 transfer."
+  },
+  "diagnostic_import_possibility": {
+    "status": "open_next_as_synthetic_candidate",
+    "candidate": true,
+    "hard_blocker_count": 0,
+    "candidate_reason": "The next proof can be a neutral timeline mapping over existing fake caption rows and visual placeholders, without producing downstream media."
+  },
+  "blocker_classification_summary": {
+    "production_only": 7,
+    "diagnostic_hard_blocker": 0,
+    "diagnostic_soft_warning": 5,
+    "already_satisfied_for_synthetic": 1,
+    "total_blockers": 13,
+    "diagnostic_hard_blocker_codes": []
+  },
+  "blocker_classifications": [
+    {
+      "code": "rights_clearance_not_cleared",
+      "original_category": "rights/provenance",
+      "detail": "rights_summary.clearance_state=hold_for_review",
+      "source_fields": [
+        "rights_summary.clearance_state"
+      ],
+      "classification": "production_only",
+      "diagnostic_effect": "Blocks production, publication, and downstream handoff; a synthetic neutral import proof can continue without rights clearance because it uses only fake placeholders.",
+      "next_requirement": "Keep production transfer closed until rights are cleared."
+    },
+    {
+      "code": "rights_summary_blocks_ymm4_transfer",
+      "original_category": "rights/provenance",
+      "detail": "rights_summary.blocked_uses includes YMM4_transfer",
+      "source_fields": [
+        "rights_summary.blocked_uses"
+      ],
+      "classification": "production_only",
+      "diagnostic_effect": "Explicitly blocks YMM4 transfer, not the smaller neutral timeline proof.",
+      "next_requirement": "Do not remove the YMM4 block in this slice."
+    },
+    {
+      "code": "rights_risk_flags_present",
+      "original_category": "rights/provenance",
+      "detail": "rights_summary.risk_flags=fake_fixture_only,media_availability:none_in_fixture,quote_clearance:not_requested,publication_approval:not_granted",
+      "source_fields": [
+        "rights_summary.risk_flags"
+      ],
+      "classification": "production_only",
+      "diagnostic_effect": "Risk flags remain decisive for production and public use, but the diagnostic proof avoids real media and real claims.",
+      "next_requirement": "Resolve risk flags before any production transfer review."
+    },
+    {
+      "code": "raw_source_material_not_included",
+      "original_category": "media/source availability",
+      "detail": "provenance.raw_source_material_included is false or missing",
+      "source_fields": [
+        "provenance.raw_source_material_included"
+      ],
+      "classification": "diagnostic_soft_warning",
+      "diagnostic_effect": "No real source material exists. The synthetic proof can proceed with placeholder rows, but later media-backed import work still needs assets.",
+      "next_requirement": "Keep the next proof neutral and no-media."
+    },
+    {
+      "code": "placeholder_source_notes_only",
+      "original_category": "media/source availability",
+      "detail": "placeholder source notes: source_fake_primary_001,source_fake_critical_001",
+      "source_fields": [
+        "source_notes"
+      ],
+      "classification": "diagnostic_soft_warning",
+      "diagnostic_effect": "Source notes are placeholders only. They are enough for synthetic row references, not for production provenance.",
+      "next_requirement": "Map placeholder source refs as diagnostic strings only."
+    },
+    {
+      "code": "review_warning_blocks_transfer:warning_fake_rights_hold",
+      "original_category": "review approval",
+      "detail": "Rights, provenance, and media availability are fake-only and must be reviewed before transfer.",
+      "source_fields": [
+        "review_warnings.warning_fake_rights_hold"
+      ],
+      "classification": "production_only",
+      "diagnostic_effect": "The warning blocks production transfer and publication, while this proof remains synthetic and non-approving.",
+      "next_requirement": "Do not treat this proof as a rights review outcome."
+    },
+    {
+      "code": "review_warning_blocks_transfer:warning_fake_no_production_readiness",
+      "original_category": "review approval",
+      "detail": "Fixture validates shape only; it does not imply production or YMM4 readiness.",
+      "source_fields": [
+        "review_warnings.warning_fake_no_production_readiness"
+      ],
+      "classification": "production_only",
+      "diagnostic_effect": "The warning correctly denies production readiness; it does not deny a no-media diagnostic import field mapping.",
+      "next_requirement": "Keep the production readiness flag false."
+    },
+    {
+      "code": "review_console_is_read_only",
+      "original_category": "review approval",
+      "detail": "review_console_visibility_status=documented_read_only",
+      "source_fields": [
+        "docs/verification/NEWSROOM_REVIEW_CONSOLE_CONSUMER_V1_2026-06-20.md"
+      ],
+      "classification": "already_satisfied_for_synthetic",
+      "diagnostic_effect": "A read-only review surface is sufficient evidence for this diagnostic proof because no approval or editing workflow is required.",
+      "next_requirement": "No extra human judgement is required for this slice."
+    },
+    {
+      "code": "visual_slot_gaps_present",
+      "original_category": "visual readiness",
+      "detail": "visuals with unhinted slots: visual_fake_title_card_001,visual_fake_evidence_card_001",
+      "source_fields": [
+        "g28_slot_linkage_readback.visual_slot_gaps"
+      ],
+      "classification": "diagnostic_soft_warning",
+      "diagnostic_effect": "Visual slots still lack downstream geometry. A neutral proof can carry visual ids, layout hints, and warning flags without claiming YMM4 fit.",
+      "next_requirement": "Carry slot warnings into the next neutral timeline proof."
+    },
+    {
+      "code": "validator_transfer_status_blocked",
+      "original_category": "downstream/YMM4 readiness",
+      "detail": "validator transfer_status=blocked",
+      "source_fields": [
+        "validator.transfer_status"
+      ],
+      "classification": "production_only",
+      "diagnostic_effect": "The validator keeps production transfer blocked; it does not prevent a separate synthetic-only import candidate proof.",
+      "next_requirement": "Do not override validator transfer_status."
+    },
+    {
+      "code": "slot_linkage_transfer_status_blocked",
+      "original_category": "downstream/YMM4 readiness",
+      "detail": "slot-linkage transfer_status=blocked",
+      "source_fields": [
+        "g28_slot_linkage_readback.transfer_status"
+      ],
+      "classification": "diagnostic_soft_warning",
+      "diagnostic_effect": "Slot linkage blocks YMM4 transfer. The next proof can still list slots as neutral metadata with warnings attached.",
+      "next_requirement": "Keep the next artifact neutral until slot linkage is cleared."
+    },
+    {
+      "code": "ymm4_transfer_ready_false",
+      "original_category": "downstream/YMM4 readiness",
+      "detail": "downstream_readiness.ymm4_transfer_ready=false",
+      "source_fields": [
+        "downstream_readiness.ymm4_transfer_ready"
+      ],
+      "classification": "production_only",
+      "diagnostic_effect": "YMM4 transfer readiness is false by design. This proof does not create a YMM4 candidate.",
+      "next_requirement": "Do not emit YMM4 carrier or project files."
+    },
+    {
+      "code": "downstream_blocking_reasons_present",
+      "original_category": "downstream/YMM4 readiness",
+      "detail": "blocking_reasons=fake_fixture_not_real_packet,transfer_candidate:block_transfer,human_review:hold_for_review,production_ymm4:fail,rights_summary_hold_for_review,media_availability_none_in_fixture",
+      "source_fields": [
+        "downstream_readiness.blocking_reasons"
+      ],
+      "classification": "diagnostic_soft_warning",
+      "diagnostic_effect": "Downstream reasons remain useful warnings for the neutral proof, but they are not hard blockers while no downstream import is produced.",
+      "next_requirement": "Repeat the blocking reasons in the next proof's boundary."
+    }
+  ],
+  "minimal_import_requirements": {
+    "candidate_scope": "synthetic_neutral_timeline_import",
+    "all_minimal_requirements_met": true,
+    "requirements": [
+      {
+        "requirement": "episode identity",
+        "status": "available",
+        "source": "capsule.episode.episode_id"
+      },
+      {
+        "requirement": "beat timing windows",
+        "status": "available",
+        "source": "caption_timing_plan.beat_timing"
+      },
+      {
+        "requirement": "caption unit timing",
+        "status": "available",
+        "source": "caption_copy.refined_caption_units"
+      },
+      {
+        "requirement": "refined caption text",
+        "status": "available",
+        "source": "caption_copy.refined_caption_units[].refined_caption_text"
+      },
+      {
+        "requirement": "visual placeholder references",
+        "status": "available",
+        "source": "caption_timing_plan.visual_timing"
+      },
+      {
+        "requirement": "no-audio/no-media boundary",
+        "status": "available",
+        "source": "caption_copy.boundary_assertions"
+      }
+    ],
+    "missing_fields_for_synthetic_candidate": [],
+    "audio_required_for_synthetic_candidate": false,
+    "media_required_for_synthetic_candidate": false,
+    "YMM4_specific_mapping_required_next": true,
+    "required_next_fields_before_importable_proof": [
+      "neutral import schema name and version",
+      "track_kind for caption and visual-placeholder rows",
+      "row ordering and stable row ids",
+      "placeholder asset policy for visual rows",
+      "explicit no-audio and no-media flags",
+      "slot warning carry-forward field"
+    ],
+    "non_requirements_for_synthetic_candidate": [
+      "TTS or narration audio",
+      "real media assets",
+      "real source material",
+      "YMM4 project carrier",
+      "render output",
+      "production approval"
+    ]
+  },
+  "next_tiny_importable_proof_plan": {
+    "recommended_next_slice": "newsroom-neutral-timeline-import-proof-v1",
+    "objective": "Emit a tiny neutral timeline proof from existing capsule, timing, and caption-copy artifacts without creating downstream media.",
+    "output_candidates": [
+      "neutral_timeline_json",
+      "optional_caption_csv"
+    ],
+    "exact_fields_to_map_next": [
+      {
+        "field": "episode_id",
+        "source": "capsule.episode.episode_id"
+      },
+      {
+        "field": "beat_id/start_sec/end_sec/duration_sec",
+        "source": "caption_timing_plan.beat_timing"
+      },
+      {
+        "field": "caption_id/refined_caption_text/line_count_target/max_chars_target",
+        "source": "caption_copy.refined_caption_units"
+      },
+      {
+        "field": "reading_density",
+        "source": "caption_copy.refined_caption_units"
+      },
+      {
+        "field": "visual_id/g28_slot/layout_hint/caption_interference_risk",
+        "source": "caption_timing_plan.visual_timing"
+      },
+      {
+        "field": "diagnostic_only/no_audio/no_media/no_render",
+        "source": "boundary assertions"
+      },
+      {
+        "field": "production_transfer_status",
+        "source": "capsule.transfer_status.transfer_status"
+      }
+    ],
+    "acceptance_checks": [
+      "JSON parses and row counts match source caption/visual rows.",
+      "Production transfer remains blocked and YMM4_candidate remains false.",
+      "No audio, media, render, carrier, or project files are created.",
+      "No real packet ingest, external fetch, or real source access is performed."
+    ],
+    "prohibited_outputs": [
+      ".ymmp project",
+      "YMM4 carrier",
+      "render output",
+      "TTS or audio output",
+      "real source packet ingest",
+      "external fetch"
+    ]
+  },
+  "review_card": {
+    "status": "none",
+    "reason": "No user judgement is required because this slice only classifies whether a synthetic diagnostic proof may be opened.",
+    "not_asking": "No production readiness, rights approval, or repeated caption/timing review is requested."
+  },
+  "prohibited_next_actions": [
+    ".ymmp generation",
+    "YMM4 carrier generation",
+    "render generation",
+    "TTS generation",
+    "real packet ingest",
+    "real source fetch",
+    "real URL access",
+    "media download",
+    "external fetch",
+    "production approval",
+    "rights approval",
+    "public-use approval",
+    "publishing"
+  ],
+  "boundary_assertions": {
+    "diagnostic_only": true,
+    "opens_production_transfer": false,
+    "opens_YMM4_transfer": false,
+    "diagnostic_candidate_only": true,
+    "contains_real_news_claims": false,
+    "contains_real_names": false,
+    "contains_real_urls": false,
+    "real_packet_ingested": false,
+    "real_source_fetch_performed": false,
+    "external_media_downloaded": false,
+    "tts_generated": false,
+    "ymmp_generated": false,
+    "ymm4_carrier_generated": false,
+    "render_generated": false,
+    "production_approval": false,
+    "public_video": false
+  }
+}

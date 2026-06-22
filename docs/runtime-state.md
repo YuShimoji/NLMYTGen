@@ -1,5 +1,33 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom diagnostic transfer candidate proof v1 completed (2026-06-22)**:
+  Created a synthetic, non-production diagnostic transfer-candidate proof that
+  separates production/YMM4 blockage from the next allowable neutral import
+  proof lane. Machine artifact:
+  `samples/_probe/newsroom_handoff/diagnostic_transfer_candidate_proof_v1.json`;
+  human readback:
+  `docs/verification/NEWSROOM_DIAGNOSTIC_TRANSFER_CANDIDATE_PROOF_V1_2026-06-22.md`;
+  implementation:
+  `src/pipeline/newsroom_diagnostic_transfer_candidate_proof.py`; focused
+  coverage: `tests/test_newsroom_diagnostic_transfer_candidate_proof.py`.
+  The classification source of truth is the current episode capsule, not the
+  older transfer-planning readback: the proof classifies all `13` current
+  blockers into `7` production-only blockers, `5` diagnostic soft warnings,
+  `1` already-satisfied synthetic condition, and `0` diagnostic hard blockers.
+  Production transfer remains `blocked`, `YMM4_candidate=false`, and no
+  production approval is implied. The diagnostic answer is only
+  `candidate_with_placeholders`: caption units, timing windows, refined caption
+  copy, and visual placeholder references are present enough to open a next
+  tiny neutral timeline JSON / optional caption CSV proof, while YMM4-specific
+  mapping, track kind, placeholder asset policy, no-audio/no-media flags, and
+  slot-warning carry-forward remain the next required fields. Verification
+  observed diagnostic transfer tests `8 passed`. This slice does not ingest a
+  real packet, fetch sources, access real URLs, download media, generate
+  TTS/audio, edit or generate `.ymmp`, generate YMM4 carriers, render, approve
+  rights, approve production, publish/upload output, or expand
+  dashboard/governance/freshness work. Next safe action is
+  `newsroom-neutral-timeline-import-proof-v1`, still diagnostic-only and
+  no-media, or a focused audit of the blocker classification.
 - **Newsroom caption copy refinement v1 completed (2026-06-22)**:
   Created a diagnostic caption-copy refinement layer for the existing
   caption/timing plan without changing timing or opening production paths.
