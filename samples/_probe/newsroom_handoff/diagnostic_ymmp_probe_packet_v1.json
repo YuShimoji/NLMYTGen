@@ -1,0 +1,279 @@
+{
+  "artifact_id": "newsroom_diagnostic_ymmp_probe_packet_v1_2026_06_23",
+  "packet_id": "newsroom_diagnostic_ymmp_probe_packet_v1_2026_06_23",
+  "schema_version": "newsroom_diagnostic_ymmp_probe_packet.v1",
+  "review_status": "ready_for_future_manual_probe",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_only",
+  "manual_probe_status": "not_run",
+  "identity": {
+    "packet_id": "newsroom_diagnostic_ymmp_probe_packet_v1_2026_06_23",
+    "source_boundary_decision_path": "samples/_probe/newsroom_handoff/minimal_ymmp_boundary_decision_v1.json",
+    "source_boundary_decision_id": "newsroom_minimal_ymmp_boundary_decision_v1_2026_06_23",
+    "source_bound_speaker_readiness_path": "samples/_probe/newsroom_handoff/yym4_bound_speaker_import_readiness_v1.json",
+    "source_bound_speaker_readiness_id": "newsroom_yym4_bound_speaker_import_readiness_v1_2026_06_23",
+    "source_bound_csv_path": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_yukkuri_reimu_v1.csv",
+    "source_commit_or_status": "worktree_verified_before_generation",
+    "production_status": "diagnostic_only",
+    "manual_probe_status": "not_run"
+  },
+  "review_memory": {
+    "source_boundary_review_count": {
+      "manual_import_behavior": 1,
+      "bound_speaker_behavior": 1,
+      "minimal_ymmp_boundary": 0
+    },
+    "source_readiness_review_count": {
+      "manual_import_behavior": 1,
+      "bound_speaker_behavior": 1
+    },
+    "prior_user_review_count": {
+      "manual_import_behavior": 1,
+      "bound_speaker_behavior": 1,
+      "minimal_ymmp_boundary": 0,
+      "diagnostic_ymmp_probe_packet": 0
+    },
+    "accepted_scope": {
+      "bound_speaker_csv_import_current_environment": true,
+      "four_dialogue_rows_visible": true,
+      "all_text_visible": true,
+      "speaker_prompt_not_shown": true,
+      "minimal_ymmp_boundary_decision_ready": true
+    },
+    "not_accepted_scope": {
+      "production_readiness": false,
+      "render_readiness": false,
+      "TTS_readiness": false,
+      "public_video_readiness": false,
+      "visual_layout_import": false,
+      "portability_across_all_YMM4_installations": false,
+      "timing_import_from_neutral_timeline_metadata": false,
+      "committed_ymmp_artifact": false
+    },
+    "next_nonredundant_axis": [
+      "diagnostic_ymmp_manual_result_readback",
+      "ymmp_save_readback_boundary",
+      "timing_gap_after_csv_import"
+    ],
+    "repeated_general_review_allowed": false,
+    "input_mode": "freeform"
+  },
+  "source_validation": {
+    "source_boundary_decision_id": "newsroom_minimal_ymmp_boundary_decision_v1_2026_06_23",
+    "source_boundary_decision_status": "approved_for_next_probe_packet",
+    "source_readiness_id": "newsroom_yym4_bound_speaker_import_readiness_v1_2026_06_23",
+    "source_readiness_result": "pass",
+    "bound_csv_bom_verified": true,
+    "bound_csv_has_header": false,
+    "bound_csv_all_rows_two_columns": true,
+    "bound_csv_row_count": 4,
+    "all_rows_use_bound_speaker": true,
+    "all_rows_have_text": true,
+    "rows": [
+      {
+        "row_number": 1,
+        "speaker_matches_bound_value": true,
+        "text_non_empty": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_number": 2,
+        "speaker_matches_bound_value": true,
+        "text_non_empty": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_number": 3,
+        "speaker_matches_bound_value": true,
+        "text_non_empty": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_number": 4,
+        "speaker_matches_bound_value": true,
+        "text_non_empty": true,
+        "status": "passed",
+        "errors": []
+      }
+    ],
+    "errors": []
+  },
+  "target": {
+    "target_csv": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_yukkuri_reimu_v1.csv",
+    "intended_YMM4_environment": "manual/operator-run only",
+    "expected_row_count": 4,
+    "observed_row_count_before_probe": 4,
+    "speaker_value": "ゆっくり霊夢",
+    "encoding": "UTF-8 BOM",
+    "bom_verified": true,
+    "header": false,
+    "has_header": false,
+    "columns": [
+      "speaker",
+      "text"
+    ],
+    "all_rows_two_columns": true,
+    "rows": [
+      {
+        "row_number": 1,
+        "speaker": "ゆっくり霊夢",
+        "text": "Fake topic, review only.",
+        "column_count": 2
+      },
+      {
+        "row_number": 2,
+        "speaker": "ゆっくり霊夢",
+        "text": "Review-only handoff stays.",
+        "column_count": 2
+      },
+      {
+        "row_number": 3,
+        "speaker": "ゆっくり霊夢",
+        "text": "A fake claim is shown.",
+        "column_count": 2
+      },
+      {
+        "row_number": 4,
+        "speaker": "ゆっくり霊夢",
+        "text": "Fake source checks are noted.",
+        "column_count": 2
+      }
+    ]
+  },
+  "expected_starting_point": {
+    "import_bound_speaker_csv": true,
+    "confirm_4_rows_and_speaker": true,
+    "save_minimal_diagnostic_ymmp_only_if_operator_comfortable": true,
+    "do_not_render": true,
+    "do_not_generate_TTS": true,
+    "do_not_import_real_media": true,
+    "timing_patch_in_this_probe": false
+  },
+  "allowed_future_manual_action": {
+    "manual_YMM4_launch_by_user_operator": true,
+    "manual_diagnostic_ymmp_save": true,
+    "manual_diagnostic_ymmp_save_scope": "diagnostic observation only",
+    "recommended_save_location": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.ymmp",
+    "recommended_save_location_created_by_agent": false,
+    "committing_ymmp_allowed_now": false,
+    "committing_ymmp_condition": "not allowed unless a later explicit result-readback slice approves it"
+  },
+  "forbidden_actions": {
+    "Agent_YMM4_launch": false,
+    "Agent_ymmp_creation": false,
+    "render": false,
+    "TTS_generation": false,
+    "real_media_import": false,
+    "production_approval": false,
+    "public_video_claim": false,
+    "external_fetch": false,
+    "real_newsroom_ingest": false
+  },
+  "operator_observation_card": {
+    "status": "required_later",
+    "target": "diagnostic .ymmp probe from bound speaker CSV",
+    "why": "Confirm whether YMM4 can save the imported 4-line script as a project without render, TTS, real media, or production flow.",
+    "action": "Manually import the bound CSV in YMM4 and, only if comfortable, save a diagnostic .ymmp outside production flow.",
+    "look_for": [
+      "4 dialogue rows remain after save/reopen or save observation",
+      "speaker remains ゆっくり霊夢",
+      "timing stays natural short duration or changes unexpectedly"
+    ],
+    "answer_style": "freeform",
+    "answer_hint": "One sentence is enough, for example: saved; 4 rows and speaker remained; timing stayed short.",
+    "not_needed": [
+      "render",
+      "TTS",
+      "real media",
+      "production approval",
+      "fixed form",
+      "screenshot unless useful"
+    ]
+  },
+  "agent_normalization_plan": {
+    "schema_owner": "Agent",
+    "exposed_as_user_form": false,
+    "fields": [
+      "result",
+      "ymmp_saved",
+      "row_count_observed",
+      "speaker_preserved",
+      "timing_observation",
+      "render_created",
+      "TTS_generated",
+      "media_imported",
+      "confidence",
+      "unknowns"
+    ],
+    "normalization_note": "The agent may infer these fields later from freeform user text; the user is not asked to fill this schema."
+  },
+  "timing_policy": {
+    "neutral_timeline_total_sec": 68,
+    "observed_yym4_import_approx_sec": 8.48,
+    "first_probe_expected_timing": "YMM4 natural duration",
+    "timing_patch_in_this_probe": false,
+    "reason": "The first diagnostic .ymmp probe observes save/readback behavior. Timing patch strategy waits until project structure is known.",
+    "next_timing_axis": [
+      "timing_gap_strategy",
+      "optional ymmp_patch_strategy after project structure is known"
+    ]
+  },
+  "human_burden_hygiene": {
+    "user_input": "freeform",
+    "template_required": false,
+    "schema_owner": "Agent",
+    "max_required_points": 3,
+    "screenshot_optional": true,
+    "negative_confirmations_required_from_user": false,
+    "fixed_form_result_template": false
+  },
+  "not_accepted_scope": {
+    "production_readiness": false,
+    "render_readiness": false,
+    "TTS_readiness": false,
+    "public_video_readiness": false,
+    "visual_layout_import": false,
+    "portability_across_all_YMM4_installations": false,
+    "timing_import_from_neutral_timeline_metadata": false,
+    "committed_ymmp_artifact": false
+  },
+  "next_recommended_slices": [
+    "newsroom-diagnostic-ymmp-manual-result-readback-v1",
+    "newsroom-yym4-timing-gap-strategy-v1",
+    "newsroom-ymmp-structure-readback-v1"
+  ],
+  "downstream_next_use": {
+    "if_manual_probe_runs_later": "Normalize the user's freeform observation into a diagnostic .ymmp manual result readback.",
+    "if_manual_probe_does_not_run": "Keep this packet as the prepared boundary and continue with a timing-gap strategy that does not require .ymmp evidence.",
+    "do_not_use_this_packet_to": [
+      "create .ymmp in this agent slice",
+      "claim production readiness",
+      "claim render readiness",
+      "claim TTS readiness",
+      "publish or prepare a public video"
+    ]
+  },
+  "review_card": {
+    "status": "none",
+    "axis_if_needed": "diagnostic_ymmp_probe_packet",
+    "reason": "This slice prepares the manual probe packet only. It does not ask the user to do the probe inside this agent turn, and it does not request repeated prior-artifact review."
+  },
+  "boundary_assertions": {
+    "diagnostic_only": true,
+    "manual_probe_status": "not_run",
+    "agent_launched_yym4": false,
+    "agent_created_or_edited_ymmp": false,
+    "ymmp_created": false,
+    "render_created": false,
+    "TTS_generated": false,
+    "real_media_imported": false,
+    "production_approval": false,
+    "public_video_ready": false,
+    "external_fetch_performed": false,
+    "real_newsroom_ingest_performed": false,
+    "dashboard_governance_freshness_changed": false
+  }
+}

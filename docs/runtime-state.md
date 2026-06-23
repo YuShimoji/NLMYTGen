@@ -1,5 +1,41 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom diagnostic `.ymmp` probe packet v1 completed (2026-06-23)**:
+  Prepared the diagnostic-only packet for a later manual `.ymmp` save probe,
+  without launching YMM4 from the agent, creating or editing `.ymmp`,
+  rendering, generating TTS/audio, importing real media, fetching external
+  sources, approving production, or changing dashboard/governance/freshness
+  work. Machine packet:
+  `samples/_probe/newsroom_handoff/diagnostic_ymmp_probe_packet_v1.json`;
+  human readback:
+  `docs/verification/NEWSROOM_DIAGNOSTIC_YMMP_PROBE_PACKET_V1_2026-06-23.md`;
+  source boundary:
+  `samples/_probe/newsroom_handoff/minimal_ymmp_boundary_decision_v1.json`;
+  source bound CSV:
+  `samples/_probe/newsroom_handoff/tiny_script_import_candidate_yukkuri_reimu_v1.csv`;
+  implementation:
+  `src/pipeline/newsroom_diagnostic_ymmp_probe_packet.py`; focused coverage:
+  `tests/test_newsroom_diagnostic_ymmp_probe_packet.py`. The packet status is
+  `ready_for_future_manual_probe`, `production_status=diagnostic_only`, and
+  `manual_probe_status=not_run`; it prepares operator instructions only and
+  does not create the recommended diagnostic save path
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.ymmp`. A later
+  user/operator may manually launch YMM4, import the bound-speaker CSV, confirm
+  four rows and the bound speaker, and optionally save a diagnostic `.ymmp`
+  outside production flow, but committing any `.ymmp` remains disallowed unless
+  a later explicit result-readback slice approves it. The Operator Observation
+  Card is intentionally freeform: one sentence is enough, only three look-for
+  points are listed, screenshots are optional, and no fixed form or negative
+  confirmation checklist is required. Timing policy remains observational:
+  neutral timeline metadata is `68` seconds, observed YMM4 import was
+  approximately `8.48` seconds, the first probe expects YMM4 natural duration,
+  and `timing_patch_in_this_probe=false` until project structure is known.
+  Recommended next slices are
+  `newsroom-diagnostic-ymmp-manual-result-readback-v1`,
+  `newsroom-yym4-timing-gap-strategy-v1`, and
+  `newsroom-ymmp-structure-readback-v1`. Review Card remains `none`; no
+  repeated timing/caption/copy/CSV/script/tiny-proof review is requested.
+  Verification observed diagnostic `.ymmp` probe packet tests `7 passed`.
 - **Newsroom minimal `.ymmp` boundary decision v1 completed (2026-06-23)**:
   Created a diagnostic-only boundary decision for the next possible `.ymmp`
   step, without launching YMM4 from the agent, creating or editing `.ymmp`,
