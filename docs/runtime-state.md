@@ -1,5 +1,38 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom minimal `.ymmp` boundary decision v1 completed (2026-06-23)**:
+  Created a diagnostic-only boundary decision for the next possible `.ymmp`
+  step, without launching YMM4 from the agent, creating or editing `.ymmp`,
+  rendering, generating TTS/audio, importing real media, fetching external
+  sources, approving production, or changing dashboard/governance/freshness
+  work. Machine decision:
+  `samples/_probe/newsroom_handoff/minimal_ymmp_boundary_decision_v1.json`;
+  human readback:
+  `docs/verification/NEWSROOM_MINIMAL_YMMP_BOUNDARY_DECISION_V1_2026-06-23.md`;
+  source readiness:
+  `samples/_probe/newsroom_handoff/yym4_bound_speaker_import_readiness_v1.json`;
+  implementation:
+  `src/pipeline/newsroom_minimal_ymmp_boundary_decision.py`; focused coverage:
+  `tests/test_newsroom_minimal_ymmp_boundary_decision.py`. The decision status
+  is `approved_for_next_probe_packet`, not approval to create `.ymmp` in this
+  slice. Current `.ymmp` status remains `not_created`,
+  `agent_may_create_ymmp_now=false`, while a later user/manual diagnostic
+  `.ymmp` probe packet may be prepared. Production `.ymmp`, render, TTS/audio,
+  real media, real newsroom ingest, external fetch, production approval, and
+  public video remain prohibited. The recommended next path is
+  `prepare_manual_diagnostic_ymmp_probe_packet`, with next slice
+  `newsroom-diagnostic-ymmp-probe-packet-v1`, because bound speaker CSV import
+  is accepted in the current environment but the timing boundary remains open:
+  neutral timeline metadata is `68` seconds while the observed YMM4 import is
+  approximately `8.48` seconds, and CSV does not import timing metadata. Timing
+  policy default is to accept YMM4 natural duration for the first diagnostic
+  `.ymmp` probe so the save/readback boundary is isolated before any manual
+  timing patch. Human-burden hygiene is explicit: input remains freeform,
+  `template_required=false`, schema owner is Agent, screenshot is optional,
+  negative confirmations are not required, and the future Operator Observation
+  Card has only three look-for points. Review Card remains `none`; no repeated
+  timing/caption/copy/CSV/script/tiny-proof review is requested. Verification
+  observed minimal `.ymmp` boundary decision tests `7 passed`.
 - **Newsroom YMM4 bound speaker import readiness v1 completed (2026-06-23)**:
   Recorded the user/operator freeform observation and screenshot context for
   the committed bound-speaker CSV candidate, without launching YMM4 from the

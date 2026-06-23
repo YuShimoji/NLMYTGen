@@ -1,0 +1,241 @@
+{
+  "artifact_id": "newsroom_minimal_ymmp_boundary_decision_v1_2026_06_23",
+  "decision_id": "newsroom_minimal_ymmp_boundary_decision_v1_2026_06_23",
+  "schema_version": "newsroom_minimal_ymmp_boundary_decision.v1",
+  "review_status": "ready_for_supervisor_review",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_only",
+  "decision_status": "approved_for_next_probe_packet",
+  "identity": {
+    "decision_id": "newsroom_minimal_ymmp_boundary_decision_v1_2026_06_23",
+    "source_bound_speaker_readiness_path": "samples/_probe/newsroom_handoff/yym4_bound_speaker_import_readiness_v1.json",
+    "source_bound_speaker_readiness_id": "newsroom_yym4_bound_speaker_import_readiness_v1_2026_06_23",
+    "source_bound_csv_path": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_yukkuri_reimu_v1.csv",
+    "source_commit_or_status": "worktree_verified_before_generation",
+    "production_status": "diagnostic_only",
+    "decision_status": "approved_for_next_probe_packet"
+  },
+  "review_memory": {
+    "source_review_memory": {
+      "manual_import_behavior": 1,
+      "bound_speaker_behavior": 1
+    },
+    "prior_user_review_count": {
+      "manual_import_behavior": 1,
+      "bound_speaker_behavior": 1,
+      "minimal_ymmp_boundary": 0
+    },
+    "accepted_scope": {
+      "tiny_speaker_text_csv_import_in_YMM4": true,
+      "bound_speaker_value_recognized_in_current_environment": true,
+      "four_dialogue_rows_visible": true,
+      "all_text_visible": true,
+      "manual_speaker_selection_needed_for_bound_csv": false
+    },
+    "not_accepted_scope": {
+      "production_readiness": false,
+      "render_readiness": false,
+      "TTS_readiness": false,
+      "public_video_readiness": false,
+      "visual_layout_import": false,
+      "portability_across_all_YMM4_installations": false,
+      "timing_import_from_neutral_timeline_metadata": false
+    },
+    "next_nonredundant_axis": [
+      "minimal_ymmp_boundary_decision",
+      "diagnostic_ymmp_probe_packet",
+      "timing_gap_after_csv_import"
+    ],
+    "repeated_general_review_allowed": false,
+    "input_mode": "freeform"
+  },
+  "source_validation": {
+    "source_readiness_id": "newsroom_yym4_bound_speaker_import_readiness_v1_2026_06_23",
+    "source_readiness_result": "pass",
+    "bound_csv_bom_verified": true,
+    "bound_csv_has_header": false,
+    "bound_csv_all_rows_two_columns": true,
+    "bound_csv_row_count": 4,
+    "all_rows_use_bound_speaker": true,
+    "all_rows_have_text": true,
+    "speaker_prompt_shown": false,
+    "timing_imported_from_csv": false,
+    "rows": [
+      {
+        "row_number": 1,
+        "speaker_matches_bound_value": true,
+        "text_non_empty": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_number": 2,
+        "speaker_matches_bound_value": true,
+        "text_non_empty": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_number": 3,
+        "speaker_matches_bound_value": true,
+        "text_non_empty": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_number": 4,
+        "speaker_matches_bound_value": true,
+        "text_non_empty": true,
+        "status": "passed",
+        "errors": []
+      }
+    ],
+    "errors": []
+  },
+  "accepted_inputs": {
+    "bound_CSV_accepted_in_current_environment": true,
+    "speaker_value": "ゆっくり霊夢",
+    "row_count": 4,
+    "text_visible": true,
+    "speaker_prompt_shown": false,
+    "speaker_prompt_not_shown": true,
+    "csv_encoding": "UTF-8 BOM",
+    "csv_header": false,
+    "csv_columns": [
+      "speaker",
+      "text"
+    ],
+    "accepted_for": "diagnostic_yym4_script_import_in_current_environment"
+  },
+  "ymmp_boundary": {
+    "current_ymmp_status": "not_created",
+    "agent_may_create_ymmp_now": false,
+    "user_manual_ymmp_probe_may_be_prepared_next": true,
+    "production_ymmp_allowed": false,
+    "render_allowed": false,
+    "TTS_generation_allowed": false,
+    "real_media_allowed": false,
+    "real_newsroom_ingest_allowed": false,
+    "external_fetch_allowed": false,
+    "public_video_allowed": false
+  },
+  "recommended_next_path": {
+    "choice": "prepare_manual_diagnostic_ymmp_probe_packet",
+    "next_recommended_slice": "newsroom-diagnostic-ymmp-probe-packet-v1",
+    "reason": "Bound speaker CSV import is accepted in the current diagnostic environment, but the CSV path does not carry the 68 second neutral timing plan. The narrow next move is to prepare, not execute, a manual diagnostic .ymmp probe packet that keeps render, TTS, real media, and production closed.",
+    "alternatives_considered": [
+      {
+        "path": "timing_gap_strategy_first",
+        "reason_not_default": "Useful soon, but the permission boundary for any saved project should be fixed before strategy work can name concrete evidence."
+      },
+      {
+        "path": "TTS_boundary_first",
+        "reason_not_default": "Premature because the current bottleneck is import/.ymmp/timing, not narration or audio generation."
+      },
+      {
+        "path": "defer_ymmp",
+        "reason_not_default": "Too conservative now that speaker import works and the next probe can remain manual and diagnostic."
+      }
+    ]
+  },
+  "timing_gap_policy": {
+    "neutral_timeline_total_sec": 68,
+    "observed_yym4_import_approx_sec": 8.48,
+    "timing_imported_by_csv": false,
+    "options": [
+      "accept YMM4 natural duration for first diagnostic .ymmp",
+      "patch timing after import",
+      "keep timing metadata external until render path"
+    ],
+    "recommended_default": "accept YMM4 natural duration for first diagnostic .ymmp",
+    "reason": "The next probe should isolate the save/readback boundary first. Using YMM4 natural dialogue duration avoids mixing manual timing adjustment with the first diagnostic .ymmp evidence."
+  },
+  "evidence_policy": {
+    "input_mode": "freeform",
+    "template_required": false,
+    "schema_owner": "Agent",
+    "screenshot_optional": true,
+    "negative_confirmations_required_from_user": false,
+    "sufficient_freeform_evidence": [
+      "whether a diagnostic .ymmp was saved",
+      "whether 4 imported dialogue rows still exist",
+      "whether timing stayed short or was manually adjusted"
+    ],
+    "not_sufficient_for": [
+      "production readiness",
+      "render readiness",
+      "TTS readiness",
+      "public video readiness"
+    ]
+  },
+  "operator_observation_card": {
+    "status": "for_next_probe_packet_only",
+    "target": "manual diagnostic .ymmp probe after a future packet is written",
+    "why": "Confirm only the save/readback and timing-boundary behavior for a diagnostic project, without render, TTS, real media, or production.",
+    "action": "If a later packet authorizes it, save a diagnostic project from the bound CSV import and answer in freeform.",
+    "look_for": [
+      ".ymmp saved or not saved",
+      "4 dialogue rows still present",
+      "timing stayed short or was adjusted"
+    ],
+    "answer_style": "freeform",
+    "not_needed": [
+      "fixed result form",
+      "render confirmation",
+      "TTS/audio confirmation",
+      "production approval"
+    ]
+  },
+  "human_burden_hygiene": {
+    "user_input": "freeform",
+    "template_required": false,
+    "schema_owner": "Agent",
+    "max_required_points": 3,
+    "screenshot_optional": true,
+    "negative_confirmations_required_from_user": false,
+    "fixed_form_result_template": false
+  },
+  "not_accepted_scope": {
+    "production_readiness": false,
+    "render_readiness": false,
+    "TTS_readiness": false,
+    "public_video_readiness": false,
+    "visual_layout_import": false,
+    "portability_across_all_YMM4_installations": false,
+    "timing_import_from_neutral_timeline_metadata": false
+  },
+  "next_recommended_slice": "newsroom-diagnostic-ymmp-probe-packet-v1",
+  "downstream_next_use": {
+    "use_this_decision_to": "Write the next diagnostic .ymmp probe packet with a compact freeform observation card and no production, render, TTS, or real-media route.",
+    "do_not_use_this_decision_to": [
+      "create .ymmp in this slice",
+      "claim render readiness",
+      "claim TTS readiness",
+      "claim production readiness",
+      "publish or prepare a public video"
+    ]
+  },
+  "review_card": {
+    "status": "none",
+    "axis_if_needed": "minimal_ymmp_boundary_decision",
+    "reason": "This slice is an agent-owned boundary decision based on the already recorded freeform YMM4 observation. It does not ask for repeated prior review or a fixed result template."
+  },
+  "boundary_assertions": {
+    "current_ymmp_status": "not_created",
+    "agent_may_create_ymmp_now": false,
+    "user_manual_ymmp_probe_may_be_prepared_next": true,
+    "production_ymmp_allowed": false,
+    "render_allowed": false,
+    "TTS_generation_allowed": false,
+    "real_media_allowed": false,
+    "real_newsroom_ingest_allowed": false,
+    "external_fetch_allowed": false,
+    "public_video_allowed": false,
+    "diagnostic_only": true,
+    "decision_only_no_probe_execution": true,
+    "YMM4_launched_by_agent": false,
+    "external_fetch_performed": false,
+    "real_newsroom_ingest_performed": false,
+    "dashboard_governance_freshness_changed": false
+  }
+}
