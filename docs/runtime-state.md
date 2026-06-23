@@ -1,5 +1,42 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom audio/TTS boundary v1 completed (2026-06-23)**:
+  Defined the diagnostic audio/TTS boundary after the tiny render smoke result,
+  without launching YMM4, rendering, generating TTS/audio, importing real media,
+  creating/modifying/staging/committing `.ymmp`, committing render output,
+  approving production, or changing dashboard/governance/freshness work. New
+  artifacts:
+  `samples/_probe/newsroom_handoff/audio_tts_boundary_v1.json`,
+  `docs/verification/NEWSROOM_AUDIO_TTS_BOUNDARY_V1_2026-06-23.md`,
+  `src/pipeline/newsroom_audio_tts_boundary.py`, and
+  `tests/test_newsroom_audio_tts_boundary.py`. Source validation reuses
+  `tiny_render_smoke_result_readback_v1.json`,
+  `diagnostic_ymmp_structure_readback_v1.json`, and
+  `yym4_timing_gap_strategy_v1.json`. Known render result remains diagnostic:
+  `pass`, output video observed, four dialogue lines visible, approximate
+  duration `8` sec, YMM4 natural duration, neutral `68` sec timing patch not
+  applied. `.ymmp` voice fields are present (`VoiceLength`, `VoiceCache`,
+  `VoiceParameter`, `Pronounce`, `Hatsuon`, `AudioEffects`), with four voice
+  items, four voice caches, and `AquesTalk`; however render success and
+  VoiceCache presence do not establish audio presence or audio quality.
+  Current audio state is intentionally bounded: `audio_presence_in_render` is
+  `unknown`, `audio_quality_accepted=false`, `TTS_ready=false`,
+  `TTS_generated_by_agent=false`, `explicit_operator_TTS_generation=false`,
+  and voice binding is only `partial` for diagnostic import with canonical
+  speaker `ゆっくり霊夢`. Recommended default is to keep the YMM4 native
+  voice/audio path as the next diagnostic path, keep external TTS closed, and
+  use a compact freeform audio observation only if audio becomes the next
+  bottleneck. First render smoke used natural timing; neutral `68` sec timing
+  patch remains deferred, and timing should not be patched before audio/TTS
+  boundary is understood. Next axes are
+  `newsroom-tiny-render-audio-observation-card-v1` if audio presence is needed,
+  `newsroom-yym4-native-audio-path-proof-v1` if the native path must be proven
+  first, or `newsroom-ymmp-timing-patch-strategy-v1` if existing audio evidence
+  is sufficient for the next decision. Human-burden hygiene remains closed:
+  User-Side Work is none, future observation stays freeform with at most three
+  look-for points, screenshots are optional, negative confirmations are not
+  required, and no fixed-form relapse is introduced. Verification observed
+  focused audio/TTS boundary tests `11 passed`.
 - **Newsroom tiny render smoke result readback v1 completed (2026-06-23)**:
   Recorded the user's freeform manual tiny render smoke observation as a
   diagnostic-only repo readback, without launching YMM4 from the Agent,

@@ -1,0 +1,293 @@
+{
+  "artifact_id": "newsroom_audio_tts_boundary_v1_2026_06_23",
+  "boundary_id": "newsroom_audio_tts_boundary_v1_2026_06_23",
+  "schema_version": "newsroom_audio_tts_boundary.v1",
+  "review_status": "ready_for_supervisor_review",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_only",
+  "boundary_status": "accepted_for_next_audio_observation",
+  "identity": {
+    "boundary_id": "newsroom_audio_tts_boundary_v1_2026_06_23",
+    "source_render_smoke_result_path": "samples/_probe/newsroom_handoff/tiny_render_smoke_result_readback_v1.json",
+    "source_render_smoke_result_id": "newsroom_tiny_render_smoke_result_readback_v1_2026_06_23",
+    "source_ymmp_structure_readback_path": "samples/_probe/newsroom_handoff/diagnostic_ymmp_structure_readback_v1.json",
+    "source_ymmp_structure_readback_id": "newsroom_diagnostic_ymmp_structure_readback_v1_2026_06_23",
+    "source_timing_strategy_path": "samples/_probe/newsroom_handoff/yym4_timing_gap_strategy_v1.json",
+    "source_timing_strategy_id": "newsroom_yym4_timing_gap_strategy_v1_2026_06_23",
+    "production_status": "diagnostic_only",
+    "boundary_status": "accepted_for_next_audio_observation"
+  },
+  "source_validation": {
+    "status": "passed",
+    "render_result_id": "newsroom_tiny_render_smoke_result_readback_v1_2026_06_23",
+    "structure_readback_id": "newsroom_diagnostic_ymmp_structure_readback_v1_2026_06_23",
+    "timing_strategy_id": "newsroom_yym4_timing_gap_strategy_v1_2026_06_23",
+    "canonical_speaker_value": "ゆっくり霊夢",
+    "canonical_speaker_unicode_escape": "\\u3086\\u3063\\u304f\\u308a\\u970a\\u5922",
+    "voice_cache_item_count": 4,
+    "voice_audio_related_fields_present": [
+      "VoiceLength",
+      "VoiceCache",
+      "VoiceParameter",
+      "Pronounce",
+      "Hatsuon",
+      "AudioEffects"
+    ],
+    "errors": []
+  },
+  "known_render_result": {
+    "tiny_render_smoke_result": "pass",
+    "output_video_observed": true,
+    "approximate_duration_sec": 8,
+    "four_dialogue_lines_visible": true,
+    "timing_mode": "YMM4 natural duration",
+    "neutral_68_sec_timing_patch_applied": false,
+    "render_output_path_if_known": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.mp4",
+    "render_output_committed": false,
+    "render_output_staged": false
+  },
+  "audio_tts_knowns_and_unknowns": {
+    "VoiceCache_or_voice_fields_present_in_ymmp": true,
+    "voice_audio_related_fields_present": [
+      "VoiceLength",
+      "VoiceCache",
+      "VoiceParameter",
+      "Pronounce",
+      "Hatsuon",
+      "AudioEffects"
+    ],
+    "voice_item_count": 4,
+    "voice_cache_item_count": 4,
+    "character_voice_apis": [
+      "AquesTalk"
+    ],
+    "TTS_generated_by_agent": false,
+    "explicit_operator_TTS_generation": false,
+    "audio_presence_in_render": "unknown",
+    "audio_quality_accepted": false,
+    "TTS_ready": false,
+    "voice_binding_ready": "partial",
+    "speaker_binding_status": "ゆっくり霊夢 accepted for diagnostic import",
+    "speaker_unicode_escape": "\\u3086\\u3063\\u304f\\u308a\\u970a\\u5922",
+    "known_unknown_note": "Render success and VoiceCache presence do not establish audio presence or audio quality in the output."
+  },
+  "responsibility_split": [
+    {
+      "path_id": "yym4_native_voice_audio_path",
+      "role": "recommended_next_diagnostic_path",
+      "benefits": [
+        "uses the saved .ymmp voice fields and VoiceCache",
+        "keeps speaker binding and timing in one YMM4-native surface"
+      ],
+      "risks": [
+        "audio presence in the current render is not yet observed",
+        "VoiceCache presence can be overread as audio quality"
+      ],
+      "what_it_enables": [
+        "small audio presence observation",
+        "native voice path proof"
+      ],
+      "what_it_defers": [
+        "external TTS integration",
+        "production voice readiness"
+      ]
+    },
+    {
+      "path_id": "external_tts_path",
+      "role": "closed_for_now",
+      "benefits": [
+        "could provide explicit audio generation control later",
+        "could decouple voice from YMM4 internals later"
+      ],
+      "risks": [
+        "adds timing drift before the native path is understood",
+        "adds credential/tooling and file-retention questions"
+      ],
+      "what_it_enables": [
+        "future external narration experiments",
+        "future voice replacement design"
+      ],
+      "what_it_defers": [
+        "current diagnostic render follow-through",
+        "neutral timing patch strategy"
+      ]
+    },
+    {
+      "path_id": "metadata_only_voice_profile_path",
+      "role": "planning_only",
+      "benefits": [
+        "records intended speaker/profile without generating audio",
+        "keeps schemas stable for future normalization"
+      ],
+      "risks": [
+        "does not prove audible output",
+        "can be mistaken for voice readiness"
+      ],
+      "what_it_enables": [
+        "voice profile bookkeeping",
+        "future path comparison"
+      ],
+      "what_it_defers": [
+        "audio presence proof",
+        "TTS quality acceptance"
+      ]
+    },
+    {
+      "path_id": "no_audio_diagnostic_render_path",
+      "role": "fallback_if_audio_remains_unneeded",
+      "benefits": [
+        "keeps render/timing diagnostics isolated from audio",
+        "allows visual/tool-chain checks without narration claims"
+      ],
+      "risks": [
+        "not representative of a public video",
+        "cannot validate voice timing or speaker quality"
+      ],
+      "what_it_enables": [
+        "continued non-audio diagnostic render checks",
+        "retention-policy decisions for silent outputs"
+      ],
+      "what_it_defers": [
+        "voice readiness",
+        "production render readiness"
+      ]
+    }
+  ],
+  "recommended_default": {
+    "choice": "keep_yym4_native_voice_audio_path_for_next_diagnostic",
+    "reasoning": [
+      "The current .ymmp already records YMM4 voice fields and VoiceCache.",
+      "The tiny render smoke proves diagnostic render viability, not audio quality.",
+      "External TTS would add a second timing and integration variable too early.",
+      "Audio/TTS choice should be understood before neutral 68 second timing patch work."
+    ],
+    "do_now": [
+      "keep YMM4 native voice/audio path as the next diagnostic path",
+      "record audio presence in render as unknown until a small observation is needed",
+      "keep external TTS closed"
+    ],
+    "defer": [
+      "external TTS generation",
+      "audio quality acceptance",
+      "production voice readiness",
+      "neutral 68 second timing patch"
+    ]
+  },
+  "operator_observation_card_if_needed": {
+    "status": "proposed_if_needed",
+    "target": "tiny render audio presence observation",
+    "why": "Audio presence in the render is unknown; use only if audio becomes the next bottleneck.",
+    "action": "Play the existing diagnostic tiny render and answer in freeform.",
+    "look_for": [
+      "whether any audio is present",
+      "whether the voice sounds like the expected YMM4 speaker",
+      "whether there is obvious silence, cutoff, or mismatch"
+    ],
+    "answer_style": "freeform",
+    "not_needed": [
+      "fixed form",
+      "production quality review",
+      "timing patch",
+      "new render",
+      "external TTS"
+    ]
+  },
+  "timing_interaction": {
+    "first_render_smoke_used_natural_duration": true,
+    "first_smoke_duration_sec": 8,
+    "first_smoke_duration_qualifier": "approx",
+    "prior_ymmp_natural_duration_sec": 8.483333,
+    "neutral_68_sec_timing_patch_remains_deferred": true,
+    "audio_tts_choice_may_affect_timing_duration": true,
+    "do_not_patch_timing_before_audio_tts_boundary_understood": true,
+    "timing_patch_applied": false
+  },
+  "next_recommended_slices": {
+    "if_audio_presence_is_sufficient_from_existing_evidence": "newsroom-ymmp-timing-patch-strategy-v1",
+    "if_audio_presence_is_unknown_and_needed": "newsroom-tiny-render-audio-observation-card-v1",
+    "if_audio_path_should_be_defined_first": "newsroom-yym4-native-audio-path-proof-v1",
+    "do_not_recommend": "production_render_immediately"
+  },
+  "boundary_status_detail": {
+    "render_created_by_agent": false,
+    "audio_generated_by_agent": false,
+    "TTS_generated_by_agent": false,
+    "real_media_imported": false,
+    "production_approval": false,
+    "public_video_ready": false,
+    "output_retention_required_now": false,
+    "dashboard_governance_freshness_changed": false
+  },
+  "review_memory": {
+    "review_source": "tiny_render_smoke_result_readback",
+    "checked": true,
+    "prior_user_review_count": {
+      "manual_import_behavior": 1,
+      "bound_speaker_behavior": 1,
+      "diagnostic_ymmp_manual_observation": 1,
+      "ymmp_structure_readback": 1,
+      "timing_gap_strategy": 1,
+      "tiny_render_smoke_boundary": 1,
+      "tiny_render_smoke_result": 1,
+      "audio_tts_boundary": 0
+    },
+    "prior_evidence_reused": [
+      "tiny render smoke result readback",
+      "diagnostic .ymmp structure readback",
+      "YMM4 timing gap strategy"
+    ],
+    "next_nonredundant_axis": [
+      "newsroom-tiny-render-audio-observation-card-v1",
+      "newsroom-yym4-native-audio-path-proof-v1",
+      "newsroom-ymmp-timing-patch-strategy-v1"
+    ],
+    "not_accepted_scope": {
+      "production_render_readiness": false,
+      "public_video_readiness": false,
+      "neutral_68_sec_timing_proof": false,
+      "visual_layout_readiness": false,
+      "TTS_audio_quality_acceptance": false,
+      "TTS_readiness": false,
+      "real_content_readiness": false,
+      "production_approval": false
+    },
+    "repeated_general_review_allowed": false,
+    "user_side_work_re_requested": false,
+    "input_mode": "freeform"
+  },
+  "human_burden_hygiene": {
+    "user_input": "freeform",
+    "template_required": false,
+    "schema_owner": "Agent",
+    "user_side_work_this_slice": "none",
+    "future_observation_max_required_points": 3,
+    "screenshot_optional": true,
+    "negative_confirmations_required_from_user": false,
+    "fixed_form_result_template": false
+  },
+  "not_accepted_scope": {
+    "production_render_readiness": false,
+    "public_video_readiness": false,
+    "neutral_68_sec_timing_proof": false,
+    "visual_layout_readiness": false,
+    "TTS_audio_quality_acceptance": false,
+    "TTS_readiness": false,
+    "real_content_readiness": false,
+    "production_approval": false
+  },
+  "downstream_next_use": {
+    "use_this_boundary_to": [
+      "keep render success separate from audio quality acceptance",
+      "choose a minimal YMM4 native audio observation if audio evidence becomes necessary",
+      "avoid introducing external TTS before native YMM4 audio behavior is understood",
+      "defer neutral timing patch until audio/TTS boundary is stable"
+    ],
+    "do_not_use_this_boundary_to": [
+      "claim audio quality acceptance",
+      "claim TTS readiness",
+      "generate or import audio",
+      "claim production render or public video readiness",
+      "commit .ymmp, mp4, wav, mp3, or media output"
+    ]
+  }
+}
