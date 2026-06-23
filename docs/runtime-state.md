@@ -1,5 +1,33 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom tiny render smoke result readback v1 completed (2026-06-23)**:
+  Recorded the user's freeform manual tiny render smoke observation as a
+  diagnostic-only repo readback, without launching YMM4 from the Agent,
+  rendering, creating/modifying/staging/committing `.ymmp`, generating
+  TTS/audio, importing real media, approving production, committing render
+  output, or changing dashboard/governance/freshness work. Machine readback:
+  `samples/_probe/newsroom_handoff/tiny_render_smoke_result_readback_v1.json`;
+  human readback:
+  `docs/verification/NEWSROOM_TINY_RENDER_SMOKE_RESULT_READBACK_V1_2026-06-23.md`.
+  The normalized result is `pass`: render completed, output video was observed,
+  four dialogue lines were visible, and duration was approximately `8` seconds
+  with `short_natural_duration`. The local output path
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.mp4` was
+  discoverable as an ignored diagnostic file, but it was not staged or
+  committed. Accepted scope is limited to current-environment diagnostic tiny
+  render viability and four-line visibility. Not accepted: production render
+  readiness, public video readiness, neutral `68` second timing proof, visual
+  layout readiness, TTS/audio quality acceptance, real content readiness, or
+  production approval. Timing gap remains `unresolved`: neutral timeline total
+  stays `68` seconds while the first smoke remains natural/short; recommended
+  next axes are `newsroom-audio-tts-boundary-v1`,
+  `newsroom-ymmp-timing-patch-strategy-v1`, and
+  `newsroom-render-output-retention-policy-v1` only if the ignored mp4 needs
+  retention. Human-burden hygiene remains closed: user input is freeform,
+  `template_required=false`, schema owner is Agent, future observation prompts
+  stay at maximum three look-for points, screenshots are optional, negative
+  confirmations are not required, no fixed-form relapse is introduced, and
+  User-Side Work is none.
 - **Newsroom tiny render smoke boundary v1 completed (2026-06-23)**:
   Prepared a diagnostic-only tiny render smoke boundary/operator packet from
   the accepted YMM4 timing gap strategy, without launching YMM4, rendering,

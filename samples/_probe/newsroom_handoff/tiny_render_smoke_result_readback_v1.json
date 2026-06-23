@@ -1,0 +1,193 @@
+{
+  "artifact_id": "newsroom_tiny_render_smoke_result_readback_v1_2026_06_23",
+  "result_id": "newsroom_tiny_render_smoke_result_readback_v1_2026_06_23",
+  "schema_version": "newsroom_tiny_render_smoke_result_readback.v1",
+  "review_status": "ready_for_supervisor_review",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_only",
+  "render_smoke_status": "observed",
+  "manual_render_smoke_status": "observed",
+  "observation_source": "user_freeform",
+  "identity": {
+    "result_id": "newsroom_tiny_render_smoke_result_readback_v1_2026_06_23",
+    "source_boundary_path": "samples/_probe/newsroom_handoff/tiny_render_smoke_boundary_v1.json",
+    "source_boundary_id": "newsroom_tiny_render_smoke_boundary_v1_2026_06_23",
+    "source_timing_strategy_path": "samples/_probe/newsroom_handoff/yym4_timing_gap_strategy_v1.json",
+    "source_timing_strategy_id": "newsroom_yym4_timing_gap_strategy_v1_2026_06_23",
+    "source_ymmp_structure_readback_path": "samples/_probe/newsroom_handoff/diagnostic_ymmp_structure_readback_v1.json",
+    "source_ymmp_structure_readback_id": "newsroom_diagnostic_ymmp_structure_readback_v1_2026_06_23",
+    "production_status": "diagnostic_only",
+    "render_smoke_status": "observed",
+    "observation_source": "user_freeform"
+  },
+  "source_validation": {
+    "status": "passed",
+    "boundary_render_smoke_status_before_observation": "not_run",
+    "boundary_status": "ready_for_future_manual_smoke",
+    "timing_strategy_status": "accepted_for_next_tiny_render_smoke",
+    "recommended_timing_default": "hybrid_natural_first_then_patch_later",
+    "source_timing_gap_status": "unresolved",
+    "errors": []
+  },
+  "operator_freeform_observation": {
+    "input_mode": "freeform",
+    "observation_source": "user_freeform",
+    "summary": "The user reported that the diagnostic tiny render completed, the output video appeared, the four dialogue lines were visible, and the duration stayed short/natural at about 8 seconds.",
+    "fixed_result_template_requested": false,
+    "manual_observation_re_requested": false
+  },
+  "normalized_result": {
+    "result": "pass",
+    "render_completed": true,
+    "output_video_observed": true,
+    "output_duration_observed_sec": 8,
+    "output_duration_observed_qualifier": "approx",
+    "four_dialogue_lines_visible": true,
+    "timing_observation": "short_natural_duration",
+    "neutral_68_sec_timing_patch_applied": false,
+    "production_render": false,
+    "public_video_ready": false,
+    "real_media_imported": false,
+    "production_approval": false,
+    "visual_layout_proof": false,
+    "TTS_quality_acceptance": false,
+    "output_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.mp4",
+    "output_path_status": "discoverable_local_ignored_tmp_file_not_staged",
+    "render_output_committed": false,
+    "render_output_staged": false
+  },
+  "local_output_discovery": {
+    "output_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.mp4",
+    "path_status": "discoverable_local_file_at_readback_time",
+    "exists_at_readback_time": true,
+    "path_source": "workspace_probe_after_user_freeform_observation",
+    "file_committed": false,
+    "file_staged": false,
+    "commit_policy": "do_not_stage_or_commit_render_output_without_explicit_later_retention_gate"
+  },
+  "accepted_scope": {
+    "YMM4_diagnostic_project_can_render_tiny_smoke_video_in_current_environment": true,
+    "four_dialogue_lines_appear_in_output": true,
+    "natural_short_duration_preserved_for_first_smoke": true,
+    "user_freeform_observation_is_sufficient_for_this_readback": true
+  },
+  "not_accepted_scope": {
+    "production_render_ready": false,
+    "public_video_ready": false,
+    "timing_patch_ready": false,
+    "TTS_quality_accepted": false,
+    "visual_layout_ready": false,
+    "real_content_ready": false,
+    "production_approval": false,
+    "neutral_68_sec_timing_proof": false
+  },
+  "timing_carry_forward": {
+    "neutral_timeline_total_sec": 68,
+    "first_smoke_duration_sec": 8,
+    "first_smoke_duration_qualifier": "approx",
+    "prior_ymmp_natural_duration_sec": 8.483333,
+    "timing_observation": "short_natural_duration",
+    "timing_gap_status": "unresolved",
+    "neutral_68_sec_timing_patch_applied": false,
+    "recommended_next_axis": [
+      "audio_tts_boundary",
+      "ymmp_timing_patch_strategy",
+      "render_output_retention_policy"
+    ]
+  },
+  "next_recommended_slices": [
+    "newsroom-audio-tts-boundary-v1",
+    "newsroom-ymmp-timing-patch-strategy-v1",
+    "newsroom-render-output-retention-policy-v1",
+    "newsroom-visual-layout-bridge-v1"
+  ],
+  "next_recommended_slice_notes": {
+    "newsroom-audio-tts-boundary-v1": "Use this if the next bottleneck is whether saved voice cache/audio behavior is acceptable or needs a TTS boundary.",
+    "newsroom-ymmp-timing-patch-strategy-v1": "Use this to resolve the gap between the diagnostic 8 second smoke and the neutral 68 second planning timeline.",
+    "newsroom-render-output-retention-policy-v1": "Use only if the ignored local mp4 needs to be retained as an artifact later.",
+    "newsroom-visual-layout-bridge-v1": "Keep later unless the supervisor chooses visual layout inspection as the immediate axis."
+  },
+  "review_memory": {
+    "review_source": "tiny_render_smoke_boundary_v1_plus_user_freeform_observation",
+    "checked": true,
+    "prior_user_review_count": {
+      "manual_import_behavior": 1,
+      "bound_speaker_behavior": 1,
+      "diagnostic_ymmp_manual_observation": 1,
+      "ymmp_structure_readback": 1,
+      "timing_gap_strategy": 1,
+      "tiny_render_smoke_boundary": 1,
+      "tiny_render_smoke_result": 1
+    },
+    "prior_evidence_reused": [
+      "tiny render smoke boundary",
+      "YMM4 timing gap strategy",
+      "diagnostic .ymmp structure readback",
+      "user freeform tiny render smoke observation"
+    ],
+    "next_nonredundant_axis": [
+      "newsroom-audio-tts-boundary-v1",
+      "newsroom-ymmp-timing-patch-strategy-v1",
+      "newsroom-render-output-retention-policy-v1"
+    ],
+    "not_accepted_scope_preserved": true,
+    "repeated_general_review_allowed": false,
+    "user_side_work_re_requested": false,
+    "input_mode": "freeform"
+  },
+  "human_burden_hygiene": {
+    "user_input": "freeform",
+    "template_required": false,
+    "schema_owner": "Agent",
+    "max_required_points": 0,
+    "future_observation_max_required_points": 3,
+    "screenshot_optional": true,
+    "negative_confirmations_required_from_user": false,
+    "fixed_form_result_template": false,
+    "user_side_work_this_slice": "none"
+  },
+  "downstream_next_use": {
+    "use_this_readback_to": [
+      "treat the diagnostic tiny render smoke as passed in the current environment",
+      "carry the 8 second natural-duration smoke evidence into audio and timing decisions",
+      "keep render output retention separate from the smoke pass",
+      "avoid re-requesting a manual render observation for this slice"
+    ],
+    "do_not_use_this_readback_to": [
+      "claim production render readiness",
+      "claim public video readiness",
+      "claim neutral 68 second timing proof",
+      "claim visual layout readiness",
+      "claim TTS or audio quality acceptance",
+      "commit .ymmp or render output without an explicit later retention gate"
+    ]
+  },
+  "review_card": {
+    "status": "none",
+    "reason": "The user freeform observation is sufficient; this slice only normalizes it into repo readback and does not ask for a fixed result template."
+  },
+  "boundary_assertions": {
+    "diagnostic_only": true,
+    "agent_launched_yym4": false,
+    "agent_render_created": false,
+    "agent_created_or_modified_ymmp": false,
+    "ymmp_staged_or_committed": false,
+    "render_output_staged_or_committed": false,
+    "TTS_generated": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "real_newsroom_ingest_performed": false,
+    "dashboard_governance_freshness_changed": false,
+    "production_approval": false,
+    "public_video_ready": false
+  },
+  "validation_plan": {
+    "json_parse_required": true,
+    "git_diff_check_required": true,
+    "conflict_marker_scan_required": true,
+    "fixed_form_relapse_scan_required": true,
+    "forbidden_staged_file_scan_required": true,
+    "focused_tests_added": false,
+    "python_module_added": false
+  }
+}
