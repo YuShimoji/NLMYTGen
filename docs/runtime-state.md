@@ -1,5 +1,39 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom tiny render smoke boundary v1 completed (2026-06-23)**:
+  Prepared a diagnostic-only tiny render smoke boundary/operator packet from
+  the accepted YMM4 timing gap strategy, without launching YMM4, rendering,
+  creating/modifying/staging/committing `.ymmp`, generating TTS/audio, importing
+  real media, approving production, or changing dashboard/governance/freshness
+  work. New artifacts:
+  `samples/_probe/newsroom_handoff/tiny_render_smoke_boundary_v1.json`,
+  `docs/verification/NEWSROOM_TINY_RENDER_SMOKE_BOUNDARY_V1_2026-06-23.md`,
+  `src/pipeline/newsroom_tiny_render_smoke_boundary.py`, and
+  `tests/test_newsroom_tiny_render_smoke_boundary.py`. The boundary reuses
+  `yym4_timing_gap_strategy_v1.json`,
+  `diagnostic_ymmp_structure_readback_v1.json`, and
+  `diagnostic_ymmp_manual_result_readback_v1.json`; canonical speaker remains
+  the decoded UI-observed `ゆっくり霊夢` value represented by Unicode codepoints
+  `\u3086\u3063\u304f\u308a\u970a\u5922`. The target diagnostic `.ymmp` path is
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.ymmp`,
+  discoverable locally and ignored under `_tmp/`; it remains untracked and must
+  not be staged or committed. Future manual action is limited to opening YMM4,
+  opening that diagnostic `.ymmp`, and, if comfortable, exporting one tiny
+  diagnostic render smoke without changing timing. The Operator Observation
+  Card has three look-for points: whether render completes or fails, whether
+  output plays and contains the four dialogue lines, and whether duration stays
+  short/natural rather than `68` sec. First smoke timing mode is YMM4 natural
+  duration (`509` frames / `60` fps / `8.483333` sec); neutral `68` sec timing
+  patch remains deferred to `newsroom-ymmp-timing-patch-strategy-v1`. If a
+  future manual smoke succeeds, next slice is
+  `newsroom-tiny-render-smoke-result-readback-v1`; if it fails,
+  `newsroom-yym4-render-failure-classification-v1`; if operator instructions
+  need refinement, `newsroom-yym4-render-operator-instruction-polish-v1`.
+  Human-burden hygiene remains closed for this Agent slice: user input is
+  freeform, `template_required=false`, schema owner is Agent,
+  `max_required_points=3`, screenshots are optional, negative confirmations
+  are not required, and User-Side Work is none. Verification observed focused
+  tiny render smoke boundary tests `9 passed`.
 - **Newsroom YMM4 timing gap strategy v1 completed (2026-06-23)**:
   Defined the diagnostic timing gap strategy from the saved diagnostic `.ymmp`
   structure readback, without patching/creating/staging/committing `.ymmp`,
