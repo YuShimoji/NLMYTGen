@@ -1,5 +1,29 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom YMM4 timing gap strategy v1 completed (2026-06-23)**:
+  Defined the diagnostic timing gap strategy from the saved diagnostic `.ymmp`
+  structure readback, without patching/creating/staging/committing `.ymmp`,
+  launching YMM4, rendering, generating TTS/audio, importing real media,
+  approving production, or changing dashboard/governance/freshness work. New
+  artifacts:
+  `samples/_probe/newsroom_handoff/yym4_timing_gap_strategy_v1.json`,
+  `docs/verification/NEWSROOM_YYM4_TIMING_GAP_STRATEGY_V1_2026-06-23.md`,
+  `src/pipeline/newsroom_yym4_timing_gap_strategy.py`, and
+  `tests/test_newsroom_yym4_timing_gap_strategy.py`. Source validation reuses
+  `diagnostic_ymmp_structure_readback_v1.json` and
+  `diagnostic_ymmp_manual_result_readback_v1.json`; canonical speaker remains
+  the decoded UI-observed value represented by Unicode codepoints
+  `\u3086\u3063\u304f\u308a\u970a\u5922`, with mojibake explicitly rejected.
+  Timing facts are now recorded as neutral timeline `68` sec versus saved YMM4
+  natural duration `509` frames at `60` fps (`8.483333` sec), item frames
+  `0/130/255/369`, item lengths `130/125/114/140`, and gap `59.516667` sec.
+  Strategy status is `accepted_for_next_tiny_render_smoke`; recommended default
+  is `hybrid_natural_first_then_patch_later`, so the next nonredundant slice is
+  `newsroom-tiny-render-smoke-boundary-v1`, followed by
+  `newsroom-ymmp-timing-patch-strategy-v1`. Human-burden hygiene remains closed:
+  user input is freeform, `template_required=false`, schema owner is Agent,
+  Operator Observation Card is none, and User-Side Work is none. Verification
+  observed focused timing gap strategy tests `8 passed`.
 - **Newsroom diagnostic `.ymmp` speaker canonical correction v2 completed (2026-06-23)**:
   Restored the diagnostic `.ymmp` structure readback canonical speaker to the
   decoded UI-observed value represented by Unicode codepoints
