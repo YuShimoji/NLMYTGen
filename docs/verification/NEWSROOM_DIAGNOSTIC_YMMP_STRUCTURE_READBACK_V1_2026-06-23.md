@@ -24,8 +24,14 @@ diagnostic_only: true
 
 - dialogue_item_count: 4
 - expected_dialogue_item_count: 4
-- canonical_speaker_value: ゆっくり霊夢
+- canonical_speaker_value: 繧・▲縺上ｊ髴雁､｢
+- speaker_value_ui_observed: 繧・▲縺上ｊ髴雁､｢
+- accepted_speaker_source: ['user_freeform_observation', 'supervisor_screenshot', 'bound_speaker_csv_observation']
+- accepted_speaker_value_must_not_equal_mojibake: true
 - raw_speaker_values: ['ゆっくり霊夢']
+- raw_character_name_if_detected: ['ゆっくり霊夢']
+- raw_character_name_decoding_status: decoded
+- encoding_note: Raw .ymmp CharacterName values are recorded separately. Terminal or parser display mojibake must not be promoted into accepted canonical speaker fields.
 - item_type_names: ['YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker']
 - items:
   - index=0 frame=0.0 length=130.0 text='Fake topic, review only.'

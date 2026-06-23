@@ -23,9 +23,6 @@ from src.pipeline.newsroom_minimal_ymmp_boundary_decision import (
 from src.pipeline.newsroom_yym4_manual_import_check_packet import (
     EXPECTED_MANUAL_IMPORT_ROW_COUNT,
 )
-from src.pipeline.newsroom_yym4_speaker_binding_policy import (
-    OBSERVED_MANUAL_CHARACTER,
-)
 
 
 DIAGNOSTIC_YMMP_STRUCTURE_READBACK_SCHEMA_VERSION = (
@@ -40,6 +37,8 @@ DEFAULT_DIAGNOSTIC_YMMP_STRUCTURE_READBACK_PATH = Path(
 DEFAULT_DIAGNOSTIC_YMMP_STRUCTURE_READBACK_DOC_PATH = Path(
     "docs/verification/NEWSROOM_DIAGNOSTIC_YMMP_STRUCTURE_READBACK_V1_2026-06-23.md"
 )
+CANONICAL_UI_OBSERVED_SPEAKER = "繧・▲縺上ｊ髴雁､｢"
+DISALLOWED_CANONICAL_SPEAKER_MOJIBAKE = "郢ｧ繝ｻ笆ｲ邵ｺ荳奇ｽ企ｫｴ髮・ｽ､・｢"
 
 
 def build_default_newsroom_diagnostic_ymmp_structure_readback(
@@ -288,7 +287,25 @@ def render_newsroom_diagnostic_ymmp_structure_readback_markdown(
                 f"{dialogue.get('expected_dialogue_item_count')}"
             ),
             f"- canonical_speaker_value: {dialogue.get('canonical_speaker_value')}",
+            f"- speaker_value_ui_observed: {dialogue.get('speaker_value_ui_observed')}",
+            (
+                "- accepted_speaker_source: "
+                f"{_display(dialogue.get('accepted_speaker_source'))}"
+            ),
+            (
+                "- accepted_speaker_value_must_not_equal_mojibake: "
+                f"{_display(dialogue.get('accepted_speaker_value_must_not_equal_mojibake'))}"
+            ),
             f"- raw_speaker_values: {_display(dialogue.get('raw_speaker_values'))}",
+            (
+                "- raw_character_name_if_detected: "
+                f"{_display(dialogue.get('raw_character_name_if_detected'))}"
+            ),
+            (
+                "- raw_character_name_decoding_status: "
+                f"{dialogue.get('raw_character_name_decoding_status')}"
+            ),
+            f"- encoding_note: {dialogue.get('encoding_note')}",
             f"- item_type_names: {_display(dialogue.get('item_type_names'))}",
             "- items:",
         ]
@@ -411,11 +428,23 @@ def _dialogue_structure(parse: dict[str, Any]) -> dict[str, Any]:
         "text_fields": ["Serif"],
         "speaker_character_fields": ["CharacterName"],
         "text_summaries": [item.get("text") for item in items],
-        "canonical_speaker_value": OBSERVED_MANUAL_CHARACTER,
+        "canonical_speaker_value": CANONICAL_UI_OBSERVED_SPEAKER,
+        "speaker_value_ui_observed": CANONICAL_UI_OBSERVED_SPEAKER,
+        "accepted_speaker_source": [
+            "user_freeform_observation",
+            "supervisor_screenshot",
+            "bound_speaker_csv_observation",
+        ],
+        "accepted_speaker_value_must_not_equal_mojibake": True,
         "raw_speaker_values": raw_speakers,
+        "raw_character_name_if_detected": raw_speakers,
+        "raw_character_name_decoding_status": "decoded"
+        if raw_speakers
+        else "unknown",
         "encoding_note": (
-            "Raw .ymmp speaker strings may display differently in terminals; "
-            "the UI-observed speaker value remains canonical."
+            "Raw .ymmp CharacterName values are recorded separately. Terminal "
+            "or parser display mojibake must not be promoted into accepted "
+            "canonical speaker fields."
         ),
         "items": items,
     }

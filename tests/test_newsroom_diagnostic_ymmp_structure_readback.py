@@ -7,16 +7,15 @@ from src.pipeline.newsroom_diagnostic_ymmp_manual_result import (
     LOCAL_DIAGNOSTIC_YMMP_PATH,
 )
 from src.pipeline.newsroom_diagnostic_ymmp_structure_readback import (
+    CANONICAL_UI_OBSERVED_SPEAKER,
     DEFAULT_DIAGNOSTIC_YMMP_STRUCTURE_READBACK_DOC_PATH,
     DEFAULT_DIAGNOSTIC_YMMP_STRUCTURE_READBACK_PATH,
     DIAGNOSTIC_YMMP_STRUCTURE_READBACK_ID,
     DIAGNOSTIC_YMMP_STRUCTURE_READBACK_SCHEMA_VERSION,
+    DISALLOWED_CANONICAL_SPEAKER_MOJIBAKE,
     build_default_newsroom_diagnostic_ymmp_structure_readback,
     parse_diagnostic_ymmp_structure,
     render_newsroom_diagnostic_ymmp_structure_readback_markdown,
-)
-from src.pipeline.newsroom_yym4_speaker_binding_policy import (
-    OBSERVED_MANUAL_CHARACTER,
 )
 
 
@@ -105,10 +104,26 @@ def test_dialogue_timing_and_audio_boundaries_are_recorded() -> None:
 
     assert dialogue["dialogue_item_count"] == 4
     assert dialogue["expected_dialogue_item_count"] == 4
-    assert dialogue["canonical_speaker_value"] == OBSERVED_MANUAL_CHARACTER
+    assert dialogue["canonical_speaker_value"] == CANONICAL_UI_OBSERVED_SPEAKER
+    assert dialogue["speaker_value_ui_observed"] == CANONICAL_UI_OBSERVED_SPEAKER
+    assert dialogue["canonical_speaker_value"] != (
+        DISALLOWED_CANONICAL_SPEAKER_MOJIBAKE
+    )
+    assert dialogue["speaker_value_ui_observed"] != (
+        DISALLOWED_CANONICAL_SPEAKER_MOJIBAKE
+    )
+    assert dialogue["accepted_speaker_source"] == [
+        "user_freeform_observation",
+        "supervisor_screenshot",
+        "bound_speaker_csv_observation",
+    ]
+    assert dialogue["accepted_speaker_value_must_not_equal_mojibake"] is True
     assert dialogue["text_fields"] == ["Serif"]
     assert dialogue["speaker_character_fields"] == ["CharacterName"]
     assert len(dialogue["raw_speaker_values"]) == 1
+    assert dialogue["raw_character_name_if_detected"] == dialogue["raw_speaker_values"]
+    assert dialogue["raw_character_name_decoding_status"] == "decoded"
+    assert "must not be promoted" in dialogue["encoding_note"]
     assert len(dialogue["items"]) == 4
     assert timing["observed_project_duration_sec"] == round(509 / 60, 6)
     assert timing["observed_project_duration_frames"] == 509
@@ -192,6 +207,13 @@ def test_doc_matches_renderer_and_has_no_fixed_form_relapse() -> None:
     )
     assert "ymmp_committed: false" in doc_text
     assert "dialogue_item_count: 4" in doc_text
+    assert f"canonical_speaker_value: {CANONICAL_UI_OBSERVED_SPEAKER}" in doc_text
+    assert (
+        f"canonical_speaker_value: {DISALLOWED_CANONICAL_SPEAKER_MOJIBAKE}"
+        not in doc_text
+    )
+    assert "accepted_speaker_value_must_not_equal_mojibake: true" in doc_text
+    assert "raw_character_name_decoding_status: decoded" in doc_text
     assert "timing_gap_status: unresolved" in doc_text
     assert "TTS_ready: false" in doc_text
     assert "user_side_work_this_slice: none" in doc_text

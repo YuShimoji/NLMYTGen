@@ -1,5 +1,24 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom diagnostic `.ymmp` speaker canonical correction v1 completed (2026-06-23)**:
+  Corrected the diagnostic `.ymmp` structure readback speaker canonicalization
+  without launching YMM4, editing/staging/committing `.ymmp`, rendering,
+  generating TTS/audio, importing real media, approving production, or changing
+  dashboard/governance/freshness work. Updated artifacts:
+  `samples/_probe/newsroom_handoff/diagnostic_ymmp_structure_readback_v1.json`,
+  `docs/verification/NEWSROOM_DIAGNOSTIC_YMMP_STRUCTURE_READBACK_V1_2026-06-23.md`,
+  `src/pipeline/newsroom_diagnostic_ymmp_structure_readback.py`, and
+  `tests/test_newsroom_diagnostic_ymmp_structure_readback.py`. The accepted
+  canonical speaker is now explicitly the UI-observed
+  `繧・▲縺上ｊ髴雁､｢`, with `speaker_value_ui_observed` matching it and
+  `accepted_speaker_value_must_not_equal_mojibake=true`. Raw `.ymmp`
+  `CharacterName` values remain recorded only under raw/encoding fields with
+  `raw_character_name_decoding_status=decoded`; terminal or parser display
+  mojibake must not be promoted into accepted canonical speaker fields.
+  Boundary status is unchanged: `.ymmp` remains ignored under `_tmp/`, not
+  staged or committed; render/TTS/real media/production/public video remain
+  false; timing gap remains unresolved. Verification observed focused
+  structure readback tests `8 passed`.
 - **Newsroom diagnostic `.ymmp` structure readback v1 completed (2026-06-23)**:
   Parsed the locally saved diagnostic `.ymmp` for bounded structure readback,
   without launching YMM4 from the agent, editing `.ymmp`, staging or committing
