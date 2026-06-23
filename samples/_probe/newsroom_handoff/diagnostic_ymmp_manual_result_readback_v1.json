@@ -1,0 +1,172 @@
+{
+  "artifact_id": "newsroom_diagnostic_ymmp_manual_result_readback_v1_2026_06_23",
+  "result_id": "newsroom_diagnostic_ymmp_manual_result_readback_v1_2026_06_23",
+  "schema_version": "newsroom_diagnostic_ymmp_manual_result_readback.v1",
+  "review_status": "ready_for_supervisor_review",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_only",
+  "manual_probe_status": "observed",
+  "result": "pass",
+  "identity": {
+    "result_id": "newsroom_diagnostic_ymmp_manual_result_readback_v1_2026_06_23",
+    "source_probe_packet_path": "samples/_probe/newsroom_handoff/diagnostic_ymmp_probe_packet_v1.json",
+    "source_probe_packet_id": "newsroom_diagnostic_ymmp_probe_packet_v1_2026_06_23",
+    "source_boundary_decision_path": "samples/_probe/newsroom_handoff/minimal_ymmp_boundary_decision_v1.json",
+    "source_boundary_decision_id": "newsroom_minimal_ymmp_boundary_decision_v1_2026_06_23",
+    "source_bound_csv_path": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_yukkuri_reimu_v1.csv",
+    "production_status": "diagnostic_only",
+    "manual_probe_status": "observed",
+    "observation_source": "user_freeform_and_supervisor_screenshot"
+  },
+  "source_validation": {
+    "source_probe_packet_id": "newsroom_diagnostic_ymmp_probe_packet_v1_2026_06_23",
+    "source_probe_packet_manual_probe_status": "not_run",
+    "source_boundary_decision_id": "newsroom_minimal_ymmp_boundary_decision_v1_2026_06_23",
+    "source_boundary_decision_status": "approved_for_next_probe_packet",
+    "bound_csv_bom_verified": true,
+    "bound_csv_has_header": false,
+    "bound_csv_all_rows_two_columns": true,
+    "bound_csv_row_count": 4,
+    "all_rows_use_bound_speaker": true,
+    "all_rows_have_text": true,
+    "errors": []
+  },
+  "operator_freeform_observation": {
+    "input_mode": "freeform",
+    "observation_source": "user_freeform_and_supervisor_screenshot",
+    "screenshot_reference": "provided_in_supervisor_thread",
+    "summary": "The manual diagnostic save/result was observed: four rows, visible text, and the UI-observed speaker remained; duration stayed short and no render or TTS was reported."
+  },
+  "normalized_result": {
+    "result": "pass",
+    "diagnostic_ymmp_saved_or_save_attempt_observed": true,
+    "local_ymmp_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.ymmp",
+    "ymmp_committed": false,
+    "observed_line_count": 4,
+    "all_text_visible": true,
+    "speaker_preserved": true,
+    "speaker_value_ui_observed": "ゆっくり霊夢",
+    "raw_speaker_value_if_detected": "unknown",
+    "encoding_note": "Use the UI-observed speaker value as canonical; terminal mojibake or raw parse ambiguity is not treated as the accepted speaker value.",
+    "timing_observation": "short_natural_duration",
+    "render_created": false,
+    "explicit_tts_generation_by_operator": false,
+    "real_media_imported": false,
+    "production_approval": false
+  },
+  "local_ymmp_discovery": {
+    "local_ymmp_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.ymmp",
+    "path_status": "discoverable_local_file_at_readback_time",
+    "exists_at_readback_time": true,
+    "path_source": "reported_path_and_workspace_probe",
+    "file_inspected": false,
+    "ymmp_structure_parsed": false,
+    "ymmp_committed": false,
+    "commit_policy": "do_not_stage_or_commit_in_this_slice"
+  },
+  "accepted_scope": {
+    "diagnostic_ymmp_probe_observed": true,
+    "dialogue_rows_preserved": true,
+    "speaker_binding_preserved": true,
+    "short_natural_duration_observed": true
+  },
+  "not_accepted_scope": {
+    "production_ymmp_ready": false,
+    "ymmp_structure_parsed": false,
+    "timing_patch_ready": false,
+    "TTS_ready": false,
+    "render_ready": false,
+    "public_video_ready": false
+  },
+  "timing_gap_carry_forward": {
+    "neutral_timeline_total_sec": 68,
+    "observed_yym4_duration": "short_natural_duration",
+    "prior_observed_yym4_import_approx_sec": 8.48,
+    "timing_gap_status": "unresolved",
+    "timing_patch_ready": false,
+    "recommended_next_axis": [
+      "ymmp_structure_readback",
+      "timing_gap_strategy"
+    ]
+  },
+  "review_memory": {
+    "review_source": "diagnostic_ymmp_manual_observation",
+    "prior_user_review_count": {
+      "manual_import_behavior": 1,
+      "bound_speaker_behavior": 1,
+      "diagnostic_ymmp_manual_observation": 1
+    },
+    "accepted_scope": {
+      "diagnostic_ymmp_probe_observed": true,
+      "dialogue_rows_preserved": true,
+      "speaker_binding_preserved": true,
+      "short_natural_duration_observed": true
+    },
+    "not_accepted_scope": {
+      "production_ymmp_ready": false,
+      "ymmp_structure_parsed": false,
+      "timing_patch_ready": false,
+      "TTS_ready": false,
+      "render_ready": false,
+      "public_video_ready": false
+    },
+    "next_nonredundant_axis": [
+      "ymmp_structure_readback",
+      "timing_gap_strategy",
+      "audio_tts_boundary"
+    ],
+    "repeated_general_review_allowed": false,
+    "input_mode": "freeform"
+  },
+  "human_burden_hygiene": {
+    "user_input": "freeform",
+    "template_required": false,
+    "schema_owner": "Agent",
+    "max_required_points": 0,
+    "screenshot_optional": true,
+    "negative_confirmations_required_from_user": false,
+    "fixed_form_result_template": false,
+    "user_side_work_this_slice": "none"
+  },
+  "next_recommended_slices": [
+    "newsroom-ymmp-structure-readback-v1",
+    "newsroom-yym4-timing-gap-strategy-v1",
+    "newsroom-audio-tts-boundary-v1"
+  ],
+  "downstream_next_use": {
+    "use_this_readback_to": [
+      "plan a non-committed diagnostic .ymmp structure readback",
+      "carry short natural duration into timing-gap strategy",
+      "keep audio/TTS readiness separate from save/readback evidence"
+    ],
+    "do_not_use_this_readback_to": [
+      "commit .ymmp files",
+      "claim .ymmp structure acceptance",
+      "claim production readiness",
+      "claim render readiness",
+      "claim TTS readiness",
+      "claim timing strategy resolution",
+      "prepare or publish a public video"
+    ]
+  },
+  "review_debt": {
+    "generic_review_card_emitted": false,
+    "reason": "The manual observation is already supplied; this slice does not request repeated general review or a fixed result template."
+  },
+  "boundary_assertions": {
+    "diagnostic_only": true,
+    "manual_probe_status": "observed",
+    "agent_launched_yym4": false,
+    "agent_created_or_edited_ymmp": false,
+    "ymmp_committed": false,
+    "ymmp_structure_parsed": false,
+    "render_created": false,
+    "TTS_generated": false,
+    "real_media_imported": false,
+    "production_approval": false,
+    "public_video_ready": false,
+    "external_fetch_performed": false,
+    "real_newsroom_ingest_performed": false,
+    "dashboard_governance_freshness_changed": false
+  }
+}

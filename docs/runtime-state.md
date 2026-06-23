@@ -1,5 +1,48 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom diagnostic `.ymmp` manual result readback v1 completed (2026-06-23)**:
+  Recorded the user/operator freeform diagnostic `.ymmp` manual probe
+  observation as repo readback, without launching YMM4 from the agent, creating
+  or editing `.ymmp`, staging or committing `.ymmp`, rendering, generating
+  TTS/audio, importing real media, fetching external sources, approving
+  production, or changing dashboard/governance/freshness work. Machine
+  readback:
+  `samples/_probe/newsroom_handoff/diagnostic_ymmp_manual_result_readback_v1.json`;
+  human readback:
+  `docs/verification/NEWSROOM_DIAGNOSTIC_YMMP_MANUAL_RESULT_READBACK_V1_2026-06-23.md`;
+  source packet:
+  `samples/_probe/newsroom_handoff/diagnostic_ymmp_probe_packet_v1.json`;
+  source boundary:
+  `samples/_probe/newsroom_handoff/minimal_ymmp_boundary_decision_v1.json`;
+  source bound CSV:
+  `samples/_probe/newsroom_handoff/tiny_script_import_candidate_yukkuri_reimu_v1.csv`;
+  implementation:
+  `src/pipeline/newsroom_diagnostic_ymmp_manual_result.py`; focused coverage:
+  `tests/test_newsroom_diagnostic_ymmp_manual_result.py`. The normalized result
+  is `pass`, `manual_probe_status=observed`, and
+  `diagnostic_ymmp_saved_or_save_attempt_observed=true`: the user/operator
+  observation reports that the diagnostic save/result used the same folder/file
+  path, 4 dialogue rows remained visible, the UI-observed speaker
+  `繧・▲縺上ｊ髴雁､｢` was preserved, preview text remained visible, and duration
+  stayed short/natural. A local diagnostic `.ymmp` file was discoverable at
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.ymmp`, but this
+  slice records path/status only; the file was not parsed, staged, committed,
+  or promoted. Accepted scope is limited to diagnostic manual probe observation,
+  row preservation, speaker preservation, and short natural duration
+  observation. Not accepted: production `.ymmp`, `.ymmp` structure acceptance,
+  timing patch strategy, TTS readiness, render readiness, public video
+  readiness, or production approval. Timing gap is carried forward as
+  unresolved: neutral timeline metadata remains `68` seconds while the manual
+  YMM4 observation remains short/natural, with next axes
+  `newsroom-ymmp-structure-readback-v1`,
+  `newsroom-yym4-timing-gap-strategy-v1`, and
+  `newsroom-audio-tts-boundary-v1`. Human-burden hygiene is closed for this
+  slice: the supplied freeform input is sufficient, `template_required=false`,
+  schema owner is Agent, `max_required_points=0`, screenshots are optional, no
+  negative confirmations are required, and User-Side Work is none. Review debt
+  remains bounded with no generic Review Card and no repeated general review
+  request. Verification observed diagnostic `.ymmp` manual result readback
+  tests `7 passed`.
 - **Newsroom diagnostic `.ymmp` probe packet v1 completed (2026-06-23)**:
   Prepared the diagnostic-only packet for a later manual `.ymmp` save probe,
   without launching YMM4 from the agent, creating or editing `.ymmp`,
