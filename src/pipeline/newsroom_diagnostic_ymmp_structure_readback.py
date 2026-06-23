@@ -37,8 +37,14 @@ DEFAULT_DIAGNOSTIC_YMMP_STRUCTURE_READBACK_PATH = Path(
 DEFAULT_DIAGNOSTIC_YMMP_STRUCTURE_READBACK_DOC_PATH = Path(
     "docs/verification/NEWSROOM_DIAGNOSTIC_YMMP_STRUCTURE_READBACK_V1_2026-06-23.md"
 )
-CANONICAL_UI_OBSERVED_SPEAKER = "繧・▲縺上ｊ髴雁､｢"
-DISALLOWED_CANONICAL_SPEAKER_MOJIBAKE = "郢ｧ繝ｻ笆ｲ邵ｺ荳奇ｽ企ｫｴ髮・ｽ､・｢"
+CANONICAL_UI_OBSERVED_SPEAKER = "\u3086\u3063\u304f\u308a\u970a\u5922"
+CANONICAL_UI_OBSERVED_SPEAKER_UNICODE_ESCAPE = (
+    "\\u3086\\u3063\\u304f\\u308a\\u970a\\u5922"
+)
+DISALLOWED_CANONICAL_SPEAKER_MOJIBAKE = (
+    "\u90e2\uff67\u7e5d\uff7b\u7b06\uff72\u90b5\uff7a\u8373\u5947"
+    "\uff7d\u4f01\uff6b\uff74\u9aee\u30fb\uff7d\uff64\u30fb\uff62"
+)
 
 
 def build_default_newsroom_diagnostic_ymmp_structure_readback(
@@ -287,7 +293,15 @@ def render_newsroom_diagnostic_ymmp_structure_readback_markdown(
                 f"{dialogue.get('expected_dialogue_item_count')}"
             ),
             f"- canonical_speaker_value: {dialogue.get('canonical_speaker_value')}",
+            (
+                "- canonical_speaker_unicode_escape: "
+                f"{dialogue.get('canonical_speaker_unicode_escape')}"
+            ),
             f"- speaker_value_ui_observed: {dialogue.get('speaker_value_ui_observed')}",
+            (
+                "- speaker_value_ui_observed_unicode_escape: "
+                f"{dialogue.get('speaker_value_ui_observed_unicode_escape')}"
+            ),
             (
                 "- accepted_speaker_source: "
                 f"{_display(dialogue.get('accepted_speaker_source'))}"
@@ -429,7 +443,13 @@ def _dialogue_structure(parse: dict[str, Any]) -> dict[str, Any]:
         "speaker_character_fields": ["CharacterName"],
         "text_summaries": [item.get("text") for item in items],
         "canonical_speaker_value": CANONICAL_UI_OBSERVED_SPEAKER,
+        "canonical_speaker_unicode_escape": (
+            CANONICAL_UI_OBSERVED_SPEAKER_UNICODE_ESCAPE
+        ),
         "speaker_value_ui_observed": CANONICAL_UI_OBSERVED_SPEAKER,
+        "speaker_value_ui_observed_unicode_escape": (
+            CANONICAL_UI_OBSERVED_SPEAKER_UNICODE_ESCAPE
+        ),
         "accepted_speaker_source": [
             "user_freeform_observation",
             "supervisor_screenshot",

@@ -59,8 +59,10 @@
       "A fake claim is shown.",
       "Fake source checks are noted."
     ],
-    "canonical_speaker_value": "繧・▲縺上ｊ髴雁､｢",
-    "speaker_value_ui_observed": "繧・▲縺上ｊ髴雁､｢",
+    "canonical_speaker_value": "ゆっくり霊夢",
+    "canonical_speaker_unicode_escape": "\\u3086\\u3063\\u304f\\u308a\\u970a\\u5922",
+    "speaker_value_ui_observed": "ゆっくり霊夢",
+    "speaker_value_ui_observed_unicode_escape": "\\u3086\\u3063\\u304f\\u308a\\u970a\\u5922",
     "accepted_speaker_source": [
       "user_freeform_observation",
       "supervisor_screenshot",

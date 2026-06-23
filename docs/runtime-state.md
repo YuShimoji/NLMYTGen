@@ -1,5 +1,25 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom diagnostic `.ymmp` speaker canonical correction v2 completed (2026-06-23)**:
+  Restored the diagnostic `.ymmp` structure readback canonical speaker to the
+  decoded UI-observed value represented by Unicode codepoints
+  `\u3086\u3063\u304f\u308a\u970a\u5922`, without launching YMM4,
+  editing/staging/committing `.ymmp`, rendering, generating TTS/audio, importing
+  real media, approving production, or changing dashboard/governance/freshness
+  work. Updated artifacts:
+  `samples/_probe/newsroom_handoff/diagnostic_ymmp_structure_readback_v1.json`,
+  `docs/verification/NEWSROOM_DIAGNOSTIC_YMMP_STRUCTURE_READBACK_V1_2026-06-23.md`,
+  `src/pipeline/newsroom_diagnostic_ymmp_structure_readback.py`, and
+  `tests/test_newsroom_diagnostic_ymmp_structure_readback.py`. The readback now
+  records both `canonical_speaker_value` and `speaker_value_ui_observed` as that
+  decoded value, plus explicit `canonical_speaker_unicode_escape` and
+  `speaker_value_ui_observed_unicode_escape` fields so terminal mojibake cannot
+  be mistaken for the accepted speaker. Raw `.ymmp` `CharacterName` values
+  remain only under raw/encoding fields, and
+  `accepted_speaker_value_must_not_equal_mojibake=true`. Boundary status is
+  unchanged: `.ymmp` remains ignored under `_tmp/`, not staged or committed;
+  render/TTS/real media/production/public video remain false; timing gap remains
+  unresolved.
 - **Newsroom diagnostic `.ymmp` speaker canonical correction v1 completed (2026-06-23)**:
   Corrected the diagnostic `.ymmp` structure readback speaker canonicalization
   without launching YMM4, editing/staging/committing `.ymmp`, rendering,
@@ -9,8 +29,9 @@
   `docs/verification/NEWSROOM_DIAGNOSTIC_YMMP_STRUCTURE_READBACK_V1_2026-06-23.md`,
   `src/pipeline/newsroom_diagnostic_ymmp_structure_readback.py`, and
   `tests/test_newsroom_diagnostic_ymmp_structure_readback.py`. The accepted
-  canonical speaker is now explicitly the UI-observed
-  `繧・▲縺上ｊ髴雁､｢`, with `speaker_value_ui_observed` matching it and
+  canonical speaker is now explicitly the decoded UI-observed value represented
+  by Unicode codepoints `\u3086\u3063\u304f\u308a\u970a\u5922`, with
+  `speaker_value_ui_observed` matching it and
   `accepted_speaker_value_must_not_equal_mojibake=true`. Raw `.ymmp`
   `CharacterName` values remain recorded only under raw/encoding fields with
   `raw_character_name_decoding_status=decoded`; terminal or parser display
@@ -43,7 +64,8 @@
   diagnostic project preserved the short/natural YMM4 duration rather than the
   neutral timeline's `68` seconds; timing gap status remains `unresolved`, and
   `timing_patch_applied=false`. Speaker handling is intentionally split:
-  canonical UI-observed speaker remains `繧・▲縺上ｊ髴雁､｢`, while raw `.ymmp`
+  canonical UI-observed speaker remains the decoded value represented by
+  Unicode codepoints `\u3086\u3063\u304f\u308a\u970a\u5922`, while raw `.ymmp`
   character fields are recorded separately because terminals may display them
   differently. Voice-related fields and voice cache are present on all four
   items, but this is not TTS readiness: `TTS_generated_by_agent=false`,
@@ -78,8 +100,9 @@
   is `pass`, `manual_probe_status=observed`, and
   `diagnostic_ymmp_saved_or_save_attempt_observed=true`: the user/operator
   observation reports that the diagnostic save/result used the same folder/file
-  path, 4 dialogue rows remained visible, the UI-observed speaker
-  `繧・▲縺上ｊ髴雁､｢` was preserved, preview text remained visible, and duration
+  path, 4 dialogue rows remained visible, the UI-observed speaker represented
+  by Unicode codepoints `\u3086\u3063\u304f\u308a\u970a\u5922` was preserved,
+  preview text remained visible, and duration
   stayed short/natural. A local diagnostic `.ymmp` file was discoverable at
   `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.ymmp`, but this
   slice records path/status only; the file was not parsed, staged, committed,

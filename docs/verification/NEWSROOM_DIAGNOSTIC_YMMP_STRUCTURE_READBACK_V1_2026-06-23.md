@@ -24,8 +24,10 @@ diagnostic_only: true
 
 - dialogue_item_count: 4
 - expected_dialogue_item_count: 4
-- canonical_speaker_value: 繧・▲縺上ｊ髴雁､｢
-- speaker_value_ui_observed: 繧・▲縺上ｊ髴雁､｢
+- canonical_speaker_value: ゆっくり霊夢
+- canonical_speaker_unicode_escape: \u3086\u3063\u304f\u308a\u970a\u5922
+- speaker_value_ui_observed: ゆっくり霊夢
+- speaker_value_ui_observed_unicode_escape: \u3086\u3063\u304f\u308a\u970a\u5922
 - accepted_speaker_source: ['user_freeform_observation', 'supervisor_screenshot', 'bound_speaker_csv_observation']
 - accepted_speaker_value_must_not_equal_mojibake: true
 - raw_speaker_values: ['ゆっくり霊夢']

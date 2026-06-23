@@ -8,6 +8,7 @@ from src.pipeline.newsroom_diagnostic_ymmp_manual_result import (
 )
 from src.pipeline.newsroom_diagnostic_ymmp_structure_readback import (
     CANONICAL_UI_OBSERVED_SPEAKER,
+    CANONICAL_UI_OBSERVED_SPEAKER_UNICODE_ESCAPE,
     DEFAULT_DIAGNOSTIC_YMMP_STRUCTURE_READBACK_DOC_PATH,
     DEFAULT_DIAGNOSTIC_YMMP_STRUCTURE_READBACK_PATH,
     DIAGNOSTIC_YMMP_STRUCTURE_READBACK_ID,
@@ -105,7 +106,21 @@ def test_dialogue_timing_and_audio_boundaries_are_recorded() -> None:
     assert dialogue["dialogue_item_count"] == 4
     assert dialogue["expected_dialogue_item_count"] == 4
     assert dialogue["canonical_speaker_value"] == CANONICAL_UI_OBSERVED_SPEAKER
+    assert (
+        dialogue["canonical_speaker_value"].encode("unicode_escape").decode()
+        == CANONICAL_UI_OBSERVED_SPEAKER_UNICODE_ESCAPE
+    )
+    assert dialogue["canonical_speaker_unicode_escape"] == (
+        CANONICAL_UI_OBSERVED_SPEAKER_UNICODE_ESCAPE
+    )
     assert dialogue["speaker_value_ui_observed"] == CANONICAL_UI_OBSERVED_SPEAKER
+    assert (
+        dialogue["speaker_value_ui_observed"].encode("unicode_escape").decode()
+        == CANONICAL_UI_OBSERVED_SPEAKER_UNICODE_ESCAPE
+    )
+    assert dialogue["speaker_value_ui_observed_unicode_escape"] == (
+        CANONICAL_UI_OBSERVED_SPEAKER_UNICODE_ESCAPE
+    )
     assert dialogue["canonical_speaker_value"] != (
         DISALLOWED_CANONICAL_SPEAKER_MOJIBAKE
     )
@@ -208,6 +223,16 @@ def test_doc_matches_renderer_and_has_no_fixed_form_relapse() -> None:
     assert "ymmp_committed: false" in doc_text
     assert "dialogue_item_count: 4" in doc_text
     assert f"canonical_speaker_value: {CANONICAL_UI_OBSERVED_SPEAKER}" in doc_text
+    assert (
+        f"canonical_speaker_unicode_escape: {CANONICAL_UI_OBSERVED_SPEAKER_UNICODE_ESCAPE}"
+        in doc_text
+    )
+    assert f"speaker_value_ui_observed: {CANONICAL_UI_OBSERVED_SPEAKER}" in doc_text
+    assert (
+        "speaker_value_ui_observed_unicode_escape: "
+        f"{CANONICAL_UI_OBSERVED_SPEAKER_UNICODE_ESCAPE}"
+        in doc_text
+    )
     assert (
         f"canonical_speaker_value: {DISALLOWED_CANONICAL_SPEAKER_MOJIBAKE}"
         not in doc_text
