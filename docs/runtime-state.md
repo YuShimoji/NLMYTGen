@@ -1,5 +1,42 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom diagnostic `.ymmp` structure readback v1 completed (2026-06-23)**:
+  Parsed the locally saved diagnostic `.ymmp` for bounded structure readback,
+  without launching YMM4 from the agent, editing `.ymmp`, staging or committing
+  `.ymmp`, rendering, generating TTS/audio, importing real media, fetching
+  external sources, approving production, or changing dashboard/governance/
+  freshness work. Machine readback:
+  `samples/_probe/newsroom_handoff/diagnostic_ymmp_structure_readback_v1.json`;
+  human readback:
+  `docs/verification/NEWSROOM_DIAGNOSTIC_YMMP_STRUCTURE_READBACK_V1_2026-06-23.md`;
+  source manual result:
+  `samples/_probe/newsroom_handoff/diagnostic_ymmp_manual_result_readback_v1.json`;
+  local source `.ymmp`:
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.ymmp`;
+  implementation:
+  `src/pipeline/newsroom_diagnostic_ymmp_structure_readback.py`; focused
+  coverage:
+  `tests/test_newsroom_diagnostic_ymmp_structure_readback.py`. Parse status is
+  `parsed`: the project has one timeline, four dialogue items, and the four
+  expected `Serif` texts. Item timing is `Frame`/`Length` based at 60fps:
+  frames `0/130/255/369`, lengths `130/125/114/140`, total timeline length
+  `509` frames, approximately `8.483333` seconds. This confirms the saved
+  diagnostic project preserved the short/natural YMM4 duration rather than the
+  neutral timeline's `68` seconds; timing gap status remains `unresolved`, and
+  `timing_patch_applied=false`. Speaker handling is intentionally split:
+  canonical UI-observed speaker remains `繧・▲縺上ｊ髴雁､｢`, while raw `.ymmp`
+  character fields are recorded separately because terminals may display them
+  differently. Voice-related fields and voice cache are present on all four
+  items, but this is not TTS readiness: `TTS_generated_by_agent=false`,
+  `explicit_operator_TTS_generation=false`, and `TTS_ready=false`. Not
+  accepted: production `.ymmp`, render readiness, TTS readiness, timing patch
+  strategy, public video readiness, production approval, or committing the
+  `.ymmp`. Human-burden hygiene remains closed: supplied freeform input is
+  enough, no fixed form is emitted, and User-Side Work is none. Next
+  nonredundant axes are `newsroom-yym4-timing-gap-strategy-v1`,
+  `newsroom-audio-tts-boundary-v1`, and
+  `newsroom-tiny-render-smoke-boundary-v1`. Verification observed diagnostic
+  `.ymmp` structure readback tests `8 passed`.
 - **Newsroom diagnostic `.ymmp` manual result readback v1 completed (2026-06-23)**:
   Recorded the user/operator freeform diagnostic `.ymmp` manual probe
   observation as repo readback, without launching YMM4 from the agent, creating
