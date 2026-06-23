@@ -27,7 +27,11 @@
   `newsroom-speaker-binding-policy-v1`,
   `newsroom-yym4-import-readiness-after-manual-result-v1`, or
   `newsroom-minimal-ymmp-boundary-decision-v1`; do not re-request general
-  timing/caption/copy/tiny-proof review for this same observation.
+  timing/caption/copy/tiny-proof review for this same observation. Remote
+  handoff commit `b107473 docs: record newsroom YMM4 manual import result` is
+  on `origin/master`; final validation observed `HEAD...origin/master = 0 0`,
+  clean worktree, JSON parse pass, compileall pass, and focused YMM4 manual
+  result/check/tiny proof tests `22 passed`.
 - **Newsroom YMM4 manual import check packet v1 completed (2026-06-22)**:
   Created a diagnostic-only manual YMM4 import check packet for the committed
   tiny script CSV without launching YMM4 or claiming any import result. Machine

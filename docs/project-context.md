@@ -1185,9 +1185,8 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ## HANDOFF SNAPSHOT (2026-06-23 newsroom YMM4 manual import result readback)
 
-- Branch/remote before commit: `master` at
-  `8c4260e docs: seal newsroom YMM4 manual import handoff`, with
-  `HEAD...origin/master = 0 0`. The expected restart sync is
+- Result readback commit on `origin/master`:
+  `b107473 docs: record newsroom YMM4 manual import result`. The expected restart sync is
   `git fetch --all --prune`, `git checkout master`, `git pull --ff-only origin
   master`, then `git rev-list --left-right --count "HEAD...origin/master" = 0
   0`.
@@ -1211,6 +1210,11 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
   `ゆっくり霊夢`. This is not production approval, render approval, TTS
   readiness, `.ymmp` readiness, automatic speaker binding, or public video
   readiness.
+- Validation at handoff: JSON parse passed, `compileall` passed, focused YMM4
+  manual result/check/tiny proof tests reported `22 passed`, `git diff --check`
+  and `git diff --cached --check` passed, conflict marker and new doc/JSON URL
+  scans were clean, and no `.ymmp`, media, render, TTS/audio, `.codex`, or
+  `.claude/worktrees` file was staged or pushed.
 - Next executable handoff steps are one of three bounded axes:
   `newsroom-speaker-binding-policy-v1`,
   `newsroom-yym4-import-readiness-after-manual-result-v1`, or
