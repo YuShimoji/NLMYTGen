@@ -1,0 +1,278 @@
+{
+  "artifact_id": "newsroom_yym4_speaker_binding_policy_v1_2026_06_23",
+  "policy_id": "newsroom_yym4_speaker_binding_policy_v1_2026_06_23",
+  "schema_version": "newsroom_yym4_speaker_binding_policy.v1",
+  "review_status": "ready_for_supervisor_review",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_only",
+  "policy_status": "diagnostic_candidate",
+  "identity": {
+    "policy_id": "newsroom_yym4_speaker_binding_policy_v1_2026_06_23",
+    "source_manual_result_path": "samples/_probe/newsroom_handoff/yym4_manual_import_result_readback_v1.json",
+    "source_manual_result_id": "newsroom_yym4_manual_import_result_readback_v1_2026_06_23",
+    "source_tiny_csv_path": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv",
+    "source_commit_or_status": "worktree_verified_before_generation",
+    "production_status": "diagnostic_only",
+    "policy_status": "diagnostic_candidate",
+    "allowed_policy_status_values": [
+      "proposed",
+      "diagnostic_candidate",
+      "accepted_for_next_manual_check",
+      "blocked"
+    ]
+  },
+  "review_memory": {
+    "review_source": "manual_import_result_readback",
+    "prior_user_review_count": 1,
+    "accepted_scope": {
+      "tiny_speaker_text_csv_accepted_by_YMM4_manual_import": true,
+      "four_dialogue_rows_visible": true,
+      "all_text_visible": true,
+      "manual_speaker_binding_observed": true
+    },
+    "not_accepted_scope": {
+      "automatic_speaker_binding": false,
+      "TTS_ready_script": false,
+      "ymmp": false,
+      "render": false,
+      "production_readiness": false,
+      "public_video": false,
+      "YMM4_approval": false
+    },
+    "next_nonredundant_axis": [
+      "speaker_binding_policy",
+      "placeholder_to_yym4_character_mapping",
+      "bound_speaker_csv_candidate"
+    ],
+    "repeated_general_review_allowed": false
+  },
+  "observed_binding": {
+    "source_placeholder_speaker": "synthetic_newsroom_placeholder",
+    "observed_manual_character": "ゆっくり霊夢",
+    "observed_behavior": "manual_selection_required",
+    "source_manual_result_behavior": "mapped_after_manual_selection",
+    "import_result": "pass_with_warnings",
+    "automatic_binding_observed": false,
+    "manual_selection_succeeded": true,
+    "observed_line_count": 4,
+    "expected_line_count": 4,
+    "all_text_visible": true,
+    "primary_warning_id": "manual_speaker_binding_required"
+  },
+  "binding_proposal": {
+    "allowed_modes": [
+      "keep_placeholder_and_require_manual_selection",
+      "emit_existing_yym4_character_name",
+      "maintain_metadata_mapping_only"
+    ],
+    "proposed_binding_mode": "emit_existing_yym4_character_name",
+    "recommended_default": {
+      "mode": "emit_existing_yym4_character_name",
+      "reason": "The manual result showed that selecting the existing YMM4 character resolved the placeholder safely while all four diagnostic texts stayed visible. Emitting that existing character name in a separate candidate CSV reduces the next manual import friction without claiming automatic binding, TTS readiness, .ymmp readiness, or production approval."
+    },
+    "candidate_speaker_name": "ゆっくり霊夢",
+    "fallback_behavior": "manual selection remains allowed",
+    "automatic_binding_claimed": false,
+    "metadata_mapping_still_recorded": true
+  },
+  "placeholder_to_yym4_character_mapping": {
+    "source_placeholder_speaker": "synthetic_newsroom_placeholder",
+    "candidate_speaker_name": "ゆっくり霊夢",
+    "mapping_basis": "operator_observed_manual_selection",
+    "mapping_status": "candidate_not_YMM4_verified_as_automatic_binding",
+    "applies_to_rows": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "optional_bound_csv_candidate": {
+    "created": true,
+    "path": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_yukkuri_reimu_v1.csv",
+    "source_tiny_csv_path": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_v1.csv",
+    "status": [
+      "not_YMM4_verified",
+      "intended_for_next_manual_check"
+    ],
+    "derivation": {
+      "source_row_count": 4,
+      "candidate_row_count": 4,
+      "text_preserved_exactly": true,
+      "changed_columns": [
+        "speaker"
+      ],
+      "unchanged_columns": [
+        "text"
+      ],
+      "source_placeholder_speaker": "synthetic_newsroom_placeholder",
+      "candidate_speaker_name": "ゆっくり霊夢"
+    },
+    "csv_contract": {
+      "encoding": "utf-8-sig",
+      "preserve_utf8_bom": true,
+      "has_header": false,
+      "columns": [
+        "speaker",
+        "text"
+      ],
+      "timing_columns_in_csv": false,
+      "media_paths_in_csv": false,
+      "production_ready_flags_in_csv": false
+    },
+    "rows": [
+      {
+        "csv_row_number": 1,
+        "source_speaker": "synthetic_newsroom_placeholder",
+        "bound_speaker": "ゆっくり霊夢",
+        "text": "Fake topic, review only.",
+        "source_column_count": 2,
+        "candidate_column_count": 2,
+        "speaker_changed": true,
+        "text_preserved": true
+      },
+      {
+        "csv_row_number": 2,
+        "source_speaker": "synthetic_newsroom_placeholder",
+        "bound_speaker": "ゆっくり霊夢",
+        "text": "Review-only handoff stays.",
+        "source_column_count": 2,
+        "candidate_column_count": 2,
+        "speaker_changed": true,
+        "text_preserved": true
+      },
+      {
+        "csv_row_number": 3,
+        "source_speaker": "synthetic_newsroom_placeholder",
+        "bound_speaker": "ゆっくり霊夢",
+        "text": "A fake claim is shown.",
+        "source_column_count": 2,
+        "candidate_column_count": 2,
+        "speaker_changed": true,
+        "text_preserved": true
+      },
+      {
+        "csv_row_number": 4,
+        "source_speaker": "synthetic_newsroom_placeholder",
+        "bound_speaker": "ゆっくり霊夢",
+        "text": "Fake source checks are noted.",
+        "source_column_count": 2,
+        "candidate_column_count": 2,
+        "speaker_changed": true,
+        "text_preserved": true
+      }
+    ],
+    "validation": {
+      "row_count": 4,
+      "expected_row_count": 4,
+      "all_text_preserved_exactly": true,
+      "only_speaker_column_changed": true,
+      "candidate_speaker_name": "ゆっくり霊夢",
+      "no_timing_columns": true,
+      "no_media_paths": true,
+      "no_real_urls": true,
+      "no_production_ready_flags": true,
+      "automatic_binding_verified_by_YMM4": false,
+      "rows": [
+        {
+          "csv_row_number": 1,
+          "text_preserved": true,
+          "source_speaker_was_placeholder": true,
+          "bound_speaker_is_observed_character": true,
+          "no_real_urls": true,
+          "no_media_paths": true,
+          "status": "passed",
+          "errors": []
+        },
+        {
+          "csv_row_number": 2,
+          "text_preserved": true,
+          "source_speaker_was_placeholder": true,
+          "bound_speaker_is_observed_character": true,
+          "no_real_urls": true,
+          "no_media_paths": true,
+          "status": "passed",
+          "errors": []
+        },
+        {
+          "csv_row_number": 3,
+          "text_preserved": true,
+          "source_speaker_was_placeholder": true,
+          "bound_speaker_is_observed_character": true,
+          "no_real_urls": true,
+          "no_media_paths": true,
+          "status": "passed",
+          "errors": []
+        },
+        {
+          "csv_row_number": 4,
+          "text_preserved": true,
+          "source_speaker_was_placeholder": true,
+          "bound_speaker_is_observed_character": true,
+          "no_real_urls": true,
+          "no_media_paths": true,
+          "status": "passed",
+          "errors": []
+        }
+      ],
+      "errors": []
+    }
+  },
+  "source_validation": {
+    "manual_result": "pass_with_warnings",
+    "manual_check_status": "observed",
+    "selected_speaker_or_character": "ゆっくり霊夢",
+    "speaker_behavior": "mapped_after_manual_selection",
+    "automatic_binding_observed": false,
+    "source_csv_bom_verified": true,
+    "source_csv_has_header": false,
+    "source_csv_all_rows_two_columns": true,
+    "source_csv_row_count": 4,
+    "source_placeholder_rows": 4,
+    "errors": []
+  },
+  "safety_boundary": {
+    "ymmp_created": false,
+    "YMM4_launched_by_agent": false,
+    "render_created": false,
+    "TTS_generated": false,
+    "real_media_imported": false,
+    "production_approval": false,
+    "public_video_ready": false
+  },
+  "boundary_assertions": {
+    "ymmp_created": false,
+    "YMM4_launched_by_agent": false,
+    "render_created": false,
+    "TTS_generated": false,
+    "real_media_imported": false,
+    "production_approval": false,
+    "public_video_ready": false,
+    "diagnostic_only": true,
+    "source_tiny_csv_replaced": false,
+    "bound_csv_is_new_artifact": true,
+    "automatic_speaker_binding_claimed": false,
+    "YMM4_approval": false,
+    "external_fetch_performed": false,
+    "real_newsroom_ingest_performed": false,
+    "dashboard_governance_freshness_changed": false
+  },
+  "next_actions": {
+    "recommended_next_slice": "newsroom-yym4-bound-speaker-manual-check-packet-v1",
+    "if_bound_csv_candidate_is_used": "Create a new manual check packet for the bound-speaker CSV and verify whether YMM4 accepts the explicit existing character name without asking the operator to bind it again.",
+    "fallback_next_slice": "newsroom-yym4-import-readiness-after-manual-result-v1",
+    "do_not_recommend_immediate": [
+      "production .ymmp",
+      "render",
+      "TTS/audio generation",
+      "real media import",
+      "production approval",
+      "public video"
+    ]
+  },
+  "review_card": {
+    "status": "none",
+    "axis_if_needed": "speaker_binding_policy",
+    "reason": "The prior manual result is already recorded; this slice only turns that result into a bounded policy and new candidate CSV. No repeated timing, caption, copy, neutral timeline, CSV, script, tiny import, or generic manual result review is needed."
+  }
+}

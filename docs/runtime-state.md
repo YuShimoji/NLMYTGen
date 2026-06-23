@@ -1,5 +1,35 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom YMM4 speaker binding policy v1 completed (2026-06-23)**:
+  Created a diagnostic-only speaker binding policy from the recorded manual
+  import result, without launching YMM4, creating or editing `.ymmp`, rendering,
+  generating TTS/audio, importing real media, fetching external sources,
+  approving production, or changing dashboard/governance/freshness work.
+  Machine policy:
+  `samples/_probe/newsroom_handoff/yym4_speaker_binding_policy_v1.json`;
+  new bound CSV candidate:
+  `samples/_probe/newsroom_handoff/tiny_script_import_candidate_yukkuri_reimu_v1.csv`;
+  human readback:
+  `docs/verification/NEWSROOM_YYM4_SPEAKER_BINDING_POLICY_V1_2026-06-23.md`;
+  implementation:
+  `src/pipeline/newsroom_yym4_speaker_binding_policy.py`; focused coverage:
+  `tests/test_newsroom_yym4_speaker_binding_policy.py`. The policy preserves
+  the manual-result observation that the original tiny CSV imported as
+  `pass_with_warnings`: `4/4` dialogue rows and all text were visible, but
+  `synthetic_newsroom_placeholder` required manual selection of the existing
+  YMM4 character `ゆっくり霊夢`. The recommended default is to test a separate
+  candidate CSV that emits that existing character name directly, while keeping
+  manual selection as fallback and explicitly not claiming automatic speaker
+  binding, TTS readiness, `.ymmp` readiness, render readiness, production
+  readiness, YMM4 approval, or public video readiness. The bound CSV is a new
+  artifact, preserves UTF-8 BOM and headerless two-column `speaker,text` shape,
+  preserves all four text cells exactly, changes only the speaker column, and
+  carries status `not_YMM4_verified` / `intended_for_next_manual_check`.
+  Review Card remains `none`; prior manual import behavior review count remains
+  `1`, repeated general timing/caption/copy/neutral timeline/CSV/script/tiny
+  import/manual-result review is not requested, and the next safe slice is
+  `newsroom-yym4-bound-speaker-manual-check-packet-v1`. Verification observed
+  speaker binding policy tests `6 passed`.
 - **Newsroom YMM4 manual import result readback v1 completed (2026-06-23)**:
   Recorded the user/operator YMM4 manual import observation for the committed
   tiny script CSV as repo readback, without launching YMM4 from the agent,
