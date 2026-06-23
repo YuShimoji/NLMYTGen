@@ -1,0 +1,255 @@
+{
+  "artifact_id": "newsroom_yym4_bound_speaker_import_readiness_v1_2026_06_23",
+  "readback_id": "newsroom_yym4_bound_speaker_import_readiness_v1_2026_06_23",
+  "schema_version": "newsroom_yym4_bound_speaker_import_readiness.v1",
+  "review_status": "ready_for_supervisor_review",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_only",
+  "manual_observation_source": "user_freeform_and_supervisor_screenshot",
+  "result": "pass",
+  "identity": {
+    "readback_id": "newsroom_yym4_bound_speaker_import_readiness_v1_2026_06_23",
+    "source_policy_path": "samples/_probe/newsroom_handoff/yym4_speaker_binding_policy_v1.json",
+    "source_policy_id": "newsroom_yym4_speaker_binding_policy_v1_2026_06_23",
+    "source_policy_status": "diagnostic_candidate",
+    "source_bound_csv_path": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_yukkuri_reimu_v1.csv",
+    "source_neutral_timeline_path": "samples/_probe/newsroom_handoff/neutral_timeline_import_proof_v1.json",
+    "source_neutral_timeline_id": "newsroom_neutral_timeline_import_proof_v1_2026_06_22",
+    "source_commit_or_status": "worktree_verified_before_generation",
+    "production_status": "diagnostic_only",
+    "manual_observation_source": "user_freeform_and_supervisor_screenshot",
+    "screenshot_reference": "user_attached_supervisor_screenshot_not_committed"
+  },
+  "review_memory": {
+    "review_source": "user_freeform_and_supervisor_screenshot",
+    "prior_user_review_count": {
+      "manual_import_behavior": 1,
+      "bound_speaker_behavior": 1
+    },
+    "accepted_scope": {
+      "tiny_speaker_text_csv_import_in_YMM4": true,
+      "bound_speaker_value_recognized_in_current_environment": true,
+      "four_dialogue_rows_visible": true,
+      "all_text_visible": true,
+      "manual_speaker_selection_needed_for_bound_csv": false
+    },
+    "not_accepted_scope": {
+      "automatic_portability_across_all_YMM4_installations": false,
+      "TTS_ready": false,
+      "render_ready": false,
+      "production_ready": false,
+      "visual_layout_ready": false,
+      "public_video_ready": false,
+      "timing_import_from_neutral_timeline_metadata": false,
+      "ymmp_ready": false
+    },
+    "next_nonredundant_axis": [
+      "bound_speaker_import_readiness",
+      "timing_gap_after_csv_import",
+      "minimal_ymmp_boundary_decision"
+    ],
+    "repeated_general_review_allowed": false,
+    "input_mode": "freeform"
+  },
+  "source_validation": {
+    "source_policy_id": "newsroom_yym4_speaker_binding_policy_v1_2026_06_23",
+    "source_policy_status": "diagnostic_candidate",
+    "bound_csv_bom_verified": true,
+    "bound_csv_has_header": false,
+    "bound_csv_all_rows_two_columns": true,
+    "bound_csv_row_count": 4,
+    "all_rows_use_bound_speaker": true,
+    "all_text_matches_policy_candidate": true,
+    "rows": [
+      {
+        "row_number": 1,
+        "speaker_is_bound_character": true,
+        "text_matches_policy_candidate": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_number": 2,
+        "speaker_is_bound_character": true,
+        "text_matches_policy_candidate": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_number": 3,
+        "speaker_is_bound_character": true,
+        "text_matches_policy_candidate": true,
+        "status": "passed",
+        "errors": []
+      },
+      {
+        "row_number": 4,
+        "speaker_is_bound_character": true,
+        "text_matches_policy_candidate": true,
+        "status": "passed",
+        "errors": []
+      }
+    ],
+    "errors": []
+  },
+  "normalized_result": {
+    "result": "pass",
+    "YMM4_version": "v4.53.0.6",
+    "observed_line_count": 4,
+    "expected_line_count": 4,
+    "all_text_visible": true,
+    "speaker_selection_prompt_shown": false,
+    "speaker_behavior": "automatically_bound_to_yukkuri_reimu_in_current_environment",
+    "selected_speaker_or_character": "ゆっくり霊夢",
+    "encoding_or_text_issues": false,
+    "header_or_column_issues": false,
+    "script_editor_rows_visible": true,
+    "main_timeline_dialogue_items_visible": true,
+    "preview_text_visible": true,
+    "observed_yym4_timeline_approx_sec": 8.48,
+    "render_created": false,
+    "ymmp_committed": false,
+    "production_approval": false
+  },
+  "accepted_import_surface": {
+    "encoding": "UTF-8 BOM",
+    "header": false,
+    "columns": [
+      "speaker",
+      "text"
+    ],
+    "speaker_value": "ゆっくり霊夢",
+    "row_count": 4,
+    "accepted_for": "diagnostic_yym4_script_import_in_current_environment",
+    "environment": "Planner007/YMM4 v4.53.0.6",
+    "speaker_selection_prompt_shown": false,
+    "all_text_visible": true,
+    "timing_columns_in_csv": false,
+    "production_ready_flags_in_csv": false
+  },
+  "target_csv_readback": {
+    "path": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_yukkuri_reimu_v1.csv",
+    "bom_verified": true,
+    "row_count": 4,
+    "all_rows_two_columns": true,
+    "has_header": false,
+    "rows": [
+      {
+        "row_number": 1,
+        "speaker": "ゆっくり霊夢",
+        "text": "Fake topic, review only.",
+        "column_count": 2
+      },
+      {
+        "row_number": 2,
+        "speaker": "ゆっくり霊夢",
+        "text": "Review-only handoff stays.",
+        "column_count": 2
+      },
+      {
+        "row_number": 3,
+        "speaker": "ゆっくり霊夢",
+        "text": "A fake claim is shown.",
+        "column_count": 2
+      },
+      {
+        "row_number": 4,
+        "speaker": "ゆっくり霊夢",
+        "text": "Fake source checks are noted.",
+        "column_count": 2
+      }
+    ]
+  },
+  "policy_linkage": {
+    "source_policy_id": "newsroom_yym4_speaker_binding_policy_v1_2026_06_23",
+    "policy_status_before_observation": "diagnostic_candidate",
+    "candidate_status_before_observation": [
+      "not_YMM4_verified",
+      "intended_for_next_manual_check"
+    ],
+    "candidate_speaker_name": "ゆっくり霊夢",
+    "policy_recommended_default": "emit_existing_yym4_character_name",
+    "readiness_delta": {
+      "before": "not_YMM4_verified",
+      "after": "diagnostic_import_accepted_in_current_environment_with_timing_gap",
+      "speaker_selection_prompt_removed_in_current_environment": true,
+      "automatic_portability_across_all_YMM4_installations": false
+    }
+  },
+  "timing_gap": {
+    "prior_neutral_timeline_total_sec": 68,
+    "observed_yym4_timeline_approx_sec": 8.48,
+    "timing_imported_from_csv": false,
+    "gap_sec": 59.52,
+    "observed_to_prior_duration_ratio": 0.1247,
+    "meaning": "The tiny speaker,text CSV path imports dialogue rows and recognized speaker values, but it does not import the neutral 68 second timeline timing plan. YMM4 appears to create its own short dialogue timeline from the imported items.",
+    "next_timing_axis": [
+      "minimal_ymmp_boundary_decision",
+      "timing_patch_strategy",
+      "YMM4_natural_duration_strategy"
+    ]
+  },
+  "not_accepted_scope": {
+    "automatic_portability_across_all_YMM4_installations": false,
+    "TTS_ready": false,
+    "render_ready": false,
+    "production_ready": false,
+    "visual_layout_ready": false,
+    "public_video_ready": false,
+    "timing_import_from_neutral_timeline_metadata": false,
+    "ymmp_ready": false
+  },
+  "safety_boundary": {
+    "ymmp_created": false,
+    "YMM4_launched_by_agent": false,
+    "render_created": false,
+    "TTS_generated": false,
+    "real_media_imported": false,
+    "production_approval": false,
+    "public_video_ready": false
+  },
+  "boundary_assertions": {
+    "ymmp_created": false,
+    "YMM4_launched_by_agent": false,
+    "render_created": false,
+    "TTS_generated": false,
+    "real_media_imported": false,
+    "production_approval": false,
+    "public_video_ready": false,
+    "diagnostic_only": true,
+    "agent_claims_only_user_observed_result": true,
+    "bound_csv_source_replaced": false,
+    "timing_imported_from_csv": false,
+    "neutral_timeline_metadata_preserved_only_as_reference": true,
+    "external_fetch_performed": false,
+    "real_newsroom_ingest_performed": false,
+    "dashboard_governance_freshness_changed": false
+  },
+  "recommended_next_slices": [
+    "newsroom-minimal-ymmp-boundary-decision-v1",
+    "newsroom-yym4-timing-gap-strategy-v1",
+    "newsroom-diagnostic-ymmp-probe-packet-v1"
+  ],
+  "next_actions": {
+    "recommended_default": "newsroom-minimal-ymmp-boundary-decision-v1",
+    "why": "The speaker value is now diagnostically accepted in the current YMM4 environment, so the next bottleneck is whether and how to cross the `.ymmp`/timing boundary without implying render, TTS, media, or production readiness.",
+    "allowed": [
+      "minimal .ymmp boundary decision",
+      "timing gap strategy",
+      "diagnostic .ymmp probe packet"
+    ],
+    "prohibited_immediate": [
+      "production .ymmp",
+      "render",
+      "TTS/audio generation",
+      "real media import",
+      "production approval",
+      "public video"
+    ]
+  },
+  "review_card": {
+    "status": "none",
+    "axis_if_needed": "minimal_ymmp_boundary_decision",
+    "reason": "The user already provided freeform bound-speaker YMM4 observation and screenshot context. No fixed template or repeated review of prior timing/caption/copy/CSV/script/tiny proof artifacts is needed."
+  }
+}

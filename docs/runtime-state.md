@@ -1,5 +1,36 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom YMM4 bound speaker import readiness v1 completed (2026-06-23)**:
+  Recorded the user/operator freeform observation and screenshot context for
+  the committed bound-speaker CSV candidate, without launching YMM4 from the
+  agent, creating or editing `.ymmp`, rendering, generating TTS/audio, importing
+  real media, fetching external sources, approving production, or changing
+  dashboard/governance/freshness work. Machine readback:
+  `samples/_probe/newsroom_handoff/yym4_bound_speaker_import_readiness_v1.json`;
+  human readback:
+  `docs/verification/NEWSROOM_YYM4_BOUND_SPEAKER_IMPORT_READINESS_V1_2026-06-23.md`;
+  source CSV:
+  `samples/_probe/newsroom_handoff/tiny_script_import_candidate_yukkuri_reimu_v1.csv`;
+  implementation:
+  `src/pipeline/newsroom_yym4_bound_speaker_import_readiness.py`; focused
+  coverage:
+  `tests/test_newsroom_yym4_bound_speaker_import_readiness.py`. The normalized
+  result is `pass` in Planner007/YMM4 `v4.53.0.6`: the bound CSV displayed
+  `4/4` dialogue rows, all text was visible, the speaker-selection prompt was
+  not shown, and the `ゆっくり霊夢` speaker value was recognized in the current
+  environment. Accepted scope is limited to diagnostic YMM4 script import in
+  this environment; not accepted are automatic portability across all YMM4
+  installations, TTS readiness, render readiness, production readiness, visual
+  layout readiness, `.ymmp` readiness, and public video readiness. The key new
+  gap is timing: the prior neutral timeline remains `68` seconds, while the
+  observed YMM4 timeline was approximately `8.48` seconds, so the tiny
+  `speaker,text` CSV path imports dialogue rows and speaker values, not neutral
+  timeline timing metadata. Review Card remains `none`; prior manual import
+  behavior review count remains `1`, bound-speaker behavior review count is
+  `1`, repeated general timing/caption/copy/CSV/script/tiny-proof review is
+  not requested, and the next safe axis is
+  `newsroom-minimal-ymmp-boundary-decision-v1` or a timing gap strategy.
+  Verification observed bound speaker import readiness tests `6 passed`.
 - **Newsroom YMM4 speaker binding policy v1 completed (2026-06-23)**:
   Created a diagnostic-only speaker binding policy from the recorded manual
   import result, without launching YMM4, creating or editing `.ymmp`, rendering,
