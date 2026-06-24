@@ -1,5 +1,39 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom audio/TTS boundary resume handoff sealed (2026-06-24)**:
+  Mainline restart state has been rechecked and preserved for another terminal.
+  Target checkout is
+  `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen-mainline-slot-linkage`
+  because `master` is attached to that worktree; the sibling
+  `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen` checkout remains on
+  `codex/baseball-bn08-script-beat-linkage` and is not the mainline handoff
+  target. Before this docs handoff, `master` was fetched/pulled from
+  `origin/master`, `HEAD...origin/master` was `0 0`, `HEAD` was
+  `16dcadc docs: define newsroom audio tts boundary`, and the tracked working
+  tree was clean. The active handoff artifacts were confirmed present:
+  `samples/_probe/newsroom_handoff/audio_tts_boundary_v1.json`,
+  `docs/verification/NEWSROOM_AUDIO_TTS_BOUNDARY_V1_2026-06-23.md`,
+  `samples/_probe/newsroom_handoff/tiny_render_smoke_result_readback_v1.json`,
+  `docs/verification/NEWSROOM_TINY_RENDER_SMOKE_RESULT_READBACK_V1_2026-06-23.md`,
+  `samples/_probe/newsroom_handoff/yym4_timing_gap_strategy_v1.json`,
+  `samples/_probe/newsroom_handoff/diagnostic_ymmp_structure_readback_v1.json`,
+  and
+  `docs/verification/NEWSROOM_DIAGNOSTIC_YMMP_STRUCTURE_READBACK_V1_2026-06-23.md`.
+  Carry-forward state remains diagnostic-only: tiny render smoke passed by prior
+  user freeform observation with four dialogue lines visible and about `8` sec
+  natural YMM4 duration; canonical speaker remains `ゆっくり霊夢`;
+  `.ymmp` voice fields and VoiceCache exist, but `audio_presence_in_render` is
+  `unknown`, `audio_quality_accepted=false`, and `TTS_ready=false`. External
+  TTS remains closed; metadata-only voice profile remains planning-only; no-audio
+  render remains a fallback only. Recommended next entry is
+  `newsroom-yym4-native-audio-path-proof-v1`, before any neutral `68` sec timing
+  patch work, because the native YMM4 voice/audio path is the current diagnostic
+  default and audio/TTS responsibility should not be mixed with timing patching.
+  No YMM4 launch, render, TTS/audio generation, real media import, `.ymmp` or
+  media staging/commit, dashboard/governance/freshness work, production approval,
+  or public-readiness claim was performed in this resume/handoff slice. Ignored
+  local residue such as `_tmp/` and Python `__pycache__/` may exist and is not
+  part of the handoff.
 - **Newsroom audio/TTS boundary v1 completed (2026-06-23)**:
   Defined the diagnostic audio/TTS boundary after the tiny render smoke result,
   without launching YMM4, rendering, generating TTS/audio, importing real media,

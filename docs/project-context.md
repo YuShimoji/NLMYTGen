@@ -5,7 +5,7 @@
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
 - 現在地の正本: 通常再開では `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md` で止める。本ファイル冒頭は状態スナップショットではなく、航海日誌への短い入口。
-- 現フェーズ: G-27 Real Estate DX の production carrier 待ちは active blocker から外し、case-specific evidence として保持する。次は `runtime-state.md` の通り、newsroom-produced bundle の downstream adapter intake、または G-28 Reference-Driven Generic Screen Carrier の Lecture Diagram diagnostic skeleton / theme variants / Map-Evidence diagnostic skeleton 済み状態からの refinement へ進む。
+- 現フェーズ: `docs/runtime-state.md` が最新の current slice を所有する。2026-06-24 時点の実行入口は newsroom downstream handoff の YMM4 native audio path diagnostic continuation。G-27 Real Estate DX の production carrier 待ちは active blocker から外し、case-specific evidence として保持する。G-28 Reference-Driven Generic Screen Carrier は既存 diagnostic / prototype evidence からの refinement lane として残るが、今回の mainline handoff では進めない。
 - 古い roadmap / prompt / verification packet は現行判断に使わない。必要な履歴は DECISION LOG と HANDOFF SNAPSHOT の該当行だけ読む。
 - Python のスコープは「テキスト変換 + IR/registry + ymmp 限定後段適用」。動画レンダリング・画像生成・YMM4 GUI 操作は Python の責務ではない。
 
@@ -14,14 +14,14 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI artifact → CSV / registry / patched ymmp → YMM4 読込・確認・レンダリング
-- 現在のスライス: G-27 は diagnostic carrier / review console / SCS lessons を証跡として残し、active production carrier blocker としては閉じる。G-28 は proposed であり、受領済み参照画像から構図原理を抽出した `docs/verification/G28-REFERENCE-STYLE-BRIEF-2026-06-05.md`、Lecture Diagram の concrete spec / diagnostic skeleton / readback artifact、`real_estate_information_gap` と `game_mechanics_explanation` diagnostic variants、Map / Evidence の concrete spec / diagnostic skeleton / readback artifact を refinement の入口にする。
-- 成功状態: G-27 の失敗と学びを捨てずに、production 昇格・slot-fill・render へ飛躍しないまま、参照画像の principle extraction を SCS mapping / generic carrier archetype / diagnostic skeleton / theme-specific diagnostic variant / Map-Evidence archetype / readback artifact / future YMM4 carrier review へ段階変換できる状態にすること。
+- 現在のスライス: newsroom tiny render smoke result と audio/TTS boundary を受け、YMM4 native voice/audio path を次の diagnostic entry にする。`audio_presence_in_render=unknown`、`audio_quality_accepted=false`、`TTS_ready=false` を保ったまま、外部 TTS や neutral 68 sec timing patch に飛ばない。G-27 / G-28 の既存 evidence は保持するが、この handoff では触らない。
+- 成功状態: newsroom handoff を YMM4 downstream adapter の diagnostic path に接続し、tiny render smoke / speaker binding / `.ymmp` structure readback / timing strategy / audio boundary を混線させずに、次の最小証跡を選べる状態にすること。
 
 ---
 
 ## CURRENT LANE
-- 主レーン: Explore / Audit（G-28 Reference-Driven Generic Screen Carrier）。現行の優先は [runtime-state.md](runtime-state.md) の `next_action`。
-- 今このレーンを優先する理由: G-27 の carrier 待ちが不動産DX固有の production blocker として長期化したため、既存 evidence を参照資産に畳み、構図・密度・余白・色階層・視線誘導・UI感を汎用化する方が次の制作摩擦を減らせる。
+- 主レーン: Downstream adapter / YMM4 diagnostic handoff（newsroom-produced handoff material）。現行の優先は [runtime-state.md](runtime-state.md) の top entry。
+- 今このレーンを優先する理由: newsroom handoff から YMM4 CSV/import/diagnostic `.ymmp`/tiny render smoke/audio boundary まで到達しており、次の制作摩擦は external TTS ではなく YMM4 native voice/audio path の責務を小さく証明することにある。
 
 ---
 
@@ -78,6 +78,30 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 - `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
+
+Latest newsroom audio/TTS boundary handoff decision (2026-06-24):
+`remote_handoff_after_newsroom_audio_tts_boundary_resume_2026_06_24`
+preserves the post-`newsroom-audio-tts-boundary-v1` continuation context in
+repo-local docs before handing off to another terminal. The active mainline
+checkout is
+`C:\Users\thank\Storage\Media Contents Projects\NLMYTGen-mainline-slot-linkage`
+on `master`; the sibling `NLMYTGen` checkout is on
+`codex/baseball-bn08-script-beat-linkage` and was not used for this mainline
+handoff. Before writing this handoff, `master` was fetched and confirmed at
+`16dcadc docs: define newsroom audio tts boundary` with
+`HEAD...origin/master = 0 0` and a clean tracked worktree. The resume check
+confirmed all expected active artifacts for the audio/TTS boundary, tiny render
+smoke result, timing strategy, and diagnostic `.ymmp` structure readback exist.
+The carry-forward decision is to recommend
+`newsroom-yym4-native-audio-path-proof-v1` as the next entry. The reason is that
+tiny render smoke already passed, external TTS is closed for now, the saved
+diagnostic `.ymmp` contains YMM4 voice fields / VoiceCache, and neutral `68` sec
+timing patch work should not be mixed with unresolved audio/TTS responsibility.
+The handoff does not claim audio presence, audio quality, TTS readiness,
+production render readiness, public video readiness, visual layout readiness,
+or production approval. It also did not launch YMM4, render, generate TTS/audio,
+import media, edit/stage/commit `.ymmp` or media, or touch
+dashboard/governance/freshness work.
 
 Latest newsroom/YMM4 manual-result decision (2026-06-23):
 `newsroom_yym4_manual_import_result_readback_v1_2026_06_23` records the
@@ -1182,6 +1206,46 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 | IP-03 | YouTube 自動アップロード | FEATURE_REGISTRY E-01 (hold) |
 
 ---
+
+## HANDOFF SNAPSHOT (2026-06-24 newsroom audio/TTS boundary resume handoff)
+
+- Branch / remote state: continue on `master` in
+  `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen-mainline-slot-linkage`.
+  Before this docs handoff, `git fetch --prune origin` and
+  `git pull --ff-only origin master` were run, `HEAD` was
+  `16dcadc docs: define newsroom audio tts boundary`, and
+  `git rev-list --left-right --count "HEAD...origin/master"` returned `0 0`.
+  After pulling the handoff commit, expect the tracked tree to be clean and
+  parity with `origin/master` to remain `0 0`.
+- Restart path: read `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` ->
+  `docs/runtime-state.md`. If more detail is needed, inspect only the current
+  artifacts:
+  `samples/_probe/newsroom_handoff/audio_tts_boundary_v1.json`,
+  `docs/verification/NEWSROOM_AUDIO_TTS_BOUNDARY_V1_2026-06-23.md`,
+  `samples/_probe/newsroom_handoff/tiny_render_smoke_result_readback_v1.json`,
+  `samples/_probe/newsroom_handoff/yym4_timing_gap_strategy_v1.json`, and
+  `samples/_probe/newsroom_handoff/diagnostic_ymmp_structure_readback_v1.json`.
+- Current accepted evidence: tiny render smoke previously passed by user
+  freeform observation; four dialogue lines were visible; duration stayed about
+  `8` sec on YMM4 natural timing; canonical speaker remains `ゆっくり霊夢`;
+  diagnostic `.ymmp` structure readback found four voice items and VoiceCache.
+- Current non-accepted scope: audio presence in the render is still `unknown`;
+  `audio_quality_accepted=false`; `TTS_ready=false`; neutral `68` sec timing
+  patch is not applied; visual layout readiness, production render readiness,
+  public video readiness, and production approval remain false.
+- Next concrete move: start `newsroom-yym4-native-audio-path-proof-v1`. Its
+  purpose is to make the YMM4 native voice/audio path explicit as the next
+  diagnostic default without opening external TTS. Use
+  `newsroom-tiny-render-audio-observation-card-v1` only if audio presence in the
+  existing tiny render becomes the actual bottleneck, and keep any observation
+  freeform with at most three look-for points.
+- Boundaries not crossed in this handoff: no YMM4 launch, no render, no
+  TTS/audio generation, no real media import, no `.ymmp` or media
+  staging/commit, no dashboard/governance/freshness work, no production/public
+  readiness claim, no G-27/G-28 implementation.
+- Local residue note: ignored `_tmp/` and Python `__pycache__/` files may be
+  present in this checkout. They are local diagnostics/runtime residue and are
+  not part of the pushed handoff.
 
 ## HANDOFF SNAPSHOT (2026-06-23 newsroom YMM4 manual import result readback)
 
