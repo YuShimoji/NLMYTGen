@@ -1,5 +1,52 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom YMM4 timing patch strategy v1 completed (2026-06-24)**:
+  Defined the diagnostic `.ymmp` timing patch strategy after tiny render smoke
+  and native audio path acceptance, without launching YMM4, rendering,
+  generating TTS/audio, importing real media, editing/staging/committing
+  `.ymmp`, staging or committing media output, approving production, or changing
+  dashboard/governance/freshness work. New artifacts:
+  `samples/_probe/newsroom_handoff/ymmp_timing_patch_strategy_v1.json`,
+  `docs/verification/NEWSROOM_YMMP_TIMING_PATCH_STRATEGY_V1_2026-06-24.md`,
+  `src/pipeline/newsroom_ymmp_timing_patch_strategy.py`, and
+  `tests/test_newsroom_ymmp_timing_patch_strategy.py`. Source validation reuses
+  `audio_observation_and_timing_patch_readiness_v1.json`,
+  `yym4_native_audio_path_proof_v1.json`,
+  `tiny_render_smoke_result_readback_v1.json`,
+  `diagnostic_ymmp_structure_readback_v1.json`,
+  `neutral_timeline_import_proof_v1.json`, and
+  `yym4_timing_gap_strategy_v1.json`; canonical speaker remains
+  `ゆっくり霊夢`. Current timing state is fixed as YMM4 natural duration
+  approximately `8` sec / `509` frames at `60` fps versus neutral timeline
+  `68` sec / `4080` frames, with `timing_gap_status=unresolved`,
+  `audio_path_status=diagnostic_pass`, and `external_TTS_status=closed`.
+  Candidate comparison covered keeping natural timing, global scaling to
+  `68` sec, aligning dialogue start/end frames to neutral anchors, adding a
+  neutral-duration tail/carrier, and deferring until script density increases.
+  Recommended default is
+  `neutral_timeline_skeleton_patch_with_native_voice_preserved`: move toward a
+  `68` sec structural proof while preserving native YMM4 speaker/text,
+  `VoiceCache`, `VoiceParameter`, `Pronounce`/`Hatsuon`, `VoiceLength` unless a
+  timing-only readback proves otherwise, `AudioEffects`, and native engine hints;
+  do not introduce external TTS, stretch/regenerate voice audio, or treat sparse
+  long gaps as production quality. Next slice is
+  `newsroom-ymmp-timing-patch-probe-v1`: create a JSON patch plan first, then
+  use an ignored local `.ymmp` copy only if the plan passes; patch only
+  `Frame`, `Length`, timeline/project duration metadata if required, or
+  non-voice carrier timing fields; parse the patched copy into repo readback;
+  and keep render deferred until structural readback passes. Render remains
+  milestone-gated at `L0 No Render`; next render trigger is after the timing
+  patch probe changes the timeline surface and structural readback passes,
+  expected as `L2 Tiny Smoke Render` or `L3 Targeted Regression Render`.
+  Not accepted: production render readiness, public video readiness, production
+  narration quality, final script/narration quality, visual layout readiness,
+  real content readiness, production approval, external TTS adoption, and
+  neutral `68` sec timing proof until the patch/probe actually proves it.
+  Human-burden hygiene remains closed: user input is freeform, schema owner is
+  Agent, User-Side Work is none, no fixed form or negative confirmation
+  checklist was introduced, and no repeated audio/render review was requested.
+  Verification observed focused timing patch strategy tests `13 passed`; full
+  validation and git push status are owned by the current completion turn.
 - **Newsroom audio observation and timing patch readiness v1 completed (2026-06-24)**:
   Recorded the user's freeform tiny-render audio observation as diagnostic repo
   readback and reopened the next axis as timing patch strategy, after a bounded
