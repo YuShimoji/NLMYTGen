@@ -1,5 +1,43 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom audio observation and timing patch readiness v1 completed (2026-06-24)**:
+  Recorded the user's freeform tiny-render audio observation as diagnostic repo
+  readback and reopened the next axis as timing patch strategy, after a bounded
+  permission preflight passed. `git fetch --all --prune` succeeded on the first
+  Codex attempt, `HEAD...origin/master` was `0 0`, `HEAD` was `482f5fc`, and
+  canonical artifact/docs/tests/src write-delete probes all passed before any
+  artifact was created. New artifacts:
+  `samples/_probe/newsroom_handoff/audio_observation_and_timing_patch_readiness_v1.json`,
+  `docs/verification/NEWSROOM_AUDIO_OBSERVATION_AND_TIMING_PATCH_READINESS_V1_2026-06-24.md`,
+  `src/pipeline/newsroom_audio_observation_and_timing_patch_readiness.py`, and
+  `tests/test_newsroom_audio_observation_and_timing_patch_readiness.py`. Source
+  validation reuses `yym4_native_audio_path_proof_v1.json`,
+  `tiny_render_smoke_result_readback_v1.json`, `audio_tts_boundary_v1.json`,
+  `yym4_timing_gap_strategy_v1.json`, and
+  `diagnostic_ymmp_structure_readback_v1.json`; canonical speaker remains
+  `ゆっくり霊夢`. Normalized audio observation is now
+  `audio_presence_in_render=true`,
+  `voice_path=YMM4_native_yukkuri_japanese`,
+  `english_word_handling=katakana_loanword_style`, observed example
+  `Fake -> フェイク`, `spelling_read_issue=false`,
+  `diagnostic_audio_path_accepted=true`, and
+  `audio_quality_accepted_for_diagnostic_flow=true`. Production narration
+  quality, production TTS readiness, external TTS, public video readiness,
+  visual layout readiness, real content readiness, production approval, and
+  neutral `68` sec timing proof all remain false/not accepted. Timing readiness
+  records the tiny render as approximately `8` sec YMM4 natural duration versus
+  neutral timeline total `68` sec; `timing_gap_status` remains `unresolved`, so
+  the recommended next slice is `newsroom-ymmp-timing-patch-strategy-v1`, then
+  `newsroom-ymmp-timing-patch-probe-v1`, then a milestone-gated render smoke
+  only after timing patch or another output-affecting milestone. No YMM4 launch,
+  render, TTS/audio generation, real media import, `.ymmp` edit/stage/commit,
+  media output stage/commit, dashboard/governance/freshness change, or
+  production approval was performed. Human-burden hygiene remains closed:
+  user input was freeform, schema owner is Agent, User-Side Work is none, no
+  fixed form or negative confirmation checklist was introduced, and future
+  look-for points stay capped at three if needed. Verification observed focused
+  audio observation/timing readiness tests `11 passed`; full validation and git
+  push status are owned by the current completion turn.
 - **Newsroom YMM4 native audio path proof v1 completed (2026-06-24)**:
   Proved the diagnostic YMM4 native voice/audio path as the next default from
   existing repo readbacks, without launching YMM4, rendering, generating

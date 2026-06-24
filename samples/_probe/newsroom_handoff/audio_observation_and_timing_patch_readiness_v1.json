@@ -1,0 +1,317 @@
+{
+  "artifact_id": "newsroom_audio_observation_and_timing_patch_readiness_v1_2026_06_24",
+  "readback_id": "newsroom_audio_observation_and_timing_patch_readiness_v1_2026_06_24",
+  "schema_version": "newsroom_audio_observation_and_timing_patch_readiness.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "observation_source": "user_freeform",
+  "readiness_status": "accepted_for_timing_patch_strategy",
+  "identity": {
+    "readback_id": "newsroom_audio_observation_and_timing_patch_readiness_v1_2026_06_24",
+    "source_native_audio_path_proof_path": "samples/_probe/newsroom_handoff/yym4_native_audio_path_proof_v1.json",
+    "source_native_audio_path_proof_id": "newsroom_yym4_native_audio_path_proof_v1_2026_06_24",
+    "source_tiny_render_result_path": "samples/_probe/newsroom_handoff/tiny_render_smoke_result_readback_v1.json",
+    "source_tiny_render_result_id": "newsroom_tiny_render_smoke_result_readback_v1_2026_06_23",
+    "source_audio_tts_boundary_path": "samples/_probe/newsroom_handoff/audio_tts_boundary_v1.json",
+    "source_audio_tts_boundary_id": "newsroom_audio_tts_boundary_v1_2026_06_23",
+    "source_timing_strategy_path": "samples/_probe/newsroom_handoff/yym4_timing_gap_strategy_v1.json",
+    "source_timing_strategy_id": "newsroom_yym4_timing_gap_strategy_v1_2026_06_23",
+    "source_structure_readback_path": "samples/_probe/newsroom_handoff/diagnostic_ymmp_structure_readback_v1.json",
+    "source_structure_readback_id": "newsroom_diagnostic_ymmp_structure_readback_v1_2026_06_23",
+    "production_status": "diagnostic_only",
+    "observation_source": "user_freeform"
+  },
+  "source_validation": {
+    "status": "passed",
+    "native_audio_path_proof_id": "newsroom_yym4_native_audio_path_proof_v1_2026_06_24",
+    "tiny_render_result_id": "newsroom_tiny_render_smoke_result_readback_v1_2026_06_23",
+    "audio_tts_boundary_id": "newsroom_audio_tts_boundary_v1_2026_06_23",
+    "timing_strategy_id": "newsroom_yym4_timing_gap_strategy_v1_2026_06_23",
+    "structure_readback_id": "newsroom_diagnostic_ymmp_structure_readback_v1_2026_06_23",
+    "canonical_speaker": "ゆっくり霊夢",
+    "canonical_speaker_unicode_escape": "\\u3086\\u3063\\u304f\\u308a\\u970a\\u5922",
+    "native_audio_path_prior_status": "passed_with_unknowns",
+    "tiny_render_result": "pass",
+    "tiny_render_duration_sec": 8,
+    "timing_gap_status": "unresolved",
+    "errors": []
+  },
+  "normalized_audio_observation": {
+    "audio_presence_in_render": true,
+    "voice_path": "YMM4_native_yukkuri_japanese",
+    "canonical_speaker": "ゆっくり霊夢",
+    "canonical_speaker_unicode_escape": "\\u3086\\u3063\\u304f\\u308a\\u970a\\u5922",
+    "english_word_handling": "katakana_loanword_style",
+    "observed_example": {
+      "source_text": "Fake",
+      "observed_reading": "フェイク",
+      "observed_reading_unicode_escape": "\\u30d5\\u30a7\\u30a4\\u30af",
+      "normalization": "Fake -> フェイク"
+    },
+    "spelling_read_issue": false,
+    "diagnostic_audio_path_accepted": true,
+    "audio_quality_accepted_for_diagnostic_flow": true,
+    "audio_quality_accepted_for_production": false,
+    "TTS_ready_for_production": false,
+    "external_TTS_introduced": false,
+    "production_ready": false
+  },
+  "accepted_scope": {
+    "tiny_render_includes_audible_native_yym4_yukkuri_voice": true,
+    "audio_sufficient_to_continue_diagnostic_flow": true,
+    "english_loanword_handling_acceptable_for_diagnostic_flow": true,
+    "external_TTS_unnecessary_for_now": true
+  },
+  "not_accepted_scope": {
+    "production_narration_quality": false,
+    "final_subtitle_narration_script": false,
+    "public_video_readiness": false,
+    "neutral_68_sec_timing_proof": false,
+    "visual_layout_readiness": false,
+    "real_content_readiness": false,
+    "production_approval": false
+  },
+  "timing_readiness": {
+    "tiny_render_duration_sec": 8,
+    "tiny_render_duration_qualifier": "approx",
+    "first_smoke_timing_mode": "YMM4 natural duration",
+    "neutral_timeline_total_sec": 68,
+    "ymmp_natural_duration_sec": 8.483333,
+    "timing_gap_status": "unresolved",
+    "neutral_68_sec_timing_patch_applied": false,
+    "recommended_next_axis": "newsroom-ymmp-timing-patch-strategy-v1",
+    "reason": [
+      "render path works",
+      "native audio path is diagnostic-acceptable",
+      "external TTS remains closed",
+      "timing patch can now be handled as a separate axis"
+    ]
+  },
+  "render_gate_policy": {
+    "new_render_in_this_slice": false,
+    "render_gate": "milestone_gated_not_change_gated",
+    "future_render_condition": "only after timing patch or another output-affecting milestone",
+    "do_not_rerender_for": [
+      "docs changes",
+      "readback changes",
+      "policy changes"
+    ]
+  },
+  "progress_strip": {
+    "lane": "VIDEO v0.1 READINESS",
+    "progress_completed": 5,
+    "progress_total": 7,
+    "current": "tiny render + native audio diagnostic pass",
+    "next": "newsroom-ymmp-timing-patch-strategy-v1",
+    "main_blocker": "8 sec natural duration vs 68 sec neutral timeline",
+    "user_work": "none"
+  },
+  "recommended_next_slices": [
+    "newsroom-ymmp-timing-patch-strategy-v1",
+    "newsroom-ymmp-timing-patch-probe-v1",
+    "milestone-gated-render-smoke-after-timing-patch",
+    "newsroom-render-output-retention-policy-v1"
+  ],
+  "recommended_next_slice_notes": {
+    "newsroom-ymmp-timing-patch-strategy-v1": "Separate the neutral 68 second timing patch strategy from audio acceptance now that native audio is diagnostic-acceptable.",
+    "newsroom-ymmp-timing-patch-probe-v1": "Apply or simulate the selected timing patch boundary after the strategy is recorded, without mixing it into this readback.",
+    "milestone-gated-render-smoke-after-timing-patch": "Render only after the timing patch or another output-affecting milestone changes what the video would contain.",
+    "newsroom-render-output-retention-policy-v1": "Use only if the local diagnostic output file needs explicit retention policy later."
+  },
+  "completion_matrix": [
+    {
+      "gate": "permission_preflight",
+      "status": "passed"
+    },
+    {
+      "gate": "current_state_verified",
+      "status": "passed"
+    },
+    {
+      "gate": "native_audio_proof_inspected",
+      "status": "passed"
+    },
+    {
+      "gate": "user_freeform_audio_observation_normalized",
+      "status": "passed"
+    },
+    {
+      "gate": "timing_patch_readiness_recorded",
+      "status": "passed"
+    },
+    {
+      "gate": "narrow_commit_and_push_if_gate_passes",
+      "status": "pending_until_git_gate"
+    }
+  ],
+  "artifact_readiness": [
+    {
+      "artifact": "readback_json",
+      "status": "present"
+    },
+    {
+      "artifact": "human_readback",
+      "status": "present"
+    },
+    {
+      "artifact": "normalized_audio_observation",
+      "status": "present"
+    },
+    {
+      "artifact": "accepted_and_not_accepted_scopes",
+      "status": "present"
+    },
+    {
+      "artifact": "timing_readiness",
+      "status": "present"
+    },
+    {
+      "artifact": "downstream_next_use",
+      "status": "present"
+    }
+  ],
+  "human_burden_hygiene": [
+    {
+      "gate": "user_input",
+      "status": "freeform"
+    },
+    {
+      "gate": "template_required",
+      "status": false
+    },
+    {
+      "gate": "schema_owner",
+      "status": "Agent"
+    },
+    {
+      "gate": "user_side_work",
+      "status": "none"
+    },
+    {
+      "gate": "future_look_for_points_max",
+      "status": 3
+    },
+    {
+      "gate": "negative_confirmation_checklist",
+      "status": false
+    },
+    {
+      "gate": "fixed_form_relapse",
+      "status": false
+    }
+  ],
+  "render_gate_hygiene": [
+    {
+      "gate": "render_performed_in_this_slice",
+      "status": false
+    },
+    {
+      "gate": "existing_render_observation_reused",
+      "status": true
+    },
+    {
+      "gate": "render_treated_as_milestone_gated",
+      "status": true
+    },
+    {
+      "gate": "next_render_tied_to_output_milestone",
+      "status": true
+    },
+    {
+      "gate": "no_render_for_docs_readback_changes",
+      "status": true
+    },
+    {
+      "gate": "output_retention_deferred_unless_needed",
+      "status": true
+    }
+  ],
+  "review_non_redundancy": [
+    {
+      "gate": "prior_render_evidence_reused",
+      "status": true
+    },
+    {
+      "gate": "prior_audio_tts_boundary_reused",
+      "status": true
+    },
+    {
+      "gate": "user_audio_observation_consumed_once",
+      "status": true
+    },
+    {
+      "gate": "next_axis_stated",
+      "status": "newsroom-ymmp-timing-patch-strategy-v1"
+    },
+    {
+      "gate": "not_accepted_scope_preserved",
+      "status": true
+    },
+    {
+      "gate": "repeated_audio_check_requested",
+      "status": false
+    }
+  ],
+  "inertia_check": [
+    {
+      "gate": "repeated_render_request",
+      "status": false
+    },
+    {
+      "gate": "repeated_audio_observation_request",
+      "status": false
+    },
+    {
+      "gate": "packet_for_packet_drift",
+      "status": false
+    },
+    {
+      "gate": "video_readiness_separated_from_slice_completion",
+      "status": true
+    },
+    {
+      "gate": "next_concrete_milestone",
+      "status": "newsroom-ymmp-timing-patch-strategy-v1"
+    }
+  ],
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_created_by_agent": false,
+    "audio_generated_by_agent": false,
+    "TTS_generated_by_agent": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "ymmp_created_or_modified_by_agent": false,
+    "ymmp_or_media_staged_or_committed": false,
+    "production_approval": false,
+    "public_video_ready": false,
+    "dashboard_governance_freshness_changed": false
+  },
+  "downstream_next_use": {
+    "use_this_readback_to": [
+      "treat the tiny render audio as present and diagnostic-acceptable",
+      "keep YMM4 native yukkuri audio as the current diagnostic path",
+      "move to a timing patch strategy without adding external TTS",
+      "preserve production readiness as a separate later decision"
+    ],
+    "do_not_use_this_readback_to": [
+      "claim production narration quality",
+      "claim public video readiness",
+      "claim neutral 68 second timing proof",
+      "launch YMM4 or create a new render",
+      "generate, import, stage, or commit audio/media output"
+    ]
+  },
+  "validation_expectations": {
+    "json_parse_required": true,
+    "focused_tests_required_if_builder_added": true,
+    "compileall_required_if_python_module_added": true,
+    "git_diff_check_required": true,
+    "conflict_marker_scan_required": true,
+    "fixed_form_relapse_scan_required": true,
+    "forbidden_staged_file_scan_required": true,
+    "YMM4_launched_by_agent": false,
+    "render_audio_or_tts_created_by_agent": false
+  }
+}
