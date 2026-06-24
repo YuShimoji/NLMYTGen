@@ -79,6 +79,24 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom timing patch remote handoff decision (2026-06-24):
+`newsroom_ymmp_timing_patch_remote_handoff_2026_06_24` preserves the
+supervisor-accepted state after `a0a3485 feat: probe newsroom YMM4 timing patch`
+and makes another-terminal restart unambiguous. The structural patch proof is
+accepted: the ignored diagnostic copy
+`_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_timing_patch_v1.ymmp`
+now carries a `4080` frame / `68` sec surface at `60` fps, with dialogue frames
+`0 / 720 / 1440 / 2760` and lengths `720 / 720 / 1320 / 1320`; native YMM4
+speaker/text/voice fields remain preserved. The active gate is not more repo
+implementation. It is one manual YMM4 milestone render smoke of that ignored
+patched copy, followed by an agent readback slice
+`newsroom-ymmp-timing-patch-render-smoke-result-readback-v1`. Before this
+handoff docs update, `master` was fetched and confirmed at parity with
+`origin/master` (`HEAD...origin/master = 0 0`). The handoff does not claim
+post-patch render success, production render readiness, public video readiness,
+visual layout readiness, production narration quality, real content readiness,
+production approval, or permission to stage/commit `.ymmp` or media output.
+
 Latest newsroom audio/TTS boundary handoff decision (2026-06-24):
 `remote_handoff_after_newsroom_audio_tts_boundary_resume_2026_06_24`
 preserves the post-`newsroom-audio-tts-boundary-v1` continuation context in

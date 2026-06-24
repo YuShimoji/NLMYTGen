@@ -1,5 +1,26 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom timing patch remote handoff sealed (2026-06-24)**:
+  Preserved the supervisor-accepted state for the timing patch probe and
+  verified local/remote parity for another-terminal restart. `master` was
+  fetched from `origin`, `HEAD...origin/master` was `0 0`, and `HEAD` was
+  `a0a3485 feat: probe newsroom YMM4 timing patch` before this handoff docs
+  update. The latest supervisor decision accepts the structural timing patch
+  proof and defers the next progress step until one manual YMM4 observation is
+  available. The active local-only target remains
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_timing_patch_v1.ymmp`;
+  it is intentionally ignored under `_tmp/` and must not be staged or
+  committed. The required user-side action is exactly one milestone render
+  smoke in YMM4: open the patched diagnostic copy, render once, and report
+  whether it opens/renders, whether the output is about `68` sec, and whether
+  the four dialogue rows and native Yukkuri voice remain obviously present.
+  Post-observation agent work is
+  `newsroom-ymmp-timing-patch-render-smoke-result-readback-v1`, producing a
+  repo readback from the freeform observation. Stored handoff details live in
+  `docs/verification/NEWSROOM_YMMP_TIMING_PATCH_REMOTE_HANDOFF_2026-06-24.md`.
+  Not accepted: production render readiness, public video readiness,
+  production narration quality, visual layout readiness, real content
+  readiness, production approval, or committing `.ymmp`/media output.
 - **Newsroom YMM4 timing patch probe v1 completed (2026-06-24)**:
   Applied the selected diagnostic timing patch strategy to an ignored local
   `.ymmp` copy, without launching YMM4, rendering, generating TTS/audio,
@@ -34,8 +55,8 @@
   diagnostic copy only as a milestone smoke, then record whether YMM4 accepts
   the 68 sec patched timeline surface. Verification observed focused timing
   patch probe tests `11 passed`, related timing tests `24 passed`, and full
-  repo validation `uv run pytest` with `865 passed, 28 skipped`; git push
-  status is owned by the current completion turn.
+  repo validation `uv run pytest` with `865 passed, 28 skipped`; remote parity
+  was verified in the subsequent timing patch remote handoff.
 - **Newsroom YMM4 timing patch strategy v1 completed (2026-06-24)**:
   Defined the diagnostic `.ymmp` timing patch strategy after tiny render smoke
   and native audio path acceptance, without launching YMM4, rendering,
