@@ -1,5 +1,41 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom YMM4 timing patch probe v1 completed (2026-06-24)**:
+  Applied the selected diagnostic timing patch strategy to an ignored local
+  `.ymmp` copy, without launching YMM4, rendering, generating TTS/audio,
+  importing real media, modifying the original source `.ymmp`, staging or
+  committing `.ymmp`/media output, approving production, or changing
+  dashboard/governance/freshness work. New repo artifacts:
+  `samples/_probe/newsroom_handoff/ymmp_timing_patch_probe_v1.json`,
+  `samples/_probe/newsroom_handoff/ymmp_timing_patch_probe_readback_v1.json`,
+  `docs/verification/NEWSROOM_YMMP_TIMING_PATCH_PROBE_V1_2026-06-24.md`,
+  `src/pipeline/newsroom_ymmp_timing_patch_probe.py`, and
+  `tests/test_newsroom_ymmp_timing_patch_probe.py`. The ignored diagnostic copy
+  is `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_timing_patch_v1.ymmp`;
+  it is under the repo `_tmp/` ignore rule and must stay unstaged/uncommitted.
+  The original source copy remains
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.ymmp`.
+  The patch method is
+  `neutral_timeline_skeleton_patch_with_native_voice_preserved`: map the four
+  existing `VoiceItem` rows to the four neutral caption rows by text and order,
+  set `Timelines[0].Length` from `509` to `4080`, set `Frame` values to
+  `0/720/1440/2760`, and set `Length` values to `720/720/1320/1320` at `60`
+  fps. Structural readback passed: patched total duration is `4080` frames /
+  `68.0` sec, end frames are `720/1440/2760/4080`, and no fallback carrier was
+  needed. Speaker/text/native YMM4 fields were preserved for all rows:
+  `CharacterName`, `Serif`, `VoiceCache`, `VoiceParameter`, `Pronounce`,
+  `Hatsuon`, `VoiceLength`, `AudioEffects`, the `Characters` block, and
+  `AquesTalk` hints. External TTS remains closed; no voice/audio was stretched,
+  regenerated, or replaced. This is a structural timing proof only: production
+  render readiness, public video readiness, production narration quality,
+  visual layout readiness, real content readiness, production approval, and
+  post-patch render smoke remain not accepted. Next slice is
+  `newsroom-ymmp-timing-patch-render-smoke-v1`: open/render the ignored patched
+  diagnostic copy only as a milestone smoke, then record whether YMM4 accepts
+  the 68 sec patched timeline surface. Verification observed focused timing
+  patch probe tests `11 passed`, related timing tests `24 passed`, and full
+  repo validation `uv run pytest` with `865 passed, 28 skipped`; git push
+  status is owned by the current completion turn.
 - **Newsroom YMM4 timing patch strategy v1 completed (2026-06-24)**:
   Defined the diagnostic `.ymmp` timing patch strategy after tiny render smoke
   and native audio path acceptance, without launching YMM4, rendering,
