@@ -1,5 +1,37 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom YMM4 native audio path proof v1 completed (2026-06-24)**:
+  Proved the diagnostic YMM4 native voice/audio path as the next default from
+  existing repo readbacks, without launching YMM4, rendering, generating
+  TTS/audio, importing real media, creating/modifying/staging/committing
+  `.ymmp`, staging or committing media output, approving production, or changing
+  dashboard/governance/freshness work. New artifacts:
+  `samples/_probe/newsroom_handoff/yym4_native_audio_path_proof_v1.json`,
+  `docs/verification/NEWSROOM_YYM4_NATIVE_AUDIO_PATH_PROOF_V1_2026-06-24.md`,
+  `src/pipeline/newsroom_yym4_native_audio_path_proof.py`, and
+  `tests/test_newsroom_yym4_native_audio_path_proof.py`. Source validation
+  reuses `audio_tts_boundary_v1.json`,
+  `tiny_render_smoke_result_readback_v1.json`, and
+  `diagnostic_ymmp_structure_readback_v1.json`; canonical speaker remains
+  `ゆっくり霊夢`. Proof status is `passed_with_unknowns`: the parsed `.ymmp`
+  has four YMM4 `VoiceItem` rows, four `VoiceCache` entries, `VoiceLength`,
+  `Pronounce`/`Hatsuon`, and native engine hint `AquesTalk`, so native field
+  sufficiency is accepted for the diagnostic path. Audio presence in the render
+  remains `unknown`, `audio_quality_accepted=false`, `TTS_ready=false`,
+  `TTS_generated_by_agent=false`, `explicit_operator_TTS_generation=false`, and
+  `external_TTS_introduced=false`; this is not audio acceptance, production
+  render readiness, public video readiness, neutral `68` sec timing proof, or
+  production approval. Recommended default is
+  `continue_with_YMM4_native_voice_audio_path_for_diagnostic_flow`; recommended
+  next slice is `newsroom-ymmp-timing-patch-strategy-v1` because native fields
+  are sufficient and the remaining unknown is audible presence/quality rather
+  than field sufficiency. If audio presence becomes the actual bottleneck, use
+  `newsroom-tiny-render-audio-observation-card-v1`; if native fields drift or
+  go missing, use `newsroom-yym4-native-audio-field-audit-v1`. Human-burden
+  hygiene remains closed: User-Side Work is none, user input remains freeform,
+  no fixed-form result template is introduced, screenshots are optional, and no
+  negative confirmation checklist is requested. Verification observed focused
+  native audio path proof tests `11 passed`.
 - **Newsroom audio/TTS boundary resume handoff sealed (2026-06-24)**:
   Mainline restart state has been rechecked and preserved for another terminal.
   Target checkout is
