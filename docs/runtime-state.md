@@ -1,5 +1,42 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom visual card asset bridge v1 completed (2026-06-25)**:
+  Created `newsroom-visual-card-asset-bridge-v1` as a diagnostic external
+  visual-asset bridge after the 68 sec timing/audio render smoke passed. No
+  YMM4 launch, video render, audio/TTS generation, real source fetch, real media
+  import, `.ymmp` edit, `.ymmp`/mp4/media staging or commit, external TTS
+  adoption, dashboard/governance/freshness change, production approval, public
+  readiness claim, or timing strategy change was performed by the Agent. New
+  repo artifacts are
+  `samples/_probe/newsroom_handoff/visual_card_asset_bridge_v1.json`,
+  `docs/verification/NEWSROOM_VISUAL_CARD_ASSET_BRIDGE_V1_2026-06-25.md`,
+  `src/pipeline/newsroom_visual_card_asset_bridge.py`,
+  `tests/test_newsroom_visual_card_asset_bridge.py`, and four SVG card assets
+  plus `contact_sheet.html` under
+  `samples/_probe/newsroom_handoff/visual_cards_v1/`. The four cards map
+  one-to-one to the existing neutral caption/dialogue rows:
+  `Fake topic, review only.` (`0-12s`), `Review-only handoff stays.` (`12-24s`),
+  `A fake claim is shown.` (`24-46s`), and
+  `Fake source checks are noted.` (`46-68s`). Each SVG is `1920x1080`, fake
+  content only, high-contrast, includes diagnostic/status chips and a
+  subtitle-safe lower reserve, and has no real URL, real brand, real media, or
+  production-news claim dependency. PNG export is explicitly deferred; the
+  deterministic SVG sources and local HTML contact sheet are the bridge output.
+  Accepted scope is limited to external visual card assets, a preview/contact
+  sheet, caption-row mapping, and suitability for a later bounded YMM4
+  image-asset placement probe. Not accepted: production visual quality, final
+  design system, YMM4 placement proof, post-card render proof, public video
+  readiness, real newsroom visuals, real content readiness, or production
+  approval. The placement contract is `future_yym4_placement_mode =
+  image_asset_import`, with `direct_yym4_card_object_graph = false` and
+  `yym4_text_shape_reconstruction = false`; native YMM4 audio and the existing
+  timing strategy are preserved. Video readiness remains `6/7`, visual
+  readiness is `4/7`, and production readiness remains low/diagnostic-only.
+  The next default slice is `newsroom-yym4-card-asset-placement-probe-v1`,
+  followed by `newsroom-card-placement-render-smoke-v1` only after placement
+  changes the video surface enough to justify a milestone render. Internal
+  review prep remains after visual/card placement is inspectable. Verification
+  observed focused bridge tests `10 passed`.
 - **Newsroom YMM4 timing patch render smoke result readback v1 completed (2026-06-25)**:
   Recorded the user's freeform post-patch render observation, with screenshot
   support, as canonical diagnostic repo evidence. No YMM4 launch, render,

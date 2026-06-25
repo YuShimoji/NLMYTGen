@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="REVIEW CHECK CARD 03">
+  <title>REVIEW CHECK CARD 03</title>
+  <desc>Diagnostic-only fake newsroom card asset for later YMM4 image import placement.</desc>
+  <rect x="0" y="0" width="1920" height="1080" fill="#0D1117"/>
+  <rect x="64" y="64" width="1792" height="952" rx="28" fill="#2B2417"/>
+  <rect x="64" y="64" width="1792" height="130" rx="28" fill="#352A19"/>
+  <rect x="64" y="930" width="1792" height="86" rx="0" fill="#352A19"/>
+  <rect x="112" y="112" width="258" height="52" rx="26" fill="#FEF3C7"/>
+  <text x="241" y="147" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#78350F">DIAGNOSTIC</text>
+  <rect x="390" y="112" width="260" height="52" rx="26" fill="#FDE68A"/>
+  <text x="520" y="147" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#78350F">FAKE CONTENT</text>
+  <rect x="670" y="112" width="216" height="52" rx="26" fill="#E5E7EB"/>
+  <text x="778" y="147" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#111827">24-46 SEC</text>
+  <text x="1740" y="148" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#FBBF24">CARD 3/4</text>
+  <rect x="112" y="252" width="14" height="460" fill="#FBBF24"/>
+  <text x="152" y="296" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700" fill="#FBBF24">REVIEW CHECK CARD 03</text>
+  <text x="152" y="420" font-family="Arial, Helvetica, sans-serif" font-size="82" font-weight="800" fill="#F8FAFC">A fake claim is shown.</text>
+  <text x="154" y="506" font-family="Arial, Helvetica, sans-serif" font-size="34" fill="#CBD5E1">A placeholder claim block demonstrates hierarchy without real news content.</text>
+  <rect x="152" y="586" width="824" height="126" rx="20" fill="#352A19" stroke="#FBBF24" stroke-width="3"/>
+  <text x="194" y="636" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#FBBF24">SOURCE CAPTION</text>
+  <text x="194" y="682" font-family="Arial, Helvetica, sans-serif" font-size="34" fill="#E5E7EB">cap_beat_fake_claim_001_01</text>
+  <rect x="1032" y="268" width="704" height="444" rx="24" fill="#0B1220" stroke="#B45309" stroke-width="4"/>
+  <rect x="1082" y="320" width="604" height="42" rx="10" fill="#FBBF24"/>
+  <rect x="1082" y="398" width="440" height="24" rx="12" fill="#94A3B8"/>
+  <rect x="1082" y="448" width="518" height="24" rx="12" fill="#64748B"/>
+  <rect x="1082" y="498" width="382" height="24" rx="12" fill="#64748B"/>
+  <rect x="1082" y="574" width="252" height="74" rx="16" fill="#2B2417" stroke="#FBBF24" stroke-width="3"/>
+  <text x="1208" y="623" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#F8FAFC">REVIEW ONLY</text>
+  <circle cx="1618" cy="611" r="44" fill="#FBBF24"/>
+  <text x="1618" y="622" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#0D1117">OK</text>
+  <rect x="112" y="796" width="1696" height="118" rx="18" fill="#05080D" stroke="#334155" stroke-width="2" stroke-dasharray="18 14"/>
+  <text x="152" y="852" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#E2E8F0">SUBTITLE-SAFE RESERVE</text>
+  <text x="152" y="892" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#94A3B8">Future YMM4 placement should keep dialogue/subtitles readable in this lower band.</text>
+  <text x="112" y="972" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#94A3B8">beat=beat_fake_claim_001 | asset=visual_card_cap_beat_fake_claim_001_01_v1 | import role=image asset</text>
+</svg>

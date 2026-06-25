@@ -79,6 +79,29 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom visual card asset bridge decision (2026-06-25):
+`newsroom_visual_card_asset_bridge_v1_2026_06_25` creates the first
+diagnostic external card-asset bridge after the 68 sec timing/audio render
+smoke passed. The bridge generates four fake/review-only `1920x1080` SVG cards
+and a local HTML contact sheet under
+`samples/_probe/newsroom_handoff/visual_cards_v1/`, mapped one-to-one to the
+existing neutral caption/dialogue rows at `0-12s`, `12-24s`, `24-46s`, and
+`46-68s`. This decision deliberately avoids rebuilding card layouts as complex
+direct YMM4 object graphs: the placement contract is future image-asset import,
+with `direct_yym4_card_object_graph=false` and
+`yym4_text_shape_reconstruction=false`. Native YMM4 audio and the existing
+timing strategy stay preserved. Accepted scope is limited to external
+diagnostic card assets, the contact sheet, caption-row mapping, fake-content
+safety, and suitability for a later bounded YMM4 placement probe. Not accepted:
+production visual quality, final design system, YMM4 placement proof,
+post-card render proof, public video readiness, real newsroom visuals, real
+content readiness, or production approval. No YMM4 launch, render, `.ymmp`
+edit, media import, audio/TTS generation, real source fetch, or media staging
+was performed. Video readiness remains `6/7`; visual readiness is `4/7`; the
+next default slice is `newsroom-yym4-card-asset-placement-probe-v1`, followed
+by `newsroom-card-placement-render-smoke-v1` only after placement changes the
+video surface enough to justify a milestone render.
+
 Latest newsroom timing patch render smoke result decision (2026-06-25):
 `newsroom_ymmp_timing_patch_render_smoke_result_readback_v1_2026_06_25`
 records the user freeform post-patch render observation, with screenshot
