@@ -1,5 +1,44 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom card placement render smoke result readback v1 completed (2026-06-25)**:
+  Recorded the user's freeform card-placement render observation, with
+  screenshot support, as canonical diagnostic repo evidence. No YMM4 launch,
+  render, audio/TTS generation, real media import, `.ymmp` edit, `.ymmp`/mp4/
+  wav/mp3/m4a/media staging or commit, external TTS adoption,
+  dashboard/governance/freshness change, production visual-quality claim,
+  production approval, public-readiness claim, timing strategy change, or
+  internal-review implementation was performed by the Agent. New repo artifacts
+  are
+  `samples/_probe/newsroom_handoff/card_placement_render_smoke_result_readback_v1.json`,
+  `docs/verification/NEWSROOM_CARD_PLACEMENT_RENDER_SMOKE_RESULT_READBACK_V1_2026-06-25.md`,
+  `src/pipeline/newsroom_card_placement_render_smoke_result_readback.py`, and
+  `tests/test_newsroom_card_placement_render_smoke_result_readback.py`. The
+  ignored local evidence targets remain
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.ymmp`
+  and
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.mp4`;
+  both are under `_tmp/` ignore policy and must remain unstaged/uncommitted.
+  Normalized result is `pass`: YMM4 `4.53.0.6` opened the card-placement
+  diagnostic project, render completed to
+  `diagnostic_bound_speaker_probe_card_placement_v1.mp4`, output duration was
+  observed as `00:01:08` / `68` sec, render time was approximately `30` sec,
+  four visual cards (`Card 1/4` through `Card 4/4`) were visible as external
+  PNG card assets, the preview surface showed title/chips/source-caption/
+  subtitle-safe-reserve elements, four dialogue/subtitle items remained
+  visible, no obvious visual element breakage was reported, and no native
+  audio/timing/dialogue regression was reported. This closes the visual card
+  placement render-smoke uncertainty at diagnostic level. Accepted scope is
+  limited to current YMM4 diagnostic open/render viability, approximately
+  `68` sec output, visible four-card placement, visible dialogue timeline, and
+  no reported visual breakage. Not accepted: production visual quality, final
+  design system, final narration/script density, public video readiness, real
+  newsroom visuals, real content readiness, production approval, final export
+  packaging, or publication readiness. Video readiness remains `6/7` until an
+  internal review milestone is completed; visual readiness advances to `7/7`;
+  production readiness remains low/diagnostic-only. The current render
+  observation has been consumed once; no new render is needed for docs/readback
+  changes. The next default slice is `newsroom-internal-review-v0.1-prep`.
+  Verification observed focused result-readback tests `9 passed`.
 - **Newsroom YMM4 card asset placement probe v1 completed (2026-06-25)**:
   Created `newsroom-yym4-card-asset-placement-probe-v1` as the bounded
   diagnostic bridge from external visual card assets into an ignored local

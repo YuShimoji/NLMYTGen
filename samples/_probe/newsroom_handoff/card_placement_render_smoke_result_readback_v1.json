@@ -1,0 +1,516 @@
+{
+  "artifact_id": "newsroom_card_placement_render_smoke_result_readback_v1_2026_06_25",
+  "readback_id": "newsroom_card_placement_render_smoke_result_readback_v1_2026_06_25",
+  "schema_version": "newsroom_card_placement_render_smoke_result_readback.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "observation_source": "user_freeform_with_screenshot_support",
+  "result_status": "pass",
+  "identity": {
+    "readback_id": "newsroom_card_placement_render_smoke_result_readback_v1_2026_06_25",
+    "source_card_placement_probe_path": "samples/_probe/newsroom_handoff/yym4_card_asset_placement_probe_v1.json",
+    "source_card_placement_probe_id": "newsroom_yym4_card_asset_placement_probe_v1_2026_06_25",
+    "source_visual_card_bridge_path": "samples/_probe/newsroom_handoff/visual_card_asset_bridge_v1.json",
+    "source_visual_card_bridge_id": "newsroom_visual_card_asset_bridge_v1_2026_06_25",
+    "source_timing_patch_render_result_path": "samples/_probe/newsroom_handoff/ymmp_timing_patch_render_smoke_result_readback_v1.json",
+    "source_timing_patch_render_result_id": "newsroom_ymmp_timing_patch_render_smoke_result_readback_v1_2026_06_25",
+    "observation_source": "user_freeform_with_screenshot_support",
+    "production_status": "diagnostic_only",
+    "result_status": "pass"
+  },
+  "source_validation": {
+    "status": "passed",
+    "errors": [],
+    "source_card_placement_probe_id": "newsroom_yym4_card_asset_placement_probe_v1_2026_06_25",
+    "source_card_placement_probe_status": "placed_structurally",
+    "source_visual_card_bridge_id": "newsroom_visual_card_asset_bridge_v1_2026_06_25",
+    "source_timing_patch_render_result_id": "newsroom_ymmp_timing_patch_render_smoke_result_readback_v1_2026_06_25",
+    "source_timing_patch_render_result": "pass",
+    "prior_duration_sec": 68,
+    "prior_native_audio_present": true,
+    "card_asset_count": 4,
+    "render_output_exists_at_generation": true,
+    "card_placement_ymmp_exists_at_generation": true,
+    "canonical_speaker": "yukkuri_reimu",
+    "canonical_speaker_unicode_escape": "\\u3086\\u3063\\u304f\\u308a\\u970a\\u5922"
+  },
+  "operator_freeform_observation": {
+    "input_mode": "freeform",
+    "summary": "The user confirmed the card-placement diagnostic video rendered as diagnostic_bound_speaker_probe_card_placement_v1.mp4, is about 1 minute 8 seconds long, completed in roughly 30 seconds, and shows no visible element breakage.",
+    "reported_duration": "about 1 minute 8 seconds",
+    "reported_render_time_approx_sec": 30,
+    "reported_output_file": "diagnostic_bound_speaker_probe_card_placement_v1.mp4",
+    "reported_visual_breakage": false,
+    "fixed_result_template_requested": false,
+    "manual_observation_re_requested": false
+  },
+  "screenshot_supported_observation": {
+    "yym4_version_observed": "4.53.0.6",
+    "project_name_observed": "diagnostic_bound_speaker_probe_card_placement_v1",
+    "yym4_preview_project_duration": "00:01:08.00",
+    "dialogue_items_remaining_on_timeline": 4,
+    "cards_visible": [
+      "Card 1/4",
+      "Card 2/4",
+      "Card 3/4",
+      "Card 4/4"
+    ],
+    "card_asset_mode_observed": "external_png_card_asset",
+    "preview_surface_elements_observed": [
+      "title",
+      "chips",
+      "source caption",
+      "subtitle-safe reserve"
+    ],
+    "output_file_name": "diagnostic_bound_speaker_probe_card_placement_v1.mp4",
+    "render_completed_reported": true,
+    "render_time_approx_sec": 30,
+    "visible_element_breakage_reported": false,
+    "audio_loss_reported": false,
+    "subtitle_or_dialogue_loss_reported": false,
+    "media_file_committed": false
+  },
+  "normalized_render_result": {
+    "render_smoke_result": "pass",
+    "yym4_opened_card_placement_project": true,
+    "render_completed": true,
+    "output_video_observed": true,
+    "output_filename_observed": "diagnostic_bound_speaker_probe_card_placement_v1.mp4",
+    "output_duration_observed": "00:01:08",
+    "output_duration_sec": 68,
+    "expected_duration_sec": 68,
+    "duration_matches_timing_patch": true,
+    "render_time_approx_sec": 30,
+    "card_assets_visible": true,
+    "card_count_visible": 4,
+    "dialogue_items_visible": true,
+    "dialogue_item_count_observed": 4,
+    "visual_card_integrity": "pass",
+    "timing_preservation_regression_reported": false,
+    "native_audio_regression_reported": false,
+    "card_placement_effective_in_render": true,
+    "production_visual_quality_accepted": false,
+    "production_pacing_accepted": false,
+    "public_video_ready": false,
+    "classification": "card_placement_render_smoke_pass"
+  },
+  "screenshot_supported_card_observations": [
+    {
+      "card_index": 1,
+      "visible_status": true,
+      "observed_time_region": "unknown",
+      "expected_mapping_source": "visual_card_cap_beat_fake_intro_001_01_v1",
+      "expected_dialogue_or_caption": "Fake topic, review only.",
+      "expected_start_sec": 0,
+      "expected_end_sec": 12,
+      "visual_integrity": "pass",
+      "notes": [
+        "diagnostic fake/review-only card",
+        "no real brand / URL / production claim"
+      ]
+    },
+    {
+      "card_index": 2,
+      "visible_status": true,
+      "observed_time_region": "unknown",
+      "expected_mapping_source": "visual_card_cap_beat_fake_intro_001_02_v1",
+      "expected_dialogue_or_caption": "Review-only handoff stays.",
+      "expected_start_sec": 12,
+      "expected_end_sec": 24,
+      "visual_integrity": "pass",
+      "notes": [
+        "diagnostic fake/review-only card",
+        "no real brand / URL / production claim"
+      ]
+    },
+    {
+      "card_index": 3,
+      "visible_status": true,
+      "observed_time_region": "unknown",
+      "expected_mapping_source": "visual_card_cap_beat_fake_claim_001_01_v1",
+      "expected_dialogue_or_caption": "A fake claim is shown.",
+      "expected_start_sec": 24,
+      "expected_end_sec": 46,
+      "visual_integrity": "pass",
+      "notes": [
+        "diagnostic fake/review-only card",
+        "no real brand / URL / production claim"
+      ]
+    },
+    {
+      "card_index": 4,
+      "visible_status": true,
+      "observed_time_region": "unknown",
+      "expected_mapping_source": "visual_card_cap_beat_fake_claim_001_02_v1",
+      "expected_dialogue_or_caption": "Fake source checks are noted.",
+      "expected_start_sec": 46,
+      "expected_end_sec": 68,
+      "visual_integrity": "pass",
+      "notes": [
+        "diagnostic fake/review-only card",
+        "no real brand / URL / production claim"
+      ]
+    }
+  ],
+  "accepted_scope": {
+    "card_placement_ymmp_can_be_opened_and_rendered_in_current_yym4_environment": true,
+    "output_remains_approximately_68_sec": true,
+    "four_visual_card_assets_are_visible": true,
+    "existing_dialogue_timeline_remains_visible": true,
+    "no_obvious_visual_element_breakage_reported": true,
+    "diagnostic_visual_placement_smoke_passes": true
+  },
+  "not_accepted_scope": {
+    "production_visual_quality": false,
+    "final_design_system": false,
+    "final_narration_script_density": false,
+    "public_video_readiness": false,
+    "real_newsroom_visuals": false,
+    "real_content_readiness": false,
+    "production_approval": false,
+    "final_export_packaging": false,
+    "publication_readiness": false
+  },
+  "readiness_separation": {
+    "slice_completion": "pass_for_this_readback",
+    "video_readiness_progress": "6/7",
+    "video_readiness_current": "card placement render smoke observed",
+    "video_readiness_next_missing_gate": "internal review v0.1 milestone",
+    "visual_readiness_progress": "7/7",
+    "visual_readiness_current": "post-placement render reviewed at diagnostic level",
+    "production_readiness": "low_diagnostic_only",
+    "production_readiness_reason": "The observation proves diagnostic card visibility only; production visual quality, real content, packaging, and publication stay outside scope.",
+    "next_default_slice": "newsroom-internal-review-v0.1-prep"
+  },
+  "render_gate_carry_forward": {
+    "current_render_observation_consumed_once": true,
+    "new_render_in_this_slice": false,
+    "YMM4_launched_by_agent": false,
+    "render_audio_or_tts_created_by_agent": false,
+    "render_gate": "milestone_gated_not_docs_gated",
+    "next_render_allowed_after": [
+      "internal review v0.1 milestone",
+      "material visual/timing/audio surface change"
+    ],
+    "do_not_render_again_for": [
+      "docs changes",
+      "readback changes",
+      "policy-only changes"
+    ],
+    "repeated_timing_audio_render_or_card_check_requested": false
+  },
+  "recommended_next_slices": [
+    {
+      "slice": "newsroom-internal-review-v0.1-prep",
+      "timing": "recommended_next_default",
+      "reason": "timing, audio, render, and card placement axes now pass at diagnostic level; the next value is internal review prep"
+    },
+    {
+      "slice": "newsroom-internal-review-v0.1-render-package-v1",
+      "timing": "after_internal_review_prep_if_needed",
+      "reason": "package the current diagnostic surface as the review milestone"
+    },
+    {
+      "slice": "newsroom-render-output-retention-policy-v1",
+      "timing": "only_if_output_artifacts_need_retention",
+      "reason": "render outputs remain ignored unless a retention gate opens"
+    },
+    {
+      "slice": "newsroom-rss-dry-run-integration-plan-v1",
+      "timing": "later_not_immediate",
+      "reason": "RSS dry-run planning should wait until internal review direction is set"
+    }
+  ],
+  "implementation_principle_for_next_lane": [
+    "Preserve the YMM4 native audio path.",
+    "Preserve the external card asset pipeline.",
+    "Avoid direct YMM4 card object graph reconstruction.",
+    "Keep .ymmp mutation limited to ignored local copies.",
+    "Render only at internal review milestone or material surface change."
+  ],
+  "goal_stack": [
+    {
+      "level": "Immediate",
+      "goal": "Record card placement render smoke result",
+      "success_signal": "JSON/doc normalize 68sec render with cards visible and no breakage",
+      "contribution": "closes visual placement smoke evidence"
+    },
+    {
+      "level": "Short-term",
+      "goal": "Prepare internal review v0.1",
+      "success_signal": "current diagnostic video can be packaged as review milestone",
+      "contribution": "moves from mechanics proof to reviewable surface"
+    },
+    {
+      "level": "Mid-term",
+      "goal": "Stabilize visual card bridge",
+      "success_signal": "external assets + YMM4 placement + render evidence are all present",
+      "contribution": "avoids fragile direct .ymmp card construction"
+    },
+    {
+      "level": "Long-term",
+      "goal": "Support Newsroom-to-video automation",
+      "success_signal": "future content packets can drive script/audio/timing/cards/render repeatably",
+      "contribution": "reduces manual assembly"
+    }
+  ],
+  "completion_matrix": [
+    {
+      "gate": "current_repo_state_verified",
+      "status": true
+    },
+    {
+      "gate": "card_placement_source_package_inspected",
+      "status": true
+    },
+    {
+      "gate": "user_freeform_observation_normalized",
+      "status": true
+    },
+    {
+      "gate": "result_readback_json_doc_created",
+      "status": true
+    },
+    {
+      "gate": "readiness_separation_updated",
+      "status": true
+    },
+    {
+      "gate": "narrow_commit_created_and_pushed_if_push_gate_passes",
+      "status": "pending_until_git_gate"
+    }
+  ],
+  "artifact_readiness": [
+    {
+      "artifact": "result_readback_json",
+      "status": "present"
+    },
+    {
+      "artifact": "human_readback",
+      "status": "present"
+    },
+    {
+      "artifact": "normalized_render_result",
+      "status": "present"
+    },
+    {
+      "artifact": "accepted_not_accepted_scopes",
+      "status": "present"
+    },
+    {
+      "artifact": "render_gate_carry_forward",
+      "status": "present"
+    },
+    {
+      "artifact": "downstream_next_use",
+      "status": "present"
+    }
+  ],
+  "video_readiness": [
+    {
+      "gate": "source_input_path_proven",
+      "status": true
+    },
+    {
+      "gate": "target_yym4_import_path_proven",
+      "status": true
+    },
+    {
+      "gate": "audio_path_proven",
+      "status": true
+    },
+    {
+      "gate": "timing_duration_strategy_defined",
+      "status": true
+    },
+    {
+      "gate": "tiny_smoke_render_observed",
+      "status": true
+    },
+    {
+      "gate": "targeted_regression_render_observed",
+      "status": true
+    },
+    {
+      "gate": "internal_review_milestone_reached",
+      "status": false
+    }
+  ],
+  "visual_readiness": [
+    {
+      "gate": "visual_card_concept_selected",
+      "status": true
+    },
+    {
+      "gate": "external_card_assets_generated",
+      "status": true
+    },
+    {
+      "gate": "preview_contact_sheet_available",
+      "status": true
+    },
+    {
+      "gate": "assets_mapped_to_timeline_caption_units",
+      "status": true
+    },
+    {
+      "gate": "yym4_placement_contract_defined",
+      "status": true
+    },
+    {
+      "gate": "yym4_placement_proof_observed",
+      "status": true
+    },
+    {
+      "gate": "post_placement_render_reviewed",
+      "status": true
+    }
+  ],
+  "render_gate_hygiene": [
+    {
+      "gate": "render_performed_by_agent_in_this_slice",
+      "status": false
+    },
+    {
+      "gate": "existing_user_render_observation_consumed_once",
+      "status": true
+    },
+    {
+      "gate": "render_treated_as_milestone_gated",
+      "status": true
+    },
+    {
+      "gate": "next_render_tied_to_internal_review_or_material_change",
+      "status": true
+    },
+    {
+      "gate": "no_render_for_docs_readback_changes",
+      "status": true
+    },
+    {
+      "gate": "repeated_timing_audio_render_card_check_avoided",
+      "status": true
+    }
+  ],
+  "human_burden_hygiene": [
+    {
+      "gate": "user_input",
+      "status": "freeform"
+    },
+    {
+      "gate": "template_required",
+      "status": false
+    },
+    {
+      "gate": "schema_owner",
+      "status": "Agent"
+    },
+    {
+      "gate": "user_side_work",
+      "status": "none"
+    },
+    {
+      "gate": "future_look_for_points_max",
+      "status": 3
+    },
+    {
+      "gate": "negative_confirmation_checklist",
+      "status": false
+    },
+    {
+      "gate": "fixed_form_relapse",
+      "status": false
+    }
+  ],
+  "review_non_redundancy": [
+    {
+      "gate": "prior_timing_proof_reused",
+      "status": true
+    },
+    {
+      "gate": "prior_audio_evidence_reused",
+      "status": true
+    },
+    {
+      "gate": "prior_visual_placement_proof_reused",
+      "status": true
+    },
+    {
+      "gate": "current_render_observation_consumed_once",
+      "status": true
+    },
+    {
+      "gate": "next_axis_stated_as_internal_review_prep",
+      "status": true
+    },
+    {
+      "gate": "not_accepted_scope_preserved",
+      "status": true
+    }
+  ],
+  "inertia_check": [
+    {
+      "gate": "packet_for_packet_drift",
+      "status": false
+    },
+    {
+      "gate": "readback_only_stall",
+      "status": false
+    },
+    {
+      "gate": "repeated_render_request",
+      "status": false
+    },
+    {
+      "gate": "product_video_visual_readiness_separated_from_slice_completion",
+      "status": true
+    },
+    {
+      "gate": "next_concrete_milestone",
+      "status": "newsroom-internal-review-v0.1-prep"
+    }
+  ],
+  "local_artifact_status": {
+    "render_output_local_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.mp4",
+    "card_placement_ymmp_local_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.ymmp",
+    "render_output_exists_at_readback_generation": true,
+    "card_placement_ymmp_exists_at_readback_generation": true,
+    "render_output_staged": false,
+    "render_output_committed": false,
+    "render_output_ignored": true,
+    "card_placement_ymmp_staged": false,
+    "card_placement_ymmp_committed": false,
+    "card_placement_ymmp_ignored": true
+  },
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_created_by_agent": false,
+    "video_render_created_by_agent": false,
+    "audio_generated_by_agent": false,
+    "TTS_generated_by_agent": false,
+    "external_TTS_introduced": false,
+    "real_media_imported": false,
+    "real_source_fetch_performed": false,
+    "ymmp_edited_by_agent": false,
+    "ymmp_or_media_staged_or_committed": false,
+    "render_output_staged_or_committed": false,
+    "production_visual_quality_accepted": false,
+    "production_approval": false,
+    "public_video_ready": false,
+    "dashboard_governance_freshness_changed": false
+  },
+  "downstream_next_use": {
+    "use_this_readback_to": [
+      "prepare newsroom-internal-review-v0.1-prep",
+      "carry diagnostic card placement render evidence without another render loop",
+      "preserve the native YMM4 audio and external card asset pipeline"
+    ],
+    "do_not_use_this_readback_to": [
+      "claim production visual quality",
+      "claim public video readiness",
+      "commit ignored .ymmp or render outputs",
+      "introduce external TTS or real media"
+    ]
+  }
+}

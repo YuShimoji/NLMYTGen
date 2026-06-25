@@ -79,6 +79,30 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom card placement render smoke result decision (2026-06-25):
+`newsroom_card_placement_render_smoke_result_readback_v1_2026_06_25` records
+the user freeform card-placement render observation, with screenshot support,
+as canonical diagnostic evidence. The ignored local card-placement project
+`_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.ymmp`
+opened in YMM4 `4.53.0.6` and rendered to
+`diagnostic_bound_speaker_probe_card_placement_v1.mp4` at approximately
+`00:01:08` / `68` sec, with a reported render time of about `30` sec. Four
+dialogue/subtitle items remained visible, four cards (`Card 1/4` through
+`Card 4/4`) were visible as external PNG card assets, and the preview surface
+showed title/chips/source-caption/subtitle-safe-reserve elements with no
+reported visible element breakage. No native audio, timing, subtitle/dialogue,
+or card placement regression was reported. This closes the visual placement
+render-smoke uncertainty at diagnostic level while preserving the boundary
+that production visual quality, final design system, final narration/script
+density, public video readiness, real newsroom visuals, real content readiness,
+production approval, final export packaging, and publication readiness remain
+not accepted. Video readiness remains `6/7` until internal review; visual
+readiness advances to `7/7`; production readiness remains low/diagnostic-only.
+The current render observation is consumed once. The next default slice is
+`newsroom-internal-review-v0.1-prep`; additional renders should be
+milestone-gated to internal review v0.1 or a material visual/timing/audio
+surface change, not docs/readback changes.
+
 Latest newsroom YMM4 card asset placement decision (2026-06-25):
 `newsroom_yym4_card_asset_placement_probe_v1_2026_06_25` advances the
 diagnostic visual lane from external asset bridge to structural YMM4 placement
