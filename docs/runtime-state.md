@@ -1,5 +1,45 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom YMM4 timing patch render smoke result readback v1 completed (2026-06-25)**:
+  Recorded the user's freeform post-patch render observation, with screenshot
+  support, as canonical diagnostic repo evidence. No YMM4 launch, render,
+  audio/TTS generation, real media import, `.ymmp` edit, `.ymmp`/mp4/media
+  staging or commit, external TTS adoption, dashboard/governance/freshness
+  change, production approval, public-readiness claim, or visual implementation
+  was performed by the Agent. New repo artifacts are
+  `samples/_probe/newsroom_handoff/ymmp_timing_patch_render_smoke_result_readback_v1.json`,
+  `docs/verification/NEWSROOM_YMMP_TIMING_PATCH_RENDER_SMOKE_RESULT_READBACK_V1_2026-06-25.md`,
+  `src/pipeline/newsroom_ymmp_timing_patch_render_smoke_result_readback.py`, and
+  `tests/test_newsroom_ymmp_timing_patch_render_smoke_result_readback.py`. The
+  ignored local evidence targets remain
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_timing_patch_v1.ymmp`
+  and
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_timing_patch_v1.mp4`;
+  both are under `_tmp/` ignore policy and must remain unstaged/uncommitted.
+  Normalized result is `pass`: YMM4 opened the patched diagnostic project,
+  render completed, output video was observed as `00:01:08` / `68` sec,
+  expected duration was `68` sec, output properties were `1920x1080`, `60` fps,
+  audio stream present at `48kHz`, four dialogue items remained visible,
+  preview text included `Fake topic, review only.`, native YMM4/Yukkuri audio
+  was present, most of the sparse diagnostic timeline was silent, only
+  post-speech/timeline elements were extended, and the timing patch was
+  effective in rendered output. The 8 sec versus 68 sec uncertainty is now
+  closed at diagnostic render-smoke level. Accepted scope is limited to current
+  YMM4 diagnostic open/render viability, 68 sec timing patch effectiveness,
+  four dialogue items visible, native Yukkuri audio present, and expected
+  sparse silence for the diagnostic skeleton. Not accepted: production pacing,
+  final narration pacing, final script density, visual layout quality, public
+  video readiness, production render readiness, real content readiness,
+  production approval, or external TTS adoption. Video readiness advances to
+  `6/7`; production readiness remains low/diagnostic-only. The current render
+  observation has been consumed once; no new render is needed for docs/readback
+  changes. The next default slice is `newsroom-visual-card-asset-bridge-v1`,
+  using external card assets generated from HTML/SVG/Canvas rather than fragile
+  direct YMM4 object graph construction. After the visual/card bridge, the
+  follow-up milestone is `newsroom-internal-review-v0.1-prep`. Render output
+  retention remains optional via `newsroom-render-output-retention-policy-v1`
+  only if a later retention gate is explicitly opened. Verification observed
+  focused result-readback tests `13 passed`.
 - **Newsroom YMM4 timing patch render smoke package v1 prepared (2026-06-25)**:
   Prepared `newsroom-ymmp-timing-patch-render-smoke-v1` as an observation
   package only, without launching YMM4, rendering, modifying the patched

@@ -79,6 +79,30 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom timing patch render smoke result decision (2026-06-25):
+`newsroom_ymmp_timing_patch_render_smoke_result_readback_v1_2026_06_25`
+records the user freeform post-patch render observation, with screenshot
+support, as canonical diagnostic repo evidence. The patched ignored diagnostic
+copy
+`_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_timing_patch_v1.ymmp`
+opened in YMM4 and rendered to
+`diagnostic_bound_speaker_probe_timing_patch_v1.mp4` at `00:01:08` / `68` sec,
+`1920x1080`, `60` fps, with an audio stream at `48kHz`. Four dialogue/subtitle
+items remained visible, preview text included `Fake topic, review only.`, and
+native YMM4/Yukkuri speech was present. The observed majority silence and
+post-speech/timeline extension are accepted only as expected diagnostic sparse
+timeline behavior, not as production pacing. This closes the 8 sec versus 68
+sec uncertainty at diagnostic render-smoke level and advances video readiness
+to `6/7`. Production readiness remains low/diagnostic-only: production pacing,
+final narration pacing, final script density, visual layout quality, public
+video readiness, production render readiness, real content readiness,
+production approval, and external TTS adoption remain not accepted. The current
+render observation is consumed once; no new render is needed for docs/readback
+changes. The next default slice is `newsroom-visual-card-asset-bridge-v1`, using
+external visual card assets generated from HTML/SVG/Canvas rather than complex
+direct YMM4 object graph construction. The ignored `.ymmp` and mp4 stay under
+`_tmp/` and must not be staged or committed.
+
 Latest newsroom timing patch remote handoff decision (2026-06-24):
 `newsroom_ymmp_timing_patch_remote_handoff_2026_06_24` preserves the
 supervisor-accepted state after `a0a3485 feat: probe newsroom YMM4 timing patch`
