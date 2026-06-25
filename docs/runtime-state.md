@@ -1,5 +1,39 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom YMM4 timing patch render smoke package v1 prepared (2026-06-25)**:
+  Prepared `newsroom-ymmp-timing-patch-render-smoke-v1` as an observation
+  package only, without launching YMM4, rendering, modifying the patched
+  `.ymmp`, generating or replacing audio, importing media, changing timing
+  strategy, staging/committing `.ymmp` or media output, approving production, or
+  touching dashboard/governance/freshness work. New repo artifacts are
+  `samples/_probe/newsroom_handoff/ymmp_timing_patch_render_smoke_v1.json`,
+  `docs/verification/NEWSROOM_YMMP_TIMING_PATCH_RENDER_SMOKE_V1_2026-06-25.md`,
+  `src/pipeline/newsroom_ymmp_timing_patch_render_smoke.py`, and
+  `tests/test_newsroom_ymmp_timing_patch_render_smoke.py`. The only manual
+  target remains the ignored local patched diagnostic copy
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_timing_patch_v1.ymmp`;
+  it was confirmed present and ignored under `_tmp/`, and must remain unstaged
+  and uncommitted. The package reuses the structural timing patch readback:
+  `4080` frames / `68.0` sec at `60` fps, dialogue anchors
+  `0/720/1440/2760`, item lengths `720/720/1320/1320`, four dialogue items,
+  preserved native voice fields, and external TTS still closed. The operator
+  card intentionally keeps the next observation to five targets only: whether
+  the patched project opens, whether render completes, whether output duration
+  is approximately `68` seconds, whether the four dialogue items remain, and
+  whether native YMM4/Yukkuri audio remains present. The result normalization
+  schema and readback builder are agent-owned; user input remains freeform, not
+  a fixed form. The classification matrix now separates pass, project-open
+  failure, render failure, duration mismatch, dialogue preservation regression,
+  native-audio preservation regression, and operator uncertainty. Verification
+  observed focused render smoke package tests `14 passed`. Current accepted
+  scope is only readiness to perform exactly one milestone-gated manual render
+  smoke; post-patch render success, production render readiness, public video
+  readiness, visual layout readiness, production narration quality, real
+  content readiness, production approval, and committing `.ymmp`/media output
+  remain not accepted. The next manual milestone is to open/render the patched
+  diagnostic copy once in YMM4. After that observation exists, the exact next
+  agent slice is
+  `newsroom-ymmp-timing-patch-render-smoke-result-readback-v1`.
 - **Newsroom timing patch remote handoff sealed (2026-06-24)**:
   Preserved the supervisor-accepted state for the timing patch probe and
   verified local/remote parity for another-terminal restart. `master` was
