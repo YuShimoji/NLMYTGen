@@ -1,5 +1,43 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom visual card design refinement v1 completed (2026-06-25)**:
+  Converted the freeform internal review result into canonical diagnostic repo
+  evidence and refined the external card assets without launching YMM4,
+  rendering video, editing `.ymmp`, generating audio/TTS, fetching external
+  sources, importing real media, staging/committing `.ymmp` or media outputs,
+  changing dashboard/governance/freshness work, or claiming production/public
+  readiness. New repo artifacts are
+  `samples/_probe/newsroom_handoff/internal_review_v0_1_result_readback_v1.json`,
+  `samples/_probe/newsroom_handoff/visual_card_design_refinement_v1.json`,
+  `docs/verification/NEWSROOM_INTERNAL_REVIEW_V0_1_RESULT_READBACK_V1_2026-06-25.md`,
+  `docs/verification/NEWSROOM_VISUAL_CARD_DESIGN_REFINEMENT_V1_2026-06-25.md`,
+  `src/pipeline/newsroom_visual_card_design_refinement.py`, and
+  `tests/test_newsroom_visual_card_design_refinement.py`. The existing
+  external card bridge generator now emits refined `1920x1080` SVG cards with
+  wrapped/clamped text, a bounded diagnostic type scale (`28` to `54` px),
+  subtitle-safe reserve preserved at the lower band, no debug footer on the
+  review surface, and four distinct role motifs: intro/summary,
+  handoff/process, claim/check, and source/status. The four committed PNGs
+  under `samples/_probe/newsroom_handoff/visual_cards_v1/` were regenerated at
+  stable paths from the refined SVGs; the contact sheet was updated. The
+  internal review normalization is `needs_visual_refinement`: timing,
+  native-audio, render, and card-placement mechanics remain diagnostic pass,
+  while text clipping/wrapping, type scale, readability, and card variation
+  were the accepted refinement axis. Accepted scope is limited to review
+  readback, refined external SVG/PNG diagnostic assets, updated preview, and
+  readiness for a later milestone-gated observation. Not accepted: production
+  visual quality, final design system, YMM4 placement proof after refinement,
+  post-refinement render proof, public video readiness, real newsroom visuals,
+  real content readiness, production approval, external TTS adoption, or media
+  retention. Video readiness remains `6/7`; visual readiness is
+  `7/7` diagnostic-refined; production readiness remains low/diagnostic-only.
+  The next default slice is
+  `newsroom-card-placement-post-refinement-render-smoke-v1` because the stable
+  PNG paths should allow the existing ignored placement project to reference
+  the improved images. Use `newsroom-yym4-card-asset-placement-refresh-v1` only
+  if those stable paths do not hold, and keep RSS dry-run integration later.
+  Verification observed focused visual-refinement tests `8 passed` and
+  adjacent bridge/placement/internal-review regression tests `28 passed`.
 - **Newsroom internal review v0.1 prep v1 completed (2026-06-25)**:
   Prepared `newsroom-internal-review-v0.1-prep` as a diagnostic internal
   review package from existing evidence only. No YMM4 launch, render,

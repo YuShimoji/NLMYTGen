@@ -18,8 +18,6 @@ from pathlib import Path
 from typing import Any
 from xml.etree import ElementTree
 
-from PIL import Image, ImageDraw, ImageFont
-
 from src.pipeline.newsroom_episode_production_capsule import load_json_object
 from src.pipeline.newsroom_visual_card_asset_bridge import (
     DEFAULT_VISUAL_CARD_ASSET_BRIDGE_PATH,
@@ -208,6 +206,8 @@ def write_default_newsroom_yym4_card_asset_placement_probe_artifacts(
 def ensure_card_png_assets(
     root: str | Path,
     source_assets: list[dict[str, Any]],
+    *,
+    force: bool = False,
 ) -> dict[str, Any]:
     """Generate PNG cards from the committed SVG cards using local sharp."""
     base = Path(root)
@@ -230,7 +230,7 @@ def ensure_card_png_assets(
         for asset in source_assets
         if (base / asset["png_path"]).exists()
     ]
-    if len(existing_pngs) == len(source_assets) and all(
+    if not force and len(existing_pngs) == len(source_assets) and all(
         metadata.get("valid") for metadata in existing_pngs
     ):
         return {
@@ -327,7 +327,7 @@ def _export_pngs_with_pillow_svg_subset(
         png_path.parent.mkdir(parents=True, exist_ok=True)
         try:
             _render_svg_subset_to_png(svg_path, png_path)
-        except (OSError, ElementTree.ParseError, ValueError) as exc:
+        except (OSError, ElementTree.ParseError, RuntimeError, ValueError) as exc:
             errors.append(f"PILLOW_SVG_SUBSET_EXPORT_FAILED:{svg_path}:{exc}")
     return errors
 
@@ -1213,6 +1213,7 @@ def _voice_preservation_keys(items: Any) -> list[dict[str, Any]]:
 
 
 def _render_svg_subset_to_png(svg_path: Path, png_path: Path) -> None:
+    Image, ImageDraw, _ = _load_pillow()
     root = ElementTree.parse(svg_path).getroot()
     width = _int_attr(root, "width", 1920)
     height = _int_attr(root, "height", 1080)
@@ -1232,7 +1233,7 @@ def _render_svg_subset_to_png(svg_path: Path, png_path: Path) -> None:
     image.save(png_path, format="PNG")
 
 
-def _draw_svg_rect(draw: ImageDraw.ImageDraw, element: ElementTree.Element) -> None:
+def _draw_svg_rect(draw: Any, element: ElementTree.Element) -> None:
     x = _float_attr(element, "x", 0.0)
     y = _float_attr(element, "y", 0.0)
     width = _float_attr(element, "width", 0.0)
@@ -1259,7 +1260,7 @@ def _draw_svg_rect(draw: ImageDraw.ImageDraw, element: ElementTree.Element) -> N
         )
 
 
-def _draw_svg_circle(draw: ImageDraw.ImageDraw, element: ElementTree.Element) -> None:
+def _draw_svg_circle(draw: Any, element: ElementTree.Element) -> None:
     cx = _float_attr(element, "cx", 0.0)
     cy = _float_attr(element, "cy", 0.0)
     radius = _float_attr(element, "r", 0.0)
@@ -1267,7 +1268,7 @@ def _draw_svg_circle(draw: ImageDraw.ImageDraw, element: ElementTree.Element) ->
     draw.ellipse([cx - radius, cy - radius, cx + radius, cy + radius], fill=fill)
 
 
-def _draw_svg_text(draw: ImageDraw.ImageDraw, element: ElementTree.Element) -> None:
+def _draw_svg_text(draw: Any, element: ElementTree.Element) -> None:
     text = "".join(element.itertext())
     if not text:
         return
@@ -1287,7 +1288,8 @@ def _draw_svg_text(draw: ImageDraw.ImageDraw, element: ElementTree.Element) -> N
     draw.text((x, y - size * 0.82), text, fill=fill, font=font)
 
 
-def _font(size: int, *, bold: bool) -> ImageFont.ImageFont:
+def _font(size: int, *, bold: bool) -> Any:
+    _, _, ImageFont = _load_pillow()
     font_dir = Path(os.environ.get("WINDIR", "C:/Windows")) / "Fonts"
     candidates = [
         font_dir / ("arialbd.ttf" if bold else "arial.ttf"),
@@ -1297,6 +1299,14 @@ def _font(size: int, *, bold: bool) -> ImageFont.ImageFont:
         if path.exists():
             return ImageFont.truetype(str(path), size=size)
     return ImageFont.load_default()
+
+
+def _load_pillow() -> tuple[Any, Any, Any]:
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+    except ModuleNotFoundError as exc:
+        raise RuntimeError("Pillow is required for local SVG-subset PNG export") from exc
+    return Image, ImageDraw, ImageFont
 
 
 def _local_xml_tag(tag: str) -> str:

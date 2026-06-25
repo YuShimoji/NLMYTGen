@@ -1,0 +1,453 @@
+{
+  "artifact_id": "newsroom_visual_card_design_refinement_v1_2026_06_25",
+  "refinement_id": "newsroom_visual_card_design_refinement_v1_2026_06_25",
+  "schema_version": "newsroom_visual_card_design_refinement.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "refinement_status": "assets_regenerated",
+  "identity": {
+    "refinement_id": "newsroom_visual_card_design_refinement_v1_2026_06_25",
+    "source_internal_review_result_readback_path": "samples/_probe/newsroom_handoff/internal_review_v0_1_result_readback_v1.json",
+    "source_internal_review_result_readback_id": "newsroom_internal_review_v0_1_result_readback_v1_2026_06_25",
+    "source_visual_card_bridge_path": "samples/_probe/newsroom_handoff/visual_card_asset_bridge_v1.json",
+    "source_cards_dir": "samples/_probe/newsroom_handoff/visual_cards_v1",
+    "output_cards_dir": "samples/_probe/newsroom_handoff/visual_cards_v1",
+    "source_card_render_result_path": "samples/_probe/newsroom_handoff/card_placement_render_smoke_result_readback_v1.json",
+    "source_card_render_result_id": "newsroom_card_placement_render_smoke_result_readback_v1_2026_06_25",
+    "production_status": "diagnostic_only"
+  },
+  "design_token_constraints": {
+    "canvas_size": {
+      "width": 1920,
+      "height": 1080
+    },
+    "safe_margin": 96,
+    "title_font_size": 46,
+    "headline_font_size": 54,
+    "body_font_size": 34,
+    "chip_font_size": 28,
+    "meta_font_size": 30,
+    "minimum_font_size": 28,
+    "maximum_font_size": 54,
+    "max_title_lines": 2,
+    "max_headline_lines": 2,
+    "body_max_lines": 3,
+    "body_wrap_width": 940,
+    "subtitle_safe_reserve": {
+      "x": 112,
+      "y": 812,
+      "width": 1696,
+      "height": 116
+    },
+    "footer_debug_treatment": "removed_from_review_surface",
+    "real_brand_or_url_present": false,
+    "production_claim_present": false,
+    "text_wrapping_required": true,
+    "source_metadata_wrap_required": true,
+    "card_variation_required": "role_specific_layout_motif"
+  },
+  "design_changes": [
+    {
+      "card_id": "visual_card_cap_beat_fake_intro_001_01_v1",
+      "role": "intro_summary",
+      "role_label": "INTRO / SUMMARY",
+      "layout_motif": "summary_stack",
+      "before_issue_summary": "Prior diagnostic card used one-line text, weak wrapping, unbalanced type, and low layout variation.",
+      "after_change_summary": "Bounded title and wrapped summary copy with a larger content panel.",
+      "text_wrap_applied": true,
+      "clipping_guard": true,
+      "type_scale_status": "balanced_diagnostic",
+      "variation_status": "role_specific_layout",
+      "output_svg_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.svg",
+      "output_png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.png",
+      "preview_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "contact_sheet_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "png_valid": true,
+      "png_width": 1920,
+      "png_height": 1080
+    },
+    {
+      "card_id": "visual_card_cap_beat_fake_intro_001_02_v1",
+      "role": "handoff_process",
+      "role_label": "HANDOFF / PROCESS",
+      "layout_motif": "process_ladder",
+      "before_issue_summary": "Prior diagnostic card used one-line text, weak wrapping, unbalanced type, and low layout variation.",
+      "after_change_summary": "Process blocks separate handoff state from the source caption.",
+      "text_wrap_applied": true,
+      "clipping_guard": true,
+      "type_scale_status": "balanced_diagnostic",
+      "variation_status": "role_specific_layout",
+      "output_svg_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.svg",
+      "output_png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.png",
+      "preview_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "contact_sheet_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "png_valid": true,
+      "png_width": 1920,
+      "png_height": 1080
+    },
+    {
+      "card_id": "visual_card_cap_beat_fake_claim_001_01_v1",
+      "role": "claim_check",
+      "role_label": "CLAIM / CHECK",
+      "layout_motif": "check_matrix",
+      "before_issue_summary": "Prior diagnostic card used one-line text, weak wrapping, unbalanced type, and low layout variation.",
+      "after_change_summary": "Claim/check cells give the fake claim card a distinct review pattern.",
+      "text_wrap_applied": true,
+      "clipping_guard": true,
+      "type_scale_status": "balanced_diagnostic",
+      "variation_status": "role_specific_layout",
+      "output_svg_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.svg",
+      "output_png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.png",
+      "preview_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "contact_sheet_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "png_valid": true,
+      "png_width": 1920,
+      "png_height": 1080
+    },
+    {
+      "card_id": "visual_card_cap_beat_fake_claim_001_02_v1",
+      "role": "source_status_next_action",
+      "role_label": "SOURCE / STATUS",
+      "layout_motif": "status_panel",
+      "before_issue_summary": "Prior diagnostic card used one-line text, weak wrapping, unbalanced type, and low layout variation.",
+      "after_change_summary": "Status and next-action panels distinguish the final source card.",
+      "text_wrap_applied": true,
+      "clipping_guard": true,
+      "type_scale_status": "balanced_diagnostic",
+      "variation_status": "role_specific_layout",
+      "output_svg_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.svg",
+      "output_png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.png",
+      "preview_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "contact_sheet_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "png_valid": true,
+      "png_width": 1920,
+      "png_height": 1080
+    }
+  ],
+  "source_review_findings": {
+    "text_clipping": true,
+    "text_wrap_missing": true,
+    "type_scale_unbalanced": true,
+    "overall_readability_low": true,
+    "card_variation_insufficient": true,
+    "pacing_density_issue_known": true
+  },
+  "source_internal_review_normalization": {
+    "internal_review_status": "needs_visual_refinement",
+    "mechanics_status": "pass",
+    "timing_audio_render_status": "diagnostic_pass",
+    "pacing_density_issue": "known",
+    "text_clipping": true,
+    "text_wrap_missing": true,
+    "min_font_too_small": true,
+    "large_font_too_large": true,
+    "type_scale_unbalanced": true,
+    "overall_readability_low": true,
+    "card_variation_insufficient": true,
+    "production_visual_quality_accepted": false,
+    "public_video_ready": false,
+    "recommended_next_axis": "visual_card_design_refinement"
+  },
+  "accepted_scope": {
+    "review_findings_captured": true,
+    "external_card_assets_refined": true,
+    "text_clipping_reduced_by_generator_rules": true,
+    "wrapping_clamping_rules_introduced": true,
+    "card_variation_increased": true,
+    "assets_ready_for_later_yym4_placement_render_smoke": true
+  },
+  "not_accepted_scope": {
+    "production_visual_quality": false,
+    "final_design_system": false,
+    "YMM4_placement_proof_after_refinement": false,
+    "post_refinement_render_proof": false,
+    "public_video_readiness": false,
+    "real_newsroom_visuals": false,
+    "real_content_readiness": false,
+    "production_approval": false
+  },
+  "readiness_separation": {
+    "slice_completion": "pass_for_visual_refinement",
+    "video_readiness_progress": "6/7",
+    "visual_readiness_progress": "7/7_diagnostic_refined",
+    "visual_readiness_current": "external_card_assets_refined",
+    "video_readiness_next_missing_gate": "post-refinement render smoke observation, then internal review milestone",
+    "production_readiness": "low_diagnostic_only",
+    "next_default_slice": "newsroom-card-placement-post-refinement-render-smoke-v1"
+  },
+  "next_recommended_slice": {
+    "slice": "newsroom-card-placement-post-refinement-render-smoke-v1",
+    "reason": "asset paths are stable and PNGs were regenerated, so the next milestone is a post-refinement render-smoke observation"
+  },
+  "recommended_next_slices": [
+    {
+      "slice": "newsroom-card-placement-post-refinement-render-smoke-v1",
+      "timing": "recommended_next_default",
+      "reason": "stable SVG/PNG asset paths are regenerated; the existing ignored placement project should now reference the improved PNGs"
+    },
+    {
+      "slice": "newsroom-yym4-card-asset-placement-refresh-v1",
+      "timing": "only_if_existing_placement_paths_are_not_stable",
+      "reason": "refresh ImageItem placement only if stable PNG paths cannot be reused"
+    },
+    {
+      "slice": "newsroom-internal-review-v0.1-prep",
+      "timing": "after_post_refinement_smoke",
+      "reason": "internal review is meaningful after the changed visual surface is observed"
+    },
+    {
+      "slice": "newsroom-rss-dry-run-integration-plan-v1",
+      "timing": "later_not_immediate",
+      "reason": "real packet integration should wait until the visual baseline is accepted"
+    }
+  ],
+  "implementation_principle_for_next_lane": [
+    "Do not rebuild cards as complex YMM4 object graphs.",
+    "Keep cards as external SVG/PNG assets.",
+    "Preserve the YMM4 native audio path.",
+    "Keep .ymmp mutation limited to ignored local copies."
+  ],
+  "goal_stack": [
+    {
+      "level": "Immediate",
+      "goal": "Convert internal review into actionable visual refinement",
+      "success_signal": "review readback and refined assets exist",
+      "contribution": "avoids a vague review loop"
+    },
+    {
+      "level": "Short-term",
+      "goal": "Improve card readability and variation",
+      "success_signal": "no obvious clipping, better type scale, differentiated cards",
+      "contribution": "makes next render review meaningful"
+    },
+    {
+      "level": "Mid-term",
+      "goal": "Prepare post-refinement render smoke",
+      "success_signal": "stable PNG assets can be reused by placement .ymmp",
+      "contribution": "moves toward internal review acceptance"
+    },
+    {
+      "level": "Long-term",
+      "goal": "Establish reusable card design baseline",
+      "success_signal": "future packets can use readable card templates",
+      "contribution": "supports automation"
+    }
+  ],
+  "completion_matrix": [
+    {
+      "gate": "current_repo_state_verified",
+      "status": true
+    },
+    {
+      "gate": "internal_review_observation_normalized",
+      "status": true
+    },
+    {
+      "gate": "current_card_issues_inspected",
+      "status": true
+    },
+    {
+      "gate": "refined_card_assets_generated",
+      "status": true
+    },
+    {
+      "gate": "preview_contact_sheet_updated",
+      "status": true
+    },
+    {
+      "gate": "narrow_commit_created_and_pushed_if_push_gate_passes",
+      "status": "pending_until_git_gate"
+    }
+  ],
+  "artifact_readiness": [
+    {
+      "artifact": "review_result_readback",
+      "status": "present"
+    },
+    {
+      "artifact": "visual_refinement_json",
+      "status": "present"
+    },
+    {
+      "artifact": "human_docs",
+      "status": "present"
+    },
+    {
+      "artifact": "refined_svg_png_assets",
+      "status": "present"
+    },
+    {
+      "artifact": "contact_sheet_preview",
+      "status": "present"
+    },
+    {
+      "artifact": "downstream_next_use",
+      "status": "present"
+    }
+  ],
+  "visual_readiness": [
+    {
+      "gate": "visual_card_concept_selected",
+      "status": true
+    },
+    {
+      "gate": "external_card_assets_generated",
+      "status": true
+    },
+    {
+      "gate": "preview_contact_sheet_available",
+      "status": true
+    },
+    {
+      "gate": "assets_mapped_to_timeline_caption_units",
+      "status": true
+    },
+    {
+      "gate": "yym4_placement_contract_defined",
+      "status": true
+    },
+    {
+      "gate": "yym4_placement_proof_observed",
+      "status": true
+    },
+    {
+      "gate": "post_refinement_render_reviewed",
+      "status": false
+    }
+  ],
+  "render_gate_hygiene": [
+    {
+      "gate": "render_performed_in_this_slice",
+      "status": false
+    },
+    {
+      "gate": "existing_render_review_evidence_reused",
+      "status": true
+    },
+    {
+      "gate": "render_treated_as_milestone_gated",
+      "status": true
+    },
+    {
+      "gate": "next_render_tied_to_visual_card_design_surface_change",
+      "status": true
+    },
+    {
+      "gate": "no_render_for_docs_readback_changes",
+      "status": true
+    },
+    {
+      "gate": "repeated_timing_audio_review_avoided",
+      "status": true
+    }
+  ],
+  "human_burden_hygiene": [
+    {
+      "gate": "user_input",
+      "status": "freeform"
+    },
+    {
+      "gate": "template_required",
+      "status": false
+    },
+    {
+      "gate": "schema_owner",
+      "status": "Agent"
+    },
+    {
+      "gate": "user_side_work_for_this_slice",
+      "status": "none"
+    },
+    {
+      "gate": "negative_confirmation_checklist",
+      "status": false
+    },
+    {
+      "gate": "fixed_form_relapse",
+      "status": false
+    },
+    {
+      "gate": "repeated_review_request",
+      "status": false
+    }
+  ],
+  "review_non_redundancy": [
+    {
+      "gate": "prior_internal_review_observation_consumed_once",
+      "status": true
+    },
+    {
+      "gate": "prior_render_evidence_reused",
+      "status": true
+    },
+    {
+      "gate": "next_axis_stated_as_visual_refinement",
+      "status": true
+    },
+    {
+      "gate": "not_accepted_scope_preserved",
+      "status": true
+    },
+    {
+      "gate": "repeated_user_review_requested",
+      "status": false
+    },
+    {
+      "gate": "mechanics_re_review_requested",
+      "status": false
+    }
+  ],
+  "inertia_check": [
+    {
+      "gate": "packet_for_packet_drift",
+      "status": false
+    },
+    {
+      "gate": "readback_only_stall",
+      "status": false
+    },
+    {
+      "gate": "repeated_render_request",
+      "status": false
+    },
+    {
+      "gate": "readiness_separated_from_slice_completion",
+      "status": true
+    },
+    {
+      "gate": "next_concrete_milestone",
+      "status": "newsroom-card-placement-post-refinement-render-smoke-v1"
+    }
+  ],
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "video_render_created_by_agent": false,
+    "audio_generated_by_agent": false,
+    "TTS_generated_by_agent": false,
+    "external_TTS_introduced": false,
+    "real_media_imported": false,
+    "external_source_fetch_performed": false,
+    "real_brand_url_or_news_screenshot_used": false,
+    "ymmp_edited_by_agent": false,
+    "ymmp_or_media_staged_or_committed": false,
+    "render_output_staged_or_committed": false,
+    "production_visual_quality_accepted": false,
+    "production_approval": false,
+    "public_video_ready": false,
+    "dashboard_governance_freshness_changed": false
+  },
+  "downstream_next_use": {
+    "use_this_refinement_to": [
+      "reuse stable PNG paths in the existing ignored placement project",
+      "run a milestone-gated post-refinement render smoke later",
+      "compare readability and variation against the prior review finding"
+    ],
+    "do_not_use_this_refinement_to": [
+      "claim production visual quality",
+      "claim public video readiness",
+      "introduce real brands, real URLs, screenshots, or external TTS",
+      "commit ignored .ymmp, mp4, audio, voice cache, or render outputs"
+    ]
+  }
+}

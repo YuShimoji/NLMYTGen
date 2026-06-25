@@ -109,6 +109,69 @@ CARD_PALETTES: tuple[dict[str, str], ...] = (
     },
 )
 
+VISUAL_CARD_REFINEMENT_TOKENS: dict[str, Any] = {
+    "canvas_size": {"width": 1920, "height": 1080},
+    "safe_margin": 96,
+    "title_font_size": 46,
+    "headline_font_size": 54,
+    "body_font_size": 34,
+    "chip_font_size": 28,
+    "meta_font_size": 30,
+    "minimum_font_size": 28,
+    "maximum_font_size": 54,
+    "max_title_lines": 2,
+    "max_headline_lines": 2,
+    "body_max_lines": 3,
+    "body_wrap_width": 940,
+    "subtitle_safe_reserve": {
+        "x": 112,
+        "y": 812,
+        "width": 1696,
+        "height": 116,
+    },
+    "footer_debug_treatment": "removed_from_review_surface",
+}
+
+CARD_LAYOUTS: tuple[dict[str, str], ...] = (
+    {
+        "role": "intro_summary",
+        "role_label": "INTRO / SUMMARY",
+        "layout_motif": "summary_stack",
+        "after_change_summary": (
+            "Bounded title and wrapped summary copy with a larger content panel."
+        ),
+    },
+    {
+        "role": "handoff_process",
+        "role_label": "HANDOFF / PROCESS",
+        "layout_motif": "process_ladder",
+        "after_change_summary": (
+            "Process blocks separate handoff state from the source caption."
+        ),
+    },
+    {
+        "role": "claim_check",
+        "role_label": "CLAIM / CHECK",
+        "layout_motif": "check_matrix",
+        "after_change_summary": (
+            "Claim/check cells give the fake claim card a distinct review pattern."
+        ),
+    },
+    {
+        "role": "source_status_next_action",
+        "role_label": "SOURCE / STATUS",
+        "layout_motif": "status_panel",
+        "after_change_summary": (
+            "Status and next-action panels distinguish the final source card."
+        ),
+    },
+)
+
+BEFORE_VISUAL_REVIEW_ISSUE_SUMMARY = (
+    "Prior diagnostic card used one-line text, weak wrapping, unbalanced type, "
+    "and low layout variation."
+)
+
 
 def build_default_newsroom_visual_card_asset_bridge(
     *,
@@ -225,6 +288,7 @@ def build_newsroom_visual_card_asset_bridge(
         },
         "source_validation": source_validation,
         "source_state": _source_state(render_smoke_result),
+        "design_refinement_defaults": _design_refinement_defaults(),
         "asset_generation": _asset_generation(contact_sheet_path),
         "assets": assets,
         "preview_contact_sheet": {
@@ -264,6 +328,7 @@ def render_newsroom_visual_card_asset_bridge_markdown(
     identity = _dict(bridge.get("identity"))
     validation = _dict(bridge.get("source_validation"))
     source_state = _dict(bridge.get("source_state"))
+    design_defaults = _dict(bridge.get("design_refinement_defaults"))
     generation = _dict(bridge.get("asset_generation"))
     contact_sheet = _dict(bridge.get("preview_contact_sheet"))
     placement = _dict(bridge.get("placement_contract"))
@@ -294,6 +359,10 @@ def render_newsroom_visual_card_asset_bridge_markdown(
 
     lines.extend(["", "## Source State", ""])
     for key, value in source_state.items():
+        lines.append(f"- {key}: {_display(value)}")
+
+    lines.extend(["", "## Design Refinement Defaults", ""])
+    for key, value in design_defaults.items():
         lines.append(f"- {key}: {_display(value)}")
 
     lines.extend(["", "## Asset Generation", ""])
@@ -404,62 +473,249 @@ def render_visual_card_svg(asset: dict[str, Any]) -> str:
     panel_2 = palette.get("panel_2", "#172E35")
     chip = palette.get("chip", "#D1FAE5")
     chip_text = palette.get("chip_text", "#064E3B")
-    title = _xml(asset.get("card_title"))
-    text = _xml(asset.get("text"))
-    body = _xml(asset.get("body"))
-    beat = _xml(asset.get("source_beat_id"))
-    caption = _xml(asset.get("source_caption_or_beat_id"))
+    title_raw = str(asset.get("card_title") or "")
+    title = _xml(title_raw)
+    role = _xml(asset.get("design_refinement_role"))
+    motif = _xml(asset.get("layout_motif"))
+    role_label = _xml(asset.get("review_role_label"))
+    caption = str(asset.get("source_caption_or_beat_id") or "")
     timing = _xml(f"{asset.get('intended_start_sec')}-{asset.get('intended_end_sec')} SEC")
-    asset_label = _xml(asset.get("asset_id"))
     count_label = _xml(f"CARD {asset.get('display_order')}/4")
+    title_lines = _wrap_text(title_raw, 26, max_lines=2)
+    headline_lines = _wrap_text(str(asset.get("text") or ""), 29, max_lines=2)
+    body_lines = _wrap_text(str(asset.get("body") or ""), 48, max_lines=3)
+    caption_lines = _wrap_text(caption, 28, max_lines=2)
 
-    return "\n".join(
+    lines = [
+        '<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" '
+        f'viewBox="0 0 1920 1080" role="img" aria-label="{title}" '
+        f'data-refinement="v1" data-role="{role}" data-motif="{motif}">',
+        f"  <title>{title}</title>",
+        "  <desc>Diagnostic-only fake newsroom card asset for later YMM4 "
+        "image import placement.</desc>",
+        '  <rect x="0" y="0" width="1920" height="1080" fill="#0D1117"/>',
+        f'  <rect x="64" y="64" width="1792" height="952" rx="8" fill="{panel}"/>',
+        f'  <rect x="96" y="88" width="1728" height="112" rx="8" fill="{panel_2}"/>',
+        f'  <rect x="126" y="118" width="250" height="52" rx="8" fill="{chip}"/>',
+        f'  <text x="251" y="153" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="{chip_text}">DIAGNOSTIC</text>',
+        '  <rect x="396" y="118" width="278" height="52" rx="8" fill="#FDE68A"/>',
+        '  <text x="535" y="153" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#78350F">FAKE CONTENT</text>',
+        '  <rect x="694" y="118" width="226" height="52" rx="8" fill="#E5E7EB"/>',
+        '  <text x="807" y="153" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#111827">'
+        f"{timing}</text>",
+        f'  <text x="1770" y="154" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="{accent}">{count_label}</text>',
+        f'  <rect x="112" y="246" width="872" height="514" rx="8" fill="#0B1220" stroke="{accent_dark}" stroke-width="4"/>',
+        f'  <rect x="112" y="246" width="18" height="514" rx="8" fill="{accent}"/>',
+        f'  <text x="158" y="302" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="{accent}">{role_label}</text>',
+    ]
+    lines.extend(
+        _svg_text_lines(
+            title_lines,
+            x=158,
+            y=360,
+            font_size=46,
+            line_height=54,
+            fill="#E2E8F0",
+            weight="700",
+        )
+    )
+    lines.extend(
+        _svg_text_lines(
+            headline_lines,
+            x=158,
+            y=486,
+            font_size=54,
+            line_height=64,
+            fill="#F8FAFC",
+            weight="800",
+        )
+    )
+    lines.extend(
+        _svg_text_lines(
+            body_lines,
+            x=160,
+            y=622,
+            font_size=34,
+            line_height=46,
+            fill="#CBD5E1",
+            weight="400",
+        )
+    )
+    lines.extend(
         [
-            '<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" '
-            f'viewBox="0 0 1920 1080" role="img" aria-label="{title}">',
-            f"  <title>{title}</title>",
-            "  <desc>Diagnostic-only fake newsroom card asset for later YMM4 "
-            "image import placement.</desc>",
-            '  <rect x="0" y="0" width="1920" height="1080" fill="#0D1117"/>',
-            f'  <rect x="64" y="64" width="1792" height="952" rx="28" fill="{panel}"/>',
-            f'  <rect x="64" y="64" width="1792" height="130" rx="28" fill="{panel_2}"/>',
-            f'  <rect x="64" y="930" width="1792" height="86" rx="0" fill="{panel_2}"/>',
-            f'  <rect x="112" y="112" width="258" height="52" rx="26" fill="{chip}"/>',
-            f'  <text x="241" y="147" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="{chip_text}">DIAGNOSTIC</text>',
-            f'  <rect x="390" y="112" width="260" height="52" rx="26" fill="#FDE68A"/>',
-            '  <text x="520" y="147" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#78350F">FAKE CONTENT</text>',
-            f'  <rect x="670" y="112" width="216" height="52" rx="26" fill="#E5E7EB"/>',
-            '  <text x="778" y="147" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#111827">'
-            f"{timing}</text>",
-            f'  <text x="1740" y="148" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="{accent}">{count_label}</text>',
-            f'  <rect x="112" y="252" width="14" height="460" fill="{accent}"/>',
-            f'  <text x="152" y="296" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700" fill="{accent}">{title}</text>',
-            '  <text x="152" y="420" font-family="Arial, Helvetica, sans-serif" font-size="82" font-weight="800" fill="#F8FAFC">'
-            f"{text}</text>",
-            '  <text x="154" y="506" font-family="Arial, Helvetica, sans-serif" font-size="34" fill="#CBD5E1">'
-            f"{body}</text>",
-            f'  <rect x="152" y="586" width="824" height="126" rx="20" fill="{panel_2}" stroke="{accent}" stroke-width="3"/>',
-            f'  <text x="194" y="636" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="{accent}">SOURCE CAPTION</text>',
-            '  <text x="194" y="682" font-family="Arial, Helvetica, sans-serif" font-size="34" fill="#E5E7EB">'
-            f"{caption}</text>",
-            f'  <rect x="1032" y="268" width="704" height="444" rx="24" fill="#0B1220" stroke="{accent_dark}" stroke-width="4"/>',
-            f'  <rect x="1082" y="320" width="604" height="42" rx="10" fill="{accent}"/>',
-            '  <rect x="1082" y="398" width="440" height="24" rx="12" fill="#94A3B8"/>',
-            '  <rect x="1082" y="448" width="518" height="24" rx="12" fill="#64748B"/>',
-            '  <rect x="1082" y="498" width="382" height="24" rx="12" fill="#64748B"/>',
-            f'  <rect x="1082" y="574" width="252" height="74" rx="16" fill="{panel}" stroke="{accent}" stroke-width="3"/>',
-            '  <text x="1208" y="623" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#F8FAFC">REVIEW ONLY</text>',
-            f'  <circle cx="1618" cy="611" r="44" fill="{accent}"/>',
-            '  <text x="1618" y="622" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#0D1117">OK</text>',
-            '  <rect x="112" y="796" width="1696" height="118" rx="18" fill="#05080D" stroke="#334155" stroke-width="2" stroke-dasharray="18 14"/>',
-            '  <text x="152" y="852" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#E2E8F0">SUBTITLE-SAFE RESERVE</text>',
-            '  <text x="152" y="892" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#94A3B8">Future YMM4 placement should keep dialogue/subtitles readable in this lower band.</text>',
-            '  <text x="112" y="972" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#94A3B8">'
-            f"beat={beat} | asset={asset_label} | import role=image asset</text>",
+            f'  <rect x="160" y="682" width="760" height="64" rx="8" fill="{panel_2}" stroke="{accent}" stroke-width="3"/>',
+            f'  <text x="190" y="724" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="{accent}">SOURCE</text>',
+        ]
+    )
+    lines.extend(
+        _svg_text_lines(
+            caption_lines,
+            x=330,
+            y=724,
+            font_size=30,
+            line_height=36,
+            fill="#E5E7EB",
+            weight="700",
+        )
+    )
+    lines.extend(_render_card_motif(asset, palette))
+    lines.extend(
+        [
+            '  <rect x="112" y="812" width="1696" height="116" rx="8" fill="#05080D" stroke="#334155" stroke-width="2" stroke-dasharray="18 14"/>',
+            '  <text x="152" y="866" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#E2E8F0">SUBTITLE-SAFE RESERVE</text>',
+            '  <text x="152" y="906" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#94A3B8">Dialogue/subtitle band remains intentionally clear for later YMM4 placement review.</text>',
+            f'  <text x="1770" y="906" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="{accent}">IMAGE ASSET</text>',
             "</svg>",
             "",
         ]
     )
+    return "\n".join(lines)
+
+
+def _svg_text_lines(
+    values: list[str],
+    *,
+    x: int,
+    y: int,
+    font_size: int,
+    line_height: int,
+    fill: str,
+    weight: str,
+    anchor: str = "start",
+) -> list[str]:
+    lines: list[str] = []
+    for index, value in enumerate(values):
+        line_y = y + index * line_height
+        anchor_attr = f' text-anchor="{anchor}"' if anchor != "start" else ""
+        lines.append(
+            f'  <text x="{x}" y="{line_y}"{anchor_attr} '
+            'font-family="Arial, Helvetica, sans-serif" '
+            f'font-size="{font_size}" font-weight="{weight}" '
+            f'fill="{fill}">{_xml(value)}</text>'
+        )
+    return lines
+
+
+def _wrap_text(value: str, max_chars: int, *, max_lines: int) -> list[str]:
+    words = str(value).split()
+    if not words:
+        return [""]
+    lines: list[str] = []
+    current = ""
+    for word in words:
+        candidate = f"{current} {word}".strip()
+        if len(candidate) <= max_chars:
+            current = candidate
+            continue
+        if current:
+            lines.append(current)
+        current = word
+        if len(lines) == max_lines:
+            break
+    if current and len(lines) < max_lines:
+        lines.append(current)
+    if len(lines) > max_lines:
+        lines = lines[:max_lines]
+    if len(lines) == max_lines and words:
+        used = " ".join(lines)
+        if len(used) < len(value):
+            lines[-1] = lines[-1].rstrip(".") + "..."
+    return lines
+
+
+def _render_card_motif(asset: dict[str, Any], palette: dict[str, str]) -> list[str]:
+    role = str(asset.get("design_refinement_role") or "")
+    accent = palette.get("accent", "#2DD4BF")
+    accent_dark = palette.get("accent_dark", "#0F766E")
+    panel = palette.get("panel", "#12232A")
+    panel_2 = palette.get("panel_2", "#172E35")
+    lines = [
+        f'  <rect x="1054" y="246" width="754" height="514" rx="8" fill="#0B1220" stroke="{accent_dark}" stroke-width="4"/>',
+        f'  <text x="1094" y="304" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="{accent}">ROLE MOTIF</text>',
+    ]
+    if role == "intro_summary":
+        lines.extend(
+            [
+                f'  <rect x="1094" y="340" width="300" height="150" rx="8" fill="{panel_2}" stroke="{accent}" stroke-width="3"/>',
+                '  <text x="1124" y="396" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#F8FAFC">START</text>',
+                '  <text x="1124" y="440" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#CBD5E1">fake overview</text>',
+                f'  <rect x="1424" y="340" width="330" height="150" rx="8" fill="{panel}" stroke="#475569" stroke-width="3"/>',
+                '  <text x="1454" y="396" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#F8FAFC">68 SEC</text>',
+                '  <text x="1454" y="440" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#CBD5E1">timing baseline</text>',
+                f'  <circle cx="1244" cy="604" r="76" fill="{accent}"/>',
+                '  <text x="1244" y="620" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="800" fill="#0D1117">1</text>',
+                f'  <rect x="1374" y="548" width="330" height="112" rx="8" fill="{panel_2}" stroke="{accent_dark}" stroke-width="3"/>',
+                '  <text x="1404" y="598" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#F8FAFC">SUMMARY</text>',
+                '  <text x="1404" y="640" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#CBD5E1">review-only signal</text>',
+            ]
+        )
+    elif role == "handoff_process":
+        steps = [
+            ("1", "INPUT", "fake caption"),
+            ("2", "ASSET", "external card"),
+            ("3", "PLACE", "image path"),
+        ]
+        for index, (number, label, note) in enumerate(steps):
+            y = 340 + index * 122
+            lines.extend(
+                [
+                    f'  <rect x="1110" y="{y}" width="590" height="82" rx="8" fill="{panel_2}" stroke="{accent}" stroke-width="3"/>',
+                    f'  <circle cx="1158" cy="{y + 41}" r="28" fill="{accent}"/>',
+                    f'  <text x="1158" y="{y + 51}" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="800" fill="#0D1117">{number}</text>',
+                    f'  <text x="1210" y="{y + 36}" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="800" fill="#F8FAFC">{label}</text>',
+                    f'  <text x="1210" y="{y + 70}" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#CBD5E1">{note}</text>',
+                ]
+            )
+        lines.extend(
+            [
+                f'  <rect x="1428" y="686" width="272" height="44" rx="8" fill="{accent}"/>',
+                '  <text x="1564" y="717" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="800" fill="#0D1117">HANDOFF OK</text>',
+            ]
+        )
+    elif role == "claim_check":
+        cells = [
+            (1098, 340, "CLAIM", "fake only"),
+            (1458, 340, "CHECK", "diagnostic"),
+            (1098, 536, "RISK", "no real source"),
+            (1458, 536, "RESULT", "review lane"),
+        ]
+        for x, y, label, note in cells:
+            lines.extend(
+                [
+                    f'  <rect x="{x}" y="{y}" width="300" height="150" rx="8" fill="{panel_2}" stroke="{accent}" stroke-width="3"/>',
+                    f'  <text x="{x + 28}" y="{y + 62}" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#F8FAFC">{label}</text>',
+                    f'  <text x="{x + 28}" y="{y + 108}" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#CBD5E1">{note}</text>',
+                ]
+            )
+        lines.extend(
+            [
+                f'  <circle cx="1430" cy="490" r="46" fill="{accent}"/>',
+                '  <text x="1430" y="503" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#0D1117">?</text>',
+            ]
+        )
+    else:
+        rows = [
+            ("SOURCE", "abstract placeholder"),
+            ("STATUS", "diagnostic pass"),
+            ("NEXT", "post-refinement smoke"),
+        ]
+        for index, (label, note) in enumerate(rows):
+            y = 344 + index * 112
+            lines.extend(
+                [
+                    f'  <rect x="1100" y="{y}" width="610" height="78" rx="8" fill="{panel_2}" stroke="#475569" stroke-width="3"/>',
+                    f'  <rect x="1100" y="{y}" width="18" height="78" rx="8" fill="{accent}"/>',
+                    f'  <text x="1144" y="{y + 36}" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="800" fill="#F8FAFC">{label}</text>',
+                    f'  <text x="1144" y="{y + 68}" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#CBD5E1">{note}</text>',
+                ]
+            )
+        lines.extend(
+            [
+                f'  <circle cx="1624" cy="684" r="48" fill="{accent}"/>',
+                '  <text x="1624" y="697" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#0D1117">4</text>',
+            ]
+        )
+    return lines
 
 
 def render_visual_card_contact_sheet_html(bridge: dict[str, Any]) -> str:
@@ -473,6 +729,8 @@ def render_visual_card_contact_sheet_html(bridge: dict[str, Any]) -> str:
                 f'  <img src="{_html(path)}" alt="{_html(asset.get("asset_id"))}">',
                 '  <div class="meta">',
                 f'    <strong>{_html(asset.get("display_label"))}</strong>',
+                f'    <span>{_html(asset.get("review_role_label"))}</span>',
+                f'    <span>{_html(asset.get("layout_motif"))}</span>',
                 f'    <span>{_html(asset.get("intended_start_sec"))}-{_html(asset.get("intended_end_sec"))}s</span>',
                 f'    <span>{_html(asset.get("source_caption_or_beat_id"))}</span>',
                 "  </div>",
@@ -486,7 +744,7 @@ def render_visual_card_contact_sheet_html(bridge: dict[str, Any]) -> str:
             "<head>",
             '  <meta charset="utf-8">',
             '  <meta name="viewport" content="width=device-width, initial-scale=1">',
-            "  <title>Newsroom Visual Card Asset Bridge v1</title>",
+            "  <title>Newsroom Visual Card Asset Bridge v1 - refined</title>",
             "  <style>",
             "    :root { color-scheme: dark; font-family: Arial, Helvetica, sans-serif; }",
             "    body { margin: 0; background: #0d1117; color: #e5e7eb; }",
@@ -502,9 +760,10 @@ def render_visual_card_contact_sheet_html(bridge: dict[str, Any]) -> str:
             "</head>",
             "<body>",
             "  <header>",
-            "    <h1>Newsroom Visual Card Asset Bridge v1</h1>",
-            "    <p>Diagnostic-only fake card assets for later YMM4 image placement. "
-            "No real brands, real URLs, real media, render output, audio, TTS, or "
+            "    <h1>Newsroom Visual Card Asset Bridge v1 - refined</h1>",
+            "    <p>Diagnostic-only fake card assets with wrapped copy, bounded "
+            "type, and role-specific motifs for later YMM4 image placement. No "
+            "real brands, real URLs, real media, render output, audio, TTS, or "
             "production approval are included.</p>",
             "  </header>",
             "  <main>",
@@ -596,6 +855,19 @@ def _source_state(render_smoke_result: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _design_refinement_defaults() -> dict[str, Any]:
+    return {
+        "review_driven_refinement_available": True,
+        "text_wrap_rule": "wrap_or_clamp_within_card_boxes",
+        "clipping_guard": True,
+        "type_scale_status": "balanced_diagnostic",
+        "variation_rule": "distinct_role_and_layout_motif_per_card",
+        "real_brand_or_url_present": False,
+        "production_claim_present": False,
+        "tokens": VISUAL_CARD_REFINEMENT_TOKENS,
+    }
+
+
 def _asset_generation(contact_sheet_path: str | Path) -> dict[str, Any]:
     return {
         "generation_mode": "external_svg_cards_with_html_contact_sheet",
@@ -603,6 +875,9 @@ def _asset_generation(contact_sheet_path: str | Path) -> dict[str, Any]:
         "svg_export_status": "created",
         "html_preview_status": "created",
         "html_preview_path": _path_text(contact_sheet_path),
+        "review_driven_design_refinement": True,
+        "text_wrapping_and_clamping_rules": "introduced_in_generator",
+        "card_variation_status": "role_specific_layouts",
         "png_export_status": "png_export_deferred",
         "png_export_reason": (
             "SVG source cards and the HTML contact sheet are deterministic and "
@@ -629,16 +904,28 @@ def _asset_rows(
         caption_id = str(item.get("caption_id") or "")
         beat_id = str(item.get("beat_id") or "")
         palette = CARD_PALETTES[index - 1]
+        layout = CARD_LAYOUTS[index - 1]
         visual = _dict(visual_by_beat.get(beat_id))
         asset_id = f"visual_card_{caption_id}_v1"
         rel_path = base / f"{asset_id}.svg"
+        png_path = rel_path.with_suffix(".png")
         rows.append(
             {
                 "asset_id": asset_id,
                 "display_order": index,
                 "display_label": f"Card {index}: {item.get('text')}",
-                "card_title": _card_title(index, visual),
+                "card_title": _card_title(index, visual, layout),
                 "body": CARD_BODIES.get(caption_id, "Diagnostic-only card asset."),
+                "design_refinement_role": layout["role"],
+                "review_role_label": layout["role_label"],
+                "layout_motif": layout["layout_motif"],
+                "before_issue_summary": BEFORE_VISUAL_REVIEW_ISSUE_SUMMARY,
+                "after_change_summary": layout["after_change_summary"],
+                "text_wrap_applied": True,
+                "clipping_guard": True,
+                "type_scale_status": "balanced_diagnostic",
+                "variation_status": "role_specific_layout",
+                "design_tokens": VISUAL_CARD_REFINEMENT_TOKENS,
                 "source_caption_or_beat_id": caption_id,
                 "source_neutral_item_id": item.get("item_id"),
                 "source_beat_id": beat_id,
@@ -647,6 +934,7 @@ def _asset_rows(
                 "text": item.get("text"),
                 "asset_type": "svg",
                 "repo_relative_path": _path_text(rel_path),
+                "raster_repo_relative_path": _path_text(png_path),
                 "intended_start_sec": item.get("start_sec"),
                 "intended_end_sec": item.get("end_sec"),
                 "intended_duration_sec": item.get("duration_sec"),
@@ -659,10 +947,14 @@ def _asset_rows(
                 "dimensions": {"width": 1920, "height": 1080, "aspect_ratio": "16:9"},
                 "subtitle_safe_lower_area": {
                     "reserved": True,
-                    "x": 112,
-                    "y": 796,
-                    "width": 1696,
-                    "height": 118,
+                    "x": VISUAL_CARD_REFINEMENT_TOKENS["subtitle_safe_reserve"]["x"],
+                    "y": VISUAL_CARD_REFINEMENT_TOKENS["subtitle_safe_reserve"]["y"],
+                    "width": VISUAL_CARD_REFINEMENT_TOKENS[
+                        "subtitle_safe_reserve"
+                    ]["width"],
+                    "height": VISUAL_CARD_REFINEMENT_TOKENS[
+                        "subtitle_safe_reserve"
+                    ]["height"],
                     "note": (
                         "Future placement should keep dialogue/subtitles readable "
                         "in this lower band."
@@ -679,11 +971,9 @@ def _asset_rows(
     return rows
 
 
-def _card_title(index: int, visual: dict[str, Any]) -> str:
-    layout = str(visual.get("layout_hint") or "diagnostic_card")
-    if "evidence" in layout or "quote" in layout:
-        return f"REVIEW CHECK CARD {index:02d}"
-    return f"NEWSROOM REVIEW CARD {index:02d}"
+def _card_title(index: int, visual: dict[str, Any], layout: dict[str, str]) -> str:
+    _ = visual
+    return f"{layout['role_label']} CARD {index:02d}"
 
 
 def _placement_contract() -> dict[str, Any]:

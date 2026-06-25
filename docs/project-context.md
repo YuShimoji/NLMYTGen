@@ -79,6 +79,33 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom visual card design refinement decision (2026-06-25):
+`newsroom_visual_card_design_refinement_v1_2026_06_25` consumes the freeform
+internal review result that accepted diagnostic mechanics but rejected the
+visual readability baseline. Timing, native YMM4 audio, render, and card
+placement remain diagnostic pass; the selected correction axis is external
+visual card refinement. The bridge generator now produces four refined
+fake/review-only `1920x1080` SVG cards with wrapped/clamped text, bounded
+`28` to `54` px type, deliberate subtitle-safe reserve, removed debug-footer
+clutter, and distinct role motifs for intro/summary, handoff/process,
+claim/check, and source/status. The four committed PNGs were regenerated at
+the same stable paths under
+`samples/_probe/newsroom_handoff/visual_cards_v1/`, and the contact sheet was
+updated. New canonical readbacks are
+`internal_review_v0_1_result_readback_v1.json` and
+`visual_card_design_refinement_v1.json`, with human docs in
+`docs/verification/`. This does not launch YMM4, render, edit `.ymmp`,
+generate audio/TTS, fetch external sources, import real media, approve
+production, or claim public readiness. Production visual quality, final design
+system, YMM4 placement proof after refinement, post-refinement render proof,
+real newsroom visuals, real content readiness, production approval, and media
+retention remain outside accepted scope. Video readiness remains `6/7`; visual
+readiness is `7/7` diagnostic-refined; production readiness remains
+low/diagnostic-only. The next default slice is
+`newsroom-card-placement-post-refinement-render-smoke-v1`; use
+`newsroom-yym4-card-asset-placement-refresh-v1` only if the stable PNG paths do
+not hold in the ignored local placement project.
+
 Latest newsroom internal review v0.1 prep decision (2026-06-25):
 `newsroom_internal_review_v0_1_prep_v1_2026_06_25` packages the current
 diagnostic 68 sec YMM4 video as an internal review v0.1 candidate without

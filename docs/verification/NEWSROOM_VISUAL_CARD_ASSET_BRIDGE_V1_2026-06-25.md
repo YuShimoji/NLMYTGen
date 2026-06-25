@@ -55,6 +55,17 @@ diagnostic_only: true
 - visual_layout_accepted: false
 - public_video_ready: false
 
+## Design Refinement Defaults
+
+- review_driven_refinement_available: true
+- text_wrap_rule: wrap_or_clamp_within_card_boxes
+- clipping_guard: true
+- type_scale_status: balanced_diagnostic
+- variation_rule: distinct_role_and_layout_motif_per_card
+- real_brand_or_url_present: false
+- production_claim_present: false
+- tokens: {'canvas_size': {'width': 1920, 'height': 1080}, 'safe_margin': 96, 'title_font_size': 46, 'headline_font_size': 54, 'body_font_size': 34, 'chip_font_size': 28, 'meta_font_size': 30, 'minimum_font_size': 28, 'maximum_font_size': 54, 'max_title_lines': 2, 'max_headline_lines': 2, 'body_max_lines': 3, 'body_wrap_width': 940, 'subtitle_safe_reserve': {'x': 112, 'y': 812, 'width': 1696, 'height': 116}, 'footer_debug_treatment': 'removed_from_review_surface'}
+
 ## Asset Generation
 
 - generation_mode: external_svg_cards_with_html_contact_sheet
@@ -62,6 +73,9 @@ diagnostic_only: true
 - svg_export_status: created
 - html_preview_status: created
 - html_preview_path: samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html
+- review_driven_design_refinement: true
+- text_wrapping_and_clamping_rules: introduced_in_generator
+- card_variation_status: role_specific_layouts
 - png_export_status: png_export_deferred
 - png_export_reason: SVG source cards and the HTML contact sheet are deterministic and sufficient for this bridge; no PNG exporter dependency was introduced.
 - external_fetch_performed: false
