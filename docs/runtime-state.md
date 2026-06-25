@@ -1,5 +1,42 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom YMM4 card asset placement probe v1 completed (2026-06-25)**:
+  Created `newsroom-yym4-card-asset-placement-probe-v1` as the bounded
+  diagnostic bridge from external visual card assets into an ignored local
+  YMM4 placement copy. No YMM4 launch, video render, audio/TTS generation,
+  external TTS adoption, real source fetch, real media import, production
+  `.ymmp` edit, `.ymmp`/mp4/wav/mp3/m4a/render-output staging or commit,
+  dashboard/governance/freshness change, production approval, public readiness
+  claim, or timing strategy change was performed by the Agent. New repo
+  artifacts are
+  `samples/_probe/newsroom_handoff/yym4_card_asset_placement_probe_v1.json`,
+  `docs/verification/NEWSROOM_YYM4_CARD_ASSET_PLACEMENT_PROBE_V1_2026-06-25.md`,
+  `src/pipeline/newsroom_yym4_card_asset_placement_probe.py`,
+  `tests/test_newsroom_yym4_card_asset_placement_probe.py`, and four
+  deterministic PNG card assets under
+  `samples/_probe/newsroom_handoff/visual_cards_v1/`, generated from the
+  existing SVG cards with a local Pillow SVG-subset renderer. The ignored local
+  output
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.ymmp`
+  was created from the prior ignored timing-patched source copy and must remain
+  unstaged/uncommitted. The structural readback is `pass`: the timeline remains
+  `4080` frames / `68` sec, the four native `VoiceItem` dialogue rows remain
+  preserved, voice/cache fields and the canonical YMM4 native audio path remain
+  untouched, and four `ImageItem` card placements were added at frames
+  `0/720/1440/2760` with lengths `720/720/1320/1320` on diagnostic layer `2`.
+  Direct YMM4 card object graph construction and YMM4 text/shape reconstruction
+  remain closed. Accepted scope is limited to external card asset mapping,
+  deterministic PNG raster assets, structural image placement in an ignored
+  diagnostic copy, and preservation of prior timing/audio evidence. Not
+  accepted: post-card render proof, production visual quality, final design
+  system, public video readiness, real newsroom visuals, real content
+  readiness, or production approval. Video readiness remains `6/7`; visual
+  readiness advances to `6/7`; production readiness remains
+  low/diagnostic-only. The next default slice is
+  `newsroom-card-placement-render-smoke-v1`, and it is milestone-gated because
+  the video surface has now changed. Internal review prep remains after the
+  post-placement render smoke result is observed. Verification observed focused
+  placement and bridge regression tests `20 passed`.
 - **Newsroom visual card asset bridge v1 completed (2026-06-25)**:
   Created `newsroom-visual-card-asset-bridge-v1` as a diagnostic external
   visual-asset bridge after the 68 sec timing/audio render smoke passed. No

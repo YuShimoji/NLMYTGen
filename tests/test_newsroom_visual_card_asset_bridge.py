@@ -277,6 +277,11 @@ def test_generated_bridge_artifacts_have_no_forbidden_media_outputs() -> None:
     bridge_text = BRIDGE_PATH.read_text(encoding="utf-8")
     doc_text = DOC_PATH.read_text(encoding="utf-8")
     contact_text = CONTACT_SHEET_PATH.read_text(encoding="utf-8")
+    placement_probe_path = (
+        ROOT
+        / "samples/_probe/newsroom_handoff/yym4_card_asset_placement_probe_v1.json"
+    )
+    png_cards = sorted(CARD_DIR.glob("*.png"))
 
     assert _real_url_matches(bridge_text) == []
     assert _real_url_matches(doc_text) == []
@@ -289,5 +294,8 @@ def test_generated_bridge_artifacts_have_no_forbidden_media_outputs() -> None:
     assert not list(CARD_DIR.glob("*.wav"))
     assert not list(CARD_DIR.glob("*.mp3"))
     assert not list(CARD_DIR.glob("*.m4a"))
-    assert not list(CARD_DIR.glob("*.png"))
+    if placement_probe_path.exists():
+        assert len(png_cards) == 4
+    else:
+        assert not png_cards
     assert _bridge()["png_export_status"] == "png_export_deferred"

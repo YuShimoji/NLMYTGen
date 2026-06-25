@@ -1,0 +1,609 @@
+{
+  "artifact_id": "newsroom_yym4_card_asset_placement_probe_v1_2026_06_25",
+  "probe_id": "newsroom_yym4_card_asset_placement_probe_v1_2026_06_25",
+  "schema_version": "newsroom_yym4_card_asset_placement_probe.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "probe_status": "placed_structurally",
+  "identity": {
+    "probe_id": "newsroom_yym4_card_asset_placement_probe_v1_2026_06_25",
+    "source_visual_card_bridge_path": "samples/_probe/newsroom_handoff/visual_card_asset_bridge_v1.json",
+    "source_render_smoke_result_path": "samples/_probe/newsroom_handoff/ymmp_timing_patch_render_smoke_result_readback_v1.json",
+    "source_timing_patch_probe_path": "samples/_probe/newsroom_handoff/ymmp_timing_patch_probe_v1.json",
+    "source_ymmp_local_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_timing_patch_v1.ymmp",
+    "patched_ymmp_local_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.ymmp",
+    "production_status": "diagnostic_only",
+    "probe_status": "placed_structurally",
+    "observation_source": "repo_structural_probe_without_yym4_launch"
+  },
+  "source_validation": {
+    "status": "passed",
+    "errors": [],
+    "source_visual_card_bridge_id": "newsroom_visual_card_asset_bridge_v1_2026_06_25",
+    "source_render_smoke_result_id": "newsroom_ymmp_timing_patch_render_smoke_result_readback_v1_2026_06_25",
+    "source_timing_patch_probe_id": "newsroom_ymmp_timing_patch_probe_v1_2026_06_24",
+    "render_smoke_result": "pass",
+    "duration_sec": 68,
+    "native_audio_present": true,
+    "source_ymmp_exists": true,
+    "patched_ymmp_exists": true,
+    "source_dialogue_item_count": 4,
+    "patched_dialogue_item_count": 4,
+    "source_card_asset_count": 4,
+    "png_file_count": 4,
+    "image_item_schema_source": "existing_repo_overlay_builder_and_tracked_ymmp_samples",
+    "canonical_speaker": "yukkuri_reimu",
+    "canonical_speaker_unicode_escape": "\\u3086\\u3063\\u304f\\u308a\\u970a\\u5922"
+  },
+  "source_assets": [
+    {
+      "card_id": "visual_card_cap_beat_fake_intro_001_01_v1",
+      "source_svg_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.svg",
+      "png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.png",
+      "html_preview_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "mapped_dialogue_or_caption_id": "cap_beat_fake_intro_001_01",
+      "mapped_dialogue_text": "Fake topic, review only.",
+      "intended_start_sec": 0,
+      "intended_end_sec": 12,
+      "intended_duration_sec": 12,
+      "start_frame": 0,
+      "length_frames": 720,
+      "placement_role": "diagnostic_visual_card_image_asset",
+      "target_layer_or_track": "Layer 2 / ImageItem",
+      "direct_yym4_card_object_graph": false,
+      "yym4_text_shape_reconstruction": false
+    },
+    {
+      "card_id": "visual_card_cap_beat_fake_intro_001_02_v1",
+      "source_svg_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.svg",
+      "png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.png",
+      "html_preview_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "mapped_dialogue_or_caption_id": "cap_beat_fake_intro_001_02",
+      "mapped_dialogue_text": "Review-only handoff stays.",
+      "intended_start_sec": 12,
+      "intended_end_sec": 24,
+      "intended_duration_sec": 12,
+      "start_frame": 720,
+      "length_frames": 720,
+      "placement_role": "diagnostic_visual_card_image_asset",
+      "target_layer_or_track": "Layer 2 / ImageItem",
+      "direct_yym4_card_object_graph": false,
+      "yym4_text_shape_reconstruction": false
+    },
+    {
+      "card_id": "visual_card_cap_beat_fake_claim_001_01_v1",
+      "source_svg_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.svg",
+      "png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.png",
+      "html_preview_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "mapped_dialogue_or_caption_id": "cap_beat_fake_claim_001_01",
+      "mapped_dialogue_text": "A fake claim is shown.",
+      "intended_start_sec": 24,
+      "intended_end_sec": 46,
+      "intended_duration_sec": 22,
+      "start_frame": 1440,
+      "length_frames": 1320,
+      "placement_role": "diagnostic_visual_card_image_asset",
+      "target_layer_or_track": "Layer 2 / ImageItem",
+      "direct_yym4_card_object_graph": false,
+      "yym4_text_shape_reconstruction": false
+    },
+    {
+      "card_id": "visual_card_cap_beat_fake_claim_001_02_v1",
+      "source_svg_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.svg",
+      "png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.png",
+      "html_preview_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "mapped_dialogue_or_caption_id": "cap_beat_fake_claim_001_02",
+      "mapped_dialogue_text": "Fake source checks are noted.",
+      "intended_start_sec": 46,
+      "intended_end_sec": 68,
+      "intended_duration_sec": 22,
+      "start_frame": 2760,
+      "length_frames": 1320,
+      "placement_role": "diagnostic_visual_card_image_asset",
+      "target_layer_or_track": "Layer 2 / ImageItem",
+      "direct_yym4_card_object_graph": false,
+      "yym4_text_shape_reconstruction": false
+    }
+  ],
+  "raster_export_status": {
+    "png_export_status": "generated",
+    "rasterization_method": "existing_toolchain",
+    "deterministic_export": true,
+    "png_files_generated_in_this_slice": true,
+    "png_file_count": 4,
+    "expected_png_file_count": 4,
+    "asset_dimensions": "1920x1080",
+    "source_format": "svg",
+    "target_format": "png",
+    "external_fetch_performed": false,
+    "real_media_dependency": false,
+    "errors": [],
+    "png_files": [
+      {
+        "path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.png",
+        "exists": true,
+        "valid": true,
+        "width": 1920,
+        "height": 1080,
+        "format": "png",
+        "expected_width": 1920,
+        "expected_height": 1080
+      },
+      {
+        "path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.png",
+        "exists": true,
+        "valid": true,
+        "width": 1920,
+        "height": 1080,
+        "format": "png",
+        "expected_width": 1920,
+        "expected_height": 1080
+      },
+      {
+        "path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.png",
+        "exists": true,
+        "valid": true,
+        "width": 1920,
+        "height": 1080,
+        "format": "png",
+        "expected_width": 1920,
+        "expected_height": 1080
+      },
+      {
+        "path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.png",
+        "exists": true,
+        "valid": true,
+        "width": 1920,
+        "height": 1080,
+        "format": "png",
+        "expected_width": 1920,
+        "expected_height": 1080
+      }
+    ]
+  },
+  "placement_operations": [
+    {
+      "operation_id": "add_image_item_visual_card_cap_beat_fake_intro_001_01_v1",
+      "target_layer_or_track": "Layer 2 / ImageItem",
+      "asset_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.png",
+      "start_frame": 0,
+      "length_frames": 720,
+      "field_changed_or_item_added": "Timelines[0].Items[] ImageItem",
+      "before": "absent",
+      "after": {
+        "item_type": "ImageItem",
+        "file_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.png",
+        "frame": 0,
+        "length": 720,
+        "layer": 2,
+        "remark": "newsroom_card_asset:visual_card_cap_beat_fake_intro_001_01_v1"
+      },
+      "safety_class": "diagnostic_only",
+      "applied": true
+    },
+    {
+      "operation_id": "add_image_item_visual_card_cap_beat_fake_intro_001_02_v1",
+      "target_layer_or_track": "Layer 2 / ImageItem",
+      "asset_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.png",
+      "start_frame": 720,
+      "length_frames": 720,
+      "field_changed_or_item_added": "Timelines[0].Items[] ImageItem",
+      "before": "absent",
+      "after": {
+        "item_type": "ImageItem",
+        "file_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.png",
+        "frame": 720,
+        "length": 720,
+        "layer": 2,
+        "remark": "newsroom_card_asset:visual_card_cap_beat_fake_intro_001_02_v1"
+      },
+      "safety_class": "diagnostic_only",
+      "applied": true
+    },
+    {
+      "operation_id": "add_image_item_visual_card_cap_beat_fake_claim_001_01_v1",
+      "target_layer_or_track": "Layer 2 / ImageItem",
+      "asset_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.png",
+      "start_frame": 1440,
+      "length_frames": 1320,
+      "field_changed_or_item_added": "Timelines[0].Items[] ImageItem",
+      "before": "absent",
+      "after": {
+        "item_type": "ImageItem",
+        "file_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.png",
+        "frame": 1440,
+        "length": 1320,
+        "layer": 2,
+        "remark": "newsroom_card_asset:visual_card_cap_beat_fake_claim_001_01_v1"
+      },
+      "safety_class": "diagnostic_only",
+      "applied": true
+    },
+    {
+      "operation_id": "add_image_item_visual_card_cap_beat_fake_claim_001_02_v1",
+      "target_layer_or_track": "Layer 2 / ImageItem",
+      "asset_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.png",
+      "start_frame": 2760,
+      "length_frames": 1320,
+      "field_changed_or_item_added": "Timelines[0].Items[] ImageItem",
+      "before": "absent",
+      "after": {
+        "item_type": "ImageItem",
+        "file_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.png",
+        "frame": 2760,
+        "length": 1320,
+        "layer": 2,
+        "remark": "newsroom_card_asset:visual_card_cap_beat_fake_claim_001_02_v1"
+      },
+      "safety_class": "diagnostic_only",
+      "applied": true
+    }
+  ],
+  "preservation_checks": {
+    "timeline_duration_preserved": true,
+    "dialogue_items_preserved": true,
+    "native_audio_fields_preserved": true,
+    "speaker_preserved": true,
+    "source_dialogue_item_count": 4,
+    "patched_dialogue_item_count": 4,
+    "direct_yym4_card_object_graph": false,
+    "yym4_text_shape_reconstruction": false,
+    "external_TTS_introduced": false,
+    "render_created": false,
+    "media_committed": false
+  },
+  "structural_result": {
+    "patched_ymmp_created_locally": true,
+    "patched_ymmp_committed": false,
+    "visual_assets_committed": true,
+    "card_item_count_added_or_planned": 4,
+    "card_image_item_count_observed": 4,
+    "placement_structural_readback_status": "pass",
+    "next_render_trigger": "newsroom-card-placement-render-smoke-v1"
+  },
+  "accepted_scope": {
+    "external_visual_card_assets_are_placement_mapped": true,
+    "cards_are_placed_into_ignored_yym4_diagnostic_copy": true,
+    "direct_yym4_card_object_graph_construction_avoided": true,
+    "native_audio_timing_proofs_preserved": true,
+    "png_card_assets_generated_from_existing_svg": true,
+    "timing_patch_duration_preserved": true
+  },
+  "not_accepted_scope": {
+    "production_visual_quality": false,
+    "final_design_system": false,
+    "post_card_render_proof": false,
+    "public_video_readiness": false,
+    "real_newsroom_visuals": false,
+    "real_content_readiness": false,
+    "production_approval": false
+  },
+  "readiness_separation": {
+    "slice_completion": "pass_for_this_placement_probe",
+    "video_readiness_progress": "6/7",
+    "video_readiness_current": "card_assets_structurally_placed_in_ignored_yym4_copy",
+    "video_readiness_next_missing_gate": "post-placement render smoke and internal review milestone",
+    "visual_readiness_progress": "6/7",
+    "visual_readiness_current": "YMM4 image placement proof exists structurally",
+    "production_readiness": "low_diagnostic_only",
+    "production_readiness_reason": "The probe uses fake PNG card assets and an ignored local YMM4 copy; it does not prove post-card render output or production quality.",
+    "next_default_slice": "newsroom-card-placement-render-smoke-v1"
+  },
+  "recommended_next_slices": [
+    {
+      "slice": "newsroom-card-placement-render-smoke-v1",
+      "timing": "recommended_next_default",
+      "reason": "structural placement passed, so the next meaningful gate is a milestone render smoke of the changed video surface"
+    },
+    {
+      "slice": "newsroom-visual-card-raster-export-v1",
+      "timing": "only_if_png_export_missing",
+      "reason": "use only when compatible raster assets are unavailable"
+    },
+    {
+      "slice": "newsroom-yym4-image-item-schema-audit-v1",
+      "timing": "only_if_image_item_schema_becomes_unsafe",
+      "reason": "audit ImageItem fields before mutating any YMM4 copy"
+    },
+    {
+      "slice": "newsroom-internal-review-v0.1-prep",
+      "timing": "later_after_card_placement_render_smoke",
+      "reason": "prepare v0.1 review once the rendered visual surface is observed"
+    }
+  ],
+  "goal_stack": [
+    {
+      "level": "Immediate",
+      "goal": "Place or prepare external card assets for YMM4 image placement",
+      "success_signal": "placement probe JSON/readback shows card assets mapped without direct object graph reconstruction",
+      "contribution": "moves visual axis from asset-only to YMM4-placement-ready"
+    },
+    {
+      "level": "Short-term",
+      "goal": "Prepare post-card render smoke",
+      "success_signal": "ignored .ymmp copy structurally includes card images",
+      "contribution": "makes the next render milestone meaningful"
+    },
+    {
+      "level": "Mid-term",
+      "goal": "Reach internal review v0.1",
+      "success_signal": "68sec video has native audio, timing, and visible cards",
+      "contribution": "enables useful human review"
+    },
+    {
+      "level": "Long-term",
+      "goal": "Stabilize Newsroom-to-video pipeline",
+      "success_signal": "content packet can drive script, audio, timing, and visual assets repeatably",
+      "contribution": "reduces manual assembly"
+    }
+  ],
+  "completion_matrix": [
+    {
+      "gate": "current_repo_state_verified",
+      "status": true
+    },
+    {
+      "gate": "visual_card_assets_inspected",
+      "status": true
+    },
+    {
+      "gate": "raster_export_readiness_determined",
+      "status": true
+    },
+    {
+      "gate": "placement_plan_probe_created",
+      "status": true
+    },
+    {
+      "gate": "structural_readback_or_clean_block_recorded",
+      "status": true
+    },
+    {
+      "gate": "narrow_commit_created_and_pushed_if_push_gate_passes",
+      "status": "pending_until_git_gate"
+    }
+  ],
+  "artifact_readiness": [
+    {
+      "artifact": "placement_probe_json",
+      "status": "present"
+    },
+    {
+      "artifact": "human_readback",
+      "status": "present"
+    },
+    {
+      "artifact": "asset_mapping",
+      "status": "present"
+    },
+    {
+      "artifact": "placement_operations_or_clean_block",
+      "status": "applied"
+    },
+    {
+      "artifact": "preservation_checks",
+      "status": "present"
+    },
+    {
+      "artifact": "downstream_next_use",
+      "status": "present"
+    }
+  ],
+  "video_readiness": [
+    {
+      "gate": "source_input_path_proven",
+      "status": true
+    },
+    {
+      "gate": "target_yym4_import_path_proven",
+      "status": true
+    },
+    {
+      "gate": "audio_path_proven",
+      "status": true
+    },
+    {
+      "gate": "timing_duration_strategy_defined",
+      "status": true
+    },
+    {
+      "gate": "tiny_smoke_render_observed",
+      "status": true
+    },
+    {
+      "gate": "targeted_regression_render_observed",
+      "status": true
+    },
+    {
+      "gate": "internal_review_milestone_reached",
+      "status": false
+    }
+  ],
+  "visual_readiness": [
+    {
+      "gate": "visual_card_concept_selected",
+      "status": true
+    },
+    {
+      "gate": "external_card_assets_generated",
+      "status": true
+    },
+    {
+      "gate": "preview_contact_sheet_available",
+      "status": true
+    },
+    {
+      "gate": "assets_mapped_to_timeline_caption_units",
+      "status": true
+    },
+    {
+      "gate": "yym4_placement_contract_defined",
+      "status": true
+    },
+    {
+      "gate": "yym4_placement_proof_observed",
+      "status": true
+    },
+    {
+      "gate": "post_placement_render_reviewed",
+      "status": false
+    }
+  ],
+  "render_gate_hygiene": [
+    {
+      "gate": "video_render_performed_in_this_slice",
+      "status": false
+    },
+    {
+      "gate": "existing_render_evidence_reused",
+      "status": true
+    },
+    {
+      "gate": "render_treated_as_milestone_gated",
+      "status": true
+    },
+    {
+      "gate": "next_render_tied_to_successful_card_placement",
+      "status": true
+    },
+    {
+      "gate": "no_render_for_docs_readback_changes",
+      "status": true
+    },
+    {
+      "gate": "repeated_timing_audio_render_check_avoided",
+      "status": true
+    }
+  ],
+  "human_burden_hygiene": [
+    {
+      "gate": "user_input",
+      "status": "freeform"
+    },
+    {
+      "gate": "template_required",
+      "status": false
+    },
+    {
+      "gate": "schema_owner",
+      "status": "Agent"
+    },
+    {
+      "gate": "user_side_work",
+      "status": "none"
+    },
+    {
+      "gate": "future_look_for_points_max",
+      "status": 3
+    },
+    {
+      "gate": "negative_confirmation_checklist",
+      "status": false
+    },
+    {
+      "gate": "fixed_form_relapse",
+      "status": false
+    }
+  ],
+  "review_non_redundancy": [
+    {
+      "gate": "prior_timing_proof_reused",
+      "status": true
+    },
+    {
+      "gate": "prior_audio_evidence_reused",
+      "status": true
+    },
+    {
+      "gate": "prior_render_smoke_result_reused",
+      "status": true
+    },
+    {
+      "gate": "next_axis_stated_as_visual_placement",
+      "status": true
+    },
+    {
+      "gate": "not_accepted_scope_preserved",
+      "status": true
+    },
+    {
+      "gate": "repeated_timing_audio_render_review_requested",
+      "status": false
+    }
+  ],
+  "inertia_check": [
+    {
+      "gate": "packet_for_packet_drift",
+      "status": false
+    },
+    {
+      "gate": "readback_only_stall",
+      "status": false
+    },
+    {
+      "gate": "repeated_render_request",
+      "status": false
+    },
+    {
+      "gate": "product_video_visual_readiness_separated_from_slice_completion",
+      "status": true
+    },
+    {
+      "gate": "next_concrete_milestone",
+      "status": "newsroom-card-placement-render-smoke-v1"
+    }
+  ],
+  "placement_contract": {
+    "placement_mode": "image_asset_import",
+    "yym4_item_type": "ImageItem",
+    "card_asset_format": "png",
+    "source_card_format": "svg",
+    "target_layer": 2,
+    "direct_yym4_card_object_graph": false,
+    "yym4_text_shape_reconstruction": false,
+    "preserves_native_audio_path": true,
+    "preserves_existing_timing_strategy": true,
+    "render_required_in_this_slice": false,
+    "YMM4_launch_required_in_this_slice": false,
+    "ymmp_mutation_boundary": "ignored local diagnostic copy only",
+    "next_render_should_be_milestone_gated": true,
+    "no_render_for_docs_readback_policy_only_changes": true
+  },
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "video_render_created_by_agent": false,
+    "audio_generated_by_agent": false,
+    "TTS_generated_by_agent": false,
+    "external_TTS_introduced": false,
+    "real_media_imported": false,
+    "external_source_fetch_performed": false,
+    "real_urls_or_real_brands_used": false,
+    "production_ymmp_edited_or_committed": false,
+    "ignored_ymmp_staged_or_committed": false,
+    "render_output_staged_or_committed": false,
+    "production_approval": false,
+    "public_video_ready": false,
+    "dashboard_governance_freshness_changed": false
+  },
+  "local_artifact_status": {
+    "patched_ymmp_local_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.ymmp",
+    "patched_ymmp_exists_at_readback_generation": true,
+    "patched_ymmp_staged": false,
+    "patched_ymmp_committed": false,
+    "patched_ymmp_ignored": true
+  },
+  "downstream_next_use": {
+    "use_this_probe_to": [
+      "run the post-placement render smoke milestone against the ignored diagnostic YMM4 copy",
+      "verify the card images are visible on the 68 second timeline",
+      "preserve native YMM4 audio and sparse diagnostic timing as prior evidence"
+    ],
+    "do_not_use_this_probe_to": [
+      "claim public video readiness",
+      "claim production visual quality",
+      "commit ignored .ymmp or render outputs",
+      "introduce external TTS or real media"
+    ]
+  }
+}
