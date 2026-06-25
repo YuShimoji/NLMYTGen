@@ -79,6 +79,22 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom visual card design refinement remote handoff decision (2026-06-25):
+`newsroom_visual_card_design_refinement_remote_handoff_2026_06_25` preserves
+the current mainline restart context after
+`92b7c92 feat: refine newsroom visual card design`. Before this handoff,
+`master` was aligned with `origin/master` (`HEAD...origin/master = 0 0`) and
+the tracked worktree was clean. The canonical handoff file is
+`docs/verification/NEWSROOM_VISUAL_CARD_DESIGN_REFINEMENT_REMOTE_HANDOFF_2026-06-25.md`.
+The preserved state is: internal review normalized to visual refinement needed,
+mechanics/timing/native audio/render/card placement still diagnostic pass,
+refined SVG/PNG card assets present at stable paths, and production/public
+readiness still closed. Ignored local `.ymmp` and mp4 diagnostic artifacts may
+exist under `_tmp/newsroom_manual_probe/` but are not repo artifacts. The next
+default milestone remains
+`newsroom-card-placement-post-refinement-render-smoke-v1`; placement refresh is
+only a fallback if stable PNG paths are not reusable.
+
 Latest newsroom visual card design refinement decision (2026-06-25):
 `newsroom_visual_card_design_refinement_v1_2026_06_25` consumes the freeform
 internal review result that accepted diagnostic mechanics but rejected the

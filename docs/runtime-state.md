@@ -1,5 +1,21 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom visual card design refinement remote handoff sealed (2026-06-25)**:
+  Preserved the current mainline restart context after
+  `newsroom-visual-card-design-refinement-v1` in
+  `docs/verification/NEWSROOM_VISUAL_CARD_DESIGN_REFINEMENT_REMOTE_HANDOFF_2026-06-25.md`.
+  The handoff base is `92b7c92 feat: refine newsroom visual card design` on
+  `master`; before writing the handoff, `HEAD...origin/master` was `0 0` and
+  the tracked worktree was clean. Ignored local manual artifacts may remain
+  under `_tmp/newsroom_manual_probe/`, including `.ymmp` and mp4 diagnostic
+  outputs, and must remain untracked and unstaged. The next restart read order
+  is `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, then `docs/runtime-state.md`.
+  The next concrete milestone remains
+  `newsroom-card-placement-post-refinement-render-smoke-v1`; use
+  `newsroom-yym4-card-asset-placement-refresh-v1` only if the stable PNG paths
+  do not hold in the ignored local placement project. Production visual
+  quality, post-refinement render proof, public video readiness, real content
+  readiness, and production approval remain not accepted.
 - **Newsroom visual card design refinement v1 completed (2026-06-25)**:
   Converted the freeform internal review result into canonical diagnostic repo
   evidence and refined the external card assets without launching YMM4,
