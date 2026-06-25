@@ -1,5 +1,37 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom internal review v0.1 prep v1 completed (2026-06-25)**:
+  Prepared `newsroom-internal-review-v0.1-prep` as a diagnostic internal
+  review package from existing evidence only. No YMM4 launch, render,
+  audio/TTS generation, external TTS adoption, real source fetch, real media
+  import, `.ymmp` edit, `.ymmp`/mp4/wav/mp3/m4a/media staging or commit,
+  dashboard/governance/freshness change, RSS/live ingest, production approval,
+  public-readiness claim, or production-quality claim was performed by the
+  Agent. New repo artifacts are
+  `samples/_probe/newsroom_handoff/internal_review_v0_1_prep_v1.json`,
+  `docs/verification/NEWSROOM_INTERNAL_REVIEW_V0_1_PREP_V1_2026-06-25.md`,
+  `docs/verification/NEWSROOM_INTERNAL_REVIEW_V0_1_REVIEW_BRIEF_2026-06-25.md`,
+  `src/pipeline/newsroom_internal_review_v0_1_prep.py`, and
+  `tests/test_newsroom_internal_review_v0_1_prep.py`. The package cites the
+  existing diagnostic evidence chain: script/caption import, speaker binding,
+  native YMM4/yukkuri audio, 68 sec timing patch, external card asset
+  generation, `ImageItem` card placement, card-placement render smoke, render
+  duration `00:01:08`, approximate render time `30` sec, and the still-closed
+  production/public scope. Candidate identity is
+  `diagnostic_bound_speaker_probe_card_placement_v1.mp4`, duration `68` sec,
+  fake/review-only diagnostic content, four cards, four dialogue items, and
+  `YMM4_native_yukkuri_japanese` voice path. Accepted scope is limited to
+  preparing internal review v0.1 from the current diagnostic video and
+  benchmark baseline. Not accepted: production pacing, final visual design,
+  final narration/script density, real newsroom content, RSS/live ingest,
+  rights/publication boundary, production export settings, final artifact
+  packaging, or public/prod approval. Video readiness remains `6/7` until
+  internal review is actually completed; visual readiness remains
+  `7/7` diagnostic; production readiness remains low/diagnostic-only; internal
+  review readiness is now `prep_defined`. The next default slice is
+  `newsroom-internal-review-v0.1-operator-review-card`, using compact
+  freeform review questions rather than a fixed review form. Verification
+  observed focused internal-review-prep tests `8 passed`.
 - **Newsroom card placement render smoke result readback v1 completed (2026-06-25)**:
   Recorded the user's freeform card-placement render observation, with
   screenshot support, as canonical diagnostic repo evidence. No YMM4 launch,

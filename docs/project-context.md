@@ -79,6 +79,30 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom internal review v0.1 prep decision (2026-06-25):
+`newsroom_internal_review_v0_1_prep_v1_2026_06_25` packages the current
+diagnostic 68 sec YMM4 video as an internal review v0.1 candidate without
+launching YMM4, rendering, editing `.ymmp`, generating audio/TTS, importing
+media, fetching external sources, or approving production/public use. The
+package cites the established evidence chain: script/caption import, speaker
+binding, native YMM4/yukkuri audio, 68 sec timing patch, external PNG card
+assets, `ImageItem` card placement, card-placement render smoke, approximate
+30 sec render time, and the closed production/public scope. The candidate is
+`diagnostic_bound_speaker_probe_card_placement_v1.mp4`, duration `68` sec,
+fake/review-only diagnostic content, four visual cards, four dialogue items,
+and `YMM4_native_yukkuri_japanese` voice path. The review questions are
+compact and freeform-friendly, focused on pacing, card comprehensibility,
+subtitle/card safe area, v0.1 viability, and the single highest-value
+improvement before real packet integration. This does not accept production
+pacing, final visual design, final narration/script density, real newsroom
+content, RSS/live ingest, rights/publication boundary, production export
+settings, final artifact packaging, public readiness, or production approval.
+Video readiness remains `6/7` until review is completed; visual readiness
+remains `7/7` diagnostic; production readiness remains low/diagnostic-only.
+The next default slice is `newsroom-internal-review-v0.1-operator-review-card`.
+Further renders stay milestone-gated to material surface changes, explicit
+internal review need, or a later real-packet dry run.
+
 Latest newsroom card placement render smoke result decision (2026-06-25):
 `newsroom_card_placement_render_smoke_result_readback_v1_2026_06_25` records
 the user freeform card-placement render observation, with screenshot support,

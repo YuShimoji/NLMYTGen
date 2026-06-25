@@ -1,0 +1,506 @@
+{
+  "artifact_id": "newsroom_internal_review_v0_1_prep_v1_2026_06_25",
+  "review_package_id": "newsroom_internal_review_v0_1_prep_v1_2026_06_25",
+  "schema_version": "newsroom_internal_review_v0_1_prep.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "review_stage": [
+    "internal_review_v0_1_prep",
+    "not_public",
+    "not_production"
+  ],
+  "identity": {
+    "review_package_id": "newsroom_internal_review_v0_1_prep_v1_2026_06_25",
+    "source_card_render_result_path": "samples/_probe/newsroom_handoff/card_placement_render_smoke_result_readback_v1.json",
+    "source_card_render_result_id": "newsroom_card_placement_render_smoke_result_readback_v1_2026_06_25",
+    "source_card_placement_probe_path": "samples/_probe/newsroom_handoff/yym4_card_asset_placement_probe_v1.json",
+    "source_card_placement_probe_id": "newsroom_yym4_card_asset_placement_probe_v1_2026_06_25",
+    "source_visual_card_bridge_path": "samples/_probe/newsroom_handoff/visual_card_asset_bridge_v1.json",
+    "source_visual_card_bridge_id": "newsroom_visual_card_asset_bridge_v1_2026_06_25",
+    "source_timing_patch_render_result_path": "samples/_probe/newsroom_handoff/ymmp_timing_patch_render_smoke_result_readback_v1.json",
+    "source_timing_patch_render_result_id": "newsroom_ymmp_timing_patch_render_smoke_result_readback_v1_2026_06_25",
+    "source_audio_observation_path": "samples/_probe/newsroom_handoff/audio_observation_and_timing_patch_readiness_v1.json",
+    "source_audio_observation_id": "newsroom_audio_observation_and_timing_patch_readiness_v1_2026_06_24",
+    "source_tiny_render_result_path": "samples/_probe/newsroom_handoff/tiny_render_smoke_result_readback_v1.json",
+    "source_tiny_render_result_id": "newsroom_tiny_render_smoke_result_readback_v1_2026_06_23",
+    "source_episode_capsule_path": "samples/_probe/newsroom_handoff/episode_production_capsule_v1.json",
+    "source_episode_capsule_id": "newsroom_episode_production_capsule_v1_2026_06_22",
+    "source_caption_timing_plan_path": "samples/_probe/newsroom_handoff/episode_caption_timing_plan_v1.json",
+    "source_caption_timing_plan_id": "newsroom_caption_timing_plan_v1_2026_06_22",
+    "production_status": "diagnostic_only",
+    "review_stage": "internal_review_v0_1_prep"
+  },
+  "source_validation": {
+    "status": "passed",
+    "errors": [],
+    "card_render_result_id": "newsroom_card_placement_render_smoke_result_readback_v1_2026_06_25",
+    "card_render_result": "pass",
+    "card_render_duration_sec": 68,
+    "card_render_card_count": 4,
+    "card_placement_probe_id": "newsroom_yym4_card_asset_placement_probe_v1_2026_06_25",
+    "card_placement_probe_status": "placed_structurally",
+    "visual_card_bridge_id": "newsroom_visual_card_asset_bridge_v1_2026_06_25",
+    "timing_render_result_id": "newsroom_ymmp_timing_patch_render_smoke_result_readback_v1_2026_06_25",
+    "timing_render_result": "pass",
+    "native_audio_present_in_prior_render": true,
+    "audio_observation_id": "newsroom_audio_observation_and_timing_patch_readiness_v1_2026_06_24",
+    "tiny_render_result_id": "newsroom_tiny_render_smoke_result_readback_v1_2026_06_23",
+    "episode_capsule_id": "newsroom_episode_production_capsule_v1_2026_06_22",
+    "caption_timing_plan_id": "newsroom_caption_timing_plan_v1_2026_06_22"
+  },
+  "evidence_map": [
+    {
+      "axis": "script/caption import",
+      "status": "diagnostic_pass",
+      "evidence_path": "samples/_probe/newsroom_handoff/tiny_render_smoke_result_readback_v1.json",
+      "evidence_id": "newsroom_tiny_render_smoke_result_readback_v1_2026_06_23",
+      "review_implication": "four fake dialogue rows are enough for internal review structure"
+    },
+    {
+      "axis": "speaker binding",
+      "status": "diagnostic_pass",
+      "evidence_path": "samples/_probe/newsroom_handoff/audio_observation_and_timing_patch_readiness_v1.json",
+      "evidence_id": "newsroom_audio_observation_and_timing_patch_readiness_v1_2026_06_24",
+      "review_implication": "native YMM4 yukkuri voice remains the diagnostic default"
+    },
+    {
+      "axis": "native YMM4 audio",
+      "status": "diagnostic_pass",
+      "evidence_path": "samples/_probe/newsroom_handoff/ymmp_timing_patch_render_smoke_result_readback_v1.json",
+      "evidence_id": "newsroom_ymmp_timing_patch_render_smoke_result_readback_v1_2026_06_25",
+      "observed_value": true,
+      "review_implication": "audio mechanics do not block internal review prep"
+    },
+    {
+      "axis": "timing patch to 68 sec",
+      "status": "diagnostic_pass",
+      "evidence_path": "samples/_probe/newsroom_handoff/ymmp_timing_patch_render_smoke_result_readback_v1.json",
+      "evidence_id": "newsroom_ymmp_timing_patch_render_smoke_result_readback_v1_2026_06_25",
+      "observed_value": 68,
+      "review_implication": "current benchmark duration is 68 sec"
+    },
+    {
+      "axis": "card asset generation",
+      "status": "diagnostic_pass",
+      "evidence_path": "samples/_probe/newsroom_handoff/visual_card_asset_bridge_v1.json",
+      "evidence_id": "newsroom_visual_card_asset_bridge_v1_2026_06_25",
+      "observed_value": 4,
+      "review_implication": "external fake card asset bridge is available"
+    },
+    {
+      "axis": "card placement as ImageItems",
+      "status": "diagnostic_pass",
+      "evidence_path": "samples/_probe/newsroom_handoff/yym4_card_asset_placement_probe_v1.json",
+      "evidence_id": "newsroom_yym4_card_asset_placement_probe_v1_2026_06_25",
+      "observed_value": 4,
+      "review_implication": "direct YMM4 text/shape card graph is avoided"
+    },
+    {
+      "axis": "card placement render smoke",
+      "status": "diagnostic_pass",
+      "evidence_path": "samples/_probe/newsroom_handoff/card_placement_render_smoke_result_readback_v1.json",
+      "evidence_id": "newsroom_card_placement_render_smoke_result_readback_v1_2026_06_25",
+      "observed_value": true,
+      "review_implication": "cards are visible in the diagnostic render surface"
+    },
+    {
+      "axis": "render duration",
+      "status": "diagnostic_pass",
+      "evidence_path": "samples/_probe/newsroom_handoff/card_placement_render_smoke_result_readback_v1.json",
+      "evidence_id": "newsroom_card_placement_render_smoke_result_readback_v1_2026_06_25",
+      "observed_value": "00:01:08",
+      "review_implication": "duration matches the 68 sec timing patch"
+    },
+    {
+      "axis": "render time approximate",
+      "status": "observed_diagnostic",
+      "evidence_path": "samples/_probe/newsroom_handoff/card_placement_render_smoke_result_readback_v1.json",
+      "evidence_id": "newsroom_card_placement_render_smoke_result_readback_v1_2026_06_25",
+      "observed_value": 30,
+      "review_implication": "local diagnostic render cost is currently about 30 sec"
+    },
+    {
+      "axis": "not accepted production/public scope",
+      "status": "closed_for_now",
+      "evidence_path": "samples/_probe/newsroom_handoff/episode_production_capsule_v1.json",
+      "evidence_id": "newsroom_episode_production_capsule_v1_2026_06_22",
+      "observed_value": "diagnostic_only",
+      "review_implication": "internal review must not be treated as production approval"
+    },
+    {
+      "axis": "caption timing source",
+      "status": "diagnostic_reference",
+      "evidence_path": "samples/_probe/newsroom_handoff/episode_caption_timing_plan_v1.json",
+      "evidence_id": "newsroom_caption_timing_plan_v1_2026_06_22",
+      "observed_value": 4,
+      "review_implication": "fake caption timing remains a review baseline, not final script density"
+    }
+  ],
+  "internal_review_v0_1_candidate_summary": {
+    "candidate_video_name": "diagnostic_bound_speaker_probe_card_placement_v1.mp4",
+    "candidate_duration_sec": 68,
+    "candidate_content_type": "fake/review-only diagnostic",
+    "card_count": 4,
+    "dialogue_item_count": 4,
+    "voice_path": "YMM4_native_yukkuri_japanese",
+    "render_status": "pass",
+    "review_status": [
+      "ready_for_internal_review_prep",
+      "not_ready_for_publication"
+    ]
+  },
+  "review_questions": [
+    "Is the 68sec pacing intelligible despite sparse content?",
+    "Do the four cards make the fake/review-only structure understandable?",
+    "Is the subtitle/card safe area acceptable for a diagnostic baseline?",
+    "Does the video feel like a viable internal review v0.1, not production?",
+    "What is the single highest-value improvement before real packet integration?"
+  ],
+  "accepted_scope": {
+    "diagnostic_68sec_yym4_video_exists_and_render_path_is_proven": true,
+    "cards_audio_timing_survive_render": true,
+    "internal_review_v0_1_can_be_prepared": true,
+    "external_card_asset_bridge_is_viable": true,
+    "yym4_native_audio_path_remains_preferred_for_diagnostic_flow": true
+  },
+  "not_accepted_scope": {
+    "production_pacing": false,
+    "final_visual_design": false,
+    "final_narration_script_density": false,
+    "real_newsroom_content": false,
+    "rss_live_ingest": false,
+    "rights_publication_boundary": false,
+    "production_export_settings": false,
+    "final_artifact_packaging": false,
+    "public_prod_approval": false
+  },
+  "next_milestone_recommendation": {
+    "recommended_default": "newsroom-internal-review-v0.1-operator-review-card",
+    "reason": "all mechanical axes now pass at diagnostic level; the next useful input is a freeform internal review of pacing and visual comprehensibility",
+    "avoid_next": "further mechanics/readback-only loop before review",
+    "alternative_next_slices": [
+      {
+        "slice": "newsroom-internal-review-v0.1-render-package-v1",
+        "reason": "only if the repo needs a non-media package around the ignored local video"
+      },
+      {
+        "slice": "newsroom-rss-dry-run-integration-plan-v1",
+        "reason": "later, after internal review identifies the next content direction"
+      },
+      {
+        "slice": "newsroom-visual-card-design-refinement-v1",
+        "reason": "only if internal review identifies a visual issue"
+      }
+    ]
+  },
+  "render_gate_carry_forward": {
+    "new_render_in_this_slice": false,
+    "existing_card_placement_render_observation_consumed_once": true,
+    "next_render_only_after": [
+      "material visual/card design change",
+      "internal review package explicitly needs a new render",
+      "real packet dry run changes the surface"
+    ],
+    "no_render_for": [
+      "docs changes",
+      "readback changes",
+      "review package changes"
+    ],
+    "YMM4_launched_by_agent": false,
+    "render_audio_or_tts_created_by_agent": false
+  },
+  "readiness_separation": {
+    "slice_completion": "pass_for_this_prep",
+    "video_readiness_progress": "6/7",
+    "video_readiness_next_missing_gate": "internal review milestone completed",
+    "visual_readiness_progress": "7/7_diagnostic",
+    "production_readiness": "low_diagnostic_only",
+    "internal_review_readiness": "prep_defined",
+    "next_default_slice": "newsroom-internal-review-v0.1-operator-review-card"
+  },
+  "benchmark_baseline": {
+    "video_duration_sec": 68,
+    "render_time_approx_sec": 30,
+    "fake_card_count": 4,
+    "dialogue_item_count": 4,
+    "voice_path": "YMM4_native_yukkuri_japanese",
+    "real_data_used": false,
+    "production_public_readiness": false,
+    "benchmark_label": "68sec diagnostic video with four fake cards and YMM4 native audio"
+  },
+  "goal_stack": [
+    {
+      "level": "Immediate",
+      "goal": "Package current diagnostic video as internal review v0.1 candidate",
+      "success_signal": "review prep JSON/doc/brief exist and cite evidence",
+      "contribution": "moves from mechanics proof to review milestone"
+    },
+    {
+      "level": "Short-term",
+      "goal": "Enable freeform internal review",
+      "success_signal": "operator review card is compact and focused",
+      "contribution": "avoids more mechanical proof loops"
+    },
+    {
+      "level": "Mid-term",
+      "goal": "Identify highest-value refinement before real packet integration",
+      "success_signal": "review outcome can choose visual refinement, script density, or RSS dry run",
+      "contribution": "makes next work evidence-driven"
+    },
+    {
+      "level": "Long-term",
+      "goal": "Stabilize Newsroom-to-video automation",
+      "success_signal": "review criteria become reusable for later real packet runs",
+      "contribution": "reduces subjective drift"
+    }
+  ],
+  "completion_matrix": [
+    {
+      "gate": "current_repo_state_verified",
+      "status": true
+    },
+    {
+      "gate": "source_evidence_artifacts_inspected",
+      "status": true
+    },
+    {
+      "gate": "internal_review_prep_json_created",
+      "status": true
+    },
+    {
+      "gate": "human_review_prep_doc_brief_created",
+      "status": true
+    },
+    {
+      "gate": "readiness_benchmark_baseline_recorded",
+      "status": true
+    },
+    {
+      "gate": "narrow_commit_created_and_pushed_if_push_gate_passes",
+      "status": "pending_until_git_gate"
+    }
+  ],
+  "artifact_readiness": [
+    {
+      "artifact": "review_prep_json",
+      "status": "present"
+    },
+    {
+      "artifact": "human_readback",
+      "status": "present"
+    },
+    {
+      "artifact": "evidence_map",
+      "status": "present"
+    },
+    {
+      "artifact": "review_questions",
+      "status": "present"
+    },
+    {
+      "artifact": "not_accepted_scope",
+      "status": "present"
+    },
+    {
+      "artifact": "downstream_next_use",
+      "status": "present"
+    }
+  ],
+  "internal_review_readiness": [
+    {
+      "gate": "candidate_identity_defined",
+      "status": true
+    },
+    {
+      "gate": "evidence_map_complete",
+      "status": true
+    },
+    {
+      "gate": "review_questions_defined",
+      "status": true
+    },
+    {
+      "gate": "user_observation_burden_bounded",
+      "status": true
+    },
+    {
+      "gate": "production_public_boundary_preserved",
+      "status": true
+    },
+    {
+      "gate": "next_review_action_named",
+      "status": "newsroom-internal-review-v0.1-operator-review-card"
+    }
+  ],
+  "video_readiness": [
+    {
+      "gate": "source_input_path_proven",
+      "status": true
+    },
+    {
+      "gate": "target_yym4_import_path_proven",
+      "status": true
+    },
+    {
+      "gate": "audio_path_proven",
+      "status": true
+    },
+    {
+      "gate": "timing_duration_strategy_defined",
+      "status": true
+    },
+    {
+      "gate": "tiny_smoke_render_observed",
+      "status": true
+    },
+    {
+      "gate": "targeted_regression_render_observed",
+      "status": true
+    },
+    {
+      "gate": "internal_review_milestone_reached",
+      "status": false
+    }
+  ],
+  "render_gate_hygiene": [
+    {
+      "gate": "render_performed_in_this_slice",
+      "status": false
+    },
+    {
+      "gate": "existing_card_placement_render_evidence_reused",
+      "status": true
+    },
+    {
+      "gate": "render_treated_as_milestone_gated",
+      "status": true
+    },
+    {
+      "gate": "next_render_tied_to_material_change_or_explicit_internal_review_need",
+      "status": true
+    },
+    {
+      "gate": "no_render_for_docs_review_prep_changes",
+      "status": true
+    },
+    {
+      "gate": "repeated_timing_audio_card_render_check_avoided",
+      "status": true
+    }
+  ],
+  "human_burden_hygiene": [
+    {
+      "gate": "user_input",
+      "status": "freeform"
+    },
+    {
+      "gate": "template_required",
+      "status": false
+    },
+    {
+      "gate": "schema_owner",
+      "status": "Agent"
+    },
+    {
+      "gate": "user_side_work_for_this_slice",
+      "status": "none"
+    },
+    {
+      "gate": "future_review_questions_compact",
+      "status": true
+    },
+    {
+      "gate": "negative_confirmation_checklist",
+      "status": false
+    },
+    {
+      "gate": "fixed_form_relapse",
+      "status": false
+    }
+  ],
+  "review_non_redundancy": [
+    {
+      "gate": "prior_timing_evidence_reused",
+      "status": true
+    },
+    {
+      "gate": "prior_audio_evidence_reused",
+      "status": true
+    },
+    {
+      "gate": "prior_card_render_evidence_reused",
+      "status": true
+    },
+    {
+      "gate": "next_axis_stated_as_internal_review",
+      "status": true
+    },
+    {
+      "gate": "not_accepted_scope_preserved",
+      "status": true
+    },
+    {
+      "gate": "repeated_mechanics_review_requested",
+      "status": false
+    }
+  ],
+  "inertia_check": [
+    {
+      "gate": "packet_for_packet_drift",
+      "status": false
+    },
+    {
+      "gate": "readback_only_stall",
+      "status": false
+    },
+    {
+      "gate": "repeated_render_request",
+      "status": false
+    },
+    {
+      "gate": "product_video_review_readiness_separated_from_slice_completion",
+      "status": true
+    },
+    {
+      "gate": "next_concrete_milestone",
+      "status": "newsroom-internal-review-v0.1-operator-review-card"
+    }
+  ],
+  "review_brief": {
+    "brief_path": "docs/verification/NEWSROOM_INTERNAL_REVIEW_V0_1_REVIEW_BRIEF_2026-06-25.md",
+    "mode": "freeform_internal_review",
+    "look_for_count": 5,
+    "fixed_template_required": false,
+    "user_side_work_for_this_slice": "none",
+    "next_user_facing_action": "newsroom-internal-review-v0.1-operator-review-card"
+  },
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "video_render_created_by_agent": false,
+    "audio_generated_by_agent": false,
+    "TTS_generated_by_agent": false,
+    "external_TTS_introduced": false,
+    "real_media_imported": false,
+    "external_source_fetch_performed": false,
+    "real_brand_url_or_news_screenshot_used": false,
+    "ymmp_edited_by_agent": false,
+    "ymmp_or_media_staged_or_committed": false,
+    "production_quality_claimed": false,
+    "public_video_ready": false,
+    "dashboard_governance_freshness_changed": false
+  },
+  "downstream_next_use": {
+    "use_this_package_to": [
+      "start the freeform internal review v0.1 operator-review-card slice",
+      "compare future refinements against the 68sec diagnostic benchmark",
+      "choose the next improvement axis from review evidence"
+    ],
+    "do_not_use_this_package_to": [
+      "claim production quality or public readiness",
+      "request another render for documentation-only work",
+      "start RSS/live ingest before internal review direction is known",
+      "commit ignored .ymmp, mp4, audio, voice cache, or render outputs"
+    ]
+  }
+}
