@@ -1,5 +1,23 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom visual card audience-fit remote handoff sealed (2026-06-26)**:
+  Preserved the current mainline restart context after
+  `newsroom-visual-card-audience-fit-refinement-v1` in
+  `docs/verification/NEWSROOM_VISUAL_CARD_AUDIENCE_FIT_REMOTE_HANDOFF_2026-06-26.md`.
+  The handoff base is
+  `93ebf62 feat: refine newsroom visual cards for audience fit` on `master`;
+  before writing the handoff, `HEAD...origin/master` was `0 0` and the tracked
+  worktree was clean. The next restart read order remains `AGENTS.md`,
+  `docs/REPO_LOCAL_RULES.md`, then `docs/runtime-state.md`, followed by this
+  handoff file only if a compact branch/commit/artifact recap is needed.
+  Ignored local manual artifacts may remain under `_tmp/newsroom_manual_probe/`,
+  including diagnostic `.ymmp` and mp4 files, and must remain untracked and
+  unstaged. The next concrete milestone is
+  `newsroom-card-placement-post-audience-fit-render-smoke-v1`; use
+  `newsroom-yym4-card-asset-placement-refresh-v1` only if the ignored placement
+  project cannot reuse the stable PNG paths. Production visual quality,
+  post-audience-fit render proof, public video readiness, real content
+  readiness, and production approval remain not accepted.
 - **Newsroom visual card audience-fit refinement v1 completed (2026-06-26)**:
   Normalized the latest freeform visual review as
   `needs_audience_fit_refinement`: modern visual quality is positive, but

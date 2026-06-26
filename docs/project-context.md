@@ -79,6 +79,24 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom visual card audience-fit remote handoff decision (2026-06-26):
+`newsroom_visual_card_audience_fit_remote_handoff_2026_06_26` preserves the
+restart context after
+`93ebf62 feat: refine newsroom visual cards for audience fit`. Before writing
+the handoff, `master` was aligned with `origin/master`
+(`HEAD...origin/master = 0 0`) and the tracked worktree was clean. The
+canonical handoff file is
+`docs/verification/NEWSROOM_VISUAL_CARD_AUDIENCE_FIT_REMOTE_HANDOFF_2026-06-26.md`.
+The preserved state is: latest review normalized to
+`needs_audience_fit_refinement`, audience-fit SVG/PNG cards regenerated at
+stable paths, bundled Python Pillow fallback used for PNG export, no YMM4
+launch/render/`.ymmp` edit/audio/TTS/external fetch/media staging performed,
+and production/public readiness still closed. Ignored local diagnostic
+artifacts may exist under `_tmp/newsroom_manual_probe/` but are not repo
+artifacts. The next default milestone is
+`newsroom-card-placement-post-audience-fit-render-smoke-v1`; placement refresh
+is only a fallback if stable PNG paths are not reusable.
+
 Latest newsroom visual card audience-fit refinement decision (2026-06-26):
 `newsroom_visual_card_audience_fit_refinement_v1_2026_06_25` consumes the
 latest freeform visual review after the post-refinement package: the cards are
