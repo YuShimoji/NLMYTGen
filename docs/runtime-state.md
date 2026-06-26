@@ -1,5 +1,42 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom visual card audience-fit refinement v1 completed (2026-06-26)**:
+  Normalized the latest freeform visual review as
+  `needs_audience_fit_refinement`: modern visual quality is positive, but
+  small text remains, the cards still feel too SaaS/dashboard-like for the
+  target audience, and familiar mainstream YouTube explainer language is now
+  required. This slice added canonical audience-fit readback/refinement
+  artifacts at
+  `samples/_probe/newsroom_handoff/visual_card_audience_fit_review_readback_v1.json`,
+  `samples/_probe/newsroom_handoff/visual_card_audience_fit_refinement_v1.json`,
+  `docs/verification/NEWSROOM_VISUAL_CARD_AUDIENCE_FIT_REVIEW_READBACK_V1_2026-06-25.md`,
+  `docs/verification/NEWSROOM_VISUAL_CARD_AUDIENCE_FIT_REFINEMENT_V1_2026-06-25.md`,
+  `src/pipeline/newsroom_visual_card_audience_fit_refinement.py`, and
+  `tests/test_newsroom_visual_card_audience_fit_refinement.py`. The four
+  stable SVG/PNG card paths under
+  `samples/_probe/newsroom_handoff/visual_cards_v1/` and their contact sheet
+  were regenerated as diagnostic-only fake cards with larger plain labels,
+  large-number/process/check/status motifs, minimum visible text raised to
+  `34` px, a declared `132` px display-number allowance, no visible debug
+  footer, and no real brands, URLs, media, screenshots, or production-news
+  claims. PNG raster export completed through the bundled Python Pillow
+  fallback because the `uv` runtime had no Pillow available. No YMM4 launch,
+  video render, `.ymmp` edit, audio/TTS generation, external fetch, real media
+  import, dashboard/governance/freshness change, production visual-quality
+  acceptance, public-readiness claim, or media staging was performed. Accepted
+  scope is limited to review normalization, regenerated external diagnostic
+  SVG/PNG assets, and a local preview surface ready for a later milestone
+  observation. Not accepted: post-audience-fit render proof, YMM4 placement
+  proof after this refinement, final design system, production visual quality,
+  public video readiness, real newsroom visuals, real content readiness, or
+  production approval. Video readiness remains `6/7`; visual readiness remains
+  diagnostic `7/7` with the audience-fit surface refreshed; production
+  readiness remains low/diagnostic-only. The next default slice is
+  `newsroom-card-placement-post-audience-fit-render-smoke-v1`; use
+  `newsroom-yym4-card-asset-placement-refresh-v1` only if the existing ignored
+  placement project cannot reuse the stable PNG paths. Verification observed
+  focused audience-fit tests `7 passed` and adjacent bridge/refinement/
+  placement/post-refinement package regression tests `41 passed`.
 - **Newsroom card placement post-refinement render smoke package v1 prepared (2026-06-26)**:
   Prepared `newsroom-card-placement-post-refinement-render-smoke-v1` as a
   diagnostic observation package after the visual card design refinement,

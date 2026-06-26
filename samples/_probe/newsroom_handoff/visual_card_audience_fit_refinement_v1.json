@@ -1,0 +1,503 @@
+{
+  "artifact_id": "newsroom_visual_card_audience_fit_refinement_v1_2026_06_25",
+  "refinement_id": "newsroom_visual_card_audience_fit_refinement_v1_2026_06_25",
+  "schema_version": "newsroom_visual_card_audience_fit_refinement.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "refinement_status": "assets_regenerated",
+  "identity": {
+    "refinement_id": "newsroom_visual_card_audience_fit_refinement_v1_2026_06_25",
+    "source_audience_fit_review_readback_path": "samples/_probe/newsroom_handoff/visual_card_audience_fit_review_readback_v1.json",
+    "source_audience_fit_review_readback_id": "newsroom_visual_card_audience_fit_review_readback_v1_2026_06_25",
+    "source_visual_card_refinement_path": "samples/_probe/newsroom_handoff/visual_card_design_refinement_v1.json",
+    "source_visual_card_refinement_id": "newsroom_visual_card_design_refinement_v1_2026_06_25",
+    "source_visual_card_bridge_path": "samples/_probe/newsroom_handoff/visual_card_asset_bridge_v1.json",
+    "source_visual_card_bridge_id": "newsroom_visual_card_asset_bridge_v1_2026_06_25",
+    "source_cards_dir": "samples/_probe/newsroom_handoff/visual_cards_v1",
+    "output_cards_dir": "samples/_probe/newsroom_handoff/visual_cards_v1",
+    "production_status": "diagnostic_only"
+  },
+  "design_token_constraints": {
+    "canvas_size": {
+      "width": 1920,
+      "height": 1080
+    },
+    "safe_margin": 84,
+    "minimum_font_size": 34,
+    "title_font_size": 62,
+    "headline_font_size": 76,
+    "body_font_size": 44,
+    "chip_or_label_font_size": 36,
+    "meta_font_size": 36,
+    "maximum_copy_font_size": 76,
+    "display_number_font_size": 132,
+    "maximum_font_size": 132,
+    "max_title_lines": 1,
+    "max_body_lines": 2,
+    "wrap_width": 760,
+    "subtitle_safe_reserve": {
+      "x": 104,
+      "y": 820,
+      "width": 1712,
+      "height": 124
+    },
+    "footer_debug_treatment": "removed_from_visible_review_surface",
+    "audience_fit_style": [
+      "familiar_youtube_explainer",
+      "diagnostic_only"
+    ],
+    "real_brand_or_url_present": false,
+    "production_claim_present": false,
+    "text_wrapping_required": true,
+    "source_metadata_wrap_required": true,
+    "card_variation_required": "role_specific_familiar_layout"
+  },
+  "design_changes": [
+    {
+      "card_id": "visual_card_cap_beat_fake_intro_001_01_v1",
+      "role": "intro_summary",
+      "role_label": "POINT",
+      "layout_motif": "large_number",
+      "previous_issue_summary": "Refined card was modern and cleaner, but still felt SaaS/dashboard-like and kept some text too small for mainstream YouTube viewing.",
+      "audience_fit_change_summary": "Shifted to larger, plainer explainer blocks with familiar labels and fewer fine UI ornaments.",
+      "text_size_adjustment": "minimum visible text raised to 34px",
+      "familiar_ui_adjustment": "large TV-style title and number, fewer chips",
+      "variation_adjustment": "large-number lead card",
+      "text_wrap_applied": true,
+      "clipping_guard": true,
+      "type_scale_status": "audience_fit_larger_plain",
+      "variation_status": "role_specific_familiar_layout",
+      "output_svg_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.svg",
+      "output_png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.png",
+      "preview_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "contact_sheet_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "png_valid": true,
+      "png_width": 1920,
+      "png_height": 1080
+    },
+    {
+      "card_id": "visual_card_cap_beat_fake_intro_001_02_v1",
+      "role": "handoff_process",
+      "role_label": "FLOW",
+      "layout_motif": "simple_process_steps",
+      "previous_issue_summary": "Refined card was modern and cleaner, but still felt SaaS/dashboard-like and kept some text too small for mainstream YouTube viewing.",
+      "audience_fit_change_summary": "Shifted to larger, plainer explainer blocks with familiar labels and fewer fine UI ornaments.",
+      "text_size_adjustment": "minimum visible text raised to 34px",
+      "familiar_ui_adjustment": "numbered steps with large labels",
+      "variation_adjustment": "simple process ladder",
+      "text_wrap_applied": true,
+      "clipping_guard": true,
+      "type_scale_status": "audience_fit_larger_plain",
+      "variation_status": "role_specific_familiar_layout",
+      "output_svg_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.svg",
+      "output_png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.png",
+      "preview_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "contact_sheet_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "png_valid": true,
+      "png_width": 1920,
+      "png_height": 1080
+    },
+    {
+      "card_id": "visual_card_cap_beat_fake_claim_001_01_v1",
+      "role": "claim_check",
+      "role_label": "CHECK",
+      "layout_motif": "check_warning_box",
+      "previous_issue_summary": "Refined card was modern and cleaner, but still felt SaaS/dashboard-like and kept some text too small for mainstream YouTube viewing.",
+      "audience_fit_change_summary": "Shifted to larger, plainer explainer blocks with familiar labels and fewer fine UI ornaments.",
+      "text_size_adjustment": "minimum visible text raised to 34px",
+      "familiar_ui_adjustment": "bold check/caution boxes instead of fine cells",
+      "variation_adjustment": "check and warning box composition",
+      "text_wrap_applied": true,
+      "clipping_guard": true,
+      "type_scale_status": "audience_fit_larger_plain",
+      "variation_status": "role_specific_familiar_layout",
+      "output_svg_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.svg",
+      "output_png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.png",
+      "preview_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "contact_sheet_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "png_valid": true,
+      "png_width": 1920,
+      "png_height": 1080
+    },
+    {
+      "card_id": "visual_card_cap_beat_fake_claim_001_02_v1",
+      "role": "source_status_next_action",
+      "role_label": "NEXT",
+      "layout_motif": "source_status_panel",
+      "previous_issue_summary": "Refined card was modern and cleaner, but still felt SaaS/dashboard-like and kept some text too small for mainstream YouTube viewing.",
+      "audience_fit_change_summary": "Shifted to larger, plainer explainer blocks with familiar labels and fewer fine UI ornaments.",
+      "text_size_adjustment": "minimum visible text raised to 34px",
+      "familiar_ui_adjustment": "large status panel and next-action label",
+      "variation_adjustment": "source/status panel with next action",
+      "text_wrap_applied": true,
+      "clipping_guard": true,
+      "type_scale_status": "audience_fit_larger_plain",
+      "variation_status": "role_specific_familiar_layout",
+      "output_svg_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.svg",
+      "output_png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.png",
+      "preview_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "contact_sheet_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+      "png_valid": true,
+      "png_width": 1920,
+      "png_height": 1080
+    }
+  ],
+  "source_review_findings": {
+    "modern_visual_quality_signal": "positive",
+    "small_text_still_present": true,
+    "audience_familiarity_mismatch": true,
+    "too_saas_dashboard_like": true,
+    "mainstream_youtube_visual_language_required": true
+  },
+  "source_audience_fit_review_normalization": {
+    "internal_review_status": "needs_audience_fit_refinement",
+    "modern_visual_quality_signal": "positive",
+    "small_text_still_present": true,
+    "audience_familiarity_mismatch": true,
+    "too_saas_dashboard_like": true,
+    "mainstream_youtube_visual_language_required": true,
+    "production_visual_quality_accepted": false,
+    "public_video_ready": false,
+    "recommended_next_axis": "visual_card_audience_fit_refinement"
+  },
+  "raster_export_status": {
+    "png_export_status": "generated",
+    "rasterization_method": "bundled_python_pillow_svg_subset",
+    "deterministic_export": true,
+    "png_file_count": 4,
+    "expected_png_file_count": 4,
+    "errors": [],
+    "png_files": [
+      {
+        "path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.png",
+        "exists": true,
+        "valid": true,
+        "width": 1920,
+        "height": 1080,
+        "format": "png"
+      },
+      {
+        "path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.png",
+        "exists": true,
+        "valid": true,
+        "width": 1920,
+        "height": 1080,
+        "format": "png"
+      },
+      {
+        "path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.png",
+        "exists": true,
+        "valid": true,
+        "width": 1920,
+        "height": 1080,
+        "format": "png"
+      },
+      {
+        "path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.png",
+        "exists": true,
+        "valid": true,
+        "width": 1920,
+        "height": 1080,
+        "format": "png"
+      }
+    ]
+  },
+  "accepted_scope": {
+    "audience_fit_review_captured": true,
+    "external_card_assets_regenerated": true,
+    "minimum_text_readability_improved": true,
+    "dashboard_saas_feel_reduced": true,
+    "familiar_youtube_explainer_visual_language_introduced": true,
+    "card_variation_increased": true,
+    "assets_ready_for_later_yym4_render_smoke": true
+  },
+  "not_accepted_scope": {
+    "production_visual_quality": false,
+    "final_design_system": false,
+    "post_audience_fit_render_proof": false,
+    "YMM4_placement_proof_after_this_refinement": false,
+    "public_video_readiness": false,
+    "real_newsroom_visuals": false,
+    "real_content_readiness": false,
+    "production_approval": false
+  },
+  "readiness_separation": {
+    "slice_completion": "pass_for_audience_fit_refinement",
+    "video_readiness_progress": "6/7",
+    "visual_readiness_progress": "7/7_diagnostic_audience_fit_refined",
+    "visual_readiness_current": "external_card_assets_audience_fit_refined",
+    "video_readiness_next_missing_gate": "post-audience-fit render smoke observation, then internal review milestone",
+    "production_readiness": "low_diagnostic_only",
+    "next_default_slice": "newsroom-card-placement-post-audience-fit-render-smoke-v1"
+  },
+  "next_recommended_slice": {
+    "slice": "newsroom-card-placement-post-audience-fit-render-smoke-v1",
+    "reason": "stable SVG/PNG asset paths were regenerated with a familiar YouTube explainer style, so the next milestone is a post-audience-fit render smoke"
+  },
+  "recommended_next_slices": [
+    {
+      "slice": "newsroom-card-placement-post-audience-fit-render-smoke-v1",
+      "timing": "recommended_next_default",
+      "reason": "stable SVG/PNG card paths were regenerated with audience-fit visual language"
+    },
+    {
+      "slice": "newsroom-yym4-card-asset-placement-refresh-v1",
+      "timing": "only_if_existing_placement_paths_are_not_stable",
+      "reason": "refresh ImageItem placement only if stable PNG paths cannot be reused"
+    },
+    {
+      "slice": "newsroom-internal-review-v0.1-prep",
+      "timing": "after_post_audience_fit_smoke",
+      "reason": "internal review is meaningful after the changed visual surface is observed"
+    }
+  ],
+  "implementation_principle_for_next_lane": [
+    "Keep cards as external SVG/PNG assets.",
+    "Do not rebuild cards as YMM4 TextItem/ShapeItem graphs.",
+    "Preserve the YMM4 native audio path.",
+    "Keep .ymmp mutation limited to ignored local copies."
+  ],
+  "goal_stack": [
+    {
+      "level": "Immediate",
+      "goal": "Convert visual review into audience-fit refinement",
+      "success_signal": "review readback and regenerated cards exist",
+      "contribution": "avoids vague taste debate"
+    },
+    {
+      "level": "Short-term",
+      "goal": "Improve readability and familiarity",
+      "success_signal": "cards are larger, simpler, less SaaS-like",
+      "contribution": "makes next render review meaningful"
+    },
+    {
+      "level": "Mid-term",
+      "goal": "Prepare post-audience-fit render smoke",
+      "success_signal": "stable PNG assets can be reused by placement .ymmp",
+      "contribution": "moves toward internal review acceptance"
+    },
+    {
+      "level": "Long-term",
+      "goal": "Establish reusable mainstream card baseline",
+      "success_signal": "future packets can use viewer-familiar templates",
+      "contribution": "improves automation viability"
+    }
+  ],
+  "completion_matrix": [
+    {
+      "gate": "current_repo_state_verified",
+      "status": true
+    },
+    {
+      "gate": "audience_fit_review_normalized",
+      "status": true
+    },
+    {
+      "gate": "current_card_issues_inspected",
+      "status": true
+    },
+    {
+      "gate": "audience_fit_refined_card_assets_generated",
+      "status": true
+    },
+    {
+      "gate": "preview_contact_sheet_updated",
+      "status": true
+    },
+    {
+      "gate": "narrow_commit_created_and_pushed_if_push_gate_passes",
+      "status": "pending_until_git_gate"
+    }
+  ],
+  "artifact_readiness": [
+    {
+      "artifact": "audience_fit_review_readback",
+      "status": "present"
+    },
+    {
+      "artifact": "audience_fit_refinement_json",
+      "status": "present"
+    },
+    {
+      "artifact": "human_docs",
+      "status": "present"
+    },
+    {
+      "artifact": "refined_svg_png_assets",
+      "status": "present"
+    },
+    {
+      "artifact": "contact_sheet_preview",
+      "status": "present"
+    },
+    {
+      "artifact": "downstream_next_use",
+      "status": "present"
+    }
+  ],
+  "visual_readiness": [
+    {
+      "gate": "visual_card_concept_selected",
+      "status": true
+    },
+    {
+      "gate": "external_card_assets_generated",
+      "status": true
+    },
+    {
+      "gate": "preview_contact_sheet_available",
+      "status": true
+    },
+    {
+      "gate": "assets_mapped_to_timeline_caption_units",
+      "status": true
+    },
+    {
+      "gate": "yym4_placement_contract_defined",
+      "status": true
+    },
+    {
+      "gate": "yym4_placement_proof_observed",
+      "status": true
+    },
+    {
+      "gate": "post_audience_fit_render_reviewed",
+      "status": false
+    }
+  ],
+  "render_gate_hygiene": [
+    {
+      "gate": "render_performed_in_this_slice",
+      "status": false
+    },
+    {
+      "gate": "existing_render_review_evidence_reused",
+      "status": true
+    },
+    {
+      "gate": "render_treated_as_milestone_gated",
+      "status": true
+    },
+    {
+      "gate": "next_render_tied_to_audience_fit_visual_surface_change",
+      "status": true
+    },
+    {
+      "gate": "no_render_for_docs_only_changes",
+      "status": true
+    },
+    {
+      "gate": "repeated_timing_audio_review_avoided",
+      "status": true
+    }
+  ],
+  "human_burden_hygiene": [
+    {
+      "gate": "user_input",
+      "status": "freeform"
+    },
+    {
+      "gate": "template_required",
+      "status": false
+    },
+    {
+      "gate": "schema_owner",
+      "status": "Agent"
+    },
+    {
+      "gate": "user_side_work_for_this_slice",
+      "status": "none"
+    },
+    {
+      "gate": "negative_confirmation_checklist",
+      "status": false
+    },
+    {
+      "gate": "fixed_form_relapse",
+      "status": false
+    },
+    {
+      "gate": "repeated_review_request",
+      "status": false
+    }
+  ],
+  "review_non_redundancy": [
+    {
+      "gate": "prior_internal_review_observation_consumed_once",
+      "status": true
+    },
+    {
+      "gate": "prior_render_evidence_reused",
+      "status": true
+    },
+    {
+      "gate": "next_axis_stated_as_audience_fit_visual_refinement",
+      "status": true
+    },
+    {
+      "gate": "not_accepted_scope_preserved",
+      "status": true
+    },
+    {
+      "gate": "repeated_user_review_requested",
+      "status": false
+    },
+    {
+      "gate": "mechanics_re_review_requested",
+      "status": false
+    }
+  ],
+  "inertia_check": [
+    {
+      "gate": "packet_for_packet_drift",
+      "status": false
+    },
+    {
+      "gate": "readback_only_stall",
+      "status": false
+    },
+    {
+      "gate": "repeated_render_request",
+      "status": false
+    },
+    {
+      "gate": "readiness_separated_from_slice_completion",
+      "status": true
+    },
+    {
+      "gate": "next_concrete_milestone",
+      "status": "newsroom-card-placement-post-audience-fit-render-smoke-v1"
+    }
+  ],
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "video_render_created_by_agent": false,
+    "audio_generated_by_agent": false,
+    "TTS_generated_by_agent": false,
+    "external_TTS_introduced": false,
+    "real_media_imported": false,
+    "external_source_fetch_performed": false,
+    "real_brand_url_or_news_screenshot_used": false,
+    "ymmp_edited_by_agent": false,
+    "ymmp_or_media_staged_or_committed": false,
+    "render_output_staged_or_committed": false,
+    "production_visual_quality_accepted": false,
+    "production_approval": false,
+    "public_video_ready": false,
+    "dashboard_governance_freshness_changed": false
+  },
+  "downstream_next_use": {
+    "use_this_refinement_to": [
+      "reuse stable PNG paths in the existing ignored placement project",
+      "run a milestone-gated post-audience-fit render smoke later",
+      "compare familiarity and readability against the latest review"
+    ],
+    "do_not_use_this_refinement_to": [
+      "claim production visual quality",
+      "claim public video readiness",
+      "introduce real brands, real URLs, screenshots, or external TTS",
+      "commit ignored .ymmp, mp4, audio, voice cache, or render outputs"
+    ]
+  }
+}

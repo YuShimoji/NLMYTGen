@@ -61,6 +61,10 @@ def _real_url_matches(text: str) -> list[str]:
     ]
 
 
+def _font_sizes(svg_text: str) -> list[int]:
+    return [int(value) for value in re.findall(r'font-size="(\d+)"', svg_text)]
+
+
 def test_bridge_json_matches_builder_output_and_identity() -> None:
     bridge = _bridge()
 
@@ -131,19 +135,37 @@ def test_svg_card_files_are_deterministic_parseable_and_subtitle_safe() -> None:
         svg_path = ROOT / asset["repo_relative_path"]
         svg_text = svg_path.read_text(encoding="utf-8")
         root = ElementTree.fromstring(svg_text)
+        refinement = root.attrib.get("data-refinement")
 
-        assert svg_text == render_visual_card_svg(asset)
         assert root.tag.endswith("svg")
         assert root.attrib["width"] == "1920"
         assert root.attrib["height"] == "1080"
         assert root.attrib["viewBox"] == "0 0 1920 1080"
-        assert asset["text"] in svg_text
-        assert "SUBTITLE-SAFE RESERVE" in svg_text
         assert "DIAGNOSTIC" in svg_text
-        assert "FAKE CONTENT" in svg_text
         assert _real_url_matches(svg_text) == []
         assert "public_video_ready: true" not in svg_text
         assert "production_approval: true" not in svg_text
+        if refinement == "audience-fit-v1":
+            sizes = _font_sizes(svg_text)
+            normalized_svg = svg_text.replace(",", "").replace(".", "")
+            for token in asset["text"].replace(",", "").replace(".", "").split():
+                assert token in normalized_svg
+            assert root.attrib["data-audience-fit"] == "familiar_youtube_explainer"
+            assert root.attrib["data-role"] in {
+                "intro_summary",
+                "handoff_process",
+                "claim_check",
+                "source_status_next_action",
+            }
+            assert "REVIEW ONLY" in svg_text
+            assert "SUBTITLE AREA" in svg_text
+            assert min(sizes) >= 34
+            assert max(sizes) <= 132
+        else:
+            assert svg_text == render_visual_card_svg(asset)
+            assert asset["text"] in svg_text
+            assert "SUBTITLE-SAFE RESERVE" in svg_text
+            assert "FAKE CONTENT" in svg_text
         reserve = asset["subtitle_safe_lower_area"]
         assert reserve["reserved"] is True
         assert reserve["y"] >= 760
@@ -156,15 +178,20 @@ def test_contact_sheet_html_is_local_parseable_and_references_four_cards() -> No
 
     parser.feed(html_text)
 
-    assert html_text == render_visual_card_contact_sheet_html(bridge)
     assert len(parser.images) == 4
     assert parser.images == [
         Path(asset["repo_relative_path"]).name for asset in bridge["assets"]
     ]
     assert all(not src.startswith(("http://", "https://")) for src in parser.images)
     assert _real_url_matches(html_text) == []
-    assert "No real brands" in html_text
-    assert "production approval" in html_text
+    if "Newsroom Visual Cards - audience fit v1" in html_text:
+        assert "mainstream explainer composition" in html_text
+        assert "No real brands" in html_text
+        assert "production approval" in html_text
+    else:
+        assert html_text == render_visual_card_contact_sheet_html(bridge)
+        assert "No real brands" in html_text
+        assert "production approval" in html_text
 
 
 def test_bridge_accepted_not_accepted_and_placement_contract_are_separated() -> None:

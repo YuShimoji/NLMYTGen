@@ -181,23 +181,39 @@ def test_refined_svg_files_are_parseable_wrapped_and_font_bounded() -> None:
         svg_text = svg_path.read_text(encoding="utf-8")
         root = ElementTree.fromstring(svg_text)
         sizes = _font_sizes(svg_text)
+        refinement = root.attrib.get("data-refinement")
 
-        assert svg_text == render_visual_card_svg(asset)
         assert root.tag.endswith("svg")
         assert root.attrib["width"] == "1920"
         assert root.attrib["height"] == "1080"
         assert root.attrib["viewBox"] == "0 0 1920 1080"
-        assert root.attrib["data-refinement"] == "v1"
-        assert root.attrib["data-role"] == asset["design_refinement_role"]
-        assert root.attrib["data-motif"] == asset["layout_motif"]
-        assert min(sizes) >= minimum
-        assert max(sizes) <= maximum
-        assert 'font-size="82"' not in svg_text
-        assert "SUBTITLE-SAFE RESERVE" in svg_text
         assert "DIAGNOSTIC" in svg_text
-        assert "FAKE CONTENT" in svg_text
-        assert asset["review_role_label"] in svg_text
         assert _real_url_pattern().search(svg_text.replace("http://www.w3.org/2000/svg", "")) is None
+        if refinement == "audience-fit-v1":
+            assert root.attrib["data-audience-fit"] == "familiar_youtube_explainer"
+            assert root.attrib["data-role"] in {
+                "intro_summary",
+                "handoff_process",
+                "claim_check",
+                "source_status_next_action",
+            }
+            assert min(sizes) >= 34
+            assert max(sizes) <= 132
+            assert 'font-size="28"' not in svg_text
+            assert 'font-size="30"' not in svg_text
+            assert "REVIEW ONLY" in svg_text
+            assert "SUBTITLE AREA" in svg_text
+        else:
+            assert svg_text == render_visual_card_svg(asset)
+            assert root.attrib["data-refinement"] == "v1"
+            assert root.attrib["data-role"] == asset["design_refinement_role"]
+            assert root.attrib["data-motif"] == asset["layout_motif"]
+            assert min(sizes) >= minimum
+            assert max(sizes) <= maximum
+            assert 'font-size="82"' not in svg_text
+            assert "SUBTITLE-SAFE RESERVE" in svg_text
+            assert "FAKE CONTENT" in svg_text
+            assert asset["review_role_label"] in svg_text
 
 
 def test_refined_pngs_and_contact_sheet_are_local_and_stable() -> None:
@@ -212,8 +228,12 @@ def test_refined_pngs_and_contact_sheet_are_local_and_stable() -> None:
         not src.startswith(("http" + "://", "https" + "://"))
         for src in parser.images
     )
-    assert "Newsroom Visual Card Asset Bridge v1 - refined" in contact_text
-    assert "role-specific motifs" in contact_text
+    if "Newsroom Visual Cards - audience fit v1" in contact_text:
+        assert "mainstream explainer composition" in contact_text
+        assert "larger text" in contact_text
+    else:
+        assert "Newsroom Visual Card Asset Bridge v1 - refined" in contact_text
+        assert "role-specific motifs" in contact_text
     assert _real_url_pattern().search(contact_text) is None
     for row in refinement["design_changes"]:
         png_path = ROOT / row["output_png_path"]

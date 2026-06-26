@@ -79,6 +79,32 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom visual card audience-fit refinement decision (2026-06-26):
+`newsroom_visual_card_audience_fit_refinement_v1_2026_06_25` consumes the
+latest freeform visual review after the post-refinement package: the cards are
+cleaner and modern, but still retain small text and read too much like a
+polished SaaS/dashboard UI for a mainstream YouTube audience. The selected
+correction axis is audience-fit visual language, not mechanics, timing, audio,
+placement, real content, or production approval. New canonical readbacks are
+`visual_card_audience_fit_review_readback_v1.json` and
+`visual_card_audience_fit_refinement_v1.json`, with human docs in
+`docs/verification/`. The four stable SVG/PNG paths under
+`samples/_probe/newsroom_handoff/visual_cards_v1/` were regenerated in place
+as diagnostic-only fake cards using larger plain labels, large-number/process/
+check/status motifs, minimum visible text of `34` px, and a declared `132` px
+display-number allowance. The contact sheet now previews the same
+audience-fit surface. PNG export used the bundled Python Pillow fallback
+because the `uv` runtime did not provide Pillow. This does not launch YMM4,
+render video, edit `.ymmp`, generate audio/TTS, fetch external sources, import
+real media, change dashboard/governance/freshness work, stage media, approve
+production, or claim public readiness. Production visual quality, final design
+system, post-audience-fit render proof, placement proof after this refinement,
+real newsroom visuals, real content readiness, and production approval remain
+outside accepted scope. The next default slice is
+`newsroom-card-placement-post-audience-fit-render-smoke-v1`; use
+`newsroom-yym4-card-asset-placement-refresh-v1` only if the ignored placement
+project cannot reuse the stable PNG paths.
+
 Latest newsroom card placement post-refinement render smoke package decision (2026-06-26):
 `newsroom_card_placement_post_refinement_render_smoke_v1_2026_06_26`
 converts the completed visual-card refinement into the next milestone-gated
