@@ -1,5 +1,31 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom visual audience-fit benchmark v1 defined (2026-06-26)**:
+  `newsroom-visual-audience-fit-benchmark-v1` now has a repo artifact at
+  `samples/_probe/newsroom_handoff/visual_audience_fit_benchmark_v1.json` and
+  the human-readable spec at
+  `docs/verification/NEWSROOM_VISUAL_AUDIENCE_FIT_BENCHMARK_V1_2026-06-26.md`,
+  with focused coverage in
+  `tests/test_newsroom_visual_audience_fit_benchmark.py` and the compact
+  builder in `src/pipeline/newsroom_visual_audience_fit_benchmark.py`. The
+  slice consumes the current audience-fit refinement and normalizes the latest
+  concern: the cards are improved, but actual YouTube audience acceptance is
+  not measurable from local screenshots, freeform review, or render
+  observation alone. The benchmark defines target audience assumptions, visual
+  job-to-be-done, L1 evidence level, proxy metrics, reference-abstraction
+  hypotheses, acceptance criteria, next-iteration mapping, and a bounded
+  freeform review protocol. This did not launch YMM4, render video, edit
+  `.ymmp`, regenerate SVG/PNG cards, generate audio/TTS, fetch external
+  assets, import real media, stage media, claim actual audience acceptance,
+  approve production visual quality, or claim public video readiness. The next
+  default slice is `newsroom-audience-fit-benchmark-evaluation-v1`: apply this
+  benchmark to the current four diagnostic cards once before any further visual
+  redesign. `newsroom-visual-card-benchmarked-refinement-v1` is only valid if
+  that evaluation finds concrete benchmark failures. The reference-pack slice is
+  only valid if reference abstraction blocks evaluation;
+  `newsroom-internal-review-v0.1-operator-review-card` is only valid if the
+  benchmark evaluation says the current cards are sufficient for diagnostic
+  review.
 - **Newsroom visual card audience-fit remote handoff sealed (2026-06-26)**:
   Preserved the current mainline restart context after
   `newsroom-visual-card-audience-fit-refinement-v1` in

@@ -79,6 +79,30 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom visual audience-fit benchmark decision (2026-06-26):
+`newsroom_visual_audience_fit_benchmark_v1_2026_06_26` turns the latest
+audience-fit correction into a measurable proxy benchmark before any further
+visual redesign. The benchmark artifacts are
+`samples/_probe/newsroom_handoff/visual_audience_fit_benchmark_v1.json` and
+`docs/verification/NEWSROOM_VISUAL_AUDIENCE_FIT_BENCHMARK_V1_2026-06-26.md`,
+with the builder in
+`src/pipeline/newsroom_visual_audience_fit_benchmark.py` and focused tests in
+`tests/test_newsroom_visual_audience_fit_benchmark.py`. The decision preserves
+the current state as improved but not audience-fit accepted: evidence remains
+L1 user freeform direction plus local diagnostic screenshots/render
+observations, while target viewer comprehension, retention/CTR, production
+visual quality, and actual audience preference are unknown. The benchmark
+defines proxy metrics for glance readability, clipping/wrapping, meaningful
+font size, one dominant message per card, familiar explainer/TV/YouTube
+grammar, no tiny metadata dependency, role variation, 68 sec pacing/density,
+diagnostic boundary visibility, and absence of real brand/URL/public claims.
+This slice did not launch YMM4, render video, edit `.ymmp`, regenerate card
+assets, generate audio/TTS, fetch external material, import real media, stage
+media, claim production/public readiness, or claim actual audience acceptance.
+The next default slice is `newsroom-audience-fit-benchmark-evaluation-v1`.
+Further visual refinement is allowed only after that evaluation identifies
+concrete benchmark failures.
+
 Latest newsroom visual card audience-fit remote handoff decision (2026-06-26):
 `newsroom_visual_card_audience_fit_remote_handoff_2026_06_26` preserves the
 restart context after

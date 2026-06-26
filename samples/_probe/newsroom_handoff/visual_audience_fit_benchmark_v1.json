@@ -1,0 +1,447 @@
+{
+  "acceptance_criteria": {
+    "must": [
+      "no clipped meaningful text",
+      "no tiny metadata carrying essential meaning",
+      "one dominant message per card",
+      "card role understood within about 3 seconds",
+      "diagnostic/fake boundary visible"
+    ],
+    "must_not": [
+      "claim production/public readiness",
+      "claim actual audience acceptance",
+      "use real brand, URL, or news screenshot",
+      "use render as vague visual exploration"
+    ],
+    "should": [
+      "familiar large-block layout",
+      "visible role variation",
+      "simple labels",
+      "limited decorative noise"
+    ]
+  },
+  "alternative_next_slices": [
+    {
+      "condition": "only if benchmark evaluation finds concrete failures",
+      "slice": "newsroom-visual-card-benchmarked-refinement-v1"
+    },
+    {
+      "condition": "only if the benchmark cannot be completed without reference abstraction",
+      "slice": "newsroom-reference-pack-visual-grammar-v1"
+    },
+    {
+      "condition": "only if benchmark evaluation says current cards are sufficient for diagnostic review",
+      "slice": "newsroom-internal-review-v0.1-operator-review-card"
+    }
+  ],
+  "artifact_id": "newsroom_visual_audience_fit_benchmark_v1_2026_06_26",
+  "artifact_readiness": [
+    {
+      "item": "benchmark_json_exists",
+      "status": true
+    },
+    {
+      "item": "human_doc_exists",
+      "status": true
+    },
+    {
+      "item": "proxy_metrics_present",
+      "status": true
+    },
+    {
+      "item": "unmeasurable_audience_acceptance_boundary_present",
+      "status": true
+    },
+    {
+      "item": "review_protocol_present",
+      "status": true
+    },
+    {
+      "item": "downstream_next_use_described",
+      "status": true
+    }
+  ],
+  "benchmark_id": "newsroom_visual_audience_fit_benchmark_v1_2026_06_26",
+  "benchmark_status": "draft_proxy_benchmark_defined",
+  "boundaries": {
+    "TTS_generated_by_agent": false,
+    "YMM4_launched_by_agent": false,
+    "actual_audience_acceptance_claimed": false,
+    "audio_generated_by_agent": false,
+    "cards_regenerated_in_this_slice": false,
+    "external_fetch_performed": false,
+    "production_visual_quality_accepted": false,
+    "public_video_ready": false,
+    "real_media_imported": false,
+    "video_render_created_by_agent": false,
+    "ymmp_edited_by_agent": false
+  },
+  "completion_matrix": [
+    {
+      "item": "current_repo_state_verified",
+      "status": true
+    },
+    {
+      "item": "audience_fit_incident_normalized",
+      "status": true
+    },
+    {
+      "item": "visual_benchmark_spec_created",
+      "status": true
+    },
+    {
+      "item": "proxy_metrics_and_unknowns_defined",
+      "status": true
+    },
+    {
+      "item": "next_benchmark_linked_slice_named",
+      "status": true
+    },
+    {
+      "item": "narrow_commit_created_and_pushed_if_push_gate_passes",
+      "status": "pending_until_git_gate"
+    }
+  ],
+  "diagnostic_only": true,
+  "downstream_next_use": {
+    "default_slice": "newsroom-audience-fit-benchmark-evaluation-v1",
+    "evaluation_subject": "current four diagnostic SVG/PNG cards",
+    "instruction": "score the current cards against the proxy metrics before any further visual redesign",
+    "refinement_gate": "only concrete benchmark failures may drive a later benchmarked refinement"
+  },
+  "evidence_level": {
+    "current_level": "L1_user_freeform_direction",
+    "evidence": [
+      "user freeform review",
+      "YMM4 screenshots",
+      "local diagnostic render observations",
+      "current diagnostic SVG/PNG card assets"
+    ],
+    "evidence_not_yet": [
+      "L2_reference_pack",
+      "L3_proxy_metric_pass",
+      "L4_target_viewer_feedback",
+      "L5_actual_analytics"
+    ],
+    "unknowns": [
+      "actual target viewer preference",
+      "retention or CTR",
+      "target viewer comprehension outside the project",
+      "production visual quality"
+    ]
+  },
+  "human_burden_hygiene": [
+    {
+      "item": "user_input",
+      "status": "freeform"
+    },
+    {
+      "item": "template_required",
+      "status": false
+    },
+    {
+      "item": "schema_owner",
+      "status": "Agent/Supervisor"
+    },
+    {
+      "item": "user_side_work_for_this_slice",
+      "status": "none"
+    },
+    {
+      "item": "future_review_look_for_count",
+      "status": 3
+    },
+    {
+      "item": "negative_confirmation_checklist",
+      "status": false
+    },
+    {
+      "item": "fixed_form_relapse",
+      "status": false
+    }
+  ],
+  "identity": {
+    "benchmark_id": "newsroom_visual_audience_fit_benchmark_v1_2026_06_26",
+    "current_cards_status": "improved_but_not_audience_fit_accepted",
+    "source_audience_fit_refinement_id": "newsroom_visual_card_audience_fit_refinement_v1_2026_06_25",
+    "source_audience_fit_refinement_path": "samples/_probe/newsroom_handoff/visual_card_audience_fit_refinement_v1.json",
+    "source_audience_fit_review_readback_id": "newsroom_visual_card_audience_fit_review_readback_v1_2026_06_25",
+    "source_audience_fit_review_readback_path": "samples/_probe/newsroom_handoff/visual_card_audience_fit_review_readback_v1.json",
+    "source_card_placement_render_readback_path": "samples/_probe/newsroom_handoff/card_placement_render_smoke_result_readback_v1.json",
+    "source_internal_review_prep_path": "samples/_probe/newsroom_handoff/internal_review_v0_1_prep_v1.json",
+    "source_post_refinement_render_package_path": "samples/_probe/newsroom_handoff/card_placement_post_refinement_render_smoke_v1.json",
+    "source_visual_card_design_refinement_path": "samples/_probe/newsroom_handoff/visual_card_design_refinement_v1.json",
+    "source_visual_cards_dir": "samples/_probe/newsroom_handoff/visual_cards_v1"
+  },
+  "inertia_check": [
+    {
+      "item": "ad_hoc_visual_iteration_stopped",
+      "status": true
+    },
+    {
+      "item": "packet_for_packet_drift",
+      "status": false
+    },
+    {
+      "item": "readback_only_stall",
+      "status": false
+    },
+    {
+      "item": "readiness_separated_from_slice_completion",
+      "status": true
+    },
+    {
+      "item": "next_concrete_benchmark_linked_milestone",
+      "status": "newsroom-audience-fit-benchmark-evaluation-v1"
+    }
+  ],
+  "next_visual_iteration_mapping": [
+    {
+      "criteria": [
+        "readability_at_a_glance",
+        "no_tiny_metadata_dependency"
+      ],
+      "future_change": "enlarge source/footer text"
+    },
+    {
+      "criteria": [
+        "one_dominant_message_per_card"
+      ],
+      "future_change": "simplify card role labels"
+    },
+    {
+      "criteria": [
+        "card_to_card_role_variation"
+      ],
+      "future_change": "differentiate card composition"
+    },
+    {
+      "criteria": [
+        "familiar_explainer_tv_youtube_grammar"
+      ],
+      "future_change": "reduce SaaS-like chips"
+    },
+    {
+      "criteria": [
+        "readability_at_a_glance",
+        "one_dominant_message_per_card"
+      ],
+      "future_change": "add simple visual motif"
+    },
+    {
+      "criteria": [
+        "pacing_density_68_sec"
+      ],
+      "future_change": "adjust pacing/density after review"
+    }
+  ],
+  "production_status": "diagnostic_only",
+  "proxy_metrics": [
+    {
+      "fail": "viewer must pause, inspect tiny text, or infer from metadata",
+      "metric_id": "readability_at_a_glance",
+      "pass": "card role and dominant message are understandable in about 3 seconds",
+      "unknown": "no benchmark evaluation has been run against current cards yet"
+    },
+    {
+      "fail": "meaningful label, headline, or body text is clipped or awkwardly wrapped",
+      "metric_id": "text_clipping_wrapping",
+      "pass": "no meaningful text is clipped and wrapping preserves readable phrases",
+      "unknown": "render compression and final placement are not benchmarked here"
+    },
+    {
+      "fail": "essential meaning depends on text below the 34px floor or footer microcopy",
+      "metric_id": "minimum_meaningful_font_size",
+      "pass": "essential meaning uses the current 34px or larger card text floor",
+      "unknown": "apparent size after video compression still needs evaluation"
+    },
+    {
+      "fail": "multiple equal-weight messages compete for attention",
+      "metric_id": "one_dominant_message_per_card",
+      "pass": "each card has one primary point before secondary labels",
+      "unknown": "viewer comprehension outside the project is not measured"
+    },
+    {
+      "fail": "layout reads mainly as SaaS dashboard, audit UI, or dense internal tool",
+      "metric_id": "familiar_explainer_tv_youtube_grammar",
+      "pass": "layout resembles large-block explainer, TV info-board, or simple YouTube panel grammar",
+      "unknown": "reference pack is needed before calling this market-proven"
+    },
+    {
+      "fail": "role, claim, fake boundary, or next action depends on tiny metadata",
+      "metric_id": "no_tiny_metadata_dependency",
+      "pass": "small metadata is decorative or diagnostic, not required for core meaning",
+      "unknown": "requires card-by-card benchmark evaluation"
+    },
+    {
+      "fail": "cards feel like repeated panels with swapped text",
+      "metric_id": "card_to_card_role_variation",
+      "pass": "cards have visibly different roles, motifs, and reading order",
+      "unknown": "variation has not yet been judged against this benchmark"
+    },
+    {
+      "fail": "viewer must frame-step or pause because density exceeds pacing",
+      "metric_id": "pacing_density_68_sec",
+      "pass": "density can be understood during normal 68 sec playback",
+      "unknown": "current benchmark is not a new render or playback review"
+    },
+    {
+      "fail": "card could be mistaken for real news, source proof, or public claim",
+      "metric_id": "diagnostic_boundary_visibility",
+      "pass": "fake/review-only boundary is visible without reading tiny footnotes",
+      "unknown": "needs evaluation on current cards and any future render surface"
+    },
+    {
+      "fail": "real external identity or production/public claim appears",
+      "metric_id": "no_real_brand_url_public_claim",
+      "pass": "no real brand, URL, real screenshot, or public-readiness claim is present",
+      "unknown": "none for the current committed card assets; recheck future edits"
+    }
+  ],
+  "recommended_next_slice": {
+    "reason": "apply this benchmark to the current cards once before any further redesign",
+    "slice": "newsroom-audience-fit-benchmark-evaluation-v1"
+  },
+  "reference_benchmark_abstraction": {
+    "candidate_reference_types": [
+      "Japanese explainer video card",
+      "TV info-board style",
+      "YouTube news commentary simple panel",
+      "educational slide-like callout"
+    ],
+    "extracted_grammar_hypotheses": [
+      "large headline or role label before detail",
+      "one dominant visual motif per card",
+      "simple block hierarchy over dense dashboard chips",
+      "diagnostic/fake boundary visible without footnote reading"
+    ],
+    "hypotheses_not_market_proof": true,
+    "no_copy_policy": "do not copy reference images, logos, brands, screenshots, or current YouTube-specific material",
+    "reference_pack_status": "needed_or_deferred"
+  },
+  "render_gate_hygiene": [
+    {
+      "item": "no_render_performed",
+      "status": true
+    },
+    {
+      "item": "render_not_used_for_vague_visual_guessing",
+      "status": true
+    },
+    {
+      "item": "next_render_tied_to_benchmark_linked_material_change",
+      "status": true
+    },
+    {
+      "item": "no_render_for_docs_benchmark_only_change",
+      "status": true
+    },
+    {
+      "item": "repeated_render_loop_avoided",
+      "status": true
+    },
+    {
+      "item": "output_first_principle_preserved",
+      "status": true
+    }
+  ],
+  "review_non_redundancy": [
+    {
+      "item": "latest_user_correction_consumed_once",
+      "status": true
+    },
+    {
+      "item": "prior_visual_reviews_reused",
+      "status": true
+    },
+    {
+      "item": "next_axis_stated_as_benchmark",
+      "status": true
+    },
+    {
+      "item": "not_accepted_scope_preserved",
+      "status": true
+    },
+    {
+      "item": "repeated_user_review_requested",
+      "status": false
+    },
+    {
+      "item": "mechanics_re_review_requested",
+      "status": false
+    }
+  ],
+  "review_protocol": {
+    "answer_style": "freeform",
+    "ask_user_after": [
+      "benchmarked evaluation",
+      "material visual change"
+    ],
+    "form_required": false,
+    "look_for": [
+      "Can the card role be understood within a few seconds?",
+      "Is any meaningful text too small or clipped?",
+      "Does the visual feel familiar enough for an explanatory YouTube video?"
+    ],
+    "schema_owner": "Agent/Supervisor",
+    "template_required": false
+  },
+  "schema_version": "newsroom_visual_audience_fit_benchmark.v1",
+  "source_validation": {
+    "current_card_asset_count": 8,
+    "errors": [],
+    "post_refinement_render_package_status": "ready_for_manual_milestone_render_smoke",
+    "source_audience_fit_refinement_status": "assets_regenerated",
+    "source_audience_fit_review_status": "ready_for_supervisor_review",
+    "source_card_render_result_status": "pass",
+    "source_internal_review_prep_status": "ready_for_supervisor_review",
+    "status": "passed"
+  },
+  "target_audience_assumption": {
+    "assumed_audience": [
+      "general YouTube viewers for explanatory/newsroom-style content",
+      "non-expert",
+      "low patience",
+      "expects familiar visual grammar"
+    ],
+    "attention_level": "must understand the dominant card message quickly",
+    "device_screen_assumption": "1080p baseline, readable after video compression",
+    "viewing_context": "normal video playback, likely desktop/mobile, not frame-by-frame inspection"
+  },
+  "visual_benchmark_gate": {
+    "benchmark_status": "defined_not_applied",
+    "evidence_level": "L1_user_freeform_direction",
+    "missing_benchmark_components": [],
+    "next_iteration_allowed": true,
+    "next_iteration_allowed_scope": "newsroom-audience-fit-benchmark-evaluation-v1",
+    "proxy_metrics": {
+      "current_cards_evaluated": false,
+      "defined": true,
+      "metric_count": 10,
+      "status": "defined_not_applied"
+    },
+    "status": "draft",
+    "unknowns": [
+      "actual audience preference",
+      "target viewer comprehension",
+      "production visual quality",
+      "retention or CTR"
+    ],
+    "visual_refinement_allowed_before_evaluation": false,
+    "visual_work_class": "audience_fit"
+  },
+  "visual_job_to_be_done": {
+    "dominant_message": "one clear point per card",
+    "helps_viewer": [
+      "understand what each fake/review-only card is doing",
+      "follow a simple diagnostic structure without reading tiny metadata"
+    ],
+    "non_goals": [
+      "final production design",
+      "real news design",
+      "public-ready branding",
+      "audience acceptance proof"
+    ]
+  },
+  "visual_work_class": "audience_fit"
+}
