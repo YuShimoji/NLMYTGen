@@ -1,0 +1,556 @@
+{
+  "artifact_id": "newsroom_card_placement_post_refinement_render_smoke_v1_2026_06_26",
+  "smoke_id": "newsroom_card_placement_post_refinement_render_smoke_v1_2026_06_26",
+  "schema_version": "newsroom_card_placement_post_refinement_render_smoke.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "smoke_status": "prepared_not_run",
+  "package_status": "ready_for_manual_milestone_render_smoke",
+  "identity": {
+    "smoke_id": "newsroom_card_placement_post_refinement_render_smoke_v1_2026_06_26",
+    "source_refinement_path": "samples/_probe/newsroom_handoff/visual_card_design_refinement_v1.json",
+    "source_refinement_id": "newsroom_visual_card_design_refinement_v1_2026_06_25",
+    "source_placement_probe_path": "samples/_probe/newsroom_handoff/yym4_card_asset_placement_probe_v1.json",
+    "source_placement_probe_id": "newsroom_yym4_card_asset_placement_probe_v1_2026_06_25",
+    "source_prior_render_result_path": "samples/_probe/newsroom_handoff/card_placement_render_smoke_result_readback_v1.json",
+    "source_prior_render_result_id": "newsroom_card_placement_render_smoke_result_readback_v1_2026_06_25",
+    "target_card_placement_ymmp_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.ymmp",
+    "post_refinement_render_output_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_post_refinement_v1.mp4",
+    "production_status": "diagnostic_only",
+    "render_smoke_status": "not_run"
+  },
+  "source_validation": {
+    "status": "passed",
+    "errors": [],
+    "source_refinement_id": "newsroom_visual_card_design_refinement_v1_2026_06_25",
+    "source_refinement_status": "assets_regenerated",
+    "source_placement_probe_id": "newsroom_yym4_card_asset_placement_probe_v1_2026_06_25",
+    "source_placement_probe_status": "placed_structurally",
+    "source_prior_render_result_id": "newsroom_card_placement_render_smoke_result_readback_v1_2026_06_25",
+    "source_prior_render_result": "pass",
+    "prior_render_duration_sec": 68,
+    "prior_render_card_count_visible": 4,
+    "refined_card_count": 4,
+    "refined_png_paths": [
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.png",
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.png",
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.png",
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.png"
+    ],
+    "target_ymmp_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.ymmp",
+    "target_ymmp_found_at_generation": true,
+    "target_ymmp_card_image_item_count": 4,
+    "target_ymmp_reuses_refined_png_paths": true,
+    "target_ymmp_ignored": true,
+    "target_ymmp_committed": false,
+    "target_ymmp_staged": false
+  },
+  "target": {
+    "target_card_placement_ymmp_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.ymmp",
+    "target_ymmp_path_status": "discoverable_local_file_at_generation_time",
+    "git_tracking_policy": "ignored_under_tmp_do_not_stage_or_commit",
+    "ymmp_file_newly_modified_in_this_slice": false,
+    "post_refinement_render_output_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_post_refinement_v1.mp4",
+    "post_refinement_output_exists_at_generation": false,
+    "render_output_commit_allowed": false,
+    "expected_duration_sec": 68,
+    "expected_card_count": 4,
+    "expected_dialogue_item_count": 4,
+    "expected_refined_cards": [
+      {
+        "card_id": "visual_card_cap_beat_fake_intro_001_01_v1",
+        "role": "intro_summary",
+        "layout_motif": "summary_stack",
+        "png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.png",
+        "ymmp_path_reused": true,
+        "text_wrap_applied": true,
+        "clipping_guard": true
+      },
+      {
+        "card_id": "visual_card_cap_beat_fake_intro_001_02_v1",
+        "role": "handoff_process",
+        "layout_motif": "process_ladder",
+        "png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.png",
+        "ymmp_path_reused": true,
+        "text_wrap_applied": true,
+        "clipping_guard": true
+      },
+      {
+        "card_id": "visual_card_cap_beat_fake_claim_001_01_v1",
+        "role": "claim_check",
+        "layout_motif": "check_matrix",
+        "png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.png",
+        "ymmp_path_reused": true,
+        "text_wrap_applied": true,
+        "clipping_guard": true
+      },
+      {
+        "card_id": "visual_card_cap_beat_fake_claim_001_02_v1",
+        "role": "source_status_next_action",
+        "layout_motif": "status_panel",
+        "png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.png",
+        "ymmp_path_reused": true,
+        "text_wrap_applied": true,
+        "clipping_guard": true
+      }
+    ],
+    "render_objective": {
+      "confirm_project_opens": true,
+      "confirm_render_completes": true,
+      "confirm_output_duration_about_68_sec": true,
+      "confirm_refined_cards_visible_and_readable": true,
+      "confirm_dialogue_and_native_audio_preserved": true,
+      "production": false,
+      "public_video": false
+    }
+  },
+  "milestone_render_gate": {
+    "gate_type": "milestone_gated_verification",
+    "milestone": "newsroom-card-placement-post-refinement-render-smoke-v1",
+    "render_performed_in_this_slice": false,
+    "YMM4_launched_by_agent": false,
+    "manual_render_allowed_next": true,
+    "manual_render_count": 1,
+    "render_reason": "Refined card PNGs replaced the prior visual surface at stable paths, so one observation can confirm YMM4 sees the updated assets.",
+    "timing_strategy_change_allowed": false,
+    "external_TTS_allowed": false,
+    "render_output_commit_allowed": false,
+    "ymmp_commit_allowed": false
+  },
+  "operator_observation_card": {
+    "status": "required_next_milestone",
+    "target": "post-refinement card-placement diagnostic render smoke",
+    "target_ymmp_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.ymmp",
+    "output_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_post_refinement_v1.mp4",
+    "why": "Confirm the existing card-placement project reads the regenerated refined PNG assets.",
+    "action": "Open the ignored card-placement .ymmp in YMM4 and render once to the separate post-refinement output path without changing timing, voice, media, or card placement.",
+    "look_for": [
+      "card-placement diagnostic project opens",
+      "render completes to a separate post-refinement output",
+      "output duration is approximately 68 seconds",
+      "four refined PNG cards are visible and have no obvious text clipping",
+      "dialogue timeline and native YMM4/Yukkuri audio remain present"
+    ],
+    "answer_style": "freeform",
+    "answer_hint": "opened and rendered; about 68 sec; four refined cards visible without obvious clipping; dialogue and native voice remained",
+    "not_needed": [
+      "fixed form",
+      "another review of the old card design",
+      "detailed sound quality judgement",
+      "production quality approval",
+      "committing .ymmp or media output"
+    ]
+  },
+  "result_normalization_schema": {
+    "schema_id": "newsroom_card_placement_post_refinement_render_smoke_result_readback_builder_v1",
+    "schema_version": "newsroom_card_placement_post_refinement_render_smoke_result_readback.v1",
+    "schema_owner": "Agent",
+    "user_must_fill_schema": false,
+    "normalization_source": "future freeform operator observation",
+    "duration_tolerance_sec": 2,
+    "fields": [
+      {
+        "field": "placement_project_opened",
+        "type": "boolean_or_unknown",
+        "normalization": "true only when the target .ymmp opens in YMM4"
+      },
+      {
+        "field": "render_completed",
+        "type": "boolean_or_unknown",
+        "normalization": "true only when YMM4 export finishes"
+      },
+      {
+        "field": "output_duration_observed_sec",
+        "type": "number_or_null",
+        "normalization": "observed media duration in seconds when known"
+      },
+      {
+        "field": "duration_approximately_68_sec",
+        "type": "boolean_or_unknown",
+        "normalization": "true when duration is within the configured 68 sec tolerance"
+      },
+      {
+        "field": "refined_card_assets_visible",
+        "type": "boolean_or_unknown",
+        "normalization": "true when all four refined PNG cards are visible"
+      },
+      {
+        "field": "card_count_observed",
+        "type": "integer_or_null",
+        "normalization": "observed refined card count when reported"
+      },
+      {
+        "field": "no_obvious_text_clipping_or_readability_breakage",
+        "type": "boolean_or_unknown",
+        "normalization": "true when the operator reports no obvious clipping or readability breakage"
+      },
+      {
+        "field": "dialogue_items_preserved",
+        "type": "boolean_or_unknown",
+        "normalization": "true when the expected dialogue items remain present"
+      },
+      {
+        "field": "dialogue_item_count_observed",
+        "type": "integer_or_null",
+        "normalization": "observed dialogue item count if reported"
+      },
+      {
+        "field": "native_audio_present",
+        "type": "boolean_or_unknown",
+        "normalization": "true when native YMM4/Yukkuri audio is still audible"
+      },
+      {
+        "field": "operator_notes",
+        "type": "string_or_null",
+        "normalization": "freeform notes retained without requiring a form"
+      },
+      {
+        "field": "error_message",
+        "type": "string_or_null",
+        "normalization": "YMM4 or export error text when reported"
+      },
+      {
+        "field": "confidence",
+        "type": "string",
+        "normalization": "agent confidence in the normalized observation"
+      },
+      {
+        "field": "unknowns",
+        "type": "array",
+        "normalization": "required targets the observation did not settle"
+      },
+      {
+        "field": "classification",
+        "type": "enum",
+        "normalization": "classification from the success/failure matrix"
+      },
+      {
+        "field": "result",
+        "type": "enum",
+        "normalization": "pass, fail, or blocked_by_operator_uncertainty"
+      }
+    ]
+  },
+  "success_failure_classification_matrix": [
+    {
+      "classification": "post_refinement_render_smoke_pass",
+      "trigger": "all post-refinement observation targets are true",
+      "result": "pass",
+      "next_recommended_slice": "newsroom-card-placement-post-refinement-render-smoke-result-readback-v1"
+    },
+    {
+      "classification": "post_refinement_project_open_failure",
+      "trigger": "card-placement project does not open",
+      "result": "fail",
+      "next_recommended_slice": "newsroom-card-placement-post-refinement-render-smoke-failure-classification-v1"
+    },
+    {
+      "classification": "post_refinement_render_execution_failure",
+      "trigger": "project opens but render does not complete",
+      "result": "fail",
+      "next_recommended_slice": "newsroom-card-placement-post-refinement-render-smoke-failure-classification-v1"
+    },
+    {
+      "classification": "post_refinement_duration_mismatch",
+      "trigger": "render completes but output is not approximately 68 sec",
+      "result": "fail",
+      "next_recommended_slice": "newsroom-card-placement-post-refinement-render-smoke-failure-classification-v1"
+    },
+    {
+      "classification": "post_refinement_card_visibility_regression",
+      "trigger": "fewer than four refined cards are visible",
+      "result": "fail",
+      "next_recommended_slice": "newsroom-card-placement-post-refinement-render-smoke-failure-classification-v1"
+    },
+    {
+      "classification": "post_refinement_readability_regression",
+      "trigger": "cards render but still show obvious clipping or readability breakage",
+      "result": "fail",
+      "next_recommended_slice": "newsroom-card-placement-post-refinement-render-smoke-failure-classification-v1"
+    },
+    {
+      "classification": "post_refinement_dialogue_preservation_regression",
+      "trigger": "dialogue items are missing or altered",
+      "result": "fail",
+      "next_recommended_slice": "newsroom-card-placement-post-refinement-render-smoke-failure-classification-v1"
+    },
+    {
+      "classification": "post_refinement_native_audio_regression",
+      "trigger": "native audio is absent",
+      "result": "fail",
+      "next_recommended_slice": "newsroom-card-placement-post-refinement-render-smoke-failure-classification-v1"
+    },
+    {
+      "classification": "post_refinement_operator_observation_uncertain",
+      "trigger": "one or more required observation targets remain unknown",
+      "result": "blocked_by_operator_uncertainty",
+      "next_recommended_slice": "newsroom-card-placement-post-refinement-render-smoke-operator-uncertainty-v1"
+    }
+  ],
+  "render_readback_builder": {
+    "builder_id": "newsroom_card_placement_post_refinement_render_smoke_result_readback_builder_v1",
+    "module": "src.pipeline.newsroom_card_placement_post_refinement_render_smoke",
+    "function": "build_newsroom_card_placement_post_refinement_render_smoke_result_readback",
+    "input_package": "samples/_probe/newsroom_handoff/card_placement_post_refinement_render_smoke_v1.json",
+    "input_observation": "future freeform operator observation normalized by Agent",
+    "output_schema_version": "newsroom_card_placement_post_refinement_render_smoke_result_readback.v1",
+    "writes_artifact_in_this_slice": false,
+    "requires_committed_media": false,
+    "requires_committed_ymmp": false,
+    "classification_function": "classify_render_smoke_observation"
+  },
+  "accepted_scope": {
+    "refined_assets_confirmed_at_stable_paths": true,
+    "existing_card_placement_ymmp_reuses_refined_png_paths": true,
+    "post_refinement_render_smoke_package_prepared": true,
+    "future_freeform_readback_builder_defined": true,
+    "render_not_performed_by_agent": true
+  },
+  "not_accepted_scope": {
+    "post_refinement_render_proof": false,
+    "production_visual_quality": false,
+    "final_design_system": false,
+    "public_video_readiness": false,
+    "real_newsroom_visuals": false,
+    "real_content_readiness": false,
+    "production_approval": false,
+    "render_output_retention": false
+  },
+  "readiness_separation": {
+    "slice_completion": "pass_for_render_smoke_package",
+    "video_readiness_progress": "6/7",
+    "visual_readiness_progress": "7/7_diagnostic_refined",
+    "visual_readiness_current": "post_refinement_render_smoke_package_prepared",
+    "video_readiness_next_missing_gate": "post-refinement render smoke observation",
+    "production_readiness": "low_diagnostic_only",
+    "next_default_slice": "newsroom-card-placement-post-refinement-render-smoke-result-readback-v1"
+  },
+  "completion_matrix": [
+    {
+      "gate": "current_repo_state_verified",
+      "status": true
+    },
+    {
+      "gate": "prior_visual_refinement_detected_as_complete",
+      "status": true
+    },
+    {
+      "gate": "stable_png_paths_verified_in_ignored_ymmp",
+      "status": true
+    },
+    {
+      "gate": "manual_render_smoke_package_created",
+      "status": true
+    },
+    {
+      "gate": "future_readback_normalizer_defined",
+      "status": true
+    },
+    {
+      "gate": "narrow_commit_created_and_pushed_if_push_gate_passes",
+      "status": "pending_until_git_gate"
+    }
+  ],
+  "artifact_readiness": [
+    {
+      "artifact": "render_smoke_package_json",
+      "status": "present"
+    },
+    {
+      "artifact": "human_render_smoke_doc",
+      "status": "present"
+    },
+    {
+      "artifact": "source_validation",
+      "status": "ready_for_manual_milestone_render_smoke"
+    },
+    {
+      "artifact": "operator_observation_card",
+      "status": "present"
+    },
+    {
+      "artifact": "result_normalization_schema",
+      "status": "present"
+    },
+    {
+      "artifact": "downstream_next_use",
+      "status": "present"
+    }
+  ],
+  "visual_readiness": [
+    {
+      "gate": "visual_card_concept_selected",
+      "status": true
+    },
+    {
+      "gate": "external_card_assets_generated",
+      "status": true
+    },
+    {
+      "gate": "preview_contact_sheet_available",
+      "status": true
+    },
+    {
+      "gate": "assets_mapped_to_timeline_caption_units",
+      "status": true
+    },
+    {
+      "gate": "yym4_placement_contract_defined",
+      "status": true
+    },
+    {
+      "gate": "yym4_placement_paths_reused_after_refinement",
+      "status": true
+    },
+    {
+      "gate": "post_refinement_render_reviewed",
+      "status": false
+    }
+  ],
+  "render_gate_hygiene": [
+    {
+      "gate": "render_performed_by_agent_in_this_slice",
+      "status": false
+    },
+    {
+      "gate": "existing_render_evidence_reused",
+      "status": true
+    },
+    {
+      "gate": "render_treated_as_milestone_gated",
+      "status": true
+    },
+    {
+      "gate": "next_render_tied_to_visual_surface_change",
+      "status": true
+    },
+    {
+      "gate": "no_render_for_docs_readback_changes",
+      "status": true
+    },
+    {
+      "gate": "repeated_timing_audio_review_avoided",
+      "status": true
+    }
+  ],
+  "human_burden_hygiene": [
+    {
+      "gate": "user_input",
+      "status": "freeform"
+    },
+    {
+      "gate": "template_required",
+      "status": false
+    },
+    {
+      "gate": "schema_owner",
+      "status": "Agent"
+    },
+    {
+      "gate": "user_side_work_this_agent_slice",
+      "status": "none"
+    },
+    {
+      "gate": "required_future_observation_target_count",
+      "status": 5
+    },
+    {
+      "gate": "negative_confirmation_checklist",
+      "status": false
+    },
+    {
+      "gate": "fixed_form_relapse",
+      "status": false
+    }
+  ],
+  "review_non_redundancy": [
+    {
+      "gate": "prior_internal_review_observation_reused",
+      "status": true
+    },
+    {
+      "gate": "prior_visual_refinement_reused",
+      "status": true
+    },
+    {
+      "gate": "prior_card_placement_render_evidence_reused",
+      "status": true
+    },
+    {
+      "gate": "next_axis_stated_as_post_refinement_render_smoke",
+      "status": true
+    },
+    {
+      "gate": "not_accepted_scope_preserved",
+      "status": true
+    },
+    {
+      "gate": "current_user_review_or_render_re_requested",
+      "status": false
+    }
+  ],
+  "inertia_check": [
+    {
+      "gate": "packet_for_packet_drift",
+      "status": false
+    },
+    {
+      "gate": "readback_only_stall",
+      "status": false
+    },
+    {
+      "gate": "repeated_render_request_without_surface_change",
+      "status": false
+    },
+    {
+      "gate": "readiness_separated_from_slice_completion",
+      "status": true
+    },
+    {
+      "gate": "next_concrete_milestone",
+      "status": "newsroom-card-placement-post-refinement-render-smoke-result-readback-v1"
+    }
+  ],
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "video_render_created_by_agent": false,
+    "audio_generated_by_agent": false,
+    "TTS_generated_by_agent": false,
+    "external_TTS_introduced": false,
+    "real_media_imported": false,
+    "external_source_fetch_performed": false,
+    "real_brand_url_or_news_screenshot_used": false,
+    "ymmp_edited_by_agent": false,
+    "ymmp_or_media_staged_or_committed": false,
+    "render_output_staged_or_committed": false,
+    "production_visual_quality_accepted": false,
+    "production_approval": false,
+    "public_video_ready": false,
+    "dashboard_governance_freshness_changed": false
+  },
+  "downstream_next_use": {
+    "use_this_package_to": [
+      "guide one post-refinement render smoke of the ignored placement project",
+      "normalize the later freeform observation into a repo readback",
+      "decide whether internal review prep can proceed on the refined visual surface"
+    ],
+    "do_not_use_this_package_to": [
+      "claim production visual quality",
+      "claim public video readiness",
+      "commit ignored .ymmp or render outputs",
+      "introduce external TTS or real media"
+    ]
+  },
+  "validation_expectations": {
+    "json_parse_required": true,
+    "focused_tests_required": true,
+    "compileall_required": true,
+    "git_diff_check_required": true,
+    "git_cached_diff_check_required": true,
+    "conflict_marker_scan_required": true,
+    "forbidden_media_staging_scan_required": true,
+    "YMM4_launched_by_agent": false,
+    "render_created_by_agent": false
+  }
+}

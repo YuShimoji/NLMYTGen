@@ -79,6 +79,28 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom card placement post-refinement render smoke package decision (2026-06-26):
+`newsroom_card_placement_post_refinement_render_smoke_v1_2026_06_26`
+converts the completed visual-card refinement into the next milestone-gated
+observation package. The package confirms that the refined SVG/PNG cards are
+present at stable paths and that the existing ignored placement project
+`_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.ymmp`
+still references all four regenerated PNG paths, so a placement refresh is not
+the default next move. The package records the separate suggested output path
+`_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_post_refinement_v1.mp4`
+but does not create or retain render output. It defines an agent-owned
+freeform result normalizer and classifier for the later observation, covering
+project-open failure, render failure, duration mismatch, refined-card
+visibility regression, readability/clipping regression, dialogue preservation,
+native audio, and operator uncertainty. This does not launch YMM4, render,
+edit `.ymmp`, generate audio/TTS, import real media, fetch external sources,
+stage media, approve production, or claim public readiness. The next default
+slice is
+`newsroom-card-placement-post-refinement-render-smoke-result-readback-v1`
+after a future observation; use
+`newsroom-yym4-card-asset-placement-refresh-v1` only if the ignored placement
+project no longer reuses the stable refined PNG paths.
+
 Latest newsroom visual card design refinement remote handoff decision (2026-06-25):
 `newsroom_visual_card_design_refinement_remote_handoff_2026_06_25` preserves
 the current mainline restart context after

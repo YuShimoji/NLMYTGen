@@ -1,5 +1,40 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom card placement post-refinement render smoke package v1 prepared (2026-06-26)**:
+  Prepared `newsroom-card-placement-post-refinement-render-smoke-v1` as a
+  diagnostic observation package after the visual card design refinement,
+  without launching YMM4, rendering video, editing `.ymmp`, generating
+  audio/TTS, fetching external sources, importing real media, staging or
+  committing `.ymmp`/mp4/wav/mp3/m4a/render outputs, changing
+  dashboard/governance/freshness work, or claiming production/public readiness.
+  New repo artifacts are
+  `samples/_probe/newsroom_handoff/card_placement_post_refinement_render_smoke_v1.json`,
+  `docs/verification/NEWSROOM_CARD_PLACEMENT_POST_REFINEMENT_RENDER_SMOKE_V1_2026-06-26.md`,
+  `src/pipeline/newsroom_card_placement_post_refinement_render_smoke.py`, and
+  `tests/test_newsroom_card_placement_post_refinement_render_smoke.py`. The
+  package verifies that the existing ignored local placement project
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.ymmp`
+  is present, ignored, untracked, unstaged, and still references all four
+  regenerated refined PNG card paths under
+  `samples/_probe/newsroom_handoff/visual_cards_v1/`; therefore placement
+  refresh is not the default next move. The result normalizer and classifier
+  are agent-owned and accept future freeform observation, separating project
+  open, render execution, duration, refined-card visibility/readability,
+  dialogue preservation, native audio, and operator uncertainty. Accepted scope
+  is limited to package readiness, stable refined PNG path reuse by the
+  ignored `.ymmp`, and readiness for exactly one later milestone observation.
+  Not accepted: post-refinement render proof, production visual quality, final
+  design system, public video readiness, real newsroom visuals, real content
+  readiness, render output retention, or production approval. Video readiness
+  remains `6/7`; visual readiness remains `7/7` diagnostic-refined until the
+  post-refinement render is actually observed; production readiness remains
+  low/diagnostic-only. The next default slice is
+  `newsroom-card-placement-post-refinement-render-smoke-result-readback-v1`
+  after a future freeform observation; if the target `.ymmp` stops reusing the
+  stable PNG paths, fall back to
+  `newsroom-yym4-card-asset-placement-refresh-v1`. Verification observed the
+  focused package tests `13 passed` and adjacent visual/card placement
+  regression tests `40 passed`.
 - **Newsroom visual card design refinement remote handoff sealed (2026-06-25)**:
   Preserved the current mainline restart context after
   `newsroom-visual-card-design-refinement-v1` in
