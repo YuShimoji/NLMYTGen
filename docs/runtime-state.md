@@ -1,5 +1,31 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom source .ymmp recreation import pack v1 completed (2026-06-26)**:
+  `newsroom-source-ymmp-recreation-import-pack-v1` addresses the current
+  mainline checkout gap where the ignored local source project
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.ymmp` and the
+  downstream regenerated `.ymmp` copies are absent. New repo artifacts are
+  `samples/_probe/newsroom_handoff/source_ymmp_recreation_import_v1.csv`,
+  `samples/_probe/newsroom_handoff/source_ymmp_recreation_import_pack_v1.json`,
+  `docs/verification/NEWSROOM_SOURCE_YMMP_RECREATION_IMPORT_PACK_V1_2026-06-26.md`,
+  `src/pipeline/newsroom_source_ymmp_recreation_import_pack.py`, and
+  `tests/test_newsroom_source_ymmp_recreation_import_pack.py`. The CSV is a
+  UTF-8 BOM, headerless two-column `speaker,text` YMM4 `台本読込` input using
+  canonical speaker `ゆっくり霊夢` and the four tracked diagnostic lines from
+  `diagnostic_ymmp_structure_readback_v1.json` /
+  `diagnostic_ymmp_probe_packet_v1.json`. Because repo `.gitignore` ignores
+  `*.csv`, this one recreation CSV must be force-added when committing. No
+  YMM4 launch, render, `.ymmp` generation/edit, audio/TTS generation, external
+  fetch, real media import, media staging, production/public readiness claim,
+  structured review template, or card/timing redesign was performed. The next
+  user move is to open YMM4, import the generated CSV via `台本読込`, use
+  `ゆっくり霊夢` if speaker binding is requested, confirm four lines appear,
+  save as `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.ymmp`,
+  and not render yet. After that local source `.ymmp` exists, Codex should
+  verify it remains ignored/unstaged and rerun local regeneration for
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_timing_patch_v1.ymmp`
+  and
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.ymmp`.
 - **Newsroom visual card benchmarked refinement v1 completed (2026-06-26)**:
   `newsroom-visual-card-benchmarked-refinement-v1` fixed the concrete static
   benchmark failures from the prior audience-fit evaluation while preserving

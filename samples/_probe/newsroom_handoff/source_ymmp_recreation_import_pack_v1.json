@@ -1,0 +1,412 @@
+{
+  "artifact_id": "newsroom_source_ymmp_recreation_import_pack_v1_2026_06_26",
+  "pack_id": "newsroom_source_ymmp_recreation_import_pack_v1_2026_06_26",
+  "schema_version": "newsroom_source_ymmp_recreation_import_pack.v1",
+  "review_status": "ready_for_operator_source_ymmp_recreation",
+  "diagnostic_only": true,
+  "production_status": "diagnostic_only",
+  "recreation_status": "csv_ready",
+  "identity": {
+    "pack_id": "newsroom_source_ymmp_recreation_import_pack_v1_2026_06_26",
+    "output_csv_path": "samples/_probe/newsroom_handoff/source_ymmp_recreation_import_v1.csv",
+    "target_source_ymmp_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.ymmp",
+    "production_status": "diagnostic_only",
+    "recreation_status": "csv_ready",
+    "source_ymmp_absence_status": "confirmed_missing_before_pack_generation",
+    "source_ymmp_absence_reason": "ignored local artifact was not present in this checkout and is not part of remote-tracked repo state"
+  },
+  "source_evidence": {
+    "source_readback_paths": [
+      "samples/_probe/newsroom_handoff/diagnostic_ymmp_structure_readback_v1.json",
+      "samples/_probe/newsroom_handoff/diagnostic_ymmp_probe_packet_v1.json",
+      "samples/_probe/newsroom_handoff/tiny_script_import_candidate_yukkuri_reimu_v1.csv"
+    ],
+    "context_readback_paths_inspected": [
+      "samples/_probe/newsroom_handoff/audio_observation_and_timing_patch_readiness_v1.json",
+      "samples/_probe/newsroom_handoff/card_placement_render_smoke_result_readback_v1.json",
+      "samples/_probe/newsroom_handoff/tiny_render_smoke_result_readback_v1.json",
+      "samples/_probe/newsroom_handoff/ymmp_timing_patch_probe_v1.json",
+      "samples/_probe/newsroom_handoff/yym4_card_asset_placement_probe_v1.json",
+      "samples/_probe/newsroom_handoff/yym4_native_audio_path_proof_v1.json"
+    ],
+    "context_readback_summary": [
+      {
+        "path": "samples/_probe/newsroom_handoff/audio_observation_and_timing_patch_readiness_v1.json",
+        "artifact_id": "newsroom_audio_observation_and_timing_patch_readiness_v1_2026_06_24",
+        "production_status": "diagnostic_only",
+        "diagnostic_only": true,
+        "status_fields": {
+          "review_status": "ready_for_supervisor_review",
+          "production_status": "diagnostic_only",
+          "readiness_status": "accepted_for_timing_patch_strategy"
+        }
+      },
+      {
+        "path": "samples/_probe/newsroom_handoff/card_placement_render_smoke_result_readback_v1.json",
+        "artifact_id": "newsroom_card_placement_render_smoke_result_readback_v1_2026_06_25",
+        "production_status": "diagnostic_only",
+        "diagnostic_only": true,
+        "status_fields": {
+          "review_status": "ready_for_supervisor_review",
+          "production_status": "diagnostic_only",
+          "result_status": "pass",
+          "normalized_render_result": {
+            "render_smoke_result": "pass",
+            "yym4_opened_card_placement_project": true,
+            "render_completed": true,
+            "output_video_observed": true,
+            "output_filename_observed": "diagnostic_bound_speaker_probe_card_placement_v1.mp4",
+            "output_duration_observed": "00:01:08",
+            "output_duration_sec": 68,
+            "expected_duration_sec": 68,
+            "duration_matches_timing_patch": true,
+            "render_time_approx_sec": 30,
+            "card_assets_visible": true,
+            "card_count_visible": 4,
+            "dialogue_items_visible": true,
+            "dialogue_item_count_observed": 4,
+            "visual_card_integrity": "pass",
+            "timing_preservation_regression_reported": false,
+            "native_audio_regression_reported": false,
+            "card_placement_effective_in_render": true,
+            "production_visual_quality_accepted": false,
+            "production_pacing_accepted": false,
+            "public_video_ready": false,
+            "classification": "card_placement_render_smoke_pass"
+          },
+          "local_artifact_status": {
+            "render_output_local_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.mp4",
+            "card_placement_ymmp_local_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.ymmp",
+            "render_output_exists_at_readback_generation": true,
+            "card_placement_ymmp_exists_at_readback_generation": true,
+            "render_output_staged": false,
+            "render_output_committed": false,
+            "render_output_ignored": true,
+            "card_placement_ymmp_staged": false,
+            "card_placement_ymmp_committed": false,
+            "card_placement_ymmp_ignored": true
+          }
+        }
+      },
+      {
+        "path": "samples/_probe/newsroom_handoff/tiny_render_smoke_result_readback_v1.json",
+        "artifact_id": "newsroom_tiny_render_smoke_result_readback_v1_2026_06_23",
+        "production_status": "diagnostic_only",
+        "diagnostic_only": true,
+        "status_fields": {
+          "review_status": "ready_for_supervisor_review",
+          "production_status": "diagnostic_only",
+          "render_smoke_status": "observed",
+          "manual_render_smoke_status": "observed",
+          "normalized_result": {
+            "result": "pass",
+            "render_completed": true,
+            "output_video_observed": true,
+            "output_duration_observed_sec": 8,
+            "output_duration_observed_qualifier": "approx",
+            "four_dialogue_lines_visible": true,
+            "timing_observation": "short_natural_duration",
+            "neutral_68_sec_timing_patch_applied": false,
+            "production_render": false,
+            "public_video_ready": false,
+            "real_media_imported": false,
+            "production_approval": false,
+            "visual_layout_proof": false,
+            "TTS_quality_acceptance": false,
+            "output_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.mp4",
+            "output_path_status": "discoverable_local_ignored_tmp_file_not_staged",
+            "render_output_committed": false,
+            "render_output_staged": false
+          }
+        }
+      },
+      {
+        "path": "samples/_probe/newsroom_handoff/ymmp_timing_patch_probe_v1.json",
+        "artifact_id": "newsroom_ymmp_timing_patch_probe_v1_2026_06_24",
+        "production_status": "diagnostic_only",
+        "diagnostic_only": true,
+        "status_fields": {
+          "review_status": "ready_for_supervisor_review",
+          "production_status": "diagnostic_only",
+          "probe_status": "applied_to_ignored_local_copy_after_validation"
+        }
+      },
+      {
+        "path": "samples/_probe/newsroom_handoff/yym4_card_asset_placement_probe_v1.json",
+        "artifact_id": "newsroom_yym4_card_asset_placement_probe_v1_2026_06_25",
+        "production_status": "diagnostic_only",
+        "diagnostic_only": true,
+        "status_fields": {
+          "review_status": "ready_for_supervisor_review",
+          "production_status": "diagnostic_only",
+          "probe_status": "placed_structurally",
+          "raster_export_status": {
+            "png_export_status": "generated",
+            "rasterization_method": "existing_toolchain",
+            "deterministic_export": true,
+            "png_files_generated_in_this_slice": true,
+            "png_file_count": 4,
+            "expected_png_file_count": 4,
+            "asset_dimensions": "1920x1080",
+            "source_format": "svg",
+            "target_format": "png",
+            "external_fetch_performed": false,
+            "real_media_dependency": false,
+            "errors": [],
+            "png_files": [
+              {
+                "path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.png",
+                "exists": true,
+                "valid": true,
+                "width": 1920,
+                "height": 1080,
+                "format": "png",
+                "expected_width": 1920,
+                "expected_height": 1080
+              },
+              {
+                "path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.png",
+                "exists": true,
+                "valid": true,
+                "width": 1920,
+                "height": 1080,
+                "format": "png",
+                "expected_width": 1920,
+                "expected_height": 1080
+              },
+              {
+                "path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.png",
+                "exists": true,
+                "valid": true,
+                "width": 1920,
+                "height": 1080,
+                "format": "png",
+                "expected_width": 1920,
+                "expected_height": 1080
+              },
+              {
+                "path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.png",
+                "exists": true,
+                "valid": true,
+                "width": 1920,
+                "height": 1080,
+                "format": "png",
+                "expected_width": 1920,
+                "expected_height": 1080
+              }
+            ]
+          },
+          "structural_result": {
+            "patched_ymmp_created_locally": true,
+            "patched_ymmp_committed": false,
+            "visual_assets_committed": true,
+            "card_item_count_added_or_planned": 4,
+            "card_image_item_count_observed": 4,
+            "placement_structural_readback_status": "pass",
+            "next_render_trigger": "newsroom-card-placement-render-smoke-v1"
+          },
+          "local_artifact_status": {
+            "patched_ymmp_local_path": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.ymmp",
+            "patched_ymmp_exists_at_readback_generation": true,
+            "patched_ymmp_staged": false,
+            "patched_ymmp_committed": false,
+            "patched_ymmp_ignored": true
+          }
+        }
+      },
+      {
+        "path": "samples/_probe/newsroom_handoff/yym4_native_audio_path_proof_v1.json",
+        "artifact_id": "newsroom_yym4_native_audio_path_proof_v1_2026_06_24",
+        "production_status": "diagnostic_only",
+        "diagnostic_only": true,
+        "status_fields": {
+          "review_status": "ready_for_supervisor_review",
+          "production_status": "diagnostic_only",
+          "proof_status": "passed_with_unknowns"
+        }
+      }
+    ],
+    "canonical_speaker": "ゆっくり霊夢",
+    "canonical_speaker_unicode_escape": "\\u3086\\u3063\\u304f\\u308a\\u970a\\u5922",
+    "canonical_dialogue_lines": [
+      "Fake topic, review only.",
+      "Review-only handoff stays.",
+      "A fake claim is shown.",
+      "Fake source checks are noted."
+    ],
+    "confidence": "high",
+    "disagreement_or_unknowns": [],
+    "structure_readback_id": "newsroom_diagnostic_ymmp_structure_readback_v1_2026_06_23",
+    "probe_packet_id": "newsroom_diagnostic_ymmp_probe_packet_v1_2026_06_23",
+    "existing_bound_csv_path": "samples/_probe/newsroom_handoff/tiny_script_import_candidate_yukkuri_reimu_v1.csv",
+    "existing_bound_csv_bom_verified": true,
+    "evidence_checks": {
+      "structure_lines_match_expected": true,
+      "csv_lines_match_expected": true,
+      "probe_target_lines_match_expected": true,
+      "structure_speaker_matches_expected": true,
+      "csv_speakers_match_expected": true,
+      "probe_target_speakers_match_expected": true,
+      "probe_source_validation_errors": []
+    }
+  },
+  "csv_spec": {
+    "encoding": "UTF-8 BOM",
+    "python_encoding": "utf-8-sig",
+    "header": false,
+    "columns": [
+      "speaker",
+      "text"
+    ],
+    "row_count": 4,
+    "yym4_import_mode": "台本読込",
+    "expected_character_binding": "ゆっくり霊夢",
+    "rows": [
+      {
+        "row_number": 1,
+        "speaker": "ゆっくり霊夢",
+        "text": "Fake topic, review only."
+      },
+      {
+        "row_number": 2,
+        "speaker": "ゆっくり霊夢",
+        "text": "Review-only handoff stays."
+      },
+      {
+        "row_number": 3,
+        "speaker": "ゆっくり霊夢",
+        "text": "A fake claim is shown."
+      },
+      {
+        "row_number": 4,
+        "speaker": "ゆっくり霊夢",
+        "text": "Fake source checks are noted."
+      }
+    ]
+  },
+  "operator_save_target": {
+    "target_dir": "_tmp/newsroom_manual_probe",
+    "target_source_ymmp": "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.ymmp",
+    "note": "this .ymmp is ignored local only and must not be committed",
+    "git_ignore_boundary": "_tmp/"
+  },
+  "post_user_continuation": {
+    "after_source_ymmp_exists": [
+      "rerun local regeneration for timing patch .ymmp",
+      "rerun local regeneration for card placement .ymmp"
+    ],
+    "expected_next_local_outputs": [
+      "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_timing_patch_v1.ymmp",
+      "_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_card_placement_v1.ymmp"
+    ],
+    "next_agent_slice": "newsroom-local-ymmp-regeneration-retry-after-source-recreation",
+    "render_gate": "render remains deferred until regenerated .ymmp chain exists"
+  },
+  "safety_boundaries": {
+    "ymmp_fabrication": false,
+    "YMM4_launched_by_agent": false,
+    "render_created_by_agent": false,
+    "external_TTS_introduced": false,
+    "audio_generated_by_agent": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "production_public_readiness": false,
+    "ymmp_or_media_stage_allowed": false
+  },
+  "completion_matrix": {
+    "total": 6,
+    "passed": 5,
+    "items": [
+      {
+        "item": "repo_state_verified",
+        "status": "passed"
+      },
+      {
+        "item": "source_ymmp_absence_confirmed",
+        "status": "passed"
+      },
+      {
+        "item": "tracked_source_evidence_inspected",
+        "status": "passed"
+      },
+      {
+        "item": "recreation_csv_generated_or_cleanly_blocked",
+        "status": "passed"
+      },
+      {
+        "item": "recreation_json_doc_created",
+        "status": "passed"
+      },
+      {
+        "item": "narrow_commit_created_and_pushed_if_gate_passes",
+        "status": "ready_for_git_followthrough"
+      }
+    ]
+  },
+  "artifact_readiness": {
+    "total": 6,
+    "passed": 6,
+    "items": [
+      {
+        "item": "recreation_csv_exists_or_blocked_status_recorded",
+        "status": "passed"
+      },
+      {
+        "item": "recreation_packet_json_exists",
+        "status": "passed"
+      },
+      {
+        "item": "human_doc_exists",
+        "status": "passed"
+      },
+      {
+        "item": "canonical_lines_speaker_evidence_recorded",
+        "status": "passed"
+      },
+      {
+        "item": "operator_save_target_recorded",
+        "status": "passed"
+      },
+      {
+        "item": "downstream_next_use_described",
+        "status": "passed"
+      }
+    ]
+  },
+  "human_burden_hygiene": {
+    "user_input": "freeform",
+    "template_required": false,
+    "schema_owner": "Agent",
+    "user_side_action": "YMM4 import/save only after this package",
+    "future_look_for_max_count": 3,
+    "negative_confirmation_checklist": false,
+    "fixed_form_result_template": false
+  },
+  "render_gate_hygiene": {
+    "render_performed": false,
+    "YMM4_render_requested_in_this_slice": false,
+    "render_milestone_after_ymmp_regeneration": true,
+    "no_render_for_docs_csv_package_only": true,
+    "repeated_render_loop_avoided": true,
+    "output_first_principle_preserved": true
+  },
+  "inertia_check": {
+    "ymmp_fabrication": false,
+    "broad_redesign": false,
+    "packet_for_packet_drift": false,
+    "local_artifact_gap_addressed_directly": true,
+    "next_concrete_user_agent_action_named": true
+  },
+  "downstream_next_use": {
+    "use_this_pack_to": [
+      "let the user recreate the missing source .ymmp through YMM4 script import",
+      "resume timing-patch and card-placement local regeneration after the source .ymmp exists"
+    ],
+    "do_not_use_this_pack_to": [
+      "fabricate .ymmp internals",
+      "claim production readiness",
+      "claim render readiness",
+      "introduce external TTS or real media"
+    ]
+  }
+}

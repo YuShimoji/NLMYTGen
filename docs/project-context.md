@@ -79,6 +79,31 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom source .ymmp recreation import pack decision (2026-06-26):
+`newsroom_source_ymmp_recreation_import_pack_v1_2026_06_26` converts the
+current local artifact gap into a user-executable YMM4 script-import recovery
+step without fabricating `.ymmp` internals. The source project
+`_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.ymmp` is an
+ignored local artifact and is absent from this checkout, so later timing-patch
+and card-placement regeneration cannot proceed from tracked repo state alone.
+The new tracked package consists of
+`samples/_probe/newsroom_handoff/source_ymmp_recreation_import_v1.csv`,
+`samples/_probe/newsroom_handoff/source_ymmp_recreation_import_pack_v1.json`,
+`docs/verification/NEWSROOM_SOURCE_YMMP_RECREATION_IMPORT_PACK_V1_2026-06-26.md`,
+`src/pipeline/newsroom_source_ymmp_recreation_import_pack.py`, and
+`tests/test_newsroom_source_ymmp_recreation_import_pack.py`. The CSV is UTF-8
+BOM, headerless, two-column `speaker,text`, and uses canonical source evidence:
+speaker `ゆっくり霊夢` and the four diagnostic fake/review-only lines recorded
+in `diagnostic_ymmp_structure_readback_v1.json`,
+`diagnostic_ymmp_probe_packet_v1.json`, and the existing bound-speaker CSV.
+This slice intentionally did not launch YMM4, render, generate/edit `.ymmp`,
+generate audio/TTS, import media, fetch sources, change card assets/timing
+strategy, request a structured user template, or claim production/public readiness. The
+next action is user-side YMM4 `台本読込` and local save to
+`_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v1.ymmp`; after that
+Codex can retry local timing-patch and card-placement `.ymmp` regeneration
+while keeping `_tmp/` outputs ignored and unstaged.
+
 Latest newsroom visual card benchmarked refinement decision (2026-06-26):
 `newsroom_visual_card_benchmarked_refinement_v1_2026_06_26` consumes the prior
 audience-fit benchmark evaluation failure and performs the allowed material
