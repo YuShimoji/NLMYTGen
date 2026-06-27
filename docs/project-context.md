@@ -79,6 +79,26 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom audience-fit benchmark evaluation decision (2026-06-26):
+`newsroom_audience_fit_benchmark_evaluation_v1_2026_06_26` applies the
+benchmark from `visual_audience_fit_benchmark_v1.json` to the current four
+diagnostic cards. The result artifacts are
+`samples/_probe/newsroom_handoff/audience_fit_benchmark_evaluation_v1.json`
+and
+`docs/verification/NEWSROOM_AUDIENCE_FIT_BENCHMARK_EVALUATION_V1_2026-06-26.md`.
+The evaluation records one material failure:
+`text_clipping_or_wrapping`. Cards 3 and 4 visibly clip meaningful left-panel
+text, while cards 1 and 2 crowd the same boundary. It also carries warnings
+for glance readability, unproven reference familiarity, source/subtitle reserve
+crowding, and 68 sec pacing density. Passing proxies are minimum meaningful
+font size, one dominant message per card, role variation, diagnostic boundary
+visibility, and no real brand/URL/public claim. This slice did not launch YMM4,
+render video, edit `.ymmp`, regenerate SVG/PNG cards, generate audio/TTS,
+fetch external material, import real media, stage media, claim production or
+public readiness, or claim actual audience acceptance. The next default slice
+is `newsroom-visual-card-benchmarked-refinement-v1`, limited to left-panel text
+wrapping/fit and bottom source/subtitle reserve separation.
+
 Latest newsroom visual audience-fit benchmark decision (2026-06-26):
 `newsroom_visual_audience_fit_benchmark_v1_2026_06_26` turns the latest
 audience-fit correction into a measurable proxy benchmark before any further

@@ -1,5 +1,31 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom audience-fit benchmark evaluation v1 applied (2026-06-26)**:
+  `newsroom-audience-fit-benchmark-evaluation-v1` applied the visual benchmark
+  to the current four diagnostic SVG/PNG cards and recorded the result in
+  `samples/_probe/newsroom_handoff/audience_fit_benchmark_evaluation_v1.json`
+  and
+  `docs/verification/NEWSROOM_AUDIENCE_FIT_BENCHMARK_EVALUATION_V1_2026-06-26.md`,
+  with focused coverage in
+  `tests/test_newsroom_audience_fit_benchmark_evaluation.py` and evaluator code
+  in `src/pipeline/newsroom_audience_fit_benchmark_evaluation.py`. The
+  evaluation found the cards remain understandable as diagnostic review-only
+  artifacts, but they fail the material `text_clipping_or_wrapping` proxy:
+  cards 3 and 4 visibly clip meaningful left-panel text, while cards 1 and 2
+  crowd the same boundary. Warnings also remain for glance readability,
+  reference-unproven familiarity, source/subtitle reserve crowding, and 68 sec
+  pacing density. Passing proxies are minimum meaningful font size, one
+  dominant message per card, card role variation, diagnostic boundary
+  visibility, and no real brand/URL/public claim. Unknowns remain actual target
+  viewer preference, CTR/retention, target viewer comprehension outside this
+  project, production visual quality, and real newsroom visual acceptance. This
+  did not launch YMM4, render video, edit `.ymmp`, regenerate card assets,
+  generate audio/TTS, fetch external media, import real media, stage media,
+  claim actual audience acceptance, approve production visual quality, or claim
+  public readiness. The next default slice is
+  `newsroom-visual-card-benchmarked-refinement-v1`, limited to the concrete
+  benchmark failures: left-panel text wrapping/fit and bottom source/subtitle
+  reserve separation.
 - **Newsroom visual audience-fit benchmark v1 defined (2026-06-26)**:
   `newsroom-visual-audience-fit-benchmark-v1` now has a repo artifact at
   `samples/_probe/newsroom_handoff/visual_audience_fit_benchmark_v1.json` and
