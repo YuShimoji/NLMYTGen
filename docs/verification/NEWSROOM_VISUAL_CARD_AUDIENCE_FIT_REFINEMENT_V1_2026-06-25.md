@@ -33,8 +33,14 @@ production_status: diagnostic_only
 - display_number_font_size: 132
 - maximum_font_size: 132
 - max_title_lines: 1
-- max_body_lines: 2
+- max_headline_lines: 2
+- max_body_lines: 3
 - wrap_width: 760
+- left_panel_safe_text_width: 702
+- headline_wrap_chars: 18
+- body_wrap_chars: 27
+- source_display_format: SRC N/4
+- source_band_treatment: short right label separated from subtitle detail
 - subtitle_safe_reserve: {"height": 124, "width": 1712, "x": 104, "y": 820}
 - footer_debug_treatment: removed_from_visible_review_surface
 - audience_fit_style: familiar_youtube_explainer, diagnostic_only

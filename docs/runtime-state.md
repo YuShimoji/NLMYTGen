@@ -1,5 +1,32 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom visual card benchmarked refinement v1 completed (2026-06-26)**:
+  `newsroom-visual-card-benchmarked-refinement-v1` fixed the concrete static
+  benchmark failures from the prior audience-fit evaluation while preserving
+  the four stable diagnostic card paths. New artifacts are
+  `samples/_probe/newsroom_handoff/visual_card_benchmarked_refinement_v1.json`,
+  `docs/verification/NEWSROOM_VISUAL_CARD_BENCHMARKED_REFINEMENT_V1_2026-06-26.md`,
+  `src/pipeline/newsroom_visual_card_benchmarked_refinement.py`, and
+  `tests/test_newsroom_visual_card_benchmarked_refinement.py`. The existing
+  audience-fit card generator now applies narrower headline/body wraps, a
+  three-line body allowance, a preserved 34 px meaningful text floor, and a
+  short `SRC N/4` label separated from the subtitle-safe reserve detail. The
+  four current SVG/PNG cards and contact sheet under
+  `samples/_probe/newsroom_handoff/visual_cards_v1/` were regenerated in
+  place; card 3/4 left-panel text no longer clips, card 1/2 boundary crowding
+  is reduced, and source/subtitle reserve crowding is removed. The benchmarked
+  refinement readback reports `refinement_status=benchmarked_text_fit_improved`,
+  source validation `passed`, local proxy recheck
+  `improved_no_material_static_failures`, `fail_count=0`, `warning_count=2`
+  (reference-unproven familiar grammar and playback pacing remain for later
+  evidence), and next default slice
+  `newsroom-card-placement-post-benchmarked-refinement-render-smoke-v1`.
+  Verification in this worktree: `compileall` on the changed modules passed;
+  focused tests passed with `19 passed`; JSON, SVG, PNG 1920x1080, local HTML
+  contact sheet, and `git diff --check` checks passed. No YMM4 launch, render,
+  `.ymmp` edit/commit, audio/TTS/voice cache, external media/live YouTube
+  fetch, real brand/content use, fixed review form, production approval,
+  public-readiness claim, or audience-acceptance claim was performed.
 - **Newsroom audience-fit benchmark evaluation v1 applied (2026-06-26)**:
   `newsroom-audience-fit-benchmark-evaluation-v1` applied the visual benchmark
   to the current four diagnostic SVG/PNG cards and recorded the result in

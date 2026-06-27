@@ -79,6 +79,32 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom visual card benchmarked refinement decision (2026-06-26):
+`newsroom_visual_card_benchmarked_refinement_v1_2026_06_26` consumes the prior
+audience-fit benchmark evaluation failure and performs the allowed material
+card refinement without changing the four-card mapping or stable asset paths.
+The new readback artifacts are
+`samples/_probe/newsroom_handoff/visual_card_benchmarked_refinement_v1.json`
+and
+`docs/verification/NEWSROOM_VISUAL_CARD_BENCHMARKED_REFINEMENT_V1_2026-06-26.md`,
+with implementation in
+`src/pipeline/newsroom_visual_card_benchmarked_refinement.py` and focused tests
+in `tests/test_newsroom_visual_card_benchmarked_refinement.py`. The existing
+audience-fit card generator now uses benchmarked wrap/clamp constraints:
+headline max 2 lines, body max 3 lines, left-panel safe text width 702 px,
+minimum meaningful font floor still 34 px, and short `SRC N/4` source labels
+separated from the subtitle-safe reserve. The stable SVG/PNG assets and contact
+sheet under `samples/_probe/newsroom_handoff/visual_cards_v1/` were
+regenerated in place. The local proxy recheck is
+`improved_no_material_static_failures` with `fail_count=0`; the only remaining
+warnings are reference-unproven familiar grammar and 68 sec playback pacing,
+which require later evidence and were not claimed here. This slice did not
+launch YMM4, render video, edit or commit `.ymmp`, create audio/TTS/voice
+cache, fetch external media/live YouTube, import real content, add a fixed
+review form, claim production/public readiness, or claim actual audience
+acceptance. The next default slice is
+`newsroom-card-placement-post-benchmarked-refinement-render-smoke-v1`.
+
 Latest newsroom audience-fit benchmark evaluation decision (2026-06-26):
 `newsroom_audience_fit_benchmark_evaluation_v1_2026_06_26` applies the
 benchmark from `visual_audience_fit_benchmark_v1.json` to the current four

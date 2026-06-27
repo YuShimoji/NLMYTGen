@@ -13,9 +13,11 @@
   <text x="140" y="296" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="800" fill="#FFFFFF">CHECK</text>
   <text x="820" y="296" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#FFFFFF">24-46 SEC</text>
   <text x="140" y="412" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="800" fill="#111827">CHECK POINT</text>
-  <text x="140" y="520" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="800" fill="#111827">A fake claim is shown.</text>
-  <text x="144" y="704" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#374151">Plain check and caution boxes make the</text>
-  <text x="144" y="758" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#374151">fake status obvious.</text>
+  <text x="140" y="520" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="800" fill="#111827">A fake claim is</text>
+  <text x="140" y="604" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="800" fill="#111827">shown.</text>
+  <text x="144" y="650" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#374151">Plain check and caution</text>
+  <text x="144" y="704" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#374151">boxes make the fake status</text>
+  <text x="144" y="758" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#374151">obvious.</text>
   <rect x="944" y="232" width="872" height="548" rx="8" fill="#FFFFFF" stroke="#92400E" stroke-width="6"/>
   <rect x="1018" y="318" width="312" height="150" rx="8" fill="#FEF3C7" stroke="#92400E" stroke-width="5"/>
   <text x="1052" y="380" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="800" fill="#111827">CHECK</text>
@@ -32,5 +34,5 @@
   <rect x="104" y="820" width="1712" height="124" rx="8" fill="#111827"/>
   <text x="146" y="872" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="800" fill="#FFFFFF">SUBTITLE AREA</text>
   <text x="146" y="918" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#D1D5DB">Keep this lower band simple for YMM4 dialogue/subtitle review.</text>
-  <text x="1768" y="918" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#FFFFFF">SOURCE: cap_beat_fake_claim_001_01</text>
+  <text x="1768" y="872" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#FFFFFF">SRC 3/4</text>
 </svg>

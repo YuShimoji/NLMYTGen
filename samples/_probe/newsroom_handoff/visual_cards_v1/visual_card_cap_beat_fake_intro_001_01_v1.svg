@@ -13,19 +13,20 @@
   <text x="140" y="296" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="800" fill="#FFFFFF">POINT</text>
   <text x="820" y="296" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#FFFFFF">0-12 SEC</text>
   <text x="140" y="412" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="800" fill="#111827">TODAY&#x27;S POINT</text>
-  <text x="140" y="520" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="800" fill="#111827">Fake topic, review only.</text>
-  <text x="144" y="704" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#374151">Big, plain summary card for a normal</text>
-  <text x="144" y="758" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#374151">viewer.</text>
+  <text x="140" y="520" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="800" fill="#111827">Fake topic, review</text>
+  <text x="140" y="604" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="800" fill="#111827">only.</text>
+  <text x="144" y="650" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#374151">Big, plain summary card for</text>
+  <text x="144" y="704" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#374151">a normal viewer.</text>
   <rect x="944" y="232" width="872" height="548" rx="8" fill="#FFFFFF" stroke="#991B1B" stroke-width="6"/>
   <circle cx="1156" cy="430" r="128" fill="#DC2626"/>
   <text x="1156" y="470" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="132" font-weight="800" fill="#FFFFFF">1</text>
   <rect x="1320" y="330" width="380" height="200" rx="8" fill="#F3F4F6" stroke="#DC2626" stroke-width="5"/>
   <text x="1360" y="410" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="800" fill="#111827">POINT</text>
-  <text x="1360" y="478" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700" fill="#374151">Review-only overview</text>
+  <text x="1360" y="478" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700" fill="#374151">Review overview</text>
   <rect x="1030" y="626" width="694" height="86" rx="8" fill="#FEF3C7" stroke="#991B1B" stroke-width="4"/>
   <text x="1072" y="682" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="800" fill="#991B1B">NO REAL NEWS CLAIM</text>
   <rect x="104" y="820" width="1712" height="124" rx="8" fill="#111827"/>
   <text x="146" y="872" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="800" fill="#FFFFFF">SUBTITLE AREA</text>
   <text x="146" y="918" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#D1D5DB">Keep this lower band simple for YMM4 dialogue/subtitle review.</text>
-  <text x="1768" y="918" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#FFFFFF">SOURCE: cap_beat_fake_intro_001_01</text>
+  <text x="1768" y="872" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#FFFFFF">SRC 1/4</text>
 </svg>

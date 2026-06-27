@@ -82,8 +82,14 @@ AUDIENCE_FIT_TOKENS: dict[str, Any] = {
     "display_number_font_size": 132,
     "maximum_font_size": 132,
     "max_title_lines": 1,
-    "max_body_lines": 2,
+    "max_headline_lines": 2,
+    "max_body_lines": 3,
     "wrap_width": 760,
+    "left_panel_safe_text_width": 702,
+    "headline_wrap_chars": 18,
+    "body_wrap_chars": 27,
+    "source_display_format": "SRC N/4",
+    "source_band_treatment": "short right label separated from subtitle detail",
     "subtitle_safe_reserve": {
         "x": 104,
         "y": 820,
@@ -109,7 +115,7 @@ AUDIENCE_FIT_CARD_SPECS: tuple[dict[str, Any], ...] = (
         "body": "Big, plain summary card for a normal viewer.",
         "main_label": "1",
         "callout_label": "POINT",
-        "callout_text": "Review-only overview",
+        "callout_text": "Review overview",
         "familiar_ui_adjustment": "large TV-style title and number, fewer chips",
         "variation_adjustment": "large-number lead card",
         "palette": {
@@ -437,9 +443,17 @@ def render_audience_fit_card_svg(card: dict[str, Any]) -> str:
     title = _xml(card.get("card_title"))
     role = _xml(card.get("role"))
     motif = _xml(card.get("layout_motif"))
-    headline_lines = _wrap_text(str(card.get("headline") or ""), 24, max_lines=2)
-    body_lines = _wrap_text(str(card.get("body") or ""), 38, max_lines=2)
-    source = _xml(card.get("source_caption_or_beat_id"))
+    headline_lines = _wrap_text(
+        str(card.get("headline") or ""),
+        int(AUDIENCE_FIT_TOKENS["headline_wrap_chars"]),
+        max_lines=int(AUDIENCE_FIT_TOKENS["max_headline_lines"]),
+    )
+    body_lines = _wrap_text(
+        str(card.get("body") or ""),
+        int(AUDIENCE_FIT_TOKENS["body_wrap_chars"]),
+        max_lines=int(AUDIENCE_FIT_TOKENS["max_body_lines"]),
+    )
+    source = _xml(_source_display_label(card))
     timing = _xml(f"{card.get('intended_start_sec')}-{card.get('intended_end_sec')} SEC")
     count = _xml(f"{card.get('display_order')}/4")
 
@@ -478,7 +492,7 @@ def render_audience_fit_card_svg(card: dict[str, Any]) -> str:
         _svg_text_lines(
             body_lines,
             x=144,
-            y=704,
+            y=650,
             font_size=44,
             line_height=54,
             fill=muted,
@@ -491,12 +505,18 @@ def render_audience_fit_card_svg(card: dict[str, Any]) -> str:
             f'  <rect x="104" y="820" width="1712" height="124" rx="8" fill="#111827"/>',
             '  <text x="146" y="872" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="800" fill="#FFFFFF">SUBTITLE AREA</text>',
             '  <text x="146" y="918" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#D1D5DB">Keep this lower band simple for YMM4 dialogue/subtitle review.</text>',
-            f'  <text x="1768" y="918" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#FFFFFF">SOURCE: {source}</text>',
+            f'  <text x="1768" y="872" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#FFFFFF">{source}</text>',
             "</svg>",
             "",
         ]
     )
     return "\n".join(lines)
+
+
+def _source_display_label(card: dict[str, Any]) -> str:
+    order = int(card.get("display_order") or 0)
+    total = len(AUDIENCE_FIT_CARD_SPECS)
+    return f"SRC {order}/{total}"
 
 
 def render_audience_fit_contact_sheet_html(cards: list[dict[str, Any]]) -> str:
@@ -540,8 +560,8 @@ def render_audience_fit_contact_sheet_html(cards: list[dict[str, Any]]) -> str:
             "<body>",
             "  <header>",
             "    <h1>Newsroom Visual Cards - audience fit v1</h1>",
-            "    <p>Diagnostic-only fake cards with larger text, familiar labels, "
-            "and mainstream explainer composition. No real brands, URLs, media, "
+            "    <p>Diagnostic-only fake cards with larger text, benchmarked text-fit wraps, "
+            "familiar labels, and mainstream explainer composition. No real brands, URLs, media, "
             "render output, audio, TTS, or production approval are included.</p>",
             "  </header>",
             "  <main>",

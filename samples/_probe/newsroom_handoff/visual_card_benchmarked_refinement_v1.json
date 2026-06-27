@@ -1,0 +1,515 @@
+{
+  "artifact_id": "newsroom_visual_card_benchmarked_refinement_v1_2026_06_26",
+  "refinement_id": "newsroom_visual_card_benchmarked_refinement_v1_2026_06_26",
+  "schema_version": "newsroom_visual_card_benchmarked_refinement.v1",
+  "refinement_status": "benchmarked_text_fit_improved",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "visual_work_class": "audience_fit_benchmarked_refinement",
+  "evidence_level": [
+    "prior_static_proxy_benchmark_evaluation",
+    "local_svg_png_asset_recheck"
+  ],
+  "audience_acceptance_claimed": false,
+  "identity": {
+    "refinement_id": "newsroom_visual_card_benchmarked_refinement_v1_2026_06_26",
+    "source_visual_benchmark_path": "samples/_probe/newsroom_handoff/visual_audience_fit_benchmark_v1.json",
+    "source_visual_benchmark_id": "newsroom_visual_audience_fit_benchmark_v1_2026_06_26",
+    "source_benchmark_evaluation_path": "samples/_probe/newsroom_handoff/audience_fit_benchmark_evaluation_v1.json",
+    "source_benchmark_evaluation_id": "newsroom_audience_fit_benchmark_evaluation_v1_2026_06_26",
+    "source_audience_fit_refinement_path": "samples/_probe/newsroom_handoff/visual_card_audience_fit_refinement_v1.json",
+    "source_audience_fit_refinement_id": "newsroom_visual_card_audience_fit_refinement_v1_2026_06_25",
+    "source_cards_dir": "samples/_probe/newsroom_handoff/visual_cards_v1",
+    "output_cards_dir": "samples/_probe/newsroom_handoff/visual_cards_v1",
+    "contact_sheet_path": "samples/_probe/newsroom_handoff/visual_cards_v1/contact_sheet.html",
+    "production_status": "diagnostic_only"
+  },
+  "source_validation": {
+    "status": "passed",
+    "errors": [],
+    "source_visual_benchmark_status": "draft_proxy_benchmark_defined",
+    "source_benchmark_evaluation_status": "material_proxy_failures_found",
+    "source_audience_fit_refinement_status": "assets_regenerated",
+    "card_count": 4
+  },
+  "failure_to_fix_map": [
+    {
+      "source_metric_id": "text_clipping_or_wrapping",
+      "prior_result": "fail",
+      "source_evidence": "cards 3 and 4 visibly clip meaningful left-panel text; cards 1 and 2 crowd the same boundary",
+      "fix_summary": "left-panel headline and body copy now uses narrower static wrap limits with a three-line body allowance inside the panel",
+      "current_proxy_result": "pass",
+      "affected_cards": [
+        "visual_card_cap_beat_fake_intro_001_01_v1",
+        "visual_card_cap_beat_fake_intro_001_02_v1",
+        "visual_card_cap_beat_fake_claim_001_01_v1",
+        "visual_card_cap_beat_fake_claim_001_02_v1"
+      ]
+    },
+    {
+      "source_metric_id": "readability_at_a_glance",
+      "prior_result": "warning",
+      "source_evidence": "roles are visible, but long headlines crowd or cross the left panel boundary",
+      "fix_summary": "dominant messages now break into short readable phrases",
+      "current_proxy_result": "pass",
+      "affected_cards": [
+        "visual_card_cap_beat_fake_intro_001_01_v1",
+        "visual_card_cap_beat_fake_intro_001_02_v1",
+        "visual_card_cap_beat_fake_claim_001_01_v1",
+        "visual_card_cap_beat_fake_claim_001_02_v1"
+      ]
+    },
+    {
+      "source_metric_id": "no_reliance_on_tiny_metadata",
+      "prior_result": "warning",
+      "source_evidence": "core meaning does not depend on source labels, but source labels crowd the subtitle reserve",
+      "fix_summary": "long source strings were replaced with short non-essential SRC N/4 labels on the top line of the subtitle reserve",
+      "current_proxy_result": "pass",
+      "affected_cards": [
+        "visual_card_cap_beat_fake_intro_001_01_v1",
+        "visual_card_cap_beat_fake_intro_001_02_v1",
+        "visual_card_cap_beat_fake_claim_001_01_v1",
+        "visual_card_cap_beat_fake_claim_001_02_v1"
+      ]
+    },
+    {
+      "source_metric_id": "pacing_density_for_68_sec_video",
+      "prior_result": "warning",
+      "source_evidence": "prior render observed four cards over 68 sec, but current clipping may hurt normal playback comprehension",
+      "fix_summary": "static card density was reduced; real playback comprehension remains for render smoke",
+      "current_proxy_result": "warning_deferred_to_render_smoke",
+      "affected_cards": [
+        "visual_card_cap_beat_fake_claim_001_01_v1",
+        "visual_card_cap_beat_fake_claim_001_02_v1"
+      ]
+    }
+  ],
+  "per_card_changes": [
+    {
+      "card_id": "visual_card_cap_beat_fake_intro_001_01_v1",
+      "display_order": 1,
+      "role": "intro_summary",
+      "layout_motif": "large_number",
+      "prior_evaluation_status": "warning",
+      "prior_issue_notes": [
+        "role and review-only boundary are clear",
+        "headline visually reaches the left panel boundary",
+        "source label crowds the subtitle reserve band"
+      ],
+      "benchmark_refinement_status": "improved_static_text_fit",
+      "headline_lines": [
+        "Fake topic, review",
+        "only."
+      ],
+      "body_lines": [
+        "Big, plain summary card for",
+        "a normal viewer."
+      ],
+      "headline_wrap_verified": true,
+      "body_wrap_verified": true,
+      "source_display_label": "SRC 1/4",
+      "source_display_label_visible": true,
+      "source_band_change": "short SRC label placed on upper right of subtitle reserve; subtitle guidance remains on lower left",
+      "meaningful_font_floor_px": 34,
+      "maximum_copy_font_px": 76,
+      "left_panel_safe_width_px": 702,
+      "stable_asset_paths_preserved": true,
+      "output_svg_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.svg",
+      "output_png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.png",
+      "svg_matches_current_renderer": true,
+      "png_size": {
+        "width": 1920,
+        "height": 1080
+      },
+      "no_full_source_caption_visible": true,
+      "no_real_url_or_www_visible": true
+    },
+    {
+      "card_id": "visual_card_cap_beat_fake_intro_001_02_v1",
+      "display_order": 2,
+      "role": "handoff_process",
+      "layout_motif": "simple_process_steps",
+      "prior_evaluation_status": "warning",
+      "prior_issue_notes": [
+        "simple 1-2-3 flow is clear",
+        "headline visually reaches the left panel boundary",
+        "source label crowds the subtitle reserve band"
+      ],
+      "benchmark_refinement_status": "improved_static_text_fit",
+      "headline_lines": [
+        "Review-only",
+        "handoff stays."
+      ],
+      "body_lines": [
+        "Three simple steps replace",
+        "dashboard-style microcopy."
+      ],
+      "headline_wrap_verified": true,
+      "body_wrap_verified": true,
+      "source_display_label": "SRC 2/4",
+      "source_display_label_visible": true,
+      "source_band_change": "short SRC label placed on upper right of subtitle reserve; subtitle guidance remains on lower left",
+      "meaningful_font_floor_px": 34,
+      "maximum_copy_font_px": 76,
+      "left_panel_safe_width_px": 702,
+      "stable_asset_paths_preserved": true,
+      "output_svg_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.svg",
+      "output_png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.png",
+      "svg_matches_current_renderer": true,
+      "png_size": {
+        "width": 1920,
+        "height": 1080
+      },
+      "no_full_source_caption_visible": true,
+      "no_real_url_or_www_visible": true
+    },
+    {
+      "card_id": "visual_card_cap_beat_fake_claim_001_01_v1",
+      "display_order": 3,
+      "role": "claim_check",
+      "layout_motif": "check_warning_box",
+      "prior_evaluation_status": "fail",
+      "prior_issue_notes": [
+        "check/caution/status boxes are clear",
+        "left-panel body text is visibly clipped at the right edge",
+        "source label crowds the subtitle reserve band"
+      ],
+      "benchmark_refinement_status": "improved_static_text_fit",
+      "headline_lines": [
+        "A fake claim is",
+        "shown."
+      ],
+      "body_lines": [
+        "Plain check and caution",
+        "boxes make the fake status",
+        "obvious."
+      ],
+      "headline_wrap_verified": true,
+      "body_wrap_verified": true,
+      "source_display_label": "SRC 3/4",
+      "source_display_label_visible": true,
+      "source_band_change": "short SRC label placed on upper right of subtitle reserve; subtitle guidance remains on lower left",
+      "meaningful_font_floor_px": 34,
+      "maximum_copy_font_px": 76,
+      "left_panel_safe_width_px": 702,
+      "stable_asset_paths_preserved": true,
+      "output_svg_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.svg",
+      "output_png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.png",
+      "svg_matches_current_renderer": true,
+      "png_size": {
+        "width": 1920,
+        "height": 1080
+      },
+      "no_full_source_caption_visible": true,
+      "no_real_url_or_www_visible": true
+    },
+    {
+      "card_id": "visual_card_cap_beat_fake_claim_001_02_v1",
+      "display_order": 4,
+      "role": "source_status_next_action",
+      "layout_motif": "source_status_panel",
+      "prior_evaluation_status": "fail",
+      "prior_issue_notes": [
+        "source/status/next role is clear",
+        "headline is visibly clipped at the right edge",
+        "source label crowds the subtitle reserve band"
+      ],
+      "benchmark_refinement_status": "improved_static_text_fit",
+      "headline_lines": [
+        "Fake source checks",
+        "are noted."
+      ],
+      "body_lines": [
+        "Status and next-action",
+        "panels stay large and",
+        "familiar."
+      ],
+      "headline_wrap_verified": true,
+      "body_wrap_verified": true,
+      "source_display_label": "SRC 4/4",
+      "source_display_label_visible": true,
+      "source_band_change": "short SRC label placed on upper right of subtitle reserve; subtitle guidance remains on lower left",
+      "meaningful_font_floor_px": 34,
+      "maximum_copy_font_px": 76,
+      "left_panel_safe_width_px": 702,
+      "stable_asset_paths_preserved": true,
+      "output_svg_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.svg",
+      "output_png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.png",
+      "svg_matches_current_renderer": true,
+      "png_size": {
+        "width": 1920,
+        "height": 1080
+      },
+      "no_full_source_caption_visible": true,
+      "no_real_url_or_www_visible": true
+    }
+  ],
+  "design_constraints": {
+    "canvas_size": {
+      "width": 1920,
+      "height": 1080
+    },
+    "stable_asset_paths": true,
+    "card_count": 4,
+    "left_panel_safe_text_width": 702,
+    "headline_wrap_chars": 18,
+    "headline_max_lines": 2,
+    "body_wrap_chars": 27,
+    "body_max_lines": 3,
+    "minimum_meaningful_font_size": 34,
+    "maximum_copy_font_size": 76,
+    "source_display_format": "SRC N/4",
+    "source_band_treatment": "short right label separated from subtitle detail",
+    "subtitle_safe_reserve": {
+      "x": 104,
+      "y": 820,
+      "width": 1712,
+      "height": 124
+    },
+    "familiar_youtube_explainer_direction_preserved": true,
+    "diagnostic_review_only_boundary_preserved": true,
+    "real_brand_or_url_present": false,
+    "production_claim_present": false
+  },
+  "local_proxy_recheck": {
+    "proxy_status": "improved_no_material_static_failures",
+    "metric_results": [
+      {
+        "metric_id": "readability_at_a_glance",
+        "result": "pass",
+        "evidence": "headline lines <=2 and body lines <=3 across all four cards"
+      },
+      {
+        "metric_id": "text_clipping_or_wrapping",
+        "result": "pass",
+        "evidence": "current SVGs match the benchmarked renderer and use narrower wrap limits"
+      },
+      {
+        "metric_id": "minimum_meaningful_font_size",
+        "result": "pass",
+        "evidence": "card token floor remains 34px; no meaningful copy is shrunk below the prior floor"
+      },
+      {
+        "metric_id": "one_dominant_message_per_card",
+        "result": "pass",
+        "evidence": "POINT, FLOW, CHECK, and NEXT roles are preserved with one dominant message each"
+      },
+      {
+        "metric_id": "familiar_explainer_visual_grammar",
+        "result": "warning",
+        "evidence": "large explainer blocks are preserved, but no external reference pack or user acceptance is claimed"
+      },
+      {
+        "metric_id": "no_reliance_on_tiny_metadata",
+        "result": "pass",
+        "evidence": "long source captions are no longer visible; source display is short and non-essential"
+      },
+      {
+        "metric_id": "card_role_variation",
+        "result": "pass",
+        "evidence": "large number, process steps, check/warning box, and source/status panel motifs remain distinct"
+      },
+      {
+        "metric_id": "pacing_density_for_68_sec_video",
+        "result": "warning",
+        "evidence": "static density is reduced, but playback comprehension needs the next render smoke"
+      },
+      {
+        "metric_id": "diagnostic_boundary_visibility",
+        "result": "pass",
+        "evidence": "REVIEW ONLY and DIAGNOSTIC labels remain visible in the generated SVG assets"
+      },
+      {
+        "metric_id": "no_real_brand_url_public_claim",
+        "result": "pass",
+        "evidence": "SVG text contains no real URL/www pattern and still uses fake diagnostic content"
+      },
+      {
+        "metric_id": "stable_asset_paths_and_size",
+        "result": "pass",
+        "evidence": "all four PNGs remain 1920x1080 under the existing visual_cards_v1 paths"
+      }
+    ],
+    "pass_count": 9,
+    "warning_count": 2,
+    "fail_count": 0,
+    "render_or_yym4_checked": false,
+    "external_reference_or_audience_checked": false
+  },
+  "accepted_scope": {
+    "prior_benchmark_failure_mapped": true,
+    "left_panel_text_wrapping_improved": true,
+    "cards_3_and_4_clipping_proxy_fixed": true,
+    "cards_1_and_2_boundary_crowding_proxy_improved": true,
+    "source_subtitle_reserve_separated": true,
+    "stable_svg_png_paths_preserved": true,
+    "minimum_meaningful_font_floor_preserved": true,
+    "diagnostic_review_only_boundary_preserved": true
+  },
+  "not_accepted_scope": {
+    "YMM4_launch_or_render": false,
+    "ymmp_edit_or_commit": false,
+    "audio_tts_or_voice_cache": false,
+    "external_media_or_live_youtube_fetch": false,
+    "real_brand_or_real_content_use": false,
+    "production_visual_quality": false,
+    "audience_acceptance": false,
+    "public_video_readiness": false,
+    "fixed_human_review_form": false
+  },
+  "next_recommended_slice": {
+    "slice": "newsroom-card-placement-post-benchmarked-refinement-render-smoke-v1",
+    "reason": "stable SVG/PNG card paths now pass the static benchmarked text-fit proxy"
+  },
+  "recommended_next_slices": [
+    {
+      "slice": "newsroom-card-placement-post-benchmarked-refinement-render-smoke-v1",
+      "timing": "next",
+      "reason": "static card assets are ready for a placement/render smoke readback"
+    },
+    {
+      "slice": "newsroom-internal-review-v0.1-operator-review-card",
+      "timing": "after_render_smoke_if_useful",
+      "reason": "human review should inspect rendered placement, not stale static failures"
+    }
+  ],
+  "completion_matrix": [
+    {
+      "item": "mainline_synced_before_work",
+      "status": true
+    },
+    {
+      "item": "prior_benchmark_failure_read",
+      "status": true
+    },
+    {
+      "item": "stable_card_assets_regenerated",
+      "status": true
+    },
+    {
+      "item": "static_text_fit_proxy_rechecked",
+      "status": true
+    },
+    {
+      "item": "new_benchmarked_refinement_artifact_written",
+      "status": true
+    },
+    {
+      "item": "render_yym4_audio_out_of_scope",
+      "status": true
+    }
+  ],
+  "artifact_readiness": [
+    {
+      "item": "json_artifact_ready",
+      "status": true
+    },
+    {
+      "item": "verification_doc_ready",
+      "status": true
+    },
+    {
+      "item": "stable_svg_png_card_paths_ready",
+      "status": true
+    },
+    {
+      "item": "contact_sheet_ready",
+      "status": true
+    },
+    {
+      "item": "production_or_audience_acceptance_ready",
+      "status": false
+    }
+  ],
+  "render_gate_hygiene": [
+    {
+      "item": "no_yym4_launch_in_this_slice",
+      "status": true
+    },
+    {
+      "item": "no_render_output_created",
+      "status": true
+    },
+    {
+      "item": "no_ymmp_committed",
+      "status": true
+    },
+    {
+      "item": "render_smoke_deferred_to_next_slice",
+      "status": true
+    }
+  ],
+  "human_burden_hygiene": [
+    {
+      "item": "no_fixed_review_form_added",
+      "status": true
+    },
+    {
+      "item": "review_burden_not_expanded",
+      "status": true
+    },
+    {
+      "item": "next_human_decision_deferred_until_render_context",
+      "status": true
+    }
+  ],
+  "review_non_redundancy": [
+    {
+      "item": "does_not_repeat_prior_benchmark_without_action",
+      "status": true
+    },
+    {
+      "item": "fixes_concrete_static_failures_before_new_review",
+      "status": true
+    },
+    {
+      "item": "keeps_market_fit_unknowns_open",
+      "status": true
+    }
+  ],
+  "inertia_check": [
+    {
+      "item": "next_action_specific",
+      "status": "newsroom-card-placement-post-benchmarked-refinement-render-smoke-v1"
+    },
+    {
+      "item": "no_governance_dashboard_detour",
+      "status": true
+    },
+    {
+      "item": "no_reference_pack_blocker",
+      "status": true
+    },
+    {
+      "item": "no_render_without_material_card_change",
+      "status": true
+    }
+  ],
+  "boundaries": {
+    "diagnostic_only": true,
+    "fake_content_only": true,
+    "external_fetch_performed": false,
+    "YMM4_launched": false,
+    "render_performed": false,
+    "ymmp_committed": false,
+    "media_audio_or_tts_created": false,
+    "production_approval": false,
+    "audience_acceptance_claimed": false,
+    "public_video_ready": false
+  },
+  "downstream_next_use": {
+    "default_slice": "newsroom-card-placement-post-benchmarked-refinement-render-smoke-v1",
+    "instruction": "use the stable benchmarked card assets for a later placement/render smoke; do not treat this static refinement as render, audience, or production proof",
+    "allowed_change_axis": [
+      "YMM4 placement/render smoke using current stable card paths",
+      "readback of card visibility against the benchmarked refinement"
+    ],
+    "disallowed_change_axis": [
+      "new visual concept",
+      ".ymmp commit",
+      "audio or TTS generation",
+      "external media or live news fetch",
+      "production/public approval claim"
+    ]
+  }
+}
