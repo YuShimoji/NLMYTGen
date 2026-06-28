@@ -1,0 +1,651 @@
+{
+  "artifact_id": "newsroom_yukkuri_animation_primitive_proof_v1_2026_06_28",
+  "proof_id": "newsroom_yukkuri_animation_primitive_proof_v1_2026_06_28",
+  "schema_version": "newsroom_yukkuri_animation_primitive_proof.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "render_gate": "L0_no_render",
+  "source_context": {
+    "format_spec_path": "samples/_probe/newsroom_handoff/yukkuri_background_animation_format_spec_v1.json",
+    "format_spec_exists": true,
+    "primitive_inventory_path": "samples/_probe/newsroom_handoff/yukkuri_animation_primitive_inventory_v1.json",
+    "primitive_inventory_exists": true,
+    "prior_asset_audit_path": "samples/_probe/newsroom_handoff/prior_animation_asset_recovery_audit_v1.json",
+    "prior_asset_audit_exists": true,
+    "source_context_role": "verified_input_not_agent_report_claim"
+  },
+  "selected_primitive_ids": [
+    "head_nod",
+    "expression_swap",
+    "character_entrance_exit",
+    "small_position_move",
+    "speech_balloon"
+  ],
+  "selection_reason": "previous inventory selected these as the smallest useful proof set; four are structurally pass and speech_balloon remains partial",
+  "asset_access_state": [
+    {
+      "artifact_id": "nod_head_probe",
+      "repo_relative_path": "samples/nod_head.ymmp",
+      "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples",
+      "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\nod_head.ymmp",
+      "target_exists": true,
+      "access_state": "tracked_repo_artifact_exists",
+      "access_evidence_level": "repo_tracked_current_host",
+      "evidence_source": "git ls-files + filesystem exists",
+      "git_state": "tracked",
+      "artifact_kind": "proof"
+    },
+    {
+      "artifact_id": "motion_recipe_brief",
+      "repo_relative_path": "samples/recipe_briefs/g26_nod_head_v1_brief.v2.json",
+      "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\recipe_briefs",
+      "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\recipe_briefs\\g26_nod_head_v1_brief.v2.json",
+      "target_exists": true,
+      "access_state": "tracked_repo_artifact_exists",
+      "access_evidence_level": "repo_tracked_current_host",
+      "evidence_source": "git ls-files + filesystem exists",
+      "git_state": "tracked",
+      "artifact_kind": "tracked"
+    },
+    {
+      "artifact_id": "motion_recipe_code",
+      "repo_relative_path": "src/pipeline/motion_recipe.py",
+      "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\src\\pipeline",
+      "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\src\\pipeline\\motion_recipe.py",
+      "target_exists": true,
+      "access_state": "tracked_repo_artifact_exists",
+      "access_evidence_level": "repo_tracked_current_host",
+      "evidence_source": "git ls-files + filesystem exists",
+      "git_state": "tracked",
+      "artifact_kind": "tracked"
+    },
+    {
+      "artifact_id": "reimu_expression_easy",
+      "repo_relative_path": "samples/characterAnimSample/reimu_easy.png",
+      "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample",
+      "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_easy.png",
+      "target_exists": true,
+      "access_state": "tracked_repo_artifact_exists",
+      "access_evidence_level": "repo_tracked_current_host",
+      "evidence_source": "git ls-files + filesystem exists",
+      "git_state": "tracked",
+      "artifact_kind": "tracked"
+    },
+    {
+      "artifact_id": "reimu_expression_anger",
+      "repo_relative_path": "samples/characterAnimSample/reimu_anger.png",
+      "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample",
+      "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_anger.png",
+      "target_exists": true,
+      "access_state": "tracked_repo_artifact_exists",
+      "access_evidence_level": "repo_tracked_current_host",
+      "evidence_source": "git ls-files + filesystem exists",
+      "git_state": "tracked",
+      "artifact_kind": "tracked"
+    },
+    {
+      "artifact_id": "reimu_expression_panic",
+      "repo_relative_path": "samples/characterAnimSample/reimu_panic.png",
+      "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample",
+      "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_panic.png",
+      "target_exists": true,
+      "access_state": "tracked_repo_artifact_exists",
+      "access_evidence_level": "repo_tracked_current_host",
+      "evidence_source": "git ls-files + filesystem exists",
+      "git_state": "tracked",
+      "artifact_kind": "tracked"
+    },
+    {
+      "artifact_id": "character_body_source",
+      "repo_relative_path": "samples/characterAnimSample/Gemini_Generated_Image_kfezhpkfezhpkfez-removebg-preview.png",
+      "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample",
+      "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\Gemini_Generated_Image_kfezhpkfezhpkfez-removebg-preview.png",
+      "target_exists": true,
+      "access_state": "tracked_repo_artifact_exists",
+      "access_evidence_level": "repo_tracked_current_host",
+      "evidence_source": "git ls-files + filesystem exists",
+      "git_state": "tracked",
+      "artifact_kind": "tracked"
+    },
+    {
+      "artifact_id": "face_map_extracted",
+      "repo_relative_path": "samples/characterAnimSample/face_map_extracted.json",
+      "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample",
+      "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\face_map_extracted.json",
+      "target_exists": true,
+      "access_state": "tracked_repo_artifact_exists",
+      "access_evidence_level": "repo_tracked_current_host",
+      "evidence_source": "git ls-files + filesystem exists",
+      "git_state": "tracked",
+      "artifact_kind": "tracked"
+    },
+    {
+      "artifact_id": "face_map_bundle_default",
+      "repo_relative_path": "samples/face_map_bundles/default.json",
+      "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\face_map_bundles",
+      "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\face_map_bundles\\default.json",
+      "target_exists": true,
+      "access_state": "tracked_repo_artifact_exists",
+      "access_evidence_level": "repo_tracked_current_host",
+      "evidence_source": "git ls-files + filesystem exists",
+      "git_state": "tracked",
+      "artifact_kind": "tracked"
+    },
+    {
+      "artifact_id": "skit_group_template_source",
+      "repo_relative_path": "samples/templates/skit_group/delivery_v1_templates.ymmp",
+      "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\templates\\skit_group",
+      "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\templates\\skit_group\\delivery_v1_templates.ymmp",
+      "target_exists": true,
+      "access_state": "tracked_repo_artifact_exists",
+      "access_evidence_level": "repo_tracked_current_host",
+      "evidence_source": "git ls-files + filesystem exists",
+      "git_state": "tracked",
+      "artifact_kind": "template"
+    },
+    {
+      "artifact_id": "skit_group_registry",
+      "repo_relative_path": "samples/registry_template/skit_group_registry.template.json",
+      "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\registry_template",
+      "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\registry_template\\skit_group_registry.template.json",
+      "target_exists": true,
+      "access_state": "tracked_repo_artifact_exists",
+      "access_evidence_level": "repo_tracked_current_host",
+      "evidence_source": "git ls-files + filesystem exists",
+      "git_state": "tracked",
+      "artifact_kind": "tracked"
+    },
+    {
+      "artifact_id": "skit_group_placement_code",
+      "repo_relative_path": "src/pipeline/skit_group_placement.py",
+      "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\src\\pipeline",
+      "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\src\\pipeline\\skit_group_placement.py",
+      "target_exists": true,
+      "access_state": "tracked_repo_artifact_exists",
+      "access_evidence_level": "repo_tracked_current_host",
+      "evidence_source": "git ls-files + filesystem exists",
+      "git_state": "tracked",
+      "artifact_kind": "tracked"
+    },
+    {
+      "artifact_id": "group_motion_map",
+      "repo_relative_path": "samples/group_motion_map.example.json",
+      "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples",
+      "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\group_motion_map.example.json",
+      "target_exists": true,
+      "access_state": "tracked_repo_artifact_exists",
+      "access_evidence_level": "repo_tracked_current_host",
+      "evidence_source": "git ls-files + filesystem exists",
+      "git_state": "tracked",
+      "artifact_kind": "tracked"
+    },
+    {
+      "artifact_id": "scene_composition_schema",
+      "repo_relative_path": "docs/SCENE_COMPOSITION_SCHEMA.md",
+      "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\docs",
+      "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\docs\\SCENE_COMPOSITION_SCHEMA.md",
+      "target_exists": true,
+      "access_state": "tracked_repo_artifact_exists",
+      "access_evidence_level": "repo_tracked_current_host",
+      "evidence_source": "git ls-files + filesystem exists",
+      "git_state": "tracked",
+      "artifact_kind": "tracked"
+    },
+    {
+      "artifact_id": "production_ir_spec",
+      "repo_relative_path": "docs/PRODUCTION_IR_SPEC.md",
+      "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\docs",
+      "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\docs\\PRODUCTION_IR_SPEC.md",
+      "target_exists": true,
+      "access_state": "tracked_repo_artifact_exists",
+      "access_evidence_level": "repo_tracked_current_host",
+      "evidence_source": "git ls-files + filesystem exists",
+      "git_state": "tracked",
+      "artifact_kind": "tracked"
+    }
+  ],
+  "structural_evidence": {
+    "head_nod": {
+      "status": "pass",
+      "source": "samples/nod_head.ymmp",
+      "group_item_count": 2,
+      "image_item_count": 2,
+      "rotation_routes": [
+        [
+          0.0
+        ],
+        [
+          0.0,
+          -10.0,
+          0.0
+        ]
+      ],
+      "native_template_remark": "nod_head_v1"
+    },
+    "expression_swap": {
+      "status": "pass",
+      "tracked_asset_count": 6,
+      "required_asset_count": 6,
+      "expression_files": [
+        "samples/characterAnimSample/reimu_easy.png",
+        "samples/characterAnimSample/reimu_anger.png",
+        "samples/characterAnimSample/reimu_panic.png"
+      ],
+      "representation": "face image source switch over a stable body image"
+    },
+    "character_entrance_exit": {
+      "status": "pass",
+      "template_names": [
+        "delivery_deny_oneshot_v1",
+        "delivery_enter_from_left_v1",
+        "delivery_exit_left_v1",
+        "delivery_nod_v1",
+        "delivery_surprise_oneshot_v1"
+      ],
+      "required_templates": [
+        "delivery_enter_from_left_v1",
+        "delivery_exit_left_v1"
+      ],
+      "validation_warnings": [],
+      "analysis_warnings": [],
+      "has_template_analysis": true
+    },
+    "small_position_move": {
+      "status": "pass",
+      "source": "samples/group_motion_map.example.json",
+      "required_motion_ids": [
+        "approach",
+        "nudge_left",
+        "nudge_right",
+        "retreat"
+      ],
+      "available_motion_ids": [
+        "approach",
+        "aside_left",
+        "aside_right",
+        "center_stage",
+        "nudge_down",
+        "nudge_left",
+        "nudge_right",
+        "nudge_up",
+        "reset_center",
+        "retreat",
+        "slide_left",
+        "slide_right",
+        "zoom_focus",
+        "zoom_in_relative",
+        "zoom_out_relative"
+      ],
+      "relative_motion_ids": [
+        "approach",
+        "nudge_left",
+        "nudge_right",
+        "retreat"
+      ]
+    },
+    "speech_balloon": {
+      "status": "partial",
+      "reason": "ShapeItem/TextItem routes are documented, but no dedicated speech balloon template or YMM4 visual pass exists in this slice",
+      "scene_composition_schema_exists": true,
+      "production_ir_spec_exists": true,
+      "dedicated_balloon_template_found": false
+    }
+  },
+  "primitive_proofs": [
+    {
+      "primitive_id": "head_nod",
+      "intended_scene_function": "confirmation_or_agreement_reaction",
+      "required_assets": [
+        "nod_head_probe",
+        "motion_recipe_brief",
+        "motion_recipe_code"
+      ],
+      "asset_access_state": [
+        {
+          "artifact_id": "nod_head_probe",
+          "access_state": "tracked_repo_artifact_exists",
+          "target_exists": true,
+          "artifact_kind": "proof"
+        },
+        {
+          "artifact_id": "motion_recipe_brief",
+          "access_state": "tracked_repo_artifact_exists",
+          "target_exists": true,
+          "artifact_kind": "tracked"
+        },
+        {
+          "artifact_id": "motion_recipe_code",
+          "access_state": "tracked_repo_artifact_exists",
+          "target_exists": true,
+          "artifact_kind": "tracked"
+        }
+      ],
+      "ymm4_representation_candidate": "GroupItem native template with head rotation keyframes",
+      "can_prove_without_render": true,
+      "proof_status": "pass",
+      "risk": "medium",
+      "fallback": "static expression_swap if nod route is visually rejected"
+    },
+    {
+      "primitive_id": "expression_swap",
+      "intended_scene_function": "externalize_question_or_confidence_without_dialogue",
+      "required_assets": [
+        "reimu_expression_easy",
+        "reimu_expression_anger",
+        "reimu_expression_panic",
+        "character_body_source",
+        "face_map_extracted",
+        "face_map_bundle_default"
+      ],
+      "asset_access_state": [
+        {
+          "artifact_id": "reimu_expression_easy",
+          "access_state": "tracked_repo_artifact_exists",
+          "target_exists": true,
+          "artifact_kind": "tracked"
+        },
+        {
+          "artifact_id": "reimu_expression_anger",
+          "access_state": "tracked_repo_artifact_exists",
+          "target_exists": true,
+          "artifact_kind": "tracked"
+        },
+        {
+          "artifact_id": "reimu_expression_panic",
+          "access_state": "tracked_repo_artifact_exists",
+          "target_exists": true,
+          "artifact_kind": "tracked"
+        },
+        {
+          "artifact_id": "character_body_source",
+          "access_state": "tracked_repo_artifact_exists",
+          "target_exists": true,
+          "artifact_kind": "tracked"
+        },
+        {
+          "artifact_id": "face_map_extracted",
+          "access_state": "tracked_repo_artifact_exists",
+          "target_exists": true,
+          "artifact_kind": "tracked"
+        },
+        {
+          "artifact_id": "face_map_bundle_default",
+          "access_state": "tracked_repo_artifact_exists",
+          "target_exists": true,
+          "artifact_kind": "tracked"
+        }
+      ],
+      "ymm4_representation_candidate": "ImageItem face/expression source switch",
+      "can_prove_without_render": true,
+      "proof_status": "pass",
+      "risk": "low",
+      "fallback": "single neutral face if expression palette fails"
+    },
+    {
+      "primitive_id": "character_entrance_exit",
+      "intended_scene_function": "open_or_close_a_background_reenactment_beat",
+      "required_assets": [
+        "skit_group_template_source",
+        "skit_group_registry",
+        "skit_group_placement_code"
+      ],
+      "asset_access_state": [
+        {
+          "artifact_id": "skit_group_template_source",
+          "access_state": "tracked_repo_artifact_exists",
+          "target_exists": true,
+          "artifact_kind": "template"
+        },
+        {
+          "artifact_id": "skit_group_registry",
+          "access_state": "tracked_repo_artifact_exists",
+          "target_exists": true,
+          "artifact_kind": "tracked"
+        },
+        {
+          "artifact_id": "skit_group_placement_code",
+          "access_state": "tracked_repo_artifact_exists",
+          "target_exists": true,
+          "artifact_kind": "tracked"
+        }
+      ],
+      "ymm4_representation_candidate": "GroupItem skit template registry entry",
+      "can_prove_without_render": true,
+      "proof_status": "pass",
+      "risk": "medium",
+      "fallback": "static character hold with no entrance motion"
+    },
+    {
+      "primitive_id": "small_position_move",
+      "intended_scene_function": "keep_background_layer_alive_without_decorative_overload",
+      "required_assets": [
+        "group_motion_map",
+        "motion_recipe_code"
+      ],
+      "asset_access_state": [
+        {
+          "artifact_id": "group_motion_map",
+          "access_state": "tracked_repo_artifact_exists",
+          "target_exists": true,
+          "artifact_kind": "tracked"
+        },
+        {
+          "artifact_id": "motion_recipe_code",
+          "access_state": "tracked_repo_artifact_exists",
+          "target_exists": true,
+          "artifact_kind": "tracked"
+        }
+      ],
+      "ymm4_representation_candidate": "ImageItem or GroupItem X/Y/Zoom transform",
+      "can_prove_without_render": true,
+      "proof_status": "pass",
+      "risk": "low",
+      "fallback": "static pose plus subtitle-only explanation"
+    },
+    {
+      "primitive_id": "speech_balloon",
+      "intended_scene_function": "show_short_question_or_reaction_as_supportive_overlay",
+      "required_assets": [
+        "scene_composition_schema",
+        "production_ir_spec"
+      ],
+      "asset_access_state": [
+        {
+          "artifact_id": "scene_composition_schema",
+          "access_state": "tracked_repo_artifact_exists",
+          "target_exists": true,
+          "artifact_kind": "tracked"
+        },
+        {
+          "artifact_id": "production_ir_spec",
+          "access_state": "tracked_repo_artifact_exists",
+          "target_exists": true,
+          "artifact_kind": "tracked"
+        }
+      ],
+      "ymm4_representation_candidate": "ShapeItem/TextItem balloon overlay candidate",
+      "can_prove_without_render": true,
+      "proof_status": "partial",
+      "risk": "medium",
+      "fallback": "caption-only reaction note if balloon styling is rejected"
+    }
+  ],
+  "proof_summary": {
+    "selected_count": 5,
+    "pass_count": 4,
+    "partial_count": 1,
+    "blocked_count": 0,
+    "structurally_provable_count": 4,
+    "enough_for_next_render_smoke_axis": true,
+    "local_ignored_probe_created": false
+  },
+  "business_goal_evaluation": [
+    {
+      "gate": "problem_clear",
+      "status": "pass",
+      "evidence": "primitive proof targets card-only fatigue",
+      "decision": "keep animation axis"
+    },
+    {
+      "gate": "offer_clear",
+      "status": "pass",
+      "evidence": "proof shows nod, expression, movement, entrance/exit, and partial balloon value",
+      "decision": "support explainer"
+    },
+    {
+      "gate": "proof_clear",
+      "status": "pass",
+      "evidence": "structural proof is separated from render and production quality",
+      "decision": "no render claim"
+    },
+    {
+      "gate": "boundary_clear",
+      "status": "pass",
+      "evidence": "diagnostic status and no public/production flags stay explicit",
+      "decision": "keep L0_no_render"
+    },
+    {
+      "gate": "next_action_clear",
+      "status": "pass",
+      "evidence": "newsroom-yukkuri-animation-primitive-render-smoke-v1",
+      "decision": "newsroom-yukkuri-animation-primitive-render-smoke-v1"
+    },
+    {
+      "gate": "visual_supports_explanation",
+      "status": "pass",
+      "evidence": "scene beats bind primitives to narration roles",
+      "decision": "avoid decoration-only motion"
+    }
+  ],
+  "next_recommended_axis": {
+    "selected": "newsroom-yukkuri-animation-primitive-render-smoke-v1",
+    "reason": "at least three primitives are structurally provable without render; next slice can create/verify an ignored probe target and then use an explicit render gate",
+    "prerequisites": [
+      "create or verify ignored local primitive probe .ymmp",
+      "confirm git check-ignore before any render attempt",
+      "keep production/public acceptance false"
+    ]
+  },
+  "completion_matrix": [
+    {
+      "gate": "repo_state_verified",
+      "status": true
+    },
+    {
+      "gate": "animation_format_artifacts_inspected",
+      "status": true
+    },
+    {
+      "gate": "safe_primitive_subset_selected",
+      "status": [
+        "head_nod",
+        "expression_swap",
+        "character_entrance_exit",
+        "small_position_move",
+        "speech_balloon"
+      ]
+    },
+    {
+      "gate": "primitive_proof_json_doc_created",
+      "status": true
+    },
+    {
+      "gate": "scene_beat_probe_json_doc_created",
+      "status": true
+    },
+    {
+      "gate": "access_states_recorded",
+      "status": true
+    },
+    {
+      "gate": "next_axis_selected",
+      "status": "newsroom-yukkuri-animation-primitive-render-smoke-v1"
+    },
+    {
+      "gate": "commit_and_push_if_push_gate_passes",
+      "status": "ready_for_git_followthrough"
+    }
+  ],
+  "access_readiness": [
+    {
+      "gate": "selected_assets_have_access_state",
+      "status": true
+    },
+    {
+      "gate": "missing_assets_classified_honestly",
+      "status": true
+    },
+    {
+      "gate": "local_ignored_ymmp_is_ignored_or_absent",
+      "status": true
+    },
+    {
+      "gate": "no_user_work_emitted_unless_access_verified",
+      "status": true
+    }
+  ],
+  "inertia_check": [
+    {
+      "gate": "no_text_density_loop",
+      "status": true
+    },
+    {
+      "gate": "no_card_polish_loop",
+      "status": true
+    },
+    {
+      "gate": "no_render_automation_rabbit_hole",
+      "status": true
+    },
+    {
+      "gate": "animation_layer_remains_product_axis",
+      "status": true
+    },
+    {
+      "gate": "next_concrete_animation_milestone_named",
+      "status": "newsroom-yukkuri-animation-primitive-render-smoke-v1"
+    }
+  ],
+  "local_ignored_output": {
+    "artifact_id": "local_ignored_primitive_probe",
+    "repo_relative_path": "_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v1.ymmp",
+    "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe",
+    "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v1.ymmp",
+    "target_exists": false,
+    "access_state": "ignored_local_artifact_missing",
+    "access_evidence_level": "local_ignored",
+    "evidence_source": "git ls-files + filesystem exists",
+    "git_state": "ignored",
+    "artifact_kind": "proof",
+    "created_in_this_slice": false,
+    "reason": "not created; this slice is a structural proof package and keeps the optional ignored .ymmp target for the next render-smoke gate"
+  },
+  "not_accepted_scope": {
+    "render_proof": false,
+    "ymmp_committed": false,
+    "production_animation_quality": false,
+    "public_upload_or_public_readiness": false,
+    "real_rss_or_news_integration": false,
+    "external_reference_video_fetch": false,
+    "copied_external_visuals": false,
+    "actual_order_or_audience_acceptance": false
+  },
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "source_ymmp_edited_by_hand": false,
+    "ymmp_staged_or_committed": false,
+    "audio_tts_generated": false,
+    "cards_modified": false,
+    "real_rss_or_news_fetched": false,
+    "external_reference_videos_fetched": false,
+    "production_public_readiness_claimed": false,
+    "actual_audience_acceptance_claimed": false
+  },
+  "artifact_links": {
+    "scene_beat_probe_path": "samples/_probe/newsroom_handoff/yukkuri_animation_scene_beat_probe_v1.json",
+    "proof_doc_path": "docs/verification/NEWSROOM_YUKKURI_ANIMATION_PRIMITIVE_PROOF_V1_2026-06-28.md",
+    "scene_beat_doc_path": "docs/verification/NEWSROOM_YUKKURI_ANIMATION_SCENE_BEAT_PROBE_V1_2026-06-28.md"
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "artifact_id": "newsroom_yukkuri_animation_scene_beat_probe_v1_2026_06_28",
+  "scene_beat_probe_id": "newsroom_yukkuri_animation_scene_beat_probe_v1_2026_06_28",
+  "schema_version": "newsroom_yukkuri_animation_scene_beat_probe.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "render_gate": "L0_no_render",
+  "source_context": {
+    "format_spec_path": "samples/_probe/newsroom_handoff/yukkuri_background_animation_format_spec_v1.json",
+    "format_spec_exists": true,
+    "primitive_inventory_path": "samples/_probe/newsroom_handoff/yukkuri_animation_primitive_inventory_v1.json",
+    "primitive_inventory_exists": true,
+    "prior_asset_audit_path": "samples/_probe/newsroom_handoff/prior_animation_asset_recovery_audit_v1.json",
+    "prior_asset_audit_exists": true,
+    "source_context_role": "verified_input_not_agent_report_claim"
+  },
+  "scene_beat_policy": {
+    "not_a_dense_script_rewrite": true,
+    "animation_supports_explanation": true,
+    "one_beat_one_scene_function": true,
+    "fallback_preserves_narration_meaning": true
+  },
+  "beats": [
+    {
+      "beat_id": "beat_01",
+      "scene_function": "viewer_question_reaction",
+      "speaker_or_character": "reimu",
+      "narration_or_caption_role": "caption states the viewer question; balloon is a short visual cue only",
+      "primitive_ids_used": [
+        "expression_swap",
+        "speech_balloon"
+      ],
+      "timing_range": "0-8 sec",
+      "card_overlay_relationship": "none; avoid card restart",
+      "fallback_if_animation_missing": "static concerned face plus subtitle"
+    },
+    {
+      "beat_id": "beat_02",
+      "scene_function": "explanation_response",
+      "speaker_or_character": "reimu",
+      "narration_or_caption_role": "narration explains the mechanism while character acknowledges it",
+      "primitive_ids_used": [
+        "head_nod",
+        "small_position_move"
+      ],
+      "timing_range": "8-18 sec",
+      "card_overlay_relationship": "optional small point label",
+      "fallback_if_animation_missing": "static character at rest pose"
+    },
+    {
+      "beat_id": "beat_03",
+      "scene_function": "proof_emphasis",
+      "speaker_or_character": "background performer",
+      "narration_or_caption_role": "caption references proof chain; entrance makes the situation concrete",
+      "primitive_ids_used": [
+        "character_entrance_exit",
+        "small_position_move"
+      ],
+      "timing_range": "18-34 sec",
+      "card_overlay_relationship": "proof card may appear as bounded support",
+      "fallback_if_animation_missing": "no entrance; use one static prop/character image"
+    },
+    {
+      "beat_id": "beat_04",
+      "scene_function": "boundary_warning",
+      "speaker_or_character": "reimu",
+      "narration_or_caption_role": "caption keeps source/rights limits explicit",
+      "primitive_ids_used": [
+        "expression_swap",
+        "speech_balloon"
+      ],
+      "timing_range": "34-48 sec",
+      "card_overlay_relationship": "boundary note only if needed",
+      "fallback_if_animation_missing": "warning subtitle without balloon"
+    },
+    {
+      "beat_id": "beat_05",
+      "scene_function": "next_action_close",
+      "speaker_or_character": "reimu",
+      "narration_or_caption_role": "caption names next user-visible action without dense script rewrite",
+      "primitive_ids_used": [
+        "head_nod",
+        "character_entrance_exit"
+      ],
+      "timing_range": "48-60 sec",
+      "card_overlay_relationship": "small next-action card optional",
+      "fallback_if_animation_missing": "static close pose plus subtitle"
+    }
+  ],
+  "primitive_coverage": {
+    "all_selected_primitives_used": true,
+    "coverage": {
+      "head_nod": [
+        "beat_02",
+        "beat_05"
+      ],
+      "expression_swap": [
+        "beat_01",
+        "beat_04"
+      ],
+      "character_entrance_exit": [
+        "beat_03",
+        "beat_05"
+      ],
+      "small_position_move": [
+        "beat_02",
+        "beat_03"
+      ],
+      "speech_balloon": [
+        "beat_01",
+        "beat_04"
+      ]
+    }
+  },
+  "next_recommended_axis": "newsroom-yukkuri-animation-primitive-render-smoke-v1",
+  "not_accepted_scope": {
+    "render_proof": false,
+    "ymmp_committed": false,
+    "production_animation_quality": false,
+    "public_upload_or_public_readiness": false,
+    "real_rss_or_news_integration": false,
+    "external_reference_video_fetch": false,
+    "copied_external_visuals": false,
+    "actual_order_or_audience_acceptance": false
+  },
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "source_ymmp_edited_by_hand": false,
+    "ymmp_staged_or_committed": false,
+    "audio_tts_generated": false,
+    "cards_modified": false,
+    "real_rss_or_news_fetched": false,
+    "external_reference_videos_fetched": false,
+    "production_public_readiness_claimed": false,
+    "actual_audience_acceptance_claimed": false
+  }
+}

@@ -79,6 +79,39 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom yukkuri animation primitive proof decision (2026-06-28 artifact date; recorded 2026-06-29 JST):
+`newsroom_yukkuri_animation_primitive_proof_v1_2026_06_28` converts the
+background animation format direction into a no-render structural proof for
+the first primitive set. The new proof artifacts are
+`samples/_probe/newsroom_handoff/yukkuri_animation_primitive_proof_v1.json` and
+`samples/_probe/newsroom_handoff/yukkuri_animation_scene_beat_probe_v1.json`,
+with human readbacks in
+`docs/verification/NEWSROOM_YUKKURI_ANIMATION_PRIMITIVE_PROOF_V1_2026-06-28.md`
+and
+`docs/verification/NEWSROOM_YUKKURI_ANIMATION_SCENE_BEAT_PROBE_V1_2026-06-28.md`,
+plus implementation/tests in
+`src/pipeline/newsroom_yukkuri_animation_primitive_proof.py` /
+`tests/test_newsroom_yukkuri_animation_primitive_proof.py`.
+
+The proof selects `head_nod`, `expression_swap`, `character_entrance_exit`,
+`small_position_move`, and `speech_balloon`. The first four are structurally
+provable from tracked repo evidence: `samples/nod_head.ymmp`, expression PNGs
+plus face-map/body assets, skit-group templates/registry, and
+`samples/group_motion_map.example.json`. `speech_balloon` remains `partial`
+because ShapeItem/TextItem routes are documented but no dedicated balloon
+template or visual pass exists. The scene beat probe maps five narration roles
+to primitives without creating a dense script rewrite. This slice intentionally
+did not create the optional ignored probe `.ymmp`; the path
+`_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v1.ymmp` is
+recorded as ignored/missing for the next gate. No YMM4 launch, render,
+`.ymmp` stage/commit, audio/TTS, card modification, real RSS/news fetch,
+external reference-video fetch, production/public readiness claim, or actual
+audience/order acceptance claim occurred. Because four primitives pass
+structurally, the next default axis is
+`newsroom-yukkuri-animation-primitive-render-smoke-v1`; that next slice must
+first create or verify an ignored local primitive probe target and keep render
+behind an explicit gate.
+
 Latest newsroom yukkuri background animation format spec decision (2026-06-28 artifact date; recorded 2026-06-29 JST):
 `newsroom_yukkuri_background_animation_format_spec_v1_2026_06_28` records the
 user correction that the main format is still `yukkuri_explainer`; the missing

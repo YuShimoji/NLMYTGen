@@ -1,5 +1,30 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom yukkuri animation primitive proof v1 completed (2026-06-28 artifact date; recorded 2026-06-29 JST)**:
+  `newsroom-yukkuri-animation-primitive-proof-v1` turns the previous
+  background animation format spec into a no-render structural proof package.
+  New artifacts are
+  `samples/_probe/newsroom_handoff/yukkuri_animation_primitive_proof_v1.json`,
+  `samples/_probe/newsroom_handoff/yukkuri_animation_scene_beat_probe_v1.json`,
+  `docs/verification/NEWSROOM_YUKKURI_ANIMATION_PRIMITIVE_PROOF_V1_2026-06-28.md`,
+  `docs/verification/NEWSROOM_YUKKURI_ANIMATION_SCENE_BEAT_PROBE_V1_2026-06-28.md`,
+  `src/pipeline/newsroom_yukkuri_animation_primitive_proof.py`, and
+  `tests/test_newsroom_yukkuri_animation_primitive_proof.py`. The selected
+  primitive subset remains `head_nod`, `expression_swap`,
+  `character_entrance_exit`, `small_position_move`, and `speech_balloon`.
+  Structural proof status is `pass` for the first four and `partial` for
+  `speech_balloon`, because ShapeItem/TextItem routes exist but no dedicated
+  speech-balloon template or visual pass exists yet. The scene beat probe maps
+  five narration roles to those primitives without rewriting the dense script.
+  No local ignored probe `.ymmp` was created in this slice; the planned path
+  `_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v1.ymmp` is
+  recorded as ignored/missing and reserved for the next gate. No YMM4 launch,
+  render, `.ymmp` stage/commit, audio/TTS generation, card modification, real
+  RSS/news fetch, external reference-video fetch, production/public readiness
+  claim, or actual audience/order acceptance claim occurred. The next default
+  axis is `newsroom-yukkuri-animation-primitive-render-smoke-v1`, with the
+  prerequisite that the next slice first creates or verifies an ignored local
+  primitive probe target and only then uses an explicit render gate.
 - **Newsroom yukkuri background animation format spec v1 completed (2026-06-28 artifact date; recorded 2026-06-29 JST)**:
   `newsroom-reference-yukkuri-background-animation-format-spec-v1` normalizes
   the latest user correction: the base format remains `yukkuri_explainer`, and

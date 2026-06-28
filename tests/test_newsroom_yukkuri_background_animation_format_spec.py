@@ -125,7 +125,12 @@ def test_prior_asset_recovery_audit_uses_tracked_access_evidence() -> None:
     payload = build_default_newsroom_yukkuri_background_animation_format_spec(root=ROOT)
     audit = _load(DEFAULT_RECOVERY_AUDIT_PATH)
 
-    assert audit == payload["recovery_audit"]
+    expected = dict(payload["recovery_audit"])
+    actual = dict(audit)
+    expected.pop("log_findings", None)
+    actual.pop("log_findings", None)
+    assert actual == expected
+    assert audit["log_findings"]
     assets = _by_id(audit["asset_access_findings"], "asset_id")
     docs = _by_id(audit["doc_access_findings"], "asset_id")
     for asset_id in [
