@@ -1,5 +1,27 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom post-density refinement render smoke result readback v1 completed (2026-06-26)**:
+  `newsroom-post-density-refinement-render-smoke-result-readback-v1`
+  normalizes the latest user freeform YMM4 observation after density-benchmarked
+  card refinement. New artifacts are
+  `samples/_probe/newsroom_handoff/post_density_refinement_render_smoke_result_readback_v1.json`,
+  `docs/verification/NEWSROOM_POST_DENSITY_REFINEMENT_RENDER_SMOKE_RESULT_READBACK_V1_2026-06-26.md`,
+  `src/pipeline/newsroom_post_density_refinement_render_smoke_result_readback.py`,
+  and
+  `tests/test_newsroom_post_density_refinement_render_smoke_result_readback.py`.
+  The readback records `render_smoke_result=pass`,
+  `yym4_opened_card_placement_project=true`, `render_completed=true`,
+  `output_duration_observed=approximately_68_sec`,
+  `card_count_visible=4`, `density_refinement_visible=true`,
+  `information_density_reduced=true`, `dialogue_items_preserved=true`,
+  `native_audio_present=true`, and no timing/audio regression reported.
+  This is a diagnostic observation only: it did not launch YMM4 by Agent,
+  perform a new Agent render, regenerate cards, edit `.ymmp`, create audio/TTS,
+  stage media, fetch external material, request a fixed review form, claim
+  actual audience acceptance, or claim production/public readiness. Video
+  readiness remains `6/7`; visual density readiness is diagnostic pass; the
+  next default slice is
+  `newsroom-internal-review-v0.1-reevaluation-card-v1`.
 - **Newsroom visual card density benchmarked refinement v1 completed (2026-06-26)**:
   `newsroom-visual-card-density-benchmarked-refinement-v1` applied the
   completed density simplification spec to the current four diagnostic visual

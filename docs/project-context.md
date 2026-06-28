@@ -79,6 +79,33 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom post-density refinement render smoke result readback decision (2026-06-26):
+`newsroom_post_density_refinement_render_smoke_result_readback_v1_2026_06_26`
+consumes the latest user freeform YMM4 observation after density-benchmarked
+card refinement and records it as a diagnostic render-smoke pass. The new
+readback artifacts are
+`samples/_probe/newsroom_handoff/post_density_refinement_render_smoke_result_readback_v1.json`
+and
+`docs/verification/NEWSROOM_POST_DENSITY_REFINEMENT_RENDER_SMOKE_RESULT_READBACK_V1_2026-06-26.md`,
+with implementation in
+`src/pipeline/newsroom_post_density_refinement_render_smoke_result_readback.py`
+and focused tests in
+`tests/test_newsroom_post_density_refinement_render_smoke_result_readback.py`.
+The normalized observation records that the card-placement YMM4 project was
+opened, rendering completed, duration remains approximately 68 seconds, four
+density-simplified cards are visible, information density is reduced at
+diagnostic observation level, dialogue items and native audio are preserved,
+and no timing/audio regression was reported. The decision does not reopen card
+design, mechanics proof, or asset generation: no Agent YMM4 launch, Agent
+render, `.ymmp` edit, SVG/PNG regeneration, audio/TTS generation, external
+fetch, media staging, fixed review form, production/public readiness claim, or
+actual audience acceptance claim occurred. Video readiness remains `6/7`;
+visual density readiness is diagnostic pass. The next default slice is
+`newsroom-internal-review-v0.1-reevaluation-card-v1`, because mechanics,
+timing, audio, placement, and density-refinement render observation now pass at
+diagnostic level and the next value is internal review against the simplified
+surface.
+
 Latest newsroom visual card density benchmarked refinement decision (2026-06-26):
 `newsroom_visual_card_density_benchmarked_refinement_v1_2026_06_26` consumes
 the density simplification spec and regenerates the current four diagnostic

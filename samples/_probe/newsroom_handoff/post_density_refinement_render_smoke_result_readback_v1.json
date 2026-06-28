@@ -1,0 +1,423 @@
+{
+  "artifact_id": "newsroom_post_density_refinement_render_smoke_result_readback_v1_2026_06_26",
+  "readback_id": "newsroom_post_density_refinement_render_smoke_result_readback_v1_2026_06_26",
+  "schema_version": "newsroom_post_density_refinement_render_smoke_result_readback.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "visual_work_class": "audience_fit",
+  "observation_source": "user_freeform_with_screenshot_support",
+  "result_status": "pass",
+  "actual_audience_acceptance_claimed": false,
+  "identity": {
+    "readback_id": "newsroom_post_density_refinement_render_smoke_result_readback_v1_2026_06_26",
+    "source_density_refinement_path": "samples/_probe/newsroom_handoff/visual_card_density_benchmarked_refinement_v1.json",
+    "source_density_refinement_id": "newsroom_visual_card_density_benchmarked_refinement_v1_2026_06_26",
+    "source_density_spec_path": "samples/_probe/newsroom_handoff/visual_density_simplification_spec_v1.json",
+    "source_density_spec_id": "newsroom_visual_density_simplification_spec_v1_2026_06_26",
+    "source_density_gate_path": "samples/_probe/newsroom_handoff/post_benchmarked_visual_observation_density_gate_v1.json",
+    "source_density_gate_id": "newsroom_post_benchmarked_visual_observation_density_gate_v1_2026_06_26",
+    "source_benchmark_evaluation_path": "samples/_probe/newsroom_handoff/audience_fit_benchmark_evaluation_v1.json",
+    "source_benchmark_evaluation_id": "newsroom_audience_fit_benchmark_evaluation_v1_2026_06_26",
+    "production_status": "diagnostic_only",
+    "visual_work_class": "audience_fit",
+    "observation_source": "user_freeform_with_screenshot_support",
+    "actual_audience_acceptance_claimed": false
+  },
+  "source_validation": {
+    "status": "passed",
+    "errors": [],
+    "source_density_refinement_id": "newsroom_visual_card_density_benchmarked_refinement_v1_2026_06_26",
+    "source_density_refinement_status": "density_benchmark_materially_improved",
+    "source_density_proxy_status": "materially_improved",
+    "source_density_proxy_fail_count": 0,
+    "source_png_export_status": "generated",
+    "source_density_spec_id": "newsroom_visual_density_simplification_spec_v1_2026_06_26",
+    "source_density_gate_id": "newsroom_post_benchmarked_visual_observation_density_gate_v1_2026_06_26",
+    "source_density_gate_status": "visual_density_issue_confirmed",
+    "source_benchmark_evaluation_id": "newsroom_audience_fit_benchmark_evaluation_v1_2026_06_26",
+    "source_card_count": 4,
+    "card_assets_exist": true,
+    "svg_png_cards_regenerated_in_this_slice": false
+  },
+  "operator_freeform_observation": {
+    "source": "user_freeform_with_screenshot_support",
+    "summary": "User confirmed the post-density render completed at about 68 sec; information is more organized than before; card visuals and audio remain.",
+    "yym4_project_observed": "diagnostic_bound_speaker_probe_card_placement_v1",
+    "render_completed": true,
+    "duration_observed": "approximately_68_sec",
+    "density_improvement_reported": true,
+    "cards_remain_visible": true,
+    "audio_remains": true,
+    "fixed_form_required": false
+  },
+  "normalized_render_observation": {
+    "render_smoke_result": "pass",
+    "yym4_opened_card_placement_project": true,
+    "render_completed": true,
+    "output_duration_observed": "approximately_68_sec",
+    "duration_matches_timing_patch": true,
+    "card_assets_visible": true,
+    "card_count_visible": 4,
+    "density_refinement_visible": true,
+    "information_density_reduced": true,
+    "dialogue_items_preserved": true,
+    "rendered_line_count_mismatch_warning": "possible_due_to_wrapping",
+    "native_audio_present": true,
+    "visual_card_integrity": "pass",
+    "timing_preservation_regression_reported": false,
+    "audio_regression_reported": false,
+    "production_visual_quality_accepted": false,
+    "actual_audience_acceptance_claimed": false,
+    "public_video_ready": false
+  },
+  "screenshot_supported_card_observations": [
+    {
+      "card_index": 1,
+      "card_id": "visual_card_cap_beat_fake_intro_001_01_v1",
+      "visible_status": true,
+      "density_simplification_visible": true,
+      "dominant_message_visible": true,
+      "clutter_reduced": true,
+      "notes": [
+        "diagnostic/review-only card",
+        "no audience acceptance claim"
+      ]
+    },
+    {
+      "card_index": 2,
+      "card_id": "visual_card_cap_beat_fake_intro_001_02_v1",
+      "visible_status": true,
+      "density_simplification_visible": true,
+      "dominant_message_visible": true,
+      "clutter_reduced": true,
+      "notes": [
+        "diagnostic/review-only card",
+        "no audience acceptance claim"
+      ]
+    },
+    {
+      "card_index": 3,
+      "card_id": "visual_card_cap_beat_fake_claim_001_01_v1",
+      "visible_status": true,
+      "density_simplification_visible": true,
+      "dominant_message_visible": true,
+      "clutter_reduced": true,
+      "notes": [
+        "diagnostic/review-only card",
+        "no audience acceptance claim"
+      ]
+    },
+    {
+      "card_index": 4,
+      "card_id": "visual_card_cap_beat_fake_claim_001_02_v1",
+      "visible_status": true,
+      "density_simplification_visible": true,
+      "dominant_message_visible": true,
+      "clutter_reduced": true,
+      "notes": [
+        "diagnostic/review-only card",
+        "no audience acceptance claim"
+      ]
+    }
+  ],
+  "accepted_scope": {
+    "post_density_refinement_cards_render_visibly_in_yym4_surface": true,
+    "duration_remains_approximately_68_sec": true,
+    "four_card_assets_remain_visible": true,
+    "dialogue_and_native_audio_are_preserved": true,
+    "information_density_materially_improved_at_diagnostic_level": true,
+    "ready_to_return_to_internal_review_v0_1_reevaluation": true
+  },
+  "not_accepted_scope": {
+    "actual_youtube_audience_acceptance": false,
+    "ctr_retention_prediction": false,
+    "production_visual_quality": false,
+    "final_design_system": false,
+    "final_narration_script_density": false,
+    "public_video_readiness": false,
+    "real_newsroom_visual_acceptance": false,
+    "production_approval": false
+  },
+  "readiness_separation": {
+    "slice_completion": "pass_for_this_readback",
+    "video_readiness_progress": "6/7",
+    "visual_density_readiness": "diagnostic_pass",
+    "production_readiness": "low_diagnostic_only",
+    "next_missing_gate": "internal review v0.1 re-evaluation",
+    "recommended_next_axis": "newsroom-internal-review-v0.1-reevaluation-card-v1",
+    "public_video_ready": false
+  },
+  "render_gate_carry_forward": {
+    "current_user_render_observation_consumed_once": true,
+    "new_render_in_this_slice": false,
+    "YMM4_launched_by_agent": false,
+    "render_audio_or_tts_created_by_agent": false,
+    "card_assets_regenerated_in_this_slice": false,
+    "render_gate": "milestone_gated_not_docs_gated",
+    "next_render_allowed_after": [
+      "material surface change",
+      "internal review package explicitly requires it"
+    ],
+    "no_render_for": [
+      "docs/readback-only changes",
+      "repeating the same observation",
+      "mechanics proof already covered by this user observation"
+    ]
+  },
+  "recommended_next_slices": [
+    {
+      "slice": "newsroom-internal-review-v0.1-reevaluation-card-v1",
+      "timing": "recommended_next_default",
+      "reason": "mechanics, timing, audio, placement, and density-refinement render observation pass at diagnostic level; next value is internal review against the simplified surface"
+    },
+    {
+      "slice": "newsroom-visual-density-reduction-v2",
+      "timing": "only_if_material_density_failures_are_found",
+      "reason": "use only if internal review finds remaining density failures"
+    },
+    {
+      "slice": "newsroom-rss-dry-run-integration-plan-v1",
+      "timing": "later_after_internal_review_reevaluation",
+      "reason": "RSS dry-run planning should wait until review direction is set"
+    },
+    {
+      "slice": "newsroom-render-output-retention-policy-v1",
+      "timing": "only_if_output_artifact_retention_becomes_necessary",
+      "reason": "render output retention is operational policy, not this readback"
+    }
+  ],
+  "goal_stack": [
+    {
+      "level": "Immediate",
+      "goal": "Normalize the post-density render observation",
+      "success_signal": "readback JSON/doc record pass without new render",
+      "contribution": "turns freeform observation into repo evidence"
+    },
+    {
+      "level": "Short-term",
+      "goal": "Resume internal review v0.1 re-evaluation",
+      "success_signal": "next slice is review of simplified card surface",
+      "contribution": "moves past mechanics and visual-density proof"
+    },
+    {
+      "level": "Mid-term",
+      "goal": "Separate review readiness from production acceptance",
+      "success_signal": "diagnostic pass recorded without public-readiness claim",
+      "contribution": "keeps review useful and honest"
+    },
+    {
+      "level": "Long-term",
+      "goal": "Preserve render-gate hygiene",
+      "success_signal": "future render only follows material change or review need",
+      "contribution": "prevents repeated proof loops"
+    }
+  ],
+  "completion_matrix": [
+    {
+      "gate": "current_repo_state_verified",
+      "status": true
+    },
+    {
+      "gate": "density_refinement_artifacts_inspected",
+      "status": true
+    },
+    {
+      "gate": "latest_observation_normalized",
+      "status": true
+    },
+    {
+      "gate": "result_readback_json_doc_created",
+      "status": true
+    },
+    {
+      "gate": "readiness_and_next_axis_updated",
+      "status": true
+    },
+    {
+      "gate": "narrow_commit_created_and_pushed_if_push_gate_passes",
+      "status": "pending_until_git_gate"
+    }
+  ],
+  "artifact_readiness": [
+    {
+      "gate": "result_readback_json_exists",
+      "status": true
+    },
+    {
+      "gate": "human_doc_exists",
+      "status": true
+    },
+    {
+      "gate": "normalized_render_observation_present",
+      "status": true
+    },
+    {
+      "gate": "accepted_not_accepted_scopes_present",
+      "status": true
+    },
+    {
+      "gate": "render_gate_carry_forward_present",
+      "status": true
+    },
+    {
+      "gate": "downstream_next_use_described",
+      "status": true
+    }
+  ],
+  "visual_density_gate": [
+    {
+      "gate": "density_refinement_reused",
+      "status": true
+    },
+    {
+      "gate": "density_spec_reused",
+      "status": true
+    },
+    {
+      "gate": "user_render_observation_consumed_once",
+      "status": true
+    },
+    {
+      "gate": "no_further_redesign_performed",
+      "status": true
+    },
+    {
+      "gate": "actual_audience_acceptance_not_claimed",
+      "status": true
+    },
+    {
+      "gate": "density_improvement_recorded_as_diagnostic_observation",
+      "status": true
+    },
+    {
+      "gate": "next_review_axis_selected",
+      "status": "newsroom-internal-review-v0.1-reevaluation-card-v1"
+    },
+    {
+      "gate": "unknowns_preserved",
+      "status": true
+    }
+  ],
+  "render_gate_hygiene": [
+    {
+      "gate": "no_render_performed_by_agent",
+      "status": true
+    },
+    {
+      "gate": "existing_user_render_observation_consumed_once",
+      "status": true
+    },
+    {
+      "gate": "no_render_for_docs_readback_only_change",
+      "status": true
+    },
+    {
+      "gate": "next_render_tied_to_material_surface_change_or_review_need",
+      "status": true
+    },
+    {
+      "gate": "repeated_render_loop_avoided",
+      "status": true
+    },
+    {
+      "gate": "output_first_principle_preserved",
+      "status": true
+    }
+  ],
+  "human_burden_hygiene": [
+    {
+      "gate": "user_input",
+      "status": "freeform"
+    },
+    {
+      "gate": "template_required",
+      "status": false
+    },
+    {
+      "gate": "schema_owner",
+      "status": "Agent"
+    },
+    {
+      "gate": "user_side_work",
+      "status": "none_for_this_slice"
+    },
+    {
+      "gate": "future_review_look_for_count",
+      "status": "<=3"
+    },
+    {
+      "gate": "negative_confirmation_checklist",
+      "status": false
+    },
+    {
+      "gate": "fixed_form_relapse",
+      "status": false
+    }
+  ],
+  "review_non_redundancy": [
+    {
+      "gate": "latest_observation_consumed_once",
+      "status": true
+    },
+    {
+      "gate": "density_refinement_reused",
+      "status": true
+    },
+    {
+      "gate": "density_spec_reused",
+      "status": true
+    },
+    {
+      "gate": "next_axis",
+      "status": "newsroom-internal-review-v0.1-reevaluation-card-v1"
+    },
+    {
+      "gate": "not_accepted_scope_preserved",
+      "status": true
+    },
+    {
+      "gate": "no_mechanics_re_review_requested",
+      "status": true
+    }
+  ],
+  "inertia_check": [
+    {
+      "gate": "no_ad_hoc_visual_iteration",
+      "status": true
+    },
+    {
+      "gate": "no_broad_redesign",
+      "status": true
+    },
+    {
+      "gate": "no_packet_for_packet_drift",
+      "status": true
+    },
+    {
+      "gate": "readiness_separated_from_slice_completion",
+      "status": true
+    },
+    {
+      "gate": "next_concrete_review_milestone",
+      "status": "newsroom-internal-review-v0.1-reevaluation-card-v1"
+    }
+  ],
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "cards_regenerated": false,
+    "ymmp_edited_or_committed": false,
+    "audio_tts_generated": false,
+    "external_assets_or_live_audience_data_fetched": false,
+    "actual_audience_acceptance_claimed": false,
+    "production_public_readiness_claimed": false,
+    "fixed_review_form_requested": false,
+    "dashboard_governance_freshness_drift": false
+  },
+  "downstream_next_use": {
+    "next_default_slice": "newsroom-internal-review-v0.1-reevaluation-card-v1",
+    "first_readback_to_reopen": "samples/_probe/newsroom_handoff/post_density_refinement_render_smoke_result_readback_v1.json",
+    "reason": "post-density rendered surface is diagnostically passable; next work should evaluate internal review v0.1 value, not repeat mechanics"
+  }
+}
