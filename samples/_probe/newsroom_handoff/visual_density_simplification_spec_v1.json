@@ -1,0 +1,574 @@
+{
+  "artifact_id": "newsroom_visual_density_simplification_spec_v1_2026_06_26",
+  "spec_id": "newsroom_visual_density_simplification_spec_v1_2026_06_26",
+  "schema_version": "newsroom_visual_density_simplification_spec.v1",
+  "spec_status": "defined",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "visual_work_class": "audience_fit",
+  "actual_audience_acceptance_claimed": false,
+  "identity": {
+    "spec_id": "newsroom_visual_density_simplification_spec_v1_2026_06_26",
+    "source_density_gate_path": "samples/_probe/newsroom_handoff/post_benchmarked_visual_observation_density_gate_v1.json",
+    "source_density_gate_id": "newsroom_post_benchmarked_visual_observation_density_gate_v1_2026_06_26",
+    "source_benchmark_evaluation_path": "samples/_probe/newsroom_handoff/audience_fit_benchmark_evaluation_v1.json",
+    "source_benchmark_evaluation_id": "newsroom_audience_fit_benchmark_evaluation_v1_2026_06_26",
+    "source_visual_benchmark_path": "samples/_probe/newsroom_handoff/visual_audience_fit_benchmark_v1.json",
+    "source_visual_benchmark_id": "newsroom_visual_audience_fit_benchmark_v1_2026_06_26",
+    "source_benchmarked_refinement_path": "samples/_probe/newsroom_handoff/visual_card_benchmarked_refinement_v1.json",
+    "source_benchmarked_refinement_id": "newsroom_visual_card_benchmarked_refinement_v1_2026_06_26",
+    "source_cards_dir": "samples/_probe/newsroom_handoff/visual_cards_v1",
+    "production_status": "diagnostic_only",
+    "visual_work_class": "audience_fit",
+    "spec_status": "defined",
+    "actual_audience_acceptance_claimed": false
+  },
+  "source_validation": {
+    "status": "passed",
+    "errors": [],
+    "source_ids": {
+      "density_gate_id": "newsroom_post_benchmarked_visual_observation_density_gate_v1_2026_06_26",
+      "benchmark_evaluation_id": "newsroom_audience_fit_benchmark_evaluation_v1_2026_06_26",
+      "visual_benchmark_id": "newsroom_visual_audience_fit_benchmark_v1_2026_06_26",
+      "benchmarked_refinement_id": "newsroom_visual_card_benchmarked_refinement_v1_2026_06_26"
+    },
+    "card_asset_counts": {
+      "svg": 4,
+      "png": 4
+    }
+  },
+  "problem_statement": {
+    "mechanics_status_pass": true,
+    "visual_density_issue": true,
+    "cognitive_load_high": true,
+    "format_attention_over_content": true,
+    "text_fit_tight_warning": true,
+    "pacing_density_issue_for_68_sec_video": true,
+    "production_quality_accepted": false,
+    "public_video_ready": false
+  },
+  "density_budget": {
+    "dominant_message_per_card": "exactly_one",
+    "headline_budget": "maximum_1_headline",
+    "primary_sentence_budget": "maximum_1_primary_sentence",
+    "supporting_note_or_diagram_budget": "maximum_1",
+    "meaningful_label_budget": "maximum_2_to_3_labels",
+    "essential_meaning_in_tiny_metadata": false,
+    "debug_or_source_text_policy": "shorten_demote_or_hide_from_main_viewing_path",
+    "subtitle_reserve_policy": "simple_and_non_competing",
+    "minimum_meaningful_font_size_policy": "preserve_or_increase",
+    "box_count_policy": "reduce_or_merge_before_adding"
+  },
+  "simplification_operations": [
+    {
+      "operation": "remove_nonessential_microcopy",
+      "rule": "delete text that explains diagnostic scaffolding but does not change the viewer's takeaway",
+      "future_use": "reduce reading paths before changing style"
+    },
+    {
+      "operation": "merge_repeated_labels",
+      "rule": "combine repeated role/status labels into one visible boundary or cue",
+      "future_use": "keep the diagnostic boundary without label clutter"
+    },
+    {
+      "operation": "demote_diagnostic_source_metadata",
+      "rule": "move source/debug detail out of the primary viewing path or shorten it to a tiny nonessential cue",
+      "future_use": "prevent source/subtitle areas from competing with the card message"
+    },
+    {
+      "operation": "replace_small_text_with_visual_markers",
+      "rule": "use icons, numbers, or color-coded markers when the text only signals role/state",
+      "future_use": "remove tiny reading obligations without losing role variation"
+    },
+    {
+      "operation": "increase_whitespace_around_essential_text",
+      "rule": "give the headline and primary sentence more breathing room before adding any explanatory box",
+      "future_use": "make the dominant message visible within three seconds"
+    },
+    {
+      "operation": "split_overloaded_roles_only_if_necessary",
+      "rule": "split a card role only when removal/merge/demotion cannot preserve the essential message",
+      "future_use": "avoid expanding the four-card structure casually"
+    },
+    {
+      "operation": "preserve_fake_review_boundary_with_fewer_labels",
+      "rule": "retain review-only/fake/diagnostic meaning through one compact boundary signal",
+      "future_use": "keep publication safety while reducing surface noise"
+    },
+    {
+      "operation": "preserve_card_role_variation",
+      "rule": "keep point, flow, check, and next/source roles distinct after simplification",
+      "future_use": "prevent simplification from flattening the explainer structure"
+    }
+  ],
+  "hard_constraints": {
+    "do_not_reduce_minimum_meaningful_font_size": true,
+    "do_not_solve_density_by_shrinking_text": true,
+    "do_not_add_more_boxes_to_explain_existing_boxes": true,
+    "do_not_introduce_real_brands_urls_or_real_news_visuals": true,
+    "do_not_convert_cards_into_complex_yym4_object_graphs": true,
+    "do_not_claim_production_visual_quality": true,
+    "do_not_claim_audience_acceptance": true
+  },
+  "card_asset_inventory": {
+    "asset_dir": "samples/_probe/newsroom_handoff/visual_cards_v1",
+    "svg_count": 4,
+    "png_count": 4,
+    "svg_paths": [
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.svg",
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.svg",
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.svg",
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.svg"
+    ],
+    "png_paths": [
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.png",
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.png",
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.png",
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.png"
+    ],
+    "stable_paths_preserved": true
+  },
+  "card_specific_preliminary_diagnosis": [
+    {
+      "card_id": "visual_card_cap_beat_fake_intro_001_01_v1",
+      "display_order": 1,
+      "current_headline_lines": [
+        "Fake topic, review",
+        "only."
+      ],
+      "current_body_lines": [
+        "Big, plain summary card for",
+        "a normal viewer."
+      ],
+      "current_source_label": "SRC 1/4",
+      "current_png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.png",
+      "likely_density_problem": "intro card carries headline, summary, number motif, point panel, no-real-claim chip, and source band at once",
+      "essential_message_to_preserve": "fake topic is review-only and the card is a plain point summary",
+      "elements_that_can_be_removed_or_demoted": [
+        "secondary POINT mini panel",
+        "no-real-news-claim chip if boundary is preserved elsewhere",
+        "extra diagnostic badge repetition"
+      ],
+      "elements_that_must_stay": [
+        "review-only/fake boundary",
+        "dominant fake-topic headline",
+        "card order cue"
+      ],
+      "suggested_future_simplification_direction": "make one large point message with one compact diagnostic boundary and more whitespace",
+      "implemented_in_this_slice": false
+    },
+    {
+      "card_id": "visual_card_cap_beat_fake_intro_001_02_v1",
+      "display_order": 2,
+      "current_headline_lines": [
+        "Review-only",
+        "handoff stays."
+      ],
+      "current_body_lines": [
+        "Three simple steps replace",
+        "dashboard-style microcopy."
+      ],
+      "current_source_label": "SRC 2/4",
+      "current_png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.png",
+      "likely_density_problem": "flow card repeats step numbers, labels, and simple-flow badge while also asking the viewer to read body copy",
+      "essential_message_to_preserve": "handoff stays review-only through three simple steps",
+      "elements_that_can_be_removed_or_demoted": [
+        "simple-flow badge",
+        "repeated explanatory body text",
+        "extra box outlines around every step"
+      ],
+      "elements_that_must_stay": [
+        "three-step flow",
+        "review-only boundary",
+        "role difference from point/check/source cards"
+      ],
+      "suggested_future_simplification_direction": "use three large step markers with short labels and remove secondary explanation",
+      "implemented_in_this_slice": false
+    },
+    {
+      "card_id": "visual_card_cap_beat_fake_claim_001_01_v1",
+      "display_order": 3,
+      "current_headline_lines": [
+        "A fake claim is",
+        "shown."
+      ],
+      "current_body_lines": [
+        "Plain check and caution",
+        "boxes make the fake status",
+        "obvious."
+      ],
+      "current_source_label": "SRC 3/4",
+      "current_png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.png",
+      "likely_density_problem": "check card uses four small status boxes plus left body text, creating multiple reading paths",
+      "essential_message_to_preserve": "a fake claim is shown and the viewer should understand it is check/review-only",
+      "elements_that_can_be_removed_or_demoted": [
+        "RESULT box",
+        "STATUS box",
+        "duplicate check/caution microcopy"
+      ],
+      "elements_that_must_stay": [
+        "fake claim boundary",
+        "check/caution role",
+        "large readable primary message"
+      ],
+      "suggested_future_simplification_direction": "collapse status boxes into one check/caution visual cue and keep one primary sentence",
+      "implemented_in_this_slice": false
+    },
+    {
+      "card_id": "visual_card_cap_beat_fake_claim_001_02_v1",
+      "display_order": 4,
+      "current_headline_lines": [
+        "Fake source checks",
+        "are noted."
+      ],
+      "current_body_lines": [
+        "Status and next-action",
+        "panels stay large and",
+        "familiar."
+      ],
+      "current_source_label": "SRC 4/4",
+      "current_png_path": "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.png",
+      "likely_density_problem": "next/source card stacks source, status, next panels and a next bubble, so metadata competes with the main next action",
+      "essential_message_to_preserve": "fake source checks are noted and the next action remains diagnostic",
+      "elements_that_can_be_removed_or_demoted": [
+        "separate SOURCE/STATUS/NEXT panel headings",
+        "next bubble",
+        "source microcopy in the main reading path"
+      ],
+      "elements_that_must_stay": [
+        "source-check awareness",
+        "next-action role",
+        "diagnostic/fake boundary"
+      ],
+      "suggested_future_simplification_direction": "merge source/status/next into one short next-action block with demoted source detail",
+      "implemented_in_this_slice": false
+    }
+  ],
+  "evaluation_criteria_for_next_refinement": [
+    {
+      "criterion": "dominant_message_visible_within_3_seconds",
+      "target": "viewer can identify the card's single point without reading secondary metadata"
+    },
+    {
+      "criterion": "no_more_than_one_primary_reading_path",
+      "target": "headline and one primary sentence or diagram carry the main meaning"
+    },
+    {
+      "criterion": "meaningful_text_fits_without_crowding",
+      "target": "no essential text sits close to box edges or depends on unexpected wrap behavior"
+    },
+    {
+      "criterion": "source_subtitle_debug_area_does_not_compete",
+      "target": "source/subtitle/debug cues are visibly secondary to main content"
+    },
+    {
+      "criterion": "role_difference_remains_clear",
+      "target": "point, flow, check, and next/source roles remain distinguishable"
+    },
+    {
+      "criterion": "diagnostic_fake_boundary_remains_visible",
+      "target": "review-only/fake status remains clear with fewer labels"
+    },
+    {
+      "criterion": "surface_feels_simpler_than_previous_density_gate",
+      "target": "less broadcast/presentation-like concentration burden than the benchmarked cards"
+    }
+  ],
+  "next_slice_recommendation": {
+    "default_slice": "newsroom-visual-card-density-benchmarked-refinement-v1",
+    "reason": "density/cognitive-load issue now has a spec and can be addressed with a bounded card update",
+    "user_side_work": "none_for_this_slice"
+  },
+  "recommended_next_slices": [
+    {
+      "slice": "newsroom-visual-card-density-benchmarked-refinement-v1",
+      "timing": "default_next",
+      "reason": "apply remove/merge/demote/whitespace rules to the current card assets"
+    },
+    {
+      "slice": "newsroom-visual-information-density-benchmark-v1",
+      "timing": "only_if_current_spec_cannot_define_adequate_criteria",
+      "reason": "upgrade metrics before refinement only if these spec criteria are insufficient"
+    },
+    {
+      "slice": "newsroom-internal-review-v0.1-operator-review-card",
+      "timing": "only_if_supervisor_accepts_current_density_for_diagnostic_v0_1",
+      "reason": "skip additional visual change only with an explicit supervisor decision"
+    },
+    {
+      "slice": "newsroom-visual-card-source-band-simplification-v1",
+      "timing": "if_source_subtitle_band_is_dominant_actionable_issue",
+      "reason": "narrow to source/subtitle band if the next diagnosis says that is the main burden"
+    }
+  ],
+  "not_accepted_scope": {
+    "actual_target_audience_acceptance": "unknown",
+    "ctr_retention_prediction": "unknown",
+    "production_visual_quality": false,
+    "final_design_system": false,
+    "real_newsroom_visual_acceptance": false,
+    "public_readiness": false,
+    "production_approval": false
+  },
+  "goal_stack": [
+    {
+      "level": "Immediate",
+      "goal": "Define density simplification rules",
+      "success_signal": "spec JSON/doc exists",
+      "contribution": "prevents another ad hoc visual tweak"
+    },
+    {
+      "level": "Short-term",
+      "goal": "Enable bounded density refinement",
+      "success_signal": "next card change has explicit remove/merge/demote rules",
+      "contribution": "reduces cognitive load"
+    },
+    {
+      "level": "Mid-term",
+      "goal": "Resume internal review v0.1",
+      "success_signal": "refined cards can be reviewed for pacing and content, not visual clutter",
+      "contribution": "improves review utility"
+    },
+    {
+      "level": "Long-term",
+      "goal": "Establish reusable density baseline",
+      "success_signal": "future RSS/content videos inherit simpler card rules",
+      "contribution": "supports automation"
+    }
+  ],
+  "completion_matrix": [
+    {
+      "item": "current_repo_state_verified",
+      "status": true
+    },
+    {
+      "item": "density_gate_inspected",
+      "status": true
+    },
+    {
+      "item": "density_budget_defined",
+      "status": true
+    },
+    {
+      "item": "simplification_operations_and_hard_constraints_defined",
+      "status": true
+    },
+    {
+      "item": "card_specific_preliminary_diagnosis_recorded",
+      "status": true
+    },
+    {
+      "item": "narrow_commit_created_and_pushed_if_push_gate_passes",
+      "status": "agent_followthrough_after_validation"
+    }
+  ],
+  "artifact_readiness": [
+    {
+      "item": "spec_json_exists",
+      "status": true
+    },
+    {
+      "item": "human_doc_exists",
+      "status": true
+    },
+    {
+      "item": "density_budget_present",
+      "status": true
+    },
+    {
+      "item": "simplification_operations_present",
+      "status": true
+    },
+    {
+      "item": "next_refinement_criteria_present",
+      "status": true
+    },
+    {
+      "item": "downstream_next_use_described",
+      "status": true
+    }
+  ],
+  "visual_gate": [
+    {
+      "item": "density_issue_preserved",
+      "status": true
+    },
+    {
+      "item": "cognitive_load_issue_preserved",
+      "status": true
+    },
+    {
+      "item": "no_redesign_performed",
+      "status": true
+    },
+    {
+      "item": "no_audience_acceptance_claimed",
+      "status": true
+    },
+    {
+      "item": "proxy_criteria_defined",
+      "status": true
+    },
+    {
+      "item": "next_iteration_bounded",
+      "status": true
+    },
+    {
+      "item": "unknowns_preserved",
+      "status": true
+    },
+    {
+      "item": "review_protocol_remains_freeform",
+      "status": true
+    }
+  ],
+  "render_gate_hygiene": [
+    {
+      "item": "no_render_performed_by_agent",
+      "status": true
+    },
+    {
+      "item": "no_render_for_spec_only_change",
+      "status": true
+    },
+    {
+      "item": "next_render_tied_to_material_density_linked_card_change",
+      "status": true
+    },
+    {
+      "item": "repeated_render_loop_avoided",
+      "status": true
+    },
+    {
+      "item": "existing_observation_consumed_once",
+      "status": true
+    },
+    {
+      "item": "output_first_principle_preserved",
+      "status": true
+    }
+  ],
+  "human_burden_hygiene": [
+    {
+      "item": "user_input_freeform",
+      "status": true
+    },
+    {
+      "item": "template_required_false",
+      "status": true
+    },
+    {
+      "item": "schema_owner_agent",
+      "status": true
+    },
+    {
+      "item": "user_side_work_none_for_this_slice",
+      "status": true
+    },
+    {
+      "item": "future_review_look_for_lte_3",
+      "status": true
+    },
+    {
+      "item": "no_negative_confirmation_checklist",
+      "status": true
+    },
+    {
+      "item": "no_fixed_form_relapse",
+      "status": true
+    }
+  ],
+  "review_non_redundancy": [
+    {
+      "item": "density_gate_reused",
+      "status": true
+    },
+    {
+      "item": "benchmark_evaluation_reused",
+      "status": true
+    },
+    {
+      "item": "next_axis_density_simplification_spec",
+      "status": true
+    },
+    {
+      "item": "not_accepted_scope_preserved",
+      "status": true
+    },
+    {
+      "item": "no_repeated_user_review_requested",
+      "status": true
+    },
+    {
+      "item": "no_mechanics_re_review_requested",
+      "status": true
+    }
+  ],
+  "inertia_check": [
+    {
+      "item": "no_ad_hoc_visual_iteration",
+      "status": true
+    },
+    {
+      "item": "no_broad_redesign",
+      "status": true
+    },
+    {
+      "item": "no_packet_for_packet_drift",
+      "status": true
+    },
+    {
+      "item": "readiness_separated_from_slice_completion",
+      "status": true
+    },
+    {
+      "item": "next_concrete_criteria_linked_milestone_named",
+      "status": true
+    }
+  ],
+  "downstream_next_use": {
+    "default_next_slice": "newsroom-visual-card-density-benchmarked-refinement-v1",
+    "instruction": "the next visual change must choose changes from this spec's remove/merge/demote/whitespace operations",
+    "allowed_change_axis": [
+      "density-benchmarked card refinement",
+      "source/subtitle band simplification if it is the dominant burden",
+      "benchmark upgrade only if this spec is inadequate"
+    ],
+    "disallowed_change_axis": [
+      "broad redesign",
+      "style-only polish",
+      "text shrinking",
+      "more boxes explaining existing boxes",
+      "YMM4/render/audio/TTS work for this spec-only slice"
+    ]
+  },
+  "push_gate_policy": {
+    "commit_message": "docs: define newsroom visual density simplification spec",
+    "force_push_allowed": false,
+    "forbidden_staged_outputs": [
+      ".ymmp",
+      ".mp4",
+      ".wav",
+      ".mp3",
+      ".m4a",
+      "render output",
+      "TTS output",
+      "external media",
+      "SVG/PNG card assets"
+    ]
+  },
+  "boundaries": {
+    "diagnostic_only": true,
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "ymmp_edited_or_committed": false,
+    "svg_png_cards_regenerated": false,
+    "audio_tts_or_voice_cache_created": false,
+    "external_fetch_performed": false,
+    "fixed_review_form_requested": false,
+    "card_redesign_performed": false,
+    "production_approval": false,
+    "audience_acceptance_claimed": false,
+    "public_video_ready": false
+  }
+}

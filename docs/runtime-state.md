@@ -1,5 +1,29 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom visual density simplification spec v1 completed (2026-06-26)**:
+  `newsroom-visual-density-simplification-spec-v1` converts the recorded
+  density/cognitive-load gate into bounded criteria before any further card
+  redesign. New artifacts are
+  `samples/_probe/newsroom_handoff/visual_density_simplification_spec_v1.json`,
+  `docs/verification/NEWSROOM_VISUAL_DENSITY_SIMPLIFICATION_SPEC_V1_2026-06-26.md`,
+  `src/pipeline/newsroom_visual_density_simplification_spec.py`, and
+  `tests/test_newsroom_visual_density_simplification_spec.py`. The spec keeps
+  the current mechanics readback as pass and defines the next visual problem as
+  high information density: one dominant message per card, at most one
+  headline, one primary sentence, one supporting note/diagram, two to three
+  meaningful labels, no essential meaning in tiny metadata, demoted or hidden
+  debug/source text, and a subtitle reserve that does not compete with the
+  card. Future visual changes must choose from the spec's remove/merge/demote/
+  whitespace operations and must not solve density by shrinking text, adding
+  more explanatory boxes, introducing real brands/URLs/news visuals, or
+  converting cards into complex YMM4 object graphs. The next default slice is
+  `newsroom-visual-card-density-benchmarked-refinement-v1`; use
+  `newsroom-visual-information-density-benchmark-v1` only if this spec is not
+  enough as criteria, or `newsroom-visual-card-source-band-simplification-v1`
+  only if the source/subtitle band is the dominant actionable burden. This
+  slice did not launch YMM4, render, edit `.ymmp`, regenerate SVG/PNG cards,
+  create audio/TTS, fetch external material, stage media, ask for a fixed
+  review form, claim audience acceptance, or claim production/public readiness.
 - **Newsroom post-benchmarked visual observation density gate v1 completed (2026-06-26)**:
   `newsroom-post-benchmarked-visual-observation-density-gate-v1` normalizes the
   latest user freeform observation with screenshot support after the

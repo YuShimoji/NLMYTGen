@@ -79,6 +79,34 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom visual density simplification spec decision (2026-06-26):
+`newsroom_visual_density_simplification_spec_v1_2026_06_26` converts the prior
+post-benchmarked density gate into explicit criteria for the next card change.
+The new spec artifacts are
+`samples/_probe/newsroom_handoff/visual_density_simplification_spec_v1.json`
+and
+`docs/verification/NEWSROOM_VISUAL_DENSITY_SIMPLIFICATION_SPEC_V1_2026-06-26.md`,
+with implementation in
+`src/pipeline/newsroom_visual_density_simplification_spec.py` and focused tests
+in `tests/test_newsroom_visual_density_simplification_spec.py`. The spec
+defines a per-card density budget: one dominant message, no more than one
+headline, one primary sentence, one supporting note or diagram, two to three
+meaningful labels, no essential meaning in tiny metadata, demoted/hidden
+debug or source text, and a non-competing subtitle reserve. Future visual work
+must use remove, merge, demote, visual-marker replacement, and whitespace
+operations before changing style, and must not shrink text, add explanatory
+boxes for existing boxes, introduce real brands/URLs/news visuals, convert
+cards into complex YMM4 object graphs, or claim production/audience acceptance.
+The next default slice is
+`newsroom-visual-card-density-benchmarked-refinement-v1`. Use
+`newsroom-visual-information-density-benchmark-v1` only if this spec is
+insufficient as criteria, and use
+`newsroom-visual-card-source-band-simplification-v1` only if the source/
+subtitle band is the dominant actionable issue. This slice did not launch YMM4,
+render video, edit `.ymmp`, regenerate SVG/PNG assets, generate audio/TTS,
+fetch external material, request a fixed review form, or claim production/
+public/audience acceptance.
+
 Latest newsroom post-benchmarked visual observation density gate decision (2026-06-26):
 `newsroom_post_benchmarked_visual_observation_density_gate_v1_2026_06_26`
 records the post-benchmarked user observation as
