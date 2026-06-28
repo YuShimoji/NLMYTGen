@@ -1,5 +1,30 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom post-benchmarked visual observation density gate v1 completed (2026-06-26)**:
+  `newsroom-post-benchmarked-visual-observation-density-gate-v1` normalizes the
+  latest user freeform observation with screenshot support after the
+  benchmarked text-fit refinement. New artifacts are
+  `samples/_probe/newsroom_handoff/post_benchmarked_visual_observation_density_gate_v1.json`,
+  `docs/verification/NEWSROOM_POST_BENCHMARKED_VISUAL_OBSERVATION_DENSITY_GATE_V1_2026-06-26.md`,
+  `src/pipeline/newsroom_post_benchmarked_visual_observation_density_gate.py`,
+  and
+  `tests/test_newsroom_post_benchmarked_visual_observation_density_gate.py`.
+  The readback records `observation_status=visual_density_issue_confirmed`,
+  `mechanics_status=pass`, four visible cards, native YMM4/yukkuri audio
+  preserved, dialogue item count preserved, no reported timing/duration
+  regression, and no production/public/audience acceptance claim. The concrete
+  visual issue is now information density and cognitive load: text-fit improved
+  enough to expose that the surface still asks the viewer to track too much
+  formatted information. Further visual work must target information
+  density/cognitive load explicitly through
+  `newsroom-visual-density-simplification-spec-v1` by default, or
+  `newsroom-visual-information-density-benchmark-v1` if existing benchmark
+  density criteria are insufficient. Do not continue broad style tweaks,
+  repeated render asks, or card regeneration until a density/spec-linked
+  material change exists. This slice did not launch YMM4, render, edit `.ymmp`,
+  regenerate SVG/PNG cards, create audio/TTS, fetch external material, stage
+  media, ask for a fixed review form, claim audience acceptance, or claim
+  production/public readiness.
 - **Newsroom source .ymmp recreation import pack v1 completed (2026-06-26)**:
   `newsroom-source-ymmp-recreation-import-pack-v1` addresses the current
   mainline checkout gap where the ignored local source project

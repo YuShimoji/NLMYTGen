@@ -79,6 +79,33 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom post-benchmarked visual observation density gate decision (2026-06-26):
+`newsroom_post_benchmarked_visual_observation_density_gate_v1_2026_06_26`
+records the post-benchmarked user observation as
+`visual_density_issue_confirmed`, not as another local text-fit repair. The
+new readback artifacts are
+`samples/_probe/newsroom_handoff/post_benchmarked_visual_observation_density_gate_v1.json`
+and
+`docs/verification/NEWSROOM_POST_BENCHMARKED_VISUAL_OBSERVATION_DENSITY_GATE_V1_2026-06-26.md`,
+with implementation in
+`src/pipeline/newsroom_post_benchmarked_visual_observation_density_gate.py` and
+focused tests in
+`tests/test_newsroom_post_benchmarked_visual_observation_density_gate.py`.
+Mechanics remain pass for the current diagnostic observation: four cards are
+visible, native YMM4/yukkuri audio remains, dialogue item count is preserved,
+and no timing/duration regression was reported. The visual finding is that the
+post-benchmarked surface still has high information density and cognitive load:
+unexpected rendered line count, tight text fit, small/source text tightness,
+and format attention competing with content are now the relevant gate. This
+slice did not launch YMM4, render video, edit `.ymmp`, regenerate SVG/PNG card
+assets, generate audio/TTS, fetch external assets, request a fixed review form,
+or claim production/public/audience acceptance. The next default axis is
+`newsroom-visual-density-simplification-spec-v1`; use
+`newsroom-visual-information-density-benchmark-v1` only if the existing
+benchmark lacks enough density criteria. A later
+`newsroom-visual-card-density-benchmarked-refinement-v1` is valid only after a
+density spec or sufficient density criteria exist.
+
 Latest newsroom source .ymmp recreation import pack decision (2026-06-26):
 `newsroom_source_ymmp_recreation_import_pack_v1_2026_06_26` converts the
 current local artifact gap into a user-executable YMM4 script-import recovery

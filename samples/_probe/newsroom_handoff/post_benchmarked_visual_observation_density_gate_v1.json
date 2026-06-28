@@ -1,0 +1,464 @@
+{
+  "artifact_id": "newsroom_post_benchmarked_visual_observation_density_gate_v1_2026_06_26",
+  "readback_id": "newsroom_post_benchmarked_visual_observation_density_gate_v1_2026_06_26",
+  "schema_version": "newsroom_post_benchmarked_visual_observation_density_gate.v1",
+  "observation_status": "visual_density_issue_confirmed",
+  "mechanics_status": "pass",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "visual_work_class": "audience_fit",
+  "observation_source": "user_freeform_with_screenshot_support",
+  "evidence_level": [
+    "user_freeform_visual_observation",
+    "user_supplied_yym4_screenshots",
+    "existing_benchmark_readbacks"
+  ],
+  "audience_acceptance_claimed": false,
+  "production_visual_quality_accepted": false,
+  "public_video_ready": false,
+  "recommended_next_axis": "visual_information_density_gate",
+  "card_assets_visible": true,
+  "native_audio_present": true,
+  "dialogue_item_count_preserved": true,
+  "rendered_line_count_mismatch_warning": true,
+  "text_fit_tight_warning": true,
+  "source_or_small_text_tightness_warning": true,
+  "manual_edit_quality_minor_issue": true,
+  "format_attention_over_content": true,
+  "bbc_like_surface_signal": true,
+  "information_density_high": true,
+  "cognitive_load_high": true,
+  "identity": {
+    "readback_id": "newsroom_post_benchmarked_visual_observation_density_gate_v1_2026_06_26",
+    "source_benchmarked_refinement_path": "samples/_probe/newsroom_handoff/visual_card_benchmarked_refinement_v1.json",
+    "source_benchmarked_refinement_id": "newsroom_visual_card_benchmarked_refinement_v1_2026_06_26",
+    "source_benchmark_evaluation_path": "samples/_probe/newsroom_handoff/audience_fit_benchmark_evaluation_v1.json",
+    "source_benchmark_evaluation_id": "newsroom_audience_fit_benchmark_evaluation_v1_2026_06_26",
+    "source_visual_benchmark_path": "samples/_probe/newsroom_handoff/visual_audience_fit_benchmark_v1.json",
+    "source_visual_benchmark_id": "newsroom_visual_audience_fit_benchmark_v1_2026_06_26",
+    "source_cards_dir": "samples/_probe/newsroom_handoff/visual_cards_v1",
+    "production_status": "diagnostic_only",
+    "visual_work_class": "audience_fit",
+    "observation_source": "user_freeform_with_screenshot_support",
+    "audience_acceptance_claimed": false
+  },
+  "source_validation": {
+    "status": "passed",
+    "errors": [],
+    "source_ids": {
+      "benchmarked_refinement_id": "newsroom_visual_card_benchmarked_refinement_v1_2026_06_26",
+      "benchmark_evaluation_id": "newsroom_audience_fit_benchmark_evaluation_v1_2026_06_26",
+      "visual_benchmark_id": "newsroom_visual_audience_fit_benchmark_v1_2026_06_26"
+    },
+    "card_asset_counts": {
+      "svg": 4,
+      "png": 4
+    }
+  },
+  "user_observation": {
+    "source": "user_freeform",
+    "summary": "User observed that the four cards and slow yukkuri/native voice remain intact, but automatic wrapping can create unexpected five-line rendering, small text pushes close to box edges, format detail competes with content, and the overall information density is high enough to require sustained concentration even in a work presentation context.",
+    "normalized_once": true,
+    "template_required": false,
+    "schema_owner": "Agent"
+  },
+  "screenshot_support": {
+    "source": "user_supplied_screenshots",
+    "count": 4,
+    "basenames": [
+      "スクリーンショット 2026-06-28 140233.png",
+      "スクリーンショット 2026-06-28 140244.png",
+      "スクリーンショット 2026-06-28 140255.png",
+      "スクリーンショット 2026-06-28 140308.png"
+    ],
+    "observed_surface": "YMM4_v4_53_0_9_preview_and_timeline",
+    "observed_project_name": "diagnostic_bound_speaker_probe_card_placement_v1",
+    "observed_card_range": "CARD 1/4 through CARD 4/4",
+    "observed_duration": "00:01:08.00"
+  },
+  "card_asset_inventory": {
+    "asset_dir": "samples/_probe/newsroom_handoff/visual_cards_v1",
+    "svg_count": 4,
+    "png_count": 4,
+    "svg_paths": [
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.svg",
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.svg",
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.svg",
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.svg"
+    ],
+    "png_paths": [
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_01_v1.png",
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_claim_001_02_v1.png",
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.png",
+      "samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_02_v1.png"
+    ],
+    "stable_paths_preserved": true
+  },
+  "mechanics_preservation": {
+    "card_assets_visible": true,
+    "native_audio_present": true,
+    "dialogue_items_preserved": true,
+    "dialogue_item_count_preserved": true,
+    "timing_or_duration_regression_reported": false,
+    "render_or_preview_context": "user_observed_YMM4_surface",
+    "production_ready": false,
+    "source": "user_freeform_observation_with_screenshot_support"
+  },
+  "visual_findings": {
+    "rendered_line_count_mismatch_warning": true,
+    "text_fit_tight_warning": true,
+    "source_or_small_text_tightness_warning": true,
+    "manual_edit_quality_minor_issue": true,
+    "format_attention_over_content": true,
+    "bbc_like_surface_signal": true,
+    "information_density_high": true,
+    "cognitive_load_high": true,
+    "issue_class": "visual_information_density_gate",
+    "not_a_local_clipping_only_issue": true
+  },
+  "benchmark_impact": {
+    "readability_at_a_glance": {
+      "result": "warning",
+      "impact": "requires sustained concentration despite mechanics pass"
+    },
+    "text_clipping_or_wrapping": {
+      "result": "improved_but_tight",
+      "impact": "previous hard failure improved, but line wrapping can still surprise"
+    },
+    "no_reliance_on_tiny_metadata": {
+      "result": "warning",
+      "impact": "small/source text and tight boxes attract attention"
+    },
+    "pacing_density_for_68_sec_video": {
+      "result": "fail",
+      "impact": "information load is too high for relaxed 68 sec viewing"
+    },
+    "familiar_explainer_visual_grammar": {
+      "result": "mixed",
+      "impact": "surface is familiar but format polish can compete with content"
+    },
+    "one_dominant_message_per_card": {
+      "result": "warning",
+      "impact": "format detail competes with the dominant message"
+    },
+    "actual_audience_acceptance": {
+      "result": "unknown",
+      "impact": "no live audience, retention, CTR, or target viewer evidence"
+    }
+  },
+  "decision": {
+    "normalized_next_axis": "visual_information_density_gate",
+    "recommended_next_axis": "newsroom-visual-density-simplification-spec-v1",
+    "alternative_next_axis": "newsroom-visual-information-density-benchmark-v1",
+    "follow_on_refinement_slice": "newsroom-visual-card-density-benchmarked-refinement-v1",
+    "reason": [
+      "the issue is not a local clipping bug only",
+      "the issue is cognitive load and information density",
+      "another card style tweak without density criteria would restart ad hoc iteration"
+    ],
+    "redesign_now": false,
+    "render_now": false
+  },
+  "accepted_scope": {
+    "post_benchmarked_cards_visible": true,
+    "audio_preserved": true,
+    "benchmarked_text_fit_refinement_exposed_next_issue": true,
+    "next_visual_issue_is_density_or_cognitive_load": true,
+    "freeform_observation_normalized_once": true
+  },
+  "not_accepted_scope": {
+    "production_visual_quality": false,
+    "actual_audience_acceptance": false,
+    "final_design_system": false,
+    "retention_or_ctr_prediction": false,
+    "real_newsroom_visual_acceptance": false,
+    "public_readiness": false,
+    "production_approval": false
+  },
+  "recommended_next_slice": {
+    "slice": "newsroom-visual-density-simplification-spec-v1",
+    "reason": "define density and simplification criteria before changing cards again",
+    "user_side_work": "none_for_this_slice"
+  },
+  "recommended_next_slices": [
+    {
+      "slice": "newsroom-visual-density-simplification-spec-v1",
+      "timing": "default_next",
+      "reason": "current concern is information density and cognitive load"
+    },
+    {
+      "slice": "newsroom-visual-information-density-benchmark-v1",
+      "timing": "if_existing_benchmark_density_criteria_are_insufficient",
+      "reason": "upgrade the benchmark before applying another visual change"
+    },
+    {
+      "slice": "newsroom-visual-card-density-benchmarked-refinement-v1",
+      "timing": "after_density_spec_or_sufficient_existing_criteria",
+      "reason": "only then change the cards against density criteria"
+    },
+    {
+      "slice": "newsroom-internal-review-v0.1-operator-review-card",
+      "timing": "only_if_supervisor_accepts_current_density_for_diagnostic_review",
+      "reason": "do not ask for repeated review while density remains the named issue"
+    }
+  ],
+  "goal_stack": [
+    {
+      "level": "Immediate",
+      "goal": "Record latest post-benchmarked observation",
+      "success_signal": "JSON/doc capture mechanics pass and density issue",
+      "contribution": "prevents repeated informal review"
+    },
+    {
+      "level": "Short-term",
+      "goal": "Stop ad hoc visual tweaking",
+      "success_signal": "next axis becomes density spec, not broad style change",
+      "contribution": "keeps benchmark discipline"
+    },
+    {
+      "level": "Mid-term",
+      "goal": "Reduce cognitive load deliberately",
+      "success_signal": "future refinement can remove/merge information using criteria",
+      "contribution": "improves reviewability"
+    },
+    {
+      "level": "Long-term",
+      "goal": "Establish reusable card density baseline",
+      "success_signal": "future RSS/content videos can use clearer card rules",
+      "contribution": "supports automation"
+    }
+  ],
+  "completion_matrix": [
+    {
+      "item": "current_repo_state_verified",
+      "status": true
+    },
+    {
+      "item": "latest_observation_normalized",
+      "status": true
+    },
+    {
+      "item": "benchmark_impact_mapped",
+      "status": true
+    },
+    {
+      "item": "density_cognitive_load_next_axis_selected",
+      "status": true
+    },
+    {
+      "item": "readback_json_doc_created",
+      "status": true
+    },
+    {
+      "item": "narrow_commit_created_and_pushed_if_push_gate_passes",
+      "status": "agent_followthrough_after_validation"
+    }
+  ],
+  "artifact_readiness": [
+    {
+      "item": "readback_json_exists",
+      "status": true
+    },
+    {
+      "item": "human_doc_exists",
+      "status": true
+    },
+    {
+      "item": "mechanics_preservation_present",
+      "status": true
+    },
+    {
+      "item": "visual_findings_present",
+      "status": true
+    },
+    {
+      "item": "benchmark_impact_present",
+      "status": true
+    },
+    {
+      "item": "downstream_next_use_described",
+      "status": true
+    }
+  ],
+  "visual_gate": [
+    {
+      "item": "latest_observation_consumed_once",
+      "status": true
+    },
+    {
+      "item": "benchmark_metrics_reused",
+      "status": true
+    },
+    {
+      "item": "density_cognitive_load_issue_identified",
+      "status": true
+    },
+    {
+      "item": "actual_audience_acceptance_not_claimed",
+      "status": true
+    },
+    {
+      "item": "unknowns_preserved",
+      "status": true
+    },
+    {
+      "item": "no_redesign_performed",
+      "status": true
+    },
+    {
+      "item": "next_axis_criteria_spec_linked",
+      "status": true
+    },
+    {
+      "item": "review_protocol_remains_bounded",
+      "status": true
+    }
+  ],
+  "render_gate_hygiene": [
+    {
+      "item": "no_render_performed_by_agent",
+      "status": true
+    },
+    {
+      "item": "existing_user_observation_consumed_once",
+      "status": true
+    },
+    {
+      "item": "no_render_for_docs_readback_only_change",
+      "status": true
+    },
+    {
+      "item": "next_render_tied_to_material_density_spec_linked_change",
+      "status": true
+    },
+    {
+      "item": "repeated_render_loop_avoided",
+      "status": true
+    },
+    {
+      "item": "output_first_principle_preserved",
+      "status": true
+    }
+  ],
+  "human_burden_hygiene": [
+    {
+      "item": "user_input_freeform",
+      "status": true
+    },
+    {
+      "item": "template_required_false",
+      "status": true
+    },
+    {
+      "item": "schema_owner_agent",
+      "status": true
+    },
+    {
+      "item": "user_side_work_none_for_this_slice",
+      "status": true
+    },
+    {
+      "item": "future_review_look_for_lte_3",
+      "status": true
+    },
+    {
+      "item": "no_negative_confirmation_checklist",
+      "status": true
+    },
+    {
+      "item": "no_fixed_form_relapse",
+      "status": true
+    }
+  ],
+  "review_non_redundancy": [
+    {
+      "item": "latest_observation_consumed_once",
+      "status": true
+    },
+    {
+      "item": "benchmark_evaluation_reused",
+      "status": true
+    },
+    {
+      "item": "next_axis_density_cognitive_load",
+      "status": true
+    },
+    {
+      "item": "not_accepted_scope_preserved",
+      "status": true
+    },
+    {
+      "item": "no_repeated_user_review_requested",
+      "status": true
+    },
+    {
+      "item": "no_mechanics_re_review_requested",
+      "status": true
+    }
+  ],
+  "inertia_check": [
+    {
+      "item": "no_ad_hoc_visual_iteration",
+      "status": true
+    },
+    {
+      "item": "no_broad_redesign",
+      "status": true
+    },
+    {
+      "item": "no_packet_for_packet_drift",
+      "status": true
+    },
+    {
+      "item": "readiness_separated_from_slice_completion",
+      "status": true
+    },
+    {
+      "item": "next_concrete_criteria_linked_milestone_named",
+      "status": true
+    }
+  ],
+  "downstream_next_use": {
+    "default_next_slice": "newsroom-visual-density-simplification-spec-v1",
+    "instruction": "further visual work must target information density and cognitive load explicitly before another card surface change",
+    "allowed_change_axis": [
+      "density or simplification criteria",
+      "benchmark upgrade if density criteria are insufficient",
+      "later density-benchmarked card refinement"
+    ],
+    "disallowed_change_axis": [
+      "broad style tweak",
+      "repeated render request",
+      "YMM4 or .ymmp work for this docs/readback-only gate",
+      "audio/TTS generation",
+      "production/public/audience acceptance claim"
+    ]
+  },
+  "push_gate_policy": {
+    "commit_message": "docs: record newsroom visual density gate",
+    "force_push_allowed": false,
+    "forbidden_staged_outputs": [
+      ".ymmp",
+      ".mp4",
+      ".wav",
+      ".mp3",
+      ".m4a",
+      "render output",
+      "TTS output",
+      "external media"
+    ]
+  },
+  "boundaries": {
+    "diagnostic_only": true,
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "ymmp_edited_or_committed": false,
+    "svg_png_cards_regenerated": false,
+    "audio_tts_or_voice_cache_created": false,
+    "external_fetch_performed": false,
+    "fixed_review_form_requested": false,
+    "production_approval": false,
+    "audience_acceptance_claimed": false,
+    "public_video_ready": false
+  }
+}
