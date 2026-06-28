@@ -1,0 +1,268 @@
+{
+  "artifact_id": "newsroom_v0_1_dense_caption_timing_plan_v2_2026_06_26",
+  "plan_id": "newsroom_v0_1_dense_caption_timing_plan_v2_2026_06_26",
+  "schema_version": "newsroom_v0_1_dense_caption_timing_plan.v2",
+  "review_status": "ready_for_operator_dense_v2_source_import",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "timing_status": "planned_not_rendered",
+  "source_package_path": "samples/_probe/newsroom_handoff/v0_1_dense_script_package_v2.json",
+  "source_package_id": "newsroom_v0_1_dense_script_package_v2_2026_06_26",
+  "total_duration_sec": 68,
+  "duration_range_sec": {
+    "min": 60,
+    "max": 75
+  },
+  "line_count": 13,
+  "line_timings": [
+    {
+      "line_id": "dense_v2_line_001",
+      "segment_id": "opening",
+      "intended_start_sec": 0,
+      "intended_end_sec": 6,
+      "speaker": "ゆっくり霊夢",
+      "text": "A requester does not need another blank process demo.",
+      "card_alignment": "card_1_point_overview"
+    },
+    {
+      "line_id": "dense_v2_line_002",
+      "segment_id": "opening",
+      "intended_start_sec": 6,
+      "intended_end_sec": 11,
+      "speaker": "ゆっくり霊夢",
+      "text": "They need to see whether an idea can become an explainable video.",
+      "card_alignment": "card_1_point_overview"
+    },
+    {
+      "line_id": "dense_v2_line_003",
+      "segment_id": "opening",
+      "intended_start_sec": 11,
+      "intended_end_sec": 16,
+      "speaker": "ゆっくり霊夢",
+      "text": "This review sample answers that with fake content only.",
+      "card_alignment": "card_1_point_overview"
+    },
+    {
+      "line_id": "dense_v2_line_004",
+      "segment_id": "mechanism",
+      "intended_start_sec": 16,
+      "intended_end_sec": 21,
+      "speaker": "ゆっくり霊夢",
+      "text": "One tracked script becomes dialogue, timing notes, and card cues.",
+      "card_alignment": "card_2_flow_mechanism"
+    },
+    {
+      "line_id": "dense_v2_line_005",
+      "segment_id": "mechanism",
+      "intended_start_sec": 21,
+      "intended_end_sec": 26,
+      "speaker": "ゆっくり霊夢",
+      "text": "That makes the handoff repeatable instead of rebuilt from memory.",
+      "card_alignment": "card_2_flow_mechanism"
+    },
+    {
+      "line_id": "dense_v2_line_006",
+      "segment_id": "mechanism",
+      "intended_start_sec": 26,
+      "intended_end_sec": 31,
+      "speaker": "ゆっくり霊夢",
+      "text": "The useful offer is a reviewable video draft, not public news.",
+      "card_alignment": "card_2_flow_mechanism"
+    },
+    {
+      "line_id": "dense_v2_line_007",
+      "segment_id": "proof",
+      "intended_start_sec": 31,
+      "intended_end_sec": 37,
+      "speaker": "ゆっくり霊夢",
+      "text": "The proof keeps speaker binding, native YMM4 voice, and a 68 second plan.",
+      "card_alignment": "card_3_check_proof"
+    },
+    {
+      "line_id": "dense_v2_line_008",
+      "segment_id": "proof",
+      "intended_start_sec": 37,
+      "intended_end_sec": 42,
+      "speaker": "ゆっくり霊夢",
+      "text": "Cards show point, flow, checks, and status while narration carries meaning.",
+      "card_alignment": "card_3_check_proof"
+    },
+    {
+      "line_id": "dense_v2_line_009",
+      "segment_id": "proof",
+      "intended_start_sec": 42,
+      "intended_end_sec": 48,
+      "speaker": "ゆっくり霊夢",
+      "text": "A prior render shows those parts can stay together in YMM4.",
+      "card_alignment": "card_3_check_proof"
+    },
+    {
+      "line_id": "dense_v2_line_010",
+      "segment_id": "boundary",
+      "intended_start_sec": 48,
+      "intended_end_sec": 54,
+      "speaker": "ゆっくり霊夢",
+      "text": "Still unproven are source truth, rights clearance, and final narration quality.",
+      "card_alignment": "card_4_next_status"
+    },
+    {
+      "line_id": "dense_v2_line_011",
+      "segment_id": "boundary",
+      "intended_start_sec": 54,
+      "intended_end_sec": 58,
+      "speaker": "ゆっくり霊夢",
+      "text": "Every claim here stays fake, diagnostic, and private.",
+      "card_alignment": "card_4_next_status"
+    },
+    {
+      "line_id": "dense_v2_line_012",
+      "segment_id": "next_action",
+      "intended_start_sec": 58,
+      "intended_end_sec": 63,
+      "speaker": "ゆっくり霊夢",
+      "text": "Next, import this v2 script and judge whether the purpose is clear.",
+      "card_alignment": "card_4_next_status"
+    },
+    {
+      "line_id": "dense_v2_line_013",
+      "segment_id": "next_action",
+      "intended_start_sec": 63,
+      "intended_end_sec": 68,
+      "speaker": "ゆっくり霊夢",
+      "text": "If it works, plan a real packet or RSS dry run with the same proof chain.",
+      "card_alignment": "card_4_next_status"
+    }
+  ],
+  "segment_timing": [
+    {
+      "segment_id": "opening",
+      "title": "Opening / requester problem",
+      "purpose": "show why a process demo is not enough",
+      "line_ids": [
+        "dense_v2_line_001",
+        "dense_v2_line_002",
+        "dense_v2_line_003"
+      ],
+      "target_time_range": {
+        "start_sec": 0,
+        "end_sec": 16
+      },
+      "expected_viewer_understanding": "viewer understands the problem being solved"
+    },
+    {
+      "segment_id": "mechanism",
+      "title": "Mechanism / repeatable draft",
+      "purpose": "connect script inputs to repeatable video draft output",
+      "line_ids": [
+        "dense_v2_line_004",
+        "dense_v2_line_005",
+        "dense_v2_line_006"
+      ],
+      "target_time_range": {
+        "start_sec": 16,
+        "end_sec": 31
+      },
+      "expected_viewer_understanding": "viewer understands the offer"
+    },
+    {
+      "segment_id": "proof",
+      "title": "Proof / confidence chain",
+      "purpose": "connect speaker, audio, timing, cards, and render evidence to confidence",
+      "line_ids": [
+        "dense_v2_line_007",
+        "dense_v2_line_008",
+        "dense_v2_line_009"
+      ],
+      "target_time_range": {
+        "start_sec": 31,
+        "end_sec": 48
+      },
+      "expected_viewer_understanding": "viewer understands what has been proven"
+    },
+    {
+      "segment_id": "boundary",
+      "title": "Boundary / diagnostic only",
+      "purpose": "keep fake/private/unproven limits explicit",
+      "line_ids": [
+        "dense_v2_line_010",
+        "dense_v2_line_011"
+      ],
+      "target_time_range": {
+        "start_sec": 48,
+        "end_sec": 58
+      },
+      "expected_viewer_understanding": "viewer understands what is not accepted"
+    },
+    {
+      "segment_id": "next_action",
+      "title": "Next action / purpose check",
+      "purpose": "ask for a purpose-clarity judgement before real packet/RSS planning",
+      "line_ids": [
+        "dense_v2_line_012",
+        "dense_v2_line_013"
+      ],
+      "target_time_range": {
+        "start_sec": 58,
+        "end_sec": 68
+      },
+      "expected_viewer_understanding": "viewer understands what to ask next"
+    }
+  ],
+  "timing_policy": {
+    "uses_exact_yym4_voice_duration": false,
+    "timing_is_planned_until_dense_v2_source_render": true,
+    "voice_audio_proof_for_dense_v2_script": false,
+    "prior_render_evidence_reused_only": true
+  },
+  "not_accepted_scope": {
+    "render_proof_for_v2_script": false,
+    "audio_proof_for_v2_script": false,
+    "production_readiness": false,
+    "public_readiness": false,
+    "real_rss_or_news_content": false,
+    "real_source_approval": false,
+    "final_narration_quality": false,
+    "automated_yym4_render_claim": false,
+    "actual_order_or_audience_acceptance": false
+  },
+  "next_recommended_slice": "newsroom-v0.1-dense-v2-source-ymmp-operator-instruction-v1",
+  "render_gate_hygiene": [
+    {
+      "gate": "no_render_performed_by_agent",
+      "status": true
+    },
+    {
+      "gate": "existing_render_evidence_reused_only",
+      "status": true
+    },
+    {
+      "gate": "no_render_for_semantic_rewrite",
+      "status": true
+    },
+    {
+      "gate": "next_render_tied_to_v2_YMM4_import_source_proof",
+      "status": true
+    },
+    {
+      "gate": "repeated_render_loop_avoided",
+      "status": true
+    },
+    {
+      "gate": "output_first_principle_preserved",
+      "status": true
+    }
+  ],
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "ymmp_edited_or_committed": false,
+    "audio_tts_generated": false,
+    "cards_regenerated": false,
+    "real_rss_or_news_fetched": false,
+    "real_brands_urls_screenshots_or_media_used": false,
+    "production_public_readiness_claimed": false,
+    "actual_audience_acceptance_claimed": false,
+    "fixed_review_form_requested": false,
+    "dashboard_governance_freshness_drift": false
+  }
+}

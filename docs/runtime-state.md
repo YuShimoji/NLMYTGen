@@ -1,5 +1,40 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom v0.1 dense script semantic audit and v2 rewrite completed (2026-06-26)**:
+  `newsroom-v0.1-dense-script-semantic-audit-and-rewrite-v1` treats the
+  latest user YMM4 dense import/save observation as a script-quality warning,
+  not a mechanics failure. The user-saved dense v1 source project exists only
+  as ignored local evidence at
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v0_1_dense_source_v1.ymmp`;
+  it remains untracked and must not be committed. New artifacts are
+  `samples/_probe/newsroom_handoff/v0_1_dense_script_semantic_audit_v1.json`,
+  `samples/_probe/newsroom_handoff/v0_1_dense_script_package_v2.json`,
+  `samples/_probe/newsroom_handoff/v0_1_dense_caption_timing_plan_v2.json`,
+  `samples/_probe/newsroom_handoff/v0_1_dense_source_ymmp_import_v2.csv`,
+  `docs/verification/NEWSROOM_V0_1_DENSE_SCRIPT_SEMANTIC_AUDIT_V1_2026-06-26.md`,
+  `docs/verification/NEWSROOM_V0_1_DENSE_SCRIPT_PACKAGE_V2_2026-06-26.md`,
+  `src/pipeline/newsroom_v0_1_dense_script_semantic_audit.py`, and
+  `tests/test_newsroom_v0_1_dense_script_semantic_audit.py`. The audit
+  classifies the v1 13-line dense script as `semantic_delta=partial` against
+  the four-line baseline because it still reads too much like process
+  inventory: problem, offer, viewer value, line-role distinctness, padding,
+  next action, and "merely split text" gates are partial, while proof sequence
+  and diagnostic boundary are pass. V2 keeps 13 short lines over the same
+  planned 68 second window but rewrites around requester problem, reviewable
+  video draft offer, proof confidence, diagnostic limits, and a purpose-clarity
+  next action. The v2 CSV is UTF-8 BOM, headerless, two-column `speaker,text`,
+  uses the canonical existing source speaker, and records
+  `access_state=verified_current_host_file_exists`; because repo `.gitignore`
+  ignores `*.csv`, this artifact must be force-added when committing. This
+  slice did not launch YMM4, render, edit or commit `.ymmp`, regenerate cards,
+  generate audio/TTS, fetch real RSS/news, use real brands/URLs/screenshots,
+  request a fixed form, or claim production/public/order/audience acceptance.
+  The next user-side milestone is to import
+  `samples/_probe/newsroom_handoff/v0_1_dense_source_ymmp_import_v2.csv` in
+  YMM4 and save the ignored local v2 source project as
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v0_1_dense_source_v2.ymmp`.
+  The next default slice is
+  `newsroom-v0.1-dense-v2-source-ymmp-operator-instruction-v1`.
 - **Newsroom v0.1 dense script package v1 completed (2026-06-26)**:
   `newsroom-v0.1-script-density-implementation-v1` turns the prior
   explanation-readiness/script-density plan into concrete review-only source

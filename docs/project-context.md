@@ -79,6 +79,41 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom v0.1 dense script semantic audit and v2 rewrite decision (2026-06-26):
+`newsroom_v0_1_dense_script_semantic_audit_v1_2026_06_26` records the latest
+freeform user warning after YMM4 dense CSV import/save: the mechanics signal is
+positive, but the v1 13-line script still feels like "just 13 text lines." The
+decision treats that as a semantic script-quality gap, not as a render, YMM4,
+or card-generation problem. The v1 dense source project exists as ignored
+local evidence at
+`_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v0_1_dense_source_v1.ymmp`
+and remains outside git. The new audit artifact is
+`samples/_probe/newsroom_handoff/v0_1_dense_script_semantic_audit_v1.json`,
+with human readback in
+`docs/verification/NEWSROOM_V0_1_DENSE_SCRIPT_SEMANTIC_AUDIT_V1_2026-06-26.md`
+and implementation/tests in
+`src/pipeline/newsroom_v0_1_dense_script_semantic_audit.py` /
+`tests/test_newsroom_v0_1_dense_script_semantic_audit.py`.
+
+The audit result is `semantic_delta_from_4_line_baseline=partial`; v1 improves
+mechanics and proof inventory but remains weak on problem clarity, offer
+clarity, viewer value, next-action clarity, line-role distinctness, and padding.
+Therefore the same slice created `newsroom_v0_1_dense_script_package_v2_2026_06_26`,
+`newsroom_v0_1_dense_caption_timing_plan_v2_2026_06_26`, and the force-added
+UTF-8 BOM CSV at
+`samples/_probe/newsroom_handoff/v0_1_dense_source_ymmp_import_v2.csv`. V2 keeps
+the diagnostic/fake/private boundary and 13-line / 68 second plan, but rewrites
+around a requester problem, reviewable video draft offer, proof confidence
+chain, unaccepted source/rights/narration limits, and a purpose-clarity next
+action. This slice intentionally did not launch YMM4, render, edit or commit
+`.ymmp`, regenerate cards, generate audio/TTS, fetch real RSS/news, use real
+brands/URLs/screenshots, request a fixed review form, or claim production,
+public, order, or audience acceptance. The next default slice is
+`newsroom-v0.1-dense-v2-source-ymmp-operator-instruction-v1`: import the v2 CSV
+in YMM4 and save
+`_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v0_1_dense_source_v2.ymmp`
+as ignored local source evidence before any v2 render proof.
+
 Latest newsroom v0.1 dense script package decision (2026-06-26):
 `newsroom_v0_1_dense_script_package_v1_2026_06_26` and
 `newsroom_v0_1_dense_caption_timing_plan_v1_2026_06_26` implement the prior
