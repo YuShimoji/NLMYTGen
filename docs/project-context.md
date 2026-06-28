@@ -79,6 +79,32 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom yukkuri background animation format spec decision (2026-06-28 artifact date; recorded 2026-06-29 JST):
+`newsroom_yukkuri_background_animation_format_spec_v1_2026_06_28` records the
+user correction that the main format is still `yukkuri_explainer`; the missing
+core is a supportive background reenactment/light animation PV layer, not
+dialogue-only chaban, not more text density, and not card-only polish. The new
+spec, inventory, and recovery audit artifacts are
+`samples/_probe/newsroom_handoff/yukkuri_background_animation_format_spec_v1.json`,
+`samples/_probe/newsroom_handoff/yukkuri_animation_primitive_inventory_v1.json`,
+`samples/_probe/newsroom_handoff/prior_animation_asset_recovery_audit_v1.json`,
+with human readbacks under `docs/verification/` and implementation/tests in
+`src/pipeline/newsroom_yukkuri_background_animation_format_spec.py` /
+`tests/test_newsroom_yukkuri_background_animation_format_spec.py`.
+
+The audit found enough tracked repo-local evidence to avoid a recovery-only
+slice first: expression PNGs, a body source, face-map bundles, `nod_head.ymmp`,
+skit-group templates/registry, group-motion map, G-24 blueprint/readback
+artifacts, and validator/placement/motion code/docs. The first animation proof
+set should cover `head_nod`, `expression_swap`, `character_entrance_exit`,
+`small_position_move`, and `speech_balloon`; the balloon route remains
+unproven but can be tested as ShapeItem/TextItem without external media. This
+slice intentionally did not launch YMM4, render, edit or commit `.ymmp`,
+generate audio/TTS, regenerate cards, fetch real RSS/news, fetch/copy external
+reference videos, stage media outputs, or claim production/public/order/audience
+acceptance. The next default slice is
+`newsroom-yukkuri-animation-primitive-proof-v1`.
+
 Latest newsroom v0.1 dense script semantic audit and v2 rewrite decision (2026-06-26):
 `newsroom_v0_1_dense_script_semantic_audit_v1_2026_06_26` records the latest
 freeform user warning after YMM4 dense CSV import/save: the mechanics signal is

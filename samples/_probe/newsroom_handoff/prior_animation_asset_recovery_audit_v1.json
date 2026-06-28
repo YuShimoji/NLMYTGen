@@ -1,0 +1,397 @@
+{
+  "artifact_id": "newsroom_prior_animation_asset_recovery_audit_v1_2026_06_28",
+  "audit_id": "newsroom_prior_animation_asset_recovery_audit_v1_2026_06_28",
+  "schema_version": "newsroom_prior_animation_asset_recovery_audit.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "audit_scope": {
+    "searched_repo_root": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage",
+    "external_reference_fetch_performed": false,
+    "YMM4_launched": false,
+    "render_performed": false,
+    "ymmp_edited": false
+  },
+  "asset_access_findings": [
+    {
+      "asset_id": "reimu_expression_easy",
+      "repo_relative_path": "samples/characterAnimSample/reimu_easy.png",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_easy.png",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "reimu_expression_anger",
+      "repo_relative_path": "samples/characterAnimSample/reimu_anger.png",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_anger.png",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "reimu_expression_panic",
+      "repo_relative_path": "samples/characterAnimSample/reimu_panic.png",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_panic.png",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "reimu_expression_shocked",
+      "repo_relative_path": "samples/characterAnimSample/reimu_shocked.png",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_shocked.png",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "reimu_expression_surprised",
+      "repo_relative_path": "samples/characterAnimSample/reimu_surprised.png",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_surprised.png",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "character_body_source",
+      "repo_relative_path": "samples/characterAnimSample/Gemini_Generated_Image_kfezhpkfezhpkfez-removebg-preview.png",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\Gemini_Generated_Image_kfezhpkfezhpkfez-removebg-preview.png",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "face_map_bundle_default",
+      "repo_relative_path": "samples/face_map_bundles/default.json",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\face_map_bundles\\default.json",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "face_map_bundle_haitatsuin",
+      "repo_relative_path": "samples/face_map_bundles/haitatsuin.json",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\face_map_bundles\\haitatsuin.json",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "face_map_extracted",
+      "repo_relative_path": "samples/characterAnimSample/face_map_extracted.json",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\face_map_extracted.json",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "nod_head_probe",
+      "repo_relative_path": "samples/nod_head.ymmp",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\nod_head.ymmp",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "skit_group_template_source",
+      "repo_relative_path": "samples/templates/skit_group/delivery_v1_templates.ymmp",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\templates\\skit_group\\delivery_v1_templates.ymmp",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "skit_group_registry",
+      "repo_relative_path": "samples/registry_template/skit_group_registry.template.json",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\registry_template\\skit_group_registry.template.json",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "group_motion_map",
+      "repo_relative_path": "samples/group_motion_map.example.json",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\group_motion_map.example.json",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "motion_recipe_brief",
+      "repo_relative_path": "samples/recipe_briefs/g26_nod_head_v1_brief.v2.json",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\recipe_briefs\\g26_nod_head_v1_brief.v2.json",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "background_skit_blueprint_example",
+      "repo_relative_path": "samples/_probe/g24/real_estate_dx_background_skit_blueprint.json",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\_probe\\g24\\real_estate_dx_background_skit_blueprint.json",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "background_skit_blueprint_validation",
+      "repo_relative_path": "samples/_probe/g24/real_estate_dx_background_skit_blueprint_validate.json",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\_probe\\g24\\real_estate_dx_background_skit_blueprint_validate.json",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "primitive_visibility_readback",
+      "repo_relative_path": "samples/_probe/g24/real_estate_dx_primitive_visibility_calibration_probe_readback.json",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\_probe\\g24\\real_estate_dx_primitive_visibility_calibration_probe_readback.json",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    }
+  ],
+  "doc_access_findings": [
+    {
+      "asset_id": "background_skit_blueprint_validator",
+      "repo_relative_path": "src/pipeline/background_skit_blueprint.py",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\src\\pipeline\\background_skit_blueprint.py",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "skit_group_placement",
+      "repo_relative_path": "src/pipeline/skit_group_placement.py",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\src\\pipeline\\skit_group_placement.py",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "motion_recipe",
+      "repo_relative_path": "src/pipeline/motion_recipe.py",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\src\\pipeline\\motion_recipe.py",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "skit_group_template_spec",
+      "repo_relative_path": "docs/SKIT_GROUP_TEMPLATE_SPEC.md",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\docs\\SKIT_GROUP_TEMPLATE_SPEC.md",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "scene_bible",
+      "repo_relative_path": "docs/PILOT_YUKKURI_THEATER_SCENE_BIBLE.md",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\docs\\PILOT_YUKKURI_THEATER_SCENE_BIBLE.md",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "blueprint_workflow",
+      "repo_relative_path": "docs/BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW.md",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\docs\\BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW.md",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "feature_registry",
+      "repo_relative_path": "docs/FEATURE_REGISTRY.md",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\docs\\FEATURE_REGISTRY.md",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    },
+    {
+      "asset_id": "status_handoff_rules",
+      "repo_relative_path": "docs/ai/STATUS_AND_HANDOFF.md",
+      "full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\docs\\ai\\STATUS_AND_HANDOFF.md",
+      "target_exists": true,
+      "git_state": "tracked",
+      "access_state": "tracked_repo_artifact_exists"
+    }
+  ],
+  "branch_findings": [
+    {
+      "ref": "codex/g24-enter-from-left-template-proof",
+      "access_state": "current_or_local_branch_reference",
+      "evidence": "git branch -a pattern search"
+    },
+    {
+      "ref": "codex/g24-nod-sync-adoption",
+      "access_state": "current_or_local_branch_reference",
+      "evidence": "git branch -a pattern search"
+    },
+    {
+      "ref": "remotes/origin/codex/g24-nod-sync",
+      "access_state": "remote_branch_reference_found_not_checked_out",
+      "evidence": "git branch -a pattern search"
+    },
+    {
+      "ref": "remotes/origin/codex/g24-nod-sync-adoption",
+      "access_state": "remote_branch_reference_found_not_checked_out",
+      "evidence": "git branch -a pattern search"
+    },
+    {
+      "ref": "remotes/origin/codex/g27-readback-ymmp-write-gate",
+      "access_state": "remote_branch_reference_found_not_checked_out",
+      "evidence": "git branch -a pattern search"
+    },
+    {
+      "ref": "remotes/origin/feat/phase2-motion-segmentation",
+      "access_state": "remote_branch_reference_found_not_checked_out",
+      "evidence": "git branch -a pattern search"
+    }
+  ],
+  "log_findings": [
+    {
+      "commit": "9018629",
+      "subject": "On codex/g24-nod-sync-adoption: pre-single-task-cleanup-real-estate-dx-2026-05-10"
+    },
+    {
+      "commit": "ffeda44",
+      "subject": "index on codex/g24-nod-sync-adoption: e0e49f9 docs: reduce agent entrypoint authority"
+    },
+    {
+      "commit": "2325036",
+      "subject": "untracked files on codex/g24-nod-sync-adoption: e0e49f9 docs: reduce agent entrypoint authority"
+    },
+    {
+      "commit": "946fb42",
+      "subject": "Harden background skit blueprint gate and handoffs"
+    },
+    {
+      "commit": "7be55d6",
+      "subject": "feat: stabilize g26 nod recipes"
+    },
+    {
+      "commit": "00b2676",
+      "subject": "feat(g26): close G-25 acceptance, propose G-26 preflight with route readback note"
+    },
+    {
+      "commit": "87bf2c7",
+      "subject": "feat(g24): wire skit group placement through gui"
+    },
+    {
+      "commit": "83908ee",
+      "subject": "Add G-24 skit group placement automation"
+    },
+    {
+      "commit": "6ff9745",
+      "subject": "feat: validate G-24 skit group production flow"
+    },
+    {
+      "commit": "0aee837",
+      "subject": "Sync G-24 starter export proof and atlas"
+    },
+    {
+      "commit": "b2d4ed6",
+      "subject": "Add G-24 skit preflight and canonical anchor docs"
+    },
+    {
+      "commit": "4755e83",
+      "subject": "feat(motion-library): v2 に更新 — flat + animation params 両方埋め、汎用台帳化"
+    },
+    {
+      "commit": "83dc870",
+      "subject": "docs: skit_group 配下を ImageItem 重ね合わせに構造固定"
+    },
+    {
+      "commit": "399aa1a",
+      "subject": "docs: handoff — G-24 user 作業待ち状態を runtime-state + context に反映"
+    },
+    {
+      "commit": "1b45ff2",
+      "subject": "feat(G-23/G-24): motion_target routing + skit group template spec"
+    },
+    {
+      "commit": "e2ee27d",
+      "subject": "feat(B-2/face-map/visual-slice): haitatsuin dry-run PASS + 6 表情拡張 + Step 3 user docs"
+    },
+    {
+      "commit": "184ad2e",
+      "subject": "docs: G-19 done 記録 + TACHIE-BODY-FACE-SWAP-PREP チェック更新"
+    },
+    {
+      "commit": "e4b6d49",
+      "subject": "feat(G-19): GUI に --face-map-bundle ファイル選択を追加"
+    },
+    {
+      "commit": "0b71142",
+      "subject": "feat(G-19): multi-body face_map bundle — carry-forward, CLI, patch, tests"
+    },
+    {
+      "commit": "00bb5c7",
+      "subject": "docs: face completion 固定 + H-01 Packaging Orchestrator spec v0.1 + ロードマップ整理"
+    },
+    {
+      "commit": "473885a",
+      "subject": "feat: face completion hardening (prompt drift, active gap, row-range integrity, fail-fast)"
+    },
+    {
+      "commit": "7fffc8d",
+      "subject": "feat: G-06~G-10 実装 (extract-template --labeled, idle_face, apply-production, annotate-row-range, validate-ir)"
+    },
+    {
+      "commit": "7825bbc",
+      "subject": "feat: extract-template コマンド追加 (face_map/bg_map 自動抽出)"
+    }
+  ],
+  "classification": {
+    "head_body_separated_assets_exist": true,
+    "expression_parts_exist": true,
+    "previous_animation_project_docs_or_branches_exist": true,
+    "assets_are_tracked_or_repo_local": true,
+    "asset_status": "mixed_but_enough_for_first_probe",
+    "unknowns": [
+      "final newsroom cast design",
+      "dedicated speech balloon style",
+      "which prior skit templates should be reused for newsroom",
+      "production animation quality"
+    ]
+  },
+  "recovery_plan": [
+    {
+      "step": "source_lock",
+      "action": "pin tracked assets and docs used by the first primitive proof",
+      "owner": "agent"
+    },
+    {
+      "step": "primitive_probe",
+      "action": "create a no-render diagnostic proof plan for nod, expression, move, and balloon",
+      "owner": "agent"
+    },
+    {
+      "step": "user_visual_acceptance_later",
+      "action": "only after generated proof exists, use YMM4 review for visual acceptance",
+      "owner": "user"
+    }
+  ],
+  "next_recommended_slice": "newsroom-yukkuri-animation-primitive-proof-v1",
+  "not_accepted_scope": {
+    "render_proof": false,
+    "ymmp_mutation": false,
+    "production_animation_quality": false,
+    "public_upload_or_public_readiness": false,
+    "real_rss_or_news_integration": false,
+    "external_reference_video_fetch": false,
+    "copied_external_visuals": false,
+    "actual_order_or_audience_acceptance": false
+  },
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "ymmp_edited_or_committed": false,
+    "audio_tts_generated": false,
+    "cards_regenerated": false,
+    "real_rss_or_news_fetched": false,
+    "external_reference_videos_fetched": false,
+    "production_public_readiness_claimed": false,
+    "actual_audience_acceptance_claimed": false
+  }
+}

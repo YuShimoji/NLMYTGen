@@ -1,0 +1,396 @@
+{
+  "artifact_id": "newsroom_yukkuri_background_animation_format_spec_v1_2026_06_28",
+  "spec_id": "newsroom_yukkuri_background_animation_format_spec_v1_2026_06_28",
+  "schema_version": "newsroom_yukkuri_background_animation_format_spec.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "business_goal_primary": "visual_engagement_supporting_explanation",
+  "source_context": {
+    "dense_semantic_audit_path": "samples/_probe/newsroom_handoff/v0_1_dense_script_semantic_audit_v1.json",
+    "dense_semantic_audit_exists": true,
+    "dense_v1_package_path": "samples/_probe/newsroom_handoff/v0_1_dense_script_package_v1.json",
+    "dense_v1_package_exists": true,
+    "dense_v1_csv_path": "samples/_probe/newsroom_handoff/v0_1_dense_source_ymmp_import_v1.csv",
+    "dense_v1_csv_exists": true,
+    "dense_context_role": "background_only_not_more_text_density"
+  },
+  "user_correction_normalized": {
+    "base_video_format": "yukkuri_explainer",
+    "background_style_layer": "yukkuri_chaban_style_reenactment_pv",
+    "goal": "visual_engagement_through_lightweight_animation",
+    "rejected_interpretation": "chaban_style_dialogue_script_as_the_main_format",
+    "rejected_path": "line_count_density_and_card_only_visual_optimization",
+    "missing_core": "background_animation_layer_and_scene_beat_automation",
+    "animation_primitives_expected": [
+      "head_body_separated_character_motion",
+      "nodding_or_head_movement",
+      "expression_changes",
+      "character_movement",
+      "speech_balloons",
+      "light_interaction_consistency"
+    ]
+  },
+  "format_decision": {
+    "base_video_format": "yukkuri_explainer",
+    "background_style_layer": "yukkuri_chaban_style_reenactment_pv",
+    "background_animation_is_supportive": true,
+    "rejected_interpretation": "chaban_style_dialogue_script_as_main_format",
+    "rejected_paths": [
+      "line_count_density_as_main_goal",
+      "card_only_visual_optimization",
+      "PowerPoint_like_card_only_video"
+    ]
+  },
+  "layer_model": [
+    {
+      "layer_id": "narration_subtitle_layer",
+      "role": "primary_explanation",
+      "primary_job": "carry the yukkuri explainer logic and subtitle-safe narration",
+      "must_not_do": "be replaced by unsourced chaban dialogue"
+    },
+    {
+      "layer_id": "background_animation_layer",
+      "role": "supportive_reenactment_pv",
+      "primary_job": "provide simple actions, reactions, and continuity behind the explanation",
+      "must_not_do": "become the main script format or production-quality animation claim"
+    },
+    {
+      "layer_id": "card_overlay_layer",
+      "role": "bounded_information_support",
+      "primary_job": "show point, proof, warning, or next-action cues only when useful",
+      "must_not_do": "turn the video back into card-only slides"
+    },
+    {
+      "layer_id": "source_boundary_layer",
+      "role": "diagnostic_limits",
+      "primary_job": "keep fake/private/source/rights/publication boundaries visible",
+      "must_not_do": "imply real source approval or public readiness"
+    }
+  ],
+  "background_animation_role": [
+    {
+      "role_id": "prevent_card_fatigue",
+      "purpose": "avoid a PowerPoint-like card-only rhythm"
+    },
+    {
+      "role_id": "visual_continuity",
+      "purpose": "make each narration segment feel connected"
+    },
+    {
+      "role_id": "light_reenactment",
+      "purpose": "show simple situations without copying external footage"
+    },
+    {
+      "role_id": "externalize_reactions",
+      "purpose": "show questions or doubt as character reactions"
+    },
+    {
+      "role_id": "attention_without_overload",
+      "purpose": "add motion while keeping explanation readable"
+    }
+  ],
+  "scene_beat_schema": {
+    "required_fields": [
+      "beat_id",
+      "narration_line_id",
+      "scene_function",
+      "character",
+      "expression",
+      "motion",
+      "prop_or_background",
+      "card_overlay",
+      "timing_range",
+      "fallback_if_animation_missing"
+    ],
+    "scene_function_values": [
+      "hook",
+      "reaction",
+      "explanation",
+      "proof",
+      "warning",
+      "next_action"
+    ],
+    "policy": {
+      "one_beat_one_visible_job": true,
+      "animation_supports_explanation": true,
+      "fallback_must_preserve_meaning": true,
+      "no_public_reference_copying": true
+    }
+  },
+  "scene_beat_examples": [
+    {
+      "beat_id": "beat_001",
+      "narration_line_id": "dense_v2_line_001",
+      "scene_function": "hook",
+      "character": "reimu",
+      "expression": "concerned",
+      "motion": "small_head_tilt",
+      "prop_or_background": "plain room / blank process demo card",
+      "card_overlay": "none",
+      "timing_range": "0-6 sec",
+      "fallback_if_animation_missing": "static character plus subtitle"
+    },
+    {
+      "beat_id": "beat_002",
+      "narration_line_id": "dense_v2_line_002",
+      "scene_function": "explanation",
+      "character": "reimu",
+      "expression": "neutral",
+      "motion": "nod",
+      "prop_or_background": "idea-to-video arrows",
+      "card_overlay": "point card optional",
+      "timing_range": "6-11 sec",
+      "fallback_if_animation_missing": "card-only cue with no motion"
+    },
+    {
+      "beat_id": "beat_003",
+      "narration_line_id": "dense_v2_line_006",
+      "scene_function": "explanation",
+      "character": "reimu",
+      "expression": "confident",
+      "motion": "small_position_move",
+      "prop_or_background": "reviewable draft board",
+      "card_overlay": "flow card optional",
+      "timing_range": "26-31 sec",
+      "fallback_if_animation_missing": "static board and subtitle"
+    },
+    {
+      "beat_id": "beat_004",
+      "narration_line_id": "dense_v2_line_010",
+      "scene_function": "warning",
+      "character": "reimu",
+      "expression": "serious",
+      "motion": "head_shake",
+      "prop_or_background": "rights/source warning sign",
+      "card_overlay": "boundary note",
+      "timing_range": "48-54 sec",
+      "fallback_if_animation_missing": "warning card only"
+    },
+    {
+      "beat_id": "beat_005",
+      "narration_line_id": "dense_v2_line_012",
+      "scene_function": "next_action",
+      "character": "reimu",
+      "expression": "easy",
+      "motion": "speech_balloon",
+      "prop_or_background": "YMM4 import/save checklist",
+      "card_overlay": "next card optional",
+      "timing_range": "58-63 sec",
+      "fallback_if_animation_missing": "subtitle plus small next-action card"
+    }
+  ],
+  "reference_grammar_plan": {
+    "external_fetch_or_copy_in_this_slice": false,
+    "later_reference_pack_should_extract": [
+      "number_of_characters",
+      "scene_transition_frequency",
+      "typical_reaction_beats",
+      "subtitle_and_balloon_relationship",
+      "card_overlay_tolerance",
+      "how_background_action_supports_explanation"
+    ],
+    "allowed_later_method": "abstract grammar only; no visual copying",
+    "blocked_until": "reference use is explicitly allowed and rights boundaries are recorded"
+  },
+  "business_goal_evaluation": [
+    {
+      "gate": "problem_clear",
+      "status": "pass",
+      "evidence": "cards alone are identified as causing card fatigue and weak visual continuity",
+      "decision": "shift axis to background animation layer"
+    },
+    {
+      "gate": "offer_clear",
+      "status": "pass",
+      "evidence": "animation layer adds reactions, simple situations, and continuity while narration explains",
+      "decision": "define as supportive layer"
+    },
+    {
+      "gate": "proof_clear",
+      "status": "pass",
+      "evidence": "prior YMM4 mechanics are separated from unproven newsroom animation automation",
+      "decision": "probe primitives next"
+    },
+    {
+      "gate": "boundary_clear",
+      "status": "pass",
+      "evidence": "production quality, render proof, public reference copying, and audience acceptance remain false",
+      "decision": "keep diagnostic only"
+    },
+    {
+      "gate": "next_action_clear",
+      "status": "pass",
+      "evidence": "newsroom-yukkuri-animation-primitive-proof-v1",
+      "decision": "newsroom-yukkuri-animation-primitive-proof-v1"
+    },
+    {
+      "gate": "visual_supports_explanation",
+      "status": "pass",
+      "evidence": "scene beat schema requires fallback and narration-line anchoring",
+      "decision": "avoid decoration-only motion"
+    }
+  ],
+  "next_recommended_slice": {
+    "selected": "newsroom-yukkuri-animation-primitive-proof-v1",
+    "reason": "tracked local primitives and prior docs are sufficient for a narrow nod/expression/move/balloon proof without recovering another project"
+  },
+  "artifact_links": {
+    "primitive_inventory_path": "samples/_probe/newsroom_handoff/yukkuri_animation_primitive_inventory_v1.json",
+    "recovery_audit_path": "samples/_probe/newsroom_handoff/prior_animation_asset_recovery_audit_v1.json",
+    "human_doc_path": "docs/verification/NEWSROOM_YUKKURI_BACKGROUND_ANIMATION_FORMAT_SPEC_V1_2026-06-28.md"
+  },
+  "completion_matrix": [
+    {
+      "gate": "repo_state_verified",
+      "status": true
+    },
+    {
+      "gate": "user_correction_normalized",
+      "status": true
+    },
+    {
+      "gate": "animation_layer_format_spec_created",
+      "status": true
+    },
+    {
+      "gate": "primitive_inventory_created",
+      "status": true
+    },
+    {
+      "gate": "prior_asset_recovery_audit_created",
+      "status": true
+    },
+    {
+      "gate": "next_animation_specific_axis_selected",
+      "status": "newsroom-yukkuri-animation-primitive-proof-v1"
+    },
+    {
+      "gate": "commit_and_push_if_push_gate_passes",
+      "status": "ready_for_git_followthrough"
+    }
+  ],
+  "artifact_readiness": [
+    {
+      "gate": "spec_json_exists",
+      "status": true
+    },
+    {
+      "gate": "human_doc_exists",
+      "status": true
+    },
+    {
+      "gate": "primitive_inventory_exists",
+      "status": true
+    },
+    {
+      "gate": "recovery_audit_exists",
+      "status": true
+    },
+    {
+      "gate": "no_production_public_claim",
+      "status": true
+    },
+    {
+      "gate": "downstream_next_use_described",
+      "status": true
+    }
+  ],
+  "access_readiness": [
+    {
+      "gate": "found_asset_paths_include_access_state",
+      "status": true
+    },
+    {
+      "gate": "missing_assets_classified_honestly",
+      "status": true
+    },
+    {
+      "gate": "no_user_work_emitted_without_verified_access",
+      "status": true
+    }
+  ],
+  "render_gate_hygiene": [
+    {
+      "gate": "no_render_performed_by_agent",
+      "status": true
+    },
+    {
+      "gate": "no_YMM4_launch",
+      "status": true
+    },
+    {
+      "gate": "no_ymmp_edit",
+      "status": true
+    },
+    {
+      "gate": "no_audio_or_tts_generation",
+      "status": true
+    },
+    {
+      "gate": "L0_no_render_gate_preserved",
+      "status": true
+    }
+  ],
+  "human_burden_hygiene": [
+    {
+      "gate": "user_input",
+      "status": "none_required_for_this_slice"
+    },
+    {
+      "gate": "fixed_form_requested",
+      "status": false
+    },
+    {
+      "gate": "schema_owner",
+      "status": "agent"
+    },
+    {
+      "gate": "future_user_work_waits_for_verified_artifact",
+      "status": true
+    }
+  ],
+  "inertia_check": [
+    {
+      "gate": "no_text_density_loop",
+      "status": true
+    },
+    {
+      "gate": "no_visual_card_polish_loop",
+      "status": true
+    },
+    {
+      "gate": "no_render_automation_rabbit_hole",
+      "status": true
+    },
+    {
+      "gate": "animation_layer_restored_as_core_product_axis",
+      "status": true
+    },
+    {
+      "gate": "next_concrete_animation_milestone_named",
+      "status": "newsroom-yukkuri-animation-primitive-proof-v1"
+    }
+  ],
+  "not_accepted_scope": {
+    "render_proof": false,
+    "ymmp_mutation": false,
+    "production_animation_quality": false,
+    "public_upload_or_public_readiness": false,
+    "real_rss_or_news_integration": false,
+    "external_reference_video_fetch": false,
+    "copied_external_visuals": false,
+    "actual_order_or_audience_acceptance": false
+  },
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "ymmp_edited_or_committed": false,
+    "audio_tts_generated": false,
+    "cards_regenerated": false,
+    "real_rss_or_news_fetched": false,
+    "external_reference_videos_fetched": false,
+    "production_public_readiness_claimed": false,
+    "actual_audience_acceptance_claimed": false
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "artifact_id": "newsroom_yukkuri_animation_primitive_inventory_v1_2026_06_28",
+  "inventory_id": "newsroom_yukkuri_animation_primitive_inventory_v1_2026_06_28",
+  "schema_version": "newsroom_yukkuri_animation_primitive_inventory.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "source_context": {
+    "dense_semantic_audit_path": "samples/_probe/newsroom_handoff/v0_1_dense_script_semantic_audit_v1.json",
+    "dense_semantic_audit_exists": true,
+    "dense_v1_package_path": "samples/_probe/newsroom_handoff/v0_1_dense_script_package_v1.json",
+    "dense_v1_package_exists": true,
+    "dense_v1_csv_path": "samples/_probe/newsroom_handoff/v0_1_dense_source_ymmp_import_v1.csv",
+    "dense_v1_csv_exists": true,
+    "dense_context_role": "background_only_not_more_text_density"
+  },
+  "primitive_count": 11,
+  "first_probe_candidate_count": 5,
+  "candidate_primitives": [
+    {
+      "primitive_id": "head_nod",
+      "purpose": "confirm or acknowledge a narration point",
+      "likely_yym4_representation": "GroupItem or TachieItem transform keyframes; prior nod template evidence",
+      "required_assets": [
+        "nod_head_probe",
+        "skit_group_template_source"
+      ],
+      "source_asset_status": "present",
+      "automation_risk": "medium",
+      "first_probe_candidate": true
+    },
+    {
+      "primitive_id": "head_shake",
+      "purpose": "show denial, caution, or disagreement",
+      "likely_yym4_representation": "GroupItem X-axis shake / deny template family",
+      "required_assets": [
+        "skit_group_registry",
+        "group_motion_map"
+      ],
+      "source_asset_status": "present",
+      "automation_risk": "medium",
+      "first_probe_candidate": false
+    },
+    {
+      "primitive_id": "expression_swap",
+      "purpose": "externalize reaction without adding dialogue",
+      "likely_yym4_representation": "face map or image source swap",
+      "required_assets": [
+        "reimu_expression_easy",
+        "reimu_expression_anger",
+        "reimu_expression_panic",
+        "face_map_extracted"
+      ],
+      "source_asset_status": "present",
+      "automation_risk": "low",
+      "first_probe_candidate": true
+    },
+    {
+      "primitive_id": "mouth_eye_change_if_feasible",
+      "purpose": "small face-part change where YMM4 route supports it",
+      "likely_yym4_representation": "TachieFaceParameter or face-map bundle route",
+      "required_assets": [
+        "face_map_bundle_default",
+        "face_map_bundle_haitatsuin"
+      ],
+      "source_asset_status": "present",
+      "automation_risk": "medium",
+      "first_probe_candidate": false
+    },
+    {
+      "primitive_id": "character_entrance_exit",
+      "purpose": "give a scene beginning and ending",
+      "likely_yym4_representation": "skit_group GroupItem template enter/exit",
+      "required_assets": [
+        "skit_group_template_source",
+        "skit_group_registry"
+      ],
+      "source_asset_status": "present",
+      "automation_risk": "medium",
+      "first_probe_candidate": true
+    },
+    {
+      "primitive_id": "small_position_move",
+      "purpose": "keep the background layer alive without overloading the viewer",
+      "likely_yym4_representation": "GroupItem X/Y/Zoom relative motion",
+      "required_assets": [
+        "group_motion_map"
+      ],
+      "source_asset_status": "present",
+      "automation_risk": "low",
+      "first_probe_candidate": true
+    },
+    {
+      "primitive_id": "scale_rotation_emphasis",
+      "purpose": "brief emphasis or surprise",
+      "likely_yym4_representation": "GroupItem Zoom/Rotation or motion recipe",
+      "required_assets": [
+        "motion_recipe_brief",
+        "group_motion_map"
+      ],
+      "source_asset_status": "present",
+      "automation_risk": "medium",
+      "first_probe_candidate": false
+    },
+    {
+      "primitive_id": "speech_balloon",
+      "purpose": "show a question or short reaction without changing main narration",
+      "likely_yym4_representation": "ShapeItem/TextItem or overlay route; dedicated proof not yet present",
+      "required_assets": [],
+      "source_asset_status": "unknown",
+      "automation_risk": "low",
+      "first_probe_candidate": true
+    },
+    {
+      "primitive_id": "reaction_mark",
+      "purpose": "visual punctuation such as question or warning mark",
+      "likely_yym4_representation": "ShapeItem/TextItem or overlay PNG route; dedicated asset not present",
+      "required_assets": [],
+      "source_asset_status": "missing",
+      "automation_risk": "low",
+      "first_probe_candidate": false
+    },
+    {
+      "primitive_id": "prop_object_cue",
+      "purpose": "make a situation readable through a simple object",
+      "likely_yym4_representation": "ImageItem/ShapeItem prop proxy",
+      "required_assets": [
+        "background_skit_blueprint_example"
+      ],
+      "source_asset_status": "present",
+      "automation_risk": "medium",
+      "first_probe_candidate": false
+    },
+    {
+      "primitive_id": "background_pan_or_simple_camera",
+      "purpose": "create continuity between beats",
+      "likely_yym4_representation": "bg_anim X/Y/Zoom route",
+      "required_assets": [
+        "primitive_visibility_readback"
+      ],
+      "source_asset_status": "present",
+      "automation_risk": "medium",
+      "first_probe_candidate": false
+    }
+  ],
+  "first_probe_set": [
+    "head_nod",
+    "expression_swap",
+    "character_entrance_exit",
+    "small_position_move",
+    "speech_balloon"
+  ],
+  "probe_readiness_summary": {
+    "minimum_viable_probe": [
+      "head_nod",
+      "expression_swap",
+      "small_position_move",
+      "speech_balloon"
+    ],
+    "enough_for_first_probe": true,
+    "blocking_gap": null,
+    "notes": [
+      "speech_balloon has no dedicated prior proof, but can be probed as ShapeItem/TextItem without external media",
+      "production animation quality remains unaccepted"
+    ]
+  },
+  "not_accepted_scope": {
+    "render_proof": false,
+    "ymmp_mutation": false,
+    "production_animation_quality": false,
+    "public_upload_or_public_readiness": false,
+    "real_rss_or_news_integration": false,
+    "external_reference_video_fetch": false,
+    "copied_external_visuals": false,
+    "actual_order_or_audience_acceptance": false
+  },
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "ymmp_edited_or_committed": false,
+    "audio_tts_generated": false,
+    "cards_regenerated": false,
+    "real_rss_or_news_fetched": false,
+    "external_reference_videos_fetched": false,
+    "production_public_readiness_claimed": false,
+    "actual_audience_acceptance_claimed": false
+  }
+}

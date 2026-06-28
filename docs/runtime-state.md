@@ -1,5 +1,33 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom yukkuri background animation format spec v1 completed (2026-06-28 artifact date; recorded 2026-06-29 JST)**:
+  `newsroom-reference-yukkuri-background-animation-format-spec-v1` normalizes
+  the latest user correction: the base format remains `yukkuri_explainer`, and
+  the missing product layer is
+  `yukkuri_chaban_style_reenactment_pv` as a supportive background
+  reenactment/light animation layer. This is not a dialogue-only chaban rewrite,
+  not a line-count-density loop, and not more card-only visual polish. New
+  artifacts are
+  `samples/_probe/newsroom_handoff/yukkuri_background_animation_format_spec_v1.json`,
+  `samples/_probe/newsroom_handoff/yukkuri_animation_primitive_inventory_v1.json`,
+  `samples/_probe/newsroom_handoff/prior_animation_asset_recovery_audit_v1.json`,
+  `docs/verification/NEWSROOM_YUKKURI_BACKGROUND_ANIMATION_FORMAT_SPEC_V1_2026-06-28.md`,
+  `docs/verification/NEWSROOM_YUKKURI_ANIMATION_PRIMITIVE_INVENTORY_V1_2026-06-28.md`,
+  `docs/verification/NEWSROOM_PRIOR_ANIMATION_ASSET_RECOVERY_AUDIT_V1_2026-06-28.md`,
+  `src/pipeline/newsroom_yukkuri_background_animation_format_spec.py`, and
+  `tests/test_newsroom_yukkuri_background_animation_format_spec.py`. The prior
+  asset audit found tracked repo evidence for expression PNGs, a body source,
+  face-map bundles, `samples/nod_head.ymmp`, skit-group templates/registry,
+  group-motion map, G-24 background skit blueprint/readback artifacts, and
+  related validator/placement/motion code and docs. The primitive inventory
+  defines 11 candidates and selects the first probe set as `head_nod`,
+  `expression_swap`, `character_entrance_exit`, `small_position_move`, and
+  `speech_balloon`; `speech_balloon` remains unproven but can be probed through
+  ShapeItem/TextItem without external media. No YMM4 launch, render, `.ymmp`
+  edit/commit, audio/TTS generation, card regeneration, real RSS/news fetch,
+  external reference-video fetch, media staging, production/public readiness
+  claim, or actual audience/order acceptance claim occurred. The next default
+  slice is `newsroom-yukkuri-animation-primitive-proof-v1`.
 - **Newsroom v0.1 dense script semantic audit and v2 rewrite completed (2026-06-26)**:
   `newsroom-v0.1-dense-script-semantic-audit-and-rewrite-v1` treats the
   latest user YMM4 dense import/save observation as a script-quality warning,
