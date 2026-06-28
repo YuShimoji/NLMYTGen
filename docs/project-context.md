@@ -79,6 +79,39 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom yukkuri animation primitive probe materialization decision (2026-06-28 artifact date; recorded 2026-06-29 JST):
+`newsroom_yukkuri_animation_primitive_probe_materialization_v1_2026_06_28`
+creates the previously reserved ignored local probe target at
+`_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v1.ymmp`. The
+tracked readback is
+`samples/_probe/newsroom_handoff/yukkuri_animation_primitive_probe_materialization_v1.json`,
+with the human readback in
+`docs/verification/NEWSROOM_YUKKURI_ANIMATION_PRIMITIVE_PROBE_MATERIALIZATION_V1_2026-06-28.md`
+and implementation/tests in
+`src/pipeline/newsroom_yukkuri_animation_primitive_probe_materialization.py` /
+`tests/test_newsroom_yukkuri_animation_primitive_probe_materialization.py`.
+
+The materialized local `.ymmp` is derived from tracked `samples/nod_head.ymmp`
+proof items, not from a zero-start YMM4 project. The builder clones the
+GroupItem/ImageItem structure and applies only bounded Frame/Length,
+current-host FilePath, expression image, parent X-position, and head Rotation
+changes. Structural readback passes with a 60 fps / 3600-frame timeline,
+20 items, `GroupItem=10`, `ImageItem=10`, and no unexpected item types. The
+probe covers the four previously pass-status primitives: `head_nod`,
+`expression_swap`, `character_entrance_exit`, and `small_position_move`.
+`speech_balloon` remains omitted/partial because the repo has ShapeItem/TextItem
+routes but no dedicated speech-balloon template or visual pass. The local probe
+exists on the current host and `git check-ignore -v` resolves it through
+`.gitignore` `_tmp/`, so it must remain untracked and uncommitted. The prior
+primitive-proof builder is kept slice-static so the later local probe existence
+does not mutate that historical readback. No YMM4 launch, render, `.ymmp`
+stage/commit, audio/TTS, card modification, real RSS/news fetch, external
+reference-video fetch, production/public readiness claim, or audience/order
+acceptance claim occurred. The next default axis is
+`newsroom-yukkuri-animation-primitive-render-smoke-v1`, but only after an
+operator instruction sheet is created for opening/rendering the ignored local
+probe.
+
 Latest newsroom yukkuri animation primitive proof decision (2026-06-28 artifact date; recorded 2026-06-29 JST):
 `newsroom_yukkuri_animation_primitive_proof_v1_2026_06_28` converts the
 background animation format direction into a no-render structural proof for

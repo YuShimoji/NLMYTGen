@@ -710,6 +710,13 @@ def _artifact_kind(artifact_id: str, path: Path, git_state: str) -> str:
 
 def _local_probe_state(base: Path) -> dict[str, Any]:
     access = _path_access(base, "local_ignored_primitive_probe", LOCAL_IGNORED_PROBE_PATH)
+    # This proof artifact is slice-static: the primitive-proof slice reserved
+    # the ignored probe path but did not create it. Later materialization
+    # slices may create the same local file; that should not rewrite the
+    # historical proof readback.
+    access["target_exists"] = False
+    access["access_state"] = "ignored_local_artifact_missing"
+    access["git_state"] = "ignored"
     return {
         **access,
         "created_in_this_slice": False,

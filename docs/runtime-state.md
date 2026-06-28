@@ -1,5 +1,33 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom yukkuri animation primitive probe materialization v1 completed (2026-06-28 artifact date; recorded 2026-06-29 JST)**:
+  `newsroom-yukkuri-animation-primitive-probe-materialization-v1`
+  materializes the previously reserved ignored local YMM4 probe target at
+  `_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v1.ymmp`.
+  The local file exists on this host, is verified ignored by
+  `git check-ignore -v`, and remains untracked/uncommitted. New tracked
+  readback artifacts are
+  `samples/_probe/newsroom_handoff/yukkuri_animation_primitive_probe_materialization_v1.json`,
+  `docs/verification/NEWSROOM_YUKKURI_ANIMATION_PRIMITIVE_PROBE_MATERIALIZATION_V1_2026-06-28.md`,
+  `src/pipeline/newsroom_yukkuri_animation_primitive_probe_materialization.py`,
+  and
+  `tests/test_newsroom_yukkuri_animation_primitive_probe_materialization.py`.
+  The generated probe clones tracked `samples/nod_head.ymmp` proof items and
+  applies bounded timing, current-host asset-path, expression, X-position, and
+  rotation changes only. Structural readback passes with a 60 fps / 3600-frame
+  timeline, 20 items total, `GroupItem=10`, `ImageItem=10`, and no unexpected
+  item types. Covered primitives are `head_nod`, `expression_swap`,
+  `character_entrance_exit`, and `small_position_move`; `speech_balloon`
+  remains omitted/partial because no dedicated balloon template or visual pass
+  exists. No YMM4 launch, render, `.ymmp` stage/commit, audio/TTS generation,
+  card modification, real RSS/news fetch, external reference-video fetch,
+  production/public readiness claim, or actual audience/order acceptance claim
+  occurred. The previous primitive-proof builder is kept slice-static so later
+  local probe existence does not rewrite the earlier "not created in that
+  slice" readback. The next default axis is
+  `newsroom-yukkuri-animation-primitive-render-smoke-v1`, with the prerequisite
+  that an operator instruction sheet exists before opening/rendering the local
+  probe.
 - **Newsroom yukkuri animation primitive proof v1 completed (2026-06-28 artifact date; recorded 2026-06-29 JST)**:
   `newsroom-yukkuri-animation-primitive-proof-v1` turns the previous
   background animation format spec into a no-render structural proof package.

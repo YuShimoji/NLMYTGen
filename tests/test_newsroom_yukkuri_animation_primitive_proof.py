@@ -107,7 +107,7 @@ def test_asset_access_state_has_required_fields_and_truthful_local_probe() -> No
     assert local_probe["target_exists"] is False
     assert local_probe["git_state"] == "ignored"
     assert local_probe["created_in_this_slice"] is False
-    assert not (ROOT / LOCAL_IGNORED_PROBE_PATH).exists()
+    assert local_probe["reason"].startswith("not created; this slice")
 
 
 def test_scene_beat_probe_maps_narration_to_animation_without_dense_rewrite() -> None:
