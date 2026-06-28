@@ -87,6 +87,18 @@ diagnostic_only: true
 - target_source_ymmp_path: _tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v0_1_dense_source_v1.ymmp
 - rows: [{"line_id": "dense_line_001", "row_number": 1, "speaker": "ゆっくり霊夢", "text": "This review-only sample proves a YMM4 video handoff can be assembled."}, {"line_id": "dense_line_002", "row_number": 2, "speaker": "ゆっくり霊夢", "text": "The goal is not public news; it is a controllable production path."}, {"line_id": "dense_line_003", "row_number": 3, "speaker": "ゆっくり霊夢", "text": "A tracked CSV becomes YMM4 dialogue with the same speaker binding."}, {"line_id": "dense_line_004", "row_number": 4, "speaker": "ゆっくり霊夢", "text": "The source project can be recreated without inventing hidden media."}, {"line_id": "dense_line_005", "row_number": 5, "speaker": "ゆっくり霊夢", "text": "That gives the next review a repeatable starting point."}, {"line_id": "dense_line_006", "row_number": 6, "speaker": "ゆっくり霊夢", "text": "Native Yukkuri audio stays in the YMM4 side of the workflow."}, {"line_id": "dense_line_007", "row_number": 7, "speaker": "ゆっくり霊夢", "text": "The timing patch holds the sample near sixty-eight seconds."}, {"line_id": "dense_line_008", "row_number": 8, "speaker": "ゆっくり霊夢", "text": "Four PNG cards appear as ImageItems on the timeline."}, {"line_id": "dense_line_009", "row_number": 9, "speaker": "ゆっくり霊夢", "text": "A prior local render confirms cards, voice, and timing can stay together."}, {"line_id": "dense_line_010", "row_number": 10, "speaker": "ゆっくり霊夢", "text": "This is still diagnostic: fake topic, fake claims, and no public approval."}, {"line_id": "dense_line_011", "row_number": 11, "speaker": "ゆっくり霊夢", "text": "Real sources, rights, and final narration are outside this proof."}, {"line_id": "dense_line_012", "row_number": 12, "speaker": "ゆっくり霊夢", "text": "Next, import this denser script and save a dense source project."}, {"line_id": "dense_line_013", "row_number": 13, "speaker": "ゆっくり霊夢", "text": "After that, a real packet or RSS dry run can be planned with clearer proof."}]
 
+## Access Information
+
+- artifact_id: v0_1_dense_source_ymmp_import_v1_csv
+- repo_relative_path: samples/_probe/newsroom_handoff/v0_1_dense_source_ymmp_import_v1.csv
+- folder_full_path_current_host: C:\Users\thank\Storage\Media Contents Projects\NLMYTGen-mainline-slot-linkage\samples\_probe\newsroom_handoff
+- file_full_path_current_host: C:\Users\thank\Storage\Media Contents Projects\NLMYTGen-mainline-slot-linkage\samples\_probe\newsroom_handoff\v0_1_dense_source_ymmp_import_v1.csv
+- launcher_or_open_command: explorer.exe "C:\Users\thank\Storage\Media Contents Projects\NLMYTGen-mainline-slot-linkage\samples\_probe\newsroom_handoff"
+- target_exists: true
+- access_state: verified_current_host_file_exists
+- access_evidence_level: L1_agent_filesystem_check
+- evidence_source: Path.exists during artifact generation
+
 ## Baseline Comparison
 
 - baseline_line_count: 4
@@ -151,7 +163,7 @@ diagnostic_only: true
 | current_repo_state_verified | true |
 | explanation_script_density_plan_inspected | true |
 | dense_script_package_generated | true |
-| YMM4_import_CSV_generated | true |
+| YMM4_import_CSV_generated_and_access_state_reported | true |
 | explanation_readiness_re_evaluated | true |
 | narrow_commit_created_and_pushed_if_push_gate_passes | ready_for_git_followthrough |
 
@@ -177,6 +189,17 @@ diagnostic_only: true
 | next_action_clear | pass |
 | audience_fit_proxy | partial |
 | visual_supports_explanation | pass |
+| access_clear | pass |
+
+## Access Readiness
+
+| gate | status |
+|---|---|
+| dense_CSV_full_path_emitted | true |
+| folder_full_path_emitted | true |
+| target_exists_stated | true |
+| access_state_stated | true |
+| evidence_level_stated | true |
 
 ## Render Gate Hygiene
 

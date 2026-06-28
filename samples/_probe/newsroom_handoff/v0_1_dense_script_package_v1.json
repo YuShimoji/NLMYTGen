@@ -360,6 +360,17 @@
       }
     ]
   },
+  "access_information": {
+    "artifact_id": "v0_1_dense_source_ymmp_import_v1_csv",
+    "repo_relative_path": "samples/_probe/newsroom_handoff/v0_1_dense_source_ymmp_import_v1.csv",
+    "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\_probe\\newsroom_handoff",
+    "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\_probe\\newsroom_handoff\\v0_1_dense_source_ymmp_import_v1.csv",
+    "launcher_or_open_command": "explorer.exe \"C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\_probe\\newsroom_handoff\"",
+    "target_exists": true,
+    "access_state": "verified_current_host_file_exists",
+    "access_evidence_level": "L1_agent_filesystem_check",
+    "evidence_source": "Path.exists during artifact generation"
+  },
   "baseline_comparison": {
     "baseline_line_count": 4,
     "new_line_count": 13,
@@ -504,7 +515,7 @@
       "status": true
     },
     {
-      "gate": "YMM4_import_CSV_generated",
+      "gate": "YMM4_import_CSV_generated_and_access_state_reported",
       "status": true
     },
     {
@@ -570,6 +581,32 @@
     {
       "gate": "visual_supports_explanation",
       "status": "pass"
+    },
+    {
+      "gate": "access_clear",
+      "status": "pass"
+    }
+  ],
+  "access_readiness": [
+    {
+      "gate": "dense_CSV_full_path_emitted",
+      "status": true
+    },
+    {
+      "gate": "folder_full_path_emitted",
+      "status": true
+    },
+    {
+      "gate": "target_exists_stated",
+      "status": true
+    },
+    {
+      "gate": "access_state_stated",
+      "status": true
+    },
+    {
+      "gate": "evidence_level_stated",
+      "status": true
     }
   ],
   "render_gate_hygiene": [

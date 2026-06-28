@@ -136,7 +136,9 @@ def write_default_newsroom_v0_1_dense_script_package_artifacts(
         package,
         base / DEFAULT_DENSE_SOURCE_YMMP_IMPORT_CSV_PATH,
     )
+    package = build_default_newsroom_v0_1_dense_script_package(root=base)
     _write_json(base / DEFAULT_DENSE_SCRIPT_PACKAGE_PATH, package)
+    timing_plan = build_newsroom_v0_1_dense_caption_timing_plan(package)
     _write_json(base / DEFAULT_DENSE_CAPTION_TIMING_PLAN_PATH, timing_plan)
     _write_text(
         base / DEFAULT_DENSE_SCRIPT_PACKAGE_DOC_PATH,
@@ -160,6 +162,7 @@ def build_newsroom_v0_1_dense_script_package(
     base = Path(root)
     script_rows = _dense_script_rows()
     segment_map = _segment_map(script_rows)
+    access_information = _dense_csv_access_information(base)
     source_validation = _source_validation(
         base,
         explanation_readiness,
@@ -213,6 +216,7 @@ def build_newsroom_v0_1_dense_script_package(
         "script_package": script_rows,
         "segment_map": segment_map,
         "csv_spec": _csv_spec(script_rows),
+        "access_information": access_information,
         "baseline_comparison": _baseline_comparison(baseline_rows, script_rows),
         "explanation_readiness_recheck": _explanation_readiness_recheck(),
         "card_alignment_summary": _card_alignment_summary(script_rows),
@@ -227,7 +231,10 @@ def build_newsroom_v0_1_dense_script_package(
         "goal_stack": _goal_stack(),
         "completion_matrix": _completion_matrix(),
         "artifact_readiness": _artifact_readiness(),
-        "business_explanation_readiness": _business_explanation_readiness(),
+        "business_explanation_readiness": _business_explanation_readiness(
+            access_information
+        ),
+        "access_readiness": _access_readiness(access_information),
         "render_gate_hygiene": _render_gate_hygiene(),
         "human_burden_hygiene": _human_burden_hygiene(),
         "inertia_check": _inertia_check(),
@@ -327,6 +334,7 @@ def render_newsroom_v0_1_dense_script_package_markdown(
     source_validation = _dict(package.get("source_validation"))
     comparison = _dict(package.get("baseline_comparison"))
     csv_spec = _dict(package.get("csv_spec"))
+    access_information = _dict(package.get("access_information"))
     next_slice = _dict(package.get("next_recommended_slice"))
 
     lines = [
@@ -388,6 +396,7 @@ def render_newsroom_v0_1_dense_script_package_markdown(
         _list(package.get("segment_map")),
     )
     _append_mapping(lines, "CSV Spec", csv_spec)
+    _append_mapping(lines, "Access Information", access_information)
     _append_mapping(lines, "Baseline Comparison", comparison)
     _append_rows(
         lines,
@@ -415,6 +424,7 @@ def render_newsroom_v0_1_dense_script_package_markdown(
         "Business / Explanation Readiness",
         package.get("business_explanation_readiness"),
     )
+    _append_status_table(lines, "Access Readiness", package.get("access_readiness"))
     _append_status_table(lines, "Render Gate Hygiene", package.get("render_gate_hygiene"))
     _append_status_table(
         lines,
@@ -444,6 +454,7 @@ def render_newsroom_v0_1_dense_source_ymmp_import_markdown(
     """Render the dense CSV operator doc."""
     csv_spec = _dict(package.get("csv_spec"))
     identity = _dict(package.get("identity"))
+    access_information = _dict(package.get("access_information"))
     timing_policy = _dict(timing_plan.get("timing_policy"))
     lines = [
         "# Newsroom v0.1 Dense Source YMM4 Import v1",
@@ -466,6 +477,30 @@ def render_newsroom_v0_1_dense_source_ymmp_import_markdown(
             f"{csv_spec.get('expected_character_binding')}"
         ),
         f"- target_source_ymmp_path: {csv_spec.get('target_source_ymmp_path')}",
+        "",
+        "## Access Information",
+        "",
+        f"- artifact_id: {access_information.get('artifact_id')}",
+        f"- repo_relative_path: {access_information.get('repo_relative_path')}",
+        (
+            "- folder_full_path_current_host: "
+            f"{access_information.get('folder_full_path_current_host')}"
+        ),
+        (
+            "- file_full_path_current_host: "
+            f"{access_information.get('file_full_path_current_host')}"
+        ),
+        (
+            "- launcher_or_open_command: "
+            f"{access_information.get('launcher_or_open_command')}"
+        ),
+        f"- target_exists: {str(access_information.get('target_exists')).lower()}",
+        f"- access_state: {access_information.get('access_state')}",
+        (
+            "- access_evidence_level: "
+            f"{access_information.get('access_evidence_level')}"
+        ),
+        f"- evidence_source: {access_information.get('evidence_source')}",
         "",
         "## Dense Rows",
         "",
@@ -812,6 +847,27 @@ def _csv_spec(script_rows: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def _dense_csv_access_information(base: Path) -> dict[str, Any]:
+    csv_path = base / DEFAULT_DENSE_SOURCE_YMMP_IMPORT_CSV_PATH
+    folder_path = csv_path.parent
+    target_exists = csv_path.exists()
+    return {
+        "artifact_id": "v0_1_dense_source_ymmp_import_v1_csv",
+        "repo_relative_path": _path_text(DEFAULT_DENSE_SOURCE_YMMP_IMPORT_CSV_PATH),
+        "folder_full_path_current_host": str(folder_path.resolve()),
+        "file_full_path_current_host": str(csv_path.resolve()),
+        "launcher_or_open_command": f'explorer.exe "{folder_path.resolve()}"',
+        "target_exists": target_exists,
+        "access_state": (
+            "verified_current_host_file_exists"
+            if target_exists
+            else "missing_access_recovery_required"
+        ),
+        "access_evidence_level": "L1_agent_filesystem_check",
+        "evidence_source": "Path.exists during artifact generation",
+    }
+
+
 def _baseline_comparison(
     baseline_rows: list[list[str]],
     script_rows: list[dict[str, Any]],
@@ -952,7 +1008,10 @@ def _completion_matrix() -> list[dict[str, Any]]:
         {"gate": "current_repo_state_verified", "status": True},
         {"gate": "explanation_script_density_plan_inspected", "status": True},
         {"gate": "dense_script_package_generated", "status": True},
-        {"gate": "YMM4_import_CSV_generated", "status": True},
+        {
+            "gate": "YMM4_import_CSV_generated_and_access_state_reported",
+            "status": True,
+        },
         {"gate": "explanation_readiness_re_evaluated", "status": True},
         {
             "gate": "narrow_commit_created_and_pushed_if_push_gate_passes",
@@ -972,10 +1031,50 @@ def _artifact_readiness() -> list[dict[str, Any]]:
     ]
 
 
-def _business_explanation_readiness() -> list[dict[str, str]]:
-    return [
+def _business_explanation_readiness(
+    access_information: dict[str, Any],
+) -> list[dict[str, str]]:
+    rows = [
         {"gate": row["gate"], "status": row["status"]}
         for row in _explanation_readiness_recheck()
+    ]
+    rows.append(
+        {
+            "gate": "access_clear",
+            "status": (
+                "pass"
+                if access_information.get("target_exists") is True
+                and access_information.get("access_state")
+                == "verified_current_host_file_exists"
+                else "fail"
+            ),
+        }
+    )
+    return rows
+
+
+def _access_readiness(access_information: dict[str, Any]) -> list[dict[str, Any]]:
+    return [
+        {
+            "gate": "dense_CSV_full_path_emitted",
+            "status": bool(access_information.get("file_full_path_current_host")),
+        },
+        {
+            "gate": "folder_full_path_emitted",
+            "status": bool(access_information.get("folder_full_path_current_host")),
+        },
+        {
+            "gate": "target_exists_stated",
+            "status": access_information.get("target_exists"),
+        },
+        {
+            "gate": "access_state_stated",
+            "status": bool(access_information.get("access_state")),
+        },
+        {
+            "gate": "evidence_level_stated",
+            "status": bool(access_information.get("access_evidence_level")),
+        },
     ]
 
 

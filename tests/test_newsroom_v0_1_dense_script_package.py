@@ -71,6 +71,20 @@ def test_dense_script_package_matches_builder_and_identity() -> None:
     assert package["identity"]["actual_order_or_audience_acceptance_claimed"] is False
     assert package["source_validation"]["status"] == "passed"
     assert package["source_validation"]["errors"] == []
+    access = package["access_information"]
+    assert access["artifact_id"] == "v0_1_dense_source_ymmp_import_v1_csv"
+    assert access["repo_relative_path"] == (
+        DEFAULT_DENSE_SOURCE_YMMP_IMPORT_CSV_PATH.as_posix()
+    )
+    assert access["folder_full_path_current_host"] == str(CSV_PATH.parent.resolve())
+    assert access["file_full_path_current_host"] == str(CSV_PATH.resolve())
+    assert access["launcher_or_open_command"] == (
+        f'explorer.exe "{CSV_PATH.parent.resolve()}"'
+    )
+    assert access["target_exists"] is True
+    assert access["access_state"] == "verified_current_host_file_exists"
+    assert access["access_evidence_level"] == "L1_agent_filesystem_check"
+    assert access["evidence_source"] == "Path.exists during artifact generation"
 
 
 def test_dense_script_lines_fit_density_segment_and_timing_contract() -> None:
@@ -184,6 +198,7 @@ def test_explanation_readiness_recheck_improves_without_audience_claim() -> None
         "next_action_clear": "pass",
         "audience_fit_proxy": "partial",
         "visual_supports_explanation": "pass",
+        "access_clear": "pass",
     }
     assert package["next_recommended_slice"]["selected"] == NEXT_RECOMMENDED_SLICE
 
@@ -215,7 +230,8 @@ def test_completion_artifact_render_human_and_inertia_counts_match_contract() ->
 
     assert len(package["completion_matrix"]) == 6
     assert len(package["artifact_readiness"]) == 6
-    assert len(package["business_explanation_readiness"]) == 7
+    assert len(package["business_explanation_readiness"]) == 8
+    assert len(package["access_readiness"]) == 5
     assert len(package["render_gate_hygiene"]) == 6
     assert len(package["human_burden_hygiene"]) == 7
     assert len(package["inertia_check"]) == 5
@@ -249,6 +265,9 @@ def test_docs_match_renderers_and_include_freeform_operator_steps() -> None:
         timing_plan,
     )
     assert "Confirm thirteen dialogue rows appear." in csv_doc
+    assert "## Access Information" in csv_doc
+    assert str(CSV_PATH.resolve()) in csv_doc
+    assert "access_state: verified_current_host_file_exists" in csv_doc
     assert "Do not render in this import/save step." in csv_doc
     assert "freeform observation" in csv_doc
     assert "A structured answer is not needed." in csv_doc

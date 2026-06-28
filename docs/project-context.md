@@ -93,7 +93,8 @@ and focused tests in `tests/test_newsroom_v0_1_dense_script_package.py`. The
 package keeps the surface fake/review-only and maps the 68 second plan across
 opening, mechanism, proof, boundary, and next-action segments. It improves the
 local explanation gates from partial to pass for problem, offer, and next
-action while keeping audience-fit proxy partial because no real viewer/order
+action, and records `access_clear=pass` for the dense CSV current-host access
+route, while keeping audience-fit proxy partial because no real viewer/order
 acceptance was measured. This slice intentionally did not launch YMM4, render,
 edit `.ymmp`, regenerate cards, generate audio/TTS, fetch real RSS/news, stage
 media, request a structured answer, or claim production/public readiness. The

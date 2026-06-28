@@ -16,6 +16,18 @@ diagnostic_only: true
 - expected_character_binding: ゆっくり霊夢
 - target_source_ymmp_path: _tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v0_1_dense_source_v1.ymmp
 
+## Access Information
+
+- artifact_id: v0_1_dense_source_ymmp_import_v1_csv
+- repo_relative_path: samples/_probe/newsroom_handoff/v0_1_dense_source_ymmp_import_v1.csv
+- folder_full_path_current_host: C:\Users\thank\Storage\Media Contents Projects\NLMYTGen-mainline-slot-linkage\samples\_probe\newsroom_handoff
+- file_full_path_current_host: C:\Users\thank\Storage\Media Contents Projects\NLMYTGen-mainline-slot-linkage\samples\_probe\newsroom_handoff\v0_1_dense_source_ymmp_import_v1.csv
+- launcher_or_open_command: explorer.exe "C:\Users\thank\Storage\Media Contents Projects\NLMYTGen-mainline-slot-linkage\samples\_probe\newsroom_handoff"
+- target_exists: true
+- access_state: verified_current_host_file_exists
+- access_evidence_level: L1_agent_filesystem_check
+- evidence_source: Path.exists during artifact generation
+
 ## Dense Rows
 
 | row | speaker | text |

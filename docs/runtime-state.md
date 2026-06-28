@@ -17,7 +17,9 @@
   source speaker value. Explanation readiness improves to
   `problem_clear=pass`, `offer_clear=pass`, `proof_clear=pass`,
   `boundary_clear=pass`, `next_action_clear=pass`,
-  `audience_fit_proxy=partial`, and `visual_supports_explanation=pass`. This
+  `audience_fit_proxy=partial`, `visual_supports_explanation=pass`, and
+  `access_clear=pass`; the dense CSV artifact records the current-host full
+  file path and `access_state=verified_current_host_file_exists`. This
   slice did not launch YMM4, render, edit `.ymmp`, regenerate cards, generate
   audio/TTS, fetch real RSS/news, stage media, request a structured answer, or
   claim production/public/audience acceptance. The next user-side milestone is
