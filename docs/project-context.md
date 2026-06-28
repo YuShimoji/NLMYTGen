@@ -79,6 +79,33 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom v0.1 explanation readiness and script density decision (2026-06-26):
+`newsroom_v0_1_explanation_readiness_v1_2026_06_26` and
+`newsroom_v0_1_script_density_plan_v1_2026_06_26` move the active bottleneck
+from visual polish and render mechanics to explanation/adoption usefulness.
+The current diagnostic mp4 exists locally and the pipeline has demonstrated
+YMM4 script import, speaker binding, native yukkuri audio, diagnostic English
+loanword handling, source `.ymmp` recreation from CSV, 68 second timing, card
+PNG generation, YMM4 ImageItem placement, render output, benchmark-driven
+visual refinement, and local artifact recovery. The new artifacts are
+`samples/_probe/newsroom_handoff/v0_1_explanation_readiness_v1.json`,
+`samples/_probe/newsroom_handoff/v0_1_script_density_plan_v1.json`,
+`docs/verification/NEWSROOM_V0_1_EXPLANATION_READINESS_V1_2026-06-26.md`, and
+`docs/verification/NEWSROOM_V0_1_SCRIPT_DENSITY_PLAN_V1_2026-06-26.md`, with
+implementation in `src/pipeline/newsroom_v0_1_explanation_readiness.py` and
+focused tests in `tests/test_newsroom_v0_1_explanation_readiness.py`. The
+decision records explanation readiness as mixed: proof and boundary are clear,
+but problem, offer, next action, and audience-fit proxy are only partial. The
+current four dialogue lines over about 68 seconds are enough to prove mechanics
+but too sparse to explain the value path; the plan targets 60-75 seconds, five
+narration segments, and roughly 10-14 short lines. This slice intentionally did
+not launch YMM4, render video, edit `.ymmp`, regenerate cards, create
+audio/TTS, fetch real RSS/news, stage media, request a fixed form, claim
+audience/order acceptance, or claim production/public readiness. The next
+default slice is `newsroom-v0.1-script-density-implementation-plan-v1`; do not
+prioritize full render automation before explanation/script density unless the
+supervisor explicitly changes that axis.
+
 Latest newsroom post-density refinement render smoke result readback decision (2026-06-26):
 `newsroom_post_density_refinement_render_smoke_result_readback_v1_2026_06_26`
 consumes the latest user freeform YMM4 observation after density-benchmarked

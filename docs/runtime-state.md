@@ -1,5 +1,28 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom v0.1 explanation readiness and script density plan v1 completed (2026-06-26)**:
+  `newsroom-v0.1-explanation-readiness-and-script-density-plan-v1` records
+  that the current diagnostic mp4 exists locally and the YMM4 render pipeline,
+  native audio path, script import path, card visual asset path, and
+  density-refined render observation are diagnostic pass, while direct
+  AI-side video generation through `.ymmp` is not reliable enough to prioritize
+  over explanation quality. New artifacts are
+  `samples/_probe/newsroom_handoff/v0_1_explanation_readiness_v1.json`,
+  `samples/_probe/newsroom_handoff/v0_1_script_density_plan_v1.json`,
+  `docs/verification/NEWSROOM_V0_1_EXPLANATION_READINESS_V1_2026-06-26.md`,
+  `docs/verification/NEWSROOM_V0_1_SCRIPT_DENSITY_PLAN_V1_2026-06-26.md`,
+  `src/pipeline/newsroom_v0_1_explanation_readiness.py`, and
+  `tests/test_newsroom_v0_1_explanation_readiness.py`. The readiness gates are:
+  `problem_clear=partial`, `offer_clear=partial`, `proof_clear=pass`,
+  `boundary_clear=pass`, `next_action_clear=partial`,
+  `audience_fit_proxy=partial`, and `visual_supports_explanation=pass`.
+  Script density diagnosis records the current four dialogue lines across about
+  68 seconds as too sparse for explanation; the plan targets 60-75 seconds,
+  five narration segments, and roughly 10-14 short lines. This slice did not
+  launch YMM4, render, edit `.ymmp`, regenerate cards, create audio/TTS, fetch
+  real RSS/news, stage media, request a fixed review form, claim audience/order
+  acceptance, or claim production/public readiness. The next default slice is
+  `newsroom-v0.1-script-density-implementation-plan-v1`.
 - **Newsroom post-density refinement render smoke result readback v1 completed (2026-06-26)**:
   `newsroom-post-density-refinement-render-smoke-result-readback-v1`
   normalizes the latest user freeform YMM4 observation after density-benchmarked
