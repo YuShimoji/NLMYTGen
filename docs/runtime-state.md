@@ -1,5 +1,32 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom v0.1 dense script package v1 completed (2026-06-26)**:
+  `newsroom-v0.1-script-density-implementation-v1` turns the prior
+  explanation-readiness/script-density plan into concrete review-only source
+  inputs. New artifacts are
+  `samples/_probe/newsroom_handoff/v0_1_dense_script_package_v1.json`,
+  `samples/_probe/newsroom_handoff/v0_1_dense_caption_timing_plan_v1.json`,
+  `samples/_probe/newsroom_handoff/v0_1_dense_source_ymmp_import_v1.csv`,
+  `docs/verification/NEWSROOM_V0_1_DENSE_SCRIPT_PACKAGE_V1_2026-06-26.md`,
+  `docs/verification/NEWSROOM_V0_1_DENSE_SOURCE_YMMP_IMPORT_V1_2026-06-26.md`,
+  `src/pipeline/newsroom_v0_1_dense_script_package.py`, and
+  `tests/test_newsroom_v0_1_dense_script_package.py`. The new script has 13
+  short diagnostic lines over a planned 68 second window across opening,
+  mechanism, proof, boundary, and next-action segments. The dense CSV is UTF-8
+  BOM, headerless, two-column `speaker,text`, and uses the canonical existing
+  source speaker value. Explanation readiness improves to
+  `problem_clear=pass`, `offer_clear=pass`, `proof_clear=pass`,
+  `boundary_clear=pass`, `next_action_clear=pass`,
+  `audience_fit_proxy=partial`, and `visual_supports_explanation=pass`. This
+  slice did not launch YMM4, render, edit `.ymmp`, regenerate cards, generate
+  audio/TTS, fetch real RSS/news, stage media, request a structured answer, or
+  claim production/public/audience acceptance. The next user-side milestone is
+  to import
+  `samples/_probe/newsroom_handoff/v0_1_dense_source_ymmp_import_v1.csv` in
+  YMM4 and save the ignored local dense source project as
+  `_tmp/newsroom_manual_probe/diagnostic_bound_speaker_probe_v0_1_dense_source_v1.ymmp`.
+  The next default slice is
+  `newsroom-v0.1-dense-source-ymmp-operator-instruction-v1`.
 - **Newsroom v0.1 explanation readiness and script density plan v1 completed (2026-06-26)**:
   `newsroom-v0.1-explanation-readiness-and-script-density-plan-v1` records
   that the current diagnostic mp4 exists locally and the YMM4 render pipeline,

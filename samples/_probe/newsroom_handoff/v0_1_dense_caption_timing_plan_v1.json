@@ -1,0 +1,302 @@
+{
+  "artifact_id": "newsroom_v0_1_dense_caption_timing_plan_v1_2026_06_26",
+  "plan_id": "newsroom_v0_1_dense_caption_timing_plan_v1_2026_06_26",
+  "schema_version": "newsroom_v0_1_dense_caption_timing_plan.v1",
+  "review_status": "ready_for_operator_dense_source_import",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "timing_status": "planned_not_rendered",
+  "source_package_path": "samples/_probe/newsroom_handoff/v0_1_dense_script_package_v1.json",
+  "source_package_id": "newsroom_v0_1_dense_script_package_v1_2026_06_26",
+  "total_duration_sec": 68,
+  "duration_range_sec": {
+    "min": 60,
+    "max": 75
+  },
+  "line_count": 13,
+  "line_timings": [
+    {
+      "line_id": "dense_line_001",
+      "segment_id": "opening",
+      "intended_start_sec": 0,
+      "intended_end_sec": 6,
+      "speaker": "ゆっくり霊夢",
+      "text": "This review-only sample proves a YMM4 video handoff can be assembled.",
+      "card_alignment": "card_1_point_overview"
+    },
+    {
+      "line_id": "dense_line_002",
+      "segment_id": "opening",
+      "intended_start_sec": 6,
+      "intended_end_sec": 12,
+      "speaker": "ゆっくり霊夢",
+      "text": "The goal is not public news; it is a controllable production path.",
+      "card_alignment": "card_1_point_overview"
+    },
+    {
+      "line_id": "dense_line_003",
+      "segment_id": "mechanism",
+      "intended_start_sec": 12,
+      "intended_end_sec": 17,
+      "speaker": "ゆっくり霊夢",
+      "text": "A tracked CSV becomes YMM4 dialogue with the same speaker binding.",
+      "card_alignment": "card_2_flow_mechanism"
+    },
+    {
+      "line_id": "dense_line_004",
+      "segment_id": "mechanism",
+      "intended_start_sec": 17,
+      "intended_end_sec": 22,
+      "speaker": "ゆっくり霊夢",
+      "text": "The source project can be recreated without inventing hidden media.",
+      "card_alignment": "card_2_flow_mechanism"
+    },
+    {
+      "line_id": "dense_line_005",
+      "segment_id": "mechanism",
+      "intended_start_sec": 22,
+      "intended_end_sec": 26,
+      "speaker": "ゆっくり霊夢",
+      "text": "That gives the next review a repeatable starting point.",
+      "card_alignment": "card_2_flow_mechanism"
+    },
+    {
+      "line_id": "dense_line_006",
+      "segment_id": "proof",
+      "intended_start_sec": 26,
+      "intended_end_sec": 31,
+      "speaker": "ゆっくり霊夢",
+      "text": "Native Yukkuri audio stays in the YMM4 side of the workflow.",
+      "card_alignment": "card_3_check_proof"
+    },
+    {
+      "line_id": "dense_line_007",
+      "segment_id": "proof",
+      "intended_start_sec": 31,
+      "intended_end_sec": 36,
+      "speaker": "ゆっくり霊夢",
+      "text": "The timing patch holds the sample near sixty-eight seconds.",
+      "card_alignment": "card_3_check_proof"
+    },
+    {
+      "line_id": "dense_line_008",
+      "segment_id": "proof",
+      "intended_start_sec": 36,
+      "intended_end_sec": 42,
+      "speaker": "ゆっくり霊夢",
+      "text": "Four PNG cards appear as ImageItems on the timeline.",
+      "card_alignment": "card_3_check_proof"
+    },
+    {
+      "line_id": "dense_line_009",
+      "segment_id": "proof",
+      "intended_start_sec": 42,
+      "intended_end_sec": 48,
+      "speaker": "ゆっくり霊夢",
+      "text": "A prior local render confirms cards, voice, and timing can stay together.",
+      "card_alignment": "card_3_check_proof"
+    },
+    {
+      "line_id": "dense_line_010",
+      "segment_id": "boundary",
+      "intended_start_sec": 48,
+      "intended_end_sec": 53,
+      "speaker": "ゆっくり霊夢",
+      "text": "This is still diagnostic: fake topic, fake claims, and no public approval.",
+      "card_alignment": "card_4_next_status"
+    },
+    {
+      "line_id": "dense_line_011",
+      "segment_id": "boundary",
+      "intended_start_sec": 53,
+      "intended_end_sec": 58,
+      "speaker": "ゆっくり霊夢",
+      "text": "Real sources, rights, and final narration are outside this proof.",
+      "card_alignment": "card_4_next_status"
+    },
+    {
+      "line_id": "dense_line_012",
+      "segment_id": "next_action",
+      "intended_start_sec": 58,
+      "intended_end_sec": 63,
+      "speaker": "ゆっくり霊夢",
+      "text": "Next, import this denser script and save a dense source project.",
+      "card_alignment": "card_4_next_status"
+    },
+    {
+      "line_id": "dense_line_013",
+      "segment_id": "next_action",
+      "intended_start_sec": 63,
+      "intended_end_sec": 68,
+      "speaker": "ゆっくり霊夢",
+      "text": "After that, a real packet or RSS dry run can be planned with clearer proof.",
+      "card_alignment": "card_4_next_status"
+    }
+  ],
+  "segment_timing": [
+    {
+      "segment_id": "opening",
+      "title": "Opening / what this proves",
+      "purpose": "name the diagnostic promise and controlled value path",
+      "line_ids": [
+        "dense_line_001",
+        "dense_line_002"
+      ],
+      "target_time_range": {
+        "start_sec": 0,
+        "end_sec": 12
+      },
+      "expected_viewer_understanding": "viewer understands this is a review-only handoff proof"
+    },
+    {
+      "segment_id": "mechanism",
+      "title": "Mechanism / CSV to YMM4",
+      "purpose": "explain tracked CSV to YMM4 dialogue/source recreation",
+      "line_ids": [
+        "dense_line_003",
+        "dense_line_004",
+        "dense_line_005"
+      ],
+      "target_time_range": {
+        "start_sec": 12,
+        "end_sec": 26
+      },
+      "expected_viewer_understanding": "viewer understands why the package is repeatable"
+    },
+    {
+      "segment_id": "proof",
+      "title": "Proof / audio timing cards render",
+      "purpose": "sequence native audio, timing, cards, and prior render evidence",
+      "line_ids": [
+        "dense_line_006",
+        "dense_line_007",
+        "dense_line_008",
+        "dense_line_009"
+      ],
+      "target_time_range": {
+        "start_sec": 26,
+        "end_sec": 48
+      },
+      "expected_viewer_understanding": "viewer understands what has actually been proven"
+    },
+    {
+      "segment_id": "boundary",
+      "title": "Boundary / diagnostic only",
+      "purpose": "keep fake/review-only limits explicit",
+      "line_ids": [
+        "dense_line_010",
+        "dense_line_011"
+      ],
+      "target_time_range": {
+        "start_sec": 48,
+        "end_sec": 58
+      },
+      "expected_viewer_understanding": "viewer understands this is not public or production approval"
+    },
+    {
+      "segment_id": "next_action",
+      "title": "Next action / import then plan",
+      "purpose": "point to dense YMM4 source import before RSS or real packet planning",
+      "line_ids": [
+        "dense_line_012",
+        "dense_line_013"
+      ],
+      "target_time_range": {
+        "start_sec": 58,
+        "end_sec": 68
+      },
+      "expected_viewer_understanding": "viewer understands what to ask for next"
+    }
+  ],
+  "card_alignment": {
+    "existing_card_count": 4,
+    "new_segment_count": 5,
+    "line_ids_by_card": {
+      "card_1_point_overview": [
+        "dense_line_001",
+        "dense_line_002"
+      ],
+      "card_2_flow_mechanism": [
+        "dense_line_003",
+        "dense_line_004",
+        "dense_line_005"
+      ],
+      "card_3_check_proof": [
+        "dense_line_006",
+        "dense_line_007",
+        "dense_line_008",
+        "dense_line_009"
+      ],
+      "card_4_next_status": [
+        "dense_line_010",
+        "dense_line_011",
+        "dense_line_012",
+        "dense_line_013"
+      ]
+    },
+    "next_action_segment_handling": "carried_by_card_4_next_status",
+    "future_card_count_expansion_needed_for_this_slice": false,
+    "future_card_count_expansion_note": "a separate fifth card may help if final content adds a larger offer/proof split, but this dense import can use the current four cards",
+    "cards_regenerated_in_this_slice": false
+  },
+  "timing_policy": {
+    "uses_exact_yym4_voice_duration": false,
+    "timing_is_planned_until_dense_source_render": true,
+    "voice_audio_proof_for_dense_script": false,
+    "prior_render_evidence_reused_only": true
+  },
+  "not_accepted_scope": {
+    "render_proof_for_dense_script": false,
+    "audio_proof_for_dense_script": false,
+    "production_readiness": false,
+    "public_readiness": false,
+    "real_rss_or_news_content": false,
+    "real_source_approval": false,
+    "final_narration_quality": false,
+    "automated_yym4_render_claim": false,
+    "actual_order_or_audience_acceptance": false
+  },
+  "next_recommended_slice": {
+    "selected": "newsroom-v0.1-dense-source-ymmp-operator-instruction-v1",
+    "reason": "planned timing needs user-side dense source import before render proof"
+  },
+  "render_gate_hygiene": [
+    {
+      "gate": "no_render_performed_by_agent",
+      "status": true
+    },
+    {
+      "gate": "existing_render_evidence_reused",
+      "status": true
+    },
+    {
+      "gate": "no_render_for_script_package_creation",
+      "status": true
+    },
+    {
+      "gate": "next_render_tied_to_dense_YMM4_import_source_proof",
+      "status": true
+    },
+    {
+      "gate": "repeated_render_loop_avoided",
+      "status": true
+    },
+    {
+      "gate": "output_first_principle_preserved",
+      "status": true
+    }
+  ],
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "ymmp_edited_or_committed": false,
+    "audio_tts_generated": false,
+    "cards_regenerated": false,
+    "real_rss_or_news_fetched": false,
+    "real_brands_urls_screenshots_or_media_used": false,
+    "production_public_readiness_claimed": false,
+    "actual_audience_acceptance_claimed": false,
+    "fixed_review_form_requested": false,
+    "dashboard_governance_freshness_drift": false
+  }
+}

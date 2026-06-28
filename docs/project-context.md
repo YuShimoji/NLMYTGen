@@ -79,6 +79,29 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom v0.1 dense script package decision (2026-06-26):
+`newsroom_v0_1_dense_script_package_v1_2026_06_26` and
+`newsroom_v0_1_dense_caption_timing_plan_v1_2026_06_26` implement the prior
+script-density plan as a review-only 13-line source package. The new artifacts
+are `samples/_probe/newsroom_handoff/v0_1_dense_script_package_v1.json`,
+`samples/_probe/newsroom_handoff/v0_1_dense_caption_timing_plan_v1.json`,
+`samples/_probe/newsroom_handoff/v0_1_dense_source_ymmp_import_v1.csv`,
+`docs/verification/NEWSROOM_V0_1_DENSE_SCRIPT_PACKAGE_V1_2026-06-26.md`, and
+`docs/verification/NEWSROOM_V0_1_DENSE_SOURCE_YMMP_IMPORT_V1_2026-06-26.md`,
+with implementation in `src/pipeline/newsroom_v0_1_dense_script_package.py`
+and focused tests in `tests/test_newsroom_v0_1_dense_script_package.py`. The
+package keeps the surface fake/review-only and maps the 68 second plan across
+opening, mechanism, proof, boundary, and next-action segments. It improves the
+local explanation gates from partial to pass for problem, offer, and next
+action while keeping audience-fit proxy partial because no real viewer/order
+acceptance was measured. This slice intentionally did not launch YMM4, render,
+edit `.ymmp`, regenerate cards, generate audio/TTS, fetch real RSS/news, stage
+media, request a structured answer, or claim production/public readiness. The
+next default slice is
+`newsroom-v0.1-dense-source-ymmp-operator-instruction-v1`: import the dense CSV
+in YMM4 and save the ignored local dense source project before any dense render
+proof or RSS dry-run planning.
+
 Latest newsroom v0.1 explanation readiness and script density decision (2026-06-26):
 `newsroom_v0_1_explanation_readiness_v1_2026_06_26` and
 `newsroom_v0_1_script_density_plan_v1_2026_06_26` move the active bottleneck
