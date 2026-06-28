@@ -1,5 +1,25 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom visual card density benchmarked refinement v1 completed (2026-06-26)**:
+  `newsroom-visual-card-density-benchmarked-refinement-v1` applied the
+  completed density simplification spec to the current four diagnostic visual
+  card assets at their stable paths. New artifacts are
+  `samples/_probe/newsroom_handoff/visual_card_density_benchmarked_refinement_v1.json`,
+  `docs/verification/NEWSROOM_VISUAL_CARD_DENSITY_BENCHMARKED_REFINEMENT_V1_2026-06-26.md`,
+  `src/pipeline/newsroom_visual_card_density_benchmarked_refinement.py`, and
+  `tests/test_newsroom_visual_card_density_benchmarked_refinement.py`. The four
+  SVG/PNG cards and `visual_cards_v1/contact_sheet.html` were regenerated in
+  place using the density rules: one primary reading path, one headline, one
+  primary sentence, one support note or diagram, two to three meaningful labels,
+  larger whitespace around essential text, demoted source/debug metadata, and a
+  non-competing subtitle reserve. The readback reports
+  `proxy_status=materially_improved`, `fail_count=0`, `warning_count=0`,
+  `png_export_status=generated`, and stable asset paths preserved. This slice
+  did not launch YMM4, render video, edit `.ymmp`, generate audio/TTS, fetch
+  external material, import real media, stage output media, request a fixed
+  review form, claim actual audience acceptance, or claim production/public
+  readiness. The next default slice is
+  `newsroom-card-placement-post-density-refinement-render-smoke-v1`.
 - **Newsroom visual density simplification spec v1 completed (2026-06-26)**:
   `newsroom-visual-density-simplification-spec-v1` converts the recorded
   density/cognitive-load gate into bounded criteria before any further card

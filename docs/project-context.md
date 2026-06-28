@@ -79,6 +79,31 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom visual card density benchmarked refinement decision (2026-06-26):
+`newsroom_visual_card_density_benchmarked_refinement_v1_2026_06_26` consumes
+the density simplification spec and regenerates the current four diagnostic
+card SVG/PNG assets under the existing stable `visual_cards_v1` paths. The new
+readback artifacts are
+`samples/_probe/newsroom_handoff/visual_card_density_benchmarked_refinement_v1.json`
+and
+`docs/verification/NEWSROOM_VISUAL_CARD_DENSITY_BENCHMARKED_REFINEMENT_V1_2026-06-26.md`,
+with implementation in
+`src/pipeline/newsroom_visual_card_density_benchmarked_refinement.py` and
+focused tests in
+`tests/test_newsroom_visual_card_density_benchmarked_refinement.py`. The
+applied decision is density-linked only: remove nonessential microcopy, merge
+repeated labels, demote source/debug metadata, replace dense details with one
+simple support marker where useful, increase whitespace around essential text,
+and preserve role variation plus the review-only boundary without adding more
+boxes or shrinking text. The local proxy recheck is
+`proxy_status=materially_improved` with `fail_count=0`, `warning_count=0`, and
+stable paths preserved; PNG export completed for all four cards. This slice did
+not launch YMM4, render video, edit `.ymmp`, create audio/TTS/voice cache,
+fetch external media, import real content, add a fixed review form, claim
+production/public readiness, or claim actual audience acceptance. The next
+default slice is
+`newsroom-card-placement-post-density-refinement-render-smoke-v1`.
+
 Latest newsroom visual density simplification spec decision (2026-06-26):
 `newsroom_visual_density_simplification_spec_v1_2026_06_26` converts the prior
 post-benchmarked density gate into explicit criteria for the next card change.

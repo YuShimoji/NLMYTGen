@@ -1,40 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="WATCH NEXT" data-refinement="audience-fit-v1" data-role="source_status_next_action" data-motif="source_status_panel" data-audience-fit="familiar_youtube_explainer">
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="WATCH NEXT" data-refinement="density-benchmarked-v1" data-card-id="visual_card_cap_beat_fake_claim_001_02_v1" data-role="next">
   <title>WATCH NEXT</title>
-  <desc>Diagnostic-only fake newsroom audience-fit card asset.</desc>
+  <desc>Diagnostic-only fake newsroom card simplified by density benchmark.</desc>
   <rect x="0" y="0" width="1920" height="1080" fill="#F8FAFC"/>
-  <rect x="56" y="56" width="1808" height="968" rx="8" fill="#FFFFFF" stroke="#111827" stroke-width="8"/>
-  <rect x="84" y="84" width="1752" height="108" rx="8" fill="#111827"/>
-  <text x="126" y="154" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="800" fill="#FFFFFF">REVIEW ONLY</text>
-  <rect x="448" y="106" width="254" height="64" rx="8" fill="#DCFCE7" stroke="#065F46" stroke-width="4"/>
-  <text x="575" y="150" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="800" fill="#065F46">DIAGNOSTIC</text>
-  <text x="1748" y="154" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#FFFFFF">CARD 4/4</text>
-  <rect x="104" y="232" width="774" height="548" rx="8" fill="#ECFDF5" stroke="#065F46" stroke-width="6"/>
-  <rect x="104" y="232" width="774" height="94" rx="8" fill="#059669"/>
-  <text x="140" y="296" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="800" fill="#FFFFFF">NEXT</text>
-  <text x="820" y="296" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#FFFFFF">46-68 SEC</text>
-  <text x="140" y="412" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="800" fill="#111827">WATCH NEXT</text>
-  <text x="140" y="520" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="800" fill="#111827">Fake source checks</text>
-  <text x="140" y="604" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="800" fill="#111827">are noted.</text>
-  <text x="144" y="650" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#374151">Status and next-action</text>
-  <text x="144" y="704" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#374151">panels stay large and</text>
-  <text x="144" y="758" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#374151">familiar.</text>
-  <rect x="944" y="232" width="872" height="548" rx="8" fill="#FFFFFF" stroke="#065F46" stroke-width="6"/>
-  <rect x="1038" y="318" width="640" height="98" rx="8" fill="#ECFDF5" stroke="#111827" stroke-width="4"/>
-  <rect x="1038" y="318" width="22" height="98" rx="8" fill="#059669"/>
-  <text x="1094" y="363" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="800" fill="#111827">SOURCE</text>
-  <text x="1094" y="402" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700" fill="#374151">fake source note</text>
-  <rect x="1038" y="450" width="640" height="98" rx="8" fill="#ECFDF5" stroke="#111827" stroke-width="4"/>
-  <rect x="1038" y="450" width="22" height="98" rx="8" fill="#059669"/>
-  <text x="1094" y="495" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="800" fill="#111827">STATUS</text>
-  <text x="1094" y="534" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700" fill="#374151">diagnostic only</text>
-  <rect x="1038" y="582" width="640" height="98" rx="8" fill="#ECFDF5" stroke="#111827" stroke-width="4"/>
-  <rect x="1038" y="582" width="22" height="98" rx="8" fill="#059669"/>
-  <text x="1094" y="627" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="800" fill="#111827">NEXT</text>
-  <text x="1094" y="666" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700" fill="#374151">render smoke later</text>
-  <circle cx="1668" cy="690" r="58" fill="#059669"/>
-  <text x="1668" y="710" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="800" fill="#FFFFFF">NEXT</text>
-  <rect x="104" y="820" width="1712" height="124" rx="8" fill="#111827"/>
-  <text x="146" y="872" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="800" fill="#FFFFFF">SUBTITLE AREA</text>
-  <text x="146" y="918" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#D1D5DB">Keep this lower band simple for YMM4 dialogue/subtitle review.</text>
-  <text x="1768" y="872" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#FFFFFF">SRC 4/4</text>
+  <rect x="70" y="64" width="1780" height="940" rx="8" fill="#FFFFFF" stroke="#111827" stroke-width="7"/>
+  <rect x="96" y="92" width="1728" height="96" rx="8" fill="#111827"/>
+  <text x="136" y="153" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="800" fill="#FFFFFF">REVIEW ONLY / DIAGNOSTIC</text>
+  <text x="1692" y="153" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="800" fill="#FFFFFF">CARD 4/4</text>
+  <rect x="136" y="246" width="544" height="102" rx="8" fill="#059669"/>
+  <text x="168" y="313" font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="800" fill="#FFFFFF">NEXT</text>
+  <text x="136" y="460" font-family="Arial, Helvetica, sans-serif" font-size="88" font-weight="800" fill="#111827">WATCH NEXT</text>
+  <text x="140" y="590" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700" fill="#374151">Fake source checks are noted.</text>
+  <rect x="1094" y="378" width="570" height="282" rx="8" fill="#ECFDF5" stroke="#047857" stroke-width="5"/>
+  <text x="1138" y="462" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="800" fill="#111827">SOURCE</text>
+  <text x="1138" y="538" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="800" fill="#111827">STATUS</text>
+  <rect x="1138" y="584" width="450" height="56" rx="8" fill="#059669"/>
+  <text x="1362" y="625" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#FFFFFF">NEXT</text>
+  <rect x="104" y="838" width="1712" height="104" rx="8" fill="#111827"/>
+  <text x="146" y="900" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="800" fill="#FFFFFF">SUBTITLE AREA</text>
+  <text x="1768" y="900" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#9CA3AF">SRC 4/4</text>
 </svg>

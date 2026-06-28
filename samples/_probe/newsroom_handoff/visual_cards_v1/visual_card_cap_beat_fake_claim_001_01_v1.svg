@@ -1,38 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="CHECK POINT" data-refinement="audience-fit-v1" data-role="claim_check" data-motif="check_warning_box" data-audience-fit="familiar_youtube_explainer">
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="CHECK POINT" data-refinement="density-benchmarked-v1" data-card-id="visual_card_cap_beat_fake_claim_001_01_v1" data-role="check">
   <title>CHECK POINT</title>
-  <desc>Diagnostic-only fake newsroom audience-fit card asset.</desc>
+  <desc>Diagnostic-only fake newsroom card simplified by density benchmark.</desc>
   <rect x="0" y="0" width="1920" height="1080" fill="#F8FAFC"/>
-  <rect x="56" y="56" width="1808" height="968" rx="8" fill="#FFFFFF" stroke="#111827" stroke-width="8"/>
-  <rect x="84" y="84" width="1752" height="108" rx="8" fill="#111827"/>
-  <text x="126" y="154" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="800" fill="#FFFFFF">REVIEW ONLY</text>
-  <rect x="448" y="106" width="254" height="64" rx="8" fill="#FEE2E2" stroke="#92400E" stroke-width="4"/>
-  <text x="575" y="150" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="800" fill="#92400E">DIAGNOSTIC</text>
-  <text x="1748" y="154" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#FFFFFF">CARD 3/4</text>
-  <rect x="104" y="232" width="774" height="548" rx="8" fill="#FEF3C7" stroke="#92400E" stroke-width="6"/>
-  <rect x="104" y="232" width="774" height="94" rx="8" fill="#D97706"/>
-  <text x="140" y="296" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="800" fill="#FFFFFF">CHECK</text>
-  <text x="820" y="296" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#FFFFFF">24-46 SEC</text>
-  <text x="140" y="412" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="800" fill="#111827">CHECK POINT</text>
-  <text x="140" y="520" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="800" fill="#111827">A fake claim is</text>
-  <text x="140" y="604" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="800" fill="#111827">shown.</text>
-  <text x="144" y="650" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#374151">Plain check and caution</text>
-  <text x="144" y="704" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#374151">boxes make the fake status</text>
-  <text x="144" y="758" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#374151">obvious.</text>
-  <rect x="944" y="232" width="872" height="548" rx="8" fill="#FFFFFF" stroke="#92400E" stroke-width="6"/>
-  <rect x="1018" y="318" width="312" height="150" rx="8" fill="#FEF3C7" stroke="#92400E" stroke-width="5"/>
-  <text x="1052" y="380" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="800" fill="#111827">CHECK</text>
-  <text x="1052" y="432" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="700" fill="#374151">fake only</text>
-  <rect x="1380" y="318" width="312" height="150" rx="8" fill="#FEE2E2" stroke="#92400E" stroke-width="5"/>
-  <text x="1414" y="380" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="800" fill="#111827">CAUTION</text>
-  <text x="1414" y="432" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="700" fill="#374151">review only</text>
-  <rect x="1018" y="542" width="312" height="150" rx="8" fill="#FEF3C7" stroke="#92400E" stroke-width="5"/>
-  <text x="1052" y="604" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="800" fill="#111827">RESULT</text>
-  <text x="1052" y="656" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="700" fill="#374151">not public</text>
-  <rect x="1380" y="542" width="312" height="150" rx="8" fill="#FEF3C7" stroke="#92400E" stroke-width="5"/>
-  <text x="1414" y="604" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="800" fill="#111827">STATUS</text>
-  <text x="1414" y="656" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="700" fill="#374151">diagnostic</text>
-  <rect x="104" y="820" width="1712" height="124" rx="8" fill="#111827"/>
-  <text x="146" y="872" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="800" fill="#FFFFFF">SUBTITLE AREA</text>
-  <text x="146" y="918" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#D1D5DB">Keep this lower band simple for YMM4 dialogue/subtitle review.</text>
-  <text x="1768" y="872" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#FFFFFF">SRC 3/4</text>
+  <rect x="70" y="64" width="1780" height="940" rx="8" fill="#FFFFFF" stroke="#111827" stroke-width="7"/>
+  <rect x="96" y="92" width="1728" height="96" rx="8" fill="#111827"/>
+  <text x="136" y="153" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="800" fill="#FFFFFF">REVIEW ONLY / DIAGNOSTIC</text>
+  <text x="1692" y="153" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="800" fill="#FFFFFF">CARD 3/4</text>
+  <rect x="136" y="246" width="544" height="102" rx="8" fill="#D97706"/>
+  <text x="168" y="313" font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="800" fill="#FFFFFF">CHECK</text>
+  <text x="136" y="460" font-family="Arial, Helvetica, sans-serif" font-size="88" font-weight="800" fill="#111827">CHECK POINT</text>
+  <text x="140" y="590" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700" fill="#374151">A fake claim is shown.</text>
+  <rect x="1124" y="384" width="520" height="272" rx="8" fill="#FFFBEB" stroke="#92400E" stroke-width="5"/>
+  <rect x="1170" y="464" width="198" height="112" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="5"/>
+  <text x="1269" y="532" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#111827">CHECK</text>
+  <rect x="1414" y="464" width="198" height="112" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="5"/>
+  <text x="1513" y="532" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#111827">CAUTION</text>
+  <text x="1384" y="718" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="700" fill="#374151">fake only</text>
+  <rect x="104" y="838" width="1712" height="104" rx="8" fill="#111827"/>
+  <text x="146" y="900" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="800" fill="#FFFFFF">SUBTITLE AREA</text>
+  <text x="1768" y="900" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#9CA3AF">SRC 3/4</text>
 </svg>
