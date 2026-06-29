@@ -1,0 +1,382 @@
+{
+  "artifact_id": "newsroom_yukkuri_animation_tempo_sweep_contract_v1_2026_06_29",
+  "tempo_sweep_contract_id": "newsroom_yukkuri_animation_tempo_sweep_contract_v1_2026_06_29",
+  "schema_version": "newsroom_yukkuri_animation_tempo_sweep_contract.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "render_gate": "L0_no_render",
+  "source_context": {
+    "source_v3_probe_path": "_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp",
+    "source_v3_observation_path": "samples/_probe/newsroom_handoff/yukkuri_animation_v3_preview_observation_v1.json",
+    "source_tempo_contract_path": "samples/_probe/newsroom_handoff/yukkuri_animation_tempo_contract_v1.json",
+    "source_motion_contract_path": "samples/_probe/newsroom_handoff/yukkuri_animation_motion_contract_v1.json",
+    "source_nod_head_ymmp_path": "samples/nod_head.ymmp",
+    "v3_materialization_basis": "existing tracked v3 tempo contract materializer"
+  },
+  "source_v3_probe_access": {
+    "artifact_id": "local_ignored_v3_tempo_fix_probe",
+    "repo_relative_path": "_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp",
+    "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe",
+    "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp",
+    "launcher_or_open_command": "Invoke-Item -LiteralPath \"C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp\"",
+    "target_exists": true,
+    "access_state": "verified_present",
+    "access_evidence_level": "L3_VERIFIED_PRESENT",
+    "artifact_scope": "ignored_local_only",
+    "evidence_source": "current_host_filesystem_plus_git_check_ignore",
+    "git_check_ignore_result": {
+      "command": "git check-ignore -v -- _tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp",
+      "returncode": 0,
+      "stdout": ".gitignore:37:_tmp/\t_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp",
+      "stderr": "",
+      "ignored": true
+    },
+    "size": 261241
+  },
+  "v3_issue_summary": [
+    "v3 is shorter than v2",
+    "v3 is still floaty and too slow",
+    "user suggested starting around 1 second",
+    "single-value fast/slow loops are inefficient",
+    "render/export remains unnecessary for this stage"
+  ],
+  "speed_bands": [
+    {
+      "band_id": "tempo_band_030f_0_5s",
+      "frame_span": 30,
+      "seconds_at_60fps": 0.5,
+      "expected_feel": "very snappy lower bound; likely useful for reaction-only motion",
+      "primitives_included": [
+        "head_nod",
+        "small_position_move",
+        "character_entrance_exit",
+        "expression_swap"
+      ],
+      "continuity_policy": "carry forward v2/v3 X=-96 shared anchor at adjacent beat boundaries",
+      "anchor_policy": "do not reintroduce X jump; each nudge starts and ends on the shared anchor",
+      "notes": "Fastest comparison band; expression readability may need a longer hold in scene integration."
+    },
+    {
+      "band_id": "tempo_band_045f_0_75s",
+      "frame_span": 45,
+      "seconds_at_60fps": 0.75,
+      "expected_feel": "quick but still readable; candidate if 1.0 second remains floaty",
+      "primitives_included": [
+        "head_nod",
+        "small_position_move",
+        "character_entrance_exit",
+        "expression_swap"
+      ],
+      "continuity_policy": "carry forward v2/v3 X=-96 shared anchor at adjacent beat boundaries",
+      "anchor_policy": "keep bounded entry/exit and return-to-anchor nudges",
+      "notes": "Middle-fast comparison band for lightweight reenactment beats."
+    },
+    {
+      "band_id": "tempo_band_060f_1_0s",
+      "frame_span": 60,
+      "seconds_at_60fps": 1.0,
+      "expected_feel": "primary default candidate based on the user suggestion to start around 1 second",
+      "primitives_included": [
+        "head_nod",
+        "small_position_move",
+        "character_entrance_exit",
+        "expression_swap"
+      ],
+      "continuity_policy": "carry forward v2/v3 X=-96 shared anchor at adjacent beat boundaries",
+      "anchor_policy": "keep head nod as a short reaction and movement as bounded cue",
+      "notes": "Expected default candidate unless preview shows it is still slow or too abrupt."
+    },
+    {
+      "band_id": "tempo_band_090f_1_5s",
+      "frame_span": 90,
+      "seconds_at_60fps": 1.5,
+      "expected_feel": "upper comparison band; should reveal whether longer movement still reads floaty",
+      "primitives_included": [
+        "head_nod",
+        "small_position_move",
+        "character_entrance_exit",
+        "expression_swap"
+      ],
+      "continuity_policy": "carry forward v2/v3 X=-96 shared anchor at adjacent beat boundaries",
+      "anchor_policy": "bounded movement only; no slow centerward drift",
+      "notes": "Kept as a contrast band rather than a likely default after the v3 observation."
+    }
+  ],
+  "primitive_coverage_per_band": [
+    {
+      "band_id": "tempo_band_030f_0_5s",
+      "frame_span": 30,
+      "primitive_ids": [
+        "character_entrance_exit",
+        "expression_swap",
+        "head_nod",
+        "small_position_move"
+      ],
+      "beat_count": 5,
+      "section_timing_range": "0.00-2.50 sec"
+    },
+    {
+      "band_id": "tempo_band_045f_0_75s",
+      "frame_span": 45,
+      "primitive_ids": [
+        "character_entrance_exit",
+        "expression_swap",
+        "head_nod",
+        "small_position_move"
+      ],
+      "beat_count": 5,
+      "section_timing_range": "2.50-6.25 sec"
+    },
+    {
+      "band_id": "tempo_band_060f_1_0s",
+      "frame_span": 60,
+      "primitive_ids": [
+        "character_entrance_exit",
+        "expression_swap",
+        "head_nod",
+        "small_position_move"
+      ],
+      "beat_count": 5,
+      "section_timing_range": "6.25-11.25 sec"
+    },
+    {
+      "band_id": "tempo_band_090f_1_5s",
+      "frame_span": 90,
+      "primitive_ids": [
+        "character_entrance_exit",
+        "expression_swap",
+        "head_nod",
+        "small_position_move"
+      ],
+      "beat_count": 5,
+      "section_timing_range": "11.25-18.75 sec"
+    }
+  ],
+  "anchor_continuity_carry_forward": {
+    "source_policy": "v2/v3 shared anchor",
+    "shared_anchor_x": -96.0,
+    "no_x_jump_regression": true,
+    "entry_exit_policy": "bounded side travel only",
+    "small_move_policy": "start and end at X=-96",
+    "head_nod_policy": "0 -> negative -> 0 neutral return"
+  },
+  "expected_default_candidate": {
+    "band_id": "tempo_band_060f_1_0s",
+    "frame_span": 60,
+    "seconds_at_60fps": 1.0,
+    "reason": "The user suggested starting around 1 second; 0.75 and 0.5 seconds are comparison lower bounds."
+  },
+  "review_instruction_for_next_preview": [
+    "Open the v4 tempo sweep probe only; do not render.",
+    "Review bands in the encoded order: 0.5 sec, 0.75 sec, 1.0 sec, 1.5 sec.",
+    "Choose the default tempo band, or report that all bands are still too slow/too abrupt.",
+    "After a usable band is chosen, stop the primitive tempo-only loop and move to scene-beat integration."
+  ],
+  "exit_criterion": {
+    "choose_default_tempo_band": true,
+    "stop_primitive_tempo_only_loop": true,
+    "move_to_scene_beat_integration_after_usable_band": true
+  },
+  "v4_materialization_status": "materialized_ignored_local_probe",
+  "v4_local_probe": {
+    "artifact_id": "local_ignored_v4_tempo_sweep_probe",
+    "repo_relative_path": "_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v4_tempo_sweep.ymmp",
+    "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe",
+    "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v4_tempo_sweep.ymmp",
+    "launcher_or_open_command": "Invoke-Item -LiteralPath \"C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v4_tempo_sweep.ymmp\"",
+    "target_exists": true,
+    "access_state": "verified_present",
+    "access_evidence_level": "L3_VERIFIED_PRESENT",
+    "artifact_scope": "ignored_local_only",
+    "evidence_source": "current_host_filesystem_plus_git_check_ignore",
+    "git_check_ignore_result": {
+      "command": "git check-ignore -v -- _tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v4_tempo_sweep.ymmp",
+      "returncode": 0,
+      "stdout": ".gitignore:37:_tmp/\t_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v4_tempo_sweep.ymmp",
+      "stderr": "",
+      "ignored": true
+    },
+    "size": 811331
+  },
+  "v4_probe_readback": {
+    "readback_status": "structural_pass",
+    "target_exists": true,
+    "file_sha256": "664c6a0abe9774aa96e4c937694fec6371a0c5f6eb2ce8d6d4c18f118a9bdc19",
+    "file_size_bytes": 811331,
+    "timeline": {
+      "fps": 60,
+      "length_frames": 1125,
+      "length_sec": 18.75,
+      "item_count": 80,
+      "item_type_counts": {
+        "GroupItem": 40,
+        "ImageItem": 40
+      },
+      "unexpected_item_types": []
+    },
+    "speed_band_order": [
+      "tempo_band_030f_0_5s",
+      "tempo_band_045f_0_75s",
+      "tempo_band_060f_1_0s",
+      "tempo_band_090f_1_5s"
+    ],
+    "band_readback": [
+      {
+        "band_id": "tempo_band_030f_0_5s",
+        "frame_span": 30,
+        "seconds_at_60fps": 0.5,
+        "section_start_frame": 0,
+        "section_end_frame": 150,
+        "section_timing_range": "0.00-2.50 sec",
+        "beat_count": 5,
+        "primitive_ids": [
+          "character_entrance_exit",
+          "expression_swap",
+          "head_nod",
+          "small_position_move"
+        ],
+        "anchor_continuity": "pass",
+        "status": "pass"
+      },
+      {
+        "band_id": "tempo_band_045f_0_75s",
+        "frame_span": 45,
+        "seconds_at_60fps": 0.75,
+        "section_start_frame": 150,
+        "section_end_frame": 375,
+        "section_timing_range": "2.50-6.25 sec",
+        "beat_count": 5,
+        "primitive_ids": [
+          "character_entrance_exit",
+          "expression_swap",
+          "head_nod",
+          "small_position_move"
+        ],
+        "anchor_continuity": "pass",
+        "status": "pass"
+      },
+      {
+        "band_id": "tempo_band_060f_1_0s",
+        "frame_span": 60,
+        "seconds_at_60fps": 1.0,
+        "section_start_frame": 375,
+        "section_end_frame": 675,
+        "section_timing_range": "6.25-11.25 sec",
+        "beat_count": 5,
+        "primitive_ids": [
+          "character_entrance_exit",
+          "expression_swap",
+          "head_nod",
+          "small_position_move"
+        ],
+        "anchor_continuity": "pass",
+        "status": "pass"
+      },
+      {
+        "band_id": "tempo_band_090f_1_5s",
+        "frame_span": 90,
+        "seconds_at_60fps": 1.5,
+        "section_start_frame": 675,
+        "section_end_frame": 1125,
+        "section_timing_range": "11.25-18.75 sec",
+        "beat_count": 5,
+        "primitive_ids": [
+          "character_entrance_exit",
+          "expression_swap",
+          "head_nod",
+          "small_position_move"
+        ],
+        "anchor_continuity": "pass",
+        "status": "pass"
+      }
+    ],
+    "tempo_sweep_summary": {
+      "band_count": 4,
+      "beat_count_per_band": 5,
+      "total_beat_count": 20,
+      "frame_spans": [
+        30,
+        45,
+        60,
+        90
+      ],
+      "seconds_at_60fps": [
+        0.5,
+        0.75,
+        1.0,
+        1.5
+      ],
+      "expected_default_candidate": "tempo_band_060f_1_0s"
+    },
+    "source_ymmp_copy_basis": "samples/nod_head.ymmp",
+    "git_check_ignore_result": {
+      "command": "git check-ignore -v -- _tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v4_tempo_sweep.ymmp",
+      "returncode": 0,
+      "stdout": ".gitignore:37:_tmp/\t_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v4_tempo_sweep.ymmp",
+      "stderr": "",
+      "ignored": true
+    },
+    "local_probe_access_state": "verified_present",
+    "YMM4_launch_status": "not_launched",
+    "render_status": "not_rendered",
+    "audio_tts_status": "not_created"
+  },
+  "selected_next_axis": "newsroom-yukkuri-animation-tempo-sweep-preview-operator-instruction-v1",
+  "next_recommended_axis": {
+    "selected": "newsroom-yukkuri-animation-tempo-sweep-preview-operator-instruction-v1",
+    "reason": "ignored local v4 tempo sweep probe exists, is git-ignored, covers all requested bands, and preserves the v2/v3 anchor rules",
+    "prerequisites": [
+      "keep v4 .ymmp ignored and unstaged",
+      "use preview-only operator observation before any render request",
+      "do not claim production/public acceptance"
+    ]
+  },
+  "not_accepted_scope": {
+    "render_proof": false,
+    "render_export_required_now": false,
+    "production_animation_quality": false,
+    "public_upload_or_public_readiness": false,
+    "real_rss_or_news_integration": false,
+    "card_redesign_or_density_work": false,
+    "dense_script_rewrite": false,
+    "external_reference_video_fetch": false,
+    "audio_or_tts_output": false,
+    "actual_order_or_audience_acceptance": false,
+    "speech_balloon_visual_acceptance": false
+  },
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "audio_tts_generated": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "card_assets_modified": false,
+    "dense_script_modified": false,
+    "local_ignored_v4_probe_created": true,
+    "ymmp_or_media_staged_or_committed": false,
+    "production_public_readiness_claimed": false
+  },
+  "inertia_check": [
+    {
+      "gate": "no_text_density_loop",
+      "status": true
+    },
+    {
+      "gate": "no_card_polish_loop",
+      "status": true
+    },
+    {
+      "gate": "no_render_export_loop",
+      "status": true
+    },
+    {
+      "gate": "tempo_sweep_replaces_single_value_loop",
+      "status": true
+    },
+    {
+      "gate": "next_concrete_animation_milestone_named",
+      "status": "newsroom-yukkuri-animation-tempo-sweep-preview-operator-instruction-v1"
+    }
+  ]
+}

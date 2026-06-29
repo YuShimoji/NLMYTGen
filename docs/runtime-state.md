@@ -1,5 +1,34 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom yukkuri v3 observation and v4 tempo sweep probe completed (2026-06-29 JST)**:
+  `newsroom-yukkuri-animation-tempo-sweep-probe-v1` normalizes the user-side
+  v3 preview observation: v3 is shorter than v2, but still feels floaty and
+  slow, and continuing one fast/slow value at a time is inefficient. New
+  tracked artifacts are
+  `samples/_probe/newsroom_handoff/yukkuri_animation_v3_preview_observation_v1.json`,
+  `docs/verification/NEWSROOM_YUKKURI_ANIMATION_V3_PREVIEW_OBSERVATION_V1_2026-06-29.md`,
+  `samples/_probe/newsroom_handoff/yukkuri_animation_tempo_sweep_contract_v1.json`,
+  `docs/verification/NEWSROOM_YUKKURI_ANIMATION_TEMPO_SWEEP_CONTRACT_V1_2026-06-29.md`,
+  `src/pipeline/newsroom_yukkuri_animation_tempo_sweep.py`, and
+  `tests/test_newsroom_yukkuri_animation_tempo_sweep.py`. The slice restores /
+  verifies the ignored local v3 probe from the existing tracked materializer
+  and creates the ignored local v4 tempo sweep probe at
+  `_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v4_tempo_sweep.ymmp`;
+  both local `.ymmp` files are under `.gitignore` `_tmp/` and must remain
+  untracked/uncommitted. V4 compares four ordered tempo bands at 60 fps:
+  30 frames / 0.5 sec, 45 frames / 0.75 sec, 60 frames / 1.0 sec, and
+  90 frames / 1.5 sec. Structural readback passes with 80 items
+  (`GroupItem=40`, `ImageItem=40`), 1125 frames / 18.75 sec total, all four
+  requested primitives covered in every band, and v2/v3 anchor continuity
+  preserved. The expected default candidate is 60 frames / 1.0 sec, with
+  0.75 sec and 0.5 sec as lower-bound comparisons. No Agent-side YMM4 launch,
+  render, `.ymmp` stage/commit, media/audio/TTS generation, card modification,
+  dense script work, real RSS/news fetch, external reference-video fetch,
+  production/public readiness claim, or actual audience/order acceptance claim
+  occurred. The next default axis is
+  `newsroom-yukkuri-animation-tempo-sweep-preview-operator-instruction-v1`:
+  open only the v4 sweep probe, do not render, and return the chosen default
+  band or report that all bands are still too slow/too abrupt.
 - **Remote sync and terminal-resume handoff completed (2026-06-29 JST)**:
   `newsroom-terminal-resume-remote-sync-handoff-v1` records the current
   cross-terminal restart context before reflecting local state to `origin`.

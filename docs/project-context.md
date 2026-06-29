@@ -79,6 +79,37 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom yukkuri v3 observation and v4 tempo sweep probe decision (2026-06-29 JST):
+`newsroom_yukkuri_animation_tempo_sweep_contract_v1_2026_06_29` records the
+user-side v3 preview observation and replaces single-value tempo tweaking with
+one ignored local comparison probe. The normalized observation is that the v3
+probe is shorter but still floaty and slow; the user suggested starting around
+1 second, so continuing one fast/slow value at a time is now the wrong
+bottleneck. Render/export remains unnecessary because the current decision is
+tempo band selection, not render mechanics.
+
+The tracked readback and contract artifacts are
+`samples/_probe/newsroom_handoff/yukkuri_animation_v3_preview_observation_v1.json`,
+`docs/verification/NEWSROOM_YUKKURI_ANIMATION_V3_PREVIEW_OBSERVATION_V1_2026-06-29.md`,
+`samples/_probe/newsroom_handoff/yukkuri_animation_tempo_sweep_contract_v1.json`,
+and
+`docs/verification/NEWSROOM_YUKKURI_ANIMATION_TEMPO_SWEEP_CONTRACT_V1_2026-06-29.md`,
+with implementation/tests in
+`src/pipeline/newsroom_yukkuri_animation_tempo_sweep.py` /
+`tests/test_newsroom_yukkuri_animation_tempo_sweep.py`. The ignored local v4
+probe exists at
+`_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v4_tempo_sweep.ymmp`
+and must remain untracked/uncommitted. It compares 30, 45, 60, and 90 frame
+bands at 60 fps (0.5, 0.75, 1.0, and 1.5 seconds), preserves the v2/v3
+`X=-96` anchor policy, covers `head_nod`, `small_position_move`,
+`character_entrance_exit`, and `expression_swap` in every band, and has
+structural readback pass. The expected default candidate is 60 frames / 1.0
+second. This decision did not launch YMM4 from the Agent, render, stage/commit
+`.ymmp`, create media/audio/TTS, modify cards, continue dense-script work,
+fetch real RSS/news or external reference video, or claim production/public/
+order/audience acceptance. The next default axis is
+`newsroom-yukkuri-animation-tempo-sweep-preview-operator-instruction-v1`.
+
 Latest terminal resume remote sync handoff decision (2026-06-29 JST):
 `newsroom_terminal_resume_remote_sync_handoff_v1_2026_06_29` persists the
 current cross-terminal restart context before reflecting local state to
