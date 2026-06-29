@@ -30,9 +30,9 @@ next_recommended_axis: newsroom-yukkuri-animation-primitive-render-smoke-v1
 {
   "artifact_id": "local_ignored_primitive_probe",
   "repo_relative_path": "_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v1.ymmp",
-  "folder_full_path_current_host": "C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe",
-  "file_full_path_current_host": "C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v1.ymmp",
-  "launcher_or_open_command": "Invoke-Item -LiteralPath \"C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v1.ymmp\"",
+  "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe",
+  "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v1.ymmp",
+  "launcher_or_open_command": "Invoke-Item -LiteralPath \"C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v1.ymmp\"",
   "target_exists": true,
   "access_state": "verified_present_ignored_local_artifact",
   "access_evidence_level": "current_host_filesystem_plus_git_ignore",
@@ -66,8 +66,8 @@ next_recommended_axis: newsroom-yukkuri-animation-primitive-render-smoke-v1
 {
   "readback_status": "structural_pass",
   "target_exists": true,
-  "file_sha256": "182c2bf0d3de4f2c634c3840915697c7281c0ed0c211722620af3a2fc7e75fc7",
-  "file_size_bytes": 260880,
+  "file_sha256": "35388731b26094908588f5437eb4f02a2a48ed3fc51e2c181f87bc9c9d8416b8",
+  "file_size_bytes": 261441,
   "timeline": {
     "fps": 60,
     "length_frames": 3600,
@@ -101,7 +101,7 @@ next_recommended_axis: newsroom-yukkuri-animation-primitive-render-smoke-v1
       "head_rotation_values": [
         0.0
       ],
-      "face_file_path": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_panic.png",
+      "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_panic.png",
       "status": "pass"
     },
     {
@@ -127,7 +127,7 @@ next_recommended_axis: newsroom-yukkuri-animation-primitive-render-smoke-v1
         -8.0,
         0.0
       ],
-      "face_file_path": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_easy.png",
+      "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_easy.png",
       "status": "pass"
     },
     {
@@ -151,7 +151,7 @@ next_recommended_axis: newsroom-yukkuri-animation-primitive-render-smoke-v1
       "head_rotation_values": [
         0.0
       ],
-      "face_file_path": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_anger.png",
+      "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_anger.png",
       "status": "pass"
     },
     {
@@ -175,7 +175,7 @@ next_recommended_axis: newsroom-yukkuri-animation-primitive-render-smoke-v1
       "head_rotation_values": [
         0.0
       ],
-      "face_file_path": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_panic.png",
+      "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_panic.png",
       "status": "pass"
     },
     {
@@ -201,7 +201,7 @@ next_recommended_axis: newsroom-yukkuri-animation-primitive-render-smoke-v1
         -6.0,
         0.0
       ],
-      "face_file_path": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_easy.png",
+      "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_easy.png",
       "status": "pass"
     }
   ],
@@ -215,9 +215,9 @@ next_recommended_axis: newsroom-yukkuri-animation-primitive-render-smoke-v1
       "primitive_id": "expression_swap",
       "status": "pass",
       "evidence": [
-        "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_anger.png",
-        "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_easy.png",
-        "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_panic.png"
+        "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_anger.png",
+        "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_easy.png",
+        "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_panic.png"
       ]
     },
     {
@@ -317,7 +317,7 @@ next_recommended_axis: newsroom-yukkuri-animation-primitive-render-smoke-v1
 {
   "this_slice_user_action_required": false,
   "future_render_smoke_action": "use the verified ignored local probe as the target for a later operator-instructed YMM4 open/render-smoke slice",
-  "open_command_recorded_not_requested": "Invoke-Item -LiteralPath \"C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v1.ymmp\""
+  "open_command_recorded_not_requested": "Invoke-Item -LiteralPath \"C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v1.ymmp\""
 }
 ```
 

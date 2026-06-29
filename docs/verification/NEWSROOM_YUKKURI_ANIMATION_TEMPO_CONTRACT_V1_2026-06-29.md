@@ -85,9 +85,9 @@ selected_next_axis: newsroom-yukkuri-animation-primitive-v3-preview-operator-ins
 {
   "artifact_id": "local_ignored_v3_tempo_fix_probe",
   "repo_relative_path": "_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp",
-  "folder_full_path_current_host": "C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe",
-  "file_full_path_current_host": "C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp",
-  "launcher_or_open_command": "Invoke-Item -LiteralPath \"C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp\"",
+  "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe",
+  "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp",
+  "launcher_or_open_command": "Invoke-Item -LiteralPath \"C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp\"",
   "target_exists": true,
   "access_state": "verified_present",
   "access_evidence_level": "L3_VERIFIED_PRESENT",
@@ -100,7 +100,7 @@ selected_next_axis: newsroom-yukkuri-animation-primitive-v3-preview-operator-ins
     "stderr": "",
     "ignored": true
   },
-  "size": 260680
+  "size": 261241
 }
 ```
 
@@ -111,8 +111,8 @@ selected_next_axis: newsroom-yukkuri-animation-primitive-v3-preview-operator-ins
 {
   "readback_status": "structural_pass",
   "target_exists": true,
-  "file_sha256": "cb30e5cc9628ada803d29e357b4e8ca039c9187ef5d11f4d38dc40e60eb335cb",
-  "file_size_bytes": 260680,
+  "file_sha256": "a1daddfa7563482d8f380ccf1a3af20f5aed6e504c9e576b3556502f22fb8ffb",
+  "file_size_bytes": 261241,
   "timeline": {
     "fps": 60,
     "length_frames": 900,
@@ -145,7 +145,7 @@ selected_next_axis: newsroom-yukkuri-animation-primitive-v3-preview-operator-ins
       "head_rotation_values": [
         0.0
       ],
-      "face_file_path": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_panic.png",
+      "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_panic.png",
       "status": "pass"
     },
     {
@@ -171,7 +171,7 @@ selected_next_axis: newsroom-yukkuri-animation-primitive-v3-preview-operator-ins
         -10.0,
         0.0
       ],
-      "face_file_path": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_easy.png",
+      "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_easy.png",
       "status": "pass"
     },
     {
@@ -195,7 +195,7 @@ selected_next_axis: newsroom-yukkuri-animation-primitive-v3-preview-operator-ins
       "head_rotation_values": [
         0.0
       ],
-      "face_file_path": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_anger.png",
+      "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_anger.png",
       "status": "pass"
     },
     {
@@ -219,7 +219,7 @@ selected_next_axis: newsroom-yukkuri-animation-primitive-v3-preview-operator-ins
       "head_rotation_values": [
         0.0
       ],
-      "face_file_path": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_panic.png",
+      "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_panic.png",
       "status": "pass"
     },
     {
@@ -244,7 +244,7 @@ selected_next_axis: newsroom-yukkuri-animation-primitive-v3-preview-operator-ins
         -8.0,
         0.0
       ],
-      "face_file_path": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_easy.png",
+      "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_easy.png",
       "status": "pass"
     }
   ],
@@ -258,9 +258,9 @@ selected_next_axis: newsroom-yukkuri-animation-primitive-v3-preview-operator-ins
       "primitive_id": "expression_swap",
       "status": "pass",
       "evidence": [
-        "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_anger.png",
-        "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_easy.png",
-        "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_panic.png"
+        "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_anger.png",
+        "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_easy.png",
+        "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_panic.png"
       ]
     },
     {
