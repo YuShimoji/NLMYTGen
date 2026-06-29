@@ -1,0 +1,220 @@
+{
+  "artifact_id": "newsroom_background_animation_mvp_policy_v1_2026_06_29",
+  "policy_id": "newsroom_background_animation_mvp_policy_v1_2026_06_29",
+  "schema_version": "newsroom_background_animation_mvp_policy.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "render_gate": "L0_no_render",
+  "source_context": {
+    "source_scene_preview_observation_path": "samples/_probe/newsroom_handoff/yukkuri_animation_scene_preview_observation_v1.json",
+    "source_scene_choreography_contract_path": "samples/_probe/newsroom_handoff/yukkuri_animation_scene_choreography_contract_v1.json",
+    "source_scene_choreography_probe_readback_path": "samples/_probe/newsroom_handoff/yukkuri_animation_scene_choreography_probe_v1.json",
+    "repo_root": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage"
+  },
+  "stop_loss_policy": [
+    {
+      "rule_id": "no_more_primitive_only_iteration",
+      "requirement": "Do not run more primitive-only tempo, angle, or expression iteration unless an integrated scene proves a specific primitive is blocking.",
+      "effect": "moves the bottleneck from isolated motion tuning to one actual explanation beat",
+      "default_state": "active"
+    },
+    {
+      "rule_id": "body_forward_back_disabled_by_default",
+      "requirement": "Disable body forward/back movement by default.",
+      "effect": "prevents the previous unstable depth-like drift from becoming the animation baseline",
+      "default_state": "active"
+    },
+    {
+      "rule_id": "expression_changes_are_scene_events",
+      "requirement": "Tie expression changes only to a scene event.",
+      "effect": "keeps expression swaps from becoming a mechanical cycle",
+      "default_state": "active"
+    },
+    {
+      "rule_id": "single_nod_or_reaction_per_short_scene",
+      "requirement": "Allow one nod or reaction per short scene.",
+      "effect": "keeps the character readable without repeated acknowledgement loops",
+      "default_state": "active"
+    },
+    {
+      "rule_id": "speech_balloon_deferred",
+      "requirement": "Defer speech balloon work.",
+      "effect": "avoids opening a new visual subsystem before the movement layer is useful",
+      "default_state": "active"
+    },
+    {
+      "rule_id": "background_animation_support_layer",
+      "requirement": "Treat background animation as an accent/support layer, not the main deliverable.",
+      "effect": "keeps story clarity and card fatigue reduction ahead of character acting complexity",
+      "default_state": "active"
+    },
+    {
+      "rule_id": "next_proof_uses_actual_explanation_beat",
+      "requirement": "Use an actual explanation beat for the next proof, not a standalone primitive demo.",
+      "effect": "tests whether the animation supports a real newsroom explanation moment",
+      "default_state": "active"
+    },
+    {
+      "rule_id": "freeze_animation_if_integrated_scene_fails",
+      "requirement": "If the next integrated scene still feels bad, freeze animation as minimal accent and return to RSS/story integration.",
+      "effect": "prevents the background animation track from consuming the mainline",
+      "default_state": "active"
+    }
+  ],
+  "allowed_default_primitives": [
+    {
+      "primitive_id": "stable_pose",
+      "allowed_default": true,
+      "constraint": "always allowed as the fallback state"
+    },
+    {
+      "primitive_id": "one_expression_event",
+      "allowed_default": true,
+      "constraint": "exactly one event when the explanation beat changes emotional state"
+    },
+    {
+      "primitive_id": "one_short_nod_or_reaction",
+      "allowed_default": true,
+      "constraint": "one reaction per short scene; no repeated nodding loop"
+    },
+    {
+      "primitive_id": "small_lateral_emphasis",
+      "allowed_default": "optional",
+      "constraint": "only when the explanation beat gives a clear reason"
+    }
+  ],
+  "disabled_by_default": [
+    {
+      "primitive_id": "repeated_nodding",
+      "disabled_by_default": true,
+      "reason": "it reads as mechanical agreement rather than explanation support"
+    },
+    {
+      "primitive_id": "mechanical_expression_cycling",
+      "disabled_by_default": true,
+      "reason": "expression changes must be tied to a scene event"
+    },
+    {
+      "primitive_id": "body_forward_back_movement",
+      "disabled_by_default": true,
+      "reason": "the latest preview still shows instability around this class of motion"
+    },
+    {
+      "primitive_id": "complex_speech_balloons",
+      "disabled_by_default": true,
+      "reason": "speech balloon acceptance has not been proven and is not needed for this gate"
+    },
+    {
+      "primitive_id": "full_chaban_scene",
+      "disabled_by_default": true,
+      "reason": "the product need is an accent/support layer, not a character skit rewrite"
+    }
+  ],
+  "review_gate": [
+    {
+      "gate_id": "supports_explanation",
+      "question": "Does the animation support the explanation?",
+      "pass_condition": "the beat is easier to follow with the accent than without it"
+    },
+    {
+      "gate_id": "does_not_distract",
+      "question": "Does it distract?",
+      "pass_condition": "viewer attention remains on the newsroom explanation and card context"
+    },
+    {
+      "gate_id": "reduces_card_fatigue",
+      "question": "Does it reduce card fatigue?",
+      "pass_condition": "the short accent breaks static-card monotony without becoming the subject"
+    },
+    {
+      "gate_id": "introduces_no_confusion",
+      "question": "Does it introduce confusion?",
+      "pass_condition": "no movement implies the wrong direction, object, speaker, or causal claim"
+    }
+  ],
+  "business_goal_outcome_contract": {
+    "problem_clear": {
+      "status": true,
+      "rationale": "the problem is over-spending on primitive tuning after partial coherence is already proven"
+    },
+    "offer_clear": {
+      "status": true,
+      "rationale": "the offer is a minimal integrated background accent, not a full skit system"
+    },
+    "proof_clear": {
+      "status": true,
+      "rationale": "the next proof is one actual explanation beat, 10-20 seconds, one preview only"
+    },
+    "boundary_clear": {
+      "status": true,
+      "rationale": "no render, no audio/TTS, no media, no card redesign, and no production claim"
+    },
+    "next_action_clear": {
+      "status": true,
+      "rationale": "newsroom-background-animation-minimal-integrated-scene-probe-v1"
+    },
+    "visual_supports_explanation": {
+      "status": "unknown_until_integrated_preview",
+      "rationale": "primitive feasibility passed, but final animation quality is not accepted"
+    }
+  },
+  "selected_next_axis": "newsroom-background-animation-minimal-integrated-scene-probe-v1",
+  "next_recommended_axis": {
+    "selected": "newsroom-background-animation-minimal-integrated-scene-probe-v1",
+    "reason": "Partial scene coherence and primitive feasibility are enough to stop isolated primitive tuning. The next useful proof is a minimal integrated explanation beat.",
+    "fallback_if_bad": "newsroom-rss-dry-run-integration-plan-v1"
+  },
+  "freeze_condition": {
+    "condition": "next_integrated_scene_still_feels_bad",
+    "action": "freeze_animation_as_minimal_accent",
+    "return_axis": "newsroom-rss-dry-run-integration-plan-v1"
+  },
+  "not_accepted_scope": {
+    "render_proof": false,
+    "render_export_required_now": false,
+    "production_animation_quality": false,
+    "public_upload_or_public_readiness": false,
+    "real_rss_or_news_integration": false,
+    "card_redesign_or_density_work": false,
+    "dense_script_rewrite": false,
+    "external_reference_video_fetch": false,
+    "audio_or_tts_output": false,
+    "actual_order_or_audience_acceptance": false,
+    "speech_balloon_visual_acceptance": false
+  },
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "audio_tts_generated": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "card_assets_modified": false,
+    "dense_script_modified": false,
+    "local_ignored_ymmp_created_in_this_slice": false,
+    "ymmp_or_media_staged_or_committed": false,
+    "production_public_readiness_claimed": false
+  },
+  "inertia_check": [
+    {
+      "gate": "remote_parity_required_before_work",
+      "status": true
+    },
+    {
+      "gate": "no_new_primitive_only_probe",
+      "status": true
+    },
+    {
+      "gate": "no_repeated_visual_proof_request",
+      "status": true
+    },
+    {
+      "gate": "integrated_scene_before_more_tuning",
+      "status": true
+    },
+    {
+      "gate": "return_to_rss_story_integration_if_bad",
+      "status": "newsroom-rss-dry-run-integration-plan-v1"
+    }
+  ]
+}

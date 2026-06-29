@@ -1,0 +1,132 @@
+# Newsroom Yukkuri Animation Scene Preview Observation v1
+
+artifact_id: newsroom_yukkuri_animation_scene_preview_observation_v1_2026_06_29
+schema_version: newsroom_yukkuri_animation_scene_preview_observation.v1
+production_status: diagnostic_only
+render_gate: L0_no_render
+
+
+## Source Context
+
+```json
+{
+  "source_scene_choreography_probe_path": "_tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp",
+  "source_scene_choreography_probe_readback_path": "samples/_probe/newsroom_handoff/yukkuri_animation_scene_choreography_probe_v1.json",
+  "source_scene_choreography_contract_path": "samples/_probe/newsroom_handoff/yukkuri_animation_scene_choreography_contract_v1.json"
+}
+```
+
+
+## Source Scene Choreography Probe Access
+
+```json
+{
+  "artifact_id": "local_ignored_scene_choreography_probe",
+  "repo_relative_path": "_tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp",
+  "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe",
+  "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\yukkuri_animation_scene_choreography_probe_v1.ymmp",
+  "launcher_or_open_command": "Invoke-Item -LiteralPath \"C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\yukkuri_animation_scene_choreography_probe_v1.ymmp\"",
+  "target_exists": true,
+  "access_state": "verified_present",
+  "access_evidence_level": "L3_VERIFIED_PRESENT",
+  "artifact_scope": "ignored_local_only",
+  "evidence_source": "current_host_filesystem_plus_git_check_ignore",
+  "git_check_ignore_result": {
+    "command": "git check-ignore -v -- _tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp",
+    "returncode": 0,
+    "stdout": ".gitignore:37:_tmp/\t_tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp",
+    "stderr": "",
+    "ignored": true
+  },
+  "size": 370078
+}
+```
+
+
+## Normalized User Observation
+
+```json
+{
+  "source_observation_role": "user_opened_local_scene_choreography_preview",
+  "source_scene_choreography_probe_path": "_tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp",
+  "yym4_opened": true,
+  "scene_choreography_probe_observed": true,
+  "scene_coherence": "partial",
+  "primitive_feasibility": "pass",
+  "expression_change_visible": true,
+  "nod_visible": true,
+  "body_motion_default_should_stop": true,
+  "unstable_motion_near_angry_expression": "warning",
+  "animation_quality_for_final": "not_accepted",
+  "primitive_tuning_loop_risk": "high",
+  "render_export_checked": false,
+  "render_export_required_now": false,
+  "next_axis": "stop_loss_and_integration_plan"
+}
+```
+
+
+## Stop-Loss Trigger
+
+```json
+{
+  "primitive_tuning_loop_risk": "high",
+  "animation_quality_for_final": "not_accepted",
+  "body_motion_default_should_stop": true,
+  "scene_coherence": "partial",
+  "primitive_feasibility": "pass",
+  "decision": "stop_primitive_only_tuning_and_plan_integrated_scene"
+}
+```
+
+
+## Render Deferral
+
+```json
+{
+  "render_export_checked": false,
+  "render_export_required_now": false
+}
+```
+
+
+## Not Accepted Scope
+
+```json
+{
+  "render_proof": false,
+  "render_export_required_now": false,
+  "production_animation_quality": false,
+  "public_upload_or_public_readiness": false,
+  "real_rss_or_news_integration": false,
+  "card_redesign_or_density_work": false,
+  "dense_script_rewrite": false,
+  "external_reference_video_fetch": false,
+  "audio_or_tts_output": false,
+  "actual_order_or_audience_acceptance": false,
+  "speech_balloon_visual_acceptance": false
+}
+```
+
+
+## Boundaries
+
+```json
+{
+  "YMM4_launched_by_agent": false,
+  "render_performed_by_agent": false,
+  "audio_tts_generated": false,
+  "real_media_imported": false,
+  "external_fetch_performed": false,
+  "card_assets_modified": false,
+  "dense_script_modified": false,
+  "local_ignored_ymmp_created_in_this_slice": false,
+  "ymmp_or_media_staged_or_committed": false,
+  "production_public_readiness_claimed": false
+}
+```
+
+
+## Boundary Note
+
+This observation records a user-side preview readback and stop-loss trigger. It does not create a new probe, render, launch YMM4 from the agent, stage media, or accept production/public quality.

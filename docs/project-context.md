@@ -79,6 +79,43 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom background animation stop-loss and minimal integrated scene plan decision (2026-06-29 JST):
+`newsroom_background_animation_mvp_policy_v1_2026_06_29` records the latest
+user-side scene choreography preview observation and converts it into an MVP
+stop-loss policy. The user observation is preserved as: YMM4 opened the scene
+choreography probe, the scene is partially coherent rather than fully
+incoherent, expression changes and nodding are visible, earlier forward/back
+movement is mostly gone, unstable movement remains near the angry expression,
+final animation quality is not accepted, and the primitive tuning loop risk is
+high. This decision stops further primitive-only tempo, angle, or expression
+iteration unless an integrated scene later proves a specific primitive is
+blocking.
+
+The tracked readback, policy, and plan artifacts are
+`samples/_probe/newsroom_handoff/yukkuri_animation_scene_preview_observation_v1.json`,
+`docs/verification/NEWSROOM_YUKKURI_ANIMATION_SCENE_PREVIEW_OBSERVATION_V1_2026-06-29.md`,
+`samples/_probe/newsroom_handoff/background_animation_mvp_policy_v1.json`,
+`docs/verification/NEWSROOM_BACKGROUND_ANIMATION_MVP_POLICY_V1_2026-06-29.md`,
+`samples/_probe/newsroom_handoff/background_animation_integration_plan_v1.json`,
+and
+`docs/verification/NEWSROOM_BACKGROUND_ANIMATION_INTEGRATION_PLAN_V1_2026-06-29.md`,
+with implementation/tests in
+`src/pipeline/newsroom_background_animation_mvp_policy.py` /
+`tests/test_newsroom_background_animation_mvp_policy.py`. The MVP default
+allows stable pose, one expression event, one short nod/reaction, and optional
+small lateral emphasis only when justified. It disables repeated nodding,
+mechanical expression cycling, body forward/back motion, complex speech
+balloons, and full chaban scenes by default. The selected next axis is
+`newsroom-background-animation-minimal-integrated-scene-probe-v1`: a later
+10-20 second integrated scene with one actual explanation beat, minimal
+existing card/overlay, one expression event, one nod/reaction, no default body
+forward/back movement, and one freeform preview only. This decision did not
+launch YMM4 from the Agent, render, create or stage `.ymmp`, create
+media/audio/TTS, modify cards, continue dense-script work, fetch real RSS/news
+or external reference video, or claim production/public/order/audience
+acceptance. If that integrated scene still feels bad, the default is to freeze
+animation as minimal accent and return to RSS/story integration.
+
 Latest newsroom yukkuri v4 tempo default policy and scene-beat route decision (2026-06-29 JST):
 `newsroom_yukkuri_animation_scene_choreography_contract_v1_2026_06_29`
 records the latest user-side v4 tempo sweep observation and exits the

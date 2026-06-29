@@ -1,5 +1,36 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom background animation stop-loss and minimal integrated scene plan completed (2026-06-29 JST)**:
+  `newsroom-animation-lane-stop-loss-and-integration-plan-v1` records the
+  latest user-side scene choreography preview observation and stops the
+  primitive-only tuning loop. The normalized observation is that the scene
+  choreography probe opened in YMM4, is partially coherent, and proves primitive
+  feasibility enough for planning: expression changes and nodding are visible,
+  earlier forward/back movement is mostly gone, but motion near the angry
+  expression still carries a warning and final animation quality is not
+  accepted. Render/export remains unnecessary. New tracked artifacts are
+  `samples/_probe/newsroom_handoff/yukkuri_animation_scene_preview_observation_v1.json`,
+  `docs/verification/NEWSROOM_YUKKURI_ANIMATION_SCENE_PREVIEW_OBSERVATION_V1_2026-06-29.md`,
+  `samples/_probe/newsroom_handoff/background_animation_mvp_policy_v1.json`,
+  `docs/verification/NEWSROOM_BACKGROUND_ANIMATION_MVP_POLICY_V1_2026-06-29.md`,
+  `samples/_probe/newsroom_handoff/background_animation_integration_plan_v1.json`,
+  `docs/verification/NEWSROOM_BACKGROUND_ANIMATION_INTEGRATION_PLAN_V1_2026-06-29.md`,
+  `src/pipeline/newsroom_background_animation_mvp_policy.py`, and
+  `tests/test_newsroom_background_animation_mvp_policy.py`. The active MVP
+  policy allows only a stable pose, one expression event, one short nod/reaction,
+  and optional small lateral emphasis when scene-justified. Repeated nodding,
+  mechanical expression cycling, body forward/back movement, complex speech
+  balloons, and full chaban scenes are disabled by default. The next default
+  axis is `newsroom-background-animation-minimal-integrated-scene-probe-v1`: a
+  later 10-20 second integrated scene using one actual explanation beat, one
+  expression event, one nod/reaction, no default body forward/back movement,
+  minimal existing card/overlay, and one freeform preview only. No Agent-side
+  YMM4 launch, render, `.ymmp` creation in this slice, `.ymmp` stage/commit,
+  media/audio/TTS generation, card modification, dense script work, real
+  RSS/news fetch, external reference-video fetch, production/public readiness
+  claim, or actual audience/order acceptance claim occurred. If the next
+  integrated scene still feels bad, freeze animation as minimal accent and
+  return to RSS/story integration.
 - **Newsroom yukkuri v4 tempo default policy and scene-beat route completed (2026-06-29 JST)**:
   `newsroom-yukkuri-animation-v4-sweep-readback-and-scene-choreography-probe-v1`
   now normalizes the latest user-side v4 tempo sweep observation: `0.75s`
