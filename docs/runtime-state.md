@@ -1,5 +1,36 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom minimal animated explanation beat mainline proof completed (2026-06-30 JST)**:
+  `newsroom-minimal-animated-explanation-beat-in-mainline-pipeline-v1`
+  returns the animation lane to mainline content integration after the MVP
+  accent freeze. The slice creates one diagnostic-only integrated explanation
+  beat that ties narration intent, subtitle/readback role, existing minimal
+  label/readback overlay semantics, source-boundary role, and the frozen
+  background animation accent policy. New tracked artifacts are
+  `samples/_probe/newsroom_handoff/minimal_animated_explanation_beat_mainline_v1.json`,
+  `docs/verification/NEWSROOM_MINIMAL_ANIMATED_EXPLANATION_BEAT_MAINLINE_V1_2026-06-29.md`,
+  `samples/_probe/newsroom_handoff/minimal_animated_explanation_beat_contract_v1.json`,
+  `docs/verification/NEWSROOM_MINIMAL_ANIMATED_EXPLANATION_BEAT_CONTRACT_V1_2026-06-29.md`,
+  `src/pipeline/newsroom_minimal_animated_explanation_beat.py`, and
+  `tests/test_newsroom_minimal_animated_explanation_beat.py`. The ignored local
+  YMM4 representation candidate exists at
+  `_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v1.ymmp`;
+  it is derived from the known minimal integrated scene route, is verified
+  ignored by `.gitignore` `_tmp/`, and must remain untracked/uncommitted.
+  Structural readback passes with a 720-frame / 12.0-second timeline,
+  `GroupItem=8`, `ImageItem=8`, no unexpected item types, and the same frozen
+  accent budget: stable pose, one expression event, one short nod/reaction,
+  and return to stable pose. This is not an animation-only, primitive-only,
+  tempo-only, card-polish, render/export, dense-script, audio/TTS, real
+  RSS/news, production/public, or audience/order acceptance slice. No Agent-side
+  YMM4 launch, render, media/audio/TTS generation, real RSS/news fetch, card
+  asset modification, dense script work, `.ymmp` stage/commit, production/public
+  readiness claim, or actual audience/order acceptance claim occurred. The next
+  selected axis is
+  `newsroom-minimal-animated-explanation-beat-preview-operator-instruction-v1`:
+  prepare one bounded preview instruction for the verified integrated local
+  target, or return to RSS dry-run integration if another preview is deemed
+  unnecessary.
 - **Newsroom background animation MVP accent freeze and mainline return completed (2026-06-30 JST)**:
   `newsroom-background-animation-minimal-integrated-scene-preview-readback-and-mvp-freeze-v1`
   records the user-side preview observation for the existing local ignored

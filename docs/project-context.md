@@ -79,6 +79,42 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom minimal animated explanation beat mainline proof decision (2026-06-30 JST):
+`newsroom_minimal_animated_explanation_beat_mainline_v1_2026_06_29`
+returns the background animation work to a mainline explanation beat instead of
+continuing primitive or animation-only tuning. The proof binds one review-only
+diagnostic line to narration intent, subtitle/readback role, existing minimal
+label/readback overlay semantics, source-boundary role, and the frozen MVP
+background animation accent policy. The animation remains subordinate to the
+explanation: stable pose, one expression event tied to the key phrase, one
+short nod/reaction, and return to stable pose.
+
+The tracked artifacts are
+`samples/_probe/newsroom_handoff/minimal_animated_explanation_beat_mainline_v1.json`,
+`docs/verification/NEWSROOM_MINIMAL_ANIMATED_EXPLANATION_BEAT_MAINLINE_V1_2026-06-29.md`,
+`samples/_probe/newsroom_handoff/minimal_animated_explanation_beat_contract_v1.json`,
+and
+`docs/verification/NEWSROOM_MINIMAL_ANIMATED_EXPLANATION_BEAT_CONTRACT_V1_2026-06-29.md`,
+with implementation/tests in
+`src/pipeline/newsroom_minimal_animated_explanation_beat.py` /
+`tests/test_newsroom_minimal_animated_explanation_beat.py`. The ignored local
+YMM4 representation candidate exists at
+`_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v1.ymmp`;
+it is derived from the known minimal integrated scene route, verified present
+on this host, verified ignored by `.gitignore` `_tmp/`, and must remain
+untracked/uncommitted. Structural readback passes with a 720-frame /
+12.0-second timeline, `GroupItem=8`, `ImageItem=8`, no unexpected item types,
+and semantic checks confirming narration/subtitle/readback binding, minimal
+overlay role, frozen animation policy, source-boundary preservation, and no
+render/audio dependency. This decision did not launch YMM4 from the Agent,
+render, stage/commit `.ymmp`, create media/audio/TTS, fetch real RSS/news or
+external media, redesign cards, continue dense script work, claim production or
+public readiness, or claim audience/order acceptance. The selected next axis is
+`newsroom-minimal-animated-explanation-beat-preview-operator-instruction-v1`:
+prepare one bounded preview instruction for the verified integrated local
+target; if another preview is not needed, return to
+`newsroom-rss-dry-run-to-animated-explanation-beat-v1`.
+
 Latest newsroom background animation MVP accent freeze and mainline return decision (2026-06-30 JST):
 `newsroom_background_animation_mvp_freeze_v1_2026_06_29` records the user-side
 preview readback for the existing ignored local minimal integrated scene probe
