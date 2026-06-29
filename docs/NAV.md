@@ -46,6 +46,7 @@
 - [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md) — **茶番劇 Group テンプレ正本**: 茶番劇を語り手への合いの手ではなく独立した背景小場面として定義し、配達員などの外部素材演者を `speaker_tachie` と分離し、canonical template → 小演出量産 → production での template 解決 + fallback note までを定義
 - [PILOT_YUKKURI_THEATER_SCENE_BIBLE.md](PILOT_YUKKURI_THEATER_SCENE_BIBLE.md) — **pilot_yukkuri_theater_v1 背景茶番劇 Scene Bible**: 不動産DXの 7 ブロック time budget / cast continuity / screen placement / props / proof path と、配達短編の setup → complication → reaction → resolution を固定する IR 前の正本
 - [BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW.md](BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW.md) — **背景茶番劇 Blueprint/Timetable 正本**: IR / 演出指定へ進む前に、総尺・開始/終了時刻・演出秒数・density thresholds/audit・script maturity・asset/control matrix を `background_skit_blueprint` artifact と validator result で固定する
+- [verification/YUKKURI-CHABANGEKI-TRACE-AUDIT-2026-06-29.md](verification/YUKKURI-CHABANGEKI-TRACE-AUDIT-2026-06-29.md) — **ゆっくり茶番劇風 trace audit**: `ゆっくり茶番劇` / `茶番劇風` / `background skit` / `skit_group` / `pilot_yukkuri_theater_v1` の痕跡を、docs / src / tests / samples / ignored local residue に分けて固定した再開用証跡
 
 `docs/verification` 直下の個別ファイルが多いときは、先に次の **索引表**だけ読む。
 

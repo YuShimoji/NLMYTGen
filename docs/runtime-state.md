@@ -1,5 +1,23 @@
 # Runtime State — NLMYTGen
 
+- **Yukkuri chabangeki trace audit preserved for restart (2026-06-29)**:
+  `docs/verification/YUKKURI-CHABANGEKI-TRACE-AUDIT-2026-06-29.md`
+  records the repo evidence for the user's question about whether
+  "ゆっくり茶番劇風" animation-generation work remains in this project. The
+  answer is yes, but under the durable keys `ゆっくり茶番劇`, `茶番劇風`,
+  `background skit`, `skit_group`, and `pilot_yukkuri_theater_v1`. Evidence
+  spans design docs, implementation, tests, tracked samples, validation
+  reports, and ignored `_tmp` episode-run residue. The audit preserves the
+  boundary that this is not full automatic art / asset / `.ymmp` zero
+  generation: NLMYTGen's accepted route is CSV / IR / registry / template
+  source plus limited post-import `.ymmp` patching and readback. Pre-handoff
+  sync baseline was branch `codex/baseball-bn08-script-beat-linkage` at
+  `4abb199`, upstream parity `0 0`, clean tracked tree. Next safe action is
+  Hold, or, if the user explicitly revives this lane, start from
+  `docs/SKIT_GROUP_TEMPLATE_SPEC.md`,
+  `docs/PILOT_YUKKURI_THEATER_SCENE_BIBLE.md`, and the new audit memo before
+  choosing blueprint-only report, compact-review `.ymmp`, or production-timing
+  work.
 - **Common foundation repo-status input audit design recorded (2026-06-15)**:
   `docs/verification/COMMON-FOUNDATION-STATUS-INPUT-AUDIT-DESIGN-2026-06-15.md`
   refines the prior live status producer contract with the exact audit-facing

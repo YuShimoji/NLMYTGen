@@ -1035,6 +1035,18 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 - Still open: human YMM4 manual preview at frame `1560` / `00:26.00`; return one screenshot plus a short freeform comment. Fixed PASS/FIX labels are not required.
 - Boundaries: no render, production proof, creative final acceptance, publish readiness, real source intake, clip export, G-27, RSS, NotebookLM, or mainline integration.
 
+## HANDOFF SNAPSHOT (2026-06-29 Yukkuri chabangeki trace audit)
+
+- Branch / remote state before this docs handoff: `codex/baseball-bn08-script-beat-linkage` at `4abb199 test: validate baseball BN-08 script beat linkage`, tracking `origin/codex/baseball-bn08-script-beat-linkage`; after `git fetch --prune origin` and `git pull --ff-only origin codex/baseball-bn08-script-beat-linkage`, `HEAD...@{u}=0 0` and the tracked tree was clean.
+- Restart path remains `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`. If the next task mentions yukkuri chabangeki, background skit, or `skit_group`, then read `docs/verification/YUKKURI-CHABANGEKI-TRACE-AUDIT-2026-06-29.md`.
+- Preserved answer: the repo does contain traces of "ゆっくり茶番劇風" animation-generation work, mainly under `ゆっくり茶番劇`, `茶番劇風`, `background skit`, `skit_group`, and `pilot_yukkuri_theater_v1`.
+- Evidence retained in the audit: `docs/C07-visual-pattern-operator-intent.md`, `docs/SKIT_GROUP_TEMPLATE_SPEC.md`, `docs/AUTOMATION_BOUNDARY.md`, `docs/PILOT_YUKKURI_THEATER_SCENE_BIBLE.md`, `docs/BACKGROUND_SKIT_BLUEPRINT_TIMETABLE_WORKFLOW.md`, `docs/verification/CHABANGEKI-E2E-PROOF-2026-04-13.md`, `docs/verification/REAL-ESTATE-DX-BACKGROUND-SKIT-BLUEPRINT-2026-05-06.md`, `src/pipeline/skit_group_placement.py`, `src/pipeline/skit_group_audit.py`, `src/pipeline/background_skit_blueprint.py`, and the tracked `samples/*skit*` / `samples/chabangeki_*` artifacts.
+- Boundary: do not describe the old work as full automatic animation generation. The accepted route is CSV / IR / registry / template-source plus limited post-import `.ymmp` patching, compact review, and readback. It excludes automatic art generation, asset acquisition, `.ymmp` zero-generation, YMM4 script-import replacement, universal GUI control, and creative / production acceptance without fresh human review.
+- Ignored local residue such as `_tmp/episode_runs/pilot_yukkuri_theater_v1/`, `_tmp/skit_01_v1.ymmp`, `_tmp/skit_01_v2.ymmp`, and `_tmp/skit_ManualSample_01.ymmp` was observed as same-machine evidence only; it is not repo-truth for another terminal.
+- Current next move: Hold unless the user explicitly revives this lane. If revived, first choose whether the goal is a blueprint-only report, a compact-review `.ymmp`, or production-timing work, then preserve the diagnostic / transport-proof boundary until a fresh YMM4 creative acceptance signal exists.
+
+---
+
 ## HANDOFF SNAPSHOT (2026-06-12 G-28 reference layout path sync)
 
 - Branch / remote state: `master` at `c6f17b5 feat: add G-28 reference layout prototypes`; after sync, `HEAD...@{u}=0 0`.
