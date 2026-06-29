@@ -1,5 +1,31 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom background animation MVP accent freeze and mainline return completed (2026-06-30 JST)**:
+  `newsroom-background-animation-minimal-integrated-scene-preview-readback-and-mvp-freeze-v1`
+  records the user-side preview observation for the existing local ignored
+  minimal integrated scene probe at
+  `_tmp/newsroom_manual_probe/background_animation_minimal_integrated_scene_probe_v1.ymmp`.
+  The user opened the file successfully, saw an expression change, and then saw
+  a nod-like motion. This is recorded as `mvp_accent_layer_status=accepted_with_boundary`,
+  not as production animation quality. New tracked artifacts are
+  `samples/_probe/newsroom_handoff/background_animation_minimal_integrated_scene_preview_observation_v1.json`,
+  `docs/verification/NEWSROOM_BACKGROUND_ANIMATION_MINIMAL_INTEGRATED_SCENE_PREVIEW_OBSERVATION_V1_2026-06-29.md`,
+  `samples/_probe/newsroom_handoff/background_animation_mvp_freeze_v1.json`,
+  `docs/verification/NEWSROOM_BACKGROUND_ANIMATION_MVP_FREEZE_V1_2026-06-29.md`,
+  `src/pipeline/newsroom_background_animation_mvp_freeze.py`, and
+  `tests/test_newsroom_background_animation_mvp_freeze.py`. The frozen MVP
+  accent policy allows stable pose, one expression event tied to a scene beat,
+  one short nod/reaction after that event, and return to stable pose. Disabled
+  by default are body forward/back movement, repeated nodding, mechanical
+  expression cycling, speech balloons, full chaban scenes, animation-only probe
+  loops, and tempo-only probe loops. No new local `.ymmp`, animation-only probe,
+  render, Agent-side YMM4 launch, media/audio/TTS generation, card asset
+  modification, dense script work, real RSS/news fetch, external reference-video
+  fetch, production/public readiness claim, or actual audience/order acceptance
+  claim occurred. The next default axis is
+  `newsroom-minimal-animated-explanation-beat-in-mainline-pipeline-v1`: attach
+  the frozen MVP accent policy to a real explanation beat / YMM4 scene route in
+  the mainline pipeline instead of tuning primitives.
 - **Newsroom background animation minimal integrated scene operator surface completed (2026-06-30 JST)**:
   `newsroom-background-animation-minimal-integrated-scene-probe-v1` creates the
   first integrated background animation accent after the stop-loss policy. The

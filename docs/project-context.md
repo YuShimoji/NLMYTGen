@@ -79,6 +79,38 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom background animation MVP accent freeze and mainline return decision (2026-06-30 JST):
+`newsroom_background_animation_mvp_freeze_v1_2026_06_29` records the user-side
+preview readback for the existing ignored local minimal integrated scene probe
+at
+`_tmp/newsroom_manual_probe/background_animation_minimal_integrated_scene_probe_v1.ymmp`.
+The user opened the file successfully, saw an expression change, and then saw a
+nod-like motion. That is sufficient for MVP accent-layer acceptance with
+boundary: the animation layer is accepted as a small support accent, not as
+production animation quality, render proof, public readiness, or audience/order
+acceptance.
+
+The tracked artifacts are
+`samples/_probe/newsroom_handoff/background_animation_minimal_integrated_scene_preview_observation_v1.json`,
+`docs/verification/NEWSROOM_BACKGROUND_ANIMATION_MINIMAL_INTEGRATED_SCENE_PREVIEW_OBSERVATION_V1_2026-06-29.md`,
+`samples/_probe/newsroom_handoff/background_animation_mvp_freeze_v1.json`, and
+`docs/verification/NEWSROOM_BACKGROUND_ANIMATION_MVP_FREEZE_V1_2026-06-29.md`,
+with implementation/tests in
+`src/pipeline/newsroom_background_animation_mvp_freeze.py` /
+`tests/test_newsroom_background_animation_mvp_freeze.py`. The frozen policy
+allows stable pose, one expression event tied to a scene beat, one short
+nod/reaction after that event, and return to stable pose. It disables body
+forward/back movement, repeated nodding, mechanical expression cycling, speech
+balloons, full chaban scenes, animation-only probe loops, and tempo-only probe
+loops by default. This decision did not create another `.ymmp`, launch YMM4
+from the Agent, render, stage/commit `.ymmp`, create media/audio/TTS, modify
+card assets, continue dense script work, fetch real RSS/news or external
+reference video, or claim production/public/order/audience acceptance. The
+selected next axis is
+`newsroom-minimal-animated-explanation-beat-in-mainline-pipeline-v1`: attach
+the frozen MVP accent policy to a real explanation beat / YMM4 scene route in
+the mainline pipeline instead of reopening primitive-only animation work.
+
 Latest newsroom background animation minimal integrated scene operator-surface decision (2026-06-30 JST):
 `newsroom_background_animation_minimal_integrated_scene_contract_v1_2026_06_29`
 implements the next slice after the stop-loss policy by creating one integrated

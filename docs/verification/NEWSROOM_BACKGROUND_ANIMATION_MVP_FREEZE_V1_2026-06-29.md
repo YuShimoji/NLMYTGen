@@ -1,0 +1,174 @@
+# Newsroom Background Animation MVP Freeze v1
+
+artifact_id: newsroom_background_animation_mvp_freeze_v1_2026_06_29
+schema_version: newsroom_background_animation_mvp_freeze.v1
+production_status: diagnostic_only
+render_gate: L0_no_render
+
+
+## Source Context
+
+```json
+{
+  "source_mvp_policy_path": "samples/_probe/newsroom_handoff/background_animation_mvp_policy_v1.json",
+  "source_minimal_integrated_scene_contract_path": "samples/_probe/newsroom_handoff/background_animation_minimal_integrated_scene_contract_v1.json",
+  "source_minimal_integrated_scene_probe_readback_path": "samples/_probe/newsroom_handoff/background_animation_minimal_integrated_scene_probe_v1.json",
+  "source_operator_instruction_path": "samples/_probe/newsroom_handoff/background_animation_minimal_integrated_scene_operator_instruction_v1.json",
+  "source_probe_id": "newsroom_background_animation_minimal_integrated_scene_probe_v1_2026_06_29",
+  "source_probe_path": "_tmp/newsroom_manual_probe/background_animation_minimal_integrated_scene_probe_v1.ymmp",
+  "repo_root": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage"
+}
+```
+
+
+## MVP Freeze Decision
+
+```json
+{
+  "status": "freeze_mvp_accent_layer",
+  "mvp_accent_layer_status": "accepted_with_boundary",
+  "primitive_loop_status": "closed",
+  "animation_only_probe_loop_status": "closed",
+  "tempo_only_probe_loop_status": "closed",
+  "mainline_return_required": true
+}
+```
+
+
+## Animation Accent Policy
+
+```json
+{
+  "policy_status": "frozen_for_mvp_accent_layer",
+  "background_animation_role": "accent_support_layer",
+  "may_reduce_static_card_fatigue": true,
+  "must_not_become_main_deliverable": true,
+  "future_change_rule": "Future animation changes require an integrated scene or production blocker, not primitive preference.",
+  "allowed": [
+    "stable_pose",
+    "one_expression_event_tied_to_scene_beat",
+    "one_short_nod_or_reaction_after_expression_event",
+    "return_to_stable_pose"
+  ],
+  "disabled_by_default": [
+    "body_forward_back_movement",
+    "repeated_nodding",
+    "mechanical_expression_cycling",
+    "speech_balloons",
+    "full_chaban_scene",
+    "animation_only_probe_loops",
+    "tempo_only_probe_loops"
+  ]
+}
+```
+
+
+## Mainline Return Plan
+
+```json
+{
+  "selected_next_axis": "newsroom-minimal-animated-explanation-beat-in-mainline-pipeline-v1",
+  "preferred_default": "newsroom-minimal-animated-explanation-beat-in-mainline-pipeline-v1",
+  "reason": "The minimal accent layer is accepted with boundary, so the next value proof should attach this policy to a real explanation beat or YMM4 scene route instead of tuning primitives.",
+  "alternates": [
+    {
+      "axis": "newsroom-rss-dry-run-to-animated-explanation-beat-v1",
+      "use_when": "the project needs topic/RSS dry-run material before scene attachment"
+    },
+    {
+      "axis": "newsroom-animation-accent-policy-closed-return-to-episode-capsule-v1",
+      "use_when": "animation should be treated as closed documentation while episode production resumes"
+    }
+  ]
+}
+```
+
+
+## Business Goal Outcome Contract
+
+```json
+{
+  "problem_clear": {
+    "status": true,
+    "rationale": "this closes primitive-only animation tuning after an integrated preview passed the MVP accent signal"
+  },
+  "offer_clear": {
+    "status": true,
+    "rationale": "animation adds a small support accent: expression event plus nod after the scene beat"
+  },
+  "proof_clear": {
+    "status": true,
+    "rationale": "MVP accent acceptance is separated from production animation quality and render proof"
+  },
+  "boundary_clear": {
+    "status": true,
+    "rationale": "production/public/order/audience acceptance and render/export proof remain false"
+  },
+  "next_action_clear": {
+    "status": true,
+    "rationale": "newsroom-minimal-animated-explanation-beat-in-mainline-pipeline-v1"
+  },
+  "visual_supports_explanation": {
+    "status": "accepted_with_boundary",
+    "rationale": "the visible expression event and following nod are enough for a subordinate accent layer"
+  }
+}
+```
+
+
+## Not Accepted Scope
+
+```json
+{
+  "render_proof": false,
+  "render_export_required_now": false,
+  "production_animation_quality": false,
+  "public_upload_or_public_readiness": false,
+  "real_rss_or_news_integration": false,
+  "card_redesign_or_density_work": false,
+  "dense_script_rewrite": false,
+  "external_reference_video_fetch": false,
+  "audio_or_tts_output": false,
+  "actual_order_or_audience_acceptance": false,
+  "speech_balloon_visual_acceptance": false,
+  "full_chaban_scene": false,
+  "animation_only_probe_loop": false,
+  "tempo_only_probe_loop": false
+}
+```
+
+
+## Boundaries
+
+```json
+{
+  "YMM4_launched_by_agent": false,
+  "render_performed_by_agent": false,
+  "audio_tts_generated": false,
+  "real_media_imported": false,
+  "external_fetch_performed": false,
+  "card_assets_modified": false,
+  "dense_script_modified": false,
+  "local_ignored_ymmp_created_in_this_slice": false,
+  "ymmp_or_media_staged_or_committed": false,
+  "production_public_readiness_claimed": false,
+  "actual_order_or_audience_acceptance_claimed": false
+}
+```
+
+
+## Inertia Check
+
+| gate | status |
+| --- | --- |
+| no_primitive_only_animation_work | True |
+| no_animation_only_probe_loop | True |
+| no_tempo_only_probe_loop | True |
+| no_card_polish_loop | True |
+| no_render_export_loop | True |
+| next_value_proof_returns_to_mainline | newsroom-minimal-animated-explanation-beat-in-mainline-pipeline-v1 |
+
+
+## Boundary Note
+
+The MVP animation accent policy is closed for now. Future work should attach it to mainline video integration, not reopen primitive-only animation preference loops.
