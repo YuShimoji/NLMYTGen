@@ -1,0 +1,454 @@
+{
+  "artifact_id": "newsroom_yukkuri_animation_tempo_contract_v1_2026_06_29",
+  "tempo_contract_id": "newsroom_yukkuri_animation_tempo_contract_v1_2026_06_29",
+  "schema_version": "newsroom_yukkuri_animation_tempo_contract.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "render_gate": "L0_no_render",
+  "source_context": {
+    "source_v2_probe_path": "_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v2_motion_fix.ymmp",
+    "source_v2_observation_path": "samples/_probe/newsroom_handoff/yukkuri_animation_v2_preview_observation_v1.json",
+    "source_motion_contract_path": "samples/_probe/newsroom_handoff/yukkuri_animation_motion_contract_v1.json",
+    "source_nod_head_ymmp_path": "samples/nod_head.ymmp"
+  },
+  "v2_issue_summary": [
+    "anchor continuity improved",
+    "segment connection passed",
+    "X jump regression was not reported",
+    "motion remains very slow",
+    "render/export is still not required for this stage"
+  ],
+  "tempo_contract": [
+    {
+      "primitive_id": "head_nod",
+      "v2_status": "pass_with_tempo_warning",
+      "observed_issue": "visible and connected, but still too slow",
+      "intended_tempo": "short reaction nod that reads within a compact 3 second beat",
+      "current_duration_or_frame_span_if_available": "360 frames / 6 seconds",
+      "proposed_duration_or_frame_span": "180 frames / 3 seconds",
+      "speed_change_ratio_if_available": "0.5x duration / 2.0x tempo",
+      "easing_policy": "keep linear route for structural probe; concentrate the tilt near the middle keyframe",
+      "continuity_policy": "preserve 0 -> negative -> 0 rotation so no tilt leaks across beat boundaries",
+      "natural_pause_policy": "no long pause at the tilted state; neutral can hold at the end of the beat",
+      "fallback_if_not_supported": "use v2 nod timing but mark tempo unresolved"
+    },
+    {
+      "primitive_id": "expression_swap",
+      "v2_status": "pass",
+      "observed_issue": "no regression; must remain readable after tempo increase",
+      "intended_tempo": "one readable expression state per 3 second beat",
+      "current_duration_or_frame_span_if_available": "360 frames / 6 seconds per expression beat",
+      "proposed_duration_or_frame_span": "180 frames / 3 seconds per expression beat",
+      "speed_change_ratio_if_available": "0.5x duration / 2.0x tempo",
+      "easing_policy": "instant image swap remains acceptable; no mid-beat flicker",
+      "continuity_policy": "expression changes only at beat boundaries",
+      "natural_pause_policy": "hold expression for the full 3 second beat",
+      "fallback_if_not_supported": "keep v2 expression beat length and continue tempo work on motion only"
+    },
+    {
+      "primitive_id": "character_entrance_exit",
+      "v2_status": "pass_with_tempo_warning",
+      "observed_issue": "connected movement still feels slow",
+      "intended_tempo": "intentional bounded cue rather than slow drift",
+      "current_duration_or_frame_span_if_available": "360 frames / 6 seconds",
+      "proposed_duration_or_frame_span": "180 frames / 3 seconds",
+      "speed_change_ratio_if_available": "0.5x duration / 2.0x tempo",
+      "easing_policy": "linear route is acceptable; avoid slow centerward drift",
+      "continuity_policy": "preserve v2 shared anchor X=-96 at adjacent beat boundaries",
+      "natural_pause_policy": "entry/exit ends on a stable anchor instead of continuing to drift",
+      "fallback_if_not_supported": "hold at X=-96 with no entrance/exit travel"
+    },
+    {
+      "primitive_id": "small_position_move",
+      "v2_status": "pass_with_tempo_warning",
+      "observed_issue": "anchor continuity improved but small movement remains slow",
+      "intended_tempo": "quick bounded nudge that returns to the shared anchor",
+      "current_duration_or_frame_span_if_available": "360 frames / 6 seconds",
+      "proposed_duration_or_frame_span": "180 frames / 3 seconds",
+      "speed_change_ratio_if_available": "0.5x duration / 2.0x tempo",
+      "easing_policy": "linear out-and-back is acceptable for this tempo pass",
+      "continuity_policy": "start and end every nudge at X=-96",
+      "natural_pause_policy": "no lingering drift after the nudge returns to anchor",
+      "fallback_if_not_supported": "drop the nudge and keep the shared anchor"
+    }
+  ],
+  "v3_correction_plan": {
+    "tempo": [
+      "halve each v2 beat from 360 frames / 6 seconds to 180 frames / 3 seconds",
+      "keep the five-beat structure but shorten the total probe from 30 seconds to 15 seconds"
+    ],
+    "anchor_continuity": [
+      "preserve X=-96 shared anchor at adjacent beat boundaries",
+      "do not reintroduce v1 X jumps"
+    ],
+    "head_nod": [
+      "preserve 0 -> negative rotation -> 0 neutral return",
+      "make the nod read inside a short reaction beat"
+    ],
+    "expression_timing": [
+      "keep one expression per 3 second beat",
+      "do not flicker mid-beat"
+    ],
+    "render_boundary": "no render/export proof in this slice"
+  },
+  "v3_beat_plan": [
+    {
+      "beat_id": "v3_beat_01_enter_question",
+      "timing_range": "0-3 sec",
+      "scene_function": "viewer_question_reaction",
+      "primitive_ids": [
+        "character_entrance_exit",
+        "expression_swap"
+      ],
+      "expression": "panic",
+      "parent_x_values": [
+        -144.0,
+        -96.0
+      ],
+      "head_rotation_values": [
+        0.0
+      ],
+      "motion_label": "tempo_bounded_side_enter_to_shared_anchor"
+    },
+    {
+      "beat_id": "v3_beat_02_nod_response",
+      "timing_range": "3-6 sec",
+      "scene_function": "explanation_response",
+      "primitive_ids": [
+        "head_nod",
+        "small_position_move"
+      ],
+      "expression": "easy",
+      "parent_x_values": [
+        -96.0,
+        -84.0,
+        -96.0
+      ],
+      "head_rotation_values": [
+        0.0,
+        -10.0,
+        0.0
+      ],
+      "motion_label": "short_nod_and_small_right_nudge"
+    },
+    {
+      "beat_id": "v3_beat_03_emphasis_nudge",
+      "timing_range": "6-9 sec",
+      "scene_function": "proof_emphasis",
+      "primitive_ids": [
+        "expression_swap",
+        "small_position_move"
+      ],
+      "expression": "anger",
+      "parent_x_values": [
+        -96.0,
+        -116.0,
+        -96.0
+      ],
+      "head_rotation_values": [
+        0.0
+      ],
+      "motion_label": "small_left_nudge_return_to_anchor"
+    },
+    {
+      "beat_id": "v3_beat_04_boundary_warning",
+      "timing_range": "9-12 sec",
+      "scene_function": "boundary_warning",
+      "primitive_ids": [
+        "expression_swap",
+        "small_position_move"
+      ],
+      "expression": "panic",
+      "parent_x_values": [
+        -96.0,
+        -86.0,
+        -96.0
+      ],
+      "head_rotation_values": [
+        0.0
+      ],
+      "motion_label": "small_right_warning_nudge_return_to_anchor"
+    },
+    {
+      "beat_id": "v3_beat_05_exit_close",
+      "timing_range": "12-15 sec",
+      "scene_function": "next_action_close",
+      "primitive_ids": [
+        "character_entrance_exit",
+        "head_nod"
+      ],
+      "expression": "easy",
+      "parent_x_values": [
+        -96.0,
+        -144.0
+      ],
+      "head_rotation_values": [
+        0.0,
+        -8.0,
+        0.0
+      ],
+      "motion_label": "tempo_bounded_side_exit_from_shared_anchor"
+    }
+  ],
+  "v3_materialization_status": "materialized_ignored_local_probe",
+  "v3_local_probe": {
+    "artifact_id": "local_ignored_v3_tempo_fix_probe",
+    "repo_relative_path": "_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp",
+    "folder_full_path_current_host": "C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe",
+    "file_full_path_current_host": "C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp",
+    "launcher_or_open_command": "Invoke-Item -LiteralPath \"C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp\"",
+    "target_exists": true,
+    "access_state": "verified_present",
+    "access_evidence_level": "L3_VERIFIED_PRESENT",
+    "artifact_scope": "ignored_local_only",
+    "evidence_source": "current_host_filesystem_plus_git_check_ignore",
+    "git_check_ignore_result": {
+      "command": "git check-ignore -v -- _tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp",
+      "returncode": 0,
+      "stdout": ".gitignore:37:_tmp/\t_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp",
+      "stderr": "",
+      "ignored": true
+    },
+    "size": 260680
+  },
+  "v3_probe_readback": {
+    "readback_status": "structural_pass",
+    "target_exists": true,
+    "file_sha256": "cb30e5cc9628ada803d29e357b4e8ca039c9187ef5d11f4d38dc40e60eb335cb",
+    "file_size_bytes": 260680,
+    "timeline": {
+      "fps": 60,
+      "length_frames": 900,
+      "length_sec": 15.0,
+      "item_count": 20,
+      "item_type_counts": {
+        "GroupItem": 10,
+        "ImageItem": 10
+      },
+      "unexpected_item_types": []
+    },
+    "beat_readback": [
+      {
+        "beat_id": "v3_beat_01_enter_question",
+        "scene_function": "viewer_question_reaction",
+        "timing_range": "0-3 sec",
+        "frame": 0,
+        "length": 180,
+        "primitive_ids": [
+          "character_entrance_exit",
+          "expression_swap"
+        ],
+        "item_count": 4,
+        "group_item_count": 2,
+        "image_item_count": 2,
+        "parent_x_values": [
+          -144.0,
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0
+        ],
+        "face_file_path": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_panic.png",
+        "status": "pass"
+      },
+      {
+        "beat_id": "v3_beat_02_nod_response",
+        "scene_function": "explanation_response",
+        "timing_range": "3-6 sec",
+        "frame": 180,
+        "length": 180,
+        "primitive_ids": [
+          "head_nod",
+          "small_position_move"
+        ],
+        "item_count": 4,
+        "group_item_count": 2,
+        "image_item_count": 2,
+        "parent_x_values": [
+          -96.0,
+          -84.0,
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0,
+          -10.0,
+          0.0
+        ],
+        "face_file_path": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_easy.png",
+        "status": "pass"
+      },
+      {
+        "beat_id": "v3_beat_03_emphasis_nudge",
+        "scene_function": "proof_emphasis",
+        "timing_range": "6-9 sec",
+        "frame": 360,
+        "length": 180,
+        "primitive_ids": [
+          "expression_swap",
+          "small_position_move"
+        ],
+        "item_count": 4,
+        "group_item_count": 2,
+        "image_item_count": 2,
+        "parent_x_values": [
+          -96.0,
+          -116.0,
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0
+        ],
+        "face_file_path": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_anger.png",
+        "status": "pass"
+      },
+      {
+        "beat_id": "v3_beat_04_boundary_warning",
+        "scene_function": "boundary_warning",
+        "timing_range": "9-12 sec",
+        "frame": 540,
+        "length": 180,
+        "primitive_ids": [
+          "expression_swap",
+          "small_position_move"
+        ],
+        "item_count": 4,
+        "group_item_count": 2,
+        "image_item_count": 2,
+        "parent_x_values": [
+          -96.0,
+          -86.0,
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0
+        ],
+        "face_file_path": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_panic.png",
+        "status": "pass"
+      },
+      {
+        "beat_id": "v3_beat_05_exit_close",
+        "scene_function": "next_action_close",
+        "timing_range": "12-15 sec",
+        "frame": 720,
+        "length": 180,
+        "primitive_ids": [
+          "character_entrance_exit",
+          "head_nod"
+        ],
+        "item_count": 4,
+        "group_item_count": 2,
+        "image_item_count": 2,
+        "parent_x_values": [
+          -96.0,
+          -144.0
+        ],
+        "head_rotation_values": [
+          0.0,
+          -8.0,
+          0.0
+        ],
+        "face_file_path": "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_easy.png",
+        "status": "pass"
+      }
+    ],
+    "primitive_status": [
+      {
+        "primitive_id": "head_nod",
+        "status": "pass",
+        "evidence": "head nod keeps 0 -> non-zero -> 0 and beat length is 180 frames"
+      },
+      {
+        "primitive_id": "expression_swap",
+        "status": "pass",
+        "evidence": [
+          "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_anger.png",
+          "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_easy.png",
+          "C:\\Users\\PLANNER007\\NLMYTGen\\samples\\characterAnimSample\\reimu_panic.png"
+        ]
+      },
+      {
+        "primitive_id": "character_entrance_exit",
+        "status": "pass",
+        "evidence": "bounded entry/exit travel is preserved at 180 frames per beat"
+      },
+      {
+        "primitive_id": "small_position_move",
+        "status": "pass",
+        "evidence": "nudges still return to X=-96 and run in 180-frame beats"
+      }
+    ],
+    "tempo_change": {
+      "v2_beat_length_frames": 360,
+      "v3_beat_length_frames": 180,
+      "duration_ratio": 0.5,
+      "tempo_multiplier": 2.0
+    },
+    "anchor_continuity": {
+      "shared_anchor_x": -96.0,
+      "adjacent_boundaries_share_anchor": true
+    },
+    "source_ymmp_copy_basis": "samples/nod_head.ymmp",
+    "local_probe_access_state": "verified_present",
+    "YMM4_launch_status": "not_launched",
+    "render_status": "not_rendered",
+    "audio_tts_status": "not_created"
+  },
+  "selected_next_axis": "newsroom-yukkuri-animation-primitive-v3-preview-operator-instruction-v1",
+  "next_recommended_axis": {
+    "selected": "newsroom-yukkuri-animation-primitive-v3-preview-operator-instruction-v1",
+    "reason": "ignored local v3 probe exists, is git-ignored, preserves v2 anchor continuity, and halves beat duration from 6 seconds to 3 seconds",
+    "prerequisites": [
+      "keep v3 .ymmp ignored and unstaged",
+      "use preview-only operator observation before any render request",
+      "do not claim production/public acceptance"
+    ]
+  },
+  "not_accepted_scope": {
+    "render_proof": false,
+    "render_export_required_now": false,
+    "production_animation_quality": false,
+    "public_upload_or_public_readiness": false,
+    "real_rss_or_news_integration": false,
+    "card_redesign_or_density_work": false,
+    "dense_script_rewrite": false,
+    "external_reference_video_fetch": false,
+    "audio_or_tts_output": false,
+    "actual_order_or_audience_acceptance": false,
+    "speech_balloon_visual_acceptance": false
+  },
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "audio_tts_generated": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "card_assets_modified": false,
+    "dense_script_modified": false,
+    "local_ignored_v3_probe_created": true,
+    "ymmp_or_media_staged_or_committed": false,
+    "production_public_readiness_claimed": false
+  },
+  "inertia_check": [
+    {
+      "gate": "no_text_density_loop",
+      "status": true
+    },
+    {
+      "gate": "no_card_polish_loop",
+      "status": true
+    },
+    {
+      "gate": "no_render_export_loop",
+      "status": true
+    },
+    {
+      "gate": "tempo_contract_targets_reported_visual_issue",
+      "status": true
+    },
+    {
+      "gate": "next_concrete_animation_milestone_named",
+      "status": "newsroom-yukkuri-animation-primitive-v3-preview-operator-instruction-v1"
+    }
+  ]
+}

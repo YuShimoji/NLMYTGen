@@ -79,6 +79,34 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom yukkuri v2 preview readback and v3 tempo-fix decision (2026-06-29 JST):
+`newsroom_yukkuri_animation_tempo_contract_v1_2026_06_29` records the user-side
+preview observation of the v2 motion-fix probe and converts it into a tempo
+contract. V2 improved anchor continuity and segment connection; no new X jump
+or major visual breakage was reported. The remaining actionable issue is
+tempo: motion still feels very slow. Render/export remains unnecessary for this
+stage because the bottleneck is preview tempo calibration, not render mechanics.
+
+The tracked readback and tempo artifacts are
+`samples/_probe/newsroom_handoff/yukkuri_animation_v2_preview_observation_v1.json`,
+`docs/verification/NEWSROOM_YUKKURI_ANIMATION_V2_PREVIEW_OBSERVATION_V1_2026-06-29.md`,
+`samples/_probe/newsroom_handoff/yukkuri_animation_tempo_contract_v1.json`, and
+`docs/verification/NEWSROOM_YUKKURI_ANIMATION_TEMPO_CONTRACT_V1_2026-06-29.md`,
+with implementation/tests in
+`src/pipeline/newsroom_yukkuri_animation_tempo_contract.py` /
+`tests/test_newsroom_yukkuri_animation_tempo_contract.py`. The ignored local v3
+probe exists at
+`_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp`
+and must remain untracked/uncommitted. It preserves v2 anchor/facing fixes,
+keeps the GroupItem/ImageItem structure, halves beat length from 360 frames /
+6 seconds to 180 frames / 3 seconds, shortens total probe length to 15 seconds,
+and keeps head neutral return and `X=-96` nudge anchors. This decision did not
+launch YMM4 from the Agent, render, stage/commit `.ymmp`, create media/audio/TTS,
+modify cards, continue dense-script work, fetch real RSS/news or external
+reference video, or claim production/public/order/audience acceptance. The next
+default axis is
+`newsroom-yukkuri-animation-primitive-v3-preview-operator-instruction-v1`.
+
 Latest newsroom yukkuri primitive preview observation and v2 motion-fix decision (2026-06-29 JST):
 `newsroom_yukkuri_animation_motion_contract_v1_2026_06_29` records the first
 user-side preview observation of the ignored local primitive probe and converts

@@ -1,5 +1,34 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom yukkuri v2 preview readback and v3 tempo-fix probe completed (2026-06-29 JST)**:
+  `newsroom-yukkuri-animation-v2-preview-readback-and-tempo-calibration-v1`
+  normalizes the user-side preview observation for the ignored local v2 probe
+  at `_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v2_motion_fix.ymmp`.
+  The user observed that motion now connects smoothly, no new major breakage
+  was reported, and render/export is still unnecessary for this stage; the
+  remaining problem is that the motion is still very slow. New tracked artifacts
+  are
+  `samples/_probe/newsroom_handoff/yukkuri_animation_v2_preview_observation_v1.json`,
+  `docs/verification/NEWSROOM_YUKKURI_ANIMATION_V2_PREVIEW_OBSERVATION_V1_2026-06-29.md`,
+  `samples/_probe/newsroom_handoff/yukkuri_animation_tempo_contract_v1.json`,
+  `docs/verification/NEWSROOM_YUKKURI_ANIMATION_TEMPO_CONTRACT_V1_2026-06-29.md`,
+  `src/pipeline/newsroom_yukkuri_animation_tempo_contract.py`, and
+  `tests/test_newsroom_yukkuri_animation_tempo_contract.py`. The slice also
+  creates the ignored local v3 probe at
+  `_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp`;
+  the file exists on this host, is verified ignored by `git check-ignore -v`,
+  and must remain untracked/uncommitted. V3 preserves the v2 shared-anchor and
+  neutral-facing fixes, keeps 20 items (`GroupItem=10`, `ImageItem=10`), and
+  halves each beat from 360 frames / 6 seconds to 180 frames / 3 seconds, so
+  the total probe is now 900 frames / 15 seconds with `duration_ratio=0.5` and
+  `tempo_multiplier=2.0`. Head nods still return through `0 -> negative -> 0`,
+  expression swaps stay one per beat, and X nudges continue to return to
+  `X=-96`. `speech_balloon` remains omitted/partial. No Agent-side YMM4 launch,
+  render, `.ymmp` stage/commit, media/audio/TTS generation, card modification,
+  dense script work, real RSS/news fetch, external reference-video fetch,
+  production/public readiness claim, or actual audience/order acceptance claim
+  occurred. The next default axis is
+  `newsroom-yukkuri-animation-primitive-v3-preview-operator-instruction-v1`.
 - **Newsroom yukkuri primitive preview observation and v2 motion-fix probe completed (2026-06-29 JST)**:
   `newsroom-yukkuri-animation-primitive-preview-observation-readback-and-motion-fix-v1`
   normalizes the user-side YMM4 preview observation for the ignored local v1
