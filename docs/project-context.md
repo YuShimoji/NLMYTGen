@@ -79,6 +79,41 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom RSS dry-run to animated explanation beat decision (2026-06-30 JST):
+`newsroom_rss_dry_run_topic_to_animated_explanation_beat_v1_2026_06_30`
+records the user-side v2 visible-integration observation for
+`_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v2_visible_integration.ymmp`.
+The file opened in YMM4 and showed one visible plain explanation `TextItem`,
+the character, and the minimal animation accent in the same scene. No
+card-like designed overlay was visible. This is a bounded integration pass, not
+production subtitle/card design acceptance.
+
+The slice returns to content-flow proof by creating one offline
+RSS-like diagnostic topic fixture and transforming it into one animated
+explanation beat. The tracked artifacts are
+`samples/_probe/newsroom_handoff/rss_dry_run_topic_to_animated_explanation_beat_v1.json`,
+`docs/verification/NEWSROOM_RSS_DRY_RUN_TO_ANIMATED_EXPLANATION_BEAT_V1_2026-06-30.md`,
+and
+`samples/_probe/newsroom_handoff/rss_dry_run_animated_explanation_beat_contract_v1.json`,
+with implementation/tests in
+`src/pipeline/newsroom_rss_dry_run_to_animated_explanation_beat.py` /
+`tests/test_newsroom_rss_dry_run_to_animated_explanation_beat.py`. The ignored
+local probe exists at
+`_tmp/newsroom_manual_probe/rss_dry_run_animated_explanation_beat_v1.ymmp`;
+it is verified present on this host, verified ignored by `.gitignore` `_tmp/`,
+and must remain untracked/uncommitted. It copies the v2 visible-integration
+YMM4 structure, keeps `GroupItem=8` and `ImageItem=8` animation items
+unchanged, and replaces the single visible `TextItem` with
+`Offline fixture: verify source boundary before production.` Readback passes
+with `TextItem=1`, visible text/overlay item count `1`, and animation item
+count `16`. This decision did not fetch live RSS/news or network content, did
+not create an animation-only probe, did not tune nod/expression/primitive
+motion, did not redesign cards or create production subtitle/card design, did
+not launch YMM4 from the Agent, did not render, did not stage/commit `.ymmp`,
+did not generate media/audio/TTS, and did not claim production/public readiness
+or audience/order acceptance. The selected next axis is
+`newsroom-rss-dry-run-animated-explanation-beat-preview-operator-instruction-v1`.
+
 Latest newsroom minimal animated explanation beat visual integration gap fix decision (2026-06-30 JST):
 `newsroom_minimal_animated_explanation_beat_preview_gap_v1_2026_06_29`
 records the user-side v1 preview observation for

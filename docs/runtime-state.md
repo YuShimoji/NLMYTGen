@@ -1,5 +1,34 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom RSS dry-run to animated explanation beat completed (2026-06-30 JST)**:
+  `newsroom-rss-dry-run-to-animated-explanation-beat-v1` records the user-side
+  v2 visual integration observation as bounded acceptance: the ignored local
+  v2 probe showed one visible plain explanation `TextItem` and the character
+  animation accent in the same YMM4 scene, with no card-like designed overlay.
+  This is `visual_integration_status=pass_with_boundary`; it does not accept
+  production subtitle design, production card design, render quality, public
+  readiness, or audience/order response. The slice stops local visual/animation
+  tuning and returns to content-flow proof by creating one offline
+  RSS-like diagnostic topic fixture and transforming it into one animated
+  explanation beat. New tracked artifacts are
+  `samples/_probe/newsroom_handoff/rss_dry_run_topic_to_animated_explanation_beat_v1.json`,
+  `docs/verification/NEWSROOM_RSS_DRY_RUN_TO_ANIMATED_EXPLANATION_BEAT_V1_2026-06-30.md`,
+  `samples/_probe/newsroom_handoff/rss_dry_run_animated_explanation_beat_contract_v1.json`,
+  `src/pipeline/newsroom_rss_dry_run_to_animated_explanation_beat.py`, and
+  `tests/test_newsroom_rss_dry_run_to_animated_explanation_beat.py`. The
+  ignored local probe exists at
+  `_tmp/newsroom_manual_probe/rss_dry_run_animated_explanation_beat_v1.ymmp`;
+  it is copied from the v2 visible-integration route, keeps the 16 animation
+  items unchanged, and replaces the single visible `TextItem` with the
+  topic-derived line `Offline fixture: verify source boundary before
+  production.` Readback passes with `TextItem=1`, `GroupItem=8`,
+  `ImageItem=8`, visible text/overlay item count `1`, animation item count
+  `16`, and `.gitignore` `_tmp/` confirmation. No live RSS/news/network fetch,
+  animation-only probe, nod/expression/primitive tuning, card redesign,
+  production subtitle/card design, render, Agent-side YMM4 launch,
+  `.ymmp` stage/commit, media/audio/TTS output, production/public readiness
+  claim, or audience/order acceptance claim occurred. The selected next axis is
+  `newsroom-rss-dry-run-animated-explanation-beat-preview-operator-instruction-v1`.
 - **Newsroom minimal animated explanation beat visual integration gap fix completed (2026-06-30 JST)**:
   `newsroom-minimal-animated-explanation-beat-visual-integration-gap-fix-v1`
   records the user-side v1 preview gap: the local ignored probe
