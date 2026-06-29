@@ -5,6 +5,8 @@ from pathlib import Path
 from src.pipeline.newsroom_background_animation_minimal_integrated_scene import (
     DEFAULT_MINIMAL_INTEGRATED_SCENE_CONTRACT_DOC_PATH,
     DEFAULT_MINIMAL_INTEGRATED_SCENE_CONTRACT_PATH,
+    DEFAULT_MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_DOC_PATH,
+    DEFAULT_MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_PATH,
     DEFAULT_MINIMAL_INTEGRATED_SCENE_PROBE_DOC_PATH,
     DEFAULT_MINIMAL_INTEGRATED_SCENE_PROBE_PATH,
     LOCAL_IGNORED_MINIMAL_INTEGRATED_SCENE_PROBE_PATH,
@@ -12,9 +14,11 @@ from src.pipeline.newsroom_background_animation_minimal_integrated_scene import 
     SCENE_DURATION_SEC,
     SCENE_TIMELINE_LENGTH_FRAMES,
     build_default_minimal_integrated_scene_contract,
+    build_default_minimal_integrated_scene_operator_instruction,
     build_default_minimal_integrated_scene_probe_readback,
     materialize_local_minimal_integrated_scene_probe,
     render_minimal_integrated_scene_contract_markdown,
+    render_minimal_integrated_scene_operator_instruction_markdown,
     render_minimal_integrated_scene_probe_markdown,
     write_default_newsroom_background_animation_minimal_integrated_scene_artifacts,
 )
@@ -130,6 +134,48 @@ def test_probe_readback_is_integrated_scene_not_primitive_loop() -> None:
     }
 
 
+def test_operator_instruction_targets_existing_integrated_scene_probe() -> None:
+    _ensure_artifacts()
+    payload = build_default_minimal_integrated_scene_operator_instruction(root=ROOT)
+    artifact = _load(DEFAULT_MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_PATH)
+
+    assert artifact == payload
+    assert artifact["render_gate"] == "L0_no_render"
+    assert artifact["production_status"] == "diagnostic_only"
+    assert artifact["actual_audience_acceptance_claimed"] is False
+
+    classification = artifact["existing_scene_choreography_probe_classification"]
+    assert classification["classification"] == "insufficient_too_abstract"
+    assert classification["access_recovery_required"] is False
+    assert classification["duplicate_probe_created"] is False
+
+    target = artifact["selected_operator_preview_target"]
+    assert target["target_kind"] == "existing_minimal_integrated_scene_probe"
+    assert target["repo_relative_path"] == LOCAL_IGNORED_MINIMAL_INTEGRATED_SCENE_PROBE_PATH.as_posix()
+    assert target["target_exists"] is True
+    assert target["access_state"] == "verified_present"
+    assert target["access_evidence_level"] == "L3_VERIFIED_PRESENT"
+    assert target["launcher_or_open_command"].startswith("Invoke-Item -LiteralPath")
+
+    policy = artifact["tempo_policy_application"]
+    assert policy["default_light_reenactment_beat"] == "0.75s / 45 frames"
+    assert policy["primitive_tempo_loop_reopened"] is False
+
+    instruction = artifact["operator_instruction"]
+    assert instruction["requested_response"] == "short_freeform_observation_later"
+    assert len(instruction["look_for_points"]) == 3
+    assert instruction["do_not_request"] == [
+        "render",
+        "screenshot",
+        "production_public_judgment",
+        "git_operation",
+        "ymmp_commit",
+        "audio_tts",
+        "rss_or_news_fetch",
+        "card_redesign",
+    ]
+
+
 def test_materializer_can_be_called_directly() -> None:
     materialize_local_minimal_integrated_scene_probe(root=ROOT)
     assert (ROOT / LOCAL_IGNORED_MINIMAL_INTEGRATED_SCENE_PROBE_PATH).exists()
@@ -139,6 +185,7 @@ def test_markdown_outputs_match_renderers() -> None:
     _ensure_artifacts()
     contract = _load(DEFAULT_MINIMAL_INTEGRATED_SCENE_CONTRACT_PATH)
     probe = _load(DEFAULT_MINIMAL_INTEGRATED_SCENE_PROBE_PATH)
+    operator_instruction = _load(DEFAULT_MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_PATH)
 
     assert (ROOT / DEFAULT_MINIMAL_INTEGRATED_SCENE_CONTRACT_DOC_PATH).read_text(
         encoding="utf-8"
@@ -146,6 +193,9 @@ def test_markdown_outputs_match_renderers() -> None:
     assert (ROOT / DEFAULT_MINIMAL_INTEGRATED_SCENE_PROBE_DOC_PATH).read_text(
         encoding="utf-8"
     ) == render_minimal_integrated_scene_probe_markdown(probe)
+    assert (ROOT / DEFAULT_MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_DOC_PATH).read_text(
+        encoding="utf-8"
+    ) == render_minimal_integrated_scene_operator_instruction_markdown(operator_instruction)
 
 
 def test_outputs_do_not_request_render_or_media_artifacts() -> None:
@@ -155,6 +205,8 @@ def test_outputs_do_not_request_render_or_media_artifacts() -> None:
         ROOT / DEFAULT_MINIMAL_INTEGRATED_SCENE_CONTRACT_DOC_PATH,
         ROOT / DEFAULT_MINIMAL_INTEGRATED_SCENE_PROBE_PATH,
         ROOT / DEFAULT_MINIMAL_INTEGRATED_SCENE_PROBE_DOC_PATH,
+        ROOT / DEFAULT_MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_PATH,
+        ROOT / DEFAULT_MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_DOC_PATH,
     ]
     combined = "\n".join(path.read_text(encoding="utf-8") for path in generated_paths)
     combined_lower = combined.lower()

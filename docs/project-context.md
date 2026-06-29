@@ -79,7 +79,7 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
-Latest newsroom background animation minimal integrated scene probe decision (2026-06-30 JST):
+Latest newsroom background animation minimal integrated scene operator-surface decision (2026-06-30 JST):
 `newsroom_background_animation_minimal_integrated_scene_contract_v1_2026_06_29`
 implements the next slice after the stop-loss policy by creating one integrated
 review-only explanation beat. The local ignored probe exists at
@@ -98,6 +98,10 @@ The tracked artifacts are
 `samples/_probe/newsroom_handoff/background_animation_minimal_integrated_scene_probe_v1.json`,
 and
 `docs/verification/NEWSROOM_BACKGROUND_ANIMATION_MINIMAL_INTEGRATED_SCENE_PROBE_V1_2026-06-29.md`,
+plus the operator surface
+`samples/_probe/newsroom_handoff/background_animation_minimal_integrated_scene_operator_instruction_v1.json`
+and
+`docs/verification/NEWSROOM_BACKGROUND_ANIMATION_MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_V1_2026-06-30.md`,
 with implementation/tests in
 `src/pipeline/newsroom_background_animation_minimal_integrated_scene.py` /
 `tests/test_newsroom_background_animation_minimal_integrated_scene.py`.
@@ -109,8 +113,15 @@ and no production/public/order/audience acceptance is claimed. This decision
 did not launch YMM4 from the Agent, render, stage/commit `.ymmp`, create
 media/audio/TTS, modify card assets, continue dense script work, fetch real
 RSS/news or external reference video, or reopen primitive-only tempo/angle/
-expression tuning. The selected next axis is
-`newsroom-background-animation-minimal-integrated-scene-preview-operator-instruction-v1`.
+expression tuning. The previous scene choreography probe is classified as
+`insufficient_too_abstract` for another preview because it has already served
+as primitive-feasibility evidence and the active surface is now the integrated
+explanation beat. No duplicate `.ymmp` was created for the operator surface.
+The selected next axis is one freeform operator preview of the verified local
+minimal integrated scene target; the operator instruction asks only three
+look-for questions and requests no render, screenshot, production/public
+judgment, Git operation, `.ymmp` commit, audio/TTS, RSS/news fetch, or card
+redesign.
 
 Latest newsroom background animation stop-loss and minimal integrated scene plan decision (2026-06-29 JST):
 `newsroom_background_animation_mvp_policy_v1_2026_06_29` records the latest

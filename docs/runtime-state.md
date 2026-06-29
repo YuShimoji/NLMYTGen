@@ -1,6 +1,6 @@
 # Runtime State — NLMYTGen
 
-- **Newsroom background animation minimal integrated scene probe completed (2026-06-30 JST)**:
+- **Newsroom background animation minimal integrated scene operator surface completed (2026-06-30 JST)**:
   `newsroom-background-animation-minimal-integrated-scene-probe-v1` creates the
   first integrated background animation accent after the stop-loss policy. The
   local ignored probe is
@@ -11,6 +11,8 @@
   `docs/verification/NEWSROOM_BACKGROUND_ANIMATION_MINIMAL_INTEGRATED_SCENE_CONTRACT_V1_2026-06-29.md`,
   `samples/_probe/newsroom_handoff/background_animation_minimal_integrated_scene_probe_v1.json`,
   `docs/verification/NEWSROOM_BACKGROUND_ANIMATION_MINIMAL_INTEGRATED_SCENE_PROBE_V1_2026-06-29.md`,
+  `samples/_probe/newsroom_handoff/background_animation_minimal_integrated_scene_operator_instruction_v1.json`,
+  `docs/verification/NEWSROOM_BACKGROUND_ANIMATION_MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_V1_2026-06-30.md`,
   `src/pipeline/newsroom_background_animation_minimal_integrated_scene.py`, and
   `tests/test_newsroom_background_animation_minimal_integrated_scene.py`. The
   probe is a 720-frame / 12.0-second review-only explanation beat using existing
@@ -23,10 +25,15 @@
   cycling, complex speech balloon, full chaban scene, Agent-side YMM4 launch,
   render, media/audio/TTS generation, card asset modification, dense script
   work, real RSS/news fetch, external reference-video fetch, production/public
-  readiness claim, or actual audience/order acceptance claim occurred. The next
-  default axis is
-  `newsroom-background-animation-minimal-integrated-scene-preview-operator-instruction-v1`:
-  one freeform user preview of the verified local integrated scene target.
+  readiness claim, or actual audience/order acceptance claim occurred. The
+  previous scene choreography probe is classified as `insufficient_too_abstract`
+  for another preview because it already served as the primitive-feasibility
+  surface and the repo has advanced to an integrated explanation beat. No
+  duplicate `.ymmp` was created for this operator surface. The next default
+  axis is one freeform user preview of the verified local integrated scene
+  target using the operator instruction artifact; no render, screenshot,
+  production/public judgment, Git operation, `.ymmp` commit, audio/TTS,
+  RSS/news fetch, or card redesign is requested.
 - **Newsroom background animation stop-loss and minimal integrated scene plan completed (2026-06-29 JST)**:
   `newsroom-animation-lane-stop-loss-and-integration-plan-v1` records the
   latest user-side scene choreography preview observation and stops the

@@ -52,11 +52,17 @@ MINIMAL_INTEGRATED_SCENE_PROBE_ID = (
 MINIMAL_INTEGRATED_SCENE_CONTRACT_ID = (
     "newsroom_background_animation_minimal_integrated_scene_contract_v1_2026_06_29"
 )
+MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_ID = (
+    "newsroom_background_animation_minimal_integrated_scene_operator_instruction_v1_2026_06_30"
+)
 MINIMAL_INTEGRATED_SCENE_PROBE_SCHEMA_VERSION = (
     "newsroom_background_animation_minimal_integrated_scene_probe.v1"
 )
 MINIMAL_INTEGRATED_SCENE_CONTRACT_SCHEMA_VERSION = (
     "newsroom_background_animation_minimal_integrated_scene_contract.v1"
+)
+MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_SCHEMA_VERSION = (
+    "newsroom_background_animation_minimal_integrated_scene_operator_instruction.v1"
 )
 
 DEFAULT_MINIMAL_INTEGRATED_SCENE_PROBE_PATH = Path(
@@ -74,6 +80,14 @@ DEFAULT_MINIMAL_INTEGRATED_SCENE_CONTRACT_PATH = Path(
 DEFAULT_MINIMAL_INTEGRATED_SCENE_CONTRACT_DOC_PATH = Path(
     "docs/verification/"
     "NEWSROOM_BACKGROUND_ANIMATION_MINIMAL_INTEGRATED_SCENE_CONTRACT_V1_2026-06-29.md"
+)
+DEFAULT_MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_PATH = Path(
+    "samples/_probe/newsroom_handoff/"
+    "background_animation_minimal_integrated_scene_operator_instruction_v1.json"
+)
+DEFAULT_MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_DOC_PATH = Path(
+    "docs/verification/"
+    "NEWSROOM_BACKGROUND_ANIMATION_MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_V1_2026-06-30.md"
 )
 
 LOCAL_IGNORED_MINIMAL_INTEGRATED_SCENE_PROBE_PATH = Path(
@@ -212,9 +226,19 @@ def write_default_newsroom_background_animation_minimal_integrated_scene_artifac
         base / DEFAULT_MINIMAL_INTEGRATED_SCENE_PROBE_DOC_PATH,
         render_minimal_integrated_scene_probe_markdown(probe),
     )
+    operator_instruction = build_default_minimal_integrated_scene_operator_instruction(root=base)
+    _write_json(
+        base / DEFAULT_MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_PATH,
+        operator_instruction,
+    )
+    _write_text(
+        base / DEFAULT_MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_DOC_PATH,
+        render_minimal_integrated_scene_operator_instruction_markdown(operator_instruction),
+    )
     return {
         "minimal_integrated_scene_contract": contract,
         "minimal_integrated_scene_probe": probe,
+        "minimal_integrated_scene_operator_instruction": operator_instruction,
     }
 
 
@@ -292,6 +316,81 @@ def build_default_minimal_integrated_scene_probe_readback(
         "selected_next_axis": _next_axis_from_created(created),
         "not_accepted_scope": _not_accepted_scope(),
         "boundaries": _boundaries(local_probe_created=created),
+    }
+
+
+def build_default_minimal_integrated_scene_operator_instruction(
+    *,
+    root: str | Path | None = None,
+) -> dict[str, Any]:
+    base = Path(root) if root is not None else Path(".")
+    probe = build_default_minimal_integrated_scene_probe_readback(root=base)
+    access = _dict(probe.get("local_probe_access"))
+    return {
+        "artifact_id": MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_ID,
+        "operator_instruction_id": MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_ID,
+        "schema_version": MINIMAL_INTEGRATED_SCENE_OPERATOR_INSTRUCTION_SCHEMA_VERSION,
+        "review_status": "ready_for_operator_preview",
+        "production_status": "diagnostic_only",
+        "diagnostic_only": True,
+        "render_gate": "L0_no_render",
+        "actual_audience_acceptance_claimed": False,
+        "source_context": {
+            "source_contract_path": DEFAULT_MINIMAL_INTEGRATED_SCENE_CONTRACT_PATH.as_posix(),
+            "source_probe_readback_path": DEFAULT_MINIMAL_INTEGRATED_SCENE_PROBE_PATH.as_posix(),
+            "superseded_scene_choreography_probe_path": (
+                "_tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp"
+            ),
+        },
+        "existing_scene_choreography_probe_classification": {
+            "classification": "insufficient_too_abstract",
+            "reason": (
+                "The scene choreography probe already served as a primitive-feasibility "
+                "preview. Repo state has advanced to a minimal integrated explanation "
+                "beat, so another raw scene choreography preview would repeat the old surface."
+            ),
+            "access_recovery_required": False,
+            "duplicate_probe_created": False,
+        },
+        "selected_operator_preview_target": {
+            "target_kind": "existing_minimal_integrated_scene_probe",
+            "target_probe_id": MINIMAL_INTEGRATED_SCENE_PROBE_ID,
+            "repo_relative_path": access.get("repo_relative_path"),
+            "target_exists": access.get("target_exists"),
+            "access_state": access.get("access_state"),
+            "access_evidence_level": access.get("access_evidence_level"),
+            "file_full_path_current_host": access.get("file_full_path_current_host"),
+            "launcher_or_open_command": access.get("launcher_or_open_command"),
+        },
+        "tempo_policy_application": {
+            "default_light_reenactment_beat": "0.75s / 45 frames",
+            "quick_reaction_or_punch_variant": "0.5s / 30 frames, only when scene function needs it",
+            "readability_or_calm_explanation_variant": "1.0s / 60 frames, only when readability needs it",
+            "slow_upper_comparison": "1.5s / 90 frames, not default",
+            "primitive_tempo_loop_reopened": False,
+        },
+        "operator_instruction": {
+            "open_command": access.get("launcher_or_open_command"),
+            "requested_response": "short_freeform_observation_later",
+            "look_for_points": [
+                "Does the mini-scene feel like scene-directed motion rather than primitive playback?",
+                "Does 0.75s default timing work inside the scene, with 0.5s / 1.0s only where appropriate?",
+                "Is the next issue choreography semantics, timing, asset/layout, or YMM4/render mechanics?",
+            ],
+            "do_not_request": [
+                "render",
+                "screenshot",
+                "production_public_judgment",
+                "git_operation",
+                "ymmp_commit",
+                "audio_tts",
+                "rss_or_news_fetch",
+                "card_redesign",
+            ],
+        },
+        "local_probe_readback_summary": probe.get("local_probe_readback_summary"),
+        "not_accepted_scope": _not_accepted_scope(),
+        "boundaries": _boundaries(local_probe_created=False),
     }
 
 
@@ -400,6 +499,43 @@ def render_minimal_integrated_scene_probe_markdown(payload: dict[str, Any]) -> s
     lines.append(
         "The local probe is an ignored diagnostic .ymmp only. It is not rendered, "
         "not staged, not committed, and not production/public/audience acceptance."
+    )
+    lines.append("")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def render_minimal_integrated_scene_operator_instruction_markdown(payload: dict[str, Any]) -> str:
+    lines = [
+        "# Newsroom Background Animation Minimal Integrated Scene Operator Instruction v1",
+        "",
+        f"artifact_id: {payload.get('artifact_id')}",
+        f"schema_version: {payload.get('schema_version')}",
+        f"review_status: {payload.get('review_status')}",
+        f"production_status: {payload.get('production_status')}",
+        f"render_gate: {payload.get('render_gate')}",
+        "",
+    ]
+    _append_mapping(lines, "Source Context", payload.get("source_context"))
+    _append_mapping(
+        lines,
+        "Existing Scene Choreography Probe Classification",
+        payload.get("existing_scene_choreography_probe_classification"),
+    )
+    _append_mapping(
+        lines,
+        "Selected Operator Preview Target",
+        payload.get("selected_operator_preview_target"),
+    )
+    _append_mapping(lines, "Tempo Policy Application", payload.get("tempo_policy_application"))
+    _append_mapping(lines, "Operator Instruction", payload.get("operator_instruction"))
+    _append_mapping(lines, "Local Probe Readback Summary", payload.get("local_probe_readback_summary"))
+    _append_mapping(lines, "Not Accepted Scope", payload.get("not_accepted_scope"))
+    _append_mapping(lines, "Boundaries", payload.get("boundaries"))
+    lines.extend(["", "## Boundary Note", ""])
+    lines.append(
+        "This operator surface points to an existing ignored local diagnostic "
+        "probe. It does not request render, screenshots, media generation, "
+        "production/public judgment, or any Git operation."
     )
     lines.append("")
     return "\n".join(lines).rstrip() + "\n"
