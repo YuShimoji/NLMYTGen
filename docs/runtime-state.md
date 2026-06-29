@@ -1,5 +1,36 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom minimal animated explanation beat visual integration gap fix completed (2026-06-30 JST)**:
+  `newsroom-minimal-animated-explanation-beat-visual-integration-gap-fix-v1`
+  records the user-side v1 preview gap: the local ignored probe
+  `_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v1.ymmp`
+  opened and showed character nodding, but no visible card-like, overlay-like,
+  subtitle, or explanation text element was present. Structure audit confirms
+  the v1 probe contains only `GroupItem=8` and `ImageItem=8`; there is no
+  `TextItem` or `ShapeItem`. The root cause is
+  `contract_only_not_materialized`, with `overlay_role_readback_only` as a
+  contributing factor: the previous contract described overlay/readback
+  semantics, but the YMM4-visible probe did not materialize them. New tracked
+  artifacts are
+  `samples/_probe/newsroom_handoff/minimal_animated_explanation_beat_preview_gap_v1.json`,
+  `docs/verification/NEWSROOM_MINIMAL_ANIMATED_EXPLANATION_BEAT_PREVIEW_GAP_V1_2026-06-29.md`,
+  `samples/_probe/newsroom_handoff/minimal_animated_explanation_beat_visual_integration_gap_fix_v1.json`,
+  `docs/verification/NEWSROOM_MINIMAL_ANIMATED_EXPLANATION_BEAT_VISUAL_INTEGRATION_GAP_FIX_V1_2026-06-29.md`,
+  `src/pipeline/newsroom_minimal_animated_explanation_beat_visual_gap_fix.py`,
+  and
+  `tests/test_newsroom_minimal_animated_explanation_beat_visual_gap_fix.py`.
+  The ignored local v2 probe exists at
+  `_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v2_visible_integration.ymmp`;
+  it copies the v1 animation items unchanged and adds one full-duration plain
+  `TextItem` diagnostic explanation overlay. V2 readback passes with
+  `TextItem=1`, `GroupItem=8`, `ImageItem=8`, visible text/overlay item count
+  `1`, animation item count `16`, and git ignore confirmed by `.gitignore`
+  `_tmp/`. No animation tuning, animation-only probe, primitive/tempo loop,
+  render, Agent-side YMM4 launch, `.ymmp` stage/commit, media/audio/TTS
+  generation, real RSS/news fetch, external media fetch, card redesign, polished
+  visual card creation, dense script work, production/public readiness claim, or
+  audience/order acceptance claim occurred. The selected next axis is
+  `newsroom-minimal-animated-explanation-beat-v2-preview-operator-instruction-v1`.
 - **Newsroom minimal animated explanation beat mainline proof completed (2026-06-30 JST)**:
   `newsroom-minimal-animated-explanation-beat-in-mainline-pipeline-v1`
   returns the animation lane to mainline content integration after the MVP

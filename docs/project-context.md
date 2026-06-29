@@ -79,6 +79,42 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom minimal animated explanation beat visual integration gap fix decision (2026-06-30 JST):
+`newsroom_minimal_animated_explanation_beat_preview_gap_v1_2026_06_29`
+records the user-side v1 preview observation for
+`_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v1.ymmp`.
+The file opened and the character nod animation was visible, but no card-like,
+overlay-like, subtitle, or explanation text element was visible. The actual
+structure audit confirms `GroupItem=8` and `ImageItem=8` only; there is no
+`TextItem` or `ShapeItem` in v1. This means the previous integrated beat
+contract was not fully materialized in the YMM4-visible scene. The primary root
+cause is `contract_only_not_materialized`; the contributing factor is
+`overlay_role_readback_only`.
+
+The tracked artifacts are
+`samples/_probe/newsroom_handoff/minimal_animated_explanation_beat_preview_gap_v1.json`,
+`docs/verification/NEWSROOM_MINIMAL_ANIMATED_EXPLANATION_BEAT_PREVIEW_GAP_V1_2026-06-29.md`,
+`samples/_probe/newsroom_handoff/minimal_animated_explanation_beat_visual_integration_gap_fix_v1.json`,
+and
+`docs/verification/NEWSROOM_MINIMAL_ANIMATED_EXPLANATION_BEAT_VISUAL_INTEGRATION_GAP_FIX_V1_2026-06-29.md`,
+with implementation/tests in
+`src/pipeline/newsroom_minimal_animated_explanation_beat_visual_gap_fix.py` /
+`tests/test_newsroom_minimal_animated_explanation_beat_visual_gap_fix.py`.
+The ignored local v2 probe exists at
+`_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v2_visible_integration.ymmp`;
+it is verified present on this host, verified ignored by `.gitignore` `_tmp/`,
+and must remain untracked/uncommitted. V2 copies the v1 animation items
+unchanged and adds one full-duration plain `TextItem` diagnostic explanation
+overlay. Readback passes with `TextItem=1`, `GroupItem=8`, `ImageItem=8`,
+visible text/overlay item count `1`, and animation item count `16`. This
+decision did not tune nod speed, expression timing, or primitive motion; did
+not create an animation-only probe; did not launch YMM4 from the Agent; did not
+render, stage/commit `.ymmp`, generate media/audio/TTS, fetch real RSS/news or
+external media, redesign cards, create polished visual cards, continue dense
+script work, claim production/public readiness, or claim audience/order
+acceptance. The selected next axis is
+`newsroom-minimal-animated-explanation-beat-v2-preview-operator-instruction-v1`.
+
 Latest newsroom minimal animated explanation beat mainline proof decision (2026-06-30 JST):
 `newsroom_minimal_animated_explanation_beat_mainline_v1_2026_06_29`
 returns the background animation work to a mainline explanation beat instead of

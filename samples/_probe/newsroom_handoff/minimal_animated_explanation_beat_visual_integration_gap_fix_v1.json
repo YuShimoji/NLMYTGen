@@ -1,0 +1,258 @@
+{
+  "artifact_id": "newsroom_minimal_animated_explanation_beat_visual_integration_gap_fix_v1_2026_06_29",
+  "fix_id": "newsroom_minimal_animated_explanation_beat_visual_integration_gap_fix_v1_2026_06_29",
+  "schema_version": "newsroom_minimal_animated_explanation_beat_visual_integration_gap_fix.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "render_gate": "L0_no_render",
+  "actual_audience_acceptance_claimed": false,
+  "source_context": {
+    "source_mainline_proof_path": "samples/_probe/newsroom_handoff/minimal_animated_explanation_beat_mainline_v1.json",
+    "source_contract_path": "samples/_probe/newsroom_handoff/minimal_animated_explanation_beat_contract_v1.json",
+    "source_v1_probe_path": "_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v1.ymmp",
+    "v2_probe_path": "_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v2_visible_integration.ymmp",
+    "repo_root": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage"
+  },
+  "source_v1_probe_path": "_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v1.ymmp",
+  "user_observation": {
+    "source_observation_role": "user_opened_minimal_animated_explanation_beat_v1_probe",
+    "source_probe_path": "_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v1.ymmp",
+    "yym4_opened": true,
+    "minimal_integrated_scene_preview_observed": true,
+    "character_animation_visible": true,
+    "nod_visible": true,
+    "card_or_overlay_visible": false,
+    "subtitle_or_explanation_text_visible": "unknown_or_absent",
+    "integrated_explanation_beat_status": "fail_or_unproven",
+    "animation_accent_status": "pass",
+    "mainline_integration_gap": true,
+    "next_axis": "visual_integration_gap_audit_and_v2_materialization"
+  },
+  "actual_v1_readback": {
+    "readback_status": "structural_pass",
+    "target_exists": true,
+    "repo_relative_path": "_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v1.ymmp",
+    "file_sha256": "45d4b08862d3a2062bd828fb89a47d3a59ade8bbd25082e6c3777808dce3817f",
+    "file_size_bytes": 224099,
+    "timeline": {
+      "fps": 60,
+      "length_frames": 720,
+      "item_count": 16,
+      "item_type_counts": {
+        "GroupItem": 8,
+        "ImageItem": 8
+      },
+      "unexpected_item_types": []
+    },
+    "actual_item_type_counts": {
+      "GroupItem": 8,
+      "ImageItem": 8
+    },
+    "TextItem_count": 0,
+    "ShapeItem_count": 0,
+    "visible_text_item_count": 0,
+    "visible_shape_item_count": 0,
+    "visible_text_or_overlay_item_count": 0,
+    "visible_TextItem_subtitle_card_or_overlay_exists": false,
+    "visible_texts": [],
+    "animation_item_count": 16,
+    "git_check_ignore_result": {
+      "command": "git check-ignore -v -- _tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v1.ymmp",
+      "returncode": 0,
+      "stdout": ".gitignore:37:_tmp/\t_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v1.ymmp",
+      "stderr": "",
+      "ignored": true
+    },
+    "YMM4_launch_status": "not_launched",
+    "render_status": "not_rendered",
+    "audio_tts_status": "not_created"
+  },
+  "root_cause_classification": {
+    "primary": "contract_only_not_materialized",
+    "contributing": [
+      "overlay_role_readback_only"
+    ],
+    "ruled_out": [
+      "item_hidden_or_zero_duration",
+      "unknown"
+    ],
+    "rationale": "The v1 .ymmp has no visible TextItem/ShapeItem/subtitle/card item, so the integration claim was recorded in JSON/docs but not materialized into the YMM4-visible scene."
+  },
+  "v2_correction_plan": {
+    "status": "safe_to_materialize_plain_text_overlay",
+    "approach": "copy v1 animation items unchanged and add one full-duration TextItem",
+    "diagnostic_text": "説明beat: 台本・字幕・最小アニメを同じ場面で確認",
+    "visible_item_semantics": "plain TextItem overlay, not a designed card",
+    "animation_changes": "none",
+    "card_design_changes": "none",
+    "render_required": false,
+    "YMM4_launch_required_by_agent": false
+  },
+  "v2_visible_integration_probe": {
+    "artifact_id": "local_ignored_minimal_animated_explanation_beat_v2_visible_integration_probe",
+    "repo_relative_path": "_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v2_visible_integration.ymmp",
+    "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe",
+    "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\minimal_animated_explanation_beat_mainline_v2_visible_integration.ymmp",
+    "launcher_or_open_command": "Invoke-Item -LiteralPath \"C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\minimal_animated_explanation_beat_mainline_v2_visible_integration.ymmp\"",
+    "target_exists": true,
+    "access_state": "verified_present",
+    "access_evidence_level": "L3_VERIFIED_PRESENT",
+    "artifact_scope": "ignored_local_only",
+    "evidence_source": "current_host_filesystem_plus_git_check_ignore",
+    "git_check_ignore_result": {
+      "command": "git check-ignore -v -- _tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v2_visible_integration.ymmp",
+      "returncode": 0,
+      "stdout": ".gitignore:37:_tmp/\t_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v2_visible_integration.ymmp",
+      "stderr": "",
+      "ignored": true
+    },
+    "size": 232740,
+    "visible_text_or_overlay_item_count": 1,
+    "animation_item_count": 16,
+    "materialization_status": "materialized_ignored_local_probe"
+  },
+  "v2_readback": {
+    "readback_status": "structural_pass",
+    "target_exists": true,
+    "repo_relative_path": "_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v2_visible_integration.ymmp",
+    "file_sha256": "001cc6e3c32eb545e25c810f228f9b24dd287404ac68cefb15ac8908e3f512b6",
+    "file_size_bytes": 232740,
+    "timeline": {
+      "fps": 60,
+      "length_frames": 720,
+      "item_count": 17,
+      "item_type_counts": {
+        "TextItem": 1,
+        "GroupItem": 8,
+        "ImageItem": 8
+      },
+      "unexpected_item_types": []
+    },
+    "actual_item_type_counts": {
+      "TextItem": 1,
+      "GroupItem": 8,
+      "ImageItem": 8
+    },
+    "TextItem_count": 1,
+    "ShapeItem_count": 0,
+    "visible_text_item_count": 1,
+    "visible_shape_item_count": 0,
+    "visible_text_or_overlay_item_count": 1,
+    "visible_TextItem_subtitle_card_or_overlay_exists": true,
+    "visible_texts": [
+      "説明beat: 台本・字幕・最小アニメを同じ場面で確認"
+    ],
+    "animation_item_count": 16,
+    "git_check_ignore_result": {
+      "command": "git check-ignore -v -- _tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v2_visible_integration.ymmp",
+      "returncode": 0,
+      "stdout": ".gitignore:37:_tmp/\t_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v2_visible_integration.ymmp",
+      "stderr": "",
+      "ignored": true
+    },
+    "YMM4_launch_status": "not_launched",
+    "render_status": "not_rendered",
+    "audio_tts_status": "not_created"
+  },
+  "business_goal_outcome_contract": {
+    "problem_clear": {
+      "status": true,
+      "rationale": "the report explicitly acknowledges the v1 YMM4-visible integration gap"
+    },
+    "offer_clear": {
+      "status": true,
+      "rationale": "v2 adds one visible plain TextItem while keeping the animation accent unchanged"
+    },
+    "proof_clear": {
+      "status": true,
+      "rationale": "animation accent pass is separated from integrated explanation proof failure"
+    },
+    "boundary_clear": {
+      "status": true,
+      "rationale": "the fix avoids animation tuning, card polish, render, audio/TTS, and production claims"
+    },
+    "next_action_clear": {
+      "status": true,
+      "rationale": "newsroom-minimal-animated-explanation-beat-v2-preview-operator-instruction-v1"
+    },
+    "visual_supports_explanation": {
+      "status": "ready_for_one_preview",
+      "rationale": "the visible TextItem is present to support the explanation beat, pending user preview"
+    }
+  },
+  "selected_next_axis": "newsroom-minimal-animated-explanation-beat-v2-preview-operator-instruction-v1",
+  "next_recommended_axis": {
+    "selected": "newsroom-minimal-animated-explanation-beat-v2-preview-operator-instruction-v1",
+    "reason": "v2 local ignored probe exists, is ignored by git, and contains one visible TextItem plus the unchanged 16 animation items",
+    "if_v1_already_had_visible_items": "newsroom-minimal-overlay-visibility-fix-v1",
+    "if_materialization_not_worth_more_work": "newsroom-animation-accent-policy-closed-return-to-rss-dry-run-v1"
+  },
+  "not_accepted_scope": {
+    "render_proof": false,
+    "render_export_required_now": false,
+    "production_animation_quality": false,
+    "public_upload_or_public_readiness": false,
+    "real_rss_or_news_integration": false,
+    "card_redesign_or_density_work": false,
+    "dense_script_rewrite": false,
+    "external_reference_video_fetch": false,
+    "audio_or_tts_output": false,
+    "actual_order_or_audience_acceptance": false,
+    "speech_balloon_visual_acceptance": false,
+    "render_export_proof": false,
+    "public_readiness": false,
+    "real_RSS_news_integration": false,
+    "full_chaban_scene": false,
+    "audience_order_acceptance": false,
+    "animation_only_probe_loop": false,
+    "tempo_only_probe_loop": false,
+    "polished_visual_card": false
+  },
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "audio_tts_generated": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "real_RSS_news_fetch_performed": false,
+    "card_assets_modified": false,
+    "card_redesign_performed": false,
+    "dense_script_modified": false,
+    "animation_tuned": false,
+    "local_ignored_ymmp_created_in_this_slice": true,
+    "ymmp_or_media_staged_or_committed": false,
+    "production_public_readiness_claimed": false,
+    "actual_order_or_audience_acceptance_claimed": false
+  },
+  "inertia_check": [
+    {
+      "gate": "no_animation_only_probe",
+      "status": true
+    },
+    {
+      "gate": "no_animation_tuning",
+      "status": true
+    },
+    {
+      "gate": "no_primitive_loop",
+      "status": true
+    },
+    {
+      "gate": "no_tempo_loop",
+      "status": true
+    },
+    {
+      "gate": "no_card_polish_loop",
+      "status": true
+    },
+    {
+      "gate": "no_render_export_loop",
+      "status": true
+    },
+    {
+      "gate": "next_axis_is_visible_integration_preview",
+      "status": "newsroom-minimal-animated-explanation-beat-v2-preview-operator-instruction-v1"
+    }
+  ]
+}
