@@ -79,6 +79,39 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom yukkuri primitive preview observation and v2 motion-fix decision (2026-06-29 JST):
+`newsroom_yukkuri_animation_motion_contract_v1_2026_06_29` records the first
+user-side preview observation of the ignored local primitive probe and converts
+it into a motion-quality contract. The v1 probe opened in YMM4, the character
+was visible, head/body attachment had no major breakage, expressions switched,
+and animation was visible. The actionable warnings are motion speed, broad
+centerward X travel that reads as backward movement, underspecified
+facing/orientation, X anchor discontinuity between primitive segments, and a
+head nod that is too slow. Render/export was not checked and is not required at
+this point because the bottleneck is preview-level motion behavior, not render
+mechanics.
+
+The tracked readback and contract artifacts are
+`samples/_probe/newsroom_handoff/yukkuri_animation_primitive_preview_observation_v1.json`,
+`docs/verification/NEWSROOM_YUKKURI_ANIMATION_PRIMITIVE_PREVIEW_OBSERVATION_V1_2026-06-29.md`,
+`samples/_probe/newsroom_handoff/yukkuri_animation_motion_contract_v1.json`, and
+`docs/verification/NEWSROOM_YUKKURI_ANIMATION_MOTION_CONTRACT_V1_2026-06-29.md`,
+with implementation/tests in
+`src/pipeline/newsroom_yukkuri_animation_motion_contract.py` /
+`tests/test_newsroom_yukkuri_animation_motion_contract.py`. The ignored local
+v2 probe exists at
+`_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v2_motion_fix.ymmp`
+and must remain untracked/uncommitted. It is derived from tracked
+`samples/nod_head.ymmp`, keeps the GroupItem/ImageItem structure, shortens the
+timeline to 30 seconds, uses bounded neutral side entry/exit, carries `X=-96`
+as the shared anchor across adjacent beats, and makes head nods return to
+neutral through `0 -> negative -> 0` rotation routes. This decision did not
+launch YMM4 from the Agent, render, stage/commit `.ymmp`, create media/audio/TTS,
+modify cards, continue dense-script work, fetch real RSS/news or external
+reference video, or claim production/public/order/audience acceptance. The next
+default axis is
+`newsroom-yukkuri-animation-primitive-v2-preview-operator-instruction-v1`.
+
 Latest newsroom yukkuri animation primitive probe materialization decision (2026-06-28 artifact date; recorded 2026-06-29 JST):
 `newsroom_yukkuri_animation_primitive_probe_materialization_v1_2026_06_28`
 creates the previously reserved ignored local probe target at

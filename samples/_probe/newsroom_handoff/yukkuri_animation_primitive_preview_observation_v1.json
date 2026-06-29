@@ -1,0 +1,114 @@
+{
+  "artifact_id": "newsroom_yukkuri_animation_primitive_preview_observation_v1_2026_06_29",
+  "observation_id": "newsroom_yukkuri_animation_primitive_preview_observation_v1_2026_06_29",
+  "schema_version": "newsroom_yukkuri_animation_primitive_preview_observation.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "render_gate": "L0_no_render",
+  "source_v1_probe_path": "_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v1.ymmp",
+  "source_v1_probe_access": {
+    "artifact_id": "local_ignored_primitive_probe_v1",
+    "repo_relative_path": "_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v1.ymmp",
+    "folder_full_path_current_host": "C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe",
+    "file_full_path_current_host": "C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v1.ymmp",
+    "launcher_or_open_command": "Invoke-Item -LiteralPath \"C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe\\yukkuri_animation_primitive_probe_v1.ymmp\"",
+    "target_exists": true,
+    "access_state": "verified_present",
+    "access_evidence_level": "L3_VERIFIED_PRESENT",
+    "artifact_scope": "ignored_local_only",
+    "evidence_source": "current_host_filesystem_plus_git_check_ignore",
+    "git_check_ignore_result": {
+      "command": "git check-ignore -v -- _tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v1.ymmp",
+      "returncode": 0,
+      "stdout": ".gitignore:37:_tmp/\t_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v1.ymmp",
+      "stderr": "",
+      "ignored": true
+    },
+    "size": 260880
+  },
+  "user_observation_notes": [
+    "Character is displayed.",
+    "Body and head are connected without major breakage.",
+    "Character animates.",
+    "Motion is very slow.",
+    "Character moves backward toward the screen center.",
+    "The likely intended behavior is to control facing/orientation.",
+    "Several expressions switch.",
+    "No major breakage.",
+    "X position differs between animation segments, causing jumpy disconnected movement.",
+    "Head nod is very slow, with one vertical nod.",
+    "Render/export confirmation is unnecessary for this stage because opening the .ymmp proved enough."
+  ],
+  "normalized_user_observation": {
+    "source_observation_role": "user_opened_local_ymmp_preview",
+    "source_v1_probe_path": "_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v1.ymmp",
+    "yym4_opened": true,
+    "character_visible": true,
+    "head_body_attachment": "pass",
+    "expression_swap": "pass",
+    "character_motion_visible": "pass_with_warning",
+    "entrance_exit": "pass_with_facing_warning",
+    "small_position_move": "pass_with_anchor_continuity_warning",
+    "head_nod": "pass_with_timing_warning",
+    "major_visual_breakage": false,
+    "render_export_checked": false,
+    "render_export_required_now": false,
+    "next_axis": "motion_timing_facing_anchor_continuity_fix"
+  },
+  "primitive_classification": [
+    {
+      "primitive_id": "head_nod",
+      "classification": "pass_with_timing_warning",
+      "observed_issue": "nod was visible but excessively slow and read as one slow vertical nod",
+      "decision": "keep primitive, shorten beat timing, require return-to-neutral"
+    },
+    {
+      "primitive_id": "expression_swap",
+      "classification": "pass",
+      "observed_issue": "several expressions switched; no major breakage reported",
+      "decision": "keep expression swap but bind each expression to a beat span"
+    },
+    {
+      "primitive_id": "character_entrance_exit",
+      "classification": "pass_with_facing_warning",
+      "observed_issue": "movement appeared backward toward screen center, suggesting missing facing/orientation intent",
+      "decision": "avoid broad facing-dependent travel in v2; use neutral bounded side entry/exit"
+    },
+    {
+      "primitive_id": "small_position_move",
+      "classification": "pass_with_anchor_continuity_warning",
+      "observed_issue": "X position changed between animation segments and produced jumpy disconnected movement",
+      "decision": "carry X anchors across adjacent beats unless a cut is explicit"
+    }
+  ],
+  "render_export_checked": false,
+  "render_export_required_now": false,
+  "render_deferred_reason": "User-side preview opened the .ymmp and confirmed the current stage: the remaining problem is motion timing, facing, and anchor continuity, not render/export mechanics.",
+  "next_axis": "motion_timing_facing_anchor_continuity_fix",
+  "not_accepted_scope": {
+    "render_proof": false,
+    "render_export_required_now": false,
+    "production_animation_quality": false,
+    "public_upload_or_public_readiness": false,
+    "real_rss_or_news_integration": false,
+    "card_redesign_or_density_work": false,
+    "dense_script_rewrite": false,
+    "external_reference_video_fetch": false,
+    "audio_or_tts_output": false,
+    "actual_order_or_audience_acceptance": false,
+    "speech_balloon_visual_acceptance": false
+  },
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "audio_tts_generated": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "card_assets_modified": false,
+    "dense_script_modified": false,
+    "local_ignored_v2_probe_created": false,
+    "ymmp_or_media_staged_or_committed": false,
+    "production_public_readiness_claimed": false
+  }
+}
