@@ -1,0 +1,501 @@
+{
+  "artifact_id": "newsroom_yukkuri_animation_scene_choreography_probe_v1_2026_06_29",
+  "scene_choreography_probe_id": "newsroom_yukkuri_animation_scene_choreography_probe_v1_2026_06_29",
+  "schema_version": "newsroom_yukkuri_animation_scene_choreography_probe.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "render_gate": "L0_no_render",
+  "source_context": {
+    "source_v4_probe_path": "_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v4_tempo_sweep.ymmp",
+    "source_scene_choreography_contract_path": "samples/_probe/newsroom_handoff/yukkuri_animation_scene_choreography_contract_v1.json",
+    "source_nod_head_ymmp_path": "samples/nod_head.ymmp"
+  },
+  "scene_probe_materialization_status": "materialized_ignored_local_probe",
+  "scene_probe_access": {
+    "artifact_id": "local_ignored_scene_choreography_probe",
+    "repo_relative_path": "_tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp",
+    "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe",
+    "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\yukkuri_animation_scene_choreography_probe_v1.ymmp",
+    "launcher_or_open_command": "Invoke-Item -LiteralPath \"C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\yukkuri_animation_scene_choreography_probe_v1.ymmp\"",
+    "target_exists": true,
+    "access_state": "verified_present",
+    "access_evidence_level": "L3_VERIFIED_PRESENT",
+    "artifact_scope": "ignored_local_only",
+    "evidence_source": "current_host_filesystem_plus_git_check_ignore",
+    "git_check_ignore_result": {
+      "command": "git check-ignore -v -- _tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp",
+      "returncode": 0,
+      "stdout": ".gitignore:37:_tmp/\t_tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp",
+      "stderr": "",
+      "ignored": true
+    },
+    "size": 370078
+  },
+  "scene_probe_plan": {
+    "scene_id": "yukkuri_scene_choreography_probe_v1",
+    "duration_frames": 1080,
+    "duration_sec_at_60fps": 18.0,
+    "beat_count": 6,
+    "structure": [
+      "Beat A: neutral listening pose",
+      "Beat B: question/reaction cue",
+      "Beat C: one short nod or acknowledgement",
+      "Beat D: expression changes for reason",
+      "Beat E: one small intentional nudge",
+      "Beat F: return to stable explanation pose"
+    ],
+    "demonstrates": [
+      "one meaningful nod",
+      "one reasoned expression change sequence",
+      "one small intentional move",
+      "stable anchor continuity",
+      "no mechanical expression cycling",
+      "no meaningless forward/back drift",
+      "no production claim"
+    ],
+    "local_probe_path": "_tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp"
+  },
+  "scene_probe_readback": {
+    "readback_status": "structural_pass",
+    "target_exists": true,
+    "file_sha256": "8155eb4fe108cbed96dd29a2ffd104b09ae9698f838cec8b3b7367dde2909baf",
+    "file_size_bytes": 370078,
+    "timeline": {
+      "fps": 60,
+      "length_frames": 1080,
+      "length_sec": 18.0,
+      "item_count": 32,
+      "item_type_counts": {
+        "GroupItem": 16,
+        "ImageItem": 16
+      },
+      "unexpected_item_types": []
+    },
+    "scene_id": "yukkuri_scene_choreography_probe_v1",
+    "segment_count": 8,
+    "segment_readback": [
+      {
+        "beat_id": "beat_a_neutral_listening_pose_hold",
+        "scene_function": "establish_readable_listening_state",
+        "timing_range": "0.00-3.00 sec",
+        "frame": 0,
+        "length": 180,
+        "primitive_ids": [
+          "stable_hold"
+        ],
+        "item_count": 4,
+        "group_item_count": 2,
+        "image_item_count": 2,
+        "parent_x_values": [
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0
+        ],
+        "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_easy.png",
+        "status": "pass"
+      },
+      {
+        "beat_id": "beat_b_question_reaction_cue_hold",
+        "scene_function": "question_reaction_cue",
+        "timing_range": "3.00-6.00 sec",
+        "frame": 180,
+        "length": 180,
+        "primitive_ids": [
+          "expression_swap"
+        ],
+        "item_count": 4,
+        "group_item_count": 2,
+        "image_item_count": 2,
+        "parent_x_values": [
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0
+        ],
+        "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_panic.png",
+        "status": "pass"
+      },
+      {
+        "beat_id": "beat_c_one_short_ack_nod_active",
+        "scene_function": "single_acknowledgement",
+        "timing_range": "6.00-6.75 sec",
+        "frame": 360,
+        "length": 45,
+        "primitive_ids": [
+          "head_nod"
+        ],
+        "item_count": 4,
+        "group_item_count": 2,
+        "image_item_count": 2,
+        "parent_x_values": [
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0,
+          -8.0,
+          0.0
+        ],
+        "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_easy.png",
+        "status": "pass"
+      },
+      {
+        "beat_id": "beat_c_one_short_ack_nod_hold",
+        "scene_function": "single_acknowledgement",
+        "timing_range": "6.75-9.00 sec",
+        "frame": 405,
+        "length": 135,
+        "primitive_ids": [
+          "stable_hold"
+        ],
+        "item_count": 4,
+        "group_item_count": 2,
+        "image_item_count": 2,
+        "parent_x_values": [
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0
+        ],
+        "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_easy.png",
+        "status": "pass"
+      },
+      {
+        "beat_id": "beat_d_reasoned_expression_shift_hold",
+        "scene_function": "risk_emphasis_expression",
+        "timing_range": "9.00-12.00 sec",
+        "frame": 540,
+        "length": 180,
+        "primitive_ids": [
+          "expression_swap"
+        ],
+        "item_count": 4,
+        "group_item_count": 2,
+        "image_item_count": 2,
+        "parent_x_values": [
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0
+        ],
+        "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_anger.png",
+        "status": "pass"
+      },
+      {
+        "beat_id": "beat_e_one_small_intentional_nudge_active",
+        "scene_function": "intentional_small_emphasis_move",
+        "timing_range": "12.00-13.00 sec",
+        "frame": 720,
+        "length": 60,
+        "primitive_ids": [
+          "small_position_move"
+        ],
+        "item_count": 4,
+        "group_item_count": 2,
+        "image_item_count": 2,
+        "parent_x_values": [
+          -96.0,
+          -108.0,
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0
+        ],
+        "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_anger.png",
+        "status": "pass"
+      },
+      {
+        "beat_id": "beat_e_one_small_intentional_nudge_hold",
+        "scene_function": "intentional_small_emphasis_move",
+        "timing_range": "13.00-15.00 sec",
+        "frame": 780,
+        "length": 120,
+        "primitive_ids": [
+          "stable_hold"
+        ],
+        "item_count": 4,
+        "group_item_count": 2,
+        "image_item_count": 2,
+        "parent_x_values": [
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0
+        ],
+        "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_anger.png",
+        "status": "pass"
+      },
+      {
+        "beat_id": "beat_f_stable_explanation_pose_hold",
+        "scene_function": "return_to_stable_explanation_pose",
+        "timing_range": "15.00-18.00 sec",
+        "frame": 900,
+        "length": 180,
+        "primitive_ids": [
+          "expression_swap",
+          "stable_hold"
+        ],
+        "item_count": 4,
+        "group_item_count": 2,
+        "image_item_count": 2,
+        "parent_x_values": [
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0
+        ],
+        "face_file_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_easy.png",
+        "status": "pass"
+      }
+    ],
+    "scene_beat_readback": [
+      {
+        "scene_id": "yukkuri_scene_choreography_probe_v1",
+        "beat_id": "beat_a_neutral_listening_pose",
+        "scene_function": "establish_readable_listening_state",
+        "frame": 0,
+        "length": 180,
+        "timing_range": "0.00-3.00 sec",
+        "active_motion_span": 0,
+        "hold_span": 180,
+        "primitive_used": [
+          "stable_hold"
+        ],
+        "expression": "easy",
+        "expression_reason": "calm listening state before the question cue",
+        "motion_reason": "no movement; this beat prevents immediate primitive playback",
+        "segment_count": 1,
+        "parent_x_values": [
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0
+        ],
+        "face_file_paths": [
+          "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_easy.png"
+        ],
+        "anchor_continuity": "pass",
+        "status": "pass"
+      },
+      {
+        "scene_id": "yukkuri_scene_choreography_probe_v1",
+        "beat_id": "beat_b_question_reaction_cue",
+        "scene_function": "question_reaction_cue",
+        "frame": 180,
+        "length": 180,
+        "timing_range": "3.00-6.00 sec",
+        "active_motion_span": 0,
+        "hold_span": 180,
+        "primitive_used": [
+          "expression_swap"
+        ],
+        "expression": "panic",
+        "expression_reason": "concerned reaction to the question cue",
+        "motion_reason": "expression change carries the reaction; body stays anchored",
+        "segment_count": 1,
+        "parent_x_values": [
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0
+        ],
+        "face_file_paths": [
+          "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_panic.png"
+        ],
+        "anchor_continuity": "pass",
+        "status": "pass"
+      },
+      {
+        "scene_id": "yukkuri_scene_choreography_probe_v1",
+        "beat_id": "beat_c_one_short_ack_nod",
+        "scene_function": "single_acknowledgement",
+        "frame": 360,
+        "length": 180,
+        "timing_range": "6.00-9.00 sec",
+        "active_motion_span": 45,
+        "hold_span": 135,
+        "primitive_used": [
+          "head_nod"
+        ],
+        "expression": "easy",
+        "expression_reason": "return to explanation-ready confidence after the question cue",
+        "motion_reason": "one nod acknowledges the question; it is not repeated",
+        "segment_count": 2,
+        "parent_x_values": [
+          -96.0,
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0,
+          -8.0,
+          0.0,
+          0.0
+        ],
+        "face_file_paths": [
+          "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_easy.png"
+        ],
+        "anchor_continuity": "pass",
+        "status": "pass"
+      },
+      {
+        "scene_id": "yukkuri_scene_choreography_probe_v1",
+        "beat_id": "beat_d_reasoned_expression_shift",
+        "scene_function": "risk_emphasis_expression",
+        "frame": 540,
+        "length": 180,
+        "timing_range": "9.00-12.00 sec",
+        "active_motion_span": 0,
+        "hold_span": 180,
+        "primitive_used": [
+          "expression_swap"
+        ],
+        "expression": "anger",
+        "expression_reason": "risk/caution emphasis rather than mechanical sequence",
+        "motion_reason": "expression change carries emphasis; no extra body motion is needed",
+        "segment_count": 1,
+        "parent_x_values": [
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0
+        ],
+        "face_file_paths": [
+          "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_anger.png"
+        ],
+        "anchor_continuity": "pass",
+        "status": "pass"
+      },
+      {
+        "scene_id": "yukkuri_scene_choreography_probe_v1",
+        "beat_id": "beat_e_one_small_intentional_nudge",
+        "scene_function": "intentional_small_emphasis_move",
+        "frame": 720,
+        "length": 180,
+        "timing_range": "12.00-15.00 sec",
+        "active_motion_span": 60,
+        "hold_span": 120,
+        "primitive_used": [
+          "small_position_move"
+        ],
+        "expression": "anger",
+        "expression_reason": "same caution expression holds while the body makes one intentional nudge",
+        "motion_reason": "small nudge underlines emphasis, then returns to the shared anchor",
+        "segment_count": 2,
+        "parent_x_values": [
+          -96.0,
+          -108.0,
+          -96.0,
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0,
+          0.0
+        ],
+        "face_file_paths": [
+          "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_anger.png"
+        ],
+        "anchor_continuity": "pass",
+        "status": "pass"
+      },
+      {
+        "scene_id": "yukkuri_scene_choreography_probe_v1",
+        "beat_id": "beat_f_stable_explanation_pose",
+        "scene_function": "return_to_stable_explanation_pose",
+        "frame": 900,
+        "length": 180,
+        "timing_range": "15.00-18.00 sec",
+        "active_motion_span": 0,
+        "hold_span": 180,
+        "primitive_used": [
+          "expression_swap",
+          "stable_hold"
+        ],
+        "expression": "easy",
+        "expression_reason": "return from caution to explanation-ready tone",
+        "motion_reason": "no movement; the beat closes the mini-scene cleanly",
+        "segment_count": 1,
+        "parent_x_values": [
+          -96.0
+        ],
+        "head_rotation_values": [
+          0.0
+        ],
+        "face_file_paths": [
+          "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\samples\\characterAnimSample\\reimu_easy.png"
+        ],
+        "anchor_continuity": "pass",
+        "status": "pass"
+      }
+    ],
+    "semantic_checks": {
+      "status": "pass",
+      "checks": {
+        "one_meaningful_nod": true,
+        "one_small_intentional_move": true,
+        "mechanical_expression_cycle_avoided": true,
+        "all_beat_boundaries_anchor_x_minus_96": true,
+        "active_motion_shorter_than_hold_when_motion_exists": true
+      },
+      "nod_beats": [
+        "beat_c_one_short_ack_nod"
+      ],
+      "moving_beats": [
+        "beat_e_one_small_intentional_nudge"
+      ],
+      "expression_change_beats": [
+        "beat_b_question_reaction_cue",
+        "beat_d_reasoned_expression_shift",
+        "beat_f_stable_explanation_pose"
+      ]
+    },
+    "source_ymmp_copy_basis": "samples/nod_head.ymmp",
+    "git_check_ignore_result": {
+      "command": "git check-ignore -v -- _tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp",
+      "returncode": 0,
+      "stdout": ".gitignore:37:_tmp/\t_tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp",
+      "stderr": "",
+      "ignored": true
+    },
+    "local_probe_access_state": "verified_present",
+    "YMM4_launch_status": "not_launched",
+    "render_status": "not_rendered",
+    "audio_tts_status": "not_created"
+  },
+  "scene_probe_readback_summary": {
+    "status": "structural_pass",
+    "timeline_length_frames": 1080,
+    "timeline_length_sec": 18.0,
+    "item_type_counts": {
+      "GroupItem": 16,
+      "ImageItem": 16
+    },
+    "segment_count": 8,
+    "semantic_status": "pass"
+  },
+  "not_accepted_scope": {
+    "render_proof": false,
+    "render_export_required_now": false,
+    "production_animation_quality": false,
+    "public_upload_or_public_readiness": false,
+    "real_rss_or_news_integration": false,
+    "card_redesign_or_density_work": false,
+    "dense_script_rewrite": false,
+    "external_reference_video_fetch": false,
+    "audio_or_tts_output": false,
+    "actual_order_or_audience_acceptance": false,
+    "speech_balloon_visual_acceptance": false
+  },
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "audio_tts_generated": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "card_assets_modified": false,
+    "dense_script_modified": false,
+    "local_ignored_scene_probe_created": true,
+    "ymmp_or_media_staged_or_committed": false,
+    "production_public_readiness_claimed": false
+  }
+}

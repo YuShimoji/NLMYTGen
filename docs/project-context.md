@@ -79,6 +79,40 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom yukkuri v4 sweep readback and scene choreography decision (2026-06-29 JST):
+`newsroom_yukkuri_animation_scene_choreography_contract_v1_2026_06_29`
+records the user-side v4 tempo sweep observation and exits the speed-only
+loop. The normalized observation is that extreme slowness improved and the
+neck/nod primitive is technically possible, but the animation still lacks
+motion coherence: repeated nodding reads as primitive playback, expression
+swaps read as a mechanical cycle, and body movement still lacks a clear
+action. Render/export remains unnecessary because the current decision is
+scene choreography and motion semantics, not render mechanics.
+
+The tracked readback and contract artifacts are
+`samples/_probe/newsroom_handoff/yukkuri_animation_v4_tempo_sweep_observation_v1.json`,
+`docs/verification/NEWSROOM_YUKKURI_ANIMATION_V4_TEMPO_SWEEP_OBSERVATION_V1_2026-06-29.md`,
+`samples/_probe/newsroom_handoff/yukkuri_animation_scene_choreography_contract_v1.json`,
+`docs/verification/NEWSROOM_YUKKURI_ANIMATION_SCENE_CHOREOGRAPHY_CONTRACT_V1_2026-06-29.md`,
+and
+`samples/_probe/newsroom_handoff/yukkuri_animation_scene_choreography_probe_v1.json`,
+with implementation/tests in
+`src/pipeline/newsroom_yukkuri_animation_scene_choreography.py` /
+`tests/test_newsroom_yukkuri_animation_scene_choreography.py`. The ignored
+local scene probe exists at
+`_tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp`
+and must remain untracked/uncommitted. It is a 1080-frame / 18-second coherent
+mini-scene, not a tempo comparison: neutral listening pose, question/reaction
+cue, one short acknowledgement nod, reasoned caution expression, one small
+intentional nudge, and return to stable explanation pose. Structural readback
+passes with `GroupItem=16`, `ImageItem=16`, one meaningful nod, one small
+intentional move, reasoned expression changes, and stable `X=-96` anchor
+continuity. This decision did not launch YMM4 from the Agent, render,
+stage/commit `.ymmp`, create media/audio/TTS, modify cards, continue
+dense-script work, fetch real RSS/news or external reference video, or claim
+production/public/order/audience acceptance. The next default axis is
+`newsroom-yukkuri-animation-scene-choreography-preview-operator-instruction-v1`.
+
 Latest newsroom yukkuri v3 observation and v4 tempo sweep probe decision (2026-06-29 JST):
 `newsroom_yukkuri_animation_tempo_sweep_contract_v1_2026_06_29` records the
 user-side v3 preview observation and replaces single-value tempo tweaking with

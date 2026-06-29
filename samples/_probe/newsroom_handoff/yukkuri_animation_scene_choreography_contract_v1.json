@@ -1,0 +1,314 @@
+{
+  "artifact_id": "newsroom_yukkuri_animation_scene_choreography_contract_v1_2026_06_29",
+  "scene_choreography_contract_id": "newsroom_yukkuri_animation_scene_choreography_contract_v1_2026_06_29",
+  "schema_version": "newsroom_yukkuri_animation_scene_choreography_contract.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "render_gate": "L0_no_render",
+  "source_context": {
+    "source_v4_probe_path": "_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v4_tempo_sweep.ymmp",
+    "source_v4_observation_path": "samples/_probe/newsroom_handoff/yukkuri_animation_v4_tempo_sweep_observation_v1.json",
+    "source_tempo_sweep_contract_path": "samples/_probe/newsroom_handoff/yukkuri_animation_tempo_sweep_contract_v1.json",
+    "source_motion_contract_path": "samples/_probe/newsroom_handoff/yukkuri_animation_motion_contract_v1.json",
+    "source_nod_head_ymmp_path": "samples/nod_head.ymmp"
+  },
+  "provisional_tempo_policy": {
+    "active_reaction_motion": "30-60 frames",
+    "nod_reaction": "30-45 frames",
+    "small_nudge": "30-60 frames",
+    "entrance_or_larger_move": "45-75 frames",
+    "expression_change": "instantaneous or near-instantaneous switch with a readable hold",
+    "scene_beat_duration": "roughly 3-6 seconds",
+    "hold_policy": "most scene time should hold readable poses instead of drifting",
+    "status": "provisional_default_until_scene_preview"
+  },
+  "choreography_rules": [
+    "every motion must have a scene function",
+    "do not cycle expressions mechanically",
+    "expression changes must be tied to a beat reason",
+    "do not repeat nodding unless the scene calls for repeated acknowledgement",
+    "do not use body forward/back movement unless it expresses a clear action",
+    "prefer short active motion plus readable hold",
+    "preserve anchor continuity",
+    "avoid floaty drifting",
+    "avoid cheap-looking tilt loops by limiting nod count and using neutral return",
+    "treat cards and overlays as optional support, not the animation target"
+  ],
+  "anti_patterns_observed_in_v4": [
+    {
+      "anti_pattern_id": "repeated_nod_playback",
+      "observed_in_v4": true,
+      "replacement_rule": "use one acknowledgement nod only when the beat needs acknowledgement"
+    },
+    {
+      "anti_pattern_id": "mechanical_expression_cycle",
+      "observed_in_v4": true,
+      "replacement_rule": "bind every expression change to a reason in the scene beat"
+    },
+    {
+      "anti_pattern_id": "meaningless_forward_back_body_motion",
+      "observed_in_v4": true,
+      "replacement_rule": "use at most one small intentional nudge around the shared anchor"
+    },
+    {
+      "anti_pattern_id": "floaty_drift",
+      "observed_in_v4": true,
+      "replacement_rule": "limit active motion to 30-60 frames and hold the pose afterward"
+    }
+  ],
+  "scene_beat_mapping": [
+    {
+      "scene_id": "yukkuri_scene_choreography_probe_v1",
+      "scene_function": "establish_readable_listening_state",
+      "beat_id": "beat_a_neutral_listening_pose",
+      "viewer_information_goal": "show the character is present and listening before the reaction starts",
+      "character_state_before": "neutral stable pose at shared anchor",
+      "motion_reason": "no movement; this beat prevents immediate primitive playback",
+      "primitive_used": [
+        "stable_hold"
+      ],
+      "expression_reason": "calm listening state before the question cue",
+      "facing_policy": "neutral front-facing proxy; no facing flip is claimed",
+      "anchor_policy": "hold X=-96 throughout the beat",
+      "active_motion_span": 0,
+      "hold_span": 180,
+      "transition_policy": "hard scene start into stable pose",
+      "forbidden_motion": [
+        "nod_loop",
+        "body_forward_back",
+        "expression_cycle"
+      ],
+      "fallback_if_primitive_unavailable": "static easy expression at X=-96"
+    },
+    {
+      "scene_id": "yukkuri_scene_choreography_probe_v1",
+      "scene_function": "question_reaction_cue",
+      "beat_id": "beat_b_question_reaction_cue",
+      "viewer_information_goal": "mark that a question or concern has appeared",
+      "character_state_before": "neutral listening pose",
+      "motion_reason": "expression change carries the reaction; body stays anchored",
+      "primitive_used": [
+        "expression_swap"
+      ],
+      "expression_reason": "concerned reaction to the question cue",
+      "facing_policy": "keep facing stable; do not imply walking backward",
+      "anchor_policy": "hold X=-96 throughout the beat",
+      "active_motion_span": 0,
+      "hold_span": 180,
+      "transition_policy": "instant expression swap at beat boundary followed by readable hold",
+      "forbidden_motion": [
+        "extra_nod",
+        "body_forward_back",
+        "expression_cycle"
+      ],
+      "fallback_if_primitive_unavailable": "hold neutral expression and mark expression binding unresolved"
+    },
+    {
+      "scene_id": "yukkuri_scene_choreography_probe_v1",
+      "scene_function": "single_acknowledgement",
+      "beat_id": "beat_c_one_short_ack_nod",
+      "viewer_information_goal": "show a single acknowledgement before explanation continues",
+      "character_state_before": "question reaction pose",
+      "motion_reason": "one nod acknowledges the question; it is not repeated",
+      "primitive_used": [
+        "head_nod"
+      ],
+      "expression_reason": "return to explanation-ready confidence after the question cue",
+      "facing_policy": "head tilt only; no body direction change",
+      "anchor_policy": "hold X=-96 while the nod returns to neutral",
+      "active_motion_span": 45,
+      "hold_span": 135,
+      "transition_policy": "45-frame active nod followed by neutral hold",
+      "forbidden_motion": [
+        "second_nod",
+        "body_forward_back",
+        "expression_cycle"
+      ],
+      "fallback_if_primitive_unavailable": "skip nod and rely on the expression return to easy"
+    },
+    {
+      "scene_id": "yukkuri_scene_choreography_probe_v1",
+      "scene_function": "risk_emphasis_expression",
+      "beat_id": "beat_d_reasoned_expression_shift",
+      "viewer_information_goal": "mark the moment where the explanation turns to risk or caution",
+      "character_state_before": "explanation-ready pose",
+      "motion_reason": "expression change carries emphasis; no extra body motion is needed",
+      "primitive_used": [
+        "expression_swap"
+      ],
+      "expression_reason": "risk/caution emphasis rather than mechanical sequence",
+      "facing_policy": "keep facing stable",
+      "anchor_policy": "hold X=-96 throughout the beat",
+      "active_motion_span": 0,
+      "hold_span": 180,
+      "transition_policy": "instant expression swap at beat boundary followed by readable hold",
+      "forbidden_motion": [
+        "nod_loop",
+        "body_forward_back",
+        "random_expression_swap"
+      ],
+      "fallback_if_primitive_unavailable": "hold easy expression and mark caution expression unresolved"
+    },
+    {
+      "scene_id": "yukkuri_scene_choreography_probe_v1",
+      "scene_function": "intentional_small_emphasis_move",
+      "beat_id": "beat_e_one_small_intentional_nudge",
+      "viewer_information_goal": "show one small emphasis move tied to the caution point",
+      "character_state_before": "risk emphasis pose",
+      "motion_reason": "small nudge underlines emphasis, then returns to the shared anchor",
+      "primitive_used": [
+        "small_position_move"
+      ],
+      "expression_reason": "same caution expression holds while the body makes one intentional nudge",
+      "facing_policy": "lateral nudge only; no forward/back or facing claim",
+      "anchor_policy": "start and end at X=-96",
+      "active_motion_span": 60,
+      "hold_span": 120,
+      "transition_policy": "60-frame nudge followed by anchor hold",
+      "forbidden_motion": [
+        "body_forward_back",
+        "long_drift",
+        "second_nudge"
+      ],
+      "fallback_if_primitive_unavailable": "drop the nudge and keep the caution expression"
+    },
+    {
+      "scene_id": "yukkuri_scene_choreography_probe_v1",
+      "scene_function": "return_to_stable_explanation_pose",
+      "beat_id": "beat_f_stable_explanation_pose",
+      "viewer_information_goal": "settle the scene back into a stable explanation pose",
+      "character_state_before": "post-emphasis anchored pose",
+      "motion_reason": "no movement; the beat closes the mini-scene cleanly",
+      "primitive_used": [
+        "expression_swap",
+        "stable_hold"
+      ],
+      "expression_reason": "return from caution to explanation-ready tone",
+      "facing_policy": "neutral front-facing proxy; no facing flip is claimed",
+      "anchor_policy": "hold X=-96 throughout the beat",
+      "active_motion_span": 0,
+      "hold_span": 180,
+      "transition_policy": "instant expression return followed by readable hold",
+      "forbidden_motion": [
+        "closing_nod_loop",
+        "body_forward_back",
+        "extra_expression_cycle"
+      ],
+      "fallback_if_primitive_unavailable": "hold previous expression and mark close expression unresolved"
+    }
+  ],
+  "v1_scene_probe_plan": {
+    "scene_id": "yukkuri_scene_choreography_probe_v1",
+    "duration_frames": 1080,
+    "duration_sec_at_60fps": 18.0,
+    "beat_count": 6,
+    "structure": [
+      "Beat A: neutral listening pose",
+      "Beat B: question/reaction cue",
+      "Beat C: one short nod or acknowledgement",
+      "Beat D: expression changes for reason",
+      "Beat E: one small intentional nudge",
+      "Beat F: return to stable explanation pose"
+    ],
+    "demonstrates": [
+      "one meaningful nod",
+      "one reasoned expression change sequence",
+      "one small intentional move",
+      "stable anchor continuity",
+      "no mechanical expression cycling",
+      "no meaningless forward/back drift",
+      "no production claim"
+    ],
+    "local_probe_path": "_tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp"
+  },
+  "scene_probe_materialization_status": "materialized_ignored_local_probe",
+  "scene_probe_access": {
+    "artifact_id": "local_ignored_scene_choreography_probe",
+    "repo_relative_path": "_tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp",
+    "folder_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe",
+    "file_full_path_current_host": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\yukkuri_animation_scene_choreography_probe_v1.ymmp",
+    "launcher_or_open_command": "Invoke-Item -LiteralPath \"C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage\\_tmp\\newsroom_manual_probe\\yukkuri_animation_scene_choreography_probe_v1.ymmp\"",
+    "target_exists": true,
+    "access_state": "verified_present",
+    "access_evidence_level": "L3_VERIFIED_PRESENT",
+    "artifact_scope": "ignored_local_only",
+    "evidence_source": "current_host_filesystem_plus_git_check_ignore",
+    "git_check_ignore_result": {
+      "command": "git check-ignore -v -- _tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp",
+      "returncode": 0,
+      "stdout": ".gitignore:37:_tmp/\t_tmp/newsroom_manual_probe/yukkuri_animation_scene_choreography_probe_v1.ymmp",
+      "stderr": "",
+      "ignored": true
+    },
+    "size": 370078
+  },
+  "scene_probe_readback_summary": {
+    "status": "structural_pass",
+    "timeline_length_frames": 1080,
+    "timeline_length_sec": 18.0,
+    "item_type_counts": {
+      "GroupItem": 16,
+      "ImageItem": 16
+    },
+    "segment_count": 8,
+    "semantic_status": "pass"
+  },
+  "selected_next_axis": "newsroom-yukkuri-animation-scene-choreography-preview-operator-instruction-v1",
+  "next_recommended_axis": {
+    "selected": "newsroom-yukkuri-animation-scene-choreography-preview-operator-instruction-v1",
+    "reason": "ignored local scene choreography probe exists, is git-ignored, uses one meaningful nod, one small intentional nudge, reasoned expression changes, and stable anchor continuity",
+    "prerequisites": [
+      "keep scene choreography .ymmp ignored and unstaged",
+      "use preview-only operator observation before any render request",
+      "do not claim production/public acceptance"
+    ]
+  },
+  "not_accepted_scope": {
+    "render_proof": false,
+    "render_export_required_now": false,
+    "production_animation_quality": false,
+    "public_upload_or_public_readiness": false,
+    "real_rss_or_news_integration": false,
+    "card_redesign_or_density_work": false,
+    "dense_script_rewrite": false,
+    "external_reference_video_fetch": false,
+    "audio_or_tts_output": false,
+    "actual_order_or_audience_acceptance": false,
+    "speech_balloon_visual_acceptance": false
+  },
+  "boundaries": {
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "audio_tts_generated": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "card_assets_modified": false,
+    "dense_script_modified": false,
+    "local_ignored_scene_probe_created": true,
+    "ymmp_or_media_staged_or_committed": false,
+    "production_public_readiness_claimed": false
+  },
+  "inertia_check": [
+    {
+      "gate": "tempo_only_loop_exited",
+      "status": true
+    },
+    {
+      "gate": "no_card_polish_loop",
+      "status": true
+    },
+    {
+      "gate": "no_render_export_loop",
+      "status": true
+    },
+    {
+      "gate": "choreography_replaces_primitive_collage",
+      "status": true
+    },
+    {
+      "gate": "next_concrete_animation_milestone_named",
+      "status": "newsroom-yukkuri-animation-scene-choreography-preview-operator-instruction-v1"
+    }
+  ]
+}
