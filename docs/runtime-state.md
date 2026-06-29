@@ -1,5 +1,32 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom background animation minimal integrated scene probe completed (2026-06-30 JST)**:
+  `newsroom-background-animation-minimal-integrated-scene-probe-v1` creates the
+  first integrated background animation accent after the stop-loss policy. The
+  local ignored probe is
+  `_tmp/newsroom_manual_probe/background_animation_minimal_integrated_scene_probe_v1.ymmp`;
+  it exists on this host, is verified ignored by `.gitignore` `_tmp/`, and must
+  remain untracked/uncommitted. The tracked contract/readback artifacts are
+  `samples/_probe/newsroom_handoff/background_animation_minimal_integrated_scene_contract_v1.json`,
+  `docs/verification/NEWSROOM_BACKGROUND_ANIMATION_MINIMAL_INTEGRATED_SCENE_CONTRACT_V1_2026-06-29.md`,
+  `samples/_probe/newsroom_handoff/background_animation_minimal_integrated_scene_probe_v1.json`,
+  `docs/verification/NEWSROOM_BACKGROUND_ANIMATION_MINIMAL_INTEGRATED_SCENE_PROBE_V1_2026-06-29.md`,
+  `src/pipeline/newsroom_background_animation_minimal_integrated_scene.py`, and
+  `tests/test_newsroom_background_animation_minimal_integrated_scene.py`. The
+  probe is a 720-frame / 12.0-second review-only explanation beat using existing
+  `samples/nod_head.ymmp` material: stable start pose, one scene-reasoned
+  expression event at the key phrase, one 45-frame nod/reaction, and stable end
+  pose. Structural readback passes with 16 items (`GroupItem=8`,
+  `ImageItem=8`), 4 segments, no unexpected item types, one expression event,
+  one nod/reaction, all parent X values fixed at `-96.0`, and semantic status
+  pass. No body forward/back movement, repeated nodding, mechanical expression
+  cycling, complex speech balloon, full chaban scene, Agent-side YMM4 launch,
+  render, media/audio/TTS generation, card asset modification, dense script
+  work, real RSS/news fetch, external reference-video fetch, production/public
+  readiness claim, or actual audience/order acceptance claim occurred. The next
+  default axis is
+  `newsroom-background-animation-minimal-integrated-scene-preview-operator-instruction-v1`:
+  one freeform user preview of the verified local integrated scene target.
 - **Newsroom background animation stop-loss and minimal integrated scene plan completed (2026-06-29 JST)**:
   `newsroom-animation-lane-stop-loss-and-integration-plan-v1` records the
   latest user-side scene choreography preview observation and stops the

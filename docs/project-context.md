@@ -79,6 +79,39 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest newsroom background animation minimal integrated scene probe decision (2026-06-30 JST):
+`newsroom_background_animation_minimal_integrated_scene_contract_v1_2026_06_29`
+implements the next slice after the stop-loss policy by creating one integrated
+review-only explanation beat. The local ignored probe exists at
+`_tmp/newsroom_manual_probe/background_animation_minimal_integrated_scene_probe_v1.ymmp`;
+it is generated from the known `samples/nod_head.ymmp` route, verified present
+on this host, verified ignored by `.gitignore` `_tmp/`, and must remain
+untracked/uncommitted. The scene is 720 frames / 12.0 seconds at 60 fps: stable
+start pose, one expression event tied to the key phrase, one short
+nod/reaction, and stable end pose. It deliberately omits lateral emphasis,
+speech balloons, card redesign, full chaban acting, and body forward/back
+movement.
+
+The tracked artifacts are
+`samples/_probe/newsroom_handoff/background_animation_minimal_integrated_scene_contract_v1.json`,
+`docs/verification/NEWSROOM_BACKGROUND_ANIMATION_MINIMAL_INTEGRATED_SCENE_CONTRACT_V1_2026-06-29.md`,
+`samples/_probe/newsroom_handoff/background_animation_minimal_integrated_scene_probe_v1.json`,
+and
+`docs/verification/NEWSROOM_BACKGROUND_ANIMATION_MINIMAL_INTEGRATED_SCENE_PROBE_V1_2026-06-29.md`,
+with implementation/tests in
+`src/pipeline/newsroom_background_animation_minimal_integrated_scene.py` /
+`tests/test_newsroom_background_animation_minimal_integrated_scene.py`.
+Structural readback passes with `GroupItem=8`, `ImageItem=8`, four segments,
+one expression event, one nod/reaction, all parent X routes fixed at `-96.0`,
+no unexpected item types, and semantic checks pass. This is integrated-scene
+structure proof only: visual quality is pending a single freeform user preview,
+and no production/public/order/audience acceptance is claimed. This decision
+did not launch YMM4 from the Agent, render, stage/commit `.ymmp`, create
+media/audio/TTS, modify card assets, continue dense script work, fetch real
+RSS/news or external reference video, or reopen primitive-only tempo/angle/
+expression tuning. The selected next axis is
+`newsroom-background-animation-minimal-integrated-scene-preview-operator-instruction-v1`.
+
 Latest newsroom background animation stop-loss and minimal integrated scene plan decision (2026-06-29 JST):
 `newsroom_background_animation_mvp_policy_v1_2026_06_29` records the latest
 user-side scene choreography preview observation and converts it into an MVP
