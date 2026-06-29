@@ -5,7 +5,7 @@ schema_version: newsroom_yukkuri_animation_scene_choreography_contract.v1
 production_status: diagnostic_only
 render_gate: L0_no_render
 scene_probe_materialization_status: materialized_ignored_local_probe
-selected_next_axis: newsroom-yukkuri-animation-scene-choreography-preview-operator-instruction-v1
+selected_next_axis: newsroom-yukkuri-animation-scene-beat-integration-v1
 
 
 ## Source Context
@@ -21,18 +21,64 @@ selected_next_axis: newsroom-yukkuri-animation-scene-choreography-preview-operat
 ```
 
 
+## Tempo Default Policy
+
+```json
+{
+  "policy_id": "newsroom_yukkuri_animation_v4_tempo_default_policy_v1_2026_06_29",
+  "status": "active_for_scene_beat_integration",
+  "scene_dependency": true,
+  "default_tempo_band": "0.75s",
+  "default_frame_span_at_60fps": 45,
+  "default_use_case": "default light reenactment beat",
+  "use_case_policy": [
+    {
+      "use_case": "default light reenactment beat",
+      "tempo": "0.75s",
+      "frames_at_60fps": 45,
+      "note": "user-selected most natural"
+    },
+    {
+      "use_case": "quick reaction / punch / short emphasis",
+      "tempo": "0.5s",
+      "frames_at_60fps": 30,
+      "note": "acceptable but use selectively"
+    },
+    {
+      "use_case": "explanatory / readable / calmer beat",
+      "tempo": "1.0s",
+      "frames_at_60fps": 60,
+      "note": "acceptable, useful when readability matters"
+    },
+    {
+      "use_case": "slow upper comparison",
+      "tempo": "1.5s",
+      "frames_at_60fps": 90,
+      "note": "not default; contrast or special slow scene only"
+    }
+  ],
+  "next_axis": "newsroom-yukkuri-animation-scene-beat-integration-v1",
+  "source_user_observation": [
+    "0.75s looks the most natural.",
+    "However, the best duration depends on the scene.",
+    "1.0s is also within acceptable range.",
+    "0.5s is also within acceptable range.",
+    "No production/public/render approval was given."
+  ]
+}
+```
+
+
 ## Provisional Tempo Policy
 
 ```json
 {
-  "active_reaction_motion": "30-60 frames",
-  "nod_reaction": "30-45 frames",
-  "small_nudge": "30-60 frames",
-  "entrance_or_larger_move": "45-75 frames",
-  "expression_change": "instantaneous or near-instantaneous switch with a readable hold",
-  "scene_beat_duration": "roughly 3-6 seconds",
-  "hold_policy": "most scene time should hold readable poses instead of drifting",
-  "status": "provisional_default_until_scene_preview"
+  "default_reaction_motion": "45 frames / 0.75s",
+  "quick_reaction_or_punch": "30 frames / 0.5s",
+  "readability_heavy_or_calm_explanation": "60 frames / 1.0s",
+  "slow_upper_comparison": "90 frames / 1.5s",
+  "scene_dependency": true,
+  "status": "superseded_by_tempo_default_policy"
 }
 ```
 
@@ -46,6 +92,10 @@ selected_next_axis: newsroom-yukkuri-animation-scene-choreography-preview-operat
   "expression changes must be tied to a beat reason",
   "do not repeat nodding unless the scene calls for repeated acknowledgement",
   "do not use body forward/back movement unless it expresses a clear action",
+  "use 0.75s / 45 frames as the default light reenactment beat",
+  "use 0.5s / 30 frames only for quick reaction, punch, or short emphasis",
+  "use 1.0s / 60 frames for slower explanatory or readability-heavy moments",
+  "keep 1.5s / 90 frames as a slow comparison or special-case upper bound",
   "prefer short active motion plus readable hold",
   "preserve anchor continuity",
   "avoid floaty drifting",
@@ -55,14 +105,13 @@ selected_next_axis: newsroom-yukkuri-animation-scene-choreography-preview-operat
 ```
 
 
-## Anti Patterns Observed In V4
+## Scene Beat Integration Risks
 
-| anti_pattern_id | observed_in_v4 | replacement_rule |
+| risk_id | status | mitigation |
 | --- | --- | --- |
-| repeated_nod_playback | True | use one acknowledgement nod only when the beat needs acknowledgement |
-| mechanical_expression_cycle | True | bind every expression change to a reason in the scene beat |
-| meaningless_forward_back_body_motion | True | use at most one small intentional nudge around the shared anchor |
-| floaty_drift | True | limit active motion to 30-60 frames and hold the pose afterward |
+| primitive_only_tempo_loop | exited | use the tempo policy inside an actual scene/beat structure |
+| scene_dependent_timing | active | select 0.5s, 0.75s, or 1.0s by beat function instead of forcing one global value |
+| slow_upper_bound_overuse | guarded | do not use 1.5s as default; reserve it for contrast or a specific slow scene |
 
 
 ## Scene Beat Mapping
@@ -97,6 +146,7 @@ selected_next_axis: newsroom-yukkuri-animation-scene-choreography-preview-operat
     "one meaningful nod",
     "one reasoned expression change sequence",
     "one small intentional move",
+    "0.75s default active timing in a scene-beat structure",
     "stable anchor continuity",
     "no mechanical expression cycling",
     "no meaningless forward/back drift",
@@ -154,11 +204,11 @@ selected_next_axis: newsroom-yukkuri-animation-scene-choreography-preview-operat
 
 ```json
 {
-  "selected": "newsroom-yukkuri-animation-scene-choreography-preview-operator-instruction-v1",
-  "reason": "ignored local scene choreography probe exists, is git-ignored, uses one meaningful nod, one small intentional nudge, reasoned expression changes, and stable anchor continuity",
+  "selected": "newsroom-yukkuri-animation-scene-beat-integration-v1",
+  "reason": "the v4 sweep selected 0.75s / 45 frames as the default tempo; the next proof should apply 0.5s, 0.75s, and 1.0s by scene-beat function instead of running another primitive-only tempo sweep",
   "prerequisites": [
     "keep scene choreography .ymmp ignored and unstaged",
-    "use preview-only operator observation before any render request",
+    "use scene-beat integration before any render request",
     "do not claim production/public acceptance"
   ]
 }
@@ -191,8 +241,10 @@ selected_next_axis: newsroom-yukkuri-animation-scene-choreography-preview-operat
 | tempo_only_loop_exited | True |
 | no_card_polish_loop | True |
 | no_render_export_loop | True |
-| choreography_replaces_primitive_collage | True |
-| next_concrete_animation_milestone_named | newsroom-yukkuri-animation-scene-choreography-preview-operator-instruction-v1 |
+| default_tempo_policy_selected | 0.75s / 45 frames |
+| scene_dependent_variants_preserved | 0.5s and 1.0s |
+| scene_beat_integration_replaces_primitive_loop | True |
+| next_concrete_animation_milestone_named | newsroom-yukkuri-animation-scene-beat-integration-v1 |
 
 
 ## Boundary Note

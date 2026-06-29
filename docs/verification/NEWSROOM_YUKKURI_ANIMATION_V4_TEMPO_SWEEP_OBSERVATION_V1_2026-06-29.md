@@ -40,16 +40,66 @@ render_gate: L0_no_render
   "source_v4_probe_path": "_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v4_tempo_sweep.ymmp",
   "yym4_opened": true,
   "v4_preview_observed": true,
-  "extreme_slowness_improved": true,
-  "primitive_feasibility": "pass_or_strong_partial",
-  "neck_nod_status": "possible_but_cheap",
-  "expression_swap_status": "mechanical_cycle_warning",
-  "body_motion_status": "incoherent_forward_back_warning",
-  "overall_motion_coherence": "fail_or_warning",
+  "default_tempo_band": "0.75s",
+  "default_frame_span_at_60fps": 45,
+  "scene_dependency": true,
+  "one_second_status": "acceptable_variant_for_slower_explanatory_or_readability_heavy_moments",
+  "half_second_status": "acceptable_variant_for_quick_reaction_punch_or_small_emphasis",
+  "one_point_five_second_status": "not_selected_as_default_upper_comparison_or_special_slow_case_only",
   "tempo_loop_exit": true,
-  "next_axis": "scene_choreography_and_motion_semantics",
+  "primitive_only_loop_exit": true,
+  "next_axis": "newsroom-yukkuri-animation-scene-beat-integration-v1",
   "render_export_checked": false,
-  "render_export_required_now": false
+  "render_export_required_now": false,
+  "production_public_render_approval_given": false
+}
+```
+
+
+## Tempo Default Policy
+
+```json
+{
+  "policy_id": "newsroom_yukkuri_animation_v4_tempo_default_policy_v1_2026_06_29",
+  "status": "active_for_scene_beat_integration",
+  "scene_dependency": true,
+  "default_tempo_band": "0.75s",
+  "default_frame_span_at_60fps": 45,
+  "default_use_case": "default light reenactment beat",
+  "use_case_policy": [
+    {
+      "use_case": "default light reenactment beat",
+      "tempo": "0.75s",
+      "frames_at_60fps": 45,
+      "note": "user-selected most natural"
+    },
+    {
+      "use_case": "quick reaction / punch / short emphasis",
+      "tempo": "0.5s",
+      "frames_at_60fps": 30,
+      "note": "acceptable but use selectively"
+    },
+    {
+      "use_case": "explanatory / readable / calmer beat",
+      "tempo": "1.0s",
+      "frames_at_60fps": 60,
+      "note": "acceptable, useful when readability matters"
+    },
+    {
+      "use_case": "slow upper comparison",
+      "tempo": "1.5s",
+      "frames_at_60fps": 90,
+      "note": "not default; contrast or special slow scene only"
+    }
+  ],
+  "next_axis": "newsroom-yukkuri-animation-scene-beat-integration-v1",
+  "source_user_observation": [
+    "0.75s looks the most natural.",
+    "However, the best duration depends on the scene.",
+    "1.0s is also within acceptable range.",
+    "0.5s is also within acceptable range.",
+    "No production/public/render approval was given."
+  ]
 }
 ```
 
@@ -59,8 +109,8 @@ render_gate: L0_no_render
 ```json
 {
   "exit": true,
-  "reason": "The v4 probe proves speed is no longer the only blocker. The remaining failure is primitive collage: repeated nodding, mechanical expressions, and incoherent body movement.",
-  "next_axis": "scene_choreography_and_motion_semantics"
+  "reason": "The v4 sweep has selected a default timing policy: 0.75s / 45 frames is the most natural default, while 0.5s and 1.0s remain acceptable by scene. The next bottleneck is applying that policy inside scene beats, not another primitive-only fast/slow loop.",
+  "next_axis": "newsroom-yukkuri-animation-scene-beat-integration-v1"
 }
 ```
 
@@ -69,8 +119,8 @@ render_gate: L0_no_render
 
 ```json
 {
-  "status": "pass_or_strong_partial",
-  "reason": "neck/nod motion is technically possible, but needs scene-bound use"
+  "status": "not_reopened",
+  "reason": "this readback records tempo selection only; production animation quality remains unapproved"
 }
 ```
 
@@ -79,11 +129,10 @@ render_gate: L0_no_render
 
 ```json
 {
-  "status": "fail_or_warning",
+  "status": "deferred_to_scene_beat_integration",
   "issues": [
-    "repeated nodding reads as primitive playback",
-    "expression swaps read as a mechanical cycle",
-    "body forward/back movement lacks action meaning"
+    "duration choice depends on scene function",
+    "primitive timing should be evaluated inside a scene-beat structure"
   ]
 }
 ```

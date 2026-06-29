@@ -1,9 +1,10 @@
-"""Record the v4 tempo sweep observation and create a scene choreography probe.
+"""Record the v4 tempo sweep observation and scene-beat tempo policy.
 
-This slice exits the tempo-only loop. It binds the existing YMM4 primitive
-routes to a small scene where each motion has a reason. It does not launch
-YMM4, render, create audio/TTS, fetch external media, or claim production
-quality.
+This slice exits the primitive-only fast/slow loop by selecting the default
+tempo band from the user's v4 sweep observation. It keeps scene choreography
+artifacts diagnostic-only and routes the next proof to scene-beat integration.
+It does not launch YMM4, render, create audio/TTS, fetch external media, or
+claim production quality.
 """
 
 from __future__ import annotations
@@ -87,10 +88,10 @@ LOCAL_IGNORED_SCENE_CHOREOGRAPHY_PROBE_PATH = Path(
 )
 
 NEXT_AXIS_SCENE_PREVIEW = (
-    "newsroom-yukkuri-animation-scene-choreography-preview-operator-instruction-v1"
+    "newsroom-yukkuri-animation-scene-beat-integration-v1"
 )
 FALLBACK_AXIS_SCENE_IMPLEMENTATION = (
-    "newsroom-yukkuri-animation-scene-choreography-implementation-v1"
+    "newsroom-yukkuri-animation-scene-beat-integration-prep-v1"
 )
 EXPRESSION_BINDING_AXIS = (
     "newsroom-yukkuri-animation-expression-event-binding-v1"
@@ -111,36 +112,72 @@ NORMALIZED_V4_SWEEP_OBSERVATION: dict[str, Any] = {
     "source_v4_probe_path": LOCAL_IGNORED_V4_TEMPO_SWEEP_PATH.as_posix(),
     "yym4_opened": True,
     "v4_preview_observed": True,
-    "extreme_slowness_improved": True,
-    "primitive_feasibility": "pass_or_strong_partial",
-    "neck_nod_status": "possible_but_cheap",
-    "expression_swap_status": "mechanical_cycle_warning",
-    "body_motion_status": "incoherent_forward_back_warning",
-    "overall_motion_coherence": "fail_or_warning",
+    "default_tempo_band": "0.75s",
+    "default_frame_span_at_60fps": 45,
+    "scene_dependency": True,
+    "one_second_status": "acceptable_variant_for_slower_explanatory_or_readability_heavy_moments",
+    "half_second_status": "acceptable_variant_for_quick_reaction_punch_or_small_emphasis",
+    "one_point_five_second_status": "not_selected_as_default_upper_comparison_or_special_slow_case_only",
     "tempo_loop_exit": True,
-    "next_axis": "scene_choreography_and_motion_semantics",
+    "primitive_only_loop_exit": True,
+    "next_axis": NEXT_AXIS_SCENE_PREVIEW,
     "render_export_checked": False,
     "render_export_required_now": False,
+    "production_public_render_approval_given": False,
 }
 
 V4_USER_OBSERVATION_NOTES = [
-    "Extreme slowness improved compared with the first primitive probe.",
-    "The file reads as repeated nodding rather than a coherent scene.",
-    "Expressions appear to switch mechanically in sequence.",
-    "Whole-body forward/back movement remains incoherent.",
-    "Neck/nod motion is technically possible, but cheap-looking at this stage.",
-    "The next bottleneck is choreography and scene semantics, not speed.",
+    "0.75s looks the most natural.",
+    "However, the best duration depends on the scene.",
+    "1.0s is also within acceptable range.",
+    "0.5s is also within acceptable range.",
+    "No production/public/render approval was given.",
 ]
 
+TEMPO_DEFAULT_POLICY: dict[str, Any] = {
+    "policy_id": "newsroom_yukkuri_animation_v4_tempo_default_policy_v1_2026_06_29",
+    "status": "active_for_scene_beat_integration",
+    "scene_dependency": True,
+    "default_tempo_band": "0.75s",
+    "default_frame_span_at_60fps": 45,
+    "default_use_case": "default light reenactment beat",
+    "use_case_policy": [
+        {
+            "use_case": "default light reenactment beat",
+            "tempo": "0.75s",
+            "frames_at_60fps": 45,
+            "note": "user-selected most natural",
+        },
+        {
+            "use_case": "quick reaction / punch / short emphasis",
+            "tempo": "0.5s",
+            "frames_at_60fps": 30,
+            "note": "acceptable but use selectively",
+        },
+        {
+            "use_case": "explanatory / readable / calmer beat",
+            "tempo": "1.0s",
+            "frames_at_60fps": 60,
+            "note": "acceptable, useful when readability matters",
+        },
+        {
+            "use_case": "slow upper comparison",
+            "tempo": "1.5s",
+            "frames_at_60fps": 90,
+            "note": "not default; contrast or special slow scene only",
+        },
+    ],
+    "next_axis": NEXT_AXIS_SCENE_PREVIEW,
+    "source_user_observation": V4_USER_OBSERVATION_NOTES,
+}
+
 PROVISIONAL_TEMPO_POLICY: dict[str, Any] = {
-    "active_reaction_motion": "30-60 frames",
-    "nod_reaction": "30-45 frames",
-    "small_nudge": "30-60 frames",
-    "entrance_or_larger_move": "45-75 frames",
-    "expression_change": "instantaneous or near-instantaneous switch with a readable hold",
-    "scene_beat_duration": "roughly 3-6 seconds",
-    "hold_policy": "most scene time should hold readable poses instead of drifting",
-    "status": "provisional_default_until_scene_preview",
+    "default_reaction_motion": "45 frames / 0.75s",
+    "quick_reaction_or_punch": "30 frames / 0.5s",
+    "readability_heavy_or_calm_explanation": "60 frames / 1.0s",
+    "slow_upper_comparison": "90 frames / 1.5s",
+    "scene_dependency": True,
+    "status": "superseded_by_tempo_default_policy",
 }
 
 CHOREOGRAPHY_RULES = [
@@ -149,6 +186,10 @@ CHOREOGRAPHY_RULES = [
     "expression changes must be tied to a beat reason",
     "do not repeat nodding unless the scene calls for repeated acknowledgement",
     "do not use body forward/back movement unless it expresses a clear action",
+    "use 0.75s / 45 frames as the default light reenactment beat",
+    "use 0.5s / 30 frames only for quick reaction, punch, or short emphasis",
+    "use 1.0s / 60 frames for slower explanatory or readability-heavy moments",
+    "keep 1.5s / 90 frames as a slow comparison or special-case upper bound",
     "prefer short active motion plus readable hold",
     "preserve anchor continuity",
     "avoid floaty drifting",
@@ -156,26 +197,21 @@ CHOREOGRAPHY_RULES = [
     "treat cards and overlays as optional support, not the animation target",
 ]
 
-V4_OBSERVED_ANTI_PATTERNS = [
+SCENE_BEAT_INTEGRATION_RISKS = [
     {
-        "anti_pattern_id": "repeated_nod_playback",
-        "observed_in_v4": True,
-        "replacement_rule": "use one acknowledgement nod only when the beat needs acknowledgement",
+        "risk_id": "primitive_only_tempo_loop",
+        "status": "exited",
+        "mitigation": "use the tempo policy inside an actual scene/beat structure",
     },
     {
-        "anti_pattern_id": "mechanical_expression_cycle",
-        "observed_in_v4": True,
-        "replacement_rule": "bind every expression change to a reason in the scene beat",
+        "risk_id": "scene_dependent_timing",
+        "status": "active",
+        "mitigation": "select 0.5s, 0.75s, or 1.0s by beat function instead of forcing one global value",
     },
     {
-        "anti_pattern_id": "meaningless_forward_back_body_motion",
-        "observed_in_v4": True,
-        "replacement_rule": "use at most one small intentional nudge around the shared anchor",
-    },
-    {
-        "anti_pattern_id": "floaty_drift",
-        "observed_in_v4": True,
-        "replacement_rule": "limit active motion to 30-60 frames and hold the pose afterward",
+        "risk_id": "slow_upper_bound_overuse",
+        "status": "guarded",
+        "mitigation": "do not use 1.5s as default; reserve it for contrast or a specific slow scene",
     },
 ]
 
@@ -361,25 +397,27 @@ def build_default_v4_sweep_observation(
         "source_tempo_sweep_contract_path": DEFAULT_TEMPO_SWEEP_CONTRACT_PATH.as_posix(),
         "user_observation_notes": V4_USER_OBSERVATION_NOTES,
         "normalized_user_observation": NORMALIZED_V4_SWEEP_OBSERVATION,
+        "tempo_default_policy": TEMPO_DEFAULT_POLICY,
         "tempo_only_loop_exit": {
             "exit": True,
             "reason": (
-                "The v4 probe proves speed is no longer the only blocker. The "
-                "remaining failure is primitive collage: repeated nodding, "
-                "mechanical expressions, and incoherent body movement."
+                "The v4 sweep has selected a default timing policy: 0.75s / "
+                "45 frames is the most natural default, while 0.5s and 1.0s "
+                "remain acceptable by scene. The next bottleneck is applying "
+                "that policy inside scene beats, not another primitive-only "
+                "fast/slow loop."
             ),
-            "next_axis": "scene_choreography_and_motion_semantics",
+            "next_axis": NEXT_AXIS_SCENE_PREVIEW,
         },
         "primitive_feasibility_judgment": {
-            "status": "pass_or_strong_partial",
-            "reason": "neck/nod motion is technically possible, but needs scene-bound use",
+            "status": "not_reopened",
+            "reason": "this readback records tempo selection only; production animation quality remains unapproved",
         },
         "motion_coherence_warning": {
-            "status": "fail_or_warning",
+            "status": "deferred_to_scene_beat_integration",
             "issues": [
-                "repeated nodding reads as primitive playback",
-                "expression swaps read as a mechanical cycle",
-                "body forward/back movement lacks action meaning",
+                "duration choice depends on scene function",
+                "primitive timing should be evaluated inside a scene-beat structure",
             ],
         },
         "render_export_checked": False,
@@ -412,9 +450,10 @@ def build_default_scene_choreography_contract(
             "source_motion_contract_path": DEFAULT_MOTION_CONTRACT_PATH.as_posix(),
             "source_nod_head_ymmp_path": SOURCE_NOD_HEAD_YMMP_PATH.as_posix(),
         },
+        "tempo_default_policy": TEMPO_DEFAULT_POLICY,
         "provisional_tempo_policy": PROVISIONAL_TEMPO_POLICY,
         "choreography_rules": CHOREOGRAPHY_RULES,
-        "anti_patterns_observed_in_v4": V4_OBSERVED_ANTI_PATTERNS,
+        "scene_beat_integration_risks": SCENE_BEAT_INTEGRATION_RISKS,
         "scene_beat_mapping": _scene_beat_contract_rows(),
         "v1_scene_probe_plan": _scene_probe_plan(),
         "scene_probe_materialization_status": probe_payload["scene_probe_materialization_status"],
@@ -426,7 +465,7 @@ def build_default_scene_choreography_contract(
             "reason": _next_axis_reason(scene_created=scene_created, probe_payload=probe_payload),
             "prerequisites": [
                 "keep scene choreography .ymmp ignored and unstaged",
-                "use preview-only operator observation before any render request",
+                "use scene-beat integration before any render request",
                 "do not claim production/public acceptance",
             ],
         },
@@ -529,6 +568,7 @@ def render_v4_sweep_observation_markdown(payload: dict[str, Any]) -> str:
     ]
     _append_mapping(lines, "Source V4 Probe Access", payload.get("source_v4_probe_access"))
     _append_mapping(lines, "Normalized User Observation", payload.get("normalized_user_observation"))
+    _append_mapping(lines, "Tempo Default Policy", payload.get("tempo_default_policy"))
     _append_mapping(lines, "Tempo Only Loop Exit", payload.get("tempo_only_loop_exit"))
     _append_mapping(lines, "Primitive Feasibility Judgment", payload.get("primitive_feasibility_judgment"))
     _append_mapping(lines, "Motion Coherence Warning", payload.get("motion_coherence_warning"))
@@ -564,13 +604,14 @@ def render_scene_choreography_contract_markdown(payload: dict[str, Any]) -> str:
         "",
     ]
     _append_mapping(lines, "Source Context", payload.get("source_context"))
+    _append_mapping(lines, "Tempo Default Policy", payload.get("tempo_default_policy"))
     _append_mapping(lines, "Provisional Tempo Policy", payload.get("provisional_tempo_policy"))
     _append_mapping(lines, "Choreography Rules", payload.get("choreography_rules"))
     _append_rows(
         lines,
-        "Anti Patterns Observed In V4",
-        ["anti_pattern_id", "observed_in_v4", "replacement_rule"],
-        payload.get("anti_patterns_observed_in_v4"),
+        "Scene Beat Integration Risks",
+        ["risk_id", "status", "mitigation"],
+        payload.get("scene_beat_integration_risks"),
     )
     _append_rows(
         lines,
@@ -883,6 +924,7 @@ def _scene_probe_plan() -> dict[str, Any]:
             "one meaningful nod",
             "one reasoned expression change sequence",
             "one small intentional move",
+            "0.75s default active timing in a scene-beat structure",
             "stable anchor continuity",
             "no mechanical expression cycling",
             "no meaningless forward/back drift",
@@ -908,9 +950,9 @@ def _next_axis(*, scene_created: bool, probe_payload: dict[str, Any]) -> str:
 def _next_axis_reason(*, scene_created: bool, probe_payload: dict[str, Any]) -> str:
     if scene_created:
         return (
-            "ignored local scene choreography probe exists, is git-ignored, "
-            "uses one meaningful nod, one small intentional nudge, reasoned "
-            "expression changes, and stable anchor continuity"
+            "the v4 sweep selected 0.75s / 45 frames as the default tempo; "
+            "the next proof should apply 0.5s, 0.75s, and 1.0s by scene-beat "
+            "function instead of running another primitive-only tempo sweep"
         )
     return probe_payload.get("scene_probe_readback_summary", {}).get("reason", "scene probe materialization blocked")
 
@@ -935,7 +977,9 @@ def _inertia_check(next_axis: str) -> list[dict[str, Any]]:
         {"gate": "tempo_only_loop_exited", "status": True},
         {"gate": "no_card_polish_loop", "status": True},
         {"gate": "no_render_export_loop", "status": True},
-        {"gate": "choreography_replaces_primitive_collage", "status": True},
+        {"gate": "default_tempo_policy_selected", "status": "0.75s / 45 frames"},
+        {"gate": "scene_dependent_variants_preserved", "status": "0.5s and 1.0s"},
+        {"gate": "scene_beat_integration_replaces_primitive_loop", "status": True},
         {"gate": "next_concrete_animation_milestone_named", "status": next_axis},
     ]
 

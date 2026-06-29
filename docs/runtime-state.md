@@ -1,13 +1,18 @@
 # Runtime State — NLMYTGen
 
-- **Newsroom yukkuri v4 sweep readback and scene choreography probe completed (2026-06-29 JST)**:
+- **Newsroom yukkuri v4 tempo default policy and scene-beat route completed (2026-06-29 JST)**:
   `newsroom-yukkuri-animation-v4-sweep-readback-and-scene-choreography-probe-v1`
-  normalizes the user-side v4 tempo sweep observation: extreme slowness is
-  improved and the neck/nod primitive is technically possible, but the result
-  still reads as repeated nodding, mechanical expression cycling, and
-  incoherent body forward/back movement. The slice exits the tempo-only loop
-  and moves the next proof to scene choreography / motion semantics. New
-  tracked artifacts are
+  now normalizes the latest user-side v4 tempo sweep observation: `0.75s`
+  looks the most natural, the best duration depends on the scene, and `1.0s`
+  plus `0.5s` are both within acceptable range. No production/public/render
+  approval was given. The active tempo default policy is `0.75s` / 45 frames
+  at 60 fps for default light reenactment beats, with `0.5s` / 30 frames kept
+  for quick reaction / punch / short emphasis and `1.0s` / 60 frames kept for
+  slower explanatory or readability-heavy moments. `1.5s` / 90 frames is not
+  selected as default and remains only an upper comparison or special slow
+  scene case. This exits the primitive-only fast/slow loop; the next route is
+  `newsroom-yukkuri-animation-scene-beat-integration-v1`. Updated tracked
+  artifacts are
   `samples/_probe/newsroom_handoff/yukkuri_animation_v4_tempo_sweep_observation_v1.json`,
   `docs/verification/NEWSROOM_YUKKURI_ANIMATION_V4_TEMPO_SWEEP_OBSERVATION_V1_2026-06-29.md`,
   `samples/_probe/newsroom_handoff/yukkuri_animation_scene_choreography_contract_v1.json`,
@@ -24,17 +29,13 @@
   stable explanation pose. Structural readback passes with 32 items
   (`GroupItem=16`, `ImageItem=16`), 8 materialized segments, one meaningful
   nod, one small intentional move, reasoned expression changes, and stable
-  `X=-96` anchor continuity. The provisional tempo policy is active reaction
-  motion 30-60 frames, nod/reaction 30-45 frames, small nudge 30-60 frames,
-  larger move 45-75 frames, instant/near-instant expression changes with
-  readable holds, and 3-6 second scene beats. No Agent-side YMM4 launch,
-  render, `.ymmp` stage/commit, media/audio/TTS generation, card modification,
-  dense script work, real RSS/news fetch, external reference-video fetch,
-  production/public readiness claim, or actual audience/order acceptance claim
-  occurred. The next default axis is
-  `newsroom-yukkuri-animation-scene-choreography-preview-operator-instruction-v1`:
-  open only the scene choreography probe, do not render, and return whether the
-  mini-scene feels coherent enough to continue into scene-beat integration.
+  `X=-96` anchor continuity. No Agent-side YMM4 launch, render, `.ymmp`
+  stage/commit, media/audio/TTS generation, card modification, dense script
+  work, real RSS/news fetch, external reference-video fetch, production/public
+  readiness claim, or actual audience/order acceptance claim occurred. The
+  next default axis is scene-beat integration using the tempo policy inside an
+  actual short scene/beat structure, not another raw primitive tempo sweep
+  unless a concrete tempo defect remains.
 - **Newsroom yukkuri v3 observation and v4 tempo sweep probe completed (2026-06-29 JST)**:
   `newsroom-yukkuri-animation-tempo-sweep-probe-v1` normalizes the user-side
   v3 preview observation: v3 is shorter than v2, but still feels floaty and

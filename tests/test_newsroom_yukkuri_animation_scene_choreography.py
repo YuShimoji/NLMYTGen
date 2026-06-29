@@ -43,15 +43,26 @@ def test_v4_observation_exits_tempo_only_loop() -> None:
     normalized = artifact["normalized_user_observation"]
     assert normalized["yym4_opened"] is True
     assert normalized["v4_preview_observed"] is True
-    assert normalized["extreme_slowness_improved"] is True
-    assert normalized["primitive_feasibility"] == "pass_or_strong_partial"
-    assert normalized["neck_nod_status"] == "possible_but_cheap"
-    assert normalized["expression_swap_status"] == "mechanical_cycle_warning"
-    assert normalized["body_motion_status"] == "incoherent_forward_back_warning"
-    assert normalized["overall_motion_coherence"] == "fail_or_warning"
+    assert normalized["default_tempo_band"] == "0.75s"
+    assert normalized["default_frame_span_at_60fps"] == 45
+    assert normalized["scene_dependency"] is True
+    assert normalized["one_second_status"] == "acceptable_variant_for_slower_explanatory_or_readability_heavy_moments"
+    assert normalized["half_second_status"] == "acceptable_variant_for_quick_reaction_punch_or_small_emphasis"
+    assert normalized["one_point_five_second_status"] == "not_selected_as_default_upper_comparison_or_special_slow_case_only"
     assert normalized["tempo_loop_exit"] is True
-    assert normalized["next_axis"] == "scene_choreography_and_motion_semantics"
+    assert normalized["primitive_only_loop_exit"] is True
+    assert normalized["next_axis"] == NEXT_AXIS_SCENE_PREVIEW
     assert normalized["render_export_required_now"] is False
+    assert normalized["production_public_render_approval_given"] is False
+    assert artifact["user_observation_notes"] == [
+        "0.75s looks the most natural.",
+        "However, the best duration depends on the scene.",
+        "1.0s is also within acceptable range.",
+        "0.5s is also within acceptable range.",
+        "No production/public/render approval was given.",
+    ]
+    assert artifact["tempo_default_policy"]["default_tempo_band"] == "0.75s"
+    assert artifact["tempo_default_policy"]["default_frame_span_at_60fps"] == 45
     assert artifact["render_gate"] == "L0_no_render"
 
 
@@ -63,16 +74,61 @@ def test_scene_choreography_contract_has_required_beat_fields() -> None:
     assert artifact == payload
     assert artifact["scene_probe_materialization_status"] == "materialized_ignored_local_probe"
     assert artifact["selected_next_axis"] == NEXT_AXIS_SCENE_PREVIEW
+    assert artifact["tempo_default_policy"]["status"] == "active_for_scene_beat_integration"
+    assert artifact["tempo_default_policy"]["scene_dependency"] is True
+    assert artifact["tempo_default_policy"]["default_tempo_band"] == "0.75s"
+    assert artifact["tempo_default_policy"]["default_frame_span_at_60fps"] == 45
+    assert artifact["tempo_default_policy"]["use_case_policy"] == [
+        {
+            "use_case": "default light reenactment beat",
+            "tempo": "0.75s",
+            "frames_at_60fps": 45,
+            "note": "user-selected most natural",
+        },
+        {
+            "use_case": "quick reaction / punch / short emphasis",
+            "tempo": "0.5s",
+            "frames_at_60fps": 30,
+            "note": "acceptable but use selectively",
+        },
+        {
+            "use_case": "explanatory / readable / calmer beat",
+            "tempo": "1.0s",
+            "frames_at_60fps": 60,
+            "note": "acceptable, useful when readability matters",
+        },
+        {
+            "use_case": "slow upper comparison",
+            "tempo": "1.5s",
+            "frames_at_60fps": 90,
+            "note": "not default; contrast or special slow scene only",
+        },
+    ]
     assert artifact["provisional_tempo_policy"] == {
-        "active_reaction_motion": "30-60 frames",
-        "nod_reaction": "30-45 frames",
-        "small_nudge": "30-60 frames",
-        "entrance_or_larger_move": "45-75 frames",
-        "expression_change": "instantaneous or near-instantaneous switch with a readable hold",
-        "scene_beat_duration": "roughly 3-6 seconds",
-        "hold_policy": "most scene time should hold readable poses instead of drifting",
-        "status": "provisional_default_until_scene_preview",
+        "default_reaction_motion": "45 frames / 0.75s",
+        "quick_reaction_or_punch": "30 frames / 0.5s",
+        "readability_heavy_or_calm_explanation": "60 frames / 1.0s",
+        "slow_upper_comparison": "90 frames / 1.5s",
+        "scene_dependency": True,
+        "status": "superseded_by_tempo_default_policy",
     }
+    assert artifact["scene_beat_integration_risks"] == [
+        {
+            "risk_id": "primitive_only_tempo_loop",
+            "status": "exited",
+            "mitigation": "use the tempo policy inside an actual scene/beat structure",
+        },
+        {
+            "risk_id": "scene_dependent_timing",
+            "status": "active",
+            "mitigation": "select 0.5s, 0.75s, or 1.0s by beat function instead of forcing one global value",
+        },
+        {
+            "risk_id": "slow_upper_bound_overuse",
+            "status": "guarded",
+            "mitigation": "do not use 1.5s as default; reserve it for contrast or a specific slow scene",
+        },
+    ]
 
     required_keys = {
         "scene_id",

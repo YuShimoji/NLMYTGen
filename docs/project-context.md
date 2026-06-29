@@ -79,15 +79,19 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
-Latest newsroom yukkuri v4 sweep readback and scene choreography decision (2026-06-29 JST):
+Latest newsroom yukkuri v4 tempo default policy and scene-beat route decision (2026-06-29 JST):
 `newsroom_yukkuri_animation_scene_choreography_contract_v1_2026_06_29`
-records the user-side v4 tempo sweep observation and exits the speed-only
-loop. The normalized observation is that extreme slowness improved and the
-neck/nod primitive is technically possible, but the animation still lacks
-motion coherence: repeated nodding reads as primitive playback, expression
-swaps read as a mechanical cycle, and body movement still lacks a clear
-action. Render/export remains unnecessary because the current decision is
-scene choreography and motion semantics, not render mechanics.
+records the latest user-side v4 tempo sweep observation and exits the
+primitive-only fast/slow loop. The preserved observation is that `0.75s` looks
+the most natural, the best duration depends on the scene, `1.0s` is within
+acceptable range, `0.5s` is within acceptable range, and no production/public/
+render approval was given. The active tempo default policy is `0.75s` /
+45 frames at 60 fps for default light reenactment beats. `0.5s` / 30 frames is
+kept for quick reaction, punch, or short emphasis; `1.0s` / 60 frames is kept
+for slower explanatory or readability-heavy moments; and `1.5s` / 90 frames is
+only an upper comparison or special slow-scene case. Render/export remains
+unnecessary because the current decision is tempo policy and scene-beat
+integration, not render mechanics.
 
 The tracked readback and contract artifacts are
 `samples/_probe/newsroom_handoff/yukkuri_animation_v4_tempo_sweep_observation_v1.json`,
@@ -111,7 +115,9 @@ continuity. This decision did not launch YMM4 from the Agent, render,
 stage/commit `.ymmp`, create media/audio/TTS, modify cards, continue
 dense-script work, fetch real RSS/news or external reference video, or claim
 production/public/order/audience acceptance. The next default axis is
-`newsroom-yukkuri-animation-scene-choreography-preview-operator-instruction-v1`.
+`newsroom-yukkuri-animation-scene-beat-integration-v1`: apply the tempo policy
+inside an actual short scene/beat structure rather than running another raw
+primitive tempo sweep by default.
 
 Latest newsroom yukkuri v3 observation and v4 tempo sweep probe decision (2026-06-29 JST):
 `newsroom_yukkuri_animation_tempo_sweep_contract_v1_2026_06_29` records the
