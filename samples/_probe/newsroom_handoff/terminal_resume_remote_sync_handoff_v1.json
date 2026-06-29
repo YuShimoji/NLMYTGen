@@ -1,0 +1,57 @@
+{
+  "artifact_id": "newsroom_terminal_resume_remote_sync_handoff_v1_2026_06_29",
+  "recorded_at_jst": "2026-06-29",
+  "purpose": "Persist the current restart context inside the repository before reflecting local state to the remote so another terminal can resume without relying on chat-only memory.",
+  "git_context_at_authoring": {
+    "branch": "master",
+    "remote": "origin",
+    "remote_url": "https://github.com/YuShimoji/NLMYTGen.git",
+    "base_before_handoff": "6b66f03 feat: add yukkuri tempo calibration contract",
+    "working_tree_before_handoff": "clean",
+    "branch_relation_before_handoff": "master aligned with origin/master",
+    "handoff_commit_after_sync": "the commit containing this artifact; read with git log -1 --oneline after sync"
+  },
+  "tracked_context_added": [
+    "docs/runtime-state.md",
+    "docs/project-context.md",
+    "docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V1_2026-06-29.md",
+    "samples/_probe/newsroom_handoff/terminal_resume_remote_sync_handoff_v1.json"
+  ],
+  "host_local_context_not_to_commit": {
+    "path": "_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp",
+    "exists_on_authoring_host": true,
+    "ignore_rule": ".gitignore:37:_tmp/",
+    "reason": "The probe is a local YMM4 review target and must remain untracked/uncommitted."
+  },
+  "current_slice": {
+    "lane": "newsroom yukkuri animation primitive preview",
+    "latest_completed_axis": "newsroom-yukkuri-animation-v2-preview-readback-and-tempo-calibration-v1",
+    "next_default_axis": "newsroom-yukkuri-animation-primitive-v3-preview-operator-instruction-v1",
+    "state": "V2 preview improved anchor continuity and connected motion. The remaining actionable issue is slow tempo. V3 keeps the shared-anchor/facing fixes and halves beats from 360 frames / 6 seconds to 180 frames / 3 seconds for a 900-frame / 15-second probe.",
+    "do_not_claim": [
+      "Agent-side YMM4 launch",
+      "render/export pass",
+      ".ymmp committed to git",
+      "media/audio/TTS generation",
+      "real RSS/news fetch",
+      "external reference-video fetch",
+      "production/public readiness",
+      "actual audience/order acceptance"
+    ]
+  },
+  "restart_read_order": [
+    "AGENTS.md",
+    "docs/REPO_LOCAL_RULES.md",
+    "docs/runtime-state.md",
+    "docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V1_2026-06-29.md"
+  ],
+  "validation_plan": {
+    "tests": "No pytest required for this docs-only handoff; repo rules skip pytest when docs do not change executable contracts.",
+    "git_checks": [
+      "git status --short --branch",
+      "git check-ignore -v -- _tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp",
+      "git push origin master",
+      "git status --short --branch after push"
+    ]
+  }
+}

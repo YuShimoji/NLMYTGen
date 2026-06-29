@@ -1,5 +1,28 @@
 # Runtime State — NLMYTGen
 
+- **Remote sync and terminal-resume handoff completed (2026-06-29 JST)**:
+  `newsroom-terminal-resume-remote-sync-handoff-v1` records the current
+  cross-terminal restart context before reflecting local state to `origin`.
+  The repo was clean and already aligned with `origin/master` at `6b66f03`
+  before this handoff slice. This slice adds tracked handoff artifacts only:
+  `samples/_probe/newsroom_handoff/terminal_resume_remote_sync_handoff_v1.json`
+  and
+  `docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V1_2026-06-29.md`,
+  plus this runtime pointer and the matching decision-log entry in
+  `docs/project-context.md`. No product code, generated media, `.ymmp` stage,
+  dependency, DB/auth/API contract, YMM4 launch, render, real RSS/news fetch,
+  external reference-video fetch, or production/public readiness claim occurred.
+  The ignored local v3 probe remains host-local at
+  `_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp`;
+  it exists on this host and is still ignored by `.gitignore` `_tmp/`, so it
+  must not be staged or committed. The current production context is still the
+  yukkuri v3 tempo-fix preview gate: v2 motion connection improved, the
+  remaining problem is slow tempo, and v3 halves beats to 180 frames / 3 seconds
+  across a 900-frame / 15-second probe. The next default axis remains
+  `newsroom-yukkuri-animation-primitive-v3-preview-operator-instruction-v1`.
+  On a fresh terminal, read `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, this top
+  runtime entry, then the handoff verification doc only if more detail is
+  needed.
 - **Newsroom yukkuri v2 preview readback and v3 tempo-fix probe completed (2026-06-29 JST)**:
   `newsroom-yukkuri-animation-v2-preview-readback-and-tempo-calibration-v1`
   normalizes the user-side preview observation for the ignored local v2 probe

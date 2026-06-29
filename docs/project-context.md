@@ -79,6 +79,29 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest terminal resume remote sync handoff decision (2026-06-29 JST):
+`newsroom_terminal_resume_remote_sync_handoff_v1_2026_06_29` persists the
+current cross-terminal restart context before reflecting local state to
+`origin/master`. The repo was clean and aligned with `origin/master` at
+`6b66f03` before this handoff. The new tracked context is
+`samples/_probe/newsroom_handoff/terminal_resume_remote_sync_handoff_v1.json`
+and
+`docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V1_2026-06-29.md`,
+with pointers in `docs/runtime-state.md` and this decision log. This slice does
+not alter product code or executable contracts.
+
+The active production context remains the yukkuri v3 tempo-fix preview gate:
+v2 improved motion connection and shared-anchor continuity, the remaining
+actionable issue is slow tempo, and v3 shortens each beat to 180 frames / 3
+seconds for a 900-frame / 15-second ignored local probe. The host-local probe at
+`_tmp/newsroom_manual_probe/yukkuri_animation_primitive_probe_v3_tempo_fix.ymmp`
+exists on the authoring machine and is ignored through `.gitignore` `_tmp/`, so
+it must remain untracked and uncommitted. No Agent-side YMM4 launch,
+render/export pass, `.ymmp` stage/commit, media/audio/TTS generation, real
+RSS/news fetch, external reference-video fetch, production/public readiness
+claim, or audience/order acceptance claim occurred. The next default axis is
+`newsroom-yukkuri-animation-primitive-v3-preview-operator-instruction-v1`.
+
 Latest newsroom yukkuri v2 preview readback and v3 tempo-fix decision (2026-06-29 JST):
 `newsroom_yukkuri_animation_tempo_contract_v1_2026_06_29` records the user-side
 preview observation of the v2 motion-fix probe and converts it into a tempo
