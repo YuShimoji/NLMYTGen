@@ -5,7 +5,7 @@
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
 - 現在地の正本: 通常再開では `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md` で止める。本ファイル冒頭は状態スナップショットではなく、航海日誌への短い入口。
-- 現フェーズ: `docs/runtime-state.md` が最新の current slice を所有する。2026-06-30 時点の実行入口は newsroom RSS dry-run から animated explanation beat への content-flow proof。G-27 Real Estate DX の production carrier 待ちは active blocker から外し、case-specific evidence として保持する。G-28 Reference-Driven Generic Screen Carrier は既存 diagnostic / prototype evidence からの refinement lane として残るが、今回の mainline handoff では進めない。
+- 現フェーズ: `docs/runtime-state.md` が最新の current slice を所有する。2026-06-30 時点の実行入口は newsroom RSS dry-run animated beat の preview readback から offline topic mini episode capsule bridge への mainline content-flow proof。G-27 Real Estate DX の production carrier 待ちは active blocker から外し、case-specific evidence として保持する。G-28 Reference-Driven Generic Screen Carrier は既存 diagnostic / prototype evidence からの refinement lane として残るが、今回の mainline handoff では進めない。
 - 古い roadmap / prompt / verification packet は現行判断に使わない。必要な履歴は DECISION LOG と HANDOFF SNAPSHOT の該当行だけ読む。
 - Python のスコープは「テキスト変換 + IR/registry + ymmp 限定後段適用」。動画レンダリング・画像生成・YMM4 GUI 操作は Python の責務ではない。
 
@@ -14,14 +14,14 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI artifact → CSV / registry / patched ymmp → YMM4 読込・確認・レンダリング
-- 現在のスライス: v2 visible integration preview が bounded pass になったため、視覚/アニメ調整を止め、offline RSS-like diagnostic topic から one animated explanation beat へ戻した状態。`visual_integration_status=pass_with_boundary`、`local_ymmp_materialization_status=materialized_ignored_local_probe`、`render_gate=L0_no_render` を保つ。
-- 成功状態: topic/RSS-like input が説明行、plain `TextItem` role、source-boundary role、frozen minimal animation accent に変換され、次の確認対象を一つに絞れる状態にすること。
+- 現在のスライス: RSS dry-run animated beat の user preview で plain topic `TextItem` と character animation accent の同シーン同居が bounded pass になったため、追加プレビュー・カード調整・アニメ調整を止め、offline RSS-like diagnostic topic を 5-beat mini episode capsule contract へ橋渡しした状態。`content_flow_visual_status=pass_with_boundary`、`local_ignored_ymmp_created_in_this_slice=false`、`render_gate=L0_no_render` を保つ。
+- 成功状態: topic/RSS-like input が hook / key claim / source warning / implication / close の小さな episode capsule に変換され、各 beat が plain text role、minimal overlay role、source-boundary role、frozen minimal animation accent policy を持ち、次の materialization 対象を一つに絞れる状態にすること。
 
 ---
 
 ## CURRENT LANE
 - 主レーン: Downstream adapter / YMM4 diagnostic handoff（newsroom-produced handoff material）。現行の優先は [runtime-state.md](runtime-state.md) の top entry。
-- 今このレーンを優先する理由: YMM4-visible co-presence は plain `TextItem` + frozen animation accent として境界付きで通ったため、次の制作摩擦はカード/アニメ調整ではなく、topic/RSS-like input を episode capsule / animated explanation beat へ接続する content-flow proof にある。
+- 今このレーンを優先する理由: YMM4-visible co-presence は plain `TextItem` + frozen animation accent として境界付きで通ったため、次の制作摩擦はカード/アニメ調整ではなく、topic/RSS-like input を mini episode capsule / animated explanation beats へ接続する content-flow proof にある。
 
 ---
 
@@ -78,6 +78,42 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 - `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
+
+Latest newsroom RSS dry-run animated beat preview readback and mini episode capsule bridge decision (2026-06-30 JST):
+`newsroom_rss_dry_run_animated_beat_preview_readback_and_mini_episode_capsule_bridge_v1_2026_06_30`
+records the user-side preview observation for the ignored local RSS dry-run
+animated beat at
+`_tmp/newsroom_manual_probe/rss_dry_run_animated_explanation_beat_v1.ymmp`.
+The preview showed the plain topic-derived `TextItem`
+`Offline fixture: verify source boundary before production.` and the character
+animation accent at the same timing in the same scene. No card-like designed
+overlay was visible. This closes the one-beat visual integration gate as
+`content_flow_visual_status=pass_with_boundary`, while production subtitle
+design, production card design, render quality, public readiness, and
+audience/order acceptance remain false.
+
+The tracked artifacts are
+`samples/_probe/newsroom_handoff/rss_dry_run_animated_beat_preview_observation_v1.json`,
+`docs/verification/NEWSROOM_RSS_DRY_RUN_ANIMATED_BEAT_PREVIEW_OBSERVATION_V1_2026-06-30.md`,
+`samples/_probe/newsroom_handoff/offline_topic_mini_episode_capsule_bridge_v1.json`,
+and
+`docs/verification/NEWSROOM_OFFLINE_TOPIC_MINI_EPISODE_CAPSULE_BRIDGE_V1_2026-06-30.md`,
+with implementation/tests in
+`src/pipeline/newsroom_offline_topic_mini_episode_capsule_bridge.py` /
+`tests/test_newsroom_offline_topic_mini_episode_capsule_bridge.py`. The bridge
+keeps the existing one-beat route as a candidate and creates a 5-beat
+diagnostic capsule contract: hook / issue framing, explanation / key claim,
+source-boundary warning, implication / why it matters, and close / next action.
+The selected next axis is
+`newsroom-offline-topic-mini-episode-capsule-with-animation-accent-v1`.
+
+The current `C:\Users\PLANNER007\NLMYTGen` workspace does not contain the
+ignored local `.ymmp` opened on the earlier `C:\Users\thank\...` host path; the
+path remains ignored by `.gitignore` `_tmp/` and was not recreated in this
+slice. This decision did not launch YMM4 from the Agent, render, create or
+stage/commit `.ymmp`, generate media/audio/TTS, fetch live RSS/news, redesign
+cards, tune animation, claim production/public readiness, or claim
+audience/order acceptance.
 
 Latest terminal resume remote sync handoff decision (2026-06-30 JST):
 `newsroom_terminal_resume_remote_sync_handoff_v2_2026_06_30` preserves the

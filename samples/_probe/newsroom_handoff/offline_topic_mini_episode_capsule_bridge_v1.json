@@ -1,0 +1,304 @@
+{
+  "artifact_id": "newsroom_offline_topic_mini_episode_capsule_bridge_v1_2026_06_30",
+  "schema_version": "newsroom_offline_topic_mini_episode_capsule_bridge.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "render_gate": "L0_no_render",
+  "actual_audience_acceptance_claimed": false,
+  "source_context": {
+    "source_rss_dry_run_topic_to_beat_path": "samples/_probe/newsroom_handoff/rss_dry_run_topic_to_animated_explanation_beat_v1.json",
+    "source_rss_dry_run_contract_path": "samples/_probe/newsroom_handoff/rss_dry_run_animated_explanation_beat_contract_v1.json",
+    "source_rss_dry_run_doc_path": "docs/verification/NEWSROOM_RSS_DRY_RUN_TO_ANIMATED_EXPLANATION_BEAT_V1_2026-06-30.md",
+    "source_background_animation_mvp_freeze_path": "samples/_probe/newsroom_handoff/background_animation_mvp_freeze_v1.json",
+    "source_episode_capsule_path": "samples/_probe/newsroom_handoff/episode_production_capsule_v1.json",
+    "source_minimal_episode_packet_path": "samples/_probe/newsroom_handoff/minimal_episode_packet.json",
+    "repo_root": "C:\\Users\\PLANNER007\\NLMYTGen"
+  },
+  "source_preview_observation_path": "samples/_probe/newsroom_handoff/rss_dry_run_animated_beat_preview_observation_v1.json",
+  "existing_route_assessment": {
+    "one_beat_route": {
+      "path": "samples/_probe/newsroom_handoff/rss_dry_run_topic_to_animated_explanation_beat_v1.json",
+      "status": "available_current_topic_route",
+      "use": "per-beat text role, source-boundary role, and frozen accent policy"
+    },
+    "prior_episode_capsule_route": {
+      "path": "samples/_probe/newsroom_handoff/episode_production_capsule_v1.json",
+      "status": "structural_precedent_not_current_topic",
+      "use": "episode/capsule shape reference only; it comes from an older fake packet"
+    },
+    "minimal_episode_packet_route": {
+      "path": "samples/_probe/newsroom_handoff/minimal_episode_packet.json",
+      "status": "fixture_shape_reference_not_materialization_target",
+      "use": "beat ordering precedent only; no current RSS dry-run materialization"
+    },
+    "smallest_safe_bridge": "create a 5-beat contract from the current offline topic without creating another .ymmp or requesting another preview",
+    "route_clarity": "clear_for_contract_bridge"
+  },
+  "offline_topic_input": {
+    "topic_id": "offline_rss_like_topic_fixture_001",
+    "title": "Offline fixture: source-boundary handoff before public news",
+    "source_kind": "offline_fixture_or_diagnostic",
+    "key_fact_or_claim": "A candidate topic must remain diagnostic until source truth, rights, and episode fit are reviewed.",
+    "explanation_angle": "show that a topic-like input can become one clear explanation beat without using live RSS or public-news claims",
+    "boundary_note": "No live RSS/network fetch, source quote, external media, rights approval, or publication readiness is implied."
+  },
+  "mini_episode_capsule": {
+    "capsule_id": "offline_topic_mini_episode_capsule_bridge_v1",
+    "capsule_status": "diagnostic_contract_bridge_only",
+    "source_topic_id": "offline_rss_like_topic_fixture_001",
+    "episode_scope": "small offline diagnostic mini episode; content-flow proof only",
+    "beat_count": 5,
+    "beats": [
+      {
+        "source_topic_id": "offline_rss_like_topic_fixture_001",
+        "animation_accent_allowed": [
+          "stable pose",
+          "one expression event",
+          "one short nod/reaction",
+          "return to stable pose"
+        ],
+        "animation_accent_disabled": [
+          "body forward/back",
+          "repeated nodding",
+          "mechanical expression cycle",
+          "speech balloon",
+          "full chaban scene"
+        ],
+        "beat_id": "offline_topic_mini_ep_beat_01_hook",
+        "beat_function": "hook / issue framing",
+        "explanation_line": "A topic-like item is not a video yet; first prove the source boundary.",
+        "narration_intent": "frame the viewer problem as source-boundary uncertainty before production",
+        "subtitle_or_text_role": "plain TextItem hook; not final subtitle styling",
+        "minimal_overlay_role": "short diagnostic label for the issue frame",
+        "background_animation_accent_role": "stable pose plus one light reaction after the issue is named",
+        "source_boundary_role": "reminds that the topic is an offline fixture only",
+        "materialization_status": "existing_route_candidate"
+      },
+      {
+        "source_topic_id": "offline_rss_like_topic_fixture_001",
+        "animation_accent_allowed": [
+          "stable pose",
+          "one expression event",
+          "one short nod/reaction",
+          "return to stable pose"
+        ],
+        "animation_accent_disabled": [
+          "body forward/back",
+          "repeated nodding",
+          "mechanical expression cycle",
+          "speech balloon",
+          "full chaban scene"
+        ],
+        "beat_id": "offline_topic_mini_ep_beat_02_key_claim",
+        "beat_function": "explanation / key claim",
+        "explanation_line": "The key claim stays diagnostic until source truth, rights, and fit are reviewed.",
+        "narration_intent": "state the central rule that prevents a dry-run topic from becoming public news",
+        "subtitle_or_text_role": "plain TextItem explanation line",
+        "minimal_overlay_role": "source-check label, not a designed card",
+        "background_animation_accent_role": "one expression event tied to the key claim",
+        "source_boundary_role": "keeps source truth and rights approval unaccepted",
+        "materialization_status": "contract_only"
+      },
+      {
+        "source_topic_id": "offline_rss_like_topic_fixture_001",
+        "animation_accent_allowed": [
+          "stable pose",
+          "one expression event",
+          "one short nod/reaction",
+          "return to stable pose"
+        ],
+        "animation_accent_disabled": [
+          "body forward/back",
+          "repeated nodding",
+          "mechanical expression cycle",
+          "speech balloon",
+          "full chaban scene"
+        ],
+        "beat_id": "offline_topic_mini_ep_beat_03_source_warning",
+        "beat_function": "source-boundary warning",
+        "explanation_line": "Offline fixture: verify source boundary before production.",
+        "narration_intent": "reuse the proven one-beat line as the capsule's explicit boundary warning",
+        "subtitle_or_text_role": "plain diagnostic TextItem boundary warning",
+        "minimal_overlay_role": "current proven plain TextItem role; no card-like overlay",
+        "background_animation_accent_role": "frozen MVP accent remains subordinate to the warning text",
+        "source_boundary_role": "no live RSS, source quote, external media, or publication readiness",
+        "materialization_status": "existing_route_candidate"
+      },
+      {
+        "source_topic_id": "offline_rss_like_topic_fixture_001",
+        "animation_accent_allowed": [
+          "stable pose",
+          "one expression event",
+          "one short nod/reaction",
+          "return to stable pose"
+        ],
+        "animation_accent_disabled": [
+          "body forward/back",
+          "repeated nodding",
+          "mechanical expression cycle",
+          "speech balloon",
+          "full chaban scene"
+        ],
+        "beat_id": "offline_topic_mini_ep_beat_04_implication",
+        "beat_function": "implication / why it matters",
+        "explanation_line": "That boundary lets the structure be checked without pretending it is publishable.",
+        "narration_intent": "explain why a private structural capsule is useful before real source work",
+        "subtitle_or_text_role": "plain TextItem implication line",
+        "minimal_overlay_role": "small readback label for why the proof matters",
+        "background_animation_accent_role": "one short nod/reaction after the implication",
+        "source_boundary_role": "separates structural confidence from public-source confidence",
+        "materialization_status": "contract_only"
+      },
+      {
+        "source_topic_id": "offline_rss_like_topic_fixture_001",
+        "animation_accent_allowed": [
+          "stable pose",
+          "one expression event",
+          "one short nod/reaction",
+          "return to stable pose"
+        ],
+        "animation_accent_disabled": [
+          "body forward/back",
+          "repeated nodding",
+          "mechanical expression cycle",
+          "speech balloon",
+          "full chaban scene"
+        ],
+        "beat_id": "offline_topic_mini_ep_beat_05_close",
+        "beat_function": "close / next action",
+        "explanation_line": "Next, build a small capsule with text roles and one frozen accent per beat.",
+        "narration_intent": "name the next diagnostic milestone without asking for another preview now",
+        "subtitle_or_text_role": "plain TextItem next-action line",
+        "minimal_overlay_role": "next-step label only",
+        "background_animation_accent_role": "return to stable pose at close",
+        "source_boundary_role": "keeps live RSS/news and production acceptance out of scope",
+        "materialization_status": "contract_only"
+      }
+    ],
+    "materialization_summary": {
+      "status_counts": {
+        "existing_route_candidate": 2,
+        "contract_only": 3
+      },
+      "local_ymmp_created_in_this_slice": false,
+      "materialization_decision": "bridge only; use existing one-beat route as a candidate and defer multi-beat YMM4 materialization to the selected next axis"
+    }
+  },
+  "business_goal_outcome_contract": {
+    "problem_clear": {
+      "status": true,
+      "rationale": "the user preview closes the local one-beat visual proof loop"
+    },
+    "offer_clear": {
+      "status": true,
+      "rationale": "the work moves from one beat to a 5-beat mini episode contract"
+    },
+    "proof_clear": {
+      "status": true,
+      "rationale": "the proof is content-flow structure, not production quality"
+    },
+    "boundary_clear": {
+      "status": true,
+      "rationale": "card design, subtitle design, animation tuning, render, and live RSS stay closed"
+    },
+    "next_action_clear": {
+      "status": true,
+      "rationale": "newsroom-offline-topic-mini-episode-capsule-with-animation-accent-v1"
+    },
+    "visual_supports_explanation": {
+      "status": true,
+      "rationale": "the accent policy stays subordinate to narration/text on every beat"
+    }
+  },
+  "recommendation_logic": {
+    "preferred_default": "newsroom-offline-topic-mini-episode-capsule-with-animation-accent-v1",
+    "selected": "newsroom-offline-topic-mini-episode-capsule-with-animation-accent-v1",
+    "if_existing_episode_capsule_route_is_unclear": "newsroom-episode-capsule-route-audit-v1",
+    "if_topic_to_beat_transformation_is_too_synthetic": "newsroom-rss-topic-fixture-route-audit-v1",
+    "if_animation_should_remain_frozen": "newsroom-animation-accent-policy-closed-return-to-episode-capsule-v1",
+    "reason": "The bridge is clear enough to move into a small offline capsule with the frozen accent policy, while avoiding animation-only, card-polish, render, and live-source loops."
+  },
+  "selected_next_axis": "newsroom-offline-topic-mini-episode-capsule-with-animation-accent-v1",
+  "not_accepted_scope": {
+    "production_subtitle_design": false,
+    "production_card_design": false,
+    "production_animation_quality": false,
+    "public_upload_or_public_readiness": false,
+    "real_rss_or_news_integration": false,
+    "real_source_truth_approved": false,
+    "external_reference_video_fetch": false,
+    "card_redesign_or_density_work": false,
+    "dense_script_rewrite": false,
+    "render_export_proof": false,
+    "audio_or_tts_output": false,
+    "actual_order_or_audience_acceptance": false,
+    "speech_balloon_visual_acceptance": false
+  },
+  "boundaries": {
+    "network_fetch_performed": false,
+    "live_RSS_news_fetch_performed": false,
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "audio_tts_generated": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "card_assets_modified": false,
+    "card_redesign_performed": false,
+    "production_subtitle_or_card_design_created": false,
+    "animation_tuned": false,
+    "animation_only_probe_created": false,
+    "local_ignored_ymmp_created_in_this_slice": false,
+    "ymmp_or_media_staged_or_committed": false,
+    "production_public_readiness_claimed": false,
+    "actual_order_or_audience_acceptance_claimed": false
+  },
+  "inertia_check": [
+    {
+      "gate": "no_animation_only_loop",
+      "status": true
+    },
+    {
+      "gate": "no_primitive_or_tempo_loop",
+      "status": true
+    },
+    {
+      "gate": "no_card_polish_loop",
+      "status": true
+    },
+    {
+      "gate": "no_render_export_loop",
+      "status": true
+    },
+    {
+      "gate": "no_live_RSS_or_network_fetch",
+      "status": true
+    },
+    {
+      "gate": "next_axis_remains_mainline_episode_construction",
+      "status": "newsroom-offline-topic-mini-episode-capsule-with-animation-accent-v1"
+    }
+  ],
+  "completion_matrix": [
+    {
+      "gate": "repo_state_verified",
+      "status": true
+    },
+    {
+      "gate": "preview_observation_recorded",
+      "status": true
+    },
+    {
+      "gate": "one_beat_visual_integration_gate_closed",
+      "status": true
+    },
+    {
+      "gate": "mini_episode_capsule_bridge_created",
+      "status": true
+    },
+    {
+      "gate": "next_axis_selected",
+      "status": true
+    }
+  ]
+}

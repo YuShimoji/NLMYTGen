@@ -1,5 +1,34 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom RSS dry-run animated beat preview readback and mini episode capsule bridge completed (2026-06-30 JST)**:
+  `newsroom-rss-dry-run-animated-beat-preview-readback-and-mini-episode-capsule-bridge-v1`
+  records the user-side preview observation for the ignored local RSS dry-run
+  animated beat. The user opened
+  `_tmp/newsroom_manual_probe/rss_dry_run_animated_explanation_beat_v1.ymmp`
+  in YMM4 and saw the plain topic-derived `TextItem`
+  `Offline fixture: verify source boundary before production.` plus the
+  character animation accent at the same scene timing. This closes the
+  one-beat visual integration gate as
+  `content_flow_visual_status=pass_with_boundary`, not as production subtitle
+  design, production card design, render quality, public readiness, or
+  audience/order acceptance. New tracked artifacts are
+  `samples/_probe/newsroom_handoff/rss_dry_run_animated_beat_preview_observation_v1.json`,
+  `docs/verification/NEWSROOM_RSS_DRY_RUN_ANIMATED_BEAT_PREVIEW_OBSERVATION_V1_2026-06-30.md`,
+  `samples/_probe/newsroom_handoff/offline_topic_mini_episode_capsule_bridge_v1.json`,
+  `docs/verification/NEWSROOM_OFFLINE_TOPIC_MINI_EPISODE_CAPSULE_BRIDGE_V1_2026-06-30.md`,
+  `src/pipeline/newsroom_offline_topic_mini_episode_capsule_bridge.py`, and
+  `tests/test_newsroom_offline_topic_mini_episode_capsule_bridge.py`. The
+  current `C:\Users\PLANNER007\NLMYTGen` workspace does not contain the ignored
+  local `.ymmp` that the user opened on the earlier `C:\Users\thank\...`
+  host path; this is recorded as host-local `_tmp` state and was not recreated.
+  No Agent-side YMM4 launch, render, `.ymmp` creation/stage/commit,
+  media/audio/TTS generation, live RSS/news fetch, card redesign, animation
+  tuning, production/public readiness claim, or audience/order acceptance
+  claim occurred. The bridge creates a 5-beat offline diagnostic mini episode
+  capsule contract: hook / issue framing, explanation / key claim,
+  source-boundary warning, implication / why it matters, and close / next
+  action. The selected next axis is
+  `newsroom-offline-topic-mini-episode-capsule-with-animation-accent-v1`.
 - **Terminal resume remote sync handoff completed (2026-06-30 JST)**:
   `newsroom-terminal-resume-remote-sync-handoff-v2` records the current
   cross-terminal restart context after
