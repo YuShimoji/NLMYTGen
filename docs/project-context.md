@@ -5,7 +5,7 @@
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
 - 現在地の正本: 通常再開では `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md` で止める。本ファイル冒頭は状態スナップショットではなく、航海日誌への短い入口。
-- 現フェーズ: `docs/runtime-state.md` が最新の current slice を所有する。2026-06-30 時点の実行入口は offline RSS-like topic から diagnostic 5-beat mini episode capsule materialization への mainline content-flow proof。G-27 Real Estate DX の production carrier 待ちは active blocker から外し、case-specific evidence として保持する。G-28 Reference-Driven Generic Screen Carrier は既存 diagnostic / prototype evidence からの refinement lane として残るが、今回の mainline handoff では進めない。
+- 現フェーズ: `docs/runtime-state.md` が最新の current slice を所有する。2026-06-30 時点の実行入口は offline RSS-like topic から diagnostic 5-beat mini episode readable text materialization への mainline content-flow proof。G-27 Real Estate DX の production carrier 待ちは active blocker から外し、case-specific evidence として保持する。G-28 Reference-Driven Generic Screen Carrier は既存 diagnostic / prototype evidence からの refinement lane として残るが、今回の mainline handoff では進めない。
 - 古い roadmap / prompt / verification packet は現行判断に使わない。必要な履歴は DECISION LOG と HANDOFF SNAPSHOT の該当行だけ読む。
 - Python のスコープは「テキスト変換 + IR/registry + ymmp 限定後段適用」。動画レンダリング・画像生成・YMM4 GUI 操作は Python の責務ではない。
 
@@ -14,14 +14,14 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI artifact → CSV / registry / patched ymmp → YMM4 読込・確認・レンダリング
-- 現在のスライス: offline RSS-like diagnostic topic を hook / key claim / source warning / implication / close の 5-beat mini episode capsule として local ignored YMM4 diagnostic project に materialize した状態。各 beat は plain text role、source-boundary role、optional frozen animation accent assignment を持ち、`route_classification=current_supported`、`local_ymmp_materialization_status=materialized_ignored_local_probe`、`render_gate=L0_no_render` を保つ。
-- 成功状態: PLANNER007 上の ignored local `.ymmp` が readback pass になり、次の preview operator instruction で episode-level co-presence を一度だけ確認できる状態にすること。
+- 現在のスライス: offline RSS-like diagnostic topic を hook / key claim / source warning / implication / close の 5-beat mini episode として local ignored YMM4 diagnostic project v2 に materialize し、screen-facing TextItem を debug label から short readable explanation line に置き換えた状態。各 beat は readable text role、source-boundary role、optional frozen animation accent assignment を持ち、`route_classification=current_supported`、`local_ymmp_materialization_status=materialized_ignored_local_probe`、`debug_label_visible_count=0`、`human_readable_text_item_count=5`、`render_gate=L0_no_render` を保つ。
+- 成功状態: PLANNER007 上の ignored local readable-text `.ymmp` が readback pass になり、次の preview operator instruction で human-readable mini episode text を一度だけ確認できる状態にすること。
 
 ---
 
 ## CURRENT LANE
 - 主レーン: Downstream adapter / YMM4 diagnostic handoff（newsroom-produced handoff material）。現行の優先は [runtime-state.md](runtime-state.md) の top entry。
-- 今このレーンを優先する理由: YMM4-visible co-presence は plain `TextItem` + frozen animation accent として境界付きで通っており、5-beat capsule materialization も PLANNER007 上で readback pass になった。次の制作摩擦はカード/アニメ調整ではなく、ignored local multi-beat `.ymmp` を一度だけ bounded preview して episode construction の見え方を確認することにある。
+- 今このレーンを優先する理由: YMM4-visible co-presence は plain `TextItem` + frozen animation accent として境界付きで通っており、v1 preview では5 beat の順次表示と同一 scene/timing の animation accent が確認された。ただし screen-facing note は debug label だったため、次の制作摩擦はカード/アニメ調整ではなく、ignored local readable-text `.ymmp` を一度だけ bounded preview して episode construction の読める本文を確認することにある。
 
 ---
 
@@ -78,6 +78,42 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 - `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
+
+Latest newsroom offline topic mini episode readable text materialization decision (2026-06-30 JST):
+`newsroom_offline_topic_mini_episode_readable_text_materialization_v1_2026_06_30`
+records the user-side preview observation for
+`_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v1.ymmp`.
+The v1 preview is a bounded pass for route/materialization structure:
+five TextItems appeared sequentially, and the character animation accent was
+present in the same scene/timing without being disruptive. It is not a pass
+for human-readable mini episode text because the user observed screen-facing
+debug labels like
+`offline_topic_mini_episode:text:offline_topic_mini_ep_beat_01_hook`.
+
+The tracked artifacts are
+`samples/_probe/newsroom_handoff/offline_topic_mini_episode_preview_observation_v1.json`,
+`docs/verification/NEWSROOM_OFFLINE_TOPIC_MINI_EPISODE_PREVIEW_OBSERVATION_V1_2026-06-30.md`,
+`samples/_probe/newsroom_handoff/offline_topic_mini_episode_readable_text_materialization_v1.json`,
+and
+`docs/verification/NEWSROOM_OFFLINE_TOPIC_MINI_EPISODE_READABLE_TEXT_MATERIALIZATION_V1_2026-06-30.md`,
+with implementation/tests in
+`src/pipeline/newsroom_offline_topic_mini_episode_readable_text_materialization.py`
+/ `tests/test_newsroom_offline_topic_mini_episode_readable_text_materialization.py`.
+The local ignored v2 project exists at
+`_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp`;
+it is verified ignored by `.gitignore` `_tmp/` and must remain
+untracked/uncommitted. It preserves the v1 route, timing, and frozen animation
+accent policy while replacing the five screen-facing `TextItem` `Text` and
+`Remark` values with short English explanation lines. English is used because
+the Japanese examples in the supplied prompt were mojibake and the current
+capsule route already uses ASCII English safely. Readback passes with a
+60 fps / 1800-frame timeline, 5 beats, 5 `TextItem`s, 8 `GroupItem`s,
+8 `ImageItem`s, 16 animation items, `debug_label_visible_count=0`, and
+`human_readable_text_item_count=5`. This decision did not launch YMM4 from the
+Agent, render, stage/commit `.ymmp`, generate media/audio/TTS, fetch live
+RSS/news, redesign cards, tune animation, claim production/public readiness,
+or claim audience/order acceptance. The selected next axis is
+`newsroom-offline-topic-mini-episode-readable-preview-operator-instruction-v1`.
 
 Latest newsroom offline topic mini episode capsule materialization decision (2026-06-30 JST):
 `newsroom_offline_topic_mini_episode_capsule_materialization_v1_2026_06_30`

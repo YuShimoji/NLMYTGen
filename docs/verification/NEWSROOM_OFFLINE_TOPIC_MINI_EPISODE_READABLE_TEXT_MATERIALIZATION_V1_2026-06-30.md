@@ -1,0 +1,366 @@
+# Newsroom Offline Topic Mini Episode Readable Text Materialization v1
+
+artifact_id: newsroom_offline_topic_mini_episode_readable_text_materialization_v1_2026_06_30
+schema_version: newsroom_offline_topic_mini_episode_readable_text_materialization.v1
+production_status: diagnostic_only
+render_gate: L0_no_render
+local_ymmp_materialization_status: materialized_ignored_local_probe
+selected_next_axis: newsroom-offline-topic-mini-episode-readable-preview-operator-instruction-v1
+
+
+## Normalized Preview Observation
+
+```json
+{
+  "source_observation_role": "user_opened_offline_topic_mini_episode_v1_probe",
+  "user_opened_path_current_host": "C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe\\offline_topic_mini_episode_capsule_materialized_v1.ymmp",
+  "repo_relative_path": "_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v1.ymmp",
+  "yym4_opened": true,
+  "five_textitems_visible": true,
+  "five_textitems_sequential": true,
+  "animation_accent_visible": true,
+  "animation_accent_not_disruptive": true,
+  "episode_route_materialization_status": "pass_with_boundary",
+  "visible_text_is_debug_label": true,
+  "human_readable_explanation_text_visible": false,
+  "production_subtitle_design_accepted": false,
+  "production_card_design_accepted": false,
+  "visible_screen_notes": [
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_01_hook",
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_02_key_claim",
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_03_source_warning",
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_04_implication",
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_05_close"
+  ],
+  "next_axis": "readable_text_materialization_v2"
+}
+```
+
+
+## Language Policy
+
+```json
+{
+  "selected_language": "english",
+  "preferred_language_in_prompt": "japanese_if_safe",
+  "reason": "the supplied Japanese examples are mojibake in the prompt, while the current capsule artifacts already use ASCII English explanation lines; English avoids adding an encoding/display variable to this diagnostic slice",
+  "text_is_diagnostic_not_production_script": true
+}
+```
+
+
+## Readable Text Lines
+
+| beat_id | visible_text |
+| --- | --- |
+| offline_topic_mini_ep_beat_01_hook | Hook: this offline topic checks the episode route. |
+| offline_topic_mini_ep_beat_02_key_claim | Key claim: source boundaries must be verified first. |
+| offline_topic_mini_ep_beat_03_source_warning | Warning: this is a fixture, not live news. |
+| offline_topic_mini_ep_beat_04_implication | Why it matters: topic input can become a short explainer. |
+| offline_topic_mini_ep_beat_05_close | Next: harden the source route before production. |
+
+
+## Local Probe Access State
+
+```json
+{
+  "artifact_id": "local_ignored_offline_topic_mini_episode_readable_text_probe",
+  "repo_relative_path": "_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp",
+  "folder_full_path_current_host": "C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe",
+  "file_full_path_current_host": "C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe\\offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp",
+  "launcher_or_open_command": "Invoke-Item -LiteralPath \"C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe\\offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp\"",
+  "target_exists": true,
+  "access_state": "verified_present",
+  "access_evidence_level": "L3_VERIFIED_PRESENT",
+  "artifact_scope": "ignored_local_only",
+  "evidence_source": "current_host_filesystem_plus_git_check_ignore",
+  "git_check_ignore_result": {
+    "command": "git check-ignore -v -- _tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp",
+    "returncode": 0,
+    "stdout": ".gitignore:37:_tmp/\t_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp",
+    "stderr": "",
+    "ignored": true
+  },
+  "size": 267097
+}
+```
+
+
+## Materialization Readback
+
+```json
+{
+  "readback_status": "readable_text_pass",
+  "artifact_id": "local_ignored_offline_topic_mini_episode_readable_text_probe",
+  "repo_relative_path": "_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp",
+  "folder_full_path_current_host": "C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe",
+  "file_full_path_current_host": "C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe\\offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp",
+  "target_exists": true,
+  "access_state": "verified_present",
+  "access_evidence_level": "L3_VERIFIED_PRESENT",
+  "artifact_scope": "ignored_local_only",
+  "evidence_source": "current_host_filesystem_plus_git_check_ignore",
+  "git_check_ignore_result": {
+    "command": "git check-ignore -v -- _tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp",
+    "returncode": 0,
+    "stdout": ".gitignore:37:_tmp/\t_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp",
+    "stderr": "",
+    "ignored": true
+  },
+  "size": 267097,
+  "file_sha256": "a0e17bd2b589b208f2cd4ce98b86c9a88377967bd567ff94240cb7832be329e9",
+  "item_type_counts": {
+    "TextItem": 5,
+    "GroupItem": 8,
+    "ImageItem": 8
+  },
+  "unexpected_item_types": [],
+  "beat_count": 5,
+  "text_item_count": 5,
+  "debug_label_visible_count": 0,
+  "human_readable_text_item_count": 5,
+  "animation_item_count": 16,
+  "duration_frames": 1800,
+  "fps": 60,
+  "per_beat_mapping": [
+    {
+      "beat_id": "offline_topic_mini_ep_beat_01_hook",
+      "debug_label": "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_01_hook",
+      "visible_text": "Hook: this offline topic checks the episode route.",
+      "text_item_remark": "Hook: this offline topic checks the episode route.",
+      "text_item_present": true,
+      "text_is_human_readable": true,
+      "animation_accent_assignment": "stable_pose_only",
+      "animation_item_count": 4,
+      "start_frame": 0,
+      "duration_frames": 360,
+      "source_boundary_role": "reminds that the topic is an offline fixture only",
+      "parent_x_values": [
+        -96.0
+      ],
+      "head_rotation_values": [
+        0.0
+      ]
+    },
+    {
+      "beat_id": "offline_topic_mini_ep_beat_02_key_claim",
+      "debug_label": "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_02_key_claim",
+      "visible_text": "Key claim: source boundaries must be verified first.",
+      "text_item_remark": "Key claim: source boundaries must be verified first.",
+      "text_item_present": true,
+      "text_is_human_readable": true,
+      "animation_accent_assignment": "expression_event",
+      "animation_item_count": 4,
+      "start_frame": 360,
+      "duration_frames": 360,
+      "source_boundary_role": "keeps source truth and rights approval unaccepted",
+      "parent_x_values": [
+        -96.0
+      ],
+      "head_rotation_values": [
+        0.0
+      ]
+    },
+    {
+      "beat_id": "offline_topic_mini_ep_beat_03_source_warning",
+      "debug_label": "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_03_source_warning",
+      "visible_text": "Warning: this is a fixture, not live news.",
+      "text_item_remark": "Warning: this is a fixture, not live news.",
+      "text_item_present": true,
+      "text_is_human_readable": true,
+      "animation_accent_assignment": "expression_plus_short_nod",
+      "animation_item_count": 4,
+      "start_frame": 720,
+      "duration_frames": 360,
+      "source_boundary_role": "no live RSS, source quote, external media, or publication readiness",
+      "parent_x_values": [
+        -96.0
+      ],
+      "head_rotation_values": [
+        0.0,
+        -8.0,
+        0.0
+      ]
+    },
+    {
+      "beat_id": "offline_topic_mini_ep_beat_04_implication",
+      "debug_label": "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_04_implication",
+      "visible_text": "Why it matters: topic input can become a short explainer.",
+      "text_item_remark": "Why it matters: topic input can become a short explainer.",
+      "text_item_present": true,
+      "text_is_human_readable": true,
+      "animation_accent_assignment": "short_nod_reaction",
+      "animation_item_count": 4,
+      "start_frame": 1080,
+      "duration_frames": 360,
+      "source_boundary_role": "separates structural confidence from public-source confidence",
+      "parent_x_values": [
+        -96.0
+      ],
+      "head_rotation_values": [
+        0.0,
+        -8.0,
+        0.0
+      ]
+    },
+    {
+      "beat_id": "offline_topic_mini_ep_beat_05_close",
+      "debug_label": "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_05_close",
+      "visible_text": "Next: harden the source route before production.",
+      "text_item_remark": "Next: harden the source route before production.",
+      "text_item_present": true,
+      "text_is_human_readable": true,
+      "animation_accent_assignment": "none",
+      "animation_item_count": 0,
+      "start_frame": 1440,
+      "duration_frames": 360,
+      "source_boundary_role": "keeps live RSS/news and production acceptance out of scope",
+      "parent_x_values": [],
+      "head_rotation_values": []
+    }
+  ],
+  "YMM4_launch_status": "not_launched",
+  "render_status": "not_rendered",
+  "audio_tts_status": "not_created"
+}
+```
+
+
+## Acceptance Readback
+
+```json
+{
+  "five_beats_are_represented": true,
+  "TextItem_exists_per_beat": true,
+  "visible_text_is_human_readable": true,
+  "debug_labels_are_not_main_visible_content": true,
+  "animation_accent_remains_subordinate": true,
+  "no_body_forward_back_default": true,
+  "no_mechanical_expression_cycling": true,
+  "no_card_polish": true,
+  "no_render_export": true,
+  "no_live_fetch": true,
+  "no_production_claim": true
+}
+```
+
+
+## Business Goal Outcome Contract
+
+```json
+{
+  "problem_clear": {
+    "status": true,
+    "rationale": "the v1 preview pass is accepted for route structure while the debug-label text gap is recorded"
+  },
+  "offer_clear": {
+    "status": true,
+    "rationale": "v2 maps the five beats to short readable explanation lines"
+  },
+  "proof_clear": {
+    "status": true,
+    "rationale": "the proof is readable episode materialization, not production script or card quality"
+  },
+  "boundary_clear": {
+    "status": true,
+    "rationale": "card design, animation tuning, render, audio/TTS, and live RSS remain closed"
+  },
+  "next_action_clear": {
+    "status": true,
+    "rationale": "newsroom-offline-topic-mini-episode-readable-preview-operator-instruction-v1"
+  },
+  "visual_supports_explanation": {
+    "status": true,
+    "rationale": "animation remains optional, subordinate, and absent on the close beat"
+  }
+}
+```
+
+
+## Recommendation Logic
+
+```json
+{
+  "selected": "newsroom-offline-topic-mini-episode-readable-preview-operator-instruction-v1",
+  "if_v2_local_ymmp_exists_and_preview_adds_value": "newsroom-offline-topic-mini-episode-readable-preview-operator-instruction-v1",
+  "if_topic_to_readable_beat_is_too_synthetic": "newsroom-rss-topic-fixture-route-audit-v1",
+  "if_offline_readable_text_route_is_strong_and_live_boundary_is_next": "newsroom-live-rss-boundary-plan-v1",
+  "if_reusable_route_hardening_is_needed": "newsroom-episode-capsule-route-hardening-v1",
+  "reason": "A v2 ignored local .ymmp exists, access is verified, and the screen text changed from debug labels to readable explanation lines."
+}
+```
+
+
+## Not Accepted Scope
+
+```json
+{
+  "live_rss_or_news_fetch": false,
+  "production_script_quality": false,
+  "production_subtitle_design": false,
+  "production_card_design": false,
+  "production_animation_quality": false,
+  "card_redesign": false,
+  "visual_layout_tuning": false,
+  "animation_tuning": false,
+  "render_export_proof": false,
+  "audio_or_tts_output": false,
+  "public_upload_or_public_readiness": false,
+  "actual_order_or_audience_acceptance": false,
+  "source_truth_or_rights_approval": false
+}
+```
+
+
+## Boundaries
+
+```json
+{
+  "network_fetch_performed": false,
+  "live_RSS_news_fetch_performed": false,
+  "YMM4_launched_by_agent": false,
+  "render_performed_by_agent": false,
+  "audio_tts_generated": false,
+  "real_media_imported": false,
+  "external_fetch_performed": false,
+  "card_assets_modified": false,
+  "card_redesign_performed": false,
+  "production_subtitle_or_card_design_created": false,
+  "animation_tuned": false,
+  "animation_only_probe_created": false,
+  "local_ignored_ymmp_created_in_this_slice": true,
+  "ymmp_or_media_staged_or_committed": false,
+  "production_public_readiness_claimed": false,
+  "actual_order_or_audience_acceptance_claimed": false
+}
+```
+
+
+## Inertia Check
+
+| gate | status |
+| --- | --- |
+| no_animation_only_loop | True |
+| no_primitive_or_tempo_loop | True |
+| no_card_polish_loop | True |
+| no_render_export_loop | True |
+| no_live_RSS_or_network_fetch | True |
+| next_axis_remains_episode_construction | newsroom-offline-topic-mini-episode-readable-preview-operator-instruction-v1 |
+
+
+## Completion Matrix
+
+| gate | status |
+| --- | --- |
+| repo_state_verified | True |
+| user_observation_recorded | True |
+| v1_debug_label_issue_classified | True |
+| readable_text_materialization_plan_created | True |
+| v2_local_ymmp_created_or_honestly_deferred | created |
+| materialization_readback_created | True |
+| next_axis_selected | True |
+
+
+## Boundary Note
+
+V2 is an ignored local diagnostic .ymmp. It changes only screen-facing TextItem content from debug labels to readable explanation lines while preserving the route and frozen animation accent policy.

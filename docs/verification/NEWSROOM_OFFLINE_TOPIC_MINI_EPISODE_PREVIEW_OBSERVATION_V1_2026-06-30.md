@@ -1,0 +1,126 @@
+# Newsroom Offline Topic Mini Episode Preview Observation v1
+
+artifact_id: newsroom_offline_topic_mini_episode_preview_observation_v1_2026_06_30
+schema_version: newsroom_offline_topic_mini_episode_preview_observation.v1
+production_status: diagnostic_only
+render_gate: L0_no_render
+
+
+## Normalized Preview Observation
+
+```json
+{
+  "source_observation_role": "user_opened_offline_topic_mini_episode_v1_probe",
+  "user_opened_path_current_host": "C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe\\offline_topic_mini_episode_capsule_materialized_v1.ymmp",
+  "repo_relative_path": "_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v1.ymmp",
+  "yym4_opened": true,
+  "five_textitems_visible": true,
+  "five_textitems_sequential": true,
+  "animation_accent_visible": true,
+  "animation_accent_not_disruptive": true,
+  "episode_route_materialization_status": "pass_with_boundary",
+  "visible_text_is_debug_label": true,
+  "human_readable_explanation_text_visible": false,
+  "production_subtitle_design_accepted": false,
+  "production_card_design_accepted": false,
+  "visible_screen_notes": [
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_01_hook",
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_02_key_claim",
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_03_source_warning",
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_04_implication",
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_05_close"
+  ],
+  "next_axis": "readable_text_materialization_v2"
+}
+```
+
+
+## V1 Debug Label Readback
+
+```json
+{
+  "readback_status": "user_preview_observation_recorded",
+  "target_exists": true,
+  "repo_relative_path": "_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v1.ymmp",
+  "file_full_path_current_host": "C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe\\offline_topic_mini_episode_capsule_materialized_v1.ymmp",
+  "text_item_count": 5,
+  "text_field_values": [
+    "A topic-like item is not a video yet; first prove the source boundary.",
+    "The key claim stays diagnostic until source truth, rights, and fit are reviewed.",
+    "Offline fixture: verify source boundary before production.",
+    "That boundary lets the structure be checked without pretending it is publishable.",
+    "Next, build a small capsule with text roles and one frozen accent per beat."
+  ],
+  "remark_values": [
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_01_hook",
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_02_key_claim",
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_03_source_warning",
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_04_implication",
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_05_close"
+  ],
+  "remark_debug_label_count": 5,
+  "text_field_human_readable_count": 1,
+  "user_observed_visible_values": [
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_01_hook",
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_02_key_claim",
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_03_source_warning",
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_04_implication",
+    "offline_topic_mini_episode:text:offline_topic_mini_ep_beat_05_close"
+  ],
+  "user_observed_debug_label_count": 5,
+  "classification": "screen_visible_debug_label_from_user_preview",
+  "interpretation": "filesystem readback shows explanation text in Text and debug labels in Remark; user preview is treated as authoritative that the screen-facing notes were debug labels"
+}
+```
+
+
+## Issue Classification
+
+```json
+{
+  "route_materialization_structure": "pass_with_boundary",
+  "animation_accent": "pass_with_boundary",
+  "screen_facing_text": "debug_label_visible_not_human_readable",
+  "production_subtitle_or_card_design": "not_accepted"
+}
+```
+
+
+## Recommended Fix
+
+```json
+{
+  "status": "safe_to_materialize_readable_text_v2",
+  "approach": "preserve v1 route and animation timing, replace five visible TextItem text/remark fields with short readable lines",
+  "next_axis": "readable_text_materialization_v2"
+}
+```
+
+
+## Boundaries
+
+```json
+{
+  "network_fetch_performed": false,
+  "live_RSS_news_fetch_performed": false,
+  "YMM4_launched_by_agent": false,
+  "render_performed_by_agent": false,
+  "audio_tts_generated": false,
+  "real_media_imported": false,
+  "external_fetch_performed": false,
+  "card_assets_modified": false,
+  "card_redesign_performed": false,
+  "production_subtitle_or_card_design_created": false,
+  "animation_tuned": false,
+  "animation_only_probe_created": false,
+  "local_ignored_ymmp_created_in_this_slice": false,
+  "ymmp_or_media_staged_or_committed": false,
+  "production_public_readiness_claimed": false,
+  "actual_order_or_audience_acceptance_claimed": false
+}
+```
+
+
+## Boundary Note
+
+This records a user-side preview observation. It accepts the five-beat route and animation accent only with boundary, and it does not accept production subtitle/card design, render quality, public readiness, or audience response.

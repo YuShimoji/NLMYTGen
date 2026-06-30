@@ -1,5 +1,38 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom offline topic mini episode readable text materialization completed (2026-06-30 JST)**:
+  `newsroom-offline-topic-mini-episode-readable-text-materialization-v1`
+  records the user-side preview observation for
+  `_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v1.ymmp`.
+  The v1 preview is accepted only for route/materialization structure:
+  five TextItems appeared sequentially, the character accent was in the same
+  scene/timing, and the accent was not disruptive. It is not accepted as
+  human-readable mini episode text because the screen-facing notes observed by
+  the user were debug labels such as
+  `offline_topic_mini_episode:text:offline_topic_mini_ep_beat_01_hook`.
+  New tracked artifacts are
+  `samples/_probe/newsroom_handoff/offline_topic_mini_episode_preview_observation_v1.json`,
+  `docs/verification/NEWSROOM_OFFLINE_TOPIC_MINI_EPISODE_PREVIEW_OBSERVATION_V1_2026-06-30.md`,
+  `samples/_probe/newsroom_handoff/offline_topic_mini_episode_readable_text_materialization_v1.json`,
+  `docs/verification/NEWSROOM_OFFLINE_TOPIC_MINI_EPISODE_READABLE_TEXT_MATERIALIZATION_V1_2026-06-30.md`,
+  `src/pipeline/newsroom_offline_topic_mini_episode_readable_text_materialization.py`,
+  and
+  `tests/test_newsroom_offline_topic_mini_episode_readable_text_materialization.py`.
+  The v2 ignored local diagnostic project exists at
+  `_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp`
+  and is verified ignored by `.gitignore` `_tmp/`. It preserves the v1 route,
+  timing, and frozen animation accent policy while replacing the five
+  screen-facing TextItem `Text` and `Remark` values with short English
+  explanation lines. English is used because the Japanese examples supplied to
+  this slice were mojibake in the prompt and the existing capsule route already
+  used ASCII English safely. Readback passes with 60 fps / 1800 frames,
+  5 beats, 5 `TextItem`s, 8 `GroupItem`s, 8 `ImageItem`s, 16 animation items,
+  `debug_label_visible_count=0`, and
+  `human_readable_text_item_count=5`. No Agent-side YMM4 launch, render,
+  `.ymmp` stage/commit, media/audio/TTS generation, live RSS/news fetch, card
+  redesign, animation tuning, production/public readiness claim, or
+  audience/order acceptance claim occurred. The selected next axis is
+  `newsroom-offline-topic-mini-episode-readable-preview-operator-instruction-v1`.
 - **Newsroom offline topic mini episode capsule materialization completed (2026-06-30 JST)**:
   `newsroom-offline-topic-mini-episode-capsule-materialization-v1`
   classifies the current offline-topic multi-beat YMM4 route as
