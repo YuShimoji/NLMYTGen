@@ -1,0 +1,130 @@
+{
+  "artifact_id": "offline_rss_like_topic_fixture_v2_2026_06_30",
+  "fixture_id": "offline_rss_like_topic_fixture_v2_2026_06_30",
+  "schema_version": "newsroom_offline_rss_like_topic_fixture.v2",
+  "review_status": "ready_for_supervisor_review",
+  "diagnostic_only": true,
+  "render_gate": "L0_no_render",
+  "topic_id": "offline_rss_like_topic_fixture_v2_001",
+  "title": "Offline fixture: source boundary check before a short explainer",
+  "source_name": "Offline diagnostic newsroom fixture",
+  "source_url_or_placeholder": "placeholder:offline-source-boundary-v2-no-live-url",
+  "published_at_or_placeholder": "placeholder:no-live-publication-timestamp",
+  "summary": "A private RSS-like topic fixture about verifying source identity, freshness, rights, and excluded claims before turning a topic into a short explainer.",
+  "key_claim": "A topic candidate should not become a publishable explainer until source identity, freshness, rights status, and excluded claims are explicit.",
+  "why_it_matters": "A stronger fixture lets the episode pipeline test hook, claim, boundary, implication, and next-action beats without pretending the input is live news.",
+  "uncertainty_or_boundary": "Offline diagnostic fixture only; no live RSS/news fetch, source truth approval, quote permission, rights clearance, or public readiness is implied.",
+  "rights_status": "placeholder:unknown_offline_fixture_needs_review",
+  "intended_episode_angle": "Explain why source-boundary verification must precede a short yukkuri explainer episode.",
+  "excluded_claims": [
+    "Do not claim that the topic was fetched from a live RSS feed.",
+    "Do not claim that source facts, freshness, rights, or quotes are approved.",
+    "Do not claim production subtitle/card design, render quality, public readiness, or audience acceptance."
+  ],
+  "production_status": "diagnostic_only",
+  "source_kind": "offline_rss_like_fixture_v2",
+  "language": "en-US",
+  "topic_category": "newsroom_source_boundary",
+  "source_reliability_note": "Reliability is not scored because this is an offline fixture, not a real publisher or fetched item.",
+  "attribution_note": "Attribution is a fixture label only and must be replaced before any real source workflow.",
+  "freshness_status": "placeholder_not_evaluable_without_live_source",
+  "editorial_risk": {
+    "risk_level": "medium_for_diagnostic_route",
+    "reason": "The fixture is structurally stronger than v1, but the source, published time, and rights fields remain explicit placeholders."
+  },
+  "materialization_notes": {
+    "local_ymmp_created_or_modified_in_this_slice": false,
+    "reason": "This slice validates the topic-to-capsule route only; YMM4 materialization is out of scope."
+  },
+  "placeholder_fields": [
+    "source_url_or_placeholder",
+    "published_at_or_placeholder",
+    "rights_status",
+    "freshness_status"
+  ],
+  "source_boundary_fields": {
+    "network_fetch_performed": false,
+    "live_RSS_news_fetch_performed": false,
+    "source_truth_approved": false,
+    "rights_approved": false,
+    "public_readiness_claimed": false
+  },
+  "v1_audit_path": "samples/_probe/newsroom_handoff/rss_topic_fixture_route_audit_v1.json",
+  "v1_route_classification": {
+    "diagnostic_only": true,
+    "reusable_fixture_candidate": true,
+    "too_synthetic": true,
+    "blocked": false,
+    "classification_summary": "usable as an offline diagnostic route skeleton, but too synthetic for safer episode generation until source, freshness, rights, summary, and excluded-claim fields are explicit"
+  },
+  "v2_improvement_over_v1": {
+    "required_fields_present": [
+      "topic_id",
+      "title",
+      "source_name",
+      "source_url_or_placeholder",
+      "published_at_or_placeholder",
+      "summary",
+      "key_claim",
+      "why_it_matters",
+      "uncertainty_or_boundary",
+      "rights_status",
+      "intended_episode_angle",
+      "excluded_claims",
+      "production_status"
+    ],
+    "fills_previous_missing_or_placeholder_required_fields": [
+      "source_name",
+      "source_url_or_placeholder",
+      "published_at_or_placeholder",
+      "summary",
+      "why_it_matters",
+      "rights_status",
+      "excluded_claims"
+    ],
+    "stronger_than_v1": true,
+    "still_synthetic": true
+  },
+  "production_blockers": [
+    "source_url_or_placeholder remains a placeholder rather than a fetched source URL",
+    "published_at_or_placeholder remains a placeholder rather than verified freshness",
+    "rights_status remains placeholder:unknown_offline_fixture_needs_review",
+    "source reliability and source truth are not approved",
+    "live RSS/news fetch remains intentionally closed"
+  ],
+  "not_accepted_scope": {
+    "live_rss_or_news_fetch": false,
+    "production_script_quality": false,
+    "production_subtitle_design": false,
+    "production_card_design": false,
+    "production_animation_quality": false,
+    "card_redesign": false,
+    "visual_layout_tuning": false,
+    "animation_tuning": false,
+    "render_export_proof": false,
+    "audio_or_tts_output": false,
+    "public_upload_or_public_readiness": false,
+    "actual_order_or_audience_acceptance": false,
+    "source_truth_or_rights_approval": false,
+    "local_ymmp_materialization": false
+  },
+  "boundaries": {
+    "network_fetch_performed": false,
+    "live_RSS_news_fetch_performed": false,
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "audio_tts_generated": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "card_assets_modified": false,
+    "card_redesign_performed": false,
+    "production_subtitle_or_card_design_created": false,
+    "animation_tuned": false,
+    "animation_only_probe_created": false,
+    "local_ignored_ymmp_created_in_this_slice": false,
+    "local_ignored_ymmp_modified_in_this_slice": false,
+    "ymmp_or_media_staged_or_committed": false,
+    "production_public_readiness_claimed": false,
+    "actual_order_or_audience_acceptance_claimed": false
+  }
+}

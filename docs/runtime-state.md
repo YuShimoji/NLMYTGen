@@ -1,5 +1,33 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom offline RSS-like topic fixture v2 to mini episode capsule completed (2026-06-30 JST)**:
+  `newsroom-offline-rss-like-topic-fixture-v2-to-mini-episode-capsule-v1`
+  strengthens the prior offline RSS-like topic route after
+  `rss_topic_fixture_route_audit_v1` classified v1 as diagnostic-only,
+  reusable, but too synthetic. New tracked artifacts are
+  `samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2.json`,
+  `samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2_schema_contract_v1.json`,
+  `samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2_to_mini_episode_capsule_v1.json`,
+  `docs/verification/NEWSROOM_OFFLINE_RSS_LIKE_TOPIC_FIXTURE_V2_TO_MINI_EPISODE_CAPSULE_V1_2026-06-30.md`,
+  `src/pipeline/newsroom_offline_rss_like_topic_fixture_v2.py`, and
+  `tests/test_newsroom_offline_rss_like_topic_fixture_v2.py`. The v2 fixture
+  now carries the required source, placeholder URL, placeholder published time,
+  summary, key claim, why-it-matters, boundary, rights, intended angle,
+  excluded claims, and diagnostic production status fields, plus source kind,
+  language, category, attribution/freshness/reliability notes, editorial risk,
+  and materialization notes. The route generates a five-beat diagnostic mini
+  episode capsule: hook, key claim, source-boundary warning, implication, and
+  close. Animation remains frozen optional metadata only
+  (`stable_pose_only`, `expression_event`, `expression_plus_short_nod`,
+  `short_nod_reaction`, `none`) and no YMM4 project is created or modified.
+  The route is classified as `current_partial`: diagnostic-only and a reusable
+  fixture candidate, stronger than v1, not blocked, but still synthetic because
+  source URL, freshness, and rights remain placeholders. No Agent-side YMM4
+  launch, render, `.ymmp` creation/modification/stage/commit, media/audio/TTS
+  generation, live RSS/news fetch, card redesign, animation tuning,
+  production/public readiness claim, or audience/order acceptance claim
+  occurred. The selected next axis is
+  `newsroom-rss-topic-fixture-route-hardening-v1`.
 - **Newsroom offline topic readable preview readback and RSS topic fixture route audit completed (2026-06-30 JST)**:
   `newsroom-offline-topic-readable-preview-readback-and-rss-topic-fixture-route-audit-v1`
   records the user-side preview observation for

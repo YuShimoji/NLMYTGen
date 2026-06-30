@@ -1,0 +1,86 @@
+{
+  "artifact_id": "offline_rss_like_topic_fixture_v2_schema_contract_v1_2026_06_30",
+  "contract_id": "offline_rss_like_topic_fixture_v2_schema_contract_v1_2026_06_30",
+  "schema_version": "newsroom_offline_rss_like_topic_fixture_v2_schema_contract.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "render_gate": "L0_no_render",
+  "source_audit_path": "samples/_probe/newsroom_handoff/rss_topic_fixture_route_audit_v1.json",
+  "required_fields": [
+    "topic_id",
+    "title",
+    "source_name",
+    "source_url_or_placeholder",
+    "published_at_or_placeholder",
+    "summary",
+    "key_claim",
+    "why_it_matters",
+    "uncertainty_or_boundary",
+    "rights_status",
+    "intended_episode_angle",
+    "excluded_claims",
+    "production_status"
+  ],
+  "recommended_additional_fields": [
+    "source_kind",
+    "language",
+    "topic_category",
+    "source_reliability_note",
+    "attribution_note",
+    "freshness_status",
+    "editorial_risk",
+    "materialization_notes"
+  ],
+  "field_purposes": {
+    "topic_id": "stable local identifier for fixture and beat traceability",
+    "title": "human-readable topic headline or RSS title equivalent",
+    "source_name": "publication/feed/source label or explicit offline fixture label",
+    "source_url_or_placeholder": "article/feed URL placeholder proving live fetch is still closed",
+    "published_at_or_placeholder": "freshness marker placeholder for offline-only testing",
+    "summary": "short source-bounded description, separate from the claim",
+    "key_claim": "the claim allowed to influence the episode beats",
+    "why_it_matters": "reason the topic can become an explainer capsule",
+    "uncertainty_or_boundary": "known source limitation and diagnostic boundary",
+    "rights_status": "rights/quote/media reuse status or explicit unknown placeholder",
+    "intended_episode_angle": "the explanatory angle used by hook, implication, and close",
+    "excluded_claims": "claims the beat generator must not produce",
+    "production_status": "diagnostic_only until source and rights are reviewed",
+    "source_kind": "declares the input as an offline RSS-like fixture, not a live feed",
+    "language": "fixture language code",
+    "topic_category": "diagnostic category used for routing and risk review",
+    "source_reliability_note": "explicitly prevents reliability overclaiming",
+    "attribution_note": "explains attribution limits for the offline source label",
+    "freshness_status": "explicitly records that freshness cannot be evaluated",
+    "editorial_risk": "compact route risk note for downstream gating",
+    "materialization_notes": "states whether any YMM4 project was created or modified"
+  },
+  "required_placeholder_policy": {
+    "allowed_for_offline_fixture": [
+      "source_url_or_placeholder",
+      "published_at_or_placeholder",
+      "rights_status"
+    ],
+    "must_be_explicit": true,
+    "must_not_be_treated_as_live_source": true
+  },
+  "episode_generation_policy": {
+    "allowed_output": "diagnostic five-beat mini episode capsule",
+    "forbidden_output": [
+      "live RSS/news item",
+      "production script acceptance",
+      "YMM4 project materialization",
+      "render/export proof",
+      "audio/TTS",
+      "public upload"
+    ]
+  },
+  "boundary_fields_required_for_capsule": [
+    "uncertainty_or_boundary",
+    "excluded_claims",
+    "production_status",
+    "rights_status",
+    "source_url_or_placeholder",
+    "published_at_or_placeholder"
+  ]
+}

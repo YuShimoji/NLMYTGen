@@ -1,6 +1,12 @@
 # Project Context — NLMYTGen
 
 ## PROJECT CONTEXT
+- Current newsroom slice (2026-06-30 JST):
+  `newsroom-offline-rss-like-topic-fixture-v2-to-mini-episode-capsule-v1`
+  is complete. The current handoff is no longer visual preview or animation
+  polish; it is an offline RSS-like topic fixture route that is stronger than
+  v1, generates a five-beat diagnostic capsule, and still needs fixture
+  hardening because URL, freshness, and rights remain placeholders.
 - プロジェクト名: NLMYTGen
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
@@ -12,6 +18,13 @@
 ---
 
 ## ACTIVE ARTIFACT
+- Current newsroom artifact: offline RSS-like topic fixture v2 plus a
+  diagnostic five-beat mini episode capsule. The v2 fixture explicitly carries
+  required source, placeholder URL, placeholder published time, summary, key
+  claim, why-it-matters, boundary, rights, intended angle, excluded claims, and
+  diagnostic production status fields. The route is `current_partial`, not
+  blocked, and selected next axis is
+  `newsroom-rss-topic-fixture-route-hardening-v1`.
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI artifact → CSV / registry / patched ymmp → YMM4 読込・確認・レンダリング
 - 現在のスライス: PLANNER007 上の ignored local readable-text `.ymmp` が user preview pass となり、YMM4 visual gate を `closed_for_now` にした状態。次の主摩擦は visual/card/animation ではなく、offline RSS-like topic fixture が safer episode generation に必要な source / freshness / rights / excluded-claim fields を持つこと。
@@ -20,6 +33,10 @@
 ---
 
 ## CURRENT LANE
+- Current lane reason: the readable YMM4 gate is already closed for now, so
+  the bottleneck moved upstream to fixture/schema quality. This slice did not
+  create or modify `.ymmp`, did not launch YMM4, did not render, did not fetch
+  live RSS/news, and did not tune animation or cards.
 - 主レーン: Downstream adapter / YMM4 diagnostic handoff（newsroom-produced handoff material）。現行の優先は [runtime-state.md](runtime-state.md) の top entry。
 - 今このレーンを優先する理由: readable v2 preview で five visible human-readable TextItems が確認され、animation accent も blocking と報告されていない。これ以上の YMM4 visual preview / animation tuning / card work は現在の bottleneck ではなく、次は offline topic/RSS-like fixture を robust にして episode capsule 生成へ戻ることにある。
 
@@ -78,6 +95,36 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 - `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
+
+Latest newsroom offline RSS-like topic fixture v2 to mini episode capsule decision (2026-06-30 JST):
+`newsroom_offline_rss_like_topic_fixture_v2_to_mini_episode_capsule_v1_2026_06_30`
+strengthens the previous offline topic/RSS-like input route after
+`rss_topic_fixture_route_audit_v1` found v1 diagnostic-only and reusable but
+too synthetic for safer episode generation. The tracked artifacts are
+`samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2.json`,
+`samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2_schema_contract_v1.json`,
+`samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2_to_mini_episode_capsule_v1.json`,
+and
+`docs/verification/NEWSROOM_OFFLINE_RSS_LIKE_TOPIC_FIXTURE_V2_TO_MINI_EPISODE_CAPSULE_V1_2026-06-30.md`,
+with implementation/tests in
+`src/pipeline/newsroom_offline_rss_like_topic_fixture_v2.py` /
+`tests/test_newsroom_offline_rss_like_topic_fixture_v2.py`.
+
+The v2 fixture fills the required source, placeholder URL, placeholder
+published time, summary, key claim, why-it-matters, boundary, rights, intended
+angle, excluded claims, and diagnostic production status fields. The
+transformation generates five diagnostic beats: hook / issue framing, key claim
+/ explanation, source-boundary warning, implication / why it matters, and close
+/ next action. Each beat carries source fields used, excluded claims applied,
+plain TextItem/overlay roles for later materialization, and optional frozen
+animation assignment metadata only. The route classification is
+`current_partial`: diagnostic-only, reusable fixture candidate, stronger than
+v1, not blocked, but still synthetic because source URL, freshness, and rights
+remain explicit placeholders. This decision did not launch YMM4, render,
+create/modify/stage/commit `.ymmp`, generate media/audio/TTS, fetch live
+RSS/news, redesign cards, tune animation, claim production/public readiness, or
+claim audience/order acceptance. The selected next axis is
+`newsroom-rss-topic-fixture-route-hardening-v1`.
 
 Latest newsroom offline topic readable preview readback and RSS topic fixture route audit decision (2026-06-30 JST):
 `newsroom_offline_topic_readable_preview_readback_and_rss_topic_fixture_route_audit_v1_2026_06_30`
