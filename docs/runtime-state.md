@@ -1,5 +1,34 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom offline topic mini episode capsule with animation accent completed (2026-06-30 JST)**:
+  `newsroom-offline-topic-mini-episode-capsule-with-animation-accent-v1`
+  advances the previous bridge into a diagnostic 5-beat mini episode capsule
+  contract from the offline RSS-like topic fixture. New tracked artifacts are
+  `samples/_probe/newsroom_handoff/offline_topic_mini_episode_capsule_with_animation_accent_v1.json`,
+  `docs/verification/NEWSROOM_OFFLINE_TOPIC_MINI_EPISODE_CAPSULE_WITH_ANIMATION_ACCENT_V1_2026-06-30.md`,
+  `samples/_probe/newsroom_handoff/offline_topic_mini_episode_capsule_contract_v1.json`,
+  `src/pipeline/newsroom_offline_topic_mini_episode_capsule.py`, and
+  `tests/test_newsroom_offline_topic_mini_episode_capsule.py`. The capsule has
+  five beats: hook / issue framing, explanation / key claim, source-boundary
+  warning, implication / why it matters, and close / next action. Each beat
+  carries narration intent, plain `TextItem` / diagnostic label roles, source
+  boundary role, materialization role, and diagnostic review status. The
+  frozen MVP animation policy is carried forward with optional assignments
+  only: `stable_pose_only`, `expression_event`, `expression_plus_short_nod`,
+  `short_nod_reaction`, and `none`; body forward/back movement, repeated
+  nodding, mechanical expression cycling, speech balloons, full chaban scenes,
+  animation-only probe loops, and tempo-only loops remain disabled. Existing
+  `episode_production_capsule_v1` is classified as an older fake-packet
+  structural precedent, not the current offline-topic materialization route.
+  No local `.ymmp` was created because PLANNER007 does not yet have a verified
+  non-speculative multi-beat YMM4 materialization route; the planned ignored
+  path
+  `_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_with_animation_accent_v1.ymmp`
+  is verified ignored and recorded as `not_created_deferred`. No Agent-side
+  YMM4 launch, render, `.ymmp` stage/commit, media/audio/TTS generation, live
+  RSS/news fetch, card redesign, animation tuning, production/public readiness
+  claim, or audience/order acceptance claim occurred. The selected next axis is
+  `newsroom-offline-topic-mini-episode-capsule-materialization-v1`.
 - **Newsroom RSS dry-run animated beat preview readback and mini episode capsule bridge completed (2026-06-30 JST)**:
   `newsroom-rss-dry-run-animated-beat-preview-readback-and-mini-episode-capsule-bridge-v1`
   records the user-side preview observation for the ignored local RSS dry-run

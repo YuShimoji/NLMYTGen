@@ -1,0 +1,168 @@
+{
+  "artifact_id": "newsroom_offline_topic_mini_episode_capsule_contract_v1_2026_06_30",
+  "contract_id": "newsroom_offline_topic_mini_episode_capsule_contract_v1_2026_06_30",
+  "schema_version": "newsroom_offline_topic_mini_episode_capsule_contract.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "render_gate": "L0_no_render",
+  "source_capsule_path": "samples/_probe/newsroom_handoff/offline_topic_mini_episode_capsule_with_animation_accent_v1.json",
+  "source_bridge_path": "samples/_probe/newsroom_handoff/offline_topic_mini_episode_capsule_bridge_v1.json",
+  "capsule_id": "newsroom_offline_topic_mini_episode_capsule_with_animation_accent_v1_2026_06_30",
+  "beat_count": 5,
+  "beat_contract": [
+    {
+      "beat_id": "offline_topic_mini_ep_beat_01_hook",
+      "source_topic_id": "offline_rss_like_topic_fixture_001",
+      "beat_function": "hook / issue framing",
+      "text_overlay_policy": {
+        "subtitle_or_text_role": "plain TextItem hook; not final subtitle styling",
+        "minimal_overlay_role": "short diagnostic label for the issue frame",
+        "production_subtitle_design": false,
+        "production_card_design": false
+      },
+      "animation_assignment": "stable_pose_only",
+      "animation_accent_role": "stable pose plus one light reaction after the issue is named",
+      "source_boundary_role": "reminds that the topic is an offline fixture only",
+      "materialization_role": "candidate_for_future_multi_beat_ymmp",
+      "review_status": "diagnostic_review_ready"
+    },
+    {
+      "beat_id": "offline_topic_mini_ep_beat_02_key_claim",
+      "source_topic_id": "offline_rss_like_topic_fixture_001",
+      "beat_function": "explanation / key claim",
+      "text_overlay_policy": {
+        "subtitle_or_text_role": "plain TextItem explanation line",
+        "minimal_overlay_role": "source-check label, not a designed card",
+        "production_subtitle_design": false,
+        "production_card_design": false
+      },
+      "animation_assignment": "expression_event",
+      "animation_accent_role": "one expression event tied to the key claim",
+      "source_boundary_role": "keeps source truth and rights approval unaccepted",
+      "materialization_role": "capsule_contract_only",
+      "review_status": "diagnostic_review_ready"
+    },
+    {
+      "beat_id": "offline_topic_mini_ep_beat_03_source_warning",
+      "source_topic_id": "offline_rss_like_topic_fixture_001",
+      "beat_function": "source-boundary warning",
+      "text_overlay_policy": {
+        "subtitle_or_text_role": "plain diagnostic TextItem boundary warning",
+        "minimal_overlay_role": "current proven plain TextItem role; no card-like overlay",
+        "production_subtitle_design": false,
+        "production_card_design": false
+      },
+      "animation_assignment": "expression_plus_short_nod",
+      "animation_accent_role": "frozen MVP accent remains subordinate to the warning text",
+      "source_boundary_role": "no live RSS, source quote, external media, or publication readiness",
+      "materialization_role": "candidate_for_future_multi_beat_ymmp",
+      "review_status": "diagnostic_review_ready"
+    },
+    {
+      "beat_id": "offline_topic_mini_ep_beat_04_implication",
+      "source_topic_id": "offline_rss_like_topic_fixture_001",
+      "beat_function": "implication / why it matters",
+      "text_overlay_policy": {
+        "subtitle_or_text_role": "plain TextItem implication line",
+        "minimal_overlay_role": "small readback label for why the proof matters",
+        "production_subtitle_design": false,
+        "production_card_design": false
+      },
+      "animation_assignment": "short_nod_reaction",
+      "animation_accent_role": "one short nod/reaction after the implication",
+      "source_boundary_role": "separates structural confidence from public-source confidence",
+      "materialization_role": "capsule_contract_only",
+      "review_status": "diagnostic_review_ready"
+    },
+    {
+      "beat_id": "offline_topic_mini_ep_beat_05_close",
+      "source_topic_id": "offline_rss_like_topic_fixture_001",
+      "beat_function": "close / next action",
+      "text_overlay_policy": {
+        "subtitle_or_text_role": "plain TextItem next-action line",
+        "minimal_overlay_role": "next-step label only",
+        "production_subtitle_design": false,
+        "production_card_design": false
+      },
+      "animation_assignment": "none",
+      "animation_accent_role": "return to stable pose at close",
+      "source_boundary_role": "keeps live RSS/news and production acceptance out of scope",
+      "materialization_role": "capsule_contract_only",
+      "review_status": "diagnostic_review_ready"
+    }
+  ],
+  "animation_accent_policy": {
+    "policy_status": "frozen_mvp_policy_carried_forward",
+    "allowed_assignments": [
+      "expression_event",
+      "expression_plus_short_nod",
+      "none",
+      "short_nod_reaction",
+      "stable_pose_only"
+    ],
+    "allowed": [
+      "stable pose",
+      "at most one expression event per relevant beat",
+      "at most one short nod/reaction per relevant beat",
+      "return to stable pose"
+    ],
+    "disabled": [
+      "body forward/back",
+      "repeated nodding",
+      "mechanical expression cycle",
+      "speech balloon",
+      "full chaban scene",
+      "animation-only probe loop",
+      "tempo-only loop"
+    ],
+    "do_not_force_animation_onto_every_beat": true
+  },
+  "text_overlay_policy": {
+    "plain_TextItem_role_acceptable": true,
+    "diagnostic_label_role_acceptable": true,
+    "polished_card_design": false,
+    "production_subtitle_design": false,
+    "card_redesign": false,
+    "visual_layout_tuning": false
+  },
+  "materialization_policy": {
+    "local_ymmp_created_in_this_slice": false,
+    "local_ymmp_materialization_status": "blocked_or_deferred",
+    "reason": "No safe non-speculative PLANNER007 multi-beat YMM4 route is identified yet; create the contract first, then materialize separately.",
+    "next_axis": "newsroom-offline-topic-mini-episode-capsule-materialization-v1"
+  },
+  "not_accepted_scope": {
+    "live_rss_or_news_fetch": false,
+    "production_script_quality": false,
+    "production_subtitle_design": false,
+    "production_card_design": false,
+    "production_animation_quality": false,
+    "card_redesign": false,
+    "visual_layout_tuning": false,
+    "animation_tuning": false,
+    "render_export_proof": false,
+    "audio_or_tts_output": false,
+    "public_upload_or_public_readiness": false,
+    "actual_order_or_audience_acceptance": false,
+    "source_truth_or_rights_approval": false
+  },
+  "boundaries": {
+    "network_fetch_performed": false,
+    "live_RSS_news_fetch_performed": false,
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "audio_tts_generated": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "card_assets_modified": false,
+    "card_redesign_performed": false,
+    "production_subtitle_or_card_design_created": false,
+    "animation_tuned": false,
+    "animation_only_probe_created": false,
+    "local_ignored_ymmp_created_in_this_slice": false,
+    "ymmp_or_media_staged_or_committed": false,
+    "production_public_readiness_claimed": false,
+    "actual_order_or_audience_acceptance_claimed": false
+  }
+}

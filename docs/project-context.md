@@ -5,7 +5,7 @@
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
 - 現在地の正本: 通常再開では `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md` で止める。本ファイル冒頭は状態スナップショットではなく、航海日誌への短い入口。
-- 現フェーズ: `docs/runtime-state.md` が最新の current slice を所有する。2026-06-30 時点の実行入口は newsroom RSS dry-run animated beat の preview readback から offline topic mini episode capsule bridge への mainline content-flow proof。G-27 Real Estate DX の production carrier 待ちは active blocker から外し、case-specific evidence として保持する。G-28 Reference-Driven Generic Screen Carrier は既存 diagnostic / prototype evidence からの refinement lane として残るが、今回の mainline handoff では進めない。
+- 現フェーズ: `docs/runtime-state.md` が最新の current slice を所有する。2026-06-30 時点の実行入口は offline RSS-like topic から diagnostic 5-beat mini episode capsule contract への mainline content-flow proof。G-27 Real Estate DX の production carrier 待ちは active blocker から外し、case-specific evidence として保持する。G-28 Reference-Driven Generic Screen Carrier は既存 diagnostic / prototype evidence からの refinement lane として残るが、今回の mainline handoff では進めない。
 - 古い roadmap / prompt / verification packet は現行判断に使わない。必要な履歴は DECISION LOG と HANDOFF SNAPSHOT の該当行だけ読む。
 - Python のスコープは「テキスト変換 + IR/registry + ymmp 限定後段適用」。動画レンダリング・画像生成・YMM4 GUI 操作は Python の責務ではない。
 
@@ -14,14 +14,14 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI artifact → CSV / registry / patched ymmp → YMM4 読込・確認・レンダリング
-- 現在のスライス: RSS dry-run animated beat の user preview で plain topic `TextItem` と character animation accent の同シーン同居が bounded pass になったため、追加プレビュー・カード調整・アニメ調整を止め、offline RSS-like diagnostic topic を 5-beat mini episode capsule contract へ橋渡しした状態。`content_flow_visual_status=pass_with_boundary`、`local_ignored_ymmp_created_in_this_slice=false`、`render_gate=L0_no_render` を保つ。
-- 成功状態: topic/RSS-like input が hook / key claim / source warning / implication / close の小さな episode capsule に変換され、各 beat が plain text role、minimal overlay role、source-boundary role、frozen minimal animation accent policy を持ち、次の materialization 対象を一つに絞れる状態にすること。
+- 現在のスライス: offline RSS-like diagnostic topic を hook / key claim / source warning / implication / close の 5-beat mini episode capsule contract に昇格した状態。各 beat は plain text role、minimal overlay role、source-boundary role、materialization role、diagnostic review status、optional frozen animation accent assignment を持つ。`local_ymmp_materialization_status=blocked_or_deferred`、`local_ignored_ymmp_created_in_this_slice=false`、`render_gate=L0_no_render` を保つ。
+- 成功状態: capsule contract が clear になり、次の materialization slice で PLANNER007 上の非 speculative multi-beat YMM4 route を定義・生成できる状態にすること。
 
 ---
 
 ## CURRENT LANE
 - 主レーン: Downstream adapter / YMM4 diagnostic handoff（newsroom-produced handoff material）。現行の優先は [runtime-state.md](runtime-state.md) の top entry。
-- 今このレーンを優先する理由: YMM4-visible co-presence は plain `TextItem` + frozen animation accent として境界付きで通ったため、次の制作摩擦はカード/アニメ調整ではなく、topic/RSS-like input を mini episode capsule / animated explanation beats へ接続する content-flow proof にある。
+- 今このレーンを優先する理由: YMM4-visible co-presence は plain `TextItem` + frozen animation accent として境界付きで通っており、5-beat capsule contract も clear になった。次の制作摩擦はカード/アニメ調整ではなく、capsule を PLANNER007 上の multi-beat materialization route へ接続することにある。
 
 ---
 
@@ -78,6 +78,42 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 - `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
+
+Latest newsroom offline topic mini episode capsule with animation accent decision (2026-06-30 JST):
+`newsroom_offline_topic_mini_episode_capsule_with_animation_accent_v1_2026_06_30`
+advances the previous bridge into a diagnostic 5-beat mini episode capsule
+contract from the offline RSS-like topic fixture. The tracked artifacts are
+`samples/_probe/newsroom_handoff/offline_topic_mini_episode_capsule_with_animation_accent_v1.json`,
+`docs/verification/NEWSROOM_OFFLINE_TOPIC_MINI_EPISODE_CAPSULE_WITH_ANIMATION_ACCENT_V1_2026-06-30.md`,
+and
+`samples/_probe/newsroom_handoff/offline_topic_mini_episode_capsule_contract_v1.json`,
+with implementation/tests in
+`src/pipeline/newsroom_offline_topic_mini_episode_capsule.py` /
+`tests/test_newsroom_offline_topic_mini_episode_capsule.py`.
+
+The capsule has five beats: hook / issue framing, explanation / key claim,
+source-boundary warning, implication / why it matters, and close / next action.
+Each beat carries `beat_id`, `source_topic_id`, `beat_function`,
+`explanation_line`, `narration_intent`, `subtitle_or_text_role`,
+`minimal_overlay_role`, `background_animation_accent_role`,
+`source_boundary_role`, `materialization_role`, and `review_status`. The
+frozen MVP animation policy remains optional and subordinate: assignments are
+`stable_pose_only`, `expression_event`, `expression_plus_short_nod`,
+`short_nod_reaction`, and `none`. Disabled remain body forward/back movement,
+repeated nodding, mechanical expression cycling, speech balloons, full chaban
+scenes, animation-only probe loops, and tempo-only loops.
+
+Existing `episode_production_capsule_v1` is treated as an older fake-packet
+structural precedent, not as the current offline-topic YMM4 route. No local
+`.ymmp` was created because a safe non-speculative PLANNER007 multi-beat YMM4
+materialization route is not yet verified; the planned ignored path
+`_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_with_animation_accent_v1.ymmp`
+is verified ignored and recorded as `not_created_deferred`. This decision did
+not launch YMM4 from the Agent, render, stage/commit `.ymmp`, generate
+media/audio/TTS, fetch live RSS/news, redesign cards, tune animation, claim
+production/public readiness, or claim audience/order acceptance. The selected
+next axis is
+`newsroom-offline-topic-mini-episode-capsule-materialization-v1`.
 
 Latest newsroom RSS dry-run animated beat preview readback and mini episode capsule bridge decision (2026-06-30 JST):
 `newsroom_rss_dry_run_animated_beat_preview_readback_and_mini_episode_capsule_bridge_v1_2026_06_30`
