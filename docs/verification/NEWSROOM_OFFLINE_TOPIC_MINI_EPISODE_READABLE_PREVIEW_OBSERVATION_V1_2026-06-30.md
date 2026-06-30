@@ -1,0 +1,121 @@
+# Newsroom Offline Topic Mini Episode Readable Preview Observation v1
+
+artifact_id: newsroom_offline_topic_mini_episode_readable_preview_observation_v1_2026_06_30
+schema_version: newsroom_offline_topic_mini_episode_readable_preview_observation.v1
+production_status: diagnostic_only
+render_gate: L0_no_render
+
+
+## Normalized Preview Observation
+
+```json
+{
+  "source_observation_role": "user_opened_offline_topic_mini_episode_v2_readable_probe",
+  "source_local_v2_path": "C:\\Users\\PLANNER007\\NLMYTGen\\_tmp\\newsroom_manual_probe\\offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp",
+  "repo_relative_path": "_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp",
+  "yym4_opened": true,
+  "readable_v2_preview_observed": true,
+  "five_textitems_visible": true,
+  "five_textitems_human_readable": true,
+  "debug_label_visible_as_primary_text": false,
+  "hook_key_warning_implication_close_visible": true,
+  "animation_accent_not_reported_as_blocking": true,
+  "readable_materialization_status": "pass_with_boundary",
+  "production_subtitle_design_accepted": false,
+  "production_card_design_accepted": false,
+  "yym4_visual_gate_status": "closed_for_now",
+  "visible_lines": [
+    "Hook: this offline topic checks the episode route.",
+    "Key claim: source boundaries must be verified first.",
+    "Warning: this is a fixture, not live news.",
+    "Why it matters: topic input can become a short explainer.",
+    "Next: harden the source route before production."
+  ],
+  "next_axis": "rss_topic_fixture_route_audit"
+}
+```
+
+
+## Source Materialization Readback
+
+```json
+{
+  "readback_status": "readable_text_pass",
+  "text_item_count": 5,
+  "debug_label_visible_count": 0,
+  "human_readable_text_item_count": 5,
+  "visible_lines": [
+    "Hook: this offline topic checks the episode route.",
+    "Key claim: source boundaries must be verified first.",
+    "Warning: this is a fixture, not live news.",
+    "Why it matters: topic input can become a short explainer.",
+    "Next: harden the source route before production."
+  ]
+}
+```
+
+
+## Visual Gate Closure
+
+```json
+{
+  "yym4_visual_gate_status": "closed_for_now",
+  "reason_no_further_visual_preview_is_requested": "the user confirmed five human-readable TextItems in the v2 local project and did not report the animation accent as blocking; the next bottleneck is the offline topic/RSS fixture route, not YMM4 visuals",
+  "closed_boundaries": [
+    "no additional YMM4 preview in this slice",
+    "no animation tuning",
+    "no card redesign",
+    "no render/export"
+  ]
+}
+```
+
+
+## Not Accepted Scope
+
+```json
+{
+  "live_rss_or_news_fetch": false,
+  "production_script_quality": false,
+  "production_subtitle_design": false,
+  "production_card_design": false,
+  "production_animation_quality": false,
+  "card_redesign": false,
+  "visual_layout_tuning": false,
+  "animation_tuning": false,
+  "render_export_proof": false,
+  "audio_or_tts_output": false,
+  "public_upload_or_public_readiness": false,
+  "actual_order_or_audience_acceptance": false,
+  "source_truth_or_rights_approval": false
+}
+```
+
+
+## Boundaries
+
+```json
+{
+  "network_fetch_performed": false,
+  "live_RSS_news_fetch_performed": false,
+  "YMM4_launched_by_agent": false,
+  "render_performed_by_agent": false,
+  "audio_tts_generated": false,
+  "real_media_imported": false,
+  "external_fetch_performed": false,
+  "card_assets_modified": false,
+  "card_redesign_performed": false,
+  "production_subtitle_or_card_design_created": false,
+  "animation_tuned": false,
+  "animation_only_probe_created": false,
+  "additional_YMM4_preview_requested": false,
+  "ymmp_or_media_staged_or_committed": false,
+  "production_public_readiness_claimed": false,
+  "actual_order_or_audience_acceptance_claimed": false
+}
+```
+
+
+## Boundary Note
+
+The readable v2 preview closes the current YMM4 visual loop for now. No further preview, render, animation tuning, card redesign, live RSS/news fetch, or audio/TTS work is requested in this slice.

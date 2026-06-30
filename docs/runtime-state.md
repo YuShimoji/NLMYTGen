@@ -1,5 +1,36 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom offline topic readable preview readback and RSS topic fixture route audit completed (2026-06-30 JST)**:
+  `newsroom-offline-topic-readable-preview-readback-and-rss-topic-fixture-route-audit-v1`
+  records the user-side preview observation for
+  `_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp`.
+  The readable v2 preview passes with boundary: YMM4 opened, five TextItems
+  were visible, the five visible lines were human-readable hook / key claim /
+  warning / implication / close beats, debug labels were not the primary
+  screen text, and the animation accent was not reported as blocking. This
+  closes the current YMM4 visual gate for now; no further YMM4 preview is
+  requested in this slice. New tracked artifacts are
+  `samples/_probe/newsroom_handoff/offline_topic_mini_episode_readable_preview_observation_v1.json`,
+  `docs/verification/NEWSROOM_OFFLINE_TOPIC_MINI_EPISODE_READABLE_PREVIEW_OBSERVATION_V1_2026-06-30.md`,
+  `samples/_probe/newsroom_handoff/rss_topic_fixture_route_audit_v1.json`,
+  `docs/verification/NEWSROOM_RSS_TOPIC_FIXTURE_ROUTE_AUDIT_V1_2026-06-30.md`,
+  `src/pipeline/newsroom_rss_topic_fixture_route_audit.py`, and
+  `tests/test_newsroom_rss_topic_fixture_route_audit.py`. The audit classifies
+  the current offline RSS-like topic route as diagnostic-only and a reusable
+  fixture candidate, but still too synthetic for safer episode generation:
+  it has `topic_id`, `title`, `source_kind`, `key_fact_or_claim`,
+  `explanation_angle`, and `boundary_note`, but lacks explicit `source_name`,
+  `source_url_or_placeholder`, `published_at_or_placeholder`, `summary`,
+  `rights_status`, and `excluded_claims`. Route confidence is `medium`, not
+  blocked. The recommended minimal v2 fixture schema now requires
+  `topic_id`, `title`, `source_name`, `source_url_or_placeholder`,
+  `published_at_or_placeholder`, `summary`, `key_claim`, `why_it_matters`,
+  `uncertainty_or_boundary`, `rights_status`, `intended_episode_angle`,
+  `excluded_claims`, and `production_status`. No Agent-side YMM4 launch,
+  render, `.ymmp` creation/stage/commit, media/audio/TTS generation, live
+  RSS/news fetch, card redesign, animation tuning, production/public readiness
+  claim, or audience/order acceptance claim occurred. The selected next axis is
+  `newsroom-offline-rss-like-topic-fixture-v2-to-mini-episode-capsule-v1`.
 - **Newsroom offline topic mini episode readable text materialization completed (2026-06-30 JST)**:
   `newsroom-offline-topic-mini-episode-readable-text-materialization-v1`
   records the user-side preview observation for
