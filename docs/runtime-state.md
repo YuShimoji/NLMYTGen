@@ -1,5 +1,32 @@
 # Runtime State — NLMYTGen
 
+- **Terminal resume remote sync handoff completed (2026-06-30 JST)**:
+  `newsroom-terminal-resume-remote-sync-handoff-v2` records the current
+  cross-terminal restart context after
+  `3e81daa docs: add rss dry-run animated beat proof`. The mainline-slot
+  worktree was fetched, clean, on `master`, and aligned with `origin/master`
+  before this handoff. New tracked handoff artifacts are
+  `samples/_probe/newsroom_handoff/terminal_resume_remote_sync_handoff_v2.json`
+  and
+  `docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V2_2026-06-30.md`,
+  plus this runtime pointer and the matching decision-log entry in
+  `docs/project-context.md`. The current production context remains the
+  newsroom RSS dry-run animated explanation beat proof: an offline RSS-like
+  diagnostic topic has been transformed into one animated explanation beat
+  with a visible plain `TextItem`, source-boundary role, and frozen minimal
+  animation accent. The current ignored local review targets are
+  `_tmp/newsroom_manual_probe/rss_dry_run_animated_explanation_beat_v1.ymmp`
+  and
+  `_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v2_visible_integration.ymmp`;
+  both exist on this host, are ignored by `.gitignore` `_tmp/`, and must
+  remain untracked/uncommitted. No Agent-side YMM4 launch, render,
+  `.ymmp` stage/commit, media/audio/TTS generation, live RSS/news fetch,
+  card redesign, animation tuning, production/public readiness claim, or
+  audience/order acceptance claim occurred. On a fresh terminal, read
+  `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, this top runtime entry, then
+  `docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V2_2026-06-30.md`
+  only if more detail is needed. The next default axis is
+  `newsroom-rss-dry-run-animated-explanation-beat-preview-operator-instruction-v1`.
 - **Newsroom RSS dry-run to animated explanation beat completed (2026-06-30 JST)**:
   `newsroom-rss-dry-run-to-animated-explanation-beat-v1` records the user-side
   v2 visual integration observation as bounded acceptance: the ignored local

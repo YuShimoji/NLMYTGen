@@ -5,7 +5,7 @@
 - 環境: Python / uv / CLI
 - ブランチ戦略: master
 - 現在地の正本: 通常再開では `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md` で止める。本ファイル冒頭は状態スナップショットではなく、航海日誌への短い入口。
-- 現フェーズ: `docs/runtime-state.md` が最新の current slice を所有する。2026-06-24 時点の実行入口は newsroom downstream handoff の YMM4 native audio path diagnostic continuation。G-27 Real Estate DX の production carrier 待ちは active blocker から外し、case-specific evidence として保持する。G-28 Reference-Driven Generic Screen Carrier は既存 diagnostic / prototype evidence からの refinement lane として残るが、今回の mainline handoff では進めない。
+- 現フェーズ: `docs/runtime-state.md` が最新の current slice を所有する。2026-06-30 時点の実行入口は newsroom RSS dry-run から animated explanation beat への content-flow proof。G-27 Real Estate DX の production carrier 待ちは active blocker から外し、case-specific evidence として保持する。G-28 Reference-Driven Generic Screen Carrier は既存 diagnostic / prototype evidence からの refinement lane として残るが、今回の mainline handoff では進めない。
 - 古い roadmap / prompt / verification packet は現行判断に使わない。必要な履歴は DECISION LOG と HANDOFF SNAPSHOT の該当行だけ読む。
 - Python のスコープは「テキスト変換 + IR/registry + ymmp 限定後段適用」。動画レンダリング・画像生成・YMM4 GUI 操作は Python の責務ではない。
 
@@ -14,14 +14,14 @@
 ## ACTIVE ARTIFACT
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI artifact → CSV / registry / patched ymmp → YMM4 読込・確認・レンダリング
-- 現在のスライス: newsroom tiny render smoke result と audio/TTS boundary を受け、YMM4 native voice/audio path を次の diagnostic entry にする。`audio_presence_in_render=unknown`、`audio_quality_accepted=false`、`TTS_ready=false` を保ったまま、外部 TTS や neutral 68 sec timing patch に飛ばない。G-27 / G-28 の既存 evidence は保持するが、この handoff では触らない。
-- 成功状態: newsroom handoff を YMM4 downstream adapter の diagnostic path に接続し、tiny render smoke / speaker binding / `.ymmp` structure readback / timing strategy / audio boundary を混線させずに、次の最小証跡を選べる状態にすること。
+- 現在のスライス: v2 visible integration preview が bounded pass になったため、視覚/アニメ調整を止め、offline RSS-like diagnostic topic から one animated explanation beat へ戻した状態。`visual_integration_status=pass_with_boundary`、`local_ymmp_materialization_status=materialized_ignored_local_probe`、`render_gate=L0_no_render` を保つ。
+- 成功状態: topic/RSS-like input が説明行、plain `TextItem` role、source-boundary role、frozen minimal animation accent に変換され、次の確認対象を一つに絞れる状態にすること。
 
 ---
 
 ## CURRENT LANE
 - 主レーン: Downstream adapter / YMM4 diagnostic handoff（newsroom-produced handoff material）。現行の優先は [runtime-state.md](runtime-state.md) の top entry。
-- 今このレーンを優先する理由: newsroom handoff から YMM4 CSV/import/diagnostic `.ymmp`/tiny render smoke/audio boundary まで到達しており、次の制作摩擦は external TTS ではなく YMM4 native voice/audio path の責務を小さく証明することにある。
+- 今このレーンを優先する理由: YMM4-visible co-presence は plain `TextItem` + frozen animation accent として境界付きで通ったため、次の制作摩擦はカード/アニメ調整ではなく、topic/RSS-like input を episode capsule / animated explanation beat へ接続する content-flow proof にある。
 
 ---
 
@@ -78,6 +78,34 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 - `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
+
+Latest terminal resume remote sync handoff decision (2026-06-30 JST):
+`newsroom_terminal_resume_remote_sync_handoff_v2_2026_06_30` preserves the
+current restart context after
+`3e81daa docs: add rss dry-run animated beat proof`. Before this handoff, the
+mainline-slot worktree was fetched, clean, on `master`, and aligned with
+`origin/master` (`HEAD...origin/master = 0 0`). The tracked context added by
+this handoff is
+`samples/_probe/newsroom_handoff/terminal_resume_remote_sync_handoff_v2.json`
+and
+`docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V2_2026-06-30.md`,
+plus this decision-log entry and the top runtime-state entry.
+
+The current restart surface is the RSS dry-run animated explanation beat proof:
+`samples/_probe/newsroom_handoff/rss_dry_run_topic_to_animated_explanation_beat_v1.json`,
+`samples/_probe/newsroom_handoff/rss_dry_run_animated_explanation_beat_contract_v1.json`,
+and
+`docs/verification/NEWSROOM_RSS_DRY_RUN_TO_ANIMATED_EXPLANATION_BEAT_V1_2026-06-30.md`.
+The current ignored local review targets are
+`_tmp/newsroom_manual_probe/rss_dry_run_animated_explanation_beat_v1.ymmp`
+and
+`_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v2_visible_integration.ymmp`;
+both exist on this host and are ignored through `.gitignore` `_tmp/`, so they
+must remain untracked/uncommitted. The next default axis remains
+`newsroom-rss-dry-run-animated-explanation-beat-preview-operator-instruction-v1`.
+This handoff did not launch YMM4, render, stage/commit `.ymmp`, generate
+media/audio/TTS, fetch live RSS/news, redesign cards, tune animation, claim
+production/public readiness, or claim audience/order acceptance.
 
 Latest newsroom RSS dry-run to animated explanation beat decision (2026-06-30 JST):
 `newsroom_rss_dry_run_topic_to_animated_explanation_beat_v1_2026_06_30`

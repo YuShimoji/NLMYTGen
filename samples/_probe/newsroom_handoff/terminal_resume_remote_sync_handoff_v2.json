@@ -1,0 +1,82 @@
+{
+  "artifact_id": "newsroom_terminal_resume_remote_sync_handoff_v2_2026_06_30",
+  "recorded_at_jst": "2026-06-30",
+  "purpose": "Persist the latest NLMYTGen restart context inside the repository and reflect it to origin/master so another terminal can resume without relying on chat-only memory.",
+  "git_context_at_authoring": {
+    "repo_root": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen-mainline-slot-linkage",
+    "branch": "master",
+    "remote": "origin",
+    "remote_url": "https://github.com/YuShimoji/NLMYTGen.git",
+    "base_before_handoff": "3e81daa docs: add rss dry-run animated beat proof",
+    "working_tree_before_handoff": "clean",
+    "branch_relation_before_handoff": "HEAD...origin/master = 0 0",
+    "handoff_commit_after_sync": "the commit containing this artifact; read with git log -1 --oneline after sync"
+  },
+  "tracked_context_added": [
+    "docs/runtime-state.md",
+    "docs/project-context.md",
+    "docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V2_2026-06-30.md",
+    "samples/_probe/newsroom_handoff/terminal_resume_remote_sync_handoff_v2.json"
+  ],
+  "current_slice": {
+    "lane": "NLMYTGen downstream adapter / YMM4 diagnostic handoff",
+    "latest_completed_axis": "newsroom-rss-dry-run-to-animated-explanation-beat-v1",
+    "latest_commit_before_handoff": "3e81daa docs: add rss dry-run animated beat proof",
+    "state": "The v2 visual integration preview passed with boundaries. The project has returned to content-flow proof: one offline RSS-like diagnostic topic was transformed into one animated explanation beat with a visible plain TextItem, source-boundary role, and frozen minimal animation accent.",
+    "next_default_axis": "newsroom-rss-dry-run-animated-explanation-beat-preview-operator-instruction-v1"
+  },
+  "current_artifacts_to_read": [
+    "docs/runtime-state.md",
+    "samples/_probe/newsroom_handoff/rss_dry_run_topic_to_animated_explanation_beat_v1.json",
+    "samples/_probe/newsroom_handoff/rss_dry_run_animated_explanation_beat_contract_v1.json",
+    "docs/verification/NEWSROOM_RSS_DRY_RUN_TO_ANIMATED_EXPLANATION_BEAT_V1_2026-06-30.md"
+  ],
+  "host_local_context_not_to_commit": [
+    {
+      "path": "_tmp/newsroom_manual_probe/rss_dry_run_animated_explanation_beat_v1.ymmp",
+      "exists_on_authoring_host": true,
+      "ignore_rule": ".gitignore:37:_tmp/",
+      "reason": "Current RSS dry-run animated explanation beat local YMM4 review target; must remain ignored and untracked."
+    },
+    {
+      "path": "_tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v2_visible_integration.ymmp",
+      "exists_on_authoring_host": true,
+      "ignore_rule": ".gitignore:37:_tmp/",
+      "reason": "Prior visible-integration proof target; same-machine evidence only and must remain ignored and untracked."
+    }
+  ],
+  "boundaries_preserved": {
+    "agent_side_YMM4_launch": false,
+    "render_or_export": false,
+    "ymmp_staged_or_committed": false,
+    "media_audio_tts_generated": false,
+    "live_RSS_or_news_fetch": false,
+    "external_media_fetch": false,
+    "card_redesign": false,
+    "animation_tuning": false,
+    "production_public_readiness_claimed": false,
+    "audience_order_acceptance_claimed": false
+  },
+  "adjacent_workspace_note": {
+    "NLMYTGen_standard_checkout": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen is on codex/baseball-bn08-script-beat-linkage and was observed clean; it is not the active handoff worktree.",
+    "ClipPipeGen": "C:\\Users\\thank\\Storage\\Media Contents Projects\\ClipPipeGen has pre-existing local modifications and was not touched or pushed in this NLMYTGen handoff."
+  },
+  "restart_read_order": [
+    "AGENTS.md",
+    "docs/REPO_LOCAL_RULES.md",
+    "docs/runtime-state.md",
+    "docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V2_2026-06-30.md"
+  ],
+  "validation_plan": {
+    "tests": "No pytest required for this docs/context-only handoff; prior executable slice tests remain recorded in its verification artifacts.",
+    "git_checks": [
+      "git fetch origin master",
+      "git rev-list --left-right --count \"HEAD...origin/master\"",
+      "git status --short --branch",
+      "git check-ignore -v -- _tmp/newsroom_manual_probe/rss_dry_run_animated_explanation_beat_v1.ymmp _tmp/newsroom_manual_probe/minimal_animated_explanation_beat_mainline_v2_visible_integration.ymmp",
+      "git diff --check",
+      "git diff --cached --check",
+      "forbidden staged-file scan for .ymmp/media/audio"
+    ]
+  }
+}
