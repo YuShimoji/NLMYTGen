@@ -1,6 +1,12 @@
 # Project Context — NLMYTGen
 
 ## PROJECT CONTEXT
+- Current remote handoff (2026-06-30 JST):
+  `newsroom-terminal-resume-remote-sync-handoff-v3` records the latest
+  PLANNER007 restart context after `84f4406 docs: add offline rss fixture v2
+  capsule`. Another terminal should fetch/pull `master`, confirm
+  `HEAD...origin/master = 0 0`, then resume from `docs/runtime-state.md` and
+  `docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V3_2026-06-30.md`.
 - Current newsroom slice (2026-06-30 JST):
   `newsroom-offline-rss-like-topic-fixture-v2-to-mini-episode-capsule-v1`
   is complete. The current handoff is no longer visual preview or animation
@@ -33,6 +39,11 @@
 ---
 
 ## CURRENT LANE
+- Current sync state: local context is being mirrored to `origin/master` through
+  terminal resume handoff v3. Product work should resume at
+  `newsroom-rss-topic-fixture-route-hardening-v1`; handoff work itself must not
+  reopen YMM4 preview, render, `.ymmp`, media/audio/TTS, live RSS/news,
+  animation tuning, or card polish loops.
 - Current lane reason: the readable YMM4 gate is already closed for now, so
   the bottleneck moved upstream to fixture/schema quality. This slice did not
   create or modify `.ymmp`, did not launch YMM4, did not render, did not fetch
@@ -95,6 +106,31 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 - `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
+
+Latest newsroom terminal resume remote sync handoff v3 decision (2026-06-30 JST):
+`newsroom_terminal_resume_remote_sync_handoff_v3_2026_06_30` persists the
+latest PLANNER007 restart context after
+`84f4406 docs: add offline rss fixture v2 capsule`. The tracked handoff
+artifacts are
+`samples/_probe/newsroom_handoff/terminal_resume_remote_sync_handoff_v3.json`
+and
+`docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V3_2026-06-30.md`,
+with this runtime/context update. Another terminal should run `git fetch
+origin`, `git checkout master`, `git pull --ff-only origin master`, then confirm
+`git status --short --branch` is clean and
+`git rev-list --left-right --count HEAD...origin/master` returns `0 0`.
+
+The latest product slice remains
+`newsroom-offline-rss-like-topic-fixture-v2-to-mini-episode-capsule-v1`, whose
+selected next axis is `newsroom-rss-topic-fixture-route-hardening-v1`. Relevant
+ignored local probes on PLANNER007 include
+`_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v1.ymmp`
+and
+`_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp`;
+both resolve through `.gitignore:37:_tmp/` and must remain local-only. This
+handoff did not launch YMM4, render, create/modify/stage/commit `.ymmp`,
+generate media/audio/TTS, fetch live RSS/news, redesign cards, tune animation,
+claim production/public readiness, or claim audience/order acceptance.
 
 Latest newsroom offline RSS-like topic fixture v2 to mini episode capsule decision (2026-06-30 JST):
 `newsroom_offline_rss_like_topic_fixture_v2_to_mini_episode_capsule_v1_2026_06_30`

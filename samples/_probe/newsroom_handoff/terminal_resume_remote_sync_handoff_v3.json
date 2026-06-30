@@ -1,0 +1,121 @@
+{
+  "artifact_id": "newsroom_terminal_resume_remote_sync_handoff_v3_2026_06_30",
+  "recorded_at_jst": "2026-06-30",
+  "purpose": "Persist the latest PLANNER007 NLMYTGen restart context inside the repository and reflect it to origin/master so another terminal can resume without relying on chat-only memory.",
+  "git_context_at_authoring": {
+    "repo_root": "C:\\Users\\PLANNER007\\NLMYTGen",
+    "branch": "master",
+    "remote": "origin",
+    "remote_url": "https://github.com/YuShimoji/NLMYTGen.git",
+    "latest_synced_commit_before_handoff": "84f4406 docs: add offline rss fixture v2 capsule",
+    "working_tree_before_handoff": "clean",
+    "branch_relation_before_handoff": "HEAD...origin/master = 0 0",
+    "handoff_commit_after_sync": "the commit containing this artifact; read with git log -1 --oneline after sync"
+  },
+  "tracked_context_added": [
+    "docs/runtime-state.md",
+    "docs/project-context.md",
+    "docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V3_2026-06-30.md",
+    "samples/_probe/newsroom_handoff/terminal_resume_remote_sync_handoff_v3.json"
+  ],
+  "latest_product_slice": {
+    "axis": "newsroom-offline-rss-like-topic-fixture-v2-to-mini-episode-capsule-v1",
+    "commit": "84f4406 docs: add offline rss fixture v2 capsule",
+    "state": "The offline RSS-like topic route now has a stronger v2 fixture, a schema contract, and a five-beat diagnostic capsule. The route is current_partial: diagnostic-only, a reusable fixture candidate, stronger than v1, not blocked, and still synthetic because source URL, freshness, and rights remain explicit placeholders.",
+    "route_confidence": "medium",
+    "selected_next_axis": "newsroom-rss-topic-fixture-route-hardening-v1"
+  },
+  "current_artifacts_to_read": [
+    "AGENTS.md",
+    "docs/REPO_LOCAL_RULES.md",
+    "docs/runtime-state.md",
+    "samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2.json",
+    "samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2_schema_contract_v1.json",
+    "samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2_to_mini_episode_capsule_v1.json",
+    "docs/verification/NEWSROOM_OFFLINE_RSS_LIKE_TOPIC_FIXTURE_V2_TO_MINI_EPISODE_CAPSULE_V1_2026-06-30.md",
+    "samples/_probe/newsroom_handoff/terminal_resume_remote_sync_handoff_v3.json"
+  ],
+  "restart_read_order": [
+    "AGENTS.md",
+    "docs/REPO_LOCAL_RULES.md",
+    "docs/runtime-state.md",
+    "docs/project-context.md",
+    "docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V3_2026-06-30.md"
+  ],
+  "restart_commands": [
+    "cd C:\\Users\\PLANNER007\\NLMYTGen",
+    "git fetch origin",
+    "git checkout master",
+    "git pull --ff-only origin master",
+    "git status --short --branch",
+    "git rev-list --left-right --count HEAD...origin/master"
+  ],
+  "expected_restart_state": {
+    "branch": "master",
+    "branch_relation_after_pull": "HEAD...origin/master = 0 0",
+    "tracked_worktree": "clean except ignored _tmp",
+    "latest_context_entry": "Newsroom terminal resume remote sync handoff v3 completed",
+    "next_default_axis": "newsroom-rss-topic-fixture-route-hardening-v1"
+  },
+  "host_local_context_not_to_commit": [
+    {
+      "path": "_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v1.ymmp",
+      "exists_on_authoring_host": true,
+      "ignore_rule": ".gitignore:37:_tmp/",
+      "size": 267302,
+      "reason": "Prior ignored local multi-beat diagnostic YMM4 materialization; must remain ignored and untracked."
+    },
+    {
+      "path": "_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp",
+      "exists_on_authoring_host": true,
+      "ignore_rule": ".gitignore:37:_tmp/",
+      "size": 267097,
+      "reason": "Prior ignored local readable-text YMM4 preview target; must remain ignored and untracked."
+    },
+    {
+      "path": "_tmp/newsroom_manual_probe/*",
+      "exists_on_authoring_host": true,
+      "ignore_rule": ".gitignore:37:_tmp/",
+      "reason": "Other historical local probe media/projects may exist on PLANNER007; they are local evidence only and are not part of the remote handoff."
+    }
+  ],
+  "boundaries_preserved": {
+    "agent_side_YMM4_launch": false,
+    "render_or_export": false,
+    "ymmp_staged_or_committed": false,
+    "ymmp_created_or_modified_in_this_handoff": false,
+    "media_audio_tts_generated": false,
+    "live_RSS_or_news_fetch": false,
+    "external_media_fetch": false,
+    "card_redesign": false,
+    "animation_tuning": false,
+    "production_public_readiness_claimed": false,
+    "audience_order_acceptance_claimed": false
+  },
+  "next_safe_moves": [
+    {
+      "axis": "newsroom-rss-topic-fixture-route-hardening-v1",
+      "why": "Add deterministic validation and placeholder hardening before live RSS planning."
+    },
+    {
+      "axis": "newsroom-episode-capsule-route-hardening-v1",
+      "why": "Tighten beat contract generation if capsule rules become the main source of ambiguity."
+    },
+    {
+      "axis": "newsroom-live-rss-boundary-plan-v1",
+      "why": "Use only after offline fixture validation is strong enough and live-source boundaries are the dominant blocker."
+    }
+  ],
+  "validation_plan": {
+    "tests": "No new product code in this handoff; prior focused test for the latest product slice was uv run pytest tests/test_newsroom_offline_rss_like_topic_fixture_v2.py = 7 passed.",
+    "git_checks": [
+      "git fetch origin",
+      "git rev-list --left-right --count HEAD...origin/master",
+      "git status --short --branch",
+      "JSON parse validation for this handoff artifact",
+      "git diff --check",
+      "git diff --cached --check",
+      "forbidden staged-file scan for .ymmp/media/audio/TTS/render outputs"
+    ]
+  }
+}
