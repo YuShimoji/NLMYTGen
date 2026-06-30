@@ -1,5 +1,32 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom offline topic mini episode capsule materialization completed (2026-06-30 JST)**:
+  `newsroom-offline-topic-mini-episode-capsule-materialization-v1`
+  classifies the current offline-topic multi-beat YMM4 route as
+  `current_supported` and materializes the 5-beat capsule into the ignored
+  local diagnostic project
+  `_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v1.ymmp`.
+  The route uses only the current offline-topic capsule/contract/bridge,
+  `rss_dry_run_topic_to_animated_explanation_beat_v1`, the frozen background
+  animation policy, and tracked `samples/nod_head.ymmp`; the older
+  `episode_production_capsule_v1` is explicitly classified as
+  `stale_fake_packet_only` and is not used as the current route. New tracked
+  artifacts are
+  `samples/_probe/newsroom_handoff/offline_topic_mini_episode_materialization_route_v1.json`,
+  `samples/_probe/newsroom_handoff/offline_topic_mini_episode_capsule_materialization_v1.json`,
+  `docs/verification/NEWSROOM_OFFLINE_TOPIC_MINI_EPISODE_CAPSULE_MATERIALIZATION_V1_2026-06-30.md`,
+  `src/pipeline/newsroom_offline_topic_mini_episode_materialization.py`, and
+  `tests/test_newsroom_offline_topic_mini_episode_materialization.py`. The
+  local ignored `.ymmp` exists on PLANNER007, is verified ignored by
+  `.gitignore` `_tmp/`, and must remain untracked/uncommitted. Readback passes
+  with a 60 fps / 1800-frame timeline, 5 beats, 5 `TextItem`s, 8 `GroupItem`s,
+  8 `ImageItem`s, 16 animation items, one plain diagnostic text role per beat,
+  no card/shape/audio/video items, fixed parent X `-96.0` for all animation
+  accents, and no animation on the close beat. No Agent-side YMM4 launch,
+  render, `.ymmp` stage/commit, media/audio/TTS generation, live RSS/news
+  fetch, card redesign, animation tuning, production/public readiness claim,
+  or audience/order acceptance claim occurred. The selected next axis is
+  `newsroom-offline-topic-mini-episode-preview-operator-instruction-v1`.
 - **Newsroom offline topic mini episode capsule with animation accent completed (2026-06-30 JST)**:
   `newsroom-offline-topic-mini-episode-capsule-with-animation-accent-v1`
   advances the previous bridge into a diagnostic 5-beat mini episode capsule

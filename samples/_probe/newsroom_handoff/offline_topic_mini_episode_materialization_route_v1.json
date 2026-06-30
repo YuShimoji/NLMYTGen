@@ -1,0 +1,84 @@
+{
+  "artifact_id": "newsroom_offline_topic_mini_episode_materialization_route_v1_2026_06_30",
+  "route_id": "newsroom_offline_topic_mini_episode_materialization_route_v1_2026_06_30",
+  "schema_version": "newsroom_offline_topic_mini_episode_materialization_route.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "render_gate": "L0_no_render",
+  "source_capsule_path": "samples/_probe/newsroom_handoff/offline_topic_mini_episode_capsule_with_animation_accent_v1.json",
+  "source_capsule_contract_path": "samples/_probe/newsroom_handoff/offline_topic_mini_episode_capsule_contract_v1.json",
+  "source_topic_fixture_path": "samples/_probe/newsroom_handoff/rss_dry_run_topic_to_animated_explanation_beat_v1.json",
+  "route_classification": "current_supported",
+  "route_confidence": "high",
+  "existing_artifacts_used": [
+    "samples/_probe/newsroom_handoff/offline_topic_mini_episode_capsule_with_animation_accent_v1.json",
+    "samples/_probe/newsroom_handoff/offline_topic_mini_episode_capsule_contract_v1.json",
+    "samples/_probe/newsroom_handoff/offline_topic_mini_episode_capsule_bridge_v1.json",
+    "samples/_probe/newsroom_handoff/rss_dry_run_topic_to_animated_explanation_beat_v1.json",
+    "samples/_probe/newsroom_handoff/background_animation_mvp_freeze_v1.json",
+    "samples/nod_head.ymmp"
+  ],
+  "stale_fake_packet_route_classification": {
+    "path": "samples/_probe/newsroom_handoff/episode_production_capsule_v1.json",
+    "classification": "stale_fake_packet_only",
+    "used_for_materialization": false,
+    "reason": "older fake-packet capsule is not the current offline-topic route"
+  },
+  "transformation_steps": [
+    "read the current offline-topic 5-beat capsule",
+    "create one sequential timeline segment per capsule beat",
+    "insert one plain TextItem per beat as the diagnostic text role",
+    "clone tracked nod_head character items only for beats with a capsule animation assignment",
+    "keep body X fixed and use at most one expression or short nod per relevant beat",
+    "write the result to an ignored local YMM4 diagnostic project"
+  ],
+  "output_artifacts": [
+    {
+      "path": "samples/_probe/newsroom_handoff/offline_topic_mini_episode_materialization_route_v1.json",
+      "scope": "tracked_route_readback"
+    },
+    {
+      "path": "samples/_probe/newsroom_handoff/offline_topic_mini_episode_capsule_materialization_v1.json",
+      "scope": "tracked_materialization_readback"
+    },
+    {
+      "path": "docs/verification/NEWSROOM_OFFLINE_TOPIC_MINI_EPISODE_CAPSULE_MATERIALIZATION_V1_2026-06-30.md",
+      "scope": "tracked_verification_doc"
+    },
+    {
+      "path": "_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v1.ymmp",
+      "scope": "ignored_local_only"
+    }
+  ],
+  "item_semantics": {
+    "TextItem role": "one visible plain diagnostic text/caption role per beat",
+    "GroupItem/ImageItem animation accent role": "frozen optional character accent from tracked nod_head source; no body forward/back and no full chaban scene",
+    "beat timing role": "5 sequential beats, 360 frames each, 1800 frames total at 60 fps",
+    "source boundary role": "each beat carries offline fixture/source-boundary text"
+  },
+  "route_blockers": [],
+  "next_required_route_work": [
+    "local ignored YMM4 diagnostic materialization in this slice",
+    "newsroom-offline-topic-mini-episode-preview-operator-instruction-v1"
+  ],
+  "boundaries": {
+    "network_fetch_performed": false,
+    "live_RSS_news_fetch_performed": false,
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "audio_tts_generated": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "card_assets_modified": false,
+    "card_redesign_performed": false,
+    "production_subtitle_or_card_design_created": false,
+    "animation_tuned": false,
+    "animation_only_probe_created": false,
+    "local_ignored_ymmp_created_in_this_slice": false,
+    "ymmp_or_media_staged_or_committed": false,
+    "production_public_readiness_claimed": false,
+    "actual_order_or_audience_acceptance_claimed": false,
+    "stale_fake_packet_route_used_as_current": false
+  }
+}
