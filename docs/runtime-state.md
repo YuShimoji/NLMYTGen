@@ -1,5 +1,33 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom source boundary adversarial fixtures completed (2026-07-01 JST)**:
+  `newsroom-source-boundary-adversarial-fixtures-v1` adds an offline
+  adversarial fixture suite for the RSS-like topic fixture route. New tracked
+  artifacts are
+  `samples/_probe/newsroom_handoff/source_boundary_adversarial_fixtures_v1.json`,
+  `samples/_probe/newsroom_handoff/source_boundary_adversarial_fixture_validation_v1.json`,
+  `samples/_probe/newsroom_handoff/source_boundary_adversarial_capsule_hardening_v1.json`,
+  `docs/verification/NEWSROOM_SOURCE_BOUNDARY_ADVERSARIAL_FIXTURES_V1_2026-06-30.md`,
+  `src/pipeline/newsroom_source_boundary_adversarial_fixtures.py`, and
+  `tests/test_newsroom_source_boundary_adversarial_fixtures.py`. The suite
+  covers 11 cases: one diagnostic control plus missing required fields,
+  unmarked placeholder source, invalid source URL/timestamp, unknown rights,
+  stale freshness, empty excluded claims, excluded-claim misuse,
+  unknown source boundary, false production-ready status with placeholders,
+  and live-fetch-attempt flags. Validation readback reports
+  `total_cases=11`, `unexpected_pass_count=0`, `unexpected_fail_count=0`,
+  `production_ready_false_count=11`, and one excluded-claim misuse detected.
+  Capsule hardening readback keeps `production_script_ready_true_count=0` and
+  `live_boundary_plan_ready_true_count=0`, blocks clean capsule generation for
+  hard-blocked cases, and detects the injected excluded-claim leak. The
+  selected next axis is `newsroom-live-rss-boundary-plan-v1`: planning only,
+  not live fetch implementation. On another terminal, fetch/pull `master`,
+  confirm `HEAD...origin/master = 0 0`, read this entry, then inspect
+  `docs/verification/NEWSROOM_SOURCE_BOUNDARY_ADVERSARIAL_FIXTURES_V1_2026-06-30.md`
+  if detail is needed. No Agent-side YMM4 launch, render, `.ymmp`
+  creation/modification/stage/commit, media/audio/TTS generation, live
+  RSS/news fetch, card redesign, animation tuning, production/public readiness
+  claim, or audience/order acceptance claim occurred.
 - **Newsroom terminal resume remote sync handoff v4 completed (2026-07-01 JST)**:
   `newsroom-terminal-resume-remote-sync-handoff-v4` records the current
   PLANNER007 restart context after

@@ -1,6 +1,19 @@
 # Project Context — NLMYTGen
 
 ## PROJECT CONTEXT
+- Current newsroom slice (2026-07-01 JST):
+  `newsroom-source-boundary-adversarial-fixtures-v1` is complete. The offline
+  adversarial suite covers the diagnostic control and ten failure classes for
+  missing required fields, unmarked placeholders, invalid URL/timestamp,
+  unknown rights, stale freshness, absent excluded claims, excluded-claim
+  misuse, unknown source boundary, false production readiness with
+  placeholders, and live-fetch-attempt flags. Validation found zero
+  unexpected passes/fails and kept `production_script_ready=false` plus
+  `live_boundary_plan_ready=false` for every case. Capsule hardening blocked
+  clean capsule generation where required and detected the injected
+  excluded-claim misuse. The selected next axis is
+  `newsroom-live-rss-boundary-plan-v1`, limited to planning; live fetch
+  implementation remains out of scope.
 - Previous newsroom slice (2026-07-01 JST):
   `newsroom-rss-topic-fixture-route-hardening-v1` is complete. The offline
   RSS-like fixture v2 route now has deterministic field validation,
@@ -71,6 +84,13 @@
 ---
 
 ## CURRENT LANE
+- Current sync state: product work has advanced through
+  `newsroom-source-boundary-adversarial-fixtures-v1`. The next bottleneck is
+  a live RSS boundary plan that specifies source, freshness, rights,
+  attribution, excluded-claim, and no-network-test gates before any live fetch
+  implementation. This does not reopen YMM4 preview, render, `.ymmp`, media,
+  audio/TTS, animation, card, production, publication, or audience-acceptance
+  work.
 - Current sync state: product work has advanced into
   `newsroom-episode-capsule-route-hardening-v1`. The next bottleneck is
   adversarial source-boundary fixtures for missing, invalid, and unmarked
@@ -143,6 +163,31 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 - `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
+
+Latest newsroom source boundary adversarial fixtures decision (2026-07-01 JST):
+`newsroom_source_boundary_adversarial_fixtures_v1_2026_06_30` validates the
+offline RSS-like topic fixture route against 11 adversarial source-boundary
+cases before live boundary planning. The tracked artifacts are
+`samples/_probe/newsroom_handoff/source_boundary_adversarial_fixtures_v1.json`,
+`samples/_probe/newsroom_handoff/source_boundary_adversarial_fixture_validation_v1.json`,
+`samples/_probe/newsroom_handoff/source_boundary_adversarial_capsule_hardening_v1.json`,
+and
+`docs/verification/NEWSROOM_SOURCE_BOUNDARY_ADVERSARIAL_FIXTURES_V1_2026-06-30.md`,
+with implementation/tests in
+`src/pipeline/newsroom_source_boundary_adversarial_fixtures.py` /
+`tests/test_newsroom_source_boundary_adversarial_fixtures.py`.
+
+Readback confirms `total_cases=11`, `expected_pass_count=1`,
+`expected_block_count=10`, `unexpected_pass_count=0`,
+`unexpected_fail_count=0`, and `production_ready_false_count=11`.
+Capsule hardening reports five diagnostic-only capsule generations, six
+blocked clean-generation cases, one excluded-claim positive-claim misuse
+detected, and zero production/live readiness true counts. The selected next
+axis is `newsroom-live-rss-boundary-plan-v1`; live fetch implementation is not
+approved. No Agent-side YMM4 launch, render, `.ymmp`
+creation/modification/stage/commit, media/audio/TTS generation, live
+RSS/news fetch, card redesign, animation tuning, production/public readiness
+claim, or audience/order acceptance claim occurred.
 
 Latest newsroom terminal resume remote sync handoff v4 decision (2026-07-01 JST):
 `newsroom_terminal_resume_remote_sync_handoff_v4_2026_07_01` persists the
