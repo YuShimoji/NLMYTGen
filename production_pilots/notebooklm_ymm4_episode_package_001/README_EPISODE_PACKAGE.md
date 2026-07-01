@@ -18,11 +18,14 @@ YMM4 without reading the repository:
 
 ## Input
 
+- `real_input/README_REAL_INPUT.md`: where to put a real user-approved
+  NotebookLM transcript. No real transcript is present yet.
 - `sample_input/transcript_sample.txt`: fictional NotebookLM-style transcript.
 - `speaker_map.example.json`: CLI-usable speaker map.
 
-The sample does not include real customer data, rights-unclear article text,
-external fetched data, media files, or private source material.
+The current generated outputs are from the fictional dry-run sample. They do
+not include real customer data, rights-unclear article text, external fetched
+data, media files, or private source material.
 
 ## Outputs
 
@@ -41,6 +44,10 @@ external fetched data, media files, or private source material.
 5. Use `outputs/cue_packet.md` and `outputs/diagram_packet.md` as planning
    material before render or final upload decisions.
 
+For a real episode, first add
+`real_input/episode_001_transcript.txt`, regenerate outputs using
+`YMM4_IMPORT_RUNBOOK.md`, then import `outputs/episode_001_ymm4.csv`.
+
 ## Rebuild Commands
 
 Run these from the repository root:
@@ -54,7 +61,7 @@ uv run python -m src.cli.main build-diagram-packet production_pilots/notebooklm_
 
 ## Next Production Work
 
-Replace the safe sample with one real user-approved NotebookLM transcript,
-regenerate the CSV and packets, import the CSV into YMM4, then decide whether
-the episode should proceed to render proof, thumbnail/title/description work,
-and upload approval.
+Put one real user-approved NotebookLM transcript in
+`real_input/episode_001_transcript.txt`, regenerate the CSV and packets, import
+the CSV into YMM4, then decide whether the episode should proceed to render
+proof, thumbnail/title/description work, and upload approval.

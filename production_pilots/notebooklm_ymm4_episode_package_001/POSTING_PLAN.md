@@ -25,7 +25,7 @@ speed for the viewer, not selling the conversion system.
 
 ## Title Candidates
 
-Use only if the real transcript still matches this sample theme:
+Use only if the real transcript is added and still matches this sample theme:
 
 - `NotebookLMの音声概要をYMM4台本にする流れ`
 - `YMM4動画化の下準備をCSVとキューで整理する`
@@ -41,7 +41,7 @@ This is a direction only. No thumbnail image has been generated.
 
 ## Description Draft
 
-This draft is safe only for the included sample theme:
+This draft is safe only for the included dry-run sample theme:
 
 ```text
 NotebookLM風のトランスクリプトを、YMM4で読み込める台本CSVと演出キューへ整理する流れを確認します。今回は投稿前の制作package段階であり、YMM4での最終確認、レンダー、公開はまだ行っていません。

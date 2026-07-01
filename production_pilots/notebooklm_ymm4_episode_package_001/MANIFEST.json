@@ -4,6 +4,8 @@
   "created_for": "Internal episode production package for video posting candidate creation",
   "generated_at": "2026-07-02 JST",
   "source_note": {
+    "real_transcript_status": "missing",
+    "real_input_slot": "real_input/episode_001_transcript.txt",
     "sample_input": "sample_input/transcript_sample.txt",
     "source_type": "fictional minimal NotebookLM-style transcript",
     "contains_customer_data": false,
@@ -12,6 +14,21 @@
     "intended_use": "safe dry-run source before replacing with a user-approved real transcript"
   },
   "files": [
+    {
+      "path": "real_input/README_REAL_INPUT.md",
+      "kind": "manual",
+      "purpose": "intake instructions for a real user-approved NotebookLM transcript"
+    },
+    {
+      "path": "real_input/.gitkeep",
+      "kind": "manual",
+      "purpose": "keep the real input directory present while no transcript exists"
+    },
+    {
+      "path": "YMM4_IMPORT_RUNBOOK.md",
+      "kind": "manual",
+      "purpose": "manual YMM4 import and observation runbook"
+    },
     {
       "path": "README_EPISODE_PACKAGE.md",
       "kind": "manual",
@@ -79,7 +96,8 @@
     "csv_generation": "passed; 11 rows written; no overflow candidates at 2 lines and 40 chars per line",
     "cue_packet_generation": "passed",
     "diagram_packet_generation": "passed",
-    "manifest_file_check": "passed"
+    "manifest_file_check": "passed",
+    "real_transcript_found": "no"
   },
   "not_performed": {
     "public_upload": true,

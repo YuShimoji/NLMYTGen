@@ -2,9 +2,15 @@
 
 Use this before treating the package as a viable video posting candidate.
 
+Current state: real transcript is not present yet. The checked outputs are from
+the fictional dry-run sample until `real_input/episode_001_transcript.txt` is
+added and regenerated.
+
 ## YMM4 CSV
 
 - [ ] `outputs/transcript_sample_ymm4.csv` exists.
+- [ ] For a real episode, `outputs/episode_001_ymm4.csv` exists after
+  regeneration.
 - [ ] The CSV has two columns: YMM4 character name and utterance text.
 - [ ] The CSV has no header row.
 - [ ] The CSV can be selected in YMM4's script import flow.
@@ -35,7 +41,7 @@ Use this before treating the package as a viable video posting candidate.
 
 ## Still Missing Before Posting
 
-- [ ] Real transcript replacement, if this sample is only a dry run.
+- [ ] Real transcript added at `real_input/episode_001_transcript.txt`.
 - [ ] YMM4 GUI import confirmation.
 - [ ] Render proof.
 - [ ] Thumbnail/title/description draft.

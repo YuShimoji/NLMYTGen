@@ -1,6 +1,12 @@
 # Runtime State — NLMYTGen
 
 - **Episode production package corrected for video-posting monetization (2026-07-02 JST)**:
+  Follow-up intake state: no real user-approved NotebookLM transcript is
+  present in the package yet. `real_input/README_REAL_INPUT.md`,
+  `real_input/.gitkeep`, and `YMM4_IMPORT_RUNBOOK.md` define the intake slot
+  and manual YMM4 import observation path. Until
+  `real_input/episode_001_transcript.txt` exists, generated outputs remain
+  dry-run sample outputs and must not be treated as production acceptance.
   The earlier external-delivery framing has been corrected. The active
   revenue-facing restart artifact is now
   `production_pilots/notebooklm_ymm4_episode_package_001/`, an internal
