@@ -1,0 +1,92 @@
+{
+  "package_id": "notebooklm_ymm4_delivery_package_001",
+  "package_path": "commercial_pilot/notebooklm_ymm4_delivery_package_001/",
+  "created_for": "NotebookLM to YMM4 manual delivery commercial pilot",
+  "generated_at": "2026-07-02 JST",
+  "source_note": {
+    "sample_input": "sample_input/transcript_sample.txt",
+    "source_type": "fictional minimal transcript",
+    "contains_customer_data": false,
+    "contains_external_article_text": false,
+    "contains_rights_unclear_media": false
+  },
+  "files": [
+    {
+      "path": "README_DELIVERY.md",
+      "kind": "manual",
+      "purpose": "buyer/operator readable package overview and rebuild commands"
+    },
+    {
+      "path": "sample_input/transcript_sample.txt",
+      "kind": "manual",
+      "purpose": "fictional representative transcript input"
+    },
+    {
+      "path": "speaker_map.example.json",
+      "kind": "manual",
+      "purpose": "CLI-usable speaker map example"
+    },
+    {
+      "path": "outputs/transcript_sample_ymm4.csv",
+      "kind": "generated",
+      "purpose": "YMM4 script-import CSV"
+    },
+    {
+      "path": "outputs/cue_packet.md",
+      "kind": "generated",
+      "purpose": "text-only production cue packet"
+    },
+    {
+      "path": "outputs/diagram_packet.md",
+      "kind": "generated",
+      "purpose": "text-only diagram brief packet"
+    },
+    {
+      "path": "OFFER.md",
+      "kind": "manual",
+      "purpose": "initial paid pilot offer definition"
+    },
+    {
+      "path": "ACCEPTANCE_CHECKLIST.md",
+      "kind": "manual",
+      "purpose": "customer/operator acceptance checklist"
+    },
+    {
+      "path": "LIMITATIONS.md",
+      "kind": "manual",
+      "purpose": "manual pilot limitations and non-claims"
+    },
+    {
+      "path": "NEXT_ORDER.md",
+      "kind": "manual",
+      "purpose": "next revenue-facing action"
+    },
+    {
+      "path": "MANIFEST.json",
+      "kind": "manual",
+      "purpose": "package file index and provenance"
+    }
+  ],
+  "commands_run": [
+    "uv run python -m src.cli.main validate commercial_pilot/notebooklm_ymm4_delivery_package_001/sample_input/transcript_sample.txt",
+    "uv run python -m src.cli.main build-csv commercial_pilot/notebooklm_ymm4_delivery_package_001/sample_input/transcript_sample.txt -o commercial_pilot/notebooklm_ymm4_delivery_package_001/outputs/transcript_sample_ymm4.csv --speaker-map-file commercial_pilot/notebooklm_ymm4_delivery_package_001/speaker_map.example.json --max-lines 2 --chars-per-line 40 --balance-lines --stats",
+    "uv run python -m src.cli.main build-cue-packet commercial_pilot/notebooklm_ymm4_delivery_package_001/sample_input/transcript_sample.txt -o commercial_pilot/notebooklm_ymm4_delivery_package_001/outputs/cue_packet.md --speaker-map-file commercial_pilot/notebooklm_ymm4_delivery_package_001/speaker_map.example.json",
+    "uv run python -m src.cli.main build-diagram-packet commercial_pilot/notebooklm_ymm4_delivery_package_001/sample_input/transcript_sample.txt -o commercial_pilot/notebooklm_ymm4_delivery_package_001/outputs/diagram_packet.md --speaker-map-file commercial_pilot/notebooklm_ymm4_delivery_package_001/speaker_map.example.json"
+  ],
+  "validation_summary": {
+    "input_validate": "passed; 7 utterances parsed; speakers Host1, Host2",
+    "csv_generation": "passed; 12 rows written; no overflow candidates at 2 lines and 40 chars per line",
+    "cue_packet_generation": "passed",
+    "diagram_packet_generation": "passed"
+  },
+  "not_performed": {
+    "public_upload": true,
+    "oauth": true,
+    "payment": true,
+    "rights_legal_acceptance": true,
+    "ymm4_gui_final_visual_check": true,
+    "live_rss_fetch": true,
+    "article_scraping": true,
+    "media_download": true
+  }
+}

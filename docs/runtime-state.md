@@ -1,5 +1,21 @@
 # Runtime State — NLMYTGen
 
+- **Commercial pilot manual delivery package added for restart (2026-07-02 JST)**:
+  `commercial_pilot/notebooklm_ymm4_delivery_package_001/` is now the
+  revenue-facing restart artifact. It converts the existing NotebookLM -> YMM4
+  CSV / cue packet route into a customer-readable manual delivery package with
+  a fictional sample transcript, CLI-usable speaker map, generated YMM4 CSV,
+  cue packet, diagram packet, manifest, offer, acceptance checklist,
+  limitations, and next-order note. Validation ran through the existing CLI:
+  `validate` parsed 7 utterances, `build-csv` wrote 12 rows with no overflow
+  candidates at 2 lines / 40 chars, and `build-cue-packet` /
+  `build-diagram-packet` wrote their markdown packets. This slice intentionally
+  did not perform public upload, OAuth, payment, rights/legal acceptance, YMM4
+  GUI final visual review, live RSS fetch, article scraping, media download,
+  common-foundation runner/status-producer work, or cross-repo edits. Next
+  revenue-facing action is one private delivery test using a real
+  customer-approved NotebookLM transcript, followed by manual YMM4 import
+  confirmation and one concrete revision pass before adding automation.
 - **Newsroom live RSS operator authorization sheet completed (2026-07-01 JST)**:
   `newsroom-live-rss-operator-authorization-sheet-v1` creates a reusable
   human-facing authorization sheet template and machine-readable authorization
