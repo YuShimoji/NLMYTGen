@@ -1,5 +1,38 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom live RSS operator authorization sheet completed (2026-07-01 JST)**:
+  `newsroom-live-rss-operator-authorization-sheet-v1` creates a reusable
+  human-facing authorization sheet template and machine-readable authorization
+  packet template for a future one-time diagnostic live RSS fetch. New tracked
+  artifacts are
+  `samples/_probe/newsroom_handoff/live_rss_operator_authorization_sheet_v1.json`,
+  `samples/_probe/newsroom_handoff/live_rss_authorization_packet_template_v1.json`,
+  `docs/verification/NEWSROOM_LIVE_RSS_OPERATOR_AUTHORIZATION_SHEET_V1_2026-06-30.md`,
+  `src/pipeline/newsroom_live_rss_operator_authorization_sheet.py`, and
+  `tests/test_newsroom_live_rss_operator_authorization_sheet.py`. The sheet
+  includes purpose, operator-fill fields, required yes/no confirmations,
+  explicit forbidden actions, preflight abort conditions, and expected future
+  result artifacts. The packet template keeps safe defaults:
+  `authorization_status=not_requested`, `network_access_allowed=false`,
+  `article_page_fetch_allowed=false`, `media_download_allowed=false`,
+  `render_allowed=false`, `audio_tts_allowed=false`,
+  `production_claim_allowed=false`, `publication_allowed=false`,
+  `feed_url=placeholder:future_feed_url_not_set`, and `max_entries=0`.
+  Safety classification sets `authorization_sheet_ready=true`,
+  `actual_authorization_requested_now=false`,
+  `fetch_implementation_allowed_now=false`,
+  `network_access_allowed_now=false`, `operator_action_required_now=false`,
+  and `next_allowed_state=authorization_request_or_source_manifest_schema`.
+  The selected next axis is `newsroom-rss-source-manifest-schema-v1`. On
+  another terminal, fetch/pull `master`, confirm `HEAD...origin/master = 0 0`,
+  read this entry, then inspect
+  `docs/verification/NEWSROOM_LIVE_RSS_OPERATOR_AUTHORIZATION_SHEET_V1_2026-06-30.md`
+  if more detail is needed. No Agent-side network/live RSS/news fetch, actual
+  authorization request, active feed source addition, fetch adapter
+  implementation, article scraping, YMM4 launch, render, `.ymmp`
+  creation/modification/stage/commit, media/audio/TTS generation, card
+  redesign, animation tuning, production/public readiness claim, or
+  audience/order acceptance claim occurred.
 - **Newsroom live RSS preflight contract completed (2026-07-01 JST)**:
   `newsroom-live-rss-preflight-contract-v1` defines the preflight packet,
   authorization model, future output policy, artifact schemas, abort

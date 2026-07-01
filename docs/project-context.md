@@ -2,6 +2,17 @@
 
 ## PROJECT CONTEXT
 - Current newsroom slice (2026-07-01 JST):
+  `newsroom-live-rss-operator-authorization-sheet-v1` is complete. The route
+  remains authorization-template-only: no live RSS/news fetch, no network
+  access, no active feed target, no fetch adapter, no article scraping, no
+  actual user authorization request, and no production or publication claim.
+  The sheet defines purpose, operator-fill fields, required yes/no
+  confirmations, forbidden actions, abort conditions, and expected future
+  result artifacts. The machine packet template keeps authorization
+  `not_requested`, feed URL as a placeholder, max entries at zero, and all
+  network/article/media/render/audio/production/public flags false. The
+  selected next axis is `newsroom-rss-source-manifest-schema-v1`.
+- Current newsroom slice (2026-07-01 JST):
   `newsroom-live-rss-preflight-contract-v1` is complete. The route remains
   preflight-contract-only: no live RSS/news fetch, no network source access,
   no active feed target, no fetch adapter, no article scraping, no actual
@@ -107,6 +118,13 @@
 
 ## CURRENT LANE
 - Current sync state: product work has advanced through
+  `newsroom-live-rss-operator-authorization-sheet-v1`. The next bottleneck is
+  a source/feed manifest schema that can describe future feed targets without
+  activating a real feed or asking for authorization prematurely. This does
+  not approve live fetch, network access, real feed use, article scraping,
+  YMM4 preview, render, `.ymmp`, media, audio/TTS, animation, card,
+  production, publication, or audience-acceptance work.
+- Current sync state: product work has advanced through
   `newsroom-live-rss-preflight-contract-v1`. The next bottleneck is a
   human-facing operator authorization sheet that can be filled later without
   silently turning into a fetch request. This does not approve live fetch,
@@ -200,6 +218,43 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 - `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
+
+Latest newsroom live RSS operator authorization sheet decision (2026-07-01 JST):
+`newsroom_live_rss_operator_authorization_sheet_v1_2026_06_30` creates the
+human-facing authorization sheet template and machine-readable authorization
+packet template for a future one-time diagnostic live RSS fetch. The tracked
+artifacts are
+`samples/_probe/newsroom_handoff/live_rss_operator_authorization_sheet_v1.json`,
+`samples/_probe/newsroom_handoff/live_rss_authorization_packet_template_v1.json`,
+and
+`docs/verification/NEWSROOM_LIVE_RSS_OPERATOR_AUTHORIZATION_SHEET_V1_2026-06-30.md`,
+with implementation/tests in
+`src/pipeline/newsroom_live_rss_operator_authorization_sheet.py` /
+`tests/test_newsroom_live_rss_operator_authorization_sheet.py`.
+
+The sheet is template-only and does not request actual authorization. Operator
+fill fields include feed title, feed URL, source name, rationale, max entries,
+fetch mode, output root, expiry, and notes. Required confirmations explicitly
+separate a future one-time RSS feed fetch from article scraping, media
+download, render/export, audio/TTS, production/public claims, raw-output
+policy, source-boundary validation, rights/freshness/attribution readback,
+excluded-claims readback, and diagnostic-only capsule candidacy. The packet
+template defaults to `authorization_status=not_requested`,
+`network_access_allowed=false`, `article_page_fetch_allowed=false`,
+`media_download_allowed=false`, `render_allowed=false`,
+`audio_tts_allowed=false`, `production_claim_allowed=false`,
+`publication_allowed=false`, `feed_url=placeholder:future_feed_url_not_set`,
+and `max_entries=0`. Safety classification sets
+`authorization_sheet_ready=true`, `actual_authorization_requested_now=false`,
+`fetch_implementation_allowed_now=false`, `network_access_allowed_now=false`,
+`operator_action_required_now=false`, and
+`next_allowed_state=authorization_request_or_source_manifest_schema`. The
+selected next axis is `newsroom-rss-source-manifest-schema-v1`. No Agent-side
+network/live RSS/news fetch, actual authorization request, active feed source,
+fetch adapter implementation, article scraping, YMM4 launch, render, `.ymmp`
+creation/modification/stage/commit, media/audio/TTS generation, card redesign,
+animation tuning, production/public readiness claim, or audience/order
+acceptance claim occurred.
 
 Latest newsroom live RSS preflight contract decision (2026-07-01 JST):
 `newsroom_live_rss_preflight_contract_v1_2026_06_30` defines the preflight
