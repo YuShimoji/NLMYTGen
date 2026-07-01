@@ -1,5 +1,30 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom RSS topic fixture route hardening completed (2026-07-01 JST)**:
+  `newsroom-rss-topic-fixture-route-hardening-v1` adds a deterministic
+  validation and boundary-classification layer for the offline RSS-like fixture
+  v2 route. New tracked artifacts are
+  `samples/_probe/newsroom_handoff/rss_topic_fixture_route_hardening_v1.json`,
+  `samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2_validation_v1.json`,
+  `docs/verification/NEWSROOM_RSS_TOPIC_FIXTURE_ROUTE_HARDENING_V1_2026-06-30.md`,
+  `src/pipeline/newsroom_rss_topic_fixture_route_hardening.py`, and
+  `tests/test_newsroom_rss_topic_fixture_route_hardening.py`. The hardening
+  readback confirms all 13 required fixture fields are present; the five
+  placeholder-capable fields (`source_url_or_placeholder`,
+  `published_at_or_placeholder`, `rights_status`, `freshness_status`, and
+  `attribution_note`) are explicit placeholders with zero unmarked
+  placeholders and zero missing required fields. The route is reusable for
+  offline diagnostics and remains `diagnostic_only`, `still_synthetic`, and
+  production-blocked; it is not blocked for offline validation, is not a
+  live-boundary-ready candidate, and carries `route_confidence=medium_high`.
+  Capsule readiness is true for the diagnostic five-beat capsule and reusable
+  offline fixture, false for live boundary planning and production script
+  generation. The selected next axis is
+  `newsroom-episode-capsule-route-hardening-v1`. No Agent-side YMM4 launch,
+  render, `.ymmp` creation/modification/stage/commit, media/audio/TTS
+  generation, live RSS/news fetch, card redesign, animation tuning,
+  production/public readiness claim, or audience/order acceptance claim
+  occurred.
 - **Newsroom terminal resume remote sync handoff v3 completed (2026-06-30 JST)**:
   `newsroom-terminal-resume-remote-sync-handoff-v3` records the current
   PLANNER007 restart context after

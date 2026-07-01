@@ -1,13 +1,22 @@
 # Project Context — NLMYTGen
 
 ## PROJECT CONTEXT
+- Current newsroom slice (2026-07-01 JST):
+  `newsroom-rss-topic-fixture-route-hardening-v1` is complete. The offline
+  RSS-like fixture v2 route now has deterministic field validation,
+  placeholder classification, route boundary states, production blocker
+  reporting, and capsule readiness classification. The fixture is reusable for
+  offline diagnostics, not blocked for offline validation, and still blocked
+  from live/production use because source URL, published timestamp, freshness,
+  attribution, and rights remain explicit placeholders. The selected next axis
+  is `newsroom-episode-capsule-route-hardening-v1`.
 - Current remote handoff (2026-06-30 JST):
   `newsroom-terminal-resume-remote-sync-handoff-v3` records the latest
   PLANNER007 restart context after `84f4406 docs: add offline rss fixture v2
   capsule`. Another terminal should fetch/pull `master`, confirm
   `HEAD...origin/master = 0 0`, then resume from `docs/runtime-state.md` and
   `docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V3_2026-06-30.md`.
-- Current newsroom slice (2026-06-30 JST):
+- Previous newsroom slice (2026-06-30 JST):
   `newsroom-offline-rss-like-topic-fixture-v2-to-mini-episode-capsule-v1`
   is complete. The current handoff is no longer visual preview or animation
   polish; it is an offline RSS-like topic fixture route that is stronger than
@@ -25,6 +34,13 @@
 
 ## ACTIVE ARTIFACT
 - Current newsroom artifact: offline RSS-like topic fixture v2 plus a
+  route-hardening validation layer. The hardening output validates all 13
+  required fields, detects five explicit placeholder-capable fields with zero
+  unmarked placeholders, classifies the route as diagnostic-only and reusable
+  offline, and keeps live RSS planning plus production script generation
+  closed until real source, freshness, attribution, reliability, and rights
+  review replace the placeholders.
+- Previous newsroom artifact: offline RSS-like topic fixture v2 plus a
   diagnostic five-beat mini episode capsule. The v2 fixture explicitly carries
   required source, placeholder URL, placeholder published time, summary, key
   claim, why-it-matters, boundary, rights, intended angle, excluded claims, and
@@ -33,13 +49,17 @@
   `newsroom-rss-topic-fixture-route-hardening-v1`.
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI artifact → CSV / registry / patched ymmp → YMM4 読込・確認・レンダリング
-- 現在のスライス: PLANNER007 上の ignored local readable-text `.ymmp` が user preview pass となり、YMM4 visual gate を `closed_for_now` にした状態。次の主摩擦は visual/card/animation ではなく、offline RSS-like topic fixture が safer episode generation に必要な source / freshness / rights / excluded-claim fields を持つこと。
-- 成功状態: 現行 fixture route を diagnostic-only reusable candidate かつ too synthetic として監査し、minimal offline RSS-like topic fixture v2 schema と次の capsule generation axis を明確にすること。
+- 現在のスライス: PLANNER007 上では fixture route hardening が完了し、YMM4 visual gate は `closed_for_now` のまま。次の主摩擦は visual/card/animation ではなく、検証済み offline fixture から capsule generation rules へ境界と excluded claims をどう強制するか。
+- 成功状態: 現行 fixture route を diagnostic-only reusable offline fixture として検証し、live/production blockers を残したまま、次の capsule hardening axis を明確にすること。
 
 ---
 
 ## CURRENT LANE
-- Current sync state: local context is being mirrored to `origin/master` through
+- Current sync state: product work has advanced past terminal resume handoff
+  into `newsroom-rss-topic-fixture-route-hardening-v1`. The next bottleneck is
+  downstream capsule-rule hardening, not live RSS, YMM4 preview, render,
+  animation, cards, audio/TTS, or publication.
+- Previous sync state: local context is being mirrored to `origin/master` through
   terminal resume handoff v3. Product work should resume at
   `newsroom-rss-topic-fixture-route-hardening-v1`; handoff work itself must not
   reopen YMM4 preview, render, `.ymmp`, media/audio/TTS, live RSS/news,
@@ -106,6 +126,34 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 - `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
+
+Latest newsroom RSS topic fixture route hardening decision (2026-07-01 JST):
+`newsroom_rss_topic_fixture_route_hardening_v1_2026_06_30` validates the
+offline RSS-like topic fixture v2 route before any live RSS/news source
+ingestion. The tracked artifacts are
+`samples/_probe/newsroom_handoff/rss_topic_fixture_route_hardening_v1.json`,
+`samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2_validation_v1.json`,
+and
+`docs/verification/NEWSROOM_RSS_TOPIC_FIXTURE_ROUTE_HARDENING_V1_2026-06-30.md`,
+with implementation/tests in
+`src/pipeline/newsroom_rss_topic_fixture_route_hardening.py` /
+`tests/test_newsroom_rss_topic_fixture_route_hardening.py`.
+
+The hardening layer confirms that all 13 required fields are present, that
+`source_url_or_placeholder`, `published_at_or_placeholder`, `rights_status`,
+`freshness_status`, and `attribution_note` are explicit placeholders, and that
+there are zero unmarked placeholders and zero missing required fields. The
+route remains diagnostic-only and reusable as an offline fixture; it is not
+blocked for offline validation, but it is still synthetic and production
+blocked because source URL, published timestamp, freshness, attribution,
+source reliability, and rights are not real reviewed source facts. Capsule
+readiness is true for diagnostic capsule and reusable offline fixture, false
+for live boundary planning and production script generation. No Agent-side
+YMM4 launch, render, `.ymmp` creation/modification/stage/commit,
+media/audio/TTS generation, live RSS/news fetch, card redesign, animation
+tuning, production/public readiness claim, or audience/order acceptance claim
+occurred. The selected next axis is
+`newsroom-episode-capsule-route-hardening-v1`.
 
 Latest newsroom terminal resume remote sync handoff v3 decision (2026-06-30 JST):
 `newsroom_terminal_resume_remote_sync_handoff_v3_2026_06_30` persists the
