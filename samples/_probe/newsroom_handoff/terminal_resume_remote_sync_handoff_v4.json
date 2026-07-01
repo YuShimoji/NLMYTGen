@@ -1,0 +1,145 @@
+{
+  "artifact_id": "newsroom_terminal_resume_remote_sync_handoff_v4_2026_07_01",
+  "recorded_at_jst": "2026-07-01",
+  "purpose": "Persist the latest PLANNER007 NLMYTGen restart context inside the repository and reflect it to origin/master so another terminal can resume without relying on chat-only memory.",
+  "git_context_at_authoring": {
+    "repo_root": "C:\\Users\\PLANNER007\\NLMYTGen",
+    "branch": "master",
+    "remote": "origin",
+    "remote_url": "https://github.com/YuShimoji/NLMYTGen.git",
+    "latest_synced_commit_before_handoff": "28940f8 newsroom: harden episode capsule boundaries",
+    "previous_context_commit": "1dee1f2 newsroom: add rss topic fixture route hardening",
+    "previous_terminal_handoff_commit": "b12e55d docs: add terminal resume handoff v3",
+    "working_tree_before_handoff": "clean",
+    "branch_relation_before_handoff": "HEAD...origin/master = 0 0",
+    "handoff_commit_after_sync": "the commit containing this artifact; read with git log -1 --oneline after sync"
+  },
+  "tracked_context_added": [
+    "docs/runtime-state.md",
+    "docs/project-context.md",
+    "docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V4_2026-07-01.md",
+    "samples/_probe/newsroom_handoff/terminal_resume_remote_sync_handoff_v4.json"
+  ],
+  "latest_product_slice": {
+    "axis": "newsroom-episode-capsule-route-hardening-v1",
+    "commit": "28940f8 newsroom: harden episode capsule boundaries",
+    "state": "The validated offline RSS-like fixture boundaries are now propagated into the five-beat episode capsule route. The hardened capsule is diagnostic-only and reusable offline; it carries production_blocker_count=6, explicit_placeholder_count=5, source/rights/freshness/attribution summaries, excluded-claim summary, and beat-level can-use flags. Production script readiness and live boundary plan readiness remain false.",
+    "route_confidence": "medium_high_for_current_offline_hardened_route",
+    "selected_next_axis": "newsroom-source-boundary-adversarial-fixtures-v1"
+  },
+  "current_artifacts_to_read": [
+    "AGENTS.md",
+    "docs/REPO_LOCAL_RULES.md",
+    "docs/runtime-state.md",
+    "docs/project-context.md",
+    "samples/_probe/newsroom_handoff/episode_capsule_route_hardening_v1.json",
+    "samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2_hardened_episode_capsule_v1.json",
+    "docs/verification/NEWSROOM_EPISODE_CAPSULE_ROUTE_HARDENING_V1_2026-06-30.md",
+    "samples/_probe/newsroom_handoff/rss_topic_fixture_route_hardening_v1.json",
+    "samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2_validation_v1.json",
+    "samples/_probe/newsroom_handoff/terminal_resume_remote_sync_handoff_v4.json"
+  ],
+  "restart_read_order": [
+    "AGENTS.md",
+    "docs/REPO_LOCAL_RULES.md",
+    "docs/runtime-state.md",
+    "docs/project-context.md",
+    "docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V4_2026-07-01.md"
+  ],
+  "restart_commands": [
+    "cd C:\\Users\\PLANNER007\\NLMYTGen",
+    "git fetch origin",
+    "git checkout master",
+    "git pull --ff-only origin master",
+    "git status --short --branch",
+    "git rev-list --left-right --count HEAD...origin/master",
+    "git log -1 --oneline"
+  ],
+  "expected_restart_state": {
+    "branch": "master",
+    "branch_relation_after_pull": "HEAD...origin/master = 0 0",
+    "tracked_worktree": "clean except ignored _tmp",
+    "latest_context_entry": "Newsroom terminal resume remote sync handoff v4 completed",
+    "next_default_axis": "newsroom-source-boundary-adversarial-fixtures-v1"
+  },
+  "latest_validation_evidence": {
+    "latest_related_tests": "uv run pytest tests/test_newsroom_episode_capsule_route_hardening.py tests/test_newsroom_rss_topic_fixture_route_hardening.py tests/test_newsroom_offline_rss_like_topic_fixture_v2.py = 21 passed",
+    "latest_compile_check": "uv run python -m compileall src/pipeline/newsroom_episode_capsule_route_hardening.py = passed",
+    "latest_json_parse": "episode_capsule_route_hardening_v1.json and offline_rss_like_topic_fixture_v2_hardened_episode_capsule_v1.json parse successfully",
+    "latest_scans": [
+      "git diff --check passed before commit",
+      "git diff --cached --check passed before commit",
+      "forbidden staged-file scan for .ymmp/media/audio/TTS/render outputs passed",
+      "network/live-fetch relapse scan passed",
+      "YMM4 preview/render/audio true-value scan passed",
+      "production/live-ready and excluded-claim-positive scan passed"
+    ]
+  },
+  "host_local_context_not_to_commit": [
+    {
+      "path": "_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v1.ymmp",
+      "exists_on_authoring_host": true,
+      "ignore_rule": ".gitignore:37:_tmp/",
+      "size": 267302,
+      "reason": "Prior ignored local multi-beat diagnostic YMM4 materialization; must remain ignored and untracked."
+    },
+    {
+      "path": "_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp",
+      "exists_on_authoring_host": true,
+      "ignore_rule": ".gitignore:37:_tmp/",
+      "size": 267097,
+      "reason": "Prior ignored local readable-text YMM4 preview target; must remain ignored and untracked."
+    },
+    {
+      "path": "_tmp/newsroom_manual_probe/*",
+      "exists_on_authoring_host": true,
+      "ignore_rule": ".gitignore:37:_tmp/",
+      "reason": "Other historical local probe media/projects may exist on PLANNER007; they are local evidence only and are not part of the remote handoff."
+    }
+  ],
+  "boundaries_preserved": {
+    "agent_side_YMM4_launch": false,
+    "render_or_export": false,
+    "ymmp_staged_or_committed": false,
+    "ymmp_created_or_modified_in_this_handoff": false,
+    "media_audio_tts_generated": false,
+    "live_RSS_or_news_fetch": false,
+    "external_media_fetch": false,
+    "card_redesign": false,
+    "animation_tuning": false,
+    "production_public_readiness_claimed": false,
+    "audience_order_acceptance_claimed": false
+  },
+  "next_safe_moves": [
+    {
+      "axis": "newsroom-source-boundary-adversarial-fixtures-v1",
+      "why": "Exercise missing, invalid, and unmarked placeholder cases across validator and capsule route before live boundary planning."
+    },
+    {
+      "axis": "newsroom-live-rss-boundary-plan-v1",
+      "why": "Plan the boundary between fetch, source validation, rights/freshness review, and episode generation after adversarial offline cases are stable. This is a plan only, not live fetch implementation."
+    },
+    {
+      "axis": "newsroom-episode-capsule-route-hardening-v2",
+      "why": "Use only if adversarial cases reveal beat-level boundary propagation gaps."
+    },
+    {
+      "axis": "newsroom-rss-topic-fixture-route-hardening-v2",
+      "why": "Use only if adversarial cases reveal fixture validator schema or placeholder-classification gaps."
+    }
+  ],
+  "validation_plan": {
+    "tests": "No product code is added by this handoff; run JSON parse and git checks for this handoff artifact. The latest product-code validation was 21 related tests passed.",
+    "git_checks": [
+      "git fetch origin",
+      "git rev-list --left-right --count HEAD...origin/master",
+      "git status --short --branch",
+      "JSON parse validation for this handoff artifact",
+      "git diff --check",
+      "git diff --cached --check",
+      "forbidden staged-file scan for .ymmp/media/audio/TTS/render outputs",
+      "commit and push to origin/master",
+      "final clean master...origin/master state"
+    ]
+  }
+}

@@ -18,12 +18,13 @@
   source-boundary warning beat. The route remains diagnostic-only and reusable
   offline, not live-boundary-ready, and not production-script-ready. The
   selected next axis is `newsroom-source-boundary-adversarial-fixtures-v1`.
-- Current remote handoff (2026-06-30 JST):
-  `newsroom-terminal-resume-remote-sync-handoff-v3` records the latest
-  PLANNER007 restart context after `84f4406 docs: add offline rss fixture v2
-  capsule`. Another terminal should fetch/pull `master`, confirm
-  `HEAD...origin/master = 0 0`, then resume from `docs/runtime-state.md` and
-  `docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V3_2026-06-30.md`.
+- Current remote handoff (2026-07-01 JST):
+  `newsroom-terminal-resume-remote-sync-handoff-v4` records the latest
+  PLANNER007 restart context after
+  `28940f8 newsroom: harden episode capsule boundaries`. Another terminal
+  should fetch/pull `master`, confirm `HEAD...origin/master = 0 0`, then
+  resume from `docs/runtime-state.md` and
+  `docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V4_2026-07-01.md`.
 - Previous newsroom slice (2026-06-30 JST):
   `newsroom-offline-rss-like-topic-fixture-v2-to-mini-episode-capsule-v1`
   is complete. The current handoff is no longer visual preview or animation
@@ -142,6 +143,31 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 - `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
+
+Latest newsroom terminal resume remote sync handoff v4 decision (2026-07-01 JST):
+`newsroom_terminal_resume_remote_sync_handoff_v4_2026_07_01` persists the
+latest PLANNER007 restart context after
+`28940f8 newsroom: harden episode capsule boundaries`. The tracked handoff
+artifacts are
+`samples/_probe/newsroom_handoff/terminal_resume_remote_sync_handoff_v4.json`
+and
+`docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V4_2026-07-01.md`,
+with this runtime/context update. Another terminal should run `git fetch
+origin`, `git checkout master`, `git pull --ff-only origin master`, then confirm
+`git status --short --branch` is clean and
+`git rev-list --left-right --count HEAD...origin/master` returns `0 0`.
+
+The latest product slice remains
+`newsroom-episode-capsule-route-hardening-v1`, whose selected next axis is
+`newsroom-source-boundary-adversarial-fixtures-v1`. Relevant ignored local
+probes on PLANNER007 include
+`_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v1.ymmp`
+and
+`_tmp/newsroom_manual_probe/offline_topic_mini_episode_capsule_materialized_v2_readable_text.ymmp`;
+both resolve through `.gitignore:37:_tmp/` and must remain local-only. This
+handoff did not launch YMM4, render, create/modify/stage/commit `.ymmp`,
+generate media/audio/TTS, fetch live RSS/news, redesign cards, tune animation,
+claim production/public readiness, or claim audience/order acceptance.
 
 Latest newsroom episode capsule route hardening decision (2026-07-01 JST):
 `newsroom_episode_capsule_route_hardening_v1_2026_06_30` hardens the five-beat

@@ -1,5 +1,30 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom terminal resume remote sync handoff v4 completed (2026-07-01 JST)**:
+  `newsroom-terminal-resume-remote-sync-handoff-v4` records the current
+  PLANNER007 restart context after
+  `28940f8 newsroom: harden episode capsule boundaries`. New tracked handoff
+  artifacts are
+  `samples/_probe/newsroom_handoff/terminal_resume_remote_sync_handoff_v4.json`
+  and
+  `docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V4_2026-07-01.md`,
+  plus this runtime pointer and the matching decision-log entry in
+  `docs/project-context.md`. The latest product slice is
+  `newsroom-episode-capsule-route-hardening-v1`: validated fixture boundaries
+  are propagated into the five-beat capsule route, every beat carries
+  excluded claims, rights/freshness/attribution status, diagnostic production
+  status, can-use flags, not-accepted scope, and
+  `production_claim_allowed=false`; `production_script_ready` and
+  `live_boundary_plan_ready` remain false. On another terminal, restart with
+  `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, this top runtime entry, then
+  `docs/verification/NEWSROOM_TERMINAL_RESUME_REMOTE_SYNC_HANDOFF_V4_2026-07-01.md`
+  if more detail is needed. The expected synced state after pull is
+  `master`, `HEAD...origin/master = 0 0`, and a tracked-clean worktree except
+  ignored `_tmp`. No Agent-side YMM4 launch, render, `.ymmp`
+  creation/modification/stage/commit, media/audio/TTS generation, live
+  RSS/news fetch, card redesign, animation tuning, production/public readiness
+  claim, or audience/order acceptance claim occurred. The selected next axis
+  is `newsroom-source-boundary-adversarial-fixtures-v1`.
 - **Newsroom episode capsule route hardening completed (2026-07-01 JST)**:
   `newsroom-episode-capsule-route-hardening-v1` propagates the validated
   fixture boundary into the five-beat capsule route. New tracked artifacts are
