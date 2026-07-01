@@ -1,0 +1,415 @@
+{
+  "preflight_packet_template_id": "newsroom_live_rss_preflight_packet_template_v1_2026_06_30",
+  "schema_version": "newsroom_live_rss_preflight_packet.v1",
+  "review_status": "ready_for_supervisor_review",
+  "render_gate": "L0_no_render",
+  "production_status": "preflight_contract_only",
+  "live_fetch_used": false,
+  "source_boundary_plan_path": "samples/_probe/newsroom_handoff/live_rss_boundary_plan_v1.json",
+  "source_boundary_contract_path": "samples/_probe/newsroom_handoff/live_rss_boundary_contract_v1.json",
+  "source_boundary_readback": {
+    "boundary_plan_id": "newsroom_live_rss_boundary_plan_v1_2026_06_30",
+    "boundary_contract_id": "newsroom_live_rss_boundary_contract_v1_2026_06_30",
+    "boundary_current_state": "live_boundary_planned",
+    "live_fetch_implementation_allowed_now": false,
+    "live_boundary_plan_ready": true,
+    "required_future_artifact_count": 9,
+    "gate_names": [
+      "LIVE_FETCH_GATE",
+      "SOURCE_BOUNDARY_GATE",
+      "CAPSULE_GENERATION_GATE",
+      "PUBLICATION_GATE"
+    ]
+  },
+  "packet_defaults": {
+    "preflight_id": "placeholder:future_preflight_id",
+    "requested_by": "not_requested",
+    "authorization_status": "not_requested",
+    "authorization_scope": "none",
+    "feed_id": "placeholder:future_feed_id_not_set",
+    "feed_title": "placeholder:future_feed_title_not_set",
+    "feed_url": "placeholder:future_feed_url_not_set",
+    "feed_type": "unselected",
+    "expected_fetch_mode": "diagnostic_smoke_once",
+    "expected_output_root": "_tmp/newsroom_live_rss_diagnostic/{preflight_id}",
+    "network_access_allowed": false,
+    "max_entries": 0,
+    "article_page_fetch_allowed": false,
+    "media_download_allowed": false,
+    "render_allowed": false,
+    "audio_tts_allowed": false,
+    "production_claim_allowed": false,
+    "publication_allowed": false,
+    "operator_notes": "not requested in this slice",
+    "abort_conditions": [
+      "ABORT_NO_EXPLICIT_AUTHORIZATION",
+      "ABORT_FEED_URL_MISSING",
+      "ABORT_FEED_URL_MALFORMED",
+      "ABORT_OUTPUT_ROOT_MISSING",
+      "ABORT_NETWORK_NOT_ALLOWED",
+      "ABORT_ARTICLE_PAGE_FETCH_REQUESTED",
+      "ABORT_MEDIA_DOWNLOAD_REQUESTED",
+      "ABORT_PUBLICATION_RENDER_AUDIO_REQUESTED",
+      "ABORT_TOO_MANY_ENTRIES",
+      "ABORT_TERMS_RIGHTS_UNCLEAR",
+      "ABORT_UNEXPECTED_REDIRECT_OR_NON_RSS",
+      "ABORT_SCRAPING_REQUIRED",
+      "ABORT_PRODUCTION_PUBLIC_CLAIM"
+    ]
+  },
+  "preflight_packet_schema": [
+    {
+      "field_name": "preflight_id",
+      "required": true,
+      "value_type": "string",
+      "purpose": "unique future preflight id",
+      "allowed_values": "future explicit value required",
+      "current_default_value": "placeholder:future_preflight_id",
+      "blocker_behavior": "required for future packet completeness"
+    },
+    {
+      "field_name": "requested_by",
+      "required": true,
+      "value_type": "string",
+      "purpose": "operator identity or not_requested",
+      "allowed_values": "future explicit value required",
+      "current_default_value": "not_requested",
+      "blocker_behavior": "required for future packet completeness"
+    },
+    {
+      "field_name": "authorization_status",
+      "required": true,
+      "value_type": "enum",
+      "purpose": "authorization state for the future diagnostic fetch",
+      "allowed_values": [
+        "not_requested",
+        "requested",
+        "authorized_for_diagnostic_fetch_once",
+        "denied",
+        "expired",
+        "revoked"
+      ],
+      "current_default_value": "not_requested",
+      "blocker_behavior": "blocks any fetch unless authorized_for_diagnostic_fetch_once in a future slice"
+    },
+    {
+      "field_name": "authorization_scope",
+      "required": true,
+      "value_type": "string",
+      "purpose": "must remain diagnostic-only",
+      "allowed_values": "future explicit value required",
+      "current_default_value": "none",
+      "blocker_behavior": "required for future packet completeness"
+    },
+    {
+      "field_name": "feed_id",
+      "required": true,
+      "value_type": "string",
+      "purpose": "future feed/source manifest id",
+      "allowed_values": "future explicit value required",
+      "current_default_value": "placeholder:future_feed_id_not_set",
+      "blocker_behavior": "required for future packet completeness"
+    },
+    {
+      "field_name": "feed_title",
+      "required": true,
+      "value_type": "string",
+      "purpose": "operator-facing feed/source label",
+      "allowed_values": "future explicit value required",
+      "current_default_value": "placeholder:future_feed_title_not_set",
+      "blocker_behavior": "required for future packet completeness"
+    },
+    {
+      "field_name": "feed_url",
+      "required": true,
+      "value_type": "string",
+      "purpose": "future RSS/Atom URL, unset in this slice",
+      "allowed_values": "future explicit value required",
+      "current_default_value": "placeholder:future_feed_url_not_set",
+      "blocker_behavior": "blocks any fetch while placeholder, missing, or malformed"
+    },
+    {
+      "field_name": "feed_type",
+      "required": true,
+      "value_type": "enum",
+      "purpose": "rss, atom, or unselected",
+      "allowed_values": [
+        "unselected",
+        "rss",
+        "atom"
+      ],
+      "current_default_value": "unselected",
+      "blocker_behavior": "required for future packet completeness"
+    },
+    {
+      "field_name": "expected_fetch_mode",
+      "required": true,
+      "value_type": "enum",
+      "purpose": "diagnostic smoke mode",
+      "allowed_values": [
+        "diagnostic_smoke_once"
+      ],
+      "current_default_value": "diagnostic_smoke_once",
+      "blocker_behavior": "required for future packet completeness"
+    },
+    {
+      "field_name": "expected_output_root",
+      "required": true,
+      "value_type": "path",
+      "purpose": "future local ignored output root",
+      "allowed_values": "future explicit value required",
+      "current_default_value": "_tmp/newsroom_live_rss_diagnostic/{preflight_id}",
+      "blocker_behavior": "blocks any fetch if not under an ignored local output root"
+    },
+    {
+      "field_name": "network_access_allowed",
+      "required": true,
+      "value_type": "boolean",
+      "purpose": "must be false now",
+      "allowed_values": [
+        false
+      ],
+      "current_default_value": false,
+      "blocker_behavior": "blocks any network action while false"
+    },
+    {
+      "field_name": "max_entries",
+      "required": true,
+      "value_type": "integer",
+      "purpose": "maximum entries in future smoke",
+      "allowed_values": "future explicit value required",
+      "current_default_value": 0,
+      "blocker_behavior": "blocks any fetch if zero now or above future allowed maximum"
+    },
+    {
+      "field_name": "article_page_fetch_allowed",
+      "required": true,
+      "value_type": "boolean",
+      "purpose": "must be false",
+      "allowed_values": [
+        false
+      ],
+      "current_default_value": false,
+      "blocker_behavior": "aborts if true because article scraping is out of scope"
+    },
+    {
+      "field_name": "media_download_allowed",
+      "required": true,
+      "value_type": "boolean",
+      "purpose": "must be false",
+      "allowed_values": [
+        false
+      ],
+      "current_default_value": false,
+      "blocker_behavior": "aborts if true because media download is out of scope"
+    },
+    {
+      "field_name": "render_allowed",
+      "required": true,
+      "value_type": "boolean",
+      "purpose": "must be false",
+      "allowed_values": [
+        false
+      ],
+      "current_default_value": false,
+      "blocker_behavior": "aborts if true because render is out of scope"
+    },
+    {
+      "field_name": "audio_tts_allowed",
+      "required": true,
+      "value_type": "boolean",
+      "purpose": "must be false",
+      "allowed_values": [
+        false
+      ],
+      "current_default_value": false,
+      "blocker_behavior": "aborts if true because audio/TTS is out of scope"
+    },
+    {
+      "field_name": "production_claim_allowed",
+      "required": true,
+      "value_type": "boolean",
+      "purpose": "must be false",
+      "allowed_values": [
+        false
+      ],
+      "current_default_value": false,
+      "blocker_behavior": "aborts if true because production claims are forbidden"
+    },
+    {
+      "field_name": "publication_allowed",
+      "required": true,
+      "value_type": "boolean",
+      "purpose": "must be false",
+      "allowed_values": [
+        false
+      ],
+      "current_default_value": false,
+      "blocker_behavior": "aborts if true because publication is forbidden"
+    },
+    {
+      "field_name": "operator_notes",
+      "required": true,
+      "value_type": "string",
+      "purpose": "future human note field",
+      "allowed_values": "future explicit value required",
+      "current_default_value": "not requested in this slice",
+      "blocker_behavior": "required for future packet completeness"
+    },
+    {
+      "field_name": "abort_conditions",
+      "required": true,
+      "value_type": "list[string]",
+      "purpose": "abort condition ids to enforce",
+      "allowed_values": "future explicit value required",
+      "current_default_value": [
+        "ABORT_NO_EXPLICIT_AUTHORIZATION",
+        "ABORT_FEED_URL_MISSING",
+        "ABORT_FEED_URL_MALFORMED",
+        "ABORT_OUTPUT_ROOT_MISSING",
+        "ABORT_NETWORK_NOT_ALLOWED",
+        "ABORT_ARTICLE_PAGE_FETCH_REQUESTED",
+        "ABORT_MEDIA_DOWNLOAD_REQUESTED",
+        "ABORT_PUBLICATION_RENDER_AUDIO_REQUESTED",
+        "ABORT_TOO_MANY_ENTRIES",
+        "ABORT_TERMS_RIGHTS_UNCLEAR",
+        "ABORT_UNEXPECTED_REDIRECT_OR_NON_RSS",
+        "ABORT_SCRAPING_REQUIRED",
+        "ABORT_PRODUCTION_PUBLIC_CLAIM"
+      ],
+      "blocker_behavior": "required for future packet completeness"
+    }
+  ],
+  "abort_conditions": [
+    {
+      "condition_id": "ABORT_NO_EXPLICIT_AUTHORIZATION",
+      "condition": "no explicit authorization",
+      "severity": "abort",
+      "gate_affected": "LIVE_FETCH_GATE",
+      "expected_behavior": "stop future diagnostic fetch and record blocker readback"
+    },
+    {
+      "condition_id": "ABORT_FEED_URL_MISSING",
+      "condition": "feed URL missing",
+      "severity": "abort",
+      "gate_affected": "LIVE_FETCH_GATE",
+      "expected_behavior": "stop future diagnostic fetch and record blocker readback"
+    },
+    {
+      "condition_id": "ABORT_FEED_URL_MALFORMED",
+      "condition": "feed URL malformed",
+      "severity": "abort",
+      "gate_affected": "LIVE_FETCH_GATE",
+      "expected_behavior": "stop future diagnostic fetch and record blocker readback"
+    },
+    {
+      "condition_id": "ABORT_OUTPUT_ROOT_MISSING",
+      "condition": "output root missing",
+      "severity": "abort",
+      "gate_affected": "LIVE_FETCH_GATE",
+      "expected_behavior": "stop future diagnostic fetch and record blocker readback"
+    },
+    {
+      "condition_id": "ABORT_NETWORK_NOT_ALLOWED",
+      "condition": "network access not allowed",
+      "severity": "abort",
+      "gate_affected": "LIVE_FETCH_GATE",
+      "expected_behavior": "stop future diagnostic fetch and record blocker readback"
+    },
+    {
+      "condition_id": "ABORT_ARTICLE_PAGE_FETCH_REQUESTED",
+      "condition": "article page fetch requested",
+      "severity": "abort",
+      "gate_affected": "LIVE_FETCH_GATE",
+      "expected_behavior": "stop future diagnostic fetch and record blocker readback"
+    },
+    {
+      "condition_id": "ABORT_MEDIA_DOWNLOAD_REQUESTED",
+      "condition": "media download requested",
+      "severity": "abort",
+      "gate_affected": "LIVE_FETCH_GATE",
+      "expected_behavior": "stop future diagnostic fetch and record blocker readback"
+    },
+    {
+      "condition_id": "ABORT_PUBLICATION_RENDER_AUDIO_REQUESTED",
+      "condition": "publication, render, or audio requested",
+      "severity": "abort",
+      "gate_affected": "LIVE_FETCH_GATE",
+      "expected_behavior": "stop future diagnostic fetch and record blocker readback"
+    },
+    {
+      "condition_id": "ABORT_TOO_MANY_ENTRIES",
+      "condition": "more entries than allowed",
+      "severity": "abort",
+      "gate_affected": "FETCH_RECEIPT_GATE",
+      "expected_behavior": "stop future diagnostic fetch and record blocker readback"
+    },
+    {
+      "condition_id": "ABORT_TERMS_RIGHTS_UNCLEAR",
+      "condition": "live source terms or rights unclear",
+      "severity": "abort",
+      "gate_affected": "SOURCE_BOUNDARY_GATE",
+      "expected_behavior": "stop future diagnostic fetch and record blocker readback"
+    },
+    {
+      "condition_id": "ABORT_UNEXPECTED_REDIRECT_OR_NON_RSS",
+      "condition": "unexpected redirect or non-RSS response",
+      "severity": "abort",
+      "gate_affected": "FETCH_RECEIPT_GATE",
+      "expected_behavior": "stop future diagnostic fetch and record blocker readback"
+    },
+    {
+      "condition_id": "ABORT_SCRAPING_REQUIRED",
+      "condition": "parser would need scraping outside RSS feed",
+      "severity": "abort",
+      "gate_affected": "NORMALIZED_TOPIC_GATE",
+      "expected_behavior": "stop future diagnostic fetch and record blocker readback"
+    },
+    {
+      "condition_id": "ABORT_PRODUCTION_PUBLIC_CLAIM",
+      "condition": "any production or public claim requested",
+      "severity": "abort",
+      "gate_affected": "PUBLICATION_GATE",
+      "expected_behavior": "stop future diagnostic fetch and record blocker readback"
+    }
+  ],
+  "boundaries": {
+    "network_fetch_performed": false,
+    "live_RSS_news_fetch_performed": false,
+    "live_feed_source_added": false,
+    "fetch_adapter_implemented": false,
+    "article_scraping_performed": false,
+    "authorization_requested_from_user": false,
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "audio_tts_generated": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "card_assets_modified": false,
+    "card_redesign_performed": false,
+    "animation_tuned": false,
+    "local_ignored_ymmp_created_in_this_slice": false,
+    "local_ignored_ymmp_modified_in_this_slice": false,
+    "ymmp_or_media_staged_or_committed": false,
+    "production_public_readiness_claimed": false,
+    "actual_order_or_audience_acceptance_claimed": false
+  },
+  "not_accepted_scope": {
+    "live_rss_or_news_fetch": false,
+    "network_access": false,
+    "live_fetch_implementation": false,
+    "active_real_feed_source": false,
+    "fetch_adapter": false,
+    "article_scraping": false,
+    "production_script_generation": false,
+    "production_subtitle_design": false,
+    "production_card_design": false,
+    "render_export_proof": false,
+    "audio_or_tts_output": false,
+    "public_upload_or_public_readiness": false,
+    "actual_order_or_audience_acceptance": false,
+    "source_truth_or_rights_approval": false,
+    "local_ymmp_materialization": false,
+    "authorization_request_in_this_slice": false
+  }
+}

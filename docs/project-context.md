@@ -2,6 +2,17 @@
 
 ## PROJECT CONTEXT
 - Current newsroom slice (2026-07-01 JST):
+  `newsroom-live-rss-preflight-contract-v1` is complete. The route remains
+  preflight-contract-only: no live RSS/news fetch, no network source access,
+  no active feed target, no fetch adapter, no article scraping, no actual
+  user authorization request, and no production or publication claim. The
+  contract defines the preflight packet schema, authorization states, future
+  local/ignored output policy, future artifact schemas, abort conditions,
+  post-fetch gates, and readiness classification. Current defaults keep
+  authorization not requested and every network/article/media/render/audio/
+  production/public flag false. The selected next axis is
+  `newsroom-live-rss-operator-authorization-sheet-v1`.
+- Current newsroom slice (2026-07-01 JST):
   `newsroom-live-rss-boundary-plan-v1` is complete. The route remains
   planning-only: no live RSS/news fetch, no network source access, no active
   feed target, no fetch adapter, no article scraping, and no production or
@@ -96,6 +107,13 @@
 
 ## CURRENT LANE
 - Current sync state: product work has advanced through
+  `newsroom-live-rss-preflight-contract-v1`. The next bottleneck is a
+  human-facing operator authorization sheet that can be filled later without
+  silently turning into a fetch request. This does not approve live fetch,
+  network access, real feed use, article scraping, YMM4 preview, render,
+  `.ymmp`, media, audio/TTS, animation, card, production, publication, or
+  audience-acceptance work.
+- Current sync state: product work has advanced through
   `newsroom-live-rss-boundary-plan-v1`. The next bottleneck is a stricter
   live RSS preflight contract: prove the authorization sheet, local ignored
   output shape, receipt schema, manifest schema, and no-production readback
@@ -182,6 +200,42 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 - `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
+
+Latest newsroom live RSS preflight contract decision (2026-07-01 JST):
+`newsroom_live_rss_preflight_contract_v1_2026_06_30` defines the preflight
+packet and authorization model for a future diagnostic live RSS smoke after
+the live boundary plan completed. The tracked artifacts are
+`samples/_probe/newsroom_handoff/live_rss_preflight_contract_v1.json`,
+`samples/_probe/newsroom_handoff/live_rss_preflight_packet_template_v1.json`,
+and
+`docs/verification/NEWSROOM_LIVE_RSS_PREFLIGHT_CONTRACT_V1_2026-06-30.md`,
+with implementation/tests in
+`src/pipeline/newsroom_live_rss_preflight_contract.py` /
+`tests/test_newsroom_live_rss_preflight_contract.py`.
+
+The packet template defaults to `authorization_status=not_requested`,
+`network_access_allowed=false`, `article_page_fetch_allowed=false`,
+`media_download_allowed=false`, `render_allowed=false`,
+`audio_tts_allowed=false`, `production_claim_allowed=false`, and
+`publication_allowed=false`. Future output policy keeps raw live fetch
+materials local/ignored and allows only summarized readbacks to become
+tracked after redaction/summarization. Abort conditions cover missing or
+malformed feed URL, missing output root, unauthorized network access, article
+page fetch, media download, render/audio/publication requests, too many
+entries, unclear rights/terms, unexpected redirect/non-RSS response,
+scraping requirement, and production/public claims. Post-fetch gates are
+defined but not executed: `FETCH_RECEIPT_GATE`, `NORMALIZED_TOPIC_GATE`,
+`SOURCE_BOUNDARY_GATE`, and `CAPSULE_INPUT_GATE`. Readiness classification
+sets `preflight_contract_ready=true`, `authorization_sheet_ready=true`,
+`fetch_implementation_allowed_now=false`, `network_access_allowed_now=false`,
+`operator_action_required_now=false`, and
+`next_allowed_state=authorization_request_preparation`. The selected next
+axis is `newsroom-live-rss-operator-authorization-sheet-v1`. No Agent-side
+network/live RSS/news fetch, active feed source, fetch adapter implementation,
+article scraping, actual user authorization request, YMM4 launch, render,
+`.ymmp` creation/modification/stage/commit, media/audio/TTS generation, card
+redesign, animation tuning, production/public readiness claim, or
+audience/order acceptance claim occurred.
 
 Latest newsroom live RSS boundary plan decision (2026-07-01 JST):
 `newsroom_live_rss_boundary_plan_v1_2026_06_30` defines the planning boundary

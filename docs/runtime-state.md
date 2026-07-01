@@ -1,5 +1,34 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom live RSS preflight contract completed (2026-07-01 JST)**:
+  `newsroom-live-rss-preflight-contract-v1` defines the preflight packet,
+  authorization model, future output policy, artifact schemas, abort
+  conditions, and post-fetch gate definitions for a future diagnostic live RSS
+  smoke. New tracked artifacts are
+  `samples/_probe/newsroom_handoff/live_rss_preflight_contract_v1.json`,
+  `samples/_probe/newsroom_handoff/live_rss_preflight_packet_template_v1.json`,
+  `docs/verification/NEWSROOM_LIVE_RSS_PREFLIGHT_CONTRACT_V1_2026-06-30.md`,
+  `src/pipeline/newsroom_live_rss_preflight_contract.py`, and
+  `tests/test_newsroom_live_rss_preflight_contract.py`. Current defaults keep
+  `authorization_status=not_requested`, `network_access_allowed=false`,
+  `article_page_fetch_allowed=false`, `media_download_allowed=false`,
+  `render_allowed=false`, `audio_tts_allowed=false`,
+  `production_claim_allowed=false`, and `publication_allowed=false`; no user
+  authorization is requested in this slice. Readiness classification sets
+  `preflight_contract_ready=true`, `authorization_sheet_ready=true`,
+  `fetch_implementation_allowed_now=false`, `network_access_allowed_now=false`,
+  `operator_action_required_now=false`, and
+  `next_allowed_state=authorization_request_preparation`. The selected next
+  axis is `newsroom-live-rss-operator-authorization-sheet-v1`. On another
+  terminal, fetch/pull `master`, confirm `HEAD...origin/master = 0 0`, read
+  this entry, then inspect
+  `docs/verification/NEWSROOM_LIVE_RSS_PREFLIGHT_CONTRACT_V1_2026-06-30.md`
+  if more detail is needed. No Agent-side network/live RSS/news fetch, active
+  feed source addition, fetch adapter implementation, article scraping,
+  actual authorization request, YMM4 launch, render, `.ymmp`
+  creation/modification/stage/commit, media/audio/TTS generation, card
+  redesign, animation tuning, production/public readiness claim, or
+  audience/order acceptance claim occurred.
 - **Newsroom live RSS boundary plan completed (2026-07-01 JST)**:
   `newsroom-live-rss-boundary-plan-v1` defines the docs-first boundary for
   future live RSS/topic introduction without implementing fetch. New tracked
