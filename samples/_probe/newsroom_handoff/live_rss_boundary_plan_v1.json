@@ -1,0 +1,767 @@
+{
+  "plan_id": "newsroom_live_rss_boundary_plan_v1_2026_06_30",
+  "schema_version": "newsroom_live_rss_boundary_plan.v1",
+  "contract_path": "samples/_probe/newsroom_handoff/live_rss_boundary_contract_v1.json",
+  "review_status": "ready_for_supervisor_review",
+  "render_gate": "L0_no_render",
+  "production_status": "planning_only",
+  "live_fetch_used": false,
+  "source_adversarial_suite_path": "samples/_probe/newsroom_handoff/source_boundary_adversarial_fixtures_v1.json",
+  "source_validator_path": "samples/_probe/newsroom_handoff/source_boundary_adversarial_fixture_validation_v1.json",
+  "source_capsule_hardening_path": "samples/_probe/newsroom_handoff/source_boundary_adversarial_capsule_hardening_v1.json",
+  "source_readback": {
+    "adversarial_total_cases": 11,
+    "adversarial_unexpected_pass_count": 0,
+    "adversarial_unexpected_fail_count": 0,
+    "adversarial_production_ready_false_count": 11,
+    "excluded_claims_used_as_positive_claims_count": 1,
+    "excluded_claim_misuse_classification": "detected adversarial misuse case; not a production-ready leak",
+    "production_script_ready_true_count": 0,
+    "live_boundary_plan_ready_true_count": 0
+  },
+  "state_machine": {
+    "allowed_states": [
+      "offline_fixture_only",
+      "offline_fixture_validated",
+      "adversarial_validation_passed",
+      "live_boundary_planned",
+      "live_fetch_authorized_for_diagnostic_smoke",
+      "live_fetch_result_captured",
+      "live_source_boundary_validated",
+      "diagnostic_capsule_ready",
+      "production_script_blocked",
+      "production_ready_requires_separate_approval"
+    ],
+    "current_state": "live_boundary_planned",
+    "state_status": [
+      {
+        "state": "offline_fixture_only",
+        "reached_in_this_slice": true,
+        "allowed_to_set_now": true
+      },
+      {
+        "state": "offline_fixture_validated",
+        "reached_in_this_slice": true,
+        "allowed_to_set_now": true
+      },
+      {
+        "state": "adversarial_validation_passed",
+        "reached_in_this_slice": true,
+        "allowed_to_set_now": true
+      },
+      {
+        "state": "live_boundary_planned",
+        "reached_in_this_slice": true,
+        "allowed_to_set_now": true
+      },
+      {
+        "state": "live_fetch_authorized_for_diagnostic_smoke",
+        "reached_in_this_slice": false,
+        "allowed_to_set_now": false
+      },
+      {
+        "state": "live_fetch_result_captured",
+        "reached_in_this_slice": false,
+        "allowed_to_set_now": false
+      },
+      {
+        "state": "live_source_boundary_validated",
+        "reached_in_this_slice": false,
+        "allowed_to_set_now": false
+      },
+      {
+        "state": "diagnostic_capsule_ready",
+        "reached_in_this_slice": false,
+        "allowed_to_set_now": false
+      },
+      {
+        "state": "production_script_blocked",
+        "reached_in_this_slice": false,
+        "allowed_to_set_now": false
+      },
+      {
+        "state": "production_ready_requires_separate_approval",
+        "reached_in_this_slice": false,
+        "allowed_to_set_now": false
+      }
+    ],
+    "forbidden_transitions": [
+      {
+        "from_state": "live_boundary_planned",
+        "to_state": "live_fetch_result_captured",
+        "reason": "fetch authorization and receipt contract must exist first"
+      },
+      {
+        "from_state": "adversarial_validation_passed",
+        "to_state": "diagnostic_capsule_ready",
+        "reason": "a live source boundary validation must be captured first"
+      },
+      {
+        "from_state": "live_boundary_planned",
+        "to_state": "production_ready_requires_separate_approval",
+        "reason": "production readiness is a separate future approval gate"
+      },
+      {
+        "from_state": "any_state",
+        "to_state": "publication_or_public_upload",
+        "reason": "publication gate is closed in the current project state"
+      }
+    ],
+    "next_allowed_transition": {
+      "from_state": "live_boundary_planned",
+      "to_state": "live_fetch_authorized_for_diagnostic_smoke",
+      "allowed_now": false,
+      "requirements": [
+        "explicit future operator authorization",
+        "named feed/source target",
+        "expected local output directory",
+        "fetch receipt schema accepted",
+        "no production or publication claim"
+      ]
+    },
+    "transition_requirements": {
+      "live_fetch_authorized_for_diagnostic_smoke": [
+        "LIVE_FETCH_GATE passes",
+        "authorization is recorded in operator_action_log"
+      ],
+      "live_fetch_result_captured": [
+        "fetch_receipt exists",
+        "raw_entry_snapshot exists",
+        "all live-source artifacts are local/ignored"
+      ],
+      "live_source_boundary_validated": [
+        "SOURCE_BOUNDARY_GATE passes",
+        "rights/freshness/attribution/source reliability are classified"
+      ],
+      "diagnostic_capsule_ready": [
+        "CAPSULE_GENERATION_GATE passes",
+        "production blockers remain attached to every downstream beat"
+      ]
+    }
+  },
+  "artifact_contract": [
+    {
+      "artifact_name": "fetch_receipt",
+      "purpose": "Records that an authorized diagnostic fetch occurred and captures timing, target identity, status, and no-production scope.",
+      "required_fields": [
+        "fetch_receipt_id",
+        "authorization_id",
+        "feed_id",
+        "retrieved_at",
+        "tool_version",
+        "target_descriptor",
+        "result_status",
+        "network_scope",
+        "production_claim_allowed"
+      ],
+      "owner": "agent after future operator authorization",
+      "can_contain_live_source_data": true,
+      "can_be_committed": false,
+      "must_remain_local_ignored": true,
+      "production_blocker_implications": "Blocks every downstream state if missing or if production_claim_allowed is true."
+    },
+    {
+      "artifact_name": "feed_source_manifest",
+      "purpose": "Describes the feed/source target selected for the diagnostic smoke.",
+      "required_fields": [
+        "feed_id",
+        "feed_title",
+        "source_name",
+        "target_descriptor",
+        "authorization_id",
+        "allowed_use",
+        "retention_policy"
+      ],
+      "owner": "operator/user with agent schema validation",
+      "can_contain_live_source_data": true,
+      "can_be_committed": false,
+      "must_remain_local_ignored": true,
+      "production_blocker_implications": "Blocks fetch if target, authorization, or allowed_use is unclear."
+    },
+    {
+      "artifact_name": "raw_entry_snapshot",
+      "purpose": "Stores the exact fetched entry snapshot before normalization.",
+      "required_fields": [
+        "fetch_receipt_id",
+        "entry_id",
+        "entry_title",
+        "entry_url",
+        "entry_published_at",
+        "entry_summary_raw",
+        "raw_metadata"
+      ],
+      "owner": "agent after future authorization",
+      "can_contain_live_source_data": true,
+      "can_be_committed": false,
+      "must_remain_local_ignored": true,
+      "production_blocker_implications": "Blocks normalization if URL, timestamp, or raw title is absent."
+    },
+    {
+      "artifact_name": "normalized_topic_candidate",
+      "purpose": "Converts a raw entry into the schema used by topic/capsule validation.",
+      "required_fields": [
+        "topic_id",
+        "feed_id",
+        "entry_title",
+        "entry_url",
+        "entry_published_at",
+        "entry_summary",
+        "source_name",
+        "retrieved_at",
+        "fetch_receipt_id"
+      ],
+      "owner": "agent",
+      "can_contain_live_source_data": true,
+      "can_be_committed": false,
+      "must_remain_local_ignored": true,
+      "production_blocker_implications": "Blocks capsule input if required normalized fields are missing."
+    },
+    {
+      "artifact_name": "source_boundary_validation",
+      "purpose": "Classifies whether live source identity, URL, timestamp, and reliability are sufficient for diagnostic use.",
+      "required_fields": [
+        "topic_id",
+        "source_url",
+        "entry_published_at",
+        "retrieved_at",
+        "source_reliability_note",
+        "source_truth_approved",
+        "production_blockers"
+      ],
+      "owner": "agent classification plus operator review when requested",
+      "can_contain_live_source_data": true,
+      "can_be_committed": false,
+      "must_remain_local_ignored": true,
+      "production_blocker_implications": "Blocks production if any placeholder, unknown, or unapproved source boundary remains."
+    },
+    {
+      "artifact_name": "rights_attribution_freshness_readback",
+      "purpose": "Captures rights, attribution, quote/media reuse, and freshness classification.",
+      "required_fields": [
+        "topic_id",
+        "rights_status",
+        "attribution_note",
+        "freshness_status",
+        "quote_media_permission_status",
+        "review_required",
+        "production_blockers"
+      ],
+      "owner": "operator/user for approval; agent for structured readback",
+      "can_contain_live_source_data": true,
+      "can_be_committed": false,
+      "must_remain_local_ignored": true,
+      "production_blocker_implications": "Blocks production when rights, attribution, freshness, or quote/media permission is unknown."
+    },
+    {
+      "artifact_name": "excluded_claims_readback",
+      "purpose": "Lists claims the generator must not assert and records leak checks.",
+      "required_fields": [
+        "topic_id",
+        "excluded_claims",
+        "excluded_claim_count",
+        "excluded_claims_used_as_positive_claims",
+        "leak_check_status"
+      ],
+      "owner": "agent",
+      "can_contain_live_source_data": true,
+      "can_be_committed": false,
+      "must_remain_local_ignored": true,
+      "production_blocker_implications": "Blocks capsule readiness if absent or if any excluded claim leaks into positive explanation text."
+    },
+    {
+      "artifact_name": "capsule_input_candidate",
+      "purpose": "Packages the normalized topic plus boundary readbacks for diagnostic capsule generation.",
+      "required_fields": [
+        "topic_id",
+        "normalized_topic_candidate_id",
+        "source_boundary_validation_id",
+        "rights_readback_id",
+        "excluded_claims_readback_id",
+        "production_status",
+        "diagnostic_capsule_allowed"
+      ],
+      "owner": "agent",
+      "can_contain_live_source_data": true,
+      "can_be_committed": false,
+      "must_remain_local_ignored": true,
+      "production_blocker_implications": "Allows diagnostic capsule only; production remains blocked if any blocker remains."
+    },
+    {
+      "artifact_name": "operator_action_log",
+      "purpose": "Records human authorization, review decisions, and explicit non-production scope.",
+      "required_fields": [
+        "authorization_id",
+        "operator",
+        "authorized_action",
+        "authorized_at",
+        "target_descriptor",
+        "scope_limit",
+        "revocation_or_expiry"
+      ],
+      "owner": "operator/user",
+      "can_contain_live_source_data": true,
+      "can_be_committed": false,
+      "must_remain_local_ignored": true,
+      "production_blocker_implications": "Blocks live fetch authorization if absent, ambiguous, expired, or wider than diagnostic smoke."
+    }
+  ],
+  "schema_plan": [
+    {
+      "field_name": "topic_id",
+      "purpose": "stable diagnostic topic id",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "feed_id",
+      "purpose": "source manifest id for the feed or source target",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "feed_title",
+      "purpose": "operator-facing feed/source label",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "entry_title",
+      "purpose": "entry title from the captured snapshot",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "entry_url",
+      "purpose": "canonical entry URL from the captured snapshot",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "entry_published_at",
+      "purpose": "publisher timestamp from the captured snapshot",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "entry_summary",
+      "purpose": "normalized summary text from the captured entry",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "source_name",
+      "purpose": "publisher/source label",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "source_url",
+      "purpose": "source or entry URL used for boundary validation",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "retrieved_at",
+      "purpose": "diagnostic retrieval timestamp",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "fetch_receipt_id",
+      "purpose": "link to the future fetch receipt",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "rights_status",
+      "purpose": "rights and reuse classification",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "attribution_note",
+      "purpose": "required attribution/readback note",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "freshness_status",
+      "purpose": "freshness classification against retrieved_at",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "source_reliability_note",
+      "purpose": "source reliability classification",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "key_claim_candidates",
+      "purpose": "candidate claims, not approved assertions",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": false,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "excluded_claims",
+      "purpose": "claims the generator must not assert",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "uncertainty_or_boundary",
+      "purpose": "source uncertainty and boundary note",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "intended_episode_angle",
+      "purpose": "diagnostic angle, not production script approval",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": false,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    },
+    {
+      "field_name": "production_status",
+      "purpose": "must remain diagnostic or blocked until separate approval",
+      "diagnostic_capsule_required": true,
+      "live_boundary_plan_required": true,
+      "production_script_candidate_required": true,
+      "placeholder_policy": "forbidden for production; allowed for diagnostic only when explicitly classified"
+    }
+  ],
+  "gate_definitions": {
+    "LIVE_FETCH_GATE": {
+      "status_now": "closed",
+      "requires": [
+        "explicit future authorization",
+        "feed/source target selected by operator",
+        "expected local ignored output directory",
+        "fetch_receipt schema accepted",
+        "no production claim"
+      ],
+      "allows": [
+        "future diagnostic smoke only"
+      ],
+      "blocks": [
+        "live fetch implementation now",
+        "production use",
+        "publication"
+      ]
+    },
+    "SOURCE_BOUNDARY_GATE": {
+      "status_now": "planned_not_executed",
+      "requires": [
+        "rights_status classification",
+        "freshness_status classification",
+        "attribution_note",
+        "source_reliability_note",
+        "excluded_claims",
+        "source URL",
+        "published timestamp"
+      ],
+      "blocks": [
+        "production if placeholders remain",
+        "production if rights/freshness/source reliability are unknown"
+      ]
+    },
+    "CAPSULE_GENERATION_GATE": {
+      "status_now": "planned_not_executed",
+      "requires": [
+        "source_boundary_validation",
+        "rights_attribution_freshness_readback",
+        "excluded_claims_readback",
+        "capsule_input_candidate"
+      ],
+      "allows": [
+        "diagnostic capsule with blockers attached"
+      ],
+      "blocks": [
+        "production capsule when any production blocker remains"
+      ]
+    },
+    "PUBLICATION_GATE": {
+      "status_now": "closed",
+      "requires": [
+        "separate future approval far beyond this plan"
+      ],
+      "allows": [],
+      "blocks": [
+        "public upload",
+        "public readiness claim",
+        "audience/order acceptance claim"
+      ]
+    }
+  },
+  "responsibility_split": {
+    "agent_owned": [
+      "schema definition",
+      "validation logic",
+      "offline and adversarial tests",
+      "readback generation",
+      "blocker classification",
+      "no-network planning"
+    ],
+    "operator_user_owned": [
+      "explicit authorization for any future live fetch",
+      "confirming fetch target/feed if needed",
+      "reviewing source/rights/freshness boundary when asked",
+      "deciding whether live source usage is acceptable"
+    ],
+    "forbidden_for_agent_without_explicit_future_authorization": [
+      "network fetch",
+      "real RSS retrieval",
+      "article scraping",
+      "rights approval",
+      "production/public readiness claims"
+    ]
+  },
+  "risk_register": [
+    {
+      "risk_id": "R1",
+      "risk": "live fetch network risk",
+      "blocker": "no network action without LIVE_FETCH_GATE",
+      "mitigation": "keep this slice planning-only",
+      "required_follow_up": "future explicit authorization"
+    },
+    {
+      "risk_id": "R2",
+      "risk": "source truth risk",
+      "blocker": "source truth is not approved by fetch existence",
+      "mitigation": "require source_boundary_validation",
+      "required_follow_up": "operator review if source is ambiguous"
+    },
+    {
+      "risk_id": "R3",
+      "risk": "rights and reuse risk",
+      "blocker": "unknown rights block production",
+      "mitigation": "require rights_status and quote/media permission readback",
+      "required_follow_up": "human rights decision"
+    },
+    {
+      "risk_id": "R4",
+      "risk": "quote/media permission risk",
+      "blocker": "quoted or media material cannot be reused by default",
+      "mitigation": "separate quote_media_permission_status",
+      "required_follow_up": "operator decision before production"
+    },
+    {
+      "risk_id": "R5",
+      "risk": "freshness/datedness risk",
+      "blocker": "stale or missing timestamps block live boundary validation",
+      "mitigation": "require entry_published_at and retrieved_at",
+      "required_follow_up": "freshness policy in preflight"
+    },
+    {
+      "risk_id": "R6",
+      "risk": "hallucinated claim risk",
+      "blocker": "candidate claims are not approved assertions",
+      "mitigation": "keep key_claim_candidates separate from approved claims",
+      "required_follow_up": "claim validation before capsule"
+    },
+    {
+      "risk_id": "R7",
+      "risk": "excluded-claim leakage risk",
+      "blocker": "leak blocks diagnostic capsule readiness",
+      "mitigation": "carry excluded_claims_readback into capsule gate",
+      "required_follow_up": "repeat adversarial leak check"
+    },
+    {
+      "risk_id": "R8",
+      "risk": "source URL and timestamp absence",
+      "blocker": "missing URL/timestamp blocks normalization",
+      "mitigation": "require raw_entry_snapshot fields",
+      "required_follow_up": "preflight schema enforcement"
+    },
+    {
+      "risk_id": "R9",
+      "risk": "attribution ambiguity",
+      "blocker": "ambiguous attribution blocks production",
+      "mitigation": "require attribution_note",
+      "required_follow_up": "operator attribution review"
+    },
+    {
+      "risk_id": "R10",
+      "risk": "production/public overclaiming risk",
+      "blocker": "publication gate remains closed",
+      "mitigation": "production_status remains planning_only or blocked",
+      "required_follow_up": "separate future approval"
+    }
+  ],
+  "decision_readback": {
+    "live_fetch_implementation_allowed_now": false,
+    "live_boundary_plan_ready": true,
+    "next_recommended_axis": "newsroom-live-rss-preflight-contract-v1",
+    "next_axis_reason": "the boundary plan is clear; next step is a stricter preflight contract, not live fetch"
+  },
+  "business_goal_outcome_contract": {
+    "problem_clear": {
+      "status": true,
+      "rationale": "The plan prevents jumping from offline fixtures directly to live fetch."
+    },
+    "offer_clear": {
+      "status": true,
+      "rationale": "Future live RSS introduction is governed by states, artifacts, gates, and owners."
+    },
+    "proof_clear": {
+      "status": true,
+      "rationale": "This defines boundary planning only, not implementation."
+    },
+    "boundary_clear": {
+      "status": true,
+      "rationale": "Source, rights, freshness, attribution, production, and publication claims remain blocked."
+    },
+    "next_action_clear": {
+      "status": true,
+      "rationale": "newsroom-live-rss-preflight-contract-v1"
+    },
+    "visual_supports_explanation": {
+      "status": true,
+      "rationale": "YMM4 visual proof stays closed."
+    }
+  },
+  "completion_matrix": [
+    {
+      "gate": "repo_state_verified",
+      "status": true
+    },
+    {
+      "gate": "adversarial_suite_inspected",
+      "status": true
+    },
+    {
+      "gate": "live_rss_boundary_states_defined",
+      "status": true
+    },
+    {
+      "gate": "artifact_contract_defined",
+      "status": true
+    },
+    {
+      "gate": "gate_definitions_created",
+      "status": true
+    },
+    {
+      "gate": "responsibility_split_recorded",
+      "status": true
+    },
+    {
+      "gate": "risk_register_created",
+      "status": true
+    },
+    {
+      "gate": "next_axis_selected",
+      "status": true
+    },
+    {
+      "gate": "no_forbidden_live_visual_media_scope_reopened",
+      "status": true
+    }
+  ],
+  "inertia_check": [
+    {
+      "gate": "no_live_rss_or_network_fetch",
+      "status": true
+    },
+    {
+      "gate": "no_YMM4_visual_loop",
+      "status": true
+    },
+    {
+      "gate": "no_animation_only_loop",
+      "status": true
+    },
+    {
+      "gate": "no_primitive_or_tempo_loop",
+      "status": true
+    },
+    {
+      "gate": "no_card_polish_loop",
+      "status": true
+    },
+    {
+      "gate": "no_render_export_loop",
+      "status": true
+    },
+    {
+      "gate": "no_production_public_readiness_claim",
+      "status": true
+    }
+  ],
+  "boundaries": {
+    "network_fetch_performed": false,
+    "live_RSS_news_fetch_performed": false,
+    "live_feed_source_added": false,
+    "fetch_adapter_implemented": false,
+    "article_scraping_performed": false,
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "audio_tts_generated": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "card_assets_modified": false,
+    "card_redesign_performed": false,
+    "animation_tuned": false,
+    "local_ignored_ymmp_created_in_this_slice": false,
+    "local_ignored_ymmp_modified_in_this_slice": false,
+    "ymmp_or_media_staged_or_committed": false,
+    "production_public_readiness_claimed": false,
+    "actual_order_or_audience_acceptance_claimed": false
+  },
+  "not_accepted_scope": {
+    "live_rss_or_news_fetch": false,
+    "live_fetch_implementation": false,
+    "active_real_feed_source": false,
+    "article_scraping": false,
+    "production_script_generation": false,
+    "production_subtitle_design": false,
+    "production_card_design": false,
+    "production_animation_quality": false,
+    "card_redesign": false,
+    "visual_layout_tuning": false,
+    "animation_tuning": false,
+    "render_export_proof": false,
+    "audio_or_tts_output": false,
+    "public_upload_or_public_readiness": false,
+    "actual_order_or_audience_acceptance": false,
+    "source_truth_or_rights_approval": false,
+    "local_ymmp_materialization": false
+  }
+}

@@ -1,5 +1,36 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom live RSS boundary plan completed (2026-07-01 JST)**:
+  `newsroom-live-rss-boundary-plan-v1` defines the docs-first boundary for
+  future live RSS/topic introduction without implementing fetch. New tracked
+  artifacts are
+  `samples/_probe/newsroom_handoff/live_rss_boundary_plan_v1.json`,
+  `samples/_probe/newsroom_handoff/live_rss_boundary_contract_v1.json`,
+  `docs/verification/NEWSROOM_LIVE_RSS_BOUNDARY_PLAN_V1_2026-06-30.md`,
+  `src/pipeline/newsroom_live_rss_boundary_plan.py`, and
+  `tests/test_newsroom_live_rss_boundary_plan.py`. The plan stops at
+  `current_state=live_boundary_planned`; later states such as
+  `live_fetch_authorized_for_diagnostic_smoke`, `live_fetch_result_captured`,
+  `live_source_boundary_validated`, `diagnostic_capsule_ready`, and
+  `production_ready_requires_separate_approval` are not set in this slice.
+  The future live RSS smoke contract defines nine local/ignored artifacts:
+  `fetch_receipt`, `feed_source_manifest`, `raw_entry_snapshot`,
+  `normalized_topic_candidate`, `source_boundary_validation`,
+  `rights_attribution_freshness_readback`, `excluded_claims_readback`,
+  `capsule_input_candidate`, and `operator_action_log`. Gate definitions cover
+  `LIVE_FETCH_GATE`, `SOURCE_BOUNDARY_GATE`, `CAPSULE_GENERATION_GATE`, and
+  `PUBLICATION_GATE`. Decision readback sets
+  `live_fetch_implementation_allowed_now=false`,
+  `live_boundary_plan_ready=true`, and the selected next axis is
+  `newsroom-live-rss-preflight-contract-v1`. On another terminal, fetch/pull
+  `master`, confirm `HEAD...origin/master = 0 0`, read this entry, then
+  inspect
+  `docs/verification/NEWSROOM_LIVE_RSS_BOUNDARY_PLAN_V1_2026-06-30.md` if more
+  detail is needed. No Agent-side network/live RSS/news fetch, real feed
+  source addition, fetch adapter implementation, article scraping, YMM4 launch,
+  render, `.ymmp` creation/modification/stage/commit, media/audio/TTS
+  generation, card redesign, animation tuning, production/public readiness
+  claim, or audience/order acceptance claim occurred.
 - **Newsroom source boundary adversarial fixtures completed (2026-07-01 JST)**:
   `newsroom-source-boundary-adversarial-fixtures-v1` adds an offline
   adversarial fixture suite for the RSS-like topic fixture route. New tracked

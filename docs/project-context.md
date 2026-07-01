@@ -2,6 +2,17 @@
 
 ## PROJECT CONTEXT
 - Current newsroom slice (2026-07-01 JST):
+  `newsroom-live-rss-boundary-plan-v1` is complete. The route remains
+  planning-only: no live RSS/news fetch, no network source access, no active
+  feed target, no fetch adapter, no article scraping, and no production or
+  publication claim. The plan defines the state machine through
+  `live_boundary_planned`, future local/ignored artifact requirements, the
+  normalized live RSS topic schema, live/source/capsule/publication gates,
+  responsibility split, and risk register. Decision readback sets
+  `live_fetch_implementation_allowed_now=false`,
+  `live_boundary_plan_ready=true`, and selects
+  `newsroom-live-rss-preflight-contract-v1` as the next axis.
+- Current newsroom slice (2026-07-01 JST):
   `newsroom-source-boundary-adversarial-fixtures-v1` is complete. The offline
   adversarial suite covers the diagnostic control and ten failure classes for
   missing required fields, unmarked placeholders, invalid URL/timestamp,
@@ -85,6 +96,14 @@
 
 ## CURRENT LANE
 - Current sync state: product work has advanced through
+  `newsroom-live-rss-boundary-plan-v1`. The next bottleneck is a stricter
+  live RSS preflight contract: prove the authorization sheet, local ignored
+  output shape, receipt schema, manifest schema, and no-production readback
+  before any diagnostic live fetch can be authorized. This does not approve
+  live fetch implementation, real feed use, article scraping, YMM4 preview,
+  render, `.ymmp`, media, audio/TTS, animation, card, production,
+  publication, or audience-acceptance work.
+- Current sync state: product work has advanced through
   `newsroom-source-boundary-adversarial-fixtures-v1`. The next bottleneck is
   a live RSS boundary plan that specifies source, freshness, rights,
   attribution, excluded-claim, and no-network-test gates before any live fetch
@@ -163,6 +182,35 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 - `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
+
+Latest newsroom live RSS boundary plan decision (2026-07-01 JST):
+`newsroom_live_rss_boundary_plan_v1_2026_06_30` defines the planning boundary
+for future live RSS/topic introduction after adversarial source-boundary
+fixtures passed. The tracked artifacts are
+`samples/_probe/newsroom_handoff/live_rss_boundary_plan_v1.json`,
+`samples/_probe/newsroom_handoff/live_rss_boundary_contract_v1.json`, and
+`docs/verification/NEWSROOM_LIVE_RSS_BOUNDARY_PLAN_V1_2026-06-30.md`, with
+implementation/tests in `src/pipeline/newsroom_live_rss_boundary_plan.py` /
+`tests/test_newsroom_live_rss_boundary_plan.py`.
+
+The state machine stops at `live_boundary_planned`; future states for live
+fetch authorization, result capture, live source boundary validation,
+diagnostic capsule readiness, and production readiness are not set. The
+future diagnostic smoke contract requires nine local/ignored artifacts:
+`fetch_receipt`, `feed_source_manifest`, `raw_entry_snapshot`,
+`normalized_topic_candidate`, `source_boundary_validation`,
+`rights_attribution_freshness_readback`, `excluded_claims_readback`,
+`capsule_input_candidate`, and `operator_action_log`. Gate definitions cover
+`LIVE_FETCH_GATE`, `SOURCE_BOUNDARY_GATE`, `CAPSULE_GENERATION_GATE`, and
+`PUBLICATION_GATE`. The decision readback sets
+`live_fetch_implementation_allowed_now=false`,
+`live_boundary_plan_ready=true`, and selects
+`newsroom-live-rss-preflight-contract-v1`. No Agent-side network/live RSS/news
+fetch, active feed source, fetch adapter implementation, article scraping,
+YMM4 launch, render, `.ymmp` creation/modification/stage/commit,
+media/audio/TTS generation, card redesign, animation tuning,
+production/public readiness claim, or audience/order acceptance claim
+occurred.
 
 Latest newsroom source boundary adversarial fixtures decision (2026-07-01 JST):
 `newsroom_source_boundary_adversarial_fixtures_v1_2026_06_30` validates the
