@@ -1,21 +1,26 @@
 # Runtime State — NLMYTGen
 
-- **Commercial pilot manual delivery package added for restart (2026-07-02 JST)**:
-  `commercial_pilot/notebooklm_ymm4_delivery_package_001/` is now the
-  revenue-facing restart artifact. It converts the existing NotebookLM -> YMM4
-  CSV / cue packet route into a customer-readable manual delivery package with
-  a fictional sample transcript, CLI-usable speaker map, generated YMM4 CSV,
-  cue packet, diagram packet, manifest, offer, acceptance checklist,
-  limitations, and next-order note. Validation ran through the existing CLI:
-  `validate` parsed 7 utterances, `build-csv` wrote 12 rows with no overflow
+- **Episode production package corrected for video-posting monetization (2026-07-02 JST)**:
+  The earlier external-delivery framing has been corrected. The active
+  revenue-facing restart artifact is now
+  `production_pilots/notebooklm_ymm4_episode_package_001/`, an internal
+  Episode Production Package for creating the user's own video posting
+  candidate from a NotebookLM-style transcript. It contains a fictional safe
+  sample transcript, CLI-usable speaker map, generated YMM4 CSV, cue packet,
+  diagram packet, manifest, episode review checklist, posting plan,
+  limitations, and next episode action. `commercial_pilot/...`, `OFFER.md`,
+  B2B price-table framing, and external customer delivery language were
+  removed from the active package. Validation ran through the existing CLI:
+  `validate` parsed 7 utterances, `build-csv` wrote 11 rows with no overflow
   candidates at 2 lines / 40 chars, and `build-cue-packet` /
-  `build-diagram-packet` wrote their markdown packets. This slice intentionally
-  did not perform public upload, OAuth, payment, rights/legal acceptance, YMM4
-  GUI final visual review, live RSS fetch, article scraping, media download,
-  common-foundation runner/status-producer work, or cross-repo edits. Next
-  revenue-facing action is one private delivery test using a real
-  customer-approved NotebookLM transcript, followed by manual YMM4 import
-  confirmation and one concrete revision pass before adding automation.
+  `build-diagram-packet` wrote their markdown packets from the new
+  `production_pilots` path. This slice intentionally did not perform public
+  upload, YouTube visibility changes, OAuth, credentials/API keys, payment,
+  rights/legal acceptance, YMM4 GUI final visual review, render proof, live RSS
+  fetch, article scraping, media download, common-foundation runner/status
+  producer work, or cross-repo edits. Next revenue-facing action is one real
+  user-approved NotebookLM transcript, generated into this episode package
+  shape, followed by manual YMM4 import confirmation.
 - **Newsroom live RSS operator authorization sheet completed (2026-07-01 JST)**:
   `newsroom-live-rss-operator-authorization-sheet-v1` creates a reusable
   human-facing authorization sheet template and machine-readable authorization

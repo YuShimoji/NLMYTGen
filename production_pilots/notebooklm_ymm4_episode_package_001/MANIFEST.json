@@ -1,0 +1,98 @@
+{
+  "package_id": "notebooklm_ymm4_episode_package_001",
+  "package_path": "production_pilots/notebooklm_ymm4_episode_package_001/",
+  "created_for": "Internal episode production package for video posting candidate creation",
+  "generated_at": "2026-07-02 JST",
+  "source_note": {
+    "sample_input": "sample_input/transcript_sample.txt",
+    "source_type": "fictional minimal NotebookLM-style transcript",
+    "contains_customer_data": false,
+    "contains_external_article_text": false,
+    "contains_rights_unclear_media": false,
+    "intended_use": "safe dry-run source before replacing with a user-approved real transcript"
+  },
+  "files": [
+    {
+      "path": "README_EPISODE_PACKAGE.md",
+      "kind": "manual",
+      "purpose": "repo-independent episode production package overview and rebuild commands"
+    },
+    {
+      "path": "sample_input/transcript_sample.txt",
+      "kind": "manual",
+      "purpose": "fictional representative transcript input"
+    },
+    {
+      "path": "speaker_map.example.json",
+      "kind": "manual",
+      "purpose": "CLI-usable NotebookLM-to-YMM4 speaker map example"
+    },
+    {
+      "path": "outputs/transcript_sample_ymm4.csv",
+      "kind": "generated",
+      "purpose": "YMM4 script-import CSV"
+    },
+    {
+      "path": "outputs/cue_packet.md",
+      "kind": "generated",
+      "purpose": "text-only production cue packet"
+    },
+    {
+      "path": "outputs/diagram_packet.md",
+      "kind": "generated",
+      "purpose": "text-only diagram brief packet"
+    },
+    {
+      "path": "EPISODE_REVIEW_CHECKLIST.md",
+      "kind": "manual",
+      "purpose": "YMM4 import and posting-candidate review checklist"
+    },
+    {
+      "path": "POSTING_PLAN.md",
+      "kind": "manual",
+      "purpose": "video posting hypothesis and next production framing"
+    },
+    {
+      "path": "LIMITATIONS.md",
+      "kind": "manual",
+      "purpose": "pre-posting limitations and non-claims"
+    },
+    {
+      "path": "NEXT_EPISODE_ACTION.md",
+      "kind": "manual",
+      "purpose": "single next action for the next episode"
+    },
+    {
+      "path": "MANIFEST.json",
+      "kind": "manual",
+      "purpose": "package file index and provenance"
+    }
+  ],
+  "commands_run": [
+    "uv run python -m src.cli.main validate production_pilots/notebooklm_ymm4_episode_package_001/sample_input/transcript_sample.txt",
+    "uv run python -m src.cli.main build-csv production_pilots/notebooklm_ymm4_episode_package_001/sample_input/transcript_sample.txt -o production_pilots/notebooklm_ymm4_episode_package_001/outputs/transcript_sample_ymm4.csv --speaker-map-file production_pilots/notebooklm_ymm4_episode_package_001/speaker_map.example.json --max-lines 2 --chars-per-line 40 --balance-lines --stats",
+    "uv run python -m src.cli.main build-cue-packet production_pilots/notebooklm_ymm4_episode_package_001/sample_input/transcript_sample.txt -o production_pilots/notebooklm_ymm4_episode_package_001/outputs/cue_packet.md --speaker-map-file production_pilots/notebooklm_ymm4_episode_package_001/speaker_map.example.json",
+    "uv run python -m src.cli.main build-diagram-packet production_pilots/notebooklm_ymm4_episode_package_001/sample_input/transcript_sample.txt -o production_pilots/notebooklm_ymm4_episode_package_001/outputs/diagram_packet.md --speaker-map-file production_pilots/notebooklm_ymm4_episode_package_001/speaker_map.example.json"
+  ],
+  "validation_summary": {
+    "input_validate": "passed; 7 utterances parsed; speakers Host1, Host2",
+    "csv_generation": "passed; 11 rows written; no overflow candidates at 2 lines and 40 chars per line",
+    "cue_packet_generation": "passed",
+    "diagram_packet_generation": "passed",
+    "manifest_file_check": "passed"
+  },
+  "not_performed": {
+    "public_upload": true,
+    "youtube_visibility_change": true,
+    "oauth": true,
+    "credentials_or_api_keys": true,
+    "payment": true,
+    "rights_legal_acceptance": true,
+    "ymm4_gui_final_visual_check": true,
+    "render_proof": true,
+    "live_rss_fetch": true,
+    "article_scraping": true,
+    "media_download": true,
+    "sales_or_service_offer": true
+  }
+}

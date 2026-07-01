@@ -57,7 +57,7 @@ Generate an S-6 cue memo only from the existing transcript.
   - Host2 -> まりさ
 - Role analysis:
   - Host1: role=host, utterances=4, avg_length=35.5, questions=0, short_responses=0, topic_intros=0
-  - Host2: role=guest, utterances=3, avg_length=36.0, questions=0, short_responses=0, topic_intros=0
+  - Host2: role=guest, utterances=3, avg_length=36.7, questions=0, short_responses=0, topic_intros=0
 - Suggested section seeds:
   - S1: 1-6 (opening) preview=今回は、NotebookLM音声概要をYMM4台本へ整える流れを確認します。
   - S2: 7-7 (topic-trigger) preview=最後に、人間がYMM4へ読み込み、字幕、話者、演出準備を確認します。
@@ -68,7 +68,7 @@ Generate an S-6 cue memo only from the existing transcript.
 3. [れいむ | src=Host1] 次に、字幕で読みやすい長さに整え、YMM4台本読込用CSVを生成します。
 4. [まりさ | src=Host2] そのあと、背景や補助素材の候補をまとめたキューパケットを作ります。
 5. [れいむ | src=Host1] 必要なら、図解前のパケットも出し、制作担当者が迷わない状態にします。
-6. [まりさ | src=Host2] このパッケージは自動投稿ではなく、手動納品の初期パイロットです。
+6. [まりさ | src=Host2] このパッケージは自動投稿ではなく、投稿候補制作の初期パイロットです。
 7. [れいむ | src=Host1] 最後に、人間がYMM4へ読み込み、字幕、話者、演出準備を確認します。
 
 ## Response Instruction
