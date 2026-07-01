@@ -1,7 +1,7 @@
 # Project Context — NLMYTGen
 
 ## PROJECT CONTEXT
-- Current newsroom slice (2026-07-01 JST):
+- Previous newsroom slice (2026-07-01 JST):
   `newsroom-rss-topic-fixture-route-hardening-v1` is complete. The offline
   RSS-like fixture v2 route now has deterministic field validation,
   placeholder classification, route boundary states, production blocker
@@ -10,6 +10,14 @@
   from live/production use because source URL, published timestamp, freshness,
   attribution, and rights remain explicit placeholders. The selected next axis
   is `newsroom-episode-capsule-route-hardening-v1`.
+- Current newsroom slice (2026-07-01 JST):
+  `newsroom-episode-capsule-route-hardening-v1` is complete. The five-beat
+  capsule now carries validated fixture boundaries at capsule and beat level:
+  rights/freshness/attribution status, production status, can-use flags,
+  production-claim denial, excluded-claim propagation, and a mandatory
+  source-boundary warning beat. The route remains diagnostic-only and reusable
+  offline, not live-boundary-ready, and not production-script-ready. The
+  selected next axis is `newsroom-source-boundary-adversarial-fixtures-v1`.
 - Current remote handoff (2026-06-30 JST):
   `newsroom-terminal-resume-remote-sync-handoff-v3` records the latest
   PLANNER007 restart context after `84f4406 docs: add offline rss fixture v2
@@ -33,13 +41,20 @@
 ---
 
 ## ACTIVE ARTIFACT
-- Current newsroom artifact: offline RSS-like topic fixture v2 plus a
+- Previous newsroom artifact: offline RSS-like topic fixture v2 plus a
   route-hardening validation layer. The hardening output validates all 13
   required fields, detects five explicit placeholder-capable fields with zero
   unmarked placeholders, classifies the route as diagnostic-only and reusable
   offline, and keeps live RSS planning plus production script generation
   closed until real source, freshness, attribution, reliability, and rights
   review replace the placeholders.
+- Current newsroom artifact: hardened offline RSS-like topic fixture v2
+  episode capsule route. The new hardened capsule/readback keeps the original
+  v2 capsule artifact unchanged, then adds capsule-level boundary summary and
+  beat-level propagation for source, rights, freshness, attribution,
+  production status, excluded claims, and readiness flags. Production and live
+  boundary readiness remain false while placeholders and source approval gaps
+  remain.
 - Previous newsroom artifact: offline RSS-like topic fixture v2 plus a
   diagnostic five-beat mini episode capsule. The v2 fixture explicitly carries
   required source, placeholder URL, placeholder published time, summary, key
@@ -49,16 +64,17 @@
   `newsroom-rss-topic-fixture-route-hardening-v1`.
 - Active Artifact: NLM transcript → YMM4 CSV → Writer IR → Template Registry → YMM4 Adapter → 動画制作ワークフロー効率化
 - Artifact Surface: CLI artifact → CSV / registry / patched ymmp → YMM4 読込・確認・レンダリング
-- 現在のスライス: PLANNER007 上では fixture route hardening が完了し、YMM4 visual gate は `closed_for_now` のまま。次の主摩擦は visual/card/animation ではなく、検証済み offline fixture から capsule generation rules へ境界と excluded claims をどう強制するか。
-- 成功状態: 現行 fixture route を diagnostic-only reusable offline fixture として検証し、live/production blockers を残したまま、次の capsule hardening axis を明確にすること。
+- 現在のスライス: PLANNER007 上では episode capsule route hardening が完了し、YMM4 visual gate は `closed_for_now` のまま。次の主摩擦は visual/card/animation ではなく、source-boundary の adversarial cases を validator と capsule route の両方へ通すこと。
+- 成功状態: 現行 capsule route が diagnostic-only reusable offline capsule として境界を保持し、live/production blockers を残したまま、次の adversarial fixture axis を明確にすること。
 
 ---
 
 ## CURRENT LANE
-- Current sync state: product work has advanced past terminal resume handoff
-  into `newsroom-rss-topic-fixture-route-hardening-v1`. The next bottleneck is
-  downstream capsule-rule hardening, not live RSS, YMM4 preview, render,
-  animation, cards, audio/TTS, or publication.
+- Current sync state: product work has advanced into
+  `newsroom-episode-capsule-route-hardening-v1`. The next bottleneck is
+  adversarial source-boundary fixtures for missing, invalid, and unmarked
+  placeholder cases across validator and capsule route, not live RSS fetch,
+  YMM4 preview, render, animation, cards, audio/TTS, or publication.
 - Previous sync state: local context is being mirrored to `origin/master` through
   terminal resume handoff v3. Product work should resume at
   `newsroom-rss-topic-fixture-route-hardening-v1`; handoff work itself must not
@@ -126,6 +142,34 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 - `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
+
+Latest newsroom episode capsule route hardening decision (2026-07-01 JST):
+`newsroom_episode_capsule_route_hardening_v1_2026_06_30` hardens the five-beat
+capsule route after fixture validation confirmed required fields and explicit
+placeholders. The tracked artifacts are
+`samples/_probe/newsroom_handoff/episode_capsule_route_hardening_v1.json`,
+`samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2_hardened_episode_capsule_v1.json`,
+and
+`docs/verification/NEWSROOM_EPISODE_CAPSULE_ROUTE_HARDENING_V1_2026-06-30.md`,
+with implementation/tests in
+`src/pipeline/newsroom_episode_capsule_route_hardening.py` /
+`tests/test_newsroom_episode_capsule_route_hardening.py`.
+
+The original v2 capsule artifact is unchanged; the new hardened capsule
+propagates fixture validation boundaries into capsule-level summary and each
+beat. Every beat carries excluded claims, rights/freshness/attribution status,
+diagnostic production status, can-use flags, not-accepted scope, and
+`production_claim_allowed=false`. The source-boundary warning beat explicitly
+mentions the offline fixture, placeholder source URL/timestamp, rights,
+freshness, and attribution not being production-approved, and excluded claims
+not being assertable. Readback confirms excluded claims are present, not used
+as positive claims, production blockers and placeholder counts are propagated,
+the source-warning beat is present, and both `production_script_ready` and
+`live_boundary_plan_ready` are false. No Agent-side YMM4 launch, render,
+`.ymmp` creation/modification/stage/commit, media/audio/TTS generation, live
+RSS/news fetch, card redesign, animation tuning, production/public readiness
+claim, or audience/order acceptance claim occurred. The selected next axis is
+`newsroom-source-boundary-adversarial-fixtures-v1`.
 
 Latest newsroom RSS topic fixture route hardening decision (2026-07-01 JST):
 `newsroom_rss_topic_fixture_route_hardening_v1_2026_06_30` validates the

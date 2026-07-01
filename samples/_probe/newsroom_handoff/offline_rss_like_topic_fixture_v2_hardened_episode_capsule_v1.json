@@ -1,0 +1,483 @@
+{
+  "artifact_id": "offline_rss_like_topic_fixture_v2_hardened_episode_capsule_v1_2026_06_30",
+  "capsule_id": "offline_rss_like_topic_fixture_v2_hardened_episode_capsule_v1_2026_06_30",
+  "schema_version": "offline_rss_like_topic_fixture_v2_hardened_episode_capsule.v1",
+  "review_status": "ready_for_supervisor_review",
+  "production_status": "diagnostic_only",
+  "diagnostic_only": true,
+  "render_gate": "L0_no_render",
+  "source_fixture_path": "samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2.json",
+  "source_fixture_validation_path": "samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2_validation_v1.json",
+  "source_capsule_path": "samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2_to_mini_episode_capsule_v1.json",
+  "live_fetch_used": false,
+  "beat_count": 5,
+  "capsule_boundary_summary": {
+    "fixture_validation_status": "pass_with_explicit_production_blockers",
+    "diagnostic_only": true,
+    "reusable_offline_fixture_candidate": true,
+    "live_boundary_ready_candidate": false,
+    "production_script_ready": false,
+    "production_blocker_count": 6,
+    "explicit_placeholder_count": 5,
+    "source_boundary_summary": "offline diagnostic fixture only; live RSS/news fetch and source truth approval remain closed",
+    "rights_boundary_summary": "rights_status=placeholder:unknown_offline_fixture_needs_review; rights and quote/media reuse are not production-approved",
+    "freshness_boundary_summary": "freshness_status=placeholder_not_evaluable_without_live_source; published time and freshness remain placeholder-bound",
+    "attribution_boundary_summary": "attribution_note is fixture-only and must be replaced before real source workflow",
+    "excluded_claims_summary": {
+      "excluded_claim_count": 3,
+      "excluded_claims_carried_to_capsule": true,
+      "excluded_claims_carried_to_every_beat": true,
+      "excluded_claims_absent": false
+    }
+  },
+  "capsule_readiness": {
+    "diagnostic_capsule_ready": true,
+    "reusable_offline_capsule_ready": true,
+    "live_boundary_plan_ready": false,
+    "production_script_ready": false,
+    "readiness_reason": "beat-level boundaries are propagated for diagnostic use, but source URL, timestamp, freshness, rights, attribution, and source reliability remain production blockers",
+    "production_blocker_count": 6
+  },
+  "beats": [
+    {
+      "order": 1,
+      "source_topic_id": "offline_rss_like_topic_fixture_v2_001",
+      "beat_id": "offline_rss_like_topic_v2_beat_01_hook",
+      "beat_function": "hook / issue framing",
+      "explanation_line": "Hook: a topic is only a starting point until its source boundary is clear.",
+      "source_fields_used": [
+        "title",
+        "summary",
+        "intended_episode_angle"
+      ],
+      "source_boundary_role": "uses title and summary while stating the fixture is offline; validation boundary remains attached",
+      "excluded_claims_applied": [
+        "Do not claim that the topic was fetched from a live RSS feed.",
+        "Do not claim that source facts, freshness, rights, or quotes are approved.",
+        "Do not claim production subtitle/card design, render quality, public readiness, or audience acceptance."
+      ],
+      "rights_status_applied": "placeholder:unknown_offline_fixture_needs_review",
+      "freshness_status_applied": "placeholder_not_evaluable_without_live_source",
+      "attribution_status_applied": "Attribution is a fixture label only and must be replaced before any real source workflow.",
+      "production_status_applied": "diagnostic_only",
+      "rights_boundary_role": "rights_status=placeholder:unknown_offline_fixture_needs_review; rights and quote/media reuse are not production-approved",
+      "freshness_boundary_role": "freshness_status=placeholder_not_evaluable_without_live_source; published time and freshness remain placeholder-bound",
+      "attribution_boundary_role": "attribution_note is fixture-only and must be replaced before real source workflow",
+      "can_be_used_for_diagnostic": true,
+      "can_be_used_for_live_boundary_plan": false,
+      "can_be_used_for_production_script": false,
+      "warning_required": false,
+      "production_claim_allowed": false,
+      "not_accepted_scope": {
+        "live_rss_or_news_fetch": false,
+        "production_script_quality": false,
+        "production_article_use": false,
+        "production_subtitle_design": false,
+        "production_card_design": false,
+        "production_animation_quality": false,
+        "card_redesign": false,
+        "visual_layout_tuning": false,
+        "animation_tuning": false,
+        "render_export_proof": false,
+        "audio_or_tts_output": false,
+        "public_upload_or_public_readiness": false,
+        "actual_order_or_audience_acceptance": false,
+        "source_truth_or_rights_approval": false,
+        "local_ymmp_materialization": false
+      },
+      "boundary_inputs_from_validation": {
+        "explicit_placeholder_count": 5,
+        "production_blocker_count": 6,
+        "live_boundary_ready_candidate": false,
+        "production_script_ready": false
+      }
+    },
+    {
+      "order": 2,
+      "source_topic_id": "offline_rss_like_topic_fixture_v2_001",
+      "beat_id": "offline_rss_like_topic_v2_beat_02_key_claim",
+      "beat_function": "key claim / explanation",
+      "explanation_line": "Key claim: source identity, freshness, rights, and excluded claims must be explicit first.",
+      "source_fields_used": [
+        "key_claim",
+        "excluded_claims",
+        "production_status"
+      ],
+      "source_boundary_role": "limits the claim to fixture-level source checks; validation boundary remains attached",
+      "excluded_claims_applied": [
+        "Do not claim that the topic was fetched from a live RSS feed.",
+        "Do not claim that source facts, freshness, rights, or quotes are approved.",
+        "Do not claim production subtitle/card design, render quality, public readiness, or audience acceptance."
+      ],
+      "rights_status_applied": "placeholder:unknown_offline_fixture_needs_review",
+      "freshness_status_applied": "placeholder_not_evaluable_without_live_source",
+      "attribution_status_applied": "Attribution is a fixture label only and must be replaced before any real source workflow.",
+      "production_status_applied": "diagnostic_only",
+      "rights_boundary_role": "rights_status=placeholder:unknown_offline_fixture_needs_review; rights and quote/media reuse are not production-approved",
+      "freshness_boundary_role": "freshness_status=placeholder_not_evaluable_without_live_source; published time and freshness remain placeholder-bound",
+      "attribution_boundary_role": "attribution_note is fixture-only and must be replaced before real source workflow",
+      "can_be_used_for_diagnostic": true,
+      "can_be_used_for_live_boundary_plan": false,
+      "can_be_used_for_production_script": false,
+      "warning_required": false,
+      "production_claim_allowed": false,
+      "not_accepted_scope": {
+        "live_rss_or_news_fetch": false,
+        "production_script_quality": false,
+        "production_article_use": false,
+        "production_subtitle_design": false,
+        "production_card_design": false,
+        "production_animation_quality": false,
+        "card_redesign": false,
+        "visual_layout_tuning": false,
+        "animation_tuning": false,
+        "render_export_proof": false,
+        "audio_or_tts_output": false,
+        "public_upload_or_public_readiness": false,
+        "actual_order_or_audience_acceptance": false,
+        "source_truth_or_rights_approval": false,
+        "local_ymmp_materialization": false
+      },
+      "boundary_inputs_from_validation": {
+        "explicit_placeholder_count": 5,
+        "production_blocker_count": 6,
+        "live_boundary_ready_candidate": false,
+        "production_script_ready": false
+      }
+    },
+    {
+      "order": 3,
+      "source_topic_id": "offline_rss_like_topic_fixture_v2_001",
+      "beat_id": "offline_rss_like_topic_v2_beat_03_source_boundary_warning",
+      "beat_function": "source-boundary warning",
+      "explanation_line": "Warning: this offline fixture still uses placeholder source URL and timestamp fields; rights, freshness, and attribution are not production-approved, and excluded claims must not be asserted.",
+      "source_fields_used": [
+        "uncertainty_or_boundary",
+        "source_url_or_placeholder",
+        "published_at_or_placeholder",
+        "rights_status"
+      ],
+      "source_boundary_role": "mandatory source-boundary warning: offline fixture, placeholder source fields, no production approval, and excluded-claim guard",
+      "excluded_claims_applied": [
+        "Do not claim that the topic was fetched from a live RSS feed.",
+        "Do not claim that source facts, freshness, rights, or quotes are approved.",
+        "Do not claim production subtitle/card design, render quality, public readiness, or audience acceptance."
+      ],
+      "rights_status_applied": "placeholder:unknown_offline_fixture_needs_review",
+      "freshness_status_applied": "placeholder_not_evaluable_without_live_source",
+      "attribution_status_applied": "Attribution is a fixture label only and must be replaced before any real source workflow.",
+      "production_status_applied": "diagnostic_only",
+      "rights_boundary_role": "rights_status=placeholder:unknown_offline_fixture_needs_review; rights and quote/media reuse are not production-approved",
+      "freshness_boundary_role": "freshness_status=placeholder_not_evaluable_without_live_source; published time and freshness remain placeholder-bound",
+      "attribution_boundary_role": "attribution_note is fixture-only and must be replaced before real source workflow",
+      "can_be_used_for_diagnostic": true,
+      "can_be_used_for_live_boundary_plan": false,
+      "can_be_used_for_production_script": false,
+      "warning_required": true,
+      "production_claim_allowed": false,
+      "not_accepted_scope": {
+        "live_rss_or_news_fetch": false,
+        "production_script_quality": false,
+        "production_article_use": false,
+        "production_subtitle_design": false,
+        "production_card_design": false,
+        "production_animation_quality": false,
+        "card_redesign": false,
+        "visual_layout_tuning": false,
+        "animation_tuning": false,
+        "render_export_proof": false,
+        "audio_or_tts_output": false,
+        "public_upload_or_public_readiness": false,
+        "actual_order_or_audience_acceptance": false,
+        "source_truth_or_rights_approval": false,
+        "local_ymmp_materialization": false
+      },
+      "boundary_inputs_from_validation": {
+        "explicit_placeholder_count": 5,
+        "production_blocker_count": 6,
+        "live_boundary_ready_candidate": false,
+        "production_script_ready": false
+      }
+    },
+    {
+      "order": 4,
+      "source_topic_id": "offline_rss_like_topic_fixture_v2_001",
+      "beat_id": "offline_rss_like_topic_v2_beat_04_implication",
+      "beat_function": "implication / why it matters",
+      "explanation_line": "Why it matters: a stronger fixture can test episode structure without overclaiming.",
+      "source_fields_used": [
+        "why_it_matters",
+        "editorial_risk",
+        "freshness_status"
+      ],
+      "source_boundary_role": "separates route confidence from source truth confidence; validation boundary remains attached",
+      "excluded_claims_applied": [
+        "Do not claim that the topic was fetched from a live RSS feed.",
+        "Do not claim that source facts, freshness, rights, or quotes are approved.",
+        "Do not claim production subtitle/card design, render quality, public readiness, or audience acceptance."
+      ],
+      "rights_status_applied": "placeholder:unknown_offline_fixture_needs_review",
+      "freshness_status_applied": "placeholder_not_evaluable_without_live_source",
+      "attribution_status_applied": "Attribution is a fixture label only and must be replaced before any real source workflow.",
+      "production_status_applied": "diagnostic_only",
+      "rights_boundary_role": "rights_status=placeholder:unknown_offline_fixture_needs_review; rights and quote/media reuse are not production-approved",
+      "freshness_boundary_role": "freshness_status=placeholder_not_evaluable_without_live_source; published time and freshness remain placeholder-bound",
+      "attribution_boundary_role": "attribution_note is fixture-only and must be replaced before real source workflow",
+      "can_be_used_for_diagnostic": true,
+      "can_be_used_for_live_boundary_plan": false,
+      "can_be_used_for_production_script": false,
+      "warning_required": false,
+      "production_claim_allowed": false,
+      "not_accepted_scope": {
+        "live_rss_or_news_fetch": false,
+        "production_script_quality": false,
+        "production_article_use": false,
+        "production_subtitle_design": false,
+        "production_card_design": false,
+        "production_animation_quality": false,
+        "card_redesign": false,
+        "visual_layout_tuning": false,
+        "animation_tuning": false,
+        "render_export_proof": false,
+        "audio_or_tts_output": false,
+        "public_upload_or_public_readiness": false,
+        "actual_order_or_audience_acceptance": false,
+        "source_truth_or_rights_approval": false,
+        "local_ymmp_materialization": false
+      },
+      "boundary_inputs_from_validation": {
+        "explicit_placeholder_count": 5,
+        "production_blocker_count": 6,
+        "live_boundary_ready_candidate": false,
+        "production_script_ready": false
+      }
+    },
+    {
+      "order": 5,
+      "source_topic_id": "offline_rss_like_topic_fixture_v2_001",
+      "beat_id": "offline_rss_like_topic_v2_beat_05_close",
+      "beat_function": "close / next action",
+      "explanation_line": "Next: validate the fixture schema before any live RSS plan.",
+      "source_fields_used": [
+        "production_status",
+        "materialization_notes",
+        "excluded_claims"
+      ],
+      "source_boundary_role": "keeps live RSS/news and materialization out of this slice; validation boundary remains attached",
+      "excluded_claims_applied": [
+        "Do not claim that the topic was fetched from a live RSS feed.",
+        "Do not claim that source facts, freshness, rights, or quotes are approved.",
+        "Do not claim production subtitle/card design, render quality, public readiness, or audience acceptance."
+      ],
+      "rights_status_applied": "placeholder:unknown_offline_fixture_needs_review",
+      "freshness_status_applied": "placeholder_not_evaluable_without_live_source",
+      "attribution_status_applied": "Attribution is a fixture label only and must be replaced before any real source workflow.",
+      "production_status_applied": "diagnostic_only",
+      "rights_boundary_role": "rights_status=placeholder:unknown_offline_fixture_needs_review; rights and quote/media reuse are not production-approved",
+      "freshness_boundary_role": "freshness_status=placeholder_not_evaluable_without_live_source; published time and freshness remain placeholder-bound",
+      "attribution_boundary_role": "attribution_note is fixture-only and must be replaced before real source workflow",
+      "can_be_used_for_diagnostic": true,
+      "can_be_used_for_live_boundary_plan": false,
+      "can_be_used_for_production_script": false,
+      "warning_required": false,
+      "production_claim_allowed": false,
+      "not_accepted_scope": {
+        "live_rss_or_news_fetch": false,
+        "production_script_quality": false,
+        "production_article_use": false,
+        "production_subtitle_design": false,
+        "production_card_design": false,
+        "production_animation_quality": false,
+        "card_redesign": false,
+        "visual_layout_tuning": false,
+        "animation_tuning": false,
+        "render_export_proof": false,
+        "audio_or_tts_output": false,
+        "public_upload_or_public_readiness": false,
+        "actual_order_or_audience_acceptance": false,
+        "source_truth_or_rights_approval": false,
+        "local_ymmp_materialization": false
+      },
+      "boundary_inputs_from_validation": {
+        "explicit_placeholder_count": 5,
+        "production_blocker_count": 6,
+        "live_boundary_ready_candidate": false,
+        "production_script_ready": false
+      }
+    }
+  ],
+  "beat_table": [
+    {
+      "beat_id": "offline_rss_like_topic_v2_beat_01_hook",
+      "beat_function": "hook / issue framing",
+      "explanation_line": "Hook: a topic is only a starting point until its source boundary is clear.",
+      "source_fields_used": [
+        "title",
+        "summary",
+        "intended_episode_angle"
+      ],
+      "excluded_claims_applied": [
+        "Do not claim that the topic was fetched from a live RSS feed.",
+        "Do not claim that source facts, freshness, rights, or quotes are approved.",
+        "Do not claim production subtitle/card design, render quality, public readiness, or audience acceptance."
+      ],
+      "source_boundary_role": "uses title and summary while stating the fixture is offline; validation boundary remains attached",
+      "rights_boundary_role": "rights_status=placeholder:unknown_offline_fixture_needs_review; rights and quote/media reuse are not production-approved",
+      "freshness_boundary_role": "freshness_status=placeholder_not_evaluable_without_live_source; published time and freshness remain placeholder-bound",
+      "attribution_boundary_role": "attribution_note is fixture-only and must be replaced before real source workflow",
+      "production_status_applied": "diagnostic_only",
+      "warning_required": false,
+      "production_claim_allowed": false
+    },
+    {
+      "beat_id": "offline_rss_like_topic_v2_beat_02_key_claim",
+      "beat_function": "key claim / explanation",
+      "explanation_line": "Key claim: source identity, freshness, rights, and excluded claims must be explicit first.",
+      "source_fields_used": [
+        "key_claim",
+        "excluded_claims",
+        "production_status"
+      ],
+      "excluded_claims_applied": [
+        "Do not claim that the topic was fetched from a live RSS feed.",
+        "Do not claim that source facts, freshness, rights, or quotes are approved.",
+        "Do not claim production subtitle/card design, render quality, public readiness, or audience acceptance."
+      ],
+      "source_boundary_role": "limits the claim to fixture-level source checks; validation boundary remains attached",
+      "rights_boundary_role": "rights_status=placeholder:unknown_offline_fixture_needs_review; rights and quote/media reuse are not production-approved",
+      "freshness_boundary_role": "freshness_status=placeholder_not_evaluable_without_live_source; published time and freshness remain placeholder-bound",
+      "attribution_boundary_role": "attribution_note is fixture-only and must be replaced before real source workflow",
+      "production_status_applied": "diagnostic_only",
+      "warning_required": false,
+      "production_claim_allowed": false
+    },
+    {
+      "beat_id": "offline_rss_like_topic_v2_beat_03_source_boundary_warning",
+      "beat_function": "source-boundary warning",
+      "explanation_line": "Warning: this offline fixture still uses placeholder source URL and timestamp fields; rights, freshness, and attribution are not production-approved, and excluded claims must not be asserted.",
+      "source_fields_used": [
+        "uncertainty_or_boundary",
+        "source_url_or_placeholder",
+        "published_at_or_placeholder",
+        "rights_status"
+      ],
+      "excluded_claims_applied": [
+        "Do not claim that the topic was fetched from a live RSS feed.",
+        "Do not claim that source facts, freshness, rights, or quotes are approved.",
+        "Do not claim production subtitle/card design, render quality, public readiness, or audience acceptance."
+      ],
+      "source_boundary_role": "mandatory source-boundary warning: offline fixture, placeholder source fields, no production approval, and excluded-claim guard",
+      "rights_boundary_role": "rights_status=placeholder:unknown_offline_fixture_needs_review; rights and quote/media reuse are not production-approved",
+      "freshness_boundary_role": "freshness_status=placeholder_not_evaluable_without_live_source; published time and freshness remain placeholder-bound",
+      "attribution_boundary_role": "attribution_note is fixture-only and must be replaced before real source workflow",
+      "production_status_applied": "diagnostic_only",
+      "warning_required": true,
+      "production_claim_allowed": false
+    },
+    {
+      "beat_id": "offline_rss_like_topic_v2_beat_04_implication",
+      "beat_function": "implication / why it matters",
+      "explanation_line": "Why it matters: a stronger fixture can test episode structure without overclaiming.",
+      "source_fields_used": [
+        "why_it_matters",
+        "editorial_risk",
+        "freshness_status"
+      ],
+      "excluded_claims_applied": [
+        "Do not claim that the topic was fetched from a live RSS feed.",
+        "Do not claim that source facts, freshness, rights, or quotes are approved.",
+        "Do not claim production subtitle/card design, render quality, public readiness, or audience acceptance."
+      ],
+      "source_boundary_role": "separates route confidence from source truth confidence; validation boundary remains attached",
+      "rights_boundary_role": "rights_status=placeholder:unknown_offline_fixture_needs_review; rights and quote/media reuse are not production-approved",
+      "freshness_boundary_role": "freshness_status=placeholder_not_evaluable_without_live_source; published time and freshness remain placeholder-bound",
+      "attribution_boundary_role": "attribution_note is fixture-only and must be replaced before real source workflow",
+      "production_status_applied": "diagnostic_only",
+      "warning_required": false,
+      "production_claim_allowed": false
+    },
+    {
+      "beat_id": "offline_rss_like_topic_v2_beat_05_close",
+      "beat_function": "close / next action",
+      "explanation_line": "Next: validate the fixture schema before any live RSS plan.",
+      "source_fields_used": [
+        "production_status",
+        "materialization_notes",
+        "excluded_claims"
+      ],
+      "excluded_claims_applied": [
+        "Do not claim that the topic was fetched from a live RSS feed.",
+        "Do not claim that source facts, freshness, rights, or quotes are approved.",
+        "Do not claim production subtitle/card design, render quality, public readiness, or audience acceptance."
+      ],
+      "source_boundary_role": "keeps live RSS/news and materialization out of this slice; validation boundary remains attached",
+      "rights_boundary_role": "rights_status=placeholder:unknown_offline_fixture_needs_review; rights and quote/media reuse are not production-approved",
+      "freshness_boundary_role": "freshness_status=placeholder_not_evaluable_without_live_source; published time and freshness remain placeholder-bound",
+      "attribution_boundary_role": "attribution_note is fixture-only and must be replaced before real source workflow",
+      "production_status_applied": "diagnostic_only",
+      "warning_required": false,
+      "production_claim_allowed": false
+    }
+  ],
+  "blocked_production_reasons": [
+    "placeholder source URL must be replaced by a verified source URL before live or production use",
+    "placeholder published timestamp must be replaced before freshness-dependent use",
+    "rights_status remains unknown placeholder; rights and quote/media reuse are not approved",
+    "freshness_status remains placeholder/not evaluable without a live source",
+    "attribution_note is fixture-only and must be replaced before a real source workflow",
+    "source_reliability_note does not score or approve a real publisher/source"
+  ],
+  "warnings": [
+    "production blockers remain attached to every beat; production script readiness stays false",
+    "diagnostic_only production status is propagated to the capsule"
+  ],
+  "validation_readback": {
+    "excluded_claims_absent": false,
+    "excluded_claims_used_as_positive_claims": false,
+    "production_blockers_propagated": true,
+    "placeholder_fields_propagated": true,
+    "source_warning_beat_present": true,
+    "source_warning_mentions_fixture_offline_status": true,
+    "source_warning_mentions_placeholder_source_fields": true,
+    "source_warning_mentions_rights_freshness_attribution": true,
+    "source_warning_mentions_excluded_claims": true,
+    "production_script_ready": false,
+    "live_boundary_plan_ready": false
+  },
+  "not_accepted_scope": {
+    "live_rss_or_news_fetch": false,
+    "production_script_quality": false,
+    "production_article_use": false,
+    "production_subtitle_design": false,
+    "production_card_design": false,
+    "production_animation_quality": false,
+    "card_redesign": false,
+    "visual_layout_tuning": false,
+    "animation_tuning": false,
+    "render_export_proof": false,
+    "audio_or_tts_output": false,
+    "public_upload_or_public_readiness": false,
+    "actual_order_or_audience_acceptance": false,
+    "source_truth_or_rights_approval": false,
+    "local_ymmp_materialization": false
+  },
+  "boundaries": {
+    "network_fetch_performed": false,
+    "live_RSS_news_fetch_performed": false,
+    "YMM4_launched_by_agent": false,
+    "render_performed_by_agent": false,
+    "audio_tts_generated": false,
+    "real_media_imported": false,
+    "external_fetch_performed": false,
+    "card_assets_modified": false,
+    "card_redesign_performed": false,
+    "production_subtitle_or_card_design_created": false,
+    "animation_tuned": false,
+    "animation_only_probe_created": false,
+    "local_ignored_ymmp_created_in_this_slice": false,
+    "local_ignored_ymmp_modified_in_this_slice": false,
+    "ymmp_or_media_staged_or_committed": false,
+    "production_public_readiness_claimed": false,
+    "actual_order_or_audience_acceptance_claimed": false
+  }
+}

@@ -1,5 +1,33 @@
 # Runtime State — NLMYTGen
 
+- **Newsroom episode capsule route hardening completed (2026-07-01 JST)**:
+  `newsroom-episode-capsule-route-hardening-v1` propagates the validated
+  fixture boundary into the five-beat capsule route. New tracked artifacts are
+  `samples/_probe/newsroom_handoff/episode_capsule_route_hardening_v1.json`,
+  `samples/_probe/newsroom_handoff/offline_rss_like_topic_fixture_v2_hardened_episode_capsule_v1.json`,
+  `docs/verification/NEWSROOM_EPISODE_CAPSULE_ROUTE_HARDENING_V1_2026-06-30.md`,
+  `src/pipeline/newsroom_episode_capsule_route_hardening.py`, and
+  `tests/test_newsroom_episode_capsule_route_hardening.py`. The original
+  `offline_rss_like_topic_fixture_v2_to_mini_episode_capsule_v1.json` remains
+  unchanged; this slice writes a new hardened capsule/readback artifact. The
+  hardened capsule carries fixture validation status, diagnostic-only and
+  reusable-offline readiness, `production_blocker_count=6`,
+  `explicit_placeholder_count=5`, source/rights/freshness/attribution
+  summaries, and excluded-claims summary at capsule level. Each beat now
+  carries `rights_status_applied`, `freshness_status_applied`,
+  `attribution_status_applied`, `production_status_applied`,
+  can-use flags, `production_claim_allowed=false`, and not-accepted scope. The
+  source-boundary warning beat explicitly names the offline fixture,
+  placeholder source URL/timestamp, rights/freshness/attribution not being
+  production-approved, and excluded claims not being assertable. Readback
+  confirms excluded claims are present, not used as positive claims, blockers
+  and placeholder counts are propagated, source-warning beat is present, and
+  both `production_script_ready` and `live_boundary_plan_ready` are false. The
+  selected next axis is `newsroom-source-boundary-adversarial-fixtures-v1`. No
+  Agent-side YMM4 launch, render, `.ymmp` creation/modification/stage/commit,
+  media/audio/TTS generation, live RSS/news fetch, card redesign, animation
+  tuning, production/public readiness claim, or audience/order acceptance claim
+  occurred.
 - **Newsroom RSS topic fixture route hardening completed (2026-07-01 JST)**:
   `newsroom-rss-topic-fixture-route-hardening-v1` adds a deterministic
   validation and boundary-classification layer for the offline RSS-like fixture
