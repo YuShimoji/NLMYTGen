@@ -1,6 +1,29 @@
 # Project Context — NLMYTGen
 
 ## PROJECT CONTEXT
+- Current handoff (2026-07-02 JST):
+  NLMYTGen is synced on `master` for the episode-production restart lane. The
+  active artifact is
+  `production_pilots/notebooklm_ymm4_episode_package_001/`, an internal package
+  for preparing the user's own video posting candidate from a NotebookLM-style
+  transcript. The package is intake-ready, not real-episode generated:
+  `real_input/episode_001_transcript.txt` is absent, and current generated
+  outputs remain dry-run sample outputs only. The package now includes
+  `real_input/README_REAL_INPUT.md`, `real_input/.gitkeep`, and
+  `YMM4_IMPORT_RUNBOOK.md`; manifest file checks and the sample rebuild route
+  (`validate`, `build-csv`, `build-cue-packet`, `build-diagram-packet`) passed
+  before this handoff. Another terminal should fetch/pull `master`, confirm
+  `HEAD...origin/master = 0 0`, then read `AGENTS.md`,
+  `docs/REPO_LOCAL_RULES.md`, `docs/runtime-state.md`, the package README,
+  `MANIFEST.json`, `real_input/README_REAL_INPUT.md`, and
+  `YMM4_IMPORT_RUNBOOK.md`. Next action: add a user-approved real NotebookLM
+  transcript at `real_input/episode_001_transcript.txt`, update the speaker
+  map if needed, regenerate `outputs/episode_001_ymm4.csv`,
+  `outputs/episode_001_cue_packet.md`, and
+  `outputs/episode_001_diagram_packet.md`, then have a human manually check
+  YMM4 import. Do not resume live RSS, scraping, OAuth, payment, upload,
+  render, rights/legal acceptance, cross-repo edits, or common-foundation /
+  status-producer work from this handoff.
 - Current newsroom slice (2026-07-01 JST):
   `newsroom-live-rss-operator-authorization-sheet-v1` is complete. The route
   remains authorization-template-only: no live RSS/news fetch, no network

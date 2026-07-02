@@ -1,5 +1,26 @@
 # Runtime State — NLMYTGen
 
+- **Terminal resume handoff synced for episode package (2026-07-02 JST)**:
+  Resume from `master` after pulling remote and confirming
+  `HEAD...origin/master = 0 0` plus clean worktree. The active artifact is
+  `production_pilots/notebooklm_ymm4_episode_package_001/`. It is an internal
+  Episode Production Package for the user's own video posting candidate, not a
+  sales/service package. Current state is intake-ready but not real-episode
+  generated: `real_input/episode_001_transcript.txt` is still absent, so the
+  existing CSV/cue/diagram outputs are dry-run sample outputs only. First read
+  targets for another terminal are `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`,
+  this entry, `production_pilots/notebooklm_ymm4_episode_package_001/README_EPISODE_PACKAGE.md`,
+  `production_pilots/notebooklm_ymm4_episode_package_001/MANIFEST.json`,
+  `production_pilots/notebooklm_ymm4_episode_package_001/real_input/README_REAL_INPUT.md`,
+  and `production_pilots/notebooklm_ymm4_episode_package_001/YMM4_IMPORT_RUNBOOK.md`.
+  Next concrete move is to place a user-approved real NotebookLM transcript at
+  the real-input path, confirm/update `speaker_map.example.json`, then run
+  `validate`, `build-csv`, `build-cue-packet`, and `build-diagram-packet` to
+  create `outputs/episode_001_*.{csv,md}` before manual YMM4 import. Still
+  forbidden: YMM4 GUI launch by the agent, render, YouTube upload/visibility
+  change, OAuth/API keys, payment, rights/legal acceptance, live RSS,
+  scraping, media download, cross-repo edits, and common-foundation/status
+  producer expansion.
 - **Episode production package corrected for video-posting monetization (2026-07-02 JST)**:
   Follow-up intake state: no real user-approved NotebookLM transcript is
   present in the package yet. `real_input/README_REAL_INPUT.md`,
