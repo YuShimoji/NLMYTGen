@@ -19,6 +19,7 @@ Usage:
     python -m src.cli.main emit-packaging-brief-template [-o path] [--format markdown|json]
     python -m src.cli.main init-episode-run --episode-id ID [--root DIR] [--force] [--format text|json]
     python -m src.cli.main episode-run-handoff --episode-id ID [--root DIR] [--format text|json]
+    python -m src.cli.main build-content-spine --source topics.json --output production_pilots/pkg [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-session-manifest --video-id ID [artifact paths...] [--format markdown|json] [-o path]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
@@ -2289,6 +2290,33 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    # build-content-spine (local/offline topic -> episode planning package)
+    p_content_spine = subparsers.add_parser(
+        "build-content-spine",
+        help="Build a local/offline content-planning dashboard spine package",
+    )
+    p_content_spine.add_argument(
+        "--source",
+        required=True,
+        help="Offline RSS-like topic candidate source manifest JSON",
+    )
+    p_content_spine.add_argument(
+        "--output",
+        required=True,
+        help="Output package directory",
+    )
+    p_content_spine.add_argument(
+        "--artifact-id",
+        default="yukkuri_newsroom_content_spine_001",
+        help="Package artifact id",
+    )
+    p_content_spine.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # build-session-manifest (production handoff)
     p_session_manifest = subparsers.add_parser(
         "build-session-manifest",
@@ -2425,6 +2453,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_init_episode_run(args)
         elif args.command == "episode-run-handoff":
             return _cmd_episode_run_handoff(args)
+        elif args.command == "build-content-spine":
+            return _cmd_build_content_spine(args)
         elif args.command == "build-session-manifest":
             return _cmd_build_session_manifest(args)
         elif args.command == "diagnose-script":
@@ -4157,6 +4187,26 @@ def _cmd_episode_run_handoff(args: argparse.Namespace) -> int:
         root=args.root,
     )
     sys.stdout.write(emit_episode_run_handoff_text(result, getattr(args, "format", "text")))
+    return 0
+
+
+def _cmd_build_content_spine(args: argparse.Namespace) -> int:
+    """Build a local/offline content-planning dashboard spine package."""
+    from src.pipeline.content_planning_spine import build_content_spine_package
+
+    readback = build_content_spine_package(
+        source_path=args.source,
+        output_dir=args.output,
+        artifact_id=args.artifact_id,
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {args.output}")
+        print(f"status: {readback.get('status')}")
+        print(f"selected_candidate_id: {readback.get('selected_candidate_id')}")
+        print(f"next_action: {readback.get('next_action')}")
     return 0
 
 

@@ -1,0 +1,28 @@
+{
+  "schema_version": "content_spine_readback.v1",
+  "status": "passed",
+  "package_dir": "production_pilots\\yukkuri_newsroom_content_spine_001",
+  "checked_files": {
+    "MANIFEST.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\MANIFEST.json",
+    "topic_candidates.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\topic_candidates.json",
+    "channel_strategy_proposals.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\channel_strategy_proposals.md",
+    "episode_candidate_001.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\episode_candidate_001.md",
+    "thumbnail_brief_001.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_brief_001.md",
+    "dashboard_status.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_status.json",
+    "dashboard_preview.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_preview.md",
+    "review_checklist.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\review_checklist.md",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\limitations.md",
+    "content_spine_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\content_spine_readback.json"
+  },
+  "checks": {
+    "all_required_files_present": true,
+    "manifest_json_loads": true,
+    "topic_candidates_json_loads": true,
+    "dashboard_status_json_loads": true,
+    "local_reviewable_only": true,
+    "public_actions_blocked": true
+  },
+  "failed_checks": [],
+  "selected_candidate_id": "sports_pitch_sequence_p05",
+  "next_action": "Open dashboard_preview.md, review episode_candidate_001.md and thumbnail_brief_001.md, then choose revise_once, accept_for_csv_ir, or hold."
+}

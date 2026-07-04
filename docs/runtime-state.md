@@ -1,5 +1,20 @@
 # Runtime State — NLMYTGen
 
+- **Content-planning dashboard spine v1 generated (2026-07-05)**:
+  `build-content-spine` now creates a local/offline review package from the
+  tracked RSS-like fixture
+  `samples/_probe/content_spine/rss_like_topic_candidates_sample.json`.
+  The first package is
+  `production_pilots/yukkuri_newsroom_content_spine_001/` and links ranked
+  topic candidates, selected sports/news yukkuri episode capsule, thumbnail
+  brief, dashboard/readback JSON, preview Markdown, checklist, and limitations.
+  The generated readback passed with selected candidate
+  `sports_pitch_sequence_p05`. Boundaries remain explicit: no live fetch,
+  scraping, media download, OAuth/API keys, YouTube upload, rights/legal/public
+  acceptance, YMM4 GUI launch/render, or thumbnail image generation. Next safe
+  action is human review of `dashboard_preview.md`,
+  `episode_candidate_001.md`, and `thumbnail_brief_001.md`, then choose
+  `accept_for_csv_ir`, `revise_once`, `reject`, or `hold`.
 - **Yukkuri chabangeki trace audit preserved for restart (2026-06-29)**:
   `docs/verification/YUKKURI-CHABANGEKI-TRACE-AUDIT-2026-06-29.md`
   records the repo evidence for the user's question about whether

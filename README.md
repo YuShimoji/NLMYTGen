@@ -117,6 +117,9 @@ python -m src.cli.main inspect input.txt --speaker-map Host1=れいむ,Host2=ま
 python -m src.cli.main generate-map input.txt > speakers.txt
 # speakers.txt を編集して --speaker-map-file で使用
 
+# ローカル/offline topic 候補から企画dashboard packageを生成
+python -m src.cli.main build-content-spine --source samples/_probe/content_spine/rss_like_topic_candidates_sample.json --output production_pilots/yukkuri_newsroom_content_spine_001
+
 # B-15 Phase 1: 外部 LLM / Automation に渡す cue packet を生成
 python -m src.cli.main build-cue-packet input.txt -o cue_packet.md
 

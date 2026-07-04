@@ -1,0 +1,148 @@
+{
+  "schema_version": "content_spine_source_manifest.v1",
+  "source_manifest_id": "rss_like_topic_candidates_sample_001",
+  "source_type": "offline_synthetic_fixture",
+  "fixture_note": "Local-only RSS-like topic candidates for content-planning-dashboard-spine v1. No live fetch, scraping, media download, or public-source claim.",
+  "candidates": [
+    {
+      "candidate_id": "sports_pitch_sequence_p05",
+      "title": "Why a 155 km/h fastball followed by a 140 km/h slider changes the at-bat",
+      "candidate_score": 88,
+      "score_rationale": "Uses an existing fact-backed baseball data capsule and can bridge to ScriptBeatIR, visual scene planning, and YMM4 readiness without live media.",
+      "channel_angle": "sports news explainer: one pitch sequence becomes a short tactical story",
+      "source_name": "Synthetic Baseball Feed",
+      "source_url_or_placeholder": "offline://samples/_probe/baseball/pipeline/baseball_data_capsule_p05.json",
+      "published_at_or_placeholder": "2026-05-26T00:00:00Z",
+      "freshness_status": "offline_fixture_not_live",
+      "rights_status": "sample_only_no_publication",
+      "attribution_note": "Derived from repo-local synthetic baseball fixture, not an official league feed or player media source.",
+      "excluded_claims": [
+        "No claim about a real player, team, game, or broadcast footage.",
+        "No scouting conclusion beyond the sample pitch-sequence facts.",
+        "No publication readiness or rights clearance."
+      ],
+      "production_status": "local_planning_only",
+      "explainer_role": "まりさ",
+      "listener_role": "れいむ",
+      "hook": "速球のあとに球速を落とすと、打者の見え方はどう変わるのか。",
+      "why_it_matters": "A concrete pitch-change example gives viewers a fast, visual explanation without relying on licensed footage.",
+      "beat_outline": [
+        "Establish inning, count, score, and empty bases.",
+        "Compare the previous 155 km/h four-seam fastball with the current 140 km/h slider.",
+        "Explain the 15 km/h drop as the main tactical contrast.",
+        "Show the low-outer strike result as the viewer watch point.",
+        "Hand off to CSV/Writer IR only after source and claim review."
+      ],
+      "recommended_tone": "fast tactical yukkuri explainer with light reaction beats",
+      "glossary_terms": [
+        "four-seam fastball",
+        "slider",
+        "velocity delta",
+        "low outer zone",
+        "B2-S2 count"
+      ],
+      "likely_audience": "baseball viewers who like quick tactical breakdowns",
+      "channel_fit": "short sports-news yukkuri explainer, under 3 minutes",
+      "title_hook": "155 -> 140 km/h",
+      "short_text_candidates": [
+        "15km/hの罠",
+        "速球のあとが怖い",
+        "外低めスライダー"
+      ],
+      "visual_motif": "Original scoreboard strip plus two pitch cards connected by a speed-drop arrow.",
+      "forbidden_avoid_claims": [
+        "Do not imply this is real broadcast analysis.",
+        "Do not use official logos, player photos, or broadcast stills.",
+        "Do not call the pitch sequence a proven strategy outside the sample."
+      ],
+      "source_rights_caution": "Use only original data-card graphics unless a real-source rights record is added later.",
+      "designer_note": "Keep the thumbnail numeric and graphic-first: speed drop, pitch-type change, and low-outer target."
+    },
+    {
+      "candidate_id": "workplace_algorithm_monitoring_sample",
+      "title": "When workplace algorithms optimize the route but move risk onto the worker",
+      "candidate_score": 74,
+      "score_rationale": "Strong yukkuri explainer hook, but needs real source material and claim verification before production.",
+      "channel_angle": "labor-tech news explainer: the invisible cost behind optimization dashboards",
+      "source_name": "Synthetic Labor Tech Topic Feed",
+      "source_url_or_placeholder": "offline://synthetic/labor-tech/algorithm-monitoring",
+      "published_at_or_placeholder": "placeholder_date_required",
+      "freshness_status": "offline_fixture_not_live",
+      "rights_status": "requires_real_source_before_public_use",
+      "attribution_note": "Synthetic candidate only. A real source packet must be supplied before CSV/IR work.",
+      "excluded_claims": [
+        "No company-specific accusation without a sourced packet.",
+        "No legal conclusion about employment classification.",
+        "No public-ready claim."
+      ],
+      "production_status": "planning_candidate_needs_sources",
+      "explainer_role": "まりさ",
+      "listener_role": "れいむ",
+      "hook": "便利な最適化の裏側で、誰がリスクを引き受けているのか。",
+      "why_it_matters": "The topic connects data dashboards to everyday work pressure, which fits explanatory yukkuri pacing.",
+      "beat_outline": [
+        "Define the optimization promise.",
+        "Show the worker-side risk transfer question.",
+        "Separate measured fact from interpretation.",
+        "List what a real source packet must prove."
+      ],
+      "recommended_tone": "calm investigative yukkuri explainer",
+      "glossary_terms": ["algorithmic management", "route optimization", "risk transfer"],
+      "likely_audience": "technology and labor-news viewers",
+      "channel_fit": "news commentary explainer with evidence cards",
+      "title_hook": "最適化の代償",
+      "short_text_candidates": ["AI監視の裏側", "誰がリスクを負う？", "便利さの請求書"],
+      "visual_motif": "Split dashboard/worker silhouette using original abstract panels.",
+      "forbidden_avoid_claims": [
+        "Do not name real companies without sources.",
+        "Do not imply legal wrongdoing.",
+        "Do not use scraped worker images."
+      ],
+      "source_rights_caution": "Needs a real source ledger before production use.",
+      "designer_note": "Use abstract UI cards and caution labels, not documentary footage."
+    },
+    {
+      "candidate_id": "channel_strategy_dashboard_sample",
+      "title": "Three ways to turn source notes into repeatable yukkuri episode proposals",
+      "candidate_score": 69,
+      "score_rationale": "Useful meta episode for channel strategy, but less externally valuable than a concrete sports/news candidate.",
+      "channel_angle": "channel operations explainer: show the planning system itself as a repeatable workflow",
+      "source_name": "Synthetic Channel Strategy Feed",
+      "source_url_or_placeholder": "offline://synthetic/channel-strategy/content-pipeline",
+      "published_at_or_placeholder": "placeholder_date_required",
+      "freshness_status": "offline_fixture_not_live",
+      "rights_status": "sample_only_no_publication",
+      "attribution_note": "Synthetic planning prompt; no external source claim.",
+      "excluded_claims": [
+        "No claim that the dashboard is a production renderer.",
+        "No claim that topic scoring is market validated.",
+        "No public-ready channel recommendation."
+      ],
+      "production_status": "local_planning_only",
+      "explainer_role": "まりさ",
+      "listener_role": "れいむ",
+      "hook": "ネタ選びを感覚だけにせず、動画化しやすさで並べ替える。",
+      "why_it_matters": "A meta workflow can make future topic intake faster, but it is secondary to an external-facing episode.",
+      "beat_outline": [
+        "Show topic intake.",
+        "Rank candidates by evidence and channel fit.",
+        "Create episode and thumbnail briefs.",
+        "Stop before public or rights gates."
+      ],
+      "recommended_tone": "practical channel-operations yukkuri explainer",
+      "glossary_terms": ["candidate score", "episode capsule", "thumbnail promise"],
+      "likely_audience": "creators designing repeatable explainers",
+      "channel_fit": "behind-the-scenes planning short",
+      "title_hook": "ネタ選びを自動化する",
+      "short_text_candidates": ["企画が一枚に", "動画化できるネタ", "候補を並べ替える"],
+      "visual_motif": "Topic cards flowing into one highlighted episode package.",
+      "forbidden_avoid_claims": [
+        "Do not claim automated publication.",
+        "Do not imply final market validation.",
+        "Do not show fake external metrics as real."
+      ],
+      "source_rights_caution": "Use only self-authored diagrams and labels.",
+      "designer_note": "Make it dashboard-like, not a marketing hero."
+    }
+  ]
+}
