@@ -1,5 +1,20 @@
 # Runtime State — NLMYTGen
 
+- **Content spine to Writer IR / YMM4 CSV bridge v1 generated (2026-07-05)**:
+  `build-content-ir-bridge` now converts the local package
+  `production_pilots/yukkuri_newsroom_content_spine_001/` into
+  `production_pilots/yukkuri_newsroom_content_spine_001/ir_bridge/`.
+  The bridge preserves the selected candidate's source boundary, yukkuri
+  roles, beat outline, thumbnail motif, and blocked public actions, then emits
+  `episode_bridge.json`, `writer_ir_candidate.json`,
+  `cue_packet_candidate.{json,md}`, `draft_yymm4.csv`,
+  `source_to_ir_mapping.md`, `ymm4_csv_readiness.md`, and
+  `validation_readback.json`. Readback passed with 10 draft CSV rows. This is
+  still a draft/offline bridge, not a NotebookLM transcript, YMM4 import proof,
+  production `.ymmp`, render, rights/legal/public acceptance, or YouTube
+  publication. Next safe action is to review `draft_yymm4.csv` and
+  `writer_ir_candidate.json`; if accepted, replace the draft lines with a real
+  transcript before `validate-ir` / `apply-production` work.
 - **Content-planning dashboard spine v1 generated (2026-07-05)**:
   `build-content-spine` now creates a local/offline review package from the
   tracked RSS-like fixture

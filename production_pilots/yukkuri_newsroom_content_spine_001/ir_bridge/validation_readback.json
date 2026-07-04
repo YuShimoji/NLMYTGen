@@ -1,0 +1,32 @@
+{
+  "schema_version": "content_ir_bridge_readback.v1",
+  "status": "passed",
+  "bridge_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge",
+  "checked_files": {
+    "bridge_manifest.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\bridge_manifest.json",
+    "episode_bridge.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\episode_bridge.json",
+    "writer_ir_candidate.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\writer_ir_candidate.json",
+    "cue_packet_candidate.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\cue_packet_candidate.json",
+    "cue_packet_candidate.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\cue_packet_candidate.md",
+    "draft_yymm4.csv": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\draft_yymm4.csv",
+    "ymm4_csv_readiness.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\ymm4_csv_readiness.md",
+    "source_to_ir_mapping.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\source_to_ir_mapping.md",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\limitations.md",
+    "validation_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\validation_readback.json"
+  },
+  "checks": {
+    "all_required_files_present": true,
+    "bridge_manifest_json_loads": true,
+    "episode_bridge_json_loads": true,
+    "writer_ir_candidate_json_loads": true,
+    "cue_packet_candidate_json_loads": true,
+    "draft_csv_has_rows": true,
+    "source_boundary_preserved": true,
+    "blocked_public_actions_preserved": true,
+    "not_production_ready": true
+  },
+  "failed_checks": [],
+  "selected_candidate_id": "sports_pitch_sequence_p05",
+  "draft_csv_rows": 10,
+  "next_action": "Review draft_yymm4.csv and writer_ir_candidate.json; if accepted, replace draft lines with a real transcript before validate-ir/apply-production work."
+}

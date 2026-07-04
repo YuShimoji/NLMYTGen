@@ -1,0 +1,41 @@
+{
+  "schema_version": "content_ir_bridge_manifest.v1",
+  "artifact_id": "content_spine_ir_bridge_001",
+  "artifact_kind": "content-spine-to-writer-ir-csv-bridge",
+  "status": "generated",
+  "source_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_001",
+  "bridge_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge",
+  "selected_candidate_id": "sports_pitch_sequence_p05",
+  "files": {
+    "bridge_manifest.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\bridge_manifest.json",
+    "episode_bridge.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\episode_bridge.json",
+    "writer_ir_candidate.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\writer_ir_candidate.json",
+    "cue_packet_candidate.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\cue_packet_candidate.json",
+    "cue_packet_candidate.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\cue_packet_candidate.md",
+    "draft_yymm4.csv": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\draft_yymm4.csv",
+    "ymm4_csv_readiness.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\ymm4_csv_readiness.md",
+    "source_to_ir_mapping.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\source_to_ir_mapping.md",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\limitations.md",
+    "validation_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ir_bridge\\validation_readback.json"
+  },
+  "readiness": {
+    "writer_ir_candidate_status": "draft_candidate_generated",
+    "cue_packet_status": "draft_candidate_generated",
+    "ymm4_csv_status": "draft_preview_generated_not_production",
+    "row_range_status": "not_available_until_real_transcript",
+    "audio_timing_status": "not_available_until_yymm4_import",
+    "maps_status": "not_selected",
+    "production_status": "blocked_until_transcript_timing_and_human_review"
+  },
+  "boundaries": {
+    "local_offline_review_only": true,
+    "draft_csv_only": true,
+    "no_live_fetch": true,
+    "no_media_download": true,
+    "no_youtube_publication": true,
+    "no_oauth_or_paid_api": true,
+    "no_rights_or_legal_acceptance": true,
+    "no_ymm4_gui_launch_or_render": true,
+    "no_production_ymmp_generation": true
+  }
+}
