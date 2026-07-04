@@ -1,5 +1,23 @@
 # Runtime State — NLMYTGen
 
+- **Transcript substitution readiness v1 generated (2026-07-05)**:
+  `build-transcript-substitution` now accepts a content spine package plus an
+  optional real/NotebookLM-like transcript and writes
+  `production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/`.
+  The package includes a transcript source probe, input contract, real-input
+  drop-zone, local sample fixture when no real transcript is present,
+  regenerated episode bridge, Writer IR candidate, cue packet candidate, draft
+  YMM4 CSV, source-to-transcript mapping, limitations, and validation readback.
+  Current probe state for the first package is `sample_fixture_generated`,
+  because no real transcript was found under the pilot package. This is a
+  local/offline readiness checkpoint only: not a real transcript acceptance,
+  NotebookLM API integration, source/rights approval, YMM4 import proof,
+  production `.ymmp`, render, legal/public-ready acceptance, or YouTube
+  publication. Next safe action is to drop a real transcript into
+  `transcript_substitution_readiness/real_input/` or rerun with `--transcript`,
+  then review `regenerated_writer_ir_candidate.json` and
+  `regenerated_draft_yymm4.csv` before any `validate-ir` /
+  `apply-production` work.
 - **Content spine to Writer IR / YMM4 CSV bridge v1 generated (2026-07-05)**:
   `build-content-ir-bridge` now converts the local package
   `production_pilots/yukkuri_newsroom_content_spine_001/` into

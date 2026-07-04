@@ -123,6 +123,12 @@ python -m src.cli.main build-content-spine --source samples/_probe/content_spine
 # 企画packageをdraft Writer IR / YMM4 CSV bridgeへ変換
 python -m src.cli.main build-content-ir-bridge --package production_pilots/yukkuri_newsroom_content_spine_001
 
+# real/NotebookLM transcript 差し替え readiness package を生成
+python -m src.cli.main build-transcript-substitution --package production_pilots/yukkuri_newsroom_content_spine_001
+
+# 明示 transcript を使う場合
+python -m src.cli.main build-transcript-substitution --package production_pilots/yukkuri_newsroom_content_spine_001 --transcript path/to/transcript.txt --speaker-map Host1=まりさ,Host2=れいむ
+
 # B-15 Phase 1: 外部 LLM / Automation に渡す cue packet を生成
 python -m src.cli.main build-cue-packet input.txt -o cue_packet.md
 

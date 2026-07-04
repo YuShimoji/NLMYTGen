@@ -1,0 +1,43 @@
+{
+  "schema_version": "transcript_source_probe.v1",
+  "status": "sample_fixture_used",
+  "source_mode": "sample_fixture_generated",
+  "selected_transcript_path": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\sample_inputs\\notebooklm_like_sample.txt",
+  "selected_transcript_exists": true,
+  "inspected_locations": [
+    "production_pilots\\yukkuri_newsroom_content_spine_001\\real_input",
+    "production_pilots\\yukkuri_newsroom_content_spine_001\\transcripts",
+    "production_pilots\\yukkuri_newsroom_content_spine_001\\notebooklm",
+    "production_pilots\\yukkuri_newsroom_content_spine_001\\NotebookLM"
+  ],
+  "real_input_dropzone": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\real_input",
+  "sample_fixture_path": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\sample_inputs\\notebooklm_like_sample.txt",
+  "sample_fixture_used": true,
+  "selected_candidate_id": "sports_pitch_sequence_p05",
+  "transcript_status": "sample_fixture_not_real",
+  "timing_status": "no_audio_or_yymm4_timing",
+  "audio_status": "no_audio_generated_or_imported",
+  "production_status": "local_offline_readiness_only",
+  "access_reality": {
+    "real_transcript_found_for_current_package": false,
+    "sample_fixture_is_real_transcript": false,
+    "notebooklm_api_used": false,
+    "live_fetch_used": false
+  },
+  "boundary_fields": {
+    "source_name": "NLMYTGen local sample transcript fixture",
+    "source_url_or_placeholder": "offline://production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/sample_inputs/notebooklm_like_sample.txt",
+    "freshness_status": "sample_fixture_generated_current_checkout_not_live",
+    "rights_status": "sample_only_no_publication",
+    "attribution_note": "Generated from the current offline content spine draft dialogue to exercise transcript intake; it is not a real NotebookLM transcript.",
+    "excluded_claims": [
+      "No public-ready source or rights acceptance.",
+      "No audio timing, YMM4 import proof, render proof, or publication readiness.",
+      "No live fetch, media download, OAuth/API, or paid service use."
+    ],
+    "production_status": "local_readiness_fixture_only",
+    "transcript_status": "sample_fixture_not_real",
+    "timing_status": "no_audio_or_yymm4_timing",
+    "audio_status": "no_audio_generated_or_imported"
+  }
+}

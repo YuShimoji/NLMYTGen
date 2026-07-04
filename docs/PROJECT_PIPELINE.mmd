@@ -1,0 +1,16 @@
+flowchart LR
+    A["T+0 offline topic candidates"] --> B["content spine package"]
+    B --> C["IR/CSV bridge"]
+    C --> D["T+1 transcript substitution readiness"]
+    D --> E["T+2 dashboard ingest (advisory)"]
+    D --> F["T+3 YMM4 import preview pack (advisory)"]
+
+    G["Real or NotebookLM transcript"] -. "drop-zone or --transcript" .-> D
+    H["sample fixture"] -. "only when no real transcript exists" .-> D
+
+    D --> I["regenerated episode bridge"]
+    D --> J["regenerated Writer IR candidate"]
+    D --> K["regenerated cue packet candidate"]
+    D --> L["regenerated draft YMM4 CSV"]
+
+    M["closed gates: rights/legal/public-ready acceptance, OAuth/API/payment, live scraping/media download, YMM4 GUI/render, YouTube publication"] -.-> D

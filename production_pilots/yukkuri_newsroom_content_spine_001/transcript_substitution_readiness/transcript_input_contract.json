@@ -1,0 +1,60 @@
+{
+  "schema_version": "transcript_input_contract.v1",
+  "purpose": "Accept real or NotebookLM-like transcript input for content spine IR/CSV substitution.",
+  "accepted_inputs": [
+    {
+      "extension": ".csv",
+      "shape": "two columns: speaker,text; header row is optional and skipped when detected"
+    },
+    {
+      "extension": ".txt",
+      "shape": "speaker-tagged lines such as Speaker: text or timestamped [00:00] Speaker: text"
+    },
+    {
+      "extension": ".txt",
+      "shape": "unlabeled alternating Speaker_A/Speaker_B lines when --unlabeled is set"
+    }
+  ],
+  "dropzone": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\real_input",
+  "package_dir": "production_pilots\\yukkuri_newsroom_content_spine_001",
+  "selected_transcript_path": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\sample_inputs\\notebooklm_like_sample.txt",
+  "source_mode": "sample_fixture_generated",
+  "speaker_mapping": {
+    "unlabeled": false,
+    "input_speakers": [
+      "まりさ",
+      "れいむ"
+    ],
+    "mapped_speakers": [
+      "まりさ",
+      "れいむ"
+    ],
+    "unmapped_speakers": [],
+    "map_required_for_yukkuri_names": false
+  },
+  "required_boundary_fields": [
+    "source_name",
+    "source_url_or_placeholder",
+    "freshness_status",
+    "rights_status",
+    "attribution_note",
+    "excluded_claims",
+    "production_status",
+    "transcript_status",
+    "timing_status",
+    "audio_status"
+  ],
+  "normalization_readback": {
+    "utterance_count": 10,
+    "csv_rows_expected": 10,
+    "parser": "src.pipeline.normalize.normalize"
+  },
+  "closed_gates": [
+    "YouTube upload/publication/visibility change",
+    "OAuth/API keys/payment",
+    "rights/legal/public-ready acceptance",
+    "live scraping/media download",
+    "YMM4 GUI launch/render",
+    "cross-repo or destructive git"
+  ]
+}

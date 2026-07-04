@@ -1,0 +1,43 @@
+{
+  "schema_version": "transcript_substitution_readback.v1",
+  "status": "passed",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness",
+  "checked_files": {
+    "substitution_manifest.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\substitution_manifest.json",
+    "transcript_input_contract.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\transcript_input_contract.json",
+    "transcript_source_probe.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\transcript_source_probe.json",
+    "regenerated_episode_bridge.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\regenerated_episode_bridge.json",
+    "regenerated_writer_ir_candidate.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\regenerated_writer_ir_candidate.json",
+    "regenerated_cue_packet_candidate.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\regenerated_cue_packet_candidate.json",
+    "regenerated_cue_packet_candidate.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\regenerated_cue_packet_candidate.md",
+    "regenerated_draft_yymm4.csv": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\regenerated_draft_yymm4.csv",
+    "cue_packet_readiness.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\cue_packet_readiness.json",
+    "source_to_transcript_mapping.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\source_to_transcript_mapping.md",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\limitations.md",
+    "validation_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\validation_readback.json"
+  },
+  "support_files": {
+    "real_input/README.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\real_input\\README.md",
+    "sample_inputs/notebooklm_like_sample.txt": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\sample_inputs\\notebooklm_like_sample.txt"
+  },
+  "checks": {
+    "all_required_files_present": true,
+    "json_loads": true,
+    "support_dropzone_present": true,
+    "sample_fixture_present": true,
+    "regenerated_csv_has_rows": true,
+    "writer_ir_matches_csv_rows": true,
+    "source_boundary_preserved": true,
+    "transcript_boundary_preserved": true,
+    "blocked_public_actions_preserved": true,
+    "not_production_ready": true,
+    "no_audio_generated": true
+  },
+  "failed_checks": [],
+  "artifact_id": "real_transcript_substitution_readiness_001",
+  "selected_candidate_id": "sports_pitch_sequence_p05",
+  "source_mode": "sample_fixture_generated",
+  "transcript_status": "sample_fixture_not_real",
+  "regenerated_csv_rows": 10,
+  "next_action": "Drop a real NotebookLM/source transcript into real_input/ or rerun with --transcript, then review regenerated_writer_ir_candidate.json and regenerated_draft_yymm4.csv before any validate-ir/apply-production work."
+}

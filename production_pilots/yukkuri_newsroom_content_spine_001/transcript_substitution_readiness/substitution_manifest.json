@@ -1,0 +1,56 @@
+{
+  "schema_version": "transcript_substitution_manifest.v1",
+  "artifact_id": "real_transcript_substitution_readiness_001",
+  "artifact_kind": "real-transcript-substitution-readiness",
+  "status": "generated",
+  "source_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_001",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness",
+  "selected_candidate_id": "sports_pitch_sequence_p05",
+  "source_mode": "sample_fixture_generated",
+  "transcript_status": "sample_fixture_not_real",
+  "timing_status": "no_audio_or_yymm4_timing",
+  "audio_status": "no_audio_generated_or_imported",
+  "files": {
+    "substitution_manifest.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\substitution_manifest.json",
+    "transcript_input_contract.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\transcript_input_contract.json",
+    "transcript_source_probe.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\transcript_source_probe.json",
+    "regenerated_episode_bridge.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\regenerated_episode_bridge.json",
+    "regenerated_writer_ir_candidate.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\regenerated_writer_ir_candidate.json",
+    "regenerated_cue_packet_candidate.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\regenerated_cue_packet_candidate.json",
+    "regenerated_cue_packet_candidate.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\regenerated_cue_packet_candidate.md",
+    "regenerated_draft_yymm4.csv": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\regenerated_draft_yymm4.csv",
+    "cue_packet_readiness.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\cue_packet_readiness.json",
+    "source_to_transcript_mapping.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\source_to_transcript_mapping.md",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\limitations.md",
+    "validation_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\validation_readback.json"
+  },
+  "support_files": {
+    "real_input/README.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\real_input\\README.md",
+    "sample_inputs/notebooklm_like_sample.txt": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\sample_inputs\\notebooklm_like_sample.txt"
+  },
+  "readiness": {
+    "writer_ir_candidate_status": "transcript_substitution_candidate_generated",
+    "cue_packet_status": "transcript_substitution_candidate_generated",
+    "ymm4_csv_status": "transcript_csv_preview_generated_not_production",
+    "row_range_status": "transcript_rows_available_without_yymm4_timing",
+    "audio_timing_status": "not_available_until_yymm4_import",
+    "maps_status": "not_selected",
+    "production_status": "blocked_until_transcript_timing_and_human_review",
+    "transcript_status": "sample_fixture_not_real",
+    "timing_status": "no_audio_or_yymm4_timing",
+    "audio_status": "no_audio_generated_or_imported"
+  },
+  "boundaries": {
+    "local_offline_review_only": true,
+    "sample_fixture_is_not_real_transcript": true,
+    "draft_csv_only": true,
+    "no_live_fetch": true,
+    "no_media_download": true,
+    "no_youtube_publication": true,
+    "no_oauth_or_paid_api": true,
+    "no_rights_or_legal_acceptance": true,
+    "no_ymm4_gui_launch_or_render": true,
+    "no_production_ymmp_generation": true,
+    "no_audio_generation": true
+  }
+}

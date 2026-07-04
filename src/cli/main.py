@@ -21,6 +21,7 @@ Usage:
     python -m src.cli.main episode-run-handoff --episode-id ID [--root DIR] [--format text|json]
     python -m src.cli.main build-content-spine --source topics.json --output production_pilots/pkg [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-content-ir-bridge --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
+    python -m src.cli.main build-transcript-substitution --package production_pilots/pkg [--transcript input.txt] [--output DIR] [--format text|json]
     python -m src.cli.main build-session-manifest --video-id ID [artifact paths...] [--format markdown|json] [-o path]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
@@ -2344,6 +2345,38 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    # build-transcript-substitution (real/NotebookLM transcript -> regenerated readiness package)
+    p_transcript_substitution = subparsers.add_parser(
+        "build-transcript-substitution",
+        help="Build a transcript substitution/readiness package for a content spine bridge",
+    )
+    p_transcript_substitution.add_argument(
+        "--package",
+        required=True,
+        help="Content spine package directory",
+    )
+    p_transcript_substitution.add_argument(
+        "--transcript",
+        help="Optional transcript path; if omitted, <package>/real_input and related drop-zones are probed",
+    )
+    p_transcript_substitution.add_argument(
+        "--output",
+        help="Output readiness directory (default: <package>/transcript_substitution_readiness)",
+    )
+    p_transcript_substitution.add_argument(
+        "--artifact-id",
+        default="real_transcript_substitution_readiness_001",
+        help="Transcript substitution artifact id",
+    )
+    _add_speaker_map_args(p_transcript_substitution)
+    _add_unlabeled_arg(p_transcript_substitution)
+    p_transcript_substitution.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # build-session-manifest (production handoff)
     p_session_manifest = subparsers.add_parser(
         "build-session-manifest",
@@ -2484,6 +2517,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_content_spine(args)
         elif args.command == "build-content-ir-bridge":
             return _cmd_build_content_ir_bridge(args)
+        elif args.command == "build-transcript-substitution":
+            return _cmd_build_transcript_substitution(args)
         elif args.command == "build-session-manifest":
             return _cmd_build_session_manifest(args)
         elif args.command == "diagnose-script":
@@ -4256,6 +4291,32 @@ def _cmd_build_content_ir_bridge(args: argparse.Namespace) -> int:
         print(f"status: {readback.get('status')}")
         print(f"selected_candidate_id: {readback.get('selected_candidate_id')}")
         print(f"draft_csv_rows: {readback.get('draft_csv_rows')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_transcript_substitution(args: argparse.Namespace) -> int:
+    """Build transcript substitution/readiness artifacts for a content spine."""
+    from src.pipeline.transcript_substitution import build_transcript_substitution_package
+
+    readback = build_transcript_substitution_package(
+        package_dir=getattr(args, "package"),
+        output_dir=getattr(args, "output", None),
+        transcript_path=getattr(args, "transcript", None),
+        artifact_id=args.artifact_id,
+        speaker_map=_resolve_speaker_map(args),
+        unlabeled=getattr(args, "unlabeled", False),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"selected_candidate_id: {readback.get('selected_candidate_id')}")
+        print(f"source_mode: {readback.get('source_mode')}")
+        print(f"transcript_status: {readback.get('transcript_status')}")
+        print(f"regenerated_csv_rows: {readback.get('regenerated_csv_rows')}")
         print(f"next_action: {readback.get('next_action')}")
     return 0
 

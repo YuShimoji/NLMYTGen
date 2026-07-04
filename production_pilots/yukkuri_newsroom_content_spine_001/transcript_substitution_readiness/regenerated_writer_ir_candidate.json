@@ -1,0 +1,200 @@
+{
+  "schema_version": "content_spine_writer_ir_candidate.v1",
+  "production_ir_spec_reference": "docs/PRODUCTION_IR_SPEC.md",
+  "compatibility_status": "transcript_substitution_candidate_not_validate_ir_ready",
+  "not_validate_ir_ready_reason": "Transcript rows are available, but final source review, row_start/row_end, YMM4 base project, audio timing, and production maps are still missing.",
+  "video_id": "sports_pitch_sequence_p05",
+  "ir_version": "1.0-draft",
+  "tone": "fast tactical yukkuri explainer with light reaction beats",
+  "pattern_mix": "intro:data:closing = 1:2:1",
+  "visual_arc": [
+    {
+      "phase": "intro",
+      "primary_pattern": "A",
+      "emotion_flow": "question -> hook"
+    },
+    {
+      "phase": "develop",
+      "primary_pattern": "B",
+      "emotion_flow": "fact comparison -> understanding"
+    },
+    {
+      "phase": "closing",
+      "primary_pattern": "D",
+      "emotion_flow": "watch point -> production boundary"
+    }
+  ],
+  "recurring_motif": "Original scoreboard strip plus two pitch cards connected by a speed-drop arrow.",
+  "default_bgm": "light_explainer",
+  "sections": [
+    {
+      "section_id": "S1",
+      "topic": "Opening hook and topic promise",
+      "start_index": 1,
+      "end_index": 2,
+      "default_bg": "studio_blue",
+      "default_face": "neutral",
+      "bgm": "light_explainer",
+      "arc_phase": "intro"
+    },
+    {
+      "section_id": "S2",
+      "topic": "Main explanation: Why a 155 km/h fastball followed by a 140 km/h slider changes the at-bat",
+      "start_index": 3,
+      "end_index": 5,
+      "default_bg": "diagram",
+      "default_face": "serious",
+      "bgm": "data_focus",
+      "arc_phase": "develop"
+    },
+    {
+      "section_id": "S3",
+      "topic": "Viewer watch point and production boundary",
+      "start_index": 6,
+      "end_index": 10,
+      "default_bg": "dark_board",
+      "default_face": "thinking",
+      "bgm": "closing_light",
+      "arc_phase": "closing"
+    }
+  ],
+  "utterances": [
+    {
+      "index": 1,
+      "speaker": "れいむ",
+      "text": "今日は「155 -> 140 km/h」って、どういう話なの？",
+      "section_id": "S1",
+      "template": "intro",
+      "face": "neutral",
+      "bg": "studio_blue",
+      "slot": "left",
+      "bridge_source": "transcript_input[1]"
+    },
+    {
+      "index": 2,
+      "speaker": "まりさ",
+      "text": "速球のあとに球速を落とすと、打者の見え方はどう変わるのか。",
+      "section_id": "S1",
+      "template": "intro",
+      "face": "neutral",
+      "bg": "studio_blue",
+      "slot": "right",
+      "bridge_source": "transcript_input[2]"
+    },
+    {
+      "index": 3,
+      "speaker": "まりさ",
+      "text": "まず場面は、7回表、1アウト、カウントB2-S2、走者なしという状況から見るぜ。",
+      "section_id": "S2",
+      "template": "data",
+      "face": "serious",
+      "bg": "diagram",
+      "slot": "right",
+      "bridge_source": "transcript_input[3]"
+    },
+    {
+      "index": 4,
+      "speaker": "まりさ",
+      "text": "直前の155km/hのフォーシームから、今回は140km/hのスライダーに変わっている。",
+      "section_id": "S2",
+      "template": "data",
+      "face": "serious",
+      "bg": "diagram",
+      "slot": "right",
+      "bridge_source": "transcript_input[4]"
+    },
+    {
+      "index": 5,
+      "speaker": "れいむ",
+      "text": "なるほど、そこを見れば話の筋が追いやすいんだね。",
+      "section_id": "S2",
+      "template": "data",
+      "face": "serious",
+      "bg": "diagram",
+      "slot": "left",
+      "bridge_source": "transcript_input[5]"
+    },
+    {
+      "index": 6,
+      "speaker": "まりさ",
+      "text": "ここで大事なのは15km/hの球速差だ。打者のタイミングをずらす主役になる。",
+      "section_id": "S3",
+      "template": "closing",
+      "face": "thinking",
+      "bg": "dark_board",
+      "slot": "right",
+      "bridge_source": "transcript_input[6]"
+    },
+    {
+      "index": 7,
+      "speaker": "まりさ",
+      "text": "結果は外低めへのストライク。視聴者にはこのコースと変化を見てもらう。",
+      "section_id": "S3",
+      "template": "closing",
+      "face": "thinking",
+      "bg": "dark_board",
+      "slot": "right",
+      "bridge_source": "transcript_input[7]"
+    },
+    {
+      "index": 8,
+      "speaker": "まりさ",
+      "text": "ただし本番化するなら、実ソースと主張確認を済ませてからCSVとWriter IRに進める。",
+      "section_id": "S3",
+      "template": "closing",
+      "face": "thinking",
+      "bg": "dark_board",
+      "slot": "right",
+      "bridge_source": "transcript_input[8]"
+    },
+    {
+      "index": 9,
+      "speaker": "れいむ",
+      "text": "なるほど、そこを見れば話の筋が追いやすいんだね。",
+      "section_id": "S3",
+      "template": "closing",
+      "face": "thinking",
+      "bg": "dark_board",
+      "slot": "left",
+      "bridge_source": "transcript_input[9]"
+    },
+    {
+      "index": 10,
+      "speaker": "まりさ",
+      "text": "この段階ではローカル企画案なので、本番化には実ソース、台本、タイミング確認が必要だぜ。",
+      "section_id": "S3",
+      "template": "closing",
+      "face": "thinking",
+      "bg": "dark_board",
+      "slot": "right",
+      "bridge_source": "transcript_input[10]"
+    }
+  ],
+  "source_boundary": {
+    "source_name": "Synthetic Baseball Feed",
+    "source_url_or_placeholder": "offline://samples/_probe/baseball/pipeline/baseball_data_capsule_p05.json",
+    "published_at_or_placeholder": "2026-05-26T00:00:00Z",
+    "freshness_status": "offline_fixture_not_live",
+    "rights_status": "sample_only_no_publication",
+    "attribution_note": "Derived from repo-local synthetic baseball fixture, not an official league feed or player media source.",
+    "excluded_claims": [
+      "No claim about a real player, team, game, or broadcast footage.",
+      "No scouting conclusion beyond the sample pitch-sequence facts.",
+      "No publication readiness or rights clearance."
+    ],
+    "production_status": "local_planning_only"
+  },
+  "production_boundary": {
+    "draft_yymm4_csv_only": true,
+    "no_ymmp_generation": true,
+    "no_render": true,
+    "no_publication": true
+  },
+  "transcript_substitution": {
+    "transcript_status": "sample_fixture_not_real",
+    "timing_status": "no_audio_or_yymm4_timing",
+    "audio_status": "no_audio_generated_or_imported",
+    "source_mode": "sample_fixture_generated",
+    "selected_transcript_path": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\sample_inputs\\notebooklm_like_sample.txt"
+  }
+}
