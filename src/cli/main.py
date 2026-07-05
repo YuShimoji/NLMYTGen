@@ -20,6 +20,7 @@ Usage:
     python -m src.cli.main init-episode-run --episode-id ID [--root DIR] [--force] [--format text|json]
     python -m src.cli.main episode-run-handoff --episode-id ID [--root DIR] [--format text|json]
     python -m src.cli.main build-content-spine --source topics.json --output production_pilots/pkg [--artifact-id ID] [--format text|json]
+    python -m src.cli.main build-content-spine-from-seed --seed-package production_pilots/pkg/factory_seed_dry_run_002 [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-content-ir-bridge --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-transcript-substitution --package production_pilots/pkg [--transcript input.txt] [--output DIR] [--format text|json]
     python -m src.cli.main build-dashboard-readiness-ingest --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
@@ -2325,6 +2326,32 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    # build-content-spine-from-seed (factory seed -> second content spine dry-run package)
+    p_content_spine_from_seed = subparsers.add_parser(
+        "build-content-spine-from-seed",
+        help="Build a local/offline content spine dry-run package from a factory seed package",
+    )
+    p_content_spine_from_seed.add_argument(
+        "--seed-package",
+        required=True,
+        help="Factory seed dry-run package directory",
+    )
+    p_content_spine_from_seed.add_argument(
+        "--output",
+        help="Output content spine package directory (default: production_pilots/yukkuri_newsroom_content_spine_002)",
+    )
+    p_content_spine_from_seed.add_argument(
+        "--artifact-id",
+        default="yukkuri_newsroom_content_spine_002_dry_run",
+        help="Content spine dry-run artifact id",
+    )
+    p_content_spine_from_seed.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # build-content-ir-bridge (content spine -> draft Writer IR / YMM4 CSV inputs)
     p_content_ir_bridge = subparsers.add_parser(
         "build-content-ir-bridge",
@@ -2686,6 +2713,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_episode_run_handoff(args)
         elif args.command == "build-content-spine":
             return _cmd_build_content_spine(args)
+        elif args.command == "build-content-spine-from-seed":
+            return _cmd_build_content_spine_from_seed(args)
         elif args.command == "build-content-ir-bridge":
             return _cmd_build_content_ir_bridge(args)
         elif args.command == "build-transcript-substitution":
@@ -4453,6 +4482,32 @@ def _cmd_build_content_spine(args: argparse.Namespace) -> int:
         print(f"Written: {args.output}")
         print(f"status: {readback.get('status')}")
         print(f"selected_candidate_id: {readback.get('selected_candidate_id')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_content_spine_from_seed(args: argparse.Namespace) -> int:
+    """Build a local/offline content spine dry-run package from a factory seed."""
+    from src.pipeline.factory_seed_content_spine import build_content_spine_from_factory_seed
+
+    readback = build_content_spine_from_factory_seed(
+        seed_package_dir=getattr(args, "seed_package"),
+        output_dir=getattr(args, "output", None),
+        artifact_id=args.artifact_id,
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"selected_candidate_id: {readback.get('selected_candidate_id')}")
+        print(f"source_seed_package_dir: {readback.get('source_seed_package_dir')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"standard_content_spine_manifest: {readback.get('standard_content_spine_manifest')}")
+        print(f"source_seed_reference_path: {readback.get('source_seed_reference_path')}")
+        print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"review_checklist: {readback.get('review_checklist')}")
         print(f"next_action: {readback.get('next_action')}")
     return 0
 

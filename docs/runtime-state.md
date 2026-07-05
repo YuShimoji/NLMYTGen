@@ -1,5 +1,35 @@
 # Runtime State — NLMYTGen
 
+- **Factory seed to content spine dry-run v1 generated (2026-07-06)**:
+  `build-content-spine-from-seed` now consumes
+  `production_pilots/yukkuri_newsroom_content_spine_001/factory_seed_dry_run_002/`
+  and generates a second local/offline content spine dry-run package at
+  `production_pilots/yukkuri_newsroom_content_spine_002/`. The package reuses
+  the standard content spine builder with the seed package's
+  `content_spine_input_candidate.json`, then adds seed-origin sidecars:
+  `content_spine_dry_run_manifest.json`, `source_seed_reference.json`,
+  `source_artifact_index.json`, and `validation_readback.json`. Standard
+  content spine outputs are also present: `MANIFEST.json`,
+  `topic_candidates.json`, `channel_strategy_proposals.md`,
+  `episode_candidate_001.md`, `thumbnail_brief_001.md`,
+  `dashboard_status.json`, `dashboard_preview.md`, `review_checklist.md`,
+  `limitations.md`, and `content_spine_readback.json`. Current readback passed
+  with seed input files present, standard content spine readback passed,
+  inherited defaults separated, dry-run placeholders marked, required real
+  inputs still null, no external references, no forbidden completion claims,
+  and selected candidate `factory_seed_dry_run_002`. This proves the factory
+  seed can feed the first downstream planning stage without manually copying
+  the original pilot. The package preserves `dry_run`,
+  `sample_fixture_not_real`, `no_real_transcript`,
+  `rights_boundary=sample_only_no_publication`, `public_upload_closed`, and
+  `yymm4_render_closed`. It is not a real source intake, real transcript rerun,
+  IR bridge, YMM4 GUI/import/render, production `.ymmp`, external
+  media/API/OAuth/payment, rights/legal/public-ready acceptance, final
+  thumbnail image, or publication. Next safe action is to review
+  `source_seed_reference.json`, `episode_candidate_001.md`, and
+  `thumbnail_brief_001.md`, then replace the seed dry-run source packet with a
+  real reviewed local topic/source packet before real transcript, IR bridge,
+  YMM4, rights, render, production, or public work.
 - **Factory seed instantiation dry-run v1 generated (2026-07-06)**:
   `instantiate-episode-factory-seed` now initializes a local/offline second
   yukkuri newsroom episode seed from the existing template registry at

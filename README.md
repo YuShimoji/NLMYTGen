@@ -213,3 +213,12 @@ local/offline episode factory template registry:
 ```bash
 python -m src.cli.main instantiate-episode-factory-seed --registry production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry
 ```
+
+## Seed To Content Spine Dry-Run CLI
+
+Generate the second local/offline content spine dry-run package from the
+factory seed package:
+
+```bash
+python -m src.cli.main build-content-spine-from-seed --seed-package production_pilots/yukkuri_newsroom_content_spine_001/factory_seed_dry_run_002
+```

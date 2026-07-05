@@ -8,9 +8,10 @@ flowchart LR
     N --> O["T+5 thumbnail visual proof pack"]
     O --> AF["T+6 episode factory template registry"]
     AF --> AK["T+7 factory seed instantiation dry-run"]
-    AK --> F["T+8 real transcript rerun (advisory)"]
-    F --> X["T+9 actual YMM4 import review (advisory)"]
-    F --> AB["T+10 production micro proof / deeper GUI adapter (advisory)"]
+    AK --> AP["T+8 seed-to-content-spine dry-run"]
+    AP --> F["T+9 real transcript rerun (advisory)"]
+    F --> X["T+10 actual YMM4 import review (advisory)"]
+    F --> AB["T+11 production micro proof / deeper GUI adapter (advisory)"]
 
     G["Real or NotebookLM transcript"] -. "drop-zone or --transcript" .-> D
     H["sample fixture"] -. "only when no real transcript exists" .-> D
@@ -40,5 +41,9 @@ flowchart LR
     AK --> AM["episode_seed.json + dry_run_topic_source_packet.json"]
     AK --> AN["required_real_inputs.json + carried_template_defaults.json"]
     AK --> AO["content_spine_input_candidate.json"]
+    AP --> AQ["content_spine_dry_run_manifest.json"]
+    AP --> AR["source_seed_reference.json"]
+    AP --> AS["topic_candidates.json + episode_candidate_001.md"]
+    AP --> AT["thumbnail_brief_001.md + dashboard_status.json"]
 
-    M["closed gates: rights/legal/public-ready acceptance, OAuth/API/payment, live scraping/media download, external image/media download, YMM4 GUI/import/render, production .ymmp, YouTube publication"] -.-> AK
+    M["closed gates: rights/legal/public-ready acceptance, OAuth/API/payment, live scraping/media download, external image/media download, YMM4 GUI/import/render, production .ymmp, YouTube publication"] -.-> AP
