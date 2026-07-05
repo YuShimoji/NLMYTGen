@@ -19,13 +19,14 @@ the feature/spec owner docs.
 | T+7 factory seed instantiation dry-run | generated | `production_pilots/yukkuri_newsroom_content_spine_001/factory_seed_dry_run_002/` | second episode seed initialized from registry; synthetic dry-run only |
 | T+8 seed-to-content-spine dry-run | generated | `production_pilots/yukkuri_newsroom_content_spine_002/` | first downstream planning package from seed; no real transcript/YMM4/public gate |
 | T+9 content spine 002 IR/CSV bridge | generated | `production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/` | draft Writer IR / cue packet / CSV only; no real transcript/YMM4/public gate |
-| T+10 real transcript rerun | advisory | `transcript_substitution_readiness/real_input/` or `--transcript` | requires verified local transcript input |
-| T+11 actual YMM4 import review | advisory | not built here | future VoiceItem/timing readback; no render claim |
-| T+12 production micro proof / deeper GUI adapter | advisory | not built here | future surface only if it reduces review friction |
+| T+10 content spine 002 transcript readiness | generated/sample-fixture | `production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/` | sample fixture only; real transcript provenance, rights, timing, and human review still required |
+| T+11 real transcript rerun | advisory | `transcript_substitution_readiness/real_input/` or `--transcript` | requires verified local transcript input |
+| T+12 actual YMM4 import review | advisory | not built here | future VoiceItem/timing readback; no render claim |
+| T+13 production micro proof / deeper GUI adapter | advisory | not built here | future surface only if it reduces review friction |
 
 ## Symbolic Progress
 
-- content_spine_002_ir_bridge: `[######-]` 6/7; local/offline IR/CSV bridge generated, next axis is reviewed real source/transcript replacement.
+- content_spine_002_transcript_readiness: `[######-]` 6/7; transcript-shaped readiness generated with sample fixture, next axis is reviewed real transcript replacement.
 
 ## True Gates
 
@@ -44,6 +45,42 @@ the feature/spec owner docs.
 ## Latest Regeneration
 
 Use this command from the repo root:
+
+```bash
+python -m src.cli.main build-transcript-substitution --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id content_spine_002_transcript_substitution_readiness_001
+```
+
+The current content-spine-002 transcript readiness package is:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/
+```
+
+The primary machine readback file is:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/validation_readback.json
+```
+
+The primary human review file is:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/review_checklist.md
+```
+
+The source-context reference file is:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/source_context_reference.json
+```
+
+The real-input drop-zone is:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input/
+```
+
+Content-spine-002 IR/CSV bridge can still be regenerated with:
 
 ```bash
 python -m src.cli.main build-content-ir-bridge --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id content_spine_002_ir_bridge_dry_run_001

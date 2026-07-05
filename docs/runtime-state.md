@@ -1,5 +1,41 @@
 # Runtime State — NLMYTGen
 
+- **Content spine 002 transcript substitution readiness v1 generated (2026-07-06)**:
+  `build-transcript-substitution` now consumes
+  `production_pilots/yukkuri_newsroom_content_spine_002/` and its current
+  `ir_bridge/` outputs, then generates a second episode local/offline
+  transcript substitution readiness package at
+  `production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/`.
+  The package includes `substitution_manifest.json`,
+  `transcript_input_contract.json`, `transcript_source_probe.json`,
+  `regenerated_episode_bridge.json`, `regenerated_writer_ir_candidate.json`,
+  `regenerated_cue_packet_candidate.{json,md}`, `regenerated_draft_yymm4.csv`,
+  `cue_packet_readiness.json`, `source_context_reference.json`,
+  `source_artifact_index.json`, `review_checklist.md`,
+  `source_to_transcript_mapping.md`, `limitations.md`, and
+  `validation_readback.json`, plus `real_input/README.md` and
+  `sample_inputs/notebooklm_like_sample.txt`. Current readback passed with
+  selected candidate `factory_seed_dry_run_002`, source mode
+  `sample_fixture_generated`, transcript status `sample_fixture_not_real`, 9
+  regenerated CSV rows, source context present, source artifact index present,
+  generated outputs indexed, source origin separated, transcript placeholders
+  separated, dry-run boundaries preserved, no external references, and no
+  forbidden completion claims. `source_context_reference.json` distinguishes
+  seed-origin fields, inherited template defaults, dry-run placeholders,
+  required real inputs, generated content-spine outputs, generated IR/CSV
+  bridge outputs, transcript placeholders, and generated transcript outputs.
+  The package preserves `dry_run`, `sample_fixture_not_real`,
+  `no_real_transcript`, `no_yymm4_import`,
+  `rights_boundary=sample_only_no_publication`, `public_upload_closed`, and
+  `yymm4_render_closed`. It is not a real transcript rerun, YMM4
+  GUI/import/render proof, production `.ymmp`, external media/API/OAuth/payment
+  action, rights/legal/public-ready acceptance, or publication. Next safe
+  action is to review `transcript_substitution_readiness/source_context_reference.json`,
+  `transcript_substitution_readiness/transcript_source_probe.json`,
+  `transcript_substitution_readiness/regenerated_writer_ir_candidate.json`, and
+  `transcript_substitution_readiness/regenerated_draft_yymm4.csv`; then replace
+  the sample fixture with a reviewed real local transcript before dashboard,
+  import preview, YMM4, rights, render, production, or public work.
 - **Content spine 002 IR/CSV bridge dry-run v1 generated (2026-07-06)**:
   `build-content-ir-bridge` now consumes
   `production_pilots/yukkuri_newsroom_content_spine_002/` and generates the

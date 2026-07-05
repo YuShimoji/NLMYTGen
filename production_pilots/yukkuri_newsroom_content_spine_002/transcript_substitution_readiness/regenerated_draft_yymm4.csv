@@ -1,0 +1,9 @@
+れいむ,今日は「DRY RUN」って、どういう話なの？
+まりさ,Dry-run only: confirm the factory can open a second episode seed.
+まりさ,ポイント1は、Load the template registry.
+まりさ,ポイント2は、Separate inherited defaults from real required inputs.
+れいむ,なるほど、そこを見れば話の筋が追いやすいんだね。
+まりさ,ポイント3は、Mark the source packet as synthetic dry-run material.
+まりさ,"ポイント4は、Stop before transcript, YMM4, rights, render, or publication work."
+れいむ,なるほど、そこを見れば話の筋が追いやすいんだね。
+まりさ,この段階ではローカル企画案なので、本番化には実ソース、台本、タイミング確認が必要だぜ。

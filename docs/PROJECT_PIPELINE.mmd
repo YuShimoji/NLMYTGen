@@ -10,9 +10,10 @@ flowchart LR
     AF --> AK["T+7 factory seed instantiation dry-run"]
     AK --> AP["T+8 seed-to-content-spine dry-run"]
     AP --> AU["T+9 content spine 002 IR/CSV bridge dry-run"]
-    AU --> F["T+10 real transcript rerun (advisory)"]
-    F --> X["T+11 actual YMM4 import review (advisory)"]
-    F --> AB["T+12 production micro proof / deeper GUI adapter (advisory)"]
+    AU --> AZ["T+10 content spine 002 transcript readiness"]
+    AZ --> F["T+11 real transcript rerun (advisory)"]
+    F --> X["T+12 actual YMM4 import review (advisory)"]
+    F --> AB["T+13 production micro proof / deeper GUI adapter (advisory)"]
 
     G["Real or NotebookLM transcript"] -. "drop-zone or --transcript" .-> D
     H["sample fixture"] -. "only when no real transcript exists" .-> D
@@ -50,5 +51,9 @@ flowchart LR
     AU --> AW["writer_ir_candidate.json + cue_packet_candidate"]
     AU --> AX["draft_yymm4.csv + csv readiness"]
     AU --> AY["source_content_spine_reference.json + source_artifact_index.json"]
+    AZ --> BA["transcript_source_probe.json + transcript_input_contract.json"]
+    AZ --> BB["regenerated_episode_bridge + Writer IR + cue packet"]
+    AZ --> BC["regenerated_draft_yymm4.csv + cue_packet_readiness.json"]
+    AZ --> BD["source_context_reference.json + source_artifact_index.json"]
 
-    M["closed gates: rights/legal/public-ready acceptance, OAuth/API/payment, live scraping/media download, external image/media download, YMM4 GUI/import/render, production .ymmp, YouTube publication"] -.-> AU
+    M["closed gates: rights/legal/public-ready acceptance, OAuth/API/payment, live scraping/media download, external image/media download, YMM4 GUI/import/render, production .ymmp, YouTube publication"] -.-> AZ
