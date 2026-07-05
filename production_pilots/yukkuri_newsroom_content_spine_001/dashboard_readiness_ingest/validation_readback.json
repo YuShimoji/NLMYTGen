@@ -1,0 +1,37 @@
+{
+  "schema_version": "dashboard_readiness_ingest_readback.v1",
+  "status": "passed",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest",
+  "checked_files": {
+    "dashboard_manifest.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\dashboard_manifest.json",
+    "pipeline_status.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\pipeline_status.json",
+    "readiness_summary.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\readiness_summary.json",
+    "symbolic_visual_panel.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\symbolic_visual_panel.json",
+    "capability_glyph_grid.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\capability_glyph_grid.json",
+    "dashboard_preview.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\dashboard_preview.md",
+    "source_artifact_index.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\source_artifact_index.json",
+    "review_checklist.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\review_checklist.md",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\limitations.md",
+    "validation_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\validation_readback.json"
+  },
+  "checks": {
+    "all_required_files_present": true,
+    "json_loads": true,
+    "required_capabilities_present": true,
+    "status_categories_valid": true,
+    "sample_fixture_reported_accurately": true,
+    "public_upload_gate_closed": true,
+    "ymm4_render_gate_closed": true,
+    "symbolic_bar_mode_hypothesis": true
+  },
+  "failed_checks": [],
+  "artifact_id": "dashboard_readiness_ingest_001",
+  "source_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_001",
+  "selected_candidate_id": "sports_pitch_sequence_p05",
+  "transcript_status": "sample_fixture_not_real",
+  "sample_fixture_used": true,
+  "capability_count": 12,
+  "primary_machine_readable": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\readiness_summary.json",
+  "primary_human_review": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\dashboard_preview.md",
+  "next_action": "Review dashboard_preview.md and readiness_summary.json, then supply a real transcript or rerun build-transcript-substitution with --transcript before YMM4 import preview work."
+}

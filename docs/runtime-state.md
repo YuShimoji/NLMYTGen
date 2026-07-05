@@ -1,5 +1,25 @@
 # Runtime State — NLMYTGen
 
+- **Dashboard readiness ingest v1 generated (2026-07-06)**:
+  `build-dashboard-readiness-ingest` now aggregates the current yukkuri
+  newsroom pilot into
+  `production_pilots/yukkuri_newsroom_content_spine_001/dashboard_readiness_ingest/`.
+  The package includes `dashboard_manifest.json`, `pipeline_status.json`,
+  `readiness_summary.json`, `symbolic_visual_panel.json`,
+  `capability_glyph_grid.json`, `source_artifact_index.json`,
+  `dashboard_preview.md`, `review_checklist.md`, `limitations.md`, and
+  `validation_readback.json`. Current readback passed with
+  `transcript_status=sample_fixture_not_real`, `sample_fixture_used=true`, and
+  12 capability rows. This is a read-only local/offline status ingest only:
+  not a real transcript acceptance, source/rights approval, YMM4 import proof,
+  VoiceItem timing readback, production `.ymmp`, render, thumbnail visual
+  proof, legal/public-ready acceptance, or YouTube publication. Next safe
+  action is to review
+  `dashboard_readiness_ingest/dashboard_preview.md` and
+  `dashboard_readiness_ingest/readiness_summary.json`, then provide a real
+  transcript in `transcript_substitution_readiness/real_input/` or rerun
+  `build-transcript-substitution --transcript ...` before YMM4 import preview
+  work.
 - **Transcript substitution readiness v1 generated (2026-07-05)**:
   `build-transcript-substitution` now accepts a content spine package plus an
   optional real/NotebookLM-like transcript and writes

@@ -80,6 +80,7 @@
 | B-17 | 字幕改行アルゴリズム v2 (統合リフロー) | done | L2 | B-15/B-16 を統合リフローとして再設計。`reflow_utterance()` ベースの一貫したトップダウン方式。2026-04-28 に YMM4 表示条件へ寄せる opt-in 補正として `--subtitle-font-scale` / `--subtitle-font-source-ymmp` / `--wrap-px` / `--measure-backend` を追加し、GUI CSV タブにも露出。WPF helper は実測幅 backend、EAW は fallback。B-17 残差観測は実害行だけ paired evidence として扱う |
 | B-18 | 台本機械診断（NLM→ゆっくり前段） | done | L2 | `diagnose-script` CLI + `src/pipeline/script_diagnostics.py`。`--format json` / `--strict` / `--expected-explainer` / `--expected-listener`。仕様: `docs/SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md`。dry proof: `docs/verification/B18-script-diagnostics-ai-monitoring-sample.md` |
 | B-19 | Content spine transcript substitution readiness | done | L2 | `build-transcript-substitution` CLI。`production_pilots/.../transcript_substitution_readiness/` に transcript source probe、input contract、regenerated episode bridge / Writer IR / cue packet / draft YMM4 CSV、readback、drop-zone、sample fixture を出す。実 transcript が無い場合は sample fixture を明示し、本番・権利・音声 timing・YMM4 render/publication は閉じる |
+| B-20 | Dashboard readiness ingest | done | L2 | `build-dashboard-readiness-ingest` CLI。`production_pilots/.../dashboard_readiness_ingest/` に read-only dashboard manifest、pipeline status、readiness summary、symbolic visual panel、capability glyph grid、source artifact index、preview/checklist/limitations/readback を出す。sample fixture と real transcript input gate を明示し、YMM4 import/render、thumbnail proof、rights/legal/public-ready acceptance は閉じる |
 
 ### C. YMM4 連携・演出 (L3-YMM4内部)
 

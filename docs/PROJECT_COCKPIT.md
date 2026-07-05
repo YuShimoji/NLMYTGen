@@ -10,9 +10,11 @@ the feature/spec owner docs.
 |---|---|---|---|
 | T+0 content spine package | generated | `production_pilots/yukkuri_newsroom_content_spine_001/` | local/offline review only |
 | T+0 IR/CSV bridge | generated | `production_pilots/yukkuri_newsroom_content_spine_001/ir_bridge/` | draft Writer IR / cue packet / CSV only |
-| T+1 transcript substitution readiness | active/generated | `production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/` | real transcript provenance, rights, timing, and human review still required |
-| T+2 dashboard ingest | advisory | not built here | future dashboard state intake |
-| T+3 YMM4 import preview pack | advisory | not built here | future YMM4 import/readback, no GUI/render in this slice |
+| T+1 transcript substitution readiness | generated/sample-fixture | `production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/` | real transcript provenance, rights, timing, and human review still required |
+| T+2 dashboard readiness ingest | generated | `production_pilots/yukkuri_newsroom_content_spine_001/dashboard_readiness_ingest/` | read-only status ingest; no production/public acceptance |
+| T+3 real transcript rerun | advisory | `transcript_substitution_readiness/real_input/` or `--transcript` | requires verified local transcript input |
+| T+4 YMM4 import preview pack | advisory | not built here | future YMM4 import/readback, no GUI/render in this slice |
+| T+5 thumbnail visual proof | advisory | not built here | future visual proof; no image generation/public-ready claim here |
 
 ## True Gates
 
@@ -31,6 +33,24 @@ the feature/spec owner docs.
 ## Latest Regeneration
 
 Use this command from the repo root:
+
+```bash
+python -m src.cli.main build-dashboard-readiness-ingest --package production_pilots/yukkuri_newsroom_content_spine_001
+```
+
+The current human review file is:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_001/dashboard_readiness_ingest/dashboard_preview.md
+```
+
+The current machine readback file is:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_001/dashboard_readiness_ingest/readiness_summary.json
+```
+
+Transcript readiness can still be regenerated with:
 
 ```bash
 python -m src.cli.main build-transcript-substitution --package production_pilots/yukkuri_newsroom_content_spine_001

@@ -129,6 +129,9 @@ python -m src.cli.main build-transcript-substitution --package production_pilots
 # 明示 transcript を使う場合
 python -m src.cli.main build-transcript-substitution --package production_pilots/yukkuri_newsroom_content_spine_001 --transcript path/to/transcript.txt --speaker-map Host1=まりさ,Host2=れいむ
 
+# read-only dashboard/readiness ingest package を生成
+python -m src.cli.main build-dashboard-readiness-ingest --package production_pilots/yukkuri_newsroom_content_spine_001
+
 # B-15 Phase 1: 外部 LLM / Automation に渡す cue packet を生成
 python -m src.cli.main build-cue-packet input.txt -o cue_packet.md
 
