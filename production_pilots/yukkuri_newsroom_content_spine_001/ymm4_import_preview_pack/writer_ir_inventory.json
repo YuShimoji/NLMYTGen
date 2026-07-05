@@ -1,0 +1,18 @@
+{
+  "schema_version": "writer_ir_inventory.v1",
+  "writer_ir_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_writer_ir_candidate.json",
+  "writer_ir_exists": true,
+  "source_schema_version": "content_spine_writer_ir_candidate.v1",
+  "video_id": "sports_pitch_sequence_p05",
+  "compatibility_status": "transcript_substitution_candidate_not_validate_ir_ready",
+  "not_validate_ir_ready_reason": "Transcript rows are available, but final source review, row_start/row_end, YMM4 base project, audio timing, and production maps are still missing.",
+  "section_count": 3,
+  "utterance_count": 10,
+  "row_ranges_present": false,
+  "production_maps_present": false,
+  "transcript_status": "sample_fixture_not_real",
+  "timing_status": "no_audio_or_yymm4_timing",
+  "audio_status": "no_audio_generated_or_imported",
+  "state": "draft_offline",
+  "status_note": "Writer IR candidate only; validate-ir/apply-production prerequisites remain missing"
+}

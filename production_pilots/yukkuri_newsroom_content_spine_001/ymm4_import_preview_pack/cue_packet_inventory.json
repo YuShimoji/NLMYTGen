@@ -1,0 +1,24 @@
+{
+  "schema_version": "cue_packet_inventory.v1",
+  "cue_packet_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_cue_packet_candidate.json",
+  "cue_packet_exists": true,
+  "cue_packet_readiness_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/cue_packet_readiness.json",
+  "cue_packet_readiness_exists": true,
+  "packet_version": "content-spine-cue-v1",
+  "phase": "content-spine-bridge-cue-candidate",
+  "objective": "Turn the content spine draft dialogue into a concise S-6 cue memo candidate.",
+  "section_count": 3,
+  "transcript_row_count": 10,
+  "constraints_count": 4,
+  "external_llm_called": false,
+  "ready_for_human_review": true,
+  "not_ready_for_production": true,
+  "remaining_gaps": [
+    "real transcript provenance and rights review",
+    "YMM4 import/audio timing",
+    "row range annotation",
+    "production maps and validate-ir/apply-production inputs"
+  ],
+  "state": "draft_offline",
+  "status_note": "cue packet candidate only; not sent to an external LLM and not production accepted"
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "ymm4_import_preview_pack_readback.v1",
+  "status": "passed",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack",
+  "checked_files": {
+    "import_preview_manifest.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\import_preview_manifest.json",
+    "yymm4_csv_inventory.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\yymm4_csv_inventory.json",
+    "cue_packet_inventory.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\cue_packet_inventory.json",
+    "writer_ir_inventory.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\writer_ir_inventory.json",
+    "import_readiness_summary.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\import_readiness_summary.json",
+    "import_preview_checklist.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\import_preview_checklist.md",
+    "import_preview_panel.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\import_preview_panel.md",
+    "import_preview_panel.html": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\import_preview_panel.html",
+    "source_artifact_index.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\source_artifact_index.json",
+    "validation_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\validation_readback.json",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\limitations.md",
+    "draft_yymm4_import_preview.csv": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\draft_yymm4_import_preview.csv"
+  },
+  "checks": {
+    "all_required_files_present": true,
+    "json_loads": true,
+    "csv_rows_present": true,
+    "csv_column_count_ok": true,
+    "sample_fixture_preserved": true,
+    "required_status_categories_visible": true,
+    "html_markers_present": true,
+    "public_upload_gate_closed": true,
+    "ymm4_gui_gate_closed": true,
+    "ymm4_render_gate_closed": true,
+    "source_artifact_index_present": true
+  },
+  "failed_checks": [],
+  "artifact_id": "ymm4_import_preview_pack_001",
+  "source_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_001",
+  "selected_candidate_id": "sports_pitch_sequence_p05",
+  "transcript_status": "sample_fixture_not_real",
+  "draft_csv_rows": 10,
+  "copied_csv_path": "production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/draft_yymm4_import_preview.csv",
+  "primary_machine_readable": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\import_readiness_summary.json",
+  "primary_human_review": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\import_preview_panel.md",
+  "primary_human_review_html": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\import_preview_panel.html",
+  "next_action": "Open import_preview_panel.md or import_preview_panel.html for offline review; then provide a verified real transcript via transcript_substitution_readiness/real_input/ or rerun build-transcript-substitution with --transcript before any actual YMM4 import."
+}

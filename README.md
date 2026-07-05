@@ -135,6 +135,9 @@ python -m src.cli.main build-dashboard-readiness-ingest --package production_pil
 # dashboard readiness ingest から static GUI panel preview を生成
 python -m src.cli.main build-gui-dashboard-panel --package production_pilots/yukkuri_newsroom_content_spine_001
 
+# draft CSV / cue / Writer IR / dashboard state から local/offline YMM4 import preview pack を生成
+python -m src.cli.main build-yymm4-import-preview-pack --package production_pilots/yukkuri_newsroom_content_spine_001
+
 # B-15 Phase 1: 外部 LLM / Automation に渡す cue packet を生成
 python -m src.cli.main build-cue-packet input.txt -o cue_packet.md
 

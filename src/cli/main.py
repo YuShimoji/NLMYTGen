@@ -24,6 +24,7 @@ Usage:
     python -m src.cli.main build-transcript-substitution --package production_pilots/pkg [--transcript input.txt] [--output DIR] [--format text|json]
     python -m src.cli.main build-dashboard-readiness-ingest --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-gui-dashboard-panel --package production_pilots/pkg [--ingest-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
+    python -m src.cli.main build-yymm4-import-preview-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-session-manifest --video-id ID [artifact paths...] [--format markdown|json] [-o path]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
@@ -2435,6 +2436,32 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    # build-yymm4-import-preview-pack (local/offline YMM4 handoff preview)
+    p_yymm4_import_preview = subparsers.add_parser(
+        "build-yymm4-import-preview-pack",
+        help="Build a local/offline YMM4 import preview pack from current pilot artifacts",
+    )
+    p_yymm4_import_preview.add_argument(
+        "--package",
+        required=True,
+        help="Content spine package directory",
+    )
+    p_yymm4_import_preview.add_argument(
+        "--output",
+        help="Output preview directory (default: <package>/ymm4_import_preview_pack)",
+    )
+    p_yymm4_import_preview.add_argument(
+        "--artifact-id",
+        default="ymm4_import_preview_pack_001",
+        help="YMM4 import preview artifact id",
+    )
+    p_yymm4_import_preview.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # build-session-manifest (production handoff)
     p_session_manifest = subparsers.add_parser(
         "build-session-manifest",
@@ -2581,6 +2608,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_dashboard_readiness_ingest(args)
         elif args.command == "build-gui-dashboard-panel":
             return _cmd_build_gui_dashboard_panel(args)
+        elif args.command == "build-yymm4-import-preview-pack":
+            return _cmd_build_yymm4_import_preview_pack(args)
         elif args.command == "build-session-manifest":
             return _cmd_build_session_manifest(args)
         elif args.command == "diagnose-script":
@@ -4424,6 +4453,30 @@ def _cmd_build_gui_dashboard_panel(args: argparse.Namespace) -> int:
         print(f"status: {readback.get('status')}")
         print(f"selected_candidate_id: {readback.get('selected_candidate_id')}")
         print(f"transcript_status: {readback.get('transcript_status')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_yymm4_import_preview_pack(args: argparse.Namespace) -> int:
+    """Build a local/offline YMM4 import preview pack from current pilot artifacts."""
+    from src.pipeline.ymm4_import_preview_pack import build_ymm4_import_preview_pack
+
+    readback = build_ymm4_import_preview_pack(
+        package_dir=getattr(args, "package"),
+        output_dir=getattr(args, "output", None),
+        artifact_id=args.artifact_id,
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"selected_candidate_id: {readback.get('selected_candidate_id')}")
+        print(f"transcript_status: {readback.get('transcript_status')}")
+        print(f"draft_csv_rows: {readback.get('draft_csv_rows')}")
         print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
         print(f"primary_human_review: {readback.get('primary_human_review')}")
         print(f"next_action: {readback.get('next_action')}")

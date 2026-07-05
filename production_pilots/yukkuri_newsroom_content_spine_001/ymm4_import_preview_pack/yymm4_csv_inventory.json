@@ -1,0 +1,57 @@
+{
+  "schema_version": "yymm4_csv_inventory.v1",
+  "source_csv_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+  "source_csv_exists": true,
+  "copied_csv_path": "production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/draft_yymm4_import_preview.csv",
+  "copied_csv_exists": true,
+  "row_count": 10,
+  "raw_row_count": 10,
+  "header_present": false,
+  "csv_contract": {
+    "format": "YMM4 script import CSV",
+    "encoding": "utf-8",
+    "column_count": 2,
+    "required_columns": [
+      "speaker",
+      "text"
+    ],
+    "required_headers": [
+      "speaker",
+      "text"
+    ],
+    "headers_required_for_yymm4_import": false,
+    "header_mode": "headerless_yymm4_csv",
+    "missing_headers": [
+      "speaker",
+      "text"
+    ],
+    "missing_headers_block_import": false
+  },
+  "column_count_ok": true,
+  "malformed_rows": [],
+  "blank_speaker_rows": [],
+  "blank_text_rows": [],
+  "speaker_counts": {
+    "まりさ": 7,
+    "れいむ": 3
+  },
+  "column_count_distribution": {
+    "2": 10
+  },
+  "sample_rows": [
+    {
+      "speaker": "れいむ",
+      "text": "今日は「155 -> 140 km/h」って、どういう話なの？"
+    },
+    {
+      "speaker": "まりさ",
+      "text": "速球のあとに球速を落とすと、打者の見え方はどう変わるのか。"
+    },
+    {
+      "speaker": "まりさ",
+      "text": "まず場面は、7回表、1アウト、カウントB2-S2、走者なしという状況から見るぜ。"
+    }
+  ],
+  "state": "draft_offline",
+  "status_note": "headerless two-column draft CSV; no YMM4 import or VoiceItem timing proof has been run"
+}

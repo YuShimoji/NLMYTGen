@@ -1,0 +1,58 @@
+{
+  "schema_version": "ymm4_import_preview_manifest.v1",
+  "artifact_id": "ymm4_import_preview_pack_001",
+  "artifact_kind": "ymm4-import-preview-pack",
+  "status": "generated",
+  "source_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_001",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack",
+  "selected_candidate_id": "sports_pitch_sequence_p05",
+  "files": {
+    "import_preview_manifest.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\import_preview_manifest.json",
+    "yymm4_csv_inventory.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\yymm4_csv_inventory.json",
+    "cue_packet_inventory.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\cue_packet_inventory.json",
+    "writer_ir_inventory.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\writer_ir_inventory.json",
+    "import_readiness_summary.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\import_readiness_summary.json",
+    "import_preview_checklist.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\import_preview_checklist.md",
+    "import_preview_panel.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\import_preview_panel.md",
+    "import_preview_panel.html": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\import_preview_panel.html",
+    "source_artifact_index.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\source_artifact_index.json",
+    "validation_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\validation_readback.json",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\limitations.md",
+    "draft_yymm4_import_preview.csv": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack\\draft_yymm4_import_preview.csv"
+  },
+  "source_inputs": {
+    "transcript_manifest": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\substitution_manifest.json",
+    "transcript_probe": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\transcript_source_probe.json",
+    "transcript_readback": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\validation_readback.json",
+    "cue_packet_readiness": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\cue_packet_readiness.json",
+    "writer_ir": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\regenerated_writer_ir_candidate.json",
+    "cue_packet": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\regenerated_cue_packet_candidate.json",
+    "draft_csv": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\regenerated_draft_yymm4.csv",
+    "episode_bridge": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\regenerated_episode_bridge.json",
+    "dashboard_summary": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\readiness_summary.json",
+    "dashboard_source_index": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\source_artifact_index.json",
+    "dashboard_readback": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\validation_readback.json",
+    "gui_adapter": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\gui_dashboard_adapter.json",
+    "gui_panel_html": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\dashboard_panel_preview.html",
+    "gui_readback": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\validation_readback.json"
+  },
+  "preview_csv": {
+    "source_csv_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+    "copied_csv_path": "production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/draft_yymm4_import_preview.csv",
+    "row_count": 10,
+    "state": "draft_offline"
+  },
+  "boundaries": {
+    "local_offline_review_only": true,
+    "sample_fixture_not_real_visible": true,
+    "draft_offline_only": true,
+    "no_live_fetch": true,
+    "no_media_download": true,
+    "no_youtube_publication": true,
+    "no_oauth_or_paid_api": true,
+    "no_rights_or_legal_acceptance": true,
+    "no_yymm4_gui_launch_or_import_or_render": true,
+    "no_production_ymmp_generation": true,
+    "no_audio_generation": true
+  }
+}

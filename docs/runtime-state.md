@@ -1,5 +1,29 @@
 # Runtime State — NLMYTGen
 
+- **YMM4 import preview pack v1 generated (2026-07-06)**:
+  `build-yymm4-import-preview-pack` now aggregates the current draft YMM4 CSV,
+  regenerated cue packet, Writer IR candidate, transcript readiness state,
+  dashboard readiness ingest, and GUI dashboard adapter into
+  `production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/`.
+  The package includes `import_preview_manifest.json`,
+  `yymm4_csv_inventory.json`, `cue_packet_inventory.json`,
+  `writer_ir_inventory.json`, `import_readiness_summary.json`,
+  `import_preview_panel.{md,html}`, `import_preview_checklist.md`,
+  `source_artifact_index.json`, `limitations.md`, `validation_readback.json`,
+  and a copied `draft_yymm4_import_preview.csv`. Current readback passed with
+  10 CSV rows, a documented headerless two-column YMM4 CSV contract,
+  `transcript_status=sample_fixture_not_real`, `cue_packet` and `writer_ir`
+  as `draft_offline`, real transcript input `blocked_by_real_input`, and
+  YMM4 GUI/import/render, production `.ymmp`, rights/legal/public-ready, and
+  YouTube/publication gates closed. This is a local/offline preview only: not a
+  real transcript rerun, YMM4 GUI launch/import, VoiceItem timing readback,
+  production `.ymmp`, render, thumbnail proof, rights/legal/public-ready
+  acceptance, or publication. Next safe action is to review
+  `ymm4_import_preview_pack/import_preview_panel.md` or
+  `import_preview_panel.html`, then provide a verified real transcript in
+  `transcript_substitution_readiness/real_input/` or rerun
+  `build-transcript-substitution --transcript ...` before any actual YMM4
+  import.
 - **GUI dashboard panel ingest v1 generated (2026-07-06)**:
   `build-gui-dashboard-panel` now turns the current dashboard readiness ingest
   into a read-only static panel package at

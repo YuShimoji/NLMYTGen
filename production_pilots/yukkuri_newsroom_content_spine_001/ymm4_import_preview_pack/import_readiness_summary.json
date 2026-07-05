@@ -1,0 +1,244 @@
+{
+  "schema_version": "ymm4_import_readiness_summary.v1",
+  "artifact_id": "ymm4_import_preview_pack_001",
+  "source_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_001",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\ymm4_import_preview_pack",
+  "selected_candidate_id": "sports_pitch_sequence_p05",
+  "status_groups": {
+    "ready": [
+      "csv_row_contract",
+      "dashboard_readiness_ingest",
+      "gui_dashboard_panel"
+    ],
+    "partial": [
+      "csv_header_contract"
+    ],
+    "sample_fixture_not_real": [
+      "transcript_source"
+    ],
+    "draft_offline": [
+      "draft_yymm4_csv",
+      "cue_packet",
+      "writer_ir"
+    ],
+    "blocked_by_real_input": [
+      "real_transcript_input"
+    ],
+    "blocked_by_true_gate": [
+      "source_rights_status",
+      "production_status",
+      "public_upload_status",
+      "ymm4_render_status"
+    ],
+    "deferred": [
+      "ymm4_gui_import_status"
+    ],
+    "missing": [
+      "production_ymmp"
+    ],
+    "unknown": [
+      "timing_audio_status"
+    ]
+  },
+  "readiness_rows": [
+    {
+      "capability_id": "draft_yymm4_csv",
+      "label": "Draft YMM4 CSV copy",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+      "exists": true,
+      "note": "copied into the preview package; no YMM4 import has been run"
+    },
+    {
+      "capability_id": "csv_row_contract",
+      "label": "CSV two-column row contract",
+      "state": "ready",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+      "exists": true,
+      "note": "10 data rows; column_count_ok=True"
+    },
+    {
+      "capability_id": "csv_header_contract",
+      "label": "CSV header contract",
+      "state": "partial",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+      "exists": true,
+      "note": "YMM4 import CSV is headerless; speaker/text headers are documented but absent by design"
+    },
+    {
+      "capability_id": "cue_packet",
+      "label": "Cue packet candidate",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_cue_packet_candidate.json",
+      "exists": true,
+      "note": "candidate only; external LLM and production operator steps were not run"
+    },
+    {
+      "capability_id": "writer_ir",
+      "label": "Writer IR candidate",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_writer_ir_candidate.json",
+      "exists": true,
+      "note": "candidate only; row ranges, timing, maps, and validate/apply remain gated"
+    },
+    {
+      "capability_id": "transcript_source",
+      "label": "Transcript source reality",
+      "state": "sample_fixture_not_real",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/transcript_source_probe.json",
+      "exists": true,
+      "note": "sample fixture is not a real NotebookLM/human-reviewed transcript"
+    },
+    {
+      "capability_id": "real_transcript_input",
+      "label": "Real transcript input",
+      "state": "blocked_by_real_input",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/real_input",
+      "exists": true,
+      "note": "supply a verified local transcript before production import review"
+    },
+    {
+      "capability_id": "dashboard_readiness_ingest",
+      "label": "Dashboard readiness ingest",
+      "state": "ready",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/dashboard_readiness_ingest/readiness_summary.json",
+      "exists": true,
+      "note": "read-only status ingest is available to cross-check import state"
+    },
+    {
+      "capability_id": "gui_dashboard_panel",
+      "label": "GUI dashboard panel",
+      "state": "ready",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/gui_dashboard_panel/gui_dashboard_adapter.json",
+      "exists": true,
+      "note": "static read-only panel exists; no GUI runtime or YMM4 launch implied"
+    },
+    {
+      "capability_id": "timing_audio_status",
+      "label": "Timing and audio status",
+      "state": "unknown",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/transcript_source_probe.json",
+      "exists": true,
+      "note": "timing=no_audio_or_yymm4_timing; audio=no_audio_generated_or_imported"
+    },
+    {
+      "capability_id": "source_rights_status",
+      "label": "Source rights/public use",
+      "state": "blocked_by_true_gate",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/transcript_source_probe.json",
+      "exists": true,
+      "note": "sample_only_no_publication"
+    },
+    {
+      "capability_id": "production_status",
+      "label": "Production status",
+      "state": "blocked_by_true_gate",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/transcript_source_probe.json",
+      "exists": true,
+      "note": "blocked until real transcript, timing, source review, and human acceptance exist"
+    },
+    {
+      "capability_id": "public_upload_status",
+      "label": "Public upload status",
+      "state": "blocked_by_true_gate",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/dashboard_readiness_ingest/readiness_summary.json",
+      "exists": true,
+      "note": "no YouTube upload, scheduling, visibility, or public-ready claim"
+    },
+    {
+      "capability_id": "ymm4_gui_import_status",
+      "label": "YMM4 GUI import status",
+      "state": "deferred",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/manual_yymm4_import",
+      "exists": false,
+      "note": "YMM4 was not launched; import is a future manual/verified gate"
+    },
+    {
+      "capability_id": "ymm4_render_status",
+      "label": "YMM4 render status",
+      "state": "blocked_by_true_gate",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/render",
+      "exists": false,
+      "note": "no render or video output was generated"
+    },
+    {
+      "capability_id": "production_ymmp",
+      "label": "Production .ymmp",
+      "state": "missing",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/production.ymmp",
+      "exists": false,
+      "note": "not created in this slice; zero-generation remains out of scope"
+    }
+  ],
+  "csv_summary": {
+    "row_count": 10,
+    "column_count_ok": true,
+    "header_present": false,
+    "required_headers": [
+      "speaker",
+      "text"
+    ],
+    "missing_headers": [
+      "speaker",
+      "text"
+    ],
+    "missing_headers_block_import": false
+  },
+  "cue_summary": {
+    "section_count": 3,
+    "transcript_row_count": 10,
+    "external_llm_called": false,
+    "state": "draft_offline"
+  },
+  "writer_ir_summary": {
+    "section_count": 3,
+    "utterance_count": 10,
+    "compatibility_status": "transcript_substitution_candidate_not_validate_ir_ready",
+    "row_ranges_present": false,
+    "state": "draft_offline"
+  },
+  "input_reality": {
+    "sample_fixture_used": true,
+    "real_transcript_found_for_current_package": false,
+    "selected_transcript_path": "production_pilots\\yukkuri_newsroom_content_spine_001\\transcript_substitution_readiness\\sample_inputs\\notebooklm_like_sample.txt",
+    "source_mode": "sample_fixture_generated"
+  },
+  "boundary_status": {
+    "source_status": "offline_fixture_not_live",
+    "transcript_status": "sample_fixture_not_real",
+    "timing_status": "no_audio_or_yymm4_timing",
+    "audio_status": "no_audio_generated_or_imported",
+    "rights_status": "sample_only_no_publication",
+    "production_status": "blocked_by_true_gate",
+    "public_upload_status": "blocked_by_true_gate",
+    "ymm4_gui_status": "blocked_by_true_gate",
+    "ymm4_import_status": "deferred",
+    "ymm4_render_status": "blocked_by_true_gate"
+  },
+  "closed_gates": [
+    "YouTube upload/publication/visibility change",
+    "OAuth/API keys/payment",
+    "rights/legal/public-ready acceptance",
+    "live scraping/media download",
+    "YMM4 GUI launch/import/render",
+    "production .ymmp generation",
+    "cross-repo or destructive git"
+  ],
+  "next_safe_local_action": "Open import_preview_panel.md or import_preview_panel.html for offline review; then provide a verified real transcript via transcript_substitution_readiness/real_input/ or rerun build-transcript-substitution with --transcript before any actual YMM4 import."
+}

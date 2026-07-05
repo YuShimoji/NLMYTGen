@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>YMM4 Import Preview Pack</title>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --surface: #ffffff;
+      --ink: #16202a;
+      --muted: #667085;
+      --line: #d7ded8;
+      --ready: #0f766e;
+      --draft: #8a6116;
+      --sample: #a14f16;
+      --input: #b42318;
+      --gate: #7f1d1d;
+      --deferred: #475569;
+      --missing: #6b7280;
+      --unknown: #4b5563;
+      --accent: #2563eb;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--ink); font-family: "Segoe UI", "Noto Sans", Arial, sans-serif; }
+    body { padding: 24px; }
+    .shell { max-width: 1320px; margin: 0 auto; }
+    header { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: end; margin-bottom: 18px; }
+    h1 { margin: 0; font-size: 28px; line-height: 1.15; letter-spacing: 0; }
+    h2 { margin: 0 0 12px; font-size: 16px; line-height: 1.25; letter-spacing: 0; }
+    p { margin: 0; color: var(--muted); line-height: 1.5; }
+    code { font-family: Consolas, "SFMono-Regular", monospace; font-size: 12px; overflow-wrap: anywhere; }
+    .topline { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+    .summary-strip { display: grid; grid-template-columns: repeat(4, minmax(140px, 1fr)); gap: 10px; margin-bottom: 18px; }
+    .metric, .panel, .card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+    .metric { padding: 14px; min-height: 78px; }
+    .metric b { display: block; font-size: 20px; margin-top: 6px; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.85fr); gap: 16px; }
+    .panel { padding: 16px; margin-bottom: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .card { padding: 12px; display: grid; gap: 8px; min-height: 135px; }
+    .card-head { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
+    .card-title { font-size: 14px; font-weight: 700; line-height: 1.25; }
+    .note { font-size: 12px; color: var(--muted); line-height: 1.4; }
+    .status-pill { display: inline-flex; align-items: center; min-height: 24px; padding: 3px 8px; border-radius: 999px; font-size: 12px; font-weight: 700; border: 1px solid currentColor; background: #fff; }
+    [data-status="ready"] { color: var(--ready); }
+    [data-status="draft_offline"] { color: var(--draft); }
+    [data-status="sample_fixture_not_real"] { color: var(--sample); }
+    [data-status="blocked_by_real_input"] { color: var(--input); }
+    [data-status="blocked_by_true_gate"] { color: var(--gate); }
+    [data-status="deferred"] { color: var(--deferred); }
+    [data-status="missing"] { color: var(--missing); }
+    [data-status="partial"], [data-status="unknown"] { color: var(--unknown); }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { text-align: left; padding: 9px 8px; border-top: 1px solid var(--line); vertical-align: top; }
+    th { width: 200px; color: var(--muted); font-weight: 700; }
+    .next { border-left: 4px solid var(--accent); padding-left: 12px; }
+    @media (max-width: 980px) {
+      body { padding: 14px; }
+      header, .layout { grid-template-columns: 1fr; }
+      .summary-strip, .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .summary-strip, .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell" data-import-preview-pack="true">
+    <header>
+      <div>
+        <h1>YMM4 Import Preview Pack</h1>
+        <p>Local/offline handoff preview for sports_pitch_sequence_p05.</p>
+        <div class="topline"><span class="status-pill" data-status="ready">ready</span>
+<span class="status-pill" data-status="partial">partial</span>
+<span class="status-pill" data-status="sample_fixture_not_real">sample_fixture_not_real</span>
+<span class="status-pill" data-status="draft_offline">draft_offline</span>
+<span class="status-pill" data-status="blocked_by_real_input">blocked_by_real_input</span>
+<span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span>
+<span class="status-pill" data-status="deferred">deferred</span>
+<span class="status-pill" data-status="missing">missing</span>
+<span class="status-pill" data-status="unknown">unknown</span></div>
+      </div>
+      <span class="status-pill" data-status="sample_fixture_not_real">sample_fixture_not_real</span>
+    </header>
+
+    <section class="summary-strip" aria-label="import preview summary">
+      <div class="metric"><p>CSV rows</p><b>10</b></div>
+      <div class="metric"><p>CSV columns</p><b>true</b></div>
+      <div class="metric"><p>Transcript</p><b>sample_fixture_not_real</b></div>
+      <div class="metric"><p>YMM4 GUI</p><b>blocked_by_true_gate</b></div>
+    </section>
+
+    <section class="layout">
+      <div>
+        <section class="panel" data-section="readiness-grid">
+          <h2>Readiness Grid</h2>
+          <div class="grid"><article class="card" data-capability="draft_yymm4_csv" data-status="draft_offline"><div class="card-head"><div class="card-title">Draft YMM4 CSV copy</div><span class="status-pill" data-status="draft_offline">draft_offline</span></div><div class="note">copied into the preview package; no YMM4 import has been run</div><code>production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_draft_yymm4.csv</code></article>
+<article class="card" data-capability="csv_row_contract" data-status="ready"><div class="card-head"><div class="card-title">CSV two-column row contract</div><span class="status-pill" data-status="ready">ready</span></div><div class="note">10 data rows; column_count_ok=True</div><code>production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_draft_yymm4.csv</code></article>
+<article class="card" data-capability="csv_header_contract" data-status="partial"><div class="card-head"><div class="card-title">CSV header contract</div><span class="status-pill" data-status="partial">partial</span></div><div class="note">YMM4 import CSV is headerless; speaker/text headers are documented but absent by design</div><code>production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_draft_yymm4.csv</code></article>
+<article class="card" data-capability="cue_packet" data-status="draft_offline"><div class="card-head"><div class="card-title">Cue packet candidate</div><span class="status-pill" data-status="draft_offline">draft_offline</span></div><div class="note">candidate only; external LLM and production operator steps were not run</div><code>production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_cue_packet_candidate.json</code></article>
+<article class="card" data-capability="writer_ir" data-status="draft_offline"><div class="card-head"><div class="card-title">Writer IR candidate</div><span class="status-pill" data-status="draft_offline">draft_offline</span></div><div class="note">candidate only; row ranges, timing, maps, and validate/apply remain gated</div><code>production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_writer_ir_candidate.json</code></article>
+<article class="card" data-capability="transcript_source" data-status="sample_fixture_not_real"><div class="card-head"><div class="card-title">Transcript source reality</div><span class="status-pill" data-status="sample_fixture_not_real">sample_fixture_not_real</span></div><div class="note">sample fixture is not a real NotebookLM/human-reviewed transcript</div><code>production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/transcript_source_probe.json</code></article>
+<article class="card" data-capability="real_transcript_input" data-status="blocked_by_real_input"><div class="card-head"><div class="card-title">Real transcript input</div><span class="status-pill" data-status="blocked_by_real_input">blocked_by_real_input</span></div><div class="note">supply a verified local transcript before production import review</div><code>production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/real_input</code></article>
+<article class="card" data-capability="dashboard_readiness_ingest" data-status="ready"><div class="card-head"><div class="card-title">Dashboard readiness ingest</div><span class="status-pill" data-status="ready">ready</span></div><div class="note">read-only status ingest is available to cross-check import state</div><code>production_pilots/yukkuri_newsroom_content_spine_001/dashboard_readiness_ingest/readiness_summary.json</code></article>
+<article class="card" data-capability="gui_dashboard_panel" data-status="ready"><div class="card-head"><div class="card-title">GUI dashboard panel</div><span class="status-pill" data-status="ready">ready</span></div><div class="note">static read-only panel exists; no GUI runtime or YMM4 launch implied</div><code>production_pilots/yukkuri_newsroom_content_spine_001/gui_dashboard_panel/gui_dashboard_adapter.json</code></article>
+<article class="card" data-capability="timing_audio_status" data-status="unknown"><div class="card-head"><div class="card-title">Timing and audio status</div><span class="status-pill" data-status="unknown">unknown</span></div><div class="note">timing=no_audio_or_yymm4_timing; audio=no_audio_generated_or_imported</div><code>production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/transcript_source_probe.json</code></article>
+<article class="card" data-capability="source_rights_status" data-status="blocked_by_true_gate"><div class="card-head"><div class="card-title">Source rights/public use</div><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></div><div class="note">sample_only_no_publication</div><code>production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/transcript_source_probe.json</code></article>
+<article class="card" data-capability="production_status" data-status="blocked_by_true_gate"><div class="card-head"><div class="card-title">Production status</div><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></div><div class="note">blocked until real transcript, timing, source review, and human acceptance exist</div><code>production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/transcript_source_probe.json</code></article>
+<article class="card" data-capability="public_upload_status" data-status="blocked_by_true_gate"><div class="card-head"><div class="card-title">Public upload status</div><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></div><div class="note">no YouTube upload, scheduling, visibility, or public-ready claim</div><code>production_pilots/yukkuri_newsroom_content_spine_001/dashboard_readiness_ingest/readiness_summary.json</code></article>
+<article class="card" data-capability="ymm4_gui_import_status" data-status="deferred"><div class="card-head"><div class="card-title">YMM4 GUI import status</div><span class="status-pill" data-status="deferred">deferred</span></div><div class="note">YMM4 was not launched; import is a future manual/verified gate</div><code>production_pilots/yukkuri_newsroom_content_spine_001/manual_yymm4_import</code></article>
+<article class="card" data-capability="ymm4_render_status" data-status="blocked_by_true_gate"><div class="card-head"><div class="card-title">YMM4 render status</div><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></div><div class="note">no render or video output was generated</div><code>production_pilots/yukkuri_newsroom_content_spine_001/render</code></article>
+<article class="card" data-capability="production_ymmp" data-status="missing"><div class="card-head"><div class="card-title">Production .ymmp</div><span class="status-pill" data-status="missing">missing</span></div><div class="note">not created in this slice; zero-generation remains out of scope</div><code>production_pilots/yukkuri_newsroom_content_spine_001/production.ymmp</code></article></div>
+        </section>
+
+        <section class="panel" data-section="source-artifact-index">
+          <h2>Source Artifact Index</h2>
+          <p>source_artifact_index: see <code>source_artifact_index.json</code> for source inputs and generated files.</p>
+        </section>
+      </div>
+
+      <aside>
+        <section class="panel" data-section="csv-contract">
+          <h2>CSV Contract</h2>
+          <table aria-label="csv contract">
+            <tbody>
+              <tr><th>source_csv</th><td><code>production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_draft_yymm4.csv</code></td></tr>
+              <tr><th>copied_csv</th><td><code>production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/draft_yymm4_import_preview.csv</code></td></tr>
+              <tr><th>header_mode</th><td>headerless_yymm4_csv</td></tr>
+              <tr><th>required_headers</th><td>speaker, text</td></tr>
+              <tr><th>missing_headers</th><td>speaker, text</td></tr>
+              <tr><th>missing_headers_block_import</th><td>false</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="panel" data-section="boundary-status">
+          <h2>Boundaries</h2>
+          <table aria-label="boundary status"><tbody><tr><th>source_status</th><td><span class="status-pill" data-status="draft_offline">offline_fixture_not_live</span></td></tr>
+<tr><th>transcript_status</th><td><span class="status-pill" data-status="sample_fixture_not_real">sample_fixture_not_real</span></td></tr>
+<tr><th>timing_status</th><td><span class="status-pill" data-status="ready">no_audio_or_yymm4_timing</span></td></tr>
+<tr><th>audio_status</th><td><span class="status-pill" data-status="ready">no_audio_generated_or_imported</span></td></tr>
+<tr><th>rights_status</th><td><span class="status-pill" data-status="sample_fixture_not_real">sample_only_no_publication</span></td></tr>
+<tr><th>production_status</th><td><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></td></tr>
+<tr><th>public_upload_status</th><td><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></td></tr>
+<tr><th>ymm4_gui_status</th><td><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></td></tr>
+<tr><th>ymm4_import_status</th><td><span class="status-pill" data-status="deferred">deferred</span></td></tr>
+<tr><th>ymm4_render_status</th><td><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></td></tr></tbody></table>
+        </section>
+
+        <section class="panel next" data-section="next-action">
+          <h2>Next Safe Local Action</h2>
+          <p>Open import_preview_panel.md or import_preview_panel.html for offline review; then provide a verified real transcript via transcript_substitution_readiness/real_input/ or rerun build-transcript-substitution with --transcript before any actual YMM4 import.</p>
+        </section>
+      </aside>
+    </section>
+  </main>
+</body>
+</html>
