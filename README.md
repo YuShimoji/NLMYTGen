@@ -205,3 +205,11 @@ LLM の主要な新しい役割は、台本から演出 IR (構造化 JSON) を�
 Phase 1 では `build-cue-packet` により、外部 LLM / Automation に渡す text-only cue packet を生成する。
 現在の cue contract は、section ごとに `主背景 1 つ + 補助素材 1 つ` を基本とし、音の cue は optional 扱いに寄せている。
 図作成 bottleneck 向けには `build-diagram-packet` により、図版そのものではなく「図作成前の text-only brief」を生成できる。
+## Factory Seed Dry-Run CLI
+
+Instantiate a second yukkuri newsroom dry-run seed package from the existing
+local/offline episode factory template registry:
+
+```bash
+python -m src.cli.main instantiate-episode-factory-seed --registry production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry
+```

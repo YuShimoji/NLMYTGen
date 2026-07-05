@@ -1,5 +1,32 @@
 # Runtime State — NLMYTGen
 
+- **Factory seed instantiation dry-run v1 generated (2026-07-06)**:
+  `instantiate-episode-factory-seed` now initializes a local/offline second
+  yukkuri newsroom episode seed from the existing template registry at
+  `production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/`.
+  The generated dry-run package is
+  `production_pilots/yukkuri_newsroom_content_spine_001/factory_seed_dry_run_002/`
+  and includes `seed_instantiation_manifest.json`, `episode_seed.json`,
+  `dry_run_topic_source_packet.json`, `required_real_inputs.json`,
+  `carried_template_defaults.json`, `planned_pipeline_steps.json`,
+  `boundary_status.json`, `init_readiness_summary.json`,
+  `source_artifact_index.json`, `content_spine_input_candidate.json`,
+  `review_checklist.md`, `limitations.md`, and `validation_readback.json`.
+  Current readback passed with registry inputs present, required real inputs
+  separated and still null, carried defaults separated, synthetic placeholders
+  marked, no external references, no forbidden completion claims, and
+  `content_spine_input_candidate.json` present as a candidate only. This proves
+  the registry can initialize a new episode seed without manually copying the
+  original pilot. The package preserves `dry_run`,
+  `sample_fixture_not_real`, `rights_boundary=sample_only_no_publication`,
+  `public_upload_closed`, and `yymm4_render_closed`. It is not a real source
+  intake, real transcript rerun, downstream content-spine execution, YMM4
+  GUI/import/render, production `.ymmp`, external media/API/OAuth/payment,
+  rights/legal/public acceptance, final thumbnail image, or publication.
+  Next safe action is to review `episode_seed.json` and
+  `required_real_inputs.json`, then replace the synthetic dry-run packet with a
+  real reviewed local topic/source packet before any downstream content-spine,
+  transcript, YMM4, rights, render, production, or public work.
 - **Episode factory template registry v1 generated (2026-07-06)**:
   `build-episode-factory-template-registry` now distills the current yukkuri
   newsroom pilot into reusable local/offline templates and a deterministic

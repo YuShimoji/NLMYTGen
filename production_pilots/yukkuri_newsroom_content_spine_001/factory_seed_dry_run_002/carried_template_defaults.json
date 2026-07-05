@@ -1,0 +1,371 @@
+{
+  "schema_version": "factory_seed_carried_template_defaults.v1",
+  "state": "inherited_defaults_only",
+  "derived_from_seed_sample_id": "next_yukkuri_newsroom_episode_seed_sample_001",
+  "carried_template_defaults": {
+    "explainer_role": "まりさ",
+    "listener_role": "れいむ",
+    "section_count": 3,
+    "csv_header_mode": "headerless_yymm4_csv",
+    "thumbnail_text_constraints": {
+      "max_primary_tokens": 4,
+      "max_short_text_candidates_on_canvas": 1
+    },
+    "thumbnail_safety": {
+      "no_external_media": true,
+      "no_logos_or_player_photos": true,
+      "source_rights_caution": "Use only original data-card graphics unless a real-source rights record is added later."
+    }
+  },
+  "carry_forward_allowed": [
+    "yukkuri role names",
+    "three-section explainer route",
+    "CSV contract shape",
+    "dashboard status categories",
+    "thumbnail proof safety constraints"
+  ],
+  "source_template_files": [
+    "yukkuri_newsroom_template.json",
+    "content_spine_template.json",
+    "transcript_input_template.json",
+    "writer_ir_template.json",
+    "yymm4_import_template.json",
+    "thumbnail_proof_template.json",
+    "dashboard_status_template.json"
+  ],
+  "template_summaries": [
+    {
+      "template_id": "yukkuri_newsroom_template",
+      "file": "yukkuri_newsroom_template.json",
+      "required_field_count": 8,
+      "carried_field_groups": [
+        "default_section_count",
+        "explainer_role",
+        "listener_role",
+        "status_policy",
+        "tone_family"
+      ],
+      "carried_from_template": {
+        "explainer_role": "まりさ",
+        "listener_role": "れいむ",
+        "tone_family": "fast tactical yukkuri explainer with light reaction beats",
+        "default_section_count": 3,
+        "status_policy": {
+          "source_status": "offline_fixture_not_live",
+          "template_status": "draft_offline",
+          "transcript_status": "sample_fixture_not_real",
+          "real_transcript_status": "blocked_by_real_input",
+          "rights_boundary": "sample_only_no_publication",
+          "rights_gate": "blocked_by_true_gate",
+          "public_upload_status": "public_upload_closed",
+          "public_upload_gate": "blocked_by_true_gate",
+          "external_media_status": "blocked_by_true_gate",
+          "yymm4_gui_status": "blocked_by_true_gate",
+          "yymm4_import_status": "deferred",
+          "yymm4_render_status": "yymm4_render_closed",
+          "yymm4_render_gate": "blocked_by_true_gate",
+          "production_status": "blocked_by_true_gate"
+        }
+      }
+    },
+    {
+      "template_id": "content_spine_template",
+      "file": "content_spine_template.json",
+      "required_field_count": 10,
+      "carried_field_groups": [
+        "public_actions_blocked",
+        "selection_policy",
+        "source_boundary_shape"
+      ],
+      "carried_from_template": {
+        "selection_policy": "highest candidate_score, then source order",
+        "source_boundary_shape": {
+          "source_name": "Synthetic Baseball Feed",
+          "source_url_or_placeholder": "offline://samples/_probe/baseball/pipeline/baseball_data_capsule_p05.json",
+          "published_at_or_placeholder": "2026-05-26T00:00:00Z",
+          "freshness_status": "offline_fixture_not_live",
+          "rights_status": "sample_only_no_publication",
+          "attribution_note": "Derived from repo-local synthetic baseball fixture, not an official league feed or player media source.",
+          "production_status": "local_planning_only"
+        },
+        "public_actions_blocked": [
+          "YouTube upload/publication/visibility change",
+          "OAuth/API keys/payment",
+          "rights/legal/public-ready acceptance",
+          "live scraping/media download",
+          "YMM4 GUI launch/render",
+          "cross-repo or destructive git"
+        ]
+      }
+    },
+    {
+      "template_id": "transcript_input_template",
+      "file": "transcript_input_template.json",
+      "required_field_count": 7,
+      "carried_field_groups": [
+        "accepted_inputs",
+        "current_dropzone_shape",
+        "parser",
+        "required_boundary_fields",
+        "sample_fixture_status"
+      ],
+      "carried_from_template": {
+        "accepted_inputs": [
+          {
+            "extension": ".csv",
+            "shape": "two columns: speaker,text; header row is optional and skipped when detected"
+          },
+          {
+            "extension": ".txt",
+            "shape": "speaker-tagged lines such as Speaker: text or timestamped [00:00] Speaker: text"
+          },
+          {
+            "extension": ".txt",
+            "shape": "unlabeled alternating Speaker_A/Speaker_B lines when --unlabeled is set"
+          }
+        ],
+        "required_boundary_fields": [
+          "source_name",
+          "source_url_or_placeholder",
+          "freshness_status",
+          "rights_status",
+          "attribution_note",
+          "excluded_claims",
+          "production_status",
+          "transcript_status",
+          "timing_status",
+          "audio_status"
+        ],
+        "parser": "src.pipeline.normalize.normalize",
+        "current_dropzone_shape": "real_input/*.txt or real_input/*.csv",
+        "sample_fixture_status": "sample_fixture_not_real"
+      }
+    },
+    {
+      "template_id": "writer_ir_template",
+      "file": "writer_ir_template.json",
+      "required_field_count": 10,
+      "carried_field_groups": [
+        "compatibility_status",
+        "section_pattern",
+        "tone",
+        "utterance_shape"
+      ],
+      "carried_from_template": {
+        "section_pattern": [
+          {
+            "section_id": "S1",
+            "arc_phase": "intro",
+            "default_bg": "studio_blue",
+            "default_face": "neutral"
+          },
+          {
+            "section_id": "S2",
+            "arc_phase": "develop",
+            "default_bg": "diagram",
+            "default_face": "serious"
+          },
+          {
+            "section_id": "S3",
+            "arc_phase": "closing",
+            "default_bg": "dark_board",
+            "default_face": "thinking"
+          }
+        ],
+        "utterance_shape": [
+          "bg",
+          "bridge_source",
+          "face",
+          "index",
+          "section_id",
+          "slot",
+          "speaker",
+          "template",
+          "text"
+        ],
+        "tone": "fast tactical yukkuri explainer with light reaction beats",
+        "compatibility_status": "draft_template_not_validate_ir_ready"
+      }
+    },
+    {
+      "template_id": "yymm4_import_template",
+      "file": "yymm4_import_template.json",
+      "required_field_count": 7,
+      "carried_field_groups": [
+        "csv_contract",
+        "current_preview_row_count",
+        "headerless_import_csv",
+        "speaker_count_shape",
+        "status_categories"
+      ],
+      "carried_from_template": {
+        "csv_contract": {
+          "format": "YMM4 script import CSV",
+          "encoding": "utf-8",
+          "column_count": 2,
+          "required_columns": [
+            "speaker",
+            "text"
+          ],
+          "required_headers": [
+            "speaker",
+            "text"
+          ],
+          "headers_required_for_yymm4_import": false,
+          "header_mode": "headerless_yymm4_csv",
+          "missing_headers": [
+            "speaker",
+            "text"
+          ],
+          "missing_headers_block_import": false
+        },
+        "speaker_count_shape": [
+          "まりさ",
+          "れいむ"
+        ],
+        "headerless_import_csv": true,
+        "current_preview_row_count": 10,
+        "status_categories": [
+          "ready",
+          "partial",
+          "sample_fixture_not_real",
+          "draft_offline",
+          "blocked_by_real_input",
+          "blocked_by_true_gate",
+          "deferred",
+          "missing",
+          "unknown"
+        ]
+      }
+    },
+    {
+      "template_id": "thumbnail_proof_template",
+      "file": "thumbnail_proof_template.json",
+      "required_field_count": 6,
+      "carried_field_groups": [
+        "concept_shape",
+        "current_motif",
+        "layout_constraints",
+        "no_external_media",
+        "proof_status",
+        "text_candidate_shape"
+      ],
+      "carried_from_template": {
+        "text_candidate_shape": [
+          "composition_pairings",
+          "primary_title_candidates",
+          "schema_version",
+          "short_text_candidates",
+          "text_constraints"
+        ],
+        "concept_shape": [
+          "concepts",
+          "schema_version",
+          "selected_candidate_id",
+          "source_thumbnail_profile"
+        ],
+        "layout_constraints": {
+          "canvas": "1280x720 SVG static proof",
+          "safe_area_px": 48,
+          "primary_title_zone": "upper-left to center",
+          "secondary_text_zone": "lower-left badge",
+          "visual_motif": "Original scoreboard strip plus two pitch cards connected by a speed-drop arrow.",
+          "contrast_target": "large light text on dark field with warm numeric accent",
+          "palette": [
+            "#0f1f2e",
+            "#f8fafc",
+            "#f59e0b",
+            "#22c55e",
+            "#ef4444"
+          ]
+        },
+        "proof_status": "static_proof_only_not_final_thumbnail",
+        "no_external_media": true,
+        "current_motif": "Original scoreboard strip plus two pitch cards connected by a speed-drop arrow."
+      }
+    },
+    {
+      "template_id": "dashboard_status_template",
+      "file": "dashboard_status_template.json",
+      "required_field_count": 6,
+      "carried_field_groups": [
+        "bar_mode",
+        "capability_ids",
+        "route_nodes",
+        "status_categories"
+      ],
+      "carried_from_template": {
+        "status_categories": [
+          "ready",
+          "partial",
+          "sample_fixture_not_real",
+          "draft_offline",
+          "blocked_by_real_input",
+          "blocked_by_true_gate",
+          "deferred",
+          "missing",
+          "unknown"
+        ],
+        "route_nodes": [
+          "offline_topic_candidates",
+          "content_spine",
+          "ir_bridge",
+          "transcript_substitution",
+          "dashboard_readiness_ingest",
+          "real_transcript_rerun",
+          "yymm4_import_preview",
+          "thumbnail_visual_proof"
+        ],
+        "capability_ids": [
+          "content_spine",
+          "ir_bridge",
+          "transcript_substitution",
+          "writer_ir",
+          "cue_packet",
+          "draft_yymm4_csv",
+          "real_transcript_input",
+          "dashboard_ingest",
+          "project_cockpit",
+          "project_pipeline_mermaid",
+          "yymm4_import_preview",
+          "thumbnail_visual_proof"
+        ],
+        "bar_mode": "hypothesis"
+      }
+    }
+  ],
+  "not_real_inputs": [
+    "topic_or_source_packet",
+    "real_transcript",
+    "rights_review",
+    "human_episode_decision",
+    "YMM4 import/timing readback"
+  ],
+  "boundary_status": {
+    "source_status": "offline_fixture_not_live",
+    "template_status": "draft_offline",
+    "transcript_status": "sample_fixture_not_real",
+    "real_transcript_status": "required_before_production",
+    "rights_boundary": "sample_only_no_publication",
+    "rights_gate": "blocked_by_true_gate",
+    "public_upload_status": "public_upload_closed",
+    "public_upload_gate": "blocked_by_true_gate",
+    "external_media_status": "blocked_by_true_gate",
+    "yymm4_gui_status": "blocked_by_true_gate",
+    "yymm4_import_status": "deferred",
+    "yymm4_render_status": "yymm4_render_closed",
+    "yymm4_render_gate": "blocked_by_true_gate",
+    "production_status": "blocked_by_true_gate",
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "factory_seed_status": "instantiated_from_template_registry",
+    "source_packet_status": "synthetic_local_dry_run",
+    "content_spine_candidate_status": "derived_candidate_only_not_executed",
+    "real_source_status": "required_before_real_episode",
+    "external_network_status": "closed",
+    "oauth_status": "closed",
+    "payment_status": "closed"
+  }
+}

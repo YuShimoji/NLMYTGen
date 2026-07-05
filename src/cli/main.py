@@ -27,6 +27,7 @@ Usage:
     python -m src.cli.main build-yymm4-import-preview-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-thumbnail-visual-proof-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-episode-factory-template-registry --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
+    python -m src.cli.main instantiate-episode-factory-seed --registry production_pilots/pkg/episode_factory_template_registry [--output DIR] [--artifact-id ID] [--episode-id ID] [--format text|json]
     python -m src.cli.main build-session-manifest --video-id ID [artifact paths...] [--format markdown|json] [-o path]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
@@ -2516,6 +2517,37 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    # instantiate-episode-factory-seed (registry -> dry-run second episode seed)
+    p_factory_seed = subparsers.add_parser(
+        "instantiate-episode-factory-seed",
+        help="Instantiate a local/offline second episode dry-run seed from the template registry",
+    )
+    p_factory_seed.add_argument(
+        "--registry",
+        required=True,
+        help="Episode factory template registry directory",
+    )
+    p_factory_seed.add_argument(
+        "--output",
+        help="Output seed dry-run directory (default: <registry-parent>/factory_seed_dry_run_002)",
+    )
+    p_factory_seed.add_argument(
+        "--artifact-id",
+        default="factory_seed_instantiation_dry_run_002",
+        help="Factory seed instantiation dry-run artifact id",
+    )
+    p_factory_seed.add_argument(
+        "--episode-id",
+        default="yukkuri_newsroom_episode_002_dry_run_seed",
+        help="Episode id for the dry-run seed",
+    )
+    p_factory_seed.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # build-session-manifest (production handoff)
     p_session_manifest = subparsers.add_parser(
         "build-session-manifest",
@@ -2668,6 +2700,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_thumbnail_visual_proof_pack(args)
         elif args.command == "build-episode-factory-template-registry":
             return _cmd_build_episode_factory_template_registry(args)
+        elif args.command == "instantiate-episode-factory-seed":
+            return _cmd_instantiate_episode_factory_seed(args)
         elif args.command == "build-session-manifest":
             return _cmd_build_session_manifest(args)
         elif args.command == "diagnose-script":
@@ -4583,6 +4617,33 @@ def _cmd_build_episode_factory_template_registry(args: argparse.Namespace) -> in
         print(f"selected_candidate_id: {readback.get('selected_candidate_id')}")
         print(f"template_count: {readback.get('template_count')}")
         print(f"seed_sample_path: {readback.get('seed_sample_path')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_instantiate_episode_factory_seed(args: argparse.Namespace) -> int:
+    """Instantiate a local/offline dry-run second episode seed."""
+    from src.pipeline.factory_seed_instantiation import instantiate_episode_factory_seed
+
+    readback = instantiate_episode_factory_seed(
+        registry_dir=getattr(args, "registry"),
+        output_dir=getattr(args, "output", None),
+        artifact_id=args.artifact_id,
+        episode_id=args.episode_id,
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"episode_id: {readback.get('episode_id')}")
+        print(f"source_registry_dir: {readback.get('source_registry_dir')}")
+        print(f"episode_seed_path: {readback.get('episode_seed_path')}")
+        print(f"topic_source_packet_path: {readback.get('topic_source_packet_path')}")
+        print(f"content_spine_input_candidate_path: {readback.get('content_spine_input_candidate_path')}")
         print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
         print(f"primary_human_review: {readback.get('primary_human_review')}")
         print(f"next_action: {readback.get('next_action')}")

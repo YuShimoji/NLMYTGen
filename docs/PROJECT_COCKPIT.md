@@ -16,9 +16,10 @@ the feature/spec owner docs.
 | T+4 YMM4 import preview pack | generated | `production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/` | local/offline import handoff preview; no YMM4 GUI/import/render/public acceptance |
 | T+5 thumbnail visual proof pack | generated | `production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/` | static abstract proof; no external media/final image/public-ready claim |
 | T+6 episode factory template registry | generated | `production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/` | reusable local/offline templates and seed sample only |
-| T+7 real transcript rerun | advisory | `transcript_substitution_readiness/real_input/` or `--transcript` | requires verified local transcript input |
-| T+8 actual YMM4 import review | advisory | not built here | future VoiceItem/timing readback; no render claim |
-| T+9 production micro proof / deeper GUI adapter | advisory | not built here | future surface only if it reduces review friction |
+| T+7 factory seed instantiation dry-run | generated | `production_pilots/yukkuri_newsroom_content_spine_001/factory_seed_dry_run_002/` | second episode seed initialized from registry; synthetic dry-run only |
+| T+8 real transcript rerun | advisory | `transcript_substitution_readiness/real_input/` or `--transcript` | requires verified local transcript input |
+| T+9 actual YMM4 import review | advisory | not built here | future VoiceItem/timing readback; no render claim |
+| T+10 production micro proof / deeper GUI adapter | advisory | not built here | future surface only if it reduces review friction |
 
 ## True Gates
 
@@ -39,25 +40,31 @@ the feature/spec owner docs.
 Use this command from the repo root:
 
 ```bash
-python -m src.cli.main build-episode-factory-template-registry --package production_pilots/yukkuri_newsroom_content_spine_001
+python -m src.cli.main instantiate-episode-factory-seed --registry production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry
 ```
 
-The current episode factory template registry is:
+The current factory seed dry-run package is:
 
 ```text
-production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/
+production_pilots/yukkuri_newsroom_content_spine_001/factory_seed_dry_run_002/
 ```
 
 The primary machine readback file is:
 
 ```text
-production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/template_registry_manifest.json
+production_pilots/yukkuri_newsroom_content_spine_001/factory_seed_dry_run_002/seed_instantiation_manifest.json
 ```
 
 The primary human review file is:
 
 ```text
-production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/template_usage.md
+production_pilots/yukkuri_newsroom_content_spine_001/factory_seed_dry_run_002/review_checklist.md
+```
+
+Episode factory template registry can still be regenerated with:
+
+```bash
+python -m src.cli.main build-episode-factory-template-registry --package production_pilots/yukkuri_newsroom_content_spine_001
 ```
 
 Thumbnail visual proof pack can still be regenerated with:

@@ -218,3 +218,8 @@ G-26 Calibration phase 開始 (2026-05-01): v1/slice3_proof/slice4_proof 計 16 
 3. **`proposed` の本文スコープ**（例: G-20 の「承認前は `src/` 変更禁止」）— **ユーザー承認と `approved` 昇格（または承認済みスライスへの分割記載）のあと**に `src/` を触る。迷う場合は拡張を起票し、既存行の「スコープ確定」文を更新してから進める。
 
 `docs/runtime-state.md` の「未承認 FEATURE は増やさない」は **優先度・スコープ膨張の指針**であり、上記 2 のような保守・硬化を禁止するものではない。
+## 2026-07 Feature Registry Addendum
+
+| ID | Feature | Status | Layer | Notes |
+|----|---------|--------|-------|-------|
+| B-25 | Factory seed instantiation dry-run | done | L2 | `instantiate-episode-factory-seed` CLI. `production_pilots/.../factory_seed_dry_run_002/` emits `seed_instantiation_manifest.json`, `episode_seed.json`, `dry_run_topic_source_packet.json`, `required_real_inputs.json`, `carried_template_defaults.json`, `planned_pipeline_steps.json`, `boundary_status.json`, `init_readiness_summary.json`, `content_spine_input_candidate.json`, source index, review checklist, limitations, and validation readback. It initializes a second episode dry-run seed from the existing `episode_factory_template_registry` without manually copying the original pilot, separates inherited defaults / synthetic dry-run placeholders / required real inputs, preserves `dry_run`, `sample_fixture_not_real`, `rights_boundary`, `public_upload_closed`, and `yymm4_render_closed`, and keeps real transcript, YMM4 GUI/import/render, production `.ymmp`, external media/API/OAuth/payment, and publication closed. |
