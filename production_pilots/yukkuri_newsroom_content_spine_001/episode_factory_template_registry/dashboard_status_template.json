@@ -1,0 +1,68 @@
+{
+  "schema_version": "dashboard_status_template.v1",
+  "template_id": "dashboard_status_template",
+  "source_schema_reference": "dashboard_readiness_summary.v1",
+  "required_fields_for_real_episode": [
+    "capability_rows",
+    "status_groups",
+    "boundary_status",
+    "input_reality",
+    "next_action",
+    "source_artifact_index"
+  ],
+  "carried_from_template": {
+    "status_categories": [
+      "ready",
+      "partial",
+      "sample_fixture_not_real",
+      "draft_offline",
+      "blocked_by_real_input",
+      "blocked_by_true_gate",
+      "deferred",
+      "missing",
+      "unknown"
+    ],
+    "route_nodes": [
+      "offline_topic_candidates",
+      "content_spine",
+      "ir_bridge",
+      "transcript_substitution",
+      "dashboard_readiness_ingest",
+      "real_transcript_rerun",
+      "yymm4_import_preview",
+      "thumbnail_visual_proof"
+    ],
+    "capability_ids": [
+      "content_spine",
+      "ir_bridge",
+      "transcript_substitution",
+      "writer_ir",
+      "cue_packet",
+      "draft_yymm4_csv",
+      "real_transcript_input",
+      "dashboard_ingest",
+      "project_cockpit",
+      "project_pipeline_mermaid",
+      "yymm4_import_preview",
+      "thumbnail_visual_proof"
+    ],
+    "bar_mode": "hypothesis"
+  },
+  "default_boundary_status": {
+    "source_status": "offline_fixture_not_live",
+    "template_status": "draft_offline",
+    "transcript_status": "sample_fixture_not_real",
+    "real_transcript_status": "blocked_by_real_input",
+    "rights_boundary": "sample_only_no_publication",
+    "rights_gate": "blocked_by_true_gate",
+    "public_upload_status": "public_upload_closed",
+    "public_upload_gate": "blocked_by_true_gate",
+    "external_media_status": "blocked_by_true_gate",
+    "yymm4_gui_status": "blocked_by_true_gate",
+    "yymm4_import_status": "deferred",
+    "yymm4_render_status": "yymm4_render_closed",
+    "yymm4_render_gate": "blocked_by_true_gate",
+    "production_status": "blocked_by_true_gate"
+  },
+  "dashboard_is_read_only": true
+}

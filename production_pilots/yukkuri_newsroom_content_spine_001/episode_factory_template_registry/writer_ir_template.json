@@ -1,0 +1,75 @@
+{
+  "schema_version": "writer_ir_template.v1",
+  "template_id": "writer_ir_template",
+  "source_schema_reference": "content_spine_writer_ir_candidate.v1",
+  "production_ir_spec_reference": "docs/PRODUCTION_IR_SPEC.md",
+  "required_fields_for_real_episode": [
+    "video_id",
+    "sections[].section_id",
+    "sections[].arc_phase",
+    "utterances[].index",
+    "utterances[].speaker",
+    "utterances[].text",
+    "utterances[].section_id",
+    "utterances[].row_start",
+    "utterances[].row_end",
+    "source_boundary"
+  ],
+  "carried_from_template": {
+    "section_pattern": [
+      {
+        "section_id": "S1",
+        "arc_phase": "intro",
+        "default_bg": "studio_blue",
+        "default_face": "neutral"
+      },
+      {
+        "section_id": "S2",
+        "arc_phase": "develop",
+        "default_bg": "diagram",
+        "default_face": "serious"
+      },
+      {
+        "section_id": "S3",
+        "arc_phase": "closing",
+        "default_bg": "dark_board",
+        "default_face": "thinking"
+      }
+    ],
+    "utterance_shape": [
+      "bg",
+      "bridge_source",
+      "face",
+      "index",
+      "section_id",
+      "slot",
+      "speaker",
+      "template",
+      "text"
+    ],
+    "tone": "fast tactical yukkuri explainer with light reaction beats",
+    "compatibility_status": "draft_template_not_validate_ir_ready"
+  },
+  "gates_before_validate_ir": [
+    "human-reviewed transcript/script",
+    "row_start/row_end annotation from YMM4 CSV import or accepted timing route",
+    "production maps when face/bg/slot/overlay/se/motion are used",
+    "human source/rights/publication review"
+  ],
+  "default_boundary_status": {
+    "source_status": "offline_fixture_not_live",
+    "template_status": "draft_offline",
+    "transcript_status": "sample_fixture_not_real",
+    "real_transcript_status": "blocked_by_real_input",
+    "rights_boundary": "sample_only_no_publication",
+    "rights_gate": "blocked_by_true_gate",
+    "public_upload_status": "public_upload_closed",
+    "public_upload_gate": "blocked_by_true_gate",
+    "external_media_status": "blocked_by_true_gate",
+    "yymm4_gui_status": "blocked_by_true_gate",
+    "yymm4_import_status": "deferred",
+    "yymm4_render_status": "yymm4_render_closed",
+    "yymm4_render_gate": "blocked_by_true_gate",
+    "production_status": "blocked_by_true_gate"
+  }
+}

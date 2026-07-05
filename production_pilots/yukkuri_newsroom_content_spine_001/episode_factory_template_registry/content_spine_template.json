@@ -1,0 +1,58 @@
+{
+  "schema_version": "content_spine_template.v1",
+  "template_id": "content_spine_template",
+  "source_schema_reference": "content_spine_manifest.v1",
+  "required_fields_for_real_episode": [
+    "candidate_id",
+    "title",
+    "candidate_score_or_selection_reason",
+    "source_boundary.source_name",
+    "source_boundary.freshness_status",
+    "source_boundary.rights_status",
+    "source_boundary.excluded_claims",
+    "yukkuri_profile.hook",
+    "yukkuri_profile.beat_outline",
+    "thumbnail_profile.title_hook"
+  ],
+  "carried_from_template": {
+    "selection_policy": "highest candidate_score, then source order",
+    "source_boundary_shape": {
+      "source_name": "Synthetic Baseball Feed",
+      "source_url_or_placeholder": "offline://samples/_probe/baseball/pipeline/baseball_data_capsule_p05.json",
+      "published_at_or_placeholder": "2026-05-26T00:00:00Z",
+      "freshness_status": "offline_fixture_not_live",
+      "rights_status": "sample_only_no_publication",
+      "attribution_note": "Derived from repo-local synthetic baseball fixture, not an official league feed or player media source.",
+      "production_status": "local_planning_only"
+    },
+    "public_actions_blocked": [
+      "YouTube upload/publication/visibility change",
+      "OAuth/API keys/payment",
+      "rights/legal/public-ready acceptance",
+      "live scraping/media download",
+      "YMM4 GUI launch/render",
+      "cross-repo or destructive git"
+    ]
+  },
+  "field_contract": {
+    "candidate_score": "optional ranking aid; not a production approval",
+    "source_boundary": "required before any downstream public or rights claim",
+    "thumbnail_profile": "draft planning input only"
+  },
+  "default_boundary_status": {
+    "source_status": "offline_fixture_not_live",
+    "template_status": "draft_offline",
+    "transcript_status": "sample_fixture_not_real",
+    "real_transcript_status": "blocked_by_real_input",
+    "rights_boundary": "sample_only_no_publication",
+    "rights_gate": "blocked_by_true_gate",
+    "public_upload_status": "public_upload_closed",
+    "public_upload_gate": "blocked_by_true_gate",
+    "external_media_status": "blocked_by_true_gate",
+    "yymm4_gui_status": "blocked_by_true_gate",
+    "yymm4_import_status": "deferred",
+    "yymm4_render_status": "yymm4_render_closed",
+    "yymm4_render_gate": "blocked_by_true_gate",
+    "production_status": "blocked_by_true_gate"
+  }
+}

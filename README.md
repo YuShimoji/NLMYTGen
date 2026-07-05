@@ -141,6 +141,9 @@ python -m src.cli.main build-yymm4-import-preview-pack --package production_pilo
 # thumbnail brief / dashboard / import preview から static local/offline thumbnail visual proof pack を生成
 python -m src.cli.main build-thumbnail-visual-proof-pack --package production_pilots/yukkuri_newsroom_content_spine_001
 
+# 現行 pilot から reusable local/offline episode factory template registry を生成
+python -m src.cli.main build-episode-factory-template-registry --package production_pilots/yukkuri_newsroom_content_spine_001
+
 # B-15 Phase 1: 外部 LLM / Automation に渡す cue packet を生成
 python -m src.cli.main build-cue-packet input.txt -o cue_packet.md
 

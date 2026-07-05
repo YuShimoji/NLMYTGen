@@ -1,5 +1,32 @@
 # Runtime State — NLMYTGen
 
+- **Episode factory template registry v1 generated (2026-07-06)**:
+  `build-episode-factory-template-registry` now distills the current yukkuri
+  newsroom pilot into reusable local/offline templates and a deterministic
+  seed sample at
+  `production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/`.
+  The package includes `template_registry_manifest.json`,
+  `episode_factory_templates.json`, `yukkuri_newsroom_template.json`,
+  `content_spine_template.json`, `transcript_input_template.json`,
+  `writer_ir_template.json`, `yymm4_import_template.json`,
+  `thumbnail_proof_template.json`, `dashboard_status_template.json`,
+  `next_episode_seed_sample.json`, `init_readiness_summary.json`,
+  `source_artifact_index.json`, `template_usage.md`, `review_checklist.md`,
+  `limitations.md`, and `validation_readback.json`. Current readback passed
+  with 7 required templates, required seed inputs present, deterministic
+  generation path true, no external references, and no forbidden completion
+  claims. The registry preserves `sample_fixture_not_real`, `draft_offline`,
+  `rights_boundary=sample_only_no_publication`,
+  `public_upload_status=public_upload_closed`, and
+  `yymm4_render_status=yymm4_render_closed`. This is a template registry and
+  seed sample only: not a real transcript rerun, actual second episode
+  initialization from real sources, live RSS/fetch/scraping, external media
+  download, YMM4 GUI/import/render, production `.ymmp`, rights/legal/public
+  acceptance, final thumbnail image, or YouTube publication. Next safe action
+  is to review `episode_factory_template_registry/template_usage.md` and
+  `next_episode_seed_sample.json`, then provide a real local topic/source
+  packet and transcript before any YMM4 import, render, rights, or public
+  work.
 - **Thumbnail visual proof pack v1 generated (2026-07-06)**:
   `build-thumbnail-visual-proof-pack` now aggregates the current content spine,
   episode candidate, thumbnail brief, dashboard readiness ingest, GUI dashboard

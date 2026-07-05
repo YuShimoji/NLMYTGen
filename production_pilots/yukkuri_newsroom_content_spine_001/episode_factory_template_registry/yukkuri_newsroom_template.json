@@ -1,0 +1,56 @@
+{
+  "schema_version": "yukkuri_newsroom_template.v1",
+  "template_id": "yukkuri_newsroom_template",
+  "purpose": "Initialize local/offline yukkuri newsroom explainer episodes from a reusable template.",
+  "template_status": "draft_offline",
+  "episode_route": [
+    "content_spine_template",
+    "transcript_input_template",
+    "writer_ir_template",
+    "yymm4_import_template",
+    "dashboard_status_template",
+    "thumbnail_proof_template"
+  ],
+  "required_fields_for_real_episode": [
+    "episode_id",
+    "topic_or_source_packet",
+    "source_boundary",
+    "title",
+    "yukkuri_profile.beat_outline",
+    "human_episode_decision",
+    "rights_review_status",
+    "real_transcript_or_script_input"
+  ],
+  "carried_from_template": {
+    "explainer_role": "まりさ",
+    "listener_role": "れいむ",
+    "tone_family": "fast tactical yukkuri explainer with light reaction beats",
+    "default_section_count": 3,
+    "status_policy": {
+      "source_status": "offline_fixture_not_live",
+      "template_status": "draft_offline",
+      "transcript_status": "sample_fixture_not_real",
+      "real_transcript_status": "blocked_by_real_input",
+      "rights_boundary": "sample_only_no_publication",
+      "rights_gate": "blocked_by_true_gate",
+      "public_upload_status": "public_upload_closed",
+      "public_upload_gate": "blocked_by_true_gate",
+      "external_media_status": "blocked_by_true_gate",
+      "yymm4_gui_status": "blocked_by_true_gate",
+      "yymm4_import_status": "deferred",
+      "yymm4_render_status": "yymm4_render_closed",
+      "yymm4_render_gate": "blocked_by_true_gate",
+      "production_status": "blocked_by_true_gate"
+    }
+  },
+  "closed_gates": [
+    "YouTube upload/publication/visibility change",
+    "OAuth/API keys/payment",
+    "rights/legal/public-ready acceptance",
+    "live scraping/media download",
+    "external image/media download or embedded copyrighted media",
+    "YMM4 GUI launch/import/render",
+    "production .ymmp generation",
+    "cross-repo or destructive git"
+  ]
+}

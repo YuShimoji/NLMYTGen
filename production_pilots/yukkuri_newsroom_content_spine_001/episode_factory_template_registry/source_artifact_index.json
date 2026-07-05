@@ -1,0 +1,333 @@
+{
+  "schema_version": "episode_factory_source_artifact_index.v1",
+  "source_inputs": [
+    {
+      "id": "content_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/MANIFEST.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_manifest.v1"
+    },
+    {
+      "id": "topic_candidates",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/topic_candidates.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_topic_candidates.v1"
+    },
+    {
+      "id": "content_readback",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/content_spine_readback.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_readback.v1"
+    },
+    {
+      "id": "dashboard_status",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/dashboard_status.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_dashboard_status.v1"
+    },
+    {
+      "id": "ir_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/ir_bridge/bridge_manifest.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_ir_bridge_manifest.v1"
+    },
+    {
+      "id": "ir_episode_bridge",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/ir_bridge/episode_bridge.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_episode_bridge.v1"
+    },
+    {
+      "id": "ir_writer_ir",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/ir_bridge/writer_ir_candidate.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_writer_ir_candidate.v1"
+    },
+    {
+      "id": "ir_cue_packet",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/ir_bridge/cue_packet_candidate.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "ir_draft_csv",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/ir_bridge/draft_yymm4.csv",
+      "exists": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "ir_readback",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/ir_bridge/validation_readback.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_ir_bridge_readback.v1"
+    },
+    {
+      "id": "transcript_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/substitution_manifest.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "transcript_substitution_manifest.v1"
+    },
+    {
+      "id": "transcript_contract",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/transcript_input_contract.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "transcript_input_contract.v1"
+    },
+    {
+      "id": "transcript_probe",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/transcript_source_probe.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "transcript_source_probe.v1"
+    },
+    {
+      "id": "transcript_episode_bridge",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_episode_bridge.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_episode_bridge.v1"
+    },
+    {
+      "id": "transcript_writer_ir",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_writer_ir_candidate.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_writer_ir_candidate.v1"
+    },
+    {
+      "id": "transcript_cue_packet",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_cue_packet_candidate.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "transcript_draft_csv",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+      "exists": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "transcript_readback",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/validation_readback.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "transcript_substitution_readback.v1"
+    },
+    {
+      "id": "dashboard_summary",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/dashboard_readiness_ingest/readiness_summary.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "dashboard_readiness_summary.v1"
+    },
+    {
+      "id": "dashboard_pipeline",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/dashboard_readiness_ingest/pipeline_status.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "dashboard_pipeline_status.v1"
+    },
+    {
+      "id": "dashboard_readback",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/dashboard_readiness_ingest/validation_readback.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "dashboard_readiness_ingest_readback.v1"
+    },
+    {
+      "id": "gui_adapter",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/gui_dashboard_panel/gui_dashboard_adapter.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "gui_dashboard_adapter.v1"
+    },
+    {
+      "id": "gui_readback",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/gui_dashboard_panel/validation_readback.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "gui_dashboard_panel_readback.v1"
+    },
+    {
+      "id": "import_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/import_preview_manifest.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "ymm4_import_preview_manifest.v1"
+    },
+    {
+      "id": "import_csv_inventory",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/yymm4_csv_inventory.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "yymm4_csv_inventory.v1"
+    },
+    {
+      "id": "import_summary",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/import_readiness_summary.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "ymm4_import_readiness_summary.v1"
+    },
+    {
+      "id": "import_readback",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/validation_readback.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "ymm4_import_preview_pack_readback.v1"
+    },
+    {
+      "id": "thumbnail_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/thumbnail_proof_manifest.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "thumbnail_visual_proof_manifest.v1"
+    },
+    {
+      "id": "thumbnail_title_candidates",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/title_text_candidates.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "thumbnail_title_text_candidates.v1"
+    },
+    {
+      "id": "thumbnail_concepts",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/thumbnail_concepts.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "thumbnail_concepts.v1"
+    },
+    {
+      "id": "thumbnail_constraints",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/visual_constraints.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "thumbnail_visual_constraints.v1"
+    },
+    {
+      "id": "thumbnail_readback",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/validation_readback.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "thumbnail_visual_proof_readback.v1"
+    }
+  ],
+  "generated_outputs": [
+    {
+      "id": "template_registry_manifest.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/template_registry_manifest.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "episode_factory_templates.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/episode_factory_templates.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "yukkuri_newsroom_template.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/yukkuri_newsroom_template.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "content_spine_template.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/content_spine_template.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "transcript_input_template.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/transcript_input_template.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "writer_ir_template.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/writer_ir_template.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "yymm4_import_template.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/yymm4_import_template.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "thumbnail_proof_template.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/thumbnail_proof_template.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "dashboard_status_template.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/dashboard_status_template.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "next_episode_seed_sample.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/next_episode_seed_sample.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "init_readiness_summary.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/init_readiness_summary.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "source_artifact_index.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/source_artifact_index.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "template_usage.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/template_usage.md",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "review_checklist.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/review_checklist.md",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "limitations.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/limitations.md",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "validation_readback.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/validation_readback.json",
+      "exists": true,
+      "state": "ready"
+    }
+  ],
+  "artifact_counts": {
+    "source_total": 32,
+    "source_present": 32,
+    "generated_total": 16,
+    "generated_present": 16
+  }
+}

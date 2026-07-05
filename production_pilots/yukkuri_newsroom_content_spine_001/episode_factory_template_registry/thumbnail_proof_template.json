@@ -1,0 +1,75 @@
+{
+  "schema_version": "thumbnail_proof_template.v1",
+  "template_id": "thumbnail_proof_template",
+  "required_fields_for_real_episode": [
+    "title_hook",
+    "short_text_candidates",
+    "visual_motif",
+    "forbidden_avoid_claims",
+    "source_rights_caution",
+    "thumbnail_direction_decision"
+  ],
+  "carried_from_template": {
+    "text_candidate_shape": [
+      "composition_pairings",
+      "primary_title_candidates",
+      "schema_version",
+      "short_text_candidates",
+      "text_constraints"
+    ],
+    "concept_shape": [
+      "concepts",
+      "schema_version",
+      "selected_candidate_id",
+      "source_thumbnail_profile"
+    ],
+    "layout_constraints": {
+      "canvas": "1280x720 SVG static proof",
+      "safe_area_px": 48,
+      "primary_title_zone": "upper-left to center",
+      "secondary_text_zone": "lower-left badge",
+      "visual_motif": "Original scoreboard strip plus two pitch cards connected by a speed-drop arrow.",
+      "contrast_target": "large light text on dark field with warm numeric accent",
+      "palette": [
+        "#0f1f2e",
+        "#f8fafc",
+        "#f59e0b",
+        "#22c55e",
+        "#ef4444"
+      ]
+    },
+    "proof_status": "static_proof_only_not_final_thumbnail",
+    "no_external_media": true,
+    "current_motif": "Original scoreboard strip plus two pitch cards connected by a speed-drop arrow."
+  },
+  "rights_boundaries": {
+    "source_rights_status": "sample_only_no_publication",
+    "source_rights_caution": "Use only original data-card graphics unless a real-source rights record is added later.",
+    "no_external_media": true,
+    "no_logos_or_player_photos": true,
+    "no_broadcast_stills": true,
+    "no_public_ready_claim": true
+  },
+  "not_claimed": [
+    "final thumbnail image",
+    "external image/media download",
+    "image generation API",
+    "logos, player photos, broadcast stills, or public-ready artwork"
+  ],
+  "default_boundary_status": {
+    "source_status": "offline_fixture_not_live",
+    "template_status": "draft_offline",
+    "transcript_status": "sample_fixture_not_real",
+    "real_transcript_status": "blocked_by_real_input",
+    "rights_boundary": "sample_only_no_publication",
+    "rights_gate": "blocked_by_true_gate",
+    "public_upload_status": "public_upload_closed",
+    "public_upload_gate": "blocked_by_true_gate",
+    "external_media_status": "blocked_by_true_gate",
+    "yymm4_gui_status": "blocked_by_true_gate",
+    "yymm4_import_status": "deferred",
+    "yymm4_render_status": "yymm4_render_closed",
+    "yymm4_render_gate": "blocked_by_true_gate",
+    "production_status": "blocked_by_true_gate"
+  }
+}

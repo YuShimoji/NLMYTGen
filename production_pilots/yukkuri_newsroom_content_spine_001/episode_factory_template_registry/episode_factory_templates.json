@@ -1,0 +1,142 @@
+{
+  "schema_version": "episode_factory_templates.v1",
+  "registry_status": "draft_offline",
+  "selected_source_candidate_id": "sports_pitch_sequence_p05",
+  "templates": [
+    {
+      "template_id": "yukkuri_newsroom_template",
+      "file": "yukkuri_newsroom_template.json",
+      "schema_version": "yukkuri_newsroom_template.v1",
+      "required_field_count": 8,
+      "carried_field_groups": [
+        "default_section_count",
+        "explainer_role",
+        "listener_role",
+        "status_policy",
+        "tone_family"
+      ]
+    },
+    {
+      "template_id": "content_spine_template",
+      "file": "content_spine_template.json",
+      "schema_version": "content_spine_template.v1",
+      "required_field_count": 10,
+      "carried_field_groups": [
+        "public_actions_blocked",
+        "selection_policy",
+        "source_boundary_shape"
+      ]
+    },
+    {
+      "template_id": "transcript_input_template",
+      "file": "transcript_input_template.json",
+      "schema_version": "transcript_input_template.v1",
+      "required_field_count": 7,
+      "carried_field_groups": [
+        "accepted_inputs",
+        "current_dropzone_shape",
+        "parser",
+        "required_boundary_fields",
+        "sample_fixture_status"
+      ]
+    },
+    {
+      "template_id": "writer_ir_template",
+      "file": "writer_ir_template.json",
+      "schema_version": "writer_ir_template.v1",
+      "required_field_count": 10,
+      "carried_field_groups": [
+        "compatibility_status",
+        "section_pattern",
+        "tone",
+        "utterance_shape"
+      ]
+    },
+    {
+      "template_id": "yymm4_import_template",
+      "file": "yymm4_import_template.json",
+      "schema_version": "yymm4_import_template.v1",
+      "required_field_count": 7,
+      "carried_field_groups": [
+        "csv_contract",
+        "current_preview_row_count",
+        "headerless_import_csv",
+        "speaker_count_shape",
+        "status_categories"
+      ]
+    },
+    {
+      "template_id": "thumbnail_proof_template",
+      "file": "thumbnail_proof_template.json",
+      "schema_version": "thumbnail_proof_template.v1",
+      "required_field_count": 6,
+      "carried_field_groups": [
+        "concept_shape",
+        "current_motif",
+        "layout_constraints",
+        "no_external_media",
+        "proof_status",
+        "text_candidate_shape"
+      ]
+    },
+    {
+      "template_id": "dashboard_status_template",
+      "file": "dashboard_status_template.json",
+      "schema_version": "dashboard_status_template.v1",
+      "required_field_count": 6,
+      "carried_field_groups": [
+        "bar_mode",
+        "capability_ids",
+        "route_nodes",
+        "status_categories"
+      ]
+    }
+  ],
+  "init_flow": [
+    "load template_registry_manifest.json",
+    "copy next_episode_seed_sample.json to a new local run record",
+    "replace required_inputs.topic_or_source_packet with a real local source packet or reviewed topic capsule",
+    "run build-content-spine or an equivalent approved local source-pack adapter",
+    "rerun downstream packages only after real transcript/source gates are satisfied"
+  ],
+  "required_real_inputs": [
+    "topic_or_source_packet",
+    "real_transcript_or_script",
+    "rights_review_status",
+    "human_episode_decision",
+    "YMM4 import/timing readback before production claims"
+  ],
+  "carry_forward_allowed": [
+    "yukkuri role names",
+    "three-section explainer route",
+    "CSV contract shape",
+    "dashboard status categories",
+    "thumbnail proof safety constraints"
+  ],
+  "boundary_status": {
+    "source_status": "offline_fixture_not_live",
+    "template_status": "draft_offline",
+    "transcript_status": "sample_fixture_not_real",
+    "real_transcript_status": "blocked_by_real_input",
+    "rights_boundary": "sample_only_no_publication",
+    "rights_gate": "blocked_by_true_gate",
+    "public_upload_status": "public_upload_closed",
+    "public_upload_gate": "blocked_by_true_gate",
+    "external_media_status": "blocked_by_true_gate",
+    "yymm4_gui_status": "blocked_by_true_gate",
+    "yymm4_import_status": "deferred",
+    "yymm4_render_status": "yymm4_render_closed",
+    "yymm4_render_gate": "blocked_by_true_gate",
+    "production_status": "blocked_by_true_gate"
+  },
+  "closed_gates": [
+    "YouTube upload/publication/visibility change",
+    "OAuth/API keys/payment",
+    "rights/legal/public-ready acceptance",
+    "live scraping/media download",
+    "external image/media download or embedded copyrighted media",
+    "YMM4 GUI launch/import/render",
+    "production .ymmp generation",
+    "cross-repo or destructive git"
+  ]
+}

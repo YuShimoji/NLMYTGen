@@ -26,6 +26,7 @@ Usage:
     python -m src.cli.main build-gui-dashboard-panel --package production_pilots/pkg [--ingest-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-yymm4-import-preview-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-thumbnail-visual-proof-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
+    python -m src.cli.main build-episode-factory-template-registry --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-session-manifest --video-id ID [artifact paths...] [--format markdown|json] [-o path]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
@@ -2489,6 +2490,32 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    # build-episode-factory-template-registry (pilot -> reusable local/offline templates)
+    p_episode_factory_registry = subparsers.add_parser(
+        "build-episode-factory-template-registry",
+        help="Build a reusable local/offline episode factory template registry from current pilot artifacts",
+    )
+    p_episode_factory_registry.add_argument(
+        "--package",
+        required=True,
+        help="Content spine package directory",
+    )
+    p_episode_factory_registry.add_argument(
+        "--output",
+        help="Output registry directory (default: <package>/episode_factory_template_registry)",
+    )
+    p_episode_factory_registry.add_argument(
+        "--artifact-id",
+        default="episode_factory_template_registry_001",
+        help="Episode factory template registry artifact id",
+    )
+    p_episode_factory_registry.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # build-session-manifest (production handoff)
     p_session_manifest = subparsers.add_parser(
         "build-session-manifest",
@@ -2639,6 +2666,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_yymm4_import_preview_pack(args)
         elif args.command == "build-thumbnail-visual-proof-pack":
             return _cmd_build_thumbnail_visual_proof_pack(args)
+        elif args.command == "build-episode-factory-template-registry":
+            return _cmd_build_episode_factory_template_registry(args)
         elif args.command == "build-session-manifest":
             return _cmd_build_session_manifest(args)
         elif args.command == "diagnose-script":
@@ -4532,6 +4561,30 @@ def _cmd_build_thumbnail_visual_proof_pack(args: argparse.Namespace) -> int:
         print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
         print(f"primary_human_review: {readback.get('primary_human_review')}")
         print(f"primary_visual_proof: {readback.get('primary_visual_proof')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_episode_factory_template_registry(args: argparse.Namespace) -> int:
+    """Build a reusable local/offline episode factory template registry."""
+    from src.pipeline.episode_factory_template_registry import build_episode_factory_template_registry
+
+    readback = build_episode_factory_template_registry(
+        package_dir=getattr(args, "package"),
+        output_dir=getattr(args, "output", None),
+        artifact_id=args.artifact_id,
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"selected_candidate_id: {readback.get('selected_candidate_id')}")
+        print(f"template_count: {readback.get('template_count')}")
+        print(f"seed_sample_path: {readback.get('seed_sample_path')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"primary_human_review: {readback.get('primary_human_review')}")
         print(f"next_action: {readback.get('next_action')}")
     return 0
 

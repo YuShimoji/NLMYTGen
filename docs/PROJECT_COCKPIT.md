@@ -15,9 +15,10 @@ the feature/spec owner docs.
 | T+3 GUI dashboard panel | generated | `production_pilots/yukkuri_newsroom_content_spine_001/gui_dashboard_panel/` | static read-only panel; no YMM4 GUI/render/public acceptance |
 | T+4 YMM4 import preview pack | generated | `production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/` | local/offline import handoff preview; no YMM4 GUI/import/render/public acceptance |
 | T+5 thumbnail visual proof pack | generated | `production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/` | static abstract proof; no external media/final image/public-ready claim |
-| T+6 real transcript rerun | advisory | `transcript_substitution_readiness/real_input/` or `--transcript` | requires verified local transcript input |
-| T+7 actual YMM4 import review | advisory | not built here | future VoiceItem/timing readback; no render claim |
-| T+8 production micro proof / deeper GUI adapter | advisory | not built here | future surface only if it reduces review friction |
+| T+6 episode factory template registry | generated | `production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/` | reusable local/offline templates and seed sample only |
+| T+7 real transcript rerun | advisory | `transcript_substitution_readiness/real_input/` or `--transcript` | requires verified local transcript input |
+| T+8 actual YMM4 import review | advisory | not built here | future VoiceItem/timing readback; no render claim |
+| T+9 production micro proof / deeper GUI adapter | advisory | not built here | future surface only if it reduces review friction |
 
 ## True Gates
 
@@ -36,6 +37,30 @@ the feature/spec owner docs.
 ## Latest Regeneration
 
 Use this command from the repo root:
+
+```bash
+python -m src.cli.main build-episode-factory-template-registry --package production_pilots/yukkuri_newsroom_content_spine_001
+```
+
+The current episode factory template registry is:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/
+```
+
+The primary machine readback file is:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/template_registry_manifest.json
+```
+
+The primary human review file is:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/template_usage.md
+```
+
+Thumbnail visual proof pack can still be regenerated with:
 
 ```bash
 python -m src.cli.main build-thumbnail-visual-proof-pack --package production_pilots/yukkuri_newsroom_content_spine_001

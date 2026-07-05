@@ -6,9 +6,10 @@ flowchart LR
     E --> S["T+3 GUI dashboard panel"]
     S --> N["T+4 YMM4 import preview pack"]
     N --> O["T+5 thumbnail visual proof pack"]
-    O --> F["T+6 real transcript rerun (advisory)"]
-    F --> X["T+7 actual YMM4 import review (advisory)"]
-    F --> AB["T+8 production micro proof / deeper GUI adapter (advisory)"]
+    O --> AF["T+6 episode factory template registry"]
+    AF --> F["T+7 real transcript rerun (advisory)"]
+    F --> X["T+8 actual YMM4 import review (advisory)"]
+    F --> AB["T+9 production micro proof / deeper GUI adapter (advisory)"]
 
     G["Real or NotebookLM transcript"] -. "drop-zone or --transcript" .-> D
     H["sample fixture"] -. "only when no real transcript exists" .-> D
@@ -30,5 +31,9 @@ flowchart LR
     O --> AC["thumbnail_proof_panel.html"]
     O --> AD["thumbnail_layout_proof.svg"]
     O --> AE["title/text candidates + visual constraints"]
+    AF --> AG["template_registry_manifest.json"]
+    AF --> AH["episode_factory_templates.json + 7 templates"]
+    AF --> AI["next_episode_seed_sample.json"]
+    AF --> AJ["init_readiness_summary.json"]
 
-    M["closed gates: rights/legal/public-ready acceptance, OAuth/API/payment, live scraping/media download, external image/media download, YMM4 GUI/import/render, production .ymmp, YouTube publication"] -.-> O
+    M["closed gates: rights/legal/public-ready acceptance, OAuth/API/payment, live scraping/media download, external image/media download, YMM4 GUI/import/render, production .ymmp, YouTube publication"] -.-> AF

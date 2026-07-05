@@ -1,0 +1,96 @@
+{
+  "schema_version": "next_episode_seed_sample.v1",
+  "seed_id": "next_yukkuri_newsroom_episode_seed_sample_001",
+  "episode_id": "yukkuri_newsroom_episode_002_seed_sample",
+  "status": "draft_offline_seed_sample",
+  "derived_from_registry_artifact_id": "episode_factory_template_registry_001",
+  "template_registry_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\episode_factory_template_registry",
+  "source_template_files": [
+    "yukkuri_newsroom_template.json",
+    "content_spine_template.json",
+    "transcript_input_template.json",
+    "writer_ir_template.json",
+    "yymm4_import_template.json",
+    "thumbnail_proof_template.json",
+    "dashboard_status_template.json"
+  ],
+  "required_inputs": {
+    "topic_or_source_packet": {
+      "state": "required_for_real_episode",
+      "value": null,
+      "accepted_shape": "local reviewed topic/source packet with source_boundary"
+    },
+    "real_transcript": {
+      "state": "required_before_production",
+      "value": null,
+      "accepted_shape": ".txt or .csv transcript through transcript_input_template"
+    },
+    "rights_review": {
+      "state": "required_before_public_use",
+      "value": null,
+      "accepted_shape": "human review result; no legal/public-ready claim is inferred"
+    },
+    "human_episode_decision": {
+      "state": "required_before_yymm4_import",
+      "value": null,
+      "accepted_shape": "accept/revise/hold decision on the next episode capsule"
+    }
+  },
+  "carried_defaults": {
+    "explainer_role": "まりさ",
+    "listener_role": "れいむ",
+    "section_count": 3,
+    "csv_header_mode": "headerless_yymm4_csv",
+    "thumbnail_text_constraints": {
+      "max_primary_tokens": 4,
+      "max_short_text_candidates_on_canvas": 1
+    },
+    "thumbnail_safety": {
+      "no_external_media": true,
+      "no_logos_or_player_photos": true,
+      "source_rights_caution": "Use only original data-card graphics unless a real-source rights record is added later."
+    }
+  },
+  "initialized_output_plan": [
+    "content_spine_package",
+    "transcript_substitution_readiness",
+    "dashboard_readiness_ingest",
+    "gui_dashboard_panel",
+    "ymm4_import_preview_pack",
+    "thumbnail_visual_proof_pack"
+  ],
+  "boundary_status": {
+    "source_status": "offline_fixture_not_live",
+    "template_status": "draft_offline",
+    "transcript_status": "sample_fixture_not_real",
+    "real_transcript_status": "blocked_by_real_input",
+    "rights_boundary": "sample_only_no_publication",
+    "rights_gate": "blocked_by_true_gate",
+    "public_upload_status": "public_upload_closed",
+    "public_upload_gate": "blocked_by_true_gate",
+    "external_media_status": "blocked_by_true_gate",
+    "yymm4_gui_status": "blocked_by_true_gate",
+    "yymm4_import_status": "deferred",
+    "yymm4_render_status": "yymm4_render_closed",
+    "yymm4_render_gate": "blocked_by_true_gate",
+    "production_status": "blocked_by_true_gate"
+  },
+  "closed_gates": [
+    "YouTube upload/publication/visibility change",
+    "OAuth/API keys/payment",
+    "rights/legal/public-ready acceptance",
+    "live scraping/media download",
+    "external image/media download or embedded copyrighted media",
+    "YMM4 GUI launch/import/render",
+    "production .ymmp generation",
+    "cross-repo or destructive git"
+  ],
+  "not_created_by_seed_sample": [
+    "real transcript",
+    "YMM4 project",
+    "production .ymmp",
+    "rendered video",
+    "final thumbnail image",
+    "public upload or visibility change"
+  ]
+}

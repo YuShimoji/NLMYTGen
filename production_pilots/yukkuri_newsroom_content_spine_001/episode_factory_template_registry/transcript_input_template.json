@@ -1,0 +1,67 @@
+{
+  "schema_version": "transcript_input_template.v1",
+  "template_id": "transcript_input_template",
+  "source_schema_reference": "transcript_input_contract.v1",
+  "required_fields_for_real_episode": [
+    "transcript_path_or_dropzone_file",
+    "transcript_status",
+    "source_mode",
+    "speaker_mapping",
+    "rights_status",
+    "timing_status",
+    "audio_status"
+  ],
+  "carried_from_template": {
+    "accepted_inputs": [
+      {
+        "extension": ".csv",
+        "shape": "two columns: speaker,text; header row is optional and skipped when detected"
+      },
+      {
+        "extension": ".txt",
+        "shape": "speaker-tagged lines such as Speaker: text or timestamped [00:00] Speaker: text"
+      },
+      {
+        "extension": ".txt",
+        "shape": "unlabeled alternating Speaker_A/Speaker_B lines when --unlabeled is set"
+      }
+    ],
+    "required_boundary_fields": [
+      "source_name",
+      "source_url_or_placeholder",
+      "freshness_status",
+      "rights_status",
+      "attribution_note",
+      "excluded_claims",
+      "production_status",
+      "transcript_status",
+      "timing_status",
+      "audio_status"
+    ],
+    "parser": "src.pipeline.normalize.normalize",
+    "current_dropzone_shape": "real_input/*.txt or real_input/*.csv",
+    "sample_fixture_status": "sample_fixture_not_real"
+  },
+  "real_episode_requirements": {
+    "sample_fixture_is_never_real": true,
+    "real_transcript_required_before_production": true,
+    "notebooklm_api_used": false,
+    "live_fetch_used": false
+  },
+  "default_boundary_status": {
+    "source_status": "offline_fixture_not_live",
+    "template_status": "draft_offline",
+    "transcript_status": "sample_fixture_not_real",
+    "real_transcript_status": "blocked_by_real_input",
+    "rights_boundary": "sample_only_no_publication",
+    "rights_gate": "blocked_by_true_gate",
+    "public_upload_status": "public_upload_closed",
+    "public_upload_gate": "blocked_by_true_gate",
+    "external_media_status": "blocked_by_true_gate",
+    "yymm4_gui_status": "blocked_by_true_gate",
+    "yymm4_import_status": "deferred",
+    "yymm4_render_status": "yymm4_render_closed",
+    "yymm4_render_gate": "blocked_by_true_gate",
+    "production_status": "blocked_by_true_gate"
+  }
+}
