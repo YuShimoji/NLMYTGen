@@ -222,3 +222,12 @@ factory seed package:
 ```bash
 python -m src.cli.main build-content-spine-from-seed --seed-package production_pilots/yukkuri_newsroom_content_spine_001/factory_seed_dry_run_002
 ```
+
+## Content Spine 002 IR/CSV Bridge Dry-Run CLI
+
+Generate the second local/offline draft Writer IR, cue packet, and headerless
+YMM4 CSV bridge package from the dry-run content spine package:
+
+```bash
+python -m src.cli.main build-content-ir-bridge --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id content_spine_002_ir_bridge_dry_run_001
+```

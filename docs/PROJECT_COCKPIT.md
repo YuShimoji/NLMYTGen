@@ -18,13 +18,14 @@ the feature/spec owner docs.
 | T+6 episode factory template registry | generated | `production_pilots/yukkuri_newsroom_content_spine_001/episode_factory_template_registry/` | reusable local/offline templates and seed sample only |
 | T+7 factory seed instantiation dry-run | generated | `production_pilots/yukkuri_newsroom_content_spine_001/factory_seed_dry_run_002/` | second episode seed initialized from registry; synthetic dry-run only |
 | T+8 seed-to-content-spine dry-run | generated | `production_pilots/yukkuri_newsroom_content_spine_002/` | first downstream planning package from seed; no real transcript/YMM4/public gate |
-| T+9 real transcript rerun | advisory | `transcript_substitution_readiness/real_input/` or `--transcript` | requires verified local transcript input |
-| T+10 actual YMM4 import review | advisory | not built here | future VoiceItem/timing readback; no render claim |
-| T+11 production micro proof / deeper GUI adapter | advisory | not built here | future surface only if it reduces review friction |
+| T+9 content spine 002 IR/CSV bridge | generated | `production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/` | draft Writer IR / cue packet / CSV only; no real transcript/YMM4/public gate |
+| T+10 real transcript rerun | advisory | `transcript_substitution_readiness/real_input/` or `--transcript` | requires verified local transcript input |
+| T+11 actual YMM4 import review | advisory | not built here | future VoiceItem/timing readback; no render claim |
+| T+12 production micro proof / deeper GUI adapter | advisory | not built here | future surface only if it reduces review friction |
 
 ## Symbolic Progress
 
-- seed_to_content_spine: `[#####--]` 5/7; current package generated, next axis is real reviewed topic/source replacement.
+- content_spine_002_ir_bridge: `[######-]` 6/7; local/offline IR/CSV bridge generated, next axis is reviewed real source/transcript replacement.
 
 ## True Gates
 
@@ -43,6 +44,36 @@ the feature/spec owner docs.
 ## Latest Regeneration
 
 Use this command from the repo root:
+
+```bash
+python -m src.cli.main build-content-ir-bridge --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id content_spine_002_ir_bridge_dry_run_001
+```
+
+The current content-spine-002 IR/CSV bridge package is:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/
+```
+
+The primary machine readback file is:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/validation_readback.json
+```
+
+The source-origin reference file is:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/source_content_spine_reference.json
+```
+
+The draft CSV file is:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/draft_yymm4.csv
+```
+
+Seed-to-content-spine dry-run package can still be regenerated with:
 
 ```bash
 python -m src.cli.main build-content-spine-from-seed --seed-package production_pilots/yukkuri_newsroom_content_spine_001/factory_seed_dry_run_002

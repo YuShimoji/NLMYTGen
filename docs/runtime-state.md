@@ -1,5 +1,33 @@
 # Runtime State — NLMYTGen
 
+- **Content spine 002 IR/CSV bridge dry-run v1 generated (2026-07-06)**:
+  `build-content-ir-bridge` now consumes
+  `production_pilots/yukkuri_newsroom_content_spine_002/` and generates the
+  second episode local/offline IR/CSV bridge package at
+  `production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/`. The
+  package includes `bridge_manifest.json`, `episode_bridge.json`,
+  `writer_ir_candidate.json`, `cue_packet_candidate.{json,md}`,
+  `draft_yymm4.csv`, `ymm4_csv_readiness.md`,
+  `source_content_spine_reference.json`, `source_artifact_index.json`,
+  `review_checklist.md`, `source_to_ir_mapping.md`, `limitations.md`, and
+  `validation_readback.json`. Current readback passed with selected candidate
+  `factory_seed_dry_run_002`, 9 headerless draft CSV rows, source artifact
+  index present, generated outputs indexed, seed origin separated, dry-run
+  boundaries preserved, no external references, and no forbidden completion
+  claims. `source_content_spine_reference.json` distinguishes seed-origin
+  fields, inherited template defaults, dry-run placeholders, required real
+  inputs, generated content-spine outputs, and generated IR/CSV bridge outputs.
+  The package preserves `dry_run`, `sample_fixture_not_real`,
+  `no_real_transcript`, `no_yymm4_import`,
+  `rights_boundary=sample_only_no_publication`, `public_upload_closed`, and
+  `yymm4_render_closed`. It is not a real transcript, YMM4 GUI/import/render
+  proof, production `.ymmp`, external media/API/OAuth/payment action,
+  rights/legal/public-ready acceptance, or publication. Next safe action is to
+  review `ir_bridge/source_content_spine_reference.json`,
+  `ir_bridge/writer_ir_candidate.json`, `ir_bridge/cue_packet_candidate.json`,
+  and `ir_bridge/draft_yymm4.csv`; then replace the dry-run source packet and
+  draft lines with reviewed real local inputs before any real transcript,
+  YMM4 import, rights, render, production, or public work.
 - **Factory seed to content spine dry-run v1 generated (2026-07-06)**:
   `build-content-spine-from-seed` now consumes
   `production_pilots/yukkuri_newsroom_content_spine_001/factory_seed_dry_run_002/`

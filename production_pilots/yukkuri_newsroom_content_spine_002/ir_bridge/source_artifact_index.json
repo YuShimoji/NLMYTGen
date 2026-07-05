@@ -1,0 +1,207 @@
+{
+  "schema_version": "content_ir_bridge_source_artifact_index.v1",
+  "source_content_spine_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_002",
+  "bridge_output_dir": "production_pilots\\yukkuri_newsroom_content_spine_002\\ir_bridge",
+  "source_inputs": [
+    {
+      "id": "MANIFEST.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/MANIFEST.json",
+      "exists": true,
+      "required_for_standard_content_spine": true,
+      "state": "ready",
+      "schema_version": "content_spine_manifest.v1"
+    },
+    {
+      "id": "topic_candidates.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/topic_candidates.json",
+      "exists": true,
+      "required_for_standard_content_spine": true,
+      "state": "ready",
+      "schema_version": "content_spine_topic_candidates.v1"
+    },
+    {
+      "id": "channel_strategy_proposals.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/channel_strategy_proposals.md",
+      "exists": true,
+      "required_for_standard_content_spine": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "episode_candidate_001.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/episode_candidate_001.md",
+      "exists": true,
+      "required_for_standard_content_spine": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "thumbnail_brief_001.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_brief_001.md",
+      "exists": true,
+      "required_for_standard_content_spine": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "dashboard_status.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/dashboard_status.json",
+      "exists": true,
+      "required_for_standard_content_spine": true,
+      "state": "ready",
+      "schema_version": "content_spine_dashboard_status.v1"
+    },
+    {
+      "id": "dashboard_preview.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/dashboard_preview.md",
+      "exists": true,
+      "required_for_standard_content_spine": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "review_checklist.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_checklist.md",
+      "exists": true,
+      "required_for_standard_content_spine": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "limitations.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/limitations.md",
+      "exists": true,
+      "required_for_standard_content_spine": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "content_spine_readback.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/content_spine_readback.json",
+      "exists": true,
+      "required_for_standard_content_spine": true,
+      "state": "ready",
+      "schema_version": "content_spine_readback.v1"
+    },
+    {
+      "id": "content_spine_dry_run_manifest.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/content_spine_dry_run_manifest.json",
+      "exists": true,
+      "required_for_standard_content_spine": false,
+      "state": "ready",
+      "schema_version": "factory_seed_content_spine_manifest.v1"
+    },
+    {
+      "id": "source_seed_reference.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/source_seed_reference.json",
+      "exists": true,
+      "required_for_standard_content_spine": false,
+      "state": "ready",
+      "schema_version": "factory_seed_content_spine_source_reference.v1"
+    },
+    {
+      "id": "source_artifact_index.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/source_artifact_index.json",
+      "exists": true,
+      "required_for_standard_content_spine": false,
+      "state": "ready",
+      "schema_version": "factory_seed_content_spine_source_artifact_index.v1"
+    },
+    {
+      "id": "validation_readback.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/validation_readback.json",
+      "exists": true,
+      "required_for_standard_content_spine": false,
+      "state": "ready",
+      "schema_version": "factory_seed_content_spine_readback.v1"
+    }
+  ],
+  "generated_outputs": [
+    {
+      "id": "bridge_manifest.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/bridge_manifest.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "episode_bridge.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/episode_bridge.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "writer_ir_candidate.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/writer_ir_candidate.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "cue_packet_candidate.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/cue_packet_candidate.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "cue_packet_candidate.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/cue_packet_candidate.md",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "draft_yymm4.csv",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/draft_yymm4.csv",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "ymm4_csv_readiness.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/ymm4_csv_readiness.md",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "source_content_spine_reference.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/source_content_spine_reference.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "source_artifact_index.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/source_artifact_index.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "review_checklist.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/review_checklist.md",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "source_to_ir_mapping.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/source_to_ir_mapping.md",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "limitations.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/limitations.md",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "validation_readback.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/validation_readback.json",
+      "exists": true,
+      "state": "ready"
+    }
+  ],
+  "artifact_counts": {
+    "source_total": 14,
+    "source_present": 14,
+    "source_required_total": 10,
+    "source_required_present": 10,
+    "generated_total": 13,
+    "generated_present": 13
+  }
+}
