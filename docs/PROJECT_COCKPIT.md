@@ -14,9 +14,10 @@ the feature/spec owner docs.
 | T+2 dashboard readiness ingest | generated | `production_pilots/yukkuri_newsroom_content_spine_001/dashboard_readiness_ingest/` | read-only status ingest; no production/public acceptance |
 | T+3 GUI dashboard panel | generated | `production_pilots/yukkuri_newsroom_content_spine_001/gui_dashboard_panel/` | static read-only panel; no YMM4 GUI/render/public acceptance |
 | T+4 YMM4 import preview pack | generated | `production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/` | local/offline import handoff preview; no YMM4 GUI/import/render/public acceptance |
-| T+5 real transcript rerun | advisory | `transcript_substitution_readiness/real_input/` or `--transcript` | requires verified local transcript input |
-| T+6 thumbnail visual proof | advisory | not built here | future visual proof; no image generation/public-ready claim here |
-| T+7 Electron GUI adapter / deeper ingest | advisory | not built here | future GUI surface only if it reduces review friction |
+| T+5 thumbnail visual proof pack | generated | `production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/` | static abstract proof; no external media/final image/public-ready claim |
+| T+6 real transcript rerun | advisory | `transcript_substitution_readiness/real_input/` or `--transcript` | requires verified local transcript input |
+| T+7 actual YMM4 import review | advisory | not built here | future VoiceItem/timing readback; no render claim |
+| T+8 production micro proof / deeper GUI adapter | advisory | not built here | future surface only if it reduces review friction |
 
 ## True Gates
 
@@ -35,6 +36,31 @@ the feature/spec owner docs.
 ## Latest Regeneration
 
 Use this command from the repo root:
+
+```bash
+python -m src.cli.main build-thumbnail-visual-proof-pack --package production_pilots/yukkuri_newsroom_content_spine_001
+```
+
+The current thumbnail visual proof package is:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/
+```
+
+The primary machine readback file is:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/thumbnail_proof_manifest.json
+```
+
+The primary human review files are:
+
+```text
+production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/thumbnail_proof_panel.html
+production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/thumbnail_layout_proof.svg
+```
+
+YMM4 import preview pack can still be regenerated with:
 
 ```bash
 python -m src.cli.main build-yymm4-import-preview-pack --package production_pilots/yukkuri_newsroom_content_spine_001

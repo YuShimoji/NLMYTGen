@@ -1,0 +1,33 @@
+{
+  "schema_version": "thumbnail_visual_constraints.v1",
+  "proof_status": "static_proof_only_not_final_thumbnail",
+  "layout_constraints": {
+    "canvas": "1280x720 SVG static proof",
+    "safe_area_px": 48,
+    "primary_title_zone": "upper-left to center",
+    "secondary_text_zone": "lower-left badge",
+    "visual_motif": "Original scoreboard strip plus two pitch cards connected by a speed-drop arrow.",
+    "contrast_target": "large light text on dark field with warm numeric accent",
+    "palette": [
+      "#0f1f2e",
+      "#f8fafc",
+      "#f59e0b",
+      "#22c55e",
+      "#ef4444"
+    ]
+  },
+  "rights_boundaries": {
+    "source_rights_status": "sample_only_no_publication",
+    "source_rights_caution": "Use only original data-card graphics unless a real-source rights record is added later.",
+    "no_external_media": true,
+    "no_logos_or_player_photos": true,
+    "no_broadcast_stills": true,
+    "no_public_ready_claim": true
+  },
+  "forbidden_avoid_claims": [
+    "Do not imply this is real broadcast analysis.",
+    "Do not use official logos, player photos, or broadcast stills.",
+    "Do not call the pitch sequence a proven strategy outside the sample."
+  ],
+  "designer_note": "Keep the thumbnail numeric and graphic-first: speed drop, pitch-type change, and low-outer target."
+}

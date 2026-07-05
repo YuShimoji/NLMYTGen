@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thumbnail Visual Proof Pack</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --surface: #ffffff;
+      --ink: #111827;
+      --muted: #64748b;
+      --line: #d8e0e8;
+      --ready: #0f766e;
+      --draft: #8a6116;
+      --sample: #a14f16;
+      --input: #b42318;
+      --gate: #7f1d1d;
+      --deferred: #475569;
+      --missing: #6b7280;
+      --unknown: #4b5563;
+      --accent: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--ink); font-family: "Segoe UI", "Noto Sans", Arial, sans-serif; }
+    body { padding: 24px; }
+    .shell { max-width: 1320px; margin: 0 auto; }
+    header { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: end; margin-bottom: 18px; }
+    h1 { margin: 0; font-size: 28px; line-height: 1.15; letter-spacing: 0; }
+    h2 { margin: 0 0 12px; font-size: 16px; line-height: 1.25; letter-spacing: 0; }
+    p { margin: 0; color: var(--muted); line-height: 1.5; }
+    code { font-family: Consolas, "SFMono-Regular", monospace; font-size: 12px; overflow-wrap: anywhere; }
+    .topline { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.85fr); gap: 16px; }
+    .panel, .card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+    .panel { padding: 16px; margin-bottom: 16px; }
+    .proof-frame { width: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #0f1f2e; }
+    .proof-frame img { display: block; width: 100%; height: 100%; object-fit: contain; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .status-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .card { padding: 12px; display: grid; gap: 8px; min-height: 132px; }
+    .card-head { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
+    .card-title { font-size: 14px; font-weight: 700; line-height: 1.25; }
+    .note { font-size: 12px; color: var(--muted); line-height: 1.4; }
+    .status-pill { display: inline-flex; align-items: center; min-height: 24px; padding: 3px 8px; border-radius: 999px; font-size: 12px; font-weight: 700; border: 1px solid currentColor; background: #fff; }
+    [data-status="ready"] { color: var(--ready); }
+    [data-status="draft_offline"] { color: var(--draft); }
+    [data-status="sample_fixture_not_real"] { color: var(--sample); }
+    [data-status="blocked_by_real_input"] { color: var(--input); }
+    [data-status="blocked_by_true_gate"] { color: var(--gate); }
+    [data-status="deferred"] { color: var(--deferred); }
+    [data-status="missing"] { color: var(--missing); }
+    [data-status="partial"], [data-status="unknown"] { color: var(--unknown); }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { text-align: left; padding: 9px 8px; border-top: 1px solid var(--line); vertical-align: top; }
+    th { width: 190px; color: var(--muted); font-weight: 700; }
+    .next { border-left: 4px solid var(--accent); padding-left: 12px; }
+    @media (max-width: 980px) {
+      body { padding: 14px; }
+      header, .layout { grid-template-columns: 1fr; }
+      .status-grid, .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .status-grid, .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell" data-thumbnail-proof-pack="true">
+    <header>
+      <div>
+        <h1>Thumbnail Visual Proof Pack</h1>
+        <p>Static local/offline thumbnail direction for sports_pitch_sequence_p05.</p>
+        <div class="topline"><span class="status-pill" data-status="ready">ready</span>
+<span class="status-pill" data-status="partial">partial</span>
+<span class="status-pill" data-status="sample_fixture_not_real">sample_fixture_not_real</span>
+<span class="status-pill" data-status="draft_offline">draft_offline</span>
+<span class="status-pill" data-status="blocked_by_real_input">blocked_by_real_input</span>
+<span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span>
+<span class="status-pill" data-status="deferred">deferred</span>
+<span class="status-pill" data-status="missing">missing</span>
+<span class="status-pill" data-status="unknown">unknown</span></div>
+      </div>
+      <span class="status-pill" data-status="ready">static proof ready</span>
+    </header>
+
+    <section class="layout">
+      <div>
+        <section class="panel" data-section="layout-proof">
+          <h2>Static Layout Proof</h2>
+          <div class="proof-frame"><img src="thumbnail_layout_proof.svg" alt="static abstract thumbnail layout proof"></div>
+        </section>
+
+        <section class="panel" data-section="visual-constraints">
+          <h2>Concepts</h2>
+          <div class="grid"><article class="card" data-concept="speed_drop_scoreboard" data-status="ready"><div class="card-head"><div class="card-title">speed_drop_scoreboard</div><span class="status-pill" data-status="ready">ready</span></div><div class="note">速球のあとに球速を落とすと、打者の見え方はどう変わるのか。</div><ul><li>top scoreboard strip with inning/count labels</li><li>left pitch card: 155 km/h four-seam</li><li>right pitch card: 140 km/h slider</li><li>large arrow connecting cards</li></ul></article>
+<article class="card" data-concept="low_outer_zone_focus" data-status="draft_offline"><div class="card-head"><div class="card-title">low_outer_zone_focus</div><span class="status-pill" data-status="draft_offline">draft_offline</span></div><div class="note">make the viewer watch point visible without footage</div><ul><li>center strike-zone grid</li><li>highlighted low-outer target</li><li>small pitch cards in the corners</li><li>no player, team, league, or broadcast identity</li></ul></article>
+<article class="card" data-concept="yukkuri_reaction_data_card" data-status="draft_offline"><div class="card-head"><div class="card-title">yukkuri_reaction_data_card</div><span class="status-pill" data-status="draft_offline">draft_offline</span></div><div class="note">connects yukkuri reaction framing to a data-first thumbnail</div><ul><li>two generic circular host placeholders</li><li>oversized numeric speed drop</li><li>small caution chip marking sample-only status</li></ul></article></div>
+        </section>
+
+        <section class="panel" data-section="source-artifact-index">
+          <h2>Source Artifact Index</h2>
+          <p>source_artifact_index: see <code>source_artifact_index.json</code>. All visual material in this proof is abstract SVG/CSS/text.</p>
+        </section>
+      </div>
+
+      <aside>
+        <section class="panel" data-section="title-candidates">
+          <h2>Title / Text Candidates</h2>
+          <table aria-label="title candidates"><tbody><tr><td>primary_numeric_hook</td><td>155 -&gt; 140 km/h</td><td><span class="status-pill" data-status="draft_offline">draft_offline</span></td></tr>
+<tr><td>full_episode_title_reference</td><td>Why a 155 km/h fastball followed by a 140 km/h slider changes the at-bat</td><td><span class="status-pill" data-status="draft_offline">draft_offline</span></td></tr>
+<tr><td>short_overlay</td><td>15km/hの罠</td><td><span class="status-pill" data-status="draft_offline">draft_offline</span></td></tr>
+<tr><td>short_overlay</td><td>速球のあとが怖い</td><td><span class="status-pill" data-status="draft_offline">draft_offline</span></td></tr>
+<tr><td>short_overlay</td><td>外低めスライダー</td><td><span class="status-pill" data-status="draft_offline">draft_offline</span></td></tr></tbody></table>
+        </section>
+
+        <section class="panel" data-section="visual-constraints">
+          <h2>Visual Constraints</h2>
+          <table aria-label="visual constraints"><tbody>
+            <tr><th>canvas</th><td>1280x720 SVG static proof</td></tr>
+            <tr><th>safe_area</th><td>48 px</td></tr>
+            <tr><th>motif</th><td>Original scoreboard strip plus two pitch cards connected by a speed-drop arrow.</td></tr>
+            <tr><th>rights</th><td>sample_only_no_publication</td></tr>
+          </tbody></table>
+        </section>
+
+        <section class="panel" data-section="boundary-status">
+          <h2>Boundaries</h2>
+          <table aria-label="boundary status"><tbody><tr><th>source_status</th><td><span class="status-pill" data-status="draft_offline">offline_fixture_not_live</span></td></tr>
+<tr><th>rights_status</th><td><span class="status-pill" data-status="sample_fixture_not_real">sample_only_no_publication</span></td></tr>
+<tr><th>transcript_status</th><td><span class="status-pill" data-status="sample_fixture_not_real">sample_fixture_not_real</span></td></tr>
+<tr><th>sample_fixture_status</th><td><span class="status-pill" data-status="sample_fixture_not_real">sample_fixture_not_real</span></td></tr>
+<tr><th>real_transcript_status</th><td><span class="status-pill" data-status="blocked_by_real_input">blocked_by_real_input</span></td></tr>
+<tr><th>thumbnail_proof_status</th><td><span class="status-pill" data-status="ready">ready</span></td></tr>
+<tr><th>thumbnail_image_status</th><td><span class="status-pill" data-status="deferred">deferred</span></td></tr>
+<tr><th>external_media_status</th><td><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></td></tr>
+<tr><th>public_upload_status</th><td><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></td></tr>
+<tr><th>yymm4_gui_import_render_status</th><td><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></td></tr>
+<tr><th>production_status</th><td><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></td></tr></tbody></table>
+        </section>
+
+        <section class="panel" data-section="readiness-grid">
+          <h2>Readiness Grid</h2>
+          <div class="status-grid"><article class="card" data-capability="content_spine" data-status="draft_offline"><div class="card-head"><div class="card-title">Content spine package</div><span class="status-pill" data-status="draft_offline">draft_offline</span></div><div class="note">current local/offline episode package</div><code>production_pilots/yukkuri_newsroom_content_spine_001/MANIFEST.json</code></article>
+<article class="card" data-capability="thumbnail_brief" data-status="draft_offline"><div class="card-head"><div class="card-title">Thumbnail direction brief</div><span class="status-pill" data-status="draft_offline">draft_offline</span></div><div class="note">text-only direction brief, not an image</div><code>production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_brief_001.md</code></article>
+<article class="card" data-capability="episode_candidate" data-status="draft_offline"><div class="card-head"><div class="card-title">Episode candidate</div><span class="status-pill" data-status="draft_offline">draft_offline</span></div><div class="note">episode hook and beat outline are available</div><code>production_pilots/yukkuri_newsroom_content_spine_001/episode_candidate_001.md</code></article>
+<article class="card" data-capability="thumbnail_layout_proof" data-status="ready"><div class="card-head"><div class="card-title">Static layout proof</div><span class="status-pill" data-status="ready">ready</span></div><div class="note">abstract SVG proof generated locally</div><code>production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/thumbnail_layout_proof.svg</code></article>
+<article class="card" data-capability="transcript_source" data-status="sample_fixture_not_real"><div class="card-head"><div class="card-title">Transcript source reality</div><span class="status-pill" data-status="sample_fixture_not_real">sample_fixture_not_real</span></div><div class="note">current transcript still uses sample fixture</div><code>production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/transcript_source_probe.json</code></article>
+<article class="card" data-capability="real_transcript_input" data-status="blocked_by_real_input"><div class="card-head"><div class="card-title">Real transcript input</div><span class="status-pill" data-status="blocked_by_real_input">blocked_by_real_input</span></div><div class="note">verified real transcript remains required before production</div><code>production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/real_input</code></article>
+<article class="card" data-capability="dashboard_readiness_ingest" data-status="ready"><div class="card-head"><div class="card-title">Dashboard readiness ingest</div><span class="status-pill" data-status="ready">ready</span></div><div class="note">read-only readiness summary exists</div><code>production_pilots/yukkuri_newsroom_content_spine_001/dashboard_readiness_ingest/readiness_summary.json</code></article>
+<article class="card" data-capability="gui_dashboard_panel" data-status="ready"><div class="card-head"><div class="card-title">GUI dashboard panel</div><span class="status-pill" data-status="ready">ready</span></div><div class="note">static dashboard panel exists</div><code>production_pilots/yukkuri_newsroom_content_spine_001/gui_dashboard_panel/gui_dashboard_adapter.json</code></article>
+<article class="card" data-capability="ymm4_import_preview" data-status="ready"><div class="card-head"><div class="card-title">YMM4 import preview pack</div><span class="status-pill" data-status="ready">ready</span></div><div class="note">import preview exists but no actual YMM4 import was run</div><code>production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/import_readiness_summary.json</code></article>
+<article class="card" data-capability="source_rights_status" data-status="blocked_by_true_gate"><div class="card-head"><div class="card-title">Source rights/public use</div><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></div><div class="note">sample_only_no_publication</div><code>production_pilots/yukkuri_newsroom_content_spine_001/topic_candidates.json</code></article>
+<article class="card" data-capability="external_media_download" data-status="blocked_by_true_gate"><div class="card-head"><div class="card-title">External media download</div><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></div><div class="note">no image, logo, screenshot, or sports media download is allowed here</div><code>production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_brief_001.md</code></article>
+<article class="card" data-capability="public_upload_status" data-status="blocked_by_true_gate"><div class="card-head"><div class="card-title">Public upload status</div><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></div><div class="note">no YouTube upload, scheduling, visibility, or public-ready claim</div><code>production_pilots/yukkuri_newsroom_content_spine_001/dashboard_readiness_ingest/readiness_summary.json</code></article>
+<article class="card" data-capability="thumbnail_image_generation" data-status="deferred"><div class="card-head"><div class="card-title">Final thumbnail image generation</div><span class="status-pill" data-status="deferred">deferred</span></div><div class="note">static proof only; no PNG/JPG final output generated</div><code>production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_output</code></article>
+<article class="card" data-capability="production_thumbnail_output" data-status="missing"><div class="card-head"><div class="card-title">Production thumbnail output</div><span class="status-pill" data-status="missing">missing</span></div><div class="note">no production image output exists</div><code>production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_output/final_thumbnail.png</code></article>
+<article class="card" data-capability="timing_audio_status" data-status="unknown"><div class="card-head"><div class="card-title">Timing and audio status</div><span class="status-pill" data-status="unknown">unknown</span></div><div class="note">timing=no_audio_or_yymm4_timing; audio=no_audio_generated_or_imported</div><code>production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/import_readiness_summary.json</code></article>
+<article class="card" data-capability="ymm4_gui_render_status" data-status="blocked_by_true_gate"><div class="card-head"><div class="card-title">YMM4 GUI/import/render</div><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></div><div class="note">no YMM4 GUI launch, import, or render in this proof</div><code>production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/import_readiness_summary.json</code></article>
+<article class="card" data-capability="visual_polish" data-status="partial"><div class="card-head"><div class="card-title">Designer polish</div><span class="status-pill" data-status="partial">partial</span></div><div class="note">composition reviewable, final taste and template transfer still pending</div><code>production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/thumbnail_proof_panel.html</code></article></div>
+        </section>
+
+        <section class="panel next" data-section="next-action">
+          <h2>Next Safe Local Action</h2>
+          <p>Open thumbnail_proof_panel.html or thumbnail_layout_proof.svg for offline composition review; then choose accept_direction, revise_copy, revise_layout, or hold before any real-source, YMM4, or final thumbnail work.</p>
+        </section>
+      </aside>
+    </section>
+  </main>
+</body>
+</html>

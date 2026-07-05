@@ -1,0 +1,53 @@
+{
+  "schema_version": "thumbnail_title_text_candidates.v1",
+  "primary_title_candidates": [
+    {
+      "text": "155 -> 140 km/h",
+      "role": "primary_numeric_hook",
+      "state": "draft_offline",
+      "reason": "uses the existing thumbnail_profile.title_hook"
+    },
+    {
+      "text": "Why a 155 km/h fastball followed by a 140 km/h slider changes the at-bat",
+      "role": "full_episode_title_reference",
+      "state": "draft_offline",
+      "reason": "too long for final thumbnail unless compressed"
+    }
+  ],
+  "short_text_candidates": [
+    {
+      "text": "15km/hの罠",
+      "role": "short_overlay",
+      "state": "draft_offline"
+    },
+    {
+      "text": "速球のあとが怖い",
+      "role": "short_overlay",
+      "state": "draft_offline"
+    },
+    {
+      "text": "外低めスライダー",
+      "role": "short_overlay",
+      "state": "draft_offline"
+    }
+  ],
+  "composition_pairings": [
+    {
+      "primary": "155 -> 140 km/h",
+      "secondary": "15km/hの罠",
+      "state": "ready",
+      "note": "preferred first-pass proof pairing"
+    },
+    {
+      "primary": "155 -> 140 km/h",
+      "secondary": "速球のあとが怖い",
+      "state": "draft_offline",
+      "note": "alternate emotional hook"
+    }
+  ],
+  "text_constraints": {
+    "max_primary_tokens": 4,
+    "max_short_text_candidates_on_canvas": 1,
+    "avoid_official_names_logos_or_broadcast_framing": true
+  }
+}

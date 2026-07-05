@@ -1,0 +1,64 @@
+{
+  "schema_version": "thumbnail_concepts.v1",
+  "selected_candidate_id": "sports_pitch_sequence_p05",
+  "concepts": [
+    {
+      "concept_id": "speed_drop_scoreboard",
+      "state": "ready",
+      "primary_title": "155 -> 140 km/h",
+      "short_text": "15km/hの罠",
+      "hook_rationale": "速球のあとに球速を落とすと、打者の見え方はどう変わるのか。",
+      "composition": [
+        "top scoreboard strip with inning/count labels",
+        "left pitch card: 155 km/h four-seam",
+        "right pitch card: 140 km/h slider",
+        "large arrow connecting cards",
+        "low-outer strike-zone marker as original abstract graphic"
+      ],
+      "why_this_is_safe": "uses only original text, boxes, arrows, and abstract strike-zone shapes"
+    },
+    {
+      "concept_id": "low_outer_zone_focus",
+      "state": "draft_offline",
+      "primary_title": "155 -> 140 km/h",
+      "short_text": "速球のあとが怖い",
+      "hook_rationale": "make the viewer watch point visible without footage",
+      "composition": [
+        "center strike-zone grid",
+        "highlighted low-outer target",
+        "small pitch cards in the corners",
+        "no player, team, league, or broadcast identity"
+      ],
+      "why_this_is_safe": "abstract zone diagram avoids media rights claims"
+    },
+    {
+      "concept_id": "yukkuri_reaction_data_card",
+      "state": "draft_offline",
+      "primary_title": "155 -> 140 km/h",
+      "short_text": "外低めスライダー",
+      "hook_rationale": "connects yukkuri reaction framing to a data-first thumbnail",
+      "composition": [
+        "two generic circular host placeholders",
+        "oversized numeric speed drop",
+        "small caution chip marking sample-only status"
+      ],
+      "why_this_is_safe": "host placeholders are abstract shapes, not generated character art"
+    }
+  ],
+  "source_thumbnail_profile": {
+    "title_hook": "155 -> 140 km/h",
+    "short_text_candidates": [
+      "15km/hの罠",
+      "速球のあとが怖い",
+      "外低めスライダー"
+    ],
+    "visual_motif": "Original scoreboard strip plus two pitch cards connected by a speed-drop arrow.",
+    "forbidden_avoid_claims": [
+      "Do not imply this is real broadcast analysis.",
+      "Do not use official logos, player photos, or broadcast stills.",
+      "Do not call the pitch sequence a proven strategy outside the sample."
+    ],
+    "source_rights_caution": "Use only original data-card graphics unless a real-source rights record is added later.",
+    "designer_note": "Keep the thumbnail numeric and graphic-first: speed drop, pitch-type change, and low-outer target."
+  }
+}

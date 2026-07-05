@@ -5,9 +5,10 @@ flowchart LR
     D --> E["T+2 dashboard readiness ingest"]
     E --> S["T+3 GUI dashboard panel"]
     S --> N["T+4 YMM4 import preview pack"]
-    N --> F["T+5 real transcript rerun (advisory)"]
-    F --> O["T+6 thumbnail visual proof (advisory)"]
-    F --> X["T+7 Electron GUI adapter / deeper ingest (advisory)"]
+    N --> O["T+5 thumbnail visual proof pack"]
+    O --> F["T+6 real transcript rerun (advisory)"]
+    F --> X["T+7 actual YMM4 import review (advisory)"]
+    F --> AB["T+8 production micro proof / deeper GUI adapter (advisory)"]
 
     G["Real or NotebookLM transcript"] -. "drop-zone or --transcript" .-> D
     H["sample fixture"] -. "only when no real transcript exists" .-> D
@@ -26,5 +27,8 @@ flowchart LR
     N --> Y["import_preview_panel.md / .html"]
     N --> Z["draft_yymm4_import_preview.csv"]
     N --> AA["CSV / cue / Writer IR inventories"]
+    O --> AC["thumbnail_proof_panel.html"]
+    O --> AD["thumbnail_layout_proof.svg"]
+    O --> AE["title/text candidates + visual constraints"]
 
-    M["closed gates: rights/legal/public-ready acceptance, OAuth/API/payment, live scraping/media download, YMM4 GUI/import/render, production .ymmp, YouTube publication"] -.-> N
+    M["closed gates: rights/legal/public-ready acceptance, OAuth/API/payment, live scraping/media download, external image/media download, YMM4 GUI/import/render, production .ymmp, YouTube publication"] -.-> O

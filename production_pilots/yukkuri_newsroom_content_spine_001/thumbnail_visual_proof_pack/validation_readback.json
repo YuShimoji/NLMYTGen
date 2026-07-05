@@ -1,0 +1,43 @@
+{
+  "schema_version": "thumbnail_visual_proof_readback.v1",
+  "status": "passed",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_visual_proof_pack",
+  "checked_files": {
+    "thumbnail_proof_manifest.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_visual_proof_pack\\thumbnail_proof_manifest.json",
+    "thumbnail_concepts.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_visual_proof_pack\\thumbnail_concepts.json",
+    "title_text_candidates.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_visual_proof_pack\\title_text_candidates.json",
+    "visual_constraints.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_visual_proof_pack\\visual_constraints.json",
+    "forbidden_claims_and_rights_boundaries.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_visual_proof_pack\\forbidden_claims_and_rights_boundaries.md",
+    "thumbnail_proof_panel.html": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_visual_proof_pack\\thumbnail_proof_panel.html",
+    "thumbnail_proof_panel.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_visual_proof_pack\\thumbnail_proof_panel.md",
+    "thumbnail_layout_proof.svg": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_visual_proof_pack\\thumbnail_layout_proof.svg",
+    "source_artifact_index.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_visual_proof_pack\\source_artifact_index.json",
+    "validation_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_visual_proof_pack\\validation_readback.json",
+    "review_checklist.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_visual_proof_pack\\review_checklist.md",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_visual_proof_pack\\limitations.md"
+  },
+  "checks": {
+    "all_required_files_present": true,
+    "json_loads": true,
+    "title_candidates_present": true,
+    "concepts_present": true,
+    "visual_constraints_present": true,
+    "html_markers_present": true,
+    "svg_static_proof_present": true,
+    "no_external_references": true,
+    "sample_fixture_preserved": true,
+    "rights_gate_closed": true,
+    "public_upload_gate_closed": true,
+    "external_media_gate_closed": true
+  },
+  "failed_checks": [],
+  "artifact_id": "thumbnail_visual_proof_pack_001",
+  "source_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_001",
+  "selected_candidate_id": "sports_pitch_sequence_p05",
+  "primary_title": "155 -> 140 km/h",
+  "short_text_count": 3,
+  "primary_machine_readable": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_visual_proof_pack\\thumbnail_proof_manifest.json",
+  "primary_human_review": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_visual_proof_pack\\thumbnail_proof_panel.html",
+  "primary_visual_proof": "production_pilots\\yukkuri_newsroom_content_spine_001\\thumbnail_visual_proof_pack\\thumbnail_layout_proof.svg",
+  "next_action": "Open thumbnail_proof_panel.html or thumbnail_layout_proof.svg for offline composition review; then choose accept_direction, revise_copy, revise_layout, or hold before any real-source, YMM4, or final thumbnail work."
+}

@@ -1,0 +1,169 @@
+{
+  "schema_version": "thumbnail_visual_proof_source_artifact_index.v1",
+  "source_inputs": [
+    {
+      "id": "content_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/MANIFEST.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_manifest.v1"
+    },
+    {
+      "id": "topic_candidates",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/topic_candidates.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_topic_candidates.v1"
+    },
+    {
+      "id": "episode_candidate",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/episode_candidate_001.md",
+      "exists": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "thumbnail_brief",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_brief_001.md",
+      "exists": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "content_dashboard",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/dashboard_status.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_dashboard_status.v1"
+    },
+    {
+      "id": "dashboard_summary",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/dashboard_readiness_ingest/readiness_summary.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "dashboard_readiness_summary.v1"
+    },
+    {
+      "id": "gui_adapter",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/gui_dashboard_panel/gui_dashboard_adapter.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "gui_dashboard_adapter.v1"
+    },
+    {
+      "id": "gui_panel_html",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/gui_dashboard_panel/dashboard_panel_preview.html",
+      "exists": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "import_summary",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/import_readiness_summary.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "ymm4_import_readiness_summary.v1"
+    },
+    {
+      "id": "import_panel_md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/import_preview_panel.md",
+      "exists": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "import_panel_html",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/ymm4_import_preview_pack/import_preview_panel.html",
+      "exists": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "transcript_probe",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/transcript_substitution_readiness/transcript_source_probe.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "transcript_source_probe.v1"
+    }
+  ],
+  "generated_outputs": [
+    {
+      "id": "thumbnail_proof_manifest.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/thumbnail_proof_manifest.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "thumbnail_concepts.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/thumbnail_concepts.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "title_text_candidates.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/title_text_candidates.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "visual_constraints.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/visual_constraints.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "forbidden_claims_and_rights_boundaries.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/forbidden_claims_and_rights_boundaries.md",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "thumbnail_proof_panel.html",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/thumbnail_proof_panel.html",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "thumbnail_proof_panel.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/thumbnail_proof_panel.md",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "thumbnail_layout_proof.svg",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/thumbnail_layout_proof.svg",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "source_artifact_index.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/source_artifact_index.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "validation_readback.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/validation_readback.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "review_checklist.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/review_checklist.md",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "limitations.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/limitations.md",
+      "exists": true,
+      "state": "ready"
+    }
+  ],
+  "artifact_counts": {
+    "source_total": 12,
+    "source_present": 12,
+    "generated_total": 12,
+    "generated_present": 12
+  }
+}

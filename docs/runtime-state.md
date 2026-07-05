@@ -1,5 +1,28 @@
 # Runtime State — NLMYTGen
 
+- **Thumbnail visual proof pack v1 generated (2026-07-06)**:
+  `build-thumbnail-visual-proof-pack` now aggregates the current content spine,
+  episode candidate, thumbnail brief, dashboard readiness ingest, GUI dashboard
+  adapter, and YMM4 import preview state into
+  `production_pilots/yukkuri_newsroom_content_spine_001/thumbnail_visual_proof_pack/`.
+  The package includes `thumbnail_proof_manifest.json`,
+  `thumbnail_concepts.json`, `title_text_candidates.json`,
+  `visual_constraints.json`, `forbidden_claims_and_rights_boundaries.md`,
+  `thumbnail_proof_panel.{html,md}`, `thumbnail_layout_proof.svg`,
+  `source_artifact_index.json`, `review_checklist.md`, `limitations.md`, and
+  `validation_readback.json`. Current readback passed with primary title
+  `155 -> 140 km/h`, 3 short text candidates, static SVG proof present, no
+  external media references, `transcript_status=sample_fixture_not_real`,
+  `rights_status=sample_only_no_publication`, and public upload / external
+  media / YMM4 GUI-import-render gates closed. This is a static local/offline
+  composition and messaging proof only: not final thumbnail image generation,
+  external media download, logo/photo/broadcast use, image API use, real
+  transcript rerun, YMM4 GUI/import/render, production `.ymmp`,
+  rights/legal/public-ready acceptance, or YouTube publication. Next safe
+  action is to open `thumbnail_visual_proof_pack/thumbnail_proof_panel.html`
+  or `thumbnail_layout_proof.svg` for direction review, then choose
+  `accept_direction`, `revise_copy`, `revise_layout`, or `hold` before any
+  real-source, YMM4, or final thumbnail work.
 - **YMM4 import preview pack v1 generated (2026-07-06)**:
   `build-yymm4-import-preview-pack` now aggregates the current draft YMM4 CSV,
   regenerated cue packet, Writer IR candidate, transcript readiness state,

@@ -138,6 +138,9 @@ python -m src.cli.main build-gui-dashboard-panel --package production_pilots/yuk
 # draft CSV / cue / Writer IR / dashboard state から local/offline YMM4 import preview pack を生成
 python -m src.cli.main build-yymm4-import-preview-pack --package production_pilots/yukkuri_newsroom_content_spine_001
 
+# thumbnail brief / dashboard / import preview から static local/offline thumbnail visual proof pack を生成
+python -m src.cli.main build-thumbnail-visual-proof-pack --package production_pilots/yukkuri_newsroom_content_spine_001
+
 # B-15 Phase 1: 外部 LLM / Automation に渡す cue packet を生成
 python -m src.cli.main build-cue-packet input.txt -o cue_packet.md
 
