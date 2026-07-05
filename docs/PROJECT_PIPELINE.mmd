@@ -3,9 +3,10 @@ flowchart LR
     B --> C["IR/CSV bridge"]
     C --> D["T+1 transcript substitution readiness"]
     D --> E["T+2 dashboard readiness ingest"]
-    E --> F["T+3 real transcript rerun (advisory)"]
-    F --> N["T+4 YMM4 import preview pack (advisory)"]
-    F --> O["T+5 thumbnail visual proof (advisory)"]
+    E --> S["T+3 GUI dashboard panel"]
+    S --> F["T+4 real transcript rerun (advisory)"]
+    F --> N["T+5 YMM4 import preview pack (advisory)"]
+    F --> O["T+6 thumbnail visual proof (advisory)"]
 
     G["Real or NotebookLM transcript"] -. "drop-zone or --transcript" .-> D
     H["sample fixture"] -. "only when no real transcript exists" .-> D
@@ -17,5 +18,8 @@ flowchart LR
     E --> P["readiness_summary.json"]
     E --> Q["dashboard_preview.md"]
     E --> R["capability glyph grid + symbolic bars"]
+    S --> T["dashboard_panel_preview.html"]
+    S --> U["gui_dashboard_adapter.json"]
+    S --> V["dom_or_static_readback.json"]
 
-    M["closed gates: rights/legal/public-ready acceptance, OAuth/API/payment, live scraping/media download, YMM4 GUI/render, YouTube publication"] -.-> E
+    M["closed gates: rights/legal/public-ready acceptance, OAuth/API/payment, live scraping/media download, YMM4 GUI/render, YouTube publication"] -.-> S

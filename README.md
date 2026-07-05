@@ -132,6 +132,9 @@ python -m src.cli.main build-transcript-substitution --package production_pilots
 # read-only dashboard/readiness ingest package を生成
 python -m src.cli.main build-dashboard-readiness-ingest --package production_pilots/yukkuri_newsroom_content_spine_001
 
+# dashboard readiness ingest から static GUI panel preview を生成
+python -m src.cli.main build-gui-dashboard-panel --package production_pilots/yukkuri_newsroom_content_spine_001
+
 # B-15 Phase 1: 外部 LLM / Automation に渡す cue packet を生成
 python -m src.cli.main build-cue-packet input.txt -o cue_packet.md
 

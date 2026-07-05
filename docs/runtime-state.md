@@ -1,5 +1,25 @@
 # Runtime State — NLMYTGen
 
+- **GUI dashboard panel ingest v1 generated (2026-07-06)**:
+  `build-gui-dashboard-panel` now turns the current dashboard readiness ingest
+  into a read-only static panel package at
+  `production_pilots/yukkuri_newsroom_content_spine_001/gui_dashboard_panel/`.
+  The package includes `panel_manifest.json`, `gui_dashboard_adapter.json`,
+  `panel_data.json`, `dashboard_panel_preview.html`,
+  `dashboard_panel_preview.md`, `dom_or_static_readback.json`,
+  `review_checklist.md`, `limitations.md`, and `validation_readback.json`.
+  Current readback passed with 12 capability rows, visible status categories,
+  `transcript_status=sample_fixture_not_real`, and DOM/static checks for
+  `sample_fixture_not_real`, `blocked_by_real_input`, source artifact index,
+  and `ymm4_render_status`. This is a static read-only local/offline panel
+  only: not a real transcript rerun, source/rights approval, YMM4 GUI launch,
+  YMM4 import proof, VoiceItem timing readback, production `.ymmp`, render,
+  thumbnail visual proof, legal/public-ready acceptance, or YouTube
+  publication. Next safe action is to open
+  `gui_dashboard_panel/dashboard_panel_preview.html` for one-surface review,
+  then provide a real transcript in `transcript_substitution_readiness/real_input/`
+  or rerun `build-transcript-substitution --transcript ...` before YMM4 import
+  preview work.
 - **Dashboard readiness ingest v1 generated (2026-07-06)**:
   `build-dashboard-readiness-ingest` now aggregates the current yukkuri
   newsroom pilot into

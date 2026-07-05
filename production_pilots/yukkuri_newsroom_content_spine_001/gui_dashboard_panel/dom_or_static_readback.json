@@ -1,0 +1,44 @@
+{
+  "schema_version": "gui_dashboard_static_readback.v1",
+  "status": "passed",
+  "html_path": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\dashboard_panel_preview.html",
+  "panel_data_path": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\panel_data.json",
+  "adapter_path": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\gui_dashboard_adapter.json",
+  "seen_states": [
+    "blocked_by_real_input",
+    "deferred",
+    "draft_offline",
+    "ready",
+    "sample_fixture_not_real"
+  ],
+  "required_visible_states": [
+    "ready",
+    "sample_fixture_not_real",
+    "draft_offline",
+    "blocked_by_real_input",
+    "deferred"
+  ],
+  "html_markers": {
+    "data-dashboard-panel=\"true\"": true,
+    "data-section=\"capability-grid\"": true,
+    "data-section=\"boundary-status\"": true,
+    "data-section=\"source-artifact-index\"": true,
+    "data-status=\"ready\"": true,
+    "data-status=\"partial\"": true,
+    "data-status=\"sample_fixture_not_real\"": true,
+    "data-status=\"blocked_by_real_input\"": true,
+    "data-status=\"blocked_by_true_gate\"": true,
+    "data-status=\"draft_offline\"": true,
+    "data-status=\"deferred\"": true,
+    "data-status=\"missing\"": true,
+    "data-status=\"unknown\"": true
+  },
+  "checks": {
+    "html_references_expected_status_categories": true,
+    "html_references_source_artifact_index": true,
+    "html_references_sample_fixture": true,
+    "html_references_real_input_gate": true,
+    "html_references_yymm4_render_gate": true,
+    "capability_rows_present": true
+  }
+}

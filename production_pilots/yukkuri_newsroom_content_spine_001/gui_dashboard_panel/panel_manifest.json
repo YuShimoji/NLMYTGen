@@ -1,0 +1,42 @@
+{
+  "schema_version": "gui_dashboard_panel_manifest.v1",
+  "artifact_id": "gui_dashboard_panel_ingest_001",
+  "artifact_kind": "gui-dashboard-panel-ingest",
+  "status": "generated",
+  "source_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_001",
+  "ingest_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel",
+  "selected_candidate_id": "sports_pitch_sequence_p05",
+  "files": {
+    "panel_manifest.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\panel_manifest.json",
+    "gui_dashboard_adapter.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\gui_dashboard_adapter.json",
+    "panel_data.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\panel_data.json",
+    "dashboard_panel_preview.html": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\dashboard_panel_preview.html",
+    "dashboard_panel_preview.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\dashboard_panel_preview.md",
+    "dom_or_static_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\dom_or_static_readback.json",
+    "review_checklist.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\review_checklist.md",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\limitations.md",
+    "validation_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\validation_readback.json"
+  },
+  "source_inputs": {
+    "dashboard_manifest": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\dashboard_manifest.json",
+    "readiness_summary": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\readiness_summary.json",
+    "pipeline_status": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\pipeline_status.json",
+    "capability_glyph_grid": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\capability_glyph_grid.json",
+    "symbolic_visual_panel": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\symbolic_visual_panel.json",
+    "source_artifact_index": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest\\source_artifact_index.json"
+  },
+  "readback_status": "passed",
+  "boundaries": {
+    "read_only_panel": true,
+    "local_offline_review_only": true,
+    "no_live_fetch": true,
+    "no_media_download": true,
+    "no_youtube_publication": true,
+    "no_oauth_or_paid_api": true,
+    "no_rights_or_legal_acceptance": true,
+    "no_ymm4_gui_launch_or_render": true,
+    "no_production_ymmp_generation": true,
+    "no_audio_generation": true
+  }
+}

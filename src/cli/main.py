@@ -23,6 +23,7 @@ Usage:
     python -m src.cli.main build-content-ir-bridge --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-transcript-substitution --package production_pilots/pkg [--transcript input.txt] [--output DIR] [--format text|json]
     python -m src.cli.main build-dashboard-readiness-ingest --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
+    python -m src.cli.main build-gui-dashboard-panel --package production_pilots/pkg [--ingest-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-session-manifest --video-id ID [artifact paths...] [--format markdown|json] [-o path]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
@@ -2404,6 +2405,36 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    # build-gui-dashboard-panel (static read-only panel from dashboard ingest)
+    p_gui_dashboard_panel = subparsers.add_parser(
+        "build-gui-dashboard-panel",
+        help="Build a static read-only dashboard panel from dashboard readiness ingest data",
+    )
+    p_gui_dashboard_panel.add_argument(
+        "--package",
+        required=True,
+        help="Content spine package directory",
+    )
+    p_gui_dashboard_panel.add_argument(
+        "--ingest-dir",
+        help="Dashboard readiness ingest directory (default: <package>/dashboard_readiness_ingest)",
+    )
+    p_gui_dashboard_panel.add_argument(
+        "--output",
+        help="Output panel directory (default: <package>/gui_dashboard_panel)",
+    )
+    p_gui_dashboard_panel.add_argument(
+        "--artifact-id",
+        default="gui_dashboard_panel_ingest_001",
+        help="GUI dashboard panel artifact id",
+    )
+    p_gui_dashboard_panel.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # build-session-manifest (production handoff)
     p_session_manifest = subparsers.add_parser(
         "build-session-manifest",
@@ -2548,6 +2579,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_transcript_substitution(args)
         elif args.command == "build-dashboard-readiness-ingest":
             return _cmd_build_dashboard_readiness_ingest(args)
+        elif args.command == "build-gui-dashboard-panel":
+            return _cmd_build_gui_dashboard_panel(args)
         elif args.command == "build-session-manifest":
             return _cmd_build_session_manifest(args)
         elif args.command == "diagnose-script":
@@ -4356,6 +4389,30 @@ def _cmd_build_dashboard_readiness_ingest(args: argparse.Namespace) -> int:
 
     readback = build_dashboard_readiness_ingest_package(
         package_dir=getattr(args, "package"),
+        output_dir=getattr(args, "output", None),
+        artifact_id=args.artifact_id,
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"selected_candidate_id: {readback.get('selected_candidate_id')}")
+        print(f"transcript_status: {readback.get('transcript_status')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_gui_dashboard_panel(args: argparse.Namespace) -> int:
+    """Build a static read-only dashboard panel from dashboard readiness ingest data."""
+    from src.pipeline.gui_dashboard_panel import build_gui_dashboard_panel_package
+
+    readback = build_gui_dashboard_panel_package(
+        package_dir=getattr(args, "package"),
+        ingest_dir=getattr(args, "ingest_dir", None),
         output_dir=getattr(args, "output", None),
         artifact_id=args.artifact_id,
     )

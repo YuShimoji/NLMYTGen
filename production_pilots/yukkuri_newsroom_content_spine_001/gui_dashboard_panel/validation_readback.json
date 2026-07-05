@@ -1,0 +1,37 @@
+{
+  "schema_version": "gui_dashboard_panel_readback.v1",
+  "status": "passed",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel",
+  "checked_files": {
+    "panel_manifest.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\panel_manifest.json",
+    "gui_dashboard_adapter.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\gui_dashboard_adapter.json",
+    "panel_data.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\panel_data.json",
+    "dashboard_panel_preview.html": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\dashboard_panel_preview.html",
+    "dashboard_panel_preview.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\dashboard_panel_preview.md",
+    "dom_or_static_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\dom_or_static_readback.json",
+    "review_checklist.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\review_checklist.md",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\limitations.md",
+    "validation_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\validation_readback.json"
+  },
+  "checks": {
+    "all_required_files_present": true,
+    "json_loads": true,
+    "required_capabilities_present": true,
+    "required_states_visible": true,
+    "html_markers_present": true,
+    "sample_fixture_visible": true,
+    "public_upload_gate_closed": true,
+    "ymm4_render_gate_closed": true,
+    "source_artifact_index_visible": true
+  },
+  "failed_checks": [],
+  "artifact_id": "gui_dashboard_panel_ingest_001",
+  "source_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_001",
+  "ingest_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\dashboard_readiness_ingest",
+  "selected_candidate_id": "sports_pitch_sequence_p05",
+  "transcript_status": "sample_fixture_not_real",
+  "capability_count": 12,
+  "primary_machine_readable": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\gui_dashboard_adapter.json",
+  "primary_human_review": "production_pilots\\yukkuri_newsroom_content_spine_001\\gui_dashboard_panel\\dashboard_panel_preview.html",
+  "next_action": "Open dashboard_panel_preview.html for the one-surface read-only view; then review dashboard_preview.md and readiness_summary.json, then supply a real transcript or rerun build-transcript-substitution with --transcript before YMM4 import preview work."
+}
