@@ -1,0 +1,71 @@
+{
+  "schema_version": "symbolic_visual_panel.v1",
+  "bar_mode": "hypothesis",
+  "measured_progress": false,
+  "bars": [
+    {
+      "capability_id": "content_spine_002",
+      "label": "Content spine 002",
+      "state": "draft_offline",
+      "done_units": 5,
+      "total_units": 7,
+      "bar": "[#####--]"
+    },
+    {
+      "capability_id": "ir_bridge_002",
+      "label": "IR/CSV bridge 002",
+      "state": "draft_offline",
+      "done_units": 5,
+      "total_units": 7,
+      "bar": "[#####--]"
+    },
+    {
+      "capability_id": "transcript_substitution_002",
+      "label": "Transcript substitution 002",
+      "state": "sample_fixture_not_real",
+      "done_units": 4,
+      "total_units": 7,
+      "bar": "[####---]"
+    },
+    {
+      "capability_id": "dashboard_ingest",
+      "label": "Dashboard ingest",
+      "state": "ready",
+      "done_units": 6,
+      "total_units": 7,
+      "bar": "[######-]"
+    },
+    {
+      "capability_id": "real_transcript_input",
+      "label": "Real transcript",
+      "state": "blocked_by_real_input",
+      "done_units": 1,
+      "total_units": 7,
+      "bar": "[#------]"
+    },
+    {
+      "capability_id": "yymm4_import_preview",
+      "label": "YMM4 import preview",
+      "state": "deferred",
+      "done_units": 0,
+      "total_units": 7,
+      "bar": "[-------]"
+    },
+    {
+      "capability_id": "thumbnail_visual_proof",
+      "label": "Thumbnail proof",
+      "state": "deferred",
+      "done_units": 0,
+      "total_units": 7,
+      "bar": "[-------]"
+    }
+  ],
+  "legend": {
+    "[#######]": "complete is not claimed; full bars are not used in this ingest",
+    "ready": "present and locally reviewable",
+    "draft_offline": "present but sample/draft/offline",
+    "sample_fixture_not_real": "sample substitute, not real transcript input",
+    "blocked_by_real_input": "waiting for real transcript/material input",
+    "deferred": "future slice, intentionally not run here"
+  }
+}

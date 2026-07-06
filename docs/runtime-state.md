@@ -1,5 +1,24 @@
 # Runtime State — NLMYTGen
 
+- **Content spine 002 dashboard readiness ingest completed (2026-07-06 JST)**:
+  `content-spine-002-dashboard-readiness-ingest-v1` builds the local/offline
+  dashboard readiness package for
+  `production_pilots/yukkuri_newsroom_content_spine_002/` by aggregating the
+  existing content spine, `ir_bridge/`, and
+  `transcript_substitution_readiness/` artifacts. The generated review folder
+  is
+  `production_pilots/yukkuri_newsroom_content_spine_002/dashboard_readiness_ingest/`.
+  Primary readback is `validation_readback.json`; primary human review is
+  `dashboard_preview.md`; the deterministic regeneration command is
+  `python -m src.cli.main build-dashboard-readiness-ingest --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id content_spine_002_dashboard_readiness_ingest_v1`.
+  Readback and targeted tests pass. The package explicitly marks `dry_run`,
+  `sample_fixture_not_real`, `no_real_transcript`, `rights_boundary`,
+  `public_upload_closed`, `yymm4_render_closed`, and `no_yymm4_import`.
+  No real transcript rerun, live fetch/scraping, external media download,
+  OAuth/API/payment, rights/legal/public-ready acceptance, YMM4 GUI/import/render,
+  production `.ymmp`, YouTube upload, cross-repo edit, or Baseball hash residue
+  repair occurred. Suggested next axis is reviewed real transcript replacement
+  or an audit of the dashboard ingest surface before any YMM4 preview work.
 - **Terminal resume handoff synced for episode package (2026-07-02 JST)**:
   Resume from `master` after pulling remote and confirming
   `HEAD...origin/master = 0 0` plus clean worktree. The active artifact is

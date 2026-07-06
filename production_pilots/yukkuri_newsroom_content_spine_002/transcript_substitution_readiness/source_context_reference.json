@@ -1,0 +1,167 @@
+{
+  "schema_version": "transcript_substitution_source_context_reference.v1",
+  "artifact_id": "content_spine_002_transcript_substitution_readiness_001",
+  "source_content_spine_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_002",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness",
+  "selected_candidate_id": "factory_seed_dry_run_002",
+  "source_seed_reference_present": true,
+  "ir_bridge_reference_present": true,
+  "seed_origin_fields": {
+    "source_seed_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\factory_seed_dry_run_002",
+    "derived_from_seed_instantiation_artifact_id": "factory_seed_instantiation_dry_run_002",
+    "derived_from_episode_seed_id": "yukkuri_newsroom_episode_002_dry_run_seed_record",
+    "derived_from_registry_artifact_id": "episode_factory_template_registry_001",
+    "content_spine_source_file": "production_pilots\\yukkuri_newsroom_content_spine_001\\factory_seed_dry_run_002\\content_spine_input_candidate.json"
+  },
+  "manual_copy_of_original_pilot": false,
+  "inherited_template_defaults": {
+    "explainer_role": "まりさ",
+    "listener_role": "れいむ",
+    "section_count": 3,
+    "csv_header_mode": "headerless_yymm4_csv",
+    "thumbnail_text_constraints": {
+      "max_primary_tokens": 4,
+      "max_short_text_candidates_on_canvas": 1
+    },
+    "thumbnail_safety": {
+      "no_external_media": true,
+      "no_logos_or_player_photos": true,
+      "source_rights_caution": "Use only original data-card graphics unless a real-source rights record is added later."
+    }
+  },
+  "dry_run_placeholders": {
+    "episode_seed_placeholders": {
+      "topic_source_packet": "dry_run_topic_source_packet.json",
+      "candidate_id": "factory_seed_dry_run_002",
+      "source_url_or_placeholder": "offline://factory_seed_dry_run/yukkuri_newsroom_episode_002",
+      "placeholder_status": "sample_fixture_not_real"
+    },
+    "topic_source_packet": {
+      "packet_id": "dry_run_topic_source_packet_002",
+      "status": "dry_run",
+      "source_reality": "sample_fixture_not_real",
+      "source_boundary": {
+        "source_name": "Synthetic Yukkuri Newsroom Factory Seed Dry-Run",
+        "source_url_or_placeholder": "offline://factory_seed_dry_run/yukkuri_newsroom_episode_002",
+        "published_at_or_placeholder": "dry_run_placeholder_date_required",
+        "freshness_status": "offline_fixture_not_live",
+        "rights_status": "sample_only_no_publication",
+        "attribution_note": "Synthetic/local dry-run packet; no public source or rights claim.",
+        "excluded_claims": [
+          "No claim that this is a real source packet.",
+          "No claim that the topic is current news.",
+          "No publication readiness or rights clearance.",
+          "No external media, scraping, OAuth, payment, YMM4 import, render, or upload."
+        ],
+        "production_status": "dry_run_only_not_production",
+        "external_media_required": false,
+        "network_required": false
+      }
+    }
+  },
+  "required_real_inputs": {
+    "topic_or_source_packet": {
+      "state": "required_for_real_episode",
+      "value": null,
+      "accepted_shape": "reviewed local topic/source packet with source_boundary and rights notes"
+    },
+    "real_transcript": {
+      "state": "required_before_production",
+      "value": null,
+      "accepted_shape": "human-reviewed transcript/script input routed through transcript_input_template"
+    },
+    "rights_review": {
+      "state": "required_before_public_use",
+      "value": null,
+      "accepted_shape": "human rights/public-use review record"
+    },
+    "human_episode_decision": {
+      "state": "required_before_yymm4_import",
+      "value": null,
+      "accepted_shape": "accept/revise/hold decision on the real episode capsule"
+    }
+  },
+  "generated_content_spine_outputs": {
+    "standard_manifest": "production_pilots\\yukkuri_newsroom_content_spine_002\\MANIFEST.json",
+    "topic_candidates": "production_pilots\\yukkuri_newsroom_content_spine_002\\topic_candidates.json",
+    "episode_candidate": "production_pilots\\yukkuri_newsroom_content_spine_002\\episode_candidate_001.md",
+    "thumbnail_brief": "production_pilots\\yukkuri_newsroom_content_spine_002\\thumbnail_brief_001.md",
+    "dashboard_status": "production_pilots\\yukkuri_newsroom_content_spine_002\\dashboard_status.json",
+    "standard_readback": "production_pilots\\yukkuri_newsroom_content_spine_002\\content_spine_readback.json"
+  },
+  "generated_ir_csv_outputs": {
+    "bridge_manifest": "production_pilots\\yukkuri_newsroom_content_spine_002\\ir_bridge\\bridge_manifest.json",
+    "episode_bridge": "production_pilots\\yukkuri_newsroom_content_spine_002\\ir_bridge\\episode_bridge.json",
+    "writer_ir_candidate": "production_pilots\\yukkuri_newsroom_content_spine_002\\ir_bridge\\writer_ir_candidate.json",
+    "cue_packet_candidate": "production_pilots\\yukkuri_newsroom_content_spine_002\\ir_bridge\\cue_packet_candidate.json",
+    "cue_packet_readable": "production_pilots\\yukkuri_newsroom_content_spine_002\\ir_bridge\\cue_packet_candidate.md",
+    "draft_yymm4_csv": "production_pilots\\yukkuri_newsroom_content_spine_002\\ir_bridge\\draft_yymm4.csv",
+    "yymm4_csv_readiness": "production_pilots\\yukkuri_newsroom_content_spine_002\\ir_bridge\\ymm4_csv_readiness.md",
+    "source_to_ir_mapping": "production_pilots\\yukkuri_newsroom_content_spine_002\\ir_bridge\\source_to_ir_mapping.md",
+    "source_artifact_index": "production_pilots\\yukkuri_newsroom_content_spine_002\\ir_bridge\\source_artifact_index.json",
+    "review_checklist": "production_pilots\\yukkuri_newsroom_content_spine_002\\ir_bridge\\review_checklist.md",
+    "limitations": "production_pilots\\yukkuri_newsroom_content_spine_002\\ir_bridge\\limitations.md",
+    "validation_readback": "production_pilots\\yukkuri_newsroom_content_spine_002\\ir_bridge\\validation_readback.json"
+  },
+  "transcript_placeholders": {
+    "source_mode": "sample_fixture_generated",
+    "transcript_status": "sample_fixture_not_real",
+    "sample_fixture_used": true,
+    "selected_transcript_path": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\sample_inputs\\notebooklm_like_sample.txt",
+    "real_input_dropzone": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\real_input",
+    "sample_fixture_path": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\sample_inputs\\notebooklm_like_sample.txt",
+    "sample_fixture_is_real_transcript": false
+  },
+  "generated_transcript_outputs": {
+    "substitution_manifest": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\substitution_manifest.json",
+    "transcript_input_contract": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\transcript_input_contract.json",
+    "transcript_source_probe": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\transcript_source_probe.json",
+    "regenerated_episode_bridge": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\regenerated_episode_bridge.json",
+    "regenerated_writer_ir_candidate": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\regenerated_writer_ir_candidate.json",
+    "regenerated_cue_packet_candidate": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\regenerated_cue_packet_candidate.json",
+    "regenerated_draft_yymm4_csv": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\regenerated_draft_yymm4.csv",
+    "cue_packet_readiness": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\cue_packet_readiness.json",
+    "source_artifact_index": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\source_artifact_index.json",
+    "review_checklist": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\review_checklist.md",
+    "validation_readback": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\validation_readback.json"
+  },
+  "bridge_readback": {
+    "status": "passed",
+    "selected_candidate_id": "factory_seed_dry_run_002",
+    "draft_csv_rows": 9
+  },
+  "boundary_status": {
+    "source_status": "offline_fixture_not_live",
+    "template_status": "draft_offline",
+    "transcript_status": "sample_fixture_not_real",
+    "real_transcript_status": "not_run_required_before_production",
+    "rights_boundary": "sample_only_no_publication",
+    "rights_gate": "blocked_by_true_gate",
+    "public_upload_status": "public_upload_closed",
+    "public_upload_gate": "blocked_by_true_gate",
+    "external_media_status": "blocked_by_true_gate",
+    "yymm4_gui_status": "blocked_by_true_gate",
+    "yymm4_import_status": "not_run",
+    "yymm4_render_status": "yymm4_render_closed",
+    "yymm4_render_gate": "blocked_by_true_gate",
+    "production_status": "blocked_by_true_gate",
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "factory_seed_status": "instantiated_from_template_registry",
+    "source_packet_status": "synthetic_local_dry_run",
+    "content_spine_candidate_status": "derived_candidate_only_not_executed",
+    "real_source_status": "required_before_real_episode",
+    "external_network_status": "closed",
+    "oauth_status": "closed",
+    "payment_status": "closed",
+    "no_real_transcript": true,
+    "seed_to_content_spine_status": "generated_from_factory_seed",
+    "content_spine_generation_status": "local_offline_dry_run",
+    "no_yymm4_import": true,
+    "ir_csv_bridge_status": "draft_generated_local_offline",
+    "writer_ir_status": "draft_candidate_not_validate_ir_ready",
+    "draft_csv_status": "draft_preview_only_no_yymm4_import"
+  }
+}

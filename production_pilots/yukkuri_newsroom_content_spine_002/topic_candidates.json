@@ -1,0 +1,65 @@
+{
+  "schema_version": "content_spine_topic_candidates.v1",
+  "source_manifest_id": "factory_seed_dry_run_content_spine_candidate_002",
+  "source_type": "offline_synthetic_fixture",
+  "selection_policy": "highest candidate_score, then source order",
+  "candidates": [
+    {
+      "candidate_id": "factory_seed_dry_run_002",
+      "title": "Factory seed dry-run placeholder for a second yukkuri newsroom episode",
+      "candidate_score": 1,
+      "score_rationale": "Synthetic local seed used only to prove registry initialization; not a real news topic.",
+      "channel_angle": "dry-run factory proof, not publishable editorial material",
+      "source_boundary": {
+        "source_name": "Synthetic Yukkuri Newsroom Factory Seed Dry-Run",
+        "source_url_or_placeholder": "offline://factory_seed_dry_run/yukkuri_newsroom_episode_002",
+        "published_at_or_placeholder": "dry_run_placeholder_date_required",
+        "freshness_status": "offline_fixture_not_live",
+        "rights_status": "sample_only_no_publication",
+        "attribution_note": "Synthetic/local dry-run packet; no public source or rights claim.",
+        "excluded_claims": [
+          "No claim that this is a real source packet.",
+          "No claim that the topic is current news.",
+          "No publication readiness or rights clearance.",
+          "No external media, scraping, OAuth, payment, YMM4 import, render, or upload."
+        ],
+        "production_status": "dry_run_only_not_production"
+      },
+      "yukkuri_profile": {
+        "explainer_role": "まりさ",
+        "listener_role": "れいむ",
+        "hook": "Dry-run only: confirm the factory can open a second episode seed.",
+        "why_it_matters": "The registry should initialize a new package without copying the original pilot by hand.",
+        "beat_outline": [
+          "Load the template registry.",
+          "Separate inherited defaults from real required inputs.",
+          "Mark the source packet as synthetic dry-run material.",
+          "Stop before transcript, YMM4, rights, render, or publication work."
+        ],
+        "recommended_tone": "fact-first yukkuri explainer",
+        "glossary_terms": [
+          "factory seed",
+          "template registry",
+          "dry-run boundary"
+        ],
+        "likely_audience": "internal reviewers",
+        "channel_fit": "not a public episode; local factory proof only"
+      },
+      "thumbnail_profile": {
+        "title_hook": "DRY RUN",
+        "short_text_candidates": [
+          "DRY RUN",
+          "SEED ONLY"
+        ],
+        "visual_motif": "Original abstract seed card and closed-gate labels.",
+        "forbidden_avoid_claims": [
+          "Do not use public news imagery.",
+          "Do not imply final thumbnail readiness.",
+          "Do not use logos, player photos, broadcast stills, or external media."
+        ],
+        "source_rights_caution": "Use only original local placeholders until a real source packet is reviewed.",
+        "designer_note": "This is a boundary marker, not a production thumbnail direction."
+      }
+    }
+  ]
+}

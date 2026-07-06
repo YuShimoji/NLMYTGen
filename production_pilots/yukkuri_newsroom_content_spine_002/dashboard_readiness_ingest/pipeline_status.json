@@ -1,0 +1,65 @@
+{
+  "schema_version": "dashboard_pipeline_status.v1",
+  "artifact_id": "content_spine_002_dashboard_readiness_ingest_v1",
+  "source_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_002",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_002\\dashboard_readiness_ingest",
+  "selected_candidate_id": "factory_seed_dry_run_002",
+  "route": [
+    {
+      "node": "offline_topic_candidates",
+      "state": "draft_offline"
+    },
+    {
+      "node": "content_spine_002",
+      "state": "draft_offline"
+    },
+    {
+      "node": "ir_bridge_002",
+      "state": "draft_offline"
+    },
+    {
+      "node": "transcript_substitution_002",
+      "state": "sample_fixture_not_real"
+    },
+    {
+      "node": "dashboard_readiness_ingest",
+      "state": "ready"
+    },
+    {
+      "node": "real_transcript_rerun",
+      "state": "blocked_by_real_input"
+    },
+    {
+      "node": "yymm4_import_preview",
+      "state": "deferred"
+    },
+    {
+      "node": "thumbnail_visual_proof",
+      "state": "deferred"
+    }
+  ],
+  "transcript_probe": {
+    "source_mode": "sample_fixture_generated",
+    "transcript_status": "sample_fixture_not_real",
+    "sample_fixture_used": true
+  },
+  "closed_gates": [
+    "YouTube upload/publication/visibility change",
+    "OAuth/API keys/payment",
+    "rights/legal/public-ready acceptance",
+    "live scraping/media download",
+    "external image/media download or embedded copyrighted media",
+    "YMM4 GUI launch/import/render",
+    "cross-repo or destructive git"
+  ],
+  "roadmap_delta": {
+    "previous_t_plus_1": "transcript_substitution_readiness",
+    "completed_current": "dashboard_readiness_ingest",
+    "new_t_plus_1_proposal": "real_transcript_rerun",
+    "reordered_or_deferred": [
+      "YMM4 import preview remains after real transcript review",
+      "thumbnail visual proof remains after source/rights and visual direction review"
+    ],
+    "reason": "dashboard ingest makes current pilot state readable before crossing real-input and YMM4 gates"
+  }
+}

@@ -24,6 +24,7 @@ Usage:
     python -m src.cli.main init-episode-run --episode-id ID [--root DIR] [--force] [--format text|json]
     python -m src.cli.main episode-run-handoff --episode-id ID [--root DIR] [--format text|json]
     python -m src.cli.main build-session-manifest --video-id ID [artifact paths...] [--format markdown|json] [-o path]
+    python -m src.cli.main build-dashboard-readiness-ingest --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
@@ -2397,6 +2398,24 @@ def main(argv: list[str] | None = None) -> int:
     )
     p_session_manifest.add_argument("-o", "--output", help="Output path (default: stdout)")
 
+    p_dashboard_ingest = subparsers.add_parser(
+        "build-dashboard-readiness-ingest",
+        help="Build a read-only dashboard readiness ingest from an offline episode package",
+    )
+    p_dashboard_ingest.add_argument("--package", required=True, help="Episode package directory")
+    p_dashboard_ingest.add_argument("--output", help="Output directory (default: <package>/dashboard_readiness_ingest)")
+    p_dashboard_ingest.add_argument(
+        "--artifact-id",
+        default="content_spine_002_dashboard_readiness_ingest_v1",
+        help="Dashboard ingest artifact id",
+    )
+    p_dashboard_ingest.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -2509,6 +2528,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_episode_run_handoff(args)
         elif args.command == "build-session-manifest":
             return _cmd_build_session_manifest(args)
+        elif args.command == "build-dashboard-readiness-ingest":
+            return _cmd_build_dashboard_readiness_ingest(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -4390,6 +4411,29 @@ def _cmd_build_session_manifest(args: argparse.Namespace) -> int:
         print(f"Written: {out_path}")
     else:
         sys.stdout.write(text)
+    return 0
+
+
+def _cmd_build_dashboard_readiness_ingest(args: argparse.Namespace) -> int:
+    """Build a read-only dashboard readiness ingest package."""
+    from src.pipeline.dashboard_readiness_ingest import build_dashboard_readiness_ingest_package
+
+    readback = build_dashboard_readiness_ingest_package(
+        package_dir=getattr(args, "package"),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"selected_candidate_id: {readback.get('selected_candidate_id')}")
+        print(f"transcript_status: {readback.get('transcript_status')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"next_action: {readback.get('next_action')}")
     return 0
 
 

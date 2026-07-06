@@ -1,0 +1,211 @@
+{
+  "schema_version": "dashboard_readiness_summary.v1",
+  "artifact_id": "content_spine_002_dashboard_readiness_ingest_v1",
+  "source_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_002",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_002\\dashboard_readiness_ingest",
+  "selected_candidate_id": "factory_seed_dry_run_002",
+  "status_groups": {
+    "ready": [
+      "dashboard_ingest",
+      "project_cockpit",
+      "project_pipeline_mermaid"
+    ],
+    "sample_fixture_not_real": [
+      "transcript_substitution_002"
+    ],
+    "draft_offline": [
+      "content_spine_002",
+      "ir_bridge_002",
+      "writer_ir",
+      "cue_packet",
+      "draft_yymm4_csv"
+    ],
+    "blocked_by_real_input": [
+      "real_transcript_input"
+    ],
+    "deferred": [
+      "yymm4_import_preview",
+      "thumbnail_visual_proof"
+    ]
+  },
+  "ready_for_review": [
+    "content_spine_002",
+    "ir_bridge_002",
+    "transcript_substitution_002",
+    "writer_ir",
+    "cue_packet",
+    "draft_yymm4_csv",
+    "dashboard_ingest",
+    "project_cockpit",
+    "project_pipeline_mermaid"
+  ],
+  "needs_real_transcript_input": [
+    "real_transcript_input"
+  ],
+  "blocked_by_true_gate": [
+    "rights_status",
+    "public_upload_status",
+    "yymm4_import_status",
+    "yymm4_render_status",
+    "production_status"
+  ],
+  "boundary_flags": {
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "no_real_transcript": true,
+    "rights_boundary": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "no_yymm4_import": true
+  },
+  "seed_origin": {
+    "content_spine_artifact_id": "yukkuri_newsroom_content_spine_002_dry_run",
+    "source_seed_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\factory_seed_dry_run_002",
+    "source_seed_package_present": false,
+    "derived_from_seed_instantiation_artifact_id": "factory_seed_instantiation_dry_run_002",
+    "manual_copy_of_original_pilot": false,
+    "inherited_template_defaults_present": true,
+    "required_real_inputs_present": true
+  },
+  "input_reality": {
+    "source_fixture_status": "offline_fixture_not_live",
+    "source_rights_status": "sample_only_no_publication",
+    "sample_fixture_used": true,
+    "real_transcript_found_for_current_package": false,
+    "selected_transcript_path": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\sample_inputs\\notebooklm_like_sample.txt"
+  },
+  "boundary_status": {
+    "source_status": "offline_fixture_not_live",
+    "transcript_status": "sample_fixture_not_real",
+    "timing_status": "no_audio_or_yymm4_timing",
+    "audio_status": "no_audio_generated_or_imported",
+    "rights_status": "sample_only_no_publication",
+    "production_status": "blocked_until_transcript_timing_and_human_review",
+    "public_upload_status": "blocked_by_true_gate",
+    "yymm4_import_status": "blocked_by_true_gate",
+    "ymm4_render_status": "blocked_by_true_gate"
+  },
+  "capability_rows": [
+    {
+      "capability_id": "content_spine_002",
+      "label": "Content spine package",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/MANIFEST.json",
+      "exists": true,
+      "source_schema": "content_spine_manifest.v1",
+      "note": "offline content/package is reviewable; source remains local fixture"
+    },
+    {
+      "capability_id": "ir_bridge_002",
+      "label": "IR/CSV bridge",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/bridge_manifest.json",
+      "exists": true,
+      "source_schema": "content_ir_bridge_manifest.v1",
+      "note": "draft Writer IR, cue packet, and CSV bridge exist; not production timing"
+    },
+    {
+      "capability_id": "transcript_substitution_002",
+      "label": "Transcript substitution readiness",
+      "state": "sample_fixture_not_real",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/substitution_manifest.json",
+      "exists": true,
+      "source_schema": "transcript_substitution_manifest.v1",
+      "note": "sample fixture is used until a real transcript is supplied"
+    },
+    {
+      "capability_id": "writer_ir",
+      "label": "Regenerated Writer IR candidate",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_writer_ir_candidate.json",
+      "exists": true,
+      "source_schema": null,
+      "note": "candidate only; validate-ir/apply-production inputs are not accepted"
+    },
+    {
+      "capability_id": "cue_packet",
+      "label": "Regenerated cue packet candidate",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_cue_packet_candidate.json",
+      "exists": true,
+      "source_schema": null,
+      "note": "candidate not sent to external LLM or production operator"
+    },
+    {
+      "capability_id": "draft_yymm4_csv",
+      "label": "Regenerated draft YMM4 CSV",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+      "exists": true,
+      "source_schema": null,
+      "note": "CSV preview only; no YMM4 import, VoiceItem timing, or render proof"
+    },
+    {
+      "capability_id": "real_transcript_input",
+      "label": "Real transcript input",
+      "state": "blocked_by_real_input",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input",
+      "exists": true,
+      "source_schema": null,
+      "note": "drop a real NotebookLM/human-reviewed transcript here for a future replacement slice"
+    },
+    {
+      "capability_id": "dashboard_ingest",
+      "label": "Dashboard readiness ingest",
+      "state": "ready",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/dashboard_readiness_ingest",
+      "exists": true,
+      "source_schema": "dashboard_readiness_ingest_manifest.v1",
+      "note": "read-only status package generated for local review and later GUI adapter work"
+    },
+    {
+      "capability_id": "project_cockpit",
+      "label": "Project Cockpit",
+      "state": "ready",
+      "review_ready": true,
+      "repo_relative_path": "docs/PROJECT_COCKPIT.md",
+      "exists": true,
+      "source_schema": null,
+      "note": "navigation doc; not a production gate"
+    },
+    {
+      "capability_id": "project_pipeline_mermaid",
+      "label": "Project Pipeline Mermaid",
+      "state": "ready",
+      "review_ready": true,
+      "repo_relative_path": "docs/PROJECT_PIPELINE.mmd",
+      "exists": true,
+      "source_schema": null,
+      "note": "navigation diagram; dashboard node should be visible"
+    },
+    {
+      "capability_id": "yymm4_import_preview",
+      "label": "YMM4 import preview",
+      "state": "deferred",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/yymm4_import_preview",
+      "exists": false,
+      "source_schema": null,
+      "note": "future slice; no YMM4 GUI/import/render in this ingest"
+    },
+    {
+      "capability_id": "thumbnail_visual_proof",
+      "label": "Thumbnail visual proof",
+      "state": "deferred",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof",
+      "exists": false,
+      "source_schema": null,
+      "note": "future slice; no thumbnail image generation or public-ready proof"
+    }
+  ],
+  "next_action": "Review dashboard_preview.md and readiness_summary.json, then supply a verified local real transcript in the real_input drop-zone for a future replacement slice before YMM4 import preview work."
+}

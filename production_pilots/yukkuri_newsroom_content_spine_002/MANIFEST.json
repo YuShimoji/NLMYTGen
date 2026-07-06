@@ -1,0 +1,72 @@
+{
+  "schema_version": "content_spine_manifest.v1",
+  "artifact_id": "yukkuri_newsroom_content_spine_002_dry_run",
+  "artifact_kind": "content-planning-dashboard-spine",
+  "status": "generated",
+  "source_manifest": "production_pilots\\yukkuri_newsroom_content_spine_001\\factory_seed_dry_run_002\\content_spine_input_candidate.json",
+  "package_dir": "production_pilots\\yukkuri_newsroom_content_spine_002",
+  "selected_candidate_id": "factory_seed_dry_run_002",
+  "selected_title": "Factory seed dry-run placeholder for a second yukkuri newsroom episode",
+  "files": {
+    "MANIFEST.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\MANIFEST.json",
+    "topic_candidates.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\topic_candidates.json",
+    "channel_strategy_proposals.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\channel_strategy_proposals.md",
+    "episode_candidate_001.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\episode_candidate_001.md",
+    "thumbnail_brief_001.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\thumbnail_brief_001.md",
+    "dashboard_status.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\dashboard_status.json",
+    "dashboard_preview.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\dashboard_preview.md",
+    "review_checklist.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_checklist.md",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\limitations.md",
+    "content_spine_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\content_spine_readback.json"
+  },
+  "dashboard_status": {
+    "schema_version": "content_spine_dashboard_status.v1",
+    "artifact_id": "yukkuri_newsroom_content_spine_002_dry_run",
+    "selected_candidate_id": "factory_seed_dry_run_002",
+    "selected_title": "Factory seed dry-run placeholder for a second yukkuri newsroom episode",
+    "candidate_count": 1,
+    "source_manifest": "production_pilots\\yukkuri_newsroom_content_spine_001\\factory_seed_dry_run_002\\content_spine_input_candidate.json",
+    "package_dir": "production_pilots\\yukkuri_newsroom_content_spine_002",
+    "candidate_score": 1,
+    "score_rationale": "Synthetic local seed used only to prove registry initialization; not a real news topic.",
+    "channel_angle": "dry-run factory proof, not publishable editorial material",
+    "readiness": {
+      "episode_package_status": "local_reviewable",
+      "topic_candidates_status": "ranked_offline_fixture",
+      "yukkuri_brief_status": "draft_capsule_ready",
+      "dashboard_status": "machine_readable",
+      "ymm4_readiness": "planning_ready_csv_ir_not_generated",
+      "thumbnail_readiness": "brief_only_no_image",
+      "public_status": "blocked_until_human_rights_and_publication_review"
+    },
+    "required_human_inputs": [
+      "choose accept_for_csv_ir, revise_once, reject, or hold",
+      "confirm channel angle and audience promise",
+      "supply real source transcript/materials before production use",
+      "approve rights/publication separately before any public action"
+    ],
+    "public_actions_blocked": [
+      "YouTube upload/publication/visibility change",
+      "OAuth/API keys/payment",
+      "rights/legal/public-ready acceptance",
+      "live scraping/media download",
+      "YMM4 GUI launch/render",
+      "cross-repo or destructive git"
+    ],
+    "next_local_actions": [
+      "review episode_candidate_001.md",
+      "review thumbnail_brief_001.md",
+      "if accepted, create CSV/Writer IR inputs in a separate production run pack"
+    ]
+  },
+  "boundaries": {
+    "local_offline_review_only": true,
+    "no_live_fetch": true,
+    "no_media_download": true,
+    "no_youtube_publication": true,
+    "no_oauth_or_paid_api": true,
+    "no_rights_or_legal_acceptance": true,
+    "no_ymm4_gui_launch_or_render": true,
+    "no_thumbnail_image_generation": true
+  }
+}

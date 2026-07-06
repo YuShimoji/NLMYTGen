@@ -1,0 +1,117 @@
+{
+  "packet_version": "content-spine-cue-v1",
+  "phase": "content-spine-bridge-cue-candidate",
+  "source_name": "factory_seed_dry_run_002",
+  "objective": "Turn the content spine draft dialogue into a concise S-6 cue memo candidate.",
+  "constraints": [
+    "Do not fetch live sources.",
+    "Do not rewrite this into a final script without human review.",
+    "Do not edit YMM4 projects or .ymmp data.",
+    "Do not generate images, audio, or video.",
+    "Do not treat dry-run placeholders as real source, transcript, timing, rights, or publication inputs."
+  ],
+  "response_preferences": {
+    "target_section_count": 3,
+    "background_density": "One primary background plus at most one supporting visual per section.",
+    "sound_policy": "Omit sound cues unless they clearly help.",
+    "operator_todos_max": 4,
+    "keep_notes_concise": true
+  },
+  "context": {
+    "candidate_title": "Factory seed dry-run placeholder for a second yukkuri newsroom episode",
+    "channel_angle": "dry-run factory proof, not publishable editorial material",
+    "glossary_terms": [
+      "factory seed",
+      "template registry",
+      "dry-run boundary"
+    ],
+    "sections": [
+      {
+        "section_id": "S1",
+        "topic": "Opening hook and topic promise",
+        "start_index": 1,
+        "end_index": 2,
+        "default_bg": "studio_blue",
+        "default_face": "neutral",
+        "bgm": "light_explainer",
+        "arc_phase": "intro"
+      },
+      {
+        "section_id": "S2",
+        "topic": "Main explanation: Factory seed dry-run placeholder for a second yukkuri newsroom episode",
+        "start_index": 3,
+        "end_index": 4,
+        "default_bg": "diagram",
+        "default_face": "serious",
+        "bgm": "data_focus",
+        "arc_phase": "develop"
+      },
+      {
+        "section_id": "S3",
+        "topic": "Viewer watch point and production boundary",
+        "start_index": 5,
+        "end_index": 9,
+        "default_bg": "dark_board",
+        "default_face": "thinking",
+        "bgm": "closing_light",
+        "arc_phase": "closing"
+      }
+    ]
+  },
+  "transcript": [
+    {
+      "index": 1,
+      "speaker": "れいむ",
+      "mapped_speaker": "れいむ",
+      "text": "今日は「DRY RUN」って、どういう話なの？"
+    },
+    {
+      "index": 2,
+      "speaker": "まりさ",
+      "mapped_speaker": "まりさ",
+      "text": "Dry-run only: confirm the factory can open a second episode seed."
+    },
+    {
+      "index": 3,
+      "speaker": "まりさ",
+      "mapped_speaker": "まりさ",
+      "text": "ポイント1は、Load the template registry."
+    },
+    {
+      "index": 4,
+      "speaker": "まりさ",
+      "mapped_speaker": "まりさ",
+      "text": "ポイント2は、Separate inherited defaults from real required inputs."
+    },
+    {
+      "index": 5,
+      "speaker": "れいむ",
+      "mapped_speaker": "れいむ",
+      "text": "なるほど、そこを見れば話の筋が追いやすいんだね。"
+    },
+    {
+      "index": 6,
+      "speaker": "まりさ",
+      "mapped_speaker": "まりさ",
+      "text": "ポイント3は、Mark the source packet as synthetic dry-run material."
+    },
+    {
+      "index": 7,
+      "speaker": "まりさ",
+      "mapped_speaker": "まりさ",
+      "text": "ポイント4は、Stop before transcript, YMM4, rights, render, or publication work."
+    },
+    {
+      "index": 8,
+      "speaker": "れいむ",
+      "mapped_speaker": "れいむ",
+      "text": "なるほど、そこを見れば話の筋が追いやすいんだね。"
+    },
+    {
+      "index": 9,
+      "speaker": "まりさ",
+      "mapped_speaker": "まりさ",
+      "text": "この段階ではローカル企画案なので、本番化には実ソース、台本、タイミング確認が必要だぜ。"
+    }
+  ]
+}

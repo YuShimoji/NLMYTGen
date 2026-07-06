@@ -1,0 +1,148 @@
+{
+  "schema_version": "capability_glyph_grid.v1",
+  "legend": {
+    "[OK]": "ready",
+    "[DRAFT]": "draft_offline",
+    "[SAMPLE]": "sample_fixture_not_real",
+    "[INPUT]": "blocked_by_real_input",
+    "[GATE]": "blocked_by_true_gate",
+    "[WAIT]": "deferred",
+    "[MISS]": "missing",
+    "[PART]": "partial",
+    "[UNK]": "unknown"
+  },
+  "rows": [
+    {
+      "glyph": "[DRAFT]",
+      "capability_id": "content_spine_002",
+      "label": "Content spine package",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/MANIFEST.json",
+      "exists": true,
+      "source_schema": "content_spine_manifest.v1",
+      "note": "offline content/package is reviewable; source remains local fixture"
+    },
+    {
+      "glyph": "[DRAFT]",
+      "capability_id": "ir_bridge_002",
+      "label": "IR/CSV bridge",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/bridge_manifest.json",
+      "exists": true,
+      "source_schema": "content_ir_bridge_manifest.v1",
+      "note": "draft Writer IR, cue packet, and CSV bridge exist; not production timing"
+    },
+    {
+      "glyph": "[SAMPLE]",
+      "capability_id": "transcript_substitution_002",
+      "label": "Transcript substitution readiness",
+      "state": "sample_fixture_not_real",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/substitution_manifest.json",
+      "exists": true,
+      "source_schema": "transcript_substitution_manifest.v1",
+      "note": "sample fixture is used until a real transcript is supplied"
+    },
+    {
+      "glyph": "[DRAFT]",
+      "capability_id": "writer_ir",
+      "label": "Regenerated Writer IR candidate",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_writer_ir_candidate.json",
+      "exists": true,
+      "source_schema": null,
+      "note": "candidate only; validate-ir/apply-production inputs are not accepted"
+    },
+    {
+      "glyph": "[DRAFT]",
+      "capability_id": "cue_packet",
+      "label": "Regenerated cue packet candidate",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_cue_packet_candidate.json",
+      "exists": true,
+      "source_schema": null,
+      "note": "candidate not sent to external LLM or production operator"
+    },
+    {
+      "glyph": "[DRAFT]",
+      "capability_id": "draft_yymm4_csv",
+      "label": "Regenerated draft YMM4 CSV",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+      "exists": true,
+      "source_schema": null,
+      "note": "CSV preview only; no YMM4 import, VoiceItem timing, or render proof"
+    },
+    {
+      "glyph": "[INPUT]",
+      "capability_id": "real_transcript_input",
+      "label": "Real transcript input",
+      "state": "blocked_by_real_input",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input",
+      "exists": true,
+      "source_schema": null,
+      "note": "drop a real NotebookLM/human-reviewed transcript here for a future replacement slice"
+    },
+    {
+      "glyph": "[OK]",
+      "capability_id": "dashboard_ingest",
+      "label": "Dashboard readiness ingest",
+      "state": "ready",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/dashboard_readiness_ingest",
+      "exists": true,
+      "source_schema": "dashboard_readiness_ingest_manifest.v1",
+      "note": "read-only status package generated for local review and later GUI adapter work"
+    },
+    {
+      "glyph": "[OK]",
+      "capability_id": "project_cockpit",
+      "label": "Project Cockpit",
+      "state": "ready",
+      "review_ready": true,
+      "repo_relative_path": "docs/PROJECT_COCKPIT.md",
+      "exists": true,
+      "source_schema": null,
+      "note": "navigation doc; not a production gate"
+    },
+    {
+      "glyph": "[OK]",
+      "capability_id": "project_pipeline_mermaid",
+      "label": "Project Pipeline Mermaid",
+      "state": "ready",
+      "review_ready": true,
+      "repo_relative_path": "docs/PROJECT_PIPELINE.mmd",
+      "exists": true,
+      "source_schema": null,
+      "note": "navigation diagram; dashboard node should be visible"
+    },
+    {
+      "glyph": "[WAIT]",
+      "capability_id": "yymm4_import_preview",
+      "label": "YMM4 import preview",
+      "state": "deferred",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/yymm4_import_preview",
+      "exists": false,
+      "source_schema": null,
+      "note": "future slice; no YMM4 GUI/import/render in this ingest"
+    },
+    {
+      "glyph": "[WAIT]",
+      "capability_id": "thumbnail_visual_proof",
+      "label": "Thumbnail visual proof",
+      "state": "deferred",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof",
+      "exists": false,
+      "source_schema": null,
+      "note": "future slice; no thumbnail image generation or public-ready proof"
+    }
+  ]
+}

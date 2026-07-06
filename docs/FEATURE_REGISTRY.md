@@ -79,6 +79,7 @@
 | B-16 | トップダウン改行 Phase 2: 行内折り返し制御 | done | L2 | `insert_inline_breaks()` で chars_per_line ごとに大区切り候補で行内改行 `\n` を挿入。`reflow_subtitles()` の最終段に統合。候補がなければ YMM4 自動折り返しに委ねる。72テストPASS。手動検証待ち |
 | B-17 | 字幕改行アルゴリズム v2 (統合リフロー) | done | L2 | B-15/B-16 を統合リフローとして再設計。`reflow_utterance()` ベースの一貫したトップダウン方式。2026-04-28 に YMM4 表示条件へ寄せる opt-in 補正として `--subtitle-font-scale` / `--subtitle-font-source-ymmp` / `--wrap-px` / `--measure-backend` を追加し、GUI CSV タブにも露出。WPF helper は実測幅 backend、EAW は fallback。B-17 残差観測は実害行だけ paired evidence として扱う |
 | B-18 | 台本機械診断（NLM→ゆっくり前段） | done | L2 | `diagnose-script` CLI + `src/pipeline/script_diagnostics.py`。`--format json` / `--strict` / `--expected-explainer` / `--expected-listener`。仕様: `docs/SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md`。dry proof: `docs/verification/B18-script-diagnostics-ai-monitoring-sample.md` |
+| B-19 | Episode 002 dashboard readiness ingest | done | L2 | `build-dashboard-readiness-ingest` CLI + `src/pipeline/dashboard_readiness_ingest.py`。`production_pilots/yukkuri_newsroom_content_spine_002/dashboard_readiness_ingest/` に manifest、pipeline status、readiness summary、symbolic visual panel、capability glyph grid、source artifact index、preview/checklist/limitations/readback を出す。既存の content spine / IR bridge / transcript readiness artifact を read-only に集約し、dry_run、sample_fixture_not_real、no_real_transcript、rights_boundary、public_upload_closed、yymm4_render_closed、no_yymm4_import を明示する。 |
 
 ### C. YMM4 連携・演出 (L3-YMM4内部)
 
