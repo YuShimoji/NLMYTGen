@@ -1,0 +1,40 @@
+{
+  "schema_version": "yymm4_import_preview_manifest.v1",
+  "artifact_id": "episode_002_yymm4_import_preview_pack_v1",
+  "artifact_kind": "yymm4-import-preview-pack",
+  "status": "generated",
+  "source_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_002",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack",
+  "selected_candidate_id": "factory_seed_dry_run_002",
+  "files": {
+    "import_preview_manifest.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack\\import_preview_manifest.json",
+    "yymm4_csv_inventory.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack\\yymm4_csv_inventory.json",
+    "cue_packet_inventory.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack\\cue_packet_inventory.json",
+    "writer_ir_inventory.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack\\writer_ir_inventory.json",
+    "import_readiness_summary.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack\\import_readiness_summary.json",
+    "import_preview_checklist.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack\\import_preview_checklist.md",
+    "import_preview_panel.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack\\import_preview_panel.md",
+    "source_artifact_index.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack\\source_artifact_index.json",
+    "draft_yymm4_preview.csv": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack\\draft_yymm4_preview.csv",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack\\limitations.md",
+    "validation_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack\\validation_readback.json"
+  },
+  "source_artifact_count": 17,
+  "boundaries": {
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "no_real_transcript": true,
+    "rights_boundary": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "no_yymm4_import": true,
+    "not_imported_to_yymm4": true,
+    "no_yymm4_gui_launch": true,
+    "no_yymm4_render": true,
+    "no_production_ymmp": true,
+    "no_external_media_download": true,
+    "validation_noise_nonblocking": true,
+    "dashboard_flags_confirmed": true
+  },
+  "next_safe_local_action": "Review import_preview_panel.md and draft_yymm4_preview.csv locally, then prepare the thumbnail visual proof pack or a separate human YMM4 import review; do not launch, import, render, or create a production .ymmp in this preview pack."
+}

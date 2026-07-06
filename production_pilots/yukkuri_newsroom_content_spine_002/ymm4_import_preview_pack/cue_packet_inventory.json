@@ -1,0 +1,20 @@
+{
+  "schema_version": "cue_packet_inventory.v1",
+  "source_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_cue_packet_candidate.json",
+  "packet_version": "content-spine-cue-v1",
+  "phase": "content-spine-bridge-cue-candidate",
+  "status": "candidate_regenerated_not_sent",
+  "section_count": 3,
+  "transcript_rows": 9,
+  "constraints_count": 5,
+  "ready_for_human_review": true,
+  "not_ready_for_production": true,
+  "remaining_gaps": [
+    "real transcript provenance and rights review",
+    "YMM4 import/audio timing",
+    "row range annotation",
+    "production maps and validate-ir/apply-production inputs"
+  ],
+  "cue_or_beat_availability": "ready_for_local_review",
+  "not_sent_to_external_llm": true
+}

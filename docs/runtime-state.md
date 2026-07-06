@@ -1,5 +1,28 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 YMM4 import preview pack completed (2026-07-06 JST)**:
+  `episode-002-yymm4-import-preview-pack-v1` builds the local/offline import
+  preview package from the current episode 002 IR/CSV bridge, transcript
+  readiness, dashboard ingest, and GUI dashboard panel outputs. Generated
+  package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/`.
+  Primary human review is `import_preview_panel.md`; primary machine readback
+  is `validation_readback.json`; primary readiness summary is
+  `import_readiness_summary.json`; copied preview CSV is
+  `draft_yymm4_preview.csv`. Regeneration command:
+  `python -m src.cli.main build-yymm4-import-preview-pack --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_yymm4_import_preview_pack_v1`.
+  The CSV is recorded as `headerless` with 9 rows and inferred
+  speaker/text fields. The pack visibly marks `dry_run`,
+  `sample_fixture_not_real`, `no_real_transcript`, `rights_boundary`,
+  `public_upload_closed`, `yymm4_render_closed`, `no_yymm4_import`,
+  `not_imported_to_yymm4`, `no_production_ymmp`, and
+  `validation_noise_nonblocking`. Full pytest was not run; use the validation
+  drift ledger as nonblocking evidence. No real transcript rerun, live fetch,
+  external media download, OAuth/API key/payment, rights/legal/public-ready
+  acceptance, YMM4 GUI/import/render, production `.ymmp`, YouTube upload,
+  destructive git, cross-repo edit, broad fixture regeneration, or repeated
+  full pytest loop occurred. Recommended next product slice is
+  `episode-002-thumbnail-visual-proof-v1`.
 - **Content spine 002 GUI dashboard panel completed (2026-07-06 JST)**:
   `content-spine-002-gui-dashboard-panel-v1` builds the read-only/static GUI
   review surface from

@@ -1,0 +1,31 @@
+{
+  "schema_version": "yymm4_csv_inventory.v1",
+  "source_csv_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+  "bridge_csv_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/draft_yymm4.csv",
+  "copied_preview_csv_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/draft_yymm4_preview.csv",
+  "selected_source": "transcript_substitution_readiness.regenerated_draft_yymm4.csv",
+  "row_count": 9,
+  "raw_row_count": 9,
+  "header_mode": "headerless",
+  "detected_column_count": 2,
+  "required_fields": [
+    "speaker",
+    "text"
+  ],
+  "inferred_fields": [
+    "speaker",
+    "text"
+  ],
+  "missing_required_fields": [],
+  "malformed_row_numbers": [],
+  "speaker_count": 2,
+  "speakers": [
+    "まりさ",
+    "れいむ"
+  ],
+  "bridge_csv_matches_selected": true,
+  "dry_run": true,
+  "sample_fixture_not_real": true,
+  "not_imported_to_yymm4": true,
+  "draft_csv_status": "draft_preview_only_no_yymm4_import"
+}

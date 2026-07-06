@@ -4,8 +4,8 @@ flowchart LR
     C --> D["Dashboard readiness ingest<br/>ready"]
     D --> T["Validation drift triage<br/>nonblocking"]
     T --> P["GUI dashboard panel<br/>ready"]
-    P --> F["YMM4 import preview pack<br/>preferred next/deferred"]
-    F --> G["Thumbnail visual proof<br/>deferred"]
+    P --> F["YMM4 import preview pack<br/>ready"]
+    F --> G["Thumbnail visual proof<br/>preferred next/deferred"]
     P --> E["Real transcript replacement<br/>blocked_by_real_input"]
 
     H["sample transcript fixture"] -. "used now" .-> C
@@ -19,5 +19,8 @@ flowchart LR
     P --> Q["dashboard_panel_preview.html"]
     P --> R["gui_dashboard_adapter.json"]
     P --> S["source_artifact_index.json"]
+    F --> U["import_preview_panel.md"]
+    F --> V["draft_yymm4_preview.csv<br/>headerless / 9 rows"]
+    F --> W["import_readiness_summary.json"]
 
-    N["closed gates:<br/>rights/legal/public-ready acceptance<br/>OAuth/API/payment<br/>live scraping/media download<br/>external image/media download<br/>YMM4 GUI/import/render<br/>production .ymmp<br/>YouTube publication"] -.-> P
+    N["closed gates:<br/>rights/legal/public-ready acceptance<br/>OAuth/API/payment<br/>live scraping/media download<br/>external image/media download<br/>YMM4 GUI/import/render<br/>production .ymmp<br/>YouTube publication"] -.-> F

@@ -1,0 +1,190 @@
+{
+  "schema_version": "yymm4_import_preview_source_artifact_index.v1",
+  "artifact_id": "episode_002_yymm4_import_preview_pack_v1",
+  "source_package_dir": "production_pilots/yukkuri_newsroom_content_spine_002",
+  "output_dir": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack",
+  "source_artifacts": [
+    {
+      "id": "draft_csv",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "bridge_csv",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/draft_yymm4.csv",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "cue_packet",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_cue_packet_candidate.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "cue_readiness",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/cue_packet_readiness.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "writer_ir",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_writer_ir_candidate.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "substitution_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/substitution_manifest.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "substitution_readback",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/validation_readback.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "bridge_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/bridge_manifest.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "bridge_readback",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/validation_readback.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "dashboard_summary",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/dashboard_readiness_ingest/readiness_summary.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "dashboard_readback",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/dashboard_readiness_ingest/validation_readback.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "gui_panel_data",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/panel_data.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "gui_readback",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/validation_readback.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "gui_source_index",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/source_artifact_index.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "dashboard_source_index",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/dashboard_readiness_ingest/source_artifact_index.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "transcript_source_index",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/source_artifact_index.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "bridge_source_index",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/source_artifact_index.json",
+      "exists": true,
+      "state": "ready"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "id": "import_preview_manifest.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_preview_manifest.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "yymm4_csv_inventory.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/yymm4_csv_inventory.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "cue_packet_inventory.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/cue_packet_inventory.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "writer_ir_inventory.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/writer_ir_inventory.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "import_readiness_summary.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_readiness_summary.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "import_preview_checklist.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_preview_checklist.md",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "import_preview_panel.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_preview_panel.md",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "source_artifact_index.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/source_artifact_index.json",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "draft_yymm4_preview.csv",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/draft_yymm4_preview.csv",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "limitations.md",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/limitations.md",
+      "exists": true,
+      "state": "ready"
+    },
+    {
+      "id": "validation_readback.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/validation_readback.json",
+      "exists": true,
+      "state": "ready"
+    }
+  ],
+  "validation_ledger": {
+    "status": "validation_noise_nonblocking",
+    "ledger_path": "samples/_probe/newsroom_handoff/validation_drift_velocity_recovery_v1.json",
+    "exists": true,
+    "safe_to_continue_product_work": true,
+    "preferred_next_slice": "episode 002 GUI dashboard panel",
+    "full_pytest_policy": "not rerun in this slice",
+    "recent_full_pytest_result": "22 failed, 1173 passed, 28 skipped",
+    "targeted_product_recheck": "4 passed",
+    "blocking_for_this_slice": false,
+    "note": "Known full-suite drift is classified as nonblocking for this GUI dashboard panel slice."
+  }
+}
