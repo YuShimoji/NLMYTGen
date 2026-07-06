@@ -1,0 +1,135 @@
+{
+  "schema_version": "alignment_repair_summary.v1",
+  "artifact_id": "episode_002_surface_alignment_repair_and_reviewer_packet_v1",
+  "artifact_kind": "surface-alignment-reviewer-packet",
+  "status": "reviewer_packet_ready_local_offline",
+  "repair_mode": "packet_level_readback_repair_no_underlying_surface_rewrite",
+  "source_alignment_artifact_id": "episode_002_surface_alignment_across_gui_import_thumbnail_v1",
+  "source_alignment_status": "passed",
+  "source_package_dir": "production_pilots/yukkuri_newsroom_content_spine_002",
+  "source_alignment_dir": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_pack",
+  "output_dir": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet",
+  "selected_candidate_id": "factory_seed_dry_run_002",
+  "surfaces": [
+    {
+      "surface_id": "gui_dashboard_panel",
+      "label": "GUI dashboard panel",
+      "status": "ready",
+      "role_in_alignment": "input_surface",
+      "primary_machine_readable": "production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/panel_data.json",
+      "primary_human_review": "production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/dashboard_panel_preview.html",
+      "selected_candidate_id": "factory_seed_dry_run_002",
+      "transcript_status": "sample_fixture_not_real",
+      "validation_noise_status": "validation_noise_nonblocking",
+      "next_action": "Open dashboard_panel_preview.html for GUI review, then use the confirmed status surface to prepare the episode 002 YMM4 import preview pack without launching, importing, or rendering in YMM4."
+    },
+    {
+      "surface_id": "yymm4_import_preview_pack",
+      "label": "YMM4 import preview pack",
+      "status": "ready",
+      "role_in_alignment": "active_import_review_surface",
+      "primary_machine_readable": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_readiness_summary.json",
+      "primary_human_review": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_preview_panel.md",
+      "selected_candidate_id": "factory_seed_dry_run_002",
+      "transcript_status": "sample_fixture_not_real",
+      "validation_noise_status": "validation_noise_nonblocking",
+      "next_action": "Review import_preview_panel.md and draft_yymm4_preview.csv locally, using the existing thumbnail proof only as context; do not launch, import, render, approve a production thumbnail, or create a production .ymmp in this preview pack."
+    },
+    {
+      "surface_id": "thumbnail_visual_proof_pack",
+      "label": "Thumbnail visual proof pack",
+      "status": "ready",
+      "role_in_alignment": "context_surface",
+      "primary_machine_readable": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_variants.json",
+      "primary_human_review": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_visual_proof.html",
+      "selected_candidate_id": "factory_seed_dry_run_002",
+      "transcript_status": "sample_fixture_not_real",
+      "validation_noise_status": "validation_noise_nonblocking",
+      "next_action": "Review thumbnail_visual_proof.html and select one direction for later title hook refinement; do not treat any variant as production thumbnail approval.",
+      "recommended_variant_id": "headline_driven"
+    }
+  ],
+  "status_categories": [
+    "ready",
+    "partial",
+    "sample_fixture_not_real",
+    "dry_run",
+    "draft_offline",
+    "blocked_by_real_input",
+    "blocked_by_true_gate",
+    "validation_noise_nonblocking",
+    "thumbnail_context_only",
+    "deferred",
+    "missing",
+    "unknown"
+  ],
+  "repair_classifications": [
+    "resolved",
+    "accepted_nonblocking",
+    "still_open_minor_label_drift",
+    "still_open_stale_next_action",
+    "boundary_mismatch",
+    "missing_reference",
+    "unknown"
+  ],
+  "reviewer_packet_status": "ready",
+  "surface_statuses": {
+    "gui_panel_status": "ready",
+    "import_preview_status": "ready",
+    "thumbnail_proof_status": "ready"
+  },
+  "prior_alignment_results": {
+    "gui_panel_status": "ready",
+    "import_preview_status": "ready",
+    "thumbnail_proof_status": "ready",
+    "source_crosswalk_status": "aligned",
+    "boundary_consistency_status": "minor_label_drift",
+    "next_action_consistency_status": "stale_next_action"
+  },
+  "prior_mismatch_counts": {
+    "aligned": 17,
+    "minor_label_drift": 5,
+    "stale_next_action": 3
+  },
+  "prior_minor_label_drift": {
+    "count": 5,
+    "packet_handling": "resolved_where_status_label_was_stale_and_accepted_nonblocking_where_semantics_already_matched"
+  },
+  "prior_stale_next_action": {
+    "count": 3,
+    "packet_handling": "resolved_by_next_action_readback"
+  },
+  "repair_classification_counts": {
+    "resolved": 5,
+    "accepted_nonblocking": 3
+  },
+  "remaining_mismatch_ledger": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/remaining_mismatch_ledger.json",
+  "still_open_mismatch_count": 0,
+  "boundary_consistency_status": "accepted_nonblocking",
+  "next_action_consistency_status": "packet_resolved",
+  "source_crosswalk_status": "aligned",
+  "boundary_status_readback": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/boundary_status_readback.json",
+  "next_action_readback": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/next_action_readback.json",
+  "source_artifact_crosswalk_readback": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/source_artifact_crosswalk_readback.json",
+  "boundary_flags": {
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "no_real_transcript": true,
+    "rights_boundary": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "no_yymm4_import": true,
+    "thumbnail_context_only": true,
+    "validation_noise_nonblocking": true,
+    "not_production_ready": true,
+    "no_yymm4_gui_launch": true,
+    "no_production_ymmp": true,
+    "no_production_thumbnail_acceptance": true,
+    "no_external_media_download": true,
+    "no_live_scraping": true,
+    "no_oauth_api_keys_payment": true
+  },
+  "primary_machine_readable": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/validation_readback.json",
+  "primary_human_review": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/aligned_review_story.md",
+  "next_safe_local_action": "Review aligned_review_story.md, then choose a later slice for verified local real input replacement or for actual YMM4 import observation without render/public claims."
+}

@@ -1,0 +1,45 @@
+{
+  "schema_version": "reviewer_packet_manifest.v1",
+  "artifact_id": "episode_002_surface_alignment_repair_and_reviewer_packet_v1",
+  "artifact_kind": "surface-alignment-reviewer-packet",
+  "status": "generated",
+  "source_package_dir": "production_pilots/yukkuri_newsroom_content_spine_002",
+  "source_alignment_dir": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_pack",
+  "output_dir": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet",
+  "files": {
+    "reviewer_packet_manifest.json": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/reviewer_packet_manifest.json",
+    "aligned_review_story.md": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/aligned_review_story.md",
+    "alignment_repair_summary.json": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/alignment_repair_summary.json",
+    "remaining_mismatch_ledger.json": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/remaining_mismatch_ledger.json",
+    "next_action_readback.json": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/next_action_readback.json",
+    "boundary_status_readback.json": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/boundary_status_readback.json",
+    "source_artifact_crosswalk_readback.json": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/source_artifact_crosswalk_readback.json",
+    "validation_readback.json": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/validation_readback.json",
+    "review_checklist.md": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/review_checklist.md",
+    "limitations.md": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/limitations.md"
+  },
+  "surfaces": [
+    "gui_dashboard_panel",
+    "yymm4_import_preview_pack",
+    "thumbnail_visual_proof_pack"
+  ],
+  "boundaries": {
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "no_real_transcript": true,
+    "rights_boundary": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "no_yymm4_import": true,
+    "thumbnail_context_only": true,
+    "validation_noise_nonblocking": true,
+    "not_production_ready": true,
+    "no_yymm4_gui_launch": true,
+    "no_production_ymmp": true,
+    "no_production_thumbnail_acceptance": true,
+    "no_external_media_download": true,
+    "no_live_scraping": true,
+    "no_oauth_api_keys_payment": true
+  },
+  "next_safe_local_action": "Review aligned_review_story.md, then choose a later slice for verified local real input replacement or for actual YMM4 import observation without render/public claims."
+}

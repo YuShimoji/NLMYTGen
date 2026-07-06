@@ -1,0 +1,159 @@
+{
+  "schema_version": "source_artifact_crosswalk_readback.v1",
+  "artifact_id": "episode_002_surface_alignment_repair_and_reviewer_packet_v1",
+  "overall_status": "aligned",
+  "source_crosswalk_status": "aligned",
+  "source_package_dir": "production_pilots/yukkuri_newsroom_content_spine_002",
+  "source_alignment_dir": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_pack",
+  "output_dir": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet",
+  "reviewer_packet_inputs": [
+    {
+      "file": "surface_alignment_summary.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_pack/surface_alignment_summary.json",
+      "exists": true
+    },
+    {
+      "file": "surface_status_matrix.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_pack/surface_status_matrix.json",
+      "exists": true
+    },
+    {
+      "file": "boundary_consistency_report.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_pack/boundary_consistency_report.json",
+      "exists": true
+    },
+    {
+      "file": "next_action_consistency_report.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_pack/next_action_consistency_report.json",
+      "exists": true
+    },
+    {
+      "file": "source_artifact_crosswalk.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_pack/source_artifact_crosswalk.json",
+      "exists": true
+    },
+    {
+      "file": "validation_readback.json",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_pack/validation_readback.json",
+      "exists": true
+    }
+  ],
+  "source_artifact_rows": [
+    {
+      "artifact_id": "gui_panel_data",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/panel_data.json",
+      "surfaces": [
+        "gui_dashboard_panel",
+        "yymm4_import_preview_pack",
+        "thumbnail_visual_proof_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "gui_human_review",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/dashboard_panel_preview.html",
+      "surfaces": [
+        "gui_dashboard_panel"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "import_readiness_summary",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_readiness_summary.json",
+      "surfaces": [
+        "yymm4_import_preview_pack",
+        "thumbnail_visual_proof_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "import_preview_panel",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_preview_panel.md",
+      "surfaces": [
+        "yymm4_import_preview_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "import_csv_inventory",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/yymm4_csv_inventory.json",
+      "surfaces": [
+        "yymm4_import_preview_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "thumbnail_variants",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_variants.json",
+      "surfaces": [
+        "thumbnail_visual_proof_pack",
+        "yymm4_import_preview_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "thumbnail_human_review",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_visual_proof.html",
+      "surfaces": [
+        "thumbnail_visual_proof_pack",
+        "yymm4_import_preview_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "validation_ledger",
+      "repo_relative_path": "samples/_probe/newsroom_handoff/validation_drift_velocity_recovery_v1.json",
+      "surfaces": [
+        "gui_dashboard_panel",
+        "yymm4_import_preview_pack",
+        "thumbnail_visual_proof_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "gui_source_index",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/source_artifact_index.json",
+      "surfaces": [
+        "gui_dashboard_panel",
+        "yymm4_import_preview_pack",
+        "thumbnail_visual_proof_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "import_source_index",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/source_artifact_index.json",
+      "surfaces": [
+        "yymm4_import_preview_pack",
+        "thumbnail_visual_proof_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "thumbnail_source_index",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/source_index.json",
+      "surfaces": [
+        "thumbnail_visual_proof_pack",
+        "yymm4_import_preview_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    }
+  ],
+  "source_artifact_counts_by_surface": {
+    "gui_dashboard_panel": 21,
+    "yymm4_import_preview_pack": 22,
+    "thumbnail_visual_proof_pack": 14
+  },
+  "missing_reference_count": 0
+}

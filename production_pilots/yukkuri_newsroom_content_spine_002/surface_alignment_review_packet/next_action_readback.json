@@ -1,0 +1,71 @@
+{
+  "schema_version": "next_action_readback.v1",
+  "artifact_id": "episode_002_surface_alignment_repair_and_reviewer_packet_v1",
+  "status": "packet_resolved",
+  "source_next_action_status": "stale_next_action",
+  "current_reviewer_action": "Open aligned_review_story.md as the single local review entrypoint.",
+  "next_safe_local_action": "Review aligned_review_story.md, then choose a later slice for verified local real input replacement or for actual YMM4 import observation without render/public claims.",
+  "advisory_next_options": [
+    {
+      "option_id": "real_input_replacement",
+      "status": "advisory_deferred",
+      "unblocks": "real topic/source/transcript replacement using reviewed local input",
+      "requires": "verified local transcript/source material and provenance",
+      "closed_gates_preserved": [
+        "no_yymm4_import",
+        "no_yymm4_render",
+        "no_public_upload",
+        "no_rights_acceptance"
+      ]
+    },
+    {
+      "option_id": "actual_yymm4_import_observation_no_render",
+      "status": "advisory_deferred",
+      "unblocks": "manual YMM4 import readback of VoiceItem/timing behavior",
+      "requires": "explicit human decision to launch/import in YMM4",
+      "closed_gates_preserved": [
+        "no_yymm4_render",
+        "no_public_upload",
+        "no_production_ymmp",
+        "no_final_thumbnail_approval"
+      ]
+    }
+  ],
+  "surface_next_action_rows": [
+    {
+      "surface_id": "gui_dashboard_panel",
+      "source_next_action": "Open dashboard_panel_preview.html for GUI review, then use the confirmed status surface to prepare the episode 002 YMM4 import preview pack without launching, importing, or rendering in YMM4.",
+      "source_classification": "stale_next_action",
+      "packet_classification": "resolved",
+      "packet_action": "Use GUI panel status as an already-aligned input surface; do not treat it as the current build target."
+    },
+    {
+      "surface_id": "yymm4_import_preview_pack",
+      "source_next_action": "Review import_preview_panel.md and draft_yymm4_preview.csv locally, using the existing thumbnail proof only as context; do not launch, import, render, approve a production thumbnail, or create a production .ymmp in this preview pack.",
+      "source_classification": "aligned",
+      "packet_classification": "accepted_nonblocking",
+      "packet_action": "Keep import preview as local/offline import-prep evidence; do not launch/import/render in YMM4."
+    },
+    {
+      "surface_id": "thumbnail_visual_proof_pack",
+      "source_next_action": "Review thumbnail_visual_proof.html and select one direction for later title hook refinement; do not treat any variant as production thumbnail approval.",
+      "source_classification": "stale_next_action",
+      "packet_classification": "resolved",
+      "packet_action": "Use thumbnail proof as context only; do not treat headline_driven as final thumbnail approval."
+    }
+  ],
+  "mismatch_repair_counts": {
+    "resolved": 5,
+    "accepted_nonblocking": 3
+  },
+  "primary_human_review": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/aligned_review_story.md",
+  "not_performed": [
+    "real_transcript_rerun",
+    "yymm4_gui_launch",
+    "yymm4_import",
+    "yymm4_render",
+    "production_ymmp_generation",
+    "final_thumbnail_approval",
+    "public_upload"
+  ]
+}

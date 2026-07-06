@@ -1,0 +1,119 @@
+{
+  "schema_version": "boundary_status_readback.v1",
+  "artifact_id": "episode_002_surface_alignment_repair_and_reviewer_packet_v1",
+  "status": "closed_gates_confirmed",
+  "source_boundary_status": "minor_label_drift",
+  "boundary_flags": {
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "no_real_transcript": true,
+    "rights_boundary": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "no_yymm4_import": true,
+    "thumbnail_context_only": true,
+    "validation_noise_nonblocking": true,
+    "not_production_ready": true,
+    "no_yymm4_gui_launch": true,
+    "no_production_ymmp": true,
+    "no_production_thumbnail_acceptance": true,
+    "no_external_media_download": true,
+    "no_live_scraping": true,
+    "no_oauth_api_keys_payment": true
+  },
+  "closed_gate_status": {
+    "public_upload_status": "blocked_by_true_gate",
+    "rights_public_ready_status": "blocked_by_true_gate",
+    "yymm4_gui_status": "not_launched",
+    "yymm4_import_status": "no_yymm4_import",
+    "yymm4_render_status": "yymm4_render_closed",
+    "production_ymmp_status": "blocked_by_true_gate",
+    "thumbnail_approval_status": "thumbnail_context_only",
+    "real_transcript_status": "blocked_by_real_input"
+  },
+  "normalized_boundary_rows": [
+    {
+      "boundary_id": "dry_run",
+      "source_classification": "minor_label_drift",
+      "packet_classification": "accepted_nonblocking",
+      "packet_status": "dry_run",
+      "note": "Thumbnail proof expresses dry-run in copy rather than a dry_run flag."
+    },
+    {
+      "boundary_id": "sample_fixture_not_real",
+      "source_classification": "aligned",
+      "packet_classification": "resolved",
+      "packet_status": "sample_fixture_not_real",
+      "note": "All surfaces preserve sample fixture status."
+    },
+    {
+      "boundary_id": "no_real_transcript",
+      "source_classification": "aligned",
+      "packet_classification": "resolved",
+      "packet_status": "no_real_transcript",
+      "note": "No surface reports a real transcript."
+    },
+    {
+      "boundary_id": "rights_boundary",
+      "source_classification": "minor_label_drift",
+      "packet_classification": "accepted_nonblocking",
+      "packet_status": "rights_boundary",
+      "note": "Thumbnail uses rights/public-ready wording instead of rights_boundary."
+    },
+    {
+      "boundary_id": "public_upload_closed",
+      "source_classification": "aligned",
+      "packet_classification": "resolved",
+      "packet_status": "public_upload_closed",
+      "note": "Public/upload gates remain closed."
+    },
+    {
+      "boundary_id": "yymm4_render_closed",
+      "source_classification": "aligned",
+      "packet_classification": "resolved",
+      "packet_status": "yymm4_render_closed",
+      "note": "No render has occurred."
+    },
+    {
+      "boundary_id": "no_yymm4_import",
+      "source_classification": "aligned",
+      "packet_classification": "resolved",
+      "packet_status": "no_yymm4_import",
+      "note": "No import has occurred."
+    },
+    {
+      "boundary_id": "thumbnail_context_only",
+      "source_classification": "aligned",
+      "packet_classification": "resolved",
+      "packet_status": "thumbnail_context_only",
+      "note": "Import treats thumbnail as context only; thumbnail remains proof-only."
+    },
+    {
+      "boundary_id": "validation_noise_nonblocking",
+      "source_classification": "aligned",
+      "packet_classification": "resolved",
+      "packet_status": "validation_noise_nonblocking",
+      "note": "All surfaces use validation drift as nonblocking."
+    },
+    {
+      "boundary_id": "no_production_thumbnail_acceptance",
+      "source_classification": "aligned",
+      "packet_classification": "resolved",
+      "packet_status": "thumbnail_context_only",
+      "note": "No final thumbnail approval is claimed."
+    },
+    {
+      "boundary_id": "blocked_by_true_gate",
+      "source_classification": "aligned",
+      "packet_classification": "resolved",
+      "packet_status": "blocked_by_true_gate",
+      "note": "Public/production gates stay closed."
+    }
+  ],
+  "mismatch_repair_counts": {
+    "resolved": 5,
+    "accepted_nonblocking": 3
+  },
+  "source_package_dir": "production_pilots/yukkuri_newsroom_content_spine_002",
+  "primary_human_review": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/aligned_review_story.md"
+}

@@ -29,6 +29,7 @@ Usage:
     python -m src.cli.main build-yymm4-import-preview-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-thumbnail-visual-proof-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-surface-alignment-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
+    python -m src.cli.main build-surface-reviewer-packet --package production_pilots/pkg [--alignment-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
@@ -2499,6 +2500,31 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_surface_reviewer_packet = subparsers.add_parser(
+        "build-surface-reviewer-packet",
+        help="Build a repaired local reviewer packet from the surface alignment pack",
+    )
+    p_surface_reviewer_packet.add_argument("--package", required=True, help="Episode package directory")
+    p_surface_reviewer_packet.add_argument(
+        "--alignment-dir",
+        help="Input surface alignment pack directory (default: <package>/surface_alignment_pack)",
+    )
+    p_surface_reviewer_packet.add_argument(
+        "--output",
+        help="Output directory (default: <package>/surface_alignment_review_packet)",
+    )
+    p_surface_reviewer_packet.add_argument(
+        "--artifact-id",
+        default="episode_002_surface_alignment_repair_and_reviewer_packet_v1",
+        help="Surface alignment reviewer packet artifact id",
+    )
+    p_surface_reviewer_packet.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -2621,6 +2647,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_thumbnail_visual_proof_pack(args)
         elif args.command == "build-surface-alignment-pack":
             return _cmd_build_surface_alignment_pack(args)
+        elif args.command == "build-surface-reviewer-packet":
+            return _cmd_build_surface_reviewer_packet(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -4632,6 +4660,40 @@ def _cmd_build_surface_alignment_pack(args: argparse.Namespace) -> int:
         print(f"boundary_consistency_status: {readback.get('boundary_consistency_status')}")
         print(f"next_action_consistency_status: {readback.get('next_action_consistency_status')}")
         print(f"mismatches_found: {readback.get('mismatches_found')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_surface_reviewer_packet(args: argparse.Namespace) -> int:
+    """Build a repaired local reviewer packet from surface alignment outputs."""
+    from src.pipeline.surface_alignment_reviewer_packet import build_surface_alignment_reviewer_packet
+
+    readback = build_surface_alignment_reviewer_packet(
+        package_dir=getattr(args, "package"),
+        alignment_dir=getattr(args, "alignment_dir", None),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"selected_candidate_id: {readback.get('selected_candidate_id')}")
+        print(f"reviewer_packet_status: {readback.get('reviewer_packet_status')}")
+        print(f"gui_panel_status: {readback.get('gui_panel_status')}")
+        print(f"import_preview_status: {readback.get('import_preview_status')}")
+        print(f"thumbnail_proof_status: {readback.get('thumbnail_proof_status')}")
+        print(f"boundary_consistency_status: {readback.get('boundary_consistency_status')}")
+        print(f"next_action_consistency_status: {readback.get('next_action_consistency_status')}")
+        print(f"source_crosswalk_status: {readback.get('source_crosswalk_status')}")
+        print(f"prior_mismatch_count: {readback.get('prior_mismatch_count')}")
+        print(f"resolved_mismatch_count: {readback.get('resolved_mismatch_count')}")
+        print(f"accepted_nonblocking_mismatch_count: {readback.get('accepted_nonblocking_mismatch_count')}")
+        print(f"still_open_mismatch_count: {readback.get('still_open_mismatch_count')}")
         print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
         print(f"primary_human_review: {readback.get('primary_human_review')}")
         print(f"next_action: {readback.get('next_action')}")

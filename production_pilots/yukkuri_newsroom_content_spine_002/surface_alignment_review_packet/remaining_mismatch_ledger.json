@@ -1,0 +1,171 @@
+{
+  "schema_version": "remaining_mismatch_ledger.v1",
+  "artifact_id": "episode_002_surface_alignment_repair_and_reviewer_packet_v1",
+  "source_alignment_artifact_id": "episode_002_surface_alignment_across_gui_import_thumbnail_v1",
+  "source_package_dir": "production_pilots/yukkuri_newsroom_content_spine_002",
+  "source_alignment_dir": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_pack",
+  "output_dir": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet",
+  "repair_classifications": [
+    "resolved",
+    "accepted_nonblocking",
+    "still_open_minor_label_drift",
+    "still_open_stale_next_action",
+    "boundary_mismatch",
+    "missing_reference",
+    "unknown"
+  ],
+  "prior_mismatch_count": 8,
+  "prior_classification_counts": {
+    "minor_label_drift": 5,
+    "stale_next_action": 3
+  },
+  "repair_classification_counts": {
+    "resolved": 5,
+    "accepted_nonblocking": 3
+  },
+  "still_open_mismatch_count": 0,
+  "blocking_for_reviewer_packet": false,
+  "underlying_surfaces_rewritten": false,
+  "rows": [
+    {
+      "mismatch_id": "surface_status_matrix:2:ymm4_import_preview_status",
+      "source_report": "surface_status_matrix.json",
+      "mismatch_scope": "surface_status_matrix",
+      "subject": "YMM4 import preview status",
+      "prior_classification": "minor_label_drift",
+      "repair_classification": "resolved",
+      "source_values": {
+        "gui_dashboard_panel": "deferred",
+        "yymm4_import_preview_pack": "ready",
+        "thumbnail_visual_proof_pack": "ready_context"
+      },
+      "source_surface_changed": false,
+      "packet_readback_supersedes_old_label": true,
+      "remaining_in_underlying_surface": true,
+      "blocking_for_reviewer_packet": false,
+      "repair_note": "The packet treats older GUI deferred labels as historical and shows the current surface as ready/context-ready."
+    },
+    {
+      "mismatch_id": "surface_status_matrix:3:thumbnail_visual_proof_status",
+      "source_report": "surface_status_matrix.json",
+      "mismatch_scope": "surface_status_matrix",
+      "subject": "Thumbnail visual proof status",
+      "prior_classification": "minor_label_drift",
+      "repair_classification": "resolved",
+      "source_values": {
+        "gui_dashboard_panel": "deferred",
+        "yymm4_import_preview_pack": "ready",
+        "thumbnail_visual_proof_pack": "ready"
+      },
+      "source_surface_changed": false,
+      "packet_readback_supersedes_old_label": true,
+      "remaining_in_underlying_surface": true,
+      "blocking_for_reviewer_packet": false,
+      "repair_note": "The packet treats older GUI deferred labels as historical and shows the current surface as ready/context-ready."
+    },
+    {
+      "mismatch_id": "surface_status_matrix:7:rights_publication_status",
+      "source_report": "surface_status_matrix.json",
+      "mismatch_scope": "surface_status_matrix",
+      "subject": "Rights / publication status",
+      "prior_classification": "minor_label_drift",
+      "repair_classification": "accepted_nonblocking",
+      "source_values": {
+        "gui_dashboard_panel": "sample_only_no_publication",
+        "yymm4_import_preview_pack": "sample_only_no_publication",
+        "thumbnail_visual_proof_pack": "sample_only_no_publication"
+      },
+      "source_surface_changed": false,
+      "packet_readback_supersedes_old_label": false,
+      "remaining_in_underlying_surface": true,
+      "blocking_for_reviewer_packet": false,
+      "repair_note": "The source labels differ, but the packet preserves the common closed-gate meaning as accepted nonblocking drift."
+    },
+    {
+      "mismatch_id": "surface_status_matrix:10:next_safe_local_action",
+      "source_report": "surface_status_matrix.json",
+      "mismatch_scope": "surface_status_matrix",
+      "subject": "Next safe local action",
+      "prior_classification": "stale_next_action",
+      "repair_classification": "resolved",
+      "source_values": {
+        "gui_dashboard_panel": "prepare_import_preview",
+        "yymm4_import_preview_pack": "review_import_preview_with_thumbnail_context",
+        "thumbnail_visual_proof_pack": "review_thumbnail_direction"
+      },
+      "source_surface_changed": false,
+      "packet_readback_supersedes_old_label": true,
+      "remaining_in_underlying_surface": true,
+      "blocking_for_reviewer_packet": false,
+      "repair_note": "The packet replaces the stale cross-surface next-action row with next_action_readback.json."
+    },
+    {
+      "mismatch_id": "boundary_consistency_report:1:dry_run",
+      "source_report": "boundary_consistency_report.json",
+      "mismatch_scope": "boundary_status",
+      "subject": "dry_run",
+      "prior_classification": "minor_label_drift",
+      "repair_classification": "accepted_nonblocking",
+      "source_values": {
+        "gui_dashboard_panel": true,
+        "yymm4_import_preview_pack": true,
+        "thumbnail_visual_proof_pack": "proof_text_context"
+      },
+      "source_surface_changed": false,
+      "packet_readback_supersedes_old_label": false,
+      "remaining_in_underlying_surface": true,
+      "blocking_for_reviewer_packet": false,
+      "repair_note": "The packet normalizes dry_run as a closed boundary while leaving source wording untouched."
+    },
+    {
+      "mismatch_id": "boundary_consistency_report:4:rights_boundary",
+      "source_report": "boundary_consistency_report.json",
+      "mismatch_scope": "boundary_status",
+      "subject": "rights_boundary",
+      "prior_classification": "minor_label_drift",
+      "repair_classification": "accepted_nonblocking",
+      "source_values": {
+        "gui_dashboard_panel": true,
+        "yymm4_import_preview_pack": true,
+        "thumbnail_visual_proof_pack": "sample_only_no_publication"
+      },
+      "source_surface_changed": false,
+      "packet_readback_supersedes_old_label": false,
+      "remaining_in_underlying_surface": true,
+      "blocking_for_reviewer_packet": false,
+      "repair_note": "The packet normalizes rights_boundary as a closed boundary while leaving source wording untouched."
+    },
+    {
+      "mismatch_id": "next_action_consistency_report:1:gui_dashboard_panel",
+      "source_report": "next_action_consistency_report.json",
+      "mismatch_scope": "next_action",
+      "subject": "gui_dashboard_panel",
+      "prior_classification": "stale_next_action",
+      "repair_classification": "resolved",
+      "source_values": {
+        "next_action": "Open dashboard_panel_preview.html for GUI review, then use the confirmed status surface to prepare the episode 002 YMM4 import preview pack without launching, importing, or rendering in YMM4."
+      },
+      "source_surface_changed": false,
+      "packet_readback_supersedes_old_label": true,
+      "remaining_in_underlying_surface": true,
+      "blocking_for_reviewer_packet": false,
+      "repair_note": "The packet supersedes the old gui_dashboard_panel next action with a current reviewer action and advisory later choices."
+    },
+    {
+      "mismatch_id": "next_action_consistency_report:3:thumbnail_visual_proof_pack",
+      "source_report": "next_action_consistency_report.json",
+      "mismatch_scope": "next_action",
+      "subject": "thumbnail_visual_proof_pack",
+      "prior_classification": "stale_next_action",
+      "repair_classification": "resolved",
+      "source_values": {
+        "next_action": "Review thumbnail_visual_proof.html and select one direction for later title hook refinement; do not treat any variant as production thumbnail approval."
+      },
+      "source_surface_changed": false,
+      "packet_readback_supersedes_old_label": true,
+      "remaining_in_underlying_surface": true,
+      "blocking_for_reviewer_packet": false,
+      "repair_note": "The packet supersedes the old thumbnail_visual_proof_pack next action with a current reviewer action and advisory later choices."
+    }
+  ]
+}

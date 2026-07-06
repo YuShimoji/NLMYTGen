@@ -10,7 +10,9 @@ flowchart LR
     F --> X["Surface alignment pack<br/>ready"]
     G --> X
     P --> X
-    X --> E
+    X --> RP["Surface alignment reviewer packet<br/>ready"]
+    RP --> E
+    RP --> IY["Actual YMM4 import observation<br/>blocked_by_true_gate"]
     P --> E["Real transcript replacement<br/>blocked_by_real_input"]
 
     H["sample transcript fixture"] -. "used now" .-> C
@@ -34,7 +36,12 @@ flowchart LR
     X --> AC["surface_status_matrix.json"]
     X --> AD["boundary_consistency_report.json"]
     X --> AE["source_artifact_crosswalk.json"]
+    RP --> AF["aligned_review_story.md"]
+    RP --> AG["remaining_mismatch_ledger.json<br/>5 resolved / 3 accepted_nonblocking"]
+    RP --> AH["next_action_readback.json<br/>packet_resolved"]
+    RP --> AI["boundary_status_readback.json<br/>accepted_nonblocking"]
 
     N["closed gates:<br/>rights/legal/public-ready acceptance<br/>OAuth/API/payment<br/>live scraping/media download<br/>external image/media download<br/>YMM4 GUI/import/render<br/>production .ymmp<br/>YouTube publication"] -.-> F
     N -.-> G
     N -.-> X
+    N -.-> RP

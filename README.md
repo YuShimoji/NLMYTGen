@@ -96,6 +96,9 @@ python -m src.cli.main emit-packaging-brief-template --format json -o packaging_
 ### CLI 一覧（抜粋）
 
 ```bash
+# Episode 002 local reviewer packet (no YMM4 launch/import/render)
+python -m src.cli.main build-surface-reviewer-packet --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_surface_alignment_repair_and_reviewer_packet_v1
+
 # CSV 生成
 python -m src.cli.main build-csv input.txt -o output.csv --speaker-map Host1=れいむ,Host2=まりさ
 

@@ -1,5 +1,37 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 surface alignment reviewer packet completed (2026-07-06 JST)**:
+  `episode-002-surface-alignment-repair-and-reviewer-packet-v1` builds one
+  local/offline reviewer packet over the accepted surface alignment pack,
+  without rewriting GUI/import/thumbnail source surfaces or creative assets.
+  Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/`.
+  Primary human review is `aligned_review_story.md`; primary machine readback
+  is `validation_readback.json`; primary repair summary is
+  `alignment_repair_summary.json`; mismatch detail is
+  `remaining_mismatch_ledger.json`. Regeneration command:
+  `python -m src.cli.main build-surface-reviewer-packet --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_surface_alignment_repair_and_reviewer_packet_v1`.
+  The packet consumes `surface_alignment_pack/` and classifies the prior 8
+  drift rows as 5 `resolved` and 3 `accepted_nonblocking`, with
+  `still_open_mismatch_count` 0. GUI panel, YMM4 import preview, and thumbnail
+  proof remain `ready` local review surfaces; source crosswalk remains
+  `aligned`; boundary consistency is now packet-level
+  `accepted_nonblocking`; next-action consistency is `packet_resolved`.
+  The packet visibly marks `dry_run`, `sample_fixture_not_real`,
+  `no_real_transcript`, `rights_boundary`, `public_upload_closed`,
+  `yymm4_render_closed`, `no_yymm4_import`, `thumbnail_context_only`,
+  `validation_noise_nonblocking`, and `not_production_ready`. Full pytest was
+  not run; targeted reviewer-packet tests plus companion surface alignment,
+  GUI/import/thumbnail-context tests and static JSON/boundary scans are the
+  validation surface. No YMM4 GUI launch/import/render, production `.ymmp`,
+  final thumbnail approval, real transcript rerun, live fetch/scraping,
+  external media download, OAuth/API key/payment, rights/legal/public-ready
+  acceptance, YouTube upload, destructive git, cross-repo edit, broad fixture
+  regeneration, or repeated full pytest loop occurred. Recommended next
+  product slice is verified local real topic/source/transcript replacement, or
+  an explicitly selected actual YMM4 import observation without render/public
+  claims.
+
 - **Episode 002 surface alignment completed (2026-07-06 JST)**:
   `episode-002-surface-alignment-across-gui-import-thumbnail-v1` builds one
   local/offline review package across the current GUI dashboard panel, YMM4
