@@ -1,6 +1,38 @@
 # Project Context — NLMYTGen
 
 ## PROJECT CONTEXT
+- Current handoff (2026-07-06 JST):
+  `episode-002-surface-alignment-repair-and-reviewer-packet-v1` is complete on
+  branch `codex/episode-002-surface-alignment-repair-and-reviewer-packet-v1`
+  at commit `2d602de` before the handoff-sync note. The active artifact is
+  `production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/`.
+  Primary human review is `aligned_review_story.md`; primary machine readback
+  is `validation_readback.json`; primary repair summary is
+  `alignment_repair_summary.json`; drift detail is
+  `remaining_mismatch_ledger.json`. The packet consumes the accepted
+  `surface_alignment_pack/`, leaves GUI/import/thumbnail source surfaces and
+  creative assets unchanged, and classifies the prior 8 drift rows as 5
+  `resolved` plus 3 `accepted_nonblocking`, with still-open reviewer drift 0.
+  GUI panel, YMM4 import preview, and thumbnail proof remain local/offline
+  review surfaces only. Another terminal should fetch, switch to
+  `codex/episode-002-surface-alignment-repair-and-reviewer-packet-v1`, confirm
+  upstream parity, then read `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`,
+  `docs/runtime-state.md`, this handoff entry, and
+  `production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/validation_readback.json`.
+  Regeneration command:
+  `python -m src.cli.main build-surface-reviewer-packet --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_surface_alignment_repair_and_reviewer_packet_v1`.
+  Targeted validation passed with
+  `uv run pytest tests\test_surface_alignment_reviewer_packet.py tests\test_surface_alignment_pack.py tests\test_gui_dashboard_panel.py tests\test_yymm4_import_preview_pack.py tests\test_thumbnail_visual_proof_pack.py -q`
+  -> 20 passed; packet JSON/static scans and diff hygiene passed; full pytest
+  was not run by policy. Next recommended product slice is verified local real
+  topic/source/transcript replacement; actual YMM4 import observation without
+  render/public claims is an alternate later lane only if explicitly selected.
+  Do not resume YMM4 GUI launch/import/render, production `.ymmp`, final
+  thumbnail approval, real transcript rerun without verified input, live
+  fetch/scraping, external media download, OAuth/API keys/payment,
+  rights/legal/public-ready acceptance, YouTube upload, destructive git,
+  cross-repo edits, broad fixture regeneration, or repeated full pytest loops.
+
 - Current handoff (2026-07-02 JST):
   NLMYTGen is synced on `master` for the episode-production restart lane. The
   active artifact is
