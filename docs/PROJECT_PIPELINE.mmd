@@ -4,9 +4,10 @@ flowchart LR
     C --> D["Dashboard readiness ingest<br/>ready"]
     D --> T["Validation drift triage<br/>nonblocking"]
     T --> P["GUI dashboard panel<br/>ready"]
-    P --> F["YMM4 import preview pack<br/>ready"]
-    F --> G["Thumbnail visual proof pack<br/>ready"]
-    G --> X["Human thumbnail review / title-hook refinement<br/>preferred next"]
+    P --> F["YMM4 import preview pack<br/>ready / context synced"]
+    F --> G["Thumbnail visual proof pack<br/>ready context"]
+    G -. "context only" .-> F
+    F --> X["Surface alignment<br/>preferred next"]
     P --> E["Real transcript replacement<br/>blocked_by_real_input"]
 
     H["sample transcript fixture"] -. "used now" .-> C
@@ -22,7 +23,7 @@ flowchart LR
     P --> S["source_artifact_index.json"]
     F --> U["import_preview_panel.md"]
     F --> V["draft_yymm4_preview.csv<br/>headerless / 9 rows"]
-    F --> W["import_readiness_summary.json"]
+    F --> W["import_readiness_summary.json<br/>thumbnail_proof_context ready"]
     G --> Y["thumbnail_visual_proof.html"]
     G --> Z["thumbnail_contact_sheet.svg"]
     G --> AA["thumbnail_variants.json<br/>3 SVG variants"]

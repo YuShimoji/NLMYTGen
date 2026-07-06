@@ -19,7 +19,7 @@
     "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack\\limitations.md",
     "validation_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack\\validation_readback.json"
   },
-  "source_artifact_count": 17,
+  "source_artifact_count": 22,
   "boundaries": {
     "dry_run": true,
     "sample_fixture_not_real": true,
@@ -33,8 +33,10 @@
     "no_yymm4_render": true,
     "no_production_ymmp": true,
     "no_external_media_download": true,
+    "no_production_thumbnail_acceptance": true,
+    "thumbnail_context_only": true,
     "validation_noise_nonblocking": true,
     "dashboard_flags_confirmed": true
   },
-  "next_safe_local_action": "Review import_preview_panel.md and draft_yymm4_preview.csv locally, then prepare the thumbnail visual proof pack or a separate human YMM4 import review; do not launch, import, render, or create a production .ymmp in this preview pack."
+  "next_safe_local_action": "Review import_preview_panel.md and draft_yymm4_preview.csv locally, using the existing thumbnail proof only as context; do not launch, import, render, approve a production thumbnail, or create a production .ymmp in this preview pack."
 }

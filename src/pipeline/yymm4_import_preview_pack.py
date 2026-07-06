@@ -80,6 +80,7 @@ def build_yymm4_import_preview_pack(
     cue_readiness = _load_json(paths["cue_readiness"])
     writer_ir = _load_json(paths["writer_ir"])
     validation_noise = _validation_noise_payload(repo_root, gui_panel_data)
+    thumbnail_context = _thumbnail_proof_context(paths, repo_root)
 
     csv_inventory = _csv_inventory(
         csv_path=paths["draft_csv"],
@@ -110,6 +111,7 @@ def build_yymm4_import_preview_pack(
         cue_inventory=cue_inventory,
         writer_inventory=writer_inventory,
         validation_noise=validation_noise,
+        thumbnail_context=thumbnail_context,
     )
     source_index = _source_artifact_index(
         artifact_id=artifact_id,
@@ -230,6 +232,13 @@ def validate_yymm4_import_preview_pack(
         failed_checks.append("validation_noise_not_nonblocking")
     if summary.get("validation_noise", {}).get("blocking_for_this_slice") is not False:
         failed_checks.append("validation_noise_blocking_flag_not_false")
+    thumbnail_context = summary.get("thumbnail_proof_context", {})
+    if thumbnail_context.get("status") != "ready":
+        failed_checks.append("thumbnail_context_not_ready")
+    if thumbnail_context.get("contextual_only") is not True:
+        failed_checks.append("thumbnail_context_not_contextual_only")
+    if thumbnail_context.get("current_implementation_target") is not False:
+        failed_checks.append("thumbnail_context_current_target_not_false")
 
     panel_text = files["import_preview_panel.md"].read_text(encoding="utf-8") if files["import_preview_panel.md"].exists() else ""
     missing_status_text = [state for state in IMPORT_PREVIEW_STATUS_CATEGORIES if state not in panel_text]
@@ -240,6 +249,8 @@ def validate_yymm4_import_preview_pack(
         failed_checks.append("panel_yymm4_not_imported_missing")
     if "draft_yymm4_preview.csv" not in panel_text:
         failed_checks.append("panel_preview_csv_missing")
+    if "thumbnail_visual_proof" not in panel_text or "contextual_only" not in panel_text:
+        failed_checks.append("panel_thumbnail_context_missing")
 
     source_artifacts = source_index.get("source_artifacts", [])
     output_artifacts = source_index.get("output_artifacts", [])
@@ -268,6 +279,8 @@ def validate_yymm4_import_preview_pack(
             "source_artifact_index_visible": "source_artifact_index.json" in panel_text,
             "not_imported_to_yymm4": summary.get("boundary_flags", {}).get("not_imported_to_yymm4") is True,
             "validation_noise_nonblocking": summary.get("validation_noise", {}).get("status") == "validation_noise_nonblocking",
+            "thumbnail_context_ready": thumbnail_context.get("status") == "ready",
+            "thumbnail_context_only": thumbnail_context.get("contextual_only") is True,
             "forbidden_true_claims_absent": not forbidden_hits,
         },
         "failed_checks": failed_checks,
@@ -278,6 +291,9 @@ def validate_yymm4_import_preview_pack(
         "transcript_status": boundary_status.get("transcript_status"),
         "yymm4_import_status": boundary_status.get("yymm4_import_status"),
         "validation_noise_status": summary.get("validation_noise", {}).get("status"),
+        "thumbnail_context_status": thumbnail_context.get("status"),
+        "thumbnail_recommended_variant_id": thumbnail_context.get("recommended_variant_id"),
+        "thumbnail_context_primary_human_review": thumbnail_context.get("primary_human_review"),
         "primary_machine_readable": str(root / "import_readiness_summary.json"),
         "primary_human_review": str(root / "import_preview_panel.md"),
         "preview_csv": str(root / "draft_yymm4_preview.csv"),
@@ -290,6 +306,7 @@ def _input_paths(source_root: Path) -> dict[str, Path]:
     bridge_dir = source_root / "ir_bridge"
     dashboard_dir = source_root / "dashboard_readiness_ingest"
     gui_dir = source_root / "gui_dashboard_panel"
+    thumbnail_dir = source_root / "thumbnail_visual_proof_pack"
     return {
         "draft_csv": transcript_dir / "regenerated_draft_yymm4.csv",
         "bridge_csv": bridge_dir / "draft_yymm4.csv",
@@ -308,6 +325,52 @@ def _input_paths(source_root: Path) -> dict[str, Path]:
         "dashboard_source_index": dashboard_dir / "source_artifact_index.json",
         "transcript_source_index": transcript_dir / "source_artifact_index.json",
         "bridge_source_index": bridge_dir / "source_artifact_index.json",
+        "thumbnail_readback": thumbnail_dir / "readback.json",
+        "thumbnail_variants": thumbnail_dir / "thumbnail_variants.json",
+        "thumbnail_html": thumbnail_dir / "thumbnail_visual_proof.html",
+        "thumbnail_contact_sheet": thumbnail_dir / "thumbnail_contact_sheet.svg",
+        "thumbnail_source_index": thumbnail_dir / "source_index.json",
+    }
+
+
+def _thumbnail_proof_context(paths: dict[str, Path], repo_root: Path) -> dict[str, Any]:
+    readback = _load_json_if_present(paths["thumbnail_readback"])
+    variants_payload = _load_json_if_present(paths["thumbnail_variants"])
+    exists = isinstance(readback, dict) and isinstance(variants_payload, dict)
+    status = "ready" if exists and readback.get("status") == "passed" else "missing"
+    variants = variants_payload.get("variants", []) if isinstance(variants_payload, dict) else []
+    return {
+        "schema_version": "thumbnail_proof_context.v1",
+        "status": status,
+        "contextual_only": True,
+        "current_implementation_target": False,
+        "not_revised_in_this_slice": True,
+        "artifact_id": variants_payload.get("artifact_id") if isinstance(variants_payload, dict) else None,
+        "variant_count": variants_payload.get("variant_count") if isinstance(variants_payload, dict) else 0,
+        "recommended_variant_id": variants_payload.get("recommended_variant_id") if isinstance(variants_payload, dict) else None,
+        "variant_ids": [
+            variant.get("variant_id")
+            for variant in variants
+            if isinstance(variant, dict) and variant.get("variant_id")
+        ],
+        "primary_machine_readable": _relpath(paths["thumbnail_variants"], repo_root),
+        "primary_human_review": _relpath(paths["thumbnail_html"], repo_root),
+        "contact_sheet": _relpath(paths["thumbnail_contact_sheet"], repo_root),
+        "readback_path": _relpath(paths["thumbnail_readback"], repo_root),
+        "source_index_path": _relpath(paths["thumbnail_source_index"], repo_root),
+        "exists": {
+            "readback": paths["thumbnail_readback"].exists(),
+            "variants": paths["thumbnail_variants"].exists(),
+            "html": paths["thumbnail_html"].exists(),
+            "contact_sheet": paths["thumbnail_contact_sheet"].exists(),
+            "source_index": paths["thumbnail_source_index"].exists(),
+        },
+        "proof_boundaries": {
+            "proof_only": True,
+            "not_production_thumbnail": True,
+            "no_external_media_download": True,
+            "no_public_ready_acceptance": True,
+        },
     }
 
 
@@ -419,6 +482,7 @@ def _import_readiness_summary(
     cue_inventory: dict[str, Any],
     writer_inventory: dict[str, Any],
     validation_noise: dict[str, Any],
+    thumbnail_context: dict[str, Any],
 ) -> dict[str, Any]:
     dashboard_flags = dashboard_summary.get("boundary_flags", {})
     boundary_flags = {
@@ -434,6 +498,8 @@ def _import_readiness_summary(
         "no_yymm4_render": True,
         "no_production_ymmp": True,
         "no_external_media_download": True,
+        "no_production_thumbnail_acceptance": True,
+        "thumbnail_context_only": thumbnail_context.get("contextual_only") is True,
         "validation_noise_nonblocking": validation_noise.get("status") == "validation_noise_nonblocking",
         "dashboard_flags_confirmed": all(dashboard_flags.get(flag) is True for flag in dashboard_flags),
     }
@@ -452,6 +518,9 @@ def _import_readiness_summary(
         "yymm4_import_observed_status": "not_imported_to_yymm4",
         "bridge_yymm4_import_status": bridge_manifest.get("readiness", {}).get("yymm4_import_status", "not_run"),
         "yymm4_render_status": "blocked_by_true_gate",
+        "thumbnail_proof_status": thumbnail_context.get("status", "unknown"),
+        "thumbnail_context_status": "contextual_existing_not_current_target",
+        "production_thumbnail_status": "blocked_by_true_gate",
     }
     return {
         "schema_version": "yymm4_import_readiness_summary.v1",
@@ -469,6 +538,7 @@ def _import_readiness_summary(
                 "writer_ir_inventory",
                 "dashboard_readiness_ingest",
                 "gui_dashboard_panel",
+                "thumbnail_visual_proof_context",
                 "source_artifact_index",
             ],
             "sample_fixture_not_real": ["transcript_substitution_002"],
@@ -484,7 +554,7 @@ def _import_readiness_summary(
                 "production_status",
             ],
             "validation_noise_nonblocking": ["validation_noise"],
-            "deferred": ["thumbnail_visual_proof", "actual_yymm4_import_review"],
+            "deferred": ["production_thumbnail_acceptance", "actual_yymm4_import_review"],
             "missing": [],
             "unknown": [],
             "partial": [],
@@ -509,12 +579,13 @@ def _import_readiness_summary(
         "boundary_flags": boundary_flags,
         "boundary_status": boundary_status,
         "validation_noise": validation_noise,
+        "thumbnail_proof_context": thumbnail_context,
         "input_reality": gui_panel_data.get("input_reality", {}),
         "dashboard_readback_status": dashboard_summary.get("artifact_id"),
         "next_safe_local_action": (
-            "Review import_preview_panel.md and draft_yymm4_preview.csv locally, then prepare "
-            "the thumbnail visual proof pack or a separate human YMM4 import review; do not "
-            "launch, import, render, or create a production .ymmp in this preview pack."
+            "Review import_preview_panel.md and draft_yymm4_preview.csv locally, using the "
+            "existing thumbnail proof only as context; do not launch, import, render, approve "
+            "a production thumbnail, or create a production .ymmp in this preview pack."
         ),
     }
 
@@ -546,6 +617,11 @@ def _source_artifact_index(
         "dashboard_source_index",
         "transcript_source_index",
         "bridge_source_index",
+        "thumbnail_readback",
+        "thumbnail_variants",
+        "thumbnail_html",
+        "thumbnail_contact_sheet",
+        "thumbnail_source_index",
     )
     return {
         "schema_version": "yymm4_import_preview_source_artifact_index.v1",
@@ -634,7 +710,19 @@ def _render_panel(
     lines.extend(["", "## Boundary Flags", "", "| flag | value |", "|---|---|"])
     for key, value in summary.get("boundary_flags", {}).items():
         lines.append(f"| {key} | {value} |")
+    thumbnail_context = summary.get("thumbnail_proof_context", {})
     lines.extend([
+        "",
+        "## Thumbnail Proof Context",
+        "",
+        "| field | value |",
+        "|---|---|",
+        f"| status | {thumbnail_context.get('status')} |",
+        f"| contextual_only | {thumbnail_context.get('contextual_only')} |",
+        f"| current_implementation_target | {thumbnail_context.get('current_implementation_target')} |",
+        f"| recommended_variant_id | {thumbnail_context.get('recommended_variant_id')} |",
+        f"| primary_human_review | `{thumbnail_context.get('primary_human_review')}` |",
+        f"| primary_machine_readable | `{thumbnail_context.get('primary_machine_readable')}` |",
         "",
         "## Validation Drift",
         "",
@@ -659,6 +747,7 @@ def _render_checklist(summary: dict[str, Any], csv_inventory: dict[str, Any]) ->
         "- Confirm `draft_yymm4_preview.csv` exists and is marked dry-run/sample-backed.",
         f"- Confirm CSV row count is `{csv_inventory.get('row_count')}` and header mode is `{csv_inventory.get('header_mode')}`.",
         "- Confirm cue packet and Writer IR are inventories only, not accepted production inputs.",
+        "- Confirm the existing thumbnail visual proof is context only and not a production thumbnail approval.",
         "- Confirm `not_imported_to_yymm4`, `no_yymm4_import`, and `yymm4_render_closed` remain visible.",
         "- Confirm no public upload, render, rights, legal, payment, OAuth, or external media gate is implied open.",
         "",
@@ -683,6 +772,7 @@ def _render_limitations(summary: dict[str, Any]) -> str:
         "- audio timing or VoiceItem readback",
         "- public upload or publication",
         "- rights/legal/public-ready acceptance",
+        "- thumbnail proof revision or production thumbnail acceptance",
         "- live scraping or external media download",
         "- full-suite green campaign",
         "",

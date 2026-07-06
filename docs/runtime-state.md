@@ -1,5 +1,33 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 YMM4 import preview context sync completed (2026-07-06 JST)**:
+  `episode-002-yymm4-import-preview-pack-v1-context-sync` verifies and
+  regenerates the local/offline import preview package after the accepted
+  thumbnail visual proof work. Generated package remains:
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/`.
+  Primary human review is `import_preview_panel.md`; primary machine readback
+  is `validation_readback.json`; primary readiness summary is
+  `import_readiness_summary.json`; copied preview CSV is
+  `draft_yymm4_preview.csv`. Regeneration command:
+  `python -m src.cli.main build-yymm4-import-preview-pack --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_yymm4_import_preview_pack_v1`.
+  The preview now records thumbnail visual proof as `ready` context only:
+  `headline_driven` is the recommended proof direction, but thumbnail proof
+  remains outside the current implementation target and is not production
+  thumbnail approval. The CSV contract remains `headerless` with 9 rows and no
+  missing required speaker/text fields. The pack still marks `dry_run`,
+  `sample_fixture_not_real`, `no_real_transcript`, `rights_boundary`,
+  `public_upload_closed`, `yymm4_render_closed`, `no_yymm4_import`,
+  `not_imported_to_yymm4`, `no_production_ymmp`,
+  `no_production_thumbnail_acceptance`, and
+  `validation_noise_nonblocking`. Full pytest was not run; targeted import
+  preview, thumbnail context, JSON, CSV, and forbidden-claim checks are the
+  relevant validation for this slice. No YMM4 GUI launch/import/render,
+  production `.ymmp`, real transcript rerun, live fetch/scraping, external
+  media download, OAuth/API key/payment, rights/legal/public-ready acceptance,
+  YouTube upload, destructive git, cross-repo edit, broad fixture regeneration,
+  or repeated full pytest loop occurred. Recommended next product slice is
+  `episode-002-surface-alignment-across-gui-import-thumbnail-v1`.
+
 - **Episode 002 thumbnail visual proof completed (2026-07-06 JST)**:
   `episode-002-thumbnail-visual-proof-v1` builds the local/static thumbnail
   proof package from the current episode 002 content spine, import preview
@@ -47,8 +75,8 @@
   external media download, OAuth/API key/payment, rights/legal/public-ready
   acceptance, YMM4 GUI/import/render, production `.ymmp`, YouTube upload,
   destructive git, cross-repo edit, broad fixture regeneration, or repeated
-  full pytest loop occurred. Recommended next product slice is
-  `episode-002-thumbnail-visual-proof-v1`.
+  full pytest loop occurred. Later slices add thumbnail proof context back into
+  this import preview surface.
 - **Content spine 002 GUI dashboard panel completed (2026-07-06 JST)**:
   `content-spine-002-gui-dashboard-panel-v1` builds the read-only/static GUI
   review surface from

@@ -10,9 +10,10 @@ Not performed:
 - audio timing or VoiceItem readback
 - public upload or publication
 - rights/legal/public-ready acceptance
+- thumbnail proof revision or production thumbnail acceptance
 - live scraping or external media download
 - full-suite green campaign
 
 Current safe action:
 
-Review import_preview_panel.md and draft_yymm4_preview.csv locally, then prepare the thumbnail visual proof pack or a separate human YMM4 import review; do not launch, import, render, or create a production .ymmp in this preview pack.
+Review import_preview_panel.md and draft_yymm4_preview.csv locally, using the existing thumbnail proof only as context; do not launch, import, render, approve a production thumbnail, or create a production .ymmp in this preview pack.

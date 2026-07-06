@@ -70,16 +70,34 @@ def test_yymm4_import_preview_pack_builds_local_package(tmp_path) -> None:
     assert summary["boundary_flags"]["no_yymm4_import"] is True
     assert summary["boundary_flags"]["not_imported_to_yymm4"] is True
     assert summary["boundary_flags"]["no_production_ymmp"] is True
+    assert summary["boundary_flags"]["no_production_thumbnail_acceptance"] is True
+    assert summary["boundary_flags"]["thumbnail_context_only"] is True
     assert summary["boundary_status"]["transcript_status"] == "sample_fixture_not_real"
     assert summary["boundary_status"]["real_transcript_status"] == "blocked_by_real_input"
     assert summary["boundary_status"]["yymm4_import_status"] == "blocked_by_true_gate"
     assert summary["boundary_status"]["yymm4_import_observed_status"] == "not_imported_to_yymm4"
+    assert summary["boundary_status"]["thumbnail_proof_status"] == "ready"
+    assert summary["boundary_status"]["thumbnail_context_status"] == "contextual_existing_not_current_target"
+    assert summary["boundary_status"]["production_thumbnail_status"] == "blocked_by_true_gate"
     assert summary["validation_noise"]["status"] == "validation_noise_nonblocking"
     assert summary["validation_noise"]["blocking_for_this_slice"] is False
+    thumbnail_context = summary["thumbnail_proof_context"]
+    assert thumbnail_context["status"] == "ready"
+    assert thumbnail_context["contextual_only"] is True
+    assert thumbnail_context["current_implementation_target"] is False
+    assert thumbnail_context["recommended_variant_id"] == "headline_driven"
+    assert thumbnail_context["primary_human_review"].endswith("thumbnail_visual_proof.html")
+    assert thumbnail_context["primary_machine_readable"].endswith("thumbnail_variants.json")
     assert len(source_index["source_artifacts"]) >= 8
+    source_ids = {artifact["id"] for artifact in source_index["source_artifacts"]}
+    assert "thumbnail_variants" in source_ids
+    assert "thumbnail_html" in source_ids
+    assert "thumbnail_readback" in source_ids
     assert "source_artifact_index.json" in panel
     assert "draft_yymm4_preview.csv" in panel
     assert "not_imported_to_yymm4" in panel
+    assert "thumbnail_visual_proof.html" in panel
+    assert "contextual_only" in panel
     for state in IMPORT_PREVIEW_STATUS_CATEGORIES:
         assert state in panel
 
@@ -122,6 +140,9 @@ def test_cli_build_yymm4_import_preview_pack_json_output(tmp_path, capsys) -> No
     assert payload["transcript_status"] == "sample_fixture_not_real"
     assert payload["yymm4_import_status"] == "blocked_by_true_gate"
     assert payload["validation_noise_status"] == "validation_noise_nonblocking"
+    assert payload["thumbnail_context_status"] == "ready"
+    assert payload["thumbnail_recommended_variant_id"] == "headline_driven"
+    assert payload["thumbnail_context_primary_human_review"].endswith("thumbnail_visual_proof.html")
     assert payload["primary_human_review"].endswith("import_preview_panel.md")
     assert payload["preview_csv"].endswith("draft_yymm4_preview.csv")
     assert (output_dir / "import_readiness_summary.json").exists()

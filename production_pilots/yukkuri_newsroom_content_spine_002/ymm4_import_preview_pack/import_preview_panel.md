@@ -59,6 +59,9 @@
 | yymm4_import_observed_status | not_imported_to_yymm4 |
 | bridge_yymm4_import_status | not_run |
 | yymm4_render_status | blocked_by_true_gate |
+| thumbnail_proof_status | ready |
+| thumbnail_context_status | contextual_existing_not_current_target |
+| production_thumbnail_status | blocked_by_true_gate |
 
 ## Boundary Flags
 
@@ -76,8 +79,21 @@
 | no_yymm4_render | True |
 | no_production_ymmp | True |
 | no_external_media_download | True |
+| no_production_thumbnail_acceptance | True |
+| thumbnail_context_only | True |
 | validation_noise_nonblocking | True |
 | dashboard_flags_confirmed | True |
+
+## Thumbnail Proof Context
+
+| field | value |
+|---|---|
+| status | ready |
+| contextual_only | True |
+| current_implementation_target | False |
+| recommended_variant_id | headline_driven |
+| primary_human_review | `production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_visual_proof.html` |
+| primary_machine_readable | `production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_variants.json` |
 
 ## Validation Drift
 
@@ -88,4 +104,4 @@
 
 ## Next Safe Local Action
 
-Review import_preview_panel.md and draft_yymm4_preview.csv locally, then prepare the thumbnail visual proof pack or a separate human YMM4 import review; do not launch, import, render, or create a production .ymmp in this preview pack.
+Review import_preview_panel.md and draft_yymm4_preview.csv locally, using the existing thumbnail proof only as context; do not launch, import, render, approve a production thumbnail, or create a production .ymmp in this preview pack.

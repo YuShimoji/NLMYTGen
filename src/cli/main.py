@@ -4551,6 +4551,8 @@ def _cmd_build_yymm4_import_preview_pack(args: argparse.Namespace) -> int:
         print(f"transcript_status: {readback.get('transcript_status')}")
         print(f"yymm4_import_status: {readback.get('yymm4_import_status')}")
         print(f"validation_noise_status: {readback.get('validation_noise_status')}")
+        print(f"thumbnail_context_status: {readback.get('thumbnail_context_status')}")
+        print(f"thumbnail_recommended_variant_id: {readback.get('thumbnail_recommended_variant_id')}")
         print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
         print(f"primary_human_review: {readback.get('primary_human_review')}")
         print(f"preview_csv: {readback.get('preview_csv')}")

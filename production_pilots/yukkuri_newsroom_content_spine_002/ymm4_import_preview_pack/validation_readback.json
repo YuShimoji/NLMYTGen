@@ -27,6 +27,8 @@
     "source_artifact_index_visible": true,
     "not_imported_to_yymm4": true,
     "validation_noise_nonblocking": true,
+    "thumbnail_context_ready": true,
+    "thumbnail_context_only": true,
     "forbidden_true_claims_absent": true
   },
   "failed_checks": [],
@@ -37,8 +39,11 @@
   "transcript_status": "sample_fixture_not_real",
   "yymm4_import_status": "blocked_by_true_gate",
   "validation_noise_status": "validation_noise_nonblocking",
+  "thumbnail_context_status": "ready",
+  "thumbnail_recommended_variant_id": "headline_driven",
+  "thumbnail_context_primary_human_review": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_visual_proof.html",
   "primary_machine_readable": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack\\import_readiness_summary.json",
   "primary_human_review": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack\\import_preview_panel.md",
   "preview_csv": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_import_preview_pack\\draft_yymm4_preview.csv",
-  "next_action": "Review import_preview_panel.md and draft_yymm4_preview.csv locally, then prepare the thumbnail visual proof pack or a separate human YMM4 import review; do not launch, import, render, or create a production .ymmp in this preview pack."
+  "next_action": "Review import_preview_panel.md and draft_yymm4_preview.csv locally, using the existing thumbnail proof only as context; do not launch, import, render, approve a production thumbnail, or create a production .ymmp in this preview pack."
 }

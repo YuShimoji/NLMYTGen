@@ -26,6 +26,7 @@
       "writer_ir_inventory",
       "dashboard_readiness_ingest",
       "gui_dashboard_panel",
+      "thumbnail_visual_proof_context",
       "source_artifact_index"
     ],
     "sample_fixture_not_real": [
@@ -55,7 +56,7 @@
       "validation_noise"
     ],
     "deferred": [
-      "thumbnail_visual_proof",
+      "production_thumbnail_acceptance",
       "actual_yymm4_import_review"
     ],
     "missing": [],
@@ -92,6 +93,8 @@
     "no_yymm4_render": true,
     "no_production_ymmp": true,
     "no_external_media_download": true,
+    "no_production_thumbnail_acceptance": true,
+    "thumbnail_context_only": true,
     "validation_noise_nonblocking": true,
     "dashboard_flags_confirmed": true
   },
@@ -109,7 +112,10 @@
     "yymm4_import_status": "blocked_by_true_gate",
     "yymm4_import_observed_status": "not_imported_to_yymm4",
     "bridge_yymm4_import_status": "not_run",
-    "yymm4_render_status": "blocked_by_true_gate"
+    "yymm4_render_status": "blocked_by_true_gate",
+    "thumbnail_proof_status": "ready",
+    "thumbnail_context_status": "contextual_existing_not_current_target",
+    "production_thumbnail_status": "blocked_by_true_gate"
   },
   "validation_noise": {
     "status": "validation_noise_nonblocking",
@@ -123,6 +129,39 @@
     "blocking_for_this_slice": false,
     "note": "Known full-suite drift is classified as nonblocking for this GUI dashboard panel slice."
   },
+  "thumbnail_proof_context": {
+    "schema_version": "thumbnail_proof_context.v1",
+    "status": "ready",
+    "contextual_only": true,
+    "current_implementation_target": false,
+    "not_revised_in_this_slice": true,
+    "artifact_id": "episode_002_thumbnail_visual_proof_v1",
+    "variant_count": 3,
+    "recommended_variant_id": "headline_driven",
+    "variant_ids": [
+      "headline_driven",
+      "speaker_contrast",
+      "newsroom_diagram"
+    ],
+    "primary_machine_readable": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_variants.json",
+    "primary_human_review": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_visual_proof.html",
+    "contact_sheet": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_contact_sheet.svg",
+    "readback_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/readback.json",
+    "source_index_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/source_index.json",
+    "exists": {
+      "readback": true,
+      "variants": true,
+      "html": true,
+      "contact_sheet": true,
+      "source_index": true
+    },
+    "proof_boundaries": {
+      "proof_only": true,
+      "not_production_thumbnail": true,
+      "no_external_media_download": true,
+      "no_public_ready_acceptance": true
+    }
+  },
   "input_reality": {
     "source_fixture_status": "offline_fixture_not_live",
     "source_rights_status": "sample_only_no_publication",
@@ -131,5 +170,5 @@
     "selected_transcript_path": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\sample_inputs\\notebooklm_like_sample.txt"
   },
   "dashboard_readback_status": "content_spine_002_dashboard_readiness_ingest_v1",
-  "next_safe_local_action": "Review import_preview_panel.md and draft_yymm4_preview.csv locally, then prepare the thumbnail visual proof pack or a separate human YMM4 import review; do not launch, import, render, or create a production .ymmp in this preview pack."
+  "next_safe_local_action": "Review import_preview_panel.md and draft_yymm4_preview.csv locally, using the existing thumbnail proof only as context; do not launch, import, render, approve a production thumbnail, or create a production .ymmp in this preview pack."
 }
