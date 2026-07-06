@@ -30,6 +30,7 @@ Usage:
     python -m src.cli.main build-thumbnail-visual-proof-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-surface-alignment-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-surface-reviewer-packet --package production_pilots/pkg [--alignment-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
+    python -m src.cli.main build-focused-review-brief --package production_pilots/pkg [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
@@ -2525,6 +2526,31 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_focused_review_brief = subparsers.add_parser(
+        "build-focused-review-brief",
+        help="Build a focused dark-mode review brief from the surface reviewer packet",
+    )
+    p_focused_review_brief.add_argument("--package", required=True, help="Episode package directory")
+    p_focused_review_brief.add_argument(
+        "--reviewer-packet-dir",
+        help="Input surface alignment review packet directory (default: <package>/surface_alignment_review_packet)",
+    )
+    p_focused_review_brief.add_argument(
+        "--output",
+        help="Output directory (default: <package>/focused_review_brief)",
+    )
+    p_focused_review_brief.add_argument(
+        "--artifact-id",
+        default="episode_002_focused_review_brief_dark_surface_v1",
+        help="Focused review brief artifact id",
+    )
+    p_focused_review_brief.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -2649,6 +2675,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_surface_alignment_pack(args)
         elif args.command == "build-surface-reviewer-packet":
             return _cmd_build_surface_reviewer_packet(args)
+        elif args.command == "build-focused-review-brief":
+            return _cmd_build_focused_review_brief(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -4696,6 +4724,35 @@ def _cmd_build_surface_reviewer_packet(args: argparse.Namespace) -> int:
         print(f"still_open_mismatch_count: {readback.get('still_open_mismatch_count')}")
         print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
         print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_focused_review_brief(args: argparse.Namespace) -> int:
+    """Build a focused dark-mode review brief from the surface reviewer packet."""
+    from src.pipeline.focused_review_brief import build_focused_review_brief
+
+    readback = build_focused_review_brief(
+        package_dir=getattr(args, "package"),
+        reviewer_packet_dir=getattr(args, "reviewer_packet_dir", None),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"primary_question: {readback.get('primary_question')}")
+        print(f"top_summary_length: {readback.get('top_summary_length')}")
+        print(f"decision_cards: {readback.get('decision_cards')}")
+        print(f"evidence_cards: {readback.get('evidence_cards')}")
+        print(f"external_dependency_status: {readback.get('external_dependency_status')}")
+        print(f"white_background_status: {readback.get('white_background_status')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"markdown_fallback: {readback.get('markdown_fallback')}")
         print(f"next_action: {readback.get('next_action')}")
     return 0
 

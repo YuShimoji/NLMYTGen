@@ -1,0 +1,173 @@
+{
+  "schema_version": "focused_review_detail_source_index.v1",
+  "artifact_id": "episode_002_focused_review_brief_dark_surface_v1",
+  "source_package_dir": "production_pilots/yukkuri_newsroom_content_spine_002",
+  "reviewer_packet_dir": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet",
+  "output_dir": "production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief",
+  "legacy_story_role": "source_record",
+  "primary_review_surface": "production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief/focused_review_brief.html",
+  "primary_machine_readable": "production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief/validation_readback.json",
+  "source_artifacts": [
+    {
+      "artifact_id": "gui_panel_data",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/panel_data.json",
+      "surfaces": [
+        "gui_dashboard_panel",
+        "yymm4_import_preview_pack",
+        "thumbnail_visual_proof_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "gui_human_review",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/dashboard_panel_preview.html",
+      "surfaces": [
+        "gui_dashboard_panel"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "import_readiness_summary",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_readiness_summary.json",
+      "surfaces": [
+        "yymm4_import_preview_pack",
+        "thumbnail_visual_proof_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "import_preview_panel",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_preview_panel.md",
+      "surfaces": [
+        "yymm4_import_preview_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "import_csv_inventory",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/yymm4_csv_inventory.json",
+      "surfaces": [
+        "yymm4_import_preview_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "thumbnail_variants",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_variants.json",
+      "surfaces": [
+        "thumbnail_visual_proof_pack",
+        "yymm4_import_preview_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "thumbnail_human_review",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_visual_proof.html",
+      "surfaces": [
+        "thumbnail_visual_proof_pack",
+        "yymm4_import_preview_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "validation_ledger",
+      "repo_relative_path": "samples/_probe/newsroom_handoff/validation_drift_velocity_recovery_v1.json",
+      "surfaces": [
+        "gui_dashboard_panel",
+        "yymm4_import_preview_pack",
+        "thumbnail_visual_proof_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "gui_source_index",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/source_artifact_index.json",
+      "surfaces": [
+        "gui_dashboard_panel",
+        "yymm4_import_preview_pack",
+        "thumbnail_visual_proof_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "import_source_index",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/source_artifact_index.json",
+      "surfaces": [
+        "yymm4_import_preview_pack",
+        "thumbnail_visual_proof_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "thumbnail_source_index",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/source_index.json",
+      "surfaces": [
+        "thumbnail_visual_proof_pack",
+        "yymm4_import_preview_pack"
+      ],
+      "exists": true,
+      "classification": "aligned"
+    },
+    {
+      "artifact_id": "focused_review_html",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief/focused_review_brief.html",
+      "surfaces": [
+        "focused_review_brief"
+      ],
+      "exists": true,
+      "classification": "focused_review_output"
+    },
+    {
+      "artifact_id": "focused_review_markdown",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief/focused_review_brief.md",
+      "surfaces": [
+        "focused_review_brief"
+      ],
+      "exists": true,
+      "classification": "focused_review_output"
+    },
+    {
+      "artifact_id": "review_decision_card",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief/review_decision_card.json",
+      "surfaces": [
+        "focused_review_brief"
+      ],
+      "exists": true,
+      "classification": "focused_review_output"
+    },
+    {
+      "artifact_id": "review_summary",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief/review_summary.json",
+      "surfaces": [
+        "focused_review_brief"
+      ],
+      "exists": true,
+      "classification": "focused_review_output"
+    },
+    {
+      "artifact_id": "legacy_aligned_story",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/aligned_review_story.md",
+      "surfaces": [
+        "surface_alignment_review_packet"
+      ],
+      "exists": true,
+      "classification": "source_record"
+    }
+  ],
+  "source_readbacks": {
+    "reviewer_packet": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/validation_readback.json",
+    "gui_dashboard_panel": "production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/validation_readback.json",
+    "yymm4_import_preview_pack": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/validation_readback.json",
+    "thumbnail_visual_proof_pack": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/readback.json"
+  }
+}

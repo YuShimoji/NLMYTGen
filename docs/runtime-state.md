@@ -1,5 +1,43 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 focused review brief completed (2026-07-07 JST)**:
+  `episode-002-focused-review-brief-dark-surface-v1` builds a concise
+  decision-first, dark-mode-compatible local HTML review brief over the
+  accepted surface alignment reviewer packet. Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief/`.
+  Primary human review is `focused_review_brief.html`; Markdown fallback is
+  `focused_review_brief.md`; primary machine readback is
+  `validation_readback.json`; decision payload is `review_decision_card.json`;
+  compact summary is `review_summary.json`; source/detail index is
+  `detail_source_index.json`. Regeneration command:
+  `python -m src.cli.main build-focused-review-brief --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_focused_review_brief_dark_surface_v1`.
+  The old `surface_alignment_review_packet/aligned_review_story.md` remains a
+  source record, not the primary human review surface. The brief answers one
+  question above the fold: which next path episode 002 should take after local
+  dry-run review. It keeps exactly 3 top-summary lines, 3 next-action cards
+  (`real_input_replacement`, `actual_yymm4_import_observation_no_render`,
+  `hold_review_later`), 3 evidence cards (GUI dashboard panel, YMM4 import
+  preview pack, thumbnail visual proof pack), one gate strip, and secondary
+  collapsed/details-style source context. It preserves `dry_run`,
+  `sample_fixture_not_real`, `no_real_transcript`, `rights_boundary`,
+  `public_upload_closed`, `yymm4_render_closed`, `no_yymm4_import`,
+  `thumbnail_context_only`, `validation_noise_nonblocking`, and
+  `not_production_ready`. Targeted tests pass
+  (`uv run pytest tests/test_focused_review_brief.py -q` -> 4 passed), and the
+  generated readback passes with no external refs, no pure-white background
+  markers, no forbidden true completion claims, and first-party dark CSS with
+  `color-scheme: dark light` plus `prefers-color-scheme`. Full pytest was not
+  run. In-app browser `file://` opening was blocked by browser policy, so access
+  verification is `verified_present`, not user-opened. No creative asset
+  changes, real transcript rerun/source replacement, YMM4 GUI launch/import/render,
+  production `.ymmp`, final thumbnail approval, live fetch/scraping, external
+  media download, OAuth/API key/payment, rights/legal/public-ready acceptance,
+  YouTube upload, destructive git, cross-repo edit, broad fixture regeneration,
+  or full-suite green campaign occurred. Next user action is to open
+  `focused_review_brief.html` and answer the single primary review question;
+  the likely next product slice after acceptance is verified local real input
+  replacement, with YMM4 import observation remaining an explicit gate.
+
 - **Episode 002 surface alignment reviewer packet completed (2026-07-06 JST)**:
   `episode-002-surface-alignment-repair-and-reviewer-packet-v1` builds one
   local/offline reviewer packet over the accepted surface alignment pack,

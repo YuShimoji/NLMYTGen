@@ -1,0 +1,47 @@
+{
+  "schema_version": "focused_review_decision_card.v1",
+  "artifact_id": "episode_002_focused_review_brief_dark_surface_v1",
+  "decision_card_count": 1,
+  "primary_questions": [
+    "Which next path should episode 002 take after this local dry-run review?"
+  ],
+  "current_state": "Focused local review is ready; production, YMM4 import/render, and public gates remain closed.",
+  "reviewer_decision_prompt": "Pick one path after reading the decision card and evidence cards.",
+  "recommended_default": "Choose real_input_replacement if verified local source/transcript material exists; otherwise hold unless YMM4 observation is explicitly selected.",
+  "next_action_cards": [
+    {
+      "option_id": "real_input_replacement",
+      "label": "Real input replacement",
+      "status": "advisory_deferred",
+      "use_when": "Verified local real source/transcript material is available.",
+      "effect": "Moves from sample fixture to production-relevant content without YMM4 or publication gates.",
+      "requires": "Human-approved local transcript/source provenance."
+    },
+    {
+      "option_id": "actual_yymm4_import_observation_no_render",
+      "label": "YMM4 observation without render",
+      "status": "blocked_by_true_gate",
+      "use_when": "Human explicitly chooses to inspect import behavior.",
+      "effect": "Observes CSV/VoiceItem/timing behavior only; no render or production .ymmp claim.",
+      "requires": "Explicit human decision to launch/import in YMM4."
+    },
+    {
+      "option_id": "hold_review_later",
+      "label": "Hold / review later",
+      "status": "safe_hold",
+      "use_when": "The brief is insufficient, input is unavailable, or no YMM4 gate is selected.",
+      "effect": "Keeps the current local/offline reviewer packet as the record.",
+      "requires": "No new action."
+    }
+  ],
+  "not_claimed": [
+    "production readiness",
+    "real transcript availability",
+    "YMM4 import or render",
+    "final thumbnail approval",
+    "rights or public-ready acceptance",
+    "YouTube upload or visibility change"
+  ],
+  "source_next_action": "Review aligned_review_story.md, then choose a later slice for verified local real input replacement or for actual YMM4 import observation without render/public claims.",
+  "primary_human_review": "production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief/focused_review_brief.html"
+}

@@ -10,9 +10,10 @@ flowchart LR
     F --> X["Surface alignment pack<br/>ready"]
     G --> X
     P --> X
-    X --> RP["Surface alignment reviewer packet<br/>ready"]
-    RP --> E
-    RP --> IY["Actual YMM4 import observation<br/>blocked_by_true_gate"]
+    X --> RP["Surface alignment reviewer packet<br/>source record"]
+    RP --> FB["Focused review brief<br/>ready dark HTML"]
+    FB --> E
+    FB --> IY["Actual YMM4 import observation<br/>blocked_by_true_gate"]
     P --> E["Real transcript replacement<br/>blocked_by_real_input"]
 
     H["sample transcript fixture"] -. "used now" .-> C
@@ -40,8 +41,13 @@ flowchart LR
     RP --> AG["remaining_mismatch_ledger.json<br/>5 resolved / 3 accepted_nonblocking"]
     RP --> AH["next_action_readback.json<br/>packet_resolved"]
     RP --> AI["boundary_status_readback.json<br/>accepted_nonblocking"]
+    FB --> AJ["focused_review_brief.html<br/>primary human review"]
+    FB --> AK["focused_review_brief.md<br/>Markdown fallback"]
+    FB --> AL["review_decision_card.json<br/>1 question / 3 options"]
+    FB --> AM["validation_readback.json<br/>dark CSS / no external refs"]
 
     N["closed gates:<br/>rights/legal/public-ready acceptance<br/>OAuth/API/payment<br/>live scraping/media download<br/>external image/media download<br/>YMM4 GUI/import/render<br/>production .ymmp<br/>YouTube publication"] -.-> F
     N -.-> G
     N -.-> X
     N -.-> RP
+    N -.-> FB
