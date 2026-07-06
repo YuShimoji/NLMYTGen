@@ -1,0 +1,142 @@
+{
+  "schema_version": "validation_drift_velocity_recovery.v1",
+  "artifact_id": "validation_drift_velocity_recovery_v1",
+  "slice": "validation-drift-triage-and-velocity-recovery-v1",
+  "created_date_jst": "2026-07-06",
+  "repo": "YuShimoji/NLMYTGen",
+  "branch_at_creation": "codex/validation-drift-triage-and-velocity-recovery-v1",
+  "base_product_checkpoint": {
+    "artifact_id": "content_spine_002_dashboard_readiness_ingest_v1",
+    "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/dashboard_readiness_ingest/",
+    "status": "validated_before_triage",
+    "narrow_test_status": "passed"
+  },
+  "validation_evidence": {
+    "recent_full_pytest_input": {
+      "source": "prior terminal output in current Codex thread",
+      "command": "uv run pytest",
+      "result": "22 failed, 1173 passed, 28 skipped",
+      "policy_decision": "not rerun in this slice"
+    },
+    "representative_failure_recheck": {
+      "command": "uv run pytest tests/test_newsroom_v0_1_dense_script_semantic_audit.py::test_user_saved_dense_v1_source_ymmp_is_ignored_local_evidence tests/test_newsroom_visual_card_benchmarked_refinement.py::test_per_card_changes_and_svg_assets_encode_benchmarked_text_fit -q",
+      "result": "2 failed",
+      "failure_classes_confirmed": [
+        "host_or_path_drift",
+        "stale_expected_metadata",
+        "fixture_snapshot_drift"
+      ]
+    },
+    "product_line_recheck": {
+      "command": "uv run pytest tests/test_dashboard_readiness_ingest.py -q",
+      "result": "4 passed"
+    }
+  },
+  "failure_ledger_summary": [
+    {
+      "group": "true_blocker_for_next_product_slice",
+      "count": 0,
+      "blocking_for_next_product_slice": false,
+      "evidence": "episode 002 dashboard readiness targeted test remains green",
+      "action": "continue product work"
+    },
+    {
+      "group": "nonblocking_validation_noise",
+      "count": 22,
+      "blocking_for_next_product_slice": false,
+      "evidence": "full pytest failures are outside dashboard ingest and cluster in older newsroom generated artifact tests",
+      "action": "record, do not pursue as full-green campaign"
+    },
+    {
+      "group": "host_or_path_drift",
+      "count": 9,
+      "blocking_for_next_product_slice": false,
+      "evidence": "tracked artifacts store C:\\Users\\thank... while current host resolves C:\\Users\\PLANNER007...",
+      "action": "future narrow normalization if these tests become product-slice gates"
+    },
+    {
+      "group": "generated_artifact_dirtiness",
+      "count": 1,
+      "blocking_for_next_product_slice": false,
+      "evidence": "previous full pytest run dirtied unrelated newsroom generated artifacts; representative recheck did not dirty the worktree",
+      "action": "avoid broad full-suite reruns during product slices"
+    },
+    {
+      "group": "stale_expected_metadata",
+      "count": 4,
+      "blocking_for_next_product_slice": false,
+      "evidence": "visual card tests still expect audience-fit-v1/title strings while artifacts/renderers show density-benchmarked-v1",
+      "action": "defer unless visual-card lane is selected"
+    },
+    {
+      "group": "fixture_snapshot_drift",
+      "count": 12,
+      "blocking_for_next_product_slice": false,
+      "evidence": "SVG/contact-sheet/rendered artifact equality failures are in older newsroom visual card and animation fixture surfaces",
+      "action": "defer broad snapshot rewrite"
+    },
+    {
+      "group": "unrelated_legacy_residue",
+      "count": 22,
+      "blocking_for_next_product_slice": false,
+      "evidence": "failure files are newsroom dense-script, visual-card, yukkuri-animation, and background-animation tests, not episode 002 dashboard ingest",
+      "action": "do not block episode 002 GUI/import/thumbnail work"
+    },
+    {
+      "group": "requires_human_input_or_provenance",
+      "count": 0,
+      "blocking_for_next_product_slice": false,
+      "evidence": "real transcript remains a product gate, but not a validation-drift blocker",
+      "action": "only choose real transcript replacement if input is available"
+    },
+    {
+      "group": "unknown_needs_followup",
+      "count": 0,
+      "blocking_for_next_product_slice": false,
+      "evidence": "representative failures explain the current drift classes enough for product continuation",
+      "action": "no immediate follow-up required"
+    }
+  ],
+  "representative_failures": [
+    {
+      "test": "tests/test_newsroom_v0_1_dense_script_semantic_audit.py::test_user_saved_dense_v1_source_ymmp_is_ignored_local_evidence",
+      "class": "host_or_path_drift",
+      "blocking_for_next_product_slice": false,
+      "observed_difference": "C:\\Users\\thank... stored path versus C:\\Users\\PLANNER007... current resolved path"
+    },
+    {
+      "test": "tests/test_newsroom_visual_card_benchmarked_refinement.py::test_per_card_changes_and_svg_assets_encode_benchmarked_text_fit",
+      "class": "stale_expected_metadata",
+      "blocking_for_next_product_slice": false,
+      "observed_difference": "expected data-refinement audience-fit-v1 but current SVG has density-benchmarked-v1"
+    }
+  ],
+  "narrow_repairs_applied": [
+    {
+      "repair": "triage ledger added",
+      "scope": "documentation/artifact only",
+      "reason": "avoid broad fixture repair and preserve velocity"
+    }
+  ],
+  "blocking_decision": {
+    "safe_to_continue_product_work": true,
+    "preferred_next_slice": "episode 002 GUI dashboard panel",
+    "reason": "dashboard ingest is validated and the drift is isolated to older generated newsroom fixture surfaces",
+    "blocked_by": []
+  },
+  "closed_gates_preserved": {
+    "no_full_suite_green_campaign": true,
+    "no_repeated_full_pytest_loops": true,
+    "no_broad_fixture_regeneration": true,
+    "no_baseball_static_frame_hash_cleanup": true,
+    "no_public_oauth_payment_legal_destructive_cross_repo_actions": true,
+    "no_yymm4_gui_launch_or_render": true,
+    "no_live_scraping_or_media_download": true
+  },
+  "next_recommended_order": [
+    "episode 002 GUI dashboard panel",
+    "episode 002 YMM4 import preview pack",
+    "episode 002 thumbnail visual proof",
+    "real transcript/source replacement if input/provenance exists"
+  ]
+}

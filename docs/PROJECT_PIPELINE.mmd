@@ -2,13 +2,16 @@ flowchart LR
     A["Episode 002 content spine<br/>draft_offline"] --> B["Episode 002 IR/CSV bridge<br/>draft_offline"]
     B --> C["Transcript substitution readiness<br/>sample_fixture_not_real"]
     C --> D["Dashboard readiness ingest<br/>ready"]
-    D --> E["Real transcript replacement<br/>blocked_by_real_input"]
+    D --> T["Validation drift triage<br/>nonblocking"]
+    T --> P["GUI dashboard panel<br/>preferred next"]
+    T --> E["Real transcript replacement<br/>blocked_by_real_input"]
     E --> F["YMM4 import preview<br/>deferred"]
     E --> G["Thumbnail visual proof<br/>deferred"]
 
     H["sample transcript fixture"] -. "used now" .-> C
     I["verified local real transcript"] -. "required later" .-> E
 
+    T --> O["validation drift ledger"]
     D --> J["readiness_summary.json"]
     D --> K["pipeline_status.json"]
     D --> L["capability_glyph_grid.json"]

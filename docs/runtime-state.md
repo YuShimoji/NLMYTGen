@@ -1,5 +1,24 @@
 # Runtime State — NLMYTGen
 
+- **Validation drift triage and velocity recovery completed (2026-07-06 JST)**:
+  `validation-drift-triage-and-velocity-recovery-v1` classifies the current
+  validation drift as nonblocking for the next episode 002 product-building
+  slice. New artifacts are
+  `samples/_probe/newsroom_handoff/validation_drift_velocity_recovery_v1.json`
+  and
+  `docs/verification/VALIDATION_DRIFT_VELOCITY_RECOVERY_V1_2026-07-06.md`.
+  Evidence used: recent full pytest output reported 22 failed, 1173 passed,
+  28 skipped; this slice did not rerun full pytest. A representative targeted
+  recheck reproduced two expected failures: one host/path drift case storing
+  `C:\Users\thank...` while current host resolves `C:\Users\PLANNER007...`,
+  and one stale visual-card metadata/snapshot case expecting `audience-fit-v1`
+  while current SVGs carry `density-benchmarked-v1`. The episode 002 dashboard
+  readiness test still passes (`uv run pytest tests/test_dashboard_readiness_ingest.py -q`
+  -> 4 passed), so product work is safe to continue. No broad fixture
+  regeneration, repeated full pytest loop, Baseball/static/hash cleanup, YMM4
+  launch/render, public/auth/payment/legal action, live scraping/media
+  download, destructive git, or cross-repo edit occurred. Recommended next
+  product slice is `episode-002-gui-dashboard-panel-v1`.
 - **Content spine 002 dashboard readiness ingest completed (2026-07-06 JST)**:
   `content-spine-002-dashboard-readiness-ingest-v1` builds the local/offline
   dashboard readiness package for
