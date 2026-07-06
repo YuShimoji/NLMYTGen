@@ -1,0 +1,107 @@
+{
+  "schema_version": "boundary_consistency_report.v1",
+  "artifact_id": "episode_002_surface_alignment_across_gui_import_thumbnail_v1",
+  "overall_status": "minor_label_drift",
+  "mismatch_categories": [
+    "aligned",
+    "minor_label_drift",
+    "missing_reference",
+    "boundary_mismatch",
+    "stale_next_action",
+    "unknown"
+  ],
+  "boundary_rows": [
+    {
+      "boundary_id": "dry_run",
+      "gui_dashboard_panel": true,
+      "yymm4_import_preview_pack": true,
+      "thumbnail_visual_proof_pack": "proof_text_context",
+      "classification": "minor_label_drift",
+      "note": "Thumbnail proof expresses dry-run in copy rather than a dry_run flag."
+    },
+    {
+      "boundary_id": "sample_fixture_not_real",
+      "gui_dashboard_panel": true,
+      "yymm4_import_preview_pack": true,
+      "thumbnail_visual_proof_pack": "sample_fixture_not_real",
+      "classification": "aligned",
+      "note": "All surfaces preserve sample fixture status."
+    },
+    {
+      "boundary_id": "no_real_transcript",
+      "gui_dashboard_panel": true,
+      "yymm4_import_preview_pack": true,
+      "thumbnail_visual_proof_pack": "sample_fixture_not_real",
+      "classification": "aligned",
+      "note": "No surface reports a real transcript."
+    },
+    {
+      "boundary_id": "rights_boundary",
+      "gui_dashboard_panel": true,
+      "yymm4_import_preview_pack": true,
+      "thumbnail_visual_proof_pack": "sample_only_no_publication",
+      "classification": "minor_label_drift",
+      "note": "Thumbnail uses rights/public-ready wording instead of rights_boundary."
+    },
+    {
+      "boundary_id": "public_upload_closed",
+      "gui_dashboard_panel": true,
+      "yymm4_import_preview_pack": true,
+      "thumbnail_visual_proof_pack": true,
+      "classification": "aligned",
+      "note": "Public/upload gates remain closed."
+    },
+    {
+      "boundary_id": "yymm4_render_closed",
+      "gui_dashboard_panel": true,
+      "yymm4_import_preview_pack": true,
+      "thumbnail_visual_proof_pack": "blocked_by_true_gate",
+      "classification": "aligned",
+      "note": "No render has occurred."
+    },
+    {
+      "boundary_id": "no_yymm4_import",
+      "gui_dashboard_panel": true,
+      "yymm4_import_preview_pack": true,
+      "thumbnail_visual_proof_pack": "blocked_by_true_gate",
+      "classification": "aligned",
+      "note": "No import has occurred."
+    },
+    {
+      "boundary_id": "thumbnail_context_only",
+      "gui_dashboard_panel": "not_applicable",
+      "yymm4_import_preview_pack": true,
+      "thumbnail_visual_proof_pack": true,
+      "classification": "aligned",
+      "note": "Import treats thumbnail as context only; thumbnail remains proof-only."
+    },
+    {
+      "boundary_id": "validation_noise_nonblocking",
+      "gui_dashboard_panel": "validation_noise_nonblocking",
+      "yymm4_import_preview_pack": true,
+      "thumbnail_visual_proof_pack": true,
+      "classification": "aligned",
+      "note": "All surfaces use validation drift as nonblocking."
+    },
+    {
+      "boundary_id": "no_production_thumbnail_acceptance",
+      "gui_dashboard_panel": "not_applicable",
+      "yymm4_import_preview_pack": true,
+      "thumbnail_visual_proof_pack": true,
+      "classification": "aligned",
+      "note": "No final thumbnail approval is claimed."
+    },
+    {
+      "boundary_id": "blocked_by_true_gate",
+      "gui_dashboard_panel": "blocked_by_true_gate",
+      "yymm4_import_preview_pack": "blocked_by_true_gate",
+      "thumbnail_visual_proof_pack": "public_ready_false",
+      "classification": "aligned",
+      "note": "Public/production gates stay closed."
+    }
+  ],
+  "classification_counts": {
+    "minor_label_drift": 2,
+    "aligned": 9
+  }
+}

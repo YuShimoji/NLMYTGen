@@ -1,0 +1,126 @@
+{
+  "schema_version": "surface_status_matrix.v1",
+  "artifact_id": "episode_002_surface_alignment_across_gui_import_thumbnail_v1",
+  "status_categories": [
+    "ready",
+    "partial",
+    "sample_fixture_not_real",
+    "dry_run",
+    "draft_offline",
+    "blocked_by_real_input",
+    "blocked_by_true_gate",
+    "validation_noise_nonblocking",
+    "thumbnail_context_only",
+    "deferred",
+    "missing",
+    "unknown"
+  ],
+  "mismatch_categories": [
+    "aligned",
+    "minor_label_drift",
+    "missing_reference",
+    "boundary_mismatch",
+    "stale_next_action",
+    "unknown"
+  ],
+  "surfaces": [
+    "gui_dashboard_panel",
+    "yymm4_import_preview_pack",
+    "thumbnail_visual_proof_pack"
+  ],
+  "rows": [
+    {
+      "axis": "GUI dashboard panel status",
+      "gui_dashboard_panel": "ready",
+      "yymm4_import_preview_pack": "ready",
+      "thumbnail_visual_proof_pack": "ready",
+      "classification": "aligned",
+      "note": "GUI readback passed; old capability rows remain visible as historical panel data."
+    },
+    {
+      "axis": "YMM4 import preview status",
+      "gui_dashboard_panel": "deferred",
+      "yymm4_import_preview_pack": "ready",
+      "thumbnail_visual_proof_pack": "ready_context",
+      "classification": "minor_label_drift",
+      "note": "GUI panel still labels import preview deferred; import pack exists and is context-synced."
+    },
+    {
+      "axis": "Thumbnail visual proof status",
+      "gui_dashboard_panel": "deferred",
+      "yymm4_import_preview_pack": "ready",
+      "thumbnail_visual_proof_pack": "ready",
+      "classification": "minor_label_drift",
+      "note": "GUI panel predates thumbnail proof; import and thumbnail surfaces agree it exists."
+    },
+    {
+      "axis": "Sample fixture / transcript status",
+      "gui_dashboard_panel": "sample_fixture_not_real",
+      "yymm4_import_preview_pack": "sample_fixture_not_real",
+      "thumbnail_visual_proof_pack": "sample_fixture_not_real",
+      "classification": "aligned",
+      "note": "All surfaces keep the transcript sample-backed and non-real."
+    },
+    {
+      "axis": "Real transcript gate",
+      "gui_dashboard_panel": "blocked_by_real_input",
+      "yymm4_import_preview_pack": "blocked_by_real_input",
+      "thumbnail_visual_proof_pack": "blocked_by_real_input",
+      "classification": "aligned",
+      "note": "No real transcript replacement happened in these surfaces."
+    },
+    {
+      "axis": "Validation drift status",
+      "gui_dashboard_panel": "validation_noise_nonblocking",
+      "yymm4_import_preview_pack": "validation_noise_nonblocking",
+      "thumbnail_visual_proof_pack": "validation_noise_nonblocking",
+      "classification": "aligned",
+      "note": "All surfaces use the drift ledger as nonblocking product evidence."
+    },
+    {
+      "axis": "Rights / publication status",
+      "gui_dashboard_panel": "sample_only_no_publication",
+      "yymm4_import_preview_pack": "sample_only_no_publication",
+      "thumbnail_visual_proof_pack": "sample_only_no_publication",
+      "classification": "minor_label_drift",
+      "note": "Labels differ but all mean sample-only/no-publication."
+    },
+    {
+      "axis": "YMM4 import / render status",
+      "gui_dashboard_panel": "blocked_by_true_gate",
+      "yymm4_import_preview_pack": "blocked_by_true_gate",
+      "thumbnail_visual_proof_pack": "blocked_by_true_gate",
+      "classification": "aligned",
+      "note": "No surface claims YMM4 import or render."
+    },
+    {
+      "axis": "Thumbnail approval status",
+      "gui_dashboard_panel": "deferred",
+      "yymm4_import_preview_pack": "blocked_by_true_gate",
+      "thumbnail_visual_proof_pack": "proof_only",
+      "classification": "aligned",
+      "note": "Thumbnail proof is context only, not final approval."
+    },
+    {
+      "axis": "Next safe local action",
+      "gui_dashboard_panel": "prepare_import_preview",
+      "yymm4_import_preview_pack": "review_import_preview_with_thumbnail_context",
+      "thumbnail_visual_proof_pack": "review_thumbnail_direction",
+      "classification": "stale_next_action",
+      "note": "GUI and thumbnail next-action text predate this alignment package."
+    },
+    {
+      "axis": "Source artifact references",
+      "gui_dashboard_panel": "source_index_present",
+      "yymm4_import_preview_pack": "source_index_present",
+      "thumbnail_visual_proof_pack": "source_index_present",
+      "classification": "aligned",
+      "note": "All three packages expose source-artifact indexes."
+    }
+  ],
+  "classification_counts": {
+    "aligned": 7,
+    "minor_label_drift": 3,
+    "stale_next_action": 1
+  }
+}

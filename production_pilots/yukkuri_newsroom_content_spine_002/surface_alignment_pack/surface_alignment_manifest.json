@@ -1,0 +1,40 @@
+{
+  "schema_version": "surface_alignment_manifest.v1",
+  "artifact_id": "episode_002_surface_alignment_across_gui_import_thumbnail_v1",
+  "artifact_kind": "surface-alignment-pack",
+  "status": "generated",
+  "source_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_002",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_002\\surface_alignment_pack",
+  "files": {
+    "surface_alignment_manifest.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\surface_alignment_pack\\surface_alignment_manifest.json",
+    "surface_alignment_summary.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\surface_alignment_pack\\surface_alignment_summary.json",
+    "surface_status_matrix.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\surface_alignment_pack\\surface_status_matrix.json",
+    "source_artifact_crosswalk.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\surface_alignment_pack\\source_artifact_crosswalk.json",
+    "boundary_consistency_report.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\surface_alignment_pack\\boundary_consistency_report.json",
+    "next_action_consistency_report.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\surface_alignment_pack\\next_action_consistency_report.json",
+    "review_story.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\surface_alignment_pack\\review_story.md",
+    "validation_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\surface_alignment_pack\\validation_readback.json",
+    "review_checklist.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\surface_alignment_pack\\review_checklist.md",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\surface_alignment_pack\\limitations.md"
+  },
+  "surfaces": [
+    "gui_dashboard_panel",
+    "yymm4_import_preview_pack",
+    "thumbnail_visual_proof_pack"
+  ],
+  "boundaries": {
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "no_real_transcript": true,
+    "rights_boundary": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "no_yymm4_import": true,
+    "thumbnail_context_only": true,
+    "validation_noise_nonblocking": true,
+    "no_production_thumbnail_acceptance": true,
+    "no_yymm4_gui_launch_or_render": true,
+    "no_production_ymmp": true
+  },
+  "next_safe_local_action": "Review review_story.md, then decide whether GUI/import/thumbnail surfaces tell the same dry-run story before any real transcript replacement or YMM4 import review."
+}

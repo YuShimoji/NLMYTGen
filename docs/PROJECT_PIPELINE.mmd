@@ -7,7 +7,10 @@ flowchart LR
     P --> F["YMM4 import preview pack<br/>ready / context synced"]
     F --> G["Thumbnail visual proof pack<br/>ready context"]
     G -. "context only" .-> F
-    F --> X["Surface alignment<br/>preferred next"]
+    F --> X["Surface alignment pack<br/>ready"]
+    G --> X
+    P --> X
+    X --> E
     P --> E["Real transcript replacement<br/>blocked_by_real_input"]
 
     H["sample transcript fixture"] -. "used now" .-> C
@@ -27,6 +30,11 @@ flowchart LR
     G --> Y["thumbnail_visual_proof.html"]
     G --> Z["thumbnail_contact_sheet.svg"]
     G --> AA["thumbnail_variants.json<br/>3 SVG variants"]
+    X --> AB["review_story.md"]
+    X --> AC["surface_status_matrix.json"]
+    X --> AD["boundary_consistency_report.json"]
+    X --> AE["source_artifact_crosswalk.json"]
 
     N["closed gates:<br/>rights/legal/public-ready acceptance<br/>OAuth/API/payment<br/>live scraping/media download<br/>external image/media download<br/>YMM4 GUI/import/render<br/>production .ymmp<br/>YouTube publication"] -.-> F
     N -.-> G
+    N -.-> X

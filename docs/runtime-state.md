@@ -1,5 +1,34 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 surface alignment completed (2026-07-06 JST)**:
+  `episode-002-surface-alignment-across-gui-import-thumbnail-v1` builds one
+  local/offline review package across the current GUI dashboard panel, YMM4
+  import preview pack, and thumbnail visual proof pack. Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_pack/`.
+  Primary human review is `review_story.md`; primary machine readback is
+  `validation_readback.json`; primary summary is
+  `surface_alignment_summary.json`. Regeneration command:
+  `python -m src.cli.main build-surface-alignment-pack --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_surface_alignment_across_gui_import_thumbnail_v1`.
+  The alignment shows all three surfaces are locally present and reviewable:
+  GUI status `ready`, import preview status `ready`, and thumbnail proof status
+  `ready`. Source crosswalk is `aligned`; boundary consistency is
+  `minor_label_drift` because older GUI/thumbnail wording uses different labels
+  for dry-run/rights context; next-action consistency is `stale_next_action`
+  because older GUI and thumbnail surfaces point at work that later slices have
+  already advanced. No underlying GUI/import/thumbnail creative assets were
+  revised for this slice. The pack visibly marks `dry_run`,
+  `sample_fixture_not_real`, `no_real_transcript`, `rights_boundary`,
+  `public_upload_closed`, `yymm4_render_closed`, `no_yymm4_import`,
+  `thumbnail_context_only`, and `validation_noise_nonblocking`. Full pytest
+  was not run; targeted surface alignment plus companion GUI/import/thumbnail
+  tests and static JSON/boundary scans are the validation surface. No YMM4 GUI
+  launch/import/render, production `.ymmp`, final thumbnail approval, real
+  transcript rerun, live fetch/scraping, external media download, OAuth/API
+  key/payment, rights/legal/public-ready acceptance, YouTube upload,
+  destructive git, cross-repo edit, broad fixture regeneration, or repeated
+  full pytest loop occurred. Recommended next product slice is real
+  topic/source/transcript replacement using reviewed local input.
+
 - **Episode 002 YMM4 import preview context sync completed (2026-07-06 JST)**:
   `episode-002-yymm4-import-preview-pack-v1-context-sync` verifies and
   regenerates the local/offline import preview package after the accepted

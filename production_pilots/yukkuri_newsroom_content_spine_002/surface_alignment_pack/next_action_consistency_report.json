@@ -1,0 +1,30 @@
+{
+  "schema_version": "next_action_consistency_report.v1",
+  "artifact_id": "episode_002_surface_alignment_across_gui_import_thumbnail_v1",
+  "overall_status": "stale_next_action",
+  "next_action_rows": [
+    {
+      "surface_id": "gui_dashboard_panel",
+      "next_action": "Open dashboard_panel_preview.html for GUI review, then use the confirmed status surface to prepare the episode 002 YMM4 import preview pack without launching, importing, or rendering in YMM4.",
+      "classification": "stale_next_action",
+      "note": "GUI panel still points toward preparing the import preview; that preview now exists."
+    },
+    {
+      "surface_id": "yymm4_import_preview_pack",
+      "next_action": "Review import_preview_panel.md and draft_yymm4_preview.csv locally, using the existing thumbnail proof only as context; do not launch, import, render, approve a production thumbnail, or create a production .ymmp in this preview pack.",
+      "classification": "aligned",
+      "note": "Import preview already frames thumbnail proof as context only."
+    },
+    {
+      "surface_id": "thumbnail_visual_proof_pack",
+      "next_action": "Review thumbnail_visual_proof.html and select one direction for later title hook refinement; do not treat any variant as production thumbnail approval.",
+      "classification": "stale_next_action",
+      "note": "Thumbnail proof points toward direction selection; this alignment slice only compares surfaces."
+    }
+  ],
+  "classification_counts": {
+    "stale_next_action": 2,
+    "aligned": 1
+  },
+  "recommended_next_safe_local_action": "Review review_story.md, then decide whether GUI/import/thumbnail surfaces tell the same dry-run story before any real transcript replacement or YMM4 import review."
+}
