@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img">
+  <title>speaker_contrast thumbnail proof</title>
+  <rect width="1280" height="720" fill="#111827"/>
+  <circle cx="330" cy="330" r="150" fill="#243042" stroke="#38bdf8" stroke-width="10"/>
+  <circle cx="950" cy="330" r="150" fill="#243042" stroke="#f472b6" stroke-width="10"/>
+  <text x="330" y="320" text-anchor="middle" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="58" font-weight="900" fill="#f8fafc">A</text>
+  <text x="330" y="374" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#cbd5e1">ASKS</text>
+  <text x="950" y="320" text-anchor="middle" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="58" font-weight="900" fill="#f8fafc">B</text>
+  <text x="950" y="374" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#cbd5e1">EXPLAINS</text>
+  <rect x="410" y="112" width="460" height="122" rx="20" fill="#38bdf8"/>
+  <text x="640" y="185" text-anchor="middle" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="62" font-weight="900" fill="#08111f">SECOND SEED?</text>
+  <rect x="250" y="536" width="780" height="70" rx="16" fill="#243042" stroke="#64748b"/>
+  <text x="640" y="582" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="800" fill="#f8fafc">Two-speaker dry-run contrast, abstract badges only</text>
+  <rect x="28" y="28" width="168" height="34" rx="17" fill="none" stroke="#f8fafc" stroke-width="2" opacity="0.7"/>
+  <text x="112" y="51" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#f8fafc">Proof only</text>
+  <text x="1244" y="690" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#cbd5e1">No external media / Not production thumbnail</text>
+  <text x="36" y="690" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#cbd5e1">speaker_contrast</text>
+</svg>

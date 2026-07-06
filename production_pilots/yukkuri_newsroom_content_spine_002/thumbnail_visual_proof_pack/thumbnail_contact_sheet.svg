@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img">
+  <title>Episode 002 thumbnail visual proof contact sheet</title>
+  <rect width="1280" height="720" fill="#0b1020"/>
+  <text x="42" y="58" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="34" font-weight="900" fill="#f8fafc">Episode 002 thumbnail visual proof</text>
+  <text x="42" y="94" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#cbd5e1">Proof only / No external media / Not production thumbnail</text>
+  <rect x="42" y="136" width="360" height="202" rx="8" fill="#111827" stroke="#334155"/>
+  <text x="60" y="186" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="30" font-weight="900" fill="#f8fafc">DRY RUN FACTORY CHECK</text>
+  <text x="60" y="224" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#cbd5e1">Episode 002 seed opens cleanly</text>
+  <rect x="60" y="254" width="150" height="28" rx="14" fill="#1e293b" stroke="#64748b"/>
+  <text x="135" y="274" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#f8fafc">proof_only</text>
+  <text x="42" y="382" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="800" fill="#f8fafc">headline_driven</text>
+  <text x="42" y="414" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#cbd5e1">recommended</text>
+  <text x="42" y="446" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#94a3b8">headline_stack</text>
+  <rect x="447" y="136" width="360" height="202" rx="8" fill="#111827" stroke="#334155"/>
+  <text x="465" y="186" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="30" font-weight="900" fill="#f8fafc">SECOND SEED?</text>
+  <text x="465" y="224" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#cbd5e1">Two-speaker dry-run contrast</text>
+  <rect x="465" y="254" width="150" height="28" rx="14" fill="#1e293b" stroke="#64748b"/>
+  <text x="540" y="274" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#f8fafc">proof_only</text>
+  <text x="447" y="382" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="800" fill="#f8fafc">speaker_contrast</text>
+  <text x="447" y="414" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#cbd5e1">alternate</text>
+  <text x="447" y="446" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#94a3b8">speaker_badges</text>
+  <rect x="852" y="136" width="360" height="202" rx="8" fill="#111827" stroke="#334155"/>
+  <text x="870" y="186" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="30" font-weight="900" fill="#f8fafc">TEMPLATE -&gt; CSV -&gt; PROOF</text>
+  <text x="870" y="224" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#cbd5e1">Episode 002 pipeline snapshot</text>
+  <rect x="870" y="254" width="150" height="28" rx="14" fill="#1e293b" stroke="#64748b"/>
+  <text x="945" y="274" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#f8fafc">proof_only</text>
+  <text x="852" y="382" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="800" fill="#f8fafc">newsroom_diagram</text>
+  <text x="852" y="414" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#cbd5e1">alternate</text>
+  <text x="852" y="446" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#94a3b8">diagram_nodes</text>
+  <text x="1238" y="680" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#94a3b8">Open thumbnail_visual_proof.html for the full review panel</text>
+</svg>

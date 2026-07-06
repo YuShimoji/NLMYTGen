@@ -1,0 +1,130 @@
+{
+  "schema_version": "thumbnail_visual_proof_variants.v1",
+  "artifact_id": "episode_002_thumbnail_visual_proof_v1",
+  "selected_candidate_id": "factory_seed_dry_run_002",
+  "variant_count": 3,
+  "recommended_variant_id": "headline_driven",
+  "recommended_reason": "Best first proof because it makes the dry-run boundary visible without relying on tiny details.",
+  "orientation": "16:9",
+  "coordinate_system": {
+    "width": 1280,
+    "height": 720
+  },
+  "source_context": {
+    "selected_candidate_id": "factory_seed_dry_run_002",
+    "selected_title": "Factory seed dry-run placeholder for a second yukkuri newsroom episode",
+    "title_hook": "Factory seed dry-run placeholder for a second",
+    "hook": "Dry-run only: confirm the factory can open a second episode seed.",
+    "channel_angle": "dry-run factory proof, not publishable editorial material",
+    "csv_row_count": 9,
+    "csv_header_mode": "headerless",
+    "cue_rows": 9,
+    "writer_utterances": 9,
+    "import_readback_status": "passed",
+    "source_status": "offline_fixture_not_live",
+    "transcript_status": "sample_fixture_not_real",
+    "rights_status": "sample_only_no_publication",
+    "yymm4_import_status": "blocked_by_true_gate",
+    "yymm4_render_status": "blocked_by_true_gate",
+    "next_safe_local_action": "Review thumbnail_visual_proof.html and select one direction for later title hook refinement; do not treat any variant as production thumbnail approval."
+  },
+  "variants": [
+    {
+      "variant_id": "headline_driven",
+      "status": "proof_only",
+      "headline": "DRY RUN FACTORY CHECK",
+      "subheadline": "Episode 002 seed opens cleanly",
+      "support_text": "Factory seed dry-run placeholder for a second",
+      "visual_structure": "Large left headline with a compact right-side proof stack and closed-gate labels.",
+      "text_hierarchy": "One dominant headline, one support line, three small gate labels.",
+      "risk_readback": "High legibility, but less character warmth.",
+      "expected_audience_cue": "Operational clarity for internal reviewers.",
+      "legibility_notes": "Works at small size because the headline is short and high contrast.",
+      "what_it_tests": "Whether the dry-run factory proof is understandable before any character framing.",
+      "recommendation": "recommended",
+      "recommendation_reason": "Best first proof because it makes the dry-run boundary visible without relying on tiny details.",
+      "svg_path": "variants/headline_driven.svg",
+      "repo_relative_svg_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/variants/headline_driven.svg",
+      "palette": {
+        "bg": "#0f172a",
+        "accent": "#facc15",
+        "panel": "#1e293b",
+        "ink": "#f8fafc"
+      },
+      "layout_family": "headline_stack",
+      "metrics": [
+        "9 rows / headerless CSV",
+        "Proof only",
+        "No external media"
+      ]
+    },
+    {
+      "variant_id": "speaker_contrast",
+      "status": "proof_only",
+      "headline": "SECOND SEED?",
+      "subheadline": "Two-speaker dry-run contrast",
+      "support_text": "Dry-run only: confirm the factory can open a second episode seed.",
+      "visual_structure": "Two abstract speaker badges face a central proof label; no character art or external media.",
+      "text_hierarchy": "Question headline, two badge labels, short hook strip.",
+      "risk_readback": "More playful, but the abstract badges need reviewer judgment.",
+      "expected_audience_cue": "Yukkuri-style dialogue energy without using real character assets.",
+      "legibility_notes": "Badge text is intentionally short; support copy is secondary.",
+      "what_it_tests": "Whether speaker contrast helps the dry-run topic feel like an episode rather than a status report.",
+      "recommendation": "alternate",
+      "recommendation_reason": "Useful if reviewer wants more channel personality.",
+      "svg_path": "variants/speaker_contrast.svg",
+      "repo_relative_svg_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/variants/speaker_contrast.svg",
+      "palette": {
+        "bg": "#111827",
+        "accent": "#38bdf8",
+        "panel": "#243042",
+        "ink": "#f8fafc"
+      },
+      "layout_family": "speaker_badges",
+      "metrics": [
+        "9 rows / headerless CSV",
+        "Sample fixture",
+        "Not production thumbnail"
+      ]
+    },
+    {
+      "variant_id": "newsroom_diagram",
+      "status": "proof_only",
+      "headline": "TEMPLATE -> CSV -> PROOF",
+      "subheadline": "Episode 002 pipeline snapshot",
+      "support_text": "Content spine, import preview, thumbnail proof",
+      "visual_structure": "Diagram-like pipeline cards with a highlighted proof endpoint and closed gates.",
+      "text_hierarchy": "Pipeline headline, three node labels, one caution footer.",
+      "risk_readback": "Most informative, but busier than the recommended headline variant.",
+      "expected_audience_cue": "Analytical newsroom/operator review.",
+      "legibility_notes": "Uses three big nodes and avoids small body paragraphs.",
+      "what_it_tests": "Whether a pipeline thumbnail can sell the proof state as a review checkpoint.",
+      "recommendation": "alternate",
+      "recommendation_reason": "Best for process-oriented reviewers.",
+      "svg_path": "variants/newsroom_diagram.svg",
+      "repo_relative_svg_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/variants/newsroom_diagram.svg",
+      "palette": {
+        "bg": "#172033",
+        "accent": "#34d399",
+        "panel": "#22314a",
+        "ink": "#f8fafc"
+      },
+      "layout_family": "diagram_nodes",
+      "metrics": [
+        "9 rows / headerless CSV",
+        "YMM4 closed",
+        "Rights closed"
+      ]
+    }
+  ],
+  "proof_only_gates": {
+    "production_ready": false,
+    "production_thumbnail_ready": false,
+    "public_ready": false,
+    "rights_accepted": false,
+    "youtube_uploaded": false,
+    "actual_yymm4_import": false,
+    "yymm4_rendered": false,
+    "external_media_used": false
+  }
+}

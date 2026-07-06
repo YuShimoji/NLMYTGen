@@ -1,0 +1,38 @@
+{
+  "schema_version": "thumbnail_visual_proof_readback.v1",
+  "status": "passed",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_002\\thumbnail_visual_proof_pack",
+  "checked_files": {
+    "manifest.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\thumbnail_visual_proof_pack\\manifest.json",
+    "thumbnail_variants.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\thumbnail_visual_proof_pack\\thumbnail_variants.json",
+    "thumbnail_visual_proof_panel.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\thumbnail_visual_proof_pack\\thumbnail_visual_proof_panel.md",
+    "thumbnail_visual_proof.html": "production_pilots\\yukkuri_newsroom_content_spine_002\\thumbnail_visual_proof_pack\\thumbnail_visual_proof.html",
+    "thumbnail_contact_sheet.svg": "production_pilots\\yukkuri_newsroom_content_spine_002\\thumbnail_visual_proof_pack\\thumbnail_contact_sheet.svg",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\thumbnail_visual_proof_pack\\limitations.md",
+    "source_index.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\thumbnail_visual_proof_pack\\source_index.json",
+    "readback.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\thumbnail_visual_proof_pack\\readback.json"
+  },
+  "checks": {
+    "all_required_files_present": true,
+    "json_loads": true,
+    "variant_count": 3,
+    "variant_count_ok": true,
+    "all_variants_proof_only": true,
+    "main_review_panel_present": true,
+    "html_review_panel_present": true,
+    "contact_sheet_svg_present": true,
+    "source_index_outputs_present": true,
+    "proof_only_gates_closed": true,
+    "forbidden_true_claims_absent": true,
+    "external_refs_absent": true
+  },
+  "failed_checks": [],
+  "artifact_id": "episode_002_thumbnail_visual_proof_v1",
+  "selected_candidate_id": "factory_seed_dry_run_002",
+  "variant_count": 3,
+  "recommended_variant_id": "headline_driven",
+  "primary_machine_readable": "production_pilots\\yukkuri_newsroom_content_spine_002\\thumbnail_visual_proof_pack\\thumbnail_variants.json",
+  "primary_human_review": "production_pilots\\yukkuri_newsroom_content_spine_002\\thumbnail_visual_proof_pack\\thumbnail_visual_proof.html",
+  "contact_sheet": "production_pilots\\yukkuri_newsroom_content_spine_002\\thumbnail_visual_proof_pack\\thumbnail_contact_sheet.svg",
+  "next_action": "Review thumbnail_visual_proof.html and select one direction for later title hook refinement; do not treat any variant as production thumbnail approval."
+}

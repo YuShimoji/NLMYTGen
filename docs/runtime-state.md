@@ -1,5 +1,31 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 thumbnail visual proof completed (2026-07-06 JST)**:
+  `episode-002-thumbnail-visual-proof-v1` builds the local/static thumbnail
+  proof package from the current episode 002 content spine, import preview
+  pack, GUI dashboard panel, and validation-noise ledger. Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/`.
+  Primary human review is `thumbnail_visual_proof.html`; primary machine
+  readback is `readback.json`; primary variant contract is
+  `thumbnail_variants.json`; contact sheet is `thumbnail_contact_sheet.svg`.
+  Regeneration command:
+  `python -m src.cli.main build-thumbnail-visual-proof-pack --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_thumbnail_visual_proof_v1`.
+  The pack contains 3 deterministic 16:9 SVG variants:
+  `headline_driven` (recommended), `speaker_contrast`, and
+  `newsroom_diagram`. It is SVG/HTML only, with no PNG export dependency and
+  no external image/media download or embedded copyrighted media. The pack
+  visibly marks proof-only review, no production thumbnail acceptance,
+  no public upload, no rights/legal/public-ready acceptance, no YMM4
+  GUI/import/render, no production `.ymmp`, and validation noise as
+  nonblocking for this slice. Targeted validation covered the new thumbnail
+  pack and the previous import-preview companion; full pytest was not run.
+  No real transcript rerun, live fetch/scraping, OAuth/API key/payment,
+  YouTube upload, destructive git, cross-repo edit, broad fixture
+  regeneration, or repeated full pytest loop occurred. Recommended next
+  product slice is `human-thumbnail-review-title-hook-refinement-v1` or
+  `episode-002-title-hook-refinement-v1`, using the selected proof direction
+  as the input.
+
 - **Episode 002 YMM4 import preview pack completed (2026-07-06 JST)**:
   `episode-002-yymm4-import-preview-pack-v1` builds the local/offline import
   preview package from the current episode 002 IR/CSV bridge, transcript

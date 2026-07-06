@@ -27,6 +27,7 @@ Usage:
     python -m src.cli.main build-dashboard-readiness-ingest --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-gui-dashboard-panel --package production_pilots/pkg [--ingest-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-yymm4-import-preview-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
+    python -m src.cli.main build-thumbnail-visual-proof-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
@@ -2455,6 +2456,27 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_thumbnail_visual_proof = subparsers.add_parser(
+        "build-thumbnail-visual-proof-pack",
+        help="Build a local/static thumbnail visual proof pack without external media or publication gates",
+    )
+    p_thumbnail_visual_proof.add_argument("--package", required=True, help="Episode package directory")
+    p_thumbnail_visual_proof.add_argument(
+        "--output",
+        help="Output directory (default: <package>/thumbnail_visual_proof_pack)",
+    )
+    p_thumbnail_visual_proof.add_argument(
+        "--artifact-id",
+        default="episode_002_thumbnail_visual_proof_v1",
+        help="Thumbnail visual proof pack artifact id",
+    )
+    p_thumbnail_visual_proof.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -2573,6 +2595,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_gui_dashboard_panel(args)
         elif args.command == "build-yymm4-import-preview-pack":
             return _cmd_build_yymm4_import_preview_pack(args)
+        elif args.command == "build-thumbnail-visual-proof-pack":
+            return _cmd_build_thumbnail_visual_proof_pack(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -4530,6 +4554,31 @@ def _cmd_build_yymm4_import_preview_pack(args: argparse.Namespace) -> int:
         print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
         print(f"primary_human_review: {readback.get('primary_human_review')}")
         print(f"preview_csv: {readback.get('preview_csv')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_thumbnail_visual_proof_pack(args: argparse.Namespace) -> int:
+    """Build a local/static thumbnail visual proof pack."""
+    from src.pipeline.thumbnail_visual_proof_pack import build_thumbnail_visual_proof_pack
+
+    readback = build_thumbnail_visual_proof_pack(
+        package_dir=getattr(args, "package"),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"selected_candidate_id: {readback.get('selected_candidate_id')}")
+        print(f"variant_count: {readback.get('variant_count')}")
+        print(f"recommended_variant_id: {readback.get('recommended_variant_id')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"contact_sheet: {readback.get('contact_sheet')}")
         print(f"next_action: {readback.get('next_action')}")
     return 0
 
