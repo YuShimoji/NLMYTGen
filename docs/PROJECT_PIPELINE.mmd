@@ -13,8 +13,10 @@ flowchart LR
     X --> RP["Surface alignment reviewer packet<br/>source record"]
     RP --> FB["Focused review brief<br/>ready dark HTML"]
     FB --> RC["Review cockpit compact<br/>ready bounded dark UI"]
-    RC --> E
-    RC --> IY["Actual YMM4 import observation<br/>blocked_by_true_gate"]
+    RC --> LR["Review layout research<br/>ready benchmark"]
+    LR -. "next UI target" .-> GF["Guided decision flow prototype<br/>advisory next"]
+    GF -. "after human review" .-> E
+    GF -. "after human review" .-> IY["Actual YMM4 import observation<br/>blocked_by_true_gate"]
     P --> E["Real transcript replacement<br/>blocked_by_real_input"]
 
     H["sample transcript fixture"] -. "used now" .-> C
@@ -50,6 +52,10 @@ flowchart LR
     RC --> AO["cockpit_state.json<br/>decision / gates / source records"]
     RC --> AP["cockpit_layout_readback.json<br/>5 sections / 7 cards / 2 details"]
     RC --> AQ["validation_readback.json<br/>bounded dark cockpit"]
+    LR --> AR["layout_research_report.md<br/>pattern benchmark"]
+    LR --> AS["candidate_wireframes.html<br/>A/B/C low-fidelity"]
+    LR --> AT["layout_decision_matrix.json<br/>Candidate B selected"]
+    LR --> AU["final_layout_recommendation.md<br/>guided decision flow"]
 
     N["closed gates:<br/>rights/legal/public-ready acceptance<br/>OAuth/API/payment<br/>live scraping/media download<br/>external image/media download<br/>YMM4 GUI/import/render<br/>production .ymmp<br/>YouTube publication"] -.-> F
     N -.-> G
@@ -57,3 +63,5 @@ flowchart LR
     N -.-> RP
     N -.-> FB
     N -.-> RC
+    N -.-> LR
+    N -.-> GF

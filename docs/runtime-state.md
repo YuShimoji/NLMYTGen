@@ -1,5 +1,42 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 review layout research completed (2026-07-07 JST)**:
+  `episode-002-review-layout-research-and-pattern-benchmark-v1` benchmarks
+  layout patterns before further review UI implementation. Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/`.
+  Primary human review is `layout_research_report.md`; low-fidelity dark-mode
+  wireframes are `candidate_wireframes.html` and `candidate_wireframes.md`;
+  final recommendation is `final_layout_recommendation.md`; primary machine
+  readback is `validation_readback.json`; decision matrix is
+  `layout_decision_matrix.json`; principles are `layout_principles.json`.
+  Regeneration command:
+  `python -m src.cli.main build-review-layout-research --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_review_layout_research_and_pattern_benchmark_v1`.
+  The current `review_cockpit_compact/review_cockpit.html` is now recorded as
+  a weak-pass evaluated prototype, not the final UI direction. The research
+  compares dashboard/status board, start page/service entry, task list,
+  command center/cockpit, wizard/step-by-step decision flow, and card
+  board/kanban-like review patterns. It selects exactly one next
+  implementation target: `candidate_b_guided_decision_flow`. Candidate A is a
+  start-page plus decision board; Candidate B is a guided decision flow;
+  Candidate C is a novice-friendly command center. The packet preserves
+  `dry_run`, `sample_fixture_not_real`, `no_real_transcript`,
+  `rights_boundary`, `public_upload_closed`, `yymm4_render_closed`,
+  `no_yymm4_import`, `thumbnail_context_only`,
+  `validation_noise_nonblocking`, and `not_production_ready`. Targeted tests
+  pass (`uv run pytest tests/test_review_layout_research.py -q` -> 4 passed),
+  and the generated readback passes with JSON load checks, 6 benchmarked
+  patterns, 3 wireframe candidates, exactly 1 selected recommendation, no
+  external dependencies in candidate wireframes, and no false production or
+  YMM4 completion claims. Full pytest was not run. Access verification is
+  `verified_present`; user-opened visual acceptance is still pending. No
+  production cockpit replacement, real transcript rerun/source replacement,
+  YMM4 GUI launch/import/render, production `.ymmp`, final thumbnail approval,
+  live fetch/scraping, external media download, OAuth/API key/payment,
+  rights/legal/public-ready acceptance, YouTube upload, destructive git,
+  cross-repo edit, broad fixture regeneration, or full-suite green campaign
+  occurred. Next implementation target after human review is a guided
+  start-to-decision flow, not another command-center polish pass.
+
 - **Episode 002 compact review cockpit completed (2026-07-07 JST)**:
   `episode-002-review-cockpit-compact-v1` builds the current primary local
   review cockpit over the accepted focused review brief and surface alignment

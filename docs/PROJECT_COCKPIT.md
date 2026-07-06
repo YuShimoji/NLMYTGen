@@ -17,7 +17,8 @@ surface. It is not a production gate, a prompt, or a source of product rules.
 | Episode 002 surface alignment pack | ready | `production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_pack/` | local/offline cross-surface review story; no YMM4 or production gates crossed |
 | Episode 002 surface alignment reviewer packet | source_record | `production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/` | source record; label/next-action drift repaired at packet readback level; source surfaces unchanged |
 | Episode 002 focused review brief | source_record | `production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief/focused_review_brief.html` | prior focused surface; preserved as secondary source record |
-| Episode 002 compact review cockpit | ready | `production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html` | primary human review cockpit; bounded dark HTML with state/layout readbacks |
+| Episode 002 compact review cockpit | weak_pass_prototype | `production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html` | evaluated prototype; dark/bounded but not the final information architecture |
+| Episode 002 review layout research | ready | `production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/layout_research_report.md` | pattern benchmark and wireframe packet; selects guided decision flow as the next UI target |
 | Validation drift triage | nonblocking | `docs/verification/VALIDATION_DRIFT_VELOCITY_RECOVERY_V1_2026-07-06.md` | full-suite drift is classified; product work can continue |
 | Real transcript replacement | blocked_by_real_input | `production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input/` | requires verified local transcript input |
 
@@ -33,27 +34,28 @@ surface. It is not a production gate, a prompt, or a source of product rules.
 - surface_alignment_002: `[######-]` GUI/import/thumbnail surfaces aligned into one review story; stale next-action labels recorded.
 - surface_reviewer_packet_002: `[#####--]` prior 8 drift rows classified as 5 resolved and 3 accepted_nonblocking; now a source record for the focused brief.
 - focused_review_brief_002: `[#####--]` prior dark-mode decision-first surface preserved as a source record.
-- review_cockpit_compact_002: `[######-]` compact bounded dark review cockpit generated and validated as the current primary review surface.
+- review_cockpit_compact_002: `[#####--]` compact bounded dark review cockpit generated and validated, now classified as weak_pass_prototype for information architecture.
+- review_layout_research_002: `[#####--]` layout benchmark packet generated; Candidate B guided decision flow selected as the next UI target.
 - validation_drift_triage: `[#####--]` current drift classified as nonblocking for episode 002 product work.
 - real_transcript_input: `[#------]` drop-zone exists, real input absent.
 
 ## Product Return Path
 
-Completed/current slice: episode 002 compact review cockpit. The active human
-review surface is now `review_cockpit_compact/review_cockpit.html`; the older
-`focused_review_brief/focused_review_brief.html` and
-`surface_alignment_review_packet/aligned_review_story.md` remain secondary
-source records. The cockpit compresses the current GUI/import/thumbnail state
-into a header strip, one primary decision card, three next-action choices,
-three surface status cards, one closed-gate strip, and secondary details. Its
-layout readback is bounded at 5 primary sections, 7 visible cards, 2 detail
-sections, no top-level tables, and no ledger in the primary body. Proposed
-next T+1 after human review is verified local real topic/source/transcript
-replacement; actual YMM4 import observation without render/public claims is an
-alternate later lane only if that gate is explicitly selected. The validation
-drift is currently classified as older newsroom generated-artifact noise,
-host/path drift, stale metadata, and fixture snapshot drift rather than a
-blocker for the episode 002 review-cockpit line.
+Completed/current slice: episode 002 review layout research. The compact
+cockpit remains available at `review_cockpit_compact/review_cockpit.html`, but
+it is now an evaluated weak-pass prototype rather than the final UI direction.
+The active research checkpoint is
+`review_layout_research/layout_research_report.md`, with low-fidelity
+wireframes at `review_layout_research/candidate_wireframes.html`. The research
+benchmarks dashboard/status board, start page/service entry, task list,
+command center/cockpit, wizard/step-by-step flow, and card-board patterns. It
+selects exactly one next implementation target:
+`candidate_b_guided_decision_flow`. Proposed next T+1 after human review is a
+guided start-to-decision prototype; real input replacement and actual YMM4
+import observation remain product decisions after the better review surface
+exists. The validation drift is currently classified as older newsroom
+generated-artifact noise, host/path drift, stale metadata, and fixture snapshot
+drift rather than a blocker for this layout-research line.
 
 ## Regeneration
 
@@ -66,18 +68,19 @@ python -m src.cli.main build-surface-alignment-pack --package production_pilots/
 python -m src.cli.main build-surface-reviewer-packet --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_surface_alignment_repair_and_reviewer_packet_v1
 python -m src.cli.main build-focused-review-brief --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_focused_review_brief_dark_surface_v1
 python -m src.cli.main build-review-cockpit-compact --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_review_cockpit_compact_v1
+python -m src.cli.main build-review-layout-research --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_review_layout_research_and_pattern_benchmark_v1
 ```
 
 Primary machine readback:
 
 ```text
-production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/validation_readback.json
+production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/validation_readback.json
 ```
 
 Primary human review file:
 
 ```text
-production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html
+production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/layout_research_report.md
 ```
 
 ## Closed Gates

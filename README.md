@@ -102,8 +102,11 @@ python -m src.cli.main build-surface-reviewer-packet --package production_pilots
 # Episode 002 focused dark review brief (prior source record)
 python -m src.cli.main build-focused-review-brief --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_focused_review_brief_dark_surface_v1
 
-# Episode 002 compact review cockpit (primary human review surface)
+# Episode 002 compact review cockpit (weak-pass evaluated prototype)
 python -m src.cli.main build-review-cockpit-compact --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_review_cockpit_compact_v1
+
+# Episode 002 review layout research (pattern benchmark and wireframes)
+python -m src.cli.main build-review-layout-research --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_review_layout_research_and_pattern_benchmark_v1
 
 # CSV 生成
 python -m src.cli.main build-csv input.txt -o output.csv --speaker-map Host1=れいむ,Host2=まりさ

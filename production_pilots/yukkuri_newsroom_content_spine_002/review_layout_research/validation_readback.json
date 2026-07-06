@@ -1,0 +1,42 @@
+{
+  "schema_version": "review_layout_research_validation_readback.v1",
+  "status": "passed",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research",
+  "checked_files": {
+    "layout_research_manifest.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\layout_research_manifest.json",
+    "layout_research_report.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\layout_research_report.md",
+    "current_ui_diagnosis.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\current_ui_diagnosis.md",
+    "layout_principles.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\layout_principles.json",
+    "pattern_benchmark.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\pattern_benchmark.md",
+    "candidate_wireframes.html": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\candidate_wireframes.html",
+    "candidate_wireframes.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\candidate_wireframes.md",
+    "layout_decision_matrix.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\layout_decision_matrix.json",
+    "final_layout_recommendation.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\final_layout_recommendation.md",
+    "validation_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\validation_readback.json",
+    "review_checklist.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\review_checklist.md",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\limitations.md"
+  },
+  "checks": {
+    "all_required_files_present": true,
+    "json_loads": true,
+    "pattern_count": 6,
+    "candidate_wireframe_count": 3,
+    "selected_candidate_count": 1,
+    "selected_candidate_exactly_one": true,
+    "selected_candidate": "candidate_b_guided_decision_flow",
+    "wireframes_have_no_external_dependencies": true,
+    "forbidden_true_claims_absent": true,
+    "boundary_flags_present": true,
+    "test_anti_goals_present": true
+  },
+  "failed_checks": [],
+  "artifact_id": "episode_002_review_layout_research_and_pattern_benchmark_v1",
+  "primary_human_review": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\layout_research_report.md",
+  "primary_machine_readable": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\validation_readback.json",
+  "candidate_wireframes": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\candidate_wireframes.html",
+  "final_recommendation": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\final_layout_recommendation.md",
+  "launcher_command": "start \"\" \"C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen\\production_pilots\\yukkuri_newsroom_content_spine_002\\review_layout_research\\candidate_wireframes.html\"",
+  "access_state": "verified_present",
+  "selected_candidate": "candidate_b_guided_decision_flow",
+  "next_action": "Use candidate_b_guided_decision_flow as the next implementation target after human review."
+}

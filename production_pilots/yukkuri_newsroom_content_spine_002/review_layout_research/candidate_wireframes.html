@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" data-layout-research="true" data-selected-candidate="candidate_b_guided_decision_flow">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Episode 002 Layout Wireframes</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+      --bg: #080d17;
+      --panel: #111827;
+      --panel2: #162033;
+      --text: #e6edf6;
+      --muted: #a7b5c8;
+      --line: #33445f;
+      --accent: #2dd4bf;
+      --selected: #93c5fd;
+      --warn: #f5c542;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #edf4f8;
+        --panel: #f7fafc;
+        --panel2: #e8eef5;
+        --text: #182235;
+        --muted: #475569;
+        --line: #bfd0df;
+        --accent: #0f766e;
+        --selected: #1d4ed8;
+        --warn: #8a5a00;
+      }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: 0; }
+    main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 24px 0 32px; }
+    header { display: grid; gap: 8px; padding: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    h1 { margin: 0; font-size: clamp(1.35rem, 2.4vw, 2rem); letter-spacing: 0; }
+    h2 { margin: 0 0 8px; font-size: 1rem; letter-spacing: 0; }
+    p { margin: 0; color: var(--muted); line-height: 1.45; }
+    .grid { display: grid; gap: 14px; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 14px; }
+    .candidate { min-height: 390px; display: grid; gap: 12px; align-content: start; padding: 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .candidate[data-status="selected"] { border-color: var(--selected); box-shadow: 0 0 0 2px rgba(147, 197, 253, 0.18); }
+    .tag { display: inline-flex; width: fit-content; padding: 4px 8px; border-radius: 999px; background: var(--panel2); color: var(--accent); font-size: 0.78rem; font-weight: 700; }
+    .screen { display: grid; gap: 8px; padding: 12px; background: var(--panel2); border: 1px dashed var(--line); border-radius: 6px; }
+    .block { min-height: 34px; padding: 8px; border: 1px solid var(--line); border-radius: 5px; color: var(--muted); }
+    .primary { border-color: var(--selected); color: var(--text); }
+    .choice { display: grid; grid-template-columns: 22px 1fr; gap: 8px; align-items: center; }
+    .dot { width: 18px; height: 18px; border-radius: 999px; border: 2px solid var(--accent); }
+    .gate-strip { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; padding: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .gate-strip span { padding: 5px 8px; border-radius: 999px; background: var(--panel2); color: var(--muted); font-size: 0.78rem; }
+    @media (max-width: 880px) { main { width: min(100% - 20px, 1180px); padding-top: 12px; } .grid { grid-template-columns: 1fr; } .candidate { min-height: auto; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Layout Wireframe Candidates</h1>
+      <p>Low-fidelity dark-mode candidates for the next Episode 002 review surface. The selected implementation target is Candidate B.</p>
+    </header>
+    <section class="grid">      <article class="candidate" data-candidate="candidate_a_start_page_decision_board" data-status="runner_up">
+        <span class="tag">runner_up</span>
+        <h2>Candidate A: start page plus decision board</h2>
+        <p>Best introductory frame and low-friction first screen.</p>
+        <div class="screen"><div class="block primary">What this review is for</div>
+<div class="block">Do you have verified real input?</div>
+<div class="block">Choose: real input / YMM4 observation / hold</div>
+<div class="block">Evidence drawer</div></div>
+        <p>Still asks the user to compare choices side by side.</p>
+      </article>
+      <article class="candidate" data-candidate="candidate_b_guided_decision_flow" data-status="selected">
+        <span class="tag">selected</span>
+        <h2>Candidate B: guided decision flow</h2>
+        <p>Turns the review into a small sequence of situation checks and recommends one next action.</p>
+        <div class="screen"><div class="block primary">Start: What situation are you in?</div>
+<div class="block choice"><span class="dot"></span><span>1. Real source or transcript is available</span></div>
+<div class="block choice"><span class="dot"></span><span>2. YMM4 import observation is explicitly selected</span></div>
+<div class="block choice"><span class="dot"></span><span>3. Neither is true</span></div>
+<div class="block primary">Recommended next action</div>
+<div class="block">Source records and gates drawer</div></div>
+        <p>Needs careful copy so it feels like guidance, not automation deciding for the user.</p>
+      </article>
+      <article class="candidate" data-candidate="candidate_c_novice_command_center" data-status="rejected">
+        <span class="tag">rejected</span>
+        <h2>Candidate C: novice-friendly command center</h2>
+        <p>Preserves cockpit continuity and compact status visibility.</p>
+        <div class="screen"><div class="block primary">Decision status</div>
+<div class="block">Three compact action tiles</div>
+<div class="block">Evidence health row</div>
+<div class="block">Gate strip</div>
+<div class="block">Records drawer</div></div>
+        <p>Closest to the weak_pass prototype and most likely to keep project jargon on top.</p>
+      </article></section>
+    <section class="gate-strip" aria-label="closed boundaries"><span>dry_run</span>
+<span>sample_fixture_not_real</span>
+<span>no_real_transcript</span>
+<span>rights_boundary</span>
+<span>public_upload_closed</span>
+<span>yymm4_render_closed</span>
+<span>no_yymm4_import</span>
+<span>thumbnail_context_only</span>
+<span>validation_noise_nonblocking</span>
+<span>not_production_ready</span></section>
+  </main>
+</body>
+</html>

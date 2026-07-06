@@ -1,0 +1,117 @@
+{
+  "schema_version": "layout_decision_matrix.v1",
+  "artifact_id": "episode_002_review_layout_research_and_pattern_benchmark_v1",
+  "status": "ready",
+  "criteria": [
+    "usable_without_prior_project_knowledge",
+    "clear_first_action",
+    "low_text_density",
+    "durable_language",
+    "dark_mode_suitability",
+    "bounded_growth",
+    "supports_real_input_yymm4_hold",
+    "source_records_secondary",
+    "avoids_gate_overclaims"
+  ],
+  "pattern_benchmark": [
+    {
+      "pattern_id": "dashboard_status_board",
+      "label": "Dashboard / status board",
+      "novice_support_score": 3,
+      "action_clarity_score": 2,
+      "verdict": "Good for at-a-glance monitoring, weak for novice decision discovery."
+    },
+    {
+      "pattern_id": "start_page_service_entry",
+      "label": "Start page / service entry",
+      "novice_support_score": 5,
+      "action_clarity_score": 4,
+      "verdict": "Strong at explaining purpose and first action, but needs a decision mechanism."
+    },
+    {
+      "pattern_id": "task_list_checklist",
+      "label": "Task list / checklist",
+      "novice_support_score": 3,
+      "action_clarity_score": 3,
+      "verdict": "Useful for multi-step completion, but this slice is one decision with optional evidence."
+    },
+    {
+      "pattern_id": "command_center_cockpit",
+      "label": "Command center / cockpit",
+      "novice_support_score": 2,
+      "action_clarity_score": 3,
+      "verdict": "Power-user friendly but repeats the current weakness: internal state can dominate."
+    },
+    {
+      "pattern_id": "wizard_decision_flow",
+      "label": "Wizard / step-by-step decision flow",
+      "novice_support_score": 5,
+      "action_clarity_score": 5,
+      "verdict": "Best fit for helping a novice discover the correct next action while deferring evidence."
+    },
+    {
+      "pattern_id": "card_board_kanban",
+      "label": "Card board / kanban-like review surface",
+      "novice_support_score": 3,
+      "action_clarity_score": 3,
+      "verdict": "Scannable but risks making all options look equal and board-like."
+    }
+  ],
+  "candidate_wireframes": [
+    {
+      "candidate_id": "candidate_a_start_page_decision_board",
+      "label": "Candidate A: start page plus decision board",
+      "pattern_mix": [
+        "start_page_service_entry",
+        "card_board_kanban"
+      ],
+      "score": 34,
+      "status": "runner_up",
+      "strength": "Best introductory frame and low-friction first screen.",
+      "weakness": "Still asks the user to compare choices side by side."
+    },
+    {
+      "candidate_id": "candidate_b_guided_decision_flow",
+      "label": "Candidate B: guided decision flow",
+      "pattern_mix": [
+        "start_page_service_entry",
+        "wizard_decision_flow",
+        "progressive_records"
+      ],
+      "score": 41,
+      "status": "selected",
+      "strength": "Turns the review into a small sequence of situation checks and recommends one next action.",
+      "weakness": "Needs careful copy so it feels like guidance, not automation deciding for the user."
+    },
+    {
+      "candidate_id": "candidate_c_novice_command_center",
+      "label": "Candidate C: novice-friendly command center",
+      "pattern_mix": [
+        "command_center_cockpit",
+        "dashboard_status_board"
+      ],
+      "score": 27,
+      "status": "rejected",
+      "strength": "Preserves cockpit continuity and compact status visibility.",
+      "weakness": "Closest to the weak_pass prototype and most likely to keep project jargon on top."
+    }
+  ],
+  "selected_candidate_ids": [
+    "candidate_b_guided_decision_flow"
+  ],
+  "winning_candidate": "candidate_b_guided_decision_flow",
+  "evaluated_prototype_verdict": "weak_pass_evaluated_prototype",
+  "decision": "Implement a guided decision flow next; do not continue polishing the command-center cockpit pattern first.",
+  "boundary_flags": {
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "no_real_transcript": true,
+    "rights_boundary": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "no_yymm4_import": true,
+    "thumbnail_context_only": true,
+    "validation_noise_nonblocking": true,
+    "not_production_ready": true
+  }
+}
