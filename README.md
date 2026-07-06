@@ -99,8 +99,11 @@ python -m src.cli.main emit-packaging-brief-template --format json -o packaging_
 # Episode 002 local reviewer packet (no YMM4 launch/import/render)
 python -m src.cli.main build-surface-reviewer-packet --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_surface_alignment_repair_and_reviewer_packet_v1
 
-# Episode 002 focused dark review brief (primary human review surface)
+# Episode 002 focused dark review brief (prior source record)
 python -m src.cli.main build-focused-review-brief --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_focused_review_brief_dark_surface_v1
+
+# Episode 002 compact review cockpit (primary human review surface)
+python -m src.cli.main build-review-cockpit-compact --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_review_cockpit_compact_v1
 
 # CSV 生成
 python -m src.cli.main build-csv input.txt -o output.csv --speaker-map Host1=れいむ,Host2=まりさ

@@ -1,0 +1,31 @@
+{
+  "schema_version": "review_cockpit_layout_readback.v1",
+  "artifact_id": "episode_002_review_cockpit_compact_v1",
+  "output_dir": "production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact",
+  "layout_name": "compact_dark_review_cockpit",
+  "primary_sections": [
+    "header_strip",
+    "decision_card",
+    "next_action_row",
+    "surface_status_row",
+    "closed_gate_strip"
+  ],
+  "primary_section_count": 5,
+  "decision_card_count": 1,
+  "next_action_option_count": 3,
+  "surface_status_count": 3,
+  "visible_card_count": 7,
+  "detail_sections": [
+    "secondary_source_index",
+    "validation_and_limitations"
+  ],
+  "detail_section_count": 2,
+  "top_level_table_count": 0,
+  "temporary_note_count": 0,
+  "ledger_in_primary_body": false,
+  "source_record_display_zone": "secondary_details",
+  "bounded_viewport_strategy": "fixed primary rows with secondary disclosures",
+  "one_off_copy_status": "absent",
+  "layout_bloat_status": "bounded",
+  "primary_review_surface": "production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html"
+}

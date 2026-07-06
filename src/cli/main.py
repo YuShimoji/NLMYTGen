@@ -31,6 +31,7 @@ Usage:
     python -m src.cli.main build-surface-alignment-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-surface-reviewer-packet --package production_pilots/pkg [--alignment-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-focused-review-brief --package production_pilots/pkg [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
+    python -m src.cli.main build-review-cockpit-compact --package production_pilots/pkg [--focused-brief-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
@@ -2551,6 +2552,35 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_review_cockpit_compact = subparsers.add_parser(
+        "build-review-cockpit-compact",
+        help="Build a compact dark review cockpit from the focused brief and reviewer packet",
+    )
+    p_review_cockpit_compact.add_argument("--package", required=True, help="Episode package directory")
+    p_review_cockpit_compact.add_argument(
+        "--focused-brief-dir",
+        help="Input focused review brief directory (default: <package>/focused_review_brief)",
+    )
+    p_review_cockpit_compact.add_argument(
+        "--reviewer-packet-dir",
+        help="Input surface alignment review packet directory (default: <package>/surface_alignment_review_packet)",
+    )
+    p_review_cockpit_compact.add_argument(
+        "--output",
+        help="Output directory (default: <package>/review_cockpit_compact)",
+    )
+    p_review_cockpit_compact.add_argument(
+        "--artifact-id",
+        default="episode_002_review_cockpit_compact_v1",
+        help="Compact review cockpit artifact id",
+    )
+    p_review_cockpit_compact.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -2677,6 +2707,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_surface_reviewer_packet(args)
         elif args.command == "build-focused-review-brief":
             return _cmd_build_focused_review_brief(args)
+        elif args.command == "build-review-cockpit-compact":
+            return _cmd_build_review_cockpit_compact(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -4753,6 +4785,41 @@ def _cmd_build_focused_review_brief(args: argparse.Namespace) -> int:
         print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
         print(f"primary_human_review: {readback.get('primary_human_review')}")
         print(f"markdown_fallback: {readback.get('markdown_fallback')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_review_cockpit_compact(args: argparse.Namespace) -> int:
+    """Build a compact dark review cockpit from focused and source review records."""
+    from src.pipeline.review_cockpit_compact import build_review_cockpit_compact
+
+    readback = build_review_cockpit_compact(
+        package_dir=getattr(args, "package"),
+        focused_brief_dir=getattr(args, "focused_brief_dir", None),
+        reviewer_packet_dir=getattr(args, "reviewer_packet_dir", None),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"primary_decision: {readback.get('primary_decision')}")
+        print(f"decision_options: {readback.get('decision_options')}")
+        print(f"surface_status_count: {readback.get('surface_status_count')}")
+        print(f"primary_section_count: {readback.get('primary_section_count')}")
+        print(f"visible_card_count: {readback.get('visible_card_count')}")
+        print(f"layout_bloat_status: {readback.get('layout_bloat_status')}")
+        print(f"source_record_policy: {readback.get('source_record_policy')}")
+        print(f"external_dependency_status: {readback.get('external_dependency_status')}")
+        print(f"white_background_status: {readback.get('white_background_status')}")
+        print(f"temporary_review_copy_status: {readback.get('temporary_review_copy_status')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"markdown_fallback: {readback.get('markdown_fallback')}")
+        print(f"launcher_command: {readback.get('launcher_command')}")
         print(f"next_action: {readback.get('next_action')}")
     return 0
 

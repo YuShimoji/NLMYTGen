@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en" data-review-cockpit="true">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Episode 002 Review Cockpit</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+      --bg: #0a0f1c;
+      --panel: #121a27;
+      --panel-2: #182235;
+      --panel-3: #0f1724;
+      --text: #e6edf6;
+      --muted: #a7b5c8;
+      --line: #33445f;
+      --accent: #2dd4bf;
+      --action: #93c5fd;
+      --warn: #f5c542;
+      --closed: #fb7185;
+      --ok: #86efac;
+      --shadow: 0 18px 46px rgba(0, 0, 0, 0.32);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #edf4f8;
+        --panel: #f7fafc;
+        --panel-2: #e8eef5;
+        --panel-3: #dde6ef;
+        --text: #182235;
+        --muted: #475569;
+        --line: #bfd0df;
+        --accent: #0f766e;
+        --action: #1d4ed8;
+        --warn: #8a5a00;
+        --closed: #be123c;
+        --ok: #166534;
+        --shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, var(--bg), #111827 68%);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 20px 0 28px;
+    }
+    .header-strip {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding: 12px 14px;
+      background: var(--panel-3);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .header-strip h1 {
+      margin: 0;
+      font-size: clamp(1.2rem, 2.1vw, 1.85rem);
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+    .header-strip p { margin: 4px 0 0; color: var(--muted); }
+    .header-meta { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+    .decision-card {
+      margin-top: 14px;
+      padding: 18px;
+      background: var(--panel);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 0.96rem;
+      letter-spacing: 0;
+    }
+    .decision-card h2 {
+      font-size: clamp(1.25rem, 2.6vw, 2rem);
+      line-height: 1.12;
+    }
+    .question {
+      margin: 0;
+      font-size: 1.04rem;
+      line-height: 1.48;
+      color: var(--text);
+    }
+    .context {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .row {
+      margin-top: 14px;
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .card {
+      min-height: 154px;
+      padding: 14px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .card p { margin: 7px 0 0; color: var(--muted); line-height: 1.45; font-size: 0.92rem; }
+    .status {
+      display: inline-flex;
+      margin-bottom: 10px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--panel-2);
+      color: var(--action);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .surface .status { color: var(--ok); }
+    .gate-strip {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px;
+      background: var(--panel-3);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .chip {
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.79rem;
+    }
+    details {
+      margin-top: 12px;
+      padding: 12px 14px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    summary { cursor: pointer; font-weight: 700; }
+    ul.compact { margin: 10px 0 0; padding-left: 20px; color: var(--muted); line-height: 1.5; }
+    ul.records, ul.metrics { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
+    ul.records li, ul.metrics li {
+      display: grid;
+      gap: 4px;
+      padding: 9px 10px;
+      background: var(--panel-2);
+      border-radius: 6px;
+      border: 1px solid var(--line);
+    }
+    ul.metrics li { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+    code { color: var(--accent); overflow-wrap: anywhere; }
+    @media (max-width: 860px) {
+      main { width: min(100% - 20px, 1180px); padding-top: 10px; }
+      .header-strip { grid-template-columns: 1fr; }
+      .header-meta { justify-content: flex-start; }
+      .row { grid-template-columns: 1fr; }
+      .card { min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="header-strip" data-section="header-strip">
+      <div>
+        <h1>Episode 002 Review Cockpit</h1>
+        <p>Episode 002 has aligned local evidence across GUI, import preview, and thumbnail proof; it remains dry-run and sample-backed.</p>
+      </div>
+      <div class="header-meta">
+        <span class="pill">dry_run</span>
+        <span class="pill">sample_fixture_not_real</span>
+        <span class="pill">gates_closed</span>
+      </div>
+    </header>
+
+    <article class="decision-card" data-section="decision-card">
+      <p class="eyebrow">Primary decision</p>
+      <h2>Select the next episode 002 review path.</h2>
+      <p class="question">Which next path should episode 002 take after this local dry-run review?</p>
+      <p class="context">Choose real_input_replacement if verified local source/transcript material exists; otherwise hold unless YMM4 observation is explicitly selected.</p>
+    </article>
+
+    <section data-section="next-action-row">
+      <h2>Next Action Row</h2>
+      <div class="row">        <article class="card">
+          <span class="status">advisory_deferred</span>
+          <h2>Real input replacement</h2>
+          <p><strong>Use when:</strong> Verified local real source/transcript material is available.</p>
+          <p><strong>Effect:</strong> Moves from sample fixture to production-relevant content without YMM4 or publication gates.</p>
+          <p><strong>Requires:</strong> Human-approved local transcript/source provenance.</p>
+        </article>
+        <article class="card">
+          <span class="status">blocked_by_true_gate</span>
+          <h2>YMM4 observation without render</h2>
+          <p><strong>Use when:</strong> Human explicitly chooses to inspect import behavior.</p>
+          <p><strong>Effect:</strong> Observes CSV/VoiceItem/timing behavior only; no render or production .ymmp claim.</p>
+          <p><strong>Requires:</strong> Explicit human decision to launch/import in YMM4.</p>
+        </article>
+        <article class="card">
+          <span class="status">safe_hold</span>
+          <h2>Hold / review later</h2>
+          <p><strong>Use when:</strong> The brief is insufficient, input is unavailable, or no YMM4 gate is selected.</p>
+          <p><strong>Effect:</strong> Keeps the current local/offline reviewer packet as the record.</p>
+          <p><strong>Requires:</strong> No new action.</p>
+        </article></div>
+    </section>
+
+    <section data-section="surface-status-row">
+      <h2>Three-Surface Status Row</h2>
+      <div class="row">        <article class="card surface">
+          <span class="status">ready</span>
+          <h2>GUI dashboard panel</h2>
+          <p>GUI dashboard panel is aligned as local review evidence.</p>
+          <p><code>production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/dashboard_panel_preview.html</code></p>
+        </article>
+        <article class="card surface">
+          <span class="status">ready</span>
+          <h2>YMM4 import preview pack</h2>
+          <p>Import preview is reviewable without a YMM4 import or render.</p>
+          <p><code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_preview_panel.md</code></p>
+        </article>
+        <article class="card surface">
+          <span class="status">ready</span>
+          <h2>Thumbnail visual proof pack</h2>
+          <p>Thumbnail proof is context and not final thumbnail approval.</p>
+          <p><code>production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_visual_proof.html</code></p>
+        </article></div>
+    </section>
+
+    <section class="gate-strip" data-section="gate-strip"><span class="chip">dry_run</span>
+<span class="chip">sample_fixture_not_real</span>
+<span class="chip">no_real_transcript</span>
+<span class="chip">rights_boundary</span>
+<span class="chip">public_upload_closed</span>
+<span class="chip">yymm4_render_closed</span>
+<span class="chip">no_yymm4_import</span>
+<span class="chip">thumbnail_context_only</span>
+<span class="chip">validation_noise_nonblocking</span>
+<span class="chip">not_production_ready</span></section>
+
+    <details data-section="secondary-source-index">
+      <summary>Secondary Source Records</summary>
+      <ul class="records"><li><span>Aligned review story</span><code>production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/aligned_review_story.md</code></li>
+<li><span>Focused review HTML</span><code>production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief/focused_review_brief.html</code></li>
+<li><span>Focused review Markdown</span><code>production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief/focused_review_brief.md</code></li>
+<li><span>Focused review validation</span><code>production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief/validation_readback.json</code></li>
+<li><span>Reviewer packet validation</span><code>production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/validation_readback.json</code></li>
+<li><span>Remaining mismatch ledger</span><code>production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/remaining_mismatch_ledger.json</code></li>
+<li><span>GUI dashboard validation</span><code>production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/validation_readback.json</code></li>
+<li><span>Import preview validation</span><code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/validation_readback.json</code></li>
+<li><span>Thumbnail proof readback</span><code>production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/readback.json</code></li></ul>
+    </details>
+
+    <details data-section="validation-limitations">
+      <summary>Validation And Closed Claims</summary>
+      <ul class="metrics"><li><span>Primary sections</span><strong>5</strong></li>
+<li><span>Visible cards</span><strong>7</strong></li>
+<li><span>Detail sections</span><strong>2</strong></li>
+<li><span>Layout status</span><strong>bounded</strong></li></ul>
+      <ul class="compact"><li>production readiness</li>
+<li>real transcript availability</li>
+<li>YMM4 import or render</li>
+<li>final thumbnail approval</li>
+<li>rights or public-ready acceptance</li>
+<li>YouTube upload or visibility change</li></ul>
+    </details>
+  </main>
+</body>
+</html>

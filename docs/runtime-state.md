@@ -1,5 +1,43 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 compact review cockpit completed (2026-07-07 JST)**:
+  `episode-002-review-cockpit-compact-v1` builds the current primary local
+  review cockpit over the accepted focused review brief and surface alignment
+  reviewer packet. Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/`.
+  Primary human review is `review_cockpit.html`; Markdown fallback is
+  `review_cockpit.md`; primary machine readback is `validation_readback.json`;
+  state is `cockpit_state.json`; bounded layout readback is
+  `cockpit_layout_readback.json`; source/detail index is
+  `detail_source_index.json`. Regeneration command:
+  `python -m src.cli.main build-review-cockpit-compact --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_review_cockpit_compact_v1`.
+  Source records are secondary records: `focused_review_brief/focused_review_brief.html`
+  and `surface_alignment_review_packet/aligned_review_story.md` remain preserved
+  inputs, not the current primary review surface. The cockpit keeps a bounded
+  top-level shape: header strip, one primary decision card, three next-action
+  choices, three surface status cards, one closed-gate strip, and two secondary
+  details sections. Layout readback is `primary_section_count=5`,
+  `visible_card_count=7`, `detail_section_count=2`, `top_level_table_count=0`,
+  `temporary_note_count=0`, and `ledger_in_primary_body=false`. It preserves
+  `dry_run`, `sample_fixture_not_real`, `no_real_transcript`,
+  `rights_boundary`, `public_upload_closed`, `yymm4_render_closed`,
+  `no_yymm4_import`, `thumbnail_context_only`,
+  `validation_noise_nonblocking`, and `not_production_ready`. Targeted tests
+  pass (`uv run pytest tests/test_review_cockpit_compact.py tests/test_focused_review_brief.py -q`
+  -> 8 passed), and the generated readback passes with no external refs, no
+  pure-white background markers, no forbidden true completion claims, no
+  temporary review copy phrases, and first-party dark CSS with
+  `color-scheme: dark light` plus `prefers-color-scheme`. Full pytest was not
+  run. Access verification is `verified_present`; user-opened visual acceptance
+  is still pending. No creative asset changes, real transcript rerun/source
+  replacement, YMM4 GUI launch/import/render, production `.ymmp`, final
+  thumbnail approval, live fetch/scraping, external media download,
+  OAuth/API key/payment, rights/legal/public-ready acceptance, YouTube upload,
+  destructive git, cross-repo edit, broad fixture regeneration, or full-suite
+  green campaign occurred. Next user action is to open `review_cockpit.html`
+  and choose real input replacement, YMM4 import observation without render, or
+  hold.
+
 - **Episode 002 focused review brief completed (2026-07-07 JST)**:
   `episode-002-focused-review-brief-dark-surface-v1` builds a concise
   decision-first, dark-mode-compatible local HTML review brief over the

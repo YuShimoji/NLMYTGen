@@ -16,7 +16,8 @@ surface. It is not a production gate, a prompt, or a source of product rules.
 | Episode 002 thumbnail visual proof pack | ready_context | `production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/` | static/local SVG+HTML proof; contextual only for import preview; not production thumbnail approval |
 | Episode 002 surface alignment pack | ready | `production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_pack/` | local/offline cross-surface review story; no YMM4 or production gates crossed |
 | Episode 002 surface alignment reviewer packet | source_record | `production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/` | source record; label/next-action drift repaired at packet readback level; source surfaces unchanged |
-| Episode 002 focused review brief | ready | `production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief/focused_review_brief.html` | primary human review surface; decision-first dark-mode HTML with Markdown fallback |
+| Episode 002 focused review brief | source_record | `production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief/focused_review_brief.html` | prior focused surface; preserved as secondary source record |
+| Episode 002 compact review cockpit | ready | `production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html` | primary human review cockpit; bounded dark HTML with state/layout readbacks |
 | Validation drift triage | nonblocking | `docs/verification/VALIDATION_DRIFT_VELOCITY_RECOVERY_V1_2026-07-06.md` | full-suite drift is classified; product work can continue |
 | Real transcript replacement | blocked_by_real_input | `production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input/` | requires verified local transcript input |
 
@@ -31,24 +32,28 @@ surface. It is not a production gate, a prompt, or a source of product rules.
 - thumbnail_visual_proof_002: `[######-]` 3 static SVG variants plus HTML/contact sheet generated and validated.
 - surface_alignment_002: `[######-]` GUI/import/thumbnail surfaces aligned into one review story; stale next-action labels recorded.
 - surface_reviewer_packet_002: `[#####--]` prior 8 drift rows classified as 5 resolved and 3 accepted_nonblocking; now a source record for the focused brief.
-- focused_review_brief_002: `[######-]` dark-mode decision-first HTML/Markdown review surface generated and validated.
+- focused_review_brief_002: `[#####--]` prior dark-mode decision-first surface preserved as a source record.
+- review_cockpit_compact_002: `[######-]` compact bounded dark review cockpit generated and validated as the current primary review surface.
 - validation_drift_triage: `[#####--]` current drift classified as nonblocking for episode 002 product work.
 - real_transcript_input: `[#------]` drop-zone exists, real input absent.
 
 ## Product Return Path
 
-Completed/current slice: episode 002 focused review brief. The active human
-review surface is now `focused_review_brief/focused_review_brief.html`; the
-older `surface_alignment_review_packet/aligned_review_story.md` remains a
-source record. The focused brief compresses the current GUI/import/thumbnail
-state into one decision card, a three-line summary, three next-action cards,
-three evidence cards, one gate strip, and secondary detail disclosure. Proposed
+Completed/current slice: episode 002 compact review cockpit. The active human
+review surface is now `review_cockpit_compact/review_cockpit.html`; the older
+`focused_review_brief/focused_review_brief.html` and
+`surface_alignment_review_packet/aligned_review_story.md` remain secondary
+source records. The cockpit compresses the current GUI/import/thumbnail state
+into a header strip, one primary decision card, three next-action choices,
+three surface status cards, one closed-gate strip, and secondary details. Its
+layout readback is bounded at 5 primary sections, 7 visible cards, 2 detail
+sections, no top-level tables, and no ledger in the primary body. Proposed
 next T+1 after human review is verified local real topic/source/transcript
 replacement; actual YMM4 import observation without render/public claims is an
 alternate later lane only if that gate is explicitly selected. The validation
 drift is currently classified as older newsroom generated-artifact noise,
 host/path drift, stale metadata, and fixture snapshot drift rather than a
-blocker for the episode 002 focused-review line.
+blocker for the episode 002 review-cockpit line.
 
 ## Regeneration
 
@@ -60,18 +65,19 @@ python -m src.cli.main build-thumbnail-visual-proof-pack --package production_pi
 python -m src.cli.main build-surface-alignment-pack --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_surface_alignment_across_gui_import_thumbnail_v1
 python -m src.cli.main build-surface-reviewer-packet --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_surface_alignment_repair_and_reviewer_packet_v1
 python -m src.cli.main build-focused-review-brief --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_focused_review_brief_dark_surface_v1
+python -m src.cli.main build-review-cockpit-compact --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_review_cockpit_compact_v1
 ```
 
 Primary machine readback:
 
 ```text
-production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief/validation_readback.json
+production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/validation_readback.json
 ```
 
 Primary human review file:
 
 ```text
-production_pilots/yukkuri_newsroom_content_spine_002/focused_review_brief/focused_review_brief.html
+production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html
 ```
 
 ## Closed Gates
