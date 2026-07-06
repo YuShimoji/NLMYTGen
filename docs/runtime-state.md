@@ -1,5 +1,19 @@
 # Runtime State — NLMYTGen
 
+- **Remote handoff snapshot refreshed for content spine 002 transcript readiness (2026-07-06)**:
+  Current branch context is
+  `codex/content-spine-002-transcript-substitution-readiness-v1`. The
+  implementation slice immediately before this docs handoff was
+  `c6a9f94 feat: add content spine 002 transcript readiness`, with upstream
+  parity `0 0` before the handoff note. The durable restart packet is recorded
+  in `docs/project-context.md` under
+  `HANDOFF SNAPSHOT (2026-07-06 Content spine 002 transcript readiness remote handoff)`.
+  After pulling latest on that branch, restart by reading `AGENTS.md`,
+  `docs/REPO_LOCAL_RULES.md`, this file, then the handoff snapshot. The next
+  safe action remains review of the transcript readiness artifacts followed by
+  replacing the sample fixture with a reviewed real local transcript; dashboard,
+  YMM4 import/render, rights, production, and public work stay closed until
+  that real input exists.
 - **Content spine 002 transcript substitution readiness v1 generated (2026-07-06)**:
   `build-transcript-substitution` now consumes
   `production_pilots/yukkuri_newsroom_content_spine_002/` and its current

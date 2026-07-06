@@ -1025,6 +1025,21 @@ FEATURE_REGISTRY.md に統合済み。機能候補は FEATURE_REGISTRY で管理
 
 ---
 
+## HANDOFF SNAPSHOT (2026-07-06 Content spine 002 transcript readiness remote handoff)
+
+- Branch / remote state before this docs handoff: `codex/content-spine-002-transcript-substitution-readiness-v1` at `c6a9f94 feat: add content spine 002 transcript readiness`, tracking `origin/codex/content-spine-002-transcript-substitution-readiness-v1`; after `git fetch --all --prune`, `HEAD...@{u}=0 0` and the tracked working tree was clean.
+- Restart from another terminal: `cd "C:\Users\thank\Storage\Media Contents Projects\NLMYTGen"`, `git fetch --all --prune`, `git switch codex/content-spine-002-transcript-substitution-readiness-v1`, `git pull --ff-only`, then confirm `git rev-list --left-right --count "HEAD...@{u}"` returns `0 0`.
+- Read order after pulling remains `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`; then read this snapshot and `production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/validation_readback.json`.
+- Closed implementation slice: `build-transcript-substitution` generates the second episode local/offline transcript substitution readiness package at `production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/`, consuming `production_pilots/yukkuri_newsroom_content_spine_002/` and its current `ir_bridge/` outputs.
+- Current readback: `validation_readback.json` is `status=passed`, `artifact_id=content_spine_002_transcript_substitution_readiness_001`, `selected_candidate_id=factory_seed_dry_run_002`, `source_mode=sample_fixture_generated`, `transcript_status=sample_fixture_not_real`, `regenerated_csv_rows=9`, all required/support files present, generated outputs indexed, source and transcript boundaries preserved, no external references, and no forbidden completion claims.
+- First review files: `source_context_reference.json`, `transcript_source_probe.json`, `regenerated_writer_ir_candidate.json`, `regenerated_draft_yymm4.csv`, `review_checklist.md`, and `limitations.md` under the transcript readiness package.
+- Regeneration route: use `build-transcript-substitution` with the content spine package and current IR bridge; for the next real move, place a reviewed local transcript in `transcript_substitution_readiness/real_input/` or rerun with `--transcript`, then review the regenerated Writer IR and draft YMM4 CSV before any validate/apply/import work.
+- Last slice verification recorded before this handoff: `uv run python -m py_compile src/pipeline/transcript_substitution.py tests/test_transcript_substitution.py` passed; `uv run pytest tests/test_transcript_substitution.py` passed with 7 tests; `uv run pytest tests/test_transcript_substitution.py tests/test_content_ir_bridge.py` passed with 13 tests; the generation CLI wrote 9 CSV rows; `git diff --check` and cached diff check passed. Full `uv run pytest` had 719 passed / 25 skipped plus 2 pre-existing unrelated Baseball hash mismatch failures, so do not treat Baseball as the active blocker for this branch.
+- Boundaries preserved: no real transcript, no NotebookLM/API fetch, no YMM4 GUI/import/render proof, no production `.ymmp`, no external media, no OAuth/payment action, no rights/legal/public-ready acceptance, and no YouTube/public publication.
+- Current next move: human or assistant review of the readiness package, then substitution with a real reviewed local transcript. Do not proceed to dashboard, YMM4 import preview, render, production, rights, or public work until that real transcript is present and the regenerated readback passes.
+
+---
+
 ## HANDOFF SNAPSHOT (2026-06-18 Baseball BN-05 asset resolution)
 
 - Branch / remote state: Baseball sidequest branch `codex/baseball-bn02-visual-data`; this snapshot is not a mainline `master` next-action change.
