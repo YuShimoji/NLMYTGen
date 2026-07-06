@@ -1,0 +1,490 @@
+{
+  "schema_version": "gui_dashboard_panel_data.v1",
+  "artifact_id": "content_spine_002_gui_dashboard_panel_v1",
+  "selected_candidate_id": "factory_seed_dry_run_002",
+  "headline_status": "sample fixture visible; validation drift nonblocking",
+  "boundary_status": {
+    "source_status": "offline_fixture_not_live",
+    "transcript_status": "sample_fixture_not_real",
+    "timing_status": "no_audio_or_yymm4_timing",
+    "audio_status": "no_audio_generated_or_imported",
+    "rights_status": "sample_only_no_publication",
+    "production_status": "blocked_until_transcript_timing_and_human_review",
+    "public_upload_status": "blocked_by_true_gate",
+    "yymm4_import_status": "blocked_by_true_gate",
+    "ymm4_render_status": "blocked_by_true_gate"
+  },
+  "boundary_flags": {
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "no_real_transcript": true,
+    "rights_boundary": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "no_yymm4_import": true
+  },
+  "status_groups": {
+    "ready": [
+      "dashboard_ingest",
+      "project_cockpit",
+      "project_pipeline_mermaid"
+    ],
+    "sample_fixture_not_real": [
+      "transcript_substitution_002"
+    ],
+    "draft_offline": [
+      "content_spine_002",
+      "ir_bridge_002",
+      "writer_ir",
+      "cue_packet",
+      "draft_yymm4_csv"
+    ],
+    "blocked_by_real_input": [
+      "real_transcript_input"
+    ],
+    "deferred": [
+      "yymm4_import_preview",
+      "thumbnail_visual_proof"
+    ]
+  },
+  "capability_rows": [
+    {
+      "glyph": "[DRAFT]",
+      "capability_id": "content_spine_002",
+      "label": "Content spine package",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/MANIFEST.json",
+      "exists": true,
+      "source_schema": "content_spine_manifest.v1",
+      "note": "offline content/package is reviewable; source remains local fixture"
+    },
+    {
+      "glyph": "[DRAFT]",
+      "capability_id": "ir_bridge_002",
+      "label": "IR/CSV bridge",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/bridge_manifest.json",
+      "exists": true,
+      "source_schema": "content_ir_bridge_manifest.v1",
+      "note": "draft Writer IR, cue packet, and CSV bridge exist; not production timing"
+    },
+    {
+      "glyph": "[SAMPLE]",
+      "capability_id": "transcript_substitution_002",
+      "label": "Transcript substitution readiness",
+      "state": "sample_fixture_not_real",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/substitution_manifest.json",
+      "exists": true,
+      "source_schema": "transcript_substitution_manifest.v1",
+      "note": "sample fixture is used until a real transcript is supplied"
+    },
+    {
+      "glyph": "[DRAFT]",
+      "capability_id": "writer_ir",
+      "label": "Regenerated Writer IR candidate",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_writer_ir_candidate.json",
+      "exists": true,
+      "source_schema": null,
+      "note": "candidate only; validate-ir/apply-production inputs are not accepted"
+    },
+    {
+      "glyph": "[DRAFT]",
+      "capability_id": "cue_packet",
+      "label": "Regenerated cue packet candidate",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_cue_packet_candidate.json",
+      "exists": true,
+      "source_schema": null,
+      "note": "candidate not sent to external LLM or production operator"
+    },
+    {
+      "glyph": "[DRAFT]",
+      "capability_id": "draft_yymm4_csv",
+      "label": "Regenerated draft YMM4 CSV",
+      "state": "draft_offline",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+      "exists": true,
+      "source_schema": null,
+      "note": "CSV preview only; no YMM4 import, VoiceItem timing, or render proof"
+    },
+    {
+      "glyph": "[INPUT]",
+      "capability_id": "real_transcript_input",
+      "label": "Real transcript input",
+      "state": "blocked_by_real_input",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input",
+      "exists": true,
+      "source_schema": null,
+      "note": "drop a real NotebookLM/human-reviewed transcript here for a future replacement slice"
+    },
+    {
+      "glyph": "[OK]",
+      "capability_id": "dashboard_ingest",
+      "label": "Dashboard readiness ingest",
+      "state": "ready",
+      "review_ready": true,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/dashboard_readiness_ingest",
+      "exists": true,
+      "source_schema": "dashboard_readiness_ingest_manifest.v1",
+      "note": "read-only status package generated for local review and later GUI adapter work"
+    },
+    {
+      "glyph": "[OK]",
+      "capability_id": "project_cockpit",
+      "label": "Project Cockpit",
+      "state": "ready",
+      "review_ready": true,
+      "repo_relative_path": "docs/PROJECT_COCKPIT.md",
+      "exists": true,
+      "source_schema": null,
+      "note": "navigation doc; not a production gate"
+    },
+    {
+      "glyph": "[OK]",
+      "capability_id": "project_pipeline_mermaid",
+      "label": "Project Pipeline Mermaid",
+      "state": "ready",
+      "review_ready": true,
+      "repo_relative_path": "docs/PROJECT_PIPELINE.mmd",
+      "exists": true,
+      "source_schema": null,
+      "note": "navigation diagram; dashboard node should be visible"
+    },
+    {
+      "glyph": "[WAIT]",
+      "capability_id": "yymm4_import_preview",
+      "label": "YMM4 import preview",
+      "state": "deferred",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/yymm4_import_preview",
+      "exists": false,
+      "source_schema": null,
+      "note": "future slice; no YMM4 GUI/import/render in this ingest"
+    },
+    {
+      "glyph": "[WAIT]",
+      "capability_id": "thumbnail_visual_proof",
+      "label": "Thumbnail visual proof",
+      "state": "deferred",
+      "review_ready": false,
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof",
+      "exists": false,
+      "source_schema": null,
+      "note": "future slice; no thumbnail image generation or public-ready proof"
+    },
+    {
+      "glyph": "[NOISE]",
+      "capability_id": "validation_noise",
+      "label": "Validation drift",
+      "state": "validation_noise_nonblocking",
+      "review_ready": true,
+      "repo_relative_path": "samples/_probe/newsroom_handoff/validation_drift_velocity_recovery_v1.json",
+      "exists": true,
+      "source_schema": "validation_drift_velocity_recovery.v1",
+      "note": "Known full-suite drift is classified as nonblocking for this GUI dashboard panel slice."
+    }
+  ],
+  "visual_bars": [
+    {
+      "capability_id": "content_spine_002",
+      "label": "Content spine 002",
+      "state": "draft_offline",
+      "done_units": 5,
+      "total_units": 7,
+      "bar": "[#####--]"
+    },
+    {
+      "capability_id": "ir_bridge_002",
+      "label": "IR/CSV bridge 002",
+      "state": "draft_offline",
+      "done_units": 5,
+      "total_units": 7,
+      "bar": "[#####--]"
+    },
+    {
+      "capability_id": "transcript_substitution_002",
+      "label": "Transcript substitution 002",
+      "state": "sample_fixture_not_real",
+      "done_units": 4,
+      "total_units": 7,
+      "bar": "[####---]"
+    },
+    {
+      "capability_id": "dashboard_ingest",
+      "label": "Dashboard ingest",
+      "state": "ready",
+      "done_units": 6,
+      "total_units": 7,
+      "bar": "[######-]"
+    },
+    {
+      "capability_id": "real_transcript_input",
+      "label": "Real transcript",
+      "state": "blocked_by_real_input",
+      "done_units": 1,
+      "total_units": 7,
+      "bar": "[#------]"
+    },
+    {
+      "capability_id": "yymm4_import_preview",
+      "label": "YMM4 import preview",
+      "state": "deferred",
+      "done_units": 0,
+      "total_units": 7,
+      "bar": "[-------]"
+    },
+    {
+      "capability_id": "thumbnail_visual_proof",
+      "label": "Thumbnail proof",
+      "state": "deferred",
+      "done_units": 0,
+      "total_units": 7,
+      "bar": "[-------]"
+    }
+  ],
+  "bar_mode": "hypothesis",
+  "source_artifacts": [
+    {
+      "id": "content_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/MANIFEST.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_manifest.v1"
+    },
+    {
+      "id": "content_dry_run_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/content_spine_dry_run_manifest.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "factory_seed_content_spine_manifest.v1"
+    },
+    {
+      "id": "content_dashboard",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/dashboard_status.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_dashboard_status.v1"
+    },
+    {
+      "id": "content_readback",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/content_spine_readback.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_readback.v1"
+    },
+    {
+      "id": "content_source_seed_reference",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/source_seed_reference.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "factory_seed_content_spine_source_reference.v1"
+    },
+    {
+      "id": "content_source_artifact_index",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/source_artifact_index.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "factory_seed_content_spine_source_artifact_index.v1"
+    },
+    {
+      "id": "ir_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/bridge_manifest.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_ir_bridge_manifest.v1"
+    },
+    {
+      "id": "ir_episode_bridge",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/episode_bridge.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_episode_bridge.v1"
+    },
+    {
+      "id": "ir_writer_ir",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/writer_ir_candidate.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_writer_ir_candidate.v1"
+    },
+    {
+      "id": "ir_cue_packet",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/cue_packet_candidate.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "ir_draft_csv",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/draft_yymm4.csv",
+      "exists": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "ir_readback",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/validation_readback.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_ir_bridge_readback.v1"
+    },
+    {
+      "id": "transcript_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/substitution_manifest.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "transcript_substitution_manifest.v1"
+    },
+    {
+      "id": "transcript_probe",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/transcript_source_probe.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "transcript_source_probe.v1"
+    },
+    {
+      "id": "transcript_episode_bridge",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_episode_bridge.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_episode_bridge.v1"
+    },
+    {
+      "id": "transcript_writer_ir",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_writer_ir_candidate.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "content_spine_writer_ir_candidate.v1"
+    },
+    {
+      "id": "transcript_cue_packet",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_cue_packet_candidate.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "transcript_draft_csv",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+      "exists": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "transcript_readback",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/validation_readback.json",
+      "exists": true,
+      "state": "ready",
+      "schema_version": "transcript_substitution_readback.v1"
+    },
+    {
+      "id": "project_cockpit",
+      "repo_relative_path": "docs/PROJECT_COCKPIT.md",
+      "exists": true,
+      "state": "ready",
+      "schema_version": null
+    },
+    {
+      "id": "project_pipeline",
+      "repo_relative_path": "docs/PROJECT_PIPELINE.mmd",
+      "exists": true,
+      "state": "ready",
+      "schema_version": null
+    }
+  ],
+  "source_artifact_counts": {
+    "total": 21,
+    "present": 21,
+    "missing": 0
+  },
+  "pipeline_route": [
+    {
+      "node": "offline_topic_candidates",
+      "state": "draft_offline"
+    },
+    {
+      "node": "content_spine_002",
+      "state": "draft_offline"
+    },
+    {
+      "node": "ir_bridge_002",
+      "state": "draft_offline"
+    },
+    {
+      "node": "transcript_substitution_002",
+      "state": "sample_fixture_not_real"
+    },
+    {
+      "node": "dashboard_readiness_ingest",
+      "state": "ready"
+    },
+    {
+      "node": "real_transcript_rerun",
+      "state": "blocked_by_real_input"
+    },
+    {
+      "node": "yymm4_import_preview",
+      "state": "deferred"
+    },
+    {
+      "node": "thumbnail_visual_proof",
+      "state": "deferred"
+    }
+  ],
+  "roadmap_delta": {
+    "previous_t_plus_1": "transcript_substitution_readiness",
+    "completed_current": "dashboard_readiness_ingest",
+    "new_t_plus_1_proposal": "real_transcript_rerun",
+    "reordered_or_deferred": [
+      "YMM4 import preview remains after real transcript review",
+      "thumbnail visual proof remains after source/rights and visual direction review"
+    ],
+    "reason": "dashboard ingest makes current pilot state readable before crossing real-input and YMM4 gates"
+  },
+  "closed_gates": [
+    "YouTube upload/publication/visibility change",
+    "OAuth/API keys/payment",
+    "rights/legal/public-ready acceptance",
+    "live scraping/media download",
+    "external image/media download or embedded copyrighted media",
+    "YMM4 GUI launch/import/render",
+    "cross-repo or destructive git"
+  ],
+  "seed_origin": {
+    "content_spine_artifact_id": "yukkuri_newsroom_content_spine_002_dry_run",
+    "source_seed_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_001\\factory_seed_dry_run_002",
+    "source_seed_package_present": false,
+    "derived_from_seed_instantiation_artifact_id": "factory_seed_instantiation_dry_run_002",
+    "manual_copy_of_original_pilot": false,
+    "inherited_template_defaults_present": true,
+    "required_real_inputs_present": true
+  },
+  "input_reality": {
+    "source_fixture_status": "offline_fixture_not_live",
+    "source_rights_status": "sample_only_no_publication",
+    "sample_fixture_used": true,
+    "real_transcript_found_for_current_package": false,
+    "selected_transcript_path": "production_pilots\\yukkuri_newsroom_content_spine_002\\transcript_substitution_readiness\\sample_inputs\\notebooklm_like_sample.txt"
+  },
+  "validation_noise": {
+    "status": "validation_noise_nonblocking",
+    "ledger_path": "samples/_probe/newsroom_handoff/validation_drift_velocity_recovery_v1.json",
+    "exists": true,
+    "safe_to_continue_product_work": true,
+    "preferred_next_slice": "episode 002 GUI dashboard panel",
+    "full_pytest_policy": "not rerun in this slice",
+    "recent_full_pytest_result": "22 failed, 1173 passed, 28 skipped",
+    "targeted_product_recheck": "4 passed",
+    "blocking_for_this_slice": false,
+    "note": "Known full-suite drift is classified as nonblocking for this GUI dashboard panel slice."
+  },
+  "next_action": "Open dashboard_panel_preview.html for GUI review, then use the confirmed status surface to prepare the episode 002 YMM4 import preview pack without launching, importing, or rendering in YMM4."
+}

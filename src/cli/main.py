@@ -25,6 +25,7 @@ Usage:
     python -m src.cli.main episode-run-handoff --episode-id ID [--root DIR] [--format text|json]
     python -m src.cli.main build-session-manifest --video-id ID [artifact paths...] [--format markdown|json] [-o path]
     python -m src.cli.main build-dashboard-readiness-ingest --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
+    python -m src.cli.main build-gui-dashboard-panel --package production_pilots/pkg [--ingest-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
@@ -2416,6 +2417,25 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_gui_dashboard_panel = subparsers.add_parser(
+        "build-gui-dashboard-panel",
+        help="Build a read-only static GUI panel from dashboard readiness ingest data",
+    )
+    p_gui_dashboard_panel.add_argument("--package", required=True, help="Episode package directory")
+    p_gui_dashboard_panel.add_argument("--ingest-dir", help="Input dashboard readiness ingest directory")
+    p_gui_dashboard_panel.add_argument("--output", help="Output directory (default: <package>/gui_dashboard_panel)")
+    p_gui_dashboard_panel.add_argument(
+        "--artifact-id",
+        default="content_spine_002_gui_dashboard_panel_v1",
+        help="GUI dashboard panel artifact id",
+    )
+    p_gui_dashboard_panel.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -2530,6 +2550,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_session_manifest(args)
         elif args.command == "build-dashboard-readiness-ingest":
             return _cmd_build_dashboard_readiness_ingest(args)
+        elif args.command == "build-gui-dashboard-panel":
+            return _cmd_build_gui_dashboard_panel(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -4433,6 +4455,32 @@ def _cmd_build_dashboard_readiness_ingest(args: argparse.Namespace) -> int:
         print(f"transcript_status: {readback.get('transcript_status')}")
         print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
         print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_gui_dashboard_panel(args: argparse.Namespace) -> int:
+    """Build a read-only static GUI dashboard panel package."""
+    from src.pipeline.gui_dashboard_panel import build_gui_dashboard_panel_package
+
+    readback = build_gui_dashboard_panel_package(
+        package_dir=getattr(args, "package"),
+        ingest_dir=getattr(args, "ingest_dir", None),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"selected_candidate_id: {readback.get('selected_candidate_id')}")
+        print(f"transcript_status: {readback.get('transcript_status')}")
+        print(f"validation_noise_status: {readback.get('validation_noise_status')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"source_artifact_index: {readback.get('source_artifact_index')}")
         print(f"next_action: {readback.get('next_action')}")
     return 0
 

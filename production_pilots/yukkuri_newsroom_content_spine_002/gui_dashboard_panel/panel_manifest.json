@@ -1,0 +1,53 @@
+{
+  "schema_version": "gui_dashboard_panel_manifest.v1",
+  "artifact_id": "content_spine_002_gui_dashboard_panel_v1",
+  "artifact_kind": "gui-dashboard-panel-ingest",
+  "status": "generated",
+  "source_package_dir": "production_pilots\\yukkuri_newsroom_content_spine_002",
+  "ingest_dir": "production_pilots\\yukkuri_newsroom_content_spine_002\\dashboard_readiness_ingest",
+  "output_dir": "production_pilots\\yukkuri_newsroom_content_spine_002\\gui_dashboard_panel",
+  "selected_candidate_id": "factory_seed_dry_run_002",
+  "files": {
+    "panel_manifest.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\gui_dashboard_panel\\panel_manifest.json",
+    "gui_dashboard_adapter.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\gui_dashboard_panel\\gui_dashboard_adapter.json",
+    "panel_data.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\gui_dashboard_panel\\panel_data.json",
+    "source_artifact_index.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\gui_dashboard_panel\\source_artifact_index.json",
+    "dashboard_panel_preview.html": "production_pilots\\yukkuri_newsroom_content_spine_002\\gui_dashboard_panel\\dashboard_panel_preview.html",
+    "dashboard_panel_preview.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\gui_dashboard_panel\\dashboard_panel_preview.md",
+    "dom_or_static_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\gui_dashboard_panel\\dom_or_static_readback.json",
+    "review_checklist.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\gui_dashboard_panel\\review_checklist.md",
+    "limitations.md": "production_pilots\\yukkuri_newsroom_content_spine_002\\gui_dashboard_panel\\limitations.md",
+    "validation_readback.json": "production_pilots\\yukkuri_newsroom_content_spine_002\\gui_dashboard_panel\\validation_readback.json"
+  },
+  "source_inputs": {
+    "dashboard_manifest": "production_pilots\\yukkuri_newsroom_content_spine_002\\dashboard_readiness_ingest\\dashboard_manifest.json",
+    "readiness_summary": "production_pilots\\yukkuri_newsroom_content_spine_002\\dashboard_readiness_ingest\\readiness_summary.json",
+    "pipeline_status": "production_pilots\\yukkuri_newsroom_content_spine_002\\dashboard_readiness_ingest\\pipeline_status.json",
+    "capability_glyph_grid": "production_pilots\\yukkuri_newsroom_content_spine_002\\dashboard_readiness_ingest\\capability_glyph_grid.json",
+    "symbolic_visual_panel": "production_pilots\\yukkuri_newsroom_content_spine_002\\dashboard_readiness_ingest\\symbolic_visual_panel.json",
+    "source_artifact_index": "production_pilots\\yukkuri_newsroom_content_spine_002\\dashboard_readiness_ingest\\source_artifact_index.json",
+    "validation_ledger": "samples\\_probe\\newsroom_handoff\\validation_drift_velocity_recovery_v1.json"
+  },
+  "readback_status": "passed",
+  "boundaries": {
+    "read_only_panel": true,
+    "local_offline_review_only": true,
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "no_real_transcript": true,
+    "no_live_fetch": true,
+    "no_media_download": true,
+    "no_external_image_or_media_download": true,
+    "no_youtube_publication": true,
+    "public_upload_closed": true,
+    "no_oauth_or_paid_api": true,
+    "no_rights_or_legal_acceptance": true,
+    "rights_boundary": true,
+    "no_yymm4_import": true,
+    "yymm4_render_closed": true,
+    "no_yymm4_gui_launch_import_or_render": true,
+    "no_production_ymmp_generation": true,
+    "no_audio_generation": true,
+    "validation_noise_nonblocking": true
+  }
+}

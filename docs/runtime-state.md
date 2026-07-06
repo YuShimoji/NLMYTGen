@@ -1,5 +1,28 @@
 # Runtime State — NLMYTGen
 
+- **Content spine 002 GUI dashboard panel completed (2026-07-06 JST)**:
+  `content-spine-002-gui-dashboard-panel-v1` builds the read-only/static GUI
+  review surface from
+  `production_pilots/yukkuri_newsroom_content_spine_002/dashboard_readiness_ingest/`.
+  Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/`.
+  Primary human review is `dashboard_panel_preview.html`; primary machine
+  readback is `validation_readback.json`; source trace is
+  `source_artifact_index.json`. Regeneration command:
+  `python -m src.cli.main build-gui-dashboard-panel --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id content_spine_002_gui_dashboard_panel_v1`.
+  The panel visibly marks `dry_run`, `sample_fixture_not_real`,
+  `no_real_transcript`, `rights_boundary`, `public_upload_closed`,
+  `yymm4_render_closed`, `no_yymm4_import`, and
+  `validation_noise_nonblocking`. Targeted GUI panel tests pass
+  (`uv run pytest tests/test_gui_dashboard_panel.py -q` -> 4 passed); the
+  dashboard readiness ingest test remains the companion product-line check.
+  Full pytest was not run; the existing validation drift ledger remains the
+  evidence that full-suite noise is nonblocking for this slice. No real
+  transcript rerun, live fetch/scraping, external media download, OAuth/API
+  key/payment, rights/legal/public-ready acceptance, YMM4 GUI/import/render,
+  production `.ymmp`, YouTube upload, cross-repo edit, destructive git, broad
+  fixture regeneration, or repeated full pytest loop occurred. Recommended
+  next product slice is `episode-002-yymm4-import-preview-pack-v1`.
 - **Validation drift triage and velocity recovery completed (2026-07-06 JST)**:
   `validation-drift-triage-and-velocity-recovery-v1` classifies the current
   validation drift as nonblocking for the next episode 002 product-building

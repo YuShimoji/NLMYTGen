@@ -81,6 +81,8 @@
 | B-18 | 台本機械診断（NLM→ゆっくり前段） | done | L2 | `diagnose-script` CLI + `src/pipeline/script_diagnostics.py`。`--format json` / `--strict` / `--expected-explainer` / `--expected-listener`。仕様: `docs/SCRIPT_QUALITY_DIAGNOSTICS_SPEC.md`。dry proof: `docs/verification/B18-script-diagnostics-ai-monitoring-sample.md` |
 | B-19 | Episode 002 dashboard readiness ingest | done | L2 | `build-dashboard-readiness-ingest` CLI + `src/pipeline/dashboard_readiness_ingest.py`。`production_pilots/yukkuri_newsroom_content_spine_002/dashboard_readiness_ingest/` に manifest、pipeline status、readiness summary、symbolic visual panel、capability glyph grid、source artifact index、preview/checklist/limitations/readback を出す。既存の content spine / IR bridge / transcript readiness artifact を read-only に集約し、dry_run、sample_fixture_not_real、no_real_transcript、rights_boundary、public_upload_closed、yymm4_render_closed、no_yymm4_import を明示する。 |
 
+| B-20 | Episode 002 GUI dashboard panel | done | GUI/L2 | `build-gui-dashboard-panel` CLI + `src/pipeline/gui_dashboard_panel.py`. Generates `production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/` with panel manifest, adapter JSON, panel data, source artifact index, static HTML/Markdown preview, DOM/static readback, checklist, limitations, and validation readback. It consumes dashboard readiness ingest outputs and visibly marks `dry_run`, `sample_fixture_not_real`, `no_real_transcript`, `rights_boundary`, `public_upload_closed`, `yymm4_render_closed`, `no_yymm4_import`, and `validation_noise_nonblocking` without opening public/YMM4/media/auth gates. |
+
 ### C. YMM4 連携・演出 (L3-YMM4内部)
 
 | ID | 機能 | ステータス | レイヤー | 備考 |

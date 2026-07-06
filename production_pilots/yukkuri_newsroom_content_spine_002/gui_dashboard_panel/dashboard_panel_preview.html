@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yukkuri Newsroom Dashboard Panel</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --ink: #172033;
+      --muted: #657085;
+      --line: #d9e1ea;
+      --ready: #0f766e;
+      --draft: #6f5f18;
+      --sample: #9f4f12;
+      --input: #b42318;
+      --gate: #7f1d1d;
+      --deferred: #475569;
+      --missing: #6b7280;
+      --unknown: #4b5563;
+      --dry: #1d4ed8;
+      --noise: #7c3aed;
+      --accent: #2563eb;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--ink); font-family: "Segoe UI", "Noto Sans", Arial, sans-serif; }
+    body { padding: 24px; }
+    .shell { max-width: 1320px; margin: 0 auto; }
+    header { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: end; margin-bottom: 20px; }
+    h1 { margin: 0; font-size: 28px; line-height: 1.15; font-weight: 700; letter-spacing: 0; }
+    h2 { margin: 0 0 12px; font-size: 16px; line-height: 1.25; letter-spacing: 0; }
+    p { margin: 0; color: var(--muted); line-height: 1.5; }
+    code { font-family: Consolas, "SFMono-Regular", monospace; font-size: 12px; overflow-wrap: anywhere; }
+    .topline { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+    .summary-strip { display: grid; grid-template-columns: repeat(5, minmax(140px, 1fr)); gap: 10px; margin-bottom: 18px; }
+    .metric, .panel, .card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+    .metric { padding: 14px; min-height: 78px; }
+    .metric b { display: block; font-size: 18px; margin-top: 6px; overflow-wrap: anywhere; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(320px, 0.8fr); gap: 16px; }
+    .panel { padding: 16px; margin-bottom: 16px; }
+    .capability-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .card { padding: 12px; display: grid; gap: 8px; min-height: 145px; }
+    .card-head { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
+    .card-title { font-size: 14px; font-weight: 700; line-height: 1.25; }
+    .note { font-size: 12px; color: var(--muted); line-height: 1.4; }
+    .path { padding-top: 2px; color: var(--muted); }
+    .status-pill { display: inline-flex; align-items: center; min-height: 24px; padding: 3px 8px; border-radius: 999px; font-size: 12px; font-weight: 700; border: 1px solid currentColor; background: #fff; overflow-wrap: anywhere; }
+    [data-status="ready"] { color: var(--ready); }
+    [data-status="draft_offline"] { color: var(--draft); }
+    [data-status="sample_fixture_not_real"] { color: var(--sample); }
+    [data-status="blocked_by_real_input"] { color: var(--input); }
+    [data-status="blocked_by_true_gate"] { color: var(--gate); }
+    [data-status="deferred"] { color: var(--deferred); }
+    [data-status="missing"] { color: var(--missing); }
+    [data-status="dry_run"] { color: var(--dry); }
+    [data-status="validation_noise_nonblocking"] { color: var(--noise); }
+    [data-status="partial"], [data-status="unknown"] { color: var(--unknown); }
+    .bars { display: grid; gap: 8px; }
+    .bar-row { display: grid; grid-template-columns: minmax(130px, 190px) minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: 13px; }
+    .track { height: 10px; border-radius: 999px; background: #e5e7eb; overflow: hidden; }
+    .fill { display: block; height: 100%; border-radius: inherit; background: var(--accent); }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { text-align: left; padding: 9px 8px; border-top: 1px solid var(--line); vertical-align: top; }
+    th { width: 190px; color: var(--muted); font-weight: 700; }
+    ul.route { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    ul.route li { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid var(--line); }
+    .validation-grid { display: grid; gap: 8px; }
+    .validation-grid div { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 8px; font-size: 13px; border-top: 1px solid var(--line); padding-top: 8px; }
+    .validation-grid strong { color: var(--muted); }
+    .next { border-left: 4px solid var(--accent); padding-left: 12px; }
+    @media (max-width: 980px) {
+      body { padding: 14px; }
+      header, .layout { grid-template-columns: 1fr; }
+      .summary-strip, .capability-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .summary-strip, .capability-grid { grid-template-columns: 1fr; }
+      .bar-row, .validation-grid div { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell" data-dashboard-panel="true">
+    <header>
+      <div>
+        <h1>Yukkuri Newsroom Dashboard Panel</h1>
+        <p>Read-only pilot state for factory_seed_dry_run_002.</p>
+        <div class="topline"><span class="status-pill" data-status="ready">ready</span>
+<span class="status-pill" data-status="partial">partial</span>
+<span class="status-pill" data-status="sample_fixture_not_real">sample_fixture_not_real</span>
+<span class="status-pill" data-status="draft_offline">draft_offline</span>
+<span class="status-pill" data-status="blocked_by_real_input">blocked_by_real_input</span>
+<span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span>
+<span class="status-pill" data-status="deferred">deferred</span>
+<span class="status-pill" data-status="missing">missing</span>
+<span class="status-pill" data-status="unknown">unknown</span>
+<span class="status-pill" data-status="dry_run">dry_run</span>
+<span class="status-pill" data-status="validation_noise_nonblocking">validation_noise_nonblocking</span></div>
+      </div>
+      <span class="status-pill" data-status="validation_noise_nonblocking">sample fixture visible; validation drift nonblocking</span>
+    </header>
+
+    <section class="summary-strip" aria-label="dashboard summary">
+      <div class="metric"><p>Capabilities</p><b>13</b></div>
+      <div class="metric"><p>Source artifacts</p><b>21/21</b></div>
+      <div class="metric"><p>Transcript</p><b>sample_fixture_not_real</b></div>
+      <div class="metric"><p>YMM4 import</p><b>blocked_by_true_gate</b></div>
+      <div class="metric"><p>Validation drift</p><b>validation_noise_nonblocking</b></div>
+    </section>
+
+    <section class="layout">
+      <div>
+        <section class="panel" data-section="capability-grid">
+          <h2>Capability Status</h2>
+          <div class="capability-grid"><article class="card" data-capability="content_spine_002" data-status="draft_offline"><div class="card-head"><div class="card-title">Content spine package</div><span class="status-pill" data-status="draft_offline">draft_offline</span></div><div class="note">offline content/package is reviewable; source remains local fixture</div><div class="path"><code>production_pilots/yukkuri_newsroom_content_spine_002/MANIFEST.json</code></div></article>
+<article class="card" data-capability="ir_bridge_002" data-status="draft_offline"><div class="card-head"><div class="card-title">IR/CSV bridge</div><span class="status-pill" data-status="draft_offline">draft_offline</span></div><div class="note">draft Writer IR, cue packet, and CSV bridge exist; not production timing</div><div class="path"><code>production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/bridge_manifest.json</code></div></article>
+<article class="card" data-capability="transcript_substitution_002" data-status="sample_fixture_not_real"><div class="card-head"><div class="card-title">Transcript substitution readiness</div><span class="status-pill" data-status="sample_fixture_not_real">sample_fixture_not_real</span></div><div class="note">sample fixture is used until a real transcript is supplied</div><div class="path"><code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/substitution_manifest.json</code></div></article>
+<article class="card" data-capability="writer_ir" data-status="draft_offline"><div class="card-head"><div class="card-title">Regenerated Writer IR candidate</div><span class="status-pill" data-status="draft_offline">draft_offline</span></div><div class="note">candidate only; validate-ir/apply-production inputs are not accepted</div><div class="path"><code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_writer_ir_candidate.json</code></div></article>
+<article class="card" data-capability="cue_packet" data-status="draft_offline"><div class="card-head"><div class="card-title">Regenerated cue packet candidate</div><span class="status-pill" data-status="draft_offline">draft_offline</span></div><div class="note">candidate not sent to external LLM or production operator</div><div class="path"><code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_cue_packet_candidate.json</code></div></article>
+<article class="card" data-capability="draft_yymm4_csv" data-status="draft_offline"><div class="card-head"><div class="card-title">Regenerated draft YMM4 CSV</div><span class="status-pill" data-status="draft_offline">draft_offline</span></div><div class="note">CSV preview only; no YMM4 import, VoiceItem timing, or render proof</div><div class="path"><code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv</code></div></article>
+<article class="card" data-capability="real_transcript_input" data-status="blocked_by_real_input"><div class="card-head"><div class="card-title">Real transcript input</div><span class="status-pill" data-status="blocked_by_real_input">blocked_by_real_input</span></div><div class="note">drop a real NotebookLM/human-reviewed transcript here for a future replacement slice</div><div class="path"><code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input</code></div></article>
+<article class="card" data-capability="dashboard_ingest" data-status="ready"><div class="card-head"><div class="card-title">Dashboard readiness ingest</div><span class="status-pill" data-status="ready">ready</span></div><div class="note">read-only status package generated for local review and later GUI adapter work</div><div class="path"><code>production_pilots/yukkuri_newsroom_content_spine_002/dashboard_readiness_ingest</code></div></article>
+<article class="card" data-capability="project_cockpit" data-status="ready"><div class="card-head"><div class="card-title">Project Cockpit</div><span class="status-pill" data-status="ready">ready</span></div><div class="note">navigation doc; not a production gate</div><div class="path"><code>docs/PROJECT_COCKPIT.md</code></div></article>
+<article class="card" data-capability="project_pipeline_mermaid" data-status="ready"><div class="card-head"><div class="card-title">Project Pipeline Mermaid</div><span class="status-pill" data-status="ready">ready</span></div><div class="note">navigation diagram; dashboard node should be visible</div><div class="path"><code>docs/PROJECT_PIPELINE.mmd</code></div></article>
+<article class="card" data-capability="yymm4_import_preview" data-status="deferred"><div class="card-head"><div class="card-title">YMM4 import preview</div><span class="status-pill" data-status="deferred">deferred</span></div><div class="note">future slice; no YMM4 GUI/import/render in this ingest</div><div class="path"><code>production_pilots/yukkuri_newsroom_content_spine_002/yymm4_import_preview</code></div></article>
+<article class="card" data-capability="thumbnail_visual_proof" data-status="deferred"><div class="card-head"><div class="card-title">Thumbnail visual proof</div><span class="status-pill" data-status="deferred">deferred</span></div><div class="note">future slice; no thumbnail image generation or public-ready proof</div><div class="path"><code>production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof</code></div></article>
+<article class="card" data-capability="validation_noise" data-status="validation_noise_nonblocking"><div class="card-head"><div class="card-title">Validation drift</div><span class="status-pill" data-status="validation_noise_nonblocking">validation_noise_nonblocking</span></div><div class="note">Known full-suite drift is classified as nonblocking for this GUI dashboard panel slice.</div><div class="path"><code>samples/_probe/newsroom_handoff/validation_drift_velocity_recovery_v1.json</code></div></article></div>
+        </section>
+
+        <section class="panel" data-section="source-artifact-index">
+          <h2>Source Artifact Index</h2>
+          <table aria-label="source_artifact_index">
+            <thead><tr><th>artifact</th><th>state</th><th>exists</th><th>path</th></tr></thead>
+            <tbody><tr><td>content_manifest</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/MANIFEST.json</code></td></tr>
+<tr><td>content_dry_run_manifest</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/content_spine_dry_run_manifest.json</code></td></tr>
+<tr><td>content_dashboard</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/dashboard_status.json</code></td></tr>
+<tr><td>content_readback</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/content_spine_readback.json</code></td></tr>
+<tr><td>content_source_seed_reference</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/source_seed_reference.json</code></td></tr>
+<tr><td>content_source_artifact_index</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/source_artifact_index.json</code></td></tr>
+<tr><td>ir_manifest</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/bridge_manifest.json</code></td></tr>
+<tr><td>ir_episode_bridge</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/episode_bridge.json</code></td></tr>
+<tr><td>ir_writer_ir</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/writer_ir_candidate.json</code></td></tr>
+<tr><td>ir_cue_packet</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/cue_packet_candidate.json</code></td></tr>
+<tr><td>ir_draft_csv</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/draft_yymm4.csv</code></td></tr>
+<tr><td>ir_readback</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/validation_readback.json</code></td></tr>
+<tr><td>transcript_manifest</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/substitution_manifest.json</code></td></tr>
+<tr><td>transcript_probe</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/transcript_source_probe.json</code></td></tr>
+<tr><td>transcript_episode_bridge</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_episode_bridge.json</code></td></tr>
+<tr><td>transcript_writer_ir</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_writer_ir_candidate.json</code></td></tr>
+<tr><td>transcript_cue_packet</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_cue_packet_candidate.json</code></td></tr>
+<tr><td>transcript_draft_csv</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv</code></td></tr>
+<tr><td>transcript_readback</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/validation_readback.json</code></td></tr>
+<tr><td>project_cockpit</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>docs/PROJECT_COCKPIT.md</code></td></tr>
+<tr><td>project_pipeline</td><td><span class="status-pill" data-status="ready">ready</span></td><td>True</td><td><code>docs/PROJECT_PIPELINE.mmd</code></td></tr></tbody>
+          </table>
+        </section>
+      </div>
+
+      <aside>
+        <section class="panel" data-section="visual-bars">
+          <h2>Symbolic Bars</h2>
+          <div class="bars"><div class="bar-row"><span>Content spine 002</span><span class="track" aria-label="71%"><span class="fill" style="width:71%"></span></span><span class="status-pill" data-status="draft_offline">draft_offline</span></div>
+<div class="bar-row"><span>IR/CSV bridge 002</span><span class="track" aria-label="71%"><span class="fill" style="width:71%"></span></span><span class="status-pill" data-status="draft_offline">draft_offline</span></div>
+<div class="bar-row"><span>Transcript substitution 002</span><span class="track" aria-label="57%"><span class="fill" style="width:57%"></span></span><span class="status-pill" data-status="sample_fixture_not_real">sample_fixture_not_real</span></div>
+<div class="bar-row"><span>Dashboard ingest</span><span class="track" aria-label="86%"><span class="fill" style="width:86%"></span></span><span class="status-pill" data-status="ready">ready</span></div>
+<div class="bar-row"><span>Real transcript</span><span class="track" aria-label="14%"><span class="fill" style="width:14%"></span></span><span class="status-pill" data-status="blocked_by_real_input">blocked_by_real_input</span></div>
+<div class="bar-row"><span>YMM4 import preview</span><span class="track" aria-label="0%"><span class="fill" style="width:0%"></span></span><span class="status-pill" data-status="deferred">deferred</span></div>
+<div class="bar-row"><span>Thumbnail proof</span><span class="track" aria-label="0%"><span class="fill" style="width:0%"></span></span><span class="status-pill" data-status="deferred">deferred</span></div></div>
+        </section>
+
+        <section class="panel" data-section="boundary-status">
+          <h2>Boundaries</h2>
+          <table aria-label="boundary status"><tbody><tr><th>source_status</th><td><span class="status-pill" data-status="draft_offline">offline_fixture_not_live</span></td></tr>
+<tr><th>transcript_status</th><td><span class="status-pill" data-status="sample_fixture_not_real">sample_fixture_not_real</span></td></tr>
+<tr><th>timing_status</th><td><span class="status-pill" data-status="ready">no_audio_or_yymm4_timing</span></td></tr>
+<tr><th>audio_status</th><td><span class="status-pill" data-status="ready">no_audio_generated_or_imported</span></td></tr>
+<tr><th>rights_status</th><td><span class="status-pill" data-status="sample_fixture_not_real">sample_only_no_publication</span></td></tr>
+<tr><th>production_status</th><td><span class="status-pill" data-status="blocked_by_true_gate">blocked_until_transcript_timing_and_human_review</span></td></tr>
+<tr><th>public_upload_status</th><td><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></td></tr>
+<tr><th>yymm4_import_status</th><td><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></td></tr>
+<tr><th>ymm4_render_status</th><td><span class="status-pill" data-status="blocked_by_true_gate">blocked_by_true_gate</span></td></tr></tbody></table>
+        </section>
+
+        <section class="panel" data-section="boundary-flags">
+          <h2>Boundary Flags</h2>
+          <table aria-label="boundary flags"><tbody><tr><th>dry_run</th><td><span class="status-pill" data-status="dry_run">True</span></td></tr>
+<tr><th>sample_fixture_not_real</th><td><span class="status-pill" data-status="sample_fixture_not_real">True</span></td></tr>
+<tr><th>no_real_transcript</th><td><span class="status-pill" data-status="blocked_by_true_gate">True</span></td></tr>
+<tr><th>rights_boundary</th><td><span class="status-pill" data-status="blocked_by_true_gate">True</span></td></tr>
+<tr><th>public_upload_closed</th><td><span class="status-pill" data-status="blocked_by_true_gate">True</span></td></tr>
+<tr><th>yymm4_render_closed</th><td><span class="status-pill" data-status="blocked_by_true_gate">True</span></td></tr>
+<tr><th>no_yymm4_import</th><td><span class="status-pill" data-status="blocked_by_true_gate">True</span></td></tr></tbody></table>
+        </section>
+
+        <section class="panel" data-section="validation-noise">
+          <h2>Validation Drift</h2>
+          <div class="validation-grid">
+            <div><strong>status</strong><span class="status-pill" data-status="validation_noise_nonblocking">validation_noise_nonblocking</span></div>
+            <div><strong>safe to continue</strong><span>True</span></div>
+            <div><strong>full pytest policy</strong><span>not rerun in this slice</span></div>
+            <div><strong>recent full pytest</strong><span>22 failed, 1173 passed, 28 skipped</span></div>
+            <div><strong>ledger</strong><code>samples/_probe/newsroom_handoff/validation_drift_velocity_recovery_v1.json</code></div>
+          </div>
+        </section>
+
+        <section class="panel" data-section="pipeline-route">
+          <h2>Pipeline Route</h2>
+          <ul class="route"><li><span>offline_topic_candidates</span><span class="status-pill" data-status="draft_offline">draft_offline</span></li>
+<li><span>content_spine_002</span><span class="status-pill" data-status="draft_offline">draft_offline</span></li>
+<li><span>ir_bridge_002</span><span class="status-pill" data-status="draft_offline">draft_offline</span></li>
+<li><span>transcript_substitution_002</span><span class="status-pill" data-status="sample_fixture_not_real">sample_fixture_not_real</span></li>
+<li><span>dashboard_readiness_ingest</span><span class="status-pill" data-status="ready">ready</span></li>
+<li><span>real_transcript_rerun</span><span class="status-pill" data-status="blocked_by_real_input">blocked_by_real_input</span></li>
+<li><span>yymm4_import_preview</span><span class="status-pill" data-status="deferred">deferred</span></li>
+<li><span>thumbnail_visual_proof</span><span class="status-pill" data-status="deferred">deferred</span></li></ul>
+        </section>
+
+        <section class="panel next" data-section="next-action">
+          <h2>Next Safe Action</h2>
+          <p>Open dashboard_panel_preview.html for GUI review, then use the confirmed status surface to prepare the episode 002 YMM4 import preview pack without launching, importing, or rendering in YMM4.</p>
+        </section>
+      </aside>
+    </section>
+  </main>
+</body>
+</html>
