@@ -1,0 +1,18 @@
+{
+  "schema_version": "japanese_copy_readback.v1",
+  "artifact_id": "episode_002_japanese_graphic_review_console_v1",
+  "primary_ui_language": "ja",
+  "allowed_english_terms": [
+    "YMM4",
+    "CSV",
+    "HTML",
+    "Git",
+    "API",
+    "RSS"
+  ],
+  "english_primary_headings": [],
+  "internal_artifact_ids_in_primary_copy": [],
+  "raw_paths_secondary": true,
+  "technical_keys_secondary": true,
+  "primary_copy_policy": "Japanese labels first; English artifact IDs and raw paths stay in the secondary drawer/readbacks."
+}

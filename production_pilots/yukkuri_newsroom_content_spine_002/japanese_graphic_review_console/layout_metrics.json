@@ -1,0 +1,36 @@
+{
+  "schema_version": "japanese_graphic_layout_metrics.v1",
+  "artifact_id": "episode_002_japanese_graphic_review_console_v1",
+  "baseline_file": "review_console_redesign_prototype/primary_artifact_review_console.html",
+  "baseline_visible_word_count": 0,
+  "main_surface_type": "japanese_graphical_flow_spine",
+  "graphical_elements": [
+    "production_flow_spine",
+    "before_after_visual_comparison_canvas",
+    "timeline_state_diagram",
+    "yymm4_prep_progress_strip",
+    "input_readiness_map",
+    "diff_style_visual_panel",
+    "structural_shelf_layout"
+  ],
+  "primary_ui_language": "ja",
+  "same_shape_card_grid_primary": false,
+  "explanatory_cards_in_main_surface": 0,
+  "evidence_front_stage_card_row": false,
+  "evidence_visible_outside_drawer": true,
+  "detail_drawer_role": "secondary_raw_records_source_paths_and_extended_proof",
+  "free_text_role": "secondary_handoff_note",
+  "free_text_handoff_character_count": 32,
+  "gate_text_bounded": true,
+  "gate_primary_token_count": 9,
+  "source_records_secondary": true,
+  "internal_artifact_ids_in_primary_copy": [],
+  "first_view_reveals_primary_artifact": true,
+  "first_view_reveals_critical_issue": true,
+  "first_view_reveals_next_operation": true,
+  "first_view_priority": [
+    "Japanese visual artifact",
+    "critical issue",
+    "next operation"
+  ]
+}

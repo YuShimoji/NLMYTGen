@@ -1,5 +1,48 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 Japanese graphical review console completed (2026-07-08 JST)**:
+  `episode-002-japanese-graphic-review-console-v1` revises the current review
+  surface into a Japanese-first graphical review console. Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/japanese_graphic_review_console/`.
+  Primary human review is `japanese_graphic_review_console.html`; Markdown
+  fallback is `japanese_graphic_review_console.md`; primary machine readback
+  is `validation_readback.json`; supporting readbacks are `screen_audit.json`,
+  `graphic_surface_readback.json`, `japanese_copy_readback.json`,
+  `inspector_readback.json`, `evidence_drawer_index.json`,
+  `layout_metrics.json`, and `visual_self_review.md`. Regeneration command:
+  `python -m src.cli.main build-japanese-graphic-review-console --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_japanese_graphic_review_console_v1`.
+  The primary UI language is Japanese (`primary_ui_language=ja`), primary
+  headings contain no English outside allowed technical terms, and the center
+  is `japanese_graphical_flow_spine` with production flow spine, visual
+  comparison canvas, timeline, YMM4 prep progress strip, input readiness map,
+  diff-style visual panel, and structural shelves. Validation readback reports
+  `same_shape_card_grid_primary=false`,
+  `explanatory_cards_in_main_surface=0`,
+  `evidence_front_stage_card_row=false`,
+  `evidence_visible_outside_drawer=true`, `free_text_role=secondary_handoff_note`,
+  `gate_text_bounded=true`, `project_lanes_recorded=true`,
+  `stop_rule_recorded=true`, and `source_records_secondary=true`. Project lane
+  split is recorded in `docs/PROJECT_LANES.md`; the stop rule is to return to
+  the product lane after this console is reviewable unless the user rejects
+  the UI direction. The primary recommendation remains
+  `prepare_verified_local_source_transcript`; hold remains
+  `safe_fallback_not_progress`; YMM4 observation remains an explicit-gate
+  alternative only. The package preserves `dry_run`,
+  `sample_fixture_not_real`, `no_real_transcript`, `rights_boundary`,
+  `public_upload_closed`, `yymm4_render_closed`, `no_yymm4_import`,
+  `thumbnail_context_only`, `validation_noise_nonblocking`, and
+  `not_production_ready`. Targeted Japanese graphical console tests pass
+  (`uv run pytest tests/test_japanese_graphic_review_console.py -q`
+  -> 4 passed). Full pytest was not run. Access verification is
+  `verified_present`; user-opened visual acceptance is still pending. No real
+  transcript/source replacement, YMM4 GUI launch/import/render, production
+  `.ymmp`, final thumbnail approval, live fetch/scraping, external media
+  download, OAuth/API key/payment, rights/legal/public-ready acceptance,
+  YouTube upload, destructive git, cross-repo edit, broad fixture regeneration,
+  production UI promotion, or full-suite green campaign occurred. Next product
+  move after human acceptance is preparing or providing verified local
+  source/transcript material.
+
 - **Episode 002 primary artifact review console completed (2026-07-08 JST)**:
   `episode-002-primary-artifact-review-console-v1` revises the review console
   so the center becomes a primary review artifact rather than explanatory

@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="ja" data-japanese-graphic-console="true" data-artifact-kind="episode-japanese-graphic-review-console" data-primary-ui-language="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第002話 日本語グラフィックレビューコンソール</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+      --bg: #0b1014;
+      --surface: #182027;
+      --stage: #10171d;
+      --panel: #141b22;
+      --line: #4e5c68;
+      --text: #f3efe7;
+      --muted: #c2baad;
+      --accent: #68e0d4;
+      --action: #9fc5ff;
+      --warn: #f2ce66;
+      --closed: #f0a0a0;
+      --ok: #a7e8c2;
+      --shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #eef1ed;
+        --surface: #e2e9e4;
+        --stage: #f7f2e8;
+        --panel: #f0eee6;
+        --line: #aeb8b1;
+        --text: #1d231f;
+        --muted: #5d665f;
+        --accent: #0f766e;
+        --action: #1d4ed8;
+        --warn: #8a5a00;
+        --closed: #9b1c1c;
+        --ok: #047857;
+        --shadow: 0 16px 32px rgba(29, 35, 31, 0.12);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+    button { font: inherit; }
+    .console {
+      width: min(1380px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 14px 0 30px;
+    }
+    .topline {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 0;
+    }
+    .identity, .region-nav, .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .region-nav { justify-content: flex-end; }
+    .episode { font-size: 1.08rem; font-weight: 760; }
+    .badge, .gate-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 720;
+      white-space: nowrap;
+    }
+    .gate-badge { color: var(--closed); }
+    .objective { color: var(--muted); font-size: 0.9rem; }
+    .region-nav button, .control {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text);
+      padding: 7px 10px;
+      cursor: pointer;
+    }
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.35fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+    .graphic-surface, .inspector, .evidence-drawer, .brief-note {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .graphic-surface {
+      min-height: 650px;
+      background: var(--surface);
+      padding: 16px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 12px;
+    }
+    .inspector {
+      background: var(--panel);
+      padding: 16px;
+      display: grid;
+      gap: 13px;
+      align-content: start;
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: clamp(1.45rem, 2.35vw, 2.2rem); line-height: 1.08; letter-spacing: 0; }
+    h2 { font-size: 1rem; letter-spacing: 0; }
+    h3 { font-size: 0.83rem; color: var(--muted); letter-spacing: 0; }
+    p, li, span { line-height: 1.4; }
+    p, li { color: var(--muted); }
+    .surface-head {
+      display: grid;
+      grid-template-columns: 1fr minmax(230px, 0.34fr);
+      gap: 10px;
+      align-items: end;
+    }
+    .decision-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .decision-cell {
+      border-left: 3px solid var(--accent);
+      padding: 7px 9px;
+      background: rgba(255, 255, 255, 0.035);
+      min-width: 0;
+    }
+    .decision-cell strong { display: block; color: var(--text); font-size: 0.94rem; }
+    .artifact-frame {
+      min-height: 488px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--stage);
+      padding: 14px;
+      display: grid;
+      grid-template-columns: minmax(190px, 0.5fr) minmax(420px, 1.28fr) minmax(190px, 0.56fr);
+      gap: 12px;
+      overflow: hidden;
+    }
+    .before-lane, .flow-stage, .next-lane {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.035);
+      padding: 12px;
+    }
+    .before-lane {
+      display: grid;
+      grid-template-rows: auto repeat(4, 1fr);
+      gap: 8px;
+      opacity: 0.76;
+    }
+    .faded-block {
+      border: 1px dashed var(--line);
+      border-radius: 5px;
+      min-height: 44px;
+      background: rgba(255, 255, 255, 0.032);
+    }
+    .flow-stage {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 12px;
+      border-color: var(--accent);
+      background: linear-gradient(180deg, rgba(104, 224, 212, 0.12), rgba(255, 255, 255, 0.035));
+    }
+    .flow-title strong {
+      display: block;
+      color: var(--text);
+      font-size: clamp(1.24rem, 2.1vw, 1.9rem);
+      line-height: 1.1;
+    }
+    .shelf-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 10px;
+    }
+    .shelf {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.14);
+      padding: 10px;
+      display: grid;
+      gap: 7px;
+      min-width: 0;
+    }
+    .shelf strong { color: var(--text); }
+    .mini-bars {
+      display: grid;
+      gap: 5px;
+    }
+    .mini-bar {
+      height: 8px;
+      border-radius: 999px;
+      background: var(--line);
+      overflow: hidden;
+    }
+    .mini-bar span {
+      display: block;
+      height: 100%;
+      background: var(--accent);
+    }
+    .mini-bar.wait span { background: var(--warn); }
+    .mini-bar.closed span { background: var(--closed); }
+    .progress-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+    .progress-step {
+      border-top: 4px solid var(--line);
+      padding-top: 7px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+    .progress-step.done { border-color: var(--accent); color: var(--text); }
+    .progress-step.next { border-color: var(--action); color: var(--action); }
+    .next-lane {
+      display: grid;
+      gap: 9px;
+      align-content: center;
+    }
+    .path-node {
+      border-left: 3px solid var(--action);
+      padding: 8px 9px;
+      background: rgba(255, 255, 255, 0.035);
+    }
+    .path-node strong { display: block; color: var(--text); }
+    .timeline-band {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .timeline-node {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.035);
+      min-width: 0;
+    }
+    .timeline-node strong { display: block; color: var(--text); }
+    .status-table { display: grid; gap: 6px; }
+    .status-row {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .status-row span:first-child { color: var(--muted); }
+    .status-row span:last-child { color: var(--text); }
+    .controls { display: grid; gap: 8px; }
+    .control {
+      text-align: left;
+      display: grid;
+      gap: 3px;
+    }
+    .control strong { color: var(--text); }
+    .control.primary { border-color: var(--accent); }
+    .control.gated { border-color: var(--warn); }
+    .control.fallback { border-color: var(--line); }
+    .brief-note {
+      margin-top: 14px;
+      background: var(--surface);
+      padding: 12px 14px;
+    }
+    .evidence-drawer {
+      margin-top: 14px;
+      background: var(--panel);
+      padding: 12px 14px;
+    }
+    .evidence-drawer summary { cursor: pointer; color: var(--text); font-weight: 760; }
+    .record-list {
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+    .record-list li {
+      display: grid;
+      gap: 2px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+    }
+    code { color: var(--action); overflow-wrap: anywhere; font-size: 0.84rem; }
+    @media (max-width: 1100px) {
+      .topline, .workspace, .surface-head, .artifact-frame { grid-template-columns: 1fr; }
+      .region-nav { justify-content: flex-start; }
+      .decision-strip, .shelf-grid, .progress-strip, .timeline-band { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="console">
+    <header class="topline" data-region="header" data-initial-visible-copy="true">
+      <div class="identity">
+        <span class="episode">第002話</span>
+        <span class="badge">日本語レビュー</span>
+        <span class="badge">サンプル素材</span>
+        <span class="objective">中央の図で方向性を判断し、次は検証済み素材へ戻す。</span>
+      </div>
+      <nav class="region-nav" data-region="navigation" aria-label="レビュー画面ナビゲーション">
+        <button type="button" data-jump="review">レビュー</button>
+        <button type="button" data-jump="records">証拠</button>
+        <button type="button" data-jump="operations">操作</button>
+        <button type="button" data-jump="note">記録</button>
+      </nav>
+    </header>
+    <section class="workspace">
+      <section
+        class="graphic-surface"
+        id="review"
+        data-region="main-graphic-review-surface"
+        data-main-surface-type="japanese-graphic-flow-spine"
+        data-visual-element="production_flow_spine"
+        data-free-text-role="secondary_handoff_note"
+        data-same-shape-card-grid-primary="false"
+        data-evidence-front-stage-row="false"
+        data-initial-visible-copy="true">
+        <div class="surface-head">
+          <div>
+            <h1>第002話 レビューコンソール</h1>
+            <p>中央を説明カードではなく、制作フローと差分で判断できる画面にする。</p>
+          </div>
+          <div class="decision-strip" aria-label="初期表示の優先事項">
+            <div class="decision-cell"><h3>判断対象</h3><strong>レビュー画面の方向性</strong></div>
+            <div class="decision-cell"><h3>問題</h3><strong>説明量が中心を奪う</strong></div>
+            <div class="decision-cell"><h3>次手</h3><strong>検証済み素材を準備</strong></div>
+          </div>
+        </div>
+        <section class="artifact-frame" aria-label="日本語グラフィック判断面">
+          <div class="before-lane" data-visual-element="before_after_visual_comparison_canvas" aria-label="修正前の重さ">
+            <span class="badge">修正前</span>
+            <div class="faded-block"></div>
+            <div class="faded-block"></div>
+            <div class="faded-block"></div>
+            <div class="faded-block"></div>
+          </div>
+          <div class="flow-stage" aria-label="制作フロー中心の判断">
+            <div class="flow-title">
+              <span class="badge">中心図</span>
+              <strong>素材準備へ戻すレビュー判断面</strong>
+              <p>画面方向、入力不足、閉じた gate、次操作を一つの図で見る。</p>
+            </div>
+            <div class="shelf-grid" data-visual-element="input_readiness_map" aria-label="入力準備マップ">
+              <div class="shelf">
+                <strong>素材状態</strong>
+                <span>サンプルのみ</span>
+                <div class="mini-bars"><span class="mini-bar wait"><span style="width: 46%"></span></span></div>
+              </div>
+              <div class="shelf">
+                <strong>判断状態</strong>
+                <span>UI方向レビュー</span>
+                <div class="mini-bars"><span class="mini-bar"><span style="width: 72%"></span></span></div>
+              </div>
+              <div class="shelf">
+                <strong>差分</strong>
+                <span>説明から図へ</span>
+                <div class="mini-bars"><span class="mini-bar"><span style="width: 82%"></span></span></div>
+              </div>
+              <div class="shelf">
+                <strong>閉鎖中</strong>
+                <span>import / render / public</span>
+                <div class="mini-bars"><span class="mini-bar closed"><span style="width: 100%"></span></span></div>
+              </div>
+            </div>
+            <div class="progress-strip" data-visual-element="yymm4_prep_progress_strip" aria-label="準備進行">
+              <span class="progress-step done">監査</span>
+              <span class="progress-step done">日本語化</span>
+              <span class="progress-step next">実素材</span>
+              <span class="progress-step">YMM4 gate</span>
+            </div>
+          </div>
+          <div class="next-lane" data-visual-element="diff_style_visual_panel" aria-label="次操作">
+            <span class="badge">次の動線</span>
+            <div class="path-node"><strong>採否判断</strong><span>この図の方向性を確認。</span></div>
+            <div class="path-node"><strong>素材準備</strong><span>検証済みローカル素材へ進む。</span></div>
+            <div class="path-node"><strong>明示 gate</strong><span>YMM4観察は選択時だけ。</span></div>
+          </div>
+        </section>
+        <section class="timeline-band" data-visual-element="timeline_state_diagram" aria-label="状態タイムライン">
+          <div class="timeline-node"><h3>過去</h3><strong>カード増加</strong></div>
+          <div class="timeline-node"><h3>現在</h3><strong>日本語図解</strong></div>
+          <div class="timeline-node"><h3>次</h3><strong>実素材準備</strong></div>
+          <div class="timeline-node"><h3>別レーン</h3><strong>GUI調整</strong></div>
+          <div class="timeline-node"><h3>ゲート</h3><strong>YMM4明示</strong></div>
+        </section>
+      </section>
+      <aside class="inspector" id="operations" data-region="inspector" data-initial-visible-copy="true">
+        <span class="badge">検査パネル</span>
+        <div>
+          <h2>現在の問題</h2>
+          <p>中央を説明カードではなく、制作フローと差分で判断できる画面にする。</p>
+        </div>
+        <div>
+          <h2>推奨操作</h2>
+          <p><strong>検証済みローカル素材/文字起こしを準備</strong></p>
+        </div>
+        <div class="status-table" aria-label="短い状態表">
+          <div class="status-row"><span>素材</span><span>サンプル / 実入力待ち</span></div>
+<div class="status-row"><span>判断</span><span>UI方向 / 人間レビュー待ち</span></div>
+<div class="status-row"><span>次手</span><span>素材準備 / 前進</span></div>
+<div class="status-row"><span>Gate</span><span>YMM4 / 明示選択のみ</span></div>
+        </div>
+        <div class="badge-row" aria-label="閉じた gate">
+          <span class="gate-badge">importなし</span>
+          <span class="gate-badge">renderなし</span>
+          <span class="gate-badge">公開なし</span>
+        </div>
+        <div class="controls" aria-label="操作">
+          <button type="button" class="control primary" data-control="prepare_verified_local_source_transcript"><strong>検証済み素材を準備</strong><span>サンプル依存から進める。</span></button>
+<button type="button" class="control neutral" data-control="regenerate_review_console"><strong>画面を再生成</strong><span>ローカル出力を作り直す。</span></button>
+<button type="button" class="control gated" data-control="request_yymm4_observation_gate"><strong>YMM4観察を依頼</strong><span>観察のみ。出力なし。</span></button>
+<button type="button" class="control fallback" data-control="accept_reject_hold"><strong>採用・差し戻し・保留</strong><span>保留は安全退避で前進ではない。</span></button>
+        </div>
+      </aside>
+    </section>
+    <section class="brief-note" id="note" data-region="handoff-note" data-free-text-role="secondary_handoff_note">
+      <h2>記録</h2>
+      <p>採用できたら、次は検証済みローカル素材/文字起こしの準備へ戻る。</p>
+    </section>
+    <details class="evidence-drawer" id="records" data-region="evidence-drawer" data-detail-drawer-role="secondary_raw_records_source_paths_and_extended_proof">
+      <summary>証拠: raw records と source paths</summary>
+      <p>判断に必要な状態は上の図と検査パネルへ配置し、raw path と内部IDはここへ退避する。</p>
+      <ul class="record-list">
+        <li>
+  <span>Second-pass split-view benchmark (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/split_view_benchmark.md</code>
+</li>
+<li>
+  <span>Second-pass candidate matrix (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/layout_candidate_matrix.json</code>
+</li>
+<li>
+  <span>Final split-view recommendation (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/final_layout_recommendation.md</code>
+</li>
+<li>
+  <span>Evidence handling report (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/evidence_handling_report.md</code>
+</li>
+<li>
+  <span>Card-bloat risk report (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/card_bloat_risk_report.md</code>
+</li>
+<li>
+  <span>Guided decision flow HTML (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.html</code>
+</li>
+<li>
+  <span>Guided flow validation (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/validation_readback.json</code>
+</li>
+<li>
+  <span>Guided flow state (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/flow_state.json</code>
+</li>
+<li>
+  <span>Compact review cockpit (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html</code>
+</li>
+<li>
+  <span>Aligned review story (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/aligned_review_story.md</code>
+</li>
+<li>
+  <span>GUI dashboard panel (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/dashboard_panel_preview.html</code>
+</li>
+<li>
+  <span>YMM4 import preview panel (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_preview_panel.md</code>
+</li>
+<li>
+  <span>Thumbnail visual proof (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_visual_proof.html</code>
+</li>
+<li>
+  <span>Real input drop-zone (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input</code>
+</li>
+<li>
+  <span>Current primary artifact console (missing)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype/primary_artifact_review_console.html</code>
+</li>
+<li>
+  <span>Project lane map (present)</span>
+  <code>docs/PROJECT_LANES.md</code>
+</li>
+      </ul>
+    </details>
+  </main>
+  <script>
+    for (const button of document.querySelectorAll('[data-jump]')) {
+      button.addEventListener('click', () => {
+        const target = document.getElementById(button.dataset.jump);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  </script>
+</body>
+</html>

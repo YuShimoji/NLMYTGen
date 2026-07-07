@@ -24,6 +24,7 @@ surface. It is not a production gate, a prompt, or a source of product rules.
 | Episode 002 split-view decision/evidence prototype | ready | `production_pilots/yukkuri_newsroom_content_spine_002/split_view_decision_evidence_prototype/split_view_decision_evidence.html` | current local review entry; left decision rail plus visible right evidence pane |
 | Episode 002 review console redesign prototype | ready | `production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype/review_console.html` | current local review entry; Header / Navigation / Main Review Surface / Inspector / Evidence Drawer console |
 | Episode 002 primary artifact review console | ready | `production_pilots/yukkuri_newsroom_content_spine_002/primary_artifact_review_console/primary_artifact_review_console.html` | current local review entry; center is HTML-rendered before/after artifact canvas, not explanatory cards |
+| Episode 002 Japanese graphical review console | ready | `production_pilots/yukkuri_newsroom_content_spine_002/japanese_graphic_review_console/japanese_graphic_review_console.html` | current local review entry; primary UI is Japanese and center is graphical flow/timeline/diff rather than text cards |
 | Validation drift triage | nonblocking | `docs/verification/VALIDATION_DRIFT_VELOCITY_RECOVERY_V1_2026-07-06.md` | full-suite drift is classified; product work can continue |
 | Real transcript replacement | blocked_by_real_input | `production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input/` | requires verified local transcript input |
 
@@ -46,31 +47,36 @@ surface. It is not a production gate, a prompt, or a source of product rules.
 - split_view_decision_evidence_002: `[######-]` split-view local prototype generated and validated; current default recommendation is preparing verified local source/transcript material, with hold kept as safe fallback only.
 - review_console_redesign_002: `[######-]` review judgment console generated and validated; first viewport exposes target, blocker, next operation, and bounded closed gates with 50.1% less initial text.
 - primary_artifact_review_console_002: `[######-]` artifact-first review console generated and validated; center is a single visual comparison canvas, not metric focus, evidence-card row, or explanatory cards.
+- japanese_graphic_review_console_002: `[######-]` Japanese-first graphical console generated and validated; center is flow/timeline/diff/input-readiness graphic, primary headings are Japanese, and lane split/stop rule are recorded.
 - validation_drift_triage: `[#####--]` current drift classified as nonblocking for episode 002 product work.
 - real_transcript_input: `[#------]` drop-zone exists, real input absent.
 
 ## Product Return Path
 
-Completed/current slice: episode 002 primary artifact review console.
+Completed/current slice: episode 002 Japanese graphical review console.
 The current human review entry is
-`primary_artifact_review_console/primary_artifact_review_console.html`,
+`japanese_graphic_review_console/japanese_graphic_review_console.html`,
 with Markdown fallback at
-`primary_artifact_review_console/primary_artifact_review_console.md` and
+`japanese_graphic_review_console/japanese_graphic_review_console.md` and
 machine readback at
-`primary_artifact_review_console/validation_readback.json`. The previous
-review console remains a source record for this revision. The current console
-uses Header / Navigation / Main Review Surface / Inspector / Evidence Drawer,
-but its center is now a dominant HTML-rendered before/after visual comparison
-canvas. It does not make the text-reduction metric the primary focus, does not
-use three explanatory cards in the main surface, and does not place evidence
-as a front-stage card row. Evidence remains visible through Inspector context
-and extended proof stays in the secondary drawer. For the current checked
-state, verified real source/transcript material is absent and YMM4 observation
-is not explicitly selected, so the product-enabling next move is preparing or
-providing verified local source/transcript material. Hold is safe fallback
-only; actual YMM4 import observation requires an explicit human choice and
-still excludes render/public claims. The validation drift remains nonblocking
-for this local artifact-first review-console line.
+`japanese_graphic_review_console/validation_readback.json`. The previous
+primary artifact console remains a source record for this revision. The current
+console uses Japanese Header / Navigation / Main Graphic Review Surface /
+Inspector / Evidence Drawer / Handoff Note. The center is a graphical flow
+spine with before/after visual comparison, timeline, progress strip,
+input-readiness map, diff panel, and structural shelves. It does not use a
+same-shape card grid, does not place raw evidence as a front-stage small-card
+row, and keeps free text as a short secondary handoff note. `docs/PROJECT_LANES.md`
+records separate Output / Video, Input / API Hub, GUI / IA / i18n, Integrity /
+Triage, Editing / YMM4 Feature Design, and Deep Research lanes with a stop
+rule: after this console is reviewable, return to the product lane unless the
+user rejects the UI direction. For the current checked state, verified real
+source/transcript material is absent and YMM4 observation is not explicitly
+selected, so the product-enabling next move is preparing or providing verified
+local source/transcript material. Hold is safe fallback only; actual YMM4
+import observation requires an explicit human choice and still excludes
+render/public claims. The validation drift remains nonblocking for this local
+review-console line.
 
 ## Regeneration
 
@@ -89,6 +95,7 @@ python -m src.cli.main build-review-layout-second-pass --package production_pilo
 python -m src.cli.main build-split-view-decision-evidence-prototype --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_split_view_decision_evidence_prototype_v1
 python -m src.cli.main build-review-console-redesign-prototype --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_review_console_redesign_prototype_v1
 python -m src.cli.main build-primary-artifact-review-console --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_primary_artifact_review_console_v1
+python -m src.cli.main build-japanese-graphic-review-console --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_japanese_graphic_review_console_v1
 ```
 
 Primary machine readback:
@@ -97,6 +104,7 @@ Primary machine readback:
 production_pilots/yukkuri_newsroom_content_spine_002/split_view_decision_evidence_prototype/validation_readback.json
 production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype/validation_readback.json
 production_pilots/yukkuri_newsroom_content_spine_002/primary_artifact_review_console/validation_readback.json
+production_pilots/yukkuri_newsroom_content_spine_002/japanese_graphic_review_console/validation_readback.json
 ```
 
 Primary human review file:
@@ -105,6 +113,7 @@ Primary human review file:
 production_pilots/yukkuri_newsroom_content_spine_002/split_view_decision_evidence_prototype/split_view_decision_evidence.html
 production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype/review_console.html
 production_pilots/yukkuri_newsroom_content_spine_002/primary_artifact_review_console/primary_artifact_review_console.html
+production_pilots/yukkuri_newsroom_content_spine_002/japanese_graphic_review_console/japanese_graphic_review_console.html
 ```
 
 ## Closed Gates

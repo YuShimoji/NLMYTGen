@@ -19,8 +19,9 @@ flowchart LR
     L2 --> SV["Split-view decision/evidence prototype<br/>ready / current review entry"]
     SV --> RCON["Review console redesign prototype<br/>ready / current review entry"]
     RCON --> PAC["Primary artifact review console<br/>ready / current review entry"]
-    PAC -. "after human acceptance" .-> E
-    PAC -. "explicit gate only" .-> IY["Actual YMM4 import observation<br/>blocked_by_true_gate"]
+    PAC --> JGC["Japanese graphic review console<br/>ready / current review entry"]
+    JGC -. "after human acceptance" .-> E
+    JGC -. "explicit gate only" .-> IY["Actual YMM4 import observation<br/>blocked_by_true_gate"]
     P --> E["Real transcript replacement<br/>blocked_by_real_input"]
 
     H["sample transcript fixture"] -. "used now" .-> C
@@ -84,6 +85,11 @@ flowchart LR
     PAC --> BQ["visual_comparison_readback.json<br/>single visual comparison canvas"]
     PAC --> BR["layout_metrics.json<br/>0 explanatory cards / no evidence card row"]
     PAC --> BS["evidence_drawer_index.json<br/>secondary records and extended proof"]
+    JGC --> BT["japanese_graphic_review_console.html<br/>primary human review"]
+    JGC --> BU["graphic_surface_readback.json<br/>flow / diff / timeline"]
+    JGC --> BV["japanese_copy_readback.json<br/>primary UI language ja"]
+    JGC --> BW["layout_metrics.json<br/>no card grid / short handoff"]
+    JGC --> BX["docs/PROJECT_LANES.md<br/>lane split and stop rule"]
 
     N["closed gates:<br/>rights/legal/public-ready acceptance<br/>OAuth/API/payment<br/>live scraping/media download<br/>external image/media download<br/>YMM4 GUI/import/render<br/>production .ymmp<br/>YouTube publication"] -.-> F
     N -.-> G
@@ -97,3 +103,4 @@ flowchart LR
     N -.-> SV
     N -.-> RCON
     N -.-> PAC
+    N -.-> JGC

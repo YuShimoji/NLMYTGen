@@ -1,0 +1,64 @@
+{
+  "schema_version": "japanese_graphic_inspector_readback.v1",
+  "artifact_id": "episode_002_japanese_graphic_review_console_v1",
+  "critical_issue": "Primary UI must be Japanese and the center must be graphical, not explanatory cards.",
+  "critical_issue_ja": "中央を説明カードではなく、制作フローと差分で判断できる画面にする。",
+  "next_operation": "検証済みローカル素材/文字起こしを準備する。",
+  "primary_recommendation": "prepare_verified_local_source_transcript",
+  "primary_recommendation_label": "検証済みローカル素材/文字起こしを準備",
+  "operational_controls": [
+    {
+      "control_id": "prepare_verified_local_source_transcript",
+      "label": "検証済み素材を準備",
+      "effect": "サンプル依存から進める。",
+      "recommended_for_current_state": true,
+      "tone": "primary"
+    },
+    {
+      "control_id": "regenerate_review_console",
+      "label": "画面を再生成",
+      "effect": "ローカル出力を作り直す。",
+      "recommended_for_current_state": false,
+      "tone": "neutral"
+    },
+    {
+      "control_id": "request_yymm4_observation_gate",
+      "label": "YMM4観察を依頼",
+      "effect": "観察のみ。出力なし。",
+      "recommended_for_current_state": false,
+      "tone": "gated"
+    },
+    {
+      "control_id": "accept_reject_hold",
+      "label": "採用・差し戻し・保留",
+      "effect": "保留は安全退避で前進ではない。",
+      "recommended_for_current_state": false,
+      "tone": "fallback"
+    }
+  ],
+  "compact_status_rows": [
+    {
+      "label": "素材",
+      "value": "サンプル",
+      "state": "実入力待ち"
+    },
+    {
+      "label": "判断",
+      "value": "UI方向",
+      "state": "人間レビュー待ち"
+    },
+    {
+      "label": "次手",
+      "value": "素材準備",
+      "state": "前進"
+    },
+    {
+      "label": "Gate",
+      "value": "YMM4",
+      "state": "明示選択のみ"
+    }
+  ],
+  "evidence_visible_outside_drawer": true,
+  "hold_is_not_progress": true,
+  "fallback_hold_status": "safe_fallback_not_progress"
+}

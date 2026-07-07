@@ -38,6 +38,7 @@ Usage:
     python -m src.cli.main build-split-view-decision-evidence-prototype --package production_pilots/pkg [--second-pass-dir DIR] [--guided-flow-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
     python -m src.cli.main build-review-console-redesign-prototype --package production_pilots/pkg [--current-split-view-dir DIR] [--second-pass-dir DIR] [--guided-flow-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
     python -m src.cli.main build-primary-artifact-review-console --package production_pilots/pkg [--current-console-dir DIR] [--second-pass-dir DIR] [--guided-flow-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
+    python -m src.cli.main build-japanese-graphic-review-console --package production_pilots/pkg [--current-console-dir DIR] [--second-pass-dir DIR] [--guided-flow-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--lane-map-path PATH] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
@@ -2829,6 +2830,56 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_japanese_graphic_review_console = subparsers.add_parser(
+        "build-japanese-graphic-review-console",
+        help="Build the episode 002 Japanese graphical review console",
+    )
+    p_japanese_graphic_review_console.add_argument("--package", required=True, help="Episode package directory")
+    p_japanese_graphic_review_console.add_argument(
+        "--current-console-dir",
+        help="Input current primary artifact console directory (default: <package>/primary_artifact_review_console)",
+    )
+    p_japanese_graphic_review_console.add_argument(
+        "--second-pass-dir",
+        help="Input second-pass layout benchmark directory (default: <package>/review_layout_second_pass)",
+    )
+    p_japanese_graphic_review_console.add_argument(
+        "--guided-flow-dir",
+        help="Input guided decision flow directory (default: <package>/guided_decision_flow_prototype)",
+    )
+    p_japanese_graphic_review_console.add_argument(
+        "--cockpit-dir",
+        help="Input compact review cockpit directory (default: <package>/review_cockpit_compact)",
+    )
+    p_japanese_graphic_review_console.add_argument(
+        "--reviewer-packet-dir",
+        help="Input surface alignment review packet directory (default: <package>/surface_alignment_review_packet)",
+    )
+    p_japanese_graphic_review_console.add_argument(
+        "--lane-map-path",
+        help="Project lane map path (default: docs/PROJECT_LANES.md)",
+    )
+    p_japanese_graphic_review_console.add_argument(
+        "--output",
+        help="Output directory (default: <package>/japanese_graphic_review_console)",
+    )
+    p_japanese_graphic_review_console.add_argument(
+        "--artifact-id",
+        default="episode_002_japanese_graphic_review_console_v1",
+        help="Japanese graphical review console artifact id",
+    )
+    p_japanese_graphic_review_console.add_argument(
+        "--explicit-yymm4-observation",
+        action="store_true",
+        help="Select YMM4 import observation as the current explicit human choice without launching YMM4",
+    )
+    p_japanese_graphic_review_console.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -2969,6 +3020,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_review_console_redesign_prototype(args)
         elif args.command == "build-primary-artifact-review-console":
             return _cmd_build_primary_artifact_review_console(args)
+        elif args.command == "build-japanese-graphic-review-console":
+            return _cmd_build_japanese_graphic_review_console(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -5303,6 +5356,60 @@ def _cmd_build_primary_artifact_review_console(args: argparse.Namespace) -> int:
         print(f"primary_human_review: {readback.get('primary_human_review')}")
         print(f"primary_artifact_readback: {readback.get('primary_artifact_readback')}")
         print(f"visual_comparison_readback: {readback.get('visual_comparison_readback')}")
+        print(f"launcher_or_open_command: {readback.get('launcher_or_open_command')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_japanese_graphic_review_console(args: argparse.Namespace) -> int:
+    """Build the episode 002 Japanese graphical review console."""
+    from src.pipeline.japanese_graphic_review_console import (
+        build_japanese_graphic_review_console,
+    )
+
+    readback = build_japanese_graphic_review_console(
+        package_dir=getattr(args, "package"),
+        current_console_dir=getattr(args, "current_console_dir", None),
+        second_pass_dir=getattr(args, "second_pass_dir", None),
+        guided_flow_dir=getattr(args, "guided_flow_dir", None),
+        cockpit_dir=getattr(args, "cockpit_dir", None),
+        reviewer_packet_dir=getattr(args, "reviewer_packet_dir", None),
+        lane_map_path=getattr(args, "lane_map_path", None),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+        explicit_yymm4_observation=bool(getattr(args, "explicit_yymm4_observation", False)),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"primary_decision: {readback.get('primary_decision')}")
+        print(f"primary_artifact: {readback.get('primary_artifact')}")
+        print(f"critical_issue: {readback.get('critical_issue')}")
+        print(f"primary_recommendation: {readback.get('primary_recommendation')}")
+        print(f"operational_controls: {readback.get('operational_controls')}")
+        print(f"main_surface_type: {readback.get('main_surface_type')}")
+        print(f"graphical_elements: {readback.get('graphical_elements')}")
+        print(f"primary_ui_language: {readback.get('primary_ui_language')}")
+        print(f"english_primary_headings: {readback.get('english_primary_headings')}")
+        print(f"free_text_role: {readback.get('free_text_role')}")
+        print(f"same_shape_card_grid_primary: {readback.get('same_shape_card_grid_primary')}")
+        print(f"explanatory_cards_in_main_surface: {readback.get('explanatory_cards_in_main_surface')}")
+        print(f"evidence_front_stage_card_row: {readback.get('evidence_front_stage_card_row')}")
+        print(f"evidence_visible_outside_drawer: {readback.get('evidence_visible_outside_drawer')}")
+        print(f"detail_drawer_role: {readback.get('detail_drawer_role')}")
+        print(f"gate_text_bounded: {readback.get('gate_text_bounded')}")
+        print(f"project_lanes_recorded: {readback.get('project_lanes_recorded')}")
+        print(f"stop_rule_recorded: {readback.get('stop_rule_recorded')}")
+        print(f"source_records_secondary: {readback.get('source_records_secondary')}")
+        print(f"internal_artifact_ids_in_primary_copy: {readback.get('internal_artifact_ids_in_primary_copy')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"graphic_surface_readback: {readback.get('graphic_surface_readback')}")
+        print(f"japanese_copy_readback: {readback.get('japanese_copy_readback')}")
+        print(f"layout_metrics: {readback.get('layout_metrics')}")
         print(f"launcher_or_open_command: {readback.get('launcher_or_open_command')}")
         print(f"next_action: {readback.get('next_action')}")
     return 0

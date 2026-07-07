@@ -1,0 +1,26 @@
+{
+  "schema_version": "japanese_graphic_surface_readback.v1",
+  "artifact_id": "episode_002_japanese_graphic_review_console_v1",
+  "primary_artifact_type": "html_rendered_japanese_graphical_review_canvas",
+  "main_surface_type": "japanese_graphical_flow_spine",
+  "primary_artifact_dominant": true,
+  "center_not_text_cards": true,
+  "graphical_elements": [
+    "production_flow_spine",
+    "before_after_visual_comparison_canvas",
+    "timeline_state_diagram",
+    "yymm4_prep_progress_strip",
+    "input_readiness_map",
+    "diff_style_visual_panel",
+    "structural_shelf_layout"
+  ],
+  "communicates": [
+    "current review target",
+    "critical issue",
+    "next operation",
+    "input readiness",
+    "bounded YMM4 gate state"
+  ],
+  "free_text_secondary": true,
+  "screenshot_or_html_preview": "html_rendered_visual_canvas"
+}
