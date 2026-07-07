@@ -1,0 +1,42 @@
+{
+  "schema_version": "split_view_recommendation_readback.v1",
+  "artifact_id": "episode_002_split_view_decision_evidence_prototype_v1",
+  "primary_recommendation": "prepare_verified_local_source_transcript",
+  "primary_recommendation_label": "Prepare verified local source or transcript material",
+  "exactly_one_recommendation": true,
+  "recommendation_paths": [
+    {
+      "recommendation_id": "prepare_verified_local_source_transcript",
+      "label": "Prepare verified local source or transcript material",
+      "recommended_for_current_state": true,
+      "progress_role": "product_enabling_default",
+      "required_next_input": "A reviewed local source file, transcript, or equivalent source record for Episode 002."
+    },
+    {
+      "recommendation_id": "replace_sample_with_verified_real_input",
+      "label": "Replace the sample with verified real input",
+      "recommended_for_current_state": false,
+      "progress_role": "product_enabling_when_input_exists",
+      "required_next_input": "Already-present verified local source or transcript material."
+    },
+    {
+      "recommendation_id": "observe_yymm4_import_without_render",
+      "label": "Observe YMM4 import without render",
+      "recommended_for_current_state": false,
+      "progress_role": "explicit_gate_alternative",
+      "required_next_input": "Explicit human selection of YMM4 import observation; render and publication remain closed."
+    },
+    {
+      "recommendation_id": "hold_review_later",
+      "label": "Hold and review later",
+      "recommended_for_current_state": false,
+      "progress_role": "safe_fallback_not_progress",
+      "required_next_input": "Use only as safe fallback when no product-enabling input is available."
+    }
+  ],
+  "fallback_hold_status": "safe_fallback_not_progress",
+  "hold_is_not_progress": true,
+  "explicit_yymm4_observation_selected": false,
+  "real_input_available": false,
+  "rationale": "No verified real material is present and no import observation is explicitly selected, so the next useful step is preparing verified local input."
+}

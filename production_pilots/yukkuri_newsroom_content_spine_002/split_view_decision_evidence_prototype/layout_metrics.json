@@ -1,0 +1,29 @@
+{
+  "schema_version": "split_view_layout_metrics.v1",
+  "artifact_id": "episode_002_split_view_decision_evidence_prototype_v1",
+  "split_view_structure_status": "passed_left_decision_rail_right_evidence_pane",
+  "left_pane_sections": [
+    "user situation",
+    "active decision",
+    "current recommendation",
+    "next product-enabling action"
+  ],
+  "right_pane_sections": [
+    "evidence preview",
+    "source readiness",
+    "recommendation rationale",
+    "bounded gate context",
+    "secondary source records"
+  ],
+  "evidence_visible_without_drawer": true,
+  "drawer_only_evidence": false,
+  "source_records_secondary": true,
+  "gate_text_bounded": true,
+  "safety_surface_budget": "bounded_one_short_left_note_plus_right_pane_context",
+  "left_primary_prohibition_list_count": 0,
+  "left_primary_boundary_note_count": 1,
+  "internal_artifact_ids_in_left_primary_copy": [],
+  "card_grid_as_primary_structure": false,
+  "primary_card_grid_count": 0,
+  "primary_structure": "two_pane_split_view_with_compact_rows"
+}

@@ -16,9 +16,9 @@ flowchart LR
     RC --> LR["Review layout research<br/>ready benchmark"]
     LR --> GF["Guided decision flow prototype<br/>ready / current review entry"]
     GF --> L2["Layout second-pass benchmark<br/>ready / split-view selected"]
-    L2 -. "after human review" .-> SV["Split-view implementation prototype<br/>advisory next"]
-    L2 -. "later product lane" .-> E
-    L2 -. "explicit gate only" .-> IY["Actual YMM4 import observation<br/>blocked_by_true_gate"]
+    L2 --> SV["Split-view decision/evidence prototype<br/>ready / current review entry"]
+    SV -. "after human acceptance" .-> E
+    SV -. "explicit gate only" .-> IY["Actual YMM4 import observation<br/>blocked_by_true_gate"]
     P --> E["Real transcript replacement<br/>blocked_by_real_input"]
 
     H["sample transcript fixture"] -. "used now" .-> C
@@ -67,6 +67,11 @@ flowchart LR
     L2 --> BB["candidate_wireframes_second_pass.html<br/>split-view and alternatives"]
     L2 --> BC["evidence_handling_report.md<br/>not a generic drawer"]
     L2 --> BD["card_bloat_risk_report.md<br/>current pattern high risk"]
+    SV --> BE["split_view_decision_evidence.html<br/>primary human review"]
+    SV --> BF["recommendation_readback.json<br/>prepare verified input / hold fallback"]
+    SV --> BG["evidence_pane_readback.json<br/>visible right pane evidence"]
+    SV --> BH["source_record_index.json<br/>secondary raw paths"]
+    SV --> BI["layout_metrics.json<br/>no primary card grid"]
 
     N["closed gates:<br/>rights/legal/public-ready acceptance<br/>OAuth/API/payment<br/>live scraping/media download<br/>external image/media download<br/>YMM4 GUI/import/render<br/>production .ymmp<br/>YouTube publication"] -.-> F
     N -.-> G
@@ -77,3 +82,4 @@ flowchart LR
     N -.-> LR
     N -.-> GF
     N -.-> L2
+    N -.-> SV

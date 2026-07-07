@@ -35,6 +35,7 @@ Usage:
     python -m src.cli.main build-review-layout-research --package production_pilots/pkg [--cockpit-dir DIR] [--focused-brief-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-guided-decision-flow-prototype --package production_pilots/pkg [--layout-research-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
     python -m src.cli.main build-review-layout-second-pass --package production_pilots/pkg [--guided-flow-dir DIR] [--layout-research-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
+    python -m src.cli.main build-split-view-decision-evidence-prototype --package production_pilots/pkg [--second-pass-dir DIR] [--guided-flow-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
@@ -2692,6 +2693,48 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_split_view_decision_evidence = subparsers.add_parser(
+        "build-split-view-decision-evidence-prototype",
+        help="Build the episode 002 split-view decision/evidence prototype",
+    )
+    p_split_view_decision_evidence.add_argument("--package", required=True, help="Episode package directory")
+    p_split_view_decision_evidence.add_argument(
+        "--second-pass-dir",
+        help="Input second-pass layout benchmark directory (default: <package>/review_layout_second_pass)",
+    )
+    p_split_view_decision_evidence.add_argument(
+        "--guided-flow-dir",
+        help="Input guided decision flow directory (default: <package>/guided_decision_flow_prototype)",
+    )
+    p_split_view_decision_evidence.add_argument(
+        "--cockpit-dir",
+        help="Input compact review cockpit directory (default: <package>/review_cockpit_compact)",
+    )
+    p_split_view_decision_evidence.add_argument(
+        "--reviewer-packet-dir",
+        help="Input surface alignment review packet directory (default: <package>/surface_alignment_review_packet)",
+    )
+    p_split_view_decision_evidence.add_argument(
+        "--output",
+        help="Output directory (default: <package>/split_view_decision_evidence_prototype)",
+    )
+    p_split_view_decision_evidence.add_argument(
+        "--artifact-id",
+        default="episode_002_split_view_decision_evidence_prototype_v1",
+        help="Split-view decision/evidence prototype artifact id",
+    )
+    p_split_view_decision_evidence.add_argument(
+        "--explicit-yymm4-observation",
+        action="store_true",
+        help="Select YMM4 import observation as the current explicit human choice without launching YMM4",
+    )
+    p_split_view_decision_evidence.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -2826,6 +2869,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_guided_decision_flow_prototype(args)
         elif args.command == "build-review-layout-second-pass":
             return _cmd_build_review_layout_second_pass(args)
+        elif args.command == "build-split-view-decision-evidence-prototype":
+            return _cmd_build_split_view_decision_evidence_prototype(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -5030,6 +5075,48 @@ def _cmd_build_review_layout_second_pass(args: argparse.Namespace) -> int:
         print(f"primary_human_review: {readback.get('primary_human_review')}")
         print(f"candidate_wireframes: {readback.get('candidate_wireframes')}")
         print(f"final_recommendation: {readback.get('final_recommendation')}")
+        print(f"launcher_command: {readback.get('launcher_command')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_split_view_decision_evidence_prototype(args: argparse.Namespace) -> int:
+    """Build the episode 002 split-view decision/evidence prototype."""
+    from src.pipeline.split_view_decision_evidence_prototype import (
+        build_split_view_decision_evidence_prototype,
+    )
+
+    readback = build_split_view_decision_evidence_prototype(
+        package_dir=getattr(args, "package"),
+        second_pass_dir=getattr(args, "second_pass_dir", None),
+        guided_flow_dir=getattr(args, "guided_flow_dir", None),
+        cockpit_dir=getattr(args, "cockpit_dir", None),
+        reviewer_packet_dir=getattr(args, "reviewer_packet_dir", None),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+        explicit_yymm4_observation=bool(getattr(args, "explicit_yymm4_observation", False)),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"selected_candidate: {readback.get('selected_candidate')}")
+        print(f"primary_recommendation: {readback.get('primary_recommendation')}")
+        print(f"fallback_hold_status: {readback.get('fallback_hold_status')}")
+        print(f"evidence_visible_without_drawer: {readback.get('evidence_visible_without_drawer')}")
+        print(f"right_pane_summary: {readback.get('right_pane_summary')}")
+        print(f"source_records_secondary: {readback.get('source_records_secondary')}")
+        print(f"gate_text_bounded: {readback.get('gate_text_bounded')}")
+        print(f"internal_artifact_ids_in_left_primary_copy: {readback.get('internal_artifact_ids_in_left_primary_copy')}")
+        print(f"card_grid_as_primary_structure: {readback.get('card_grid_as_primary_structure')}")
+        print(f"split_view_structure_status: {readback.get('split_view_structure_status')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"recommendation_readback: {readback.get('recommendation_readback')}")
+        print(f"evidence_pane_readback: {readback.get('evidence_pane_readback')}")
+        print(f"markdown_fallback: {readback.get('markdown_fallback')}")
         print(f"launcher_command: {readback.get('launcher_command')}")
         print(f"next_action: {readback.get('next_action')}")
     return 0

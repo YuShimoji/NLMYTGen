@@ -1,5 +1,48 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 split-view decision/evidence prototype completed (2026-07-07 JST)**:
+  `episode-002-split-view-decision-evidence-prototype-v1` materializes the
+  second-pass selected layout target as a local/static dark-mode review
+  prototype. Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/split_view_decision_evidence_prototype/`.
+  Primary human review is `split_view_decision_evidence.html`; Markdown
+  fallback is `split_view_decision_evidence.md`; primary machine readback is
+  `validation_readback.json`; recommendation readback is
+  `recommendation_readback.json`; evidence pane readback is
+  `evidence_pane_readback.json`; secondary source index is
+  `source_record_index.json`; layout readback is `layout_metrics.json`.
+  Regeneration command:
+  `python -m src.cli.main build-split-view-decision-evidence-prototype --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_split_view_decision_evidence_prototype_v1`.
+  The prototype uses a left decision rail for situation, active decision,
+  current recommendation, and next product-enabling action plus a right
+  evidence pane for visible evidence preview, source readiness,
+  recommendation rationale, bounded gate context, and secondary raw source
+  records. Evidence is visible without a drawer-only mechanism; source paths
+  and internal artifact IDs are secondary and absent from left-pane primary
+  copy. For the current checked state, verified real input is absent and YMM4
+  observation is not explicitly selected, so the single product-enabling
+  recommendation is `prepare_verified_local_source_transcript`. Hold remains
+  `safe_fallback_not_progress`; YMM4 observation remains an explicit-gate
+  alternative only. The package preserves `dry_run`,
+  `sample_fixture_not_real`, `no_real_transcript`, `rights_boundary`,
+  `public_upload_closed`, `yymm4_render_closed`, `no_yymm4_import`,
+  `thumbnail_context_only`, `validation_noise_nonblocking`, and
+  `not_production_ready`. Targeted split-view tests pass
+  (`uv run pytest tests/test_split_view_decision_evidence_prototype.py -q`
+  -> 4 passed), and the CLI generation readback passes with
+  `evidence_visible_without_drawer=true`, `source_records_secondary=true`,
+  `gate_text_bounded=true`, no internal artifact IDs in left primary copy, no
+  card grid as primary structure, no external refs, and no false
+  production/YMM4/public claims. Full pytest was not run. Access verification
+  is `verified_present`; user-opened visual acceptance is still pending. No
+  production UI promotion, real transcript/source replacement, YMM4 GUI
+  launch/import/render, production `.ymmp`, final thumbnail approval, live
+  fetch/scraping, external media download, OAuth/API key/payment,
+  rights/legal/public-ready acceptance, YouTube upload, destructive git,
+  cross-repo edit, or full-suite green campaign occurred. Next product move
+  after human acceptance is preparing or providing verified local
+  source/transcript material.
+
 - **Episode 002 layout second-pass split-view benchmark completed (2026-07-07 JST)**:
   `episode-002-layout-second-pass-split-view-benchmark-v1` re-evaluates the
   Episode 002 review UI after guided-flow weak-pass feedback, with special

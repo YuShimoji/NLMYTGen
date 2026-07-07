@@ -1,0 +1,57 @@
+{
+  "schema_version": "split_view_evidence_pane_readback.v1",
+  "artifact_id": "episode_002_split_view_decision_evidence_prototype_v1",
+  "evidence_visible_without_drawer": true,
+  "drawer_only_evidence": false,
+  "right_pane_summary": "Visible evidence preview with source readiness, recommendation rationale, bounded gate context, and secondary raw source records.",
+  "visible_evidence_rows": [
+    {
+      "row_id": "selected_layout",
+      "label": "Selected layout evidence",
+      "status": "ready",
+      "evidence": "The second-pass benchmark selects split view as the single next implementation target.",
+      "supports": "Use a decision rail and evidence pane instead of extending cards or drawer-only evidence."
+    },
+    {
+      "row_id": "current_review_surfaces",
+      "label": "Source surface readiness",
+      "status": "local_review_surfaces_present",
+      "evidence": "GUI dashboard, import preview, thumbnail proof, and aligned story are available as local source records.",
+      "supports": "The right pane can explain what existing surfaces prove without making raw paths primary."
+    },
+    {
+      "row_id": "real_input_readiness",
+      "label": "Real input readiness",
+      "status": "verified_real_input_absent",
+      "evidence": "The real-input drop-zone has no non-placeholder source file in the current checked state.",
+      "supports": "Preparing verified local source or transcript material is the product-enabling next step."
+    },
+    {
+      "row_id": "hold_boundary",
+      "label": "Hold fallback",
+      "status": "safe_fallback_not_progress",
+      "evidence": "Hold remains safe because gates stay closed, but it does not move Episode 002 toward real input replacement.",
+      "supports": "Do not present hold as the main progress state."
+    }
+  ],
+  "source_readiness_summary": {
+    "second_pass_benchmark": "ready_selected_split_view",
+    "guided_flow": "weak_pass_source_record",
+    "gui_dashboard_panel": "ready_local_review_surface",
+    "ymm4_import_preview": "ready_context_synced_not_imported",
+    "thumbnail_visual_proof": "context_only_not_final_approval",
+    "verified_real_input": "absent"
+  },
+  "recommendation_rationale": [
+    "The split-view benchmark rejected drawer-only evidence because trust evidence must sit beside the decision.",
+    "No verified real input is present, so the next product-enabling action is preparing or providing it.",
+    "YMM4 observation remains an explicit-gate alternative, not an implicit next step.",
+    "Hold remains safe fallback, not progress."
+  ],
+  "bounded_gate_context": [
+    "No render/import/publication occurs from this prototype.",
+    "Rights/public-ready and final thumbnail approval remain closed.",
+    "Validation drift remains nonblocking for this local review slice."
+  ],
+  "secondary_source_records_path": "secondary_source_records"
+}
