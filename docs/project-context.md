@@ -2,6 +2,58 @@
 
 ## PROJECT CONTEXT
 - Current handoff (2026-07-07 JST):
+  `episode-002-split-view-decision-evidence-prototype-v1` is complete on
+  branch `codex/episode-002-surface-alignment-repair-and-reviewer-packet-v1`;
+  the artifact completion commit before this docs-only handoff note is
+  `e86cd8f`. The branch was fetched from `origin`, the worktree was clean
+  before this handoff note, and `HEAD...@{u}` was `0 0`. The active artifact
+  is
+  `production_pilots/yukkuri_newsroom_content_spine_002/split_view_decision_evidence_prototype/`.
+  Primary human review is `split_view_decision_evidence.html`; primary
+  machine readback is `validation_readback.json`; recommendation readback is
+  `recommendation_readback.json`; evidence pane readback is
+  `evidence_pane_readback.json`; source records are secondary in
+  `source_record_index.json`; layout readback is `layout_metrics.json`.
+  Current host open command:
+  `start "" "C:\Users\PLANNER007\NLMYTGen\production_pilots\yukkuri_newsroom_content_spine_002\split_view_decision_evidence_prototype\split_view_decision_evidence.html"`.
+  The split-view prototype materializes the selected
+  `candidate_a_split_view_decision_evidence_pane` direction from
+  `review_layout_second_pass/`: left decision rail for user situation,
+  active decision, current recommendation, and next product-enabling action;
+  right evidence pane for evidence preview, source readiness, rationale,
+  bounded gate context, and raw source records. Evidence is visible without a
+  drawer-only mechanism. Internal artifact IDs and raw paths are absent from
+  the left-pane primary copy. The current checked recommendation is
+  `prepare_verified_local_source_transcript`; `hold_review_later` is only
+  `safe_fallback_not_progress`; YMM4 import observation is an explicit-gate
+  alternative only. Another terminal should fetch, switch to
+  `codex/episode-002-surface-alignment-repair-and-reviewer-packet-v1`, confirm
+  `git rev-list --left-right --count "HEAD...@{u}"` is `0 0`, then read
+  `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, `docs/runtime-state.md`, this
+  handoff entry,
+  `production_pilots/yukkuri_newsroom_content_spine_002/split_view_decision_evidence_prototype/validation_readback.json`,
+  and
+  `production_pilots/yukkuri_newsroom_content_spine_002/split_view_decision_evidence_prototype/recommendation_readback.json`.
+  Regeneration command:
+  `python -m src.cli.main build-split-view-decision-evidence-prototype --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_split_view_decision_evidence_prototype_v1`.
+  Targeted validation passed with
+  `uv run pytest tests/test_split_view_decision_evidence_prototype.py tests/test_review_layout_second_pass.py tests/test_guided_decision_flow_prototype.py -q`
+  -> 12 passed; generated readback reports
+  `evidence_visible_without_drawer=true`,
+  `source_records_secondary=true`, `gate_text_bounded=true`,
+  `internal_artifact_ids_in_left_primary_copy=[]`, and
+  `card_grid_as_primary_structure=false`; `git diff --check` and
+  `git diff --cached --check` passed before commit. Full pytest was not run by
+  policy. Next meaningful product slice after human visual acceptance is
+  preparing or providing verified local source/transcript material so Episode
+  002 can leave sample-only review. Do not resume production UI promotion,
+  YMM4 GUI launch/import/render, production `.ymmp`, final thumbnail approval,
+  real transcript/source replacement before verified input exists, live
+  fetch/scraping, external media download, OAuth/API keys/payment,
+  rights/legal/public-ready acceptance, YouTube upload, destructive git,
+  cross-repo edits, or repeated full pytest loops.
+
+- Current handoff (2026-07-07 JST):
   `episode-002-review-layout-research-and-pattern-benchmark-v1` is complete on
   branch `codex/episode-002-surface-alignment-repair-and-reviewer-packet-v1`;
   the artifact completion commit before this docs-only handoff note is
