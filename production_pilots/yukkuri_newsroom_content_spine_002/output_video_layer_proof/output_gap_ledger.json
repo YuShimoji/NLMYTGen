@@ -1,0 +1,115 @@
+{
+  "schema_version": "output_gap_ledger.v1",
+  "artifact_id": "episode_002_output_video_layer_proof_v1",
+  "purpose": "Identify what is still needed to turn Episode 002 into a real yukkuri video.",
+  "features": [
+    {
+      "feature_id": "timing_alignment",
+      "category": "buildable_locally",
+      "current_state": "Scene durations are rough estimates.",
+      "needed_for_video": "Create timing readback from narration rows and future audio/YMM4 observation."
+    },
+    {
+      "feature_id": "voice_item_mapping",
+      "category": "buildable_locally",
+      "current_state": "Speaker rows exist but no VoiceItem mapping proof exists.",
+      "needed_for_video": "Map speakers to YMM4 voice item assumptions without importing."
+    },
+    {
+      "feature_id": "visual_scene_template",
+      "category": "buildable_locally",
+      "current_state": "Sections have default bg/face labels only.",
+      "needed_for_video": "Create a local scene-template proof for intro/develop/closing beats."
+    },
+    {
+      "feature_id": "citation_source_overlay",
+      "category": "buildable_locally",
+      "current_state": "No source/citation overlay contract exists for a real episode.",
+      "needed_for_video": "Define overlay slots that can accept reviewed source notes later."
+    },
+    {
+      "feature_id": "thumbnail_transfer",
+      "category": "buildable_locally",
+      "current_state": "Thumbnail proof exists as context only.",
+      "needed_for_video": "Record how selected thumbnail direction would transfer into a video package."
+    },
+    {
+      "feature_id": "verified_source_transcript_intake",
+      "category": "blocked_by_real_input",
+      "current_state": "Current transcript is sample_fixture_not_real.",
+      "needed_for_video": "Provide reviewed local source/transcript material."
+    },
+    {
+      "feature_id": "real_source_rights_context",
+      "category": "blocked_by_real_input",
+      "current_state": "Source is offline fixture, not live reviewed material.",
+      "needed_for_video": "Attach source context and rights status before production use."
+    },
+    {
+      "feature_id": "yymm4_import_observation",
+      "category": "blocked_by_yymm4_gate",
+      "current_state": "Draft CSV has not been imported to YMM4.",
+      "needed_for_video": "Explicit human gate required for import observation without render."
+    },
+    {
+      "feature_id": "voiceitem_timing_readback",
+      "category": "blocked_by_yymm4_gate",
+      "current_state": "No VoiceItem timing exists.",
+      "needed_for_video": "Read timing only after explicit YMM4 observation."
+    },
+    {
+      "feature_id": "render_smoke",
+      "category": "blocked_by_yymm4_gate",
+      "current_state": "No render was performed.",
+      "needed_for_video": "Render smoke remains closed until explicit YMM4/render gate."
+    },
+    {
+      "feature_id": "public_rights_acceptance",
+      "category": "blocked_by_public_rights_gate",
+      "current_state": "No rights/legal/public-ready acceptance exists.",
+      "needed_for_video": "Human rights/public review required."
+    },
+    {
+      "feature_id": "youtube_visibility_package",
+      "category": "blocked_by_public_rights_gate",
+      "current_state": "No upload/visibility action is allowed.",
+      "needed_for_video": "Public metadata and upload remain closed."
+    },
+    {
+      "feature_id": "final_thumbnail_approval",
+      "category": "blocked_by_public_rights_gate",
+      "current_state": "Thumbnail proof is contextual only.",
+      "needed_for_video": "Human final thumbnail approval required."
+    }
+  ],
+  "groups": {
+    "buildable_locally": [
+      "timing_alignment",
+      "voice_item_mapping",
+      "visual_scene_template",
+      "citation_source_overlay",
+      "thumbnail_transfer"
+    ],
+    "blocked_by_real_input": [
+      "verified_source_transcript_intake",
+      "real_source_rights_context"
+    ],
+    "blocked_by_yymm4_gate": [
+      "yymm4_import_observation",
+      "voiceitem_timing_readback",
+      "render_smoke"
+    ],
+    "blocked_by_public_rights_gate": [
+      "public_rights_acceptance",
+      "youtube_visibility_package",
+      "final_thumbnail_approval"
+    ]
+  },
+  "group_counts": {
+    "buildable_locally": 5,
+    "blocked_by_real_input": 2,
+    "blocked_by_yymm4_gate": 3,
+    "blocked_by_public_rights_gate": 3
+  },
+  "missing_feature_count": 13
+}

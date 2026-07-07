@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="ja" data-output-video-proof="true" data-artifact-kind="episode-output-video-layer-proof">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Episode 002 Output Video Layer Proof</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+      --bg: #0c1116;
+      --surface: #182129;
+      --stage: #101820;
+      --panel: #141b22;
+      --line: #50606d;
+      --text: #f3efe7;
+      --muted: #c2baad;
+      --accent: #73dfcf;
+      --action: #9fc5ff;
+      --warn: #f1cf6a;
+      --closed: #ef9f9f;
+      --ok: #9ee8bc;
+      --shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #eef2ef;
+        --surface: #e2e9e5;
+        --stage: #f7f2e8;
+        --panel: #efede5;
+        --line: #aeb9b3;
+        --text: #1d231f;
+        --muted: #5d665f;
+        --accent: #0f766e;
+        --action: #1d4ed8;
+        --warn: #8a5a00;
+        --closed: #9b1c1c;
+        --ok: #047857;
+        --shadow: 0 16px 32px rgba(29, 35, 31, 0.12);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+    button { font: inherit; }
+    .wrap {
+      width: min(1360px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 16px 0 32px;
+    }
+    .topline {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 0 14px;
+    }
+    .identity, .nav, .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .nav { justify-content: flex-end; }
+    .episode { font-size: 1.08rem; font-weight: 760; }
+    .badge, .gate {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 720;
+      white-space: nowrap;
+    }
+    .gate { color: var(--closed); }
+    .nav button {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text);
+      padding: 7px 10px;
+      cursor: pointer;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.34fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+    .storyboard, .side, .gap-ledger, .handoff {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      background: var(--surface);
+    }
+    .storyboard {
+      min-height: 640px;
+      padding: 16px;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 14px;
+    }
+    .side {
+      padding: 16px;
+      display: grid;
+      gap: 13px;
+      align-content: start;
+      background: var(--panel);
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: clamp(1.45rem, 2.3vw, 2.2rem); line-height: 1.08; letter-spacing: 0; }
+    h2 { font-size: 1rem; letter-spacing: 0; }
+    h3 { font-size: 0.82rem; color: var(--muted); letter-spacing: 0; }
+    p, li, span { line-height: 1.4; }
+    p, li { color: var(--muted); }
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .summary-item {
+      border-left: 3px solid var(--accent);
+      padding: 7px 9px;
+      background: rgba(255, 255, 255, 0.035);
+      min-width: 0;
+    }
+    .summary-item strong { display: block; color: var(--text); }
+    .scene-rail {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .scene-panel {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--stage);
+      padding: 12px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 10px;
+    }
+    .scene-panel strong { color: var(--text); }
+    .phase-bar {
+      height: 8px;
+      border-radius: 999px;
+      background: var(--line);
+      overflow: hidden;
+    }
+    .phase-bar span {
+      display: block;
+      height: 100%;
+      background: var(--accent);
+    }
+    .rows {
+      display: grid;
+      gap: 5px;
+      min-height: 80px;
+    }
+    .dialogue-row {
+      border-left: 3px solid var(--action);
+      padding: 6px 7px;
+      background: rgba(255, 255, 255, 0.035);
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .timeline-node {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.035);
+      min-width: 0;
+    }
+    .timeline-node strong { color: var(--text); display: block; }
+    .table {
+      display: grid;
+      gap: 6px;
+    }
+    .table-row {
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .table-row span:first-child { color: var(--muted); }
+    .table-row span:last-child { color: var(--text); }
+    .gap-ledger, .handoff {
+      margin-top: 14px;
+      padding: 14px;
+    }
+    .gap-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .gap-group {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.035);
+      padding: 10px;
+      min-width: 0;
+    }
+    .gap-group ul { margin: 8px 0 0; padding-left: 18px; }
+    code { color: var(--action); overflow-wrap: anywhere; font-size: 0.84rem; }
+    @media (max-width: 1100px) {
+      .topline, .layout { grid-template-columns: 1fr; }
+      .nav { justify-content: flex-start; }
+      .summary-strip, .scene-rail, .timeline, .gap-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="topline" data-region="header">
+      <div class="identity">
+        <span class="episode">Episode 002</span>
+        <span class="badge">Output / Video Layer</span>
+        <span class="badge">local proof</span>
+        <span class="badge">sample fixture</span>
+      </div>
+      <nav class="nav" data-region="navigation" aria-label="proof navigation">
+        <button type="button" data-jump="storyboard">storyboard</button>
+        <button type="button" data-jump="gaps">gaps</button>
+        <button type="button" data-jump="handoff">handoff</button>
+      </nav>
+    </header>
+    <section class="layout">
+      <section class="storyboard" id="storyboard" data-region="storyboard-timeline">
+        <div>
+          <h1>Factory seed dry-run placeholder for a second yukkuri newsroom episode</h1>
+          <p>Existing dry-run IR/CSV artifacts are assembled into a local storyboard and timeline preview. No YMM4 import, render, or public gate is crossed.</p>
+        </div>
+        <div class="summary-strip" aria-label="proof summary">
+          <div class="summary-item"><h3>scenes</h3><strong>3</strong></div>
+          <div class="summary-item"><h3>CSV rows</h3><strong>9</strong></div>
+          <div class="summary-item"><h3>estimated time</h3><strong>36 sec</strong></div>
+          <div class="summary-item"><h3>real input</h3><strong>blocked_by_real_input</strong></div>
+        </div>
+        <div class="scene-rail" aria-label="storyboard scenes">
+          <article class="scene-panel"><span class="badge">S1</span><div><h2>Opening hook and topic promise</h2><p>topic hook, title proof, speaker setup</p></div><div class="rows"><div class="dialogue-row">今日は「DRY RUN」って、どういう話なの？</div>
+<div class="dialogue-row">Dry-run only: confirm the factory can open a second episode seed.</div></div><div><div class="phase-bar"><span style="width: 24%"></span></div><p>0-8 sec / rows 1-2</p></div></article>
+<article class="scene-panel"><span class="badge">S2</span><div><h2>Main explanation: Factory seed dry-run placeholder for a second yukkuri newsroom episode</h2><p>diagram view, template registry, inherited defaults split</p></div><div class="rows"><div class="dialogue-row">ポイント1は、Load the template registry.</div>
+<div class="dialogue-row">ポイント2は、Separate inherited defaults from real required inputs.</div></div><div><div class="phase-bar"><span style="width: 24%"></span></div><p>8-16 sec / rows 3-4</p></div></article>
+<article class="scene-panel"><span class="badge">S3</span><div><h2>Viewer watch point and production boundary</h2><p>readiness strip, closed gates, next material requirement</p></div><div class="rows"><div class="dialogue-row">なるほど、そこを見れば話の筋が追いやすいんだね。</div>
+<div class="dialogue-row">ポイント3は、Mark the source packet as synthetic dry-run material.</div></div><div><div class="phase-bar"><span style="width: 60%"></span></div><p>16-36 sec / rows 5-9</p></div></article>
+        </div>
+      </section>
+      <aside class="side" data-region="readiness-panel">
+        <span class="badge">readiness</span>
+        <div class="table" aria-label="readiness table">
+          <div class="table-row"><span>timeline</span><span>writer_ir_sections_plus_regenerated_draft_yymm4_csv</span></div>
+          <div class="table-row"><span>draft CSV</span><span>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv</span></div>
+          <div class="table-row"><span>YMM4</span><span>not_imported_to_yymm4</span></div>
+          <div class="table-row"><span>thumbnail</span><span>headline_driven</span></div>
+        </div>
+        <div class="badges" aria-label="closed gates">
+          <span class="gate">no import</span>
+          <span class="gate">no render</span>
+          <span class="gate">no public</span>
+          <span class="gate">no rights approval</span>
+        </div>
+      </aside>
+    </section>
+    <section class="gap-ledger" id="gaps" data-region="gap-ledger">
+      <h2>Missing output/editing features</h2>
+      <p>The ledger is secondary to the storyboard preview; it names the concrete work still needed for a real yukkuri video.</p>
+      <div class="gap-grid">
+        <section class="gap-group"><h3>buildable_locally</h3><ul><li>timing_alignment</li>
+<li>voice_item_mapping</li>
+<li>visual_scene_template</li>
+<li>citation_source_overlay</li>
+<li>thumbnail_transfer</li></ul></section>
+<section class="gap-group"><h3>blocked_by_real_input</h3><ul><li>verified_source_transcript_intake</li>
+<li>real_source_rights_context</li></ul></section>
+<section class="gap-group"><h3>blocked_by_yymm4_gate</h3><ul><li>yymm4_import_observation</li>
+<li>voiceitem_timing_readback</li>
+<li>render_smoke</li></ul></section>
+<section class="gap-group"><h3>blocked_by_public_rights_gate</h3><ul><li>public_rights_acceptance</li>
+<li>youtube_visibility_package</li>
+<li>final_thumbnail_approval</li></ul></section>
+      </div>
+    </section>
+    <section class="handoff" id="handoff" data-region="handoff-readiness">
+      <h2>YMM4 handoff readiness</h2>
+      <div class="timeline" aria-label="handoff ladder">
+        <div class="timeline-node"><h3>now</h3><strong>storyboard proof</strong><span>local preview only</span></div>
+        <div class="timeline-node"><h3>input</h3><strong>real source needed</strong><span>blocked by real input</span></div>
+        <div class="timeline-node"><h3>timing</h3><strong>voice mapping</strong><span>buildable locally</span></div>
+        <div class="timeline-node"><h3>gate</h3><strong>YMM4 observation</strong><span>explicit choice only</span></div>
+        <div class="timeline-node"><h3>public</h3><strong>closed</strong><span>rights and upload blocked</span></div>
+      </div>
+    </section>
+  </main>
+  <script>
+    for (const button of document.querySelectorAll('[data-jump]')) {
+      button.addEventListener('click', () => {
+        const target = document.getElementById(button.dataset.jump);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  </script>
+</body>
+</html>

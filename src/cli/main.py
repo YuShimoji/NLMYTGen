@@ -39,6 +39,7 @@ Usage:
     python -m src.cli.main build-review-console-redesign-prototype --package production_pilots/pkg [--current-split-view-dir DIR] [--second-pass-dir DIR] [--guided-flow-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
     python -m src.cli.main build-primary-artifact-review-console --package production_pilots/pkg [--current-console-dir DIR] [--second-pass-dir DIR] [--guided-flow-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
     python -m src.cli.main build-japanese-graphic-review-console --package production_pilots/pkg [--current-console-dir DIR] [--second-pass-dir DIR] [--guided-flow-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--lane-map-path PATH] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
+    python -m src.cli.main build-output-video-layer-proof --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
@@ -2880,6 +2881,27 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_output_video_layer_proof = subparsers.add_parser(
+        "build-output-video-layer-proof",
+        help="Build the episode 002 output/video layer proof package",
+    )
+    p_output_video_layer_proof.add_argument("--package", required=True, help="Episode package directory")
+    p_output_video_layer_proof.add_argument(
+        "--output",
+        help="Output directory (default: <package>/output_video_layer_proof)",
+    )
+    p_output_video_layer_proof.add_argument(
+        "--artifact-id",
+        default="episode_002_output_video_layer_proof_v1",
+        help="Output/video layer proof artifact id",
+    )
+    p_output_video_layer_proof.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -3022,6 +3044,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_primary_artifact_review_console(args)
         elif args.command == "build-japanese-graphic-review-console":
             return _cmd_build_japanese_graphic_review_console(args)
+        elif args.command == "build-output-video-layer-proof":
+            return _cmd_build_output_video_layer_proof(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -5410,6 +5434,43 @@ def _cmd_build_japanese_graphic_review_console(args: argparse.Namespace) -> int:
         print(f"graphic_surface_readback: {readback.get('graphic_surface_readback')}")
         print(f"japanese_copy_readback: {readback.get('japanese_copy_readback')}")
         print(f"layout_metrics: {readback.get('layout_metrics')}")
+        print(f"launcher_or_open_command: {readback.get('launcher_or_open_command')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_output_video_layer_proof(args: argparse.Namespace) -> int:
+    """Build the episode 002 output/video layer proof package."""
+    from src.pipeline.output_video_layer_proof import (
+        build_output_video_layer_proof,
+    )
+
+    readback = build_output_video_layer_proof(
+        package_dir=getattr(args, "package"),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"primary_review_file: {readback.get('primary_review_file')}")
+        print(f"scene_count: {readback.get('scene_count')}")
+        print(f"timeline_source: {readback.get('timeline_source')}")
+        print(f"draft_csv_used: {readback.get('draft_csv_used')}")
+        print(f"real_transcript_status: {readback.get('real_transcript_status')}")
+        print(f"yymm4_status: {readback.get('yymm4_status')}")
+        print(f"missing_feature_count: {readback.get('missing_feature_count')}")
+        print(f"buildable_local_count: {readback.get('buildable_local_count')}")
+        print(f"blocked_by_real_input_count: {readback.get('blocked_by_real_input_count')}")
+        print(f"blocked_by_yymm4_gate_count: {readback.get('blocked_by_yymm4_gate_count')}")
+        print(f"blocked_by_public_rights_count: {readback.get('blocked_by_public_rights_count')}")
+        print(f"gui_lane_files_touched: {readback.get('gui_lane_files_touched')}")
+        print(f"shared_docs_touched: {readback.get('shared_docs_touched')}")
+        print(f"full_pytest_run: {readback.get('full_pytest_run')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
         print(f"launcher_or_open_command: {readback.get('launcher_or_open_command')}")
         print(f"next_action: {readback.get('next_action')}")
     return 0

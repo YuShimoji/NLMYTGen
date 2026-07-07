@@ -1,0 +1,75 @@
+{
+  "schema_version": "output_video_source_artifact_index.v1",
+  "artifact_id": "episode_002_output_video_layer_proof_v1",
+  "gui_lane_context_read_only": true,
+  "protected_gui_lane_dirs": [
+    "production_pilots/yukkuri_newsroom_content_spine_002/japanese_graphic_review_console",
+    "production_pilots/yukkuri_newsroom_content_spine_002/primary_artifact_review_console",
+    "production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype"
+  ],
+  "records": [
+    {
+      "record_id": "episode_bridge",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/episode_bridge.json",
+      "role": "story_source",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "writer_ir_candidate",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/writer_ir_candidate.json",
+      "role": "story_source",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "cue_packet_candidate",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/cue_packet_candidate.json",
+      "role": "story_source",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "draft_yymm4_csv",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+      "role": "draft_csv_source",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "transcript_validation",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/validation_readback.json",
+      "role": "input_boundary",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "import_readiness_summary",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_readiness_summary.json",
+      "role": "handoff_boundary",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "yymm4_csv_inventory",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/yymm4_csv_inventory.json",
+      "role": "handoff_boundary",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "thumbnail_variants",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_variants.json",
+      "role": "thumbnail_context",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "japanese_graphic_console_validation",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/japanese_graphic_review_console/validation_readback.json",
+      "role": "gui_context_read_only",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    }
+  ]
+}
