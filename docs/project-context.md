@@ -1,6 +1,53 @@
 # Project Context — NLMYTGen
 
 ## PROJECT CONTEXT
+- Current handoff (2026-07-07 JST):
+  `episode-002-review-layout-research-and-pattern-benchmark-v1` is complete on
+  branch `codex/episode-002-surface-alignment-repair-and-reviewer-packet-v1`;
+  the artifact completion commit before this docs-only handoff note is
+  `7d9427a`. The branch was fetched from `origin`, the worktree was clean
+  before this handoff note, and `HEAD...@{u}` was `0 0`. The active
+  artifact is
+  `production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/`.
+  Primary human review is `layout_research_report.md`; low-fidelity dark-mode
+  wireframes are `candidate_wireframes.html`; primary machine readback is
+  `validation_readback.json`; final recommendation is
+  `final_layout_recommendation.md`; decision matrix is
+  `layout_decision_matrix.json`. Current host open command:
+  `start "" "C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\production_pilots\yukkuri_newsroom_content_spine_002\review_layout_research\candidate_wireframes.html"`.
+  The compact cockpit at
+  `production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html`
+  is now a weak-pass evaluated prototype, not the next UI direction. The
+  research packet compares dashboard/status board, start page/service entry,
+  task list/checklist, command center/cockpit, wizard/step-by-step decision
+  flow, and card-board/kanban-like review patterns, then selects exactly one
+  next implementation target: `candidate_b_guided_decision_flow`. Another
+  terminal should fetch, switch to
+  `codex/episode-002-surface-alignment-repair-and-reviewer-packet-v1`, confirm
+  `git rev-list --left-right --count "HEAD...@{u}"` is `0 0`, then read
+  `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, `docs/runtime-state.md`, this
+  handoff entry,
+  `production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/validation_readback.json`,
+  and
+  `production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/final_layout_recommendation.md`.
+  Regeneration command:
+  `python -m src.cli.main build-review-layout-research --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_review_layout_research_and_pattern_benchmark_v1`.
+  Targeted validation passed with
+  `uv run pytest tests\test_review_layout_research.py tests\test_review_cockpit_compact.py -q`
+  -> 8 passed; generated JSON loaded; candidate wireframes had no external
+  CSS/JS/font/image/media dependencies; forbidden production/public/YMM4 true
+  claims were absent; `git diff --check` and `git diff --cached --check`
+  passed before commit. Full pytest was not run by policy. Next meaningful
+  product slice is a guided start-to-decision prototype using Candidate B.
+  Real input replacement and actual YMM4 import observation remain later
+  human/product decisions after the better review surface exists. Do not
+  resume production review-cockpit replacement from this handoff, YMM4
+  GUI launch/import/render, production `.ymmp`, final thumbnail approval,
+  real transcript rerun without verified input, live fetch/scraping, external
+  media download, OAuth/API keys/payment, rights/legal/public-ready acceptance,
+  YouTube upload, destructive git, cross-repo edits, broad fixture
+  regeneration, or repeated full pytest loops.
+
 - Current handoff (2026-07-06 JST):
   `episode-002-surface-alignment-repair-and-reviewer-packet-v1` is complete on
   branch `codex/episode-002-surface-alignment-repair-and-reviewer-packet-v1`
