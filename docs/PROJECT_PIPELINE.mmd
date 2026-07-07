@@ -17,8 +17,9 @@ flowchart LR
     LR --> GF["Guided decision flow prototype<br/>ready / current review entry"]
     GF --> L2["Layout second-pass benchmark<br/>ready / split-view selected"]
     L2 --> SV["Split-view decision/evidence prototype<br/>ready / current review entry"]
-    SV -. "after human acceptance" .-> E
-    SV -. "explicit gate only" .-> IY["Actual YMM4 import observation<br/>blocked_by_true_gate"]
+    SV --> RCON["Review console redesign prototype<br/>ready / current review entry"]
+    RCON -. "after human acceptance" .-> E
+    RCON -. "explicit gate only" .-> IY["Actual YMM4 import observation<br/>blocked_by_true_gate"]
     P --> E["Real transcript replacement<br/>blocked_by_real_input"]
 
     H["sample transcript fixture"] -. "used now" .-> C
@@ -72,6 +73,11 @@ flowchart LR
     SV --> BG["evidence_pane_readback.json<br/>visible right pane evidence"]
     SV --> BH["source_record_index.json<br/>secondary raw paths"]
     SV --> BI["layout_metrics.json<br/>no primary card grid"]
+    RCON --> BJ["review_console.html<br/>primary human review"]
+    RCON --> BK["screen_audit.json<br/>decision / artifact / evidence / controls / noise"]
+    RCON --> BL["layout_metrics.json<br/>50.1 percent text reduction"]
+    RCON --> BM["inspector_readback.json<br/>issue / next operation / controls"]
+    RCON --> BN["evidence_drawer_index.json<br/>secondary raw records"]
 
     N["closed gates:<br/>rights/legal/public-ready acceptance<br/>OAuth/API/payment<br/>live scraping/media download<br/>external image/media download<br/>YMM4 GUI/import/render<br/>production .ymmp<br/>YouTube publication"] -.-> F
     N -.-> G
@@ -83,3 +89,4 @@ flowchart LR
     N -.-> GF
     N -.-> L2
     N -.-> SV
+    N -.-> RCON

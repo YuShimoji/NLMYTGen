@@ -22,6 +22,7 @@ surface. It is not a production gate, a prompt, or a source of product rules.
 | Episode 002 guided decision flow prototype | weak_pass_prototype | `production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.html` | evaluated source record; starts from user situation but keeps evidence drawer/card weaknesses |
 | Episode 002 layout second-pass benchmark | source_record | `production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/split_view_benchmark.md` | split-view benchmark; selects split-view decision rail plus evidence pane |
 | Episode 002 split-view decision/evidence prototype | ready | `production_pilots/yukkuri_newsroom_content_spine_002/split_view_decision_evidence_prototype/split_view_decision_evidence.html` | current local review entry; left decision rail plus visible right evidence pane |
+| Episode 002 review console redesign prototype | ready | `production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype/review_console.html` | current local review entry; Header / Navigation / Main Review Surface / Inspector / Evidence Drawer console |
 | Validation drift triage | nonblocking | `docs/verification/VALIDATION_DRIFT_VELOCITY_RECOVERY_V1_2026-07-06.md` | full-suite drift is classified; product work can continue |
 | Real transcript replacement | blocked_by_real_input | `production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input/` | requires verified local transcript input |
 
@@ -42,30 +43,30 @@ surface. It is not a production gate, a prompt, or a source of product rules.
 - guided_decision_flow_002: `[#####--]` guided local prototype generated and validated; now a weak-pass source record because hold and drawer-only evidence are not the desired progress model.
 - review_layout_second_pass_002: `[######-]` split-view benchmark generated and validated; selected decision rail plus evidence/preview pane as the implementation target.
 - split_view_decision_evidence_002: `[######-]` split-view local prototype generated and validated; current default recommendation is preparing verified local source/transcript material, with hold kept as safe fallback only.
+- review_console_redesign_002: `[######-]` review judgment console generated and validated; first viewport exposes target, blocker, next operation, and bounded closed gates with 50.1% less initial text.
 - validation_drift_triage: `[#####--]` current drift classified as nonblocking for episode 002 product work.
 - real_transcript_input: `[#------]` drop-zone exists, real input absent.
 
 ## Product Return Path
 
-Completed/current slice: episode 002 split-view decision/evidence prototype.
+Completed/current slice: episode 002 review console redesign prototype.
 The current human review entry is
-`split_view_decision_evidence_prototype/split_view_decision_evidence.html`,
+`review_console_redesign_prototype/review_console.html`,
 with Markdown fallback at
-`split_view_decision_evidence_prototype/split_view_decision_evidence.md` and
+`review_console_redesign_prototype/review_console.md` and
 machine readback at
-`split_view_decision_evidence_prototype/validation_readback.json`. The second
-pass benchmark remains the source record that selected
-`candidate_a_split_view_decision_evidence_pane`; the guided decision flow
-remains a weak-pass source record because it made hold too central and kept
-evidence in a drawer-like secondary space. The implemented prototype now uses a
-left decision rail and a visible right evidence pane, keeps raw source paths
-secondary, bounds gate text, and avoids card-grid primary structure. For the
+`review_console_redesign_prototype/validation_readback.json`. The split-view
+prototype remains a source record for the redesign. The current console uses
+Header / Navigation / Main Review Surface / Inspector / Evidence Drawer,
+keeps evidence visible outside the drawer, makes raw source paths secondary,
+reduces initial visible text by 50.1% against the split-view baseline, bounds
+gate text, and avoids same-shape card grid as the primary structure. For the
 current checked state, verified real source/transcript material is absent and
 YMM4 observation is not explicitly selected, so the product-enabling next move
 is preparing or providing verified local source/transcript material. Hold is
 safe fallback only; actual YMM4 import observation requires an explicit human
 choice and still excludes render/public claims. The validation drift remains
-nonblocking for this local split-view review line.
+nonblocking for this local review-console line.
 
 ## Regeneration
 
@@ -82,18 +83,21 @@ python -m src.cli.main build-review-layout-research --package production_pilots/
 python -m src.cli.main build-guided-decision-flow-prototype --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_guided_decision_flow_prototype_v1
 python -m src.cli.main build-review-layout-second-pass --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_layout_second_pass_split_view_benchmark_v1
 python -m src.cli.main build-split-view-decision-evidence-prototype --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_split_view_decision_evidence_prototype_v1
+python -m src.cli.main build-review-console-redesign-prototype --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_review_console_redesign_prototype_v1
 ```
 
 Primary machine readback:
 
 ```text
 production_pilots/yukkuri_newsroom_content_spine_002/split_view_decision_evidence_prototype/validation_readback.json
+production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype/validation_readback.json
 ```
 
 Primary human review file:
 
 ```text
 production_pilots/yukkuri_newsroom_content_spine_002/split_view_decision_evidence_prototype/split_view_decision_evidence.html
+production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype/review_console.html
 ```
 
 ## Closed Gates

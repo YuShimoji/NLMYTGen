@@ -1,0 +1,66 @@
+{
+  "schema_version": "review_console_inspector_readback.v1",
+  "artifact_id": "episode_002_review_console_redesign_prototype_v1",
+  "current_issue": "The current split-view still reads as a dense text dashboard with equal-weight bordered blocks.",
+  "critical_issue": "The current split-view still reads as a dense text dashboard with equal-weight bordered blocks.",
+  "next_operation": "Prepare verified local source/transcript material.",
+  "primary_recommendation": "prepare_verified_local_source_transcript",
+  "primary_recommendation_label": "Prepare verified local source or transcript material",
+  "recommendation_rationale": "No verified real material is present and no import observation is explicitly selected, so the next useful step is preparing verified local input.",
+  "operational_controls": [
+    {
+      "control_id": "prepare_verified_local_source_transcript",
+      "label": "Prepare real input",
+      "effect": "Advance beyond sample.",
+      "recommended_for_current_state": true,
+      "tone": "primary"
+    },
+    {
+      "control_id": "regenerate_review_console",
+      "label": "Regenerate console",
+      "effect": "Rebuild local package.",
+      "recommended_for_current_state": false,
+      "tone": "neutral"
+    },
+    {
+      "control_id": "request_yymm4_observation_gate",
+      "label": "Request YMM4 gate",
+      "effect": "Observation only; no render.",
+      "recommended_for_current_state": false,
+      "tone": "gated"
+    },
+    {
+      "control_id": "accept_reject_hold",
+      "label": "Accept / reject / hold",
+      "effect": "Record judgment; fallback only.",
+      "recommended_for_current_state": false,
+      "tone": "fallback"
+    }
+  ],
+  "hold_is_not_progress": true,
+  "fallback_hold_status": "safe_fallback_not_progress",
+  "compact_status_rows": [
+    {
+      "label": "Source",
+      "value": "sample fixture",
+      "state": "not real input"
+    },
+    {
+      "label": "Decision",
+      "value": "console review",
+      "state": "needs human acceptance"
+    },
+    {
+      "label": "Next",
+      "value": "prepare verified input",
+      "state": "product enabling"
+    },
+    {
+      "label": "Gates",
+      "value": "closed",
+      "state": "bounded"
+    }
+  ],
+  "evidence_visible_outside_drawer": true,
+  "inspector_summary": "The side inspector carries issue, next operation, compact status, and controls without making closed-gate warnings dominate the main view."
+}

@@ -1,5 +1,43 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 review console redesign prototype completed (2026-07-08 JST)**:
+  `episode-002-review-console-redesign-prototype-v1` replaces the card-heavy
+  split-view review surface with a local/static review judgment console.
+  Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype/`.
+  Primary human review is `review_console.html`; Markdown fallback is
+  `review_console.md`; primary machine readback is `validation_readback.json`;
+  screen audit is `screen_audit.json` / `screen_audit.md`; state/readbacks are
+  `console_state.json`, `inspector_readback.json`,
+  `evidence_drawer_index.json`, `layout_metrics.json`, and
+  `visual_self_review.md`. Regeneration command:
+  `python -m src.cli.main build-review-console-redesign-prototype --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_review_console_redesign_prototype_v1`.
+  The console uses Header / Navigation / Main Review Surface / Inspector /
+  Evidence Drawer, keeps evidence visible outside the drawer, and moves raw
+  records/source paths to the secondary drawer. The first viewport shows the
+  current review target, critical issue, recommended next operation, and
+  bounded closed production/YMM4 status without scroll. Initial visible text
+  is reduced by 50.1% against the current split-view baseline
+  (`359 -> 179 words`) using the documented extractor/readback method, and
+  `same_shape_card_grid_primary=false`. The primary recommendation remains
+  `prepare_verified_local_source_transcript`; hold remains
+  `safe_fallback_not_progress`; YMM4 observation remains an explicit-gate
+  alternative only. The package preserves `dry_run`,
+  `sample_fixture_not_real`, `no_real_transcript`, `rights_boundary`,
+  `public_upload_closed`, `yymm4_render_closed`, `no_yymm4_import`,
+  `thumbnail_context_only`, `validation_noise_nonblocking`, and
+  `not_production_ready`. Targeted review-console tests pass
+  (`uv run pytest tests/test_review_console_redesign_prototype.py -q`
+  -> 4 passed). Full pytest was not run. Access verification is
+  `verified_present`; user-opened visual acceptance is still pending. No
+  production UI promotion, real transcript/source replacement, YMM4 GUI
+  launch/import/render, production `.ymmp`, final thumbnail approval, live
+  fetch/scraping, external media download, OAuth/API key/payment,
+  rights/legal/public-ready acceptance, YouTube upload, destructive git,
+  cross-repo edit, broad fixture regeneration, or full-suite green campaign
+  occurred. Next product move after human acceptance is preparing or providing
+  verified local source/transcript material.
+
 - **Episode 002 split-view decision/evidence prototype completed (2026-07-07 JST)**:
   `episode-002-split-view-decision-evidence-prototype-v1` materializes the
   second-pass selected layout target as a local/static dark-mode review

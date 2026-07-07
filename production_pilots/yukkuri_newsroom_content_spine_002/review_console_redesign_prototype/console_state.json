@@ -1,0 +1,243 @@
+{
+  "schema_version": "review_console_state.v1",
+  "artifact_id": "episode_002_review_console_redesign_prototype_v1",
+  "artifact_kind": "episode-review-console-redesign-prototype",
+  "status": "review_console_ready_local_offline",
+  "source_package_dir": "production_pilots/yukkuri_newsroom_content_spine_002",
+  "current_split_view_dir": "production_pilots/yukkuri_newsroom_content_spine_002/split_view_decision_evidence_prototype",
+  "second_pass_dir": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass",
+  "guided_flow_dir": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype",
+  "cockpit_dir": "production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact",
+  "reviewer_packet_dir": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet",
+  "output_dir": "production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype",
+  "primary_decision": "Accept or reject the compact review judgment console direction for Episode 002.",
+  "primary_artifact": "Review console first viewport showing target, blocker, next operation, and bounded closed gates.",
+  "current_review_target": "Episode 002 local review surface redesign",
+  "critical_issue": "The current split-view still reads as a dense text dashboard with equal-weight bordered blocks.",
+  "critical_issue_compact": "Dense text dashboard.",
+  "primary_recommendation": "prepare_verified_local_source_transcript",
+  "primary_recommendation_label": "Prepare verified local source or transcript material",
+  "next_operation": "Prepare verified local source/transcript material.",
+  "next_operation_compact": "Prepare verified input.",
+  "fallback_hold_status": "safe_fallback_not_progress",
+  "hold_is_not_progress": true,
+  "explicit_yymm4_observation_selected": false,
+  "real_input_available": false,
+  "real_input_files": [],
+  "real_input_dir": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input",
+  "closed_gate_status": {
+    "production": "closed",
+    "yymm4_import": "not_imported",
+    "yymm4_render": "closed",
+    "public_upload": "closed",
+    "rights_public_ready": "closed",
+    "thumbnail_final_approval": "closed"
+  },
+  "operational_controls": [
+    {
+      "control_id": "prepare_verified_local_source_transcript",
+      "label": "Prepare real input",
+      "effect": "Advance beyond sample.",
+      "recommended_for_current_state": true,
+      "tone": "primary"
+    },
+    {
+      "control_id": "regenerate_review_console",
+      "label": "Regenerate console",
+      "effect": "Rebuild local package.",
+      "recommended_for_current_state": false,
+      "tone": "neutral"
+    },
+    {
+      "control_id": "request_yymm4_observation_gate",
+      "label": "Request YMM4 gate",
+      "effect": "Observation only; no render.",
+      "recommended_for_current_state": false,
+      "tone": "gated"
+    },
+    {
+      "control_id": "accept_reject_hold",
+      "label": "Accept / reject / hold",
+      "effect": "Record judgment; fallback only.",
+      "recommended_for_current_state": false,
+      "tone": "fallback"
+    }
+  ],
+  "compact_status_rows": [
+    {
+      "label": "Source",
+      "value": "sample fixture",
+      "state": "not real input"
+    },
+    {
+      "label": "Decision",
+      "value": "console review",
+      "state": "needs human acceptance"
+    },
+    {
+      "label": "Next",
+      "value": "prepare verified input",
+      "state": "product enabling"
+    },
+    {
+      "label": "Gates",
+      "value": "closed",
+      "state": "bounded"
+    }
+  ],
+  "source_records": [
+    {
+      "record_id": "second_pass_benchmark",
+      "label": "Second-pass split-view benchmark",
+      "source_group": "selected_layout_evidence",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/split_view_benchmark.md",
+      "role": "secondary_source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "second_pass_matrix",
+      "label": "Second-pass candidate matrix",
+      "source_group": "selected_layout_evidence",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/layout_candidate_matrix.json",
+      "role": "secondary_source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "second_pass_recommendation",
+      "label": "Final split-view recommendation",
+      "source_group": "selected_layout_evidence",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/final_layout_recommendation.md",
+      "role": "secondary_source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "evidence_handling_report",
+      "label": "Evidence handling report",
+      "source_group": "evidence_policy",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/evidence_handling_report.md",
+      "role": "secondary_source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "card_bloat_risk_report",
+      "label": "Card-bloat risk report",
+      "source_group": "layout_risk_policy",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/card_bloat_risk_report.md",
+      "role": "secondary_source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "guided_flow_html",
+      "label": "Guided decision flow HTML",
+      "source_group": "weak_pass_source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.html",
+      "role": "secondary_source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "guided_flow_validation",
+      "label": "Guided flow validation",
+      "source_group": "weak_pass_source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/validation_readback.json",
+      "role": "secondary_source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "guided_flow_state",
+      "label": "Guided flow state",
+      "source_group": "weak_pass_source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/flow_state.json",
+      "role": "secondary_source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "compact_review_cockpit",
+      "label": "Compact review cockpit",
+      "source_group": "prior_review_surface",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html",
+      "role": "secondary_source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "aligned_review_story",
+      "label": "Aligned review story",
+      "source_group": "source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/aligned_review_story.md",
+      "role": "secondary_source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "gui_dashboard_panel",
+      "label": "GUI dashboard panel",
+      "source_group": "source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/dashboard_panel_preview.html",
+      "role": "secondary_source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "import_preview_panel",
+      "label": "YMM4 import preview panel",
+      "source_group": "source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_preview_panel.md",
+      "role": "secondary_source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "thumbnail_visual_proof",
+      "label": "Thumbnail visual proof",
+      "source_group": "source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_visual_proof.html",
+      "role": "secondary_source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "real_input_dir",
+      "label": "Real input drop-zone",
+      "source_group": "input_readiness",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input",
+      "role": "secondary_source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "current_split_view_html",
+      "label": "Current split-view HTML",
+      "source_group": "redesign_input",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/split_view_decision_evidence_prototype/split_view_decision_evidence.html",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    }
+  ],
+  "boundary_flags": {
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "no_real_transcript": true,
+    "rights_boundary": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "no_yymm4_import": true,
+    "thumbnail_context_only": true,
+    "validation_noise_nonblocking": true,
+    "not_production_ready": true
+  },
+  "primary_human_review": "production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype/review_console.html",
+  "markdown_fallback": "production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype/review_console.md",
+  "primary_machine_readable": "production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype/validation_readback.json",
+  "screen_audit": "production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype/screen_audit.json",
+  "layout_metrics": "production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype/layout_metrics.json",
+  "next_action": "Open review_console.html; if the console direction is accepted, prepare verified local source or transcript material."
+}

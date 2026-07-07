@@ -1,0 +1,35 @@
+{
+  "schema_version": "review_console_layout_metrics.v1",
+  "artifact_id": "episode_002_review_console_redesign_prototype_v1",
+  "text_count_method": "current split-view: strip style/script/details and tags from full body; new console: count the explicit first-viewport data-initial-visible-copy text model used by the renderer",
+  "baseline_file": "split_view_decision_evidence_prototype/split_view_decision_evidence.html",
+  "baseline_initial_visible_word_count": 359,
+  "console_initial_visible_word_count": 179,
+  "initial_visible_text_reduction_percent": 50.1,
+  "initial_visible_text_reduction_label": "50.1% reduction (359 -> 179 words)",
+  "initial_visible_text_reduction_passed": true,
+  "same_shape_card_grid_primary": false,
+  "primary_structure": "header_navigation_main_surface_inspector_with_secondary_evidence_drawer",
+  "required_regions": [
+    "header",
+    "navigation",
+    "main-review-surface",
+    "inspector",
+    "evidence-drawer"
+  ],
+  "evidence_visible_outside_drawer": true,
+  "detail_drawer_role": "secondary_raw_records_and_source_paths",
+  "gate_text_bounded": true,
+  "gate_primary_token_count": 12,
+  "source_records_secondary": true,
+  "internal_artifact_ids_in_primary_copy": [],
+  "first_view_reveals_current_target": true,
+  "first_view_reveals_critical_issue": true,
+  "first_view_reveals_next_operation": true,
+  "first_view_reveals_closed_status_bounded": true,
+  "visual_self_review": {
+    "gaze": "header identity -> main review target -> inspector next operation -> evidence drawer only when detail is needed",
+    "priority": "primary recommendation and blocker are above secondary records",
+    "operation_flow": "review surface, choose operation, inspect raw records only on demand"
+  }
+}

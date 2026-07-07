@@ -1,0 +1,37 @@
+{
+  "schema_version": "review_console_screen_audit.v1",
+  "artifact_id": "episode_002_review_console_redesign_prototype_v1",
+  "audited_file": "production_pilots\\yukkuri_newsroom_content_spine_002\\split_view_decision_evidence_prototype\\split_view_decision_evidence.html",
+  "audited_file_exists": true,
+  "current_visible_word_count_method": "strip style/script/details tags, strip html tags, count alphanumeric and CJK token groups in the current split-view HTML body",
+  "current_visible_word_count": 359,
+  "current_shape_findings": {
+    "card_class_count": 0,
+    "bordered_block_count": 5,
+    "details_count": 1
+  },
+  "primary_decision": "Accept or reject the compact review judgment console direction for Episode 002.",
+  "primary_artifact": "Review console first viewport showing target, blocker, next operation, and bounded closed gates.",
+  "secondary_evidence": [
+    "layout benchmark decision",
+    "source surface readiness",
+    "real input absence",
+    "bounded gate state",
+    "raw source records and paths"
+  ],
+  "operational_controls": [
+    "prepare_verified_local_source_transcript",
+    "regenerate_review_console",
+    "request_yymm4_observation_gate",
+    "accept_reject_hold"
+  ],
+  "noise": [
+    "raw artifact paths",
+    "long source provenance explanations",
+    "full boundary inventories",
+    "test-passing justification copy",
+    "internal artifact ids",
+    "secondary record ledgers"
+  ],
+  "audit_conclusion": "Replace equal-weight bordered text regions with a compact console: one target surface, one inspector, visible evidence chips, and secondary raw records."
+}

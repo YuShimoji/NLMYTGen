@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en" data-review-console="true" data-artifact-kind="episode-review-console-redesign-prototype">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Episode 002 Review Console</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+      --bg: #0f1115;
+      --shell: #171b21;
+      --surface: #20262d;
+      --inspector: #151a20;
+      --line: #4a5563;
+      --text: #f0eee7;
+      --muted: #b9b4aa;
+      --accent: #69e4cf;
+      --action: #a9c7ff;
+      --warn: #ffd166;
+      --closed: #f0a6a6;
+      --ok: #a7f3d0;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #eef1ef;
+        --shell: #f5f1e8;
+        --surface: #e2e9e5;
+        --inspector: #f7f6ef;
+        --line: #aab6b0;
+        --text: #1d231f;
+        --muted: #59615c;
+        --accent: #0f766e;
+        --action: #1d4ed8;
+        --warn: #8a5a00;
+        --closed: #9b1c1c;
+        --ok: #047857;
+        --shadow: 0 16px 30px rgba(29, 35, 31, 0.12);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+    button { font: inherit; }
+    .console {
+      width: min(1280px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 14px 0 30px;
+    }
+    .topline {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 0;
+    }
+    .identity {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+    }
+    .episode {
+      font-size: 1.05rem;
+      font-weight: 760;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--accent);
+      background: var(--inspector);
+      font-size: 0.76rem;
+      font-weight: 720;
+      white-space: nowrap;
+    }
+    .objective {
+      color: var(--muted);
+      font-size: 0.9rem;
+      overflow-wrap: anywhere;
+    }
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .nav button, .control {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text);
+      padding: 7px 10px;
+      cursor: pointer;
+    }
+    .console-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.38fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+    .main-surface, .inspector, .drawer {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .main-surface {
+      min-height: 560px;
+      background: var(--surface);
+      padding: 18px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 14px;
+    }
+    .inspector {
+      background: var(--inspector);
+      padding: 16px;
+      display: grid;
+      gap: 13px;
+      align-content: start;
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      font-size: clamp(1.55rem, 2.6vw, 2.35rem);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+    h2 { font-size: 1rem; letter-spacing: 0; }
+    h3 { font-size: 0.88rem; letter-spacing: 0; color: var(--muted); }
+    p, li { color: var(--muted); line-height: 1.42; }
+    .target-band {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.5fr) minmax(260px, 1fr) minmax(220px, 0.8fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+    .metric {
+      border-left: 3px solid var(--accent);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 10px 12px;
+      min-width: 0;
+    }
+    .metric strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.98rem;
+      line-height: 1.24;
+    }
+    .preview-lane {
+      display: grid;
+      grid-template-columns: 0.68fr 1fr;
+      gap: 12px;
+      min-height: 230px;
+    }
+    .artifact-frame {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      background: var(--shell);
+    }
+    .artifact-frame .large {
+      font-size: clamp(1.6rem, 5vw, 4rem);
+      color: var(--accent);
+      font-weight: 820;
+      line-height: 0.95;
+    }
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      align-content: end;
+    }
+    .step {
+      border-top: 4px solid var(--line);
+      padding-top: 8px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+    .step.active { border-color: var(--accent); color: var(--text); }
+    .step.next { border-color: var(--action); color: var(--action); }
+    .diff {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .diff-pane {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: var(--shell);
+      min-width: 0;
+    }
+    .diff-pane strong { display: block; color: var(--text); margin-bottom: 8px; }
+    .evidence-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .evidence-chip {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 9px;
+      background: var(--shell);
+      min-width: 0;
+    }
+    .evidence-chip b {
+      display: block;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+    .status-table {
+      display: grid;
+      gap: 6px;
+    }
+    .status-row {
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .status-row span:first-child { color: var(--muted); }
+    .status-row span:last-child { color: var(--text); }
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .control {
+      text-align: left;
+      display: grid;
+      gap: 3px;
+    }
+    .control strong { color: var(--text); }
+    .control.primary { border-color: var(--accent); }
+    .control.gated { border-color: var(--warn); }
+    .control.fallback { border-color: var(--line); }
+    .gate-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .gate-badge {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--closed);
+      padding: 4px 8px;
+      font-size: 0.76rem;
+      font-weight: 720;
+      white-space: nowrap;
+    }
+    .drawer {
+      margin-top: 14px;
+      background: var(--shell);
+      padding: 12px 14px;
+    }
+    .drawer summary {
+      cursor: pointer;
+      color: var(--text);
+      font-weight: 760;
+    }
+    .record-list {
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+    .record-list li {
+      display: grid;
+      gap: 2px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+    }
+    code {
+      color: var(--action);
+      overflow-wrap: anywhere;
+      font-size: 0.84rem;
+    }
+    @media (max-width: 980px) {
+      .topline, .console-shell, .preview-lane, .diff, .target-band {
+        grid-template-columns: 1fr;
+      }
+      .nav { justify-content: flex-start; }
+      .evidence-strip { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="console">
+    <header class="topline" data-region="header" data-initial-visible-copy="true">
+      <div class="identity">
+        <span class="episode">Episode 002</span>
+        <span class="badge">local review console</span>
+        <span class="badge">sample-backed</span>
+        <span class="objective">Accept console; prepare verified input.</span>
+      </div>
+      <nav class="nav" data-region="navigation" aria-label="Review console navigation">
+        <button type="button" data-jump="review">Review</button>
+        <button type="button" data-jump="evidence">Evidence</button>
+        <button type="button" data-jump="operations">Operations</button>
+        <button type="button" data-jump="records">Records</button>
+      </nav>
+    </header>
+    <section class="console-shell" data-same-shape-grid-primary="false">
+      <section class="main-surface" id="review" data-region="main-review-surface" data-evidence-visible-outside-drawer="true" data-initial-visible-copy="true">
+        <div>
+          <h1>Episode 002 local review surface redesign</h1>
+          <p>Target, blocker, next step.</p>
+        </div>
+        <div class="target-band" aria-label="current target blocker operation">
+          <div class="metric">
+            <h3>Target</h3>
+            <strong>Review console</strong>
+          </div>
+          <div class="metric">
+            <h3>Critical issue</h3>
+            <strong>Dense text dashboard.</strong>
+          </div>
+          <div class="metric">
+            <h3>Next operation</h3>
+            <strong>Prepare verified input.</strong>
+          </div>
+        </div>
+        <div class="preview-lane">
+          <div class="artifact-frame" aria-label="central review artifact">
+            <span class="badge">Main Review Surface</span>
+            <div class="large">50.1%</div>
+            <p>Less first-screen text than the split-view surface.</p>
+            <div class="timeline" aria-label="operation timeline">
+              <span class="step active">Audit</span>
+              <span class="step active">Console</span>
+              <span class="step next">Input</span>
+              <span class="step">YMM4 gate</span>
+            </div>
+          </div>
+          <div class="diff" aria-label="layout diff">
+            <div class="diff-pane">
+              <strong>Before</strong>
+              <p>Dense bordered blocks and competing safety copy.</p>
+            </div>
+            <div class="diff-pane">
+              <strong>After</strong>
+              <p>Target surface, inspector, compact evidence.</p>
+            </div>
+          </div>
+        </div>
+        <div class="evidence-strip" id="evidence" aria-label="visible evidence outside drawer">
+          <div class="evidence-chip"><b>Layout evidence</b><span>Equal-weight blocks removed.</span></div>
+          <div class="evidence-chip"><b>Input evidence</b><span>Verified real input absent.</span></div>
+          <div class="evidence-chip"><b>Gate evidence</b><span>Import, render, public gates closed.</span></div>
+        </div>
+      </section>
+      <aside class="inspector" id="operations" data-region="inspector" data-initial-visible-copy="true">
+        <span class="badge">Inspector</span>
+        <div>
+          <h2>Current issue</h2>
+          <p>Dense text dashboard.</p>
+        </div>
+        <div>
+          <h2>Recommended operation</h2>
+          <p><strong>Prepare verified local source or transcript material</strong></p>
+        </div>
+        <div class="status-table" aria-label="compact status table">
+          <div class="status-row"><span>Source</span><span>sample fixture / not real input</span></div>
+<div class="status-row"><span>Decision</span><span>console review / needs human acceptance</span></div>
+<div class="status-row"><span>Next</span><span>prepare verified input / product enabling</span></div>
+<div class="status-row"><span>Gates</span><span>closed / bounded</span></div>
+        </div>
+        <div class="gate-strip" aria-label="bounded closed gate status">
+          <span class="gate-badge">Production closed</span>
+<span class="gate-badge">YMM4 not imported</span>
+<span class="gate-badge">Render closed</span>
+<span class="gate-badge">Public closed</span>
+        </div>
+        <div class="controls" aria-label="operational controls">
+          <button type="button" class="control primary" data-control="prepare_verified_local_source_transcript"><strong>Prepare real input</strong><span>Advance beyond sample.</span></button>
+<button type="button" class="control neutral" data-control="regenerate_review_console"><strong>Regenerate console</strong><span>Rebuild local package.</span></button>
+<button type="button" class="control gated" data-control="request_yymm4_observation_gate"><strong>Request YMM4 gate</strong><span>Observation only; no render.</span></button>
+<button type="button" class="control fallback" data-control="accept_reject_hold"><strong>Accept / reject / hold</strong><span>Record judgment; fallback only.</span></button>
+        </div>
+      </aside>
+    </section>
+    <details class="drawer" id="records" data-region="evidence-drawer" data-detail-drawer-role="secondary_raw_records_and_source_paths">
+      <summary>Evidence drawer: raw records and source paths</summary>
+      <p>Evidence remains visible in the main surface and inspector; this drawer keeps long records secondary.</p>
+      <ul class="record-list">
+        <li>
+  <span>Second-pass split-view benchmark (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/split_view_benchmark.md</code>
+</li>
+<li>
+  <span>Second-pass candidate matrix (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/layout_candidate_matrix.json</code>
+</li>
+<li>
+  <span>Final split-view recommendation (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/final_layout_recommendation.md</code>
+</li>
+<li>
+  <span>Evidence handling report (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/evidence_handling_report.md</code>
+</li>
+<li>
+  <span>Card-bloat risk report (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/card_bloat_risk_report.md</code>
+</li>
+<li>
+  <span>Guided decision flow HTML (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.html</code>
+</li>
+<li>
+  <span>Guided flow validation (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/validation_readback.json</code>
+</li>
+<li>
+  <span>Guided flow state (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/flow_state.json</code>
+</li>
+<li>
+  <span>Compact review cockpit (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html</code>
+</li>
+<li>
+  <span>Aligned review story (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/aligned_review_story.md</code>
+</li>
+<li>
+  <span>GUI dashboard panel (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/dashboard_panel_preview.html</code>
+</li>
+<li>
+  <span>YMM4 import preview panel (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_preview_panel.md</code>
+</li>
+<li>
+  <span>Thumbnail visual proof (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_visual_proof.html</code>
+</li>
+<li>
+  <span>Real input drop-zone (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input</code>
+</li>
+<li>
+  <span>Current split-view HTML (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/split_view_decision_evidence_prototype/split_view_decision_evidence.html</code>
+</li>
+      </ul>
+    </details>
+  </main>
+  <script>
+    for (const button of document.querySelectorAll('[data-jump]')) {
+      button.addEventListener('click', () => {
+        const target = document.getElementById(button.dataset.jump);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  </script>
+</body>
+</html>

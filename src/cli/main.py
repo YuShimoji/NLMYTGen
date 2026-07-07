@@ -36,6 +36,7 @@ Usage:
     python -m src.cli.main build-guided-decision-flow-prototype --package production_pilots/pkg [--layout-research-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
     python -m src.cli.main build-review-layout-second-pass --package production_pilots/pkg [--guided-flow-dir DIR] [--layout-research-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-split-view-decision-evidence-prototype --package production_pilots/pkg [--second-pass-dir DIR] [--guided-flow-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
+    python -m src.cli.main build-review-console-redesign-prototype --package production_pilots/pkg [--current-split-view-dir DIR] [--second-pass-dir DIR] [--guided-flow-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
@@ -2735,6 +2736,52 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_review_console_redesign = subparsers.add_parser(
+        "build-review-console-redesign-prototype",
+        help="Build the episode 002 review judgment console redesign prototype",
+    )
+    p_review_console_redesign.add_argument("--package", required=True, help="Episode package directory")
+    p_review_console_redesign.add_argument(
+        "--current-split-view-dir",
+        help="Input current split-view prototype directory (default: <package>/split_view_decision_evidence_prototype)",
+    )
+    p_review_console_redesign.add_argument(
+        "--second-pass-dir",
+        help="Input second-pass layout benchmark directory (default: <package>/review_layout_second_pass)",
+    )
+    p_review_console_redesign.add_argument(
+        "--guided-flow-dir",
+        help="Input guided decision flow directory (default: <package>/guided_decision_flow_prototype)",
+    )
+    p_review_console_redesign.add_argument(
+        "--cockpit-dir",
+        help="Input compact review cockpit directory (default: <package>/review_cockpit_compact)",
+    )
+    p_review_console_redesign.add_argument(
+        "--reviewer-packet-dir",
+        help="Input surface alignment review packet directory (default: <package>/surface_alignment_review_packet)",
+    )
+    p_review_console_redesign.add_argument(
+        "--output",
+        help="Output directory (default: <package>/review_console_redesign_prototype)",
+    )
+    p_review_console_redesign.add_argument(
+        "--artifact-id",
+        default="episode_002_review_console_redesign_prototype_v1",
+        help="Review console redesign prototype artifact id",
+    )
+    p_review_console_redesign.add_argument(
+        "--explicit-yymm4-observation",
+        action="store_true",
+        help="Select YMM4 import observation as the current explicit human choice without launching YMM4",
+    )
+    p_review_console_redesign.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -2871,6 +2918,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_review_layout_second_pass(args)
         elif args.command == "build-split-view-decision-evidence-prototype":
             return _cmd_build_split_view_decision_evidence_prototype(args)
+        elif args.command == "build-review-console-redesign-prototype":
+            return _cmd_build_review_console_redesign_prototype(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -5118,6 +5167,48 @@ def _cmd_build_split_view_decision_evidence_prototype(args: argparse.Namespace) 
         print(f"evidence_pane_readback: {readback.get('evidence_pane_readback')}")
         print(f"markdown_fallback: {readback.get('markdown_fallback')}")
         print(f"launcher_command: {readback.get('launcher_command')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_review_console_redesign_prototype(args: argparse.Namespace) -> int:
+    """Build the episode 002 review judgment console redesign prototype."""
+    from src.pipeline.review_console_redesign_prototype import (
+        build_review_console_redesign_prototype,
+    )
+
+    readback = build_review_console_redesign_prototype(
+        package_dir=getattr(args, "package"),
+        current_split_view_dir=getattr(args, "current_split_view_dir", None),
+        second_pass_dir=getattr(args, "second_pass_dir", None),
+        guided_flow_dir=getattr(args, "guided_flow_dir", None),
+        cockpit_dir=getattr(args, "cockpit_dir", None),
+        reviewer_packet_dir=getattr(args, "reviewer_packet_dir", None),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+        explicit_yymm4_observation=bool(getattr(args, "explicit_yymm4_observation", False)),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"primary_decision: {readback.get('primary_decision')}")
+        print(f"primary_artifact: {readback.get('primary_artifact')}")
+        print(f"critical_issue: {readback.get('critical_issue')}")
+        print(f"primary_recommendation: {readback.get('primary_recommendation')}")
+        print(f"initial_visible_text_reduction: {readback.get('initial_visible_text_reduction')}")
+        print(f"same_shape_card_grid_primary: {readback.get('same_shape_card_grid_primary')}")
+        print(f"evidence_visible_outside_drawer: {readback.get('evidence_visible_outside_drawer')}")
+        print(f"detail_drawer_role: {readback.get('detail_drawer_role')}")
+        print(f"gate_text_bounded: {readback.get('gate_text_bounded')}")
+        print(f"source_records_secondary: {readback.get('source_records_secondary')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"screen_audit: {readback.get('screen_audit')}")
+        print(f"layout_metrics: {readback.get('layout_metrics')}")
+        print(f"launcher_or_open_command: {readback.get('launcher_or_open_command')}")
         print(f"next_action: {readback.get('next_action')}")
     return 0
 
