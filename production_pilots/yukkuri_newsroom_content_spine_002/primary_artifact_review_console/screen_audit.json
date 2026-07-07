@@ -1,0 +1,36 @@
+{
+  "schema_version": "primary_artifact_screen_audit.v1",
+  "artifact_id": "episode_002_primary_artifact_review_console_v1",
+  "audited_file": "production_pilots\\yukkuri_newsroom_content_spine_002\\review_console_redesign_prototype\\review_console.html",
+  "audited_file_exists": true,
+  "current_visible_word_count": 165,
+  "current_shape_findings": {
+    "metric_visual_focus_present": true,
+    "main_surface_metric_class_count": 3,
+    "diff_pane_count": 2,
+    "evidence_chip_count": 3,
+    "bordered_block_count": 7
+  },
+  "primary_decision": "Accept or reject the artifact-first Episode 002 review console direction.",
+  "primary_artifact": "HTML-rendered before/after comparison canvas for the review target and next operation.",
+  "secondary_evidence": [
+    "current console validation",
+    "real input absence",
+    "closed gate state",
+    "source records and raw paths"
+  ],
+  "operational_controls": [
+    "prepare_verified_local_source_transcript",
+    "regenerate_review_console",
+    "request_yymm4_observation_gate",
+    "accept_reject_hold"
+  ],
+  "noise": [
+    "50.1% metric as the largest center object",
+    "separate before/after explanation boxes",
+    "front-stage evidence chips",
+    "raw paths and internal artifact ids",
+    "long safety explanation in primary view"
+  ],
+  "audit_conclusion": "Use one dominant HTML-rendered comparison canvas as the center artifact; keep evidence in the inspector and drawer."
+}

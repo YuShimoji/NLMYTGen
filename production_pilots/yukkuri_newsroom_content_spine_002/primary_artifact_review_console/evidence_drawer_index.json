@@ -1,0 +1,151 @@
+{
+  "schema_version": "primary_artifact_evidence_drawer_index.v1",
+  "artifact_id": "episode_002_primary_artifact_review_console_v1",
+  "detail_drawer_role": "secondary_raw_records_source_paths_and_extended_proof",
+  "evidence_visible_outside_drawer": true,
+  "drawer_only_evidence": false,
+  "evidence_front_stage_card_row": false,
+  "source_records_secondary": true,
+  "visible_evidence_locations": [
+    "inspector compact status",
+    "main artifact gate strip",
+    "main artifact input path"
+  ],
+  "source_records": [
+    {
+      "record_id": "second_pass_benchmark",
+      "label": "Second-pass split-view benchmark",
+      "source_group": "selected_layout_evidence",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/split_view_benchmark.md",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "second_pass_matrix",
+      "label": "Second-pass candidate matrix",
+      "source_group": "selected_layout_evidence",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/layout_candidate_matrix.json",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "second_pass_recommendation",
+      "label": "Final split-view recommendation",
+      "source_group": "selected_layout_evidence",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/final_layout_recommendation.md",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "evidence_handling_report",
+      "label": "Evidence handling report",
+      "source_group": "evidence_policy",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/evidence_handling_report.md",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "card_bloat_risk_report",
+      "label": "Card-bloat risk report",
+      "source_group": "layout_risk_policy",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/card_bloat_risk_report.md",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "guided_flow_html",
+      "label": "Guided decision flow HTML",
+      "source_group": "weak_pass_source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.html",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "guided_flow_validation",
+      "label": "Guided flow validation",
+      "source_group": "weak_pass_source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/validation_readback.json",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "guided_flow_state",
+      "label": "Guided flow state",
+      "source_group": "weak_pass_source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/flow_state.json",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "compact_review_cockpit",
+      "label": "Compact review cockpit",
+      "source_group": "prior_review_surface",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "aligned_review_story",
+      "label": "Aligned review story",
+      "source_group": "source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/aligned_review_story.md",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "gui_dashboard_panel",
+      "label": "GUI dashboard panel",
+      "source_group": "source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/dashboard_panel_preview.html",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "import_preview_panel",
+      "label": "YMM4 import preview panel",
+      "source_group": "source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_preview_panel.md",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "thumbnail_visual_proof",
+      "label": "Thumbnail visual proof",
+      "source_group": "source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_visual_proof.html",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "real_input_dir",
+      "label": "Real input drop-zone",
+      "source_group": "input_readiness",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "current_review_console_html",
+      "label": "Current review console HTML",
+      "source_group": "redesign_input",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype/review_console.html",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    }
+  ]
+}

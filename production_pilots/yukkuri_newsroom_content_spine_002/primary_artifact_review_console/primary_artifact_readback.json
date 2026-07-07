@@ -1,0 +1,17 @@
+{
+  "schema_version": "primary_artifact_readback.v1",
+  "artifact_id": "episode_002_primary_artifact_review_console_v1",
+  "primary_artifact_type": "html_rendered_visual_comparison_canvas",
+  "main_surface_type": "visual_comparison_canvas",
+  "primary_artifact_dominant": true,
+  "metric_as_primary_focus": false,
+  "primary_artifact_role": "central review object for judging artifact-first console direction",
+  "canvas_parts": [
+    "left ghosted prior console grammar",
+    "center review artifact lane",
+    "right next-operation path",
+    "bottom state timeline"
+  ],
+  "primary_artifact_summary": "The center is a visual comparison canvas that shows old card gravity against the revised artifact-first console flow.",
+  "screenshot_or_html_preview": "html_rendered_visual_canvas"
+}

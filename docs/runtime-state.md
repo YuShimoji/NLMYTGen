@@ -1,5 +1,49 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 primary artifact review console completed (2026-07-08 JST)**:
+  `episode-002-primary-artifact-review-console-v1` revises the review console
+  so the center becomes a primary review artifact rather than explanatory
+  bordered blocks. Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/primary_artifact_review_console/`.
+  Primary human review is `primary_artifact_review_console.html`; Markdown
+  fallback is `primary_artifact_review_console.md`; primary machine readback is
+  `validation_readback.json`; audit/readbacks are `screen_audit.json`,
+  `primary_artifact_readback.json`, `visual_comparison_readback.json`,
+  `inspector_readback.json`, `evidence_drawer_index.json`,
+  `layout_metrics.json`, and `visual_self_review.md`. Regeneration command:
+  `python -m src.cli.main build-primary-artifact-review-console --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_primary_artifact_review_console_v1`.
+  The main review surface is an HTML-rendered before/after visual comparison
+  canvas, not three explanatory cards, not a front-stage evidence-card row,
+  and not the `50.1%` text-reduction metric as the primary focus. Header,
+  Navigation, Inspector, and Evidence Drawer remain in place. The first
+  viewport prioritizes exactly the primary artifact, critical issue, and next
+  operation. Evidence is available through the Inspector and secondary drawer;
+  raw records/source paths stay secondary. Validation readback reports
+  `main_surface_type=visual_comparison_canvas`,
+  `before_after_representation=single_visual_comparison_canvas`,
+  `metric_as_primary_focus=false`, `same_shape_card_grid_primary=false`,
+  `explanatory_cards_in_main_surface=0`,
+  `evidence_front_stage_card_row=false`,
+  `evidence_visible_outside_drawer=true`, and `gate_text_bounded=true`.
+  The primary recommendation remains
+  `prepare_verified_local_source_transcript`; hold remains
+  `safe_fallback_not_progress`; YMM4 observation remains an explicit-gate
+  alternative only. The package preserves `dry_run`,
+  `sample_fixture_not_real`, `no_real_transcript`, `rights_boundary`,
+  `public_upload_closed`, `yymm4_render_closed`, `no_yymm4_import`,
+  `thumbnail_context_only`, `validation_noise_nonblocking`, and
+  `not_production_ready`. Targeted primary-artifact console tests pass
+  (`uv run pytest tests/test_primary_artifact_review_console.py -q`
+  -> 4 passed). Full pytest was not run. Access verification is
+  `verified_present`; user-opened visual acceptance is still pending. No
+  production UI promotion, real transcript/source replacement, YMM4 GUI
+  launch/import/render, production `.ymmp`, final thumbnail approval, live
+  fetch/scraping, external media download, OAuth/API key/payment,
+  rights/legal/public-ready acceptance, YouTube upload, destructive git,
+  cross-repo edit, broad fixture regeneration, or full-suite green campaign
+  occurred. Next product move after human acceptance is preparing or providing
+  verified local source/transcript material.
+
 - **Episode 002 review console redesign prototype completed (2026-07-08 JST)**:
   `episode-002-review-console-redesign-prototype-v1` replaces the card-heavy
   split-view review surface with a local/static review judgment console.

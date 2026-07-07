@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en" data-primary-artifact-console="true" data-artifact-kind="episode-primary-artifact-review-console">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Episode 002 Primary Artifact Review Console</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+      --bg: #0d1116;
+      --surface: #1c232b;
+      --stage: #111820;
+      --panel: #151b23;
+      --line: #53606d;
+      --text: #f2efe8;
+      --muted: #b9b4aa;
+      --accent: #6ee7d8;
+      --action: #a8c7ff;
+      --warn: #f4d06f;
+      --closed: #f2a7a7;
+      --shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #eef2ef;
+        --surface: #e4ebe7;
+        --stage: #f7f4ec;
+        --panel: #f4f2eb;
+        --line: #aeb9b3;
+        --text: #1c231f;
+        --muted: #59615c;
+        --accent: #0f766e;
+        --action: #1d4ed8;
+        --warn: #8a5a00;
+        --closed: #9b1c1c;
+        --shadow: 0 16px 30px rgba(28, 35, 31, 0.12);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+    button { font: inherit; }
+    .console {
+      width: min(1320px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 14px 0 30px;
+    }
+    .topline {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 0;
+    }
+    .identity, .nav, .gate-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .nav { justify-content: flex-end; }
+    .episode { font-size: 1.05rem; font-weight: 760; }
+    .badge, .gate-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 720;
+      white-space: nowrap;
+    }
+    .gate-badge { color: var(--closed); }
+    .objective { color: var(--muted); font-size: 0.9rem; }
+    .nav button, .control {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text);
+      padding: 7px 10px;
+      cursor: pointer;
+    }
+    .shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.35fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+    .main-surface, .inspector, .drawer {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .main-surface {
+      min-height: 620px;
+      background: var(--surface);
+      padding: 16px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 12px;
+    }
+    .inspector {
+      background: var(--panel);
+      padding: 16px;
+      display: grid;
+      gap: 13px;
+      align-content: start;
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: clamp(1.45rem, 2.4vw, 2.25rem); line-height: 1.05; letter-spacing: 0; }
+    h2 { font-size: 1rem; letter-spacing: 0; }
+    h3 { font-size: 0.82rem; color: var(--muted); letter-spacing: 0; }
+    p, li, span { line-height: 1.38; }
+    p, li { color: var(--muted); }
+    .surface-header {
+      display: grid;
+      grid-template-columns: 1fr minmax(220px, 0.34fr);
+      gap: 10px;
+      align-items: end;
+    }
+    .priority-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .priority-item {
+      border-left: 3px solid var(--accent);
+      padding: 7px 9px;
+      background: rgba(255, 255, 255, 0.03);
+      min-width: 0;
+    }
+    .priority-item strong { display: block; color: var(--text); font-size: 0.94rem; }
+    .artifact-canvas {
+      position: relative;
+      min-height: 470px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--stage);
+      padding: 16px;
+      display: grid;
+      grid-template-columns: minmax(180px, 0.56fr) minmax(360px, 1.22fr) minmax(180px, 0.6fr);
+      gap: 12px;
+      align-items: stretch;
+      overflow: hidden;
+    }
+    .artifact-canvas::before {
+      content: "";
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      top: 50%;
+      border-top: 1px dashed var(--line);
+      opacity: 0.5;
+    }
+    .ghost-stack, .artifact-stage, .path-lane {
+      position: relative;
+      z-index: 1;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.035);
+      padding: 12px;
+      min-width: 0;
+    }
+    .ghost-stack {
+      display: grid;
+      grid-template-rows: auto repeat(4, 1fr);
+      gap: 8px;
+      opacity: 0.74;
+    }
+    .ghost-block {
+      border: 1px dashed var(--line);
+      border-radius: 5px;
+      min-height: 44px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .artifact-stage {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 12px;
+      border-color: var(--accent);
+      background: linear-gradient(180deg, rgba(110, 231, 216, 0.1), rgba(255, 255, 255, 0.03));
+    }
+    .artifact-title strong {
+      display: block;
+      color: var(--text);
+      font-size: clamp(1.35rem, 2.2vw, 2rem);
+      line-height: 1.08;
+    }
+    .artifact-board {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 10px;
+    }
+    .artifact-cell {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.12);
+      padding: 10px;
+      display: grid;
+      align-content: center;
+      gap: 5px;
+      min-width: 0;
+    }
+    .artifact-cell strong { color: var(--text); }
+    .state-timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+    .step {
+      border-top: 4px solid var(--line);
+      padding-top: 7px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+    .step.active { border-color: var(--accent); color: var(--text); }
+    .step.next { border-color: var(--action); color: var(--action); }
+    .path-lane {
+      display: grid;
+      gap: 9px;
+      align-content: center;
+    }
+    .path-node {
+      border-left: 3px solid var(--action);
+      padding: 8px 9px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .path-node strong { display: block; color: var(--text); }
+    .status-table { display: grid; gap: 6px; }
+    .status-row {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .status-row span:first-child { color: var(--muted); }
+    .status-row span:last-child { color: var(--text); }
+    .controls { display: grid; gap: 8px; }
+    .control {
+      text-align: left;
+      display: grid;
+      gap: 3px;
+    }
+    .control strong { color: var(--text); }
+    .control.primary { border-color: var(--accent); }
+    .control.gated { border-color: var(--warn); }
+    .control.fallback { border-color: var(--line); }
+    .drawer {
+      margin-top: 14px;
+      background: var(--panel);
+      padding: 12px 14px;
+    }
+    .drawer summary { cursor: pointer; color: var(--text); font-weight: 760; }
+    .record-list {
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+    .record-list li {
+      display: grid;
+      gap: 2px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+    }
+    code { color: var(--action); overflow-wrap: anywhere; font-size: 0.84rem; }
+    @media (max-width: 1060px) {
+      .topline, .shell, .surface-header, .artifact-canvas { grid-template-columns: 1fr; }
+      .priority-strip, .artifact-board, .state-timeline { grid-template-columns: 1fr; }
+      .nav { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <main class="console">
+    <header class="topline" data-region="header" data-initial-visible-copy="true">
+      <div class="identity">
+        <span class="episode">Episode 002</span>
+        <span class="badge">artifact-first console</span>
+        <span class="badge">sample-backed</span>
+        <span class="objective">Judge the center artifact; prepare verified input.</span>
+      </div>
+      <nav class="nav" data-region="navigation" aria-label="Primary artifact console navigation">
+        <button type="button" data-jump="review">Review</button>
+        <button type="button" data-jump="operations">Operations</button>
+        <button type="button" data-jump="records">Records</button>
+      </nav>
+    </header>
+    <section class="shell">
+      <section
+        class="main-surface"
+        id="review"
+        data-region="main-review-surface"
+        data-primary-artifact-container="true"
+        data-main-surface-type="visual-comparison-canvas"
+        data-before-after-representation="single-visual-comparison"
+        data-metric-primary-focus="false"
+        data-evidence-front-stage-row="false"
+        data-initial-visible-copy="true">
+        <div class="surface-header">
+          <div>
+            <h1>Episode 002 review console</h1>
+            <p>HTML-rendered before/after comparison canvas for the review target and next operation.</p>
+          </div>
+          <div class="priority-strip" aria-label="first viewport priority">
+            <div class="priority-item"><h3>Artifact</h3><strong>Comparison canvas</strong></div>
+            <div class="priority-item"><h3>Issue</h3><strong>Center is not artifact-first.</strong></div>
+            <div class="priority-item"><h3>Next</h3><strong>Prepare verified input.</strong></div>
+          </div>
+        </div>
+        <section class="artifact-canvas" aria-label="Primary review artifact visual comparison">
+          <div class="ghost-stack" aria-label="before console grammar">
+            <span class="badge">Before</span>
+            <div class="ghost-block"></div>
+            <div class="ghost-block"></div>
+            <div class="ghost-block"></div>
+            <div class="ghost-block"></div>
+          </div>
+          <div class="artifact-stage" aria-label="artifact first target">
+            <div class="artifact-title">
+              <span class="badge">Primary Review Artifact</span>
+              <strong>Artifact-first judgment surface</strong>
+              <p>Review target, blocker, operation, and gate state are composed as one canvas.</p>
+            </div>
+            <div class="artifact-board">
+              <div class="artifact-cell"><strong>Target</strong><span>Episode 002 console</span></div>
+              <div class="artifact-cell"><strong>Blocker</strong><span>Verified real input absent</span></div>
+              <div class="artifact-cell"><strong>Operation</strong><span>Prepare source/transcript</span></div>
+              <div class="artifact-cell"><strong>Closed gates</strong><span>Import / render / public</span></div>
+            </div>
+            <div class="state-timeline" aria-label="state timeline">
+              <span class="step active">Audit</span>
+              <span class="step active">Artifact</span>
+              <span class="step next">Input</span>
+              <span class="step">YMM4 gate</span>
+            </div>
+          </div>
+          <div class="path-lane" aria-label="next operation path">
+            <span class="badge">After</span>
+            <div class="path-node"><strong>Accept / reject</strong><span>Judge the artifact shape.</span></div>
+            <div class="path-node"><strong>Prepare input</strong><span>Provide verified local material.</span></div>
+            <div class="path-node"><strong>Gate later</strong><span>YMM4 observation stays explicit.</span></div>
+          </div>
+        </section>
+      </section>
+      <aside class="inspector" id="operations" data-region="inspector" data-initial-visible-copy="true">
+        <span class="badge">Inspector</span>
+        <div>
+          <h2>Current issue</h2>
+          <p>Center is not artifact-first.</p>
+        </div>
+        <div>
+          <h2>Next operation</h2>
+          <p><strong>Prepare verified local source or transcript material</strong></p>
+        </div>
+        <div class="status-table" aria-label="compact status table">
+          <div class="status-row"><span>Artifact</span><span>visual canvas / front stage</span></div><div class="status-row"><span>Input</span><span>sample-backed / needs verified source</span></div><div class="status-row"><span>Next</span><span>prepare input / product enabling</span></div><div class="status-row"><span>Gates</span><span>closed / bounded</span></div>
+        </div>
+        <div class="gate-strip" aria-label="bounded gate status">
+          <span class="gate-badge">No import</span>
+          <span class="gate-badge">No render</span>
+          <span class="gate-badge">No public</span>
+        </div>
+        <div class="controls" aria-label="operational controls">
+          <button type="button" class="control primary" data-control="prepare_verified_local_source_transcript"><strong>Prepare real input</strong><span>Advance beyond sample.</span></button>
+<button type="button" class="control neutral" data-control="regenerate_review_console"><strong>Regenerate console</strong><span>Rebuild local package.</span></button>
+<button type="button" class="control gated" data-control="request_yymm4_observation_gate"><strong>Request YMM4 gate</strong><span>Observation only; no render.</span></button>
+<button type="button" class="control fallback" data-control="accept_reject_hold"><strong>Accept / reject / hold</strong><span>Record judgment; fallback only.</span></button>
+        </div>
+      </aside>
+    </section>
+    <details class="drawer" id="records" data-region="evidence-drawer" data-detail-drawer-role="secondary_raw_records_source_paths_and_extended_proof">
+      <summary>Evidence drawer: secondary records and extended proof</summary>
+      <p>Evidence supports the judgment through the inspector and canvas; raw records stay here.</p>
+      <ul class="record-list">
+        <li>
+  <span>Second-pass split-view benchmark (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/split_view_benchmark.md</code>
+</li>
+<li>
+  <span>Second-pass candidate matrix (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/layout_candidate_matrix.json</code>
+</li>
+<li>
+  <span>Final split-view recommendation (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/final_layout_recommendation.md</code>
+</li>
+<li>
+  <span>Evidence handling report (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/evidence_handling_report.md</code>
+</li>
+<li>
+  <span>Card-bloat risk report (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/card_bloat_risk_report.md</code>
+</li>
+<li>
+  <span>Guided decision flow HTML (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.html</code>
+</li>
+<li>
+  <span>Guided flow validation (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/validation_readback.json</code>
+</li>
+<li>
+  <span>Guided flow state (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/flow_state.json</code>
+</li>
+<li>
+  <span>Compact review cockpit (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html</code>
+</li>
+<li>
+  <span>Aligned review story (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/aligned_review_story.md</code>
+</li>
+<li>
+  <span>GUI dashboard panel (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/dashboard_panel_preview.html</code>
+</li>
+<li>
+  <span>YMM4 import preview panel (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_preview_panel.md</code>
+</li>
+<li>
+  <span>Thumbnail visual proof (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_visual_proof.html</code>
+</li>
+<li>
+  <span>Real input drop-zone (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input</code>
+</li>
+<li>
+  <span>Current review console HTML (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype/review_console.html</code>
+</li>
+      </ul>
+    </details>
+  </main>
+  <script>
+    for (const button of document.querySelectorAll('[data-jump]')) {
+      button.addEventListener('click', () => {
+        const target = document.getElementById(button.dataset.jump);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  </script>
+</body>
+</html>

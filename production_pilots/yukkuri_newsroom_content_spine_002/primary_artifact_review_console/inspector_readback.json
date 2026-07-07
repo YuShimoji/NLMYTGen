@@ -1,0 +1,63 @@
+{
+  "schema_version": "primary_artifact_inspector_readback.v1",
+  "artifact_id": "episode_002_primary_artifact_review_console_v1",
+  "critical_issue": "The center must become the review artifact, not another group of explanatory bordered blocks.",
+  "next_operation": "Prepare verified local source/transcript material.",
+  "primary_recommendation": "prepare_verified_local_source_transcript",
+  "primary_recommendation_label": "Prepare verified local source or transcript material",
+  "operational_controls": [
+    {
+      "control_id": "prepare_verified_local_source_transcript",
+      "label": "Prepare real input",
+      "effect": "Advance beyond sample.",
+      "recommended_for_current_state": true,
+      "tone": "primary"
+    },
+    {
+      "control_id": "regenerate_review_console",
+      "label": "Regenerate console",
+      "effect": "Rebuild local package.",
+      "recommended_for_current_state": false,
+      "tone": "neutral"
+    },
+    {
+      "control_id": "request_yymm4_observation_gate",
+      "label": "Request YMM4 gate",
+      "effect": "Observation only; no render.",
+      "recommended_for_current_state": false,
+      "tone": "gated"
+    },
+    {
+      "control_id": "accept_reject_hold",
+      "label": "Accept / reject / hold",
+      "effect": "Record judgment; fallback only.",
+      "recommended_for_current_state": false,
+      "tone": "fallback"
+    }
+  ],
+  "compact_status_rows": [
+    {
+      "label": "Artifact",
+      "value": "visual canvas",
+      "state": "front stage"
+    },
+    {
+      "label": "Input",
+      "value": "sample-backed",
+      "state": "needs verified source"
+    },
+    {
+      "label": "Next",
+      "value": "prepare input",
+      "state": "product enabling"
+    },
+    {
+      "label": "Gates",
+      "value": "closed",
+      "state": "bounded"
+    }
+  ],
+  "evidence_visible_outside_drawer": true,
+  "hold_is_not_progress": true,
+  "fallback_hold_status": "safe_fallback_not_progress"
+}

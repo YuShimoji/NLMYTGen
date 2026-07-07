@@ -1,0 +1,11 @@
+{
+  "schema_version": "visual_comparison_readback.v1",
+  "artifact_id": "episode_002_primary_artifact_review_console_v1",
+  "before_after_representation": "single_visual_comparison_canvas",
+  "html_rendered_visual_canvas": true,
+  "before_after_as_text_cards": false,
+  "old_side": "compressed prior console grammar: metric focus, text blocks, evidence chips",
+  "new_side": "dominant artifact lane: target, issue, next operation, gate strip, input path",
+  "comparison_assertion": "The largest region is the review artifact itself, not three explanatory blocks.",
+  "screenshot_generation": "not_attempted_html_preview_sufficient"
+}
