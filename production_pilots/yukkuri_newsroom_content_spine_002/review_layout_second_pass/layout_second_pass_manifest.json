@@ -1,0 +1,128 @@
+{
+  "schema_version": "layout_second_pass_manifest.v1",
+  "artifact_id": "episode_002_layout_second_pass_split_view_benchmark_v1",
+  "artifact_kind": "episode-review-layout-second-pass",
+  "status": "layout_second_pass_ready_local_offline",
+  "output_dir": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass",
+  "files": {
+    "layout_second_pass_manifest.json": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/layout_second_pass_manifest.json",
+    "current_guided_flow_diagnosis.md": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/current_guided_flow_diagnosis.md",
+    "split_view_benchmark.md": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/split_view_benchmark.md",
+    "layout_candidate_matrix.json": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/layout_candidate_matrix.json",
+    "evidence_handling_report.md": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/evidence_handling_report.md",
+    "card_bloat_risk_report.md": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/card_bloat_risk_report.md",
+    "candidate_wireframes_second_pass.html": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/candidate_wireframes_second_pass.html",
+    "candidate_wireframes_second_pass.md": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/candidate_wireframes_second_pass.md",
+    "final_layout_recommendation.md": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/final_layout_recommendation.md",
+    "validation_readback.json": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/validation_readback.json",
+    "review_checklist.md": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/review_checklist.md",
+    "limitations.md": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/limitations.md"
+  },
+  "evaluated_guided_flow": {
+    "artifact_id": "episode_002_guided_decision_flow_prototype_v1",
+    "path": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.html",
+    "verdict": "weak_pass_evaluated_prototype",
+    "reason": "One-screen dark prototype succeeds at situation-first framing but falls back to card rows and a generic evidence drawer."
+  },
+  "source_records": [
+    {
+      "record_id": "guided_flow_html",
+      "label": "Guided decision flow HTML",
+      "source_group": "evaluated_prototype",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.html",
+      "role": "source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "guided_flow_validation",
+      "label": "Guided decision flow validation",
+      "source_group": "evaluated_prototype",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/validation_readback.json",
+      "role": "source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "guided_flow_evidence",
+      "label": "Guided flow evidence index",
+      "source_group": "evaluated_prototype",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/evidence_drawer_index.json",
+      "role": "source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "layout_research_matrix",
+      "label": "First-pass layout matrix",
+      "source_group": "first_pass_research",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/layout_decision_matrix.json",
+      "role": "source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "compact_review_cockpit",
+      "label": "Compact review cockpit",
+      "source_group": "prior_prototype",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html",
+      "role": "source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "aligned_review_story",
+      "label": "Aligned review story",
+      "source_group": "source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/aligned_review_story.md",
+      "role": "source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "gui_dashboard_panel",
+      "label": "GUI dashboard panel",
+      "source_group": "source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/dashboard_panel_preview.html",
+      "role": "source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "import_preview_panel",
+      "label": "YMM4 import preview panel",
+      "source_group": "source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_preview_panel.md",
+      "role": "source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    },
+    {
+      "record_id": "thumbnail_visual_proof",
+      "label": "Thumbnail visual proof",
+      "source_group": "source_record",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_visual_proof.html",
+      "role": "source_record",
+      "display_zone": "secondary_source_records",
+      "exists": true
+    }
+  ],
+  "primary_human_review": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/split_view_benchmark.md",
+  "primary_machine_readable": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/validation_readback.json",
+  "candidate_wireframes": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/candidate_wireframes_second_pass.html",
+  "selected_candidate": "candidate_a_split_view_decision_evidence_pane",
+  "production_ui_replaced": false,
+  "boundary_flags": {
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "no_real_transcript": true,
+    "rights_boundary": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "no_yymm4_import": true,
+    "thumbnail_context_only": true,
+    "validation_noise_nonblocking": true,
+    "not_production_ready": true
+  },
+  "next_action": "Use candidate_a_split_view_decision_evidence_pane as the next implementation target; do not treat this research packet as a production UI replacement."
+}

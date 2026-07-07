@@ -1,0 +1,119 @@
+{
+  "schema_version": "layout_second_pass_candidate_matrix.v1",
+  "artifact_id": "episode_002_layout_second_pass_split_view_benchmark_v1",
+  "status": "ready",
+  "evaluated_guided_flow_verdict": "weak_pass_evaluated_prototype",
+  "criteria": [
+    "user_situation_first",
+    "visible_active_path",
+    "evidence_trust_without_junk_drawer",
+    "bounded_gate_context",
+    "low_card_bloat_risk",
+    "scales_to_future_episode_reviews",
+    "supports_real_input_yymm4_hold",
+    "internal_artifact_ids_secondary",
+    "avoids_production_overclaim"
+  ],
+  "research_basis": [
+    "Dashboards help monitoring, but this task is choosing a next lane.",
+    "Progressive disclosure works only when secondary information is genuinely secondary.",
+    "Task lists fit multi-step services, not a single next-lane decision.",
+    "Split-view and spine-detail patterns can keep decision and evidence visible together.",
+    "Card grids are suspect unless each card is a primary action and dependencies stay visible."
+  ],
+  "candidates": [
+    {
+      "candidate_id": "candidate_a_split_view_decision_evidence_pane",
+      "label": "Split view: decision rail + evidence/preview pane",
+      "pattern_family": "split_view_master_detail",
+      "status": "selected",
+      "score": 47,
+      "primary_strength": "Keeps the active recommendation and the trust evidence visible at the same time without turning evidence into a closet.",
+      "primary_weakness": "Needs responsive behavior so the right pane stacks cleanly on narrow screens.",
+      "evidence_handling": "evidence_preview_pane",
+      "card_bloat_risk": "low"
+    },
+    {
+      "candidate_id": "candidate_b_spine_detail_active_path",
+      "label": "Spine + detail: active path and selected node",
+      "pattern_family": "spine_detail",
+      "status": "runner_up",
+      "score": 42,
+      "primary_strength": "Shows the route through hold, real input, and YMM4 observation without making every option equal.",
+      "primary_weakness": "Can become process-heavy if the user only needs a simple current recommendation.",
+      "evidence_handling": "selected_node_detail_with_source_links",
+      "card_bloat_risk": "medium"
+    },
+    {
+      "candidate_id": "candidate_c_service_entry_decision_board",
+      "label": "Start page / service entry + decision board",
+      "pattern_family": "service_entry",
+      "status": "rejected",
+      "score": 35,
+      "primary_strength": "Strong explanation of purpose and first-time user orientation.",
+      "primary_weakness": "Still tends to compare choices side by side and can slide back into card-board layout.",
+      "evidence_handling": "summary_then_secondary_panel",
+      "card_bloat_risk": "medium"
+    },
+    {
+      "candidate_id": "candidate_d_wizard_step_flow",
+      "label": "Wizard / step-by-step decision flow",
+      "pattern_family": "wizard",
+      "status": "rejected_after_weak_pass",
+      "score": 34,
+      "primary_strength": "Good for novice input gathering and exactly-one outcome.",
+      "primary_weakness": "The weak-pass prototype showed that wizard language can over-trim evidence and hide trust checks.",
+      "evidence_handling": "deferred_details",
+      "card_bloat_risk": "medium"
+    },
+    {
+      "candidate_id": "candidate_e_current_card_drawer_guided_flow",
+      "label": "Current card/drawer guided flow",
+      "pattern_family": "card_drawer",
+      "status": "weak_pass_do_not_extend",
+      "score": 26,
+      "primary_strength": "Compact, local, dark, and already validates exactly-one recommendation.",
+      "primary_weakness": "Cards make options look like equal objects, and the evidence drawer becomes a storage closet.",
+      "evidence_handling": "generic_drawer",
+      "card_bloat_risk": "high"
+    },
+    {
+      "candidate_id": "candidate_f_command_center_cockpit",
+      "label": "Command-center cockpit",
+      "pattern_family": "dashboard_cockpit",
+      "status": "rejected",
+      "score": 24,
+      "primary_strength": "Power users can scan many statuses quickly.",
+      "primary_weakness": "It centers artifact inventory and repeats the original cockpit weakness for novice decision making.",
+      "evidence_handling": "status_rows_and_details",
+      "card_bloat_risk": "high"
+    }
+  ],
+  "selected_candidate_ids": [
+    "candidate_a_split_view_decision_evidence_pane"
+  ],
+  "winning_candidate": "candidate_a_split_view_decision_evidence_pane",
+  "decision": "Implement a split-view decision rail plus evidence/preview pane next; do not keep extending the card/drawer guided flow.",
+  "test_strategy": [
+    "user-situation-first",
+    "visible active path",
+    "evidence is available without becoming a junk drawer",
+    "internal artifact IDs are secondary",
+    "gate details are bounded",
+    "exactly one recommended next step",
+    "no external dependencies",
+    "no production/YMM4/public overclaims"
+  ],
+  "boundary_flags": {
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "no_real_transcript": true,
+    "rights_boundary": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "no_yymm4_import": true,
+    "thumbnail_context_only": true,
+    "validation_noise_nonblocking": true,
+    "not_production_ready": true
+  }
+}

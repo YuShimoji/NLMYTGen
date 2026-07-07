@@ -20,6 +20,7 @@ surface. It is not a production gate, a prompt, or a source of product rules.
 | Episode 002 compact review cockpit | weak_pass_prototype | `production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html` | evaluated prototype; dark/bounded but not the final information architecture |
 | Episode 002 review layout research | ready | `production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/layout_research_report.md` | pattern benchmark and wireframe packet; selects guided decision flow as the next UI target |
 | Episode 002 guided decision flow prototype | ready | `production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.html` | current local review entry; starts from user situation and recommends one current path |
+| Episode 002 layout second-pass benchmark | ready | `production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/split_view_benchmark.md` | split-view benchmark; treats guided flow as weak-pass and selects split-view decision rail plus evidence pane |
 | Validation drift triage | nonblocking | `docs/verification/VALIDATION_DRIFT_VELOCITY_RECOVERY_V1_2026-07-06.md` | full-suite drift is classified; product work can continue |
 | Real transcript replacement | blocked_by_real_input | `production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input/` | requires verified local transcript input |
 
@@ -38,27 +39,31 @@ surface. It is not a production gate, a prompt, or a source of product rules.
 - review_cockpit_compact_002: `[#####--]` compact bounded dark review cockpit generated and validated, now classified as weak_pass_prototype for information architecture.
 - review_layout_research_002: `[#####--]` layout benchmark packet generated; Candidate B guided decision flow selected as the next UI target.
 - guided_decision_flow_002: `[######-]` guided local prototype generated and validated; current default recommendation is hold/review later because real input is absent and YMM4 observation is not selected.
+- review_layout_second_pass_002: `[######-]` split-view benchmark generated and validated; next implementation target is decision rail plus evidence/preview pane.
 - validation_drift_triage: `[#####--]` current drift classified as nonblocking for episode 002 product work.
 - real_transcript_input: `[#------]` drop-zone exists, real input absent.
 
 ## Product Return Path
 
-Completed/current slice: episode 002 guided decision flow prototype. The
-current local review entry is
-`guided_decision_flow_prototype/guided_decision_flow.html`, with machine
-readback at `guided_decision_flow_prototype/validation_readback.json` and
-recommendation readback at
-`guided_decision_flow_prototype/recommendation_engine_readback.json`. The prior
-compact cockpit remains available at `review_cockpit_compact/review_cockpit.html`
-as an evaluated weak-pass prototype, and the layout research remains the source
-record that selected `candidate_b_guided_decision_flow`. The new prototype
-starts with user situation checks instead of artifact inventory and produces
-exactly one current recommendation: hold/review later. Real input replacement
-requires verified local material; actual YMM4 import observation requires an
-explicit human choice and still excludes render/public claims. The validation
-drift is currently classified as older newsroom generated-artifact noise,
-host/path drift, stale metadata, and fixture snapshot drift rather than a
-blocker for this guided-flow line.
+Completed/current slice: episode 002 layout second-pass split-view benchmark.
+The current research checkpoint is
+`review_layout_second_pass/split_view_benchmark.md`, with low-fidelity
+wireframes at `review_layout_second_pass/candidate_wireframes_second_pass.html`
+and machine readback at `review_layout_second_pass/validation_readback.json`.
+The guided decision flow remains available at
+`guided_decision_flow_prototype/guided_decision_flow.html`, but it is now an
+evaluated weak-pass prototype rather than the final UI direction. The
+second-pass benchmark compares split view, spine-detail, service entry,
+wizard, current card/drawer guided flow, and command-center cockpit. It selects
+exactly one next implementation target:
+`candidate_a_split_view_decision_evidence_pane`. The next UI implementation
+should use a decision rail plus evidence/preview pane so trust evidence stays
+visible beside the active recommendation instead of being hidden in a generic
+drawer. Real input replacement requires verified local material; actual YMM4
+import observation requires an explicit human choice and still excludes
+render/public claims. The validation drift is currently classified as older
+newsroom generated-artifact noise, host/path drift, stale metadata, and fixture
+snapshot drift rather than a blocker for this split-view research line.
 
 ## Regeneration
 
@@ -73,18 +78,19 @@ python -m src.cli.main build-focused-review-brief --package production_pilots/yu
 python -m src.cli.main build-review-cockpit-compact --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_review_cockpit_compact_v1
 python -m src.cli.main build-review-layout-research --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_review_layout_research_and_pattern_benchmark_v1
 python -m src.cli.main build-guided-decision-flow-prototype --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_guided_decision_flow_prototype_v1
+python -m src.cli.main build-review-layout-second-pass --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_layout_second_pass_split_view_benchmark_v1
 ```
 
 Primary machine readback:
 
 ```text
-production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/validation_readback.json
+production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/validation_readback.json
 ```
 
 Primary human review file:
 
 ```text
-production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.html
+production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/split_view_benchmark.md
 ```
 
 ## Closed Gates

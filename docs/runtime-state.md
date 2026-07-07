@@ -1,5 +1,51 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 layout second-pass split-view benchmark completed (2026-07-07 JST)**:
+  `episode-002-layout-second-pass-split-view-benchmark-v1` re-evaluates the
+  Episode 002 review UI after guided-flow weak-pass feedback, with special
+  attention to split-view alternatives, evidence handling, card-bloat risk,
+  and durable information architecture. Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/`.
+  Primary human review is `split_view_benchmark.md`; low-fidelity dark local
+  wireframes are `candidate_wireframes_second_pass.html` and
+  `candidate_wireframes_second_pass.md`; final recommendation is
+  `final_layout_recommendation.md`; primary machine readback is
+  `validation_readback.json`; candidate matrix is
+  `layout_candidate_matrix.json`; supporting reports are
+  `current_guided_flow_diagnosis.md`, `evidence_handling_report.md`, and
+  `card_bloat_risk_report.md`. Regeneration command:
+  `python -m src.cli.main build-review-layout-second-pass --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_layout_second_pass_split_view_benchmark_v1`.
+  The current `guided_decision_flow_prototype/guided_decision_flow.html` is
+  now recorded as a weak-pass evaluated prototype, not the final UI direction.
+  The benchmark compares split view, spine-detail, start-page/service entry
+  plus decision board, wizard/step-by-step decision flow, current card/drawer
+  guided flow, and command-center cockpit. It selects exactly one next
+  implementation target: `candidate_a_split_view_decision_evidence_pane`.
+  The selected direction is a left decision rail for current situation, active
+  decision, and one recommended next step plus a right evidence/preview pane
+  for source readiness and gate context. Evidence drawer alone is rejected as
+  insufficient because trust evidence is needed beside the decision; current
+  card/drawer risk is classified as high. The packet preserves `dry_run`,
+  `sample_fixture_not_real`, `no_real_transcript`, `rights_boundary`,
+  `public_upload_closed`, `yymm4_render_closed`, `no_yymm4_import`,
+  `thumbnail_context_only`, `validation_noise_nonblocking`, and
+  `not_production_ready`. Targeted layout second-pass plus companion layout
+  tests pass
+  (`uv run pytest tests/test_review_layout_second_pass.py tests/test_guided_decision_flow_prototype.py tests/test_review_layout_research.py -q`
+  -> 12 passed), and generated readback passes with 6 candidates, exactly-one
+  selected recommendation, split-view pane markers, spine-detail and
+  current-pattern critique coverage, evidence-not-generic-drawer policy, no
+  external refs, and no false production/YMM4/public claims. Full pytest was
+  not run. Access verification is `verified_present`; user-opened visual
+  acceptance is still pending. No production UI replacement,
+  real transcript/source replacement,
+  YMM4 GUI launch/import/render, production `.ymmp`, final thumbnail approval,
+  live fetch/scraping, external media download, OAuth/API key/payment,
+  rights/legal/public-ready acceptance, YouTube upload, destructive git,
+  cross-repo edit, broad fixture regeneration, or full-suite green campaign
+  occurred. Next implementation target after human review is a split-view
+  decision rail plus evidence/preview pane prototype.
+
 - **Episode 002 guided decision flow prototype completed (2026-07-07 JST)**:
   `episode-002-guided-decision-flow-prototype-v1` implements the selected
   Candidate B direction from the layout research as a local/static dark-mode

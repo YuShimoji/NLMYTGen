@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en" data-layout-second-pass="true" data-selected-candidate="candidate_a_split_view_decision_evidence_pane">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Episode 002 Layout Second Pass</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+      --bg: #101113;
+      --panel: #1b1d20;
+      --panel2: #24282e;
+      --panel3: #14171b;
+      --text: #f0eee8;
+      --muted: #b8b5ad;
+      --line: #4b5563;
+      --accent: #67e8f9;
+      --selected: #a7f3d0;
+      --warn: #facc15;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #eef2f0;
+        --panel: #f4f1ea;
+        --panel2: #e4e8e6;
+        --panel3: #d8dfdc;
+        --text: #1f2420;
+        --muted: #5f6661;
+        --line: #bac3bd;
+        --accent: #0e7490;
+        --selected: #166534;
+        --warn: #8a5a00;
+      }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: 0; }
+    main { width: min(1220px, calc(100% - 32px)); margin: 0 auto; padding: 22px 0 34px; }
+    header { display: grid; gap: 8px; padding: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    h1 { margin: 0; font-size: clamp(1.35rem, 2.4vw, 2rem); letter-spacing: 0; }
+    h2 { margin: 0 0 8px; font-size: 1rem; letter-spacing: 0; }
+    h3 { margin: 0; font-size: 0.93rem; letter-spacing: 0; }
+    p { margin: 0; color: var(--muted); line-height: 1.45; }
+    .candidate-grid { margin-top: 14px; display: grid; gap: 14px; }
+    .candidate { display: grid; gap: 10px; padding: 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .candidate[data-status="selected"] { border-color: var(--selected); box-shadow: 0 0 0 2px rgba(167, 243, 208, 0.16); }
+    .candidate-layout { display: grid; grid-template-columns: minmax(220px, 0.9fr) minmax(300px, 1.35fr); gap: 10px; }
+    .pane, .block { padding: 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel2); min-height: 40px; }
+    .pane[data-right-pane] { border-color: var(--accent); }
+    .stack { display: grid; gap: 8px; }
+    .spine { display: grid; grid-template-columns: 16px 1fr; gap: 8px; align-items: start; }
+    .node { width: 12px; height: 12px; margin-top: 4px; border-radius: 999px; background: var(--accent); }
+    .tag { width: fit-content; padding: 4px 8px; border-radius: 999px; background: var(--panel3); color: var(--accent); font-size: 0.78rem; font-weight: 700; }
+    .gate-strip { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; padding: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .gate-strip span { padding: 5px 8px; border-radius: 999px; background: var(--panel2); color: var(--muted); font-size: 0.78rem; }
+    @media (max-width: 850px) {
+      main { width: min(100% - 20px, 1220px); padding-top: 12px; }
+      .candidate-layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Episode 002 Layout Second Pass</h1>
+      <p>Low-fidelity local wireframes comparing split-view, spine-detail, service entry, wizard, current card/drawer, and cockpit patterns.</p>
+    </header>
+    <section class="candidate-grid"><article class="candidate" data-candidate="candidate_a_split_view_decision_evidence_pane" data-status="selected">
+  <span class="tag">selected</span>
+  <h2>Split view: decision rail + evidence/preview pane</h2>
+  <p>Keeps the active recommendation and the trust evidence visible at the same time without turning evidence into a closet.</p>
+  <div class="candidate-layout"><div class="pane stack" data-left-pane>
+<h3>Decision rail</h3>
+<div class="block">Current user situation</div>
+<div class="block">Active decision</div>
+<div class="block">Recommended next step</div>
+</div>
+<div class="pane stack" data-right-pane>
+<h3>Evidence preview pane</h3>
+<div class="block">Source readiness summary</div>
+<div class="block">Gate context</div>
+<div class="block">Source index summary</div>
+</div></div>
+  <p>Needs responsive behavior so the right pane stacks cleanly on narrow screens.</p>
+</article>
+<article class="candidate" data-candidate="candidate_b_spine_detail_active_path" data-status="runner_up">
+  <span class="tag">runner_up</span>
+  <h2>Spine + detail: active path and selected node</h2>
+  <p>Shows the route through hold, real input, and YMM4 observation without making every option equal.</p>
+  <div class="candidate-layout"><div class="pane stack">
+<h3>Active path spine</h3>
+<div class="spine"><span class="node"></span><span>Hold now</span></div>
+<div class="spine"><span class="node"></span><span>Real input later</span></div>
+<div class="spine"><span class="node"></span><span>YMM4 observation gate</span></div>
+</div>
+<div class="pane stack">
+<h3>Selected node detail</h3>
+<div class="block">Recommendation rationale</div>
+<div class="block">Relevant evidence links</div>
+<div class="block">Bounded gate notes</div>
+</div></div>
+  <p>Can become process-heavy if the user only needs a simple current recommendation.</p>
+</article>
+<article class="candidate" data-candidate="candidate_c_service_entry_decision_board" data-status="rejected">
+  <span class="tag">rejected</span>
+  <h2>Start page / service entry + decision board</h2>
+  <p>Strong explanation of purpose and first-time user orientation.</p>
+  <div class="candidate-layout"><div class="pane stack">
+<h3>service_entry</h3>
+<div class="block">Primary decision area</div>
+<div class="block">Alternative path area</div>
+</div>
+<div class="pane stack">
+<h3>Evidence and gates</h3>
+<div class="block">Evidence summary</div>
+<div class="block">Boundary summary</div>
+</div></div>
+  <p>Still tends to compare choices side by side and can slide back into card-board layout.</p>
+</article>
+<article class="candidate" data-candidate="candidate_d_wizard_step_flow" data-status="rejected_after_weak_pass">
+  <span class="tag">rejected_after_weak_pass</span>
+  <h2>Wizard / step-by-step decision flow</h2>
+  <p>Good for novice input gathering and exactly-one outcome.</p>
+  <div class="candidate-layout"><div class="pane stack">
+<h3>wizard</h3>
+<div class="block">Primary decision area</div>
+<div class="block">Alternative path area</div>
+</div>
+<div class="pane stack">
+<h3>Evidence and gates</h3>
+<div class="block">Evidence summary</div>
+<div class="block">Boundary summary</div>
+</div></div>
+  <p>The weak-pass prototype showed that wizard language can over-trim evidence and hide trust checks.</p>
+</article>
+<article class="candidate" data-candidate="candidate_e_current_card_drawer_guided_flow" data-status="weak_pass_do_not_extend">
+  <span class="tag">weak_pass_do_not_extend</span>
+  <h2>Current card/drawer guided flow</h2>
+  <p>Compact, local, dark, and already validates exactly-one recommendation.</p>
+  <div class="candidate-layout"><div class="pane stack">
+<h3>Current card/drawer pattern</h3>
+<div class="block">Three situation cards</div>
+<div class="block">Three outcome cards</div>
+</div>
+<div class="pane stack">
+<h3>Critique</h3>
+<div class="block">Evidence hidden after the decision</div>
+<div class="block">Cards multiply as sources grow</div>
+</div></div>
+  <p>Cards make options look like equal objects, and the evidence drawer becomes a storage closet.</p>
+</article>
+<article class="candidate" data-candidate="candidate_f_command_center_cockpit" data-status="rejected">
+  <span class="tag">rejected</span>
+  <h2>Command-center cockpit</h2>
+  <p>Power users can scan many statuses quickly.</p>
+  <div class="candidate-layout"><div class="pane stack">
+<h3>dashboard_cockpit</h3>
+<div class="block">Primary decision area</div>
+<div class="block">Alternative path area</div>
+</div>
+<div class="pane stack">
+<h3>Evidence and gates</h3>
+<div class="block">Evidence summary</div>
+<div class="block">Boundary summary</div>
+</div></div>
+  <p>It centers artifact inventory and repeats the original cockpit weakness for novice decision making.</p>
+</article></section>
+    <section class="gate-strip" aria-label="closed boundaries"><span>dry_run</span>
+<span>sample_fixture_not_real</span>
+<span>no_real_transcript</span>
+<span>rights_boundary</span>
+<span>public_upload_closed</span>
+<span>yymm4_render_closed</span>
+<span>no_yymm4_import</span>
+<span>thumbnail_context_only</span>
+<span>validation_noise_nonblocking</span>
+<span>not_production_ready</span></section>
+  </main>
+</body>
+</html>

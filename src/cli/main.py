@@ -34,6 +34,7 @@ Usage:
     python -m src.cli.main build-review-cockpit-compact --package production_pilots/pkg [--focused-brief-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-review-layout-research --package production_pilots/pkg [--cockpit-dir DIR] [--focused-brief-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-guided-decision-flow-prototype --package production_pilots/pkg [--layout-research-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
+    python -m src.cli.main build-review-layout-second-pass --package production_pilots/pkg [--guided-flow-dir DIR] [--layout-research-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
@@ -2654,6 +2655,43 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_review_layout_second_pass = subparsers.add_parser(
+        "build-review-layout-second-pass",
+        help="Build the episode 002 second-pass layout benchmark focused on split-view alternatives",
+    )
+    p_review_layout_second_pass.add_argument("--package", required=True, help="Episode package directory")
+    p_review_layout_second_pass.add_argument(
+        "--guided-flow-dir",
+        help="Input guided decision flow directory (default: <package>/guided_decision_flow_prototype)",
+    )
+    p_review_layout_second_pass.add_argument(
+        "--layout-research-dir",
+        help="Input first-pass layout research directory (default: <package>/review_layout_research)",
+    )
+    p_review_layout_second_pass.add_argument(
+        "--cockpit-dir",
+        help="Input compact review cockpit directory (default: <package>/review_cockpit_compact)",
+    )
+    p_review_layout_second_pass.add_argument(
+        "--reviewer-packet-dir",
+        help="Input surface alignment review packet directory (default: <package>/surface_alignment_review_packet)",
+    )
+    p_review_layout_second_pass.add_argument(
+        "--output",
+        help="Output directory (default: <package>/review_layout_second_pass)",
+    )
+    p_review_layout_second_pass.add_argument(
+        "--artifact-id",
+        default="episode_002_layout_second_pass_split_view_benchmark_v1",
+        help="Second-pass layout benchmark artifact id",
+    )
+    p_review_layout_second_pass.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -2786,6 +2824,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_review_layout_research(args)
         elif args.command == "build-guided-decision-flow-prototype":
             return _cmd_build_guided_decision_flow_prototype(args)
+        elif args.command == "build-review-layout-second-pass":
+            return _cmd_build_review_layout_second_pass(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -4957,6 +4997,39 @@ def _cmd_build_guided_decision_flow_prototype(args: argparse.Namespace) -> int:
         print(f"primary_human_review: {readback.get('primary_human_review')}")
         print(f"recommendation_engine_readback: {readback.get('recommendation_engine_readback')}")
         print(f"markdown_fallback: {readback.get('markdown_fallback')}")
+        print(f"launcher_command: {readback.get('launcher_command')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_review_layout_second_pass(args: argparse.Namespace) -> int:
+    """Build the episode 002 second-pass layout benchmark."""
+    from src.pipeline.review_layout_second_pass import build_review_layout_second_pass
+
+    readback = build_review_layout_second_pass(
+        package_dir=getattr(args, "package"),
+        guided_flow_dir=getattr(args, "guided_flow_dir", None),
+        layout_research_dir=getattr(args, "layout_research_dir", None),
+        cockpit_dir=getattr(args, "cockpit_dir", None),
+        reviewer_packet_dir=getattr(args, "reviewer_packet_dir", None),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"selected_candidate: {readback.get('selected_candidate')}")
+        print(f"candidate_count: {readback.get('checks', {}).get('candidate_count')}")
+        print(f"split_view_panes_present: {readback.get('checks', {}).get('split_view_panes_present')}")
+        print(f"evidence_not_generic_drawer: {readback.get('checks', {}).get('evidence_not_generic_drawer')}")
+        print(f"card_bloat_risk_classified: {readback.get('checks', {}).get('card_bloat_risk_classified')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"candidate_wireframes: {readback.get('candidate_wireframes')}")
+        print(f"final_recommendation: {readback.get('final_recommendation')}")
         print(f"launcher_command: {readback.get('launcher_command')}")
         print(f"next_action: {readback.get('next_action')}")
     return 0
