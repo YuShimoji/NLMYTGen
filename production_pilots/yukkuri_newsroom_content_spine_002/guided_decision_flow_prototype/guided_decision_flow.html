@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en" data-guided-decision-flow="true" data-default-recommendation="hold_review_later">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Episode 002 Guided Decision Flow</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+      --bg: #11100e;
+      --panel: #1b1d20;
+      --panel-2: #242830;
+      --panel-3: #15181d;
+      --text: #f3f0e8;
+      --muted: #bab7ae;
+      --line: #4b5563;
+      --accent: #4ade80;
+      --action: #8ab4f8;
+      --warn: #f7c948;
+      --closed: #f97373;
+      --shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #edf1ee;
+        --panel: #f3f0e8;
+        --panel-2: #e4e8e4;
+        --panel-3: #d9dfdc;
+        --text: #1f2420;
+        --muted: #5b625d;
+        --line: #bac3bd;
+        --accent: #166534;
+        --action: #1d4ed8;
+        --warn: #8a5a00;
+        --closed: #be123c;
+        --shadow: 0 16px 34px rgba(31, 36, 32, 0.12);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+    main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; padding: 22px 0 32px; }
+    header, section, details {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    header { display: grid; gap: 10px; padding: 18px; }
+    h1 { margin: 0; font-size: clamp(1.35rem, 2.5vw, 2rem); line-height: 1.12; letter-spacing: 0; }
+    h2 { margin: 0 0 10px; font-size: 1.05rem; letter-spacing: 0; }
+    h3 { margin: 0; font-size: 0.98rem; letter-spacing: 0; }
+    p { margin: 0; color: var(--muted); line-height: 1.5; }
+    .primary-flow { margin-top: 14px; padding: 16px; display: grid; gap: 14px; }
+    .question-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .question-card, .outcome-card {
+      min-height: 142px;
+      padding: 13px;
+      border-radius: 8px;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+    .answer { width: fit-content; padding: 4px 8px; border-radius: 999px; color: var(--text); background: var(--panel-3); border: 1px solid var(--line); font-size: 0.82rem; font-weight: 700; }
+    .recommendation {
+      padding: 16px;
+      border-radius: 8px;
+      background: var(--panel-3);
+      border: 1px solid var(--accent);
+      display: grid;
+      gap: 8px;
+    }
+    .recommendation strong { color: var(--accent); font-size: clamp(1.15rem, 2.2vw, 1.55rem); }
+    .form-row { display: grid; gap: 10px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    fieldset { margin: 0; padding: 12px; border: 1px solid var(--line); border-radius: 8px; display: grid; gap: 8px; }
+    legend { padding: 0 4px; font-weight: 700; }
+    label { display: flex; gap: 8px; align-items: center; color: var(--muted); line-height: 1.4; }
+    input { accent-color: var(--accent); }
+    .outcome-row { display: grid; gap: 12px; grid-template-columns: 1.25fr 0.9fr 0.9fr; }
+    .outcome-card[data-selected="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.16); }
+    .outcome-card[data-selected="false"] { opacity: 0.86; }
+    .status { width: fit-content; padding: 4px 8px; border-radius: 999px; background: var(--panel-3); color: var(--action); font-size: 0.78rem; font-weight: 700; }
+    .status.recommended { color: var(--accent); }
+    .status.gated { color: var(--warn); }
+    details { margin-top: 12px; padding: 13px 15px; }
+    summary { cursor: pointer; font-weight: 700; }
+    .record-list { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 8px; }
+    .record-list li { padding: 9px 10px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 6px; display: grid; gap: 4px; }
+    code { color: var(--action); overflow-wrap: anywhere; }
+    .gate-strip { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .gate-strip span { padding: 5px 8px; border-radius: 999px; background: var(--panel-2); border: 1px solid var(--line); color: var(--muted); font-size: 0.78rem; }
+    @media (max-width: 880px) {
+      main { width: min(100% - 20px, 1080px); padding-top: 12px; }
+      .question-grid, .form-row, .outcome-row { grid-template-columns: 1fr; }
+      .question-card, .outcome-card { min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Episode 002 Decision Flow</h1>
+      <p>Start with the situation you are in, then use one safe recommendation for the current sample review.</p>
+    </header>
+
+    <section class="primary-flow" data-primary-copy="true">
+      <div>
+        <h2>What situation are you in right now?</h2>
+        <p>Answer these checks before choosing any next work.</p>
+      </div>
+      <div class="question-grid"><article class="question-card">
+  <span class="answer">Current answer: No</span>
+  <h3>Do you have reviewed local source or transcript material for this episode?</h3>
+</article>
+<article class="question-card">
+  <span class="answer">Current answer: No</span>
+  <h3>Do you need to inspect YMM4 import behavior now without rendering or publishing?</h3>
+</article>
+<article class="question-card">
+  <span class="answer">Current answer: Yes</span>
+  <h3>Are you only checking whether the current sample story is understandable?</h3>
+</article></div>
+      <article class="recommendation" aria-live="polite">
+        <span class="answer">Recommended now</span>
+        <strong id="liveRecommendation">Hold and review later</strong>
+        <p id="liveReason">No reviewed real material is detected and no import observation is selected, so keep this as a local review record.</p>
+      </article>
+      <div class="form-row" data-interactive-prototype="true">
+        <fieldset>
+          <legend>Reviewed material</legend>
+          <label><input type="radio" name="realInput" value="yes"> Yes</label>
+          <label><input type="radio" name="realInput" value="no" checked> No</label>
+        </fieldset>
+        <fieldset>
+          <legend>Import observation</legend>
+          <label><input type="radio" name="yymm4" value="yes"> Yes</label>
+          <label><input type="radio" name="yymm4" value="no" checked> No</label>
+        </fieldset>
+        <fieldset>
+          <legend>Current intent</legend>
+          <label><input type="radio" name="intent" value="story" checked> Check story only</label>
+          <label><input type="radio" name="intent" value="move"> Move forward</label>
+        </fieldset>
+      </div>
+      <div class="outcome-row"><article class="outcome-card" data-selected="false">
+  <span class="status gated">gated</span>
+  <h3>Real input replacement</h3>
+  <p>Reviewed local source or transcript material is available for this episode.</p>
+  <p>Moves the episode from sample review toward real content while keeping YMM4 and public gates closed.</p>
+</article>
+<article class="outcome-card" data-selected="false">
+  <span class="status gated">gated</span>
+  <h3>YMM4 import observation without render</h3>
+  <p>A human explicitly chooses to inspect import behavior now.</p>
+  <p>Allows a manual import observation only; it does not render, publish, or create a production project claim.</p>
+</article>
+<article class="outcome-card" data-selected="true">
+  <span class="status recommended">recommended</span>
+  <h3>Hold and review later</h3>
+  <p>No reviewed local real material is available and no import observation has been selected.</p>
+  <p>Keeps the current sample-backed review as a local record without crossing any production gate.</p>
+</article></div>
+    </section>
+
+    <details data-secondary-records>
+      <summary>Evidence drawer</summary>
+      <p>Source records stay here so the first screen remains about the decision.</p>
+      <ul class="record-list"><li>
+  <span>Layout research manifest (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/layout_research_manifest.json</code>
+</li>
+<li>
+  <span>Layout decision matrix (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/layout_decision_matrix.json</code>
+</li>
+<li>
+  <span>Layout principles (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/layout_principles.json</code>
+</li>
+<li>
+  <span>Layout final recommendation (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/final_layout_recommendation.md</code>
+</li>
+<li>
+  <span>Layout wireframes (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/candidate_wireframes.html</code>
+</li>
+<li>
+  <span>Compact review cockpit (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html</code>
+</li>
+<li>
+  <span>Aligned review story (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/aligned_review_story.md</code>
+</li>
+<li>
+  <span>GUI dashboard panel (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/dashboard_panel_preview.html</code>
+</li>
+<li>
+  <span>YMM4 import preview panel (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_preview_panel.md</code>
+</li>
+<li>
+  <span>Thumbnail visual proof (present)</span>
+  <code>production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_visual_proof.html</code>
+</li></ul>
+    </details>
+
+    <details>
+      <summary>Closed gates and boundaries</summary>
+      <p>This prototype does not perform import, render, publication, rights approval, or production acceptance.</p>
+      <div class="gate-strip"><span>dry_run</span>
+<span>sample_fixture_not_real</span>
+<span>no_real_transcript</span>
+<span>rights_boundary</span>
+<span>public_upload_closed</span>
+<span>yymm4_render_closed</span>
+<span>no_yymm4_import</span>
+<span>thumbnail_context_only</span>
+<span>validation_noise_nonblocking</span>
+<span>not_production_ready</span></div>
+    </details>
+  </main>
+  <script>
+    const outcomeLabels = {"real": "Real input replacement", "yymm4": "YMM4 import observation without render", "hold": "Hold and review later"};
+    const recommendation = document.getElementById("liveRecommendation");
+    const reason = document.getElementById("liveReason");
+    function checked(name) {
+      const node = document.querySelector(`input[name="${name}"]:checked`);
+      return node ? node.value : "no";
+    }
+    function updateRecommendation() {
+      const real = checked("realInput") === "yes";
+      const importCheck = checked("yymm4") === "yes";
+      if (real) {
+        recommendation.textContent = outcomeLabels.real;
+        reason.textContent = "Use this when reviewed local material exists; YMM4 and public gates still remain closed.";
+      } else if (importCheck) {
+        recommendation.textContent = outcomeLabels.yymm4;
+        reason.textContent = "Use this only when import observation is explicitly selected; no render or publication follows from this page.";
+      } else {
+        recommendation.textContent = outcomeLabels.hold;
+        reason.textContent = "No reviewed real material is detected and no import observation is selected, so keep this as a local review record.";
+      }
+    }
+    document.querySelectorAll("input").forEach((node) => node.addEventListener("change", updateRecommendation));
+  </script>
+</body>
+</html>

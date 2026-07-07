@@ -1,0 +1,24 @@
+{
+  "schema_version": "guided_recommendation_engine_readback.v1",
+  "artifact_id": "episode_002_guided_decision_flow_prototype_v1",
+  "status": "passed",
+  "primary_user_question": "What situation are you in right now?",
+  "default_recommendation": "hold_review_later",
+  "recommended_outcome_ids": [
+    "hold_review_later"
+  ],
+  "exactly_one_recommendation": true,
+  "default_reason": "No reviewed real material is detected and no import observation is selected, so keep this as a local review record.",
+  "current_inputs": {
+    "real_input_available": false,
+    "real_input_files": [],
+    "explicit_yymm4_observation_selected": false,
+    "selected_candidate": "candidate_b_guided_decision_flow",
+    "source_record_policy": "secondary_records_only"
+  },
+  "alternatives": [
+    "real_input_replacement",
+    "actual_yymm4_import_observation_no_render"
+  ],
+  "gate_integrity_status": "closed_preserved"
+}

@@ -1,5 +1,47 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 guided decision flow prototype completed (2026-07-07 JST)**:
+  `episode-002-guided-decision-flow-prototype-v1` implements the selected
+  Candidate B direction from the layout research as a local/static dark-mode
+  guided start-to-decision prototype. Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/`.
+  Primary human review is `guided_decision_flow.html`; Markdown fallback is
+  `guided_decision_flow.md`; primary machine readback is
+  `validation_readback.json`; recommendation readback is
+  `recommendation_engine_readback.json`; state is `flow_state.json`; outcomes
+  are `decision_outcomes.json`; secondary source index is
+  `evidence_drawer_index.json`. Regeneration command:
+  `python -m src.cli.main build-guided-decision-flow-prototype --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_guided_decision_flow_prototype_v1`.
+  The prototype starts from the question "What situation are you in right now?"
+  and asks whether reviewed local source/transcript material exists, whether
+  YMM4 import observation is explicitly needed without render/publication, and
+  whether the user is only checking the current sample story. For the current
+  checked state, no real transcript/source file exists in the real-input slot
+  and no explicit YMM4 observation is selected, so exactly one recommendation
+  is produced: `hold_review_later`. Real input replacement and actual YMM4
+  import observation remain gated alternatives. Source records and internal
+  artifact paths live in the evidence drawer, not the primary copy. The package
+  preserves `dry_run`, `sample_fixture_not_real`, `no_real_transcript`,
+  `rights_boundary`, `public_upload_closed`, `yymm4_render_closed`,
+  `no_yymm4_import`, `thumbnail_context_only`,
+  `validation_noise_nonblocking`, and `not_production_ready`. Targeted guided
+  decision flow plus companion review-surface tests pass
+  (`uv run pytest tests/test_guided_decision_flow_prototype.py tests/test_review_layout_research.py tests/test_review_cockpit_compact.py tests/test_focused_review_brief.py -q`
+  -> 16 passed), and generated readback passes with exactly-one
+  recommendation, secondary source records, no internal artifact IDs in primary
+  visible copy, dark-mode markers, no external refs, no temporary-copy markers,
+  and no false production/YMM4/public claims. Full pytest was not run. Access
+  verification is `verified_present`; user-opened visual acceptance is still
+  pending. No
+  real transcript/source replacement, YMM4 GUI launch/import/render,
+  production `.ymmp`, final thumbnail approval, live fetch/scraping, external
+  media download, OAuth/API key/payment, rights/legal/public-ready acceptance,
+  YouTube upload, destructive git, cross-repo edit, broad fixture regeneration,
+  production UI promotion, or full-suite green campaign occurred. Next product
+  move after human review is either real input replacement with verified local
+  material, explicit YMM4 import observation without render/public claims, or
+  hold/review later as the current default.
+
 - **Episode 002 review layout research completed (2026-07-07 JST)**:
   `episode-002-review-layout-research-and-pattern-benchmark-v1` benchmarks
   layout patterns before further review UI implementation. Generated package:

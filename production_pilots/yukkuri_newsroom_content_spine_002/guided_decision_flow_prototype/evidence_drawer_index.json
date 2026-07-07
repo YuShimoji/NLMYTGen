@@ -1,0 +1,111 @@
+{
+  "schema_version": "guided_evidence_drawer_index.v1",
+  "artifact_id": "episode_002_guided_decision_flow_prototype_v1",
+  "status": "ready",
+  "source_record_policy": "secondary_records_only",
+  "primary_surface": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.html",
+  "source_records": [
+    {
+      "record_id": "layout_research_manifest",
+      "label": "Layout research manifest",
+      "source_group": "layout_research",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/layout_research_manifest.json",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "layout_decision_matrix",
+      "label": "Layout decision matrix",
+      "source_group": "layout_research",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/layout_decision_matrix.json",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "layout_principles",
+      "label": "Layout principles",
+      "source_group": "layout_research",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/layout_principles.json",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "layout_final_recommendation",
+      "label": "Layout final recommendation",
+      "source_group": "layout_research",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/final_layout_recommendation.md",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "layout_wireframes",
+      "label": "Layout wireframes",
+      "source_group": "layout_research",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/candidate_wireframes.html",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "compact_review_cockpit",
+      "label": "Compact review cockpit",
+      "source_group": "prior_prototype",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "aligned_review_story",
+      "label": "Aligned review story",
+      "source_group": "reviewer_packet",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet/aligned_review_story.md",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "gui_dashboard_panel",
+      "label": "GUI dashboard panel",
+      "source_group": "episode_surface",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/gui_dashboard_panel/dashboard_panel_preview.html",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "import_preview_panel",
+      "label": "YMM4 import preview panel",
+      "source_group": "episode_surface",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/import_preview_panel.md",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    },
+    {
+      "record_id": "thumbnail_visual_proof",
+      "label": "Thumbnail visual proof",
+      "source_group": "episode_surface",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_visual_proof.html",
+      "role": "secondary_source_record",
+      "display_zone": "evidence_drawer",
+      "exists": true
+    }
+  ],
+  "boundary_flags": {
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "no_real_transcript": true,
+    "rights_boundary": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "no_yymm4_import": true,
+    "thumbnail_context_only": true,
+    "validation_noise_nonblocking": true,
+    "not_production_ready": true
+  }
+}

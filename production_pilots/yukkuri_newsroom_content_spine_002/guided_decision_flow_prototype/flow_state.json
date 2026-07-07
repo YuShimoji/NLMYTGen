@@ -1,0 +1,82 @@
+{
+  "schema_version": "guided_decision_flow_state.v1",
+  "artifact_id": "episode_002_guided_decision_flow_prototype_v1",
+  "artifact_kind": "episode-guided-decision-flow-prototype",
+  "status": "guided_decision_flow_prototype_ready_local_offline",
+  "source_package_dir": "production_pilots/yukkuri_newsroom_content_spine_002",
+  "layout_research_dir": "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research",
+  "cockpit_dir": "production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact",
+  "reviewer_packet_dir": "production_pilots/yukkuri_newsroom_content_spine_002/surface_alignment_review_packet",
+  "output_dir": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype",
+  "selected_candidate": "candidate_b_guided_decision_flow",
+  "layout_research_status": "layout_research_ready_local_offline",
+  "evaluated_prior_prototype": {
+    "artifact_id": "episode_002_review_cockpit_compact_v1",
+    "path": "production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/review_cockpit.html",
+    "verdict": "weak_pass_evaluated_prototype",
+    "keep_as": "source_record_for_next_layout"
+  },
+  "primary_user_question": "What situation are you in right now?",
+  "user_situation_checks": [
+    {
+      "check_id": "reviewed_local_source_or_transcript",
+      "question": "Do you have reviewed local source or transcript material for this episode?",
+      "current_checked_answer": false,
+      "current_answer_label": "No",
+      "if_yes_recommendation": "real_input_replacement"
+    },
+    {
+      "check_id": "explicit_yymm4_import_observation",
+      "question": "Do you need to inspect YMM4 import behavior now without rendering or publishing?",
+      "current_checked_answer": false,
+      "current_answer_label": "No",
+      "if_yes_recommendation": "actual_yymm4_import_observation_no_render"
+    },
+    {
+      "check_id": "current_story_understanding_check",
+      "question": "Are you only checking whether the current sample story is understandable?",
+      "current_checked_answer": true,
+      "current_answer_label": "Yes",
+      "if_yes_recommendation": "hold_review_later"
+    }
+  ],
+  "real_input_dir": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input",
+  "real_input_files": [],
+  "real_input_available": false,
+  "explicit_yymm4_observation_selected": false,
+  "default_recommendation": "hold_review_later",
+  "alternative_paths": [
+    "real_input_replacement",
+    "actual_yymm4_import_observation_no_render",
+    "hold_review_later"
+  ],
+  "default_reason": "No reviewed real material is detected and no import observation is selected, so keep this as a local review record.",
+  "source_record_policy": "secondary_records_only",
+  "source_records_display_zone": "evidence_drawer",
+  "boundary_flags": {
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "no_real_transcript": true,
+    "rights_boundary": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "no_yymm4_import": true,
+    "thumbnail_context_only": true,
+    "validation_noise_nonblocking": true,
+    "not_production_ready": true
+  },
+  "closed_gate_status": {
+    "real_transcript_status": "blocked_by_real_input",
+    "yymm4_import_status": "no_yymm4_import",
+    "yymm4_render_status": "yymm4_render_closed",
+    "public_upload_status": "public_upload_closed",
+    "rights_public_ready_status": "rights_boundary",
+    "thumbnail_approval_status": "thumbnail_context_only",
+    "production_status": "not_production_ready"
+  },
+  "primary_human_review": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.html",
+  "markdown_fallback": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.md",
+  "primary_machine_readable": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/validation_readback.json",
+  "recommendation_engine_readback": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/recommendation_engine_readback.json",
+  "next_action": "Open guided_decision_flow.html and review the single default recommendation before choosing a gated next path."
+}

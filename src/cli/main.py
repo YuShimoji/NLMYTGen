@@ -33,6 +33,7 @@ Usage:
     python -m src.cli.main build-focused-review-brief --package production_pilots/pkg [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-review-cockpit-compact --package production_pilots/pkg [--focused-brief-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-review-layout-research --package production_pilots/pkg [--cockpit-dir DIR] [--focused-brief-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--format text|json]
+    python -m src.cli.main build-guided-decision-flow-prototype --package production_pilots/pkg [--layout-research-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
@@ -2615,6 +2616,44 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_guided_decision_flow = subparsers.add_parser(
+        "build-guided-decision-flow-prototype",
+        help="Build the episode 002 guided start-to-decision flow prototype",
+    )
+    p_guided_decision_flow.add_argument("--package", required=True, help="Episode package directory")
+    p_guided_decision_flow.add_argument(
+        "--layout-research-dir",
+        help="Input layout research directory (default: <package>/review_layout_research)",
+    )
+    p_guided_decision_flow.add_argument(
+        "--cockpit-dir",
+        help="Input compact review cockpit directory (default: <package>/review_cockpit_compact)",
+    )
+    p_guided_decision_flow.add_argument(
+        "--reviewer-packet-dir",
+        help="Input surface alignment review packet directory (default: <package>/surface_alignment_review_packet)",
+    )
+    p_guided_decision_flow.add_argument(
+        "--output",
+        help="Output directory (default: <package>/guided_decision_flow_prototype)",
+    )
+    p_guided_decision_flow.add_argument(
+        "--artifact-id",
+        default="episode_002_guided_decision_flow_prototype_v1",
+        help="Guided decision flow prototype artifact id",
+    )
+    p_guided_decision_flow.add_argument(
+        "--explicit-yymm4-observation",
+        action="store_true",
+        help="Select YMM4 import observation as the current explicit human choice without launching YMM4",
+    )
+    p_guided_decision_flow.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -2745,6 +2784,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_review_cockpit_compact(args)
         elif args.command == "build-review-layout-research":
             return _cmd_build_review_layout_research(args)
+        elif args.command == "build-guided-decision-flow-prototype":
+            return _cmd_build_guided_decision_flow_prototype(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -4883,6 +4924,39 @@ def _cmd_build_review_layout_research(args: argparse.Namespace) -> int:
         print(f"primary_human_review: {readback.get('primary_human_review')}")
         print(f"candidate_wireframes: {readback.get('candidate_wireframes')}")
         print(f"final_recommendation: {readback.get('final_recommendation')}")
+        print(f"launcher_command: {readback.get('launcher_command')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_guided_decision_flow_prototype(args: argparse.Namespace) -> int:
+    """Build the episode 002 guided start-to-decision flow prototype."""
+    from src.pipeline.guided_decision_flow_prototype import build_guided_decision_flow_prototype
+
+    readback = build_guided_decision_flow_prototype(
+        package_dir=getattr(args, "package"),
+        layout_research_dir=getattr(args, "layout_research_dir", None),
+        cockpit_dir=getattr(args, "cockpit_dir", None),
+        reviewer_packet_dir=getattr(args, "reviewer_packet_dir", None),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+        explicit_yymm4_observation=bool(getattr(args, "explicit_yymm4_observation", False)),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"primary_user_question: {readback.get('primary_user_question')}")
+        print(f"default_recommendation: {readback.get('default_recommendation')}")
+        print(f"exactly_one_recommendation: {readback.get('exactly_one_recommendation')}")
+        print(f"source_records_secondary: {readback.get('source_records_secondary')}")
+        print(f"gate_integrity_status: {readback.get('gate_integrity_status')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"primary_human_review: {readback.get('primary_human_review')}")
+        print(f"recommendation_engine_readback: {readback.get('recommendation_engine_readback')}")
+        print(f"markdown_fallback: {readback.get('markdown_fallback')}")
         print(f"launcher_command: {readback.get('launcher_command')}")
         print(f"next_action: {readback.get('next_action')}")
     return 0

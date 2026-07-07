@@ -14,7 +14,7 @@ flowchart LR
     RP --> FB["Focused review brief<br/>ready dark HTML"]
     FB --> RC["Review cockpit compact<br/>ready bounded dark UI"]
     RC --> LR["Review layout research<br/>ready benchmark"]
-    LR -. "next UI target" .-> GF["Guided decision flow prototype<br/>advisory next"]
+    LR --> GF["Guided decision flow prototype<br/>ready / current review entry"]
     GF -. "after human review" .-> E
     GF -. "after human review" .-> IY["Actual YMM4 import observation<br/>blocked_by_true_gate"]
     P --> E["Real transcript replacement<br/>blocked_by_real_input"]
@@ -56,6 +56,10 @@ flowchart LR
     LR --> AS["candidate_wireframes.html<br/>A/B/C low-fidelity"]
     LR --> AT["layout_decision_matrix.json<br/>Candidate B selected"]
     LR --> AU["final_layout_recommendation.md<br/>guided decision flow"]
+    GF --> AV["guided_decision_flow.html<br/>primary human review"]
+    GF --> AW["recommendation_engine_readback.json<br/>exactly one recommendation"]
+    GF --> AX["flow_state.json<br/>user situation checks"]
+    GF --> AY["evidence_drawer_index.json<br/>secondary source records"]
 
     N["closed gates:<br/>rights/legal/public-ready acceptance<br/>OAuth/API/payment<br/>live scraping/media download<br/>external image/media download<br/>YMM4 GUI/import/render<br/>production .ymmp<br/>YouTube publication"] -.-> F
     N -.-> G

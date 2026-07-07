@@ -1,0 +1,54 @@
+{
+  "schema_version": "guided_decision_outcomes.v1",
+  "artifact_id": "episode_002_guided_decision_flow_prototype_v1",
+  "status": "ready",
+  "current_state": {
+    "real_input_available": false,
+    "explicit_yymm4_observation_selected": false,
+    "default_recommendation": "hold_review_later"
+  },
+  "outcomes": [
+    {
+      "outcome_id": "real_input_replacement",
+      "label": "Real input replacement",
+      "status": "gated_until_reviewed_local_material_exists",
+      "recommended_for_current_state": false,
+      "use_when": "Reviewed local source or transcript material is available for this episode.",
+      "effect": "Moves the episode from sample review toward real content while keeping YMM4 and public gates closed.",
+      "required_next_input": "Verified local source/transcript material with provenance."
+    },
+    {
+      "outcome_id": "actual_yymm4_import_observation_no_render",
+      "label": "YMM4 import observation without render",
+      "status": "gated_until_explicit_observation_is_selected",
+      "recommended_for_current_state": false,
+      "use_when": "A human explicitly chooses to inspect import behavior now.",
+      "effect": "Allows a manual import observation only; it does not render, publish, or create a production project claim.",
+      "required_next_input": "Explicit human decision to perform the YMM4 observation outside this prototype."
+    },
+    {
+      "outcome_id": "hold_review_later",
+      "label": "Hold and review later",
+      "status": "recommended",
+      "recommended_for_current_state": true,
+      "use_when": "No reviewed local real material is available and no import observation has been selected.",
+      "effect": "Keeps the current sample-backed review as a local record without crossing any production gate.",
+      "required_next_input": "None."
+    }
+  ],
+  "recommended_outcome_ids": [
+    "hold_review_later"
+  ],
+  "boundary_flags": {
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "no_real_transcript": true,
+    "rights_boundary": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "no_yymm4_import": true,
+    "thumbnail_context_only": true,
+    "validation_noise_nonblocking": true,
+    "not_production_ready": true
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "guided_flow_manifest.v1",
+  "artifact_id": "episode_002_guided_decision_flow_prototype_v1",
+  "artifact_kind": "episode-guided-decision-flow-prototype",
+  "status": "guided_decision_flow_prototype_ready_local_offline",
+  "output_dir": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype",
+  "files": {
+    "guided_flow_manifest.json": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_flow_manifest.json",
+    "guided_decision_flow.html": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.html",
+    "guided_decision_flow.md": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.md",
+    "flow_state.json": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/flow_state.json",
+    "recommendation_engine_readback.json": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/recommendation_engine_readback.json",
+    "evidence_drawer_index.json": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/evidence_drawer_index.json",
+    "decision_outcomes.json": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/decision_outcomes.json",
+    "validation_readback.json": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/validation_readback.json",
+    "review_checklist.md": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/review_checklist.md",
+    "limitations.md": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/limitations.md"
+  },
+  "selected_candidate": "candidate_b_guided_decision_flow",
+  "primary_user_question": "What situation are you in right now?",
+  "default_recommendation": "hold_review_later",
+  "recommended_outcome_ids": [
+    "hold_review_later"
+  ],
+  "source_record_policy": "secondary_records_only",
+  "primary_human_review": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.html",
+  "primary_machine_readable": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/validation_readback.json",
+  "recommendation_engine_readback": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/recommendation_engine_readback.json",
+  "markdown_fallback": "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/guided_decision_flow.md",
+  "boundary_flags": {
+    "dry_run": true,
+    "sample_fixture_not_real": true,
+    "no_real_transcript": true,
+    "rights_boundary": true,
+    "public_upload_closed": true,
+    "yymm4_render_closed": true,
+    "no_yymm4_import": true,
+    "thumbnail_context_only": true,
+    "validation_noise_nonblocking": true,
+    "not_production_ready": true
+  },
+  "next_action": "Open guided_decision_flow.html and review the single default recommendation before choosing a gated next path."
+}
