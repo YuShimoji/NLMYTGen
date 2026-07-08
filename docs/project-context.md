@@ -2,6 +2,52 @@
 
 ## PROJECT CONTEXT
 - Current handoff (2026-07-08 JST):
+  `episode-002-editing-operations-readiness-v1` is complete on branch
+  `codex/episode-002-editing-operations-readiness-v1`; the artifact
+  completion commit before this docs-only handoff note is `b5ac43d`. The
+  branch was pushed to
+  `origin/codex/episode-002-editing-operations-readiness-v1`, the worktree was
+  clean before this docs-only handoff, and `HEAD...@{u}` was `0 0`. The active
+  artifact is
+  `production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/`.
+  Primary human review is `editing_operations_preview.html`; primary machine
+  readback is `validation_readback.json`; detailed remote restart handoff is
+  `docs/verification/NEWSROOM_EPISODE_002_EDITING_OPERATIONS_REMOTE_HANDOFF_2026-07-08.md`.
+  Current open command:
+  `Invoke-Item -LiteralPath "C:\Users\PLANNER007\NLMYTGen\production_pilots\yukkuri_newsroom_content_spine_002\editing_operations_readiness_pack\editing_operations_preview.html"`.
+  The package turns Episode 002 output-template and real-input-intake context
+  into concrete editing operation contracts across timing, voice/subtitle,
+  visual scene slots, citation overlays, thumbnail transfer, and future manual
+  YMM4 observation readback. It records 10 operations, covers 3 scenes, maps 9
+  voice/subtitle rows and 3 visual slot rows, and keeps actual YMM4 import,
+  render, real input replacement, public readiness, rights acceptance, and
+  final thumbnail approval closed. Operation gaps are grouped as 7 buildable
+  locally, 4 blocked by real input, 4 blocked by explicit YMM4 gate, and 3
+  blocked by public/rights gate. Validation readback reports `status=passed`,
+  no external dependencies, no forbidden production/public/YMM4 true claims,
+  no GUI lane files touched, no output-template files touched, and no
+  input-intake files touched. Another terminal should fetch, switch to
+  `codex/episode-002-editing-operations-readiness-v1`, run
+  `git pull --ff-only origin codex/episode-002-editing-operations-readiness-v1`,
+  confirm `git rev-list --left-right --count HEAD...'@{u}'` is `0 0`, then
+  read `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, `docs/runtime-state.md`, this
+  handoff entry, the detailed remote handoff file, and the package
+  `validation_readback.json`. Regeneration command:
+  `python -m src.cli.main build-editing-operations-readiness-pack --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_editing_operations_readiness_pack_v1`.
+  Targeted validation passed with
+  `uv run pytest tests/test_editing_operations_readiness_pack.py tests/test_output_template_readiness_pack.py tests/test_real_input_intake_readiness_pack.py -q`
+  -> 12 passed; `git diff --check` and `git diff --cached --check` passed
+  before the artifact commit. Full pytest was not run by policy. Next
+  meaningful move is to review the operation matrix, then choose verified real
+  local source/transcript, explicit YMM4 observation readback, citation or
+  thumbnail gate audit, or a local edit-slice execution. Do not resume YMM4
+  GUI launch/import/render, production `.ymmp`, real input replacement without
+  verified input, rights/legal/public-ready acceptance, final thumbnail
+  approval, YouTube upload/publication, live fetch/scraping, external media
+  download, OAuth/API keys/payment, destructive git, cross-repo edits, or full
+  pytest loops from this handoff.
+
+- Current handoff (2026-07-08 JST):
   `episode-002-output-video-layer-proof-v1` is complete on branch
   `codex/episode-002-output-video-layer-proof-v1`; the artifact completion
   commit before this docs-only handoff note is `ed7bc04`. The branch was

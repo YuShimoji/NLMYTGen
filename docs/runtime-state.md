@@ -1,5 +1,49 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 Editing Operations readiness completed and remote handoff sealed (2026-07-08 JST)**:
+  `episode-002-editing-operations-readiness-v1` is complete on branch
+  `codex/episode-002-editing-operations-readiness-v1`; the artifact
+  completion commit before this docs-only handoff note is `b5ac43d`. Generated
+  package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/`.
+  Primary human review is `editing_operations_preview.html`; Markdown fallback
+  is `editing_operations_preview.md`; primary machine readback is
+  `validation_readback.json`; restart handoff is
+  `docs/verification/NEWSROOM_EPISODE_002_EDITING_OPERATIONS_REMOTE_HANDOFF_2026-07-08.md`.
+  The pack maps Episode 002 timing, voice/subtitle, visual scene, citation
+  overlay, thumbnail-transfer, and future YMM4 observation needs into concrete
+  operation contracts. Validation readback reports `status=passed`,
+  `operation_count=10`, `scene_count=3`, `voice_operation_rows=9`,
+  `visual_slot_rows=3`,
+  `timing_model_status=provisional_timing_model_ready_no_audio_or_yymm4_timing`,
+  `voice_subtitle_operation_status=voice_subtitle_operations_ready_no_yymm4_voiceitems`,
+  `visual_slot_map_status=visual_asset_slots_ready_no_external_media`,
+  `yymm4_protocol_status=future_manual_observation_protocol_ready_no_launch`,
+  `yymm4_readback_schema_status=schema_ready_no_actual_import`,
+  `invented_real_content=false`, `actual_yymm4_import=false`,
+  `gui_lane_files_touched=[]`, `output_template_files_touched=[]`, and
+  `input_intake_files_touched=[]`. Operation gaps are grouped as buildable
+  locally 7, blocked by real input 4, blocked by explicit YMM4 gate 4, and
+  blocked by public/rights gate 3. Targeted validation passed with
+  `uv run pytest tests/test_editing_operations_readiness_pack.py tests/test_output_template_readiness_pack.py tests/test_real_input_intake_readiness_pack.py -q`
+  -> 12 passed; full pytest was not run. Another terminal should fetch,
+  switch to `codex/episode-002-editing-operations-readiness-v1`, pull
+  fast-forward from origin, confirm
+  `git rev-list --left-right --count HEAD...'@{u}'` is `0 0`, then read
+  `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, this top runtime entry,
+  `docs/project-context.md` top handoff entry, the restart handoff file, and
+  `production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/validation_readback.json`.
+  Current review open command:
+  `Invoke-Item -LiteralPath "C:\Users\PLANNER007\NLMYTGen\production_pilots\yukkuri_newsroom_content_spine_002\editing_operations_readiness_pack\editing_operations_preview.html"`.
+  Next meaningful move is to review the operation matrix, then choose one of
+  these bottleneck entrances: verified real local source/transcript, explicit
+  future YMM4 observation readback, citation/thumbnail gate audit, or a local
+  edit-slice execution. Do not resume YMM4 GUI launch/import/render,
+  production `.ymmp`, real input replacement without verified input, rights or
+  public-ready acceptance, final thumbnail approval, upload/publication, live
+  fetch/scraping, external media download, OAuth/API keys/payment, destructive
+  git, cross-repo edits, or full pytest loops from this handoff.
+
 - **Episode 002 Output / Video Layer proof completed and remote handoff sealed (2026-07-08 JST)**:
   `episode-002-output-video-layer-proof-v1` is complete on branch
   `codex/episode-002-output-video-layer-proof-v1`; the artifact completion
