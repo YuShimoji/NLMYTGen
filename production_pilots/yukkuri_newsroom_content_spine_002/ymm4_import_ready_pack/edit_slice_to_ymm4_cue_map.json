@@ -1,0 +1,447 @@
+{
+  "schema_version": "edit_slice_to_ymm4_cue_map.v1",
+  "artifact_id": "nlm-e002-ymm4-import-ready-edit-package-v1-001",
+  "status": "cue_map_ready_for_manual_ymm4_observation",
+  "input_local_edit_execution_pack": "production_pilots/yukkuri_newsroom_content_spine_002/local_edit_slice_execution_pack",
+  "source_voice_subtitle_map": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/voice_subtitle_operation_map.json",
+  "source_visual_slot_map": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/visual_asset_slot_map.json",
+  "queue_operation_count": 7,
+  "scene_count": 3,
+  "cue_count": 9,
+  "scene_summaries": [
+    {
+      "scene_id": "S1",
+      "cue_count": 2,
+      "provisional_start_sec": 0,
+      "provisional_end_sec": 8,
+      "primary_template_id": "intro_status",
+      "citation_overlay_ids": [
+        "s1_source_note"
+      ],
+      "thumbnail_transfer_rule_ids": [
+        "headline_to_opening_frame",
+        "proof_stack_to_boundary_strip",
+        "palette_to_template_tokens"
+      ],
+      "asset_state": "placeholder_and_real_required_later"
+    },
+    {
+      "scene_id": "S2",
+      "cue_count": 2,
+      "provisional_start_sec": 8,
+      "provisional_end_sec": 16,
+      "primary_template_id": "topic_explanation",
+      "citation_overlay_ids": [
+        "s2_source_note"
+      ],
+      "thumbnail_transfer_rule_ids": [
+        "palette_to_template_tokens"
+      ],
+      "asset_state": "placeholder_and_real_required_later"
+    },
+    {
+      "scene_id": "S3",
+      "cue_count": 5,
+      "provisional_start_sec": 16,
+      "provisional_end_sec": 36,
+      "primary_template_id": "summary_transition",
+      "citation_overlay_ids": [
+        "s3_source_note"
+      ],
+      "thumbnail_transfer_rule_ids": [
+        "proof_stack_to_boundary_strip",
+        "palette_to_template_tokens"
+      ],
+      "asset_state": "placeholder_and_real_required_later"
+    }
+  ],
+  "cues": [
+    {
+      "cue_id": "csv_row_1",
+      "source_scene_id": "S1",
+      "local_edit_item_id": "S1:csv_row_1",
+      "row_number": 1,
+      "speaker": "れいむ",
+      "approximate_timing": {
+        "timing_source": "provisional_even_split_from_scene_duration",
+        "scene_start_sec": 0.0,
+        "scene_end_sec": 8.0,
+        "cue_index_in_scene": 1,
+        "cue_count_in_scene": 2,
+        "approximate_start_sec": 0.0,
+        "approximate_end_sec": 4.0
+      },
+      "voice_or_subtitle_action": {
+        "expected_voice_slot_id": "voice_slot_1",
+        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-1",
+        "subtitle_text_status": "draft_sample_fixture_not_real",
+        "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
+      },
+      "visual_action": {
+        "primary_template_id": "intro_status",
+        "supporting_template_ids": [],
+        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+      },
+      "overlay_or_citation_action": {
+        "citation_overlay_ids": [
+          "s1_source_note"
+        ],
+        "thumbnail_transfer_rule_ids": [
+          "headline_to_opening_frame",
+          "proof_stack_to_boundary_strip",
+          "palette_to_template_tokens"
+        ],
+        "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
+      },
+      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "required_asset_state": "real_required_later",
+      "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
+      "manual_observation_question": "After explicit import observation, does csv_row_1 keep readable voice/subtitle order and make the intro_status placeholder intent understandable without implying final assets?"
+    },
+    {
+      "cue_id": "csv_row_2",
+      "source_scene_id": "S1",
+      "local_edit_item_id": "S1:csv_row_2",
+      "row_number": 2,
+      "speaker": "まりさ",
+      "approximate_timing": {
+        "timing_source": "provisional_even_split_from_scene_duration",
+        "scene_start_sec": 0.0,
+        "scene_end_sec": 8.0,
+        "cue_index_in_scene": 2,
+        "cue_count_in_scene": 2,
+        "approximate_start_sec": 4.0,
+        "approximate_end_sec": 8.0
+      },
+      "voice_or_subtitle_action": {
+        "expected_voice_slot_id": "voice_slot_2",
+        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-2",
+        "subtitle_text_status": "draft_sample_fixture_not_real",
+        "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
+      },
+      "visual_action": {
+        "primary_template_id": "intro_status",
+        "supporting_template_ids": [],
+        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+      },
+      "overlay_or_citation_action": {
+        "citation_overlay_ids": [
+          "s1_source_note"
+        ],
+        "thumbnail_transfer_rule_ids": [
+          "headline_to_opening_frame",
+          "proof_stack_to_boundary_strip",
+          "palette_to_template_tokens"
+        ],
+        "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
+      },
+      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "required_asset_state": "real_required_later",
+      "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
+      "manual_observation_question": "After explicit import observation, does csv_row_2 keep readable voice/subtitle order and make the intro_status placeholder intent understandable without implying final assets?"
+    },
+    {
+      "cue_id": "csv_row_3",
+      "source_scene_id": "S2",
+      "local_edit_item_id": "S2:csv_row_3",
+      "row_number": 3,
+      "speaker": "まりさ",
+      "approximate_timing": {
+        "timing_source": "provisional_even_split_from_scene_duration",
+        "scene_start_sec": 8.0,
+        "scene_end_sec": 16.0,
+        "cue_index_in_scene": 1,
+        "cue_count_in_scene": 2,
+        "approximate_start_sec": 8.0,
+        "approximate_end_sec": 12.0
+      },
+      "voice_or_subtitle_action": {
+        "expected_voice_slot_id": "voice_slot_2",
+        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-3",
+        "subtitle_text_status": "draft_sample_fixture_not_real",
+        "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
+      },
+      "visual_action": {
+        "primary_template_id": "topic_explanation",
+        "supporting_template_ids": [
+          "evidence_source"
+        ],
+        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+      },
+      "overlay_or_citation_action": {
+        "citation_overlay_ids": [
+          "s2_source_note"
+        ],
+        "thumbnail_transfer_rule_ids": [
+          "palette_to_template_tokens"
+        ],
+        "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
+      },
+      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "required_asset_state": "real_required_later",
+      "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
+      "manual_observation_question": "After explicit import observation, does csv_row_3 keep readable voice/subtitle order and make the topic_explanation placeholder intent understandable without implying final assets?"
+    },
+    {
+      "cue_id": "csv_row_4",
+      "source_scene_id": "S2",
+      "local_edit_item_id": "S2:csv_row_4",
+      "row_number": 4,
+      "speaker": "まりさ",
+      "approximate_timing": {
+        "timing_source": "provisional_even_split_from_scene_duration",
+        "scene_start_sec": 8.0,
+        "scene_end_sec": 16.0,
+        "cue_index_in_scene": 2,
+        "cue_count_in_scene": 2,
+        "approximate_start_sec": 12.0,
+        "approximate_end_sec": 16.0
+      },
+      "voice_or_subtitle_action": {
+        "expected_voice_slot_id": "voice_slot_2",
+        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-4",
+        "subtitle_text_status": "draft_sample_fixture_not_real",
+        "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
+      },
+      "visual_action": {
+        "primary_template_id": "topic_explanation",
+        "supporting_template_ids": [
+          "evidence_source"
+        ],
+        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+      },
+      "overlay_or_citation_action": {
+        "citation_overlay_ids": [
+          "s2_source_note"
+        ],
+        "thumbnail_transfer_rule_ids": [
+          "palette_to_template_tokens"
+        ],
+        "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
+      },
+      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "required_asset_state": "real_required_later",
+      "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
+      "manual_observation_question": "After explicit import observation, does csv_row_4 keep readable voice/subtitle order and make the topic_explanation placeholder intent understandable without implying final assets?"
+    },
+    {
+      "cue_id": "csv_row_5",
+      "source_scene_id": "S3",
+      "local_edit_item_id": "S3:csv_row_5",
+      "row_number": 5,
+      "speaker": "れいむ",
+      "approximate_timing": {
+        "timing_source": "provisional_even_split_from_scene_duration",
+        "scene_start_sec": 16.0,
+        "scene_end_sec": 36.0,
+        "cue_index_in_scene": 1,
+        "cue_count_in_scene": 5,
+        "approximate_start_sec": 16.0,
+        "approximate_end_sec": 20.0
+      },
+      "voice_or_subtitle_action": {
+        "expected_voice_slot_id": "voice_slot_1",
+        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-5",
+        "subtitle_text_status": "draft_sample_fixture_not_real",
+        "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
+      },
+      "visual_action": {
+        "primary_template_id": "summary_transition",
+        "supporting_template_ids": [
+          "evidence_source"
+        ],
+        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+      },
+      "overlay_or_citation_action": {
+        "citation_overlay_ids": [
+          "s3_source_note"
+        ],
+        "thumbnail_transfer_rule_ids": [
+          "proof_stack_to_boundary_strip",
+          "palette_to_template_tokens"
+        ],
+        "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
+      },
+      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "required_asset_state": "real_required_later",
+      "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
+      "manual_observation_question": "After explicit import observation, does csv_row_5 keep readable voice/subtitle order and make the summary_transition placeholder intent understandable without implying final assets?"
+    },
+    {
+      "cue_id": "csv_row_6",
+      "source_scene_id": "S3",
+      "local_edit_item_id": "S3:csv_row_6",
+      "row_number": 6,
+      "speaker": "まりさ",
+      "approximate_timing": {
+        "timing_source": "provisional_even_split_from_scene_duration",
+        "scene_start_sec": 16.0,
+        "scene_end_sec": 36.0,
+        "cue_index_in_scene": 2,
+        "cue_count_in_scene": 5,
+        "approximate_start_sec": 20.0,
+        "approximate_end_sec": 24.0
+      },
+      "voice_or_subtitle_action": {
+        "expected_voice_slot_id": "voice_slot_2",
+        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-6",
+        "subtitle_text_status": "draft_sample_fixture_not_real",
+        "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
+      },
+      "visual_action": {
+        "primary_template_id": "summary_transition",
+        "supporting_template_ids": [
+          "evidence_source"
+        ],
+        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+      },
+      "overlay_or_citation_action": {
+        "citation_overlay_ids": [
+          "s3_source_note"
+        ],
+        "thumbnail_transfer_rule_ids": [
+          "proof_stack_to_boundary_strip",
+          "palette_to_template_tokens"
+        ],
+        "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
+      },
+      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "required_asset_state": "real_required_later",
+      "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
+      "manual_observation_question": "After explicit import observation, does csv_row_6 keep readable voice/subtitle order and make the summary_transition placeholder intent understandable without implying final assets?"
+    },
+    {
+      "cue_id": "csv_row_7",
+      "source_scene_id": "S3",
+      "local_edit_item_id": "S3:csv_row_7",
+      "row_number": 7,
+      "speaker": "まりさ",
+      "approximate_timing": {
+        "timing_source": "provisional_even_split_from_scene_duration",
+        "scene_start_sec": 16.0,
+        "scene_end_sec": 36.0,
+        "cue_index_in_scene": 3,
+        "cue_count_in_scene": 5,
+        "approximate_start_sec": 24.0,
+        "approximate_end_sec": 28.0
+      },
+      "voice_or_subtitle_action": {
+        "expected_voice_slot_id": "voice_slot_2",
+        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-7",
+        "subtitle_text_status": "draft_sample_fixture_not_real",
+        "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
+      },
+      "visual_action": {
+        "primary_template_id": "summary_transition",
+        "supporting_template_ids": [
+          "evidence_source"
+        ],
+        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+      },
+      "overlay_or_citation_action": {
+        "citation_overlay_ids": [
+          "s3_source_note"
+        ],
+        "thumbnail_transfer_rule_ids": [
+          "proof_stack_to_boundary_strip",
+          "palette_to_template_tokens"
+        ],
+        "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
+      },
+      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "required_asset_state": "real_required_later",
+      "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
+      "manual_observation_question": "After explicit import observation, does csv_row_7 keep readable voice/subtitle order and make the summary_transition placeholder intent understandable without implying final assets?"
+    },
+    {
+      "cue_id": "csv_row_8",
+      "source_scene_id": "S3",
+      "local_edit_item_id": "S3:csv_row_8",
+      "row_number": 8,
+      "speaker": "れいむ",
+      "approximate_timing": {
+        "timing_source": "provisional_even_split_from_scene_duration",
+        "scene_start_sec": 16.0,
+        "scene_end_sec": 36.0,
+        "cue_index_in_scene": 4,
+        "cue_count_in_scene": 5,
+        "approximate_start_sec": 28.0,
+        "approximate_end_sec": 32.0
+      },
+      "voice_or_subtitle_action": {
+        "expected_voice_slot_id": "voice_slot_1",
+        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-8",
+        "subtitle_text_status": "draft_sample_fixture_not_real",
+        "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
+      },
+      "visual_action": {
+        "primary_template_id": "summary_transition",
+        "supporting_template_ids": [
+          "evidence_source"
+        ],
+        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+      },
+      "overlay_or_citation_action": {
+        "citation_overlay_ids": [
+          "s3_source_note"
+        ],
+        "thumbnail_transfer_rule_ids": [
+          "proof_stack_to_boundary_strip",
+          "palette_to_template_tokens"
+        ],
+        "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
+      },
+      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "required_asset_state": "real_required_later",
+      "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
+      "manual_observation_question": "After explicit import observation, does csv_row_8 keep readable voice/subtitle order and make the summary_transition placeholder intent understandable without implying final assets?"
+    },
+    {
+      "cue_id": "csv_row_9",
+      "source_scene_id": "S3",
+      "local_edit_item_id": "S3:csv_row_9",
+      "row_number": 9,
+      "speaker": "まりさ",
+      "approximate_timing": {
+        "timing_source": "provisional_even_split_from_scene_duration",
+        "scene_start_sec": 16.0,
+        "scene_end_sec": 36.0,
+        "cue_index_in_scene": 5,
+        "cue_count_in_scene": 5,
+        "approximate_start_sec": 32.0,
+        "approximate_end_sec": 36.0
+      },
+      "voice_or_subtitle_action": {
+        "expected_voice_slot_id": "voice_slot_2",
+        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-9",
+        "subtitle_text_status": "draft_sample_fixture_not_real",
+        "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
+      },
+      "visual_action": {
+        "primary_template_id": "summary_transition",
+        "supporting_template_ids": [
+          "evidence_source"
+        ],
+        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+      },
+      "overlay_or_citation_action": {
+        "citation_overlay_ids": [
+          "s3_source_note"
+        ],
+        "thumbnail_transfer_rule_ids": [
+          "proof_stack_to_boundary_strip",
+          "palette_to_template_tokens"
+        ],
+        "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
+      },
+      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "required_asset_state": "real_required_later",
+      "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
+      "manual_observation_question": "After explicit import observation, does csv_row_9 keep readable voice/subtitle order and make the summary_transition placeholder intent understandable without implying final assets?"
+    }
+  ],
+  "actual_ymm4_imported": false,
+  "rendered_video_created": false,
+  "real_input_replaced": false,
+  "public_ready": false
+}

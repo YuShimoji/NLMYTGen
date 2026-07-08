@@ -1,0 +1,29 @@
+{
+  "schema_version": "ymm4_import_ready_gate_readback.v1",
+  "artifact_id": "nlm-e002-ymm4-import-ready-edit-package-v1-001",
+  "status": "ymm4_import_gates_closed",
+  "cue_count": 9,
+  "scene_count": 3,
+  "gates_closed": true,
+  "closed_gate_flags": {
+    "actual_ymm4_imported": false,
+    "actual_yymm4_import": false,
+    "rendered_video_created": false,
+    "yymm4_rendered": false,
+    "production_ymmp_written": false,
+    "real_input_replaced": false,
+    "real_input_replacement_executed": false,
+    "rights_approved": false,
+    "rights_accepted": false,
+    "public_ready": false,
+    "final_thumbnail_approval": false,
+    "youtube_uploaded": false
+  },
+  "non_gate_work_completed": [
+    "manifest",
+    "cue_map",
+    "manual_observation_sheet",
+    "html_preview",
+    "adapter_plan_no_ymmp_write"
+  ]
+}

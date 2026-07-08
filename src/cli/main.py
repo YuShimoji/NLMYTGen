@@ -2989,6 +2989,27 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_ymm4_import_ready_pack = subparsers.add_parser(
+        "build-ymm4-import-ready-pack",
+        help="Build the episode 002 YMM4 import-ready edit package",
+    )
+    p_ymm4_import_ready_pack.add_argument("--package", required=True, help="Episode package directory")
+    p_ymm4_import_ready_pack.add_argument(
+        "--output",
+        help="Output directory (default: <package>/ymm4_import_ready_pack)",
+    )
+    p_ymm4_import_ready_pack.add_argument(
+        "--artifact-id",
+        default="nlm-e002-ymm4-import-ready-edit-package-v1-001",
+        help="YMM4 import-ready package artifact id",
+    )
+    p_ymm4_import_ready_pack.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -3141,6 +3162,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_editing_operations_readiness_pack(args)
         elif args.command == "build-local-edit-slice-execution-pack":
             return _cmd_build_local_edit_slice_execution_pack(args)
+        elif args.command == "build-ymm4-import-ready-pack":
+            return _cmd_build_ymm4_import_ready_pack(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -5712,6 +5735,41 @@ def _cmd_build_local_edit_slice_execution_pack(args: argparse.Namespace) -> int:
         print(f"public_ready: {readback.get('public_ready')}")
         print(f"thread_registry_updated: {readback.get('thread_registry_updated')}")
         print(f"shared_docs_touched: {readback.get('shared_docs_touched')}")
+        print(f"full_pytest_run: {readback.get('full_pytest_run')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"launcher_or_open_command: {readback.get('launcher_or_open_command')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_ymm4_import_ready_pack(args: argparse.Namespace) -> int:
+    """Build the episode 002 YMM4 import-ready edit package."""
+    from src.pipeline.ymm4_import_ready_pack import (
+        build_ymm4_import_ready_pack,
+    )
+
+    readback = build_ymm4_import_ready_pack(
+        package_dir=getattr(args, "package"),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"primary_review_file: {readback.get('primary_review_file')}")
+        print(f"queue_count: {readback.get('queue_count')}")
+        print(f"scene_count: {readback.get('scene_count')}")
+        print(f"cue_count: {readback.get('cue_count')}")
+        print(f"ymm4_import_state: {readback.get('ymm4_import_state')}")
+        print(f"actual_ymm4_imported: {readback.get('actual_ymm4_imported')}")
+        print(f"rendered_video_created: {readback.get('rendered_video_created')}")
+        print(f"real_input_replaced: {readback.get('real_input_replaced')}")
+        print(f"rights_approved: {readback.get('rights_approved')}")
+        print(f"public_ready: {readback.get('public_ready')}")
+        print(f"gates_closed: {readback.get('gates_closed')}")
         print(f"full_pytest_run: {readback.get('full_pytest_run')}")
         print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
         print(f"launcher_or_open_command: {readback.get('launcher_or_open_command')}")

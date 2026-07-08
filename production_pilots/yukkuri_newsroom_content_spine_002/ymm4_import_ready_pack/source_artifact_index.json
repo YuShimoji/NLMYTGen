@@ -1,0 +1,50 @@
+{
+  "schema_version": "ymm4_import_ready_source_artifact_index.v1",
+  "artifact_id": "nlm-e002-ymm4-import-ready-edit-package-v1-001",
+  "local_edit_pack_read_only": true,
+  "editing_operations_pack_read_only": true,
+  "records": [
+    {
+      "record_id": "local_edit_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/local_edit_slice_execution_pack/local_edit_slice_manifest.json",
+      "role": "local_edit_pack_read_only",
+      "exists_expected": true
+    },
+    {
+      "record_id": "local_edit_queue",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/local_edit_slice_execution_pack/local_edit_slice_queue.json",
+      "role": "queue_read_only",
+      "exists_expected": true
+    },
+    {
+      "record_id": "local_scene_plan",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/local_edit_slice_execution_pack/scene_edit_execution_plan.json",
+      "role": "scene_execution_read_only",
+      "exists_expected": true
+    },
+    {
+      "record_id": "local_gate_readback",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/local_edit_slice_execution_pack/operation_gate_preservation_readback.json",
+      "role": "gate_readback_read_only",
+      "exists_expected": true
+    },
+    {
+      "record_id": "voice_subtitle_operation_map",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/voice_subtitle_operation_map.json",
+      "role": "voice_subtitle_read_only",
+      "exists_expected": true
+    },
+    {
+      "record_id": "visual_asset_slot_map",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/visual_asset_slot_map.json",
+      "role": "visual_slot_read_only",
+      "exists_expected": true
+    },
+    {
+      "record_id": "timing_adjustment_model",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/timing_adjustment_model.json",
+      "role": "timing_read_only",
+      "exists_expected": true
+    }
+  ]
+}

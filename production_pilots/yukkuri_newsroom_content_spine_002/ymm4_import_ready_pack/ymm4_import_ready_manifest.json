@@ -1,0 +1,80 @@
+{
+  "schema_version": "ymm4_import_ready_manifest.v1",
+  "artifact_id": "nlm-e002-ymm4-import-ready-edit-package-v1-001",
+  "artifact_kind": "episode-ymm4-import-ready-edit-package",
+  "source_episode_id": "yukkuri_newsroom_content_spine_002",
+  "input_local_edit_execution_pack": "production_pilots/yukkuri_newsroom_content_spine_002/local_edit_slice_execution_pack",
+  "output_dir": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack",
+  "files": {
+    "ymm4_import_ready_manifest.json": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/ymm4_import_ready_manifest.json",
+    "edit_slice_to_ymm4_cue_map.json": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/edit_slice_to_ymm4_cue_map.json",
+    "manual_ymm4_import_observation_sheet.md": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/manual_ymm4_import_observation_sheet.md",
+    "ymm4_import_ready_preview.html": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/ymm4_import_ready_preview.html",
+    "validation_readback.json": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/validation_readback.json",
+    "gate_readback.json": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/gate_readback.json",
+    "source_artifact_index.json": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/source_artifact_index.json",
+    "ymmp_adapter_plan.json": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/ymmp_adapter_plan.json",
+    "README_YMM4_IMPORT_READY.md": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/README_YMM4_IMPORT_READY.md",
+    "limitations.md": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/limitations.md"
+  },
+  "queue_count": 7,
+  "scene_count": 3,
+  "cue_count": 9,
+  "expected_voice_subtitle_links": {
+    "count": 9,
+    "source": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/voice_subtitle_operation_map.json",
+    "status": "ready_for_manual_import_observation"
+  },
+  "visual_scene_links": [
+    {
+      "scene_id": "S1",
+      "primary_template_id": "intro_status",
+      "asset_state": "placeholder_and_real_required_later"
+    },
+    {
+      "scene_id": "S2",
+      "primary_template_id": "topic_explanation",
+      "asset_state": "placeholder_and_real_required_later"
+    },
+    {
+      "scene_id": "S3",
+      "primary_template_id": "summary_transition",
+      "asset_state": "placeholder_and_real_required_later"
+    }
+  ],
+  "citation_overlay_links": [
+    {
+      "scene_id": "S1",
+      "citation_overlay_ids": [
+        "s1_source_note"
+      ]
+    },
+    {
+      "scene_id": "S2",
+      "citation_overlay_ids": [
+        "s2_source_note"
+      ]
+    },
+    {
+      "scene_id": "S3",
+      "citation_overlay_ids": [
+        "s3_source_note"
+      ]
+    }
+  ],
+  "thumbnail_motif_status": "placeholder_context_transferred_not_final_approval",
+  "ymm4_import_state": "ready_for_manual_import_observation",
+  "actual_ymm4_imported": false,
+  "rendered_video_created": false,
+  "real_input_replaced": false,
+  "rights_approved": false,
+  "public_ready": false,
+  "gates_closed": true,
+  "adapter_plan_status": "adapter_plan_ready_no_ymmp_write",
+  "ymmp_file_created": false,
+  "primary_review_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/ymm4_import_ready_preview.html",
+  "primary_human_review": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/ymm4_import_ready_preview.html",
+  "primary_machine_readable": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/validation_readback.json",
+  "full_pytest_run": false,
+  "next_action": "Use the preview and observation sheet for a future explicit YMM4 import observation; do not import, render, replace real input, or publish from this package."
+}

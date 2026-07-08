@@ -1,0 +1,19 @@
+{
+  "schema_version": "ymmp_adapter_plan.v1",
+  "artifact_id": "nlm-e002-ymm4-import-ready-edit-package-v1-001",
+  "status": "adapter_plan_ready_no_ymmp_write",
+  "purpose": "Describe future adapter inputs without generating or patching a YMM4 project.",
+  "source_cue_map": "edit_slice_to_ymm4_cue_map.json",
+  "cue_count": 9,
+  "expected_item_families": [
+    "VoiceItem",
+    "subtitle/TextItem",
+    "ImageItem",
+    "TextItem"
+  ],
+  "csv_import_is_manual_future_gate": true,
+  "ymmp_file_created": false,
+  "production_ymmp_written": false,
+  "actual_ymm4_imported": false,
+  "rendered_video_created": false
+}
