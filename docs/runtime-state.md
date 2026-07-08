@@ -1,5 +1,44 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 Local Edit-Slice execution completed and remote handoff sealed (2026-07-08 JST)**:
+  `episode-002-local-edit-slice-execution-v1` is complete on branch
+  `codex/episode-002-local-edit-slice-execution-v1`; the artifact completion
+  commit before this docs-only handoff note is `697cb7e`. Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/local_edit_slice_execution_pack/`.
+  Primary human review is `local_edit_execution_preview.html`; Markdown
+  fallback is `local_edit_execution_preview.md`; primary machine readback is
+  `validation_readback.json`; restart handoff is
+  `docs/verification/NEWSROOM_EPISODE_002_LOCAL_EDIT_SLICE_EXECUTION_REMOTE_HANDOFF_2026-07-08.md`.
+  The pack converts the completed Editing Operations readiness contracts into
+  a local-only execution queue: `queue_operation_count=7`, `scene_count=3`,
+  `blocked_operation_count=3`, and `gates_closed=true`. Queued operations are
+  `set_scene_duration`, `align_voice_subtitle`, `split_or_wrap_subtitle`,
+  `assign_visual_scene_template`, `place_citation_overlay`,
+  `transfer_thumbnail_motif`, and `validate_operation_pack`; blocked gate
+  operations remain `flag_real_input_required`, `mark_yymm4_observation_needed`,
+  and `capture_yymm4_readback`. Validation readback reports `status=passed`,
+  `blocked_gate_operations_not_queued=true`, `forbidden_gates_closed=true`,
+  `actual_yymm4_import=false`, `real_input_replacement_executed=false`,
+  `public_ready=false`, protected context touch lists empty, no external
+  dependencies, no forbidden production/public/YMM4 true claims, and no
+  temporary-copy markers. Targeted validation passed with
+  `uv run pytest tests/test_local_edit_slice_execution_pack.py tests/test_editing_operations_readiness_pack.py tests/test_output_template_readiness_pack.py tests/test_real_input_intake_readiness_pack.py -q`
+  -> 16 passed; full pytest was not run. Another terminal should fetch, switch
+  to `codex/episode-002-local-edit-slice-execution-v1`, pull fast-forward from
+  origin, confirm `git rev-list --left-right --count "HEAD...@{u}"` is `0 0`,
+  then read `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, this top runtime entry,
+  `docs/project-context.md` top handoff entry, the restart handoff file, and
+  `production_pilots/yukkuri_newsroom_content_spine_002/local_edit_slice_execution_pack/validation_readback.json`.
+  Current review open command:
+  `Invoke-Item -LiteralPath "C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\production_pilots\yukkuri_newsroom_content_spine_002\local_edit_slice_execution_pack\local_edit_execution_preview.html"`.
+  Next meaningful move is to use the queue to execute one future local draft
+  edit artifact, or explicitly open real-input/YMM4 gates before replacement or
+  observation work. Do not resume YMM4 GUI launch/import/render, production
+  `.ymmp`, real input replacement without verified input, rights or
+  public-ready acceptance, final thumbnail approval, upload/publication, live
+  fetch/scraping, external media download, OAuth/API keys/payment, destructive
+  git, cross-repo edits, or full pytest loops from this handoff.
+
 - **Episode 002 Editing Operations readiness completed and remote handoff sealed (2026-07-08 JST)**:
   `episode-002-editing-operations-readiness-v1` is complete on branch
   `codex/episode-002-editing-operations-readiness-v1`; the artifact

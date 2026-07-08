@@ -9,5 +9,6 @@ not a governance document or roadmap.
 | output-video-proof-episode002 | OUTPUT_VIDEO | accepted/close-ready | Output proof package exists. |
 | output-template-episode002 | OUTPUT_VIDEO | accepted/close-ready | Output template readiness package exists. |
 | input-intake-episode002 | INPUT_API_HUB | accepted/close-ready | Real input intake readiness package exists. |
-| editing-ops-episode002 | EDITING_FEATURES | running | Editing operations readiness package is the active slice. |
+| editing-ops-episode002 | EDITING_FEATURES | accepted/close-ready | Editing operations readiness package exists. |
+| local-edit-slice-episode002 | EDITING_FEATURES_LOCAL_EXECUTION | running | Local edit-slice execution queue is the active slice. |
 | integrity-triage | INTEGRITY_TRIAGE | paused | Full-suite drift remains nonblocking for targeted slices. |
