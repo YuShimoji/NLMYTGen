@@ -1,6 +1,54 @@
 # Project Context — NLMYTGen
 
 ## PROJECT CONTEXT
+- Current handoff (2026-07-08 JST):
+  `episode-002-output-video-layer-proof-v1` is complete on branch
+  `codex/episode-002-output-video-layer-proof-v1`; the artifact completion
+  commit before this docs-only handoff note is `ed7bc04`. The branch was
+  fetched from `origin`, the worktree was clean before this handoff note, and
+  `HEAD...@{u}` was `0 0`. The active artifact is
+  `production_pilots/yukkuri_newsroom_content_spine_002/output_video_layer_proof/`.
+  Primary human review is `episode_002_storyboard_preview.html`; primary
+  machine readback is `validation_readback.json`; the timeline is
+  `scene_timeline.json`; the YMM4 boundary readback is
+  `yymm4_handoff_readiness.json`; output/editing gaps are
+  `output_gap_ledger.json` and `missing_editing_features.md`; source/context
+  provenance is `source_artifact_index.json`. Current open command:
+  `Invoke-Item -LiteralPath "C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\production_pilots\yukkuri_newsroom_content_spine_002\output_video_layer_proof\episode_002_storyboard_preview.html"`.
+  The package turns existing dry-run Episode 002 artifacts into a local static
+  storyboard/timeline proof for the parallel Output / Video Layer lane. It
+  records 3 scenes, uses
+  `production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv`,
+  keeps real input blocked, keeps YMM4 not imported, and names 13 remaining
+  output/editing features: 5 buildable locally, 2 blocked by real input, 3 by
+  the YMM4 gate, and 3 by public-rights gates. Validation readback reports
+  `status=passed`, all required package files present, no external
+  dependencies, no forbidden production/public/YMM4 true claims, no GUI lane
+  files touched, and no shared docs touched by the artifact generation step.
+  This handoff note is the explicit exception that records the context in the
+  shared project docs for cross-terminal restart. Another terminal should
+  fetch, switch to `codex/episode-002-output-video-layer-proof-v1`, run
+  `git pull --ff-only origin codex/episode-002-output-video-layer-proof-v1`,
+  confirm `git rev-list --left-right --count "HEAD...@{u}"` is `0 0`, then
+  read `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, `docs/runtime-state.md`, this
+  handoff entry, and
+  `production_pilots/yukkuri_newsroom_content_spine_002/output_video_layer_proof/validation_readback.json`.
+  Regeneration command:
+  `python -m src.cli.main build-output-video-layer-proof --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_output_video_layer_proof_v1`.
+  Targeted validation passed with
+  `uv run pytest tests/test_output_video_layer_proof.py tests/test_japanese_graphic_review_console.py -q`
+  -> 8 passed; `git diff --check` and `git diff --cached --check` passed
+  before the artifact commit. Full pytest was not run by policy. Next
+  meaningful move is to review the storyboard and gap ledger, then choose
+  verified local source/transcript input, more local output-template proof, or
+  an explicit YMM4 observation gate. Do not resume GUI/i18n lane modification,
+  production video/render claims, YMM4 GUI launch/import/render, production
+  `.ymmp`, final thumbnail approval, real transcript/source replacement
+  without verified input, live fetch/scraping, external media download,
+  OAuth/API keys/payment, rights/legal/public-ready acceptance, YouTube
+  upload/publication, destructive git, cross-repo edits, or repeated
+  full-suite pytest loops.
+
 - Current handoff (2026-07-07 JST):
   `episode-002-split-view-decision-evidence-prototype-v1` is complete on
   branch `codex/episode-002-surface-alignment-repair-and-reviewer-packet-v1`;
@@ -372,6 +420,21 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 - `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
+
+Latest Episode 002 Output / Video Layer handoff decision (2026-07-08 JST):
+`episode_002_output_video_layer_proof_v1` is the current cross-terminal
+restart focus on branch `codex/episode-002-output-video-layer-proof-v1`. The
+user explicitly requested that all current context be held in the project and
+that local state be reflected to remote, so the otherwise lane-local Output /
+Video proof context was recorded in `docs/runtime-state.md` and this
+`project-context.md` handoff/decision entry. This does not promote shared-doc
+churn as the default for parallel lanes; it is the handoff exception for this
+request. The proof remains local/static and non-production: real
+transcript/source input is blocked, YMM4 import/render is closed, public
+rights/upload gates are closed, and GUI/IA/i18n review packages are not the
+active edit target. The next decision is whether to review the storyboard/gap
+ledger only, supply verified local source/transcript material, continue local
+output-template proofing, or explicitly open a YMM4 observation gate.
 
 Latest newsroom live RSS operator authorization sheet decision (2026-07-01 JST):
 `newsroom_live_rss_operator_authorization_sheet_v1_2026_06_30` creates the

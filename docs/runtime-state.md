@@ -1,5 +1,56 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 Output / Video Layer proof completed and remote handoff sealed (2026-07-08 JST)**:
+  `episode-002-output-video-layer-proof-v1` is complete on branch
+  `codex/episode-002-output-video-layer-proof-v1`; the artifact completion
+  commit before this docs-only handoff note is `ed7bc04`. Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/output_video_layer_proof/`.
+  Primary human review is `episode_002_storyboard_preview.html`; Markdown
+  fallback is `episode_002_storyboard_preview.md`; primary machine readback is
+  `validation_readback.json`; supporting artifacts are
+  `output_video_proof_manifest.json`, `scene_timeline.json`,
+  `draft_yukkuri_narration_outline.md`, `yymm4_handoff_readiness.json`,
+  `output_gap_ledger.json`, `missing_editing_features.md`,
+  `source_artifact_index.json`, `review_checklist.md`, `limitations.md`, and
+  `README_OUTPUT_VIDEO_LAYER_PROOF.md`. Regeneration command:
+  `python -m src.cli.main build-output-video-layer-proof --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_output_video_layer_proof_v1`.
+  The proof assembles existing dry-run Episode 002 IR/CSV/readback artifacts
+  into a local static storyboard/timeline preview for the parallel Output /
+  Video Layer lane. It records `scene_count=3`,
+  `timeline_source=writer_ir_sections_plus_regenerated_draft_yymm4_csv`,
+  `draft_csv_used=production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv`,
+  `real_transcript_status=blocked_by_real_input`, and
+  `yymm4_status=not_imported_to_yymm4`. The output gap ledger records 13
+  missing/editing features: 5 buildable locally, 2 blocked by real input, 3
+  blocked by the YMM4 gate, and 3 blocked by public-rights gates. Validation
+  readback reports `status=passed`, all 13 required files present,
+  `external_dependency_status=none_found`, forbidden production/public/YMM4
+  true claims absent, `gui_lane_files_touched=[]`, and
+  `shared_docs_touched=false` for the artifact generation step. Targeted tests
+  passed with
+  `uv run pytest tests/test_output_video_layer_proof.py tests/test_japanese_graphic_review_console.py -q`
+  -> 8 passed. Full pytest was not run. This lane intentionally left the
+  Japanese graphical review console, primary artifact review console, and
+  redesign prototype packages untouched; shared docs changed only for this
+  explicit remote handoff. Another terminal should fetch, switch to
+  `codex/episode-002-output-video-layer-proof-v1`, pull fast-forward from
+  origin, confirm
+  `git rev-list --left-right --count "HEAD...@{u}"` is `0 0`, then read
+  `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, this top runtime entry,
+  `docs/project-context.md` top handoff entry, and
+  `production_pilots/yukkuri_newsroom_content_spine_002/output_video_layer_proof/validation_readback.json`.
+  Current review open command:
+  `Invoke-Item -LiteralPath "C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\production_pilots\yukkuri_newsroom_content_spine_002\output_video_layer_proof\episode_002_storyboard_preview.html"`.
+  Next meaningful move is to review the storyboard preview and
+  `output_gap_ledger.json`, then choose whether to provide verified local
+  source/transcript material, keep iterating local output templates, or open an
+  explicit YMM4 observation gate. Do not resume production video/render claims,
+  YMM4 GUI launch/import/render, production `.ymmp`, final thumbnail approval,
+  real transcript/source replacement without verified input, live
+  fetch/scraping, external media download, OAuth/API keys/payment,
+  rights/legal/public-ready acceptance, YouTube upload/publication, destructive
+  git, cross-repo edits, or repeated full-suite pytest loops from this handoff.
+
 - **Episode 002 Japanese graphical review console completed (2026-07-08 JST)**:
   `episode-002-japanese-graphic-review-console-v1` revises the current review
   surface into a Japanese-first graphical review console. Generated package:
