@@ -1,0 +1,220 @@
+{
+  "schema_version": "scene_edit_execution_plan.v1",
+  "artifact_id": "episode_002_local_edit_slice_execution_pack_v1",
+  "status": "scene_edit_execution_plan_ready_local_offline",
+  "source_scene_operation_plan": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/scene_operation_plan.json",
+  "scene_count": 3,
+  "scenes": [
+    {
+      "scene_id": "S1",
+      "title": "Opening hook and topic promise",
+      "arc_phase": "intro",
+      "row_range": {
+        "start": 1,
+        "end": 2
+      },
+      "cue_ids": [
+        "csv_row_1",
+        "csv_row_2"
+      ],
+      "local_execution_steps": [
+        {
+          "operation_id": "set_scene_duration",
+          "effect": "Use provisional duration 8 sec.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        },
+        {
+          "operation_id": "align_voice_subtitle",
+          "effect": "Bind 2 draft cue rows to stable scene slots.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        },
+        {
+          "operation_id": "split_or_wrap_subtitle",
+          "effect": "Mark wrap intent only; final linebreaks wait for real text and observed timing.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        },
+        {
+          "operation_id": "assign_visual_scene_template",
+          "effect": "Use template intro_status.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        },
+        {
+          "operation_id": "place_citation_overlay",
+          "effect": "Reserve overlays s1_source_note.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        },
+        {
+          "operation_id": "transfer_thumbnail_motif",
+          "effect": "Carry thumbnail motif rules headline_to_opening_frame, proof_stack_to_boundary_strip, palette_to_template_tokens.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        }
+      ],
+      "queued_operation_ids": [
+        "set_scene_duration",
+        "align_voice_subtitle",
+        "split_or_wrap_subtitle",
+        "assign_visual_scene_template",
+        "place_citation_overlay",
+        "transfer_thumbnail_motif"
+      ],
+      "validation_step": "validate_operation_pack",
+      "blocked_after_local_execution": [
+        "verified_real_input_required_before_replacement",
+        "explicit_yymm4_gate_required_before_observation",
+        "rights_public_gate_required_before_final_claims"
+      ],
+      "execution_state": "ready_local_offline",
+      "actual_yymm4_import": false,
+      "real_input_replacement_executed": false
+    },
+    {
+      "scene_id": "S2",
+      "title": "Main explanation: Factory seed dry-run placeholder for a second yukkuri newsroom episode",
+      "arc_phase": "develop",
+      "row_range": {
+        "start": 3,
+        "end": 4
+      },
+      "cue_ids": [
+        "csv_row_3",
+        "csv_row_4"
+      ],
+      "local_execution_steps": [
+        {
+          "operation_id": "set_scene_duration",
+          "effect": "Use provisional duration 8 sec.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        },
+        {
+          "operation_id": "align_voice_subtitle",
+          "effect": "Bind 2 draft cue rows to stable scene slots.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        },
+        {
+          "operation_id": "split_or_wrap_subtitle",
+          "effect": "Mark wrap intent only; final linebreaks wait for real text and observed timing.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        },
+        {
+          "operation_id": "assign_visual_scene_template",
+          "effect": "Use template topic_explanation.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        },
+        {
+          "operation_id": "place_citation_overlay",
+          "effect": "Reserve overlays s2_source_note.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        },
+        {
+          "operation_id": "transfer_thumbnail_motif",
+          "effect": "Carry thumbnail motif rules palette_to_template_tokens.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        }
+      ],
+      "queued_operation_ids": [
+        "set_scene_duration",
+        "align_voice_subtitle",
+        "split_or_wrap_subtitle",
+        "assign_visual_scene_template",
+        "place_citation_overlay",
+        "transfer_thumbnail_motif"
+      ],
+      "validation_step": "validate_operation_pack",
+      "blocked_after_local_execution": [
+        "verified_real_input_required_before_replacement",
+        "explicit_yymm4_gate_required_before_observation",
+        "rights_public_gate_required_before_final_claims"
+      ],
+      "execution_state": "ready_local_offline",
+      "actual_yymm4_import": false,
+      "real_input_replacement_executed": false
+    },
+    {
+      "scene_id": "S3",
+      "title": "Viewer watch point and production boundary",
+      "arc_phase": "closing",
+      "row_range": {
+        "start": 5,
+        "end": 9
+      },
+      "cue_ids": [
+        "csv_row_5",
+        "csv_row_6",
+        "csv_row_7",
+        "csv_row_8",
+        "csv_row_9"
+      ],
+      "local_execution_steps": [
+        {
+          "operation_id": "set_scene_duration",
+          "effect": "Use provisional duration 20 sec.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        },
+        {
+          "operation_id": "align_voice_subtitle",
+          "effect": "Bind 5 draft cue rows to stable scene slots.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        },
+        {
+          "operation_id": "split_or_wrap_subtitle",
+          "effect": "Mark wrap intent only; final linebreaks wait for real text and observed timing.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        },
+        {
+          "operation_id": "assign_visual_scene_template",
+          "effect": "Use template summary_transition.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        },
+        {
+          "operation_id": "place_citation_overlay",
+          "effect": "Reserve overlays s3_source_note.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        },
+        {
+          "operation_id": "transfer_thumbnail_motif",
+          "effect": "Carry thumbnail motif rules proof_stack_to_boundary_strip, palette_to_template_tokens.",
+          "current_state": "ready_local_offline",
+          "requires_explicit_gate": false
+        }
+      ],
+      "queued_operation_ids": [
+        "set_scene_duration",
+        "align_voice_subtitle",
+        "split_or_wrap_subtitle",
+        "assign_visual_scene_template",
+        "place_citation_overlay",
+        "transfer_thumbnail_motif"
+      ],
+      "validation_step": "validate_operation_pack",
+      "blocked_after_local_execution": [
+        "verified_real_input_required_before_replacement",
+        "explicit_yymm4_gate_required_before_observation",
+        "rights_public_gate_required_before_final_claims"
+      ],
+      "execution_state": "ready_local_offline",
+      "actual_yymm4_import": false,
+      "real_input_replacement_executed": false
+    }
+  ],
+  "global_validation_step": "validate_operation_pack",
+  "actual_yymm4_import": false,
+  "real_input_replacement_executed": false,
+  "public_ready": false
+}

@@ -1,0 +1,172 @@
+{
+  "schema_version": "local_edit_slice_queue.v1",
+  "artifact_id": "episode_002_local_edit_slice_execution_pack_v1",
+  "status": "local_edit_slice_queue_ready",
+  "source_operation_registry": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/edit_operation_registry.json",
+  "queue_operation_count": 7,
+  "queue": [
+    {
+      "step_number": 1,
+      "operation_id": "set_scene_duration",
+      "lane": "timing",
+      "purpose": "Set provisional scene durations from the existing scene timing map.",
+      "effect": "Creates a stable provisional timing pass for each scene.",
+      "requirements": [
+        "scene_operation_plan.json",
+        "timing_adjustment_model.json"
+      ],
+      "current_state": "ready_local_offline",
+      "owner": "assistant_or_future_operator_local_only",
+      "next_move": "Apply provisional durations to the local draft edit plan only.",
+      "source_contract": "scene_operation_plan.scenes[].duration_contract",
+      "may_execute_without_real_input": true,
+      "may_execute_without_yymm4": true,
+      "requires_explicit_gate": false,
+      "writes_existing_lane_artifacts": false
+    },
+    {
+      "step_number": 2,
+      "operation_id": "align_voice_subtitle",
+      "lane": "voice_subtitle",
+      "purpose": "Bind each draft CSV cue to a voice slot, subtitle slot, and scene.",
+      "effect": "Keeps cue order and voice/subtitle ownership explicit.",
+      "requirements": [
+        "voice_subtitle_operation_map.json"
+      ],
+      "current_state": "ready_local_offline",
+      "owner": "assistant_or_future_operator_local_only",
+      "next_move": "Review cue-to-slot bindings before any real input replacement.",
+      "source_contract": "voice_subtitle_operation_map.utterance_operations[]",
+      "may_execute_without_real_input": true,
+      "may_execute_without_yymm4": true,
+      "requires_explicit_gate": false,
+      "writes_existing_lane_artifacts": false
+    },
+    {
+      "step_number": 3,
+      "operation_id": "split_or_wrap_subtitle",
+      "lane": "voice_subtitle",
+      "purpose": "Mark subtitle wrapping responsibility before real timing observation.",
+      "effect": "Separates local wrap intent from final YMM4 linebreak acceptance.",
+      "requirements": [
+        "voice_subtitle_operation_map.json"
+      ],
+      "current_state": "ready_local_offline",
+      "owner": "assistant_or_future_operator_local_only",
+      "next_move": "Mark wrap intent and defer final linebreaks.",
+      "source_contract": "voice_subtitle_operation_map.utterance_operations[].subtitle_wrap_contract",
+      "may_execute_without_real_input": true,
+      "may_execute_without_yymm4": true,
+      "requires_explicit_gate": false,
+      "writes_existing_lane_artifacts": false
+    },
+    {
+      "step_number": 4,
+      "operation_id": "assign_visual_scene_template",
+      "lane": "visual",
+      "purpose": "Assign existing visual scene template ids to each scene.",
+      "effect": "Connects each scene to an existing template slot.",
+      "requirements": [
+        "visual_asset_slot_map.json"
+      ],
+      "current_state": "ready_local_offline",
+      "owner": "assistant_or_future_operator_local_only",
+      "next_move": "Use the mapped local template as the scene placeholder.",
+      "source_contract": "visual_asset_slot_map.scene_visual_slots[]",
+      "may_execute_without_real_input": true,
+      "may_execute_without_yymm4": true,
+      "requires_explicit_gate": false,
+      "writes_existing_lane_artifacts": false
+    },
+    {
+      "step_number": 5,
+      "operation_id": "place_citation_overlay",
+      "lane": "visual",
+      "purpose": "Reserve citation overlay slots without claiming real source approval.",
+      "effect": "Allocates citation placeholders while real source wording stays gated.",
+      "requirements": [
+        "visual_asset_slot_map.json",
+        "operation_gap_ledger.json"
+      ],
+      "current_state": "ready_local_offline",
+      "owner": "assistant_or_future_operator_local_only",
+      "next_move": "Keep citation wording as placeholder until verified source material exists.",
+      "source_contract": "visual_asset_slot_map.scene_visual_slots[].citation_overlay_ids",
+      "may_execute_without_real_input": true,
+      "may_execute_without_yymm4": true,
+      "requires_explicit_gate": false,
+      "writes_existing_lane_artifacts": false
+    },
+    {
+      "step_number": 6,
+      "operation_id": "transfer_thumbnail_motif",
+      "lane": "visual",
+      "purpose": "Transfer approved thumbnail motif contracts into scene slot language.",
+      "effect": "Reuses thumbnail motifs as local scene language without final approval.",
+      "requirements": [
+        "visual_asset_slot_map.json"
+      ],
+      "current_state": "ready_local_offline",
+      "owner": "assistant_or_future_operator_local_only",
+      "next_move": "Carry motif tokens without declaring final thumbnail acceptance.",
+      "source_contract": "visual_asset_slot_map.scene_visual_slots[].thumbnail_transfer_rule_ids",
+      "may_execute_without_real_input": true,
+      "may_execute_without_yymm4": true,
+      "requires_explicit_gate": false,
+      "writes_existing_lane_artifacts": false
+    },
+    {
+      "step_number": 7,
+      "operation_id": "validate_operation_pack",
+      "lane": "validation",
+      "purpose": "Validate package completeness, local-only references, and closed claims.",
+      "effect": "Checks all generated files and closed gate claims.",
+      "requirements": [
+        "local_edit_slice_manifest.json",
+        "operation_gate_preservation_readback.json"
+      ],
+      "current_state": "ready_local_offline",
+      "owner": "assistant_or_future_operator_local_only",
+      "next_move": "Run targeted tests and gate scans after regeneration.",
+      "source_contract": "validation_readback.json",
+      "may_execute_without_real_input": true,
+      "may_execute_without_yymm4": true,
+      "requires_explicit_gate": false,
+      "writes_existing_lane_artifacts": false
+    }
+  ],
+  "blocked_operation_count": 3,
+  "blocked_operations": [
+    {
+      "operation_id": "flag_real_input_required",
+      "lane": "input_boundary",
+      "purpose": "Flag every source/text dependent slot as requiring verified local input.",
+      "current_state": "blocked_by_real_input",
+      "owner": "human_gate_required",
+      "next_move": "Wait for verified local source/transcript input before replacement.",
+      "requires_explicit_gate": true
+    },
+    {
+      "operation_id": "mark_yymm4_observation_needed",
+      "lane": "yymm4_observation",
+      "purpose": "Attach future manual YMM4 readback fields without launching or importing.",
+      "current_state": "blocked_by_explicit_yymm4_gate",
+      "owner": "human_gate_required",
+      "next_move": "Open an explicit YMM4 observation gate before launch/import/readback.",
+      "requires_explicit_gate": true
+    },
+    {
+      "operation_id": "capture_yymm4_readback",
+      "lane": "yymm4_observation",
+      "purpose": "Define the future readback shape an operator can fill after an explicit gate.",
+      "current_state": "blocked_by_explicit_yymm4_gate",
+      "owner": "human_gate_required",
+      "next_move": "Fill schema only after explicit manual observation.",
+      "requires_explicit_gate": true
+    }
+  ],
+  "selection_reason": "Only operations marked buildable_locally are queued; real-input, YMM4, and public-rights gates stay closed.",
+  "actual_yymm4_import": false,
+  "real_input_replacement_executed": false,
+  "public_ready": false
+}

@@ -1,0 +1,72 @@
+{
+  "schema_version": "local_edit_slice_source_artifact_index.v1",
+  "artifact_id": "episode_002_local_edit_slice_execution_pack_v1",
+  "editing_operations_context_read_only": true,
+  "protected_context_dirs": [
+    "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack",
+    "production_pilots/yukkuri_newsroom_content_spine_002/output_template_readiness_pack",
+    "production_pilots/yukkuri_newsroom_content_spine_002/real_input_intake_readiness",
+    "production_pilots/yukkuri_newsroom_content_spine_002/japanese_graphic_review_console",
+    "production_pilots/yukkuri_newsroom_content_spine_002/primary_artifact_review_console",
+    "production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype",
+    "production_pilots/yukkuri_newsroom_content_spine_002/split_view_decision_evidence_prototype"
+  ],
+  "records": [
+    {
+      "record_id": "editing_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/editing_operations_manifest.json",
+      "role": "editing_operations_context_read_only",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "edit_operation_registry",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/edit_operation_registry.json",
+      "role": "operation_registry_read_only",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "scene_operation_plan",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/scene_operation_plan.json",
+      "role": "scene_contract_read_only",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "timing_adjustment_model",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/timing_adjustment_model.json",
+      "role": "timing_contract_read_only",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "voice_subtitle_operation_map",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/voice_subtitle_operation_map.json",
+      "role": "voice_subtitle_contract_read_only",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "visual_asset_slot_map",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/visual_asset_slot_map.json",
+      "role": "visual_contract_read_only",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "operation_gap_ledger",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/operation_gap_ledger.json",
+      "role": "gap_ledger_read_only",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "editing_validation",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/validation_readback.json",
+      "role": "validation_readback_read_only",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    }
+  ]
+}

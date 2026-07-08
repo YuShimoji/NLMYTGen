@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en" data-local-edit-slice="true" data-artifact-kind="episode-local-edit-slice-execution-pack">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Episode 002 Local Edit-Slice Execution</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+      --bg: #111411;
+      --surface: #18211b;
+      --panel: #213025;
+      --ink: #eef7ee;
+      --muted: #a8b8aa;
+      --line: #3a4a3e;
+      --teal: #68d8c0;
+      --amber: #f3c969;
+      --red: #f08c8c;
+      --blue: #91b7ff;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.5; }
+    main { max-width: 1180px; margin: 0 auto; padding: 28px 18px 42px; }
+    h1, h2, h3 { margin: 0; letter-spacing: 0; }
+    h1 { font-size: clamp(28px, 4vw, 44px); line-height: 1.08; }
+    h2 { font-size: 20px; margin: 28px 0 12px; }
+    h3 { font-size: 15px; }
+    p { color: var(--muted); }
+    .hero { display: grid; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { border: 1px solid var(--line); border-radius: 999px; padding: 5px 10px; background: var(--surface); font-size: 12px; }
+    .queue { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+    .card { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: 14px; min-height: 150px; }
+    .step { color: var(--amber); font-size: 12px; }
+    .scene-row, .blocked-row, .gate-row { display: grid; grid-template-columns: 120px 1fr 1fr; gap: 8px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .cell { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); padding: 10px; overflow-wrap: anywhere; }
+    .ok { color: var(--teal); }
+    .hold { color: var(--red); }
+    code { color: var(--amber); }
+    @media (prefers-color-scheme: light) {
+      :root { --bg: #f7faf7; --surface: #ffffff; --panel: #eef4ef; --ink: #172118; --muted: #4d6251; --line: #cbd9ce; }
+    }
+    @media (max-width: 760px) { main { padding: 20px 12px 32px; } .scene-row, .blocked-row, .gate-row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="chips">
+        <span class="chip">queue operations: 7</span>
+        <span class="chip">scenes: 3</span>
+        <span class="chip">gates closed: True</span>
+        <span class="chip">real input: not replaced</span>
+        <span class="chip">YMM4: not launched</span>
+      </div>
+      <h1>Episode 002 Local Edit-Slice Execution</h1>
+      <p>This pack converts completed editing operation contracts into a local execution queue. It preserves the real-input, YMM4, rights, thumbnail, and public gates.</p>
+    </section>
+
+    <section data-region="execution-queue">
+      <h2>Execution Queue</h2>
+      <div class="queue"><article class="card">
+  <div class="step">Step 1 / timing</div>
+  <h3>set_scene_duration</h3>
+  <p>Creates a stable provisional timing pass for each scene.</p>
+  <p class="ok">ready_local_offline</p>
+</article>
+<article class="card">
+  <div class="step">Step 2 / voice_subtitle</div>
+  <h3>align_voice_subtitle</h3>
+  <p>Keeps cue order and voice/subtitle ownership explicit.</p>
+  <p class="ok">ready_local_offline</p>
+</article>
+<article class="card">
+  <div class="step">Step 3 / voice_subtitle</div>
+  <h3>split_or_wrap_subtitle</h3>
+  <p>Separates local wrap intent from final YMM4 linebreak acceptance.</p>
+  <p class="ok">ready_local_offline</p>
+</article>
+<article class="card">
+  <div class="step">Step 4 / visual</div>
+  <h3>assign_visual_scene_template</h3>
+  <p>Connects each scene to an existing template slot.</p>
+  <p class="ok">ready_local_offline</p>
+</article>
+<article class="card">
+  <div class="step">Step 5 / visual</div>
+  <h3>place_citation_overlay</h3>
+  <p>Allocates citation placeholders while real source wording stays gated.</p>
+  <p class="ok">ready_local_offline</p>
+</article>
+<article class="card">
+  <div class="step">Step 6 / visual</div>
+  <h3>transfer_thumbnail_motif</h3>
+  <p>Reuses thumbnail motifs as local scene language without final approval.</p>
+  <p class="ok">ready_local_offline</p>
+</article>
+<article class="card">
+  <div class="step">Step 7 / validation</div>
+  <h3>validate_operation_pack</h3>
+  <p>Checks all generated files and closed gate claims.</p>
+  <p class="ok">ready_local_offline</p>
+</article></div>
+    </section>
+
+    <section data-region="scene-execution-plan">
+      <h2>Scene Execution Plan</h2>
+      <div class="scene-row">
+  <div class="cell"><code>S1</code><br>intro</div>
+  <div class="cell">Opening hook and topic promise<br>set_scene_duration, align_voice_subtitle, split_or_wrap_subtitle, assign_visual_scene_template, place_citation_overlay, transfer_thumbnail_motif</div>
+  <div class="cell hold">verified_real_input_required_before_replacement, explicit_yymm4_gate_required_before_observation, rights_public_gate_required_before_final_claims</div>
+</div>
+<div class="scene-row">
+  <div class="cell"><code>S2</code><br>develop</div>
+  <div class="cell">Main explanation: Factory seed dry-run placeholder for a second yukkuri newsroom episode<br>set_scene_duration, align_voice_subtitle, split_or_wrap_subtitle, assign_visual_scene_template, place_citation_overlay, transfer_thumbnail_motif</div>
+  <div class="cell hold">verified_real_input_required_before_replacement, explicit_yymm4_gate_required_before_observation, rights_public_gate_required_before_final_claims</div>
+</div>
+<div class="scene-row">
+  <div class="cell"><code>S3</code><br>closing</div>
+  <div class="cell">Viewer watch point and production boundary<br>set_scene_duration, align_voice_subtitle, split_or_wrap_subtitle, assign_visual_scene_template, place_citation_overlay, transfer_thumbnail_motif</div>
+  <div class="cell hold">verified_real_input_required_before_replacement, explicit_yymm4_gate_required_before_observation, rights_public_gate_required_before_final_claims</div>
+</div>
+    </section>
+
+    <section data-region="blocked-gates">
+      <h2>Blocked Gate Operations</h2>
+      <div class="blocked-row">
+  <div><code>flag_real_input_required</code></div>
+  <div>Flag every source/text dependent slot as requiring verified local input.</div>
+  <div class="hold">Wait for verified local source/transcript input before replacement.</div>
+</div>
+<div class="blocked-row">
+  <div><code>mark_yymm4_observation_needed</code></div>
+  <div>Attach future manual YMM4 readback fields without launching or importing.</div>
+  <div class="hold">Open an explicit YMM4 observation gate before launch/import/readback.</div>
+</div>
+<div class="blocked-row">
+  <div><code>capture_yymm4_readback</code></div>
+  <div>Define the future readback shape an operator can fill after an explicit gate.</div>
+  <div class="hold">Fill schema only after explicit manual observation.</div>
+</div>
+    </section>
+
+    <section data-region="gate-readback">
+      <h2>Gate Readback</h2>
+      <div class="gate-row">
+  <div><code>actual_yymm4_import</code></div>
+  <div>False</div>
+  <div class="ok">closed in this pack</div>
+</div>
+<div class="gate-row">
+  <div><code>yymm4_rendered</code></div>
+  <div>False</div>
+  <div class="ok">closed in this pack</div>
+</div>
+<div class="gate-row">
+  <div><code>production_ymmp_written</code></div>
+  <div>False</div>
+  <div class="ok">closed in this pack</div>
+</div>
+<div class="gate-row">
+  <div><code>real_input_replacement_executed</code></div>
+  <div>False</div>
+  <div class="ok">closed in this pack</div>
+</div>
+<div class="gate-row">
+  <div><code>real_transcript_exists</code></div>
+  <div>False</div>
+  <div class="ok">closed in this pack</div>
+</div>
+<div class="gate-row">
+  <div><code>rights_accepted</code></div>
+  <div>False</div>
+  <div class="ok">closed in this pack</div>
+</div>
+<div class="gate-row">
+  <div><code>public_ready</code></div>
+  <div>False</div>
+  <div class="ok">closed in this pack</div>
+</div>
+<div class="gate-row">
+  <div><code>final_thumbnail_approval</code></div>
+  <div>False</div>
+  <div class="ok">closed in this pack</div>
+</div>
+<div class="gate-row">
+  <div><code>live_fetch_performed</code></div>
+  <div>False</div>
+  <div class="ok">closed in this pack</div>
+</div>
+<div class="gate-row">
+  <div><code>external_media_downloaded</code></div>
+  <div>False</div>
+  <div class="ok">closed in this pack</div>
+</div>
+<div class="gate-row">
+  <div><code>oauth_or_api_used</code></div>
+  <div>False</div>
+  <div class="ok">closed in this pack</div>
+</div>
+<div class="gate-row">
+  <div><code>youtube_uploaded</code></div>
+  <div>False</div>
+  <div class="ok">closed in this pack</div>
+</div>
+    </section>
+  </main>
+</body>
+</html>
