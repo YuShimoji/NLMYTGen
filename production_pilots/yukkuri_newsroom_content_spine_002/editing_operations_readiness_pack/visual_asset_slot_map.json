@@ -1,0 +1,84 @@
+{
+  "schema_version": "visual_asset_slot_map.v1",
+  "artifact_id": "episode_002_editing_operations_readiness_pack_v1",
+  "status": "visual_asset_slots_ready_no_external_media",
+  "source_visual_registry": "production_pilots/yukkuri_newsroom_content_spine_002/output_template_readiness_pack/visual_scene_template_registry.json",
+  "source_overlay_spec": "production_pilots/yukkuri_newsroom_content_spine_002/output_template_readiness_pack/citation_overlay_spec.json",
+  "source_thumbnail_map": "production_pilots/yukkuri_newsroom_content_spine_002/output_template_readiness_pack/thumbnail_transfer_map.json",
+  "template_type_count": 5,
+  "overlay_slot_count": 3,
+  "thumbnail_transfer_status": "thumbnail_context_transfer_ready_not_final_approval",
+  "scene_visual_slot_count": 3,
+  "scene_visual_slots": [
+    {
+      "scene_id": "S1",
+      "operation_ids": [
+        "assign_visual_scene_template",
+        "place_citation_overlay",
+        "transfer_thumbnail_motif",
+        "flag_real_input_required"
+      ],
+      "primary_template_id": "intro_status",
+      "supporting_template_ids": [],
+      "citation_overlay_ids": [
+        "s1_source_note"
+      ],
+      "thumbnail_transfer_rule_ids": [
+        "headline_to_opening_frame",
+        "proof_stack_to_boundary_strip",
+        "palette_to_template_tokens"
+      ],
+      "asset_policy": "template slots and local tokens only",
+      "external_media_allowed": false,
+      "final_thumbnail_approval": false
+    },
+    {
+      "scene_id": "S2",
+      "operation_ids": [
+        "assign_visual_scene_template",
+        "place_citation_overlay",
+        "transfer_thumbnail_motif",
+        "flag_real_input_required"
+      ],
+      "primary_template_id": "topic_explanation",
+      "supporting_template_ids": [
+        "evidence_source"
+      ],
+      "citation_overlay_ids": [
+        "s2_source_note"
+      ],
+      "thumbnail_transfer_rule_ids": [
+        "palette_to_template_tokens"
+      ],
+      "asset_policy": "template slots and local tokens only",
+      "external_media_allowed": false,
+      "final_thumbnail_approval": false
+    },
+    {
+      "scene_id": "S3",
+      "operation_ids": [
+        "assign_visual_scene_template",
+        "place_citation_overlay",
+        "transfer_thumbnail_motif",
+        "flag_real_input_required"
+      ],
+      "primary_template_id": "summary_transition",
+      "supporting_template_ids": [
+        "evidence_source"
+      ],
+      "citation_overlay_ids": [
+        "s3_source_note"
+      ],
+      "thumbnail_transfer_rule_ids": [
+        "proof_stack_to_boundary_strip",
+        "palette_to_template_tokens"
+      ],
+      "asset_policy": "template slots and local tokens only",
+      "external_media_allowed": false,
+      "final_thumbnail_approval": false
+    }
+  ],
+  "external_media_allowed": false,
+  "final_thumbnail_approval": false,
+  "invented_real_content": false
+}

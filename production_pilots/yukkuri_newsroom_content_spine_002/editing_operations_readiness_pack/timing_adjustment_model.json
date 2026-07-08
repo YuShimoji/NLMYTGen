@@ -1,0 +1,73 @@
+{
+  "schema_version": "timing_adjustment_model.v1",
+  "artifact_id": "episode_002_editing_operations_readiness_pack_v1",
+  "status": "provisional_timing_model_ready_no_audio_or_yymm4_timing",
+  "source_scene_timing_map": "production_pilots/yukkuri_newsroom_content_spine_002/output_template_readiness_pack/scene_timing_map.json",
+  "scene_count": 3,
+  "total_provisional_duration_sec": 36,
+  "scene_duration_contracts": [
+    {
+      "scene_id": "S1",
+      "operation_id": "set_scene_duration",
+      "row_range": {
+        "start": 1,
+        "end": 2
+      },
+      "cue_ids": [
+        "csv_row_1",
+        "csv_row_2"
+      ],
+      "provisional_start_sec": 0,
+      "provisional_end_sec": 8,
+      "provisional_duration_sec": 8,
+      "adjustment_policy": "preserve cue order, then adjust only after future audio/YMM4 readback",
+      "actual_audio_timing_status": "blocked_by_explicit_yymm4_gate"
+    },
+    {
+      "scene_id": "S2",
+      "operation_id": "set_scene_duration",
+      "row_range": {
+        "start": 3,
+        "end": 4
+      },
+      "cue_ids": [
+        "csv_row_3",
+        "csv_row_4"
+      ],
+      "provisional_start_sec": 8,
+      "provisional_end_sec": 16,
+      "provisional_duration_sec": 8,
+      "adjustment_policy": "preserve cue order, then adjust only after future audio/YMM4 readback",
+      "actual_audio_timing_status": "blocked_by_explicit_yymm4_gate"
+    },
+    {
+      "scene_id": "S3",
+      "operation_id": "set_scene_duration",
+      "row_range": {
+        "start": 5,
+        "end": 9
+      },
+      "cue_ids": [
+        "csv_row_5",
+        "csv_row_6",
+        "csv_row_7",
+        "csv_row_8",
+        "csv_row_9"
+      ],
+      "provisional_start_sec": 16,
+      "provisional_end_sec": 36,
+      "provisional_duration_sec": 20,
+      "adjustment_policy": "preserve cue order, then adjust only after future audio/YMM4 readback",
+      "actual_audio_timing_status": "blocked_by_explicit_yymm4_gate"
+    }
+  ],
+  "adjustment_rules": [
+    "set_scene_duration may use provisional seconds from the template map",
+    "audio-derived start/end changes require future manual YMM4 readback",
+    "row ranges and cue ids stay stable until real input replacement is validated",
+    "no render or import action is part of this timing model"
+  ],
+  "actual_yymm4_import": false,
+  "yymm4_rendered": false,
+  "invented_real_content": false
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": "operation_gap_ledger.v1",
+  "artifact_id": "episode_002_editing_operations_readiness_pack_v1",
+  "status": "operation_gap_ledger_ready_local_offline",
+  "operation_count": 10,
+  "groups": {
+    "buildable_locally": [
+      "edit_operation_registry.json",
+      "scene_operation_plan.json",
+      "timing_adjustment_model.json",
+      "voice_subtitle_operation_map.json",
+      "visual_asset_slot_map.json",
+      "operation_gap_ledger.json",
+      "editing_operations_preview.html"
+    ],
+    "blocked_by_real_input": [
+      "verified local source file",
+      "verified transcript text",
+      "citation overlay wording from real material",
+      "real-input replacement execution"
+    ],
+    "blocked_by_explicit_yymm4_gate": [
+      "YMM4 GUI launch",
+      "CSV import observation",
+      "VoiceItem id and timing readback",
+      "render smoke or production project write"
+    ],
+    "blocked_by_public_rights_gate": [
+      "rights/public-ready acceptance",
+      "final thumbnail approval",
+      "public upload or production publication decision"
+    ]
+  },
+  "counts": {
+    "buildable_locally": 7,
+    "blocked_by_real_input": 4,
+    "blocked_by_explicit_yymm4_gate": 4,
+    "blocked_by_public_rights_gate": 3
+  },
+  "operation_status_by_id": {
+    "set_scene_duration": "buildable_locally",
+    "align_voice_subtitle": "buildable_locally",
+    "split_or_wrap_subtitle": "buildable_locally",
+    "assign_visual_scene_template": "buildable_locally",
+    "place_citation_overlay": "buildable_locally",
+    "transfer_thumbnail_motif": "buildable_locally",
+    "mark_yymm4_observation_needed": "blocked_by_explicit_yymm4_gate",
+    "flag_real_input_required": "blocked_by_real_input",
+    "capture_yymm4_readback": "blocked_by_explicit_yymm4_gate",
+    "validate_operation_pack": "buildable_locally"
+  },
+  "invented_real_content": false,
+  "actual_yymm4_import": false,
+  "public_ready": false
+}

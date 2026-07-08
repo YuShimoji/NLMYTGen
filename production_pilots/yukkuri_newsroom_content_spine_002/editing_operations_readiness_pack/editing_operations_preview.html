@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="ja" data-editing-operations="true" data-artifact-kind="episode-editing-operations-readiness-pack">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Episode 002 Editing Operations Readiness</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+      --bg: #101316;
+      --surface: #172027;
+      --panel: #1f2a31;
+      --ink: #edf6f9;
+      --muted: #9fb3bd;
+      --line: #33454e;
+      --amber: #f6c85f;
+      --teal: #55d6be;
+      --rose: #f28b82;
+      --blue: #8ab4f8;
+      --green: #9ad67d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+    h1, h2, h3 { margin: 0; letter-spacing: 0; }
+    h1 { font-size: clamp(28px, 4vw, 46px); line-height: 1.05; }
+    h2 { font-size: 20px; margin-top: 28px; }
+    h3 { font-size: 15px; }
+    p { color: var(--muted); }
+    .hero {
+      display: grid;
+      gap: 14px;
+      padding: 24px 0 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 5px 10px;
+      color: var(--ink);
+      background: var(--surface);
+      font-size: 12px;
+    }
+    .grid { display: grid; gap: 12px; }
+    .ops { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      padding: 14px;
+      min-height: 130px;
+    }
+    .lane { color: var(--teal); font-size: 12px; text-transform: uppercase; }
+    .matrix {
+      display: grid;
+      gap: 8px;
+      overflow-x: auto;
+    }
+    .matrix-row {
+      display: grid;
+      grid-template-columns: 90px minmax(160px, 1.2fr) repeat(4, minmax(130px, 1fr));
+      gap: 8px;
+      min-width: 860px;
+      align-items: stretch;
+    }
+    .cell {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 10px;
+      min-height: 74px;
+      overflow-wrap: anywhere;
+    }
+    .head .cell { color: var(--amber); min-height: auto; }
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .time-node {
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      padding: 12px;
+      background: var(--surface);
+    }
+    .voice-row, .visual-row, .gap-row {
+      display: grid;
+      grid-template-columns: 120px 1fr 1fr;
+      gap: 8px;
+      border-bottom: 1px solid var(--line);
+      padding: 10px 0;
+    }
+    .danger { color: var(--rose); }
+    .ok { color: var(--green); }
+    code { color: var(--amber); }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f7faf9;
+        --surface: #ffffff;
+        --panel: #eef3f5;
+        --ink: #142026;
+        --muted: #4c626d;
+        --line: #c7d6dc;
+      }
+    }
+    @media (max-width: 760px) {
+      main { padding: 20px 12px 32px; }
+      .voice-row, .visual-row, .gap-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="chips">
+        <span class="chip">operation count: 10</span>
+        <span class="chip">scene count: 3</span>
+        <span class="chip">YMM4: future manual only</span>
+        <span class="chip">real input: required later</span>
+      </div>
+      <h1>Episode 002 Editing Operations Readiness</h1>
+      <p>Local operation contracts for timing, voice/subtitle, visual slots, citation overlays, thumbnail transfer, and future YMM4 observation readback. No import, render, or public-ready claim is made here.</p>
+    </section>
+
+    <section data-region="operation-lanes">
+      <h2>Operation Lanes</h2>
+      <div class="grid ops"><article class="card">
+  <div class="lane">timing</div>
+  <h3>set_scene_duration</h3>
+  <p>Set provisional scene durations from the existing scene timing map.</p>
+  <p class="ok">buildable_locally</p>
+</article>
+<article class="card">
+  <div class="lane">voice_subtitle</div>
+  <h3>align_voice_subtitle</h3>
+  <p>Bind each draft CSV cue to a voice slot, subtitle slot, and scene.</p>
+  <p class="ok">buildable_locally</p>
+</article>
+<article class="card">
+  <div class="lane">voice_subtitle</div>
+  <h3>split_or_wrap_subtitle</h3>
+  <p>Mark subtitle wrapping responsibility before real timing observation.</p>
+  <p class="ok">buildable_locally</p>
+</article>
+<article class="card">
+  <div class="lane">visual</div>
+  <h3>assign_visual_scene_template</h3>
+  <p>Assign existing visual scene template ids to each scene.</p>
+  <p class="ok">buildable_locally</p>
+</article>
+<article class="card">
+  <div class="lane">visual</div>
+  <h3>place_citation_overlay</h3>
+  <p>Reserve citation overlay slots without claiming real source approval.</p>
+  <p class="ok">buildable_locally</p>
+</article>
+<article class="card">
+  <div class="lane">visual</div>
+  <h3>transfer_thumbnail_motif</h3>
+  <p>Transfer approved thumbnail motif contracts into scene slot language.</p>
+  <p class="ok">buildable_locally</p>
+</article>
+<article class="card">
+  <div class="lane">yymm4_observation</div>
+  <h3>mark_yymm4_observation_needed</h3>
+  <p>Attach future manual YMM4 readback fields without launching or importing.</p>
+  <p class="ok">blocked_by_explicit_yymm4_gate</p>
+</article>
+<article class="card">
+  <div class="lane">input_boundary</div>
+  <h3>flag_real_input_required</h3>
+  <p>Flag every source/text dependent slot as requiring verified local input.</p>
+  <p class="ok">blocked_by_real_input</p>
+</article>
+<article class="card">
+  <div class="lane">yymm4_observation</div>
+  <h3>capture_yymm4_readback</h3>
+  <p>Define the future readback shape an operator can fill after an explicit gate.</p>
+  <p class="ok">blocked_by_explicit_yymm4_gate</p>
+</article>
+<article class="card">
+  <div class="lane">validation</div>
+  <h3>validate_operation_pack</h3>
+  <p>Validate package completeness, local-only references, and closed claims.</p>
+  <p class="ok">buildable_locally</p>
+</article></div>
+    </section>
+
+    <section data-region="scene-operation-matrix">
+      <h2>Scene Operation Matrix</h2>
+      <div class="matrix">
+        <div class="matrix-row head">
+          <div class="cell">Scene</div>
+          <div class="cell">Purpose</div>
+          <div class="cell">Timing</div>
+          <div class="cell">Voice / Subtitle</div>
+          <div class="cell">Visual / Citation</div>
+          <div class="cell">Gates</div>
+        </div>
+        <div class="matrix-row">
+  <div class="cell"><code>S1</code><br>intro</div>
+  <div class="cell">Opening hook and topic promise</div>
+  <div class="cell">8 sec<br><code>set_scene_duration</code></div>
+  <div class="cell">2 cues<br><code>align_voice_subtitle</code></div>
+  <div class="cell">intro_status<br>s1_source_note</div>
+  <div class="cell danger">blocked_by_real_input; blocked_by_explicit_yymm4_gate</div>
+</div>
+<div class="matrix-row">
+  <div class="cell"><code>S2</code><br>develop</div>
+  <div class="cell">Main explanation: Factory seed dry-run placeholder for a second yukkuri newsroom episode</div>
+  <div class="cell">8 sec<br><code>set_scene_duration</code></div>
+  <div class="cell">2 cues<br><code>align_voice_subtitle</code></div>
+  <div class="cell">topic_explanation<br>s2_source_note</div>
+  <div class="cell danger">blocked_by_real_input; blocked_by_explicit_yymm4_gate</div>
+</div>
+<div class="matrix-row">
+  <div class="cell"><code>S3</code><br>closing</div>
+  <div class="cell">Viewer watch point and production boundary</div>
+  <div class="cell">20 sec<br><code>set_scene_duration</code></div>
+  <div class="cell">5 cues<br><code>align_voice_subtitle</code></div>
+  <div class="cell">summary_transition<br>s3_source_note</div>
+  <div class="cell danger">blocked_by_real_input; blocked_by_explicit_yymm4_gate</div>
+</div>
+      </div>
+    </section>
+
+    <section data-region="timing-strip">
+      <h2>Timing Strip</h2>
+      <div class="timeline"><div class="time-node">
+  <h3>S1</h3>
+  <p>0s to 8s / 8s</p>
+  <p>blocked_by_explicit_yymm4_gate</p>
+</div>
+<div class="time-node">
+  <h3>S2</h3>
+  <p>8s to 16s / 8s</p>
+  <p>blocked_by_explicit_yymm4_gate</p>
+</div>
+<div class="time-node">
+  <h3>S3</h3>
+  <p>16s to 36s / 20s</p>
+  <p>blocked_by_explicit_yymm4_gate</p>
+</div></div>
+    </section>
+
+    <section data-region="voice-subtitle-lane">
+      <h2>Voice / Subtitle Lane</h2>
+      <div class="voice-row">
+  <div><code>csv_row_1</code><br>S1</div>
+  <div>れいむ<br>voice_slot_1</div>
+  <div>local review can mark wrapping intent; final wrap waits for real text and observed timing<br><span class="danger">explicit_yymm4_gate</span></div>
+</div>
+<div class="voice-row">
+  <div><code>csv_row_2</code><br>S1</div>
+  <div>まりさ<br>voice_slot_2</div>
+  <div>local review can mark wrapping intent; final wrap waits for real text and observed timing<br><span class="danger">explicit_yymm4_gate</span></div>
+</div>
+<div class="voice-row">
+  <div><code>csv_row_3</code><br>S2</div>
+  <div>まりさ<br>voice_slot_2</div>
+  <div>local review can mark wrapping intent; final wrap waits for real text and observed timing<br><span class="danger">explicit_yymm4_gate</span></div>
+</div>
+<div class="voice-row">
+  <div><code>csv_row_4</code><br>S2</div>
+  <div>まりさ<br>voice_slot_2</div>
+  <div>local review can mark wrapping intent; final wrap waits for real text and observed timing<br><span class="danger">explicit_yymm4_gate</span></div>
+</div>
+<div class="voice-row">
+  <div><code>csv_row_5</code><br>S3</div>
+  <div>れいむ<br>voice_slot_1</div>
+  <div>local review can mark wrapping intent; final wrap waits for real text and observed timing<br><span class="danger">explicit_yymm4_gate</span></div>
+</div>
+<div class="voice-row">
+  <div><code>csv_row_6</code><br>S3</div>
+  <div>まりさ<br>voice_slot_2</div>
+  <div>local review can mark wrapping intent; final wrap waits for real text and observed timing<br><span class="danger">explicit_yymm4_gate</span></div>
+</div>
+<div class="voice-row">
+  <div><code>csv_row_7</code><br>S3</div>
+  <div>まりさ<br>voice_slot_2</div>
+  <div>local review can mark wrapping intent; final wrap waits for real text and observed timing<br><span class="danger">explicit_yymm4_gate</span></div>
+</div>
+<div class="voice-row">
+  <div><code>csv_row_8</code><br>S3</div>
+  <div>れいむ<br>voice_slot_1</div>
+  <div>local review can mark wrapping intent; final wrap waits for real text and observed timing<br><span class="danger">explicit_yymm4_gate</span></div>
+</div>
+<div class="voice-row">
+  <div><code>csv_row_9</code><br>S3</div>
+  <div>まりさ<br>voice_slot_2</div>
+  <div>local review can mark wrapping intent; final wrap waits for real text and observed timing<br><span class="danger">explicit_yymm4_gate</span></div>
+</div>
+    </section>
+
+    <section data-region="visual-slot-lane">
+      <h2>Visual Slot Lane</h2>
+      <div class="visual-row">
+  <div><code>S1</code></div>
+  <div>intro_status<br></div>
+  <div>overlays: s1_source_note<br>thumbnail: headline_to_opening_frame, proof_stack_to_boundary_strip, palette_to_template_tokens</div>
+</div>
+<div class="visual-row">
+  <div><code>S2</code></div>
+  <div>topic_explanation<br>evidence_source</div>
+  <div>overlays: s2_source_note<br>thumbnail: palette_to_template_tokens</div>
+</div>
+<div class="visual-row">
+  <div><code>S3</code></div>
+  <div>summary_transition<br>evidence_source</div>
+  <div>overlays: s3_source_note<br>thumbnail: proof_stack_to_boundary_strip, palette_to_template_tokens</div>
+</div>
+    </section>
+
+    <section data-region="yymm4-observation-lane">
+      <h2>YMM4 Observation Lane</h2>
+      <p class="danger">Do not launch, import, render, or write production project output from this package. The schema only defines fields for a future manual observation after an explicit gate.</p>
+      <div class="gap-row">
+  <div><code>buildable_locally</code></div>
+  <div>7 items</div>
+  <div>edit_operation_registry.json, scene_operation_plan.json, timing_adjustment_model.json, voice_subtitle_operation_map.json, visual_asset_slot_map.json, operation_gap_ledger.json, editing_operations_preview.html</div>
+</div>
+<div class="gap-row">
+  <div><code>blocked_by_real_input</code></div>
+  <div>4 items</div>
+  <div>verified local source file, verified transcript text, citation overlay wording from real material, real-input replacement execution</div>
+</div>
+<div class="gap-row">
+  <div><code>blocked_by_explicit_yymm4_gate</code></div>
+  <div>4 items</div>
+  <div>YMM4 GUI launch, CSV import observation, VoiceItem id and timing readback, render smoke or production project write</div>
+</div>
+<div class="gap-row">
+  <div><code>blocked_by_public_rights_gate</code></div>
+  <div>3 items</div>
+  <div>rights/public-ready acceptance, final thumbnail approval, public upload or production publication decision</div>
+</div>
+    </section>
+  </main>
+</body>
+</html>

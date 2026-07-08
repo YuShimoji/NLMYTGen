@@ -8,5 +8,6 @@ not a governance document or roadmap.
 | gui-i18n-episode002-console | GUI_IA_I18N | reported | Visual acceptance pending. |
 | output-video-proof-episode002 | OUTPUT_VIDEO | accepted/close-ready | Output proof package exists. |
 | output-template-episode002 | OUTPUT_VIDEO | accepted/close-ready | Output template readiness package exists. |
-| input-intake-episode002 | INPUT_API_HUB | running | Real input intake readiness package is the active slice. |
+| input-intake-episode002 | INPUT_API_HUB | accepted/close-ready | Real input intake readiness package exists. |
+| editing-ops-episode002 | EDITING_FEATURES | running | Editing operations readiness package is the active slice. |
 | integrity-triage | INTEGRITY_TRIAGE | paused | Full-suite drift remains nonblocking for targeted slices. |

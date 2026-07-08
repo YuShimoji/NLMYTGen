@@ -1,0 +1,269 @@
+{
+  "schema_version": "voice_subtitle_operation_map.v1",
+  "artifact_id": "episode_002_editing_operations_readiness_pack_v1",
+  "status": "voice_subtitle_operations_ready_no_yymm4_voiceitems",
+  "source_voice_subtitle_mapping": "production_pilots/yukkuri_newsroom_content_spine_002/output_template_readiness_pack/voice_subtitle_mapping.json",
+  "source_csv": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+  "utterance_operation_count": 9,
+  "utterance_operations": [
+    {
+      "cue_id": "csv_row_1",
+      "row_number": 1,
+      "scene_id": "S1",
+      "scene_title": "Opening hook and topic promise",
+      "speaker": "れいむ",
+      "voice_slot_id": "voice_slot_1",
+      "operation_ids": [
+        "align_voice_subtitle",
+        "split_or_wrap_subtitle",
+        "flag_real_input_required",
+        "mark_yymm4_observation_needed"
+      ],
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-1",
+      "subtitle_text_status": "draft_sample_fixture_not_real",
+      "subtitle_wrap_contract": {
+        "operation_id": "split_or_wrap_subtitle",
+        "source_text_length": 23,
+        "wrap_policy": "local review can mark wrapping intent; final wrap waits for real text and observed timing",
+        "actual_linebreaks_ready": false
+      },
+      "voiceitem_readback": {
+        "actual_yymm4_voiceitem_id": null,
+        "actual_start_sec": null,
+        "actual_end_sec": null,
+        "observation_required": "explicit_yymm4_gate"
+      }
+    },
+    {
+      "cue_id": "csv_row_2",
+      "row_number": 2,
+      "scene_id": "S1",
+      "scene_title": "Opening hook and topic promise",
+      "speaker": "まりさ",
+      "voice_slot_id": "voice_slot_2",
+      "operation_ids": [
+        "align_voice_subtitle",
+        "split_or_wrap_subtitle",
+        "flag_real_input_required",
+        "mark_yymm4_observation_needed"
+      ],
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-2",
+      "subtitle_text_status": "draft_sample_fixture_not_real",
+      "subtitle_wrap_contract": {
+        "operation_id": "split_or_wrap_subtitle",
+        "source_text_length": 65,
+        "wrap_policy": "local review can mark wrapping intent; final wrap waits for real text and observed timing",
+        "actual_linebreaks_ready": false
+      },
+      "voiceitem_readback": {
+        "actual_yymm4_voiceitem_id": null,
+        "actual_start_sec": null,
+        "actual_end_sec": null,
+        "observation_required": "explicit_yymm4_gate"
+      }
+    },
+    {
+      "cue_id": "csv_row_3",
+      "row_number": 3,
+      "scene_id": "S2",
+      "scene_title": "Main explanation: Factory seed dry-run placeholder for a second yukkuri newsroom episode",
+      "speaker": "まりさ",
+      "voice_slot_id": "voice_slot_2",
+      "operation_ids": [
+        "align_voice_subtitle",
+        "split_or_wrap_subtitle",
+        "flag_real_input_required",
+        "mark_yymm4_observation_needed"
+      ],
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-3",
+      "subtitle_text_status": "draft_sample_fixture_not_real",
+      "subtitle_wrap_contract": {
+        "operation_id": "split_or_wrap_subtitle",
+        "source_text_length": 34,
+        "wrap_policy": "local review can mark wrapping intent; final wrap waits for real text and observed timing",
+        "actual_linebreaks_ready": false
+      },
+      "voiceitem_readback": {
+        "actual_yymm4_voiceitem_id": null,
+        "actual_start_sec": null,
+        "actual_end_sec": null,
+        "observation_required": "explicit_yymm4_gate"
+      }
+    },
+    {
+      "cue_id": "csv_row_4",
+      "row_number": 4,
+      "scene_id": "S2",
+      "scene_title": "Main explanation: Factory seed dry-run placeholder for a second yukkuri newsroom episode",
+      "speaker": "まりさ",
+      "voice_slot_id": "voice_slot_2",
+      "operation_ids": [
+        "align_voice_subtitle",
+        "split_or_wrap_subtitle",
+        "flag_real_input_required",
+        "mark_yymm4_observation_needed"
+      ],
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-4",
+      "subtitle_text_status": "draft_sample_fixture_not_real",
+      "subtitle_wrap_contract": {
+        "operation_id": "split_or_wrap_subtitle",
+        "source_text_length": 61,
+        "wrap_policy": "local review can mark wrapping intent; final wrap waits for real text and observed timing",
+        "actual_linebreaks_ready": false
+      },
+      "voiceitem_readback": {
+        "actual_yymm4_voiceitem_id": null,
+        "actual_start_sec": null,
+        "actual_end_sec": null,
+        "observation_required": "explicit_yymm4_gate"
+      }
+    },
+    {
+      "cue_id": "csv_row_5",
+      "row_number": 5,
+      "scene_id": "S3",
+      "scene_title": "Viewer watch point and production boundary",
+      "speaker": "れいむ",
+      "voice_slot_id": "voice_slot_1",
+      "operation_ids": [
+        "align_voice_subtitle",
+        "split_or_wrap_subtitle",
+        "flag_real_input_required",
+        "mark_yymm4_observation_needed"
+      ],
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-5",
+      "subtitle_text_status": "draft_sample_fixture_not_real",
+      "subtitle_wrap_contract": {
+        "operation_id": "split_or_wrap_subtitle",
+        "source_text_length": 24,
+        "wrap_policy": "local review can mark wrapping intent; final wrap waits for real text and observed timing",
+        "actual_linebreaks_ready": false
+      },
+      "voiceitem_readback": {
+        "actual_yymm4_voiceitem_id": null,
+        "actual_start_sec": null,
+        "actual_end_sec": null,
+        "observation_required": "explicit_yymm4_gate"
+      }
+    },
+    {
+      "cue_id": "csv_row_6",
+      "row_number": 6,
+      "scene_id": "S3",
+      "scene_title": "Viewer watch point and production boundary",
+      "speaker": "まりさ",
+      "voice_slot_id": "voice_slot_2",
+      "operation_ids": [
+        "align_voice_subtitle",
+        "split_or_wrap_subtitle",
+        "flag_real_input_required",
+        "mark_yymm4_observation_needed"
+      ],
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-6",
+      "subtitle_text_status": "draft_sample_fixture_not_real",
+      "subtitle_wrap_contract": {
+        "operation_id": "split_or_wrap_subtitle",
+        "source_text_length": 60,
+        "wrap_policy": "local review can mark wrapping intent; final wrap waits for real text and observed timing",
+        "actual_linebreaks_ready": false
+      },
+      "voiceitem_readback": {
+        "actual_yymm4_voiceitem_id": null,
+        "actual_start_sec": null,
+        "actual_end_sec": null,
+        "observation_required": "explicit_yymm4_gate"
+      }
+    },
+    {
+      "cue_id": "csv_row_7",
+      "row_number": 7,
+      "scene_id": "S3",
+      "scene_title": "Viewer watch point and production boundary",
+      "speaker": "まりさ",
+      "voice_slot_id": "voice_slot_2",
+      "operation_ids": [
+        "align_voice_subtitle",
+        "split_or_wrap_subtitle",
+        "flag_real_input_required",
+        "mark_yymm4_observation_needed"
+      ],
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-7",
+      "subtitle_text_status": "draft_sample_fixture_not_real",
+      "subtitle_wrap_contract": {
+        "operation_id": "split_or_wrap_subtitle",
+        "source_text_length": 73,
+        "wrap_policy": "local review can mark wrapping intent; final wrap waits for real text and observed timing",
+        "actual_linebreaks_ready": false
+      },
+      "voiceitem_readback": {
+        "actual_yymm4_voiceitem_id": null,
+        "actual_start_sec": null,
+        "actual_end_sec": null,
+        "observation_required": "explicit_yymm4_gate"
+      }
+    },
+    {
+      "cue_id": "csv_row_8",
+      "row_number": 8,
+      "scene_id": "S3",
+      "scene_title": "Viewer watch point and production boundary",
+      "speaker": "れいむ",
+      "voice_slot_id": "voice_slot_1",
+      "operation_ids": [
+        "align_voice_subtitle",
+        "split_or_wrap_subtitle",
+        "flag_real_input_required",
+        "mark_yymm4_observation_needed"
+      ],
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-8",
+      "subtitle_text_status": "draft_sample_fixture_not_real",
+      "subtitle_wrap_contract": {
+        "operation_id": "split_or_wrap_subtitle",
+        "source_text_length": 24,
+        "wrap_policy": "local review can mark wrapping intent; final wrap waits for real text and observed timing",
+        "actual_linebreaks_ready": false
+      },
+      "voiceitem_readback": {
+        "actual_yymm4_voiceitem_id": null,
+        "actual_start_sec": null,
+        "actual_end_sec": null,
+        "observation_required": "explicit_yymm4_gate"
+      }
+    },
+    {
+      "cue_id": "csv_row_9",
+      "row_number": 9,
+      "scene_id": "S3",
+      "scene_title": "Viewer watch point and production boundary",
+      "speaker": "まりさ",
+      "voice_slot_id": "voice_slot_2",
+      "operation_ids": [
+        "align_voice_subtitle",
+        "split_or_wrap_subtitle",
+        "flag_real_input_required",
+        "mark_yymm4_observation_needed"
+      ],
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-9",
+      "subtitle_text_status": "draft_sample_fixture_not_real",
+      "subtitle_wrap_contract": {
+        "operation_id": "split_or_wrap_subtitle",
+        "source_text_length": 43,
+        "wrap_policy": "local review can mark wrapping intent; final wrap waits for real text and observed timing",
+        "actual_linebreaks_ready": false
+      },
+      "voiceitem_readback": {
+        "actual_yymm4_voiceitem_id": null,
+        "actual_start_sec": null,
+        "actual_end_sec": null,
+        "observation_required": "explicit_yymm4_gate"
+      }
+    }
+  ],
+  "unknowns": [
+    "actual YMM4 VoiceItem IDs",
+    "audio-derived start/end timing",
+    "real transcript replacement text"
+  ],
+  "actual_yymm4_import": false,
+  "invented_real_content": false
+}

@@ -1,0 +1,166 @@
+{
+  "schema_version": "edit_operation_registry.v1",
+  "artifact_id": "episode_002_editing_operations_readiness_pack_v1",
+  "status": "operation_registry_ready_local_offline",
+  "operation_count": 10,
+  "required_operation_ids": [
+    "set_scene_duration",
+    "align_voice_subtitle",
+    "split_or_wrap_subtitle",
+    "assign_visual_scene_template",
+    "place_citation_overlay",
+    "transfer_thumbnail_motif",
+    "mark_yymm4_observation_needed",
+    "flag_real_input_required"
+  ],
+  "optional_operation_ids": [
+    "capture_yymm4_readback",
+    "validate_operation_pack"
+  ],
+  "operations": [
+    {
+      "operation_id": "set_scene_duration",
+      "lane": "timing",
+      "purpose": "Set provisional scene durations from the existing scene timing map.",
+      "input_artifacts": [
+        "scene_timing_map.json"
+      ],
+      "output_contract": "scene_operation_plan.scenes[].duration_contract",
+      "build_status": "buildable_locally",
+      "remaining_gates": [
+        "actual audio duration remains blocked by explicit YMM4 gate"
+      ],
+      "local_only": true
+    },
+    {
+      "operation_id": "align_voice_subtitle",
+      "lane": "voice_subtitle",
+      "purpose": "Bind each draft CSV cue to a voice slot, subtitle slot, and scene.",
+      "input_artifacts": [
+        "voice_subtitle_mapping.json",
+        "scene_timing_map.json"
+      ],
+      "output_contract": "voice_subtitle_operation_map.utterance_operations[]",
+      "build_status": "buildable_locally",
+      "remaining_gates": [
+        "actual VoiceItem ids remain blocked by explicit YMM4 gate"
+      ],
+      "local_only": true
+    },
+    {
+      "operation_id": "split_or_wrap_subtitle",
+      "lane": "voice_subtitle",
+      "purpose": "Mark subtitle wrapping responsibility before real timing observation.",
+      "input_artifacts": [
+        "voice_subtitle_mapping.json"
+      ],
+      "output_contract": "voice_subtitle_operation_map.utterance_operations[].subtitle_wrap_contract",
+      "build_status": "buildable_locally",
+      "remaining_gates": [
+        "final line breaks wait for real text and YMM4 timing"
+      ],
+      "local_only": true
+    },
+    {
+      "operation_id": "assign_visual_scene_template",
+      "lane": "visual",
+      "purpose": "Assign existing visual scene template ids to each scene.",
+      "input_artifacts": [
+        "visual_scene_template_registry.json"
+      ],
+      "output_contract": "visual_asset_slot_map.scene_visual_slots[]",
+      "build_status": "buildable_locally",
+      "remaining_gates": [
+        "production visual acceptance remains outside this package"
+      ],
+      "local_only": true
+    },
+    {
+      "operation_id": "place_citation_overlay",
+      "lane": "visual",
+      "purpose": "Reserve citation overlay slots without claiming real source approval.",
+      "input_artifacts": [
+        "citation_overlay_spec.json"
+      ],
+      "output_contract": "visual_asset_slot_map.scene_visual_slots[].citation_overlay_ids",
+      "build_status": "buildable_locally",
+      "remaining_gates": [
+        "verified local source and rights review are still required"
+      ],
+      "local_only": true
+    },
+    {
+      "operation_id": "transfer_thumbnail_motif",
+      "lane": "visual",
+      "purpose": "Transfer approved thumbnail motif contracts into scene slot language.",
+      "input_artifacts": [
+        "thumbnail_transfer_map.json"
+      ],
+      "output_contract": "visual_asset_slot_map.scene_visual_slots[].thumbnail_transfer_rule_ids",
+      "build_status": "buildable_locally",
+      "remaining_gates": [
+        "final thumbnail approval remains blocked by public/rights gate"
+      ],
+      "local_only": true
+    },
+    {
+      "operation_id": "mark_yymm4_observation_needed",
+      "lane": "yymm4_observation",
+      "purpose": "Attach future manual YMM4 readback fields without launching or importing.",
+      "input_artifacts": [
+        "yymm4_readback_schema.json"
+      ],
+      "output_contract": "scene_operation_plan.scenes[].yymm4_observation_needed",
+      "build_status": "blocked_by_explicit_yymm4_gate",
+      "remaining_gates": [
+        "YMM4 GUI launch/import/render remains closed in this package"
+      ],
+      "local_only": true
+    },
+    {
+      "operation_id": "flag_real_input_required",
+      "lane": "input_boundary",
+      "purpose": "Flag every source/text dependent slot as requiring verified local input.",
+      "input_artifacts": [
+        "real_input_intake_manifest.json",
+        "source_transcript_contract.schema.json"
+      ],
+      "output_contract": "operation_gap_ledger.groups.blocked_by_real_input",
+      "build_status": "blocked_by_real_input",
+      "remaining_gates": [
+        "no real source transcript is ingested here"
+      ],
+      "local_only": true
+    },
+    {
+      "operation_id": "capture_yymm4_readback",
+      "lane": "yymm4_observation",
+      "purpose": "Define the future readback shape an operator can fill after an explicit gate.",
+      "input_artifacts": [
+        "yymm4_readback_schema.json"
+      ],
+      "output_contract": "yymm4_readback_schema.json",
+      "build_status": "blocked_by_explicit_yymm4_gate",
+      "remaining_gates": [
+        "schema only; no actual observation is recorded"
+      ],
+      "local_only": true
+    },
+    {
+      "operation_id": "validate_operation_pack",
+      "lane": "validation",
+      "purpose": "Validate package completeness, local-only references, and closed claims.",
+      "input_artifacts": [
+        "validation_readback.json"
+      ],
+      "output_contract": "validation_readback.json",
+      "build_status": "buildable_locally",
+      "remaining_gates": [
+        "full pytest is outside the scoped validation budget"
+      ],
+      "local_only": true
+    }
+  ],
+  "actual_yymm4_import": false,
+  "invented_real_content": false
+}

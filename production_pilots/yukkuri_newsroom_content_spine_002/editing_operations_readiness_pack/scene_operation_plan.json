@@ -1,0 +1,223 @@
+{
+  "schema_version": "scene_operation_plan.v1",
+  "artifact_id": "episode_002_editing_operations_readiness_pack_v1",
+  "status": "scene_operation_plan_ready_local_offline",
+  "source_scene_timing_map": "production_pilots/yukkuri_newsroom_content_spine_002/output_template_readiness_pack/scene_timing_map.json",
+  "operation_registry": "operation_registry_ready_local_offline",
+  "scene_count": 3,
+  "scenes": [
+    {
+      "scene_id": "S1",
+      "title": "Opening hook and topic promise",
+      "arc_phase": "intro",
+      "row_range": {
+        "start": 1,
+        "end": 2
+      },
+      "cue_ids": [
+        "csv_row_1",
+        "csv_row_2"
+      ],
+      "duration_contract": {
+        "operation_id": "set_scene_duration",
+        "provisional_start_sec": 0,
+        "provisional_end_sec": 8,
+        "provisional_duration_sec": 8,
+        "actual_timing_ready": false
+      },
+      "voice_subtitle_contract": {
+        "operation_ids": [
+          "align_voice_subtitle",
+          "split_or_wrap_subtitle"
+        ],
+        "cue_count": 2,
+        "source_status": "voice_subtitle_template_ready_no_yymm4_voiceitems",
+        "actual_voiceitems_ready": false
+      },
+      "visual_contract": {
+        "operation_ids": [
+          "assign_visual_scene_template",
+          "place_citation_overlay",
+          "transfer_thumbnail_motif"
+        ],
+        "primary_template_id": "intro_status",
+        "supporting_template_ids": [],
+        "citation_overlay_ids": [
+          "s1_source_note"
+        ],
+        "thumbnail_transfer_rule_ids": [
+          "headline_to_opening_frame",
+          "proof_stack_to_boundary_strip",
+          "palette_to_template_tokens"
+        ],
+        "external_media_allowed": false
+      },
+      "gate_contracts": [
+        {
+          "operation_id": "flag_real_input_required",
+          "reason": "source, transcript, citation text, and final wording need verified local input",
+          "status": "blocked_by_real_input"
+        },
+        {
+          "operation_id": "mark_yymm4_observation_needed",
+          "reason": "actual VoiceItem ids and timing require future manual YMM4 readback",
+          "status": "blocked_by_explicit_yymm4_gate"
+        }
+      ],
+      "operation_ids": [
+        "set_scene_duration",
+        "align_voice_subtitle",
+        "split_or_wrap_subtitle",
+        "assign_visual_scene_template",
+        "place_citation_overlay",
+        "transfer_thumbnail_motif",
+        "flag_real_input_required",
+        "mark_yymm4_observation_needed"
+      ]
+    },
+    {
+      "scene_id": "S2",
+      "title": "Main explanation: Factory seed dry-run placeholder for a second yukkuri newsroom episode",
+      "arc_phase": "develop",
+      "row_range": {
+        "start": 3,
+        "end": 4
+      },
+      "cue_ids": [
+        "csv_row_3",
+        "csv_row_4"
+      ],
+      "duration_contract": {
+        "operation_id": "set_scene_duration",
+        "provisional_start_sec": 8,
+        "provisional_end_sec": 16,
+        "provisional_duration_sec": 8,
+        "actual_timing_ready": false
+      },
+      "voice_subtitle_contract": {
+        "operation_ids": [
+          "align_voice_subtitle",
+          "split_or_wrap_subtitle"
+        ],
+        "cue_count": 2,
+        "source_status": "voice_subtitle_template_ready_no_yymm4_voiceitems",
+        "actual_voiceitems_ready": false
+      },
+      "visual_contract": {
+        "operation_ids": [
+          "assign_visual_scene_template",
+          "place_citation_overlay",
+          "transfer_thumbnail_motif"
+        ],
+        "primary_template_id": "topic_explanation",
+        "supporting_template_ids": [
+          "evidence_source"
+        ],
+        "citation_overlay_ids": [
+          "s2_source_note"
+        ],
+        "thumbnail_transfer_rule_ids": [
+          "palette_to_template_tokens"
+        ],
+        "external_media_allowed": false
+      },
+      "gate_contracts": [
+        {
+          "operation_id": "flag_real_input_required",
+          "reason": "source, transcript, citation text, and final wording need verified local input",
+          "status": "blocked_by_real_input"
+        },
+        {
+          "operation_id": "mark_yymm4_observation_needed",
+          "reason": "actual VoiceItem ids and timing require future manual YMM4 readback",
+          "status": "blocked_by_explicit_yymm4_gate"
+        }
+      ],
+      "operation_ids": [
+        "set_scene_duration",
+        "align_voice_subtitle",
+        "split_or_wrap_subtitle",
+        "assign_visual_scene_template",
+        "place_citation_overlay",
+        "transfer_thumbnail_motif",
+        "flag_real_input_required",
+        "mark_yymm4_observation_needed"
+      ]
+    },
+    {
+      "scene_id": "S3",
+      "title": "Viewer watch point and production boundary",
+      "arc_phase": "closing",
+      "row_range": {
+        "start": 5,
+        "end": 9
+      },
+      "cue_ids": [
+        "csv_row_5",
+        "csv_row_6",
+        "csv_row_7",
+        "csv_row_8",
+        "csv_row_9"
+      ],
+      "duration_contract": {
+        "operation_id": "set_scene_duration",
+        "provisional_start_sec": 16,
+        "provisional_end_sec": 36,
+        "provisional_duration_sec": 20,
+        "actual_timing_ready": false
+      },
+      "voice_subtitle_contract": {
+        "operation_ids": [
+          "align_voice_subtitle",
+          "split_or_wrap_subtitle"
+        ],
+        "cue_count": 5,
+        "source_status": "voice_subtitle_template_ready_no_yymm4_voiceitems",
+        "actual_voiceitems_ready": false
+      },
+      "visual_contract": {
+        "operation_ids": [
+          "assign_visual_scene_template",
+          "place_citation_overlay",
+          "transfer_thumbnail_motif"
+        ],
+        "primary_template_id": "summary_transition",
+        "supporting_template_ids": [
+          "evidence_source"
+        ],
+        "citation_overlay_ids": [
+          "s3_source_note"
+        ],
+        "thumbnail_transfer_rule_ids": [
+          "proof_stack_to_boundary_strip",
+          "palette_to_template_tokens"
+        ],
+        "external_media_allowed": false
+      },
+      "gate_contracts": [
+        {
+          "operation_id": "flag_real_input_required",
+          "reason": "source, transcript, citation text, and final wording need verified local input",
+          "status": "blocked_by_real_input"
+        },
+        {
+          "operation_id": "mark_yymm4_observation_needed",
+          "reason": "actual VoiceItem ids and timing require future manual YMM4 readback",
+          "status": "blocked_by_explicit_yymm4_gate"
+        }
+      ],
+      "operation_ids": [
+        "set_scene_duration",
+        "align_voice_subtitle",
+        "split_or_wrap_subtitle",
+        "assign_visual_scene_template",
+        "place_citation_overlay",
+        "transfer_thumbnail_motif",
+        "flag_real_input_required",
+        "mark_yymm4_observation_needed"
+      ]
+    }
+  ],
+  "actual_yymm4_import": false,
+  "invented_real_content": false
+}

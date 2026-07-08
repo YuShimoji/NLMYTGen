@@ -1,0 +1,113 @@
+{
+  "schema_version": "yymm4_readback_schema.v1",
+  "artifact_id": "episode_002_editing_operations_readiness_pack_v1",
+  "status": "schema_ready_no_actual_import",
+  "protocol": "future manual observation only",
+  "actual_yymm4_import": false,
+  "yymm4_rendered": false,
+  "production_ready": false,
+  "scene_ids": [
+    "S1",
+    "S2",
+    "S3"
+  ],
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "observation_session_id",
+      "operator",
+      "observed_at_local_time",
+      "explicit_yymm4_gate_confirmed",
+      "project_file_path",
+      "csv_import_observed",
+      "render_attempted",
+      "scene_readbacks",
+      "notes"
+    ],
+    "properties": {
+      "observation_session_id": {
+        "type": "string"
+      },
+      "operator": {
+        "type": "string"
+      },
+      "observed_at_local_time": {
+        "type": "string"
+      },
+      "explicit_yymm4_gate_confirmed": {
+        "type": "boolean"
+      },
+      "project_file_path": {
+        "type": "string"
+      },
+      "csv_import_observed": {
+        "type": "boolean"
+      },
+      "render_attempted": {
+        "type": "boolean"
+      },
+      "scene_readbacks": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scene_id",
+            "voiceitems",
+            "subtitle_items",
+            "observed_start_sec",
+            "observed_end_sec",
+            "issues"
+          ],
+          "properties": {
+            "scene_id": {
+              "type": "string",
+              "enum": [
+                "S1",
+                "S2",
+                "S3"
+              ]
+            },
+            "voiceitems": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "subtitle_items": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "observed_start_sec": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "observed_end_sec": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "issues": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "notes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
