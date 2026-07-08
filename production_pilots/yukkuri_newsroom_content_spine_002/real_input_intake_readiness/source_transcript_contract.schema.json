@@ -1,0 +1,84 @@
+{
+  "schema_version": "source_transcript_contract.schema.v1",
+  "title": "Episode 002 Local Source and Transcript Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "local_file_path",
+    "source_title",
+    "source_type",
+    "capture_date",
+    "provenance_note",
+    "rights_usage_note",
+    "transcript_language",
+    "transcript_format",
+    "segment_timestamps",
+    "trust_verification_notes"
+  ],
+  "properties": {
+    "local_file_path": {
+      "type": "string",
+      "description": "Repo-relative or absolute local path supplied by the user."
+    },
+    "source_title": {
+      "type": "string",
+      "description": "Human-readable source title."
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "article",
+        "paper",
+        "video",
+        "audio",
+        "document",
+        "notes",
+        "other"
+      ]
+    },
+    "capture_date": {
+      "type": "string",
+      "description": "Date the local source/transcript was captured or exported."
+    },
+    "provenance_note": {
+      "type": "string",
+      "description": "How the local file was obtained and why it is trusted."
+    },
+    "rights_usage_note": {
+      "type": "string",
+      "description": "Usage note for review only; not legal acceptance."
+    },
+    "transcript_language": {
+      "type": "string",
+      "description": "Language tag or plain language name."
+    },
+    "transcript_format": {
+      "type": "string",
+      "enum": [
+        "plain_text",
+        "speaker_labeled_text",
+        "csv_two_column",
+        "json_segments",
+        "other"
+      ]
+    },
+    "segment_timestamps": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "trust_verification_notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "boundary": {
+    "template_only": true,
+    "no_live_fetch": true,
+    "no_rights_acceptance": true,
+    "no_real_content_embedded": true
+  }
+}

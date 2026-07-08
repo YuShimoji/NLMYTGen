@@ -1,0 +1,21 @@
+{
+  "schema_version": "local_source_manifest_template.v1",
+  "template_status": "placeholder_only_not_verified",
+  "source": {
+    "local_file_path": "<required-local-path-inside-real_input-dropzone>",
+    "source_title": "<required-source-title>",
+    "source_type": "<article|paper|video|audio|document|notes|other>",
+    "capture_date": "<YYYY-MM-DD-or-local-export-date>",
+    "provenance_note": "<how-this-local-file-was-obtained>",
+    "rights_usage_note": "<review-only-usage-note-not-legal-acceptance>",
+    "trust_verification_notes": [
+      "<required-verification-note>"
+    ]
+  },
+  "episode_linkage": {
+    "target_episode": "episode_002",
+    "current_status": "sample_fixture_not_real",
+    "replacement_execution": "not_run"
+  },
+  "invented_real_content": false
+}

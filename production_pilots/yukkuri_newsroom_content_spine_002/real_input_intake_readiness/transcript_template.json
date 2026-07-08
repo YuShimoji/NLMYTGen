@@ -1,0 +1,23 @@
+{
+  "schema_version": "transcript_template.v1",
+  "template_status": "placeholder_only_no_real_transcript",
+  "transcript": {
+    "local_file_path": "<required-local-transcript-path-inside-real_input-dropzone>",
+    "transcript_language": "<required-language>",
+    "transcript_format": "<plain_text|speaker_labeled_text|csv_two_column|json_segments|other>",
+    "segment_timestamps": [
+      {
+        "segment_id": "<segment-id>",
+        "start_time": "<optional-start-time>",
+        "end_time": "<optional-end-time>",
+        "speaker": "<optional-speaker-label>",
+        "text": "<transcript-text-placeholder>"
+      }
+    ],
+    "trust_verification_notes": [
+      "<required-note-confirming-this-is-user-provided-local-material>"
+    ],
+    "actual_segments_present": false,
+    "invented_real_content": false
+  }
+}

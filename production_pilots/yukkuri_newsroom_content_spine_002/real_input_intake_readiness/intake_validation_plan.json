@@ -1,0 +1,25 @@
+{
+  "schema_version": "intake_validation_plan.v1",
+  "status": "ready_to_validate_future_local_files",
+  "invented_real_content": false,
+  "rights_acceptance_claimed": false,
+  "checks": [
+    "source_manifest_json_loads",
+    "all_required_contract_fields_present",
+    "local_file_paths_exist_when_user_supplies_files",
+    "transcript_format_declared",
+    "segment_timestamps_declared_or_explicitly_not_available",
+    "provenance_note_present",
+    "rights_usage_note_present_without_public_ready_claim",
+    "trust_verification_notes_present",
+    "no_live_fetch_or_external_media_download",
+    "output_template_readiness_pack_link_available"
+  ],
+  "future_failures_to_block_replacement": [
+    "missing local source file",
+    "missing transcript file",
+    "rights note claims public-ready approval without human gate",
+    "transcript cannot be parsed into supported format",
+    "provenance note absent"
+  ]
+}

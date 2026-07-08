@@ -1,0 +1,16 @@
+{
+  "schema_version": "provenance_receipt_template.v1",
+  "receipt_status": "template_only_not_verified",
+  "provenance_receipt": {
+    "source_manifest_path": "<local-source-manifest-path>",
+    "transcript_path": "<local-transcript-path>",
+    "captured_by": "<user-or-local-process-name>",
+    "capture_date": "<YYYY-MM-DD>",
+    "hash_or_size_note": "<optional-local-file-size-or-hash-note>",
+    "reviewer_verification_note": "<what-the-reviewer-checked>",
+    "rights_usage_note": "<review-only-note-not-public-ready-approval>",
+    "public_ready_acceptance": false,
+    "legal_acceptance": false
+  },
+  "invented_real_content": false
+}

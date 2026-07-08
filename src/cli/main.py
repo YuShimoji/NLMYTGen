@@ -41,6 +41,7 @@ Usage:
     python -m src.cli.main build-japanese-graphic-review-console --package production_pilots/pkg [--current-console-dir DIR] [--second-pass-dir DIR] [--guided-flow-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--lane-map-path PATH] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
     python -m src.cli.main build-output-video-layer-proof --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-output-template-readiness-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
+    python -m src.cli.main build-real-input-intake-readiness-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
@@ -2924,6 +2925,27 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_real_input_intake_readiness_pack = subparsers.add_parser(
+        "build-real-input-intake-readiness-pack",
+        help="Build the episode 002 real input intake readiness package",
+    )
+    p_real_input_intake_readiness_pack.add_argument("--package", required=True, help="Episode package directory")
+    p_real_input_intake_readiness_pack.add_argument(
+        "--output",
+        help="Output directory (default: <package>/real_input_intake_readiness)",
+    )
+    p_real_input_intake_readiness_pack.add_argument(
+        "--artifact-id",
+        default="episode_002_real_input_intake_readiness_pack_v1",
+        help="Real input intake readiness artifact id",
+    )
+    p_real_input_intake_readiness_pack.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -3070,6 +3092,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_output_video_layer_proof(args)
         elif args.command == "build-output-template-readiness-pack":
             return _cmd_build_output_template_readiness_pack(args)
+        elif args.command == "build-real-input-intake-readiness-pack":
+            return _cmd_build_real_input_intake_readiness_pack(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -5531,6 +5555,42 @@ def _cmd_build_output_template_readiness_pack(args: argparse.Namespace) -> int:
         print(f"blocked_by_yymm4_gate_count: {readback.get('blocked_by_yymm4_gate_count')}")
         print(f"blocked_by_public_rights_count: {readback.get('blocked_by_public_rights_count')}")
         print(f"gui_lane_files_touched: {readback.get('gui_lane_files_touched')}")
+        print(f"shared_docs_touched: {readback.get('shared_docs_touched')}")
+        print(f"full_pytest_run: {readback.get('full_pytest_run')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"launcher_or_open_command: {readback.get('launcher_or_open_command')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_real_input_intake_readiness_pack(args: argparse.Namespace) -> int:
+    """Build the episode 002 real input intake readiness package."""
+    from src.pipeline.real_input_intake_readiness_pack import (
+        build_real_input_intake_readiness_pack,
+    )
+
+    readback = build_real_input_intake_readiness_pack(
+        package_dir=getattr(args, "package"),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"primary_review_file: {readback.get('primary_review_file')}")
+        print(f"input_contract_status: {readback.get('input_contract_status')}")
+        print(f"transcript_template_status: {readback.get('transcript_template_status')}")
+        print(f"provenance_template_status: {readback.get('provenance_template_status')}")
+        print(f"dropzone_status: {readback.get('dropzone_status')}")
+        print(f"replacement_plan_status: {readback.get('replacement_plan_status')}")
+        print(f"invented_real_content: {readback.get('invented_real_content')}")
+        print(f"rights_acceptance_claimed: {readback.get('rights_acceptance_claimed')}")
+        print(f"gui_lane_files_touched: {readback.get('gui_lane_files_touched')}")
+        print(f"output_template_files_touched: {readback.get('output_template_files_touched')}")
+        print(f"thread_registry_updated: {readback.get('thread_registry_updated')}")
         print(f"shared_docs_touched: {readback.get('shared_docs_touched')}")
         print(f"full_pytest_run: {readback.get('full_pytest_run')}")
         print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")

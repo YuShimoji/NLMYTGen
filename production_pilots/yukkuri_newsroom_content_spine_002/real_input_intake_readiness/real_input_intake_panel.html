@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ja" data-real-input-intake="true" data-artifact-kind="episode-real-input-intake-readiness-pack">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Episode 002 Real Input Intake</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+      --bg: #101316;
+      --surface: #172027;
+      --stage: #111a21;
+      --panel: #202734;
+      --line: #66717c;
+      --text: #f4efe4;
+      --muted: #c8c0b1;
+      --green: #9ee8bc;
+      --teal: #73dfcf;
+      --blue: #91bbff;
+      --amber: #f1cf6a;
+      --rose: #f0a1aa;
+      --shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #eef2ef;
+        --surface: #e4ebe6;
+        --stage: #f6f0e4;
+        --panel: #e8e6dc;
+        --line: #aeb8b2;
+        --text: #1d231f;
+        --muted: #5d665f;
+        --green: #047857;
+        --teal: #0f766e;
+        --blue: #1d4ed8;
+        --amber: #8a5a00;
+        --rose: #9b1c1c;
+        --shadow: 0 16px 32px rgba(29, 35, 31, 0.12);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+    .wrap {
+      width: min(1380px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 16px 0 34px;
+    }
+    .topline {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 0 14px;
+    }
+    .identity, .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .episode { font-size: 1.06rem; font-weight: 780; }
+    .badge, .gate {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      color: var(--teal);
+      font-size: 0.76rem;
+      font-weight: 720;
+      white-space: nowrap;
+    }
+    .gate { color: var(--rose); }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: clamp(1.45rem, 2.4vw, 2.25rem); line-height: 1.08; letter-spacing: 0; }
+    h2 { font-size: 1rem; letter-spacing: 0; }
+    h3 { font-size: 0.82rem; color: var(--muted); letter-spacing: 0; }
+    p, span { line-height: 1.4; }
+    p { color: var(--muted); }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.34fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+    .board, .side, .lane {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      background: var(--surface);
+    }
+    .board {
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+    .side {
+      padding: 16px;
+      background: var(--panel);
+      display: grid;
+      align-content: start;
+      gap: 12px;
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .flow-node, .contract-node, .check-item, .step-node {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--stage);
+      padding: 10px;
+      min-width: 0;
+    }
+    .flow-node strong, .contract-node strong, .step-node strong {
+      display: block;
+      color: var(--text);
+    }
+    .lanes {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .lane {
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+    .contract-map {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .check-list, .steps {
+      display: grid;
+      gap: 8px;
+    }
+    code { color: var(--blue); overflow-wrap: anywhere; font-size: 0.84rem; }
+    @media (max-width: 1120px) {
+      .topline, .hero, .lanes, .flow, .contract-map { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="topline" data-region="header">
+      <div class="identity">
+        <span class="episode">Episode 002</span>
+        <span class="badge">Input / API Hub</span>
+        <span class="badge">実入力受け入れ準備</span>
+        <span class="badge">local only</span>
+      </div>
+      <div class="badges" aria-label="closed gates">
+        <span class="gate">no live fetch</span>
+        <span class="gate">no real ingest</span>
+        <span class="gate">no YMM4</span>
+        <span class="gate">no public approval</span>
+      </div>
+    </header>
+    <section class="hero">
+      <section class="board">
+        <div>
+          <h1>実入力を受け取るための準備パネル</h1>
+          <p>今は sample_fixture のままです。次にユーザーがローカルのソースと文字起こしを置けるよう、契約・置き場・来歴・置換手順だけを用意します。</p>
+        </div>
+        <div class="flow" data-region="intake-checklist" aria-label="intake flow">
+          <article class="flow-node"><strong>1. local source</strong><p>source manifest とファイルパスを用意</p></article>
+          <article class="flow-node"><strong>2. transcript</strong><p>言語、形式、timestamp 有無を明記</p></article>
+          <article class="flow-node"><strong>3. provenance</strong><p>取得経路と確認メモを receipt に記録</p></article>
+          <article class="flow-node"><strong>4. replacement</strong><p>output template slots へ後で接続</p></article>
+        </div>
+      </section>
+      <aside class="side">
+        <span class="badge">current state</span>
+        <p>current_transcript_status: sample_fixture_not_real</p>
+        <p>output_template_status: output_template_readiness_ready_local_offline</p>
+        <p>実ファイルの検証と episode 置換は、ユーザー提供ファイルが入ってからです。</p>
+      </aside>
+    </section>
+    <section class="lanes">
+      <section class="lane" data-region="contract-map">
+        <h2>契約フィールド</h2>
+        <div class="contract-map">
+          <article class="contract-node"><strong>local_file_path</strong><p>ローカルファイルの場所</p></article>
+<article class="contract-node"><strong>source_title</strong><p>ソース名</p></article>
+<article class="contract-node"><strong>source_type</strong><p>種別</p></article>
+<article class="contract-node"><strong>capture_date</strong><p>取得日</p></article>
+<article class="contract-node"><strong>provenance_note</strong><p>来歴メモ</p></article>
+<article class="contract-node"><strong>rights_usage_note</strong><p>利用メモ</p></article>
+<article class="contract-node"><strong>transcript_language</strong><p>文字起こし言語</p></article>
+<article class="contract-node"><strong>transcript_format</strong><p>形式</p></article>
+<article class="contract-node"><strong>segment_timestamps</strong><p>時刻情報</p></article>
+<article class="contract-node"><strong>trust_verification_notes</strong><p>確認メモ</p></article>
+        </div>
+      </section>
+      <section class="lane" data-region="provenance-flow">
+        <h2>来歴確認</h2>
+        <div class="check-list"><div class="check-item"><strong>source_manifest_json_loads</strong><p>future validation check</p></div>
+<div class="check-item"><strong>all_required_contract_fields_present</strong><p>future validation check</p></div>
+<div class="check-item"><strong>local_file_paths_exist_when_user_supplies_files</strong><p>future validation check</p></div>
+<div class="check-item"><strong>transcript_format_declared</strong><p>future validation check</p></div>
+<div class="check-item"><strong>segment_timestamps_declared_or_explicitly_not_available</strong><p>future validation check</p></div>
+<div class="check-item"><strong>provenance_note_present</strong><p>future validation check</p></div>
+<div class="check-item"><strong>rights_usage_note_present_without_public_ready_claim</strong><p>future validation check</p></div>
+<div class="check-item"><strong>trust_verification_notes_present</strong><p>future validation check</p></div></div>
+      </section>
+      <section class="lane" data-region="replacement-strip">
+        <h2>置換への接続</h2>
+        <div class="steps"><article class="step-node"><strong>1</strong><p>Validate local source manifest and transcript against source_transcript_contract.schema.json.</p></article>
+<article class="step-node"><strong>2</strong><p>Generate real-input replacement draft artifacts from validated local files.</p></article>
+<article class="step-node"><strong>3</strong><p>Reconnect replacement output to output_template_readiness_pack timing, voice, scene, overlay, and thumbnail transfer slots.</p></article>
+<article class="step-node"><strong>4</strong><p>Review readback before any YMM4 observation gate.</p></article></div>
+      </section>
+      <section class="lane">
+        <h2>次に置くもの</h2>
+        <p><code>real_input/source/</code> にソース、<code>real_input/transcript/</code> に文字起こし、<code>real_input/manifests/</code> に manifest と receipt を置く想定です。</p>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
