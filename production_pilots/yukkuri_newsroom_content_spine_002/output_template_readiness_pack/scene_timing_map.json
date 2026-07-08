@@ -1,0 +1,104 @@
+{
+  "schema_version": "scene_timing_map.v1",
+  "artifact_id": "episode_002_output_template_readiness_pack_v1",
+  "status": "template_ready_estimated_no_audio_or_yymm4_timing",
+  "source_scene_timeline": "production_pilots/yukkuri_newsroom_content_spine_002/output_video_layer_proof/scene_timeline.json",
+  "draft_csv_used": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+  "scene_count": 3,
+  "csv_row_count": 9,
+  "timing_model": "provisional_scene_template_timing_from_rows",
+  "total_provisional_duration_sec": 36,
+  "actual_audio_timing_status": "not_available_until_yymm4_observation",
+  "scenes": [
+    {
+      "scene_id": "S1",
+      "title": "Opening hook and topic promise",
+      "arc_phase": "intro",
+      "row_start": 1,
+      "row_end": 2,
+      "cue_ids": [
+        "csv_row_1",
+        "csv_row_2"
+      ],
+      "transcript_csv_rows": [
+        "csv_row_1",
+        "csv_row_2"
+      ],
+      "provisional_start_sec": 0,
+      "provisional_end_sec": 8,
+      "provisional_duration_sec": 8,
+      "duration_source": "output_video_layer_proof.scene_timeline.estimated_duration_sec",
+      "timing_readback_template": {
+        "future_yymm4_voiceitem_start_sec": null,
+        "future_yymm4_voiceitem_end_sec": null,
+        "future_audio_duration_sec": null,
+        "observation_required": "explicit_yymm4_gate"
+      },
+      "template_ready": true,
+      "actual_timing_ready": false,
+      "status": "closed_for_local_template_readiness"
+    },
+    {
+      "scene_id": "S2",
+      "title": "Main explanation: Factory seed dry-run placeholder for a second yukkuri newsroom episode",
+      "arc_phase": "develop",
+      "row_start": 3,
+      "row_end": 4,
+      "cue_ids": [
+        "csv_row_3",
+        "csv_row_4"
+      ],
+      "transcript_csv_rows": [
+        "csv_row_3",
+        "csv_row_4"
+      ],
+      "provisional_start_sec": 8,
+      "provisional_end_sec": 16,
+      "provisional_duration_sec": 8,
+      "duration_source": "output_video_layer_proof.scene_timeline.estimated_duration_sec",
+      "timing_readback_template": {
+        "future_yymm4_voiceitem_start_sec": null,
+        "future_yymm4_voiceitem_end_sec": null,
+        "future_audio_duration_sec": null,
+        "observation_required": "explicit_yymm4_gate"
+      },
+      "template_ready": true,
+      "actual_timing_ready": false,
+      "status": "closed_for_local_template_readiness"
+    },
+    {
+      "scene_id": "S3",
+      "title": "Viewer watch point and production boundary",
+      "arc_phase": "closing",
+      "row_start": 5,
+      "row_end": 9,
+      "cue_ids": [
+        "csv_row_5",
+        "csv_row_6",
+        "csv_row_7",
+        "csv_row_8",
+        "csv_row_9"
+      ],
+      "transcript_csv_rows": [
+        "csv_row_5",
+        "csv_row_6",
+        "csv_row_7",
+        "csv_row_8",
+        "csv_row_9"
+      ],
+      "provisional_start_sec": 16,
+      "provisional_end_sec": 36,
+      "provisional_duration_sec": 20,
+      "duration_source": "output_video_layer_proof.scene_timeline.estimated_duration_sec",
+      "timing_readback_template": {
+        "future_yymm4_voiceitem_start_sec": null,
+        "future_yymm4_voiceitem_end_sec": null,
+        "future_audio_duration_sec": null,
+        "observation_required": "explicit_yymm4_gate"
+      },
+      "template_ready": true,
+      "actual_timing_ready": false,
+      "status": "closed_for_local_template_readiness"
+    }
+  ]
+}

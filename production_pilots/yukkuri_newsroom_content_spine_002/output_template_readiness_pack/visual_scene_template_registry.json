@@ -1,0 +1,130 @@
+{
+  "schema_version": "visual_scene_template_registry.v1",
+  "artifact_id": "episode_002_output_template_readiness_pack_v1",
+  "status": "visual_scene_templates_ready_local_offline",
+  "template_type_count": 5,
+  "template_types": [
+    {
+      "template_id": "intro_status",
+      "label": "Intro status",
+      "applicable_arc_phases": [
+        "intro"
+      ],
+      "purpose": "Opening hook, title promise, dry-run status badges",
+      "default_bg": "studio_blue",
+      "lanes": [
+        "scene_frame",
+        "speaker_slots",
+        "subtitle_band",
+        "overlay_slot"
+      ],
+      "ready_to_apply_local_template": true,
+      "requires_external_media": false,
+      "requires_yymm4_gate": false
+    },
+    {
+      "template_id": "topic_explanation",
+      "label": "Topic explanation",
+      "applicable_arc_phases": [
+        "develop"
+      ],
+      "purpose": "Two-column explanation surface with subtitle rail",
+      "default_bg": "diagram",
+      "lanes": [
+        "scene_frame",
+        "speaker_slots",
+        "subtitle_band",
+        "overlay_slot"
+      ],
+      "ready_to_apply_local_template": true,
+      "requires_external_media": false,
+      "requires_yymm4_gate": false
+    },
+    {
+      "template_id": "evidence_source",
+      "label": "Evidence/source",
+      "applicable_arc_phases": [
+        "develop",
+        "closing"
+      ],
+      "purpose": "Source note shelf and citation overlay placeholders",
+      "default_bg": "dark_board",
+      "lanes": [
+        "scene_frame",
+        "speaker_slots",
+        "subtitle_band",
+        "overlay_slot"
+      ],
+      "ready_to_apply_local_template": true,
+      "requires_external_media": false,
+      "requires_yymm4_gate": false
+    },
+    {
+      "template_id": "summary_transition",
+      "label": "Summary transition",
+      "applicable_arc_phases": [
+        "closing"
+      ],
+      "purpose": "Boundary recap and next-material strip",
+      "default_bg": "dark_board",
+      "lanes": [
+        "scene_frame",
+        "speaker_slots",
+        "subtitle_band",
+        "overlay_slot"
+      ],
+      "ready_to_apply_local_template": true,
+      "requires_external_media": false,
+      "requires_yymm4_gate": false
+    },
+    {
+      "template_id": "call_to_action",
+      "label": "Call to action",
+      "applicable_arc_phases": [
+        "closing"
+      ],
+      "purpose": "Verified input preparation card without public upload claim",
+      "default_bg": "dark_board",
+      "lanes": [
+        "scene_frame",
+        "speaker_slots",
+        "subtitle_band",
+        "overlay_slot"
+      ],
+      "ready_to_apply_local_template": true,
+      "requires_external_media": false,
+      "requires_yymm4_gate": false
+    }
+  ],
+  "scene_assignments": [
+    {
+      "scene_id": "S1",
+      "arc_phase": "intro",
+      "primary_template_id": "intro_status",
+      "supporting_template_ids": [],
+      "template_status": "local_template_ready",
+      "requires_external_media": false
+    },
+    {
+      "scene_id": "S2",
+      "arc_phase": "develop",
+      "primary_template_id": "topic_explanation",
+      "supporting_template_ids": [
+        "evidence_source"
+      ],
+      "template_status": "local_template_ready",
+      "requires_external_media": false
+    },
+    {
+      "scene_id": "S3",
+      "arc_phase": "closing",
+      "primary_template_id": "summary_transition",
+      "supporting_template_ids": [
+        "evidence_source"
+      ],
+      "template_status": "local_template_ready",
+      "requires_external_media": false
+    }
+  ],
+  "closed_gate_policy": "Templates prepare composition only; no YMM4 import, render, production .ymmp, or public asset approval."
+}

@@ -40,6 +40,7 @@ Usage:
     python -m src.cli.main build-primary-artifact-review-console --package production_pilots/pkg [--current-console-dir DIR] [--second-pass-dir DIR] [--guided-flow-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
     python -m src.cli.main build-japanese-graphic-review-console --package production_pilots/pkg [--current-console-dir DIR] [--second-pass-dir DIR] [--guided-flow-dir DIR] [--cockpit-dir DIR] [--reviewer-packet-dir DIR] [--lane-map-path PATH] [--output DIR] [--artifact-id ID] [--explicit-yymm4-observation] [--format text|json]
     python -m src.cli.main build-output-video-layer-proof --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
+    python -m src.cli.main build-output-template-readiness-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
@@ -2902,6 +2903,27 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_output_template_readiness_pack = subparsers.add_parser(
+        "build-output-template-readiness-pack",
+        help="Build the episode 002 output template readiness package",
+    )
+    p_output_template_readiness_pack.add_argument("--package", required=True, help="Episode package directory")
+    p_output_template_readiness_pack.add_argument(
+        "--output",
+        help="Output directory (default: <package>/output_template_readiness_pack)",
+    )
+    p_output_template_readiness_pack.add_argument(
+        "--artifact-id",
+        default="episode_002_output_template_readiness_pack_v1",
+        help="Output template readiness artifact id",
+    )
+    p_output_template_readiness_pack.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -3046,6 +3068,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_japanese_graphic_review_console(args)
         elif args.command == "build-output-video-layer-proof":
             return _cmd_build_output_video_layer_proof(args)
+        elif args.command == "build-output-template-readiness-pack":
+            return _cmd_build_output_template_readiness_pack(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -5464,6 +5488,45 @@ def _cmd_build_output_video_layer_proof(args: argparse.Namespace) -> int:
         print(f"yymm4_status: {readback.get('yymm4_status')}")
         print(f"missing_feature_count: {readback.get('missing_feature_count')}")
         print(f"buildable_local_count: {readback.get('buildable_local_count')}")
+        print(f"blocked_by_real_input_count: {readback.get('blocked_by_real_input_count')}")
+        print(f"blocked_by_yymm4_gate_count: {readback.get('blocked_by_yymm4_gate_count')}")
+        print(f"blocked_by_public_rights_count: {readback.get('blocked_by_public_rights_count')}")
+        print(f"gui_lane_files_touched: {readback.get('gui_lane_files_touched')}")
+        print(f"shared_docs_touched: {readback.get('shared_docs_touched')}")
+        print(f"full_pytest_run: {readback.get('full_pytest_run')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"launcher_or_open_command: {readback.get('launcher_or_open_command')}")
+        print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_output_template_readiness_pack(args: argparse.Namespace) -> int:
+    """Build the episode 002 output template readiness package."""
+    from src.pipeline.output_template_readiness_pack import (
+        build_output_template_readiness_pack,
+    )
+
+    readback = build_output_template_readiness_pack(
+        package_dir=getattr(args, "package"),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"primary_review_file: {readback.get('primary_review_file')}")
+        print(f"scene_count: {readback.get('scene_count')}")
+        print(f"timing_map_status: {readback.get('timing_map_status')}")
+        print(f"voice_mapping_status: {readback.get('voice_mapping_status')}")
+        print(f"visual_template_count: {readback.get('visual_template_count')}")
+        print(f"citation_overlay_status: {readback.get('citation_overlay_status')}")
+        print(f"thumbnail_transfer_status: {readback.get('thumbnail_transfer_status')}")
+        print(f"previous_buildable_gap_count: {readback.get('previous_buildable_gap_count')}")
+        print(f"buildable_gap_closed_count: {readback.get('buildable_gap_closed_count')}")
+        print(f"buildable_gap_partial_count: {readback.get('buildable_gap_partial_count')}")
         print(f"blocked_by_real_input_count: {readback.get('blocked_by_real_input_count')}")
         print(f"blocked_by_yymm4_gate_count: {readback.get('blocked_by_yymm4_gate_count')}")
         print(f"blocked_by_public_rights_count: {readback.get('blocked_by_public_rights_count')}")

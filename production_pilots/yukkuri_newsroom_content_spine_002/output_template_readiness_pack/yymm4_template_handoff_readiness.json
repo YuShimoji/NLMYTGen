@@ -1,0 +1,32 @@
+{
+  "schema_version": "yymm4_template_handoff_readiness.v1",
+  "artifact_id": "episode_002_output_template_readiness_pack_v1",
+  "status": "ready_for_later_import_observation_templates_only",
+  "ready_for_later_import_observation": [
+    "scene timing map with cue IDs",
+    "voice/subtitle row mapping",
+    "visual scene template assignments",
+    "citation/source overlay slots",
+    "thumbnail-to-frame transfer rules"
+  ],
+  "requires_yymm4_gate": [
+    "actual CSV import observation",
+    "VoiceItem timing readback",
+    "render smoke",
+    "production .ymmp generation"
+  ],
+  "requires_real_input": [
+    "verified source/transcript replacement",
+    "real source rights context"
+  ],
+  "actual_yymm4_import": false,
+  "yymm4_rendered": false,
+  "production_ready": false,
+  "public_ready": false,
+  "scene_count": 3,
+  "voice_mapping_rows": 9,
+  "visual_template_count": 5,
+  "overlay_slot_count": 3,
+  "thumbnail_transfer_status": "thumbnail_context_transfer_ready_not_final_approval",
+  "gate_policy": "YMM4 GUI launch, import, render, and production .ymmp creation remain closed."
+}

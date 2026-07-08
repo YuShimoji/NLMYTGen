@@ -1,0 +1,117 @@
+{
+  "schema_version": "template_gap_closure_readback.v1",
+  "artifact_id": "episode_002_output_template_readiness_pack_v1",
+  "source_gap_ledger": "production_pilots/yukkuri_newsroom_content_spine_002/output_video_layer_proof/output_gap_ledger.json",
+  "previous_buildable_gap_count": 5,
+  "buildable_gap_closed_count": 5,
+  "buildable_gap_partial_count": 0,
+  "blocked_by_real_input_count": 2,
+  "blocked_by_yymm4_gate_count": 3,
+  "blocked_by_public_rights_count": 3,
+  "gap_results": [
+    {
+      "feature_id": "timing_alignment",
+      "previous_category": "buildable_locally",
+      "previous_current_state": "Scene durations are rough estimates.",
+      "template_readiness_status": "closed_for_local_template_readiness",
+      "closure_artifact": "scene_timing_map.json",
+      "remaining_true_gate": "actual production use still waits for verified input and explicit YMM4/public gates where relevant"
+    },
+    {
+      "feature_id": "voice_item_mapping",
+      "previous_category": "buildable_locally",
+      "previous_current_state": "Speaker rows exist but no VoiceItem mapping proof exists.",
+      "template_readiness_status": "closed_for_local_template_readiness",
+      "closure_artifact": "voice_subtitle_mapping.json",
+      "remaining_true_gate": "actual production use still waits for verified input and explicit YMM4/public gates where relevant"
+    },
+    {
+      "feature_id": "visual_scene_template",
+      "previous_category": "buildable_locally",
+      "previous_current_state": "Sections have default bg/face labels only.",
+      "template_readiness_status": "closed_for_local_template_readiness",
+      "closure_artifact": "visual_scene_template_registry.json",
+      "remaining_true_gate": "actual production use still waits for verified input and explicit YMM4/public gates where relevant"
+    },
+    {
+      "feature_id": "citation_source_overlay",
+      "previous_category": "buildable_locally",
+      "previous_current_state": "No source/citation overlay contract exists for a real episode.",
+      "template_readiness_status": "closed_for_local_template_readiness",
+      "closure_artifact": "citation_overlay_spec.json",
+      "remaining_true_gate": "actual production use still waits for verified input and explicit YMM4/public gates where relevant"
+    },
+    {
+      "feature_id": "thumbnail_transfer",
+      "previous_category": "buildable_locally",
+      "previous_current_state": "Thumbnail proof exists as context only.",
+      "template_readiness_status": "closed_for_local_template_readiness",
+      "closure_artifact": "thumbnail_transfer_map.json",
+      "remaining_true_gate": "actual production use still waits for verified input and explicit YMM4/public gates where relevant"
+    },
+    {
+      "feature_id": "verified_source_transcript_intake",
+      "previous_category": "blocked_by_real_input",
+      "previous_current_state": "Current transcript is sample_fixture_not_real.",
+      "template_readiness_status": "unchanged_blocked_by_real_input",
+      "closure_artifact": null,
+      "remaining_true_gate": "verified local source/transcript material required"
+    },
+    {
+      "feature_id": "real_source_rights_context",
+      "previous_category": "blocked_by_real_input",
+      "previous_current_state": "Source is offline fixture, not live reviewed material.",
+      "template_readiness_status": "unchanged_blocked_by_real_input",
+      "closure_artifact": null,
+      "remaining_true_gate": "verified local source/transcript material required"
+    },
+    {
+      "feature_id": "yymm4_import_observation",
+      "previous_category": "blocked_by_yymm4_gate",
+      "previous_current_state": "Draft CSV has not been imported to YMM4.",
+      "template_readiness_status": "unchanged_blocked_by_yymm4_gate",
+      "closure_artifact": null,
+      "remaining_true_gate": "explicit YMM4 observation/render gate required"
+    },
+    {
+      "feature_id": "voiceitem_timing_readback",
+      "previous_category": "blocked_by_yymm4_gate",
+      "previous_current_state": "No VoiceItem timing exists.",
+      "template_readiness_status": "unchanged_blocked_by_yymm4_gate",
+      "closure_artifact": null,
+      "remaining_true_gate": "explicit YMM4 observation/render gate required"
+    },
+    {
+      "feature_id": "render_smoke",
+      "previous_category": "blocked_by_yymm4_gate",
+      "previous_current_state": "No render was performed.",
+      "template_readiness_status": "unchanged_blocked_by_yymm4_gate",
+      "closure_artifact": null,
+      "remaining_true_gate": "explicit YMM4 observation/render gate required"
+    },
+    {
+      "feature_id": "public_rights_acceptance",
+      "previous_category": "blocked_by_public_rights_gate",
+      "previous_current_state": "No rights/legal/public-ready acceptance exists.",
+      "template_readiness_status": "unchanged_blocked_by_public_rights_gate",
+      "closure_artifact": null,
+      "remaining_true_gate": "human rights/public-ready/final thumbnail decision required"
+    },
+    {
+      "feature_id": "youtube_visibility_package",
+      "previous_category": "blocked_by_public_rights_gate",
+      "previous_current_state": "No upload/visibility action is allowed.",
+      "template_readiness_status": "unchanged_blocked_by_public_rights_gate",
+      "closure_artifact": null,
+      "remaining_true_gate": "human rights/public-ready/final thumbnail decision required"
+    },
+    {
+      "feature_id": "final_thumbnail_approval",
+      "previous_category": "blocked_by_public_rights_gate",
+      "previous_current_state": "Thumbnail proof is contextual only.",
+      "template_readiness_status": "unchanged_blocked_by_public_rights_gate",
+      "closure_artifact": null,
+      "remaining_true_gate": "human rights/public-ready/final thumbnail decision required"
+    }
+  ]
+}

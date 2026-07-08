@@ -1,0 +1,40 @@
+{
+  "schema_version": "citation_overlay_spec.v1",
+  "artifact_id": "episode_002_output_template_readiness_pack_v1",
+  "status": "citation_overlay_template_ready_local_offline",
+  "overlay_slot_count": 3,
+  "overlay_slots": [
+    {
+      "overlay_id": "s1_source_note",
+      "scene_id": "S1",
+      "timing_anchor": "S1:1-2",
+      "screen_region": "lower_third_source_shelf",
+      "source_text_policy": "reviewed local source note placeholder only",
+      "current_text": "Synthetic dry-run source; replace after verified local source intake.",
+      "external_media_allowed": false,
+      "status": "overlay_template_ready_no_real_source_claim"
+    },
+    {
+      "overlay_id": "s2_source_note",
+      "scene_id": "S2",
+      "timing_anchor": "S2:3-4",
+      "screen_region": "lower_third_source_shelf",
+      "source_text_policy": "reviewed local source note placeholder only",
+      "current_text": "Synthetic dry-run source; replace after verified local source intake.",
+      "external_media_allowed": false,
+      "status": "overlay_template_ready_no_real_source_claim"
+    },
+    {
+      "overlay_id": "s3_source_note",
+      "scene_id": "S3",
+      "timing_anchor": "S3:5-9",
+      "screen_region": "lower_third_source_shelf",
+      "source_text_policy": "reviewed local source note placeholder only",
+      "current_text": "Synthetic dry-run source; replace after verified local source intake.",
+      "external_media_allowed": false,
+      "status": "overlay_template_ready_no_real_source_claim"
+    }
+  ],
+  "source_context_status": "sample_fixture_not_real",
+  "future_input_required": "verified local source/transcript before production use"
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": "thumbnail_transfer_map.v1",
+  "artifact_id": "episode_002_output_template_readiness_pack_v1",
+  "status": "thumbnail_context_transfer_ready_not_final_approval",
+  "source_thumbnail_variants": "production_pilots/yukkuri_newsroom_content_spine_002/thumbnail_visual_proof_pack/thumbnail_variants.json",
+  "recommended_variant_id": "headline_driven",
+  "recommended_layout_family": "headline_stack",
+  "final_thumbnail_approval": false,
+  "transfer_rules": [
+    {
+      "rule_id": "headline_to_opening_frame",
+      "source_concept": "DRY RUN FACTORY CHECK",
+      "video_frame_language": "Use as opening frame headline with dry-run badge.",
+      "target_scene_ids": [
+        "S1"
+      ]
+    },
+    {
+      "rule_id": "proof_stack_to_boundary_strip",
+      "source_concept": "proof metrics and closed-gate labels",
+      "video_frame_language": "Move compact proof labels into lower status strip.",
+      "target_scene_ids": [
+        "S1",
+        "S3"
+      ]
+    },
+    {
+      "rule_id": "palette_to_template_tokens",
+      "source_concept": {
+        "bg": "#0f172a",
+        "accent": "#facc15",
+        "panel": "#1e293b",
+        "ink": "#f8fafc"
+      },
+      "video_frame_language": "Reuse contrast direction as local CSS/template color tokens only.",
+      "target_scene_ids": [
+        "S1",
+        "S2",
+        "S3"
+      ]
+    }
+  ],
+  "blocked_until_human_review": [
+    "final thumbnail approval",
+    "production thumbnail export",
+    "rights/public-ready acceptance"
+  ]
+}

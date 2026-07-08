@@ -1,0 +1,132 @@
+{
+  "schema_version": "voice_subtitle_mapping.v1",
+  "artifact_id": "episode_002_output_template_readiness_pack_v1",
+  "status": "voice_subtitle_template_ready_no_yymm4_voiceitems",
+  "csv_reference_status": "references_available_csv_rows",
+  "source_csv": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+  "speaker_count": 2,
+  "voice_slots": [
+    {
+      "speaker": "れいむ",
+      "voice_slot_id": "voice_slot_1",
+      "role_hint": "explainer_or_host",
+      "voice_item_status": "template_assumption_not_yymm4_voiceitem",
+      "requires_yymm4_observation": true
+    },
+    {
+      "speaker": "まりさ",
+      "voice_slot_id": "voice_slot_2",
+      "role_hint": "listener_or_partner",
+      "voice_item_status": "template_assumption_not_yymm4_voiceitem",
+      "requires_yymm4_observation": true
+    }
+  ],
+  "utterance_count": 9,
+  "utterance_mappings": [
+    {
+      "row_number": 1,
+      "cue_id": "csv_row_1",
+      "scene_id": "S1",
+      "speaker": "れいむ",
+      "voice_slot_id": "voice_slot_1",
+      "subtitle_text": "今日は「DRY RUN」って、どういう話なの？",
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-1",
+      "subtitle_status": "draft_sample_fixture_not_real",
+      "voiceitem_status": "not_imported_to_yymm4"
+    },
+    {
+      "row_number": 2,
+      "cue_id": "csv_row_2",
+      "scene_id": "S1",
+      "speaker": "まりさ",
+      "voice_slot_id": "voice_slot_2",
+      "subtitle_text": "Dry-run only: confirm the factory can open a second episode seed.",
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-2",
+      "subtitle_status": "draft_sample_fixture_not_real",
+      "voiceitem_status": "not_imported_to_yymm4"
+    },
+    {
+      "row_number": 3,
+      "cue_id": "csv_row_3",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "voice_slot_id": "voice_slot_2",
+      "subtitle_text": "ポイント1は、Load the template registry.",
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-3",
+      "subtitle_status": "draft_sample_fixture_not_real",
+      "voiceitem_status": "not_imported_to_yymm4"
+    },
+    {
+      "row_number": 4,
+      "cue_id": "csv_row_4",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "voice_slot_id": "voice_slot_2",
+      "subtitle_text": "ポイント2は、Separate inherited defaults from real required inputs.",
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-4",
+      "subtitle_status": "draft_sample_fixture_not_real",
+      "voiceitem_status": "not_imported_to_yymm4"
+    },
+    {
+      "row_number": 5,
+      "cue_id": "csv_row_5",
+      "scene_id": "S3",
+      "speaker": "れいむ",
+      "voice_slot_id": "voice_slot_1",
+      "subtitle_text": "なるほど、そこを見れば話の筋が追いやすいんだね。",
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-5",
+      "subtitle_status": "draft_sample_fixture_not_real",
+      "voiceitem_status": "not_imported_to_yymm4"
+    },
+    {
+      "row_number": 6,
+      "cue_id": "csv_row_6",
+      "scene_id": "S3",
+      "speaker": "まりさ",
+      "voice_slot_id": "voice_slot_2",
+      "subtitle_text": "ポイント3は、Mark the source packet as synthetic dry-run material.",
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-6",
+      "subtitle_status": "draft_sample_fixture_not_real",
+      "voiceitem_status": "not_imported_to_yymm4"
+    },
+    {
+      "row_number": 7,
+      "cue_id": "csv_row_7",
+      "scene_id": "S3",
+      "speaker": "まりさ",
+      "voice_slot_id": "voice_slot_2",
+      "subtitle_text": "ポイント4は、Stop before transcript, YMM4, rights, render, or publication work.",
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-7",
+      "subtitle_status": "draft_sample_fixture_not_real",
+      "voiceitem_status": "not_imported_to_yymm4"
+    },
+    {
+      "row_number": 8,
+      "cue_id": "csv_row_8",
+      "scene_id": "S3",
+      "speaker": "れいむ",
+      "voice_slot_id": "voice_slot_1",
+      "subtitle_text": "なるほど、そこを見れば話の筋が追いやすいんだね。",
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-8",
+      "subtitle_status": "draft_sample_fixture_not_real",
+      "voiceitem_status": "not_imported_to_yymm4"
+    },
+    {
+      "row_number": 9,
+      "cue_id": "csv_row_9",
+      "scene_id": "S3",
+      "speaker": "まりさ",
+      "voice_slot_id": "voice_slot_2",
+      "subtitle_text": "この段階ではローカル企画案なので、本番化には実ソース、台本、タイミング確認が必要だぜ。",
+      "subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-9",
+      "subtitle_status": "draft_sample_fixture_not_real",
+      "voiceitem_status": "not_imported_to_yymm4"
+    }
+  ],
+  "unknowns": [
+    "actual YMM4 VoiceItem IDs",
+    "audio-derived start/end timing",
+    "final voice preset choices",
+    "real transcript replacement text"
+  ]
+}
