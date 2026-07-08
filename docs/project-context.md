@@ -1,6 +1,56 @@
 # Project Context — NLMYTGen
 
 ## PROJECT CONTEXT
+- Current handoff (2026-07-09 JST):
+  `episode-002-ymm4-import-ready-ja-review-v1` is complete on branch
+  `codex/episode-002-ymm4-import-ready-ja-review-v1`; the artifact completion
+  commit before this docs-only handoff note is `1cc52b6`. The active artifact is
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/`.
+  Primary human review is `ymm4_import_ready_preview.html`, now Japanese-first;
+  manual future operator sheet is `manual_ymm4_import_observation_sheet.md`,
+  now Episode 002-specific and Japanese-first; primary machine readback is
+  `validation_readback.json`; detailed remote restart handoff is
+  `docs/verification/NEWSROOM_EPISODE_002_YMM4_IMPORT_READY_JA_REVIEW_REMOTE_HANDOFF_2026-07-09.md`.
+  Current open command:
+  `Invoke-Item -LiteralPath "C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\production_pilots\yukkuri_newsroom_content_spine_002\ymm4_import_ready_pack\ymm4_import_ready_preview.html"`.
+  This slice localized the review surface without changing JSON identity or
+  machine contracts: schema keys, artifact ID, cue IDs, state enum values, and
+  gate flags remain stable while Japanese display labels explain cue order,
+  provisional timing, VoiceItem/subtitle, visual/overlay,
+  placeholder/diagnostic boundary, import risk, and false gate meanings. The
+  manual sheet is a temporary Episode 002 checkpoint with purpose, scope,
+  out-of-scope boundaries, the next expected artifact
+  `YMM4 observation readback`, and 5 natural-language checks. The package still
+  records 7 queue operations, 3 scenes, 9 cues, 5 manual observation checks,
+  `ymm4_import_state=ready_for_manual_import_observation`, and
+  `ymmp_file_created=false`. Actual YMM4 import, render/export, production
+  `.ymmp` write, real input replacement, rights approval, public readiness,
+  final thumbnail approval, live fetch, external media download, OAuth/API use,
+  and YouTube upload remain closed. Validation readback reports `status=passed`,
+  all generated JSON parses, no external dependencies, no forbidden
+  production/public/YMM4 true claims, and no temporary-copy markers. Generated
+  files are JSON/HTML/MD only; no media/render/`.ymmp` file was created.
+  Another terminal should fetch, switch to
+  `codex/episode-002-ymm4-import-ready-ja-review-v1`, run
+  `git pull --ff-only origin codex/episode-002-ymm4-import-ready-ja-review-v1`,
+  confirm `git rev-list --left-right --count "HEAD...@{u}"` is `0 0`, then
+  read `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, `docs/runtime-state.md`, this
+  handoff entry, the detailed remote handoff file, and the package
+  `validation_readback.json`. Regeneration command:
+  `python -m src.cli.main build-ymm4-import-ready-pack --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id nlm-e002-ymm4-import-ready-edit-package-v1-001`.
+  Targeted validation passed with
+  `uv run pytest tests/test_ymm4_import_ready_pack.py tests/test_local_edit_slice_execution_pack.py tests/test_editing_operations_readiness_pack.py tests/test_output_template_readiness_pack.py tests/test_real_input_intake_readiness_pack.py -q`
+  -> 20 passed; `git diff --check` and `git diff --cached --check` passed for
+  the artifact commit. Full pytest was not run by policy. Next meaningful move
+  is a future explicit YMM4 import observation readback using this Japanese
+  surface, or a verified real-input replacement gate before changing placeholder
+  content. Do not resume actual YMM4 GUI import/render/export, production
+  `.ymmp` write, real input replacement without verified input,
+  rights/legal/public-ready acceptance, final thumbnail approval, YouTube
+  upload/publication, live fetch/scraping, external media download,
+  OAuth/API keys/payment, destructive git, ClipPipeGen work, or full pytest
+  loops from this handoff.
+
 - Current handoff (2026-07-08 JST):
   `episode-002-ymm4-import-ready-edit-package-v1` is complete on branch
   `codex/episode-002-ymm4-import-ready-edit-package-v1`; the artifact

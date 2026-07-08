@@ -1,5 +1,52 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 YMM4 import-ready Japanese review surface completed and remote handoff sealed (2026-07-09 JST)**:
+  `episode-002-ymm4-import-ready-ja-review-v1` is complete on branch
+  `codex/episode-002-ymm4-import-ready-ja-review-v1`; the artifact completion
+  commit before this docs-only handoff note is `1cc52b6`. Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/`.
+  Primary human review remains `ymm4_import_ready_preview.html`, now
+  Japanese-first; the manual future operator sheet is
+  `manual_ymm4_import_observation_sheet.md`, now Episode 002-specific and
+  Japanese-first; primary machine readback is `validation_readback.json`;
+  restart handoff is
+  `docs/verification/NEWSROOM_EPISODE_002_YMM4_IMPORT_READY_JA_REVIEW_REMOTE_HANDOFF_2026-07-09.md`.
+  This slice changed the review surface only: top summary explains what the
+  package is, what it enables next, and what remains closed; cue tables show
+  cue order, provisional timing, VoiceItem/subtitle, visual/overlay,
+  placeholder/diagnostic boundary, import risk, and observation checkpoint; gate
+  readback keeps raw JSON keys and false values while adding Japanese labels
+  such as `false = 未実行`. The JSON artifact IDs, schema keys, cue IDs, state
+  enum values, manifest counts, and closed-gate flags remain stable:
+  `queue_count=7`, `scene_count=3`, `cue_count=9`,
+  `observation_check_count=5`,
+  `ymm4_import_state=ready_for_manual_import_observation`,
+  `actual_ymm4_imported=false`, `rendered_video_created=false`,
+  `real_input_replaced=false`, `rights_approved=false`, `public_ready=false`,
+  and `ymmp_file_created=false`. Validation readback reports `status=passed`,
+  all generated JSON parses, no external dependencies, no forbidden
+  production/public/YMM4 true claims, and no temporary-copy markers. Generated
+  files are JSON/HTML/MD only; no media/render/`.ymmp` file was created.
+  Targeted validation passed with
+  `uv run pytest tests/test_ymm4_import_ready_pack.py tests/test_local_edit_slice_execution_pack.py tests/test_editing_operations_readiness_pack.py tests/test_output_template_readiness_pack.py tests/test_real_input_intake_readiness_pack.py -q`
+  -> 20 passed; `git diff --check` and `git diff --cached --check` passed.
+  Full pytest was not run. Another terminal should fetch, switch to
+  `codex/episode-002-ymm4-import-ready-ja-review-v1`, pull fast-forward from
+  origin, confirm `git rev-list --left-right --count "HEAD...@{u}"` is `0 0`,
+  then read `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, this top runtime entry,
+  `docs/project-context.md` top handoff entry, the restart handoff file, and
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/validation_readback.json`.
+  Current review open command:
+  `Invoke-Item -LiteralPath "C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\production_pilots\yukkuri_newsroom_content_spine_002\ymm4_import_ready_pack\ymm4_import_ready_preview.html"`.
+  Next meaningful move is a future explicit YMM4 import observation readback
+  using this Japanese surface, or a verified real-input replacement gate before
+  changing placeholder content. Do not resume actual YMM4 GUI import/render/export,
+  production `.ymmp` write, real input replacement without verified input,
+  rights or public-ready acceptance, final thumbnail approval,
+  upload/publication, live fetch/scraping, external media download,
+  OAuth/API keys/payment, destructive git, ClipPipeGen work, or full pytest
+  loops from this handoff.
+
 - **Episode 002 YMM4 import-ready edit package completed and remote handoff sealed (2026-07-08 JST)**:
   `episode-002-ymm4-import-ready-edit-package-v1` is complete on branch
   `codex/episode-002-ymm4-import-ready-edit-package-v1`; the artifact
