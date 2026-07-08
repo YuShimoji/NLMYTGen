@@ -1,9 +1,12 @@
-# Manual YMM4 Import Observation Sheet
+# Episode 002 YMM4観測前確認チェック
 
-Use this only after an explicit YMM4 observation gate is opened. The package contains 9 cues across 3 scenes. It does not authorize render, production `.ymmp` write, real input replacement, rights approval, final thumbnail approval, or upload.
+目的: YMM4観測前の確認チェック。Episode 002限定で、3 scenes / 9 cues のimport-ready表示がoperatorに読めるかを見る。
+範囲: cue順、仮timing、VoiceItem/subtitle、visual/overlay、placeholder/diagnostic境界の観測準備だけ。
+対象外: render承認、production `.ymmp` write、real input replacement、rights承認、public承認、final thumbnail承認、upload。
+次に残す成果物: 明示的なgateが開いた場合だけ `YMM4 observation readback` を別artifactとして作る。
 
-1. After CSV import, does the cue order follow S1 -> S2 -> S3 and preserve the listed row order?
-2. Are the VoiceItem/subtitle pairs readable enough to understand speaker, cue, and placeholder text status?
-3. Are visual template and overlay instructions understandable as non-final placeholders?
-4. Are placeholder/diagnostic assets clearly separated from real source, rights, and final thumbnail decisions?
-5. Before any render, is there one specific blocker recorded: real input, YMM4 timing/readback, rights/public approval, or final thumbnail approval?
+1. cue順はS1 -> S2 -> S3の流れで読め、行順の入れ替わりを検出できるか。
+2. VoiceItem/subtitleの対応は、speaker、cue、placeholder text statusをoperatorが追える粒度になっているか。
+3. visual templateとoverlay/citationの指示は、final素材ではないplaceholderとして誤解なく読めるか。
+4. real source、rights、final thumbnailの判断が、diagnostic/placeholder assetから明確に分離されているか。
+5. renderより前に残るblockerが、real input、YMM4 timing/readback、rights/public approval、final thumbnail approvalのどれか一つ以上として記録できるか。

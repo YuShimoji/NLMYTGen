@@ -76,9 +76,22 @@ def test_ymm4_import_ready_pack_builds_manifest_cue_map_and_preview(tmp_path) ->
     assert adapter_plan["status"] == "adapter_plan_ready_no_ymmp_write"
     assert adapter_plan["ymmp_file_created"] is False
     assert source_index["local_edit_pack_read_only"] is True
+    assert '<html lang="ja"' in html
     assert 'data-ymm4-import-ready="true"' in html
     assert 'data-region="cue-map"' in html
+    assert "YMM4インポート準備レビュー" in html
+    assert "cueマップ" in html
+    assert "gate確認" in html
+    assert "未実行" in html
+    assert "import risk" in html
     assert "card-grid" not in html
+    assert "Episode 002限定" in sheet
+    assert "目的: YMM4観測前の確認チェック" in sheet
+    assert "範囲: cue順" in sheet
+    assert "対象外:" in sheet
+    assert "YMM4 observation readback" in sheet
+    assert "窶" not in html
+    assert "窶" not in sheet
     assert sheet.count("\n1.") == 1
     assert sheet.count("\n5.") == 1
 

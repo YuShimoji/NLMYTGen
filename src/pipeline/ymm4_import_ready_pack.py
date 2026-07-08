@@ -617,11 +617,11 @@ def _render_html(
     scene_rows = "\n".join(_render_scene_row(row) for row in _list(cue_map.get("scene_summaries")))
     gate_rows = "\n".join(_render_gate_row(flag, value) for flag, value in _dict(gate_readback.get("closed_gate_flags")).items())
     return f"""<!doctype html>
-<html lang="en" data-ymm4-import-ready="true" data-artifact-kind="episode-ymm4-import-ready-edit-package">
+<html lang="ja" data-ymm4-import-ready="true" data-artifact-kind="episode-ymm4-import-ready-edit-package">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Episode 002 YMM4 Import-Ready Edit Package</title>
+  <title>Episode 002 YMM4インポート準備レビュー</title>
   <style>
     :root {{
       color-scheme: dark light;
@@ -645,6 +645,9 @@ def _render_html(
     .hero {{ display: grid; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }}
     .metrics {{ display: flex; flex-wrap: wrap; gap: 8px; }}
     .metric {{ border: 1px solid var(--line); border-radius: 999px; padding: 5px 10px; background: var(--surface); font-size: 12px; }}
+    .summary-grid {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }}
+    .summary-box {{ border: 1px solid var(--line); background: var(--surface); padding: 10px; }}
+    .summary-box strong {{ display: block; color: var(--warn); margin-bottom: 4px; }}
     .matrix {{ width: 100%; border-collapse: collapse; table-layout: fixed; }}
     th, td {{ border: 1px solid var(--line); padding: 9px; vertical-align: top; overflow-wrap: anywhere; }}
     th {{ color: var(--warn); background: var(--panel); text-align: left; }}
@@ -657,6 +660,7 @@ def _render_html(
     }}
     @media (max-width: 820px) {{
       main {{ padding: 20px 12px 34px; }}
+      .summary-grid {{ grid-template-columns: 1fr; }}
       .matrix {{ display: block; overflow-x: auto; white-space: normal; }}
       th, td {{ min-width: 170px; }}
     }}
@@ -667,34 +671,38 @@ def _render_html(
     <section class="hero">
       <div class="metrics">
         <span class="metric">import state: {_escape(manifest.get("ymm4_import_state"))}</span>
-        <span class="metric">cues: {_escape(manifest.get("cue_count"))}</span>
-        <span class="metric">scenes: {_escape(manifest.get("scene_count"))}</span>
-        <span class="metric">gates closed: {_escape(manifest.get("gates_closed"))}</span>
+        <span class="metric">cue数: {_escape(manifest.get("cue_count"))}</span>
+        <span class="metric">scene数: {_escape(manifest.get("scene_count"))}</span>
+        <span class="metric">gate: {_escape(manifest.get("gates_closed"))} / 閉鎖中</span>
       </div>
-      <h1>Episode 002 YMM4 Import-Ready Edit Package</h1>
-      <p>This package prepares cue order, provisional timing, voice/subtitle links, visual placeholders, citation placeholders, and manual observation questions for a future explicit YMM4 import observation. It does not import, render, replace real input, approve rights, or publish.</p>
+      <h1>Episode 002 YMM4インポート準備レビュー</h1>
+      <div class="summary-grid" aria-label="レビュー概要">
+        <p class="summary-box"><strong>このpackage</strong>既存のローカル編集queueを、YMM4で後日観測するためのcue順・仮timing・voice/subtitle・visual/overlay対応に読み替えたレビュー面です。</p>
+        <p class="summary-box"><strong>次に可能になること</strong>明示的なYMM4観測gateが開いた後、CSV import前後のcue順、表示意図、placeholder境界をoperatorが確認できます。</p>
+        <p class="summary-box"><strong>閉じたままのこと</strong>YMM4 import、render/export、production `.ymmp` write、real input replacement、rights/public approval、final thumbnail approval、uploadは未実行です。</p>
+      </div>
     </section>
 
     <section data-region="scene-summary">
-      <h2>Scene Summary</h2>
+      <h2>scene runway / cue順</h2>
       <table class="matrix">
-        <thead><tr><th>Scene</th><th>Timing</th><th>Template</th><th>Citation / Thumbnail State</th></tr></thead>
+        <thead><tr><th>scene</th><th>仮timing</th><th>visual template</th><th>overlay / thumbnail / asset境界</th></tr></thead>
         <tbody>{scene_rows}</tbody>
       </table>
     </section>
 
     <section data-region="cue-map">
-      <h2>Cue Map</h2>
+      <h2>cueマップ / timing・voice・subtitle</h2>
       <table class="matrix">
-        <thead><tr><th>Cue</th><th>Approx Timing</th><th>Voice / Subtitle</th><th>Visual / Overlay</th><th>Observation Question</th></tr></thead>
+        <thead><tr><th>cue</th><th>仮timing</th><th>voice / subtitle</th><th>visual / overlay</th><th>placeholder境界</th><th>import risk</th><th>観測checkpoint</th></tr></thead>
         <tbody>{cue_rows}</tbody>
       </table>
     </section>
 
     <section data-region="gate-readback">
-      <h2>Gate Readback</h2>
+      <h2>gate確認 / false値の意味</h2>
       <table class="matrix">
-        <thead><tr><th>Gate</th><th>Value</th><th>Meaning</th></tr></thead>
+        <thead><tr><th>gate key</th><th>値</th><th>日本語label</th><th>意味</th></tr></thead>
         <tbody>{gate_rows}</tbody>
       </table>
     </section>
@@ -708,10 +716,10 @@ def _render_scene_row(row: Any) -> str:
     item = _dict(row)
     timing = f"{item.get('provisional_start_sec')}s to {item.get('provisional_end_sec')}s"
     return f"""<tr>
-  <td><code>{_escape(item.get("scene_id"))}</code><br>{_escape(item.get("cue_count"))} cues</td>
+  <td><code>{_escape(item.get("scene_id"))}</code><br>cue数: {_escape(item.get("cue_count"))}</td>
   <td>{_escape(timing)}</td>
   <td>{_escape(item.get("primary_template_id"))}</td>
-  <td>citations: {_escape(', '.join(_list(item.get("citation_overlay_ids"))))}<br>thumbnail: {_escape(', '.join(_list(item.get("thumbnail_transfer_rule_ids"))))}<br><span class="hold">{_escape(item.get("asset_state"))}</span></td>
+  <td>citation overlay: {_escape(', '.join(_list(item.get("citation_overlay_ids"))))}<br>thumbnail motif: {_escape(', '.join(_list(item.get("thumbnail_transfer_rule_ids"))))}<br>asset state: <span class="hold">{_escape(item.get("asset_state"))}</span></td>
 </tr>"""
 
 
@@ -726,6 +734,8 @@ def _render_cue_row(row: Any) -> str:
   <td>{_escape(timing.get("approximate_start_sec"))}s to {_escape(timing.get("approximate_end_sec"))}s<br>{_escape(timing.get("timing_source"))}</td>
   <td>{_escape(voice.get("expected_voice_slot_id"))}<br>{_escape(voice.get("subtitle_text_status"))}</td>
   <td>{_escape(visual.get("primary_template_id"))}<br>overlay: {_escape(', '.join(_list(overlay.get("citation_overlay_ids"))))}<br><span class="hold">{_escape(item.get("required_asset_state"))}</span></td>
+  <td>real inputではなくplaceholder/diagnostic前提<br><code>{_escape(item.get("required_asset_state"))}</code></td>
+  <td>{_escape(item.get("import_risk"))}</td>
   <td>{_escape(item.get("manual_observation_question"))}</td>
 </tr>"""
 
@@ -733,21 +743,51 @@ def _render_cue_row(row: Any) -> str:
 def _render_gate_row(flag: str, value: Any) -> str:
     return f"""<tr>
   <td><code>{_escape(flag)}</code></td>
-  <td>{_escape(value)}</td>
-  <td><span class="ok">closed in this package</span></td>
+  <td><code>{_escape(value)}</code></td>
+  <td>{_escape(_gate_label_ja(flag))}</td>
+  <td><span class="ok">{_escape(_gate_value_meaning_ja(value))} / このpackageでは閉じたまま</span></td>
 </tr>"""
 
 
+def _gate_label_ja(flag: str) -> str:
+    labels = {
+        "actual_ymm4_imported": "YMM4実import",
+        "actual_yymm4_import": "YMM4実import",
+        "rendered_video_created": "render/export済み動画",
+        "yymm4_rendered": "YMM4 render",
+        "production_ymmp_written": "production .ymmp write",
+        "real_input_replaced": "real input replacement",
+        "real_input_replacement_executed": "real input replacement",
+        "rights_approved": "rights approval",
+        "rights_accepted": "rights acceptance",
+        "public_ready": "public-ready判定",
+        "final_thumbnail_approval": "final thumbnail approval",
+        "youtube_uploaded": "YouTube upload",
+    }
+    return labels.get(flag, flag)
+
+
+def _gate_value_meaning_ja(value: Any) -> str:
+    if value is False:
+        return "false = 未実行"
+    if value is True:
+        return "true = 実行済み"
+    return f"{value} = raw readback"
+
+
 def _render_observation_sheet(state: dict[str, Any], cue_map: dict[str, Any], gate_readback: dict[str, Any]) -> str:
-    return f"""# Manual YMM4 Import Observation Sheet
+    return f"""# Episode 002 YMM4観測前確認チェック
 
-Use this only after an explicit YMM4 observation gate is opened. The package contains {cue_map.get("cue_count")} cues across {cue_map.get("scene_count")} scenes. It does not authorize render, production `.ymmp` write, real input replacement, rights approval, final thumbnail approval, or upload.
+目的: YMM4観測前の確認チェック。Episode 002限定で、{cue_map.get("scene_count")} scenes / {cue_map.get("cue_count")} cues のimport-ready表示がoperatorに読めるかを見る。
+範囲: cue順、仮timing、VoiceItem/subtitle、visual/overlay、placeholder/diagnostic境界の観測準備だけ。
+対象外: render承認、production `.ymmp` write、real input replacement、rights承認、public承認、final thumbnail承認、upload。
+次に残す成果物: 明示的なgateが開いた場合だけ `YMM4 observation readback` を別artifactとして作る。
 
-1. After CSV import, does the cue order follow S1 -> S2 -> S3 and preserve the listed row order?
-2. Are the VoiceItem/subtitle pairs readable enough to understand speaker, cue, and placeholder text status?
-3. Are visual template and overlay instructions understandable as non-final placeholders?
-4. Are placeholder/diagnostic assets clearly separated from real source, rights, and final thumbnail decisions?
-5. Before any render, is there one specific blocker recorded: real input, YMM4 timing/readback, rights/public approval, or final thumbnail approval?
+1. cue順はS1 -> S2 -> S3の流れで読め、行順の入れ替わりを検出できるか。
+2. VoiceItem/subtitleの対応は、speaker、cue、placeholder text statusをoperatorが追える粒度になっているか。
+3. visual templateとoverlay/citationの指示は、final素材ではないplaceholderとして誤解なく読めるか。
+4. real source、rights、final thumbnailの判断が、diagnostic/placeholder assetから明確に分離されているか。
+5. renderより前に残るblockerが、real input、YMM4 timing/readback、rights/public approval、final thumbnail approvalのどれか一つ以上として記録できるか。
 """
 
 
@@ -757,28 +797,28 @@ def _render_readme(
     cue_map: dict[str, Any],
     gate_readback: dict[str, Any],
 ) -> str:
-    return f"""# Episode 002 YMM4 Import-Ready Edit Package
+    return f"""# Episode 002 YMM4インポート準備レビュー
 
-This package bridges the local edit-slice execution queue into YMM4-facing import/observation concepts.
+このpackageは、local edit-slice execution queueをYMM4向けの将来観測概念へ読み替えるレビュー面です。実import、render、production `.ymmp` writeは行いません。
 
 - Artifact: `{manifest.get("artifact_id")}`
 - Import state: `{manifest.get("ymm4_import_state")}`
-- Cues: {cue_map.get("cue_count")}
-- Scenes: {cue_map.get("scene_count")}
+- Cue数: {cue_map.get("cue_count")}
+- Scene数: {cue_map.get("scene_count")}
 - Gates closed: {gate_readback.get("gates_closed")}
 - Primary review: `{state.get("primary_human_review")}`
 - Machine readback: `{state.get("primary_machine_readable")}`
 
-No `.ymmp` file is generated or patched by this package.
+このpackageでは`.ymmp` fileを生成・patchしません。
 """
 
 
 def _render_limitations() -> str:
-    return """# Limitations
+    return """# 制限
 
-- Do not launch YMM4 from this package without a separate explicit gate.
-- Do not import CSV, render, export, or write a production `.ymmp` from this package.
-- Do not replace diagnostic placeholders with real source or transcript material.
-- Do not claim rights approval, public readiness, final thumbnail approval, upload, or publication.
-- The cue timing is approximate and derived from provisional scene durations for observation planning only.
+- YMM4を起動しない（Do not launch YMM4）。別の明示gateなしにこのpackageからYMM4作業へ進めない。
+- CSV import、render/export、production `.ymmp` writeは行わない。
+- diagnostic placeholderをreal sourceやtranscript materialで置き換えない。
+- rights approval、public readiness、final thumbnail approval、upload、publicationを主張しない。
+- cue timingは観測計画用の仮値であり、provisional scene durationからの読み替えに限る。
 """
