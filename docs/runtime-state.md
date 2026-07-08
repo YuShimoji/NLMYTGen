@@ -1,5 +1,50 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 YMM4 import-ready edit package completed and remote handoff sealed (2026-07-08 JST)**:
+  `episode-002-ymm4-import-ready-edit-package-v1` is complete on branch
+  `codex/episode-002-ymm4-import-ready-edit-package-v1`; the artifact
+  completion commit before this docs-only handoff note is `a39ce95`. Generated
+  package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/`.
+  Primary human review is `ymm4_import_ready_preview.html`; manual future
+  operator sheet is `manual_ymm4_import_observation_sheet.md`; primary machine
+  readback is `validation_readback.json`; restart handoff is
+  `docs/verification/NEWSROOM_EPISODE_002_YMM4_IMPORT_READY_REMOTE_HANDOFF_2026-07-08.md`.
+  The pack converts the local edit-slice execution queue into YMM4-facing
+  import/observation concepts without launching or importing in YMM4:
+  `queue_count=7`, `scene_count=3`, `cue_count=9`,
+  `observation_check_count=5`, and
+  `ymm4_import_state=ready_for_manual_import_observation`. The cue map links
+  each draft CSV cue to provisional timing, voice/subtitle action, visual
+  placeholder action, citation/thumbnail placeholder action, expected
+  VoiceItem/subtitle plus ImageItem/TextItem lanes, required asset state,
+  import risk, and a manual observation question. Validation readback reports
+  `status=passed`, all generated JSON parses, `gates_closed=true`,
+  `actual_ymm4_imported=false`, `rendered_video_created=false`,
+  `real_input_replaced=false`, `rights_approved=false`,
+  `public_ready=false`, `ymmp_file_created=false`, no external dependencies,
+  no forbidden production/public/YMM4 true claims, and no temporary-copy
+  markers. Generated files are JSON/HTML/MD only; no media/render/`.ymmp` file
+  was created. Targeted validation passed with
+  `uv run pytest tests/test_ymm4_import_ready_pack.py tests/test_local_edit_slice_execution_pack.py tests/test_editing_operations_readiness_pack.py tests/test_output_template_readiness_pack.py tests/test_real_input_intake_readiness_pack.py -q`
+  -> 20 passed; full pytest was not run. Another terminal should fetch, switch
+  to `codex/episode-002-ymm4-import-ready-edit-package-v1`, pull fast-forward
+  from origin, confirm `git rev-list --left-right --count "HEAD...@{u}"` is
+  `0 0`, then read `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, this top runtime
+  entry, `docs/project-context.md` top handoff entry, the restart handoff file,
+  and
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/validation_readback.json`.
+  Current review open command:
+  `Invoke-Item -LiteralPath "C:\Users\thank\Storage\Media Contents Projects\NLMYTGen\production_pilots\yukkuri_newsroom_content_spine_002\ymm4_import_ready_pack\ymm4_import_ready_preview.html"`.
+  Next meaningful move is a future explicit YMM4 import observation using the
+  manual sheet, or a verified real-input replacement gate before changing
+  placeholder content. Do not resume actual YMM4 GUI import/render/export,
+  production `.ymmp` write, real input replacement without verified input,
+  rights or public-ready acceptance, final thumbnail approval,
+  upload/publication, live fetch/scraping, external media download,
+  OAuth/API keys/payment, destructive git, ClipPipeGen work, or full pytest
+  loops from this handoff.
+
 - **Episode 002 Local Edit-Slice execution completed and remote handoff sealed (2026-07-08 JST)**:
   `episode-002-local-edit-slice-execution-v1` is complete on branch
   `codex/episode-002-local-edit-slice-execution-v1`; the artifact completion

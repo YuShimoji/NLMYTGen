@@ -10,5 +10,6 @@ not a governance document or roadmap.
 | output-template-episode002 | OUTPUT_VIDEO | accepted/close-ready | Output template readiness package exists. |
 | input-intake-episode002 | INPUT_API_HUB | accepted/close-ready | Real input intake readiness package exists. |
 | editing-ops-episode002 | EDITING_FEATURES | accepted/close-ready | Editing operations readiness package exists. |
-| local-edit-slice-episode002 | EDITING_FEATURES_LOCAL_EXECUTION | running | Local edit-slice execution queue is the active slice. |
+| local-edit-slice-episode002 | EDITING_FEATURES_LOCAL_EXECUTION | accepted/close-ready | Local edit-slice execution queue exists. |
+| ymm4-import-ready-episode002 | OUTPUT_VIDEO_EDITING | running | YMM4 import-ready edit package is the active slice. |
 | integrity-triage | INTEGRITY_TRIAGE | paused | Full-suite drift remains nonblocking for targeted slices. |
