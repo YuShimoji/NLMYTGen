@@ -2,6 +2,9 @@
 
 Date: 2026-07-09 JST
 Branch: `codex/episode-002-ymm4-observation-readback-v1`
+Artifact/package commit before this docs-only remote seal: `506ec9e`
+Remote state before this docs-only remote seal: pushed, upstream parity `0 0`,
+worktree clean.
 
 ## Scope
 

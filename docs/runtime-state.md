@@ -2,7 +2,10 @@
 
 - **Episode 002 YMM4 observation readback package completed as operator-instruction hold (2026-07-09 JST)**:
   `episode-002-ymm4-observation-readback-v1` is complete on branch
-  `codex/episode-002-ymm4-observation-readback-v1`. Generated package:
+  `codex/episode-002-ymm4-observation-readback-v1`; the artifact/package
+  commit before this docs-only remote seal is `506ec9e`, the branch was
+  pushed to origin, and upstream parity was `0 0` with a clean worktree.
+  Generated package:
   `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_readback_pack/`.
   Primary human review is `observation_preview.html`; operator readback sheet
   is `manual_ymm4_observation_readback.md`; primary machine readback is
