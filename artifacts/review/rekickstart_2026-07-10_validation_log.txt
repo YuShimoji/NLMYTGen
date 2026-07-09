@@ -1,0 +1,16 @@
+# Re-kickstart validation log
+date: 2026-07-10 00:21:58 +09:00
+cwd: C:\Users\thank\Storage\Media Contents Projects\NLMYTGen
+branch: codex/episode-002-ymm4-import-ready-ja-review-v1
+commit: adb2776 docs: seal episode 002 ymm4 ja review handoff
+upstream_revlist: 0	0
+
+## command: uv run python -m compileall -q src tests
+compileall_exit: 0
+
+## command: uv run pytest tests/test_ymm4_import_ready_pack.py -q
+....                                                                     [100%]
+pytest_exit: 0
+
+## command: git diff --check
+git_diff_check_exit: 0
