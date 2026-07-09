@@ -1,31 +1,5 @@
 # Runtime State — NLMYTGen
 
-- **Re-kickstart Project Capsule initialized with material evidence (2026-07-10 JST)**:
-  Current branch remains `codex/episode-002-ymm4-import-ready-ja-review-v1`;
-  latest commit before this slice is `adb2776` and, after `git fetch --prune`,
-  `git rev-list --left-right --count "HEAD...@{u}"` is `0 0`. The kit
-  `PROJECT_REPO_TEMPLATE` content was integrated without overwriting existing
-  repo authorities: root `AGENTS.md` stayed the NLMYTGen entry pointer and the
-  kit `docs/RUNTIME_STATE.md` was not copied over the canonical
-  `docs/runtime-state.md` because Windows treats those paths as the same file.
-  New Project Capsule docs are `docs/VALIDATION.md`, `docs/PROJECT_BRIEF.md`,
-  `docs/ROADMAP.md`, `docs/DECISION_LOG.md`, `docs/ARTIFACT_INDEX.md`,
-  `docs/UI_RUBRIC.md`, `docs/RESEARCH_NOTES.md`, and
-  `docs/RESEARCH_TODO.md`; template placeholders from the placed docs were
-  replaced with repo-real commands or explicit `NOT_AVAILABLE_IN_THIS_REPO`.
-  Material evidence for this BUILD turn is
-  `artifacts/review/rekickstart_2026-07-10_validation_log.txt`, which records
-  `uv run python -m compileall -q src tests` -> exit 0,
-  `uv run pytest tests/test_ymm4_import_ready_pack.py -q` -> 4 passed, and
-  `git diff --check` -> exit 0. Current next BUILD candidates are recorded in
-  `docs/ROADMAP.md`: verified real-input replacement prep, explicit YMM4
-  import observation readback, or screenshot-backed review-surface QA. Do not
-  treat this re-kickstart as approval to launch/import/render/export in YMM4,
-  write a production `.ymmp`, replace placeholder content without verified
-  input, approve rights/public-ready state, upload/publish, perform live
-  fetch/scraping, download external media, handle OAuth/API keys/payment, or
-  work outside this repo.
-
 - **Episode 002 YMM4 import-ready Japanese review surface completed and remote handoff sealed (2026-07-09 JST)**:
   `episode-002-ymm4-import-ready-ja-review-v1` is complete on branch
   `codex/episode-002-ymm4-import-ready-ja-review-v1`; the artifact completion
