@@ -13,4 +13,6 @@ not a governance document or roadmap.
 | local-edit-slice-episode002 | EDITING_FEATURES_LOCAL_EXECUTION | accepted/close-ready | Local edit-slice execution queue exists. |
 | ymm4-import-ready-episode002 | OUTPUT_VIDEO_EDITING | accepted/close-ready | YMM4 import-ready edit package exists. |
 | ymm4-import-ready-ja-review-episode002 | GUI_IA_I18N | accepted/close-ready | Japanese-first import-ready review surface exists; no YMM4 import/render/.ymmp. |
+| verified-real-input-prep-episode002 | INPUT_API_HUB / VERIFIED_REAL_INPUT_PREP | accepted/close-ready | Real-input replacement readiness pack exists; required local inputs defined; candidate input count is 0. |
+| ymm4-observation-readback-episode002 | OUTPUT_VIDEO / YMM4_OBSERVATION_READBACK | queued/second_launch | Held behind explicit future gate; not executed by verified real-input prep. |
 | integrity-triage | INTEGRITY_TRIAGE | paused | Full-suite drift remains nonblocking for targeted slices. |

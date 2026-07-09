@@ -2947,6 +2947,27 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_real_input_replacement_readiness_pack = subparsers.add_parser(
+        "build-real-input-replacement-readiness-pack",
+        help="Build the episode 002 real input replacement readiness package",
+    )
+    p_real_input_replacement_readiness_pack.add_argument("--package", required=True, help="Episode package directory")
+    p_real_input_replacement_readiness_pack.add_argument(
+        "--output",
+        help="Output directory (default: <package>/real_input_replacement_readiness_pack)",
+    )
+    p_real_input_replacement_readiness_pack.add_argument(
+        "--artifact-id",
+        default="episode_002_verified_real_input_replacement_readiness_pack_v1",
+        help="Real input replacement readiness artifact id",
+    )
+    p_real_input_replacement_readiness_pack.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     p_editing_operations_readiness_pack = subparsers.add_parser(
         "build-editing-operations-readiness-pack",
         help="Build the episode 002 editing operations readiness package",
@@ -3158,6 +3179,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_output_template_readiness_pack(args)
         elif args.command == "build-real-input-intake-readiness-pack":
             return _cmd_build_real_input_intake_readiness_pack(args)
+        elif args.command == "build-real-input-replacement-readiness-pack":
+            return _cmd_build_real_input_replacement_readiness_pack(args)
         elif args.command == "build-editing-operations-readiness-pack":
             return _cmd_build_editing_operations_readiness_pack(args)
         elif args.command == "build-local-edit-slice-execution-pack":
@@ -5666,6 +5689,45 @@ def _cmd_build_real_input_intake_readiness_pack(args: argparse.Namespace) -> int
         print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
         print(f"launcher_or_open_command: {readback.get('launcher_or_open_command')}")
         print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_real_input_replacement_readiness_pack(args: argparse.Namespace) -> int:
+    """Build the episode 002 real input replacement readiness package."""
+    from src.pipeline.real_input_replacement_readiness_pack import (
+        build_real_input_replacement_readiness_pack,
+    )
+
+    readback = build_real_input_replacement_readiness_pack(
+        package_dir=getattr(args, "package"),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"primary_review_file: {readback.get('primary_review_file')}")
+        print(f"episode_id: {readback.get('episode_id')}")
+        print(f"package_type: {readback.get('package_type')}")
+        print(f"source_episode_pack_reference: {readback.get('source_episode_pack_reference')}")
+        print(f"placeholder_state: {readback.get('placeholder_state')}")
+        print(f"required_local_input_count: {readback.get('required_local_input_count')}")
+        print(f"candidate_input_count: {readback.get('candidate_input_count')}")
+        print(f"actual_real_input_replaced: {readback.get('actual_real_input_replaced')}")
+        print(f"live_fetch_performed: {readback.get('live_fetch_performed')}")
+        print(f"external_media_downloaded: {readback.get('external_media_downloaded')}")
+        print(f"actual_ymm4_imported: {readback.get('actual_ymm4_imported')}")
+        print(f"rendered_video_created: {readback.get('rendered_video_created')}")
+        print(f"ymmp_file_created: {readback.get('ymmp_file_created')}")
+        print(f"rights_approved: {readback.get('rights_approved')}")
+        print(f"public_ready: {readback.get('public_ready')}")
+        print(f"next_gate: {readback.get('next_gate')}")
+        print(f"full_pytest_run: {readback.get('full_pytest_run')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"launcher_or_open_command: {readback.get('launcher_or_open_command')}")
     return 0
 
 

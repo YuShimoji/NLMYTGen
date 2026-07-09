@@ -1,0 +1,58 @@
+{
+  "schema_version": "real_input_replacement_source_artifact_index.v1",
+  "artifact_id": "episode_002_verified_real_input_replacement_readiness_pack_v1",
+  "ymm4_import_ready_pack_read_only": true,
+  "real_input_intake_pack_read_only": true,
+  "local_edit_pack_read_only": true,
+  "records": [
+    {
+      "record_id": "ymm4_import_ready_validation",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/validation_readback.json",
+      "role": "source_episode_pack_reference",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "ymm4_import_ready_cue_map",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/edit_slice_to_ymm4_cue_map.json",
+      "role": "episode_002_cue_map",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "ymm4_import_ready_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/ymm4_import_ready_manifest.json",
+      "role": "source_pack_manifest",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "real_input_intake_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/real_input_intake_readiness/real_input_intake_manifest.json",
+      "role": "prior_input_contract",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "source_transcript_contract_schema",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/real_input_intake_readiness/source_transcript_contract.schema.json",
+      "role": "prior_input_contract",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "real_input_intake_validation",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/real_input_intake_readiness/validation_readback.json",
+      "role": "prior_input_readback",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "local_edit_validation",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/local_edit_slice_execution_pack/validation_readback.json",
+      "role": "local_edit_context",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    }
+  ]
+}

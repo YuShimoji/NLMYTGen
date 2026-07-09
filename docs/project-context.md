@@ -2,6 +2,53 @@
 
 ## PROJECT CONTEXT
 - Current handoff (2026-07-09 JST):
+  `episode-002-verified-real-input-prep-v1` is complete on branch
+  `codex/episode-002-verified-real-input-prep-v1`. The active artifact is
+  `production_pilots/yukkuri_newsroom_content_spine_002/real_input_replacement_readiness_pack/`.
+  Primary human review is `real_input_replacement_preview.html`; operator
+  contract is `real_input_replacement_contract.md`; primary machine readback
+  is `validation_readback.json`; placeholder input folder note is
+  `input_dropzone/README.md`; detailed restart handoff is
+  `docs/verification/NEWSROOM_EPISODE_002_VERIFIED_REAL_INPUT_PREP_HANDOFF_2026-07-09.md`.
+  Current open command:
+  `Invoke-Item -LiteralPath "C:\Users\PLANNER007\NLMYTGen\production_pilots\yukkuri_newsroom_content_spine_002\real_input_replacement_readiness_pack\real_input_replacement_preview.html"`.
+  This slice advances the verified real-input gate without replacing content:
+  it uses the accepted YMM4 import-ready pack and prior real-input intake
+  contract as read-only sources, then states the exact local material needed
+  before sample/diagnostic Episode 002 content can be replaced. Required inputs
+  are source audio/video/document path, transcript path or transcript
+  generation receipt, provenance/rights note, hash or stable identity, and
+  Episode 002 cue-map alignment. The operator-facing HTML is Japanese-first and
+  built as a pipeline runway plus matrix/status tables, not a primary card-grid
+  dashboard. Validation readback reports `status=passed`,
+  `required_local_input_count=5`, `candidate_input_count=0`,
+  `actual_real_input_replaced=false`, `live_fetch_performed=false`,
+  `external_media_downloaded=false`, `actual_ymm4_imported=false`,
+  `rendered_video_created=false`, `ymmp_file_created=false`,
+  `rights_approved=false`, `public_ready=false`, no external dependencies, no
+  forbidden production/public/YMM4 true claims, and no temporary-copy markers.
+  Generated files are JSON/HTML/MD only; no media/render/`.ymmp` file was
+  created. Regeneration command:
+  `python -m src.cli.main build-real-input-replacement-readiness-pack --package production_pilots/yukkuri_newsroom_content_spine_002 --artifact-id episode_002_verified_real_input_replacement_readiness_pack_v1`.
+  Targeted validation passed with
+  `uv run pytest tests/test_real_input_replacement_readiness_pack.py tests/test_ymm4_import_ready_pack.py tests/test_local_edit_slice_execution_pack.py tests/test_editing_operations_readiness_pack.py tests/test_output_template_readiness_pack.py tests/test_real_input_intake_readiness_pack.py -q`
+  -> 24 passed. Full pytest was not run by repo policy and slice scope.
+  Another terminal should fetch, switch to
+  `codex/episode-002-verified-real-input-prep-v1`, run
+  `git pull --ff-only origin codex/episode-002-verified-real-input-prep-v1`,
+  confirm `git rev-list --left-right --count "HEAD...@{u}"` is `0 0`, then
+  read `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, `docs/runtime-state.md`, this
+  handoff entry, the detailed handoff file, and the package
+  `validation_readback.json`. Next meaningful move is to provide verified
+  local source/transcript material and build a validated local input receipt;
+  YMM4 observation remains second_launch. Do not resume actual real input
+  replacement, actual YMM4 GUI import/render/export, production `.ymmp` write,
+  rights/legal/public-ready acceptance, final thumbnail approval, YouTube
+  upload/publication, live fetch/scraping, external media download,
+  OAuth/API/payment work, ClipPipeGen edits, destructive git, or full pytest
+  loops from this handoff.
+
+- Current handoff (2026-07-09 JST):
   `episode-002-ymm4-import-ready-ja-review-v1` is complete on branch
   `codex/episode-002-ymm4-import-ready-ja-review-v1`; the artifact completion
   commit before this docs-only handoff note is `1cc52b6`. The active artifact is

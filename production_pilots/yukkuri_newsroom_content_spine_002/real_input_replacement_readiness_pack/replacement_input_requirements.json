@@ -1,0 +1,104 @@
+{
+  "schema_version": "real_input_replacement_requirements.v1",
+  "artifact_id": "episode_002_verified_real_input_replacement_readiness_pack_v1",
+  "episode_id": "yukkuri_newsroom_content_spine_002",
+  "status": "requirements_ready_no_candidate_input",
+  "placeholder_state": "sample_diagnostic_only_no_verified_local_input",
+  "required_local_inputs": [
+    {
+      "input_id": "local_source_audio_video_or_document_path",
+      "label_ja": "元資料ファイル",
+      "required": true,
+      "expected_value": "source audio/video/document path",
+      "accepted_material_types": [
+        "local audio",
+        "local video",
+        "local document",
+        "local notes"
+      ],
+      "forbidden_material_types": [
+        "live URL only",
+        "worker-downloaded media",
+        "untracked external asset"
+      ],
+      "stable_identity_expectation": "path plus hash, file size, or timestamp note",
+      "episode_002_relation": "source for S1-S3 narrative and citation placeholders"
+    },
+    {
+      "input_id": "local_transcript_or_generation_receipt_path",
+      "label_ja": "文字起こし",
+      "required": true,
+      "expected_value": "transcript path or transcript generation receipt",
+      "accepted_material_types": [
+        "speaker-labeled text",
+        "plain transcript",
+        "CSV transcript",
+        "JSON segments",
+        "local generation receipt"
+      ],
+      "forbidden_material_types": [
+        "unverified generated text",
+        "remote-only transcript"
+      ],
+      "stable_identity_expectation": "path plus generation date or hash when available",
+      "episode_002_relation": "maps to csv_row_1 through csv_row_9 before replacement"
+    },
+    {
+      "input_id": "source_provenance_and_rights_note",
+      "label_ja": "由来と権利メモ",
+      "required": true,
+      "expected_value": "source provenance/rights note",
+      "accepted_material_types": [
+        "local review note",
+        "operator provenance memo"
+      ],
+      "forbidden_material_types": [
+        "public-ready approval",
+        "legal acceptance claim"
+      ],
+      "stable_identity_expectation": "reviewer name/date or equivalent local receipt",
+      "episode_002_relation": "keeps citation/thumbnail/public gates separated from replacement"
+    },
+    {
+      "input_id": "stable_file_identity",
+      "label_ja": "安定識別子",
+      "required": true,
+      "expected_value": "file hash or stable identity expectation",
+      "accepted_material_types": [
+        "sha256",
+        "file size plus modified time",
+        "local export receipt"
+      ],
+      "forbidden_material_types": [
+        "only a title",
+        "only a URL"
+      ],
+      "stable_identity_expectation": "enough to detect file drift before rerun",
+      "episode_002_relation": "prevents sample/real boundary drift during replacement"
+    },
+    {
+      "input_id": "episode_002_cue_map_alignment",
+      "label_ja": "cue対応",
+      "required": true,
+      "expected_value": "expected relation to Episode 002 cue map",
+      "accepted_material_types": [
+        "S1-S3 mapping note",
+        "csv_row_1-9 mapping note",
+        "explicit no-timestamp explanation"
+      ],
+      "forbidden_material_types": [
+        "replacement text with no cue relation"
+      ],
+      "stable_identity_expectation": "alignment note references source cue map revision",
+      "episode_002_relation": "3 scenes / 9 cues must remain traceable"
+    }
+  ],
+  "allowed_material_summary_ja": "ローカルに存在し、由来と照合方法を書ける source/transcript/receipt だけ。",
+  "forbidden_material_summary_ja": "live fetch、scraping、外部media download、OAuth/API/payment、public-ready承認、YMM4実行結果は対象外。",
+  "transcript_alignment_requirements": {
+    "cue_map_reference": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/edit_slice_to_ymm4_cue_map.json",
+    "scene_count": 3,
+    "cue_count": 9,
+    "minimum_alignment": "S1-S3 and csv_row_1-9 relation must be declared before replacement"
+  }
+}

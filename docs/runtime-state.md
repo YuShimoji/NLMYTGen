@@ -1,5 +1,51 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 verified real input replacement readiness completed (2026-07-09 JST)**:
+  `episode-002-verified-real-input-prep-v1` is complete on branch
+  `codex/episode-002-verified-real-input-prep-v1`. Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/real_input_replacement_readiness_pack/`.
+  Primary human review is `real_input_replacement_preview.html`; operator
+  contract is `real_input_replacement_contract.md`; primary machine readback
+  is `validation_readback.json`; placeholder input folder note is
+  `input_dropzone/README.md`; restart handoff is
+  `docs/verification/NEWSROOM_EPISODE_002_VERIFIED_REAL_INPUT_PREP_HANDOFF_2026-07-09.md`.
+  The pack converts the accepted Japanese YMM4 import-ready surface and the
+  earlier real-input intake contract into a local-only replacement gate: it
+  states the five required verified local inputs before replacement can occur
+  (`source audio/video/document path`, transcript path or generation receipt,
+  provenance/rights note, hash or stable identity, and Episode 002 cue-map
+  alignment). The HTML is Japanese-first and uses a pipeline runway plus
+  matrix/status tables rather than a primary card-grid dashboard. Validation
+  readback reports `status=passed`, `package_type=real_input_replacement_readiness`,
+  `placeholder_state=sample_diagnostic_only_no_verified_local_input`,
+  `required_local_input_count=5`, `candidate_input_count=0`,
+  `actual_real_input_replaced=false`, `live_fetch_performed=false`,
+  `external_media_downloaded=false`, `actual_ymm4_imported=false`,
+  `rendered_video_created=false`, `ymmp_file_created=false`,
+  `rights_approved=false`, `public_ready=false`,
+  `next_gate=provide_verified_local_source_and_transcript`,
+  no external dependencies, no forbidden production/public/YMM4 true claims,
+  and no temporary-copy markers. Generated files are JSON/HTML/MD only; no
+  media/render/`.ymmp` file was created. Targeted validation passed with
+  `uv run pytest tests/test_real_input_replacement_readiness_pack.py tests/test_ymm4_import_ready_pack.py tests/test_local_edit_slice_execution_pack.py tests/test_editing_operations_readiness_pack.py tests/test_output_template_readiness_pack.py tests/test_real_input_intake_readiness_pack.py -q`
+  -> 24 passed. Full pytest was not run. Another terminal should fetch,
+  switch to `codex/episode-002-verified-real-input-prep-v1`, pull
+  fast-forward from origin, confirm `git rev-list --left-right --count
+  "HEAD...@{u}"` is `0 0`, then read `AGENTS.md`,
+  `docs/REPO_LOCAL_RULES.md`, this top runtime entry,
+  `docs/project-context.md` top handoff entry, the restart handoff file, and
+  `production_pilots/yukkuri_newsroom_content_spine_002/real_input_replacement_readiness_pack/validation_readback.json`.
+  Current review open command:
+  `Invoke-Item -LiteralPath "C:\Users\PLANNER007\NLMYTGen\production_pilots\yukkuri_newsroom_content_spine_002\real_input_replacement_readiness_pack\real_input_replacement_preview.html"`.
+  Next meaningful move is to provide verified local source/transcript material
+  and build a validated local input receipt before any replacement; the
+  explicit YMM4 observation readback remains second_launch debt. Do not resume
+  actual real input replacement, YMM4 GUI import/render/export, production
+  `.ymmp` write, rights/legal/public-ready acceptance, final thumbnail
+  approval, YouTube upload/publication, live fetch/scraping, external media
+  download, OAuth/API/payment work, ClipPipeGen edits, destructive git, or full
+  pytest loops from this handoff.
+
 - **Episode 002 YMM4 import-ready Japanese review surface completed and remote handoff sealed (2026-07-09 JST)**:
   `episode-002-ymm4-import-ready-ja-review-v1` is complete on branch
   `codex/episode-002-ymm4-import-ready-ja-review-v1`; the artifact completion
