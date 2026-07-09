@@ -1,5 +1,53 @@
 # Runtime State — NLMYTGen
 
+- **Episode 002 YMM4 observation readback package completed as operator-instruction hold (2026-07-09 JST)**:
+  `episode-002-ymm4-observation-readback-v1` is complete on branch
+  `codex/episode-002-ymm4-observation-readback-v1`. Generated package:
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_readback_pack/`.
+  Primary human review is `observation_preview.html`; operator readback sheet
+  is `manual_ymm4_observation_readback.md`; primary machine readback is
+  `observation_readback.json`; restart handoff is
+  `docs/verification/NEWSROOM_EPISODE_002_YMM4_OBSERVATION_READBACK_2026-07-09.md`.
+  YMM4 was detected at
+  `C:\Users\PLANNER007\Downloads\YukkuriMovieMaker_v4\YukkuriMovieMaker.exe`,
+  and the primary import CSV candidate exists at
+  `production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv`.
+  Actual GUI import observation was not performed because this worker has no
+  safe manual/GUI visual readback channel for importing and inspecting YMM4.
+  The package therefore records `status=blocked`,
+  `validation_status=passed`, `observation_mode=operator_instruction_only`,
+  `actual_ymm4_import_attempted=false`, `actual_ymm4_imported=false`,
+  `cue_count_expected=9`, `cue_count_observed=0`,
+  `voice_item_observed=not_observed`,
+  `subtitle_item_observed=not_observed`,
+  `timing_order_observed=not_observed`, and
+  `placeholder_boundary_observed=not_observed`. It keeps
+  `rendered_video_created=false`, `ymmp_file_created=false`,
+  `production_ymmp_written=false`, `real_input_replaced=false`,
+  `rights_approved=false`, and `public_ready=false`; screenshot/visual
+  evidence paths are empty because no actual GUI observation occurred. The
+  HTML is Japanese-first and uses a pipeline runway plus observation/status
+  tables rather than a primary card-grid dashboard. Targeted validation passed
+  with
+  `uv run pytest tests/test_ymm4_observation_readback_pack.py tests/test_ymm4_import_ready_pack.py tests/test_local_edit_slice_execution_pack.py tests/test_real_input_replacement_readiness_pack.py -q`
+  -> 16 passed. Full pytest was not run. Another terminal should fetch,
+  switch to `codex/episode-002-ymm4-observation-readback-v1`, pull
+  fast-forward from origin, confirm `git rev-list --left-right --count
+  "HEAD...@{u}"` is `0 0`, then read `AGENTS.md`,
+  `docs/REPO_LOCAL_RULES.md`, this top runtime entry,
+  `docs/project-context.md` top handoff entry, the restart handoff file, and
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_readback_pack/observation_readback.json`.
+  Current review open command:
+  `Invoke-Item -LiteralPath "C:\Users\PLANNER007\NLMYTGen\production_pilots\yukkuri_newsroom_content_spine_002\ymm4_observation_readback_pack\observation_preview.html"`.
+  Next meaningful move is for a human/operator to open YMM4 manually, import
+  the CSV candidate, and return the five observations from
+  `manual_ymm4_observation_readback.md`; only then choose adapter correction,
+  real input receipt, or later render proof. Do not resume render/export,
+  production `.ymmp` write, real input replacement, rights/legal/public-ready
+  acceptance, final thumbnail approval, YouTube upload/publication, live
+  fetch/scraping, external media download, OAuth/API/payment work, ClipPipeGen
+  edits, destructive git, or full pytest loops from this handoff.
+
 - **Episode 002 verified real input replacement readiness completed (2026-07-09 JST)**:
   `episode-002-verified-real-input-prep-v1` is complete on branch
   `codex/episode-002-verified-real-input-prep-v1`. Generated package:

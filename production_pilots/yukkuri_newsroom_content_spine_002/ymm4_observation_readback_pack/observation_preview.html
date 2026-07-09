@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ja" data-ymm4-observation-readback="true" data-artifact-kind="episode-ymm4-observation-readback-pack">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Episode 002 YMM4観測readback</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+      --bg: #101413;
+      --surface: #18211f;
+      --panel: #202b28;
+      --ink: #f0f7f4;
+      --muted: #a9bbb3;
+      --line: #34463f;
+      --accent: #7dd7c2;
+      --warn: #f1cc75;
+      --stop: #f0a0a0;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.5; }
+    main { max-width: 1240px; margin: 0 auto; padding: 28px 18px 44px; }
+    h1, h2 { margin: 0; letter-spacing: 0; }
+    h1 { font-size: clamp(28px, 4vw, 42px); line-height: 1.08; }
+    h2 { font-size: 20px; margin: 30px 0 12px; }
+    p { color: var(--muted); margin: 0; }
+    code { color: var(--warn); }
+    .hero { display: grid; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+    .metrics { display: flex; flex-wrap: wrap; gap: 8px; }
+    .metric { border: 1px solid var(--line); border-radius: 999px; padding: 5px 10px; background: var(--surface); font-size: 12px; }
+    .runway { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+    .step { border-top: 4px solid var(--accent); background: var(--surface); padding: 10px; min-height: 118px; }
+    .step strong { display: block; color: var(--warn); margin-bottom: 6px; }
+    .matrix { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    th, td { border: 1px solid var(--line); padding: 9px; vertical-align: top; overflow-wrap: anywhere; }
+    th { color: var(--warn); background: var(--panel); text-align: left; }
+    td { background: var(--surface); }
+    .band { border: 1px solid var(--line); background: var(--surface); padding: 12px; }
+    .ok { color: var(--accent); }
+    .hold { color: var(--stop); }
+    @media (prefers-color-scheme: light) {
+      :root { --bg: #f7faf8; --surface: #ffffff; --panel: #edf5f1; --ink: #17211e; --muted: #516258; --line: #c8d9d1; }
+    }
+    @media (max-width: 860px) {
+      main { padding: 20px 12px 34px; }
+      .runway { grid-template-columns: 1fr; }
+      .matrix { display: block; overflow-x: auto; white-space: normal; }
+      th, td { min-width: 180px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="metrics">
+        <span class="metric">status: blocked</span>
+        <span class="metric">mode: operator_instruction_only</span>
+        <span class="metric">expected cues: 9</span>
+        <span class="metric">observed cues: 0</span>
+      </div>
+      <h1>Episode 002 YMM4観測readback</h1>
+      <p>実観測は未実行。YMM4 executable は検出済みだが、GUI importをこのworkerが安全に操作・視認する経路がないため、operator instructionとして保持する。</p>
+    </section>
+
+    <section data-region="pipeline-runway">
+      <h2>pipeline runway</h2>
+      <div class="runway"><div class="step">
+  <strong>1. 準備済み</strong>
+  <code>import-ready pack</code>
+  <p>3 scenes / 9 cues の観測対象は定義済み。</p>
+</div>
+<div class="step">
+  <strong>2. 今回の判定</strong>
+  <code>operator_instruction_only</code>
+  <p>YMM4実行ファイルは検出したが、GUI importを安全に操作・視認できる経路がない。</p>
+</div>
+<div class="step">
+  <strong>3. 返却待ち</strong>
+  <code>manual observation</code>
+  <p>operatorがYMM4上でimport結果を確認し、5点だけ返す。</p>
+</div>
+<div class="step">
+  <strong>4. 次判断</strong>
+  <code>manual_ymm4_import_observation_return</code>
+  <p>観測結果によりadapter correction、real input receipt、render proof待ちを分岐する。</p>
+</div></div>
+    </section>
+
+    <section data-region="observation-matrix">
+      <h2>観測matrix / result or blocker</h2>
+      <table class="matrix">
+        <thead><tr><th>項目</th><th>readback</th></tr></thead>
+        <tbody><tr>
+  <td><code>observation_mode</code></td>
+  <td>operator_instruction_only</td>
+</tr>
+<tr>
+  <td><code>actual_ymm4_import_attempted</code></td>
+  <td>False</td>
+</tr>
+<tr>
+  <td><code>actual_ymm4_imported</code></td>
+  <td>False</td>
+</tr>
+<tr>
+  <td><code>cue_count_expected</code></td>
+  <td>9</td>
+</tr>
+<tr>
+  <td><code>cue_count_observed</code></td>
+  <td>0</td>
+</tr>
+<tr>
+  <td><code>voice_item_observed</code></td>
+  <td>not_observed</td>
+</tr>
+<tr>
+  <td><code>subtitle_item_observed</code></td>
+  <td>not_observed</td>
+</tr>
+<tr>
+  <td><code>timing_order_observed</code></td>
+  <td>not_observed</td>
+</tr>
+<tr>
+  <td><code>placeholder_boundary_observed</code></td>
+  <td>not_observed</td>
+</tr></tbody>
+      </table>
+    </section>
+
+    <section data-region="expected-import-path">
+      <h2>expected import path</h2>
+      <div class="band">
+        <p>YMM4: <code>C:\Users\PLANNER007\Downloads\YukkuriMovieMaker_v4\YukkuriMovieMaker.exe</code></p>
+        <p>CSV: <code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv</code></p>
+        <p>blocker: <span class="hold">YMM4 executable was detected locally, but this worker has no safe manual/GUI visual readback channel for importing and inspecting the project.</span></p>
+      </div>
+      <table class="matrix">
+        <thead><tr><th>candidate</th><th>exists</th><th>role</th></tr></thead>
+        <tbody><tr>
+  <td><code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv</code></td>
+  <td>True</td>
+  <td>primary_import_candidate</td>
+</tr>
+<tr>
+  <td><code>production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/draft_yymm4.csv</code></td>
+  <td>True</td>
+  <td>alternate_import_candidate</td>
+</tr>
+<tr>
+  <td><code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/draft_yymm4_preview.csv</code></td>
+  <td>True</td>
+  <td>alternate_import_candidate</td>
+</tr></tbody>
+      </table>
+    </section>
+
+    <section data-region="untested">
+      <h2>未検証のまま残る項目</h2>
+      <div class="band">
+        <p>VoiceItem、subtitle、timing order、placeholder boundary、visual evidence は actual GUI importが未実行のため未観測。</p>
+      </div>
+    </section>
+
+    <section data-region="closed-gates">
+      <h2>閉じたgate</h2>
+      <table class="matrix">
+        <thead><tr><th>gate key</th><th>値</th><th>意味</th></tr></thead>
+        <tbody><tr>
+  <td><code>rendered_video_created</code></td>
+  <td><code>False</code></td>
+  <td><span class="ok">false = 未実行 / このpackageでは閉じたまま</span></td>
+</tr>
+<tr>
+  <td><code>ymmp_file_created</code></td>
+  <td><code>False</code></td>
+  <td><span class="ok">false = 未実行 / このpackageでは閉じたまま</span></td>
+</tr>
+<tr>
+  <td><code>production_ymmp_written</code></td>
+  <td><code>False</code></td>
+  <td><span class="ok">false = 未実行 / このpackageでは閉じたまま</span></td>
+</tr>
+<tr>
+  <td><code>real_input_replaced</code></td>
+  <td><code>False</code></td>
+  <td><span class="ok">false = 未実行 / このpackageでは閉じたまま</span></td>
+</tr>
+<tr>
+  <td><code>rights_approved</code></td>
+  <td><code>False</code></td>
+  <td><span class="ok">false = 未実行 / このpackageでは閉じたまま</span></td>
+</tr>
+<tr>
+  <td><code>public_ready</code></td>
+  <td><code>False</code></td>
+  <td><span class="ok">false = 未実行 / このpackageでは閉じたまま</span></td>
+</tr>
+<tr>
+  <td><code>final_thumbnail_approval</code></td>
+  <td><code>False</code></td>
+  <td><span class="ok">false = 未実行 / このpackageでは閉じたまま</span></td>
+</tr>
+<tr>
+  <td><code>youtube_uploaded</code></td>
+  <td><code>False</code></td>
+  <td><span class="ok">false = 未実行 / このpackageでは閉じたまま</span></td>
+</tr>
+<tr>
+  <td><code>live_fetch_performed</code></td>
+  <td><code>False</code></td>
+  <td><span class="ok">false = 未実行 / このpackageでは閉じたまま</span></td>
+</tr>
+<tr>
+  <td><code>external_media_downloaded</code></td>
+  <td><code>False</code></td>
+  <td><span class="ok">false = 未実行 / このpackageでは閉じたまま</span></td>
+</tr></tbody>
+      </table>
+    </section>
+
+    <section data-region="next-decision">
+      <h2>次の判断</h2>
+      <div class="band">
+        <p><code>manual_ymm4_import_observation_return</code>: operatorが5点の観測結果を返した後、adapter correction / real input receipt / later render proof のどれに進むかを決める。</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

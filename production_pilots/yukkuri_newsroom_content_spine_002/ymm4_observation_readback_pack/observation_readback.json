@@ -1,0 +1,117 @@
+{
+  "schema_version": "ymm4_observation_readback.v1",
+  "status": "blocked",
+  "artifact_id": "episode_002_ymm4_observation_readback_pack_v1",
+  "episode_id": "yukkuri_newsroom_content_spine_002",
+  "source_import_ready_pack_reference": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack",
+  "source_real_input_prep_reference": "production_pilots/yukkuri_newsroom_content_spine_002/real_input_replacement_readiness_pack",
+  "observation_mode": "operator_instruction_only",
+  "actual_ymm4_import_attempted": false,
+  "actual_ymm4_imported": false,
+  "observed_at": "not_observed_2026-07-09_JST",
+  "observed_by_environment": {
+    "terminal_or_device": "Planner007",
+    "yymm4_availability_status": "executable_detected_but_gui_observation_not_attempted",
+    "yymm4_executable_detected": true,
+    "yymm4_executable_path": "C:\\Users\\PLANNER007\\Downloads\\YukkuriMovieMaker_v4\\YukkuriMovieMaker.exe",
+    "start_menu_shortcut_detected": true,
+    "start_menu_shortcut_path": "C:\\Users\\PLANNER007\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\YukkuriMovieMaker.lnk",
+    "launch_attempted": false,
+    "gui_observation_channel_available": false
+  },
+  "cue_count_expected": 9,
+  "cue_count_observed": 0,
+  "scene_count_expected": 3,
+  "voice_item_observed": "not_observed",
+  "subtitle_item_observed": "not_observed",
+  "timing_order_observed": "not_observed",
+  "placeholder_boundary_observed": "not_observed",
+  "import_errors": [],
+  "deviations": [
+    {
+      "deviation_id": "actual_gui_observation_not_performed",
+      "severity": "blocking_for_observation_pass",
+      "detail": "YMM4 executable was detected locally, but this worker has no safe manual/GUI visual readback channel for importing and inspecting the project."
+    }
+  ],
+  "blocker": {
+    "blocker_id": "manual_gui_observation_required",
+    "status": "blocked_for_actual_observation",
+    "reason": "YMM4 executable was detected locally, but this worker has no safe manual/GUI visual readback channel for importing and inspecting the project.",
+    "operator_action": "Open YMM4 manually, import the CSV candidate, inspect cue/voice/subtitle/timing/placeholder boundaries, and return the five observations."
+  },
+  "expected_import_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+  "importable_csv_candidates": [
+    {
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+      "exists": true,
+      "role": "primary_import_candidate"
+    },
+    {
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/draft_yymm4.csv",
+      "exists": true,
+      "role": "alternate_import_candidate"
+    },
+    {
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_preview_pack/draft_yymm4_preview.csv",
+      "exists": true,
+      "role": "alternate_import_candidate"
+    }
+  ],
+  "screenshot_or_visual_evidence_paths": [],
+  "rendered_video_created": false,
+  "ymmp_file_created": false,
+  "production_ymmp_written": false,
+  "real_input_replaced": false,
+  "rights_approved": false,
+  "public_ready": false,
+  "final_thumbnail_approval": false,
+  "youtube_uploaded": false,
+  "live_fetch_performed": false,
+  "external_media_downloaded": false,
+  "closed_gate_flags": {
+    "rendered_video_created": false,
+    "ymmp_file_created": false,
+    "production_ymmp_written": false,
+    "real_input_replaced": false,
+    "rights_approved": false,
+    "public_ready": false,
+    "final_thumbnail_approval": false,
+    "youtube_uploaded": false,
+    "live_fetch_performed": false,
+    "external_media_downloaded": false
+  },
+  "next_gate": "manual_ymm4_import_observation_return",
+  "output_dir": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_readback_pack",
+  "validation_status": "passed",
+  "failed_checks": [],
+  "checks": {
+    "all_required_files_present": true,
+    "json_loads": true,
+    "html_preview_exists": true,
+    "manual_readback_exists": true,
+    "japanese_first_surface": true,
+    "primary_card_grid_absent": true,
+    "operator_instruction_check_count": 5,
+    "closed_gate_flags": {
+      "rendered_video_created": false,
+      "ymmp_file_created": false,
+      "production_ymmp_written": false,
+      "real_input_replaced": false,
+      "rights_approved": false,
+      "public_ready": false,
+      "final_thumbnail_approval": false,
+      "youtube_uploaded": false,
+      "live_fetch_performed": false,
+      "external_media_downloaded": false
+    },
+    "external_dependency_status": "none_found",
+    "forbidden_true_claims_absent": true,
+    "temporary_copy_absent": true
+  },
+  "primary_review_file": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_observation_readback_pack\\observation_preview.html",
+  "primary_human_review": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_observation_readback_pack\\observation_preview.html",
+  "primary_machine_readable": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_observation_readback_pack\\observation_readback.json",
+  "launcher_or_open_command": "Invoke-Item -LiteralPath \"C:\\Users\\PLANNER007\\NLMYTGen\\production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_observation_readback_pack\\observation_preview.html\"",
+  "access_state": "verified_present"
+}

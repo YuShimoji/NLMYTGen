@@ -3031,6 +3031,27 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_ymm4_observation_readback_pack = subparsers.add_parser(
+        "build-ymm4-observation-readback-pack",
+        help="Build the episode 002 YMM4 observation readback package",
+    )
+    p_ymm4_observation_readback_pack.add_argument("--package", required=True, help="Episode package directory")
+    p_ymm4_observation_readback_pack.add_argument(
+        "--output",
+        help="Output directory (default: <package>/ymm4_observation_readback_pack)",
+    )
+    p_ymm4_observation_readback_pack.add_argument(
+        "--artifact-id",
+        default="episode_002_ymm4_observation_readback_pack_v1",
+        help="YMM4 observation readback artifact id",
+    )
+    p_ymm4_observation_readback_pack.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -3187,6 +3208,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_local_edit_slice_execution_pack(args)
         elif args.command == "build-ymm4-import-ready-pack":
             return _cmd_build_ymm4_import_ready_pack(args)
+        elif args.command == "build-ymm4-observation-readback-pack":
+            return _cmd_build_ymm4_observation_readback_pack(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -5836,6 +5859,46 @@ def _cmd_build_ymm4_import_ready_pack(args: argparse.Namespace) -> int:
         print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
         print(f"launcher_or_open_command: {readback.get('launcher_or_open_command')}")
         print(f"next_action: {readback.get('next_action')}")
+    return 0
+
+
+def _cmd_build_ymm4_observation_readback_pack(args: argparse.Namespace) -> int:
+    """Build the episode 002 YMM4 observation readback package."""
+    from src.pipeline.ymm4_observation_readback_pack import (
+        build_ymm4_observation_readback_pack,
+    )
+
+    readback = build_ymm4_observation_readback_pack(
+        package_dir=getattr(args, "package"),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+    )
+    fmt = getattr(args, "format", "text")
+    if fmt == "json":
+        print(json.dumps(readback, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {readback.get('output_dir')}")
+        print(f"status: {readback.get('status')}")
+        print(f"validation_status: {readback.get('validation_status')}")
+        print(f"primary_review_file: {readback.get('primary_review_file')}")
+        print(f"observation_mode: {readback.get('observation_mode')}")
+        print(f"actual_ymm4_import_attempted: {readback.get('actual_ymm4_import_attempted')}")
+        print(f"actual_ymm4_imported: {readback.get('actual_ymm4_imported')}")
+        print(f"cue_count_expected: {readback.get('cue_count_expected')}")
+        print(f"cue_count_observed: {readback.get('cue_count_observed')}")
+        print(f"voice_item_observed: {readback.get('voice_item_observed')}")
+        print(f"subtitle_item_observed: {readback.get('subtitle_item_observed')}")
+        print(f"timing_order_observed: {readback.get('timing_order_observed')}")
+        print(f"placeholder_boundary_observed: {readback.get('placeholder_boundary_observed')}")
+        print(f"rendered_video_created: {readback.get('rendered_video_created')}")
+        print(f"ymmp_file_created: {readback.get('ymmp_file_created')}")
+        print(f"production_ymmp_written: {readback.get('production_ymmp_written')}")
+        print(f"real_input_replaced: {readback.get('real_input_replaced')}")
+        print(f"rights_approved: {readback.get('rights_approved')}")
+        print(f"public_ready: {readback.get('public_ready')}")
+        print(f"next_gate: {readback.get('next_gate')}")
+        print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
+        print(f"launcher_or_open_command: {readback.get('launcher_or_open_command')}")
     return 0
 
 

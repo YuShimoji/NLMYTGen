@@ -1,0 +1,50 @@
+{
+  "schema_version": "ymm4_observation_source_artifact_index.v1",
+  "artifact_id": "episode_002_ymm4_observation_readback_pack_v1",
+  "ymm4_import_ready_pack_read_only": true,
+  "real_input_prep_pack_read_only": true,
+  "records": [
+    {
+      "record_id": "ymm4_import_ready_validation",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/validation_readback.json",
+      "role": "import_ready_readback",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "ymm4_import_ready_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/ymm4_import_ready_manifest.json",
+      "role": "import_ready_manifest",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "ymm4_cue_map",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/edit_slice_to_ymm4_cue_map.json",
+      "role": "cue_map_expected_observation",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "ymm4_manual_sheet",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/manual_ymm4_import_observation_sheet.md",
+      "role": "prior_operator_sheet",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "real_input_prep_validation",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/real_input_replacement_readiness_pack/validation_readback.json",
+      "role": "real_input_gate_readback",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "real_input_prep_contract",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/real_input_replacement_readiness_pack/real_input_replacement_contract.md",
+      "role": "real_input_gate_contract",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    }
+  ]
+}
