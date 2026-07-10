@@ -1,11 +1,11 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: supervisor-only-control-boundary-restored-v1
-State-Revision: 2026-07-10.4
+State-Revision: 2026-07-10.5
 Updated: 2026-07-10 JST
-Product-State: episode-002-ymm4-observation-ready
-Product-Gate: five-point-ymm4-import-observation
-Recommended-Next: verify-ymm4-five-observations
+Product-State: episode-002-ymm4-observation-completed-with-adapter-gap
+Product-Gate: evidence-backed-adapter-correction
+Recommended-Next: correct-speaker-mapping-and-placeholder-lane-gap
 External-State: public-repo-feature-branch
 
 ## Current Slice
@@ -21,9 +21,10 @@ External-State: public-repo-feature-branch
 - **Explicit integrity tool**: `scripts/check_project_state_sync.py` remains an
   opt-in checker for the shared runtime/cockpit fields. It is not invoked by a
   Stop hook and has no retry/fail-open behavior.
-- **Product scope**: no Episode 002 artifact, import candidate, adapter contract,
-  real-input receipt, default-branch integration, or publication setting was
-  changed in this correction.
+- **Product scope**: the tracked nine-row diagnostic CSV was imported in YMM4
+  `4.53.0.9`, observed, closed without saving, and persisted as an evidence
+  receipt plus regenerated readback. No render/export, production `.ymmp`, real
+  input, rights/public decision, default-branch integration, or upload changed.
 - **Cross-device resume**: after the normal three-document read budget, use the
   top `現在の別端末再開ハンドオフ` section in `docs/project-context.md`. It names
   the tracked branch, clean/parity check, current product facts, and exact
@@ -31,13 +32,20 @@ External-State: public-repo-feature-branch
 
 ## Product Position
 
-- The Episode 002 operator package, Japanese preview, five-point observation
-  sheet, machine readback, and nine-cue import CSV candidate are present.
-- Package generation and focused product validation are proven. The latest
-  product regression covered 16 tests for observation readback, import
+- The Episode 002 nine-row CSV produced nine ordered VoiceItems. Row order
+  remained `csv_row_1` through `csv_row_9`, corresponding to S1 -> S2 -> S3;
+  no missing, duplicate, or reordered cue was observed.
+- Linked subtitle text matched the speaker/cue after manual character mapping:
+  `れいむ` -> `ゆっくり霊夢` and `まりさ` -> `ゆっくり魔理沙`. Automatic
+  binding was not proven and the initial `まりさ` default was incorrect.
+- Timing order remained intact, but YMM4 recalculated the provisional
+  four-second blocks to 2790 frames / 46.50 seconds at 60 fps.
+- The result is `partial`: VoiceItem/subtitle lanes appeared, but the expected
+  ImageItem/TextItem placeholder scene lanes did not. Diagnostic text retained
+  its dry-run boundary and did not claim final/public readiness.
+- Receipt-driven regeneration and focused product validation are proven. The
+  current regression covers 24 tests for observation readback, import
   readiness, local edit execution, and real-input readiness.
-- Actual YMM4 import has not happened. Cue count, VoiceItem creation, subtitle
-  creation, timing order, and placeholder boundaries remain unobserved.
 - No verified Episode 002 source/transcript bundle has been supplied, so sample
   input has not been replaced by real material.
 - A 2026-07-10 full-suite audit reported 22 known failures and tracked-fixture
@@ -48,7 +56,7 @@ External-State: public-repo-feature-branch
 
 | Entry | Resolves | What becomes possible |
 | --- | --- | --- |
-| **Verify — recommended** | Five YMM4 observations are still unknown | Decide from evidence whether the import adapter needs a correction |
+| **Correct — recommended** | Speaker aliases require manual mapping and placeholder scene lanes are absent | Repair only the two evidence-backed adapter gaps, then repeat the bounded observation |
 | **Advance** | There is no verified real source/transcript | Validate a supplied receipt and replace the diagnostic sample input |
 | **Integrate** | Feature-branch work is not yet reconciled with the default branch | Audit the branch/default diff and choose the safe integration path |
 
@@ -60,9 +68,9 @@ are separate decisions; this public repository already exposes tracked Markdown.
 
 ## Human or External Decision Points
 
-- **YMM4 verification**: a human operator imports the tracked CSV and returns
-  the five bounded observations. The assistant can then read back and repair
-  only evidence-backed adapter defects.
+- **Adapter correction**: use the recorded five-point observation to correct
+  automatic speaker binding and ImageItem/TextItem placeholder-lane generation
+  without widening into render, production `.ymmp`, or visual acceptance.
 - **Real-input route**: a verified source/transcript, provenance/rights note,
   stable identity, and cue alignment are required before real replacement.
 - **Integration**: inspect the then-current feature/default diff before merging;
@@ -70,9 +78,10 @@ are separate decisions; this public repository already exposes tracked Markdown.
 
 ## Product Boundaries
 
-- Do not claim actual import, render/export, production `.ymmp`, real-input
-  replacement, rights approval, final thumbnail approval, upload, or public
-  readiness without corresponding evidence.
+- Actual import is proven only for this bounded diagnostic run. Do not claim
+  render/export, production `.ymmp`, real-input replacement, rights approval,
+  final thumbnail approval, upload, or public readiness without corresponding
+  evidence.
 - Do not turn compact state, task routing, or product review guidance back into
   a repository-side session prompt or response gate.
 

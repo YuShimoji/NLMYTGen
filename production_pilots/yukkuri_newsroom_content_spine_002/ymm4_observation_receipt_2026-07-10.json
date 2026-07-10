@@ -1,0 +1,133 @@
+{
+  "schema_version": "ymm4_gui_observation_receipt.v1",
+  "episode_id": "yukkuri_newsroom_content_spine_002",
+  "observed_at": "2026-07-10_JST",
+  "status": "partial",
+  "result": "pass_with_warnings",
+  "actual_ymm4_import_attempted": true,
+  "actual_ymm4_imported": true,
+  "source_csv": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+  "source_csv_sha256": "6FBB4666028DF4EF61F19C29505563141B1A82E932DC8E05BF8168F06347D38C",
+  "observed_by_environment": {
+    "terminal_or_device": "thank",
+    "yymm4_version": "4.53.0.9",
+    "yymm4_executable_path": "D:\\YukkuriMovieMaker_v4\\YukkuriMovieMaker.exe",
+    "yymm4_availability_status": "actual_gui_observation_completed",
+    "yymm4_executable_detected": true,
+    "launch_attempted": true,
+    "gui_observation_channel_available": true
+  },
+  "five_point_observations": {
+    "cue_order": {
+      "status": "passed",
+      "scene_order": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "scene_order_basis": "row_order_crosswalk_to_edit_slice_to_ymm4_cue_map",
+      "cue_order": [
+        "csv_row_1",
+        "csv_row_2",
+        "csv_row_3",
+        "csv_row_4",
+        "csv_row_5",
+        "csv_row_6",
+        "csv_row_7",
+        "csv_row_8",
+        "csv_row_9"
+      ]
+    },
+    "voice_items": {
+      "status": "passed",
+      "count": 9,
+      "missing_cue_ids": [],
+      "duplicate_cue_ids": [],
+      "reordered": false,
+      "layer_observation": "three_reimu_items_on_layer_0_and_six_marisa_items_on_layer_1"
+    },
+    "subtitle_text": {
+      "status": "passed_with_manual_mapping",
+      "all_text_matched": true,
+      "speaker_cue_match": true,
+      "diagnostic_text_boundary_visible": true,
+      "automatic_speaker_binding_observed": false,
+      "speaker_mapping": [
+        {
+          "source_speaker": "れいむ",
+          "selected_character": "ゆっくり霊夢",
+          "manual_selection_required": true
+        },
+        {
+          "source_speaker": "まりさ",
+          "initial_default_character": "ゆっくり霊夢",
+          "selected_character": "ゆっくり魔理沙",
+          "manual_correction_before_apply": true
+        }
+      ]
+    },
+    "timing_order": {
+      "status": "passed_with_variance",
+      "order_preserved": true,
+      "provisional_exact_durations_preserved": false,
+      "frame_rate": 60,
+      "total_frames": 2790,
+      "duration_seconds": 46.5,
+      "sampled_items": [
+        {
+          "cue_id": "csv_row_1",
+          "start_frame": 0,
+          "length_frames": 273,
+          "character": "ゆっくり霊夢"
+        },
+        {
+          "cue_id": "csv_row_2",
+          "start_frame": 273,
+          "length_frames": 293,
+          "character": "ゆっくり魔理沙"
+        },
+        {
+          "cue_id": "csv_row_9",
+          "start_frame": 2317,
+          "length_frames": 473,
+          "character": "ゆっくり魔理沙"
+        }
+      ]
+    },
+    "placeholder_boundary": {
+      "status": "not_met",
+      "voiceitem_subtitle_lane_present": true,
+      "imageitem_placeholder_lanes_present": false,
+      "textitem_placeholder_lanes_present": false,
+      "misleading_final_or_public_ready_claim_present": false
+    }
+  },
+  "import_errors": [],
+  "deviations": [
+    {
+      "deviation_id": "manual_speaker_mapping_required",
+      "severity": "adapter_correction_recommended",
+      "detail": "れいむ and まりさ were not found as YMM4 characters; まりさ initially defaulted to ゆっくり霊夢 and was manually corrected to ゆっくり魔理沙 before apply."
+    },
+    {
+      "deviation_id": "imageitem_textitem_placeholder_lanes_absent",
+      "severity": "adapter_correction_required",
+      "detail": "CSV import created VoiceItem/subtitle lanes only; no ImageItem or TextItem placeholder scene lanes appeared."
+    },
+    {
+      "deviation_id": "provisional_timing_recomputed_by_yymm4",
+      "severity": "informational",
+      "detail": "Cue order was preserved, but YMM4 voice durations replaced the provisional four-second blocks."
+    }
+  ],
+  "safety": {
+    "application_closed_without_saving": true,
+    "render_or_export_performed": false,
+    "ymmp_saved_or_written": false,
+    "real_input_replaced": false,
+    "rights_or_public_approval_performed": false,
+    "upload_performed": false
+  },
+  "screenshot_or_visual_evidence_paths": [],
+  "next_gate": "adapter_correction_after_observation"
+}

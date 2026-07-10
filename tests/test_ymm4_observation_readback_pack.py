@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from src.cli.main import main
 from src.pipeline.split_view_decision_evidence_prototype import (
     EXTERNAL_REF_MARKERS,
@@ -10,7 +12,9 @@ from src.pipeline.split_view_decision_evidence_prototype import (
 )
 from src.pipeline.ymm4_observation_readback_pack import (
     DEFAULT_ARTIFACT_ID,
+    OBSERVATION_RECEIPT_SCHEMA_VERSION,
     REQUIRED_YMM4_OBSERVATION_FILES,
+    _detect_yymm4,
     build_ymm4_observation_readback_pack,
     validate_ymm4_observation_readback_pack,
 )
@@ -22,6 +26,83 @@ SOURCE_PACKAGE = REPO_ROOT / "production_pilots" / "yukkuri_newsroom_content_spi
 
 def _load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _actual_observation_receipt() -> dict:
+    return {
+        "schema_version": OBSERVATION_RECEIPT_SCHEMA_VERSION,
+        "episode_id": "yukkuri_newsroom_content_spine_002",
+        "observed_at": "2026-07-10_JST",
+        "status": "partial",
+        "result": "pass_with_warnings",
+        "actual_ymm4_import_attempted": True,
+        "actual_ymm4_imported": True,
+        "source_csv": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+        "source_csv_sha256": "6FBB4666028DF4EF61F19C29505563141B1A82E932DC8E05BF8168F06347D38C",
+        "observed_by_environment": {
+            "terminal_or_device": "thank",
+            "yymm4_version": "4.53.0.9",
+            "yymm4_executable_path": r"D:\YukkuriMovieMaker_v4\YukkuriMovieMaker.exe",
+            "launch_attempted": True,
+            "gui_observation_channel_available": True,
+        },
+        "five_point_observations": {
+            "cue_order": {
+                "status": "passed",
+                "scene_order": ["S1", "S2", "S3"],
+                "cue_order": [f"csv_row_{index}" for index in range(1, 10)],
+            },
+            "voice_items": {
+                "status": "passed",
+                "count": 9,
+                "missing_cue_ids": [],
+                "duplicate_cue_ids": [],
+                "reordered": False,
+            },
+            "subtitle_text": {
+                "status": "passed_with_manual_mapping",
+                "speaker_mapping": [
+                    {"source_speaker": "れいむ", "selected_character": "ゆっくり霊夢"},
+                    {"source_speaker": "まりさ", "selected_character": "ゆっくり魔理沙"},
+                ],
+            },
+            "timing_order": {
+                "status": "passed_with_variance",
+                "order_preserved": True,
+                "frame_rate": 60,
+                "total_frames": 2790,
+                "duration_seconds": 46.5,
+            },
+            "placeholder_boundary": {
+                "status": "not_met",
+                "imageitem_placeholder_lanes_present": False,
+                "textitem_placeholder_lanes_present": False,
+            },
+        },
+        "import_errors": [],
+        "deviations": [
+            {
+                "deviation_id": "manual_speaker_mapping_required",
+                "severity": "adapter_correction_recommended",
+            },
+            {
+                "deviation_id": "imageitem_textitem_placeholder_lanes_absent",
+                "severity": "adapter_correction_required",
+            },
+        ],
+        "safety": {
+            "application_closed_without_saving": True,
+            "render_or_export_performed": False,
+            "ymmp_saved_or_written": False,
+            "real_input_replaced": False,
+            "rights_or_public_approval_performed": False,
+            "upload_performed": False,
+        },
+        "screenshot_or_visual_evidence_paths": [],
+        "next_gate": "adapter_correction_after_observation",
+        "artifact_id": "receipt_must_not_override_output_identity",
+        "public_ready": True,
+    }
 
 
 def test_ymm4_observation_readback_builds_operator_instruction_package(tmp_path) -> None:
@@ -96,6 +177,125 @@ def test_ymm4_observation_validation_catches_missing_manual_sheet(tmp_path) -> N
     assert "missing_file:manual_ymm4_observation_readback.md" in readback["failed_checks"]
 
 
+def test_ymm4_observation_validation_rejects_unhandled_blocked_mode(tmp_path) -> None:
+    output_dir = tmp_path / "ymm4_observation_readback_pack"
+    build_ymm4_observation_readback_pack(
+        package_dir=SOURCE_PACKAGE,
+        output_dir=output_dir,
+        artifact_id=DEFAULT_ARTIFACT_ID,
+    )
+    observation_path = output_dir / "observation_readback.json"
+    observation = _load(observation_path)
+    observation["observation_mode"] = "blocked"
+    observation_path.write_text(
+        json.dumps(observation, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+    readback = validate_ymm4_observation_readback_pack(output_dir)
+
+    assert readback["validation_status"] == "failed"
+    assert "observation_mode_invalid" in readback["failed_checks"]
+
+
+def test_ymm4_observation_readback_accepts_actual_gui_receipt_safely(tmp_path) -> None:
+    output_dir = tmp_path / "actual_ymm4_observation_readback_pack"
+    receipt_path = tmp_path / "actual_ymm4_observation_receipt.json"
+    receipt_path.write_text(
+        json.dumps(_actual_observation_receipt(), ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+    readback = build_ymm4_observation_readback_pack(
+        package_dir=SOURCE_PACKAGE,
+        output_dir=output_dir,
+        artifact_id=DEFAULT_ARTIFACT_ID,
+        observation_receipt=receipt_path,
+    )
+
+    assert readback["validation_status"] == "passed"
+    assert readback["status"] == "partial"
+    assert readback["artifact_id"] == DEFAULT_ARTIFACT_ID
+    assert readback["observation_mode"] == "actual_ymm4_gui_observation"
+    assert readback["actual_ymm4_import_attempted"] is True
+    assert readback["actual_ymm4_imported"] is True
+    assert readback["cue_count_observed"] == 9
+    assert readback["scene_order_observed"] == ["S1", "S2", "S3"]
+    assert readback["cue_order_observed"] == [f"csv_row_{index}" for index in range(1, 10)]
+    assert readback["next_gate"] == "adapter_correction_after_observation"
+    assert readback["public_ready"] is False
+    assert all(value is False for value in readback["closed_gate_flags"].values())
+
+    source_index = _load(output_dir / "source_artifact_index.json")
+    records = {record["record_id"]: record for record in source_index["records"]}
+    assert "actual_gui_observation_receipt" in records
+    html = (output_dir / "observation_preview.html").read_text(encoding="utf-8")
+    manual = (output_dir / "manual_ymm4_observation_readback.md").read_text(encoding="utf-8")
+    limitations = (output_dir / "limitations.md").read_text(encoding="utf-8")
+    assert "実YMM4 GUIでbounded importを観測済み" in html
+    assert "実観測は未実行" not in html
+    assert "実観測結果5点" in manual
+    assert "ImageItem/TextItem placeholder scene laneはない" in manual
+    assert "bounded CSV import" in limitations
+
+
+def test_ymm4_observation_readback_rejects_missing_explicit_receipt(tmp_path) -> None:
+    with pytest.raises(FileNotFoundError, match="observation receipt not found"):
+        build_ymm4_observation_readback_pack(
+            package_dir=SOURCE_PACKAGE,
+            output_dir=tmp_path / "output",
+            artifact_id=DEFAULT_ARTIFACT_ID,
+            observation_receipt=tmp_path / "missing.json",
+        )
+
+
+def test_ymm4_observation_readback_rejects_mismatched_source_hash(tmp_path) -> None:
+    receipt = _actual_observation_receipt()
+    receipt["source_csv_sha256"] = "0" * 64
+    receipt_path = tmp_path / "mismatched_source_receipt.json"
+    receipt_path.write_text(json.dumps(receipt, ensure_ascii=False), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="source_csv_sha256 does not match"):
+        build_ymm4_observation_readback_pack(
+            package_dir=SOURCE_PACKAGE,
+            output_dir=tmp_path / "output",
+            artifact_id=DEFAULT_ARTIFACT_ID,
+            observation_receipt=receipt_path,
+        )
+
+
+def test_ymm4_observation_readback_rejects_open_safety_gate(tmp_path) -> None:
+    receipt = _actual_observation_receipt()
+    receipt["safety"]["render_or_export_performed"] = True
+    receipt_path = tmp_path / "unsafe_receipt.json"
+    receipt_path.write_text(json.dumps(receipt, ensure_ascii=False), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="safety field must be false"):
+        build_ymm4_observation_readback_pack(
+            package_dir=SOURCE_PACKAGE,
+            output_dir=tmp_path / "output",
+            artifact_id=DEFAULT_ARTIFACT_ID,
+            observation_receipt=receipt_path,
+        )
+
+
+def test_ymm4_observation_readback_rejects_pass_claim_with_observed_gap(tmp_path) -> None:
+    receipt = _actual_observation_receipt()
+    receipt["status"] = "passed"
+    receipt["result"] = "passed"
+    receipt["next_gate"] = "render_proof_after_observation"
+    receipt_path = tmp_path / "false_pass_receipt.json"
+    receipt_path.write_text(json.dumps(receipt, ensure_ascii=False), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="requires all five checks to pass"):
+        build_ymm4_observation_readback_pack(
+            package_dir=SOURCE_PACKAGE,
+            output_dir=tmp_path / "output",
+            artifact_id=DEFAULT_ARTIFACT_ID,
+            observation_receipt=receipt_path,
+        )
+
+
 def test_cli_build_ymm4_observation_readback_json_output(tmp_path, capsys) -> None:
     output_dir = tmp_path / "cli_ymm4_observation_readback_pack"
 
@@ -133,6 +333,51 @@ def test_cli_build_ymm4_observation_readback_json_output(tmp_path, capsys) -> No
     assert payload["real_input_replaced"] is False
     assert payload["rights_approved"] is False
     assert payload["public_ready"] is False
+
+
+def test_cli_build_ymm4_observation_readback_with_actual_receipt(tmp_path, capsys) -> None:
+    output_dir = tmp_path / "cli_actual_ymm4_observation_readback_pack"
+    receipt_path = tmp_path / "actual_ymm4_observation_receipt.json"
+    receipt_path.write_text(
+        json.dumps(_actual_observation_receipt(), ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+    code = main(
+        [
+            "build-ymm4-observation-readback-pack",
+            "--package",
+            str(SOURCE_PACKAGE),
+            "--output",
+            str(output_dir),
+            "--artifact-id",
+            DEFAULT_ARTIFACT_ID,
+            "--observation-receipt",
+            str(receipt_path),
+            "--format",
+            "json",
+        ]
+    )
+
+    assert code == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["validation_status"] == "passed"
+    assert payload["status"] == "partial"
+    assert payload["observation_mode"] == "actual_ymm4_gui_observation"
+    assert payload["cue_count_observed"] == 9
+
+
+def test_detect_yymm4_uses_environment_override_and_current_home(tmp_path, monkeypatch) -> None:
+    executable = tmp_path / "YukkuriMovieMaker.exe"
+    executable.touch()
+    monkeypatch.setenv("NLMYTGEN_YMM4_EXE", str(executable))
+
+    detected = _detect_yymm4()
+
+    assert detected["terminal_or_device"] == Path.home().name
+    assert detected["yymm4_executable_detected"] is True
+    assert detected["yymm4_executable_path"] == str(executable)
+    assert detected["environment_override_used"] is True
 
 
 def test_ymm4_observation_readback_is_local_and_claims_stay_closed(tmp_path) -> None:

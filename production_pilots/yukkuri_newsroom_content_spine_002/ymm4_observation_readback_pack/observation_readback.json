@@ -1,45 +1,11 @@
 {
   "schema_version": "ymm4_observation_readback.v1",
-  "status": "blocked",
   "artifact_id": "episode_002_ymm4_observation_readback_pack_v1",
   "episode_id": "yukkuri_newsroom_content_spine_002",
   "source_import_ready_pack_reference": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack",
   "source_real_input_prep_reference": "production_pilots/yukkuri_newsroom_content_spine_002/real_input_replacement_readiness_pack",
-  "observation_mode": "operator_instruction_only",
-  "actual_ymm4_import_attempted": false,
-  "actual_ymm4_imported": false,
-  "observed_at": "not_observed_2026-07-09_JST",
-  "observed_by_environment": {
-    "terminal_or_device": "Planner007",
-    "yymm4_availability_status": "executable_detected_but_gui_observation_not_attempted",
-    "yymm4_executable_detected": true,
-    "yymm4_executable_path": "C:\\Users\\PLANNER007\\Downloads\\YukkuriMovieMaker_v4\\YukkuriMovieMaker.exe",
-    "start_menu_shortcut_detected": true,
-    "start_menu_shortcut_path": "C:\\Users\\PLANNER007\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\YukkuriMovieMaker.lnk",
-    "launch_attempted": false,
-    "gui_observation_channel_available": false
-  },
   "cue_count_expected": 9,
-  "cue_count_observed": 0,
   "scene_count_expected": 3,
-  "voice_item_observed": "not_observed",
-  "subtitle_item_observed": "not_observed",
-  "timing_order_observed": "not_observed",
-  "placeholder_boundary_observed": "not_observed",
-  "import_errors": [],
-  "deviations": [
-    {
-      "deviation_id": "actual_gui_observation_not_performed",
-      "severity": "blocking_for_observation_pass",
-      "detail": "YMM4 executable was detected locally, but this worker has no safe manual/GUI visual readback channel for importing and inspecting the project."
-    }
-  ],
-  "blocker": {
-    "blocker_id": "manual_gui_observation_required",
-    "status": "blocked_for_actual_observation",
-    "reason": "YMM4 executable was detected locally, but this worker has no safe manual/GUI visual readback channel for importing and inspecting the project.",
-    "operator_action": "Open YMM4 manually, import the CSV candidate, inspect cue/voice/subtitle/timing/placeholder boundaries, and return the five observations."
-  },
   "expected_import_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
   "importable_csv_candidates": [
     {
@@ -58,7 +24,6 @@
       "role": "alternate_import_candidate"
     }
   ],
-  "screenshot_or_visual_evidence_paths": [],
   "rendered_video_created": false,
   "ymmp_file_created": false,
   "production_ymmp_written": false,
@@ -81,8 +46,208 @@
     "live_fetch_performed": false,
     "external_media_downloaded": false
   },
-  "next_gate": "manual_ymm4_import_observation_return",
+  "next_gate": "adapter_correction_after_observation",
   "output_dir": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_readback_pack",
+  "status": "partial",
+  "observation_result": "pass_with_warnings",
+  "observation_mode": "actual_ymm4_gui_observation",
+  "actual_ymm4_import_attempted": true,
+  "actual_ymm4_imported": true,
+  "observed_at": "2026-07-10_JST",
+  "observed_by_environment": {
+    "terminal_or_device": "thank",
+    "yymm4_availability_status": "actual_gui_observation_completed",
+    "yymm4_executable_detected": true,
+    "yymm4_executable_path": "D:\\YukkuriMovieMaker_v4\\YukkuriMovieMaker.exe",
+    "environment_override_used": true,
+    "start_menu_shortcut_detected": true,
+    "start_menu_shortcut_path": "C:\\Users\\thank\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\YukkuriMovieMaker.lnk",
+    "launch_attempted": true,
+    "gui_observation_channel_available": true,
+    "yymm4_version": "4.53.0.9"
+  },
+  "cue_count_observed": 9,
+  "scene_order_observed": [
+    "S1",
+    "S2",
+    "S3"
+  ],
+  "cue_order_observed": [
+    "csv_row_1",
+    "csv_row_2",
+    "csv_row_3",
+    "csv_row_4",
+    "csv_row_5",
+    "csv_row_6",
+    "csv_row_7",
+    "csv_row_8",
+    "csv_row_9"
+  ],
+  "voice_item_observed": "9_voiceitems_no_missing_duplicate_or_reorder",
+  "subtitle_item_observed": "linked_subtitle_texts_match_after_manual_character_mapping",
+  "timing_order_observed": "order_preserved_actual_voice_duration_46.5_seconds",
+  "placeholder_boundary_observed": "imageitem_textitem_placeholder_lanes_absent",
+  "five_point_observations": {
+    "cue_order": {
+      "status": "passed",
+      "scene_order": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "scene_order_basis": "row_order_crosswalk_to_edit_slice_to_ymm4_cue_map",
+      "cue_order": [
+        "csv_row_1",
+        "csv_row_2",
+        "csv_row_3",
+        "csv_row_4",
+        "csv_row_5",
+        "csv_row_6",
+        "csv_row_7",
+        "csv_row_8",
+        "csv_row_9"
+      ]
+    },
+    "voice_items": {
+      "status": "passed",
+      "count": 9,
+      "missing_cue_ids": [],
+      "duplicate_cue_ids": [],
+      "reordered": false,
+      "layer_observation": "three_reimu_items_on_layer_0_and_six_marisa_items_on_layer_1"
+    },
+    "subtitle_text": {
+      "status": "passed_with_manual_mapping",
+      "all_text_matched": true,
+      "speaker_cue_match": true,
+      "diagnostic_text_boundary_visible": true,
+      "automatic_speaker_binding_observed": false,
+      "speaker_mapping": [
+        {
+          "source_speaker": "れいむ",
+          "selected_character": "ゆっくり霊夢",
+          "manual_selection_required": true
+        },
+        {
+          "source_speaker": "まりさ",
+          "initial_default_character": "ゆっくり霊夢",
+          "selected_character": "ゆっくり魔理沙",
+          "manual_correction_before_apply": true
+        }
+      ]
+    },
+    "timing_order": {
+      "status": "passed_with_variance",
+      "order_preserved": true,
+      "provisional_exact_durations_preserved": false,
+      "frame_rate": 60,
+      "total_frames": 2790,
+      "duration_seconds": 46.5,
+      "sampled_items": [
+        {
+          "cue_id": "csv_row_1",
+          "start_frame": 0,
+          "length_frames": 273,
+          "character": "ゆっくり霊夢"
+        },
+        {
+          "cue_id": "csv_row_2",
+          "start_frame": 273,
+          "length_frames": 293,
+          "character": "ゆっくり魔理沙"
+        },
+        {
+          "cue_id": "csv_row_9",
+          "start_frame": 2317,
+          "length_frames": 473,
+          "character": "ゆっくり魔理沙"
+        }
+      ]
+    },
+    "placeholder_boundary": {
+      "status": "not_met",
+      "voiceitem_subtitle_lane_present": true,
+      "imageitem_placeholder_lanes_present": false,
+      "textitem_placeholder_lanes_present": false,
+      "misleading_final_or_public_ready_claim_present": false
+    }
+  },
+  "timeline_observation": {
+    "status": "passed_with_variance",
+    "order_preserved": true,
+    "provisional_exact_durations_preserved": false,
+    "frame_rate": 60,
+    "total_frames": 2790,
+    "duration_seconds": 46.5,
+    "sampled_items": [
+      {
+        "cue_id": "csv_row_1",
+        "start_frame": 0,
+        "length_frames": 273,
+        "character": "ゆっくり霊夢"
+      },
+      {
+        "cue_id": "csv_row_2",
+        "start_frame": 273,
+        "length_frames": 293,
+        "character": "ゆっくり魔理沙"
+      },
+      {
+        "cue_id": "csv_row_9",
+        "start_frame": 2317,
+        "length_frames": 473,
+        "character": "ゆっくり魔理沙"
+      }
+    ]
+  },
+  "speaker_mapping": [
+    {
+      "source_speaker": "れいむ",
+      "selected_character": "ゆっくり霊夢",
+      "manual_selection_required": true
+    },
+    {
+      "source_speaker": "まりさ",
+      "initial_default_character": "ゆっくり霊夢",
+      "selected_character": "ゆっくり魔理沙",
+      "manual_correction_before_apply": true
+    }
+  ],
+  "import_errors": [],
+  "deviations": [
+    {
+      "deviation_id": "manual_speaker_mapping_required",
+      "severity": "adapter_correction_recommended",
+      "detail": "れいむ and まりさ were not found as YMM4 characters; まりさ initially defaulted to ゆっくり霊夢 and was manually corrected to ゆっくり魔理沙 before apply."
+    },
+    {
+      "deviation_id": "imageitem_textitem_placeholder_lanes_absent",
+      "severity": "adapter_correction_required",
+      "detail": "CSV import created VoiceItem/subtitle lanes only; no ImageItem or TextItem placeholder scene lanes appeared."
+    },
+    {
+      "deviation_id": "provisional_timing_recomputed_by_yymm4",
+      "severity": "informational",
+      "detail": "Cue order was preserved, but YMM4 voice durations replaced the provisional four-second blocks."
+    }
+  ],
+  "blocker": {
+    "blocker_id": "none",
+    "status": "resolved_by_actual_gui_observation",
+    "reason": "The bounded YMM4 GUI import observation was completed.",
+    "operator_action": "none"
+  },
+  "screenshot_or_visual_evidence_paths": [],
+  "source_csv_sha256": "6FBB4666028DF4EF61F19C29505563141B1A82E932DC8E05BF8168F06347D38C",
+  "receipt_source_csv": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+  "safety": {
+    "application_closed_without_saving": true,
+    "render_or_export_performed": false,
+    "ymmp_saved_or_written": false,
+    "real_input_replaced": false,
+    "rights_or_public_approval_performed": false,
+    "upload_performed": false
+  },
   "validation_status": "passed",
   "failed_checks": [],
   "checks": {
@@ -112,6 +277,6 @@
   "primary_review_file": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_observation_readback_pack\\observation_preview.html",
   "primary_human_review": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_observation_readback_pack\\observation_preview.html",
   "primary_machine_readable": "production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_observation_readback_pack\\observation_readback.json",
-  "launcher_or_open_command": "Invoke-Item -LiteralPath \"C:\\Users\\PLANNER007\\NLMYTGen\\production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_observation_readback_pack\\observation_preview.html\"",
+  "launcher_or_open_command": "Invoke-Item -LiteralPath \"C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen\\production_pilots\\yukkuri_newsroom_content_spine_002\\ymm4_observation_readback_pack\\observation_preview.html\"",
   "access_state": "verified_present"
 }

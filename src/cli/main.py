@@ -3046,6 +3046,10 @@ def main(argv: list[str] | None = None) -> int:
         help="YMM4 observation readback artifact id",
     )
     p_ymm4_observation_readback_pack.add_argument(
+        "--observation-receipt",
+        help="Optional tracked actual-GUI observation receipt JSON",
+    )
+    p_ymm4_observation_readback_pack.add_argument(
         "--format",
         choices=["text", "json"],
         default="text",
@@ -5872,6 +5876,7 @@ def _cmd_build_ymm4_observation_readback_pack(args: argparse.Namespace) -> int:
         package_dir=getattr(args, "package"),
         output_dir=getattr(args, "output", None),
         artifact_id=getattr(args, "artifact_id"),
+        observation_receipt=getattr(args, "observation_receipt", None),
     )
     fmt = getattr(args, "format", "text")
     if fmt == "json":

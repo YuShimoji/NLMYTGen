@@ -45,6 +45,13 @@
       "role": "real_input_gate_contract",
       "exists_expected": true,
       "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "actual_gui_observation_receipt",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_receipt_2026-07-10.json",
+      "role": "actual_gui_observation_receipt",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
     }
   ]
 }

@@ -14,7 +14,7 @@ not a governance document or roadmap.
 | ymm4-import-ready-episode002 | OUTPUT_VIDEO_EDITING | accepted/close-ready | YMM4 import-ready edit package exists. |
 | ymm4-import-ready-ja-review-episode002 | GUI_IA_I18N | accepted/close-ready | Japanese-first import-ready review surface exists; no YMM4 import/render/.ymmp. |
 | verified-real-input-prep-episode002 | INPUT_API_HUB / VERIFIED_REAL_INPUT_PREP | accepted/close-ready | Real-input replacement readiness pack exists; required local inputs defined; candidate input count is 0. |
-| ymm4-observation-readback-episode002 | OUTPUT_VIDEO / YMM4_OBSERVATION_READBACK | hold/operator-instruction | Observation package exists; YMM4 executable and CSV candidate detected, but actual GUI observation is not performed by worker. |
+| ymm4-observation-readback-episode002 | OUTPUT_VIDEO / YMM4_OBSERVATION_READBACK | observed/adapter-correction-needed | Actual bounded import produced 9/9 ordered VoiceItems; speaker mapping was manual and ImageItem/TextItem placeholder lanes were absent. |
 | integrity-triage | INTEGRITY_TRIAGE | paused | Full-suite drift remains nonblocking for targeted slices. |
-| control-boundary-correction | INTEGRITY_TRIAGE | completed/return-to-product | Repo-side supervisor control plane removed; next product entry is the YMM4 five-point observation. |
-| cross-device-restart-handoff | INTEGRITY_TRIAGE | completed/remote-seal | Current restart context is persisted at the top of project-context, with runtime/Cockpit navigation synchronized. |
+| control-boundary-correction | INTEGRITY_TRIAGE | completed/return-to-product | Repo-side supervisor control plane remains removed; product work has advanced through the YMM4 five-point observation. |
+| cross-device-restart-handoff | INTEGRITY_TRIAGE | completed/remote-seal | Current restart context points to the actual-observation branch and the evidence-backed adapter-correction gate. |

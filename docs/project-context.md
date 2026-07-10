@@ -3,14 +3,13 @@
 ## 現在の別端末再開ハンドオフ（2026-07-10 JST）
 
 この節だけが現在の再開地点である。下にある日付付き `Current handoff` は判断履歴であり、
-現在の指示として読まない。
+現在の指示として読まない。下部に残る旧端末の絶対pathは当時の履歴であり、現在の
+実行pathとして再利用しない。
 
-- **取得先**: `origin/codex/workflow-velocity-and-current-state-v1`。
-  直前の境界是正commitは `c0d098f` であり、このhandoff記録を含むbranch先端を
-  取得してから判断する。
+- **取得先**: `origin/codex/episode-002-ymm4-five-point-observation-v1` のbranch先端。
 - **再開前確認**: `git fetch --prune origin`、`git switch
-  codex/workflow-velocity-and-current-state-v1`、`git pull --ff-only origin
-  codex/workflow-velocity-and-current-state-v1` の順に実行し、`git status
+  codex/episode-002-ymm4-five-point-observation-v1`、`git pull --ff-only origin
+  codex/episode-002-ymm4-five-point-observation-v1` の順に実行し、`git status
   --short --branch` と `git rev-list --left-right --count "HEAD...@{u}"` が
   clean / `0 0` であることを確認する。
 - **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
@@ -19,21 +18,44 @@
   `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_readback_pack/manual_ymm4_observation_readback.md`
   を追加で開く。
 - **現在の状態**: `Project-State-ID` は
-  `supervisor-only-control-boundary-restored-v1`。repo内のSupervisor Prompt正本、
-  generic Worker authority、回答品質lint、state-sync Stop hookは除去済みで、
-  repoは製品仕様・artifact・状態・履歴・navigationだけを保持する。
-- **製品の事実**: Episode 002はYMM4五点観測用のpreview、readback、9 cue CSV候補まで
-  準備済み。actual import、VoiceItem/subtitle/timing/placeholderの実観測、render/export、
-  production `.ymmp`、実素材置換、rights/public/final thumbnail/uploadは未実施。
-- **次の入口**: 推奨は `Verify`（YMM4でCSVを読み込み、cue順、9 VoiceItem、
-  subtitle/text、timing order、placeholder境界の五点を返す）。`Advance` はverified
-  source/transcript受領後の実素材置換、`Integrate` はfeature/default差分を再計測してからの
-  統合判断である。Pages公開は別判断であり、public repoのMarkdown現在地には不要。
-- **確認済み**: 境界是正ではPython compile、state alignment CLI、guardrail/state-sync
-  targeted testsが通過し、full pytestは既知のfixture side effectを持つため実行していない。
-  production artifactは変更していない。
+  `supervisor-only-control-boundary-restored-v1`、revisionは`2026-07-10.5`。
+  Product-Stateは`episode-002-ymm4-observation-completed-with-adapter-gap`、
+  Product-Gateは`evidence-backed-adapter-correction`。
+- **実観測の事実**: tracked 9-row CSVをYMM4 `4.53.0.9`へ読み込み、9/9 VoiceItems、
+  csv_row_1 -> csv_row_9、cue map対応のS1 -> S2 -> S3、linked subtitle text、
+  timing orderを確認した。YMM4はprojectを保存せず閉じた。
+- **五点結果**: cue順=OK、VoiceItem件数/欠落/重複/順序=OK、字幕本文=手動話者mapping後OK、
+  timing順=OK（60fps・2790 frames・46.50秒へ再計算）、placeholder境界=NG。
+  CSV importではVoiceItem/subtitleのみ生成され、期待されたImageItem/TextItem placeholder
+  scene laneは現れなかった。`まりさ`は誤った初期mappingから`ゆっくり魔理沙`へ手動補正した。
+- **証跡**: input receiptは
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_receipt_2026-07-10.json`、
+  machine readbackは同packageの`ymm4_observation_readback_pack/observation_readback.json`。
+  generator/CLIは`--observation-receipt`を明示したactual modeと、未指定時の従来operator-only
+  modeを両方保持する。
+- **次の入口**: 推奨は`Correct`。automatic speaker bindingとImageItem/TextItem placeholder
+  laneの二つだけを実測証拠に基づいて補正し、同じbounded observationを再実行する。
+  `Advance`はverified source/transcript受領後、`Integrate`はfeature/default差分再計測後。
+- **確認済み**: observation/import/local-edit/real-inputのfocused regressionは24 passed。
+  full pytestは既知のfixture side effectを持つため実行していない。render/export、production
+  `.ymmp`、実素材置換、rights/public/final thumbnail/uploadは未実施のまま閉じている。
 
 ## PROJECT CONTEXT
+- Episode 002 actual YMM4 five-point observation (2026-07-10 JST):
+  `regenerated_draft_yymm4.csv` was imported in YMM4 `4.53.0.9` and produced
+  nine ordered VoiceItems with matching linked subtitle text after manual
+  character mapping. Cue order remained `csv_row_1` through `csv_row_9`, mapped
+  to S1 -> S2 -> S3. YMM4 recalculated provisional four-second durations to
+  2790 frames / 46.50 seconds at 60 fps while preserving order. The result is
+  `partial`, not a production pass: expected ImageItem/TextItem placeholder
+  scene lanes were absent, and `れいむ`/`まりさ` required manual binding (with
+  `まりさ` initially defaulting to the wrong character). The application was
+  closed without saving; no render/export, production `.ymmp`, real-input
+  replacement, rights/public/final-thumbnail approval, or upload occurred.
+  The tracked actual-observation receipt drives regenerated JSON/HTML/Markdown
+  readback, while omitting the receipt preserves the prior operator-only mode.
+  The next product gate is evidence-backed correction of those two adapter
+  gaps, followed by the same bounded observation.
 - Control-boundary correction (2026-07-10 JST):
   `supervisor-only-control-boundary-restored-v1` removes the repository-side
   Supervisor Prompt source, generic Worker authority, response-quality lint,

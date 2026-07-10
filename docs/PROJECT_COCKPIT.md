@@ -1,11 +1,11 @@
 # NLMYTGen Project Cockpit
 
 Project-State-ID: supervisor-only-control-boundary-restored-v1
-State-Revision: 2026-07-10.4
+State-Revision: 2026-07-10.5
 Updated: 2026-07-10 JST
-Product-State: episode-002-ymm4-observation-ready
-Product-Gate: five-point-ymm4-import-observation
-Recommended-Next: verify-ymm4-five-observations
+Product-State: episode-002-ymm4-observation-completed-with-adapter-gap
+Product-Gate: evidence-backed-adapter-correction
+Recommended-Next: correct-speaker-mapping-and-placeholder-lane-gap
 External-State: public-repo-feature-branch
 
 このページは、public repository で現在地を読むための追跡済み Markdown です。
@@ -21,15 +21,16 @@ External-State: public-repo-feature-branch
 
 ## いまの一文
 
-Episode 002 は「YMM4 に読み込み、五つの実観測を返せる準備」まで完了しています。
-実 import と実素材置換は未実施です。今回、repo 内に作られていた監修制御面を除去し、
-実行 authority を Web から渡される self-contained prompt だけに戻しました。
+Episode 002 の9行CSVはYMM4 `4.53.0.9`で実importされ、9 VoiceItems、順序、
+字幕本文、timing orderを確認しました。結果はpartialで、話者の手動mappingと
+ImageItem/TextItem placeholder lane欠落が次のadapter修正対象です。保存・render・
+実素材置換は行っていません。
 
 ## 現在の状態
 
 | 対象 | 現在地 | 次に進む条件 | まだ保証しないこと |
 | --- | --- | --- | --- |
-| Episode 002 観測 | 日本語 preview、五点シート、readback、九 cue CSV が生成済み | 人間が YMM4 import 後の五点を返す | actual import / observed cue / render |
+| Episode 002 観測 | 9/9 VoiceItemsを順序どおり実観測。字幕は手動話者mapping後に一致。実durationは2790 frames / 46.50秒 | speaker aliasとplaceholder laneを証拠範囲で補正 | render / production `.ymmp` / public-ready |
 | 実素材置換 | intake 契約はあるが検証済み候補はゼロ | source / transcript / provenance / stable identity / cue alignment を受領 | sample input を real input と扱うこと |
 | feature branch | control-boundary correctionを実装 | default branch との差分を再計算し、integration を判断 | default branch に統合済みという主張 |
 | 公開面 | public repo のこの Markdown で現在地を参照可能 | Pages が必要な場合だけ別途 publication を選ぶ | Pages / Wiki の自動公開 |
@@ -47,7 +48,7 @@ Episode 002 は「YMM4 に読み込み、五つの実観測を返せる準備」
 
 | 入口 | 解く bottleneck | 選ぶと可能になること |
 | --- | --- | --- |
-| **Verify（推奨）** | YMM4 実観測がゼロ | adapter の修正要否を五つの証拠で判断できる |
+| **Correct（推奨）** | 話者aliasが自動bindingされず、ImageItem/TextItem placeholder laneがない | 二つの実測gapだけを修正し、bounded observationを再実行できる |
 | **Advance** | sample fixture から先へ進めない | 検証済み実素材 receipt を作り、置換へ進める |
 | **Integrate** | feature/default branch の関係が未判断 | 最新 diff を監査し、安全な統合方針を選べる |
 
@@ -55,11 +56,12 @@ Explore は将来の visible product review debt に降格し、Excise は現在
 default branch への integration と GitHub Pages の publication は別の選択です。
 public repo の安定した Markdown URL を使うだけなら Pages は不要です。
 
-推奨既定は **Verify** です。五点観測が返れば、実装を広げず adapter の修正要否を
-証拠から確定できます。
+推奨既定は **Correct** です。五点観測で確認されたspeaker mappingとplaceholder laneの
+二点だけを対象にし、renderや実素材へscopeを広げません。
 
 ## 公開境界
 
 このページには private URL、token、raw source、article body、権利未確認素材、
-ローカル絶対パスを載せません。actual import、render、real-input replacement、
-rights approval、upload completion は証拠が揃うまで未完了として扱います。
+ローカル絶対パスを載せません。actual importはこのbounded diagnostic runだけで確認済みです。
+render、production `.ymmp`、real-input replacement、rights approval、upload completion は
+証拠が揃うまで未完了として扱います。

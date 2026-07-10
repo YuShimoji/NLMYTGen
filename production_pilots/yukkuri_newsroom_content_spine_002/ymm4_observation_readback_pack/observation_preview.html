@@ -53,13 +53,13 @@
   <main>
     <section class="hero">
       <div class="metrics">
-        <span class="metric">status: blocked</span>
-        <span class="metric">mode: operator_instruction_only</span>
+        <span class="metric">status: partial</span>
+        <span class="metric">mode: actual_ymm4_gui_observation</span>
         <span class="metric">expected cues: 9</span>
-        <span class="metric">observed cues: 0</span>
+        <span class="metric">observed cues: 9</span>
       </div>
       <h1>Episode 002 YMM4観測readback</h1>
-      <p>実観測は未実行。YMM4 executable は検出済みだが、GUI importをこのworkerが安全に操作・視認する経路がないため、operator instructionとして保持する。</p>
+      <p>実YMM4 GUIでbounded importを観測済み。VoiceItems=9; subtitle=passed_with_manual_mapping; timing=passed_with_variance; placeholder=not_met.</p>
     </section>
 
     <section data-region="pipeline-runway">
@@ -67,22 +67,22 @@
       <div class="runway"><div class="step">
   <strong>1. 準備済み</strong>
   <code>import-ready pack</code>
-  <p>3 scenes / 9 cues の観測対象は定義済み。</p>
+  <p>3 scenes / 9 cues の観測対象を使用。</p>
 </div>
 <div class="step">
-  <strong>2. 今回の判定</strong>
-  <code>operator_instruction_only</code>
-  <p>YMM4実行ファイルは検出したが、GUI importを安全に操作・視認できる経路がない。</p>
+  <strong>2. 実観測</strong>
+  <code>actual YMM4 GUI</code>
+  <p>9 VoiceItemsの順序とlinked subtitle textを確認。</p>
 </div>
 <div class="step">
-  <strong>3. 返却待ち</strong>
-  <code>manual observation</code>
-  <p>operatorがYMM4上でimport結果を確認し、5点だけ返す。</p>
+  <strong>3. 今回の判定</strong>
+  <code>partial</code>
+  <p>subtitle=passed_with_manual_mapping; timing=passed_with_variance; placeholder=not_met.</p>
 </div>
 <div class="step">
   <strong>4. 次判断</strong>
-  <code>manual_ymm4_import_observation_return</code>
-  <p>観測結果によりadapter correction、real input receipt、render proof待ちを分岐する。</p>
+  <code>adapter_correction_after_observation</code>
+  <p>観測証拠に限定して次gateへ進む。</p>
 </div></div>
     </section>
 
@@ -92,15 +92,15 @@
         <thead><tr><th>項目</th><th>readback</th></tr></thead>
         <tbody><tr>
   <td><code>observation_mode</code></td>
-  <td>operator_instruction_only</td>
+  <td>actual_ymm4_gui_observation</td>
 </tr>
 <tr>
   <td><code>actual_ymm4_import_attempted</code></td>
-  <td>False</td>
+  <td>True</td>
 </tr>
 <tr>
   <td><code>actual_ymm4_imported</code></td>
-  <td>False</td>
+  <td>True</td>
 </tr>
 <tr>
   <td><code>cue_count_expected</code></td>
@@ -108,23 +108,58 @@
 </tr>
 <tr>
   <td><code>cue_count_observed</code></td>
-  <td>0</td>
+  <td>9</td>
+</tr>
+<tr>
+  <td><code>scene_order_observed</code></td>
+  <td>[&#x27;S1&#x27;, &#x27;S2&#x27;, &#x27;S3&#x27;]</td>
+</tr>
+<tr>
+  <td><code>cue_order_observed</code></td>
+  <td>[&#x27;csv_row_1&#x27;, &#x27;csv_row_2&#x27;, &#x27;csv_row_3&#x27;, &#x27;csv_row_4&#x27;, &#x27;csv_row_5&#x27;, &#x27;csv_row_6&#x27;, &#x27;csv_row_7&#x27;, &#x27;csv_row_8&#x27;, &#x27;csv_row_9&#x27;]</td>
 </tr>
 <tr>
   <td><code>voice_item_observed</code></td>
-  <td>not_observed</td>
+  <td>9_voiceitems_no_missing_duplicate_or_reorder</td>
 </tr>
 <tr>
   <td><code>subtitle_item_observed</code></td>
-  <td>not_observed</td>
+  <td>linked_subtitle_texts_match_after_manual_character_mapping</td>
 </tr>
 <tr>
   <td><code>timing_order_observed</code></td>
-  <td>not_observed</td>
+  <td>order_preserved_actual_voice_duration_46.5_seconds</td>
 </tr>
 <tr>
   <td><code>placeholder_boundary_observed</code></td>
-  <td>not_observed</td>
+  <td>imageitem_textitem_placeholder_lanes_absent</td>
+</tr></tbody>
+      </table>
+    </section>
+
+    <section data-region="five-point-observations">
+      <h2>五点観測</h2>
+      <table class="matrix">
+        <thead><tr><th>項目</th><th>判定</th></tr></thead>
+        <tbody><tr>
+  <td><code>cue_order</code></td>
+  <td>passed</td>
+</tr>
+<tr>
+  <td><code>voice_items</code></td>
+  <td>passed</td>
+</tr>
+<tr>
+  <td><code>subtitle_text</code></td>
+  <td>passed_with_manual_mapping</td>
+</tr>
+<tr>
+  <td><code>timing_order</code></td>
+  <td>passed_with_variance</td>
+</tr>
+<tr>
+  <td><code>placeholder_boundary</code></td>
+  <td>not_met</td>
 </tr></tbody>
       </table>
     </section>
@@ -132,9 +167,9 @@
     <section data-region="expected-import-path">
       <h2>expected import path</h2>
       <div class="band">
-        <p>YMM4: <code>C:\Users\PLANNER007\Downloads\YukkuriMovieMaker_v4\YukkuriMovieMaker.exe</code></p>
+        <p>YMM4: <code>D:\YukkuriMovieMaker_v4\YukkuriMovieMaker.exe</code></p>
         <p>CSV: <code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv</code></p>
-        <p>blocker: <span class="hold">YMM4 executable was detected locally, but this worker has no safe manual/GUI visual readback channel for importing and inspecting the project.</span></p>
+        <p>observation result: <span class="hold">pass_with_warnings / partial</span></p>
       </div>
       <table class="matrix">
         <thead><tr><th>candidate</th><th>exists</th><th>role</th></tr></thead>
@@ -157,9 +192,9 @@
     </section>
 
     <section data-region="untested">
-      <h2>未検証のまま残る項目</h2>
+      <h2>未検証または未解消の項目</h2>
       <div class="band">
-        <p>VoiceItem、subtitle、timing order、placeholder boundary、visual evidence は actual GUI importが未実行のため未観測。</p>
+        <p>recorded deviations: manual_speaker_mapping_required, imageitem_textitem_placeholder_lanes_absent, provisional_timing_recomputed_by_yymm4。render/exportやproduction approvalは未実施。</p>
       </div>
     </section>
 
@@ -223,7 +258,7 @@
     <section data-region="next-decision">
       <h2>次の判断</h2>
       <div class="band">
-        <p><code>manual_ymm4_import_observation_return</code>: operatorが5点の観測結果を返した後、adapter correction / real input receipt / later render proof のどれに進むかを決める。</p>
+        <p><code>adapter_correction_after_observation</code>: 五点観測の証拠とrecorded deviationsに限定して次gateへ進む。</p>
       </div>
     </section>
   </main>
