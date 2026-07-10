@@ -52,16 +52,16 @@
   <main>
     <section class="hero">
       <div class="metrics">
-        <span class="metric">import state: ready_for_manual_import_observation</span>
+        <span class="metric">import state: ready_for_bounded_alias_reobservation</span>
         <span class="metric">cue数: 9</span>
         <span class="metric">scene数: 3</span>
         <span class="metric">gate: True / 閉鎖中</span>
       </div>
       <h1>Episode 002 YMM4インポート準備レビュー</h1>
       <div class="summary-grid" aria-label="レビュー概要">
-        <p class="summary-box"><strong>このpackage</strong>既存のローカル編集queueを、YMM4で後日観測するためのcue順・仮timing・voice/subtitle・visual/overlay対応に読み替えたレビュー面です。</p>
-        <p class="summary-box"><strong>次に可能になること</strong>明示的なYMM4観測gateが開いた後、CSV import前後のcue順、表示意図、placeholder境界をoperatorが確認できます。</p>
-        <p class="summary-box"><strong>閉じたままのこと</strong>YMM4 import、render/export、production `.ymmp` write、real input replacement、rights/public approval、final thumbnail approval、uploadは未実行です。</p>
+        <p class="summary-box"><strong>このpackage</strong>canonical speaker identityを維持し、明示選択したYMM4 character profileでspeaker列だけを射影したderived CSVを提供します。</p>
+        <p class="summary-box"><strong>次に可能になること</strong>derived CSVを一度だけimportし、mapping dialogなしの9 VoiceItems・character・text/orderをbounded観測できます。</p>
+        <p class="summary-box"><strong>閉じたままのこと</strong>ImageItem/独立TextItemのdiagnostic projectはnot_authorized/not_attemptedです。render/export、production `.ymmp`、real input、public gateも閉じたままです。</p>
       </div>
     </section>
 
@@ -93,87 +93,87 @@
     <section data-region="cue-map">
       <h2>cueマップ / timing・voice・subtitle</h2>
       <table class="matrix">
-        <thead><tr><th>cue</th><th>仮timing</th><th>voice / subtitle</th><th>visual / overlay</th><th>placeholder境界</th><th>import risk</th><th>観測checkpoint</th></tr></thead>
+        <thead><tr><th>cue / identity projection</th><th>仮timing</th><th>CSV import source</th><th>deferred diagnostic intent</th><th>responsibility boundary</th><th>import risk</th><th>観測checkpoint</th></tr></thead>
         <tbody><tr>
-  <td><code>csv_row_1</code><br>S1<br>れいむ</td>
+  <td><code>csv_row_1</code><br>S1<br>れいむ → ゆっくり霊夢</td>
   <td>0.0s to 4.0s<br>provisional_even_split_from_scene_duration</td>
-  <td>voice_slot_1<br>draft_sample_fixture_not_real</td>
+  <td>voice_slot_1<br><code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-1</code><br>draft_sample_fixture_not_real</td>
   <td>intro_status<br>overlay: s1_source_note<br><span class="hold">real_required_later</span></td>
-  <td>real inputではなくplaceholder/diagnostic前提<br><code>real_required_later</code></td>
+  <td>CSV: VoiceItem + linked subtitle<br>diagnostic project: <code>not_authorized</code></td>
   <td>voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source</td>
-  <td>After explicit import observation, does csv_row_1 keep readable voice/subtitle order and make the intro_status placeholder intent understandable without implying final assets?</td>
+  <td>After importing the derived CSV, does csv_row_1 keep the expected character, linked subtitle text, and row order without a mapping dialog?</td>
 </tr>
 <tr>
-  <td><code>csv_row_2</code><br>S1<br>まりさ</td>
+  <td><code>csv_row_2</code><br>S1<br>まりさ → ゆっくり魔理沙</td>
   <td>4.0s to 8.0s<br>provisional_even_split_from_scene_duration</td>
-  <td>voice_slot_2<br>draft_sample_fixture_not_real</td>
+  <td>voice_slot_2<br><code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-2</code><br>draft_sample_fixture_not_real</td>
   <td>intro_status<br>overlay: s1_source_note<br><span class="hold">real_required_later</span></td>
-  <td>real inputではなくplaceholder/diagnostic前提<br><code>real_required_later</code></td>
+  <td>CSV: VoiceItem + linked subtitle<br>diagnostic project: <code>not_authorized</code></td>
   <td>voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source</td>
-  <td>After explicit import observation, does csv_row_2 keep readable voice/subtitle order and make the intro_status placeholder intent understandable without implying final assets?</td>
+  <td>After importing the derived CSV, does csv_row_2 keep the expected character, linked subtitle text, and row order without a mapping dialog?</td>
 </tr>
 <tr>
-  <td><code>csv_row_3</code><br>S2<br>まりさ</td>
+  <td><code>csv_row_3</code><br>S2<br>まりさ → ゆっくり魔理沙</td>
   <td>8.0s to 12.0s<br>provisional_even_split_from_scene_duration</td>
-  <td>voice_slot_2<br>draft_sample_fixture_not_real</td>
+  <td>voice_slot_2<br><code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-3</code><br>draft_sample_fixture_not_real</td>
   <td>topic_explanation<br>overlay: s2_source_note<br><span class="hold">real_required_later</span></td>
-  <td>real inputではなくplaceholder/diagnostic前提<br><code>real_required_later</code></td>
+  <td>CSV: VoiceItem + linked subtitle<br>diagnostic project: <code>not_authorized</code></td>
   <td>voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source</td>
-  <td>After explicit import observation, does csv_row_3 keep readable voice/subtitle order and make the topic_explanation placeholder intent understandable without implying final assets?</td>
+  <td>After importing the derived CSV, does csv_row_3 keep the expected character, linked subtitle text, and row order without a mapping dialog?</td>
 </tr>
 <tr>
-  <td><code>csv_row_4</code><br>S2<br>まりさ</td>
+  <td><code>csv_row_4</code><br>S2<br>まりさ → ゆっくり魔理沙</td>
   <td>12.0s to 16.0s<br>provisional_even_split_from_scene_duration</td>
-  <td>voice_slot_2<br>draft_sample_fixture_not_real</td>
+  <td>voice_slot_2<br><code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-4</code><br>draft_sample_fixture_not_real</td>
   <td>topic_explanation<br>overlay: s2_source_note<br><span class="hold">real_required_later</span></td>
-  <td>real inputではなくplaceholder/diagnostic前提<br><code>real_required_later</code></td>
+  <td>CSV: VoiceItem + linked subtitle<br>diagnostic project: <code>not_authorized</code></td>
   <td>voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source</td>
-  <td>After explicit import observation, does csv_row_4 keep readable voice/subtitle order and make the topic_explanation placeholder intent understandable without implying final assets?</td>
+  <td>After importing the derived CSV, does csv_row_4 keep the expected character, linked subtitle text, and row order without a mapping dialog?</td>
 </tr>
 <tr>
-  <td><code>csv_row_5</code><br>S3<br>れいむ</td>
+  <td><code>csv_row_5</code><br>S3<br>れいむ → ゆっくり霊夢</td>
   <td>16.0s to 20.0s<br>provisional_even_split_from_scene_duration</td>
-  <td>voice_slot_1<br>draft_sample_fixture_not_real</td>
+  <td>voice_slot_1<br><code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-5</code><br>draft_sample_fixture_not_real</td>
   <td>summary_transition<br>overlay: s3_source_note<br><span class="hold">real_required_later</span></td>
-  <td>real inputではなくplaceholder/diagnostic前提<br><code>real_required_later</code></td>
+  <td>CSV: VoiceItem + linked subtitle<br>diagnostic project: <code>not_authorized</code></td>
   <td>voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source</td>
-  <td>After explicit import observation, does csv_row_5 keep readable voice/subtitle order and make the summary_transition placeholder intent understandable without implying final assets?</td>
+  <td>After importing the derived CSV, does csv_row_5 keep the expected character, linked subtitle text, and row order without a mapping dialog?</td>
 </tr>
 <tr>
-  <td><code>csv_row_6</code><br>S3<br>まりさ</td>
+  <td><code>csv_row_6</code><br>S3<br>まりさ → ゆっくり魔理沙</td>
   <td>20.0s to 24.0s<br>provisional_even_split_from_scene_duration</td>
-  <td>voice_slot_2<br>draft_sample_fixture_not_real</td>
+  <td>voice_slot_2<br><code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-6</code><br>draft_sample_fixture_not_real</td>
   <td>summary_transition<br>overlay: s3_source_note<br><span class="hold">real_required_later</span></td>
-  <td>real inputではなくplaceholder/diagnostic前提<br><code>real_required_later</code></td>
+  <td>CSV: VoiceItem + linked subtitle<br>diagnostic project: <code>not_authorized</code></td>
   <td>voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source</td>
-  <td>After explicit import observation, does csv_row_6 keep readable voice/subtitle order and make the summary_transition placeholder intent understandable without implying final assets?</td>
+  <td>After importing the derived CSV, does csv_row_6 keep the expected character, linked subtitle text, and row order without a mapping dialog?</td>
 </tr>
 <tr>
-  <td><code>csv_row_7</code><br>S3<br>まりさ</td>
+  <td><code>csv_row_7</code><br>S3<br>まりさ → ゆっくり魔理沙</td>
   <td>24.0s to 28.0s<br>provisional_even_split_from_scene_duration</td>
-  <td>voice_slot_2<br>draft_sample_fixture_not_real</td>
+  <td>voice_slot_2<br><code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-7</code><br>draft_sample_fixture_not_real</td>
   <td>summary_transition<br>overlay: s3_source_note<br><span class="hold">real_required_later</span></td>
-  <td>real inputではなくplaceholder/diagnostic前提<br><code>real_required_later</code></td>
+  <td>CSV: VoiceItem + linked subtitle<br>diagnostic project: <code>not_authorized</code></td>
   <td>voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source</td>
-  <td>After explicit import observation, does csv_row_7 keep readable voice/subtitle order and make the summary_transition placeholder intent understandable without implying final assets?</td>
+  <td>After importing the derived CSV, does csv_row_7 keep the expected character, linked subtitle text, and row order without a mapping dialog?</td>
 </tr>
 <tr>
-  <td><code>csv_row_8</code><br>S3<br>れいむ</td>
+  <td><code>csv_row_8</code><br>S3<br>れいむ → ゆっくり霊夢</td>
   <td>28.0s to 32.0s<br>provisional_even_split_from_scene_duration</td>
-  <td>voice_slot_1<br>draft_sample_fixture_not_real</td>
+  <td>voice_slot_1<br><code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-8</code><br>draft_sample_fixture_not_real</td>
   <td>summary_transition<br>overlay: s3_source_note<br><span class="hold">real_required_later</span></td>
-  <td>real inputではなくplaceholder/diagnostic前提<br><code>real_required_later</code></td>
+  <td>CSV: VoiceItem + linked subtitle<br>diagnostic project: <code>not_authorized</code></td>
   <td>voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source</td>
-  <td>After explicit import observation, does csv_row_8 keep readable voice/subtitle order and make the summary_transition placeholder intent understandable without implying final assets?</td>
+  <td>After importing the derived CSV, does csv_row_8 keep the expected character, linked subtitle text, and row order without a mapping dialog?</td>
 </tr>
 <tr>
-  <td><code>csv_row_9</code><br>S3<br>まりさ</td>
+  <td><code>csv_row_9</code><br>S3<br>まりさ → ゆっくり魔理沙</td>
   <td>32.0s to 36.0s<br>provisional_even_split_from_scene_duration</td>
-  <td>voice_slot_2<br>draft_sample_fixture_not_real</td>
+  <td>voice_slot_2<br><code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-9</code><br>draft_sample_fixture_not_real</td>
   <td>summary_transition<br>overlay: s3_source_note<br><span class="hold">real_required_later</span></td>
-  <td>real inputではなくplaceholder/diagnostic前提<br><code>real_required_later</code></td>
+  <td>CSV: VoiceItem + linked subtitle<br>diagnostic project: <code>not_authorized</code></td>
   <td>voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source</td>
-  <td>After explicit import observation, does csv_row_9 keep readable voice/subtitle order and make the summary_transition placeholder intent understandable without implying final assets?</td>
+  <td>After importing the derived CSV, does csv_row_9 keep the expected character, linked subtitle text, and row order without a mapping dialog?</td>
 </tr></tbody>
       </table>
     </section>
@@ -252,6 +252,12 @@
   <td><code>youtube_uploaded</code></td>
   <td><code>False</code></td>
   <td>YouTube upload</td>
+  <td><span class="ok">false = 未実行 / このpackageでは閉じたまま</span></td>
+</tr>
+<tr>
+  <td><code>diagnostic_ymmp_project_attempted</code></td>
+  <td><code>False</code></td>
+  <td>diagnostic_ymmp_project_attempted</td>
   <td><span class="ok">false = 未実行 / このpackageでは閉じたまま</span></td>
 </tr></tbody>
       </table>

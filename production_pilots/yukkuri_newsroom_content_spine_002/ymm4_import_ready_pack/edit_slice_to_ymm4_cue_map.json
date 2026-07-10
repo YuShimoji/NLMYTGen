@@ -1,10 +1,26 @@
 {
-  "schema_version": "edit_slice_to_ymm4_cue_map.v1",
+  "schema_version": "edit_slice_to_ymm4_cue_map.v2",
   "artifact_id": "nlm-e002-ymm4-import-ready-edit-package-v1-001",
   "status": "cue_map_ready_for_manual_ymm4_observation",
   "input_local_edit_execution_pack": "production_pilots/yukkuri_newsroom_content_spine_002/local_edit_slice_execution_pack",
   "source_voice_subtitle_map": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/voice_subtitle_operation_map.json",
   "source_visual_slot_map": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/visual_asset_slot_map.json",
+  "canonical_csv": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+  "derived_import_csv": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv",
+  "selected_yymm4_character_profile": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_character_alias_profiles/ymm4_4_53_0_9_yukkuri_characters_v1.json",
+  "responsibility_contract": {
+    "schema_version": "ymm4_import_responsibility_contract.v1",
+    "csv_import_expected_item_families": [
+      "VoiceItem",
+      "linked_subtitle"
+    ],
+    "diagnostic_project_expected_item_families": [
+      "ImageItem",
+      "independent_TextItem_placeholders"
+    ],
+    "diagnostic_project_gate": "not_authorized",
+    "diagnostic_project_status": "not_attempted"
+  },
   "queue_operation_count": 7,
   "scene_count": 3,
   "cue_count": 9,
@@ -62,6 +78,8 @@
       "local_edit_item_id": "S1:csv_row_1",
       "row_number": 1,
       "speaker": "れいむ",
+      "canonical_speaker": "れいむ",
+      "yymm4_character": "ゆっくり霊夢",
       "approximate_timing": {
         "timing_source": "provisional_even_split_from_scene_duration",
         "scene_start_sec": 0.0,
@@ -73,14 +91,15 @@
       },
       "voice_or_subtitle_action": {
         "expected_voice_slot_id": "voice_slot_1",
-        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-1",
+        "canonical_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-1",
+        "csv_import_source": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-1",
         "subtitle_text_status": "draft_sample_fixture_not_real",
         "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
       },
       "visual_action": {
         "primary_template_id": "intro_status",
         "supporting_template_ids": [],
-        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+        "action": "retain future diagnostic-project intent without treating it as CSV import output"
       },
       "overlay_or_citation_action": {
         "citation_overlay_ids": [
@@ -93,10 +112,18 @@
         ],
         "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
       },
-      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "csv_import_expected_item_families": [
+        "VoiceItem",
+        "linked_subtitle"
+      ],
+      "diagnostic_project_expected_item_families": [
+        "ImageItem",
+        "independent_TextItem_placeholders"
+      ],
+      "diagnostic_project_gate": "not_authorized",
       "required_asset_state": "real_required_later",
       "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
-      "manual_observation_question": "After explicit import observation, does csv_row_1 keep readable voice/subtitle order and make the intro_status placeholder intent understandable without implying final assets?"
+      "manual_observation_question": "After importing the derived CSV, does csv_row_1 keep the expected character, linked subtitle text, and row order without a mapping dialog?"
     },
     {
       "cue_id": "csv_row_2",
@@ -104,6 +131,8 @@
       "local_edit_item_id": "S1:csv_row_2",
       "row_number": 2,
       "speaker": "まりさ",
+      "canonical_speaker": "まりさ",
+      "yymm4_character": "ゆっくり魔理沙",
       "approximate_timing": {
         "timing_source": "provisional_even_split_from_scene_duration",
         "scene_start_sec": 0.0,
@@ -115,14 +144,15 @@
       },
       "voice_or_subtitle_action": {
         "expected_voice_slot_id": "voice_slot_2",
-        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-2",
+        "canonical_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-2",
+        "csv_import_source": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-2",
         "subtitle_text_status": "draft_sample_fixture_not_real",
         "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
       },
       "visual_action": {
         "primary_template_id": "intro_status",
         "supporting_template_ids": [],
-        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+        "action": "retain future diagnostic-project intent without treating it as CSV import output"
       },
       "overlay_or_citation_action": {
         "citation_overlay_ids": [
@@ -135,10 +165,18 @@
         ],
         "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
       },
-      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "csv_import_expected_item_families": [
+        "VoiceItem",
+        "linked_subtitle"
+      ],
+      "diagnostic_project_expected_item_families": [
+        "ImageItem",
+        "independent_TextItem_placeholders"
+      ],
+      "diagnostic_project_gate": "not_authorized",
       "required_asset_state": "real_required_later",
       "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
-      "manual_observation_question": "After explicit import observation, does csv_row_2 keep readable voice/subtitle order and make the intro_status placeholder intent understandable without implying final assets?"
+      "manual_observation_question": "After importing the derived CSV, does csv_row_2 keep the expected character, linked subtitle text, and row order without a mapping dialog?"
     },
     {
       "cue_id": "csv_row_3",
@@ -146,6 +184,8 @@
       "local_edit_item_id": "S2:csv_row_3",
       "row_number": 3,
       "speaker": "まりさ",
+      "canonical_speaker": "まりさ",
+      "yymm4_character": "ゆっくり魔理沙",
       "approximate_timing": {
         "timing_source": "provisional_even_split_from_scene_duration",
         "scene_start_sec": 8.0,
@@ -157,7 +197,8 @@
       },
       "voice_or_subtitle_action": {
         "expected_voice_slot_id": "voice_slot_2",
-        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-3",
+        "canonical_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-3",
+        "csv_import_source": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-3",
         "subtitle_text_status": "draft_sample_fixture_not_real",
         "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
       },
@@ -166,7 +207,7 @@
         "supporting_template_ids": [
           "evidence_source"
         ],
-        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+        "action": "retain future diagnostic-project intent without treating it as CSV import output"
       },
       "overlay_or_citation_action": {
         "citation_overlay_ids": [
@@ -177,10 +218,18 @@
         ],
         "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
       },
-      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "csv_import_expected_item_families": [
+        "VoiceItem",
+        "linked_subtitle"
+      ],
+      "diagnostic_project_expected_item_families": [
+        "ImageItem",
+        "independent_TextItem_placeholders"
+      ],
+      "diagnostic_project_gate": "not_authorized",
       "required_asset_state": "real_required_later",
       "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
-      "manual_observation_question": "After explicit import observation, does csv_row_3 keep readable voice/subtitle order and make the topic_explanation placeholder intent understandable without implying final assets?"
+      "manual_observation_question": "After importing the derived CSV, does csv_row_3 keep the expected character, linked subtitle text, and row order without a mapping dialog?"
     },
     {
       "cue_id": "csv_row_4",
@@ -188,6 +237,8 @@
       "local_edit_item_id": "S2:csv_row_4",
       "row_number": 4,
       "speaker": "まりさ",
+      "canonical_speaker": "まりさ",
+      "yymm4_character": "ゆっくり魔理沙",
       "approximate_timing": {
         "timing_source": "provisional_even_split_from_scene_duration",
         "scene_start_sec": 8.0,
@@ -199,7 +250,8 @@
       },
       "voice_or_subtitle_action": {
         "expected_voice_slot_id": "voice_slot_2",
-        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-4",
+        "canonical_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-4",
+        "csv_import_source": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-4",
         "subtitle_text_status": "draft_sample_fixture_not_real",
         "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
       },
@@ -208,7 +260,7 @@
         "supporting_template_ids": [
           "evidence_source"
         ],
-        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+        "action": "retain future diagnostic-project intent without treating it as CSV import output"
       },
       "overlay_or_citation_action": {
         "citation_overlay_ids": [
@@ -219,10 +271,18 @@
         ],
         "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
       },
-      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "csv_import_expected_item_families": [
+        "VoiceItem",
+        "linked_subtitle"
+      ],
+      "diagnostic_project_expected_item_families": [
+        "ImageItem",
+        "independent_TextItem_placeholders"
+      ],
+      "diagnostic_project_gate": "not_authorized",
       "required_asset_state": "real_required_later",
       "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
-      "manual_observation_question": "After explicit import observation, does csv_row_4 keep readable voice/subtitle order and make the topic_explanation placeholder intent understandable without implying final assets?"
+      "manual_observation_question": "After importing the derived CSV, does csv_row_4 keep the expected character, linked subtitle text, and row order without a mapping dialog?"
     },
     {
       "cue_id": "csv_row_5",
@@ -230,6 +290,8 @@
       "local_edit_item_id": "S3:csv_row_5",
       "row_number": 5,
       "speaker": "れいむ",
+      "canonical_speaker": "れいむ",
+      "yymm4_character": "ゆっくり霊夢",
       "approximate_timing": {
         "timing_source": "provisional_even_split_from_scene_duration",
         "scene_start_sec": 16.0,
@@ -241,7 +303,8 @@
       },
       "voice_or_subtitle_action": {
         "expected_voice_slot_id": "voice_slot_1",
-        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-5",
+        "canonical_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-5",
+        "csv_import_source": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-5",
         "subtitle_text_status": "draft_sample_fixture_not_real",
         "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
       },
@@ -250,7 +313,7 @@
         "supporting_template_ids": [
           "evidence_source"
         ],
-        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+        "action": "retain future diagnostic-project intent without treating it as CSV import output"
       },
       "overlay_or_citation_action": {
         "citation_overlay_ids": [
@@ -262,10 +325,18 @@
         ],
         "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
       },
-      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "csv_import_expected_item_families": [
+        "VoiceItem",
+        "linked_subtitle"
+      ],
+      "diagnostic_project_expected_item_families": [
+        "ImageItem",
+        "independent_TextItem_placeholders"
+      ],
+      "diagnostic_project_gate": "not_authorized",
       "required_asset_state": "real_required_later",
       "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
-      "manual_observation_question": "After explicit import observation, does csv_row_5 keep readable voice/subtitle order and make the summary_transition placeholder intent understandable without implying final assets?"
+      "manual_observation_question": "After importing the derived CSV, does csv_row_5 keep the expected character, linked subtitle text, and row order without a mapping dialog?"
     },
     {
       "cue_id": "csv_row_6",
@@ -273,6 +344,8 @@
       "local_edit_item_id": "S3:csv_row_6",
       "row_number": 6,
       "speaker": "まりさ",
+      "canonical_speaker": "まりさ",
+      "yymm4_character": "ゆっくり魔理沙",
       "approximate_timing": {
         "timing_source": "provisional_even_split_from_scene_duration",
         "scene_start_sec": 16.0,
@@ -284,7 +357,8 @@
       },
       "voice_or_subtitle_action": {
         "expected_voice_slot_id": "voice_slot_2",
-        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-6",
+        "canonical_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-6",
+        "csv_import_source": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-6",
         "subtitle_text_status": "draft_sample_fixture_not_real",
         "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
       },
@@ -293,7 +367,7 @@
         "supporting_template_ids": [
           "evidence_source"
         ],
-        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+        "action": "retain future diagnostic-project intent without treating it as CSV import output"
       },
       "overlay_or_citation_action": {
         "citation_overlay_ids": [
@@ -305,10 +379,18 @@
         ],
         "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
       },
-      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "csv_import_expected_item_families": [
+        "VoiceItem",
+        "linked_subtitle"
+      ],
+      "diagnostic_project_expected_item_families": [
+        "ImageItem",
+        "independent_TextItem_placeholders"
+      ],
+      "diagnostic_project_gate": "not_authorized",
       "required_asset_state": "real_required_later",
       "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
-      "manual_observation_question": "After explicit import observation, does csv_row_6 keep readable voice/subtitle order and make the summary_transition placeholder intent understandable without implying final assets?"
+      "manual_observation_question": "After importing the derived CSV, does csv_row_6 keep the expected character, linked subtitle text, and row order without a mapping dialog?"
     },
     {
       "cue_id": "csv_row_7",
@@ -316,6 +398,8 @@
       "local_edit_item_id": "S3:csv_row_7",
       "row_number": 7,
       "speaker": "まりさ",
+      "canonical_speaker": "まりさ",
+      "yymm4_character": "ゆっくり魔理沙",
       "approximate_timing": {
         "timing_source": "provisional_even_split_from_scene_duration",
         "scene_start_sec": 16.0,
@@ -327,7 +411,8 @@
       },
       "voice_or_subtitle_action": {
         "expected_voice_slot_id": "voice_slot_2",
-        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-7",
+        "canonical_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-7",
+        "csv_import_source": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-7",
         "subtitle_text_status": "draft_sample_fixture_not_real",
         "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
       },
@@ -336,7 +421,7 @@
         "supporting_template_ids": [
           "evidence_source"
         ],
-        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+        "action": "retain future diagnostic-project intent without treating it as CSV import output"
       },
       "overlay_or_citation_action": {
         "citation_overlay_ids": [
@@ -348,10 +433,18 @@
         ],
         "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
       },
-      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "csv_import_expected_item_families": [
+        "VoiceItem",
+        "linked_subtitle"
+      ],
+      "diagnostic_project_expected_item_families": [
+        "ImageItem",
+        "independent_TextItem_placeholders"
+      ],
+      "diagnostic_project_gate": "not_authorized",
       "required_asset_state": "real_required_later",
       "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
-      "manual_observation_question": "After explicit import observation, does csv_row_7 keep readable voice/subtitle order and make the summary_transition placeholder intent understandable without implying final assets?"
+      "manual_observation_question": "After importing the derived CSV, does csv_row_7 keep the expected character, linked subtitle text, and row order without a mapping dialog?"
     },
     {
       "cue_id": "csv_row_8",
@@ -359,6 +452,8 @@
       "local_edit_item_id": "S3:csv_row_8",
       "row_number": 8,
       "speaker": "れいむ",
+      "canonical_speaker": "れいむ",
+      "yymm4_character": "ゆっくり霊夢",
       "approximate_timing": {
         "timing_source": "provisional_even_split_from_scene_duration",
         "scene_start_sec": 16.0,
@@ -370,7 +465,8 @@
       },
       "voice_or_subtitle_action": {
         "expected_voice_slot_id": "voice_slot_1",
-        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-8",
+        "canonical_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-8",
+        "csv_import_source": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-8",
         "subtitle_text_status": "draft_sample_fixture_not_real",
         "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
       },
@@ -379,7 +475,7 @@
         "supporting_template_ids": [
           "evidence_source"
         ],
-        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+        "action": "retain future diagnostic-project intent without treating it as CSV import output"
       },
       "overlay_or_citation_action": {
         "citation_overlay_ids": [
@@ -391,10 +487,18 @@
         ],
         "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
       },
-      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "csv_import_expected_item_families": [
+        "VoiceItem",
+        "linked_subtitle"
+      ],
+      "diagnostic_project_expected_item_families": [
+        "ImageItem",
+        "independent_TextItem_placeholders"
+      ],
+      "diagnostic_project_gate": "not_authorized",
       "required_asset_state": "real_required_later",
       "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
-      "manual_observation_question": "After explicit import observation, does csv_row_8 keep readable voice/subtitle order and make the summary_transition placeholder intent understandable without implying final assets?"
+      "manual_observation_question": "After importing the derived CSV, does csv_row_8 keep the expected character, linked subtitle text, and row order without a mapping dialog?"
     },
     {
       "cue_id": "csv_row_9",
@@ -402,6 +506,8 @@
       "local_edit_item_id": "S3:csv_row_9",
       "row_number": 9,
       "speaker": "まりさ",
+      "canonical_speaker": "まりさ",
+      "yymm4_character": "ゆっくり魔理沙",
       "approximate_timing": {
         "timing_source": "provisional_even_split_from_scene_duration",
         "scene_start_sec": 16.0,
@@ -413,7 +519,8 @@
       },
       "voice_or_subtitle_action": {
         "expected_voice_slot_id": "voice_slot_2",
-        "expected_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-9",
+        "canonical_subtitle_source": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv#row-9",
+        "csv_import_source": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv#row-9",
         "subtitle_text_status": "draft_sample_fixture_not_real",
         "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability"
       },
@@ -422,7 +529,7 @@
         "supporting_template_ids": [
           "evidence_source"
         ],
-        "action": "confirm the placeholder scene template instruction is understandable before any final asset work"
+        "action": "retain future diagnostic-project intent without treating it as CSV import output"
       },
       "overlay_or_citation_action": {
         "citation_overlay_ids": [
@@ -434,10 +541,18 @@
         ],
         "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open"
       },
-      "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+      "csv_import_expected_item_families": [
+        "VoiceItem",
+        "linked_subtitle"
+      ],
+      "diagnostic_project_expected_item_families": [
+        "ImageItem",
+        "independent_TextItem_placeholders"
+      ],
+      "diagnostic_project_gate": "not_authorized",
       "required_asset_state": "real_required_later",
       "import_risk": "voiceitem_timing_unobserved, sample_fixture_text, citation_wording_requires_verified_source",
-      "manual_observation_question": "After explicit import observation, does csv_row_9 keep readable voice/subtitle order and make the summary_transition placeholder intent understandable without implying final assets?"
+      "manual_observation_question": "After importing the derived CSV, does csv_row_9 keep the expected character, linked subtitle text, and row order without a mapping dialog?"
     }
   ],
   "actual_ymm4_imported": false,

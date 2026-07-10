@@ -1,5 +1,5 @@
 {
-  "schema_version": "ymm4_import_ready_gate_readback.v1",
+  "schema_version": "ymm4_import_ready_gate_readback.v2",
   "artifact_id": "nlm-e002-ymm4-import-ready-edit-package-v1-001",
   "status": "ymm4_import_gates_closed",
   "cue_count": 9,
@@ -17,13 +17,17 @@
     "rights_accepted": false,
     "public_ready": false,
     "final_thumbnail_approval": false,
-    "youtube_uploaded": false
+    "youtube_uploaded": false,
+    "diagnostic_ymmp_project_attempted": false
   },
   "non_gate_work_completed": [
     "manifest",
     "cue_map",
     "manual_observation_sheet",
     "html_preview",
-    "adapter_plan_no_ymmp_write"
+    "adapter_plan_no_ymmp_write",
+    "explicit_yymm4_character_profile",
+    "derived_import_csv",
+    "strict_alias_coverage_readback"
   ]
 }

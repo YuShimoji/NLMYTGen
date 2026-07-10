@@ -1,106 +1,17 @@
 flowchart LR
-    A["Episode 002 content spine<br/>draft_offline"] --> B["Episode 002 IR/CSV bridge<br/>draft_offline"]
-    B --> C["Transcript substitution readiness<br/>sample_fixture_not_real"]
-    C --> D["Dashboard readiness ingest<br/>ready"]
-    D --> T["Validation drift triage<br/>nonblocking"]
-    T --> P["GUI dashboard panel<br/>ready"]
-    P --> F["YMM4 import preview pack<br/>ready / context synced"]
-    F --> G["Thumbnail visual proof pack<br/>ready context"]
-    G -. "context only" .-> F
-    F --> X["Surface alignment pack<br/>ready"]
-    G --> X
-    P --> X
-    X --> RP["Surface alignment reviewer packet<br/>source record"]
-    RP --> FB["Focused review brief<br/>ready dark HTML"]
-    FB --> RC["Review cockpit compact<br/>ready bounded dark UI"]
-    RC --> LR["Review layout research<br/>ready benchmark"]
-    LR --> GF["Guided decision flow prototype<br/>ready / current review entry"]
-    GF --> L2["Layout second-pass benchmark<br/>ready / split-view selected"]
-    L2 --> SV["Split-view decision/evidence prototype<br/>ready / current review entry"]
-    SV --> RCON["Review console redesign prototype<br/>ready / current review entry"]
-    RCON --> PAC["Primary artifact review console<br/>ready / current review entry"]
-    PAC --> JGC["Japanese graphic review console<br/>ready / current review entry"]
-    JGC -. "after human acceptance" .-> E
-    JGC -. "explicit gate only" .-> IY["Actual YMM4 import observation<br/>blocked_by_true_gate"]
-    P --> E["Real transcript replacement<br/>blocked_by_real_input"]
+    A["Episode 002 sample transcript<br/>canonical speaker identity"] --> B["Canonical 9-row CSV<br/>れいむ / まりさ<br/>SHA fixed"]
+    O["Historical GUI receipt v1<br/>partial under legacy mixed contract"] --> P["Explicit YMM4 character profile<br/>4.53.0.9 observed environment<br/>strict coverage"]
+    B --> D["Deterministic derived import CSV<br/>speaker column only projected"]
+    P --> D
+    D --> C["CSV responsibility contract<br/>VoiceItem + linked subtitle"]
+    C --> G["Bounded YMM4 CSV gate<br/>mapping dialog / 9 items / characters<br/>text-order / timing order"]
 
-    H["sample transcript fixture"] -. "used now" .-> C
-    I["verified local real transcript"] -. "required later" .-> E
+    U["Existing unsaved YMM4 project<br/>preserved / discard not authorized"] -. "current blocker" .-> G
+    G -. "after existing-state decision" .-> R["CSV gate receipt v2"]
+    R --> S["Supervisor next-slice decision"]
+    S -. "separate authorization" .-> Y["Diagnostic .ymmp project<br/>ImageItem + independent TextItem<br/>not_authorized / not_attempted"]
+    S -. "verified inputs required" .-> E["Real-input replacement<br/>source + transcript + provenance<br/>stable identity + cue alignment"]
 
-    T --> O["validation drift ledger"]
-    D --> J["readiness_summary.json"]
-    D --> K["pipeline_status.json"]
-    D --> L["capability_glyph_grid.json"]
-    D --> M["dashboard_preview.md"]
-    P --> Q["dashboard_panel_preview.html"]
-    P --> R["gui_dashboard_adapter.json"]
-    P --> S["source_artifact_index.json"]
-    F --> U["import_preview_panel.md"]
-    F --> V["draft_yymm4_preview.csv<br/>headerless / 9 rows"]
-    F --> W["import_readiness_summary.json<br/>thumbnail_proof_context ready"]
-    G --> Y["thumbnail_visual_proof.html"]
-    G --> Z["thumbnail_contact_sheet.svg"]
-    G --> AA["thumbnail_variants.json<br/>3 SVG variants"]
-    X --> AB["review_story.md"]
-    X --> AC["surface_status_matrix.json"]
-    X --> AD["boundary_consistency_report.json"]
-    X --> AE["source_artifact_crosswalk.json"]
-    RP --> AF["aligned_review_story.md"]
-    RP --> AG["remaining_mismatch_ledger.json<br/>5 resolved / 3 accepted_nonblocking"]
-    RP --> AH["next_action_readback.json<br/>packet_resolved"]
-    RP --> AI["boundary_status_readback.json<br/>accepted_nonblocking"]
-    FB --> AJ["focused_review_brief.html<br/>prior review record"]
-    FB --> AK["focused_review_brief.md<br/>Markdown fallback"]
-    FB --> AL["review_decision_card.json<br/>1 question / 3 options"]
-    FB --> AM["validation_readback.json<br/>dark CSS / no external refs"]
-    RC --> AN["review_cockpit.html<br/>primary human review"]
-    RC --> AO["cockpit_state.json<br/>decision / gates / source records"]
-    RC --> AP["cockpit_layout_readback.json<br/>5 sections / 7 cards / 2 details"]
-    RC --> AQ["validation_readback.json<br/>bounded dark cockpit"]
-    LR --> AR["layout_research_report.md<br/>pattern benchmark"]
-    LR --> AS["candidate_wireframes.html<br/>A/B/C low-fidelity"]
-    LR --> AT["layout_decision_matrix.json<br/>Candidate B selected"]
-    LR --> AU["final_layout_recommendation.md<br/>guided decision flow"]
-    GF --> AV["guided_decision_flow.html<br/>primary human review"]
-    GF --> AW["recommendation_engine_readback.json<br/>exactly one recommendation"]
-    GF --> AX["flow_state.json<br/>user situation checks"]
-    GF --> AY["evidence_drawer_index.json<br/>secondary source records"]
-    L2 --> AZ["split_view_benchmark.md<br/>primary research review"]
-    L2 --> BA["layout_candidate_matrix.json<br/>6 candidates / split-view selected"]
-    L2 --> BB["candidate_wireframes_second_pass.html<br/>split-view and alternatives"]
-    L2 --> BC["evidence_handling_report.md<br/>not a generic drawer"]
-    L2 --> BD["card_bloat_risk_report.md<br/>current pattern high risk"]
-    SV --> BE["split_view_decision_evidence.html<br/>primary human review"]
-    SV --> BF["recommendation_readback.json<br/>prepare verified input / hold fallback"]
-    SV --> BG["evidence_pane_readback.json<br/>visible right pane evidence"]
-    SV --> BH["source_record_index.json<br/>secondary raw paths"]
-    SV --> BI["layout_metrics.json<br/>no primary card grid"]
-    RCON --> BJ["review_console.html<br/>primary human review"]
-    RCON --> BK["screen_audit.json<br/>decision / artifact / evidence / controls / noise"]
-    RCON --> BL["layout_metrics.json<br/>50.1 percent text reduction"]
-    RCON --> BM["inspector_readback.json<br/>issue / next operation / controls"]
-    RCON --> BN["evidence_drawer_index.json<br/>secondary raw records"]
-    PAC --> BO["primary_artifact_review_console.html<br/>primary human review"]
-    PAC --> BP["primary_artifact_readback.json<br/>artifact dominance / metric not primary"]
-    PAC --> BQ["visual_comparison_readback.json<br/>single visual comparison canvas"]
-    PAC --> BR["layout_metrics.json<br/>0 explanatory cards / no evidence card row"]
-    PAC --> BS["evidence_drawer_index.json<br/>secondary records and extended proof"]
-    JGC --> BT["japanese_graphic_review_console.html<br/>primary human review"]
-    JGC --> BU["graphic_surface_readback.json<br/>flow / diff / timeline"]
-    JGC --> BV["japanese_copy_readback.json<br/>primary UI language ja"]
-    JGC --> BW["layout_metrics.json<br/>no card grid / short handoff"]
-    JGC --> BX["docs/PROJECT_LANES.md<br/>lane split and stop rule"]
-
-    N["closed gates:<br/>rights/legal/public-ready acceptance<br/>OAuth/API/payment<br/>live scraping/media download<br/>external image/media download<br/>YMM4 GUI/import/render<br/>production .ymmp<br/>YouTube publication"] -.-> F
-    N -.-> G
-    N -.-> X
-    N -.-> RP
-    N -.-> FB
-    N -.-> RC
-    N -.-> LR
-    N -.-> GF
-    N -.-> L2
-    N -.-> SV
-    N -.-> RCON
-    N -.-> PAC
-    N -.-> JGC
+    N["Closed gates<br/>render/export<br/>production .ymmp<br/>rights/public/final thumbnail<br/>upload/publication<br/>default-branch integration"] -.-> G
+    N -.-> Y
+    N -.-> E

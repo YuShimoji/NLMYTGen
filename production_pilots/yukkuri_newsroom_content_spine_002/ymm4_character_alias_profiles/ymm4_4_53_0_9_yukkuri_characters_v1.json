@@ -1,0 +1,24 @@
+{
+  "schema_version": "ymm4_character_alias_profile.v1",
+  "profile_id": "ymm4_4_53_0_9_yukkuri_characters_ja_v1",
+  "status": "observed_environment_specific",
+  "selection_policy": "explicit_only",
+  "strict_coverage": true,
+  "canonical_speaker_namespace": "nlmytgen.canonical_speaker.v1",
+  "target_character_namespace": "ymm4.installed_character_name",
+  "canonical_to_yymm4_character": {
+    "れいむ": "ゆっくり霊夢",
+    "まりさ": "ゆっくり魔理沙"
+  },
+  "observed_environment": {
+    "yymm4_version": "4.53.0.9",
+    "observation_receipt": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_receipt_2026-07-10.json",
+    "observation_receipt_sha256": "DC756D9C4EE9ABDFDDFB284B2B8EC70B227DDEB5E365C1BBB8EE8438D8C9A5B5"
+  },
+  "universal_default_claimed": false,
+  "scope": {
+    "episode_id": "yukkuri_newsroom_content_spine_002",
+    "purpose": "bounded_csv_import_reobservation",
+    "production_default": false
+  }
+}

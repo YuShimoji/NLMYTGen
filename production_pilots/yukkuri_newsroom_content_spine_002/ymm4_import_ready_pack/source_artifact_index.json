@@ -1,5 +1,5 @@
 {
-  "schema_version": "ymm4_import_ready_source_artifact_index.v1",
+  "schema_version": "ymm4_import_ready_source_artifact_index.v2",
   "artifact_id": "nlm-e002-ymm4-import-ready-edit-package-v1-001",
   "local_edit_pack_read_only": true,
   "editing_operations_pack_read_only": true,
@@ -44,6 +44,24 @@
       "record_id": "timing_adjustment_model",
       "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/timing_adjustment_model.json",
       "role": "timing_read_only",
+      "exists_expected": true
+    },
+    {
+      "record_id": "canonical_csv",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+      "role": "canonical_speaker_identity_read_only",
+      "exists_expected": true
+    },
+    {
+      "record_id": "yymm4_character_profile",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_character_alias_profiles/ymm4_4_53_0_9_yukkuri_characters_v1.json",
+      "role": "explicit_environment_profile",
+      "exists_expected": true
+    },
+    {
+      "record_id": "original_observation_receipt",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_receipt_2026-07-10.json",
+      "role": "immutable_prior_observation_evidence",
       "exists_expected": true
     }
   ]

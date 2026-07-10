@@ -1,5 +1,5 @@
 {
-  "schema_version": "ymm4_observation_source_artifact_index.v1",
+  "schema_version": "ymm4_observation_source_artifact_index.v2",
   "artifact_id": "episode_002_ymm4_observation_readback_pack_v1",
   "ymm4_import_ready_pack_read_only": true,
   "real_input_prep_pack_read_only": true,
@@ -33,6 +33,34 @@
       "display_zone": "source_artifact_index"
     },
     {
+      "record_id": "ymm4_alias_coverage",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/yymm4_character_alias_coverage_readback.json",
+      "role": "alias_derivation_readback",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "ymm4_derived_csv",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv",
+      "role": "primary_derived_import_csv",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "canonical_csv",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+      "role": "canonical_speaker_identity_read_only",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
+      "record_id": "prior_gui_observation_receipt",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_receipt_2026-07-10.json",
+      "role": "immutable_legacy_partial_evidence",
+      "exists_expected": true,
+      "display_zone": "source_artifact_index"
+    },
+    {
       "record_id": "real_input_prep_validation",
       "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/real_input_replacement_readiness_pack/validation_readback.json",
       "role": "real_input_gate_readback",
@@ -47,9 +75,9 @@
       "display_zone": "source_artifact_index"
     },
     {
-      "record_id": "actual_gui_observation_receipt",
-      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_receipt_2026-07-10.json",
-      "role": "actual_gui_observation_receipt",
+      "record_id": "actual_gui_observation_blocker",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_alias_reobservation_blocker_2026-07-11.json",
+      "role": "existing_unsaved_project_preserved_blocker",
       "exists_expected": true,
       "display_zone": "source_artifact_index"
     }

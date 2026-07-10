@@ -1,16 +1,27 @@
 {
-  "schema_version": "ymmp_adapter_plan.v1",
+  "schema_version": "ymmp_adapter_plan.v2",
   "artifact_id": "nlm-e002-ymm4-import-ready-edit-package-v1-001",
   "status": "adapter_plan_ready_no_ymmp_write",
   "purpose": "Describe future adapter inputs without generating or patching a YMM4 project.",
   "source_cue_map": "edit_slice_to_ymm4_cue_map.json",
   "cue_count": 9,
-  "expected_item_families": [
-    "VoiceItem",
-    "subtitle/TextItem",
-    "ImageItem",
-    "TextItem"
-  ],
+  "csv_import_contract": {
+    "expected_item_families": [
+      "VoiceItem",
+      "linked_subtitle"
+    ],
+    "source_csv": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv",
+    "selected_yymm4_character_profile": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_character_alias_profiles/ymm4_4_53_0_9_yukkuri_characters_v1.json"
+  },
+  "diagnostic_project_contract": {
+    "expected_item_families": [
+      "ImageItem",
+      "independent_TextItem_placeholders"
+    ],
+    "gate": "not_authorized",
+    "status": "not_attempted",
+    "separate_authorization_required": true
+  },
   "csv_import_is_manual_future_gate": true,
   "ymmp_file_created": false,
   "production_ymmp_written": false,

@@ -1,5 +1,5 @@
 {
-  "schema_version": "ymm4_import_ready_manifest.v1",
+  "schema_version": "ymm4_import_ready_manifest.v2",
   "artifact_id": "nlm-e002-ymm4-import-ready-edit-package-v1-001",
   "artifact_kind": "episode-ymm4-import-ready-edit-package",
   "source_episode_id": "yukkuri_newsroom_content_spine_002",
@@ -15,7 +15,46 @@
     "source_artifact_index.json": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/source_artifact_index.json",
     "ymmp_adapter_plan.json": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/ymmp_adapter_plan.json",
     "README_YMM4_IMPORT_READY.md": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/README_YMM4_IMPORT_READY.md",
-    "limitations.md": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/limitations.md"
+    "limitations.md": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/limitations.md",
+    "derived_yymm4_import.csv": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv",
+    "yymm4_character_alias_coverage_readback.json": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/yymm4_character_alias_coverage_readback.json"
+  },
+  "canonical_source_csv": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+  "primary_import_csv": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv",
+  "selected_yymm4_character_profile": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_character_alias_profiles/ymm4_4_53_0_9_yukkuri_characters_v1.json",
+  "alias_coverage_readback": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/yymm4_character_alias_coverage_readback.json",
+  "character_alias_derivation": {
+    "profile_id": "ymm4_4_53_0_9_yukkuri_characters_ja_v1",
+    "strict_coverage": true,
+    "canonical_csv_sha256": "6FBB4666028DF4EF61F19C29505563141B1A82E932DC8E05BF8168F06347D38C",
+    "derived_csv_sha256": "5452DE96DC6EF012400A132BA5BAE80B8553C1B1CDD27860D36674C25AF391BC",
+    "row_count": 9,
+    "checks": {
+      "canonical_sha256_matches_expected": true,
+      "canonical_source_unchanged": true,
+      "strict_coverage_enabled": true,
+      "strict_coverage_satisfied": true,
+      "unmapped_canonical_speakers": [],
+      "row_count_preserved": true,
+      "text_and_order_preserved": true,
+      "speaker_projection_matches_profile": true,
+      "only_speaker_column_changed": true,
+      "headerless_two_column_shape": true,
+      "encoding_compatibility_preserved": true
+    }
+  },
+  "responsibility_contract": {
+    "schema_version": "ymm4_import_responsibility_contract.v1",
+    "csv_import_expected_item_families": [
+      "VoiceItem",
+      "linked_subtitle"
+    ],
+    "diagnostic_project_expected_item_families": [
+      "ImageItem",
+      "independent_TextItem_placeholders"
+    ],
+    "diagnostic_project_gate": "not_authorized",
+    "diagnostic_project_status": "not_attempted"
   },
   "queue_count": 7,
   "scene_count": 3,
@@ -63,7 +102,7 @@
     }
   ],
   "thumbnail_motif_status": "placeholder_context_transferred_not_final_approval",
-  "ymm4_import_state": "ready_for_manual_import_observation",
+  "ymm4_import_state": "ready_for_bounded_alias_reobservation",
   "actual_ymm4_imported": false,
   "rendered_video_created": false,
   "real_input_replaced": false,
@@ -76,5 +115,5 @@
   "primary_human_review": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/ymm4_import_ready_preview.html",
   "primary_machine_readable": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/validation_readback.json",
   "full_pytest_run": false,
-  "next_action": "Use the preview and observation sheet for a future explicit YMM4 import observation; do not import, render, replace real input, or publish from this package."
+  "next_action": "Import only the explicitly derived CSV for one bounded YMM4 alias re-observation; do not create a diagnostic project, render, replace real input, or publish."
 }

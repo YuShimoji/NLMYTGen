@@ -1,0 +1,9 @@
+ゆっくり霊夢,今日は「DRY RUN」って、どういう話なの？
+ゆっくり魔理沙,Dry-run only: confirm the factory can open a second episode seed.
+ゆっくり魔理沙,ポイント1は、Load the template registry.
+ゆっくり魔理沙,ポイント2は、Separate inherited defaults from real required inputs.
+ゆっくり霊夢,なるほど、そこを見れば話の筋が追いやすいんだね。
+ゆっくり魔理沙,ポイント3は、Mark the source packet as synthetic dry-run material.
+ゆっくり魔理沙,"ポイント4は、Stop before transcript, YMM4, rights, render, or publication work."
+ゆっくり霊夢,なるほど、そこを見れば話の筋が追いやすいんだね。
+ゆっくり魔理沙,この段階ではローカル企画案なので、本番化には実ソース、台本、タイミング確認が必要だぜ。

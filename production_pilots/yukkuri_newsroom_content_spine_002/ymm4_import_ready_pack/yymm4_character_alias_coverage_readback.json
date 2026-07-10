@@ -1,0 +1,111 @@
+{
+  "schema_version": "ymm4_character_alias_derivation_readback.v1",
+  "status": "passed",
+  "profile": {
+    "profile_id": "ymm4_4_53_0_9_yukkuri_characters_ja_v1",
+    "schema_version": "ymm4_character_alias_profile.v1",
+    "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_character_alias_profiles/ymm4_4_53_0_9_yukkuri_characters_v1.json",
+    "selection_policy": "explicit_only",
+    "strict_coverage": true,
+    "universal_default_claimed": false,
+    "observed_environment": {
+      "yymm4_version": "4.53.0.9",
+      "observation_receipt": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_receipt_2026-07-10.json",
+      "observation_receipt_sha256": "DC756D9C4EE9ABDFDDFB284B2B8EC70B227DDEB5E365C1BBB8EE8438D8C9A5B5"
+    },
+    "profile_sha256": "C32F8E0FAA2FBCED6E91ADFD5BEDC62E8E245EF48F88A67F81B86C39AB89A304",
+    "observation_receipt_sha256_verified": "DC756D9C4EE9ABDFDDFB284B2B8EC70B227DDEB5E365C1BBB8EE8438D8C9A5B5"
+  },
+  "canonical_csv": {
+    "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+    "sha256": "6FBB4666028DF4EF61F19C29505563141B1A82E932DC8E05BF8168F06347D38C",
+    "expected_sha256": "6FBB4666028DF4EF61F19C29505563141B1A82E932DC8E05BF8168F06347D38C",
+    "row_count": 9,
+    "encoding": "utf-8",
+    "has_utf8_bom": false,
+    "canonical_speakers": [
+      "まりさ",
+      "れいむ"
+    ]
+  },
+  "derived_csv": {
+    "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv",
+    "sha256": "5452DE96DC6EF012400A132BA5BAE80B8553C1B1CDD27860D36674C25AF391BC",
+    "row_count": 9,
+    "encoding": "utf-8",
+    "has_utf8_bom": false,
+    "yymm4_characters": [
+      "ゆっくり霊夢",
+      "ゆっくり魔理沙"
+    ]
+  },
+  "checks": {
+    "canonical_sha256_matches_expected": true,
+    "canonical_source_unchanged": true,
+    "strict_coverage_enabled": true,
+    "strict_coverage_satisfied": true,
+    "unmapped_canonical_speakers": [],
+    "row_count_preserved": true,
+    "text_and_order_preserved": true,
+    "speaker_projection_matches_profile": true,
+    "only_speaker_column_changed": true,
+    "headerless_two_column_shape": true,
+    "encoding_compatibility_preserved": true
+  },
+  "row_crosswalk": [
+    {
+      "row_number": 1,
+      "canonical_speaker": "れいむ",
+      "yymm4_character": "ゆっくり霊夢",
+      "text_sha256": "73765FE9B106B0F9953B4FBEFA33EB3B2BFC480F8FDB8ED843AB87FB0B7B6BB0"
+    },
+    {
+      "row_number": 2,
+      "canonical_speaker": "まりさ",
+      "yymm4_character": "ゆっくり魔理沙",
+      "text_sha256": "6525EC89DC5ECEA44D1C6658B1855F4D84C9D351DF3CCEB6E027AB866227A985"
+    },
+    {
+      "row_number": 3,
+      "canonical_speaker": "まりさ",
+      "yymm4_character": "ゆっくり魔理沙",
+      "text_sha256": "B1BC72E60AE9A8BD952202A5F49293AEE2D49E550AE29B292B5F67BEC48A5281"
+    },
+    {
+      "row_number": 4,
+      "canonical_speaker": "まりさ",
+      "yymm4_character": "ゆっくり魔理沙",
+      "text_sha256": "9DDC0A03F91034A44ABA586BC26091207836BD44750DF663FE65AC2892F00ACF"
+    },
+    {
+      "row_number": 5,
+      "canonical_speaker": "れいむ",
+      "yymm4_character": "ゆっくり霊夢",
+      "text_sha256": "96D5542B95A88F1FAC9531A88BC8797151223F4FA5B39EC4C19318DA7846DFAF"
+    },
+    {
+      "row_number": 6,
+      "canonical_speaker": "まりさ",
+      "yymm4_character": "ゆっくり魔理沙",
+      "text_sha256": "85E8B37CB0328BB0D96805B1C5DF6E891C89815EFA8C73BBF89BDF133ED0451C"
+    },
+    {
+      "row_number": 7,
+      "canonical_speaker": "まりさ",
+      "yymm4_character": "ゆっくり魔理沙",
+      "text_sha256": "04F604448BD66EF908DCABBB46882747506DF2BD99AD9FEB60F2FD6B61860361"
+    },
+    {
+      "row_number": 8,
+      "canonical_speaker": "れいむ",
+      "yymm4_character": "ゆっくり霊夢",
+      "text_sha256": "96D5542B95A88F1FAC9531A88BC8797151223F4FA5B39EC4C19318DA7846DFAF"
+    },
+    {
+      "row_number": 9,
+      "canonical_speaker": "まりさ",
+      "yymm4_character": "ゆっくり魔理沙",
+      "text_sha256": "3C0D704633F3735B7133F3D130896C23C4BF4D33957B06179B1929547E63DF5C"
+    }
+  ]
+}

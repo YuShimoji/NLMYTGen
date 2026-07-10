@@ -1,67 +1,65 @@
 # NLMYTGen Project Cockpit
 
-Project-State-ID: supervisor-only-control-boundary-restored-v1
-State-Revision: 2026-07-10.5
-Updated: 2026-07-10 JST
-Product-State: episode-002-ymm4-observation-completed-with-adapter-gap
-Product-Gate: evidence-backed-adapter-correction
-Recommended-Next: correct-speaker-mapping-and-placeholder-lane-gap
+Project-State-ID: episode-002-ymm4-speaker-alias-ready-for-reobservation-v1
+State-Revision: 2026-07-11.1
+Updated: 2026-07-11 JST
+Product-State: episode-002-ymm4-speaker-alias-ready-for-reobservation
+Product-Gate: bounded-yymm4-alias-reobservation
+Recommended-Next: reobserve-derived-yymm4-csv
 External-State: public-repo-feature-branch
 
-このページは、public repository で現在地を読むための追跡済み Markdown です。
-内部 capsule は [runtime-state.md](runtime-state.md)、履歴は
-[project-context.md](project-context.md)、タスク経路は
-[THREAD_REGISTRY.md](THREAD_REGISTRY.md)、product pipeline は
-[PROJECT_PIPELINE.mmd](PROJECT_PIPELINE.mmd) にあります。これらは状態の保存・案内面であり、
-開発セッションの Prompt や Worker 実行権限を定義しません。
-
-別端末からはfeature branchをfast-forwardで取得した後、通常の3文書と
-`project-context.md`最上部の「現在の別端末再開ハンドオフ」を読めば、
-現在地・未実施事項・再開条件へ戻れます。
+このページはpublic repositoryで現在地を読むための追跡済みMarkdownです。
+内部capsuleは[runtime-state.md](runtime-state.md)、履歴は
+[project-context.md](project-context.md)、task経路は
+[THREAD_REGISTRY.md](THREAD_REGISTRY.md)、product pipelineは
+[PROJECT_PIPELINE.mmd](PROJECT_PIPELINE.mmd)にあります。これらは状態の保存・案内面であり、
+開発セッションのPromptやWorker実行権限を定義しません。
 
 ## いまの一文
 
-Episode 002 の9行CSVはYMM4 `4.53.0.9`で実importされ、9 VoiceItems、順序、
-字幕本文、timing orderを確認しました。結果はpartialで、話者の手動mappingと
-ImageItem/TextItem placeholder lane欠落が次のadapter修正対象です。保存・render・
-実素材置換は行っていません。
+Episode 002は、canonical speakerを保つ明示的YMM4 character profileと9行の
+derived import CSV、CSV/diagnostic-project責務分離まで実装・検証済みです。
+再観測時にYMM4が既存のunsaved `無題*` projectを復元したため、その状態を破棄せず
+停止しました。現在のgateはderived CSVの一回限りのbounded re-observationです。
 
 ## 現在の状態
 
 | 対象 | 現在地 | 次に進む条件 | まだ保証しないこと |
 | --- | --- | --- | --- |
-| Episode 002 観測 | 9/9 VoiceItemsを順序どおり実観測。字幕は手動話者mapping後に一致。実durationは2790 frames / 46.50秒 | speaker aliasとplaceholder laneを証拠範囲で補正 | render / production `.ymmp` / public-ready |
-| 実素材置換 | intake 契約はあるが検証済み候補はゼロ | source / transcript / provenance / stable identity / cue alignment を受領 | sample input を real input と扱うこと |
-| feature branch | control-boundary correctionを実装 | default branch との差分を再計算し、integration を判断 | default branch に統合済みという主張 |
-| 公開面 | public repo のこの Markdown で現在地を参照可能 | Pages が必要な場合だけ別途 publication を選ぶ | Pages / Wiki の自動公開 |
-
-## 今回の境界修正
-
-| 除去したもの | 残したもの | 意味 |
-| --- | --- | --- |
-| repo 内 Supervisor Prompt 正本と汎用 Worker authority | Web supervisor から渡す self-contained prompt | セッション指示と repository state を混同しない |
-| 応答品質・YMM4・scene bible・asset matrix の Stop lint | 明示されていない cross-repo 参照だけを止める guardrail | 内容や報告形式が隠れた hard gate にならない |
-| state checker の自動 Stop hook / retry logic | 明示実行できる state alignment CLI | 状態検査を保ちつつ応答停止ループを作らない |
-| repo 内の汎用監修 workflow | product artifact 用の review cycle / Direction Check | 見た目の方向確認を Worker governance から分離する |
+| speaker identity | canonical `れいむ` / `まりさ`を維持し、profileで`ゆっくり霊夢` / `ゆっくり魔理沙`へstrictに射影 | 未定義speakerを追加する場合はprofileを明示更新 | 全YMM4環境のuniversal default |
+| derived CSV | 9行、text/order不変、speaker列だけ変換。canonical SHA不変 | cleanなYMM4 projectへ一度だけimport | automatic bindingのGUI pass |
+| CSV contract | `VoiceItem + linked_subtitle`だけがCSV gate | mapping dialogなし・9/9 items・正しいcharacter・text/order・timing orderを観測 | ImageItem/独立TextItemをCSVが生成すること |
+| diagnostic project | `not_authorized / not_attempted` | supervisorが別sliceとして明示認可 | `.ymmp`生成・patch・保存 |
+| GUI再観測 | 既存unsaved `無題*`を保全して停止。derived import未実施 | userが既存projectをsave elsewhereまたはdiscardする判断 | existing unsaved stateの無断破棄 |
+| 実素材置換 | intake契約はあるが検証済み候補ゼロ | source / transcript / provenance / stable identity / cue alignmentを受領 | sample inputをreal inputと扱うこと |
 
 ## 次に選べる入口
 
-| 入口 | 解く bottleneck | 選ぶと可能になること |
+| 入口 | 解くbottleneck | 選ぶと可能になること |
 | --- | --- | --- |
-| **Correct（推奨）** | 話者aliasが自動bindingされず、ImageItem/TextItem placeholder laneがない | 二つの実測gapだけを修正し、bounded observationを再実行できる |
-| **Advance** | sample fixture から先へ進めない | 検証済み実素材 receipt を作り、置換へ進める |
-| **Integrate** | feature/default branch の関係が未判断 | 最新 diff を監査し、安全な統合方針を選べる |
+| **Reobserve（推奨）** | YMM4に復元された既存unsaved projectがclean importを阻む | 既存stateの扱いを決めた後、derived CSVのCSV gateだけを観測できる |
+| **Advance** | sample fixtureから先へ進めない | 検証済み実素材receiptを作り、置換へ進める |
+| **Integrate** | feature/default branchの関係が未判断 | 最新diffを監査し、安全な統合方針を選べる |
 
-Explore は将来の visible product review debt に降格し、Excise は現在の入口にしません。
-default branch への integration と GitHub Pages の publication は別の選択です。
-public repo の安定した Markdown URL を使うだけなら Pages は不要です。
+Reobserveの実行対象は
+`production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv`
+です。先に、現在開いているYMM4のunsaved `無題*` projectを保存するか破棄するかを
+決める必要があります。成功してもdiagnostic `.ymmp`を自動開始しません。
 
-推奨既定は **Correct** です。五点観測で確認されたspeaker mappingとplaceholder laneの
-二点だけを対象にし、renderや実素材へscopeを広げません。
+## 証拠境界
+
+- canonical CSV SHA-256:
+  `6FBB4666028DF4EF61F19C29505563141B1A82E932DC8E05BF8168F06347D38C`
+- derived CSV SHA-256:
+  `5452DE96DC6EF012400A132BA5BAE80B8553C1B1CDD27860D36674C25AF391BC`
+- immutable prior receipt SHA-256:
+  `DC756D9C4EE9ABDFDDFB284B2B8EC70B227DDEB5E365C1BBB8EE8438D8C9A5B5`
+- current GUI blocker: existing unsaved project preserved; no derived import,
+  save, render, export, or project discard occurred.
 
 ## 公開境界
 
-このページには private URL、token、raw source、article body、権利未確認素材、
-ローカル絶対パスを載せません。actual importはこのbounded diagnostic runだけで確認済みです。
-render、production `.ymmp`、real-input replacement、rights approval、upload completion は
-証拠が揃うまで未完了として扱います。
+このページにはprivate URL、token、raw source、article body、権利未確認素材、
+ローカルuser-home絶対pathを載せません。render、production `.ymmp`、real-input
+replacement、rights approval、final thumbnail、upload、default-branch integrationは
+対応する証拠が揃うまで未完了です。

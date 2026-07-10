@@ -11,10 +11,10 @@ not a governance document or roadmap.
 | input-intake-episode002 | INPUT_API_HUB | accepted/close-ready | Real input intake readiness package exists. |
 | editing-ops-episode002 | EDITING_FEATURES | accepted/close-ready | Editing operations readiness package exists. |
 | local-edit-slice-episode002 | EDITING_FEATURES_LOCAL_EXECUTION | accepted/close-ready | Local edit-slice execution queue exists. |
-| ymm4-import-ready-episode002 | OUTPUT_VIDEO_EDITING | accepted/close-ready | YMM4 import-ready edit package exists. |
+| ymm4-import-ready-episode002 | OUTPUT_VIDEO_EDITING / YMM4_CSV_ADAPTER | alias-ready/reobservation-pending | Explicit 4.53.0.9 character profile, derived 9-row CSV, strict coverage, and CSV-vs-diagnostic responsibility contract are validated. |
 | ymm4-import-ready-ja-review-episode002 | GUI_IA_I18N | accepted/close-ready | Japanese-first import-ready review surface exists; no YMM4 import/render/.ymmp. |
 | verified-real-input-prep-episode002 | INPUT_API_HUB / VERIFIED_REAL_INPUT_PREP | accepted/close-ready | Real-input replacement readiness pack exists; required local inputs defined; candidate input count is 0. |
-| ymm4-observation-readback-episode002 | OUTPUT_VIDEO / YMM4_OBSERVATION_READBACK | observed/adapter-correction-needed | Actual bounded import produced 9/9 ordered VoiceItems; speaker mapping was manual and ImageItem/TextItem placeholder lanes were absent. |
+| ymm4-observation-readback-episode002 | OUTPUT_VIDEO_EDITING / YMM4_CSV_ADAPTER | blocked/existing-unsaved-project-preserved | Derived CSV re-observation was not attempted because YMM4 restored an existing unsaved project. CSV gate remains pending; diagnostic `.ymmp` is separately `not_authorized / not_attempted`. |
 | integrity-triage | INTEGRITY_TRIAGE | paused | Full-suite drift remains nonblocking for targeted slices. |
 | control-boundary-correction | INTEGRITY_TRIAGE | completed/return-to-product | Repo-side supervisor control plane remains removed; product work has advanced through the YMM4 five-point observation. |
 | cross-device-restart-handoff | INTEGRITY_TRIAGE | completed/remote-seal | Current restart context points to the actual-observation branch and the evidence-backed adapter-correction gate. |

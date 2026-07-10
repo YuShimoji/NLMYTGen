@@ -69,8 +69,13 @@ Observed result: generator `validation_status=passed`; focused regression
 
 ## Residual work
 
+2026-07-11 contract correction: this receipt remains immutable historical v1
+evidence, but its missing ImageItem/TextItem result is no longer interpreted as
+a CSV-import failure. CSV import and a future diagnostic `.ymmp` project now use
+separate versioned gates.
+
 | Purpose | Effect | Requirements | State | Owner | Next move |
 | --- | --- | --- | --- | --- | --- |
-| Bind source speaker aliases automatically | Remove manual mapping and the incorrect Marisa default | Evidence-backed alias/character policy; preserve existing speaker text | open / recommended | adapter implementation lane | Map `れいむ` to `ゆっくり霊夢` and `まりさ` to `ゆっくり魔理沙`, then repeat bounded import |
-| Generate expected placeholder scene lanes | Make the cue-map ImageItem/TextItem contract visible in YMM4 | Diagnostic-only placeholder data; no production asset or rights claim | open / required | adapter implementation lane | Add the missing lanes without render/export, then repeat the same five checks |
+| Reobserve the explicit speaker aliases | Prove mapping-dialog-free import and remove the incorrect Marisa default | Implemented strict profile and derived CSV; existing unsaved YMM4 state must first be resolved | implemented / GUI return blocked | CSV adapter lane + user decision | Decide whether to save or discard the recovered unsaved project, then import only the derived CSV once |
+| Authorize a diagnostic placeholder project | Make ImageItem/independent TextItem placeholders visible through a project path, not CSV import | Separate supervisor authorization; diagnostic-only inputs; no production asset or rights claim | not_authorized / not_attempted | future diagnostic `.ymmp` lane | Do not start from CSV-gate success; open only as a separate approved slice |
 | Replace diagnostic input | Move from sample fixture to verified real material | Verified source/transcript, provenance/rights note, stable identity, cue alignment | blocked by missing inputs | real-input intake owner | Supply and validate the required receipt; do not infer readiness from this observation |

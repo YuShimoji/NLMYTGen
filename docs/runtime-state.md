@@ -1,93 +1,93 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: supervisor-only-control-boundary-restored-v1
-State-Revision: 2026-07-10.5
-Updated: 2026-07-10 JST
-Product-State: episode-002-ymm4-observation-completed-with-adapter-gap
-Product-Gate: evidence-backed-adapter-correction
-Recommended-Next: correct-speaker-mapping-and-placeholder-lane-gap
+Project-State-ID: episode-002-ymm4-speaker-alias-ready-for-reobservation-v1
+State-Revision: 2026-07-11.1
+Updated: 2026-07-11 JST
+Product-State: episode-002-ymm4-speaker-alias-ready-for-reobservation
+Product-Gate: bounded-yymm4-alias-reobservation
+Recommended-Next: reobserve-derived-yymm4-csv
 External-State: public-repo-feature-branch
 
 ## Current Slice
 
-- **Completed boundary correction**: repository-side Supervisor Prompt storage,
-  generic Worker authority, response-quality lint, and the automatic state-sync
-  Stop hook have been removed. A self-contained prompt supplied by the Web
-  supervisor is the session execution authority.
-- **Repository role**: this file and `docs/PROJECT_COCKPIT.md` persist compact
-  project state for navigation. `docs/THREAD_REGISTRY.md` routes task history,
-  and `docs/PROJECT_PIPELINE.mmd` maps the product path. None is a substitute
-  prompt or a Worker control plane.
-- **Explicit integrity tool**: `scripts/check_project_state_sync.py` remains an
-  opt-in checker for the shared runtime/cockpit fields. It is not invoked by a
-  Stop hook and has no retry/fail-open behavior.
-- **Product scope**: the tracked nine-row diagnostic CSV was imported in YMM4
-  `4.53.0.9`, observed, closed without saving, and persisted as an evidence
-  receipt plus regenerated readback. No render/export, production `.ymmp`, real
-  input, rights/public decision, default-branch integration, or upload changed.
-- **Cross-device resume**: after the normal three-document read budget, use the
-  top `現在の別端末再開ハンドオフ` section in `docs/project-context.md`. It names
-  the tracked branch, clean/parity check, current product facts, and exact
-  return path without recreating a repository-side session prompt.
+- **Alias profile implemented**: the Episode 002 artifact chain now explicitly
+  selects `ymm4_4_53_0_9_yukkuri_characters_ja_v1`. It maps canonical `れいむ`
+  to `ゆっくり霊夢` and `まりさ` to `ゆっくり魔理沙`, requires strict coverage,
+  and does not claim a universal environment default.
+- **Canonical input preserved**: the tracked nine-row canonical CSV remains
+  unchanged at SHA-256
+  `6FBB4666028DF4EF61F19C29505563141B1A82E932DC8E05BF8168F06347D38C`.
+  The derived import CSV is a separate artifact with SHA-256
+  `5452DE96DC6EF012400A132BA5BAE80B8553C1B1CDD27860D36674C25AF391BC`.
+- **Responsibility contract corrected**: CSV import expects only `VoiceItem` and
+  linked subtitle output. `ImageItem` and independent `TextItem` placeholders
+  belong to a separate diagnostic project whose gate is
+  `not_authorized / not_attempted`; their absence is not a CSV failure.
+- **Historical evidence preserved**: the 2026-07-10 receipt remains byte-for-byte
+  unchanged at SHA-256
+  `DC756D9C4EE9ABDFDDFB284B2B8EC70B227DDEB5E365C1BBB8EE8438D8C9A5B5`.
+  Its `partial` result remains historical v1 evidence under the former mixed
+  placeholder contract.
+- **Bounded GUI re-observation blocked safely**: YMM4 `4.53.0.9` was opened, but
+  it restored the prior nine-item / 2790-frame project as unsaved `無題*` state.
+  A clean derived-CSV import would require discarding or relocating that existing
+  unsaved project. No discard, new project, derived import, save, render, or
+  export occurred; YMM4 was left open to preserve the state.
 
 ## Product Position
 
-- The Episode 002 nine-row CSV produced nine ordered VoiceItems. Row order
-  remained `csv_row_1` through `csv_row_9`, corresponding to S1 -> S2 -> S3;
-  no missing, duplicate, or reordered cue was observed.
-- Linked subtitle text matched the speaker/cue after manual character mapping:
-  `れいむ` -> `ゆっくり霊夢` and `まりさ` -> `ゆっくり魔理沙`. Automatic
-  binding was not proven and the initial `まりさ` default was incorrect.
-- Timing order remained intact, but YMM4 recalculated the provisional
-  four-second blocks to 2790 frames / 46.50 seconds at 60 fps.
-- The result is `partial`: VoiceItem/subtitle lanes appeared, but the expected
-  ImageItem/TextItem placeholder scene lanes did not. Diagnostic text retained
-  its dry-run boundary and did not claim final/public readiness.
-- Receipt-driven regeneration and focused product validation are proven. The
-  current regression covers 24 tests for observation readback, import
-  readiness, local edit execution, and real-input readiness.
-- No verified Episode 002 source/transcript bundle has been supplied, so sample
-  input has not been replaced by real material.
-- A 2026-07-10 full-suite audit reported 22 known failures and tracked-fixture
-  side effects. Those writes were restored; full-suite repair remains a
-  separate Integrity / Triage task and is not the product gate.
+- Profile parsing, strict unmapped-speaker failure, canonical immutability,
+  nine-row text/order/character projection, encoding compatibility, and byte
+  determinism are machine-checked.
+- Import-ready cue-map, adapter plan, manifest, source index, validation, HTML,
+  and manual sheet are regenerated under versioned v2 contracts.
+- Observation readback supports immutable historical receipt v1, CSV-gate
+  receipt v2, and the current tracked GUI-blocker receipt.
+- The current CSV gate is not yet passed because the derived CSV was not
+  imported. Mapping-dialog absence, 9/9 VoiceItems, automatic characters,
+  linked text/order, and timing order remain to be observed once.
+- No diagnostic `.ymmp`, ImageItem/TextItem project, render/export, production
+  `.ymmp`, real-input replacement, rights/public decision, upload, or
+  default-branch integration occurred.
 
 ## Current Decision Menu
 
 | Entry | Resolves | What becomes possible |
 | --- | --- | --- |
-| **Correct — recommended** | Speaker aliases require manual mapping and placeholder scene lanes are absent | Repair only the two evidence-backed adapter gaps, then repeat the bounded observation |
-| **Advance** | There is no verified real source/transcript | Validate a supplied receipt and replace the diagnostic sample input |
-| **Integrate** | Feature-branch work is not yet reconciled with the default branch | Audit the branch/default diff and choose the safe integration path |
+| **Reobserve — recommended** | The already-open YMM4 window holds an existing unsaved recovered project | After the user decides whether to save it elsewhere or discard it, import only the derived CSV in a clean untitled project and record the five CSV-gate checks |
+| **Advance** | There is no verified real source/transcript | Validate a supplied receipt and replace the diagnostic sample input without implying CSV-gate completion |
+| **Integrate** | Feature-branch work is not reconciled with the default branch | Audit the then-current feature/default diff and choose a safe integration path |
 
-Explore is review debt, not the next product entry. Use a product Direction
-Check only when a future visible layout, language, color/type, content, or
-animation decision would otherwise be expensive to reverse. Excise is not a
-current entry. Default-branch integration and optional GitHub Pages publication
-are separate decisions; this public repository already exposes tracked Markdown.
+Successful CSV re-observation does not authorize the diagnostic `.ymmp` lane.
+That future lane and real-input replacement remain separate supervisor choices.
 
 ## Human or External Decision Points
 
-- **Adapter correction**: use the recorded five-point observation to correct
-  automatic speaker binding and ImageItem/TextItem placeholder-lane generation
-  without widening into render, production `.ymmp`, or visual acceptance.
-- **Real-input route**: a verified source/transcript, provenance/rights note,
-  stable identity, and cue alignment are required before real replacement.
-- **Integration**: inspect the then-current feature/default diff before merging;
-  do not infer approval for default-branch mutation from this state record.
+- **Existing unsaved YMM4 project**: in the already-open YMM4 window, first
+  decide whether the recovered `無題*` project may be discarded or must be saved
+  elsewhere. Do not start a clean import until that decision is explicit.
+- **Bounded return path**: after the existing project is resolved, start a clean
+  untitled project, import
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv`
+  once, record mapping dialog / 9 VoiceItems / characters / linked text and order /
+  timing order / CSV responsibility boundary, then close the new observation
+  project without saving.
+- **Real-input route**: verified source/transcript, provenance/rights note,
+  stable identity, and cue alignment are still required before replacement.
 
 ## Product Boundaries
 
-- Actual import is proven only for this bounded diagnostic run. Do not claim
-  render/export, production `.ymmp`, real-input replacement, rights approval,
-  final thumbnail approval, upload, or public readiness without corresponding
-  evidence.
-- Do not turn compact state, task routing, or product review guidance back into
-  a repository-side session prompt or response gate.
+- Alias and derived-CSV readiness is machine-proven; actual automatic binding is
+  not proven until the bounded GUI import succeeds.
+- The diagnostic `.ymmp` project remains `not_authorized / not_attempted`.
+- Do not infer render/export, production `.ymmp`, real input, rights/public/final
+  thumbnail approval, upload, publication, or default-branch integration.
+- Compact state files and task routing remain navigation surfaces, not a
+  repository-side session prompt or Worker control plane.
 
 ## Maintenance Note
 
-Replace this file as a compact current capsule; put durable decisions and old
-handoffs in `docs/project-context.md`, dated verification artifacts, and Git
-history. When these shared fields change, update `docs/PROJECT_COCKPIT.md` in
-the same commit and invoke the checker explicitly if validation is needed.
+Replace this file as the current capsule. Keep historical decisions in
+`docs/project-context.md`, dated verification artifacts, and Git history. Update
+`docs/PROJECT_COCKPIT.md` with the same shared fields and run the explicit state
+checker when those fields change.

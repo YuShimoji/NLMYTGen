@@ -3025,6 +3025,11 @@ def main(argv: list[str] | None = None) -> int:
         help="YMM4 import-ready package artifact id",
     )
     p_ymm4_import_ready_pack.add_argument(
+        "--ymm4-character-profile",
+        required=True,
+        help="Explicit repo-tracked canonical-speaker to installed-YMM4-character profile",
+    )
+    p_ymm4_import_ready_pack.add_argument(
         "--format",
         choices=["text", "json"],
         default="text",
@@ -3048,6 +3053,10 @@ def main(argv: list[str] | None = None) -> int:
     p_ymm4_observation_readback_pack.add_argument(
         "--observation-receipt",
         help="Optional tracked actual-GUI observation receipt JSON",
+    )
+    p_ymm4_observation_readback_pack.add_argument(
+        "--observation-blocker",
+        help="Optional tracked GUI blocker receipt JSON (mutually exclusive with --observation-receipt)",
     )
     p_ymm4_observation_readback_pack.add_argument(
         "--format",
@@ -5839,6 +5848,7 @@ def _cmd_build_ymm4_import_ready_pack(args: argparse.Namespace) -> int:
 
     readback = build_ymm4_import_ready_pack(
         package_dir=getattr(args, "package"),
+        yymm4_character_profile=getattr(args, "ymm4_character_profile"),
         output_dir=getattr(args, "output", None),
         artifact_id=getattr(args, "artifact_id"),
     )
@@ -5853,6 +5863,9 @@ def _cmd_build_ymm4_import_ready_pack(args: argparse.Namespace) -> int:
         print(f"scene_count: {readback.get('scene_count')}")
         print(f"cue_count: {readback.get('cue_count')}")
         print(f"ymm4_import_state: {readback.get('ymm4_import_state')}")
+        print(f"canonical_source_csv: {readback.get('canonical_source_csv')}")
+        print(f"primary_import_csv: {readback.get('primary_import_csv')}")
+        print(f"selected_yymm4_character_profile: {readback.get('selected_yymm4_character_profile')}")
         print(f"actual_ymm4_imported: {readback.get('actual_ymm4_imported')}")
         print(f"rendered_video_created: {readback.get('rendered_video_created')}")
         print(f"real_input_replaced: {readback.get('real_input_replaced')}")
@@ -5877,6 +5890,7 @@ def _cmd_build_ymm4_observation_readback_pack(args: argparse.Namespace) -> int:
         output_dir=getattr(args, "output", None),
         artifact_id=getattr(args, "artifact_id"),
         observation_receipt=getattr(args, "observation_receipt", None),
+        observation_blocker=getattr(args, "observation_blocker", None),
     )
     fmt = getattr(args, "format", "text")
     if fmt == "json":

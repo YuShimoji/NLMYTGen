@@ -2,9 +2,15 @@
 
 from __future__ import annotations
 
+import hashlib
 from pathlib import Path
 from typing import Any
 
+from src.pipeline.ymm4_character_alias_profile import (
+    build_derived_yymm4_import_csv,
+    load_yymm4_character_alias_profile,
+    read_headerless_yymm4_csv,
+)
 from src.pipeline.split_view_decision_evidence_prototype import (
     _dict,
     _escape,
@@ -22,6 +28,14 @@ from src.pipeline.split_view_decision_evidence_prototype import (
 DEFAULT_OUTPUT_DIRNAME = "ymm4_import_ready_pack"
 DEFAULT_ARTIFACT_ID = "nlm-e002-ymm4-import-ready-edit-package-v1-001"
 SOURCE_EPISODE_ID = "yukkuri_newsroom_content_spine_002"
+CANONICAL_CSV_RELATIVE = "transcript_substitution_readiness/regenerated_draft_yymm4.csv"
+ORIGINAL_CANONICAL_CSV_SHA256 = "6FBB4666028DF4EF61F19C29505563141B1A82E932DC8E05BF8168F06347D38C"
+DERIVED_IMPORT_CSV_FILENAME = "derived_yymm4_import.csv"
+ALIAS_COVERAGE_FILENAME = "yymm4_character_alias_coverage_readback.json"
+EXPECTED_EPISODE_CHARACTER_ALIASES = {
+    "れいむ": "ゆっくり霊夢",
+    "まりさ": "ゆっくり魔理沙",
+}
 
 LOCAL_EDIT_DIRNAME = "local_edit_slice_execution_pack"
 EDITING_OPERATIONS_DIRNAME = "editing_operations_readiness_pack"
@@ -37,16 +51,24 @@ REQUIRED_YMM4_IMPORT_READY_FILES = (
     "ymmp_adapter_plan.json",
     "README_YMM4_IMPORT_READY.md",
     "limitations.md",
+    DERIVED_IMPORT_CSV_FILENAME,
+    ALIAS_COVERAGE_FILENAME,
 )
 
 REQUIRED_CUE_FIELDS = (
     "cue_id",
+    "row_number",
+    "speaker",
     "source_scene_id",
     "approximate_timing",
     "voice_or_subtitle_action",
     "visual_action",
     "overlay_or_citation_action",
-    "expected_yymm4_layer_or_track",
+    "canonical_speaker",
+    "yymm4_character",
+    "csv_import_expected_item_families",
+    "diagnostic_project_expected_item_families",
+    "diagnostic_project_gate",
     "required_asset_state",
     "import_risk",
     "manual_observation_question",
@@ -65,12 +87,14 @@ FORBIDDEN_GATE_FLAGS = (
     "public_ready",
     "final_thumbnail_approval",
     "youtube_uploaded",
+    "diagnostic_ymmp_project_attempted",
 )
 
 
 def build_ymm4_import_ready_pack(
     *,
     package_dir: str | Path,
+    yymm4_character_profile: str | Path,
     output_dir: str | Path | None = None,
     artifact_id: str = DEFAULT_ARTIFACT_ID,
 ) -> dict[str, Any]:
@@ -81,6 +105,19 @@ def build_ymm4_import_ready_pack(
     repo_root = _find_repo_root(source_root)
 
     paths = _input_paths(source_root)
+    profile_path = Path(yymm4_character_profile)
+    profile = load_yymm4_character_alias_profile(profile_path)
+    if _dict(profile.get("scope")).get("episode_id") != SOURCE_EPISODE_ID:
+        raise ValueError(f"YMM4 character profile scope must be {SOURCE_EPISODE_ID}")
+    if profile.get("canonical_to_yymm4_character") != EXPECTED_EPISODE_CHARACTER_ALIASES:
+        raise ValueError("Episode 002 YMM4 character profile alias map does not match observed characters")
+    derivation = build_derived_yymm4_import_csv(
+        canonical_csv=paths["canonical_csv"],
+        derived_csv=output_root / DERIVED_IMPORT_CSV_FILENAME,
+        profile_path=profile_path,
+        repo_root=repo_root,
+        expected_canonical_sha256=ORIGINAL_CANONICAL_CSV_SHA256,
+    )
     payloads = _load_payloads(paths)
     state = _state(
         artifact_id=artifact_id,
@@ -89,6 +126,9 @@ def build_ymm4_import_ready_pack(
         repo_root=repo_root,
         paths=paths,
         payloads=payloads,
+        profile_path=profile_path,
+        profile=profile,
+        derivation=derivation,
     )
     cue_map = _cue_map(state)
     gate_readback = _gate_readback(state, cue_map)
@@ -101,6 +141,7 @@ def build_ymm4_import_ready_pack(
     _write_json(output_root / "gate_readback.json", gate_readback)
     _write_json(output_root / "source_artifact_index.json", source_index)
     _write_json(output_root / "ymmp_adapter_plan.json", adapter_plan)
+    _write_json(output_root / ALIAS_COVERAGE_FILENAME, derivation)
     _write_text(output_root / "manual_ymm4_import_observation_sheet.md", _render_observation_sheet(state, cue_map, gate_readback))
     _write_text(output_root / "ymm4_import_ready_preview.html", _render_html(state, manifest, cue_map, gate_readback))
     _write_text(output_root / "README_YMM4_IMPORT_READY.md", _render_readme(state, manifest, cue_map, gate_readback))
@@ -134,12 +175,14 @@ def validate_ymm4_import_ready_pack(
     gate_readback = _load_json_if_present(files["gate_readback.json"])
     source_index = _load_json_if_present(files["source_artifact_index.json"])
     adapter_plan = _load_json_if_present(files["ymmp_adapter_plan.json"])
+    alias_coverage = _load_json_if_present(files[ALIAS_COVERAGE_FILENAME])
     json_payloads = {
         "manifest": manifest,
         "cue_map": cue_map,
         "gate_readback": gate_readback,
         "source_index": source_index,
         "adapter_plan": adapter_plan,
+        "alias_coverage": alias_coverage,
     }
     for name, payload in json_payloads.items():
         if not isinstance(payload, dict):
@@ -151,6 +194,22 @@ def validate_ymm4_import_ready_pack(
     gate_readback = _dict(json_payloads["gate_readback"])
     source_index = _dict(json_payloads["source_index"])
     adapter_plan = _dict(json_payloads["adapter_plan"])
+    alias_coverage = _dict(json_payloads["alias_coverage"])
+
+    derived_csv: dict[str, Any] = {}
+    if files[DERIVED_IMPORT_CSV_FILENAME].exists():
+        try:
+            derived_csv = read_headerless_yymm4_csv(files[DERIVED_IMPORT_CSV_FILENAME])
+        except (OSError, UnicodeError, ValueError) as exc:
+            failed_checks.append(f"derived_csv_invalid:{exc}")
+    repo_root = _find_repo_root(Path(__file__))
+    canonical_csv: dict[str, Any] = {}
+    canonical_manifest_path = str(manifest.get("canonical_source_csv") or "")
+    if canonical_manifest_path:
+        try:
+            canonical_csv = read_headerless_yymm4_csv(repo_root / canonical_manifest_path)
+        except (OSError, UnicodeError, ValueError) as exc:
+            failed_checks.append(f"canonical_csv_invalid:{exc}")
 
     html_text = files["ymm4_import_ready_preview.html"].read_text(encoding="utf-8") if files["ymm4_import_ready_preview.html"].exists() else ""
     sheet_text = files["manual_ymm4_import_observation_sheet.md"].read_text(encoding="utf-8") if files["manual_ymm4_import_observation_sheet.md"].exists() else ""
@@ -163,11 +222,13 @@ def validate_ymm4_import_ready_pack(
 
     if manifest.get("artifact_id") != DEFAULT_ARTIFACT_ID:
         failed_checks.append("manifest_artifact_id_mismatch")
+    if manifest.get("schema_version") != "ymm4_import_ready_manifest.v2":
+        failed_checks.append("manifest_schema_version_mismatch")
     if manifest.get("artifact_kind") != "episode-ymm4-import-ready-edit-package":
         failed_checks.append("manifest_artifact_kind_mismatch")
     if manifest.get("source_episode_id") != SOURCE_EPISODE_ID:
         failed_checks.append("manifest_source_episode_id_mismatch")
-    if manifest.get("ymm4_import_state") != "ready_for_manual_import_observation":
+    if manifest.get("ymm4_import_state") != "ready_for_bounded_alias_reobservation":
         failed_checks.append("manifest_import_state_mismatch")
     for flag in (
         "actual_ymm4_imported",
@@ -186,12 +247,38 @@ def validate_ymm4_import_ready_pack(
         failed_checks.append("manifest_scene_count_mismatch")
     if len(cues) < 1:
         failed_checks.append("cue_map_empty")
+    if cue_map.get("schema_version") != "edit_slice_to_ymm4_cue_map.v2":
+        failed_checks.append("cue_map_schema_version_mismatch")
+    responsibility = _dict(cue_map.get("responsibility_contract"))
+    if responsibility.get("csv_import_expected_item_families") != ["VoiceItem", "linked_subtitle"]:
+        failed_checks.append("csv_import_item_family_contract_mismatch")
+    if responsibility.get("diagnostic_project_expected_item_families") != [
+        "ImageItem",
+        "independent_TextItem_placeholders",
+    ]:
+        failed_checks.append("diagnostic_project_item_family_contract_mismatch")
+    if responsibility.get("diagnostic_project_gate") != "not_authorized":
+        failed_checks.append("diagnostic_project_gate_not_closed")
+    if responsibility.get("diagnostic_project_status") != "not_attempted":
+        failed_checks.append("diagnostic_project_status_not_attempted")
     for cue in cues:
         for field in REQUIRED_CUE_FIELDS:
             if field not in cue:
                 failed_checks.append(f"cue_field_missing:{field}")
         if cue.get("required_asset_state") not in {"placeholder", "diagnostic", "real_required_later"}:
             failed_checks.append(f"cue_asset_state_invalid:{cue.get('cue_id')}")
+        if "expected_yymm4_layer_or_track" in cue:
+            failed_checks.append(f"cue_legacy_mixed_contract_present:{cue.get('cue_id')}")
+        if cue.get("csv_import_expected_item_families") != ["VoiceItem", "linked_subtitle"]:
+            failed_checks.append(f"cue_csv_import_contract_mismatch:{cue.get('cue_id')}")
+        if cue.get("diagnostic_project_gate") != "not_authorized":
+            failed_checks.append(f"cue_diagnostic_gate_not_closed:{cue.get('cue_id')}")
+        if cue.get("speaker") != cue.get("canonical_speaker"):
+            failed_checks.append(f"cue_canonical_speaker_identity_mismatch:{cue.get('cue_id')}")
+        if cue.get("yymm4_character") not in {"ゆっくり霊夢", "ゆっくり魔理沙"}:
+            failed_checks.append(f"cue_yymm4_character_invalid:{cue.get('cue_id')}")
+    if [cue.get("row_number") for cue in cues] != list(range(1, 10)):
+        failed_checks.append("cue_row_order_mismatch")
     if gate_readback.get("status") != "ymm4_import_gates_closed":
         failed_checks.append("gate_readback_status_mismatch")
     if gate_readback.get("gates_closed") is not True:
@@ -201,10 +288,63 @@ def validate_ymm4_import_ready_pack(
             failed_checks.append(f"gate_flag_not_false:{flag_name}")
     if adapter_plan.get("status") != "adapter_plan_ready_no_ymmp_write":
         failed_checks.append("adapter_plan_status_mismatch")
+    if adapter_plan.get("schema_version") != "ymmp_adapter_plan.v2":
+        failed_checks.append("adapter_plan_schema_version_mismatch")
+    if "expected_item_families" in adapter_plan:
+        failed_checks.append("adapter_plan_legacy_mixed_contract_present")
+    diagnostic_contract = _dict(adapter_plan.get("diagnostic_project_contract"))
+    if diagnostic_contract.get("gate") != "not_authorized":
+        failed_checks.append("adapter_plan_diagnostic_gate_not_closed")
+    if diagnostic_contract.get("status") != "not_attempted":
+        failed_checks.append("adapter_plan_diagnostic_status_not_attempted")
     if adapter_plan.get("ymmp_file_created") is not False:
         failed_checks.append("adapter_plan_created_ymmp")
     if source_index.get("local_edit_pack_read_only") is not True:
         failed_checks.append("local_edit_pack_not_read_only")
+    coverage_checks = _dict(alias_coverage.get("checks"))
+    if alias_coverage.get("status") != "passed":
+        failed_checks.append("alias_coverage_status_mismatch")
+    for check_name in (
+        "canonical_sha256_matches_expected",
+        "canonical_source_unchanged",
+        "strict_coverage_enabled",
+        "strict_coverage_satisfied",
+        "row_count_preserved",
+        "text_and_order_preserved",
+        "speaker_projection_matches_profile",
+        "only_speaker_column_changed",
+        "headerless_two_column_shape",
+        "encoding_compatibility_preserved",
+    ):
+        if coverage_checks.get(check_name) is not True:
+            failed_checks.append(f"alias_coverage_check_failed:{check_name}")
+    if _dict(alias_coverage.get("canonical_csv")).get("sha256") != ORIGINAL_CANONICAL_CSV_SHA256:
+        failed_checks.append("canonical_csv_sha256_mismatch")
+    if canonical_csv.get("sha256") != ORIGINAL_CANONICAL_CSV_SHA256:
+        failed_checks.append("canonical_csv_actual_sha256_mismatch")
+    if derived_csv.get("row_count") != 9:
+        failed_checks.append("derived_csv_row_count_mismatch")
+    if derived_csv.get("sha256") != _dict(alias_coverage.get("derived_csv")).get("sha256"):
+        failed_checks.append("derived_csv_sha256_mismatch")
+    derived_speakers = {str(row.get("speaker")) for row in _list(derived_csv.get("rows"))}
+    if derived_speakers != {"ゆっくり霊夢", "ゆっくり魔理沙"}:
+        failed_checks.append("derived_csv_character_set_mismatch")
+    canonical_rows = _list(canonical_csv.get("rows"))
+    derived_rows = _list(derived_csv.get("rows"))
+    crosswalk_rows = _list(alias_coverage.get("row_crosswalk"))
+    if [row.get("text") for row in derived_rows] != [row.get("text") for row in canonical_rows]:
+        failed_checks.append("derived_csv_actual_text_order_mismatch")
+    expected_crosswalk = [
+        {
+            "row_number": row.get("row_number"),
+            "canonical_speaker": canonical.get("speaker"),
+            "yymm4_character": row.get("speaker"),
+            "text_sha256": hashlib.sha256(str(row.get("text") or "").encode("utf-8")).hexdigest().upper(),
+        }
+        for canonical, row in zip(canonical_rows, derived_rows, strict=False)
+    ]
+    if crosswalk_rows != expected_crosswalk:
+        failed_checks.append("derived_csv_actual_crosswalk_mismatch")
     if "data-ymm4-import-ready=\"true\"" not in html_text:
         failed_checks.append("html_missing_import_ready_marker")
     if "data-region=\"cue-map\"" not in html_text:
@@ -213,8 +353,8 @@ def validate_ymm4_import_ready_pack(
         failed_checks.append("html_card_grid_marker_found")
     if len(observation_checks) > 5:
         failed_checks.append("observation_sheet_too_many_checks")
-    if "Do not launch YMM4" not in limitations_text:
-        failed_checks.append("limitations_missing_yymm4_stop")
+    if "Do not create or save a diagnostic `.ymmp` project" not in limitations_text:
+        failed_checks.append("limitations_missing_diagnostic_project_stop")
 
     visible_files = [path for path in files.values() if path.exists()]
     external_refs = _external_refs_in_files(visible_files)
@@ -229,7 +369,7 @@ def validate_ymm4_import_ready_pack(
 
     status = "passed" if not failed_checks else "failed"
     return {
-        "schema_version": "ymm4_import_ready_validation_readback.v1",
+        "schema_version": "ymm4_import_ready_validation_readback.v2",
         "status": status,
         "output_dir": str(root),
         "checked_files": {name: str(path) for name, path in files.items()},
@@ -247,6 +387,15 @@ def validate_ymm4_import_ready_pack(
             "closed_gate_flags": gate_flags,
             "ymmp_file_created": adapter_plan.get("ymmp_file_created"),
             "local_edit_pack_read_only": source_index.get("local_edit_pack_read_only"),
+            "canonical_csv_sha256": _dict(alias_coverage.get("canonical_csv")).get("sha256"),
+            "derived_csv_sha256": _dict(alias_coverage.get("derived_csv")).get("sha256"),
+            "derived_csv_row_count": derived_csv.get("row_count"),
+            "alias_profile_id": _dict(alias_coverage.get("profile")).get("profile_id"),
+            "alias_coverage": coverage_checks,
+            "csv_import_expected_item_families": responsibility.get("csv_import_expected_item_families"),
+            "diagnostic_project_expected_item_families": responsibility.get("diagnostic_project_expected_item_families"),
+            "diagnostic_project_gate": responsibility.get("diagnostic_project_gate"),
+            "diagnostic_project_status": responsibility.get("diagnostic_project_status"),
             "external_dependency_status": "none_found" if not external_refs else external_refs,
             "forbidden_true_claims_absent": not forbidden_claims,
             "temporary_copy_absent": not temporary_hits,
@@ -260,6 +409,9 @@ def validate_ymm4_import_ready_pack(
         "scene_count": len(scenes),
         "cue_count": len(cues),
         "ymm4_import_state": manifest.get("ymm4_import_state"),
+        "canonical_source_csv": manifest.get("canonical_source_csv"),
+        "primary_import_csv": manifest.get("primary_import_csv"),
+        "selected_yymm4_character_profile": manifest.get("selected_yymm4_character_profile"),
         "actual_ymm4_imported": manifest.get("actual_ymm4_imported"),
         "rendered_video_created": manifest.get("rendered_video_created"),
         "real_input_replaced": manifest.get("real_input_replaced"),
@@ -288,6 +440,8 @@ def _input_paths(source_root: Path) -> dict[str, Path]:
         "visual_asset_slot_map": editing_root / "visual_asset_slot_map.json",
         "timing_adjustment_model": editing_root / "timing_adjustment_model.json",
         "operation_gap_ledger": editing_root / "operation_gap_ledger.json",
+        "canonical_csv": source_root / CANONICAL_CSV_RELATIVE,
+        "original_observation_receipt": source_root / "ymm4_observation_receipt_2026-07-10.json",
     }
 
 
@@ -313,6 +467,9 @@ def _state(
     repo_root: Path,
     paths: dict[str, Path],
     payloads: dict[str, Any],
+    profile_path: Path,
+    profile: dict[str, Any],
+    derivation: dict[str, Any],
 ) -> dict[str, Any]:
     return {
         "schema_version": "ymm4_import_ready_state.v1",
@@ -322,7 +479,14 @@ def _state(
         "source_package_dir": _relpath(source_root, repo_root),
         "output_dir": _relpath(output_root, repo_root),
         "repo_root": str(repo_root),
-        "paths": {name: _relpath(path, repo_root) for name, path in paths.items()},
+        "paths": {
+            **{name: _relpath(path, repo_root) for name, path in paths.items()},
+            "yymm4_character_profile": _relpath(profile_path, repo_root),
+            "derived_import_csv": _relpath(output_root / DERIVED_IMPORT_CSV_FILENAME, repo_root),
+            "alias_coverage_readback": _relpath(output_root / ALIAS_COVERAGE_FILENAME, repo_root),
+        },
+        "yymm4_character_profile": profile,
+        "alias_derivation": derivation,
         "local_edit_manifest": _dict(payloads.get("local_edit_manifest")),
         "local_edit_queue": _dict(payloads.get("local_edit_queue")),
         "local_scene_plan": _dict(payloads.get("local_scene_plan")),
@@ -334,7 +498,7 @@ def _state(
         "operation_gap_ledger": _dict(payloads.get("operation_gap_ledger")),
         "primary_human_review": _relpath(output_root / "ymm4_import_ready_preview.html", repo_root),
         "primary_machine_readable": _relpath(output_root / "validation_readback.json", repo_root),
-        "next_action": "Use the preview and observation sheet for a future explicit YMM4 import observation; do not import, render, replace real input, or publish from this package.",
+        "next_action": "Import only the explicitly derived CSV for one bounded YMM4 alias re-observation; do not create a diagnostic project, render, replace real input, or publish.",
     }
 
 
@@ -343,6 +507,12 @@ def _cue_map(state: dict[str, Any]) -> dict[str, Any]:
     visual_map = _dict(state.get("visual_asset_slot_map"))
     timing_model = _dict(state.get("timing_adjustment_model"))
     local_queue = _dict(state.get("local_edit_queue"))
+    derivation = _dict(state.get("alias_derivation"))
+    alias_rows = {
+        int(_dict(row).get("row_number") or 0): _dict(row)
+        for row in _list(derivation.get("row_crosswalk"))
+    }
+    paths = _dict(state.get("paths"))
 
     visual_by_scene = {
         str(row.get("scene_id")): row
@@ -372,6 +542,10 @@ def _cue_map(state: dict[str, Any]) -> dict[str, Any]:
             approx_start = scene_start + cue_duration * index
             approx_end = scene_start + cue_duration * (index + 1)
             cue_id = str(row.get("cue_id") or f"{scene_id}_cue_{index + 1}")
+            row_number = int(row.get("row_number") or 0)
+            alias_row = _dict(alias_rows.get(row_number))
+            if not alias_row:
+                raise ValueError(f"YMM4 character alias crosswalk missing row {row_number}")
             overlays = _list(visual.get("citation_overlay_ids"))
             thumbnail_rules = _list(visual.get("thumbnail_transfer_rule_ids"))
             cues.append(
@@ -379,8 +553,10 @@ def _cue_map(state: dict[str, Any]) -> dict[str, Any]:
                     "cue_id": cue_id,
                     "source_scene_id": scene_id,
                     "local_edit_item_id": f"{scene_id}:{cue_id}",
-                    "row_number": row.get("row_number"),
+                    "row_number": row_number,
                     "speaker": row.get("speaker"),
+                    "canonical_speaker": alias_row.get("canonical_speaker") or row.get("speaker"),
+                    "yymm4_character": alias_row.get("yymm4_character"),
                     "approximate_timing": {
                         "timing_source": "provisional_even_split_from_scene_duration",
                         "scene_start_sec": scene_start,
@@ -392,21 +568,27 @@ def _cue_map(state: dict[str, Any]) -> dict[str, Any]:
                     },
                     "voice_or_subtitle_action": {
                         "expected_voice_slot_id": row.get("voice_slot_id"),
-                        "expected_subtitle_source": row.get("subtitle_source"),
+                        "canonical_subtitle_source": row.get("subtitle_source"),
+                        "csv_import_source": f"{paths.get('derived_import_csv')}#row-{row_number}",
                         "subtitle_text_status": row.get("subtitle_text_status"),
                         "action": "observe YMM4 CSV-imported VoiceItem and linked subtitle readability",
                     },
                     "visual_action": {
                         "primary_template_id": visual.get("primary_template_id"),
                         "supporting_template_ids": _list(visual.get("supporting_template_ids")),
-                        "action": "confirm the placeholder scene template instruction is understandable before any final asset work",
+                        "action": "retain future diagnostic-project intent without treating it as CSV import output",
                     },
                     "overlay_or_citation_action": {
                         "citation_overlay_ids": overlays,
                         "thumbnail_transfer_rule_ids": thumbnail_rules,
                         "action": "keep citation and thumbnail motifs as placeholders until verified source and approval gates open",
                     },
-                    "expected_yymm4_layer_or_track": "VoiceItem/subtitle import lane plus ImageItem/TextItem placeholder scene lanes",
+                    "csv_import_expected_item_families": ["VoiceItem", "linked_subtitle"],
+                    "diagnostic_project_expected_item_families": [
+                        "ImageItem",
+                        "independent_TextItem_placeholders",
+                    ],
+                    "diagnostic_project_gate": "not_authorized",
                     "required_asset_state": "real_required_later" if overlays else "placeholder",
                     "import_risk": _import_risk(row, visual),
                     "manual_observation_question": _manual_question(row, visual),
@@ -431,12 +613,25 @@ def _cue_map(state: dict[str, Any]) -> dict[str, Any]:
         )
 
     return {
-        "schema_version": "edit_slice_to_ymm4_cue_map.v1",
+        "schema_version": "edit_slice_to_ymm4_cue_map.v2",
         "artifact_id": state.get("artifact_id"),
         "status": "cue_map_ready_for_manual_ymm4_observation",
         "input_local_edit_execution_pack": _dict(state.get("paths")).get("local_edit_root"),
         "source_voice_subtitle_map": _dict(state.get("paths")).get("voice_subtitle_operation_map"),
         "source_visual_slot_map": _dict(state.get("paths")).get("visual_asset_slot_map"),
+        "canonical_csv": paths.get("canonical_csv"),
+        "derived_import_csv": paths.get("derived_import_csv"),
+        "selected_yymm4_character_profile": paths.get("yymm4_character_profile"),
+        "responsibility_contract": {
+            "schema_version": "ymm4_import_responsibility_contract.v1",
+            "csv_import_expected_item_families": ["VoiceItem", "linked_subtitle"],
+            "diagnostic_project_expected_item_families": [
+                "ImageItem",
+                "independent_TextItem_placeholders",
+            ],
+            "diagnostic_project_gate": "not_authorized",
+            "diagnostic_project_status": "not_attempted",
+        },
         "queue_operation_count": local_queue.get("queue_operation_count"),
         "scene_count": len(scene_summaries),
         "cue_count": len(cues),
@@ -462,8 +657,8 @@ def _import_risk(row: dict[str, Any], visual: dict[str, Any]) -> str:
 
 def _manual_question(row: dict[str, Any], visual: dict[str, Any]) -> str:
     return (
-        f"After explicit import observation, does {row.get('cue_id')} keep readable voice/subtitle order "
-        f"and make the {visual.get('primary_template_id')} placeholder intent understandable without implying final assets?"
+        f"After importing the derived CSV, does {row.get('cue_id')} keep the expected character, "
+        "linked subtitle text, and row order without a mapping dialog?"
     )
 
 
@@ -481,9 +676,10 @@ def _gate_readback(state: dict[str, Any], cue_map: dict[str, Any]) -> dict[str, 
         "public_ready": False,
         "final_thumbnail_approval": False,
         "youtube_uploaded": False,
+        "diagnostic_ymmp_project_attempted": False,
     }
     return {
-        "schema_version": "ymm4_import_ready_gate_readback.v1",
+        "schema_version": "ymm4_import_ready_gate_readback.v2",
         "artifact_id": state.get("artifact_id"),
         "status": "ymm4_import_gates_closed",
         "cue_count": cue_map.get("cue_count"),
@@ -496,19 +692,32 @@ def _gate_readback(state: dict[str, Any], cue_map: dict[str, Any]) -> dict[str, 
             "manual_observation_sheet",
             "html_preview",
             "adapter_plan_no_ymmp_write",
+            "explicit_yymm4_character_profile",
+            "derived_import_csv",
+            "strict_alias_coverage_readback",
         ],
     }
 
 
 def _ymmp_adapter_plan(state: dict[str, Any], cue_map: dict[str, Any]) -> dict[str, Any]:
     return {
-        "schema_version": "ymmp_adapter_plan.v1",
+        "schema_version": "ymmp_adapter_plan.v2",
         "artifact_id": state.get("artifact_id"),
         "status": "adapter_plan_ready_no_ymmp_write",
         "purpose": "Describe future adapter inputs without generating or patching a YMM4 project.",
         "source_cue_map": "edit_slice_to_ymm4_cue_map.json",
         "cue_count": cue_map.get("cue_count"),
-        "expected_item_families": ["VoiceItem", "subtitle/TextItem", "ImageItem", "TextItem"],
+        "csv_import_contract": {
+            "expected_item_families": ["VoiceItem", "linked_subtitle"],
+            "source_csv": _dict(state.get("paths")).get("derived_import_csv"),
+            "selected_yymm4_character_profile": _dict(state.get("paths")).get("yymm4_character_profile"),
+        },
+        "diagnostic_project_contract": {
+            "expected_item_families": ["ImageItem", "independent_TextItem_placeholders"],
+            "gate": "not_authorized",
+            "status": "not_attempted",
+            "separate_authorization_required": True,
+        },
         "csv_import_is_manual_future_gate": True,
         "ymmp_file_created": False,
         "production_ymmp_written": False,
@@ -527,9 +736,12 @@ def _source_artifact_index(state: dict[str, Any]) -> dict[str, Any]:
         _source_record("voice_subtitle_operation_map", paths.get("voice_subtitle_operation_map"), "voice_subtitle_read_only", True),
         _source_record("visual_asset_slot_map", paths.get("visual_asset_slot_map"), "visual_slot_read_only", True),
         _source_record("timing_adjustment_model", paths.get("timing_adjustment_model"), "timing_read_only", True),
+        _source_record("canonical_csv", paths.get("canonical_csv"), "canonical_speaker_identity_read_only", True),
+        _source_record("yymm4_character_profile", paths.get("yymm4_character_profile"), "explicit_environment_profile", True),
+        _source_record("original_observation_receipt", paths.get("original_observation_receipt"), "immutable_prior_observation_evidence", True),
     ]
     return {
-        "schema_version": "ymm4_import_ready_source_artifact_index.v1",
+        "schema_version": "ymm4_import_ready_source_artifact_index.v2",
         "artifact_id": state.get("artifact_id"),
         "local_edit_pack_read_only": True,
         "editing_operations_pack_read_only": True,
@@ -556,14 +768,28 @@ def _manifest(
 ) -> dict[str, Any]:
     cue_count = int(cue_map.get("cue_count") or 0)
     scenes = _list(cue_map.get("scene_summaries"))
+    derivation = _dict(state.get("alias_derivation"))
     return {
-        "schema_version": "ymm4_import_ready_manifest.v1",
+        "schema_version": "ymm4_import_ready_manifest.v2",
         "artifact_id": DEFAULT_ARTIFACT_ID,
         "artifact_kind": "episode-ymm4-import-ready-edit-package",
         "source_episode_id": SOURCE_EPISODE_ID,
         "input_local_edit_execution_pack": _dict(state.get("paths")).get("local_edit_root"),
         "output_dir": _relpath(output_root, repo_root),
         "files": {filename: _relpath(output_root / filename, repo_root) for filename in REQUIRED_YMM4_IMPORT_READY_FILES},
+        "canonical_source_csv": _dict(state.get("paths")).get("canonical_csv"),
+        "primary_import_csv": _dict(state.get("paths")).get("derived_import_csv"),
+        "selected_yymm4_character_profile": _dict(state.get("paths")).get("yymm4_character_profile"),
+        "alias_coverage_readback": _dict(state.get("paths")).get("alias_coverage_readback"),
+        "character_alias_derivation": {
+            "profile_id": _dict(derivation.get("profile")).get("profile_id"),
+            "strict_coverage": _dict(derivation.get("profile")).get("strict_coverage"),
+            "canonical_csv_sha256": _dict(derivation.get("canonical_csv")).get("sha256"),
+            "derived_csv_sha256": _dict(derivation.get("derived_csv")).get("sha256"),
+            "row_count": _dict(derivation.get("derived_csv")).get("row_count"),
+            "checks": _dict(derivation.get("checks")),
+        },
+        "responsibility_contract": _dict(cue_map.get("responsibility_contract")),
         "queue_count": _dict(state.get("local_edit_queue")).get("queue_operation_count"),
         "scene_count": len(scenes),
         "cue_count": cue_count,
@@ -590,7 +816,7 @@ def _manifest(
             if isinstance(scene, dict)
         ],
         "thumbnail_motif_status": "placeholder_context_transferred_not_final_approval",
-        "ymm4_import_state": "ready_for_manual_import_observation",
+        "ymm4_import_state": "ready_for_bounded_alias_reobservation",
         "actual_ymm4_imported": False,
         "rendered_video_created": False,
         "real_input_replaced": False,
@@ -677,9 +903,9 @@ def _render_html(
       </div>
       <h1>Episode 002 YMM4インポート準備レビュー</h1>
       <div class="summary-grid" aria-label="レビュー概要">
-        <p class="summary-box"><strong>このpackage</strong>既存のローカル編集queueを、YMM4で後日観測するためのcue順・仮timing・voice/subtitle・visual/overlay対応に読み替えたレビュー面です。</p>
-        <p class="summary-box"><strong>次に可能になること</strong>明示的なYMM4観測gateが開いた後、CSV import前後のcue順、表示意図、placeholder境界をoperatorが確認できます。</p>
-        <p class="summary-box"><strong>閉じたままのこと</strong>YMM4 import、render/export、production `.ymmp` write、real input replacement、rights/public approval、final thumbnail approval、uploadは未実行です。</p>
+        <p class="summary-box"><strong>このpackage</strong>canonical speaker identityを維持し、明示選択したYMM4 character profileでspeaker列だけを射影したderived CSVを提供します。</p>
+        <p class="summary-box"><strong>次に可能になること</strong>derived CSVを一度だけimportし、mapping dialogなしの9 VoiceItems・character・text/orderをbounded観測できます。</p>
+        <p class="summary-box"><strong>閉じたままのこと</strong>ImageItem/独立TextItemのdiagnostic projectはnot_authorized/not_attemptedです。render/export、production `.ymmp`、real input、public gateも閉じたままです。</p>
       </div>
     </section>
 
@@ -694,7 +920,7 @@ def _render_html(
     <section data-region="cue-map">
       <h2>cueマップ / timing・voice・subtitle</h2>
       <table class="matrix">
-        <thead><tr><th>cue</th><th>仮timing</th><th>voice / subtitle</th><th>visual / overlay</th><th>placeholder境界</th><th>import risk</th><th>観測checkpoint</th></tr></thead>
+        <thead><tr><th>cue / identity projection</th><th>仮timing</th><th>CSV import source</th><th>deferred diagnostic intent</th><th>responsibility boundary</th><th>import risk</th><th>観測checkpoint</th></tr></thead>
         <tbody>{cue_rows}</tbody>
       </table>
     </section>
@@ -730,11 +956,11 @@ def _render_cue_row(row: Any) -> str:
     visual = _dict(item.get("visual_action"))
     overlay = _dict(item.get("overlay_or_citation_action"))
     return f"""<tr>
-  <td><code>{_escape(item.get("cue_id"))}</code><br>{_escape(item.get("source_scene_id"))}<br>{_escape(item.get("speaker"))}</td>
+  <td><code>{_escape(item.get("cue_id"))}</code><br>{_escape(item.get("source_scene_id"))}<br>{_escape(item.get("canonical_speaker"))} → {_escape(item.get("yymm4_character"))}</td>
   <td>{_escape(timing.get("approximate_start_sec"))}s to {_escape(timing.get("approximate_end_sec"))}s<br>{_escape(timing.get("timing_source"))}</td>
-  <td>{_escape(voice.get("expected_voice_slot_id"))}<br>{_escape(voice.get("subtitle_text_status"))}</td>
+  <td>{_escape(voice.get("expected_voice_slot_id"))}<br><code>{_escape(voice.get("csv_import_source"))}</code><br>{_escape(voice.get("subtitle_text_status"))}</td>
   <td>{_escape(visual.get("primary_template_id"))}<br>overlay: {_escape(', '.join(_list(overlay.get("citation_overlay_ids"))))}<br><span class="hold">{_escape(item.get("required_asset_state"))}</span></td>
-  <td>real inputではなくplaceholder/diagnostic前提<br><code>{_escape(item.get("required_asset_state"))}</code></td>
+  <td>CSV: VoiceItem + linked subtitle<br>diagnostic project: <code>{_escape(item.get("diagnostic_project_gate"))}</code></td>
   <td>{_escape(item.get("import_risk"))}</td>
   <td>{_escape(item.get("manual_observation_question"))}</td>
 </tr>"""
@@ -779,15 +1005,15 @@ def _render_observation_sheet(state: dict[str, Any], cue_map: dict[str, Any], ga
     return f"""# Episode 002 YMM4観測前確認チェック
 
 目的: YMM4観測前の確認チェック。Episode 002限定で、{cue_map.get("scene_count")} scenes / {cue_map.get("cue_count")} cues のimport-ready表示がoperatorに読めるかを見る。
-範囲: cue順、仮timing、VoiceItem/subtitle、visual/overlay、placeholder/diagnostic境界の観測準備だけ。
+範囲: derived CSVのcue順、VoiceItem、character binding、linked subtitle text、timing order、CSV responsibility boundaryだけ。
 対象外: render承認、production `.ymmp` write、real input replacement、rights承認、public承認、final thumbnail承認、upload。
 次に残す成果物: 明示的なgateが開いた場合だけ `YMM4 observation readback` を別artifactとして作る。
 
-1. cue順はS1 -> S2 -> S3の流れで読め、行順の入れ替わりを検出できるか。
-2. VoiceItem/subtitleの対応は、speaker、cue、placeholder text statusをoperatorが追える粒度になっているか。
-3. visual templateとoverlay/citationの指示は、final素材ではないplaceholderとして誤解なく読めるか。
-4. real source、rights、final thumbnailの判断が、diagnostic/placeholder assetから明確に分離されているか。
-5. renderより前に残るblockerが、real input、YMM4 timing/readback、rights/public approval、final thumbnail approvalのどれか一つ以上として記録できるか。
+1. derived CSV import後、cue順がS1 -> S2 -> S3、csv_row_1 -> csv_row_9として維持されるか。
+2. VoiceItemが9件で、欠落・重複・順序入れ替わりがないか。
+3. mapping dialogが出ず、れいむ行はゆっくり霊夢、まりさ行はゆっくり魔理沙として結び付くか。
+4. linked subtitle textとrow orderがcanonical CSVと一致し、timing orderが維持されるか（duration再計算はinformational）。
+5. CSV importの責務がVoiceItem + linked subtitleに限定され、ImageItem/独立TextItemのdiagnostic projectがnot_authorized/not_attemptedのままか。
 """
 
 
@@ -799,7 +1025,7 @@ def _render_readme(
 ) -> str:
     return f"""# Episode 002 YMM4インポート準備レビュー
 
-このpackageは、local edit-slice execution queueをYMM4向けの将来観測概念へ読み替えるレビュー面です。実import、render、production `.ymmp` writeは行いません。
+このpackageは、canonical CSVを明示選択した環境固有profileで射影し、bounded YMM4 CSV re-observationへ渡すレビュー面です。renderやdiagnostic `.ymmp` project writeは行いません。
 
 - Artifact: `{manifest.get("artifact_id")}`
 - Import state: `{manifest.get("ymm4_import_state")}`
@@ -808,6 +1034,9 @@ def _render_readme(
 - Gates closed: {gate_readback.get("gates_closed")}
 - Primary review: `{state.get("primary_human_review")}`
 - Machine readback: `{state.get("primary_machine_readable")}`
+- Canonical CSV: `{_dict(state.get("paths")).get("canonical_csv")}`
+- Derived import CSV: `{_dict(state.get("paths")).get("derived_import_csv")}`
+- Selected character profile: `{_dict(state.get("paths")).get("yymm4_character_profile")}`
 
 このpackageでは`.ymmp` fileを生成・patchしません。
 """
@@ -816,8 +1045,9 @@ def _render_readme(
 def _render_limitations() -> str:
     return """# 制限
 
-- YMM4を起動しない（Do not launch YMM4）。別の明示gateなしにこのpackageからYMM4作業へ進めない。
-- CSV import、render/export、production `.ymmp` writeは行わない。
+- derived CSVだけを一度のbounded re-observationへ使用する。canonical CSVを上書きしない。
+- Do not create or save a diagnostic `.ymmp` project. Separate authorization is required.
+- render/export、production `.ymmp` writeは行わない。
 - diagnostic placeholderをreal sourceやtranscript materialで置き換えない。
 - rights approval、public readiness、final thumbnail approval、upload、publicationを主張しない。
 - cue timingは観測計画用の仮値であり、provisional scene durationからの読み替えに限る。

@@ -1,0 +1,39 @@
+{
+  "schema_version": "ymm4_gui_observation_blocker.v1",
+  "episode_id": "yukkuri_newsroom_content_spine_002",
+  "blocked_at": "2026-07-11_JST",
+  "status": "blocked",
+  "blocker_id": "existing_unsaved_project_requires_discard_authorization",
+  "reason": "YMM4 restored an existing unsaved untitled project containing the prior nine-item, 2790-frame observation state. Starting a clean derived-CSV import would require discarding that existing unsaved state, which this slice does not authorize.",
+  "source_csv": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv",
+  "source_csv_sha256": "5452DE96DC6EF012400A132BA5BAE80B8553C1B1CDD27860D36674C25AF391BC",
+  "observed_by_environment": {
+    "terminal_or_device": "thank",
+    "yymm4_version": "4.53.0.9",
+    "yymm4_executable_path": "D:\\YukkuriMovieMaker_v4\\YukkuriMovieMaker.exe",
+    "yymm4_availability_status": "gui_available_but_existing_unsaved_project_preserved",
+    "yymm4_executable_detected": true,
+    "launch_attempted": true,
+    "gui_observation_channel_available": true
+  },
+  "restored_project_observation": {
+    "window_title": "ゆっくりMovieMaker v4.53.0.9",
+    "project_label": "無題*",
+    "unsaved_marker_visible": true,
+    "prior_voiceitem_count_visible": 9,
+    "prior_total_frames_visible": 2790,
+    "prior_duration_seconds_visible": 46.5,
+    "screenshot_persisted": false
+  },
+  "actions": {
+    "existing_project_discarded": false,
+    "new_project_created": false,
+    "derived_csv_import_attempted": false,
+    "mapping_dialog_observed": "not_observed",
+    "render_or_export_performed": false,
+    "ymmp_saved_or_written": false,
+    "application_left_open_to_preserve_unsaved_state": true
+  },
+  "operator_action": "In the already-open YMM4 window, first decide whether the restored unsaved project may be discarded or saved elsewhere. Only after that decision, start a clean untitled project, import the derived CSV once, record the five CSV-gate observations, and close without saving the new observation project.",
+  "next_gate": "bounded_yymm4_alias_reobservation"
+}

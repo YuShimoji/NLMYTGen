@@ -26,18 +26,29 @@ DEFAULT_OUTPUT_DIRNAME = "ymm4_observation_readback_pack"
 DEFAULT_ARTIFACT_ID = "episode_002_ymm4_observation_readback_pack_v1"
 EPISODE_ID = "yukkuri_newsroom_content_spine_002"
 OBSERVATION_RECEIPT_SCHEMA_VERSION = "ymm4_gui_observation_receipt.v1"
+CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION = "ymm4_gui_observation_receipt.v2"
+OBSERVATION_BLOCKER_SCHEMA_VERSION = "ymm4_gui_observation_blocker.v1"
 EXPECTED_SCENE_ORDER = ("S1", "S2", "S3")
 EXPECTED_CUE_ORDER = tuple(f"csv_row_{index}" for index in range(1, 10))
-FIVE_POINT_OBSERVATION_KEYS = (
+LEGACY_FIVE_POINT_OBSERVATION_KEYS = (
     "cue_order",
     "voice_items",
     "subtitle_text",
     "timing_order",
     "placeholder_boundary",
 )
+CSV_GATE_FIVE_POINT_OBSERVATION_KEYS = (
+    "cue_order",
+    "voice_items",
+    "subtitle_text",
+    "timing_order",
+    "csv_responsibility_boundary",
+)
 
 YMM4_IMPORT_READY_DIRNAME = "ymm4_import_ready_pack"
 REAL_INPUT_PREP_DIRNAME = "real_input_replacement_readiness_pack"
+ALIAS_COVERAGE_FILENAME = "yymm4_character_alias_coverage_readback.json"
+ORIGINAL_OBSERVATION_RECEIPT_FILENAME = "ymm4_observation_receipt_2026-07-10.json"
 
 REQUIRED_YMM4_OBSERVATION_FILES = (
     "observation_readback.json",
@@ -59,6 +70,7 @@ CLOSED_GATE_FLAGS = (
     "youtube_uploaded",
     "live_fetch_performed",
     "external_media_downloaded",
+    "diagnostic_ymmp_project_attempted",
 )
 
 
@@ -68,6 +80,7 @@ def build_ymm4_observation_readback_pack(
     output_dir: str | Path | None = None,
     artifact_id: str = DEFAULT_ARTIFACT_ID,
     observation_receipt: str | Path | None = None,
+    observation_blocker: str | Path | None = None,
 ) -> dict[str, Any]:
     """Build an observation-only YMM4 readback package."""
     source_root = Path(package_dir)
@@ -76,6 +89,10 @@ def build_ymm4_observation_readback_pack(
     repo_root = _find_repo_root(source_root)
     receipt_path = Path(observation_receipt) if observation_receipt is not None else None
     receipt = _load_observation_receipt(receipt_path) if receipt_path is not None else None
+    blocker_path = Path(observation_blocker) if observation_blocker is not None else None
+    if receipt_path is not None and blocker_path is not None:
+        raise ValueError("Use either an observation receipt or an observation blocker, not both")
+    blocker_receipt = _load_observation_blocker(blocker_path) if blocker_path is not None else None
 
     paths = _input_paths(source_root)
     payloads = _load_payloads(paths)
@@ -88,6 +105,8 @@ def build_ymm4_observation_readback_pack(
         payloads=payloads,
         observation_receipt_path=receipt_path,
         observation_receipt=receipt,
+        observation_blocker_path=blocker_path,
+        observation_blocker=blocker_receipt,
     )
     readback = _observation_readback(state, output_root, repo_root)
     source_index = _source_artifact_index(state)
@@ -129,7 +148,7 @@ def validate_ymm4_observation_readback_pack(output_dir: str | Path) -> dict[str,
     closed_gates = _dict(readback.get("closed_gate_flags"))
     manual_check_count = _numbered_check_count(manual_text)
 
-    if readback.get("schema_version") != "ymm4_observation_readback.v1":
+    if readback.get("schema_version") != "ymm4_observation_readback.v2":
         failed_checks.append("readback_schema_version_mismatch")
     if readback.get("status") not in {"passed", "blocked", "partial"}:
         failed_checks.append("readback_status_invalid")
@@ -150,8 +169,10 @@ def validate_ymm4_observation_readback_pack(output_dir: str | Path) -> dict[str,
             failed_checks.append("operator_instruction_imported_true")
         if readback.get("cue_count_observed") != 0:
             failed_checks.append("operator_instruction_observed_cues_not_zero")
-        if readback.get("next_gate") != "manual_ymm4_import_observation_return":
+        if readback.get("next_gate") != "bounded_yymm4_alias_reobservation":
             failed_checks.append("operator_instruction_next_gate_invalid")
+        if not _dict(readback.get("prior_observation_evidence")):
+            failed_checks.append("operator_instruction_prior_evidence_missing")
     if readback.get("observation_mode") == "actual_ymm4_gui_observation":
         source_records = [_dict(record) for record in _list(source_index.get("records"))]
         receipt_recorded = any(record.get("record_id") == "actual_gui_observation_receipt" for record in source_records)
@@ -179,28 +200,47 @@ def validate_ymm4_observation_readback_pack(output_dir: str | Path) -> dict[str,
             "voice_item_observed",
             "subtitle_item_observed",
             "timing_order_observed",
-            "placeholder_boundary_observed",
+            "responsibility_boundary_observed",
         ):
             if readback.get(field) in {None, "", "not_observed"}:
                 failed_checks.append(f"actual_observation_field_missing:{field}")
         observations = _dict(readback.get("five_point_observations"))
-        for key in FIVE_POINT_OBSERVATION_KEYS:
+        receipt_schema = str(readback.get("receipt_schema_version") or "")
+        expected_keys = (
+            CSV_GATE_FIVE_POINT_OBSERVATION_KEYS
+            if receipt_schema == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION
+            else LEGACY_FIVE_POINT_OBSERVATION_KEYS
+        )
+        for key in expected_keys:
             if not _dict(observations.get(key)).get("status"):
                 failed_checks.append(f"actual_observation_check_missing:{key}")
-        passed_five_points = _five_point_observations_pass(observations)
-        if readback.get("status") == "passed":
-            if readback.get("observation_result") != "passed":
-                failed_checks.append("actual_observation_passed_result_invalid")
-            if not passed_five_points or _list(readback.get("import_errors")):
-                failed_checks.append("actual_observation_passed_without_five_point_pass")
-            if readback.get("next_gate") != "render_proof_after_observation":
-                failed_checks.append("actual_observation_passed_next_gate_invalid")
-        elif passed_five_points:
-            failed_checks.append("actual_observation_partial_without_gap")
-        elif readback.get("observation_result") != "pass_with_warnings":
-            failed_checks.append("actual_observation_partial_result_invalid")
-        elif readback.get("next_gate") != "adapter_correction_after_observation":
-            failed_checks.append("actual_observation_partial_next_gate_invalid")
+        passed_five_points = _five_point_observations_pass(observations, receipt_schema=receipt_schema)
+        if receipt_schema == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION:
+            if readback.get("status") == "passed":
+                if readback.get("observation_result") != "passed":
+                    failed_checks.append("csv_gate_observation_passed_result_invalid")
+                if not passed_five_points or _list(readback.get("import_errors")):
+                    failed_checks.append("csv_gate_observation_passed_without_five_point_pass")
+                if readback.get("next_gate") != "supervisor_next_slice_decision":
+                    failed_checks.append("csv_gate_observation_passed_next_gate_invalid")
+            elif passed_five_points:
+                failed_checks.append("csv_gate_observation_partial_without_gap")
+            elif readback.get("observation_result") != "pass_with_warnings":
+                failed_checks.append("csv_gate_observation_partial_result_invalid")
+            elif readback.get("next_gate") != "bounded_yymm4_alias_reobservation":
+                failed_checks.append("csv_gate_observation_partial_next_gate_invalid")
+        else:
+            if readback.get("status") == "passed":
+                if readback.get("observation_result") != "passed" or not passed_five_points:
+                    failed_checks.append("legacy_observation_passed_without_five_point_pass")
+                if readback.get("next_gate") != "render_proof_after_observation":
+                    failed_checks.append("legacy_observation_passed_next_gate_invalid")
+            elif passed_five_points:
+                failed_checks.append("legacy_observation_partial_without_gap")
+            elif readback.get("observation_result") != "pass_with_warnings":
+                failed_checks.append("legacy_observation_partial_result_invalid")
+            elif readback.get("next_gate") != "adapter_correction_after_observation":
+                failed_checks.append("legacy_observation_partial_next_gate_invalid")
         safety = _dict(readback.get("safety"))
         if safety.get("application_closed_without_saving") is not True:
             failed_checks.append("actual_observation_not_closed_without_saving")
@@ -213,8 +253,8 @@ def validate_ymm4_observation_readback_pack(output_dir: str | Path) -> dict[str,
         ):
             if safety.get(field) is not False:
                 failed_checks.append(f"actual_observation_safety_not_false:{field}")
-        if readback.get("next_gate") == "manual_ymm4_import_observation_return":
-            failed_checks.append("actual_observation_manual_gate_not_advanced")
+        if readback.get("next_gate") == "bounded_yymm4_alias_reobservation" and readback.get("status") == "passed":
+            failed_checks.append("actual_observation_passed_gate_not_advanced")
     for flag in CLOSED_GATE_FLAGS:
         if readback.get(flag) is not False:
             failed_checks.append(f"gate_not_false:{flag}")
@@ -224,8 +264,21 @@ def validate_ymm4_observation_readback_pack(output_dir: str | Path) -> dict[str,
         failed_checks.append("cue_count_expected_mismatch")
     if readback.get("scene_count_expected") != 3:
         failed_checks.append("scene_count_expected_mismatch")
-    if readback.get("next_gate") not in {"manual_ymm4_import_observation_return", "adapter_correction_after_observation", "render_proof_after_observation"}:
+    if readback.get("next_gate") not in {
+        "bounded_yymm4_alias_reobservation",
+        "supervisor_next_slice_decision",
+        "adapter_correction_after_observation",
+        "render_proof_after_observation",
+    }:
         failed_checks.append("next_gate_invalid")
+    csv_gate = _dict(readback.get("csv_import_gate"))
+    diagnostic_gate = _dict(readback.get("diagnostic_project_gate"))
+    if csv_gate.get("expected_item_families") != ["VoiceItem", "linked_subtitle"]:
+        failed_checks.append("csv_import_gate_contract_mismatch")
+    if diagnostic_gate.get("authorization_status") != "not_authorized":
+        failed_checks.append("diagnostic_project_authorization_not_closed")
+    if diagnostic_gate.get("execution_status") != "not_attempted":
+        failed_checks.append("diagnostic_project_execution_not_closed")
     if source_index.get("ymm4_import_ready_pack_read_only") is not True:
         failed_checks.append("ymm4_import_ready_pack_not_read_only")
     if source_index.get("real_input_prep_pack_read_only") is not True:
@@ -296,38 +349,73 @@ def _load_observation_receipt(path: Path) -> dict[str, Any]:
         raise ValueError(f"YMM4 observation receipt is not valid JSON: {path}") from exc
     if not isinstance(payload, dict):
         raise ValueError("YMM4 observation receipt must be a JSON object")
-    if payload.get("schema_version") != OBSERVATION_RECEIPT_SCHEMA_VERSION:
-        raise ValueError(
-            "YMM4 observation receipt schema mismatch: "
-            f"expected {OBSERVATION_RECEIPT_SCHEMA_VERSION}"
-        )
+    schema_version = str(payload.get("schema_version") or "")
+    if schema_version not in {
+        OBSERVATION_RECEIPT_SCHEMA_VERSION,
+        CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION,
+    }:
+        raise ValueError("YMM4 observation receipt schema mismatch")
     if payload.get("episode_id") != EPISODE_ID:
         raise ValueError(f"YMM4 observation receipt episode must be {EPISODE_ID}")
     if payload.get("status") not in {"passed", "partial"}:
         raise ValueError("YMM4 observation receipt status must be passed or partial")
-    if payload.get("next_gate") not in {
-        "adapter_correction_after_observation",
-        "render_proof_after_observation",
-    }:
-        raise ValueError("YMM4 observation receipt next_gate is invalid")
     observations = _dict(payload.get("five_point_observations"))
-    missing = [key for key in FIVE_POINT_OBSERVATION_KEYS if not _dict(observations.get(key)).get("status")]
+    expected_keys = (
+        CSV_GATE_FIVE_POINT_OBSERVATION_KEYS
+        if schema_version == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION
+        else LEGACY_FIVE_POINT_OBSERVATION_KEYS
+    )
+    missing = [key for key in expected_keys if not _dict(observations.get(key)).get("status")]
     if missing:
         raise ValueError(f"YMM4 observation receipt is missing five-point checks: {', '.join(missing)}")
-    passed_five_points = _five_point_observations_pass(observations)
-    if payload.get("status") == "passed":
-        if payload.get("result") != "passed":
-            raise ValueError("A passed YMM4 observation receipt must use result=passed")
-        if not passed_five_points or _list(payload.get("import_errors")):
-            raise ValueError("A passed YMM4 observation receipt requires all five checks to pass")
-        if payload.get("next_gate") != "render_proof_after_observation":
-            raise ValueError("A passed YMM4 observation receipt must advance to render proof")
-    elif passed_five_points:
-        raise ValueError("A partial YMM4 observation receipt must retain an observed gap")
-    elif payload.get("result") != "pass_with_warnings":
-        raise ValueError("A partial YMM4 observation receipt must use result=pass_with_warnings")
-    elif payload.get("next_gate") != "adapter_correction_after_observation":
-        raise ValueError("A partial YMM4 observation receipt must advance to adapter correction")
+    passed_five_points = _five_point_observations_pass(
+        observations,
+        receipt_schema=schema_version,
+    )
+    if schema_version == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION:
+        if payload.get("observation_contract") != "ymm4_csv_import_gate.v1":
+            raise ValueError("YMM4 CSV-gate receipt observation_contract is invalid")
+        for field in (
+            "canonical_source_csv",
+            "canonical_source_csv_sha256",
+            "selected_yymm4_character_profile",
+            "profile_id",
+            "prior_receipt_reference",
+        ):
+            if not payload.get(field):
+                raise ValueError(f"YMM4 CSV-gate receipt is missing required field: {field}")
+        if payload.get("status") == "passed":
+            if payload.get("result") != "passed":
+                raise ValueError("A passed YMM4 CSV-gate receipt must use result=passed")
+            if not passed_five_points or _list(payload.get("import_errors")):
+                raise ValueError("A passed YMM4 CSV-gate receipt requires all five checks to pass")
+            if payload.get("next_gate") != "supervisor_next_slice_decision":
+                raise ValueError("A passed YMM4 CSV-gate receipt must advance to supervisor decision")
+        elif passed_five_points:
+            raise ValueError("A partial YMM4 CSV-gate receipt must retain an observed gap")
+        elif payload.get("result") != "pass_with_warnings":
+            raise ValueError("A partial YMM4 CSV-gate receipt must use result=pass_with_warnings")
+        elif payload.get("next_gate") != "bounded_yymm4_alias_reobservation":
+            raise ValueError("A partial YMM4 CSV-gate receipt must retain the re-observation gate")
+    else:
+        if payload.get("next_gate") not in {
+            "adapter_correction_after_observation",
+            "render_proof_after_observation",
+        }:
+            raise ValueError("YMM4 observation receipt next_gate is invalid")
+        if payload.get("status") == "passed":
+            if payload.get("result") != "passed":
+                raise ValueError("A passed YMM4 observation receipt must use result=passed")
+            if not passed_five_points or _list(payload.get("import_errors")):
+                raise ValueError("A passed YMM4 observation receipt requires all five checks to pass")
+            if payload.get("next_gate") != "render_proof_after_observation":
+                raise ValueError("A passed YMM4 observation receipt must advance to render proof")
+        elif passed_five_points:
+            raise ValueError("A partial YMM4 observation receipt must retain an observed gap")
+        elif payload.get("result") != "pass_with_warnings":
+            raise ValueError("A partial YMM4 observation receipt must use result=pass_with_warnings")
+        elif payload.get("next_gate") != "adapter_correction_after_observation":
+            raise ValueError("A partial YMM4 observation receipt must advance to adapter correction")
     for field in (
         "observed_at",
         "result",
@@ -361,15 +449,92 @@ def _load_observation_receipt(path: Path) -> dict[str, Any]:
     return payload
 
 
-def _five_point_observations_pass(observations: dict[str, Any]) -> bool:
+def _load_observation_blocker(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        raise FileNotFoundError(f"YMM4 observation blocker not found: {path}")
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"YMM4 observation blocker is not valid JSON: {path}") from exc
+    if not isinstance(payload, dict):
+        raise ValueError("YMM4 observation blocker must be a JSON object")
+    if payload.get("schema_version") != OBSERVATION_BLOCKER_SCHEMA_VERSION:
+        raise ValueError("YMM4 observation blocker schema mismatch")
+    if payload.get("episode_id") != EPISODE_ID:
+        raise ValueError(f"YMM4 observation blocker episode must be {EPISODE_ID}")
+    if payload.get("status") != "blocked":
+        raise ValueError("YMM4 observation blocker status must be blocked")
+    if payload.get("blocker_id") != "existing_unsaved_project_requires_discard_authorization":
+        raise ValueError("YMM4 observation blocker id is invalid")
+    if payload.get("next_gate") != "bounded_yymm4_alias_reobservation":
+        raise ValueError("YMM4 observation blocker next_gate is invalid")
+    actions = _dict(payload.get("actions"))
+    for field in (
+        "existing_project_discarded",
+        "new_project_created",
+        "derived_csv_import_attempted",
+        "render_or_export_performed",
+        "ymmp_saved_or_written",
+    ):
+        if actions.get(field) is not False:
+            raise ValueError(f"YMM4 observation blocker action must be false: {field}")
+    if actions.get("application_left_open_to_preserve_unsaved_state") is not True:
+        raise ValueError("YMM4 observation blocker must preserve the existing unsaved state")
+    for field in (
+        "blocked_at",
+        "source_csv",
+        "source_csv_sha256",
+        "observed_by_environment",
+        "operator_action",
+    ):
+        if not payload.get(field):
+            raise ValueError(f"YMM4 observation blocker is missing required field: {field}")
+    return payload
+
+
+def _five_point_observations_pass(
+    observations: dict[str, Any],
+    *,
+    receipt_schema: str,
+) -> bool:
     cue = _dict(observations.get("cue_order"))
     voice = _dict(observations.get("voice_items"))
     subtitle = _dict(observations.get("subtitle_text"))
     timing = _dict(observations.get("timing_order"))
+    if receipt_schema == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION:
+        boundary = _dict(observations.get("csv_responsibility_boundary"))
+        statuses_pass = all(
+            _dict(observations.get(key)).get("status") == "passed"
+            for key in CSV_GATE_FIVE_POINT_OBSERVATION_KEYS
+        )
+        return bool(
+            statuses_pass
+            and cue.get("scene_order") == list(EXPECTED_SCENE_ORDER)
+            and cue.get("cue_order") == list(EXPECTED_CUE_ORDER)
+            and voice.get("count") == len(EXPECTED_CUE_ORDER)
+            and not _list(voice.get("missing_cue_ids"))
+            and not _list(voice.get("duplicate_cue_ids"))
+            and voice.get("reordered") is False
+            and subtitle.get("mapping_dialog_present") is False
+            and subtitle.get("automatic_speaker_binding_observed") is True
+            and subtitle.get("all_text_matched") is True
+            and subtitle.get("speaker_cue_match") is True
+            and not _list(subtitle.get("incorrect_character_cue_ids"))
+            and subtitle.get("character_counts")
+            == {"ゆっくり霊夢": 3, "ゆっくり魔理沙": 6}
+            and timing.get("order_preserved") is True
+            and boundary.get("csv_import_expected_item_families")
+            == ["VoiceItem", "linked_subtitle"]
+            and boundary.get("diagnostic_project_gate") == "not_authorized"
+            and boundary.get("diagnostic_project_status") == "not_attempted"
+            and boundary.get("diagnostic_item_absence_is_csv_failure") is False
+            and boundary.get("misleading_final_or_public_ready_claim_present") is False
+        )
+
     placeholder = _dict(observations.get("placeholder_boundary"))
     statuses_pass = all(
         _dict(observations.get(key)).get("status") == "passed"
-        for key in FIVE_POINT_OBSERVATION_KEYS
+        for key in LEGACY_FIVE_POINT_OBSERVATION_KEYS
     )
     return bool(
         statuses_pass
@@ -398,12 +563,15 @@ def _input_paths(source_root: Path) -> dict[str, Path]:
         "ymm4_import_ready_manifest": import_root / "ymm4_import_ready_manifest.json",
         "ymm4_cue_map": import_root / "edit_slice_to_ymm4_cue_map.json",
         "ymm4_manual_sheet": import_root / "manual_ymm4_import_observation_sheet.md",
+        "ymm4_alias_coverage": import_root / ALIAS_COVERAGE_FILENAME,
+        "ymm4_derived_csv": import_root / "derived_yymm4_import.csv",
         "real_input_prep_root": real_input_root,
         "real_input_prep_validation": real_input_root / "validation_readback.json",
         "real_input_prep_contract": real_input_root / "real_input_replacement_contract.md",
         "ir_bridge_csv": source_root / "ir_bridge" / "draft_yymm4.csv",
         "regenerated_csv": source_root / "transcript_substitution_readiness" / "regenerated_draft_yymm4.csv",
         "preview_csv": source_root / "ymm4_import_preview_pack" / "draft_yymm4_preview.csv",
+        "original_observation_receipt": source_root / ORIGINAL_OBSERVATION_RECEIPT_FILENAME,
     }
 
 
@@ -412,6 +580,7 @@ def _load_payloads(paths: dict[str, Path]) -> dict[str, Any]:
         "ymm4_import_ready_validation": _load_json_if_present(paths["ymm4_import_ready_validation"]),
         "ymm4_import_ready_manifest": _load_json_if_present(paths["ymm4_import_ready_manifest"]),
         "ymm4_cue_map": _load_json_if_present(paths["ymm4_cue_map"]),
+        "ymm4_alias_coverage": _load_json_if_present(paths["ymm4_alias_coverage"]),
         "real_input_prep_validation": _load_json_if_present(paths["real_input_prep_validation"]),
     }
 
@@ -426,31 +595,79 @@ def _state(
     payloads: dict[str, Any],
     observation_receipt_path: Path | None,
     observation_receipt: dict[str, Any] | None,
+    observation_blocker_path: Path | None,
+    observation_blocker: dict[str, Any] | None,
 ) -> dict[str, Any]:
     cue_map = _dict(payloads.get("ymm4_cue_map"))
     import_validation = _dict(payloads.get("ymm4_import_ready_validation"))
+    import_manifest = _dict(payloads.get("ymm4_import_ready_manifest"))
+    alias_coverage = _dict(payloads.get("ymm4_alias_coverage"))
     real_input_validation = _dict(payloads.get("real_input_prep_validation"))
     detected = _detect_yymm4()
     if observation_receipt:
         detected.update(_dict(observation_receipt.get("observed_by_environment")))
-    csv_candidates = _csv_candidates(paths, cue_map, repo_root)
-    primary_import_csv = csv_candidates[0]["repo_relative_path"] if csv_candidates else ""
-    verified_source_csv_sha256 = ""
+    elif observation_blocker:
+        detected = _dict(observation_blocker.get("observed_by_environment"))
+    canonical_import_csv = str(
+        import_manifest.get("canonical_source_csv")
+        or _relpath(paths["regenerated_csv"], repo_root)
+    )
+    derived_import_csv = str(
+        import_manifest.get("primary_import_csv")
+        or _relpath(paths["ymm4_derived_csv"], repo_root)
+    )
+    receipt_schema = str(_dict(observation_receipt).get("schema_version") or "")
+    primary_import_csv = (
+        canonical_import_csv
+        if receipt_schema == OBSERVATION_RECEIPT_SCHEMA_VERSION
+        else derived_import_csv
+    )
+    csv_candidates = _csv_candidates(
+        paths,
+        import_manifest,
+        repo_root,
+        primary_import_csv=primary_import_csv,
+    )
+    source_path = repo_root / primary_import_csv
+    if not source_path.exists():
+        raise FileNotFoundError(f"YMM4 observation source CSV not found: {source_path}")
+    verified_source_csv_sha256 = hashlib.sha256(source_path.read_bytes()).hexdigest().upper()
     if observation_receipt:
         receipt_source_csv = str(observation_receipt.get("source_csv") or "")
         if receipt_source_csv != primary_import_csv:
             raise ValueError(
                 "YMM4 observation receipt source_csv must match the primary import CSV"
             )
-        source_path = repo_root / receipt_source_csv
-        if not source_path.exists():
-            raise FileNotFoundError(f"YMM4 observation source CSV not found: {source_path}")
-        verified_source_csv_sha256 = hashlib.sha256(source_path.read_bytes()).hexdigest().upper()
         receipt_sha256 = str(observation_receipt.get("source_csv_sha256") or "").upper()
         if receipt_sha256 != verified_source_csv_sha256:
             raise ValueError("YMM4 observation receipt source_csv_sha256 does not match the source CSV")
+        if receipt_schema == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION:
+            canonical_hash = str(_dict(alias_coverage.get("canonical_csv")).get("sha256") or "")
+            profile_id = str(_dict(alias_coverage.get("profile")).get("profile_id") or "")
+            selected_profile = str(import_manifest.get("selected_yymm4_character_profile") or "")
+            if observation_receipt.get("canonical_source_csv") != canonical_import_csv:
+                raise ValueError("YMM4 CSV-gate receipt canonical_source_csv mismatch")
+            if str(observation_receipt.get("canonical_source_csv_sha256") or "").upper() != canonical_hash:
+                raise ValueError("YMM4 CSV-gate receipt canonical source SHA-256 mismatch")
+            if observation_receipt.get("selected_yymm4_character_profile") != selected_profile:
+                raise ValueError("YMM4 CSV-gate receipt selected profile path mismatch")
+            if observation_receipt.get("profile_id") != profile_id:
+                raise ValueError("YMM4 CSV-gate receipt profile_id mismatch")
+            if observation_receipt.get("prior_receipt_reference") != _relpath(
+                paths["original_observation_receipt"], repo_root
+            ):
+                raise ValueError("YMM4 CSV-gate receipt prior receipt reference mismatch")
+    elif observation_blocker:
+        if observation_blocker.get("source_csv") != primary_import_csv:
+            raise ValueError("YMM4 observation blocker source_csv must match the derived import CSV")
+        if str(observation_blocker.get("source_csv_sha256") or "").upper() != verified_source_csv_sha256:
+            raise ValueError("YMM4 observation blocker source CSV SHA-256 mismatch")
+
+    original_receipt_sha256 = hashlib.sha256(
+        paths["original_observation_receipt"].read_bytes()
+    ).hexdigest().upper()
     return {
-        "schema_version": "ymm4_observation_state.v1",
+        "schema_version": "ymm4_observation_state.v2",
         "artifact_id": artifact_id,
         "episode_id": EPISODE_ID,
         "source_package_dir": _relpath(source_root, repo_root),
@@ -464,11 +681,28 @@ def _state(
         "real_input_prep_status": real_input_validation.get("status"),
         "csv_candidates": csv_candidates,
         "primary_import_csv": primary_import_csv,
+        "canonical_import_csv": canonical_import_csv,
+        "derived_import_csv": derived_import_csv,
+        "selected_yymm4_character_profile": import_manifest.get("selected_yymm4_character_profile"),
+        "profile_id": _dict(alias_coverage.get("profile")).get("profile_id"),
+        "alias_coverage_reference": import_manifest.get("alias_coverage_readback"),
         "verified_source_csv_sha256": verified_source_csv_sha256,
+        "canonical_source_csv_sha256": _dict(alias_coverage.get("canonical_csv")).get("sha256"),
+        "prior_observation_evidence": {
+            "receipt": _relpath(paths["original_observation_receipt"], repo_root),
+            "receipt_sha256": original_receipt_sha256,
+            "schema_version": OBSERVATION_RECEIPT_SCHEMA_VERSION,
+            "status": "partial",
+            "interpretation": "historical_result_under_legacy_placeholder_contract",
+        },
         "yymm4_environment": detected,
         "observation_receipt": observation_receipt,
         "observation_receipt_path": (
             _relpath(observation_receipt_path, repo_root) if observation_receipt_path is not None else ""
+        ),
+        "observation_blocker": observation_blocker,
+        "observation_blocker_path": (
+            _relpath(observation_blocker_path, repo_root) if observation_blocker_path is not None else ""
         ),
         "blocker": (
             {
@@ -478,12 +712,19 @@ def _state(
                 "operator_action": "none",
             }
             if observation_receipt
+            else {
+                "blocker_id": observation_blocker.get("blocker_id"),
+                "status": "blocked_for_actual_observation",
+                "reason": observation_blocker.get("reason"),
+                "operator_action": observation_blocker.get("operator_action"),
+            }
+            if observation_blocker
             else _observation_blocker(detected)
         ),
         "next_gate": (
             observation_receipt.get("next_gate")
             if observation_receipt
-            else "manual_ymm4_import_observation_return"
+            else "bounded_yymm4_alias_reobservation"
         ),
     }
 
@@ -492,16 +733,42 @@ def _observation_readback(state: dict[str, Any], output_root: Path, repo_root: P
     closed_gates = {flag: False for flag in CLOSED_GATE_FLAGS}
     blocker = _dict(state.get("blocker"))
     receipt = _dict(state.get("observation_receipt"))
+    blocker_receipt = _dict(state.get("observation_blocker"))
+    receipt_schema = str(receipt.get("schema_version") or "")
     common = {
-        "schema_version": "ymm4_observation_readback.v1",
+        "schema_version": "ymm4_observation_readback.v2",
         "artifact_id": DEFAULT_ARTIFACT_ID,
         "episode_id": EPISODE_ID,
+        "observation_contract": (
+            "legacy_five_point_observation.v1"
+            if receipt_schema == OBSERVATION_RECEIPT_SCHEMA_VERSION
+            else "ymm4_csv_import_gate.v1"
+        ),
+        "receipt_schema_version": receipt_schema or None,
         "source_import_ready_pack_reference": state.get("source_import_ready_pack_reference"),
         "source_real_input_prep_reference": state.get("source_real_input_prep_reference"),
         "cue_count_expected": state.get("cue_count_expected"),
         "scene_count_expected": state.get("scene_count_expected"),
         "expected_import_path": state.get("primary_import_csv"),
+        "canonical_source_csv": state.get("canonical_import_csv"),
+        "canonical_source_csv_sha256": state.get("canonical_source_csv_sha256"),
+        "derived_import_csv": state.get("derived_import_csv"),
+        "selected_yymm4_character_profile": state.get("selected_yymm4_character_profile"),
+        "profile_id": state.get("profile_id"),
+        "alias_coverage_reference": state.get("alias_coverage_reference"),
+        "prior_observation_evidence": state.get("prior_observation_evidence"),
         "importable_csv_candidates": state.get("csv_candidates"),
+        "csv_import_gate": {
+            "contract": "ymm4_csv_import_gate.v1",
+            "expected_item_families": ["VoiceItem", "linked_subtitle"],
+            "status": "not_observed" if not receipt else receipt.get("status"),
+        },
+        "diagnostic_project_gate": {
+            "expected_item_families": ["ImageItem", "independent_TextItem_placeholders"],
+            "authorization_status": "not_authorized",
+            "execution_status": "not_attempted",
+            "absence_during_csv_import_is_failure": False,
+        },
         "rendered_video_created": False,
         "ymmp_file_created": False,
         "production_ymmp_written": False,
@@ -512,6 +779,7 @@ def _observation_readback(state: dict[str, Any], output_root: Path, repo_root: P
         "youtube_uploaded": False,
         "live_fetch_performed": False,
         "external_media_downloaded": False,
+        "diagnostic_ymmp_project_attempted": False,
         "closed_gate_flags": closed_gates,
         "next_gate": state.get("next_gate"),
         "output_dir": _relpath(output_root, repo_root),
@@ -523,7 +791,7 @@ def _observation_readback(state: dict[str, Any], output_root: Path, repo_root: P
                 "observation_mode": "operator_instruction_only",
                 "actual_ymm4_import_attempted": False,
                 "actual_ymm4_imported": False,
-                "observed_at": "not_observed_2026-07-09_JST",
+                "observed_at": blocker_receipt.get("blocked_at") or "not_observed_2026-07-11_JST",
                 "observed_by_environment": state.get("yymm4_environment"),
                 "cue_count_observed": 0,
                 "scene_order_observed": [],
@@ -531,19 +799,22 @@ def _observation_readback(state: dict[str, Any], output_root: Path, repo_root: P
                 "voice_item_observed": "not_observed",
                 "subtitle_item_observed": "not_observed",
                 "timing_order_observed": "not_observed",
-                "placeholder_boundary_observed": "not_observed",
+                "responsibility_boundary_observed": "not_observed",
                 "five_point_observations": {},
                 "timeline_observation": {},
                 "speaker_mapping": [],
                 "import_errors": [],
                 "deviations": [
                     {
-                        "deviation_id": "actual_gui_observation_not_performed",
+                        "deviation_id": blocker_receipt.get("blocker_id")
+                        or "bounded_alias_reobservation_not_performed",
                         "severity": "blocking_for_observation_pass",
                         "detail": blocker.get("reason"),
                     }
                 ],
                 "blocker": blocker,
+                "observation_blocker_receipt": state.get("observation_blocker_path") or None,
+                "safety": _dict(blocker_receipt.get("actions")),
                 "screenshot_or_visual_evidence_paths": [],
             }
         )
@@ -554,7 +825,11 @@ def _observation_readback(state: dict[str, Any], output_root: Path, repo_root: P
     voice_observation = _dict(observations.get("voice_items"))
     subtitle_observation = _dict(observations.get("subtitle_text"))
     timing_observation = _dict(observations.get("timing_order"))
-    placeholder_observation = _dict(observations.get("placeholder_boundary"))
+    responsibility_observation = _dict(
+        observations.get("csv_responsibility_boundary")
+        if receipt_schema == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION
+        else observations.get("placeholder_boundary")
+    )
     voice_count = voice_observation.get("count", 0)
     duration_seconds = timing_observation.get("duration_seconds")
     voice_items_match = (
@@ -565,13 +840,14 @@ def _observation_readback(state: dict[str, Any], output_root: Path, repo_root: P
     )
     subtitle_status = subtitle_observation.get("status")
     timing_order_preserved = timing_observation.get("order_preserved") is True
-    placeholder_lanes_present = (
-        placeholder_observation.get("imageitem_placeholder_lanes_present") is True
-        and placeholder_observation.get("textitem_placeholder_lanes_present") is True
+    legacy_placeholder_lanes_present = (
+        responsibility_observation.get("imageitem_placeholder_lanes_present") is True
+        and responsibility_observation.get("textitem_placeholder_lanes_present") is True
     )
     common.update(
         {
             "status": receipt.get("status"),
+            "receipt_schema_version": receipt_schema,
             "observation_result": receipt.get(
                 "result",
                 "passed" if receipt.get("status") == "passed" else "pass_with_warnings",
@@ -590,7 +866,10 @@ def _observation_readback(state: dict[str, Any], output_root: Path, repo_root: P
                 else f"{voice_count}_voiceitems_with_count_or_order_deviation"
             ),
             "subtitle_item_observed": (
-                "linked_subtitle_texts_match_after_manual_character_mapping"
+                "linked_subtitle_texts_match_with_automatic_character_binding"
+                if receipt_schema == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION
+                and subtitle_status == "passed"
+                else "linked_subtitle_texts_match_after_manual_character_mapping"
                 if subtitle_status == "passed_with_manual_mapping"
                 else f"linked_subtitle_text_status_{subtitle_status}"
             ),
@@ -599,14 +878,18 @@ def _observation_readback(state: dict[str, Any], output_root: Path, repo_root: P
                 if timing_order_preserved
                 else f"order_not_preserved_actual_voice_duration_{duration_seconds}_seconds"
             ),
-            "placeholder_boundary_observed": (
-                "imageitem_textitem_placeholder_lanes_present"
-                if placeholder_lanes_present
-                else "imageitem_textitem_placeholder_lanes_absent"
+            "responsibility_boundary_observed": (
+                "csv_voiceitem_linked_subtitle_only_diagnostic_project_not_authorized_not_attempted"
+                if receipt_schema == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION
+                else "legacy_imageitem_textitem_placeholder_lanes_present"
+                if legacy_placeholder_lanes_present
+                else "legacy_imageitem_textitem_placeholder_lanes_absent"
             ),
             "five_point_observations": observations,
             "timeline_observation": timing_observation,
             "speaker_mapping": subtitle_observation.get("speaker_mapping", []),
+            "character_counts": subtitle_observation.get("character_counts", {}),
+            "mapping_dialog_present": subtitle_observation.get("mapping_dialog_present"),
             "import_errors": _list(receipt.get("import_errors")),
             "deviations": _list(receipt.get("deviations")),
             "blocker": blocker,
@@ -629,6 +912,10 @@ def _source_artifact_index(state: dict[str, Any]) -> dict[str, Any]:
         _source_record("ymm4_import_ready_manifest", paths.get("ymm4_import_ready_manifest"), "import_ready_manifest", True),
         _source_record("ymm4_cue_map", paths.get("ymm4_cue_map"), "cue_map_expected_observation", True),
         _source_record("ymm4_manual_sheet", paths.get("ymm4_manual_sheet"), "prior_operator_sheet", True),
+        _source_record("ymm4_alias_coverage", paths.get("ymm4_alias_coverage"), "alias_derivation_readback", True),
+        _source_record("ymm4_derived_csv", paths.get("ymm4_derived_csv"), "primary_derived_import_csv", True),
+        _source_record("canonical_csv", paths.get("regenerated_csv"), "canonical_speaker_identity_read_only", True),
+        _source_record("prior_gui_observation_receipt", paths.get("original_observation_receipt"), "immutable_legacy_partial_evidence", True),
         _source_record("real_input_prep_validation", paths.get("real_input_prep_validation"), "real_input_gate_readback", True),
         _source_record("real_input_prep_contract", paths.get("real_input_prep_contract"), "real_input_gate_contract", True),
     ]
@@ -641,8 +928,17 @@ def _source_artifact_index(state: dict[str, Any]) -> dict[str, Any]:
                 True,
             )
         )
+    if state.get("observation_blocker_path"):
+        records.append(
+            _source_record(
+                "actual_gui_observation_blocker",
+                state.get("observation_blocker_path"),
+                "existing_unsaved_project_preserved_blocker",
+                True,
+            )
+        )
     return {
-        "schema_version": "ymm4_observation_source_artifact_index.v1",
+        "schema_version": "ymm4_observation_source_artifact_index.v2",
         "artifact_id": state.get("artifact_id"),
         "ymm4_import_ready_pack_read_only": True,
         "real_input_prep_pack_read_only": True,
@@ -666,24 +962,27 @@ def _render_html(state: dict[str, Any], readback: dict[str, Any]) -> str:
     voice_observation = _dict(observations.get("voice_items"))
     subtitle_observation = _dict(observations.get("subtitle_text"))
     timing_observation = _dict(observations.get("timing_order"))
-    placeholder_observation = _dict(observations.get("placeholder_boundary"))
+    boundary_observation = _dict(
+        observations.get("csv_responsibility_boundary")
+        or observations.get("placeholder_boundary")
+    )
     if is_actual:
         voice_count = voice_observation.get("count")
         subtitle_status = subtitle_observation.get("status")
         timing_status = timing_observation.get("status")
-        placeholder_status = placeholder_observation.get("status")
+        boundary_status = boundary_observation.get("status")
         deviation_ids = ", ".join(
             str(_dict(item).get("deviation_id")) for item in _list(readback.get("deviations"))
         )
         runway_steps = [
             ("準備済み", "import-ready pack", "3 scenes / 9 cues の観測対象を使用。"),
             ("実観測", "actual YMM4 GUI", f"{voice_count} VoiceItemsの順序とlinked subtitle textを確認。"),
-            ("今回の判定", str(readback.get("status")), f"subtitle={subtitle_status}; timing={timing_status}; placeholder={placeholder_status}."),
+            ("今回の判定", str(readback.get("status")), f"subtitle={subtitle_status}; timing={timing_status}; responsibility={boundary_status}."),
             ("次判断", str(readback.get("next_gate")), "観測証拠に限定して次gateへ進む。"),
         ]
         hero_copy = (
             f"実YMM4 GUIでbounded importを観測済み。VoiceItems={voice_count}; "
-            f"subtitle={subtitle_status}; timing={timing_status}; placeholder={placeholder_status}."
+            f"subtitle={subtitle_status}; timing={timing_status}; responsibility={boundary_status}."
         )
         result_label = "observation result"
         result_copy = f"{readback.get('observation_result')} / {readback.get('status')}"
@@ -693,16 +992,16 @@ def _render_html(state: dict[str, Any], readback: dict[str, Any]) -> str:
     else:
         runway_steps = [
             ("準備済み", "import-ready pack", "3 scenes / 9 cues の観測対象は定義済み。"),
-            ("今回の判定", "operator_instruction_only", "YMM4実行ファイルは検出したが、GUI importを安全に操作・視認できる経路がない。"),
-            ("返却待ち", "manual observation", "operatorがYMM4上でimport結果を確認し、5点だけ返す。"),
-            ("次判断", str(readback.get("next_gate")), "観測結果によりadapter correction、real input receipt、render proof待ちを分岐する。"),
+            ("今回の判定", "operator_instruction_only", "derived CSVは生成・検証済みだが、bounded GUI re-observationは未実行。"),
+            ("返却待ち", "bounded re-observation", "derived CSVだけをimportし、CSV責務の5点を確認する。"),
+            ("次判断", str(readback.get("next_gate")), "CSV gate結果だけを返し、diagnostic projectは自動開始しない。"),
         ]
-        hero_copy = "実観測は未実行。YMM4 executable は検出済みだが、GUI importをこのworkerが安全に操作・視認する経路がないため、operator instructionとして保持する。"
+        hero_copy = "実観測は未実行。explicit profileとderived CSVは準備済みで、現在はbounded alias re-observationのoperator instructionとして保持する。"
         result_label = "blocker"
         result_copy = _dict(readback.get("blocker")).get("reason")
         result_class = "hold"
-        unresolved_copy = "VoiceItem、subtitle、timing order、placeholder boundary、visual evidence は actual GUI importが未実行のため未観測。"
-        next_copy = "operatorが5点の観測結果を返した後、adapter correction / real input receipt / later render proof のどれに進むかを決める。"
+        unresolved_copy = "mapping dialog、9 VoiceItems、character binding、text/order、timing order、CSV responsibility boundaryは未観測。"
+        next_copy = "bounded CSV gateの結果を返した後、supervisorがdiagnostic `.ymmp` proofまたはreal inputを選ぶ。"
     runway = "\n".join(_render_runway_step(index, *step) for index, step in enumerate(runway_steps, start=1))
     status_rows = "\n".join(
         _render_status_row(label, value)
@@ -717,7 +1016,7 @@ def _render_html(state: dict[str, Any], readback: dict[str, Any]) -> str:
             ("voice_item_observed", readback.get("voice_item_observed")),
             ("subtitle_item_observed", readback.get("subtitle_item_observed")),
             ("timing_order_observed", readback.get("timing_order_observed")),
-            ("placeholder_boundary_observed", readback.get("placeholder_boundary_observed")),
+            ("responsibility_boundary_observed", readback.get("responsibility_boundary_observed")),
         )
     )
     check_rows = "\n".join(
@@ -816,7 +1115,9 @@ def _render_html(state: dict[str, Any], readback: dict[str, Any]) -> str:
       <h2>expected import path</h2>
       <div class="band">
         <p>YMM4: <code>{_escape(env.get("yymm4_executable_path"))}</code></p>
-        <p>CSV: <code>{_escape(readback.get("expected_import_path"))}</code></p>
+        <p>Derived CSV: <code>{_escape(readback.get("expected_import_path"))}</code></p>
+        <p>Canonical source: <code>{_escape(readback.get("canonical_source_csv"))}</code></p>
+        <p>Character profile: <code>{_escape(readback.get("selected_yymm4_character_profile"))}</code></p>
         <p>{_escape(result_label)}: <span class="{result_class}">{_escape(result_copy)}</span></p>
       </div>
       <table class="matrix">
@@ -893,6 +1194,32 @@ def _render_manual_readback(state: dict[str, Any], readback: dict[str, Any]) -> 
         voice = _dict(observations.get("voice_items"))
         subtitle = _dict(observations.get("subtitle_text"))
         timing = _dict(observations.get("timing_order"))
+        if readback.get("receipt_schema_version") == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION:
+            boundary = _dict(observations.get("csv_responsibility_boundary"))
+            return f"""# Episode 002 YMM4 CSV import gate readback
+
+状態: `{readback.get("status")}` / `actual_ymm4_gui_observation` / `ymm4_csv_import_gate.v1`
+
+明示選択したcharacter profileから生成したderived CSVだけをYMM4 `{env.get("yymm4_version")}`へ読み込み、保存せず終了した。
+
+import済みderived CSV:
+`{readback.get("expected_import_path")}`
+
+canonical source（不変）:
+`{readback.get("canonical_source_csv")}`
+
+## CSV gate 実観測結果5点
+
+1. **{cue.get("status")}** — scene order: {' -> '.join(str(item) for item in _list(cue.get("scene_order")))}; cue order: {' -> '.join(str(item) for item in _list(cue.get("cue_order")))}。
+2. **{voice.get("status")}** — VoiceItemは{voice.get("count")}件。missing={_list(voice.get("missing_cue_ids"))}; duplicate={_list(voice.get("duplicate_cue_ids"))}; reordered={voice.get("reordered")}。
+3. **{subtitle.get("status")}** — mapping_dialog_present={subtitle.get("mapping_dialog_present")}; automatic_binding={subtitle.get("automatic_speaker_binding_observed")}; character_counts={subtitle.get("character_counts")}; text/cue match={subtitle.get("speaker_cue_match")}。
+4. **{timing.get("status")}** — order_preserved={timing.get("order_preserved")}; duration varianceはinformational。{timing.get("frame_rate")}fps・{timing.get("total_frames")} frames・{timing.get("duration_seconds")}秒。
+5. **{boundary.get("status")}** — CSV expected={boundary.get("csv_import_expected_item_families")}; diagnostic project={boundary.get("diagnostic_project_gate")}/{boundary.get("diagnostic_project_status")}; diagnostic item absence is CSV failure={boundary.get("diagnostic_item_absence_is_csv_failure")}。
+
+次gate: `{readback.get("next_gate")}`
+
+Do not render/export. Do not save or write production `.ymmp`. Do not start the diagnostic project. Do not replace real input. Do not approve rights/public/final thumbnail. Do not upload.
+"""
         placeholder = _dict(observations.get("placeholder_boundary"))
         mapping_text = "; ".join(
             (
@@ -950,8 +1277,14 @@ YMM4 executable:
 開くもの:
 `{state.get("source_import_ready_pack_reference")}/ymm4_import_ready_preview.html`
 
-import候補CSV:
+importするderived CSV:
 `{readback.get("expected_import_path")}`
+
+canonical source（上書き禁止）:
+`{readback.get("canonical_source_csv")}`
+
+selected character profile:
+`{readback.get("selected_yymm4_character_profile")}`
 
 blocker:
 {blocker.get("reason")}
@@ -960,23 +1293,30 @@ blocker:
 
 1. CSV import後、cue順がS1 -> S2 -> S3、csv_row_1 -> csv_row_9として読めるか。
 2. VoiceItemが9 cue分に見えるか、欠落・重複・順序入れ替わりがあるか。
-3. subtitle/textがspeakerとcueに対応し、sample/diagnostic textであることが誤解なく見えるか。
-4. timing orderは仮timingの流れを崩していないか。
-5. visual/overlay/citation/thumbnail要素がplaceholder境界として読め、final素材やpublic-readyを示していないか。
+3. mapping dialogが出ず、れいむ行=ゆっくり霊夢、まりさ行=ゆっくり魔理沙として自動bindingされるか。linked subtitle textがspeaker/cueに一致するか。
+4. timing orderは仮timingの流れを崩していないか。duration再計算はinformationalとして記録する。
+5. CSV責務がVoiceItem + linked subtitleに限定され、ImageItem/独立TextItemのdiagnostic projectがnot_authorized/not_attemptedのままか。
 
-Do not render/export. Do not save or write production `.ymmp`. Do not replace real input. Do not approve rights/public/final thumbnail. Do not upload.
+Do not render/export. Do not save or write production `.ymmp`. Do not start the diagnostic project. Do not replace real input. Do not approve rights/public/final thumbnail. Do not upload.
 """
 
 
 def _render_readme(state: dict[str, Any], readback: dict[str, Any]) -> str:
     if readback.get("observation_mode") == "actual_ymm4_gui_observation":
-        state_copy = (
-            f"Actual bounded GUI import was observed with "
-            f"`cue_count_observed={readback.get('cue_count_observed')}` and "
-            f"`status={readback.get('status')}`. VoiceItem, subtitle, timing, and placeholder "
-            "outcomes are recorded in `observation_readback.json`; no result is inferred beyond "
-            "those fields. YMM4 was closed without saving the project."
-        )
+        if readback.get("receipt_schema_version") == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION:
+            state_copy = (
+                f"The bounded derived-CSV gate was observed with "
+                f"`cue_count_observed={readback.get('cue_count_observed')}` and "
+                f"`status={readback.get('status')}`. VoiceItem, automatic character binding, "
+                "linked subtitle, timing order, and the CSV responsibility boundary are recorded; "
+                "the diagnostic project remained not_authorized/not_attempted."
+            )
+        else:
+            state_copy = (
+                f"The historical v1 bounded import was observed with "
+                f"`cue_count_observed={readback.get('cue_count_observed')}` and "
+                f"`status={readback.get('status')}` under its legacy placeholder contract."
+            )
     else:
         state_copy = (
             "Actual GUI import was not performed, so `status=blocked` and "
@@ -994,6 +1334,9 @@ This package records the current observation-only state. {state_copy}
 - source real-input prep pack: `{readback.get("source_real_input_prep_reference")}`
 - expected cue count: `{readback.get("cue_count_expected")}`
 - observed cue count: `{readback.get("cue_count_observed")}`
+- canonical source CSV: `{readback.get("canonical_source_csv")}`
+- derived import CSV: `{readback.get("derived_import_csv")}`
+- selected character profile: `{readback.get("selected_yymm4_character_profile")}`
 - next gate: `{readback.get("next_gate")}`
 
 No render/export, production `.ymmp`, real input replacement, rights/public
@@ -1007,12 +1350,21 @@ def _render_limitations(readback: dict[str, Any]) -> str:
         deviation_ids = ", ".join(
             str(_dict(item).get("deviation_id")) for item in _list(readback.get("deviations"))
         )
-        observation_copy = (
-            "Actual observed means only the bounded CSV import and the five recorded GUI "
-            "checks occurred. It does not prove render, production `.ymmp`, real-input, "
-            f"rights, thumbnail, upload, or public readiness. Observation status is "
-            f"`{readback.get('status')}`; recorded deviations: {deviation_ids or 'none'}."
-        )
+        if readback.get("receipt_schema_version") == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION:
+            observation_copy = (
+                "Actual observed means only the bounded derived-CSV import and five CSV-gate "
+                "checks occurred. ImageItem or independent TextItem absence is not a CSV failure; "
+                "the diagnostic project remains not_authorized/not_attempted. It does not prove "
+                f"render, production `.ymmp`, real-input, rights, thumbnail, upload, or public "
+                f"readiness. Observation status is `{readback.get('status')}`; recorded deviations: "
+                f"{deviation_ids or 'none'}."
+            )
+        else:
+            observation_copy = (
+                "This is immutable historical v1 evidence interpreted under its legacy placeholder "
+                f"contract. Observation status is `{readback.get('status')}`; recorded deviations: "
+                f"{deviation_ids or 'none'}."
+            )
     else:
         observation_copy = (
             "Actual observed means actual GUI/manual observation occurred. This package is "
@@ -1022,6 +1374,7 @@ def _render_limitations(readback: dict[str, Any]) -> str:
 
 Do not launch render/export from this package.
 Do not write or save a production `.ymmp` file.
+Do not create or start the diagnostic `.ymmp` project without separate authorization.
 Do not replace sample placeholders with real input.
 Do not approve rights, legal status, public readiness, final thumbnail, or upload.
 Do not live fetch, scrape, download external media, use OAuth/API keys, or perform payment work.
@@ -1058,27 +1411,33 @@ def _detect_yymm4() -> dict[str, Any]:
 def _observation_blocker(detected: dict[str, Any]) -> dict[str, Any]:
     if detected.get("yymm4_executable_detected"):
         reason = (
-            "YMM4 executable was detected locally, but this worker has no safe "
-            "manual/GUI visual readback channel for importing and inspecting the project."
+            "The explicit alias profile and derived CSV are ready, but the bounded "
+            "YMM4 alias re-observation has not been completed in this artifact."
         )
     else:
         reason = "YMM4 executable was not detected in the checked local paths."
     return {
-        "blocker_id": "manual_gui_observation_required",
+        "blocker_id": "bounded_yymm4_alias_reobservation_required",
         "status": "blocked_for_actual_observation",
         "reason": reason,
-        "operator_action": "Open YMM4 manually, import the CSV candidate, inspect cue/voice/subtitle/timing/placeholder boundaries, and return the five observations.",
+        "operator_action": "Open YMM4, import only the derived CSV, record mapping-dialog/VoiceItem/character/text-order/timing/CSV-boundary results, then close without saving.",
     }
 
 
-def _csv_candidates(paths: dict[str, Path], cue_map: dict[str, Any], repo_root: Path) -> list[dict[str, Any]]:
-    candidates: list[Path] = []
-    for cue in _list(cue_map.get("cues")):
-        source = _dict(cue).get("voice_or_subtitle_action", {})
-        expected = _dict(source).get("expected_subtitle_source")
-        if isinstance(expected, str) and expected:
-            candidates.append(repo_root / expected.split("#", 1)[0])
-    for key in ("regenerated_csv", "ir_bridge_csv", "preview_csv"):
+def _csv_candidates(
+    paths: dict[str, Path],
+    manifest: dict[str, Any],
+    repo_root: Path,
+    *,
+    primary_import_csv: str,
+) -> list[dict[str, Any]]:
+    candidates: list[Path] = [repo_root / primary_import_csv]
+    canonical = str(manifest.get("canonical_source_csv") or "")
+    derived = str(manifest.get("primary_import_csv") or "")
+    for reference in (derived, canonical):
+        if reference:
+            candidates.append(repo_root / reference)
+    for key in ("ir_bridge_csv", "preview_csv"):
         candidates.append(paths[key])
 
     seen: set[str] = set()

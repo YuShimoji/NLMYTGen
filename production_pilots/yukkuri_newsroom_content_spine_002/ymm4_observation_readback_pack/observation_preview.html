@@ -53,13 +53,13 @@
   <main>
     <section class="hero">
       <div class="metrics">
-        <span class="metric">status: partial</span>
-        <span class="metric">mode: actual_ymm4_gui_observation</span>
+        <span class="metric">status: blocked</span>
+        <span class="metric">mode: operator_instruction_only</span>
         <span class="metric">expected cues: 9</span>
-        <span class="metric">observed cues: 9</span>
+        <span class="metric">observed cues: 0</span>
       </div>
       <h1>Episode 002 YMM4観測readback</h1>
-      <p>実YMM4 GUIでbounded importを観測済み。VoiceItems=9; subtitle=passed_with_manual_mapping; timing=passed_with_variance; placeholder=not_met.</p>
+      <p>実観測は未実行。explicit profileとderived CSVは準備済みで、現在はbounded alias re-observationのoperator instructionとして保持する。</p>
     </section>
 
     <section data-region="pipeline-runway">
@@ -67,22 +67,22 @@
       <div class="runway"><div class="step">
   <strong>1. 準備済み</strong>
   <code>import-ready pack</code>
-  <p>3 scenes / 9 cues の観測対象を使用。</p>
+  <p>3 scenes / 9 cues の観測対象は定義済み。</p>
 </div>
 <div class="step">
-  <strong>2. 実観測</strong>
-  <code>actual YMM4 GUI</code>
-  <p>9 VoiceItemsの順序とlinked subtitle textを確認。</p>
+  <strong>2. 今回の判定</strong>
+  <code>operator_instruction_only</code>
+  <p>derived CSVは生成・検証済みだが、bounded GUI re-observationは未実行。</p>
 </div>
 <div class="step">
-  <strong>3. 今回の判定</strong>
-  <code>partial</code>
-  <p>subtitle=passed_with_manual_mapping; timing=passed_with_variance; placeholder=not_met.</p>
+  <strong>3. 返却待ち</strong>
+  <code>bounded re-observation</code>
+  <p>derived CSVだけをimportし、CSV責務の5点を確認する。</p>
 </div>
 <div class="step">
   <strong>4. 次判断</strong>
-  <code>adapter_correction_after_observation</code>
-  <p>観測証拠に限定して次gateへ進む。</p>
+  <code>bounded_yymm4_alias_reobservation</code>
+  <p>CSV gate結果だけを返し、diagnostic projectは自動開始しない。</p>
 </div></div>
     </section>
 
@@ -92,15 +92,15 @@
         <thead><tr><th>項目</th><th>readback</th></tr></thead>
         <tbody><tr>
   <td><code>observation_mode</code></td>
-  <td>actual_ymm4_gui_observation</td>
+  <td>operator_instruction_only</td>
 </tr>
 <tr>
   <td><code>actual_ymm4_import_attempted</code></td>
-  <td>True</td>
+  <td>False</td>
 </tr>
 <tr>
   <td><code>actual_ymm4_imported</code></td>
-  <td>True</td>
+  <td>False</td>
 </tr>
 <tr>
   <td><code>cue_count_expected</code></td>
@@ -108,31 +108,31 @@
 </tr>
 <tr>
   <td><code>cue_count_observed</code></td>
-  <td>9</td>
+  <td>0</td>
 </tr>
 <tr>
   <td><code>scene_order_observed</code></td>
-  <td>[&#x27;S1&#x27;, &#x27;S2&#x27;, &#x27;S3&#x27;]</td>
+  <td>[]</td>
 </tr>
 <tr>
   <td><code>cue_order_observed</code></td>
-  <td>[&#x27;csv_row_1&#x27;, &#x27;csv_row_2&#x27;, &#x27;csv_row_3&#x27;, &#x27;csv_row_4&#x27;, &#x27;csv_row_5&#x27;, &#x27;csv_row_6&#x27;, &#x27;csv_row_7&#x27;, &#x27;csv_row_8&#x27;, &#x27;csv_row_9&#x27;]</td>
+  <td>[]</td>
 </tr>
 <tr>
   <td><code>voice_item_observed</code></td>
-  <td>9_voiceitems_no_missing_duplicate_or_reorder</td>
+  <td>not_observed</td>
 </tr>
 <tr>
   <td><code>subtitle_item_observed</code></td>
-  <td>linked_subtitle_texts_match_after_manual_character_mapping</td>
+  <td>not_observed</td>
 </tr>
 <tr>
   <td><code>timing_order_observed</code></td>
-  <td>order_preserved_actual_voice_duration_46.5_seconds</td>
+  <td>not_observed</td>
 </tr>
 <tr>
-  <td><code>placeholder_boundary_observed</code></td>
-  <td>imageitem_textitem_placeholder_lanes_absent</td>
+  <td><code>responsibility_boundary_observed</code></td>
+  <td>not_observed</td>
 </tr></tbody>
       </table>
     </section>
@@ -142,24 +142,8 @@
       <table class="matrix">
         <thead><tr><th>項目</th><th>判定</th></tr></thead>
         <tbody><tr>
-  <td><code>cue_order</code></td>
-  <td>passed</td>
-</tr>
-<tr>
-  <td><code>voice_items</code></td>
-  <td>passed</td>
-</tr>
-<tr>
-  <td><code>subtitle_text</code></td>
-  <td>passed_with_manual_mapping</td>
-</tr>
-<tr>
-  <td><code>timing_order</code></td>
-  <td>passed_with_variance</td>
-</tr>
-<tr>
-  <td><code>placeholder_boundary</code></td>
-  <td>not_met</td>
+  <td><code>actual_observation</code></td>
+  <td>not_observed</td>
 </tr></tbody>
       </table>
     </section>
@@ -168,15 +152,22 @@
       <h2>expected import path</h2>
       <div class="band">
         <p>YMM4: <code>D:\YukkuriMovieMaker_v4\YukkuriMovieMaker.exe</code></p>
-        <p>CSV: <code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv</code></p>
-        <p>observation result: <span class="hold">pass_with_warnings / partial</span></p>
+        <p>Derived CSV: <code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv</code></p>
+        <p>Canonical source: <code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv</code></p>
+        <p>Character profile: <code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_character_alias_profiles/ymm4_4_53_0_9_yukkuri_characters_v1.json</code></p>
+        <p>blocker: <span class="hold">YMM4 restored an existing unsaved untitled project containing the prior nine-item, 2790-frame observation state. Starting a clean derived-CSV import would require discarding that existing unsaved state, which this slice does not authorize.</span></p>
       </div>
       <table class="matrix">
         <thead><tr><th>candidate</th><th>exists</th><th>role</th></tr></thead>
         <tbody><tr>
-  <td><code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv</code></td>
+  <td><code>production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv</code></td>
   <td>True</td>
   <td>primary_import_candidate</td>
+</tr>
+<tr>
+  <td><code>production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv</code></td>
+  <td>True</td>
+  <td>alternate_import_candidate</td>
 </tr>
 <tr>
   <td><code>production_pilots/yukkuri_newsroom_content_spine_002/ir_bridge/draft_yymm4.csv</code></td>
@@ -194,7 +185,7 @@
     <section data-region="untested">
       <h2>未検証または未解消の項目</h2>
       <div class="band">
-        <p>recorded deviations: manual_speaker_mapping_required, imageitem_textitem_placeholder_lanes_absent, provisional_timing_recomputed_by_yymm4。render/exportやproduction approvalは未実施。</p>
+        <p>mapping dialog、9 VoiceItems、character binding、text/order、timing order、CSV responsibility boundaryは未観測。</p>
       </div>
     </section>
 
@@ -251,6 +242,11 @@
   <td><code>external_media_downloaded</code></td>
   <td><code>False</code></td>
   <td><span class="ok">false = 未実行 / このpackageでは閉じたまま</span></td>
+</tr>
+<tr>
+  <td><code>diagnostic_ymmp_project_attempted</code></td>
+  <td><code>False</code></td>
+  <td><span class="ok">false = 未実行 / このpackageでは閉じたまま</span></td>
 </tr></tbody>
       </table>
     </section>
@@ -258,7 +254,7 @@
     <section data-region="next-decision">
       <h2>次の判断</h2>
       <div class="band">
-        <p><code>adapter_correction_after_observation</code>: 五点観測の証拠とrecorded deviationsに限定して次gateへ進む。</p>
+        <p><code>bounded_yymm4_alias_reobservation</code>: bounded CSV gateの結果を返した後、supervisorがdiagnostic `.ymmp` proofまたはreal inputを選ぶ。</p>
       </div>
     </section>
   </main>

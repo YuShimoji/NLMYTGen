@@ -1,10 +1,57 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-10 JST）
+## 現在の別端末再開ハンドオフ（2026-07-11 JST）
 
-この節だけが現在の再開地点である。下にある日付付き `Current handoff` は判断履歴であり、
-現在の指示として読まない。下部に残る旧端末の絶対pathは当時の履歴であり、現在の
-実行pathとして再利用しない。
+この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
+現在の指示として読まない。
+
+- **取得先**: `origin/codex/episode-002-ymm4-five-point-observation-v1` のbranch先端。
+- **再開前確認**: `git fetch --prune origin`、同branchへのswitch、
+  `git pull --ff-only`、`git status --short --branch`、
+  `git rev-list --left-right --count "HEAD...@{u}"`の順でclean / `0 0`を確認する。
+- **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
+  `docs/runtime-state.md` → この節 → `docs/PROJECT_COCKPIT.md` →
+  `docs/THREAD_REGISTRY.md`。GUI再観測時だけ
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_readback_pack/manual_ymm4_observation_readback.md`
+  を追加で読む。
+- **現在の状態**: `Project-State-ID`は
+  `episode-002-ymm4-speaker-alias-ready-for-reobservation-v1`。
+  Product-Stateは`episode-002-ymm4-speaker-alias-ready-for-reobservation`、
+  Product-Gateは`bounded-yymm4-alias-reobservation`。
+- **実装済み**: canonical speaker identityは`れいむ` / `まりさ`のまま、
+  explicit profile `ymm4_4_53_0_9_yukkuri_characters_ja_v1`で
+  `ゆっくり霊夢` / `ゆっくり魔理沙`へstrictに射影する。generic `build-csv`の
+  source-label mapping既定動作は変更していない。
+- **derived CSV**:
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv`。
+  9行、text/order同一、speaker列だけ変換。SHA-256は
+  `5452DE96DC6EF012400A132BA5BAE80B8553C1B1CDD27860D36674C25AF391BC`。
+  canonical CSVは元のSHA-256
+  `6FBB4666028DF4EF61F19C29505563141B1A82E932DC8E05BF8168F06347D38C`
+  のまま。
+- **責務契約**: CSV import gateは`VoiceItem + linked subtitle`だけを期待する。
+  `ImageItem + independent TextItem placeholders`は別のdiagnostic projectで、
+  `not_authorized / not_attempted`。CSV importに出ないことはfailureではない。
+- **旧証拠**: `ymm4_observation_receipt_2026-07-10.json`はbyte不変で、
+  SHA-256 `DC756D9C4EE9ABDFDDFB284B2B8EC70B227DDEB5E365C1BBB8EE8438D8C9A5B5`。
+  旧mixed contract下のhistorical `partial` evidenceとして残す。
+- **GUI blocker**: YMM4 `4.53.0.9`を開いたところ、以前の9-item / 2790-frame
+  projectがunsaved `無題*`として復元された。clean project開始には既存stateの
+  discardまたは退避が必要なため、無断破棄せず停止した。derived CSV import、new
+  project、save、render、exportは未実施で、YMM4はstate保全のため開いたまま。
+- **次の入口**: まずuserが既存unsaved projectをsave elsewhereするかdiscardするかを
+  決める。その後だけclean untitled projectへderived CSVを一度importし、mapping dialog、
+  9 VoiceItems、character counts、linked text/order、timing order、CSV responsibility
+  boundaryを記録して、新しい観測projectを保存せず閉じる。
+- **禁止された自動遷移**: CSV gate成功からdiagnostic `.ymmp`、real input、render、
+  publication、default-branch integrationへ自動で進めない。
+- **詳細証跡**:
+  `docs/verification/NEWSROOM_EPISODE_002_YMM4_ALIAS_CSV_CONTRACT_2026-07-11.md`。
+
+## 直前の別端末再開ハンドオフ（2026-07-10 JST・履歴）
+
+この節は判断履歴であり、現在の指示として読まない。下部に残る旧端末の絶対pathは
+当時の履歴であり、現在の実行pathとして再利用しない。
 
 - **取得先**: `origin/codex/episode-002-ymm4-five-point-observation-v1` のbranch先端。
 - **再開前確認**: `git fetch --prune origin`、`git switch
