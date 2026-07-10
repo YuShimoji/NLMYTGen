@@ -1,14 +1,15 @@
 # NLMYTGen Project Cockpit
 
 Project-State-ID: workflow-velocity-and-current-state-v1
-State-Revision: 2026-07-10.1
+State-Revision: 2026-07-10.2
 Updated: 2026-07-10 JST
 Product-State: episode-002-ymm4-observation-ready
 Product-Gate: five-point-ymm4-import-observation
 Recommended-Next: verify-ymm4-five-observations
-External-State: tracked-branch-mirror-pages-unpublished
+External-State: branch-pushed-pages-unpublished
 
-このページは branch push 後に GitHub 上で現在地を読むための追跡済みミラーです。内部の
+このページは origin の feature branch に push 済みで、repository visibility が許せば
+GitHub 上で現在地を読める追跡済みミラーです。内部の
 詳細正本は `docs/runtime-state.md`、過去の判断履歴は
 `docs/project-context.md` に置きます。別管理の Wiki 本文を手動更新する運用には
 せず、同じ commit でこのページと runtime capsule を同期します。
@@ -28,7 +29,7 @@ Promptを渡し、開発AIが関連修正・限定検証・現在地同期・Git
 | Episode 002 観測パッケージ | 日本語 preview、五点シート、readback、九 cue CSV が生成済み | 人間が YMM4 import 後の五点を返す | actual import / observed cue / render |
 | 実素材置換 | intake 契約と drop-zone はあるが候補ゼロ | 検証済み source / transcript / rights note / identity / cue alignment | sample input を real input と扱うこと |
 | 公開・配信 | 閉じている | rights、final creative judgement、upload authority | public-ready / upload complete |
-| 外部現在地 | この Markdown は branch push 後に GitHub で閲覧可能 | stable URL が必要なら master promotion と Pages 方針を決める | Wiki / Pages が自動同期済みという主張 |
+| 外部現在地 | origin feature branch に current mirror を反映済み | stable URL が必要なら master promotion と Pages 方針を決める | Wiki / Pages が自動同期済みという主張 |
 
 ## 今回変わった判断の流れ
 

@@ -1,19 +1,20 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: workflow-velocity-and-current-state-v1
-State-Revision: 2026-07-10.1
+State-Revision: 2026-07-10.2
 Updated: 2026-07-10 JST
 Product-State: episode-002-ymm4-observation-ready
 Product-Gate: five-point-ymm4-import-observation
 Recommended-Next: verify-ymm4-five-observations
-External-State: tracked-branch-mirror-pages-unpublished
+External-State: branch-pushed-pages-unpublished
 
 ## Current Slice
 
 - **Development slice**: `workflow-velocity-and-current-state-v1` on
   `codex/workflow-velocity-and-current-state-v1`, based on `99477a0`.
-- **State**: completed locally after remote refresh, development-environment
-  repair, workflow redesign, focused validation, and current-state sync.
+- **State**: completed and pushed after remote refresh, development-environment
+  repair, workflow redesign, focused validation, and current-state sync. The
+  implementation commit before this state seal is `38f96e2`.
 - **Why this slice exists**: the supervisor-AI to developer-AI loop had become
   slow because advisory quality rules behaved as hard stops, implementation
   prompts were split into small steps, current state was copied into several
