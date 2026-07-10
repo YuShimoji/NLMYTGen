@@ -4,26 +4,20 @@
 from __future__ import annotations
 
 import argparse
-import json
 import re
-import sys
 from pathlib import Path
 
 
 DEFAULT_REPO_ROOT = Path(__file__).resolve().parents[1]
 MAX_RUNTIME_STATE_LINES = 160
 
-_STATE_ID_RE = re.compile(
-    r"^Project-State-ID: ([a-z0-9]+(?:-[a-z0-9]+)*)$"
-)
+_STATE_ID_RE = re.compile(r"^Project-State-ID: ([a-z0-9]+(?:-[a-z0-9]+)*)$")
 _UPDATED_RE = re.compile(r"^Updated: (\d{4}-\d{2}-\d{2} JST)$")
 _SHARED_FIELD_PATTERNS = {
     "State-Revision": re.compile(r"^State-Revision: ([a-z0-9]+(?:[.-][a-z0-9]+)*)$"),
     "Product-State": re.compile(r"^Product-State: ([a-z0-9]+(?:-[a-z0-9]+)*)$"),
     "Product-Gate": re.compile(r"^Product-Gate: ([a-z0-9]+(?:-[a-z0-9]+)*)$"),
-    "Recommended-Next": re.compile(
-        r"^Recommended-Next: ([a-z0-9]+(?:-[a-z0-9]+)*)$"
-    ),
+    "Recommended-Next": re.compile(r"^Recommended-Next: ([a-z0-9]+(?:-[a-z0-9]+)*)$"),
     "External-State": re.compile(r"^External-State: ([a-z0-9]+(?:-[a-z0-9]+)*)$"),
 }
 _COCKPIT_INLINE_LINK_RE = re.compile(
@@ -78,9 +72,7 @@ def _updated_value(text: str, relative_path: str, errors: list[str]) -> str | No
     return updated_values[0]
 
 
-def _shared_fields(
-    text: str, relative_path: str, errors: list[str]
-) -> dict[str, str]:
+def _shared_fields(text: str, relative_path: str, errors: list[str]) -> dict[str, str]:
     fields: dict[str, str] = {}
     lines = text.splitlines()
     for field_name, pattern in _SHARED_FIELD_PATTERNS.items():
@@ -106,14 +98,6 @@ def _has_cockpit_link(readme: str) -> bool:
     )
 
 
-def _stop_hook_is_already_active() -> bool:
-    try:
-        payload = json.loads(sys.stdin.read() or "{}")
-    except json.JSONDecodeError:
-        return False
-    return bool(isinstance(payload, dict) and payload.get("stop_hook_active"))
-
-
 def check_project_state_sync(
     repo_root: str | Path = DEFAULT_REPO_ROOT,
     *,
@@ -127,10 +111,8 @@ def check_project_state_sync(
     cockpit = _read_text(root, "docs/PROJECT_COCKPIT.md", errors)
     readme = _read_text(root, "README.md", errors)
 
-    runtime_id = None
-    cockpit_id = None
-    runtime_updated = None
-    cockpit_updated = None
+    runtime_id = cockpit_id = None
+    runtime_updated = cockpit_updated = None
     runtime_fields: dict[str, str] = {}
     cockpit_fields: dict[str, str] = {}
     if runtime is not None:
@@ -148,8 +130,7 @@ def check_project_state_sync(
         line_count = len(runtime.splitlines())
         if line_count > MAX_RUNTIME_STATE_LINES:
             errors.append(
-                "docs/runtime-state.md: "
-                f"{line_count} lines exceeds {MAX_RUNTIME_STATE_LINES}"
+                f"docs/runtime-state.md: {line_count} lines exceeds {MAX_RUNTIME_STATE_LINES}"
             )
 
     if cockpit is not None:
@@ -162,7 +143,6 @@ def check_project_state_sync(
             "Project-State-ID mismatch: "
             f"runtime-state={runtime_id}, PROJECT_COCKPIT={cockpit_id}"
         )
-
     if (
         runtime_updated is not None
         and cockpit_updated is not None
@@ -172,7 +152,6 @@ def check_project_state_sync(
             "Updated mismatch: "
             f"runtime-state={runtime_updated}, PROJECT_COCKPIT={cockpit_updated}"
         )
-
     for field_name in _SHARED_FIELD_PATTERNS:
         runtime_value = runtime_fields.get(field_name)
         cockpit_value = cockpit_fields.get(field_name)
@@ -199,7 +178,6 @@ def check_project_state_sync(
 
     if readme is not None and not _has_cockpit_link(readme):
         errors.append("README.md: missing Markdown link to docs/PROJECT_COCKPIT.md")
-
     return errors
 
 
@@ -220,12 +198,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument(
         "--expected-state-id",
-        help="Require the capsule to match the Outcome Packet state id.",
-    )
-    parser.add_argument(
-        "--hook",
-        action="store_true",
-        help="Use Claude Stop-hook exit codes (2 blocks once; active retry fails open).",
+        help="Require the capsule to match this state id.",
     )
     args = parser.parse_args(argv)
 
@@ -235,13 +208,7 @@ def main(argv: list[str] | None = None) -> int:
     if errors:
         for error in errors:
             print(f"ERROR: {error}")
-        if args.hook:
-            if _stop_hook_is_already_active():
-                print("ADVISORY: state drift remains during an active Stop-hook retry")
-                return 0
-            return 2
         return 1
-
     if not args.quiet:
         print("PASS: project state is synchronized")
     return 0

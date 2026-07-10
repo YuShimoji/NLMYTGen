@@ -1,5 +1,5 @@
 # DECISION_GATES.md
-Ruleset-Version: v21
+Ruleset-Version: v20
 Status: canonical
 
 ## Active Artifact and Change Relation
@@ -10,28 +10,6 @@ Each block must know:
 - change relation: `direct`, `unblocker`, `cleanup`, or `evidence-only`
 
 If change relation is repeatedly `cleanup` or `evidence-only`, do not use pendulum logic. Identify the actual bottleneck.
-
-## Risk Budget Gate
-
-Classify a possible interruption before stopping:
-
-| Class | Examples | Required behavior |
-| --- | --- | --- |
-| continue | reversible repo-local implementation, related fix, fixture, narrow test, docs/current-state sync, normal commit/push | proceed and report assumptions |
-| direction checkpoint | unapproved layout/visual/i18n/content/motion direction or material scope expansion | show 2–3 low-cost directions and ask once |
-| hard stop | destructive operation, dependency addition, DB/auth/API contract, external publish/rights/payment, specification conflict, approved direction change | stop with the exact decision and tradeoff |
-
-Warnings about report shape, optional proof, or current non-goals do not qualify
-as hard stops. A hard gate must name the affected contract or external effect.
-
-## Creative Direction Gate
-
-Before a high-cost visible build, confirm whether the direction is already
-approved. If not, create a low-fidelity comparison and preserve the user's
-freeform intent as adopted direction, avoided direction, and fixed conditions.
-Once approved, do not reopen concept exploration for ordinary implementation
-defects or polish. If completion feedback rejects the direction itself, return
-to this gate instead of chaining local corrections.
 
 ## Success Transition Gate
 After a success definition is reached, do not invent a new frontier just to keep moving. Move only to:

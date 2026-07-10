@@ -31,14 +31,6 @@
   - 予防: `docs/ai/STATUS_AND_HANDOFF.md` の status semantics に戻し、status 変更には根拠と承認状態を明記する。
 - `TEMPLATE_FORMALISM`: Prompt、チェックリスト、返却テンプレ、短い OK/NG 形式を、作業接続性より優先する。対象ファイル・作るもの・元にする object・判定主体が欠けたまま形式だけ整い、実作業が接続不能になる。
   - 予防: テンプレを出す前に `open target` / `create or modify target` / `source object` / `actor` / `owner artifact` / `acceptance meaning` / `replan condition` を埋める。1 つでも欠ける場合は、短い返却形式へ圧縮せず、まず欠落項目を repo 内で解決する。
-- `SAFETY_STALL`: 品質上の注意、今回の non-goal、破壊的な hard gate を同じ停止条件として扱い、reversible な実装・関連修正・限定検証まで止める。安全説明が増える一方で active artifact が動かない。
-  - 予防: `continue` / `direction checkpoint` / `hard stop` の三段階に分ける。repo-local で可逆な実装・docs sync・検証・commit/push は続行する。未承認の visible direction は低コスト案で一度だけ確認し、破壊的変更、依存追加、DB/認証/API 契約、外部公開・権利・支払い、仕様衝突だけを hard stop にする。文章品質 lint は既定 advisory とし、安全境界そのものと混同しない。
-- `PROMPT_SHARDING`: 監修AIが調査、計画、実装、テスト、報告を別 Prompt に分割し、開発AIが次の細片を待つ。各 Prompt が再アンカリングと安全説明を繰り返すため、成果物より handoff が増える。
-  - 予防: 監修AIは Outcome Packet を一つ渡す。packet は workflow 上の結果、bottleneck、正本、must/may/not-change、autonomy、完了シグナル、限定検証、停止条件、visible work の Direction Check、closeout 同期先を含む。開発AIは関連修正・検証・current-state sync・Git follow-through まで一つの slice として閉じる。追撃 Prompt は high-level decision または replan condition が発火した場合だけにする。
-- `STATE_MIRROR_DRIFT`: `runtime-state`、cockpit、dashboard、handoff がそれぞれ current を名乗り、更新日と next action が分裂する。監修側は古い面を読み、開発側は毎回現在地の復元から始める。
-  - 予防: 内部正本は 160 行以内の `docs/runtime-state.md` current capsule、GitHub で読むミラーは `docs/PROJECT_COCKPIT.md` に限定する。両方の `Project-State-ID` / revision / product state / gate / recommended next / external state を closeout で更新し、Outcome Packet の `target_state_id` を `scripts/check_project_state_sync.py --expected-state-id <target_state_id>` へ渡す。履歴は `project-context` / verification / Git に置き、current capsule へ追記しない。
-- `CREATIVE_LATE_LOCK`: layout、言語、色・書体、motion、隣接 content の方向を決めずに高忠実度成果物を完成させ、その後の自由文 feedback を局所修正として連鎖させる。方向変更と polish が混ざり、微修正が終わらない。
-  - 予防: 方向差が高コストな visible work は、約 10% の 2〜3 方向比較、約 40% の代表面、system 展開後の最終判断の順にする。ユーザーの自由文で採用方向・避ける方向・固定条件を残し、方向承認後の実装は一括する。同じ局所調整が 2 回続き、3 回目が必要なら pixel tweak を止めて layout/token/system debt として再設計へ戻す。
 - `FIXED_LABEL_REVIEW_LOCK`: user review を `accept` / `reject` / `revise_once` などの固定ラベル入力に閉じ込め、自由文に含まれる意図・制約・優先度を捨てる。固定語彙は agent 側の内部正規化には有効だが、user 側の必須返答形式にすると review が止まり、実際の判断材料が失われる。
   - 予防: review が必要な場合は、対象・見る点・自由文可・例・agent がどう解釈するか・完了シグナルを含む Review Card を出す。受け取った自由文は `target` / `intent` / `constraints` / `confidence` へ内部 parse し、confidence が medium/high なら reversible な修正・docs 反映・artifact 生成・validation へ進む。low confidence かつ誤解が artifact 方向を変える場合だけ、Review Clarification Card を 1 回だけ出す。
 - `FILE_DIFF_CLOSEOUT`: 最終報告が「どのファイルに何を追加したか」の列挙に寄り、ユーザーがファイルを開かないと、実際に何が変わったのか、制作導線上の効果、次に誰が何をするのかを復元できない。これは evidence を explanation と取り違える closeout failure であり、認知負荷を user に押し戻す。
@@ -47,12 +39,6 @@
   - 予防: closeout 前に、完了内容・根拠・残る不確実性・次に動く主体・返答後に閉じる作業が自然文でつながっているか確認する。これは内部チェックであり、固定見出しや英語ラベルを出力する要求ではない。
 - `NEXT_WORK_SHORTHAND`: 残作業レビューや次回作業導線が `P0/P1`、commit/test/path、または「こちら側で未処理なし」の短文に縮退し、各作業の目的・効果・必要条件・現在状態・次の動きが本文だけで分からない。ユーザーは何を選ぶと何が軽くなるか判断できず、次回の作業開始がまた status 確認から始まる。
   - 予防: `残作業` / `次回` / `優先順位` / `レビューしてください` が出た場合は、作業ごとに目的、効果、必要条件、現在状態、次の動きを説明する。表は任意であり、固定列名を出す必要はない。assistant が今すぐ動ける候補と user review 待ちを混ぜない。
-
-## Supervisor → Developer Outcome Packet
-
-- packet の意味契約、Direction Check、集約修正は [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md) を正とし、ユーザーがコピーする現行形は [USER_COPYPASTE_BLOCKS.md](USER_COPYPASTE_BLOCKS.md) 冒頭だけを使う。このファイルで別仕様を増やさない。
-- 対話上の要点は、監修AIが「次の一手」ではなく一つの review 可能な成果を委任し、開発AIが repo 根拠で閉じる mechanical choice を再質問しないこと。追撃 Prompt は方向・acceptance・hard boundary が変わる delta だけにする。
-- `creative_explore` は product 実装ではなく低コスト方向比較、明示 `AUDIT` は build packet 外の read-only phase とする。受け取った自由文は実装中の細切れ ask に戻さず、Task Development Cycle の分類で一括消費する。
 
 ## Ask Protocol
 - 質問前に、repo 内根拠で決められない理由を確認する。理由がない場合は質問せず進める。cross-project 指示がある場合は、明示された他 repo / docs も根拠範囲に含める。

@@ -16,3 +16,4 @@ not a governance document or roadmap.
 | verified-real-input-prep-episode002 | INPUT_API_HUB / VERIFIED_REAL_INPUT_PREP | accepted/close-ready | Real-input replacement readiness pack exists; required local inputs defined; candidate input count is 0. |
 | ymm4-observation-readback-episode002 | OUTPUT_VIDEO / YMM4_OBSERVATION_READBACK | hold/operator-instruction | Observation package exists; YMM4 executable and CSV candidate detected, but actual GUI observation is not performed by worker. |
 | integrity-triage | INTEGRITY_TRIAGE | paused | Full-suite drift remains nonblocking for targeted slices. |
+| control-boundary-correction | INTEGRITY_TRIAGE | completed/return-to-product | Repo-side supervisor control plane removed; next product entry is the YMM4 five-point observation. |

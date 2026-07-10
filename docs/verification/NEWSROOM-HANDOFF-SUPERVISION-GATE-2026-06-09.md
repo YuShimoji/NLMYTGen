@@ -37,7 +37,6 @@ NLMYTGen authority:
 - `docs/project-context.md`
 - `docs/FEATURE_REGISTRY.md`
 - `docs/INVARIANTS.md`
-- `docs/USER_COPYPASTE_BLOCKS.md`
 
 G-28 authority:
 

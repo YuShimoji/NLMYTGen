@@ -1,7 +1,20 @@
 # Project Context — NLMYTGen
 
 ## PROJECT CONTEXT
-- Workflow decision (2026-07-10 JST):
+- Control-boundary correction (2026-07-10 JST):
+  `supervisor-only-control-boundary-restored-v1` removes the repository-side
+  Supervisor Prompt source, generic Worker authority, response-quality lint,
+  and Stop-hook state gate introduced by `workflow-velocity-and-current-state-v1`.
+  A self-contained prompt supplied through the Web supervisor remains the
+  session execution authority. The repository retains only product-specific
+  review guidance plus compact runtime/cockpit navigation and an explicitly
+  invoked state-alignment checker. `docs/PROJECT_COCKPIT.md`,
+  `docs/THREAD_REGISTRY.md`, and `docs/PROJECT_PIPELINE.mmd` persist current
+  routing without governing Worker behavior. The repository is public; the
+  tracked Markdown cockpit is therefore readable without GitHub Pages, while
+  Pages remains an optional publication choice. The product frontier returns
+  to the Episode 002 five-point YMM4 observation.
+- Superseded workflow decision (2026-07-10 JST; historical record only):
   `workflow-velocity-and-current-state-v1` changes the supervisor-to-developer
   default from prompt-per-step to one outcome-sized slice. Reversible repo-local
   implementation, related fixes, proportional validation, current-state sync,

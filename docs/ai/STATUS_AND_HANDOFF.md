@@ -1,5 +1,5 @@
 # STATUS_AND_HANDOFF.md
-Ruleset-Version: v21
+Ruleset-Version: v20
 Status: canonical
 
 ## Feature status semantics
@@ -63,26 +63,6 @@ A robust handoff should preserve:
 - safe next-thread plan
 - what not to do next
 - new fossils created in the current thread
-
-## Current-state publication contract
-
-- `docs/runtime-state.md` is a compact current capsule, not an append-only
-  handoff log. Keep it at or below 160 lines and move durable history to
-  `project-context`, dated verification artifacts, and Git history.
-- `docs/PROJECT_COCKPIT.md` is the tracked GitHub-readable mirror. It is the
-  external reading surface until a sanitized Pages/Wiki publisher is explicitly
-  approved; it must not contain local absolute paths, private URLs, tokens, raw
-  sources, or unapproved rights/public claims.
-- Both files carry the same ID, revision, product state, product gate,
-  recommended next action, and external-state posture. A substantive slice is
-  not closed until `uv run python scripts/check_project_state_sync.py
-  --expected-state-id <target_state_id>` passes.
-- Historical dashboard JSON/HTML must identify itself as a snapshot and must not
-  be called a live registry unless it is generated from the current capsule in
-  the same commit.
-- Stable Pages/Wiki publication requires repository visibility, sanitization,
-  and branch-promotion policy decisions. Do not silently publish from a feature
-  branch or create a second hand-maintained source of truth.
 
 ## Closeout chain minimum
 Final responses should not merely summarize activity; they should make the next move executable.

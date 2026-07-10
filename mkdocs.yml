@@ -75,7 +75,6 @@ nav:
       - Project Context: docs/project-context.md
       - Feature Registry: docs/FEATURE_REGISTRY.md
       - User Request Ledger: docs/USER_REQUEST_LEDGER.md
-      - User Copypaste Blocks: docs/USER_COPYPASTE_BLOCKS.md
       - Migration Ledger: docs/MIGRATION_LEDGER.md
   - Rules And Boundaries:
       - Repo Local Rules: docs/REPO_LOCAL_RULES.md

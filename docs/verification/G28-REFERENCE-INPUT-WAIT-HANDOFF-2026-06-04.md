@@ -170,9 +170,9 @@ evidence rather than deleting it.
 
 ## ChatGPT Copy-Block Requirement
 
-When the user asks for a ChatGPT-supervised handoff, return one copyable block
-from `BEGIN_COPY_BLOCK_FOR_CHATGPT` to `END_COPY_BLOCK_FOR_CHATGPT`. The G-28
-parking-specific template is preserved in `docs/USER_COPYPASTE_BLOCKS.md`.
+When the user asks for the historical ChatGPT-supervised handoff, its former
+copy block is no longer present in the active tree. Recover the exact record
+only with `git show 99477a0:docs/USER_COPYPASTE_BLOCKS.md`.
 
 The block must make these facts clear:
 

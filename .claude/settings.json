@@ -7,10 +7,6 @@
           {
             "type": "command",
             "command": "uv run python .claude/hooks/guardrails.py"
-          },
-          {
-            "type": "command",
-            "command": "uv run python scripts/check_project_state_sync.py --hook --quiet"
           }
         ]
       }

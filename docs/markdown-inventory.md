@@ -26,7 +26,6 @@ Excluded directories: `.git`, `node_modules`, `dist`, `build`, `.venv`, `venv`, 
 | [docs/MIGRATION_LEDGER.md](../docs/MIGRATION_LEDGER.md) | MIGRATION LEDGER |
 | [docs/project-context.md](../docs/project-context.md) | Project Context 窶・NLMYTGen |
 | [docs/runtime-state.md](../docs/runtime-state.md) | Runtime State 窶・NLMYTGen |
-| [docs/USER_COPYPASTE_BLOCKS.md](../docs/USER_COPYPASTE_BLOCKS.md) | User Copypaste Blocks |
 | [docs/USER_REQUEST_LEDGER.md](../docs/USER_REQUEST_LEDGER.md) | User Request Ledger |
 
 ## Rules And Boundaries

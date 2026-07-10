@@ -9,4 +9,4 @@
 - 通常はこの repo 以外は読まない・書かない。ユーザーが cross-project / 他 repo 作業を明示した場合は、その明示範囲だけ扱う。
 - 通常再開は **`docs/REPO_LOCAL_RULES.md`** → **`docs/runtime-state.md`**。`AGENTS.md` は入口確認だけ、`docs/ai/*.md` は該当 gate が必要なときだけ追加参照。
 - 略称は `ID（説明名）` 形式で書く。正本: `docs/ai/CORE_RULESET.md` §Terminology。制作工程の一覧は `docs/WORKFLOW.md`、自動化レイヤーは `docs/AUTOMATION_BOUNDARY.md` を参照。
-- 機械ガード: **`.claude/hooks/guardrails.py`**。repo 外境界は hard stop、回答品質 lint は既定 advisory。厳格監査時だけ `NLMYTGEN_GUARDRAILS_STRICT=1` を使う。Stop 時には `scripts/check_project_state_sync.py --hook` も走り、current capsule と GitHub-facing cockpit の drift を一度 hard stop にする。`stop_hook_active` の再試行中は無限ループ防止のため advisory に降格する。
+- 機械ガード: **`.claude/hooks/guardrails.py`**

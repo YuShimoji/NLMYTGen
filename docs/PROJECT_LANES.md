@@ -11,12 +11,10 @@ expansion. Current state is mirrored in `docs/PROJECT_COCKPIT.md`.
 | GUI / IA / i18n | Improve visible surfaces without restarting a long prototype chain. | Makes layout, language, color/type, and motion choices cheap to correct. | A new visible slice or explicit rejection of an accepted direction. | Prior Japanese console is a source record, not the current development slice. | NLMYTGen review UI lane. | Run a 2–3 direction low-fi check before the next high-fidelity build. |
 | Integrity / Triage | Isolate full pytest drift, fixture drift, generated artifact policy, and heavy constraints. | Prevents validation cleanup from swallowing product slices. | Explicit integrity task or a failing narrow gate. | Full-suite drift is nonblocking for this slice. | Integrity/triage lane. | Use targeted checks only here. |
 | Editing / YMM4 Feature Design | Observe import behavior and correct deterministic editing routes. | Separates actual GUI evidence from speculative adapter work. | Human performs the bounded import observation. | Five-point observation is ready; all five results remain unobserved. | Human observation + assistant readback/fix. | Use the observation sheet; do not broaden to render/publication. |
-| Development Workflow | Keep supervisor prompts, autonomy, review timing, status sync, and Git closure coherent. | Prevents safety stalls, prompt sharding, stale current-state mirrors, and late direction changes. | Apply the new outcome packet and risk tiers on real slices. | Workflow velocity/current-state v1 is implemented locally. | Supervisor AI + developer AI. | Measure friction on the next two slices; revise the system only on repeated evidence. |
 | Deep Research | Study app form, UI model, Docker capabilities, video trends, and production-process reverse engineering. | Feeds later product strategy without delaying current output. | Explicit research lane and bounded question. | Deferred. | Research lane. | Do not run deep external research in this slice. |
 
 ## Stop Rule
 
-Workflow/docs work must return to the product lane after the state and safety
-contracts pass. A new visible direction gets one low-cost Direction Check; an
-approved direction does not reopen for repeated concept exploration during
-implementation.
+Maintenance work returns to the product lane after its focused checks pass. A
+new visible product direction gets one low-cost comparison before high-fidelity
+work; an accepted direction is not reopened by ordinary polish.

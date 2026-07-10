@@ -179,12 +179,11 @@ uv sync --extra dev
 uv run python scripts/check_project_state_sync.py
 ```
 
-スライス closeout では、監修側 Outcome Packet の `target_state_id` を
-`--expected-state-id <target_state_id>` で渡し、runtime と cockpit の両方を古いまま残す事故も
-検出する。
+状態面を変更したときは上記 checker を明示的に実行すると、runtime と cockpit の
+共有フィールド、更新日、README からの導線を検査できる。自動 Stop hook ではない。
 
 現在の green baseline は、変更対象の narrow test を選ぶ方式です。今回の
-workflow/current-state と Episode 002 観測経路は次で検証できます。
+state alignment と Episode 002 観測経路は次で検証できます。
 
 ```powershell
 uv run pytest tests/test_guardrails.py tests/test_project_state_sync.py tests/test_ymm4_observation_readback_pack.py tests/test_ymm4_import_ready_pack.py tests/test_local_edit_slice_execution_pack.py tests/test_real_input_replacement_readiness_pack.py -q

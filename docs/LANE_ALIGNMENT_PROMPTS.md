@@ -63,7 +63,7 @@ NLMYTGen 周辺の開発レーンへ、報告と認識調整を投げるため�
    - CLI command: `fetch-topics`, `list-feed-sources`, `rss-smoke`
    - code: `src/feed/*`, `src/contracts/feed_*`
    - tests: feed / OPML / Inoreader / RSS CLI tests
-   - docs: RSS specs, verification, USER_COPYPASTE_BLOCKS, runtime-state, FEATURE_REGISTRY, README / INVARIANTS references
+   - docs: RSS specs, verification, runtime-state, FEATURE_REGISTRY, README / INVARIANTS references
 3. 残存surfaceを分類する。
    - `delete_now`: Newsroomへ移管済みでNLMYTGen本流から削ってよいもの
    - `keep_as_history`: 履歴・判断証跡として残すが active導線ではないもの
