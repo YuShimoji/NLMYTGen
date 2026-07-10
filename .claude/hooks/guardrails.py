@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -383,6 +384,15 @@ def _reject(message: str) -> int:
     return 2
 
 
+def _strict_mode_enabled() -> bool:
+    return os.environ.get("NLMYTGEN_GUARDRAILS_STRICT", "").strip().lower() in {
+        "1",
+        "true",
+        "yes",
+        "on",
+    }
+
+
 def _matches_any(text: str, patterns: list[re.Pattern[str]]) -> bool:
     return any(pattern.search(text) for pattern in patterns)
 
@@ -668,7 +678,9 @@ def main() -> int:
 
         issue = _check_stop_content(strings)
         if issue:
-            return _reject(f"Guardrails rejected assistant output: {issue}")
+            if _strict_mode_enabled():
+                return _reject(f"Guardrails rejected assistant output: {issue}")
+            print(f"Guardrails advisory: {issue}", file=sys.stderr)
 
     return 0
 

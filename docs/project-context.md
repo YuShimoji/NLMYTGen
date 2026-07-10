@@ -1,6 +1,22 @@
 # Project Context — NLMYTGen
 
 ## PROJECT CONTEXT
+- Workflow decision (2026-07-10 JST):
+  `workflow-velocity-and-current-state-v1` changes the supervisor-to-developer
+  default from prompt-per-step to one outcome-sized slice. Reversible repo-local
+  implementation, related fixes, proportional validation, current-state sync,
+  and Git follow-through continue without a checkpoint. A Direction Check is
+  used only for a new high-cost visible direction; destructive work, dependency
+  addition, DB/auth/API contract changes, external publication/rights/payment,
+  specification conflict, and an approved-direction change remain hard stops.
+  Stop-hook content quality findings are advisory by default and strict only
+  when `NLMYTGEN_GUARDRAILS_STRICT` is explicitly enabled. Current state is no
+  longer append-only: `docs/runtime-state.md` is a <=160-line capsule and
+  `docs/PROJECT_COCKPIT.md` is its GitHub-readable mirror, coupled by
+  `Project-State-ID` and `scripts/check_project_state_sync.py`. The historical
+  common-foundation HTML/JSON dashboard is explicitly a 2026-06-22 snapshot.
+  GitHub Pages/Wiki publication remains a separate decision because repository
+  visibility, sanitization, and branch-promotion policy are not yet confirmed.
 - Current handoff (2026-07-09 JST):
   `episode-002-ymm4-observation-readback-v1` is complete on branch
   `codex/episode-002-ymm4-observation-readback-v1`; the artifact/package
@@ -2727,7 +2743,9 @@ preview-only implementation remains a separate explicitly authorized slice.
 Latest common foundation decision (2026-06-09):
 `remote_handoff_sealed_after_preflight_operator_surface_parking_001` records
 the repo-local handoff for the parked common foundation state. The restart entry
-is `docs/USER_COPYPASTE_BLOCKS.md` SECTION 22, and it points the next terminal
+was legacy `docs/USER_COPYPASTE_BLOCKS.md` SECTION 22 (removed from the active
+prompt file on 2026-07-10; recover only with
+`git show 99477a0:docs/USER_COPYPASTE_BLOCKS.md`), and it pointed the next terminal
 back to `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, `docs/runtime-state.md`,
 `docs/project-context.md`, `docs/AGENT_ORCHESTRATION.md`, and
 `docs/AGENT_OPERATOR_SURFACE.md`. This handoff preserves the human-confirmed
@@ -2926,7 +2944,9 @@ Latest G-28 decision (2026-06-08): `remote_handoff_sealed_after_g28_game_mechani
 keeps the accepted `game_mechanics_explanation` inspector-first diagnostic
 review surface context in-project for another terminal. The restart owner is
 `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md` plus
-`docs/USER_COPYPASTE_BLOCKS.md` SECTION 20. The accepted contract remains
+legacy `docs/USER_COPYPASTE_BLOCKS.md` SECTION 20 (removed from the active
+prompt file on 2026-07-10; recover only with
+`git show 99477a0:docs/USER_COPYPASTE_BLOCKS.md`). The accepted contract remains
 `review_surface=inspector_first`, `in_frame_review_overlay=false`,
 `clean_frame_available=true`, `semantic_labels_human_visible=true`,
 `diagnostic_only=true`, and `production_candidate=false`. This handoff does not
@@ -2987,7 +3007,9 @@ boundary unless real runner support is explicitly authorized.
 Latest G-28 decision (2026-06-08): `remote_handoff_sealed_after_review_console_ingest`
 keeps the latest context in-project for another terminal. The durable restart
 packet is now `AGENTS.md` -> `docs/REPO_LOCAL_RULES.md` -> `docs/runtime-state.md`
-plus `docs/USER_COPYPASTE_BLOCKS.md` SECTION 18. The next safe work is only
+plus legacy `docs/USER_COPYPASTE_BLOCKS.md` SECTION 18 (removed from the active
+prompt file on 2026-07-10; recover only with
+`git show 99477a0:docs/USER_COPYPASTE_BLOCKS.md`). The next safe work was only
 screenshot / Electron smoke evidence or human GUI confirmation of the read-only
 G-28 Review Console panel; this does not reopen `.ymmp` generation, builders,
 readback/report artifacts, production carrier approval, creative final

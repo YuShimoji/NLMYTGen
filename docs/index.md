@@ -4,19 +4,20 @@
 
 ## 主な導線
 
+- [Project Cockpit](PROJECT_COCKPIT.md): GitHub から読める現在地、product gate、次の decision path。`runtime-state.md` と同じ State ID を持つ current mirror です。
 - [Markdown Inventory](markdown-inventory.md): 除外ディレクトリを避けて列挙した `.md` 一覧。分類は配置・ファイル名・冒頭見出しからの実用的な推定です。
-- [Project Overview](project-overview.md): 機能台帳、進捗、項目別実装、証跡、今後の入口をどこで見るかの早見表です。
+- [Project Overview](project-overview.md): 2026-06-17 時点の文書地図。current state は Project Cockpit を優先します。
 - [Visual Proof Index](visual-proof-index.md): すぐ確認できるスクリーンショット、proof PNG、HTML review surface の索引です。
-- [Turn-Based Development Map](turn-based-development-map.md): 日付ではなく、次の数ターンでどの判断を進めるかを見るための補助マップです。
+- [Turn-Based Development Map](turn-based-development-map.md): 2026-06-17 の G-28 / common-foundation 計画 snapshot です。
 - [Document Map](NAV.md): 既存のリポジトリ内ドキュメント案内。日常の読み順や正本の所在を確認する入口です。
 - [Runtime State](runtime-state.md): 現在位置や次の安全な作業入口を確認する文書です。
 - [Repo Local Rules](REPO_LOCAL_RULES.md): このリポジトリでの作業ルールと報告・検証の境界です。
 
-## Common Foundation Cockpit
+## Historical Common Foundation Cockpit
 
-- [Common Foundation Cockpit](dashboard/index.html): common-foundation の現在状態、次アクション、artifact access、topic status を確認する master 上の review surface です。
+- [Common Foundation Cockpit](dashboard/index.html): 2026-06-22 の common-foundation adoption snapshot。現在地には使わず、当時の review surface として参照します。
 - [Dashboard Access Guide](dashboard/README.md): `scripts/operator/open_dashboard.ps1` を使う開き方と fallback を確認できます。
-- [Project Status JSON](dashboard/project-status.json): dashboard が読む repo-relative status registry です。
+- [Project Status JSON](dashboard/project-status.json): historical dashboard が読む snapshot です。live registry ではありません。
 - [Feature Index](features/index.md) / [Workflow Index](workflows/index.md) / [Decision Index](decisions/index.md): common-foundation 関連の補助索引です。
 
 ## ローカル起動

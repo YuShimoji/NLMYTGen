@@ -1,5 +1,5 @@
 # CORE_RULESET.md
-Ruleset-Version: v20
+Ruleset-Version: v21
 Status: canonical
 Audience: Claude Code, Codex, and any adapter that reads project-local AI rules.
 
@@ -38,6 +38,24 @@ Every major action has an actor and an owner artifact.
 - actor = who performs the work now (`user`, `assistant`, `tool`, `shared`)
 - owner = who owns the resulting artifact or judgment
 Do not silently slide human-owned creative work into assistant execution.
+
+### Risk-tiered autonomy
+Do not treat every uncertainty as a safety stop.
+
+- **Continue**: reversible repo-local implementation, related fixes, fixtures,
+  proportional validation, canonical/current-state sync, commit, and push within
+  the approved slice.
+- **Direction checkpoint**: an unapproved visible direction or material scope
+  change. Show two or three low-cost alternatives and ask once before the
+  expensive build.
+- **Hard stop**: destructive operations, dependency additions, DB/auth/API
+  contract changes, external publication/rights/payment actions, explicit
+  specification conflicts, or changing an approved creative direction.
+
+Quality and report diagnostics should be advisory by default. They may explain
+how to improve a response, but must not create a hidden retry loop or prevent a
+reversible slice from reaching verification. Strict lint remains an explicit
+audit mode, not the normal development path.
 
 ### Read-only audit phases
 REFRESH / REANCHOR / SCAN / AUDIT は、**user が現ブロック冒頭で当該 phase 名を明示宣言した場合に限り** read-only として扱う。assistant が自己判断で「これは REFRESH 相当」と解釈して自己発火させない。user 宣言済みブロック内では long-lived repo files への書き込み・commit・push を禁止する。ただし同一ブロック内で user が明示的に mutation を依頼した場合は、その依頼範囲に限り例外。

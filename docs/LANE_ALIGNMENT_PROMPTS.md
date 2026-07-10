@@ -43,7 +43,7 @@ NLMYTGen 周辺の開発レーンへ、報告と認識調整を投げるため�
 - docs/INVARIANTS.md
 - docs/LANE_REGISTRY.md
 - docs/LANE_ALIGNMENT_PROMPTS.md
-- docs/runtime-state.md の RSS / Newsroom / current next_action に関係する箇所
+- docs/runtime-state.md の RSS / Newsroom / `Recommended-Next` に関係する箇所
 
 必要に応じて、Newsroom 側の後継確認として次も読んでください。
 
@@ -70,7 +70,7 @@ NLMYTGen 周辺の開発レーンへ、報告と認識調整を投げるため�
    - `rewrite_to_newsroom_pointer`: 削除ではなくNewsroom後継への参照へ置き換えるもの
    - `do_not_touch`: G-28、YMM4、Baseball、common foundation、Newsroom本体など今回範囲外のもの
 4. 削除実装レーンへ渡す前に、NLMYTGen本流の現在作業を壊さないことを確認する。
-   - `runtime-state.md` の current next_action をRSSへ戻さない。
+   - `runtime-state.md` の `Recommended-Next` を RSS へ戻さない。
    - Newsroom repoには追加変更しない。
    - raw OPML、token、private feed URL、full article body を探したりcommitしたりしない。
    - YMM4、render、publishing、NotebookLM API、自動投稿へ広げない。

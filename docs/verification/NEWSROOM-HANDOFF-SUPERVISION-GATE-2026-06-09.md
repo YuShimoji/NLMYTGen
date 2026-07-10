@@ -156,4 +156,8 @@ Recommended human-side procedure:
 
 ## Next Prompt
 
-Use `docs/USER_COPYPASTE_BLOCKS.md` SECTION 21. The next operator must still stop at `request_authority / no-op_wait` unless the user explicitly supplies the copy/read-only decision and lane-supersession decision.
+The original restart text was legacy `docs/USER_COPYPASTE_BLOCKS.md` SECTION 21.
+It was removed from the active prompt file on 2026-07-10; recover it only with
+`git show 99477a0:docs/USER_COPYPASTE_BLOCKS.md`. This historical gate still
+records that the operator was to stop at `request_authority / no-op_wait` unless
+the user supplied the copy/read-only decision and lane-supersession decision.

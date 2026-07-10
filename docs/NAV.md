@@ -8,9 +8,11 @@
 
 1. [AGENTS.md](../AGENTS.md) — 入口・境界・再アンカリング手順の正本
 2. [REPO_LOCAL_RULES.md](REPO_LOCAL_RULES.md) — 短い front-door。Core Rules / Reporting / Ask Hygiene
-3. [runtime-state.md](runtime-state.md) — 現在位置・`next_action`・カウンターの正本
+3. [runtime-state.md](runtime-state.md) — 160 行以内の current capsule。product state / gate / recommended next / hard gates の正本
 
 通常再開はここで止める。フル再アンカリングは、境界不明・drift 検出・user 明示の REANCHOR / REFRESH / AUDIT などの例外時だけ `AGENTS.md` の例外手順を使う。
+
+GitHub 上で現在地だけを読む場合は [PROJECT_COCKPIT.md](PROJECT_COCKPIT.md) を使う。内部正本の `runtime-state.md` と同じ `Project-State-ID` を持つ追跡済みミラーであり、別の状態正本ではない。
 
 **Creative slice 例外**: 演出 / motion / 視覚 effect 制作タスクの場合、上記 3 点に加えて以下も必読:
 
@@ -26,6 +28,7 @@
 
 - [GUI_MINIMUM_PATH.md](GUI_MINIMUM_PATH.md) — **Electron GUI**: 最小ファイル集合・必須/任意・ウィザード範囲（S-3 / S-6b）・L2/L3/creative 検証ラダー
 - [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md) — **改善レビューサイクル正本**: タスクごとの review surface / machine proof / human signal / close gate / next artifact。G-27 Real Estate DX、本流/sidequest 境界、Baseball screen plan、GUI/YMM4 の見る場所を統一する
+- [INTERACTION_NOTES.md](INTERACTION_NOTES.md) — **監修AI→開発AIの Outcome Packet / 対話 failure class**: 過剰停止、Prompt 細分化、state mirror drift、完成後の creative 微修正連鎖を防ぐ
 - [PRODUCTION_PIPELINE_CONTRACT.md](PRODUCTION_PIPELINE_CONTRACT.md) — **量産pipeline契約**: NotebookLM script → Script Beat IR → Visual Direction → Shot Layout → Motion Beat → GUI Review → downstream artifacts の artifact authority / Definition of Done / multi-topic smoke 計画。GUI timeline を primary review surface とし、HTML/PNG/JSON を evidence に限定する
 - [G27_ADAPTER_ROUTE_CONTRACT.md](G27_ADAPTER_ROUTE_CONTRACT.md) — **G-27 YMM4 adapter route 契約 (planning zone)**: Real Estate DX の 7 adapter-planning-ready candidates、`RE-02-turn` excluded_until_adjusted、`RE-07D-turn` deferred_blocks_planning、route 分類 (abstract UI / document proxy / property card / risk marker / AI panel)、forbidden representation、preflight report、`output_generation_allowed=false`。adapter output / patch / render / production timing / creative acceptance は範囲外
 - [REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md](REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md) — **G-28 参照画像ベース汎用画面 carrier 設計**: G-27 の case-specific lessons を引き継ぎ、参照画像 3-7 枚から構図・密度・余白・色階層・視線誘導・UI感を抽出して SCS mapping / generic carrier archetype / YMM4 item group 案へ落とす。画像丸コピー、raw image/URL/private data commit、`.ymmp` ゼロ生成、render、creative final acceptance は含めない
@@ -65,13 +68,13 @@
 
 ## 4. テンプレと状態（混同しやすい点）
 
-汎用 Prompt ハブ・ファイル番号式のコア計画・パケット別短文 Prompt は削除済み。テンプレは状態正本ではなく、`open target` / `create target` / `source object` / `actor` / `acceptance meaning` が接続済みのときだけ、該当する詳細手順ファイルを使う。
+汎用 Prompt ハブ・ファイル番号式のコア計画・パケット別短文 Prompt は状態正本として使わない。通常の監修→開発は [USER_COPYPASTE_BLOCKS.md](USER_COPYPASTE_BLOCKS.md) の Outcome Packet を一つだけ使う。案件別の古い Resume Prompt は現行ファイルから削除済みで、必要な履歴だけ Git から読む。テンプレは `open target` / `create target` / `source object` / `actor` / `acceptance meaning` が接続済みの場合だけ使う。
 
-- [USER_COPYPASTE_BLOCKS.md](USER_COPYPASTE_BLOCKS.md) — **ユーザー用コピペ資産**。ChatGPT / Codex 間で毎回組み立て直していた長文 Prompt / PowerShell / 停止文 / 報告文の保存版。これは通常再開で読む正本でも、次 Agent への実行マニュアルでもない。
+- [USER_COPYPASTE_BLOCKS.md](USER_COPYPASTE_BLOCKS.md) — **現行 Outcome Packet / delta のコピペ資産**。案件別の旧長文 Prompt は active file に置かない。これは current state 正本でも再開マニュアルでもない。
 
 **いまどこまで終わっているか**は、次を見る。
 
-- [runtime-state.md](runtime-state.md) の `next_action` / `parallel_replan_*`
+- [runtime-state.md](runtime-state.md) の shared state fields / Product Position / Human or External Decision Points
 - [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md) の G-27 / 本流-sidequest 境界 / Baseball / GUI-YMM4 review cycle
 - [verification/P02-production-adoption-proof.md](verification/P02-production-adoption-proof.md) の G-24 基盤受け入れ・採用記録
 - 案件ごとの `*-proof.md` や verification 配下の JSON 証跡

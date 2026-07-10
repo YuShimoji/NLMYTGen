@@ -6,18 +6,22 @@ NotebookLM の出力を YMM4 (ゆっくりMovieMaker4) 用 CSV に変換し、�
 
 ## ドキュメント最短経路（初日）
 
-1. [AGENTS.md](AGENTS.md) — 境界と再アンカリングの正本  
-2. [docs/runtime-state.md](docs/runtime-state.md) — いまの位置と `next_action`  
-3. [docs/FEATURE_REGISTRY.md](docs/FEATURE_REGISTRY.md) — 機能の全件台帳  
-4. [docs/LANE_REGISTRY.md](docs/LANE_REGISTRY.md) — NLMYTGen 周辺 repo / worktree / sidequest の責務台帳
+1. [AGENTS.md](AGENTS.md) — 短い入口ポインタ
+2. [docs/REPO_LOCAL_RULES.md](docs/REPO_LOCAL_RULES.md) — 日常の実行・質問・検証・Git ルール
+3. [docs/runtime-state.md](docs/runtime-state.md) — 160行以内の現在位置と次の decision point
 
-詳細な読み順・運用ルールは AGENTS の「再アンカリング手順」と [docs/REPO_LOCAL_RULES.md](docs/REPO_LOCAL_RULES.md) を参照（Claude Code 入口は [.claude/CLAUDE.md](.claude/CLAUDE.md)）。
+GitHub 上で現在地だけを読む場合は
+[docs/PROJECT_COCKPIT.md](docs/PROJECT_COCKPIT.md) を開いてください。機能全件は
+[docs/FEATURE_REGISTRY.md](docs/FEATURE_REGISTRY.md)、複数 repo / worktree / sidequest の責務は
+[docs/LANE_REGISTRY.md](docs/LANE_REGISTRY.md) にあります。詳細な文書地図は
+[docs/NAV.md](docs/NAV.md) を参照してください（Claude Code 入口は
+[.claude/CLAUDE.md](.claude/CLAUDE.md)）。
 
 ## 目的
 
 1. NotebookLM で生成した Audio Overview のトランスクリプトを、YMM4 の台本読込フォーマットに変換する (CSV 変換 -- 実装済み)
-2. 台本から演出 IR を定義し、LLM (Custom GPT) が構造化された演出指示を出力できるようにする (演出 IR -- 設計中)
-3. 演出 IR + テンプレート定義で、S-6 の背景・立ち絵・素材配置を段階的に効率化する (テンプレート半自動化 -- 計画中)
+2. 台本から演出 IR を定義し、LLM (Custom GPT) が構造化された演出指示を出力できるようにする (IR 仕様・prompt・validator -- 基盤実装済み)
+3. 演出 IR + Template Registry + YMM4 Adapter で、S-6（背景・演出設定）の face / bg / slot / overlay / SE / 一部 motion・transition・skit group を capability matrix の範囲で半自動化する (基盤実装済み、最終 creative judgement は手動)
 
 音声・字幕投入は YMM4 台本読込が不動の主経路。Python の責務は「テキスト変換 + 演出 IR 定義」であり、台本の品質は NotebookLM が生成する。
 
@@ -166,14 +170,35 @@ python -m src.cli.main build-csv file1.txt file2.txt file3.txt --speaker-map Hos
 
 ## 開発環境とテスト
 
-このリポジトリは `uv` を推奨する（`uv sync` + `uv run pytest`）。`pytest` は `pyproject.toml` の optional `dev` に定義。
+このリポジトリは `uv` を推奨する。`pytest` は `pyproject.toml` の
+optional `dev` にあるため、開発 checkout では extra を明示する。`uv.lock` は
+repo 非追跡なので、fresh clone でも動く既定コマンドに `--locked` は付けない。
 
 ```bash
-uv sync
-uv run pytest
+uv sync --extra dev
+uv run python scripts/check_project_state_sync.py
 ```
 
-pytest は `src/` または `tests/` を変更したブロックの終わりにだけ走らせる。integration テストは `conftest.py` で default-skip、全件走らせたい時だけ `NLMYTGEN_PYTEST_FULL=1 uv run pytest`。
+スライス closeout では、監修側 Outcome Packet の `target_state_id` を
+`--expected-state-id <target_state_id>` で渡し、runtime と cockpit の両方を古いまま残す事故も
+検出する。
+
+現在の green baseline は、変更対象の narrow test を選ぶ方式です。今回の
+workflow/current-state と Episode 002 観測経路は次で検証できます。
+
+```powershell
+uv run pytest tests/test_guardrails.py tests/test_project_state_sync.py tests/test_ymm4_observation_readback_pack.py tests/test_ymm4_import_ready_pack.py tests/test_local_edit_slice_execution_pack.py tests/test_real_input_replacement_readiness_pack.py -q
+```
+
+`uv run pytest` の全体 baseline には、生成済み artifact / 旧絶対 path の既知 drift
+（2026-07-10 の監査実行で 22 failures）があり、一部の生成テストは
+追跡済み fixture を書き換える。通常開発の既定 gate にはせず、明示した Integrity /
+Triage slice で clean-state snapshot を取ってから隔離・修復する。
+
+pytest は `src/` または `tests/` を変更したブロックの終わりに、変更対象の narrow
+test から走らせる。integration テストは `conftest.py` で default-skip、全件走らせたい
+時だけ `NLMYTGEN_PYTEST_FULL=1 uv run pytest`。上記の既知 full-suite drift と tracked
+fixture write を解消するまでは、通常 closeout で全体実行しない。
 
 WSL で実行する場合は `TMPDIR=/tmp TMP=/tmp TEMP=/tmp` を設定してから `pytest` を実行すると一時ファイルのパスずれを避けられる。
 

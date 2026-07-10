@@ -31,15 +31,17 @@ NLMYTGen の通常再開で読む短い front-door。ここには毎回効く行
 - Prefer assistant-owned mechanical closure: dry-run, readback, gap report, drift check, docs sync, or focused tests before asking for manual proof.
 - Do not request repeated YMM4 visual proof. Use it for first E2E, changed review surfaces, or final creative judgement.
 - Keep task-specific scars out of this file. Put lane-specific constraints in the relevant spec, registry, handoff artifact, or `runtime-state`.
+- Continue without a checkpoint for reversible repo-local implementation, related fixes, narrow validation, current-state sync, and normal Git follow-through. Ask once before an unapproved creative direction or material scope change. Stop for destructive work, dependency additions, DB/auth/API contract changes, external publication/rights/payment actions, or a real specification conflict.
 
 ## Git And Tests
 
 - Git follow-through is assistant-owned by default. After a validated slice, run non-destructive `git add` / `git commit` / `git push` without asking again.
 - Stop before destructive operations, pushed-history rewrites, ambiguous large deletions, cross-repo publication, or explicit user prohibition.
-- For `src/`, `gui/`, or CLI contract changes, run the narrow relevant test first; use `uv run pytest` as the normal repo-level Python check.
+- For `src/`, `gui/`, or CLI contract changes, run the narrow relevant test first. The current full `uv run pytest` baseline has known generated-artifact/path drift and tracked-fixture side effects, so it is not a normal closeout gate until an explicit Integrity / Triage slice repairs it.
 - Use `NLMYTGEN_PYTEST_FULL=1 uv run pytest` only when subprocess/integration coverage is relevant.
 - Do not run pytest for docs-only or runtime-state-only edits unless the docs changed an executable contract.
 - Playwright and commit-history analysis are optional diagnostics, not default gates.
+- At slice closeout, keep the shared state fields in `docs/runtime-state.md` and `docs/PROJECT_COCKPIT.md` aligned, then run `uv run python scripts/check_project_state_sync.py --expected-state-id <target_state_id>`.
 
 ## Reporting Rule
 

@@ -418,28 +418,29 @@
 <body>
   <header>
     <div class="inner">
-      <p class="eyebrow">Common Foundation / Dashboard Mainline Adoption</p>
+      <p class="eyebrow">Historical Snapshot / 2026-06-22</p>
       <div class="header-row">
         <div>
-          <h1>NLMYTGen Common Foundation Cockpit</h1>
-          <p class="lede">Master-native review surface for the common foundation dashboard. The first screen keeps current state, next action, health, artifacts, and topic status visible before detailed evidence tables.</p>
+          <h1>NLMYTGen Common Foundation Snapshot</h1>
+          <p class="lede">This page preserves the 2026-06-22 common-foundation dashboard adoption. It is evidence, not the live project registry. Use Project Cockpit for the current state.</p>
         </div>
         <nav class="header-actions" aria-label="Primary dashboard actions">
-          <a class="action-link primary" href="README.md">Open guide</a>
+          <a class="action-link primary" href="../PROJECT_COCKPIT.md">Current Project Cockpit</a>
+          <a class="action-link" href="README.md">Snapshot guide</a>
           <a class="action-link" href="project-status.json">Status JSON</a>
           <a class="action-link" href="../index.md">Docs index</a>
         </nav>
       </div>
       <div class="cockpit-deck" aria-label="First screen cockpit status">
         <article class="state-card good">
-          <span>Current State</span>
-          <strong>Dashboard access and cockpit layout are ready for freeform review.</strong>
-          <p>Branch: <code>master</code>. Active artifact: <code>docs/dashboard/index.html</code>.</p>
+          <span>Snapshot State</span>
+          <strong>Historical common-foundation dashboard adoption.</strong>
+          <p>Captured from <code>master</code> on 2026-06-22. Do not use this card as the current project status.</p>
         </article>
         <article class="state-card watch">
-          <span>Next Action</span>
-          <strong>USER_OPEN_ONLY review</strong>
-          <p>Open through <code>scripts/operator/open_dashboard.ps1</code>; return freeform impressions, concerns, or adjustment requests.</p>
+          <span>Current Route</span>
+          <strong>Open docs/PROJECT_COCKPIT.md</strong>
+          <p>The tracked cockpit mirrors the compact runtime capsule with a mechanically checked State ID.</p>
         </article>
         <article class="state-card good">
           <span>Health</span>
@@ -664,7 +665,7 @@
         </div>
         <div class="panel">
           <h3>Continuation State</h3>
-          <p>Handoff Gate: review-ready after remote parity. Treat this dashboard as handoff-ready together with the current agent report's post-push parity readback.</p>
+          <p>Historical handoff gate: this snapshot was review-ready after the 2026-06-22 remote-parity readback.</p>
           <ul>
             <li>Use the agent report for validation, commit, push, and parity evidence.</li>
             <li>Continue from this dashboard or the report template after parity <code>0 0</code>.</li>
@@ -676,7 +677,7 @@
 
     <section>
       <h2>Topic Progress</h2>
-      <p>The topic ledger keeps historical <code>progress_pct</code> for continuity. For mainline adoption reporting, use the Completion Matrix in <a href="project-status.json">project-status.json</a>.</p>
+      <p>The topic ledger and Completion Matrix preserve 2026-06-22 adoption reporting only. Use Project Cockpit for current project reporting.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -698,7 +699,7 @@
               <td>100%</td>
               <td>2026-06-15</td>
               <td><a href="../verification/COMMON-FOUNDATION-HOLD-STATE-AUDIT-2026-06-15.md">COMMON-FOUNDATION-HOLD-STATE-AUDIT</a></td>
-              <td>Use as evidence; rely on the dashboard JSON for current cockpit state.</td>
+              <td>Use as 2026-06 evidence; open docs/PROJECT_COCKPIT.md for current state.</td>
             </tr>
             <tr>
               <td>Operator surface readback</td>
@@ -842,11 +843,11 @@
           <p>Fallback: open the path printed by <code>powershell -NoProfile -ExecutionPolicy Bypass -File scripts/operator/open_dashboard.ps1 -PrintPath</code>.</p>
         </div>
         <div class="panel">
-          <h3>Agent-side next actions</h3>
+          <h3>Snapshot preservation</h3>
           <ul>
-            <li>Keep <code>project-status.json</code> updated after common foundation docs move.</li>
-            <li>Implement a stdout-only live repo status producer only after separate authorization.</li>
-            <li>Tighten one unclear doc section only when the dashboard identifies it as the current bottleneck.</li>
+            <li>Do not update <code>project-status.json</code> as the live registry; it is a 2026-06-22 snapshot.</li>
+            <li>Use <code>docs/PROJECT_COCKPIT.md</code> and <code>docs/runtime-state.md</code> for current state.</li>
+            <li>External Pages/Wiki publication remains a separately authorized, sanitized path.</li>
           </ul>
         </div>
       </div>

@@ -6,6 +6,8 @@ from pathlib import Path
 from io import StringIO
 from types import ModuleType
 
+import pytest
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -77,12 +79,34 @@ def test_guardrails_ignore_stop_hook_metadata_paths() -> None:
     assert guardrails._check_stop_content(strings) is None
 
 
-def test_guardrails_main_writes_rejection_to_stderr(monkeypatch, capsys) -> None:
+def test_guardrails_main_writes_advisory_to_stderr_by_default(monkeypatch, capsys) -> None:
     guardrails = _load_guardrails()
     payload = json.dumps(
         {"event": "Stop", "assistant_response": "判断をお願いします"},
         ensure_ascii=False,
     )
+    monkeypatch.delenv("NLMYTGEN_GUARDRAILS_STRICT", raising=False)
+    monkeypatch.setattr(guardrails.sys, "stdin", StringIO(payload))
+
+    result = guardrails.main()
+
+    captured = capsys.readouterr()
+    assert result == 0
+    assert captured.out == ""
+    assert "Guardrails advisory:" in captured.err
+    assert "broad question / user-punt phrase detected" in captured.err
+
+
+@pytest.mark.parametrize("strict_value", ["1", "true", "yes", "on"])
+def test_guardrails_main_strict_mode_rejects_quality_findings(
+    monkeypatch, capsys, strict_value
+) -> None:
+    guardrails = _load_guardrails()
+    payload = json.dumps(
+        {"event": "Stop", "assistant_response": "判断をお願いします"},
+        ensure_ascii=False,
+    )
+    monkeypatch.setenv("NLMYTGEN_GUARDRAILS_STRICT", strict_value)
     monkeypatch.setattr(guardrails.sys, "stdin", StringIO(payload))
 
     result = guardrails.main()
@@ -90,7 +114,30 @@ def test_guardrails_main_writes_rejection_to_stderr(monkeypatch, capsys) -> None
     captured = capsys.readouterr()
     assert result == 2
     assert captured.out == ""
+    assert "Guardrails rejected assistant output:" in captured.err
     assert "broad question / user-punt phrase detected" in captured.err
+
+
+def test_guardrails_main_keeps_repo_external_scope_as_hard_rejection(
+    monkeypatch, capsys
+) -> None:
+    guardrails = _load_guardrails()
+    payload = json.dumps(
+        {
+            "event": "Stop",
+            "assistant_response": "C:\\Users\\example\\holosync\\handoff.md を確認します。",
+        },
+        ensure_ascii=False,
+    )
+    monkeypatch.delenv("NLMYTGEN_GUARDRAILS_STRICT", raising=False)
+    monkeypatch.setattr(guardrails.sys, "stdin", StringIO(payload))
+
+    result = guardrails.main()
+
+    captured = capsys.readouterr()
+    assert result == 2
+    assert captured.out == ""
+    assert "repo-external reference without explicit cross-project scope" in captured.err
 
 
 def test_guardrails_main_allows_wait_text_with_hook_metadata(monkeypatch, capsys) -> None:

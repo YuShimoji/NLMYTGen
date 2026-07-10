@@ -1,12 +1,16 @@
 # Turn-Based Development Map
 
-このページは、日付ではなく「次の数ターン」で現在の開発判断を読むための補助マップです。正本は [runtime-state.md](runtime-state.md) と [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md) です。このページは、それらを開く前の短い見取り図として使います。
+> **Historical snapshot (2026-06-17):** このページの G-28 / common-foundation
+> ターンは current plan ではありません。現在地と次の分岐は
+> [PROJECT_COCKPIT.md](PROJECT_COCKPIT.md)、内部詳細は
+> [runtime-state.md](runtime-state.md) を使ってください。この turn map は更新せず、
+> 当時の判断経路として保持します。
 
-## 現状の見え方
+## 2026-06-17 時点の見え方
 
 既存 docs は日付、feature ID、slice、decision gate で進捗を保存しています。これは履歴証跡としては強い一方で、「次の 1-4 ターンで何をするか」を一目で見るには重いです。
 
-そのため、ローカル閲覧では次の turn 区切りで読むのが実用的です。
+当時は、ローカル閲覧で次の turn 区切りを使っていました。
 
 | Turn | 入口 | 減らす摩擦 | 次に可能になること |
 | --- | --- | --- | --- |
@@ -15,7 +19,7 @@
 | T+2 | [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md) の G-28 行と [REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md](REFERENCE_DRIVEN_SCREEN_CARRIER_SPEC.md) | proposed / approved / diagnostic の境界を確認する | 次の修正が docs/prototype か、YMM4 transfer planning かを切り分けられる |
 | T+3 | [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md) と関連 verification | review surface / machine proof / human signal / close gate を揃える | 次の artifact が proof、readback、review packet、または hold record のどれかを決められる |
 
-## 現行レーン別のターン読み
+## 2026-06-17 のレーン別ターン読み
 
 | レーン | T+0 で見る場所 | T+1 の判断 | T+2 以降の注意 |
 | --- | --- | --- | --- |
@@ -24,10 +28,10 @@
 | Common foundation / runner | [AGENT_ORCHESTRATION.md](AGENT_ORCHESTRATION.md) と runner verification docs | preview-only か real-runner かを混同しない | real runner は別途明示承認が必要。 |
 | Baseball / sports_news | [BASEBALL_NEWS_PIPELINE_SPEC.md](BASEBALL_NEWS_PIPELINE_SPEC.md) と `lanes/sports_news/` | 本流ではなく sidequest として起動するか | 最初の review surface は screen plan。PNG/export を先に最終 proof にしない。 |
 
-## この turn map で未解決のこと
+## 当時この turn map に残っていた未解決事項
 
 | 未解決 | 今の扱い | 次に整えるなら |
 | --- | --- | --- |
-| 正本 runtime 自体が turn ベースではない | このページだけが turn 見取り図 | ユーザー合意後、`runtime-state.md` の current slice に turn budget 欄を追加する |
+| 正本 runtime 自体が turn ベースではなかった | このページだけが当時の turn 見取り図だった | 現在は `PROJECT_COCKPIT.md` の decision paths を使う |
 | スクリーンショットの採否が一箇所に閉じていない | [Visual Proof Index](visual-proof-index.md) で入口を集約 | proof ごとの `accepted / diagnostic / superseded` を別表化する |
 | feature status と visual proof の対応が完全には結線されていない | FEATURE_REGISTRY と proof docs を併読 | feature ID ごとの proof index を生成する |

@@ -30,6 +30,23 @@
 - 字幕は通常ケースで 2 行以内に収まり、はみ出し候補は事前警告で把握できる。
 - 人間が行うのは、読み・演出・サムネイルなど創造判断を要する工程に寄る。
 
+## 監修AI → 開発AI の反復
+
+通常の開発単位は Prompt 一通ではなく「一つの review 可能な成果スライス」とする。
+
+| 位相 | 主体 | 行うこと | 次へ進む条件 |
+| --- | --- | --- | --- |
+| Outcome framing | 監修AI | workflow 上の結果、現在の bottleneck、正本、scope、autonomy、停止条件、完了シグナルを一つの packet にする | 開発AIが調査・実装・関連修正・検証・状態同期まで再質問なしで開始できる |
+| Direction Check | 監修AI + user | 新しい visible direction の場合だけ、layout / language / color-type / motion / adjacent content から効く軸を選び、低コスト 2〜3 案を比較する | 採用方向、避ける方向、固定条件が自由文で分かる |
+| Autonomous build | 開発AI | 選択済み方向または既存契約の範囲で、実装、関連修正、比例的検証、current-state sync、commit/push を一括で閉じる | primary review surface と machine proof が揃う |
+| Consolidated review | user + 開発AI | feedback を方向違い、usable defect、polish、将来案に分け、must-fix を一回の batch で直す | 完成面が受け入れ可能、または方向自体を見直すと判断できる |
+
+Direction Check は bug fix、承認済み design system 内の変更、mechanical adapter 修正には要求しない。新しい layout、visual language、i18n 方針、content format、animation system のように、完成後の方向変更が高コストな場合だけ使う。
+
+レビュー回数と再設計条件の正本は [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md) の Direction Check / 集約修正とし、この operator doc では重複定義しない。
+
+監修AIは各 substantive slice で最大 2 件の Creative Opportunity を添えてよい。候補は layout、i18n、隣接 content、色・書体、animation など違う bottleneck から選び、仮説、最小 preview、利得、コスト、完了すると何が可能になるかを短く示す。未承認候補を実装 backlog や current next action に昇格させない。
+
 ## workflow proof / 残差観測条件
 - B-11 は S-5 pain を取込前にどこまで減らせるかを実証した履歴テンプレートであり、現在の主軸 frontier ではない。通常は B-18 診断、必要時の C-09 constrained rewrite、B-17 系リフローを前提にメンテ観測として回す。
 - proof は Python 側の改善余地と YMM4 手動修正の境界を見極めることが目的であり、YMM4 の自動操作を作ることではない。

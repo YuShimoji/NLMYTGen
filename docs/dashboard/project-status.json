@@ -1,5 +1,8 @@
 {
   "schema_version": 2,
+  "snapshot_status": "historical_common_foundation_snapshot",
+  "do_not_use_for_current_state": true,
+  "current_state_mirror": "docs/PROJECT_COCKPIT.md",
   "generated_at": "2026-06-22T03:01:18+09:00",
   "branch": "master",
   "remote_branch": "origin/master",
@@ -200,7 +203,7 @@
       "last_touched": "2026-06-15",
       "active_artifact": "docs/verification/COMMON-FOUNDATION-HOLD-STATE-AUDIT-2026-06-15.md",
       "source_of_truth": "docs/verification/COMMON-FOUNDATION-HOLD-STATE-AUDIT-2026-06-15.md",
-      "next_action": "Use as evidence for the hold-state boundary; rely on the dashboard JSON for current cockpit status."
+      "next_action": "Use as 2026-06 evidence for the hold-state boundary; use docs/PROJECT_COCKPIT.md for current status."
     },
     {
       "id": "common_foundation_operator_surface_readback",

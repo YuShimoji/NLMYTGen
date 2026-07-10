@@ -37,7 +37,7 @@ NLMYTGen と別 repo の間では、次を各 repo 側の境界文書に置く�
 
 ## レーン変更時の更新
 
-- 本流 `next_action` が変わる場合は `docs/runtime-state.md` を更新する。
+- 本流 `Recommended-Next` が変わる場合は `docs/runtime-state.md` と `docs/PROJECT_COCKPIT.md` の shared state fields を同じ slice で更新する。
 - 新しい separate repo が NLMYTGen と接続する場合は、相手 repo に `docs/NLMYTGEN_BOUNDARY.md` 相当を置く。
 - 長期 worktree を作る場合は、この台帳に branch / purpose / exit condition を追加する。
 - sidequest が NLMYTGen 本流へ戻る場合は、戻す artifact と lane 内に閉じる artifact を closeout で分ける。

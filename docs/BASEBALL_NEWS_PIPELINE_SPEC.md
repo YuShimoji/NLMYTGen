@@ -5,7 +5,7 @@ Status: draft sidequest lane boundary (2026-05-10)
 この文書は、NLMYTGen 内で新しく扱う **野球速報系ゆっくり解説動画** レーンの正本仕様である。
 既存の「ゆっくり解説」制作パイプラインを再利用するが、題材・映像素材・データ契約はスポーツニュース向けに分離する。
 
-このレーンは大きなサイドクエストであり、NLMYTGen 本流の `runtime-state.md` `next_action` を置き換えない。Baseball を進める場合は、チャットで明示的に別レーンとして起動する。専用 Prompt md は作らない。
+このレーンは大きなサイドクエストであり、NLMYTGen 本流の `runtime-state.md` `Recommended-Next` を置き換えない。Baseball を進める場合は、チャットで明示的に別レーンとして起動する。専用 Prompt md は作らない。
 
 ## 目的
 

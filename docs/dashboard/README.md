@@ -1,4 +1,9 @@
-# Common Foundation Dashboard Access
+# Historical Common Foundation Dashboard Access
+
+This dashboard is a 2026-06-22 common-foundation adoption snapshot. It is not
+the current project registry. Read `docs/PROJECT_COCKPIT.md` for the current
+GitHub-facing state and `docs/runtime-state.md` for the internal current
+capsule.
 
 Use the launcher from the checkout root:
 

@@ -8,7 +8,7 @@
 
 NLMYTGen の本流は、ゆっくり解説動画の制作ワークフローである。つまり、台本診断、CSV、YMM4 台本読込、Production IR、演出配置、茶番劇、サムネイル、投稿準備を、ゆっくり解説の完成動画へ接続することを主軸とする。
 
-Baseball Info / `sports_news` は大きなサイドクエストであり、本流の `runtime-state.md` `next_action` を置き換えない。Baseball を進める場合は、チャットで明示的に Baseball sidequest として依頼する。専用 Prompt md は作らず、本書と Baseball 正本 docs の境界に従う。
+Baseball Info / `sports_news` は大きなサイドクエストであり、本流の `runtime-state.md` `Recommended-Next` を置き換えない。Baseball を進める場合は、チャットで明示的に Baseball sidequest として依頼する。専用 Prompt md は作らず、本書と Baseball 正本 docs の境界に従う。
 
 サイドクエスト中でも、共通サイクルは本書を使う。ただし closeout では、本流へ戻すものと Baseball lane に閉じるものを分けて記録する。
 
@@ -16,13 +16,39 @@ Baseball Info / `sports_news` は大きなサイドクエストであり、本�
 
 | 段階 | 目的 | 必須 artifact | 見る場所 | 次に進める条件 |
 | --- | --- | --- | --- | --- |
+| `0. direction check` | 高コストな visible work の方向を先に決める | 2〜3 案の低fi比較 + creative decision record | chat / wireframe / representative frame | 採用方向・避ける方向・固定条件が自由文で明確。bug fix や承認済み system 内変更では省略可 |
 | `1. plan` | 何を改善するかを狭める | task brief / screen plan / scene bible | Markdown / YAML / JSON | 目的・対象範囲・見ないものが明確 |
 | `2. build review surface` | 良し悪しを見える形にする | review memo / preview / `.ymmp` / readback | GUI または YMM4 のどちらか一方 | 判断対象が場面・画面・区間単位に分かれている |
 | `3. machine proof` | 接続・構造・禁則を確認する | validator result / readback JSON / parse result | CLI / GUI result panel | failure class または pass が機械的に読める |
 | `4. human signal` | creative / editorial 判断を受ける | reviewer-facing memo | Markdown / YMM4 final check | 違和感・不足・優先度・弱い仮定を自然文で返せる |
 | `5. close gate` | 次 artifact を決める | close decision record | runtime-state / lane doc | `proceed / revise / split / cut / blocked` のいずれか |
+| `6. state sync` | 次回と GitHub 閲覧面を同じ現在地にする | current capsule + project cockpit | `runtime-state.md` / `PROJECT_COCKPIT.md` | ID / revision / product state / gate / recommended next / external state が一致し、packet ID 指定の freshness check が通る |
 
 レビュー surface は「HTML も JSON も `.ymmp` も全部見てください」ではなく、毎回 1 つを primary にする。補助 artifact は evidence として扱い、判断導線の代替にしない。
+
+### 監修AIから渡す実装スライス
+
+監修AIは通常、次の Outcome Packet を一つの Prompt として渡す。これは実装手順を逐一指定する形式ではなく、開発AIが一つの成果物を閉じるための authority と acceptance の契約である。
+
+| Packet 要素 | 必要な内容 |
+| --- | --- |
+| state reference | branch、base commit、現在の `base_state_id`、完了時に同期する新しい `target_state_id`、active artifact |
+| result / bottleneck | 今回完成させる workflow 上の結果と、解く摩擦 |
+| scope | `must change`、必要なら自律的に触れてよい `may change`、明確な `do not change` |
+| autonomy | repo 調査、局所設計、関連修正、限定検証、docs/current-state sync、commit/push を一括で許可 |
+| stop conditions | destructive、依存追加、DB/auth/API 契約、外部公開・権利・支払い、仕様衝突、承認方向を変える creative decision |
+| acceptance | primary review surface、machine proof、human judgement が必要な一点、replan condition |
+| closeout | runtime capsule と project cockpit を `target_state_id` へ同期、必要な decision history、Git parity |
+
+`investigate → plan → implement → test → report` を別 Prompt にしない。packet 内の goal が同じなら、開発AIは途中の mechanical choice を自分で閉じる。追加 Prompt は stop condition または replan condition が発火した場合だけにする。
+
+### Direction Check と集約修正
+
+- 新しい layout / visual language / i18n 方針 / content format / animation system は、約 10% の低fi 2〜3 案を先に比較する。比較軸を同質化させず、各案で何が可能になるかを示す。
+- 採用後は代表 1 画面・1 区間を約 40% の fidelity で確認し、問題がなければ token / component / layout rule として横展開する。
+- 完成面の feedback は `direction mismatch` / `usable defect` / `polish` / `future idea` に整理し、must-fix を一回の revision batch にする。
+- 方向 mismatch は局所修正で吸収しない。Direction Check へ戻る。polish と future idea は、現在の acceptance を壊さない限り次 slice 候補へ分ける。
+- 同じ局所修正が 2 回続いた場合、3 回目は system debt として設計を見直す。
 
 ## 茶番劇 / Real Estate DX
 

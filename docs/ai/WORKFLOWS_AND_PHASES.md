@@ -1,5 +1,5 @@
 # WORKFLOWS_AND_PHASES.md
-Ruleset-Version: v20
+Ruleset-Version: v21
 Status: canonical
 
 ## Recommended read budget on resume / continue / refresh
@@ -28,6 +28,22 @@ Initialization may be prepared, but long-lived writes belong to an explicit writ
 - Resume prompts in `prompts/` are convenience entrypoints, not canonical state stores.
 - Prompts must avoid embedding stale backlog status or outdated next steps when those belong in project docs.
 - When a prompt and repo docs differ, update the prompt or ignore it; do not override repo docs with prompt text.
+- The supervisor's normal unit is one Outcome Packet for one reviewable slice,
+  not separate investigate / plan / implement / test / report prompts. The
+  developer owns repo inspection, local design choices, related corrections,
+  proportional validation, current-state sync, and Git follow-through inside
+  that packet.
+- Follow-up prompts carry only a delta that changes direction, acceptance, or a
+  hard boundary. Do not re-send the whole state or use a new prompt for the next
+  mechanical step.
+
+## Creative direction timing
+
+- Use a Direction Check only when a new visible direction makes late revision
+  expensive. Bugs and work inside an accepted system continue directly.
+- The concrete comparison, representative-surface, feedback classification,
+  and retry-budget contract lives in `docs/TASK_DEVELOPMENT_CYCLE_SPEC.md`; do
+  not fork another version in an adapter or prompt.
 
 ## Task-scout requirements
 A scout pass should include, when relevant:
