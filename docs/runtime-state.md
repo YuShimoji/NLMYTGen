@@ -1,7 +1,7 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: supervisor-only-control-boundary-restored-v1
-State-Revision: 2026-07-10.3
+State-Revision: 2026-07-10.4
 Updated: 2026-07-10 JST
 Product-State: episode-002-ymm4-observation-ready
 Product-Gate: five-point-ymm4-import-observation
@@ -24,6 +24,10 @@ External-State: public-repo-feature-branch
 - **Product scope**: no Episode 002 artifact, import candidate, adapter contract,
   real-input receipt, default-branch integration, or publication setting was
   changed in this correction.
+- **Cross-device resume**: after the normal three-document read budget, use the
+  top `現在の別端末再開ハンドオフ` section in `docs/project-context.md`. It names
+  the tracked branch, clean/parity check, current product facts, and exact
+  return path without recreating a repository-side session prompt.
 
 ## Product Position
 

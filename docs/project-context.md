@@ -1,5 +1,38 @@
 # Project Context — NLMYTGen
 
+## 現在の別端末再開ハンドオフ（2026-07-10 JST）
+
+この節だけが現在の再開地点である。下にある日付付き `Current handoff` は判断履歴であり、
+現在の指示として読まない。
+
+- **取得先**: `origin/codex/workflow-velocity-and-current-state-v1`。
+  直前の境界是正commitは `c0d098f` であり、このhandoff記録を含むbranch先端を
+  取得してから判断する。
+- **再開前確認**: `git fetch --prune origin`、`git switch
+  codex/workflow-velocity-and-current-state-v1`、`git pull --ff-only origin
+  codex/workflow-velocity-and-current-state-v1` の順に実行し、`git status
+  --short --branch` と `git rev-list --left-right --count "HEAD...@{u}"` が
+  clean / `0 0` であることを確認する。
+- **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
+  `docs/runtime-state.md` → この節 → `docs/PROJECT_COCKPIT.md` →
+  `docs/THREAD_REGISTRY.md`。YMM4観測を扱うときだけ
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_readback_pack/manual_ymm4_observation_readback.md`
+  を追加で開く。
+- **現在の状態**: `Project-State-ID` は
+  `supervisor-only-control-boundary-restored-v1`。repo内のSupervisor Prompt正本、
+  generic Worker authority、回答品質lint、state-sync Stop hookは除去済みで、
+  repoは製品仕様・artifact・状態・履歴・navigationだけを保持する。
+- **製品の事実**: Episode 002はYMM4五点観測用のpreview、readback、9 cue CSV候補まで
+  準備済み。actual import、VoiceItem/subtitle/timing/placeholderの実観測、render/export、
+  production `.ymmp`、実素材置換、rights/public/final thumbnail/uploadは未実施。
+- **次の入口**: 推奨は `Verify`（YMM4でCSVを読み込み、cue順、9 VoiceItem、
+  subtitle/text、timing order、placeholder境界の五点を返す）。`Advance` はverified
+  source/transcript受領後の実素材置換、`Integrate` はfeature/default差分を再計測してからの
+  統合判断である。Pages公開は別判断であり、public repoのMarkdown現在地には不要。
+- **確認済み**: 境界是正ではPython compile、state alignment CLI、guardrail/state-sync
+  targeted testsが通過し、full pytestは既知のfixture side effectを持つため実行していない。
+  production artifactは変更していない。
+
 ## PROJECT CONTEXT
 - Control-boundary correction (2026-07-10 JST):
   `supervisor-only-control-boundary-restored-v1` removes the repository-side

@@ -14,6 +14,10 @@
 
 GitHub 上で現在地だけを読む場合は [PROJECT_COCKPIT.md](PROJECT_COCKPIT.md) を使う。内部正本の `runtime-state.md` と同じ `Project-State-ID` を持つ追跡済みミラーであり、別の状態正本ではない。
 
+**別端末再開**では、上の3点を読んだ後にだけ
+[project-context.md](project-context.md) 最上部の「現在の別端末再開ハンドオフ」を開く。
+過去の日付付き handoff を現在の指示として使わない。
+
 **Creative slice 例外**: 演出 / motion / 視覚 effect 制作タスクの場合、上記 3 点に加えて以下も必読:
 
 - [MOTION_PRODUCTION_PIPELINE.md](MOTION_PRODUCTION_PIPELINE.md) — workflow 正本（5-phase pipeline + Anti-Shortcut Rules）

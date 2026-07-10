@@ -1,7 +1,7 @@
 # NLMYTGen Project Cockpit
 
 Project-State-ID: supervisor-only-control-boundary-restored-v1
-State-Revision: 2026-07-10.3
+State-Revision: 2026-07-10.4
 Updated: 2026-07-10 JST
 Product-State: episode-002-ymm4-observation-ready
 Product-Gate: five-point-ymm4-import-observation
@@ -14,6 +14,10 @@ External-State: public-repo-feature-branch
 [THREAD_REGISTRY.md](THREAD_REGISTRY.md)、product pipeline は
 [PROJECT_PIPELINE.mmd](PROJECT_PIPELINE.mmd) にあります。これらは状態の保存・案内面であり、
 開発セッションの Prompt や Worker 実行権限を定義しません。
+
+別端末からはfeature branchをfast-forwardで取得した後、通常の3文書と
+`project-context.md`最上部の「現在の別端末再開ハンドオフ」を読めば、
+現在地・未実施事項・再開条件へ戻れます。
 
 ## いまの一文
 
