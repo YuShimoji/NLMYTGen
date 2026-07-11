@@ -1,0 +1,54 @@
+{
+  "schema_version": "verified_local_evidence_operator_batch_manifest.v1",
+  "artifact_id": "episode_002_verified_local_evidence_input_pilot_v1_operator_batch",
+  "status": "ready",
+  "manual_action_count": 5,
+  "manual_actions": [
+    "Run run_yymm4_operator_batch.ps1 once from a clean terminal.",
+    "In YMM4 create/confirm a new empty project and empty timeline, then use Tools > Script Import, select the derived CSV, confirm no mapping/error or character mismatch, add it to the timeline, and save the exact import-base target.",
+    "Return to the terminal and enter READY so the script generates the local internal-review project.",
+    "Open that generated project, confirm it opens without error and shows the three internal/non-final labels, then render exactly once to the specified MP4 and close safely.",
+    "Return to the terminal and enter COLLECT so the script writes operator_result.json."
+  ],
+  "stop_conditions": [
+    "unexpected unsaved project",
+    "project other than the intended pilot",
+    "YMM4 update requirement",
+    "mapping dialog or character mismatch",
+    "parse or open error",
+    "render asks for production, public, or upload action",
+    "output path differs unexpectedly",
+    "an exact pilot output target already exists from an earlier run",
+    "unrelated user work is visible"
+  ],
+  "prohibited_actions": [
+    "upload",
+    "publication",
+    "production .ymmp",
+    "external media download",
+    "source replacement",
+    "rights approval",
+    "final thumbnail approval",
+    "default-branch mutation",
+    "deleting unrelated user files"
+  ],
+  "return_items": [
+    "success_or_failure",
+    "operator_result_json_path",
+    "error_text_only_when_failed"
+  ],
+  "gui_operator": "user",
+  "codex_gui_automation": false,
+  "freshness_contract": {
+    "preexisting_exact_targets": "stop_without_deleting",
+    "project_and_render_must_not_predate_batch_start": true,
+    "operator_clean_confirmation_required": true
+  },
+  "targets": {
+    "derived_csv": "../derived_yymm4_import.csv",
+    "import_base": "../local_outputs/episode_002_verified_local_evidence_import_base.local.ymmp",
+    "project": "../local_outputs/episode_002_verified_local_evidence_internal_review.local.ymmp",
+    "render": "../local_outputs/episode_002_verified_local_evidence_internal_review.mp4",
+    "result": "../local_outputs/operator_result.json"
+  }
+}

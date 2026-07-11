@@ -1,9 +1,61 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-11 JST）
+## 現在の別端末再開ハンドオフ（2026-07-12 JST）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
+
+- **取得先**: `origin/codex/episode-002-verified-local-evidence-render-v1` のbranch先端。
+- **再開前確認**: `git fetch --prune origin`、同branchへのswitch、
+  `git pull --ff-only`、`git status --short --branch`、
+  `git rev-list --left-right --count "HEAD...@{u}"`の順でclean / `0 0`を確認する。
+- **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
+  `docs/runtime-state.md` → この節 →
+  `production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/operator_batch/README_OPERATOR_BATCH.md`。
+  source/claimの再監査時だけ同pilotの`source_bundle_manifest.json`、
+  `source_claim_ledger.json`、`input_validation_readback.json`を追加で読む。
+- **現在の状態**: `Project-State-ID`は
+  `episode-002-verified-local-evidence-operator-batch-ready-v1`、revisionは
+  `2026-07-12.1`。Product-Stateは
+  `episode-002-verified-local-evidence-render-operator-batch-ready`、Product-Gateは
+  `manual-yymm4-render-batch`、Recommended-Nextは
+  `run-one-yymm4-operator-batch`。
+- **復旧結果**: target branchは期待source HEAD
+  `a4eed8fe76085d7a59d483ffbafec0867b64812d`から作成。canonical historical CSVの
+  delayed YMM4 alias projectionだけをapplication-generated contaminationとして一点復旧し、
+  accepted SHA-256
+  `6FBB4666028DF4EF61F19C29505563141B1A82E932DC8E05BF8168F06347D38C`
+  を確認した。unrelated/uncertain user workはなかった。
+- **tracked source/script成果**: 6 authorized/related sourcesをhash/schema/statusで拘束し、
+  9 cuesすべてをclaim ledgerのJSON pointerへ接続した。unsupported claimは0、scene配分は
+  S1=2 / S2=2 / S3=5、canonical speakerは`れいむ` 3 / `まりさ` 6。
+- **CSV成果**: 新`canonical_yymm4.csv`と`derived_yymm4_import.csv`はheaderless 2列・
+  9行でtext/order同一、explicit environment-specific profileによりspeaker列だけ
+  `ゆっくり霊夢` 3 / `ゆっくり魔理沙` 6へ射影する。historical sample CSV/receiptsは変更していない。
+- **project境界**: 旧local import baseはtracked manifestとhash一致し、1 timeline / 9 VoiceItems
+  の構造は健全だが旧dry-run本文なので新CSVには再利用しない。generatorはoperatorが保存する
+  new baseをexact row matchで検証し、VoiceItem objectsを不変保持してS1/S2/S3へ各1 ImageItem
+  と各1 independent TextItemだけを追加する。labelsは`INTERNAL REVIEW / NOT FINAL /
+  LOCAL EVIDENCE PILOT`。
+- **Operator Batch**: `run_yymm4_operator_batch.ps1`がprimary surface。manual actionsは5、
+  returnは最大3項目、stop/prohibited conditionsを内蔵する。PowerShell syntaxと
+  operator directory起点の`-PreflightOnly`がpassedし、local_outputs未作成・YMM4未起動を確認した。
+  installed YMM4はprofile観測版と異なる場合があるため、mapping dialog、character mismatch、
+  update requirement、parse/open errorでは必ず停止する。
+- **focused checks**: new pilot tests 7 passed、reused diagnostic/profile tests 14 passed、
+  modified Python compile、source/claim/CSV/project/operator validator、deterministic regeneration、
+  state sync、`git diff --check`を使用。full pytestは実行していない。
+- **exact next action**: unrelated/unsaved YMM4 workを先に解消したうえで、operator batch directoryから
+  `powershell -NoProfile -ExecutionPolicy Bypass -File .\run_yymm4_operator_batch.ps1`
+  を一度だけ実行する。ユーザーだけがGUIを操作し、指定CSV import、new base save、generated
+  project open、exact MP4 render、safe close、result collectionを一括で行う。
+- **未完了境界**: actual YMM4 import/project reopen/render、MP4 validation、production `.ymmp`、
+  external editorial/real-media input、creative polish、rights/legal/final-thumbnail approval、
+  upload/publication、default-branch integration、full-suite Integrity campaign。
+
+## 直前の別端末再開ハンドオフ（2026-07-11 JST・diagnostic proof observed・履歴）
+
+この節はdiagnostic-proof-observed時点の履歴であり、現在の再開指示として読まない。
 
 - **取得先**: `origin/codex/episode-002-ymm4-five-point-observation-v1` のbranch先端。
 - **再開前確認**: `git fetch --prune origin`、同branchへのswitch、

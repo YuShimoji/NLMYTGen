@@ -1,0 +1,321 @@
+{
+  "schema_version": "verified_local_evidence_source_claim_ledger.v1",
+  "artifact_id": "episode_002_verified_local_evidence_input_pilot_v1_claim_ledger",
+  "status": "passed",
+  "claim_count": 9,
+  "unsupported_claim_count": 0,
+  "coverage": "every_cue_has_machine_matched_authorized_source_evidence",
+  "claims": [
+    {
+      "cue_id": "cue_001",
+      "claim_summary": "The observed import contained nine ordered rows with matching speaker assignments.",
+      "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+      "json_pointer_or_field": "/actual_ymm4_imported",
+      "paraphrase_status": "paraphrased",
+      "unsupported_claim": false,
+      "evidence": [
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer_or_field": "/actual_ymm4_imported",
+          "expected_value": true,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer_or_field": "/five_point_observations/subtitle_text/speaker_cue_match",
+          "expected_value": true,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer_or_field": "/five_point_observations/cue_order/cue_order",
+          "expected_value": [
+            "csv_row_1",
+            "csv_row_2",
+            "csv_row_3",
+            "csv_row_4",
+            "csv_row_5",
+            "csv_row_6",
+            "csv_row_7",
+            "csv_row_8",
+            "csv_row_9"
+          ],
+          "matched": true
+        }
+      ]
+    },
+    {
+      "cue_id": "cue_002",
+      "claim_summary": "The bounded CSV observation passed with nine VoiceItems and no missing, duplicate, or reordered cues.",
+      "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+      "json_pointer_or_field": "/five_point_observations/voice_items",
+      "paraphrase_status": "paraphrased",
+      "unsupported_claim": false,
+      "evidence": [
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer_or_field": "/status",
+          "expected_value": "passed",
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer_or_field": "/five_point_observations/voice_items/count",
+          "expected_value": 9,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer_or_field": "/five_point_observations/voice_items/missing_cue_ids",
+          "expected_value": [],
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer_or_field": "/five_point_observations/voice_items/duplicate_cue_ids",
+          "expected_value": [],
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer_or_field": "/five_point_observations/voice_items/reordered",
+          "expected_value": false,
+          "matched": true
+        }
+      ]
+    },
+    {
+      "cue_id": "cue_003",
+      "claim_summary": "In this observed import, no mapping dialog appeared and the explicit characters were bound 3/6.",
+      "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+      "json_pointer_or_field": "/five_point_observations/subtitle_text",
+      "paraphrase_status": "paraphrased",
+      "unsupported_claim": false,
+      "evidence": [
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer_or_field": "/five_point_observations/subtitle_text/mapping_dialog_present",
+          "expected_value": false,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer_or_field": "/five_point_observations/subtitle_text/automatic_speaker_binding_observed",
+          "expected_value": true,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer_or_field": "/five_point_observations/subtitle_text/character_counts",
+          "expected_value": {
+            "ゆっくり霊夢": 3,
+            "ゆっくり魔理沙": 6
+          },
+          "matched": true
+        }
+      ]
+    },
+    {
+      "cue_id": "cue_004",
+      "claim_summary": "The observed diagnostic-source timeline preserved text/order and measured 60 fps, 2790 frames, and 46.5 seconds.",
+      "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+      "json_pointer_or_field": "/five_point_observations/timing_order",
+      "paraphrase_status": "paraphrased",
+      "unsupported_claim": false,
+      "evidence": [
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer_or_field": "/five_point_observations/subtitle_text/all_text_matched",
+          "expected_value": true,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer_or_field": "/five_point_observations/timing_order/order_preserved",
+          "expected_value": true,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer_or_field": "/five_point_observations/timing_order/frame_rate",
+          "expected_value": 60,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer_or_field": "/five_point_observations/timing_order/total_frames",
+          "expected_value": 2790,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer_or_field": "/five_point_observations/timing_order/duration_seconds",
+          "expected_value": 46.5,
+          "matched": true
+        }
+      ]
+    },
+    {
+      "cue_id": "cue_005",
+      "claim_summary": "The separate diagnostic GUI reopen preserved nine VoiceItems and linked subtitles.",
+      "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+      "json_pointer_or_field": "/observations/VoiceItems",
+      "paraphrase_status": "paraphrased",
+      "unsupported_claim": false,
+      "evidence": [
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer_or_field": "/observations/VoiceItems",
+          "expected_value": 9,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer_or_field": "/observations/linked_subtitles_preserved",
+          "expected_value": true,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer_or_field": "/safety/diagnostic_only",
+          "expected_value": true,
+          "matched": true
+        }
+      ]
+    },
+    {
+      "cue_id": "cue_006",
+      "claim_summary": "Each of the three diagnostic scenes structurally contained one ImageItem and one independent TextItem.",
+      "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+      "json_pointer_or_field": "/scenes",
+      "paraphrase_status": "paraphrased",
+      "unsupported_claim": false,
+      "evidence": [
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+          "json_pointer_or_field": "/scenes/0/ImageItem_count",
+          "expected_value": 1,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+          "json_pointer_or_field": "/scenes/0/TextItem_count",
+          "expected_value": 1,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+          "json_pointer_or_field": "/scenes/1/ImageItem_count",
+          "expected_value": 1,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+          "json_pointer_or_field": "/scenes/1/TextItem_count",
+          "expected_value": 1,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+          "json_pointer_or_field": "/scenes/2/ImageItem_count",
+          "expected_value": 1,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+          "json_pointer_or_field": "/scenes/2/TextItem_count",
+          "expected_value": 1,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+          "json_pointer_or_field": "/checks/independent_TextItem_count_3",
+          "expected_value": true,
+          "matched": true
+        }
+      ]
+    },
+    {
+      "cue_id": "cue_007",
+      "claim_summary": "The diagnostic labels explicitly marked non-final status and were readable on GUI reopen.",
+      "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+      "json_pointer_or_field": "/observations/placeholder_is_explicitly_non_final",
+      "paraphrase_status": "paraphrased",
+      "unsupported_claim": false,
+      "evidence": [
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer_or_field": "/observations/placeholder_is_explicitly_non_final",
+          "expected_value": true,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer_or_field": "/observations/scene_labels_readable",
+          "expected_value": [
+            "S1 | DIAGNOSTIC | NOT FINAL | SAMPLE / PLACEHOLDER",
+            "S2 | DIAGNOSTIC | NOT FINAL | SAMPLE / PLACEHOLDER",
+            "S3 | DIAGNOSTIC | NOT FINAL | SAMPLE / PLACEHOLDER"
+          ],
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer_or_field": "/observed_by_environment/observation_mode",
+          "expected_value": "actual_gui_reopen",
+          "matched": true
+        }
+      ]
+    },
+    {
+      "cue_id": "cue_008",
+      "claim_summary": "The observed diagnostic gate did not render/export or create a production project.",
+      "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+      "json_pointer_or_field": "/observations/render_or_export_performed",
+      "paraphrase_status": "paraphrased",
+      "unsupported_claim": false,
+      "evidence": [
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer_or_field": "/observations/render_or_export_performed",
+          "expected_value": false,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer_or_field": "/safety/production_ymmp_written",
+          "expected_value": false,
+          "matched": true
+        }
+      ]
+    },
+    {
+      "cue_id": "cue_009",
+      "claim_summary": "The observed diagnostic gate did not replace real input, approve rights/publication, or upload.",
+      "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+      "json_pointer_or_field": "/safety/real_input_replaced",
+      "paraphrase_status": "paraphrased",
+      "unsupported_claim": false,
+      "evidence": [
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer_or_field": "/safety/real_input_replaced",
+          "expected_value": false,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer_or_field": "/safety/rights_or_public_approval_performed",
+          "expected_value": false,
+          "matched": true
+        },
+        {
+          "source_file": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer_or_field": "/safety/upload_performed",
+          "expected_value": false,
+          "matched": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": "verified_local_evidence_expected_output_contract.v1",
+  "status": "ready",
+  "project_target": "local_outputs/episode_002_verified_local_evidence_internal_review.local.ymmp",
+  "render_target": "local_outputs/episode_002_verified_local_evidence_internal_review.mp4",
+  "operator_result_target": "local_outputs/operator_result.json",
+  "project_expectations": {
+    "VoiceItem": 9,
+    "ImageItem": 3,
+    "independent_TextItem": 3,
+    "characters": {
+      "ゆっくり霊夢": 3,
+      "ゆっくり魔理沙": 6
+    },
+    "scene_labels_contain": [
+      "INTERNAL REVIEW",
+      "NOT FINAL",
+      "LOCAL EVIDENCE PILOT"
+    ],
+    "resolution_policy": "preserve_operator_import_base"
+  },
+  "render_expectations": {
+    "container": "mp4",
+    "render_count": 1,
+    "minimum_machine_check": [
+      "exists",
+      "nonzero_size",
+      "sha256",
+      "ftyp_signature",
+      "modified_after_batch_start"
+    ]
+  },
+  "environment_recording": {
+    "actual_yymm4_product_version": "collected_locally",
+    "profile_observation_version": "4.53.0.9",
+    "version_difference_is_a_manual_mapping_gate": true
+  },
+  "not_claimed": [
+    "production acceptance",
+    "public readiness",
+    "rights approval",
+    "upload or publication"
+  ]
+}

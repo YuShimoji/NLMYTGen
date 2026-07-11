@@ -1,0 +1,88 @@
+{
+  "schema_version": "verified_local_evidence_internal_project_manifest.v1",
+  "artifact_id": "episode_002_verified_local_evidence_input_pilot_v1_internal_project",
+  "episode_id": "yukkuri_newsroom_content_spine_002",
+  "status": "ready_for_operator_generation",
+  "internal_review_only": true,
+  "generator": {
+    "module": "src.pipeline.verified_local_evidence_input_pilot",
+    "command": "python -m src.cli.main generate-verified-local-evidence-project --pilot production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot --source-ymmp <operator-import-base.local.ymmp>",
+    "voiceitem_policy": "preserve_each_imported_voiceitem_object_unchanged",
+    "resolution_policy": "preserve_operator_import_base",
+    "layout_state_policy": "strip_base_LayoutXml_and_CollapsedGroups_to_avoid_carrying_gui_dock_state"
+  },
+  "targets": {
+    "operator_import_base": "local_outputs/episode_002_verified_local_evidence_import_base.local.ymmp",
+    "internal_review_project": "local_outputs/episode_002_verified_local_evidence_internal_review.local.ymmp",
+    "internal_review_render": "local_outputs/episode_002_verified_local_evidence_internal_review.mp4",
+    "actual_project_readback": "local_outputs/static_project_readback.actual.json",
+    "actual_generation_receipt": "local_outputs/project_generation_receipt.actual.json",
+    "operator_result": "local_outputs/operator_result.json"
+  },
+  "asset": {
+    "repo_relative_path": "assets/internal_review_placeholder.png",
+    "sha256": "7698897C23F7E6C053A995CB4D1F79D5A3366B4F5D5EEDBC1B6B14877745FA9F",
+    "external_source": false,
+    "generation": "deterministic_python_standard_library_rgba_png"
+  },
+  "expected_counts": {
+    "VoiceItem": 9,
+    "ImageItem": 3,
+    "independent_TextItem": 3,
+    "characters": {
+      "ゆっくり霊夢": 3,
+      "ゆっくり魔理沙": 6
+    }
+  },
+  "scenes": [
+    {
+      "scene_id": "S1",
+      "cue_ids": [
+        "cue_001",
+        "cue_002"
+      ],
+      "label": "S1 | INTERNAL REVIEW | NOT FINAL | LOCAL EVIDENCE PILOT",
+      "ImageItem": 1,
+      "independent_TextItem": 1
+    },
+    {
+      "scene_id": "S2",
+      "cue_ids": [
+        "cue_003",
+        "cue_004"
+      ],
+      "label": "S2 | INTERNAL REVIEW | NOT FINAL | LOCAL EVIDENCE PILOT",
+      "ImageItem": 1,
+      "independent_TextItem": 1
+    },
+    {
+      "scene_id": "S3",
+      "cue_ids": [
+        "cue_005",
+        "cue_006",
+        "cue_007",
+        "cue_008",
+        "cue_009"
+      ],
+      "label": "S3 | INTERNAL REVIEW | NOT FINAL | LOCAL EVIDENCE PILOT",
+      "ImageItem": 1,
+      "independent_TextItem": 1
+    }
+  ],
+  "prior_local_base_assessment": {
+    "evidence_name": "episode_002_imported_base.local.ymmp",
+    "evidence_sha256": "A3FA8D5645B6317C2D72D38D391E7E26DB3544B9F17C1F1CC7B3A180C1834626",
+    "previously_observed_structure": "one_timeline_nine_voiceitems_only",
+    "reusable_for_current_script": false,
+    "assessment": "rejected_old_dry_run_voice_text_mismatch",
+    "safety_reason": "VoiceItem Serif and voice-cache fields must not be rewritten headlessly"
+  },
+  "evidence_boundary": {
+    "tracked_manifest_is_not_actual_project_parse": true,
+    "operator_import_base_required": true,
+    "actual_local_project_generated": false,
+    "render_or_export_performed": false,
+    "production_ymmp_written": false,
+    "public_or_rights_approved": false
+  }
+}

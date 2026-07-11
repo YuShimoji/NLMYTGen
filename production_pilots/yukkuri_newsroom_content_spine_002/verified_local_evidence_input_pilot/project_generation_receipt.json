@@ -1,0 +1,15 @@
+{
+  "schema_version": "verified_local_evidence_project_generation_receipt.v1",
+  "artifact_id": "episode_002_verified_local_evidence_input_pilot_v1_project_generation",
+  "status": "operator_input_required",
+  "generator_implemented": true,
+  "static_contract_passed": true,
+  "actual_local_project_generated": false,
+  "reason": "new derived CSV must be imported by YMM4 so voice cache fields remain coherent",
+  "operator_import_base_target": "local_outputs/episode_002_verified_local_evidence_import_base.local.ymmp",
+  "local_project_target": "local_outputs/episode_002_verified_local_evidence_internal_review.local.ymmp",
+  "render_target": "local_outputs/episode_002_verified_local_evidence_internal_review.mp4",
+  "worker_yymm4_launch_performed": false,
+  "render_or_export_performed": false,
+  "production_ymmp_written": false
+}

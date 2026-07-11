@@ -1,0 +1,5 @@
+!canonical_yymm4.csv
+!derived_yymm4_import.csv
+local_outputs/
+*.local.ymmp
+*.mp4

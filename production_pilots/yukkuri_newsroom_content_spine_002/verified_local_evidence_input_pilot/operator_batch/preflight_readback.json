@@ -1,0 +1,17 @@
+{
+  "schema_version": "verified_local_evidence_operator_preflight.v1",
+  "status": "passed",
+  "validation_mode": "tracked_headless_contract_preflight",
+  "source_bundle_valid": true,
+  "claim_coverage": "9_of_9",
+  "unsupported_claim_count": 0,
+  "csv_invariants_passed": true,
+  "project_static_contract_passed": true,
+  "operator_manual_action_count": 5,
+  "operator_return_item_count": 3,
+  "fresh_output_binding_required": true,
+  "yymm4_launch_attempted": false,
+  "computer_use_invoked": false,
+  "runtime_command": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\run_yymm4_operator_batch.ps1 -PreflightOnly",
+  "note": "Runtime preflight additionally checks local Python and YMM4 executable availability without launching YMM4."
+}

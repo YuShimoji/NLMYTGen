@@ -1,0 +1,34 @@
+{
+  "schema_version": "verified_local_evidence_script_generation_receipt.v1",
+  "artifact_id": "episode_002_verified_local_evidence_input_pilot_v1_script_generation",
+  "status": "passed",
+  "generation_mode": "deterministic_authorized_evidence_paraphrase",
+  "cue_count": 9,
+  "scene_allocation": {
+    "S1": 2,
+    "S2": 2,
+    "S3": 5
+  },
+  "canonical_speaker_counts": {
+    "れいむ": 3,
+    "まりさ": 6
+  },
+  "derived_character_counts": {
+    "ゆっくり霊夢": 3,
+    "ゆっくり魔理沙": 6
+  },
+  "unsupported_claim_count": 0,
+  "files": {
+    "source_claim_ledger.json": "BA21FFF7E9725AF00A438213AE3453B84D9E9CFDC1568141AE83F52877C1B587",
+    "canonical_script.txt": "22F894D713C51D8E688ADB934D0BFB5992B31216443FF430777EC980AA413826",
+    "canonical_script.json": "4249425D680A44DE25BE697262966A44D396AAFE611AA90A0BF769BEC4EE9B16",
+    "canonical_yymm4.csv": "0A7B7F27FFF37E9AD29ADACD93BDB6FECBA6AE2650FE34DBE90E7BCFED9FE967",
+    "derived_yymm4_import.csv": "D1C5C4C4E61996BDD89398618C0E7353A826D598B642E2397ACD982B1D5CBB1F"
+  },
+  "spoken_content_boundaries": {
+    "absolute_paths_present": false,
+    "hashes_or_commit_ids_present": false,
+    "device_or_private_metadata_present": false,
+    "production_or_public_ready_claimed": false
+  }
+}

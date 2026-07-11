@@ -1,0 +1,18 @@
+{
+  "schema_version": "validated_local_input_receipt.v1",
+  "artifact_id": "episode_002_verified_local_evidence_input_pilot_v1_validated_input",
+  "status": "passed",
+  "input_kind": "tracked_local_project_evidence",
+  "source_count": 6,
+  "source_hashes_match": true,
+  "source_schemas_and_statuses_match": true,
+  "external_fetch_performed": false,
+  "external_asset_used": false,
+  "editorial_adoption": false,
+  "rights_or_legal_approval": false,
+  "public_ready": false,
+  "production_ready": false,
+  "claim_count": 9,
+  "unsupported_claim_count": 0,
+  "next_gate": "manual_yymm4_render_batch"
+}

@@ -1,0 +1,66 @@
+{
+  "schema_version": "verified_local_evidence_source_bundle_manifest.v1",
+  "artifact_id": "episode_002_verified_local_evidence_input_pilot_v1_source_bundle",
+  "episode_id": "yukkuri_newsroom_content_spine_002",
+  "status": "validated_local_internal_evidence",
+  "sources": [
+    {
+      "source_id": "csv_gate_observation_receipt",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+      "sha256": "7F35D2DFC66600AFAF058BF1C250807D6ACCE05A457656D5EBBB2AA1637D8676",
+      "schema": "ymm4_gui_observation_receipt.v2",
+      "status": "passed",
+      "role": "actual bounded CSV import observation"
+    },
+    {
+      "source_id": "diagnostic_project_manifest",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_manifest.json",
+      "sha256": "0CB3F36D9E87E618AE69D77108FDA49839278579AA218249ADA5B52B0271F36B",
+      "schema": "ymm4_diagnostic_project_manifest.v1",
+      "status": "generated_structural_pass",
+      "role": "diagnostic project provenance and evidence boundary"
+    },
+    {
+      "source_id": "diagnostic_project_readback",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+      "sha256": "25B242CF32FB8885361BEAFC38581024C892E80977A4BB88E26E8260E564FCCC",
+      "schema": "ymm4_diagnostic_project_readback.v1",
+      "status": "structural_pass",
+      "role": "machine structural readback for VoiceItem and placeholder counts"
+    },
+    {
+      "source_id": "diagnostic_project_receipt",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+      "sha256": "402C55023C338CCD65C1CE3D1D8899947834FABDE530D59FD896339DC0421134",
+      "schema": "ymm4_diagnostic_project_gui_receipt.v1",
+      "status": "passed",
+      "role": "actual GUI reopen observation and non-final safety boundary"
+    },
+    {
+      "source_id": "runtime_state",
+      "repo_relative_path": "docs/runtime-state.md",
+      "sha256": "412CD6BF1EC7B225A665C65C5CAA2D954C53EC4ADEAAAA955A22A9605FB435B5",
+      "schema": "nlmytgen_runtime_state_capsule",
+      "status": "episode-002-verified-local-evidence-operator-batch-ready-v1",
+      "role": "current project-state context; not a spoken factual source"
+    },
+    {
+      "source_id": "yymm4_character_profile",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_character_alias_profiles/ymm4_4_53_0_9_yukkuri_characters_v1.json",
+      "sha256": "C32F8E0FAA2FBCED6E91ADFD5BEDC62E8E245EF48F88A67F81B86C39AB89A304",
+      "schema": "ymm4_character_alias_profile.v1",
+      "status": "observed_environment_specific",
+      "role": "explicit environment-specific canonical-to-YMM4 character mapping"
+    }
+  ],
+  "source_boundary": {
+    "source_kind": "tracked NLMYTGen local observation evidence",
+    "internal_pilot_only": true,
+    "external_editorial_source": false,
+    "external_fetch_or_download": false,
+    "external_asset_used": false,
+    "rights_or_legal_approval": false,
+    "public_ready": false,
+    "production_ready": false
+  }
+}

@@ -1,18 +1,27 @@
 flowchart LR
-    A["Episode 002 sample transcript<br/>canonical speaker identity"] --> B["Canonical 9-row CSV<br/>れいむ / まりさ<br/>SHA fixed"]
+    A["Episode 002 sample transcript<br/>canonical speaker identity"] --> B["Canonical historical 9-row CSV<br/>れいむ / まりさ<br/>accepted hash"]
     O["Historical GUI receipt v1<br/>partial under legacy mixed contract"] --> P["Explicit YMM4 character profile<br/>4.53.0.9 observed environment<br/>strict coverage"]
-    B --> D["Deterministic derived import CSV<br/>speaker column only projected"]
+    B --> D["Historical derived import CSV<br/>speaker column only projected"]
     P --> D
     D --> C["CSV responsibility contract<br/>VoiceItem + linked subtitle"]
     C --> G["Bounded YMM4 CSV gate<br/>no mapping dialog / 9 VoiceItems<br/>Reimu 3 / Marisa 6 / order preserved"]
     G -->|"passed: 2790 frames / 46.50 s"| R["CSV gate receipt v2<br/>passed"]
-    R --> Y["Separately authorized diagnostic project<br/>local .ymmp ignored / tracked generator and evidence"]
-    Y --> Q["YMM4 4.53.0.9 reopen observed<br/>9 VoiceItems + linked subtitles<br/>3 ImageItems + 3 independent TextItems<br/>S1 / S2 / S3 explicitly non-final"]
-    Q --> S["Supervisor next-slice decision"]
-    S -. "verified inputs required" .-> E["Real-input replacement<br/>source + transcript + provenance/rights<br/>stable identity + cue alignment"]
-    S -. "current diff decision required" .-> I["Feature/default integration review<br/>no automatic merge or rebase"]
+    R --> Y["Separately authorized diagnostic project<br/>local .ymmp ignored / tracked evidence"]
+    Y --> Q["YMM4 4.53.0.9 reopen observed<br/>9 VoiceItems + linked subtitles<br/>3 ImageItems + 3 independent TextItems<br/>explicitly non-final"]
 
-    N["Closed gates<br/>render/export<br/>production .ymmp<br/>rights/public/final thumbnail<br/>upload/publication<br/>automatic default-branch mutation"] -.-> G
-    N -.-> Y
-    N -.-> E
-    N -.-> I
+    R --> V["Verified local evidence bundle<br/>tracked source hashes / schemas / boundaries"]
+    Q --> V
+    P --> V
+    V --> L["9-cue claim ledger + Japanese script<br/>S1/S2/S3 = 2/2/5<br/>unsupported claims = 0"]
+    L --> NCSV["New canonical / derived CSV pair<br/>9 rows / text-order identical<br/>strict 3 / 6 projection"]
+    NCSV --> H["Headless project generator + static contract<br/>preserve imported VoiceItems<br/>3 ImageItems + 3 independent TextItems<br/>INTERNAL REVIEW / NOT FINAL"]
+    H --> M["Manual YMM4 operator batch<br/>5 actions / exact local targets<br/>stop on mapping, update, parse, or unrelated work"]
+    M -. "next gate; not yet run" .-> Z["Local internal-review project + one MP4<br/>operator_result.json collection"]
+
+    Z -. "separate decision" .-> E["External editorial / real-media input<br/>provenance + identity + rights context"]
+    Z -. "separate decision" .-> I["Feature/default integration review<br/>no automatic merge or rebase"]
+
+    X["Closed gates<br/>production .ymmp<br/>rights/public/final thumbnail<br/>upload/publication<br/>automatic default-branch mutation"] -.-> M
+    X -.-> Z
+    X -.-> E
+    X -.-> I

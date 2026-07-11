@@ -1,0 +1,45 @@
+{
+  "schema_version": "verified_local_evidence_static_project_readback.v1",
+  "artifact_id": "episode_002_verified_local_evidence_input_pilot_v1_static_project_readback",
+  "status": "contract_pass",
+  "validation_kind": "headless_static_contract_not_actual_project_parse",
+  "actual_project_present": false,
+  "actual_project_parse_performed": false,
+  "expected_targets": {
+    "operator_import_base": "local_outputs/episode_002_verified_local_evidence_import_base.local.ymmp",
+    "internal_review_project": "local_outputs/episode_002_verified_local_evidence_internal_review.local.ymmp",
+    "internal_review_render": "local_outputs/episode_002_verified_local_evidence_internal_review.mp4",
+    "actual_project_readback": "local_outputs/static_project_readback.actual.json",
+    "actual_generation_receipt": "local_outputs/project_generation_receipt.actual.json",
+    "operator_result": "local_outputs/operator_result.json"
+  },
+  "expected_item_counts": {
+    "VoiceItem": 9,
+    "ImageItem": 3,
+    "independent_TextItem": 3,
+    "characters": {
+      "ゆっくり霊夢": 3,
+      "ゆっくり魔理沙": 6
+    }
+  },
+  "expected_scene_labels": [
+    "S1 | INTERNAL REVIEW | NOT FINAL | LOCAL EVIDENCE PILOT",
+    "S2 | INTERNAL REVIEW | NOT FINAL | LOCAL EVIDENCE PILOT",
+    "S3 | INTERNAL REVIEW | NOT FINAL | LOCAL EVIDENCE PILOT"
+  ],
+  "checks": {
+    "source_bundle_validated": true,
+    "nine_cue_derived_csv_ready": true,
+    "strict_character_profile_coverage": true,
+    "prior_base_mismatch_classified": true,
+    "operator_import_base_is_explicit_input": true,
+    "generator_preserves_voiceitems": true,
+    "generator_strips_base_gui_layout_state": true,
+    "three_scene_placeholder_contract": true,
+    "internal_non_final_labels_explicit": true,
+    "local_project_and_render_targets_ignored": true,
+    "no_external_asset": true
+  },
+  "actual_render_validated": false,
+  "next_gate": "manual_yymm4_render_batch"
+}

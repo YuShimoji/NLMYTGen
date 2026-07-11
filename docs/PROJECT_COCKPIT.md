@@ -1,11 +1,11 @@
 # NLMYTGen Project Cockpit
 
-Project-State-ID: episode-002-ymm4-diagnostic-placeholder-proof-observed-v1
-State-Revision: 2026-07-11.2
-Updated: 2026-07-11 JST
-Product-State: episode-002-ymm4-diagnostic-placeholder-proof-observed
-Product-Gate: supervisor-next-slice-decision
-Recommended-Next: decide-real-input-or-integration
+Project-State-ID: episode-002-verified-local-evidence-operator-batch-ready-v1
+State-Revision: 2026-07-12.1
+Updated: 2026-07-12 JST
+Product-State: episode-002-verified-local-evidence-render-operator-batch-ready
+Product-Gate: manual-yymm4-render-batch
+Recommended-Next: run-one-yymm4-operator-batch
 External-State: public-repo-feature-branch
 
 このページはpublic repositoryで現在地を読むための追跡済みMarkdownです。
@@ -17,50 +17,51 @@ External-State: public-repo-feature-branch
 
 ## いまの一文
 
-Episode 002は、derived CSVの自動character bindingと9件のVoiceItem/linked subtitle、
-別認可のdiagnostic projectにある3件ずつのImageItem/独立TextItemを、YMM4
-`4.53.0.9`で実観測済みです。次のgateは実素材置換またはbranch統合のどちらへ
-進むかを決めるsupervisor decisionであり、どちらも自動開始しません。
+Episode 002は、実観測済みのローカル証拠だけを根拠にした9-cue台本、claim ledger、
+canonical/derived CSV、VoiceItem不変のheadless project generator、内部非finalの
+static contract、5アクションのone-shot YMM4 Operator Batchまで準備済みです。
+次のgateはユーザーが一度だけbatchを実行し、local projectとMP4をcollectorで検証することです。
 
 ## 現在の状態
 
 | 対象 | 現在地 | 次に進む条件 | まだ保証しないこと |
 | --- | --- | --- | --- |
-| speaker identity | canonical `れいむ` / `まりさ`を維持し、explicit profileで`ゆっくり霊夢` 3件 / `ゆっくり魔理沙` 6件へ自動bindingされたことを実観測 | 未定義speakerを追加する場合はprofileを明示更新 | 全YMM4環境のuniversal default |
-| derived CSV | mapping dialogなしでclean import、9 VoiceItems、linked text/order維持、2790 frames / 46.50秒 | CSV gateとして追加作業なし | ImageItem/独立TextItemをCSVが生成すること |
-| CSV contract | `VoiceItem + linked_subtitle`だけのgateとしてreceipt v2がpassed | 実素材へ進む場合は別のverified inputを受領 | diagnostic projectのproduction適合性 |
-| diagnostic project | YMM4 reopenで9 VoiceItems維持、3 ImageItems、3 independent TextItems、S1/S2/S3 non-final labelを観測 | production化ではなく次のsupervisor decisionへ戻る | final design、public-ready、production `.ymmp` |
-| portability | local `.ymmp`は絶対asset referenceのためignored。generator、PNG、manifest、readback、GUI receiptを追跡 | portable projectが必要ならYMM4 reference方式を別途解決 | ignored local project自体のportable commit |
-| 実素材置換 | intake契約はあるが検証済み候補ゼロ | source / transcript / provenance / rights context / stable identity / cue alignmentを受領 | sample inputをreal inputと扱うこと |
+| source bundle | CSV/diagnostic/runtime/profileの6 tracked sourcesをhash/schema/statusで検証 | source hash drift時はbundleを再生成 | external editorial source、rights approval |
+| script/claim | 9/9 cuesにauthorized source pointer、unsupported claim 0、S1/S2/S3=2/2/5 | 新claim追加時は同じprovenance gate | production/public-ready claim |
+| CSV | canonical 9行をexplicit profileでspeaker列だけderived 9行へ射影 | operatorがderived CSVをclean YMM4 projectへ一度import | 全YMM4版でのuniversal mapping |
+| historical base | 1 timeline / 9 VoiceItemsの構造は健全だが旧dry-run本文 | 新derived CSVから新baseを保存 | VoiceItem text/cacheのheadless置換 |
+| project generator | new baseの9 VoiceItemsを不変保持し、3 ImageItems + 3 independent TextItemsを追加 | operator baseがnew CSVと完全一致 | actual YMM4 open/render済み |
+| labels | 各sceneに`INTERNAL REVIEW / NOT FINAL / LOCAL EVIDENCE PILOT` | manual reopenでparse/errorと表示異常がないことを確認 | final design、production `.ymmp` |
+| operator batch | 5 manual actions、return最大3項目、preflight/syntax passed | userがone-shot batchを実行 | actual MP4、publication、upload |
 
-## 次に選べる入口
+## 次に使う入口
 
 | 入口 | 解くbottleneck | 選ぶと可能になること |
 | --- | --- | --- |
-| **Advance** | diagnostic sampleから実素材へ進めない | 必要入力を受領・検証してreal-input replacementを開始できる |
-| **Integrate** | feature/default branchの関係が未判断 | 最新diffを監査し、安全な統合方針を選べる |
+| **Run one operator batch** | headless準備は完了したがactual YMM4 project/render evidenceがない | exact local projectとMP4を一度生成し、`operator_result.json`で構造・hash・MP4 signatureを収集できる |
 
-diagnostic proofの成功は、どちらの入口も自動認可しません。次のstate transitionは
-supervisorがreal-inputまたはintegrationを選んだ後にだけ開始します。
+Primary surface:
+`production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/operator_batch/README_OPERATOR_BATCH.md`
+
+YMM4に未保存・無関係の作業、update要求、mapping dialog、character mismatch、parse errorが
+ある場合はbatchを止めます。成功してもproduction/public/rights/uploadへ自動遷移しません。
 
 ## 証拠境界
 
-- CSV gate receipt v2:
-  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json`
-- tracked diagnostic proof:
-  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/`
-- canonical CSV SHA-256:
-  `6FBB4666028DF4EF61F19C29505563141B1A82E932DC8E05BF8168F06347D38C`
-- derived CSV SHA-256:
-  `5452DE96DC6EF012400A132BA5BAE80B8553C1B1CDD27860D36674C25AF391BC`
-- immutable prior receipt SHA-256:
-  `DC756D9C4EE9ABDFDDFB284B2B8EC70B227DDEB5E365C1BBB8EE8438D8C9A5B5`
-- GUI observation: YMM4 `4.53.0.9`でCSV gateとdiagnostic project reopenが
-  passed。screenshotは未取得で、今回の必須gateではない。
+- Source bundle / claim ledger / script / CSV:
+  `production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/`
+- Headless validation:
+  `verified_local_evidence_input_pilot/input_validation_readback.json`
+- Static project contract:
+  `verified_local_evidence_input_pilot/static_project_readback.json`
+- Operator preflight:
+  `verified_local_evidence_input_pilot/operator_batch/preflight_readback.json`
+- Existing canonical CSV remains SHA-256
+  `6FBB4666028DF4EF61F19C29505563141B1A82E932DC8E05BF8168F06347D38C`。
+- Actual local `.ymmp`、MP4、actual readback、operator resultはignoredであり、現時点では未生成です。
 
 ## 公開境界
 
-このページにはprivate URL、token、raw source、article body、権利未確認素材、
-ローカルuser-home絶対pathを載せません。render、production `.ymmp`、real-input
-replacement、rights approval、final thumbnail、upload、default-branch integrationは
-対応する証拠と明示的な次slice判断が揃うまで未完了です。
+このページにはprivate URL、token、raw external source、権利未確認素材、user-home絶対pathを
+載せません。actual render、production `.ymmp`、external editorial input、real-media replacement、
+rights/legal approval、final thumbnail、upload/publication、default-branch integrationは未完了です。

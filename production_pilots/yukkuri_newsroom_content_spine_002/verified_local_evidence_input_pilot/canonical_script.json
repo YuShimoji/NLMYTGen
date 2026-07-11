@@ -1,0 +1,86 @@
+{
+  "schema_version": "verified_local_evidence_canonical_script.v1",
+  "artifact_id": "episode_002_verified_local_evidence_input_pilot_v1_script",
+  "episode_id": "yukkuri_newsroom_content_spine_002",
+  "language": "ja",
+  "content_mode": "internal_verified_local_evidence_pilot",
+  "tone": "fact_first_concise_non_exaggerated",
+  "cue_count": 9,
+  "scene_allocation": {
+    "S1": 2,
+    "S2": 2,
+    "S3": 5
+  },
+  "speaker_counts": {
+    "れいむ": 3,
+    "まりさ": 6
+  },
+  "editorial_adoption": false,
+  "public_ready": false,
+  "production_ready": false,
+  "cues": [
+    {
+      "sequence": 1,
+      "cue_id": "cue_001",
+      "scene_id": "S1",
+      "speaker": "れいむ",
+      "text": "9行のCSVをYMM4に読み込み、話者割り当てと順番を確認したよ。"
+    },
+    {
+      "sequence": 2,
+      "cue_id": "cue_002",
+      "scene_id": "S1",
+      "speaker": "まりさ",
+      "text": "CSV取り込みの観測結果は合格で、9件のボイス項目に欠けや重複、並べ替えはなかったぜ。"
+    },
+    {
+      "sequence": 3,
+      "cue_id": "cue_003",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "text": "この取り込みでは対応表は表示されず、霊夢3件、魔理沙6件へ自動で結び付いたぜ。"
+    },
+    {
+      "sequence": 4,
+      "cue_id": "cue_004",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "text": "観測時はテキストと順番が一致し、60fpsで2790フレーム、46.5秒のタイムラインだったぜ。"
+    },
+    {
+      "sequence": 5,
+      "cue_id": "cue_005",
+      "scene_id": "S3",
+      "speaker": "れいむ",
+      "text": "別の診断用プロジェクトでも、9件のボイスと連動字幕が保たれていたよ。"
+    },
+    {
+      "sequence": 6,
+      "cue_id": "cue_006",
+      "scene_id": "S3",
+      "speaker": "まりさ",
+      "text": "3つのシーンには、画像と独立したテキストが1件ずつ置かれていたぜ。"
+    },
+    {
+      "sequence": 7,
+      "cue_id": "cue_007",
+      "scene_id": "S3",
+      "speaker": "まりさ",
+      "text": "各ラベルには診断用で最終版ではないことが明記され、再確認時にも読めたぜ。"
+    },
+    {
+      "sequence": 8,
+      "cue_id": "cue_008",
+      "scene_id": "S3",
+      "speaker": "れいむ",
+      "text": "ただし、映像の書き出しや本番用プロジェクトの作成は行っていないよ。"
+    },
+    {
+      "sequence": 9,
+      "cue_id": "cue_009",
+      "scene_id": "S3",
+      "speaker": "まりさ",
+      "text": "実素材への置き換え、権利や公開の承認、アップロードも行っていないぜ。"
+    }
+  ]
+}

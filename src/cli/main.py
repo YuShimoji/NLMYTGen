@@ -3098,6 +3098,90 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_verified_local_evidence_pilot = subparsers.add_parser(
+        "build-verified-local-evidence-pilot",
+        help="Build the Episode 002 verified-local-evidence headless pilot",
+    )
+    p_verified_local_evidence_pilot.add_argument(
+        "--package", required=True, help="Episode package directory"
+    )
+    p_verified_local_evidence_pilot.add_argument(
+        "--output",
+        help="Output directory (default: <package>/verified_local_evidence_input_pilot)",
+    )
+    p_verified_local_evidence_pilot.add_argument(
+        "--format", choices=["text", "json"], default="text"
+    )
+
+    p_validate_verified_local_evidence = subparsers.add_parser(
+        "validate-verified-local-evidence-pilot",
+        help="Validate the tracked Episode 002 verified-local-evidence pilot",
+    )
+    p_validate_verified_local_evidence.add_argument(
+        "--pilot", required=True, help="Pilot directory"
+    )
+    p_validate_verified_local_evidence.add_argument(
+        "--package", help="Optional Episode package directory"
+    )
+    p_validate_verified_local_evidence.add_argument(
+        "--format", choices=["text", "json"], default="text"
+    )
+
+    p_generate_verified_local_evidence = subparsers.add_parser(
+        "generate-verified-local-evidence-project",
+        help="Generate the ignored internal-review YMM4 project from an operator import base",
+    )
+    p_generate_verified_local_evidence.add_argument(
+        "--pilot", required=True, help="Pilot directory"
+    )
+    p_generate_verified_local_evidence.add_argument(
+        "--source-ymmp", required=True, help="Operator-saved clean import base"
+    )
+    p_generate_verified_local_evidence.add_argument(
+        "--output-ymmp", help="Ignored local project target"
+    )
+    p_generate_verified_local_evidence.add_argument(
+        "--format", choices=["text", "json"], default="text"
+    )
+
+    p_collect_verified_local_evidence = subparsers.add_parser(
+        "collect-verified-local-evidence-operator-result",
+        help="Collect ignored local project/render evidence after the manual operator batch",
+    )
+    p_collect_verified_local_evidence.add_argument(
+        "--pilot", required=True, help="Pilot directory"
+    )
+    p_collect_verified_local_evidence.add_argument(
+        "--project", help="Generated ignored local project"
+    )
+    p_collect_verified_local_evidence.add_argument(
+        "--render", help="Rendered MP4"
+    )
+    p_collect_verified_local_evidence.add_argument(
+        "--output", help="operator_result.json output"
+    )
+    p_collect_verified_local_evidence.add_argument(
+        "--not-before-utc",
+        required=True,
+        help="UTC timestamp captured before this one-shot batch started",
+    )
+    p_collect_verified_local_evidence.add_argument(
+        "--operator-confirmed-clean",
+        action="store_true",
+        help="Operator confirmed no mapping, character, or parse error before collection",
+    )
+    p_collect_verified_local_evidence.add_argument(
+        "--yymm4-product-version", required=True, help="Sanitized local YMM4 product version"
+    )
+    p_collect_verified_local_evidence.add_argument(
+        "--profile-observation-version",
+        required=True,
+        help="YMM4 version recorded by the explicit character profile",
+    )
+    p_collect_verified_local_evidence.add_argument(
+        "--format", choices=["text", "json"], default="text"
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -3258,6 +3342,14 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_ymm4_observation_readback_pack(args)
         elif args.command == "build-ymm4-diagnostic-placeholder-proof":
             return _cmd_build_ymm4_diagnostic_placeholder_proof(args)
+        elif args.command == "build-verified-local-evidence-pilot":
+            return _cmd_build_verified_local_evidence_pilot(args)
+        elif args.command == "validate-verified-local-evidence-pilot":
+            return _cmd_validate_verified_local_evidence_pilot(args)
+        elif args.command == "generate-verified-local-evidence-project":
+            return _cmd_generate_verified_local_evidence_project(args)
+        elif args.command == "collect-verified-local-evidence-operator-result":
+            return _cmd_collect_verified_local_evidence_operator_result(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -5981,6 +6073,95 @@ def _cmd_build_ymm4_diagnostic_placeholder_proof(args: argparse.Namespace) -> in
         print(f"project_commit_disposition: {result.get('project_commit_disposition')}")
         print(f"readback_status: {result.get('readback', {}).get('status')}")
     return 0
+
+
+def _cmd_build_verified_local_evidence_pilot(args: argparse.Namespace) -> int:
+    """Build the Episode 002 verified-local-evidence headless pilot."""
+    from src.pipeline.verified_local_evidence_input_pilot import (
+        build_verified_local_evidence_input_pilot,
+    )
+
+    result = build_verified_local_evidence_input_pilot(
+        package_dir=getattr(args, "package"),
+        output_dir=getattr(args, "output", None),
+    )
+    if getattr(args, "format", "text") == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {result.get('output_dir')}")
+        print(f"status: {result.get('status')}")
+        print(f"cue_count: {result.get('cue_count')}")
+        print(f"manual_action_count: {result.get('manual_action_count')}")
+        print(f"local_project_target: {result.get('local_project_target')}")
+        print(f"render_target: {result.get('render_target')}")
+    return 0
+
+
+def _cmd_validate_verified_local_evidence_pilot(args: argparse.Namespace) -> int:
+    """Validate the tracked Episode 002 verified-local-evidence pilot."""
+    from src.pipeline.verified_local_evidence_input_pilot import (
+        validate_verified_local_evidence_input_pilot,
+    )
+
+    result = validate_verified_local_evidence_input_pilot(
+        pilot_dir=getattr(args, "pilot"),
+        package_dir=getattr(args, "package", None),
+    )
+    if getattr(args, "format", "text") == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        print(f"status: {result.get('status')}")
+        print(f"cue_count: {result.get('cue_count')}")
+        print(f"failed_checks: {', '.join(result.get('failed_checks', []))}")
+    return 0 if result.get("status") == "passed" else 1
+
+
+def _cmd_generate_verified_local_evidence_project(args: argparse.Namespace) -> int:
+    """Generate the ignored local internal-review project."""
+    from src.pipeline.verified_local_evidence_input_pilot import (
+        generate_verified_local_evidence_project,
+    )
+
+    result = generate_verified_local_evidence_project(
+        pilot_dir=getattr(args, "pilot"),
+        source_ymmp=getattr(args, "source_ymmp"),
+        output_ymmp=getattr(args, "output_ymmp", None),
+    )
+    if getattr(args, "format", "text") == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        print(f"status: {result.get('status')}")
+        print(f"project_path: {result.get('project_path')}")
+        print(f"readback_path: {result.get('readback_path')}")
+    return 0
+
+
+def _cmd_collect_verified_local_evidence_operator_result(
+    args: argparse.Namespace,
+) -> int:
+    """Collect the local operator project and render result."""
+    from src.pipeline.verified_local_evidence_input_pilot import (
+        collect_verified_local_evidence_operator_result,
+    )
+
+    result = collect_verified_local_evidence_operator_result(
+        pilot_dir=getattr(args, "pilot"),
+        project_path=getattr(args, "project", None),
+        render_path=getattr(args, "render", None),
+        output_path=getattr(args, "output", None),
+        not_before_utc=getattr(args, "not_before_utc"),
+        operator_confirmed_clean=bool(getattr(args, "operator_confirmed_clean")),
+        yymm4_product_version=getattr(args, "yymm4_product_version"),
+        profile_observation_version=getattr(args, "profile_observation_version"),
+    )
+    if getattr(args, "format", "text") == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        print(f"status: {result.get('status')}")
+        print(f"operator_result_path: {result.get('operator_result_path')}")
+        if result.get("failed_checks"):
+            print(f"failed_checks: {', '.join(result['failed_checks'])}")
+    return 0 if result.get("status") == "success" else 1
 
 
 def _cmd_init_episode_run(args: argparse.Namespace) -> int:
