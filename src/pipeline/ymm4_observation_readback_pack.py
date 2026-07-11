@@ -242,8 +242,11 @@ def validate_ymm4_observation_readback_pack(output_dir: str | Path) -> dict[str,
             elif readback.get("next_gate") != "adapter_correction_after_observation":
                 failed_checks.append("legacy_observation_partial_next_gate_invalid")
         safety = _dict(readback.get("safety"))
-        if safety.get("application_closed_without_saving") is not True:
-            failed_checks.append("actual_observation_not_closed_without_saving")
+        if not _application_checkpoint_is_safe(
+            safety,
+            receipt_schema=receipt_schema,
+        ):
+            failed_checks.append("actual_observation_application_checkpoint_invalid")
         for field in (
             "render_or_export_performed",
             "ymmp_saved_or_written",
@@ -275,9 +278,21 @@ def validate_ymm4_observation_readback_pack(output_dir: str | Path) -> dict[str,
     diagnostic_gate = _dict(readback.get("diagnostic_project_gate"))
     if csv_gate.get("expected_item_families") != ["VoiceItem", "linked_subtitle"]:
         failed_checks.append("csv_import_gate_contract_mismatch")
-    if diagnostic_gate.get("authorization_status") != "not_authorized":
+    expected_diagnostic_authorization = (
+        "not_authorized_by_csv_gate_receipt"
+        if readback.get("receipt_schema_version")
+        == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION
+        else "not_authorized"
+    )
+    expected_diagnostic_execution = (
+        "not_evaluated_by_csv_gate_receipt"
+        if readback.get("receipt_schema_version")
+        == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION
+        else "not_attempted"
+    )
+    if diagnostic_gate.get("authorization_status") != expected_diagnostic_authorization:
         failed_checks.append("diagnostic_project_authorization_not_closed")
-    if diagnostic_gate.get("execution_status") != "not_attempted":
+    if diagnostic_gate.get("execution_status") != expected_diagnostic_execution:
         failed_checks.append("diagnostic_project_execution_not_closed")
     if source_index.get("ymm4_import_ready_pack_read_only") is not True:
         failed_checks.append("ymm4_import_ready_pack_not_read_only")
@@ -435,8 +450,14 @@ def _load_observation_receipt(path: Path) -> dict[str, Any]:
     if payload.get("actual_ymm4_imported") is not True:
         raise ValueError("YMM4 observation receipt must record a completed GUI import")
     safety = _dict(payload.get("safety"))
-    if safety.get("application_closed_without_saving") is not True:
-        raise ValueError("YMM4 observation receipt must record closing without saving")
+    if not _application_checkpoint_is_safe(
+        safety,
+        receipt_schema=schema_version,
+    ):
+        raise ValueError(
+            "YMM4 observation receipt must record either closing without saving "
+            "or the authorized diagnostic-project continuation checkpoint"
+        )
     for field in (
         "render_or_export_performed",
         "ymmp_saved_or_written",
@@ -447,6 +468,31 @@ def _load_observation_receipt(path: Path) -> dict[str, Any]:
         if safety.get(field) is not False:
             raise ValueError(f"YMM4 observation receipt safety field must be false: {field}")
     return payload
+
+
+def load_ymm4_observation_receipt(path: str | Path) -> dict[str, Any]:
+    """Load and fully validate a v1 or v2 GUI observation receipt."""
+    return _load_observation_receipt(Path(path))
+
+
+def _application_checkpoint_is_safe(
+    safety: dict[str, Any],
+    *,
+    receipt_schema: str,
+) -> bool:
+    left_open_for_diagnostic = (
+        safety.get("application_left_open_for_authorized_diagnostic_project") is True
+    )
+    closed_without_saving = (
+        safety.get("application_closed_without_saving") is True
+        and not left_open_for_diagnostic
+    )
+    continued_to_diagnostic = (
+        receipt_schema == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION
+        and safety.get("application_closed_without_saving") is False
+        and left_open_for_diagnostic
+    )
+    return closed_without_saving or continued_to_diagnostic
 
 
 def _load_observation_blocker(path: Path) -> dict[str, Any]:
@@ -606,6 +652,11 @@ def _state(
     detected = _detect_yymm4()
     if observation_receipt:
         detected.update(_dict(observation_receipt.get("observed_by_environment")))
+        if observation_receipt.get("actual_ymm4_imported") is True:
+            detected["yymm4_executable_detected"] = bool(
+                detected.get("yymm4_executable_path")
+            )
+            detected["yymm4_availability_status"] = "actual_gui_observation_recorded"
     elif observation_blocker:
         detected = _dict(observation_blocker.get("observed_by_environment"))
     canonical_import_csv = str(
@@ -765,8 +816,16 @@ def _observation_readback(state: dict[str, Any], output_root: Path, repo_root: P
         },
         "diagnostic_project_gate": {
             "expected_item_families": ["ImageItem", "independent_TextItem_placeholders"],
-            "authorization_status": "not_authorized",
-            "execution_status": "not_attempted",
+            "authorization_status": (
+                "not_authorized_by_csv_gate_receipt"
+                if receipt_schema == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION
+                else "not_authorized"
+            ),
+            "execution_status": (
+                "not_evaluated_by_csv_gate_receipt"
+                if receipt_schema == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION
+                else "not_attempted"
+            ),
             "absence_during_csv_import_is_failure": False,
         },
         "rendered_video_created": False,
@@ -879,7 +938,7 @@ def _observation_readback(state: dict[str, Any], output_root: Path, repo_root: P
                 else f"order_not_preserved_actual_voice_duration_{duration_seconds}_seconds"
             ),
             "responsibility_boundary_observed": (
-                "csv_voiceitem_linked_subtitle_only_diagnostic_project_not_authorized_not_attempted"
+                "csv_voiceitem_linked_subtitle_only_diagnostic_authority_outside_csv_receipt"
                 if receipt_schema == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION
                 else "legacy_imageitem_textitem_placeholder_lanes_present"
                 if legacy_placeholder_lanes_present
@@ -1200,7 +1259,7 @@ def _render_manual_readback(state: dict[str, Any], readback: dict[str, Any]) -> 
 
 状態: `{readback.get("status")}` / `actual_ymm4_gui_observation` / `ymm4_csv_import_gate.v1`
 
-明示選択したcharacter profileから生成したderived CSVだけをYMM4 `{env.get("yymm4_version")}`へ読み込み、保存せず終了した。
+明示選択したcharacter profileから生成したderived CSVだけをYMM4 `{env.get("yymm4_version")}`へ読み込み、CSV gate checkpointを記録した。
 
 import済みderived CSV:
 `{readback.get("expected_import_path")}`
@@ -1214,11 +1273,11 @@ canonical source（不変）:
 2. **{voice.get("status")}** — VoiceItemは{voice.get("count")}件。missing={_list(voice.get("missing_cue_ids"))}; duplicate={_list(voice.get("duplicate_cue_ids"))}; reordered={voice.get("reordered")}。
 3. **{subtitle.get("status")}** — mapping_dialog_present={subtitle.get("mapping_dialog_present")}; automatic_binding={subtitle.get("automatic_speaker_binding_observed")}; character_counts={subtitle.get("character_counts")}; text/cue match={subtitle.get("speaker_cue_match")}。
 4. **{timing.get("status")}** — order_preserved={timing.get("order_preserved")}; duration varianceはinformational。{timing.get("frame_rate")}fps・{timing.get("total_frames")} frames・{timing.get("duration_seconds")}秒。
-5. **{boundary.get("status")}** — CSV expected={boundary.get("csv_import_expected_item_families")}; diagnostic project={boundary.get("diagnostic_project_gate")}/{boundary.get("diagnostic_project_status")}; diagnostic item absence is CSV failure={boundary.get("diagnostic_item_absence_is_csv_failure")}。
+5. **{boundary.get("status")}** — CSV expected={boundary.get("csv_import_expected_item_families")}; diagnostic project fields (CSV-receipt scope only)={boundary.get("diagnostic_project_gate")}/{boundary.get("diagnostic_project_status")}; diagnostic item absence is CSV failure={boundary.get("diagnostic_item_absence_is_csv_failure")}。
 
 次gate: `{readback.get("next_gate")}`
 
-Do not render/export. Do not save or write production `.ymmp`. Do not start the diagnostic project. Do not replace real input. Do not approve rights/public/final thumbnail. Do not upload.
+Do not render/export or write a production `.ymmp`. Diagnostic-project authorization and evidence remain outside this CSV-gate receipt. Do not replace real input, approve rights/public/final thumbnail, or upload.
 """
         placeholder = _dict(observations.get("placeholder_boundary"))
         mapping_text = "; ".join(
@@ -1245,7 +1304,7 @@ Do not render/export. Do not save or write production `.ymmp`. Do not start the 
 
 状態: `{readback.get("status")}` / `actual_ymm4_gui_observation`
 
-YMM4 `{env.get("yymm4_version")}` で対象CSVを実際に読み込み、保存せずに終了した。観測結果はreceiptから再生成され、総合判定は`{readback.get("status")}`。
+YMM4 `{env.get("yymm4_version")}` で対象CSVを実際に読み込み、CSV gate checkpointを記録した。観測結果はreceiptから再生成され、総合判定は`{readback.get("status")}`。
 
 YMM4 executable:
 `{env.get("yymm4_executable_path")}`
@@ -1295,9 +1354,9 @@ blocker:
 2. VoiceItemが9 cue分に見えるか、欠落・重複・順序入れ替わりがあるか。
 3. mapping dialogが出ず、れいむ行=ゆっくり霊夢、まりさ行=ゆっくり魔理沙として自動bindingされるか。linked subtitle textがspeaker/cueに一致するか。
 4. timing orderは仮timingの流れを崩していないか。duration再計算はinformationalとして記録する。
-5. CSV責務がVoiceItem + linked subtitleに限定され、ImageItem/独立TextItemのdiagnostic projectがnot_authorized/not_attemptedのままか。
+5. CSV責務がVoiceItem + linked subtitleに限定され、ImageItem/独立TextItemの権限・実行証拠をこのCSV receiptへ混在させていないか。
 
-Do not render/export. Do not save or write production `.ymmp`. Do not start the diagnostic project. Do not replace real input. Do not approve rights/public/final thumbnail. Do not upload.
+Do not render/export or write a production `.ymmp`. This CSV artifact does not itself authorize or evaluate a diagnostic project. Do not replace real input, approve rights/public/final thumbnail, or upload.
 """
 
 
@@ -1309,7 +1368,7 @@ def _render_readme(state: dict[str, Any], readback: dict[str, Any]) -> str:
                 f"`cue_count_observed={readback.get('cue_count_observed')}` and "
                 f"`status={readback.get('status')}`. VoiceItem, automatic character binding, "
                 "linked subtitle, timing order, and the CSV responsibility boundary are recorded; "
-                "the diagnostic project remained not_authorized/not_attempted."
+                "diagnostic-project authority and evidence remain outside this CSV receipt."
             )
         else:
             state_copy = (
@@ -1354,7 +1413,7 @@ def _render_limitations(readback: dict[str, Any]) -> str:
             observation_copy = (
                 "Actual observed means only the bounded derived-CSV import and five CSV-gate "
                 "checks occurred. ImageItem or independent TextItem absence is not a CSV failure; "
-                "the diagnostic project remains not_authorized/not_attempted. It does not prove "
+                "this receipt neither authorizes nor evaluates the separate diagnostic project. It does not prove "
                 f"render, production `.ymmp`, real-input, rights, thumbnail, upload, or public "
                 f"readiness. Observation status is `{readback.get('status')}`; recorded deviations: "
                 f"{deviation_ids or 'none'}."
@@ -1374,7 +1433,7 @@ def _render_limitations(readback: dict[str, Any]) -> str:
 
 Do not launch render/export from this package.
 Do not write or save a production `.ymmp` file.
-Do not create or start the diagnostic `.ymmp` project without separate authorization.
+Diagnostic `.ymmp` work requires authorization outside this CSV-gate artifact.
 Do not replace sample placeholders with real input.
 Do not approve rights, legal status, public readiness, final thumbnail, or upload.
 Do not live fetch, scrape, download external media, use OAuth/API keys, or perform payment work.

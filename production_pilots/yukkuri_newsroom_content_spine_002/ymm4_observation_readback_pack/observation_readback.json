@@ -3,7 +3,7 @@
   "artifact_id": "episode_002_ymm4_observation_readback_pack_v1",
   "episode_id": "yukkuri_newsroom_content_spine_002",
   "observation_contract": "ymm4_csv_import_gate.v1",
-  "receipt_schema_version": null,
+  "receipt_schema_version": "ymm4_gui_observation_receipt.v2",
   "source_import_ready_pack_reference": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack",
   "source_real_input_prep_reference": "production_pilots/yukkuri_newsroom_content_spine_002/real_input_replacement_readiness_pack",
   "cue_count_expected": 9,
@@ -50,15 +50,15 @@
       "VoiceItem",
       "linked_subtitle"
     ],
-    "status": "not_observed"
+    "status": "passed"
   },
   "diagnostic_project_gate": {
     "expected_item_families": [
       "ImageItem",
       "independent_TextItem_placeholders"
     ],
-    "authorization_status": "not_authorized",
-    "execution_status": "not_attempted",
+    "authorization_status": "not_authorized_by_csv_gate_receipt",
+    "execution_status": "not_evaluated_by_csv_gate_receipt",
     "absence_during_csv_import_is_failure": false
   },
   "rendered_video_created": false,
@@ -85,57 +85,175 @@
     "external_media_downloaded": false,
     "diagnostic_ymmp_project_attempted": false
   },
-  "next_gate": "bounded_yymm4_alias_reobservation",
+  "next_gate": "supervisor_next_slice_decision",
   "output_dir": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_readback_pack",
-  "status": "blocked",
-  "observation_mode": "operator_instruction_only",
-  "actual_ymm4_import_attempted": false,
-  "actual_ymm4_imported": false,
-  "observed_at": "2026-07-11_JST",
+  "status": "passed",
+  "observation_result": "passed",
+  "observation_mode": "actual_ymm4_gui_observation",
+  "actual_ymm4_import_attempted": true,
+  "actual_ymm4_imported": true,
+  "observed_at": "2026-07-11T15:20:04+09:00",
   "observed_by_environment": {
     "terminal_or_device": "thank",
-    "yymm4_version": "4.53.0.9",
-    "yymm4_executable_path": "D:\\YukkuriMovieMaker_v4\\YukkuriMovieMaker.exe",
-    "yymm4_availability_status": "gui_available_but_existing_unsaved_project_preserved",
+    "yymm4_availability_status": "actual_gui_observation_recorded",
     "yymm4_executable_detected": true,
+    "yymm4_executable_path": "D:\\YukkuriMovieMaker_v4\\YukkuriMovieMaker.exe",
+    "environment_override_used": false,
+    "start_menu_shortcut_detected": true,
+    "start_menu_shortcut_path": "C:\\Users\\thank\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\YukkuriMovieMaker.lnk",
     "launch_attempted": true,
-    "gui_observation_channel_available": true
+    "gui_observation_channel_available": true,
+    "yymm4_version": "4.53.0.9"
   },
-  "cue_count_observed": 0,
-  "scene_order_observed": [],
-  "cue_order_observed": [],
-  "voice_item_observed": "not_observed",
-  "subtitle_item_observed": "not_observed",
-  "timing_order_observed": "not_observed",
-  "responsibility_boundary_observed": "not_observed",
-  "five_point_observations": {},
-  "timeline_observation": {},
-  "speaker_mapping": [],
+  "cue_count_observed": 9,
+  "scene_order_observed": [
+    "S1",
+    "S2",
+    "S3"
+  ],
+  "cue_order_observed": [
+    "csv_row_1",
+    "csv_row_2",
+    "csv_row_3",
+    "csv_row_4",
+    "csv_row_5",
+    "csv_row_6",
+    "csv_row_7",
+    "csv_row_8",
+    "csv_row_9"
+  ],
+  "voice_item_observed": "9_voiceitems_no_missing_duplicate_or_reorder",
+  "subtitle_item_observed": "linked_subtitle_texts_match_with_automatic_character_binding",
+  "timing_order_observed": "order_preserved_actual_voice_duration_46.5_seconds",
+  "responsibility_boundary_observed": "csv_voiceitem_linked_subtitle_only_diagnostic_authority_outside_csv_receipt",
+  "five_point_observations": {
+    "cue_order": {
+      "status": "passed",
+      "scene_order": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "cue_order": [
+        "csv_row_1",
+        "csv_row_2",
+        "csv_row_3",
+        "csv_row_4",
+        "csv_row_5",
+        "csv_row_6",
+        "csv_row_7",
+        "csv_row_8",
+        "csv_row_9"
+      ]
+    },
+    "voice_items": {
+      "status": "passed",
+      "count": 9,
+      "missing_cue_ids": [],
+      "duplicate_cue_ids": [],
+      "reordered": false
+    },
+    "subtitle_text": {
+      "status": "passed",
+      "mapping_dialog_present": false,
+      "automatic_speaker_binding_observed": true,
+      "all_text_matched": true,
+      "speaker_cue_match": true,
+      "incorrect_character_cue_ids": [],
+      "character_counts": {
+        "ゆっくり霊夢": 3,
+        "ゆっくり魔理沙": 6
+      },
+      "speaker_mapping": [
+        {
+          "canonical_speaker": "れいむ",
+          "selected_character": "ゆっくり霊夢",
+          "mapping_mode": "derived_csv_automatic_binding"
+        },
+        {
+          "canonical_speaker": "まりさ",
+          "selected_character": "ゆっくり魔理沙",
+          "mapping_mode": "derived_csv_automatic_binding"
+        }
+      ]
+    },
+    "timing_order": {
+      "status": "passed",
+      "order_preserved": true,
+      "provisional_exact_durations_preserved": false,
+      "duration_variance_status": "informational",
+      "frame_rate": 60,
+      "total_frames": 2790,
+      "duration_seconds": 46.5
+    },
+    "csv_responsibility_boundary": {
+      "status": "passed",
+      "csv_import_expected_item_families": [
+        "VoiceItem",
+        "linked_subtitle"
+      ],
+      "diagnostic_project_expected_item_families": [
+        "ImageItem",
+        "independent_TextItem_placeholders"
+      ],
+      "diagnostic_project_gate": "not_authorized",
+      "diagnostic_project_status": "not_attempted",
+      "diagnostic_items_present_during_csv_import": false,
+      "diagnostic_item_absence_is_csv_failure": false,
+      "misleading_final_or_public_ready_claim_present": false
+    }
+  },
+  "timeline_observation": {
+    "status": "passed",
+    "order_preserved": true,
+    "provisional_exact_durations_preserved": false,
+    "duration_variance_status": "informational",
+    "frame_rate": 60,
+    "total_frames": 2790,
+    "duration_seconds": 46.5
+  },
+  "speaker_mapping": [
+    {
+      "canonical_speaker": "れいむ",
+      "selected_character": "ゆっくり霊夢",
+      "mapping_mode": "derived_csv_automatic_binding"
+    },
+    {
+      "canonical_speaker": "まりさ",
+      "selected_character": "ゆっくり魔理沙",
+      "mapping_mode": "derived_csv_automatic_binding"
+    }
+  ],
+  "character_counts": {
+    "ゆっくり霊夢": 3,
+    "ゆっくり魔理沙": 6
+  },
+  "mapping_dialog_present": false,
   "import_errors": [],
   "deviations": [
     {
-      "deviation_id": "existing_unsaved_project_requires_discard_authorization",
-      "severity": "blocking_for_observation_pass",
-      "detail": "YMM4 restored an existing unsaved untitled project containing the prior nine-item, 2790-frame observation state. Starting a clean derived-CSV import would require discarding that existing unsaved state, which this slice does not authorize."
+      "deviation_id": "provisional_timing_recomputed_by_yymm4",
+      "severity": "informational"
     }
   ],
   "blocker": {
-    "blocker_id": "existing_unsaved_project_requires_discard_authorization",
-    "status": "blocked_for_actual_observation",
-    "reason": "YMM4 restored an existing unsaved untitled project containing the prior nine-item, 2790-frame observation state. Starting a clean derived-CSV import would require discarding that existing unsaved state, which this slice does not authorize.",
-    "operator_action": "In the already-open YMM4 window, first decide whether the restored unsaved project may be discarded or saved elsewhere. Only after that decision, start a clean untitled project, import the derived CSV once, record the five CSV-gate observations, and close without saving the new observation project."
-  },
-  "observation_blocker_receipt": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_alias_reobservation_blocker_2026-07-11.json",
-  "safety": {
-    "existing_project_discarded": false,
-    "new_project_created": false,
-    "derived_csv_import_attempted": false,
-    "mapping_dialog_observed": "not_observed",
-    "render_or_export_performed": false,
-    "ymmp_saved_or_written": false,
-    "application_left_open_to_preserve_unsaved_state": true
+    "blocker_id": "none",
+    "status": "resolved_by_actual_gui_observation",
+    "reason": "The bounded YMM4 GUI import observation was completed.",
+    "operator_action": "none"
   },
   "screenshot_or_visual_evidence_paths": [],
+  "source_csv_sha256": "5452DE96DC6EF012400A132BA5BAE80B8553C1B1CDD27860D36674C25AF391BC",
+  "receipt_source_csv": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv",
+  "safety": {
+    "application_closed_without_saving": false,
+    "application_left_open_for_authorized_diagnostic_project": true,
+    "render_or_export_performed": false,
+    "ymmp_saved_or_written": false,
+    "real_input_replaced": false,
+    "rights_or_public_approval_performed": false,
+    "upload_performed": false
+  },
   "validation_status": "passed",
   "failed_checks": [],
   "checks": {

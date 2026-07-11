@@ -75,9 +75,9 @@
       "display_zone": "source_artifact_index"
     },
     {
-      "record_id": "actual_gui_observation_blocker",
-      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_alias_reobservation_blocker_2026-07-11.json",
-      "role": "existing_unsaved_project_preserved_blocker",
+      "record_id": "actual_gui_observation_receipt",
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+      "role": "actual_gui_observation_receipt",
       "exists_expected": true,
       "display_zone": "source_artifact_index"
     }

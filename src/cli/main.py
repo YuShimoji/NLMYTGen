@@ -3065,6 +3065,39 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: text)",
     )
 
+    p_ymm4_diagnostic_placeholder_proof = subparsers.add_parser(
+        "build-ymm4-diagnostic-placeholder-proof",
+        help="Build the Episode 002 diagnostic-only YMM4 placeholder proof",
+    )
+    p_ymm4_diagnostic_placeholder_proof.add_argument(
+        "--package", required=True, help="Episode package directory"
+    )
+    p_ymm4_diagnostic_placeholder_proof.add_argument(
+        "--source-ymmp",
+        required=True,
+        help="Local YMM4 project saved from the passed derived-CSV import",
+    )
+    p_ymm4_diagnostic_placeholder_proof.add_argument(
+        "--csv-gate-receipt",
+        required=True,
+        help="Passed YMM4 CSV-gate GUI receipt v2",
+    )
+    p_ymm4_diagnostic_placeholder_proof.add_argument(
+        "--output",
+        help="Output directory (default: <package>/ymm4_diagnostic_placeholder_proof)",
+    )
+    p_ymm4_diagnostic_placeholder_proof.add_argument(
+        "--artifact-id",
+        default="episode_002_ymm4_diagnostic_placeholder_proof_v1",
+        help="Diagnostic proof artifact id",
+    )
+    p_ymm4_diagnostic_placeholder_proof.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -3223,6 +3256,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_ymm4_import_ready_pack(args)
         elif args.command == "build-ymm4-observation-readback-pack":
             return _cmd_build_ymm4_observation_readback_pack(args)
+        elif args.command == "build-ymm4-diagnostic-placeholder-proof":
+            return _cmd_build_ymm4_diagnostic_placeholder_proof(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -5908,7 +5943,10 @@ def _cmd_build_ymm4_observation_readback_pack(args: argparse.Namespace) -> int:
         print(f"voice_item_observed: {readback.get('voice_item_observed')}")
         print(f"subtitle_item_observed: {readback.get('subtitle_item_observed')}")
         print(f"timing_order_observed: {readback.get('timing_order_observed')}")
-        print(f"placeholder_boundary_observed: {readback.get('placeholder_boundary_observed')}")
+        print(
+            "responsibility_boundary_observed: "
+            f"{readback.get('responsibility_boundary_observed')}"
+        )
         print(f"rendered_video_created: {readback.get('rendered_video_created')}")
         print(f"ymmp_file_created: {readback.get('ymmp_file_created')}")
         print(f"production_ymmp_written: {readback.get('production_ymmp_written')}")
@@ -5918,6 +5956,30 @@ def _cmd_build_ymm4_observation_readback_pack(args: argparse.Namespace) -> int:
         print(f"next_gate: {readback.get('next_gate')}")
         print(f"primary_machine_readable: {readback.get('primary_machine_readable')}")
         print(f"launcher_or_open_command: {readback.get('launcher_or_open_command')}")
+    return 0
+
+
+def _cmd_build_ymm4_diagnostic_placeholder_proof(args: argparse.Namespace) -> int:
+    """Build the Episode 002 diagnostic-only YMM4 placeholder proof."""
+    from src.pipeline.ymm4_diagnostic_placeholder_proof import (
+        build_ymm4_diagnostic_placeholder_proof,
+    )
+
+    result = build_ymm4_diagnostic_placeholder_proof(
+        package_dir=getattr(args, "package"),
+        source_ymmp=getattr(args, "source_ymmp"),
+        csv_gate_receipt=getattr(args, "csv_gate_receipt"),
+        output_dir=getattr(args, "output", None),
+        artifact_id=getattr(args, "artifact_id"),
+    )
+    if getattr(args, "format", "text") == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        print(f"Written: {result.get('output_dir')}")
+        print(f"status: {result.get('status')}")
+        print(f"project_path: {result.get('project_path')}")
+        print(f"project_commit_disposition: {result.get('project_commit_disposition')}")
+        print(f"readback_status: {result.get('readback', {}).get('status')}")
     return 0
 
 

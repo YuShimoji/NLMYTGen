@@ -1,0 +1,119 @@
+{
+  "schema_version": "ymm4_gui_observation_receipt.v2",
+  "observation_contract": "ymm4_csv_import_gate.v1",
+  "episode_id": "yukkuri_newsroom_content_spine_002",
+  "observed_at": "2026-07-11T15:20:04+09:00",
+  "status": "passed",
+  "result": "passed",
+  "actual_ymm4_import_attempted": true,
+  "actual_ymm4_imported": true,
+  "source_csv": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv",
+  "source_csv_sha256": "5452DE96DC6EF012400A132BA5BAE80B8553C1B1CDD27860D36674C25AF391BC",
+  "canonical_source_csv": "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+  "canonical_source_csv_sha256": "6FBB4666028DF4EF61F19C29505563141B1A82E932DC8E05BF8168F06347D38C",
+  "selected_yymm4_character_profile": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_character_alias_profiles/ymm4_4_53_0_9_yukkuri_characters_v1.json",
+  "profile_id": "ymm4_4_53_0_9_yukkuri_characters_ja_v1",
+  "prior_receipt_reference": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_receipt_2026-07-10.json",
+  "observed_by_environment": {
+    "terminal_or_device": "thank",
+    "yymm4_version": "4.53.0.9",
+    "yymm4_executable_path": "D:\\YukkuriMovieMaker_v4\\YukkuriMovieMaker.exe",
+    "launch_attempted": true,
+    "gui_observation_channel_available": true
+  },
+  "five_point_observations": {
+    "cue_order": {
+      "status": "passed",
+      "scene_order": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "cue_order": [
+        "csv_row_1",
+        "csv_row_2",
+        "csv_row_3",
+        "csv_row_4",
+        "csv_row_5",
+        "csv_row_6",
+        "csv_row_7",
+        "csv_row_8",
+        "csv_row_9"
+      ]
+    },
+    "voice_items": {
+      "status": "passed",
+      "count": 9,
+      "missing_cue_ids": [],
+      "duplicate_cue_ids": [],
+      "reordered": false
+    },
+    "subtitle_text": {
+      "status": "passed",
+      "mapping_dialog_present": false,
+      "automatic_speaker_binding_observed": true,
+      "all_text_matched": true,
+      "speaker_cue_match": true,
+      "incorrect_character_cue_ids": [],
+      "character_counts": {
+        "ゆっくり霊夢": 3,
+        "ゆっくり魔理沙": 6
+      },
+      "speaker_mapping": [
+        {
+          "canonical_speaker": "れいむ",
+          "selected_character": "ゆっくり霊夢",
+          "mapping_mode": "derived_csv_automatic_binding"
+        },
+        {
+          "canonical_speaker": "まりさ",
+          "selected_character": "ゆっくり魔理沙",
+          "mapping_mode": "derived_csv_automatic_binding"
+        }
+      ]
+    },
+    "timing_order": {
+      "status": "passed",
+      "order_preserved": true,
+      "provisional_exact_durations_preserved": false,
+      "duration_variance_status": "informational",
+      "frame_rate": 60,
+      "total_frames": 2790,
+      "duration_seconds": 46.5
+    },
+    "csv_responsibility_boundary": {
+      "status": "passed",
+      "csv_import_expected_item_families": [
+        "VoiceItem",
+        "linked_subtitle"
+      ],
+      "diagnostic_project_expected_item_families": [
+        "ImageItem",
+        "independent_TextItem_placeholders"
+      ],
+      "diagnostic_project_gate": "not_authorized",
+      "diagnostic_project_status": "not_attempted",
+      "diagnostic_items_present_during_csv_import": false,
+      "diagnostic_item_absence_is_csv_failure": false,
+      "misleading_final_or_public_ready_claim_present": false
+    }
+  },
+  "import_errors": [],
+  "deviations": [
+    {
+      "deviation_id": "provisional_timing_recomputed_by_yymm4",
+      "severity": "informational"
+    }
+  ],
+  "safety": {
+    "application_closed_without_saving": false,
+    "application_left_open_for_authorized_diagnostic_project": true,
+    "render_or_export_performed": false,
+    "ymmp_saved_or_written": false,
+    "real_input_replaced": false,
+    "rights_or_public_approval_performed": false,
+    "upload_performed": false
+  },
+  "screenshot_or_visual_evidence_paths": [],
+  "next_gate": "supervisor_next_slice_decision"
+}

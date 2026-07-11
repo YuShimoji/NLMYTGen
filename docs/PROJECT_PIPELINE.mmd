@@ -4,14 +4,15 @@ flowchart LR
     B --> D["Deterministic derived import CSV<br/>speaker column only projected"]
     P --> D
     D --> C["CSV responsibility contract<br/>VoiceItem + linked subtitle"]
-    C --> G["Bounded YMM4 CSV gate<br/>mapping dialog / 9 items / characters<br/>text-order / timing order"]
+    C --> G["Bounded YMM4 CSV gate<br/>no mapping dialog / 9 VoiceItems<br/>Reimu 3 / Marisa 6 / order preserved"]
+    G -->|"passed: 2790 frames / 46.50 s"| R["CSV gate receipt v2<br/>passed"]
+    R --> Y["Separately authorized diagnostic project<br/>local .ymmp ignored / tracked generator and evidence"]
+    Y --> Q["YMM4 4.53.0.9 reopen observed<br/>9 VoiceItems + linked subtitles<br/>3 ImageItems + 3 independent TextItems<br/>S1 / S2 / S3 explicitly non-final"]
+    Q --> S["Supervisor next-slice decision"]
+    S -. "verified inputs required" .-> E["Real-input replacement<br/>source + transcript + provenance/rights<br/>stable identity + cue alignment"]
+    S -. "current diff decision required" .-> I["Feature/default integration review<br/>no automatic merge or rebase"]
 
-    U["Existing unsaved YMM4 project<br/>preserved / discard not authorized"] -. "current blocker" .-> G
-    G -. "after existing-state decision" .-> R["CSV gate receipt v2"]
-    R --> S["Supervisor next-slice decision"]
-    S -. "separate authorization" .-> Y["Diagnostic .ymmp project<br/>ImageItem + independent TextItem<br/>not_authorized / not_attempted"]
-    S -. "verified inputs required" .-> E["Real-input replacement<br/>source + transcript + provenance<br/>stable identity + cue alignment"]
-
-    N["Closed gates<br/>render/export<br/>production .ymmp<br/>rights/public/final thumbnail<br/>upload/publication<br/>default-branch integration"] -.-> G
+    N["Closed gates<br/>render/export<br/>production .ymmp<br/>rights/public/final thumbnail<br/>upload/publication<br/>automatic default-branch mutation"] -.-> G
     N -.-> Y
     N -.-> E
+    N -.-> I

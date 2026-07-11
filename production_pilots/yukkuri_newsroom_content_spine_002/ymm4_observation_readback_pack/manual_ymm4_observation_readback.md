@@ -1,33 +1,23 @@
-# Episode 002 YMM4観測readback
+# Episode 002 YMM4 CSV import gate readback
 
-状態: `operator_instruction_only`
+状態: `passed` / `actual_ymm4_gui_observation` / `ymm4_csv_import_gate.v1`
 
-実観測は未実行。YMM4 executable は検出されたが、このworkerからGUI import結果を安全に操作・視認する経路がないため、観測passは付けない。
+明示選択したcharacter profileから生成したderived CSVだけをYMM4 `4.53.0.9`へ読み込み、CSV gate checkpointを記録した。
 
-YMM4 executable:
-`D:\YukkuriMovieMaker_v4\YukkuriMovieMaker.exe`
-
-開くもの:
-`production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/ymm4_import_ready_preview.html`
-
-importするderived CSV:
+import済みderived CSV:
 `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/derived_yymm4_import.csv`
 
-canonical source（上書き禁止）:
+canonical source（不変）:
 `production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/regenerated_draft_yymm4.csv`
 
-selected character profile:
-`production_pilots/yukkuri_newsroom_content_spine_002/ymm4_character_alias_profiles/ymm4_4_53_0_9_yukkuri_characters_v1.json`
+## CSV gate 実観測結果5点
 
-blocker:
-YMM4 restored an existing unsaved untitled project containing the prior nine-item, 2790-frame observation state. Starting a clean derived-CSV import would require discarding that existing unsaved state, which this slice does not authorize.
+1. **passed** — scene order: S1 -> S2 -> S3; cue order: csv_row_1 -> csv_row_2 -> csv_row_3 -> csv_row_4 -> csv_row_5 -> csv_row_6 -> csv_row_7 -> csv_row_8 -> csv_row_9。
+2. **passed** — VoiceItemは9件。missing=[]; duplicate=[]; reordered=False。
+3. **passed** — mapping_dialog_present=False; automatic_binding=True; character_counts={'ゆっくり霊夢': 3, 'ゆっくり魔理沙': 6}; text/cue match=True。
+4. **passed** — order_preserved=True; duration varianceはinformational。60fps・2790 frames・46.5秒。
+5. **passed** — CSV expected=['VoiceItem', 'linked_subtitle']; diagnostic project fields (CSV-receipt scope only)=not_authorized/not_attempted; diagnostic item absence is CSV failure=False。
 
-## operatorが返す観測5点
+次gate: `supervisor_next_slice_decision`
 
-1. CSV import後、cue順がS1 -> S2 -> S3、csv_row_1 -> csv_row_9として読めるか。
-2. VoiceItemが9 cue分に見えるか、欠落・重複・順序入れ替わりがあるか。
-3. mapping dialogが出ず、れいむ行=ゆっくり霊夢、まりさ行=ゆっくり魔理沙として自動bindingされるか。linked subtitle textがspeaker/cueに一致するか。
-4. timing orderは仮timingの流れを崩していないか。duration再計算はinformationalとして記録する。
-5. CSV責務がVoiceItem + linked subtitleに限定され、ImageItem/独立TextItemのdiagnostic projectがnot_authorized/not_attemptedのままか。
-
-Do not render/export. Do not save or write production `.ymmp`. Do not start the diagnostic project. Do not replace real input. Do not approve rights/public/final thumbnail. Do not upload.
+Do not render/export or write a production `.ymmp`. Diagnostic-project authorization and evidence remain outside this CSV-gate receipt. Do not replace real input, approve rights/public/final thumbnail, or upload.

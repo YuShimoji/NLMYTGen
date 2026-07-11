@@ -11,10 +11,10 @@ not a governance document or roadmap.
 | input-intake-episode002 | INPUT_API_HUB | accepted/close-ready | Real input intake readiness package exists. |
 | editing-ops-episode002 | EDITING_FEATURES | accepted/close-ready | Editing operations readiness package exists. |
 | local-edit-slice-episode002 | EDITING_FEATURES_LOCAL_EXECUTION | accepted/close-ready | Local edit-slice execution queue exists. |
-| ymm4-import-ready-episode002 | OUTPUT_VIDEO_EDITING / YMM4_CSV_ADAPTER | alias-ready/reobservation-pending | Explicit 4.53.0.9 character profile, derived 9-row CSV, strict coverage, and CSV-vs-diagnostic responsibility contract are validated. |
+| ymm4-import-ready-episode002 | OUTPUT_VIDEO_EDITING / YMM4_CSV_ADAPTER | accepted/csv-gate-passed | YMM4 4.53.0.9 imported the derived CSV without a mapping dialog: 9 VoiceItems, Reimu 3 / Marisa 6, linked text/order preserved, 2790 frames / 46.50 seconds. |
 | ymm4-import-ready-ja-review-episode002 | GUI_IA_I18N | accepted/close-ready | Japanese-first import-ready review surface exists; no YMM4 import/render/.ymmp. |
 | verified-real-input-prep-episode002 | INPUT_API_HUB / VERIFIED_REAL_INPUT_PREP | accepted/close-ready | Real-input replacement readiness pack exists; required local inputs defined; candidate input count is 0. |
-| ymm4-observation-readback-episode002 | OUTPUT_VIDEO_EDITING / YMM4_CSV_ADAPTER | blocked/existing-unsaved-project-preserved | Derived CSV re-observation was not attempted because YMM4 restored an existing unsaved project. CSV gate remains pending; diagnostic `.ymmp` is separately `not_authorized / not_attempted`. |
+| ymm4-observation-readback-episode002 | OUTPUT_VIDEO_EDITING / YMM4_DIAGNOSTIC_PROJECT | accepted/diagnostic-proof-observed | The separately authorized diagnostic project reopened in YMM4 with 9 VoiceItems and linked subtitles, 3 ImageItems, 3 independent TextItems, and readable S1/S2/S3 non-final labels; no render/export. |
 | integrity-triage | INTEGRITY_TRIAGE | paused | Full-suite drift remains nonblocking for targeted slices. |
-| control-boundary-correction | INTEGRITY_TRIAGE | completed/return-to-product | Repo-side supervisor control plane remains removed; product work has advanced through the YMM4 five-point observation. |
-| cross-device-restart-handoff | INTEGRITY_TRIAGE | completed/remote-seal | Current restart context points to the actual-observation branch and the evidence-backed adapter-correction gate. |
+| control-boundary-correction | INTEGRITY_TRIAGE | completed/return-to-product | Repo-side supervisor control plane remains removed; product work has advanced through the diagnostic placeholder proof observation. |
+| cross-device-restart-handoff | INTEGRITY_TRIAGE | completed/remote-seal | Current restart context points to the diagnostic-proof-observed state and the supervisor decision between real-input and integration. |

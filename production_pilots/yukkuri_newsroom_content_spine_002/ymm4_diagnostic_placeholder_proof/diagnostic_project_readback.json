@@ -1,0 +1,217 @@
+{
+  "schema_version": "ymm4_diagnostic_project_readback.v1",
+  "artifact_id": "episode_002_ymm4_diagnostic_placeholder_proof_v1_readback",
+  "episode_id": "yukkuri_newsroom_content_spine_002",
+  "status": "structural_pass",
+  "diagnostic_only": true,
+  "project_repo_relative_local_path": "episode_002_diagnostic_placeholder.local.ymmp",
+  "project_sha256": "18343C8E8ECA85180A696A8C70353C286B749D69FC0E2259BCF49C234F84270D",
+  "normalized_project_sha256": "71FEB01F5E952F7F969EA4F3D984B296F25B775FCDC2022DAA54B3AF607164B2",
+  "asset": {
+    "repo_relative_path": "assets/diagnostic_placeholder.png",
+    "sha256": "7698897C23F7E6C053A995CB4D1F79D5A3366B4F5D5EEDBC1B6B14877745FA9F",
+    "valid": true,
+    "width": 1920,
+    "height": 1080,
+    "format": "png",
+    "external_source": false
+  },
+  "timeline": {
+    "fps": 60,
+    "length_frames": 2790,
+    "item_count": 15,
+    "item_type_counts": {
+      "VoiceItem": 9,
+      "ImageItem": 3,
+      "TextItem": 3
+    }
+  },
+  "VoiceItems": [
+    {
+      "cue_id": "csv_row_1",
+      "scene_id": "S1",
+      "character": "ゆっくり霊夢",
+      "text": "今日は「DRY RUN」って、どういう話なの？",
+      "frame": 0,
+      "length": 273,
+      "canonical_json_sha256": "3D060DDF85A966F81EBB1081305C2016DC9978D2D5ECE9656B800E654F175EC7"
+    },
+    {
+      "cue_id": "csv_row_2",
+      "scene_id": "S1",
+      "character": "ゆっくり魔理沙",
+      "text": "Dry-run only: confirm the factory can open a second episode seed.",
+      "frame": 273,
+      "length": 293,
+      "canonical_json_sha256": "DA8E1D209B004D0F84FD7EB18692147FA25D3D3008922A4A283C295BA2C3B11E"
+    },
+    {
+      "cue_id": "csv_row_3",
+      "scene_id": "S2",
+      "character": "ゆっくり魔理沙",
+      "text": "ポイント1は、Load the template registry.",
+      "frame": 566,
+      "length": 205,
+      "canonical_json_sha256": "56F15668375DE2AC714A318408382EE22AD3AE21DDF936B36E31C6732C851FF2"
+    },
+    {
+      "cue_id": "csv_row_4",
+      "scene_id": "S2",
+      "character": "ゆっくり魔理沙",
+      "text": "ポイント2は、Separate inherited defaults from real required inputs.",
+      "frame": 771,
+      "length": 329,
+      "canonical_json_sha256": "7C64399B2822E1966BA5B6FBE92780904F6EBD1E725D441B3BF77C714B63AD4E"
+    },
+    {
+      "cue_id": "csv_row_5",
+      "scene_id": "S3",
+      "character": "ゆっくり霊夢",
+      "text": "なるほど、そこを見れば話の筋が追いやすいんだね。",
+      "frame": 1100,
+      "length": 241,
+      "canonical_json_sha256": "1EC8BAB351E5FD315C69BDFC872DB4EA4D975352AE9F40D2D8B04C4CAE5CD85D"
+    },
+    {
+      "cue_id": "csv_row_6",
+      "scene_id": "S3",
+      "character": "ゆっくり魔理沙",
+      "text": "ポイント3は、Mark the source packet as synthetic dry-run material.",
+      "frame": 1341,
+      "length": 306,
+      "canonical_json_sha256": "E7E238136786D02062A439255D666095408E20CA6C5CF414C0460A9D3774954C"
+    },
+    {
+      "cue_id": "csv_row_7",
+      "scene_id": "S3",
+      "character": "ゆっくり魔理沙",
+      "text": "ポイント4は、Stop before transcript, YMM4, rights, render, or publication work.",
+      "frame": 1647,
+      "length": 429,
+      "canonical_json_sha256": "6372B6CCC840C673DE690032536A4DC2091C901A379C4D6F72BD8E70D48E7E56"
+    },
+    {
+      "cue_id": "csv_row_8",
+      "scene_id": "S3",
+      "character": "ゆっくり霊夢",
+      "text": "なるほど、そこを見れば話の筋が追いやすいんだね。",
+      "frame": 2076,
+      "length": 241,
+      "canonical_json_sha256": "7B237FCB9C3FEDD18450B5DB47CAE7131AEAF3BDB01ED9757B70B07E3A721865"
+    },
+    {
+      "cue_id": "csv_row_9",
+      "scene_id": "S3",
+      "character": "ゆっくり魔理沙",
+      "text": "この段階ではローカル企画案なので、本番化には実ソース、台本、タイミング確認が必要だぜ。",
+      "frame": 2317,
+      "length": 473,
+      "canonical_json_sha256": "B9819C1CD481653F0286ACE2539F3A6ACA584B129CBCBE54E71AF1E0281CB5AD"
+    }
+  ],
+  "scenes": [
+    {
+      "scene_id": "S1",
+      "cue_ids": [
+        "csv_row_1",
+        "csv_row_2"
+      ],
+      "start_frame": 0,
+      "end_frame": 566,
+      "length_frames": 566,
+      "timing_source": "actual_voiceitem_frames_and_next_scene_cue_boundary",
+      "label": "S1 | DIAGNOSTIC | NOT FINAL | SAMPLE / PLACEHOLDER",
+      "image_remark": "episode002:diagnostic_placeholder:S1:image",
+      "text_remark": "episode002:diagnostic_placeholder:S1:text",
+      "ImageItem_count": 1,
+      "TextItem_count": 1,
+      "image_asset_matches": true,
+      "image_timing_matches": true,
+      "text_timing_matches": true,
+      "text_matches": true
+    },
+    {
+      "scene_id": "S2",
+      "cue_ids": [
+        "csv_row_3",
+        "csv_row_4"
+      ],
+      "start_frame": 566,
+      "end_frame": 1100,
+      "length_frames": 534,
+      "timing_source": "actual_voiceitem_frames_and_next_scene_cue_boundary",
+      "label": "S2 | DIAGNOSTIC | NOT FINAL | SAMPLE / PLACEHOLDER",
+      "image_remark": "episode002:diagnostic_placeholder:S2:image",
+      "text_remark": "episode002:diagnostic_placeholder:S2:text",
+      "ImageItem_count": 1,
+      "TextItem_count": 1,
+      "image_asset_matches": true,
+      "image_timing_matches": true,
+      "text_timing_matches": true,
+      "text_matches": true
+    },
+    {
+      "scene_id": "S3",
+      "cue_ids": [
+        "csv_row_5",
+        "csv_row_6",
+        "csv_row_7",
+        "csv_row_8",
+        "csv_row_9"
+      ],
+      "start_frame": 1100,
+      "end_frame": 2790,
+      "length_frames": 1690,
+      "timing_source": "actual_voiceitem_frames_and_next_scene_cue_boundary",
+      "label": "S3 | DIAGNOSTIC | NOT FINAL | SAMPLE / PLACEHOLDER",
+      "image_remark": "episode002:diagnostic_placeholder:S3:image",
+      "text_remark": "episode002:diagnostic_placeholder:S3:text",
+      "ImageItem_count": 1,
+      "TextItem_count": 1,
+      "image_asset_matches": true,
+      "image_timing_matches": true,
+      "text_timing_matches": true,
+      "text_matches": true
+    }
+  ],
+  "path_audit": {
+    "project_contains_absolute_local_asset_reference": true,
+    "absolute_local_reference_count": 4,
+    "allowed_absolute_local_reference_count": 4,
+    "allowed_asset_reference_count": 3,
+    "unexpected_local_reference_count": 0,
+    "unexpected_local_reference_present": false,
+    "external_or_file_uri_reference_present": false,
+    "unc_reference_present": false,
+    "private_path_values_exposed_in_readback": false,
+    "commit_disposition": "local_only_not_committed_absolute_asset_reference"
+  },
+  "checks": {
+    "project_parse_pass": true,
+    "one_selected_timeline": true,
+    "VoiceItem_count_9": true,
+    "VoiceItem_objects_unchanged": true,
+    "VoiceItem_text_character_order_matches_derived_csv": true,
+    "VoiceItem_frames_strictly_increasing": true,
+    "character_counts_3_6": true,
+    "ImageItem_count_3": true,
+    "independent_TextItem_count_3": true,
+    "item_type_families_exact": true,
+    "scene_placeholder_coverage": true,
+    "timeline_length_unchanged": true,
+    "timeline_contains_last_scene": true,
+    "placeholder_asset_is_valid_png": true,
+    "only_expected_local_absolute_references": true,
+    "no_external_or_file_uri_reference": true,
+    "no_unc_reference": true,
+    "diagnostic_boundary_explicit": true,
+    "committed_metadata_has_no_private_path_values": true
+  },
+  "failed_checks": [],
+  "render_or_export_performed": false,
+  "production_ymmp_written": false,
+  "real_input_replaced": false,
+  "public_ready": false,
+  "final_thumbnail_approval": false,
+  "upload_performed": false
+}

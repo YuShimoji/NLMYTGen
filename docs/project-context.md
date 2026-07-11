@@ -11,6 +11,51 @@
   `git rev-list --left-right --count "HEAD...@{u}"`の順でclean / `0 0`を確認する。
 - **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
   `docs/runtime-state.md` → この節 → `docs/PROJECT_COCKPIT.md` →
+  `docs/THREAD_REGISTRY.md`。証拠の再確認時だけ
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json`、
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_manifest.json`、
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json`、
+  `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json`を追加で読む。
+- **現在の状態**: `Project-State-ID`は
+  `episode-002-ymm4-diagnostic-placeholder-proof-observed-v1`、revisionは
+  `2026-07-11.2`。Product-Stateは
+  `episode-002-ymm4-diagnostic-placeholder-proof-observed`、Product-Gateは
+  `supervisor-next-slice-decision`。
+- **CSV gate実観測**: 許可対象だったrecovered unsaved projectを破棄し、clean projectで
+  derived CSVだけをYMM4 `4.53.0.9`へimportした。mapping dialogは出ず、9 VoiceItems、
+  `ゆっくり霊夢` 3件 / `ゆっくり魔理沙` 6件、linked subtitle text/orderを確認した。
+  timing orderは維持され、60 fps・2790 frames・46.50秒だった。receipt v2は`passed`。
+- **diagnostic project実観測**: 別認可のdiagnostic-only projectを生成してYMM4で再openし、
+  error/unexpected dialogなし、元の9 VoiceItemsとlinked subtitles維持、3 ImageItems、
+  3 independent TextItems、明示的にnon-finalなS1 / S2 / S3 labelを確認した。
+  render/exportは行わず、applicationは保存済みdiagnostic projectを開いた状態にある。
+- **portable evidence**: local `episode_002_imported_base.local.ymmp`と
+  `episode_002_diagnostic_placeholder.local.ymmp`はmachine-local referenceを持ち、後者は
+  絶対asset referenceを含むためignoreし、commitしない。tracked対象はdeterministic generator、placeholder PNG、
+  manifest、machine readback、GUI receipt、READMEである。
+- **不変証拠**: canonical CSV SHA-256は
+  `6FBB4666028DF4EF61F19C29505563141B1A82E932DC8E05BF8168F06347D38C`、
+  derived CSVは`5452DE96DC6EF012400A132BA5BAE80B8553C1B1CDD27860D36674C25AF391BC`、
+  historical 2026-07-10 receiptは
+  `DC756D9C4EE9ABDFDDFB284B2B8EC70B227DDEB5E365C1BBB8EE8438D8C9A5B5`のまま。
+- **検証境界**: receipt/readbackはCSV gateとdiagnostic GUI gateを分離して記録する。
+  screenshotは未取得だが必須gateではない。full pytestは実行せず、focused validationと
+  target state ID付きstate syncをcloseout gateにする。
+- **次の入口**: supervisorが`Advance`（verified real input）または`Integrate`
+  （feature/default diff review）を選ぶ。どちらもこの成功から自動開始しない。
+- **閉じたままのgate**: production `.ymmp`、render/export、real-input replacement、
+  rights/public/final-thumbnail approval、upload/publication、default-branch integration。
+
+## 直前の別端末再開ハンドオフ（2026-07-11 JST・alias reobservation blocker・履歴）
+
+この節は、Case A成功前のblocker判断を残す履歴であり、現在の指示として読まない。
+
+- **取得先**: `origin/codex/episode-002-ymm4-five-point-observation-v1` のbranch先端。
+- **再開前確認**: `git fetch --prune origin`、同branchへのswitch、
+  `git pull --ff-only`、`git status --short --branch`、
+  `git rev-list --left-right --count "HEAD...@{u}"`の順でclean / `0 0`を確認する。
+- **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
+  `docs/runtime-state.md` → この節 → `docs/PROJECT_COCKPIT.md` →
   `docs/THREAD_REGISTRY.md`。GUI再観測時だけ
   `production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_readback_pack/manual_ymm4_observation_readback.md`
   を追加で読む。
@@ -48,7 +93,7 @@
 - **詳細証跡**:
   `docs/verification/NEWSROOM_EPISODE_002_YMM4_ALIAS_CSV_CONTRACT_2026-07-11.md`。
 
-## 直前の別端末再開ハンドオフ（2026-07-10 JST・履歴）
+## その前の別端末再開ハンドオフ（2026-07-10 JST・履歴）
 
 この節は判断履歴であり、現在の指示として読まない。下部に残る旧端末の絶対pathは
 当時の履歴であり、現在の実行pathとして再利用しない。

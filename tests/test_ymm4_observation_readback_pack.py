@@ -315,7 +315,7 @@ def test_ymm4_observation_readback_builds_operator_instruction_package(tmp_path)
     assert "card-grid" not in html
     assert "operatorが返す観測5点" in manual
     assert "mapping dialogが出ず" in manual
-    assert "not_authorized/not_attempted" in manual
+    assert "does not itself authorize or evaluate a diagnostic project" in manual
     assert "Do not render/export" in manual
     assert manual.count("\n1.") == 1
     assert manual.count("\n5.") == 1
@@ -455,6 +455,10 @@ def test_ymm4_observation_readback_accepts_passed_csv_gate_without_diagnostic_it
     assert readback["receipt_schema_version"] == CSV_GATE_OBSERVATION_RECEIPT_SCHEMA_VERSION
     assert readback["observation_contract"] == "ymm4_csv_import_gate.v1"
     assert readback["observation_mode"] == "actual_ymm4_gui_observation"
+    assert readback["observed_by_environment"]["yymm4_executable_detected"] is True
+    assert readback["observed_by_environment"]["yymm4_availability_status"] == (
+        "actual_gui_observation_recorded"
+    )
     assert readback["expected_import_path"] == DERIVED_CSV
     assert readback["receipt_source_csv"] == DERIVED_CSV
     assert readback["source_csv_sha256"] == DERIVED_CSV_SHA256
@@ -479,7 +483,7 @@ def test_ymm4_observation_readback_accepts_passed_csv_gate_without_diagnostic_it
         "order_preserved_actual_voice_duration_46.5_seconds"
     )
     assert readback["responsibility_boundary_observed"] == (
-        "csv_voiceitem_linked_subtitle_only_diagnostic_project_not_authorized_not_attempted"
+        "csv_voiceitem_linked_subtitle_only_diagnostic_authority_outside_csv_receipt"
     )
     assert readback["csv_import_gate"] == {
         "contract": "ymm4_csv_import_gate.v1",
@@ -491,8 +495,8 @@ def test_ymm4_observation_readback_accepts_passed_csv_gate_without_diagnostic_it
             "ImageItem",
             "independent_TextItem_placeholders",
         ],
-        "authorization_status": "not_authorized",
-        "execution_status": "not_attempted",
+        "authorization_status": "not_authorized_by_csv_gate_receipt",
+        "execution_status": "not_evaluated_by_csv_gate_receipt",
         "absence_during_csv_import_is_failure": False,
     }
     assert readback["diagnostic_ymmp_project_attempted"] is False
@@ -528,9 +532,62 @@ def test_ymm4_observation_readback_accepts_passed_csv_gate_without_diagnostic_it
     limitations = (output_dir / "limitations.md").read_text(encoding="utf-8")
     assert "CSV gate 実観測結果5点" in manual
     assert "mapping_dialog_present=False" in manual
-    assert "diagnostic project=not_authorized/not_attempted" in manual
+    assert "diagnostic project fields (CSV-receipt scope only)=not_authorized/not_attempted" in manual
     assert "supervisor_next_slice_decision" in manual
     assert "ImageItem or independent TextItem absence is not a CSV failure" in limitations
+
+
+def test_csv_gate_receipt_can_checkpoint_before_authorized_diagnostic_project(
+    tmp_path,
+) -> None:
+    receipt = _csv_gate_observation_receipt()
+    receipt["safety"]["application_closed_without_saving"] = False
+    receipt["safety"]["application_left_open_for_authorized_diagnostic_project"] = True
+    receipt_path = tmp_path / "csv_gate_continuation_receipt.json"
+    receipt_path.write_text(
+        json.dumps(receipt, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+    readback = build_ymm4_observation_readback_pack(
+        package_dir=SOURCE_PACKAGE,
+        output_dir=tmp_path / "readback",
+        artifact_id=DEFAULT_ARTIFACT_ID,
+        observation_receipt=receipt_path,
+    )
+
+    assert readback["validation_status"] == "passed"
+    assert readback["status"] == "passed"
+    assert readback["safety"]["application_closed_without_saving"] is False
+    assert readback["safety"][
+        "application_left_open_for_authorized_diagnostic_project"
+    ] is True
+
+
+@pytest.mark.parametrize(("closed", "left_open"), [(True, True), (False, False)])
+def test_csv_gate_receipt_rejects_contradictory_application_checkpoint(
+    tmp_path,
+    closed,
+    left_open,
+) -> None:
+    receipt = _csv_gate_observation_receipt()
+    receipt["safety"]["application_closed_without_saving"] = closed
+    receipt["safety"][
+        "application_left_open_for_authorized_diagnostic_project"
+    ] = left_open
+    receipt_path = tmp_path / "contradictory_checkpoint.json"
+    receipt_path.write_text(
+        json.dumps(receipt, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="authorized diagnostic-project continuation"):
+        build_ymm4_observation_readback_pack(
+            package_dir=SOURCE_PACKAGE,
+            output_dir=tmp_path / "readback",
+            artifact_id=DEFAULT_ARTIFACT_ID,
+            observation_receipt=receipt_path,
+        )
 
 
 @pytest.mark.parametrize(
@@ -768,7 +825,7 @@ def test_cli_build_ymm4_observation_readback_with_actual_receipt(tmp_path, capsy
         "ゆっくり魔理沙": 6,
     }
     assert payload["responsibility_boundary_observed"] == (
-        "csv_voiceitem_linked_subtitle_only_diagnostic_project_not_authorized_not_attempted"
+        "csv_voiceitem_linked_subtitle_only_diagnostic_authority_outside_csv_receipt"
     )
     assert payload["next_gate"] == "supervisor_next_slice_decision"
 

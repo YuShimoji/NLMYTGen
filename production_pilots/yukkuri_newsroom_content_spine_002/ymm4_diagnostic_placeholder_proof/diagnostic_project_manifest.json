@@ -1,0 +1,131 @@
+{
+  "schema_version": "ymm4_diagnostic_project_manifest.v1",
+  "artifact_id": "episode_002_ymm4_diagnostic_placeholder_proof_v1",
+  "episode_id": "yukkuri_newsroom_content_spine_002",
+  "status": "generated_structural_pass",
+  "diagnostic_only": true,
+  "generator": {
+    "module": "src.pipeline.ymm4_diagnostic_placeholder_proof",
+    "command": "uv run python -m src.cli.main build-ymm4-diagnostic-placeholder-proof --package production_pilots/yukkuri_newsroom_content_spine_002 --source-ymmp <local-import-base.ymmp> --csv-gate-receipt <csv-gate-receipt-v2.json>",
+    "determinism_contract": "same inputs and output path yield identical project and metadata bytes"
+  },
+  "source_records": [
+    {
+      "record_id": "derived_csv",
+      "repo_relative_or_local_name": "ymm4_import_ready_pack/derived_yymm4_import.csv",
+      "sha256": "5452DE96DC6EF012400A132BA5BAE80B8553C1B1CDD27860D36674C25AF391BC"
+    },
+    {
+      "record_id": "canonical_csv",
+      "repo_relative_or_local_name": "transcript_substitution_readiness/regenerated_draft_yymm4.csv",
+      "sha256": "6FBB4666028DF4EF61F19C29505563141B1A82E932DC8E05BF8168F06347D38C"
+    },
+    {
+      "record_id": "cue_map",
+      "repo_relative_or_local_name": "ymm4_import_ready_pack/edit_slice_to_ymm4_cue_map.json",
+      "sha256": "99A90FE89877AB59DCC2877955E908219B22CEE5BB94BDA474474DAB7814059D"
+    },
+    {
+      "record_id": "character_profile",
+      "repo_relative_or_local_name": "ymm4_character_alias_profiles/ymm4_4_53_0_9_yukkuri_characters_v1.json",
+      "sha256": "C32F8E0FAA2FBCED6E91ADFD5BEDC62E8E245EF48F88A67F81B86C39AB89A304"
+    },
+    {
+      "record_id": "csv_gate_receipt_v2",
+      "repo_relative_or_local_name": "ymm4_csv_gate_observation_receipt_2026-07-11.json",
+      "sha256": "7F35D2DFC66600AFAF058BF1C250807D6ACCE05A457656D5EBBB2AA1637D8676"
+    },
+    {
+      "record_id": "local_import_base",
+      "repo_relative_or_local_name": "episode_002_imported_base.local.ymmp",
+      "sha256": "A3FA8D5645B6317C2D72D38D391E7E26DB3544B9F17C1F1CC7B3A180C1834626"
+    }
+  ],
+  "source_environment": {
+    "yymm4_version": "4.53.0.9",
+    "profile_id": "ymm4_4_53_0_9_yukkuri_characters_ja_v1"
+  },
+  "project": {
+    "repo_relative_local_path": "episode_002_diagnostic_placeholder.local.ymmp",
+    "sha256": "18343C8E8ECA85180A696A8C70353C286B749D69FC0E2259BCF49C234F84270D",
+    "normalized_sha256": "71FEB01F5E952F7F969EA4F3D984B296F25B775FCDC2022DAA54B3AF607164B2",
+    "commit_disposition": "local_only_not_committed_absolute_asset_reference",
+    "portable_relative_imageitem_path_proven": false
+  },
+  "assets": [
+    {
+      "repo_relative_path": "assets/diagnostic_placeholder.png",
+      "sha256": "7698897C23F7E6C053A995CB4D1F79D5A3366B4F5D5EEDBC1B6B14877745FA9F",
+      "width": 1920,
+      "height": 1080,
+      "external_source": false,
+      "generation": "deterministic_python_standard_library_rgba_png"
+    }
+  ],
+  "scenes": [
+    {
+      "scene_id": "S1",
+      "cue_ids": [
+        "csv_row_1",
+        "csv_row_2"
+      ],
+      "start_frame": 0,
+      "end_frame": 566,
+      "length_frames": 566,
+      "timing_source": "actual_voiceitem_frames_and_next_scene_cue_boundary",
+      "label": "S1 | DIAGNOSTIC | NOT FINAL | SAMPLE / PLACEHOLDER",
+      "image_remark": "episode002:diagnostic_placeholder:S1:image",
+      "text_remark": "episode002:diagnostic_placeholder:S1:text"
+    },
+    {
+      "scene_id": "S2",
+      "cue_ids": [
+        "csv_row_3",
+        "csv_row_4"
+      ],
+      "start_frame": 566,
+      "end_frame": 1100,
+      "length_frames": 534,
+      "timing_source": "actual_voiceitem_frames_and_next_scene_cue_boundary",
+      "label": "S2 | DIAGNOSTIC | NOT FINAL | SAMPLE / PLACEHOLDER",
+      "image_remark": "episode002:diagnostic_placeholder:S2:image",
+      "text_remark": "episode002:diagnostic_placeholder:S2:text"
+    },
+    {
+      "scene_id": "S3",
+      "cue_ids": [
+        "csv_row_5",
+        "csv_row_6",
+        "csv_row_7",
+        "csv_row_8",
+        "csv_row_9"
+      ],
+      "start_frame": 1100,
+      "end_frame": 2790,
+      "length_frames": 1690,
+      "timing_source": "actual_voiceitem_frames_and_next_scene_cue_boundary",
+      "label": "S3 | DIAGNOSTIC | NOT FINAL | SAMPLE / PLACEHOLDER",
+      "image_remark": "episode002:diagnostic_placeholder:S3:image",
+      "text_remark": "episode002:diagnostic_placeholder:S3:text"
+    }
+  ],
+  "expected_counts": {
+    "VoiceItem": 9,
+    "ImageItem": 3,
+    "independent_TextItem": 3,
+    "characters": {
+      "ゆっくり霊夢": 3,
+      "ゆっくり魔理沙": 6
+    }
+  },
+  "evidence_boundary": {
+    "csv_gate_receipt_is_separate": true,
+    "machine_readback_is_not_gui_observation": true,
+    "diagnostic_project_receipt_records_gui_observation": true,
+    "render_or_export_performed": false,
+    "production_ymmp_written": false,
+    "real_input_replaced": false,
+    "rights_public_or_upload_approved": false,
+    "final_thumbnail_approved": false
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": "ymm4_diagnostic_project_gui_receipt.v1",
+  "artifact_id": "episode_002_ymm4_diagnostic_placeholder_proof_v1_gui_observation",
+  "episode_id": "yukkuri_newsroom_content_spine_002",
+  "status": "passed",
+  "result": "passed",
+  "observed_at": "2026-07-11T15:41:22+09:00",
+  "observed_by_environment": {
+    "application": "YukkuriMovieMaker",
+    "yymm4_version": "4.53.0.9",
+    "observation_mode": "actual_gui_reopen"
+  },
+  "application_close_state": "left_open_with_saved_diagnostic_project",
+  "project": {
+    "repo_relative_local_path": "episode_002_diagnostic_placeholder.local.ymmp",
+    "sha256": "18343C8E8ECA85180A696A8C70353C286B749D69FC0E2259BCF49C234F84270D",
+    "commit_disposition": "local_only_not_committed_absolute_asset_reference"
+  },
+  "evidence_hashes": {
+    "manifest_sha256": "0CB3F36D9E87E618AE69D77108FDA49839278579AA218249ADA5B52B0271F36B",
+    "readback_sha256": "25B242CF32FB8885361BEAFC38581024C892E80977A4BB88E26E8260E564FCCC",
+    "project_sha256": "18343C8E8ECA85180A696A8C70353C286B749D69FC0E2259BCF49C234F84270D",
+    "asset_sha256": "7698897C23F7E6C053A995CB4D1F79D5A3366B4F5D5EEDBC1B6B14877745FA9F",
+    "csv_gate_receipt_sha256": "7F35D2DFC66600AFAF058BF1C250807D6ACCE05A457656D5EBBB2AA1637D8676"
+  },
+  "observations": {
+    "opened_without_error": true,
+    "unexpected_dialog_present": false,
+    "VoiceItems": 9,
+    "character_counts": {
+      "ゆっくり霊夢": 3,
+      "ゆっくり魔理沙": 6
+    },
+    "linked_subtitles_preserved": true,
+    "ImageItems": 3,
+    "independent_TextItems": 3,
+    "placeholder_is_explicitly_non_final": true,
+    "render_or_export_performed": false,
+    "scene_labels_readable": [
+      "S1 | DIAGNOSTIC | NOT FINAL | SAMPLE / PLACEHOLDER",
+      "S2 | DIAGNOSTIC | NOT FINAL | SAMPLE / PLACEHOLDER",
+      "S3 | DIAGNOSTIC | NOT FINAL | SAMPLE / PLACEHOLDER"
+    ]
+  },
+  "screenshot": {
+    "status": "not_captured",
+    "repo_relative_path": null,
+    "sha256": null
+  },
+  "safety": {
+    "diagnostic_only": true,
+    "production_ymmp_written": false,
+    "render_or_export_performed": false,
+    "real_input_replaced": false,
+    "rights_or_public_approval_performed": false,
+    "final_thumbnail_approval": false,
+    "public_ready": false,
+    "upload_performed": false
+  },
+  "next_gate": "supervisor_next_slice_decision"
+}
