@@ -1,0 +1,216 @@
+{
+  "schema_version": "verified_local_evidence_render_validation_readback.v1",
+  "artifact_id": "episode_002_verified_local_evidence_render_validation",
+  "status": "passed",
+  "operator_result": {
+    "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/local_outputs/operator_result.json",
+    "sha256": "C2204D10579FFBC9133F21C65F9C60968C19638C29DB4354A529D0CAF1B6E9E5",
+    "parsed_as_utf8": true,
+    "source_bytes_preserved": true,
+    "reported_status": "success",
+    "reported_failed_checks": []
+  },
+  "identity_checks": {
+    "project_sha256_matches_operator_result": true,
+    "render_sha256_matches_operator_result": true,
+    "render_size_matches_operator_result": true,
+    "project_not_before_batch": true,
+    "render_not_before_batch": true,
+    "project_not_after_collection": true,
+    "render_not_after_collection": true
+  },
+  "project": {
+    "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/local_outputs/episode_002_verified_local_evidence_internal_review.local.ymmp",
+    "sha256": "318AF09D0B52958555918140AD62AF0E7882A39FFA902C8E5D1304319CE11A01",
+    "status": "structural_pass",
+    "timeline": {
+      "fps": 60,
+      "width": 1920,
+      "height": 1080,
+      "length_frames": 3563,
+      "item_type_counts": {
+        "VoiceItem": 9,
+        "ImageItem": 3,
+        "TextItem": 3
+      }
+    },
+    "characters": {
+      "ゆっくり霊夢": 3,
+      "ゆっくり魔理沙": 6
+    },
+    "checks": {
+      "project_parse_pass": true,
+      "one_selected_timeline": true,
+      "base_gui_layout_state_stripped": true,
+      "VoiceItem_count_9": true,
+      "VoiceItem_text_character_order_matches_derived_csv": true,
+      "VoiceItem_objects_unchanged": true,
+      "character_counts_3_6": true,
+      "ImageItem_count_3": true,
+      "independent_TextItem_count_3": true,
+      "item_type_families_exact": true,
+      "scene_placeholder_coverage": true,
+      "internal_boundary_labels_explicit": true,
+      "timeline_length_preserved": true,
+      "only_expected_local_absolute_references": true,
+      "no_external_or_file_uri_reference": true,
+      "no_unc_reference": true
+    },
+    "failed_checks": [],
+    "evidence_grade": "verified"
+  },
+  "original_render": {
+    "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/local_outputs/episode_002_verified_local_evidence_internal_review.mp4",
+    "sha256": "ACF2E8B284E7956529F8170B6BA5EC55CBC0A4B511DCF56E579087051DA00BAE",
+    "size_bytes": 1782869795,
+    "iso_bmff": {
+      "status": "passed",
+      "box_types": [
+        "ftyp",
+        "free",
+        "mdat",
+        "moov"
+      ],
+      "has_ftyp": true,
+      "has_moov": true,
+      "has_mdat": true,
+      "major_brand": "isom",
+      "compatible_brands": [
+        "isom",
+        "iso2",
+        "avc1",
+        "mp41"
+      ],
+      "duration_seconds": 59.384,
+      "misnamed_yymm4_project_json": false
+    },
+    "probe": {
+      "status": "passed",
+      "tool": "ffprobe",
+      "tool_version": "8.0.1-full_build-www.gyan.dev",
+      "exit_code": 0,
+      "probe_score": 100
+    },
+    "decode": {
+      "status": "passed",
+      "tool": "ffmpeg",
+      "tool_version": "8.0.1-full_build-www.gyan.dev",
+      "exit_code": 0,
+      "decode_target": "null_output",
+      "decoded_frames": null,
+      "scope": "full_file",
+      "source_unchanged": true
+    },
+    "media": {
+      "container": "mov,mp4,m4a,3gp,3g2,mj2",
+      "brands": [
+        "isom",
+        "iso2",
+        "avc1",
+        "mp41"
+      ],
+      "major_brand": "isom",
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "duration_seconds": 59.383008,
+      "stream_count": 2,
+      "overall_bitrate_bps": 240185851,
+      "video_bitrate_bps": 240000480,
+      "audio_bitrate_bps": 171024
+    },
+    "checks": {
+      "not_yymm4_project_json": true,
+      "iso_bmff_structure_pass": true,
+      "ffprobe_pass": true,
+      "decode_smoke_pass": true,
+      "positive_duration": true,
+      "stream_count_positive": true,
+      "media_validation_pass": true
+    },
+    "evidence_grade": "verified"
+  },
+  "review_proxy": {
+    "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/local_outputs/episode_002_verified_local_evidence_internal_review.proxy.mp4",
+    "sha256": "45BD0A060BAA45C1BB44068F4ADAE1A6B50DBBF86FABA70F3A1761809BE5A025",
+    "size_bytes": 1400926,
+    "iso_bmff": {
+      "status": "passed",
+      "box_types": [
+        "ftyp",
+        "moov",
+        "free",
+        "mdat"
+      ],
+      "has_ftyp": true,
+      "has_moov": true,
+      "has_mdat": true,
+      "major_brand": "isom",
+      "compatible_brands": [
+        "isom",
+        "iso2",
+        "avc1",
+        "mp41"
+      ],
+      "duration_seconds": 59.392,
+      "misnamed_yymm4_project_json": false
+    },
+    "probe": {
+      "status": "passed",
+      "tool": "ffprobe",
+      "tool_version": "8.0.1-full_build-www.gyan.dev",
+      "exit_code": 0,
+      "probe_score": 100
+    },
+    "decode": {
+      "status": "passed",
+      "tool": "ffmpeg",
+      "tool_version": "8.0.1-full_build-www.gyan.dev",
+      "exit_code": 0,
+      "decode_target": "null_output",
+      "decoded_frames": null,
+      "scope": "full_file",
+      "source_unchanged": true
+    },
+    "media": {
+      "container": "mov,mp4,m4a,3gp,3g2,mj2",
+      "brands": [
+        "isom",
+        "iso2",
+        "avc1",
+        "mp41"
+      ],
+      "major_brand": "isom",
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "width": 1280,
+      "height": 720,
+      "fps": 60.0,
+      "duration_seconds": 59.392,
+      "stream_count": 2,
+      "overall_bitrate_bps": 188702,
+      "video_bitrate_bps": 56631,
+      "audio_bitrate_bps": 119069
+    },
+    "checks": {
+      "not_yymm4_project_json": true,
+      "iso_bmff_structure_pass": true,
+      "ffprobe_pass": true,
+      "decode_smoke_pass": true,
+      "positive_duration": true,
+      "stream_count_positive": true,
+      "media_validation_pass": true
+    },
+    "evidence_grade": "verified"
+  },
+  "evidence_boundary": {
+    "container_codec_decode": "verified",
+    "operator_gui_actions_and_output_setting": "observed",
+    "large_file_cause": "inferred_from_verified_bitrate",
+    "visual_editorial_acceptance": "unknown",
+    "semantic_cue_alignment_in_encoded_media": "unknown"
+  },
+  "failed_checks": []
+}

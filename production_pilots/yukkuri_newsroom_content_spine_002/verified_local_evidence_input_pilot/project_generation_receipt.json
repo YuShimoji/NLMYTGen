@@ -2,6 +2,8 @@
   "schema_version": "verified_local_evidence_project_generation_receipt.v1",
   "artifact_id": "episode_002_verified_local_evidence_input_pilot_v1_project_generation",
   "status": "operator_input_required",
+  "contract_stage": "pre_operator_contract_snapshot",
+  "superseded_by_render_receipt_when_present": "render_receipt.json",
   "generator_implemented": true,
   "static_contract_passed": true,
   "actual_local_project_generated": false,

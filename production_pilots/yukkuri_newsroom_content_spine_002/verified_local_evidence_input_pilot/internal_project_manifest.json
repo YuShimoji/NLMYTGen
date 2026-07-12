@@ -3,6 +3,8 @@
   "artifact_id": "episode_002_verified_local_evidence_input_pilot_v1_internal_project",
   "episode_id": "yukkuri_newsroom_content_spine_002",
   "status": "ready_for_operator_generation",
+  "contract_stage": "pre_operator_contract_snapshot",
+  "current_authority_when_render_exists": "render_receipt.json",
   "internal_review_only": true,
   "generator": {
     "module": "src.pipeline.verified_local_evidence_input_pilot",

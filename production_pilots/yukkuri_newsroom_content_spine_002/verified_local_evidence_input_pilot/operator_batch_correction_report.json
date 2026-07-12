@@ -1,0 +1,66 @@
+{
+  "schema_version": "verified_local_evidence_operator_batch_correction_report.v1",
+  "artifact_id": "episode_002_verified_local_evidence_operator_batch_corrections",
+  "status": "passed",
+  "operator_batch_manifest": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/operator_batch/operator_batch_manifest.json",
+  "corrections": [
+    {
+      "requirement_id": "R4",
+      "defect": "ambiguous native-stdout JSON transport under Windows PowerShell",
+      "correction": "Python-written UTF-8 JSON file read with Get-Content -Raw -Encoding UTF8",
+      "verification": "focused UTF-8 Japanese JSON regression and static script check",
+      "result": "passed"
+    },
+    {
+      "requirement_id": "R5",
+      "defect": "project Save As and video output instructions were ambiguous",
+      "correction": "project .local.ymmp and video .mp4 targets are named separately",
+      "verification": "tracked README and manifest contract",
+      "result": "passed"
+    },
+    {
+      "requirement_id": "R6",
+      "defect": "no resume-after-render collection route",
+      "correction": "-CollectOnly reuses existing outputs without YMM4 launch or regeneration",
+      "verification": "focused collect-only regression",
+      "result": "passed"
+    },
+    {
+      "requirement_id": "R7",
+      "defect": "YMM4 project JSON could be mistaken for an MP4",
+      "correction": "dedicated render_is_yymm4_project_json_not_mp4 detection",
+      "verification": "focused masquerading-project regression",
+      "result": "passed"
+    },
+    {
+      "requirement_id": "R8",
+      "defect": "first-32-byte ftyp search was insufficient media evidence",
+      "correction": "ISO BMFF box inspection plus ffprobe and decode smoke",
+      "verification": "render_validation_readback.json",
+      "result": "passed"
+    }
+  ],
+  "checks": {
+    "explicit_python_utf8": true,
+    "powershell_utf8_file_read": true,
+    "collect_only_supported": true,
+    "project_save_and_video_output_distinct": true,
+    "manual_actions_at_most_five": true
+  },
+  "operator_environment_observation": {
+    "yymm4_product_version": "4.54.0.1+76b177dd451f9d162816dabc4ac658180e869582",
+    "profile_observation_version": "4.53.0.9",
+    "output_setting_note": "MPEG",
+    "output_setting_note_is_machine_verified_codec": false,
+    "evidence_grade": "observed"
+  },
+  "recovery_contract": {
+    "collect_only_supported": true,
+    "collect_only_launches_yymm4": false,
+    "collect_only_regenerates_project_or_render": false,
+    "existing_success_result_is_preserved_byte_for_byte": true
+  },
+  "json_transport": "python_written_utf8_file_read_by_powershell_explicit_utf8",
+  "manual_action_count": 5,
+  "failed_checks": []
+}

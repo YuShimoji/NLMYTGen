@@ -2,6 +2,8 @@
   "schema_version": "verified_local_evidence_static_project_readback.v1",
   "artifact_id": "episode_002_verified_local_evidence_input_pilot_v1_static_project_readback",
   "status": "contract_pass",
+  "contract_stage": "pre_operator_contract_snapshot",
+  "current_authority_when_render_exists": "render_receipt.json",
   "validation_kind": "headless_static_contract_not_actual_project_parse",
   "actual_project_present": false,
   "actual_project_parse_performed": false,

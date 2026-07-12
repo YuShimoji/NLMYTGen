@@ -10,6 +10,8 @@
   "operator_manual_action_count": 5,
   "operator_return_item_count": 3,
   "fresh_output_binding_required": true,
+  "collect_only_recovery_supported": true,
+  "python_powershell_json_transport": "explicit_utf8_file",
   "yymm4_launch_attempted": false,
   "computer_use_invoked": false,
   "runtime_command": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\run_yymm4_operator_batch.ps1 -PreflightOnly",

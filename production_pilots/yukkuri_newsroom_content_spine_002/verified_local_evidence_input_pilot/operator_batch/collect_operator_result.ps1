@@ -5,6 +5,9 @@ param(
     [string]$ProjectPath = "",
     [string]$RenderPath = "",
     [string]$OutputPath = "",
+    [switch]$OperatorConfirmedClean,
+    [switch]$PreserveExistingSuccess,
+    [string]$OperatorOutputSettingNote = "",
     [Parameter(Mandatory=$true)]
     [string]$NotBeforeUtc,
     [Parameter(Mandatory=$true)]
@@ -14,6 +17,8 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+$env:PYTHONUTF8 = "1"
+$env:PYTHONIOENCODING = "utf-8"
 if (-not $PilotDir) {
     $PilotDir = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
 }
@@ -34,28 +39,51 @@ if (-not $OutputPath) {
     $OutputPath = Join-Path $PilotDir "local_outputs\operator_result.json"
 }
 
-$CollectionExit = 1
+$Arguments = @(
+    "-m", "src.cli.main", "collect-verified-local-evidence-operator-result",
+    "--pilot", $PilotDir,
+    "--project", $ProjectPath,
+    "--render", $RenderPath,
+    "--output", $OutputPath,
+    "--not-before-utc", $NotBeforeUtc,
+    "--yymm4-product-version", $Ymm4ProductVersion,
+    "--profile-observation-version", $ProfileObservationVersion,
+    "--format", "text"
+)
+if ($OperatorConfirmedClean) { $Arguments += "--operator-confirmed-clean" }
+if ($PreserveExistingSuccess) { $Arguments += "--preserve-existing-success" }
+if ($OperatorOutputSettingNote) {
+    $Arguments += "--operator-output-setting-note"
+    $Arguments += $OperatorOutputSettingNote
+}
+
 Push-Location -LiteralPath $RepoRoot
 try {
-    $ResultText = (& $PythonExe -m src.cli.main collect-verified-local-evidence-operator-result --pilot $PilotDir --project $ProjectPath --render $RenderPath --output $OutputPath --not-before-utc $NotBeforeUtc --operator-confirmed-clean --yymm4-product-version $Ymm4ProductVersion --profile-observation-version $ProfileObservationVersion --format json 2>&1 | Out-String).Trim()
+    & $PythonExe @Arguments | Out-Null
     $CollectionExit = $LASTEXITCODE
 }
 finally {
     Pop-Location
 }
-if ($CollectionExit -ne 0) {
+if (-not (Test-Path -LiteralPath $OutputPath -PathType Leaf)) {
     Write-Output "1. result: failure"
     Write-Output "2. operator_result.json: $OutputPath"
-    Write-Output "3. error: $ResultText"
+    Write-Output "3. error: collector did not write the expected UTF-8 JSON result"
     exit 1
 }
-$Result = $ResultText | ConvertFrom-Json
-if ($Result.status -eq "success") {
+$Result = Get-Content -LiteralPath $OutputPath -Raw -Encoding UTF8 | ConvertFrom-Json
+if ($CollectionExit -eq 0 -and $Result.status -eq "success") {
     Write-Output "1. result: success"
     Write-Output "2. operator_result.json: $OutputPath"
     exit 0
 }
 Write-Output "1. result: failure"
 Write-Output "2. operator_result.json: $OutputPath"
-Write-Output ("3. error: " + (($Result.failed_checks -join ", ")))
+if ($Result.status -eq "failure" -and @($Result.failed_checks).Count -gt 0) {
+    Write-Output ("3. error: " + (($Result.failed_checks -join ", ")))
+} elseif ($CollectionExit -ne 0) {
+    Write-Output "3. error: collector process failed; the existing result was preserved when requested"
+} else {
+    Write-Output "3. error: collector returned an unexpected result state"
+}
 exit 1

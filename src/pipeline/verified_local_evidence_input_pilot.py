@@ -76,6 +76,7 @@ LOCAL_RENDER_FILENAME = "episode_002_verified_local_evidence_internal_review.mp4
 LOCAL_ACTUAL_READBACK_FILENAME = "static_project_readback.actual.json"
 LOCAL_GENERATION_RECEIPT_FILENAME = "project_generation_receipt.actual.json"
 LOCAL_OPERATOR_RESULT_FILENAME = "operator_result.json"
+LOCAL_BATCH_MARKER_FILENAME = "operator_batch_started.local.txt"
 
 SCENE_ROWS = (("S1", 0, 2), ("S2", 2, 4), ("S3", 4, 9))
 CANONICAL_SPEAKERS = {"れいむ", "まりさ"}
@@ -663,6 +664,8 @@ def collect_verified_local_evidence_operator_result(
     operator_confirmed_clean: bool,
     yymm4_product_version: str,
     profile_observation_version: str,
+    operator_output_setting_note: str = "",
+    preserve_existing_success: bool = False,
 ) -> dict[str, Any]:
     """Collect local project and MP4 evidence after the manual batch."""
     root = Path(pilot_dir).resolve()
@@ -707,14 +710,33 @@ def collect_verified_local_evidence_operator_result(
         )
         if project_readback["status"] != "structural_pass":
             failed.extend(f"project:{item}" for item in project_readback["failed_checks"])
-    render_size = render.stat().st_size if render.exists() else 0
-    render_header = render.read_bytes()[:32] if render.exists() else b""
+    media_inspection: dict[str, Any] = {
+        "status": "failed",
+        "error_code": "render_missing",
+        "failed_checks": ["render_missing"],
+        "is_yymm4_project_json": False,
+        "file_size_bytes": 0,
+        "sha256": None,
+        "top_level_boxes": [],
+        "top_level_box_types": [],
+        "ftyp": None,
+        "mvhd": None,
+        "checks": {},
+    }
+    if render.exists():
+        from src.pipeline.media_validation import inspect_iso_bmff
+
+        media_inspection = inspect_iso_bmff(render)
+    render_size = int(media_inspection.get("file_size_bytes") or 0)
+    media_error_code = str(media_inspection.get("error_code") or "")
     if not render.exists():
         failed.append("render_missing")
+    elif media_inspection.get("is_yymm4_project_json") is True:
+        failed.append("render_is_yymm4_project_json_not_mp4")
     elif render_size <= 32:
         failed.append("render_too_small")
-    elif b"ftyp" not in render_header:
-        failed.append("render_mp4_signature_missing")
+    elif media_inspection.get("status") != "passed":
+        failed.append(media_error_code or "render_iso_bmff_structure_invalid")
     elif datetime.fromtimestamp(render.stat().st_mtime, timezone.utc) < threshold:
         failed.append("render_predates_batch")
     result = {
@@ -727,6 +749,10 @@ def collect_verified_local_evidence_operator_result(
             "no_unexpected_mapping_character_or_parse_error": operator_confirmed_clean,
             "yymm4_product_version": yymm4_product_version,
             "profile_observation_version": profile_observation_version,
+            "output_setting_note": operator_output_setting_note or None,
+            "output_setting_note_evidence_grade": (
+                "observed" if operator_output_setting_note else "unknown"
+            ),
             "profile_version_match": yymm4_product_version.startswith(
                 profile_observation_version
             ),
@@ -736,8 +762,24 @@ def collect_verified_local_evidence_operator_result(
             "project_sha256": _sha256(project) if project.exists() else None,
             "render_exists": render.exists(),
             "render_size_bytes": render_size,
-            "render_sha256": _sha256(render) if render.exists() else None,
-            "render_mp4_signature_present": b"ftyp" in render_header,
+            "render_sha256": (
+                str(media_inspection.get("sha256") or "").upper() or None
+            )
+            if render.exists()
+            else None,
+            "render_mp4_signature_present": "ftyp"
+            in _list(media_inspection.get("top_level_box_types")),
+            "render_iso_bmff_structure_pass": media_inspection.get("status")
+            == "passed",
+            "render_detection_error_code": media_error_code or None,
+            "render_is_yymm4_project_json": media_inspection.get(
+                "is_yymm4_project_json"
+            )
+            is True,
+            "render_top_level_box_types": _list(
+                media_inspection.get("top_level_box_types")
+            ),
+            "render_ftyp": media_inspection.get("ftyp"),
         },
         "files": {
             "project": project.name,
@@ -752,6 +794,31 @@ def collect_verified_local_evidence_operator_result(
             "upload_or_publication": False,
         },
     }
+    if preserve_existing_success and output.exists():
+        existing_bytes = output.read_bytes()
+        existing = _load_json(output)
+        existing_verified = _dict(existing.get("independently_verified"))
+        evidence_matches = (
+            existing.get("status") == "success"
+            and _list(existing.get("failed_checks")) == []
+            and not failed
+            and existing_verified.get("project_sha256")
+            == result["independently_verified"]["project_sha256"]
+            and existing_verified.get("render_sha256")
+            == result["independently_verified"]["render_sha256"]
+            and existing_verified.get("render_size_bytes") == render_size
+        )
+        if not evidence_matches:
+            raise ValueError("EXISTING_OPERATOR_RESULT_EVIDENCE_MISMATCH")
+        if output.read_bytes() != existing_bytes:
+            raise ValueError("EXISTING_OPERATOR_RESULT_CHANGED_DURING_COLLECTION")
+        return {
+            **existing,
+            "operator_result_path": str(output),
+            "operator_result_preserved_byte_for_byte": True,
+            "current_iso_bmff_structure_pass": media_inspection.get("status")
+            == "passed",
+        }
     output.parent.mkdir(parents=True, exist_ok=True)
     _write_json(output, result)
     return {**result, "operator_result_path": str(output)}
@@ -1052,6 +1119,8 @@ def _project_contracts(
         "artifact_id": f"{ARTIFACT_ID}_internal_project",
         "episode_id": EPISODE_ID,
         "status": "ready_for_operator_generation",
+        "contract_stage": "pre_operator_contract_snapshot",
+        "current_authority_when_render_exists": "render_receipt.json",
         "internal_review_only": True,
         "generator": {
             "module": "src.pipeline.verified_local_evidence_input_pilot",
@@ -1103,6 +1172,8 @@ def _project_contracts(
         "schema_version": "verified_local_evidence_static_project_readback.v1",
         "artifact_id": f"{ARTIFACT_ID}_static_project_readback",
         "status": "contract_pass",
+        "contract_stage": "pre_operator_contract_snapshot",
+        "current_authority_when_render_exists": "render_receipt.json",
         "validation_kind": "headless_static_contract_not_actual_project_parse",
         "actual_project_present": False,
         "actual_project_parse_performed": False,
@@ -1132,6 +1203,8 @@ def _project_contracts(
         "schema_version": "verified_local_evidence_project_generation_receipt.v1",
         "artifact_id": f"{ARTIFACT_ID}_project_generation",
         "status": "operator_input_required",
+        "contract_stage": "pre_operator_contract_snapshot",
+        "superseded_by_render_receipt_when_present": "render_receipt.json",
         "generator_implemented": True,
         "static_contract_passed": True,
         "actual_local_project_generated": False,
@@ -1152,9 +1225,9 @@ def _write_operator_batch(
     operator = output / OPERATOR_DIRNAME
     actions = [
         "Run run_yymm4_operator_batch.ps1 once from a clean terminal.",
-        "In YMM4 create/confirm a new empty project and empty timeline, then use Tools > Script Import, select the derived CSV, confirm no mapping/error or character mismatch, add it to the timeline, and save the exact import-base target.",
+        "In YMM4 create/confirm a new empty project and empty timeline, then use Tools > Script Import, select the derived CSV, confirm no mapping/error or character mismatch, add it to the timeline, and use Project Save As to save the exact .local.ymmp import-base target (never the .mp4 target).",
         "Return to the terminal and enter READY so the script generates the local internal-review project.",
-        "Open that generated project, confirm it opens without error and shows the three internal/non-final labels, then render exactly once to the specified MP4 and close safely.",
+        "Open that generated project, confirm it opens without error and shows the three internal/non-final labels, then use Video Output/Export (not Project Save As) exactly once to the specified .mp4 target and close safely.",
         "Return to the terminal and enter COLLECT so the script writes operator_result.json.",
     ]
     stop_conditions = [
@@ -1165,6 +1238,7 @@ def _write_operator_batch(
         "parse or open error",
         "render asks for production, public, or upload action",
         "output path differs unexpectedly",
+        "a Project Save As dialog is being used for the .mp4 video-output target",
         "an exact pilot output target already exists from an earlier run",
         "unrelated user work is visible",
     ]
@@ -1199,6 +1273,16 @@ def _write_operator_batch(
             "project_and_render_must_not_predate_batch_start": True,
             "operator_clean_confirmation_required": True,
         },
+        "recovery_contract": {
+            "collect_only_supported": True,
+            "collect_only_launches_yymm4": False,
+            "collect_only_regenerates_project_or_render": False,
+            "existing_success_result_is_preserved_byte_for_byte": True,
+            "batch_start_and_version_marker": (
+                f"../{LOCAL_OUTPUT_DIRNAME}/{LOCAL_BATCH_MARKER_FILENAME}"
+            ),
+        },
+        "json_transport": "python_written_utf8_file_read_by_powershell_explicit_utf8",
         "targets": {
             "derived_csv": f"../{DERIVED_CSV_FILENAME}",
             "import_base": f"../{LOCAL_OUTPUT_DIRNAME}/{LOCAL_IMPORT_BASE_FILENAME}",
@@ -1231,7 +1315,9 @@ def _write_operator_batch(
                     "exists",
                     "nonzero_size",
                     "sha256",
-                    "ftyp_signature",
+                    "bounded_top_level_iso_bmff_box_walk",
+                    "ftyp_moov_mdat_structure",
+                    "specific_yymm4_project_json_misname_detection",
                     "modified_after_batch_start",
                 ],
             },
@@ -1262,6 +1348,8 @@ def _write_operator_batch(
             "operator_manual_action_count": 5,
             "operator_return_item_count": 3,
             "fresh_output_binding_required": True,
+            "collect_only_recovery_supported": True,
+            "python_powershell_json_transport": "explicit_utf8_file",
             "yymm4_launch_attempted": False,
             "computer_use_invoked": False,
             "runtime_command": (
@@ -1308,11 +1396,22 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\\{OPERATOR_SCRIPT_FILENAME
 powershell -NoProfile -ExecutionPolicy Bypass -File .\\{OPERATOR_SCRIPT_FILENAME} -PreflightOnly
 ```
 
+render後にterminalやcollectorだけが中断した場合は、YMM4を起動せずproject／renderを再生成しない次の回収専用routeを使います。既存の成功済み `operator_result.json` がある場合はbyte-for-byteで保持します。
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\\{OPERATOR_SCRIPT_FILENAME} -CollectOnly -OperatorConfirmedClean
+```
+
 ## 手動アクション（5件）
 
 {action_lines}
 
-YMM4では最初に新規の空project／空timelineであることを確認し、既存itemがあれば停止します。その後 `ツール` → `台本読み込み` から `derived_yymm4_import.csv` を選び、対応表やerrorが出ず、霊夢／魔理沙の割り当てが正しい場合だけ `タイムラインに追加` します。保存先と動画出力先はscriptが絶対パスで表示します。手で件数やhashを計算する必要はありません。
+YMM4では最初に新規の空project／空timelineであることを確認し、既存itemがあれば停止します。その後 `ツール` → `台本読み込み` から `derived_yymm4_import.csv` を選び、対応表やerrorが出ず、霊夢／魔理沙の割り当てが正しい場合だけ `タイムラインに追加` します。手で件数やhashを計算する必要はありません。
+
+保存操作は次の2種類を混同しないでください。
+
+- **Project Save As -> `.local.ymmp`**: import base projectを保存する操作です。`.mp4` pathを入力してはいけません。
+- **Video Output/Export -> `.mp4`**: 動画を書き出す操作です。Project Save Asを使ってはいけません。project JSONが`.mp4`名で保存されるためです。
 
 ## Stop conditions
 
@@ -1341,11 +1440,22 @@ def _operator_script() -> str:
     return r'''[CmdletBinding()]
 param(
     [switch]$PreflightOnly,
+    [switch]$CollectOnly,
+    [switch]$OperatorConfirmedClean,
     [string]$PythonExe = "",
-    [string]$Ymm4Exe = ""
+    [string]$Ymm4Exe = "",
+    [string]$NotBeforeUtc = "",
+    [string]$Ymm4ProductVersion = "",
+    [string]$OperatorOutputSettingNote = ""
 )
 
 $ErrorActionPreference = "Stop"
+$env:PYTHONUTF8 = "1"
+$env:PYTHONIOENCODING = "utf-8"
+
+if ($PreflightOnly -and $CollectOnly) {
+    throw "Choose either -PreflightOnly or -CollectOnly, not both."
+}
 
 function Resolve-PythonExe {
     param([string]$Requested, [string]$RepoRoot)
@@ -1376,33 +1486,97 @@ function Resolve-Ymm4Exe {
     throw "YMM4 executable was not found. Pass -Ymm4Exe explicitly."
 }
 
+function Read-Utf8Json {
+    param([Parameter(Mandatory=$true)][string]$Path)
+    if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) {
+        throw "Expected UTF-8 JSON file was not found: $Path"
+    }
+    return (Get-Content -LiteralPath $Path -Raw -Encoding UTF8 | ConvertFrom-Json)
+}
+
 $PilotDir = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
 $RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..\..\..")).Path
 $Python = Resolve-PythonExe -Requested $PythonExe -RepoRoot $RepoRoot
-$Ymm4 = Resolve-Ymm4Exe -Requested $Ymm4Exe
 $DerivedCsv = Join-Path $PilotDir "derived_yymm4_import.csv"
 $LocalOutput = Join-Path $PilotDir "local_outputs"
 $ImportBase = Join-Path $LocalOutput "episode_002_verified_local_evidence_import_base.local.ymmp"
 $Project = Join-Path $LocalOutput "episode_002_verified_local_evidence_internal_review.local.ymmp"
 $Render = Join-Path $LocalOutput "episode_002_verified_local_evidence_internal_review.mp4"
 $Result = Join-Path $LocalOutput "operator_result.json"
+$BatchMarker = Join-Path $LocalOutput "operator_batch_started.local.txt"
 
-$ValidationExit = 1
-Push-Location -LiteralPath $RepoRoot
+$ValidationResultFile = Join-Path ([IO.Path]::GetTempPath()) ("nlmytgen-pilot-validation-" + [guid]::NewGuid().ToString("N") + ".json")
 try {
-    $ValidationText = (& $Python -m src.cli.main validate-verified-local-evidence-pilot --pilot $PilotDir --format json 2>&1 | Out-String).Trim()
-    $ValidationExit = $LASTEXITCODE
+    Push-Location -LiteralPath $RepoRoot
+    try {
+        & $Python -m src.cli.main validate-verified-local-evidence-pilot --pilot $PilotDir --format text --result-json $ValidationResultFile | Out-Null
+        $ValidationExit = $LASTEXITCODE
+    }
+    finally {
+        Pop-Location
+    }
+    $Validation = Read-Utf8Json -Path $ValidationResultFile
+    if ($ValidationExit -ne 0 -or $Validation.status -ne "passed") {
+        throw ("Pilot validation failed: " + (($Validation.failed_checks -join ", ")))
+    }
 }
 finally {
-    Pop-Location
+    Remove-Item -LiteralPath $ValidationResultFile -Force -ErrorAction SilentlyContinue
 }
-if ($ValidationExit -ne 0) {
-    throw "Pilot validation failed: $ValidationText"
+
+if ($CollectOnly) {
+    $PreserveExistingSuccess = $false
+    if (Test-Path -LiteralPath $Result -PathType Leaf) {
+        $ExistingResult = Read-Utf8Json -Path $Result
+        if ($ExistingResult.status -eq "success" -and @($ExistingResult.failed_checks).Count -eq 0) {
+            $PreserveExistingSuccess = $true
+            if (-not $NotBeforeUtc) { $NotBeforeUtc = [string]$ExistingResult.batch_not_before_utc }
+            if (-not $Ymm4ProductVersion) { $Ymm4ProductVersion = [string]$ExistingResult.operator_reported.yymm4_product_version }
+            if (-not $OperatorOutputSettingNote -and $ExistingResult.operator_reported.output_setting_note) {
+                $OperatorOutputSettingNote = [string]$ExistingResult.operator_reported.output_setting_note
+            }
+            if ($ExistingResult.operator_reported.manual_batch_completed_before_collection -eq $true) {
+                $OperatorConfirmedClean = $true
+            }
+        }
+    }
+    if ((-not $NotBeforeUtc -or -not $Ymm4ProductVersion) -and (Test-Path -LiteralPath $BatchMarker -PathType Leaf)) {
+        $MarkerValues = @{}
+        foreach ($Line in (Get-Content -LiteralPath $BatchMarker -Encoding UTF8)) {
+            $Parts = $Line -split "=", 2
+            if ($Parts.Count -eq 2) { $MarkerValues[$Parts[0]] = $Parts[1] }
+        }
+        if (-not $NotBeforeUtc) { $NotBeforeUtc = [string]$MarkerValues["batch_not_before_utc"] }
+        if (-not $Ymm4ProductVersion) { $Ymm4ProductVersion = [string]$MarkerValues["yymm4_product_version"] }
+    }
+    if (-not $NotBeforeUtc) {
+        throw "Collect-only needs the ignored batch marker, an existing operator_result.json, or explicit -NotBeforeUtc."
+    }
+    if (-not $Ymm4ProductVersion) {
+        throw "Collect-only needs the ignored batch marker, an existing operator_result.json, or explicit -Ymm4ProductVersion."
+    }
+    if (-not $OperatorConfirmedClean) {
+        throw "Collect-only requires -OperatorConfirmedClean when no successful existing result records that confirmation."
+    }
+    $CollectArgs = @{
+        PythonExe = $Python
+        PilotDir = $PilotDir
+        ProjectPath = $Project
+        RenderPath = $Render
+        OutputPath = $Result
+        NotBeforeUtc = $NotBeforeUtc
+        Ymm4ProductVersion = $Ymm4ProductVersion
+        ProfileObservationVersion = "4.53.0.9"
+        OperatorConfirmedClean = $true
+        OperatorOutputSettingNote = $OperatorOutputSettingNote
+        PreserveExistingSuccess = $PreserveExistingSuccess
+    }
+    & (Join-Path $PSScriptRoot "collect_operator_result.ps1") @CollectArgs
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    return
 }
-$Validation = $ValidationText | ConvertFrom-Json
-if ($Validation.status -ne "passed") {
-    throw "Pilot validation did not pass."
-}
+
+$Ymm4 = Resolve-Ymm4Exe -Requested $Ymm4Exe
 $Version = (Get-Item -LiteralPath $Ymm4).VersionInfo.ProductVersion
 $ProfileVersionMatch = $Version -like "4.53.0.9*"
 $Preflight = [ordered]@{
@@ -1415,6 +1589,7 @@ $Preflight = [ordered]@{
     profile_version_match = $ProfileVersionMatch
     version_difference_is_manual_mapping_gate = (-not $ProfileVersionMatch)
     yymm4_launch_attempted = $false
+    collect_only_supported = $true
     preflight_only = [bool]$PreflightOnly
 }
 
@@ -1433,13 +1608,20 @@ $ExactTargets = @(
     $Render,
     $Result,
     (Join-Path $LocalOutput "static_project_readback.actual.json"),
-    (Join-Path $LocalOutput "project_generation_receipt.actual.json")
+    (Join-Path $LocalOutput "project_generation_receipt.actual.json"),
+    $BatchMarker
 )
 $ExistingTargets = @($ExactTargets | Where-Object { Test-Path -LiteralPath $_ })
 if ($ExistingTargets.Count -gt 0) {
     throw ("Exact pilot output already exists. Stop and move/archive it manually; this batch will not delete or reuse it: " + ($ExistingTargets -join ", "))
 }
 $BatchStartedUtc = [DateTime]::UtcNow.ToString("o")
+New-Item -ItemType Directory -Path $LocalOutput -Force | Out-Null
+@(
+    "batch_not_before_utc=$BatchStartedUtc",
+    "yymm4_product_version=$Version",
+    "profile_observation_version=4.53.0.9"
+) | Set-Content -LiteralPath $BatchMarker -Encoding UTF8
 
 Write-Host "PC CONTROL: USER. Codex does not operate the GUI."
 Write-Host "This is INTERNAL REVIEW / NOT FINAL / LOCAL EVIDENCE PILOT only."
@@ -1450,10 +1632,10 @@ if (-not $ProfileVersionMatch) {
 }
 Write-Host ""
 Write-Host "Open/import CSV: $DerivedCsv"
-Write-Host "Save clean import base exactly as: $ImportBase"
+Write-Host "PROJECT SAVE AS TARGET (.local.ymmp): $ImportBase"
+Write-Host "Use Project Save As only for this .local.ymmp. NEVER enter the .mp4 path in Project Save As."
 Write-Host "First create/confirm a NEW EMPTY project and EMPTY timeline. STOP if any existing item/project is present."
 Write-Host "YMM4 click path: Tools > Script Import > select CSV > verify no mapping/error > Add to Timeline > Save As."
-New-Item -ItemType Directory -Path $LocalOutput -Force | Out-Null
 Start-Process -FilePath $Ymm4 | Out-Null
 $Ready = Read-Host "After the exact import base is safely saved, type READY"
 if ($Ready -ne "READY") {
@@ -1463,29 +1645,37 @@ if (-not (Test-Path -LiteralPath $ImportBase -PathType Leaf)) {
     throw "Exact import-base file was not found."
 }
 
-$GenerationExit = 1
-Push-Location -LiteralPath $RepoRoot
+$GenerationResultFile = Join-Path ([IO.Path]::GetTempPath()) ("nlmytgen-project-generation-" + [guid]::NewGuid().ToString("N") + ".json")
 try {
-    $GenerationText = (& $Python -m src.cli.main generate-verified-local-evidence-project --pilot $PilotDir --source-ymmp $ImportBase --output-ymmp $Project --format json 2>&1 | Out-String).Trim()
-    $GenerationExit = $LASTEXITCODE
+    Push-Location -LiteralPath $RepoRoot
+    try {
+        & $Python -m src.cli.main generate-verified-local-evidence-project --pilot $PilotDir --source-ymmp $ImportBase --output-ymmp $Project --format text --result-json $GenerationResultFile | Out-Null
+        $GenerationExit = $LASTEXITCODE
+    }
+    finally {
+        Pop-Location
+    }
+    $Generation = Read-Utf8Json -Path $GenerationResultFile
+    if ($GenerationExit -ne 0 -or $Generation.status -ne "local_internal_review_project_ready") {
+        throw "Headless project generation failed."
+    }
 }
 finally {
-    Pop-Location
-}
-if ($GenerationExit -ne 0) {
-    throw "Headless project generation failed: $GenerationText"
+    Remove-Item -LiteralPath $GenerationResultFile -Force -ErrorAction SilentlyContinue
 }
 Write-Host ""
 Write-Host "Open generated project: $Project"
 Write-Host "Confirm no parse/error dialog and the three INTERNAL REVIEW / NOT FINAL / LOCAL EVIDENCE PILOT labels."
-Write-Host "Render exactly once to: $Render"
+Write-Host "VIDEO OUTPUT/EXPORT TARGET (.mp4): $Render"
+Write-Host "Use Video Output/Export, NOT Project Save As. If a project-save dialog is targeting .mp4, STOP."
+Write-Host "Output exactly once. Record any manual format change (for example, the operator-observed MPEG selection) as an observation, not a machine-verified codec claim."
 Write-Host "Close safely after render. Do not upload or publish."
 $Collect = Read-Host "After render and safe close, type COLLECT"
 if ($Collect -ne "COLLECT") {
     throw "Batch stopped before result collection. Expected COLLECT."
 }
 
-& (Join-Path $PSScriptRoot "collect_operator_result.ps1") -PythonExe $Python -PilotDir $PilotDir -ProjectPath $Project -RenderPath $Render -OutputPath $Result -NotBeforeUtc $BatchStartedUtc -Ymm4ProductVersion $Version -ProfileObservationVersion "4.53.0.9"
+& (Join-Path $PSScriptRoot "collect_operator_result.ps1") -PythonExe $Python -PilotDir $PilotDir -ProjectPath $Project -RenderPath $Render -OutputPath $Result -NotBeforeUtc $BatchStartedUtc -Ymm4ProductVersion $Version -ProfileObservationVersion "4.53.0.9" -OperatorConfirmedClean -OperatorOutputSettingNote $OperatorOutputSettingNote
 if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
@@ -1500,6 +1690,9 @@ param(
     [string]$ProjectPath = "",
     [string]$RenderPath = "",
     [string]$OutputPath = "",
+    [switch]$OperatorConfirmedClean,
+    [switch]$PreserveExistingSuccess,
+    [string]$OperatorOutputSettingNote = "",
     [Parameter(Mandatory=$true)]
     [string]$NotBeforeUtc,
     [Parameter(Mandatory=$true)]
@@ -1509,6 +1702,8 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+$env:PYTHONUTF8 = "1"
+$env:PYTHONIOENCODING = "utf-8"
 if (-not $PilotDir) {
     $PilotDir = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
 }
@@ -1529,30 +1724,53 @@ if (-not $OutputPath) {
     $OutputPath = Join-Path $PilotDir "local_outputs\operator_result.json"
 }
 
-$CollectionExit = 1
+$Arguments = @(
+    "-m", "src.cli.main", "collect-verified-local-evidence-operator-result",
+    "--pilot", $PilotDir,
+    "--project", $ProjectPath,
+    "--render", $RenderPath,
+    "--output", $OutputPath,
+    "--not-before-utc", $NotBeforeUtc,
+    "--yymm4-product-version", $Ymm4ProductVersion,
+    "--profile-observation-version", $ProfileObservationVersion,
+    "--format", "text"
+)
+if ($OperatorConfirmedClean) { $Arguments += "--operator-confirmed-clean" }
+if ($PreserveExistingSuccess) { $Arguments += "--preserve-existing-success" }
+if ($OperatorOutputSettingNote) {
+    $Arguments += "--operator-output-setting-note"
+    $Arguments += $OperatorOutputSettingNote
+}
+
 Push-Location -LiteralPath $RepoRoot
 try {
-    $ResultText = (& $PythonExe -m src.cli.main collect-verified-local-evidence-operator-result --pilot $PilotDir --project $ProjectPath --render $RenderPath --output $OutputPath --not-before-utc $NotBeforeUtc --operator-confirmed-clean --yymm4-product-version $Ymm4ProductVersion --profile-observation-version $ProfileObservationVersion --format json 2>&1 | Out-String).Trim()
+    & $PythonExe @Arguments | Out-Null
     $CollectionExit = $LASTEXITCODE
 }
 finally {
     Pop-Location
 }
-if ($CollectionExit -ne 0) {
+if (-not (Test-Path -LiteralPath $OutputPath -PathType Leaf)) {
     Write-Output "1. result: failure"
     Write-Output "2. operator_result.json: $OutputPath"
-    Write-Output "3. error: $ResultText"
+    Write-Output "3. error: collector did not write the expected UTF-8 JSON result"
     exit 1
 }
-$Result = $ResultText | ConvertFrom-Json
-if ($Result.status -eq "success") {
+$Result = Get-Content -LiteralPath $OutputPath -Raw -Encoding UTF8 | ConvertFrom-Json
+if ($CollectionExit -eq 0 -and $Result.status -eq "success") {
     Write-Output "1. result: success"
     Write-Output "2. operator_result.json: $OutputPath"
     exit 0
 }
 Write-Output "1. result: failure"
 Write-Output "2. operator_result.json: $OutputPath"
-Write-Output ("3. error: " + (($Result.failed_checks -join ", ")))
+if ($Result.status -eq "failure" -and @($Result.failed_checks).Count -gt 0) {
+    Write-Output ("3. error: " + (($Result.failed_checks -join ", ")))
+} elseif ($CollectionExit -ne 0) {
+    Write-Output "3. error: collector process failed; the existing result was preserved when requested"
+} else {
+    Write-Output "3. error: collector returned an unexpected result state"
+}
 exit 1
 '''
 
@@ -1907,7 +2125,11 @@ def _first_timeline(data: dict[str, Any]) -> dict[str, Any]:
 
 
 def _sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest().upper()
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest().upper()
 
 
 def _json_sha256(value: Any) -> str:

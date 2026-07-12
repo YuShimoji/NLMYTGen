@@ -3126,6 +3126,10 @@ def main(argv: list[str] | None = None) -> int:
     p_validate_verified_local_evidence.add_argument(
         "--format", choices=["text", "json"], default="text"
     )
+    p_validate_verified_local_evidence.add_argument(
+        "--result-json",
+        help="Write the complete command result as an explicit UTF-8 JSON file",
+    )
 
     p_generate_verified_local_evidence = subparsers.add_parser(
         "generate-verified-local-evidence-project",
@@ -3142,6 +3146,10 @@ def main(argv: list[str] | None = None) -> int:
     )
     p_generate_verified_local_evidence.add_argument(
         "--format", choices=["text", "json"], default="text"
+    )
+    p_generate_verified_local_evidence.add_argument(
+        "--result-json",
+        help="Write the complete command result as an explicit UTF-8 JSON file",
     )
 
     p_collect_verified_local_evidence = subparsers.add_parser(
@@ -3177,6 +3185,16 @@ def main(argv: list[str] | None = None) -> int:
         "--profile-observation-version",
         required=True,
         help="YMM4 version recorded by the explicit character profile",
+    )
+    p_collect_verified_local_evidence.add_argument(
+        "--operator-output-setting-note",
+        default="",
+        help="Optional operator-observed output-setting note; not a machine codec claim",
+    )
+    p_collect_verified_local_evidence.add_argument(
+        "--preserve-existing-success",
+        action="store_true",
+        help="Revalidate but preserve an existing hash-consistent success result byte-for-byte",
     )
     p_collect_verified_local_evidence.add_argument(
         "--format", choices=["text", "json"], default="text"
@@ -6097,6 +6115,20 @@ def _cmd_build_verified_local_evidence_pilot(args: argparse.Namespace) -> int:
     return 0
 
 
+def _write_cli_result_json(args: argparse.Namespace, result: dict) -> None:
+    """Write Python-owned machine JSON without native-stdout transcoding."""
+    raw_path = getattr(args, "result_json", None)
+    if not raw_path:
+        return
+    path = Path(raw_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(result, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+
 def _cmd_validate_verified_local_evidence_pilot(args: argparse.Namespace) -> int:
     """Validate the tracked Episode 002 verified-local-evidence pilot."""
     from src.pipeline.verified_local_evidence_input_pilot import (
@@ -6107,6 +6139,7 @@ def _cmd_validate_verified_local_evidence_pilot(args: argparse.Namespace) -> int
         pilot_dir=getattr(args, "pilot"),
         package_dir=getattr(args, "package", None),
     )
+    _write_cli_result_json(args, result)
     if getattr(args, "format", "text") == "json":
         print(json.dumps(result, ensure_ascii=False, indent=2))
     else:
@@ -6127,6 +6160,7 @@ def _cmd_generate_verified_local_evidence_project(args: argparse.Namespace) -> i
         source_ymmp=getattr(args, "source_ymmp"),
         output_ymmp=getattr(args, "output_ymmp", None),
     )
+    _write_cli_result_json(args, result)
     if getattr(args, "format", "text") == "json":
         print(json.dumps(result, ensure_ascii=False, indent=2))
     else:
@@ -6153,6 +6187,12 @@ def _cmd_collect_verified_local_evidence_operator_result(
         operator_confirmed_clean=bool(getattr(args, "operator_confirmed_clean")),
         yymm4_product_version=getattr(args, "yymm4_product_version"),
         profile_observation_version=getattr(args, "profile_observation_version"),
+        operator_output_setting_note=getattr(
+            args, "operator_output_setting_note", ""
+        ),
+        preserve_existing_success=bool(
+            getattr(args, "preserve_existing_success", False)
+        ),
     )
     if getattr(args, "format", "text") == "json":
         print(json.dumps(result, ensure_ascii=False, indent=2))

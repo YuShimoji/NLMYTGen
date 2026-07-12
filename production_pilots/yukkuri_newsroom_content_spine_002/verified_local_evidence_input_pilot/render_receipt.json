@@ -1,0 +1,140 @@
+{
+  "schema_version": "verified_local_evidence_render_receipt.v1",
+  "artifact_id": "episode_002_verified_local_evidence_internal_render_receipt",
+  "status": "passed",
+  "classification": {
+    "internal_review_only": true,
+    "final": false,
+    "public": false,
+    "production": false
+  },
+  "operator_result": {
+    "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/local_outputs/operator_result.json",
+    "sha256": "C2204D10579FFBC9133F21C65F9C60968C19638C29DB4354A529D0CAF1B6E9E5",
+    "status": "success",
+    "failed_checks": [],
+    "preserved_byte_for_byte": true,
+    "evidence_grade": "verified"
+  },
+  "project": {
+    "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/local_outputs/episode_002_verified_local_evidence_internal_review.local.ymmp",
+    "sha256": "318AF09D0B52958555918140AD62AF0E7882A39FFA902C8E5D1304319CE11A01",
+    "structural_status": "structural_pass",
+    "item_type_counts": {
+      "VoiceItem": 9,
+      "ImageItem": 3,
+      "TextItem": 3
+    },
+    "characters": {
+      "ゆっくり霊夢": 3,
+      "ゆっくり魔理沙": 6
+    },
+    "evidence_grade": "verified"
+  },
+  "original_render": {
+    "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/local_outputs/episode_002_verified_local_evidence_internal_review.mp4",
+    "sha256": "ACF2E8B284E7956529F8170B6BA5EC55CBC0A4B511DCF56E579087051DA00BAE",
+    "size_bytes": 1782869795,
+    "media": {
+      "container": "mov,mp4,m4a,3gp,3g2,mj2",
+      "brands": [
+        "isom",
+        "iso2",
+        "avc1",
+        "mp41"
+      ],
+      "major_brand": "isom",
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "duration_seconds": 59.383008,
+      "stream_count": 2,
+      "overall_bitrate_bps": 240185851,
+      "video_bitrate_bps": 240000480,
+      "audio_bitrate_bps": 171024
+    },
+    "decode_smoke": {
+      "status": "passed",
+      "tool": "ffmpeg",
+      "tool_version": "8.0.1-full_build-www.gyan.dev",
+      "exit_code": 0,
+      "decode_target": "null_output",
+      "decoded_frames": null,
+      "scope": "full_file",
+      "source_unchanged": true
+    },
+    "immutable_source": true,
+    "evidence_grade": "verified"
+  },
+  "review_proxy": {
+    "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/local_outputs/episode_002_verified_local_evidence_internal_review.proxy.mp4",
+    "sha256": "45BD0A060BAA45C1BB44068F4ADAE1A6B50DBBF86FABA70F3A1761809BE5A025",
+    "size_bytes": 1400926,
+    "media": {
+      "container": "mov,mp4,m4a,3gp,3g2,mj2",
+      "brands": [
+        "isom",
+        "iso2",
+        "avc1",
+        "mp41"
+      ],
+      "major_brand": "isom",
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "width": 1280,
+      "height": 720,
+      "fps": 60.0,
+      "duration_seconds": 59.392,
+      "stream_count": 2,
+      "overall_bitrate_bps": 188702,
+      "video_bitrate_bps": 56631,
+      "audio_bitrate_bps": 119069
+    },
+    "decode_smoke": {
+      "status": "passed",
+      "tool": "ffmpeg",
+      "tool_version": "8.0.1-full_build-www.gyan.dev",
+      "exit_code": 0,
+      "decode_target": "null_output",
+      "decoded_frames": null,
+      "scope": "full_file",
+      "source_unchanged": true
+    },
+    "reduction_ratio": 1272.637,
+    "size_reduction_percent": 99.921423,
+    "source_overwritten": false,
+    "evidence_grade": "verified"
+  },
+  "reviewability_analysis": {
+    "verified_original_video_bitrate_bps": 240000480,
+    "verified_original_overall_bitrate_bps": 240185851,
+    "large_file_cause": "very_high_video_bitrate_is_the_primary_size_driver",
+    "large_file_cause_evidence_grade": "inferred",
+    "proxy_available": true
+  },
+  "operator_observations": {
+    "yymm4_product_version": "4.54.0.1+76b177dd451f9d162816dabc4ac658180e869582",
+    "profile_observation_version": "4.53.0.9",
+    "no_unexpected_mapping_character_or_parse_error": true,
+    "output_setting_note": "MPEG",
+    "output_setting_note_is_codec_label": false,
+    "evidence_grade": "observed"
+  },
+  "achieved_state_recommendation": {
+    "Project-State-ID": "episode-002-verified-local-evidence-internal-render-validated-v1",
+    "Product-State": "episode-002-verified-local-evidence-internal-render-validated",
+    "Product-Gate": "milestone-integration-audit",
+    "Recommended-Next": "audit-feature-branch-integration-after-render-milestone",
+    "External-State": "public-repo-feature-branch"
+  },
+  "not_claimed": [
+    "visual or editorial acceptance",
+    "production readiness",
+    "public readiness",
+    "rights or legal approval",
+    "upload or publication",
+    "default-branch integration"
+  ]
+}

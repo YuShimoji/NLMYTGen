@@ -1,0 +1,523 @@
+{
+  "schema_version": "verified_local_evidence_source_to_output_traceability.v1",
+  "artifact_id": "episode_002_verified_local_evidence_source_to_output_traceability",
+  "status": "passed",
+  "source_to_project_traceability": "9_of_9_verified",
+  "project_to_render_traceability": "operator_observed_and_media_verified",
+  "render_semantic_alignment": "unknown_pending_human_review",
+  "project_repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/local_outputs/episode_002_verified_local_evidence_internal_review.local.ymmp",
+  "render_repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/local_outputs/episode_002_verified_local_evidence_internal_review.mp4",
+  "cues": [
+    {
+      "sequence": 1,
+      "cue_id": "cue_001",
+      "scene_id": "S1",
+      "source_claim_references": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer": "/actual_ymm4_imported",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer": "/five_point_observations/subtitle_text/speaker_cue_match",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer": "/five_point_observations/cue_order/cue_order",
+          "matched": true,
+          "evidence_grade": "verified"
+        }
+      ],
+      "script": {
+        "speaker": "れいむ",
+        "text": "9行のCSVをYMM4に読み込み、話者割り当てと順番を確認したよ。",
+        "evidence_grade": "verified"
+      },
+      "derived_csv": {
+        "row": 1,
+        "character": "ゆっくり霊夢",
+        "text": "9行のCSVをYMM4に読み込み、話者割り当てと順番を確認したよ。",
+        "evidence_grade": "verified"
+      },
+      "project_voiceitem": {
+        "sequence": 1,
+        "character": "ゆっくり霊夢",
+        "text": "9行のCSVをYMM4に読み込み、話者割り当てと順番を確認したよ。",
+        "evidence_grade": "verified"
+      },
+      "checks": {
+        "script_matches_canonical_csv": true,
+        "canonical_text_matches_derived_csv": true,
+        "derived_row_matches_project_voiceitem": true
+      },
+      "encoded_render": {
+        "operator_render_completion": "observed",
+        "container_codec_and_decode": "verified",
+        "semantic_cue_alignment": "unknown"
+      }
+    },
+    {
+      "sequence": 2,
+      "cue_id": "cue_002",
+      "scene_id": "S1",
+      "source_claim_references": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer": "/status",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer": "/five_point_observations/voice_items/count",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer": "/five_point_observations/voice_items/missing_cue_ids",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer": "/five_point_observations/voice_items/duplicate_cue_ids",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer": "/five_point_observations/voice_items/reordered",
+          "matched": true,
+          "evidence_grade": "verified"
+        }
+      ],
+      "script": {
+        "speaker": "まりさ",
+        "text": "CSV取り込みの観測結果は合格で、9件のボイス項目に欠けや重複、並べ替えはなかったぜ。",
+        "evidence_grade": "verified"
+      },
+      "derived_csv": {
+        "row": 2,
+        "character": "ゆっくり魔理沙",
+        "text": "CSV取り込みの観測結果は合格で、9件のボイス項目に欠けや重複、並べ替えはなかったぜ。",
+        "evidence_grade": "verified"
+      },
+      "project_voiceitem": {
+        "sequence": 2,
+        "character": "ゆっくり魔理沙",
+        "text": "CSV取り込みの観測結果は合格で、9件のボイス項目に欠けや重複、並べ替えはなかったぜ。",
+        "evidence_grade": "verified"
+      },
+      "checks": {
+        "script_matches_canonical_csv": true,
+        "canonical_text_matches_derived_csv": true,
+        "derived_row_matches_project_voiceitem": true
+      },
+      "encoded_render": {
+        "operator_render_completion": "observed",
+        "container_codec_and_decode": "verified",
+        "semantic_cue_alignment": "unknown"
+      }
+    },
+    {
+      "sequence": 3,
+      "cue_id": "cue_003",
+      "scene_id": "S2",
+      "source_claim_references": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer": "/five_point_observations/subtitle_text/mapping_dialog_present",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer": "/five_point_observations/subtitle_text/automatic_speaker_binding_observed",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer": "/five_point_observations/subtitle_text/character_counts",
+          "matched": true,
+          "evidence_grade": "verified"
+        }
+      ],
+      "script": {
+        "speaker": "まりさ",
+        "text": "この取り込みでは対応表は表示されず、霊夢3件、魔理沙6件へ自動で結び付いたぜ。",
+        "evidence_grade": "verified"
+      },
+      "derived_csv": {
+        "row": 3,
+        "character": "ゆっくり魔理沙",
+        "text": "この取り込みでは対応表は表示されず、霊夢3件、魔理沙6件へ自動で結び付いたぜ。",
+        "evidence_grade": "verified"
+      },
+      "project_voiceitem": {
+        "sequence": 3,
+        "character": "ゆっくり魔理沙",
+        "text": "この取り込みでは対応表は表示されず、霊夢3件、魔理沙6件へ自動で結び付いたぜ。",
+        "evidence_grade": "verified"
+      },
+      "checks": {
+        "script_matches_canonical_csv": true,
+        "canonical_text_matches_derived_csv": true,
+        "derived_row_matches_project_voiceitem": true
+      },
+      "encoded_render": {
+        "operator_render_completion": "observed",
+        "container_codec_and_decode": "verified",
+        "semantic_cue_alignment": "unknown"
+      }
+    },
+    {
+      "sequence": 4,
+      "cue_id": "cue_004",
+      "scene_id": "S2",
+      "source_claim_references": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer": "/five_point_observations/subtitle_text/all_text_matched",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer": "/five_point_observations/timing_order/order_preserved",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer": "/five_point_observations/timing_order/frame_rate",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer": "/five_point_observations/timing_order/total_frames",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+          "json_pointer": "/five_point_observations/timing_order/duration_seconds",
+          "matched": true,
+          "evidence_grade": "verified"
+        }
+      ],
+      "script": {
+        "speaker": "まりさ",
+        "text": "観測時はテキストと順番が一致し、60fpsで2790フレーム、46.5秒のタイムラインだったぜ。",
+        "evidence_grade": "verified"
+      },
+      "derived_csv": {
+        "row": 4,
+        "character": "ゆっくり魔理沙",
+        "text": "観測時はテキストと順番が一致し、60fpsで2790フレーム、46.5秒のタイムラインだったぜ。",
+        "evidence_grade": "verified"
+      },
+      "project_voiceitem": {
+        "sequence": 4,
+        "character": "ゆっくり魔理沙",
+        "text": "観測時はテキストと順番が一致し、60fpsで2790フレーム、46.5秒のタイムラインだったぜ。",
+        "evidence_grade": "verified"
+      },
+      "checks": {
+        "script_matches_canonical_csv": true,
+        "canonical_text_matches_derived_csv": true,
+        "derived_row_matches_project_voiceitem": true
+      },
+      "encoded_render": {
+        "operator_render_completion": "observed",
+        "container_codec_and_decode": "verified",
+        "semantic_cue_alignment": "unknown"
+      }
+    },
+    {
+      "sequence": 5,
+      "cue_id": "cue_005",
+      "scene_id": "S3",
+      "source_claim_references": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer": "/observations/VoiceItems",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer": "/observations/linked_subtitles_preserved",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer": "/safety/diagnostic_only",
+          "matched": true,
+          "evidence_grade": "verified"
+        }
+      ],
+      "script": {
+        "speaker": "れいむ",
+        "text": "別の診断用プロジェクトでも、9件のボイスと連動字幕が保たれていたよ。",
+        "evidence_grade": "verified"
+      },
+      "derived_csv": {
+        "row": 5,
+        "character": "ゆっくり霊夢",
+        "text": "別の診断用プロジェクトでも、9件のボイスと連動字幕が保たれていたよ。",
+        "evidence_grade": "verified"
+      },
+      "project_voiceitem": {
+        "sequence": 5,
+        "character": "ゆっくり霊夢",
+        "text": "別の診断用プロジェクトでも、9件のボイスと連動字幕が保たれていたよ。",
+        "evidence_grade": "verified"
+      },
+      "checks": {
+        "script_matches_canonical_csv": true,
+        "canonical_text_matches_derived_csv": true,
+        "derived_row_matches_project_voiceitem": true
+      },
+      "encoded_render": {
+        "operator_render_completion": "observed",
+        "container_codec_and_decode": "verified",
+        "semantic_cue_alignment": "unknown"
+      }
+    },
+    {
+      "sequence": 6,
+      "cue_id": "cue_006",
+      "scene_id": "S3",
+      "source_claim_references": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+          "json_pointer": "/scenes/0/ImageItem_count",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+          "json_pointer": "/scenes/0/TextItem_count",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+          "json_pointer": "/scenes/1/ImageItem_count",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+          "json_pointer": "/scenes/1/TextItem_count",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+          "json_pointer": "/scenes/2/ImageItem_count",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+          "json_pointer": "/scenes/2/TextItem_count",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+          "json_pointer": "/checks/independent_TextItem_count_3",
+          "matched": true,
+          "evidence_grade": "verified"
+        }
+      ],
+      "script": {
+        "speaker": "まりさ",
+        "text": "3つのシーンには、画像と独立したテキストが1件ずつ置かれていたぜ。",
+        "evidence_grade": "verified"
+      },
+      "derived_csv": {
+        "row": 6,
+        "character": "ゆっくり魔理沙",
+        "text": "3つのシーンには、画像と独立したテキストが1件ずつ置かれていたぜ。",
+        "evidence_grade": "verified"
+      },
+      "project_voiceitem": {
+        "sequence": 6,
+        "character": "ゆっくり魔理沙",
+        "text": "3つのシーンには、画像と独立したテキストが1件ずつ置かれていたぜ。",
+        "evidence_grade": "verified"
+      },
+      "checks": {
+        "script_matches_canonical_csv": true,
+        "canonical_text_matches_derived_csv": true,
+        "derived_row_matches_project_voiceitem": true
+      },
+      "encoded_render": {
+        "operator_render_completion": "observed",
+        "container_codec_and_decode": "verified",
+        "semantic_cue_alignment": "unknown"
+      }
+    },
+    {
+      "sequence": 7,
+      "cue_id": "cue_007",
+      "scene_id": "S3",
+      "source_claim_references": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer": "/observations/placeholder_is_explicitly_non_final",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer": "/observations/scene_labels_readable",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer": "/observed_by_environment/observation_mode",
+          "matched": true,
+          "evidence_grade": "verified"
+        }
+      ],
+      "script": {
+        "speaker": "まりさ",
+        "text": "各ラベルには診断用で最終版ではないことが明記され、再確認時にも読めたぜ。",
+        "evidence_grade": "verified"
+      },
+      "derived_csv": {
+        "row": 7,
+        "character": "ゆっくり魔理沙",
+        "text": "各ラベルには診断用で最終版ではないことが明記され、再確認時にも読めたぜ。",
+        "evidence_grade": "verified"
+      },
+      "project_voiceitem": {
+        "sequence": 7,
+        "character": "ゆっくり魔理沙",
+        "text": "各ラベルには診断用で最終版ではないことが明記され、再確認時にも読めたぜ。",
+        "evidence_grade": "verified"
+      },
+      "checks": {
+        "script_matches_canonical_csv": true,
+        "canonical_text_matches_derived_csv": true,
+        "derived_row_matches_project_voiceitem": true
+      },
+      "encoded_render": {
+        "operator_render_completion": "observed",
+        "container_codec_and_decode": "verified",
+        "semantic_cue_alignment": "unknown"
+      }
+    },
+    {
+      "sequence": 8,
+      "cue_id": "cue_008",
+      "scene_id": "S3",
+      "source_claim_references": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer": "/observations/render_or_export_performed",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer": "/safety/production_ymmp_written",
+          "matched": true,
+          "evidence_grade": "verified"
+        }
+      ],
+      "script": {
+        "speaker": "れいむ",
+        "text": "ただし、映像の書き出しや本番用プロジェクトの作成は行っていないよ。",
+        "evidence_grade": "verified"
+      },
+      "derived_csv": {
+        "row": 8,
+        "character": "ゆっくり霊夢",
+        "text": "ただし、映像の書き出しや本番用プロジェクトの作成は行っていないよ。",
+        "evidence_grade": "verified"
+      },
+      "project_voiceitem": {
+        "sequence": 8,
+        "character": "ゆっくり霊夢",
+        "text": "ただし、映像の書き出しや本番用プロジェクトの作成は行っていないよ。",
+        "evidence_grade": "verified"
+      },
+      "checks": {
+        "script_matches_canonical_csv": true,
+        "canonical_text_matches_derived_csv": true,
+        "derived_row_matches_project_voiceitem": true
+      },
+      "encoded_render": {
+        "operator_render_completion": "observed",
+        "container_codec_and_decode": "verified",
+        "semantic_cue_alignment": "unknown"
+      }
+    },
+    {
+      "sequence": 9,
+      "cue_id": "cue_009",
+      "scene_id": "S3",
+      "source_claim_references": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer": "/safety/real_input_replaced",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer": "/safety/rights_or_public_approval_performed",
+          "matched": true,
+          "evidence_grade": "verified"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+          "json_pointer": "/safety/upload_performed",
+          "matched": true,
+          "evidence_grade": "verified"
+        }
+      ],
+      "script": {
+        "speaker": "まりさ",
+        "text": "実素材への置き換え、権利や公開の承認、アップロードも行っていないぜ。",
+        "evidence_grade": "verified"
+      },
+      "derived_csv": {
+        "row": 9,
+        "character": "ゆっくり魔理沙",
+        "text": "実素材への置き換え、権利や公開の承認、アップロードも行っていないぜ。",
+        "evidence_grade": "verified"
+      },
+      "project_voiceitem": {
+        "sequence": 9,
+        "character": "ゆっくり魔理沙",
+        "text": "実素材への置き換え、権利や公開の承認、アップロードも行っていないぜ。",
+        "evidence_grade": "verified"
+      },
+      "checks": {
+        "script_matches_canonical_csv": true,
+        "canonical_text_matches_derived_csv": true,
+        "derived_row_matches_project_voiceitem": true
+      },
+      "encoded_render": {
+        "operator_render_completion": "observed",
+        "container_codec_and_decode": "verified",
+        "semantic_cue_alignment": "unknown"
+      }
+    }
+  ],
+  "failed_checks": []
+}

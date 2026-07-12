@@ -15,13 +15,15 @@ flowchart LR
     V --> L["9-cue claim ledger + Japanese script<br/>S1/S2/S3 = 2/2/5<br/>unsupported claims = 0"]
     L --> NCSV["New canonical / derived CSV pair<br/>9 rows / text-order identical<br/>strict 3 / 6 projection"]
     NCSV --> H["Headless project generator + static contract<br/>preserve imported VoiceItems<br/>3 ImageItems + 3 independent TextItems<br/>INTERNAL REVIEW / NOT FINAL"]
-    H --> M["Manual YMM4 operator batch<br/>5 actions / exact local targets<br/>stop on mapping, update, parse, or unrelated work"]
-    M -. "next gate; not yet run" .-> Z["Local internal-review project + one MP4<br/>operator_result.json collection"]
+    H --> M["Manual YMM4 operator batch<br/>5 actions / exact local targets<br/>successful result collected"]
+    M --> Z["Validated local project + original MP4<br/>hash / ISO-BMFF / H.264 + AAC<br/>full video + audio decode passed"]
+    Z --> W["Internal review package + ignored proxy<br/>traceability / five questions / limitations<br/>non-final and non-production"]
 
-    Z -. "separate decision" .-> E["External editorial / real-media input<br/>provenance + identity + rights context"]
-    Z -. "separate decision" .-> I["Feature/default integration review<br/>no automatic merge or rebase"]
+    W -. "separate decision" .-> E["External editorial / real-media input<br/>provenance + identity + rights context"]
+    W -. "next advisory gate" .-> I["Feature/default integration audit<br/>no automatic merge or rebase"]
 
     X["Closed gates<br/>production .ymmp<br/>rights/public/final thumbnail<br/>upload/publication<br/>automatic default-branch mutation"] -.-> M
     X -.-> Z
+    X -.-> W
     X -.-> E
     X -.-> I

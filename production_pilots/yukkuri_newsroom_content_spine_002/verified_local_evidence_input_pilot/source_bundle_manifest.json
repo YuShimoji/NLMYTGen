@@ -39,9 +39,9 @@
     {
       "source_id": "runtime_state",
       "repo_relative_path": "docs/runtime-state.md",
-      "sha256": "412CD6BF1EC7B225A665C65C5CAA2D954C53EC4ADEAAAA955A22A9605FB435B5",
+      "sha256": "35A949E6C5E0C658D66DEA721FF4DAA8613307E8E39D0C5661F2577342B96433",
       "schema": "nlmytgen_runtime_state_capsule",
-      "status": "episode-002-verified-local-evidence-operator-batch-ready-v1",
+      "status": "episode-002-verified-local-evidence-internal-render-validated-v1",
       "role": "current project-state context; not a spoken factual source"
     },
     {

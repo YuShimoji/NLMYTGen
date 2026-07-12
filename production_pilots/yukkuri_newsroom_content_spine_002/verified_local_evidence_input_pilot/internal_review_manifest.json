@@ -1,0 +1,96 @@
+{
+  "schema_version": "verified_local_evidence_internal_review_manifest.v1",
+  "artifact_id": "episode_002_verified_local_evidence_internal_review_v1",
+  "status": "media_validated",
+  "classification": {
+    "internal_review_only": true,
+    "not_final": true,
+    "non_public": true,
+    "non_production": true
+  },
+  "primary_review_surface": "README_INTERNAL_REVIEW.md",
+  "tracked_review_files": [
+    {
+      "path": "README_INTERNAL_REVIEW.md",
+      "role": "primary human review surface"
+    },
+    {
+      "path": "render_validation_readback.json",
+      "role": "machine validation evidence"
+    },
+    {
+      "path": "render_receipt.json",
+      "role": "adjudicated render receipt"
+    },
+    {
+      "path": "source_to_output_traceability.json",
+      "role": "source-to-output evidence map"
+    },
+    {
+      "path": "operator_batch_correction_report.json",
+      "role": "operator batch hardening report"
+    },
+    {
+      "path": "operator_review_sheet.md",
+      "role": "bounded human review questions"
+    },
+    {
+      "path": "limitations.md",
+      "role": "remaining evidence and portability limits"
+    }
+  ],
+  "local_ignored_artifacts": [
+    {
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/local_outputs/operator_result.json",
+      "sha256": "C2204D10579FFBC9133F21C65F9C60968C19638C29DB4354A529D0CAF1B6E9E5",
+      "role": "immutable operator result source",
+      "committed": false
+    },
+    {
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/local_outputs/episode_002_verified_local_evidence_internal_review.local.ymmp",
+      "sha256": "318AF09D0B52958555918140AD62AF0E7882A39FFA902C8E5D1304319CE11A01",
+      "role": "internal local YMM4 project",
+      "committed": false
+    },
+    {
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/local_outputs/episode_002_verified_local_evidence_internal_review.mp4",
+      "sha256": "ACF2E8B284E7956529F8170B6BA5EC55CBC0A4B511DCF56E579087051DA00BAE",
+      "role": "immutable original internal render",
+      "committed": false
+    },
+    {
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/local_outputs/episode_002_verified_local_evidence_internal_review.proxy.mp4",
+      "sha256": "45BD0A060BAA45C1BB44068F4ADAE1A6B50DBBF86FABA70F3A1761809BE5A025",
+      "role": "lightweight internal review proxy",
+      "committed": false
+    }
+  ],
+  "source_evidence_sha256": {
+    "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/source_bundle_manifest.json": "A21D17FF25978E00EEF7C0E2FD052E5CF8CDD98BEFB94A38E8F83B2B44187DBE",
+    "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/source_claim_ledger.json": "BA21FFF7E9725AF00A438213AE3453B84D9E9CFDC1568141AE83F52877C1B587",
+    "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/canonical_script.json": "4249425D680A44DE25BE697262966A44D396AAFE611AA90A0BF769BEC4EE9B16",
+    "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/canonical_yymm4.csv": "0A7B7F27FFF37E9AD29ADACD93BDB6FECBA6AE2650FE34DBE90E7BCFED9FE967",
+    "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/derived_yymm4_import.csv": "D1C5C4C4E61996BDD89398618C0E7353A826D598B642E2397ACD982B1D5CBB1F",
+    "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/assets/internal_review_placeholder.png": "7698897C23F7E6C053A995CB4D1F79D5A3366B4F5D5EEDBC1B6B14877745FA9F"
+  },
+  "evidence_grades": {
+    "verified": "direct file, parser, probe, decode, or focused-test evidence",
+    "observed": "operator-reported YMM4 action or UI setting",
+    "inferred": "conclusion supported by verified measurements",
+    "unknown": "not established without human visual/editorial review"
+  },
+  "achieved_state": {
+    "Project-State-ID": "episode-002-verified-local-evidence-internal-render-validated-v1",
+    "Product-State": "episode-002-verified-local-evidence-internal-render-validated",
+    "Product-Gate": "milestone-integration-audit",
+    "Recommended-Next": "audit-feature-branch-integration-after-render-milestone",
+    "External-State": "public-repo-feature-branch"
+  },
+  "evidence_boundary": {
+    "original_render_preserved": true,
+    "operator_result_preserved": true,
+    "local_binaries_ignored": true,
+    "production_or_public_transition": false
+  },
+  "operator_collection_status": "success"
+}
