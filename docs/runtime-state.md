@@ -1,77 +1,73 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: episode-002-milestone-integration-audited-ready-v1
-State-Revision: 2026-07-12.3
-Updated: 2026-07-12 JST
-Product-State: episode-002-milestone-integration-audited-ready
-Product-Gate: default-branch-integration-decision
-Recommended-Next: approve-or-reject-default-branch-integration
-External-State: public-repo-feature-branch
+Project-State-ID: episode-002-milestone-integrated-default-branch-v1
+State-Revision: 2026-07-13.1
+Updated: 2026-07-13 JST
+Product-State: episode-002-milestone-integrated-on-default-branch
+Product-Gate: verified-external-editorial-input-selection
+Recommended-Next: select-or-provide-verified-editorial-source
+External-State: public-repo-default-branch
 
 ## Current Slice
 
-- **Fixed audit subject**: commit
-  `d8e959c54b8c8f28c31cc2b586bbdd8c79f69f97` on
-  `codex/episode-002-verified-local-evidence-render-v1` is the immutable product
-  basis. The separate audit branch/commit is evidence and state only.
-- **Graph audit complete**: the subject is a linear 44-commit continuation of
-  `origin/master` at `b61722454e3e218547fe6220bf1f4aa3802ed4d8`,
-  44 ahead / 0 behind, with the same merge-base and no merge commits.
-- **Full inventory complete**: all 44 commits and all 448 changed paths are
-  classified. Net status is A420 / M27 / D1 / R0 and +69,452 / -6,959;
-  unclassified paths are zero.
-- **Integration mechanics pass**: non-mutating `git merge-tree --write-tree`
-  reports no conflict and leaves index/worktree unchanged. The evidence-derived
-  route is `fast_forward_after_approval`.
-- **Safety audit pass**: no secret, private endpoint, tracked MP4/local `.ymmp`,
-  proxy, operator result, or current-authority conflict was found. Historical
-  user-home paths and generated-artifact burden are disclosed nonblocking debt.
-- **Targeted validation pass**: 85 focused tests cover guardrails, state sync,
-  YMM4 alias/import/readback, diagnostic proof, verified pilot, media validation,
-  and internal render review. Full pytest was not run.
+- **Approved integration complete**: user-approved Option A was executed as one
+  normal fast-forward of `master`. The integrated history contains the fixed
+  subject `d8e959c54b8c8f28c31cc2b586bbdd8c79f69f97`, its direct audit child
+  `a8b81e43616281691b73520a045dfa6ff44d2054`, and one integration-seal commit.
+- **Provenance retained**: the subject, audit, and integration branches remain
+  available without rewrite or deletion. The final integration commit is
+  resolved from Git refs and the AGENT_REPORT rather than self-embedded here.
+- **Bounded metadata rebind complete**: only the pilot's state-dependent source
+  manifest, input-validation readback, and internal-review manifest were
+  rebound to this runtime state. The rebind is deterministic and does not read
+  or regenerate local media or YMM4 projects.
+- **Evidence identity preserved**: canonical script text/JSON, claim semantics,
+  canonical and derived CSV, source observation receipts, render/project/media
+  identities, and immutable pre-integration audit artifacts did not change.
+- **Integration checks pass**: the accepted focused milestone suite plus the
+  metadata-rebind test, project-state sync, JSON/privacy/path/binary checks,
+  canonical/media identity checks, merge-tree, and Git diff checks passed.
 
 ## Product Position
 
-- Recommendation class is exactly `integration_ready`; technical readiness is
-  not default-branch approval.
-- `README_INTERNAL_REVIEW.md` and `render_receipt.json` remain the current
-  milestone review/receipt authority at the audited subject. Earlier review
-  packages are historical or non-authoritative prototypes.
-- The audit tail must not be silently included in the 44-commit subject delta.
-  If its new state is integrated, H1 must explicitly rebind the pilot metadata
-  that hash-locks `docs/runtime-state.md` before claiming current-worktree pilot
-  validation; no media regeneration is required.
-- Human visual/editorial acceptance, YMM4/profile portability, production,
-  external editorial input, rights, upload, and publication remain separate.
+- The validated Episode 002 local-evidence workflow is now reachable from the
+  repository default branch. `README_INTERNAL_REVIEW.md` and
+  `render_receipt.json` remain the internal milestone review/receipt authority.
+- `public-repo-default-branch` describes repository placement only. It does not
+  mean that any video, editorial source, creative result, rights decision, or
+  production output is public or approved.
+- Human visual/editorial acceptance, the YMM4 profile/environment version gap,
+  cross-machine local `.ymmp` portability, external editorial input, production,
+  rights, upload, and publication remain separate gates.
 
 ## Exact Next Action
 
-The user or Supervisor must approve or reject default-branch integration of the
-fixed subject `d8e959c`. Approval must explicitly authorize the fast-forward
-route and decide how the separate audit-state tail is applied or recreated.
-Do not mutate the default branch without that later explicit decision.
+Select or provide one verified external editorial source with explicit source
+and provenance/rights context, stable identity, and cue alignment. Keep the
+intake internal and non-public; do not infer editorial adoption, creative
+acceptance, rights approval, production readiness, or publication approval.
 
 ## Evidence and Access
 
-- Primary audit:
+- Integration evidence:
+  `docs/verification/EPISODE_002_DEFAULT_BRANCH_INTEGRATION_2026-07-12.md`
+- Machine integration receipt:
+  `docs/verification/episode_002_default_branch_integration_receipt.json`
+- Immutable pre-integration audit:
   `docs/verification/EPISODE_002_MILESTONE_INTEGRATION_AUDIT_2026-07-12.md`
-- Machine audit:
-  `docs/verification/episode_002_milestone_integration_audit.json`
-- Exact path inventory:
-  `docs/verification/episode_002_integration_path_inventory.json`
 - Milestone review surface:
   `production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/README_INTERNAL_REVIEW.md`
 
 ## Integration Boundaries
 
-- Re-fetch and recheck ancestry immediately before H1 because branch protection,
-  required-review policy, and future `origin/master` movement are unknown locally.
-- No merge, rebase, squash, cherry-pick, PR, issue, force push, default mutation,
-  YMM4, Computer Use, media regeneration, dependency install, or publication was
-  performed by this audit.
-- Full-suite drift remains outside this focused decision gate.
+- No force/non-fast-forward push, merge commit, rebase, squash, cherry-pick, PR,
+  branch deletion, YMM4, Computer Use, media regeneration, dependency install,
+  publication, upload, or rights action belongs to this completed slice.
+- Historical absolute paths, stale secondary docs, human review, and YMM4/local
+  project portability remain the five accepted nonblocking debt areas.
+- Full-suite drift remains outside this focused integration gate.
 
 ## Maintenance Note
 
 Keep this capsule within 160 lines. History remains in `docs/project-context.md`
-and Git; the dated audit is the durable decision evidence for this transition.
+and Git; the dated integration receipt is the durable transition evidence.

@@ -1,0 +1,148 @@
+{
+  "schema_version": "episode_002_default_branch_integration_receipt.v1",
+  "artifact_id": "episode_002_default_branch_integration_v1",
+  "status": "passed",
+  "integration_date": "2026-07-13 JST",
+  "authorization": {
+    "class": "user_approved_option_a",
+    "scope": "audited_subject_plus_audit_tail_plus_one_metadata_rebind_integration_seal",
+    "target": "master",
+    "mechanism": "normal_non_force_fast_forward"
+  },
+  "refs": {
+    "pre_integration_origin_master": "b61722454e3e218547fe6220bf1f4aa3802ed4d8",
+    "audited_subject_branch": "codex/episode-002-verified-local-evidence-render-v1",
+    "audited_subject_head": "d8e959c54b8c8f28c31cc2b586bbdd8c79f69f97",
+    "audit_branch": "codex/episode-002-milestone-integration-audit-v1",
+    "audit_head": "a8b81e43616281691b73520a045dfa6ff44d2054",
+    "integration_branch": "codex/episode-002-default-branch-integration-v1",
+    "integration_commit_sha": null,
+    "integration_commit_resolution": "final Git ref and AGENT_REPORT",
+    "post_integration_origin_master": null,
+    "post_integration_resolution": "final Git ref and AGENT_REPORT"
+  },
+  "graph": {
+    "expected_merge_base": "b61722454e3e218547fe6220bf1f4aa3802ed4d8",
+    "subject_ahead_behind": [44, 0],
+    "audit_ahead_behind_subject": [1, 0],
+    "audit_ahead_behind_master": [45, 0],
+    "audit_is_direct_child_of_subject": true,
+    "integration_tip_must_descend_from_audit": true,
+    "merge_tree_required_conflict_count": 0
+  },
+  "metadata_rebind": {
+    "runtime_state": {
+      "audit_tail_before_sha256": "65D2419CD8876FBBC8AD7567D6DE2B559E61FCA5D3B9E4BE0A441996A9DF92E6",
+      "source_manifest_bound_before_sha256": "35A949E6C5E0C658D66DEA721FF4DAA8613307E8E39D0C5661F2577342B96433",
+      "integrated_after_sha256": "943DB7C5C286B1668F31483E57CADE5370F53422F7DFEB1985072168FD1F61E1"
+    },
+    "files": [
+      {
+        "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/source_bundle_manifest.json",
+        "before_sha256": "A21D17FF25978E00EEF7C0E2FD052E5CF8CDD98BEFB94A38E8F83B2B44187DBE",
+        "after_sha256": "98ADB8307099A47BA07D6DACAE263AF5759C3FC51D4C904A7DCC648E08473A6D"
+      },
+      {
+        "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/input_validation_readback.json",
+        "before_sha256": "04B8D0A725579BB5EBF0B62431028398EA0D9F364FAE9BE6695ED7E73A607203",
+        "after_sha256": "9D4B9C212083D563AD6128153E2080B4F8F4AD5BBECF7B0BFBB5B3AA51C3EDD4"
+      },
+      {
+        "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/internal_review_manifest.json",
+        "before_sha256": "2F3BA081BCF38122AAA193274A2E75232DBF683ED1C3BC9336A39360C1BB37A4",
+        "after_sha256": "05118F6D67DAAF2F49A4F2BA365F9EF192C8589D97A81DE1E0AC2E4DE77C2568"
+      }
+    ],
+    "deterministic_second_pass_changed_files": [],
+    "local_outputs_read": false,
+    "media_regenerated": false
+  },
+  "immutable_evidence": {
+    "canonical_script_text_sha256": "22F894D713C51D8E688ADB934D0BFB5992B31216443FF430777EC980AA413826",
+    "canonical_script_json_sha256": "4249425D680A44DE25BE697262966A44D396AAFE611AA90A0BF769BEC4EE9B16",
+    "source_claim_ledger_sha256": "BA21FFF7E9725AF00A438213AE3453B84D9E9CFDC1568141AE83F52877C1B587",
+    "canonical_csv_sha256": "0A7B7F27FFF37E9AD29ADACD93BDB6FECBA6AE2650FE34DBE90E7BCFED9FE967",
+    "derived_csv_sha256": "D1C5C4C4E61996BDD89398618C0E7353A826D598B642E2397ACD982B1D5CBB1F",
+    "source_receipts_sha256": {
+      "csv_gate_observation": "7F35D2DFC66600AFAF058BF1C250807D6ACCE05A457656D5EBBB2AA1637D8676",
+      "diagnostic_manifest": "0CB3F36D9E87E618AE69D77108FDA49839278579AA218249ADA5B52B0271F36B",
+      "diagnostic_readback": "25B242CF32FB8885361BEAFC38581024C892E80977A4BB88E26E8260E564FCCC",
+      "diagnostic_receipt": "402C55023C338CCD65C1CE3D1D8899947834FABDE530D59FD896339DC0421134",
+      "character_profile": "C32F8E0FAA2FBCED6E91ADFD5BEDC62E8E245EF48F88A67F81B86C39AB89A304"
+    },
+    "tracked_render_receipt_sha256": "B9D366AB2EEAB5203450159C7C8665D69DBF502E34151F1D046AA8A0E9722FEE",
+    "tracked_render_readback_sha256": "8099EFBBF40750A3E960122EBDF7D90012909578523BADF3A9D4E2BB93248070",
+    "operator_result_sha256": "C2204D10579FFBC9133F21C65F9C60968C19638C29DB4354A529D0CAF1B6E9E5",
+    "project_sha256": "318AF09D0B52958555918140AD62AF0E7882A39FFA902C8E5D1304319CE11A01",
+    "original_render_sha256": "ACF2E8B284E7956529F8170B6BA5EC55CBC0A4B511DCF56E579087051DA00BAE",
+    "original_render_size_bytes": 1782869795,
+    "review_proxy_sha256": "45BD0A060BAA45C1BB44068F4ADAE1A6B50DBBF86FABA70F3A1761809BE5A025",
+    "review_proxy_size_bytes": 1400926,
+    "audit_markdown_sha256": "93E3518B73046353D896DB5B23872BF02A44C5C66B69D9DE09CFDF86C21FEB32",
+    "audit_json_sha256": "97CF2739D2DBDEF0753F3DAECA9DE3A78A0E5FD875159C9CA049FDF7AE76A4FA",
+    "audit_path_inventory_sha256": "7D47826D0D9E0DE26D7E57E7E079D351803F513B1FB2D9BE27C44B578760DBC6"
+  },
+  "focused_validation": {
+    "test_files": [
+      "tests/test_guardrails.py",
+      "tests/test_project_state_sync.py",
+      "tests/test_ymm4_character_alias_profile.py",
+      "tests/test_yymm4_import_preview_pack.py",
+      "tests/test_yymm4_import_ready_pack.py",
+      "tests/test_ymm4_observation_readback_pack.py",
+      "tests/test_ymm4_diagnostic_placeholder_proof.py",
+      "tests/test_verified_local_evidence_input_pilot.py",
+      "tests/test_media_validation.py",
+      "tests/test_internal_render_review.py",
+      "tests/test_episode_002_integration_metadata.py"
+    ],
+    "result": "passed",
+    "test_count": 87,
+    "full_pytest_run": false,
+    "state_sync": "passed",
+    "JSON_checks": "passed",
+    "canonical_script_csv_invariance": "passed",
+    "render_project_evidence_invariance": "passed",
+    "privacy_secret_binary_audit": "passed",
+    "git_diff_check": "passed",
+    "merge_tree": "passed"
+  },
+  "selected_state": {
+    "Project-State-ID": "episode-002-milestone-integrated-default-branch-v1",
+    "Product-State": "episode-002-milestone-integrated-on-default-branch",
+    "Product-Gate": "verified-external-editorial-input-selection",
+    "Recommended-Next": "select-or-provide-verified-editorial-source",
+    "External-State": "public-repo-default-branch"
+  },
+  "next_gate": {
+    "name": "verified_external_editorial_input_selection",
+    "required_context": [
+      "source",
+      "provenance_and_rights_context",
+      "stable_identity",
+      "cue_alignment"
+    ],
+    "internal_non_public": true
+  },
+  "negative_operations_not_performed": {
+    "force_or_non_fast_forward": true,
+    "merge_commit": true,
+    "rebase_squash_or_cherry_pick": true,
+    "pull_request_or_issue": true,
+    "branch_deletion": true,
+    "YMM4_or_Computer_Use": true,
+    "media_or_project_regeneration": true,
+    "dependency_installation": true,
+    "publication_upload_or_rights_action": true,
+    "full_pytest": true
+  },
+  "not_claimed": [
+    "external editorial adoption",
+    "human visual or creative acceptance",
+    "production readiness",
+    "rights or legal approval",
+    "upload or publication",
+    "public availability of local media"
+  ],
+  "failed_checks": []
+}

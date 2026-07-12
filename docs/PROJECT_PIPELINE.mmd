@@ -19,11 +19,11 @@ flowchart LR
     M --> Z["Validated local project + original MP4<br/>hash / ISO-BMFF / H.264 + AAC<br/>full video + audio decode passed"]
     Z --> W["Internal review package + ignored proxy<br/>traceability / five questions / limitations<br/>non-final and non-production"]
 
-    W -. "separate decision" .-> E["External editorial / real-media input<br/>provenance + identity + rights context"]
+    J -. "separate verified intake" .-> E["External editorial / real-media input<br/>provenance + identity + rights context"]
     W --> I["Feature/default integration audit passed<br/>44 commits / 448 paths classified<br/>integration_ready"]
-    I -. "explicit approve or reject" .-> J["Default-branch integration decision<br/>recommended: fast-forward after approval<br/>not yet executed"]
+    I -->|"approved Option A / normal FF"| J["Default branch integrated<br/>subject + audit tail + metadata rebind<br/>master current"]
 
-    X["Closed gates<br/>production .ymmp<br/>rights/public/final thumbnail<br/>upload/publication<br/>automatic default-branch mutation"] -.-> M
+    X["Closed gates<br/>production .ymmp<br/>rights/public/final thumbnail<br/>upload/publication<br/>automatic/unapproved default mutation"] -.-> M
     X -.-> Z
     X -.-> W
     X -.-> E

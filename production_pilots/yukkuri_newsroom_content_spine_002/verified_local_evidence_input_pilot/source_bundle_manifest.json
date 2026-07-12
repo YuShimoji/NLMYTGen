@@ -39,9 +39,9 @@
     {
       "source_id": "runtime_state",
       "repo_relative_path": "docs/runtime-state.md",
-      "sha256": "35A949E6C5E0C658D66DEA721FF4DAA8613307E8E39D0C5661F2577342B96433",
+      "sha256": "943DB7C5C286B1668F31483E57CADE5370F53422F7DFEB1985072168FD1F61E1",
       "schema": "nlmytgen_runtime_state_capsule",
-      "status": "episode-002-verified-local-evidence-internal-render-validated-v1",
+      "status": "episode-002-milestone-integrated-default-branch-v1",
       "role": "current project-state context; not a spoken factual source"
     },
     {

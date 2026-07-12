@@ -66,7 +66,7 @@
     }
   ],
   "source_evidence_sha256": {
-    "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/source_bundle_manifest.json": "A21D17FF25978E00EEF7C0E2FD052E5CF8CDD98BEFB94A38E8F83B2B44187DBE",
+    "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/source_bundle_manifest.json": "98ADB8307099A47BA07D6DACAE263AF5759C3FC51D4C904A7DCC648E08473A6D",
     "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/source_claim_ledger.json": "BA21FFF7E9725AF00A438213AE3453B84D9E9CFDC1568141AE83F52877C1B587",
     "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/canonical_script.json": "4249425D680A44DE25BE697262966A44D396AAFE611AA90A0BF769BEC4EE9B16",
     "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/canonical_yymm4.csv": "0A7B7F27FFF37E9AD29ADACD93BDB6FECBA6AE2650FE34DBE90E7BCFED9FE967",
@@ -80,11 +80,11 @@
     "unknown": "not established without human visual/editorial review"
   },
   "achieved_state": {
-    "Project-State-ID": "episode-002-verified-local-evidence-internal-render-validated-v1",
-    "Product-State": "episode-002-verified-local-evidence-internal-render-validated",
-    "Product-Gate": "milestone-integration-audit",
-    "Recommended-Next": "audit-feature-branch-integration-after-render-milestone",
-    "External-State": "public-repo-feature-branch"
+    "Project-State-ID": "episode-002-milestone-integrated-default-branch-v1",
+    "Product-State": "episode-002-milestone-integrated-on-default-branch",
+    "Product-Gate": "verified-external-editorial-input-selection",
+    "Recommended-Next": "select-or-provide-verified-editorial-source",
+    "External-State": "public-repo-default-branch"
   },
   "evidence_boundary": {
     "original_render_preserved": true,

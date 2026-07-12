@@ -1,50 +1,38 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-12 JST）
+## 現在の別端末再開ハンドオフ（2026-07-13 JST）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
 
-- **取得先**: `origin/codex/episode-002-verified-local-evidence-render-v1` のbranch先端。
-- **再開前確認**: `git fetch --prune origin`、同branchへのswitch、
+- **取得先**: `origin/master`。
+- **再開前確認**: `git fetch --prune origin`、`git switch master`、
   `git pull --ff-only`、`git status --short --branch`、
   `git rev-list --left-right --count "HEAD...@{u}"`の順でclean / `0 0`を確認する。
 - **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
-  `docs/runtime-state.md` → この節 →
-  `production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/README_INTERNAL_REVIEW.md`。
-  machine evidence再監査時だけ同pilotの`render_validation_readback.json`、
-  `render_receipt.json`、`source_to_output_traceability.json`を追加で読む。
+  `docs/runtime-state.md` → この節。integration再監査時だけ
+  `docs/verification/EPISODE_002_DEFAULT_BRANCH_INTEGRATION_2026-07-12.md`と
+  `docs/verification/episode_002_default_branch_integration_receipt.json`を追加で読む。
 - **現在の状態**: `Project-State-ID`は
-  `episode-002-verified-local-evidence-internal-render-validated-v1`、revisionは
-  `2026-07-12.2`。Product-Stateは
-  `episode-002-verified-local-evidence-internal-render-validated`、Product-Gateは
-  `milestone-integration-audit`、Recommended-Nextは
-  `audit-feature-branch-integration-after-render-milestone`。
-- **local project evidence**: ignored `.local.ymmp`はoperator resultと同じSHA-256で、
-  3563 frames、1920x1080/60 fps、VoiceItem 9 / ImageItem 3 / independent TextItem 3、
-  canonical speaker 3/6をactual parserで確認した。
-- **original render evidence**: ignored MP4はoperator resultとsize/hashが一致し、
-  ISO-BMFF `ftyp` / `mdat` / `moov`を完全走査した。`ffprobe`はH.264 Main
-  1920x1080/60 fps、AAC-LC 48 kHz stereo、59.383008秒、3563 video frames、
-  2 streamsを報告し、video+audio全編decodeはexit 0。原本は変更していない。
-- **review proxy**: ignored 1280x720/60 fps H.264/AAC proxyを原本から作成し、
-  独立に全編decodeした。これは内部review convenienceでproduction masterではない。
-- **Operator Batch hardening**: native stdout JSON依存を除去し、明示UTF-8 result file、
-  safe collect-only、YMM4 project JSONが`.mp4`名になった場合の専用errorを追加した。
-  既存success `operator_result.json`はbyte-for-byte不変。YMM4起動・操作・再出力はしていない。
-- **tracked primary review package**: `README_INTERNAL_REVIEW.md`、render validation/receipt、
-  source-to-output traceability、operator correction report、5問review sheet、limitationsを追加。
-  旧static project artifactsはpre-operator contract snapshotと明示し、render後のauthorityは
-  `render_receipt.json`とした。
-- **観測境界**: operator記載のoutput setting `MPEG`は観測メモでありcodec断定ではない。
-  machine evidenceはH.264/AAC。YMM4 observed `4.54.0.1`とprofile `4.53.0.9`の差、
-  local `.ymmp` portability、human visual/editorial acceptanceは残存debt。
-- **exact next action**: feature branchのbounded diff、tracked evidence privacy、authority、
-  target-branch riskをmilestone integration auditする。recommendationだけを返し、
-  merge/rebaseは自動実行しない。
-- **未完了境界**: human visual/editorial acceptance、production `.ymmp`、external editorial/
-  real-media input、creative polish、rights/legal/final-thumbnail approval、upload/publication、
-  default-branch integration、full-suite Integrity campaign。
+  `episode-002-milestone-integrated-default-branch-v1`、revisionは`2026-07-13.1`。
+  Product-Stateは`episode-002-milestone-integrated-on-default-branch`、Product-Gateは
+  `verified-external-editorial-input-selection`、Recommended-Nextは
+  `select-or-provide-verified-editorial-source`、External-Stateは
+  `public-repo-default-branch`。
+- **統合provenance**: fixed subject `d8e959c54b8c8f28c31cc2b586bbdd8c79f69f97`、
+  audit tail `a8b81e43616281691b73520a045dfa6ff44d2054`、integration branchを
+  rewrite/deleteせず維持した。integration commit SHAはtracked contentへself-embedせず、
+  Git refとAGENT_REPORTで解決する。
+- **metadata rebind**: final runtime-stateへ依存するsource bundle、input readback、
+  internal review manifestだけをdeterministicにrebindした。canonical script、claim semantics、
+  canonical/derived CSV、source receipts、render/project/media identity、audit artifactsは不変。
+- **local evidence**: MP4、proxy、`.local.ymmp`、operator result、`local_outputs`は
+  ignored/untrackedのまま維持した。YMM4、Computer Use、media再生成は行っていない。
+- **exact next action**: source、provenance/rights context、stable identity、cue alignmentを
+  備えたverified external editorial sourceを1件選定または提供する。
+- **未完了境界**: external editorial adoption、human visual/editorial acceptance、
+  YMM4/profile portability、production `.ymmp`、creative polish、rights/legal/final-thumbnail
+  approval、upload/publication、full-suite Integrity campaign。
 
 ## 直前の別端末再開ハンドオフ（2026-07-12 JST・operator-batch-ready・履歴）
 
