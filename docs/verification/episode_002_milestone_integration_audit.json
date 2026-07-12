@@ -1,0 +1,987 @@
+{
+  "schema_version": "episode_002_milestone_integration_audit.v1",
+  "audit_date": "2026-07-12 JST",
+  "status": "passed",
+  "audited_refs": {
+    "origin_master": "b61722454e3e218547fe6220bf1f4aa3802ed4d8",
+    "audited_subject_branch": "codex/episode-002-verified-local-evidence-render-v1",
+    "audited_subject_head": "d8e959c54b8c8f28c31cc2b586bbdd8c79f69f97",
+    "audit_branch": "codex/episode-002-milestone-integration-audit-v1",
+    "audit_head": null,
+    "audit_head_resolution": "Recorded from the pushed audit branch in the final AGENT_REPORT; an artifact cannot contain its own commit hash without self-reference.",
+    "merge_base": "b61722454e3e218547fe6220bf1f4aa3802ed4d8",
+    "fetch_prune_completed": true,
+    "expected_refs_unchanged": true
+  },
+  "recommendation": {
+    "class": "integration_ready",
+    "recommended_mechanism": "fast_forward_after_approval",
+    "rationale": [
+      "origin/master is the exact merge-base and has no unique commits relative to the audited subject",
+      "all 44 commits and 448 changed paths are inventoried with no unclassified path",
+      "merge-tree is conflict-free and leaves index/worktree unchanged",
+      "no secret, private endpoint, local media binary, or current-authority conflict was found",
+      "85 focused milestone tests and the state checker pass"
+    ],
+    "blockers": [],
+    "technical_readiness_is_not_user_approval": true,
+    "audit_tail_is_not_silently_part_of_subject_delta": true
+  },
+  "graph": {
+    "subject_ahead": 44,
+    "subject_behind": 0,
+    "commit_count": 44,
+    "first_parent_commit_count": 44,
+    "merge_commit_count": 0,
+    "linear_history": true,
+    "origin_master_is_ancestor": true,
+    "merge_tree_exit_code": 0,
+    "merge_tree_result_tree": "726a87e65cde357135a6fb948ceb61fbc3ed3b0c",
+    "merge_tree_conflict_count": 0,
+    "changed_path_count": 448,
+    "status_counts": {
+      "A": 420,
+      "D": 1,
+      "M": 27
+    },
+    "line_counts": {
+      "added": 69452,
+      "deleted": 6959,
+      "binary_paths_excluded_from_line_totals": 2
+    },
+    "intermediate_remote_refs_fully_contained": 18
+  },
+  "commit_audit": {
+    "inventory_complete": true,
+    "strict_docs_only_commit_count": 11,
+    "non_code_triage_commit_count": 1,
+    "families": [
+      {
+        "family_id": "F1",
+        "name": "dashboard_import_thumbnail_bootstrap",
+        "summary": "Episode dashboard, import preview, and thumbnail bootstrap.",
+        "commit_count": 6,
+        "first_commit": "797e268942e691084d868c3f7f63bc191a7b6b18",
+        "last_commit": "ecc4a6c1cbf060dd9760974f64b795ba9e093ed8",
+        "net_changed_path_count": 101,
+        "net_lines_added": 12278,
+        "net_lines_deleted": 0
+      },
+      {
+        "family_id": "F2",
+        "name": "surface_alignment_and_reviewer_packet",
+        "summary": "Surface alignment evidence and reviewer packet.",
+        "commit_count": 3,
+        "first_commit": "79e498c1041016d0f4c9e4aa6b30ca14c8d6e925",
+        "last_commit": "6293d32522844baaa27eb183a71893b6f83868c5",
+        "net_changed_path_count": 31,
+        "net_lines_added": 4121,
+        "net_lines_deleted": 11
+      },
+      {
+        "family_id": "F3",
+        "name": "review_ux_exploration_and_prototypes",
+        "summary": "Successive review UX research, prototypes, and localized consoles.",
+        "commit_count": 11,
+        "first_commit": "1cf1194e8445e2833e8dc3fc0fa1dda9d5e87e49",
+        "last_commit": "817dae846cd3d3fe34be1dd17122acc044e5fc5a",
+        "net_changed_path_count": 129,
+        "net_lines_added": 20748,
+        "net_lines_deleted": 20
+      },
+      {
+        "family_id": "F4",
+        "name": "output_edit_and_import_readiness",
+        "summary": "Output, editing, local execution, and YMM4 import readiness.",
+        "commit_count": 12,
+        "first_commit": "ed7bc04758417e3b91b75ac201812d3f9668f072",
+        "last_commit": "adb2776ff7d4cd4d19c6f07f637144289ed7e747",
+        "net_changed_path_count": 101,
+        "net_lines_added": 15398,
+        "net_lines_deleted": 0
+      },
+      {
+        "family_id": "F5",
+        "name": "real_input_and_observation_preparation",
+        "summary": "Real-input replacement and YMM4 observation preparation.",
+        "commit_count": 3,
+        "first_commit": "c93d1c94813963a6c596c68146ad2617319adca6",
+        "last_commit": "99477a0bcb4372bb193de65c0f3bc317e4a11021",
+        "net_changed_path_count": 25,
+        "net_lines_added": 3368,
+        "net_lines_deleted": 0
+      },
+      {
+        "family_id": "F6",
+        "name": "control_plane_and_state_governance",
+        "summary": "Workflow streamlining followed by explicit control-boundary correction.",
+        "commit_count": 4,
+        "first_commit": "38f96e271e4c719e36137f24843f165d56a4ab67",
+        "last_commit": "d63e5647864cd7d030f0ee90687a8d3cace5bf5a",
+        "net_changed_path_count": 31,
+        "net_lines_added": 812,
+        "net_lines_deleted": 7969
+      },
+      {
+        "family_id": "F7",
+        "name": "actual_yymm4_to_render_evidence",
+        "summary": "Actual observations, alias gate, diagnostic proof, operator batch, and render evidence.",
+        "commit_count": 5,
+        "first_commit": "76f9d8f50e9c07ffe8c6ce300634ff8d75b80732",
+        "last_commit": "d8e959c54b8c8f28c31cc2b586bbdd8c79f69f97",
+        "net_changed_path_count": 80,
+        "net_lines_added": 14335,
+        "net_lines_deleted": 567
+      }
+    ],
+    "commits": [
+      {
+        "ordinal": 1,
+        "commit": "797e268942e691084d868c3f7f63bc191a7b6b18",
+        "date": "2026-07-06",
+        "subject": "feat: add content spine 002 dashboard readiness ingest",
+        "family_id": "F1",
+        "flags": [],
+        "path_count": 61,
+        "lines_added": 5505,
+        "lines_deleted": 0,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 2,
+        "commit": "777bd16d3f436d49754a7229213aed7efc49774e",
+        "date": "2026-07-06",
+        "subject": "docs: triage validation drift for product velocity",
+        "family_id": "F1",
+        "flags": [
+          "non_code_validation_drift_triage"
+        ],
+        "path_count": 5,
+        "lines_added": 242,
+        "lines_deleted": 1,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 3,
+        "commit": "a06b43dfd5dc0d87721d693faf59a79aa99983dc",
+        "date": "2026-07-06",
+        "subject": "feat: add content spine 002 gui dashboard panel",
+        "family_id": "F1",
+        "flags": [],
+        "path_count": 17,
+        "lines_added": 2862,
+        "lines_deleted": 12,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 4,
+        "commit": "f85c76e0f3fb7096b5f922d8729757906c4c893d",
+        "date": "2026-07-06",
+        "subject": "feat: add episode 002 ymm4 import preview pack",
+        "family_id": "F1",
+        "flags": [],
+        "path_count": 18,
+        "lines_added": 1673,
+        "lines_deleted": 13,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 5,
+        "commit": "6846359f14e4fefee2f959c14893c90cd74acf5d",
+        "date": "2026-07-06",
+        "subject": "feat: add episode 002 thumbnail visual proof pack",
+        "family_id": "F1",
+        "flags": [],
+        "path_count": 18,
+        "lines_added": 1795,
+        "lines_deleted": 11,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 6,
+        "commit": "ecc4a6c1cbf060dd9760974f64b795ba9e093ed8",
+        "date": "2026-07-06",
+        "subject": "feat: sync episode 002 import preview thumbnail context",
+        "family_id": "F1",
+        "flags": [
+          "amendment"
+        ],
+        "path_count": 14,
+        "lines_added": 271,
+        "lines_deleted": 33,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 7,
+        "commit": "79e498c1041016d0f4c9e4aa6b30ca14c8d6e925",
+        "date": "2026-07-06",
+        "subject": "feat: add episode 002 surface alignment pack",
+        "family_id": "F2",
+        "flags": [],
+        "path_count": 17,
+        "lines_added": 1844,
+        "lines_deleted": 13,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 8,
+        "commit": "2d602de41c69f8311593ab570cf3010c4cafd66e",
+        "date": "2026-07-06",
+        "subject": "feat: add episode 002 surface reviewer packet",
+        "family_id": "F2",
+        "flags": [],
+        "path_count": 18,
+        "lines_added": 2259,
+        "lines_deleted": 12,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 9,
+        "commit": "6293d32522844baaa27eb183a71893b6f83868c5",
+        "date": "2026-07-06",
+        "subject": "docs: add episode 002 reviewer packet handoff",
+        "family_id": "F2",
+        "flags": [
+          "strict_docs_only_seal"
+        ],
+        "path_count": 1,
+        "lines_added": 32,
+        "lines_deleted": 0,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 10,
+        "commit": "1cf1194e8445e2833e8dc3fc0fa1dda9d5e87e49",
+        "date": "2026-07-07",
+        "subject": "feat: add episode 002 focused review brief",
+        "family_id": "F3",
+        "flags": [],
+        "path_count": 16,
+        "lines_added": 1838,
+        "lines_deleted": 16,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 11,
+        "commit": "f1badd799aa591fabec6099a960ac7a915ee1f96",
+        "date": "2026-07-07",
+        "subject": "feat: add episode 002 compact review cockpit",
+        "family_id": "F3",
+        "flags": [],
+        "path_count": 16,
+        "lines_added": 2289,
+        "lines_deleted": 15,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 12,
+        "commit": "7d9427aa0837bbb5c737a9ce8a34f106e785f17e",
+        "date": "2026-07-07",
+        "subject": "feat: add episode 002 review layout research",
+        "family_id": "F3",
+        "flags": [],
+        "path_count": 19,
+        "lines_added": 1796,
+        "lines_deleted": 22,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 13,
+        "commit": "ce35473dee06f976c5002995ba6eb3ce01d0424f",
+        "date": "2026-07-07",
+        "subject": "docs: add episode 002 layout research handoff",
+        "family_id": "F3",
+        "flags": [
+          "strict_docs_only_seal"
+        ],
+        "path_count": 1,
+        "lines_added": 47,
+        "lines_deleted": 0,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 14,
+        "commit": "46fa47c2f1a7e4a2962c11f3bf9e95cce5fbf061",
+        "date": "2026-07-07",
+        "subject": "feat: add episode 002 guided decision flow",
+        "family_id": "F3",
+        "flags": [],
+        "path_count": 16,
+        "lines_added": 2043,
+        "lines_deleted": 18,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 15,
+        "commit": "754f771c962022cd0504036331c75d6c18cd5569",
+        "date": "2026-07-07",
+        "subject": "feat: add episode 002 layout second pass",
+        "family_id": "F3",
+        "flags": [],
+        "path_count": 18,
+        "lines_added": 2012,
+        "lines_deleted": 20,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 16,
+        "commit": "e86cd8f450f962307f6011104ae31d288296a7fa",
+        "date": "2026-07-07",
+        "subject": "feat: add episode 002 split view prototype",
+        "family_id": "F3",
+        "flags": [],
+        "path_count": 17,
+        "lines_added": 2583,
+        "lines_deleted": 28,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 17,
+        "commit": "5e28b32eb8060571993083963036a98a1a03301f",
+        "date": "2026-07-07",
+        "subject": "docs: add episode 002 split view handoff",
+        "family_id": "F3",
+        "flags": [
+          "strict_docs_only_seal"
+        ],
+        "path_count": 1,
+        "lines_added": 52,
+        "lines_deleted": 0,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 18,
+        "commit": "8110ad3f4a87c11494310cc1c040be7ed8865b5a",
+        "date": "2026-07-08",
+        "subject": "feat: add episode 002 review console prototype",
+        "family_id": "F3",
+        "flags": [],
+        "path_count": 19,
+        "lines_added": 2825,
+        "lines_deleted": 13,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 19,
+        "commit": "f53be8feb6cb312d0f5497742e02864be87bcb44",
+        "date": "2026-07-08",
+        "subject": "feat: add primary artifact review console",
+        "family_id": "F3",
+        "flags": [],
+        "path_count": 20,
+        "lines_added": 2510,
+        "lines_deleted": 17,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 20,
+        "commit": "817dae846cd3d3fe34be1dd17122acc044e5fc5a",
+        "date": "2026-07-08",
+        "subject": "feat: add japanese graphic review console",
+        "family_id": "F3",
+        "flags": [],
+        "path_count": 21,
+        "lines_added": 2901,
+        "lines_deleted": 19,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 21,
+        "commit": "ed7bc04758417e3b91b75ac201812d3f9668f072",
+        "date": "2026-07-08",
+        "subject": "feat: add output video layer proof",
+        "family_id": "F4",
+        "flags": [],
+        "path_count": 16,
+        "lines_added": 2251,
+        "lines_deleted": 0,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 22,
+        "commit": "412c22850cfca1db02540b93708b86282cc8ed99",
+        "date": "2026-07-08",
+        "subject": "docs: seal output video layer handoff",
+        "family_id": "F4",
+        "flags": [
+          "strict_docs_only_seal"
+        ],
+        "path_count": 2,
+        "lines_added": 114,
+        "lines_deleted": 0,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 23,
+        "commit": "279614aa5ba2d27ae67ba01600afecb51334aea8",
+        "date": "2026-07-08",
+        "subject": "Build episode 002 output template readiness pack",
+        "family_id": "F4",
+        "flags": [],
+        "path_count": 18,
+        "lines_added": 2697,
+        "lines_deleted": 0,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 24,
+        "commit": "95b5fe2624cd102436261b7600174b38b65489ba",
+        "date": "2026-07-08",
+        "subject": "Build episode 002 real input intake readiness pack",
+        "family_id": "F4",
+        "flags": [],
+        "path_count": 20,
+        "lines_added": 1986,
+        "lines_deleted": 0,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 25,
+        "commit": "b5ac43dcd3ac47358830c8899873c18e7319d97f",
+        "date": "2026-07-08",
+        "subject": "Add episode 002 editing operations readiness pack",
+        "family_id": "F4",
+        "flags": [],
+        "path_count": 20,
+        "lines_added": 3295,
+        "lines_deleted": 1,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 26,
+        "commit": "46577b4b1b7d79f72835cca8d5868148a4c20693",
+        "date": "2026-07-08",
+        "subject": "Seal episode 002 editing operations handoff",
+        "family_id": "F4",
+        "flags": [
+          "strict_docs_only_seal"
+        ],
+        "path_count": 3,
+        "lines_added": 291,
+        "lines_deleted": 0,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 27,
+        "commit": "697cb7e678e39fd9f61d75b2308d0b11ffa0f44e",
+        "date": "2026-07-08",
+        "subject": "feat: add episode 002 local edit slice execution pack",
+        "family_id": "F4",
+        "flags": [],
+        "path_count": 14,
+        "lines_added": 1984,
+        "lines_deleted": 0,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 28,
+        "commit": "c382b336a659e11b4201d37f2c7e528d8aaf7e57",
+        "date": "2026-07-08",
+        "subject": "docs: seal episode 002 local edit slice handoff",
+        "family_id": "F4",
+        "flags": [
+          "strict_docs_only_seal"
+        ],
+        "path_count": 4,
+        "lines_added": 256,
+        "lines_deleted": 1,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 29,
+        "commit": "a39ce95c7b6536891bb93f924c7a3efe7cd91a90",
+        "date": "2026-07-08",
+        "subject": "feat: add episode 002 ymm4 import ready pack",
+        "family_id": "F4",
+        "flags": [],
+        "path_count": 13,
+        "lines_added": 1946,
+        "lines_deleted": 0,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 30,
+        "commit": "5f30a729ab9a30a921f86d3ea0316e9564dd778b",
+        "date": "2026-07-08",
+        "subject": "docs: seal episode 002 ymm4 import ready handoff",
+        "family_id": "F4",
+        "flags": [
+          "strict_docs_only_seal"
+        ],
+        "path_count": 4,
+        "lines_added": 256,
+        "lines_deleted": 1,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 31,
+        "commit": "1cc52b6fd016afc367683d61e30c097ce1a8d080",
+        "date": "2026-07-09",
+        "subject": "feat: localize episode 002 ymm4 import review surface",
+        "family_id": "F4",
+        "flags": [
+          "amendment"
+        ],
+        "path_count": 6,
+        "lines_added": 191,
+        "lines_deleted": 97,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 32,
+        "commit": "adb2776ff7d4cd4d19c6f07f637144289ed7e747",
+        "date": "2026-07-09",
+        "subject": "docs: seal episode 002 ymm4 ja review handoff",
+        "family_id": "F4",
+        "flags": [
+          "strict_docs_only_seal"
+        ],
+        "path_count": 4,
+        "lines_added": 232,
+        "lines_deleted": 1,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 33,
+        "commit": "c93d1c94813963a6c596c68146ad2617319adca6",
+        "date": "2026-07-09",
+        "subject": "Add Episode 002 real input replacement readiness pack",
+        "family_id": "F5",
+        "flags": [],
+        "path_count": 16,
+        "lines_added": 1787,
+        "lines_deleted": 0,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 34,
+        "commit": "506ec9e750033363c083ff90c58733d3252f22d3",
+        "date": "2026-07-09",
+        "subject": "Add Episode 002 YMM4 observation readback package",
+        "family_id": "F5",
+        "flags": [],
+        "path_count": 13,
+        "lines_added": 1573,
+        "lines_deleted": 1,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 35,
+        "commit": "99477a0bcb4372bb193de65c0f3bc317e4a11021",
+        "date": "2026-07-09",
+        "subject": "Seal Episode 002 YMM4 observation remote handoff",
+        "family_id": "F5",
+        "flags": [
+          "strict_docs_only_seal"
+        ],
+        "path_count": 3,
+        "lines_added": 11,
+        "lines_deleted": 2,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 36,
+        "commit": "38f96e271e4c719e36137f24843f165d56a4ab67",
+        "date": "2026-07-10",
+        "subject": "feat: streamline AI workflow and project state",
+        "family_id": "F6",
+        "flags": [
+          "partially_superseded_control_state"
+        ],
+        "path_count": 34,
+        "lines_added": 1012,
+        "lines_deleted": 6687,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 37,
+        "commit": "4297eb8101ebe7b47195c8a7601c77c237750e8f",
+        "date": "2026-07-10",
+        "subject": "docs: seal workflow state handoff",
+        "family_id": "F6",
+        "flags": [
+          "strict_docs_only_seal",
+          "partially_superseded_control_state"
+        ],
+        "path_count": 2,
+        "lines_added": 10,
+        "lines_deleted": 8,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 38,
+        "commit": "c0d098fc3b6c4a561a1e1861d9894b938d02b5d3",
+        "date": "2026-07-10",
+        "subject": "fix: restore supervisor control boundary",
+        "family_id": "F6",
+        "flags": [
+          "compensating_control_boundary_correction"
+        ],
+        "path_count": 28,
+        "lines_added": 248,
+        "lines_deleted": 1778,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 39,
+        "commit": "d63e5647864cd7d030f0ee90687a8d3cace5bf5a",
+        "date": "2026-07-10",
+        "subject": "docs: record cross-device restart handoff",
+        "family_id": "F6",
+        "flags": [
+          "strict_docs_only_seal"
+        ],
+        "path_count": 5,
+        "lines_added": 48,
+        "lines_deleted": 2,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 40,
+        "commit": "76f9d8f50e9c07ffe8c6ce300634ff8d75b80732",
+        "date": "2026-07-10",
+        "subject": "feat: record actual YMM4 five-point observation",
+        "family_id": "F7",
+        "flags": [
+          "gap_observation"
+        ],
+        "path_count": 15,
+        "lines_added": 1324,
+        "lines_deleted": 186,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 41,
+        "commit": "8ac03504d1e2fce9f3850ffb2d37333928ce5712",
+        "date": "2026-07-11",
+        "subject": "feat: add explicit YMM4 speaker alias import gate",
+        "family_id": "F7",
+        "flags": [
+          "bounded_gap_closure"
+        ],
+        "path_count": 34,
+        "lines_added": 2756,
+        "lines_deleted": 770,
+        "binary_path_count": 0
+      },
+      {
+        "ordinal": 42,
+        "commit": "a4eed8fe76085d7a59d483ffbafec0867b64812d",
+        "date": "2026-07-11",
+        "subject": "feat: observe Episode 002 YMM4 diagnostic proof",
+        "family_id": "F7",
+        "flags": [
+          "bounded_gap_closure"
+        ],
+        "path_count": 23,
+        "lines_added": 2953,
+        "lines_deleted": 218,
+        "binary_path_count": 1
+      },
+      {
+        "ordinal": 43,
+        "commit": "e8df1324f59474236d890d43fc9a037d49d089d7",
+        "date": "2026-07-12",
+        "subject": "feat: prepare Episode 002 evidence operator batch",
+        "family_id": "F7",
+        "flags": [
+          "pre_operator_milestone"
+        ],
+        "path_count": 30,
+        "lines_added": 3778,
+        "lines_deleted": 113,
+        "binary_path_count": 1
+      },
+      {
+        "ordinal": 44,
+        "commit": "d8e959c54b8c8f28c31cc2b586bbdd8c79f69f97",
+        "date": "2026-07-12",
+        "subject": "Finalize Episode 002 internal render evidence",
+        "family_id": "F7",
+        "flags": [
+          "audited_subject_current_authority"
+        ],
+        "path_count": 31,
+        "lines_added": 4449,
+        "lines_deleted": 205,
+        "binary_path_count": 0
+      }
+    ],
+    "material_reversal": {
+      "streamlining_commit": "38f96e271e4c719e36137f24843f165d56a4ab67",
+      "obsolete_seal_commit": "4297eb8101ebe7b47195c8a7601c77c237750e8f",
+      "compensating_correction_commit": "c0d098fc3b6c4a561a1e1861d9894b938d02b5d3",
+      "corrected_state_seal_commit": "d63e5647864cd7d030f0ee90687a8d3cace5bf5a",
+      "assessment": "partially_superseded_with_control_boundary_restored"
+    }
+  },
+  "path_audit": {
+    "inventory_file": "docs/verification/episode_002_integration_path_inventory.json",
+    "inventory_sha256": "7D47826D0D9E0DE26D7E57E7E079D351803F513B1FB2D9BE27C44B578760DBC6",
+    "inventory_complete": true,
+    "unclassified_path_count": 0,
+    "category_counts": {
+      "runtime_product_code": 0,
+      "CLI_or_pipeline": 31,
+      "tests": 30,
+      "current_state_navigation": 15,
+      "product_specification": 6,
+      "historical_verification": 12,
+      "tracked_generated_evidence": 207,
+      "prototype_or_review_surface": 134,
+      "empty_or_stub_artifact": 3,
+      "control_boundary_or_repo_hygiene": 9,
+      "deletion_or_migration": 1,
+      "unknown_requires_review": 0
+    },
+    "lifecycle_counts": {
+      "current": 125,
+      "historical": 322,
+      "obsolete": 1
+    },
+    "zero_byte_audit": {
+      "changed_zero_byte_count": 0,
+      "repo_tracked_zero_byte_count": 5,
+      "repo_tracked_zero_byte_files": [
+        {
+          "path": "src/__init__.py",
+          "classification": "intentional_python_package_marker",
+          "blocker": false
+        },
+        {
+          "path": "src/cli/__init__.py",
+          "classification": "intentional_python_package_marker",
+          "blocker": false
+        },
+        {
+          "path": "src/feed/__init__.py",
+          "classification": "intentional_python_package_marker",
+          "blocker": false
+        },
+        {
+          "path": "src/pipeline/__init__.py",
+          "classification": "intentional_python_package_marker",
+          "blocker": false
+        },
+        {
+          "path": "tests/__init__.py",
+          "classification": "intentional_python_package_marker",
+          "blocker": false
+        }
+      ]
+    },
+    "binary_audit": {
+      "changed_binary_count": 2,
+      "changed_binaries": [
+        {
+          "path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/assets/internal_review_placeholder.png",
+          "size_bytes": 11298
+        },
+        {
+          "path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/assets/diagnostic_placeholder.png",
+          "size_bytes": 11298
+        }
+      ],
+      "local_mp4_or_local_ymmp_path_count": 0
+    },
+    "large_file_audit": {
+      "threshold_bytes": 100000,
+      "changed_large_file_count": 2,
+      "changed_large_files": [
+        {
+          "path": "docs/project-context.md",
+          "size_bytes": 361992
+        },
+        {
+          "path": "src/cli/main.py",
+          "size_bytes": 281926
+        }
+      ]
+    }
+  },
+  "privacy_audit": {
+    "secret_pattern_occurrence_count_in_final_or_deleted_blobs": 0,
+    "secret_pattern_occurrence_count_added": 0,
+    "user_home_occurrence_count_in_final_or_deleted_blobs": 99,
+    "user_home_occurrence_count_added": 49,
+    "scope_correction_path_count": 0,
+    "scope_correction_paths": [],
+    "disclosed_historical_path_count": 26,
+    "disclosed_historical_paths": [
+      "docs/project-context.md",
+      "docs/verification/NEWSROOM_EPISODE_002_EDITING_OPERATIONS_REMOTE_HANDOFF_2026-07-08.md",
+      "docs/verification/NEWSROOM_EPISODE_002_LOCAL_EDIT_SLICE_EXECUTION_REMOTE_HANDOFF_2026-07-08.md",
+      "docs/verification/NEWSROOM_EPISODE_002_VERIFIED_REAL_INPUT_PREP_HANDOFF_2026-07-09.md",
+      "docs/verification/NEWSROOM_EPISODE_002_YMM4_ACTUAL_OBSERVATION_2026-07-10.md",
+      "docs/verification/NEWSROOM_EPISODE_002_YMM4_IMPORT_READY_JA_REVIEW_REMOTE_HANDOFF_2026-07-09.md",
+      "docs/verification/NEWSROOM_EPISODE_002_YMM4_IMPORT_READY_REMOTE_HANDOFF_2026-07-08.md",
+      "docs/verification/NEWSROOM_EPISODE_002_YMM4_OBSERVATION_READBACK_2026-07-09.md",
+      "docs/verification/VALIDATION_DRIFT_VELOCITY_RECOVERY_V1_2026-07-06.md",
+      "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/validation_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/guided_decision_flow_prototype/validation_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/japanese_graphic_review_console/validation_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/local_edit_slice_execution_pack/validation_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/output_template_readiness_pack/validation_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/output_video_layer_proof/validation_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/primary_artifact_review_console/validation_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/real_input_intake_readiness/validation_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/real_input_replacement_readiness_pack/validation_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/review_cockpit_compact/validation_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/review_console_redesign_prototype/validation_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_research/validation_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/review_layout_second_pass/validation_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/split_view_decision_evidence_prototype/validation_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_import_ready_pack/validation_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_observation_readback_pack/observation_readback.json",
+      "samples/_probe/newsroom_handoff/validation_drift_velocity_recovery_v1.json"
+    ],
+    "intentional_test_fixture_path_count": 2,
+    "intentional_test_fixture_paths": [
+      "tests/test_guardrails.py",
+      "tests/test_ymm4_diagnostic_placeholder_proof.py"
+    ],
+    "file_uri_occurrence_count_in_final_blobs": 3,
+    "file_uri_occurrence_count_added": 3,
+    "file_uri_paths": [
+      "src/pipeline/internal_render_review.py",
+      "src/pipeline/verified_local_evidence_input_pilot.py",
+      "tests/test_internal_render_review.py"
+    ],
+    "external_url_hosts": [
+      "127.0.0.1",
+      "design-system.service.gov.uk",
+      "www.nngroup.com",
+      "www.w3.org"
+    ],
+    "subject_repo_wide_user_home_matching_blob_count": 210,
+    "master_repo_wide_user_home_matching_blob_count": 185,
+    "private_endpoint_count": 0,
+    "true_unc_path_count": 0,
+    "current_primary_evidence_private_path_count": 0,
+    "finding": "no secret or current-primary leak; disclosed historical absolute paths remain"
+  },
+  "authority_audit": {
+    "current_state_authority": "docs/runtime-state.md",
+    "current_primary_review": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/README_INTERNAL_REVIEW.md",
+    "current_primary_receipt": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/render_receipt.json",
+    "pre_operator_snapshots": [
+      "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/internal_project_manifest.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/project_generation_receipt.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/static_project_readback.json"
+    ],
+    "deleted_prompt_authority": "docs/USER_COPYPASTE_BLOCKS.md",
+    "repo_supervisor_prompt_storage_removed": true,
+    "current_authority_conflict_count": 0,
+    "nonblocking_stale_secondary_docs": [
+      "docs/PROJECT_LANES.md",
+      ".claude/hooks/README.md"
+    ]
+  },
+  "integration_mechanics": {
+    "technical_fast_forward": true,
+    "recommended_route": "fast_forward_after_approval",
+    "merge_commit": "not_recommended_no_target_unique_commits",
+    "squash_merge": "not_recommended_would_hide_milestone_and_compensating_provenance",
+    "selective_cherry_pick": "not_recommended_shared_CLI_and_state_history_are_highly_coupled",
+    "branch_protection_or_required_PR": "unknown_from_local_evidence",
+    "subject_scope": "d8e959c54b8c8f28c31cc2b586bbdd8c79f69f97",
+    "audit_tail_scope": "separate_audit_evidence_and_state_commit_not_silently_included",
+    "audit_state_hash_coupling": "If the audit-state tail is integrated, rebind the runtime-state hash in the pilot metadata before claiming current-worktree pilot validation.",
+    "post_integration_checks": [
+      "fetch/prune and recheck origin/master ancestry immediately before integration",
+      "fast-forward only after explicit user approval",
+      "rerun the same 85 focused tests",
+      "run state sync, JSON parse, privacy scan, and git diff --check",
+      "if audit state is included, deterministically rebind runtime-state hash-bound pilot metadata and validate it without media regeneration",
+      "verify clean worktree and upstream parity"
+    ]
+  },
+  "checks": {
+    "focused_test_files": [
+      "tests/test_guardrails.py",
+      "tests/test_project_state_sync.py",
+      "tests/test_ymm4_character_alias_profile.py",
+      "tests/test_yymm4_import_preview_pack.py",
+      "tests/test_yymm4_import_ready_pack.py",
+      "tests/test_yymm4_observation_readback_pack.py",
+      "tests/test_ymm4_diagnostic_placeholder_proof.py",
+      "tests/test_verified_local_evidence_input_pilot.py",
+      "tests/test_media_validation.py",
+      "tests/test_internal_render_review.py"
+    ],
+    "focused_test_count": 85,
+    "focused_test_result": "passed",
+    "full_pytest_run": false,
+    "state_sync_result": "passed",
+    "JSON_parse_result": "passed",
+    "git_diff_check": "passed",
+    "GitHub_CI_status": "unknown_no_local_evidence"
+  },
+  "quality_and_review_debt": [
+    {
+      "debt_id": "D1",
+      "issue": "Disclosed historical user-home paths remain in older handoffs and generated validation provenance.",
+      "impact": "They reduce portability and expose workstation usernames, but do not affect current primary evidence or contain secrets.",
+      "blocker": false,
+      "owner": "future history and generated-evidence hygiene slice",
+      "revisit_trigger": "before public repackaging or when any affected historical package is promoted",
+      "status": "accepted_nonblocking_debt"
+    },
+    {
+      "debt_id": "D2",
+      "issue": "The milestone carries 322 historical paths and 18 contained intermediate remote branches.",
+      "impact": "Review and maintenance burden is high even though artifacts are namespaced, small, and non-authoritative.",
+      "blocker": false,
+      "owner": "repository hygiene maintainer",
+      "revisit_trigger": "after integration or before a repository-size and history cleanup campaign",
+      "status": "accepted_nonblocking_debt"
+    },
+    {
+      "debt_id": "D3",
+      "issue": "Secondary docs are stale: PROJECT_LANES still says render observations are pending, and the hook README lists removed response-quality guards.",
+      "impact": "Readers using non-authoritative secondary surfaces can infer an outdated state or enforcement model.",
+      "blocker": false,
+      "owner": "documentation hygiene maintainer",
+      "revisit_trigger": "before either secondary surface is linked as current navigation",
+      "status": "open_nonblocking_debt"
+    },
+    {
+      "debt_id": "D4",
+      "issue": "Human visual and editorial review of the render remains incomplete.",
+      "impact": "Machine validity does not establish readability, timing feel, or editorial quality.",
+      "blocker": false,
+      "owner": "human reviewer",
+      "revisit_trigger": "before H2 merge-ready creative acceptance or any final-quality claim",
+      "status": "open_review_debt"
+    },
+    {
+      "debt_id": "D5",
+      "issue": "YMM4 profile 4.53.0.9 differs from observed 4.54.0.1 and the local project contains machine-local references.",
+      "impact": "A future environment or cross-machine open may map or resolve assets differently.",
+      "blocker": false,
+      "owner": "operator and portability maintainer",
+      "revisit_trigger": "YMM4/profile change, mapping dialog, cross-machine transfer, or production carrier adoption",
+      "status": "accepted_nonblocking_debt"
+    }
+  ],
+  "selected_state": {
+    "Project-State-ID": "episode-002-milestone-integration-audited-ready-v1",
+    "Product-State": "episode-002-milestone-integration-audited-ready",
+    "Product-Gate": "default-branch-integration-decision",
+    "Recommended-Next": "approve-or-reject-default-branch-integration",
+    "External-State": "public-repo-feature-branch"
+  },
+  "exact_user_decision_needed": "Approve or reject default-branch integration of audited subject d8e959c; approval must explicitly select the fast-forward route and treatment of the separate audit-state tail.",
+  "prohibited_operations_not_performed": {
+    "merge": true,
+    "rebase": true,
+    "squash": true,
+    "cherry_pick": true,
+    "pull_request_creation": true,
+    "default_branch_mutation": true,
+    "YMM4_launch": true,
+    "Computer_Use": true,
+    "media_regeneration": true,
+    "publication_or_rights_action": true
+  }
+}

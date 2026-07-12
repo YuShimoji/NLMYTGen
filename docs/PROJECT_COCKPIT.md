@@ -1,11 +1,11 @@
 # NLMYTGen Project Cockpit
 
-Project-State-ID: episode-002-verified-local-evidence-internal-render-validated-v1
-State-Revision: 2026-07-12.2
+Project-State-ID: episode-002-milestone-integration-audited-ready-v1
+State-Revision: 2026-07-12.3
 Updated: 2026-07-12 JST
-Product-State: episode-002-verified-local-evidence-internal-render-validated
-Product-Gate: milestone-integration-audit
-Recommended-Next: audit-feature-branch-integration-after-render-milestone
+Product-State: episode-002-milestone-integration-audited-ready
+Product-Gate: default-branch-integration-decision
+Recommended-Next: approve-or-reject-default-branch-integration
 External-State: public-repo-feature-branch
 
 このページはpublic repositoryで現在地を読むための追跡済みMarkdownです。
@@ -16,45 +16,42 @@ External-State: public-repo-feature-branch
 
 ## いまの一文
 
-Episode 002のverified-local-evidence pilotは、実際のlocal YMM4 projectと
-約59.38秒のMP4について、hash整合、project構造、ISO-BMFF、H.264/AAC stream、
-全編video/audio decodeを確認し、内部レビュー用proxyとtracked review packageまで
-整備済みです。次はfeature branchをmergeせずに行うmilestone integration auditです。
+Episode 002の固定subject `d8e959c`は、44 commits / 448 changed pathsを全数監査し、
+merge-tree conflict 0、secret・local media・current authority blocker 0、focused tests
+85件passにより`integration_ready`と判定済みです。推奨はユーザー承認後のfast-forwardで、
+default branchはまだ変更していません。
 
-## 現在の状態
+## 監査結果
 
-| 対象 | 現在地 | 次に進む条件 | まだ保証しないこと |
-| --- | --- | --- | --- |
-| source/script | 9/9 cuesがauthorized pointersへ接続、S1/S2/S3=2/2/5 | source/hash drift時は再検証 | external editorial/rights approval |
-| local project | 3563 frames、9 VoiceItems、3 ImageItems、3 TextItems、speaker 3/6をparse | 別環境利用時はprofile/path portabilityを再確認 | production `.ymmp` |
-| original MP4 | 1920x1080/60 fps、H.264/AAC、59.383008秒、全編decode passed | humanが5問review sheetで内容を判断 | visual/editorial acceptance |
-| review proxy | 1280x720/60 fps、H.264/AAC、全編decode passed、originalは不変 | review後もmaster扱いしない | production master |
-| operator batch | success resultをbyte-for-byte保持し、UTF-8/collect-only/misnamed JSONをhardening | 将来のbatchは同collector contractを使う | 全YMM4版でのportable execution |
-| review package | receipt、traceability、correction report、review sheet、limitationsがprimary | bounded integration audit | merge/publication/upload |
-
-## 次に使う入口
-
-| 入口 | 解くbottleneck | 成果 |
+| 対象 | 結果 | 判断境界 |
 | --- | --- | --- |
-| **Milestone integration audit** | feature branchの証拠・privacy・authority・target riskを未監査 | merge/rebaseを行わずintegration recommendationを返す |
+| graph | origin/masterがexact merge-base、subjectは44 ahead / 0 behind、linear | target移動時は再監査 |
+| commits | 44/44を7 capability familiesへ分類、merge commit 0 | audit tailは別commit |
+| paths | 448/448分類、A420/M27/D1/R0、unclassified 0 | historical 322 pathsは非authority |
+| mechanics | merge-tree conflict 0、index/worktree不変 | technical FFはapprovalではない |
+| privacy | secret/private endpoint/current-primary leak 0 | historical absolute pathsは開示済みdebt |
+| binaries | placeholder PNG 2件のみ、MP4/local `.ymmp`/proxy 0 | ignored local evidenceを維持 |
+| tests | focused 85 pass、state sync pass | full pytestは対象外 |
+| recommendation | `integration_ready` / `fast_forward_after_approval` | H1は明示承認必須 |
 
-Primary surface:
-`production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/README_INTERNAL_REVIEW.md`
+## 次に必要な決定
 
-## 証拠境界
+固定subject `d8e959c`のdefault-branch integrationをapproveまたはrejectしてください。
+Approveの場合も、fast-forward routeとseparate audit-state tailの扱いを明示し、直前に
+fetch/ancestry/merge-treeを再確認します。audit tailを含める場合はruntime-stateをhash-lockする
+pilot metadataを非mediaのdeterministic stepでrebindしてからvalidationします。
 
-- Machine evidence:
-  `verified_local_evidence_input_pilot/render_validation_readback.json`
-- Receipt/traceability:
-  `verified_local_evidence_input_pilot/render_receipt.json`、
-  `verified_local_evidence_input_pilot/source_to_output_traceability.json`
-- Human review:
-  `verified_local_evidence_input_pilot/operator_review_sheet.md`
-- Original MP4、proxy、local `.ymmp`、operator resultはignored。tracked receiptには
-  repo-relative label、hash、size、検証結果だけを残します。
+Primary audit:
+`docs/verification/EPISODE_002_MILESTONE_INTEGRATION_AUDIT_2026-07-12.md`
 
-## 公開境界
+## 残存debt
 
-このページにはprivate URL、token、raw external source、user-home絶対pathを載せません。
-valid renderはproduction/public/rights/creative acceptanceを意味しません。external editorial input、
-real-media replacement、final thumbnail、upload/publication、default-branch integrationは未完了です。
+- historical user-home pathsと322 historical artifactsは開示済み・非blocking。
+- `docs/PROJECT_LANES.md`と`.claude/hooks/README.md`はsecondary docsとしてstale。
+- human visual/editorial review、YMM4 4.53.0.9 profileと4.54.0.1 environment差、
+  local `.ymmp` portabilityは未解決。
+
+## 公開・実行境界
+
+No merge/rebase/squash/cherry-pick/PR/default mutation、YMM4、Computer Use、media再生成、
+production、external editorial input、rights/legal、upload/publicationを維持しています。

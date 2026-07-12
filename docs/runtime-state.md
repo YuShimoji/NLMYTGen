@@ -1,77 +1,77 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: episode-002-verified-local-evidence-internal-render-validated-v1
-State-Revision: 2026-07-12.2
+Project-State-ID: episode-002-milestone-integration-audited-ready-v1
+State-Revision: 2026-07-12.3
 Updated: 2026-07-12 JST
-Product-State: episode-002-verified-local-evidence-internal-render-validated
-Product-Gate: milestone-integration-audit
-Recommended-Next: audit-feature-branch-integration-after-render-milestone
+Product-State: episode-002-milestone-integration-audited-ready
+Product-Gate: default-branch-integration-decision
+Recommended-Next: approve-or-reject-default-branch-integration
 External-State: public-repo-feature-branch
 
 ## Current Slice
 
-- **Internal render validated**: the ignored local YMM4 project parses as the
-  expected 3563-frame, 1920x1080/60 fps structure with 9 VoiceItems,
-  3 ImageItems, 3 independent TextItems, and canonical speaker counts 3/6.
-- **Original MP4 validated without mutation**: ISO-BMFF structure, `ffprobe`
-  streams, reported duration/frame count, and full video+audio decode pass.
-  The original remains ignored and hash-bound by `render_receipt.json`.
-- **Review proxy available**: an ignored 1280x720/60 fps H.264/AAC proxy was
-  derived from the original for internal review and independently full-decoded.
-- **Operator result preserved**: the collected success result remains byte-for-byte
-  unchanged. Collector hardening now uses explicit UTF-8 result files,
-  collect-only recovery, and a dedicated error for a YMM4 project JSON saved
-  under an `.mp4` name.
-- **Tracked review package is primary**: render validation, receipt,
-  source-to-output traceability, correction report, five-question review sheet,
-  and limitations are the current review authority. Earlier static project
-  artifacts are explicitly pre-operator contract snapshots.
+- **Fixed audit subject**: commit
+  `d8e959c54b8c8f28c31cc2b586bbdd8c79f69f97` on
+  `codex/episode-002-verified-local-evidence-render-v1` is the immutable product
+  basis. The separate audit branch/commit is evidence and state only.
+- **Graph audit complete**: the subject is a linear 44-commit continuation of
+  `origin/master` at `b61722454e3e218547fe6220bf1f4aa3802ed4d8`,
+  44 ahead / 0 behind, with the same merge-base and no merge commits.
+- **Full inventory complete**: all 44 commits and all 448 changed paths are
+  classified. Net status is A420 / M27 / D1 / R0 and +69,452 / -6,959;
+  unclassified paths are zero.
+- **Integration mechanics pass**: non-mutating `git merge-tree --write-tree`
+  reports no conflict and leaves index/worktree unchanged. The evidence-derived
+  route is `fast_forward_after_approval`.
+- **Safety audit pass**: no secret, private endpoint, tracked MP4/local `.ymmp`,
+  proxy, operator result, or current-authority conflict was found. Historical
+  user-home paths and generated-artifact burden are disclosed nonblocking debt.
+- **Targeted validation pass**: 85 focused tests cover guardrails, state sync,
+  YMM4 alias/import/readback, diagnostic proof, verified pilot, media validation,
+  and internal render review. Full pytest was not run.
 
 ## Product Position
 
-- This is an internal, non-final, non-production recap pilot based only on
-  tracked project evidence. A valid render does not grant editorial, rights,
-  creative, public, or production approval.
-- The operator observed YMM4 `4.54.0.1`; the tracked character profile records
-  `4.53.0.9`. No mapping error was reported, but the version difference remains
-  a documented portability debt.
-- The operator described the output setting as `MPEG`; that is an observation,
-  not a codec assertion. Machine evidence identifies H.264 video and AAC audio.
-- No Computer Use, Worker-launched YMM4, rerender, original overwrite,
-  production `.ymmp`, external fetch, upload, publication, merge, or rebase was
-  performed in this slice.
+- Recommendation class is exactly `integration_ready`; technical readiness is
+  not default-branch approval.
+- `README_INTERNAL_REVIEW.md` and `render_receipt.json` remain the current
+  milestone review/receipt authority at the audited subject. Earlier review
+  packages are historical or non-authoritative prototypes.
+- The audit tail must not be silently included in the 44-commit subject delta.
+  If its new state is integrated, H1 must explicitly rebind the pilot metadata
+  that hash-locks `docs/runtime-state.md` before claiming current-worktree pilot
+  validation; no media regeneration is required.
+- Human visual/editorial acceptance, YMM4/profile portability, production,
+  external editorial input, rights, upload, and publication remain separate.
 
 ## Exact Next Action
 
-Audit this feature branch as an integration milestone: review the bounded diff,
-tracked evidence privacy, review-package authority, and target-branch risk.
-Return an integration recommendation only; do not merge or rebase automatically.
+The user or Supervisor must approve or reject default-branch integration of the
+fixed subject `d8e959c`. Approval must explicitly authorize the fast-forward
+route and decide how the separate audit-state tail is applied or recreated.
+Do not mutate the default branch without that later explicit decision.
 
 ## Evidence and Access
 
-- Primary review surface:
+- Primary audit:
+  `docs/verification/EPISODE_002_MILESTONE_INTEGRATION_AUDIT_2026-07-12.md`
+- Machine audit:
+  `docs/verification/episode_002_milestone_integration_audit.json`
+- Exact path inventory:
+  `docs/verification/episode_002_integration_path_inventory.json`
+- Milestone review surface:
   `production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/README_INTERNAL_REVIEW.md`
-- Render machine validation:
-  `verified_local_evidence_input_pilot/render_validation_readback.json`
-- Hash-bound receipt and traceability:
-  `verified_local_evidence_input_pilot/render_receipt.json` and
-  `verified_local_evidence_input_pilot/source_to_output_traceability.json`
-- Operator review questions:
-  `verified_local_evidence_input_pilot/operator_review_sheet.md`
-- Local original, proxy, project, and operator result remain ignored beneath
-  `verified_local_evidence_input_pilot/local_outputs/`.
 
-## Product Boundaries
+## Integration Boundaries
 
-- Machine-valid media is not human visual/editorial acceptance.
-- The proxy is a review convenience, not the production master.
-- External editorial input, real-media replacement, creative polish,
-  rights/legal approval, final-thumbnail approval, production carrier approval,
-  upload/publication, and default-branch integration remain separate decisions.
-- Full-suite Integrity work remains outside this focused milestone.
+- Re-fetch and recheck ancestry immediately before H1 because branch protection,
+  required-review policy, and future `origin/master` movement are unknown locally.
+- No merge, rebase, squash, cherry-pick, PR, issue, force push, default mutation,
+  YMM4, Computer Use, media regeneration, dependency install, or publication was
+  performed by this audit.
+- Full-suite drift remains outside this focused decision gate.
 
 ## Maintenance Note
 
-Replace this file as the current capsule. Keep history in
-`docs/project-context.md` and Git. Keep this file within 160 lines and run the
-explicit state-sync checker after any shared-field change.
+Keep this capsule within 160 lines. History remains in `docs/project-context.md`
+and Git; the dated audit is the durable decision evidence for this transition.
