@@ -1,0 +1,84 @@
+{
+  "schema_version": "new_banknote_authoritative_script.v1.editorial_revision_receipt",
+  "status": "passed",
+  "revision_id": "final-editorial-convergence-before-human-review-v1",
+  "revision_basis": "existing_verified_primary_evidence_only",
+  "issues_addressed": [
+    "opening_question_answer_handoff",
+    "unexplained_series_notation_in_spoken_text",
+    "cue_008_information_density",
+    "repetitive_marisa_endings",
+    "vague_tool_checking_phrase"
+  ],
+  "factual_support_units": {
+    "before": 22,
+    "after": 20
+  },
+  "claim_edges": {
+    "before": 23,
+    "after": 21
+  },
+  "source_claim_identity": {
+    "captured_source_count": 13,
+    "source_identity_sha256": "9ab1f3b1a56d191f4057a0e6d545043652208b35104e329ae5022ce499f4e5ba",
+    "source_registry_sha256": "3a55d5ec999edec215b87fba0f999f1a9086eca1921158c9c3f72749ade1713a",
+    "source_receipts_sha256": "6c4cc1817a3574b7278f2986522c91b05a51c1b8bba3ea4a544a78aee920e205",
+    "claim_count": 182,
+    "verified_primary_count": 19,
+    "claim_outcome_identity_sha256": "4084f67719f95d16efad7059dbf9ecce315f537f77b65a8f442ba90929acb5a6"
+  },
+  "removed_spoken_facts_retained_in_evidence": [
+    {
+      "claim_id": "claim_158",
+      "prior_cue_id": "cue_008",
+      "adoption_status": "verified_not_adopted",
+      "traceability_lane": "cue_008.retained_verified_unspoken_claims",
+      "retention_reason": "cue_information_budget"
+    }
+  ],
+  "evidence_anchor_refinements": [
+    {
+      "cue_id": "cue_009",
+      "from_claim_id": "claim_095",
+      "to_claim_id": "claim_096",
+      "reason": "specific_loupe_action_requires_specific_verified_claim",
+      "prior_claim_remains_verified": true
+    }
+  ],
+  "human_review_questions": [
+    "公式一次資料で支えた事実は、初見でも意味が分かりますか。",
+    "キャッシュレス誘導や政策意図を示唆する、根拠のない含みは残っていませんか。",
+    "れいむとまりさの受け渡しは自然で、同じ説明を繰り返していませんか。",
+    "S1の導入、S2の技術、S3の見分け方という流れは一貫していますか。",
+    "高精細すき入れ、深凹版印刷、識別マークなどの用語は、誤解を招かず難しすぎませんか。"
+  ],
+  "banned_framing_absent": true,
+  "actions": {
+    "notebooklm_accessed": false,
+    "network_source_fetch": false,
+    "yymm4_launched": false,
+    "render_or_media_generated": false,
+    "production_or_public_action": false
+  },
+  "checks": {
+    "source_capture_identity_unchanged": true,
+    "claim_outcome_identity_unchanged": true,
+    "spoken_terminology_refined": true,
+    "cue_008_information_budget_met": true,
+    "cue_008_omitted_evidence_retained": true,
+    "unsupported_spoken_claims_zero": true,
+    "human_review_gate_retained": true
+  },
+  "files": {
+    "README_CANONICAL_SCRIPT_REVIEW.md": "a5d5a23fca7d6c0c0fe200a89800d9c3c8ac278c18c1a137c35019d4780e7da8",
+    "canonical_script.json": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47",
+    "canonical_script.txt": "4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091",
+    "canonical_script_review.md": "9816c28e9b0099ef98e2aefb9e70bf22a32fbbd0f931fd8989c6ac19dcd99d3a",
+    "cue_source_traceability.json": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47",
+    "canonical_yymm4.csv": "23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12",
+    "derived_yymm4_import.csv": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee",
+    "csv_validation_readback.json": "df76e400a437c89384b46abd8988f2cdf532d3675ddcbe500036c10fc7e82d06",
+    "source_to_script_manifest.json": "e13fb57a2681875f577e4d85f13cf41bfc601519892fa4f975bdfcdd24d927b5",
+    "canonical_script_editorial_revision.md": "af5680175765526684ea2bddccd05d1d34fda84cfce303c23a282a1d0b2b32bb"
+  }
+}

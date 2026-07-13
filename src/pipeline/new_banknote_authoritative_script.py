@@ -27,6 +27,20 @@ from src.pipeline.ymm4_character_alias_profile import (
 SCHEMA_PREFIX = "new_banknote_authoritative_script.v1"
 EXPECTED_CLAIM_COUNT = 182
 EXPECTED_SOURCE_COUNT = 11
+EXPECTED_CAPTURED_SOURCE_COUNT = 13
+EXPECTED_VERIFIED_PRIMARY_COUNT = 19
+EXPECTED_CLAIM_OUTCOME_IDENTITY_SHA256 = (
+    "4084f67719f95d16efad7059dbf9ecce315f537f77b65a8f442ba90929acb5a6"
+)
+EXPECTED_SOURCE_REGISTRY_SHA256 = (
+    "3a55d5ec999edec215b87fba0f999f1a9086eca1921158c9c3f72749ade1713a"
+)
+EXPECTED_SOURCE_RECEIPTS_SHA256 = (
+    "6c4cc1817a3574b7278f2986522c91b05a51c1b8bba3ea4a544a78aee920e205"
+)
+EDITORIAL_REVISION_ID = "final-editorial-convergence-before-human-review-v1"
+BASELINE_FACTUAL_SUPPORT_UNIT_COUNT = 22
+BASELINE_CLAIM_EDGE_COUNT = 23
 EXPECTED_RAW_IDENTITY = {
     "sha256": "1825c9689a050ddbfc91537a228f6af0ba2f7f033e5b681fff4f227551144437",
     "size_bytes": 32089,
@@ -47,6 +61,21 @@ EXPECTED_SCENE_ALLOCATION = {"S1": 2, "S2": 4, "S3": 3}
 EXPECTED_SPEAKER_COUNTS = {"れいむ": 3, "まりさ": 6}
 EXPECTED_DERIVED_COUNTS = {"ゆっくり霊夢": 3, "ゆっくり魔理沙": 6}
 CANONICAL_TO_YMM4 = {"れいむ": "ゆっくり霊夢", "まりさ": "ゆっくり魔理沙"}
+HUMAN_REVIEW_QUESTIONS = (
+    "公式一次資料で支えた事実は、初見でも意味が分かりますか。",
+    "キャッシュレス誘導や政策意図を示唆する、根拠のない含みは残っていませんか。",
+    "れいむとまりさの受け渡しは自然で、同じ説明を繰り返していませんか。",
+    "S1の導入、S2の技術、S3の見分け方という流れは一貫していますか。",
+    "高精細すき入れ、深凹版印刷、識別マークなどの用語は、誤解を招かず難しすぎませんか。",
+)
+EXPECTED_MARISA_TERMINAL_FORMS = (
+    "んだ",
+    "んだぜ",
+    "ぞ",
+    "なんだ",
+    "ぜ",
+    "おこう",
+)
 PROFILE_RELATIVE = Path(
     "production_pilots/yukkuri_newsroom_content_spine_002/"
     "ymm4_character_alias_profiles/ymm4_4_53_0_9_yukkuri_characters_v1.json"
@@ -58,6 +87,7 @@ REQUIRED_ARTIFACTS = (
     "authoritative_source_registry.json",
     "authoritative_source_resolution_readback.json",
     "canonical_script.json",
+    "canonical_script_editorial_revision.md",
     "canonical_script.txt",
     "canonical_script_review.md",
     "canonical_yymm4.csv",
@@ -66,6 +96,7 @@ REQUIRED_ARTIFACTS = (
     "csv_validation_readback.json",
     "cue_source_traceability.json",
     "derived_yymm4_import.csv",
+    "editorial_revision_receipt.json",
     "limitations.md",
     "notebook_source_to_verification_source_crosswalk.json",
     "operator_review_sheet.md",
@@ -75,6 +106,33 @@ REQUIRED_ARTIFACTS = (
     "source_resolution_limitations.md",
     "source_to_script_manifest.json",
     "verified_claim_set.json",
+)
+EDITORIAL_RECEIPT_FILES = (
+    "README_CANONICAL_SCRIPT_REVIEW.md",
+    "canonical_script.json",
+    "canonical_script.txt",
+    "canonical_script_review.md",
+    "cue_source_traceability.json",
+    "canonical_yymm4.csv",
+    "derived_yymm4_import.csv",
+    "csv_validation_readback.json",
+    "source_to_script_manifest.json",
+    "canonical_script_editorial_revision.md",
+)
+SCRIPT_RECEIPT_FILES = (
+    "README_CANONICAL_SCRIPT_REVIEW.md",
+    "canonical_script.json",
+    "canonical_script_editorial_revision.md",
+    "canonical_script.txt",
+    "canonical_script_review.md",
+    "cue_source_traceability.json",
+    "canonical_yymm4.csv",
+    "derived_yymm4_import.csv",
+    "csv_validation_readback.json",
+    "editorial_revision_receipt.json",
+    "operator_review_sheet.md",
+    "limitations.md",
+    "source_to_script_manifest.json",
 )
 
 
@@ -556,23 +614,13 @@ CUES: tuple[dict[str, Any], ...] = (
         "cue_id": "cue_001",
         "scene_id": "S1",
         "speaker": "れいむ",
-        "text": "2024年に発行された新しいお札。偽造防止技術に加えて、誰にとっても使いやすいユニバーサルデザインも取り入れたんだね。",
-        "adopted_claim_ids": ["claim_010", "claim_099", "claim_161"],
+        "text": "2024年に発行された新しいお札って、見た目以外にも変わったところがあるの？",
+        "adopted_claim_ids": ["claim_010"],
         "support_units": [
             {
                 "unit_id": "cue_001_fact_01",
                 "statement": "F券は2024年に発行された。",
                 "claim_ids": ["claim_010"],
-            },
-            {
-                "unit_id": "cue_001_fact_02",
-                "statement": "F券は複数の偽造防止技術を組み合わせている。",
-                "claim_ids": ["claim_099"],
-            },
-            {
-                "unit_id": "cue_001_fact_03",
-                "statement": "F券には、誰にとっても使いやすいものを目指したユニバーサルデザインが取り入れられている。",
-                "claim_ids": ["claim_161"],
             },
         ],
     },
@@ -581,8 +629,13 @@ CUES: tuple[dict[str, Any], ...] = (
         "cue_id": "cue_002",
         "scene_id": "S1",
         "speaker": "まりさ",
-        "text": "そうだぜ。高精細すき入れと3Dホログラムを採り入れ、額面数字もE券より大きくしたんだ。",
-        "adopted_claim_ids": ["claim_090", "claim_065", "claim_114"],
+        "text": "あるぞ。偽造防止では、高精細すき入れや3Dホログラムなど複数の技術を組み合わせている。誰にとっても使いやすいユニバーサルデザインも取り入れたんだ。",
+        "adopted_claim_ids": [
+            "claim_090",
+            "claim_065",
+            "claim_099",
+            "claim_161",
+        ],
         "support_units": [
             {
                 "unit_id": "cue_002_fact_01",
@@ -596,8 +649,13 @@ CUES: tuple[dict[str, Any], ...] = (
             },
             {
                 "unit_id": "cue_002_fact_03",
-                "statement": "アラビア数字の額面表示をE券より大きくした。",
-                "claim_ids": ["claim_114"],
+                "statement": "F券は複数の偽造防止技術を組み合わせている。",
+                "claim_ids": ["claim_099"],
+            },
+            {
+                "unit_id": "cue_002_fact_04",
+                "statement": "F券には、誰にとっても使いやすいものを目指したユニバーサルデザインが取り入れられている。",
+                "claim_ids": ["claim_161"],
             },
         ],
     },
@@ -606,7 +664,7 @@ CUES: tuple[dict[str, Any], ...] = (
         "cue_id": "cue_003",
         "scene_id": "S2",
         "speaker": "まりさ",
-        "text": "まず、光に透かすと細かな模様が見える。これが高精細すき入れだぜ。",
+        "text": "まずは高精細すき入れ。光に透かすと、細かな模様が見えるんだぜ。",
         "adopted_claim_ids": ["claim_090"],
         "support_units": [
             {
@@ -621,7 +679,7 @@ CUES: tuple[dict[str, Any], ...] = (
         "cue_id": "cue_004",
         "scene_id": "S2",
         "speaker": "まりさ",
-        "text": "次は3Dホログラム。角度を変えると三次元の肖像が回転して見えるぜ。",
+        "text": "次は3Dホログラム。角度を変えると、三次元の肖像が回転して見えるぞ。",
         "adopted_claim_ids": ["claim_065", "claim_067"],
         "support_units": [
             {
@@ -656,7 +714,7 @@ CUES: tuple[dict[str, Any], ...] = (
         "cue_id": "cue_006",
         "scene_id": "S2",
         "speaker": "まりさ",
-        "text": "ルーペで確かめるマイクロ文字は『NIPPONGINKO』。カラーコピー機では再現が難しいほど小さい文字だぜ。",
+        "text": "マイクロ文字の『NIPPONGINKO』は、ルーペで確かめられる。カラーコピー機では再現が難しいほど小さい文字なんだ。",
         "adopted_claim_ids": ["claim_096", "claim_097"],
         "support_units": [
             {
@@ -676,7 +734,7 @@ CUES: tuple[dict[str, Any], ...] = (
         "cue_id": "cue_007",
         "scene_id": "S3",
         "speaker": "まりさ",
-        "text": "見分けやすさでは、11本の斜線の識別マークを同じ形にそろえ、券種ごとに位置を変えているぜ。",
+        "text": "見分けやすさの工夫では、識別マークを11本の斜線にそろえ、券種ごとに位置を変えているぜ。",
         "adopted_claim_ids": ["claim_118", "claim_130", "claim_132"],
         "support_units": [
             {
@@ -696,8 +754,9 @@ CUES: tuple[dict[str, Any], ...] = (
         "cue_id": "cue_008",
         "scene_id": "S3",
         "speaker": "れいむ",
-        "text": "アラビア数字の額面表示をE券より大きくし、一万円券と千円券ではホログラムの形と位置や数字の『1』を変え、千円券中央には橙色も入れているんだ。",
-        "adopted_claim_ids": ["claim_114", "claim_155", "claim_157", "claim_158"],
+        "text": "額面の数字は前のシリーズのお札より大きい。一万円券と千円券ではホログラムの形や位置が違い、千円券の中央には橙色のグラデーションもあるんだね。",
+        "adopted_claim_ids": ["claim_114", "claim_155", "claim_157"],
+        "retained_verified_unspoken_claim_ids": ["claim_158"],
         "support_units": [
             {
                 "unit_id": "cue_008_fact_01",
@@ -714,11 +773,6 @@ CUES: tuple[dict[str, Any], ...] = (
                 "statement": "千円券中央には橙色のグラデーションが配置されている。",
                 "claim_ids": ["claim_157"],
             },
-            {
-                "unit_id": "cue_008_fact_04",
-                "statement": "一万円券と千円券では数字『1』のデザインが異なる。",
-                "claim_ids": ["claim_158"],
-            },
         ],
     },
     {
@@ -726,8 +780,8 @@ CUES: tuple[dict[str, Any], ...] = (
         "cue_id": "cue_009",
         "scene_id": "S3",
         "speaker": "まりさ",
-        "text": "確認するときは、透かす、触る、傾ける、道具で見る。この四つで、それぞれ別の特徴を確かめられるぜ。",
-        "adopted_claim_ids": ["claim_090", "claim_116", "claim_065", "claim_095"],
+        "text": "確かめ方は、透かす、触る、傾ける、ルーペで見る。この四つを覚えておこう。",
+        "adopted_claim_ids": ["claim_090", "claim_116", "claim_065", "claim_096"],
         "support_units": [
             {
                 "unit_id": "cue_009_fact_01",
@@ -746,8 +800,8 @@ CUES: tuple[dict[str, Any], ...] = (
             },
             {
                 "unit_id": "cue_009_fact_04",
-                "statement": "マイクロ文字は道具で確認する。",
-                "claim_ids": ["claim_095"],
+                "statement": "マイクロ文字はルーペで確認する。",
+                "claim_ids": ["claim_096"],
             },
         ],
     },
@@ -864,6 +918,21 @@ def build_new_banknote_authoritative_script_package(
         output / "README_CANONICAL_SCRIPT_REVIEW.md",
         _primary_review_surface(script, adjudication, source_readback),
     )
+    _write_text(
+        output / "canonical_script_editorial_revision.md",
+        _render_editorial_revision(script, adjudication),
+    )
+    editorial_receipt = _build_editorial_revision_receipt(
+        output=output,
+        script=script,
+        adjudication=adjudication,
+        traceability=traceability,
+        registry=registry,
+    )
+    _write_json(
+        output / "editorial_revision_receipt.json",
+        editorial_receipt,
+    )
 
     receipt = _build_script_receipt(output, script)
     _write_json(output / "script_generation_receipt.json", receipt)
@@ -881,7 +950,7 @@ def build_new_banknote_authoritative_script_package(
             + ", ".join(validation["failed_checks"])
         )
     return {
-        "status": "source_backed_script_review_ready",
+        "status": "source_backed_script_human_review_ready",
         "output_dir": output.as_posix(),
         "captured_source_count": len(registry["sources"]),
         "input_claim_count": EXPECTED_CLAIM_COUNT,
@@ -914,10 +983,13 @@ def validate_new_banknote_authoritative_script_package(
         registry = _read_json(root / "authoritative_source_registry.json")
         receipts = _read_json(root / "source_capture_receipts.json")
         claims = _read_json(root / "claim_adjudication.json")
+        verified_set = _read_json(root / "verified_claim_set.json")
         script = _read_json(root / "canonical_script.json")
         traceability = _read_json(root / "cue_source_traceability.json")
         manifest = _read_json(root / "source_to_script_manifest.json")
         csv_readback = _read_json(root / "csv_validation_readback.json")
+        editorial_receipt = _read_json(root / "editorial_revision_receipt.json")
+        script_receipt = _read_json(root / "script_generation_receipt.json")
     except (json.JSONDecodeError, OSError, ValueError) as exc:
         failed.append(f"json_parse:{exc}")
         return {
@@ -936,6 +1008,13 @@ def validate_new_banknote_authoritative_script_package(
     )
     checks["official_domain_allowlist"] = all(
         _official_url(str(record.get("canonical_url", ""))) for record in sources
+    )
+    checks["source_capture_identity_unchanged"] = (
+        len(sources) == EXPECTED_CAPTURED_SOURCE_COUNT
+        and _sha256(root / "authoritative_source_registry.json")
+        == EXPECTED_SOURCE_REGISTRY_SHA256
+        and _sha256(root / "source_capture_receipts.json")
+        == EXPECTED_SOURCE_RECEIPTS_SHA256
     )
 
     claim_rows = claims.get("claims", [])
@@ -964,13 +1043,56 @@ def validate_new_banknote_authoritative_script_package(
         for record in claim_rows
         if record.get("primary_outcome") == "verified_primary"
     }
+    checks["claim_outcome_identity_unchanged"] = (
+        len(verified_ids) == EXPECTED_VERIFIED_PRIMARY_COUNT
+        and _claim_outcome_identity_sha256(claims)
+        == EXPECTED_CLAIM_OUTCOME_IDENTITY_SHA256
+    )
 
     cues = script.get("cues", [])
     scene_counts = Counter(cue.get("scene_id") for cue in cues)
     speaker_counts = Counter(cue.get("speaker") for cue in cues)
+    adopted_ids = {
+        claim_id
+        for cue in cues
+        for claim_id in cue.get("adopted_claim_ids", [])
+    }
+    expected_verified_records = [
+        record
+        for record in claim_rows
+        if record.get("primary_outcome") == "verified_primary"
+    ]
+    checks["canonical_use_matches_adopted_claim_set"] = (
+        claims.get("canonical_claim_count") == len(adopted_ids)
+        and all(
+            isinstance(record.get("canonical_use"), bool)
+            and record["canonical_use"]
+            == (record.get("claim_id") in adopted_ids)
+            for record in claim_rows
+        )
+    )
+    checks["verified_claim_set_exact"] = (
+        verified_set.get("claim_count") == EXPECTED_VERIFIED_PRIMARY_COUNT
+        and verified_set.get("claims") == expected_verified_records
+        and {
+            record["claim_id"]
+            for record in expected_verified_records
+            if record["canonical_use"] is False
+        }
+        == {"claim_095", "claim_158", "claim_162", "claim_164"}
+    )
     checks["nine_cues"] = len(cues) == 9
     checks["scene_allocation_2_4_3"] = dict(scene_counts) == EXPECTED_SCENE_ALLOCATION
     checks["speaker_counts_3_6"] = dict(speaker_counts) == EXPECTED_SPEAKER_COUNTS
+    cue_by_id = {str(cue.get("cue_id")): cue for cue in cues}
+    cue_001 = cue_by_id.get("cue_001", {})
+    cue_002 = cue_by_id.get("cue_002", {})
+    cue_008 = cue_by_id.get("cue_008", {})
+    cue_009 = cue_by_id.get("cue_009", {})
+    checks["opening_question_answer_handoff"] = (
+        str(cue_001.get("text", "")).endswith("？")
+        and str(cue_002.get("text", "")).startswith("あるぞ。")
+    )
     checks["cue_claims_verified"] = all(
         cue.get("adopted_claim_ids")
         and all(claim_id in verified_ids for claim_id in cue["adopted_claim_ids"])
@@ -1009,6 +1131,50 @@ def validate_new_banknote_authoritative_script_package(
             for row in trace_rows
         )
     )
+    trace_by_id = {
+        str(row.get("cue_id")): row for row in trace_rows
+    }
+    cue_008_trace = trace_by_id.get("cue_008", {})
+    retained_unspoken = cue_008_trace.get(
+        "retained_verified_unspoken_claims", []
+    )
+    claim_by_id = {
+        str(record.get("claim_id")): record for record in claim_rows
+    }
+    retained_rows_by_cue = {
+        cue_id: row.get("retained_verified_unspoken_claims", [])
+        for cue_id, row in trace_by_id.items()
+    }
+    expected_claim_158_retained = (
+        [_retained_verified_unspoken_claim_row(claim_by_id["claim_158"])]
+        if "claim_158" in claim_by_id
+        else []
+    )
+    all_retained_claim_ids = {
+        retained_row.get("claim_id")
+        for rows in retained_rows_by_cue.values()
+        for retained_row in rows
+    }
+    checks["cue_008_spoken_information_budget"] = (
+        len(cue_008.get("factual_support_units", [])) <= 3
+        and cue_008.get("adopted_claim_ids")
+        == ["claim_114", "claim_155", "claim_157"]
+    )
+    checks["cue_008_verified_unspoken_evidence_retained"] = (
+        retained_unspoken == expected_claim_158_retained
+        and traceability.get("retained_verified_unspoken_claim_count") == 1
+        and all(
+            not rows
+            for cue_id, rows in retained_rows_by_cue.items()
+            if cue_id != "cue_008"
+        )
+        and all_retained_claim_ids == {"claim_158"}
+        and all_retained_claim_ids.isdisjoint(adopted_ids)
+        and claim_by_id.get("claim_158", {}).get("primary_outcome")
+        == "verified_primary"
+        and claim_by_id.get("claim_158", {}).get("canonical_use") is False
+        and "claim_158" not in cue_008.get("adopted_claim_ids", [])
+    )
     expected_manifest_edges = {
         (edge["source_id"], edge["claim_id"])
         for row in trace_rows
@@ -1022,6 +1188,9 @@ def validate_new_banknote_authoritative_script_package(
     checks["source_claim_manifest_edges_exact"] = (
         expected_manifest_edges == actual_manifest_edges
     )
+    checks["source_to_script_manifest_exact"] = manifest == (
+        _build_source_to_script_manifest(script, traceability, registry)
+    )
     checks["unsupported_claim_count_computed_zero"] = (
         script.get("unsupported_claim_count") == 0
         and traceability.get("unsupported_claim_count") == 0
@@ -1029,6 +1198,19 @@ def validate_new_banknote_authoritative_script_package(
     )
     spoken = "\n".join(str(cue.get("text", "")) for cue in cues)
     checks["spoken_boundaries_clean"] = not _spoken_boundary_violation(spoken)
+    checks["spoken_editorial_terms_clean"] = (
+        "E券" not in spoken
+        and "道具で見る" not in spoken
+        and "ルーペで見る" in str(cue_009.get("text", ""))
+    )
+    marisa_endings = [
+        _marisa_terminal_form(str(cue.get("text", "")))
+        for cue in cues
+        if cue.get("speaker") == "まりさ"
+    ]
+    checks["marisa_endings_varied"] = (
+        tuple(marisa_endings) == EXPECTED_MARISA_TERMINAL_FORMS
+    )
 
     canonical = read_headerless_yymm4_csv(root / "canonical_yymm4.csv")
     derived = read_headerless_yymm4_csv(root / "derived_yymm4_import.csv")
@@ -1047,6 +1229,66 @@ def validate_new_banknote_authoritative_script_package(
         == [CANONICAL_TO_YMM4[speaker] for speaker, _ in canonical_rows]
     )
     checks["csv_readback_passed"] = csv_readback.get("status") == "passed"
+    editorial_checks = editorial_receipt.get("checks", {})
+    editorial_actions = editorial_receipt.get("actions", {})
+    editorial_files = editorial_receipt.get("files", {})
+    script_receipt_files = script_receipt.get("files", {})
+    checks["editorial_revision_receipt_passed"] = (
+        editorial_receipt.get("schema_version")
+        == f"{SCHEMA_PREFIX}.editorial_revision_receipt"
+        and editorial_receipt.get("status") == "passed"
+        and editorial_receipt.get("revision_id") == EDITORIAL_REVISION_ID
+        and editorial_receipt.get("revision_basis")
+        == "existing_verified_primary_evidence_only"
+        and editorial_receipt.get("banned_framing_absent") is True
+        and editorial_receipt.get("factual_support_units")
+        == {"before": BASELINE_FACTUAL_SUPPORT_UNIT_COUNT, "after": 20}
+        and editorial_receipt.get("claim_edges")
+        == {"before": BASELINE_CLAIM_EDGE_COUNT, "after": 21}
+        and editorial_receipt.get("human_review_questions")
+        == list(HUMAN_REVIEW_QUESTIONS)
+        and bool(editorial_checks)
+        and all(
+            value is True
+            for value in editorial_checks.values()
+            if isinstance(value, bool)
+        )
+        and bool(editorial_actions)
+        and all(value is False for value in editorial_actions.values())
+    )
+    checks["editorial_revision_receipt_hashes_match"] = (
+        list(editorial_files) == list(EDITORIAL_RECEIPT_FILES)
+        and all(
+            isinstance(digest, str)
+            and bool(re.fullmatch(r"[0-9a-f]{64}", digest))
+            and (root / name).is_file()
+            and _sha256(root / name) == digest
+            for name, digest in editorial_files.items()
+        )
+    )
+    checks["script_generation_receipt_hashes_match"] = (
+        script_receipt.get("schema_version")
+        == f"{SCHEMA_PREFIX}.script_generation_receipt"
+        and script_receipt.get("status") == "passed"
+        and script_receipt.get("network_access_during_generation") is False
+        and script_receipt.get("notebooklm_accessed") is False
+        and script_receipt.get("cue_count") == 9
+        and script_receipt.get("scene_allocation") == EXPECTED_SCENE_ALLOCATION
+        and script_receipt.get("canonical_speaker_counts")
+        == EXPECTED_SPEAKER_COUNTS
+        and script_receipt.get("unsupported_claim_count") == 0
+        and script_receipt.get("editorial_adoption") is False
+        and script_receipt.get("public_ready") is False
+        and script_receipt.get("production_ready") is False
+        and list(script_receipt_files) == list(SCRIPT_RECEIPT_FILES)
+        and all(
+            isinstance(digest, str)
+            and bool(re.fullmatch(r"[0-9a-f]{64}", digest))
+            and (root / name).is_file()
+            and _sha256(root / name) == digest
+            for name, digest in script_receipt_files.items()
+        )
+    )
     candidate_files = [
         path
         for path in root.rglob("*")
@@ -1590,6 +1832,25 @@ def _build_script(adjudication: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _retained_verified_unspoken_claim_row(
+    claim: dict[str, Any],
+) -> dict[str, Any]:
+    return {
+        "claim_id": claim["claim_id"],
+        "adoption_status": "verified_not_adopted",
+        "retention_reason": "cue_information_budget",
+        "supporting_evidence": [
+            {
+                "claim_id": claim["claim_id"],
+                "source_id": support["source_id"],
+                "exact_location": support["exact_location"],
+                "evidence_grade": support["evidence_grade"],
+            }
+            for support in claim["supporting_evidence"]
+        ],
+    }
+
+
 def _build_traceability(
     script: dict[str, Any],
     adjudication: dict[str, Any],
@@ -1601,6 +1862,7 @@ def _build_traceability(
         source_ids: list[str] = []
         support_rows: list[dict[str, Any]] = []
         unit_rows: list[dict[str, Any]] = []
+        retained_unspoken_rows: list[dict[str, Any]] = []
         for unit in cue["factual_support_units"]:
             unit_evidence: list[dict[str, Any]] = []
             for claim_id in unit["claim_ids"]:
@@ -1629,6 +1891,15 @@ def _build_traceability(
                     "supported": unit_supported,
                 }
             )
+        for claim_id in cue.get("retained_verified_unspoken_claim_ids", []):
+            claim = claim_by_id[claim_id]
+            if claim["primary_outcome"] != "verified_primary":
+                raise ValueError(
+                    f"RETAINED_UNSPOKEN_CLAIM_NOT_VERIFIED:{claim_id}"
+                )
+            retained_unspoken_rows.append(
+                _retained_verified_unspoken_claim_row(claim)
+            )
         unsupported_count = sum(not unit["supported"] for unit in unit_rows)
         if cue["semantic_coverage_status"] != "fully_mapped_to_adjudicated_propositions":
             unsupported_count += 1
@@ -1640,6 +1911,7 @@ def _build_traceability(
                 "supporting_source_ids": source_ids,
                 "supporting_evidence": support_rows,
                 "factual_support_units": unit_rows,
+                "retained_verified_unspoken_claims": retained_unspoken_rows,
                 "all_adopted_claims_verified_primary": all(
                     claim_by_id[claim_id]["primary_outcome"] == "verified_primary"
                     for claim_id in cue["adopted_claim_ids"]
@@ -1648,6 +1920,9 @@ def _build_traceability(
             }
         )
     unsupported_total = sum(row["unsupported_claim_count"] for row in rows)
+    retained_unspoken_total = sum(
+        len(row["retained_verified_unspoken_claims"]) for row in rows
+    )
     return {
         "schema_version": f"{SCHEMA_PREFIX}.cue_source_traceability",
         "status": "passed" if unsupported_total == 0 else "failed",
@@ -1656,6 +1931,7 @@ def _build_traceability(
             f"{sum(row['unsupported_claim_count'] == 0 for row in rows)}/{len(rows)}"
         ),
         "unsupported_claim_count": unsupported_total,
+        "retained_verified_unspoken_claim_count": retained_unspoken_total,
         "cues": rows,
     }
 
@@ -1757,16 +2033,157 @@ def _build_source_to_script_manifest(
     }
 
 
-def _build_script_receipt(output: Path, script: dict[str, Any]) -> dict[str, Any]:
-    files = (
-        "canonical_script.json",
-        "canonical_script.txt",
-        "canonical_script_review.md",
-        "cue_source_traceability.json",
-        "canonical_yymm4.csv",
-        "derived_yymm4_import.csv",
-        "source_to_script_manifest.json",
+def _script_fact_counts(script: dict[str, Any]) -> tuple[int, int]:
+    units = [
+        unit
+        for cue in script["cues"]
+        for unit in cue["factual_support_units"]
+    ]
+    claim_edges = sum(len(unit["claim_ids"]) for unit in units)
+    return len(units), claim_edges
+
+
+def _claim_outcome_identity_sha256(adjudication: dict[str, Any]) -> str:
+    identity = "\n".join(
+        f'{claim["claim_id"]}:{claim["primary_outcome"]}'
+        for claim in adjudication["claims"]
     )
+    return hashlib.sha256(identity.encode("utf-8")).hexdigest()
+
+
+def _source_identity_sha256(registry: dict[str, Any]) -> str:
+    identity = "\n".join(
+        f'{source["source_id"]}:{source["sha256"]}'
+        for source in registry["sources"]
+    )
+    return hashlib.sha256(identity.encode("utf-8")).hexdigest()
+
+
+def _build_editorial_revision_receipt(
+    *,
+    output: Path,
+    script: dict[str, Any],
+    adjudication: dict[str, Any],
+    traceability: dict[str, Any],
+    registry: dict[str, Any],
+) -> dict[str, Any]:
+    factual_unit_count, claim_edge_count = _script_fact_counts(script)
+    claim_by_id = {
+        claim["claim_id"]: claim for claim in adjudication["claims"]
+    }
+    cue_008 = next(cue for cue in script["cues"] if cue["cue_id"] == "cue_008")
+    cue_008_trace = next(
+        cue for cue in traceability["cues"] if cue["cue_id"] == "cue_008"
+    )
+    retained = cue_008_trace["retained_verified_unspoken_claims"]
+    spoken = "\n".join(cue["text"] for cue in script["cues"])
+    outcome_identity = _claim_outcome_identity_sha256(adjudication)
+    verified_count = sum(
+        claim["primary_outcome"] == "verified_primary"
+        for claim in adjudication["claims"]
+    )
+    checks = {
+        "source_capture_identity_unchanged": (
+            len(registry["sources"]) == EXPECTED_CAPTURED_SOURCE_COUNT
+            and _sha256(output / "authoritative_source_registry.json")
+            == EXPECTED_SOURCE_REGISTRY_SHA256
+            and _sha256(output / "source_capture_receipts.json")
+            == EXPECTED_SOURCE_RECEIPTS_SHA256
+        ),
+        "claim_outcome_identity_unchanged": (
+            len(adjudication["claims"]) == EXPECTED_CLAIM_COUNT
+            and verified_count == EXPECTED_VERIFIED_PRIMARY_COUNT
+            and outcome_identity == EXPECTED_CLAIM_OUTCOME_IDENTITY_SHA256
+        ),
+        "spoken_terminology_refined": "E券" not in spoken
+        and "道具で見る" not in spoken,
+        "cue_008_information_budget_met": (
+            len(cue_008["factual_support_units"]) <= 3
+            and cue_008["adopted_claim_ids"]
+            == ["claim_114", "claim_155", "claim_157"]
+        ),
+        "cue_008_omitted_evidence_retained": (
+            [row["claim_id"] for row in retained] == ["claim_158"]
+            and claim_by_id["claim_158"]["primary_outcome"]
+            == "verified_primary"
+            and claim_by_id["claim_158"]["canonical_use"] is False
+        ),
+        "unsupported_spoken_claims_zero": (
+            script["unsupported_claim_count"] == 0
+            and traceability["unsupported_claim_count"] == 0
+        ),
+        "human_review_gate_retained": len(HUMAN_REVIEW_QUESTIONS) == 5,
+    }
+    return {
+        "schema_version": f"{SCHEMA_PREFIX}.editorial_revision_receipt",
+        "status": "passed" if all(checks.values()) else "failed",
+        "revision_id": EDITORIAL_REVISION_ID,
+        "revision_basis": "existing_verified_primary_evidence_only",
+        "issues_addressed": [
+            "opening_question_answer_handoff",
+            "unexplained_series_notation_in_spoken_text",
+            "cue_008_information_density",
+            "repetitive_marisa_endings",
+            "vague_tool_checking_phrase",
+        ],
+        "factual_support_units": {
+            "before": BASELINE_FACTUAL_SUPPORT_UNIT_COUNT,
+            "after": factual_unit_count,
+        },
+        "claim_edges": {
+            "before": BASELINE_CLAIM_EDGE_COUNT,
+            "after": claim_edge_count,
+        },
+        "source_claim_identity": {
+            "captured_source_count": len(registry["sources"]),
+            "source_identity_sha256": _source_identity_sha256(registry),
+            "source_registry_sha256": _sha256(
+                output / "authoritative_source_registry.json"
+            ),
+            "source_receipts_sha256": _sha256(
+                output / "source_capture_receipts.json"
+            ),
+            "claim_count": len(adjudication["claims"]),
+            "verified_primary_count": verified_count,
+            "claim_outcome_identity_sha256": outcome_identity,
+        },
+        "removed_spoken_facts_retained_in_evidence": [
+            {
+                "claim_id": "claim_158",
+                "prior_cue_id": "cue_008",
+                "adoption_status": "verified_not_adopted",
+                "traceability_lane": (
+                    "cue_008.retained_verified_unspoken_claims"
+                ),
+                "retention_reason": "cue_information_budget",
+            }
+        ],
+        "evidence_anchor_refinements": [
+            {
+                "cue_id": "cue_009",
+                "from_claim_id": "claim_095",
+                "to_claim_id": "claim_096",
+                "reason": "specific_loupe_action_requires_specific_verified_claim",
+                "prior_claim_remains_verified": True,
+            }
+        ],
+        "human_review_questions": list(HUMAN_REVIEW_QUESTIONS),
+        "banned_framing_absent": not _spoken_boundary_violation(spoken),
+        "actions": {
+            "notebooklm_accessed": False,
+            "network_source_fetch": False,
+            "yymm4_launched": False,
+            "render_or_media_generated": False,
+            "production_or_public_action": False,
+        },
+        "checks": checks,
+        "files": {
+            name: _sha256(output / name) for name in EDITORIAL_RECEIPT_FILES
+        },
+    }
+
+
+def _build_script_receipt(output: Path, script: dict[str, Any]) -> dict[str, Any]:
     return {
         "schema_version": f"{SCHEMA_PREFIX}.script_generation_receipt",
         "status": "passed",
@@ -1780,8 +2197,68 @@ def _build_script_receipt(output: Path, script: dict[str, Any]) -> dict[str, Any
         "editorial_adoption": False,
         "public_ready": False,
         "production_ready": False,
-        "files": {name: _sha256(output / name) for name in files},
+        "files": {
+            name: _sha256(output / name) for name in SCRIPT_RECEIPT_FILES
+        },
     }
+
+
+def _render_editorial_revision(
+    script: dict[str, Any],
+    adjudication: dict[str, Any],
+) -> str:
+    factual_unit_count, claim_edge_count = _script_fact_counts(script)
+    canonical_claim_count = len(
+        {
+            claim_id
+            for cue in script["cues"]
+            for claim_id in cue["adopted_claim_ids"]
+        }
+    )
+    lines = [
+        "# Canonical Script Editorial Revision",
+        "",
+        "> INTERNAL REVIEW / NOT FINAL / NON-PUBLIC / NON-PRODUCTION",
+        "",
+        "既存の公式source captureと182件のclaim adjudicationは固定したまま、一般視聴者が最初に引っかかる会話上の欠点だけを一度の編集収束で直しました。新しい事実や出典は追加していません。",
+        "",
+        "## 改訂した箇所",
+        "",
+        "| Cue | 改訂前の摩擦 | 改訂後 | 証拠への影響 |",
+        "| --- | --- | --- | --- |",
+        "| 1→2 | 事実の列挙から相づちへ進み、問いと答えが弱かった | れいむの素朴な質問へ、まりさが技術と使いやすさの両面で答える | 既存claimをcue間で移動し、support locationは維持 |",
+        "| 3→4 | まりさの説明が同じ終わり方に寄っていた | 技術の順序は保ち、終止を分散 | 事実単位とclaim edgeは不変 |",
+        "| 5 | 手触りの説明は明瞭だった | 発話を維持 | 変更なし |",
+        "| 6→7 | 説明語尾が反復していた | ルーペと識別マークの説明を保ちながら終止を分散 | 事実単位とclaim edgeは不変 |",
+        "| 8 | 内部的なシリーズ記号と4事実が一息に入っていた | 比較対象を前のシリーズのお札と明示し、額面数字・ホログラム差・橙色の3事実へ限定 | 数字『1』のclaimはverifiedのまま非発話レーンへ保持 |",
+        "| 9 | 道具が何か分からなかった | 透かす・触る・傾ける・ルーペで見る、へ具体化 | 一般claimからルーペを明示するclaimへ結び直し |",
+        "",
+        "## 証拠と構造の読み戻し",
+        "",
+        f"- factual meaning units: {BASELINE_FACTUAL_SUPPORT_UNIT_COUNT}件から{factual_unit_count}件。",
+        f"- claim edges: {BASELINE_CLAIM_EDGE_COUNT}本から{claim_edge_count}本。",
+        f"- 現在のadopted claimは{canonical_claim_count}件。verified-primary全{adjudication['outcome_counts'].get('verified_primary', 0)}件と182件のoutcomeは維持。",
+        "- cue 8から外した数字『1』のデザイン差は、`claim_158`としてadjudication、verified set、cue traceの非発話レーンに残しています。",
+        "- cue 9はルーペを明記する`claim_096`へ結び直し、一般的な道具確認の`claim_095`はverifiedのまま非採用です。",
+        "- source registry、capture receipt、raw transcript、source cacheは変更していません。",
+        "",
+        "## 人が判断する5点",
+        "",
+    ]
+    lines.extend(
+        f"{index}. {question}"
+        for index, question in enumerate(HUMAN_REVIEW_QUESTIONS, start=1)
+    )
+    lines.extend(
+        [
+            "",
+            "## この改訂で行っていないこと",
+            "",
+            "NotebookLMアクセス、source再取得、YMM4起動、render、media生成、editorial acceptance、production、publication、rights actionは行っていません。",
+            "",
+        ]
+    )
+    return "\n".join(lines)
 
 
 def _render_script_text(script: dict[str, Any]) -> str:
@@ -1800,7 +2277,7 @@ def _render_script_review(
         "",
         "> INTERNAL REVIEW / NOT FINAL / NON-PUBLIC / NON-PRODUCTION",
         "",
-        "既存のNotebookLM由来claimを公式一次資料で絞り込んだ、9キューの制約付き書き直し候補です。",
+        "既存のNotebookLM由来claimを公式一次資料で絞り込み、明らかな用語・密度・掛け合いの欠点を直した9キューのhuman-review候補です。",
         "",
         "| # | Scene | Speaker | Spoken text | Evidence anchors |",
         "| ---: | --- | --- | --- | --- |",
@@ -1833,13 +2310,14 @@ def _primary_review_surface(
         "",
         "> **INTERNAL REVIEW — NOT FINAL — NON-PUBLIC — NON-PRODUCTION**",
         "",
-        "このページがhuman reviewの主画面です。既存のNotebookLM会話から事実の意味単位を検証済みclaimへ結び、公式一次資料で支えられる範囲だけを9キューへ短く整えています。",
+        "このページがhuman reviewの主画面です。既存のNotebookLM会話から事実の意味単位を検証済みclaimへ結び、公式一次資料で支えられる範囲だけを9キューへ短く整えたうえで、用語・情報密度・掛け合いを編集収束しました。",
         "",
         "## いま判断できること",
         "",
         f'- 公式source capture: {source_readback["captured_source_count"]}件。S10/S11はexact、S04は同名の現行公式document（生成時byte同一性は未証明）、S05はexact未解決でofficial equivalentを分離。',
         f'- claim adjudication: 182/182。verified-primaryは{counts.get("verified_primary", 0)}件。',
         f'- script: 9 cues、S1/S2/S3 = 2/4/3、れいむ/まりさ = 3/6。意味単位から計算したunsupported claimは{script["unsupported_claim_count"]}件。',
+        "- editorial revision: シリーズ記号を発話から外し、cue 8を3事実へ絞り、確認方法をルーペまで具体化。外した検証済みclaimは非発話レーンへ保持。",
         "- CSV: canonicalとYMM4-character derivedの2本。本文と順序は同一で、話者列だけを変換。",
         "",
         "## Script",
@@ -1858,6 +2336,8 @@ def _primary_review_surface(
             "",
             "`operator_review_sheet.md`の5問に沿って、事実の伝わり方、誤解を招く含意、掛け合い、3 sceneの流れ、専門語の難しさを確認してください。",
             "",
+            "改訂理由と証拠の移動は`canonical_script_editorial_revision.md`にまとめています。",
+            "",
             "この候補はeditorial acceptanceでもYMM4投入承認でもありません。修正判断後にだけ、次のbounded operator batchへ進めます。",
             "",
         ]
@@ -1866,16 +2346,17 @@ def _primary_review_surface(
 
 
 def _operator_review_sheet() -> str:
-    return """# Operator Review Sheet
-
-> INTERNAL REVIEW / NOT FINAL / NON-PUBLIC / NON-PRODUCTION
-
-1. 公式一次資料で支えた事実は、初見でも意味が分かりますか。
-2. キャッシュレス誘導や政策意図を示唆する、根拠のない含みは残っていませんか。
-3. れいむとまりさの受け渡しは自然で、同じ説明を繰り返していませんか。
-4. S1の導入、S2の技術、S3の見分け方という流れは一貫していますか。
-5. 高精細すき入れ、深凹版印刷、識別マークなどの用語は、誤解を招かず難しすぎませんか。
-"""
+    lines = [
+        "# Operator Review Sheet",
+        "",
+        "> INTERNAL REVIEW / NOT FINAL / NON-PUBLIC / NON-PRODUCTION",
+        "",
+    ]
+    lines.extend(
+        f"{index}. {question}"
+        for index, question in enumerate(HUMAN_REVIEW_QUESTIONS, start=1)
+    )
+    return "\n".join(lines) + "\n"
 
 
 def _source_resolution_limitations() -> str:
@@ -1892,13 +2373,12 @@ def _source_resolution_limitations() -> str:
 def _review_limitations() -> str:
     return """# Limitations
 
-| 残る不確実性 | Reviewへの影響 | 再訪条件 | 現在blockするか |
-| --- | --- | --- | --- |
-| S04は現行同名PDFだが生成時版のbyte同一性は未証明 | 開発経緯のprovenanceに版差が残る | NotebookLM投入時のstable IDまたはhashが得られた時 | いいえ。採用claimは現行技術ページでも支持 |
-| S05のexact 572KB PDFは未解決 | 元資料の同定は完了していない | 旧URL、archive identifier、元PDFが得られた時 | いいえ。official equivalentが採用claimを支持 |
-| ASRや複合文は公式用語へ命題を狭めた | 原会話のニュアンスをそのまま採用していない | Human reviewerが意味のずれを指摘した時 | いいえ |
-| 元音声のtimestampとspeaker identityはない | claim provenanceはline/fingerprint基準 | 元Audio Overview metadataが安全に得られた時 | いいえ |
-| Human editorial acceptanceとYMM4確認は未実施 | 掛け合いと実運用適合は未承認 | 5問reviewが完了した時 | はい、YMM4 batch開始に対して |
+| 残る不確実性 | Reviewへの影響 | Owner | 再訪条件 | 現在blockするか |
+| --- | --- | --- | --- | --- |
+| S04は現行同名PDFだが生成時版のbyte同一性は未証明 | 開発経緯のprovenanceに版差が残る | source provenance reviewer | NotebookLM投入時のstable IDまたはhashが得られた時 | いいえ。採用claimは現行技術ページでも支持 |
+| S05のexact 572KB PDFは未解決 | 元資料の同定は完了していない | source provenance reviewer | 旧URL、archive identifier、元PDFが得られた時 | いいえ。official equivalentが採用claimを支持 |
+| 元Audio Overviewのtimestampとtrue speaker identityは得られていない | claim provenanceはline/fingerprint基準 | original Audio Overview custodian | 元Audio Overview metadataが安全に得られた時 | いいえ |
+| Voice・rhythm・terminologyのhuman editorial acceptanceは未実施 | 掛け合いと発話表現は未承認 | human editorial reviewer | 5問reviewが完了した時 | はい。YMM4 batchの承認をblock |
 """
 
 
@@ -1950,6 +2430,14 @@ def _spoken_boundary_violation(spoken: str) -> bool:
         r"リスナー|今回の深掘り|また次回",
     )
     return any(re.search(pattern, spoken, re.IGNORECASE) for pattern in patterns)
+
+
+def _marisa_terminal_form(text: str) -> str:
+    cleaned = re.sub(r"[。！？]+$", "", text.strip())
+    for terminal in ("なんだ", "んだぜ", "おこう", "んだ", "だぜ", "ぜ", "ぞ", "だ"):
+        if cleaned.endswith(terminal):
+            return terminal
+    return cleaned
 
 
 def _read_json(path: Path) -> dict[str, Any]:

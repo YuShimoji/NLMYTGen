@@ -24,11 +24,9 @@
       "cue_id": "cue_001",
       "scene_id": "S1",
       "speaker": "れいむ",
-      "text": "2024年に発行された新しいお札。偽造防止技術に加えて、誰にとっても使いやすいユニバーサルデザインも取り入れたんだね。",
+      "text": "2024年に発行された新しいお札って、見た目以外にも変わったところがあるの？",
       "adopted_claim_ids": [
-        "claim_010",
-        "claim_099",
-        "claim_161"
+        "claim_010"
       ],
       "factual_support_units": [
         {
@@ -36,22 +34,6 @@
           "statement": "F券は2024年に発行された。",
           "claim_ids": [
             "claim_010"
-          ],
-          "support_status": "supported_by_verified_primary_claims"
-        },
-        {
-          "unit_id": "cue_001_fact_02",
-          "statement": "F券は複数の偽造防止技術を組み合わせている。",
-          "claim_ids": [
-            "claim_099"
-          ],
-          "support_status": "supported_by_verified_primary_claims"
-        },
-        {
-          "unit_id": "cue_001_fact_03",
-          "statement": "F券には、誰にとっても使いやすいものを目指したユニバーサルデザインが取り入れられている。",
-          "claim_ids": [
-            "claim_161"
           ],
           "support_status": "supported_by_verified_primary_claims"
         }
@@ -65,11 +47,12 @@
       "cue_id": "cue_002",
       "scene_id": "S1",
       "speaker": "まりさ",
-      "text": "そうだぜ。高精細すき入れと3Dホログラムを採り入れ、額面数字もE券より大きくしたんだ。",
+      "text": "あるぞ。偽造防止では、高精細すき入れや3Dホログラムなど複数の技術を組み合わせている。誰にとっても使いやすいユニバーサルデザインも取り入れたんだ。",
       "adopted_claim_ids": [
         "claim_090",
         "claim_065",
-        "claim_114"
+        "claim_099",
+        "claim_161"
       ],
       "factual_support_units": [
         {
@@ -90,9 +73,17 @@
         },
         {
           "unit_id": "cue_002_fact_03",
-          "statement": "アラビア数字の額面表示をE券より大きくした。",
+          "statement": "F券は複数の偽造防止技術を組み合わせている。",
           "claim_ids": [
-            "claim_114"
+            "claim_099"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        },
+        {
+          "unit_id": "cue_002_fact_04",
+          "statement": "F券には、誰にとっても使いやすいものを目指したユニバーサルデザインが取り入れられている。",
+          "claim_ids": [
+            "claim_161"
           ],
           "support_status": "supported_by_verified_primary_claims"
         }
@@ -106,7 +97,7 @@
       "cue_id": "cue_003",
       "scene_id": "S2",
       "speaker": "まりさ",
-      "text": "まず、光に透かすと細かな模様が見える。これが高精細すき入れだぜ。",
+      "text": "まずは高精細すき入れ。光に透かすと、細かな模様が見えるんだぜ。",
       "adopted_claim_ids": [
         "claim_090"
       ],
@@ -129,7 +120,7 @@
       "cue_id": "cue_004",
       "scene_id": "S2",
       "speaker": "まりさ",
-      "text": "次は3Dホログラム。角度を変えると三次元の肖像が回転して見えるぜ。",
+      "text": "次は3Dホログラム。角度を変えると、三次元の肖像が回転して見えるぞ。",
       "adopted_claim_ids": [
         "claim_065",
         "claim_067"
@@ -184,7 +175,7 @@
       "cue_id": "cue_006",
       "scene_id": "S2",
       "speaker": "まりさ",
-      "text": "ルーペで確かめるマイクロ文字は『NIPPONGINKO』。カラーコピー機では再現が難しいほど小さい文字だぜ。",
+      "text": "マイクロ文字の『NIPPONGINKO』は、ルーペで確かめられる。カラーコピー機では再現が難しいほど小さい文字なんだ。",
       "adopted_claim_ids": [
         "claim_096",
         "claim_097"
@@ -216,7 +207,7 @@
       "cue_id": "cue_007",
       "scene_id": "S3",
       "speaker": "まりさ",
-      "text": "見分けやすさでは、11本の斜線の識別マークを同じ形にそろえ、券種ごとに位置を変えているぜ。",
+      "text": "見分けやすさの工夫では、識別マークを11本の斜線にそろえ、券種ごとに位置を変えているぜ。",
       "adopted_claim_ids": [
         "claim_118",
         "claim_130",
@@ -250,11 +241,13 @@
       "cue_id": "cue_008",
       "scene_id": "S3",
       "speaker": "れいむ",
-      "text": "アラビア数字の額面表示をE券より大きくし、一万円券と千円券ではホログラムの形と位置や数字の『1』を変え、千円券中央には橙色も入れているんだ。",
+      "text": "額面の数字は前のシリーズのお札より大きい。一万円券と千円券ではホログラムの形や位置が違い、千円券の中央には橙色のグラデーションもあるんだね。",
       "adopted_claim_ids": [
         "claim_114",
         "claim_155",
-        "claim_157",
+        "claim_157"
+      ],
+      "retained_verified_unspoken_claim_ids": [
         "claim_158"
       ],
       "factual_support_units": [
@@ -281,14 +274,6 @@
             "claim_157"
           ],
           "support_status": "supported_by_verified_primary_claims"
-        },
-        {
-          "unit_id": "cue_008_fact_04",
-          "statement": "一万円券と千円券では数字『1』のデザインが異なる。",
-          "claim_ids": [
-            "claim_158"
-          ],
-          "support_status": "supported_by_verified_primary_claims"
         }
       ],
       "semantic_coverage_status": "fully_mapped_to_adjudicated_propositions",
@@ -300,12 +285,12 @@
       "cue_id": "cue_009",
       "scene_id": "S3",
       "speaker": "まりさ",
-      "text": "確認するときは、透かす、触る、傾ける、道具で見る。この四つで、それぞれ別の特徴を確かめられるぜ。",
+      "text": "確かめ方は、透かす、触る、傾ける、ルーペで見る。この四つを覚えておこう。",
       "adopted_claim_ids": [
         "claim_090",
         "claim_116",
         "claim_065",
-        "claim_095"
+        "claim_096"
       ],
       "factual_support_units": [
         {
@@ -334,9 +319,9 @@
         },
         {
           "unit_id": "cue_009_fact_04",
-          "statement": "マイクロ文字は道具で確認する。",
+          "statement": "マイクロ文字はルーペで確認する。",
           "claim_ids": [
-            "claim_095"
+            "claim_096"
           ],
           "support_status": "supported_by_verified_primary_claims"
         }

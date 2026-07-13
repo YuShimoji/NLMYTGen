@@ -1,11 +1,11 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: new-banknote-source-backed-script-review-ready-v1
-State-Revision: 2026-07-13.4
+Project-State-ID: new-banknote-source-backed-script-editorially-refined-v1
+State-Revision: 2026-07-13.5
 Updated: 2026-07-13 JST
-Product-State: new-banknote-authoritative-source-nine-cue-script-ready
+Product-State: new-banknote-authoritative-script-human-review-ready
 Product-Gate: human-script-review-and-yymm4-batch-decision
-Recommended-Next: review-source-backed-nine-cue-script
+Recommended-Next: review-refined-nine-cue-script
 External-State: public-repo-feature-branch
 
 ## Current Slice
@@ -20,10 +20,15 @@ External-State: public-repo-feature-branch
   outcome. Nineteen are `verified_primary`; unsupported policy-intent,
   cashless-causation, and quantitative narrative is excluded from canonical
   use.
-- **Review script ready**: the internal candidate has exactly nine cues with
-  scene allocation 2/4/3 and canonical speaker counts 3/6. Each factual meaning
-  unit is mapped to verified claim evidence; cue traceability is complete and
-  unsupported claims in spoken text are zero.
+- **Review script editorially refined**: the internal candidate still has
+  exactly nine cues with scene allocation 2/4/3 and canonical speaker counts
+  3/6. The opening is now a direct question/answer, unexplained series notation
+  is absent from speech, cue 8 carries three coordinated facts, cue 9 names a
+  loupe, and Marisa's endings are varied.
+- **Evidence remains complete**: 20 spoken factual meaning units and 21 claim
+  edges all resolve to existing verified-primary evidence. The numeral-`1`
+  design claim removed from cue 8 speech remains verified and is retained in a
+  separate non-adopted traceability lane; unsupported spoken claims remain zero.
 - **CSV pair ready**: canonical and YMM4-character-derived, headerless two-column
   CSVs preserve identical text and order across all nine cues. They are review
   artifacts only; YMM4 was not launched.
@@ -33,8 +38,9 @@ External-State: public-repo-feature-branch
 
 ## Product Position
 
-- The external editorial input lane has moved from title-level reconciliation to
-  a reproducible, official-source-backed nine-cue review package.
+- The external editorial input lane now has a reproducible,
+  official-source-backed nine-cue package whose obvious terminology, density,
+  and dialogue defects have been removed before human review.
 - The primary human surface is `README_CANONICAL_SCRIPT_REVIEW.md` in the
   new-banknote package. Source receipts, claim adjudication, cue traceability,
   the canonical script, and both CSV variants remain inspectable beside it.
@@ -43,7 +49,7 @@ External-State: public-repo-feature-branch
 
 ## Exact Next Action
 
-Review the source-backed nine-cue candidate for factual clarity, absence of
+Review the refined nine-cue candidate for factual clarity, absence of
 unsupported cashless-policy implication, Reimu/Marisa conversational
 naturalness, 2/4/3 scene coherence, and terminology. That decision gates any
 bounded YMM4 operator batch.
@@ -58,6 +64,8 @@ bounded YMM4 operator batch.
 - Script handoff: `canonical_script.json`, `cue_source_traceability.json`,
   `canonical_yymm4.csv`, and `derived_yymm4_import.csv` beside the primary
   surface.
+- Editorial revision evidence: `canonical_script_editorial_revision.md` and
+  `editorial_revision_receipt.json` beside the primary surface.
 - Human decision aid: `operator_review_sheet.md` beside the primary surface.
 
 ## Active Boundaries

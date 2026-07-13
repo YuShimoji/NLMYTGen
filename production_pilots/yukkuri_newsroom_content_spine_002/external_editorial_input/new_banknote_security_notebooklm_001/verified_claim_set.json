@@ -162,7 +162,7 @@
         "official_primary",
         "terminology_verified"
       ],
-      "canonical_use": true,
+      "canonical_use": false,
       "adjudicated_proposition": "F券には、道具で確認するマイクロ文字が印刷されている。",
       "supporting_evidence": [
         {
@@ -552,7 +552,7 @@
         "official_primary",
         "scope_narrowed"
       ],
-      "canonical_use": true,
+      "canonical_use": false,
       "adjudicated_proposition": "一万円券と千円券では数字『1』のデザインが異なる。",
       "supporting_evidence": [
         {

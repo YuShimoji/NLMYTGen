@@ -73,6 +73,7 @@ REQUIRED_ARTIFACTS = (
     "authoritative_source_registry.json",
     "authoritative_source_resolution_readback.json",
     "canonical_script.json",
+    "canonical_script_editorial_revision.md",
     "canonical_script.txt",
     "canonical_script_review.md",
     "canonical_yymm4.csv",
@@ -81,6 +82,7 @@ REQUIRED_ARTIFACTS = (
     "csv_validation_readback.json",
     "cue_source_traceability.json",
     "derived_yymm4_import.csv",
+    "editorial_revision_receipt.json",
     "limitations.md",
     "notebook_source_to_verification_source_crosswalk.json",
     "operator_review_sheet.md",
@@ -121,6 +123,56 @@ CANONICAL_TO_YMM4 = {
 EXPECTED_SCENES = ["S1", "S1", "S2", "S2", "S2", "S2", "S3", "S3", "S3"]
 EXPECTED_SPEAKER_COUNTS = {"れいむ": 3, "まりさ": 6}
 EXPECTED_CHARACTER_COUNTS = {"ゆっくり霊夢": 3, "ゆっくり魔理沙": 6}
+EXPECTED_CLAIM_OUTCOME_IDENTITY_SHA256 = (
+    "4084f67719f95d16efad7059dbf9ecce315f537f77b65a8f442ba90929acb5a6"
+)
+EXPECTED_SOURCE_REGISTRY_SHA256 = (
+    "3a55d5ec999edec215b87fba0f999f1a9086eca1921158c9c3f72749ade1713a"
+)
+EXPECTED_SOURCE_RECEIPTS_SHA256 = (
+    "6c4cc1817a3574b7278f2986522c91b05a51c1b8bba3ea4a544a78aee920e205"
+)
+EXPECTED_MARISA_TERMINAL_FORMS = (
+    "んだ",
+    "んだぜ",
+    "ぞ",
+    "なんだ",
+    "ぜ",
+    "おこう",
+)
+EXPECTED_VERIFIED_NOT_ADOPTED = {
+    "claim_095",
+    "claim_158",
+    "claim_162",
+    "claim_164",
+}
+EDITORIAL_RECEIPT_FILES = (
+    "README_CANONICAL_SCRIPT_REVIEW.md",
+    "canonical_script.json",
+    "canonical_script.txt",
+    "canonical_script_review.md",
+    "cue_source_traceability.json",
+    "canonical_yymm4.csv",
+    "derived_yymm4_import.csv",
+    "csv_validation_readback.json",
+    "source_to_script_manifest.json",
+    "canonical_script_editorial_revision.md",
+)
+SCRIPT_RECEIPT_FILES = (
+    "README_CANONICAL_SCRIPT_REVIEW.md",
+    "canonical_script.json",
+    "canonical_script_editorial_revision.md",
+    "canonical_script.txt",
+    "canonical_script_review.md",
+    "cue_source_traceability.json",
+    "canonical_yymm4.csv",
+    "derived_yymm4_import.csv",
+    "csv_validation_readback.json",
+    "editorial_revision_receipt.json",
+    "operator_review_sheet.md",
+    "limitations.md",
+    "source_to_script_manifest.json",
+)
 
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$", re.IGNORECASE)
 _UUID_RE = re.compile(
@@ -161,6 +213,14 @@ def _load(path: Path) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     assert isinstance(payload, dict), path.name
     return payload
+
+
+def _dump(path: Path, payload: dict[str, Any]) -> None:
+    path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
 
 
 def _records(payload: dict[str, Any], *names: str) -> list[dict[str, Any]]:
@@ -294,6 +354,22 @@ def _tree_hashes(root: Path) -> dict[str, str]:
         name: hashlib.sha256((root / name).read_bytes()).hexdigest()
         for name in REQUIRED_ARTIFACTS
     }
+
+
+def _claim_outcome_identity_sha256(payload: dict[str, Any]) -> str:
+    claims = _records(payload, "claims", "adjudications")
+    identity = "\n".join(
+        f'{claim["claim_id"]}:{claim["primary_outcome"]}' for claim in claims
+    )
+    return hashlib.sha256(identity.encode("utf-8")).hexdigest()
+
+
+def _marisa_terminal_form(text: str) -> str:
+    cleaned = re.sub(r"[。！？]+$", "", text.strip())
+    for terminal in ("なんだ", "んだぜ", "おこう", "んだ", "だぜ", "ぜ", "ぞ", "だ"):
+        if cleaned.endswith(terminal):
+            return terminal
+    return cleaned
 
 
 def _csv_rows(path: Path) -> list[tuple[str, str]]:
@@ -615,15 +691,15 @@ def test_nine_cue_script_and_traceability_contract(
     assert script.get("public_ready") is False
     assert script.get("production_ready") is False
     assert [cue["adopted_claim_ids"] for cue in cues] == [
-        ["claim_010", "claim_099", "claim_161"],
-        ["claim_090", "claim_065", "claim_114"],
+        ["claim_010"],
+        ["claim_090", "claim_065", "claim_099", "claim_161"],
         ["claim_090"],
         ["claim_065", "claim_067"],
         ["claim_116"],
         ["claim_096", "claim_097"],
         ["claim_118", "claim_130", "claim_132"],
-        ["claim_114", "claim_155", "claim_157", "claim_158"],
-        ["claim_090", "claim_116", "claim_065", "claim_095"],
+        ["claim_114", "claim_155", "claim_157"],
+        ["claim_090", "claim_116", "claim_065", "claim_096"],
     ]
     spoken = "\n".join(cue["text"] for cue in cues)
     assert "肖像の周りに緻密な連続模様" not in spoken
@@ -720,6 +796,165 @@ def test_nine_cue_script_and_traceability_contract(
     assert receipt["scene_allocation"] == {"S1": 2, "S2": 4, "S3": 3}
     assert receipt["canonical_speaker_counts"] == EXPECTED_SPEAKER_COUNTS
     assert receipt["unsupported_claim_count"] == 0
+
+
+def test_editorial_convergence_preserves_evidence_and_removes_spoken_defects(
+    generated: tuple[Path, Path],
+) -> None:
+    _, output = generated
+    script = _load(output / "canonical_script.json")
+    cues = script["cues"]
+    spoken = "\n".join(cue["text"] for cue in cues)
+
+    assert "E券" not in spoken
+    assert "道具で見る" not in spoken
+    assert "ルーペで見る" in cues[8]["text"]
+    assert cues[0]["speaker"] == "れいむ" and cues[0]["text"].endswith("？")
+    assert cues[1]["speaker"] == "まりさ" and cues[1]["text"].startswith(
+        "あるぞ。"
+    )
+    assert len(cues[7]["factual_support_units"]) == 3
+    assert cues[7]["adopted_claim_ids"] == [
+        "claim_114",
+        "claim_155",
+        "claim_157",
+    ]
+
+    marisa_endings = [
+        _marisa_terminal_form(cue["text"])
+        for cue in cues
+        if cue["speaker"] == "まりさ"
+    ]
+    assert tuple(marisa_endings) == EXPECTED_MARISA_TERMINAL_FORMS
+
+    adjudication = _load(output / "claim_adjudication.json")
+    claim_by_id = {
+        claim["claim_id"]: claim
+        for claim in _records(adjudication, "claims", "adjudications")
+    }
+    assert _claim_outcome_identity_sha256(adjudication) == (
+        EXPECTED_CLAIM_OUTCOME_IDENTITY_SHA256
+    )
+    assert sum(
+        claim["primary_outcome"] == "verified_primary"
+        for claim in claim_by_id.values()
+    ) == 19
+    assert claim_by_id["claim_158"]["primary_outcome"] == "verified_primary"
+    assert claim_by_id["claim_158"]["canonical_use"] is False
+    assert claim_by_id["claim_095"]["primary_outcome"] == "verified_primary"
+    assert claim_by_id["claim_095"]["canonical_use"] is False
+    assert claim_by_id["claim_096"]["canonical_use"] is True
+    assert claim_by_id["claim_099"]["canonical_use"] is True
+    adopted_ids = {
+        claim_id for cue in cues for claim_id in cue["adopted_claim_ids"]
+    }
+    assert adjudication["canonical_claim_count"] == len(adopted_ids) == 15
+    assert all(
+        claim["canonical_use"] == (claim_id in adopted_ids)
+        for claim_id, claim in claim_by_id.items()
+    )
+    assert {
+        claim_id
+        for claim_id, claim in claim_by_id.items()
+        if claim["primary_outcome"] == "verified_primary"
+        and claim["canonical_use"] is False
+    } == EXPECTED_VERIFIED_NOT_ADOPTED
+
+    verified_payload = _load(output / "verified_claim_set.json")
+    verified_records = _records(
+        verified_payload,
+        "claims",
+        "verified_claims",
+    )
+    verified_ids = {claim["claim_id"] for claim in verified_records}
+    assert verified_records == [
+        claim
+        for claim in adjudication["claims"]
+        if claim["primary_outcome"] == "verified_primary"
+    ]
+    assert {"claim_095", "claim_158"} <= verified_ids
+
+    traceability = _load(output / "cue_source_traceability.json")
+    trace_by_id = {
+        trace["cue_id"]: trace
+        for trace in _records(traceability, "cues", "traceability")
+    }
+    retained = trace_by_id["cue_008"]["retained_verified_unspoken_claims"]
+    assert [row["claim_id"] for row in retained] == ["claim_158"]
+    assert retained[0]["adoption_status"] == "verified_not_adopted"
+    assert retained[0]["retention_reason"] == "cue_information_budget"
+    assert retained[0]["supporting_evidence"] == [
+        {
+            "claim_id": "claim_158",
+            "source_id": "V02",
+            "exact_location": "一万円券と千円券の『1』のデザインの違い",
+            "evidence_grade": "verified_primary",
+        }
+    ]
+    assert not any(
+        edge["claim_id"] == "claim_158"
+        for edge in trace_by_id["cue_008"]["supporting_evidence"]
+    )
+
+    manifest_claim_ids = {
+        claim_id
+        for source in _records(
+            _load(output / "source_to_script_manifest.json"),
+            "sources",
+            "entries",
+        )
+        for claim_id in source["claim_ids"]
+    }
+    assert "claim_158" not in manifest_claim_ids
+    assert "claim_095" not in manifest_claim_ids
+    assert "claim_096" in manifest_claim_ids
+
+    assert hashlib.sha256(
+        (output / "authoritative_source_registry.json").read_bytes()
+    ).hexdigest() == EXPECTED_SOURCE_REGISTRY_SHA256
+    assert hashlib.sha256(
+        (output / "source_capture_receipts.json").read_bytes()
+    ).hexdigest() == EXPECTED_SOURCE_RECEIPTS_SHA256
+
+    editorial_receipt = _load(output / "editorial_revision_receipt.json")
+    assert editorial_receipt["status"] == "passed"
+    assert editorial_receipt["revision_id"] == (
+        "final-editorial-convergence-before-human-review-v1"
+    )
+    assert editorial_receipt["factual_support_units"] == {
+        "before": 22,
+        "after": 20,
+    }
+    assert editorial_receipt["claim_edges"] == {"before": 23, "after": 21}
+    assert len(editorial_receipt["human_review_questions"]) == 5
+    assert all(value is False for value in editorial_receipt["actions"].values())
+    assert all(editorial_receipt["checks"].values())
+    assert tuple(editorial_receipt["files"]) == EDITORIAL_RECEIPT_FILES
+    for name, digest in editorial_receipt["files"].items():
+        assert _SHA256_RE.fullmatch(digest)
+        assert hashlib.sha256((output / name).read_bytes()).hexdigest() == digest
+
+    script_receipt = _load(output / "script_generation_receipt.json")
+    assert tuple(script_receipt["files"]) == SCRIPT_RECEIPT_FILES
+    for name, digest in script_receipt["files"].items():
+        assert _SHA256_RE.fullmatch(digest)
+        assert hashlib.sha256((output / name).read_bytes()).hexdigest() == digest
+
+    revision = (output / "canonical_script_editorial_revision.md").read_text(
+        encoding="utf-8"
+    )
+    assert "22件から20件" in revision
+    assert "23本から21本" in revision
+    assert "claim_158" in revision
+    assert "NotebookLMアクセス" in revision
+
+    limitations = (output / "limitations.md").read_text(encoding="utf-8")
+    debt_rows = [line for line in limitations.splitlines() if line.startswith("| ")]
+    assert len(debt_rows) == 6  # header, separator, and four named debts
+    assert "| Owner |" in debt_rows[0]
+    assert "true speaker identity" in limitations
+    assert "Voice・rhythm・terminologyのhuman editorial acceptance" in limitations
+    assert "human editorial reviewer" in limitations
 
 
 def test_canonical_and_derived_csvs_preserve_text_order_and_only_map_speakers(
@@ -824,6 +1059,83 @@ def test_build_is_cache_independent_and_byte_deterministic(tmp_path: Path) -> No
     assert first_hashes == _tree_hashes(first)
     validation = validate_new_banknote_authoritative_script_package(first)
     assert validation.get("failed_checks", []) == []
+
+
+def test_validator_rejects_coordinated_integrity_tampering(
+    generated: tuple[Path, Path],
+    tmp_path: Path,
+) -> None:
+    _, output = generated
+
+    def copy_output(name: str) -> Path:
+        target = tmp_path / name
+        shutil.copytree(output, target)
+        return target
+
+    def refresh_receipt_hashes(root: Path) -> None:
+        editorial_path = root / "editorial_revision_receipt.json"
+        editorial = _load(editorial_path)
+        for name in editorial["files"]:
+            editorial["files"][name] = hashlib.sha256(
+                (root / name).read_bytes()
+            ).hexdigest()
+        _dump(editorial_path, editorial)
+
+        script_path = root / "script_generation_receipt.json"
+        script_receipt = _load(script_path)
+        for name in script_receipt["files"]:
+            script_receipt["files"][name] = hashlib.sha256(
+                (root / name).read_bytes()
+            ).hexdigest()
+        _dump(script_path, script_receipt)
+
+    canonical_use_root = copy_output("tampered_canonical_use")
+    adjudication = _load(canonical_use_root / "claim_adjudication.json")
+    next(
+        claim for claim in adjudication["claims"] if claim["claim_id"] == "claim_099"
+    )["canonical_use"] = False
+    _dump(canonical_use_root / "claim_adjudication.json", adjudication)
+    validation = validate_new_banknote_authoritative_script_package(
+        canonical_use_root
+    )
+    assert "canonical_use_matches_adopted_claim_set" in validation["failed_checks"]
+    assert "verified_claim_set_exact" in validation["failed_checks"]
+
+    receipt_root = copy_output("tampered_receipt_keyset")
+    script_receipt = _load(receipt_root / "script_generation_receipt.json")
+    del script_receipt["files"]["limitations.md"]
+    _dump(receipt_root / "script_generation_receipt.json", script_receipt)
+    validation = validate_new_banknote_authoritative_script_package(receipt_root)
+    assert "script_generation_receipt_hashes_match" in validation["failed_checks"]
+
+    retained_root = copy_output("tampered_retained_evidence")
+    traceability = _load(retained_root / "cue_source_traceability.json")
+    cue_008 = next(
+        cue for cue in traceability["cues"] if cue["cue_id"] == "cue_008"
+    )
+    cue_008["retained_verified_unspoken_claims"][0]["supporting_evidence"][0][
+        "exact_location"
+    ] = "WRONG"
+    _dump(retained_root / "cue_source_traceability.json", traceability)
+    refresh_receipt_hashes(retained_root)
+    validation = validate_new_banknote_authoritative_script_package(retained_root)
+    assert (
+        "cue_008_verified_unspoken_evidence_retained"
+        in validation["failed_checks"]
+    )
+    assert "editorial_revision_receipt_hashes_match" not in validation["failed_checks"]
+    assert "script_generation_receipt_hashes_match" not in validation["failed_checks"]
+
+    manifest_root = copy_output("tampered_manifest_usage")
+    manifest = _load(manifest_root / "source_to_script_manifest.json")
+    manifest["sources"][0]["support_unit_ids"][0] = "wrong_unit"
+    _dump(manifest_root / "source_to_script_manifest.json", manifest)
+    refresh_receipt_hashes(manifest_root)
+    validation = validate_new_banknote_authoritative_script_package(manifest_root)
+    assert "source_to_script_manifest_exact" in validation["failed_checks"]
+    assert "source_claim_manifest_edges_exact" not in validation["failed_checks"]
+    assert "editorial_revision_receipt_hashes_match" not in validation["failed_checks"]
+    assert "script_generation_receipt_hashes_match" not in validation["failed_checks"]
 
 
 def test_package_ignore_rules_keep_local_evidence_private_and_csvs_trackable() -> None:

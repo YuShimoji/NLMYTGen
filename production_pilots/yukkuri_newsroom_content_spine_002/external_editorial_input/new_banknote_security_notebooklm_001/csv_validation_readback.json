@@ -11,7 +11,7 @@
   },
   "canonical_csv": {
     "file": "canonical_yymm4.csv",
-    "sha256": "549d382cec35dcd9f9f51ee21f9e82d68f662156baacf56891a888832aae1ab3",
+    "sha256": "23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12",
     "row_count": 9,
     "speaker_counts": {
       "れいむ": 3,
@@ -20,7 +20,7 @@
   },
   "derived_csv": {
     "file": "derived_yymm4_import.csv",
-    "sha256": "179421d0e04b3e510c76c63e7a8613586a2115172743d5892689a656c5282069",
+    "sha256": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee",
     "row_count": 9,
     "speaker_counts": {
       "ゆっくり霊夢": 3,

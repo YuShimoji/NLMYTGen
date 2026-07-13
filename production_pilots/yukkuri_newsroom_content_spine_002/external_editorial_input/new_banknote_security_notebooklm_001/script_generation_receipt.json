@@ -19,12 +19,18 @@
   "public_ready": false,
   "production_ready": false,
   "files": {
-    "canonical_script.json": "c1c7dacdaf0961f2c1796639e401f2d7ad41c5eb9dfe998727715a341ac26a87",
-    "canonical_script.txt": "a9fd2e3f59ea61519d572ccc56bead0fed5c19bd38a8c69b7b7dfec7b68d2dd8",
-    "canonical_script_review.md": "8cf54b38291faa64c8a108a1b39c9210948b6750c059d625210b4a96ffb7644c",
-    "cue_source_traceability.json": "98534ded178900adf30148bff2e6690ed7d9a9c9696eeee9d3aa45dcb4e30a7e",
-    "canonical_yymm4.csv": "549d382cec35dcd9f9f51ee21f9e82d68f662156baacf56891a888832aae1ab3",
-    "derived_yymm4_import.csv": "179421d0e04b3e510c76c63e7a8613586a2115172743d5892689a656c5282069",
-    "source_to_script_manifest.json": "e2f4502d119eb237e0da06573ae44353cee9493c938342d698e7f69d61684019"
+    "README_CANONICAL_SCRIPT_REVIEW.md": "a5d5a23fca7d6c0c0fe200a89800d9c3c8ac278c18c1a137c35019d4780e7da8",
+    "canonical_script.json": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47",
+    "canonical_script_editorial_revision.md": "af5680175765526684ea2bddccd05d1d34fda84cfce303c23a282a1d0b2b32bb",
+    "canonical_script.txt": "4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091",
+    "canonical_script_review.md": "9816c28e9b0099ef98e2aefb9e70bf22a32fbbd0f931fd8989c6ac19dcd99d3a",
+    "cue_source_traceability.json": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47",
+    "canonical_yymm4.csv": "23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12",
+    "derived_yymm4_import.csv": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee",
+    "csv_validation_readback.json": "df76e400a437c89384b46abd8988f2cdf532d3675ddcbe500036c10fc7e82d06",
+    "editorial_revision_receipt.json": "357b42e60135cfc2e08d828ae7cced285645a3416234d2da4a68baf711855ce1",
+    "operator_review_sheet.md": "fa21b0707396e5d50e48c4b6c418bc4f6ef4fb71ffec52839f92717b1a0f8673",
+    "limitations.md": "cc1b30f9ade99b92376e06d4ebe6bb96b4d72e0def58bb31d945614da3c5f505",
+    "source_to_script_manifest.json": "e13fb57a2681875f577e4d85f13cf41bfc601519892fa4f975bdfcdd24d927b5"
   }
 }
