@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "probe_id": "generic_static_image_text_subtitle_safe_area_v1",
+  "stage": "H0_preparation_only",
+  "primary_dependency": "linked_subtitle_typography_layout",
+  "optional_capabilities_under_observation": [
+    "static_imageitem_materialization",
+    "static_textitem_materialization"
+  ],
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "coordinate_system": "top_left_canvas_pixels"
+  },
+  "composition": {
+    "linked_subtitle": {
+      "count": 1,
+      "source": "unchanged_carrier_voiceitem_and_character_setting",
+      "reserve_bbox": {
+        "x_min": 96,
+        "y_min": 842,
+        "x_max": 1824,
+        "y_max": 1026
+      }
+    },
+    "imageitem": {
+      "count": 1,
+      "asset": "deterministic_original_opaque_rgb_png",
+      "intended_bbox": {
+        "x_min": 160,
+        "y_min": 180,
+        "x_max": 800,
+        "y_max": 540
+      },
+      "anchor_mapping": "center_anchor_inferred_pending_H1"
+    },
+    "textitem": {
+      "count": 1,
+      "text": "PROBE LABEL",
+      "intended_bbox_conservative": {
+        "x_min": 1040,
+        "y_min": 220,
+        "x_max": 1450,
+        "y_max": 300
+      },
+      "anchor_mapping": "top_left_evidence_bounded_pending_H1"
+    },
+    "zones_pairwise_nonoverlap": true,
+    "timing": "observed_carrier_voice_span"
+  },
+  "allowed_timeline_item_families": [
+    "VoiceItem",
+    "ImageItem",
+    "TextItem"
+  ],
+  "excluded_capabilities": [
+    "ShapeItem",
+    "callout_system",
+    "fade",
+    "transition",
+    "motion",
+    "pan",
+    "parallax",
+    "non_default_transform",
+    "non_default_opacity",
+    "non_default_zoom",
+    "non_default_rotation",
+    "external_asset",
+    "render"
+  ],
+  "serializer_default_fields": {
+    "Opacity": 100,
+    "Zoom": 100,
+    "Rotation": 0,
+    "FadeIn": 0,
+    "FadeOut": 0,
+    "AnimationType": "なし",
+    "meaning": "openable_static_defaults_not_capability_use"
+  },
+  "carrier_policy": {
+    "kind": "neutral_tracked_sample_voice_subtitle_transport",
+    "source_mutation_allowed": false,
+    "existing_non_voice_visual_items_inherited": false,
+    "tracked_provenance": "hash_and_structural_facts_only",
+    "evidence_limit": "same_carrier_H0_structure_only"
+  },
+  "evidence": {
+    "verified_in_H0": [
+      "project_parse",
+      "exact_item_counts",
+      "voiceitem_object_invariance",
+      "carrier_byte_invariance",
+      "zone_contract_nonoverlap",
+      "deterministic_generation"
+    ],
+    "unverified_until_H1": [
+      "subtitle_readability_nonoverlap",
+      "image_visibility_crop_anchor",
+      "text_visibility_wrapping_anchor"
+    ],
+    "runtime_capability_proven": false,
+    "capability_regraded": false
+  }
+}

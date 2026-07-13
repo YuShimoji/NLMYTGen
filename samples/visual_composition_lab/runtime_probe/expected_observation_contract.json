@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "probe_id": "generic_static_image_text_subtitle_safe_area_v1",
+  "language": "ja-JP-first",
+  "questions": [
+    {
+      "id": "subtitle_readability_nonoverlap",
+      "question": "リンク字幕は読みやすく、Image/Text zoneと重なっていませんか？",
+      "allowed_answers": ["pass", "fail", "uncertain"],
+      "evidence_grade_after_user_operation": "observed"
+    },
+    {
+      "id": "image_visibility_crop_anchor",
+      "question": "静止Imageは見えており、想定外のcropやanchorずれはありませんか？",
+      "allowed_answers": ["pass", "fail", "uncertain"],
+      "evidence_grade_after_user_operation": "observed"
+    },
+    {
+      "id": "text_visibility_wrapping_anchor",
+      "question": "短いTextItemはclipping・不要なwrap・字幕との重なりなく見えていますか？",
+      "allowed_answers": ["pass", "fail", "uncertain"],
+      "evidence_grade_after_user_operation": "observed"
+    }
+  ],
+  "question_count": 3,
+  "screenshot_required": false,
+  "render_required": false,
+  "project_save_required": false
+}

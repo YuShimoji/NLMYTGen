@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "receipt_id": "generic-static-layout-probe-h0-validation-v1",
+  "status": "passed",
+  "scope": "H0 generic static-layout probe preparation; no full pytest and no GUI/media validation",
+  "commands": [
+    {
+      "id": "focused_probe_and_direct_regressions",
+      "command": ".venv\\Scripts\\python.exe -m pytest -q -o addopts='' tests/test_generic_static_layout_probe.py tests/test_generic_visual_scene_ir.py tests/test_ymmp_template.py tests/test_ymmp_variation.py tests/test_ymm4_diagnostic_placeholder_proof.py tests/test_new_banknote_yymm4_import_operator_batch.py",
+      "test_selections": [
+        "tests/test_generic_static_layout_probe.py",
+        "tests/test_generic_visual_scene_ir.py",
+        "tests/test_ymmp_template.py",
+        "tests/test_ymmp_variation.py",
+        "tests/test_ymm4_diagnostic_placeholder_proof.py",
+        "tests/test_new_banknote_yymm4_import_operator_batch.py"
+      ],
+      "passed": 116,
+      "skipped": 0,
+      "failed": 0,
+      "includes_state_sync_tests": false
+    },
+    {
+      "id": "state_sync_tests",
+      "command": ".venv\\Scripts\\python.exe -m pytest -q -o addopts='' tests/test_project_state_sync.py",
+      "test_selections": [
+        "tests/test_project_state_sync.py"
+      ],
+      "passed": 8,
+      "skipped": 0,
+      "failed": 0,
+      "includes_state_sync_tests": true
+    }
+  ],
+  "aggregate": {
+    "passed": 124,
+    "skipped": 0,
+    "failed": 0,
+    "state_sync_tests_included": true,
+    "semantics": "sum_of_non_overlapping_test_selections"
+  },
+  "historical_count_ambiguity_resolution": {
+    "previous_178": "historical capability-envelope suite; not reused as the current H0 aggregate",
+    "previous_reported_186": "not reconstructed by assumption",
+    "resolution": "superseded by the exact current commands and non-overlapping aggregate above"
+  },
+  "supporting_checks": [
+    {
+      "id": "modified_python_compile",
+      "command": ".venv\\Scripts\\python.exe -m py_compile src\\pipeline\\generic_static_layout_probe.py tests\\test_generic_static_layout_probe.py",
+      "result": "pass"
+    },
+    {
+      "id": "deterministic_materialization_second_pass",
+      "command": ".venv\\Scripts\\python.exe -m src.pipeline.generic_static_layout_probe materialize",
+      "repeat_count": 2,
+      "result": "byte_identical_project_asset_and_tracked_readback"
+    },
+    {
+      "id": "powershell_syntax",
+      "command": "$ErrorActionPreference='Stop'; foreach($f in @('samples/visual_composition_lab/runtime_probe/operator_batch/run_generic_static_layout_probe.ps1','samples/visual_composition_lab/runtime_probe/operator_batch/collect_generic_static_layout_probe.ps1')){$tokens=$null;$errors=$null;[System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path $f),[ref]$tokens,[ref]$errors)|Out-Null;if($errors.Count){throw ('POWERSHELL_PARSE_FAILED:'+$f)}}",
+      "result": "pass"
+    },
+    {
+      "id": "preflight_only",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\samples\\visual_composition_lab\\runtime_probe\\operator_batch\\run_generic_static_layout_probe.ps1 -PreflightOnly -PythonExe .\\.venv\\Scripts\\python.exe -Ymm4Exe .\\definitely-missing\\YukkuriMovieMaker.exe",
+      "result": "preflight_pass_launch_count_0"
+    },
+    {
+      "id": "fixture_collect_only",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\samples\\visual_composition_lab\\runtime_probe\\operator_batch\\run_generic_static_layout_probe.ps1 -CollectOnly -PythonExe .\\.venv\\Scripts\\python.exe -Ymm4Exe .\\definitely-missing\\YukkuriMovieMaker.exe -OutputPath .\\samples\\visual_composition_lab\\runtime_probe\\local_outputs\\archive\\h0_fixture_collect_receipt.json",
+      "result": "fixture_validation_pass_launch_count_0_not_observed"
+    },
+    {
+      "id": "tracked_json_parse",
+      "command": ".venv\\Scripts\\python.exe -c \"import json; from pathlib import Path; files=[Path(p) for p in ['docs/visual_system/validation_scope_receipt.json','samples/visual_composition_lab/runtime_probe/static_layout_probe_contract.json','samples/visual_composition_lab/runtime_probe/static_layout_probe_fixture.json','samples/visual_composition_lab/runtime_probe/static_layout_probe_materialization_readback.json','samples/visual_composition_lab/runtime_probe/expected_observation_contract.json','samples/visual_composition_lab/runtime_probe/validation_scope_receipt_link.json','samples/visual_composition_lab/runtime_probe/operator_batch/preflight_readback.json','samples/visual_composition_lab/runtime_probe/operator_batch/operator_batch_manifest.json']]; [json.loads(p.read_text(encoding='utf-8')) for p in files]\"",
+      "result": "pass"
+    },
+    {
+      "id": "privacy_external_path_audit",
+      "command": ".venv\\Scripts\\python.exe -m pytest -q -o addopts='' tests/test_generic_static_layout_probe.py::test_tracked_probe_sources_are_topic_neutral_and_private_path_free",
+      "result": "pass"
+    },
+    {
+      "id": "project_state_sync",
+      "command": ".venv\\Scripts\\python.exe scripts\\check_project_state_sync.py --expected-state-id generic-visual-static-layout-probe-ready-v1",
+      "result": "pass"
+    },
+    {
+      "id": "git_diff_check",
+      "command": "git diff --check",
+      "result": "pass"
+    }
+  ],
+  "evidence_boundary": {
+    "verified": "tracked counts, deterministic generation, project parse, source and VoiceItem invariance, exact item counts, static defaults, PowerShell safe modes, tests and state sync",
+    "observed": "none for visual layout in H0",
+    "unverified": "subtitle readability/non-overlap, Image visibility/crop/anchor, Text visibility/wrapping/anchor",
+    "runtime_capability_proven": false,
+    "capability_regraded": false
+  }
+}

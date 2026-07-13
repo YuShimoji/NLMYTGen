@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "probe_id": "generic_static_image_text_subtitle_safe_area_v1",
+  "receipt_repo_relative_path": "docs/visual_system/validation_scope_receipt.json",
+  "relationship": "H0_validation_scope_authority"
+}

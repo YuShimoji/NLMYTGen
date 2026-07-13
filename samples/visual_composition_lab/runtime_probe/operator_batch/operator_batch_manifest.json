@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "probe_id": "generic_static_image_text_subtitle_safe_area_v1",
+  "language": "ja-JP-first",
+  "normal_mode": {
+    "user_operated": true,
+    "ymm4_launch_count": 1,
+    "automatic_gui_action_count": 0,
+    "render": false,
+    "project_save": false
+  },
+  "safe_modes": {
+    "PreflightOnly": {
+      "ymm4_launch_count": 0,
+      "executable_resolution": false
+    },
+    "CollectOnly": {
+      "ymm4_launch_count": 0,
+      "executable_resolution": false,
+      "default_input": "tracked_synthetic_validation_fixture",
+      "evidence_grade": "synthetic_validation_only_not_observed"
+    }
+  },
+  "manual_actions": [
+    "batch commandを1回実行する",
+    "prepared projectで3点を確認し、render/saveせずYMM4を閉じる",
+    "terminalへ戻り3回答を入力してcollectionを完了する"
+  ],
+  "manual_action_count": 3,
+  "observation_ids": [
+    "subtitle_readability_nonoverlap",
+    "image_visibility_crop_anchor",
+    "text_visibility_wrapping_anchor"
+  ],
+  "observation_count": 3,
+  "allowed_answers": ["pass", "fail", "uncertain"],
+  "return_items": [
+    "result",
+    "operator_result path",
+    "error on failure"
+  ],
+  "return_item_max": 3,
+  "local_targets": {
+    "project": "../local_outputs/generic_static_layout_probe.local.ymmp",
+    "batch_state": "../local_outputs/operator_batch.local.json",
+    "observations": "../local_outputs/operator_observations.local.json",
+    "result": "../local_outputs/operator_result.json",
+    "asset": "../local_outputs/assets/generic_probe_image.png",
+    "archive": "../local_outputs/archive/"
+  },
+  "preservation": {
+    "overwrite_existing_result": false,
+    "overwrite_existing_state": false,
+    "delete_failed_evidence": false,
+    "recovery": "archive_exact_targets_then_regenerate"
+  },
+  "capability_regraded": false
+}

@@ -1,61 +1,53 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-14 JST・generic visual capability envelope delivered）
+## 現在の別端末再開ハンドオフ（2026-07-14 JST・generic static-layout probe ready）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
 
-- **取得先**: origin/codex/generic-visual-capability-composition-v1。sourceは
-  bc07fc073063d3e5d1af1e6e5400a340b0036496の
-  codex/new-banknote-authoritative-source-script-v1で、current branch tipがこのhandoffを
-  含むoutcome commitである。再開時はHEAD、upstream parity 0 0、clean worktreeをlive確認する。
+- **取得先**: origin/codex/generic-visual-static-layout-probe-v1。exact sourceは
+  codex/generic-visual-capability-composition-v1の
+  981f67e55b7e533e86edcbe034c7fd3299f23fae。current branch tipがこのhandoffを含む
+  outcome commitである。再開時はHEAD、upstream parity 0 0、tracked cleanとignored
+  probe evidenceを分けてlive確認する。
 - **最小読取順**: AGENTS.md → docs/REPO_LOCAL_RULES.md → docs/runtime-state.md →
-  この節 → docs/visual_system/README_GENERIC_VISUAL_CAPABILITIES.md。
-- **現在の状態**: Project-State-IDはgeneric-visual-capability-envelope-delivered-v1、
-  State-Revisionは2026-07-14.2。Product-Stateは
-  generic-visual-composition-capabilities-audited、Product-Gateは
-  generic-yymm4-capability-probe-decision、Recommended-Nextは
-  review-capability-envelope-and-select-probe、External-Stateは
-  public-repo-feature-branch。
-- **capability inventory**: visual/YMM4に関係する78 pathsをreusable core、pilot-local helper、
-  topic-specific、historical evidence、obsolete/duplicate、unknownへ分類し、未分類は0。
-  38 capabilitiesはproven 15 / conditional 14 / unsupported 5 / unknown 4、
-  C0-C5は5/3/14/14/2/0。provenはC3以上、strict renderはC4、C5は0を強制する。
-- **evidence boundary**: VoiceItem/linked subtitle import、固定Voice/Image/Text project reopen、
-  named GroupItem motion/template、one exact internal renderのC3/C4 evidenceだけを維持した。
-  code/schema/test/static project/unretained render observationをruntime/render proofへ昇格していない。
-- **generic Scene IR**: src/pipeline/generic_visual_scene_ir.pyはdata-driven validatorだけを持ち、
-  scene/cue数、semantic role、layout recipe、existing SCS geometry、timing、primitive、overlay、
-  motion request、capability/evidence、fallback、rights、costを可変dataとして検証する。
-  topic builder import、current-topic literal、fixed 9/3/3-6/73.58 assumptionsは0。
-- **composition grammar**: narration baseline、inspection/explanation、process/sequence、
-  comparison/contrast、callout focus、recap/action sequenceの6 recipesをexisting SCSと直交させた。
-  required/optional primitive、prohibited combination、evidence、fallback、cost/reuse、
-  suitable/unsuitable archetype、YMM4 observation debtを全recipeに持たせる。whole-composition
-  floorはsubtitle layout未観測のためC0、deterministic static conformanceは別軸C2。
-- **conformance lab**: Route A inspection 3 scenes / 9 cues、unrelated synthetic process 4/5、
-  unrelated synthetic comparison 2/4が同じvalidate_fixtureをpassした。Route Aはsource packetを
-  変更せずexact text/source/claim/timing/factual boundary/palette/motion labelをpayloadに保持し、
-  fixture-only selection、implementation/render unauthorized。20 derived/explicit gapsはfallback付きで、
-  うち9件はcaption reserveから導出したsubtitle-layout gap。
-- **minimum stack**: C3 narration/import + observed cue timing + no-transition、optional C2
-  static local ImageItem/short TextItem、C2 fixture preflight、visual acceptance前のC0 subtitle
-  layout gateをdefaultとし、motionはoff。
-  W2 setup / low per-episode / small maintenance / optional rights / easy recovery。
-  broad reuseはC5までhypothesis。
-- **delivery surfaces**: primaryはdocs/visual_system/README_GENERIC_VISUAL_CAPABILITIES.md。
-  JSON matrices、CAN_DO_CANNOT_DO、LIMITATIONS_AND_NON_GOALS、DELIVERY_ACCEPTANCE、
-  secondary self-contained HTML、samples/visual_composition_lab/を同じboundaryで追跡した。
-- **検証済み範囲**: modified Python compile、14 new testsを含む178 focused generic/YMM4 tests、
-  deterministic second pass changed []、3 fixture conformance、JSON/HTML structure、78 path existence、
-  evidence/availability rules、topic literal/fixed-assumption scan、privacy/private-path auditがpassed。
-  full pytest、YMM4、renderは実行していない。
-- **exact next action**: primary matrixのminimum stack、fragile/expensive combinations、
-  not-worth-buildingをreviewし、複数archetypeへ効くgeneric primitiveをH1候補として最大1件選ぶ。
-  minimal static Text/Image/Shape layout、fade、bounded transformが候補で、final Route A sceneやrenderは
-  選ばない。
-- **retained quality debt**: generic Text/Image/Shape observation、subtitle layout、cross-machine
-  portability、real second-topic C5、render semantic/visual acceptanceの5件だけを保持する。
+  この節 → samples/visual_composition_lab/runtime_probe/README_STATIC_LAYOUT_PROBE.md。
+- **現在の状態**: Project-State-IDはgeneric-visual-static-layout-probe-ready-v1、
+  State-Revisionは2026-07-14.3。Product-Stateは
+  generic-visual-static-layout-yymm4-probe-ready、Product-Gateは
+  manual-generic-static-layout-observation、Recommended-Nextは
+  run-generic-static-layout-yymm4-probe、External-Stateはpublic-repo-feature-branch。
+- **consistency seal**: canonical inventoryは78 paths、capability recordは38、proven 15 /
+  conditional 14 / unsupported 5 / unknown 4、C0-C5は5/3/14/14/2/0で不変。
+  PROJECT_PIPELINEの61誤記を78へ修正した。current H0 validationは
+  validation_scope_receipt.jsonの非重複2 commandsがauthorityで、focused probe/direct
+  regressions 116 passed + state-sync 8 passed = aggregate 124 passed、skip/fail 0。
+  旧178/186は加算推測せず、historical count ambiguityとしてcurrent aggregateから切り離した。
+- **neutral carrier policy**: 104943-byte neutral sample、SHA-256
+  9f89a982caba90cc4c241acaaa5c4df50d92c4a38d09270a04aeb3df4e09a524、
+  1920x1080/60fps、source items 3 / VoiceItem 1をread-onlyで解析した。VoiceItemと対応
+  Character/linked-subtitle settingはcanonical digest一致、source bytes不変。sourceの既存
+  Image/Tachie、legacy path、GUI stateはoutputへ引き継がない。
+- **prepared probe**: ignored local projectはobserved carrier span 0..109 frames上に
+  VoiceItem 1 + ImageItem 1 + independent TextItem 1だけを持つ。Imageはdeterministic original
+  opaque RGB 640x360、Textは`PROBE LABEL`。upper-left Image、upper-right Text、bottom
+  subtitle reserveはcontract上pairwise non-overlap。project parse、layer 1/2/3、path、asset、
+  static default、no effect/keyframe/renderをverifiedにした。
+- **evidence boundary**: materialization/readback/preflightはstructural C2/H0。subtitle readability/
+  non-overlap、Image visibility/crop/anchor、Text visibility/wrap/anchorはunverified H1。
+  WorkerのYMM4 launchとComputer Useは0、normal Operator Batchは未実行。C3/C4/C5、runtime
+  success、visual quality、portability、production/public/rights claimへの昇格は0。
+- **Operator Batch**: Japanese-first、manual actions 3、questions exactly 3、return最大3。
+  `-PreflightOnly` とsynthetic fixtureの `-CollectOnly` はYMM4 resolution/launch 0でpass。
+  normal modeはprepared projectをuserのために1回開くだけで、click/key/save/close/screenshot/
+  renderは自動実行しない。project hash/size/mtimeをbatch startでfreezeし、collection時に
+  unchangedを検証する。既存result/state/evidenceは上書き・削除せずarchiveする。
+- **exact next action**: repo rootで
+  `powershell -NoProfile -ExecutionPolicy Bypass -File .\samples\visual_composition_lab\runtime_probe\operator_batch\run_generic_static_layout_probe.ps1`
+  をuserが実行する。字幕non-overlap、Image crop/anchor、Text wrap/anchorの3点を確認し、
+  save/renderせずYMM4を閉じ、terminalで3回答をcollectionする。
+- **retained quality debt**: subtitle readability/non-overlap、Image crop/anchor、Text wrap/anchor、
+  cross-machine portability、heterogeneous second-topic C5の5件だけを保持する。
 
 ## 直前の別端末再開ハンドオフ（2026-07-14 JST・new-banknote import observed / visual decision ready・履歴）
 

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "probe_id": "generic_static_image_text_subtitle_safe_area_v1",
+  "label": "PROBE LABEL",
+  "materialization": {
+    "image": {
+      "width": 640,
+      "height": 360,
+      "stored_x": -480,
+      "stored_y": -180,
+      "intended_bbox": [160, 180, 800, 540]
+    },
+    "text": {
+      "font": "Yu Gothic UI",
+      "font_size": 34,
+      "word_wrap": "NoWrap",
+      "stored_x": 80,
+      "stored_y": -320,
+      "intended_bbox_conservative": [1040, 220, 1450, 300]
+    },
+    "subtitle_reserve_bbox": [96, 842, 1824, 1026],
+    "frame_span_source": "carrier_voiceitems_min_frame_to_max_end",
+    "imageitem_count": 1,
+    "textitem_count": 1
+  },
+  "collector_validation_fixture": {
+    "evidence_grade": "synthetic_validation_only_not_observed",
+    "observations": {
+      "subtitle_readability_nonoverlap": "pass",
+      "image_visibility_crop_anchor": "pass",
+      "text_visibility_wrapping_anchor": "pass"
+    }
+  }
+}

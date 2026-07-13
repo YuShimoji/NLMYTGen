@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "probe_id": "generic_static_image_text_subtitle_safe_area_v1",
+  "evidence_grade": "verified_structure_C2_only",
+  "carrier": {
+    "sha256": "9f89a982caba90cc4c241acaaa5c4df50d92c4a38d09270a04aeb3df4e09a524",
+    "byte_count": 104943,
+    "source_item_count": 3,
+    "voiceitem_count": 1,
+    "timeline_count": 1,
+    "width": 1920,
+    "height": 1080,
+    "fps": 60.0,
+    "limitation": "neutral_sample_voice_subtitle_transport_only",
+    "linked_subtitle_profile": {
+      "stored_x": 0.0,
+      "stored_y": 350.0,
+      "font_size": 45.0,
+      "max_width": 1920.0,
+      "word_wrap": "NoWrap",
+      "base_point": "CenterBottom",
+      "fade_in": 0.0,
+      "fade_out": 0.0,
+      "video_effect_count": 0
+    }
+  },
+  "materialized": {
+    "project_path_policy": "ignored_repo_relative_target",
+    "asset_path_policy": "ignored_repo_relative_target",
+    "frame": 0,
+    "length_frames": 109,
+    "item_type_counts": {
+      "ImageItem": 1,
+      "TextItem": 1,
+      "VoiceItem": 1
+    },
+    "image_layer": 2,
+    "text_layer": 3,
+    "normalized_project_sha256": "ef55ca3d79b6e736189860157972ffa439798f21ebd9c4298848bfd306afc55c",
+    "asset_sha256": "ad1f93bf29d07372a955645326129127a96f989786db642969ef77aad84b00b9",
+    "asset": {
+      "format": "png",
+      "width": 640,
+      "height": 360,
+      "color_mode": "opaque_rgb"
+    }
+  },
+  "layout_contract": {
+    "coordinate_system": "top_left_canvas_pixels_1920x1080",
+    "image_bbox": {
+      "x_min": 160,
+      "y_min": 180,
+      "x_max": 800,
+      "y_max": 540
+    },
+    "text_bbox_conservative": {
+      "x_min": 1040,
+      "y_min": 220,
+      "x_max": 1450,
+      "y_max": 300
+    },
+    "linked_subtitle_reserve": {
+      "x_min": 96,
+      "y_min": 842,
+      "x_max": 1824,
+      "y_max": 1026
+    }
+  },
+  "checks": {
+    "one_selected_timeline": true,
+    "voice_count_preserved": true,
+    "voice_objects_unchanged": true,
+    "voice_order_unchanged": true,
+    "character_objects_unchanged": true,
+    "linked_subtitle_transport_preserved": true,
+    "linked_subtitle_settings_static": true,
+    "linked_subtitle_reserve_contains_baseline": true,
+    "exactly_one_imageitem": true,
+    "exactly_one_independent_textitem": true,
+    "item_families_exact": true,
+    "timing_matches_voice_span": true,
+    "layers_distinct_above_voice": true,
+    "max_layer_matches": true,
+    "asset_path_matches": true,
+    "project_path_matches": true,
+    "allowed_absolute_paths_only": true,
+    "zone_contract_nonoverlap": true,
+    "no_render_output": true,
+    "static_positions_only": true,
+    "default_serializer_transform_fields_only": true,
+    "no_fade_effect_or_keyframes": true,
+    "no_transition_or_shape_fields": true,
+    "deterministic_opaque_rgb_asset": true,
+    "source_bytes_unchanged": true
+  },
+  "observation_status": {
+    "subtitle_readability_nonoverlap": "unverified_H1",
+    "image_visibility_crop_anchor": "unverified_H1",
+    "text_visibility_wrapping_anchor": "unverified_H1"
+  },
+  "runtime_capability_proven": false,
+  "capability_regraded": false
+}

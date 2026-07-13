@@ -310,9 +310,14 @@ def test_deterministic_second_pass_matches_tracked_outputs() -> None:
     )
 
 
-def test_no_local_project_or_media_materialization_in_lab() -> None:
+def test_no_unscoped_local_project_or_media_materialization_in_lab() -> None:
     forbidden_suffixes = {".ymmp", ".mp4", ".wav", ".mp3", ".m4a", ".png", ".jpg"}
-    files = [path for path in LAB.rglob("*") if path.is_file()]
+    allowed_local_root = LAB / "runtime_probe" / "local_outputs"
+    files = [
+        path
+        for path in LAB.rglob("*")
+        if path.is_file() and allowed_local_root not in path.parents
+    ]
     assert all(path.suffix.lower() not in forbidden_suffixes for path in files)
     readback = load_json(LAB / "conformance_readback.json")
     assert readback["runtime_capability_proven"] is False
