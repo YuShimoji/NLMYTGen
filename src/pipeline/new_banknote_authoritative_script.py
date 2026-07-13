@@ -1298,8 +1298,12 @@ def validate_new_banknote_authoritative_script_package(
             for part in path.relative_to(root).parts
         )
     ]
+    allowed_generated_review_html = (
+        root / "visual_scene_decision" / "visual_direction_board.html"
+    ).resolve()
     checks["no_source_bodies"] = not any(
         path.suffix.lower() in {".pdf", ".html", ".htm"}
+        and path.resolve() != allowed_generated_review_html
         for path in candidate_files
     )
     combined = "\n".join(

@@ -1,0 +1,223 @@
+{
+  "schema_version": "new_banknote.yymm4_import_source_to_project_traceability.v1",
+  "status": "passed",
+  "source_registry": "authoritative_source_registry.json",
+  "claim_adjudication": "claim_adjudication.json",
+  "cue_traceability": "cue_source_traceability.json",
+  "project_identity": {
+    "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/new_banknote_yymm4_import_observation.local.ymmp",
+    "sha256": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54"
+  },
+  "expected_and_actual_row_sha256": "8608e71b82f28d13cc927ada739aa8165311a7414238c217a28b9adfcce14ca1",
+  "rows": [
+    {
+      "csv_row_id": "csv_row_1",
+      "cue_id": "cue_001",
+      "scene_id": "S1",
+      "claim_ids": [
+        "claim_010"
+      ],
+      "source_ids": [
+        "V02"
+      ],
+      "project_character": "ゆっくり霊夢",
+      "text_sha256": "6ae1e15f8fb09ffdf0551e6adc7be29232554b34badf8f025385e0df646456ee",
+      "timing": {
+        "csv_row_id": "csv_row_1",
+        "cue_id": "cue_001",
+        "frame": 0,
+        "length_frames": 391,
+        "end_frame": 391
+      },
+      "exact_project_match": true
+    },
+    {
+      "csv_row_id": "csv_row_2",
+      "cue_id": "cue_002",
+      "scene_id": "S1",
+      "claim_ids": [
+        "claim_090",
+        "claim_065",
+        "claim_099",
+        "claim_161"
+      ],
+      "source_ids": [
+        "V06",
+        "V13",
+        "V02"
+      ],
+      "project_character": "ゆっくり魔理沙",
+      "text_sha256": "c3dfc706245679aa1f8fe07e5b19eee2e94918807083ba8c2c54d15aa6583752",
+      "timing": {
+        "csv_row_id": "csv_row_2",
+        "cue_id": "cue_002",
+        "frame": 391,
+        "length_frames": 705,
+        "end_frame": 1096
+      },
+      "exact_project_match": true
+    },
+    {
+      "csv_row_id": "csv_row_3",
+      "cue_id": "cue_003",
+      "scene_id": "S2",
+      "claim_ids": [
+        "claim_090"
+      ],
+      "source_ids": [
+        "V06"
+      ],
+      "project_character": "ゆっくり魔理沙",
+      "text_sha256": "7b8f30a2d341dc2962fe5f13c41b9a832348c6c00ed2e07a7ed08af6a5fc8bf4",
+      "timing": {
+        "csv_row_id": "csv_row_3",
+        "cue_id": "cue_003",
+        "frame": 1096,
+        "length_frames": 338,
+        "end_frame": 1434
+      },
+      "exact_project_match": true
+    },
+    {
+      "csv_row_id": "csv_row_4",
+      "cue_id": "cue_004",
+      "scene_id": "S2",
+      "claim_ids": [
+        "claim_065",
+        "claim_067"
+      ],
+      "source_ids": [
+        "V06",
+        "V07"
+      ],
+      "project_character": "ゆっくり魔理沙",
+      "text_sha256": "ad50602ced2e889cc3169b18858fbe4537224533118283ffd0d2c49f929f17c7",
+      "timing": {
+        "csv_row_id": "csv_row_4",
+        "cue_id": "cue_004",
+        "frame": 1434,
+        "length_frames": 384,
+        "end_frame": 1818
+      },
+      "exact_project_match": true
+    },
+    {
+      "csv_row_id": "csv_row_5",
+      "cue_id": "cue_005",
+      "scene_id": "S2",
+      "claim_ids": [
+        "claim_116"
+      ],
+      "source_ids": [
+        "V06"
+      ],
+      "project_character": "ゆっくり霊夢",
+      "text_sha256": "afc01c0054276359b1c6b1a6f60dfc886c7cc26438d73b048437a33d6ee45a97",
+      "timing": {
+        "csv_row_id": "csv_row_5",
+        "cue_id": "cue_005",
+        "frame": 1818,
+        "length_frames": 407,
+        "end_frame": 2225
+      },
+      "exact_project_match": true
+    },
+    {
+      "csv_row_id": "csv_row_6",
+      "cue_id": "cue_006",
+      "scene_id": "S2",
+      "claim_ids": [
+        "claim_096",
+        "claim_097"
+      ],
+      "source_ids": [
+        "V06"
+      ],
+      "project_character": "ゆっくり魔理沙",
+      "text_sha256": "6ffa83cc6dd9cafba3b271ac8c300e36386b95438ca1c912ef0dedf5d748b0e8",
+      "timing": {
+        "csv_row_id": "csv_row_6",
+        "cue_id": "cue_006",
+        "frame": 2225,
+        "length_frames": 610,
+        "end_frame": 2835
+      },
+      "exact_project_match": true
+    },
+    {
+      "csv_row_id": "csv_row_7",
+      "cue_id": "cue_007",
+      "scene_id": "S3",
+      "claim_ids": [
+        "claim_118",
+        "claim_130",
+        "claim_132"
+      ],
+      "source_ids": [
+        "V13",
+        "V06",
+        "V02"
+      ],
+      "project_character": "ゆっくり魔理沙",
+      "text_sha256": "db8c4f0bcfcb4351ee35dea6a614870b4d967e0cde9bb4421fc0c35016758309",
+      "timing": {
+        "csv_row_id": "csv_row_7",
+        "cue_id": "cue_007",
+        "frame": 2835,
+        "length_frames": 427,
+        "end_frame": 3262
+      },
+      "exact_project_match": true
+    },
+    {
+      "csv_row_id": "csv_row_8",
+      "cue_id": "cue_008",
+      "scene_id": "S3",
+      "claim_ids": [
+        "claim_114",
+        "claim_155",
+        "claim_157"
+      ],
+      "source_ids": [
+        "V02"
+      ],
+      "project_character": "ゆっくり霊夢",
+      "text_sha256": "46f345d6b494ee94664752787c84bc32032e3673e02f5b8751d0e03cb8901d30",
+      "timing": {
+        "csv_row_id": "csv_row_8",
+        "cue_id": "cue_008",
+        "frame": 3262,
+        "length_frames": 733,
+        "end_frame": 3995
+      },
+      "exact_project_match": true
+    },
+    {
+      "csv_row_id": "csv_row_9",
+      "cue_id": "cue_009",
+      "scene_id": "S3",
+      "claim_ids": [
+        "claim_090",
+        "claim_116",
+        "claim_065",
+        "claim_096"
+      ],
+      "source_ids": [
+        "V06"
+      ],
+      "project_character": "ゆっくり魔理沙",
+      "text_sha256": "e11a16e48b4386490a5a4e43b400dd5786ec8b31f140da318aca3b1c6c0e9702",
+      "timing": {
+        "csv_row_id": "csv_row_9",
+        "cue_id": "cue_009",
+        "frame": 3995,
+        "length_frames": 420,
+        "end_frame": 4415
+      },
+      "exact_project_match": true
+    }
+  ],
+  "unsupported_spoken_claim_count": 0,
+  "source_bodies_copied": false,
+  "absolute_paths_copied": false
+}

@@ -1,0 +1,352 @@
+{
+  "schema_version": "new_banknote.source_backed_script_beat_ir.v1",
+  "status": "visual_planning_only",
+  "source_anchor_allowlist": [
+    "V02",
+    "V06",
+    "V07",
+    "V13"
+  ],
+  "cue_count": 9,
+  "scene_allocation": {
+    "S1": 2,
+    "S2": 4,
+    "S3": 3
+  },
+  "beats": [
+    {
+      "sequence": 1,
+      "cue_id": "cue_001",
+      "csv_row_id": "csv_row_1",
+      "scene_id": "S1",
+      "speaker": "れいむ",
+      "text": "2024年に発行された新しいお札って、見た目以外にも変わったところがあるの？",
+      "claim_ids": [
+        "claim_010"
+      ],
+      "source_ids": [
+        "V02"
+      ],
+      "screen_objective": "新しいお札の変化を問う導入を作る。",
+      "foreground": "角丸の抽象券シルエットと大きな疑問符。",
+      "background": "off-whiteの検査台グリッド。",
+      "text_overlay": "2024年 新しいお札",
+      "source_backed_factual_boundary": "2024年発行だけを扱う。発行目的、経済効果、政策意図は示さない。",
+      "animation": {
+        "primitive": "outline_reveal",
+        "start": "voice_start",
+        "end": "voice_end",
+        "start_frame": 0,
+        "end_frame": 391
+      },
+      "expected_duration_relation_to_actual_voiceitem_timing": {
+        "basis": "actual_import_voiceitem",
+        "length_frames": 391,
+        "policy": "visual beat fits inside the observed voice interval; future implementation may not alter VoiceItem timing"
+      },
+      "placeholder_asset": "abstract_note_question_placeholder",
+      "future_rights_decision": "review original abstract asset after route selection; rights not cleared in this slice",
+      "ymm4_item_family_expectation": "ShapeItem + TextItem",
+      "implementation_status": "not_started"
+    },
+    {
+      "sequence": 2,
+      "cue_id": "cue_002",
+      "csv_row_id": "csv_row_2",
+      "scene_id": "S1",
+      "speaker": "まりさ",
+      "text": "あるぞ。偽造防止では、高精細すき入れや3Dホログラムなど複数の技術を組み合わせている。誰にとっても使いやすいユニバーサルデザインも取り入れたんだ。",
+      "claim_ids": [
+        "claim_090",
+        "claim_065",
+        "claim_099",
+        "claim_161"
+      ],
+      "source_ids": [
+        "V06",
+        "V13",
+        "V02"
+      ],
+      "screen_objective": "複数の偽造防止技術と見分けやすさを俯瞰する。",
+      "foreground": "抽象券の上に四つの色分けされた技術レイヤー。",
+      "background": "中央照明のある検査台。",
+      "text_overlay": "複数技術 + ユニバーサルデザイン",
+      "source_backed_factual_boundary": "複数技術とユニバーサルデザインの採用意図まで。効果、優位性、新規性の実証は主張しない。",
+      "animation": {
+        "primitive": "layer_callout_reveal",
+        "start": "voice_start",
+        "end": "voice_end",
+        "start_frame": 391,
+        "end_frame": 1096
+      },
+      "expected_duration_relation_to_actual_voiceitem_timing": {
+        "basis": "actual_import_voiceitem",
+        "length_frames": 705,
+        "policy": "visual beat fits inside the observed voice interval; future implementation may not alter VoiceItem timing"
+      },
+      "placeholder_asset": "security_layer_callout_placeholder",
+      "future_rights_decision": "review original abstract asset after route selection; rights not cleared in this slice",
+      "ymm4_item_family_expectation": "ShapeItem group + TextItem",
+      "implementation_status": "not_started"
+    },
+    {
+      "sequence": 3,
+      "cue_id": "cue_003",
+      "csv_row_id": "csv_row_3",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "text": "まずは高精細すき入れ。光に透かすと、細かな模様が見えるんだぜ。",
+      "claim_ids": [
+        "claim_090"
+      ],
+      "source_ids": [
+        "V06"
+      ],
+      "screen_objective": "高精細すき入れを透過光の現象として示す。",
+      "foreground": "非肖像の細線パターンが光で浮かぶ抽象パネル。",
+      "background": "暗い青からoff-whiteへのバックライト。",
+      "text_overlay": "透かす｜高精細すき入れ",
+      "source_backed_factual_boundary": "透過光で細かな模様が見えることだけを抽象化する。実券の肖像、位置、寸法、製法を再現しない。",
+      "animation": {
+        "primitive": "light_sweep",
+        "start": "voice_start",
+        "end": "voice_end",
+        "start_frame": 1096,
+        "end_frame": 1434
+      },
+      "expected_duration_relation_to_actual_voiceitem_timing": {
+        "basis": "actual_import_voiceitem",
+        "length_frames": 338,
+        "policy": "visual beat fits inside the observed voice interval; future implementation may not alter VoiceItem timing"
+      },
+      "placeholder_asset": "abstract_backlight_pattern_placeholder",
+      "future_rights_decision": "review original abstract asset after route selection; rights not cleared in this slice",
+      "ymm4_item_family_expectation": "ShapeItem + masked gradient",
+      "implementation_status": "not_started"
+    },
+    {
+      "sequence": 4,
+      "cue_id": "cue_004",
+      "csv_row_id": "csv_row_4",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "text": "次は3Dホログラム。角度を変えると、三次元の肖像が回転して見えるぞ。",
+      "claim_ids": [
+        "claim_065",
+        "claim_067"
+      ],
+      "source_ids": [
+        "V06",
+        "V07"
+      ],
+      "screen_objective": "3Dホログラムの見え方を傾きで説明する。",
+      "foreground": "人物に似せない楕円シルエットと傾き矢印。",
+      "background": "低彩度の角度ガイド。",
+      "text_overlay": "傾ける｜3Dホログラム",
+      "source_backed_factual_boundary": "角度で三次元の肖像が回転して見える現象を非肖像シルエットで示す。実際の形状、位置、箔模様は示さない。",
+      "animation": {
+        "primitive": "restrained_tilt_parallax",
+        "start": "voice_start",
+        "end": "voice_end",
+        "start_frame": 1434,
+        "end_frame": 1818
+      },
+      "expected_duration_relation_to_actual_voiceitem_timing": {
+        "basis": "actual_import_voiceitem",
+        "length_frames": 384,
+        "policy": "visual beat fits inside the observed voice interval; future implementation may not alter VoiceItem timing"
+      },
+      "placeholder_asset": "generic_portrait_parallax_placeholder",
+      "future_rights_decision": "review original abstract asset after route selection; rights not cleared in this slice",
+      "ymm4_item_family_expectation": "ShapeItem layers + TextItem",
+      "implementation_status": "not_started"
+    },
+    {
+      "sequence": 5,
+      "cue_id": "cue_005",
+      "csv_row_id": "csv_row_5",
+      "scene_id": "S2",
+      "speaker": "れいむ",
+      "text": "触るとざらざらするのは、額面数字などのインキを高く盛り上げる深凹版印刷なんだね。",
+      "claim_ids": [
+        "claim_116"
+      ],
+      "source_ids": [
+        "V06"
+      ],
+      "screen_objective": "深凹版印刷の盛り上がりと触感を概念化する。",
+      "foreground": "三本の抽象インキ稜線と指示波形。",
+      "background": "off-whiteの断面風パネル。",
+      "text_overlay": "触る｜深凹版印刷",
+      "source_backed_factual_boundary": "額面数字などの盛り上がりと触感だけを概念化する。版、工程、インキ高さなど再現可能な製造情報を示さない。",
+      "animation": {
+        "primitive": "tactile_pulse",
+        "start": "voice_start",
+        "end": "voice_end",
+        "start_frame": 1818,
+        "end_frame": 2225
+      },
+      "expected_duration_relation_to_actual_voiceitem_timing": {
+        "basis": "actual_import_voiceitem",
+        "length_frames": 407,
+        "policy": "visual beat fits inside the observed voice interval; future implementation may not alter VoiceItem timing"
+      },
+      "placeholder_asset": "raised_ink_ridge_placeholder",
+      "future_rights_decision": "review original abstract asset after route selection; rights not cleared in this slice",
+      "ymm4_item_family_expectation": "ShapeItem group + TextItem",
+      "implementation_status": "not_started"
+    },
+    {
+      "sequence": 6,
+      "cue_id": "cue_006",
+      "csv_row_id": "csv_row_6",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "text": "マイクロ文字の『NIPPONGINKO』は、ルーペで確かめられる。カラーコピー機では再現が難しいほど小さい文字なんだ。",
+      "claim_ids": [
+        "claim_096",
+        "claim_097"
+      ],
+      "source_ids": [
+        "V06"
+      ],
+      "screen_objective": "マイクロ文字をルーペ確認の模式図で示す。",
+      "foreground": "ルーペ円内に単一のNIPPONGINKO模式ラベル。",
+      "background": "実券模様を持たない点描グリッド。",
+      "text_overlay": "ルーペで見る｜マイクロ文字",
+      "source_backed_factual_boundary": "NIPPONGINKOを単一の模式ラベルとして示す。実寸、密度、位置、周辺模様は再現せず、複写は困難という範囲に留める。",
+      "animation": {
+        "primitive": "loupe_zoom",
+        "start": "voice_start",
+        "end": "voice_end",
+        "start_frame": 2225,
+        "end_frame": 2835
+      },
+      "expected_duration_relation_to_actual_voiceitem_timing": {
+        "basis": "actual_import_voiceitem",
+        "length_frames": 610,
+        "policy": "visual beat fits inside the observed voice interval; future implementation may not alter VoiceItem timing"
+      },
+      "placeholder_asset": "schematic_loupe_label_placeholder",
+      "future_rights_decision": "review original abstract asset after route selection; rights not cleared in this slice",
+      "ymm4_item_family_expectation": "ShapeItem + TextItem",
+      "implementation_status": "not_started"
+    },
+    {
+      "sequence": 7,
+      "cue_id": "cue_007",
+      "csv_row_id": "csv_row_7",
+      "scene_id": "S3",
+      "speaker": "まりさ",
+      "text": "見分けやすさの工夫では、識別マークを11本の斜線にそろえ、券種ごとに位置を変えているぜ。",
+      "claim_ids": [
+        "claim_118",
+        "claim_130",
+        "claim_132"
+      ],
+      "source_ids": [
+        "V13",
+        "V06",
+        "V02"
+      ],
+      "screen_objective": "識別マークの統一数と位置差を模式化する。",
+      "foreground": "11本の同一斜線と三つの概念位置カード。",
+      "background": "縮尺外と明記した抽象券枠。",
+      "text_overlay": "識別マーク｜11本・位置が異なる",
+      "source_backed_factual_boundary": "11本の斜線と券種別の位置差を模式図で示す。座標、角度、太さ、性能評価は示さない。",
+      "animation": {
+        "primitive": "position_marker_step",
+        "start": "voice_start",
+        "end": "voice_end",
+        "start_frame": 2835,
+        "end_frame": 3262
+      },
+      "expected_duration_relation_to_actual_voiceitem_timing": {
+        "basis": "actual_import_voiceitem",
+        "length_frames": 427,
+        "policy": "visual beat fits inside the observed voice interval; future implementation may not alter VoiceItem timing"
+      },
+      "placeholder_asset": "identification_mark_diagram_placeholder",
+      "future_rights_decision": "review original abstract asset after route selection; rights not cleared in this slice",
+      "ymm4_item_family_expectation": "ShapeItem group + TextItem",
+      "implementation_status": "not_started"
+    },
+    {
+      "sequence": 8,
+      "cue_id": "cue_008",
+      "csv_row_id": "csv_row_8",
+      "scene_id": "S3",
+      "speaker": "れいむ",
+      "text": "額面の数字は前のシリーズのお札より大きい。一万円券と千円券ではホログラムの形や位置が違い、千円券の中央には橙色のグラデーションもあるんだね。",
+      "claim_ids": [
+        "claim_114",
+        "claim_155",
+        "claim_157"
+      ],
+      "source_ids": [
+        "V02"
+      ],
+      "screen_objective": "額面数字と券種内の配置差を限定比較する。",
+      "foreground": "大きさの異なる抽象数字と二つのF券位置カード。",
+      "background": "比較範囲を分けた二段グリッド。",
+      "text_overlay": "大きい額面数字｜券種ごとの違い",
+      "source_backed_factual_boundary": "E券より大きい額面数字、F券内の一万円券と千円券のホログラム差、千円券中央の橙色グラデーションだけを縮尺外の抽象図で示す。",
+      "animation": {
+        "primitive": "bounded_difference_reveal",
+        "start": "voice_start",
+        "end": "voice_end",
+        "start_frame": 3262,
+        "end_frame": 3995
+      },
+      "expected_duration_relation_to_actual_voiceitem_timing": {
+        "basis": "actual_import_voiceitem",
+        "length_frames": 733,
+        "policy": "visual beat fits inside the observed voice interval; future implementation may not alter VoiceItem timing"
+      },
+      "placeholder_asset": "denomination_difference_placeholder",
+      "future_rights_decision": "review original abstract asset after route selection; rights not cleared in this slice",
+      "ymm4_item_family_expectation": "ShapeItem + TextItem group",
+      "implementation_status": "not_started"
+    },
+    {
+      "sequence": 9,
+      "cue_id": "cue_009",
+      "csv_row_id": "csv_row_9",
+      "scene_id": "S3",
+      "speaker": "まりさ",
+      "text": "確かめ方は、透かす、触る、傾ける、ルーペで見る。この四つを覚えておこう。",
+      "claim_ids": [
+        "claim_090",
+        "claim_116",
+        "claim_065",
+        "claim_096"
+      ],
+      "source_ids": [
+        "V06"
+      ],
+      "screen_objective": "四つの確認動作を一列で記憶しやすくまとめる。",
+      "foreground": "光・指・傾き・ルーペの四つの抽象アイコン。",
+      "background": "off-whiteの最終チェックライン。",
+      "text_overlay": "透かす / 触る / 傾ける / ルーペで見る",
+      "source_backed_factual_boundary": "透かす・触る・傾ける・ルーペで見るを確認行動として示す。真贋保証や完全な判定手順とは扱わない。",
+      "animation": {
+        "primitive": "four_action_sequence",
+        "start": "voice_start",
+        "end": "voice_end",
+        "start_frame": 3995,
+        "end_frame": 4415
+      },
+      "expected_duration_relation_to_actual_voiceitem_timing": {
+        "basis": "actual_import_voiceitem",
+        "length_frames": 420,
+        "policy": "visual beat fits inside the observed voice interval; future implementation may not alter VoiceItem timing"
+      },
+      "placeholder_asset": "four_action_icon_placeholder",
+      "future_rights_decision": "review original abstract asset after route selection; rights not cleared in this slice",
+      "ymm4_item_family_expectation": "ShapeItem icons + TextItem",
+      "implementation_status": "not_started"
+    }
+  ],
+  "voice_timing_mutation_authorized": false,
+  "new_claim_generation_authorized": false
+}

@@ -1,0 +1,147 @@
+{
+  "schema_version": "new_banknote.visual_direction_options.v1",
+  "status": "human_selection_required",
+  "route_count": 3,
+  "recommended_route_count": 1,
+  "routes": [
+    {
+      "route_id": "route_A_security_inspection_lab",
+      "route_label": "Route A",
+      "name": "Security Inspection Lab",
+      "status": "RECOMMENDED",
+      "recommended": true,
+      "concept": "抽象的な検査台の上で、技術の層と四つの確認動作を順に解く。Labは説明上の舞台比喩であり、実在施設や公式手順ではない。",
+      "scene_purposes": {
+        "S1": "問いを起点に、複数の技術と見分けやすさを俯瞰する。",
+        "S2": "透過・傾き・触感・ルーペの四技術を一つずつ説明する。",
+        "S3": "券種識別の工夫と四つの確認動作をまとめる。"
+      },
+      "layout_system": "中央の抽象券シルエット、左の行動ラベル、右の根拠付き説明。字幕用下端リザーブを常時確保する。",
+      "typography_role": {
+        "stack": "Japanese system UI sans-serif",
+        "headline_role": "scene question or inspection action",
+        "body_role": "one source-backed explanation at a time",
+        "metadata_role": "cue/source IDs remain machine metadata only"
+      },
+      "color_role_proposal": {
+        "proposal_only": true,
+        "paper_field": "off-white",
+        "primary_ink": "ink blue",
+        "security_layer": "security green",
+        "attention_accent": "restrained orange",
+        "factual_color_exception": "橙色が事実を表すのはcue_008の千円券中央グラデーションだけ"
+      },
+      "motion_vocabulary": [
+        "light_sweep",
+        "restrained_tilt_parallax",
+        "tactile_pulse",
+        "loupe_zoom",
+        "short_label_transition"
+      ],
+      "required_asset_families": [
+        "original_abstract_note_silhouette",
+        "css_security_layer_callouts",
+        "generic_non_likeness_portrait",
+        "schematic_loupe_and_action_icons"
+      ],
+      "rights_risk": "low_but_not_cleared",
+      "factual_or_misleading_risk": "抽象図を実券の位置・形状・検査手順と誤認させる可能性。全図を模式・縮尺外として扱う。",
+      "ymm4_implementation_weight": "low_to_medium",
+      "validation_evidence": "S1/S2/S3の流れと各模式図が、9 cueの説明を誤解なく支えるかをhuman reviewで確認する。",
+      "why_it_may_be_rejected": "検査台の比喩が硬すぎる、または技術説明が日常文脈から離れて見える場合。"
+    },
+    {
+      "route_id": "route_B_everyday_verification",
+      "route_label": "Route B",
+      "name": "Everyday Verification",
+      "status": "OPTION",
+      "recommended": false,
+      "concept": "会計・ATM・手元確認を抽象的な日常背景として使い、四つの確認動作へ接続する。文脈は演出上の推定で事実根拠ではない。",
+      "scene_purposes": {
+        "S1": "新しいお札に気づく日常の入口を作る。",
+        "S2": "日常背景を弱め、四技術の模式説明へ切り替える。",
+        "S3": "手元確認と見分けやすさの工夫を整理する。"
+      },
+      "layout_system": "左に抽象的な場所シルエット、中央に手元の模式図、右に確認動作。人物・店舗固有表現は使わない。",
+      "typography_role": {
+        "stack": "Japanese system UI sans-serif",
+        "headline_role": "scene question or inspection action",
+        "body_role": "one source-backed explanation at a time",
+        "metadata_role": "cue/source IDs remain machine metadata only"
+      },
+      "color_role_proposal": {
+        "proposal_only": true,
+        "environment": "neutral gray-blue",
+        "note_focus": "off-white and ink blue",
+        "action_accent": "security green"
+      },
+      "motion_vocabulary": [
+        "context_fade",
+        "hand_position_hint",
+        "action_highlight",
+        "restrained_focus_shift"
+      ],
+      "required_asset_families": [
+        "original_generic_checkout_geometry",
+        "original_generic_atm_geometry",
+        "abstract_hand_pose",
+        "schematic_action_icons"
+      ],
+      "rights_risk": "medium_not_cleared",
+      "factual_or_misleading_risk": "日常背景を政策、決済手段の比較、普及効果の根拠と誤認させる可能性。背景は非事実の文脈として明記する。",
+      "ymm4_implementation_weight": "medium",
+      "validation_evidence": "日常文脈が説明を助け、技術事実や社会的意味を追加していないかをhuman reviewで確認する。",
+      "why_it_may_be_rejected": "人物・手・場所のrights-safe asset負担が増え、文脈が根拠以上の意味を帯びる場合。"
+    },
+    {
+      "route_id": "route_C_design_evolution",
+      "route_label": "Route C",
+      "name": "Design Evolution",
+      "status": "OPTION",
+      "recommended": false,
+      "concept": "識別しやすさに関わるデザイン変更を抽象比較する。改善効果や政策進化ではなく、採用された差異だけを扱う。",
+      "scene_purposes": {
+        "S1": "2024年発行と複数技術の採用を現在側の俯瞰として示す。",
+        "S2": "四技術を機能別の模式レイヤーとして並べる。",
+        "S3": "額面数字、識別マーク、券種内の配置差を限定比較する。"
+      },
+      "layout_system": "左右比較はcue_008で根拠のある額面数字だけに限定し、その他はF券内の抽象配置図として分離する。",
+      "typography_role": {
+        "stack": "Japanese system UI sans-serif",
+        "headline_role": "scene question or inspection action",
+        "body_role": "one source-backed explanation at a time",
+        "metadata_role": "cue/source IDs remain machine metadata only"
+      },
+      "color_role_proposal": {
+        "proposal_only": true,
+        "prior_series_placeholder": "neutral gray",
+        "current_series_placeholder": "ink blue",
+        "difference_marker": "restrained orange"
+      },
+      "motion_vocabulary": [
+        "split_reveal",
+        "difference_marker",
+        "layer_step",
+        "restrained_position_shift"
+      ],
+      "required_asset_families": [
+        "original_generic_series_silhouettes",
+        "schematic_numeral_scale_comparison",
+        "abstract_position_diagrams",
+        "difference_labels"
+      ],
+      "rights_risk": "medium_not_cleared",
+      "factual_or_misleading_risk": "比較範囲を越えた全体進化、改善効果、正確な券面差と受け取られる可能性。比較対象を明示して縮尺外とする。",
+      "ymm4_implementation_weight": "medium_to_high",
+      "validation_evidence": "E券対F券の比較が額面数字だけに限定され、F券内差との混同がないかをhuman reviewで確認する。",
+      "why_it_may_be_rejected": "比較精度と情報密度が高く、説明より券面再現に見える場合。"
+    }
+  ],
+  "shared_boundary": {
+    "abstract_original_diagrams_only": true,
+    "official_image_reuse": false,
+    "external_asset_or_url": false,
+    "new_factual_claims": false,
+    "production_or_rights_approval": false
+  }
+}

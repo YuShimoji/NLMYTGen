@@ -1,0 +1,107 @@
+{
+  "schema_version": "new_banknote.visual_asset_rights_matrix.v1",
+  "status": "planning_only",
+  "default_representation": "original_abstract_schematic",
+  "official_image_reuse": false,
+  "external_asset_fetch": false,
+  "rights_cleared": false,
+  "prohibited_representation_elements": [
+    "recognizable_portrait",
+    "serial_or_seal",
+    "full_note_layout",
+    "real_security_pattern_texture",
+    "repeatable_exact_placement_or_detail"
+  ],
+  "assets": [
+    {
+      "asset_id": "abstract_note_silhouette",
+      "representation": "CSS geometry",
+      "scene_use": "S1/S2/S3",
+      "source": "future_original_internal_asset",
+      "rights_risk": "low_but_not_cleared",
+      "current_file": null,
+      "created_in_this_slice": false,
+      "future_decision": "review after Route A is selected"
+    },
+    {
+      "asset_id": "security_layer_callouts",
+      "representation": "CSS geometry and labels",
+      "scene_use": "S1",
+      "source": "future_original_internal_asset",
+      "rights_risk": "low_but_not_cleared",
+      "current_file": null,
+      "created_in_this_slice": false,
+      "future_decision": "review after Route A is selected"
+    },
+    {
+      "asset_id": "backlight_pattern",
+      "representation": "original abstract line pattern",
+      "scene_use": "S2",
+      "source": "future_original_internal_asset",
+      "rights_risk": "low_but_not_cleared",
+      "current_file": null,
+      "created_in_this_slice": false,
+      "future_decision": "review after Route A is selected"
+    },
+    {
+      "asset_id": "generic_portrait_silhouette",
+      "representation": "non-likeness CSS geometry",
+      "scene_use": "S2",
+      "source": "future_original_internal_asset",
+      "rights_risk": "low_but_not_cleared",
+      "current_file": null,
+      "created_in_this_slice": false,
+      "future_decision": "review after Route A is selected"
+    },
+    {
+      "asset_id": "raised_ink_ridges",
+      "representation": "original abstract CSS geometry",
+      "scene_use": "S2",
+      "source": "future_original_internal_asset",
+      "rights_risk": "low_but_not_cleared",
+      "current_file": null,
+      "created_in_this_slice": false,
+      "future_decision": "review after Route A is selected"
+    },
+    {
+      "asset_id": "loupe_and_schematic_label",
+      "representation": "CSS geometry and one text label",
+      "scene_use": "S2",
+      "source": "future_original_internal_asset",
+      "rights_risk": "low_but_not_cleared",
+      "current_file": null,
+      "created_in_this_slice": false,
+      "future_decision": "review after Route A is selected"
+    },
+    {
+      "asset_id": "identification_mark_diagram",
+      "representation": "schematic CSS geometry",
+      "scene_use": "S3",
+      "source": "future_original_internal_asset",
+      "rights_risk": "low_but_not_cleared",
+      "current_file": null,
+      "created_in_this_slice": false,
+      "future_decision": "review after Route A is selected"
+    },
+    {
+      "asset_id": "denomination_difference_diagram",
+      "representation": "schematic CSS geometry",
+      "scene_use": "S3",
+      "source": "future_original_internal_asset",
+      "rights_risk": "low_but_not_cleared",
+      "current_file": null,
+      "created_in_this_slice": false,
+      "future_decision": "review after Route A is selected"
+    },
+    {
+      "asset_id": "four_action_icons",
+      "representation": "original symbolic CSS geometry",
+      "scene_use": "S3",
+      "source": "future_original_internal_asset",
+      "rights_risk": "low_but_not_cleared",
+      "current_file": null,
+      "created_in_this_slice": false,
+      "future_decision": "review after Route A is selected"
+    }
+  ]
+}

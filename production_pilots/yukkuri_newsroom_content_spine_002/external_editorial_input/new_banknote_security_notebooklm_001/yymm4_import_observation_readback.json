@@ -1,0 +1,421 @@
+{
+  "schema_version": "new_banknote.yymm4_import_observation_readback.v1",
+  "status": "passed",
+  "evidence_snapshot": {
+    "schema_version": "new_banknote_yymm4_import_observation.evidence_snapshot.v1",
+    "status": "verified_import_observation",
+    "user_reported_terminal_result": {
+      "status": "success",
+      "evidence_grade": "observed"
+    },
+    "operator_result": {
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/operator_result.json",
+      "basename": "operator_result.json",
+      "sha256": "e4ecb1bf5e4b5780990a00094804dd871d66068a917000015f9fecfd83e8ddfa",
+      "size_bytes": 4494,
+      "modified_at_utc": "2026-07-13T16:51:24.951197+00:00",
+      "status": "success",
+      "failed_checks": [],
+      "verified_check_count": 17
+    },
+    "operator_batch_state": {
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/operator_batch.local.json",
+      "basename": "operator_batch.local.json",
+      "sha256": "0753e1cb17cedf52c57dc4856dc896db61d7c275ac540e621c17a2058d093b04",
+      "size_bytes": 924,
+      "modified_at_utc": "2026-07-13T16:18:30.396186+00:00",
+      "batch_not_before_utc": "2026-07-13T16:18:30.351644+00:00"
+    },
+    "project_identity": {
+      "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/new_banknote_yymm4_import_observation.local.ymmp",
+      "basename": "new_banknote_yymm4_import_observation.local.ymmp",
+      "sha256": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54",
+      "size_bytes": 1337084,
+      "modified_at_utc": "2026-07-13T16:51:05.683684+00:00",
+      "exact_target_matches": true,
+      "embedded_file_path_matches": true,
+      "parse_error_code": null
+    },
+    "operator_observation": {
+      "no_mapping_error_update_or_character_mismatch_confirmed": true,
+      "mapping_dialog_or_error_observed": false,
+      "evidence_grade": "observed",
+      "yymm4_product_version": "4.54.0.1+76b177dd451f9d162816dabc4ac658180e869582",
+      "profile_observation_version": "4.53.0.9",
+      "profile_version_match": false,
+      "version_difference_policy": "warning_only"
+    },
+    "project_verification": {
+      "evidence_grade": "verified",
+      "VoiceItem_count": 9,
+      "character_counts": {
+        "ゆっくり霊夢": 3,
+        "ゆっくり魔理沙": 6
+      },
+      "expected_and_actual_row_sha256": "8608e71b82f28d13cc927ada739aa8165311a7414238c217a28b9adfcce14ca1",
+      "exact_text_order": true,
+      "exact_character_text_order": true,
+      "missing_count": 0,
+      "duplicate_count": 0,
+      "reordered": false,
+      "fps": 60,
+      "timeline_frames": 4415,
+      "duration_seconds": 73.583333,
+      "timing_source": "actual_saved_voiceitem_frames_and_fps",
+      "voice_timing_summary": [
+        {
+          "csv_row_id": "csv_row_1",
+          "cue_id": "cue_001",
+          "frame": 0,
+          "length_frames": 391,
+          "end_frame": 391
+        },
+        {
+          "csv_row_id": "csv_row_2",
+          "cue_id": "cue_002",
+          "frame": 391,
+          "length_frames": 705,
+          "end_frame": 1096
+        },
+        {
+          "csv_row_id": "csv_row_3",
+          "cue_id": "cue_003",
+          "frame": 1096,
+          "length_frames": 338,
+          "end_frame": 1434
+        },
+        {
+          "csv_row_id": "csv_row_4",
+          "cue_id": "cue_004",
+          "frame": 1434,
+          "length_frames": 384,
+          "end_frame": 1818
+        },
+        {
+          "csv_row_id": "csv_row_5",
+          "cue_id": "cue_005",
+          "frame": 1818,
+          "length_frames": 407,
+          "end_frame": 2225
+        },
+        {
+          "csv_row_id": "csv_row_6",
+          "cue_id": "cue_006",
+          "frame": 2225,
+          "length_frames": 610,
+          "end_frame": 2835
+        },
+        {
+          "csv_row_id": "csv_row_7",
+          "cue_id": "cue_007",
+          "frame": 2835,
+          "length_frames": 427,
+          "end_frame": 3262
+        },
+        {
+          "csv_row_id": "csv_row_8",
+          "cue_id": "cue_008",
+          "frame": 3262,
+          "length_frames": 733,
+          "end_frame": 3995
+        },
+        {
+          "csv_row_id": "csv_row_9",
+          "cue_id": "cue_009",
+          "frame": 3995,
+          "length_frames": 420,
+          "end_frame": 4415
+        }
+      ],
+      "ImageItem_required_for_import_gate": false,
+      "independent_TextItem_required_for_import_gate": false,
+      "render_required_for_import_gate": false
+    },
+    "approved_script_identity": {
+      "accepted_batch_commit": "d47794f47d7ffa1ffdbdffe506562fc7ddd2cb77",
+      "artifact_hashes": {
+        "canonical_script.json": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47",
+        "canonical_script.txt": "4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091",
+        "canonical_yymm4.csv": "23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12",
+        "derived_yymm4_import.csv": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee",
+        "cue_source_traceability.json": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47",
+        "source_to_script_manifest.json": "e13fb57a2681875f577e4d85f13cf41bfc601519892fa4f975bdfcdd24d927b5"
+      },
+      "cue_count": 9,
+      "scene_allocation": {
+        "S1": 2,
+        "S2": 4,
+        "S3": 3
+      },
+      "unsupported_spoken_claim_count": 0
+    },
+    "source_anchor_allowlist": [
+      "V02",
+      "V06",
+      "V07",
+      "V13"
+    ],
+    "cue_evidence": [
+      {
+        "sequence": 1,
+        "cue_id": "cue_001",
+        "csv_row_id": "csv_row_1",
+        "scene_id": "S1",
+        "speaker": "れいむ",
+        "text": "2024年に発行された新しいお札って、見た目以外にも変わったところがあるの？",
+        "claim_ids": [
+          "claim_010"
+        ],
+        "source_ids": [
+          "V02"
+        ],
+        "source_backed_factual_boundary": "2024年発行だけを扱う。発行目的、経済効果、政策意図は示さない。",
+        "timing": {
+          "csv_row_id": "csv_row_1",
+          "cue_id": "cue_001",
+          "frame": 0,
+          "length_frames": 391,
+          "end_frame": 391
+        }
+      },
+      {
+        "sequence": 2,
+        "cue_id": "cue_002",
+        "csv_row_id": "csv_row_2",
+        "scene_id": "S1",
+        "speaker": "まりさ",
+        "text": "あるぞ。偽造防止では、高精細すき入れや3Dホログラムなど複数の技術を組み合わせている。誰にとっても使いやすいユニバーサルデザインも取り入れたんだ。",
+        "claim_ids": [
+          "claim_090",
+          "claim_065",
+          "claim_099",
+          "claim_161"
+        ],
+        "source_ids": [
+          "V06",
+          "V13",
+          "V02"
+        ],
+        "source_backed_factual_boundary": "複数技術とユニバーサルデザインの採用意図まで。効果、優位性、新規性の実証は主張しない。",
+        "timing": {
+          "csv_row_id": "csv_row_2",
+          "cue_id": "cue_002",
+          "frame": 391,
+          "length_frames": 705,
+          "end_frame": 1096
+        }
+      },
+      {
+        "sequence": 3,
+        "cue_id": "cue_003",
+        "csv_row_id": "csv_row_3",
+        "scene_id": "S2",
+        "speaker": "まりさ",
+        "text": "まずは高精細すき入れ。光に透かすと、細かな模様が見えるんだぜ。",
+        "claim_ids": [
+          "claim_090"
+        ],
+        "source_ids": [
+          "V06"
+        ],
+        "source_backed_factual_boundary": "透過光で細かな模様が見えることだけを抽象化する。実券の肖像、位置、寸法、製法を再現しない。",
+        "timing": {
+          "csv_row_id": "csv_row_3",
+          "cue_id": "cue_003",
+          "frame": 1096,
+          "length_frames": 338,
+          "end_frame": 1434
+        }
+      },
+      {
+        "sequence": 4,
+        "cue_id": "cue_004",
+        "csv_row_id": "csv_row_4",
+        "scene_id": "S2",
+        "speaker": "まりさ",
+        "text": "次は3Dホログラム。角度を変えると、三次元の肖像が回転して見えるぞ。",
+        "claim_ids": [
+          "claim_065",
+          "claim_067"
+        ],
+        "source_ids": [
+          "V06",
+          "V07"
+        ],
+        "source_backed_factual_boundary": "角度で三次元の肖像が回転して見える現象を非肖像シルエットで示す。実際の形状、位置、箔模様は示さない。",
+        "timing": {
+          "csv_row_id": "csv_row_4",
+          "cue_id": "cue_004",
+          "frame": 1434,
+          "length_frames": 384,
+          "end_frame": 1818
+        }
+      },
+      {
+        "sequence": 5,
+        "cue_id": "cue_005",
+        "csv_row_id": "csv_row_5",
+        "scene_id": "S2",
+        "speaker": "れいむ",
+        "text": "触るとざらざらするのは、額面数字などのインキを高く盛り上げる深凹版印刷なんだね。",
+        "claim_ids": [
+          "claim_116"
+        ],
+        "source_ids": [
+          "V06"
+        ],
+        "source_backed_factual_boundary": "額面数字などの盛り上がりと触感だけを概念化する。版、工程、インキ高さなど再現可能な製造情報を示さない。",
+        "timing": {
+          "csv_row_id": "csv_row_5",
+          "cue_id": "cue_005",
+          "frame": 1818,
+          "length_frames": 407,
+          "end_frame": 2225
+        }
+      },
+      {
+        "sequence": 6,
+        "cue_id": "cue_006",
+        "csv_row_id": "csv_row_6",
+        "scene_id": "S2",
+        "speaker": "まりさ",
+        "text": "マイクロ文字の『NIPPONGINKO』は、ルーペで確かめられる。カラーコピー機では再現が難しいほど小さい文字なんだ。",
+        "claim_ids": [
+          "claim_096",
+          "claim_097"
+        ],
+        "source_ids": [
+          "V06"
+        ],
+        "source_backed_factual_boundary": "NIPPONGINKOを単一の模式ラベルとして示す。実寸、密度、位置、周辺模様は再現せず、複写は困難という範囲に留める。",
+        "timing": {
+          "csv_row_id": "csv_row_6",
+          "cue_id": "cue_006",
+          "frame": 2225,
+          "length_frames": 610,
+          "end_frame": 2835
+        }
+      },
+      {
+        "sequence": 7,
+        "cue_id": "cue_007",
+        "csv_row_id": "csv_row_7",
+        "scene_id": "S3",
+        "speaker": "まりさ",
+        "text": "見分けやすさの工夫では、識別マークを11本の斜線にそろえ、券種ごとに位置を変えているぜ。",
+        "claim_ids": [
+          "claim_118",
+          "claim_130",
+          "claim_132"
+        ],
+        "source_ids": [
+          "V13",
+          "V06",
+          "V02"
+        ],
+        "source_backed_factual_boundary": "11本の斜線と券種別の位置差を模式図で示す。座標、角度、太さ、性能評価は示さない。",
+        "timing": {
+          "csv_row_id": "csv_row_7",
+          "cue_id": "cue_007",
+          "frame": 2835,
+          "length_frames": 427,
+          "end_frame": 3262
+        }
+      },
+      {
+        "sequence": 8,
+        "cue_id": "cue_008",
+        "csv_row_id": "csv_row_8",
+        "scene_id": "S3",
+        "speaker": "れいむ",
+        "text": "額面の数字は前のシリーズのお札より大きい。一万円券と千円券ではホログラムの形や位置が違い、千円券の中央には橙色のグラデーションもあるんだね。",
+        "claim_ids": [
+          "claim_114",
+          "claim_155",
+          "claim_157"
+        ],
+        "source_ids": [
+          "V02"
+        ],
+        "source_backed_factual_boundary": "E券より大きい額面数字、F券内の一万円券と千円券のホログラム差、千円券中央の橙色グラデーションだけを縮尺外の抽象図で示す。",
+        "timing": {
+          "csv_row_id": "csv_row_8",
+          "cue_id": "cue_008",
+          "frame": 3262,
+          "length_frames": 733,
+          "end_frame": 3995
+        }
+      },
+      {
+        "sequence": 9,
+        "cue_id": "cue_009",
+        "csv_row_id": "csv_row_9",
+        "scene_id": "S3",
+        "speaker": "まりさ",
+        "text": "確かめ方は、透かす、触る、傾ける、ルーペで見る。この四つを覚えておこう。",
+        "claim_ids": [
+          "claim_090",
+          "claim_116",
+          "claim_065",
+          "claim_096"
+        ],
+        "source_ids": [
+          "V06"
+        ],
+        "source_backed_factual_boundary": "透かす・触る・傾ける・ルーペで見るを確認行動として示す。真贋保証や完全な判定手順とは扱わない。",
+        "timing": {
+          "csv_row_id": "csv_row_9",
+          "cue_id": "cue_009",
+          "frame": 3995,
+          "length_frames": 420,
+          "end_frame": 4415
+        }
+      }
+    ],
+    "evidence_grades": {
+      "verified": [
+        "local_json_schema_and_hash",
+        "project_parse_and_structure",
+        "script_csv_hashes",
+        "timing_summary"
+      ],
+      "observed": [
+        "user_terminal_success",
+        "no_mapping_error_update_or_character_mismatch"
+      ],
+      "inferred": [
+        "creative_suitability",
+        "future_yymm4_implementation_weight"
+      ],
+      "unverified": [
+        "audio_rhythm_and_pronunciation",
+        "subtitle_readability",
+        "visual_effectiveness",
+        "production_render_and_rights"
+      ],
+      "unknown": []
+    },
+    "gate_boundary": {
+      "csv_import_gate": "passed",
+      "audio_editorial_gate": "open",
+      "visual_direction_gate": "open",
+      "render_gate": "open",
+      "production_project": false,
+      "rights_or_publication_approval": false
+    },
+    "local_evidence_byte_preserved": true
+  },
+  "checks": {
+    "operator_result_success": true,
+    "failed_checks_empty": true,
+    "local_project_reparsed": true,
+    "VoiceItem_count_9": true,
+    "character_counts_3_6": true,
+    "exact_text_and_order": true,
+    "missing_and_duplicate_zero": true,
+    "local_evidence_byte_preserved": true,
+    "approved_script_hashes_frozen": true,
+    "absolute_runtime_paths_excluded": true
+  },
+  "failed_checks": []
+}

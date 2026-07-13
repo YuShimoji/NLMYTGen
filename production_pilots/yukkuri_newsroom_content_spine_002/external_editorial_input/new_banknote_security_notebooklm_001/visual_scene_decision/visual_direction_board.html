@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>New Banknote Visual Direction Board</title>
+<style>
+:root { --paper:#f4f0e6; --ink:#17324d; --green:#2f6f5d; --orange:#d77836; --line:#c8c2b5; --muted:#68737c; }
+* { box-sizing:border-box; }
+body { margin:0; background:#e8e4db; color:#152433; font-family:"Yu Gothic UI","Meiryo",sans-serif; }
+.shell { max-width:1440px; margin:0 auto; padding:28px; }
+.banner { background:#172a3a; color:white; padding:12px 18px; letter-spacing:.08em; font-weight:800; border-radius:12px; }
+.hero { display:grid; grid-template-columns:1.4fr .6fr; gap:24px; margin:24px 0; }
+.hero h1 { font-size:clamp(30px,4vw,58px); line-height:1.05; margin:10px 0; color:var(--ink); }
+.eyebrow,.route-label,.scene-kicker { color:var(--green); font-weight:900; letter-spacing:.1em; text-transform:uppercase; }
+.status { border:2px solid var(--orange); background:var(--paper); padding:18px; border-radius:16px; }
+.status strong { display:block; color:var(--orange); font-size:22px; }
+.meta { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+.meta span { background:white; border:1px solid var(--line); border-radius:999px; padding:7px 11px; }
+.spine { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.scene-card { background:var(--paper); border:1px solid var(--line); border-top:8px solid var(--green); border-radius:18px; padding:20px; min-height:520px; }
+.scene-card h3 { font-size:24px; color:var(--ink); margin:8px 0; }
+.note-geometry { height:130px; margin:18px 0; border:3px solid var(--ink); border-radius:14px; position:relative; background:linear-gradient(110deg,#f7f3e9,#e6efe8); overflow:hidden; }
+.note-core { position:absolute; width:64px; height:64px; border:2px solid var(--green); border-radius:50%; left:50%; top:50%; transform:translate(-50%,-50%); }
+.note-mark { position:absolute; width:34px; height:8px; background:var(--orange); border-radius:8px; }
+.m1 { left:12%; top:25%; } .m2 { right:12%; top:55%; } .m3 { left:18%; bottom:18%; background:var(--green); }
+.cue-list { list-style:none; padding:0; margin:0; display:grid; gap:10px; }
+.cue-list li { display:grid; grid-template-columns:auto 1fr; gap:4px 10px; background:white; border:1px solid var(--line); border-radius:12px; padding:10px; }
+.cue-id { grid-row:1 / span 2; color:var(--orange); font-weight:800; }
+.cue-list small { color:var(--muted); }
+.alternatives { margin-top:28px; }
+.compare-row { display:grid; grid-template-columns:240px 1fr 130px; gap:18px; align-items:center; background:white; border-left:7px solid var(--ink); padding:16px 20px; margin:10px 0; border-radius:12px; }
+.compare-row h3 { margin:3px 0; } .compare-row p { margin:0; color:#394957; }
+.weight { text-align:center; border:1px solid var(--line); border-radius:999px; padding:8px; font-weight:800; }
+.footer { margin-top:26px; padding:20px; border:2px dashed var(--orange); background:var(--paper); border-radius:14px; }
+.links { display:flex; flex-wrap:wrap; gap:12px; margin-top:12px; }
+.links a { color:var(--ink); background:white; border:1px solid var(--line); padding:9px 12px; border-radius:9px; font-weight:700; }
+@media (max-width:900px) { .hero,.spine,.compare-row { grid-template-columns:1fr; } .scene-card { min-height:auto; } }
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="banner">INTERNAL REVIEW / NOT FINAL / NON-PUBLIC / NON-PRODUCTION</div>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Visual direction decision</div>
+      <h1>新紙幣を、抽象図でどう説明するか</h1>
+      <p>三つのrouteを比較し、source-backedなS1/S2/S3 spineを選ぶための静的boardです。</p>
+      <div class="meta"><span>9 cues</span><span>60 fps</span><span>4415 frames</span><span>73.583333 sec</span></div>
+    </div>
+    <aside class="status"><strong>Route A — RECOMMENDED</strong><h2>Security Inspection Lab</h2><p>推奨は選択・承認・実装を意味しません。</p></aside>
+  </section>
+  <section>
+    <div class="eyebrow">Primary scene spine</div>
+    <h2>Route A / S1 → S2 → S3</h2>
+    <div class="spine"><section class="scene-card"><div class="scene-kicker">S1</div><h3>Question and Overview</h3><p>問いから複数の技術レイヤーへ導く。</p><div class="note-geometry" aria-hidden="true"><span class="note-core"></span><span class="note-mark m1"></span><span class="note-mark m2"></span><span class="note-mark m3"></span></div><ul class="cue-list"><li><span class="cue-id">cue_001</span><strong>2024年 新しいお札</strong><small>新しいお札の変化を問う導入を作る。</small></li><li><span class="cue-id">cue_002</span><strong>複数技術 + ユニバーサルデザイン</strong><small>複数の偽造防止技術と見分けやすさを俯瞰する。</small></li></ul></section><section class="scene-card"><div class="scene-kicker">S2</div><h3>Four Security Techniques</h3><p>透過・傾き・触感・ルーペを順に深掘りする。</p><div class="note-geometry" aria-hidden="true"><span class="note-core"></span><span class="note-mark m1"></span><span class="note-mark m2"></span><span class="note-mark m3"></span></div><ul class="cue-list"><li><span class="cue-id">cue_003</span><strong>透かす｜高精細すき入れ</strong><small>高精細すき入れを透過光の現象として示す。</small></li><li><span class="cue-id">cue_004</span><strong>傾ける｜3Dホログラム</strong><small>3Dホログラムの見え方を傾きで説明する。</small></li><li><span class="cue-id">cue_005</span><strong>触る｜深凹版印刷</strong><small>深凹版印刷の盛り上がりと触感を概念化する。</small></li><li><span class="cue-id">cue_006</span><strong>ルーペで見る｜マイクロ文字</strong><small>マイクロ文字をルーペ確認の模式図で示す。</small></li></ul></section><section class="scene-card"><div class="scene-kicker">S3</div><h3>Identification and Four Actions</h3><p>識別の工夫を整理し、四動作で締める。</p><div class="note-geometry" aria-hidden="true"><span class="note-core"></span><span class="note-mark m1"></span><span class="note-mark m2"></span><span class="note-mark m3"></span></div><ul class="cue-list"><li><span class="cue-id">cue_007</span><strong>識別マーク｜11本・位置が異なる</strong><small>識別マークの統一数と位置差を模式化する。</small></li><li><span class="cue-id">cue_008</span><strong>大きい額面数字｜券種ごとの違い</strong><small>額面数字と券種内の配置差を限定比較する。</small></li><li><span class="cue-id">cue_009</span><strong>透かす / 触る / 傾ける / ルーペで見る</strong><small>四つの確認動作を一列で記憶しやすくまとめる。</small></li></ul></section></div>
+  </section>
+  <section class="alternatives">
+    <div class="eyebrow">Compact comparison</div>
+    <h2>Routes B and C</h2>
+    <article class="compare-row"><div><span class="route-label">Route B</span><h3>Everyday Verification</h3></div><p>会計・ATM・手元確認を抽象的な日常背景として使い、四つの確認動作へ接続する。文脈は演出上の推定で事実根拠ではない。</p><div class="weight">medium</div></article><article class="compare-row"><div><span class="route-label">Route C</span><h3>Design Evolution</h3></div><p>識別しやすさに関わるデザイン変更を抽象比較する。改善効果や政策進化ではなく、採用された差異だけを扱う。</p><div class="weight">medium_to_high</div></article>
+  </section>
+  <section class="footer">
+    <strong>Abstract schematic only.</strong> 実券の肖像・通し番号・印章・券面全体・実security pattern・正確配置を使いません。
+    <div class="links"><a href="visual_review_sheet.md">4-question review sheet</a><a href="recommended_visual_direction.json">Recommended direction</a><a href="../README_YMM4_IMPORT_OBSERVATION.md">Import evidence</a></div>
+  </section>
+</main>
+</body>
+</html>

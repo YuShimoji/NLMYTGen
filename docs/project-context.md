@@ -1,9 +1,73 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-13 JST・new-banknote YMM4 import Operator Batch ready）
+## 現在の別端末再開ハンドオフ（2026-07-14 JST・new-banknote import observed / visual decision ready）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
+
+- **取得先**: origin/codex/new-banknote-authoritative-source-script-v1。
+  intake開始時HEADはd47794f47d7ffa1ffdbdffe506562fc7ddd2cb77。current branch tipが
+  このhandoffを含むoutcome commitであり、再開時はgit rev-parse HEAD、upstream
+  parity 0 0、clean worktreeをlive確認する。
+- **最小読取順**: AGENTS.md → docs/REPO_LOCAL_RULES.md →
+  docs/runtime-state.md → この節 →
+  production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/README_VISUAL_SCENE_DECISION.md。
+- **現在の状態**: Project-State-IDは
+  new-banknote-yymm4-import-observed-visual-decision-ready-v1、State-Revisionは
+  2026-07-14.1。Product-Stateは
+  new-banknote-yymm4-import-observed-visual-direction-review-ready、Product-Gateは
+  human-visual-direction-selection、Recommended-Nextは
+  select-new-banknote-visual-direction、External-Stateはpublic-repo-feature-branch。
+- **operator result intake**: ignored operator_result.jsonはstatus success、
+  failed_checks []、17 checks true。mapping/error/update/character mismatchなしは
+  operator-observed evidenceであり、CodexによるGUI観測ではない。result SHA-256は
+  e4ecb1bf5e4b5780990a00094804dd871d66068a917000015f9fecfd83e8ddfa、4494 bytes。
+- **independent project verification**: ignored local projectをexisting parserで
+  read-only再解析し、1 timeline / VoiceItem-only 9件、ゆっくり霊夢3 / ゆっくり魔理沙6、
+  exact character/text order、missing 0、duplicate 0、strict frame orderを確認した。
+  project SHA-256は
+  beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54、
+  1337084 bytes。resultが記録したhash/size/mtimeとactual bytesは一致する。
+- **actual timing**: 60 fps、4415 frames、73.583333 seconds。cue framesは
+  0 / 391 / 1096 / 1434 / 1818 / 2225 / 2835 / 3262 / 3995、endは4415。
+  timingはinformational evidenceでありproduction固定値ではない。
+- **approved identity**: accepted six artifactsはd47794f時点から不変。9 cues、
+  scene 2/4/3、canonical/YMM4 character 3/6、unsupported spoken claim 0を維持し、
+  wording、claim、source identityを変更していない。
+- **sanitized import evidence**: README_YMM4_IMPORT_OBSERVATION.md、receipt、readback、
+  source-to-project traceability、limitationsをtracked化した。local project/result/
+  batch stateのbasename、repo-relative identity、hash、size、mtime、match boolだけを
+  promotionし、absolute path、executable path、VoiceCache、source bodyは含めない。
+- **visual routes**: exactly three。Route A Security Inspection LabをRECOMMENDED、
+  Route B Everyday VerificationとRoute C Design EvolutionをOPTIONとした。Aは四つの
+  source-backed確認動作へ最短で対応し、external asset/rights burdenが最小。recommendedは
+  human selected、approved、implemented、rights clearedを意味しない。
+- **Route A spine**: S1はquestion/overviewの2 cues、S2は高精細すき入れ・3D hologram・
+  深凹版・microtextの4 cues、S3は識別mark・券種差・四動作まとめの3 cues。9/9 cuesが
+  claim/source IDs、actual VoiceItem timing、factual boundary、placeholder、future rights、
+  YMM4 item-family expectationを持つ。claim_158はunspokenのままvisual spineへ入れない。
+- **review surfaces**: visual_direction_board.htmlはself-contained system-font/CSS geometry、
+  repo-relative hrefだけを使い、external asset/script/URL/private pathは0。Route Aの
+  horizontal S1/S2/S3を主面にし、B/Cはcompact rows。visual_review_sheet.mdはA/B/C、
+  flow、misleading risk、motion restraintの4問だけを人へ返す。
+- **implementation boundary**: yymm4_visual_project_contract.jsonはauthorized=false、
+  implementation_status=not_started。YMM4 launch、Computer Use、screenshot、image generation、
+  external fetch、asset creation/download、visual project、render、production、rights、
+  publication、master integrationは行っていない。
+- **検証済み範囲**: read-only evidence audit、local byte-preservation、modified Python compile、
+  12 new testsを含む48 focused tests、deterministic second generation、project reparse、
+  JSON/HTML structure、exactly 3 routes / one recommended、9/9 cue coverage、
+  privacy/external-reference/ignore audit、target state付きstate syncがpassed。full pytestは
+  実行していない。
+- **exact next action**: visual_direction_board.htmlを開き、A / B / C、またはscene/cue ID付き
+  修正を返す。同時にS1/S2/S3 flow、誤解しそうな模式図、motion抑制度だけを判断する。
+  human selection後の別sliceでのみselected-route diagnostic YMM4 projectを検討する。
+- **retained review debt**: human audio/rhythm/terminology、human visual-direction choice、
+  S04/S05 provenance precision、cross-machine local .ymmp portabilityだけを保持する。
+
+## 直前の別端末再開ハンドオフ（2026-07-13 JST・new-banknote YMM4 import Operator Batch ready・履歴）
+
+この節はmanual import実行前の判断履歴であり、現在の指示として読まない。
 
 - **取得先**: origin/codex/new-banknote-authoritative-source-script-v1。
   batch準備前の確認HEADは40a8d5e5d5e8165e4e9deef812435ae4529bf040。
