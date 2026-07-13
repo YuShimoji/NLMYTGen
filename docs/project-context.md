@@ -1,38 +1,43 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-13 JST）
+## 現在の別端末再開ハンドオフ（2026-07-13 JST・new-banknote editorial convergence）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
 
-- **取得先**: `origin/master`。
-- **再開前確認**: `git fetch --prune origin`、`git switch master`、
+- **取得先**: `origin/codex/new-banknote-authoritative-source-script-v1`。
+- **現在のcommit**: `b05eb3867caabda496fb9a0070d230a4e81aea01`
+  (`feat: refine source-backed new-banknote script`)。HEAD・upstream・remoteは一致し、parityは`0 0`。
+- **再開前確認**: `git fetch --prune origin`、対象branchへ`git switch`、
   `git pull --ff-only`、`git status --short --branch`、
   `git rev-list --left-right --count "HEAD...@{u}"`の順でclean / `0 0`を確認する。
 - **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
-  `docs/runtime-state.md` → この節。integration再監査時だけ
-  `docs/verification/EPISODE_002_DEFAULT_BRANCH_INTEGRATION_2026-07-12.md`と
-  `docs/verification/episode_002_default_branch_integration_receipt.json`を追加で読む。
+  `docs/runtime-state.md` → この節。本文確認時だけprimary review surfaceと
+  `canonical_script_editorial_revision.md`を追加で読む。
 - **現在の状態**: `Project-State-ID`は
-  `episode-002-milestone-integrated-default-branch-v1`、revisionは`2026-07-13.1`。
-  Product-Stateは`episode-002-milestone-integrated-on-default-branch`、Product-Gateは
-  `verified-external-editorial-input-selection`、Recommended-Nextは
-  `select-or-provide-verified-editorial-source`、External-Stateは
-  `public-repo-default-branch`。
-- **統合provenance**: fixed subject `d8e959c54b8c8f28c31cc2b586bbdd8c79f69f97`、
-  audit tail `a8b81e43616281691b73520a045dfa6ff44d2054`、integration branchを
-  rewrite/deleteせず維持した。integration commit SHAはtracked contentへself-embedせず、
-  Git refとAGENT_REPORTで解決する。
-- **metadata rebind**: final runtime-stateへ依存するsource bundle、input readback、
-  internal review manifestだけをdeterministicにrebindした。canonical script、claim semantics、
-  canonical/derived CSV、source receipts、render/project/media identity、audit artifactsは不変。
-- **local evidence**: MP4、proxy、`.local.ymmp`、operator result、`local_outputs`は
-  ignored/untrackedのまま維持した。YMM4、Computer Use、media再生成は行っていない。
-- **exact next action**: source、provenance/rights context、stable identity、cue alignmentを
-  備えたverified external editorial sourceを1件選定または提供する。
-- **未完了境界**: external editorial adoption、human visual/editorial acceptance、
-  YMM4/profile portability、production `.ymmp`、creative polish、rights/legal/final-thumbnail
-  approval、upload/publication、full-suite Integrity campaign。
+  `new-banknote-source-backed-script-editorially-refined-v1`、State-Revisionは`2026-07-13.5`。
+  Product-Stateは`new-banknote-authoritative-script-human-review-ready`、Product-Gateは
+  `human-script-review-and-yymm4-batch-decision`、Recommended-Nextは
+  `review-refined-nine-cue-script`、External-Stateは`public-repo-feature-branch`。
+- **成果物の正本**: `production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_CANONICAL_SCRIPT_REVIEW.md`。
+  同じディレクトリの`canonical_script.json`、`canonical_script.txt`、
+  `canonical_script_review.md`、`cue_source_traceability.json`、
+  `canonical_yymm4.csv`、`derived_yymm4_import.csv`、
+  `canonical_script_editorial_revision.md`、`editorial_revision_receipt.json`を同期済み。
+- **不変の証拠**: official source capture 13件、claim outcome 182件、verified-primary 19件。
+  canonicalは9 cues、scene配分2/4/3、speaker 3/6、20 factual units、21 claim edges、
+  unsupported spoken claim 0。`claim_158`はcue 8から発話だけ外し、verified/not-adopted evidenceとして保持。
+- **編集判断**: cue 1→2を質問/回答へ変更、発話中の`E券`を除去、cue 8を3事実へ制限、
+  cue 9を`ルーペで見る`へ具体化、まりさの語尾を6種類へ分散。cashless-policyやhidden-mission framingは不在。
+- **検証済み範囲**: focused tests 32 passed、直接validator passed、deterministic再生成差分0、
+  JSON/CSV/privacy audit passed、state sync passed、`git diff --check` passed。full pytest、NotebookLM、
+  web fetch、YMM4、Computer Use、render、production/publicationは未実施。
+- **ignored evidence**: `source_cache`、`source_extracts`、`local_outputs`はignored/untrackedのまま保持し、
+  source cache/raw transcript/source bodyをcommitしていない。
+- **exact next action**: primary review surfaceの5問を人が確認し、承認またはcue番号付き修正指示を返す。
+  承認後にのみ、別途明示されたYMM4 batch判断へ進む。
+- **未完了境界**: human editorial acceptance、YMM4実行、render、production `.ymmp`、rights/legal/publication、
+  master integration、S04生成時byte identity、exact S05 572KB PDF identity、Audio Overview metadata。
 
 ## 直前の別端末再開ハンドオフ（2026-07-12 JST・operator-batch-ready・履歴）
 
