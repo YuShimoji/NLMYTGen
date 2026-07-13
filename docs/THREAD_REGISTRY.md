@@ -5,6 +5,7 @@ not a governance document or roadmap.
 
 | Thread | Lane | State | Current note |
 |---|---|---|---|
+| new-banknote-notebooklm-transcript-salvage-v1 | INPUT_API_HUB / NOTEBOOKLM_RAW_TRANSCRIPT_INTAKE | completed/source-reconciliation-gated | Immutable 326-line raw identity is preserved locally; deterministic duplicate/style/ASR/anonymous-turn/claim-risk salvage is tracked with zero verified claims. |
 | gui-i18n-episode002-console | GUI_IA_I18N | reported | Visual acceptance pending. |
 | output-video-proof-episode002 | OUTPUT_VIDEO | accepted/close-ready | Output proof package exists. |
 | output-template-episode002 | OUTPUT_VIDEO | accepted/close-ready | Output template readiness package exists. |

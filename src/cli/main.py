@@ -3200,6 +3200,29 @@ def main(argv: list[str] | None = None) -> int:
         "--format", choices=["text", "json"], default="text"
     )
 
+    p_analyze_notebooklm_audio = subparsers.add_parser(
+        "analyze-notebooklm-audio-transcript",
+        help="Salvage an immutable unlabeled NotebookLM Audio Overview transcript",
+    )
+    p_analyze_notebooklm_audio.add_argument(
+        "--raw", required=True, help="Immutable local raw transcript"
+    )
+    p_analyze_notebooklm_audio.add_argument(
+        "--capture-manifest", required=True, help="Local capture manifest v2"
+    )
+    p_analyze_notebooklm_audio.add_argument(
+        "--output", required=True, help="Tracked sanitized package directory"
+    )
+    p_analyze_notebooklm_audio.add_argument(
+        "--local-output", help="Ignored full-text output directory"
+    )
+    p_analyze_notebooklm_audio.add_argument(
+        "--raw-label", help="Sanitized repo-relative raw path for receipts"
+    )
+    p_analyze_notebooklm_audio.add_argument(
+        "--format", choices=["text", "json"], default="text"
+    )
+
     # diagnose-script (B-18)
     p_diag_script = subparsers.add_parser(
         "diagnose-script",
@@ -3368,6 +3391,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_generate_verified_local_evidence_project(args)
         elif args.command == "collect-verified-local-evidence-operator-result":
             return _cmd_collect_verified_local_evidence_operator_result(args)
+        elif args.command == "analyze-notebooklm-audio-transcript":
+            return _cmd_analyze_notebooklm_audio_transcript(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
         else:
@@ -6202,6 +6227,34 @@ def _cmd_collect_verified_local_evidence_operator_result(
         if result.get("failed_checks"):
             print(f"failed_checks: {', '.join(result['failed_checks'])}")
     return 0 if result.get("status") == "success" else 1
+
+
+def _cmd_analyze_notebooklm_audio_transcript(args: argparse.Namespace) -> int:
+    """Build tracked and ignored NotebookLM transcript salvage layers."""
+    from src.pipeline.notebooklm_audio_transcript import (
+        analyze_notebooklm_audio_transcript,
+    )
+
+    result = analyze_notebooklm_audio_transcript(
+        raw_path=getattr(args, "raw"),
+        capture_manifest_path=getattr(args, "capture_manifest"),
+        tracked_output_dir=getattr(args, "output"),
+        local_output_dir=getattr(args, "local_output", None),
+        raw_label=getattr(args, "raw_label", None),
+    )
+    if getattr(args, "format", "text") == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        print(f"status: {result.get('status')}")
+        print(f"raw_logical_lines: {result.get('raw_logical_lines')}")
+        print(f"mapped_lines: {result.get('mapped_lines')}")
+        print(f"duplicate_clusters: {result.get('duplicate_clusters')}")
+        print(f"style_findings: {result.get('style_findings')}")
+        print(f"asr_candidates: {result.get('asr_candidates')}")
+        print(f"anonymous_turns: {result.get('anonymous_turns')}")
+        print(f"claim_candidates: {result.get('claim_candidates')}")
+        print(f"verified_claims: {result.get('verified_claims')}")
+    return 0
 
 
 def _cmd_init_episode_run(args: argparse.Namespace) -> int:

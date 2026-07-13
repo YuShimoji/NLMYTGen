@@ -1,0 +1,1567 @@
+{
+  "schema_version": "notebooklm_audio_transcript_salvage.v1.style_ledger",
+  "finding_count": 120,
+  "findings": [
+    {
+      "finding_id": "style_001",
+      "class": "host_introduction",
+      "line_start": 1,
+      "line_end": 1,
+      "line_fingerprints": [
+        "1169ee1d65aeaf2131735a086e3460f0841b0f2f7a82ccbd639f3709ef832957"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "host_introduction signal at line 001"
+    },
+    {
+      "finding_id": "style_002",
+      "class": "listener_address",
+      "line_start": 1,
+      "line_end": 1,
+      "line_fingerprints": [
+        "1169ee1d65aeaf2131735a086e3460f0841b0f2f7a82ccbd639f3709ef832957"
+      ],
+      "confidence": 0.8,
+      "recommendation": "rewrite",
+      "factual_meaning_impact": "possible",
+      "short_label": "listener_address signal at line 001"
+    },
+    {
+      "finding_id": "style_003",
+      "class": "update_sensitive_unknown_pattern",
+      "line_start": 1,
+      "line_end": 1,
+      "line_fingerprints": [
+        "1169ee1d65aeaf2131735a086e3460f0841b0f2f7a82ccbd639f3709ef832957"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "update_sensitive_unknown_pattern signal at line 001"
+    },
+    {
+      "finding_id": "style_004",
+      "class": "host_introduction",
+      "line_start": 5,
+      "line_end": 5,
+      "line_fingerprints": [
+        "a7f8cad61e422d178749d7604552c31758d34ea50abb6ce1d65e073a38be1c6a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "host_introduction signal at line 005"
+    },
+    {
+      "finding_id": "style_005",
+      "class": "program_format_self_reference",
+      "line_start": 5,
+      "line_end": 5,
+      "line_fingerprints": [
+        "a7f8cad61e422d178749d7604552c31758d34ea50abb6ce1d65e073a38be1c6a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "program_format_self_reference signal at line 005"
+    },
+    {
+      "finding_id": "style_006",
+      "class": "exaggerated_certainty",
+      "line_start": 5,
+      "line_end": 5,
+      "line_fingerprints": [
+        "a7f8cad61e422d178749d7604552c31758d34ea50abb6ce1d65e073a38be1c6a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 005"
+    },
+    {
+      "finding_id": "style_007",
+      "class": "update_sensitive_unknown_pattern",
+      "line_start": 5,
+      "line_end": 5,
+      "line_fingerprints": [
+        "a7f8cad61e422d178749d7604552c31758d34ea50abb6ce1d65e073a38be1c6a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "update_sensitive_unknown_pattern signal at line 005"
+    },
+    {
+      "finding_id": "style_008",
+      "class": "generic_agreement_filler",
+      "line_start": 6,
+      "line_end": 6,
+      "line_fingerprints": [
+        "2910a18eec8fd2dd5cd180079f7daaa70fc264fbed0798ef916403245c1c3d55"
+      ],
+      "confidence": 0.95,
+      "recommendation": "remove_or_merge",
+      "factual_meaning_impact": "low",
+      "short_label": "generic_agreement_filler signal at line 006"
+    },
+    {
+      "finding_id": "style_009",
+      "class": "listener_address",
+      "line_start": 9,
+      "line_end": 9,
+      "line_fingerprints": [
+        "8f5ced3dc241bed5dd01e14aecb2a2079fa601b1c8fbe15d4eb80a1585b8d818"
+      ],
+      "confidence": 0.8,
+      "recommendation": "rewrite",
+      "factual_meaning_impact": "possible",
+      "short_label": "listener_address signal at line 009"
+    },
+    {
+      "finding_id": "style_010",
+      "class": "suspense_hidden_mission_framing",
+      "line_start": 9,
+      "line_end": 9,
+      "line_fingerprints": [
+        "8f5ced3dc241bed5dd01e14aecb2a2079fa601b1c8fbe15d4eb80a1585b8d818"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "suspense_hidden_mission_framing signal at line 009"
+    },
+    {
+      "finding_id": "style_011",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 9,
+      "line_end": 9,
+      "line_fingerprints": [
+        "8f5ced3dc241bed5dd01e14aecb2a2079fa601b1c8fbe15d4eb80a1585b8d818"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 009"
+    },
+    {
+      "finding_id": "style_012",
+      "class": "update_sensitive_unknown_pattern",
+      "line_start": 9,
+      "line_end": 9,
+      "line_fingerprints": [
+        "8f5ced3dc241bed5dd01e14aecb2a2079fa601b1c8fbe15d4eb80a1585b8d818"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "update_sensitive_unknown_pattern signal at line 009"
+    },
+    {
+      "finding_id": "style_013",
+      "class": "suspense_hidden_mission_framing",
+      "line_start": 10,
+      "line_end": 10,
+      "line_fingerprints": [
+        "0e103c6631fd1aaa0e5801b907d587ad70c5c26870bbe983f51744d9bbb29a67"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "suspense_hidden_mission_framing signal at line 010"
+    },
+    {
+      "finding_id": "style_014",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 10,
+      "line_end": 10,
+      "line_fingerprints": [
+        "0e103c6631fd1aaa0e5801b907d587ad70c5c26870bbe983f51744d9bbb29a67"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 010"
+    },
+    {
+      "finding_id": "style_015",
+      "class": "update_sensitive_unknown_pattern",
+      "line_start": 10,
+      "line_end": 10,
+      "line_fingerprints": [
+        "0e103c6631fd1aaa0e5801b907d587ad70c5c26870bbe983f51744d9bbb29a67"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "update_sensitive_unknown_pattern signal at line 010"
+    },
+    {
+      "finding_id": "style_016",
+      "class": "listener_address",
+      "line_start": 11,
+      "line_end": 11,
+      "line_fingerprints": [
+        "19e5c9bdf811862f71d8ca0e9d1321d5637602f8b294dedca46dae83978fdd90"
+      ],
+      "confidence": 0.8,
+      "recommendation": "rewrite",
+      "factual_meaning_impact": "possible",
+      "short_label": "listener_address signal at line 011"
+    },
+    {
+      "finding_id": "style_017",
+      "class": "host_introduction",
+      "line_start": 19,
+      "line_end": 19,
+      "line_fingerprints": [
+        "aa57359e77141179a98a2374a55fdf40119696a547fd6be48e0bfa15da32d324"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "host_introduction signal at line 019"
+    },
+    {
+      "finding_id": "style_018",
+      "class": "program_format_self_reference",
+      "line_start": 19,
+      "line_end": 19,
+      "line_fingerprints": [
+        "aa57359e77141179a98a2374a55fdf40119696a547fd6be48e0bfa15da32d324"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "program_format_self_reference signal at line 019"
+    },
+    {
+      "finding_id": "style_019",
+      "class": "suspense_hidden_mission_framing",
+      "line_start": 19,
+      "line_end": 19,
+      "line_fingerprints": [
+        "aa57359e77141179a98a2374a55fdf40119696a547fd6be48e0bfa15da32d324"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "suspense_hidden_mission_framing signal at line 019"
+    },
+    {
+      "finding_id": "style_020",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 22,
+      "line_end": 22,
+      "line_fingerprints": [
+        "f5dc74df85732813b8f5aa08dae05faa82d4ceda8dfb4aea4178bd1f5259d683"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 022"
+    },
+    {
+      "finding_id": "style_021",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 25,
+      "line_end": 25,
+      "line_fingerprints": [
+        "cbdd2d3bb7f3619c9ca10486ec90f5958a8cee9fa8f3886d1c11302ed873596d"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 025"
+    },
+    {
+      "finding_id": "style_022",
+      "class": "exaggerated_certainty",
+      "line_start": 27,
+      "line_end": 27,
+      "line_fingerprints": [
+        "0e15a1d375489868a48b320ae9df5470dace1f9b0f3e89b7f1b52a28af3119cc"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 027"
+    },
+    {
+      "finding_id": "style_023",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 27,
+      "line_end": 27,
+      "line_fingerprints": [
+        "0e15a1d375489868a48b320ae9df5470dace1f9b0f3e89b7f1b52a28af3119cc"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 027"
+    },
+    {
+      "finding_id": "style_024",
+      "class": "generic_agreement_filler",
+      "line_start": 28,
+      "line_end": 28,
+      "line_fingerprints": [
+        "e6060d825a6076f13a47cc304d64491b431764116f93db22e8a3eb419858f2a8"
+      ],
+      "confidence": 0.95,
+      "recommendation": "remove_or_merge",
+      "factual_meaning_impact": "low",
+      "short_label": "generic_agreement_filler signal at line 028"
+    },
+    {
+      "finding_id": "style_025",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 29,
+      "line_end": 29,
+      "line_fingerprints": [
+        "a85c21de2eac020da899422a4b0c5d91afa63b6ddd10463ca9fcda5db0759394"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 029"
+    },
+    {
+      "finding_id": "style_026",
+      "class": "listener_address",
+      "line_start": 31,
+      "line_end": 31,
+      "line_fingerprints": [
+        "7ab1bd4b241477790112d6ede31cb7e242ab2f14da56208a8916a6f68b7e02a4"
+      ],
+      "confidence": 0.8,
+      "recommendation": "rewrite",
+      "factual_meaning_impact": "possible",
+      "short_label": "listener_address signal at line 031"
+    },
+    {
+      "finding_id": "style_027",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 31,
+      "line_end": 31,
+      "line_fingerprints": [
+        "7ab1bd4b241477790112d6ede31cb7e242ab2f14da56208a8916a6f68b7e02a4"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 031"
+    },
+    {
+      "finding_id": "style_028",
+      "class": "neutrality_balance_self_positioning",
+      "line_start": 32,
+      "line_end": 32,
+      "line_fingerprints": [
+        "dcc113c74fc55d3d10fb491c78606e558d054d82b169a02fd172b5f846d914e9"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "neutrality_balance_self_positioning signal at line 032"
+    },
+    {
+      "finding_id": "style_029",
+      "class": "exaggerated_certainty",
+      "line_start": 32,
+      "line_end": 32,
+      "line_fingerprints": [
+        "dcc113c74fc55d3d10fb491c78606e558d054d82b169a02fd172b5f846d914e9"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 032"
+    },
+    {
+      "finding_id": "style_030",
+      "class": "generic_agreement_filler",
+      "line_start": 33,
+      "line_end": 33,
+      "line_fingerprints": [
+        "2910a18eec8fd2dd5cd180079f7daaa70fc264fbed0798ef916403245c1c3d55"
+      ],
+      "confidence": 0.95,
+      "recommendation": "remove_or_merge",
+      "factual_meaning_impact": "low",
+      "short_label": "generic_agreement_filler signal at line 033"
+    },
+    {
+      "finding_id": "style_031",
+      "class": "neutrality_balance_self_positioning",
+      "line_start": 34,
+      "line_end": 34,
+      "line_fingerprints": [
+        "a971ecd8f00754f9accb9c97675e20711a85757ec7771a6a349fc15b4ea28512"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "neutrality_balance_self_positioning signal at line 034"
+    },
+    {
+      "finding_id": "style_032",
+      "class": "exaggerated_certainty",
+      "line_start": 34,
+      "line_end": 34,
+      "line_fingerprints": [
+        "a971ecd8f00754f9accb9c97675e20711a85757ec7771a6a349fc15b4ea28512"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 034"
+    },
+    {
+      "finding_id": "style_033",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 35,
+      "line_end": 35,
+      "line_fingerprints": [
+        "01d7693bdf02cb09607df628ed0596f965f02c64905bf7aeb85ace27d7056ec1"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 035"
+    },
+    {
+      "finding_id": "style_034",
+      "class": "neutrality_balance_self_positioning",
+      "line_start": 36,
+      "line_end": 36,
+      "line_fingerprints": [
+        "dc6051ef6af0c0e1d3bf93d294efb9a2d8fabc108cc0b007918879cfd767b98a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "neutrality_balance_self_positioning signal at line 036"
+    },
+    {
+      "finding_id": "style_035",
+      "class": "generic_agreement_filler",
+      "line_start": 37,
+      "line_end": 37,
+      "line_fingerprints": [
+        "0dff9c22444294d7fdf07f405c2811876bff03ecf38962ce4d88f4b259444f57"
+      ],
+      "confidence": 0.95,
+      "recommendation": "remove_or_merge",
+      "factual_meaning_impact": "low",
+      "short_label": "generic_agreement_filler signal at line 037"
+    },
+    {
+      "finding_id": "style_036",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 39,
+      "line_end": 39,
+      "line_fingerprints": [
+        "26a3bf0d8e2b24a4316269618276b13704893a1a836a307bc3723eab07f4cb62"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 039"
+    },
+    {
+      "finding_id": "style_037",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 42,
+      "line_end": 42,
+      "line_fingerprints": [
+        "4e494cafbf9c2c7ca8312ed107c90e800f4edc61017e7e87403b24d802b3ba46"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 042"
+    },
+    {
+      "finding_id": "style_038",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 43,
+      "line_end": 43,
+      "line_fingerprints": [
+        "a1ec2af64f191a8eced89e0972db3ad6f86068492200cce14215eadffa521eef"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 043"
+    },
+    {
+      "finding_id": "style_039",
+      "class": "generic_agreement_filler",
+      "line_start": 44,
+      "line_end": 44,
+      "line_fingerprints": [
+        "2910a18eec8fd2dd5cd180079f7daaa70fc264fbed0798ef916403245c1c3d55"
+      ],
+      "confidence": 0.95,
+      "recommendation": "remove_or_merge",
+      "factual_meaning_impact": "low",
+      "short_label": "generic_agreement_filler signal at line 044"
+    },
+    {
+      "finding_id": "style_040",
+      "class": "listener_address",
+      "line_start": 48,
+      "line_end": 48,
+      "line_fingerprints": [
+        "8025cedade9c875d55ba6ca5f7a6f77313bb25cbab6792e71604fdf0966270ef"
+      ],
+      "confidence": 0.8,
+      "recommendation": "rewrite",
+      "factual_meaning_impact": "possible",
+      "short_label": "listener_address signal at line 048"
+    },
+    {
+      "finding_id": "style_041",
+      "class": "generic_agreement_filler",
+      "line_start": 49,
+      "line_end": 49,
+      "line_fingerprints": [
+        "2910a18eec8fd2dd5cd180079f7daaa70fc264fbed0798ef916403245c1c3d55"
+      ],
+      "confidence": 0.95,
+      "recommendation": "remove_or_merge",
+      "factual_meaning_impact": "low",
+      "short_label": "generic_agreement_filler signal at line 049"
+    },
+    {
+      "finding_id": "style_042",
+      "class": "generic_agreement_filler",
+      "line_start": 51,
+      "line_end": 51,
+      "line_fingerprints": [
+        "2910a18eec8fd2dd5cd180079f7daaa70fc264fbed0798ef916403245c1c3d55"
+      ],
+      "confidence": 0.95,
+      "recommendation": "remove_or_merge",
+      "factual_meaning_impact": "low",
+      "short_label": "generic_agreement_filler signal at line 051"
+    },
+    {
+      "finding_id": "style_043",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 55,
+      "line_end": 55,
+      "line_fingerprints": [
+        "e92570d1bbac8d4c373092d87c925ccef643a3e435f7d1660bee04de3324d32c"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 055"
+    },
+    {
+      "finding_id": "style_044",
+      "class": "generic_agreement_filler",
+      "line_start": 60,
+      "line_end": 60,
+      "line_fingerprints": [
+        "2910a18eec8fd2dd5cd180079f7daaa70fc264fbed0798ef916403245c1c3d55"
+      ],
+      "confidence": 0.95,
+      "recommendation": "remove_or_merge",
+      "factual_meaning_impact": "low",
+      "short_label": "generic_agreement_filler signal at line 060"
+    },
+    {
+      "finding_id": "style_045",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 69,
+      "line_end": 69,
+      "line_fingerprints": [
+        "c475bd848a9d7fbe91b138c3290603c7b1e352000f2dd012e12a76d8d83a42d2"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 069"
+    },
+    {
+      "finding_id": "style_046",
+      "class": "exaggerated_certainty",
+      "line_start": 71,
+      "line_end": 71,
+      "line_fingerprints": [
+        "ae3f1ccf2a05e20a2dbdb7bf7ea353cfe8a8fb15258ddf6a2727321df85ed449"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 071"
+    },
+    {
+      "finding_id": "style_047",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 75,
+      "line_end": 75,
+      "line_fingerprints": [
+        "7f193631ba828d9b1076c13e1b559bf8b61d6b18699ca900b06883f68e7a1a99"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 075"
+    },
+    {
+      "finding_id": "style_048",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 81,
+      "line_end": 81,
+      "line_fingerprints": [
+        "953d7ad4ab93cf0bd2c950fededb9210099278d3603a8b1447bb32d1ccedb01a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 081"
+    },
+    {
+      "finding_id": "style_049",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 83,
+      "line_end": 83,
+      "line_fingerprints": [
+        "cd5b2163996fbaea77697374b50a7c1e96f51f9e338a75eccb83dae2c941c39d"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 083"
+    },
+    {
+      "finding_id": "style_050",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 91,
+      "line_end": 91,
+      "line_fingerprints": [
+        "e69a9120ac278c30e7e2f1d12402c2d923313778f84abca146769aa63e7ed8ed"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 091"
+    },
+    {
+      "finding_id": "style_051",
+      "class": "generic_agreement_filler",
+      "line_start": 108,
+      "line_end": 108,
+      "line_fingerprints": [
+        "2910a18eec8fd2dd5cd180079f7daaa70fc264fbed0798ef916403245c1c3d55"
+      ],
+      "confidence": 0.95,
+      "recommendation": "remove_or_merge",
+      "factual_meaning_impact": "low",
+      "short_label": "generic_agreement_filler signal at line 108"
+    },
+    {
+      "finding_id": "style_052",
+      "class": "exaggerated_certainty",
+      "line_start": 111,
+      "line_end": 111,
+      "line_fingerprints": [
+        "d06d943eb08da0d8b114f9f93933ae0324803d9ac4d3fafcfeea3618dbe08090"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 111"
+    },
+    {
+      "finding_id": "style_053",
+      "class": "exaggerated_certainty",
+      "line_start": 114,
+      "line_end": 114,
+      "line_fingerprints": [
+        "2f47b0f0539894f5ae033cdba715b9f104058f30068f94db0d2bbb88837a252a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 114"
+    },
+    {
+      "finding_id": "style_054",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 114,
+      "line_end": 114,
+      "line_fingerprints": [
+        "2f47b0f0539894f5ae033cdba715b9f104058f30068f94db0d2bbb88837a252a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 114"
+    },
+    {
+      "finding_id": "style_055",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 118,
+      "line_end": 118,
+      "line_fingerprints": [
+        "07ad4a90d967e8518f6bb90f985eef6fcb88a0fcb0e71b6a6275ceed2e378669"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 118"
+    },
+    {
+      "finding_id": "style_056",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 130,
+      "line_end": 130,
+      "line_fingerprints": [
+        "e96e122886edcfddc8df1ff478dcba632e1ffe6edc57d012a00a3703172fcb78"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 130"
+    },
+    {
+      "finding_id": "style_057",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 132,
+      "line_end": 132,
+      "line_fingerprints": [
+        "5775aaf3cb337db784b6af11eef2e9d309e556f68861aaaf8bbe2ff1878c18a4"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 132"
+    },
+    {
+      "finding_id": "style_058",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 135,
+      "line_end": 135,
+      "line_fingerprints": [
+        "7c85eb4ffb3bff7142fe4c027dc8d4dd7ee48345d546ff2b45be8a1e1b02b7cb"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 135"
+    },
+    {
+      "finding_id": "style_059",
+      "class": "generic_agreement_filler",
+      "line_start": 137,
+      "line_end": 137,
+      "line_fingerprints": [
+        "e6060d825a6076f13a47cc304d64491b431764116f93db22e8a3eb419858f2a8"
+      ],
+      "confidence": 0.95,
+      "recommendation": "remove_or_merge",
+      "factual_meaning_impact": "low",
+      "short_label": "generic_agreement_filler signal at line 137"
+    },
+    {
+      "finding_id": "style_060",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 143,
+      "line_end": 143,
+      "line_fingerprints": [
+        "3c9731fa5254c9689e1b7226ae05ed4e879a3f5866a5370ab20e55af862ff4b1"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 143"
+    },
+    {
+      "finding_id": "style_061",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 153,
+      "line_end": 153,
+      "line_fingerprints": [
+        "7520024cf0b19e92ee731ed2953accb0cfee9a622e729b5940ef05b2ea97794b"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 153"
+    },
+    {
+      "finding_id": "style_062",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 154,
+      "line_end": 154,
+      "line_fingerprints": [
+        "9c03ab41506c5fc029a7bdb780c0433fb1aab2fda8d27f2f5c154344122c6e47"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 154"
+    },
+    {
+      "finding_id": "style_063",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 162,
+      "line_end": 162,
+      "line_fingerprints": [
+        "95604960f6c33c3ecbe8db3bba86264feef707f6ecb3052bb0f6e3dab89c42bb"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 162"
+    },
+    {
+      "finding_id": "style_064",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 166,
+      "line_end": 166,
+      "line_fingerprints": [
+        "d355ac7bd9d78eb92bd0e8794e828a0fa1f2504c35723dfd493b73bbf9f11a50"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 166"
+    },
+    {
+      "finding_id": "style_065",
+      "class": "generic_agreement_filler",
+      "line_start": 170,
+      "line_end": 170,
+      "line_fingerprints": [
+        "e6060d825a6076f13a47cc304d64491b431764116f93db22e8a3eb419858f2a8"
+      ],
+      "confidence": 0.95,
+      "recommendation": "remove_or_merge",
+      "factual_meaning_impact": "low",
+      "short_label": "generic_agreement_filler signal at line 170"
+    },
+    {
+      "finding_id": "style_066",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 174,
+      "line_end": 174,
+      "line_fingerprints": [
+        "72aba9f4204a5cce1879303a3a253d987fe57d4e8f03001c917c0bebef079412"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 174"
+    },
+    {
+      "finding_id": "style_067",
+      "class": "exaggerated_certainty",
+      "line_start": 177,
+      "line_end": 177,
+      "line_fingerprints": [
+        "3e9b6db9943bfd7dcd1db8e63823b76936d085316e5ab4b51ce4b100037c5568"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 177"
+    },
+    {
+      "finding_id": "style_068",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 185,
+      "line_end": 185,
+      "line_fingerprints": [
+        "aa0e18a8025851aa221040dc3e089a7d818f1d25089fcb2cb942b838beed2cd5"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 185"
+    },
+    {
+      "finding_id": "style_069",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 186,
+      "line_end": 186,
+      "line_fingerprints": [
+        "05a017d9c697363a763805383a5600641e0e80fa0caed02e3eff8bbf50e56e43"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 186"
+    },
+    {
+      "finding_id": "style_070",
+      "class": "exaggerated_certainty",
+      "line_start": 187,
+      "line_end": 187,
+      "line_fingerprints": [
+        "c3fd7045326ff3005eee75c0e09c82130476b0d35b08572013db860a2b9a02ec"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 187"
+    },
+    {
+      "finding_id": "style_071",
+      "class": "exaggerated_certainty",
+      "line_start": 190,
+      "line_end": 190,
+      "line_fingerprints": [
+        "4cde9ab50c73ed30deee2710ed89210e640c14c01cd46fc178fccc120e356344"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 190"
+    },
+    {
+      "finding_id": "style_072",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 191,
+      "line_end": 191,
+      "line_fingerprints": [
+        "90dcf596bd55a0a6dedc8e4d76030741d36b5dc8391374ccad2244039010565f"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 191"
+    },
+    {
+      "finding_id": "style_073",
+      "class": "generic_agreement_filler",
+      "line_start": 197,
+      "line_end": 197,
+      "line_fingerprints": [
+        "2910a18eec8fd2dd5cd180079f7daaa70fc264fbed0798ef916403245c1c3d55"
+      ],
+      "confidence": 0.95,
+      "recommendation": "remove_or_merge",
+      "factual_meaning_impact": "low",
+      "short_label": "generic_agreement_filler signal at line 197"
+    },
+    {
+      "finding_id": "style_074",
+      "class": "exaggerated_certainty",
+      "line_start": 198,
+      "line_end": 198,
+      "line_fingerprints": [
+        "10e146f684720c901099541986bdee9f022fe923fc6b6f768eff21de6cedf728"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 198"
+    },
+    {
+      "finding_id": "style_075",
+      "class": "exaggerated_certainty",
+      "line_start": 200,
+      "line_end": 200,
+      "line_fingerprints": [
+        "a1e2c8f7244aa9b1ede7f5d9308061626994333ee1ab8994ed71616a16534609"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 200"
+    },
+    {
+      "finding_id": "style_076",
+      "class": "exaggerated_certainty",
+      "line_start": 204,
+      "line_end": 204,
+      "line_fingerprints": [
+        "f33260b0f62f260fbb3393ea2af2462e6a64f9fcd0e4a2d6c76960552a3e942b"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 204"
+    },
+    {
+      "finding_id": "style_077",
+      "class": "exaggerated_certainty",
+      "line_start": 205,
+      "line_end": 205,
+      "line_fingerprints": [
+        "0ae89094332aef18a1b9f93f75697bfdb9240ccadb46c41132874e291fbbd066"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 205"
+    },
+    {
+      "finding_id": "style_078",
+      "class": "exaggerated_certainty",
+      "line_start": 207,
+      "line_end": 207,
+      "line_fingerprints": [
+        "31844c5e25a13441139ec0061878950b18f332f29213ba428cd238c922938206"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 207"
+    },
+    {
+      "finding_id": "style_079",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 215,
+      "line_end": 215,
+      "line_fingerprints": [
+        "8f3f407f3e6a9da847e198010c60e8df79bd391ccc304725e15c307728ccb6a2"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 215"
+    },
+    {
+      "finding_id": "style_080",
+      "class": "suspense_hidden_mission_framing",
+      "line_start": 216,
+      "line_end": 216,
+      "line_fingerprints": [
+        "503d4e12909bf96dd06ecef11b99623ff4c32b1f0ab496645e58397931adb397"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "suspense_hidden_mission_framing signal at line 216"
+    },
+    {
+      "finding_id": "style_081",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 217,
+      "line_end": 217,
+      "line_fingerprints": [
+        "a4765f858fa300f426d557f0c9312ba9149b9140b85c8fd9f7287e825475bd1a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 217"
+    },
+    {
+      "finding_id": "style_082",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 219,
+      "line_end": 219,
+      "line_fingerprints": [
+        "19eb786a4fd4cc78120b6652b193b99268ae6c42adfb8547cfe4ef48d7332dee"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 219"
+    },
+    {
+      "finding_id": "style_083",
+      "class": "exaggerated_certainty",
+      "line_start": 226,
+      "line_end": 226,
+      "line_fingerprints": [
+        "1fa04eee9f533fa026d28b946257b2b45a95a11828953e62284a12301a828091"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 226"
+    },
+    {
+      "finding_id": "style_084",
+      "class": "exaggerated_certainty",
+      "line_start": 228,
+      "line_end": 228,
+      "line_fingerprints": [
+        "47c6d7e2539e33f02b9f2fc1d0442b800173d12e6f4ceba7770145ed79e924cf"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 228"
+    },
+    {
+      "finding_id": "style_085",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 237,
+      "line_end": 237,
+      "line_fingerprints": [
+        "e228540b8339c42466868b1bcffe88b3289308af6191a33e2862b54f29fbc99a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 237"
+    },
+    {
+      "finding_id": "style_086",
+      "class": "suspense_hidden_mission_framing",
+      "line_start": 238,
+      "line_end": 238,
+      "line_fingerprints": [
+        "503d4e12909bf96dd06ecef11b99623ff4c32b1f0ab496645e58397931adb397"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "suspense_hidden_mission_framing signal at line 238"
+    },
+    {
+      "finding_id": "style_087",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 239,
+      "line_end": 239,
+      "line_fingerprints": [
+        "a4765f858fa300f426d557f0c9312ba9149b9140b85c8fd9f7287e825475bd1a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 239"
+    },
+    {
+      "finding_id": "style_088",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 241,
+      "line_end": 241,
+      "line_fingerprints": [
+        "19eb786a4fd4cc78120b6652b193b99268ae6c42adfb8547cfe4ef48d7332dee"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 241"
+    },
+    {
+      "finding_id": "style_089",
+      "class": "exaggerated_certainty",
+      "line_start": 247,
+      "line_end": 247,
+      "line_fingerprints": [
+        "23b5d36f5e37738669949c64e16c42718cfad42ab96405db41d944ac50298dea"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 247"
+    },
+    {
+      "finding_id": "style_090",
+      "class": "exaggerated_certainty",
+      "line_start": 249,
+      "line_end": 249,
+      "line_fingerprints": [
+        "ba7272d4efa928c5c97ad2fee81dbe057243d0de9451d7926e0dd77d4ae20749"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 249"
+    },
+    {
+      "finding_id": "style_091",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 258,
+      "line_end": 258,
+      "line_fingerprints": [
+        "b9cb370cb174d0749f996c2ed77b1f295e14500b9ce243824eb26743e72ca1d3"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 258"
+    },
+    {
+      "finding_id": "style_092",
+      "class": "suspense_hidden_mission_framing",
+      "line_start": 259,
+      "line_end": 259,
+      "line_fingerprints": [
+        "11dbca1ad44846b1d9b5c4216116a6e54f0e868ddf5e6d8dd4f322974e3c9f55"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "suspense_hidden_mission_framing signal at line 259"
+    },
+    {
+      "finding_id": "style_093",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 260,
+      "line_end": 260,
+      "line_fingerprints": [
+        "a4765f858fa300f426d557f0c9312ba9149b9140b85c8fd9f7287e825475bd1a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 260"
+    },
+    {
+      "finding_id": "style_094",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 262,
+      "line_end": 262,
+      "line_fingerprints": [
+        "19eb786a4fd4cc78120b6652b193b99268ae6c42adfb8547cfe4ef48d7332dee"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 262"
+    },
+    {
+      "finding_id": "style_095",
+      "class": "exaggerated_certainty",
+      "line_start": 268,
+      "line_end": 268,
+      "line_fingerprints": [
+        "b1a88e922c82c5f8e02dadfc7d22066811fcf628ea8934219f3d3d461fceee5b"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 268"
+    },
+    {
+      "finding_id": "style_096",
+      "class": "exaggerated_certainty",
+      "line_start": 270,
+      "line_end": 270,
+      "line_fingerprints": [
+        "ba7272d4efa928c5c97ad2fee81dbe057243d0de9451d7926e0dd77d4ae20749"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 270"
+    },
+    {
+      "finding_id": "style_097",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 279,
+      "line_end": 279,
+      "line_fingerprints": [
+        "9fc1b3d6118e139cc9cd2dd4653fa011e2680b6d86af91428ad44008a47fd6a2"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 279"
+    },
+    {
+      "finding_id": "style_098",
+      "class": "suspense_hidden_mission_framing",
+      "line_start": 280,
+      "line_end": 280,
+      "line_fingerprints": [
+        "503d4e12909bf96dd06ecef11b99623ff4c32b1f0ab496645e58397931adb397"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "suspense_hidden_mission_framing signal at line 280"
+    },
+    {
+      "finding_id": "style_099",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 281,
+      "line_end": 281,
+      "line_fingerprints": [
+        "a4765f858fa300f426d557f0c9312ba9149b9140b85c8fd9f7287e825475bd1a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 281"
+    },
+    {
+      "finding_id": "style_100",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 283,
+      "line_end": 283,
+      "line_fingerprints": [
+        "19eb786a4fd4cc78120b6652b193b99268ae6c42adfb8547cfe4ef48d7332dee"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 283"
+    },
+    {
+      "finding_id": "style_101",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 293,
+      "line_end": 293,
+      "line_fingerprints": [
+        "470dc149b510664155d50008e92e0c2cfd6a93b85f4f47b2d072c1982120293e"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 293"
+    },
+    {
+      "finding_id": "style_102",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 299,
+      "line_end": 299,
+      "line_fingerprints": [
+        "3b4e3fb9bb86918c8d5c799e6f8a30256f7b41cb95b72595fd6322e907812574"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 299"
+    },
+    {
+      "finding_id": "style_103",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 305,
+      "line_end": 305,
+      "line_fingerprints": [
+        "1eee5119c05ccfbfc4077f4727a669518267254fc5e37df0447e7cc047ba6c5d"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 305"
+    },
+    {
+      "finding_id": "style_104",
+      "class": "exaggerated_certainty",
+      "line_start": 310,
+      "line_end": 310,
+      "line_fingerprints": [
+        "02398e9e77bec9ba2e236bb92fb5dc4a48ad8c34397c772cbed7f2d5e28ec2a9"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 310"
+    },
+    {
+      "finding_id": "style_105",
+      "class": "update_sensitive_unknown_pattern",
+      "line_start": 317,
+      "line_end": 317,
+      "line_fingerprints": [
+        "8ecae1b196979de8a6f2936e01b42dacc5f41cef8c6c71c679dc5ed1057472c9"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "update_sensitive_unknown_pattern signal at line 317"
+    },
+    {
+      "finding_id": "style_106",
+      "class": "program_format_self_reference",
+      "line_start": 318,
+      "line_end": 318,
+      "line_fingerprints": [
+        "a953185376567a76b5533bb7abf658a760fcc8d19dcbffad41275f141eebd40a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "program_format_self_reference signal at line 318"
+    },
+    {
+      "finding_id": "style_107",
+      "class": "suspense_hidden_mission_framing",
+      "line_start": 318,
+      "line_end": 318,
+      "line_fingerprints": [
+        "a953185376567a76b5533bb7abf658a760fcc8d19dcbffad41275f141eebd40a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "suspense_hidden_mission_framing signal at line 318"
+    },
+    {
+      "finding_id": "style_108",
+      "class": "neutrality_balance_self_positioning",
+      "line_start": 319,
+      "line_end": 319,
+      "line_fingerprints": [
+        "e443ab3cceac9199ef1da1543f6da6dd8018789d02af81d1d94b3a675c35016d"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "neutrality_balance_self_positioning signal at line 319"
+    },
+    {
+      "finding_id": "style_109",
+      "class": "exaggerated_certainty",
+      "line_start": 320,
+      "line_end": 320,
+      "line_fingerprints": [
+        "57ae2433fe94d4b24c52201bb018f5694ddcb12afdfd6c852868e587552d6b1a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "exaggerated_certainty signal at line 320"
+    },
+    {
+      "finding_id": "style_110",
+      "class": "host_introduction",
+      "line_start": 322,
+      "line_end": 322,
+      "line_fingerprints": [
+        "111d3ff977cbcd4b1be335f09ea3888323b919c8301a05de9a58c8c03074985a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "host_introduction signal at line 322"
+    },
+    {
+      "finding_id": "style_111",
+      "class": "listener_address",
+      "line_start": 322,
+      "line_end": 322,
+      "line_fingerprints": [
+        "111d3ff977cbcd4b1be335f09ea3888323b919c8301a05de9a58c8c03074985a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "rewrite",
+      "factual_meaning_impact": "possible",
+      "short_label": "listener_address signal at line 322"
+    },
+    {
+      "finding_id": "style_112",
+      "class": "rhetorical_question_scaffolding",
+      "line_start": 322,
+      "line_end": 322,
+      "line_fingerprints": [
+        "111d3ff977cbcd4b1be335f09ea3888323b919c8301a05de9a58c8c03074985a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "low",
+      "short_label": "rhetorical_question_scaffolding signal at line 322"
+    },
+    {
+      "finding_id": "style_113",
+      "class": "update_sensitive_unknown_pattern",
+      "line_start": 322,
+      "line_end": 322,
+      "line_fingerprints": [
+        "111d3ff977cbcd4b1be335f09ea3888323b919c8301a05de9a58c8c03074985a"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "update_sensitive_unknown_pattern signal at line 322"
+    },
+    {
+      "finding_id": "style_114",
+      "class": "closing_boilerplate",
+      "line_start": 323,
+      "line_end": 323,
+      "line_fingerprints": [
+        "b33c3d1c56f2559cc53bace12071da04d9a68492ea01caedfe4433cabf6cbbf7"
+      ],
+      "confidence": 0.8,
+      "recommendation": "remove",
+      "factual_meaning_impact": "possible",
+      "short_label": "closing_boilerplate signal at line 323"
+    },
+    {
+      "finding_id": "style_115",
+      "class": "listener_address",
+      "line_start": 324,
+      "line_end": 324,
+      "line_fingerprints": [
+        "3733bb51cfa718059f1b22c3756a1c9a3974bde951f6d7b0e27908eab4b20d24"
+      ],
+      "confidence": 0.8,
+      "recommendation": "rewrite",
+      "factual_meaning_impact": "possible",
+      "short_label": "listener_address signal at line 324"
+    },
+    {
+      "finding_id": "style_116",
+      "class": "closing_boilerplate",
+      "line_start": 324,
+      "line_end": 324,
+      "line_fingerprints": [
+        "3733bb51cfa718059f1b22c3756a1c9a3974bde951f6d7b0e27908eab4b20d24"
+      ],
+      "confidence": 0.8,
+      "recommendation": "remove",
+      "factual_meaning_impact": "possible",
+      "short_label": "closing_boilerplate signal at line 324"
+    },
+    {
+      "finding_id": "style_117",
+      "class": "host_introduction",
+      "line_start": 326,
+      "line_end": 326,
+      "line_fingerprints": [
+        "3ed8749f3d95a9bdaaa6d6a8b03bc58c5c0a81f305a3045a69a1d6bb63a668d4"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "host_introduction signal at line 326"
+    },
+    {
+      "finding_id": "style_118",
+      "class": "program_format_self_reference",
+      "line_start": 326,
+      "line_end": 326,
+      "line_fingerprints": [
+        "3ed8749f3d95a9bdaaa6d6a8b03bc58c5c0a81f305a3045a69a1d6bb63a668d4"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "program_format_self_reference signal at line 326"
+    },
+    {
+      "finding_id": "style_119",
+      "class": "closing_boilerplate",
+      "line_start": 326,
+      "line_end": 326,
+      "line_fingerprints": [
+        "3ed8749f3d95a9bdaaa6d6a8b03bc58c5c0a81f305a3045a69a1d6bb63a668d4"
+      ],
+      "confidence": 0.8,
+      "recommendation": "remove",
+      "factual_meaning_impact": "possible",
+      "short_label": "closing_boilerplate signal at line 326"
+    },
+    {
+      "finding_id": "style_120",
+      "class": "update_sensitive_unknown_pattern",
+      "line_start": 326,
+      "line_end": 326,
+      "line_fingerprints": [
+        "3ed8749f3d95a9bdaaa6d6a8b03bc58c5c0a81f305a3045a69a1d6bb63a668d4"
+      ],
+      "confidence": 0.8,
+      "recommendation": "review",
+      "factual_meaning_impact": "possible",
+      "short_label": "update_sensitive_unknown_pattern signal at line 326"
+    }
+  ],
+  "automatic_removal_performed": false
+}

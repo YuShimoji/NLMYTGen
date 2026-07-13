@@ -1,0 +1,25 @@
+{
+  "schema_version": "notebooklm_audio_transcript_salvage.v1.turn_readback",
+  "status": "provisional_anonymous_segmentation",
+  "logical_line_count": 326,
+  "turn_count": 326,
+  "identity_counts": {
+    "ambiguous": 0,
+    "voice_1": 160,
+    "voice_2": 166
+  },
+  "allowed_identities": [
+    "ambiguous",
+    "voice_1",
+    "voice_2"
+  ],
+  "character_casting_performed": false,
+  "invented_dialogue_count": 0,
+  "duplicate_assignment_policy": "retain provisional assignment and flag duplicate membership",
+  "heuristics": [
+    "question_turn",
+    "acknowledgement_turn",
+    "continuation_after_unterminated_line",
+    "alternating_unlabeled_dialogue"
+  ]
+}

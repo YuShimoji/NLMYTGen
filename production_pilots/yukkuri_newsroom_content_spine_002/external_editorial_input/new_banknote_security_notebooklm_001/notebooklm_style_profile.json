@@ -1,0 +1,57 @@
+{
+  "schema_version": "notebooklm_audio_transcript_salvage.v1.style_profile",
+  "profile_kind": "semantic_classification_not_exact_phrase_filter",
+  "classes": [
+    {
+      "class": "host_introduction",
+      "finding_count": 5,
+      "update_sensitive": false
+    },
+    {
+      "class": "program_format_self_reference",
+      "finding_count": 4,
+      "update_sensitive": false
+    },
+    {
+      "class": "listener_address",
+      "finding_count": 7,
+      "update_sensitive": false
+    },
+    {
+      "class": "neutrality_balance_self_positioning",
+      "finding_count": 4,
+      "update_sensitive": false
+    },
+    {
+      "class": "suspense_hidden_mission_framing",
+      "finding_count": 8,
+      "update_sensitive": false
+    },
+    {
+      "class": "exaggerated_certainty",
+      "finding_count": 23,
+      "update_sensitive": false
+    },
+    {
+      "class": "generic_agreement_filler",
+      "finding_count": 12,
+      "update_sensitive": false
+    },
+    {
+      "class": "rhetorical_question_scaffolding",
+      "finding_count": 47,
+      "update_sensitive": false
+    },
+    {
+      "class": "closing_boilerplate",
+      "finding_count": 3,
+      "update_sensitive": false
+    },
+    {
+      "class": "update_sensitive_unknown_pattern",
+      "finding_count": 7,
+      "update_sensitive": true
+    }
+  ],
+  "class_coverage_complete": true
+}

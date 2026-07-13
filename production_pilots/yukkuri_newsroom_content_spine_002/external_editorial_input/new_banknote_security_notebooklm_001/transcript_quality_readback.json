@@ -1,0 +1,15 @@
+{
+  "schema_version": "notebooklm_audio_transcript_salvage.v1.quality_readback",
+  "status": "salvaged_not_source_verified",
+  "raw_logical_lines": 326,
+  "mapped_lines": 326,
+  "duplicate_clusters": 18,
+  "style_findings": 120,
+  "asr_candidates": 45,
+  "anonymous_turns": 326,
+  "ambiguous_turns": 0,
+  "claim_candidates": 182,
+  "verified_claims": 0,
+  "source_set_status": "reconciliation_required",
+  "raw_and_full_text_tracking_status": "local_ignored_untracked_required"
+}

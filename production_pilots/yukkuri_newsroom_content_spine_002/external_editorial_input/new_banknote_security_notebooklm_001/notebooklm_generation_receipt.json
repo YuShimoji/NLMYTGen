@@ -1,0 +1,15 @@
+{
+  "schema_version": "notebooklm_audio_transcript_salvage.v1.generation_receipt",
+  "evidence_grade": "user_observed",
+  "process": [
+    "exact title used as NotebookLM Fast Research anchor",
+    "Audio Overview generated from notebook materials",
+    "Audio Overview added back and converted to plain text"
+  ],
+  "generation_latency": "approximately 30 minutes",
+  "speaker_labels_present": false,
+  "speaker_split_retry_performed": false,
+  "regeneration_performed": false,
+  "no_rerun_policy": "repair deterministic transcript defects locally unless a later gate changes source set or editorial objective",
+  "NotebookLM_accessed_by_analyzer": false
+}

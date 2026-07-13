@@ -1,0 +1,17 @@
+{
+  "schema_version": "notebooklm_audio_transcript_salvage.v1.input_identity_receipt",
+  "status": "identity_matched",
+  "raw_path": "production_pilots/yukkuri_newsroom_content_spine_002/real_input_intake_readiness/real_input/transcript/new_banknote_notebooklm/raw/notebooklm_audio_overview_transcript_raw.txt",
+  "capture_manifest_schema": "notebooklm_audio_overview_capture.v2",
+  "raw_sha256": "1825c9689a050ddbfc91537a228f6af0ba2f7f033e5b681fff4f227551144437",
+  "raw_size_bytes": 32089,
+  "raw_logical_line_count": 326,
+  "newline_counts": {
+    "crlf_separators": 325,
+    "bare_lf_separators": 0,
+    "bare_cr_separators": 0
+  },
+  "line_fingerprint_count": 326,
+  "raw_modified": false,
+  "raw_tracked": false
+}

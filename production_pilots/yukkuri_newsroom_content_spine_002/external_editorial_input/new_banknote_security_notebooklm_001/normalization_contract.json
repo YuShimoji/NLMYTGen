@@ -1,0 +1,11 @@
+{
+  "schema_version": "notebooklm_audio_transcript_salvage.v1.normalization_contract",
+  "raw_is_immutable": true,
+  "full_text_outputs_are_local_ignored": true,
+  "line_mapping_is_complete": true,
+  "newline_policy": "logical UTF-8 lines; CRLF separators are not line records",
+  "asr_policy": "confidence-graded reversible candidates; source-dependent terms remain unresolved",
+  "style_policy": "classification first; no blind phrase deletion",
+  "speaker_policy": "voice_1, voice_2, or ambiguous only",
+  "claim_policy": "all extracted claims remain unverified pending source reconciliation"
+}
