@@ -1,0 +1,114 @@
+{
+  "schema_version": "generic_visual_capability_evidence_ledger.v1",
+  "ladder": {
+    "C0": "proposed or missing implementation evidence",
+    "C1": "code/schema path exists",
+    "C2": "deterministic static materialization and parse",
+    "C3": "actual YMM4 open/import/preview behavior observed",
+    "C4": "render media exists and structure/probe/decode are verified",
+    "C5": "same generic core reused by two heterogeneous real-topic workflows without core-code change"
+  },
+  "records": [
+    {
+      "evidence_id": "ev_voice_imports",
+      "evidence_level": "C3",
+      "capability_ids": ["voice_linked_subtitle_import", "observed_frame_length_timing", "no_transition_baseline"],
+      "locations": ["production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json", "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/yymm4_import_observation_readback.json"],
+      "observed_environment": "YMM4 4.53.0.9 and 4.54.0.1",
+      "boundary": "Observed packets only; duration may be recomputed and subtitle appearance is not reviewed."
+    },
+    {
+      "evidence_id": "ev_diagnostic_project",
+      "evidence_level": "C3",
+      "capability_ids": ["voiceitem_preserving_project_augmentation", "exact_voice_image_text_project_open", "observed_layer_assignment", "fixed_text_style_readability"],
+      "locations": ["production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json", "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json"],
+      "observed_environment": "YMM4 4.53.0.9 actual GUI reopen",
+      "boundary": "Fixed 9 Voice, 3 Image, 3 Text project only; same-machine absolute asset path."
+    },
+    {
+      "evidence_id": "ev_card_visibility",
+      "evidence_level": "C3",
+      "capability_ids": ["card_image_visibility_with_dialogue"],
+      "locations": ["samples/_probe/newsroom_handoff/card_placement_render_smoke_result_readback_v1.json"],
+      "observed_environment": "YMM4 4.53.0.6 screenshot-supported user observation",
+      "boundary": "No retained media structure/decode verification; not C4."
+    },
+    {
+      "evidence_id": "ev_group_motion",
+      "evidence_level": "C3",
+      "capability_ids": ["group_xy_zoom_motion", "group_rotation_bounce_motion", "expression_swap", "named_template_reuse", "selected_effect_presets"],
+      "locations": ["docs/MOTION_CALIBRATION_GUIDE.md", "docs/verification/B2-haitatsuin-motion-groupitem-2026-04-19.md", "samples/_probe/newsroom_handoff/yukkuri_animation_primitive_preview_observation_v1.json", "docs/SKIT_GROUP_TEMPLATE_SPEC.md"],
+      "observed_environment": "Bounded named-template and preview observations",
+      "boundary": "Only selected named templates/presets; timing, facing and anchor warnings remain."
+    },
+    {
+      "evidence_id": "ev_strict_render",
+      "evidence_level": "C4",
+      "capability_ids": ["decoded_internal_render", "decoded_review_proxy"],
+      "locations": ["production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/render_receipt.json", "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/render_validation_readback.json"],
+      "observed_environment": "YMM4 4.54.0.1 plus ffprobe/ffmpeg 8.0.1",
+      "boundary": "Media structure and decode only; semantic alignment and visual/editorial acceptance unknown."
+    },
+    {
+      "evidence_id": "ev_static_patch_paths",
+      "evidence_level": "C2",
+      "capability_ids": ["static_imageitem_materialization", "static_textitem_materialization", "arbitrary_item_transform_fields", "scale_zoom_transform", "opacity_transform", "background_layer_replacement", "background_pan_zoom", "overlay_imageitem_insertion", "fade_transition_fields", "audioitem_se_materialization"],
+      "locations": ["src/pipeline/ymmp_patch.py", "tests/test_ymmp_template.py", "tests/test_ymmp_motion_patch.py", "tests/test_ymmp_transition_patch.py", "tests/test_ymmp_bg_anim_patch.py"],
+      "observed_environment": "Headless deterministic tests",
+      "boundary": "Serialized fields and parse success do not prove visible runtime behavior."
+    },
+    {
+      "evidence_id": "ev_topic_shape_callouts",
+      "evidence_level": "C2",
+      "capability_ids": ["static_shapeitem_materialization", "shape_text_callout_materialization"],
+      "locations": ["samples/_probe/g24/real_estate_dx_diagnostic_carrier_readback.json", "samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe_readback.json"],
+      "observed_environment": "Headless readbacks from topic-specific JavaScript builders",
+      "boundary": "One-off geometry and a targeted label repair are not generic runtime proof."
+    },
+    {
+      "evidence_id": "ev_motion_recipe",
+      "evidence_level": "C2",
+      "capability_ids": ["motion_recipe_materialization"],
+      "locations": ["src/pipeline/motion_recipe.py", "tests/test_motion_recipe.py"],
+      "observed_environment": "Headless deterministic recipe build",
+      "boundary": "Only separately observed named presets may be upgraded to C3."
+    },
+    {
+      "evidence_id": "ev_static_fixture_lab",
+      "evidence_level": "C2",
+      "capability_ids": ["static_cross_archetype_conformance"],
+      "locations": ["src/pipeline/generic_visual_scene_ir.py", "samples/visual_composition_lab/conformance_readback.json"],
+      "observed_environment": "Pure Python validator",
+      "boundary": "Static variance is not YMM4 runtime behavior or C5."
+    },
+    {
+      "evidence_id": "ev_missing_runtime",
+      "evidence_level": "C0",
+      "capability_ids": ["route_specific_motion_profiles", "cross_machine_project_portability", "real_cross_topic_core_reuse", "linked_subtitle_typography_layout"],
+      "locations": ["production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/motion_beat_plan.json", "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_manifest.json"],
+      "observed_environment": "No qualifying observation",
+      "boundary": "Selection, a schema, or a static fixture cannot fill these gates."
+    },
+    {
+      "evidence_id": "ev_known_unavailable",
+      "evidence_level": "C0-C1",
+      "capability_ids": ["external_asset_auto_fetch", "nonfade_transition", "generic_shapeitem_creation_core", "generic_speech_balloon"],
+      "locations": ["src/pipeline/ir_validate.py", "src/pipeline/ymmp_patch.py", "samples/_probe/newsroom_handoff/yukkuri_animation_primitive_inventory_v1.json"],
+      "observed_environment": "Current code and policy inspection",
+      "boundary": "Known missing generic paths; fall back instead of adding topic exceptions."
+    },
+    {
+      "evidence_id": "ev_negative_card_quality",
+      "evidence_level": "C3",
+      "capability_ids": ["production_quality_card_composition"],
+      "locations": ["samples/_probe/newsroom_handoff/internal_review_v0_1_result_readback_v1.json"],
+      "observed_environment": "Human internal review",
+      "boundary": "Negative evidence for the observed older surface, not every future design."
+    }
+  ],
+  "coverage": {
+    "capability_ids_missing_from_ledger": [],
+    "C5_evidence_record_count": 0,
+    "runtime_overclaim_count": 0
+  }
+}

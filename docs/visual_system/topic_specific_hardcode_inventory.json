@@ -1,0 +1,63 @@
+{
+  "schema_version": "generic_visual_topic_specific_hardcode_inventory.v1",
+  "generic_core_path": "src/pipeline/generic_visual_scene_ir.py",
+  "generic_core_policy": "Core validates structure and resolves all recipe, primitive, capability and topic values from data. It has no fixture adapter branch.",
+  "banned_literal_checks": [
+    {"literal_family": "current topic nouns and named effects", "status": "absent_from_generic_core"},
+    {"literal_family": "claim/source identifiers and exact cue text", "status": "absent_from_generic_core"},
+    {"literal_family": "route labels and palette facts", "status": "absent_from_generic_core"},
+    {"literal_family": "current pilot IDs and directories", "status": "absent_from_generic_core"}
+  ],
+  "fixed_assumption_checks": [
+    {"assumption": "nine cues", "status": "absent_from_generic_core"},
+    {"assumption": "three scenes", "status": "absent_from_generic_core"},
+    {"assumption": "fixed speaker distribution", "status": "absent_from_generic_core"},
+    {"assumption": "fixed duration, frame count or fps", "status": "absent_from_generic_core"},
+    {"assumption": "fixed canvas geometry in Python", "status": "absent_from_generic_core", "data_authority": "docs/SCENE_COMPOSITION_SCHEMA.md"}
+  ],
+  "topic_specific_locations": [
+    {
+      "path": "samples/visual_composition_lab/fixtures/inspection_route_A.json",
+      "classification": "fixture_payload_only",
+      "contains": ["selected route label", "exact cue text", "claim/source references", "factual boundaries", "proposed palette/object/motion labels", "observed timing metadata"],
+      "core_imported": false
+    },
+    {
+      "path": "src/pipeline/new_banknote_yymm4_import_intake_visual_decision.py",
+      "classification": "read_only_topic_builder",
+      "contains": ["pilot/state IDs", "route names", "fixed cue/scene/speaker counts", "source allowlist", "topic visual specs"],
+      "core_imported": false
+    },
+    {
+      "path": "src/pipeline/ymm4_diagnostic_placeholder_proof.py",
+      "classification": "historical_fixed_pilot_builder",
+      "contains": ["Episode ID", "nine cues", "three scenes", "fixed speaker distribution", "fixed labels and asset"],
+      "core_imported": false
+    },
+    {
+      "path": "src/pipeline/newsroom_yukkuri_animation_primitive_probe_materialization.py",
+      "classification": "historical_topic_probe",
+      "contains": ["newsroom probe scenes", "fixed assets", "fixed beat timing"],
+      "core_imported": false
+    },
+    {
+      "path": "scripts/build_g27_diagnostic_carrier.js",
+      "classification": "historical_topic_builder",
+      "contains": ["real-estate split labels", "fixed 1920x1080 geometry", "topic item names"],
+      "core_imported": false
+    },
+    {
+      "path": "scripts/build_g28_game_mechanics_ymmp_probe.js",
+      "classification": "historical_topic_builder",
+      "contains": ["game-mechanics labels", "fixed geometry", "targeted label repair"],
+      "core_imported": false
+    }
+  ],
+  "fixture_invariance": {
+    "validator_function": "validate_fixture",
+    "special_case_function_count": 0,
+    "fixture_name_branch_count": 0,
+    "generic_core_changed_after_first_fixture": false
+  },
+  "conclusion": "All current domain facts remain in fixture or historical topic code. Static conformance demonstrates schema invariance only, not C5."
+}

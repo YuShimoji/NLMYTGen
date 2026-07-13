@@ -1,0 +1,142 @@
+{
+  "schema_version": "generic_visual_primitive_catalog.v1",
+  "frame_profile_reference": "docs/SCENE_COMPOSITION_SCHEMA.md",
+  "policy": "Primitive presence in this catalog is a planning vocabulary. Availability and runtime behavior come only from the referenced capability record.",
+  "primitives": [
+    {
+      "primitive_id": "narration_voice",
+      "item_family": "VoiceItem",
+      "scs_role": "supporting",
+      "capability_id": "voice_linked_subtitle_import",
+      "minimum_evidence_level": "C3",
+      "purpose": "Provide the narration and cue timing baseline.",
+      "fallback_primitive_id": "narration_voice"
+    },
+    {
+      "primitive_id": "linked_subtitle",
+      "item_family": "linked subtitle",
+      "scs_role": "label",
+      "capability_id": "voice_linked_subtitle_import",
+      "minimum_evidence_level": "C3",
+      "purpose": "Carry the imported narration text without an independent label item.",
+      "fallback_primitive_id": "narration_voice"
+    },
+    {
+      "primitive_id": "caption_safe_reserve",
+      "item_family": "layout reservation",
+      "scs_role": "boundary",
+      "capability_id": "linked_subtitle_typography_layout",
+      "minimum_evidence_level": "C3",
+      "purpose": "Reserve space for subtitles while leaving visual acceptance open.",
+      "fallback_primitive_id": "linked_subtitle"
+    },
+    {
+      "primitive_id": "static_image_panel",
+      "item_family": "ImageItem",
+      "scs_role": "focal_anchor",
+      "capability_id": "static_imageitem_materialization",
+      "minimum_evidence_level": "C2",
+      "purpose": "Display one precomposed local visual panel for a cue or scene.",
+      "fallback_primitive_id": "narration_voice"
+    },
+    {
+      "primitive_id": "static_background",
+      "item_family": "ImageItem",
+      "scs_role": "decoration",
+      "capability_id": "background_layer_replacement",
+      "minimum_evidence_level": "C2",
+      "purpose": "Provide one static same-machine background field.",
+      "fallback_primitive_id": "static_image_panel"
+    },
+    {
+      "primitive_id": "short_text_label",
+      "item_family": "TextItem",
+      "scs_role": "label",
+      "capability_id": "static_textitem_materialization",
+      "minimum_evidence_level": "C2",
+      "purpose": "Add one short bounded label outside the linked subtitle.",
+      "fallback_primitive_id": "linked_subtitle"
+    },
+    {
+      "primitive_id": "shape_marker",
+      "item_family": "ShapeItem",
+      "scs_role": "supporting",
+      "capability_id": "static_shapeitem_materialization",
+      "minimum_evidence_level": "C2",
+      "purpose": "Represent an abstract marker, node, highlight, or icon substitute.",
+      "fallback_primitive_id": "static_image_panel"
+    },
+    {
+      "primitive_id": "connector_line",
+      "item_family": "ShapeItem",
+      "scs_role": "connector",
+      "capability_id": "static_shapeitem_materialization",
+      "minimum_evidence_level": "C2",
+      "purpose": "Express ordering, causality, or correspondence between bounded nodes.",
+      "fallback_primitive_id": "short_text_label"
+    },
+    {
+      "primitive_id": "comparison_panel",
+      "item_family": "ImageItem or ShapeItem group",
+      "scs_role": "focal_anchor",
+      "capability_id": "static_cross_archetype_conformance",
+      "minimum_evidence_level": "C2",
+      "purpose": "Hold one side of a two-sided contrast without fixing domain content.",
+      "fallback_primitive_id": "static_image_panel"
+    },
+    {
+      "primitive_id": "callout_label",
+      "item_family": "TextItem with optional static backing",
+      "scs_role": "supporting",
+      "capability_id": "shape_text_callout_materialization",
+      "minimum_evidence_level": "C3",
+      "purpose": "Attach one short explanatory callout to a focal object.",
+      "fallback_primitive_id": "short_text_label"
+    },
+    {
+      "primitive_id": "character_group",
+      "item_family": "GroupItem and ImageItem template",
+      "scs_role": "decoration",
+      "capability_id": "named_template_reuse",
+      "minimum_evidence_level": "C3",
+      "purpose": "Provide an optional bounded character accent from an observed named template.",
+      "fallback_primitive_id": "static_image_panel"
+    },
+    {
+      "primitive_id": "expression_badge",
+      "item_family": "ImageItem expression asset",
+      "scs_role": "risk_marker",
+      "capability_id": "expression_swap",
+      "minimum_evidence_level": "C3",
+      "purpose": "Add one optional reaction state without changing narration.",
+      "fallback_primitive_id": "character_group"
+    },
+    {
+      "primitive_id": "group_motion_accent",
+      "item_family": "GroupItem transform",
+      "scs_role": "supporting",
+      "capability_id": "group_rotation_bounce_motion",
+      "minimum_evidence_level": "C3",
+      "purpose": "Request one restrained observed motion accent on a known group.",
+      "fallback_primitive_id": "character_group"
+    },
+    {
+      "primitive_id": "static_focus_hold",
+      "item_family": "no additional item",
+      "scs_role": "focal_anchor",
+      "capability_id": "no_transition_baseline",
+      "minimum_evidence_level": "C3",
+      "purpose": "Hold a single focal state when richer primitives are unsupported or too costly.",
+      "fallback_primitive_id": "narration_voice"
+    },
+    {
+      "primitive_id": "audio_accent",
+      "item_family": "AudioItem",
+      "scs_role": "decoration",
+      "capability_id": "audioitem_se_materialization",
+      "minimum_evidence_level": "C2",
+      "purpose": "Optional nonvisual accent kept outside the recommended minimum visual stack.",
+      "fallback_primitive_id": "narration_voice"
+    }
+  ]
+}

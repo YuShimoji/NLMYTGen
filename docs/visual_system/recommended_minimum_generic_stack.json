@@ -1,0 +1,35 @@
+{
+  "schema_version": "recommended_minimum_generic_visual_stack.v1",
+  "stack_id": "minimum_static_narration_visual_stack_v1",
+  "status": "recommended_from_evidence_not_runtime_generalized",
+  "overall_evidence_level": "C0",
+  "static_recommendation_artifact_level": "C2",
+  "rationale": "Use only runtime-observed narration/timing behavior by default, add the smallest statically materialized visual surface, and fall back before unobserved motion or one-off geometry creates more cost than reuse.",
+  "components": [
+    {"order": 1, "capability_id": "voice_linked_subtitle_import", "use": "required", "evidence_level": "C3", "fallback": "stop before visual work on import failure"},
+    {"order": 2, "capability_id": "observed_frame_length_timing", "use": "required", "evidence_level": "C3", "fallback": "cue-relative spans only; never fixed episode constants"},
+    {"order": 3, "capability_id": "no_transition_baseline", "use": "required", "evidence_level": "C3", "fallback": "hold the current scene"},
+    {"order": 4, "capability_id": "static_imageitem_materialization", "use": "optional_after_path_and_rights_check", "evidence_level": "C2", "fallback": "narration baseline"},
+    {"order": 5, "capability_id": "static_textitem_materialization", "use": "optional_short_label", "evidence_level": "C2", "fallback": "linked subtitle only"},
+    {"order": 6, "capability_id": "static_cross_archetype_conformance", "use": "required_preflight", "evidence_level": "C2", "fallback": "reject or lower recipe to narration_baseline"},
+    {"order": 7, "capability_id": "linked_subtitle_typography_layout", "use": "required_gate_before_visual_acceptance", "evidence_level": "C0", "fallback": "reserve caption space and do not claim subtitle layout acceptance"}
+  ],
+  "default_motion_policy": "none",
+  "optional_motion_after_probe": ["one named observed GroupItem accent"],
+  "excluded_by_default": ["generic ShapeItem generation", "callout system", "speech balloon", "background pan/zoom", "nonfade transitions", "automatic external assets", "routine render"],
+  "cost_reuse_profile": {
+    "setup_weight": "W2",
+    "per_episode_burden": "low",
+    "reuse_class": "broad_hypothesis_not_C5",
+    "maintenance_surface": "small",
+    "rights_dependency": "optional",
+    "recovery_complexity": "easy"
+  },
+  "required_human_or_runtime_gates": [
+    "subtitle and short-label readability in YMM4 after a material layout change",
+    "asset rights and same-machine path validity",
+    "one bounded observation before enabling any conditional motion",
+    "a real second topic with no core-code change before C5"
+  ],
+  "not_claimed": ["production readiness", "universal topic support", "cross-machine portability", "render correctness", "C5 cross-topic reuse"]
+}

@@ -1,0 +1,72 @@
+{
+  "schema_version": "generic_visual_scene_ir.v1",
+  "fixture_id": "synthetic_three_stage_process_v1",
+  "fixture_archetype": "process_sequence",
+  "fixture_role": "unrelated_synthetic_conformance_only",
+  "evidence_boundary": {
+    "static_maximum": "C2",
+    "runtime_ready": false,
+    "external_factual_claims": false,
+    "implementation_authorized": false
+  },
+  "payload": {
+    "title": "Prepare a fictional desk exercise",
+    "domain": "synthetic workflow with no external factual claims",
+    "palette": {"field": "warm gray", "step": "blue", "check": "green"},
+    "labels": ["Gather", "Arrange", "Check", "Begin"],
+    "rights_note": "text and abstract geometry only"
+  },
+  "scenes": [
+    {"scene_id": "process_scene_prepare", "semantic_role": "introduce_goal", "default_layout_archetype": "narration_baseline", "cue_ids": ["process_cue_01"], "rights_boundary": "none", "cost_profile_id": "W1"},
+    {"scene_id": "process_scene_gather", "semantic_role": "collect_inputs", "default_layout_archetype": "process_sequence", "cue_ids": ["process_cue_02"], "rights_boundary": "original_only", "cost_profile_id": "W2"},
+    {"scene_id": "process_scene_arrange", "semantic_role": "order_inputs", "default_layout_archetype": "process_sequence", "cue_ids": ["process_cue_03", "process_cue_04"], "rights_boundary": "original_only", "cost_profile_id": "W2"},
+    {"scene_id": "process_scene_check", "semantic_role": "confirm_and_start", "default_layout_archetype": "recap_action_sequence", "cue_ids": ["process_cue_05"], "rights_boundary": "original_only", "cost_profile_id": "W2"}
+  ],
+  "cues": [
+    {
+      "cue_id": "process_cue_01", "scene_id": "process_scene_prepare", "sequence": 1,
+      "layout_archetype": "narration_baseline", "scs_composition_type": "center-focal",
+      "timing_anchor": {"kind": "relative_cue_span", "start": "cue_start", "end": "cue_end"},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "linked_subtitle", "role": "label"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}],
+      "overlay_refs": [], "motion_request": {"intent": "none", "status": "none"},
+      "capability_requirements": [{"capability_id": "voice_linked_subtitle_import", "minimum_evidence_level": "C3"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "narration_baseline", "reason": "already the minimum baseline"}
+    },
+    {
+      "cue_id": "process_cue_02", "scene_id": "process_scene_gather", "sequence": 2,
+      "layout_archetype": "process_sequence", "scs_composition_type": "chain",
+      "timing_anchor": {"kind": "relative_cue_span", "start": "cue_start", "end": "cue_end"},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "shape_marker", "role": "supporting"}, {"primitive_id": "connector_line", "role": "connector"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}],
+      "overlay_refs": ["payload.labels[0]"], "motion_request": {"intent": "none", "status": "none"},
+      "capability_requirements": [{"capability_id": "static_shapeitem_materialization", "minimum_evidence_level": "C2"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "narration_baseline", "reason": "describe the gather step in narration"}
+    },
+    {
+      "cue_id": "process_cue_03", "scene_id": "process_scene_arrange", "sequence": 3,
+      "layout_archetype": "process_sequence", "scs_composition_type": "chain",
+      "timing_anchor": {"kind": "relative_cue_span", "start": "cue_start", "end": "cue_end"},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "static_image_panel", "role": "focal_anchor"}, {"primitive_id": "connector_line", "role": "connector"}, {"primitive_id": "short_text_label", "role": "label"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}],
+      "overlay_refs": ["payload.labels[1]"], "motion_request": {"intent": "none", "status": "none"},
+      "capability_requirements": [{"capability_id": "static_imageitem_materialization", "minimum_evidence_level": "C2"}, {"capability_id": "static_textitem_materialization", "minimum_evidence_level": "C2"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "narration_baseline", "reason": "omit the panel and keep spoken order"}
+    },
+    {
+      "cue_id": "process_cue_04", "scene_id": "process_scene_arrange", "sequence": 4,
+      "layout_archetype": "callout_focus", "scs_composition_type": "center-focal",
+      "timing_anchor": {"kind": "relative_cue_span", "start": "cue_start", "end": "cue_end"},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "static_focus_hold", "role": "focal_anchor"}, {"primitive_id": "short_text_label", "role": "label"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}],
+      "overlay_refs": ["payload.labels[2]"], "motion_request": {"intent": "none", "status": "none"},
+      "capability_requirements": [{"capability_id": "static_textitem_materialization", "minimum_evidence_level": "C2"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "narration_baseline", "reason": "state the check without a callout"}
+    },
+    {
+      "cue_id": "process_cue_05", "scene_id": "process_scene_check", "sequence": 5,
+      "layout_archetype": "recap_action_sequence", "scs_composition_type": "chain",
+      "timing_anchor": {"kind": "relative_cue_span", "start": "cue_start", "end": "cue_end"},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "shape_marker", "role": "supporting"}, {"primitive_id": "connector_line", "role": "connector"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}],
+      "overlay_refs": ["payload.labels"], "motion_request": {"intent": "none", "status": "none"},
+      "capability_requirements": [{"capability_id": "static_cross_archetype_conformance", "minimum_evidence_level": "C2"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "narration_baseline", "reason": "speak the four labels in order"}
+    }
+  ]
+}

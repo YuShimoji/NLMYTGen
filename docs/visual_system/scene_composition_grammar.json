@@ -1,0 +1,137 @@
+{
+  "schema_version": "generic_scene_composition_grammar.v1",
+  "extends": "docs/SCENE_COMPOSITION_SCHEMA.md",
+  "model": "layout_archetype describes the explanatory recipe; scs_composition_type selects existing frame geometry. Neither field contains topic data.",
+  "evidence_semantics": {
+    "evidence_level": "The weakest current evidence level among all required primitive capabilities; this is the honest whole-composition floor.",
+    "static_conformance_evidence_level": "The deterministic schema/fixture validation level only; it does not upgrade the whole composition or any runtime behavior."
+  },
+  "compositions": [
+    {
+      "composition_id": "narration_baseline",
+      "required_primitives": ["narration_voice", "linked_subtitle", "caption_safe_reserve"],
+      "optional_primitives": ["static_background", "short_text_label"],
+      "prohibited_combinations": ["unobserved motion plus dense independent labels", "external asset without rights and path checks"],
+      "allowed_scs_composition_types": ["center-focal"],
+      "evidence_level": "C0",
+      "static_conformance_evidence_level": "C2",
+      "fallback_composition": "narration_baseline",
+      "cost_reuse_profile": {
+        "setup_weight": "W1",
+        "per_episode_burden": "low",
+        "reuse_class": "broad",
+        "maintenance_surface": "small",
+        "rights_dependency": "none",
+        "recovery_complexity": "easy"
+      },
+      "suitable_archetypes": ["spoken explanation", "question and answer", "fallback for any unsupported visual recipe"],
+      "unsuitable_archetypes": ["dense comparison requiring simultaneous evidence", "precise spatial demonstration"],
+      "yymm4_observation_still_needed": ["subtitle typography and safe-area readability for each material layout change"]
+    },
+    {
+      "composition_id": "inspection_explanation",
+      "required_primitives": ["narration_voice", "caption_safe_reserve", "static_focus_hold"],
+      "optional_primitives": ["static_image_panel", "shape_marker", "short_text_label", "callout_label"],
+      "prohibited_combinations": ["claiming a proposed motion profile as implemented", "reproducing exact protected or sensitive object geometry"],
+      "allowed_scs_composition_types": ["center-focal", "reveal"],
+      "evidence_level": "C0",
+      "static_conformance_evidence_level": "C2",
+      "fallback_composition": "narration_baseline",
+      "cost_reuse_profile": {
+        "setup_weight": "W2",
+        "per_episode_burden": "medium",
+        "reuse_class": "archetype-specific",
+        "maintenance_surface": "medium",
+        "rights_dependency": "optional",
+        "recovery_complexity": "easy"
+      },
+      "suitable_archetypes": ["feature inspection", "mechanism explanation", "single-object evidence walk-through"],
+      "unsuitable_archetypes": ["many-way comparison", "continuous real-world action requiring footage"],
+      "yymm4_observation_still_needed": ["Shape/Text visibility", "callout anchors", "any reveal, zoom, tilt, pulse, or sweep request"]
+    },
+    {
+      "composition_id": "process_sequence",
+      "required_primitives": ["narration_voice", "caption_safe_reserve", "connector_line"],
+      "optional_primitives": ["static_image_panel", "shape_marker", "short_text_label", "group_motion_accent"],
+      "prohibited_combinations": ["five or more equal-weight nodes in one frame", "motion without a static fallback"],
+      "allowed_scs_composition_types": ["chain", "mediator"],
+      "evidence_level": "C0",
+      "static_conformance_evidence_level": "C2",
+      "fallback_composition": "narration_baseline",
+      "cost_reuse_profile": {
+        "setup_weight": "W2",
+        "per_episode_burden": "medium",
+        "reuse_class": "broad",
+        "maintenance_surface": "medium",
+        "rights_dependency": "optional",
+        "recovery_complexity": "medium"
+      },
+      "suitable_archetypes": ["three-stage procedure", "cause to effect", "handoff or decision flow"],
+      "unsuitable_archetypes": ["nonlinear network", "long unbounded workflow in one frame"],
+      "yymm4_observation_still_needed": ["connector visibility", "transition pacing", "motion continuity when used"]
+    },
+    {
+      "composition_id": "comparison_contrast",
+      "required_primitives": ["narration_voice", "caption_safe_reserve", "comparison_panel"],
+      "optional_primitives": ["short_text_label", "shape_marker", "connector_line"],
+      "prohibited_combinations": ["more than two focal sides", "unreviewed dense table or indexed card grid"],
+      "allowed_scs_composition_types": ["split", "mediator"],
+      "evidence_level": "C0",
+      "static_conformance_evidence_level": "C2",
+      "fallback_composition": "narration_baseline",
+      "cost_reuse_profile": {
+        "setup_weight": "W2",
+        "per_episode_burden": "medium",
+        "reuse_class": "broad",
+        "maintenance_surface": "medium",
+        "rights_dependency": "optional",
+        "recovery_complexity": "medium"
+      },
+      "suitable_archetypes": ["before and after", "option A versus option B", "two-sided tradeoff"],
+      "unsuitable_archetypes": ["three or more peer categories", "comparison requiring exact scale without verified data"],
+      "yymm4_observation_still_needed": ["panel balance", "label wrapping", "subtitle clearance and focal order"]
+    },
+    {
+      "composition_id": "callout_focus",
+      "required_primitives": ["narration_voice", "caption_safe_reserve", "static_focus_hold"],
+      "optional_primitives": ["callout_label", "shape_marker", "short_text_label"],
+      "prohibited_combinations": ["more than three simultaneous callouts", "long labels inside one-off geometry"],
+      "allowed_scs_composition_types": ["center-focal", "reveal"],
+      "evidence_level": "C0",
+      "static_conformance_evidence_level": "C2",
+      "fallback_composition": "inspection_explanation",
+      "cost_reuse_profile": {
+        "setup_weight": "W3",
+        "per_episode_burden": "high",
+        "reuse_class": "archetype-specific",
+        "maintenance_surface": "large",
+        "rights_dependency": "optional",
+        "recovery_complexity": "hard"
+      },
+      "suitable_archetypes": ["one focal object with one short annotation", "bounded misconception warning"],
+      "unsuitable_archetypes": ["paragraph annotation", "many moving callouts", "speech balloon dialogue"],
+      "yymm4_observation_still_needed": ["TextItem anchor", "overflow", "callout association and visual hierarchy"]
+    },
+    {
+      "composition_id": "recap_action_sequence",
+      "required_primitives": ["narration_voice", "caption_safe_reserve", "connector_line"],
+      "optional_primitives": ["shape_marker", "short_text_label", "static_image_panel"],
+      "prohibited_combinations": ["more than four visible steps", "animated sequence without observed timing"],
+      "allowed_scs_composition_types": ["chain", "center-focal"],
+      "evidence_level": "C0",
+      "static_conformance_evidence_level": "C2",
+      "fallback_composition": "narration_baseline",
+      "cost_reuse_profile": {
+        "setup_weight": "W2",
+        "per_episode_burden": "low",
+        "reuse_class": "broad",
+        "maintenance_surface": "small",
+        "rights_dependency": "optional",
+        "recovery_complexity": "easy"
+      },
+      "suitable_archetypes": ["two-to-four action recap", "memory aid", "final checklist"],
+      "unsuitable_archetypes": ["decision tree", "safety-critical complete procedure"],
+      "yymm4_observation_still_needed": ["step legibility", "motion sequencing if anything beyond static reveal is requested"]
+    }
+  ]
+}

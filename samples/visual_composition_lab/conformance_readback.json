@@ -1,0 +1,360 @@
+{
+  "schema_version": "generic_visual_composition_conformance_readback.v1",
+  "status": "passed",
+  "evidence_level": "C2",
+  "runtime_capability_proven": false,
+  "cross_topic_proven": false,
+  "generic_core_changed_per_fixture": false,
+  "validator": "src/pipeline/generic_visual_scene_ir.py",
+  "fixture_count": 3,
+  "fixture_archetypes": [
+    "comparison_contrast",
+    "inspection_explanation",
+    "process_sequence"
+  ],
+  "scene_counts": {
+    "synthetic_two_side_comparison_v1": 2,
+    "selected_route_A_inspection_fixture_v1": 3,
+    "synthetic_three_stage_process_v1": 4
+  },
+  "cue_counts": {
+    "synthetic_two_side_comparison_v1": 4,
+    "selected_route_A_inspection_fixture_v1": 9,
+    "synthetic_three_stage_process_v1": 5
+  },
+  "results": [
+    {
+      "fixture_id": "synthetic_two_side_comparison_v1",
+      "status": "static_conformance_pass",
+      "evidence_level": "C2",
+      "runtime_ready": false,
+      "cross_topic_proven": false,
+      "archetypes": [
+        "callout_focus",
+        "comparison_contrast"
+      ],
+      "scene_count": 2,
+      "cue_count": 4,
+      "primitive_count": 16,
+      "capability_requirement_count": 16,
+      "capability_gaps": [
+        {
+          "cue_id": "comparison_cue_01",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "primitive"
+        },
+        {
+          "cue_id": "comparison_cue_02",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "primitive"
+        },
+        {
+          "cue_id": "comparison_cue_03",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "primitive"
+        },
+        {
+          "cue_id": "comparison_cue_04",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "primitive"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "fixture_id": "selected_route_A_inspection_fixture_v1",
+      "status": "static_conformance_pass",
+      "evidence_level": "C2",
+      "runtime_ready": false,
+      "cross_topic_proven": false,
+      "archetypes": [
+        "callout_focus",
+        "comparison_contrast",
+        "inspection_explanation",
+        "recap_action_sequence"
+      ],
+      "scene_count": 3,
+      "cue_count": 9,
+      "primitive_count": 36,
+      "capability_requirement_count": 45,
+      "capability_gaps": [
+        {
+          "cue_id": "cue_001",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "primitive"
+        },
+        {
+          "cue_id": "cue_001",
+          "capability_id": "route_specific_motion_profiles",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "explicit"
+        },
+        {
+          "cue_id": "cue_002",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "inspection_explanation",
+          "requirement_source": "primitive"
+        },
+        {
+          "cue_id": "cue_002",
+          "capability_id": "route_specific_motion_profiles",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "inspection_explanation",
+          "requirement_source": "explicit"
+        },
+        {
+          "cue_id": "cue_002",
+          "capability_id": "shape_text_callout_materialization",
+          "actual": "C2",
+          "required": "C3",
+          "fallback": "inspection_explanation",
+          "requirement_source": "explicit+primitive"
+        },
+        {
+          "cue_id": "cue_003",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "inspection_explanation",
+          "requirement_source": "primitive"
+        },
+        {
+          "cue_id": "cue_003",
+          "capability_id": "route_specific_motion_profiles",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "inspection_explanation",
+          "requirement_source": "explicit"
+        },
+        {
+          "cue_id": "cue_004",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "inspection_explanation",
+          "requirement_source": "primitive"
+        },
+        {
+          "cue_id": "cue_004",
+          "capability_id": "route_specific_motion_profiles",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "inspection_explanation",
+          "requirement_source": "explicit"
+        },
+        {
+          "cue_id": "cue_004",
+          "capability_id": "scale_zoom_transform",
+          "actual": "C2",
+          "required": "C3",
+          "fallback": "inspection_explanation",
+          "requirement_source": "explicit"
+        },
+        {
+          "cue_id": "cue_005",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "inspection_explanation",
+          "requirement_source": "primitive"
+        },
+        {
+          "cue_id": "cue_005",
+          "capability_id": "route_specific_motion_profiles",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "inspection_explanation",
+          "requirement_source": "explicit"
+        },
+        {
+          "cue_id": "cue_006",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "inspection_explanation",
+          "requirement_source": "primitive"
+        },
+        {
+          "cue_id": "cue_006",
+          "capability_id": "route_specific_motion_profiles",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "inspection_explanation",
+          "requirement_source": "explicit"
+        },
+        {
+          "cue_id": "cue_007",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "primitive"
+        },
+        {
+          "cue_id": "cue_007",
+          "capability_id": "route_specific_motion_profiles",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "explicit"
+        },
+        {
+          "cue_id": "cue_008",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "primitive"
+        },
+        {
+          "cue_id": "cue_008",
+          "capability_id": "route_specific_motion_profiles",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "explicit"
+        },
+        {
+          "cue_id": "cue_009",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "primitive"
+        },
+        {
+          "cue_id": "cue_009",
+          "capability_id": "route_specific_motion_profiles",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "explicit"
+        }
+      ],
+      "warnings": [
+        "cue_001:motion_requires_runtime_observation",
+        "cue_002:motion_requires_runtime_observation",
+        "cue_003:motion_requires_runtime_observation",
+        "cue_004:motion_requires_runtime_observation",
+        "cue_005:motion_requires_runtime_observation",
+        "cue_006:motion_requires_runtime_observation",
+        "cue_007:motion_requires_runtime_observation",
+        "cue_008:motion_requires_runtime_observation",
+        "cue_009:motion_requires_runtime_observation"
+      ]
+    },
+    {
+      "fixture_id": "synthetic_three_stage_process_v1",
+      "status": "static_conformance_pass",
+      "evidence_level": "C2",
+      "runtime_ready": false,
+      "cross_topic_proven": false,
+      "archetypes": [
+        "callout_focus",
+        "narration_baseline",
+        "process_sequence",
+        "recap_action_sequence"
+      ],
+      "scene_count": 4,
+      "cue_count": 5,
+      "primitive_count": 20,
+      "capability_requirement_count": 18,
+      "capability_gaps": [
+        {
+          "cue_id": "process_cue_01",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "primitive"
+        },
+        {
+          "cue_id": "process_cue_02",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "primitive"
+        },
+        {
+          "cue_id": "process_cue_03",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "primitive"
+        },
+        {
+          "cue_id": "process_cue_04",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "primitive"
+        },
+        {
+          "cue_id": "process_cue_05",
+          "capability_id": "linked_subtitle_typography_layout",
+          "actual": "C0",
+          "required": "C3",
+          "fallback": "narration_baseline",
+          "requirement_source": "primitive"
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "capability_count": 38,
+  "availability_counts": {
+    "proven": 15,
+    "conditional": 14,
+    "unsupported": 5,
+    "unknown": 4
+  },
+  "evidence_level_counts": {
+    "C0": 5,
+    "C1": 3,
+    "C2": 14,
+    "C3": 14,
+    "C4": 2,
+    "C5": 0
+  },
+  "relevant_path_count": 78,
+  "unclassified_relevant_path_count": 0,
+  "checks": {
+    "same_validator_for_all_fixtures": true,
+    "variable_scene_counts": true,
+    "variable_cue_counts": true,
+    "inspection_fixture_present": true,
+    "process_fixture_present": true,
+    "comparison_fixture_present": true,
+    "runtime_overclaim_absent": true,
+    "C5_claim_absent": true,
+    "topic_payload_outside_core": true
+  },
+  "fixture_sha256": {
+    "samples/visual_composition_lab/fixtures/comparison_generic.json": "86941a948ed60caadc1ffaa1a06e86b25239dbf140f21ce3d15eac22f958ad52",
+    "samples/visual_composition_lab/fixtures/inspection_route_A.json": "78ed6f375f7b2d92b8c4413ebf8669364526868d990fb999dd4934b496887536",
+    "samples/visual_composition_lab/fixtures/process_generic.json": "ab2832c2df11eb1d6eb9de1da815e8134edd4e75f7dcbf72619607098f582bab"
+  }
+}

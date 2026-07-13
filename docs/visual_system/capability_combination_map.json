@@ -1,0 +1,106 @@
+{
+  "schema_version": "generic_visual_capability_combination_map.v1",
+  "policy": "A primitive may be proven while a combination remains conditional. The combination level never exceeds its weakest unobserved interaction.",
+  "combinations": [
+    {
+      "combination_id": "minimum_narration_baseline",
+      "primitive_ids": ["narration_voice", "linked_subtitle", "caption_safe_reserve"],
+      "capability_ids": ["voice_linked_subtitle_import", "no_transition_baseline", "linked_subtitle_typography_layout"],
+      "availability_class": "conditional",
+      "evidence_level": "C2",
+      "observed_scope": "Voice and linked subtitle import is C3; visual subtitle layout remains unknown.",
+      "fallback": "VoiceItem plus linked subtitle with default settings and reserved lower frame.",
+      "cost_reuse_profile": {"setup_weight": "W1", "per_episode_burden": "low", "reuse_class": "broad", "maintenance_surface": "small", "rights_dependency": "none", "recovery_complexity": "easy"}
+    },
+    {
+      "combination_id": "same_machine_voice_image_text_diagnostic",
+      "primitive_ids": ["narration_voice", "linked_subtitle", "static_image_panel", "short_text_label"],
+      "capability_ids": ["exact_voice_image_text_project_open", "observed_layer_assignment", "observed_frame_length_timing"],
+      "availability_class": "proven",
+      "evidence_level": "C3",
+      "observed_scope": "One fixed 9/3/3 project reopened with readable diagnostic labels.",
+      "fallback": "Voice-only project or one static image per scene without independent labels.",
+      "cost_reuse_profile": {"setup_weight": "W2", "per_episode_burden": "medium", "reuse_class": "topic-specific", "maintenance_surface": "medium", "rights_dependency": "required", "recovery_complexity": "medium"}
+    },
+    {
+      "combination_id": "precomposed_card_overlay",
+      "primitive_ids": ["narration_voice", "static_image_panel", "linked_subtitle"],
+      "capability_ids": ["card_image_visibility_with_dialogue", "overlay_imageitem_insertion"],
+      "availability_class": "proven",
+      "evidence_level": "C3",
+      "observed_scope": "Four cards visible in one diagnostic render observation; not media-decode verified.",
+      "fallback": "One full-scene static panel or narration-only baseline.",
+      "cost_reuse_profile": {"setup_weight": "W2", "per_episode_burden": "medium", "reuse_class": "archetype-specific", "maintenance_surface": "medium", "rights_dependency": "required", "recovery_complexity": "medium"}
+    },
+    {
+      "combination_id": "named_character_motion_accent",
+      "primitive_ids": ["character_group", "expression_badge", "group_motion_accent"],
+      "capability_ids": ["named_template_reuse", "expression_swap", "group_rotation_bounce_motion"],
+      "availability_class": "proven",
+      "evidence_level": "C3",
+      "observed_scope": "Selected named templates, expression assets and bounded nod-like motion only.",
+      "fallback": "Static character pose or omit the character accent.",
+      "cost_reuse_profile": {"setup_weight": "W3", "per_episode_burden": "medium", "reuse_class": "archetype-specific", "maintenance_surface": "large", "rights_dependency": "required", "recovery_complexity": "medium"}
+    },
+    {
+      "combination_id": "static_shape_text_callout",
+      "primitive_ids": ["static_focus_hold", "shape_marker", "callout_label"],
+      "capability_ids": ["static_shapeitem_materialization", "static_textitem_materialization", "shape_text_callout_materialization"],
+      "availability_class": "conditional",
+      "evidence_level": "C2",
+      "observed_scope": "Topic-specific static geometry only; generic YMM4 visual behavior is unobserved.",
+      "fallback": "One short TextItem or a precomposed reviewed image.",
+      "cost_reuse_profile": {"setup_weight": "W4", "per_episode_burden": "high", "reuse_class": "topic-specific", "maintenance_surface": "large", "rights_dependency": "none", "recovery_complexity": "hard"}
+    },
+    {
+      "combination_id": "conditional_fade_between_static_scenes",
+      "primitive_ids": ["static_image_panel", "linked_subtitle"],
+      "capability_ids": ["fade_transition_fields", "static_imageitem_materialization"],
+      "availability_class": "conditional",
+      "evidence_level": "C2",
+      "observed_scope": "Fade fields and static images materialize headlessly; interaction is unobserved.",
+      "fallback": "Use the proven no-transition baseline.",
+      "cost_reuse_profile": {"setup_weight": "W2", "per_episode_burden": "low", "reuse_class": "broad", "maintenance_surface": "small", "rights_dependency": "optional", "recovery_complexity": "easy"}
+    },
+    {
+      "combination_id": "conditional_background_motion",
+      "primitive_ids": ["static_background", "static_focus_hold"],
+      "capability_ids": ["background_layer_replacement", "background_pan_zoom", "arbitrary_item_transform_fields"],
+      "availability_class": "conditional",
+      "evidence_level": "C2",
+      "observed_scope": "Keyframes materialize, but generic pan/zoom visual behavior is not isolated in an observation.",
+      "fallback": "Static background hold.",
+      "cost_reuse_profile": {"setup_weight": "W3", "per_episode_burden": "medium", "reuse_class": "broad", "maintenance_surface": "large", "rights_dependency": "required", "recovery_complexity": "hard"}
+    },
+    {
+      "combination_id": "verified_internal_render_media",
+      "primitive_ids": ["narration_voice", "static_image_panel", "short_text_label"],
+      "capability_ids": ["decoded_internal_render", "decoded_review_proxy"],
+      "availability_class": "proven",
+      "evidence_level": "C4",
+      "observed_scope": "One exact project produced validated original and proxy MP4 media.",
+      "fallback": "Retain structural project evidence until a separately authorized render gate.",
+      "cost_reuse_profile": {"setup_weight": "W4", "per_episode_burden": "high", "reuse_class": "topic-specific", "maintenance_surface": "large", "rights_dependency": "required", "recovery_complexity": "hard"}
+    },
+    {
+      "combination_id": "static_cross_archetype_lab",
+      "primitive_ids": ["narration_voice", "caption_safe_reserve", "static_focus_hold", "connector_line", "comparison_panel"],
+      "capability_ids": ["static_cross_archetype_conformance", "static_shapeitem_materialization", "static_imageitem_materialization"],
+      "availability_class": "conditional",
+      "evidence_level": "C2",
+      "observed_scope": "Inspection, process and comparison fixtures pass one pure validator with varying counts.",
+      "fallback": "Reject invalid fixture or lower it to narration_baseline.",
+      "cost_reuse_profile": {"setup_weight": "W1", "per_episode_burden": "low", "reuse_class": "broad", "maintenance_surface": "small", "rights_dependency": "none", "recovery_complexity": "easy"}
+    },
+    {
+      "combination_id": "cross_topic_production_reuse",
+      "primitive_ids": ["narration_voice", "static_image_panel", "short_text_label"],
+      "capability_ids": ["real_cross_topic_core_reuse", "cross_machine_project_portability", "decoded_internal_render"],
+      "availability_class": "unknown",
+      "evidence_level": "C0",
+      "observed_scope": "No C5 reuse exists; static fixtures and separate topic builders do not qualify.",
+      "fallback": "Keep each real workflow diagnostic and measure core changes before making a reuse claim.",
+      "cost_reuse_profile": {"setup_weight": "W5", "per_episode_burden": "high", "reuse_class": "broad", "maintenance_surface": "large", "rights_dependency": "required", "recovery_complexity": "hard"}
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "schema_version": "generic_visual_scene_ir.v1",
+  "fixture_id": "selected_route_A_inspection_fixture_v1",
+  "fixture_archetype": "inspection_explanation",
+  "fixture_role": "selected_route_data_only_conformance_fixture",
+  "evidence_boundary": {
+    "static_maximum": "C2",
+    "source_selection_status": "recommended_not_selected_in_source_packet",
+    "fixture_selection_context": "selected_for_conformance_fixture_only_by_current_supervisor_contract",
+    "runtime_ready": false,
+    "implementation_authorized": false,
+    "render_authorized": false,
+    "cross_topic_proven": false
+  },
+  "payload": {
+    "source_packet_refs": [
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/recommended_visual_direction.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/scene_layout_plan.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/motion_beat_plan.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/asset_rights_matrix.json"
+    ],
+    "route": {"label": "Route A", "name": "Security Inspection Lab", "role": "conformance fixture only"},
+    "palette_proposal": {"paper_field": "off-white", "primary_ink": "ink blue", "security_layer": "security green", "attention_accent": "restrained orange"},
+    "rights_boundary": "Original abstract schematic only. No recognizable portraits, serials, seals, full-note layouts, real security textures, or repeatable exact placement/detail.",
+    "cue_payloads": [
+      {"cue_id": "cue_001", "text": "2024年に発行された新しいお札って、見た目以外にも変わったところがあるの？", "claim_refs": ["claim_010"], "source_refs": ["V02"], "factual_boundary": "2024年発行だけを扱う。発行目的、経済効果、政策意図は示さない。", "original_motion_label": "outline_reveal", "frame": 0, "length_frames": 391},
+      {"cue_id": "cue_002", "text": "あるぞ。偽造防止では、高精細すき入れや3Dホログラムなど複数の技術を組み合わせている。誰にとっても使いやすいユニバーサルデザインも取り入れたんだ。", "claim_refs": ["claim_090", "claim_065", "claim_099", "claim_161"], "source_refs": ["V06", "V13", "V02"], "factual_boundary": "複数技術とユニバーサルデザインの採用意図まで。効果、優位性、新規性の実証は主張しない。", "original_motion_label": "layer_callout_reveal", "frame": 391, "length_frames": 705},
+      {"cue_id": "cue_003", "text": "まずは高精細すき入れ。光に透かすと、細かな模様が見えるんだぜ。", "claim_refs": ["claim_090"], "source_refs": ["V06"], "factual_boundary": "透過光で細かな模様が見えることだけを抽象化する。実券の肖像、位置、寸法、製法を再現しない。", "original_motion_label": "light_sweep", "frame": 1096, "length_frames": 338},
+      {"cue_id": "cue_004", "text": "次は3Dホログラム。角度を変えると、三次元の肖像が回転して見えるぞ。", "claim_refs": ["claim_065", "claim_067"], "source_refs": ["V06", "V07"], "factual_boundary": "角度で三次元の肖像が回転して見える現象を非肖像シルエットで示す。実際の形状、位置、箔模様は示さない。", "original_motion_label": "restrained_tilt_parallax", "frame": 1434, "length_frames": 384},
+      {"cue_id": "cue_005", "text": "触るとざらざらするのは、額面数字などのインキを高く盛り上げる深凹版印刷なんだね。", "claim_refs": ["claim_116"], "source_refs": ["V06"], "factual_boundary": "額面数字などの盛り上がりと触感だけを概念化する。版、工程、インキ高さなど再現可能な製造情報を示さない。", "original_motion_label": "tactile_pulse", "frame": 1818, "length_frames": 407},
+      {"cue_id": "cue_006", "text": "マイクロ文字の『NIPPONGINKO』は、ルーペで確かめられる。カラーコピー機では再現が難しいほど小さい文字なんだ。", "claim_refs": ["claim_096", "claim_097"], "source_refs": ["V06"], "factual_boundary": "NIPPONGINKOを単一の模式ラベルとして示す。実寸、密度、位置、周辺模様は再現せず、複写は困難という範囲に留める。", "original_motion_label": "loupe_zoom", "frame": 2225, "length_frames": 610},
+      {"cue_id": "cue_007", "text": "見分けやすさの工夫では、識別マークを11本の斜線にそろえ、券種ごとに位置を変えているぜ。", "claim_refs": ["claim_118", "claim_130", "claim_132"], "source_refs": ["V13", "V06", "V02"], "factual_boundary": "11本の斜線と券種別の位置差を模式図で示す。座標、角度、太さ、性能評価は示さない。", "original_motion_label": "position_marker_step", "frame": 2835, "length_frames": 427},
+      {"cue_id": "cue_008", "text": "額面の数字は前のシリーズのお札より大きい。一万円券と千円券ではホログラムの形や位置が違い、千円券の中央には橙色のグラデーションもあるんだね。", "claim_refs": ["claim_114", "claim_155", "claim_157"], "source_refs": ["V02"], "factual_boundary": "E券より大きい額面数字、F券内の一万円券と千円券のホログラム差、千円券中央の橙色グラデーションだけを縮尺外の抽象図で示す。", "original_motion_label": "bounded_difference_reveal", "frame": 3262, "length_frames": 733},
+      {"cue_id": "cue_009", "text": "確かめ方は、透かす、触る、傾ける、ルーペで見る。この四つを覚えておこう。", "claim_refs": ["claim_090", "claim_116", "claim_065", "claim_096"], "source_refs": ["V06"], "factual_boundary": "透かす・触る・傾ける・ルーペで見るを確認行動として示す。真贋保証や完全な判定手順とは扱わない。", "original_motion_label": "four_action_sequence", "frame": 3995, "length_frames": 420}
+    ]
+  },
+  "scenes": [
+    {"scene_id": "S1", "semantic_role": "question_and_overview", "default_layout_archetype": "inspection_explanation", "cue_ids": ["cue_001", "cue_002"], "rights_boundary": "original_only", "cost_profile_id": "W2"},
+    {"scene_id": "S2", "semantic_role": "four_technique_inspection", "default_layout_archetype": "inspection_explanation", "cue_ids": ["cue_003", "cue_004", "cue_005", "cue_006"], "rights_boundary": "original_only", "cost_profile_id": "W3"},
+    {"scene_id": "S3", "semantic_role": "identification_and_action_recap", "default_layout_archetype": "comparison_contrast", "cue_ids": ["cue_007", "cue_008", "cue_009"], "rights_boundary": "original_only", "cost_profile_id": "W3"}
+  ],
+  "cues": [
+    {
+      "cue_id": "cue_001", "scene_id": "S1", "sequence": 1, "layout_archetype": "inspection_explanation", "scs_composition_type": "center-focal",
+      "timing_anchor": {"kind": "observed_voice_interval", "start_frame": 0, "end_frame": 391},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}, {"primitive_id": "static_focus_hold", "role": "focal_anchor"}, {"primitive_id": "short_text_label", "role": "label"}],
+      "overlay_refs": ["payload.cue_payloads[0]"], "motion_request": {"intent": "reveal", "status": "proposed_unobserved"},
+      "capability_requirements": [{"capability_id": "voice_linked_subtitle_import", "minimum_evidence_level": "C3"}, {"capability_id": "route_specific_motion_profiles", "minimum_evidence_level": "C3"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "narration_baseline", "reason": "static question label or narration only"}
+    },
+    {
+      "cue_id": "cue_002", "scene_id": "S1", "sequence": 2, "layout_archetype": "callout_focus", "scs_composition_type": "center-focal",
+      "timing_anchor": {"kind": "observed_voice_interval", "start_frame": 391, "end_frame": 1096},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}, {"primitive_id": "static_focus_hold", "role": "focal_anchor"}, {"primitive_id": "callout_label", "role": "supporting"}],
+      "overlay_refs": ["payload.cue_payloads[1]"], "motion_request": {"intent": "reveal", "status": "proposed_unobserved"},
+      "capability_requirements": [{"capability_id": "shape_text_callout_materialization", "minimum_evidence_level": "C3"}, {"capability_id": "route_specific_motion_profiles", "minimum_evidence_level": "C3"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "inspection_explanation", "reason": "one static focal panel without callout animation"}
+    },
+    {
+      "cue_id": "cue_003", "scene_id": "S2", "sequence": 3, "layout_archetype": "inspection_explanation", "scs_composition_type": "reveal",
+      "timing_anchor": {"kind": "observed_voice_interval", "start_frame": 1096, "end_frame": 1434},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}, {"primitive_id": "static_focus_hold", "role": "focal_anchor"}, {"primitive_id": "shape_marker", "role": "supporting"}],
+      "overlay_refs": ["payload.cue_payloads[2]"], "motion_request": {"intent": "reveal", "status": "proposed_unobserved"},
+      "capability_requirements": [{"capability_id": "static_shapeitem_materialization", "minimum_evidence_level": "C2"}, {"capability_id": "route_specific_motion_profiles", "minimum_evidence_level": "C3"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "inspection_explanation", "reason": "static abstract marker with no sweep"}
+    },
+    {
+      "cue_id": "cue_004", "scene_id": "S2", "sequence": 4, "layout_archetype": "inspection_explanation", "scs_composition_type": "center-focal",
+      "timing_anchor": {"kind": "observed_voice_interval", "start_frame": 1434, "end_frame": 1818},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}, {"primitive_id": "static_focus_hold", "role": "focal_anchor"}, {"primitive_id": "shape_marker", "role": "supporting"}],
+      "overlay_refs": ["payload.cue_payloads[3]"], "motion_request": {"intent": "move", "status": "proposed_unobserved"},
+      "capability_requirements": [{"capability_id": "scale_zoom_transform", "minimum_evidence_level": "C3"}, {"capability_id": "route_specific_motion_profiles", "minimum_evidence_level": "C3"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "inspection_explanation", "reason": "static angle marker and narration"}
+    },
+    {
+      "cue_id": "cue_005", "scene_id": "S2", "sequence": 5, "layout_archetype": "inspection_explanation", "scs_composition_type": "center-focal",
+      "timing_anchor": {"kind": "observed_voice_interval", "start_frame": 1818, "end_frame": 2225},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}, {"primitive_id": "static_focus_hold", "role": "focal_anchor"}, {"primitive_id": "shape_marker", "role": "supporting"}],
+      "overlay_refs": ["payload.cue_payloads[4]"], "motion_request": {"intent": "emphasize", "status": "proposed_unobserved"},
+      "capability_requirements": [{"capability_id": "static_shapeitem_materialization", "minimum_evidence_level": "C2"}, {"capability_id": "route_specific_motion_profiles", "minimum_evidence_level": "C3"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "inspection_explanation", "reason": "static abstract ridge marker"}
+    },
+    {
+      "cue_id": "cue_006", "scene_id": "S2", "sequence": 6, "layout_archetype": "callout_focus", "scs_composition_type": "center-focal",
+      "timing_anchor": {"kind": "observed_voice_interval", "start_frame": 2225, "end_frame": 2835},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}, {"primitive_id": "static_focus_hold", "role": "focal_anchor"}, {"primitive_id": "short_text_label", "role": "label"}],
+      "overlay_refs": ["payload.cue_payloads[5]"], "motion_request": {"intent": "emphasize", "status": "proposed_unobserved"},
+      "capability_requirements": [{"capability_id": "static_textitem_materialization", "minimum_evidence_level": "C2"}, {"capability_id": "route_specific_motion_profiles", "minimum_evidence_level": "C3"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "inspection_explanation", "reason": "static schematic label without zoom"}
+    },
+    {
+      "cue_id": "cue_007", "scene_id": "S3", "sequence": 7, "layout_archetype": "comparison_contrast", "scs_composition_type": "split",
+      "timing_anchor": {"kind": "observed_voice_interval", "start_frame": 2835, "end_frame": 3262},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}, {"primitive_id": "comparison_panel", "role": "focal_anchor"}, {"primitive_id": "shape_marker", "role": "supporting"}],
+      "overlay_refs": ["payload.cue_payloads[6]"], "motion_request": {"intent": "move", "status": "proposed_unobserved"},
+      "capability_requirements": [{"capability_id": "static_cross_archetype_conformance", "minimum_evidence_level": "C2"}, {"capability_id": "route_specific_motion_profiles", "minimum_evidence_level": "C3"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "narration_baseline", "reason": "describe the abstract position difference sequentially"}
+    },
+    {
+      "cue_id": "cue_008", "scene_id": "S3", "sequence": 8, "layout_archetype": "comparison_contrast", "scs_composition_type": "split",
+      "timing_anchor": {"kind": "observed_voice_interval", "start_frame": 3262, "end_frame": 3995},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}, {"primitive_id": "comparison_panel", "role": "focal_anchor"}, {"primitive_id": "short_text_label", "role": "label"}],
+      "overlay_refs": ["payload.cue_payloads[7]"], "motion_request": {"intent": "reveal", "status": "proposed_unobserved"},
+      "capability_requirements": [{"capability_id": "static_textitem_materialization", "minimum_evidence_level": "C2"}, {"capability_id": "route_specific_motion_profiles", "minimum_evidence_level": "C3"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "narration_baseline", "reason": "avoid simultaneous comparison if the panel could mislead"}
+    },
+    {
+      "cue_id": "cue_009", "scene_id": "S3", "sequence": 9, "layout_archetype": "recap_action_sequence", "scs_composition_type": "chain",
+      "timing_anchor": {"kind": "observed_voice_interval", "start_frame": 3995, "end_frame": 4415},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}, {"primitive_id": "connector_line", "role": "connector"}, {"primitive_id": "shape_marker", "role": "supporting"}],
+      "overlay_refs": ["payload.cue_payloads[8]"], "motion_request": {"intent": "reveal", "status": "proposed_unobserved"},
+      "capability_requirements": [{"capability_id": "static_shapeitem_materialization", "minimum_evidence_level": "C2"}, {"capability_id": "route_specific_motion_profiles", "minimum_evidence_level": "C3"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "narration_baseline", "reason": "speak the four actions without an animated sequence"}
+    }
+  ]
+}

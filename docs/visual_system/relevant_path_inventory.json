@@ -1,0 +1,560 @@
+{
+  "schema_version": "generic_visual_relevant_path_inventory.v1",
+  "scope": "Visual/YMM4 paths that implement, validate, reference, or evidence the requested capability envelope. Editorial ingestion and unrelated newsroom business logic are excluded.",
+  "method": "Tracked-code search plus targeted receipt/readback inspection; supporting siblings are represented by the narrowest authoritative path rather than counting every generated mirror.",
+  "unclassified_relevant_path_count": 0,
+  "excluded_path_classes": [
+    "source acquisition and claim adjudication",
+    "dashboard-only presentation code",
+    "audio/TTS work without a visual or YMM4 project boundary",
+    "unreceipted sample projects used only as corpus"
+  ],
+  "paths": [
+    {
+      "path_id": "path_001",
+      "path": "src/pipeline/ymmp_patch.py",
+      "classification": "reusable_core",
+      "capability_relevance": "VoiceItem preservation, Frame/Length, layer, background/overlay ImageItem, GroupItem motion, fade and transform routes",
+      "scope_reason": "Main generic project patch path; runtime support remains bounded by separate receipts."
+    },
+    {
+      "path_id": "path_002",
+      "path": "src/cli/main.py",
+      "classification": "reusable_core",
+      "capability_relevance": "CLI wiring for project patch and focused visual utilities",
+      "scope_reason": "Execution entrypoint for generic patch paths."
+    },
+    {
+      "path_id": "path_003",
+      "path": "src/pipeline/ir_validate.py",
+      "classification": "reusable_core",
+      "capability_relevance": "Writer IR validation for transition, background, motion target and overlay references",
+      "scope_reason": "Adjacent utterance IR authority; not reused as Scene IR."
+    },
+    {
+      "path_id": "path_004",
+      "path": "src/pipeline/ymmp_openability.py",
+      "classification": "reusable_core",
+      "capability_relevance": "Headless project shape and layer-setting normalization",
+      "scope_reason": "Static openability prerequisite only."
+    },
+    {
+      "path_id": "path_005",
+      "path": "src/pipeline/ymmp_extract.py",
+      "classification": "reusable_core",
+      "capability_relevance": "Voice/Tachie template and layer-0 image/video reference extraction",
+      "scope_reason": "Generic read path for existing project templates."
+    },
+    {
+      "path_id": "path_006",
+      "path": "src/pipeline/ymmp_measure.py",
+      "classification": "reusable_core",
+      "capability_relevance": "Static item, transform, effect and fade-route measurement",
+      "scope_reason": "Readback evidence is C2 unless paired with observation."
+    },
+    {
+      "path_id": "path_007",
+      "path": "src/pipeline/skit_group_placement.py",
+      "classification": "reusable_core",
+      "capability_relevance": "GroupItem/ImageItem template cloning, timing/layer shift and anchor placement",
+      "scope_reason": "Generic named-template placement implementation."
+    },
+    {
+      "path_id": "path_008",
+      "path": "src/pipeline/skit_group_audit.py",
+      "classification": "reusable_core",
+      "capability_relevance": "Registry, template and anchor validation",
+      "scope_reason": "Fail-closed template audit path."
+    },
+    {
+      "path_id": "path_009",
+      "path": "src/pipeline/motion_recipe.py",
+      "classification": "pilot_local_reusable_helper",
+      "capability_relevance": "Group/Image motion recipe materialization and effect reuse",
+      "scope_reason": "Data-driven helper, but runtime generality is not established."
+    },
+    {
+      "path_id": "path_010",
+      "path": "src/pipeline/media_validation.py",
+      "classification": "reusable_core",
+      "capability_relevance": "ISO-BMFF, ffprobe and ffmpeg decode validation",
+      "scope_reason": "Provides the strict C4 media boundary."
+    },
+    {
+      "path_id": "path_011",
+      "path": "docs/SCENE_COMPOSITION_SCHEMA.md",
+      "classification": "reusable_core",
+      "capability_relevance": "SCS geometry types, roles, safe areas, reading order and static composition checks",
+      "scope_reason": "Existing generic composition authority extended by the new data grammar."
+    },
+    {
+      "path_id": "path_012",
+      "path": "docs/PRODUCTION_PIPELINE_CONTRACT.md",
+      "classification": "reusable_core",
+      "capability_relevance": "Script beat to visual direction, shot layout and motion-plan stage boundary",
+      "scope_reason": "Defines ownership between editorial and visual layers."
+    },
+    {
+      "path_id": "path_013",
+      "path": "docs/PRODUCTION_IR_SPEC.md",
+      "classification": "reusable_core",
+      "capability_relevance": "Existing utterance-centered IR and adapter-label contract",
+      "scope_reason": "Kept separate because it does not model composition."
+    },
+    {
+      "path_id": "path_014",
+      "path": "samples/timeline_route_contract.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "Static route corpus for transform/effect compatibility",
+      "scope_reason": "C2 corpus, not YMM4 observation."
+    },
+    {
+      "path_id": "path_015",
+      "path": "samples/templates/skit_group/delivery_v1_templates.ymmp",
+      "classification": "historical_evidence",
+      "capability_relevance": "Named GroupItem/ImageItem motion templates",
+      "scope_reason": "Specific templates have observation evidence; the file is not universal capability proof."
+    },
+    {
+      "path_id": "path_016",
+      "path": "samples/registry_template/skit_group_registry.template.json",
+      "classification": "reusable_core",
+      "capability_relevance": "Registry schema for template lookup and placement",
+      "scope_reason": "Reusable registry contract."
+    },
+    {
+      "path_id": "path_017",
+      "path": "samples/group_motion_map.example.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "Relative GroupItem X/Y/Zoom motion vocabulary",
+      "scope_reason": "Static example and source for C2 tests."
+    },
+    {
+      "path_id": "path_018",
+      "path": "samples/tachie_motion_map_library.json",
+      "classification": "reusable_core",
+      "capability_relevance": "Named character-motion map data",
+      "scope_reason": "Reusable data library; each runtime route needs observation."
+    },
+    {
+      "path_id": "path_019",
+      "path": "tests/test_ymmp_template.py",
+      "classification": "reusable_core",
+      "capability_relevance": "Static Voice/Tachie/background/overlay/AudioItem materialization tests",
+      "scope_reason": "C2 code-path evidence."
+    },
+    {
+      "path_id": "path_020",
+      "path": "tests/test_ymmp_motion_patch.py",
+      "classification": "reusable_core",
+      "capability_relevance": "Static Image/Group transform splitting and clipping tests",
+      "scope_reason": "C2 motion-structure evidence."
+    },
+    {
+      "path_id": "path_021",
+      "path": "tests/test_ymmp_transition_patch.py",
+      "classification": "reusable_core",
+      "capability_relevance": "None/fade transition field tests",
+      "scope_reason": "C2 transition-structure evidence."
+    },
+    {
+      "path_id": "path_022",
+      "path": "tests/test_ymmp_bg_anim_patch.py",
+      "classification": "reusable_core",
+      "capability_relevance": "Static pan/zoom background keyframe tests",
+      "scope_reason": "C2 only; no generic observed background motion."
+    },
+    {
+      "path_id": "path_023",
+      "path": "tests/test_skit_group_placement.py",
+      "classification": "reusable_core",
+      "capability_relevance": "Template placement and asset-resolution tests",
+      "scope_reason": "C2 placement evidence."
+    },
+    {
+      "path_id": "path_024",
+      "path": "tests/test_motion_recipe.py",
+      "classification": "pilot_local_reusable_helper",
+      "capability_relevance": "Motion recipe project/readback determinism",
+      "scope_reason": "Static recipe evidence, not runtime proof."
+    },
+    {
+      "path_id": "path_025",
+      "path": "tests/test_media_validation.py",
+      "classification": "reusable_core",
+      "capability_relevance": "Media structure, probe and decode failure tests",
+      "scope_reason": "Supports the strict C4 validator."
+    },
+    {
+      "path_id": "path_026",
+      "path": "src/pipeline/ymm4_diagnostic_placeholder_proof.py",
+      "classification": "topic_specific",
+      "capability_relevance": "Fixed Episode fixture that preserves VoiceItems and appends Image/Text placeholders",
+      "scope_reason": "Contains fixed scene/cue/speaker assumptions and is evidence, not generic architecture."
+    },
+    {
+      "path_id": "path_027",
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_readback.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "C2 structure for 9 Voice, 3 Image and 3 Text items",
+      "scope_reason": "Headless materialization readback."
+    },
+    {
+      "path_id": "path_028",
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_receipt.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "C3 actual reopen and readable fixed labels",
+      "scope_reason": "Exact diagnostic combination only."
+    },
+    {
+      "path_id": "path_029",
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_diagnostic_placeholder_proof/diagnostic_project_manifest.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "Local ImageItem path and portability boundary",
+      "scope_reason": "Records that relative cross-machine portability is unproven."
+    },
+    {
+      "path_id": "path_030",
+      "path": "src/pipeline/verified_local_evidence_input_pilot.py",
+      "classification": "topic_specific",
+      "capability_relevance": "Episode-specific project/render operator workflow",
+      "scope_reason": "Fixed real-input pilot, not a generic renderer."
+    },
+    {
+      "path_id": "path_031",
+      "path": "src/pipeline/internal_render_review.py",
+      "classification": "pilot_local_reusable_helper",
+      "capability_relevance": "Project/render identity, media validation and review receipt creation",
+      "scope_reason": "Reusable evidence collector around a fixed pilot."
+    },
+    {
+      "path_id": "path_032",
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/render_validation_readback.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "C4 ISO-BMFF, ffprobe and full-file decode evidence",
+      "scope_reason": "Strong media evidence for one exact project/render."
+    },
+    {
+      "path_id": "path_033",
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/render_receipt.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "C4 operator render receipt and original/proxy identities",
+      "scope_reason": "Does not prove semantic or editorial acceptance."
+    },
+    {
+      "path_id": "path_034",
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/verified_local_evidence_input_pilot/source_to_output_traceability.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "Project-to-render traceability and semantic unknown boundary",
+      "scope_reason": "Separates media validity from content correctness."
+    },
+    {
+      "path_id": "path_035",
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_csv_gate_observation_receipt_2026-07-11.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "C3 VoiceItem plus linked subtitle import and character binding",
+      "scope_reason": "Observed Episode fixture."
+    },
+    {
+      "path_id": "path_036",
+      "path": "src/pipeline/new_banknote_yymm4_import_intake_visual_decision.py",
+      "classification": "topic_specific",
+      "capability_relevance": "Current import evidence intake and Route packet generation",
+      "scope_reason": "All domain facts and fixed counts remain outside generic core."
+    },
+    {
+      "path_id": "path_037",
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/yymm4_import_observation_readback.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "C3 saved VoiceItem import observation with actual timing",
+      "scope_reason": "Exact text/order evidence; no visual capability proof."
+    },
+    {
+      "path_id": "path_038",
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/scene_layout_plan.json",
+      "classification": "topic_specific",
+      "capability_relevance": "Selected inspection fixture payload source",
+      "scope_reason": "Proposed scene data only; implementation remains unauthorized."
+    },
+    {
+      "path_id": "path_039",
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/motion_beat_plan.json",
+      "classification": "topic_specific",
+      "capability_relevance": "Proposed motion labels for the inspection fixture",
+      "scope_reason": "All named profiles are C0 until observed."
+    },
+    {
+      "path_id": "path_040",
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/yymm4_visual_project_contract.json",
+      "classification": "topic_specific",
+      "capability_relevance": "Explicit not-authorized/not-started project boundary",
+      "scope_reason": "Prevents Route selection from becoming runtime evidence."
+    },
+    {
+      "path_id": "path_041",
+      "path": "src/pipeline/newsroom_yukkuri_animation_primitive_probe_materialization.py",
+      "classification": "topic_specific",
+      "capability_relevance": "Expression, position, entry/exit and nod probe construction",
+      "scope_reason": "Fixed newsroom probe used only as bounded historical evidence."
+    },
+    {
+      "path_id": "path_042",
+      "path": "samples/_probe/newsroom_handoff/yukkuri_animation_primitive_preview_observation_v1.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "C3 observed expression and motion with timing/anchor warnings",
+      "scope_reason": "Specific presets only."
+    },
+    {
+      "path_id": "path_043",
+      "path": "src/pipeline/newsroom_background_animation_minimal_integrated_scene.py",
+      "classification": "topic_specific",
+      "capability_relevance": "Integrated accent-scene probe construction",
+      "scope_reason": "Does not independently prove generic background pan/zoom."
+    },
+    {
+      "path_id": "path_044",
+      "path": "samples/_probe/newsroom_handoff/background_animation_minimal_integrated_scene_preview_observation_v1.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "C3 expression followed by nod-like motion observation",
+      "scope_reason": "Background transform semantics remain conditional."
+    },
+    {
+      "path_id": "path_045",
+      "path": "src/pipeline/newsroom_yym4_card_asset_placement_probe.py",
+      "classification": "topic_specific",
+      "capability_relevance": "External precomposed card ImageItem placement",
+      "scope_reason": "Specific card path, not a general asset system."
+    },
+    {
+      "path_id": "path_046",
+      "path": "samples/_probe/newsroom_handoff/card_placement_render_smoke_result_readback_v1.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "C3 screenshot-supported card visibility and render observation",
+      "scope_reason": "No retained media decode, so not C4."
+    },
+    {
+      "path_id": "path_047",
+      "path": "samples/_probe/newsroom_handoff/internal_review_v0_1_result_readback_v1.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "Negative C3 evidence for production-quality card composition",
+      "scope_reason": "Clipping, wrapping, scale and variation failures establish an unsupported boundary."
+    },
+    {
+      "path_id": "path_048",
+      "path": "scripts/build_g27_diagnostic_carrier.js",
+      "classification": "topic_specific",
+      "capability_relevance": "One-off ShapeItem/TextItem split carrier construction",
+      "scope_reason": "Geometry logic is domain-bound and not imported by generic core."
+    },
+    {
+      "path_id": "path_049",
+      "path": "samples/_probe/g24/real_estate_dx_diagnostic_carrier_readback.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "C2 Shape/Text split composition and static callout-like roles",
+      "scope_reason": "Diagnostic-only, no render."
+    },
+    {
+      "path_id": "path_050",
+      "path": "scripts/build_g28_game_mechanics_ymmp_probe.js",
+      "classification": "topic_specific",
+      "capability_relevance": "One-off Shape/Text chain and callout construction",
+      "scope_reason": "Contains domain geometry and targeted label repair."
+    },
+    {
+      "path_id": "path_051",
+      "path": "samples/_probe/g28/lecture_diagram_carrier_game_mechanics_explanation_ymmp_diagnostic_probe_readback.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "C2 materialized 12 Shape and 7 Text items with callouts",
+      "scope_reason": "Final visual recheck remains human-owned; no generic runtime claim."
+    },
+    {
+      "path_id": "path_052",
+      "path": "docs/MOTION_CALIBRATION_GUIDE.md",
+      "classification": "historical_evidence",
+      "capability_relevance": "C3 bounded rotation, bounce, face and selected effect observations",
+      "scope_reason": "Only the named calibration patterns are observed."
+    },
+    {
+      "path_id": "path_053",
+      "path": "docs/verification/B2-haitatsuin-motion-groupitem-2026-04-19.md",
+      "classification": "historical_evidence",
+      "capability_relevance": "C3 specific GroupItem X/Y/Zoom and body/face synchronization",
+      "scope_reason": "Cannot be generalized to arbitrary item families."
+    },
+    {
+      "path_id": "path_054",
+      "path": "docs/SKIT_GROUP_TEMPLATE_SPEC.md",
+      "classification": "historical_evidence",
+      "capability_relevance": "Observed named template behavior and template constraints",
+      "scope_reason": "Specific template families only."
+    },
+    {
+      "path_id": "path_055",
+      "path": "src/pipeline/output_template_readiness_pack.py",
+      "classification": "pilot_local_reusable_helper",
+      "capability_relevance": "Episode scene-template registry and static handoff readiness",
+      "scope_reason": "Fixed three-scene pilot; referenced for gaps, not imported."
+    },
+    {
+      "path_id": "path_056",
+      "path": "src/pipeline/editing_operations_readiness_pack.py",
+      "classification": "pilot_local_reusable_helper",
+      "capability_relevance": "Static edit-operation, timing, asset slot and readback schema",
+      "scope_reason": "Pilot-local contract evidence."
+    },
+    {
+      "path_id": "path_057",
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/output_template_readiness_pack/visual_scene_template_registry.json",
+      "classification": "pilot_local_reusable_helper",
+      "capability_relevance": "Scene template assignment data",
+      "scope_reason": "Fixed Episode data, not generic C5 reuse."
+    },
+    {
+      "path_id": "path_058",
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/editing_operations_readiness_pack/operation_gap_ledger.json",
+      "classification": "pilot_local_reusable_helper",
+      "capability_relevance": "Known manual/YMM4 operation gaps",
+      "scope_reason": "Useful negative boundary evidence."
+    },
+    {
+      "path_id": "path_059",
+      "path": "src/pipeline/capability_atlas.py",
+      "classification": "obsolete_duplicate",
+      "capability_relevance": "Legacy route inventory with incompatible direct_proven terminology",
+      "scope_reason": "Path seed only; its labels are not mapped to the C0-C5 ladder."
+    },
+    {
+      "path_id": "path_060",
+      "path": "docs/TIMELINE_EFFECT_CAPABILITY_ATLAS.md",
+      "classification": "obsolete_duplicate",
+      "capability_relevance": "Legacy human atlas of timeline/effect routes",
+      "scope_reason": "Superseded for evidence grading by this package."
+    },
+    {
+      "path_id": "path_061",
+      "path": "samples/_probe/g24/real_estate_dx_visual_proxy_v2_probe_readback.json",
+      "classification": "obsolete_duplicate",
+      "capability_relevance": "Negative evidence for indexed-whiteboard composition",
+      "scope_reason": "Historical failure, not a reusable scene recipe."
+    },
+    {
+      "path_id": "path_062",
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/yymm4_import_observation_limitations.md",
+      "classification": "historical_evidence",
+      "capability_relevance": "Import-observation limits for timing, subtitle layout, visuals, render and portability",
+      "scope_reason": "Directly bounds C3 import evidence without upgrading adjacent visual capabilities."
+    },
+    {
+      "path_id": "path_063",
+      "path": "samples/_probe/newsroom_handoff/yukkuri_animation_primitive_inventory_v1.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "Prior primitive and route inventory used as a path seed",
+      "scope_reason": "Its labels are regraded through the current C0-C5 matrix rather than reused as proof."
+    },
+    {
+      "path_id": "path_064",
+      "path": "tests/test_ymm4_diagnostic_placeholder_proof.py",
+      "classification": "historical_evidence",
+      "capability_relevance": "Focused validation of the fixed Voice/Image/Text diagnostic project contract",
+      "scope_reason": "Supports the exact topic-local C2/C3 boundary, not generic runtime behavior."
+    },
+    {
+      "path_id": "path_065",
+      "path": "docs/visual_system/generic_visual_capability_matrix.json",
+      "classification": "reusable_core",
+      "capability_relevance": "Authoritative availability, evidence, limitation, fallback and cost classification",
+      "scope_reason": "Machine-readable capability envelope for this generic lane."
+    },
+    {
+      "path_id": "path_066",
+      "path": "docs/visual_system/capability_evidence_ledger.json",
+      "classification": "reusable_core",
+      "capability_relevance": "Evidence records and complete capability-to-evidence coverage",
+      "scope_reason": "Keeps proof artifacts distinct from capability claims."
+    },
+    {
+      "path_id": "path_067",
+      "path": "docs/visual_system/visual_primitive_catalog.json",
+      "classification": "reusable_core",
+      "capability_relevance": "Topic-independent primitive vocabulary with capability and evidence requirements",
+      "scope_reason": "Feeds the generic fixture validator without domain constants."
+    },
+    {
+      "path_id": "path_068",
+      "path": "docs/visual_system/scene_composition_grammar.json",
+      "classification": "reusable_core",
+      "capability_relevance": "Six generic composition recipes layered over existing SCS geometry",
+      "scope_reason": "Separates static conformance evidence from whole-composition evidence floors."
+    },
+    {
+      "path_id": "path_069",
+      "path": "docs/visual_system/capability_combination_map.json",
+      "classification": "reusable_core",
+      "capability_relevance": "Primitive combinations, evidence boundaries, fallbacks and cost profiles",
+      "scope_reason": "Machine-readable combination contract with no topic adapter."
+    },
+    {
+      "path_id": "path_070",
+      "path": "docs/visual_system/cost_reuse_matrix.json",
+      "classification": "reusable_core",
+      "capability_relevance": "Ordinal setup, burden, reuse, maintenance, rights and recovery model",
+      "scope_reason": "Planning weights only; no invented hours or throughput."
+    },
+    {
+      "path_id": "path_071",
+      "path": "docs/visual_system/recommended_minimum_generic_stack.json",
+      "classification": "reusable_core",
+      "capability_relevance": "Evidence-derived minimum stack and explicit visual-acceptance gates",
+      "scope_reason": "Recommends the smallest recoverable baseline without a C5 claim."
+    },
+    {
+      "path_id": "path_072",
+      "path": "docs/visual_system/topic_specific_hardcode_inventory.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "Audit of domain-bound builders and current fixture-only payload boundaries",
+      "scope_reason": "Prevents topic paths from being mistaken for reusable generic core."
+    },
+    {
+      "path_id": "path_073",
+      "path": "src/pipeline/generic_visual_scene_ir.py",
+      "classification": "reusable_core",
+      "capability_relevance": "Generic package, composition and variable-count fixture validator",
+      "scope_reason": "Data-driven structural core with no current-topic branch or literal."
+    },
+    {
+      "path_id": "path_074",
+      "path": "tests/test_generic_visual_scene_ir.py",
+      "classification": "reusable_core",
+      "capability_relevance": "Focused coverage for inventory, evidence floors, genericity, fixtures and delivery surfaces",
+      "scope_reason": "Fails closed on missing evidence references and topic/fixed-count leakage."
+    },
+    {
+      "path_id": "path_075",
+      "path": "samples/visual_composition_lab/fixtures/inspection_route_A.json",
+      "classification": "topic_specific",
+      "capability_relevance": "Selected Route A represented only as inspection conformance data",
+      "scope_reason": "Exact domain payload stays outside generic core and carries no implementation authorization."
+    },
+    {
+      "path_id": "path_076",
+      "path": "samples/visual_composition_lab/fixtures/process_generic.json",
+      "classification": "reusable_core",
+      "capability_relevance": "Unrelated synthetic process fixture with variable scene and cue counts",
+      "scope_reason": "Exercises the same validator without external factual claims."
+    },
+    {
+      "path_id": "path_077",
+      "path": "samples/visual_composition_lab/fixtures/comparison_generic.json",
+      "classification": "reusable_core",
+      "capability_relevance": "Unrelated synthetic two-side comparison fixture",
+      "scope_reason": "Exercises the same validator without topic-specific code."
+    },
+    {
+      "path_id": "path_078",
+      "path": "samples/visual_composition_lab/conformance_readback.json",
+      "classification": "reusable_core",
+      "capability_relevance": "Deterministic C2 readback for fixture variance, evidence gaps and no-C5 boundary",
+      "scope_reason": "Generated static evidence only; never runtime or render proof."
+    }
+  ]
+}

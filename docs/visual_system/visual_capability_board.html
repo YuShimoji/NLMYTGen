@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generic Visual Capability Envelope</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, sans-serif; --ink:#172033; --line:#cbd5e1; --soft:#f4f7fb; --accent:#155e75; }
+body { margin:0; color:var(--ink); background:white; }
+main { max-width:1500px; margin:auto; padding:32px; }
+h1,h2 { line-height:1.2; }
+.boundary { border-left:6px solid var(--accent); background:var(--soft); padding:16px 20px; }
+table { width:100%; border-collapse:collapse; margin:12px 0 28px; font-size:14px; }
+th,td { border:1px solid var(--line); padding:9px; text-align:left; vertical-align:top; }
+th { background:var(--soft); position:sticky; top:0; }
+.spine { display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:12px; align-items:center; margin:20px 0 30px; }
+.node { border:2px solid var(--line); padding:16px; min-height:78px; }
+.arrow { color:var(--accent); font-size:24px; }
+code { overflow-wrap:anywhere; }
+@media (max-width:850px) { .spine { grid-template-columns:1fr; } .arrow { transform:rotate(90deg); text-align:center; } main { padding:18px; } }
+</style>
+</head>
+<body><main>
+<h1>Generic visual capability envelope</h1>
+<div class="boundary"><strong>INTERNAL / STATIC C2 / NOT RUNTIME-PROVEN</strong><br>
+Three heterogeneous fixtures pass one validator. This does not prove editor behavior, render semantics, production quality, rights, portability, or cross-topic reuse.</div>
+<h2>Evidence dependency spine</h2>
+<div class="spine"><div class="node"><strong>Repository evidence</strong><br>C0-C4 receipts, code paths, failures</div><div class="arrow">→</div><div class="node"><strong>Capability envelope</strong><br>availability + cost + fallback</div><div class="arrow">→</div><div class="node"><strong>Composition fixtures</strong><br>static conformance only</div></div>
+<h2>Capability matrix</h2>
+<table><thead><tr><th>Capability</th><th>Availability</th><th>Level</th><th>Observed output</th><th>Fallback</th><th>Cost</th></tr></thead><tbody><tr><td><code>voice_linked_subtitle_import</code></td><td>proven</td><td>C3</td><td>VoiceItems and linked subtitles import in exact text/character order for the two observed packets.</td><td>Fail the import gate and repair the character profile or CSV before visual work.</td><td>W1 / low</td></tr>
+<tr><td><code>voiceitem_preserving_project_augmentation</code></td><td>proven</td><td>C3</td><td>The exact nine VoiceItems remain unchanged while fixed Image/Text placeholders are added.</td><td>Regenerate from the imported base and compare canonical VoiceItem digests.</td><td>W2 / medium</td></tr>
+<tr><td><code>exact_voice_image_text_project_open</code></td><td>proven</td><td>C3</td><td>One project with 9 VoiceItems, 3 ImageItems and 3 independent TextItems opens without error and labels are readable.</td><td>Use the VoiceItem-only project or rebuild absolute asset references on the current machine.</td><td>W2 / medium</td></tr>
+<tr><td><code>card_image_visibility_with_dialogue</code></td><td>proven</td><td>C3</td><td>Four external PNG cards were reported visible with dialogue and audio in a diagnostic render observation.</td><td>Use a single scene placeholder or static no-card narration baseline.</td><td>W2 / medium</td></tr>
+<tr><td><code>observed_frame_length_timing</code></td><td>proven</td><td>C3</td><td>VoiceItem and exact diagnostic scene spans have positive Frame/Length values and stable order.</td><td>Anchor visuals to observed VoiceItem intervals and fail on invalid spans.</td><td>W1 / low</td></tr>
+<tr><td><code>observed_layer_assignment</code></td><td>proven</td><td>C3</td><td>The exact placeholder layers open together without an unexpected item-family failure.</td><td>Use a known sparse layer profile and static readback before observation.</td><td>W2 / medium</td></tr>
+<tr><td><code>group_xy_zoom_motion</code></td><td>proven</td><td>C3</td><td>Specific GroupItem X/Y/Zoom motion kept body and face synchronized.</td><td>Static GroupItem hold at the last validated anchor.</td><td>W2 / medium</td></tr>
+<tr><td><code>group_rotation_bounce_motion</code></td><td>proven</td><td>C3</td><td>Named nod/rotation and bounded Y movement were visible for selected patterns.</td><td>Static expression change or no motion.</td><td>W2 / medium</td></tr>
+<tr><td><code>fixed_text_style_readability</code></td><td>proven</td><td>C3</td><td>The three fixed diagnostic labels were reported readable.</td><td>Shorten the label or bake reviewed text into a precomposed local image.</td><td>W1 / low</td></tr>
+<tr><td><code>named_template_reuse</code></td><td>proven</td><td>C3</td><td>Specific named templates can be placed and observed without rebuilding their internal groups.</td><td>Static pose or omit the template-dependent motion.</td><td>W2 / low</td></tr>
+<tr><td><code>expression_swap</code></td><td>proven</td><td>C3</td><td>Expression changes were visible in the bounded probes.</td><td>Single neutral expression.</td><td>W2 / low</td></tr>
+<tr><td><code>no_transition_baseline</code></td><td>proven</td><td>C3</td><td>A static hard-cut/continuous baseline opens and remains reviewable.</td><td>Split the narration or keep one static scene longer.</td><td>W1 / low</td></tr>
+<tr><td><code>selected_effect_presets</code></td><td>proven</td><td>C3</td><td>Selected named effects in the calibration set were observable.</td><td>No effect or static transform using a known route.</td><td>W3 / medium</td></tr>
+<tr><td><code>decoded_internal_render</code></td><td>proven</td><td>C4</td><td>One 1920x1080 60fps H.264/AAC MP4 passed ISO-BMFF, ffprobe and full-file decode.</td><td>Keep static project evidence and regenerate only under a separately authorized render gate.</td><td>W4 / high</td></tr>
+<tr><td><code>decoded_review_proxy</code></td><td>proven</td><td>C4</td><td>One 1280x720 60fps H.264/AAC review proxy passed full decode.</td><td>Review the immutable original locally if size permits.</td><td>W2 / low</td></tr>
+<tr><td><code>static_imageitem_materialization</code></td><td>conditional</td><td>C2</td><td>An ImageItem object can be deterministically written and parsed.</td><td>Omit the image or use a verified precomposed same-machine asset.</td><td>W2 / medium</td></tr>
+<tr><td><code>static_textitem_materialization</code></td><td>conditional</td><td>C2</td><td>An independent TextItem object can be deterministically written and parsed.</td><td>Shorten text or use a reviewed precomposed image.</td><td>W2 / medium</td></tr>
+<tr><td><code>static_shapeitem_materialization</code></td><td>conditional</td><td>C2</td><td>Topic-specific builders materialize and parse static ShapeItems.</td><td>Use a precomposed local image or a previously validated ShapeItem template.</td><td>W3 / high</td></tr>
+<tr><td><code>arbitrary_item_transform_fields</code></td><td>conditional</td><td>C2</td><td>Transform routes can be segmented and serialized deterministically.</td><td>Use static defaults or a named observed GroupItem template.</td><td>W3 / medium</td></tr>
+<tr><td><code>scale_zoom_transform</code></td><td>conditional</td><td>C2</td><td>Zoom values and keyframes can be written and read back.</td><td>Keep zoom at 100 and use a static cut.</td><td>W2 / medium</td></tr>
+<tr><td><code>opacity_transform</code></td><td>conditional</td><td>C2</td><td>Opacity values can be serialized and clipped to a segment.</td><td>Use opacity 100 with a hard cut.</td><td>W2 / low</td></tr>
+<tr><td><code>background_layer_replacement</code></td><td>conditional</td><td>C2</td><td>Layer-0 background ImageItems can be replaced per span.</td><td>Use one static known background for the full project.</td><td>W2 / medium</td></tr>
+<tr><td><code>background_pan_zoom</code></td><td>conditional</td><td>C2</td><td>Pan/zoom/Ken-Burns-like keyframes can be materialized.</td><td>Static background hold.</td><td>W3 / medium</td></tr>
+<tr><td><code>overlay_imageitem_insertion</code></td><td>conditional</td><td>C2</td><td>Overlay ImageItems can be inserted at utterance-relative spans.</td><td>No overlay or one full-scene placeholder image.</td><td>W2 / medium</td></tr>
+<tr><td><code>fade_transition_fields</code></td><td>conditional</td><td>C2</td><td>Fade fields can be written to Voice/Jimaku structures.</td><td>Use the proven no-transition baseline.</td><td>W2 / low</td></tr>
+<tr><td><code>motion_recipe_materialization</code></td><td>conditional</td><td>C2</td><td>Named Group/Image recipes with transform routes can be materialized and parsed.</td><td>Static pose or one named observed template.</td><td>W4 / medium</td></tr>
+<tr><td><code>shape_text_callout_materialization</code></td><td>conditional</td><td>C2</td><td>Three callout slots and labels can be statically materialized in one diagnostic carrier.</td><td>Single short TextItem or a precomposed reviewed callout image.</td><td>W4 / high</td></tr>
+<tr><td><code>audioitem_se_materialization</code></td><td>conditional</td><td>C2</td><td>An AudioItem can be inserted and parsed structurally.</td><td>No sound effect; narration-only baseline.</td><td>W3 / medium</td></tr>
+<tr><td><code>static_cross_archetype_conformance</code></td><td>conditional</td><td>C2</td><td>Inspection, process and comparison fixtures pass the same validator with different scene/cue counts.</td><td>Use the narration baseline or reject the fixture before project generation.</td><td>W1 / low</td></tr>
+<tr><td><code>route_specific_motion_profiles</code></td><td>unknown</td><td>C0</td><td>Proposed reveal, sweep, tilt, pulse, zoom and sequence intents have no runtime output yet.</td><td>Static Image/Text/Shape placeholder using only capabilities already evidenced.</td><td>W4 / high</td></tr>
+<tr><td><code>cross_machine_project_portability</code></td><td>unknown</td><td>C0</td><td>No cross-machine success is established.</td><td>Regenerate or rebind absolute local paths on the target machine.</td><td>W3 / medium</td></tr>
+<tr><td><code>real_cross_topic_core_reuse</code></td><td>unknown</td><td>C0</td><td>No qualifying C5 output exists.</td><td>Keep claims at supported archetype and static-conformance level.</td><td>W5 / high</td></tr>
+<tr><td><code>linked_subtitle_typography_layout</code></td><td>unknown</td><td>C0</td><td>No generic readability or safe-area result is established.</td><td>Use default linked subtitles and reserve the bottom safe area until reviewed.</td><td>W2 / medium</td></tr>
+<tr><td><code>external_asset_auto_fetch</code></td><td>unsupported</td><td>C0</td><td>The current visual core does not fetch or clear external assets.</td><td>Original abstract geometry or a user-provided cleared local asset.</td><td>W5 / high</td></tr>
+<tr><td><code>nonfade_transition</code></td><td>unsupported</td><td>C1</td><td>No wipe, slide, dissolve family beyond the current fade contract is available.</td><td>Use the proven no-transition baseline or conditional fade.</td><td>W4 / medium</td></tr>
+<tr><td><code>generic_shapeitem_creation_core</code></td><td>unsupported</td><td>C1</td><td>No generic core method creates arbitrary ShapeItems today.</td><td>Precomposed local image or a previously validated static template.</td><td>W4 / high</td></tr>
+<tr><td><code>generic_speech_balloon</code></td><td>unsupported</td><td>C1</td><td>No generic balloon template exists in the current core.</td><td>Short independent TextItem or narration-only cue.</td><td>W4 / medium</td></tr>
+<tr><td><code>production_quality_card_composition</code></td><td>unsupported</td><td>C3</td><td>The observed older card composition failed production-quality review.</td><td>Use a sparse single-focus static scene or narration baseline.</td><td>W5 / high</td></tr></tbody></table>
+<h2>Composition map</h2>
+<table><thead><tr><th>Composition</th><th>Required primitives</th><th>Fallback</th><th>Overall / static</th><th>Setup</th></tr></thead><tbody><tr><td><code>narration_baseline</code></td><td>narration_voice, linked_subtitle, caption_safe_reserve</td><td>narration_baseline</td><td>C0 / C2</td><td>W1</td></tr>
+<tr><td><code>inspection_explanation</code></td><td>narration_voice, caption_safe_reserve, static_focus_hold</td><td>narration_baseline</td><td>C0 / C2</td><td>W2</td></tr>
+<tr><td><code>process_sequence</code></td><td>narration_voice, caption_safe_reserve, connector_line</td><td>narration_baseline</td><td>C0 / C2</td><td>W2</td></tr>
+<tr><td><code>comparison_contrast</code></td><td>narration_voice, caption_safe_reserve, comparison_panel</td><td>narration_baseline</td><td>C0 / C2</td><td>W2</td></tr>
+<tr><td><code>callout_focus</code></td><td>narration_voice, caption_safe_reserve, static_focus_hold</td><td>inspection_explanation</td><td>C0 / C2</td><td>W3</td></tr>
+<tr><td><code>recap_action_sequence</code></td><td>narration_voice, caption_safe_reserve, connector_line</td><td>narration_baseline</td><td>C0 / C2</td><td>W2</td></tr></tbody></table>
+<h2>Cross-archetype conformance</h2>
+<table><thead><tr><th>Fixture</th><th>Scenes</th><th>Cues</th><th>Recipes used</th><th>Status</th></tr></thead><tbody><tr><td><code>synthetic_two_side_comparison_v1</code></td><td>2</td><td>4</td><td>callout_focus, comparison_contrast</td><td>static_conformance_pass</td></tr>
+<tr><td><code>selected_route_A_inspection_fixture_v1</code></td><td>3</td><td>9</td><td>callout_focus, comparison_contrast, inspection_explanation, recap_action_sequence</td><td>static_conformance_pass</td></tr>
+<tr><td><code>synthetic_three_stage_process_v1</code></td><td>4</td><td>5</td><td>callout_focus, narration_baseline, process_sequence, recap_action_sequence</td><td>static_conformance_pass</td></tr></tbody></table>
+<h2>Combination boundaries</h2><ul><li><code>minimum_narration_baseline</code> → C2 / fallback: VoiceItem plus linked subtitle with default settings and reserved lower frame.</li>
+<li><code>same_machine_voice_image_text_diagnostic</code> → C3 / fallback: Voice-only project or one static image per scene without independent labels.</li>
+<li><code>precomposed_card_overlay</code> → C3 / fallback: One full-scene static panel or narration-only baseline.</li>
+<li><code>named_character_motion_accent</code> → C3 / fallback: Static character pose or omit the character accent.</li>
+<li><code>static_shape_text_callout</code> → C2 / fallback: One short TextItem or a precomposed reviewed image.</li>
+<li><code>conditional_fade_between_static_scenes</code> → C2 / fallback: Use the proven no-transition baseline.</li>
+<li><code>conditional_background_motion</code> → C2 / fallback: Static background hold.</li>
+<li><code>verified_internal_render_media</code> → C4 / fallback: Retain structural project evidence until a separately authorized render gate.</li>
+<li><code>static_cross_archetype_lab</code> → C2 / fallback: Reject invalid fixture or lower it to narration_baseline.</li>
+<li><code>cross_topic_production_reuse</code> → C0 / fallback: Keep each real workflow diagnostic and measure core changes before making a reuse claim.</li></ul>
+</main></body></html>

@@ -1,0 +1,36 @@
+{
+  "schema_version": "generic_visual_cost_reuse_matrix.v1",
+  "precision_boundary": "Ordinal planning weights only. They are not hours, money, or throughput forecasts.",
+  "setup_weight_scale": {
+    "W1": "existing validated path; configuration and review only",
+    "W2": "small data/fixture work plus focused validation",
+    "W3": "bounded adapter or asset work plus YMM4 observation",
+    "W4": "new capability probe, compatibility risk, or repeated visual review",
+    "W5": "new subsystem or cross-environment/rights campaign"
+  },
+  "combination_costs": [
+    {"combination_id": "minimum_narration_baseline", "setup_weight": "W1", "per_episode_burden": "low", "reuse_class": "broad", "maintenance_surface": "small", "rights_dependency": "none", "recovery_complexity": "easy", "default": true},
+    {"combination_id": "same_machine_voice_image_text_diagnostic", "setup_weight": "W2", "per_episode_burden": "medium", "reuse_class": "topic-specific", "maintenance_surface": "medium", "rights_dependency": "required", "recovery_complexity": "medium", "default": false},
+    {"combination_id": "precomposed_card_overlay", "setup_weight": "W2", "per_episode_burden": "medium", "reuse_class": "archetype-specific", "maintenance_surface": "medium", "rights_dependency": "required", "recovery_complexity": "medium", "default": false},
+    {"combination_id": "named_character_motion_accent", "setup_weight": "W3", "per_episode_burden": "medium", "reuse_class": "archetype-specific", "maintenance_surface": "large", "rights_dependency": "required", "recovery_complexity": "medium", "default": false},
+    {"combination_id": "static_shape_text_callout", "setup_weight": "W4", "per_episode_burden": "high", "reuse_class": "topic-specific", "maintenance_surface": "large", "rights_dependency": "none", "recovery_complexity": "hard", "default": false},
+    {"combination_id": "conditional_fade_between_static_scenes", "setup_weight": "W2", "per_episode_burden": "low", "reuse_class": "broad", "maintenance_surface": "small", "rights_dependency": "optional", "recovery_complexity": "easy", "default": false},
+    {"combination_id": "conditional_background_motion", "setup_weight": "W3", "per_episode_burden": "medium", "reuse_class": "broad", "maintenance_surface": "large", "rights_dependency": "required", "recovery_complexity": "hard", "default": false},
+    {"combination_id": "verified_internal_render_media", "setup_weight": "W4", "per_episode_burden": "high", "reuse_class": "topic-specific", "maintenance_surface": "large", "rights_dependency": "required", "recovery_complexity": "hard", "default": false},
+    {"combination_id": "static_cross_archetype_lab", "setup_weight": "W1", "per_episode_burden": "low", "reuse_class": "broad", "maintenance_surface": "small", "rights_dependency": "none", "recovery_complexity": "easy", "default": true},
+    {"combination_id": "cross_topic_production_reuse", "setup_weight": "W5", "per_episode_burden": "high", "reuse_class": "broad", "maintenance_surface": "large", "rights_dependency": "required", "recovery_complexity": "hard", "default": false}
+  ],
+  "fragile_or_expensive": [
+    {"combination_id": "static_shape_text_callout", "reason": "One-off geometry and text-anchor repairs have not produced a generic observed path."},
+    {"combination_id": "conditional_background_motion", "reason": "Static keyframes exist but crop, anchor and visible motion remain unobserved generically."},
+    {"combination_id": "verified_internal_render_media", "reason": "Render collection, large media, freshness, decode and rights checks are milestone work."},
+    {"combination_id": "cross_topic_production_reuse", "reason": "Requires real heterogeneous workflows and cannot be purchased with more static fixtures."}
+  ],
+  "not_worth_building_now": [
+    {"capability_id": "generic_speech_balloon", "reason": "No dedicated template or observation; narration/short-label fallback is cheaper."},
+    {"capability_id": "nonfade_transition", "reason": "No recurrent evidence that a new transition family beats hard cut/fade cost."},
+    {"capability_id": "generic_shapeitem_creation_core", "reason": "Current need can use static images while H1 determines the smallest valuable shapes."},
+    {"capability_id": "external_asset_auto_fetch", "reason": "Rights, privacy and reproducibility costs exceed generic-core reuse value."},
+    {"capability_id": "route_specific_motion_profiles", "reason": "Probe one generic primitive first; do not implement a bundle of unobserved effects."}
+  ]
+}

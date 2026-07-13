@@ -1,6 +1,63 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-14 JST・new-banknote import observed / visual decision ready）
+## 現在の別端末再開ハンドオフ（2026-07-14 JST・generic visual capability envelope delivered）
+
+この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
+現在の指示として読まない。
+
+- **取得先**: origin/codex/generic-visual-capability-composition-v1。sourceは
+  bc07fc073063d3e5d1af1e6e5400a340b0036496の
+  codex/new-banknote-authoritative-source-script-v1で、current branch tipがこのhandoffを
+  含むoutcome commitである。再開時はHEAD、upstream parity 0 0、clean worktreeをlive確認する。
+- **最小読取順**: AGENTS.md → docs/REPO_LOCAL_RULES.md → docs/runtime-state.md →
+  この節 → docs/visual_system/README_GENERIC_VISUAL_CAPABILITIES.md。
+- **現在の状態**: Project-State-IDはgeneric-visual-capability-envelope-delivered-v1、
+  State-Revisionは2026-07-14.2。Product-Stateは
+  generic-visual-composition-capabilities-audited、Product-Gateは
+  generic-yymm4-capability-probe-decision、Recommended-Nextは
+  review-capability-envelope-and-select-probe、External-Stateは
+  public-repo-feature-branch。
+- **capability inventory**: visual/YMM4に関係する78 pathsをreusable core、pilot-local helper、
+  topic-specific、historical evidence、obsolete/duplicate、unknownへ分類し、未分類は0。
+  38 capabilitiesはproven 15 / conditional 14 / unsupported 5 / unknown 4、
+  C0-C5は5/3/14/14/2/0。provenはC3以上、strict renderはC4、C5は0を強制する。
+- **evidence boundary**: VoiceItem/linked subtitle import、固定Voice/Image/Text project reopen、
+  named GroupItem motion/template、one exact internal renderのC3/C4 evidenceだけを維持した。
+  code/schema/test/static project/unretained render observationをruntime/render proofへ昇格していない。
+- **generic Scene IR**: src/pipeline/generic_visual_scene_ir.pyはdata-driven validatorだけを持ち、
+  scene/cue数、semantic role、layout recipe、existing SCS geometry、timing、primitive、overlay、
+  motion request、capability/evidence、fallback、rights、costを可変dataとして検証する。
+  topic builder import、current-topic literal、fixed 9/3/3-6/73.58 assumptionsは0。
+- **composition grammar**: narration baseline、inspection/explanation、process/sequence、
+  comparison/contrast、callout focus、recap/action sequenceの6 recipesをexisting SCSと直交させた。
+  required/optional primitive、prohibited combination、evidence、fallback、cost/reuse、
+  suitable/unsuitable archetype、YMM4 observation debtを全recipeに持たせる。whole-composition
+  floorはsubtitle layout未観測のためC0、deterministic static conformanceは別軸C2。
+- **conformance lab**: Route A inspection 3 scenes / 9 cues、unrelated synthetic process 4/5、
+  unrelated synthetic comparison 2/4が同じvalidate_fixtureをpassした。Route Aはsource packetを
+  変更せずexact text/source/claim/timing/factual boundary/palette/motion labelをpayloadに保持し、
+  fixture-only selection、implementation/render unauthorized。20 derived/explicit gapsはfallback付きで、
+  うち9件はcaption reserveから導出したsubtitle-layout gap。
+- **minimum stack**: C3 narration/import + observed cue timing + no-transition、optional C2
+  static local ImageItem/short TextItem、C2 fixture preflight、visual acceptance前のC0 subtitle
+  layout gateをdefaultとし、motionはoff。
+  W2 setup / low per-episode / small maintenance / optional rights / easy recovery。
+  broad reuseはC5までhypothesis。
+- **delivery surfaces**: primaryはdocs/visual_system/README_GENERIC_VISUAL_CAPABILITIES.md。
+  JSON matrices、CAN_DO_CANNOT_DO、LIMITATIONS_AND_NON_GOALS、DELIVERY_ACCEPTANCE、
+  secondary self-contained HTML、samples/visual_composition_lab/を同じboundaryで追跡した。
+- **検証済み範囲**: modified Python compile、14 new testsを含む178 focused generic/YMM4 tests、
+  deterministic second pass changed []、3 fixture conformance、JSON/HTML structure、78 path existence、
+  evidence/availability rules、topic literal/fixed-assumption scan、privacy/private-path auditがpassed。
+  full pytest、YMM4、renderは実行していない。
+- **exact next action**: primary matrixのminimum stack、fragile/expensive combinations、
+  not-worth-buildingをreviewし、複数archetypeへ効くgeneric primitiveをH1候補として最大1件選ぶ。
+  minimal static Text/Image/Shape layout、fade、bounded transformが候補で、final Route A sceneやrenderは
+  選ばない。
+- **retained quality debt**: generic Text/Image/Shape observation、subtitle layout、cross-machine
+  portability、real second-topic C5、render semantic/visual acceptanceの5件だけを保持する。
+
+## 直前の別端末再開ハンドオフ（2026-07-14 JST・new-banknote import observed / visual decision ready・履歴）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。

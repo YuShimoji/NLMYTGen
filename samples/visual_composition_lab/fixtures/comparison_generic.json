@@ -1,0 +1,62 @@
+{
+  "schema_version": "generic_visual_scene_ir.v1",
+  "fixture_id": "synthetic_two_side_comparison_v1",
+  "fixture_archetype": "comparison_contrast",
+  "fixture_role": "unrelated_synthetic_conformance_only",
+  "evidence_boundary": {
+    "static_maximum": "C2",
+    "runtime_ready": false,
+    "external_factual_claims": false,
+    "implementation_authorized": false
+  },
+  "payload": {
+    "title": "Compare two fictional sorting trays",
+    "domain": "synthetic contrast with no external factual claims",
+    "sides": {"left": "Quiet tray", "right": "Rapid tray"},
+    "palette": {"left": "muted blue", "right": "muted amber", "boundary": "neutral gray"},
+    "comparison_axes": ["pace label", "review label"],
+    "rights_note": "text and abstract geometry only"
+  },
+  "scenes": [
+    {"scene_id": "comparison_scene_frame", "semantic_role": "introduce_two_sides", "default_layout_archetype": "comparison_contrast", "cue_ids": ["comparison_cue_01", "comparison_cue_02"], "rights_boundary": "original_only", "cost_profile_id": "W2"},
+    {"scene_id": "comparison_scene_decision", "semantic_role": "state_bounded_tradeoff", "default_layout_archetype": "comparison_contrast", "cue_ids": ["comparison_cue_03", "comparison_cue_04"], "rights_boundary": "original_only", "cost_profile_id": "W2"}
+  ],
+  "cues": [
+    {
+      "cue_id": "comparison_cue_01", "scene_id": "comparison_scene_frame", "sequence": 1,
+      "layout_archetype": "comparison_contrast", "scs_composition_type": "split",
+      "timing_anchor": {"kind": "relative_cue_span", "start": "cue_start", "end": "cue_end"},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "comparison_panel", "role": "focal_anchor"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}],
+      "overlay_refs": ["payload.sides.left", "payload.sides.right"], "motion_request": {"intent": "none", "status": "none"},
+      "capability_requirements": [{"capability_id": "static_cross_archetype_conformance", "minimum_evidence_level": "C2"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "narration_baseline", "reason": "name the two fictional options sequentially"}
+    },
+    {
+      "cue_id": "comparison_cue_02", "scene_id": "comparison_scene_frame", "sequence": 2,
+      "layout_archetype": "comparison_contrast", "scs_composition_type": "split",
+      "timing_anchor": {"kind": "relative_cue_span", "start": "cue_start", "end": "cue_end"},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "comparison_panel", "role": "focal_anchor"}, {"primitive_id": "short_text_label", "role": "label"}, {"primitive_id": "shape_marker", "role": "supporting"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}],
+      "overlay_refs": ["payload.comparison_axes[0]"], "motion_request": {"intent": "none", "status": "none"},
+      "capability_requirements": [{"capability_id": "static_textitem_materialization", "minimum_evidence_level": "C2"}, {"capability_id": "static_shapeitem_materialization", "minimum_evidence_level": "C2"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "narration_baseline", "reason": "describe the first axis without simultaneous panels"}
+    },
+    {
+      "cue_id": "comparison_cue_03", "scene_id": "comparison_scene_decision", "sequence": 3,
+      "layout_archetype": "comparison_contrast", "scs_composition_type": "split",
+      "timing_anchor": {"kind": "relative_cue_span", "start": "cue_start", "end": "cue_end"},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "comparison_panel", "role": "focal_anchor"}, {"primitive_id": "short_text_label", "role": "label"}, {"primitive_id": "connector_line", "role": "connector"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}],
+      "overlay_refs": ["payload.comparison_axes[1]"], "motion_request": {"intent": "none", "status": "none"},
+      "capability_requirements": [{"capability_id": "static_cross_archetype_conformance", "minimum_evidence_level": "C2"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "narration_baseline", "reason": "state the second axis linearly"}
+    },
+    {
+      "cue_id": "comparison_cue_04", "scene_id": "comparison_scene_decision", "sequence": 4,
+      "layout_archetype": "callout_focus", "scs_composition_type": "center-focal",
+      "timing_anchor": {"kind": "relative_cue_span", "start": "cue_start", "end": "cue_end"},
+      "primitive_refs": [{"primitive_id": "narration_voice", "role": "supporting"}, {"primitive_id": "static_focus_hold", "role": "focal_anchor"}, {"primitive_id": "caption_safe_reserve", "role": "boundary"}],
+      "overlay_refs": [], "motion_request": {"intent": "none", "status": "none"},
+      "capability_requirements": [{"capability_id": "no_transition_baseline", "minimum_evidence_level": "C3"}],
+      "minimum_evidence_level": "C2", "fallback": {"composition_id": "narration_baseline", "reason": "already uses the minimum close"}
+    }
+  ]
+}
