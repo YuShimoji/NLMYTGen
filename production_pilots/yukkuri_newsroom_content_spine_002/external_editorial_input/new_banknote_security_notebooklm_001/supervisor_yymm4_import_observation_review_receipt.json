@@ -1,0 +1,81 @@
+{
+  "schema_version": "new_banknote_yymm4_import_observation.supervisor_review_receipt.v1",
+  "status": "passed_for_bounded_operator_batch_preparation",
+  "decision": "supervisor_pass_for_bounded_yymm4_import_observation",
+  "decision_date": "2026-07-13",
+  "accepted_script_commit": "b05eb3867caabda496fb9a0070d230a4e81aea01",
+  "review_results": [
+    {
+      "question_number": 1,
+      "question": "公式一次資料で支えた事実は、初見でも意味が分かりますか。",
+      "result": "pass_for_bounded_yymm4_import_observation",
+      "scope": "operator_batch_preparation_only"
+    },
+    {
+      "question_number": 2,
+      "question": "キャッシュレス誘導や政策意図を示唆する、根拠のない含みは残っていませんか。",
+      "result": "pass_for_bounded_yymm4_import_observation",
+      "scope": "operator_batch_preparation_only"
+    },
+    {
+      "question_number": 3,
+      "question": "れいむとまりさの受け渡しは自然で、同じ説明を繰り返していませんか。",
+      "result": "pass_for_bounded_yymm4_import_observation",
+      "scope": "operator_batch_preparation_only"
+    },
+    {
+      "question_number": 4,
+      "question": "S1の導入、S2の技術、S3の見分け方という流れは一貫していますか。",
+      "result": "pass_for_bounded_yymm4_import_observation",
+      "scope": "operator_batch_preparation_only"
+    },
+    {
+      "question_number": 5,
+      "question": "高精細すき入れ、深凹版印刷、識別マークなどの用語は、誤解を招かず難しすぎませんか。",
+      "result": "pass_for_bounded_yymm4_import_observation",
+      "scope": "operator_batch_preparation_only"
+    }
+  ],
+  "approved_artifact_hashes": {
+    "canonical_script.json": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47",
+    "canonical_script.txt": "4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091",
+    "canonical_yymm4.csv": "23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12",
+    "derived_yymm4_import.csv": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee",
+    "cue_source_traceability.json": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47",
+    "source_to_script_manifest.json": "e13fb57a2681875f577e4d85f13cf41bfc601519892fa4f975bdfcdd24d927b5"
+  },
+  "approved_contract": {
+    "cue_count": 9,
+    "scene_allocation": {
+      "S1": 2,
+      "S2": 4,
+      "S3": 3
+    },
+    "canonical_speaker_counts": {
+      "れいむ": 3,
+      "まりさ": 6
+    },
+    "yymm4_character_counts": {
+      "ゆっくり霊夢": 3,
+      "ゆっくり魔理沙": 6
+    },
+    "unsupported_spoken_claim_count": 0,
+    "spoken_cues_may_be_revised_in_this_slice": false
+  },
+  "authorization_boundary": {
+    "operator_batch_preparation": true,
+    "manual_import_observation": "later_user_action",
+    "user_creative_preference_acceptance": false,
+    "production_approval": false,
+    "render_approval": false,
+    "rights_approval": false,
+    "publication_approval": false
+  },
+  "actions": {
+    "notebooklm_accessed": false,
+    "network_source_fetch": false,
+    "yymm4_launched": false,
+    "computer_use_invoked": false,
+    "render_or_media_generated": false
+  }
+}

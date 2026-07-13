@@ -1,0 +1,106 @@
+{
+  "schema_version": "new_banknote_yymm4_import_observation.expected_contract.v1",
+  "status": "ready",
+  "batch_scope": "csv_import_observation_only",
+  "source_csv": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/derived_yymm4_import.csv",
+  "source_csv_sha256": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee",
+  "approved_artifact_hashes": {
+    "canonical_script.json": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47",
+    "canonical_script.txt": "4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091",
+    "canonical_yymm4.csv": "23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12",
+    "derived_yymm4_import.csv": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee",
+    "cue_source_traceability.json": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47",
+    "source_to_script_manifest.json": "e13fb57a2681875f577e4d85f13cf41bfc601519892fa4f975bdfcdd24d927b5"
+  },
+  "character_profile": {
+    "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_character_alias_profiles/ymm4_4_53_0_9_yukkuri_characters_v1.json",
+    "profile_id": "ymm4_4_53_0_9_yukkuri_characters_ja_v1",
+    "observed_yymm4_version": "4.53.0.9",
+    "sha256": "c32f8e0faa2fbced6e91adfd5bedc62e8e245ef48f88a67f81b86c39ab89a304",
+    "version_difference_policy": "warning_only",
+    "mapping_dialog_or_wrong_character_policy": "operator_stop"
+  },
+  "project_target": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/new_banknote_yymm4_import_observation.local.ymmp",
+  "operator_result_target": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/operator_result.json",
+  "expectations": {
+    "VoiceItem_count": 9,
+    "character_counts": {
+      "ゆっくり霊夢": 3,
+      "ゆっくり魔理沙": 6
+    },
+    "exact_text_and_order": true,
+    "missing_count": 0,
+    "duplicate_count": 0,
+    "reordered": false,
+    "ImageItem_required": false,
+    "independent_TextItem_required": false,
+    "render_required": false,
+    "duration_policy": "informational_actual_frames_and_fps"
+  },
+  "rows": [
+    {
+      "csv_row_id": "csv_row_1",
+      "cue_id": "cue_001",
+      "character": "ゆっくり霊夢",
+      "text": "2024年に発行された新しいお札って、見た目以外にも変わったところがあるの？"
+    },
+    {
+      "csv_row_id": "csv_row_2",
+      "cue_id": "cue_002",
+      "character": "ゆっくり魔理沙",
+      "text": "あるぞ。偽造防止では、高精細すき入れや3Dホログラムなど複数の技術を組み合わせている。誰にとっても使いやすいユニバーサルデザインも取り入れたんだ。"
+    },
+    {
+      "csv_row_id": "csv_row_3",
+      "cue_id": "cue_003",
+      "character": "ゆっくり魔理沙",
+      "text": "まずは高精細すき入れ。光に透かすと、細かな模様が見えるんだぜ。"
+    },
+    {
+      "csv_row_id": "csv_row_4",
+      "cue_id": "cue_004",
+      "character": "ゆっくり魔理沙",
+      "text": "次は3Dホログラム。角度を変えると、三次元の肖像が回転して見えるぞ。"
+    },
+    {
+      "csv_row_id": "csv_row_5",
+      "cue_id": "cue_005",
+      "character": "ゆっくり霊夢",
+      "text": "触るとざらざらするのは、額面数字などのインキを高く盛り上げる深凹版印刷なんだね。"
+    },
+    {
+      "csv_row_id": "csv_row_6",
+      "cue_id": "cue_006",
+      "character": "ゆっくり魔理沙",
+      "text": "マイクロ文字の『NIPPONGINKO』は、ルーペで確かめられる。カラーコピー機では再現が難しいほど小さい文字なんだ。"
+    },
+    {
+      "csv_row_id": "csv_row_7",
+      "cue_id": "cue_007",
+      "character": "ゆっくり魔理沙",
+      "text": "見分けやすさの工夫では、識別マークを11本の斜線にそろえ、券種ごとに位置を変えているぜ。"
+    },
+    {
+      "csv_row_id": "csv_row_8",
+      "cue_id": "cue_008",
+      "character": "ゆっくり霊夢",
+      "text": "額面の数字は前のシリーズのお札より大きい。一万円券と千円券ではホログラムの形や位置が違い、千円券の中央には橙色のグラデーションもあるんだね。"
+    },
+    {
+      "csv_row_id": "csv_row_9",
+      "cue_id": "cue_009",
+      "character": "ゆっくり魔理沙",
+      "text": "確かめ方は、透かす、触る、傾ける、ルーペで見る。この四つを覚えておこう。"
+    }
+  ],
+  "operator_observation_fields": {
+    "no_mapping_error_update_or_character_mismatch": "required",
+    "evidence_grade": "observed"
+  },
+  "evidence_boundary": {
+    "internal_import_observation_only": true,
+    "production_project": false,
+    "render": false,
+    "rights_or_publication_approval": false
+  }
+}

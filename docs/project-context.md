@@ -1,9 +1,77 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-13 JST・new-banknote editorial convergence）
+## 現在の別端末再開ハンドオフ（2026-07-13 JST・new-banknote YMM4 import Operator Batch ready）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
+
+- **取得先**: origin/codex/new-banknote-authoritative-source-script-v1。
+  batch準備前の確認HEADは40a8d5e5d5e8165e4e9deef812435ae4529bf040。
+  このhandoffを含むcurrent branch tipがoutcome commitであり、再開時は
+  git rev-parse HEADで実値を読み、upstream parity 0 0とclean worktreeを確認する。
+- **再開前確認**: git fetch --prune origin、対象branchへswitch、
+  git pull --ff-only、git status --short --branch、
+  git rev-list --left-right --count "HEAD...@{u}" の順で確認する。
+- **最小読取順**: AGENTS.md → docs/REPO_LOCAL_RULES.md →
+  docs/runtime-state.md → この節 →
+  production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/operator_batch/README_OPERATOR_BATCH.md。
+- **現在の状態**: Project-State-IDは
+  new-banknote-yymm4-import-operator-batch-ready-v1、State-Revisionは
+  2026-07-13.6。Product-Stateは
+  new-banknote-source-backed-script-yymm4-import-batch-ready、
+  Product-Gateはmanual-yymm4-import-observation、Recommended-Nextは
+  run-new-banknote-yymm4-import-operator-batch、External-Stateは
+  public-repo-feature-branch。
+- **承認identity**: accepted six artifactsは変更なし。SHA-256は
+  canonical_script.json=4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47、
+  canonical_script.txt=4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091、
+  canonical_yymm4.csv=23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12、
+  derived_yymm4_import.csv=127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee、
+  cue_source_traceability.json=5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47、
+  source_to_script_manifest.json=e13fb57a2681875f577e4d85f13cf41bfc601519892fa4f975bdfcdd24d927b5。
+  9 cues、scene 2/4/3、canonical 3/6、derived 3/6、unsupported 0。
+- **Supervisor receipt**:
+  supervisor_yymm4_import_observation_review_receipt.jsonが5問すべての
+  supervisor_pass_for_bounded_yymm4_import_observationを記録する。
+  これはbatch準備許可だけで、user creative acceptance、production、render、
+  rights、publication承認ではない。
+- **Operator Batch**: operator_batch/README_OPERATOR_BATCH.mdがprimary surface。
+  run scriptは-Ymm4Exe override、runtime detection、-PreflightOnly、
+  -CollectOnlyを持つ。safe modeはlaunch 0。normal modeもGUIを自動操作せず、
+  userが4 actionsを行い、returnは最大3項目。
+- **Collector**: exact ignored projectのfreshnessとembedded targetを確認し、
+  VoiceItem 9、ゆっくり霊夢3 / ゆっくり魔理沙6、exact text/order、
+  missing 0、duplicate 0をmachine-checkする。fps/frames/durationはactual
+  informational evidenceであり、ImageItem、independent TextItem、renderは不要。
+- **Compatibility**: runtime preflightでinstalled YMM4 4.54.0.1をread-only検出。
+  explicit profile 4.53.0.9との差はwarningで、mapping dialog、update、
+  wrong character、foreign projectはuser stop condition。
+- **検証済み範囲**: new operator tests 10 passed、script/alias/prior hardened-batch
+  regression 18 passed、state-sync tests 8 passed、modified Python compile、
+  PowerShell 2 scripts syntax、
+  deterministic regeneration、runtime -PreflightOnly、JSON/CSV/privacy/ignore
+  auditがpassed。full pytestは実行していない。
+- **ignored local evidence**:
+  local_outputs/new_banknote_yymm4_import_observation.local.ymmp、
+  local_outputs/operator_result.json、local_outputs/operator_batch.local.json。
+  executable pathも最後のignored stateだけへ記録し、tracked artifactへ入れない。
+- **exact next action**: unrelated/unsaved YMM4 workを安全に閉じ、operator
+  directoryで
+  powershell -NoProfile -ExecutionPolicy Bypass -File .\run_new_banknote_yymm4_import_batch.ps1
+  を一度だけ実行する。新規空projectへのCSV import、exact local save、
+  YMM4 safe close、terminalへのCOLLECT入力だけをuserが行う。
+- **retained review debt**: audio/rhythm/terminologyはsuccessful import後にhuman
+  editorial reviewerが判断する。S04 generation-time binaryとexact S05 572KB
+  identityはstable ID/hashまたはoriginal発見時にsource provenance reviewerが
+  再確認する。topic-specific builder ownershipはintegration audit開始時に
+  integration architectが決める。
+- **未完了境界**: actual YMM4 import、mapping/character/audio/timing/subtitle
+  observation、actual new-banknote project/result、scene/visual decision、render、
+  production/public/rights/upload、master integration、full-suite Integrity。
+
+## 直前の別端末再開ハンドオフ（2026-07-13 JST・new-banknote editorial convergence・履歴）
+
+この節はeditorial convergence時点の判断履歴であり、現在の再開指示として読まない。
 
 - **取得先**: `origin/codex/new-banknote-authoritative-source-script-v1`。
 - **Git状態**: script成果のcommitは`b05eb3867caabda496fb9a0070d230a4e81aea01`。
