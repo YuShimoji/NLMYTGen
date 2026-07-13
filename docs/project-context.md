@@ -6,8 +6,8 @@
 現在の指示として読まない。
 
 - **取得先**: `origin/codex/new-banknote-authoritative-source-script-v1`。
-- **現在のcommit**: `5bcc771` (`docs: update new-banknote handoff context`)。直前のscript commitは
-  `b05eb3867caabda496fb9a0070d230a4e81aea01`。HEAD・upstream・remoteは一致し、parityは`0 0`。
+- **Git状態**: script成果のcommitは`b05eb3867caabda496fb9a0070d230a4e81aea01`。
+  handoff更新commitを含む現在のbranch tipは、下記の再開確認コマンドで実値を読み、HEAD・upstream・remote一致とparity`0 0`を確認する。
 - **再開前確認**: `git fetch --prune origin`、対象branchへ`git switch`、
   `git pull --ff-only`、`git status --short --branch`、
   `git rev-list --left-right --count "HEAD...@{u}"`の順でclean / `0 0`を確認する。
