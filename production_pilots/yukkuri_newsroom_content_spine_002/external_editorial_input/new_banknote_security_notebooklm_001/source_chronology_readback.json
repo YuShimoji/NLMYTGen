@@ -1,0 +1,46 @@
+{
+  "schema_version": "notebooklm_source_reconciliation.v1.source_chronology_readback",
+  "status": "chronology_frozen_title_level",
+  "generation_time_count": 10,
+  "generation_time_source_ids": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S08",
+    "S09",
+    "S10",
+    "S11"
+  ],
+  "strict_generation_time_source_ids": [
+    "S01",
+    "S02",
+    "S04",
+    "S05",
+    "S06",
+    "S08",
+    "S09",
+    "S10",
+    "S11"
+  ],
+  "provisional_generation_time_source_ids": [
+    "S03"
+  ],
+  "post_generation_derived_count": 1,
+  "post_generation_derived_source_ids": [
+    "S07"
+  ],
+  "raw_transcript": {
+    "artifact_class": "post_generation_derived_transcript",
+    "included_in_source_set": false,
+    "factual_authority_policy": "excluded",
+    "raw_sha256": "1825c9689a050ddbfc91537a228f6af0ba2f7f033e5b681fff4f227551144437",
+    "raw_size_bytes": 32089,
+    "raw_logical_line_count": 326
+  },
+  "notebook_reference_supplied": true,
+  "notebook_reference_access_verified": false,
+  "notebook_reference_tracked": false
+}

@@ -1,0 +1,202 @@
+{
+  "schema_version": "notebooklm_source_reconciliation.v1.source_resolution_backlog",
+  "status": "authoritative_source_resolution_pending",
+  "unresolved_source_definition": "generation_time_source_missing_URL_or_stable_identifier",
+  "unresolved_source_count": 10,
+  "minimum_identity_evidence": [
+    "URL_or_stable_document_identifier",
+    "publisher",
+    "publication_or_update_date",
+    "content_hash_or_capture_receipt"
+  ],
+  "entries": [
+    {
+      "source_id": "S01",
+      "priority": "P1",
+      "resolution_status": "pending",
+      "unresolved_fields": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "minimum_evidence_needed": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "next_action": "defer_to_H1_authoritative_source_resolution"
+    },
+    {
+      "source_id": "S02",
+      "priority": "P1",
+      "resolution_status": "pending",
+      "unresolved_fields": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "minimum_evidence_needed": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "next_action": "defer_to_H1_authoritative_source_resolution"
+    },
+    {
+      "source_id": "S03",
+      "priority": "P2",
+      "resolution_status": "pending",
+      "unresolved_fields": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "minimum_evidence_needed": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "next_action": "defer_to_H1_authoritative_source_resolution"
+    },
+    {
+      "source_id": "S04",
+      "priority": "P0",
+      "resolution_status": "pending",
+      "unresolved_fields": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "minimum_evidence_needed": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "next_action": "defer_to_H1_authoritative_source_resolution"
+    },
+    {
+      "source_id": "S05",
+      "priority": "P0",
+      "resolution_status": "pending",
+      "unresolved_fields": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "minimum_evidence_needed": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "next_action": "defer_to_H1_authoritative_source_resolution"
+    },
+    {
+      "source_id": "S06",
+      "priority": "P1",
+      "resolution_status": "pending",
+      "unresolved_fields": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "minimum_evidence_needed": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "next_action": "defer_to_H1_authoritative_source_resolution"
+    },
+    {
+      "source_id": "S07",
+      "priority": "excluded",
+      "resolution_status": "excluded_derived_output",
+      "unresolved_fields": [],
+      "minimum_evidence_needed": [],
+      "next_action": "retain_exclusion"
+    },
+    {
+      "source_id": "S08",
+      "priority": "P1",
+      "resolution_status": "pending",
+      "unresolved_fields": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "minimum_evidence_needed": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "next_action": "defer_to_H1_authoritative_source_resolution"
+    },
+    {
+      "source_id": "S09",
+      "priority": "P2",
+      "resolution_status": "pending",
+      "unresolved_fields": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "minimum_evidence_needed": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "next_action": "defer_to_H1_authoritative_source_resolution"
+    },
+    {
+      "source_id": "S10",
+      "priority": "P0",
+      "resolution_status": "pending",
+      "unresolved_fields": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "minimum_evidence_needed": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "next_action": "defer_to_H1_authoritative_source_resolution"
+    },
+    {
+      "source_id": "S11",
+      "priority": "P0",
+      "resolution_status": "pending",
+      "unresolved_fields": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "minimum_evidence_needed": [
+        "URL_or_stable_document_identifier",
+        "publisher",
+        "publication_or_update_date",
+        "content_hash_or_capture_receipt"
+      ],
+      "next_action": "defer_to_H1_authoritative_source_resolution"
+    }
+  ]
+}

@@ -1,0 +1,300 @@
+{
+  "schema_version": "notebooklm_source_reconciliation.v1.source_set_snapshot",
+  "status": "source_set_frozen_title_level",
+  "snapshot_basis": "externally_supplied_title_list",
+  "source_selection_performed": false,
+  "source_content_inspected": false,
+  "source_count": 11,
+  "source_set_fingerprint": "af9cf9f22311e7274a682eb6ba5e16c61c8273b7767a3f78445373107e013fa2",
+  "title_normalization_contract": "NFKC_then_casefold_then_whitespace_collapse",
+  "title_fingerprint_contract": "sha256_of_normalized_utf8",
+  "notebook_reference_supplied": true,
+  "notebook_reference_access_verified": false,
+  "notebook_reference_tracked": false,
+  "sources": [
+    {
+      "source_id": "S01",
+      "exact_title": "【新紙幣を完全解説】世界初の3Dホログラムで偽造防止、キャッシュレス化のなか新紙幣の効果とは - JBpress",
+      "normalized_title": "【新紙幣を完全解説】世界初の3dホログラムで偽造防止、キャッシュレス化のなか新紙幣の効果とは - jbpress",
+      "title_fingerprint": "a6946a67bce2a272f0ce5285a7b24c737f37e22cb210d2ac1285da14b790bf6b",
+      "chronology_class": "generation_time",
+      "chronology_confidence": "user_provided",
+      "authority_class": "secondary_journalism_anchor",
+      "authority_confidence": "provisional_title_only",
+      "publisher_label": "JBpress",
+      "URL_status": "not_provided",
+      "stable_identifier_status": "not_provided",
+      "generation_role": "generation_context_anchor",
+      "factual_authority_policy": "secondary_context_only",
+      "allowed_use": [
+        "context_discovery",
+        "claim_origin_tracing"
+      ],
+      "forbidden_use": [
+        "sole_factual_verification",
+        "government_intent_verification"
+      ],
+      "notes": [
+        "content_not_inspected"
+      ]
+    },
+    {
+      "source_id": "S02",
+      "exact_title": "このタイミングで新紙幣発表\"本当の狙い\" キャッシュレス化とは矛盾しない",
+      "normalized_title": "このタイミングで新紙幣発表\"本当の狙い\" キャッシュレス化とは矛盾しない",
+      "title_fingerprint": "18780f3929524227db5d4db93f7be8eb875c6037701d7b05787e30bfbfaae946",
+      "chronology_class": "generation_time",
+      "chronology_confidence": "user_provided",
+      "authority_class": "secondary_commentary_publisher_unresolved",
+      "authority_confidence": "provisional_title_only",
+      "publisher_label": "unresolved",
+      "URL_status": "not_provided",
+      "stable_identifier_status": "not_provided",
+      "generation_role": "generation_framing_input",
+      "factual_authority_policy": "secondary_framing_only",
+      "allowed_use": [
+        "framing_origin_tracing",
+        "publisher_resolution"
+      ],
+      "forbidden_use": [
+        "sole_factual_verification",
+        "policy_intent_verification"
+      ],
+      "notes": [
+        "publisher_unresolved",
+        "content_not_inspected"
+      ]
+    },
+    {
+      "source_id": "S03",
+      "exact_title": "テーマ：新紙幣の経済的影響とキャッシュレス化",
+      "normalized_title": "テーマ:新紙幣の経済的影響とキャッシュレス化",
+      "title_fingerprint": "4e720c50ce731e67b3ac168342171a456f81a23d988be6d078a8e29e413caaa2",
+      "chronology_class": "generation_time_candidate",
+      "chronology_confidence": "provisional_user_provided",
+      "authority_class": "notebooklm_generated_synthesis_or_user_note_candidate",
+      "authority_confidence": "provisional_origin_unresolved",
+      "publisher_label": "not_applicable_or_unresolved",
+      "URL_status": "not_provided",
+      "stable_identifier_status": "not_provided",
+      "generation_role": "generation_synthesis_or_user_note",
+      "factual_authority_policy": "non_independent_excluded_from_factual_verification",
+      "allowed_use": [
+        "generation_context",
+        "provenance_resolution"
+      ],
+      "forbidden_use": [
+        "independent_factual_verification",
+        "policy_intent_verification"
+      ],
+      "notes": [
+        "non_independent_authority",
+        "origin_type_unresolved"
+      ]
+    },
+    {
+      "source_id": "S04",
+      "exact_title": "新しい日本銀行券 「開発秘話」 - 国立印刷局",
+      "normalized_title": "新しい日本銀行券 「開発秘話」 - 国立印刷局",
+      "title_fingerprint": "91e44821571d60f53c5aacf5b60b7b77b04ef7accce0016fe42b718a34229452",
+      "chronology_class": "generation_time",
+      "chronology_confidence": "user_provided",
+      "authority_class": "primary_official_candidate",
+      "authority_confidence": "provisional_title_only",
+      "publisher_label": "国立印刷局",
+      "URL_status": "not_provided",
+      "stable_identifier_status": "not_provided",
+      "generation_role": "generation_official_evidence_candidate",
+      "factual_authority_policy": "candidate_pending_identity_and_content_verification",
+      "allowed_use": [
+        "official_identity_resolution",
+        "future_claim_verification_candidate"
+      ],
+      "forbidden_use": [
+        "verified_use_before_identity_and_content_resolution"
+      ],
+      "notes": [
+        "content_not_inspected"
+      ]
+    },
+    {
+      "source_id": "S05",
+      "exact_title": "新しい日本銀行券の偽造防止技術 [PDF 572KB]",
+      "normalized_title": "新しい日本銀行券の偽造防止技術 [pdf 572kb]",
+      "title_fingerprint": "13757d7a14c601493e26192a5f01e632abda36d3cf22ca0adb35b30bca3bdb0f",
+      "chronology_class": "generation_time",
+      "chronology_confidence": "user_provided",
+      "authority_class": "primary_official_candidate",
+      "authority_confidence": "provisional_title_only",
+      "publisher_label": "official_publisher_unresolved",
+      "URL_status": "not_provided",
+      "stable_identifier_status": "not_provided",
+      "generation_role": "generation_official_evidence_candidate",
+      "factual_authority_policy": "candidate_pending_identity_and_content_verification",
+      "allowed_use": [
+        "official_identity_resolution",
+        "future_claim_verification_candidate"
+      ],
+      "forbidden_use": [
+        "verified_use_before_identity_and_content_resolution"
+      ],
+      "notes": [
+        "publisher_requires_resolution",
+        "content_not_inspected"
+      ]
+    },
+    {
+      "source_id": "S06",
+      "exact_title": "新紙幣に採用された3Dホログラムとホログラム映像 何が違う？ - ユピテル",
+      "normalized_title": "新紙幣に採用された3dホログラムとホログラム映像 何が違う? - ユピテル",
+      "title_fingerprint": "6d33776e264b7ff8fb6f56e026b39a3303ab11f7faf5a3e33b6801d60ea98630",
+      "chronology_class": "generation_time",
+      "chronology_confidence": "user_provided",
+      "authority_class": "secondary_corporate_technical_explainer",
+      "authority_confidence": "provisional_title_only",
+      "publisher_label": "ユピテル",
+      "URL_status": "not_provided",
+      "stable_identifier_status": "not_provided",
+      "generation_role": "generation_technical_context",
+      "factual_authority_policy": "secondary_technical_context_only",
+      "allowed_use": [
+        "technical_context",
+        "claim_origin_tracing"
+      ],
+      "forbidden_use": [
+        "sole_official_feature_verification"
+      ],
+      "notes": [
+        "content_not_inspected"
+      ]
+    },
+    {
+      "source_id": "S07",
+      "exact_title": "新紙幣に隠されたキャッシュレスの罠.m4a",
+      "normalized_title": "新紙幣に隠されたキャッシュレスの罠.m4a",
+      "title_fingerprint": "39603ea15483e3fe82d5e419dd278bea8ffad7916dcc08e612d951e6d54dcdd8",
+      "chronology_class": "post_generation_derived",
+      "chronology_confidence": "user_provided",
+      "authority_class": "derived_audio_overview",
+      "authority_confidence": "excluded_by_chronology",
+      "publisher_label": "derived_audio_overview",
+      "URL_status": "not_applicable",
+      "stable_identifier_status": "not_tracked",
+      "generation_role": "post_generation_audio_output",
+      "factual_authority_policy": "excluded",
+      "allowed_use": [
+        "derived_style_and_dialogue_provenance"
+      ],
+      "forbidden_use": [
+        "factual_support",
+        "generation_time_source_membership"
+      ],
+      "notes": [
+        "post_generation_derived",
+        "never_independent_factual_authority"
+      ]
+    },
+    {
+      "source_id": "S08",
+      "exact_title": "注目のキーワード「改刷」",
+      "normalized_title": "注目のキーワード「改刷」",
+      "title_fingerprint": "503e66926c1a72218aa9e1386a56ce7900d1f6174385f79cf821e94802432341",
+      "chronology_class": "generation_time",
+      "chronology_confidence": "user_provided",
+      "authority_class": "publisher_unresolved_title_only",
+      "authority_confidence": "provisional_title_only",
+      "publisher_label": "unresolved",
+      "URL_status": "not_provided",
+      "stable_identifier_status": "not_provided",
+      "generation_role": "generation_keyword_context",
+      "factual_authority_policy": "excluded_until_publisher_and_content_resolution",
+      "allowed_use": [
+        "publisher_resolution",
+        "history_keyword_origin_tracing"
+      ],
+      "forbidden_use": [
+        "factual_verification_before_resolution"
+      ],
+      "notes": [
+        "publisher_unresolved",
+        "content_not_inspected"
+      ]
+    },
+    {
+      "source_id": "S09",
+      "exact_title": "紙切れを価値に変える1000年の知略：3Dホログラムが描く偽造防止の最前線 - note",
+      "normalized_title": "紙切れを価値に変える1000年の知略:3dホログラムが描く偽造防止の最前線 - note",
+      "title_fingerprint": "49223689f56d3a66037b5bab7b77de2aa4198d5b112921d730909a192e349d0d",
+      "chronology_class": "generation_time",
+      "chronology_confidence": "user_provided",
+      "authority_class": "tertiary_user_published_commentary",
+      "authority_confidence": "provisional_title_only",
+      "publisher_label": "note",
+      "URL_status": "not_provided",
+      "stable_identifier_status": "not_provided",
+      "generation_role": "generation_narrative_context",
+      "factual_authority_policy": "tertiary_narrative_inspiration_only",
+      "allowed_use": [
+        "narrative_origin_tracing",
+        "editorial_inspiration"
+      ],
+      "forbidden_use": [
+        "sole_factual_verification",
+        "policy_intent_verification"
+      ],
+      "notes": [
+        "content_not_inspected"
+      ]
+    },
+    {
+      "source_id": "S10",
+      "exact_title": "紙幣の肖像と図柄について、選定理由を教えてください - 財務省",
+      "normalized_title": "紙幣の肖像と図柄について、選定理由を教えてください - 財務省",
+      "title_fingerprint": "7ad232c235f05a2e8129029c4c5d773b1fe861676abb044781a05fe3d92f247b",
+      "chronology_class": "generation_time",
+      "chronology_confidence": "user_provided",
+      "authority_class": "primary_official_candidate",
+      "authority_confidence": "provisional_title_only",
+      "publisher_label": "財務省",
+      "URL_status": "not_provided",
+      "stable_identifier_status": "not_provided",
+      "generation_role": "generation_official_evidence_candidate",
+      "factual_authority_policy": "candidate_pending_identity_and_content_verification",
+      "allowed_use": [
+        "official_identity_resolution",
+        "future_claim_verification_candidate"
+      ],
+      "forbidden_use": [
+        "verified_use_before_identity_and_content_resolution"
+      ],
+      "notes": [
+        "content_not_inspected"
+      ]
+    },
+    {
+      "source_id": "S11",
+      "exact_title": "識別性向上に向けた取組 - 国立印刷局",
+      "normalized_title": "識別性向上に向けた取組 - 国立印刷局",
+      "title_fingerprint": "ca385f29259b83aa8c2170799af7eb005f5c78bf52a08d6b7dd7756e11cee301",
+      "chronology_class": "generation_time",
+      "chronology_confidence": "user_provided",
+      "authority_class": "primary_official_candidate",
+      "authority_confidence": "provisional_title_only",
+      "publisher_label": "国立印刷局",
+      "URL_status": "not_provided",
+      "stable_identifier_status": "not_provided",
+      "generation_role": "generation_official_evidence_candidate",
+      "factual_authority_policy": "candidate_pending_identity_and_content_verification",
+      "allowed_use": [
+        "official_identity_resolution",
+        "future_claim_verification_candidate"
+      ],
+      "forbidden_use": [
+        "verified_use_before_identity_and_content_resolution"
+      ],
+      "notes": [
+        "content_not_inspected"
+      ]
+    }
+  ]
+}

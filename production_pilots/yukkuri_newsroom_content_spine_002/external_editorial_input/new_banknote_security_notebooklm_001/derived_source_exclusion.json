@@ -1,0 +1,29 @@
+{
+  "schema_version": "notebooklm_source_reconciliation.v1.derived_source_exclusion",
+  "status": "derived_material_excluded_from_factual_authority",
+  "excluded_source_ids": [
+    "S07"
+  ],
+  "excluded_sources": [
+    {
+      "source_id": "S07",
+      "chronology_class": "post_generation_derived",
+      "allowed_use": [
+        "derived_style_and_dialogue_provenance"
+      ],
+      "factual_authority_use": false,
+      "generation_time_evidence_use": false
+    }
+  ],
+  "other_derived_artifacts": [
+    {
+      "artifact_id": "raw_transcript",
+      "artifact_class": "post_generation_derived_transcript",
+      "included_in_source_set": false,
+      "factual_authority_use": false,
+      "raw_sha256": "1825c9689a050ddbfc91537a228f6af0ba2f7f033e5b681fff4f227551144437",
+      "raw_size_bytes": 32089,
+      "raw_logical_line_count": 326
+    }
+  ]
+}

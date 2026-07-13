@@ -1,0 +1,177 @@
+{
+  "schema_version": "notebooklm_source_reconciliation.v1.source_authority_matrix",
+  "status": "title_level_authority_classification_provisional",
+  "primary_official_candidate_source_ids": [
+    "S04",
+    "S05",
+    "S10",
+    "S11"
+  ],
+  "non_independent_source_ids": [
+    "S03"
+  ],
+  "excluded_from_factual_authority_source_ids": [
+    "S03",
+    "S07"
+  ],
+  "entries": [
+    {
+      "source_id": "S01",
+      "authority_class": "secondary_journalism_anchor",
+      "authority_confidence": "provisional_title_only",
+      "generation_role": "generation_context_anchor",
+      "factual_authority_policy": "secondary_context_only",
+      "allowed_use": [
+        "context_discovery",
+        "claim_origin_tracing"
+      ],
+      "forbidden_use": [
+        "sole_factual_verification",
+        "government_intent_verification"
+      ]
+    },
+    {
+      "source_id": "S02",
+      "authority_class": "secondary_commentary_publisher_unresolved",
+      "authority_confidence": "provisional_title_only",
+      "generation_role": "generation_framing_input",
+      "factual_authority_policy": "secondary_framing_only",
+      "allowed_use": [
+        "framing_origin_tracing",
+        "publisher_resolution"
+      ],
+      "forbidden_use": [
+        "sole_factual_verification",
+        "policy_intent_verification"
+      ]
+    },
+    {
+      "source_id": "S03",
+      "authority_class": "notebooklm_generated_synthesis_or_user_note_candidate",
+      "authority_confidence": "provisional_origin_unresolved",
+      "generation_role": "generation_synthesis_or_user_note",
+      "factual_authority_policy": "non_independent_excluded_from_factual_verification",
+      "allowed_use": [
+        "generation_context",
+        "provenance_resolution"
+      ],
+      "forbidden_use": [
+        "independent_factual_verification",
+        "policy_intent_verification"
+      ]
+    },
+    {
+      "source_id": "S04",
+      "authority_class": "primary_official_candidate",
+      "authority_confidence": "provisional_title_only",
+      "generation_role": "generation_official_evidence_candidate",
+      "factual_authority_policy": "candidate_pending_identity_and_content_verification",
+      "allowed_use": [
+        "official_identity_resolution",
+        "future_claim_verification_candidate"
+      ],
+      "forbidden_use": [
+        "verified_use_before_identity_and_content_resolution"
+      ]
+    },
+    {
+      "source_id": "S05",
+      "authority_class": "primary_official_candidate",
+      "authority_confidence": "provisional_title_only",
+      "generation_role": "generation_official_evidence_candidate",
+      "factual_authority_policy": "candidate_pending_identity_and_content_verification",
+      "allowed_use": [
+        "official_identity_resolution",
+        "future_claim_verification_candidate"
+      ],
+      "forbidden_use": [
+        "verified_use_before_identity_and_content_resolution"
+      ]
+    },
+    {
+      "source_id": "S06",
+      "authority_class": "secondary_corporate_technical_explainer",
+      "authority_confidence": "provisional_title_only",
+      "generation_role": "generation_technical_context",
+      "factual_authority_policy": "secondary_technical_context_only",
+      "allowed_use": [
+        "technical_context",
+        "claim_origin_tracing"
+      ],
+      "forbidden_use": [
+        "sole_official_feature_verification"
+      ]
+    },
+    {
+      "source_id": "S07",
+      "authority_class": "derived_audio_overview",
+      "authority_confidence": "excluded_by_chronology",
+      "generation_role": "post_generation_audio_output",
+      "factual_authority_policy": "excluded",
+      "allowed_use": [
+        "derived_style_and_dialogue_provenance"
+      ],
+      "forbidden_use": [
+        "factual_support",
+        "generation_time_source_membership"
+      ]
+    },
+    {
+      "source_id": "S08",
+      "authority_class": "publisher_unresolved_title_only",
+      "authority_confidence": "provisional_title_only",
+      "generation_role": "generation_keyword_context",
+      "factual_authority_policy": "excluded_until_publisher_and_content_resolution",
+      "allowed_use": [
+        "publisher_resolution",
+        "history_keyword_origin_tracing"
+      ],
+      "forbidden_use": [
+        "factual_verification_before_resolution"
+      ]
+    },
+    {
+      "source_id": "S09",
+      "authority_class": "tertiary_user_published_commentary",
+      "authority_confidence": "provisional_title_only",
+      "generation_role": "generation_narrative_context",
+      "factual_authority_policy": "tertiary_narrative_inspiration_only",
+      "allowed_use": [
+        "narrative_origin_tracing",
+        "editorial_inspiration"
+      ],
+      "forbidden_use": [
+        "sole_factual_verification",
+        "policy_intent_verification"
+      ]
+    },
+    {
+      "source_id": "S10",
+      "authority_class": "primary_official_candidate",
+      "authority_confidence": "provisional_title_only",
+      "generation_role": "generation_official_evidence_candidate",
+      "factual_authority_policy": "candidate_pending_identity_and_content_verification",
+      "allowed_use": [
+        "official_identity_resolution",
+        "future_claim_verification_candidate"
+      ],
+      "forbidden_use": [
+        "verified_use_before_identity_and_content_resolution"
+      ]
+    },
+    {
+      "source_id": "S11",
+      "authority_class": "primary_official_candidate",
+      "authority_confidence": "provisional_title_only",
+      "generation_role": "generation_official_evidence_candidate",
+      "factual_authority_policy": "candidate_pending_identity_and_content_verification",
+      "allowed_use": [
+        "official_identity_resolution",
+        "future_claim_verification_candidate"
+      ],
+      "forbidden_use": [
+        "verified_use_before_identity_and_content_resolution"
+      ]
+    }
+  ]
+}

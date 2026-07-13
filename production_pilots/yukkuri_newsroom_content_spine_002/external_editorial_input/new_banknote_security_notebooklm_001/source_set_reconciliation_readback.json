@@ -1,0 +1,37 @@
+{
+  "schema_version": "notebooklm_source_reconciliation.v1.source_set_reconciliation_readback",
+  "status": "source_set_frozen_title_level",
+  "source_count": 11,
+  "generation_time_count": 10,
+  "derived_count": 1,
+  "primary_official_candidate_count": 4,
+  "primary_official_candidate_source_ids": [
+    "S04",
+    "S05",
+    "S10",
+    "S11"
+  ],
+  "claim_alignment_count": 182,
+  "verified_claim_count": 0,
+  "unresolved_source_count": 10,
+  "source_title_coverage": {
+    "covered": 11,
+    "expected": 11,
+    "complete": true
+  },
+  "claim_coverage": {
+    "covered": 182,
+    "expected": 182,
+    "complete": true
+  },
+  "source_set_fingerprint": "af9cf9f22311e7274a682eb6ba5e16c61c8273b7767a3f78445373107e013fa2",
+  "private_link_tracking": false,
+  "source_content_verified": false,
+  "claim_verification_performed": false,
+  "notebook_reference_supplied": true,
+  "notebook_reference_access_verified": false,
+  "notebook_reference_tracked": false,
+  "topic_labeling_mode": "fingerprint_verified_local_line_map_lexical_labels",
+  "topic_labeled_claim_count": 87,
+  "topic_unlabeled_claim_count": 95
+}
