@@ -1,0 +1,715 @@
+{
+  "schema_version": "new_banknote_authoritative_script.v1.cue_source_traceability",
+  "status": "passed",
+  "cue_count": 9,
+  "traceability_coverage": "9/9",
+  "unsupported_claim_count": 0,
+  "cues": [
+    {
+      "cue_id": "cue_001",
+      "sequence": 1,
+      "adopted_claim_ids": [
+        "claim_010",
+        "claim_099",
+        "claim_161"
+      ],
+      "supporting_source_ids": [
+        "V02",
+        "V13"
+      ],
+      "supporting_evidence": [
+        {
+          "support_unit_id": "cue_001_fact_01",
+          "claim_id": "claim_010",
+          "source_id": "V02",
+          "exact_location": "H1直下の導入",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_001_fact_02",
+          "claim_id": "claim_099",
+          "source_id": "V13",
+          "exact_location": "PDF物理ページ5（冊子pp.8–9）",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_001_fact_03",
+          "claim_id": "claim_161",
+          "source_id": "V02",
+          "exact_location": "H1直下の導入",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_support_units": [
+        {
+          "support_unit_id": "cue_001_fact_01",
+          "statement": "F券は2024年に発行された。",
+          "claim_ids": [
+            "claim_010"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_001_fact_01",
+              "claim_id": "claim_010",
+              "source_id": "V02",
+              "exact_location": "H1直下の導入",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        },
+        {
+          "support_unit_id": "cue_001_fact_02",
+          "statement": "F券は複数の偽造防止技術を組み合わせている。",
+          "claim_ids": [
+            "claim_099"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_001_fact_02",
+              "claim_id": "claim_099",
+              "source_id": "V13",
+              "exact_location": "PDF物理ページ5（冊子pp.8–9）",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        },
+        {
+          "support_unit_id": "cue_001_fact_03",
+          "statement": "F券には、誰にとっても使いやすいものを目指したユニバーサルデザインが取り入れられている。",
+          "claim_ids": [
+            "claim_161"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_001_fact_03",
+              "claim_id": "claim_161",
+              "source_id": "V02",
+              "exact_location": "H1直下の導入",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        }
+      ],
+      "all_adopted_claims_verified_primary": true,
+      "unsupported_claim_count": 0
+    },
+    {
+      "cue_id": "cue_002",
+      "sequence": 2,
+      "adopted_claim_ids": [
+        "claim_090",
+        "claim_065",
+        "claim_114"
+      ],
+      "supporting_source_ids": [
+        "V06",
+        "V02"
+      ],
+      "supporting_evidence": [
+        {
+          "support_unit_id": "cue_002_fact_01",
+          "claim_id": "claim_090",
+          "source_id": "V06",
+          "exact_location": "『すかして』わかる偽造防止技術 > すき入れ・高精細すき入れ",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_002_fact_02",
+          "claim_id": "claim_065",
+          "source_id": "V06",
+          "exact_location": "『傾けて』わかる偽造防止技術 > 3Dホログラム",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_002_fact_03",
+          "claim_id": "claim_114",
+          "source_id": "V02",
+          "exact_location": "額面数字の大型化",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_support_units": [
+        {
+          "support_unit_id": "cue_002_fact_01",
+          "statement": "F券には高精細すき入れが採り入れられている。",
+          "claim_ids": [
+            "claim_090"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_002_fact_01",
+              "claim_id": "claim_090",
+              "source_id": "V06",
+              "exact_location": "『すかして』わかる偽造防止技術 > すき入れ・高精細すき入れ",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        },
+        {
+          "support_unit_id": "cue_002_fact_02",
+          "statement": "F券には3Dホログラムが採用された。",
+          "claim_ids": [
+            "claim_065"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_002_fact_02",
+              "claim_id": "claim_065",
+              "source_id": "V06",
+              "exact_location": "『傾けて』わかる偽造防止技術 > 3Dホログラム",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        },
+        {
+          "support_unit_id": "cue_002_fact_03",
+          "statement": "アラビア数字の額面表示をE券より大きくした。",
+          "claim_ids": [
+            "claim_114"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_002_fact_03",
+              "claim_id": "claim_114",
+              "source_id": "V02",
+              "exact_location": "額面数字の大型化",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        }
+      ],
+      "all_adopted_claims_verified_primary": true,
+      "unsupported_claim_count": 0
+    },
+    {
+      "cue_id": "cue_003",
+      "sequence": 3,
+      "adopted_claim_ids": [
+        "claim_090"
+      ],
+      "supporting_source_ids": [
+        "V06"
+      ],
+      "supporting_evidence": [
+        {
+          "support_unit_id": "cue_003_fact_01",
+          "claim_id": "claim_090",
+          "source_id": "V06",
+          "exact_location": "『すかして』わかる偽造防止技術 > すき入れ・高精細すき入れ",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_support_units": [
+        {
+          "support_unit_id": "cue_003_fact_01",
+          "statement": "F券の高精細すき入れには、光に透かすと見える微細な模様が施されている。",
+          "claim_ids": [
+            "claim_090"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_003_fact_01",
+              "claim_id": "claim_090",
+              "source_id": "V06",
+              "exact_location": "『すかして』わかる偽造防止技術 > すき入れ・高精細すき入れ",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        }
+      ],
+      "all_adopted_claims_verified_primary": true,
+      "unsupported_claim_count": 0
+    },
+    {
+      "cue_id": "cue_004",
+      "sequence": 4,
+      "adopted_claim_ids": [
+        "claim_065",
+        "claim_067"
+      ],
+      "supporting_source_ids": [
+        "V06",
+        "V07"
+      ],
+      "supporting_evidence": [
+        {
+          "support_unit_id": "cue_004_fact_01",
+          "claim_id": "claim_065",
+          "source_id": "V06",
+          "exact_location": "『傾けて』わかる偽造防止技術 > 3Dホログラム",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_004_fact_02",
+          "claim_id": "claim_067",
+          "source_id": "V07",
+          "exact_location": "3Dホログラム",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_support_units": [
+        {
+          "support_unit_id": "cue_004_fact_01",
+          "statement": "F券には3Dホログラムが採用された。",
+          "claim_ids": [
+            "claim_065"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_004_fact_01",
+              "claim_id": "claim_065",
+              "source_id": "V06",
+              "exact_location": "『傾けて』わかる偽造防止技術 > 3Dホログラム",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        },
+        {
+          "support_unit_id": "cue_004_fact_02",
+          "statement": "角度により三次元の肖像が回転して見える。",
+          "claim_ids": [
+            "claim_067"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_004_fact_02",
+              "claim_id": "claim_067",
+              "source_id": "V07",
+              "exact_location": "3Dホログラム",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        }
+      ],
+      "all_adopted_claims_verified_primary": true,
+      "unsupported_claim_count": 0
+    },
+    {
+      "cue_id": "cue_005",
+      "sequence": 5,
+      "adopted_claim_ids": [
+        "claim_116"
+      ],
+      "supporting_source_ids": [
+        "V06"
+      ],
+      "supporting_evidence": [
+        {
+          "support_unit_id": "cue_005_fact_01",
+          "claim_id": "claim_116",
+          "source_id": "V06",
+          "exact_location": "『さわって』わかる偽造防止技術 > 深凹版印刷",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_support_units": [
+        {
+          "support_unit_id": "cue_005_fact_01",
+          "statement": "額面数字などには、インキを高く盛り上げる深凹版印刷が使われ、ざらざらした触感がある。",
+          "claim_ids": [
+            "claim_116"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_005_fact_01",
+              "claim_id": "claim_116",
+              "source_id": "V06",
+              "exact_location": "『さわって』わかる偽造防止技術 > 深凹版印刷",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        }
+      ],
+      "all_adopted_claims_verified_primary": true,
+      "unsupported_claim_count": 0
+    },
+    {
+      "cue_id": "cue_006",
+      "sequence": 6,
+      "adopted_claim_ids": [
+        "claim_096",
+        "claim_097"
+      ],
+      "supporting_source_ids": [
+        "V06"
+      ],
+      "supporting_evidence": [
+        {
+          "support_unit_id": "cue_006_fact_01",
+          "claim_id": "claim_096",
+          "source_id": "V06",
+          "exact_location": "『道具で』わかる偽造防止技術 > マイクロ文字",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_006_fact_02",
+          "claim_id": "claim_097",
+          "source_id": "V06",
+          "exact_location": "『道具で』わかる偽造防止技術 > マイクロ文字",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_support_units": [
+        {
+          "support_unit_id": "cue_006_fact_01",
+          "statement": "F券には『NIPPONGINKO』という微小なマイクロ文字が印刷され、ルーペで確認できる。",
+          "claim_ids": [
+            "claim_096"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_006_fact_01",
+              "claim_id": "claim_096",
+              "source_id": "V06",
+              "exact_location": "『道具で』わかる偽造防止技術 > マイクロ文字",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        },
+        {
+          "support_unit_id": "cue_006_fact_02",
+          "statement": "マイクロ文字はカラーコピー機では再現が困難なほど小さい。",
+          "claim_ids": [
+            "claim_097"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_006_fact_02",
+              "claim_id": "claim_097",
+              "source_id": "V06",
+              "exact_location": "『道具で』わかる偽造防止技術 > マイクロ文字",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        }
+      ],
+      "all_adopted_claims_verified_primary": true,
+      "unsupported_claim_count": 0
+    },
+    {
+      "cue_id": "cue_007",
+      "sequence": 7,
+      "adopted_claim_ids": [
+        "claim_118",
+        "claim_130",
+        "claim_132"
+      ],
+      "supporting_source_ids": [
+        "V13",
+        "V06",
+        "V02"
+      ],
+      "supporting_evidence": [
+        {
+          "support_unit_id": "cue_007_fact_01",
+          "claim_id": "claim_118",
+          "source_id": "V13",
+          "exact_location": "PDF物理ページ4（冊子pp.6–7）",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_007_fact_02",
+          "claim_id": "claim_130",
+          "source_id": "V06",
+          "exact_location": "識別マーク（深凹版印刷）",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_007_fact_02",
+          "claim_id": "claim_132",
+          "source_id": "V02",
+          "exact_location": "識別マーク（凹版印刷）",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_support_units": [
+        {
+          "support_unit_id": "cue_007_fact_01",
+          "statement": "F券の識別マークは11本の斜線に統一された。",
+          "claim_ids": [
+            "claim_118"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_007_fact_01",
+              "claim_id": "claim_118",
+              "source_id": "V13",
+              "exact_location": "PDF物理ページ4（冊子pp.6–7）",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        },
+        {
+          "support_unit_id": "cue_007_fact_02",
+          "statement": "同じ識別マークの位置を券種ごとに変えている。",
+          "claim_ids": [
+            "claim_130",
+            "claim_132"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_007_fact_02",
+              "claim_id": "claim_130",
+              "source_id": "V06",
+              "exact_location": "識別マーク（深凹版印刷）",
+              "evidence_grade": "verified_primary"
+            },
+            {
+              "support_unit_id": "cue_007_fact_02",
+              "claim_id": "claim_132",
+              "source_id": "V02",
+              "exact_location": "識別マーク（凹版印刷）",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        }
+      ],
+      "all_adopted_claims_verified_primary": true,
+      "unsupported_claim_count": 0
+    },
+    {
+      "cue_id": "cue_008",
+      "sequence": 8,
+      "adopted_claim_ids": [
+        "claim_114",
+        "claim_155",
+        "claim_157",
+        "claim_158"
+      ],
+      "supporting_source_ids": [
+        "V02"
+      ],
+      "supporting_evidence": [
+        {
+          "support_unit_id": "cue_008_fact_01",
+          "claim_id": "claim_114",
+          "source_id": "V02",
+          "exact_location": "額面数字の大型化",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_008_fact_02",
+          "claim_id": "claim_155",
+          "source_id": "V02",
+          "exact_location": "ホログラム・すき入れの配置",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_008_fact_03",
+          "claim_id": "claim_157",
+          "source_id": "V02",
+          "exact_location": "区別しやすい色味の工夫",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_008_fact_04",
+          "claim_id": "claim_158",
+          "source_id": "V02",
+          "exact_location": "一万円券と千円券の『1』のデザインの違い",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_support_units": [
+        {
+          "support_unit_id": "cue_008_fact_01",
+          "statement": "アラビア数字の額面表示をE券より大きくした。",
+          "claim_ids": [
+            "claim_114"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_008_fact_01",
+              "claim_id": "claim_114",
+              "source_id": "V02",
+              "exact_location": "額面数字の大型化",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        },
+        {
+          "support_unit_id": "cue_008_fact_02",
+          "statement": "一万円券と千円券ではホログラムの形状と配置が異なる。",
+          "claim_ids": [
+            "claim_155"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_008_fact_02",
+              "claim_id": "claim_155",
+              "source_id": "V02",
+              "exact_location": "ホログラム・すき入れの配置",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        },
+        {
+          "support_unit_id": "cue_008_fact_03",
+          "statement": "千円券中央には橙色のグラデーションが配置されている。",
+          "claim_ids": [
+            "claim_157"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_008_fact_03",
+              "claim_id": "claim_157",
+              "source_id": "V02",
+              "exact_location": "区別しやすい色味の工夫",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        },
+        {
+          "support_unit_id": "cue_008_fact_04",
+          "statement": "一万円券と千円券では数字『1』のデザインが異なる。",
+          "claim_ids": [
+            "claim_158"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_008_fact_04",
+              "claim_id": "claim_158",
+              "source_id": "V02",
+              "exact_location": "一万円券と千円券の『1』のデザインの違い",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        }
+      ],
+      "all_adopted_claims_verified_primary": true,
+      "unsupported_claim_count": 0
+    },
+    {
+      "cue_id": "cue_009",
+      "sequence": 9,
+      "adopted_claim_ids": [
+        "claim_090",
+        "claim_116",
+        "claim_065",
+        "claim_095"
+      ],
+      "supporting_source_ids": [
+        "V06"
+      ],
+      "supporting_evidence": [
+        {
+          "support_unit_id": "cue_009_fact_01",
+          "claim_id": "claim_090",
+          "source_id": "V06",
+          "exact_location": "『すかして』わかる偽造防止技術 > すき入れ・高精細すき入れ",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_009_fact_02",
+          "claim_id": "claim_116",
+          "source_id": "V06",
+          "exact_location": "『さわって』わかる偽造防止技術 > 深凹版印刷",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_009_fact_03",
+          "claim_id": "claim_065",
+          "source_id": "V06",
+          "exact_location": "『傾けて』わかる偽造防止技術 > 3Dホログラム",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_009_fact_04",
+          "claim_id": "claim_095",
+          "source_id": "V06",
+          "exact_location": "『道具で』わかる偽造防止技術 > マイクロ文字",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_support_units": [
+        {
+          "support_unit_id": "cue_009_fact_01",
+          "statement": "高精細すき入れは光に透かして確認する。",
+          "claim_ids": [
+            "claim_090"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_009_fact_01",
+              "claim_id": "claim_090",
+              "source_id": "V06",
+              "exact_location": "『すかして』わかる偽造防止技術 > すき入れ・高精細すき入れ",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        },
+        {
+          "support_unit_id": "cue_009_fact_02",
+          "statement": "深凹版印刷は触って確認する。",
+          "claim_ids": [
+            "claim_116"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_009_fact_02",
+              "claim_id": "claim_116",
+              "source_id": "V06",
+              "exact_location": "『さわって』わかる偽造防止技術 > 深凹版印刷",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        },
+        {
+          "support_unit_id": "cue_009_fact_03",
+          "statement": "3Dホログラムは傾けて確認する。",
+          "claim_ids": [
+            "claim_065"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_009_fact_03",
+              "claim_id": "claim_065",
+              "source_id": "V06",
+              "exact_location": "『傾けて』わかる偽造防止技術 > 3Dホログラム",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        },
+        {
+          "support_unit_id": "cue_009_fact_04",
+          "statement": "マイクロ文字は道具で確認する。",
+          "claim_ids": [
+            "claim_095"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_009_fact_04",
+              "claim_id": "claim_095",
+              "source_id": "V06",
+              "exact_location": "『道具で』わかる偽造防止技術 > マイクロ文字",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "supported": true
+        }
+      ],
+      "all_adopted_claims_verified_primary": true,
+      "unsupported_claim_count": 0
+    }
+  ]
+}

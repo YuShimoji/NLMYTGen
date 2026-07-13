@@ -1,0 +1,349 @@
+{
+  "schema_version": "new_banknote_authoritative_script.v1.canonical_script",
+  "status": "internal_review_candidate",
+  "title": "新紙幣の偽造防止技術と、見分けやすくするための工夫",
+  "shaping_mode": "supported_only_constrained_rewrite",
+  "source_origin": "existing_notebooklm_transcript_claims",
+  "cue_count": 9,
+  "scene_allocation": {
+    "S1": 2,
+    "S2": 4,
+    "S3": 3
+  },
+  "speaker_counts": {
+    "れいむ": 3,
+    "まりさ": 6
+  },
+  "unsupported_claim_count": 0,
+  "editorial_adoption": false,
+  "public_ready": false,
+  "production_ready": false,
+  "cues": [
+    {
+      "sequence": 1,
+      "cue_id": "cue_001",
+      "scene_id": "S1",
+      "speaker": "れいむ",
+      "text": "2024年に発行された新しいお札。偽造防止技術に加えて、誰にとっても使いやすいユニバーサルデザインも取り入れたんだね。",
+      "adopted_claim_ids": [
+        "claim_010",
+        "claim_099",
+        "claim_161"
+      ],
+      "factual_support_units": [
+        {
+          "unit_id": "cue_001_fact_01",
+          "statement": "F券は2024年に発行された。",
+          "claim_ids": [
+            "claim_010"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        },
+        {
+          "unit_id": "cue_001_fact_02",
+          "statement": "F券は複数の偽造防止技術を組み合わせている。",
+          "claim_ids": [
+            "claim_099"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        },
+        {
+          "unit_id": "cue_001_fact_03",
+          "statement": "F券には、誰にとっても使いやすいものを目指したユニバーサルデザインが取り入れられている。",
+          "claim_ids": [
+            "claim_161"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        }
+      ],
+      "semantic_coverage_status": "fully_mapped_to_adjudicated_propositions",
+      "unsupported_claim_count": 0,
+      "evidence_grade": "verified_primary"
+    },
+    {
+      "sequence": 2,
+      "cue_id": "cue_002",
+      "scene_id": "S1",
+      "speaker": "まりさ",
+      "text": "そうだぜ。高精細すき入れと3Dホログラムを採り入れ、額面数字もE券より大きくしたんだ。",
+      "adopted_claim_ids": [
+        "claim_090",
+        "claim_065",
+        "claim_114"
+      ],
+      "factual_support_units": [
+        {
+          "unit_id": "cue_002_fact_01",
+          "statement": "F券には高精細すき入れが採り入れられている。",
+          "claim_ids": [
+            "claim_090"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        },
+        {
+          "unit_id": "cue_002_fact_02",
+          "statement": "F券には3Dホログラムが採用された。",
+          "claim_ids": [
+            "claim_065"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        },
+        {
+          "unit_id": "cue_002_fact_03",
+          "statement": "アラビア数字の額面表示をE券より大きくした。",
+          "claim_ids": [
+            "claim_114"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        }
+      ],
+      "semantic_coverage_status": "fully_mapped_to_adjudicated_propositions",
+      "unsupported_claim_count": 0,
+      "evidence_grade": "verified_primary"
+    },
+    {
+      "sequence": 3,
+      "cue_id": "cue_003",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "text": "まず、光に透かすと細かな模様が見える。これが高精細すき入れだぜ。",
+      "adopted_claim_ids": [
+        "claim_090"
+      ],
+      "factual_support_units": [
+        {
+          "unit_id": "cue_003_fact_01",
+          "statement": "F券の高精細すき入れには、光に透かすと見える微細な模様が施されている。",
+          "claim_ids": [
+            "claim_090"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        }
+      ],
+      "semantic_coverage_status": "fully_mapped_to_adjudicated_propositions",
+      "unsupported_claim_count": 0,
+      "evidence_grade": "verified_primary"
+    },
+    {
+      "sequence": 4,
+      "cue_id": "cue_004",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "text": "次は3Dホログラム。角度を変えると三次元の肖像が回転して見えるぜ。",
+      "adopted_claim_ids": [
+        "claim_065",
+        "claim_067"
+      ],
+      "factual_support_units": [
+        {
+          "unit_id": "cue_004_fact_01",
+          "statement": "F券には3Dホログラムが採用された。",
+          "claim_ids": [
+            "claim_065"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        },
+        {
+          "unit_id": "cue_004_fact_02",
+          "statement": "角度により三次元の肖像が回転して見える。",
+          "claim_ids": [
+            "claim_067"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        }
+      ],
+      "semantic_coverage_status": "fully_mapped_to_adjudicated_propositions",
+      "unsupported_claim_count": 0,
+      "evidence_grade": "verified_primary"
+    },
+    {
+      "sequence": 5,
+      "cue_id": "cue_005",
+      "scene_id": "S2",
+      "speaker": "れいむ",
+      "text": "触るとざらざらするのは、額面数字などのインキを高く盛り上げる深凹版印刷なんだね。",
+      "adopted_claim_ids": [
+        "claim_116"
+      ],
+      "factual_support_units": [
+        {
+          "unit_id": "cue_005_fact_01",
+          "statement": "額面数字などには、インキを高く盛り上げる深凹版印刷が使われ、ざらざらした触感がある。",
+          "claim_ids": [
+            "claim_116"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        }
+      ],
+      "semantic_coverage_status": "fully_mapped_to_adjudicated_propositions",
+      "unsupported_claim_count": 0,
+      "evidence_grade": "verified_primary"
+    },
+    {
+      "sequence": 6,
+      "cue_id": "cue_006",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "text": "ルーペで確かめるマイクロ文字は『NIPPONGINKO』。カラーコピー機では再現が難しいほど小さい文字だぜ。",
+      "adopted_claim_ids": [
+        "claim_096",
+        "claim_097"
+      ],
+      "factual_support_units": [
+        {
+          "unit_id": "cue_006_fact_01",
+          "statement": "F券には『NIPPONGINKO』という微小なマイクロ文字が印刷され、ルーペで確認できる。",
+          "claim_ids": [
+            "claim_096"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        },
+        {
+          "unit_id": "cue_006_fact_02",
+          "statement": "マイクロ文字はカラーコピー機では再現が困難なほど小さい。",
+          "claim_ids": [
+            "claim_097"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        }
+      ],
+      "semantic_coverage_status": "fully_mapped_to_adjudicated_propositions",
+      "unsupported_claim_count": 0,
+      "evidence_grade": "verified_primary"
+    },
+    {
+      "sequence": 7,
+      "cue_id": "cue_007",
+      "scene_id": "S3",
+      "speaker": "まりさ",
+      "text": "見分けやすさでは、11本の斜線の識別マークを同じ形にそろえ、券種ごとに位置を変えているぜ。",
+      "adopted_claim_ids": [
+        "claim_118",
+        "claim_130",
+        "claim_132"
+      ],
+      "factual_support_units": [
+        {
+          "unit_id": "cue_007_fact_01",
+          "statement": "F券の識別マークは11本の斜線に統一された。",
+          "claim_ids": [
+            "claim_118"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        },
+        {
+          "unit_id": "cue_007_fact_02",
+          "statement": "同じ識別マークの位置を券種ごとに変えている。",
+          "claim_ids": [
+            "claim_130",
+            "claim_132"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        }
+      ],
+      "semantic_coverage_status": "fully_mapped_to_adjudicated_propositions",
+      "unsupported_claim_count": 0,
+      "evidence_grade": "verified_primary"
+    },
+    {
+      "sequence": 8,
+      "cue_id": "cue_008",
+      "scene_id": "S3",
+      "speaker": "れいむ",
+      "text": "アラビア数字の額面表示をE券より大きくし、一万円券と千円券ではホログラムの形と位置や数字の『1』を変え、千円券中央には橙色も入れているんだ。",
+      "adopted_claim_ids": [
+        "claim_114",
+        "claim_155",
+        "claim_157",
+        "claim_158"
+      ],
+      "factual_support_units": [
+        {
+          "unit_id": "cue_008_fact_01",
+          "statement": "アラビア数字の額面表示をE券より大きくした。",
+          "claim_ids": [
+            "claim_114"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        },
+        {
+          "unit_id": "cue_008_fact_02",
+          "statement": "一万円券と千円券ではホログラムの形状と配置が異なる。",
+          "claim_ids": [
+            "claim_155"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        },
+        {
+          "unit_id": "cue_008_fact_03",
+          "statement": "千円券中央には橙色のグラデーションが配置されている。",
+          "claim_ids": [
+            "claim_157"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        },
+        {
+          "unit_id": "cue_008_fact_04",
+          "statement": "一万円券と千円券では数字『1』のデザインが異なる。",
+          "claim_ids": [
+            "claim_158"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        }
+      ],
+      "semantic_coverage_status": "fully_mapped_to_adjudicated_propositions",
+      "unsupported_claim_count": 0,
+      "evidence_grade": "verified_primary"
+    },
+    {
+      "sequence": 9,
+      "cue_id": "cue_009",
+      "scene_id": "S3",
+      "speaker": "まりさ",
+      "text": "確認するときは、透かす、触る、傾ける、道具で見る。この四つで、それぞれ別の特徴を確かめられるぜ。",
+      "adopted_claim_ids": [
+        "claim_090",
+        "claim_116",
+        "claim_065",
+        "claim_095"
+      ],
+      "factual_support_units": [
+        {
+          "unit_id": "cue_009_fact_01",
+          "statement": "高精細すき入れは光に透かして確認する。",
+          "claim_ids": [
+            "claim_090"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        },
+        {
+          "unit_id": "cue_009_fact_02",
+          "statement": "深凹版印刷は触って確認する。",
+          "claim_ids": [
+            "claim_116"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        },
+        {
+          "unit_id": "cue_009_fact_03",
+          "statement": "3Dホログラムは傾けて確認する。",
+          "claim_ids": [
+            "claim_065"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        },
+        {
+          "unit_id": "cue_009_fact_04",
+          "statement": "マイクロ文字は道具で確認する。",
+          "claim_ids": [
+            "claim_095"
+          ],
+          "support_status": "supported_by_verified_primary_claims"
+        }
+      ],
+      "semantic_coverage_status": "fully_mapped_to_adjudicated_propositions",
+      "unsupported_claim_count": 0,
+      "evidence_grade": "verified_primary"
+    }
+  ]
+}

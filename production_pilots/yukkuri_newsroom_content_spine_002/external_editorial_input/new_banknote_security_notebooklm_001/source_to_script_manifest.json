@@ -1,0 +1,108 @@
+{
+  "schema_version": "new_banknote_authoritative_script.v1.source_to_script_manifest",
+  "status": "source_to_script_traceability_complete",
+  "script_title": "新紙幣の偽造防止技術と、見分けやすくするための工夫",
+  "cue_count": 9,
+  "source_count_used": 4,
+  "unsupported_claim_count": 0,
+  "sources": [
+    {
+      "source_id": "V02",
+      "url_label": "識別性向上に向けた取組 独立行政法人 国立印刷局",
+      "canonical_url": "https://www.npb.go.jp/product_service/intro/ninsiki.html",
+      "cue_ids": [
+        "cue_001",
+        "cue_002",
+        "cue_007",
+        "cue_008"
+      ],
+      "claim_ids": [
+        "claim_010",
+        "claim_161",
+        "claim_114",
+        "claim_132",
+        "claim_155",
+        "claim_157",
+        "claim_158"
+      ],
+      "support_unit_ids": [
+        "cue_001_fact_01",
+        "cue_001_fact_03",
+        "cue_002_fact_03",
+        "cue_007_fact_02",
+        "cue_008_fact_01",
+        "cue_008_fact_02",
+        "cue_008_fact_03",
+        "cue_008_fact_04"
+      ]
+    },
+    {
+      "source_id": "V06",
+      "url_label": "お札の偽造防止技術 独立行政法人 国立印刷局",
+      "canonical_url": "https://www.npb.go.jp/product_service/intro/gizoboshi.html",
+      "cue_ids": [
+        "cue_002",
+        "cue_003",
+        "cue_004",
+        "cue_005",
+        "cue_006",
+        "cue_007",
+        "cue_009"
+      ],
+      "claim_ids": [
+        "claim_090",
+        "claim_065",
+        "claim_116",
+        "claim_096",
+        "claim_097",
+        "claim_130",
+        "claim_095"
+      ],
+      "support_unit_ids": [
+        "cue_002_fact_01",
+        "cue_002_fact_02",
+        "cue_003_fact_01",
+        "cue_004_fact_01",
+        "cue_005_fact_01",
+        "cue_006_fact_01",
+        "cue_006_fact_02",
+        "cue_007_fact_02",
+        "cue_009_fact_01",
+        "cue_009_fact_02",
+        "cue_009_fact_03",
+        "cue_009_fact_04"
+      ]
+    },
+    {
+      "source_id": "V07",
+      "url_label": "新しい日本銀行券特設サイト｜新しい一万円札について",
+      "canonical_url": "https://www.npb.go.jp/ja/n_banknote/design10/",
+      "cue_ids": [
+        "cue_004"
+      ],
+      "claim_ids": [
+        "claim_067"
+      ],
+      "support_unit_ids": [
+        "cue_004_fact_02"
+      ]
+    },
+    {
+      "source_id": "V13",
+      "url_label": "信頼のものづくり～お札の製造まるわかりBOOK～",
+      "canonical_url": "https://www.npb.go.jp/guide/pamphlet.files/shinrai2026.pdf",
+      "cue_ids": [
+        "cue_001",
+        "cue_007"
+      ],
+      "claim_ids": [
+        "claim_099",
+        "claim_118"
+      ],
+      "support_unit_ids": [
+        "cue_001_fact_02",
+        "cue_007_fact_01"
+      ]
+    }
+  ]
+}

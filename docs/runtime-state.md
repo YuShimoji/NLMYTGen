@@ -1,74 +1,74 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: new-banknote-notebooklm-source-set-frozen-v1
-State-Revision: 2026-07-13.3
+Project-State-ID: new-banknote-source-backed-script-review-ready-v1
+State-Revision: 2026-07-13.4
 Updated: 2026-07-13 JST
-Product-State: new-banknote-notebooklm-generation-source-set-frozen
-Product-Gate: authoritative-source-resolution-and-claim-verification
-Recommended-Next: resolve-official-source-urls-and-map-claims
+Product-State: new-banknote-authoritative-source-nine-cue-script-ready
+Product-Gate: human-script-review-and-yymm4-batch-decision
+Recommended-Next: review-source-backed-nine-cue-script
 External-State: public-repo-feature-branch
 
 ## Current Slice
 
-- **Exact source snapshot frozen**: all 11 externally supplied titles are
-  preserved verbatim under S01-S11 with deterministic normalized-title
-  fingerprints. Ten are generation-time candidates; S07 is post-generation
-  derived audio and excluded from factual authority.
-- **Authority boundary explicit**: S04, S05, S10, and S11 are provisional
-  primary-official candidates pending identity and content resolution. S03 is
-  non-independent synthesis or a user-note candidate; S08 remains publisher
-  unresolved. Commentary and tertiary material are context only.
-- **Claim-family coverage complete**: all 182 sanitized claim candidates retain
-  their IDs, line fingerprints, classes, and risk while receiving title-level
-  source-family routing and verification requirements. The ignored line map was
-  fingerprint-matched 182/182 and used only for lexical topic labels; no claim
-  text was copied. Verified claims remain zero; policy/intent and causal claims
-  require independent evidence, and every quantitative claim requires exact
-  source, page or field, date, and unit.
-- **Salvage and privacy retained**: raw identity remains SHA-256
-  `1825c9689a050ddbfc91537a228f6af0ba2f7f033e5b681fff4f227551144437`,
-  32,089 bytes, and 326 logical lines. Full text stays ignored in
-  `local_outputs/`; no NotebookLM link, UUID, private path, or source content is
-  tracked.
+- **Official evidence captured**: 13 official-source captures now have stable
+  identity and bounded support locations. S10 and S11 are exact-title matches.
+  S04 resolves to the current exact official document, while its
+  generation-time byte version remains unknown. The exact S05 572KB document
+  remains unresolved; a separately identified official equivalent supports the
+  adopted technical claims without identity conflation.
+- **Claims adjudicated**: all 182 preserved claim records have exactly one
+  outcome. Nineteen are `verified_primary`; unsupported policy-intent,
+  cashless-causation, and quantitative narrative is excluded from canonical
+  use.
+- **Review script ready**: the internal candidate has exactly nine cues with
+  scene allocation 2/4/3 and canonical speaker counts 3/6. Each factual meaning
+  unit is mapped to verified claim evidence; cue traceability is complete and
+  unsupported claims in spoken text are zero.
+- **CSV pair ready**: canonical and YMM4-character-derived, headerless two-column
+  CSVs preserve identical text and order across all nine cues. They are review
+  artifacts only; YMM4 was not launched.
+- **Salvage and privacy retained**: the frozen 11-title snapshot, all prior
+  fingerprints, and ignored raw identity remain preserved. No raw transcript,
+  source body, private path, NotebookLM link, or UUID is tracked.
 
 ## Product Position
 
-- The external editorial input lane now has a bounded title-level source-set
-  freeze layered on the preserved raw-transcript salvage. The primary surface is
-  `README_SOURCE_RECONCILIATION.md` in the new-banknote package.
-- Source-family alignment is routing metadata, not factual support. The source
-  contents, URLs, publication identities, exact claim support, and all 182 claim
-  outcomes remain unresolved.
-- The transcript and source snapshot are not a final script, canonical nine-cue
-  script, speaker casting, CSV, YMM4 input, production artifact, or rights/public
-  approval.
+- The external editorial input lane has moved from title-level reconciliation to
+  a reproducible, official-source-backed nine-cue review package.
+- The primary human surface is `README_CANONICAL_SCRIPT_REVIEW.md` in the
+  new-banknote package. Source receipts, claim adjudication, cue traceability,
+  the canonical script, and both CSV variants remain inspectable beside it.
+- This state means ready for human script review, not editorial acceptance,
+  YMM4 execution, render approval, production, rights approval, or publication.
 
 ## Exact Next Action
 
-Resolve stable URLs or document identifiers for S04, S05, S10, and S11 first,
-capture publisher/date/content identity, and map exact claim support locations.
-Then resolve S01, S02, S06, and S08 as context without treating S03 or S07 as
-independent factual evidence.
+Review the source-backed nine-cue candidate for factual clarity, absence of
+unsupported cashless-policy implication, Reimu/Marisa conversational
+naturalness, 2/4/3 scene coherence, and terminology. That decision gates any
+bounded YMM4 operator batch.
 
 ## Evidence and Access
 
 - Primary tracked surface:
-  `production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_SOURCE_RECONCILIATION.md`
-- Canonical title snapshot and claim routing:
-  `source_set_snapshot.json` and `claim_source_family_alignment.json` beside the
+  `production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_CANONICAL_SCRIPT_REVIEW.md`
+- Source and claim evidence: `authoritative_source_registry.json`,
+  `source_capture_receipts.json`, and `claim_adjudication.json` beside the
   primary surface.
-- Reusable builders: `src/pipeline/notebooklm_source_reconciliation.py` and
-  `src/pipeline/notebooklm_audio_transcript.py`.
-- Local full-text evidence: ignored `local_outputs/` under the tracked package.
+- Script handoff: `canonical_script.json`, `cue_source_traceability.json`,
+  `canonical_yymm4.csv`, and `derived_yymm4_import.csv` beside the primary
+  surface.
+- Human decision aid: `operator_review_sheet.md` beside the primary surface.
 
 ## Active Boundaries
 
-- No external fetch, NotebookLM access, source-content or claim verification,
-  final script, Reimu/Marisa casting, CSV, YMM4, render, Computer Use,
-  dependency install, editorial adoption, production, rights, upload, or
-  publication occurred.
-- Full-suite drift and the unrelated integration-receipt test-path typo remain
-  outside this focused slice.
+- Official public web capture occurred only for bounded source verification.
+- No NotebookLM access, Audio Overview regeneration, YMM4 launch, Computer Use,
+  render, editorial acceptance, production, rights action, upload, publication,
+  or master integration occurred.
+- The unresolved exact S05 572KB identity and S04 generation-time byte version
+  do not weaken adopted claims because those claims use separately captured
+  official support.
 
 ## Maintenance Note
 

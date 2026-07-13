@@ -1,0 +1,22 @@
+{
+  "schema_version": "new_banknote_authoritative_script.v1.source_resolution_readback",
+  "status": "passed",
+  "captured_source_count": 13,
+  "S10_exact_resolved": true,
+  "S11_exact_resolved": true,
+  "S04_exact_document_resolved": true,
+  "S05_exact_source_status": "unresolved_exact_source",
+  "checks": {
+    "registry_receipt_counts_match": true,
+    "official_domain_allowlist": true,
+    "S10_exact_resolved": true,
+    "S11_exact_resolved": true,
+    "S04_exact_document_resolved": true,
+    "S05_exact_unresolved_disclosed": true,
+    "S05_official_equivalent_available": true,
+    "crosswalk_edges_match_registry": true,
+    "publication_dates_not_inferred": true,
+    "content_and_fact_dates_separated": true,
+    "source_bodies_untracked": true
+  }
+}

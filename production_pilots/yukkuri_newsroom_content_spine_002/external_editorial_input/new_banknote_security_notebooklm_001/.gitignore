@@ -1,1 +1,6 @@
 local_outputs/
+source_cache/
+source_extracts/
+source_probe/
+!canonical_yymm4.csv
+!derived_yymm4_import.csv

@@ -1,0 +1,687 @@
+{
+  "schema_version": "new_banknote_authoritative_script.v1.verified_claim_set",
+  "status": "verified_primary_claims_frozen",
+  "claim_count": 19,
+  "claims": [
+    {
+      "claim_id": "claim_010",
+      "line_ordinal": 19,
+      "line_fingerprint": "aa57359e77141179a98a2374a55fdf40119696a547fd6be48e0bfa15da32d324",
+      "claim_class": "historical_claim",
+      "risk_class": "high",
+      "topic_family_labels": [
+        "history_keyword"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "scope_narrowed",
+        "asr_normalized"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "F券は2024年に発行された。",
+      "supporting_evidence": [
+        {
+          "source_id": "V02",
+          "url_label": "識別性向上に向けた取組 独立行政法人 国立印刷局",
+          "canonical_url": "https://www.npb.go.jp/product_service/intro/ninsiki.html",
+          "exact_location": "H1直下の導入",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": "2024",
+          "evidence_as_of": "2026-07-13T17:00:40+09:00",
+          "date_basis": "claim_fact_date",
+          "unit": "年",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_065",
+      "line_ordinal": 125,
+      "line_fingerprint": "a8a182b200e9a305bcfa83687fa03035cfdb98887d13be224a299b62ad871774",
+      "claim_class": "technical_description",
+      "risk_class": "high",
+      "topic_family_labels": [
+        "anti_counterfeit_technology"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "asr_normalized"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "F券には、傾けると変化を確認できる3Dホログラムが採用された。",
+      "supporting_evidence": [
+        {
+          "source_id": "V06",
+          "url_label": "お札の偽造防止技術 独立行政法人 国立印刷局",
+          "canonical_url": "https://www.npb.go.jp/product_service/intro/gizoboshi.html",
+          "exact_location": "『傾けて』わかる偽造防止技術 > 3Dホログラム",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:03:17+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "技術仕様",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_067",
+      "line_ordinal": 126,
+      "line_fingerprint": "e9244851d15de00c29893ca53d89695c9f13d9ac21c7706a8def17813418a49b",
+      "claim_class": "technical_description",
+      "risk_class": "high",
+      "topic_family_labels": [
+        "anti_counterfeit_technology",
+        "portrait_design_selection"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "scope_narrowed"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "3Dホログラムでは角度により三次元の肖像が回転して見える。",
+      "supporting_evidence": [
+        {
+          "source_id": "V07",
+          "url_label": "新しい日本銀行券特設サイト｜新しい一万円札について",
+          "canonical_url": "https://www.npb.go.jp/ja/n_banknote/design10/",
+          "exact_location": "3Dホログラム",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:00:40+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "表示仕様",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_090",
+      "line_ordinal": 169,
+      "line_fingerprint": "cb2f592bf85678b5779f88c137854d2631f742d8cc0b733bce3d30e17d1d53d2",
+      "claim_class": "technical_description",
+      "risk_class": "high",
+      "topic_family_labels": [
+        "anti_counterfeit_technology"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "scope_narrowed",
+        "causal_effect_excluded",
+        "asr_normalized",
+        "contextual_term_resolution"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "F券の高精細すき入れには、光に透かすと見える微細な模様が施されている。",
+      "supporting_evidence": [
+        {
+          "source_id": "V06",
+          "url_label": "お札の偽造防止技術 独立行政法人 国立印刷局",
+          "canonical_url": "https://www.npb.go.jp/product_service/intro/gizoboshi.html",
+          "exact_location": "『すかして』わかる偽造防止技術 > すき入れ・高精細すき入れ",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:03:17+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "透過表示仕様",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_095",
+      "line_ordinal": 178,
+      "line_fingerprint": "763fc764f3a61a01473e49057b1ea5503600cde762c1c26028c85f483ac67077",
+      "claim_class": "technical_description",
+      "risk_class": "high",
+      "topic_family_labels": [
+        "anti_counterfeit_technology"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "terminology_verified"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "F券には、道具で確認するマイクロ文字が印刷されている。",
+      "supporting_evidence": [
+        {
+          "source_id": "V06",
+          "url_label": "お札の偽造防止技術 独立行政法人 国立印刷局",
+          "canonical_url": "https://www.npb.go.jp/product_service/intro/gizoboshi.html",
+          "exact_location": "『道具で』わかる偽造防止技術 > マイクロ文字",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:03:17+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "技術仕様",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_096",
+      "line_ordinal": 179,
+      "line_fingerprint": "541a6960fa0c03940b3cdf4b7a8e8e3d3c2d605e8cbee8155eee8d75733d4f8c",
+      "claim_class": "technical_description",
+      "risk_class": "high",
+      "topic_family_labels": [
+        "anti_counterfeit_technology"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "asr_normalized",
+        "terminology_verified"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "F券には『NIPPONGINKO』という微小なマイクロ文字が印刷され、ルーペで確認できる。",
+      "supporting_evidence": [
+        {
+          "source_id": "V06",
+          "url_label": "お札の偽造防止技術 独立行政法人 国立印刷局",
+          "canonical_url": "https://www.npb.go.jp/product_service/intro/gizoboshi.html",
+          "exact_location": "『道具で』わかる偽造防止技術 > マイクロ文字",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:03:17+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "表示文字・確認方法",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_097",
+      "line_ordinal": 181,
+      "line_fingerprint": "bf0bf1076eb0e625149b7b22ce9bedf782e7b375a7bf407aeffb5155a6744573",
+      "claim_class": "technical_description",
+      "risk_class": "high",
+      "topic_family_labels": [
+        "anti_counterfeit_technology"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "scope_narrowed",
+        "unsupported_mechanism_excluded",
+        "device_scope_normalized"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "マイクロ文字はカラーコピー機では再現が困難なほど小さい。",
+      "supporting_evidence": [
+        {
+          "source_id": "V06",
+          "url_label": "お札の偽造防止技術 独立行政法人 国立印刷局",
+          "canonical_url": "https://www.npb.go.jp/product_service/intro/gizoboshi.html",
+          "exact_location": "『道具で』わかる偽造防止技術 > マイクロ文字",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:03:17+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "複写再現性",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_099",
+      "line_ordinal": 182,
+      "line_fingerprint": "878241fd67014a2bb852b54dcf7496402e5610f5155a266c24c0221a4beada0e",
+      "claim_class": "technical_description",
+      "risk_class": "high",
+      "topic_family_labels": [
+        "anti_counterfeit_technology"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "compound_technical_claim_narrowed",
+        "analogy_excluded",
+        "asr_normalized"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "F券はホログラム、深凹版印刷、すき入れ、マイクロ文字を組み合わせている。",
+      "supporting_evidence": [
+        {
+          "source_id": "V13",
+          "url_label": "信頼のものづくり～お札の製造まるわかりBOOK～",
+          "canonical_url": "https://www.npb.go.jp/guide/pamphlet.files/shinrai2026.pdf",
+          "exact_location": "PDF物理ページ5（冊子pp.8–9）",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:13:31+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "技術一覧",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_114",
+      "line_ordinal": 210,
+      "line_fingerprint": "c6fcebf5f6ce92da7f7fa1cc10e8ec2bde1089d5371bb0f7b9a066385cce2441",
+      "claim_class": "quantitative_statistic",
+      "risk_class": "high",
+      "topic_family_labels": [
+        "accessibility_identification"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "scope_narrowed",
+        "asr_normalized"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "アラビア数字の額面表示をE券より大きくした。",
+      "supporting_evidence": [
+        {
+          "source_id": "V02",
+          "url_label": "識別性向上に向けた取組 独立行政法人 国立印刷局",
+          "canonical_url": "https://www.npb.go.jp/product_service/intro/ninsiki.html",
+          "exact_location": "額面数字の大型化",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:00:40+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "券面仕様（E券との比較）",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_116",
+      "line_ordinal": 215,
+      "line_fingerprint": "8f3f407f3e6a9da847e198010c60e8df79bd391ccc304725e15c307728ccb6a2",
+      "claim_class": "technical_description",
+      "risk_class": "high",
+      "topic_family_labels": [
+        "anti_counterfeit_technology"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "asr_normalized",
+        "question_form_normalized"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "額面数字や識別マークには、インキを高く盛り上げる深凹版印刷が使われ、ざらざらした触感がある。",
+      "supporting_evidence": [
+        {
+          "source_id": "V06",
+          "url_label": "お札の偽造防止技術 独立行政法人 国立印刷局",
+          "canonical_url": "https://www.npb.go.jp/product_service/intro/gizoboshi.html",
+          "exact_location": "『さわって』わかる偽造防止技術 > 深凹版印刷",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:03:17+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "触感仕様",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_118",
+      "line_ordinal": 216,
+      "line_fingerprint": "503d4e12909bf96dd06ecef11b99623ff4c32b1f0ab496645e58397931adb397",
+      "claim_class": "quantitative_statistic",
+      "risk_class": "high",
+      "topic_family_labels": [
+        "accessibility_identification"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "scope_narrowed",
+        "asr_normalized"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "F券の識別マークは11本の斜線に統一された。",
+      "supporting_evidence": [
+        {
+          "source_id": "V13",
+          "url_label": "信頼のものづくり～お札の製造まるわかりBOOK～",
+          "canonical_url": "https://www.npb.go.jp/guide/pamphlet.files/shinrai2026.pdf",
+          "exact_location": "PDF物理ページ4（冊子pp.6–7）",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:13:31+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "本",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_130",
+      "line_ordinal": 240,
+      "line_fingerprint": "5f708d03906a14cf5c9597f0981d64e5af4999e9397723acc63bc5d7eb0b201f",
+      "claim_class": "causal_claim",
+      "risk_class": "high",
+      "topic_family_labels": [
+        "accessibility_identification"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "causal_effect_excluded"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "同じ識別マークの位置を券種ごとに変えている。",
+      "supporting_evidence": [
+        {
+          "source_id": "V06",
+          "url_label": "お札の偽造防止技術 独立行政法人 国立印刷局",
+          "canonical_url": "https://www.npb.go.jp/product_service/intro/gizoboshi.html",
+          "exact_location": "識別マーク（深凹版印刷）",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:03:17+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "券種別位置仕様",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_132",
+      "line_ordinal": 242,
+      "line_fingerprint": "416ca7444762454dca28474f2d3ae1ebd440ad750a0ffbb0aadaf15a5951daff",
+      "claim_class": "quantitative_statistic",
+      "risk_class": "high",
+      "topic_family_labels": [],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "asr_normalized"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "識別マークの位置は一万円券・五千円券・千円券で異なる。",
+      "supporting_evidence": [
+        {
+          "source_id": "V02",
+          "url_label": "識別性向上に向けた取組 独立行政法人 国立印刷局",
+          "canonical_url": "https://www.npb.go.jp/product_service/intro/ninsiki.html",
+          "exact_location": "識別マーク（凹版印刷）",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:00:40+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "券種別位置",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_155",
+      "line_ordinal": 294,
+      "line_fingerprint": "43a23db449b2575f427a6eb3c3c1df9e12720ac70d114fbe3fd3839df72c714b",
+      "claim_class": "technical_description",
+      "risk_class": "high",
+      "topic_family_labels": [
+        "anti_counterfeit_technology"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "scope_narrowed"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "一万円券と千円券ではホログラムの形状と配置が異なる。",
+      "supporting_evidence": [
+        {
+          "source_id": "V02",
+          "url_label": "識別性向上に向けた取組 独立行政法人 国立印刷局",
+          "canonical_url": "https://www.npb.go.jp/product_service/intro/ninsiki.html",
+          "exact_location": "ホログラム・すき入れの配置",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:00:40+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "券種別配置仕様",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_157",
+      "line_ordinal": 296,
+      "line_fingerprint": "30534ff29bd61023889bd4b93eb813edeed13afc2e90ceeea82014906aab92fd",
+      "claim_class": "quantitative_statistic",
+      "risk_class": "high",
+      "topic_family_labels": [],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "asr_normalized",
+        "effect_not_quantified"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "千円券中央には橙色のグラデーションが配置されている。",
+      "supporting_evidence": [
+        {
+          "source_id": "V02",
+          "url_label": "識別性向上に向けた取組 独立行政法人 国立印刷局",
+          "canonical_url": "https://www.npb.go.jp/product_service/intro/ninsiki.html",
+          "exact_location": "区別しやすい色味の工夫",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:00:40+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "色配置仕様",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_158",
+      "line_ordinal": 298,
+      "line_fingerprint": "6b28ddb37f0abb2429b7bb7c90649ba858333f73d60d44189ee7b1b3a4272d92",
+      "claim_class": "quantitative_statistic",
+      "risk_class": "high",
+      "topic_family_labels": [
+        "accessibility_identification"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "scope_narrowed"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "一万円券と千円券では数字『1』のデザインが異なる。",
+      "supporting_evidence": [
+        {
+          "source_id": "V02",
+          "url_label": "識別性向上に向けた取組 独立行政法人 国立印刷局",
+          "canonical_url": "https://www.npb.go.jp/product_service/intro/ninsiki.html",
+          "exact_location": "一万円券と千円券の『1』のデザインの違い",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:00:40+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "数字デザイン仕様",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_161",
+      "line_ordinal": 301,
+      "line_fingerprint": "558a2147340590aa293422eb7a25b2c1812658e817b79c57ca77c176a4a990b2",
+      "claim_class": "analogy_or_metaphor",
+      "risk_class": "medium",
+      "topic_family_labels": [
+        "accessibility_identification"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "scope_narrowed",
+        "analogy_excluded",
+        "effect_not_quantified"
+      ],
+      "canonical_use": true,
+      "adjudicated_proposition": "F券には、誰にとっても使いやすいものを目指したユニバーサルデザインが取り入れられている。",
+      "supporting_evidence": [
+        {
+          "source_id": "V02",
+          "url_label": "識別性向上に向けた取組 独立行政法人 国立印刷局",
+          "canonical_url": "https://www.npb.go.jp/product_service/intro/ninsiki.html",
+          "exact_location": "H1直下の導入",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:00:40+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "設計方針",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_162",
+      "line_ordinal": 304,
+      "line_fingerprint": "4fcd7742984875d13a49155850c85efb338fa4b9aad54f039be626b404d0faef",
+      "claim_class": "technical_description",
+      "risk_class": "high",
+      "topic_family_labels": [
+        "anti_counterfeit_technology",
+        "accessibility_identification"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "asr_normalized",
+        "platform_narrowed"
+      ],
+      "canonical_use": false,
+      "adjudicated_proposition": "視覚障害者向けのiPhone用識別アプリ『言う吉くん』を無料配信している。",
+      "supporting_evidence": [
+        {
+          "source_id": "V02",
+          "url_label": "識別性向上に向けた取組 独立行政法人 国立印刷局",
+          "canonical_url": "https://www.npb.go.jp/product_service/intro/ninsiki.html",
+          "exact_location": "お札識別アプリ『言う吉くん』",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:00:40+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "アプリ提供仕様",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    },
+    {
+      "claim_id": "claim_164",
+      "line_ordinal": 306,
+      "line_fingerprint": "bec7ede1498cc682da2e478304800bbbcd43fbb4746fc760f2e6f0c8121d3f89",
+      "claim_class": "technical_description",
+      "risk_class": "high",
+      "topic_family_labels": [
+        "accessibility_identification"
+      ],
+      "primary_outcome": "verified_primary",
+      "secondary_tags": [
+        "official_primary",
+        "scope_narrowed",
+        "authenticity_function_excluded"
+      ],
+      "canonical_use": false,
+      "adjudicated_proposition": "識別アプリはカメラで券種を識別し、音声と大きな文字で額面を知らせる。",
+      "supporting_evidence": [
+        {
+          "source_id": "V02",
+          "url_label": "識別性向上に向けた取組 独立行政法人 国立印刷局",
+          "canonical_url": "https://www.npb.go.jp/product_service/intro/ninsiki.html",
+          "exact_location": "お札識別アプリ『言う吉くん』",
+          "source_publication_date": null,
+          "source_publication_date_basis": "not_stated",
+          "fact_date": null,
+          "evidence_as_of": "2026-07-13T17:00:40+09:00",
+          "date_basis": "source_retrieval_timestamp",
+          "unit": "機能仕様",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "evidence_grade": "verified_primary",
+      "concise_rationale": "公式一次資料の固定済み位置へ命題範囲を限定して検証した。",
+      "raw_claim_text_tracked": false
+    }
+  ]
+}

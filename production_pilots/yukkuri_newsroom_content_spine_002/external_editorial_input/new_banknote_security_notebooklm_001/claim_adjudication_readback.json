@@ -1,0 +1,29 @@
+{
+  "schema_version": "new_banknote_authoritative_script.v1.claim_adjudication_readback",
+  "status": "passed",
+  "claim_count": 182,
+  "input_claim_count": 182,
+  "adjudicated_claim_count": 182,
+  "verified_primary_count": 19,
+  "outcome_counts": {
+    "duplicate_not_used": 26,
+    "rejected_policy_intent": 10,
+    "rejected_quantitative_without_exact_source": 18,
+    "rejected_unsupported": 15,
+    "style_or_rhetoric_only": 52,
+    "supported_context_only": 11,
+    "unresolved_not_used": 31,
+    "verified_primary": 19
+  },
+  "checks": {
+    "claim_count_182": true,
+    "claim_ids_unique": true,
+    "exactly_one_primary_outcome": true,
+    "outcome_counts_sum_182": true,
+    "verified_claims_use_official_primary": true,
+    "verified_evidence_dates_separated": true,
+    "policy_intent_rejected": true,
+    "canonical_use_verified_only": true,
+    "raw_claim_text_untracked": true
+  }
+}

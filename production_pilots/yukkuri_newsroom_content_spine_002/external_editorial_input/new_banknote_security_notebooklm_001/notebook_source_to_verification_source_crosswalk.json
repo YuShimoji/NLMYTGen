@@ -1,0 +1,162 @@
+{
+  "schema_version": "new_banknote_authoritative_script.v1.notebook_source_crosswalk",
+  "status": "active_official_sources_crosswalked",
+  "input_source_count": 11,
+  "entries": [
+    {
+      "notebook_source_id": "S01",
+      "notebook_exact_title": "【新紙幣を完全解説】世界初の3Dホログラムで偽造防止、キャッシュレス化のなか新紙幣の効果とは - JBpress",
+      "notebook_title_fingerprint": "a6946a67bce2a272f0ce5285a7b24c737f37e22cb210d2ac1285da14b790bf6b",
+      "chronology_class": "generation_time",
+      "resolution_status": "deferred_context_source_resolution",
+      "exact_source_status": "unresolved_exact_source",
+      "relations": [],
+      "identity_conflation_avoided": true
+    },
+    {
+      "notebook_source_id": "S02",
+      "notebook_exact_title": "このタイミングで新紙幣発表\"本当の狙い\" キャッシュレス化とは矛盾しない",
+      "notebook_title_fingerprint": "18780f3929524227db5d4db93f7be8eb875c6037701d7b05787e30bfbfaae946",
+      "chronology_class": "generation_time",
+      "resolution_status": "deferred_context_source_resolution",
+      "exact_source_status": "unresolved_exact_source",
+      "relations": [],
+      "identity_conflation_avoided": true
+    },
+    {
+      "notebook_source_id": "S03",
+      "notebook_exact_title": "テーマ：新紙幣の経済的影響とキャッシュレス化",
+      "notebook_title_fingerprint": "4e720c50ce731e67b3ac168342171a456f81a23d988be6d078a8e29e413caaa2",
+      "chronology_class": "generation_time_candidate",
+      "resolution_status": "deferred_context_source_resolution",
+      "exact_source_status": "unresolved_exact_source",
+      "relations": [],
+      "identity_conflation_avoided": true
+    },
+    {
+      "notebook_source_id": "S04",
+      "notebook_exact_title": "新しい日本銀行券 「開発秘話」 - 国立印刷局",
+      "notebook_title_fingerprint": "91e44821571d60f53c5aacf5b60b7b77b04ef7accce0016fe42b718a34229452",
+      "chronology_class": "generation_time",
+      "resolution_status": "exact_document_family_resolved_version_unproven",
+      "exact_source_status": "exact_document_match",
+      "relations": [
+        {
+          "verification_source_id": "V04",
+          "relation_type": "exact_document_match"
+        },
+        {
+          "verification_source_id": "V03",
+          "relation_type": "official_supplement"
+        },
+        {
+          "verification_source_id": "V13",
+          "relation_type": "official_supplement"
+        }
+      ],
+      "identity_conflation_avoided": true
+    },
+    {
+      "notebook_source_id": "S05",
+      "notebook_exact_title": "新しい日本銀行券の偽造防止技術 [PDF 572KB]",
+      "notebook_title_fingerprint": "13757d7a14c601493e26192a5f01e632abda36d3cf22ca0adb35b30bca3bdb0f",
+      "chronology_class": "generation_time",
+      "resolution_status": "official_equivalent_available",
+      "exact_source_status": "unresolved_exact_source",
+      "relations": [
+        {
+          "verification_source_id": "V06",
+          "relation_type": "official_equivalent"
+        },
+        {
+          "verification_source_id": "V05",
+          "relation_type": "official_supplement"
+        },
+        {
+          "verification_source_id": "V13",
+          "relation_type": "official_supplement"
+        }
+      ],
+      "identity_conflation_avoided": true
+    },
+    {
+      "notebook_source_id": "S06",
+      "notebook_exact_title": "新紙幣に採用された3Dホログラムとホログラム映像 何が違う？ - ユピテル",
+      "notebook_title_fingerprint": "6d33776e264b7ff8fb6f56e026b39a3303ab11f7faf5a3e33b6801d60ea98630",
+      "chronology_class": "generation_time",
+      "resolution_status": "deferred_context_source_resolution",
+      "exact_source_status": "unresolved_exact_source",
+      "relations": [],
+      "identity_conflation_avoided": true
+    },
+    {
+      "notebook_source_id": "S07",
+      "notebook_exact_title": "新紙幣に隠されたキャッシュレスの罠.m4a",
+      "notebook_title_fingerprint": "39603ea15483e3fe82d5e419dd278bea8ffad7916dcc08e612d951e6d54dcdd8",
+      "chronology_class": "post_generation_derived",
+      "resolution_status": "excluded_derived",
+      "exact_source_status": "excluded_derived",
+      "relations": [
+        {
+          "verification_source_id": "none",
+          "relation_type": "excluded_derived"
+        }
+      ],
+      "identity_conflation_avoided": true
+    },
+    {
+      "notebook_source_id": "S08",
+      "notebook_exact_title": "注目のキーワード「改刷」",
+      "notebook_title_fingerprint": "503e66926c1a72218aa9e1386a56ce7900d1f6174385f79cf821e94802432341",
+      "chronology_class": "generation_time",
+      "resolution_status": "deferred_context_source_resolution",
+      "exact_source_status": "unresolved_exact_source",
+      "relations": [],
+      "identity_conflation_avoided": true
+    },
+    {
+      "notebook_source_id": "S09",
+      "notebook_exact_title": "紙切れを価値に変える1000年の知略：3Dホログラムが描く偽造防止の最前線 - note",
+      "notebook_title_fingerprint": "49223689f56d3a66037b5bab7b77de2aa4198d5b112921d730909a192e349d0d",
+      "chronology_class": "generation_time",
+      "resolution_status": "deferred_context_source_resolution",
+      "exact_source_status": "unresolved_exact_source",
+      "relations": [],
+      "identity_conflation_avoided": true
+    },
+    {
+      "notebook_source_id": "S10",
+      "notebook_exact_title": "紙幣の肖像と図柄について、選定理由を教えてください - 財務省",
+      "notebook_title_fingerprint": "7ad232c235f05a2e8129029c4c5d773b1fe861676abb044781a05fe3d92f247b",
+      "chronology_class": "generation_time",
+      "resolution_status": "exact_official_identity_resolved",
+      "exact_source_status": "exact_title_match",
+      "relations": [
+        {
+          "verification_source_id": "V01",
+          "relation_type": "exact_title_match"
+        }
+      ],
+      "identity_conflation_avoided": true
+    },
+    {
+      "notebook_source_id": "S11",
+      "notebook_exact_title": "識別性向上に向けた取組 - 国立印刷局",
+      "notebook_title_fingerprint": "ca385f29259b83aa8c2170799af7eb005f5c78bf52a08d6b7dd7756e11cee301",
+      "chronology_class": "generation_time",
+      "resolution_status": "exact_official_identity_resolved",
+      "exact_source_status": "exact_title_match",
+      "relations": [
+        {
+          "verification_source_id": "V02",
+          "relation_type": "exact_title_match"
+        },
+        {
+          "verification_source_id": "V13",
+          "relation_type": "official_supplement"
+        }
+      ],
+      "identity_conflation_avoided": true
+    }
+  ]
+}

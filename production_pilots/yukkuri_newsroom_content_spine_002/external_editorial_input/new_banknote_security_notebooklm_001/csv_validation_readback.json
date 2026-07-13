@@ -1,0 +1,42 @@
+{
+  "schema_version": "new_banknote_authoritative_script.v1.csv_validation_readback",
+  "status": "passed",
+  "profile": {
+    "profile_id": "ymm4_4_53_0_9_yukkuri_characters_ja_v1",
+    "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_character_alias_profiles/ymm4_4_53_0_9_yukkuri_characters_v1.json",
+    "profile_sha256": "c32f8e0faa2fbced6e91adfd5bedc62e8e245ef48f88a67f81b86c39ab89a304",
+    "selection_policy": "explicit_only",
+    "strict_coverage": true,
+    "universal_default_claimed": false
+  },
+  "canonical_csv": {
+    "file": "canonical_yymm4.csv",
+    "sha256": "549d382cec35dcd9f9f51ee21f9e82d68f662156baacf56891a888832aae1ab3",
+    "row_count": 9,
+    "speaker_counts": {
+      "れいむ": 3,
+      "まりさ": 6
+    }
+  },
+  "derived_csv": {
+    "file": "derived_yymm4_import.csv",
+    "sha256": "179421d0e04b3e510c76c63e7a8613586a2115172743d5892689a656c5282069",
+    "row_count": 9,
+    "speaker_counts": {
+      "ゆっくり霊夢": 3,
+      "ゆっくり魔理沙": 6
+    }
+  },
+  "checks": {
+    "canonical_utf8_without_bom": true,
+    "derived_utf8_without_bom": true,
+    "canonical_headerless_two_columns": true,
+    "derived_headerless_two_columns": true,
+    "row_count_preserved": true,
+    "text_and_order_preserved": true,
+    "speaker_projection_matches_profile": true,
+    "only_speaker_column_changed": true,
+    "strict_coverage_satisfied": true,
+    "unmapped_canonical_speakers": []
+  }
+}

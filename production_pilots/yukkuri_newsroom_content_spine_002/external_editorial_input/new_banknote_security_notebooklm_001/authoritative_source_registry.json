@@ -1,0 +1,469 @@
+{
+  "schema_version": "new_banknote_authoritative_script.v1.authoritative_source_registry",
+  "status": "official_source_capture_frozen",
+  "source_count": 13,
+  "official_domain_allowlist": [
+    "boj.or.jp",
+    "mof.go.jp",
+    "npb.go.jp"
+  ],
+  "source_bodies_tracked": false,
+  "sources": [
+    {
+      "source_id": "V01",
+      "publisher": "財務省 / Ministry of Finance Japan",
+      "title": "紙幣の肖像と図柄について、選定理由を教えてください : 財務省",
+      "canonical_url": "https://www.mof.go.jp/faq/currency/07am.htm",
+      "official_domain": "www.mof.go.jp",
+      "authority_class": "primary_official",
+      "relation_type": "exact_title_match",
+      "notebook_source_ids": [
+        "S10"
+      ],
+      "retrieved_at": "2026-07-13T17:00:40+09:00",
+      "http_status": 200,
+      "redirect_count": 0,
+      "content_type": "text/html",
+      "size_bytes": 22154,
+      "sha256": "85a3c65af2823def502175ae9ce0d790cf5581dd7960eee6340311d338b9e381",
+      "last_modified_header": "2026-06-05T09:24:13Z",
+      "publication_date": null,
+      "publication_date_basis": "not_stated",
+      "fact_dates": [],
+      "content_dates": [
+        {
+          "date": "2025-12-24",
+          "meaning": "HTML meta name=date",
+          "basis": "html_meta_name_date"
+        }
+      ],
+      "capture_id": "capture_v01",
+      "ignored_cache_repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_cache/s10_mof.html",
+      "evidence_locations": [
+        "H1直下の回答欄",
+        "回答欄（肖像の選定観点）",
+        "回答欄（裏面図柄）"
+      ],
+      "bounded_paraphrase": "肖像と裏面図柄の選定理由を財務省が説明している。",
+      "inspection_method": "html_heading_inspection"
+    },
+    {
+      "source_id": "V02",
+      "publisher": "独立行政法人 国立印刷局 / National Printing Bureau",
+      "title": "識別性向上に向けた取組 独立行政法人 国立印刷局",
+      "canonical_url": "https://www.npb.go.jp/product_service/intro/ninsiki.html",
+      "official_domain": "www.npb.go.jp",
+      "authority_class": "primary_official",
+      "relation_type": "exact_title_match",
+      "notebook_source_ids": [
+        "S11"
+      ],
+      "retrieved_at": "2026-07-13T17:00:40+09:00",
+      "http_status": 200,
+      "redirect_count": 0,
+      "content_type": "text/html",
+      "size_bytes": 16982,
+      "sha256": "b1e1835d54f3fa403d9a7d72bd06d74924ef508b87231db4ab9482516078b45b",
+      "last_modified_header": "2026-07-13T02:00:03Z",
+      "publication_date": null,
+      "publication_date_basis": "not_stated",
+      "fact_dates": [
+        {
+          "date": "2024",
+          "meaning": "F券発行年",
+          "location": "H1直下の導入"
+        }
+      ],
+      "content_dates": [],
+      "capture_id": "capture_v02",
+      "ignored_cache_repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_cache/s11_npb.html",
+      "evidence_locations": [
+        "H1直下の導入",
+        "識別マーク（凹版印刷）",
+        "ホログラム・すき入れの配置",
+        "額面数字の大型化",
+        "区別しやすい色味の工夫",
+        "一万円券と千円券の『1』のデザインの違い",
+        "お札識別アプリ『言う吉くん』"
+      ],
+      "bounded_paraphrase": "F券の識別マーク、配置、額面表示、色、数字と識別アプリを説明している。",
+      "inspection_method": "html_heading_inspection"
+    },
+    {
+      "source_id": "V03",
+      "publisher": "独立行政法人 国立印刷局 / National Printing Bureau",
+      "title": "採用パンフレット 独立行政法人 国立印刷局",
+      "canonical_url": "https://www.npb.go.jp/recruit/brochure.html",
+      "official_domain": "www.npb.go.jp",
+      "authority_class": "primary_official",
+      "relation_type": "official_supplement",
+      "notebook_source_ids": [
+        "S04"
+      ],
+      "retrieved_at": "2026-07-13T17:03:17+09:00",
+      "http_status": 200,
+      "redirect_count": 0,
+      "content_type": "text/html",
+      "size_bytes": 14912,
+      "sha256": "f4aa2e12e56d928b6d3392bca7b949d071c45e49ceb734c4f8203d500e0decfb",
+      "last_modified_header": "2026-07-13T02:00:03Z",
+      "publication_date": null,
+      "publication_date_basis": "not_stated",
+      "fact_dates": [],
+      "content_dates": [
+        {
+          "date": "2026-04-24",
+          "meaning": "ページ更新日",
+          "basis": "visible_update_date"
+        }
+      ],
+      "capture_id": "capture_v03",
+      "ignored_cache_repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_cache/recruit_brochure.html",
+      "evidence_locations": [
+        "採用パンフレット > 新しい日本銀行券『開発秘話』"
+      ],
+      "bounded_paraphrase": "S04と同名の現行PDFへ結ぶ公式ランディングページ。",
+      "inspection_method": "html_heading_inspection"
+    },
+    {
+      "source_id": "V04",
+      "publisher": "独立行政法人 国立印刷局 / National Printing Bureau",
+      "title": "新しい日本銀行券『開発秘話』",
+      "canonical_url": "https://www.npb.go.jp/recruit/brochure.files/recruit-2511-4.pdf",
+      "official_domain": "www.npb.go.jp",
+      "authority_class": "primary_official",
+      "relation_type": "exact_document_match",
+      "notebook_source_ids": [
+        "S04"
+      ],
+      "retrieved_at": "2026-07-13T17:03:17+09:00",
+      "http_status": 200,
+      "redirect_count": 0,
+      "content_type": "application/pdf",
+      "size_bytes": 1748819,
+      "sha256": "792e5b4897aa383de8896571de94ec89643a735dc5971e6ff429330248ea7882",
+      "last_modified_header": "2025-11-13T07:26:34Z",
+      "publication_date": null,
+      "publication_date_basis": "not_stated",
+      "fact_dates": [],
+      "content_dates": [],
+      "capture_id": "capture_v04",
+      "ignored_cache_repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_cache/s04_development_story.pdf",
+      "evidence_locations": [
+        "PDF物理ページ1（冊子pp.11–12）"
+      ],
+      "bounded_paraphrase": "同名の現行セクションで、技術開発とユニバーサルデザインの経緯を扱う。",
+      "inspection_method": "pdf_render_visual_inspection_no_ocr"
+    },
+    {
+      "source_id": "V05",
+      "publisher": "独立行政法人 国立印刷局 / National Printing Bureau",
+      "title": "生まれ変わる日本銀行券 紙幣は the ART",
+      "canonical_url": "https://www.npb.go.jp/guide/pamphlet.files/202407_nbn_pamphlet.pdf",
+      "official_domain": "www.npb.go.jp",
+      "authority_class": "primary_official",
+      "relation_type": "official_supplement",
+      "notebook_source_ids": [
+        "S05"
+      ],
+      "retrieved_at": "2026-07-13T17:00:40+09:00",
+      "http_status": 200,
+      "redirect_count": 0,
+      "content_type": "application/pdf",
+      "size_bytes": 1253689,
+      "sha256": "85a30019f2cfee42990f1e737e900aa9be464de730fb30936d3916e55bd721f9",
+      "last_modified_header": "2024-07-16T01:26:43Z",
+      "publication_date": null,
+      "publication_date_basis": "not_stated",
+      "fact_dates": [
+        {
+          "date": "2024-07-03",
+          "meaning": "F券発行日",
+          "location": "PDF物理ページ1"
+        }
+      ],
+      "content_dates": [],
+      "capture_id": "capture_v05",
+      "ignored_cache_repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_cache/s05_pamphlet.pdf",
+      "evidence_locations": [
+        "PDF物理ページ1",
+        "PDF物理ページ2（進化する技術）"
+      ],
+      "bounded_paraphrase": "2024年7月3日の発行日と、技術・識別設計を2ページで紹介する。",
+      "inspection_method": "pdf_render_visual_inspection_no_ocr"
+    },
+    {
+      "source_id": "V06",
+      "publisher": "独立行政法人 国立印刷局 / National Printing Bureau",
+      "title": "お札の偽造防止技術 独立行政法人 国立印刷局",
+      "canonical_url": "https://www.npb.go.jp/product_service/intro/gizoboshi.html",
+      "official_domain": "www.npb.go.jp",
+      "authority_class": "primary_official",
+      "relation_type": "official_equivalent",
+      "notebook_source_ids": [
+        "S05"
+      ],
+      "retrieved_at": "2026-07-13T17:03:17+09:00",
+      "http_status": 200,
+      "redirect_count": 0,
+      "content_type": "text/html",
+      "size_bytes": 38185,
+      "sha256": "74dceacbfc342a04faeead79b6236e400ed23b332a23dcae9ed7735d7a13abd6",
+      "last_modified_header": "2026-07-13T02:00:04Z",
+      "publication_date": null,
+      "publication_date_basis": "not_stated",
+      "fact_dates": [],
+      "content_dates": [],
+      "capture_id": "capture_v06",
+      "ignored_cache_repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_cache/gizoboshi.html",
+      "evidence_locations": [
+        "F券に施されている偽造防止技術",
+        "『さわって』わかる偽造防止技術 > 深凹版印刷",
+        "『すかして』わかる偽造防止技術 > すき入れ・高精細すき入れ",
+        "『傾けて』わかる偽造防止技術 > 3Dホログラム",
+        "『道具で』わかる偽造防止技術 > マイクロ文字"
+      ],
+      "bounded_paraphrase": "F券の偽造防止技術を、触る・透かす・傾ける・道具で見る方法別に説明する。",
+      "inspection_method": "html_heading_inspection"
+    },
+    {
+      "source_id": "V07",
+      "publisher": "独立行政法人 国立印刷局 / National Printing Bureau",
+      "title": "新しい日本銀行券特設サイト｜新しい一万円札について",
+      "canonical_url": "https://www.npb.go.jp/ja/n_banknote/design10/",
+      "official_domain": "www.npb.go.jp",
+      "authority_class": "primary_official",
+      "relation_type": "official_supplement",
+      "notebook_source_ids": [
+        "S04",
+        "S05"
+      ],
+      "retrieved_at": "2026-07-13T17:00:40+09:00",
+      "http_status": 200,
+      "redirect_count": 0,
+      "content_type": "text/html",
+      "size_bytes": 17830,
+      "sha256": "ca91e48dfbc3931bad88ff9cc34c2f64d92d60336265176de234ef38362451fb",
+      "last_modified_header": "2024-07-10T08:41:46Z",
+      "publication_date": null,
+      "publication_date_basis": "not_stated",
+      "fact_dates": [],
+      "content_dates": [],
+      "capture_id": "capture_v07",
+      "ignored_cache_repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_cache/design10.html",
+      "evidence_locations": [
+        "高精細すき入れ",
+        "深凹版印刷",
+        "3Dホログラム",
+        "マイクロ文字",
+        "ユニバーサルデザイン"
+      ],
+      "bounded_paraphrase": "一万円券の新旧技術と識別設計を券種別に説明する。",
+      "inspection_method": "html_heading_inspection"
+    },
+    {
+      "source_id": "V08",
+      "publisher": "独立行政法人 国立印刷局 / National Printing Bureau",
+      "title": "新しい日本銀行券特設サイト｜新しい五千円札について",
+      "canonical_url": "https://www.npb.go.jp/ja/n_banknote/design05/",
+      "official_domain": "www.npb.go.jp",
+      "authority_class": "primary_official",
+      "relation_type": "official_supplement",
+      "notebook_source_ids": [
+        "S04",
+        "S05"
+      ],
+      "retrieved_at": "2026-07-13T17:03:17+09:00",
+      "http_status": 200,
+      "redirect_count": 0,
+      "content_type": "text/html",
+      "size_bytes": 17797,
+      "sha256": "0027e51f169baa4791d1f3ff7fbdbcd00c032c4c2260039df1e86b6c8ae51de1",
+      "last_modified_header": "2024-07-10T08:42:58Z",
+      "publication_date": null,
+      "publication_date_basis": "not_stated",
+      "fact_dates": [],
+      "content_dates": [],
+      "capture_id": "capture_v08",
+      "ignored_cache_repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_cache/design05.html",
+      "evidence_locations": [
+        "高精細すき入れ",
+        "深凹版印刷",
+        "3Dホログラム",
+        "マイクロ文字",
+        "ユニバーサルデザイン"
+      ],
+      "bounded_paraphrase": "五千円券の新旧技術と識別設計を券種別に説明する。",
+      "inspection_method": "html_heading_inspection"
+    },
+    {
+      "source_id": "V09",
+      "publisher": "独立行政法人 国立印刷局 / National Printing Bureau",
+      "title": "新しい日本銀行券特設サイト｜新しい千円札について",
+      "canonical_url": "https://www.npb.go.jp/ja/n_banknote/design01/",
+      "official_domain": "www.npb.go.jp",
+      "authority_class": "primary_official",
+      "relation_type": "official_supplement",
+      "notebook_source_ids": [
+        "S04",
+        "S05"
+      ],
+      "retrieved_at": "2026-07-13T17:03:17+09:00",
+      "http_status": 200,
+      "redirect_count": 0,
+      "content_type": "text/html",
+      "size_bytes": 17740,
+      "sha256": "37cc217955d0438d79cccb6a0d713315ef49f232e9c39053baba0b790e913864",
+      "last_modified_header": "2024-07-10T08:43:42Z",
+      "publication_date": null,
+      "publication_date_basis": "not_stated",
+      "fact_dates": [],
+      "content_dates": [],
+      "capture_id": "capture_v09",
+      "ignored_cache_repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_cache/design01.html",
+      "evidence_locations": [
+        "高精細すき入れ",
+        "深凹版印刷",
+        "3Dホログラム",
+        "マイクロ文字",
+        "ユニバーサルデザイン"
+      ],
+      "bounded_paraphrase": "千円券の新旧技術と識別設計を券種別に説明する。",
+      "inspection_method": "html_heading_inspection"
+    },
+    {
+      "source_id": "V10",
+      "publisher": "独立行政法人 国立印刷局 / National Printing Bureau",
+      "title": "新しい日本銀行券特設サイト｜TOPページ",
+      "canonical_url": "https://www.npb.go.jp/ja/n_banknote/index.html",
+      "official_domain": "www.npb.go.jp",
+      "authority_class": "primary_official",
+      "relation_type": "official_supplement",
+      "notebook_source_ids": [
+        "S04",
+        "S05"
+      ],
+      "retrieved_at": "2026-07-13T17:00:40+09:00",
+      "http_status": 200,
+      "redirect_count": 0,
+      "content_type": "text/html",
+      "size_bytes": 10459,
+      "sha256": "73b51958a7a8e982f5a7fb629a18a8f384a45ba5043cb9433dfa42d14aae3cb3",
+      "last_modified_header": "2025-02-12T07:21:59Z",
+      "publication_date": null,
+      "publication_date_basis": "not_stated",
+      "fact_dates": [
+        {
+          "date": "2024-07-03",
+          "meaning": "F券発行日",
+          "location": "2024年7月3日 お札が変わりました"
+        }
+      ],
+      "content_dates": [],
+      "capture_id": "capture_v10",
+      "ignored_cache_repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_cache/s04_index.html",
+      "evidence_locations": [
+        "2024年7月3日 お札が変わりました",
+        "券種別案内"
+      ],
+      "bounded_paraphrase": "2024年7月3日の三券種改刷と券種別技術ページへの入口。",
+      "inspection_method": "html_heading_inspection"
+    },
+    {
+      "source_id": "V11",
+      "publisher": "独立行政法人 国立印刷局 / National Printing Bureau",
+      "title": "お札に関するよくあるご質問 独立行政法人 国立印刷局",
+      "canonical_url": "https://www.npb.go.jp/product_service/intro/faq.html",
+      "official_domain": "www.npb.go.jp",
+      "authority_class": "primary_official",
+      "relation_type": "official_supplement",
+      "notebook_source_ids": [
+        "S05"
+      ],
+      "retrieved_at": "2026-07-13T17:00:40+09:00",
+      "http_status": 200,
+      "redirect_count": 0,
+      "content_type": "text/html",
+      "size_bytes": 55564,
+      "sha256": "891f9546f43c7f8f10dc9913682ca5f9da558db2eb11995f8fb05d9fc8badd87",
+      "last_modified_header": "2026-07-13T02:00:04Z",
+      "publication_date": null,
+      "publication_date_basis": "not_stated",
+      "fact_dates": [],
+      "content_dates": [],
+      "capture_id": "capture_v11",
+      "ignored_cache_repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_cache/faq.html",
+      "evidence_locations": [
+        "『改刷』とは何ですか？",
+        "偽造防止技術について",
+        "目の不自由な人は、どうやってお札を区別したらよいですか？"
+      ],
+      "bounded_paraphrase": "改刷、すき入れ、識別マークなどをQ&A形式で説明する。",
+      "inspection_method": "html_heading_inspection"
+    },
+    {
+      "source_id": "V12",
+      "publisher": "独立行政法人 国立印刷局 / National Printing Bureau",
+      "title": "国立印刷局 事業案内パンフレット・動画 独立行政法人 国立印刷局",
+      "canonical_url": "https://www.npb.go.jp/guide/pamphlet.html",
+      "official_domain": "www.npb.go.jp",
+      "authority_class": "primary_official",
+      "relation_type": "official_supplement",
+      "notebook_source_ids": [
+        "S05"
+      ],
+      "retrieved_at": "2026-07-13T17:00:40+09:00",
+      "http_status": 200,
+      "redirect_count": 0,
+      "content_type": "text/html",
+      "size_bytes": 20978,
+      "sha256": "e12861c0cf13113ad96e009b4592986d63822662c2943960945cd0dc80213d52",
+      "last_modified_header": "2026-07-13T02:00:01Z",
+      "publication_date": null,
+      "publication_date_basis": "not_stated",
+      "fact_dates": [],
+      "content_dates": [],
+      "capture_id": "capture_v12",
+      "ignored_cache_repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_cache/pamphlet_index.html",
+      "evidence_locations": [
+        "新しい日本銀行券紹介パンフレット",
+        "信頼のものづくり"
+      ],
+      "bounded_paraphrase": "現行の公式パンフレット群を列挙するランディングページ。",
+      "inspection_method": "html_heading_inspection"
+    },
+    {
+      "source_id": "V13",
+      "publisher": "独立行政法人 国立印刷局 / National Printing Bureau",
+      "title": "信頼のものづくり～お札の製造まるわかりBOOK～",
+      "canonical_url": "https://www.npb.go.jp/guide/pamphlet.files/shinrai2026.pdf",
+      "official_domain": "www.npb.go.jp",
+      "authority_class": "primary_official",
+      "relation_type": "official_supplement",
+      "notebook_source_ids": [
+        "S04",
+        "S05",
+        "S11"
+      ],
+      "retrieved_at": "2026-07-13T17:13:31+09:00",
+      "http_status": 200,
+      "redirect_count": 0,
+      "content_type": "application/pdf",
+      "size_bytes": 4764351,
+      "sha256": "499ff52d5da97a7130495262c4c3d6fd0bf3eb8831e199778788b45a762c43b4",
+      "last_modified_header": "2026-03-30T01:33:14Z",
+      "publication_date": null,
+      "publication_date_basis": "not_stated",
+      "fact_dates": [],
+      "content_dates": [],
+      "capture_id": "capture_v13",
+      "ignored_cache_repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_cache/shinrai2026.pdf",
+      "evidence_locations": [
+        "PDF物理ページ4（冊子pp.6–7）",
+        "PDF物理ページ5（冊子pp.8–9）"
+      ],
+      "bounded_paraphrase": "ユニバーサルデザインと八つの偽造防止技術をページ単位で説明する。",
+      "inspection_method": "pdf_text_extraction_plus_render_visual_inspection"
+    }
+  ]
+}
