@@ -1,0 +1,414 @@
+{
+  "schema_version": "editorial_provenance.stage_decision_ledger.v1",
+  "status": "complete",
+  "stage_order": [
+    "D00",
+    "D01",
+    "D02",
+    "D03",
+    "D04",
+    "D05",
+    "D06",
+    "D07",
+    "D08",
+    "D09",
+    "D10"
+  ],
+  "stages": [
+    {
+      "stage_id": "D00",
+      "stage_name": "RSS-title anchor / NotebookLM research",
+      "actor": "upstream_user_and_research_service",
+      "authority_classes": [
+        "user_requested"
+      ],
+      "operations": [
+        "preserve"
+      ],
+      "input_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/notebooklm_generation_receipt.json",
+          "sha256": "8ed678d77710d63789a6864e2b4b0d6279d88710c2cc2ddc73d28c4bb7757ef8"
+        }
+      ],
+      "output_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_set_snapshot.json",
+          "sha256": "ac4041ded0f9fd4be1e5d23dc8800fd632b2e30ae15bd995c9ec9c0bf691085f"
+        }
+      ],
+      "semantic_change_class": "upstream_research_input",
+      "user_approval_required": true,
+      "approval_status": "source_set_frozen_for_current_chain",
+      "may_alter_canonical_content": false,
+      "evidence_grade": "verified_repo_receipts"
+    },
+    {
+      "stage_id": "D01",
+      "stage_name": "Audio Overview generation",
+      "actor": "NotebookLM",
+      "authority_classes": [
+        "unresolved"
+      ],
+      "operations": [
+        "merge",
+        "paraphrase"
+      ],
+      "input_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/notebooklm_generation_receipt.json",
+          "sha256": "8ed678d77710d63789a6864e2b4b0d6279d88710c2cc2ddc73d28c4bb7757ef8"
+        }
+      ],
+      "output_identity": [
+        {
+          "artifact_kind": "user_submitted_audio_overview_transcript",
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/real_input_intake_readiness/real_input/transcript/new_banknote_notebooklm/raw/notebooklm_audio_overview_transcript_raw.txt",
+          "sha256": "1825c9689a050ddbfc91537a228f6af0ba2f7f033e5b681fff4f227551144437",
+          "size_bytes": 32089,
+          "logical_line_count": 326,
+          "tracked": false,
+          "body_embedded": false
+        }
+      ],
+      "semantic_change_class": "external_generative_transformation",
+      "user_approval_required": true,
+      "approval_status": "upstream_output_accepted_as_input_not_factual_authority",
+      "may_alter_canonical_content": false,
+      "evidence_grade": "identity_verified_generation_details_unavailable"
+    },
+    {
+      "stage_id": "D02",
+      "stage_name": "raw transcript salvage",
+      "actor": "Worker_mechanical",
+      "authority_classes": [
+        "machine_normalization"
+      ],
+      "operations": [
+        "normalize",
+        "preserve"
+      ],
+      "input_identity": [
+        {
+          "artifact_kind": "user_submitted_audio_overview_transcript",
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/real_input_intake_readiness/real_input/transcript/new_banknote_notebooklm/raw/notebooklm_audio_overview_transcript_raw.txt",
+          "sha256": "1825c9689a050ddbfc91537a228f6af0ba2f7f033e5b681fff4f227551144437",
+          "size_bytes": 32089,
+          "logical_line_count": 326,
+          "tracked": false,
+          "body_embedded": false
+        }
+      ],
+      "output_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/input_identity_receipt.json",
+          "sha256": "285ebe69286584d2e64fa685593684a46d443c985924836ebd0eb663109940a8"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/asr_correction_ledger.json",
+          "sha256": "8b718091f31180d8f3133244f0e412a3cca4d8f3ac5b709495793c24be8f00f9"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/transcript_quality_readback.json",
+          "sha256": "8cb6e9ea38e3677ae9934f42752a959724a2155255e235a50ce351d7f8798449"
+        }
+      ],
+      "semantic_change_class": "mechanical_nonsemantic",
+      "user_approval_required": false,
+      "approval_status": "not_required",
+      "may_alter_canonical_content": false,
+      "evidence_grade": "verified_repo_and_ignored_fingerprints"
+    },
+    {
+      "stage_id": "D03",
+      "stage_name": "source-set freeze",
+      "actor": "user_and_Worker",
+      "authority_classes": [
+        "user_requested"
+      ],
+      "operations": [
+        "preserve",
+        "omit"
+      ],
+      "input_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/notebooklm_generation_receipt.json",
+          "sha256": "8ed678d77710d63789a6864e2b4b0d6279d88710c2cc2ddc73d28c4bb7757ef8"
+        }
+      ],
+      "output_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_set_snapshot.json",
+          "sha256": "ac4041ded0f9fd4be1e5d23dc8800fd632b2e30ae15bd995c9ec9c0bf691085f"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/notebook_source_to_verification_source_crosswalk.json",
+          "sha256": "679c7100fcbcd2a04f5d3e225a79a1b85693c67b8068862e7c78154057d77fd3"
+        }
+      ],
+      "semantic_change_class": "upstream_scope_decision",
+      "user_approval_required": true,
+      "approval_status": "frozen_for_current_chain",
+      "may_alter_canonical_content": false,
+      "evidence_grade": "verified_repo_receipts"
+    },
+    {
+      "stage_id": "D04",
+      "stage_name": "official source capture",
+      "actor": "Worker_source_verification",
+      "authority_classes": [
+        "source_correction"
+      ],
+      "operations": [
+        "preserve",
+        "correct_fact"
+      ],
+      "input_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_set_snapshot.json",
+          "sha256": "ac4041ded0f9fd4be1e5d23dc8800fd632b2e30ae15bd995c9ec9c0bf691085f"
+        }
+      ],
+      "output_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/authoritative_source_registry.json",
+          "sha256": "3a55d5ec999edec215b87fba0f999f1a9086eca1921158c9c3f72749ade1713a"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_capture_receipts.json",
+          "sha256": "6c4cc1817a3574b7278f2986522c91b05a51c1b8bba3ea4a544a78aee920e205"
+        }
+      ],
+      "semantic_change_class": "evidence_resolution",
+      "user_approval_required": false,
+      "approval_status": "not_required_until_claim_adoption",
+      "may_alter_canonical_content": false,
+      "evidence_grade": "verified_repo_receipts"
+    },
+    {
+      "stage_id": "D05",
+      "stage_name": "claim adjudication",
+      "actor": "Worker_source_verification",
+      "authority_classes": [
+        "source_correction"
+      ],
+      "operations": [
+        "correct_fact",
+        "omit",
+        "remove_style"
+      ],
+      "input_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/claim_risk_ledger.json",
+          "sha256": "0ef07c38e234dfc18f3166ae790bc43e49bee0d9b325e02aa6790cf37e1ae360"
+        }
+      ],
+      "output_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/claim_adjudication.json",
+          "sha256": "f6c61c2bb0f01fd36d1b09ddc219544a15922ecbd92a111be8d6e1ce4d97600b"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/claim_adjudication_readback.json",
+          "sha256": "7b16e107e3b78f0b372ad38a16b5b12cc00db5a932c20ef85f8a905cb5ede662"
+        }
+      ],
+      "semantic_change_class": "substantive_factual_filtering",
+      "user_approval_required": true,
+      "approval_status": "approved_only_as_part_of_current_script_state",
+      "may_alter_canonical_content": true,
+      "evidence_grade": "verified_claim_and_source_receipts"
+    },
+    {
+      "stage_id": "D06",
+      "stage_name": "canonical script generation",
+      "actor": "Worker_editorial",
+      "authority_classes": [
+        "worker_editorial",
+        "source_correction"
+      ],
+      "operations": [
+        "paraphrase",
+        "merge",
+        "split",
+        "reorder",
+        "omit",
+        "add_bridge",
+        "assign_speaker",
+        "move_scene",
+        "remove_style"
+      ],
+      "input_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/claim_adjudication.json",
+          "sha256": "f6c61c2bb0f01fd36d1b09ddc219544a15922ecbd92a111be8d6e1ce4d97600b"
+        }
+      ],
+      "output_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.json",
+          "sha256": "c1c7dacdaf0961f2c1796639e401f2d7ad41c5eb9dfe998727715a341ac26a87",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c"
+        }
+      ],
+      "semantic_change_class": "substantive_editorial_and_semantic",
+      "user_approval_required": true,
+      "approval_status": "superseded_by_editorial_convergence",
+      "may_alter_canonical_content": true,
+      "evidence_grade": "verified_git_history_with_inferred_operation_labels"
+    },
+    {
+      "stage_id": "D07",
+      "stage_name": "editorial convergence",
+      "actor": "Worker_editorial",
+      "authority_classes": [
+        "worker_editorial",
+        "source_correction"
+      ],
+      "operations": [
+        "preserve",
+        "paraphrase",
+        "merge",
+        "split",
+        "reorder",
+        "omit",
+        "add_bridge",
+        "reduce_density",
+        "correct_fact"
+      ],
+      "input_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.json",
+          "sha256": "c1c7dacdaf0961f2c1796639e401f2d7ad41c5eb9dfe998727715a341ac26a87",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c"
+        }
+      ],
+      "output_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.json",
+          "sha256": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/cue_source_traceability.json",
+          "sha256": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/editorial_revision_receipt.json",
+          "sha256": "597943c1b3a25d0c01d057d70a9f9eafa7fff7ba756e003496d81858000414dd"
+        }
+      ],
+      "semantic_change_class": "substantive_editorial_with_bounded_semantic_delta",
+      "user_approval_required": true,
+      "approval_status": "current_result_approved_for_continuation",
+      "may_alter_canonical_content": true,
+      "evidence_grade": "verified_git_delta_and_revision_receipt"
+    },
+    {
+      "stage_id": "D08",
+      "stage_name": "user approval for continuation",
+      "actor": "user",
+      "authority_classes": [
+        "user_approved"
+      ],
+      "operations": [
+        "preserve"
+      ],
+      "input_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.json",
+          "sha256": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47"
+        }
+      ],
+      "output_identity": [
+        {
+          "artifact_kind": "bounded_user_approval_decision",
+          "decision_id": "current-nine-cue-continuation-approval-v1",
+          "subject_sha256": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47",
+          "decision": "continue_current_state",
+          "future_silent_edits_authorized": false,
+          "evidence_reference": "current_execution_contract",
+          "decision_sha256": "f3b77651cf5798b6977dec9139a1351dad9f3d419dbda1750ce675b44631547e",
+          "tracked_prior_to_retrofit": false,
+          "independent_contemporaneous_receipt_available": false
+        }
+      ],
+      "semantic_change_class": "approval_only_no_content_change",
+      "user_approval_required": true,
+      "approval_status": "approved_current_state_only_future_silent_edits_not_authorized",
+      "may_alter_canonical_content": false,
+      "evidence_grade": "observed_current_execution_contract_without_independent_contemporaneous_receipt"
+    },
+    {
+      "stage_id": "D09",
+      "stage_name": "YMM4 import observation",
+      "actor": "human_operator_and_headless_parser",
+      "authority_classes": [
+        "machine_normalization",
+        "user_requested"
+      ],
+      "operations": [
+        "preserve",
+        "normalize"
+      ],
+      "input_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/derived_yymm4_import.csv",
+          "sha256": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee"
+        }
+      ],
+      "output_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/yymm4_import_observation_receipt.json",
+          "sha256": "008f9ec26392306af3a5db24c0d69f6fda93101a95ac134d9bc2d77628a839f4"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/yymm4_import_observation_readback.json",
+          "sha256": "6390943813644c9c94febe8f2a307727f8905250040796e2eace0bad22feb17e"
+        }
+      ],
+      "semantic_change_class": "mechanical_observation_no_script_change",
+      "user_approval_required": true,
+      "approval_status": "observed_not_editorially_accepted",
+      "may_alter_canonical_content": false,
+      "evidence_grade": "tracked_sanitized_receipts_local_bytes_not_reverified_in_this_slice"
+    },
+    {
+      "stage_id": "D10",
+      "stage_name": "visual route proposal",
+      "actor": "Worker_visual_editorial",
+      "authority_classes": [
+        "worker_editorial"
+      ],
+      "operations": [
+        "preserve",
+        "reorder"
+      ],
+      "input_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.json",
+          "sha256": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/yymm4_import_observation_readback.json",
+          "sha256": "6390943813644c9c94febe8f2a307727f8905250040796e2eace0bad22feb17e"
+        }
+      ],
+      "output_identity": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/visual_direction_options.json",
+          "sha256": "71c880203f5ab06b33fcd8652100e109a56a4fce001a3176992f3d58a123b03d"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/recommended_visual_direction.json",
+          "sha256": "d9919faffd17b6550f7a664e294dc37f88f1a42f458bbfa9d61a6e4ddfebd342"
+        }
+      ],
+      "semantic_change_class": "visual_proposal_no_canonical_content_change",
+      "user_approval_required": true,
+      "approval_status": "human_selection_pending",
+      "may_alter_canonical_content": false,
+      "evidence_grade": "verified_route_packet"
+    }
+  ],
+  "current_approval_scope": "continue_current_nine_cue_state_not_future_silent_edit_authority"
+}

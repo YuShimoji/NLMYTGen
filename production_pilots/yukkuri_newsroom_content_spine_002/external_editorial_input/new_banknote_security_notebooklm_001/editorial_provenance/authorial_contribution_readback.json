@@ -1,0 +1,66 @@
+{
+  "schema_version": "editorial_provenance.authorial_contribution_readback.v1",
+  "status": "complete",
+  "substantive_unit_count": 38,
+  "attributed_substantive_unit_count": 38,
+  "unresolved_substantive_unit_count": 0,
+  "unresolved_substantive_unit_ids": [],
+  "unattributed_substantive_change_count": 0,
+  "surface_segment_count": 40,
+  "surface_character_count": 425,
+  "attribution_counts": {
+    "evidence_backed_paraphrase": 19,
+    "multi_source_synthesis": 1,
+    "worker_editorial_bridge": 18
+  },
+  "operation_counts": {
+    "add_bridge": 8,
+    "assign_speaker": 9,
+    "merge": 4,
+    "omit": 1,
+    "paraphrase": 9,
+    "preserve": 1,
+    "reduce_density": 1,
+    "reorder": 4,
+    "split": 1
+  },
+  "authority_counts": {
+    "source_correction": 9,
+    "user_approved": 9,
+    "worker_editorial": 9
+  },
+  "transformation_magnitude": {
+    "pre_editorial_draft_cue_count": 9,
+    "exact_byte_equal_cue_count": 1,
+    "normalized_before_character_count": 424,
+    "normalized_after_character_count": 425,
+    "ordered_matching_character_count": 279,
+    "before_token_count": 408,
+    "after_token_count": 409,
+    "ordered_matching_token_count": 263,
+    "single_source_paraphrased_factual_unit_count": 19,
+    "multi_source_synthesis_unit_count": 1,
+    "new_bridge_unit_count": 9,
+    "character_voice_unit_count": 9,
+    "omitted_verified_claim_count": 4,
+    "speaker_reassignment_count_pre_editorial_to_current": 0,
+    "scene_movement_count_pre_editorial_to_current": 0,
+    "merge_annotated_cue_count": 4,
+    "split_annotated_cue_count": 1,
+    "style_or_rhetoric_units_excluded_count": 52,
+    "supervisor_requested_revision_count": null,
+    "supervisor_requested_revision_observation": "not_observed_in_available_repo_evidence",
+    "user_requested_revision_count": null,
+    "user_requested_revision_observation": "not_observed_in_available_repo_evidence",
+    "unresolved_external_origin_unit_count": 0
+  },
+  "method": "Factual units come from tracked cue traceability; editorial and voice units are mapped through a 40-segment non-overlapping character partition plus explicit structural relations and speaker assignments. Ordered overlap uses NFKC-normalized SequenceMatcher blocks against the recoverable pre-editorial Git draft.",
+  "limitations": [
+    "Overlap counts are similarity indicators, not authorship percentages.",
+    "Raw transcript bodies remain ignored, so raw-to-final verbatim overlap is not computed.",
+    "Operation labels are review classifications, not a contemporaneous keystroke log.",
+    "Supervisor/user revision counts are unknown when no durable request ledger is available.",
+    "Token-level authorship is not claimed."
+  ],
+  "authorship_percentage_claimed": false
+}

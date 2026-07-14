@@ -2,6 +2,8 @@
 
 > INTERNAL REVIEW / NOT FINAL / NON-PUBLIC / NON-PRODUCTION
 
+編集操作、判断権限、cueごとの由来は [Editorial Provenance](editorial_provenance/README_EDITORIAL_PROVENANCE.md) で読み戻せます。source-backedな事実、Workerのeditorial synthesis、current execution contractでのbounded approval、prior user script利用が未証明である範囲を分離します。独立した同時点の承認receiptはありません。現在文面への継続承認は、将来の非公開・無記録な本文変更を許可しません。
+
 既存の公式source captureと182件のclaim adjudicationは固定したまま、一般視聴者が最初に引っかかる会話上の欠点だけを一度の編集収束で直しました。新しい事実や出典は追加していません。
 
 ## 改訂した箇所

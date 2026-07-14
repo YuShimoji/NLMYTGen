@@ -12,6 +12,14 @@
 - editorial revision: シリーズ記号を発話から外し、cue 8を3事実へ絞り、確認方法をルーペまで具体化。外した検証済みclaimは非発話レーンへ保持。
 - CSV: canonicalとYMM4-character derivedの2本。本文と順序は同一で、話者列だけを変換。
 
+## 編集来歴
+
+- 事実部分は claim と official source に接続されています。
+- 会話構造、接続、圧縮、話者らしさは editorial synthesis として区別しています。
+- current execution contractで現在の9 cueを継続するbounded approvalを記録しています。独立した同時点receiptはなく、将来の silent edit も含みません。
+- 以前の user-submitted script の取り込みは、利用可能な repo 証拠からは証明されていません。
+- 詳細: [Editorial Provenance](editorial_provenance/README_EDITORIAL_PROVENANCE.md)
+
 ## Script
 
 | # | Scene | Speaker | Spoken text |

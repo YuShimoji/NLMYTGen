@@ -1,6 +1,72 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-14 JST・new-banknote import observed / visual decision ready）
+## 現在の別端末再開ハンドオフ（2026-07-14 JST・editorial provenance audited / visual selection ready）
+
+この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
+現在の指示として読まない。
+
+- **取得先**: origin/codex/new-banknote-authoritative-source-script-v1。
+  provenance開始時のvisual baselineは
+  bc07fc073063d3e5d1af1e6e5400a340b0036496。current branch tipがこのhandoffを
+  含むoutcome commitであり、再開時はgit rev-parse HEAD、upstream parity 0 0、
+  clean worktreeをlive確認する。
+- **最小読取順**: AGENTS.md → docs/REPO_LOCAL_RULES.md →
+  docs/runtime-state.md → この節 →
+  production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/
+  new_banknote_security_notebooklm_001/editorial_provenance/
+  README_EDITORIAL_PROVENANCE.md。
+- **現在の状態**: Project-State-IDは
+  new-banknote-editorial-provenance-audited-visual-selection-ready-v1、
+  State-Revisionは2026-07-14.2。Product-Stateは
+  new-banknote-script-lineage-audited-visual-direction-review-ready、
+  Product-Gateはhuman-visual-direction-selection、Recommended-Nextは
+  select-new-banknote-visual-direction-with-lineage、External-Stateは
+  public-repo-feature-branch。
+- **cue lineage**: 9/9 cuesがfinal text hash、scene、speaker、15 unique adopted
+  claims、raw line ordinal/fingerprint、V02/V06/V07/V13、prior draft cue、operation、
+  authority、approval、confidence、unresolved lineageを持つ。20 factual units、
+  9 bridges、9 voice unitsの38/38 substantive unitsをrealizedとする。425文字は40の
+  non-overlapping surface segmentsで全被覆され、unresolved/unattributedは0。
+  token-level authorshipは主張しない。
+- **transformation magnitude**: a307083のpre-editorial draftと現行をNFKC正規化して
+  ordered overlapを測り、279 matching characters / 263 matching tokens、byte同一は
+  1/9 cues。19 single-source paraphrases、1 multi-source synthesis、4 omitted verified
+  claims、merge annotation 4 cues、split annotation 1 cue、speaker reassignment 0、
+  scene movement 0。これはauthorship percentageではない。
+- **decision authority**: D00〜D10がRSS/title・NotebookLM research、Audio Overview、
+  salvage、source freeze、official capture、claim adjudication、Worker canonical
+  generation、editorial convergence、current user approval、YMM4 observation、visual
+  proposalを区別する。current execution contractからbounded decision identityを
+  作り、現在の9 cueで継続する範囲だけを記録した。独立した同時点receiptはなく、
+  future silent edit authorityではない。
+- **prior user script audit**: user-submitted raw Audio Overview transcript
+  `1825c9689a050ddbfc91537a228f6af0ba2f7f033e5b681fff4f227551144437`
+  はclaim-discovery inputとして確認した。repo、Git history、configured dropzones、
+  intentional ignored evidenceにfinished user-script candidateは無く、final statusは
+  `not_proven_from_available_repo_evidence`。不使用の証明とは扱わない。
+- **content lock**: script/CSV/trace、claim/source identity、tracked YMM4 observation、
+  visual route definitionsの24 artifactsと9 cue semantic identityをlockした。future
+  substantive changeはlockを無効化し、visible delta ledger、successor revision、
+  renewed human approvalを次のhuman/YMM4 gate前に要求する。
+- **metadata integration**: README_CANONICAL_SCRIPT_REVIEW.md、
+  canonical_script_editorial_revision.md、visual README、visual_direction_board.htmlへ
+  provenanceを追加し、generatorからdeterministic regenerationした。関連するcanonical
+  receiptsとvisual board readbackだけを追随させ、script/CSV/claim/YMM4 tracked evidence/
+  route options/recommendation/scene/motion/rights identitiesは不変。
+- **local evidence boundary**: tracked YMM4 receipt/readbackはlock済みだが、ignored
+  local `.ymmp`、operator result、batch stateはこのcheckoutに無いためlocal byte
+  re-verificationは行っていない。これは現在のvisual selectionをblockしないが、
+  selected-route diagnostic work前に再確認する。
+- **検証済み範囲**: modified Python compile、39 focused tests、provenance second build
+  changed=[]、canonical/visual pure renderer、9/9 cues・40/40 segments・38/38 units、24 lock hashes、JSON/
+  HTML relative links、privacy/path/UUID/raw-body audit、target state sync、git diff check。
+  full pytest、NotebookLM、web fetch、YMM4、Computer Useは実行していない。
+- **exact next action**: provenance READMEを先に読み、visual_direction_board.htmlで
+  A / B / C、またはscene/cue ID付き修正を返す。同時にS1/S2/S3 flow、misleading
+  diagram risk、motion restraintだけを判断する。route selection後の別sliceでのみ
+  diagnostic YMM4 visual projectを検討する。
+
+## 直前の別端末再開ハンドオフ（2026-07-14 JST・new-banknote import observed / visual decision ready・履歴）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。

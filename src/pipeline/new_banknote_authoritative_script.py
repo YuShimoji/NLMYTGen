@@ -2224,6 +2224,13 @@ def _render_editorial_revision(
         "",
         "> INTERNAL REVIEW / NOT FINAL / NON-PUBLIC / NON-PRODUCTION",
         "",
+        "編集操作、判断権限、cueごとの由来は "
+        "[Editorial Provenance](editorial_provenance/README_EDITORIAL_PROVENANCE.md) "
+        "で読み戻せます。source-backedな事実、Workerのeditorial synthesis、"
+        "current execution contractでのbounded approval、prior user script利用が未証明である範囲を分離します。"
+        "独立した同時点の承認receiptはありません。"
+        "現在文面への継続承認は、将来の非公開・無記録な本文変更を許可しません。",
+        "",
         "既存の公式source captureと182件のclaim adjudicationは固定したまま、一般視聴者が最初に引っかかる会話上の欠点だけを一度の編集収束で直しました。新しい事実や出典は追加していません。",
         "",
         "## 改訂した箇所",
@@ -2323,6 +2330,14 @@ def _primary_review_surface(
         f'- script: 9 cues、S1/S2/S3 = 2/4/3、れいむ/まりさ = 3/6。意味単位から計算したunsupported claimは{script["unsupported_claim_count"]}件。',
         "- editorial revision: シリーズ記号を発話から外し、cue 8を3事実へ絞り、確認方法をルーペまで具体化。外した検証済みclaimは非発話レーンへ保持。",
         "- CSV: canonicalとYMM4-character derivedの2本。本文と順序は同一で、話者列だけを変換。",
+        "",
+        "## 編集来歴",
+        "",
+        "- 事実部分は claim と official source に接続されています。",
+        "- 会話構造、接続、圧縮、話者らしさは editorial synthesis として区別しています。",
+        "- current execution contractで現在の9 cueを継続するbounded approvalを記録しています。独立した同時点receiptはなく、将来の silent edit も含みません。",
+        "- 以前の user-submitted script の取り込みは、利用可能な repo 証拠からは証明されていません。",
+        "- 詳細: [Editorial Provenance](editorial_provenance/README_EDITORIAL_PROVENANCE.md)",
         "",
         "## Script",
         "",

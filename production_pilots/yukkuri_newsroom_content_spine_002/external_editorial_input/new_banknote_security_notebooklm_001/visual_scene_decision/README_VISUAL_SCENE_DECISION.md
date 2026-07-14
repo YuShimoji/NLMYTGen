@@ -6,6 +6,14 @@ machine-verified import timing（60 fps / 4415 frames /
 73.583333 seconds）を参照し、同じ9 cueを三つのvisual routeとして
 比較するreview packetです。ここではrouteを実装せず、Route Aを推奨として明示します。
 
+## Editorial provenance
+
+事実部分はclaimとofficial sourceに接続し、会話構造・接続・圧縮はeditorial synthesisとして
+区別しています。current execution contractで現在の9 cueを継続するbounded approvalを
+記録していますが、独立した同時点receiptや将来のsilent edit権限ではありません。
+以前のuser-submitted scriptの取り込みは利用可能なrepo証拠から未証明です。
+詳細は[Editorial Provenance](../editorial_provenance/README_EDITORIAL_PROVENANCE.md)で確認できます。
+
 ## Recommendation
 
 **Route A — Security Inspection Lab — RECOMMENDED**

@@ -20,7 +20,7 @@
   },
   "failed_checks": [],
   "artifact_hashes": {
-    "visual_scene_decision/README_VISUAL_SCENE_DECISION.md": "87d45f0bff63f7920d1cf413c84b02b13c6d8ea7f6bca370949a9e159bff541a",
+    "visual_scene_decision/README_VISUAL_SCENE_DECISION.md": "cf2d0b7470f3a7f26f65580800c436000e569e45c8199cd62c2624e7feff237b",
     "visual_scene_decision/visual_direction_options.json": "71c880203f5ab06b33fcd8652100e109a56a4fce001a3176992f3d58a123b03d",
     "visual_scene_decision/recommended_visual_direction.json": "d9919faffd17b6550f7a664e294dc37f88f1a42f458bbfa9d61a6e4ddfebd342",
     "visual_scene_decision/script_beat_ir.json": "e99e6fdf3052148423cb1fba27d0714993d117832a075fb127b2ba8a0ac8f343",
@@ -29,7 +29,7 @@
     "visual_scene_decision/asset_rights_matrix.json": "6e8ae2bc883148755b5e2eb808cd8cfed3dfd11361a53e9c15f537484df08d34",
     "visual_scene_decision/yymm4_visual_project_contract.json": "610b4b95ded4769029b672a2103d8303aabe96268774193082ec18b687e89ce3",
     "visual_scene_decision/visual_review_sheet.md": "a68c7aaa51ff4ac5528e2dcd97d6b8a9b5da3825848472ccf89f49b7b535b905",
-    "visual_scene_decision/visual_direction_board.html": "27cf98142ad5eddb6baa62bd835ad70c3b68f8ecc8bb9f06bc952643f52225e5",
+    "visual_scene_decision/visual_direction_board.html": "6bcba4e58f56b4b4efc0c1406731eb3cfa810d8a51cd6fa023d2165a5144c6ca",
     "visual_scene_decision/limitations.md": "d95bfc409abb46aedfcc4cbab3ebc1c389e57d3f19a9ae7dd921b9f6ec98516f"
   },
   "human_review_question_count": 4,

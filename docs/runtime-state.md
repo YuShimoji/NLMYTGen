@@ -1,99 +1,105 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: new-banknote-yymm4-import-observed-visual-decision-ready-v1
-State-Revision: 2026-07-14.1
+Project-State-ID: new-banknote-editorial-provenance-audited-visual-selection-ready-v1
+State-Revision: 2026-07-14.2
 Updated: 2026-07-14 JST
-Product-State: new-banknote-yymm4-import-observed-visual-direction-review-ready
+Product-State: new-banknote-script-lineage-audited-visual-direction-review-ready
 Product-Gate: human-visual-direction-selection
-Recommended-Next: select-new-banknote-visual-direction
+Recommended-Next: select-new-banknote-visual-direction-with-lineage
 External-State: public-repo-feature-branch
 
 ## Current Slice
 
-- **Manual import structurally observed**: the ignored operator result reports
-  success with zero failed checks and an operator-confirmed absence of
-  mapping/error/update/character mismatch. Independent headless parsing of the
-  immutable local project verifies 9 VoiceItems, Reimu 3 / Marisa 6, exact
-  character/text order, missing 0, duplicate 0, and no unexpected item.
-- **Actual timing captured**: the imported project is 60 fps, 4415 frames, and
-  73.583333 seconds. Per-cue frame/length evidence is tracked as informational
-  timing and does not become a fixed production timing contract.
-- **Local evidence remains local**: project SHA-256 is
-  beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54;
-  operator-result SHA-256 is
-  e4ecb1bf5e4b5780990a00094804dd871d66068a917000015f9fecfd83e8ddfa.
-  The project, result, batch state, embedded path, and executable path remain
-  ignored and byte-preserved. Tracked receipts use repo-relative identities.
-- **Approved identity unchanged**: all six approved script/CSV/traceability
-  hashes remain frozen. The contract is 9 cues, scenes 2/4/3, canonical and
-  YMM4 speakers 3/6, and zero unsupported spoken claims.
-- **Visual decision packet ready**: exactly three routes are available. Route A
-  Security Inspection Lab is RECOMMENDED; Route B Everyday Verification and
-  Route C Design Evolution remain compact alternatives. Recommended does not
-  mean selected, approved, implemented, or rights-cleared.
-- **Route A scene spine complete**: all nine cues map once into S1 question and
-  overview, S2 four-technique inspection, and S3 identification plus the final
-  透かす / 触る / 傾ける / ルーペで見る sequence. Every cue retains claim/source
-  anchors, actual VoiceItem timing, factual limits, placeholder, future rights
-  decision, and expected YMM4 item family.
-- **Review surface bounded**: the self-contained HTML board uses system fonts,
-  CSS geometry, repo-relative links, and no external assets, scripts, URLs, or
-  private paths. The review sheet asks only four human questions.
+- **Nine-cue lineage complete**: all nine current cues record final text hash,
+  scene, speaker, adopted claims, official source IDs, raw line fingerprints,
+  prior draft identity, transformation operations, authority, approval scope,
+  rationale, confidence, and unresolved lineage. The coverage is 9/9.
+- **Factual traceability and editorial authorship separated**: 20 factual
+  meaning units are classified as 19 single-source paraphrases and one
+  multi-source synthesis. Nine editorial bridges and nine character-voice
+  units are Worker editorial contributions. A non-overlapping 40-segment
+  partition covers all 425 final characters, and all 38 substantive units are
+  realized; unresolved and unattributed substantive units are zero.
+- **Transformation magnitude bounded**: the recoverable pre-editorial draft
+  and current cues have 279 ordered NFKC-normalized matching characters and
+  263 ordered matching tokens; one of nine cues is byte-identical. These are
+  similarity indicators, not authorship percentages.
+- **Decision authority visible**: D00–D10 distinguish upstream research,
+  Audio Overview generation, mechanical salvage, source freeze, official
+  capture, claim adjudication, Worker script generation/convergence, current
+  user approval, YMM4 observation, and the visual proposal.
+- **Prior user-script audit bounded**: a user-submitted raw Audio Overview
+  transcript is proven as claim-discovery input. No prior user-authored or
+  user-submitted finished script is present in the available repo, Git, or
+  configured dropzone evidence, so the status is
+  `not_proven_from_available_repo_evidence`, never `not_used`.
+- **Current approval scope explicit**: the current execution contract records
+  acceptance of the present nine-cue state for continuation. There is no
+  independent contemporaneous approval receipt; this bounded decision is not
+  authorship attribution and does not authorize future silent wording, claim,
+  speaker, scene, or order changes.
+- **Downstream lock active**: 24 script/CSV/trace/claim/YMM4/visual identities
+  are hash-locked. Any substantive change invalidates the lock and requires a
+  visible delta ledger plus successor human approval before the next human or
+  YMM4 gate.
+- **Human surfaces linked without content drift**: the canonical review,
+  editorial revision, visual README, and HTML board now expose provenance.
+  Their deterministic receipts/readback changed only for this metadata link;
+  script text, CSVs, claim identities, YMM4 tracked evidence, and A/B/C route
+  definitions remain unchanged.
 
 ## Product Position
 
-- The verified NotebookLM-to-script-to-CSV chain has now reached one real,
-  structurally successful YMM4 import without speaker repair or content drift.
-- H0 creates evidence and a human decision surface only. It is not production
-  value, a selected visual route, a YMM4 visual project, a render, or creative
-  acceptance.
-- Route A has the strongest explanatory fit and lowest asset/rights burden
-  because it uses original abstract diagrams for the four source-backed checks.
+- The NotebookLM → source verification → editorial shaping → YMM4 chain is now
+  inspectable at claim/support-unit/cue granularity without claiming token-level
+  authorship.
+- Route A Security Inspection Lab remains recommended, while Routes B and C
+  remain available. No route is selected, approved, or implemented.
+- Tracked YMM4 observation receipts remain locked. The ignored local `.ymmp`,
+  operator result, and batch state are absent in this checkout, so their local
+  bytes were not reverified in this provenance slice.
 
 ## Exact Next Action
 
-Review
-`production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/visual_direction_board.html`
-and return A, B, or C. Also answer whether the S1/S2/S3 flow fits, whether any
-diagram could mislead viewers, and whether the motion proposal is restrained.
-A cue ID or scene ID may be supplied instead of a route when revision is needed.
+Open the provenance README first, then the visual direction board. Return A,
+B, or C and answer whether the S1/S2/S3 flow fits, whether any diagram could
+mislead viewers, and whether the motion proposal is restrained. A cue or scene
+ID may be returned instead when revision is needed. A selected route is the
+only result that authorizes planning the later diagnostic YMM4 project.
 
 ## Evidence and Access
 
-- Import review:
-  `production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_YMM4_IMPORT_OBSERVATION.md`
-- Sanitized receipt/readback:
-  `yymm4_import_observation_receipt.json` and
-  `yymm4_import_observation_readback.json` beside that README.
-- Visual review:
-  `visual_scene_decision/README_VISUAL_SCENE_DECISION.md`,
-  `visual_direction_board.html`, and `visual_review_sheet.md`.
-- Machine plans:
-  three-route options, recommended direction, script beat IR, scene layout,
-  motion beats, asset/rights matrix, and the not-authorized YMM4 contract live
-  in `visual_scene_decision/`.
+- Primary provenance surface:
+  `production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/editorial_provenance/README_EDITORIAL_PROVENANCE.md`
+- Per-cue, stage, contribution, prior-script, lock, future-change, and
+  validation records are in the same `editorial_provenance/` directory.
+- Visual review surface:
+  `production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/visual_direction_board.html`
+- Current tracked import evidence remains in
+  `README_YMM4_IMPORT_OBSERVATION.md`, its receipt/readback, and traceability.
 
 ## Active Boundaries
 
-- No YMM4 launch, Computer Use, screenshot, image generation, external fetch,
-  asset download, visual project, render, media, production, rights approval,
-  publication, upload, or master integration occurred in this slice.
-- All proposed banknote visuals are original abstract schematic geometry. They
-  must not reproduce recognizable portraits, serials, seals, full-note layouts,
-  real security textures, or repeatable exact placement/detail.
-- Audio rhythm, pronunciation, subtitle readability, and visual effectiveness
-  remain human judgments. Structural import success does not imply them.
+- No script rewrite, source fetch, NotebookLM access, YMM4 operation, Computer
+  Use, screenshot, image generation, asset download, route selection, visual
+  implementation, render, production, rights approval, publication, upload,
+  or master integration occurred in this slice.
+- Raw transcript/source bodies, private paths, NotebookLM URLs/UUIDs, and long
+  excerpts are not included in the tracked provenance package.
+- Mechanical nonsemantic regeneration may retain the lock only when content
+  hashes remain exact and the receipt records the delta. Substantive changes
+  always require a visible successor revision.
 
 ## Retained Review Debt
 
-| Debt | Impact | Owner | Revisit trigger |
+| Remaining uncertainty | Workflow impact | Owner / revisit trigger | Blocks current gate |
 | --- | --- | --- | --- |
-| Human audio/rhythm/terminology review | Blocks editorial acceptance beyond structural import proof | human editorial reviewer | after route selection or before diagnostic-project acceptance |
-| Human visual-direction choice | Blocks any selected-route implementation | human visual reviewer | current A/B/C review |
-| S04/S05 provenance precision | Leaves historical binary/source identity incomplete without weakening adopted claim support | source provenance reviewer | stable S04 identity or exact S05 original becomes available |
-| Cross-machine local `.ymmp` portability | Prevents treating the ignored imported project as a portable production base | YMM4 integration owner | before moving a selected-route diagnostic project to another machine |
+| External-conversation-only prior user script may have existed | Exact external authorship cannot be proven from repo evidence | user/supervisor when a candidate artifact or conversation anchor is supplied | no |
+| Ignored YMM4 project/result are absent in this checkout | Local observation bytes cannot be reverified here; tracked identities remain locked | YMM4 integration owner before selected-route diagnostic work | no |
+| S04/S05 historical source precision remains incomplete | Historical provenance is less precise without weakening adopted official support | source provenance reviewer when stable source identity appears | no |
+| Human visual-direction choice remains open | No selected-route diagnostic project can begin | human visual reviewer at the current A/B/C gate | yes |
 
 ## Maintenance Note
 
-Keep this capsule within 160 lines. Durable evidence belongs in the tracked
-receipts, plans, tests, and Git history; local project/result data stays ignored.
+Keep this capsule within 160 lines. Durable detail belongs in the provenance
+package, tracked receipts, tests, and Git history; raw/private bodies stay ignored.

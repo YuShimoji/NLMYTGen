@@ -70,7 +70,7 @@
     "human_review_gate_retained": true
   },
   "files": {
-    "README_CANONICAL_SCRIPT_REVIEW.md": "a5d5a23fca7d6c0c0fe200a89800d9c3c8ac278c18c1a137c35019d4780e7da8",
+    "README_CANONICAL_SCRIPT_REVIEW.md": "c14b5b9d4612e2bc9264057346e8fdc7df94b26decb6c9e4f7dff3f29651bac6",
     "canonical_script.json": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47",
     "canonical_script.txt": "4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091",
     "canonical_script_review.md": "9816c28e9b0099ef98e2aefb9e70bf22a32fbbd0f931fd8989c6ac19dcd99d3a",
@@ -79,6 +79,6 @@
     "derived_yymm4_import.csv": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee",
     "csv_validation_readback.json": "df76e400a437c89384b46abd8988f2cdf532d3675ddcbe500036c10fc7e82d06",
     "source_to_script_manifest.json": "e13fb57a2681875f577e4d85f13cf41bfc601519892fa4f975bdfcdd24d927b5",
-    "canonical_script_editorial_revision.md": "af5680175765526684ea2bddccd05d1d34fda84cfce303c23a282a1d0b2b32bb"
+    "canonical_script_editorial_revision.md": "6db51926d5c2d0b9485f8053480126286ee60bcb48a1da12603de4170cf4fa89"
   }
 }

@@ -1,0 +1,27 @@
+{
+  "schema_version": "editorial_provenance.ledger.v1",
+  "status": "complete",
+  "artifact_family": "new_banknote_script_to_yymm4_and_visual_review",
+  "current_script_policy": "frozen_no_wording_change",
+  "factual_traceability_vs_authorship": {
+    "factual_traceability": "15 adopted claim identities connect 20 factual units to official sources",
+    "editorial_authorship": "Worker operations are classified separately as paraphrase structure bridge voice and compression",
+    "user_role": "approval_of_current_state_for_continuation_not_claimed_as_text_authorship"
+  },
+  "cue_coverage": "9/9",
+  "stage_coverage": "11/11",
+  "prior_user_script_usage_status": "not_proven_from_available_repo_evidence",
+  "current_approval": {
+    "status": "approved_for_continuation_of_current_state",
+    "authority_class": "user_approved",
+    "future_silent_edits_authorized": false,
+    "decision_id": "current-nine-cue-continuation-approval-v1",
+    "decision_sha256": "f3b77651cf5798b6977dec9139a1351dad9f3d419dbda1750ce675b44631547e",
+    "evidence_grade": "observed_current_execution_contract_without_independent_contemporaneous_receipt"
+  },
+  "source_body_embedded": false,
+  "raw_transcript_body_embedded": false,
+  "token_level_authorship_claimed": false,
+  "unattributed_substantive_change_count": 0,
+  "successor": "human_visual_direction_selection_with_lineage"
+}

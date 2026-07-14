@@ -347,6 +347,7 @@ def test_html_board_is_self_contained_relative_and_reviewable() -> None:
         "visual_review_sheet.md",
         "recommended_visual_direction.json",
         "../README_YMM4_IMPORT_OBSERVATION.md",
+        "../editorial_provenance/README_EDITORIAL_PROVENANCE.md",
     ]
     assert all(
         token in board

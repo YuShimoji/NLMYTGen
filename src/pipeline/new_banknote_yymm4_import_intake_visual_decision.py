@@ -1232,6 +1232,14 @@ machine-verified import timing（{timing['fps']} fps / {timing['timeline_frames'
 {timing['duration_seconds']} seconds）を参照し、同じ9 cueを三つのvisual routeとして
 比較するreview packetです。ここではrouteを実装せず、Route Aを推奨として明示します。
 
+## Editorial provenance
+
+事実部分はclaimとofficial sourceに接続し、会話構造・接続・圧縮はeditorial synthesisとして
+区別しています。current execution contractで現在の9 cueを継続するbounded approvalを
+記録していますが、独立した同時点receiptや将来のsilent edit権限ではありません。
+以前のuser-submitted scriptの取り込みは利用可能なrepo証拠から未証明です。
+詳細は[Editorial Provenance](../editorial_provenance/README_EDITORIAL_PROVENANCE.md)で確認できます。
+
 ## Recommendation
 
 **Route A — Security Inspection Lab — RECOMMENDED**
@@ -1397,8 +1405,9 @@ body {{ margin:0; background:#e8e4db; color:#152433; font-family:"Yu Gothic UI",
     {comparison_rows}
   </section>
   <section class="footer">
+    <p><strong>Editorial provenance:</strong> source-derived facts、editorial synthesis、current execution contractのbounded approval（独立receiptなし）、prior-user-scriptの未証明範囲を分離して記録しています。</p>
     <strong>Abstract schematic only.</strong> 実券の肖像・通し番号・印章・券面全体・実security pattern・正確配置を使いません。
-    <div class="links"><a href="visual_review_sheet.md">4-question review sheet</a><a href="recommended_visual_direction.json">Recommended direction</a><a href="../README_YMM4_IMPORT_OBSERVATION.md">Import evidence</a></div>
+    <div class="links"><a href="visual_review_sheet.md">4-question review sheet</a><a href="recommended_visual_direction.json">Recommended direction</a><a href="../README_YMM4_IMPORT_OBSERVATION.md">Import evidence</a><a href="../editorial_provenance/README_EDITORIAL_PROVENANCE.md">Editorial provenance</a></div>
   </section>
 </main>
 </body>
