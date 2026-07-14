@@ -8,8 +8,9 @@
 - **取得先**: origin/codex/new-banknote-authoritative-source-script-v1。
   provenance開始時のvisual baselineは
   bc07fc073063d3e5d1af1e6e5400a340b0036496。current branch tipがこのhandoffを
-  含むoutcome commitであり、再開時はgit rev-parse HEAD、upstream parity 0 0、
-  clean worktreeをlive確認する。
+  含むoutcome commit `1f78449f896f6ee5cb49f04d7f86b21a23dc99a0`であり、push済み。
+  再開時はgit rev-parse HEAD、upstream parity 0 0、clean tracked worktreeをlive確認し、
+  intentional ignored evidenceは削除しない。
 - **最小読取順**: AGENTS.md → docs/REPO_LOCAL_RULES.md →
   docs/runtime-state.md → この節 →
   production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/
@@ -17,7 +18,7 @@
   README_EDITORIAL_PROVENANCE.md。
 - **現在の状態**: Project-State-IDは
   new-banknote-editorial-provenance-audited-visual-selection-ready-v1、
-  State-Revisionは2026-07-14.2。Product-Stateは
+  State-Revisionは2026-07-14.3。Product-Stateは
   new-banknote-script-lineage-audited-visual-direction-review-ready、
   Product-Gateはhuman-visual-direction-selection、Recommended-Nextは
   select-new-banknote-visual-direction-with-lineage、External-Stateは

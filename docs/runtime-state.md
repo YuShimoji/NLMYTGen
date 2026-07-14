@@ -1,12 +1,15 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: new-banknote-editorial-provenance-audited-visual-selection-ready-v1
-State-Revision: 2026-07-14.2
+State-Revision: 2026-07-14.3
 Updated: 2026-07-14 JST
 Product-State: new-banknote-script-lineage-audited-visual-direction-review-ready
 Product-Gate: human-visual-direction-selection
 Recommended-Next: select-new-banknote-visual-direction-with-lineage
 External-State: public-repo-feature-branch
+Handoff-Commit: 1f78449f896f6ee5cb49f04d7f86b21a23dc99a0
+Remote-Parity: 0/0
+Tracked-Worktree: clean; intentional ignored evidence retained
 
 ## Current Slice
 
