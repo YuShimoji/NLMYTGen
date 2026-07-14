@@ -26,6 +26,15 @@
       "boundary": "Fixed 9 Voice, 3 Image, 3 Text project only; same-machine absolute asset path."
     },
     {
+      "evidence_id": "ev_bounded_static_layout_safe_area_probe",
+      "evidence_level": "C3",
+      "capability_ids": [],
+      "combination_ids": ["bounded_static_layout_safe_area_probe"],
+      "locations": ["samples/visual_composition_lab/runtime_probe/runtime_observation_receipt.json", "samples/visual_composition_lab/runtime_probe/runtime_observation_readback.json"],
+      "observed_environment": "Thank device user-operated YMM4 normal batch; exact YMM4 version not recorded in this result",
+      "boundary": "Exact same-machine 1 Voice, 1 static 640x360 Image and one short Text composite in conservative disjoint zones only; no capability-row regrade, save, screenshot evidence, render, motion, C4, C5, Route A or production claim."
+    },
+    {
       "evidence_id": "ev_card_visibility",
       "evidence_level": "C3",
       "capability_ids": ["card_image_visibility_with_dialogue"],

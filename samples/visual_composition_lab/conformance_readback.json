@@ -339,7 +339,7 @@
     "C4": 2,
     "C5": 0
   },
-  "relevant_path_count": 78,
+  "relevant_path_count": 80,
   "unclassified_relevant_path_count": 0,
   "checks": {
     "same_validator_for_all_fixtures": true,

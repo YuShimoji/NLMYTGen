@@ -26,3 +26,23 @@
 - **Delivery**: branch `codex/generic-visual-static-layout-probe-v1`、artifact outcome commit
   `7f71c72a7f0bca16b13a75216f4787791da909df`、remote parity 0/0。handoff docsのfollow-up
   commit後もnormal Operator Batchは未実行。次はuser-operated H1 observationだけ。
+
+## 2026-07-15 — H1 exact-composite observation pass
+
+- **Local result**: ignored `operator_result.json`はnon-fixture、`status=pass`、
+  `observed_by_operator`で、subtitle readability/non-overlap、Image visibility/crop/anchor、
+  Text visibility/wrapping/anchorのexact 3 keysがすべてpass。result SHA-256は
+  `a881c5e6bfd8be167b32c8aa7b232d0c4ed31b494563e192091aba119419dd03`。
+- **Identity**: project SHA-256
+  `100d4ebcd31e1665db90cc688492efec211d899e579d013e751c9643cc98eebc`、79,303 bytes、
+  mtimeはbatch stateと一致。asset SHA-256
+  `ad1f93bf29d07372a955645326129127a96f989786db642969ef77aad84b00b9`もH0と一致。
+- **Evidence separation**: structural facts/identityはmachine-verified、3 visual answersは
+  human operator-observed。WorkerはYMM4/Computer Useを使わず、local ignored evidenceは
+  byte-for-byte保持した。
+- **Capability decision**: 38 capability rowsにexact 1 Voice / 1 Image / 1 Text compositeの
+  unique rowはないためglobal rowをregradeしない。`bounded_static_layout_safe_area_probe`
+  combinationだけをC3 `bounded_runtime_observed_pass`として追加し、class totalsとC0-C5は不変。
+- **Boundary**: no save、screenshot evidence、render、motion/effect、alternate layout、
+  cross-machine、C4/C5、Route A/B/C、production/right/publication claim。次のhuman gateは
+  authoritative provenance branch上のnew-banknote visual-direction selection。

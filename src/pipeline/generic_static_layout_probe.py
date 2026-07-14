@@ -1,7 +1,8 @@
-"""Prepare and validate the generic static Image/Text/subtitle YMM4 probe.
+"""Prepare, validate, and ingest the generic static Image/Text/subtitle probe.
 
-This module deliberately stops at H0 preparation.  It never launches YMM4 and
-never renders media.  Runtime observations belong to the user-operated batch.
+This module never launches YMM4 and never renders media. Runtime observations
+belong to the user-operated batch; intake only validates its ignored evidence
+and emits a sanitized tracked package.
 """
 
 from __future__ import annotations
@@ -37,10 +38,20 @@ PROJECT_REL = Path("local_outputs/generic_static_layout_probe.local.ymmp")
 ASSET_REL = Path("local_outputs/assets/generic_probe_image.png")
 RESULT_REL = Path("local_outputs/operator_result.json")
 BATCH_STATE_REL = Path("local_outputs/operator_batch.local.json")
+OBSERVATIONS_REL = Path("local_outputs/operator_observations.local.json")
 READBACK_NAME = "static_layout_probe_materialization_readback.json"
 PREFLIGHT_REL = Path("operator_batch/preflight_readback.json")
+RUNTIME_RECEIPT_REL = Path("runtime_observation_receipt.json")
+RUNTIME_READBACK_REL = Path("runtime_observation_readback.json")
+RUNTIME_README_REL = Path("README_STATIC_LAYOUT_PROBE_RESULT.md")
+RUNTIME_LIMITATIONS_REL = Path("runtime_observation_limitations.md")
 
 EXPECTED_CARRIER_SHA256 = "9f89a982caba90cc4c241acaaa5c4df50d92c4a38d09270a04aeb3df4e09a524"
+EXPECTED_PROJECT_SHA256 = "100d4ebcd31e1665db90cc688492efec211d899e579d013e751c9643cc98eebc"
+EXPECTED_ASSET_SHA256 = "ad1f93bf29d07372a955645326129127a96f989786db642969ef77aad84b00b9"
+H0_SOURCE_BRANCH = "codex/generic-visual-static-layout-probe-v1"
+H0_SOURCE_HEAD = "4b0d5d22fe58bfdf823382932df47aa8aa460b48"
+H0_ARTIFACT_COMMIT = "7f71c72a7f0bca16b13a75216f4787791da909df"
 PNG_WIDTH = 640
 PNG_HEIGHT = 360
 LABEL = "PROBE LABEL"
@@ -612,6 +623,402 @@ def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
+def _read_json_object(path: Path, *, error_code: str) -> dict[str, Any]:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise ProbeError(f"{error_code}_MISSING") from exc
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise ProbeError(f"{error_code}_INVALID_JSON") from exc
+    if not isinstance(value, dict):
+        raise ProbeError(f"{error_code}_NOT_OBJECT")
+    return value
+
+
+def _require_exact_keys(value: dict[str, Any], expected: set[str], *, error_code: str) -> None:
+    if set(value) != expected:
+        raise ProbeError(error_code)
+
+
+def _parse_utc_timestamp(value: Any, *, error_code: str) -> datetime:
+    if not isinstance(value, str):
+        raise ProbeError(error_code)
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise ProbeError(error_code) from exc
+    if parsed.tzinfo is None:
+        raise ProbeError(error_code)
+    return parsed.astimezone(timezone.utc)
+
+
+def _tracked_probe_identity(relative: Path) -> str:
+    return (PACKAGE_REL / relative).as_posix()
+
+
+def _runtime_result_readme(receipt: dict[str, Any]) -> bytes:
+    observations = receipt["operator_observations"]["values"]
+    project = receipt["local_evidence"]["project"]
+    asset = receipt["local_evidence"]["asset"]
+    lines = [
+        "# Generic static-layout runtime observation result",
+        "",
+        "> **BOUNDED RUNTIME OBSERVATION / SAME-MACHINE EXACT COMPOSITE / NOT PRODUCTION**",
+        "",
+        "The exact neutral probe was opened by the human operator in YMM4 and all three bounded visual checks passed. Structural facts remain machine-verified; the visual answers are operator-observed evidence.",
+        "",
+        "## Observed result",
+        "",
+        f"- Probe: `{receipt['probe_id']}`",
+        f"- Collected: `{receipt['timing']['collected_at']}`",
+        f"- Linked subtitle readability/non-overlap: `{observations['subtitle_readability_nonoverlap']}`",
+        f"- Image visibility/crop/anchor: `{observations['image_visibility_crop_anchor']}`",
+        f"- Text visibility/wrapping/anchor: `{observations['text_visibility_wrapping_anchor']}`",
+        "- Observation grade: `observed_by_operator`",
+        "- Structural grade: `verified`",
+        "",
+        "## Exact bounded composite",
+        "",
+        "- One unchanged VoiceItem with its linked subtitle settings.",
+        "- One static 640x360 opaque RGB ImageItem in the upper-left conservative zone.",
+        "- One short independent TextItem (`PROBE LABEL`) in the upper-right conservative zone.",
+        "- 1920x1080, 60 fps, 109-frame Voice span, disjoint bottom subtitle reserve.",
+        "- Same-machine exact project and asset only; zero motion, fade, effect, transition, non-default transform, save, screenshot evidence, or render.",
+        "",
+        "## Identity and evidence boundary",
+        "",
+        f"- Ignored project: `{project['repo_relative_path']}` (`{project['sha256']}`)",
+        f"- Ignored asset: `{asset['repo_relative_path']}` (`{asset['sha256']}`)",
+        f"- Ignored operator result SHA-256: `{receipt['local_evidence']['operator_result']['sha256']}`",
+        "- Local project, asset, batch state, observations, result, and archives remain ignored and untracked.",
+        "- No global capability row was regraded. The result is recorded only as `bounded_runtime_observed_pass` for this exact composite.",
+        "",
+        "This does not establish arbitrary subtitle typography, longer text, alternate image dimensions or anchors, motion/effects, cross-machine portability, C4 render evidence, C5 reuse, Route A behavior, production readiness, rights clearance, or publication approval.",
+        "",
+        "Machine-readable authority: `runtime_observation_receipt.json` and `runtime_observation_readback.json`.",
+    ]
+    return ("\n".join(lines) + "\n").encode("utf-8")
+
+
+def _runtime_result_limitations() -> bytes:
+    text = """# Runtime observation limitations
+
+The operator observation is limited to the exact same-machine composite identified by
+`runtime_observation_receipt.json`: one unchanged VoiceItem with linked subtitle, one
+static 640x360 opaque ImageItem, and one short independent TextItem on a 1920x1080,
+60 fps canvas with conservative disjoint zones.
+
+It does not generalize to longer or differently styled text, alternate image sizes or
+anchors, other subtitle profiles, other machines, motion, fades, effects, transitions,
+non-default transforms, render/media validity, heterogeneous topics, production quality,
+rights clearance, publication, or Route A/B/C behavior. Cross-machine portability and
+C5 reuse remain unknown. If any bounded condition changes, repeat only the relevant
+visual gate or fall back to the narration/static baseline.
+"""
+    return text.encode("utf-8")
+
+
+def ingest_runtime_observation(
+    *,
+    repo_root: Path = REPO_ROOT,
+    package_dir: Path | None = None,
+    expected_project_sha256: str = EXPECTED_PROJECT_SHA256,
+) -> dict[str, Any]:
+    """Validate the ignored operator result and emit sanitized tracked evidence.
+
+    The ignored project, asset, state, observations, result, and archives are
+    read-only inputs. No project materialization or YMM4 operation occurs here.
+    """
+
+    package = (package_dir or repo_root / PACKAGE_REL).resolve()
+    project_path = package / PROJECT_REL
+    asset_path = package / ASSET_REL
+    state_path = package / BATCH_STATE_REL
+    observations_path = package / OBSERVATIONS_REL
+    result_path = package / RESULT_REL
+
+    state = _read_json_object(state_path, error_code="BATCH_STATE")
+    observations_document = _read_json_object(
+        observations_path, error_code="OPERATOR_OBSERVATIONS"
+    )
+    result = _read_json_object(result_path, error_code="OPERATOR_RESULT")
+
+    _require_exact_keys(
+        observations_document,
+        {"schema_version", "probe_id", "observations"},
+        error_code="OPERATOR_OBSERVATIONS_SCHEMA_INVALID",
+    )
+    _require_exact_keys(
+        result,
+        {
+            "schema_version",
+            "probe_id",
+            "status",
+            "collected_at",
+            "fixture_mode",
+            "structural_facts",
+            "operator_observations",
+            "capability_regraded",
+            "render_performed",
+        },
+        error_code="OPERATOR_RESULT_SCHEMA_INVALID",
+    )
+    if state.get("probe_id") != PROBE_ID:
+        raise ProbeError("BATCH_STATE_PROBE_ID_MISMATCH")
+    if observations_document.get("probe_id") != PROBE_ID:
+        raise ProbeError("OPERATOR_OBSERVATIONS_PROBE_ID_MISMATCH")
+    if result.get("probe_id") != PROBE_ID:
+        raise ProbeError("OPERATOR_RESULT_PROBE_ID_MISMATCH")
+    if result.get("fixture_mode") is not False:
+        raise ProbeError("OPERATOR_RESULT_FIXTURE_REJECTED")
+    if result.get("status") != "pass":
+        raise ProbeError("OPERATOR_RESULT_NOT_PASS")
+    if result.get("capability_regraded") is not False:
+        raise ProbeError("RAW_CAPABILITY_REGRADE_FORBIDDEN")
+    if result.get("render_performed") is not False:
+        raise ProbeError("RENDER_RESULT_REJECTED")
+
+    expected_observations = {key: "pass" for key in OBSERVATION_KEYS}
+    observation_values = observations_document.get("observations")
+    if not isinstance(observation_values, dict) or set(observation_values) != set(OBSERVATION_KEYS):
+        raise ProbeError("OPERATOR_OBSERVATION_KEYS_INVALID")
+    if observation_values != expected_observations:
+        raise ProbeError("OPERATOR_OBSERVATIONS_NOT_ALL_PASS")
+    operator_observations = result.get("operator_observations")
+    if not isinstance(operator_observations, dict):
+        raise ProbeError("OPERATOR_RESULT_OBSERVATIONS_INVALID")
+    _require_exact_keys(
+        operator_observations,
+        {"evidence_grade", "values"},
+        error_code="OPERATOR_RESULT_OBSERVATIONS_SCHEMA_INVALID",
+    )
+    if operator_observations.get("evidence_grade") != "observed_by_operator":
+        raise ProbeError("OPERATOR_OBSERVATION_GRADE_INVALID")
+    if operator_observations.get("values") != expected_observations:
+        raise ProbeError("OPERATOR_RESULT_OBSERVATIONS_NOT_ALL_PASS")
+    if observation_values != operator_observations.get("values"):
+        raise ProbeError("OBSERVATION_DOCUMENT_RESULT_MISMATCH")
+
+    structural_facts = result.get("structural_facts")
+    if not isinstance(structural_facts, dict):
+        raise ProbeError("STRUCTURAL_FACTS_INVALID")
+    _require_exact_keys(
+        structural_facts,
+        {
+            "evidence_grade",
+            "project_hash_unchanged_during_batch",
+            "exactly_one_imageitem",
+            "exactly_one_independent_textitem",
+            "voice_objects_unchanged",
+            "excluded_behavior_absent",
+        },
+        error_code="STRUCTURAL_FACTS_SCHEMA_INVALID",
+    )
+    if structural_facts.get("evidence_grade") != "verified" or any(
+        structural_facts.get(key) is not True
+        for key in structural_facts
+        if key != "evidence_grade"
+    ):
+        raise ProbeError("STRUCTURAL_FACTS_NOT_VERIFIED")
+
+    if not project_path.is_file() or not asset_path.is_file():
+        raise ProbeError("PREPARED_PROJECT_OR_ASSET_MISSING")
+    project_stat = project_path.stat()
+    project_sha256 = _sha256_file(project_path)
+    if project_sha256 != expected_project_sha256:
+        raise ProbeError("PREPARED_PROJECT_HASH_MISMATCH")
+    if Path(str(state.get("project_path", ""))).resolve() != project_path.resolve():
+        raise ProbeError("BATCH_STATE_PROJECT_MISMATCH")
+    if Path(str(state.get("result_path", ""))).resolve() != result_path.resolve():
+        raise ProbeError("BATCH_STATE_RESULT_MISMATCH")
+    if (
+        state.get("project_sha256") != project_sha256
+        or int(state.get("project_size", -1)) != project_stat.st_size
+        or int(state.get("project_mtime_ns", -1)) != project_stat.st_mtime_ns
+    ):
+        raise ProbeError("PREPARED_PROJECT_CHANGED_DURING_BATCH")
+    if state.get("expected_observation_keys") != list(OBSERVATION_KEYS):
+        raise ProbeError("BATCH_STATE_OBSERVATION_KEYS_INVALID")
+    if state.get("no_save_required") is not True or state.get("render_required") is not False:
+        raise ProbeError("BATCH_STATE_EXECUTION_BOUNDARY_INVALID")
+
+    batch_started = _parse_utc_timestamp(
+        state.get("started_at"), error_code="BATCH_STARTED_AT_INVALID"
+    )
+    collected_at = _parse_utc_timestamp(
+        result.get("collected_at"), error_code="RESULT_COLLECTED_AT_INVALID"
+    )
+    if collected_at <= batch_started:
+        raise ProbeError("RESULT_TIMESTAMP_NOT_AFTER_BATCH_START")
+
+    materialization = _inspect_materialized(
+        project_path=project_path,
+        asset_path=asset_path,
+        carrier_path=(repo_root / CARRIER_REL).resolve(),
+    )
+    tracked_materialization = _read_json_object(
+        package / READBACK_NAME, error_code="TRACKED_MATERIALIZATION_READBACK"
+    )
+    if materialization != tracked_materialization:
+        raise ProbeError("TRACKED_MATERIALIZATION_READBACK_MISMATCH")
+    asset_sha256 = _sha256_file(asset_path)
+    if asset_sha256 != EXPECTED_ASSET_SHA256:
+        raise ProbeError("PREPARED_ASSET_HASH_MISMATCH")
+
+    if _absolute_path_strings(observations_document) or _absolute_path_strings(result):
+        raise ProbeError("PRIVATE_PATH_IN_OPERATOR_RESULT")
+
+    receipt = {
+        "schema_version": 1,
+        "receipt_id": "generic-static-layout-bounded-runtime-observation-v1",
+        "probe_id": PROBE_ID,
+        "status": "pass",
+        "source": {
+            "branch": H0_SOURCE_BRANCH,
+            "source_head": H0_SOURCE_HEAD,
+            "h0_artifact_commit": H0_ARTIFACT_COMMIT,
+        },
+        "timing": {
+            "batch_started_at": str(state["started_at"]),
+            "collected_at": str(result["collected_at"]),
+            "collection_after_batch_start": True,
+        },
+        "local_evidence": {
+            "tracking_status": "ignored_preserved_untracked",
+            "project": {
+                "repo_relative_path": _tracked_probe_identity(PROJECT_REL),
+                "sha256": project_sha256,
+                "byte_count": project_stat.st_size,
+                "mtime_ns": project_stat.st_mtime_ns,
+            },
+            "asset": {
+                "repo_relative_path": _tracked_probe_identity(ASSET_REL),
+                "sha256": asset_sha256,
+                "byte_count": asset_path.stat().st_size,
+            },
+            "batch_state": {
+                "repo_relative_path": _tracked_probe_identity(BATCH_STATE_REL),
+                "sha256": _sha256_file(state_path),
+            },
+            "operator_observations": {
+                "repo_relative_path": _tracked_probe_identity(OBSERVATIONS_REL),
+                "sha256": _sha256_file(observations_path),
+            },
+            "operator_result": {
+                "repo_relative_path": _tracked_probe_identity(RESULT_REL),
+                "sha256": _sha256_file(result_path),
+            },
+            "archives": "preserved_ignored_not_enumerated_in_tracked_receipt",
+        },
+        "structural_facts": {
+            "evidence_grade": "verified",
+            "checks": {
+                "project_hash_size_mtime_match_batch_state": True,
+                "tracked_materialization_readback_match": True,
+                "voice_objects_unchanged": True,
+                "exactly_one_imageitem": True,
+                "exactly_one_independent_textitem": True,
+                "excluded_behavior_absent": True,
+            },
+        },
+        "operator_observations": {
+            "evidence_grade": "observed_by_operator",
+            "values": expected_observations,
+        },
+        "exact_composite": {
+            "maturity": "bounded_runtime_observed_pass",
+            "canvas": {"width": 1920, "height": 1080, "fps": 60},
+            "duration_frames": materialization["materialized"]["length_frames"],
+            "item_type_counts": materialization["materialized"]["item_type_counts"],
+            "image": {
+                "width": PNG_WIDTH,
+                "height": PNG_HEIGHT,
+                "color_mode": "opaque_rgb",
+                "intended_bbox": IMAGE_BBOX,
+            },
+            "text": {"value": LABEL, "intended_bbox_conservative": TEXT_BBOX},
+            "linked_subtitle_reserve": SUBTITLE_BBOX,
+            "zones_pairwise_nonoverlap": True,
+            "same_machine_exact_project_asset_only": True,
+        },
+        "execution_boundary": {
+            "project_save_required": False,
+            "project_identity_unchanged": True,
+            "render_performed": False,
+            "screenshot_required": False,
+            "screenshot_evidence_collected": False,
+            "motion_fade_effect_transition_nondefault_transform": False,
+        },
+        "capability_classification": {
+            "decision": "combination_level_evidence_only",
+            "combination_id": "bounded_static_layout_safe_area_probe",
+            "maturity": "bounded_runtime_observed_pass",
+            "capability_matrix_rows_changed": [],
+            "global_capability_counts_changed": False,
+            "raw_result_capability_regraded": False,
+        },
+        "non_generalization": [
+            "longer_or_differently_styled_text",
+            "alternate_image_dimensions_or_anchors",
+            "other_subtitle_profiles_or_layouts",
+            "cross_machine_portability",
+            "motion_effect_fade_transition_or_nondefault_transform",
+            "render_or_C4",
+            "heterogeneous_second_topic_or_C5",
+            "route_A_B_C_behavior",
+            "production_rights_publication",
+        ],
+    }
+    if _absolute_path_strings(receipt):
+        raise ProbeError("SANITIZED_RECEIPT_PATH_LEAK")
+
+    receipt_bytes = _json_bytes(receipt)
+    readback = {
+        "schema_version": 1,
+        "probe_id": PROBE_ID,
+        "status": "passed",
+        "receipt_sha256": _sha256_bytes(receipt_bytes),
+        "checks": {
+            "result_utf8_json_object": True,
+            "probe_ids_match": True,
+            "fixture_mode_false": True,
+            "status_pass": True,
+            "exact_three_observations_all_pass": True,
+            "observation_grade_operator": True,
+            "structural_facts_verified": True,
+            "project_hash_size_mtime_match": True,
+            "asset_hash_match": True,
+            "collected_after_batch_start": True,
+            "render_false": True,
+            "raw_capability_regraded_false": True,
+            "tracked_outputs_private_path_free": True,
+            "local_evidence_preserved_ignored": True,
+        },
+        "evidence_grades": {
+            "verified": "file identity, JSON semantics, structural facts and deterministic sanitization",
+            "observed": "three human operator visual answers for the exact composite",
+            "inferred": "bounded_runtime_observed_pass at combination level only",
+            "unverified": "other layouts, assets, text lengths, devices, motion, render and production",
+            "unknown": "cross-machine portability and heterogeneous second-topic reuse",
+        },
+        "capability_decision": receipt["capability_classification"],
+        "tracked_outputs": [
+            RUNTIME_README_REL.as_posix(),
+            RUNTIME_RECEIPT_REL.as_posix(),
+            RUNTIME_READBACK_REL.as_posix(),
+            RUNTIME_LIMITATIONS_REL.as_posix(),
+        ],
+    }
+    if _absolute_path_strings(readback):
+        raise ProbeError("SANITIZED_READBACK_PATH_LEAK")
+
+    _write_bytes_if_changed(package / RUNTIME_RECEIPT_REL, receipt_bytes)
+    _write_json_if_changed(package / RUNTIME_READBACK_REL, readback)
+    _write_bytes_if_changed(package / RUNTIME_README_REL, _runtime_result_readme(receipt))
+    _write_bytes_if_changed(package / RUNTIME_LIMITATIONS_REL, _runtime_result_limitations())
+    return {"receipt": receipt, "readback": readback}
+
+
 def _require_ignored_local_target(path: Path, package: Path, *, suffix: str) -> Path:
     resolved = path.resolve()
     local_root = (package / "local_outputs").resolve()
@@ -771,6 +1178,9 @@ def _parser() -> argparse.ArgumentParser:
     collect.add_argument("--observations", type=Path, required=True)
     collect.add_argument("--output", type=Path, required=True)
     collect.add_argument("--fixture-mode", action="store_true")
+    intake = subparsers.add_parser("intake-observation")
+    intake.add_argument("--repo-root", type=Path, default=REPO_ROOT)
+    intake.add_argument("--package", type=Path)
     return parser
 
 
@@ -791,6 +1201,8 @@ def main(argv: list[str] | None = None) -> int:
             repo_root=args.repo_root,
             package_dir=args.package,
         )
+    elif args.command == "intake-observation":
+        ingest_runtime_observation(repo_root=args.repo_root, package_dir=args.package)
     return 0
 
 

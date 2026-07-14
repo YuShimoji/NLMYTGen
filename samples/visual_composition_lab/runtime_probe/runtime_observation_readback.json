@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "probe_id": "generic_static_image_text_subtitle_safe_area_v1",
+  "status": "passed",
+  "receipt_sha256": "18b3f4942eb207855c62c897240bd66171e7a523c6e164bebd531e17a2989f0a",
+  "checks": {
+    "result_utf8_json_object": true,
+    "probe_ids_match": true,
+    "fixture_mode_false": true,
+    "status_pass": true,
+    "exact_three_observations_all_pass": true,
+    "observation_grade_operator": true,
+    "structural_facts_verified": true,
+    "project_hash_size_mtime_match": true,
+    "asset_hash_match": true,
+    "collected_after_batch_start": true,
+    "render_false": true,
+    "raw_capability_regraded_false": true,
+    "tracked_outputs_private_path_free": true,
+    "local_evidence_preserved_ignored": true
+  },
+  "evidence_grades": {
+    "verified": "file identity, JSON semantics, structural facts and deterministic sanitization",
+    "observed": "three human operator visual answers for the exact composite",
+    "inferred": "bounded_runtime_observed_pass at combination level only",
+    "unverified": "other layouts, assets, text lengths, devices, motion, render and production",
+    "unknown": "cross-machine portability and heterogeneous second-topic reuse"
+  },
+  "capability_decision": {
+    "decision": "combination_level_evidence_only",
+    "combination_id": "bounded_static_layout_safe_area_probe",
+    "maturity": "bounded_runtime_observed_pass",
+    "capability_matrix_rows_changed": [],
+    "global_capability_counts_changed": false,
+    "raw_result_capability_regraded": false
+  },
+  "tracked_outputs": [
+    "README_STATIC_LAYOUT_PROBE_RESULT.md",
+    "runtime_observation_receipt.json",
+    "runtime_observation_readback.json",
+    "runtime_observation_limitations.md"
+  ]
+}

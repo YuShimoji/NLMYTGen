@@ -11,11 +11,18 @@ from src.pipeline.generic_static_layout_probe import (
     ASSET_REL,
     BATCH_STATE_REL,
     CARRIER_REL,
+    EXPECTED_ASSET_SHA256,
     EXPECTED_CARRIER_SHA256,
     IMAGE_BBOX,
     OBSERVATION_KEYS,
+    OBSERVATIONS_REL,
     PACKAGE_REL,
     PROJECT_REL,
+    RESULT_REL,
+    RUNTIME_LIMITATIONS_REL,
+    RUNTIME_READBACK_REL,
+    RUNTIME_README_REL,
+    RUNTIME_RECEIPT_REL,
     SUBTITLE_BBOX,
     TEXT_BBOX,
     ProbeError,
@@ -24,8 +31,10 @@ from src.pipeline.generic_static_layout_probe import (
     _get_timeline_items,
     _item_type,
     collect_operator_result,
+    ingest_runtime_observation,
     materialize_probe,
     preflight_probe,
+    start_operator_batch,
 )
 from src.pipeline.ymmp_patch import load_ymmp
 
@@ -37,6 +46,46 @@ CARRIER = REPO_ROOT / CARRIER_REL
 
 def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _write_json(path: Path, value: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def _prepared_intake_package(
+    tmp_path: Path,
+    *,
+    answers: dict[str, str] | None = None,
+    fixture_mode: bool = False,
+) -> tuple[Path, str]:
+    package = tmp_path / "runtime_probe"
+    materialize_probe(repo_root=REPO_ROOT, package_dir=package)
+    state_path = package / BATCH_STATE_REL
+    observations_path = package / OBSERVATIONS_REL
+    result_path = package / RESULT_REL
+    start_operator_batch(
+        state_path=state_path,
+        repo_root=REPO_ROOT,
+        package_dir=package,
+    )
+    _write_json(
+        observations_path,
+        {
+            "schema_version": 1,
+            "probe_id": "generic_static_image_text_subtitle_safe_area_v1",
+            "observations": answers or {key: "pass" for key in OBSERVATION_KEYS},
+        },
+    )
+    collect_operator_result(
+        state_path=state_path,
+        observations_path=observations_path,
+        output_path=result_path,
+        fixture_mode=fixture_mode,
+        repo_root=REPO_ROOT,
+        package_dir=package,
+    )
+    return package, _sha(package / PROJECT_REL)
 
 
 def _tracked_package_files() -> list[Path]:
@@ -213,6 +262,191 @@ def test_collector_rejects_output_outside_ignored_local_root(tmp_path: Path) -> 
         )
 
 
+def test_runtime_observation_intake_accepts_exact_pass_and_preserves_local_bytes(
+    tmp_path: Path,
+) -> None:
+    package, project_sha256 = _prepared_intake_package(tmp_path)
+    local_paths = [
+        package / PROJECT_REL,
+        package / ASSET_REL,
+        package / BATCH_STATE_REL,
+        package / OBSERVATIONS_REL,
+        package / RESULT_REL,
+    ]
+    before = {path: path.read_bytes() for path in local_paths}
+
+    outcome = ingest_runtime_observation(
+        repo_root=REPO_ROOT,
+        package_dir=package,
+        expected_project_sha256=project_sha256,
+    )
+
+    receipt = outcome["receipt"]
+    assert receipt["status"] == "pass"
+    assert receipt["operator_observations"] == {
+        "evidence_grade": "observed_by_operator",
+        "values": {key: "pass" for key in OBSERVATION_KEYS},
+    }
+    assert receipt["local_evidence"]["project"]["sha256"] == project_sha256
+    assert receipt["local_evidence"]["asset"]["sha256"] == EXPECTED_ASSET_SHA256
+    assert receipt["execution_boundary"]["render_performed"] is False
+    assert receipt["capability_classification"]["capability_matrix_rows_changed"] == []
+    assert receipt["capability_classification"]["global_capability_counts_changed"] is False
+    assert all(path.read_bytes() == before[path] for path in local_paths)
+
+
+def test_runtime_observation_intake_rejects_fixture_result(tmp_path: Path) -> None:
+    package, project_sha256 = _prepared_intake_package(tmp_path, fixture_mode=True)
+    with pytest.raises(ProbeError, match="OPERATOR_RESULT_FIXTURE_REJECTED"):
+        ingest_runtime_observation(
+            repo_root=REPO_ROOT,
+            package_dir=package,
+            expected_project_sha256=project_sha256,
+        )
+
+
+@pytest.mark.parametrize(
+    ("answer", "expected_status"),
+    [("fail", "fail"), ("uncertain", "uncertain")],
+)
+def test_runtime_observation_intake_rejects_nonpass_result(
+    tmp_path: Path,
+    answer: str,
+    expected_status: str,
+) -> None:
+    answers = {key: "pass" for key in OBSERVATION_KEYS}
+    answers[OBSERVATION_KEYS[0]] = answer
+    package, project_sha256 = _prepared_intake_package(tmp_path, answers=answers)
+    result = json.loads((package / RESULT_REL).read_text(encoding="utf-8"))
+    assert result["status"] == expected_status
+    with pytest.raises(ProbeError, match="OPERATOR_RESULT_NOT_PASS"):
+        ingest_runtime_observation(
+            repo_root=REPO_ROOT,
+            package_dir=package,
+            expected_project_sha256=project_sha256,
+        )
+
+
+@pytest.mark.parametrize("mutation", ["missing", "extra"])
+def test_runtime_observation_intake_rejects_missing_or_extra_observation_keys(
+    tmp_path: Path,
+    mutation: str,
+) -> None:
+    package, project_sha256 = _prepared_intake_package(tmp_path)
+    result_path = package / RESULT_REL
+    result = json.loads(result_path.read_text(encoding="utf-8"))
+    values = result["operator_observations"]["values"]
+    if mutation == "missing":
+        values.pop(OBSERVATION_KEYS[0])
+    else:
+        values["unexpected"] = "pass"
+    _write_json(result_path, result)
+    with pytest.raises(ProbeError, match="OPERATOR_RESULT_OBSERVATIONS_NOT_ALL_PASS"):
+        ingest_runtime_observation(
+            repo_root=REPO_ROOT,
+            package_dir=package,
+            expected_project_sha256=project_sha256,
+        )
+
+
+@pytest.mark.parametrize(
+    ("field", "replacement"),
+    [
+        ("project_sha256", "0" * 64),
+        ("project_size", 1),
+        ("project_mtime_ns", 1),
+    ],
+)
+def test_runtime_observation_intake_rejects_project_identity_drift(
+    tmp_path: Path,
+    field: str,
+    replacement: str | int,
+) -> None:
+    package, project_sha256 = _prepared_intake_package(tmp_path)
+    state_path = package / BATCH_STATE_REL
+    state = json.loads(state_path.read_text(encoding="utf-8"))
+    state[field] = replacement
+    _write_json(state_path, state)
+    with pytest.raises(ProbeError, match="PREPARED_PROJECT_CHANGED_DURING_BATCH"):
+        ingest_runtime_observation(
+            repo_root=REPO_ROOT,
+            package_dir=package,
+            expected_project_sha256=project_sha256,
+        )
+
+
+def test_runtime_observation_intake_rejects_render_flag(tmp_path: Path) -> None:
+    package, project_sha256 = _prepared_intake_package(tmp_path)
+    result_path = package / RESULT_REL
+    result = json.loads(result_path.read_text(encoding="utf-8"))
+    result["render_performed"] = True
+    _write_json(result_path, result)
+    with pytest.raises(ProbeError, match="RENDER_RESULT_REJECTED"):
+        ingest_runtime_observation(
+            repo_root=REPO_ROOT,
+            package_dir=package,
+            expected_project_sha256=project_sha256,
+        )
+
+
+def test_runtime_observation_intake_rejects_stale_timestamp(tmp_path: Path) -> None:
+    package, project_sha256 = _prepared_intake_package(tmp_path)
+    state = json.loads((package / BATCH_STATE_REL).read_text(encoding="utf-8"))
+    result_path = package / RESULT_REL
+    result = json.loads(result_path.read_text(encoding="utf-8"))
+    result["collected_at"] = state["started_at"]
+    _write_json(result_path, result)
+    with pytest.raises(ProbeError, match="RESULT_TIMESTAMP_NOT_AFTER_BATCH_START"):
+        ingest_runtime_observation(
+            repo_root=REPO_ROOT,
+            package_dir=package,
+            expected_project_sha256=project_sha256,
+        )
+
+
+def test_runtime_observation_intake_is_deterministic_and_private_path_free(
+    tmp_path: Path,
+) -> None:
+    package, project_sha256 = _prepared_intake_package(tmp_path)
+    ingest_runtime_observation(
+        repo_root=REPO_ROOT,
+        package_dir=package,
+        expected_project_sha256=project_sha256,
+    )
+    outputs = [
+        package / RUNTIME_README_REL,
+        package / RUNTIME_RECEIPT_REL,
+        package / RUNTIME_READBACK_REL,
+        package / RUNTIME_LIMITATIONS_REL,
+    ]
+    before = {path: path.read_bytes() for path in outputs}
+    ingest_runtime_observation(
+        repo_root=REPO_ROOT,
+        package_dir=package,
+        expected_project_sha256=project_sha256,
+    )
+    assert all(path.read_bytes() == before[path] for path in outputs)
+    combined = b"\n".join(path.read_bytes() for path in outputs).decode("utf-8")
+    assert not re.search(r"[A-Za-z]:[\\/]", combined)
+    assert "Users\\" not in combined
+
+
+def test_runtime_observation_intake_rejects_unexpected_private_path_field(
+    tmp_path: Path,
+) -> None:
+    package, project_sha256 = _prepared_intake_package(tmp_path)
+    result_path = package / RESULT_REL
+    result = json.loads(result_path.read_text(encoding="utf-8"))
+    result["private_path"] = r"C:\Users\example\private.json"
+    _write_json(result_path, result)
+    with pytest.raises(ProbeError, match="OPERATOR_RESULT_SCHEMA_INVALID"):
+        ingest_runtime_observation(
+            repo_root=REPO_ROOT,
+            package_dir=package,
+            expected_project_sha256=project_sha256,
+        )
+
+
 def test_tracked_package_has_exact_required_deliverables() -> None:
     required = {
         "README_STATIC_LAYOUT_PROBE.md",
@@ -227,6 +461,10 @@ def test_tracked_package_has_exact_required_deliverables() -> None:
         "operator_batch/collect_generic_static_layout_probe.ps1",
         "operator_batch/preflight_readback.json",
         "operator_batch/operator_batch_manifest.json",
+        "README_STATIC_LAYOUT_PROBE_RESULT.md",
+        "runtime_observation_receipt.json",
+        "runtime_observation_readback.json",
+        "runtime_observation_limitations.md",
     }
     actual = {path.relative_to(PACKAGE).as_posix() for path in _tracked_package_files()}
     assert required <= actual
@@ -287,7 +525,13 @@ def test_tracked_probe_sources_are_topic_neutral_and_private_path_free() -> None
 def test_local_probe_targets_are_ignored_and_untracked() -> None:
     import subprocess
 
-    targets = [PACKAGE / PROJECT_REL, PACKAGE / ASSET_REL, PACKAGE / BATCH_STATE_REL]
+    targets = [
+        PACKAGE / PROJECT_REL,
+        PACKAGE / ASSET_REL,
+        PACKAGE / BATCH_STATE_REL,
+        PACKAGE / OBSERVATIONS_REL,
+        PACKAGE / RESULT_REL,
+    ]
     for target in targets:
         result = subprocess.run(
             ["git", "check-ignore", "-q", str(target)],
@@ -304,18 +548,56 @@ def test_local_probe_targets_are_ignored_and_untracked() -> None:
         assert tracked.returncode != 0
 
 
-def test_canonical_78_path_count_is_consistent_across_current_surfaces() -> None:
+def test_canonical_80_path_count_is_consistent_across_current_surfaces() -> None:
     inventory = json.loads(
         (REPO_ROOT / "docs/visual_system/relevant_path_inventory.json").read_text(encoding="utf-8")
     )
-    assert len(inventory["paths"]) == 78
+    assert len(inventory["paths"]) == 80
     pipeline = (REPO_ROOT / "docs/PROJECT_PIPELINE.mmd").read_text(encoding="utf-8")
     runtime = (REPO_ROOT / "docs/runtime-state.md").read_text(encoding="utf-8")
     cockpit = (REPO_ROOT / "docs/PROJECT_COCKPIT.md").read_text(encoding="utf-8")
     assert "61 paths" not in pipeline
-    assert "78 paths" in pipeline
-    assert "78" in runtime
-    assert "78" in cockpit
+    assert "80 paths" in pipeline
+    assert "80" in runtime
+    assert "80" in cockpit
+
+
+def test_runtime_observation_is_combination_level_without_global_regrade() -> None:
+    matrix = json.loads(
+        (REPO_ROOT / "docs/visual_system/generic_visual_capability_matrix.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    classes = [row["availability_class"] for row in matrix["capabilities"]]
+    levels = [row["evidence_level"] for row in matrix["capabilities"]]
+    assert len(matrix["capabilities"]) == 38
+    assert {name: classes.count(name) for name in set(classes)} == {
+        "proven": 15,
+        "conditional": 14,
+        "unsupported": 5,
+        "unknown": 4,
+    }
+    assert {level: levels.count(level) for level in {"C0", "C1", "C2", "C3", "C4", "C5"}} == {
+        "C0": 5,
+        "C1": 3,
+        "C2": 14,
+        "C3": 14,
+        "C4": 2,
+        "C5": 0,
+    }
+    combinations = json.loads(
+        (REPO_ROOT / "docs/visual_system/capability_combination_map.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    observed = [
+        row
+        for row in combinations["combinations"]
+        if row["combination_id"] == "bounded_static_layout_safe_area_probe"
+    ]
+    assert len(observed) == 1
+    assert observed[0]["evidence_level"] == "C3"
+    assert observed[0]["observed_scope"].startswith("Exact same-machine 1 Voice / 1 Image / 1 Text")
 
 
 def test_validation_scope_receipt_arithmetic_and_state_inclusion() -> None:

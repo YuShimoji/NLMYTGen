@@ -555,6 +555,20 @@
       "classification": "reusable_core",
       "capability_relevance": "Deterministic C2 readback for fixture variance, evidence gaps and no-C5 boundary",
       "scope_reason": "Generated static evidence only; never runtime or render proof."
+    },
+    {
+      "path_id": "path_079",
+      "path": "samples/visual_composition_lab/runtime_probe/runtime_observation_receipt.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "Sanitized identity and three-pass operator observation for the exact bounded static layout composite",
+      "scope_reason": "C3 combination evidence only; ignored local files remain untracked and no primitive or global capability row is regraded."
+    },
+    {
+      "path_id": "path_080",
+      "path": "samples/visual_composition_lab/runtime_probe/runtime_observation_readback.json",
+      "classification": "historical_evidence",
+      "capability_relevance": "Machine-readable validation and evidence-grade boundary for the sanitized runtime observation receipt",
+      "scope_reason": "Confirms exact-scope pass, privacy, no-render and no-global-regrade conditions without generalization."
     }
   ]
 }

@@ -78,6 +78,7 @@ Three heterogeneous fixtures pass one validator. This does not prove editor beha
 <tr><td><code>synthetic_three_stage_process_v1</code></td><td>4</td><td>5</td><td>callout_focus, narration_baseline, process_sequence, recap_action_sequence</td><td>static_conformance_pass</td></tr></tbody></table>
 <h2>Combination boundaries</h2><ul><li><code>minimum_narration_baseline</code> → C2 / fallback: VoiceItem plus linked subtitle with default settings and reserved lower frame.</li>
 <li><code>same_machine_voice_image_text_diagnostic</code> → C3 / fallback: Voice-only project or one static image per scene without independent labels.</li>
+<li><code>bounded_static_layout_safe_area_probe</code> → C3 / fallback: Narration baseline, or omit the independent Image/Text item when any exact bounded condition changes.</li>
 <li><code>precomposed_card_overlay</code> → C3 / fallback: One full-scene static panel or narration-only baseline.</li>
 <li><code>named_character_motion_accent</code> → C3 / fallback: Static character pose or omit the character accent.</li>
 <li><code>static_shape_text_callout</code> → C2 / fallback: One short TextItem or a precomposed reviewed image.</li>

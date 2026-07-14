@@ -2,6 +2,15 @@
 
 このpackageは、リンク字幕のsafe areaを主対象に、静止ImageItem 1件と短い独立TextItem 1件を同じYMM4 projectで後から目視確認するためのH0準備物です。現時点で確認済みなのはproject構造、決定的生成、source不変、safe-mode、countだけであり、YMM4上の見え方やC3 capabilityは未確認です。
 
+## Current result
+
+H1 user operationは完了し、exact same-machine compositeの3項目はすべてpassとして
+sanitized intake済みです。このprobeを再実行しません。現在の人間向け結果は
+[`README_STATIC_LAYOUT_PROBE_RESULT.md`](README_STATIC_LAYOUT_PROBE_RESULT.md)、機械正本は
+`runtime_observation_receipt.json`と`runtime_observation_readback.json`です。H0 contractと
+materialization readbackの`unverified_H1`表記は実行前構造証拠の履歴であり、current resultを
+上書きしません。
+
 ## 構成
 
 - 1920x1080の下部をリンク字幕reserveにする。
@@ -21,9 +30,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\samples\visual_composition
 
 `materialize` はtracked neutral sampleをread-onlyで解析し、既存Image/Tachieを引き継がず、VoiceItemと対応Character設定だけを保持します。出力projectとPNGは `local_outputs/` 配下でignoreされます。
 
-## H1 user operation
+## H1 user operation（completed history; do not repeat）
 
-ユーザーが実行するcommandは次の1件です。Workerは実行しません。
+以下は完了済みoperationの履歴です。新しい条件変更がない限り再実行しません。
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\samples\visual_composition_lab\runtime_probe\operator_batch\run_generic_static_layout_probe.ps1

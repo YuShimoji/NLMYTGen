@@ -5,8 +5,9 @@
 - Static fixture conformance is capped at C2.
 - Every fixture now reports the C0 linked-subtitle typography/layout gap derived
   from its required caption reserve; C2 conformance does not conceal that gap.
-- Text metrics, wrapping, subtitle readability and callout anchors remain
-  YMM4/human-observation concerns.
+- The exact short Text / static Image / linked-subtitle layout passed human
+  observation, but other text metrics, wrapping, subtitle profiles/layouts and
+  callout anchors remain YMM4/human-observation concerns.
 - Generic ImageItem paths are same-machine until a portability probe succeeds.
 - ShapeItem and callout generation currently exists only in topic-specific
   builders; it is not promoted into generic core.
@@ -15,6 +16,8 @@
 - Strict C4 applies to one exact internal project/render and proxy. It verifies
   media structure and decode, not semantic alignment or design quality.
 - C5 is zero. Existing real packets use separate topic builders/contracts.
+- The bounded result records no exact YMM4 version and proves no cross-machine
+  portability, alternate asset geometry or reusable typography engine.
 
 ## Non-goals of this slice
 

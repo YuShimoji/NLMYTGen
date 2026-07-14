@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "receipt_id": "generic-static-layout-bounded-runtime-observation-v1",
+  "probe_id": "generic_static_image_text_subtitle_safe_area_v1",
+  "status": "pass",
+  "source": {
+    "branch": "codex/generic-visual-static-layout-probe-v1",
+    "source_head": "4b0d5d22fe58bfdf823382932df47aa8aa460b48",
+    "h0_artifact_commit": "7f71c72a7f0bca16b13a75216f4787791da909df"
+  },
+  "timing": {
+    "batch_started_at": "2026-07-14T17:27:13.782732Z",
+    "collected_at": "2026-07-14T17:36:50.239082Z",
+    "collection_after_batch_start": true
+  },
+  "local_evidence": {
+    "tracking_status": "ignored_preserved_untracked",
+    "project": {
+      "repo_relative_path": "samples/visual_composition_lab/runtime_probe/local_outputs/generic_static_layout_probe.local.ymmp",
+      "sha256": "100d4ebcd31e1665db90cc688492efec211d899e579d013e751c9643cc98eebc",
+      "byte_count": 79303,
+      "mtime_ns": 1783974327002700400
+    },
+    "asset": {
+      "repo_relative_path": "samples/visual_composition_lab/runtime_probe/local_outputs/assets/generic_probe_image.png",
+      "sha256": "ad1f93bf29d07372a955645326129127a96f989786db642969ef77aad84b00b9",
+      "byte_count": 3370
+    },
+    "batch_state": {
+      "repo_relative_path": "samples/visual_composition_lab/runtime_probe/local_outputs/operator_batch.local.json",
+      "sha256": "4b224f3b739d5397c88831352ebf2600c08b88af15bd4735897b36bd19a5f930"
+    },
+    "operator_observations": {
+      "repo_relative_path": "samples/visual_composition_lab/runtime_probe/local_outputs/operator_observations.local.json",
+      "sha256": "593522128431149bcec9fb292d1bd3248da0d55d401a2866a9af9081e9f644ac"
+    },
+    "operator_result": {
+      "repo_relative_path": "samples/visual_composition_lab/runtime_probe/local_outputs/operator_result.json",
+      "sha256": "a881c5e6bfd8be167b32c8aa7b232d0c4ed31b494563e192091aba119419dd03"
+    },
+    "archives": "preserved_ignored_not_enumerated_in_tracked_receipt"
+  },
+  "structural_facts": {
+    "evidence_grade": "verified",
+    "checks": {
+      "project_hash_size_mtime_match_batch_state": true,
+      "tracked_materialization_readback_match": true,
+      "voice_objects_unchanged": true,
+      "exactly_one_imageitem": true,
+      "exactly_one_independent_textitem": true,
+      "excluded_behavior_absent": true
+    }
+  },
+  "operator_observations": {
+    "evidence_grade": "observed_by_operator",
+    "values": {
+      "subtitle_readability_nonoverlap": "pass",
+      "image_visibility_crop_anchor": "pass",
+      "text_visibility_wrapping_anchor": "pass"
+    }
+  },
+  "exact_composite": {
+    "maturity": "bounded_runtime_observed_pass",
+    "canvas": {
+      "width": 1920,
+      "height": 1080,
+      "fps": 60
+    },
+    "duration_frames": 109,
+    "item_type_counts": {
+      "ImageItem": 1,
+      "TextItem": 1,
+      "VoiceItem": 1
+    },
+    "image": {
+      "width": 640,
+      "height": 360,
+      "color_mode": "opaque_rgb",
+      "intended_bbox": {
+        "x_min": 160,
+        "y_min": 180,
+        "x_max": 800,
+        "y_max": 540
+      }
+    },
+    "text": {
+      "value": "PROBE LABEL",
+      "intended_bbox_conservative": {
+        "x_min": 1040,
+        "y_min": 220,
+        "x_max": 1450,
+        "y_max": 300
+      }
+    },
+    "linked_subtitle_reserve": {
+      "x_min": 96,
+      "y_min": 842,
+      "x_max": 1824,
+      "y_max": 1026
+    },
+    "zones_pairwise_nonoverlap": true,
+    "same_machine_exact_project_asset_only": true
+  },
+  "execution_boundary": {
+    "project_save_required": false,
+    "project_identity_unchanged": true,
+    "render_performed": false,
+    "screenshot_required": false,
+    "screenshot_evidence_collected": false,
+    "motion_fade_effect_transition_nondefault_transform": false
+  },
+  "capability_classification": {
+    "decision": "combination_level_evidence_only",
+    "combination_id": "bounded_static_layout_safe_area_probe",
+    "maturity": "bounded_runtime_observed_pass",
+    "capability_matrix_rows_changed": [],
+    "global_capability_counts_changed": false,
+    "raw_result_capability_regraded": false
+  },
+  "non_generalization": [
+    "longer_or_differently_styled_text",
+    "alternate_image_dimensions_or_anchors",
+    "other_subtitle_profiles_or_layouts",
+    "cross_machine_portability",
+    "motion_effect_fade_transition_or_nondefault_transform",
+    "render_or_C4",
+    "heterogeneous_second_topic_or_C5",
+    "route_A_B_C_behavior",
+    "production_rights_publication"
+  ]
+}

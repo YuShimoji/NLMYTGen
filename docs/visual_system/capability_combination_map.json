@@ -23,6 +23,16 @@
       "cost_reuse_profile": {"setup_weight": "W2", "per_episode_burden": "medium", "reuse_class": "topic-specific", "maintenance_surface": "medium", "rights_dependency": "required", "recovery_complexity": "medium"}
     },
     {
+      "combination_id": "bounded_static_layout_safe_area_probe",
+      "primitive_ids": ["narration_voice", "linked_subtitle", "static_image_panel", "short_text_label"],
+      "capability_ids": ["voice_linked_subtitle_import", "linked_subtitle_typography_layout", "static_imageitem_materialization", "static_textitem_materialization"],
+      "availability_class": "proven",
+      "evidence_level": "C3",
+      "observed_scope": "Exact same-machine 1 Voice / 1 Image / 1 Text composite only: linked subtitle, one static 640x360 opaque ImageItem and short PROBE LABEL passed in conservative disjoint zones at 1920x1080/60 fps; no save, screenshot evidence, render, motion, effect or non-default transform.",
+      "fallback": "Narration baseline, or omit the independent Image/Text item when any exact bounded condition changes.",
+      "cost_reuse_profile": {"setup_weight": "W2", "per_episode_burden": "low", "reuse_class": "archetype-specific", "maintenance_surface": "small", "rights_dependency": "none", "recovery_complexity": "easy"}
+    },
+    {
       "combination_id": "precomposed_card_overlay",
       "primitive_ids": ["narration_voice", "static_image_panel", "linked_subtitle"],
       "capability_ids": ["card_image_visibility_with_dialogue", "overlay_imageitem_insertion"],

@@ -1,93 +1,83 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: generic-visual-static-layout-probe-ready-v1
-State-Revision: 2026-07-14.3
-Updated: 2026-07-14 JST
-Product-State: generic-visual-static-layout-yymm4-probe-ready
-Product-Gate: manual-generic-static-layout-observation
-Recommended-Next: run-generic-static-layout-yymm4-probe
+Project-State-ID: generic-visual-static-layout-observation-passed-v1
+State-Revision: 2026-07-15.1
+Updated: 2026-07-15 JST
+Product-State: generic-static-layout-bounded-runtime-observation-passed
+Product-Gate: new-banknote-visual-direction-selection
+Recommended-Next: review-new-banknote-route-a-b-c-on-provenance-branch
 External-State: public-repo-feature-branch
 
 ## Current Slice
 
-- **Evidence count sealed**: the canonical inventory remains 78 relevant paths;
-  38 capabilities remain proven 15 / conditional 14 / unsupported 5 / unknown 4,
-  with C0-C5 = 5/3/14/14/2/0. `PROJECT_PIPELINE.mmd` now agrees with the
-  inventory and current surfaces. No capability record was regraded.
-- **Validation scope is exact**: `docs/visual_system/validation_scope_receipt.json`
-  owns the current non-overlapping test selections, per-command counts, state-test
-  inclusion and aggregate. It supersedes the ambiguous historical 178/186 prose;
-  no arithmetic reconstruction was assumed.
-- **One neutral H0 probe is prepared**: a tracked neutral sample supplies one
-  unchanged VoiceItem and visible linked-subtitle settings. Its source hash is
-  sealed and unchanged. Existing source Image/Tachie and GUI state are not
-  inherited. The ignored output has exactly VoiceItem 1 + static ImageItem 1 +
-  independent TextItem 1 over the observed 109-frame Voice span.
-- **Layout contract is explicit**: an opaque original 640x360 RGB image occupies
-  the upper-left zone, `PROBE LABEL` occupies an upper-right conservative zone,
-  and the linked-subtitle reserve occupies the bottom. All three bounding zones
-  are pairwise disjoint by contract. Actual crop, anchor, wrap, readability and
-  overlap remain H1 observations.
-- **Operator Batch is ready**: Japanese-first instructions use at most three
-  actions and exactly three observations. `-PreflightOnly` and `-CollectOnly`
-  resolve or launch no YMM4 executable. Normal mode may open the prepared project
-  once for the user; it performs no automatic GUI action, save, close, screenshot
-  or render. Existing local evidence is preserved and must be archived, not deleted.
-- **Evidence boundary remains C2/H0**: project parse, deterministic generation,
-  source/Voice invariance, item counts, static default fields, scripts and safe
-  transport are verified. No YMM4 visual observation occurred, so C3/C4/C5,
-  runtime success and visual acceptance remain unclaimed.
+- **Exact H1 result passed**: the ignored non-fixture operator result is UTF-8
+  JSON with `status=pass`, `observed_by_operator`, and exactly three pass values:
+  linked-subtitle readability/non-overlap, Image visibility/crop/anchor, and
+  short Text visibility/wrapping/anchor. Result SHA-256 is
+  `a881c5e6bfd8be167b32c8aa7b232d0c4ed31b494563e192091aba119419dd03`.
+- **Identity stayed frozen**: the same-machine project is 79,303 bytes with
+  SHA-256 `100d4ebcd31e1665db90cc688492efec211d899e579d013e751c9643cc98eebc`;
+  its hash, size and mtime match the batch state. The 640x360 opaque RGB asset
+  remains `ad1f93bf29d07372a955645326129127a96f989786db642969ef77aad84b00b9`.
+- **Evidence grades remain separate**: project parse, source/Voice invariance,
+  exact counts, static defaults, exclusion checks and identity are
+  machine-verified. The three visual answers are human operator observations.
+  No screenshot evidence or Worker GUI observation was used.
+- **Scope is exact**: the pass covers one unchanged VoiceItem with linked
+  subtitle, one static 640x360 ImageItem, and one short independent `PROBE LABEL`
+  TextItem at 1920x1080/60 fps for 109 frames in conservative disjoint zones.
+  It does not cover another text, asset, layout, machine, topic or behavior.
+- **Capability decision is bounded**: no row in the 38-capability matrix was
+  regraded; proven 15 / conditional 14 / unsupported 5 / unknown 4 and C0-C5
+  5/3/14/14/2/0 remain unchanged. One exact combination is recorded as
+  `bounded_runtime_observed_pass` at C3. The evidence inventory is now 80 paths.
+- **Sanitized tracked package exists**: the primary README, receipt, readback and
+  limitations record repo-relative identities and hashes only. Ignored project,
+  asset, state, observations, result and archives remain byte-preserved and
+  untracked.
 
 ## Exact Next Action
 
-From the repository root, the user may run exactly:
+The next human gate is new-banknote A/B/C visual-direction selection on the
+authoritative provenance branch. Do not use the older board in this generic
+branch as current authority. Re-anchor that separate branch and review its
+provenance surface and visual board there; return an explicit route choice plus
+S1/S2/S3 flow, misleading-diagram risk and motion-restraint judgment.
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\samples\visual_composition_lab\runtime_probe\operator_batch\run_generic_static_layout_probe.ps1
-```
-
-Inspect only: (1) linked-subtitle readability/non-overlap, (2) Image visibility
-without unexpected crop/anchor shift, and (3) Text visibility without clipping,
-unwanted wrapping or subtitle overlap. Close YMM4 without project save or render,
-then answer the three terminal questions.
+This branch must not choose A/B/C, build a selected-route project, or integrate
+branches. Artifact-family integration remains a later separately authorized lane.
 
 ## Primary Evidence and Access
 
-- Probe entry: `samples/visual_composition_lab/runtime_probe/README_STATIC_LAYOUT_PROBE.md`
-- Contract and fixture: `static_layout_probe_contract.json` and
-  `static_layout_probe_fixture.json` beside the entry.
-- Structural readback: `static_layout_probe_materialization_readback.json`.
-- Operator contract: `operator_batch/README_OPERATOR_BATCH.md`,
-  `operator_batch_manifest.json` and `expected_observation_contract.json`.
-- Validation authority: `docs/visual_system/validation_scope_receipt.json`.
-- Capability authority remains `docs/visual_system/README_GENERIC_VISUAL_CAPABILITIES.md`.
+- Human surface:
+  `samples/visual_composition_lab/runtime_probe/README_STATIC_LAYOUT_PROBE_RESULT.md`
+- Sanitized receipt: `runtime_observation_receipt.json` beside that README.
+- Validation readback: `runtime_observation_readback.json` beside that README.
+- Scope boundary: `runtime_observation_limitations.md` beside that README.
+- Capability authority: `docs/visual_system/README_GENERIC_VISUAL_CAPABILITIES.md`.
 
 ## Active Boundaries
 
-- Worker Computer Use = 0 and Worker YMM4 launches = 0. Only structural
-  preflight and synthetic fixture collection were executed; the normal Operator
-  Batch was not executed.
-- The generated `.ymmp`, abstract PNG and archived synthetic fixture results are
-  under the package's ignored `local_outputs/`; none is tracked or staged.
-  `operator_batch.local.json` and `operator_result.json` are future ignored H1 targets
-  and do not exist in the H0 evidence set.
-- No source carrier overwrite, screenshot, render/media output, external asset,
-  dependency install, Route A implementation, topic branch, rights/publication
-  action, master mutation, merge or rebase occurred.
-- Serializer defaults (`Opacity=100`, `Zoom=100`, `Rotation=0`, zero fades) are
-  openability fields, not observed opacity/zoom/transform/fade capability use.
+- Worker Computer Use = 0 and Worker YMM4 launches = 0. The Worker only read and
+  hashed completed ignored evidence; it did not regenerate or save the project.
+- No screenshot capture, render/media output, dependency install, motion/effect,
+  Route A/B/C selection, new-banknote branch access or modification, merge,
+  rebase, cherry-pick, master mutation, rights/publication or production action.
+- `capability_regraded=false` remains true in the raw result. The exact
+  combination-level C3 record does not promote broader subtitle, ImageItem or
+  TextItem primitives.
 
 ## Retained Quality Debt
 
 | Debt | Impact | Owner | Revisit trigger |
 | --- | --- | --- | --- |
-| Linked-subtitle readability/non-overlap | Keeps the common layout floor unaccepted at runtime | human visual reviewer | prepared project is opened in H1 |
-| Image crop/anchor | Keeps static ImageItem placement at structural C2 | human visual reviewer | H1 image checkpoint is answered |
-| Text wrap/anchor | Keeps short TextItem placement at structural C2 | human visual reviewer | H1 text checkpoint is answered |
-| Cross-machine project/asset portability | Keeps the prepared project same-machine | YMM4 integration owner | the package must run on another machine |
-| Real second-topic reuse | Keeps C5 at zero | episode-factory owner | a heterogeneous second topic uses the same core unchanged |
+| Cross-machine portability | Keeps project/asset proof same-machine | YMM4 integration owner | another device must materialize/open it |
+| Alternate Image/Text conditions | Keeps other sizes, anchors, styles and longer text outside the pass | visual system owner | a material layout changes any bounded condition |
+| Motion/effects/transitions | Keeps dynamic behavior unclaimed | motion integration owner | a selected route requires one bounded dynamic primitive |
+| Real second-topic reuse | Keeps C5 at zero | episode-factory owner | a heterogeneous topic uses the same core unchanged |
+| New-banknote visual route | Blocks selected-route diagnostic planning | human visual reviewer | authoritative provenance board is reviewed |
 
 ## Maintenance Note
 
-Keep this capsule within 160 lines. Runtime observations belong in ignored result
-evidence and a bounded successor intake, not in generic capability claims by default.
+Keep this capsule within 160 lines. Local operator evidence stays ignored; only
+sanitized identities and bounded observations belong in tracked state.

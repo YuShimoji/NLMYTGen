@@ -1,6 +1,6 @@
 # Generic Visual Capabilities — evidence-graded envelope
 
-> **INTERNAL / STATIC CONFORMANCE / NOT PRODUCTION / NOT C5**
+> **INTERNAL / STATIC CONFORMANCE + ONE BOUNDED RUNTIME OBSERVATION / NOT PRODUCTION / NOT C5**
 
 This is the primary delivery surface for the generic visual capability audit.
 It extends the existing [Scene Composition Schema](../SCENE_COMPOSITION_SCHEMA.md)
@@ -12,27 +12,29 @@ while `scs_composition_type` selects the existing frame geometry.
 - **Can be used now, inside observed boundaries:** VoiceItem plus linked-subtitle
   import, observed cue timing, a no-transition baseline, selected named
   GroupItem motion/templates, one exact Voice/Image/Text diagnostic combination,
-  and strict media validation for one exact internal render.
+  the exact same-machine 1 Voice / 1 static Image / 1 short Text safe-area
+  composite, and strict media validation for one exact internal render.
 - **Only statically materialized:** generic ImageItem/TextItem/ShapeItem candidates,
   arbitrary transforms, fades, overlays, background replacement/pan/zoom,
   motion recipes, Shape/Text callouts, and this three-fixture composition lab.
-- **Requires YMM4 observation:** any new Text/Image/Shape layout, subtitle
-  readability, callout anchors, fades, background motion, zoom, opacity, or any
-  Route A motion profile.
+- **Requires YMM4 observation:** any Text/Image/subtitle layout outside the exact
+  observed composite, any Shape/callout layout, fades, background motion, zoom,
+  opacity, or any Route A motion profile.
 - **Requires render evidence:** a claim that a project produces valid media.
   C4 additionally requires container/probe/decode verification; valid media still
   does not prove semantic or visual quality.
 - **Unsupported now:** non-fade transitions, generic ShapeItem creation in the
   patch core, generic speech balloons, automatic external-asset acquisition, and
   reuse of the failed older card surface as a production design system.
-- **Unknown:** Route A runtime motion, linked-subtitle visual layout,
-  cross-machine portability, and C5 real cross-topic core reuse.
+- **Unknown:** Route A runtime motion, linked-subtitle behavior outside the exact
+  observed profile/layout, cross-machine portability, and C5 real cross-topic
+  core reuse.
 
 ## Evidence counts
 
 | Dimension | Count |
 | --- | ---: |
-| Relevant paths classified | 78 |
+| Relevant paths classified | 80 |
 | Unclassified relevant paths | 0 |
 | Capabilities | 38 |
 | Proven | 15 |
@@ -45,6 +47,8 @@ while `scs_composition_type` selects the existing frame geometry.
 No current record is `cross_topic_proven` because C5 evidence does not exist.
 All matrix/ledger evidence references and the generic core, machine package,
 focused test, fixtures and readback are included in the classified inventory.
+The capability totals remain unchanged because the new runtime result is an
+exact-composite combination record, not a reusable primitive regrade.
 
 ## Capability matrix
 
@@ -93,6 +97,21 @@ Full evidence locations, environments, failure modes and overclaim boundaries ar
 in [generic_visual_capability_matrix.json](generic_visual_capability_matrix.json)
 and [capability_evidence_ledger.json](capability_evidence_ledger.json).
 
+## Bounded static-layout runtime observation
+
+The `bounded_static_layout_safe_area_probe` combination is C3 only for one exact
+same-machine project: one unchanged VoiceItem with linked subtitle, one static
+640x360 opaque ImageItem, and one short independent `PROBE LABEL` TextItem on a
+1920x1080/60 fps canvas with conservative disjoint zones. The operator reported
+all three checks pass; structural identity remains machine-verified.
+
+This does not regrade `linked_subtitle_typography_layout`,
+`static_imageitem_materialization`, or `static_textitem_materialization` at their
+broader reusable scopes. No longer text, alternate asset/layout, other machine,
+motion/effect, render, C5, Route A, production or rights claim follows. The
+primary human surface is
+[`README_STATIC_LAYOUT_PROBE_RESULT.md`](../../samples/visual_composition_lab/runtime_probe/README_STATIC_LAYOUT_PROBE_RESULT.md).
+
 ## Composition map
 
 | Recipe | SCS geometry | Required baseline | Whole floor / static conformance | Default fallback | Cost / reuse |
@@ -136,13 +155,15 @@ The recommended default is
 1. C3 VoiceItem + linked subtitle import.
 2. C3 observed cue-relative Frame/Length anchors.
 3. C3 no-transition baseline.
-4. Optional C2 static local ImageItem after path/rights checks.
-5. Optional C2 short TextItem; otherwise linked subtitle only.
+4. The exact observed same-machine Image/Text/subtitle combination may be reused
+   only while every bounded condition stays unchanged; other ImageItem cases are C2.
+5. The exact short TextItem is observed in that combination; longer/different
+   text remains C2 and falls back to linked subtitle or a reviewed image.
 6. C2 generic fixture preflight before project generation.
 7. Motion off by default. At most one named C3 GroupItem accent after a real
    scene justifies it.
-8. C0 linked-subtitle typography/layout remains a required gate before visual
-   acceptance; reserve space and make no readability claim until observation.
+8. Linked-subtitle typography/layout outside the exact observed profile remains
+   C0 and requires its own material-layout gate.
 
 This is W2 setup, low per-episode burden, small maintenance surface, optional
 rights dependency, and easy recovery. The recommendation artifact is C2, but
@@ -163,7 +184,8 @@ observed. “Broad reuse” remains a hypothesis until C5. See
 
 ## Remaining generalization gate
 
-H1 may observe a **small generic capability probe**, not the final Route A
-project. C5 remains closed until a second heterogeneous real episode uses this
-same core with data/config changes only, no core-code changes, and the evidence
-and cost classifications still hold.
+The small H1 generic capability probe passed at exact-composite scope. The next
+human gate belongs to the authoritative new-banknote provenance branch and must
+not be decided here. C5 remains closed until a second heterogeneous real episode
+uses this same core with data/config changes only, no core-code changes, and the
+evidence and cost classifications still hold.

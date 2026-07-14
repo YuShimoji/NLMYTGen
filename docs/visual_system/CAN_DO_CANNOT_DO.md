@@ -8,6 +8,9 @@ records live in the adjacent JSON matrices.
 - Import VoiceItems and linked subtitles for validated speaker profiles (C3).
 - Preserve VoiceItems while opening one exact diagnostic Voice/Image/Text
   project (C3).
+- Reopen the exact same-machine 1 Voice / 1 static 640x360 Image / 1 short Text
+  safe-area composite with readable non-overlapping subtitle, visible Image and
+  unclipped/unwrapped Text (C3 combination only).
 - Use observed cue-relative Frame/Length and the no-transition baseline (C3).
 - Reuse selected named GroupItem motion/templates and tracked expression assets
   under their exact warnings and fallbacks (C3).
@@ -18,7 +21,8 @@ quality, portability, rights clearance, or public readiness.
 
 ## Conditional — static/code evidence only
 
-- Generic ImageItem, independent TextItem and topic-built ShapeItem candidates.
+- Generic ImageItem, independent TextItem and topic-built ShapeItem candidates
+  outside the exact observed static-layout composite.
 - Arbitrary transform fields, scale/zoom, opacity, background replacement,
   background pan/zoom, overlay insertion and fade fields.
 - Motion-recipe projects, AudioItem insertion and Shape/Text callouts.
@@ -39,7 +43,8 @@ a static or narration fallback.
 ## Unknown until new evidence exists
 
 - Route A reveal/sweep/tilt/pulse/zoom/sequence behavior.
-- Linked-subtitle typography and safe-area readability for a material layout.
+- Linked-subtitle typography and safe-area readability outside the exact
+  observed profile and conservative layout.
 - Cross-machine `.ymmp` and asset portability.
 - Same-core reuse across two heterogeneous real topics (C5).
 
@@ -50,3 +55,5 @@ a static or narration fallback.
 - A decodable MP4 does not prove cue semantics or visual quality.
 - Three static fixtures are not C5.
 - Route selection is not project authorization or runtime evidence.
+- One exact composite pass does not regrade its broader Image/Text/subtitle
+  primitives or establish another layout.

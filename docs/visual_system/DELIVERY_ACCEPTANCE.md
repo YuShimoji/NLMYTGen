@@ -2,7 +2,7 @@
 
 ## H0 acceptance
 
-- [x] 78 relevant code, test, data and evidence paths are classified; every
+- [x] 80 relevant code, test, data and evidence paths are classified; every
   matrix/ledger evidence reference and the generic package paths are included.
 - [x] Unclassified relevant paths = 0.
 - [x] 38 capabilities each have one availability class, C0-C5 level, evidence,
@@ -26,18 +26,30 @@
   tracked separately.
 - [x] HTML is secondary, self-contained and table/dependency-spine based.
 
-## Delivered state, not delivered runtime
+## H1 bounded observation acceptance
 
-The deliverable is an evidence-graded capability envelope and composition
-grammar. It authorizes no project generation, YMM4 action, render, publication,
-rights decision or master integration.
+- [x] Exact project hash, size and mtime match the frozen batch state.
+- [x] Non-fixture operator result records exactly three pass answers with
+  `observed_by_operator` grade.
+- [x] Structural facts remain machine-verified and local evidence stays ignored.
+- [x] Sanitized receipt/readback expose no private absolute path.
+- [x] No capability row or global C0-C5 count is regraded; only the exact
+  `bounded_static_layout_safe_area_probe` combination is C3.
+- [x] No save, screenshot evidence, render, motion/effect, C4, C5, Route A,
+  production, rights or publication claim is introduced.
 
-## H1 decision gate
+## Delivered state, bounded runtime only
 
-Review the capability matrix and choose at most one small generic capability
-probe. Good candidates are a short Text/Image/Shape layout check, one fade, or
-one bounded transform that materially affects multiple archetypes. The probe
-must not become a final topic scene.
+The deliverable is an evidence-graded capability envelope, composition grammar,
+and one exact same-machine runtime-observed static combination. It authorizes no
+new project generation, further YMM4 action, render, publication, rights decision
+or master integration.
+
+## H1 decision gate (closed)
+
+The generic H1 probe is closed. New-banknote A/B/C visual-direction selection
+remains on the authoritative provenance branch; this generic branch must not
+select a route or build its diagnostic project.
 
 ## What would close the next evidence gaps
 

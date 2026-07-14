@@ -44,10 +44,10 @@ def test_relevant_path_inventory_has_full_classification_and_existing_paths() ->
     validate_path_inventory(inventory, ROOT)
 
     assert inventory["unclassified_relevant_path_count"] == 0
-    assert len(inventory["paths"]) == 78
+    assert len(inventory["paths"]) == 80
     assert {row["classification"] for row in inventory["paths"]} <= set(PATH_CLASSES)
-    assert len({row["path_id"] for row in inventory["paths"]}) == 78
-    assert len({row["path"] for row in inventory["paths"]}) == 78
+    assert len({row["path_id"] for row in inventory["paths"]}) == 80
+    assert len({row["path"] for row in inventory["paths"]}) == 80
 
 
 def test_each_capability_has_exactly_one_valid_availability_and_complete_fields() -> None:

@@ -1,9 +1,51 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-14 JST・generic static-layout probe ready）
+## 現在の別端末再開ハンドオフ（2026-07-15 JST・generic static-layout bounded observation passed）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
+
+- **取得先**: `origin/codex/generic-visual-static-layout-observation-intake-v1`。
+  exact sourceは`codex/generic-visual-static-layout-probe-v1`の
+  `4b0d5d22fe58bfdf823382932df47aa8aa460b48`。artifact commitはGit closeout後にlive確認し、
+  upstream parity 0/0、tracked cleanとignored evidenceを分けて確認する。
+- **最小読取順**: AGENTS.md → docs/REPO_LOCAL_RULES.md → docs/runtime-state.md →
+  この節 → samples/visual_composition_lab/runtime_probe/README_STATIC_LAYOUT_PROBE_RESULT.md。
+- **現在の状態**: Project-State-IDは
+  `generic-visual-static-layout-observation-passed-v1`、State-Revisionは2026-07-15.1。
+  Product-Stateは`generic-static-layout-bounded-runtime-observation-passed`、Product-Gateは
+  `new-banknote-visual-direction-selection`、Recommended-Nextは
+  `review-new-banknote-route-a-b-c-on-provenance-branch`、External-Stateは
+  `public-repo-feature-branch`。
+- **local result**: ignored resultはnon-fixture、status pass、evidence grade
+  `observed_by_operator`。subtitle readability/non-overlap、Image visibility/crop/anchor、
+  Text visibility/wrapping/anchorのexact 3 observationsがすべてpass。result SHA-256は
+  `a881c5e6bfd8be167b32c8aa7b232d0c4ed31b494563e192091aba119419dd03`。
+- **identity verification**: projectは79,303 bytes、SHA-256
+  `100d4ebcd31e1665db90cc688492efec211d899e579d013e751c9643cc98eebc`で、batch stateの
+  hash/size/mtimeと一致。asset SHA-256は
+  `ad1f93bf29d07372a955645326129127a96f989786db642969ef77aad84b00b9`。
+  batch開始2026-07-14T17:27:13.782732Z、collectionは17:36:50.239082Zで順序もpass。
+- **evidence boundary**: structural factsとidentityはmachine-verified。3 visual answersだけが
+  human operator-observed。WorkerのComputer Use/YMM4 launchは0。project save、screenshot
+  evidence、render、media、motion/effect/transition、non-default transformは0。
+- **capability decision**: 38 capability matrixにexact compositeのunique rowがないためrowは
+  regradeせず、proven 15 / conditional 14 / unsupported 5 / unknown 4、C0-C5
+  5/3/14/14/2/0を維持。`bounded_static_layout_safe_area_probe` combinationだけを
+  exact same-machine C3 `bounded_runtime_observed_pass`として追加。inventoryは新規sanitized
+  receipt/readbackを含む80 paths、unclassified 0。
+- **tracked package**: primary README、runtime_observation_receipt.json、readback、limitationsは
+  repo-relative identity/hashだけを持つ。ignored project/asset/state/observations/result/archiveは
+  intake前後hash一致でbyte-preserved、tracked/staged 0。
+- **次のgate**: new-banknote A/B/C選択はauthoritative provenance branchの別laneで行う。
+  generic branchの旧boardをcurrent authorityにせず、このbranchではroute選択、selected-route
+  project、branch integration、render、master mutationを行わない。
+- **retained debt**: cross-machine portability、alternate Image/Text conditions、motion/effects、
+  heterogeneous second-topic C5、human visual-route selectionだけを保持する。
+
+## 直前の別端末再開ハンドオフ（2026-07-14 JST・generic static-layout probe ready・履歴）
+
+この節はH1実行前の判断履歴であり、現在の指示として読まない。
 
 - **取得先**: origin/codex/generic-visual-static-layout-probe-v1。exact sourceは
   codex/generic-visual-capability-composition-v1の
