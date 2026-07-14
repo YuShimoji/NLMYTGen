@@ -1,11 +1,11 @@
 # NLMYTGen Project Cockpit
 
-Project-State-ID: new-banknote-source-backed-script-editorially-refined-v1
-State-Revision: 2026-07-13.5
-Updated: 2026-07-13 JST
-Product-State: new-banknote-authoritative-script-human-review-ready
-Product-Gate: human-script-review-and-yymm4-batch-decision
-Recommended-Next: review-refined-nine-cue-script
+Project-State-ID: new-banknote-content-lineage-sealed-yymm4-batch-ready-v1
+State-Revision: 2026-07-14.1
+Updated: 2026-07-14 JST
+Product-State: new-banknote-human-approved-script-lineage-sealed-operator-batch-ready
+Product-Gate: manual-yymm4-import-observation
+Recommended-Next: run-one-new-banknote-yymm4-operator-batch
 External-State: public-repo-feature-branch
 
 このページは public repository で現在地を読むための追跡済み Markdown です。
@@ -16,34 +16,40 @@ External-State: public-repo-feature-branch
 
 ## いまの一文
 
-公式資料で採用 claim を絞り込んだ9 cue から、未説明のシリーズ記号、cue 8の
-過密、曖昧な確認方法、語尾の反復を取り除きました。同じ本文順を保持する
-canonical / YMM4-character-derived CSV も同期済みです。次の gate は人による
-script 判断であり、YMM4 実行や production 承認ではありません。
+人が option A で承認した新紙幣9-cue scriptを commitと8 file hashesで固定し、
+提出 transcript から official evidence、supported rewrite、editorial convergence、
+approval、YMM4 projectionまでをT00–T07の一つのlineage packageへ統合しました。
+次はユーザー自身による一度だけのYMM4 import観測です。
 
-## レビュー判断に使える現在地
+## 判断に使える現在地
 
-| 対象 | 現在状態 | 判断に残る境界 |
+| 対象 | 現在状態 | 次の gate で確認すること |
 | --- | --- | --- |
-| official sources | 13 captures。S10/S11 は exact title、S04 は現行 exact document | S04 の generation-time byte version は不明。S05 の exact 572KB document は未解決で、別登録の official equivalent を使用 |
-| claims | 182/182 adjudicated、`verified_primary` 19 | unsupported policy-intent、cashless-causation、位置を特定できない quantitative claim は canonical script に不採用 |
-| script | 9 cues、scene 2/4/3、canonical speaker 3/6、20意味単位・21 claim edge、traceability 9/9 | human editorial acceptance は未実施。spoken text の unsupported claim は0 |
-| editorial revision | cue 1→2を質問/回答化、cue 8を3事実化、cue 9をルーペへ具体化 | cue 8から外した数字`1`のclaimはverifiedのまま非採用traceへ保持 |
-| CSV | canonical / derived の2列・9行 pair、本文と順序は一致 | YMM4 import・render は未実施 |
-| privacy | title、receipt、hash、短い support location のみ tracked | raw transcript、source body、NotebookLM link / UUID、private path は tracked されない |
+| Approval | `b05eb386…`、9 cues、2/4/3、Reimu/Marisa 3/6、8 hashesをreceiptで固定 | hash、text/order、speaker/scene、claim/evidence、CSV driftがあれば自動停止 |
+| Submitted content | 326 lines→182 claims。raw claim fingerprintでfinal cueへの影響を追跡 | transcriptはoriginでありfactual authorityではない。token-level authorshipは不明 |
+| Evidence | 19 verified-primaryのうち15 claimsを採用、20 units・21 edges、used sourcesはV02/V06/V07/V13 | unsupported policy/cashless/quantitative framingは不採用のまま |
+| Editorial origin | factual paraphraseとWorker connective/voice/structureをcue単位で分離 | connective/voiceはsource quotationとして扱わない |
+| Operator batch | 5 actions、return最大3、実行前/収集前の二重lock、collectorが9/3/6/text/order/timingを検証 | mapping/update/wrong characterで停止し、発音・clippingをcue番号で記録 |
+| Privacy | raw/source/local bodiesとprivate pathをtracked artifactへ含めない | ignored salvage evidenceをbatch recoveryで移動・削除しない |
+| Runtime | headless preflight passed、YMM4 process増加0、Computer Use 0 | actual import、pronunciation/rhythm、renderは未実施 |
 
 Primary surface:
-`production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_CANONICAL_SCRIPT_REVIEW.md`
+`production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_CONTENT_LINEAGE.md`
 
 ## 次の入口
 
-primary surface と `operator_review_sheet.md` を使い、改訂後の公式情報の分かりやすさ、
-cashless-policy の誤解が残らないこと、Reimu / Marisa の自然さ、2/4/3 の流れ、
-用語の正確さを確認します。承認された場合だけ、bounded YMM4 operator batch を
-次の slice として選べます。
+repository rootから次を一度だけ実行します。
+
+`powershell -NoProfile -ExecutionPolicy Bypass -File ".\production_pilots\yukkuri_newsroom_content_spine_002\external_editorial_input\new_banknote_security_notebooklm_001\yymm4_operator_batch\run_new_banknote_yymm4_batch.ps1"`
+
+YMM4に未保存の無関係な作業がないことを確認し、新規空projectへ表示済みCSVを
+importしてexact local pathへ保存します。9 cuesを一度previewし、発音または明らかな
+clippingをcue番号でメモして、renderせず閉じた後にterminalで`COLLECT`とメモを
+入力します。
 
 ## 公開・実行境界
 
-No NotebookLM access, Audio Overview regeneration, YMM4 launch, Computer Use,
-render, human editorial acceptance, production, rights approval, upload,
-publication, or master integration occurred in this slice.
+このsliceではapproved contentを変更せず、NotebookLM、web fetch、Computer Use、
+YMM4 launch/inspection、render、production、public/rights action、master integrationを
+行っていません。Human approvalはbounded import observationだけを許可し、production
+やpublicationの承認ではありません。

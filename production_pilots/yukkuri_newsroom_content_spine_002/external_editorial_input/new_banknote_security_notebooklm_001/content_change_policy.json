@@ -1,0 +1,49 @@
+{
+  "schema_version": "content_transformation_lineage.change_policy.v1",
+  "status": "active",
+  "policy_id": "no-silent-content-change-v1",
+  "scope": "content artifact families from upstream input through serialization",
+  "classes": {
+    "M_MECHANICAL": {
+      "definition": "encoding, serialization, alias projection, hashing, packaging",
+      "content_change_allowed": false,
+      "logging_required": true,
+      "renewed_approval": "not_required_when_approved_content_hashes_are_unchanged"
+    },
+    "E_EDITORIAL_EVIDENCE_PRESERVING": {
+      "definition": "rewording, shortening, ordering, connective, voice, compression",
+      "logging_required": true,
+      "post_approval_rule": "new_revision_visible_diff_and_renewed_human_approval"
+    },
+    "S_SEMANTIC": {
+      "definition": "factual addition/removal, implication, judgment, statistic, claim adoption",
+      "evidence_required": true,
+      "logging_required": true,
+      "approval_rule": "explicit_human_approval_always"
+    },
+    "U_UPSTREAM": {
+      "definition": "changed source set, regeneration, replacement transcript",
+      "new_upstream_snapshot_required": true,
+      "approval_rule": "explicit_milestone_authorization"
+    }
+  },
+  "required_stage_fields": [
+    "stage_id",
+    "input_artifacts_and_hashes",
+    "output_artifacts_and_hashes",
+    "actor_class",
+    "change_class",
+    "affected_claim_or_cue_ids",
+    "semantic_change",
+    "evidence_change",
+    "approval_impact",
+    "human_approval_required_for_equivalent_future_change",
+    "approval_remains_valid_for_current_hashes",
+    "before_after_summary",
+    "rejection_or_omission_retention",
+    "current_approval_status"
+  ],
+  "acceptance_rule": "No content transformation may enter an artifact silently; missing lineage rejects acceptance.",
+  "current_approval_receipt_id": "new-banknote-script-option-a-approval-v1",
+  "current_approval_status": "valid_only_while_all_approved_hashes_match"
+}

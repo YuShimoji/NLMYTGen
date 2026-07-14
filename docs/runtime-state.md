@@ -1,85 +1,93 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: new-banknote-source-backed-script-editorially-refined-v1
-State-Revision: 2026-07-13.5
-Updated: 2026-07-13 JST
-Product-State: new-banknote-authoritative-script-human-review-ready
-Product-Gate: human-script-review-and-yymm4-batch-decision
-Recommended-Next: review-refined-nine-cue-script
+Project-State-ID: new-banknote-content-lineage-sealed-yymm4-batch-ready-v1
+State-Revision: 2026-07-14.1
+Updated: 2026-07-14 JST
+Product-State: new-banknote-human-approved-script-lineage-sealed-operator-batch-ready
+Product-Gate: manual-yymm4-import-observation
+Recommended-Next: run-one-new-banknote-yymm4-operator-batch
 External-State: public-repo-feature-branch
 
 ## Current Slice
 
-- **Official evidence captured**: 13 official-source captures now have stable
-  identity and bounded support locations. S10 and S11 are exact-title matches.
-  S04 resolves to the current exact official document, while its
-  generation-time byte version remains unknown. The exact S05 572KB document
-  remains unresolved; a separately identified official equivalent supports the
-  adopted technical claims without identity conflation.
-- **Claims adjudicated**: all 182 preserved claim records have exactly one
-  outcome. Nineteen are `verified_primary`; unsupported policy-intent,
-  cashless-causation, and quantitative narrative is excluded from canonical
-  use.
-- **Review script editorially refined**: the internal candidate still has
-  exactly nine cues with scene allocation 2/4/3 and canonical speaker counts
-  3/6. The opening is now a direct question/answer, unexplained series notation
-  is absent from speech, cue 8 carries three coordinated facts, cue 9 names a
-  loupe, and Marisa's endings are varied.
-- **Evidence remains complete**: 20 spoken factual meaning units and 21 claim
-  edges all resolve to existing verified-primary evidence. The numeral-`1`
-  design claim removed from cue 8 speech remains verified and is retained in a
-  separate non-adopted traceability lane; unsupported spoken claims remain zero.
-- **CSV pair ready**: canonical and YMM4-character-derived, headerless two-column
-  CSVs preserve identical text and order across all nine cues. They are review
-  artifacts only; YMM4 was not launched.
-- **Salvage and privacy retained**: the frozen 11-title snapshot, all prior
-  fingerprints, and ignored raw identity remain preserved. No raw transcript,
-  source body, private path, NotebookLM link, or UUID is tracked.
+- **Human approval sealed**: explicit user option A approval fixes commit
+  `b05eb3867caabda496fb9a0070d230a4e81aea01`, eight approved file
+  hashes, nine cue texts/order, scene allocation 2/4/3, Reimu/Marisa 3/6,
+  canonical/derived CSV text, and current claim/source traceability.
+- **Raw-to-approved lineage consolidated**: T00–T07 distinguish NotebookLM
+  upstream generation, immutable intake, the 11-title freeze, official-source
+  adjudication of all 182 claims, supported-only rewrite, editorial
+  convergence, human approval, and mechanical YMM4 projection.
+- **Cue lineage complete at meaning-unit granularity**: all nine cues connect
+  raw claim IDs/fingerprints to 15 adopted verified-primary claims, four
+  official sources, 20 factual units, and 21 evidence edges. Editorial
+  connective and character-voice phrasing are explicitly non-quotational
+  inferred units; token-level authorship is not claimed.
+- **No-silent-change lock active**: any approved text, order, speaker, scene,
+  claim, evidence edge, CSV, approval receipt, or lineage drift invalidates the
+  approval and stops preflight. A later editorial, semantic, or upstream
+  change requires a new revision, visible diff, and successor human approval
+  receipt.
+- **Manual YMM4 batch prepared**: the five-action user-operated batch verifies
+  hashes before launch and again before collection, leaves counting to the
+  collector, records mapping status and pronunciation/clipping notes through
+  ignored UTF-8 JSON, and returns at most three items.
+- **Headless checks passed**: deterministic lineage and operator generation,
+  approval-drift rejection, 9/3/6/text/order/timing collector fixtures,
+  PowerShell syntax, privacy boundaries, and worker-safe `-PreflightOnly`
+  passed without inspecting or launching YMM4.
 
 ## Product Position
 
-- The external editorial input lane now has a reproducible,
-  official-source-backed nine-cue package whose obvious terminology, density,
-  and dialogue defects have been removed before human review.
-- The primary human surface is `README_CANONICAL_SCRIPT_REVIEW.md` in the
-  new-banknote package. Source receipts, claim adjudication, cue traceability,
-  the canonical script, and both CSV variants remain inspectable beside it.
-- This state means ready for human script review, not editorial acceptance,
-  YMM4 execution, render approval, production, rights approval, or publication.
+The submitted transcript's influence is now inspectable without treating it as
+factual authority: claim fingerprints show what entered the process, official
+primary evidence shows what could survive, and the cue matrix separates facts
+from Worker-authored connective, voice, and structure. The approved script
+itself is unchanged.
+
+This state is ready for one user-controlled YMM4 import observation. It is not
+pronunciation acceptance, render approval, production, public release, rights
+approval, or master integration.
 
 ## Exact Next Action
 
-Review the refined nine-cue candidate for factual clarity, absence of
-unsupported cashless-policy implication, Reimu/Marisa conversational
-naturalness, 2/4/3 scene coherence, and terminology. That decision gates any
-bounded YMM4 operator batch.
+From the repository root, the user may run exactly:
+
+`powershell -NoProfile -ExecutionPolicy Bypass -File ".\production_pilots\yukkuri_newsroom_content_spine_002\external_editorial_input\new_banknote_security_notebooklm_001\yymm4_operator_batch\run_new_banknote_yymm4_batch.ps1"`
+
+Stop on an unrelated/unsaved project, mapping or update dialog, wrong
+character, changed save target, parse error, changed text/order, or any request
+to render or publish. The collector, not the user, verifies the nine
+VoiceItems, 3/6 characters, exact text/order, and timing.
 
 ## Evidence and Access
 
-- Primary tracked surface:
-  `production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_CANONICAL_SCRIPT_REVIEW.md`
-- Source and claim evidence: `authoritative_source_registry.json`,
-  `source_capture_receipts.json`, and `claim_adjudication.json` beside the
-  primary surface.
-- Script handoff: `canonical_script.json`, `cue_source_traceability.json`,
-  `canonical_yymm4.csv`, and `derived_yymm4_import.csv` beside the primary
-  surface.
-- Editorial revision evidence: `canonical_script_editorial_revision.md` and
-  `editorial_revision_receipt.json` beside the primary surface.
-- Human decision aid: `operator_review_sheet.md` beside the primary surface.
+- Primary lineage surface:
+  `production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_CONTENT_LINEAGE.md`
+- Approval and transformation evidence beside it:
+  `human_script_approval_receipt.json`,
+  `content_transformation_ledger.json`, `cue_lineage_matrix.json`,
+  `content_change_summary.md`, and `content_lineage_readback.json`.
+- Operator surface:
+  `yymm4_operator_batch/README_OPERATOR_BATCH.md` and
+  `yymm4_operator_batch/run_new_banknote_yymm4_batch.ps1`.
+- Reusable acceptance contract:
+  `docs/CONTENT_TRANSFORMATION_PROVENANCE.md`.
 
 ## Active Boundaries
 
-- Official public web capture occurred only for bounded source verification.
-- No NotebookLM access, Audio Overview regeneration, YMM4 launch, Computer Use,
-  render, editorial acceptance, production, rights action, upload, publication,
-  or master integration occurred.
-- The unresolved exact S05 572KB identity and S04 generation-time byte version
-  do not weaken adopted claims because those claims use separately captured
-  official support.
+- No approved script, claim, source, traceability, or CSV content changed.
+- No NotebookLM access, web fetch, Computer Use, YMM4 launch/inspection,
+  render, production, publication, rights action, or master integration
+  occurred.
+- Raw transcript, source bodies, local YMM4 project, batch state, operator
+  observation/result, private path, NotebookLM link, and UUID remain ignored
+  or absent from tracked artifacts.
+- Remaining review debt is limited to token-level authorship unavailability,
+  true Audio Overview speaker identity, unresolved S04 generation-time/S05
+  exact-document identity, and H1 pronunciation/rhythm observation.
 
 ## Maintenance Note
 
 Keep this capsule within 160 lines. Durable implementation evidence belongs in
-the tracked salvage package, tests, and Git history; full transcript content
-remains local and ignored.
+the tracked lineage package, focused tests, and Git history.

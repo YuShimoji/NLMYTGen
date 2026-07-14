@@ -1,0 +1,158 @@
+{
+  "schema_version": "new_banknote_yymm4_import_observation.operator_batch_manifest.v1",
+  "artifact_id": "new-banknote-yymm4-import-observation-v1",
+  "status": "ready",
+  "target_state_id": "new-banknote-content-lineage-sealed-yymm4-batch-ready-v1",
+  "scope": "user_operated_csv_import_observation_only",
+  "approved_script_identity": {
+    "approval_class": "explicit_user_option_a",
+    "approval_receipt_id": "new-banknote-script-option-a-approval-v1",
+    "accepted_script_commit": "b05eb3867caabda496fb9a0070d230a4e81aea01",
+    "artifact_hashes": {
+      "README_CANONICAL_SCRIPT_REVIEW.md": "a5d5a23fca7d6c0c0fe200a89800d9c3c8ac278c18c1a137c35019d4780e7da8",
+      "canonical_script.json": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47",
+      "canonical_script.txt": "4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091",
+      "canonical_script_review.md": "9816c28e9b0099ef98e2aefb9e70bf22a32fbbd0f931fd8989c6ac19dcd99d3a",
+      "cue_source_traceability.json": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47",
+      "canonical_yymm4.csv": "23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12",
+      "derived_yymm4_import.csv": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee",
+      "source_to_script_manifest.json": "e13fb57a2681875f577e4d85f13cf41bfc601519892fa4f975bdfcdd24d927b5"
+    },
+    "lineage_and_receipt_hashes": {
+      "human_script_approval_receipt.json": "1ac490cbcd06483082b2d56a97ff758199ef37ab4b6d1229806c24b8698d7e0f",
+      "README_CONTENT_LINEAGE.md": "30ea7a618fd36bad097aedce01b3fe293bc95d57e3def31bca0d2298308060a2",
+      "content_transformation_ledger.json": "3caac4df17beb3ae2305a93e9af793cb8029705e5b209d85820aadda2165458c",
+      "cue_lineage_matrix.json": "8dd80c400631f261d673f78e02512050c86bbae59038f314998a9c6db59047a4",
+      "content_change_summary.md": "536ce4cb38bd6b35f4526d8a3dc20f603fb7374ea22c44373fa368f379ad8539",
+      "content_change_policy.json": "804df1eab8c447eb6b5e3459ae5e9cbcfabb25f1771fec7c3ddb0de19fc2da05",
+      "content_lineage_readback.json": "7ab925c716e62af59b888929ad1591ee08ff4aedc5b99eb46a2570d187bc03ac"
+    },
+    "approval_status": "valid"
+  },
+  "character_profile": {
+    "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/ymm4_character_alias_profiles/ymm4_4_53_0_9_yukkuri_characters_v1.json",
+    "profile_id": "ymm4_4_53_0_9_yukkuri_characters_ja_v1",
+    "observed_yymm4_version": "4.53.0.9",
+    "sha256": "c32f8e0faa2fbced6e91adfd5bedc62e8e245ef48f88a67f81b86c39ab89a304"
+  },
+  "modes": {
+    "normal": {
+      "may_launch_yymm4": true,
+      "gui_operator": "user",
+      "automatic_gui_actions": 0
+    },
+    "preflight_only": {
+      "parameter": "-PreflightOnly",
+      "launches_yymm4": false,
+      "inspects_yymm4": false,
+      "writes_local_evidence": false
+    },
+    "collect_only": {
+      "parameter": "-CollectOnly -OperatorConfirmedNoMappingError",
+      "launches_yymm4": false,
+      "regenerates_or_overwrites_outputs": false
+    }
+  },
+  "manual_action_count": 5,
+  "manual_actions": [
+    "clean terminalからbatch commandを一度だけ実行する",
+    "YMM4に未保存の無関係な作業がないことを確認して新規空projectを開く",
+    "display済みCSVをimportし、mapping/error/update/character mismatchがなければdisplay済み.local.ymmpへ保存する",
+    "9 cuesを一度previewして発音または明らかなclippingをcue番号でメモする",
+    "renderせずYMM4を閉じ、terminalでCOLLECTとメモ1行を入力する"
+  ],
+  "return_item_count": 3,
+  "return_items": [
+    "success_or_failure",
+    "operator_result_json_path",
+    "pronunciation_notes_on_success_or_error_on_failure"
+  ],
+  "stop_conditions": [
+    "yymm4_already_running",
+    "unrelated_or_unsaved_project",
+    "preexisting_exact_local_target",
+    "nonempty_project_or_timeline",
+    "mapping_error_or_update_dialog",
+    "character_mismatch",
+    "unexpected_save_target",
+    "project_parse_error",
+    "changed_text_or_order",
+    "render_production_public_or_rights_request"
+  ],
+  "targets": {
+    "source_csv": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/derived_yymm4_import.csv",
+    "local_project": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/new_banknote_yymm4_import_observation.local.ymmp",
+    "local_result": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/operator_result.json",
+    "local_batch_state": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/operator_batch.local.json",
+    "local_observation": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/operator_observation.local.json"
+  },
+  "executable_resolution": {
+    "explicit_parameter": "-Ymm4Exe",
+    "environment_variable": "NLMYTGEN_YMM4_EXE",
+    "runtime_detection": [
+      "PATH",
+      "Windows App Paths registry",
+      "LOCALAPPDATA common application locations",
+      "fixed-drive common application-relative locations"
+    ],
+    "tracked_absolute_path": false,
+    "unresolved_behavior": "print_exact_parameterized_command_and_stop"
+  },
+  "json_transport": "python_writes_utf8_file_powershell_reads_explicit_utf8",
+  "powershell_5_1_contract": "scripts_are_ascii_only_japanese_messages_are_loaded_from_utf8_json",
+  "collector_contract": {
+    "VoiceItem_count": 9,
+    "character_counts": {
+      "ゆっくり霊夢": 3,
+      "ゆっくり魔理沙": 6
+    },
+    "exact_text_order": true,
+    "missing_count": 0,
+    "duplicate_count": 0,
+    "fresh_project_required": true,
+    "exact_local_target_required": true,
+    "timing_is_informational": true,
+    "mapping_dialog_status_required": true,
+    "pronunciation_or_clipping_notes_recorded": true,
+    "ImageItem_required": false,
+    "independent_TextItem_required": false,
+    "render_required": false
+  },
+  "tracked_artifacts": {
+    "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/yymm4_operator_batch/README_OPERATOR_BATCH.md": {
+      "sha256": "618afccf4b956b300dd68e5f528db6058538d456d8591f133a8b47057e92da23"
+    },
+    "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/yymm4_operator_batch/expected_result_contract.json": {
+      "sha256": "ab0bd08a9a1379b7210653543910a3f97db88e79216862f2a11604007388bb30"
+    },
+    "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/yymm4_operator_batch/operator_return_template.md": {
+      "sha256": "ff087e8e091d8f713cbf3d28a9af66100cfd56a7d4a760cf85bb5d9420c9bcc4"
+    },
+    "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/yymm4_operator_batch/run_new_banknote_yymm4_batch.ps1": {
+      "sha256": "77da21d017e9e244f680a3fbb0983c445b118e04b33fa2b8df830086f2d04f1a"
+    },
+    "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/yymm4_operator_batch/collect_new_banknote_yymm4_result.ps1": {
+      "sha256": "676dd67cede198f48b0fbab3ef73fc71622f54c740fb3533b65074b47ff2030a"
+    }
+  },
+  "operator_messages": {
+    "pc_control": "PC操作主体はユーザーです。CodexはGUIを操作しません。",
+    "scope_boundary": "INTERNAL IMPORT OBSERVATION ONLY。render、本番、公開、権利承認は行いません。",
+    "stop_conditions": "未保存/無関係project、mapping/error/update dialog、character mismatch、違う保存先では直ちに停止してください。",
+    "version_warning": "profile観測版とruntime版が異なります。差分自体はwarningですが、mapping dialogやwrong characterでは停止します。",
+    "csv_path": "台本読み込みCSV",
+    "project_path": "Project Save As先",
+    "manual_sequence": "新規空projectへimportして保存し、9 cuesを一度previewしてから、renderせずYMM4を安全に閉じてterminalへ戻ってください。",
+    "collect_prompt": "mapping/error/update/character mismatchがなく、exact projectを保存してYMM4を閉じた後だけCOLLECTと入力",
+    "pronunciation_prompt": "cue番号付きの発音または明らかなclippingメモを1行で入力。問題がなければ空Enter"
+  },
+  "prohibited_actions": [
+    "computer_use",
+    "automatic_gui_control",
+    "render_or_mp4",
+    "production_project",
+    "source_or_script_revision",
+    "upload_publication_or_rights_action",
+    "master_integration"
+  ]
+}

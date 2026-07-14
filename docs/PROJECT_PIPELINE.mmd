@@ -24,7 +24,10 @@ flowchart LR
     NS --> SF["Title-level source set frozen<br/>11 titles / generation 10 + derived 1<br/>182/182 aligned / verified = 0"]
     SF --> AR["Official source identity resolution<br/>URLs / stable IDs / captured content identity<br/>S03 non-independent / S07 excluded"]
     AR --> CV["Claim-level verification / rejection<br/>exact page / field / date / unit"]
-    CV --> E["External editorial / real-media input<br/>provenance + identity + rights context"]
+    CV --> NBS["Supported-only new-banknote script<br/>9 cues / 2-4-3 / Reimu 3 + Marisa 6<br/>15 claims / 20 units / 21 edges"]
+    NBS --> NBL["T00-T07 content lineage + human approval seal<br/>8 approved hashes / no silent change<br/>clause-level, not token-level"]
+    NBL --> NBO["Hash-locked manual YMM4 import gate<br/>5 user actions / preflight passed<br/>YMM4 observation not yet run"]
+    NBO -. "later user-operated result intake" .-> E["External editorial / real-media input<br/>provenance + identity + rights context"]
     W --> I["Feature/default integration audit passed<br/>44 commits / 448 paths classified<br/>integration_ready"]
     I -->|"approved Option A / normal FF"| J["Default branch integrated<br/>subject + audit tail + metadata rebind<br/>master current"]
 

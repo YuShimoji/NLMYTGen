@@ -1,0 +1,1179 @@
+{
+  "schema_version": "content_transformation_lineage.cue_matrix.v1",
+  "status": "complete",
+  "cue_coverage": "9/9",
+  "unique_adopted_claim_count": 15,
+  "factual_support_unit_count": 20,
+  "claim_edge_count": 21,
+  "source_quote_count": 0,
+  "token_level_attribution_claimed": false,
+  "cues": [
+    {
+      "cue_id": "cue_001",
+      "sequence": 1,
+      "scene": "S1",
+      "speaker": "れいむ",
+      "approved_text": "2024年に発行された新しいお札って、見た目以外にも変わったところがあるの？",
+      "approved_text_sha256": "6ae1e15f8fb09ffdf0551e6adc7be29232554b34badf8f025385e0df646456ee",
+      "originating_raw_claim_ids": [
+        {
+          "claim_id": "claim_010",
+          "raw_line_ordinal": 19,
+          "raw_line_fingerprint": "aa57359e77141179a98a2374a55fdf40119696a547fd6be48e0bfa15da32d324",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        }
+      ],
+      "adopted_verified_claims": [
+        {
+          "claim_id": "claim_010",
+          "adjudicated_proposition": "F券は2024年に発行された。",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "official_sources_and_support_locations": [
+        {
+          "support_unit_id": "cue_001_fact_01",
+          "claim_id": "claim_010",
+          "source_id": "V02",
+          "exact_location": "H1直下の導入",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_paraphrase_units": [
+        {
+          "unit_id": "cue_001_fact_01",
+          "statement": "F券は2024年に発行された。",
+          "claim_ids": [
+            "claim_010"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_001_fact_01",
+              "claim_id": "claim_010",
+              "source_id": "V02",
+              "exact_location": "H1直下の導入",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        }
+      ],
+      "editorial_connective_units": [
+        {
+          "unit_id": "cue_001_editorial_01",
+          "surface_fragment": "見た目以外にも",
+          "role": "opens a contrast beyond appearance",
+          "source_quote": false,
+          "classification": "worker_editorial_connective",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "character_voice_phrasing_units": [
+        {
+          "unit_id": "cue_001_voice_01",
+          "surface_fragment": "って、…あるの？",
+          "role": "Reimu question",
+          "source_quote": false,
+          "classification": "worker_character_voice_phrasing",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "structural_role": "S1 opening question and scope",
+      "last_content_changing_stage": "T05",
+      "last_stage_precision": "package-level; token-level last-edit authorship unavailable",
+      "omitted_verified_claims_retained_nearby": [],
+      "approval_receipt_id": "new-banknote-script-option-a-approval-v1",
+      "current_approval_validity": true,
+      "coverage_boundary": "factual meaning, editorial connective, voice, and structural role; not token-level attribution"
+    },
+    {
+      "cue_id": "cue_002",
+      "sequence": 2,
+      "scene": "S1",
+      "speaker": "まりさ",
+      "approved_text": "あるぞ。偽造防止では、高精細すき入れや3Dホログラムなど複数の技術を組み合わせている。誰にとっても使いやすいユニバーサルデザインも取り入れたんだ。",
+      "approved_text_sha256": "c3dfc706245679aa1f8fe07e5b19eee2e94918807083ba8c2c54d15aa6583752",
+      "originating_raw_claim_ids": [
+        {
+          "claim_id": "claim_090",
+          "raw_line_ordinal": 169,
+          "raw_line_fingerprint": "cb2f592bf85678b5779f88c137854d2631f742d8cc0b733bce3d30e17d1d53d2",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        },
+        {
+          "claim_id": "claim_065",
+          "raw_line_ordinal": 125,
+          "raw_line_fingerprint": "a8a182b200e9a305bcfa83687fa03035cfdb98887d13be224a299b62ad871774",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        },
+        {
+          "claim_id": "claim_099",
+          "raw_line_ordinal": 182,
+          "raw_line_fingerprint": "878241fd67014a2bb852b54dcf7496402e5610f5155a266c24c0221a4beada0e",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        },
+        {
+          "claim_id": "claim_161",
+          "raw_line_ordinal": 301,
+          "raw_line_fingerprint": "558a2147340590aa293422eb7a25b2c1812658e817b79c57ca77c176a4a990b2",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        }
+      ],
+      "adopted_verified_claims": [
+        {
+          "claim_id": "claim_090",
+          "adjudicated_proposition": "F券の高精細すき入れには、光に透かすと見える微細な模様が施されている。",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "claim_id": "claim_065",
+          "adjudicated_proposition": "F券には、傾けると変化を確認できる3Dホログラムが採用された。",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "claim_id": "claim_099",
+          "adjudicated_proposition": "F券はホログラム、深凹版印刷、すき入れ、マイクロ文字を組み合わせている。",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "claim_id": "claim_161",
+          "adjudicated_proposition": "F券には、誰にとっても使いやすいものを目指したユニバーサルデザインが取り入れられている。",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "official_sources_and_support_locations": [
+        {
+          "support_unit_id": "cue_002_fact_01",
+          "claim_id": "claim_090",
+          "source_id": "V06",
+          "exact_location": "『すかして』わかる偽造防止技術 > すき入れ・高精細すき入れ",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_002_fact_02",
+          "claim_id": "claim_065",
+          "source_id": "V06",
+          "exact_location": "『傾けて』わかる偽造防止技術 > 3Dホログラム",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_002_fact_03",
+          "claim_id": "claim_099",
+          "source_id": "V13",
+          "exact_location": "PDF物理ページ5（冊子pp.8–9）",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_002_fact_04",
+          "claim_id": "claim_161",
+          "source_id": "V02",
+          "exact_location": "H1直下の導入",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_paraphrase_units": [
+        {
+          "unit_id": "cue_002_fact_01",
+          "statement": "F券には高精細すき入れが採り入れられている。",
+          "claim_ids": [
+            "claim_090"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_002_fact_01",
+              "claim_id": "claim_090",
+              "source_id": "V06",
+              "exact_location": "『すかして』わかる偽造防止技術 > すき入れ・高精細すき入れ",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        },
+        {
+          "unit_id": "cue_002_fact_02",
+          "statement": "F券には3Dホログラムが採用された。",
+          "claim_ids": [
+            "claim_065"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_002_fact_02",
+              "claim_id": "claim_065",
+              "source_id": "V06",
+              "exact_location": "『傾けて』わかる偽造防止技術 > 3Dホログラム",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        },
+        {
+          "unit_id": "cue_002_fact_03",
+          "statement": "F券は複数の偽造防止技術を組み合わせている。",
+          "claim_ids": [
+            "claim_099"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_002_fact_03",
+              "claim_id": "claim_099",
+              "source_id": "V13",
+              "exact_location": "PDF物理ページ5（冊子pp.8–9）",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        },
+        {
+          "unit_id": "cue_002_fact_04",
+          "statement": "F券には、誰にとっても使いやすいものを目指したユニバーサルデザインが取り入れられている。",
+          "claim_ids": [
+            "claim_161"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_002_fact_04",
+              "claim_id": "claim_161",
+              "source_id": "V02",
+              "exact_location": "H1直下の導入",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        }
+      ],
+      "editorial_connective_units": [
+        {
+          "unit_id": "cue_002_editorial_01",
+          "surface_fragment": "偽造防止では",
+          "role": "groups the following supported techniques",
+          "source_quote": false,
+          "classification": "worker_editorial_connective",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "character_voice_phrasing_units": [
+        {
+          "unit_id": "cue_002_voice_01",
+          "surface_fragment": "あるぞ。…んだ。",
+          "role": "Marisa answer",
+          "source_quote": false,
+          "classification": "worker_character_voice_phrasing",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "structural_role": "S1 direct answer and two-family overview",
+      "last_content_changing_stage": "T05",
+      "last_stage_precision": "package-level; token-level last-edit authorship unavailable",
+      "omitted_verified_claims_retained_nearby": [],
+      "approval_receipt_id": "new-banknote-script-option-a-approval-v1",
+      "current_approval_validity": true,
+      "coverage_boundary": "factual meaning, editorial connective, voice, and structural role; not token-level attribution"
+    },
+    {
+      "cue_id": "cue_003",
+      "sequence": 3,
+      "scene": "S2",
+      "speaker": "まりさ",
+      "approved_text": "まずは高精細すき入れ。光に透かすと、細かな模様が見えるんだぜ。",
+      "approved_text_sha256": "7b8f30a2d341dc2962fe5f13c41b9a832348c6c00ed2e07a7ed08af6a5fc8bf4",
+      "originating_raw_claim_ids": [
+        {
+          "claim_id": "claim_090",
+          "raw_line_ordinal": 169,
+          "raw_line_fingerprint": "cb2f592bf85678b5779f88c137854d2631f742d8cc0b733bce3d30e17d1d53d2",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        }
+      ],
+      "adopted_verified_claims": [
+        {
+          "claim_id": "claim_090",
+          "adjudicated_proposition": "F券の高精細すき入れには、光に透かすと見える微細な模様が施されている。",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "official_sources_and_support_locations": [
+        {
+          "support_unit_id": "cue_003_fact_01",
+          "claim_id": "claim_090",
+          "source_id": "V06",
+          "exact_location": "『すかして』わかる偽造防止技術 > すき入れ・高精細すき入れ",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_paraphrase_units": [
+        {
+          "unit_id": "cue_003_fact_01",
+          "statement": "F券の高精細すき入れには、光に透かすと見える微細な模様が施されている。",
+          "claim_ids": [
+            "claim_090"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_003_fact_01",
+              "claim_id": "claim_090",
+              "source_id": "V06",
+              "exact_location": "『すかして』わかる偽造防止技術 > すき入れ・高精細すき入れ",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        }
+      ],
+      "editorial_connective_units": [
+        {
+          "unit_id": "cue_003_editorial_01",
+          "surface_fragment": "まずは",
+          "role": "orders the S2 explanation",
+          "source_quote": false,
+          "classification": "worker_editorial_connective",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "character_voice_phrasing_units": [
+        {
+          "unit_id": "cue_003_voice_01",
+          "surface_fragment": "んだぜ。",
+          "role": "Marisa ending",
+          "source_quote": false,
+          "classification": "worker_character_voice_phrasing",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "structural_role": "S2 first anti-counterfeit technique",
+      "last_content_changing_stage": "T05",
+      "last_stage_precision": "package-level; token-level last-edit authorship unavailable",
+      "omitted_verified_claims_retained_nearby": [],
+      "approval_receipt_id": "new-banknote-script-option-a-approval-v1",
+      "current_approval_validity": true,
+      "coverage_boundary": "factual meaning, editorial connective, voice, and structural role; not token-level attribution"
+    },
+    {
+      "cue_id": "cue_004",
+      "sequence": 4,
+      "scene": "S2",
+      "speaker": "まりさ",
+      "approved_text": "次は3Dホログラム。角度を変えると、三次元の肖像が回転して見えるぞ。",
+      "approved_text_sha256": "ad50602ced2e889cc3169b18858fbe4537224533118283ffd0d2c49f929f17c7",
+      "originating_raw_claim_ids": [
+        {
+          "claim_id": "claim_065",
+          "raw_line_ordinal": 125,
+          "raw_line_fingerprint": "a8a182b200e9a305bcfa83687fa03035cfdb98887d13be224a299b62ad871774",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        },
+        {
+          "claim_id": "claim_067",
+          "raw_line_ordinal": 126,
+          "raw_line_fingerprint": "e9244851d15de00c29893ca53d89695c9f13d9ac21c7706a8def17813418a49b",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        }
+      ],
+      "adopted_verified_claims": [
+        {
+          "claim_id": "claim_065",
+          "adjudicated_proposition": "F券には、傾けると変化を確認できる3Dホログラムが採用された。",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "claim_id": "claim_067",
+          "adjudicated_proposition": "3Dホログラムでは角度により三次元の肖像が回転して見える。",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "official_sources_and_support_locations": [
+        {
+          "support_unit_id": "cue_004_fact_01",
+          "claim_id": "claim_065",
+          "source_id": "V06",
+          "exact_location": "『傾けて』わかる偽造防止技術 > 3Dホログラム",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_004_fact_02",
+          "claim_id": "claim_067",
+          "source_id": "V07",
+          "exact_location": "3Dホログラム",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_paraphrase_units": [
+        {
+          "unit_id": "cue_004_fact_01",
+          "statement": "F券には3Dホログラムが採用された。",
+          "claim_ids": [
+            "claim_065"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_004_fact_01",
+              "claim_id": "claim_065",
+              "source_id": "V06",
+              "exact_location": "『傾けて』わかる偽造防止技術 > 3Dホログラム",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        },
+        {
+          "unit_id": "cue_004_fact_02",
+          "statement": "角度により三次元の肖像が回転して見える。",
+          "claim_ids": [
+            "claim_067"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_004_fact_02",
+              "claim_id": "claim_067",
+              "source_id": "V07",
+              "exact_location": "3Dホログラム",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        }
+      ],
+      "editorial_connective_units": [
+        {
+          "unit_id": "cue_004_editorial_01",
+          "surface_fragment": "次は",
+          "role": "continues the S2 explanation",
+          "source_quote": false,
+          "classification": "worker_editorial_connective",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "character_voice_phrasing_units": [
+        {
+          "unit_id": "cue_004_voice_01",
+          "surface_fragment": "ぞ。",
+          "role": "Marisa ending",
+          "source_quote": false,
+          "classification": "worker_character_voice_phrasing",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "structural_role": "S2 second anti-counterfeit technique",
+      "last_content_changing_stage": "T05",
+      "last_stage_precision": "package-level; token-level last-edit authorship unavailable",
+      "omitted_verified_claims_retained_nearby": [],
+      "approval_receipt_id": "new-banknote-script-option-a-approval-v1",
+      "current_approval_validity": true,
+      "coverage_boundary": "factual meaning, editorial connective, voice, and structural role; not token-level attribution"
+    },
+    {
+      "cue_id": "cue_005",
+      "sequence": 5,
+      "scene": "S2",
+      "speaker": "れいむ",
+      "approved_text": "触るとざらざらするのは、額面数字などのインキを高く盛り上げる深凹版印刷なんだね。",
+      "approved_text_sha256": "afc01c0054276359b1c6b1a6f60dfc886c7cc26438d73b048437a33d6ee45a97",
+      "originating_raw_claim_ids": [
+        {
+          "claim_id": "claim_116",
+          "raw_line_ordinal": 215,
+          "raw_line_fingerprint": "8f3f407f3e6a9da847e198010c60e8df79bd391ccc304725e15c307728ccb6a2",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        }
+      ],
+      "adopted_verified_claims": [
+        {
+          "claim_id": "claim_116",
+          "adjudicated_proposition": "額面数字や識別マークには、インキを高く盛り上げる深凹版印刷が使われ、ざらざらした触感がある。",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "official_sources_and_support_locations": [
+        {
+          "support_unit_id": "cue_005_fact_01",
+          "claim_id": "claim_116",
+          "source_id": "V06",
+          "exact_location": "『さわって』わかる偽造防止技術 > 深凹版印刷",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_paraphrase_units": [
+        {
+          "unit_id": "cue_005_fact_01",
+          "statement": "額面数字などには、インキを高く盛り上げる深凹版印刷が使われ、ざらざらした触感がある。",
+          "claim_ids": [
+            "claim_116"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_005_fact_01",
+              "claim_id": "claim_116",
+              "source_id": "V06",
+              "exact_location": "『さわって』わかる偽造防止技術 > 深凹版印刷",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        }
+      ],
+      "editorial_connective_units": [],
+      "character_voice_phrasing_units": [
+        {
+          "unit_id": "cue_005_voice_01",
+          "surface_fragment": "なんだね。",
+          "role": "Reimu confirmation",
+          "source_quote": false,
+          "classification": "worker_character_voice_phrasing",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "structural_role": "S2 tactile technique confirmation",
+      "last_content_changing_stage": "T04",
+      "last_stage_precision": "package-level; token-level last-edit authorship unavailable",
+      "omitted_verified_claims_retained_nearby": [],
+      "approval_receipt_id": "new-banknote-script-option-a-approval-v1",
+      "current_approval_validity": true,
+      "coverage_boundary": "factual meaning, editorial connective, voice, and structural role; not token-level attribution"
+    },
+    {
+      "cue_id": "cue_006",
+      "sequence": 6,
+      "scene": "S2",
+      "speaker": "まりさ",
+      "approved_text": "マイクロ文字の『NIPPONGINKO』は、ルーペで確かめられる。カラーコピー機では再現が難しいほど小さい文字なんだ。",
+      "approved_text_sha256": "6ffa83cc6dd9cafba3b271ac8c300e36386b95438ca1c912ef0dedf5d748b0e8",
+      "originating_raw_claim_ids": [
+        {
+          "claim_id": "claim_096",
+          "raw_line_ordinal": 179,
+          "raw_line_fingerprint": "541a6960fa0c03940b3cdf4b7a8e8e3d3c2d605e8cbee8155eee8d75733d4f8c",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        },
+        {
+          "claim_id": "claim_097",
+          "raw_line_ordinal": 181,
+          "raw_line_fingerprint": "bf0bf1076eb0e625149b7b22ce9bedf782e7b375a7bf407aeffb5155a6744573",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        }
+      ],
+      "adopted_verified_claims": [
+        {
+          "claim_id": "claim_096",
+          "adjudicated_proposition": "F券には『NIPPONGINKO』という微小なマイクロ文字が印刷され、ルーペで確認できる。",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "claim_id": "claim_097",
+          "adjudicated_proposition": "マイクロ文字はカラーコピー機では再現が困難なほど小さい。",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "official_sources_and_support_locations": [
+        {
+          "support_unit_id": "cue_006_fact_01",
+          "claim_id": "claim_096",
+          "source_id": "V06",
+          "exact_location": "『道具で』わかる偽造防止技術 > マイクロ文字",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_006_fact_02",
+          "claim_id": "claim_097",
+          "source_id": "V06",
+          "exact_location": "『道具で』わかる偽造防止技術 > マイクロ文字",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_paraphrase_units": [
+        {
+          "unit_id": "cue_006_fact_01",
+          "statement": "F券には『NIPPONGINKO』という微小なマイクロ文字が印刷され、ルーペで確認できる。",
+          "claim_ids": [
+            "claim_096"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_006_fact_01",
+              "claim_id": "claim_096",
+              "source_id": "V06",
+              "exact_location": "『道具で』わかる偽造防止技術 > マイクロ文字",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        },
+        {
+          "unit_id": "cue_006_fact_02",
+          "statement": "マイクロ文字はカラーコピー機では再現が困難なほど小さい。",
+          "claim_ids": [
+            "claim_097"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_006_fact_02",
+              "claim_id": "claim_097",
+              "source_id": "V06",
+              "exact_location": "『道具で』わかる偽造防止技術 > マイクロ文字",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        }
+      ],
+      "editorial_connective_units": [
+        {
+          "unit_id": "cue_006_editorial_01",
+          "surface_fragment": "二文への分割",
+          "role": "separates checking method from reproduction difficulty",
+          "source_quote": false,
+          "classification": "worker_editorial_connective",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "character_voice_phrasing_units": [
+        {
+          "unit_id": "cue_006_voice_01",
+          "surface_fragment": "なんだ。",
+          "role": "Marisa ending",
+          "source_quote": false,
+          "classification": "worker_character_voice_phrasing",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "structural_role": "S2 tool-assisted microtext explanation",
+      "last_content_changing_stage": "T05",
+      "last_stage_precision": "package-level; token-level last-edit authorship unavailable",
+      "omitted_verified_claims_retained_nearby": [],
+      "approval_receipt_id": "new-banknote-script-option-a-approval-v1",
+      "current_approval_validity": true,
+      "coverage_boundary": "factual meaning, editorial connective, voice, and structural role; not token-level attribution"
+    },
+    {
+      "cue_id": "cue_007",
+      "sequence": 7,
+      "scene": "S3",
+      "speaker": "まりさ",
+      "approved_text": "見分けやすさの工夫では、識別マークを11本の斜線にそろえ、券種ごとに位置を変えているぜ。",
+      "approved_text_sha256": "db8c4f0bcfcb4351ee35dea6a614870b4d967e0cde9bb4421fc0c35016758309",
+      "originating_raw_claim_ids": [
+        {
+          "claim_id": "claim_118",
+          "raw_line_ordinal": 216,
+          "raw_line_fingerprint": "503d4e12909bf96dd06ecef11b99623ff4c32b1f0ab496645e58397931adb397",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        },
+        {
+          "claim_id": "claim_130",
+          "raw_line_ordinal": 240,
+          "raw_line_fingerprint": "5f708d03906a14cf5c9597f0981d64e5af4999e9397723acc63bc5d7eb0b201f",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        },
+        {
+          "claim_id": "claim_132",
+          "raw_line_ordinal": 242,
+          "raw_line_fingerprint": "416ca7444762454dca28474f2d3ae1ebd440ad750a0ffbb0aadaf15a5951daff",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        }
+      ],
+      "adopted_verified_claims": [
+        {
+          "claim_id": "claim_118",
+          "adjudicated_proposition": "F券の識別マークは11本の斜線に統一された。",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "claim_id": "claim_130",
+          "adjudicated_proposition": "同じ識別マークの位置を券種ごとに変えている。",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "claim_id": "claim_132",
+          "adjudicated_proposition": "識別マークの位置は一万円券・五千円券・千円券で異なる。",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "official_sources_and_support_locations": [
+        {
+          "support_unit_id": "cue_007_fact_01",
+          "claim_id": "claim_118",
+          "source_id": "V13",
+          "exact_location": "PDF物理ページ4（冊子pp.6–7）",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_007_fact_02",
+          "claim_id": "claim_130",
+          "source_id": "V06",
+          "exact_location": "識別マーク（深凹版印刷）",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_007_fact_02",
+          "claim_id": "claim_132",
+          "source_id": "V02",
+          "exact_location": "識別マーク（凹版印刷）",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_paraphrase_units": [
+        {
+          "unit_id": "cue_007_fact_01",
+          "statement": "F券の識別マークは11本の斜線に統一された。",
+          "claim_ids": [
+            "claim_118"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_007_fact_01",
+              "claim_id": "claim_118",
+              "source_id": "V13",
+              "exact_location": "PDF物理ページ4（冊子pp.6–7）",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        },
+        {
+          "unit_id": "cue_007_fact_02",
+          "statement": "同じ識別マークの位置を券種ごとに変えている。",
+          "claim_ids": [
+            "claim_130",
+            "claim_132"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_007_fact_02",
+              "claim_id": "claim_130",
+              "source_id": "V06",
+              "exact_location": "識別マーク（深凹版印刷）",
+              "evidence_grade": "verified_primary"
+            },
+            {
+              "support_unit_id": "cue_007_fact_02",
+              "claim_id": "claim_132",
+              "source_id": "V02",
+              "exact_location": "識別マーク（凹版印刷）",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        }
+      ],
+      "editorial_connective_units": [
+        {
+          "unit_id": "cue_007_editorial_01",
+          "surface_fragment": "見分けやすさの工夫では",
+          "role": "moves from security techniques to identification design",
+          "source_quote": false,
+          "classification": "worker_editorial_connective",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "character_voice_phrasing_units": [
+        {
+          "unit_id": "cue_007_voice_01",
+          "surface_fragment": "ぜ。",
+          "role": "Marisa ending",
+          "source_quote": false,
+          "classification": "worker_character_voice_phrasing",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "structural_role": "S3 tactile identification design",
+      "last_content_changing_stage": "T05",
+      "last_stage_precision": "package-level; token-level last-edit authorship unavailable",
+      "omitted_verified_claims_retained_nearby": [],
+      "approval_receipt_id": "new-banknote-script-option-a-approval-v1",
+      "current_approval_validity": true,
+      "coverage_boundary": "factual meaning, editorial connective, voice, and structural role; not token-level attribution"
+    },
+    {
+      "cue_id": "cue_008",
+      "sequence": 8,
+      "scene": "S3",
+      "speaker": "れいむ",
+      "approved_text": "額面の数字は前のシリーズのお札より大きい。一万円券と千円券ではホログラムの形や位置が違い、千円券の中央には橙色のグラデーションもあるんだね。",
+      "approved_text_sha256": "46f345d6b494ee94664752787c84bc32032e3673e02f5b8751d0e03cb8901d30",
+      "originating_raw_claim_ids": [
+        {
+          "claim_id": "claim_114",
+          "raw_line_ordinal": 210,
+          "raw_line_fingerprint": "c6fcebf5f6ce92da7f7fa1cc10e8ec2bde1089d5371bb0f7b9a066385cce2441",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        },
+        {
+          "claim_id": "claim_155",
+          "raw_line_ordinal": 294,
+          "raw_line_fingerprint": "43a23db449b2575f427a6eb3c3c1df9e12720ac70d114fbe3fd3839df72c714b",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        },
+        {
+          "claim_id": "claim_157",
+          "raw_line_ordinal": 296,
+          "raw_line_fingerprint": "30534ff29bd61023889bd4b93eb813edeed13afc2e90ceeea82014906aab92fd",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        }
+      ],
+      "adopted_verified_claims": [
+        {
+          "claim_id": "claim_114",
+          "adjudicated_proposition": "アラビア数字の額面表示をE券より大きくした。",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "claim_id": "claim_155",
+          "adjudicated_proposition": "一万円券と千円券ではホログラムの形状と配置が異なる。",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "claim_id": "claim_157",
+          "adjudicated_proposition": "千円券中央には橙色のグラデーションが配置されている。",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "official_sources_and_support_locations": [
+        {
+          "support_unit_id": "cue_008_fact_01",
+          "claim_id": "claim_114",
+          "source_id": "V02",
+          "exact_location": "額面数字の大型化",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_008_fact_02",
+          "claim_id": "claim_155",
+          "source_id": "V02",
+          "exact_location": "ホログラム・すき入れの配置",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_008_fact_03",
+          "claim_id": "claim_157",
+          "source_id": "V02",
+          "exact_location": "区別しやすい色味の工夫",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_paraphrase_units": [
+        {
+          "unit_id": "cue_008_fact_01",
+          "statement": "アラビア数字の額面表示をE券より大きくした。",
+          "claim_ids": [
+            "claim_114"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_008_fact_01",
+              "claim_id": "claim_114",
+              "source_id": "V02",
+              "exact_location": "額面数字の大型化",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        },
+        {
+          "unit_id": "cue_008_fact_02",
+          "statement": "一万円券と千円券ではホログラムの形状と配置が異なる。",
+          "claim_ids": [
+            "claim_155"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_008_fact_02",
+              "claim_id": "claim_155",
+              "source_id": "V02",
+              "exact_location": "ホログラム・すき入れの配置",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        },
+        {
+          "unit_id": "cue_008_fact_03",
+          "statement": "千円券中央には橙色のグラデーションが配置されている。",
+          "claim_ids": [
+            "claim_157"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_008_fact_03",
+              "claim_id": "claim_157",
+              "source_id": "V02",
+              "exact_location": "区別しやすい色味の工夫",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        }
+      ],
+      "editorial_connective_units": [
+        {
+          "unit_id": "cue_008_editorial_01",
+          "surface_fragment": "三つの事実を二文で並列化",
+          "role": "compresses related visual-identification facts",
+          "source_quote": false,
+          "classification": "worker_editorial_connective",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "character_voice_phrasing_units": [
+        {
+          "unit_id": "cue_008_voice_01",
+          "surface_fragment": "んだね。",
+          "role": "Reimu confirmation",
+          "source_quote": false,
+          "classification": "worker_character_voice_phrasing",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "structural_role": "S3 visual identification design compression",
+      "last_content_changing_stage": "T05",
+      "last_stage_precision": "package-level; token-level last-edit authorship unavailable",
+      "omitted_verified_claims_retained_nearby": [
+        {
+          "claim_id": "claim_158",
+          "adoption_status": "verified_not_adopted",
+          "retention_reason": "cue_information_budget",
+          "supporting_evidence": [
+            {
+              "claim_id": "claim_158",
+              "source_id": "V02",
+              "exact_location": "一万円券と千円券の『1』のデザインの違い",
+              "evidence_grade": "verified_primary"
+            }
+          ]
+        }
+      ],
+      "approval_receipt_id": "new-banknote-script-option-a-approval-v1",
+      "current_approval_validity": true,
+      "coverage_boundary": "factual meaning, editorial connective, voice, and structural role; not token-level attribution"
+    },
+    {
+      "cue_id": "cue_009",
+      "sequence": 9,
+      "scene": "S3",
+      "speaker": "まりさ",
+      "approved_text": "確かめ方は、透かす、触る、傾ける、ルーペで見る。この四つを覚えておこう。",
+      "approved_text_sha256": "e11a16e48b4386490a5a4e43b400dd5786ec8b31f140da318aca3b1c6c0e9702",
+      "originating_raw_claim_ids": [
+        {
+          "claim_id": "claim_090",
+          "raw_line_ordinal": 169,
+          "raw_line_fingerprint": "cb2f592bf85678b5779f88c137854d2631f742d8cc0b733bce3d30e17d1d53d2",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        },
+        {
+          "claim_id": "claim_116",
+          "raw_line_ordinal": 215,
+          "raw_line_fingerprint": "8f3f407f3e6a9da847e198010c60e8df79bd391ccc304725e15c307728ccb6a2",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        },
+        {
+          "claim_id": "claim_065",
+          "raw_line_ordinal": 125,
+          "raw_line_fingerprint": "a8a182b200e9a305bcfa83687fa03035cfdb98887d13be224a299b62ad871774",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        },
+        {
+          "claim_id": "claim_096",
+          "raw_line_ordinal": 179,
+          "raw_line_fingerprint": "541a6960fa0c03940b3cdf4b7a8e8e3d3c2d605e8cbee8155eee8d75733d4f8c",
+          "relationship": "claim_candidate_derived_from_submitted_transcript",
+          "raw_text_embedded": false
+        }
+      ],
+      "adopted_verified_claims": [
+        {
+          "claim_id": "claim_090",
+          "adjudicated_proposition": "F券の高精細すき入れには、光に透かすと見える微細な模様が施されている。",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "claim_id": "claim_116",
+          "adjudicated_proposition": "額面数字や識別マークには、インキを高く盛り上げる深凹版印刷が使われ、ざらざらした触感がある。",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "claim_id": "claim_065",
+          "adjudicated_proposition": "F券には、傾けると変化を確認できる3Dホログラムが採用された。",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "claim_id": "claim_096",
+          "adjudicated_proposition": "F券には『NIPPONGINKO』という微小なマイクロ文字が印刷され、ルーペで確認できる。",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "official_sources_and_support_locations": [
+        {
+          "support_unit_id": "cue_009_fact_01",
+          "claim_id": "claim_090",
+          "source_id": "V06",
+          "exact_location": "『すかして』わかる偽造防止技術 > すき入れ・高精細すき入れ",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_009_fact_02",
+          "claim_id": "claim_116",
+          "source_id": "V06",
+          "exact_location": "『さわって』わかる偽造防止技術 > 深凹版印刷",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_009_fact_03",
+          "claim_id": "claim_065",
+          "source_id": "V06",
+          "exact_location": "『傾けて』わかる偽造防止技術 > 3Dホログラム",
+          "evidence_grade": "verified_primary"
+        },
+        {
+          "support_unit_id": "cue_009_fact_04",
+          "claim_id": "claim_096",
+          "source_id": "V06",
+          "exact_location": "『道具で』わかる偽造防止技術 > マイクロ文字",
+          "evidence_grade": "verified_primary"
+        }
+      ],
+      "factual_paraphrase_units": [
+        {
+          "unit_id": "cue_009_fact_01",
+          "statement": "高精細すき入れは光に透かして確認する。",
+          "claim_ids": [
+            "claim_090"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_009_fact_01",
+              "claim_id": "claim_090",
+              "source_id": "V06",
+              "exact_location": "『すかして』わかる偽造防止技術 > すき入れ・高精細すき入れ",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        },
+        {
+          "unit_id": "cue_009_fact_02",
+          "statement": "深凹版印刷は触って確認する。",
+          "claim_ids": [
+            "claim_116"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_009_fact_02",
+              "claim_id": "claim_116",
+              "source_id": "V06",
+              "exact_location": "『さわって』わかる偽造防止技術 > 深凹版印刷",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        },
+        {
+          "unit_id": "cue_009_fact_03",
+          "statement": "3Dホログラムは傾けて確認する。",
+          "claim_ids": [
+            "claim_065"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_009_fact_03",
+              "claim_id": "claim_065",
+              "source_id": "V06",
+              "exact_location": "『傾けて』わかる偽造防止技術 > 3Dホログラム",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        },
+        {
+          "unit_id": "cue_009_fact_04",
+          "statement": "マイクロ文字はルーペで確認する。",
+          "claim_ids": [
+            "claim_096"
+          ],
+          "supporting_evidence": [
+            {
+              "support_unit_id": "cue_009_fact_04",
+              "claim_id": "claim_096",
+              "source_id": "V06",
+              "exact_location": "『道具で』わかる偽造防止技術 > マイクロ文字",
+              "evidence_grade": "verified_primary"
+            }
+          ],
+          "source_quote": false,
+          "classification": "verified_factual_paraphrase"
+        }
+      ],
+      "editorial_connective_units": [
+        {
+          "unit_id": "cue_009_editorial_01",
+          "surface_fragment": "確認方法は",
+          "role": "introduces the closing recap",
+          "source_quote": false,
+          "classification": "worker_editorial_connective",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        },
+        {
+          "unit_id": "cue_009_editorial_02",
+          "surface_fragment": "この四つを覚えておこう",
+          "role": "structural summary and retention prompt",
+          "source_quote": false,
+          "classification": "worker_editorial_connective",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "character_voice_phrasing_units": [
+        {
+          "unit_id": "cue_009_voice_01",
+          "surface_fragment": "覚えておこう。",
+          "role": "Marisa closing invitation",
+          "source_quote": false,
+          "classification": "worker_character_voice_phrasing",
+          "evidence_grade": "inferred_from_final_text_and_revision_receipt"
+        }
+      ],
+      "structural_role": "S3 four-method recap",
+      "last_content_changing_stage": "T05",
+      "last_stage_precision": "package-level; token-level last-edit authorship unavailable",
+      "omitted_verified_claims_retained_nearby": [],
+      "approval_receipt_id": "new-banknote-script-option-a-approval-v1",
+      "current_approval_validity": true,
+      "coverage_boundary": "factual meaning, editorial connective, voice, and structural role; not token-level attribution"
+    }
+  ]
+}

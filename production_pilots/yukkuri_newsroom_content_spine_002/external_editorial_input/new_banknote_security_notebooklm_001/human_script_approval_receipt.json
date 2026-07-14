@@ -1,0 +1,70 @@
+{
+  "schema_version": "content_transformation_lineage.human_approval_receipt.v1",
+  "receipt_id": "new-banknote-script-option-a-approval-v1",
+  "status": "valid",
+  "approval_class": "explicit_user_option_a",
+  "approval_recorded_at": "2026-07-14T13:17:00+09:00",
+  "approval_timestamp_basis": "worker_recorded_with_local_utc_offset",
+  "approved_commit": "b05eb3867caabda496fb9a0070d230a4e81aea01",
+  "approval_scope": {
+    "script_text": true,
+    "cue_order": true,
+    "scene_allocation": {
+      "S1": 2,
+      "S2": 4,
+      "S3": 3
+    },
+    "canonical_speaker_counts": {
+      "れいむ": 3,
+      "まりさ": 6
+    },
+    "canonical_csv_text_and_order": true,
+    "derived_csv_text_and_order": true,
+    "claim_and_source_traceability": true
+  },
+  "approved_file_hashes": {
+    "README_CANONICAL_SCRIPT_REVIEW.md": "a5d5a23fca7d6c0c0fe200a89800d9c3c8ac278c18c1a137c35019d4780e7da8",
+    "canonical_script.json": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47",
+    "canonical_script.txt": "4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091",
+    "canonical_script_review.md": "9816c28e9b0099ef98e2aefb9e70bf22a32fbbd0f931fd8989c6ac19dcd99d3a",
+    "cue_source_traceability.json": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47",
+    "canonical_yymm4.csv": "23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12",
+    "derived_yymm4_import.csv": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee",
+    "source_to_script_manifest.json": "e13fb57a2681875f577e4d85f13cf41bfc601519892fa4f975bdfcdd24d927b5"
+  },
+  "approved_contract": {
+    "cue_count": 9,
+    "unique_adopted_claim_count": 15,
+    "factual_support_unit_count": 20,
+    "claim_edge_count": 21,
+    "unsupported_spoken_claim_count": 0
+  },
+  "permissions": {
+    "operator_batch_preparation": true,
+    "later_user_manual_import_observation": true,
+    "wording_or_claim_revision": false,
+    "worker_yymm4_operation": false,
+    "render": false,
+    "production": false,
+    "publication": false,
+    "rights_action": false
+  },
+  "invalidation_rules": [
+    "any approved file hash changes",
+    "cue text, order, speaker, or scene changes",
+    "adopted claim or evidence edge changes",
+    "canonical or derived CSV text/order changes",
+    "approval receipt is overwritten instead of superseded"
+  ],
+  "successor_receipt_policy": {
+    "overwrite_current_receipt": false,
+    "new_revision_id_required": true,
+    "visible_diff_required": true,
+    "renewed_explicit_human_approval_required_for": [
+      "E_EDITORIAL_EVIDENCE_PRESERVING",
+      "S_SEMANTIC",
+      "U_UPSTREAM"
+    ],
+    "mechanical_change_without_content_hash_change": "may retain approval when logged and validation passes"
+  }
+}

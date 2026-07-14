@@ -1,0 +1,544 @@
+{
+  "schema_version": "content_transformation_lineage.stage_ledger.v1",
+  "status": "complete",
+  "artifact_family": "new_banknote_source_backed_script_to_yymm4",
+  "stage_order": [
+    "T00",
+    "T01",
+    "T02",
+    "T03",
+    "T04",
+    "T05",
+    "T06",
+    "T07"
+  ],
+  "stages": [
+    {
+      "stage_id": "T00",
+      "stage_type": "upstream_audio_overview_transcript",
+      "input_artifacts_and_hashes": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/notebooklm_generation_receipt.json",
+          "sha256": "8ed678d77710d63789a6864e2b4b0d6279d88710c2cc2ddc73d28c4bb7757ef8"
+        }
+      ],
+      "output_artifacts_and_hashes": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/real_input_intake_readiness/real_input/transcript/new_banknote_notebooklm/raw/notebooklm_audio_overview_transcript_raw.txt",
+          "sha256": "1825c9689a050ddbfc91537a228f6af0ba2f7f033e5b681fff4f227551144437",
+          "size_bytes": 32089,
+          "tracked": false,
+          "body_embedded": false
+        }
+      ],
+      "actor_class": "NotebookLM",
+      "change_class": "U_UPSTREAM",
+      "secondary_change_classes": [],
+      "affected_claim_or_cue_ids": "see_output_artifacts",
+      "content_count_before": {
+        "source_title_snapshot_count": 11
+      },
+      "content_count_after": {
+        "raw_logical_line_count": 326,
+        "raw_size_bytes": 32089
+      },
+      "semantic_change": true,
+      "factual_meaning_impact": "changed",
+      "evidence_change": false,
+      "approval_impact": "upstream material requiring downstream verification",
+      "human_approval_required_for_equivalent_future_change": true,
+      "approval_remains_valid_for_current_hashes": true,
+      "before_after_summary": {
+        "before": {
+          "source_title_snapshot_count": 11
+        },
+        "after": {
+          "raw_logical_line_count": 326,
+          "raw_size_bytes": 32089
+        }
+      },
+      "visible_rationale": "Audio Overview was converted to the submitted plain-text transcript.",
+      "rejection_or_omission_retention": "Raw body remains ignored; identity and line fingerprints are retained.",
+      "current_approval_status": "valid_for_exact_T06_baseline",
+      "status": "identity_verified_content_not_reproduced"
+    },
+    {
+      "stage_id": "T01",
+      "stage_type": "immutable_raw_intake_and_deterministic_salvage",
+      "input_artifacts_and_hashes": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/real_input_intake_readiness/real_input/transcript/new_banknote_notebooklm/raw/notebooklm_audio_overview_transcript_raw.txt",
+          "sha256": "1825c9689a050ddbfc91537a228f6af0ba2f7f033e5b681fff4f227551144437",
+          "size_bytes": 32089,
+          "tracked": false,
+          "body_embedded": false
+        }
+      ],
+      "output_artifacts_and_hashes": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/input_identity_receipt.json",
+          "sha256": "285ebe69286584d2e64fa685593684a46d443c985924836ebd0eb663109940a8"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/transcript_quality_readback.json",
+          "sha256": "8cb6e9ea38e3677ae9934f42752a959724a2155255e235a50ce351d7f8798449"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/asr_correction_ledger.json",
+          "sha256": "8b718091f31180d8f3133244f0e412a3cca4d8f3ac5b709495793c24be8f00f9"
+        }
+      ],
+      "actor_class": "Worker_mechanical",
+      "change_class": "M_MECHANICAL",
+      "secondary_change_classes": [],
+      "affected_claim_or_cue_ids": "see_output_artifacts",
+      "content_count_before": {
+        "raw_logical_line_count": 326
+      },
+      "content_count_after": {
+        "claim_candidate_count": 182
+      },
+      "semantic_change": false,
+      "factual_meaning_impact": "unchanged",
+      "evidence_change": false,
+      "approval_impact": "none; normalization is fingerprinted and raw identity is unchanged",
+      "human_approval_required_for_equivalent_future_change": false,
+      "approval_remains_valid_for_current_hashes": true,
+      "before_after_summary": {
+        "before": {
+          "raw_logical_line_count": 326
+        },
+        "after": {
+          "claim_candidate_count": 182
+        }
+      },
+      "visible_rationale": "Normalize and salvage deterministically without tracking the raw body.",
+      "rejection_or_omission_retention": "Corrections, rejected spans, and raw line mapping remain in receipts/ignored evidence.",
+      "current_approval_status": "valid_for_exact_T06_baseline",
+      "status": "passed"
+    },
+    {
+      "stage_id": "T02",
+      "stage_type": "title_level_source_set_freeze",
+      "input_artifacts_and_hashes": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/notebooklm_generation_receipt.json",
+          "sha256": "8ed678d77710d63789a6864e2b4b0d6279d88710c2cc2ddc73d28c4bb7757ef8"
+        }
+      ],
+      "output_artifacts_and_hashes": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_set_snapshot.json",
+          "sha256": "ac4041ded0f9fd4be1e5d23dc8800fd632b2e30ae15bd995c9ec9c0bf691085f"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/notebook_source_to_verification_source_crosswalk.json",
+          "sha256": "679c7100fcbcd2a04f5d3e225a79a1b85693c67b8068862e7c78154057d77fd3"
+        }
+      ],
+      "actor_class": "user",
+      "change_class": "U_UPSTREAM",
+      "secondary_change_classes": [],
+      "affected_claim_or_cue_ids": "see_output_artifacts",
+      "content_count_before": {
+        "supplied_title_count": 11
+      },
+      "content_count_after": {
+        "frozen_title_count": 11
+      },
+      "semantic_change": false,
+      "factual_meaning_impact": "unchanged",
+      "evidence_change": true,
+      "approval_impact": "source-set replacement would require U_UPSTREAM authorization",
+      "human_approval_required_for_equivalent_future_change": true,
+      "approval_remains_valid_for_current_hashes": true,
+      "before_after_summary": {
+        "before": {
+          "supplied_title_count": 11
+        },
+        "after": {
+          "frozen_title_count": 11
+        }
+      },
+      "visible_rationale": "Freeze supplied titles independently from later factual authority.",
+      "rejection_or_omission_retention": "Unresolved and excluded source identities remain explicit in the snapshot.",
+      "current_approval_status": "valid_for_exact_T06_baseline",
+      "status": "passed_title_level_only"
+    },
+    {
+      "stage_id": "T03",
+      "stage_type": "official_source_capture_and_claim_adjudication",
+      "input_artifacts_and_hashes": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_set_snapshot.json",
+          "sha256": "ac4041ded0f9fd4be1e5d23dc8800fd632b2e30ae15bd995c9ec9c0bf691085f"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/claim_risk_ledger.json",
+          "sha256": "0ef07c38e234dfc18f3166ae790bc43e49bee0d9b325e02aa6790cf37e1ae360"
+        }
+      ],
+      "output_artifacts_and_hashes": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/authoritative_source_registry.json",
+          "sha256": "3a55d5ec999edec215b87fba0f999f1a9086eca1921158c9c3f72749ade1713a"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_capture_receipts.json",
+          "sha256": "6c4cc1817a3574b7278f2986522c91b05a51c1b8bba3ea4a544a78aee920e205"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/claim_adjudication.json",
+          "sha256": "f6c61c2bb0f01fd36d1b09ddc219544a15922ecbd92a111be8d6e1ce4d97600b"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/claim_adjudication_readback.json",
+          "sha256": "7b16e107e3b78f0b372ad38a16b5b12cc00db5a932c20ef85f8a905cb5ede662"
+        }
+      ],
+      "actor_class": "Worker_source_verification",
+      "change_class": "S_SEMANTIC",
+      "secondary_change_classes": [],
+      "affected_claim_or_cue_ids": "claim_001..claim_182",
+      "content_count_before": {
+        "claim_candidate_count": 182
+      },
+      "content_count_after": {
+        "verified_primary_count": 19,
+        "outcome_counts": {
+          "duplicate_not_used": 26,
+          "rejected_policy_intent": 10,
+          "rejected_quantitative_without_exact_source": 18,
+          "rejected_unsupported": 15,
+          "style_or_rhetoric_only": 52,
+          "supported_context_only": 11,
+          "unresolved_not_used": 31,
+          "verified_primary": 19
+        }
+      },
+      "semantic_change": true,
+      "factual_meaning_impact": "changed",
+      "evidence_change": true,
+      "approval_impact": "claim adoption remains unapproved until T06",
+      "human_approval_required_for_equivalent_future_change": true,
+      "approval_remains_valid_for_current_hashes": true,
+      "before_after_summary": {
+        "before": {
+          "claim_candidate_count": 182
+        },
+        "after": {
+          "verified_primary_count": 19,
+          "outcome_counts": {
+            "duplicate_not_used": 26,
+            "rejected_policy_intent": 10,
+            "rejected_quantitative_without_exact_source": 18,
+            "rejected_unsupported": 15,
+            "style_or_rhetoric_only": 52,
+            "supported_context_only": 11,
+            "unresolved_not_used": 31,
+            "verified_primary": 19
+          }
+        }
+      },
+      "visible_rationale": "Use bounded official evidence to adjudicate every preserved claim once.",
+      "rejection_or_omission_retention": "All rejected, unresolved, context-only, style, and duplicate outcomes remain enumerated.",
+      "current_approval_status": "valid_for_exact_T06_baseline",
+      "status": "passed"
+    },
+    {
+      "stage_id": "T04",
+      "stage_type": "supported_only_constrained_rewrite",
+      "input_artifacts_and_hashes": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/claim_adjudication.json",
+          "sha256": "f6c61c2bb0f01fd36d1b09ddc219544a15922ecbd92a111be8d6e1ce4d97600b"
+        }
+      ],
+      "output_artifacts_and_hashes": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.json",
+          "sha256": "c1c7dacdaf0961f2c1796639e401f2d7ad41c5eb9dfe998727715a341ac26a87",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c",
+          "identity_status": "recoverable_from_git_history"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/cue_source_traceability.json",
+          "sha256": "98534ded178900adf30148bff2e6690ed7d9a9c9696eeee9d3aa45dcb4e30a7e",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c",
+          "identity_status": "recoverable_from_git_history"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_yymm4.csv",
+          "sha256": "549d382cec35dcd9f9f51ee21f9e82d68f662156baacf56891a888832aae1ab3",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c",
+          "identity_status": "recoverable_from_git_history"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/derived_yymm4_import.csv",
+          "sha256": "179421d0e04b3e510c76c63e7a8613586a2115172743d5892689a656c5282069",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c",
+          "identity_status": "recoverable_from_git_history"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/script_generation_receipt.json",
+          "sha256": "678edad35a24aaeeefb4ee46a1f3703032a65eb6e3adf589a799f8ae18060d10",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c",
+          "identity_status": "recoverable_from_git_history"
+        }
+      ],
+      "actor_class": "Worker_editorial",
+      "change_class": "S_SEMANTIC",
+      "secondary_change_classes": [
+        "E_EDITORIAL_EVIDENCE_PRESERVING"
+      ],
+      "affected_claim_or_cue_ids": "17 adopted claims across cue_001..cue_009",
+      "content_count_before": {
+        "verified_primary_count": 19
+      },
+      "content_count_after": {
+        "cue_count": 9,
+        "unique_adopted_claim_count": 17,
+        "factual_units": 22,
+        "claim_edges": 23
+      },
+      "semantic_change": true,
+      "factual_meaning_impact": "changed",
+      "evidence_change": false,
+      "approval_impact": "required later human approval",
+      "human_approval_required_for_equivalent_future_change": true,
+      "approval_remains_valid_for_current_hashes": true,
+      "before_after_summary": {
+        "before": {
+          "verified_primary_count": 19
+        },
+        "after": {
+          "cue_count": 9,
+          "unique_adopted_claim_count": 17,
+          "factual_units": 22,
+          "claim_edges": 23
+        }
+      },
+      "visible_rationale": "Select supported propositions and rewrite them into a 2/4/3 dialogue structure.",
+      "rejection_or_omission_retention": "Non-adopted claims remain in adjudication; exact T04 bytes are recoverable at the recorded commit.",
+      "current_approval_status": "valid_for_exact_T06_baseline",
+      "status": "superseded_by_T05_but_git_recoverable"
+    },
+    {
+      "stage_id": "T05",
+      "stage_type": "editorial_convergence",
+      "input_artifacts_and_hashes": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.json",
+          "sha256": "c1c7dacdaf0961f2c1796639e401f2d7ad41c5eb9dfe998727715a341ac26a87",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c",
+          "identity_status": "recoverable_from_git_history"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/cue_source_traceability.json",
+          "sha256": "98534ded178900adf30148bff2e6690ed7d9a9c9696eeee9d3aa45dcb4e30a7e",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c",
+          "identity_status": "recoverable_from_git_history"
+        }
+      ],
+      "output_artifacts_and_hashes": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.json",
+          "sha256": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/cue_source_traceability.json",
+          "sha256": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/editorial_revision_receipt.json",
+          "sha256": "357b42e60135cfc2e08d828ae7cced285645a3416234d2da4a68baf711855ce1"
+        }
+      ],
+      "actor_class": "Worker_editorial",
+      "change_class": "S_SEMANTIC",
+      "secondary_change_classes": [
+        "E_EDITORIAL_EVIDENCE_PRESERVING"
+      ],
+      "affected_claim_or_cue_ids": "cue_001..cue_009",
+      "content_count_before": {
+        "cue_count": 9,
+        "unique_adopted_claim_count": 17,
+        "factual_units": 22,
+        "claim_edges": 23
+      },
+      "content_count_after": {
+        "cue_count": 9,
+        "unique_adopted_claim_count": 15,
+        "factual_units": 20,
+        "claim_edges": 21
+      },
+      "semantic_change": true,
+      "factual_meaning_impact": "changed",
+      "evidence_change": false,
+      "approval_impact": "T05 result is the exact T06 approval candidate",
+      "human_approval_required_for_equivalent_future_change": true,
+      "approval_remains_valid_for_current_hashes": true,
+      "before_after_summary": {
+        "before": {
+          "cue_count": 9,
+          "unique_adopted_claim_count": 17,
+          "factual_units": 22,
+          "claim_edges": 23
+        },
+        "after": {
+          "cue_count": 9,
+          "unique_adopted_claim_count": 15,
+          "factual_units": 20,
+          "claim_edges": 21
+        }
+      },
+      "visible_rationale": "Improve question/answer flow, terminology, density, endings, and loupe specificity without unsupported facts.",
+      "rejection_or_omission_retention": "claim_158 is retained beside cue_008; claim_095/162/164 remain verified but not adopted.",
+      "current_approval_status": "valid_for_exact_T06_baseline",
+      "status": "passed"
+    },
+    {
+      "stage_id": "T06",
+      "stage_type": "explicit_human_approval",
+      "input_artifacts_and_hashes": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_CANONICAL_SCRIPT_REVIEW.md",
+          "sha256": "a5d5a23fca7d6c0c0fe200a89800d9c3c8ac278c18c1a137c35019d4780e7da8"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.json",
+          "sha256": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.txt",
+          "sha256": "4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script_review.md",
+          "sha256": "9816c28e9b0099ef98e2aefb9e70bf22a32fbbd0f931fd8989c6ac19dcd99d3a"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/cue_source_traceability.json",
+          "sha256": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_yymm4.csv",
+          "sha256": "23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/derived_yymm4_import.csv",
+          "sha256": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_to_script_manifest.json",
+          "sha256": "e13fb57a2681875f577e4d85f13cf41bfc601519892fa4f975bdfcdd24d927b5"
+        }
+      ],
+      "output_artifacts_and_hashes": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/human_script_approval_receipt.json",
+          "sha256": "1ac490cbcd06483082b2d56a97ff758199ef37ab4b6d1229806c24b8698d7e0f"
+        }
+      ],
+      "actor_class": "human_approval",
+      "change_class": "M_MECHANICAL",
+      "secondary_change_classes": [],
+      "affected_claim_or_cue_ids": "cue_001..cue_009 and 15 adopted claims",
+      "content_count_before": {
+        "approval_status": "pending",
+        "cue_count": 9
+      },
+      "content_count_after": {
+        "approval_status": "valid",
+        "cue_count": 9
+      },
+      "semantic_change": false,
+      "factual_meaning_impact": "unchanged",
+      "evidence_change": false,
+      "approval_impact": "locks exact commit, files, text, order, scenes, speakers, claims, and CSV projection",
+      "human_approval_required_for_equivalent_future_change": false,
+      "approval_remains_valid_for_current_hashes": true,
+      "before_after_summary": {
+        "before": {
+          "approval_status": "pending",
+          "cue_count": 9
+        },
+        "after": {
+          "approval_status": "valid",
+          "cue_count": 9
+        }
+      },
+      "visible_rationale": "Record explicit user option A approval with invalidation and successor rules.",
+      "rejection_or_omission_retention": "The receipt is immutable; a later revision must create a successor receipt.",
+      "current_approval_status": "valid_for_exact_T06_baseline",
+      "status": "valid"
+    },
+    {
+      "stage_id": "T07",
+      "stage_type": "mechanical_yymm4_projection",
+      "input_artifacts_and_hashes": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.json",
+          "sha256": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47"
+        },
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_yymm4.csv",
+          "sha256": "23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12"
+        }
+      ],
+      "output_artifacts_and_hashes": [
+        {
+          "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/derived_yymm4_import.csv",
+          "sha256": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee"
+        }
+      ],
+      "actor_class": "Worker_mechanical",
+      "change_class": "M_MECHANICAL",
+      "secondary_change_classes": [],
+      "affected_claim_or_cue_ids": "cue_001..cue_009",
+      "content_count_before": {
+        "canonical_csv_rows": 9,
+        "canonical_speakers": {
+          "れいむ": 3,
+          "まりさ": 6
+        }
+      },
+      "content_count_after": {
+        "derived_csv_rows": 9,
+        "yymm4_characters": {
+          "ゆっくり霊夢": 3,
+          "ゆっくり魔理沙": 6
+        }
+      },
+      "semantic_change": false,
+      "factual_meaning_impact": "unchanged",
+      "evidence_change": false,
+      "approval_impact": "approval remains valid only while text/order and all approved hashes remain exact",
+      "human_approval_required_for_equivalent_future_change": false,
+      "approval_remains_valid_for_current_hashes": true,
+      "before_after_summary": {
+        "before": {
+          "canonical_csv_rows": 9,
+          "canonical_speakers": {
+            "れいむ": 3,
+            "まりさ": 6
+          }
+        },
+        "after": {
+          "derived_csv_rows": 9,
+          "yymm4_characters": {
+            "ゆっくり霊夢": 3,
+            "ゆっくり魔理沙": 6
+          }
+        }
+      },
+      "visible_rationale": "Bind the already-created canonical-to-YMM4 speaker projection to the T06 approval lock; no post-approval CSV regeneration or text change occurred.",
+      "rejection_or_omission_retention": "Canonical and derived CSVs are both retained; runtime observation has not occurred.",
+      "current_approval_status": "valid_for_exact_T06_baseline",
+      "status": "prepared_not_observed"
+    }
+  ],
+  "current_approval_receipt_id": "new-banknote-script-option-a-approval-v1",
+  "current_approval_status": "valid",
+  "granularity_boundary": "clause_and_meaning_unit_lineage; no token-level authorship claim"
+}
