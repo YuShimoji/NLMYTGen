@@ -9,7 +9,7 @@
   provenance開始時のvisual baselineは
   bc07fc073063d3e5d1af1e6e5400a340b0036496。current branch tipがこのhandoffを
   含むoutcome commit `1f78449f896f6ee5cb49f04d7f86b21a23dc99a0`に加え、現在の
-  handoff commit `533c37956f5ce5d51115bde98e1a0acc0e2168ef`までpush済み。
+  handoff commit `6540846c5be129b9601b0b3b0bbdd2441225280c`までpush済み。
   再開時はgit rev-parse HEAD、upstream parity 0 0、clean tracked worktreeをlive確認し、
   intentional ignored evidenceは削除しない。
 - **最小読取順**: AGENTS.md → docs/REPO_LOCAL_RULES.md →
