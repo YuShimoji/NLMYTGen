@@ -8,8 +8,9 @@
 - **取得先**: origin/codex/generic-visual-static-layout-probe-v1。exact sourceは
   codex/generic-visual-capability-composition-v1の
   981f67e55b7e533e86edcbe034c7fd3299f23fae。current branch tipがこのhandoffを含む
-  outcome commitである。再開時はHEAD、upstream parity 0 0、tracked cleanとignored
-  probe evidenceを分けてlive確認する。
+  artifact outcome commit `7f71c72a7f0bca16b13a75216f4787791da909df`である。handoff docsの
+  follow-up commitを含むcurrent branch tipは、再開時にHEADとしてlive確認する。upstream
+  parity 0 0、tracked cleanとignored probe evidenceも分けて確認する。
 - **最小読取順**: AGENTS.md → docs/REPO_LOCAL_RULES.md → docs/runtime-state.md →
   この節 → samples/visual_composition_lab/runtime_probe/README_STATIC_LAYOUT_PROBE.md。
 - **現在の状態**: Project-State-IDはgeneric-visual-static-layout-probe-ready-v1、
@@ -48,6 +49,10 @@
   save/renderせずYMM4を閉じ、terminalで3回答をcollectionする。
 - **retained quality debt**: subtitle readability/non-overlap、Image crop/anchor、Text wrap/anchor、
   cross-machine portability、heterogeneous second-topic C5の5件だけを保持する。
+- **durable re-entry packet**: 判断は`docs/decision-log.md`、残した候補は`docs/idea-ledger.md`、
+  current capsuleは`docs/runtime-state.md`、一行入口は`docs/PROJECT_COCKPIT.md`に分担した。
+  最初のlive checkは `git fetch --prune origin`、branch/HEAD/upstream/parity、tracked status、
+  `docs/runtime-state.md`、`samples/visual_composition_lab/runtime_probe/README_STATIC_LAYOUT_PROBE.md`。
 
 ## 直前の別端末再開ハンドオフ（2026-07-14 JST・new-banknote import observed / visual decision ready・履歴）
 

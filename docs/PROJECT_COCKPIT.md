@@ -40,6 +40,10 @@ Primary probe surface:
 Capability authority:
 `docs/visual_system/README_GENERIC_VISUAL_CAPABILITIES.md`
 
+Re-entry packet:
+`docs/project-context.md`（current handoff）、`docs/decision-log.md`（判断）、
+`docs/idea-ledger.md`（残した次候補）、artifact commit `7f71c72a7f0bca16b13a75216f4787791da909df`。
+
 ## 次の入口
 
 repo rootからtracked README記載のbatch commandを1回実行し、字幕non-overlap、Image

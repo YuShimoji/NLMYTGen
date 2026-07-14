@@ -18,6 +18,9 @@ GitHub 上で現在地だけを読む場合は [PROJECT_COCKPIT.md](PROJECT_COCK
 [project-context.md](project-context.md) 最上部の「現在の別端末再開ハンドオフ」を開く。
 過去の日付付き handoff を現在の指示として使わない。
 
+Current sliceの判断と次の候補は、必要なときだけ
+[decision-log.md](decision-log.md) と [idea-ledger.md](idea-ledger.md) を読む。
+
 **Creative slice 例外**: 演出 / motion / 視覚 effect 制作タスクの場合、上記 3 点に加えて以下も必読:
 
 - [MOTION_PRODUCTION_PIPELINE.md](MOTION_PRODUCTION_PIPELINE.md) — workflow 正本（5-phase pipeline + Anti-Shortcut Rules）
