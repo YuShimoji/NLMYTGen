@@ -324,11 +324,13 @@ def test_content_lock_covers_current_script_yymm4_and_visual_identities() -> Non
         assert row["canonical_content_effect"] == "none"
     local_yymm4 = lock["local_yymm4_evidence_reverification"]
     assert local_yymm4["status"] == (
-        "not_reperformed_local_project_and_results_absent"
+        "reverified_from_current_local_bytes"
     )
     assert local_yymm4["expected_identity_count"] == 3
-    assert local_yymm4["local_present_count"] == 0
-    assert all(row["local_file_present"] is False for row in local_yymm4["evidence"])
+    assert local_yymm4["local_present_count"] == 3
+    assert local_yymm4["all_present_hashes_match"] is True
+    assert all(row["local_file_present"] is True for row in local_yymm4["evidence"])
+    assert all(row["local_sha256_matches"] is True for row in local_yymm4["evidence"])
 
 
 def test_render_and_second_build_are_byte_deterministic(tmp_path: Path) -> None:

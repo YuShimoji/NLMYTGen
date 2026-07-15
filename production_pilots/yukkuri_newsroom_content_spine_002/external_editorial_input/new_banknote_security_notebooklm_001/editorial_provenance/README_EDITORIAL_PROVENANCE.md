@@ -13,7 +13,7 @@
 | どの程度変わったか | pre-editorial draftの9 cue中、byte同一は1 cue。ordered normalized overlapは279 characters / 263 tokens | similarityであり著者比率ではない |
 | 誰が承認したか | current execution contract上、ユーザーは現在の9 cueで継続する状態を承認 | 独立した同時点receiptはなく、将来のsilent editも未許可 |
 | 以前のuser scriptを使ったか | `not_proven_from_available_repo_evidence` | repoに候補がないことは不使用の証明ではない |
-| YMM4ローカル証跡を再検証したか | `not_reperformed_local_project_and_results_absent` | tracked receipt/readback identityはlockしたが、ローカルbytes不在時は再検証していない |
+| YMM4ローカル証跡を再検証したか | `reverified_from_current_local_bytes` | 3 expected identitiesはcurrent local bytesとhash一致。raw bytesはignoredのまま |
 
 ## 変換量の読み戻し
 

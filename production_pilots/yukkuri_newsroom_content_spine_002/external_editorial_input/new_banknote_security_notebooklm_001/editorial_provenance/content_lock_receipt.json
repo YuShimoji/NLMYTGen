@@ -321,31 +321,31 @@
   ],
   "future_substantive_change_rule": "invalidate_this_lock_create_visible_delta_ledger_and_obtain_successor_human_approval",
   "local_yymm4_evidence_reverification": {
-    "status": "not_reperformed_local_project_and_results_absent",
+    "status": "reverified_from_current_local_bytes",
     "expected_identity_count": 3,
-    "local_present_count": 0,
-    "all_present_hashes_match": null,
+    "local_present_count": 3,
+    "all_present_hashes_match": true,
     "evidence": [
       {
         "evidence_kind": "operator_result",
         "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/operator_result.json",
         "expected_sha256": "e4ecb1bf5e4b5780990a00094804dd871d66068a917000015f9fecfd83e8ddfa",
-        "local_file_present": false,
-        "local_sha256_matches": null
+        "local_file_present": true,
+        "local_sha256_matches": true
       },
       {
         "evidence_kind": "operator_batch_state",
         "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/operator_batch.local.json",
         "expected_sha256": "0753e1cb17cedf52c57dc4856dc896db61d7c275ac540e621c17a2058d093b04",
-        "local_file_present": false,
-        "local_sha256_matches": null
+        "local_file_present": true,
+        "local_sha256_matches": true
       },
       {
         "evidence_kind": "project_identity",
         "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/new_banknote_yymm4_import_observation.local.ymmp",
         "expected_sha256": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54",
-        "local_file_present": false,
-        "local_sha256_matches": null
+        "local_file_present": true,
+        "local_sha256_matches": true
       }
     ],
     "tracked_receipts_remain_locked": true

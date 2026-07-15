@@ -2034,6 +2034,17 @@ def _readme(
     yymm4_local_status = lock["local_yymm4_evidence_reverification"][
         "status"
     ]
+    yymm4_local_boundary = {
+        "reverified_from_current_local_bytes": (
+            "3 expected identitiesはcurrent local bytesとhash一致。raw bytesはignoredのまま"
+        ),
+        "not_reperformed_local_project_and_results_absent": (
+            "tracked receipt/readback identityはlock済み。current local bytes不在時は再検証しない"
+        ),
+        "incomplete_or_identity_mismatch_requires_reobservation": (
+            "一部不在またはidentity mismatchのため、次のYMM4 gate前に再観察が必要"
+        ),
+    }[yymm4_local_status]
     return f"""# New-banknote Editorial Provenance
 
 > **CURRENT SCRIPT FROZEN — INTERNAL REVIEW — NO FUTURE SILENT EDIT AUTHORITY**
@@ -2049,7 +2060,7 @@ def _readme(
 | どの程度変わったか | pre-editorial draftの9 cue中、byte同一は{magnitude['exact_byte_equal_cue_count']} cue。ordered normalized overlapは{magnitude['ordered_matching_character_count']} characters / {magnitude['ordered_matching_token_count']} tokens | similarityであり著者比率ではない |
 | 誰が承認したか | current execution contract上、ユーザーは現在の9 cueで継続する状態を承認 | 独立した同時点receiptはなく、将来のsilent editも未許可 |
 | 以前のuser scriptを使ったか | `{audit['final_status']}` | repoに候補がないことは不使用の証明ではない |
-| YMM4ローカル証跡を再検証したか | `{yymm4_local_status}` | tracked receipt/readback identityはlockしたが、ローカルbytes不在時は再検証していない |
+| YMM4ローカル証跡を再検証したか | `{yymm4_local_status}` | {yymm4_local_boundary} |
 
 ## 変換量の読み戻し
 
