@@ -9,9 +9,15 @@
   provenance開始時のvisual baselineは
   bc07fc073063d3e5d1af1e6e5400a340b0036496。current branch tipがこのhandoffを
   含むoutcome commit `1f78449f896f6ee5cb49f04d7f86b21a23dc99a0`に加え、現在の
-  handoff commit `6540846c5be129b9601b0b3b0bbdd2441225280c`までpush済み。
+  handoff commit `517d70896c10570caad51a7c6c1e0659a862ed69`までpush済み。
   再開時はgit rev-parse HEAD、upstream parity 0 0、clean tracked worktreeをlive確認し、
   intentional ignored evidenceは削除しない。
+- **2026-07-15 開発再開確認**: fetch/pruneとfast-forward限定pull後も対象branchは
+  remote parity 0/0。`uv sync --extra dev`、GUI Electron dependency readback、
+  editorial provenance / visual decision / state syncのfocused 29 testsを通過した。
+  監修AI向けの時点報告は
+  `docs/verification/REMOTE_SYNC_AND_DEVELOPMENT_READINESS_2026-07-15.md`。
+  製品gateは進めず、別レーンの新規remote branchも混ぜていない。
 - **最小読取順**: AGENTS.md → docs/REPO_LOCAL_RULES.md →
   docs/runtime-state.md → この節 →
   production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/

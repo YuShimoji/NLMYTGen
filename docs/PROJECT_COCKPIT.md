@@ -7,7 +7,7 @@ Product-State: new-banknote-script-lineage-audited-visual-direction-review-ready
 Product-Gate: human-visual-direction-selection
 Recommended-Next: select-new-banknote-visual-direction-with-lineage
 External-State: public-repo-feature-branch
-Handoff-Commit: 6540846c5be129b9601b0b3b0bbdd2441225280c
+Handoff-Commit: 517d70896c10570caad51a7c6c1e0659a862ed69
 Remote-Parity: 0/0
 Tracked-Worktree: clean; intentional ignored evidence retained
 
