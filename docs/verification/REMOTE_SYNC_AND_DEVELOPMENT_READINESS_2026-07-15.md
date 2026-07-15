@@ -8,8 +8,9 @@ visual route を承認したりするものではありません。
 ## 監修判断に必要な結論
 
 リモート参照を prune 付きで更新し、現行ブランチへ fast-forward 限定 pull を実行しました。
-対象ブランチはすでに最新で、確認基準 commit は
-`517d70896c10570caad51a7c6c1e0659a862ed69`、同期直後の `HEAD...upstream` は
+対象ブランチはすでに最新で、製品状態の確認基準 commit は
+`517d70896c10570caad51a7c6c1e0659a862ed69`、同期・開発再開報告を含む取得時の branch tip は
+`3d39e8cb97f9799d3b207b0dc2e837d7aeb69d85` でした。同期直後の `HEAD...upstream` は
 `0/0`、tracked worktree は clean でした。`origin` には別レーンの新規ブランチ
 `codex/generic-visual-static-layout-observation-intake-v1` も現れていますが、現在の
 new-banknote lineage / visual-selection slice とは別系統なので、混入・merge・branch switch は
@@ -27,12 +28,13 @@ new-banknote lineage / visual-selection slice とは別系統なので、混入�
 | ブランチ境界 | current branch と remote の最新一覧を比較 | 別レーンの新規 branch は取り込まず保持 | new-banknote の判断面へ unrelated visual work を混ぜていない |
 | Python 環境 | `uv sync --extra dev` | 7 package resolved、6 package audited、失敗なし | 現行 pipeline/test を再実行できる |
 | GUI 環境 | top-level npm dependency readback | Electron 35.7.5 解決済み | GUI 開発へ進む場合も追加 install 待ちではない |
-| 現行 slice 回帰 | editorial provenance、visual decision、project state sync の focused pytest | 29 passed | 9-cue lineage、review board linkage、状態同期の既知契約は維持 |
+| provenance receipt 追随 | 報告ファイル追加後に決定的 generator を再実行 | tracked path inventory が 2728 から 2729 へ追随、locked content の変更なし | 報告追加そのものが監査 receipt を古くする drift を解消 |
+| 現行 slice 回帰 | editorial provenance、visual decision、pipeline smoke manifest、project state sync の focused pytest | 36 passed | 9-cue lineage、review board linkage、状態同期の既知契約は維持 |
 | worktree 衛生 | `git diff --check` と porcelain readback | whitespace error なし、tracked/untracked change なし | 報告作成前の baseline にユーザー作業の混入がない |
 
 フル `uv run pytest` は実行していません。repo-local rule が、生成済み artifact / 旧 absolute
 path の既知 drift と tracked fixture side effect のため通常 closeout gate にしないと定めており、
-今回はコード取り込みがなく、現行 slice に直結する focused 29 tests の方が判断根拠として
+今回はコード取り込みがなく、現行 slice に直結する focused 36 tests の方が判断根拠として
 適切だからです。
 
 ## 製品の現在地と変更していない境界

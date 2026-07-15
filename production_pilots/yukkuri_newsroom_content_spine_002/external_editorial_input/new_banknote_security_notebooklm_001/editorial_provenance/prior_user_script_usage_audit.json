@@ -36,8 +36,8 @@
     {
       "surface": "current tracked repository path inventory",
       "method": "executed_git_ls_files_path_inventory",
-      "path_count": 2728,
-      "path_inventory_sha256": "b0924540841830eed3d4a75965b687352085ef3f0225bc4629eef3f40421e2c5",
+      "path_count": 2729,
+      "path_inventory_sha256": "e40c1d859461bdaf2b5fb558c0c23a16f0b66072c724cc3edd82b4ebd774dea4",
       "candidate_path_inventory_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "result": "no_unresolved_prior_user_script_candidate"
     },

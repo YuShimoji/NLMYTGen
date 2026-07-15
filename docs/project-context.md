@@ -14,7 +14,9 @@
   intentional ignored evidenceは削除しない。
 - **2026-07-15 開発再開確認**: fetch/pruneとfast-forward限定pull後も対象branchは
   remote parity 0/0。`uv sync --extra dev`、GUI Electron dependency readback、
-  editorial provenance / visual decision / state syncのfocused 29 testsを通過した。
+  editorial provenance / visual decision / pipeline smoke manifest / state syncの
+  focused 36 testsを通過した。報告ファイル追加でtracked path inventoryが1件増えたため、
+  provenance receiptを決定的再生成し、locked content不変のままdriftを解消した。
   監修AI向けの時点報告は
   `docs/verification/REMOTE_SYNC_AND_DEVELOPMENT_READINESS_2026-07-15.md`。
   製品gateは進めず、別レーンの新規remote branchも混ぜていない。
