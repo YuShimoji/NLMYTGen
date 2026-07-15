@@ -1,6 +1,6 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-14 JST・editorial provenance audited / visual selection ready）
+## 現在の別端末再開ハンドオフ（2026-07-15 JST・editorial provenance audited / visual selection ready）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
@@ -9,14 +9,17 @@
   provenance開始時のvisual baselineは
   bc07fc073063d3e5d1af1e6e5400a340b0036496。current branch tipがこのhandoffを
   含むoutcome commit `1f78449f896f6ee5cb49f04d7f86b21a23dc99a0`に加え、現在の
-  handoff commit `517d70896c10570caad51a7c6c1e0659a862ed69`までpush済み。
+  provenance baseline handoff `517d70896c10570caad51a7c6c1e0659a862ed69`と、
+  same-machine revalidation outcome `4bfa445604d185852c1ab0734fcf19975b2774d7`を含む。
   再開時はgit rev-parse HEAD、upstream parity 0 0、clean tracked worktreeをlive確認し、
   intentional ignored evidenceは削除しない。
-- **2026-07-15 開発再開確認**: fetch/pruneとfast-forward限定pull後も対象branchは
-  remote parity 0/0。`uv sync --extra dev`、GUI Electron dependency readback、
-  editorial provenance / visual decision / pipeline smoke manifest / state syncの
-  focused 36 testsを通過した。報告ファイル追加でtracked path inventoryが1件増えたため、
-  provenance receiptを決定的再生成し、locked content不変のままdriftを解消した。
+- **2026-07-15 開発再開確認**: fetch/prune後、完了済みgeneric visual branchから
+  このbranchをremote tip `3bfcaed0ce7fc8f5d0b472d2cd54b2b078252cc1`へfast-forwardして
+  再入場した。`uv sync --extra dev`、GUI Electron dependency readback、editorial
+  provenance / visual decision / pipeline smoke manifest / state syncのfocused 36 testsを
+  通過した。初回はremote receiptのlocal-bytes absent記録と、この端末に残る3件のignored
+  YMM4証跡が食い違い35/36だったが、3件ともlocked hash一致を確認し、deterministic
+  generator、receipt、README境界、test snapshotを同期した。locked contentは不変。
   監修AI向けの時点報告は
   `docs/verification/REMOTE_SYNC_AND_DEVELOPMENT_READINESS_2026-07-15.md`。
   製品gateは進めず、別レーンの新規remote branchも混ぜていない。
@@ -27,7 +30,7 @@
   README_EDITORIAL_PROVENANCE.md。
 - **現在の状態**: Project-State-IDは
   new-banknote-editorial-provenance-audited-visual-selection-ready-v1、
-  State-Revisionは2026-07-14.3。Product-Stateは
+  State-Revisionは2026-07-15.1。Product-Stateは
   new-banknote-script-lineage-audited-visual-direction-review-ready、
   Product-Gateはhuman-visual-direction-selection、Recommended-Nextは
   select-new-banknote-visual-direction-with-lineage、External-Stateは
@@ -63,13 +66,13 @@
   provenanceを追加し、generatorからdeterministic regenerationした。関連するcanonical
   receiptsとvisual board readbackだけを追随させ、script/CSV/claim/YMM4 tracked evidence/
   route options/recommendation/scene/motion/rights identitiesは不変。
-- **local evidence boundary**: tracked YMM4 receipt/readbackはlock済みだが、ignored
-  local `.ymmp`、operator result、batch stateはこのcheckoutに無いためlocal byte
-  re-verificationは行っていない。これは現在のvisual selectionをblockしないが、
-  selected-route diagnostic work前に再確認する。
-- **検証済み範囲**: modified Python compile、39 focused tests、provenance second build
-  changed=[]、canonical/visual pure renderer、9/9 cues・40/40 segments・38/38 units、24 lock hashes、JSON/
-  HTML relative links、privacy/path/UUID/raw-body audit、target state sync、git diff check。
+- **local evidence boundary**: ignored local `.ymmp`、operator result、batch stateの
+  3件はこのcheckoutにあり、すべてtracked lock identityとhash一致した。read/hashだけで
+  YMM4は起動していない。raw bytesはignored・same-machineのままで、別端末からの独立
+  re-hashにはportability taskが必要だが、現在のvisual selectionはblockしない。
+- **検証済み範囲**: `uv sync --extra dev`、GUI Electron dependency readback、
+  editorial provenance / visual decision / pipeline smoke manifest / state syncのfocused
+  36 tests、provenance second build `changed=[]`、24 lock hashes、git diff check。
   full pytest、NotebookLM、web fetch、YMM4、Computer Useは実行していない。
 - **exact next action**: provenance READMEを先に読み、visual_direction_board.htmlで
   A / B / C、またはscene/cue ID付き修正を返す。同時にS1/S2/S3 flow、misleading

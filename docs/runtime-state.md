@@ -1,13 +1,13 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: new-banknote-editorial-provenance-audited-visual-selection-ready-v1
-State-Revision: 2026-07-14.3
-Updated: 2026-07-14 JST
+State-Revision: 2026-07-15.1
+Updated: 2026-07-15 JST
 Product-State: new-banknote-script-lineage-audited-visual-direction-review-ready
 Product-Gate: human-visual-direction-selection
 Recommended-Next: select-new-banknote-visual-direction-with-lineage
 External-State: public-repo-feature-branch
-Handoff-Commit: 517d70896c10570caad51a7c6c1e0659a862ed69
+Handoff-Commit: 4bfa445604d185852c1ab0734fcf19975b2774d7
 Remote-Parity: 0/0
 Tracked-Worktree: clean; intentional ignored evidence retained
 
@@ -50,6 +50,10 @@ Tracked-Worktree: clean; intentional ignored evidence retained
   Their deterministic receipts/readback changed only for this metadata link;
   script text, CSVs, claim identities, YMM4 tracked evidence, and A/B/C route
   definitions remain unchanged.
+- **Same-machine YMM4 identities reverified**: the ignored operator result,
+  batch state, and project are present in this checkout. All three hashes match
+  the locked identities, so the provenance receipt now records
+  `reverified_from_current_local_bytes`; raw bytes remain ignored.
 
 ## Product Position
 
@@ -59,8 +63,8 @@ Tracked-Worktree: clean; intentional ignored evidence retained
 - Route A Security Inspection Lab remains recommended, while Routes B and C
   remain available. No route is selected, approved, or implemented.
 - Tracked YMM4 observation receipts remain locked. The ignored local `.ymmp`,
-  operator result, and batch state are absent in this checkout, so their local
-  bytes were not reverified in this provenance slice.
+  operator result, and batch state were read and hashed without launching YMM4;
+  all three match the recorded identities.
 
 ## Exact Next Action
 
@@ -98,7 +102,7 @@ only result that authorizes planning the later diagnostic YMM4 project.
 | Remaining uncertainty | Workflow impact | Owner / revisit trigger | Blocks current gate |
 | --- | --- | --- | --- |
 | External-conversation-only prior user script may have existed | Exact external authorship cannot be proven from repo evidence | user/supervisor when a candidate artifact or conversation anchor is supplied | no |
-| Ignored YMM4 project/result are absent in this checkout | Local observation bytes cannot be reverified here; tracked identities remain locked | YMM4 integration owner before selected-route diagnostic work | no |
+| Ignored YMM4 bytes remain same-machine only | Another checkout can inspect tracked hashes but cannot independently re-hash the raw project/result | YMM4 integration owner when another machine must regenerate or open them | no |
 | S04/S05 historical source precision remains incomplete | Historical provenance is less precise without weakening adopted official support | source provenance reviewer when stable source identity appears | no |
 | Human visual-direction choice remains open | No selected-route diagnostic project can begin | human visual reviewer at the current A/B/C gate | yes |
 
