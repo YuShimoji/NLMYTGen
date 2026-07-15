@@ -1,7 +1,7 @@
 # NLMYTGen Project Cockpit
 
 Project-State-ID: generic-visual-static-layout-observation-passed-v1
-State-Revision: 2026-07-15.1
+State-Revision: 2026-07-15.2
 Updated: 2026-07-15 JST
 Product-State: generic-static-layout-bounded-runtime-observation-passed
 Product-Gate: new-banknote-visual-direction-selection
@@ -41,6 +41,12 @@ Primary result surface:
 
 Capability authority:
 `docs/visual_system/README_GENERIC_VISUAL_CAPABILITIES.md`
+
+Remote handoff:
+`origin/codex/generic-visual-static-layout-observation-intake-v1`。検証済み成果commitは
+`81b9092cb44d45924c87965907e6065d63189ba4`で、current tipにはdocs-only handoff sealも
+含まれます。別端末はtracked sanitized packageから次gateへ進めますが、ignored原本の
+再hash/YMM4再観測には明示的なportability taskが必要です。
 
 ## 次の入口
 

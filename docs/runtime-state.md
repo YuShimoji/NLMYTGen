@@ -1,7 +1,7 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: generic-visual-static-layout-observation-passed-v1
-State-Revision: 2026-07-15.1
+State-Revision: 2026-07-15.2
 Updated: 2026-07-15 JST
 Product-State: generic-static-layout-bounded-runtime-observation-passed
 Product-Gate: new-banknote-visual-direction-selection
@@ -55,6 +55,20 @@ branches. Artifact-family integration remains a later separately authorized lane
 - Validation readback: `runtime_observation_readback.json` beside that README.
 - Scope boundary: `runtime_observation_limitations.md` beside that README.
 - Capability authority: `docs/visual_system/README_GENERIC_VISUAL_CAPABILITIES.md`.
+
+## Remote Re-entry
+
+- Fetch `origin/codex/generic-visual-static-layout-observation-intake-v1`.
+  The validated outcome commit is
+  `81b9092cb44d45924c87965907e6065d63189ba4`; the current branch tip also
+  contains the docs-only remote handoff seal.
+- Read `AGENTS.md`, `docs/REPO_LOCAL_RULES.md`, this file, then the primary
+  result surface above. Confirm `git status --short --branch` is clean and
+  `git rev-list --left-right --count "HEAD...@{u}"` returns `0 0`.
+- Another device can resume the product decision from the tracked sanitized
+  package. The ignored project/result/archive bytes stay on the source device,
+  so direct re-hashing or renewed YMM4 observation requires an explicit
+  portability task; it is not a prerequisite for the next A/B/C review gate.
 
 ## Active Boundaries
 

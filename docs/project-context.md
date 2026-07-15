@@ -7,12 +7,19 @@
 
 - **取得先**: `origin/codex/generic-visual-static-layout-observation-intake-v1`。
   exact sourceは`codex/generic-visual-static-layout-probe-v1`の
-  `4b0d5d22fe58bfdf823382932df47aa8aa460b48`。artifact commitはGit closeout後にlive確認し、
-  upstream parity 0/0、tracked cleanとignored evidenceを分けて確認する。
+  `4b0d5d22fe58bfdf823382932df47aa8aa460b48`。検証済み成果commitは
+  `81b9092cb44d45924c87965907e6065d63189ba4`。current branch tipにはこのdocs-only
+  remote handoff sealも含まれるため、再開時は`git rev-parse HEAD`でlive確認する。
+- **最初のlive check**: repo rootで`git fetch --prune origin`を実行し、local branchが
+  なければ`git switch --track origin/codex/generic-visual-static-layout-observation-intake-v1`、
+  あれば同名branchへswitchして`git pull --ff-only`。続けて
+  `git status --short --branch`と
+  `git rev-list --left-right --count "HEAD...@{u}"`を確認し、tracked clean / parity 0 0を
+  再取得する。ignored evidenceはtracked parityと混同しない。
 - **最小読取順**: AGENTS.md → docs/REPO_LOCAL_RULES.md → docs/runtime-state.md →
   この節 → samples/visual_composition_lab/runtime_probe/README_STATIC_LAYOUT_PROBE_RESULT.md。
 - **現在の状態**: Project-State-IDは
-  `generic-visual-static-layout-observation-passed-v1`、State-Revisionは2026-07-15.1。
+  `generic-visual-static-layout-observation-passed-v1`、State-Revisionは2026-07-15.2。
   Product-Stateは`generic-static-layout-bounded-runtime-observation-passed`、Product-Gateは
   `new-banknote-visual-direction-selection`、Recommended-Nextは
   `review-new-banknote-route-a-b-c-on-provenance-branch`、External-Stateは
@@ -37,6 +44,14 @@
 - **tracked package**: primary README、runtime_observation_receipt.json、readback、limitationsは
   repo-relative identity/hashだけを持つ。ignored project/asset/state/observations/result/archiveは
   intake前後hash一致でbyte-preserved、tracked/staged 0。
+- **検証とremote seal**: 成果commitではfocused 128 tests、target state sync、JSON、privacy、
+  tracked evidence consistency、`git diff --check`がpass。成果commit push後にupstream parity 0/0、
+  tracked cleanをlive確認した。このhandoff追補はdocs-onlyなのでpytestを再実行せず、state sync、
+  runtime-state line budget、diff check、remote ref一致をcloseout gateにする。
+- **別端末の証跡境界**: tracked sanitized packageだけでbounded passと次gateを再読できる。
+  ignored project/result/archive原本はsource deviceにのみ残るため、別端末では原本再hash、YMM4
+  reopen、再観測を主張しない。それらが必要になった時だけCross-machine portability seedを
+  明示的な別taskへ昇格する。
 - **次のgate**: new-banknote A/B/C選択はauthoritative provenance branchの別laneで行う。
   generic branchの旧boardをcurrent authorityにせず、このbranchではroute選択、selected-route
   project、branch integration、render、master mutationを行わない。

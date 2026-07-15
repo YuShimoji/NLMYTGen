@@ -46,3 +46,8 @@
 - **Boundary**: no save、screenshot evidence、render、motion/effect、alternate layout、
   cross-machine、C4/C5、Route A/B/C、production/right/publication claim。次のhuman gateは
   authoritative provenance branch上のnew-banknote visual-direction selection。
+- **Delivery**: validated outcome commitは
+  `81b9092cb44d45924c87965907e6065d63189ba4`、remote branchは
+  `origin/codex/generic-visual-static-layout-observation-intake-v1`。remote handoff sealは
+  product判断を変更せず、別端末のrestart order、tracked/ignored境界、live parity checkを
+  current docsへ固定する。
