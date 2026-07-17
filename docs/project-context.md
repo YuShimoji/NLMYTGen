@@ -37,7 +37,8 @@
   project/result/batch stateを検出して意図どおり停止した。既存resultはsuccess、9/3/6、exact
   text/order、60 fps、4415 frames、73.583333秒でproject hash一致。3件は削除・移動・上書きしていない。
 - **branch split**: このbranchと`origin/codex/new-banknote-authoritative-source-script-v1`は
-  approval baseline `b05eb386`から3対13 commitに分岐している。後者のimport intake、editorial
+  approval baseline `b05eb386`から分岐し、このhandoff追加前のproduct tipは3対13 commitだった。
+  このhandoffのdocs-only commitは意味的統合を行っていない。後者のimport intake、editorial
   provenance、A/B/C visual directionを自動mergeせず、successor integration auditへ残した。
 - **exact next action**: YMM4 batchを再実行しない。既存ignored evidenceを変えず、current
   approval/lineage lockとproject/resultを照合してsanitized successor receiptを出すread-only pathを

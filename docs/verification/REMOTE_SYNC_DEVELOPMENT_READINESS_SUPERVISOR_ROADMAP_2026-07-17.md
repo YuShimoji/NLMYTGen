@@ -17,8 +17,8 @@ checkoutし、fast-forward限定pullを実施しました。取得時HEADは
 
 ただし、日付が新しいbranchを既存の進行branchへ自動統合してはいません。現在branchと
 `origin/codex/new-banknote-authoritative-source-script-v1`はapproval baseline
-`b05eb3867caabda496fb9a0070d230a4e81aea01`から分岐し、現在branchだけに3 commit、
-後者だけに13 commitがあります。後者には既存YMM4 import観測、editorial provenance、
+`b05eb3867caabda496fb9a0070d230a4e81aea01`から分岐し、本報告追加前の取得時点では
+現在branchだけに3 commit、後者だけに13 commitがあります。後者には既存YMM4 import観測、editorial provenance、
 A/B/C visual directionがあり、現在branchには新しいT00-T07 content lineageと
 no-silent-change lockを含むOperator Batchがあります。current-state文書が競合するため、
 merge / rebase / cherry-pickを機械的に行わず、両branchを保持しました。

@@ -53,8 +53,9 @@ Tracked-Worktree: clean; intentional ignored evidence retained
   operator-owned files. They were not deleted, moved, overwritten, or tracked.
 - **Branch divergence explicit**: this branch and
   `codex/new-banknote-authoritative-source-script-v1` diverge from approved
-  baseline `b05eb386` with 3 versus 13 unique commits. No merge, rebase, or
-  cherry-pick was performed; a successor integration audit remains required.
+  baseline `b05eb386`. Before this handoff's two docs-only commits, the product
+  tips had 3 versus 13 unique commits. No merge, rebase, or cherry-pick was
+  performed; the semantic split remains and requires a successor audit.
 
 ## Product Position
 
