@@ -1,13 +1,14 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-16 JST・new-banknote lineage sealed / Operator Batch ready）
+## 現在の別端末再開ハンドオフ（2026-07-17 JST・new-banknote lineage sealed / Operator Batch ready）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
 
 - **取得先**: `origin/codex/new-banknote-content-lineage-yymm4-batch-v1`。
+  remoteは`https://github.com/YuShimoji/NLMYTGen.git`に設定済みで、新規repository作成は不要。
   `git fetch --prune origin`後、同branchをcheckoutしてfast-forward限定pullする。
-  再開確認時のHEADは`8c3342611cea9ec8171dc21ba1392e833ff4c7b9`、remote parityは
+  再開確認時のvalidated-through HEADは`5d46a7389334626eb713ea5f9681288ac9b25b63`、remote parityは
   `0/0`、tracked worktreeはclean。approval baseline `b05eb3867caabda496fb9a0070d230a4e81aea01`
   はbranch先端のancestorであり、古いpromptのSTART_STATEから作り直さない。
 - **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
@@ -15,7 +16,8 @@
   `yymm4_operator_batch/README_OPERATOR_BATCH.md`。旧Web threadや下のmaster handoffを
   現在の指示として使わない。
 - **現在の状態**: Project-State-IDは
-  `new-banknote-content-lineage-sealed-yymm4-batch-ready-v1`。9 cue、2/4/3 scene、
+  `new-banknote-content-lineage-sealed-yymm4-batch-ready-v1`、State-Revisionは
+  `2026-07-17.1`。9 cue、2/4/3 scene、
   Reimu/Marisa 3/6、8 approved hashes、15 adopted claims、20 factual units、21 edgesを
   human approval receiptとT00–T07 lineageで固定済み。approved script、CSV、claim/sourceは
   この再開確認でも変更していない。

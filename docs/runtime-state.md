@@ -1,12 +1,15 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: new-banknote-content-lineage-sealed-yymm4-batch-ready-v1
-State-Revision: 2026-07-14.1
-Updated: 2026-07-14 JST
+State-Revision: 2026-07-17.1
+Updated: 2026-07-17 JST
 Product-State: new-banknote-human-approved-script-lineage-sealed-operator-batch-ready
 Product-Gate: manual-yymm4-import-observation
 Recommended-Next: run-one-new-banknote-yymm4-operator-batch
 External-State: public-repo-feature-branch
+Handoff-Commit: 5d46a7389334626eb713ea5f9681288ac9b25b63
+Remote-Parity: 0/0
+Tracked-Worktree: clean; intentional ignored evidence retained
 
 ## Current Slice
 
@@ -36,6 +39,10 @@ External-State: public-repo-feature-branch
   approval-drift rejection, 9/3/6/text/order/timing collector fixtures,
   PowerShell syntax, privacy boundaries, and worker-safe `-PreflightOnly`
   passed without inspecting or launching YMM4.
+- **Cross-device handoff refreshed**: the public feature branch, validated
+  commit, remote parity, clean tracked state, ignored evidence disposition,
+  minimal read order, and exact manual gate are recorded in tracked state and
+  project context. No hidden conversation context is required to resume.
 
 ## Product Position
 

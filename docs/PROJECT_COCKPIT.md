@@ -1,12 +1,15 @@
 # NLMYTGen Project Cockpit
 
 Project-State-ID: new-banknote-content-lineage-sealed-yymm4-batch-ready-v1
-State-Revision: 2026-07-14.1
-Updated: 2026-07-14 JST
+State-Revision: 2026-07-17.1
+Updated: 2026-07-17 JST
 Product-State: new-banknote-human-approved-script-lineage-sealed-operator-batch-ready
 Product-Gate: manual-yymm4-import-observation
 Recommended-Next: run-one-new-banknote-yymm4-operator-batch
 External-State: public-repo-feature-branch
+Handoff-Commit: 5d46a7389334626eb713ea5f9681288ac9b25b63
+Remote-Parity: 0/0
+Tracked-Worktree: clean; intentional ignored evidence retained
 
 このページは public repository で現在地を読むための追跡済み Markdown です。
 短期 capsule は [runtime-state.md](runtime-state.md)、履歴は
