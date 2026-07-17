@@ -8,8 +8,9 @@
 - **取得先**: `origin/codex/new-banknote-content-lineage-yymm4-batch-v1`。
   remoteは`https://github.com/YuShimoji/NLMYTGen.git`に設定済みで、新規repository作成は不要。
   `git fetch --prune origin`後、同branchをcheckoutしてfast-forward限定pullする。
-  再開確認時のvalidated-through HEADは`5d46a7389334626eb713ea5f9681288ac9b25b63`、remote parityは
-  `0/0`、tracked worktreeはclean。approval baseline `b05eb3867caabda496fb9a0070d230a4e81aea01`
+  再開確認と監修報告のvalidated-through outcomeは
+  `d8b8707bd7eb5ed0ead3bf7955c0d188c45de285`、remote parityは`0/0`、tracked worktreeはclean。
+  approval baseline `b05eb3867caabda496fb9a0070d230a4e81aea01`
   はbranch先端のancestorであり、古いpromptのSTART_STATEから作り直さない。
 - **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
   `docs/runtime-state.md` → この節 → pilotの`README_CONTENT_LINEAGE.md` →

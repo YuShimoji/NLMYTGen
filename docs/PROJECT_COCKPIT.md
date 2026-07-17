@@ -7,7 +7,7 @@ Product-State: new-banknote-lineage-sealed-existing-import-evidence-readback-rea
 Product-Gate: current-lineage-compatible-yymm4-evidence-reconciliation
 Recommended-Next: build-non-overwriting-existing-yymm4-evidence-revalidation
 External-State: public-repo-feature-branch
-Handoff-Commit: 5d46a7389334626eb713ea5f9681288ac9b25b63
+Handoff-Commit: d8b8707bd7eb5ed0ead3bf7955c0d188c45de285
 Remote-Parity: 0/0
 Tracked-Worktree: clean; intentional ignored evidence retained
 
