@@ -1,6 +1,6 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-17 JST・new-banknote lineage sealed / Operator Batch ready）
+## 現在の別端末再開ハンドオフ（2026-07-17 JST・lineage sealed / existing YMM4 evidence reconciliation ready）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
@@ -16,8 +16,8 @@
   `yymm4_operator_batch/README_OPERATOR_BATCH.md`。旧Web threadや下のmaster handoffを
   現在の指示として使わない。
 - **現在の状態**: Project-State-IDは
-  `new-banknote-content-lineage-sealed-yymm4-batch-ready-v1`、State-Revisionは
-  `2026-07-17.1`。9 cue、2/4/3 scene、
+  `new-banknote-content-lineage-sealed-existing-yymm4-evidence-reconciliation-ready-v1`、
+  State-Revisionは`2026-07-17.2`。9 cue、2/4/3 scene、
   Reimu/Marisa 3/6、8 approved hashes、15 adopted claims、20 factual units、21 edgesを
   human approval receiptとT00–T07 lineageで固定済み。approved script、CSV、claim/sourceは
   この再開確認でも変更していない。
@@ -29,12 +29,22 @@
 - **local evidence**: ignored `local_outputs/`、`source_cache/`、`source_extracts/`を保持し、
   削除・移動・上書きしていない。tracked packageにprivate path、NotebookLM URL/UUID、
   raw transcript bodyは含めない。
-- **exact next action**: userだけがrepository rootから
-  `powershell -NoProfile -ExecutionPolicy Bypass -File ".\production_pilots\yukkuri_newsroom_content_spine_002\external_editorial_input\new_banknote_security_notebooklm_001\yymm4_operator_batch\run_new_banknote_yymm4_batch.ps1"`
-  を一度実行する。未保存・無関係project、mapping/error/update dialog、wrong character、
-  changed save target、parse/text/order drift、render/publication要求では停止する。
-- **未完了境界**: actual YMM4 import、発音/rhythm/clipping判断、result intake、render、
-  content revision、production/public/rights、master integration、full-suite Integrity campaign。
+- **2026-07-17 sync/readback**: latest handoff branchへtracking checkoutし、HEAD
+  `2dbc5d7ec0ae027caa2dad1a270eb5dc5af75849`、upstream `0/0`、master ahead 7 / behind 0を
+  確認した。Python/GUI dependencies、focused 25件、上流回帰17件、compile、lineage validate、
+  Operator runtime preflightはpassed。PowerShell `-PreflightOnly`は同端末に残るignored
+  project/result/batch stateを検出して意図どおり停止した。既存resultはsuccess、9/3/6、exact
+  text/order、60 fps、4415 frames、73.583333秒でproject hash一致。3件は削除・移動・上書きしていない。
+- **branch split**: このbranchと`origin/codex/new-banknote-authoritative-source-script-v1`は
+  approval baseline `b05eb386`から3対13 commitに分岐している。後者のimport intake、editorial
+  provenance、A/B/C visual directionを自動mergeせず、successor integration auditへ残した。
+- **exact next action**: YMM4 batchを再実行しない。既存ignored evidenceを変えず、current
+  approval/lineage lockとproject/resultを照合してsanitized successor receiptを出すread-only pathを
+  実装する。その後にbranch integration auditへ進む。詳細目標は
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-17.md`。
+- **未完了境界**: current-lineage result receipt、発音/rhythm/clipping判断、branch integration、
+  visual selection、render、content revision、production/public/rights、master integration、
+  full-suite Integrity campaign。
 
 ## 直前の別端末再開ハンドオフ（2026-07-13 JST・default branch integration・履歴）
 

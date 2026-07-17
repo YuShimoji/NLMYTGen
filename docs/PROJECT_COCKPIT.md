@@ -1,11 +1,11 @@
 # NLMYTGen Project Cockpit
 
-Project-State-ID: new-banknote-content-lineage-sealed-yymm4-batch-ready-v1
-State-Revision: 2026-07-17.1
+Project-State-ID: new-banknote-content-lineage-sealed-existing-yymm4-evidence-reconciliation-ready-v1
+State-Revision: 2026-07-17.2
 Updated: 2026-07-17 JST
-Product-State: new-banknote-human-approved-script-lineage-sealed-operator-batch-ready
-Product-Gate: manual-yymm4-import-observation
-Recommended-Next: run-one-new-banknote-yymm4-operator-batch
+Product-State: new-banknote-lineage-sealed-existing-import-evidence-readback-ready
+Product-Gate: current-lineage-compatible-yymm4-evidence-reconciliation
+Recommended-Next: build-non-overwriting-existing-yymm4-evidence-revalidation
 External-State: public-repo-feature-branch
 Handoff-Commit: 5d46a7389334626eb713ea5f9681288ac9b25b63
 Remote-Parity: 0/0
@@ -22,7 +22,8 @@ Tracked-Worktree: clean; intentional ignored evidence retained
 人が option A で承認した新紙幣9-cue scriptを commitと8 file hashesで固定し、
 提出 transcript から official evidence、supported rewrite、editorial convergence、
 approval、YMM4 projectionまでをT00–T07の一つのlineage packageへ統合しました。
-次はユーザー自身による一度だけのYMM4 import観測です。
+同端末に既存YMM4 import成功証跡があるため、次は再実行ではなくcurrent lineageとの
+非破壊再照合です。
 
 ## 判断に使える現在地
 
@@ -32,23 +33,21 @@ approval、YMM4 projectionまでをT00–T07の一つのlineage packageへ統合
 | Submitted content | 326 lines→182 claims。raw claim fingerprintでfinal cueへの影響を追跡 | transcriptはoriginでありfactual authorityではない。token-level authorshipは不明 |
 | Evidence | 19 verified-primaryのうち15 claimsを採用、20 units・21 edges、used sourcesはV02/V06/V07/V13 | unsupported policy/cashless/quantitative framingは不採用のまま |
 | Editorial origin | factual paraphraseとWorker connective/voice/structureをcue単位で分離 | connective/voiceはsource quotationとして扱わない |
-| Operator batch | 5 actions、return最大3、実行前/収集前の二重lock、collectorが9/3/6/text/order/timingを検証 | mapping/update/wrong characterで停止し、発音・clippingをcue番号で記録 |
+| Operator evidence | ignored project/result/stateあり。旧resultは9/3/6、exact text/order、4415 frames、73.583333秒 | 再実行せずcurrent lineage lockで非破壊再照合。発音/clippingはunknown維持 |
 | Privacy | raw/source/local bodiesとprivate pathをtracked artifactへ含めない | ignored salvage evidenceをbatch recoveryで移動・削除しない |
-| Runtime | headless preflight passed、YMM4 process増加0、Computer Use 0 | actual import、pronunciation/rhythm、renderは未実施 |
+| Runtime | focused 25 + regression 17、validator/headless preflight passed | tracked successor receipt、branch integration audit、pronunciation/rhythm、renderは未完了 |
 
 Primary surface:
 `production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_CONTENT_LINEAGE.md`
 
 ## 次の入口
 
-repository rootから次を一度だけ実行します。
-
-`powershell -NoProfile -ExecutionPolicy Bypass -File ".\production_pilots\yukkuri_newsroom_content_spine_002\external_editorial_input\new_banknote_security_notebooklm_001\yymm4_operator_batch\run_new_banknote_yymm4_batch.ps1"`
-
-YMM4に未保存の無関係な作業がないことを確認し、新規空projectへ表示済みCSVを
-importしてexact local pathへ保存します。9 cuesを一度previewし、発音または明らかな
-clippingをcue番号でメモして、renderせず閉じた後にterminalで`COLLECT`とメモを
-入力します。
+既存ignored project/result/batch stateを削除・移動・上書きせず、current approvalと
+lineage lockを検査して既存project/resultをparseするread-only revalidation pathを作ります。
+sanitized successor receiptが通った後にだけ、分岐したvisual/provenance branchとの
+integration auditへ進みます。監修用の詳細は
+[`REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-17.md`](verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-17.md)
+を参照してください。
 
 ## 公開・実行境界
 
