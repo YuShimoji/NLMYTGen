@@ -1,0 +1,119 @@
+{
+  "schema_version": "new_banknote_yymm4_existing_evidence_revalidation.traceability.v1",
+  "status": "passed",
+  "successor_state_id": "new-banknote-current-lineage-yymm4-evidence-revalidated-v1",
+  "approval_receipt": {
+    "receipt_id": "new-banknote-script-option-a-approval-v1",
+    "sha256": "1ac490cbcd06483082b2d56a97ff758199ef37ab4b6d1229806c24b8698d7e0f",
+    "approved_commit": "b05eb3867caabda496fb9a0070d230a4e81aea01"
+  },
+  "lineage_artifact_hashes": {
+    "human_script_approval_receipt.json": "1ac490cbcd06483082b2d56a97ff758199ef37ab4b6d1229806c24b8698d7e0f",
+    "README_CONTENT_LINEAGE.md": "30ea7a618fd36bad097aedce01b3fe293bc95d57e3def31bca0d2298308060a2",
+    "content_transformation_ledger.json": "3caac4df17beb3ae2305a93e9af793cb8029705e5b209d85820aadda2165458c",
+    "cue_lineage_matrix.json": "8dd80c400631f261d673f78e02512050c86bbae59038f314998a9c6db59047a4",
+    "content_change_summary.md": "536ce4cb38bd6b35f4526d8a3dc20f603fb7374ea22c44373fa368f379ad8539",
+    "content_change_policy.json": "804df1eab8c447eb6b5e3459ae5e9cbcfabb25f1771fec7c3ddb0de19fc2da05",
+    "content_lineage_readback.json": "7ab925c716e62af59b888929ad1591ee08ff4aedc5b99eb46a2570d187bc03ac"
+  },
+  "stage_coverage": [
+    "T00",
+    "T01",
+    "T02",
+    "T03",
+    "T04",
+    "T05",
+    "T06",
+    "T07"
+  ],
+  "existing_evidence_hashes": {
+    "project": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54",
+    "result": "e4ecb1bf5e4b5780990a00094804dd871d66068a917000015f9fecfd83e8ddfa",
+    "batch_state": "0753e1cb17cedf52c57dc4856dc896db61d7c275ac540e621c17a2058d093b04"
+  },
+  "cue_bindings": [
+    {
+      "cue_id": "cue_001",
+      "sequence": 1,
+      "expected_character": "ゆっくり霊夢",
+      "actual_character": "ゆっくり霊夢",
+      "approved_text_sha256": "6ae1e15f8fb09ffdf0551e6adc7be29232554b34badf8f025385e0df646456ee",
+      "project_text_sha256": "6ae1e15f8fb09ffdf0551e6adc7be29232554b34badf8f025385e0df646456ee",
+      "character_and_text_exact": true
+    },
+    {
+      "cue_id": "cue_002",
+      "sequence": 2,
+      "expected_character": "ゆっくり魔理沙",
+      "actual_character": "ゆっくり魔理沙",
+      "approved_text_sha256": "c3dfc706245679aa1f8fe07e5b19eee2e94918807083ba8c2c54d15aa6583752",
+      "project_text_sha256": "c3dfc706245679aa1f8fe07e5b19eee2e94918807083ba8c2c54d15aa6583752",
+      "character_and_text_exact": true
+    },
+    {
+      "cue_id": "cue_003",
+      "sequence": 3,
+      "expected_character": "ゆっくり魔理沙",
+      "actual_character": "ゆっくり魔理沙",
+      "approved_text_sha256": "7b8f30a2d341dc2962fe5f13c41b9a832348c6c00ed2e07a7ed08af6a5fc8bf4",
+      "project_text_sha256": "7b8f30a2d341dc2962fe5f13c41b9a832348c6c00ed2e07a7ed08af6a5fc8bf4",
+      "character_and_text_exact": true
+    },
+    {
+      "cue_id": "cue_004",
+      "sequence": 4,
+      "expected_character": "ゆっくり魔理沙",
+      "actual_character": "ゆっくり魔理沙",
+      "approved_text_sha256": "ad50602ced2e889cc3169b18858fbe4537224533118283ffd0d2c49f929f17c7",
+      "project_text_sha256": "ad50602ced2e889cc3169b18858fbe4537224533118283ffd0d2c49f929f17c7",
+      "character_and_text_exact": true
+    },
+    {
+      "cue_id": "cue_005",
+      "sequence": 5,
+      "expected_character": "ゆっくり霊夢",
+      "actual_character": "ゆっくり霊夢",
+      "approved_text_sha256": "afc01c0054276359b1c6b1a6f60dfc886c7cc26438d73b048437a33d6ee45a97",
+      "project_text_sha256": "afc01c0054276359b1c6b1a6f60dfc886c7cc26438d73b048437a33d6ee45a97",
+      "character_and_text_exact": true
+    },
+    {
+      "cue_id": "cue_006",
+      "sequence": 6,
+      "expected_character": "ゆっくり魔理沙",
+      "actual_character": "ゆっくり魔理沙",
+      "approved_text_sha256": "6ffa83cc6dd9cafba3b271ac8c300e36386b95438ca1c912ef0dedf5d748b0e8",
+      "project_text_sha256": "6ffa83cc6dd9cafba3b271ac8c300e36386b95438ca1c912ef0dedf5d748b0e8",
+      "character_and_text_exact": true
+    },
+    {
+      "cue_id": "cue_007",
+      "sequence": 7,
+      "expected_character": "ゆっくり魔理沙",
+      "actual_character": "ゆっくり魔理沙",
+      "approved_text_sha256": "db8c4f0bcfcb4351ee35dea6a614870b4d967e0cde9bb4421fc0c35016758309",
+      "project_text_sha256": "db8c4f0bcfcb4351ee35dea6a614870b4d967e0cde9bb4421fc0c35016758309",
+      "character_and_text_exact": true
+    },
+    {
+      "cue_id": "cue_008",
+      "sequence": 8,
+      "expected_character": "ゆっくり霊夢",
+      "actual_character": "ゆっくり霊夢",
+      "approved_text_sha256": "46f345d6b494ee94664752787c84bc32032e3673e02f5b8751d0e03cb8901d30",
+      "project_text_sha256": "46f345d6b494ee94664752787c84bc32032e3673e02f5b8751d0e03cb8901d30",
+      "character_and_text_exact": true
+    },
+    {
+      "cue_id": "cue_009",
+      "sequence": 9,
+      "expected_character": "ゆっくり魔理沙",
+      "actual_character": "ゆっくり魔理沙",
+      "approved_text_sha256": "e11a16e48b4386490a5a4e43b400dd5786ec8b31f140da318aca3b1c6c0e9702",
+      "project_text_sha256": "e11a16e48b4386490a5a4e43b400dd5786ec8b31f140da318aca3b1c6c0e9702",
+      "character_and_text_exact": true
+    }
+  ],
+  "approved_content_modified": false,
+  "source_evidence_modified": false
+}

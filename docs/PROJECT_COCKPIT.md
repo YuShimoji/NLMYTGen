@@ -1,13 +1,13 @@
 # NLMYTGen Project Cockpit
 
-Project-State-ID: new-banknote-content-lineage-sealed-existing-yymm4-evidence-reconciliation-ready-v1
-State-Revision: 2026-07-17.2
-Updated: 2026-07-17 JST
-Product-State: new-banknote-lineage-sealed-existing-import-evidence-readback-ready
-Product-Gate: current-lineage-compatible-yymm4-evidence-reconciliation
-Recommended-Next: build-non-overwriting-existing-yymm4-evidence-revalidation
+Project-State-ID: new-banknote-current-lineage-yymm4-evidence-revalidated-v1
+State-Revision: 2026-07-19.1
+Updated: 2026-07-19 JST
+Product-State: new-banknote-existing-yymm4-import-evidence-current-lineage-compatible
+Product-Gate: new-banknote-successor-branch-integration-audit
+Recommended-Next: audit-and-integrate-new-banknote-successor-branches
 External-State: public-repo-feature-branch
-Handoff-Commit: d8b8707bd7eb5ed0ead3bf7955c0d188c45de285
+Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0
 Tracked-Worktree: clean; intentional ignored evidence retained
 
@@ -19,39 +19,34 @@ Tracked-Worktree: clean; intentional ignored evidence retained
 
 ## いまの一文
 
-人が option A で承認した新紙幣9-cue scriptを commitと8 file hashesで固定し、
-提出 transcript から official evidence、supported rewrite、editorial convergence、
-approval、YMM4 projectionまでをT00–T07の一つのlineage packageへ統合しました。
-同端末に既存YMM4 import成功証跡があるため、次は再実行ではなくcurrent lineageとの
-非破壊再照合です。
+人が option A で承認した新紙幣9-cue scriptとT00–T07 lineageを変更せず、
+同端末の既存ignored YMM4 project/result/batch stateをread-onlyで再検証しました。
+current approval/hash/text/order/timingとの互換性をsanitized tracked receiptで固定済みで、
+次は分岐したsuccessor branchesのG1 integration auditです。
 
 ## 判断に使える現在地
 
 | 対象 | 現在状態 | 次の gate で確認すること |
 | --- | --- | --- |
-| Approval | `b05eb386…`、9 cues、2/4/3、Reimu/Marisa 3/6、8 hashesをreceiptで固定 | hash、text/order、speaker/scene、claim/evidence、CSV driftがあれば自動停止 |
-| Submitted content | 326 lines→182 claims。raw claim fingerprintでfinal cueへの影響を追跡 | transcriptはoriginでありfactual authorityではない。token-level authorshipは不明 |
-| Evidence | 19 verified-primaryのうち15 claimsを採用、20 units・21 edges、used sourcesはV02/V06/V07/V13 | unsupported policy/cashless/quantitative framingは不採用のまま |
-| Editorial origin | factual paraphraseとWorker connective/voice/structureをcue単位で分離 | connective/voiceはsource quotationとして扱わない |
-| Operator evidence | ignored project/result/stateあり。旧resultは9/3/6、exact text/order、4415 frames、73.583333秒 | 再実行せずcurrent lineage lockで非破壊再照合。発音/clippingはunknown維持 |
-| Privacy | raw/source/local bodiesとprivate pathをtracked artifactへ含めない | ignored salvage evidenceをbatch recoveryで移動・削除しない |
-| Runtime | focused 25 + regression 17、validator/headless preflight passed | tracked successor receipt、branch integration audit、pronunciation/rhythm、renderは未完了 |
+| Approval | `b05eb386…`、9 cues、2/4/3、Reimu/Marisa 3/6、8 hashesをreceiptで固定。変更なし | branch側のhash、text/order、speaker/scene、claim/evidence、CSV driftを拒否 |
+| Lineage | T00–T07、15 adopted claims、20 units、21 edges、unsupported spoken claims 0 | lineage authorityとsuccessor branch provenanceの重複・競合を分類 |
+| Existing YMM4 evidence | 既存3ファイルを非破壊再読取。9/3/6、exact text/order、4415 frames、73.583333秒、timing一致 | tracked receiptを維持したままcompatible commitsだけを統合 |
+| Immutability | 生成前後の存在・size・mtime・SHA-256一致。YMM4再実行なし | G1でもignored source evidenceに書かない |
+| Audio quality | pronunciation / rhythm / clippingは`unknown` | audio acceptanceが必要な時だけhuman reviewを別gate化 |
+| Privacy | tracked packageにprivate path、local binary、NotebookLM URL/UUID、raw/source bodyなし | 統合候補にも同じ境界を適用 |
+| Divergence | visual/provenance branch未統合 | ancestry、write set、authority、A/B/C成果物、validation planを先に監査 |
 
 Primary surface:
-`production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_CONTENT_LINEAGE.md`
+`production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_EXISTING_YMM4_EVIDENCE_REVALIDATION.md`
 
 ## 次の入口
 
-既存ignored project/result/batch stateを削除・移動・上書きせず、current approvalと
-lineage lockを検査して既存project/resultをparseするread-only revalidation pathを作ります。
-sanitized successor receiptが通った後にだけ、分岐したvisual/provenance branchとの
-integration auditへ進みます。監修用の詳細は
-[`REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-17.md`](verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-17.md)
-を参照してください。
+G1ではnew-banknote successor branchesをread-firstで監査し、branch ancestry、write set、
+content authority、provenance、visual-direction artifacts、current approval locksを比較します。
+互換commitと検証計画が確定するまでmerge/rebase/cherry-pickは行いません。
 
 ## 公開・実行境界
 
-このsliceではapproved contentを変更せず、NotebookLM、web fetch、Computer Use、
-YMM4 launch/inspection、render、production、public/rights action、master integrationを
-行っていません。Human approvalはbounded import observationだけを許可し、production
-やpublicationの承認ではありません。
+このsliceではapproved contentを変更せず、YMM4 launch/rerun、Computer Use、NotebookLM、
+web fetch、render/media生成、production、public/rights action、master integrationを
+行っていません。構造的import互換性は発音・visual・production・publicationの承認ではありません。

@@ -1,0 +1,302 @@
+{
+  "schema_version": "new_banknote_yymm4_existing_evidence_revalidation.receipt.v1",
+  "status": "accepted",
+  "revalidation_mode": "read_only_non_overwriting",
+  "successor_state_id": "new-banknote-current-lineage-yymm4-evidence-revalidated-v1",
+  "current_approval": {
+    "receipt_id": "new-banknote-script-option-a-approval-v1",
+    "receipt_sha256": "1ac490cbcd06483082b2d56a97ff758199ef37ab4b6d1229806c24b8698d7e0f",
+    "status": "valid",
+    "approved_commit": "b05eb3867caabda496fb9a0070d230a4e81aea01",
+    "approved_file_hashes": {
+      "README_CANONICAL_SCRIPT_REVIEW.md": "a5d5a23fca7d6c0c0fe200a89800d9c3c8ac278c18c1a137c35019d4780e7da8",
+      "canonical_script.json": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47",
+      "canonical_script.txt": "4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091",
+      "canonical_script_review.md": "9816c28e9b0099ef98e2aefb9e70bf22a32fbbd0f931fd8989c6ac19dcd99d3a",
+      "cue_source_traceability.json": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47",
+      "canonical_yymm4.csv": "23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12",
+      "derived_yymm4_import.csv": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee",
+      "source_to_script_manifest.json": "e13fb57a2681875f577e4d85f13cf41bfc601519892fa4f975bdfcdd24d927b5"
+    },
+    "approved_content_modified": false
+  },
+  "current_lineage": {
+    "status": "passed",
+    "artifact_hashes": {
+      "human_script_approval_receipt.json": "1ac490cbcd06483082b2d56a97ff758199ef37ab4b6d1229806c24b8698d7e0f",
+      "README_CONTENT_LINEAGE.md": "30ea7a618fd36bad097aedce01b3fe293bc95d57e3def31bca0d2298308060a2",
+      "content_transformation_ledger.json": "3caac4df17beb3ae2305a93e9af793cb8029705e5b209d85820aadda2165458c",
+      "cue_lineage_matrix.json": "8dd80c400631f261d673f78e02512050c86bbae59038f314998a9c6db59047a4",
+      "content_change_summary.md": "536ce4cb38bd6b35f4526d8a3dc20f603fb7374ea22c44373fa368f379ad8539",
+      "content_change_policy.json": "804df1eab8c447eb6b5e3459ae5e9cbcfabb25f1771fec7c3ddb0de19fc2da05",
+      "content_lineage_readback.json": "7ab925c716e62af59b888929ad1591ee08ff4aedc5b99eb46a2570d187bc03ac"
+    },
+    "stage_coverage": [
+      "T00",
+      "T01",
+      "T02",
+      "T03",
+      "T04",
+      "T05",
+      "T06",
+      "T07"
+    ],
+    "cue_count": 9,
+    "scene_allocation": {
+      "S1": 2,
+      "S2": 4,
+      "S3": 3
+    },
+    "canonical_speaker_counts": {
+      "れいむ": 3,
+      "まりさ": 6
+    },
+    "adopted_claim_count": 15,
+    "factual_support_unit_count": 20,
+    "claim_edge_count": 21,
+    "unsupported_spoken_claim_count": 0
+  },
+  "local_evidence": {
+    "project": {
+      "role": "project",
+      "name": "new_banknote_yymm4_import_observation.local.ymmp",
+      "present": true,
+      "size_bytes": 1337084,
+      "sha256": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54",
+      "before_after_equal": true
+    },
+    "result": {
+      "role": "result",
+      "name": "operator_result.json",
+      "present": true,
+      "size_bytes": 4494,
+      "sha256": "e4ecb1bf5e4b5780990a00094804dd871d66068a917000015f9fecfd83e8ddfa",
+      "before_after_equal": true
+    },
+    "batch_state": {
+      "role": "batch_state",
+      "name": "operator_batch.local.json",
+      "present": true,
+      "size_bytes": 924,
+      "sha256": "0753e1cb17cedf52c57dc4856dc896db61d7c275ac540e621c17a2058d093b04",
+      "before_after_equal": true
+    }
+  },
+  "project_result_binding": {
+    "project_embedded_path_matches_source": true,
+    "result_expected_role_matches": true,
+    "batch_project_target_matches_source": true,
+    "batch_result_target_matches_source": true,
+    "predecessor_result_status_success": true,
+    "predecessor_failed_checks_empty": true,
+    "predecessor_checks_all_true": true,
+    "result_project_sha256_matches": true,
+    "result_project_size_matches": true,
+    "result_recorded_exact_target": true,
+    "result_recorded_embedded_path_match": true,
+    "result_mapping_confirmation_observed": true,
+    "result_VoiceItem_count_matches": true,
+    "result_character_counts_match": true,
+    "result_text_order_matches": true,
+    "result_character_text_order_matches": true,
+    "result_missing_count_matches": true,
+    "result_duplicate_count_matches": true,
+    "result_reordered_matches": true,
+    "result_fps_matches": true,
+    "result_timeline_frames_match": true,
+    "result_duration_matches": true,
+    "result_voice_timing_matches": true
+  },
+  "structural_readback": {
+    "VoiceItem_count": 9,
+    "character_counts": {
+      "ゆっくり霊夢": 3,
+      "ゆっくり魔理沙": 6
+    },
+    "exact_text_order": true,
+    "exact_character_text_order": true,
+    "missing_count": 0,
+    "duplicate_count": 0,
+    "reordered": false,
+    "fps": 60,
+    "timeline_frames": 4415,
+    "duration_seconds": 73.583333,
+    "voice_timing_summary": [
+      {
+        "csv_row_id": "csv_row_1",
+        "cue_id": "cue_001",
+        "frame": 0,
+        "length_frames": 391,
+        "end_frame": 391
+      },
+      {
+        "csv_row_id": "csv_row_2",
+        "cue_id": "cue_002",
+        "frame": 391,
+        "length_frames": 705,
+        "end_frame": 1096
+      },
+      {
+        "csv_row_id": "csv_row_3",
+        "cue_id": "cue_003",
+        "frame": 1096,
+        "length_frames": 338,
+        "end_frame": 1434
+      },
+      {
+        "csv_row_id": "csv_row_4",
+        "cue_id": "cue_004",
+        "frame": 1434,
+        "length_frames": 384,
+        "end_frame": 1818
+      },
+      {
+        "csv_row_id": "csv_row_5",
+        "cue_id": "cue_005",
+        "frame": 1818,
+        "length_frames": 407,
+        "end_frame": 2225
+      },
+      {
+        "csv_row_id": "csv_row_6",
+        "cue_id": "cue_006",
+        "frame": 2225,
+        "length_frames": 610,
+        "end_frame": 2835
+      },
+      {
+        "csv_row_id": "csv_row_7",
+        "cue_id": "cue_007",
+        "frame": 2835,
+        "length_frames": 427,
+        "end_frame": 3262
+      },
+      {
+        "csv_row_id": "csv_row_8",
+        "cue_id": "cue_008",
+        "frame": 3262,
+        "length_frames": 733,
+        "end_frame": 3995
+      },
+      {
+        "csv_row_id": "csv_row_9",
+        "cue_id": "cue_009",
+        "frame": 3995,
+        "length_frames": 420,
+        "end_frame": 4415
+      }
+    ]
+  },
+  "version_readback": {
+    "yymm4_product_version": "4.54.0.1+76b177dd451f9d162816dabc4ac658180e869582",
+    "profile_observation_version": "4.53.0.9",
+    "profile_version_match": false,
+    "mismatch_policy": "warning_only"
+  },
+  "pronunciation_and_clipping": {
+    "pronunciation_status": "unknown",
+    "clipping_status": "unknown",
+    "rhythm_status": "unknown",
+    "existing_note_present": false,
+    "existing_note": null,
+    "note_source": "not_recorded",
+    "evidence_grade": "unknown",
+    "acceptance_claimed": false
+  },
+  "before_after_immutability": {
+    "status": "passed",
+    "all_source_evidence_unchanged": true,
+    "compared_fields": [
+      "exists",
+      "size_bytes",
+      "mtime_ns",
+      "sha256"
+    ]
+  },
+  "predecessor_evidence_identity": {
+    "operator_result_schema": "new_banknote_yymm4_import_observation.operator_result.v1",
+    "operator_result_status": "success",
+    "operator_result_sha256": "e4ecb1bf5e4b5780990a00094804dd871d66068a917000015f9fecfd83e8ddfa",
+    "project_sha256": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54",
+    "batch_state_sha256": "0753e1cb17cedf52c57dc4856dc896db61d7c275ac540e621c17a2058d093b04",
+    "collected_at_utc": "2026-07-13T16:51:24.946861+00:00"
+  },
+  "execution_boundary": {
+    "yymm4_launched": false,
+    "yymm4_rerun": false,
+    "computer_use_invoked": false,
+    "render_or_media_generated": false,
+    "source_evidence_written": false
+  },
+  "evidence_boundary": {
+    "current_lineage_compatibility_verified": true,
+    "internal_import_observation_only": true,
+    "pronunciation_or_clipping_acceptance": false,
+    "production_project": false,
+    "rights_or_publication_approval": false,
+    "private_path_tracked": false,
+    "local_binary_tracked": false
+  },
+  "checks": {
+    "required_project_present": true,
+    "required_result_present": true,
+    "required_batch_state_present": true,
+    "current_approval_and_lineage_lock_valid": true,
+    "existing_evidence_parse_pass": true,
+    "source_evidence_before_after_equal": true,
+    "approval_receipt_valid": true,
+    "approval_contract_exact": true,
+    "scene_allocation_2_4_3": true,
+    "canonical_speaker_counts_3_6": true,
+    "lineage_readback_passed": true,
+    "stage_coverage_T00_T07": true,
+    "cue_matrix_9_15_20_21": true,
+    "token_level_attribution_not_claimed": true,
+    "one_selected_timeline": true,
+    "VoiceItem_count_9": true,
+    "character_counts_3_6": true,
+    "exact_text_order": true,
+    "exact_character_text_order": true,
+    "missing_count_zero": true,
+    "duplicate_count_zero": true,
+    "reordered_false": true,
+    "voice_frames_strictly_increasing": true,
+    "voice_lengths_positive": true,
+    "VoiceItem_only_timeline": true,
+    "fps_present_and_positive": true,
+    "project_embedded_path_matches_source": true,
+    "result_expected_role_matches": true,
+    "batch_project_target_matches_source": true,
+    "batch_result_target_matches_source": true,
+    "predecessor_result_status_success": true,
+    "predecessor_failed_checks_empty": true,
+    "predecessor_checks_all_true": true,
+    "result_project_sha256_matches": true,
+    "result_project_size_matches": true,
+    "result_recorded_exact_target": true,
+    "result_recorded_embedded_path_match": true,
+    "result_mapping_confirmation_observed": true,
+    "result_VoiceItem_count_matches": true,
+    "result_character_counts_match": true,
+    "result_text_order_matches": true,
+    "result_character_text_order_matches": true,
+    "result_missing_count_matches": true,
+    "result_duplicate_count_matches": true,
+    "result_reordered_matches": true,
+    "result_fps_matches": true,
+    "result_timeline_frames_match": true,
+    "result_duration_matches": true,
+    "result_voice_timing_matches": true,
+    "batch_id_matches": true,
+    "batch_start_matches_result": true,
+    "project_not_older_than_batch": true,
+    "result_collected_after_project": true,
+    "batch_and_result_yymm4_version_match": true,
+    "batch_and_result_profile_version_match": true,
+    "pronunciation_note_sanitized": true
+  },
+  "failed_checks": [],
+  "warnings": [
+    "YMM4_PROFILE_VERSION_MISMATCH_WARNING_ONLY"
+  ]
+}

@@ -1,51 +1,48 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-17 JST・lineage sealed / existing YMM4 evidence reconciliation ready）
+## 現在の別端末再開ハンドオフ（2026-07-19 JST・existing YMM4 evidence current-lineage compatible）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
 
-- **取得先**: `origin/codex/new-banknote-content-lineage-yymm4-batch-v1`。
+- **取得先**: `origin/codex/new-banknote-existing-yymm4-evidence-revalidation-v1`。
   remoteは`https://github.com/YuShimoji/NLMYTGen.git`に設定済みで、新規repository作成は不要。
   `git fetch --prune origin`後、同branchをcheckoutしてfast-forward限定pullする。
-  再開確認と監修報告のvalidated-through outcomeは
-  `d8b8707bd7eb5ed0ead3bf7955c0d188c45de285`、remote parityは`0/0`、tracked worktreeはclean。
+  validated source/baseは`220a9b554f267a5367c9589eb09f35fc9058d4a0`。outcome commitは
+  current remote branch tipから解決し、push後のremote parity `0/0`とclean tracked worktreeを確認する。
   approval baseline `b05eb3867caabda496fb9a0070d230a4e81aea01`
   はbranch先端のancestorであり、古いpromptのSTART_STATEから作り直さない。
 - **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
   `docs/runtime-state.md` → この節 → pilotの`README_CONTENT_LINEAGE.md` →
-  `yymm4_operator_batch/README_OPERATOR_BATCH.md`。旧Web threadや下のmaster handoffを
+  `README_EXISTING_YMM4_EVIDENCE_REVALIDATION.md`。旧Web threadや下のmaster handoffを
   現在の指示として使わない。
 - **現在の状態**: Project-State-IDは
-  `new-banknote-content-lineage-sealed-existing-yymm4-evidence-reconciliation-ready-v1`、
-  State-Revisionは`2026-07-17.2`。9 cue、2/4/3 scene、
+  `new-banknote-current-lineage-yymm4-evidence-revalidated-v1`、
+  State-Revisionは`2026-07-19.1`。9 cue、2/4/3 scene、
   Reimu/Marisa 3/6、8 approved hashes、15 adopted claims、20 factual units、21 edgesを
   human approval receiptとT00–T07 lineageで固定済み。approved script、CSV、claim/sourceは
-  この再開確認でも変更していない。
-- **再検証**: lineage / approval lock / Operator Batchのfocused tests 25件、
-  authoritative script / source reconciliation回帰17件、modified Python compile、
-  lineage validate/preflight、Operator Batch runtime preflight、PowerShell
-  `-PreflightOnly`がpassed。manual actionは5、returnは最大3、YMM4 launch/inspection、
-  Computer Use、NotebookLM、web fetch、renderは0。
+  このH0でも変更していない。
+- **H0再検証**: current approval/lineage lockを先に検証し、既存ignored project/result/
+  batch stateをread-onlyでparseした。project/result binding、9 VoiceItems、3/6、exact
+  text/order、missing 0、duplicate 0、reordered false、60 fps、4415 frames、73.583333秒、
+  cue timingが一致。focused新規tests 10件、関連回帰、compile、JSON parse、deterministic
+  second pass、privacy/ignored/state/diff checksをcloseout gateとする。
 - **local evidence**: ignored `local_outputs/`、`source_cache/`、`source_extracts/`を保持し、
-  削除・移動・上書きしていない。tracked packageにprivate path、NotebookLM URL/UUID、
-  raw transcript bodyは含めない。
-- **2026-07-17 sync/readback**: latest handoff branchへtracking checkoutし、HEAD
-  `2dbc5d7ec0ae027caa2dad1a270eb5dc5af75849`、upstream `0/0`、master ahead 7 / behind 0を
-  確認した。Python/GUI dependencies、focused 25件、上流回帰17件、compile、lineage validate、
-  Operator runtime preflightはpassed。PowerShell `-PreflightOnly`は同端末に残るignored
-  project/result/batch stateを検出して意図どおり停止した。既存resultはsuccess、9/3/6、exact
-  text/order、60 fps、4415 frames、73.583333秒でproject hash一致。3件は削除・移動・上書きしていない。
-- **branch split**: このbranchと`origin/codex/new-banknote-authoritative-source-script-v1`は
-  approval baseline `b05eb386`から分岐し、このhandoff追加前のproduct tipは3対13 commitだった。
-  このhandoffのdocs-only commitは意味的統合を行っていない。後者のimport intake、editorial
-  provenance、A/B/C visual directionを自動mergeせず、successor integration auditへ残した。
-- **exact next action**: YMM4 batchを再実行しない。既存ignored evidenceを変えず、current
-  approval/lineage lockとproject/resultを照合してsanitized successor receiptを出すread-only pathを
-  実装する。その後にbranch integration auditへ進む。詳細目標は
-  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-17.md`。
-- **未完了境界**: current-lineage result receipt、発音/rhythm/clipping判断、branch integration、
-  visual selection、render、content revision、production/public/rights、master integration、
+  削除・移動・上書きしていない。生成前後のexists/size/mtime/SHA-256は一致し、既存
+  `operator_observation.local.json`は不在。tracked packageにprivate path、NotebookLM
+  URL/UUID、raw transcript/source body、local binaryは含めない。
+- **tracked successor evidence**: pilot直下の
+  `README_EXISTING_YMM4_EVIDENCE_REVALIDATION.md`、receipt、readback、current-lineage
+  traceability、limitationsが正本。5成果物は2回生成でhash一致し、YMM4は再実行していない。
+- **audio/version境界**: pronunciation/rhythm/clippingは`unknown`でacceptanceを主張しない。
+  existing YMM4 4.54.0.1とprofile observation 4.53.0.9の差はwarning-only debt。
+- **branch split**: 別のvisual/provenance successor branchは未統合。import intake、editorial
+  provenance、A/B/C visual directionを自動mergeせず、次のG1 auditへ残した。
+- **exact next action**: new-banknote successor branchesのancestry、write set、content
+  authority、provenance、visual artifacts、approval/hash locksをread-firstで比較するG1
+  integration auditを実施する。compatible commitsとvalidation planが確定するまでmergeしない。
+- **未完了境界**: pronunciation/rhythm/clipping判断、branch integration、visual selection、
+  render、content revision、production/public/rights、master integration、
   full-suite Integrity campaign。
 
 ## 直前の別端末再開ハンドオフ（2026-07-13 JST・default branch integration・履歴）

@@ -1,0 +1,154 @@
+{
+  "schema_version": "new_banknote_yymm4_existing_evidence_revalidation.readback.v1",
+  "status": "passed",
+  "successor_state_id": "new-banknote-current-lineage-yymm4-evidence-revalidated-v1",
+  "receipt_sha256": "4b6d3e781f98a585778c8b1c05da7f7646566a2b881aeaf694b68c982c30a5f0",
+  "checks": {
+    "required_project_present": true,
+    "required_result_present": true,
+    "required_batch_state_present": true,
+    "current_approval_and_lineage_lock_valid": true,
+    "existing_evidence_parse_pass": true,
+    "source_evidence_before_after_equal": true,
+    "approval_receipt_valid": true,
+    "approval_contract_exact": true,
+    "scene_allocation_2_4_3": true,
+    "canonical_speaker_counts_3_6": true,
+    "lineage_readback_passed": true,
+    "stage_coverage_T00_T07": true,
+    "cue_matrix_9_15_20_21": true,
+    "token_level_attribution_not_claimed": true,
+    "one_selected_timeline": true,
+    "VoiceItem_count_9": true,
+    "character_counts_3_6": true,
+    "exact_text_order": true,
+    "exact_character_text_order": true,
+    "missing_count_zero": true,
+    "duplicate_count_zero": true,
+    "reordered_false": true,
+    "voice_frames_strictly_increasing": true,
+    "voice_lengths_positive": true,
+    "VoiceItem_only_timeline": true,
+    "fps_present_and_positive": true,
+    "project_embedded_path_matches_source": true,
+    "result_expected_role_matches": true,
+    "batch_project_target_matches_source": true,
+    "batch_result_target_matches_source": true,
+    "predecessor_result_status_success": true,
+    "predecessor_failed_checks_empty": true,
+    "predecessor_checks_all_true": true,
+    "result_project_sha256_matches": true,
+    "result_project_size_matches": true,
+    "result_recorded_exact_target": true,
+    "result_recorded_embedded_path_match": true,
+    "result_mapping_confirmation_observed": true,
+    "result_VoiceItem_count_matches": true,
+    "result_character_counts_match": true,
+    "result_text_order_matches": true,
+    "result_character_text_order_matches": true,
+    "result_missing_count_matches": true,
+    "result_duplicate_count_matches": true,
+    "result_reordered_matches": true,
+    "result_fps_matches": true,
+    "result_timeline_frames_match": true,
+    "result_duration_matches": true,
+    "result_voice_timing_matches": true,
+    "batch_id_matches": true,
+    "batch_start_matches_result": true,
+    "project_not_older_than_batch": true,
+    "result_collected_after_project": true,
+    "batch_and_result_yymm4_version_match": true,
+    "batch_and_result_profile_version_match": true,
+    "pronunciation_note_sanitized": true
+  },
+  "failed_checks": [],
+  "warnings": [
+    "YMM4_PROFILE_VERSION_MISMATCH_WARNING_ONLY"
+  ],
+  "metrics": {
+    "VoiceItem_count": 9,
+    "character_counts": {
+      "ゆっくり霊夢": 3,
+      "ゆっくり魔理沙": 6
+    },
+    "exact_text_order": true,
+    "exact_character_text_order": true,
+    "missing_count": 0,
+    "duplicate_count": 0,
+    "reordered": false,
+    "fps": 60,
+    "timeline_frames": 4415,
+    "duration_seconds": 73.583333,
+    "voice_timing_summary": [
+      {
+        "csv_row_id": "csv_row_1",
+        "cue_id": "cue_001",
+        "frame": 0,
+        "length_frames": 391,
+        "end_frame": 391
+      },
+      {
+        "csv_row_id": "csv_row_2",
+        "cue_id": "cue_002",
+        "frame": 391,
+        "length_frames": 705,
+        "end_frame": 1096
+      },
+      {
+        "csv_row_id": "csv_row_3",
+        "cue_id": "cue_003",
+        "frame": 1096,
+        "length_frames": 338,
+        "end_frame": 1434
+      },
+      {
+        "csv_row_id": "csv_row_4",
+        "cue_id": "cue_004",
+        "frame": 1434,
+        "length_frames": 384,
+        "end_frame": 1818
+      },
+      {
+        "csv_row_id": "csv_row_5",
+        "cue_id": "cue_005",
+        "frame": 1818,
+        "length_frames": 407,
+        "end_frame": 2225
+      },
+      {
+        "csv_row_id": "csv_row_6",
+        "cue_id": "cue_006",
+        "frame": 2225,
+        "length_frames": 610,
+        "end_frame": 2835
+      },
+      {
+        "csv_row_id": "csv_row_7",
+        "cue_id": "cue_007",
+        "frame": 2835,
+        "length_frames": 427,
+        "end_frame": 3262
+      },
+      {
+        "csv_row_id": "csv_row_8",
+        "cue_id": "cue_008",
+        "frame": 3262,
+        "length_frames": 733,
+        "end_frame": 3995
+      },
+      {
+        "csv_row_id": "csv_row_9",
+        "cue_id": "cue_009",
+        "frame": 3995,
+        "length_frames": 420,
+        "end_frame": 4415
+      }
+    ]
+  },
+  "evidence_grades": {
+    "approval_lineage_and_hashes": "verified",
+    "existing_operator_confirmation": "observed",
+    "current_compatibility_conclusion": "inferred_from_verified_inputs",
+    "pronunciation_rhythm_clipping": "unknown"
+  }
+}
