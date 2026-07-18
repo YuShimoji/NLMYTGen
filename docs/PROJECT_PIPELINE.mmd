@@ -27,8 +27,11 @@ flowchart LR
     CV --> NBS["Supported-only new-banknote script<br/>9 cues / 2-4-3 / Reimu 3 + Marisa 6<br/>15 claims / 20 units / 21 edges"]
     NBS --> NBL["T00-T07 content lineage + human approval seal<br/>8 approved hashes / no silent change<br/>clause-level, not token-level"]
     NBL --> NBO["Read-only existing YMM4 evidence revalidation<br/>9 VoiceItems / 3+6 / exact text-order-timing<br/>current-lineage compatible"]
-    NBO --> G1["Successor branch integration audit<br/>ancestry / write set / authority / visual provenance<br/>merge route not yet selected"]
-    G1 -. "compatible commits only" .-> E["External editorial / real-media input<br/>provenance + identity + rights context"]
+    NBO --> G1["Successor branch integration audit<br/>exact refs / 27-2-8-14 partition<br/>selective integration ready"]
+    G1 --> SI["Audited selective successor integration<br/>primary approval + T00-T07 + current YMM4<br/>D00-D10 secondary / observation historical"]
+    SI --> VS["Human visual-direction selection<br/>A-B-C or scene-cue revision<br/>Route A recommended, not selected"]
+    VS -. "only after human choice" .-> SL["Shot Layout + Motion Beat contracts<br/>asset-proxy-rights planning<br/>diagnostic YMM4 still separately gated"]
+    SI -. "future verified intake" .-> E["External editorial / real-media input<br/>provenance + identity + rights context"]
     W --> I["Feature/default integration audit passed<br/>44 commits / 448 paths classified<br/>integration_ready"]
     I -->|"approved Option A / normal FF"| J["Default branch integrated<br/>subject + audit tail + metadata rebind<br/>master current"]
 

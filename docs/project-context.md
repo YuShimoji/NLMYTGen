@@ -1,49 +1,48 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-19 JST・existing YMM4 evidence current-lineage compatible）
+## 現在の別端末再開ハンドオフ（2026-07-19 JST・selective successor integrated / visual selection ready）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
 
-- **取得先**: `origin/codex/new-banknote-existing-yymm4-evidence-revalidation-v1`。
+- **取得先**: `origin/codex/new-banknote-successor-selective-integration-v1`。
   remoteは`https://github.com/YuShimoji/NLMYTGen.git`に設定済みで、新規repository作成は不要。
   `git fetch --prune origin`後、同branchをcheckoutしてfast-forward限定pullする。
-  validated source/baseは`220a9b554f267a5367c9589eb09f35fc9058d4a0`。outcome commitは
+  exact baseは`5e50ff707806724e67a5e0cec215bdd3b604ce32`、candidateは
+  `833717f63713db9555f563a2a26285fa2f621e3d`、auditは
+  `ee052489a33e9247f77b90af27cdd56911acc527`。outcome commitは
   current remote branch tipから解決し、push後のremote parity `0/0`とclean tracked worktreeを確認する。
   approval baseline `b05eb3867caabda496fb9a0070d230a4e81aea01`
   はbranch先端のancestorであり、古いpromptのSTART_STATEから作り直さない。
 - **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
-  `docs/runtime-state.md` → この節 → pilotの`README_CONTENT_LINEAGE.md` →
-  `README_EXISTING_YMM4_EVIDENCE_REVALIDATION.md`。旧Web threadや下のmaster handoffを
+  `docs/runtime-state.md` → この節 → integration README → pilotの
+  `README_CONTENT_LINEAGE.md` → `editorial_provenance/README_EDITORIAL_PROVENANCE.md` →
+  `visual_scene_decision/README_VISUAL_SCENE_DECISION.md`。旧Web threadや下のhandoffを
   現在の指示として使わない。
 - **現在の状態**: Project-State-IDは
-  `new-banknote-current-lineage-yymm4-evidence-revalidated-v1`、
-  State-Revisionは`2026-07-19.1`。9 cue、2/4/3 scene、
+  `new-banknote-successor-selectively-integrated-visual-selection-ready-v1`、
+  State-Revisionは`2026-07-19.3`。9 cue、2/4/3 scene、
   Reimu/Marisa 3/6、8 approved hashes、15 adopted claims、20 factual units、21 edgesを
-  human approval receiptとT00–T07 lineageで固定済み。approved script、CSV、claim/sourceは
-  このH0でも変更していない。
-- **H0再検証**: current approval/lineage lockを先に検証し、既存ignored project/result/
-  batch stateをread-onlyでparseした。project/result binding、9 VoiceItems、3/6、exact
-  text/order、missing 0、duplicate 0、reordered false、60 fps、4415 frames、73.583333秒、
-  cue timingが一致。focused新規tests 10件、関連回帰、compile、JSON parse、deterministic
-  second pass、privacy/ignored/state/diff checksをcloseout gateとする。
+  primary human approval receiptとT00–T07 lineageで固定済み。approved script、CSV、
+  claim/sourceは変更していない。
+- **H0 selective integration**: exact audit JSONのdisjoint partitionをそのまま適用し、
+  candidate 27 accepted + 2 historicalをpath-level materialize、8 surfaceをregenerate、
+  14 pathsをexcludeした。normal merge、rebase、cherry-pickは行っていない。
+- **authority result**: primary T00–T07がcurrent content authority。candidate D00–D10は
+  secondary deep audit。primary existing-evidence revalidationがcurrent YMM4 authority、
+  candidate observationはhistorical predecessor。primary five-action Operator Batchがcurrent。
 - **local evidence**: ignored `local_outputs/`、`source_cache/`、`source_extracts/`を保持し、
-  削除・移動・上書きしていない。生成前後のexists/size/mtime/SHA-256は一致し、既存
-  `operator_observation.local.json`は不在。tracked packageにprivate path、NotebookLM
-  URL/UUID、raw transcript/source body、local binaryは含めない。
-- **tracked successor evidence**: pilot直下の
-  `README_EXISTING_YMM4_EVIDENCE_REVALIDATION.md`、receipt、readback、current-lineage
-  traceability、limitationsが正本。5成果物は2回生成でhash一致し、YMM4は再実行していない。
-- **audio/version境界**: pronunciation/rhythm/clippingは`unknown`でacceptanceを主張しない。
-  existing YMM4 4.54.0.1とprofile observation 4.53.0.9の差はwarning-only debt。
-- **branch split**: 別のvisual/provenance successor branchは未統合。import intake、editorial
-  provenance、A/B/C visual directionを自動mergeせず、次のG1 auditへ残した。
-- **exact next action**: new-banknote successor branchesのancestry、write set、content
-  authority、provenance、visual artifacts、approval/hash locksをread-firstで比較するG1
-  integration auditを実施する。compatible commitsとvalidation planが確定するまでmergeしない。
-- **未完了境界**: pronunciation/rhythm/clipping判断、branch integration、visual selection、
-  render、content revision、production/public/rights、master integration、
-  full-suite Integrity campaign。
+  削除・移動・上書きしていない。portable checkoutで不在なら
+  `not_reperformed_or_not_present`と記録し、tracked historical receiptを失敗にしない。
+- **visual status**: exact candidate A/B/C packageはproposal-only。Route Aは
+  `recommended_not_selected`、human selection required、implementation unauthorized。
+- **integration evidence**: `docs/verification/NEW_BANKNOTE_SUCCESSOR_SELECTIVE_INTEGRATION.md`
+  と隣接receipt/manifestがpath、hash、protected identity、validation、rollbackを記録する。
+- **exact next action**: visual boardと4-question review sheetを読み、A/B/Cまたは
+  scene/cue-specific revision、S1/S2/S3 flow、diagram-misleading risk、motion restraintを返す。
+- **未完了境界**: pronunciation/rhythm/clipping、exact S04/S05 historical identity、
+  token-level authorship、human visual selection、Shot Layout/Motion Beat、assets/rights、
+  diagnostic YMM4、render、production/publication、PR、master integration、full suite。
 
 ## 直前の別端末再開ハンドオフ（2026-07-13 JST・default branch integration・履歴）
 

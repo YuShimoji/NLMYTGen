@@ -1,0 +1,2468 @@
+{
+  "schema_version": "editorial_provenance.cue_transformation_matrix.v1",
+  "status": "complete",
+  "cue_coverage": "9/9",
+  "granularity": "claim_support_unit_editorial_role_and_cue",
+  "token_level_authorship_claimed": false,
+  "attribution_classes": [
+    "source_verbatim_candidate",
+    "normalized_source_reuse",
+    "evidence_backed_paraphrase",
+    "multi_source_synthesis",
+    "worker_editorial_bridge",
+    "supervisor_requested_revision",
+    "user_requested_change",
+    "user_approved_current_state",
+    "unresolved_external_origin"
+  ],
+  "operation_classes": [
+    "preserve",
+    "normalize",
+    "paraphrase",
+    "merge",
+    "split",
+    "reorder",
+    "omit",
+    "add_bridge",
+    "assign_speaker",
+    "move_scene",
+    "remove_style",
+    "correct_fact",
+    "reduce_density"
+  ],
+  "authority_classes": [
+    "source_correction",
+    "machine_normalization",
+    "worker_editorial",
+    "supervisor_editorial",
+    "user_requested",
+    "user_approved",
+    "unresolved"
+  ],
+  "cues": [
+    {
+      "cue_id": "cue_001",
+      "sequence": 1,
+      "scene": "S1",
+      "speaker": "れいむ",
+      "final_text_sha256": "6ae1e15f8fb09ffdf0551e6adc7be29232554b34badf8f025385e0df646456ee",
+      "final_text_character_count": 38,
+      "adopted_claim_ids": [
+        "claim_010"
+      ],
+      "source_ids": [
+        "V02"
+      ],
+      "raw_transcript_candidates": [
+        {
+          "claim_id": "claim_010",
+          "raw_line_ordinal": 19,
+          "raw_line_fingerprint": "aa57359e77141179a98a2374a55fdf40119696a547fd6be48e0bfa15da32d324",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        }
+      ],
+      "adopted_claim_identities": [
+        {
+          "claim_id": "claim_010",
+          "adjudicated_proposition_sha256": "7851f87eedb2454708591e75bbd9020d04320e9a4dbde11959659f0d0dad902c",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        }
+      ],
+      "prior_draft_cue_ids": [
+        {
+          "cue_id": "cue_001",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c",
+          "relationship": "same_sequence_pre_editorial_draft",
+          "evidence_grade": "verified_from_git_history"
+        }
+      ],
+      "pre_editorial_to_current_overlap": {
+        "before_normalized_characters": 59,
+        "after_normalized_characters": 38,
+        "ordered_matching_characters": 20,
+        "before_tokens": 56,
+        "after_tokens": 35,
+        "ordered_matching_tokens": 17,
+        "text_byte_equal": false,
+        "metric_scope": "pre_editorial_draft_to_current_cue",
+        "authorship_share_claimed": false
+      },
+      "transformation_operations": [
+        "paraphrase",
+        "reorder",
+        "add_bridge",
+        "assign_speaker"
+      ],
+      "authority_classes": [
+        "source_correction",
+        "worker_editorial",
+        "user_approved"
+      ],
+      "substantive_units": [
+        {
+          "unit_id": "cue_001_fact_01",
+          "unit_kind": "factual_content",
+          "statement_sha256": "7851f87eedb2454708591e75bbd9020d04320e9a4dbde11959659f0d0dad902c",
+          "statement_character_count": 15,
+          "claim_ids": [
+            "claim_010"
+          ],
+          "source_ids": [
+            "V02"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_001_bridge_01",
+          "unit_kind": "editorial_bridge",
+          "role": "contrast beyond appearance",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "add_bridge"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_revision_receipt",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_001_voice_01",
+          "unit_kind": "character_voice",
+          "role": "Reimu question framing",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "assign_speaker"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_final_dialogue",
+          "source_quote": false,
+          "surface_realization": "character_span_and_speaker_assignment"
+        }
+      ],
+      "substantive_unit_count": 3,
+      "final_text_coverage": {
+        "character_range": [
+          0,
+          38
+        ],
+        "surface_segments": [
+          {
+            "segment_id": "cue_001_segment_01",
+            "character_range": [
+              0,
+              11
+            ],
+            "character_count": 11,
+            "fragment_sha256": "9c31476591cc5fc602bda12b2fc0acc6e3f10080f8709721885f887fb28c7820",
+            "primary_substantive_unit_id": "cue_001_fact_01",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_001_segment_02",
+            "character_range": [
+              11,
+              19
+            ],
+            "character_count": 8,
+            "fragment_sha256": "194c2bb974d4b61399d4bc426085e6c67893e7a99686a11445c04d2002f2339d",
+            "primary_substantive_unit_id": "cue_001_voice_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "character_voice",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_001_segment_03",
+            "character_range": [
+              19,
+              26
+            ],
+            "character_count": 7,
+            "fragment_sha256": "0d34ec5dad0e2a24efc8ed0dc6acba6c3057950201aa9451cd3c4031673c1d55",
+            "primary_substantive_unit_id": "cue_001_bridge_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "editorial_bridge",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_001_segment_04",
+            "character_range": [
+              26,
+              38
+            ],
+            "character_count": 12,
+            "fragment_sha256": "2a4f44f399d218bf60d8ca07dd867b9e23673c49316f51afd854a241cb90be5c",
+            "primary_substantive_unit_id": "cue_001_voice_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "character_voice",
+            "source_text_embedded": false
+          }
+        ],
+        "surface_segment_count": 4,
+        "structural_realizations": [],
+        "speaker_assignment": {
+          "substantive_unit_id": "cue_001_voice_01",
+          "speaker": "れいむ",
+          "attribution_class": "worker_editorial_bridge",
+          "operation": "assign_speaker",
+          "realization_mode": "speaker_assignment_with_style_span"
+        },
+        "covered_by_substantive_unit_ids": [
+          "cue_001_bridge_01",
+          "cue_001_fact_01",
+          "cue_001_voice_01"
+        ],
+        "unmapped_substantive_unit_ids": [],
+        "unattributed_character_ranges": [],
+        "coverage_status": "complete_non_overlapping_surface_partition",
+        "token_level_authorship_claimed": false
+      },
+      "approval_state": {
+        "attribution_class": "user_approved_current_state",
+        "authority_class": "user_approved",
+        "status": "approved_for_continuation_of_current_state",
+        "future_silent_edits_authorized": false,
+        "decision_id": "current-nine-cue-continuation-approval-v1",
+        "decision_sha256": "f3b77651cf5798b6977dec9139a1351dad9f3d419dbda1750ce675b44631547e",
+        "evidence_grade": "observed_current_execution_contract_without_independent_contemporaneous_receipt"
+      },
+      "unresolved_lineage": [],
+      "unattributed_substantive_change": false,
+      "short_rationale": "opening question that scopes the topic beyond appearance",
+      "confidence": {
+        "factual_lineage": "high",
+        "editorial_operation": "medium_high_inferred_from_git_delta_and_revision_receipt",
+        "token_level_authorship": "not_claimed"
+      }
+    },
+    {
+      "cue_id": "cue_002",
+      "sequence": 2,
+      "scene": "S1",
+      "speaker": "まりさ",
+      "final_text_sha256": "c3dfc706245679aa1f8fe07e5b19eee2e94918807083ba8c2c54d15aa6583752",
+      "final_text_character_count": 73,
+      "adopted_claim_ids": [
+        "claim_090",
+        "claim_065",
+        "claim_099",
+        "claim_161"
+      ],
+      "source_ids": [
+        "V02",
+        "V06",
+        "V13"
+      ],
+      "raw_transcript_candidates": [
+        {
+          "claim_id": "claim_090",
+          "raw_line_ordinal": 169,
+          "raw_line_fingerprint": "cb2f592bf85678b5779f88c137854d2631f742d8cc0b733bce3d30e17d1d53d2",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        },
+        {
+          "claim_id": "claim_065",
+          "raw_line_ordinal": 125,
+          "raw_line_fingerprint": "a8a182b200e9a305bcfa83687fa03035cfdb98887d13be224a299b62ad871774",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        },
+        {
+          "claim_id": "claim_099",
+          "raw_line_ordinal": 182,
+          "raw_line_fingerprint": "878241fd67014a2bb852b54dcf7496402e5610f5155a266c24c0221a4beada0e",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        },
+        {
+          "claim_id": "claim_161",
+          "raw_line_ordinal": 301,
+          "raw_line_fingerprint": "558a2147340590aa293422eb7a25b2c1812658e817b79c57ca77c176a4a990b2",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        }
+      ],
+      "adopted_claim_identities": [
+        {
+          "claim_id": "claim_090",
+          "adjudicated_proposition_sha256": "42bd10402bf4704ccb1ca4e1c713c0e254766ff5050d1abc116cd894d84df4d9",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        },
+        {
+          "claim_id": "claim_065",
+          "adjudicated_proposition_sha256": "6e4f383fb2917c49ccaf0a7fe080a6698c4d7569d959492fb9d5a95996dff7e5",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        },
+        {
+          "claim_id": "claim_099",
+          "adjudicated_proposition_sha256": "446572e66d2852a839525333e9728b5bd36f30c81e0ff8ae98b9503b06f49bdd",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        },
+        {
+          "claim_id": "claim_161",
+          "adjudicated_proposition_sha256": "d42d8e96985e5fe21064fc4134a9f2978e25014a8b5918a50ef6d526b9ba69b4",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        }
+      ],
+      "prior_draft_cue_ids": [
+        {
+          "cue_id": "cue_002",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c",
+          "relationship": "same_sequence_pre_editorial_draft",
+          "evidence_grade": "verified_from_git_history"
+        }
+      ],
+      "pre_editorial_to_current_overlap": {
+        "before_normalized_characters": 43,
+        "after_normalized_characters": 73,
+        "ordered_matching_characters": 23,
+        "before_tokens": 42,
+        "after_tokens": 72,
+        "ordered_matching_tokens": 22,
+        "text_byte_equal": false,
+        "metric_scope": "pre_editorial_draft_to_current_cue",
+        "authorship_share_claimed": false
+      },
+      "transformation_operations": [
+        "paraphrase",
+        "merge",
+        "add_bridge",
+        "assign_speaker"
+      ],
+      "authority_classes": [
+        "source_correction",
+        "worker_editorial",
+        "user_approved"
+      ],
+      "substantive_units": [
+        {
+          "unit_id": "cue_002_fact_01",
+          "unit_kind": "factual_content",
+          "statement_sha256": "249c1351fe9b99cbd1fc49c92be65946d1ba8daf44a6ed68b0d8bbc1c7eb2592",
+          "statement_character_count": 22,
+          "claim_ids": [
+            "claim_090"
+          ],
+          "source_ids": [
+            "V06"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_002_fact_02",
+          "unit_kind": "factual_content",
+          "statement_sha256": "f46ecd509880a8707a33df927da1fc1790577bfc59a29c395164dac080f7ee80",
+          "statement_character_count": 18,
+          "claim_ids": [
+            "claim_065"
+          ],
+          "source_ids": [
+            "V06"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_002_fact_03",
+          "unit_kind": "factual_content",
+          "statement_sha256": "d2dfd11be07c5d4458c18c893d9446e59b7a155224f24e82344b512cfabd5831",
+          "statement_character_count": 22,
+          "claim_ids": [
+            "claim_099"
+          ],
+          "source_ids": [
+            "V13"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_002_fact_04",
+          "unit_kind": "factual_content",
+          "statement_sha256": "d42d8e96985e5fe21064fc4134a9f2978e25014a8b5918a50ef6d526b9ba69b4",
+          "statement_character_count": 44,
+          "claim_ids": [
+            "claim_161"
+          ],
+          "source_ids": [
+            "V02"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_002_bridge_01",
+          "unit_kind": "editorial_bridge",
+          "role": "groups supported security techniques",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "add_bridge"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_revision_receipt",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_002_voice_01",
+          "unit_kind": "character_voice",
+          "role": "Marisa direct answer",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "assign_speaker"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_final_dialogue",
+          "source_quote": false,
+          "surface_realization": "character_span_and_speaker_assignment"
+        }
+      ],
+      "substantive_unit_count": 6,
+      "final_text_coverage": {
+        "character_range": [
+          0,
+          73
+        ],
+        "surface_segments": [
+          {
+            "segment_id": "cue_002_segment_01",
+            "character_range": [
+              0,
+              4
+            ],
+            "character_count": 4,
+            "fragment_sha256": "77903ec7f7cb863fa3e434ce6fac56067762e6c2738144f1dac5da39a2d20ffa",
+            "primary_substantive_unit_id": "cue_002_voice_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "character_voice",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_002_segment_02",
+            "character_range": [
+              4,
+              11
+            ],
+            "character_count": 7,
+            "fragment_sha256": "013dfe3f3cdab83cce8877095dde07a8fe613706dc1a34c84255b7b95f82b134",
+            "primary_substantive_unit_id": "cue_002_bridge_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "editorial_bridge",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_002_segment_03",
+            "character_range": [
+              11,
+              19
+            ],
+            "character_count": 8,
+            "fragment_sha256": "690c27c4c9bbe8009a54d1bc99db4f42f277149347d4a2b12c868425cb26c122",
+            "primary_substantive_unit_id": "cue_002_fact_01",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_002_segment_04",
+            "character_range": [
+              19,
+              28
+            ],
+            "character_count": 9,
+            "fragment_sha256": "53a0c451959d400985ee7a55d2613908882cd503c132e785534459fe68ca67d7",
+            "primary_substantive_unit_id": "cue_002_fact_02",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_002_segment_05",
+            "character_range": [
+              28,
+              43
+            ],
+            "character_count": 15,
+            "fragment_sha256": "a3898b553e7f3ed640adc9d6fc85e3d16787415172159c166a7c41dfc8521dca",
+            "primary_substantive_unit_id": "cue_002_fact_03",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_002_segment_06",
+            "character_range": [
+              43,
+              70
+            ],
+            "character_count": 27,
+            "fragment_sha256": "1484f0123fe910f5d0bdc4d0ae12e12cbd28a0f7107e9bcfb9d996ab3ed27356",
+            "primary_substantive_unit_id": "cue_002_fact_04",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_002_segment_07",
+            "character_range": [
+              70,
+              73
+            ],
+            "character_count": 3,
+            "fragment_sha256": "c067e2d651673b8008cadcd9b1132edf16257c10d4988035b7680b35590b7438",
+            "primary_substantive_unit_id": "cue_002_voice_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "character_voice",
+            "source_text_embedded": false
+          }
+        ],
+        "surface_segment_count": 7,
+        "structural_realizations": [],
+        "speaker_assignment": {
+          "substantive_unit_id": "cue_002_voice_01",
+          "speaker": "まりさ",
+          "attribution_class": "worker_editorial_bridge",
+          "operation": "assign_speaker",
+          "realization_mode": "speaker_assignment_with_style_span"
+        },
+        "covered_by_substantive_unit_ids": [
+          "cue_002_bridge_01",
+          "cue_002_fact_01",
+          "cue_002_fact_02",
+          "cue_002_fact_03",
+          "cue_002_fact_04",
+          "cue_002_voice_01"
+        ],
+        "unmapped_substantive_unit_ids": [],
+        "unattributed_character_ranges": [],
+        "coverage_status": "complete_non_overlapping_surface_partition",
+        "token_level_authorship_claimed": false
+      },
+      "approval_state": {
+        "attribution_class": "user_approved_current_state",
+        "authority_class": "user_approved",
+        "status": "approved_for_continuation_of_current_state",
+        "future_silent_edits_authorized": false,
+        "decision_id": "current-nine-cue-continuation-approval-v1",
+        "decision_sha256": "f3b77651cf5798b6977dec9139a1351dad9f3d419dbda1750ce675b44631547e",
+        "evidence_grade": "observed_current_execution_contract_without_independent_contemporaneous_receipt"
+      },
+      "unresolved_lineage": [],
+      "unattributed_substantive_change": false,
+      "short_rationale": "direct answer and two-family overview",
+      "confidence": {
+        "factual_lineage": "high",
+        "editorial_operation": "medium_high_inferred_from_git_delta_and_revision_receipt",
+        "token_level_authorship": "not_claimed"
+      }
+    },
+    {
+      "cue_id": "cue_003",
+      "sequence": 3,
+      "scene": "S2",
+      "speaker": "まりさ",
+      "final_text_sha256": "7b8f30a2d341dc2962fe5f13c41b9a832348c6c00ed2e07a7ed08af6a5fc8bf4",
+      "final_text_character_count": 31,
+      "adopted_claim_ids": [
+        "claim_090"
+      ],
+      "source_ids": [
+        "V06"
+      ],
+      "raw_transcript_candidates": [
+        {
+          "claim_id": "claim_090",
+          "raw_line_ordinal": 169,
+          "raw_line_fingerprint": "cb2f592bf85678b5779f88c137854d2631f742d8cc0b733bce3d30e17d1d53d2",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        }
+      ],
+      "adopted_claim_identities": [
+        {
+          "claim_id": "claim_090",
+          "adjudicated_proposition_sha256": "42bd10402bf4704ccb1ca4e1c713c0e254766ff5050d1abc116cd894d84df4d9",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        }
+      ],
+      "prior_draft_cue_ids": [
+        {
+          "cue_id": "cue_003",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c",
+          "relationship": "same_sequence_pre_editorial_draft",
+          "evidence_grade": "verified_from_git_history"
+        }
+      ],
+      "pre_editorial_to_current_overlap": {
+        "before_normalized_characters": 32,
+        "after_normalized_characters": 31,
+        "ordered_matching_characters": 20,
+        "before_tokens": 32,
+        "after_tokens": 31,
+        "ordered_matching_tokens": 20,
+        "text_byte_equal": false,
+        "metric_scope": "pre_editorial_draft_to_current_cue",
+        "authorship_share_claimed": false
+      },
+      "transformation_operations": [
+        "paraphrase",
+        "reorder",
+        "add_bridge",
+        "assign_speaker"
+      ],
+      "authority_classes": [
+        "source_correction",
+        "worker_editorial",
+        "user_approved"
+      ],
+      "substantive_units": [
+        {
+          "unit_id": "cue_003_fact_01",
+          "unit_kind": "factual_content",
+          "statement_sha256": "42bd10402bf4704ccb1ca4e1c713c0e254766ff5050d1abc116cd894d84df4d9",
+          "statement_character_count": 35,
+          "claim_ids": [
+            "claim_090"
+          ],
+          "source_ids": [
+            "V06"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_003_bridge_01",
+          "unit_kind": "editorial_bridge",
+          "role": "orders the first technique",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "add_bridge"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_revision_receipt",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_003_voice_01",
+          "unit_kind": "character_voice",
+          "role": "Marisa explanatory ending",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "assign_speaker"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_final_dialogue",
+          "source_quote": false,
+          "surface_realization": "character_span_and_speaker_assignment"
+        }
+      ],
+      "substantive_unit_count": 3,
+      "final_text_coverage": {
+        "character_range": [
+          0,
+          31
+        ],
+        "surface_segments": [
+          {
+            "segment_id": "cue_003_segment_01",
+            "character_range": [
+              0,
+              3
+            ],
+            "character_count": 3,
+            "fragment_sha256": "e819e4cbc5d429f74a70fd511a4454ff9fc4964265b99201c6956e5cdb9fa0cf",
+            "primary_substantive_unit_id": "cue_003_bridge_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "editorial_bridge",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_003_segment_02",
+            "character_range": [
+              3,
+              11
+            ],
+            "character_count": 8,
+            "fragment_sha256": "4aeae32ae7917a653c421e1c2418924b489af2819471ab355a6c52ae7191d5b4",
+            "primary_substantive_unit_id": "cue_003_fact_01",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_003_segment_03",
+            "character_range": [
+              11,
+              27
+            ],
+            "character_count": 16,
+            "fragment_sha256": "216175778df33169f83616217a62b85e8fe8bead8d16f882014d467abba70a44",
+            "primary_substantive_unit_id": "cue_003_fact_01",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_003_segment_04",
+            "character_range": [
+              27,
+              31
+            ],
+            "character_count": 4,
+            "fragment_sha256": "10e2285345ac48841969cffe94f533808d7f080f16021550eb6659e87cfb0bbd",
+            "primary_substantive_unit_id": "cue_003_voice_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "character_voice",
+            "source_text_embedded": false
+          }
+        ],
+        "surface_segment_count": 4,
+        "structural_realizations": [],
+        "speaker_assignment": {
+          "substantive_unit_id": "cue_003_voice_01",
+          "speaker": "まりさ",
+          "attribution_class": "worker_editorial_bridge",
+          "operation": "assign_speaker",
+          "realization_mode": "speaker_assignment_with_style_span"
+        },
+        "covered_by_substantive_unit_ids": [
+          "cue_003_bridge_01",
+          "cue_003_fact_01",
+          "cue_003_voice_01"
+        ],
+        "unmapped_substantive_unit_ids": [],
+        "unattributed_character_ranges": [],
+        "coverage_status": "complete_non_overlapping_surface_partition",
+        "token_level_authorship_claimed": false
+      },
+      "approval_state": {
+        "attribution_class": "user_approved_current_state",
+        "authority_class": "user_approved",
+        "status": "approved_for_continuation_of_current_state",
+        "future_silent_edits_authorized": false,
+        "decision_id": "current-nine-cue-continuation-approval-v1",
+        "decision_sha256": "f3b77651cf5798b6977dec9139a1351dad9f3d419dbda1750ce675b44631547e",
+        "evidence_grade": "observed_current_execution_contract_without_independent_contemporaneous_receipt"
+      },
+      "unresolved_lineage": [],
+      "unattributed_substantive_change": false,
+      "short_rationale": "first counterfeit-resistance technique",
+      "confidence": {
+        "factual_lineage": "high",
+        "editorial_operation": "medium_high_inferred_from_git_delta_and_revision_receipt",
+        "token_level_authorship": "not_claimed"
+      }
+    },
+    {
+      "cue_id": "cue_004",
+      "sequence": 4,
+      "scene": "S2",
+      "speaker": "まりさ",
+      "final_text_sha256": "ad50602ced2e889cc3169b18858fbe4537224533118283ffd0d2c49f929f17c7",
+      "final_text_character_count": 34,
+      "adopted_claim_ids": [
+        "claim_065",
+        "claim_067"
+      ],
+      "source_ids": [
+        "V06",
+        "V07"
+      ],
+      "raw_transcript_candidates": [
+        {
+          "claim_id": "claim_065",
+          "raw_line_ordinal": 125,
+          "raw_line_fingerprint": "a8a182b200e9a305bcfa83687fa03035cfdb98887d13be224a299b62ad871774",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        },
+        {
+          "claim_id": "claim_067",
+          "raw_line_ordinal": 126,
+          "raw_line_fingerprint": "e9244851d15de00c29893ca53d89695c9f13d9ac21c7706a8def17813418a49b",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        }
+      ],
+      "adopted_claim_identities": [
+        {
+          "claim_id": "claim_065",
+          "adjudicated_proposition_sha256": "6e4f383fb2917c49ccaf0a7fe080a6698c4d7569d959492fb9d5a95996dff7e5",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        },
+        {
+          "claim_id": "claim_067",
+          "adjudicated_proposition_sha256": "c19caafff91fccd09be5469b8f3f8564cdd5fb3655e7788b2ea1dee069893806",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        }
+      ],
+      "prior_draft_cue_ids": [
+        {
+          "cue_id": "cue_004",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c",
+          "relationship": "same_sequence_pre_editorial_draft",
+          "evidence_grade": "verified_from_git_history"
+        }
+      ],
+      "pre_editorial_to_current_overlap": {
+        "before_normalized_characters": 33,
+        "after_normalized_characters": 34,
+        "ordered_matching_characters": 32,
+        "before_tokens": 32,
+        "after_tokens": 33,
+        "ordered_matching_tokens": 31,
+        "text_byte_equal": false,
+        "metric_scope": "pre_editorial_draft_to_current_cue",
+        "authorship_share_claimed": false
+      },
+      "transformation_operations": [
+        "paraphrase",
+        "add_bridge",
+        "assign_speaker"
+      ],
+      "authority_classes": [
+        "source_correction",
+        "worker_editorial",
+        "user_approved"
+      ],
+      "substantive_units": [
+        {
+          "unit_id": "cue_004_fact_01",
+          "unit_kind": "factual_content",
+          "statement_sha256": "f46ecd509880a8707a33df927da1fc1790577bfc59a29c395164dac080f7ee80",
+          "statement_character_count": 18,
+          "claim_ids": [
+            "claim_065"
+          ],
+          "source_ids": [
+            "V06"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_004_fact_02",
+          "unit_kind": "factual_content",
+          "statement_sha256": "6566fb98dccb4f27e2b4756d33ead955e0253827b4d9d0cb2d54819c0e050cfc",
+          "statement_character_count": 20,
+          "claim_ids": [
+            "claim_067"
+          ],
+          "source_ids": [
+            "V07"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_004_bridge_01",
+          "unit_kind": "editorial_bridge",
+          "role": "continues the ordered explanation",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "add_bridge"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_revision_receipt",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_004_voice_01",
+          "unit_kind": "character_voice",
+          "role": "Marisa explanatory ending",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "assign_speaker"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_final_dialogue",
+          "source_quote": false,
+          "surface_realization": "character_span_and_speaker_assignment"
+        }
+      ],
+      "substantive_unit_count": 4,
+      "final_text_coverage": {
+        "character_range": [
+          0,
+          34
+        ],
+        "surface_segments": [
+          {
+            "segment_id": "cue_004_segment_01",
+            "character_range": [
+              0,
+              2
+            ],
+            "character_count": 2,
+            "fragment_sha256": "d9b46d05b63e6dd8551acf0a436c4f1f6e711a8e427ddb6f0c77feb153d382c0",
+            "primary_substantive_unit_id": "cue_004_bridge_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "editorial_bridge",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_004_segment_02",
+            "character_range": [
+              2,
+              10
+            ],
+            "character_count": 8,
+            "fragment_sha256": "f660863f6b5909f561e651c1434e28a133188a17bfbd286164708400eafdc0a3",
+            "primary_substantive_unit_id": "cue_004_fact_01",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_004_segment_03",
+            "character_range": [
+              10,
+              32
+            ],
+            "character_count": 22,
+            "fragment_sha256": "debbf124a90ed30a5f93d901ae9debe2f07119cf8bab7ef01d77bb370944bab8",
+            "primary_substantive_unit_id": "cue_004_fact_02",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_004_segment_04",
+            "character_range": [
+              32,
+              34
+            ],
+            "character_count": 2,
+            "fragment_sha256": "0d5d7d7abe1b0956b5ec8d4c4f8fc699b932907b502c79ba19e3b1e5c51ab55f",
+            "primary_substantive_unit_id": "cue_004_voice_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "character_voice",
+            "source_text_embedded": false
+          }
+        ],
+        "surface_segment_count": 4,
+        "structural_realizations": [],
+        "speaker_assignment": {
+          "substantive_unit_id": "cue_004_voice_01",
+          "speaker": "まりさ",
+          "attribution_class": "worker_editorial_bridge",
+          "operation": "assign_speaker",
+          "realization_mode": "speaker_assignment_with_style_span"
+        },
+        "covered_by_substantive_unit_ids": [
+          "cue_004_bridge_01",
+          "cue_004_fact_01",
+          "cue_004_fact_02",
+          "cue_004_voice_01"
+        ],
+        "unmapped_substantive_unit_ids": [],
+        "unattributed_character_ranges": [],
+        "coverage_status": "complete_non_overlapping_surface_partition",
+        "token_level_authorship_claimed": false
+      },
+      "approval_state": {
+        "attribution_class": "user_approved_current_state",
+        "authority_class": "user_approved",
+        "status": "approved_for_continuation_of_current_state",
+        "future_silent_edits_authorized": false,
+        "decision_id": "current-nine-cue-continuation-approval-v1",
+        "decision_sha256": "f3b77651cf5798b6977dec9139a1351dad9f3d419dbda1750ce675b44631547e",
+        "evidence_grade": "observed_current_execution_contract_without_independent_contemporaneous_receipt"
+      },
+      "unresolved_lineage": [],
+      "unattributed_substantive_change": false,
+      "short_rationale": "second counterfeit-resistance technique",
+      "confidence": {
+        "factual_lineage": "high",
+        "editorial_operation": "medium_high_inferred_from_git_delta_and_revision_receipt",
+        "token_level_authorship": "not_claimed"
+      }
+    },
+    {
+      "cue_id": "cue_005",
+      "sequence": 5,
+      "scene": "S2",
+      "speaker": "れいむ",
+      "final_text_sha256": "afc01c0054276359b1c6b1a6f60dfc886c7cc26438d73b048437a33d6ee45a97",
+      "final_text_character_count": 40,
+      "adopted_claim_ids": [
+        "claim_116"
+      ],
+      "source_ids": [
+        "V06"
+      ],
+      "raw_transcript_candidates": [
+        {
+          "claim_id": "claim_116",
+          "raw_line_ordinal": 215,
+          "raw_line_fingerprint": "8f3f407f3e6a9da847e198010c60e8df79bd391ccc304725e15c307728ccb6a2",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        }
+      ],
+      "adopted_claim_identities": [
+        {
+          "claim_id": "claim_116",
+          "adjudicated_proposition_sha256": "610438ee58093b8cb191d04fc278f03644a672b53909b6a3b51913ed8e0be844",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        }
+      ],
+      "prior_draft_cue_ids": [
+        {
+          "cue_id": "cue_005",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c",
+          "relationship": "same_sequence_pre_editorial_draft",
+          "evidence_grade": "verified_from_git_history"
+        }
+      ],
+      "pre_editorial_to_current_overlap": {
+        "before_normalized_characters": 40,
+        "after_normalized_characters": 40,
+        "ordered_matching_characters": 40,
+        "before_tokens": 40,
+        "after_tokens": 40,
+        "ordered_matching_tokens": 40,
+        "text_byte_equal": true,
+        "metric_scope": "pre_editorial_draft_to_current_cue",
+        "authorship_share_claimed": false
+      },
+      "transformation_operations": [
+        "preserve",
+        "paraphrase",
+        "assign_speaker"
+      ],
+      "authority_classes": [
+        "source_correction",
+        "worker_editorial",
+        "user_approved"
+      ],
+      "substantive_units": [
+        {
+          "unit_id": "cue_005_fact_01",
+          "unit_kind": "factual_content",
+          "statement_sha256": "e07d30c9805a123cc8ddcff472bbac655e3539ee7ce42710a81a0b8f889993de",
+          "statement_character_count": 42,
+          "claim_ids": [
+            "claim_116"
+          ],
+          "source_ids": [
+            "V06"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_005_voice_01",
+          "unit_kind": "character_voice",
+          "role": "Reimu confirmation",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "assign_speaker"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_final_dialogue",
+          "source_quote": false,
+          "surface_realization": "character_span_and_speaker_assignment"
+        }
+      ],
+      "substantive_unit_count": 2,
+      "final_text_coverage": {
+        "character_range": [
+          0,
+          40
+        ],
+        "surface_segments": [
+          {
+            "segment_id": "cue_005_segment_01",
+            "character_range": [
+              0,
+              12
+            ],
+            "character_count": 12,
+            "fragment_sha256": "9bb5d471d6da5fd7dc81a5c681afb5c399f184dd9882bcb23377cfd29d237941",
+            "primary_substantive_unit_id": "cue_005_fact_01",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_005_segment_02",
+            "character_range": [
+              12,
+              35
+            ],
+            "character_count": 23,
+            "fragment_sha256": "33ebce2fac44dadf09f264d173dfca7c8f477582a06a5d6aa1fb24ddf9ce8fd4",
+            "primary_substantive_unit_id": "cue_005_fact_01",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_005_segment_03",
+            "character_range": [
+              35,
+              40
+            ],
+            "character_count": 5,
+            "fragment_sha256": "8d56f214fdac39e4a21418446b73cde62ff2e4cf43a40c9bc3305764cc4ed2bf",
+            "primary_substantive_unit_id": "cue_005_voice_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "character_voice",
+            "source_text_embedded": false
+          }
+        ],
+        "surface_segment_count": 3,
+        "structural_realizations": [],
+        "speaker_assignment": {
+          "substantive_unit_id": "cue_005_voice_01",
+          "speaker": "れいむ",
+          "attribution_class": "worker_editorial_bridge",
+          "operation": "assign_speaker",
+          "realization_mode": "speaker_assignment_with_style_span"
+        },
+        "covered_by_substantive_unit_ids": [
+          "cue_005_fact_01",
+          "cue_005_voice_01"
+        ],
+        "unmapped_substantive_unit_ids": [],
+        "unattributed_character_ranges": [],
+        "coverage_status": "complete_non_overlapping_surface_partition",
+        "token_level_authorship_claimed": false
+      },
+      "approval_state": {
+        "attribution_class": "user_approved_current_state",
+        "authority_class": "user_approved",
+        "status": "approved_for_continuation_of_current_state",
+        "future_silent_edits_authorized": false,
+        "decision_id": "current-nine-cue-continuation-approval-v1",
+        "decision_sha256": "f3b77651cf5798b6977dec9139a1351dad9f3d419dbda1750ce675b44631547e",
+        "evidence_grade": "observed_current_execution_contract_without_independent_contemporaneous_receipt"
+      },
+      "unresolved_lineage": [],
+      "unattributed_substantive_change": false,
+      "short_rationale": "tactile technique confirmation",
+      "confidence": {
+        "factual_lineage": "high",
+        "editorial_operation": "medium_high_inferred_from_git_delta_and_revision_receipt",
+        "token_level_authorship": "not_claimed"
+      }
+    },
+    {
+      "cue_id": "cue_006",
+      "sequence": 6,
+      "scene": "S2",
+      "speaker": "まりさ",
+      "final_text_sha256": "6ffa83cc6dd9cafba3b271ac8c300e36386b95438ca1c912ef0dedf5d748b0e8",
+      "final_text_character_count": 59,
+      "adopted_claim_ids": [
+        "claim_096",
+        "claim_097"
+      ],
+      "source_ids": [
+        "V06"
+      ],
+      "raw_transcript_candidates": [
+        {
+          "claim_id": "claim_096",
+          "raw_line_ordinal": 179,
+          "raw_line_fingerprint": "541a6960fa0c03940b3cdf4b7a8e8e3d3c2d605e8cbee8155eee8d75733d4f8c",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        },
+        {
+          "claim_id": "claim_097",
+          "raw_line_ordinal": 181,
+          "raw_line_fingerprint": "bf0bf1076eb0e625149b7b22ce9bedf782e7b375a7bf407aeffb5155a6744573",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        }
+      ],
+      "adopted_claim_identities": [
+        {
+          "claim_id": "claim_096",
+          "adjudicated_proposition_sha256": "b08321b654fd893aeb216f727e82d65600a0c6d74dcc6af9d246c12197253a4c",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        },
+        {
+          "claim_id": "claim_097",
+          "adjudicated_proposition_sha256": "ce8e32447f9baada45bf951682fe01c6728c6b1213f1e73877a23cf26e2ed7b5",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        }
+      ],
+      "prior_draft_cue_ids": [
+        {
+          "cue_id": "cue_006",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c",
+          "relationship": "same_sequence_pre_editorial_draft",
+          "evidence_grade": "verified_from_git_history"
+        }
+      ],
+      "pre_editorial_to_current_overlap": {
+        "before_normalized_characters": 54,
+        "after_normalized_characters": 59,
+        "ordered_matching_characters": 44,
+        "before_tokens": 44,
+        "after_tokens": 49,
+        "ordered_matching_tokens": 33,
+        "text_byte_equal": false,
+        "metric_scope": "pre_editorial_draft_to_current_cue",
+        "authorship_share_claimed": false
+      },
+      "transformation_operations": [
+        "paraphrase",
+        "split",
+        "add_bridge",
+        "assign_speaker"
+      ],
+      "authority_classes": [
+        "source_correction",
+        "worker_editorial",
+        "user_approved"
+      ],
+      "substantive_units": [
+        {
+          "unit_id": "cue_006_fact_01",
+          "unit_kind": "factual_content",
+          "statement_sha256": "b08321b654fd893aeb216f727e82d65600a0c6d74dcc6af9d246c12197253a4c",
+          "statement_character_count": 45,
+          "claim_ids": [
+            "claim_096"
+          ],
+          "source_ids": [
+            "V06"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_006_fact_02",
+          "unit_kind": "factual_content",
+          "statement_sha256": "ce8e32447f9baada45bf951682fe01c6728c6b1213f1e73877a23cf26e2ed7b5",
+          "statement_character_count": 28,
+          "claim_ids": [
+            "claim_097"
+          ],
+          "source_ids": [
+            "V06"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_006_bridge_01",
+          "unit_kind": "editorial_bridge",
+          "role": "separates checking method from reproduction difficulty",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "add_bridge"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_revision_receipt",
+          "source_quote": false,
+          "surface_realization": "structural_sequence"
+        },
+        {
+          "unit_id": "cue_006_voice_01",
+          "unit_kind": "character_voice",
+          "role": "Marisa explanatory ending",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "assign_speaker"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_final_dialogue",
+          "source_quote": false,
+          "surface_realization": "character_span_and_speaker_assignment"
+        }
+      ],
+      "substantive_unit_count": 4,
+      "final_text_coverage": {
+        "character_range": [
+          0,
+          59
+        ],
+        "surface_segments": [
+          {
+            "segment_id": "cue_006_segment_01",
+            "character_range": [
+              0,
+              33
+            ],
+            "character_count": 33,
+            "fragment_sha256": "5f77c500dd199e87d8b5e5e2f15b0b4debfdc8ef684580dcbd57fe7891b52dd1",
+            "primary_substantive_unit_id": "cue_006_fact_01",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_006_segment_02",
+            "character_range": [
+              33,
+              55
+            ],
+            "character_count": 22,
+            "fragment_sha256": "648b3304465bcb9fda1c885dd115f193e3b07161912cce80fe566beda75a6f5c",
+            "primary_substantive_unit_id": "cue_006_fact_02",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_006_segment_03",
+            "character_range": [
+              55,
+              59
+            ],
+            "character_count": 4,
+            "fragment_sha256": "b315ea0c5b9f0fa55d2bfe797f8aef987afe763b1ba0f6104b2490537e86b6d7",
+            "primary_substantive_unit_id": "cue_006_voice_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "character_voice",
+            "source_text_embedded": false
+          }
+        ],
+        "surface_segment_count": 3,
+        "structural_realizations": [
+          {
+            "unit_id": "cue_006_bridge_01",
+            "realization_mode": "structural_sequence",
+            "between_segment_ids": [
+              "cue_006_segment_01",
+              "cue_006_segment_02"
+            ],
+            "attribution_class": "worker_editorial_bridge",
+            "operation": "add_bridge"
+          }
+        ],
+        "speaker_assignment": {
+          "substantive_unit_id": "cue_006_voice_01",
+          "speaker": "まりさ",
+          "attribution_class": "worker_editorial_bridge",
+          "operation": "assign_speaker",
+          "realization_mode": "speaker_assignment_with_style_span"
+        },
+        "covered_by_substantive_unit_ids": [
+          "cue_006_bridge_01",
+          "cue_006_fact_01",
+          "cue_006_fact_02",
+          "cue_006_voice_01"
+        ],
+        "unmapped_substantive_unit_ids": [],
+        "unattributed_character_ranges": [],
+        "coverage_status": "complete_non_overlapping_surface_partition",
+        "token_level_authorship_claimed": false
+      },
+      "approval_state": {
+        "attribution_class": "user_approved_current_state",
+        "authority_class": "user_approved",
+        "status": "approved_for_continuation_of_current_state",
+        "future_silent_edits_authorized": false,
+        "decision_id": "current-nine-cue-continuation-approval-v1",
+        "decision_sha256": "f3b77651cf5798b6977dec9139a1351dad9f3d419dbda1750ce675b44631547e",
+        "evidence_grade": "observed_current_execution_contract_without_independent_contemporaneous_receipt"
+      },
+      "unresolved_lineage": [],
+      "unattributed_substantive_change": false,
+      "short_rationale": "tool-assisted microtext explanation",
+      "confidence": {
+        "factual_lineage": "high",
+        "editorial_operation": "medium_high_inferred_from_git_delta_and_revision_receipt",
+        "token_level_authorship": "not_claimed"
+      }
+    },
+    {
+      "cue_id": "cue_007",
+      "sequence": 7,
+      "scene": "S3",
+      "speaker": "まりさ",
+      "final_text_sha256": "db8c4f0bcfcb4351ee35dea6a614870b4d967e0cde9bb4421fc0c35016758309",
+      "final_text_character_count": 44,
+      "adopted_claim_ids": [
+        "claim_118",
+        "claim_130",
+        "claim_132"
+      ],
+      "source_ids": [
+        "V02",
+        "V06",
+        "V13"
+      ],
+      "raw_transcript_candidates": [
+        {
+          "claim_id": "claim_118",
+          "raw_line_ordinal": 216,
+          "raw_line_fingerprint": "503d4e12909bf96dd06ecef11b99623ff4c32b1f0ab496645e58397931adb397",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        },
+        {
+          "claim_id": "claim_130",
+          "raw_line_ordinal": 240,
+          "raw_line_fingerprint": "5f708d03906a14cf5c9597f0981d64e5af4999e9397723acc63bc5d7eb0b201f",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        },
+        {
+          "claim_id": "claim_132",
+          "raw_line_ordinal": 242,
+          "raw_line_fingerprint": "416ca7444762454dca28474f2d3ae1ebd440ad750a0ffbb0aadaf15a5951daff",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        }
+      ],
+      "adopted_claim_identities": [
+        {
+          "claim_id": "claim_118",
+          "adjudicated_proposition_sha256": "7a5bbcea947e4cb294b721575c7e9350dcfb5d614f8ea3d8de8aaca9b9b8bc00",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        },
+        {
+          "claim_id": "claim_130",
+          "adjudicated_proposition_sha256": "653a4fc0df89872b00b78fe881dc251a1d5349dad44938ea0ed000759a897502",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        },
+        {
+          "claim_id": "claim_132",
+          "adjudicated_proposition_sha256": "48d27c8a0d5fb8eaba957c254818a4e244ee46834c80c8fefb542e8143a55bfb",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        }
+      ],
+      "prior_draft_cue_ids": [
+        {
+          "cue_id": "cue_007",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c",
+          "relationship": "same_sequence_pre_editorial_draft",
+          "evidence_grade": "verified_from_git_history"
+        }
+      ],
+      "pre_editorial_to_current_overlap": {
+        "before_normalized_characters": 45,
+        "after_normalized_characters": 44,
+        "ordered_matching_characters": 35,
+        "before_tokens": 44,
+        "after_tokens": 43,
+        "ordered_matching_tokens": 35,
+        "text_byte_equal": false,
+        "metric_scope": "pre_editorial_draft_to_current_cue",
+        "authorship_share_claimed": false
+      },
+      "transformation_operations": [
+        "paraphrase",
+        "merge",
+        "reorder",
+        "add_bridge",
+        "assign_speaker"
+      ],
+      "authority_classes": [
+        "source_correction",
+        "worker_editorial",
+        "user_approved"
+      ],
+      "substantive_units": [
+        {
+          "unit_id": "cue_007_fact_01",
+          "unit_kind": "factual_content",
+          "statement_sha256": "7a5bbcea947e4cb294b721575c7e9350dcfb5d614f8ea3d8de8aaca9b9b8bc00",
+          "statement_character_count": 22,
+          "claim_ids": [
+            "claim_118"
+          ],
+          "source_ids": [
+            "V13"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_007_fact_02",
+          "unit_kind": "factual_content",
+          "statement_sha256": "653a4fc0df89872b00b78fe881dc251a1d5349dad44938ea0ed000759a897502",
+          "statement_character_count": 22,
+          "claim_ids": [
+            "claim_130",
+            "claim_132"
+          ],
+          "source_ids": [
+            "V02",
+            "V06"
+          ],
+          "attribution_class": "multi_source_synthesis",
+          "operations": [
+            "paraphrase",
+            "merge"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_007_bridge_01",
+          "unit_kind": "editorial_bridge",
+          "role": "moves from counterfeit resistance to identification",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "add_bridge"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_revision_receipt",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_007_voice_01",
+          "unit_kind": "character_voice",
+          "role": "Marisa transition ending",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "assign_speaker"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_final_dialogue",
+          "source_quote": false,
+          "surface_realization": "character_span_and_speaker_assignment"
+        }
+      ],
+      "substantive_unit_count": 4,
+      "final_text_coverage": {
+        "character_range": [
+          0,
+          44
+        ],
+        "surface_segments": [
+          {
+            "segment_id": "cue_007_segment_01",
+            "character_range": [
+              0,
+              12
+            ],
+            "character_count": 12,
+            "fragment_sha256": "4e91b97b8d0f2e6315d6313b96a0ad61ff48686c9e1bf0a929c74099aceb3b88",
+            "primary_substantive_unit_id": "cue_007_bridge_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "editorial_bridge",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_007_segment_02",
+            "character_range": [
+              12,
+              29
+            ],
+            "character_count": 17,
+            "fragment_sha256": "a47001e039e294b234366f9cd9911205bd8a4e4e27f8fb45db35b463d43c17cb",
+            "primary_substantive_unit_id": "cue_007_fact_01",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_007_segment_03",
+            "character_range": [
+              29,
+              42
+            ],
+            "character_count": 13,
+            "fragment_sha256": "85bc8cc3fe53101c90d4321a135f7186d50c75edddf735e4e7c2108f85870f22",
+            "primary_substantive_unit_id": "cue_007_fact_02",
+            "primary_attribution_class": "multi_source_synthesis",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_007_segment_04",
+            "character_range": [
+              42,
+              44
+            ],
+            "character_count": 2,
+            "fragment_sha256": "c4c5454176df4950f066cdb10d304830be68d6e9421ed443691cf4a8f9d05d93",
+            "primary_substantive_unit_id": "cue_007_voice_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "character_voice",
+            "source_text_embedded": false
+          }
+        ],
+        "surface_segment_count": 4,
+        "structural_realizations": [],
+        "speaker_assignment": {
+          "substantive_unit_id": "cue_007_voice_01",
+          "speaker": "まりさ",
+          "attribution_class": "worker_editorial_bridge",
+          "operation": "assign_speaker",
+          "realization_mode": "speaker_assignment_with_style_span"
+        },
+        "covered_by_substantive_unit_ids": [
+          "cue_007_bridge_01",
+          "cue_007_fact_01",
+          "cue_007_fact_02",
+          "cue_007_voice_01"
+        ],
+        "unmapped_substantive_unit_ids": [],
+        "unattributed_character_ranges": [],
+        "coverage_status": "complete_non_overlapping_surface_partition",
+        "token_level_authorship_claimed": false
+      },
+      "approval_state": {
+        "attribution_class": "user_approved_current_state",
+        "authority_class": "user_approved",
+        "status": "approved_for_continuation_of_current_state",
+        "future_silent_edits_authorized": false,
+        "decision_id": "current-nine-cue-continuation-approval-v1",
+        "decision_sha256": "f3b77651cf5798b6977dec9139a1351dad9f3d419dbda1750ce675b44631547e",
+        "evidence_grade": "observed_current_execution_contract_without_independent_contemporaneous_receipt"
+      },
+      "unresolved_lineage": [],
+      "unattributed_substantive_change": false,
+      "short_rationale": "transition to tactile identification design",
+      "confidence": {
+        "factual_lineage": "high",
+        "editorial_operation": "medium_high_inferred_from_git_delta_and_revision_receipt",
+        "token_level_authorship": "not_claimed"
+      }
+    },
+    {
+      "cue_id": "cue_008",
+      "sequence": 8,
+      "scene": "S3",
+      "speaker": "れいむ",
+      "final_text_sha256": "46f345d6b494ee94664752787c84bc32032e3673e02f5b8751d0e03cb8901d30",
+      "final_text_character_count": 70,
+      "adopted_claim_ids": [
+        "claim_114",
+        "claim_155",
+        "claim_157"
+      ],
+      "source_ids": [
+        "V02"
+      ],
+      "raw_transcript_candidates": [
+        {
+          "claim_id": "claim_114",
+          "raw_line_ordinal": 210,
+          "raw_line_fingerprint": "c6fcebf5f6ce92da7f7fa1cc10e8ec2bde1089d5371bb0f7b9a066385cce2441",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        },
+        {
+          "claim_id": "claim_155",
+          "raw_line_ordinal": 294,
+          "raw_line_fingerprint": "43a23db449b2575f427a6eb3c3c1df9e12720ac70d114fbe3fd3839df72c714b",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        },
+        {
+          "claim_id": "claim_157",
+          "raw_line_ordinal": 296,
+          "raw_line_fingerprint": "30534ff29bd61023889bd4b93eb813edeed13afc2e90ceeea82014906aab92fd",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        }
+      ],
+      "adopted_claim_identities": [
+        {
+          "claim_id": "claim_114",
+          "adjudicated_proposition_sha256": "df8f8d5206cc44d5bc6d0cb8f8b7200fa9861c7be8b9be374ae6515aa1226122",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        },
+        {
+          "claim_id": "claim_155",
+          "adjudicated_proposition_sha256": "6d82130fa231e37c52eb5bef6e261d0f7e9e491e415c6d818bc06da38bddb4ee",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        },
+        {
+          "claim_id": "claim_157",
+          "adjudicated_proposition_sha256": "a02e4ebce786acae291323dd8e70ca17b7628853c8a8141ebdc72b1a735b1958",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        }
+      ],
+      "prior_draft_cue_ids": [
+        {
+          "cue_id": "cue_008",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c",
+          "relationship": "same_sequence_pre_editorial_draft",
+          "evidence_grade": "verified_from_git_history"
+        }
+      ],
+      "pre_editorial_to_current_overlap": {
+        "before_normalized_characters": 70,
+        "after_normalized_characters": 70,
+        "ordered_matching_characters": 41,
+        "before_tokens": 70,
+        "after_tokens": 70,
+        "ordered_matching_tokens": 41,
+        "text_byte_equal": false,
+        "metric_scope": "pre_editorial_draft_to_current_cue",
+        "authorship_share_claimed": false
+      },
+      "transformation_operations": [
+        "paraphrase",
+        "merge",
+        "omit",
+        "reduce_density",
+        "add_bridge",
+        "assign_speaker"
+      ],
+      "authority_classes": [
+        "source_correction",
+        "worker_editorial",
+        "user_approved"
+      ],
+      "substantive_units": [
+        {
+          "unit_id": "cue_008_fact_01",
+          "unit_kind": "factual_content",
+          "statement_sha256": "df8f8d5206cc44d5bc6d0cb8f8b7200fa9861c7be8b9be374ae6515aa1226122",
+          "statement_character_count": 22,
+          "claim_ids": [
+            "claim_114"
+          ],
+          "source_ids": [
+            "V02"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_008_fact_02",
+          "unit_kind": "factual_content",
+          "statement_sha256": "6d82130fa231e37c52eb5bef6e261d0f7e9e491e415c6d818bc06da38bddb4ee",
+          "statement_character_count": 26,
+          "claim_ids": [
+            "claim_155"
+          ],
+          "source_ids": [
+            "V02"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_008_fact_03",
+          "unit_kind": "factual_content",
+          "statement_sha256": "a02e4ebce786acae291323dd8e70ca17b7628853c8a8141ebdc72b1a735b1958",
+          "statement_character_count": 26,
+          "claim_ids": [
+            "claim_157"
+          ],
+          "source_ids": [
+            "V02"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_008_bridge_01",
+          "unit_kind": "editorial_bridge",
+          "role": "compresses three related facts into a readable turn",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "add_bridge"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_revision_receipt",
+          "source_quote": false,
+          "surface_realization": "structural_sequence"
+        },
+        {
+          "unit_id": "cue_008_voice_01",
+          "unit_kind": "character_voice",
+          "role": "Reimu confirmation",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "assign_speaker"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_final_dialogue",
+          "source_quote": false,
+          "surface_realization": "character_span_and_speaker_assignment"
+        }
+      ],
+      "substantive_unit_count": 5,
+      "final_text_coverage": {
+        "character_range": [
+          0,
+          70
+        ],
+        "surface_segments": [
+          {
+            "segment_id": "cue_008_segment_01",
+            "character_range": [
+              0,
+              21
+            ],
+            "character_count": 21,
+            "fragment_sha256": "cca5c556de8f7a89acfdaf321c8b384672316a79fc88afb5dd9553b7d3dae242",
+            "primary_substantive_unit_id": "cue_008_fact_01",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_008_segment_02",
+            "character_range": [
+              21,
+              45
+            ],
+            "character_count": 24,
+            "fragment_sha256": "a71b377b4ca38c05efc7766b613cb8b03206df631facabdfb4476f74419b3d9f",
+            "primary_substantive_unit_id": "cue_008_fact_02",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_008_segment_03",
+            "character_range": [
+              45,
+              66
+            ],
+            "character_count": 21,
+            "fragment_sha256": "fe84741d450b1bbcc4ee53045796e3385ae2db9e1779a0cf06c767717ec6fd8a",
+            "primary_substantive_unit_id": "cue_008_fact_03",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_008_segment_04",
+            "character_range": [
+              66,
+              70
+            ],
+            "character_count": 4,
+            "fragment_sha256": "5be474b295bd259342bb0241ae7c8bb5443613db9913b8c81419532cbee03503",
+            "primary_substantive_unit_id": "cue_008_voice_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "character_voice",
+            "source_text_embedded": false
+          }
+        ],
+        "surface_segment_count": 4,
+        "structural_realizations": [
+          {
+            "unit_id": "cue_008_bridge_01",
+            "realization_mode": "structural_sequence",
+            "between_segment_ids": [
+              "cue_008_segment_01",
+              "cue_008_segment_02"
+            ],
+            "attribution_class": "worker_editorial_bridge",
+            "operation": "add_bridge"
+          }
+        ],
+        "speaker_assignment": {
+          "substantive_unit_id": "cue_008_voice_01",
+          "speaker": "れいむ",
+          "attribution_class": "worker_editorial_bridge",
+          "operation": "assign_speaker",
+          "realization_mode": "speaker_assignment_with_style_span"
+        },
+        "covered_by_substantive_unit_ids": [
+          "cue_008_bridge_01",
+          "cue_008_fact_01",
+          "cue_008_fact_02",
+          "cue_008_fact_03",
+          "cue_008_voice_01"
+        ],
+        "unmapped_substantive_unit_ids": [],
+        "unattributed_character_ranges": [],
+        "coverage_status": "complete_non_overlapping_surface_partition",
+        "token_level_authorship_claimed": false
+      },
+      "approval_state": {
+        "attribution_class": "user_approved_current_state",
+        "authority_class": "user_approved",
+        "status": "approved_for_continuation_of_current_state",
+        "future_silent_edits_authorized": false,
+        "decision_id": "current-nine-cue-continuation-approval-v1",
+        "decision_sha256": "f3b77651cf5798b6977dec9139a1351dad9f3d419dbda1750ce675b44631547e",
+        "evidence_grade": "observed_current_execution_contract_without_independent_contemporaneous_receipt"
+      },
+      "unresolved_lineage": [],
+      "unattributed_substantive_change": false,
+      "short_rationale": "compressed visual-identification comparison",
+      "confidence": {
+        "factual_lineage": "high",
+        "editorial_operation": "medium_high_inferred_from_git_delta_and_revision_receipt",
+        "token_level_authorship": "not_claimed"
+      }
+    },
+    {
+      "cue_id": "cue_009",
+      "sequence": 9,
+      "scene": "S3",
+      "speaker": "まりさ",
+      "final_text_sha256": "e11a16e48b4386490a5a4e43b400dd5786ec8b31f140da318aca3b1c6c0e9702",
+      "final_text_character_count": 36,
+      "adopted_claim_ids": [
+        "claim_090",
+        "claim_116",
+        "claim_065",
+        "claim_096"
+      ],
+      "source_ids": [
+        "V06"
+      ],
+      "raw_transcript_candidates": [
+        {
+          "claim_id": "claim_090",
+          "raw_line_ordinal": 169,
+          "raw_line_fingerprint": "cb2f592bf85678b5779f88c137854d2631f742d8cc0b733bce3d30e17d1d53d2",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        },
+        {
+          "claim_id": "claim_116",
+          "raw_line_ordinal": 215,
+          "raw_line_fingerprint": "8f3f407f3e6a9da847e198010c60e8df79bd391ccc304725e15c307728ccb6a2",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        },
+        {
+          "claim_id": "claim_065",
+          "raw_line_ordinal": 125,
+          "raw_line_fingerprint": "a8a182b200e9a305bcfa83687fa03035cfdb98887d13be224a299b62ad871774",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        },
+        {
+          "claim_id": "claim_096",
+          "raw_line_ordinal": 179,
+          "raw_line_fingerprint": "541a6960fa0c03940b3cdf4b7a8e8e3d3c2d605e8cbee8155eee8d75733d4f8c",
+          "relationship": "claim_candidate_derived_from_submitted_audio_overview_transcript",
+          "body_embedded": false
+        }
+      ],
+      "adopted_claim_identities": [
+        {
+          "claim_id": "claim_090",
+          "adjudicated_proposition_sha256": "42bd10402bf4704ccb1ca4e1c713c0e254766ff5050d1abc116cd894d84df4d9",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        },
+        {
+          "claim_id": "claim_116",
+          "adjudicated_proposition_sha256": "610438ee58093b8cb191d04fc278f03644a672b53909b6a3b51913ed8e0be844",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        },
+        {
+          "claim_id": "claim_065",
+          "adjudicated_proposition_sha256": "6e4f383fb2917c49ccaf0a7fe080a6698c4d7569d959492fb9d5a95996dff7e5",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        },
+        {
+          "claim_id": "claim_096",
+          "adjudicated_proposition_sha256": "b08321b654fd893aeb216f727e82d65600a0c6d74dcc6af9d246c12197253a4c",
+          "evidence_grade": "verified_primary",
+          "primary_outcome": "verified_primary"
+        }
+      ],
+      "prior_draft_cue_ids": [
+        {
+          "cue_id": "cue_009",
+          "git_commit": "a307083891cccb974021d2523a3b30e1b1c60a5c",
+          "relationship": "same_sequence_pre_editorial_draft",
+          "evidence_grade": "verified_from_git_history"
+        }
+      ],
+      "pre_editorial_to_current_overlap": {
+        "before_normalized_characters": 48,
+        "after_normalized_characters": 36,
+        "ordered_matching_characters": 24,
+        "before_tokens": 48,
+        "after_tokens": 36,
+        "ordered_matching_tokens": 24,
+        "text_byte_equal": false,
+        "metric_scope": "pre_editorial_draft_to_current_cue",
+        "authorship_share_claimed": false
+      },
+      "transformation_operations": [
+        "paraphrase",
+        "merge",
+        "reorder",
+        "add_bridge",
+        "assign_speaker"
+      ],
+      "authority_classes": [
+        "source_correction",
+        "worker_editorial",
+        "user_approved"
+      ],
+      "substantive_units": [
+        {
+          "unit_id": "cue_009_fact_01",
+          "unit_kind": "factual_content",
+          "statement_sha256": "91a97bc26ddf105710fc1c5e9e904fb1ad589b026bae05ddfe6b37bdd6de1dff",
+          "statement_character_count": 19,
+          "claim_ids": [
+            "claim_090"
+          ],
+          "source_ids": [
+            "V06"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_009_fact_02",
+          "unit_kind": "factual_content",
+          "statement_sha256": "b374be5985e5eb78fa37aeeaaf7ae4bbd0529bbf039693bbdd17900877e34e8e",
+          "statement_character_count": 14,
+          "claim_ids": [
+            "claim_116"
+          ],
+          "source_ids": [
+            "V06"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_009_fact_03",
+          "unit_kind": "factual_content",
+          "statement_sha256": "b51dd07af9d18dc6f26ee3d0638fafd77c01723e05caeae0ec2cf03c9c6bd2ac",
+          "statement_character_count": 16,
+          "claim_ids": [
+            "claim_065"
+          ],
+          "source_ids": [
+            "V06"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_009_fact_04",
+          "unit_kind": "factual_content",
+          "statement_sha256": "e3b15e83ca186d3a7cc1c2f9ad5f4321ebf6ac1b57dc10e15f6056752077c582",
+          "statement_character_count": 16,
+          "claim_ids": [
+            "claim_096"
+          ],
+          "source_ids": [
+            "V06"
+          ],
+          "attribution_class": "evidence_backed_paraphrase",
+          "operations": [
+            "paraphrase"
+          ],
+          "authority_classes": [
+            "source_correction",
+            "worker_editorial"
+          ],
+          "confidence": "high",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_009_bridge_01",
+          "unit_kind": "editorial_bridge",
+          "role": "introduces the recap",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "add_bridge"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_revision_receipt",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_009_bridge_02",
+          "unit_kind": "editorial_bridge",
+          "role": "closes with a retention prompt",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "add_bridge"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_revision_receipt",
+          "source_quote": false,
+          "surface_realization": "character_span"
+        },
+        {
+          "unit_id": "cue_009_voice_01",
+          "unit_kind": "character_voice",
+          "role": "Marisa closing invitation",
+          "attribution_class": "worker_editorial_bridge",
+          "operations": [
+            "assign_speaker"
+          ],
+          "authority_classes": [
+            "worker_editorial"
+          ],
+          "confidence": "medium_high_inferred_from_final_dialogue",
+          "source_quote": false,
+          "surface_realization": "character_span_and_speaker_assignment"
+        }
+      ],
+      "substantive_unit_count": 7,
+      "final_text_coverage": {
+        "character_range": [
+          0,
+          36
+        ],
+        "surface_segments": [
+          {
+            "segment_id": "cue_009_segment_01",
+            "character_range": [
+              0,
+              6
+            ],
+            "character_count": 6,
+            "fragment_sha256": "9ebd5ac5440dd91558a00f3437076e6aaa1dc9329d08a66b364b02943425322c",
+            "primary_substantive_unit_id": "cue_009_bridge_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "editorial_bridge",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_009_segment_02",
+            "character_range": [
+              6,
+              10
+            ],
+            "character_count": 4,
+            "fragment_sha256": "85c0acb8a8b32b6ba6bab4cae9eaa17bbbbdd33e875eb169baa22994cffe5694",
+            "primary_substantive_unit_id": "cue_009_fact_01",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_009_segment_03",
+            "character_range": [
+              10,
+              13
+            ],
+            "character_count": 3,
+            "fragment_sha256": "12ddc9f3c22f80652c3255d1d558f34283408e82fa98c05a2bab3e568636e61a",
+            "primary_substantive_unit_id": "cue_009_fact_02",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_009_segment_04",
+            "character_range": [
+              13,
+              17
+            ],
+            "character_count": 4,
+            "fragment_sha256": "5393ade963017f8d5d8000384eb47f20ecd70ceb6b2b0fa492200060fdd01f9e",
+            "primary_substantive_unit_id": "cue_009_fact_03",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_009_segment_05",
+            "character_range": [
+              17,
+              24
+            ],
+            "character_count": 7,
+            "fragment_sha256": "f08fcc1646ddb1b7641fd18aac88568a56e680d8d53ca1cd652d37fe3b4aa9bf",
+            "primary_substantive_unit_id": "cue_009_fact_04",
+            "primary_attribution_class": "evidence_backed_paraphrase",
+            "surface_role": "factual_content",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_009_segment_06",
+            "character_range": [
+              24,
+              29
+            ],
+            "character_count": 5,
+            "fragment_sha256": "951c4af9ca3903c58b2798dd9e9d488deb03a3f0f618fc250d1168741c193291",
+            "primary_substantive_unit_id": "cue_009_bridge_02",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "editorial_bridge",
+            "source_text_embedded": false
+          },
+          {
+            "segment_id": "cue_009_segment_07",
+            "character_range": [
+              29,
+              36
+            ],
+            "character_count": 7,
+            "fragment_sha256": "a1999374829bd91ec3c4cdb6986ba3c3f0aa33ee1f2ddc22ae056343a0f7e68f",
+            "primary_substantive_unit_id": "cue_009_voice_01",
+            "primary_attribution_class": "worker_editorial_bridge",
+            "surface_role": "character_voice",
+            "source_text_embedded": false
+          }
+        ],
+        "surface_segment_count": 7,
+        "structural_realizations": [],
+        "speaker_assignment": {
+          "substantive_unit_id": "cue_009_voice_01",
+          "speaker": "まりさ",
+          "attribution_class": "worker_editorial_bridge",
+          "operation": "assign_speaker",
+          "realization_mode": "speaker_assignment_with_style_span"
+        },
+        "covered_by_substantive_unit_ids": [
+          "cue_009_bridge_01",
+          "cue_009_bridge_02",
+          "cue_009_fact_01",
+          "cue_009_fact_02",
+          "cue_009_fact_03",
+          "cue_009_fact_04",
+          "cue_009_voice_01"
+        ],
+        "unmapped_substantive_unit_ids": [],
+        "unattributed_character_ranges": [],
+        "coverage_status": "complete_non_overlapping_surface_partition",
+        "token_level_authorship_claimed": false
+      },
+      "approval_state": {
+        "attribution_class": "user_approved_current_state",
+        "authority_class": "user_approved",
+        "status": "approved_for_continuation_of_current_state",
+        "future_silent_edits_authorized": false,
+        "decision_id": "current-nine-cue-continuation-approval-v1",
+        "decision_sha256": "f3b77651cf5798b6977dec9139a1351dad9f3d419dbda1750ce675b44631547e",
+        "evidence_grade": "observed_current_execution_contract_without_independent_contemporaneous_receipt"
+      },
+      "unresolved_lineage": [],
+      "unattributed_substantive_change": false,
+      "short_rationale": "four-method closing recap",
+      "confidence": {
+        "factual_lineage": "high",
+        "editorial_operation": "medium_high_inferred_from_git_delta_and_revision_receipt",
+        "token_level_authorship": "not_claimed"
+      }
+    }
+  ]
+}

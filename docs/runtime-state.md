@@ -1,11 +1,11 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: new-banknote-current-lineage-yymm4-evidence-revalidated-v1
-State-Revision: 2026-07-19.1
+Project-State-ID: new-banknote-successor-selectively-integrated-visual-selection-ready-v1
+State-Revision: 2026-07-19.3
 Updated: 2026-07-19 JST
-Product-State: new-banknote-existing-yymm4-import-evidence-current-lineage-compatible
-Product-Gate: new-banknote-successor-branch-integration-audit
-Recommended-Next: audit-and-integrate-new-banknote-successor-branches
+Product-State: new-banknote-lineage-yymm4-provenance-visual-proposals-unified
+Product-Gate: human-visual-direction-selection
+Recommended-Next: select-new-banknote-visual-direction-from-unified-surface
 External-State: public-repo-feature-branch
 Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0
@@ -13,88 +13,81 @@ Tracked-Worktree: clean; intentional ignored evidence retained
 
 ## Current Slice
 
-- **Current approval remains sealed**: option A receipt
-  `new-banknote-script-option-a-approval-v1` still fixes approved commit
-  `b05eb3867caabda496fb9a0070d230a4e81aea01`, eight approved file hashes,
-  nine cue texts/order, scene allocation 2/4/3, Reimu/Marisa 3/6, and the
-  canonical/derived CSV pair. Approved content was not changed.
-- **T00–T07 lineage remains exact**: all nine cues connect to 15 adopted
-  verified-primary claims, 20 factual support units, and 21 evidence edges;
-  unsupported spoken claims remain zero. Token-level authorship is not
-  claimed.
-- **Existing YMM4 evidence revalidated read-only**: the ignored project,
-  operator result, and batch state were parsed without deletion, movement, or
-  overwrite. Before/after existence, size, modification time, and SHA-256 are
-  equal. No operator observation note exists.
-- **Current-lineage compatibility passed**: project/result binding, 9
-  VoiceItems, Reimu/Marisa 3/6, exact text and order, zero missing/duplicate,
-  no reorder, 60 fps, 4415 frames, 73.583333 seconds, and per-cue timing all
-  match current approved inputs and the predecessor result.
-- **Sanitized successor evidence tracked**: the pilot now contains a receipt,
-  readback, current-lineage traceability map, limitations, and README. The
-  package records hashes and structural facts without private paths, local
-  binaries, NotebookLM links/UUIDs, or raw/source/transcript bodies.
-- **Determinism and failure boundaries tested**: focused tests cover exact
-  acceptance, deterministic output, approval/CSV drift, project/result drift,
-  order/speaker drift, mutation during read, version-warning behavior,
-  optional note handling, output overlap rejection, and ignored-file status.
-- **Execution boundary preserved**: YMM4 was not launched or rerun; Computer
-  Use, NotebookLM, web fetch, rendering, media generation, production,
-  publication, rights action, and master integration did not occur.
-- **Audio quality stays unresolved**: pronunciation, rhythm, and clipping are
-  `unknown`. Structural import evidence is not audio acceptance. The observed
-  YMM4 4.54.0.1 versus profile 4.53.0.9 difference remains warning-only debt.
-- **Branch divergence remains explicit**: the separate visual/provenance
-  successor branch was not merged, rebased, or cherry-picked. Its editorial
-  provenance and A/B/C visual-direction work require the next G1 integration
-  audit before reuse.
+- **Audited selective integration completed**: the successor descends from exact
+  primary `5e50ff7` and uses exact candidate `833717f` under audit `ee05248`.
+  The disjoint candidate treatment is 27 accepted, 2 historical, 8 regenerated,
+  and 14 excluded paths. No merge, rebase, or cherry-pick was used.
+- **Approved content remains sole current authority**: the explicit option A
+  receipt, all eight approved hashes, nine cue texts/order, scenes 2/4/3,
+  Reimu/Marisa 3/6, canonical/derived CSVs, 15 adopted claims, 20 factual units,
+  21 evidence edges, and unsupported spoken claims 0 are byte-exact to primary.
+- **Lineage roles are unified**: primary T00–T07 remains the current content
+  authority. Candidate D00–D10 is retained byte-exact as secondary editorial
+  deep-audit evidence; token-level authorship is not claimed.
+- **YMM4 evidence roles are explicit**: primary current-lineage revalidation is
+  the current structural authority. Candidate tracked import observation is a
+  historical predecessor over the same project/result identities and metrics.
+  No new YMM4 operation occurred; pronunciation, rhythm, and clipping are unknown.
+- **Portable provenance is regenerated**: its README, content lock, and validation
+  readback bind the primary approval/T00–T07/current revalidation to the secondary
+  D00–D10 core. Absent same-machine local evidence is represented as
+  `not_reperformed_or_not_present` and does not invalidate the tracked package.
+- **Operator Batch authority stays primary**: the five-action approval/lineage-aware
+  batch, module, and tests remain byte-exact. The candidate four-action executable
+  family, module, and test are excluded.
+- **A/B/C is proposal-only**: the exact candidate review package is integrated.
+  Route A remains `recommended_not_selected`; human selection is required and
+  implementation is unauthorized. Rights and misleading-diagram risk remain open.
+- **Evidence is reviewable**: the integration README, receipt, and manifest record
+  refs, every copied/historical/regenerated/excluded path, protected hashes,
+  authority resolution, validation, rollback boundary, and operations not performed.
+- **Boundary preserved**: source branches, master, approved content, ignored
+  `local_outputs/`, YMM4, render/media, production/publication, and rights work were
+  not mutated. Full-suite Integrity work remains outside this slice.
 
 ## Product Position
 
-The approved script and T00–T07 content lineage are unchanged. Existing
-same-machine YMM4 import evidence is now demonstrably compatible with the
-current approval and lineage locks through a tracked, sanitized successor
-package. This closes the H0 reconciliation gate only; it does not establish
-pronunciation quality, visual acceptance, production readiness, rights, or
-publication approval.
+The human reviewer no longer needs to reconcile branches. One successor feature
+branch now presents the primary approval, T00–T07 lineage, current YMM4 structural
+evidence, secondary D00–D10 provenance, historical observation, and proposal-only
+A/B/C visual packet under one authority model. H0 selective integration is closed;
+the next product gate is human visual-direction selection only.
 
 ## Exact Next Action
 
-Run G1 as a read-first integration audit of the new-banknote successor
-branches. Compare their ancestry, write sets, content authority, provenance,
-visual-direction artifacts, and current approval/hash locks. Select an
-integration route that preserves this revalidated receipt and rejects silent
-approved-content drift. Do not merge until the audit identifies the exact
-compatible commits and validation plan.
+Open `visual_scene_decision/visual_direction_board.html` and
+`visual_review_sheet.md` in the new-banknote pilot. Return an A/B/C choice or
+scene/cue-specific revision, plus judgments on S1/S2/S3 flow, misleading-diagram
+risk, and motion restraint. Do not create Shot Layout, Motion Beat, assets, or a
+diagnostic YMM4 project until that human decision is recorded.
 
 ## Evidence and Access
 
-- Revalidation entry surface:
-  `production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_EXISTING_YMM4_EVIDENCE_REVALIDATION.md`.
-- Receipt and readback beside it:
-  `existing_yymm4_evidence_revalidation_receipt.json` and
-  `existing_yymm4_evidence_revalidation_readback.json`.
-- Approval/evidence linkage:
-  `existing_yymm4_evidence_current_lineage_traceability.json`.
-- Remaining evidence limits:
-  `existing_yymm4_evidence_limitations.md`.
-- Current content-lineage authority remains `README_CONTENT_LINEAGE.md` and
-  its approval, transformation, cue, policy, and readback artifacts.
+- Integration entry surface:
+  `docs/verification/NEW_BANKNOTE_SUCCESSOR_SELECTIVE_INTEGRATION.md`.
+- Machine receipts:
+  `new_banknote_successor_selective_integration_receipt.json` and
+  `new_banknote_successor_selective_integration_manifest.json` beside it.
+- Current content authority: pilot `README_CONTENT_LINEAGE.md` and
+  `human_script_approval_receipt.json`.
+- Current provenance surface: pilot
+  `editorial_provenance/README_EDITORIAL_PROVENANCE.md`.
+- Current YMM4 authority: pilot
+  `README_EXISTING_YMM4_EVIDENCE_REVALIDATION.md`.
+- Historical predecessor: pilot `README_YMM4_IMPORT_OBSERVATION.md`.
+- Human visual review: pilot
+  `visual_scene_decision/README_VISUAL_SCENE_DECISION.md` and board HTML.
 
 ## Active Boundaries
 
-- Approved script, claims, sources, traceability, and CSVs are unchanged.
-- Existing ignored project/result/batch state remain local, ignored, and
-  non-authoritative outside this same-machine observation.
-- Pronunciation/rhythm/clipping, human visual/editorial acceptance, exact S04
-  generation-time binary/S05 identity, and token-level authorship remain
-  unresolved or unavailable.
-- G1 branch integration, visual selection, render, production project,
-  rights/legal/final-thumbnail approval, upload/publication, master
-  integration, and full-suite Integrity work remain undone.
+- Human A/B/C preference and creative acceptance are pending.
+- Pronunciation/rhythm/clipping, exact S04/S05 historical identity, token-level
+  authorship, and remote CI/branch policy remain unresolved or unavailable.
+- Shot Layout, Motion Beat, asset/proxy/rights work, diagnostic YMM4, render,
+  production, publication, PR, master integration, and full-suite Integrity work
+  remain undone and unauthorized by this state.
 
 ## Maintenance Note
 
-Keep this capsule within 160 lines. Resolve the handoff commit and remote
-parity from the current tracked branch after closeout; durable evidence lives
-in the pilot package, focused tests, project context, and Git history.
+Keep this capsule within 160 lines. Resolve the handoff commit from the current
+branch tip; exact path and hash inventories belong in the integration manifest.

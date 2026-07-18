@@ -1,0 +1,100 @@
+{
+  "schema_version": "new_banknote.visual_motion_beat_plan.v1",
+  "status": "proposed_not_implemented",
+  "route_id": "route_A_security_inspection_lab",
+  "motion_policy": {
+    "restrained": true,
+    "production_keyframes_authorized": false,
+    "voice_timing_mutation_authorized": false,
+    "allowed_semantics": [
+      "enter",
+      "reveal",
+      "emphasize",
+      "move",
+      "dim"
+    ]
+  },
+  "beats": [
+    {
+      "cue_id": "cue_001",
+      "scene_id": "S1",
+      "primitive": "outline_reveal",
+      "start_frame_reference": 0,
+      "end_frame_reference": 391,
+      "timing_basis": "observed VoiceItem interval",
+      "future_tuning": "human-selected route diagnostic project only"
+    },
+    {
+      "cue_id": "cue_002",
+      "scene_id": "S1",
+      "primitive": "layer_callout_reveal",
+      "start_frame_reference": 391,
+      "end_frame_reference": 1096,
+      "timing_basis": "observed VoiceItem interval",
+      "future_tuning": "human-selected route diagnostic project only"
+    },
+    {
+      "cue_id": "cue_003",
+      "scene_id": "S2",
+      "primitive": "light_sweep",
+      "start_frame_reference": 1096,
+      "end_frame_reference": 1434,
+      "timing_basis": "observed VoiceItem interval",
+      "future_tuning": "human-selected route diagnostic project only"
+    },
+    {
+      "cue_id": "cue_004",
+      "scene_id": "S2",
+      "primitive": "restrained_tilt_parallax",
+      "start_frame_reference": 1434,
+      "end_frame_reference": 1818,
+      "timing_basis": "observed VoiceItem interval",
+      "future_tuning": "human-selected route diagnostic project only"
+    },
+    {
+      "cue_id": "cue_005",
+      "scene_id": "S2",
+      "primitive": "tactile_pulse",
+      "start_frame_reference": 1818,
+      "end_frame_reference": 2225,
+      "timing_basis": "observed VoiceItem interval",
+      "future_tuning": "human-selected route diagnostic project only"
+    },
+    {
+      "cue_id": "cue_006",
+      "scene_id": "S2",
+      "primitive": "loupe_zoom",
+      "start_frame_reference": 2225,
+      "end_frame_reference": 2835,
+      "timing_basis": "observed VoiceItem interval",
+      "future_tuning": "human-selected route diagnostic project only"
+    },
+    {
+      "cue_id": "cue_007",
+      "scene_id": "S3",
+      "primitive": "position_marker_step",
+      "start_frame_reference": 2835,
+      "end_frame_reference": 3262,
+      "timing_basis": "observed VoiceItem interval",
+      "future_tuning": "human-selected route diagnostic project only"
+    },
+    {
+      "cue_id": "cue_008",
+      "scene_id": "S3",
+      "primitive": "bounded_difference_reveal",
+      "start_frame_reference": 3262,
+      "end_frame_reference": 3995,
+      "timing_basis": "observed VoiceItem interval",
+      "future_tuning": "human-selected route diagnostic project only"
+    },
+    {
+      "cue_id": "cue_009",
+      "scene_id": "S3",
+      "primitive": "four_action_sequence",
+      "start_frame_reference": 3995,
+      "end_frame_reference": 4415,
+      "timing_basis": "observed VoiceItem interval",
+      "future_tuning": "human-selected route diagnostic project only"
+    }
+  ]
+}

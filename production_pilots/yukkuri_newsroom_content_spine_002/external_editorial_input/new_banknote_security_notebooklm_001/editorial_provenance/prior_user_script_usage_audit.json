@@ -1,0 +1,100 @@
+{
+  "schema_version": "editorial_provenance.prior_user_script_audit.v1",
+  "status": "complete_evidence_bounded",
+  "allowed_final_statuses": [
+    "proven_used",
+    "proven_not_used",
+    "candidate_overlap_unresolved",
+    "not_proven_from_available_repo_evidence"
+  ],
+  "inventory_policy": {
+    "policy_id": "bounded-prior-user-script-path-audit-v1",
+    "configured_roots": [
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001",
+      "production_pilots/yukkuri_newsroom_content_spine_002/real_input_intake_readiness/real_input/transcript/new_banknote_notebooklm",
+      "production_pilots/yukkuri_newsroom_content_spine_002/real_input_replacement_readiness_pack/input_dropzone",
+      "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input"
+    ],
+    "candidate_suffixes": [
+      ".csv",
+      ".docx",
+      ".json",
+      ".md",
+      ".rtf",
+      ".txt"
+    ],
+    "candidate_pattern": "(?i)(?:(?:user|submitted|human|prior|previous|finished|final)[-_. ]*(?:script|draft)|(?:script|draft)[-_. ]*(?:user|submitted|human|prior|previous)|台本|原稿)",
+    "generated_script_exclusion_pattern": "(?i)(?:canonical_script|regenerated_|script_generation_receipt|script_beat_ir|source_script|transcript_template|approval_receipt|readback|audit|contract|manifest)",
+    "git_history_scopes": [
+      "fixed_content_baseline",
+      "available_local_refs_candidate_set_only"
+    ],
+    "body_read_for_overlap": false,
+    "policy_sha256": "67652b80ac99b5db6ce6d35fd901a5cf0efe5332b865c4a31a9289822bd49fec"
+  },
+  "search_surfaces": [
+    {
+      "surface": "current tracked repository path inventory",
+      "method": "executed_git_ls_files_path_inventory",
+      "path_count": 2729,
+      "path_inventory_sha256": "e40c1d859461bdaf2b5fb558c0c23a16f0b66072c724cc3edd82b4ebd774dea4",
+      "candidate_path_inventory_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "result": "no_unresolved_prior_user_script_candidate"
+    },
+    {
+      "surface": "Git path history reachable from content baseline",
+      "method": "executed_git_log_name_only_fixed_endpoint",
+      "history_endpoint_commit": "bc07fc073063d3e5d1af1e6e5400a340b0036496",
+      "unique_path_count": 2788,
+      "path_inventory_sha256": "01dceecd54864b5d7a206cb48d5c69a9c1913a5f2350b55b6c1457cecec9ab9b",
+      "candidate_path_inventory_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "result": "no_unresolved_prior_user_script_candidate"
+    },
+    {
+      "surface": "Git path history across available local refs",
+      "method": "executed_git_log_all_name_only_candidate_filter_without_ref_snapshot",
+      "candidate_path_inventory_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "result": "no_unresolved_prior_user_script_candidate"
+    },
+    {
+      "surface": "configured package and dropzone filesystems",
+      "method": "executed_recursive_filename_inventory",
+      "configured_roots": [
+        "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001",
+        "production_pilots/yukkuri_newsroom_content_spine_002/real_input_intake_readiness/real_input/transcript/new_banknote_notebooklm",
+        "production_pilots/yukkuri_newsroom_content_spine_002/real_input_replacement_readiness_pack/input_dropzone",
+        "production_pilots/yukkuri_newsroom_content_spine_002/transcript_substitution_readiness/real_input"
+      ],
+      "candidate_path_inventory_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "result": "no_unresolved_prior_user_script_candidate"
+    },
+    {
+      "surface": "intentional ignored package evidence",
+      "method": "executed_git_ls_files_ignored_strong_candidate_filter_without_body_serialization",
+      "candidate_path_inventory_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "result": "no_unresolved_prior_user_script_candidate"
+    }
+  ],
+  "known_upstream_user_input": {
+    "artifact_kind": "audio_overview_transcript",
+    "sha256": "1825c9689a050ddbfc91537a228f6af0ba2f7f033e5b681fff4f227551144437",
+    "size_bytes": 32089,
+    "logical_line_count": 326,
+    "relationship_to_final_cues": "proven_claim_discovery_input_via_line_fingerprints",
+    "finished_script": false,
+    "factual_authority": false,
+    "body_embedded": false,
+    "optional_local_identity_gate": "required_when_file_present",
+    "optional_raw_line_map_gate": "required_when_file_present",
+    "local_presence_serialized": false
+  },
+  "candidate_files": [],
+  "candidate_hashes": [],
+  "candidate_count": 0,
+  "candidate_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "relationship_to_final_script": "not_assessable_because_no_candidate_artifact_was_found",
+  "evidence_grade": "verified_executed_repo_git_and_dropzone_path_inventory_with_external_history_limit",
+  "final_status": "not_proven_from_available_repo_evidence",
+  "false_non_use_inference_made": false,
+  "limitation": "The fixed Git endpoint covers this content lineage, not every external conversation or system; an artifact absent here may still have existed."
+}

@@ -1,0 +1,87 @@
+{
+  "schema_version": "new_banknote.recommended_visual_direction.v1",
+  "status": "recommended_not_selected",
+  "route": {
+    "route_id": "route_A_security_inspection_lab",
+    "route_label": "Route A",
+    "name": "Security Inspection Lab",
+    "status": "RECOMMENDED",
+    "recommended": true,
+    "concept": "抽象的な検査台の上で、技術の層と四つの確認動作を順に解く。Labは説明上の舞台比喩であり、実在施設や公式手順ではない。",
+    "scene_purposes": {
+      "S1": "問いを起点に、複数の技術と見分けやすさを俯瞰する。",
+      "S2": "透過・傾き・触感・ルーペの四技術を一つずつ説明する。",
+      "S3": "券種識別の工夫と四つの確認動作をまとめる。"
+    },
+    "layout_system": "中央の抽象券シルエット、左の行動ラベル、右の根拠付き説明。字幕用下端リザーブを常時確保する。",
+    "typography_role": {
+      "stack": "Japanese system UI sans-serif",
+      "headline_role": "scene question or inspection action",
+      "body_role": "one source-backed explanation at a time",
+      "metadata_role": "cue/source IDs remain machine metadata only"
+    },
+    "color_role_proposal": {
+      "proposal_only": true,
+      "paper_field": "off-white",
+      "primary_ink": "ink blue",
+      "security_layer": "security green",
+      "attention_accent": "restrained orange",
+      "factual_color_exception": "橙色が事実を表すのはcue_008の千円券中央グラデーションだけ"
+    },
+    "motion_vocabulary": [
+      "light_sweep",
+      "restrained_tilt_parallax",
+      "tactile_pulse",
+      "loupe_zoom",
+      "short_label_transition"
+    ],
+    "required_asset_families": [
+      "original_abstract_note_silhouette",
+      "css_security_layer_callouts",
+      "generic_non_likeness_portrait",
+      "schematic_loupe_and_action_icons"
+    ],
+    "rights_risk": "low_but_not_cleared",
+    "factual_or_misleading_risk": "抽象図を実券の位置・形状・検査手順と誤認させる可能性。全図を模式・縮尺外として扱う。",
+    "ymm4_implementation_weight": "low_to_medium",
+    "validation_evidence": "S1/S2/S3の流れと各模式図が、9 cueの説明を誤解なく支えるかをhuman reviewで確認する。",
+    "why_it_may_be_rejected": "検査台の比喩が硬すぎる、または技術説明が日常文脈から離れて見える場合。"
+  },
+  "recommendation_rationale": [
+    "direct mapping to the four source-backed inspection actions",
+    "lowest external asset and rights burden",
+    "strongest S1/S2/S3 explanatory fit",
+    "reusable original schematic geometry in a later YMM4 diagnostic project"
+  ],
+  "scene_spine_summary": [
+    {
+      "scene_id": "S1",
+      "title": "Question and Overview",
+      "cue_ids": [
+        "cue_001",
+        "cue_002"
+      ]
+    },
+    {
+      "scene_id": "S2",
+      "title": "Four Security Techniques",
+      "cue_ids": [
+        "cue_003",
+        "cue_004",
+        "cue_005",
+        "cue_006"
+      ]
+    },
+    {
+      "scene_id": "S3",
+      "title": "Identification and Four Actions",
+      "cue_ids": [
+        "cue_007",
+        "cue_008",
+        "cue_009"
+      ]
+    }
+  ],
+  "human_selection_required": true,
+  "implementation_authorized": false
+}

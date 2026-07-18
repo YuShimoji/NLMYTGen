@@ -1,0 +1,227 @@
+{
+  "schema_version": "new_banknote.successor_selective_integration_receipt.v1",
+  "status": "passed",
+  "state_id": "new-banknote-successor-selectively-integrated-visual-selection-ready-v1",
+  "branch": "codex/new-banknote-successor-selective-integration-v1",
+  "target_head": "resolved_by_current_branch_tip",
+  "refs": {
+    "primary": "5e50ff707806724e67a5e0cec215bdd3b604ce32",
+    "candidate": "833717f63713db9555f563a2a26285fa2f621e3d",
+    "audit": "ee052489a33e9247f77b90af27cdd56911acc527",
+    "common_baseline": "b05eb3867caabda496fb9a0070d230a4e81aea01",
+    "origin_master": "37a02fbcecaf324f61b055b8677b6537735853fd",
+    "final_pre_commit_recheck": "passed_unchanged"
+  },
+  "audit_contract": {
+    "status": "passed",
+    "recommendation_class": "selective_integration_ready",
+    "mechanism": "selective_path_materialization_from_exact_candidate_ref_onto_exact_primary_base",
+    "accepted_count": 27,
+    "historical_count": 2,
+    "regenerated_count": 8,
+    "excluded_count": 14,
+    "lists_disjoint": true,
+    "audit_contract_drift": false
+  },
+  "integration_result": {
+    "accepted_candidate_byte_exact_count": 25,
+    "accepted_candidate_adapted_count": 2,
+    "adapted_paths": [
+      "src/pipeline/editorial_provenance.py",
+      "tests/test_editorial_provenance.py"
+    ],
+    "historical_candidate_byte_exact_count": 2,
+    "regenerated_path_count": 8,
+    "excluded_candidate_blob_count": 14,
+    "excluded_candidate_blobs_materialized": 0,
+    "protected_primary_artifact_count": 31,
+    "protected_primary_all_exact": true,
+    "ignored_local_evidence_file_count": 3,
+    "ignored_local_evidence_all_unchanged": true,
+    "ignored_local_evidence_all_ignored": true,
+    "manifest": "docs/verification/new_banknote_successor_selective_integration_manifest.json"
+  },
+  "authority_result": {
+    "approved_content": {
+      "role": "sole_current_authority",
+      "receipt_id": "new-banknote-script-option-a-approval-v1",
+      "approved_hash_count": 8,
+      "approved_commit": "b05eb3867caabda496fb9a0070d230a4e81aea01",
+      "modified": false
+    },
+    "content_lineage": {
+      "current": "primary_T00_T07",
+      "secondary": "candidate_D00_D10_deep_audit",
+      "cue_count": 9,
+      "scene_allocation": {
+        "S1": 2,
+        "S2": 4,
+        "S3": 3
+      },
+      "speaker_counts": {
+        "Reimu": 3,
+        "Marisa": 6
+      },
+      "adopted_claim_count": 15,
+      "factual_support_unit_count": 20,
+      "claim_edge_count": 21,
+      "unsupported_spoken_claim_count": 0,
+      "token_level_authorship_claimed": false
+    },
+    "yymm4": {
+      "current": "primary_existing_evidence_revalidation",
+      "historical_predecessor": "candidate_tracked_import_observation",
+      "project_sha256": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54",
+      "result_sha256": "e4ecb1bf5e4b5780990a00094804dd871d66068a917000015f9fecfd83e8ddfa",
+      "VoiceItem_count": 9,
+      "fps": 60,
+      "timeline_frames": 4415,
+      "duration_seconds": 73.583333,
+      "metric_or_hash_conflict": false,
+      "pronunciation_rhythm_clipping": "unknown",
+      "new_yymm4_operation_performed": false
+    },
+    "operator_batch": {
+      "current": "primary_five_action_approval_and_lineage_aware_family",
+      "candidate_four_action_family": "excluded",
+      "primary_family_modified": false
+    },
+    "visual": {
+      "package": "candidate_A_B_C_proposal_only",
+      "recommended_route": "route_A_security_inspection_lab",
+      "status": "recommended_not_selected",
+      "selected_route": null,
+      "human_selection_required": true,
+      "implementation_authorized": false,
+      "rights_cleared": false
+    }
+  },
+  "provenance_rebind": {
+    "primary_approval_and_eight_hashes_authoritative": true,
+    "primary_T00_T07_current": true,
+    "candidate_D00_D10_secondary": true,
+    "primary_yymm4_revalidation_current": true,
+    "candidate_yymm4_observation_historical": true,
+    "secondary_core_byte_exact": true,
+    "regenerated_authority_surfaces": [
+      "editorial_provenance/README_EDITORIAL_PROVENANCE.md",
+      "editorial_provenance/content_lock_receipt.json",
+      "editorial_provenance/provenance_validation_readback.json"
+    ],
+    "portable_absent_local_evidence_status": "not_reperformed_or_not_present",
+    "absent_local_evidence_is_validation_failure": false,
+    "current_same_machine_availability": "present_and_hash_matched_same_machine_non_authoritative"
+  },
+  "validation": {
+    "primary_exact_ref_focused_pytest": {
+      "revision": "5e50ff707806724e67a5e0cec215bdd3b604ce32",
+      "result": "45_passed",
+      "scope": "content lineage, authoritative script, five-action Operator Batch, existing-evidence revalidation"
+    },
+    "primary_content_lineage_validator": "passed_all_artifacts_byte_exact",
+    "primary_operator_preflight": "passed_five_actions_no_launch",
+    "candidate_exact_ref_visual_historical_pytest": {
+      "revision": "833717f63713db9555f563a2a26285fa2f621e3d",
+      "result": "12_passed"
+    },
+    "integrated_successor_focused_pytest": {
+      "result": "20_passed",
+      "scope": "editorial provenance, project state sync, exact partition and cross-artifact integration"
+    },
+    "editorial_provenance_validate": "passed_9_of_9_artifacts",
+    "editorial_provenance_second_generation": "passed_changed_empty_twice",
+    "json_parse": "passed_all_integrated_and_new_json",
+    "visual_html_and_relative_links": "passed",
+    "approved_hash_csv_scene_speaker_claim_comparison": "passed",
+    "current_historical_yymm4_consistency": "passed",
+    "visual_selection_guard": "passed_recommended_not_selected_no_selected_approved_or_implemented_route",
+    "privacy_path_uuid_raw_body_local_binary": "passed_for_current_and_integrated_surfaces",
+    "state_sync": "passed",
+    "python_compile": "passed",
+    "git_diff_check": "passed",
+    "full_pytest": "not_run_by_contract"
+  },
+  "autonomous_repair": {
+    "cycle_count": 1,
+    "failure_class": "mixed_authority_legacy_validator_scope",
+    "initial_diagnostic": "a combined checkout probe allowed legacy primary scanners to inspect integrated visual HTML and allowed candidate intake tests to consume the primary five-action result check superset",
+    "resolution": "preserved protected source modules and candidate visual bytes; validated primary and candidate families at their exact refs, then validated the integrated authority rebind and cross-artifact contract on the successor",
+    "content_repair_performed": false,
+    "protected_primary_repair_performed": false
+  },
+  "source_and_write_boundaries": {
+    "target_descends_from_exact_primary": true,
+    "merge_commit_present": false,
+    "primary_ref_modified": false,
+    "candidate_ref_modified": false,
+    "audit_ref_modified": false,
+    "master_ref_modified": false,
+    "ignored_evidence_modified": false,
+    "other_repository_modified": false
+  },
+  "quality_debt": [
+    {
+      "id": "D1",
+      "issue": "pronunciation, rhythm, and clipping unknown",
+      "impact": "structural YMM4 evidence is not audio acceptance",
+      "owner": "human audio reviewer",
+      "revisit_trigger": "audio acceptance is requested after visual selection",
+      "blocker": false
+    },
+    {
+      "id": "D2",
+      "issue": "exact S04 generation-time binary and S05 historical identity unresolved",
+      "impact": "historical source identity cannot be strengthened beyond current receipts",
+      "owner": "source provenance reviewer",
+      "revisit_trigger": "stable source identity appears or the provenance claim expands",
+      "blocker": false
+    },
+    {
+      "id": "D3",
+      "issue": "token-level authorship unavailable",
+      "impact": "D00-D10 supports unit and operation attribution only",
+      "owner": "content-lineage owner",
+      "revisit_trigger": "new contemporaneous authorship evidence exists",
+      "blocker": false
+    },
+    {
+      "id": "D4",
+      "issue": "human A/B/C selection pending",
+      "impact": "visual implementation remains unauthorized",
+      "owner": "human visual reviewer",
+      "revisit_trigger": "the unified review surface is judged",
+      "blocker": false
+    },
+    {
+      "id": "D5",
+      "issue": "remote CI and branch policy not evidenced",
+      "impact": "no PR or default-branch readiness claim is made",
+      "owner": "integration owner",
+      "revisit_trigger": "a PR or default-branch integration is requested",
+      "blocker": false
+    }
+  ],
+  "human_visual_selection_requirements": {
+    "required": [
+      "A, B, C, or scene/cue-specific revision",
+      "S1/S2/S3 flow judgment",
+      "misleading-diagram risk judgment",
+      "motion-restraint judgment"
+    ],
+    "selection_recorded": false,
+    "implementation_may_start": false
+  },
+  "operations_not_performed": [
+    "visual route selection",
+    "approved script, source, claim, or CSV revision",
+    "YMM4 launch or rerun",
+    "pronunciation acceptance",
+    "render or media generation",
+    "Shot Layout, Motion Beat, asset, proxy, or rights work",
+    "production or publication",
+    "master integration or PR creation",
+    "full pytest suite"
+  ],
+  "rollback_boundary": "abandon or delete only the successor feature branch; primary, candidate, audit, and master refs remain immutable",
+  "self_hash_recorded": false
+}
