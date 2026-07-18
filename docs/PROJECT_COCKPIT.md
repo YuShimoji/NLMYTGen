@@ -1,11 +1,11 @@
 # NLMYTGen Project Cockpit
 
-Project-State-ID: new-banknote-current-lineage-yymm4-evidence-revalidated-v1
-State-Revision: 2026-07-19.1
+Project-State-ID: new-banknote-successor-integration-audited-selective-ready-v1
+State-Revision: 2026-07-19.2
 Updated: 2026-07-19 JST
-Product-State: new-banknote-existing-yymm4-import-evidence-current-lineage-compatible
-Product-Gate: new-banknote-successor-branch-integration-audit
-Recommended-Next: audit-and-integrate-new-banknote-successor-branches
+Product-State: new-banknote-successor-integration-audited-selective-ready
+Product-Gate: new-banknote-successor-selective-integration
+Recommended-Next: integrate-audited-new-banknote-successor-artifacts
 External-State: public-repo-feature-branch
 Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0
@@ -19,34 +19,34 @@ Tracked-Worktree: clean; intentional ignored evidence retained
 
 ## いまの一文
 
-人が option A で承認した新紙幣9-cue scriptとT00–T07 lineageを変更せず、
-同端末の既存ignored YMM4 project/result/batch stateをread-onlyで再検証しました。
-current approval/hash/text/order/timingとの互換性をsanitized tracked receiptで固定済みで、
-次は分岐したsuccessor branchesのG1 integration auditです。
+primary `5e50ff7`とcandidate `833717f`の7対13 commit／77 path unionをread-firstで
+監査し、approved contentを変えずに構築できるexact selective integration contractを
+固定しました。両source branchは未統合、Route Aは推奨のまま未選択です。
 
 ## 判断に使える現在地
 
-| 対象 | 現在状態 | 次の gate で確認すること |
+| 対象 | 監査結果 | later integrationの扱い |
 | --- | --- | --- |
-| Approval | `b05eb386…`、9 cues、2/4/3、Reimu/Marisa 3/6、8 hashesをreceiptで固定。変更なし | branch側のhash、text/order、speaker/scene、claim/evidence、CSV driftを拒否 |
-| Lineage | T00–T07、15 adopted claims、20 units、21 edges、unsupported spoken claims 0 | lineage authorityとsuccessor branch provenanceの重複・競合を分類 |
-| Existing YMM4 evidence | 既存3ファイルを非破壊再読取。9/3/6、exact text/order、4415 frames、73.583333秒、timing一致 | tracked receiptを維持したままcompatible commitsだけを統合 |
-| Immutability | 生成前後の存在・size・mtime・SHA-256一致。YMM4再実行なし | G1でもignored source evidenceに書かない |
-| Audio quality | pronunciation / rhythm / clippingは`unknown` | audio acceptanceが必要な時だけhuman reviewを別gate化 |
-| Privacy | tracked packageにprivate path、local binary、NotebookLM URL/UUID、raw/source bodyなし | 統合候補にも同じ境界を適用 |
-| Divergence | visual/provenance branch未統合 | ancestry、write set、authority、A/B/C成果物、validation planを先に監査 |
+| Approval | primary 8/8 exact、candidate 7/8 exact | candidateのapproved README variantを除外しprimary byteを保持 |
+| Content lineage | primary T00–T07がcurrent authority | candidate D00–D10はsecondary deep audit |
+| YMM4 evidence | 同一project/result、9/3/6、60 fps、4415 frames、73.583333秒 | primary revalidationをcurrent、candidate observationをhistoricalに配置 |
+| Operator Batch | module/testを含むadd/add conflict | primary five-action familyを保持、candidate four-action toolingを除外 |
+| Visual A/B/C | 9 cues・2/4/3と互換、Route A `recommended_not_selected` | proposal packageのみ統合しhuman choiceはH2へ残す |
+| State | 5 documentsがmerge conflict | successorで一つに再生成。proseをmechanical mergeしない |
+| Coverage | 20 commits、84 side-path entries、77 union paths、未分類0 | 27 integrate / 2 historical / 8 regenerate / 14 exclude |
 
 Primary surface:
-`production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_EXISTING_YMM4_EVIDENCE_REVALIDATION.md`
+[`NEW_BANKNOTE_SUCCESSOR_BRANCH_INTEGRATION_AUDIT.md`](verification/NEW_BANKNOTE_SUCCESSOR_BRANCH_INTEGRATION_AUDIT.md)
 
 ## 次の入口
 
-G1ではnew-banknote successor branchesをread-firstで監査し、branch ancestry、write set、
-content authority、provenance、visual-direction artifacts、current approval locksを比較します。
-互換commitと検証計画が確定するまでmerge/rebase/cherry-pickは行いません。
+`new-banknote-successor-selective-integration-v1`が、exact primary baseからaudit JSONの
+accepted candidate pathsだけをmaterializeします。primary approval、T00–T07、YMM4
+revalidation、Operator Batchはbyte-exactで保持し、provenance authority 3面とcurrent
+stateを再生成します。A/B/Cの選択は行いません。
 
 ## 公開・実行境界
 
-このsliceではapproved contentを変更せず、YMM4 launch/rerun、Computer Use、NotebookLM、
-web fetch、render/media生成、production、public/rights action、master integrationを
-行っていません。構造的import互換性は発音・visual・production・publicationの承認ではありません。
+このauditではmerge/rebase/cherry-pick、approved content edit、visual selection、YMM4、
+render/media、production、public/rights action、master mutationを行っていません。
+発音・creative quality・rights・publicationの承認ではありません。

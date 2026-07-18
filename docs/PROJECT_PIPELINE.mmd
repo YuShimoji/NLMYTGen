@@ -27,8 +27,10 @@ flowchart LR
     CV --> NBS["Supported-only new-banknote script<br/>9 cues / 2-4-3 / Reimu 3 + Marisa 6<br/>15 claims / 20 units / 21 edges"]
     NBS --> NBL["T00-T07 content lineage + human approval seal<br/>8 approved hashes / no silent change<br/>clause-level, not token-level"]
     NBL --> NBO["Read-only existing YMM4 evidence revalidation<br/>9 VoiceItems / 3+6 / exact text-order-timing<br/>current-lineage compatible"]
-    NBO --> G1["Successor branch integration audit<br/>ancestry / write set / authority / visual provenance<br/>merge route not yet selected"]
-    G1 -. "compatible commits only" .-> E["External editorial / real-media input<br/>provenance + identity + rights context"]
+    NBO --> G1["Successor branch integration audit passed<br/>20 commits / 84 side-path entries / 77 union paths<br/>selective integration ready"]
+    G1 --> SI["Selective successor construction pending<br/>27 integrate / 2 historical / 8 regenerate / 14 exclude<br/>primary approval-lineage-revalidation preserved"]
+    SI --> HVS["Human A/B/C selection gate<br/>Route A recommended_not_selected<br/>no route selected by audit"]
+    HVS -. "later verified asset / rights context" .-> E["External editorial / real-media input<br/>provenance + identity + rights context"]
     W --> I["Feature/default integration audit passed<br/>44 commits / 448 paths classified<br/>integration_ready"]
     I -->|"approved Option A / normal FF"| J["Default branch integrated<br/>subject + audit tail + metadata rebind<br/>master current"]
 

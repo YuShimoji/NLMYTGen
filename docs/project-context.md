@@ -1,46 +1,50 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-19 JST・existing YMM4 evidence current-lineage compatible）
+## 現在の別端末再開ハンドオフ（2026-07-19 JST・successor integration audited / selective ready）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
 
-- **取得先**: `origin/codex/new-banknote-existing-yymm4-evidence-revalidation-v1`。
+- **取得先**: `origin/codex/new-banknote-successor-integration-audit-v1`。
   remoteは`https://github.com/YuShimoji/NLMYTGen.git`に設定済みで、新規repository作成は不要。
   `git fetch --prune origin`後、同branchをcheckoutしてfast-forward限定pullする。
-  validated source/baseは`220a9b554f267a5367c9589eb09f35fc9058d4a0`。outcome commitは
+  audit source/baseは`5e50ff707806724e67a5e0cec215bdd3b604ce32`。outcome commitは
   current remote branch tipから解決し、push後のremote parity `0/0`とclean tracked worktreeを確認する。
   approval baseline `b05eb3867caabda496fb9a0070d230a4e81aea01`
   はbranch先端のancestorであり、古いpromptのSTART_STATEから作り直さない。
 - **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
-  `docs/runtime-state.md` → この節 → pilotの`README_CONTENT_LINEAGE.md` →
-  `README_EXISTING_YMM4_EVIDENCE_REVALIDATION.md`。旧Web threadや下のmaster handoffを
+  `docs/runtime-state.md` → この節 →
+  `docs/verification/NEW_BANKNOTE_SUCCESSOR_BRANCH_INTEGRATION_AUDIT.md` →
+  `new_banknote_successor_integration_audit.json`。旧Web threadや下のmaster handoffを
   現在の指示として使わない。
 - **現在の状態**: Project-State-IDは
-  `new-banknote-current-lineage-yymm4-evidence-revalidated-v1`、
-  State-Revisionは`2026-07-19.1`。9 cue、2/4/3 scene、
+  `new-banknote-successor-integration-audited-selective-ready-v1`、
+  State-Revisionは`2026-07-19.2`。primaryの9 cue、2/4/3 scene、
   Reimu/Marisa 3/6、8 approved hashes、15 adopted claims、20 factual units、21 edgesを
   human approval receiptとT00–T07 lineageで固定済み。approved script、CSV、claim/sourceは
-  このH0でも変更していない。
-- **H0再検証**: current approval/lineage lockを先に検証し、既存ignored project/result/
-  batch stateをread-onlyでparseした。project/result binding、9 VoiceItems、3/6、exact
-  text/order、missing 0、duplicate 0、reordered false、60 fps、4415 frames、73.583333秒、
-  cue timingが一致。focused新規tests 10件、関連回帰、compile、JSON parse、deterministic
-  second pass、privacy/ignored/state/diff checksをcloseout gateとする。
+  このG1でも変更していない。H0 current-lineage YMM4 revalidationはacceptedのまま。
+- **graph/coverage**: primary`5e50ff7`、candidate`833717f`、baseline`b05eb386`、
+  divergence 7/13。20 unique commits、primary 33 / candidate 51の計84 side-path entries、
+  77 union paths、7 overlapsを全分類し、unclassifiedは0。
+- **recommendation**: `selective_integration_ready`。normal mergeは5 state docsと2 Operator
+  Batch code/testの7 conflictを生む。candidateから27 pathをintegrate、2 pathをhistorical、
+  8 surfacesをregenerate、14 pathをexcludeするexact contractをtracked auditへ固定した。
+- **authority**: primary human approval 8/8、T00–T07、current YMM4 revalidation、five-action
+  Operator Batchがcurrent。candidate D00–D10はsecondary deep audit、tracked observationは
+  historical、A/B/Cはproposal-only。Route Aは`recommended_not_selected`のまま。
 - **local evidence**: ignored `local_outputs/`、`source_cache/`、`source_extracts/`を保持し、
   削除・移動・上書きしていない。生成前後のexists/size/mtime/SHA-256は一致し、既存
   `operator_observation.local.json`は不在。tracked packageにprivate path、NotebookLM
   URL/UUID、raw transcript/source body、local binaryは含めない。
-- **tracked successor evidence**: pilot直下の
-  `README_EXISTING_YMM4_EVIDENCE_REVALIDATION.md`、receipt、readback、current-lineage
-  traceability、limitationsが正本。5成果物は2回生成でhash一致し、YMM4は再実行していない。
+- **tracked audit evidence**: human surface、recommendation JSON、20-commit inventory、
+  84-entry path inventory、one-to-one authority/conflict matrixを`docs/verification/`へ固定。
 - **audio/version境界**: pronunciation/rhythm/clippingは`unknown`でacceptanceを主張しない。
   existing YMM4 4.54.0.1とprofile observation 4.53.0.9の差はwarning-only debt。
-- **branch split**: 別のvisual/provenance successor branchは未統合。import intake、editorial
-  provenance、A/B/C visual directionを自動mergeせず、次のG1 auditへ残した。
-- **exact next action**: new-banknote successor branchesのancestry、write set、content
-  authority、provenance、visual artifacts、approval/hash locksをread-firstで比較するG1
-  integration auditを実施する。compatible commitsとvalidation planが確定するまでmergeしない。
+- **branch boundary**: primary、candidate、masterは未変更。actual integration、merge、rebase、
+  cherry-pick、visual selectionは行っていない。
+- **exact next action**: future `new-banknote-successor-selective-integration-v1`がexact primary
+  baseからaudit JSONのaccepted candidate pathsだけをmaterializeし、primary authorityを保持、
+  provenance 3面とcurrent stateを再生成してtargeted validationを行う。A/B/Cは選ばない。
 - **未完了境界**: pronunciation/rhythm/clipping判断、branch integration、visual selection、
   render、content revision、production/public/rights、master integration、
   full-suite Integrity campaign。

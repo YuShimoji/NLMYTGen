@@ -1,11 +1,11 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: new-banknote-current-lineage-yymm4-evidence-revalidated-v1
-State-Revision: 2026-07-19.1
+Project-State-ID: new-banknote-successor-integration-audited-selective-ready-v1
+State-Revision: 2026-07-19.2
 Updated: 2026-07-19 JST
-Product-State: new-banknote-existing-yymm4-import-evidence-current-lineage-compatible
-Product-Gate: new-banknote-successor-branch-integration-audit
-Recommended-Next: audit-and-integrate-new-banknote-successor-branches
+Product-State: new-banknote-successor-integration-audited-selective-ready
+Product-Gate: new-banknote-successor-selective-integration
+Recommended-Next: integrate-audited-new-banknote-successor-artifacts
 External-State: public-repo-feature-branch
 Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0
@@ -13,88 +13,93 @@ Tracked-Worktree: clean; intentional ignored evidence retained
 
 ## Current Slice
 
-- **Current approval remains sealed**: option A receipt
-  `new-banknote-script-option-a-approval-v1` still fixes approved commit
-  `b05eb3867caabda496fb9a0070d230a4e81aea01`, eight approved file hashes,
-  nine cue texts/order, scene allocation 2/4/3, Reimu/Marisa 3/6, and the
-  canonical/derived CSV pair. Approved content was not changed.
-- **T00–T07 lineage remains exact**: all nine cues connect to 15 adopted
-  verified-primary claims, 20 factual support units, and 21 evidence edges;
-  unsupported spoken claims remain zero. Token-level authorship is not
-  claimed.
-- **Existing YMM4 evidence revalidated read-only**: the ignored project,
-  operator result, and batch state were parsed without deletion, movement, or
-  overwrite. Before/after existence, size, modification time, and SHA-256 are
-  equal. No operator observation note exists.
-- **Current-lineage compatibility passed**: project/result binding, 9
-  VoiceItems, Reimu/Marisa 3/6, exact text and order, zero missing/duplicate,
-  no reorder, 60 fps, 4415 frames, 73.583333 seconds, and per-cue timing all
-  match current approved inputs and the predecessor result.
-- **Sanitized successor evidence tracked**: the pilot now contains a receipt,
-  readback, current-lineage traceability map, limitations, and README. The
-  package records hashes and structural facts without private paths, local
-  binaries, NotebookLM links/UUIDs, or raw/source/transcript bodies.
-- **Determinism and failure boundaries tested**: focused tests cover exact
-  acceptance, deterministic output, approval/CSV drift, project/result drift,
-  order/speaker drift, mutation during read, version-warning behavior,
-  optional note handling, output overlap rejection, and ignored-file status.
-- **Execution boundary preserved**: YMM4 was not launched or rerun; Computer
-  Use, NotebookLM, web fetch, rendering, media generation, production,
-  publication, rights action, and master integration did not occur.
-- **Audio quality stays unresolved**: pronunciation, rhythm, and clipping are
-  `unknown`. Structural import evidence is not audio acceptance. The observed
-  YMM4 4.54.0.1 versus profile 4.53.0.9 difference remains warning-only debt.
-- **Branch divergence remains explicit**: the separate visual/provenance
-  successor branch was not merged, rebased, or cherry-picked. Its editorial
-  provenance and A/B/C visual-direction work require the next G1 integration
-  audit before reuse.
+- **H0 remains accepted**: the primary branch keeps the explicit option A
+  human receipt, all eight approved hashes, T00–T07 lineage, and the
+  current-lineage YMM4 revalidation. The approved script, cue/order, scene
+  2/4/3, Reimu/Marisa 3/6, 15 claims, 20 units, 21 edges, and both CSVs are
+  unchanged.
+- **Exact graph audited**: primary `5e50ff7`, candidate `833717f`, common
+  baseline `b05eb386`, and origin/master `37a02fb` were verified after fetch.
+  Divergence is 7 primary-only and 13 candidate-only commits. Both baselines
+  remain unambiguous ancestors.
+- **Coverage complete**: all 20 unique commits and all 84 side-path entries
+  covering 77 union paths are classified; unclassified commits and paths are
+  zero. Commit, path, authority, conflict, and integration-contract evidence
+  is tracked under `docs/verification/`.
+- **Approved identity resolved**: primary is 8/8 exact. Candidate is 7/8
+  exact; only its metadata-linked `README_CANONICAL_SCRIPT_REVIEW.md` differs.
+  That variant is excluded because the primary approved hash wins. Canonical
+  script JSON/TXT, both CSVs, cue trace, and source manifest are cross-branch
+  exact.
+- **Authority is one-to-one**: primary T00–T07 is the current content surface;
+  candidate D00–D10 becomes secondary editorial deep-audit evidence. Primary
+  revalidation is current YMM4 structural authority; candidate tracked import
+  observation is historical predecessor evidence over the same bytes and
+  metrics.
+- **Operator tooling resolved**: primary five-action approval/lineage-aware
+  Operator Batch remains current. Candidate four-action batch and its add/add
+  module/test conflict are excluded; its bounded supervisor review receipt may
+  remain historical.
+- **Visual proposal compatible but unselected**: candidate A/B/C maps the same
+  nine cues and 2/4/3 scenes. Route A remains `recommended_not_selected`,
+  human selection is required, implementation is unauthorized, and rights are
+  unresolved proposal-only.
+- **Normal merge rejected**: non-mutating merge-tree reports seven conflicts—
+  five current-state documents and two Operator Batch code/test paths. The
+  accepted recommendation is `selective_integration_ready`, using exact
+  candidate paths rather than a merge or whole-commit cherry-pick.
+- **Regeneration boundary explicit**: candidate editorial provenance README,
+  content lock, and validation readback encode candidate-current and
+  same-machine disposition and must be regenerated against primary authority.
+  All compact state surfaces must also be regenerated after later integration.
+- **Source branches preserved**: no merge, rebase, cherry-pick, visual choice,
+  approved-content edit, YMM4 operation, render, media, publication, rights
+  action, or master mutation occurred in this audit.
 
 ## Product Position
 
-The approved script and T00–T07 content lineage are unchanged. Existing
-same-machine YMM4 import evidence is now demonstrably compatible with the
-current approval and lineage locks through a tracked, sanitized successor
-package. This closes the H0 reconciliation gate only; it does not establish
-pronunciation quality, visual acceptance, production readiness, rights, or
-publication approval.
+The project now has an evidence-backed selective integration contract rather
+than an ambiguous branch merge. It identifies 27 candidate paths for
+integration, two historical paths to retain, eight surfaces to regenerate,
+and 14 candidate paths to exclude. This audit does not integrate them; it
+makes the later successor construction bounded and reviewable.
 
 ## Exact Next Action
 
-Run G1 as a read-first integration audit of the new-banknote successor
-branches. Compare their ancestry, write sets, content authority, provenance,
-visual-direction artifacts, and current approval/hash locks. Select an
-integration route that preserves this revalidated receipt and rejects silent
-approved-content drift. Do not merge until the audit identifies the exact
-compatible commits and validation plan.
+The next Worker owns `new-banknote-successor-selective-integration-v1`. Create
+`codex/new-banknote-successor-selective-integration-v1` from exact primary
+`5e50ff707806724e67a5e0cec215bdd3b604ce32`, materialize only the exact
+candidate paths listed in the audit JSON from candidate `833717f`, keep all
+primary approved/lineage/revalidation/Operator Batch bytes, rebind and
+regenerate the three provenance authority surfaces, then regenerate one
+current state and run the recorded targeted validation. Do not select A/B/C.
 
 ## Evidence and Access
 
-- Revalidation entry surface:
-  `production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_EXISTING_YMM4_EVIDENCE_REVALIDATION.md`.
-- Receipt and readback beside it:
-  `existing_yymm4_evidence_revalidation_receipt.json` and
-  `existing_yymm4_evidence_revalidation_readback.json`.
-- Approval/evidence linkage:
-  `existing_yymm4_evidence_current_lineage_traceability.json`.
-- Remaining evidence limits:
-  `existing_yymm4_evidence_limitations.md`.
-- Current content-lineage authority remains `README_CONTENT_LINEAGE.md` and
-  its approval, transformation, cue, policy, and readback artifacts.
+- Primary audit surface:
+  `docs/verification/NEW_BANKNOTE_SUCCESSOR_BRANCH_INTEGRATION_AUDIT.md`.
+- Recommendation and exact later contract:
+  `docs/verification/new_banknote_successor_integration_audit.json`.
+- Exhaustive inventories:
+  `new_banknote_successor_commit_inventory.json` and
+  `new_banknote_successor_path_inventory.json`.
+- One-to-one authority result:
+  `new_banknote_successor_authority_conflict_matrix.json`.
+- H0 authority remains the pilot's `README_CONTENT_LINEAGE.md` and
+  `README_EXISTING_YMM4_EVIDENCE_REVALIDATION.md` packages.
 
 ## Active Boundaries
 
-- Approved script, claims, sources, traceability, and CSVs are unchanged.
-- Existing ignored project/result/batch state remain local, ignored, and
-  non-authoritative outside this same-machine observation.
-- Pronunciation/rhythm/clipping, human visual/editorial acceptance, exact S04
-  generation-time binary/S05 identity, and token-level authorship remain
-  unresolved or unavailable.
-- G1 branch integration, visual selection, render, production project,
+- No source branch is integrated; actual selective integration is H1.
+- Pronunciation/rhythm/clipping, exact S04/S05 historical identity,
+  token-level authorship, remote CI/branch policy, and human visual preference
+  remain unknown or unresolved.
+- H2 human A/B/C selection, diagnostic YMM4 work, render, production project,
   rights/legal/final-thumbnail approval, upload/publication, master
   integration, and full-suite Integrity work remain undone.
 
 ## Maintenance Note
 
-Keep this capsule within 160 lines. Resolve the handoff commit and remote
-parity from the current tracked branch after closeout; durable evidence lives
-in the pilot package, focused tests, project context, and Git history.
+Keep this capsule within 160 lines. Exact path lists and conflict mechanics
+belong in the audit artifacts; resolve the audit commit from the current
+branch tip after closeout.

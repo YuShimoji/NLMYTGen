@@ -1,0 +1,73 @@
+{
+  "schema_version": "new_banknote.successor_authority_conflict_matrix.v1",
+  "status": "passed",
+  "recommendation_class": "selective_integration_ready",
+  "one_to_one_authority_roles": true,
+  "unresolved_authority_count": 0,
+  "matrix": [
+    {
+      "artifact_family": "approved_content",
+      "primary_role": "sole current authority: explicit human receipt plus eight hashes",
+      "candidate_role": "seven exact files plus one metadata-modified approved README",
+      "conflict": "candidate README hash conflicts with primary approval",
+      "resolution": "keep all primary approved files; exclude candidate README variant",
+      "later_treatment": "keep_primary"
+    },
+    {
+      "artifact_family": "content_lineage",
+      "primary_role": "sole current T00-T07 human surface and policy",
+      "candidate_role": "no T00-T07 successor package",
+      "conflict": "none after primary authority is fixed",
+      "resolution": "keep primary lineage byte-exact",
+      "later_treatment": "keep_primary"
+    },
+    {
+      "artifact_family": "editorial_provenance",
+      "primary_role": "T00-T07 remains the current content authority",
+      "candidate_role": "secondary D00-D10 deep-audit evidence and prior-script audit",
+      "conflict": "candidate README/lock/readback claim candidate-current and encode same-machine reverify status",
+      "resolution": "integrate stable core; regenerate three authority surfaces against primary receipts",
+      "later_treatment": "selective_integrate_and_regenerate"
+    },
+    {
+      "artifact_family": "YMM4_evidence",
+      "primary_role": "current-lineage revalidation is current structural authority",
+      "candidate_role": "tracked historical predecessor observation of the same bytes",
+      "conflict": "no metric/hash/timing conflict",
+      "resolution": "retain candidate observation as historical beneath the primary successor receipt",
+      "later_treatment": "integrate_candidate_as_historical"
+    },
+    {
+      "artifact_family": "Operator_Batch",
+      "primary_role": "current five-action approval/T00-T07-aware batch",
+      "candidate_role": "superseded four-action predecessor batch",
+      "conflict": "add/add code and test conflict; candidate lacks current approval/lineage checks",
+      "resolution": "keep primary tooling; exclude candidate executable batch; retain bounded review receipt as history",
+      "later_treatment": "keep_primary_exclude_candidate_tooling"
+    },
+    {
+      "artifact_family": "visual_ABC",
+      "primary_role": "no selected visual route",
+      "candidate_role": "proposal-only A/B/C package; Route A recommended_not_selected",
+      "conflict": "none with approved content; human preference remains unknown",
+      "resolution": "integrate package without changing recommendation or authorization fields",
+      "later_treatment": "integrate_candidate"
+    },
+    {
+      "artifact_family": "current_state",
+      "primary_role": "newer accepted evidence at primary base",
+      "candidate_role": "older visual-selection-ready state with competing authority claims",
+      "conflict": "five current-state documents conflict in merge-tree",
+      "resolution": "regenerate one successor state after selective integration",
+      "later_treatment": "regenerate_successor"
+    },
+    {
+      "artifact_family": "historical_reports",
+      "primary_role": "G0-G9 roadmap and primary handoff history",
+      "candidate_role": "dated candidate readiness report",
+      "conflict": "none when explicitly historical",
+      "resolution": "retain reports immutable; never use them as current state",
+      "later_treatment": "retain_historical"
+    }
+  ]
+}

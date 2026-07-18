@@ -1,0 +1,426 @@
+{
+  "schema_version": "new_banknote.successor_integration_audit.v1",
+  "status": "passed",
+  "recommendation_class": "selective_integration_ready",
+  "selected_state": {
+    "Project-State-ID": "new-banknote-successor-integration-audited-selective-ready-v1",
+    "Product-State": "new-banknote-successor-integration-audited-selective-ready",
+    "Product-Gate": "new-banknote-successor-selective-integration",
+    "Recommended-Next": "integrate-audited-new-banknote-successor-artifacts",
+    "External-State": "public-repo-feature-branch"
+  },
+  "refs": {
+    "primary": "5e50ff707806724e67a5e0cec215bdd3b604ce32",
+    "candidate": "833717f63713db9555f563a2a26285fa2f621e3d",
+    "origin_master": "37a02fbcecaf324f61b055b8677b6537735853fd",
+    "merge_base": "b05eb3867caabda496fb9a0070d230a4e81aea01",
+    "primary_only_commit_count": 7,
+    "candidate_only_commit_count": 13,
+    "baseline_is_ancestor_of_both": true
+  },
+  "graph": {
+    "primary_ref": "origin/codex/new-banknote-existing-yymm4-evidence-revalidation-v1",
+    "candidate_ref": "origin/codex/new-banknote-authoritative-source-script-v1",
+    "common_baseline": "b05eb3867caabda496fb9a0070d230a4e81aea01",
+    "primary_only_commit_count": 7,
+    "candidate_only_commit_count": 13,
+    "merge_tree_result": "conflicts_present_no_worktree_or_index_mutation",
+    "merge_tree_conflict_count": 7,
+    "merge_tree_conflict_paths": [
+      "docs/PROJECT_COCKPIT.md",
+      "docs/PROJECT_PIPELINE.mmd",
+      "docs/THREAD_REGISTRY.md",
+      "docs/project-context.md",
+      "docs/runtime-state.md",
+      "src/pipeline/new_banknote_yymm4_import_operator_batch.py",
+      "tests/test_new_banknote_yymm4_import_operator_batch.py"
+    ],
+    "normal_merge_recommended": false
+  },
+  "coverage": {
+    "audited_commit_count": 20,
+    "unclassified_commit_count": 0,
+    "audited_side_path_entry_count": 84,
+    "union_path_count": 77,
+    "unclassified_path_count": 0
+  },
+  "approved_content_identity": {
+    "approval_receipt_id": "new-banknote-script-option-a-approval-v1",
+    "approved_commit": "b05eb3867caabda496fb9a0070d230a4e81aea01",
+    "approved_files": [
+      {
+        "name": "README_CANONICAL_SCRIPT_REVIEW.md",
+        "expected_sha256": "a5d5a23fca7d6c0c0fe200a89800d9c3c8ac278c18c1a137c35019d4780e7da8",
+        "primary_sha256": "a5d5a23fca7d6c0c0fe200a89800d9c3c8ac278c18c1a137c35019d4780e7da8",
+        "candidate_sha256": "c14b5b9d4612e2bc9264057346e8fdc7df94b26decb6c9e4f7dff3f29651bac6",
+        "primary_matches_approval": true,
+        "candidate_matches_approval": false,
+        "cross_branch_equal": false,
+        "classification": "approval_conflicting_metadata_drift_exclude"
+      },
+      {
+        "name": "canonical_script.json",
+        "expected_sha256": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47",
+        "primary_sha256": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47",
+        "candidate_sha256": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47",
+        "primary_matches_approval": true,
+        "candidate_matches_approval": true,
+        "cross_branch_equal": true,
+        "classification": "exact_compatible"
+      },
+      {
+        "name": "canonical_script.txt",
+        "expected_sha256": "4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091",
+        "primary_sha256": "4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091",
+        "candidate_sha256": "4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091",
+        "primary_matches_approval": true,
+        "candidate_matches_approval": true,
+        "cross_branch_equal": true,
+        "classification": "exact_compatible"
+      },
+      {
+        "name": "canonical_script_review.md",
+        "expected_sha256": "9816c28e9b0099ef98e2aefb9e70bf22a32fbbd0f931fd8989c6ac19dcd99d3a",
+        "primary_sha256": "9816c28e9b0099ef98e2aefb9e70bf22a32fbbd0f931fd8989c6ac19dcd99d3a",
+        "candidate_sha256": "9816c28e9b0099ef98e2aefb9e70bf22a32fbbd0f931fd8989c6ac19dcd99d3a",
+        "primary_matches_approval": true,
+        "candidate_matches_approval": true,
+        "cross_branch_equal": true,
+        "classification": "exact_compatible"
+      },
+      {
+        "name": "cue_source_traceability.json",
+        "expected_sha256": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47",
+        "primary_sha256": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47",
+        "candidate_sha256": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47",
+        "primary_matches_approval": true,
+        "candidate_matches_approval": true,
+        "cross_branch_equal": true,
+        "classification": "exact_compatible"
+      },
+      {
+        "name": "canonical_yymm4.csv",
+        "expected_sha256": "23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12",
+        "primary_sha256": "23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12",
+        "candidate_sha256": "23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12",
+        "primary_matches_approval": true,
+        "candidate_matches_approval": true,
+        "cross_branch_equal": true,
+        "classification": "exact_compatible"
+      },
+      {
+        "name": "derived_yymm4_import.csv",
+        "expected_sha256": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee",
+        "primary_sha256": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee",
+        "candidate_sha256": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee",
+        "primary_matches_approval": true,
+        "candidate_matches_approval": true,
+        "cross_branch_equal": true,
+        "classification": "exact_compatible"
+      },
+      {
+        "name": "source_to_script_manifest.json",
+        "expected_sha256": "e13fb57a2681875f577e4d85f13cf41bfc601519892fa4f975bdfcdd24d927b5",
+        "primary_sha256": "e13fb57a2681875f577e4d85f13cf41bfc601519892fa4f975bdfcdd24d927b5",
+        "candidate_sha256": "e13fb57a2681875f577e4d85f13cf41bfc601519892fa4f975bdfcdd24d927b5",
+        "primary_matches_approval": true,
+        "candidate_matches_approval": true,
+        "cross_branch_equal": true,
+        "classification": "exact_compatible"
+      }
+    ],
+    "primary_all_eight_match": true,
+    "candidate_exact_match_count": 7,
+    "candidate_drift_count": 1,
+    "canonical_script_json_object_equal": true,
+    "cue_count": 9,
+    "scene_allocation": {
+      "S1": 2,
+      "S2": 4,
+      "S3": 3
+    },
+    "speaker_counts": {
+      "れいむ": 3,
+      "まりさ": 6
+    },
+    "adopted_claim_count": 15,
+    "factual_support_unit_count": 20,
+    "claim_edge_count": 21,
+    "unsupported_spoken_claim_count": 0,
+    "canonical_csv_cross_branch_equal": true,
+    "derived_csv_cross_branch_equal": true,
+    "canonical_derived_text_equal_on_both_sides": true,
+    "candidate_human_approval_receipt_present": false,
+    "authority_result": "primary_human_approval_receipt_and_all_eight_primary_hashes_win"
+  },
+  "authority_result": {
+    "schema_version": "new_banknote.successor_authority_conflict_matrix.v1",
+    "status": "passed",
+    "recommendation_class": "selective_integration_ready",
+    "one_to_one_authority_roles": true,
+    "unresolved_authority_count": 0,
+    "matrix": [
+      {
+        "artifact_family": "approved_content",
+        "primary_role": "sole current authority: explicit human receipt plus eight hashes",
+        "candidate_role": "seven exact files plus one metadata-modified approved README",
+        "conflict": "candidate README hash conflicts with primary approval",
+        "resolution": "keep all primary approved files; exclude candidate README variant",
+        "later_treatment": "keep_primary"
+      },
+      {
+        "artifact_family": "content_lineage",
+        "primary_role": "sole current T00-T07 human surface and policy",
+        "candidate_role": "no T00-T07 successor package",
+        "conflict": "none after primary authority is fixed",
+        "resolution": "keep primary lineage byte-exact",
+        "later_treatment": "keep_primary"
+      },
+      {
+        "artifact_family": "editorial_provenance",
+        "primary_role": "T00-T07 remains the current content authority",
+        "candidate_role": "secondary D00-D10 deep-audit evidence and prior-script audit",
+        "conflict": "candidate README/lock/readback claim candidate-current and encode same-machine reverify status",
+        "resolution": "integrate stable core; regenerate three authority surfaces against primary receipts",
+        "later_treatment": "selective_integrate_and_regenerate"
+      },
+      {
+        "artifact_family": "YMM4_evidence",
+        "primary_role": "current-lineage revalidation is current structural authority",
+        "candidate_role": "tracked historical predecessor observation of the same bytes",
+        "conflict": "no metric/hash/timing conflict",
+        "resolution": "retain candidate observation as historical beneath the primary successor receipt",
+        "later_treatment": "integrate_candidate_as_historical"
+      },
+      {
+        "artifact_family": "Operator_Batch",
+        "primary_role": "current five-action approval/T00-T07-aware batch",
+        "candidate_role": "superseded four-action predecessor batch",
+        "conflict": "add/add code and test conflict; candidate lacks current approval/lineage checks",
+        "resolution": "keep primary tooling; exclude candidate executable batch; retain bounded review receipt as history",
+        "later_treatment": "keep_primary_exclude_candidate_tooling"
+      },
+      {
+        "artifact_family": "visual_ABC",
+        "primary_role": "no selected visual route",
+        "candidate_role": "proposal-only A/B/C package; Route A recommended_not_selected",
+        "conflict": "none with approved content; human preference remains unknown",
+        "resolution": "integrate package without changing recommendation or authorization fields",
+        "later_treatment": "integrate_candidate"
+      },
+      {
+        "artifact_family": "current_state",
+        "primary_role": "newer accepted evidence at primary base",
+        "candidate_role": "older visual-selection-ready state with competing authority claims",
+        "conflict": "five current-state documents conflict in merge-tree",
+        "resolution": "regenerate one successor state after selective integration",
+        "later_treatment": "regenerate_successor"
+      },
+      {
+        "artifact_family": "historical_reports",
+        "primary_role": "G0-G9 roadmap and primary handoff history",
+        "candidate_role": "dated candidate readiness report",
+        "conflict": "none when explicitly historical",
+        "resolution": "retain reports immutable; never use them as current state",
+        "later_treatment": "retain_historical"
+      }
+    ]
+  },
+  "YMM4_evidence_comparison": {
+    "primary_current_authority": "existing_yymm4_evidence_revalidation_receipt.json",
+    "candidate_historical_authority": "yymm4_import_observation_receipt.json",
+    "project_sha256": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54",
+    "result_sha256": "e4ecb1bf5e4b5780990a00094804dd871d66068a917000015f9fecfd83e8ddfa",
+    "VoiceItem_count": 9,
+    "fps": 60,
+    "timeline_frames": 4415,
+    "duration_seconds": 73.583333,
+    "metric_or_hash_conflict": false,
+    "pronunciation_rhythm_clipping": "unknown"
+  },
+  "visual_result": {
+    "candidate_package_compatible": true,
+    "recommendation_status": "recommended_not_selected",
+    "recommended_route": "route_A_security_inspection_lab",
+    "human_selection_required": true,
+    "implementation_authorized": false,
+    "selected_route": null
+  },
+  "semantic_conflicts": [
+    {
+      "id": "SC1",
+      "issue": "candidate approved README metadata drift",
+      "resolution": "exclude candidate variant and keep primary approved hash",
+      "blocks_recommendation": false
+    },
+    {
+      "id": "SC2",
+      "issue": "five current-state documents conflict",
+      "resolution": "regenerate one successor state; never merge prose",
+      "blocks_recommendation": false
+    },
+    {
+      "id": "SC3",
+      "issue": "Operator Batch module and test add/add conflict",
+      "resolution": "keep primary implementation and exclude candidate executable family",
+      "blocks_recommendation": false
+    },
+    {
+      "id": "SC4",
+      "issue": "candidate provenance README/lock/readback depend on candidate-current and same-machine state",
+      "resolution": "regenerate those three surfaces against primary authority",
+      "blocks_recommendation": false
+    }
+  ],
+  "blockers": [],
+  "quality_debt": [
+    {
+      "id": "D1",
+      "issue": "pronunciation/rhythm/clipping unknown",
+      "owner": "human audio reviewer",
+      "revisit_trigger": "audio acceptance is requested after visual selection"
+    },
+    {
+      "id": "D2",
+      "issue": "exact S04 generation-time binary and S05 historical identity unresolved",
+      "owner": "source provenance reviewer",
+      "revisit_trigger": "stable source identity appears or provenance claim expands"
+    },
+    {
+      "id": "D3",
+      "issue": "token-level authorship unavailable",
+      "owner": "content-lineage owner",
+      "revisit_trigger": "new contemporaneous evidence exists"
+    },
+    {
+      "id": "D4",
+      "issue": "human visual selection pending",
+      "owner": "human visual reviewer",
+      "revisit_trigger": "unified A/B/C review surface is available after H1"
+    },
+    {
+      "id": "D5",
+      "issue": "remote CI and branch policy not evidenced",
+      "owner": "integration owner",
+      "revisit_trigger": "H1 branch is pushed or a PR is opened"
+    }
+  ],
+  "integration_contract": {
+    "integration_owner": "new-banknote-successor-selective-integration-v1",
+    "target_successor_branch": "codex/new-banknote-successor-selective-integration-v1",
+    "target_base_revision": "5e50ff707806724e67a5e0cec215bdd3b604ce32",
+    "candidate_source_revision": "833717f63713db9555f563a2a26285fa2f621e3d",
+    "accepted_primary_inputs": [
+      "primary human_script_approval_receipt.json and all eight approved files",
+      "primary README_CONTENT_LINEAGE.md and T00-T07 lineage package",
+      "primary existing YMM4 evidence revalidation package",
+      "primary yymm4_operator_batch/ plus current module and tests",
+      "primary supervisor roadmap and immutable history"
+    ],
+    "accepted_candidate_paths": [
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_YMM4_IMPORT_OBSERVATION.md",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/editorial_provenance/authorial_contribution_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/editorial_provenance/cue_transformation_matrix.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/editorial_provenance/editorial_provenance_ledger.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/editorial_provenance/future_change_contract.md",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/editorial_provenance/prior_user_script_usage_audit.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/editorial_provenance/stage_decision_ledger.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/README_VISUAL_SCENE_DECISION.md",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/asset_rights_matrix.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/limitations.md",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/motion_beat_plan.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/recommended_visual_direction.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/scene_layout_plan.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/script_beat_ir.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/visual_direction_board.html",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/visual_direction_board_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/visual_direction_options.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/visual_review_sheet.md",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/yymm4_visual_project_contract.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/yymm4_import_observation_limitations.md",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/yymm4_import_observation_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/yymm4_import_observation_receipt.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/yymm4_import_source_to_project_traceability.json",
+      "src/pipeline/editorial_provenance.py",
+      "src/pipeline/new_banknote_yymm4_import_intake_visual_decision.py",
+      "tests/test_editorial_provenance.py",
+      "tests/test_new_banknote_yymm4_import_intake_visual_decision.py"
+    ],
+    "historical_candidate_paths": [
+      "docs/verification/REMOTE_SYNC_AND_DEVELOPMENT_READINESS_2026-07-15.md",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/supervisor_yymm4_import_observation_review_receipt.json"
+    ],
+    "regenerate_after_copy_paths": [
+      "docs/PROJECT_COCKPIT.md",
+      "docs/PROJECT_PIPELINE.mmd",
+      "docs/THREAD_REGISTRY.md",
+      "docs/project-context.md",
+      "docs/runtime-state.md",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/editorial_provenance/README_EDITORIAL_PROVENANCE.md",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/editorial_provenance/content_lock_receipt.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/editorial_provenance/provenance_validation_readback.json"
+    ],
+    "excluded_candidate_paths": [
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/README_CANONICAL_SCRIPT_REVIEW.md",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script_editorial_revision.md",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/editorial_revision_receipt.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/operator_batch/README_OPERATOR_BATCH.md",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/operator_batch/collect_new_banknote_yymm4_import_result.ps1",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/operator_batch/expected_import_contract.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/operator_batch/operator_batch_manifest.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/operator_batch/operator_return_template.md",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/operator_batch/preflight_readback.json",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/operator_batch/run_new_banknote_yymm4_import_batch.ps1",
+      "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/script_generation_receipt.json",
+      "src/pipeline/new_banknote_authoritative_script.py",
+      "src/pipeline/new_banknote_yymm4_import_operator_batch.py",
+      "tests/test_new_banknote_yymm4_import_operator_batch.py"
+    ],
+    "mechanism": "selective_path_materialization_from_exact_candidate_ref_onto_exact_primary_base",
+    "ordered_steps": [
+      "create the successor branch from the exact primary base",
+      "materialize only accepted candidate paths from the exact candidate revision",
+      "retain historical candidate receipts/reports with explicit secondary status",
+      "keep all primary approved, lineage, revalidation, and Operator Batch bytes",
+      "rebind editorial provenance implementation to primary approval/T00-T07/revalidation authority",
+      "regenerate the three provenance authority surfaces and all compact current-state surfaces",
+      "run targeted primary, editorial-provenance, visual, observation, privacy, and state validation"
+    ],
+    "conflict_resolution_policy": {
+      "approved_content": "primary_wins_byte_exact",
+      "content_lineage": "primary_T00_T07_is_current",
+      "YMM4_revalidation": "primary_successor_receipt_is_current",
+      "Operator_Batch": "primary_only",
+      "editorial_provenance": "candidate_secondary_core_with_regenerated_primary_links",
+      "visual": "candidate_proposal_only_no_selection",
+      "current_state": "regenerate_never_mechanical_merge"
+    },
+    "targeted_validation": [
+      "primary content-transformation lineage validator",
+      "primary content-lineage, Operator Batch, and existing-evidence revalidation focused tests",
+      "editorial-provenance focused tests with portable absent-local-evidence behavior",
+      "candidate visual-decision and import-observation focused tests",
+      "approved eight-hash and canonical/derived CSV comparison",
+      "all JSON plus visual HTML parse",
+      "recommended_not_selected and no selected/approved/implemented route checks",
+      "privacy, path, raw-body, local-binary, state-sync, and diff checks"
+    ],
+    "completion_evidence": [
+      "all primary approved hashes remain exact",
+      "primary current-lineage revalidation receipt remains byte-exact",
+      "one regenerated current state names the integrated successor",
+      "focused tests and state sync pass",
+      "source refs remain unchanged and successor parity is 0/0"
+    ],
+    "rollback_boundary": "delete or abandon only the new successor branch; primary, candidate, and master refs remain immutable",
+    "supervisor_decision_required": "accept this selective path contract before dispatching H1; no A/B/C choice is requested until H2"
+  },
+  "operations_not_performed": [
+    "source branch merge, rebase, or cherry-pick",
+    "actual selective integration",
+    "approved script, source, claim, or CSV modification",
+    "visual route selection or implementation",
+    "YMM4, Computer Use, render, media, publication, rights, or master mutation",
+    "full test suite"
+  ]
+}
