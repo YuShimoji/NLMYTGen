@@ -1,0 +1,70 @@
+{
+  "schema_version": "new_banknote.reference_grounded_design_contract.v1",
+  "status": "implemented_proof_pending_human_review",
+  "design_id": "documentary_object_focus_consensus",
+  "canvas": {
+    "width": 1920,
+    "height": 1080
+  },
+  "selected_grammar": [
+    "P01_object_first",
+    "P02_one_focus_callout",
+    "P03_short_key_term",
+    "P04_bottom_text_band",
+    "P05_speaker_cues",
+    "P06_adjacent_source_credit",
+    "P07_restrained_reveal",
+    "P08_neutral_field"
+  ],
+  "implementation": {
+    "primary_subject": "neutral source/object slot; no external image embedded",
+    "composition": "single field plus one bounded focus",
+    "speaker_treatment": "text-only speaker nameplate",
+    "subtitle_safe_area": [
+      84,
+      780,
+      1752,
+      220
+    ],
+    "source_credit": "compact reference IDs and rights boundary footer",
+    "palette": {
+      "field": "#15181D",
+      "surface": "#F7F5EF",
+      "reimu": "#CF3F57",
+      "marisa": "#E5B840",
+      "focus": "#52C7C7"
+    },
+    "motion": "one non-looping reveal or zoom maximum per cue; storyboard only"
+  },
+  "rights_boundary": {
+    "external_assets": 0,
+    "source_images_embedded": false,
+    "logos": false,
+    "creator_character_art": false,
+    "exact_banknote_likeness": false,
+    "portrait_seal_serial_exact_security_pattern": false,
+    "reference_captures": "ignored local research evidence only"
+  },
+  "content_boundary": {
+    "approved_text_changed": false,
+    "scene_allocation": {
+      "S1": 2,
+      "S2": 4,
+      "S3": 3
+    },
+    "speaker_counts": {
+      "れいむ": 3,
+      "まりさ": 6
+    },
+    "new_claims_added": false
+  },
+  "authorization": {
+    "human_visual_acceptance": false,
+    "shot_motion": false,
+    "asset_rights": false,
+    "YMM4": false,
+    "render": false,
+    "production": false,
+    "publication": false
+  }
+}

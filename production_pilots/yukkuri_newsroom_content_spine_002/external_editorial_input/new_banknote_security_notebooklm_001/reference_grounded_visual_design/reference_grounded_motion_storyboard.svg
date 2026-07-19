@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-loop="false" data-motion-status="storyboard-only">
+<rect width="1920" height="1080" fill="#F7F5EF"/>
+<text x="70" y="76" font-size="42" font-weight="900" fill="#15181D">MOTION STORYBOARD / START → EMPHASIS → SETTLED</text>
+<text x="70" y="116" font-size="22" fill="#70757D">P07 restrained reveal · one principal motion maximum · continuous loop false · YMM4 untested</text>
+<g data-cue-id="cue_001" data-loop="false" data-principal-motion-count="1">
+<rect x="70" y="158" width="1780" height="76" rx="18" fill="#FFFFFF" stroke="#D8D5CC" stroke-width="2"/>
+<text x="96" y="206" font-size="24" font-weight="900" fill="#15181D">cue_001</text>
+<text x="300" y="206" font-size="23" fill="#59616B">question and action labels reveal once</text>
+<text x="1160" y="206" font-size="21" font-weight="800" fill="#387F82">START</text>
+<path d="M1250 196 H1340" stroke="#52C7C7" stroke-width="5"/>
+<text x="1370" y="206" font-size="21" font-weight="800" fill="#387F82">EMPHASIS</text>
+<path d="M1515 196 H1605" stroke="#52C7C7" stroke-width="5"/>
+<text x="1635" y="206" font-size="21" font-weight="800" fill="#387F82">SETTLED</text>
+</g>
+<g data-cue-id="cue_002" data-loop="false" data-principal-motion-count="1">
+<rect x="70" y="254" width="1780" height="76" rx="18" fill="#FFFFFF" stroke="#D8D5CC" stroke-width="2"/>
+<text x="96" y="302" font-size="24" font-weight="900" fill="#15181D">cue_002</text>
+<text x="300" y="302" font-size="23" fill="#59616B">four-action overview settles once</text>
+<text x="1160" y="302" font-size="21" font-weight="800" fill="#387F82">START</text>
+<path d="M1250 292 H1340" stroke="#52C7C7" stroke-width="5"/>
+<text x="1370" y="302" font-size="21" font-weight="800" fill="#387F82">EMPHASIS</text>
+<path d="M1515 292 H1605" stroke="#52C7C7" stroke-width="5"/>
+<text x="1635" y="302" font-size="21" font-weight="800" fill="#387F82">SETTLED</text>
+</g>
+<g data-cue-id="cue_003" data-loop="false" data-principal-motion-count="1">
+<rect x="70" y="350" width="1780" height="76" rx="18" fill="#FFFFFF" stroke="#D8D5CC" stroke-width="2"/>
+<text x="96" y="398" font-size="24" font-weight="900" fill="#15181D">cue_003</text>
+<text x="300" y="398" font-size="23" fill="#59616B">neutral source slot brightens once</text>
+<text x="1160" y="398" font-size="21" font-weight="800" fill="#387F82">START</text>
+<path d="M1250 388 H1340" stroke="#52C7C7" stroke-width="5"/>
+<text x="1370" y="398" font-size="21" font-weight="800" fill="#387F82">EMPHASIS</text>
+<path d="M1515 388 H1605" stroke="#52C7C7" stroke-width="5"/>
+<text x="1635" y="398" font-size="21" font-weight="800" fill="#387F82">SETTLED</text>
+</g>
+<g data-cue-id="cue_004" data-loop="false" data-principal-motion-count="1">
+<rect x="70" y="446" width="1780" height="76" rx="18" fill="#FFFFFF" stroke="#D8D5CC" stroke-width="2"/>
+<text x="96" y="494" font-size="24" font-weight="900" fill="#15181D">cue_004</text>
+<text x="300" y="494" font-size="23" fill="#59616B">three angle states reveal once</text>
+<text x="1160" y="494" font-size="21" font-weight="800" fill="#387F82">START</text>
+<path d="M1250 484 H1340" stroke="#52C7C7" stroke-width="5"/>
+<text x="1370" y="494" font-size="21" font-weight="800" fill="#387F82">EMPHASIS</text>
+<path d="M1515 484 H1605" stroke="#52C7C7" stroke-width="5"/>
+<text x="1635" y="494" font-size="21" font-weight="800" fill="#387F82">SETTLED</text>
+</g>
+<g data-cue-id="cue_005" data-loop="false" data-principal-motion-count="1">
+<rect x="70" y="542" width="1780" height="76" rx="18" fill="#FFFFFF" stroke="#D8D5CC" stroke-width="2"/>
+<text x="96" y="590" font-size="24" font-weight="900" fill="#15181D">cue_005</text>
+<text x="300" y="590" font-size="23" fill="#59616B">raised-line profile reveals once</text>
+<text x="1160" y="590" font-size="21" font-weight="800" fill="#387F82">START</text>
+<path d="M1250 580 H1340" stroke="#52C7C7" stroke-width="5"/>
+<text x="1370" y="590" font-size="21" font-weight="800" fill="#387F82">EMPHASIS</text>
+<path d="M1515 580 H1605" stroke="#52C7C7" stroke-width="5"/>
+<text x="1635" y="590" font-size="21" font-weight="800" fill="#387F82">SETTLED</text>
+</g>
+<g data-cue-id="cue_006" data-loop="false" data-principal-motion-count="1">
+<rect x="70" y="638" width="1780" height="76" rx="18" fill="#FFFFFF" stroke="#D8D5CC" stroke-width="2"/>
+<text x="96" y="686" font-size="24" font-weight="900" fill="#15181D">cue_006</text>
+<text x="300" y="686" font-size="23" fill="#59616B">one focus window zooms once</text>
+<text x="1160" y="686" font-size="21" font-weight="800" fill="#387F82">START</text>
+<path d="M1250 676 H1340" stroke="#52C7C7" stroke-width="5"/>
+<text x="1370" y="686" font-size="21" font-weight="800" fill="#387F82">EMPHASIS</text>
+<path d="M1515 676 H1605" stroke="#52C7C7" stroke-width="5"/>
+<text x="1635" y="686" font-size="21" font-weight="800" fill="#387F82">SETTLED</text>
+</g>
+<g data-cue-id="cue_007" data-loop="false" data-principal-motion-count="1">
+<rect x="70" y="734" width="1780" height="76" rx="18" fill="#FFFFFF" stroke="#D8D5CC" stroke-width="2"/>
+<text x="96" y="782" font-size="24" font-weight="900" fill="#15181D">cue_007</text>
+<text x="300" y="782" font-size="23" fill="#59616B">identification marker label reveals once</text>
+<text x="1160" y="782" font-size="21" font-weight="800" fill="#387F82">START</text>
+<path d="M1250 772 H1340" stroke="#52C7C7" stroke-width="5"/>
+<text x="1370" y="782" font-size="21" font-weight="800" fill="#387F82">EMPHASIS</text>
+<path d="M1515 772 H1605" stroke="#52C7C7" stroke-width="5"/>
+<text x="1635" y="782" font-size="21" font-weight="800" fill="#387F82">SETTLED</text>
+</g>
+<g data-cue-id="cue_008" data-loop="false" data-principal-motion-count="1">
+<rect x="70" y="830" width="1780" height="76" rx="18" fill="#FFFFFF" stroke="#D8D5CC" stroke-width="2"/>
+<text x="96" y="878" font-size="24" font-weight="900" fill="#15181D">cue_008</text>
+<text x="300" y="878" font-size="23" fill="#59616B">two neutral comparison cards reveal once</text>
+<text x="1160" y="878" font-size="21" font-weight="800" fill="#387F82">START</text>
+<path d="M1250 868 H1340" stroke="#52C7C7" stroke-width="5"/>
+<text x="1370" y="878" font-size="21" font-weight="800" fill="#387F82">EMPHASIS</text>
+<path d="M1515 868 H1605" stroke="#52C7C7" stroke-width="5"/>
+<text x="1635" y="878" font-size="21" font-weight="800" fill="#387F82">SETTLED</text>
+</g>
+<g data-cue-id="cue_009" data-loop="false" data-principal-motion-count="1">
+<rect x="70" y="926" width="1780" height="76" rx="18" fill="#FFFFFF" stroke="#D8D5CC" stroke-width="2"/>
+<text x="96" y="974" font-size="24" font-weight="900" fill="#15181D">cue_009</text>
+<text x="300" y="974" font-size="23" fill="#59616B">four action labels sequence once</text>
+<text x="1160" y="974" font-size="21" font-weight="800" fill="#387F82">START</text>
+<path d="M1250 964 H1340" stroke="#52C7C7" stroke-width="5"/>
+<text x="1370" y="974" font-size="21" font-weight="800" fill="#387F82">EMPHASIS</text>
+<path d="M1515 964 H1605" stroke="#52C7C7" stroke-width="5"/>
+<text x="1635" y="974" font-size="21" font-weight="800" fill="#387F82">SETTLED</text>
+</g>
+</svg>

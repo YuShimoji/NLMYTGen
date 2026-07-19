@@ -1,0 +1,132 @@
+{
+  "schema_version": "new_banknote.reference_grounded_motion_storyboard.v1",
+  "status": "proposal_only_not_implemented",
+  "motion_bearing_cue_count": 9,
+  "principal_motion_maximum_per_cue": 1,
+  "continuous_loop_allowed": false,
+  "states": [
+    "start",
+    "emphasis",
+    "settled"
+  ],
+  "reference_pattern_id": "P07_restrained_reveal",
+  "cues": [
+    {
+      "cue_id": "cue_001",
+      "motion_class": "label_reveal",
+      "display_label": "question and action labels reveal once",
+      "start": "neutral hold",
+      "emphasis": "single supported focus action",
+      "settled": "stable reading frame",
+      "duration_seconds": 0.65,
+      "easing": "ease-out",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "storyboard_only_YMM4_untested"
+    },
+    {
+      "cue_id": "cue_002",
+      "motion_class": "object_focus_reveal",
+      "display_label": "four-action overview settles once",
+      "start": "neutral hold",
+      "emphasis": "single supported focus action",
+      "settled": "stable reading frame",
+      "duration_seconds": 0.65,
+      "easing": "ease-out",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "storyboard_only_YMM4_untested"
+    },
+    {
+      "cue_id": "cue_003",
+      "motion_class": "light_reveal",
+      "display_label": "neutral source slot brightens once",
+      "start": "neutral hold",
+      "emphasis": "single supported focus action",
+      "settled": "stable reading frame",
+      "duration_seconds": 0.65,
+      "easing": "ease-out",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "storyboard_only_YMM4_untested"
+    },
+    {
+      "cue_id": "cue_004",
+      "motion_class": "angle_state_reveal",
+      "display_label": "three angle states reveal once",
+      "start": "neutral hold",
+      "emphasis": "single supported focus action",
+      "settled": "stable reading frame",
+      "duration_seconds": 0.65,
+      "easing": "ease-out",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "storyboard_only_YMM4_untested"
+    },
+    {
+      "cue_id": "cue_005",
+      "motion_class": "relief_reveal",
+      "display_label": "raised-line profile reveals once",
+      "start": "neutral hold",
+      "emphasis": "single supported focus action",
+      "settled": "stable reading frame",
+      "duration_seconds": 0.65,
+      "easing": "ease-out",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "storyboard_only_YMM4_untested"
+    },
+    {
+      "cue_id": "cue_006",
+      "motion_class": "magnification_zoom",
+      "display_label": "one focus window zooms once",
+      "start": "neutral hold",
+      "emphasis": "single supported focus action",
+      "settled": "stable reading frame",
+      "duration_seconds": 0.65,
+      "easing": "ease-out",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "storyboard_only_YMM4_untested"
+    },
+    {
+      "cue_id": "cue_007",
+      "motion_class": "marker_reveal",
+      "display_label": "identification marker label reveals once",
+      "start": "neutral hold",
+      "emphasis": "single supported focus action",
+      "settled": "stable reading frame",
+      "duration_seconds": 0.65,
+      "easing": "ease-out",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "storyboard_only_YMM4_untested"
+    },
+    {
+      "cue_id": "cue_008",
+      "motion_class": "difference_reveal",
+      "display_label": "two neutral comparison cards reveal once",
+      "start": "neutral hold",
+      "emphasis": "single supported focus action",
+      "settled": "stable reading frame",
+      "duration_seconds": 0.65,
+      "easing": "ease-out",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "storyboard_only_YMM4_untested"
+    },
+    {
+      "cue_id": "cue_009",
+      "motion_class": "four_step_sequence",
+      "display_label": "four action labels sequence once",
+      "start": "neutral hold",
+      "emphasis": "single supported focus action",
+      "settled": "stable reading frame",
+      "duration_seconds": 0.65,
+      "easing": "ease-out",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "storyboard_only_YMM4_untested"
+    }
+  ]
+}

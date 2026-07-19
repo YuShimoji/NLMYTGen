@@ -1,93 +1,94 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: new-banknote-route-a-dual-surface-visual-proof-human-review-ready-v1
-State-Revision: 2026-07-19.5
-Updated: 2026-07-19 JST
-Product-State: new-banknote-route-a-viewer-and-annotation-proof-ready
-Product-Gate: human-route-a-visual-proof-review
-Recommended-Next: review-clean-route-a-viewer-frames
+Project-State-ID: new-banknote-reference-grounded-visual-proof-human-review-ready-v1
+State-Revision: 2026-07-20.1
+Updated: 2026-07-20 JST
+Product-State: new-banknote-existing-content-researched-visual-grammar-implemented
+Product-Gate: human-reference-grounded-visual-review
+Recommended-Next: review-reference-grounded-visual-proof-and-lineage
 External-State: public-repo-feature-branch
 Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0
-Tracked-Worktree: clean; unrelated untracked supervision artifact and intentional ignored evidence retained
+Tracked-Worktree: clean after handoff commit; unrelated untracked supervision artifact and intentional ignored research/render evidence retained
 
 ## Current Slice
 
-- **Route A direction is recorded**: the explicit user decision selects
-  `route_A_security_inspection_lab` for concrete proof generation only. The new
-  receipt preserves S1/S2/S3, the schematic disclaimer, and the one-principal-
-  motion/non-looping budget. Final visual acceptance and implementation remain false.
-- **Viewer and annotation surfaces are separated**: six clean 1920×1080 viewer
-  frames cover S1, cue_003–cue_006, and S3 without cue IDs, proof status, motion
-  metadata, or safe-area labels. The six annotation frames retain those audit
-  overlays. The primary offline HTML defaults to viewer mode and exposes annotation
-  mode as an explicit secondary section.
-- **Mechanical presentation defects are closed**: approved subtitles and bounded
-  explanations use deterministic semantic segments. The known punctuation-only,
-  lexical/inflection split, and contact-sheet label truncation defects are absent;
-  concatenated cue text remains exact and all nine motion display labels are complete.
-- **Motion remains proposal-only**: all nine cues have start, emphasis, and settled
-  states, duration/easing proposals, `loop: false`, and at most one principal motion.
-  This is not motion playback or YMM4 feasibility evidence.
-- **Subtitle and diagram boundaries are visible**: every full frame reserves
-  x=84, y=780, width=1752, height=220 for approved subtitles and displays
-  `模式図／実券の縮尺・配置ではありません`. All visuals use original abstract
-  SVG geometry with no external assets or network resources.
+- **Existing-content research precedes design**: 16 public references were registered.
+  Four official/educational, five journalism/documentary, and five
+  Yukkuri/adjacent surfaces are visually usable (14 total); two access-limited
+  government pages remain recorded but are not counted as visually analyzed.
+- **A cross-source grammar is explicit**: object-first composition, one bounded
+  focus, short key terms, a bottom text band, speaker cues, adjacent source IDs,
+  restrained one-time reveals, and a neutral field are separated from creator-
+  specific branding, dense collage, and reusable source imagery.
+- **The prior Route A proof is historical only**: `route_a_visual_proof/` remains
+  byte-exact at base `8d7fd5a`. Its Lab metaphor, palette, three-column layout,
+  abstract note geometry, and bespoke motion vocabulary are classified as
+  exploratory AI-original choices, not current visual authority.
+- **Selection is explicit**: `documentary_object_focus_consensus` scored 92/100,
+  six points above the next valid candidate. All 12 major visual decisions have
+  reference lineage; maximum single-reference decision share is 0.3333.
+- **A new proof is directly viewable**: six original 1920×1080 SVG keyframes,
+  a 9/9 cue contact sheet, a non-looping motion storyboard, an offline HTML viewer,
+  and a direct `#reference-lineage` mode are tracked. External assets are zero.
 - **Approved content is unchanged**: all eight approval hashes, nine cue texts/order,
-  scenes 2/4/3, speakers 3/6, claims, evidence edges, canonical/derived CSVs,
-  lineage, current/historical YMM4 evidence, Operator Batch, and original A/B/C
-  proposal files remain byte-exact to the integrated source.
-- **Actual output was inspected**: the primary offline HTML, all six viewer frames,
-  all six annotation frames, contact sheet, and storyboard were rendered locally at
-  1920×1080. A bounded second repair raised the four-line annotation subtitle baseline;
-  no approved text, visual semantics, or motion budget changed.
-- **Boundary preserved**: no YMM4 launch/project, video render, source/image fetch,
-  external asset, production/publication, rights action, PR, master integration, or
-  full-suite run occurred. Ignored local evidence and the unrelated untracked
-  supervision artifact were not modified.
+  scenes 2/4/3, speakers 3/6, canonical/derived CSVs, claims, and lineage remain exact.
+- **Actual output was inspected**: all six frames, the cue overview, storyboard,
+  primary HTML, lineage mode, and ignored local research contact sheet were rendered
+  and viewed. One annotation/handle overlap in cue_006 was repaired and rechecked.
+- **Rights and authority stay bounded**: captured pages and public thumbnails remain
+  ignored local research evidence. No source image, logo, creator character art,
+  banknote likeness, portrait, seal, serial, or exact security pattern is embedded.
+- **Final acceptance remains false**: human visual acceptance, Shot/Motion,
+  Asset/Rights, YMM4 feasibility, motion playback, render, production, publication,
+  PR, and master integration are still pending or unauthorized.
 
 ## Product Position
 
-The A/B/C choice is closed for this slice: Route A is the selected direction for
-concrete proof, not an accepted final design. The reviewer now sees clean intended
-video screens first and can open separate audit evidence when needed, then judge
-composition, subtitle readability, diagram risk, and restrained motion before any
-Shot/Motion or Asset/Proxy/Rights contract is authorized.
+The review candidate now derives its grammar from a three-cohort existing-content
+corpus instead of treating an AI-original visual world as authority. The proof uses
+only original neutral diagrams and exact approved subtitles. This establishes a
+reviewable design basis; it does not establish rights approval, YMM4 feasibility,
+actual motion quality, render quality, production readiness, or final acceptance.
 
 ## Exact Next Action
 
-Open the pilot `route_a_visual_proof/route_a_visual_proof.html` and answer only:
+Open
+`reference_grounded_visual_design/reference_grounded_visual_proof.html` and its
+`#reference-lineage` mode, then answer the five questions in
+`reference_grounded_visual_review_sheet.md`:
 
-1. S1／S2／S3の画面は、説明順と一致して理解しやすいですか。
-2. 抽象券や各技術の模式図が、実券の正確な形状・位置・公式手順に見えませんか。
-3. 字幕領域、見出し、説明文は1920×1080画面で読みやすいですか。
-4. motion storyboardは十分に抑制され、各cueの主旨を邪魔していませんか。
+1. Is the research set sufficient and acceptably balanced?
+2. Does the proof use shared existing-content grammar without reviving an
+   AI-original world?
+3. Are S1/S2/S3, all nine cues, subtitles, dialogue, and technical explanations clear?
+4. Is the result a safe adaptation rather than source or creator imitation?
+5. May this proof become the future Shot/Motion and Asset/Rights design baseline?
 
-Return `accept` or a scene/cue-specific revision. Do not choose A/B/C again.
+Return `accept` or a source/decision/scene/cue-specific revision. Do not treat the
+focused machine pass as final visual acceptance.
 
 ## Evidence and Access
 
-- Primary human surface: pilot `route_a_visual_proof/route_a_visual_proof.html`.
-- Boundary and entry doc: `README_ROUTE_A_VISUAL_PROOF.md` beside it.
-- Direction receipt: `human_visual_direction_selection_receipt.json`.
-- Six viewer frames: `route_a_visual_proof/viewer_keyframes/`.
-- Six annotation frames: `route_a_visual_proof/keyframes/`.
-- Coverage: `route_a_nine_cue_contact_sheet.svg` and mapping JSON.
-- Motion: `route_a_motion_storyboard.svg` and JSON.
-- Machine inventories: `route_a_visual_proof_manifest.json` and readback JSON.
-- Presentation revision: `visual_proof_presentation_revision_receipt.json`.
-- Exact human questions: `route_a_visual_review_sheet.md`.
+- Primary surface: `reference_grounded_visual_design/reference_grounded_visual_proof.html`.
+- Direct lineage: append `#reference-lineage` to that HTML path.
+- Research: `reference_registry.json`, `reference_audit_matrix.json`, coverage and
+  grammar JSON, plus `README_REFERENCE_GROUNDED_VISUAL_DESIGN.md`.
+- Selection/audit: `reference_selection_scorecard.json`,
+  `current_ai_design_deviation_report.md`, and
+  `ai_original_visual_supersession_receipt.json`.
+- Proof: six `keyframes/*.svg`, 9-cue contact sheet, storyboard SVG/JSON, mapping,
+  manifest, readback, proof README, and review sheet.
+- Ignored local evidence: captures, thumbnails, metadata, render PNGs, and
+  `reference_contact_sheet.local.html`; none are publication or reuse assets.
 
 ## Active Boundaries
 
-- Human visual acceptance remains pending; machine checks do not settle taste,
-  clarity, subtitle readability, diagram interpretation, or motion restraint.
-- YMM4 feasibility and actual motion playback quality are untested.
-- Pronunciation/rhythm/clipping remain unknown.
-- Production assets and rights clearance remain pending.
-- Shot/Motion implementation, Asset/Proxy/Rights implementation, diagnostic YMM4,
-  render, production/publication, PR, master integration, remote CI/policy, and
-  full-suite Integrity work remain undone and unauthorized.
+- Human reference-grounded visual acceptance is pending.
+- YMM4 feasibility and actual motion playback are untested.
+- Production assets and rights clearance are pending.
+- No YMM4 launch/project, video render, source-media download, production/publication,
+  PR, master integration, remote CI/policy acceptance, or full-suite run occurred.
 
 ## Maintenance Note
 

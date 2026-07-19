@@ -1,0 +1,125 @@
+{
+  "schema_version": "new_banknote.reference_selection_scorecard.v1",
+  "status": "selected_for_human_review_proof",
+  "scoring_model_maximum": 100,
+  "candidates": [
+    {
+      "candidate_id": "documentary_object_focus_consensus",
+      "supporting_reference_ids": [
+        "O01",
+        "O02",
+        "J02",
+        "J03",
+        "J04",
+        "J05",
+        "Y01",
+        "Y02"
+      ],
+      "cohort_coverage": 3,
+      "subject_strategy": "single neutral source/object slot with one focus",
+      "character_strategy": "speaker nameplates only",
+      "subtitle_strategy": "bottom safe band",
+      "callout_strategy": "one focus window or numbered point",
+      "source_credit_strategy": "compact reference footer",
+      "motion_strategy": "one non-looping reveal or zoom",
+      "rights_burden": "low",
+      "YMM4_feasibility": "high",
+      "content_risk": "low",
+      "deviations": [
+        "real source imagery is replaced with neutral placeholders"
+      ],
+      "score_components": {
+        "reference_support_breadth": 24,
+        "approved_content_fidelity": 20,
+        "viewer_comprehension_readability": 14,
+        "rights_and_asset_feasibility": 14,
+        "yukkuri_dialogue_compatibility": 8,
+        "YMM4_feasibility": 8,
+        "motion_restraint_maintainability": 4
+      },
+      "score": 92,
+      "hard_fail": false
+    },
+    {
+      "candidate_id": "official_feature_map",
+      "supporting_reference_ids": [
+        "O01",
+        "O02",
+        "O06",
+        "J04"
+      ],
+      "cohort_coverage": 2,
+      "subject_strategy": "numbered object map",
+      "character_strategy": "voice only",
+      "subtitle_strategy": "bottom safe band",
+      "callout_strategy": "multiple numbered outlines",
+      "source_credit_strategy": "institutional footer",
+      "motion_strategy": "feature reveal",
+      "rights_burden": "low when placeholders are used",
+      "YMM4_feasibility": "medium",
+      "content_risk": "medium because a multi-callout map may imply exact placement",
+      "deviations": [
+        "exact object geometry cannot transfer"
+      ],
+      "score_components": {
+        "reference_support_breadth": 20,
+        "approved_content_fidelity": 18,
+        "viewer_comprehension_readability": 13,
+        "rights_and_asset_feasibility": 13,
+        "yukkuri_dialogue_compatibility": 7,
+        "YMM4_feasibility": 7,
+        "motion_restraint_maintainability": 4
+      },
+      "score": 82,
+      "hard_fail": false
+    },
+    {
+      "candidate_id": "dialogue_overlay_object",
+      "supporting_reference_ids": [
+        "J01",
+        "J03",
+        "Y01",
+        "Y02",
+        "Y03",
+        "Y04",
+        "Y05"
+      ],
+      "cohort_coverage": 2,
+      "subject_strategy": "object field plus two speaker cues",
+      "character_strategy": "nameplates replace art",
+      "subtitle_strategy": "speaker-coded bottom band",
+      "callout_strategy": "short speech point",
+      "source_credit_strategy": "footer",
+      "motion_strategy": "speaker cue reveal",
+      "rights_burden": "medium",
+      "YMM4_feasibility": "high",
+      "content_risk": "medium because dialogue framing can overpower technical evidence",
+      "deviations": [
+        "creator character art is excluded"
+      ],
+      "score_components": {
+        "reference_support_breadth": 21,
+        "approved_content_fidelity": 18,
+        "viewer_comprehension_readability": 13,
+        "rights_and_asset_feasibility": 11,
+        "yukkuri_dialogue_compatibility": 10,
+        "YMM4_feasibility": 9,
+        "motion_restraint_maintainability": 4
+      },
+      "score": 86,
+      "hard_fail": false
+    }
+  ],
+  "selection": {
+    "rule": "top valid candidate leads the second by at least 5 points",
+    "selected_candidate": "documentary_object_focus_consensus",
+    "selected_score": 92,
+    "second_candidate": "dialogue_overlay_object",
+    "second_score": 86,
+    "lead": 6,
+    "reference_threshold_passed": true,
+    "hard_constraints_passed": true,
+    "selection_confidence": "medium_high",
+    "human_approval_status": "pending"
+  }
+}

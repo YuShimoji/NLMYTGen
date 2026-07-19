@@ -1,0 +1,42 @@
+{
+  "schema_version": "new_banknote.reference_coverage_readback.v1",
+  "status": "passed",
+  "total_references": 16,
+  "usable_visually_analyzed_references": 14,
+  "limited_not_counted_reference_ids": [
+    "O03",
+    "O04"
+  ],
+  "cohort_counts": {
+    "journalism_documentary": 5,
+    "official_educational": 6,
+    "yukkuri_adjacent_explainer": 5
+  },
+  "usable_cohort_counts": {
+    "journalism_documentary": 5,
+    "official_educational": 4,
+    "yukkuri_adjacent_explainer": 5
+  },
+  "coverage_tag_counts": {
+    "exact_topic": 10,
+    "motion_callout_zoom": 7,
+    "object_centred": 11,
+    "source_credit": 8,
+    "thumbnail": 5,
+    "two_character_dialogue": 5
+  },
+  "checks": {
+    "total_references_between_15_and_18": true,
+    "usable_visually_analyzed_minimum_12": true,
+    "official_usable_minimum_4": true,
+    "journalism_usable_minimum_4": true,
+    "yukkuri_usable_minimum_4": true,
+    "exact_topic_minimum_2": true,
+    "object_centred_minimum_3": true,
+    "two_character_minimum_3": true,
+    "source_credit_minimum_2": true,
+    "motion_callout_zoom_minimum_3": true,
+    "title_only_not_counted": true,
+    "all_passed": true
+  }
+}

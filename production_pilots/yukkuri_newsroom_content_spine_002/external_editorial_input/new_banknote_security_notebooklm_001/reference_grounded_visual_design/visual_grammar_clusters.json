@@ -1,0 +1,188 @@
+{
+  "schema_version": "new_banknote.visual_grammar_clusters.v1",
+  "status": "passed",
+  "usable_reference_denominator": 14,
+  "classification_rules": {
+    "dominant": "at least 40 percent of usable references or strong across two cohorts",
+    "recurring": "at least three independent references",
+    "cohort_specific": "common within one cohort only",
+    "outlier": "one source or one creator pattern",
+    "unsuitable": "conflicts with fidelity, rights, readability, or feasibility"
+  },
+  "patterns": [
+    {
+      "pattern_id": "P01_object_first",
+      "dimension": "primary_subject",
+      "classification": "dominant",
+      "usable_reference_count": 11,
+      "usable_reference_ratio": 0.7857,
+      "supporting_reference_ids": [
+        "O01",
+        "O02",
+        "O06",
+        "J02",
+        "J03",
+        "J04",
+        "J05",
+        "Y01",
+        "Y02",
+        "Y03",
+        "Y05"
+      ],
+      "finding": "A real object or source image is the first visual anchor; text explains rather than replaces it.",
+      "transfer_rule": "Use a neutral, explicitly empty source slot in the proof; do not reconstruct or embed the real note."
+    },
+    {
+      "pattern_id": "P02_one_focus_callout",
+      "dimension": "composition_callout",
+      "classification": "dominant",
+      "usable_reference_count": 7,
+      "usable_reference_ratio": 0.5,
+      "supporting_reference_ids": [
+        "O01",
+        "O02",
+        "J01",
+        "J03",
+        "J04",
+        "Y02",
+        "Y04"
+      ],
+      "finding": "One feature, crop, numbered point, or magnified region receives emphasis at a time.",
+      "transfer_rule": "Use one bounded focus window or numbered focus card per cue."
+    },
+    {
+      "pattern_id": "P03_short_key_term",
+      "dimension": "information_hierarchy",
+      "classification": "dominant",
+      "usable_reference_count": 12,
+      "usable_reference_ratio": 0.8571,
+      "supporting_reference_ids": [
+        "O01",
+        "O02",
+        "O05",
+        "O06",
+        "J01",
+        "J02",
+        "J03",
+        "J04",
+        "J05",
+        "Y01",
+        "Y03",
+        "Y05"
+      ],
+      "finding": "A short topic label or key term is larger than explanatory copy.",
+      "transfer_rule": "Keep one Japanese action label and one feature term above the subtitle."
+    },
+    {
+      "pattern_id": "P04_bottom_text_band",
+      "dimension": "subtitle",
+      "classification": "recurring",
+      "usable_reference_count": 4,
+      "usable_reference_ratio": 0.2857,
+      "supporting_reference_ids": [
+        "J05",
+        "Y01",
+        "Y03",
+        "Y05"
+      ],
+      "finding": "A high-contrast lower band carries a short promise or dialogue text.",
+      "transfer_rule": "Retain the approved subtitle safe area as a production constraint, not as copied styling."
+    },
+    {
+      "pattern_id": "P05_speaker_cues",
+      "dimension": "speaker_representation",
+      "classification": "cohort_specific",
+      "usable_reference_count": 5,
+      "usable_reference_ratio": 0.3571,
+      "supporting_reference_ids": [
+        "Y01",
+        "Y02",
+        "Y03",
+        "Y04",
+        "Y05"
+      ],
+      "finding": "Dialogue explainers visibly distinguish two speakers, commonly with busts at edges or corners.",
+      "transfer_rule": "Use neutral speaker nameplates only; no character art is authorized."
+    },
+    {
+      "pattern_id": "P06_adjacent_source_credit",
+      "dimension": "source_attribution",
+      "classification": "recurring",
+      "usable_reference_count": 4,
+      "usable_reference_ratio": 0.2857,
+      "supporting_reference_ids": [
+        "O02",
+        "O05",
+        "O06",
+        "J04"
+      ],
+      "finding": "Institutional identity or an image source caption stays adjacent to the evidence surface.",
+      "transfer_rule": "Show compact reference IDs and the research-only rights boundary in a footer."
+    },
+    {
+      "pattern_id": "P07_restrained_reveal",
+      "dimension": "motion",
+      "classification": "recurring",
+      "usable_reference_count": 5,
+      "usable_reference_ratio": 0.3571,
+      "supporting_reference_ids": [
+        "O01",
+        "O02",
+        "O05",
+        "J02",
+        "J03"
+      ],
+      "finding": "Change is explained through angle states, a reveal, a process shot, or one focus shift.",
+      "transfer_rule": "Storyboard one non-looping reveal or zoom per cue; do not infer playback quality."
+    },
+    {
+      "pattern_id": "P08_neutral_field",
+      "dimension": "background_palette",
+      "classification": "dominant",
+      "usable_reference_count": 8,
+      "usable_reference_ratio": 0.5714,
+      "supporting_reference_ids": [
+        "O01",
+        "O02",
+        "O06",
+        "J02",
+        "J04",
+        "J05",
+        "Y03",
+        "Y05"
+      ],
+      "finding": "Neutral or source-derived fields keep the object and explanation dominant.",
+      "transfer_rule": "Use charcoal and warm-white neutral glue; accents encode speaker or focus only."
+    },
+    {
+      "pattern_id": "P09_creator_brand_world",
+      "dimension": "background_branding",
+      "classification": "unsuitable",
+      "usable_reference_count": 6,
+      "usable_reference_ratio": 0.4286,
+      "supporting_reference_ids": [
+        "O05",
+        "J01",
+        "J02",
+        "J03",
+        "J05",
+        "Y01"
+      ],
+      "finding": "Publisher and creator packages are common but source-specific.",
+      "transfer_rule": "Do not copy branded frames, character art, studio worlds, or a creator palette."
+    },
+    {
+      "pattern_id": "P10_dense_collage",
+      "dimension": "thumbnail",
+      "classification": "outlier",
+      "usable_reference_count": 2,
+      "usable_reference_ratio": 0.1429,
+      "supporting_reference_ids": [
+        "Y02",
+        "Y04"
+      ],
+      "finding": "Dense multi-image collage appears in individual thumbnails, not across cohorts.",
+      "transfer_rule": "Reject as a full-frame proof grammar because it increases rights and comprehension burden."
+    }
+  ]
+}

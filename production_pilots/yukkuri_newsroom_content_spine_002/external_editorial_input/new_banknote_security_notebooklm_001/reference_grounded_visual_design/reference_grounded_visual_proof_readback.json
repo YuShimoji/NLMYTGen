@@ -1,0 +1,46 @@
+{
+  "schema_version": "new_banknote.reference_grounded_visual_proof_readback.v1",
+  "status": "passed",
+  "checks": {
+    "research_preceded_design": true,
+    "corpus_coverage_passed": true,
+    "approved_hashes_8_of_8_exact": true,
+    "old_route_a_proof_byte_exact": true,
+    "old_route_a_not_current_authority": true,
+    "six_keyframes": true,
+    "cue_coverage_9_of_9": true,
+    "scene_allocation_2_4_3": true,
+    "speaker_counts_3_6": true,
+    "approved_text_and_order_exact": true,
+    "major_decision_lineage_complete": true,
+    "source_dominance_passed": true,
+    "no_external_assets": true,
+    "no_security_inspection_lab_in_viewer": true,
+    "no_absolute_path_or_uuid": true,
+    "motion_budget": true,
+    "viewer_lineage_separated": true,
+    "final_acceptance_false": true,
+    "YMM4_render_false": true,
+    "all_passed": true
+  },
+  "evidence_grades": {
+    "source_metadata": "web_and_public_metadata_verified",
+    "visual_observation": "14 usable captures_or_public_thumbnails; 2 limited not counted",
+    "rendered_output": "all_six_keyframes_contact_sheet_storyboard_primary_html_lineage_and_local_contact_sheet_inspected",
+    "YMM4": "not_tested"
+  },
+  "output_inspection": {
+    "inspected_at": "2026-07-20T05:35:35+09:00",
+    "method": "headless Chromium capture at 1920 px width plus manual visual inspection",
+    "artifacts": [
+      "six keyframes",
+      "nine-cue contact sheet",
+      "motion storyboard",
+      "primary HTML viewer",
+      "reference lineage mode",
+      "ignored local reference contact sheet"
+    ],
+    "repair_cycles": 1,
+    "result": "passed_after_microtext_annotation_handle_overlap_repair"
+  }
+}

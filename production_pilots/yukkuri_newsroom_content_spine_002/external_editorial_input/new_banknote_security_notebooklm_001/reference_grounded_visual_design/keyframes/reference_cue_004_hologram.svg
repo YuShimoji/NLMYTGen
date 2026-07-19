@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-surface="viewer" data-design-id="documentary_object_focus_consensus" data-cue-id="cue_004" data-approved-text="次は3Dホログラム。角度を変えると、三次元の肖像が回転して見えるぞ。" data-reference-ids="O01 O02 J02" data-pattern-ids="P01_object_first P02_one_focus_callout P03_short_key_term P04_bottom_text_band P06_adjacent_source_credit" data-external-asset-count="0" data-human-approval="pending" data-implementation-authorized="false">
+<rect width="1920" height="1080" fill="#15181D"/>
+<rect x="48" y="42" width="1824" height="696" rx="32" fill="#F7F5EF"/>
+<text x="84" y="116" font-size="30" font-weight="800" fill="#70757D">S2 / cue_004</text>
+<text x="84" y="188" font-size="70" font-weight="900" fill="#15181D">傾ける</text>
+<text x="84" y="238" font-size="28" font-weight="800" fill="#387F82">3Dホログラム</text>
+<rect x="722" y="274" width="1114" height="414" rx="28" fill="#FFFFFF" stroke="#D8D5CC" stroke-width="4"/><text x="1279" y="338" text-anchor="middle" font-size="26" font-weight="800" fill="#70757D">角度の変化を三状態で示す</text><rect x="804" y="382" width="232" height="214" rx="22" fill="#EEF7F7" stroke="#52C7C7" stroke-width="5"/><path d="M862 535 Q920 427 978 535" fill="none" stroke="#387F82" stroke-width="10"/><text x="920" y="638" text-anchor="middle" font-size="22" font-weight="800" fill="#70757D">ANGLE 01</text><rect x="1163" y="382" width="232" height="214" rx="22" fill="#EEF7F7" stroke="#52C7C7" stroke-width="5"/><path d="M1221 535 Q1279 439 1337 535" fill="none" stroke="#387F82" stroke-width="10"/><text x="1279" y="638" text-anchor="middle" font-size="22" font-weight="800" fill="#70757D">ANGLE 02</text><rect x="1522" y="382" width="232" height="214" rx="22" fill="#EEF7F7" stroke="#52C7C7" stroke-width="5"/><path d="M1580 535 Q1638 451 1696 535" fill="none" stroke="#387F82" stroke-width="10"/><text x="1638" y="638" text-anchor="middle" font-size="22" font-weight="800" fill="#70757D">ANGLE 03</text>
+<text x="84" y="724" font-size="24" font-weight="800" fill="#70757D">模式図／実券の縮尺・配置ではありません</text>
+<rect x="84" y="780" width="1752" height="220" rx="26" fill="#24282F" stroke="#454B55" stroke-width="2"/>
+<rect x="112" y="812" width="170" height="56" rx="28" fill="#E5B840"/>
+<text x="197" y="850" text-anchor="middle" font-size="28" font-weight="900" fill="#15181D">まりさ</text>
+<text font-size="38" font-weight="800" fill="#FFFFFF"><tspan x="316" y="844">次は3Dホログラム。角度を変えると、三次元の肖像が回転して見えるぞ。</tspan></text>
+<text x="84" y="1044" font-size="20" font-weight="700" fill="#B7BDC5">参照文法 O01 O02 J02 ｜ 外部画像不使用 ｜ human review pending</text>
+</svg>

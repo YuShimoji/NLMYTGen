@@ -1,0 +1,978 @@
+{
+  "schema_version": "new_banknote.reference_audit_matrix.v1",
+  "status": "complete",
+  "required_field_count": 35,
+  "rows": [
+    {
+      "reference_id": "O01",
+      "exact_title": "新しい日本銀行券特設サイト｜新しい一万円札について",
+      "publisher_channel": "独立行政法人 国立印刷局",
+      "creator": "独立行政法人 国立印刷局",
+      "publication_update_date": "date_not_stated",
+      "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
+      "canonical_url": "https://www.npb.go.jp/ja/n_banknote/design10/index.html",
+      "redirects_observed": [],
+      "content_type": "web_page",
+      "cohort": "official_educational",
+      "topic_scope": "exact_topic",
+      "accessibility_status": "public_no_login",
+      "visually_analyzed": true,
+      "inspected_surfaces": [
+        "page structure and image inventory",
+        "high-definition watermark image",
+        "multi-state hologram image"
+      ],
+      "representative_timestamps_or_sections": [
+        "3Dで見る偽造防止技術",
+        "新たに採用された偽造防止技術"
+      ],
+      "primary_visual_subject": "real object or source image",
+      "object_image_diagram_character_ratio": "object_high / diagram_medium / character_none",
+      "screen_composition": "object-first sections followed by feature close-ups and labels",
+      "subtitle_position_and_approximate_line_count": "not observed on static surface",
+      "character_speaker_placement": "no persistent character",
+      "title_and_key_term_treatment": "large topic title with short section labels",
+      "callout_arrow_zoom_usage": "sequential close-up states; isolated feature crops",
+      "source_credit_treatment": "publisher identity on page",
+      "background_treatment": "neutral page or source image",
+      "palette_role": "neutral base with functional accent",
+      "motion_type_and_frequency": "angle-change sequence represented as bounded still states",
+      "thumbnail_grammar": "object-led, short promise where relevant",
+      "strengths": [
+        "real object remains primary",
+        "feature explanation follows the object"
+      ],
+      "weaknesses": [
+        "exact source images carry high rights and likeness burden"
+      ],
+      "misleading_risk": "source image may be mistaken for reusable production material",
+      "rights_reuse_status": "research_only_public_visibility_not_reuse_permission",
+      "patterns_worth_adopting": [
+        "object first",
+        "feature-by-feature close-up",
+        "short functional labels"
+      ],
+      "patterns_to_avoid": [
+        "copying exact composition",
+        "reusing source imagery"
+      ],
+      "evidence_grade": "high",
+      "coverage_tags": [
+        "exact_topic",
+        "object_centred",
+        "motion_callout_zoom",
+        "source_credit"
+      ],
+      "local_capture": "local_reference_captures/O01_npb_hologram.jpg",
+      "capture_note": "captured in ignored local research cache"
+    },
+    {
+      "reference_id": "O02",
+      "exact_title": "新しい日本銀行券の特徴",
+      "publisher_channel": "日本銀行",
+      "creator": "日本銀行",
+      "publication_update_date": "2024-07-03 issuance context; page update date not stated",
+      "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
+      "canonical_url": "https://www.boj.or.jp/note_tfjgs/note/n_note/security.htm",
+      "redirects_observed": [],
+      "content_type": "web_page",
+      "cohort": "official_educational",
+      "topic_scope": "exact_topic",
+      "accessibility_status": "public_no_login",
+      "visually_analyzed": true,
+      "inspected_surfaces": [
+        "1440x1100 page capture",
+        "annotated note overview",
+        "magnified feature image"
+      ],
+      "representative_timestamps_or_sections": [
+        "1．偽造防止技術",
+        "2．ユニバーサルデザイン"
+      ],
+      "primary_visual_subject": "real object or source image",
+      "object_image_diagram_character_ratio": "object_high / diagram_medium / character_none",
+      "screen_composition": "large source object with numbered outlines, followed by individual crops",
+      "subtitle_position_and_approximate_line_count": "not observed on static surface",
+      "character_speaker_placement": "no persistent character",
+      "title_and_key_term_treatment": "large topic title with short section labels",
+      "callout_arrow_zoom_usage": "numbered outlines, leader lines, magnified detail window",
+      "source_credit_treatment": "constant institutional header and footer",
+      "background_treatment": "neutral page or source image",
+      "palette_role": "neutral base with functional accent",
+      "motion_type_and_frequency": "before/angle states described through paired still images",
+      "thumbnail_grammar": "object-led, short promise where relevant",
+      "strengths": [
+        "numbered callouts map feature to object",
+        "institutional source is explicit"
+      ],
+      "weaknesses": [
+        "full note likeness is unsuitable for a rights-minimal proof"
+      ],
+      "misleading_risk": "source image may be mistaken for reusable production material",
+      "rights_reuse_status": "research_only_public_visibility_not_reuse_permission",
+      "patterns_worth_adopting": [
+        "numbered feature callouts",
+        "one magnified detail at a time",
+        "source visibility"
+      ],
+      "patterns_to_avoid": [
+        "copying exact composition",
+        "reusing source imagery"
+      ],
+      "evidence_grade": "high",
+      "coverage_tags": [
+        "exact_topic",
+        "object_centred",
+        "motion_callout_zoom",
+        "source_credit"
+      ],
+      "local_capture": "local_reference_captures/O02_boj_annotated_note.png",
+      "capture_note": "captured in ignored local research cache"
+    },
+    {
+      "reference_id": "O03",
+      "exact_title": "2024年7月3日、新しいお札が発行！",
+      "publisher_channel": "政府広報オンライン",
+      "creator": "政府広報オンライン",
+      "publication_update_date": "2024-08-19",
+      "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
+      "canonical_url": "https://www.gov-online.go.jp/article/202406/entry-6075.html",
+      "redirects_observed": [],
+      "content_type": "web_page",
+      "cohort": "official_educational",
+      "topic_scope": "exact_topic",
+      "accessibility_status": "metadata_and_index_accessible_direct_capture_http_403",
+      "visually_analyzed": false,
+      "inspected_surfaces": [
+        "search-index image descriptions only",
+        "direct capture returned HTTP 403"
+      ],
+      "representative_timestamps_or_sections": [
+        "POINT",
+        "高精細すき入れの採用",
+        "3Dホログラムの採用"
+      ],
+      "primary_visual_subject": "real object or source image",
+      "object_image_diagram_character_ratio": "object_high / diagram_medium / character_none",
+      "screen_composition": "single object field with bounded explanatory labels",
+      "subtitle_position_and_approximate_line_count": "not observed on static surface",
+      "character_speaker_placement": "no persistent character",
+      "title_and_key_term_treatment": "large topic title with short section labels",
+      "callout_arrow_zoom_usage": "bounded outline or close-up when needed",
+      "source_credit_treatment": "publisher identity on page",
+      "background_treatment": "neutral page or source image",
+      "palette_role": "neutral base with functional accent",
+      "motion_type_and_frequency": "not directly observed",
+      "thumbnail_grammar": "object-led, short promise where relevant",
+      "strengths": [
+        "clear section hierarchy in accessible metadata"
+      ],
+      "weaknesses": [
+        "actual pixels unavailable in this session"
+      ],
+      "misleading_risk": "source image may be mistaken for reusable production material",
+      "rights_reuse_status": "research_only_public_visibility_not_reuse_permission",
+      "patterns_worth_adopting": [
+        "single primary subject",
+        "short key term"
+      ],
+      "patterns_to_avoid": [
+        "copying exact composition",
+        "reusing source imagery"
+      ],
+      "evidence_grade": "limited_not_counted",
+      "coverage_tags": [
+        "exact_topic"
+      ],
+      "local_capture": null,
+      "capture_note": "metadata card only; direct headless access returned HTTP 403"
+    },
+    {
+      "reference_id": "O04",
+      "exact_title": "新しいお札の新しい工夫",
+      "publisher_channel": "政府広報オンライン",
+      "creator": "政府広報オンライン",
+      "publication_update_date": "2024-11-05",
+      "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
+      "canonical_url": "https://www.gov-online.go.jp/useful/202406/video-284832.html",
+      "redirects_observed": [],
+      "content_type": "video_page",
+      "cohort": "official_educational",
+      "topic_scope": "exact_topic",
+      "accessibility_status": "metadata_accessible_direct_capture_http_403",
+      "visually_analyzed": false,
+      "inspected_surfaces": [
+        "public player metadata",
+        "direct capture returned HTTP 403"
+      ],
+      "representative_timestamps_or_sections": [
+        "3:15 public-service video player"
+      ],
+      "primary_visual_subject": "real object or source image",
+      "object_image_diagram_character_ratio": "object_high / diagram_medium / character_none",
+      "screen_composition": "single object field with bounded explanatory labels",
+      "subtitle_position_and_approximate_line_count": "not observed on static surface",
+      "character_speaker_placement": "no persistent character",
+      "title_and_key_term_treatment": "large topic title with short section labels",
+      "callout_arrow_zoom_usage": "bounded outline or close-up when needed",
+      "source_credit_treatment": "publisher identity on page",
+      "background_treatment": "neutral page or source image",
+      "palette_role": "neutral base with functional accent",
+      "motion_type_and_frequency": "not directly observed",
+      "thumbnail_grammar": "object-led, short promise where relevant",
+      "strengths": [
+        "bounded public-service runtime"
+      ],
+      "weaknesses": [
+        "actual video surface unavailable in this session"
+      ],
+      "misleading_risk": "source image may be mistaken for reusable production material",
+      "rights_reuse_status": "research_only_public_visibility_not_reuse_permission",
+      "patterns_worth_adopting": [
+        "single primary subject",
+        "short key term"
+      ],
+      "patterns_to_avoid": [
+        "copying exact composition",
+        "reusing source imagery"
+      ],
+      "evidence_grade": "limited_not_counted",
+      "coverage_tags": [
+        "exact_topic"
+      ],
+      "local_capture": null,
+      "capture_note": "metadata card only; direct headless access returned HTTP 403"
+    },
+    {
+      "reference_id": "O05",
+      "exact_title": "広報ビデオ：そこが知りたい日本銀行",
+      "publisher_channel": "日本銀行",
+      "creator": "日本銀行",
+      "publication_update_date": "2025-03 production date",
+      "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
+      "canonical_url": "https://www.boj.or.jp/about/education/thisisboj.htm",
+      "redirects_observed": [],
+      "content_type": "video_index_page",
+      "cohort": "official_educational",
+      "topic_scope": "adjacent_format",
+      "accessibility_status": "public_no_login",
+      "visually_analyzed": true,
+      "inspected_surfaces": [
+        "1440x1100 page capture",
+        "official video capture image"
+      ],
+      "representative_timestamps_or_sections": [
+        "わが国唯一の発券銀行として（5分13秒）"
+      ],
+      "primary_visual_subject": "official title card and topic imagery",
+      "object_image_diagram_character_ratio": "image_medium / text_high / host_not_visible_in_inspected_frame",
+      "screen_composition": "single title field with restrained institutional framing",
+      "subtitle_position_and_approximate_line_count": "not observed on static surface",
+      "character_speaker_placement": "no persistent character",
+      "title_and_key_term_treatment": "one centered sentence on a full-frame title card",
+      "callout_arrow_zoom_usage": "none in inspected title card",
+      "source_credit_treatment": "publisher identity on page",
+      "background_treatment": "light patterned field with restrained branded border",
+      "palette_role": "cream field with gold, green, and black institutional accents",
+      "motion_type_and_frequency": "dynamic content exists; only official capture still inspected",
+      "thumbnail_grammar": "object-led, short promise where relevant",
+      "strengths": [
+        "one message per frame",
+        "clear institutional source"
+      ],
+      "weaknesses": [
+        "decorative institutional motif is publisher-specific"
+      ],
+      "misleading_risk": "source image may be mistaken for reusable production material",
+      "rights_reuse_status": "research_only_public_visibility_not_reuse_permission",
+      "patterns_worth_adopting": [
+        "one message per frame",
+        "short section card",
+        "clear source"
+      ],
+      "patterns_to_avoid": [
+        "copying branded border",
+        "copying decorative motif"
+      ],
+      "evidence_grade": "medium",
+      "coverage_tags": [
+        "object_centred",
+        "source_credit",
+        "motion_callout_zoom"
+      ],
+      "local_capture": "local_reference_captures/O05_boj_video_capture.png",
+      "capture_note": "captured in ignored local research cache"
+    },
+    {
+      "reference_id": "O06",
+      "exact_title": "見どころ解説",
+      "publisher_channel": "お札と切手の博物館／独立行政法人 国立印刷局",
+      "creator": "お札と切手の博物館／独立行政法人 国立印刷局",
+      "publication_update_date": "2026-06-30",
+      "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
+      "canonical_url": "https://www.npb.go.jp/museum/tenji/jousetu/midokoro.html",
+      "redirects_observed": [],
+      "content_type": "web_page",
+      "cohort": "official_educational",
+      "topic_scope": "adjacent_format",
+      "accessibility_status": "public_no_login",
+      "visually_analyzed": true,
+      "inspected_surfaces": [
+        "1440x1100 page capture",
+        "new-banknote exhibit summary"
+      ],
+      "representative_timestamps_or_sections": [
+        "新日本銀行券の紹介",
+        "偽造防止技術体験コーナー・Q&A"
+      ],
+      "primary_visual_subject": "real object or source image",
+      "object_image_diagram_character_ratio": "object_high / diagram_medium / character_none",
+      "screen_composition": "large section heading, compact topic tabs, small source object at edge",
+      "subtitle_position_and_approximate_line_count": "not observed on static surface",
+      "character_speaker_placement": "no persistent character",
+      "title_and_key_term_treatment": "large topic title with short section labels",
+      "callout_arrow_zoom_usage": "section tabs rather than diagram callouts",
+      "source_credit_treatment": "publisher identity on page",
+      "background_treatment": "white educational page with faint guilloche motif",
+      "palette_role": "neutral base with functional accent",
+      "motion_type_and_frequency": "not directly observed",
+      "thumbnail_grammar": "object-led, short promise where relevant",
+      "strengths": [
+        "content hierarchy is obvious",
+        "topic navigation remains secondary"
+      ],
+      "weaknesses": [
+        "decorative guilloche is distinctive and non-transferable"
+      ],
+      "misleading_risk": "source image may be mistaken for reusable production material",
+      "rights_reuse_status": "research_only_public_visibility_not_reuse_permission",
+      "patterns_worth_adopting": [
+        "large section heading",
+        "short topic labels",
+        "neutral whitespace"
+      ],
+      "patterns_to_avoid": [
+        "copying guilloche motif",
+        "using exact banknote image"
+      ],
+      "evidence_grade": "high",
+      "coverage_tags": [
+        "exact_topic",
+        "object_centred",
+        "source_credit"
+      ],
+      "local_capture": "local_reference_captures/O06_npb_museum.png",
+      "capture_note": "captured in ignored local research cache"
+    },
+    {
+      "reference_id": "J01",
+      "exact_title": "20年ぶり「新紙幣」いよいよ　3Dホログラム、進化版すかし……偽造防止の最新技術　“最後の紙幣”に？【#みんなのギモン】",
+      "publisher_channel": "日テレNEWS NNN",
+      "creator": "日テレNEWS NNN",
+      "publication_update_date": "2024-07-02 10:04",
+      "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
+      "canonical_url": "https://news.ntv.co.jp/category/economy/8f3eede662e94d2190bd9662aa645086",
+      "redirects_observed": [],
+      "content_type": "article_with_video",
+      "cohort": "journalism_documentary",
+      "topic_scope": "exact_topic",
+      "accessibility_status": "public_no_login",
+      "visually_analyzed": true,
+      "inspected_surfaces": [
+        "1440x1100 page capture",
+        "video thumbnail/explainer card"
+      ],
+      "representative_timestamps_or_sections": [
+        "#みんなのギモン opening card"
+      ],
+      "primary_visual_subject": "two large question circles and short topic labels",
+      "object_image_diagram_character_ratio": "diagram_high / text_high / small generic people row",
+      "screen_composition": "single bright explainer card with two balanced questions",
+      "subtitle_position_and_approximate_line_count": "headline-like text inside the graphic; no full sentence subtitle observed",
+      "character_speaker_placement": "generic people silhouettes along lower edge",
+      "title_and_key_term_treatment": "short question phrases in large circles",
+      "callout_arrow_zoom_usage": "two circular focus fields",
+      "source_credit_treatment": "publisher identity on page",
+      "background_treatment": "flat high-saturation field",
+      "palette_role": "pink base with teal and yellow functional contrast",
+      "motion_type_and_frequency": "video player present; thumbnail only inspected",
+      "thumbnail_grammar": "object-led, short promise where relevant",
+      "strengths": [
+        "question structure is instantly legible",
+        "few large information units"
+      ],
+      "weaknesses": [
+        "publisher palette and illustration style are distinctive"
+      ],
+      "misleading_risk": "source image may be mistaken for reusable production material",
+      "rights_reuse_status": "research_only_public_visibility_not_reuse_permission",
+      "patterns_worth_adopting": [
+        "short question headline",
+        "few large information units"
+      ],
+      "patterns_to_avoid": [
+        "copying palette",
+        "copying circular Q motif"
+      ],
+      "evidence_grade": "high",
+      "coverage_tags": [
+        "exact_topic",
+        "motion_callout_zoom",
+        "source_credit"
+      ],
+      "local_capture": "local_reference_captures/J01_ntv.png",
+      "capture_note": "captured in ignored local research cache"
+    },
+    {
+      "reference_id": "J02",
+      "exact_title": "20年ぶりの新紙幣　来月3日の流通開始を前に製造工程を公開",
+      "publisher_channel": "テレビ朝日／テレ朝NEWS",
+      "creator": "テレビ朝日／テレ朝NEWS",
+      "publication_update_date": "2024-06-19 16:23",
+      "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
+      "canonical_url": "https://news.tv-asahi.co.jp/news_economy/articles/000355266.html",
+      "redirects_observed": [],
+      "content_type": "video_news_article",
+      "cohort": "journalism_documentary",
+      "topic_scope": "exact_topic",
+      "accessibility_status": "public_no_login",
+      "visually_analyzed": true,
+      "inspected_surfaces": [
+        "1440x1100 page capture",
+        "manufacturing video preview frame"
+      ],
+      "representative_timestamps_or_sections": [
+        "video preview: sheets of notes in production"
+      ],
+      "primary_visual_subject": "real manufacturing object filling the video frame",
+      "object_image_diagram_character_ratio": "real_object_very_high / text_low / character_none",
+      "screen_composition": "full-frame process image with a narrow headline strip",
+      "subtitle_position_and_approximate_line_count": "short top headline strip; no dialogue subtitle in inspected preview",
+      "character_speaker_placement": "no persistent character",
+      "title_and_key_term_treatment": "white/cyan broadcast headline over object",
+      "callout_arrow_zoom_usage": "no diagram callout in inspected frame",
+      "source_credit_treatment": "publisher identity on page",
+      "background_treatment": "real manufacturing footage",
+      "palette_role": "source-derived beige with cyan/white overlay",
+      "motion_type_and_frequency": "manufacturing footage; preview still inspected",
+      "thumbnail_grammar": "object-led, short promise where relevant",
+      "strengths": [
+        "process object dominates",
+        "overlay text is short"
+      ],
+      "weaknesses": [
+        "production footage cannot be reused"
+      ],
+      "misleading_risk": "source image may be mistaken for reusable production material",
+      "rights_reuse_status": "research_only_public_visibility_not_reuse_permission",
+      "patterns_worth_adopting": [
+        "object dominance",
+        "short overlay",
+        "process close-up"
+      ],
+      "patterns_to_avoid": [
+        "copying exact composition",
+        "reusing source imagery"
+      ],
+      "evidence_grade": "high",
+      "coverage_tags": [
+        "exact_topic",
+        "object_centred",
+        "motion_callout_zoom"
+      ],
+      "local_capture": "local_reference_captures/J02_tv_asahi.png",
+      "capture_note": "captured in ignored local research cache"
+    },
+    {
+      "reference_id": "J03",
+      "exact_title": "【新紙幣】プラスチック製の国も増える中で「紙」のままなのは『日本が〇〇大国』だから？偽造防止技術はパワーアップ！",
+      "publisher_channel": "毎日放送／TBS NEWS DIG",
+      "creator": "毎日放送／TBS NEWS DIG",
+      "publication_update_date": "2024-06-05 15:39",
+      "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
+      "canonical_url": "https://newsdig.tbs.co.jp/articles/-/1213068",
+      "redirects_observed": [],
+      "content_type": "video_news_article",
+      "cohort": "journalism_documentary",
+      "topic_scope": "exact_topic",
+      "accessibility_status": "public_no_login",
+      "visually_analyzed": true,
+      "inspected_surfaces": [
+        "1440x1100 page capture",
+        "studio explainer preview frame"
+      ],
+      "representative_timestamps_or_sections": [
+        "presenter plus numbered three-point board"
+      ],
+      "primary_visual_subject": "source object and numbered explanation board",
+      "object_image_diagram_character_ratio": "object_medium / diagram_medium / presenter_medium",
+      "screen_composition": "presenter left, object and three numbered points right",
+      "subtitle_position_and_approximate_line_count": "short broadcast title at top; list items one to three",
+      "character_speaker_placement": "human presenter at left, not persistent character art",
+      "title_and_key_term_treatment": "large numbered key points with green emphasis",
+      "callout_arrow_zoom_usage": "numbered list aligned to object images",
+      "source_credit_treatment": "publisher identity on page",
+      "background_treatment": "studio",
+      "palette_role": "white with green functional highlight",
+      "motion_type_and_frequency": "studio explainer video; preview still inspected",
+      "thumbnail_grammar": "object-led, short promise where relevant",
+      "strengths": [
+        "numbered hierarchy",
+        "subject and explanation stay adjacent"
+      ],
+      "weaknesses": [
+        "presenter/studio composition is asset-heavy"
+      ],
+      "misleading_risk": "source image may be mistaken for reusable production material",
+      "rights_reuse_status": "research_only_public_visibility_not_reuse_permission",
+      "patterns_worth_adopting": [
+        "numbered steps",
+        "one short point at a time",
+        "adjacent object and explanation"
+      ],
+      "patterns_to_avoid": [
+        "recreating presenter",
+        "copying board styling"
+      ],
+      "evidence_grade": "high",
+      "coverage_tags": [
+        "exact_topic",
+        "object_centred",
+        "motion_callout_zoom",
+        "source_credit"
+      ],
+      "local_capture": "local_reference_captures/J03_tbs_mbs.png",
+      "capture_note": "captured in ignored local research cache"
+    },
+    {
+      "reference_id": "J04",
+      "exact_title": "新紙幣 発行開始　世界初の3Dホログラム採用",
+      "publisher_channel": "Impress Watch",
+      "creator": "Impress Watch",
+      "publication_update_date": "2024-07-03 13:59",
+      "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
+      "canonical_url": "https://www.watch.impress.co.jp/docs/topic/1605299.html",
+      "redirects_observed": [],
+      "content_type": "image_led_article",
+      "cohort": "journalism_documentary",
+      "topic_scope": "exact_topic",
+      "accessibility_status": "public_no_login",
+      "visually_analyzed": true,
+      "inspected_surfaces": [
+        "1440x1100 page capture",
+        "credited object images",
+        "feature close-ups"
+      ],
+      "representative_timestamps_or_sections": [
+        "opening note lineup",
+        "high-definition watermark",
+        "3D hologram"
+      ],
+      "primary_visual_subject": "credited real object images",
+      "object_image_diagram_character_ratio": "object_high / prose_medium / character_none",
+      "screen_composition": "single article column; image followed by source credit and explanation",
+      "subtitle_position_and_approximate_line_count": "not applicable",
+      "character_speaker_placement": "none",
+      "title_and_key_term_treatment": "plain headline; feature terms in body headings",
+      "callout_arrow_zoom_usage": "successive feature close-ups rather than overlaid arrows",
+      "source_credit_treatment": "visible source caption directly below image",
+      "background_treatment": "white editorial page",
+      "palette_role": "neutral source-derived imagery; blue publisher chrome",
+      "motion_type_and_frequency": "linked official video for hologram; article stills inspected",
+      "thumbnail_grammar": "object-led, short promise where relevant",
+      "strengths": [
+        "source credit is adjacent",
+        "object and explanation are sequential"
+      ],
+      "weaknesses": [
+        "real object imagery has high rights burden"
+      ],
+      "misleading_risk": "source image may be mistaken for reusable production material",
+      "rights_reuse_status": "research_only_public_visibility_not_reuse_permission",
+      "patterns_worth_adopting": [
+        "adjacent source credit",
+        "one feature crop at a time",
+        "neutral field"
+      ],
+      "patterns_to_avoid": [
+        "copying exact composition",
+        "reusing source imagery"
+      ],
+      "evidence_grade": "high",
+      "coverage_tags": [
+        "exact_topic",
+        "object_centred",
+        "motion_callout_zoom",
+        "source_credit"
+      ],
+      "local_capture": "local_reference_captures/J04_impress.png",
+      "capture_note": "captured in ignored local research cache"
+    },
+    {
+      "reference_id": "J05",
+      "exact_title": "【独自】新紙幣に謎の文字「あれ？ちょっと違う！」「“F”だけ丸い」財務省国庫課トップに理由を直撃…隠された仕掛けは他にも",
+      "publisher_channel": "FNNプライムオンライン／イット！",
+      "creator": "FNNプライムオンライン／イット！",
+      "publication_update_date": "2025-06-01 15:00",
+      "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
+      "canonical_url": "https://www.fnn.jp/articles/-/879612",
+      "redirects_observed": [],
+      "content_type": "broadcast_article_with_image_gallery",
+      "cohort": "journalism_documentary",
+      "topic_scope": "exact_topic",
+      "accessibility_status": "public_no_login",
+      "visually_analyzed": true,
+      "inspected_surfaces": [
+        "1440x1100 page capture",
+        "broadcast opening frame",
+        "image-gallery metadata"
+      ],
+      "representative_timestamps_or_sections": [
+        "opening frame: three notes plus short lower-third"
+      ],
+      "primary_visual_subject": "real object on dark neutral field",
+      "object_image_diagram_character_ratio": "object_very_high / text_medium / character_none",
+      "screen_composition": "full-frame object with compact lower-third headline",
+      "subtitle_position_and_approximate_line_count": "bottom headline band, two lines",
+      "character_speaker_placement": "none in inspected frame",
+      "title_and_key_term_treatment": "short red/black emphasis in white lower-third",
+      "callout_arrow_zoom_usage": "later article close-ups indicated; opening frame has no arrow",
+      "source_credit_treatment": "publisher identity on page",
+      "background_treatment": "dark neutral textile",
+      "palette_role": "source-derived object color with white/black/red overlay",
+      "motion_type_and_frequency": "broadcast segment; opening still inspected",
+      "thumbnail_grammar": "object-led, short promise where relevant",
+      "strengths": [
+        "object remains dominant",
+        "headline band does not split the frame"
+      ],
+      "weaknesses": [
+        "broadcast lower-third styling is publisher-specific"
+      ],
+      "misleading_risk": "source image may be mistaken for reusable production material",
+      "rights_reuse_status": "research_only_public_visibility_not_reuse_permission",
+      "patterns_worth_adopting": [
+        "single object field",
+        "bottom two-line text band",
+        "high contrast"
+      ],
+      "patterns_to_avoid": [
+        "copying lower-third package",
+        "copying source photograph"
+      ],
+      "evidence_grade": "high",
+      "coverage_tags": [
+        "exact_topic",
+        "object_centred",
+        "source_credit"
+      ],
+      "local_capture": "local_reference_captures/J05_fnn.png",
+      "capture_note": "captured in ignored local research cache"
+    },
+    {
+      "reference_id": "Y01",
+      "exact_title": "【20年ぶりになぜ？】ついに新紙幣発行！知らないと損する⁈その狙いとは…【ずんだもん＆ゆっくり解説】",
+      "publisher_channel": "にゃんだもん",
+      "creator": "にゃんだもん",
+      "publication_update_date": "2024-07-29",
+      "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
+      "canonical_url": "https://www.youtube.com/watch?v=hVx2x3YUIUM",
+      "redirects_observed": [],
+      "content_type": "youtube_video_thumbnail_and_metadata",
+      "cohort": "yukkuri_adjacent_explainer",
+      "topic_scope": "exact_topic",
+      "accessibility_status": "public_no_login",
+      "visually_analyzed": true,
+      "inspected_surfaces": [
+        "1280x720 public thumbnail",
+        "public video metadata"
+      ],
+      "representative_timestamps_or_sections": [
+        "thumbnail only; no frame-level claims"
+      ],
+      "primary_visual_subject": "money imagery plus two dialogue avatars",
+      "object_image_diagram_character_ratio": "source_image_high / text_high / characters_medium",
+      "screen_composition": "split topic image with one speaker on each side",
+      "subtitle_position_and_approximate_line_count": "thumbnail speech boxes; dialogue subtitle not inspected",
+      "character_speaker_placement": "two avatars at left and right with separate speech boxes",
+      "title_and_key_term_treatment": "very large high-contrast promise at top",
+      "callout_arrow_zoom_usage": "speech boxes rather than arrows",
+      "source_credit_treatment": "source links in public description; not visible in thumbnail",
+      "background_treatment": "full-bleed topic image",
+      "palette_role": "black field with red/yellow headline and green-outlined speech boxes",
+      "motion_type_and_frequency": "not inspected; thumbnail-limited",
+      "thumbnail_grammar": "object-led, short promise where relevant",
+      "strengths": [
+        "speaker separation is immediate",
+        "topic promise is short"
+      ],
+      "weaknesses": [
+        "character art, source image, and click-through style cannot transfer"
+      ],
+      "misleading_risk": "source image may be mistaken for reusable production material",
+      "rights_reuse_status": "research_only_public_visibility_not_reuse_permission",
+      "patterns_worth_adopting": [
+        "speaker-coded labels",
+        "short key term",
+        "object plus dialogue"
+      ],
+      "patterns_to_avoid": [
+        "character art reuse",
+        "sensational wording",
+        "copying thumbnail layout"
+      ],
+      "evidence_grade": "thumbnail_limited",
+      "coverage_tags": [
+        "exact_topic",
+        "two_character_dialogue",
+        "object_centred",
+        "thumbnail"
+      ],
+      "local_capture": "local_reference_cache/youtube/hVx2x3YUIUM.jpg",
+      "capture_note": "captured in ignored local research cache"
+    },
+    {
+      "reference_id": "Y02",
+      "exact_title": "【ゆっくり解説】新紙幣凄すぎる！",
+      "publisher_channel": "グリム貨幣コレクション",
+      "creator": "グリム貨幣コレクション",
+      "publication_update_date": "2024-07-08",
+      "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
+      "canonical_url": "https://www.youtube.com/watch?v=PXI5Q57YXD4",
+      "redirects_observed": [],
+      "content_type": "youtube_video_thumbnail_and_metadata",
+      "cohort": "yukkuri_adjacent_explainer",
+      "topic_scope": "exact_topic",
+      "accessibility_status": "public_no_login",
+      "visually_analyzed": true,
+      "inspected_surfaces": [
+        "1280x720 public thumbnail",
+        "public video metadata"
+      ],
+      "representative_timestamps_or_sections": [
+        "thumbnail only; no frame-level claims"
+      ],
+      "primary_visual_subject": "dense collage of banknote feature images plus two avatars",
+      "object_image_diagram_character_ratio": "source_image_very_high / text_medium / characters_low",
+      "screen_composition": "full-frame collage, two small speakers at bottom corners",
+      "subtitle_position_and_approximate_line_count": "large centered thumbnail promise; dialogue subtitle not inspected",
+      "character_speaker_placement": "two small Yukkuri busts at lower corners",
+      "title_and_key_term_treatment": "single red high-contrast phrase across lower middle",
+      "callout_arrow_zoom_usage": "collage crops imply close-up; no explicit leader line",
+      "source_credit_treatment": "visible watermark on source imagery; description states image handling",
+      "background_treatment": "full-bleed image collage",
+      "palette_role": "source-derived with red/black title",
+      "motion_type_and_frequency": "not inspected; thumbnail-limited",
+      "thumbnail_grammar": "object-led, short promise where relevant",
+      "strengths": [
+        "topic object fills the frame",
+        "speakers remain secondary"
+      ],
+      "weaknesses": [
+        "dense collage and source images create high rights burden"
+      ],
+      "misleading_risk": "source image may be mistaken for reusable production material",
+      "rights_reuse_status": "research_only_public_visibility_not_reuse_permission",
+      "patterns_worth_adopting": [
+        "object-first hierarchy",
+        "secondary speaker cues",
+        "one short promise"
+      ],
+      "patterns_to_avoid": [
+        "source-image collage",
+        "creator character art",
+        "watermark imitation"
+      ],
+      "evidence_grade": "thumbnail_limited",
+      "coverage_tags": [
+        "exact_topic",
+        "two_character_dialogue",
+        "object_centred",
+        "thumbnail"
+      ],
+      "local_capture": "local_reference_cache/youtube/PXI5Q57YXD4.jpg",
+      "capture_note": "captured in ignored local research cache"
+    },
+    {
+      "reference_id": "Y03",
+      "exact_title": "【二千円札】誰も使わない紙幣、二千円札が普及しなかった意外な理由【ゆっくり解説】",
+      "publisher_channel": "ゆっくりルーザーズ",
+      "creator": "ゆっくりルーザーズ",
+      "publication_update_date": "2021-09-26",
+      "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
+      "canonical_url": "https://www.youtube.com/watch?v=aCYgLBDrNYk",
+      "redirects_observed": [],
+      "content_type": "youtube_video_thumbnail_and_metadata",
+      "cohort": "yukkuri_adjacent_explainer",
+      "topic_scope": "adjacent_format",
+      "accessibility_status": "public_no_login",
+      "visually_analyzed": true,
+      "inspected_surfaces": [
+        "1280x720 public thumbnail",
+        "public video metadata"
+      ],
+      "representative_timestamps_or_sections": [
+        "thumbnail only; no frame-level claims"
+      ],
+      "primary_visual_subject": "one banknote image and one short question",
+      "object_image_diagram_character_ratio": "source_image_high / text_high / characters_low",
+      "screen_composition": "rough half split: object left, question and two speakers right",
+      "subtitle_position_and_approximate_line_count": "bottom promise band; dialogue subtitle not inspected",
+      "character_speaker_placement": "two busts grouped at upper right",
+      "title_and_key_term_treatment": "one very large word pair and one bottom explanatory line",
+      "callout_arrow_zoom_usage": "none",
+      "source_credit_treatment": "not visible in thumbnail",
+      "background_treatment": "white text field plus object crop",
+      "palette_role": "black/white with red and yellow emphasis",
+      "motion_type_and_frequency": "not inspected; thumbnail-limited",
+      "thumbnail_grammar": "object-led, short promise where relevant",
+      "strengths": [
+        "question and object are immediately paired",
+        "speaker role is compact"
+      ],
+      "weaknesses": [
+        "thumbnail exaggeration and source image are not proof grammar"
+      ],
+      "misleading_risk": "source image may be mistaken for reusable production material",
+      "rights_reuse_status": "research_only_public_visibility_not_reuse_permission",
+      "patterns_worth_adopting": [
+        "compact speaker pair",
+        "single question",
+        "high text contrast"
+      ],
+      "patterns_to_avoid": [
+        "copying split",
+        "copying character art",
+        "sensational emphasis"
+      ],
+      "evidence_grade": "thumbnail_limited",
+      "coverage_tags": [
+        "two_character_dialogue",
+        "object_centred",
+        "thumbnail"
+      ],
+      "local_capture": "local_reference_cache/youtube/aCYgLBDrNYk.jpg",
+      "capture_note": "captured in ignored local research cache"
+    },
+    {
+      "reference_id": "Y04",
+      "exact_title": "【ゆっくり解説】日本細菌学のパイオニア。新千円札の「北里柴三郎」の生涯が凄すぎた",
+      "publisher_channel": "【ゆっくり解説】日本の偉人伝",
+      "creator": "【ゆっくり解説】日本の偉人伝",
+      "publication_update_date": "2023-08-10",
+      "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
+      "canonical_url": "https://www.youtube.com/watch?v=NUjG_XKDYRw",
+      "redirects_observed": [],
+      "content_type": "youtube_video_thumbnail_and_metadata",
+      "cohort": "yukkuri_adjacent_explainer",
+      "topic_scope": "adjacent_format",
+      "accessibility_status": "public_no_login",
+      "visually_analyzed": true,
+      "inspected_surfaces": [
+        "1280x720 public thumbnail",
+        "public video metadata"
+      ],
+      "representative_timestamps_or_sections": [
+        "thumbnail only; no frame-level claims"
+      ],
+      "primary_visual_subject": "portrait surrounded by four context images",
+      "object_image_diagram_character_ratio": "source_image_very_high / text_medium / characters_low",
+      "screen_composition": "central subject portrait, four context quadrants, speakers at lower corners",
+      "subtitle_position_and_approximate_line_count": "large central name; dialogue subtitle not inspected",
+      "character_speaker_placement": "two Yukkuri busts at lower corners",
+      "title_and_key_term_treatment": "central subject name with short corner labels",
+      "callout_arrow_zoom_usage": "context images act as four supporting facets",
+      "source_credit_treatment": "not visible in thumbnail",
+      "background_treatment": "full-bleed image collage",
+      "palette_role": "source-derived with red/yellow/black title",
+      "motion_type_and_frequency": "not inspected; thumbnail-limited",
+      "thumbnail_grammar": "object-led, short promise where relevant",
+      "strengths": [
+        "primary subject is unambiguous",
+        "supporting facets are bounded"
+      ],
+      "weaknesses": [
+        "portrait collage and creator art carry rights burden"
+      ],
+      "misleading_risk": "source image may be mistaken for reusable production material",
+      "rights_reuse_status": "research_only_public_visibility_not_reuse_permission",
+      "patterns_worth_adopting": [
+        "one primary subject",
+        "bounded supporting facets",
+        "short labels"
+      ],
+      "patterns_to_avoid": [
+        "portrait reuse",
+        "collage copying",
+        "creator character art"
+      ],
+      "evidence_grade": "thumbnail_limited",
+      "coverage_tags": [
+        "two_character_dialogue",
+        "thumbnail"
+      ],
+      "local_capture": "local_reference_cache/youtube/NUjG_XKDYRw.jpg",
+      "capture_note": "captured in ignored local research cache"
+    },
+    {
+      "reference_id": "Y05",
+      "exact_title": "【ゆっくり解説】新紙幣の3人をざっくり説明【渋沢栄一/津田梅子/北里柴三郎】",
+      "publisher_channel": "ゆっくりアレコレ",
+      "creator": "ゆっくりアレコレ",
+      "publication_update_date": "2019-04-09",
+      "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
+      "canonical_url": "https://www.youtube.com/watch?v=5Uc_e7FHcX8",
+      "redirects_observed": [],
+      "content_type": "youtube_video_thumbnail_and_metadata",
+      "cohort": "yukkuri_adjacent_explainer",
+      "topic_scope": "adjacent_format",
+      "accessibility_status": "public_no_login",
+      "visually_analyzed": true,
+      "inspected_surfaces": [
+        "1280x720 public thumbnail",
+        "public video metadata"
+      ],
+      "representative_timestamps_or_sections": [
+        "thumbnail only; no frame-level claims"
+      ],
+      "primary_visual_subject": "new-note lineup and portrait",
+      "object_image_diagram_character_ratio": "source_image_very_high / text_high / characters_low",
+      "screen_composition": "full background object, question upper left, two speakers lower left",
+      "subtitle_position_and_approximate_line_count": "large two-line question; dialogue subtitle not inspected",
+      "character_speaker_placement": "two busts together at lower left",
+      "title_and_key_term_treatment": "large yellow/red question",
+      "callout_arrow_zoom_usage": "no explicit callout",
+      "source_credit_treatment": "not visible in thumbnail",
+      "background_treatment": "full-bleed source image",
+      "palette_role": "source-derived beige with yellow/red text",
+      "motion_type_and_frequency": "not inspected; thumbnail-limited",
+      "thumbnail_grammar": "object-led, short promise where relevant",
+      "strengths": [
+        "short question frames the topic",
+        "speaker pair is compact"
+      ],
+      "weaknesses": [
+        "source likeness and creator art cannot transfer"
+      ],
+      "misleading_risk": "source image may be mistaken for reusable production material",
+      "rights_reuse_status": "research_only_public_visibility_not_reuse_permission",
+      "patterns_worth_adopting": [
+        "compact speaker pair",
+        "single framing question",
+        "large key term"
+      ],
+      "patterns_to_avoid": [
+        "source image reuse",
+        "character art reuse",
+        "copying exact placement"
+      ],
+      "evidence_grade": "thumbnail_limited",
+      "coverage_tags": [
+        "two_character_dialogue",
+        "thumbnail"
+      ],
+      "local_capture": "local_reference_cache/youtube/5Uc_e7FHcX8.jpg",
+      "capture_note": "captured in ignored local research cache"
+    }
+  ]
+}

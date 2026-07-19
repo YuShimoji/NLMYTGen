@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-cue-coverage="9/9" data-design-id="documentary_object_focus_consensus">
+<rect width="1920" height="1080" fill="#15181D"/>
+<text x="70" y="78" font-size="42" font-weight="900" fill="#FFFFFF">9 CUE / REFERENCE-GROUNDED OVERVIEW</text>
+<text x="70" y="118" font-size="22" fill="#B7BDC5">single subject · short key term · speaker cue · source boundary</text>
+<g data-cue-id="cue_001" data-approved-text="2024年に発行された新しいお札って、見た目以外にも変わったところがあるの？">
+<rect x="70" y="160" width="560" height="244" rx="24" fill="#F7F5EF"/>
+<rect x="94" y="182" width="126" height="38" rx="19" fill="#CF3F57"/>
+<text x="157" y="209" text-anchor="middle" font-size="20" font-weight="900" fill="#15181D">れいむ</text>
+<text x="606" y="210" text-anchor="end" font-size="19" font-weight="800" fill="#70757D">S1 / cue_001</text>
+<text x="98" y="272" font-size="39" font-weight="900" fill="#15181D">問い</text>
+<rect x="98" y="302" width="504" height="72" rx="16" fill="#EEF7F7"/>
+<text font-size="18" font-weight="800" fill="#3F4650"><tspan x="118" y="329">2024年に発行された新しいお札って、</tspan><tspan x="118" y="354">見た目以外にも変わったところがあるの？</tspan></text>
+</g>
+<g data-cue-id="cue_002" data-approved-text="あるぞ。偽造防止では、高精細すき入れや3Dホログラムなど複数の技術を組み合わせている。誰にとっても使いやすいユニバーサルデザインも取り入れたんだ。">
+<rect x="680" y="160" width="560" height="244" rx="24" fill="#F7F5EF"/>
+<rect x="704" y="182" width="126" height="38" rx="19" fill="#E5B840"/>
+<text x="767" y="209" text-anchor="middle" font-size="20" font-weight="900" fill="#15181D">まりさ</text>
+<text x="1216" y="210" text-anchor="end" font-size="19" font-weight="800" fill="#70757D">S1 / cue_002</text>
+<text x="708" y="272" font-size="39" font-weight="900" fill="#15181D">全体像</text>
+<rect x="708" y="302" width="504" height="72" rx="16" fill="#EEF7F7"/>
+<text font-size="18" font-weight="800" fill="#3F4650"><tspan x="728" y="329">あるぞ。偽造防止では、高精細すき入れや3Dホログラムな</tspan><tspan x="728" y="354">ど複数の技術を組み合わせている…</tspan></text>
+</g>
+<g data-cue-id="cue_003" data-approved-text="まずは高精細すき入れ。光に透かすと、細かな模様が見えるんだぜ。">
+<rect x="1290" y="160" width="560" height="244" rx="24" fill="#F7F5EF"/>
+<rect x="1314" y="182" width="126" height="38" rx="19" fill="#E5B840"/>
+<text x="1377" y="209" text-anchor="middle" font-size="20" font-weight="900" fill="#15181D">まりさ</text>
+<text x="1826" y="210" text-anchor="end" font-size="19" font-weight="800" fill="#70757D">S2 / cue_003</text>
+<text x="1318" y="272" font-size="39" font-weight="900" fill="#15181D">透かす</text>
+<rect x="1318" y="302" width="504" height="72" rx="16" fill="#EEF7F7"/>
+<text font-size="18" font-weight="800" fill="#3F4650"><tspan x="1338" y="329">まずは高精細すき入れ。光に透かすと、</tspan><tspan x="1338" y="354">細かな模様が見えるんだぜ。</tspan></text>
+</g>
+<g data-cue-id="cue_004" data-approved-text="次は3Dホログラム。角度を変えると、三次元の肖像が回転して見えるぞ。">
+<rect x="70" y="446" width="560" height="244" rx="24" fill="#F7F5EF"/>
+<rect x="94" y="468" width="126" height="38" rx="19" fill="#E5B840"/>
+<text x="157" y="495" text-anchor="middle" font-size="20" font-weight="900" fill="#15181D">まりさ</text>
+<text x="606" y="496" text-anchor="end" font-size="19" font-weight="800" fill="#70757D">S2 / cue_004</text>
+<text x="98" y="558" font-size="39" font-weight="900" fill="#15181D">傾ける</text>
+<rect x="98" y="588" width="504" height="72" rx="16" fill="#EEF7F7"/>
+<text font-size="18" font-weight="800" fill="#3F4650"><tspan x="118" y="615">次は3Dホログラム。角度を変えると、</tspan><tspan x="118" y="640">三次元の肖像が回転して見えるぞ。</tspan></text>
+</g>
+<g data-cue-id="cue_005" data-approved-text="触るとざらざらするのは、額面数字などのインキを高く盛り上げる深凹版印刷なんだね。">
+<rect x="680" y="446" width="560" height="244" rx="24" fill="#F7F5EF"/>
+<rect x="704" y="468" width="126" height="38" rx="19" fill="#CF3F57"/>
+<text x="767" y="495" text-anchor="middle" font-size="20" font-weight="900" fill="#15181D">れいむ</text>
+<text x="1216" y="496" text-anchor="end" font-size="19" font-weight="800" fill="#70757D">S2 / cue_005</text>
+<text x="708" y="558" font-size="39" font-weight="900" fill="#15181D">触る</text>
+<rect x="708" y="588" width="504" height="72" rx="16" fill="#EEF7F7"/>
+<text font-size="18" font-weight="800" fill="#3F4650"><tspan x="728" y="615">触るとざらざらするのは、額面数字などのインキを高く盛り</tspan><tspan x="728" y="640">上げる深凹版印刷なんだね。</tspan></text>
+</g>
+<g data-cue-id="cue_006" data-approved-text="マイクロ文字の『NIPPONGINKO』は、ルーペで確かめられる。カラーコピー機では再現が難しいほど小さい文字なんだ。">
+<rect x="1290" y="446" width="560" height="244" rx="24" fill="#F7F5EF"/>
+<rect x="1314" y="468" width="126" height="38" rx="19" fill="#E5B840"/>
+<text x="1377" y="495" text-anchor="middle" font-size="20" font-weight="900" fill="#15181D">まりさ</text>
+<text x="1826" y="496" text-anchor="end" font-size="19" font-weight="800" fill="#70757D">S2 / cue_006</text>
+<text x="1318" y="558" font-size="39" font-weight="900" fill="#15181D">ルーペ</text>
+<rect x="1318" y="588" width="504" height="72" rx="16" fill="#EEF7F7"/>
+<text font-size="18" font-weight="800" fill="#3F4650"><tspan x="1338" y="615">マイクロ文字の『NIPPONGINKO』は、</tspan><tspan x="1338" y="640">ルーペで確かめられる。カラーコピー機では再現が難しいほ…</tspan></text>
+</g>
+<g data-cue-id="cue_007" data-approved-text="見分けやすさの工夫では、識別マークを11本の斜線にそろえ、券種ごとに位置を変えているぜ。">
+<rect x="70" y="732" width="560" height="244" rx="24" fill="#F7F5EF"/>
+<rect x="94" y="754" width="126" height="38" rx="19" fill="#E5B840"/>
+<text x="157" y="781" text-anchor="middle" font-size="20" font-weight="900" fill="#15181D">まりさ</text>
+<text x="606" y="782" text-anchor="end" font-size="19" font-weight="800" fill="#70757D">S3 / cue_007</text>
+<text x="98" y="844" font-size="39" font-weight="900" fill="#15181D">識別</text>
+<rect x="98" y="874" width="504" height="72" rx="16" fill="#EEF7F7"/>
+<text font-size="18" font-weight="800" fill="#3F4650"><tspan x="118" y="901">見分けやすさの工夫では、識別マークを11本の斜線にそろ</tspan><tspan x="118" y="926">え、券種ごとに位置を変えているぜ。</tspan></text>
+</g>
+<g data-cue-id="cue_008" data-approved-text="額面の数字は前のシリーズのお札より大きい。一万円券と千円券ではホログラムの形や位置が違い、千円券の中央には橙色のグラデーションもあるんだね。">
+<rect x="680" y="732" width="560" height="244" rx="24" fill="#F7F5EF"/>
+<rect x="704" y="754" width="126" height="38" rx="19" fill="#CF3F57"/>
+<text x="767" y="781" text-anchor="middle" font-size="20" font-weight="900" fill="#15181D">れいむ</text>
+<text x="1216" y="782" text-anchor="end" font-size="19" font-weight="800" fill="#70757D">S3 / cue_008</text>
+<text x="708" y="844" font-size="39" font-weight="900" fill="#15181D">差を見る</text>
+<rect x="708" y="874" width="504" height="72" rx="16" fill="#EEF7F7"/>
+<text font-size="18" font-weight="800" fill="#3F4650"><tspan x="728" y="901">額面の数字は前のシリーズのお札より大きい。</tspan><tspan x="728" y="926">一万円券と千円券ではホログラムの形や位置が違い…</tspan></text>
+</g>
+<g data-cue-id="cue_009" data-approved-text="確かめ方は、透かす、触る、傾ける、ルーペで見る。この四つを覚えておこう。">
+<rect x="1290" y="732" width="560" height="244" rx="24" fill="#F7F5EF"/>
+<rect x="1314" y="754" width="126" height="38" rx="19" fill="#E5B840"/>
+<text x="1377" y="781" text-anchor="middle" font-size="20" font-weight="900" fill="#15181D">まりさ</text>
+<text x="1826" y="782" text-anchor="end" font-size="19" font-weight="800" fill="#70757D">S3 / cue_009</text>
+<text x="1318" y="844" font-size="39" font-weight="900" fill="#15181D">四つを覚える</text>
+<rect x="1318" y="874" width="504" height="72" rx="16" fill="#EEF7F7"/>
+<text font-size="18" font-weight="800" fill="#3F4650"><tspan x="1338" y="901">確かめ方は、透かす、触る、傾ける、ルーペで見る。</tspan><tspan x="1338" y="926">この四つを覚えておこう。</tspan></text>
+</g>
+<text x="70" y="1050" font-size="20" fill="#B7BDC5">9/9 cue · external assets 0 · thumbnails are original neutral diagrams · human review pending</text>
+</svg>

@@ -1,0 +1,169 @@
+{
+  "schema_version": "new_banknote.reference_grounded_visual_mapping.v1",
+  "status": "complete_pending_human_review",
+  "cue_count": 9,
+  "scene_allocation": {
+    "S1": 2,
+    "S2": 4,
+    "S3": 3
+  },
+  "speaker_counts": {
+    "れいむ": 3,
+    "まりさ": 6
+  },
+  "cues": [
+    {
+      "sequence": 1,
+      "cue_id": "cue_001",
+      "scene_id": "S1",
+      "speaker": "れいむ",
+      "text": "2024年に発行された新しいお札って、見た目以外にも変わったところがあるの？",
+      "keyframe": "reference_S1_overview.svg",
+      "contact_sheet_thumbnail": true,
+      "adopted_pattern_ids": [
+        "P01_object_first",
+        "P03_short_key_term",
+        "P04_bottom_text_band"
+      ],
+      "external_asset": false,
+      "loop": false,
+      "principal_motion_count": 1
+    },
+    {
+      "sequence": 2,
+      "cue_id": "cue_002",
+      "scene_id": "S1",
+      "speaker": "まりさ",
+      "text": "あるぞ。偽造防止では、高精細すき入れや3Dホログラムなど複数の技術を組み合わせている。誰にとっても使いやすいユニバーサルデザインも取り入れたんだ。",
+      "keyframe": null,
+      "contact_sheet_thumbnail": true,
+      "adopted_pattern_ids": [
+        "P01_object_first",
+        "P03_short_key_term",
+        "P04_bottom_text_band"
+      ],
+      "external_asset": false,
+      "loop": false,
+      "principal_motion_count": 1
+    },
+    {
+      "sequence": 3,
+      "cue_id": "cue_003",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "text": "まずは高精細すき入れ。光に透かすと、細かな模様が見えるんだぜ。",
+      "keyframe": "reference_cue_003_watermark.svg",
+      "contact_sheet_thumbnail": true,
+      "adopted_pattern_ids": [
+        "P01_object_first",
+        "P03_short_key_term",
+        "P04_bottom_text_band"
+      ],
+      "external_asset": false,
+      "loop": false,
+      "principal_motion_count": 1
+    },
+    {
+      "sequence": 4,
+      "cue_id": "cue_004",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "text": "次は3Dホログラム。角度を変えると、三次元の肖像が回転して見えるぞ。",
+      "keyframe": "reference_cue_004_hologram.svg",
+      "contact_sheet_thumbnail": true,
+      "adopted_pattern_ids": [
+        "P01_object_first",
+        "P03_short_key_term",
+        "P04_bottom_text_band"
+      ],
+      "external_asset": false,
+      "loop": false,
+      "principal_motion_count": 1
+    },
+    {
+      "sequence": 5,
+      "cue_id": "cue_005",
+      "scene_id": "S2",
+      "speaker": "れいむ",
+      "text": "触るとざらざらするのは、額面数字などのインキを高く盛り上げる深凹版印刷なんだね。",
+      "keyframe": "reference_cue_005_intaglio.svg",
+      "contact_sheet_thumbnail": true,
+      "adopted_pattern_ids": [
+        "P01_object_first",
+        "P03_short_key_term",
+        "P04_bottom_text_band"
+      ],
+      "external_asset": false,
+      "loop": false,
+      "principal_motion_count": 1
+    },
+    {
+      "sequence": 6,
+      "cue_id": "cue_006",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "text": "マイクロ文字の『NIPPONGINKO』は、ルーペで確かめられる。カラーコピー機では再現が難しいほど小さい文字なんだ。",
+      "keyframe": "reference_cue_006_microtext.svg",
+      "contact_sheet_thumbnail": true,
+      "adopted_pattern_ids": [
+        "P01_object_first",
+        "P03_short_key_term",
+        "P04_bottom_text_band"
+      ],
+      "external_asset": false,
+      "loop": false,
+      "principal_motion_count": 1
+    },
+    {
+      "sequence": 7,
+      "cue_id": "cue_007",
+      "scene_id": "S3",
+      "speaker": "まりさ",
+      "text": "見分けやすさの工夫では、識別マークを11本の斜線にそろえ、券種ごとに位置を変えているぜ。",
+      "keyframe": null,
+      "contact_sheet_thumbnail": true,
+      "adopted_pattern_ids": [
+        "P01_object_first",
+        "P03_short_key_term",
+        "P04_bottom_text_band"
+      ],
+      "external_asset": false,
+      "loop": false,
+      "principal_motion_count": 1
+    },
+    {
+      "sequence": 8,
+      "cue_id": "cue_008",
+      "scene_id": "S3",
+      "speaker": "れいむ",
+      "text": "額面の数字は前のシリーズのお札より大きい。一万円券と千円券ではホログラムの形や位置が違い、千円券の中央には橙色のグラデーションもあるんだね。",
+      "keyframe": null,
+      "contact_sheet_thumbnail": true,
+      "adopted_pattern_ids": [
+        "P01_object_first",
+        "P03_short_key_term",
+        "P04_bottom_text_band"
+      ],
+      "external_asset": false,
+      "loop": false,
+      "principal_motion_count": 1
+    },
+    {
+      "sequence": 9,
+      "cue_id": "cue_009",
+      "scene_id": "S3",
+      "speaker": "まりさ",
+      "text": "確かめ方は、透かす、触る、傾ける、ルーペで見る。この四つを覚えておこう。",
+      "keyframe": "reference_S3_summary.svg",
+      "contact_sheet_thumbnail": true,
+      "adopted_pattern_ids": [
+        "P01_object_first",
+        "P03_short_key_term",
+        "P04_bottom_text_band"
+      ],
+      "external_asset": false,
+      "loop": false,
+      "principal_motion_count": 1
+    }
+  ]
+}

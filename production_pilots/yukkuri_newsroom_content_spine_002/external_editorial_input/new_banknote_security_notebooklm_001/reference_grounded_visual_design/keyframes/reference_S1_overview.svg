@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-surface="viewer" data-design-id="documentary_object_focus_consensus" data-cue-id="cue_001" data-approved-text="2024年に発行された新しいお札って、見た目以外にも変わったところがあるの？" data-reference-ids="O01 J01 Y01" data-pattern-ids="P01_object_first P02_one_focus_callout P03_short_key_term P04_bottom_text_band P06_adjacent_source_credit" data-external-asset-count="0" data-human-approval="pending" data-implementation-authorized="false">
+<rect width="1920" height="1080" fill="#15181D"/>
+<rect x="48" y="42" width="1824" height="696" rx="32" fill="#F7F5EF"/>
+<text x="84" y="116" font-size="30" font-weight="800" fill="#70757D">S1 / cue_001</text>
+<text x="84" y="188" font-size="70" font-weight="900" fill="#15181D">まず、全体像</text>
+<text x="84" y="238" font-size="28" font-weight="800" fill="#387F82">四つの確認動作</text>
+<rect x="722" y="274" width="1114" height="414" rx="28" fill="#FFFFFF" stroke="#D8D5CC" stroke-width="4"/><text x="1279" y="342" text-anchor="middle" font-size="28" font-weight="800" fill="#70757D">対象資料の確認手順</text><circle cx="790" cy="500" r="92" fill="#EEF7F7" stroke="#52C7C7" stroke-width="6"/><text x="790" y="486" text-anchor="middle" font-size="24" font-weight="900" fill="#387F82">01</text><text x="790" y="536" text-anchor="middle" font-size="30" font-weight="900" fill="#15181D">透かす</text><circle cx="1045" cy="500" r="92" fill="#EEF7F7" stroke="#52C7C7" stroke-width="6"/><text x="1045" y="486" text-anchor="middle" font-size="24" font-weight="900" fill="#387F82">02</text><text x="1045" y="536" text-anchor="middle" font-size="30" font-weight="900" fill="#15181D">触る</text><circle cx="1300" cy="500" r="92" fill="#EEF7F7" stroke="#52C7C7" stroke-width="6"/><text x="1300" y="486" text-anchor="middle" font-size="24" font-weight="900" fill="#387F82">03</text><text x="1300" y="536" text-anchor="middle" font-size="30" font-weight="900" fill="#15181D">傾ける</text><circle cx="1555" cy="500" r="92" fill="#EEF7F7" stroke="#52C7C7" stroke-width="6"/><text x="1555" y="486" text-anchor="middle" font-size="24" font-weight="900" fill="#387F82">04</text><text x="1555" y="536" text-anchor="middle" font-size="30" font-weight="900" fill="#15181D">ルーペ</text>
+<text x="84" y="724" font-size="24" font-weight="800" fill="#70757D">模式図／実券の縮尺・配置ではありません</text>
+<rect x="84" y="780" width="1752" height="220" rx="26" fill="#24282F" stroke="#454B55" stroke-width="2"/>
+<rect x="112" y="812" width="170" height="56" rx="28" fill="#CF3F57"/>
+<text x="197" y="850" text-anchor="middle" font-size="28" font-weight="900" fill="#15181D">れいむ</text>
+<text font-size="38" font-weight="800" fill="#FFFFFF"><tspan x="316" y="844">2024年に発行された新しいお札って、</tspan><tspan x="316" y="894">見た目以外にも変わったところがあるの？</tspan></text>
+<text x="84" y="1044" font-size="20" font-weight="700" fill="#B7BDC5">参照文法 O01 J01 Y01 ｜ 外部画像不使用 ｜ human review pending</text>
+</svg>
