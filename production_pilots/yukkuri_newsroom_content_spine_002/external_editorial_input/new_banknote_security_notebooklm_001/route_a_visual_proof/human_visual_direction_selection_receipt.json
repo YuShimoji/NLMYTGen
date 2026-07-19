@@ -1,0 +1,55 @@
+{
+  "schema_version": "new_banknote.route_a_visual_direction_selection_receipt.v1",
+  "receipt_id": "new-banknote-route-a-direction-selected-for-proof-v1",
+  "status": "valid_direction_only",
+  "route_id": "route_A_security_inspection_lab",
+  "selection_class": "direction_selected_for_concrete_proof",
+  "user_decision": "explicit",
+  "decision_observed_date": "2026-07-19",
+  "timestamp_basis": "worker_contract_date_no_inferred_time",
+  "source_base_revision": "d38075b97efabc99d1a23e8e0afafd5d44f1e2de",
+  "selection_scope": "visual_direction_for_concrete_proof_only",
+  "scene_spine": {
+    "S1": 2,
+    "S2": 4,
+    "S3": 3
+  },
+  "approved_content_identity": {
+    "approval_receipt_id": "new-banknote-script-option-a-approval-v1",
+    "cue_count": 9,
+    "speaker_counts": {
+      "れいむ": 3,
+      "まりさ": 6
+    },
+    "approved_file_hash_count": 8,
+    "content_change_authorized": false
+  },
+  "diagram_constraint": "模式図／実券の縮尺・配置ではありません",
+  "motion_constraint": {
+    "principal_motion_maximum_per_cue": 1,
+    "continuous_loop_allowed": false
+  },
+  "authorization": {
+    "concrete_visual_proof_generation": true,
+    "final_visual_acceptance": false,
+    "implementation_authorized": false,
+    "YMM4_authorized": false,
+    "render_authorized": false,
+    "production_authorized": false,
+    "public_release_authorized": false,
+    "rights_authorized": false
+  },
+  "invalidation_rules": [
+    "route_id changes",
+    "S1/S2/S3 scene spine changes",
+    "approved cue text or order changes",
+    "schematic/non-scale disclaimer is removed or weakened",
+    "principal motion budget or non-looping rule changes"
+  ],
+  "successor_approval_policy": {
+    "proof_may_be_accepted_only_by_human_review": true,
+    "acceptance_or_revision_receipt_required": true,
+    "shot_motion_and_asset_contracts_remain_separate": true,
+    "YMM4_requires_separate_authorization": true
+  }
+}

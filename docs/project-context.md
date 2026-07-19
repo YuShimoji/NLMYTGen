@@ -1,48 +1,37 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-19 JST・selective successor integrated / visual selection ready）
+## 現在の別端末再開ハンドオフ（2026-07-19 JST・Route A concrete proof / human review ready）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
 
-- **取得先**: `origin/codex/new-banknote-successor-selective-integration-v1`。
+- **取得先**: `origin/codex/new-banknote-route-a-concrete-visual-proof-v1`。
   remoteは`https://github.com/YuShimoji/NLMYTGen.git`に設定済みで、新規repository作成は不要。
   `git fetch --prune origin`後、同branchをcheckoutしてfast-forward限定pullする。
-  exact baseは`5e50ff707806724e67a5e0cec215bdd3b604ce32`、candidateは
-  `833717f63713db9555f563a2a26285fa2f621e3d`、auditは
-  `ee052489a33e9247f77b90af27cdd56911acc527`。outcome commitは
+  exact source baseは`d38075b97efabc99d1a23e8e0afafd5d44f1e2de`。outcome commitは
   current remote branch tipから解決し、push後のremote parity `0/0`とclean tracked worktreeを確認する。
-  approval baseline `b05eb3867caabda496fb9a0070d230a4e81aea01`
-  はbranch先端のancestorであり、古いpromptのSTART_STATEから作り直さない。
+  source successor、master、approved content、ignored evidenceは変更しない。
 - **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
-  `docs/runtime-state.md` → この節 → integration README → pilotの
-  `README_CONTENT_LINEAGE.md` → `editorial_provenance/README_EDITORIAL_PROVENANCE.md` →
-  `visual_scene_decision/README_VISUAL_SCENE_DECISION.md`。旧Web threadや下のhandoffを
-  現在の指示として使わない。
+  `docs/runtime-state.md` → この節 → pilotの
+  `route_a_visual_proof/README_ROUTE_A_VISUAL_PROOF.md` → primary proof HTML。
+  旧Web thread、元A/B/C proposal、下のhandoffを現在の指示として使わない。
 - **現在の状態**: Project-State-IDは
-  `new-banknote-successor-selectively-integrated-visual-selection-ready-v1`、
-  State-Revisionは`2026-07-19.3`。9 cue、2/4/3 scene、
-  Reimu/Marisa 3/6、8 approved hashes、15 adopted claims、20 factual units、21 edgesを
-  primary human approval receiptとT00–T07 lineageで固定済み。approved script、CSV、
-  claim/sourceは変更していない。
-- **H0 selective integration**: exact audit JSONのdisjoint partitionをそのまま適用し、
-  candidate 27 accepted + 2 historicalをpath-level materialize、8 surfaceをregenerate、
-  14 pathsをexcludeした。normal merge、rebase、cherry-pickは行っていない。
-- **authority result**: primary T00–T07がcurrent content authority。candidate D00–D10は
-  secondary deep audit。primary existing-evidence revalidationがcurrent YMM4 authority、
-  candidate observationはhistorical predecessor。primary five-action Operator Batchがcurrent。
-- **local evidence**: ignored `local_outputs/`、`source_cache/`、`source_extracts/`を保持し、
-  削除・移動・上書きしていない。portable checkoutで不在なら
-  `not_reperformed_or_not_present`と記録し、tracked historical receiptを失敗にしない。
-- **visual status**: exact candidate A/B/C packageはproposal-only。Route Aは
-  `recommended_not_selected`、human selection required、implementation unauthorized。
-- **integration evidence**: `docs/verification/NEW_BANKNOTE_SUCCESSOR_SELECTIVE_INTEGRATION.md`
-  と隣接receipt/manifestがpath、hash、protected identity、validation、rollbackを記録する。
-- **exact next action**: visual boardと4-question review sheetを読み、A/B/Cまたは
-  scene/cue-specific revision、S1/S2/S3 flow、diagram-misleading risk、motion restraintを返す。
-- **未完了境界**: pronunciation/rhythm/clipping、exact S04/S05 historical identity、
-  token-level authorship、human visual selection、Shot Layout/Motion Beat、assets/rights、
-  diagnostic YMM4、render、production/publication、PR、master integration、full suite。
+  `new-banknote-route-a-concrete-visual-proof-review-ready-v1`、State-Revisionは
+  `2026-07-19.4`。Route Aはconcrete proof生成の方向として明示的に選択済みだが、
+  final visual acceptanceとimplementation authorizationはfalse。
+- **H0 concrete proof**: S1、cue_003–cue_006、S3の六つの1920×1080 keyframe、
+  approved subtitles付き9/9 cue contact sheet、全cueのstart/emphasis/settled storyboard、
+  subtitle safe area、visible schematic disclaimerをoffline SVG/HTMLで生成した。
+- **protected authority**: 8 approved hashes、9 cue text/order、2/4/3 scene、3/6 speaker、
+  claims/edges、canonical/derived CSV、lineage、current/historical YMM4 evidence、
+  five-action Operator Batch、元A/B/C proposalはsource baseとbyte-exact。
+- **inspection / validation**: all SVG/HTML/JSONをparseし、既存Edgeで1920×1080表示を
+  実見した。長いlabelのclipを一回repairし、approved textを変えずに収束した。
+- **exact next action**: `route_a_visual_proof.html`と四問review sheetを見て、
+  `accept`またはscene/cue-specific revisionを返す。A/B/Cは選び直さない。
+- **未完了境界**: human visual acceptance、Shot/Motion、Asset/Proxy/Rights、YMM4 feasibility、
+  pronunciation/rhythm/clipping、render、production/publication、PR、master integration、
+  remote CI/policy、full suite。untracked supervision artifactとignored evidenceは保持する。
 
 ## 直前の別端末再開ハンドオフ（2026-07-13 JST・default branch integration・履歴）
 

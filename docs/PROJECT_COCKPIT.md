@@ -1,15 +1,15 @@
 # NLMYTGen Project Cockpit
 
-Project-State-ID: new-banknote-successor-selectively-integrated-visual-selection-ready-v1
-State-Revision: 2026-07-19.3
+Project-State-ID: new-banknote-route-a-concrete-visual-proof-review-ready-v1
+State-Revision: 2026-07-19.4
 Updated: 2026-07-19 JST
-Product-State: new-banknote-lineage-yymm4-provenance-visual-proposals-unified
-Product-Gate: human-visual-direction-selection
-Recommended-Next: select-new-banknote-visual-direction-from-unified-surface
+Product-State: new-banknote-route-a-keyframes-and-motion-proof-ready
+Product-Gate: human-route-a-visual-proof-review
+Recommended-Next: review-route-a-concrete-keyframes-and-motion
 External-State: public-repo-feature-branch
 Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0
-Tracked-Worktree: clean; intentional ignored evidence retained
+Tracked-Worktree: clean; unrelated untracked supervision artifact and intentional ignored evidence retained
 
 このページはpublic repositoryで現在地を読む追跡済みMarkdownです。
 短期capsuleは[runtime-state.md](runtime-state.md)、履歴は
@@ -19,37 +19,33 @@ Tracked-Worktree: clean; intentional ignored evidence retained
 
 ## いまの一文
 
-exact auditの27/2/8/14 partitionでnew-banknote successorを選択統合し、
-primary approval・T00–T07・current YMM4 revalidationを正本のまま、candidate
-D00–D10・historical observation・A/B/C proposalだけを一つのreview surfaceへ
-接続しました。次はbranch reconciliationではなくhuman visual selectionです。
+Route Aをconcrete proof生成の方向として明示的に記録し、approved contentを変えずに、
+六つの1920×1080 full-frame、9 cue contact sheet、subtitle-safe evidence、全cueの
+non-looping motion storyboardを作りました。次はfinal designの宣言ではなくhuman reviewです。
 
 ## 判断に使える現在地
 
 | 対象 | 現在状態 | 次のgateで確認すること |
 | --- | --- | --- |
-| Approval | option A receipt、8 hashes、9 cues、2/4/3、3/6、CSV、15/20/21がprimary byte-exact | visual選択でscript/contentを変えない |
-| Lineage / provenance | T00–T07がcurrent、D00–D10はsecondary deep audit | 来歴を見ながらscene/cueごとのvisual妥当性を判断 |
-| YMM4 evidence | primary revalidationがcurrent、candidate observationはhistorical。9 VoiceItems、60 fps、4415 frames、73.583333秒で整合 | audio品質は別gateのまま維持 |
-| Operator Batch | primary five-action familyがcurrent、candidate four-action familyはexcluded | visual選択では実行しない |
-| Visual | A/B/C proposal integrated、Route A `recommended_not_selected`、selectionなし | A/B/Cまたはscene/cue-specific revisionを返す |
-| Portability | same-machine local evidence不在は`not_reperformed_or_not_present` | tracked packageをportableにreviewできること |
-| Privacy / rights | private path、local binary、raw/source bodyなし。rights未解決 | misleading-diagram riskとrights burdenをhuman判断 |
+| Route decision | Route A selected for concrete proof only | final acceptanceとimplementationはfalseのまま |
+| Approval/content | 8 hashes、9 cues、2/4/3、3/6、CSV、15/20/21がsource baseとexact | visual feedbackでscriptをsilent editしない |
+| Full frames | S1、S2 four techniques、S3の六つを1920×1080 SVG化 | flow、hierarchy、abstract geometryをhuman判断 |
+| Cue coverage | cue_001–cue_009をapproved subtitle付きcontact sheetで9/9表示 | omissionとscene/cue-specific revisionを確認 |
+| Subtitle | lower safe area x=84/y=780/1752×220を全full-frameに表示 | 1920×1080での実読性をhuman判断 |
+| Diagram | 全full-frameに模式・非縮尺・非配置 disclaimer | real-note/official-procedureに見えないかhuman判断 |
+| Motion | start/emphasis/settled、loop false、principal motion最大1 | restraintとcue主旨への干渉をhuman判断 |
+| Assets/rights | original abstract SVG only、external resource 0 | production asset/rightsはH2で別契約 |
 
-Primary integrated surface:
-`docs/verification/NEW_BANKNOTE_SUCCESSOR_SELECTIVE_INTEGRATION.md`
-
-Human review surface:
-`production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/visual_direction_board.html`
+Primary review surface:
+`production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/route_a_visual_proof.html`
 
 ## 次の入口
 
-A/B/C choiceまたはscene/cue-specific revision、S1/S2/S3 flow、
-diagram-misleading risk、motion restraintの4点をhuman reviewerが返します。
-このdecision前にShot Layout、Motion Beat、asset work、diagnostic YMM4へ進みません。
+同HTMLとreview sheetを見て、四問に対する`accept`またはscene/cue-specific revisionを返します。
+A/B/Cは選び直しません。human accept前にShot/Motion、Asset/Proxy/Rights、YMM4へ進みません。
 
 ## 公開・実行境界
 
-このsliceではnormal merge/rebase/cherry-pick、approved content変更、YMM4、render/media、
-production/publication、rights action、PR、master integrationを行っていません。
-Route Aのrecommendationはselection、approval、implementationを意味しません。
+このsliceではapproved content、original proposal、YMM4 evidence、Operator Batch、ignored
+evidence、source branch、masterを変更していません。YMM4、render、production/publication、
+rights approval、PR、master integration、full suiteは実行していません。

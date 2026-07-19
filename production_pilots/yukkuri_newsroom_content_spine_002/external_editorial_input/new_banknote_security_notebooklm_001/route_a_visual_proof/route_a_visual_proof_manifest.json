@@ -1,0 +1,193 @@
+{
+  "schema_version": "new_banknote.route_a_visual_proof_manifest.v1",
+  "status": "review_ready_not_accepted",
+  "route_id": "route_A_security_inspection_lab",
+  "source_base_revision": "d38075b97efabc99d1a23e8e0afafd5d44f1e2de",
+  "artifact_root": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof",
+  "artifact_count_excluding_manifest_and_readback": 14,
+  "artifacts": [
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/README_ROUTE_A_VISUAL_PROOF.md",
+      "sha256": "d103a2d7af5511367123396ec01ffe900691f98de6678ef60c595decf11e6c4d",
+      "size_bytes": 1763,
+      "category": "primary_review_surface"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/human_visual_direction_selection_receipt.json",
+      "sha256": "be48d54818cb0a90b6bd75decbde0650ac79df10c6df52524dacc7f233c0d240",
+      "size_bytes": 1936,
+      "category": "human_direction_selection"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/keyframes/route_a_S1_overview.svg",
+      "sha256": "d7c15399125de9c7a05d8bd43ce5d6e50ec6c144200ff9c472d06e88e6f43c86",
+      "size_bytes": 5422,
+      "category": "full_frame_keyframe"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/keyframes/route_a_S3_identification_summary.svg",
+      "sha256": "b7f1f10e6bc514aaa00c3e2bcb30f49dba8a770041ad391ebc0ecaed407daea0",
+      "size_bytes": 5534,
+      "category": "full_frame_keyframe"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/keyframes/route_a_cue_003_watermark.svg",
+      "sha256": "4c09f4ad4e6c26db35bdf15f9cea899c34cabd50a6b4ae0f66d8184c1f1f6c70",
+      "size_bytes": 4488,
+      "category": "full_frame_keyframe"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/keyframes/route_a_cue_004_hologram.svg",
+      "sha256": "58f8b0383164a2f93decca32cf12c8640be81098b529f117e5a2540651b4a410",
+      "size_bytes": 4907,
+      "category": "full_frame_keyframe"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/keyframes/route_a_cue_005_intaglio.svg",
+      "sha256": "7fbf2ed7ac443ddb999cddc632e1d7b5c0c01306de3d2d7468f9409e3c0e6efd",
+      "size_bytes": 4686,
+      "category": "full_frame_keyframe"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/keyframes/route_a_cue_006_microtext.svg",
+      "sha256": "c91b41bf28155d77116e3b26f8120225663ecdb757628678b1252ba41ea8d32d",
+      "size_bytes": 4829,
+      "category": "full_frame_keyframe"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/route_a_cue_visual_mapping.json",
+      "sha256": "aceb05ee50de0d9f1243b8cb1ed3427ec0d959514ecd6204829a247167818e68",
+      "size_bytes": 9192,
+      "category": "nine_cue_coverage"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/route_a_motion_storyboard.json",
+      "sha256": "1488f61613b395ceaacacc15ca6a0a3348e2e4f2083df5cbd6498e665f824880",
+      "size_bytes": 4348,
+      "category": "motion_storyboard"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/route_a_motion_storyboard.svg",
+      "sha256": "3c8aaeefad1e983e1bcd20613937b10c0db07ff0e72147284a2313574a97e478",
+      "size_bytes": 20037,
+      "category": "motion_storyboard"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/route_a_nine_cue_contact_sheet.svg",
+      "sha256": "d04f006ad04d881c1a84f4a226f461b33b50a34ab1e52895e18c0d701771ff5a",
+      "size_bytes": 15369,
+      "category": "nine_cue_coverage"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/route_a_visual_proof.html",
+      "sha256": "5d06d6f526606aa20d423f8ba2495eb8d1e450cb57a41ece859dc5a24d7e692a",
+      "size_bytes": 5695,
+      "category": "primary_review_surface"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/route_a_visual_review_sheet.md",
+      "sha256": "5595e3422dd6980450bae7dc96bd9317af9f6bc841bc38ee94c654156c46a1f8",
+      "size_bytes": 679,
+      "category": "human_review_gate"
+    }
+  ],
+  "protected_original_visual_proposal": {
+    "artifact_count": 12,
+    "artifacts": [
+      {
+        "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/asset_rights_matrix.json",
+        "sha256": "6e8ae2bc883148755b5e2eb808cd8cfed3dfd11361a53e9c15f537484df08d34",
+        "source_base_revision": "d38075b97efabc99d1a23e8e0afafd5d44f1e2de"
+      },
+      {
+        "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/limitations.md",
+        "sha256": "d95bfc409abb46aedfcc4cbab3ebc1c389e57d3f19a9ae7dd921b9f6ec98516f",
+        "source_base_revision": "d38075b97efabc99d1a23e8e0afafd5d44f1e2de"
+      },
+      {
+        "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/motion_beat_plan.json",
+        "sha256": "1a5ee226fe44d9255e6db9459ed5ab1edb70acd656ad23dc145a54cb5975f535",
+        "source_base_revision": "d38075b97efabc99d1a23e8e0afafd5d44f1e2de"
+      },
+      {
+        "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/README_VISUAL_SCENE_DECISION.md",
+        "sha256": "cf2d0b7470f3a7f26f65580800c436000e569e45c8199cd62c2624e7feff237b",
+        "source_base_revision": "d38075b97efabc99d1a23e8e0afafd5d44f1e2de"
+      },
+      {
+        "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/recommended_visual_direction.json",
+        "sha256": "d9919faffd17b6550f7a664e294dc37f88f1a42f458bbfa9d61a6e4ddfebd342",
+        "source_base_revision": "d38075b97efabc99d1a23e8e0afafd5d44f1e2de"
+      },
+      {
+        "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/scene_layout_plan.json",
+        "sha256": "a36912697b342c0681a80356df2e6dbeb9fcbb7749e4e6d5a8bac332b551102f",
+        "source_base_revision": "d38075b97efabc99d1a23e8e0afafd5d44f1e2de"
+      },
+      {
+        "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/script_beat_ir.json",
+        "sha256": "e99e6fdf3052148423cb1fba27d0714993d117832a075fb127b2ba8a0ac8f343",
+        "source_base_revision": "d38075b97efabc99d1a23e8e0afafd5d44f1e2de"
+      },
+      {
+        "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/visual_direction_board.html",
+        "sha256": "6bcba4e58f56b4b4efc0c1406731eb3cfa810d8a51cd6fa023d2165a5144c6ca",
+        "source_base_revision": "d38075b97efabc99d1a23e8e0afafd5d44f1e2de"
+      },
+      {
+        "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/visual_direction_board_readback.json",
+        "sha256": "07a56764753e9ca1bac0edadae5faded05a861ddfb6d46c43b8cc805544f9c47",
+        "source_base_revision": "d38075b97efabc99d1a23e8e0afafd5d44f1e2de"
+      },
+      {
+        "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/visual_direction_options.json",
+        "sha256": "71c880203f5ab06b33fcd8652100e109a56a4fce001a3176992f3d58a123b03d",
+        "source_base_revision": "d38075b97efabc99d1a23e8e0afafd5d44f1e2de"
+      },
+      {
+        "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/visual_review_sheet.md",
+        "sha256": "a68c7aaa51ff4ac5528e2dcd97d6b8a9b5da3825848472ccf89f49b7b535b905",
+        "source_base_revision": "d38075b97efabc99d1a23e8e0afafd5d44f1e2de"
+      },
+      {
+        "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/yymm4_visual_project_contract.json",
+        "sha256": "610b4b95ded4769029b672a2103d8303aabe96268774193082ec18b687e89ce3",
+        "source_base_revision": "d38075b97efabc99d1a23e8e0afafd5d44f1e2de"
+      }
+    ],
+    "modification_authorized": false
+  },
+  "approved_content": {
+    "cue_count": 9,
+    "scene_allocation": {
+      "S1": 2,
+      "S2": 4,
+      "S3": 3
+    },
+    "speaker_counts": {
+      "れいむ": 3,
+      "まりさ": 6
+    },
+    "approved_hash_count": 8,
+    "modification_authorized": false
+  },
+  "proof_contract": {
+    "full_frame_keyframes": 6,
+    "cue_coverage": 9,
+    "canvas": {
+      "width": 1920,
+      "height": 1080
+    },
+    "subtitle_safe_area": {
+      "x": 84,
+      "y": 780,
+      "width": 1752,
+      "height": 220
+    },
+    "disclaimer": "模式図／実券の縮尺・配置ではありません",
+    "external_assets": 0,
+    "continuous_loops": 0,
+    "implementation_authorized": false,
+    "human_visual_acceptance": false
+  }
+}

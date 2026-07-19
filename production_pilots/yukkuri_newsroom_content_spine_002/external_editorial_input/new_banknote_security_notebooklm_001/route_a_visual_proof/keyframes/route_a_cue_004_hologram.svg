@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="Route A S2 cue_004 concrete visual proof" data-route-id="route_A_security_inspection_lab" data-scene-id="S2" data-cue-id="cue_004" data-subtitle-safe-area="84,780,1752,220" data-implementation-authorized="false"><style>.ui{font-family:"Yu Gothic UI","Meiryo",sans-serif}</style><title>Route A S2 cue_004 concrete visual proof</title>
+  <rect width="1920" height="1080" fill="#E9E5DB"/>
+  <path d="M0 180H1920M0 360H1920M0 540H1920M0 720H1920 M240 90V760M480 90V760M720 90V760M960 90V760M1200 90V760M1440 90V760M1680 90V760" stroke="#D4CEC0" stroke-width="2" opacity="0.55"/>
+  <rect x="0" y="0" width="1920" height="94" fill="#17324D"/>
+  <text x="84" y="59" class="ui" font-size="30" font-weight="800" fill="#F8F5ED">ROUTE A / SECURITY INSPECTION LAB</text>
+  <rect x="1414" y="22" width="422" height="50" rx="25" fill="#F8F5ED"/>
+  <text x="1625" y="56" text-anchor="middle" class="ui" font-size="22" font-weight="800" fill="#17324D">CONCRETE PROOF / REVIEW PENDING</text>
+  <rect x="84" y="134" width="316" height="586" rx="28" fill="#17324D"/>
+  <text x="126" y="194" class="ui" font-size="24" font-weight="700" fill="#A9C8BC">S2 / cue_004</text>
+<text x="126" y="276" text-anchor="start" class="ui" font-size="42" font-weight="900" fill="#F8F5ED">傾ける</text>
+  <line x1="126" y1="350" x2="354" y2="350" stroke="#D77836" stroke-width="8"/>
+  <text x="126" y="408" class="ui" font-size="25" font-weight="700" fill="#A9C8BC">PRINCIPAL MOTION</text>
+<text x="126" y="454" text-anchor="start" class="ui" font-size="23" font-weight="700" fill="#F8F5ED">restrained tilt</text>
+<text x="126" y="488" text-anchor="start" class="ui" font-size="23" font-weight="700" fill="#F8F5ED">once</text>
+  <text x="126" y="620" class="ui" font-size="24" fill="#A9C8BC">loop: false</text>
+  <text x="126" y="660" class="ui" font-size="24" fill="#A9C8BC">principal: 1</text>
+  <rect x="438" y="134" width="892" height="586" rx="32" fill="#F8F5ED" stroke="#17324D" stroke-width="4"/>
+  <rect x="478" y="170" width="812" height="64" rx="16" fill="#E1ECE6"/>
+  <text x="884" y="212" text-anchor="middle" class="ui" font-size="25" font-weight="800" fill="#2F6F5D">模式図／実券の縮尺・配置ではありません</text>
+  <rect x="520" y="274" width="728" height="374" rx="48" fill="#F3EFE4" stroke="#2F6F5D" stroke-width="5" stroke-dasharray="20 14"/>
+  <g transform="translate(884 466)"><rect x="-150" y="-118" width="300" height="236" rx="36" fill="#DDE9F0" transform="rotate(-8)"/><rect x="-122" y="-104" width="244" height="208" rx="34" fill="#E8E2F1" opacity="0.82" transform="rotate(7)"/><path d="M-58 -48L52 -76L82 18L-18 76L-92 8Z" fill="#A9C8BC"/></g>
+  <path d="M650 352C570 430 580 538 666 610M1116 352C1196 430 1186 538 1100 610" fill="none" stroke="#D77836" stroke-width="8" stroke-linecap="round"/>
+  <path d="M650 352L624 398M650 352L602 368M1116 352L1142 398M1116 352L1164 368" stroke="#D77836" stroke-width="8" stroke-linecap="round"/>
+  <text x="884" y="610" text-anchor="middle" class="ui" font-size="23" font-weight="800" fill="#17324D">ABSTRACT LAYERS / NO LIKENESS</text>
+  <rect x="1368" y="134" width="468" height="586" rx="28" fill="#F8F5ED" stroke="#C7BFAF" stroke-width="3"/>
+  <text x="1410" y="200" class="ui" font-size="25" font-weight="800" fill="#2F6F5D">傾ける</text>
+<text x="1410" y="260" text-anchor="start" class="ui" font-size="34" font-weight="900" fill="#17324D">3Dホログラム</text>
+  <line x1="1410" y1="338" x2="1792" y2="338" stroke="#D77836" stroke-width="6"/>
+<text x="1410" y="398" text-anchor="start" class="ui" font-size="27" font-weight="600" fill="#263E52">角度で見え方が変わることを、人物を描か</text>
+<text x="1410" y="441" text-anchor="start" class="ui" font-size="27" font-weight="600" fill="#263E52">ない抽象層のずれとして示します。</text>
+  <rect x="1410" y="620" width="382" height="58" rx="12" fill="#E9E5DB"/>
+  <text x="1601" y="658" text-anchor="middle" class="ui" font-size="22" font-weight="800" fill="#6A6258">SOURCE-BOUNDED EXPLANATION</text>
+  <rect x="84" y="780" width="1752" height="220" rx="26" fill="#111D29" stroke="#D77836" stroke-width="5"/>
+  <text x="126" y="832" class="ui" font-size="22" font-weight="800" fill="#DFA06F">SUBTITLE SAFE AREA / APPROVED TEXT</text>
+  <rect x="1540" y="808" width="250" height="44" rx="22" fill="#2F6F5D"/><text x="1665" y="838" text-anchor="middle" class="ui" font-size="21" font-weight="800" fill="#FFFFFF">まりさ</text>
+<text x="126" y="890" text-anchor="start" class="ui" font-size="31" font-weight="800" fill="#FFFFFF">次は3Dホログラム。角度を変えると、三次元の肖像が回転して見</text>
+<text x="126" y="929" text-anchor="start" class="ui" font-size="31" font-weight="800" fill="#FFFFFF">えるぞ。</text>
+</svg>

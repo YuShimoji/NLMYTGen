@@ -1,93 +1,85 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: new-banknote-successor-selectively-integrated-visual-selection-ready-v1
-State-Revision: 2026-07-19.3
+Project-State-ID: new-banknote-route-a-concrete-visual-proof-review-ready-v1
+State-Revision: 2026-07-19.4
 Updated: 2026-07-19 JST
-Product-State: new-banknote-lineage-yymm4-provenance-visual-proposals-unified
-Product-Gate: human-visual-direction-selection
-Recommended-Next: select-new-banknote-visual-direction-from-unified-surface
+Product-State: new-banknote-route-a-keyframes-and-motion-proof-ready
+Product-Gate: human-route-a-visual-proof-review
+Recommended-Next: review-route-a-concrete-keyframes-and-motion
 External-State: public-repo-feature-branch
 Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0
-Tracked-Worktree: clean; intentional ignored evidence retained
+Tracked-Worktree: clean; unrelated untracked supervision artifact and intentional ignored evidence retained
 
 ## Current Slice
 
-- **Audited selective integration completed**: the successor descends from exact
-  primary `5e50ff7` and uses exact candidate `833717f` under audit `ee05248`.
-  The disjoint candidate treatment is 27 accepted, 2 historical, 8 regenerated,
-  and 14 excluded paths. No merge, rebase, or cherry-pick was used.
-- **Approved content remains sole current authority**: the explicit option A
-  receipt, all eight approved hashes, nine cue texts/order, scenes 2/4/3,
-  Reimu/Marisa 3/6, canonical/derived CSVs, 15 adopted claims, 20 factual units,
-  21 evidence edges, and unsupported spoken claims 0 are byte-exact to primary.
-- **Lineage roles are unified**: primary T00–T07 remains the current content
-  authority. Candidate D00–D10 is retained byte-exact as secondary editorial
-  deep-audit evidence; token-level authorship is not claimed.
-- **YMM4 evidence roles are explicit**: primary current-lineage revalidation is
-  the current structural authority. Candidate tracked import observation is a
-  historical predecessor over the same project/result identities and metrics.
-  No new YMM4 operation occurred; pronunciation, rhythm, and clipping are unknown.
-- **Portable provenance is regenerated**: its README, content lock, and validation
-  readback bind the primary approval/T00–T07/current revalidation to the secondary
-  D00–D10 core. Absent same-machine local evidence is represented as
-  `not_reperformed_or_not_present` and does not invalidate the tracked package.
-- **Operator Batch authority stays primary**: the five-action approval/lineage-aware
-  batch, module, and tests remain byte-exact. The candidate four-action executable
-  family, module, and test are excluded.
-- **A/B/C is proposal-only**: the exact candidate review package is integrated.
-  Route A remains `recommended_not_selected`; human selection is required and
-  implementation is unauthorized. Rights and misleading-diagram risk remain open.
-- **Evidence is reviewable**: the integration README, receipt, and manifest record
-  refs, every copied/historical/regenerated/excluded path, protected hashes,
-  authority resolution, validation, rollback boundary, and operations not performed.
-- **Boundary preserved**: source branches, master, approved content, ignored
-  `local_outputs/`, YMM4, render/media, production/publication, and rights work were
-  not mutated. Full-suite Integrity work remains outside this slice.
+- **Route A direction is recorded**: the explicit user decision selects
+  `route_A_security_inspection_lab` for concrete proof generation only. The new
+  receipt preserves S1/S2/S3, the schematic disclaimer, and the one-principal-
+  motion/non-looping budget. Final visual acceptance and implementation remain false.
+- **Concrete proof is directly viewable**: six 1920×1080 full-frame SVG keyframes
+  cover S1, cue_003–cue_006, and S3. A 9/9 cue contact sheet preserves approved
+  subtitle text and exposes scene, visual role, motion, disclaimer, and risk labels.
+- **Motion remains proposal-only**: all nine cues have start, emphasis, and settled
+  states, duration/easing proposals, `loop: false`, and at most one principal motion.
+  This is not motion playback or YMM4 feasibility evidence.
+- **Subtitle and diagram boundaries are visible**: every full frame reserves
+  x=84, y=780, width=1752, height=220 for approved subtitles and displays
+  `模式図／実券の縮尺・配置ではありません`. All visuals use original abstract
+  SVG geometry with no external assets or network resources.
+- **Approved content is unchanged**: all eight approval hashes, nine cue texts/order,
+  scenes 2/4/3, speakers 3/6, claims, evidence edges, canonical/derived CSVs,
+  lineage, current/historical YMM4 evidence, Operator Batch, and original A/B/C
+  proposal files remain byte-exact to the integrated source.
+- **Actual output was inspected**: the primary offline HTML, all six full frames,
+  contact sheet, and storyboard were rendered locally at 1920×1080. One proof-only
+  text-fit repair cycle removed clipped long labels without changing approved text.
+- **Boundary preserved**: no YMM4 launch/project, video render, source/image fetch,
+  external asset, production/publication, rights action, PR, master integration, or
+  full-suite run occurred. Ignored local evidence and the unrelated untracked
+  supervision artifact were not modified.
 
 ## Product Position
 
-The human reviewer no longer needs to reconcile branches. One successor feature
-branch now presents the primary approval, T00–T07 lineage, current YMM4 structural
-evidence, secondary D00–D10 provenance, historical observation, and proposal-only
-A/B/C visual packet under one authority model. H0 selective integration is closed;
-the next product gate is human visual-direction selection only.
+The A/B/C choice is closed for this slice: Route A is the selected direction for
+concrete proof, not an accepted final design. The reviewer can now judge actual
+full-frame compositions, subtitle readability, diagram risk, and restrained motion
+before Shot/Motion or Asset/Proxy/Rights contracts are authorized.
 
 ## Exact Next Action
 
-Open `visual_scene_decision/visual_direction_board.html` and
-`visual_review_sheet.md` in the new-banknote pilot. Return an A/B/C choice or
-scene/cue-specific revision, plus judgments on S1/S2/S3 flow, misleading-diagram
-risk, and motion restraint. Do not create Shot Layout, Motion Beat, assets, or a
-diagnostic YMM4 project until that human decision is recorded.
+Open the pilot `route_a_visual_proof/route_a_visual_proof.html` and answer only:
+
+1. S1／S2／S3の画面は、説明順と一致して理解しやすいですか。
+2. 抽象券や各技術の模式図が、実券の正確な形状・位置・公式手順に見えませんか。
+3. 字幕領域、見出し、説明文は1920×1080画面で読みやすいですか。
+4. motion storyboardは十分に抑制され、各cueの主旨を邪魔していませんか。
+
+Return `accept` or a scene/cue-specific revision. Do not choose A/B/C again.
 
 ## Evidence and Access
 
-- Integration entry surface:
-  `docs/verification/NEW_BANKNOTE_SUCCESSOR_SELECTIVE_INTEGRATION.md`.
-- Machine receipts:
-  `new_banknote_successor_selective_integration_receipt.json` and
-  `new_banknote_successor_selective_integration_manifest.json` beside it.
-- Current content authority: pilot `README_CONTENT_LINEAGE.md` and
-  `human_script_approval_receipt.json`.
-- Current provenance surface: pilot
-  `editorial_provenance/README_EDITORIAL_PROVENANCE.md`.
-- Current YMM4 authority: pilot
-  `README_EXISTING_YMM4_EVIDENCE_REVALIDATION.md`.
-- Historical predecessor: pilot `README_YMM4_IMPORT_OBSERVATION.md`.
-- Human visual review: pilot
-  `visual_scene_decision/README_VISUAL_SCENE_DECISION.md` and board HTML.
+- Primary human surface: pilot `route_a_visual_proof/route_a_visual_proof.html`.
+- Boundary and entry doc: `README_ROUTE_A_VISUAL_PROOF.md` beside it.
+- Direction receipt: `human_visual_direction_selection_receipt.json`.
+- Six frames: `route_a_visual_proof/keyframes/`.
+- Coverage: `route_a_nine_cue_contact_sheet.svg` and mapping JSON.
+- Motion: `route_a_motion_storyboard.svg` and JSON.
+- Machine inventories: `route_a_visual_proof_manifest.json` and readback JSON.
+- Exact human questions: `route_a_visual_review_sheet.md`.
 
 ## Active Boundaries
 
-- Human A/B/C preference and creative acceptance are pending.
-- Pronunciation/rhythm/clipping, exact S04/S05 historical identity, token-level
-  authorship, and remote CI/branch policy remain unresolved or unavailable.
-- Shot Layout, Motion Beat, asset/proxy/rights work, diagnostic YMM4, render,
-  production, publication, PR, master integration, and full-suite Integrity work
-  remain undone and unauthorized by this state.
+- Human visual acceptance remains pending; machine checks do not settle taste,
+  clarity, subtitle readability, diagram interpretation, or motion restraint.
+- YMM4 feasibility and actual motion playback quality are untested.
+- Pronunciation/rhythm/clipping remain unknown.
+- Production assets and rights clearance remain pending.
+- Shot/Motion implementation, Asset/Proxy/Rights implementation, diagnostic YMM4,
+  render, production/publication, PR, master integration, remote CI/policy, and
+  full-suite Integrity work remain undone and unauthorized.
 
 ## Maintenance Note
 
 Keep this capsule within 160 lines. Resolve the handoff commit from the current
-branch tip; exact path and hash inventories belong in the integration manifest.
+branch tip; exact artifact hashes belong in the proof manifest.

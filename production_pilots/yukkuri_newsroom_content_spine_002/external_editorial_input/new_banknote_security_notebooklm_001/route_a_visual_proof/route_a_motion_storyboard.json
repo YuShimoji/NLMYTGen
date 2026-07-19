@@ -1,0 +1,133 @@
+{
+  "schema_version": "new_banknote.route_a_motion_storyboard.v1",
+  "status": "proposal_only_non_looping",
+  "route_id": "route_A_security_inspection_lab",
+  "motion_bearing_cue_count": 9,
+  "principal_motion_maximum_per_cue": 1,
+  "continuous_loop_allowed": false,
+  "states": [
+    "start",
+    "emphasis",
+    "settled"
+  ],
+  "cues": [
+    {
+      "cue_id": "cue_001",
+      "scene_id": "S1",
+      "principal_motion": "short_label_transition",
+      "start": "問いのラベルを待機",
+      "emphasis": "ラベルを一度だけ表示",
+      "settled": "全体像を静止保持",
+      "duration_seconds": 0.55,
+      "easing": "ease_out",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "proposal_only_not_implemented"
+    },
+    {
+      "cue_id": "cue_002",
+      "scene_id": "S1",
+      "principal_motion": "short_label_transition",
+      "start": "技術レイヤーを待機",
+      "emphasis": "四層を一度だけ提示",
+      "settled": "レイヤーを静止保持",
+      "duration_seconds": 0.65,
+      "easing": "ease_out",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "proposal_only_not_implemented"
+    },
+    {
+      "cue_id": "cue_003",
+      "scene_id": "S2",
+      "principal_motion": "light_reveal_once",
+      "start": "透過光なし",
+      "emphasis": "光の帯が一度通過",
+      "settled": "細線だけを静止表示",
+      "duration_seconds": 0.9,
+      "easing": "ease_in_out",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "proposal_only_not_implemented"
+    },
+    {
+      "cue_id": "cue_004",
+      "scene_id": "S2",
+      "principal_motion": "restrained_tilt_once",
+      "start": "抽象層を正面表示",
+      "emphasis": "小さく一度傾ける",
+      "settled": "一度だけ戻して静止",
+      "duration_seconds": 1.1,
+      "easing": "ease_in_out",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "proposal_only_not_implemented"
+    },
+    {
+      "cue_id": "cue_005",
+      "scene_id": "S2",
+      "principal_motion": "tactile_pulse",
+      "start": "稜線を静止表示",
+      "emphasis": "稜線を二回以内で脈動",
+      "settled": "盛り上がりを静止保持",
+      "duration_seconds": 0.8,
+      "easing": "ease_out",
+      "pulse_count": 2,
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "proposal_only_not_implemented"
+    },
+    {
+      "cue_id": "cue_006",
+      "scene_id": "S2",
+      "principal_motion": "loupe_zoom_once",
+      "start": "ルーペを待機",
+      "emphasis": "一度だけ拡大",
+      "settled": "拡大ラベルを静止保持",
+      "duration_seconds": 0.85,
+      "easing": "ease_out",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "proposal_only_not_implemented"
+    },
+    {
+      "cue_id": "cue_007",
+      "scene_id": "S3",
+      "principal_motion": "position_callout_once",
+      "start": "位置カードを静止表示",
+      "emphasis": "差分を一度だけ指示",
+      "settled": "三カードを静止保持",
+      "duration_seconds": 0.6,
+      "easing": "ease_out",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "proposal_only_not_implemented"
+    },
+    {
+      "cue_id": "cue_008",
+      "scene_id": "S3",
+      "principal_motion": "bounded_difference_reveal_once",
+      "start": "比較カードを待機",
+      "emphasis": "差異を一度だけ提示",
+      "settled": "限定比較を静止保持",
+      "duration_seconds": 0.7,
+      "easing": "ease_out",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "proposal_only_not_implemented"
+    },
+    {
+      "cue_id": "cue_009",
+      "scene_id": "S3",
+      "principal_motion": "four_action_sequence_once",
+      "start": "四アイコンを待機",
+      "emphasis": "四アイコンを一度だけ順次表示",
+      "settled": "四動作を静止保持",
+      "duration_seconds": 1.2,
+      "easing": "linear_steps",
+      "loop": false,
+      "simultaneous_principal_motions": 1,
+      "implementation_status": "proposal_only_not_implemented"
+    }
+  ]
+}

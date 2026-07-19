@@ -1,0 +1,205 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="Route A non-looping motion storyboard" data-route-id="route_A_security_inspection_lab" data-loop="false" data-cues="9"><style>.ui{font-family:"Yu Gothic UI","Meiryo",sans-serif}</style><title>Route A non-looping motion storyboard</title>
+<rect width="1920" height="1080" fill="#111D29"/>
+<text x="70" y="58" class="ui" font-size="32" font-weight="900" fill="#FFFFFF">ROUTE A / MOTION STORYBOARD</text>
+<text x="70" y="94" class="ui" font-size="21" font-weight="700" fill="#A9C8BC">START → EMPHASIS → SETTLED / LOOP FALSE / PRINCIPAL MOTION ≤ 1</text>
+<text x="1850" y="58" text-anchor="end" class="ui" font-size="21" font-weight="800" fill="#DFA06F">模式図／実券の縮尺・配置ではありません</text>
+<g data-cue-id="cue_001" data-loop="false" data-principal-motion-count="1">
+<rect x="70" y="132" width="560" height="270" rx="22" fill="#F8F5ED"/>
+<text x="92" y="166" class="ui" font-size="19" font-weight="900" fill="#17324D">cue_001 / label transition once</text>
+<text x="608" y="166" text-anchor="end" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">0.55s · ease_out</text>
+<rect x="90" y="190" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="172" y="216" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">START</text>
+<line x1="114" y1="256" x2="230" y2="256" stroke="#17324D" stroke-width="4"/>
+<circle cx="124" cy="256" r="13" fill="#D77836"/>
+<text x="172" y="290" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">問いのラベルを待機</text>
+<rect x="268" y="190" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="350" y="216" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">EMPHASIS</text>
+<line x1="292" y1="256" x2="408" y2="256" stroke="#17324D" stroke-width="4"/>
+<circle cx="356" cy="256" r="13" fill="#D77836"/>
+<text x="350" y="290" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">ラベルを一度だけ表示</text>
+<rect x="446" y="190" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="528" y="216" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">SETTLED</text>
+<line x1="470" y1="256" x2="586" y2="256" stroke="#17324D" stroke-width="4"/>
+<circle cx="586" cy="256" r="13" fill="#D77836"/>
+<text x="528" y="290" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">全体像を静止保持</text>
+<text x="92" y="370" class="ui" font-size="15" font-weight="800" fill="#6A6258">loop: false / simultaneous principal motions: 1</text>
+<text x="608" y="390" text-anchor="end" class="ui" font-size="14" fill="#2F6F5D">proposal only / not implemented</text>
+</g>
+<g data-cue-id="cue_002" data-loop="false" data-principal-motion-count="1">
+<rect x="670" y="132" width="560" height="270" rx="22" fill="#F8F5ED"/>
+<text x="692" y="166" class="ui" font-size="19" font-weight="900" fill="#17324D">cue_002 / layer reveal once</text>
+<text x="1208" y="166" text-anchor="end" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">0.65s · ease_out</text>
+<rect x="690" y="190" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="772" y="216" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">START</text>
+<line x1="714" y1="256" x2="830" y2="256" stroke="#17324D" stroke-width="4"/>
+<circle cx="724" cy="256" r="13" fill="#D77836"/>
+<text x="772" y="290" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">技術レイヤーを待機</text>
+<rect x="868" y="190" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="950" y="216" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">EMPHASIS</text>
+<line x1="892" y1="256" x2="1008" y2="256" stroke="#17324D" stroke-width="4"/>
+<circle cx="956" cy="256" r="13" fill="#D77836"/>
+<text x="950" y="290" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">四層を一度だけ提示</text>
+<rect x="1046" y="190" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="1128" y="216" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">SETTLED</text>
+<line x1="1070" y1="256" x2="1186" y2="256" stroke="#17324D" stroke-width="4"/>
+<circle cx="1186" cy="256" r="13" fill="#D77836"/>
+<text x="1128" y="290" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">レイヤーを静止保持</text>
+<text x="692" y="370" class="ui" font-size="15" font-weight="800" fill="#6A6258">loop: false / simultaneous principal motions: 1</text>
+<text x="1208" y="390" text-anchor="end" class="ui" font-size="14" fill="#2F6F5D">proposal only / not implemented</text>
+</g>
+<g data-cue-id="cue_003" data-loop="false" data-principal-motion-count="1">
+<rect x="1270" y="132" width="560" height="270" rx="22" fill="#F8F5ED"/>
+<text x="1292" y="166" class="ui" font-size="19" font-weight="900" fill="#17324D">cue_003 / light reveal once</text>
+<text x="1808" y="166" text-anchor="end" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">0.9s · ease_in_out</text>
+<rect x="1290" y="190" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="1372" y="216" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">START</text>
+<line x1="1314" y1="256" x2="1430" y2="256" stroke="#17324D" stroke-width="4"/>
+<circle cx="1324" cy="256" r="13" fill="#D77836"/>
+<text x="1372" y="290" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">透過光なし</text>
+<rect x="1468" y="190" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="1550" y="216" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">EMPHASIS</text>
+<line x1="1492" y1="256" x2="1608" y2="256" stroke="#17324D" stroke-width="4"/>
+<circle cx="1556" cy="256" r="13" fill="#D77836"/>
+<text x="1550" y="290" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">光の帯が一度通過</text>
+<rect x="1646" y="190" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="1728" y="216" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">SETTLED</text>
+<line x1="1670" y1="256" x2="1786" y2="256" stroke="#17324D" stroke-width="4"/>
+<circle cx="1786" cy="256" r="13" fill="#D77836"/>
+<text x="1728" y="290" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">細線だけを静止表示</text>
+<text x="1292" y="370" class="ui" font-size="15" font-weight="800" fill="#6A6258">loop: false / simultaneous principal motions: 1</text>
+<text x="1808" y="390" text-anchor="end" class="ui" font-size="14" fill="#2F6F5D">proposal only / not implemented</text>
+</g>
+<g data-cue-id="cue_004" data-loop="false" data-principal-motion-count="1">
+<rect x="70" y="436" width="560" height="270" rx="22" fill="#F8F5ED"/>
+<text x="92" y="470" class="ui" font-size="19" font-weight="900" fill="#17324D">cue_004 / restrained tilt once</text>
+<text x="608" y="470" text-anchor="end" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">1.1s · ease_in_out</text>
+<rect x="90" y="494" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="172" y="520" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">START</text>
+<line x1="114" y1="560" x2="230" y2="560" stroke="#17324D" stroke-width="4"/>
+<circle cx="124" cy="560" r="13" fill="#D77836"/>
+<text x="172" y="594" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">抽象層を正面表示</text>
+<rect x="268" y="494" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="350" y="520" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">EMPHASIS</text>
+<line x1="292" y1="560" x2="408" y2="560" stroke="#17324D" stroke-width="4"/>
+<circle cx="356" cy="560" r="13" fill="#D77836"/>
+<text x="350" y="594" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">小さく一度傾ける</text>
+<rect x="446" y="494" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="528" y="520" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">SETTLED</text>
+<line x1="470" y1="560" x2="586" y2="560" stroke="#17324D" stroke-width="4"/>
+<circle cx="586" cy="560" r="13" fill="#D77836"/>
+<text x="528" y="594" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">一度だけ戻して静止</text>
+<text x="92" y="674" class="ui" font-size="15" font-weight="800" fill="#6A6258">loop: false / simultaneous principal motions: 1</text>
+<text x="608" y="694" text-anchor="end" class="ui" font-size="14" fill="#2F6F5D">proposal only / not implemented</text>
+</g>
+<g data-cue-id="cue_005" data-loop="false" data-principal-motion-count="1">
+<rect x="670" y="436" width="560" height="270" rx="22" fill="#F8F5ED"/>
+<text x="692" y="470" class="ui" font-size="19" font-weight="900" fill="#17324D">cue_005 / tactile pulse ≤ 2</text>
+<text x="1208" y="470" text-anchor="end" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">0.8s · ease_out</text>
+<rect x="690" y="494" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="772" y="520" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">START</text>
+<line x1="714" y1="560" x2="830" y2="560" stroke="#17324D" stroke-width="4"/>
+<circle cx="724" cy="560" r="13" fill="#D77836"/>
+<text x="772" y="594" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">稜線を静止表示</text>
+<rect x="868" y="494" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="950" y="520" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">EMPHASIS</text>
+<line x1="892" y1="560" x2="1008" y2="560" stroke="#17324D" stroke-width="4"/>
+<circle cx="956" cy="560" r="13" fill="#D77836"/>
+<text x="950" y="594" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">稜線を二回以内で脈動</text>
+<rect x="1046" y="494" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="1128" y="520" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">SETTLED</text>
+<line x1="1070" y1="560" x2="1186" y2="560" stroke="#17324D" stroke-width="4"/>
+<circle cx="1186" cy="560" r="13" fill="#D77836"/>
+<text x="1128" y="594" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">盛り上がりを静止保持</text>
+<text x="692" y="674" class="ui" font-size="15" font-weight="800" fill="#6A6258">loop: false / simultaneous principal motions: 1</text>
+<text x="1208" y="694" text-anchor="end" class="ui" font-size="14" fill="#2F6F5D">proposal only / not implemented</text>
+</g>
+<g data-cue-id="cue_006" data-loop="false" data-principal-motion-count="1">
+<rect x="1270" y="436" width="560" height="270" rx="22" fill="#F8F5ED"/>
+<text x="1292" y="470" class="ui" font-size="19" font-weight="900" fill="#17324D">cue_006 / loupe zoom once</text>
+<text x="1808" y="470" text-anchor="end" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">0.85s · ease_out</text>
+<rect x="1290" y="494" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="1372" y="520" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">START</text>
+<line x1="1314" y1="560" x2="1430" y2="560" stroke="#17324D" stroke-width="4"/>
+<circle cx="1324" cy="560" r="13" fill="#D77836"/>
+<text x="1372" y="594" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">ルーペを待機</text>
+<rect x="1468" y="494" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="1550" y="520" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">EMPHASIS</text>
+<line x1="1492" y1="560" x2="1608" y2="560" stroke="#17324D" stroke-width="4"/>
+<circle cx="1556" cy="560" r="13" fill="#D77836"/>
+<text x="1550" y="594" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">一度だけ拡大</text>
+<rect x="1646" y="494" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="1728" y="520" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">SETTLED</text>
+<line x1="1670" y1="560" x2="1786" y2="560" stroke="#17324D" stroke-width="4"/>
+<circle cx="1786" cy="560" r="13" fill="#D77836"/>
+<text x="1728" y="594" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">拡大ラベルを静止保持</text>
+<text x="1292" y="674" class="ui" font-size="15" font-weight="800" fill="#6A6258">loop: false / simultaneous principal motions: 1</text>
+<text x="1808" y="694" text-anchor="end" class="ui" font-size="14" fill="#2F6F5D">proposal only / not implemented</text>
+</g>
+<g data-cue-id="cue_007" data-loop="false" data-principal-motion-count="1">
+<rect x="70" y="740" width="560" height="270" rx="22" fill="#F8F5ED"/>
+<text x="92" y="774" class="ui" font-size="19" font-weight="900" fill="#17324D">cue_007 / callout once</text>
+<text x="608" y="774" text-anchor="end" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">0.6s · ease_out</text>
+<rect x="90" y="798" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="172" y="824" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">START</text>
+<line x1="114" y1="864" x2="230" y2="864" stroke="#17324D" stroke-width="4"/>
+<circle cx="124" cy="864" r="13" fill="#D77836"/>
+<text x="172" y="898" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">位置カードを静止表示</text>
+<rect x="268" y="798" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="350" y="824" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">EMPHASIS</text>
+<line x1="292" y1="864" x2="408" y2="864" stroke="#17324D" stroke-width="4"/>
+<circle cx="356" cy="864" r="13" fill="#D77836"/>
+<text x="350" y="898" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">差分を一度だけ指示</text>
+<rect x="446" y="798" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="528" y="824" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">SETTLED</text>
+<line x1="470" y1="864" x2="586" y2="864" stroke="#17324D" stroke-width="4"/>
+<circle cx="586" cy="864" r="13" fill="#D77836"/>
+<text x="528" y="898" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">三カードを静止保持</text>
+<text x="92" y="978" class="ui" font-size="15" font-weight="800" fill="#6A6258">loop: false / simultaneous principal motions: 1</text>
+<text x="608" y="998" text-anchor="end" class="ui" font-size="14" fill="#2F6F5D">proposal only / not implemented</text>
+</g>
+<g data-cue-id="cue_008" data-loop="false" data-principal-motion-count="1">
+<rect x="670" y="740" width="560" height="270" rx="22" fill="#F8F5ED"/>
+<text x="692" y="774" class="ui" font-size="19" font-weight="900" fill="#17324D">cue_008 / difference reveal once</text>
+<text x="1208" y="774" text-anchor="end" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">0.7s · ease_out</text>
+<rect x="690" y="798" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="772" y="824" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">START</text>
+<line x1="714" y1="864" x2="830" y2="864" stroke="#17324D" stroke-width="4"/>
+<circle cx="724" cy="864" r="13" fill="#D77836"/>
+<text x="772" y="898" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">比較カードを待機</text>
+<rect x="868" y="798" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="950" y="824" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">EMPHASIS</text>
+<line x1="892" y1="864" x2="1008" y2="864" stroke="#17324D" stroke-width="4"/>
+<circle cx="956" cy="864" r="13" fill="#D77836"/>
+<text x="950" y="898" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">差異を一度だけ提示</text>
+<rect x="1046" y="798" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="1128" y="824" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">SETTLED</text>
+<line x1="1070" y1="864" x2="1186" y2="864" stroke="#17324D" stroke-width="4"/>
+<circle cx="1186" cy="864" r="13" fill="#D77836"/>
+<text x="1128" y="898" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">限定比較を静止保持</text>
+<text x="692" y="978" class="ui" font-size="15" font-weight="800" fill="#6A6258">loop: false / simultaneous principal motions: 1</text>
+<text x="1208" y="998" text-anchor="end" class="ui" font-size="14" fill="#2F6F5D">proposal only / not implemented</text>
+</g>
+<g data-cue-id="cue_009" data-loop="false" data-principal-motion-count="1">
+<rect x="1270" y="740" width="560" height="270" rx="22" fill="#F8F5ED"/>
+<text x="1292" y="774" class="ui" font-size="19" font-weight="900" fill="#17324D">cue_009 / four-action sequence once</text>
+<text x="1808" y="774" text-anchor="end" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">1.2s · linear_steps</text>
+<rect x="1290" y="798" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="1372" y="824" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">START</text>
+<line x1="1314" y1="864" x2="1430" y2="864" stroke="#17324D" stroke-width="4"/>
+<circle cx="1324" cy="864" r="13" fill="#D77836"/>
+<text x="1372" y="898" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">四アイコンを待機</text>
+<rect x="1468" y="798" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="1550" y="824" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">EMPHASIS</text>
+<line x1="1492" y1="864" x2="1608" y2="864" stroke="#17324D" stroke-width="4"/>
+<circle cx="1556" cy="864" r="13" fill="#D77836"/>
+<text x="1550" y="898" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">四アイコンを一度だけ</text>
+<text x="1550" y="917" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">順次表示</text>
+<rect x="1646" y="798" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
+<text x="1728" y="824" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">SETTLED</text>
+<line x1="1670" y1="864" x2="1786" y2="864" stroke="#17324D" stroke-width="4"/>
+<circle cx="1786" cy="864" r="13" fill="#D77836"/>
+<text x="1728" y="898" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">四動作を静止保持</text>
+<text x="1292" y="978" class="ui" font-size="15" font-weight="800" fill="#6A6258">loop: false / simultaneous principal motions: 1</text>
+<text x="1808" y="998" text-anchor="end" class="ui" font-size="14" fill="#2F6F5D">proposal only / not implemented</text>
+</g>
+</svg>
