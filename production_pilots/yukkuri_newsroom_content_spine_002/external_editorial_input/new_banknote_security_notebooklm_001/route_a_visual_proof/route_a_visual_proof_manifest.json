@@ -4,12 +4,12 @@
   "route_id": "route_A_security_inspection_lab",
   "source_base_revision": "d38075b97efabc99d1a23e8e0afafd5d44f1e2de",
   "artifact_root": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof",
-  "artifact_count_excluding_manifest_and_readback": 14,
+  "artifact_count_excluding_manifest_and_readback": 21,
   "artifacts": [
     {
       "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/README_ROUTE_A_VISUAL_PROOF.md",
-      "sha256": "d103a2d7af5511367123396ec01ffe900691f98de6678ef60c595decf11e6c4d",
-      "size_bytes": 1763,
+      "sha256": "19ddc9b9c969ed06503c3b33ffe203ff1b9e28fb1d800f44d758f22b86494ffe",
+      "size_bytes": 2156,
       "category": "primary_review_surface"
     },
     {
@@ -20,39 +20,39 @@
     },
     {
       "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/keyframes/route_a_S1_overview.svg",
-      "sha256": "d7c15399125de9c7a05d8bd43ce5d6e50ec6c144200ff9c472d06e88e6f43c86",
-      "size_bytes": 5422,
-      "category": "full_frame_keyframe"
+      "sha256": "827a1d4a52ce4584ef4d6fbd49f3a56f127440a1732248edd3e49e4d7e782059",
+      "size_bytes": 5686,
+      "category": "annotation_full_frame_keyframe"
     },
     {
       "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/keyframes/route_a_S3_identification_summary.svg",
-      "sha256": "b7f1f10e6bc514aaa00c3e2bcb30f49dba8a770041ad391ebc0ecaed407daea0",
-      "size_bytes": 5534,
-      "category": "full_frame_keyframe"
+      "sha256": "a0df6710646df13e2c3b5fc50de6a603bf891398c8333b129d6f4f59969c7495",
+      "size_bytes": 5800,
+      "category": "annotation_full_frame_keyframe"
     },
     {
       "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/keyframes/route_a_cue_003_watermark.svg",
-      "sha256": "4c09f4ad4e6c26db35bdf15f9cea899c34cabd50a6b4ae0f66d8184c1f1f6c70",
-      "size_bytes": 4488,
-      "category": "full_frame_keyframe"
+      "sha256": "73b71f6524b2bfcf0b02848c6370511cc491cf7b882019a06e389461b9a439b9",
+      "size_bytes": 4739,
+      "category": "annotation_full_frame_keyframe"
     },
     {
       "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/keyframes/route_a_cue_004_hologram.svg",
-      "sha256": "58f8b0383164a2f93decca32cf12c8640be81098b529f117e5a2540651b4a410",
-      "size_bytes": 4907,
-      "category": "full_frame_keyframe"
+      "sha256": "cf668b45c7193ba77a3d1b214544766c1bb11da1cf58d69a39166a3083c24a74",
+      "size_bytes": 5163,
+      "category": "annotation_full_frame_keyframe"
     },
     {
       "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/keyframes/route_a_cue_005_intaglio.svg",
-      "sha256": "7fbf2ed7ac443ddb999cddc632e1d7b5c0c01306de3d2d7468f9409e3c0e6efd",
-      "size_bytes": 4686,
-      "category": "full_frame_keyframe"
+      "sha256": "9a982b5b61118b5aae55c7ff2aa9dfdc6e8450977b96b7ad7a0e15a71b5d71bc",
+      "size_bytes": 5073,
+      "category": "annotation_full_frame_keyframe"
     },
     {
       "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/keyframes/route_a_cue_006_microtext.svg",
-      "sha256": "c91b41bf28155d77116e3b26f8120225663ecdb757628678b1252ba41ea8d32d",
-      "size_bytes": 4829,
-      "category": "full_frame_keyframe"
+      "sha256": "c3561de81ff642131fb7275a6a1ec9d78011315890dd12eee99628c8be367472",
+      "size_bytes": 5360,
+      "category": "annotation_full_frame_keyframe"
     },
     {
       "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/route_a_cue_visual_mapping.json",
@@ -68,20 +68,20 @@
     },
     {
       "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/route_a_motion_storyboard.svg",
-      "sha256": "3c8aaeefad1e983e1bcd20613937b10c0db07ff0e72147284a2313574a97e478",
+      "sha256": "28e439fe01a94bc13cf49fe3ae368b06a3ac6fba91e7b40ad9a3d2efecdfc465",
       "size_bytes": 20037,
       "category": "motion_storyboard"
     },
     {
       "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/route_a_nine_cue_contact_sheet.svg",
-      "sha256": "d04f006ad04d881c1a84f4a226f461b33b50a34ab1e52895e18c0d701771ff5a",
-      "size_bytes": 15369,
+      "sha256": "d5a4109ffa047d1582594f1002ead30ae8c7b08d305e876b21ec7a91340dea14",
+      "size_bytes": 17323,
       "category": "nine_cue_coverage"
     },
     {
       "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/route_a_visual_proof.html",
-      "sha256": "5d06d6f526606aa20d423f8ba2495eb8d1e450cb57a41ece859dc5a24d7e692a",
-      "size_bytes": 5695,
+      "sha256": "ae7a2d39f4d43fbbc4c309b3a0ae5d4dc4d7308fc632b5ede54741f8b3fa4dde",
+      "size_bytes": 8594,
       "category": "primary_review_surface"
     },
     {
@@ -89,6 +89,48 @@
       "sha256": "5595e3422dd6980450bae7dc96bd9317af9f6bc841bc38ee94c654156c46a1f8",
       "size_bytes": 679,
       "category": "human_review_gate"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/viewer_keyframes/route_a_S1_overview.svg",
+      "sha256": "be9b0ee652a7d8ba3f5f545d5e100dee9810b82bbe22c85f9aa20ced8368d130",
+      "size_bytes": 3933,
+      "category": "viewer_full_frame_keyframe"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/viewer_keyframes/route_a_S3_identification_summary.svg",
+      "sha256": "4d2d1faae3ad020c13f06efa37b7193046af8b27e1cb7f7ec1c12a1f5ab00f39",
+      "size_bytes": 3990,
+      "category": "viewer_full_frame_keyframe"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/viewer_keyframes/route_a_cue_003_watermark.svg",
+      "sha256": "85b7df01d2aa0966f184e6eb7f73269163f92977ba148ce86fb2e9cc9ba5f17a",
+      "size_bytes": 3018,
+      "category": "viewer_full_frame_keyframe"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/viewer_keyframes/route_a_cue_004_hologram.svg",
+      "sha256": "c064fc47cfc200fe71e50da208a96a4ae1f2c98cc4c9478cc4563e1bdbb0e985",
+      "size_bytes": 3326,
+      "category": "viewer_full_frame_keyframe"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/viewer_keyframes/route_a_cue_005_intaglio.svg",
+      "sha256": "056c46fd8251db2e0b900300bb8c1411e800027791a7a0d78934fef3ba53540e",
+      "size_bytes": 3332,
+      "category": "viewer_full_frame_keyframe"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/viewer_keyframes/route_a_cue_006_microtext.svg",
+      "sha256": "09f9fe53024d8128c05ed01ee41bc2f56cb5e69372f72ce34bcc24542ac207cc",
+      "size_bytes": 3640,
+      "category": "viewer_full_frame_keyframe"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/route_a_visual_proof/visual_proof_presentation_revision_receipt.json",
+      "sha256": "1a7a772cd4bf5e647dcfdc1de24f9fc279f00a5ddba015a85f6ccd33481853af",
+      "size_bytes": 5134,
+      "category": "presentation_revision_evidence"
     }
   ],
   "protected_original_visual_proposal": {
@@ -172,7 +214,9 @@
     "modification_authorized": false
   },
   "proof_contract": {
-    "full_frame_keyframes": 6,
+    "viewer_keyframes": 6,
+    "annotation_keyframes": 6,
+    "default_html_surface": "viewer",
     "cue_coverage": 9,
     "canvas": {
       "width": 1920,

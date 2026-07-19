@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="ルーペで見る — マイクロ文字" data-route-id="route_A_security_inspection_lab" data-surface="viewer" data-scene-id="S2" data-cue-id="cue_006" data-approved-text="マイクロ文字の『NIPPONGINKO』は、ルーペで確かめられる。カラーコピー機では再現が難しいほど小さい文字なんだ。" data-subtitle-safe-area="84,780,1752,220" data-implementation-authorized="false"><style>.ui{font-family:"Yu Gothic UI","Meiryo",sans-serif}</style><title>ルーペで見る — マイクロ文字</title>
+  <rect width="1920" height="1080" fill="#E9E5DB"/>
+  <rect width="1920" height="108" fill="#17324D"/>
+  <text x="84" y="68" class="ui" font-size="30" font-weight="900" fill="#F8F5ED">新しいお札の確認ポイント</text>
+  <rect x="84" y="142" width="1220" height="578" rx="34" fill="#F8F5ED" stroke="#D4CEC0" stroke-width="3"/>
+  <rect x="118" y="174" width="470" height="52" rx="26" fill="#E1ECE6"/><text x="353" y="209" text-anchor="middle" class="ui" font-size="22" font-weight="800" fill="#2F6F5D">模式図／実券の縮尺・配置ではありません</text>
+  <rect x="520" y="274" width="728" height="374" rx="48" fill="#F3EFE4" stroke="#2F6F5D" stroke-width="5"/>
+  <g opacity="0.45" stroke="#2F6F5D" stroke-width="3"><path d="M570 342H1180M570 390H1180M570 438H1180M570 486H1180M570 534H1180M570 582H1180"/><path d="M610 310V618M690 310V618M770 310V618M850 310V618M930 310V618M1010 310V618M1090 310V618M1170 310V618"/></g>
+  <circle cx="930" cy="438" r="142" fill="#F8F5ED" stroke="#17324D" stroke-width="14"/>
+  <line x1="1034" y1="542" x2="1142" y2="632" stroke="#17324D" stroke-width="24" stroke-linecap="round"/>
+  <text x="930" y="430" text-anchor="middle" class="ui" font-size="30" font-weight="900" fill="#2F6F5D">NIPPONGINKO</text>
+  <text x="930" y="476" text-anchor="middle" class="ui" font-size="22" font-weight="700" fill="#17324D">模式ラベル</text>
+  <rect x="1340" y="142" width="496" height="578" rx="34" fill="#F8F5ED" stroke="#C7BFAF" stroke-width="3"/>
+  <text x="1384" y="204" class="ui" font-size="25" font-weight="800" fill="#2F6F5D">ルーペで見る</text>
+<text x="1384" y="270" text-anchor="start" class="ui" font-size="36" font-weight="900" fill="#17324D">マイクロ文字</text>
+  <line x1="1384" y1="360" x2="1792" y2="360" stroke="#D77836" stroke-width="6"/>
+<text x="1384" y="422" text-anchor="start" class="ui" font-size="27" font-weight="600" fill="#263E52">単一の模式ラベルを拡大し、</text>
+<text x="1384" y="466" text-anchor="start" class="ui" font-size="27" font-weight="600" fill="#263E52">実寸・密度・位置・周辺模様は</text>
+<text x="1384" y="510" text-anchor="start" class="ui" font-size="27" font-weight="600" fill="#263E52">再現しません。</text>
+  <rect x="84" y="780" width="1752" height="220" rx="28" fill="#111D29"/>
+  <rect x="84" y="780" width="12" height="220" rx="6" fill="#D77836"/>
+<text x="130" y="850" text-anchor="start" class="ui" font-size="32" font-weight="800" fill="#FFFFFF">マイクロ文字の『NIPPONGINKO』は、</text>
+<text x="130" y="892" text-anchor="start" class="ui" font-size="32" font-weight="800" fill="#FFFFFF">ルーペで確かめられる。</text>
+<text x="130" y="934" text-anchor="start" class="ui" font-size="32" font-weight="800" fill="#FFFFFF">カラーコピー機では再現が難しいほど</text>
+<text x="130" y="976" text-anchor="start" class="ui" font-size="32" font-weight="800" fill="#FFFFFF">小さい文字なんだ。</text>
+</svg>

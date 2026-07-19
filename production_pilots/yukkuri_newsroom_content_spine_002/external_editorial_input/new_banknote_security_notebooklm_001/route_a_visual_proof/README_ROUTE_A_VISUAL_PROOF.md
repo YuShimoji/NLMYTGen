@@ -3,16 +3,19 @@
 > **INTERNAL REVIEW / CONCRETE PROOF / NOT FINAL / NON-PUBLIC / NON-PRODUCTION**
 
 Route A — Security Inspection Labを、human visual reviewのための直接表示可能な
-1920×1080 SVG/HTML packageへ具体化しています。方向選択はproof生成だけを許可し、
+1920×1080 SVG/HTML packageへ具体化しています。既定の視聴者向け画面と、別区画の
+注釈・監査画面を分離しています。方向選択はproof生成だけを許可し、
 final visual acceptance、YMM4、render、production、publication、rightsを許可しません。
 
 ## Review entry
 
 - primary surface: `route_a_visual_proof.html`
-- six keyframes: `keyframes/`
+- six clean viewer frames: `viewer_keyframes/`
+- six annotation/audit frames: `keyframes/`
 - nine-cue overview: `route_a_nine_cue_contact_sheet.svg`
 - motion states: `route_a_motion_storyboard.svg`
 - exact questions: `route_a_visual_review_sheet.md`
+- presentation revision evidence: `visual_proof_presentation_revision_receipt.json`
 
 ## Visible contract
 
@@ -23,6 +26,8 @@ final visual acceptance、YMM4、render、production、publication、rightsを�
 - typography: Japanese system sans-serif; no font dependency
 - motion: one principal motion maximum per cue; continuous loop false
 - assets: original abstract SVG geometry only; no external resource
+- line wrapping: approved text is rendered from explicit semantic segments;
+  concatenation is exact and basic kinsoku/orphan-punctuation checks apply
 
 cue_008以外のorangeはUI emphasisです。cue_008だけが、approved textにある
 千円券中央の橙色gradientという事実色を限定的に示します。どのartifactも実券の

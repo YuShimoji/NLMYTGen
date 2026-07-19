@@ -1,11 +1,11 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: new-banknote-route-a-concrete-visual-proof-review-ready-v1
-State-Revision: 2026-07-19.4
+Project-State-ID: new-banknote-route-a-dual-surface-visual-proof-human-review-ready-v1
+State-Revision: 2026-07-19.5
 Updated: 2026-07-19 JST
-Product-State: new-banknote-route-a-keyframes-and-motion-proof-ready
+Product-State: new-banknote-route-a-viewer-and-annotation-proof-ready
 Product-Gate: human-route-a-visual-proof-review
-Recommended-Next: review-route-a-concrete-keyframes-and-motion
+Recommended-Next: review-clean-route-a-viewer-frames
 External-State: public-repo-feature-branch
 Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0
@@ -17,9 +17,15 @@ Tracked-Worktree: clean; unrelated untracked supervision artifact and intentiona
   `route_A_security_inspection_lab` for concrete proof generation only. The new
   receipt preserves S1/S2/S3, the schematic disclaimer, and the one-principal-
   motion/non-looping budget. Final visual acceptance and implementation remain false.
-- **Concrete proof is directly viewable**: six 1920×1080 full-frame SVG keyframes
-  cover S1, cue_003–cue_006, and S3. A 9/9 cue contact sheet preserves approved
-  subtitle text and exposes scene, visual role, motion, disclaimer, and risk labels.
+- **Viewer and annotation surfaces are separated**: six clean 1920×1080 viewer
+  frames cover S1, cue_003–cue_006, and S3 without cue IDs, proof status, motion
+  metadata, or safe-area labels. The six annotation frames retain those audit
+  overlays. The primary offline HTML defaults to viewer mode and exposes annotation
+  mode as an explicit secondary section.
+- **Mechanical presentation defects are closed**: approved subtitles and bounded
+  explanations use deterministic semantic segments. The known punctuation-only,
+  lexical/inflection split, and contact-sheet label truncation defects are absent;
+  concatenated cue text remains exact and all nine motion display labels are complete.
 - **Motion remains proposal-only**: all nine cues have start, emphasis, and settled
   states, duration/easing proposals, `loop: false`, and at most one principal motion.
   This is not motion playback or YMM4 feasibility evidence.
@@ -31,9 +37,10 @@ Tracked-Worktree: clean; unrelated untracked supervision artifact and intentiona
   scenes 2/4/3, speakers 3/6, claims, evidence edges, canonical/derived CSVs,
   lineage, current/historical YMM4 evidence, Operator Batch, and original A/B/C
   proposal files remain byte-exact to the integrated source.
-- **Actual output was inspected**: the primary offline HTML, all six full frames,
-  contact sheet, and storyboard were rendered locally at 1920×1080. One proof-only
-  text-fit repair cycle removed clipped long labels without changing approved text.
+- **Actual output was inspected**: the primary offline HTML, all six viewer frames,
+  all six annotation frames, contact sheet, and storyboard were rendered locally at
+  1920×1080. A bounded second repair raised the four-line annotation subtitle baseline;
+  no approved text, visual semantics, or motion budget changed.
 - **Boundary preserved**: no YMM4 launch/project, video render, source/image fetch,
   external asset, production/publication, rights action, PR, master integration, or
   full-suite run occurred. Ignored local evidence and the unrelated untracked
@@ -42,9 +49,10 @@ Tracked-Worktree: clean; unrelated untracked supervision artifact and intentiona
 ## Product Position
 
 The A/B/C choice is closed for this slice: Route A is the selected direction for
-concrete proof, not an accepted final design. The reviewer can now judge actual
-full-frame compositions, subtitle readability, diagram risk, and restrained motion
-before Shot/Motion or Asset/Proxy/Rights contracts are authorized.
+concrete proof, not an accepted final design. The reviewer now sees clean intended
+video screens first and can open separate audit evidence when needed, then judge
+composition, subtitle readability, diagram risk, and restrained motion before any
+Shot/Motion or Asset/Proxy/Rights contract is authorized.
 
 ## Exact Next Action
 
@@ -62,10 +70,12 @@ Return `accept` or a scene/cue-specific revision. Do not choose A/B/C again.
 - Primary human surface: pilot `route_a_visual_proof/route_a_visual_proof.html`.
 - Boundary and entry doc: `README_ROUTE_A_VISUAL_PROOF.md` beside it.
 - Direction receipt: `human_visual_direction_selection_receipt.json`.
-- Six frames: `route_a_visual_proof/keyframes/`.
+- Six viewer frames: `route_a_visual_proof/viewer_keyframes/`.
+- Six annotation frames: `route_a_visual_proof/keyframes/`.
 - Coverage: `route_a_nine_cue_contact_sheet.svg` and mapping JSON.
 - Motion: `route_a_motion_storyboard.svg` and JSON.
 - Machine inventories: `route_a_visual_proof_manifest.json` and readback JSON.
+- Presentation revision: `visual_proof_presentation_revision_receipt.json`.
 - Exact human questions: `route_a_visual_review_sheet.md`.
 
 ## Active Boundaries

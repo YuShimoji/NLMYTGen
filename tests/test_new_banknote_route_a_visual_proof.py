@@ -9,11 +9,15 @@ from pathlib import Path
 from xml.etree import ElementTree
 
 from src.pipeline.new_banknote_route_a_visual_proof import (
+    APPROVED_SUBTITLE_LINES_BY_CUE,
     BASE_REVISION,
     CANVAS_HEIGHT,
     CANVAS_WIDTH,
     DISCLAIMER,
     KEYFRAME_SPECS,
+    MOTION_DISPLAY_BY_CUE,
+    PRESENTATION_BASE_REVISION,
+    PRESENTATION_BEFORE_SHA256,
     REVIEW_QUESTIONS,
     ROUTE_ID,
     build_route_a_visual_proof,
@@ -28,7 +32,8 @@ PILOT = (
 )
 PROOF = PILOT / "route_a_visual_proof"
 KEYFRAMES = PROOF / "keyframes"
-EXPECTED_STATE = "new-banknote-route-a-concrete-visual-proof-review-ready-v1"
+VIEWER_KEYFRAMES = PROOF / "viewer_keyframes"
+EXPECTED_STATE = "new-banknote-route-a-dual-surface-visual-proof-human-review-ready-v1"
 
 
 def _load(path: Path) -> dict:
@@ -119,26 +124,76 @@ def test_direction_receipt_is_bounded_and_does_not_approve_implementation() -> N
     )
 
 
-def test_six_full_frame_keyframes_are_parseable_1920x1080_and_subtitle_safe() -> None:
+def test_six_viewer_and_six_annotation_frames_are_exact_and_1920x1080() -> None:
     expected_names = {spec["filename"] for spec in KEYFRAME_SPECS}
     assert {path.name for path in KEYFRAMES.glob("*.svg")} == expected_names
+    assert {path.name for path in VIEWER_KEYFRAMES.glob("*.svg")} == expected_names
     script = _load(PILOT / "canonical_script.json")
     cue_text = {cue["cue_id"]: cue["text"] for cue in script["cues"]}
-    for spec in KEYFRAME_SPECS:
-        path = KEYFRAMES / spec["filename"]
-        text = path.read_text(encoding="utf-8")
-        root = ElementTree.fromstring(text)
-        assert root.attrib["width"] == str(CANVAS_WIDTH)
-        assert root.attrib["height"] == str(CANVAS_HEIGHT)
-        assert root.attrib["viewBox"] == "0 0 1920 1080"
-        assert root.attrib["data-cue-id"] == spec["cue_id"]
-        assert root.attrib["data-subtitle-safe-area"] == "84,780,1752,220"
-        assert root.attrib["data-implementation-authorized"] == "false"
-        assert DISCLAIMER in text
-        normalized = "".join("".join(root.itertext()).split())
-        assert "".join(cue_text[spec["cue_id"]].split()) in normalized
-        assert "http://" not in text.replace("http://www.w3.org/2000/svg", "")
-        assert "https://" not in text
+    for directory, surface in ((KEYFRAMES, "annotation"), (VIEWER_KEYFRAMES, "viewer")):
+        for spec in KEYFRAME_SPECS:
+            path = directory / spec["filename"]
+            text = path.read_text(encoding="utf-8")
+            root = ElementTree.fromstring(text)
+            assert root.attrib["width"] == str(CANVAS_WIDTH)
+            assert root.attrib["height"] == str(CANVAS_HEIGHT)
+            assert root.attrib["viewBox"] == "0 0 1920 1080"
+            assert root.attrib["data-surface"] == surface
+            assert root.attrib["data-cue-id"] == spec["cue_id"]
+            assert root.attrib["data-approved-text"] == cue_text[spec["cue_id"]]
+            assert root.attrib["data-subtitle-safe-area"] == "84,780,1752,220"
+            assert root.attrib["data-implementation-authorized"] == "false"
+            assert DISCLAIMER in text
+            normalized = "".join("".join(root.itertext()).split())
+            assert "".join(cue_text[spec["cue_id"]].split()) in normalized
+            assert "http://" not in text.replace("http://www.w3.org/2000/svg", "")
+            assert "https://" not in text
+
+
+def test_semantic_wraps_preserve_approved_text_and_avoid_known_defects() -> None:
+    script = _load(PILOT / "canonical_script.json")
+    cue_text = {cue["cue_id"]: cue["text"] for cue in script["cues"]}
+    assert set(APPROVED_SUBTITLE_LINES_BY_CUE) == set(cue_text)
+    for cue_id, lines in APPROVED_SUBTITLE_LINES_BY_CUE.items():
+        assert "".join(lines) == cue_text[cue_id]
+        assert all(line and line[0] not in "、。）」』】！？!?" for line in lines)
+        assert all(line not in {"、", "。", "！", "？", "!", "?"} for line in lines)
+        assert not (len(lines) > 1 and len(lines[-1]) == 1)
+    protected_units = ("技術", "見える", "描かない", "持たない", "傾ける", "確かめられる", "覚えておこう")
+    for svg_path in [*KEYFRAMES.glob("*.svg"), *VIEWER_KEYFRAMES.glob("*.svg")]:
+        root = ElementTree.parse(svg_path).getroot()
+        visible_lines = [value.strip() for value in root.itertext() if value.strip()]
+        assert all(value not in {"、", "。", "！", "？", "!", "?"} for value in visible_lines)
+        assert all(value[0] not in "、。）」』】！？!?" for value in visible_lines)
+        approved = root.attrib["data-approved-text"]
+        expected_lines = APPROVED_SUBTITLE_LINES_BY_CUE[root.attrib["data-cue-id"]]
+        boundaries: set[int] = set()
+        cursor = 0
+        for line in expected_lines[:-1]:
+            cursor += len(line)
+            boundaries.add(cursor)
+        for unit in protected_units:
+            start = approved.find(unit)
+            if start >= 0:
+                assert not any(start < boundary < start + len(unit) for boundary in boundaries)
+
+
+def test_viewer_excludes_debug_ui_and_annotation_retains_audit_evidence() -> None:
+    debug_labels = (
+        "CONCRETE PROOF",
+        "REVIEW PENDING",
+        "PRINCIPAL MOTION",
+        "loop: false",
+        "principal: 1",
+        "SOURCE-BOUNDED EXPLANATION",
+        "SUBTITLE SAFE AREA",
+    )
+    viewer = "\n".join(path.read_text(encoding="utf-8") for path in VIEWER_KEYFRAMES.glob("*.svg"))
+    annotation = "\n".join(path.read_text(encoding="utf-8") for path in KEYFRAMES.glob("*.svg"))
+    assert all(label not in viewer for label in debug_labels)
+    assert all(label in annotation for label in debug_labels)
+    assert viewer.count(DISCLAIMER) == 6
+    assert annotation.count(DISCLAIMER) == 6
 
 
 def test_mapping_and_contact_sheet_cover_approved_nine_cues_exactly() -> None:
@@ -169,6 +224,20 @@ def test_mapping_and_contact_sheet_cover_approved_nine_cues_exactly() -> None:
     )
     for index in range(1, 10):
         assert f'data-cue-id="cue_{index:03d}"' in rendered
+    storyboard = (PROOF / "route_a_motion_storyboard.svg").read_text(encoding="utf-8")
+    for label in MOTION_DISPLAY_BY_CUE.values():
+        assert label in rendered
+        assert label in storyboard
+    assert all(
+        truncated not in rendered
+        for truncated in (
+            "label transiti</text>",
+            "layer reveal o</text>",
+            "light reveal o</text>",
+            "restrained til</text>",
+            "loupe zoom onc</text>",
+        )
+    )
 
 
 def test_motion_storyboard_has_start_emphasis_settled_and_no_loop() -> None:
@@ -201,6 +270,9 @@ def test_primary_html_is_offline_and_all_relative_targets_exist() -> None:
     assert "iframe" not in parser.tags
     for target in parser.links + parser.resources:
         assert not target.startswith(("http://", "https://", "file://", "/"))
+        if target.startswith("#"):
+            assert f'id="{target[1:]}"' in text
+            continue
         assert (path.parent / target).resolve().is_file()
     lowered = text.lower()
     assert all(
@@ -208,6 +280,13 @@ def test_primary_html_is_offline_and_all_relative_targets_exist() -> None:
         for token in ("https://", "file://", "cdn.", "@import", "analytics")
     )
     assert 'data-external-resource-count="0"' in text
+    assert 'data-default-surface="viewer"' in text
+    assert '<section id="viewer-mode"' in text
+    assert '<details id="annotation-mode"' in text
+    assert text.index('<section id="viewer-mode"') < text.index('<details id="annotation-mode"')
+    assert text.count('src="viewer_keyframes/') == 6
+    assert text.count('src="keyframes/') == 6
+    assert "意図する動画グラフィックではありません" in text
     assert "最終visual acceptance" in text
     assert "ymm4実装" in lowered
 
@@ -228,6 +307,9 @@ def test_manifest_readback_hashes_privacy_and_prohibited_fields() -> None:
     assert manifest["source_base_revision"] == BASE_REVISION
     assert manifest["proof_contract"]["human_visual_acceptance"] is False
     assert manifest["proof_contract"]["implementation_authorized"] is False
+    assert manifest["proof_contract"]["viewer_keyframes"] == 6
+    assert manifest["proof_contract"]["annotation_keyframes"] == 6
+    assert manifest["proof_contract"]["default_html_surface"] == "viewer"
     for row in manifest["artifacts"]:
         assert _sha(ROOT / row["path"]) == row["sha256"]
     assert readback["status"] == "passed"
@@ -252,6 +334,32 @@ def test_manifest_readback_hashes_privacy_and_prohibited_fields() -> None:
     ) is None
     assert "notebooklm.google.com" not in combined.lower()
     assert not any(path.suffix.lower() in {".ymmp", ".mp4", ".png"} for path in PROOF.rglob("*"))
+
+
+def test_presentation_revision_receipt_binds_before_after_and_pending_gate() -> None:
+    receipt = _load(PROOF / "visual_proof_presentation_revision_receipt.json")
+    assert receipt["receipt_id"] == "new-banknote-route-a-dual-surface-visual-proof-v1"
+    assert receipt["presentation_base_revision"] == PRESENTATION_BASE_REVISION
+    assert receipt["status"] == "human_review_ready_not_accepted"
+    assert receipt["surface_separation"]["default_html_surface"] == "viewer"
+    assert receipt["surface_separation"]["viewer_keyframe_count"] == 6
+    assert receipt["surface_separation"]["annotation_keyframe_count"] == 6
+    assert receipt["approved_content_invariance"]["approved_hashes_8_of_8_exact"] is True
+    assert receipt["approved_content_invariance"]["cue_text_segment_concatenation_exact"] is True
+    assert receipt["contact_sheet_motion_labels"]["display_values"] == list(
+        MOTION_DISPLAY_BY_CUE.values()
+    )
+    assert receipt["artifact_sha256"]["before"] == PRESENTATION_BEFORE_SHA256
+    assert len(receipt["artifact_sha256"]["after"]) == 15
+    for relative, digest in receipt["artifact_sha256"]["before"].items():
+        blob = _git_blob(PRESENTATION_BASE_REVISION, PROOF / relative)
+        before = subprocess.check_output(
+            ["git", "cat-file", "blob", blob], cwd=ROOT
+        )
+        assert hashlib.sha256(before).hexdigest() == digest
+    for relative, digest in receipt["artifact_sha256"]["after"].items():
+        assert _sha(PROOF / relative) == digest
+    assert all(value is False for value in receipt["authorization"].values())
 
 
 def test_approved_content_original_proposal_and_ignored_evidence_are_unchanged() -> None:
@@ -296,6 +404,6 @@ def test_generation_is_deterministic_and_state_is_review_ready() -> None:
     cockpit = (ROOT / "docs/PROJECT_COCKPIT.md").read_text(encoding="utf-8")
     for text in (runtime, cockpit):
         assert f"Project-State-ID: {EXPECTED_STATE}" in text
-        assert "Product-State: new-banknote-route-a-keyframes-and-motion-proof-ready" in text
+        assert "Product-State: new-banknote-route-a-viewer-and-annotation-proof-ready" in text
         assert "Product-Gate: human-route-a-visual-proof-review" in text
-        assert "Recommended-Next: review-route-a-concrete-keyframes-and-motion" in text
+        assert "Recommended-Next: review-clean-route-a-viewer-frames" in text

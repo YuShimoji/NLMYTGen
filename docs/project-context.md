@@ -1,6 +1,6 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-19 JST・Route A concrete proof / human review ready）
+## 現在の別端末再開ハンドオフ（2026-07-19 JST・Route A dual-surface proof / human review ready）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
@@ -8,7 +8,8 @@
 - **取得先**: `origin/codex/new-banknote-route-a-concrete-visual-proof-v1`。
   remoteは`https://github.com/YuShimoji/NLMYTGen.git`に設定済みで、新規repository作成は不要。
   `git fetch --prune origin`後、同branchをcheckoutしてfast-forward限定pullする。
-  exact source baseは`d38075b97efabc99d1a23e8e0afafd5d44f1e2de`。outcome commitは
+  exact content-authority baseは`d38075b97efabc99d1a23e8e0afafd5d44f1e2de`、presentation
+  revision baseは`f611aacd0e6d238bce76df7bdc6f55b86695b842`。outcome commitは
   current remote branch tipから解決し、push後のremote parity `0/0`とclean tracked worktreeを確認する。
   source successor、master、approved content、ignored evidenceは変更しない。
 - **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
@@ -16,17 +17,20 @@
   `route_a_visual_proof/README_ROUTE_A_VISUAL_PROOF.md` → primary proof HTML。
   旧Web thread、元A/B/C proposal、下のhandoffを現在の指示として使わない。
 - **現在の状態**: Project-State-IDは
-  `new-banknote-route-a-concrete-visual-proof-review-ready-v1`、State-Revisionは
-  `2026-07-19.4`。Route Aはconcrete proof生成の方向として明示的に選択済みだが、
+  `new-banknote-route-a-dual-surface-visual-proof-human-review-ready-v1`、State-Revisionは
+  `2026-07-19.5`。Route Aはconcrete proof生成の方向として明示的に選択済みだが、
   final visual acceptanceとimplementation authorizationはfalse。
-- **H0 concrete proof**: S1、cue_003–cue_006、S3の六つの1920×1080 keyframe、
-  approved subtitles付き9/9 cue contact sheet、全cueのstart/emphasis/settled storyboard、
-  subtitle safe area、visible schematic disclaimerをoffline SVG/HTMLで生成した。
+- **H0 dual-surface proof**: S1、cue_003–cue_006、S3の六つのclean viewer frameと
+  六つのannotation frameを分離した。HTMLはviewerを既定表示とし、annotation overlayは
+  動画graphicではないことを明記する。approved subtitles付き9/9 cue contact sheet、
+  全cueのstart/emphasis/settled storyboard、visible schematic disclaimerを保持する。
 - **protected authority**: 8 approved hashes、9 cue text/order、2/4/3 scene、3/6 speaker、
   claims/edges、canonical/derived CSV、lineage、current/historical YMM4 evidence、
   five-action Operator Batch、元A/B/C proposalはsource baseとbyte-exact。
-- **inspection / validation**: all SVG/HTML/JSONをparseし、既存Edgeで1920×1080表示を
-  実見した。長いlabelのclipを一回repairし、approved textを変えずに収束した。
+- **inspection / validation**: all SVG/HTML/JSONをparseし、local Chromeでviewer 6、
+  annotation 6、contact sheet、storyboard、primary HTMLを1920×1080表示した。句読点単独、
+  既知語中分割、説明活用分割、motion label省略を修復し、四行annotation字幕のbaselineも
+  一回repairした。approved text、visual semantics、motion budgetは変更していない。
 - **exact next action**: `route_a_visual_proof.html`と四問review sheetを見て、
   `accept`またはscene/cue-specific revisionを返す。A/B/Cは選び直さない。
 - **未完了境界**: human visual acceptance、Shot/Motion、Asset/Proxy/Rights、YMM4 feasibility、

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="触る — 深凹版印刷" data-route-id="route_A_security_inspection_lab" data-surface="viewer" data-scene-id="S2" data-cue-id="cue_005" data-approved-text="触るとざらざらするのは、額面数字などのインキを高く盛り上げる深凹版印刷なんだね。" data-subtitle-safe-area="84,780,1752,220" data-implementation-authorized="false"><style>.ui{font-family:"Yu Gothic UI","Meiryo",sans-serif}</style><title>触る — 深凹版印刷</title>
+  <rect width="1920" height="1080" fill="#E9E5DB"/>
+  <rect width="1920" height="108" fill="#17324D"/>
+  <text x="84" y="68" class="ui" font-size="30" font-weight="900" fill="#F8F5ED">新しいお札の確認ポイント</text>
+  <rect x="84" y="142" width="1220" height="578" rx="34" fill="#F8F5ED" stroke="#D4CEC0" stroke-width="3"/>
+  <rect x="118" y="174" width="470" height="52" rx="26" fill="#E1ECE6"/><text x="353" y="209" text-anchor="middle" class="ui" font-size="22" font-weight="800" fill="#2F6F5D">模式図／実券の縮尺・配置ではありません</text>
+  <rect x="520" y="274" width="728" height="374" rx="48" fill="#F3EFE4" stroke="#2F6F5D" stroke-width="5"/>
+  <path d="M620 558C680 558 692 382 752 382S824 558 884 558 956 382 1016 382 1088 558 1148 558" fill="none" stroke="#2F6F5D" stroke-width="22" stroke-linecap="round"/>
+  <path d="M620 594H1148" stroke="#17324D" stroke-width="7"/>
+  <path d="M748 330V278M884 330V258M1020 330V278" stroke="#D77836" stroke-width="8" stroke-linecap="round"/>
+  <path d="M728 300L748 330L768 300M864 280L884 310L904 280M1000 300L1020 330L1040 300" fill="none" stroke="#D77836" stroke-width="8"/>
+  <text x="884" y="640" text-anchor="middle" class="ui" font-size="24" font-weight="800" fill="#17324D">触感の模式図／縮尺なし</text>
+  <rect x="1340" y="142" width="496" height="578" rx="34" fill="#F8F5ED" stroke="#C7BFAF" stroke-width="3"/>
+  <text x="1384" y="204" class="ui" font-size="25" font-weight="800" fill="#2F6F5D">触る</text>
+<text x="1384" y="270" text-anchor="start" class="ui" font-size="36" font-weight="900" fill="#17324D">深凹版印刷</text>
+  <line x1="1384" y1="360" x2="1792" y2="360" stroke="#D77836" stroke-width="6"/>
+<text x="1384" y="422" text-anchor="start" class="ui" font-size="27" font-weight="600" fill="#263E52">インキの盛り上がりと触感を、</text>
+<text x="1384" y="466" text-anchor="start" class="ui" font-size="27" font-weight="600" fill="#263E52">寸法を持たない三本の抽象稜線で</text>
+<text x="1384" y="510" text-anchor="start" class="ui" font-size="27" font-weight="600" fill="#263E52">示します。</text>
+  <rect x="84" y="780" width="1752" height="220" rx="28" fill="#111D29"/>
+  <rect x="84" y="780" width="12" height="220" rx="6" fill="#D77836"/>
+<text x="130" y="850" text-anchor="start" class="ui" font-size="32" font-weight="800" fill="#FFFFFF">触るとざらざらするのは、</text>
+<text x="130" y="892" text-anchor="start" class="ui" font-size="32" font-weight="800" fill="#FFFFFF">額面数字などのインキを高く盛り上げる</text>
+<text x="130" y="934" text-anchor="start" class="ui" font-size="32" font-weight="800" fill="#FFFFFF">深凹版印刷なんだね。</text>
+</svg>

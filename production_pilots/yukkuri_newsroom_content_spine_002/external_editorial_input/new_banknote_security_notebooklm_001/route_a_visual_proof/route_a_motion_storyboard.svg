@@ -192,8 +192,8 @@
 <text x="1550" y="824" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">EMPHASIS</text>
 <line x1="1492" y1="864" x2="1608" y2="864" stroke="#17324D" stroke-width="4"/>
 <circle cx="1556" cy="864" r="13" fill="#D77836"/>
-<text x="1550" y="898" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">四アイコンを一度だけ</text>
-<text x="1550" y="917" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">順次表示</text>
+<text x="1550" y="898" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">四アイコンを</text>
+<text x="1550" y="917" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#17324D">一度だけ順次表示</text>
 <rect x="1646" y="798" width="164" height="150" rx="15" fill="#E9E5DB" stroke="#C7BFAF" stroke-width="2"/>
 <text x="1728" y="824" text-anchor="middle" class="ui" font-size="15" font-weight="900" fill="#2F6F5D">SETTLED</text>
 <line x1="1670" y1="864" x2="1786" y2="864" stroke="#17324D" stroke-width="4"/>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="透かす — 高精細すき入れ" data-route-id="route_A_security_inspection_lab" data-surface="viewer" data-scene-id="S2" data-cue-id="cue_003" data-approved-text="まずは高精細すき入れ。光に透かすと、細かな模様が見えるんだぜ。" data-subtitle-safe-area="84,780,1752,220" data-implementation-authorized="false"><style>.ui{font-family:"Yu Gothic UI","Meiryo",sans-serif}</style><title>透かす — 高精細すき入れ</title>
+  <rect width="1920" height="1080" fill="#E9E5DB"/>
+  <rect width="1920" height="108" fill="#17324D"/>
+  <text x="84" y="68" class="ui" font-size="30" font-weight="900" fill="#F8F5ED">新しいお札の確認ポイント</text>
+  <rect x="84" y="142" width="1220" height="578" rx="34" fill="#F8F5ED" stroke="#D4CEC0" stroke-width="3"/>
+  <rect x="118" y="174" width="470" height="52" rx="26" fill="#E1ECE6"/><text x="353" y="209" text-anchor="middle" class="ui" font-size="22" font-weight="800" fill="#2F6F5D">模式図／実券の縮尺・配置ではありません</text>
+  <rect x="520" y="274" width="728" height="374" rx="48" fill="#F3EFE4" stroke="#2F6F5D" stroke-width="5"/>
+  <path d="M558 610L848 292L1002 292L720 610Z" fill="#DDE9F0" opacity="0.8"/>
+  <path d="M720 560C780 330 1010 330 1100 558M748 560C810 380 985 380 1072 558M780 560C840 426 960 426 1040 558" fill="none" stroke="#2F6F5D" stroke-width="7" opacity="0.75"/>
+  <circle cx="914" cy="470" r="74" fill="#F8F5ED" opacity="0.72"/>
+  <text x="914" y="480" text-anchor="middle" class="ui" font-size="28" font-weight="900" fill="#17324D">透過光</text>
+  <rect x="1340" y="142" width="496" height="578" rx="34" fill="#F8F5ED" stroke="#C7BFAF" stroke-width="3"/>
+  <text x="1384" y="204" class="ui" font-size="25" font-weight="800" fill="#2F6F5D">透かす</text>
+<text x="1384" y="270" text-anchor="start" class="ui" font-size="36" font-weight="900" fill="#17324D">高精細すき入れ</text>
+  <line x1="1384" y1="360" x2="1792" y2="360" stroke="#D77836" stroke-width="6"/>
+<text x="1384" y="422" text-anchor="start" class="ui" font-size="27" font-weight="600" fill="#263E52">透過光で細かな模様が見える</text>
+<text x="1384" y="466" text-anchor="start" class="ui" font-size="27" font-weight="600" fill="#263E52">現象だけを、抽象的な光の層として</text>
+<text x="1384" y="510" text-anchor="start" class="ui" font-size="27" font-weight="600" fill="#263E52">示します。</text>
+  <rect x="84" y="780" width="1752" height="220" rx="28" fill="#111D29"/>
+  <rect x="84" y="780" width="12" height="220" rx="6" fill="#D77836"/>
+<text x="130" y="850" text-anchor="start" class="ui" font-size="32" font-weight="800" fill="#FFFFFF">まずは高精細すき入れ。</text>
+<text x="130" y="892" text-anchor="start" class="ui" font-size="32" font-weight="800" fill="#FFFFFF">光に透かすと、細かな模様が見えるんだぜ。</text>
+</svg>

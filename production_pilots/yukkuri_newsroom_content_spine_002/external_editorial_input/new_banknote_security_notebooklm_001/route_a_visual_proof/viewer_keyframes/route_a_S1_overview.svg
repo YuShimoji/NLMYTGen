@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="全体像を見る — 新しいお札を、四つの確認動作から見る" data-route-id="route_A_security_inspection_lab" data-surface="viewer" data-scene-id="S1" data-cue-id="cue_001" data-approved-text="2024年に発行された新しいお札って、見た目以外にも変わったところがあるの？" data-subtitle-safe-area="84,780,1752,220" data-implementation-authorized="false"><style>.ui{font-family:"Yu Gothic UI","Meiryo",sans-serif}</style><title>全体像を見る — 新しいお札を、四つの確認動作から見る</title>
+  <rect width="1920" height="1080" fill="#E9E5DB"/>
+  <rect width="1920" height="108" fill="#17324D"/>
+  <text x="84" y="68" class="ui" font-size="30" font-weight="900" fill="#F8F5ED">新しいお札の確認ポイント</text>
+  <rect x="84" y="142" width="1220" height="578" rx="34" fill="#F8F5ED" stroke="#D4CEC0" stroke-width="3"/>
+  <rect x="118" y="174" width="470" height="52" rx="26" fill="#E1ECE6"/><text x="353" y="209" text-anchor="middle" class="ui" font-size="22" font-weight="800" fill="#2F6F5D">模式図／実券の縮尺・配置ではありません</text>
+  <rect x="520" y="274" width="728" height="374" rx="48" fill="#F3EFE4" stroke="#2F6F5D" stroke-width="5"/>
+  <circle cx="884" cy="452" r="94" fill="#E1ECE6" stroke="#2F6F5D" stroke-width="5"/>
+  <text x="884" y="464" text-anchor="middle" class="ui" font-size="31" font-weight="900" fill="#17324D">2024年／新紙幣</text>
+  <rect x="574" y="332" width="164" height="92" rx="18" fill="#DDE9F0"/><text x="656" y="389" text-anchor="middle" class="ui" font-size="25" font-weight="800" fill="#17324D">透かす</text>
+  <rect x="1030" y="332" width="164" height="92" rx="18" fill="#F1DFC9"/><text x="1112" y="389" text-anchor="middle" class="ui" font-size="25" font-weight="800" fill="#17324D">傾ける</text>
+  <rect x="574" y="506" width="164" height="92" rx="18" fill="#E1ECE6"/><text x="656" y="563" text-anchor="middle" class="ui" font-size="25" font-weight="800" fill="#17324D">触る</text>
+  <rect x="1030" y="506" width="164" height="92" rx="18" fill="#E8E2F1"/><text x="1112" y="563" text-anchor="middle" class="ui" font-size="25" font-weight="800" fill="#17324D">ルーペ</text>
+  <path d="M738 378L802 420M1030 378L966 420M738 552L802 494M1030 552L966 494" stroke="#2F6F5D" stroke-width="6"/>
+  <rect x="1340" y="142" width="496" height="578" rx="34" fill="#F8F5ED" stroke="#C7BFAF" stroke-width="3"/>
+  <text x="1384" y="204" class="ui" font-size="25" font-weight="800" fill="#2F6F5D">全体像を見る</text>
+<text x="1384" y="270" text-anchor="start" class="ui" font-size="36" font-weight="900" fill="#17324D">新しいお札を、四つの</text>
+<text x="1384" y="318" text-anchor="start" class="ui" font-size="36" font-weight="900" fill="#17324D">確認動作から見る</text>
+  <line x1="1384" y1="360" x2="1792" y2="360" stroke="#D77836" stroke-width="6"/>
+<text x="1384" y="422" text-anchor="start" class="ui" font-size="27" font-weight="600" fill="#263E52">2024年発行という入口から、</text>
+<text x="1384" y="466" text-anchor="start" class="ui" font-size="27" font-weight="600" fill="#263E52">複数の技術と見分けやすさを</text>
+<text x="1384" y="510" text-anchor="start" class="ui" font-size="27" font-weight="600" fill="#263E52">順に整理します。</text>
+  <rect x="84" y="780" width="1752" height="220" rx="28" fill="#111D29"/>
+  <rect x="84" y="780" width="12" height="220" rx="6" fill="#D77836"/>
+<text x="130" y="850" text-anchor="start" class="ui" font-size="32" font-weight="800" fill="#FFFFFF">2024年に発行された新しいお札って、</text>
+<text x="130" y="892" text-anchor="start" class="ui" font-size="32" font-weight="800" fill="#FFFFFF">見た目以外にも変わったところがあるの？</text>
+</svg>

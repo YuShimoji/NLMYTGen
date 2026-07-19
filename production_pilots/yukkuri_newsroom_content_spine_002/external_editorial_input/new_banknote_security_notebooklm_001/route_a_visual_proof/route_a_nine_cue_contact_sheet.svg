@@ -4,134 +4,136 @@
 <text x="70" y="54" class="ui" font-size="30" font-weight="900" fill="#FFFFFF">ROUTE A / NINE-CUE CONTACT SHEET</text>
 <text x="1850" y="52" text-anchor="end" class="ui" font-size="23" font-weight="800" fill="#A9C8BC">模式図／実券の縮尺・配置ではありません</text>
 <text x="70" y="91" class="ui" font-size="20" font-weight="700" fill="#DFA06F">APPROVED SUBTITLES / ONE PRINCIPAL MOTION / LOOP FALSE</text>
-<g data-cue-id="cue_001" data-scene-id="S1">
+<g data-cue-id="cue_001" data-scene-id="S1" data-approved-text="2024年に発行された新しいお札って、見た目以外にも変わったところがあるの？" data-motion-id="short_label_transition">
 <rect x="70" y="138" width="560" height="270" rx="22" fill="#F8F5ED" stroke="#C7BFAF" stroke-width="3"/>
 <rect x="70" y="138" width="560" height="52" rx="22" fill="#17324D"/>
 <text x="94" y="173" class="ui" font-size="22" font-weight="900" fill="#FFFFFF">cue_001 / S1</text>
 <rect x="462" y="148" width="144" height="32" rx="16" fill="#D77836"/><text x="534" y="171" text-anchor="middle" class="ui" font-size="17" font-weight="900" fill="#FFFFFF">問い</text>
 <rect x="94" y="210" width="112" height="112" rx="18" fill="#E1ECE6" stroke="#2F6F5D" stroke-width="3"/>
 <text x="150" y="262" text-anchor="middle" class="ui" font-size="19" font-weight="900" fill="#17324D">模式図</text>
-<text x="150" y="292" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">label transiti</text>
-<text x="228" y="228" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">2024年に発行された新しいお札って、見</text>
-<text x="228" y="252" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">た目以外にも変わったところがあるの？</text>
+<text x="150" y="292" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">抽象図</text>
+<text x="228" y="228" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">2024年に発行された新しいお札って、</text>
+<text x="228" y="250" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">見た目以外にも変わったところがあるの？</text>
 <line x1="94" y1="340" x2="606" y2="340" stroke="#D8D1C4" stroke-width="2"/>
 <text x="94" y="366" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">motion: label transition once</text>
 <text x="94" y="390" class="ui" font-size="15" fill="#6A6258">risk: 発行年のみ／政策意図を示さない</text>
 </g>
-<g data-cue-id="cue_002" data-scene-id="S1">
+<g data-cue-id="cue_002" data-scene-id="S1" data-approved-text="あるぞ。偽造防止では、高精細すき入れや3Dホログラムなど複数の技術を組み合わせている。誰にとっても使いやすいユニバーサルデザインも取り入れたんだ。" data-motion-id="short_label_transition">
 <rect x="670" y="138" width="560" height="270" rx="22" fill="#F8F5ED" stroke="#C7BFAF" stroke-width="3"/>
 <rect x="670" y="138" width="560" height="52" rx="22" fill="#17324D"/>
 <text x="694" y="173" class="ui" font-size="22" font-weight="900" fill="#FFFFFF">cue_002 / S1</text>
 <rect x="1062" y="148" width="144" height="32" rx="16" fill="#D77836"/><text x="1134" y="171" text-anchor="middle" class="ui" font-size="17" font-weight="900" fill="#FFFFFF">俯瞰</text>
 <rect x="694" y="210" width="112" height="112" rx="18" fill="#E1ECE6" stroke="#2F6F5D" stroke-width="3"/>
 <text x="750" y="262" text-anchor="middle" class="ui" font-size="19" font-weight="900" fill="#17324D">模式図</text>
-<text x="750" y="292" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">layer reveal o</text>
-<text x="828" y="228" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">あるぞ。偽造防止では、高精細すき入れや3</text>
-<text x="828" y="252" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">Dホログラムなど複数の技術を組み合わせて</text>
-<text x="828" y="276" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">いる。誰にとっても使いやすいユニバーサル</text>
-<text x="828" y="300" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">デザインも取り入れたんだ。</text>
+<text x="750" y="292" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">抽象図</text>
+<text x="828" y="228" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">あるぞ。偽造防止では、高精細すき入れや</text>
+<text x="828" y="250" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">3Dホログラムなど複数の技術を</text>
+<text x="828" y="272" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">組み合わせている。誰にとっても使いやすい</text>
+<text x="828" y="294" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">ユニバーサルデザインも取り入れたんだ。</text>
 <line x1="694" y1="340" x2="1206" y2="340" stroke="#D8D1C4" stroke-width="2"/>
 <text x="694" y="366" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">motion: layer reveal once</text>
 <text x="694" y="390" class="ui" font-size="15" fill="#6A6258">risk: 採用技術のみ／効果を断定しない</text>
 </g>
-<g data-cue-id="cue_003" data-scene-id="S2">
+<g data-cue-id="cue_003" data-scene-id="S2" data-approved-text="まずは高精細すき入れ。光に透かすと、細かな模様が見えるんだぜ。" data-motion-id="light_reveal_once">
 <rect x="1270" y="138" width="560" height="270" rx="22" fill="#F8F5ED" stroke="#C7BFAF" stroke-width="3"/>
 <rect x="1270" y="138" width="560" height="52" rx="22" fill="#17324D"/>
 <text x="1294" y="173" class="ui" font-size="22" font-weight="900" fill="#FFFFFF">cue_003 / S2</text>
 <rect x="1662" y="148" width="144" height="32" rx="16" fill="#D77836"/><text x="1734" y="171" text-anchor="middle" class="ui" font-size="17" font-weight="900" fill="#FFFFFF">透かす</text>
 <rect x="1294" y="210" width="112" height="112" rx="18" fill="#E1ECE6" stroke="#2F6F5D" stroke-width="3"/>
 <text x="1350" y="262" text-anchor="middle" class="ui" font-size="19" font-weight="900" fill="#17324D">模式図</text>
-<text x="1350" y="292" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">light reveal o</text>
-<text x="1428" y="228" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">まずは高精細すき入れ。光に透かすと、細か</text>
-<text x="1428" y="252" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">な模様が見えるんだぜ。</text>
+<text x="1350" y="292" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">抽象図</text>
+<text x="1428" y="228" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">まずは高精細すき入れ。</text>
+<text x="1428" y="250" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">光に透かすと、細かな模様が見えるんだぜ。</text>
 <line x1="1294" y1="340" x2="1806" y2="340" stroke="#D8D1C4" stroke-width="2"/>
 <text x="1294" y="366" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">motion: light reveal once</text>
 <text x="1294" y="390" class="ui" font-size="15" fill="#6A6258">risk: 現象のみ／位置・寸法・製法なし</text>
 </g>
-<g data-cue-id="cue_004" data-scene-id="S2">
+<g data-cue-id="cue_004" data-scene-id="S2" data-approved-text="次は3Dホログラム。角度を変えると、三次元の肖像が回転して見えるぞ。" data-motion-id="restrained_tilt_once">
 <rect x="70" y="440" width="560" height="270" rx="22" fill="#F8F5ED" stroke="#C7BFAF" stroke-width="3"/>
 <rect x="70" y="440" width="560" height="52" rx="22" fill="#17324D"/>
 <text x="94" y="475" class="ui" font-size="22" font-weight="900" fill="#FFFFFF">cue_004 / S2</text>
 <rect x="462" y="450" width="144" height="32" rx="16" fill="#D77836"/><text x="534" y="473" text-anchor="middle" class="ui" font-size="17" font-weight="900" fill="#FFFFFF">傾ける</text>
 <rect x="94" y="512" width="112" height="112" rx="18" fill="#E1ECE6" stroke="#2F6F5D" stroke-width="3"/>
 <text x="150" y="564" text-anchor="middle" class="ui" font-size="19" font-weight="900" fill="#17324D">模式図</text>
-<text x="150" y="594" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">restrained til</text>
-<text x="228" y="530" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">次は3Dホログラム。角度を変えると、三次</text>
-<text x="228" y="554" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">元の肖像が回転して見えるぞ。</text>
+<text x="150" y="594" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">抽象図</text>
+<text x="228" y="530" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">次は3Dホログラム。角度を変えると、</text>
+<text x="228" y="552" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">三次元の肖像が回転して見えるぞ。</text>
 <line x1="94" y1="642" x2="606" y2="642" stroke="#D8D1C4" stroke-width="2"/>
 <text x="94" y="668" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">motion: restrained tilt once</text>
 <text x="94" y="692" class="ui" font-size="15" fill="#6A6258">risk: 現象のみ／実形状・箔模様なし</text>
 </g>
-<g data-cue-id="cue_005" data-scene-id="S2">
+<g data-cue-id="cue_005" data-scene-id="S2" data-approved-text="触るとざらざらするのは、額面数字などのインキを高く盛り上げる深凹版印刷なんだね。" data-motion-id="tactile_pulse">
 <rect x="670" y="440" width="560" height="270" rx="22" fill="#F8F5ED" stroke="#C7BFAF" stroke-width="3"/>
 <rect x="670" y="440" width="560" height="52" rx="22" fill="#17324D"/>
 <text x="694" y="475" class="ui" font-size="22" font-weight="900" fill="#FFFFFF">cue_005 / S2</text>
 <rect x="1062" y="450" width="144" height="32" rx="16" fill="#D77836"/><text x="1134" y="473" text-anchor="middle" class="ui" font-size="17" font-weight="900" fill="#FFFFFF">触る</text>
 <rect x="694" y="512" width="112" height="112" rx="18" fill="#E1ECE6" stroke="#2F6F5D" stroke-width="3"/>
 <text x="750" y="564" text-anchor="middle" class="ui" font-size="19" font-weight="900" fill="#17324D">模式図</text>
-<text x="750" y="594" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">tactile pulse </text>
-<text x="828" y="530" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">触るとざらざらするのは、額面数字などのイ</text>
-<text x="828" y="554" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">ンキを高く盛り上げる深凹版印刷なんだね。</text>
+<text x="750" y="594" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">抽象図</text>
+<text x="828" y="530" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">触るとざらざらするのは、</text>
+<text x="828" y="552" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">額面数字などのインキを高く盛り上げる</text>
+<text x="828" y="574" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">深凹版印刷なんだね。</text>
 <line x1="694" y1="642" x2="1206" y2="642" stroke="#D8D1C4" stroke-width="2"/>
 <text x="694" y="668" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">motion: tactile pulse ≤ 2</text>
 <text x="694" y="692" class="ui" font-size="15" fill="#6A6258">risk: 触感のみ／製造寸法なし</text>
 </g>
-<g data-cue-id="cue_006" data-scene-id="S2">
+<g data-cue-id="cue_006" data-scene-id="S2" data-approved-text="マイクロ文字の『NIPPONGINKO』は、ルーペで確かめられる。カラーコピー機では再現が難しいほど小さい文字なんだ。" data-motion-id="loupe_zoom_once">
 <rect x="1270" y="440" width="560" height="270" rx="22" fill="#F8F5ED" stroke="#C7BFAF" stroke-width="3"/>
 <rect x="1270" y="440" width="560" height="52" rx="22" fill="#17324D"/>
 <text x="1294" y="475" class="ui" font-size="22" font-weight="900" fill="#FFFFFF">cue_006 / S2</text>
 <rect x="1662" y="450" width="144" height="32" rx="16" fill="#D77836"/><text x="1734" y="473" text-anchor="middle" class="ui" font-size="17" font-weight="900" fill="#FFFFFF">ルーペで見る</text>
 <rect x="1294" y="512" width="112" height="112" rx="18" fill="#E1ECE6" stroke="#2F6F5D" stroke-width="3"/>
 <text x="1350" y="564" text-anchor="middle" class="ui" font-size="19" font-weight="900" fill="#17324D">模式図</text>
-<text x="1350" y="594" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">loupe zoom onc</text>
-<text x="1428" y="530" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">マイクロ文字の『NIPPONGINKO』</text>
-<text x="1428" y="554" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">は、ルーペで確かめられる。カラーコピー機</text>
-<text x="1428" y="578" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">では再現が難しいほど小さい文字なんだ。</text>
+<text x="1350" y="594" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">抽象図</text>
+<text x="1428" y="530" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">マイクロ文字の『NIPPONGINKO』は、</text>
+<text x="1428" y="552" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">ルーペで確かめられる。</text>
+<text x="1428" y="574" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">カラーコピー機では再現が難しいほど</text>
+<text x="1428" y="596" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">小さい文字なんだ。</text>
 <line x1="1294" y1="642" x2="1806" y2="642" stroke="#D8D1C4" stroke-width="2"/>
 <text x="1294" y="668" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">motion: loupe zoom once</text>
 <text x="1294" y="692" class="ui" font-size="15" fill="#6A6258">risk: 模式ラベルのみ／実寸・密度なし</text>
 </g>
-<g data-cue-id="cue_007" data-scene-id="S3">
+<g data-cue-id="cue_007" data-scene-id="S3" data-approved-text="見分けやすさの工夫では、識別マークを11本の斜線にそろえ、券種ごとに位置を変えているぜ。" data-motion-id="position_callout_once">
 <rect x="70" y="742" width="560" height="270" rx="22" fill="#F8F5ED" stroke="#C7BFAF" stroke-width="3"/>
 <rect x="70" y="742" width="560" height="52" rx="22" fill="#17324D"/>
 <text x="94" y="777" class="ui" font-size="22" font-weight="900" fill="#FFFFFF">cue_007 / S3</text>
 <rect x="462" y="752" width="144" height="32" rx="16" fill="#D77836"/><text x="534" y="775" text-anchor="middle" class="ui" font-size="17" font-weight="900" fill="#FFFFFF">位置を比べる</text>
 <rect x="94" y="814" width="112" height="112" rx="18" fill="#E1ECE6" stroke="#2F6F5D" stroke-width="3"/>
 <text x="150" y="866" text-anchor="middle" class="ui" font-size="19" font-weight="900" fill="#17324D">模式図</text>
-<text x="150" y="896" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">callout once</text>
-<text x="228" y="832" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">見分けやすさの工夫では、識別マークを11</text>
-<text x="228" y="856" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">本の斜線にそろえ、券種ごとに位置を変えて</text>
-<text x="228" y="880" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">いるぜ。</text>
+<text x="150" y="896" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">抽象図</text>
+<text x="228" y="832" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">見分けやすさの工夫では、識別マークを</text>
+<text x="228" y="854" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">11本の斜線にそろえ、券種ごとに</text>
+<text x="228" y="876" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">位置を変えているぜ。</text>
 <line x1="94" y1="944" x2="606" y2="944" stroke="#D8D1C4" stroke-width="2"/>
 <text x="94" y="970" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">motion: callout once</text>
 <text x="94" y="994" class="ui" font-size="15" fill="#6A6258">risk: 11本と位置差のみ／座標なし</text>
 </g>
-<g data-cue-id="cue_008" data-scene-id="S3">
+<g data-cue-id="cue_008" data-scene-id="S3" data-approved-text="額面の数字は前のシリーズのお札より大きい。一万円券と千円券ではホログラムの形や位置が違い、千円券の中央には橙色のグラデーションもあるんだね。" data-motion-id="bounded_difference_reveal_once">
 <rect x="670" y="742" width="560" height="270" rx="22" fill="#F8F5ED" stroke="#C7BFAF" stroke-width="3"/>
 <rect x="670" y="742" width="560" height="52" rx="22" fill="#17324D"/>
 <text x="694" y="777" class="ui" font-size="22" font-weight="900" fill="#FFFFFF">cue_008 / S3</text>
 <rect x="1062" y="752" width="144" height="32" rx="16" fill="#D77836"/><text x="1134" y="775" text-anchor="middle" class="ui" font-size="17" font-weight="900" fill="#FFFFFF">違いを限定比較</text>
 <rect x="694" y="814" width="112" height="112" rx="18" fill="#E1ECE6" stroke="#2F6F5D" stroke-width="3"/>
 <text x="750" y="866" text-anchor="middle" class="ui" font-size="19" font-weight="900" fill="#17324D">模式図</text>
-<text x="750" y="896" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">difference rev</text>
-<text x="828" y="832" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">額面の数字は前のシリーズのお札より大きい</text>
-<text x="828" y="856" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">。一万円券と千円券ではホログラムの形や位</text>
-<text x="828" y="880" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">置が違い、千円券の中央には橙色のグラデー</text>
-<text x="828" y="904" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">ションもあるんだね。</text>
+<text x="750" y="896" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">抽象図</text>
+<text x="828" y="832" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">額面の数字は前のシリーズのお札より大きい。</text>
+<text x="828" y="854" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">一万円券と千円券ではホログラムの形や</text>
+<text x="828" y="876" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">位置が違い、千円券の中央には</text>
+<text x="828" y="898" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">橙色のグラデーションもあるんだね。</text>
 <line x1="694" y1="944" x2="1206" y2="944" stroke="#D8D1C4" stroke-width="2"/>
 <text x="694" y="970" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">motion: difference reveal once</text>
 <text x="694" y="994" class="ui" font-size="15" fill="#6A6258">risk: 限定比較／橙色だけ事実色</text>
 </g>
-<g data-cue-id="cue_009" data-scene-id="S3">
+<g data-cue-id="cue_009" data-scene-id="S3" data-approved-text="確かめ方は、透かす、触る、傾ける、ルーペで見る。この四つを覚えておこう。" data-motion-id="four_action_sequence_once">
 <rect x="1270" y="742" width="560" height="270" rx="22" fill="#F8F5ED" stroke="#C7BFAF" stroke-width="3"/>
 <rect x="1270" y="742" width="560" height="52" rx="22" fill="#17324D"/>
 <text x="1294" y="777" class="ui" font-size="22" font-weight="900" fill="#FFFFFF">cue_009 / S3</text>
 <rect x="1662" y="752" width="144" height="32" rx="16" fill="#D77836"/><text x="1734" y="775" text-anchor="middle" class="ui" font-size="17" font-weight="900" fill="#FFFFFF">四動作を覚える</text>
 <rect x="1294" y="814" width="112" height="112" rx="18" fill="#E1ECE6" stroke="#2F6F5D" stroke-width="3"/>
 <text x="1350" y="866" text-anchor="middle" class="ui" font-size="19" font-weight="900" fill="#17324D">模式図</text>
-<text x="1350" y="896" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">four-action se</text>
-<text x="1428" y="832" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">確かめ方は、透かす、触る、傾ける、ルーペ</text>
-<text x="1428" y="856" text-anchor="start" class="ui" font-size="17" font-weight="700" fill="#17324D">で見る。この四つを覚えておこう。</text>
+<text x="1350" y="896" text-anchor="middle" class="ui" font-size="14" font-weight="700" fill="#2F6F5D">抽象図</text>
+<text x="1428" y="832" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">確かめ方は、透かす、触る、傾ける、</text>
+<text x="1428" y="854" text-anchor="start" class="ui" font-size="16" font-weight="700" fill="#17324D">ルーペで見る。この四つを覚えておこう。</text>
 <line x1="1294" y1="944" x2="1806" y2="944" stroke="#D8D1C4" stroke-width="2"/>
 <text x="1294" y="970" class="ui" font-size="16" font-weight="800" fill="#2F6F5D">motion: four-action sequence once</text>
 <text x="1294" y="994" class="ui" font-size="15" fill="#6A6258">risk: 確認動作／真贋保証ではない</text>

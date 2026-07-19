@@ -11,28 +11,37 @@
 .hero{display:grid;grid-template-columns:1.35fr .65fr;gap:24px;align-items:stretch} h1{font-size:clamp(38px,5vw,72px);line-height:1.05;margin:.25em 0} h2{font-size:34px;margin-top:1.8em}
 .boundary,.decision{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:24px} .decision{border-color:var(--orange)}
 .pill-row{display:flex;flex-wrap:wrap;gap:10px} .pill{padding:6px 12px;border-radius:999px;background:#e1ece6;font-weight:800}
+.mode-nav{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0} .mode-nav a{background:var(--surface);border:2px solid var(--green);border-radius:999px;padding:8px 15px;font-weight:900;text-decoration:none}
 .disclaimer{margin:28px 0;padding:14px 18px;border-left:8px solid var(--orange);background:var(--surface);font-weight:900}
 .frame-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px} .frame-card{background:var(--surface);padding:14px;border-radius:20px;border:1px solid var(--line)} .frame-card img,.wide img{display:block;width:100%;height:auto;border-radius:10px;background:white}
 .frame-meta{display:flex;justify-content:space-between;gap:12px;padding:4px 4px 12px} .wide{background:var(--surface);padding:16px;border-radius:20px;border:1px solid var(--line);margin:20px 0}
+.audit{margin-top:44px;background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:18px} .audit summary{cursor:pointer;font-size:26px;font-weight:900} .audit-note{border-left:6px solid var(--orange);padding-left:14px}
 .review{background:var(--ink);color:white;border-radius:24px;padding:28px;margin-top:36px} .review a{color:white;font-weight:900} code{background:#dde9f0;padding:.12em .35em;border-radius:5px}
 @media(max-width:900px){.hero,.frame-grid{grid-template-columns:1fr}.shell{padding:18px}}
 </style>
 </head>
-<body data-route-id="route_A_security_inspection_lab" data-review-status="pending" data-external-resource-count="0">
-<div class="banner">INTERNAL REVIEW / CONCRETE PROOF / NOT FINAL / NON-PUBLIC / NON-PRODUCTION</div>
+<body data-route-id="route_A_security_inspection_lab" data-default-surface="viewer" data-review-status="pending" data-external-resource-count="0">
+<div class="banner">内部レビュー用／最終承認前／非公開／非本番</div>
 <main class="shell">
-<section class="hero"><div><p><strong>ROUTE A / SECURITY INSPECTION LAB</strong></p><h1>新紙幣を、抽象的な検査台で読み解く</h1><p>低精細conceptを、直接見られる1920×1080 keyframe、9 cue contact sheet、非loop motion storyboardへ具体化したhuman review packageです。</p><div class="pill-row"><span class="pill">6 full-frame keyframes</span><span class="pill">9/9 cues</span><span class="pill">subtitle-safe</span><span class="pill">loop false</span></div></div><aside class="decision"><strong>方向決定</strong><h2>Route A selected for proof</h2><p>方向はconcrete proof生成のために選択済みです。最終visual acceptance、YMM4実装、render、production、public release、rights approvalは未承認です。</p></aside></section>
+<section class="hero"><div><p><strong>ROUTE A／SECURITY INSPECTION LAB</strong></p><h1>新紙幣を、抽象的な検査台で読み解く</h1><p>視聴者が実際に見る画面を最初に確認し、必要なときだけ注釈・監査表示へ切り替えられる、1920×1080の二面構成レビューです。</p><div class="pill-row"><span class="pill">視聴者向け 6画面</span><span class="pill">注釈・監査 6画面</span><span class="pill">9/9 cue</span><span class="pill">非ループ</span></div></div><aside class="decision"><strong>方向決定</strong><h2>Route Aをproof方向に選択</h2><p>最終visual acceptance、YMM4実装、render、production、public release、rights approvalは未承認です。</p></aside></section>
+<nav class="mode-nav" aria-label="表示モード"><a href="#viewer-mode">視聴者向け（既定）</a><a href="#annotation-mode">注釈・監査モード</a><a href="#human-review">四問レビュー</a></nav>
 <div class="disclaimer">模式図／実券の縮尺・配置ではありません</div>
 <section class="boundary"><h2>Authorization boundary</h2><p>approved 9 cue text/order、S1/S2/S3 2/4/3、speaker 3/6、claims、evidence edges、canonical/derived CSVは変更していません。すべてoriginal abstract geometryで、real portrait、seal、serial number、official security pattern、exact feature placementを使いません。</p></section>
-<h2>Six full-frame keyframes</h2><div class="frame-grid"><article class="frame-card"><div class="frame-meta"><span>S1 / cue_001</span><strong>全体像を見る</strong></div><img src="keyframes/route_a_S1_overview.svg" alt="S1 cue_001 Route A concrete keyframe"></article>
-<article class="frame-card"><div class="frame-meta"><span>S2 / cue_003</span><strong>透かす</strong></div><img src="keyframes/route_a_cue_003_watermark.svg" alt="S2 cue_003 Route A concrete keyframe"></article>
-<article class="frame-card"><div class="frame-meta"><span>S2 / cue_004</span><strong>傾ける</strong></div><img src="keyframes/route_a_cue_004_hologram.svg" alt="S2 cue_004 Route A concrete keyframe"></article>
-<article class="frame-card"><div class="frame-meta"><span>S2 / cue_005</span><strong>触る</strong></div><img src="keyframes/route_a_cue_005_intaglio.svg" alt="S2 cue_005 Route A concrete keyframe"></article>
-<article class="frame-card"><div class="frame-meta"><span>S2 / cue_006</span><strong>ルーペで見る</strong></div><img src="keyframes/route_a_cue_006_microtext.svg" alt="S2 cue_006 Route A concrete keyframe"></article>
-<article class="frame-card"><div class="frame-meta"><span>S3 / cue_009</span><strong>四つを覚える</strong></div><img src="keyframes/route_a_S3_identification_summary.svg" alt="S3 cue_009 Route A concrete keyframe"></article></div>
-<h2>Nine-cue coverage</h2><div class="wide"><img src="route_a_nine_cue_contact_sheet.svg" alt="Route A nine cue contact sheet"></div>
-<h2>Motion: start → emphasis → settled</h2><p>各cueのprincipal motionは最大1、continuous loopはありません。これはproposal-only storyboardで、実装結果や再生品質の証明ではありません。</p><div class="wide"><img src="route_a_motion_storyboard.svg" alt="Route A non-looping motion storyboard"></div>
-<section class="review"><h2>Human review gate</h2><p>次はA/B/Cを選び直さず、このproofを四つの質問で確認します。</p><p><a href="route_a_visual_review_sheet.md">四問のreview sheetを開く</a> · <a href="human_visual_direction_selection_receipt.json">direction selection receipt</a> · <a href="route_a_visual_proof_readback.json">machine readback</a></p></section>
+<section id="viewer-mode" data-surface="viewer"><h2>視聴者向け画面（既定表示）</h2><p>動画画面に含める想定の見出し、抽象図、最小限の説明、承認済み字幕、控えめな模式図注記だけを表示します。</p><div class="frame-grid"><article class="frame-card"><div class="frame-meta"><strong>全体像を見る</strong><span>新しいお札を、四つの確認動作から見る</span></div><img src="viewer_keyframes/route_a_S1_overview.svg" alt="全体像を見るの視聴者向けフレーム"></article>
+<article class="frame-card"><div class="frame-meta"><strong>透かす</strong><span>高精細すき入れ</span></div><img src="viewer_keyframes/route_a_cue_003_watermark.svg" alt="透かすの視聴者向けフレーム"></article>
+<article class="frame-card"><div class="frame-meta"><strong>傾ける</strong><span>3Dホログラム</span></div><img src="viewer_keyframes/route_a_cue_004_hologram.svg" alt="傾けるの視聴者向けフレーム"></article>
+<article class="frame-card"><div class="frame-meta"><strong>触る</strong><span>深凹版印刷</span></div><img src="viewer_keyframes/route_a_cue_005_intaglio.svg" alt="触るの視聴者向けフレーム"></article>
+<article class="frame-card"><div class="frame-meta"><strong>ルーペで見る</strong><span>マイクロ文字</span></div><img src="viewer_keyframes/route_a_cue_006_microtext.svg" alt="ルーペで見るの視聴者向けフレーム"></article>
+<article class="frame-card"><div class="frame-meta"><strong>四つを覚える</strong><span>識別の工夫と確認動作</span></div><img src="viewer_keyframes/route_a_S3_identification_summary.svg" alt="四つを覚えるの視聴者向けフレーム"></article></div></section>
+<section id="overview"><h2>9 cueの確認一覧</h2><div class="wide"><img src="route_a_nine_cue_contact_sheet.svg" alt="Route A 9 cue contact sheet"></div></section>
+<section id="motion"><h2>Motion: start → emphasis → settled</h2><p>各cueのprincipal motionは最大1、continuous loopはありません。これはproposal-only storyboardで、実装結果や再生品質の証明ではありません。</p><div class="wide"><img src="route_a_motion_storyboard.svg" alt="Route A non-looping motion storyboard"></div></section>
+<details id="annotation-mode" class="audit" data-surface="annotation"><summary>注釈／監査モードを表示</summary><p class="audit-note">ここにあるcue ID、motion metadata、source boundary、safe-area、review statusは設計・監査用overlayであり、意図する動画グラフィックではありません。</p><div class="frame-grid"><article class="frame-card"><div class="frame-meta"><span>S1 / cue_001</span><strong>全体像を見る</strong></div><img src="keyframes/route_a_S1_overview.svg" alt="S1 cue_001 注釈監査フレーム"></article>
+<article class="frame-card"><div class="frame-meta"><span>S2 / cue_003</span><strong>透かす</strong></div><img src="keyframes/route_a_cue_003_watermark.svg" alt="S2 cue_003 注釈監査フレーム"></article>
+<article class="frame-card"><div class="frame-meta"><span>S2 / cue_004</span><strong>傾ける</strong></div><img src="keyframes/route_a_cue_004_hologram.svg" alt="S2 cue_004 注釈監査フレーム"></article>
+<article class="frame-card"><div class="frame-meta"><span>S2 / cue_005</span><strong>触る</strong></div><img src="keyframes/route_a_cue_005_intaglio.svg" alt="S2 cue_005 注釈監査フレーム"></article>
+<article class="frame-card"><div class="frame-meta"><span>S2 / cue_006</span><strong>ルーペで見る</strong></div><img src="keyframes/route_a_cue_006_microtext.svg" alt="S2 cue_006 注釈監査フレーム"></article>
+<article class="frame-card"><div class="frame-meta"><span>S3 / cue_009</span><strong>四つを覚える</strong></div><img src="keyframes/route_a_S3_identification_summary.svg" alt="S3 cue_009 注釈監査フレーム"></article></div></details>
+<section id="human-review" class="review"><h2>Human review gate</h2><p>次はA/B/Cを選び直さず、このproofを四つの質問で確認します。</p><p><a href="route_a_visual_review_sheet.md">四問のreview sheetを開く</a> · <a href="human_visual_direction_selection_receipt.json">direction selection receipt</a> · <a href="visual_proof_presentation_revision_receipt.json">presentation revision receipt</a> · <a href="route_a_visual_proof_readback.json">machine readback</a></p></section>
 </main>
 </body>
 </html>
