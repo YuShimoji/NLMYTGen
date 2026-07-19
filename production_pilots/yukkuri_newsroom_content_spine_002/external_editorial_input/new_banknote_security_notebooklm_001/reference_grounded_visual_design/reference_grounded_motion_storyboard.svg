@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-loop="false" data-motion-status="storyboard-only">
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-loop="false" data-motion-status="inferred-constraint-storyboard-only">
 <rect width="1920" height="1080" fill="#F7F5EF"/>
-<text x="70" y="76" font-size="42" font-weight="900" fill="#15181D">MOTION STORYBOARD / START → EMPHASIS → SETTLED</text>
-<text x="70" y="116" font-size="22" fill="#70757D">P07 restrained reveal · one principal motion maximum · continuous loop false · YMM4 untested</text>
+<text x="70" y="76" font-size="42" font-weight="900" fill="#15181D">INFERRED MOTION CEILING / START → EMPHASIS → SETTLED</text>
+<text x="70" y="116" font-size="22" fill="#70757D">proposal only · no observed playback sequence · one principal motion maximum · no loop · YMM4 untested</text>
 <g data-cue-id="cue_001" data-loop="false" data-principal-motion-count="1">
 <rect x="70" y="158" width="1780" height="76" rx="18" fill="#FFFFFF" stroke="#D8D5CC" stroke-width="2"/>
 <text x="96" y="206" font-size="24" font-weight="900" fill="#15181D">cue_001</text>

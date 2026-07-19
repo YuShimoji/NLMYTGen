@@ -1,5 +1,5 @@
 {
-  "schema_version": "new_banknote.reference_grounded_visual_mapping.v1",
+  "schema_version": "new_banknote.reference_grounded_visual_mapping.v2",
   "status": "complete_pending_human_review",
   "cue_count": 9,
   "scene_allocation": {
@@ -18,7 +18,9 @@
       "scene_id": "S1",
       "speaker": "れいむ",
       "text": "2024年に発行された新しいお札って、見た目以外にも変わったところがあるの？",
-      "keyframe": "reference_S1_overview.svg",
+      "viewer_keyframe": "reference_S1_overview.svg",
+      "annotation_keyframe": "reference_S1_overview.svg",
+      "viewer_visible_metadata": false,
       "contact_sheet_thumbnail": true,
       "adopted_pattern_ids": [
         "P01_object_first",
@@ -35,7 +37,9 @@
       "scene_id": "S1",
       "speaker": "まりさ",
       "text": "あるぞ。偽造防止では、高精細すき入れや3Dホログラムなど複数の技術を組み合わせている。誰にとっても使いやすいユニバーサルデザインも取り入れたんだ。",
-      "keyframe": null,
+      "viewer_keyframe": null,
+      "annotation_keyframe": null,
+      "viewer_visible_metadata": false,
       "contact_sheet_thumbnail": true,
       "adopted_pattern_ids": [
         "P01_object_first",
@@ -52,7 +56,9 @@
       "scene_id": "S2",
       "speaker": "まりさ",
       "text": "まずは高精細すき入れ。光に透かすと、細かな模様が見えるんだぜ。",
-      "keyframe": "reference_cue_003_watermark.svg",
+      "viewer_keyframe": "reference_cue_003_watermark.svg",
+      "annotation_keyframe": "reference_cue_003_watermark.svg",
+      "viewer_visible_metadata": false,
       "contact_sheet_thumbnail": true,
       "adopted_pattern_ids": [
         "P01_object_first",
@@ -69,7 +75,9 @@
       "scene_id": "S2",
       "speaker": "まりさ",
       "text": "次は3Dホログラム。角度を変えると、三次元の肖像が回転して見えるぞ。",
-      "keyframe": "reference_cue_004_hologram.svg",
+      "viewer_keyframe": "reference_cue_004_hologram.svg",
+      "annotation_keyframe": "reference_cue_004_hologram.svg",
+      "viewer_visible_metadata": false,
       "contact_sheet_thumbnail": true,
       "adopted_pattern_ids": [
         "P01_object_first",
@@ -86,7 +94,9 @@
       "scene_id": "S2",
       "speaker": "れいむ",
       "text": "触るとざらざらするのは、額面数字などのインキを高く盛り上げる深凹版印刷なんだね。",
-      "keyframe": "reference_cue_005_intaglio.svg",
+      "viewer_keyframe": "reference_cue_005_intaglio.svg",
+      "annotation_keyframe": "reference_cue_005_intaglio.svg",
+      "viewer_visible_metadata": false,
       "contact_sheet_thumbnail": true,
       "adopted_pattern_ids": [
         "P01_object_first",
@@ -103,7 +113,9 @@
       "scene_id": "S2",
       "speaker": "まりさ",
       "text": "マイクロ文字の『NIPPONGINKO』は、ルーペで確かめられる。カラーコピー機では再現が難しいほど小さい文字なんだ。",
-      "keyframe": "reference_cue_006_microtext.svg",
+      "viewer_keyframe": "reference_cue_006_microtext.svg",
+      "annotation_keyframe": "reference_cue_006_microtext.svg",
+      "viewer_visible_metadata": false,
       "contact_sheet_thumbnail": true,
       "adopted_pattern_ids": [
         "P01_object_first",
@@ -120,7 +132,9 @@
       "scene_id": "S3",
       "speaker": "まりさ",
       "text": "見分けやすさの工夫では、識別マークを11本の斜線にそろえ、券種ごとに位置を変えているぜ。",
-      "keyframe": null,
+      "viewer_keyframe": null,
+      "annotation_keyframe": null,
+      "viewer_visible_metadata": false,
       "contact_sheet_thumbnail": true,
       "adopted_pattern_ids": [
         "P01_object_first",
@@ -137,7 +151,9 @@
       "scene_id": "S3",
       "speaker": "れいむ",
       "text": "額面の数字は前のシリーズのお札より大きい。一万円券と千円券ではホログラムの形や位置が違い、千円券の中央には橙色のグラデーションもあるんだね。",
-      "keyframe": null,
+      "viewer_keyframe": null,
+      "annotation_keyframe": null,
+      "viewer_visible_metadata": false,
       "contact_sheet_thumbnail": true,
       "adopted_pattern_ids": [
         "P01_object_first",
@@ -154,7 +170,9 @@
       "scene_id": "S3",
       "speaker": "まりさ",
       "text": "確かめ方は、透かす、触る、傾ける、ルーペで見る。この四つを覚えておこう。",
-      "keyframe": "reference_S3_summary.svg",
+      "viewer_keyframe": "reference_S3_summary.svg",
+      "annotation_keyframe": "reference_S3_summary.svg",
+      "viewer_visible_metadata": false,
       "contact_sheet_thumbnail": true,
       "adopted_pattern_ids": [
         "P01_object_first",

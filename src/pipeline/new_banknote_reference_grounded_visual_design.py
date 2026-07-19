@@ -6,18 +6,22 @@ import json
 from collections import Counter
 from pathlib import Path
 from typing import Any
+from xml.etree import ElementTree
 
 
-BASE_REVISION = "8d7fd5a19b392dd4869fa71536b7fe9f7fe3c028"
+BASE_REVISION = "2b8a32367a6b6ec4cf8d2cc5902625aad02524bb"
+OLD_PROOF_BASE_REVISION = "8d7fd5a19b392dd4869fa71536b7fe9f7fe3c028"
+PREDECESSOR_REGISTRY_SHA256 = "518355c9e9adcd503b47245846659241c98d77da0322174eca949e3597146b3c"
 RETRIEVED_AT = "2026-07-20T05:21:35+09:00"
 RESEARCH_FROZEN_AT = "2026-07-20T05:21:35+09:00"
 DESIGN_GENERATION_STARTED_AT = "2026-07-20T05:24:00+09:00"
-OUTPUT_INSPECTED_AT = "2026-07-20T05:35:35+09:00"
+EVIDENCE_PRECISION_REVISED_AT = "2026-07-20T08:04:21+09:00"
+OUTPUT_INSPECTED_AT = "2026-07-20T08:23:44+09:00"
 CANVAS_WIDTH = 1920
 CANVAS_HEIGHT = 1080
 DISCLAIMER = "模式図／実券の縮尺・配置ではありません"
 DESIGN_ID = "documentary_object_focus_consensus"
-STATE_ID = "new-banknote-reference-grounded-visual-proof-human-review-ready-v1"
+STATE_ID = "new-banknote-reference-grounded-visual-proof-evidence-strengthened-human-review-ready-v1"
 
 DEFAULT_PILOT = Path(
     "production_pilots/yukkuri_newsroom_content_spine_002/"
@@ -74,6 +78,8 @@ def _reference(
     tags: list[str] | None = None,
     local_capture: str | None = None,
     capture_note: str = "captured in ignored local research cache",
+    evidence_classes: list[str] | None = None,
+    in_video_observation_ids: list[str] | None = None,
 ) -> dict[str, Any]:
     return {
         "reference_id": reference_id,
@@ -89,6 +95,10 @@ def _reference(
         "topic_scope": topic_scope,
         "accessibility_status": accessibility_status,
         "visually_analyzed": visually_analyzed,
+        "evidence_classes": evidence_classes or (
+            ["page_or_frame_observed"] if visually_analyzed else ["metadata_only"]
+        ),
+        "in_video_observation_ids": in_video_observation_ids or [],
         "inspected_surfaces": inspected_surfaces or ["page viewport", "page images"],
         "representative_timestamps_or_sections": representative_sections or [],
         "primary_visual_subject": primary_visual_subject,
@@ -180,6 +190,7 @@ REFERENCES: list[dict[str, Any]] = [
         tags=["exact_topic"],
         local_capture=None,
         capture_note="metadata card only; direct headless access returned HTTP 403",
+        evidence_classes=["metadata_only", "inaccessible_not_counted"],
     ),
     _reference(
         "O04",
@@ -200,6 +211,7 @@ REFERENCES: list[dict[str, Any]] = [
         tags=["exact_topic"],
         local_capture=None,
         capture_note="metadata card only; direct headless access returned HTTP 403",
+        evidence_classes=["metadata_only", "inaccessible_not_counted"],
     ),
     _reference(
         "O05",
@@ -401,27 +413,29 @@ REFERENCES: list[dict[str, Any]] = [
         "yukkuri_adjacent_explainer",
         "exact_topic",
         creator="にゃんだもん",
-        content_type="youtube_video_thumbnail_and_metadata",
-        inspected_surfaces=["1280x720 public thumbnail", "public video metadata"],
-        representative_sections=["thumbnail only; no frame-level claims"],
-        primary_visual_subject="money imagery plus two dialogue avatars",
-        ratio="source_image_high / text_high / characters_medium",
-        composition="split topic image with one speaker on each side",
-        subtitle="thumbnail speech boxes; dialogue subtitle not inspected",
-        speaker="two avatars at left and right with separate speech boxes",
+        content_type="youtube_video_thumbnail_metadata_and_bounded_in_video_frame",
+        inspected_surfaces=["1280x720 public thumbnail", "public video metadata", "public no-login player frame at 00:30.003"],
+        representative_sections=["thumbnail", "00:30.003 in-video frame"],
+        primary_visual_subject="ATM background with two dialogue characters in the observed video frame",
+        ratio="background_object_high / characters_medium / dialogue_text_medium",
+        composition="observed frame places one character at each side around an ATM background and one dialogue bubble",
+        subtitle="observed white dialogue bubble in lower-right region, two lines; persistence unknown",
+        speaker="observed two characters at left and right in one frame; persistence and alternation unknown",
         title_treatment="very large high-contrast promise at top",
-        callout="speech boxes rather than arrows",
-        credit="source links in public description; not visible in thumbnail",
-        background="full-bleed topic image",
+        callout="one dialogue bubble; no arrow or zoom callout in the observed frame",
+        credit="source links in public description; no source credit visible in the observed frame",
+        background="ATM image fills the observed frame",
         palette="black field with red/yellow headline and green-outlined speech boxes",
-        motion="not inspected; thumbnail-limited",
+        motion="unknown; one decoded in-video frame cannot establish transition or motion frequency",
         strengths=["speaker separation is immediate", "topic promise is short"],
         weaknesses=["character art, source image, and click-through style cannot transfer"],
         adopt=["speaker-coded labels", "short key term", "object plus dialogue"],
         avoid=["character art reuse", "sensational wording", "copying thumbnail layout"],
-        grade="thumbnail_limited",
+        grade="thumbnail_plus_single_in_video_frame",
         tags=["exact_topic", "two_character_dialogue", "object_centred", "thumbnail"],
         local_capture="local_reference_cache/youtube/hVx2x3YUIUM.jpg",
+        evidence_classes=["thumbnail_observed", "metadata_only", "in_video_frame_observed"],
+        in_video_observation_ids=["Y01-T0030"],
     ),
     _reference(
         "Y02",
@@ -432,27 +446,29 @@ REFERENCES: list[dict[str, Any]] = [
         "yukkuri_adjacent_explainer",
         "exact_topic",
         creator="グリム貨幣コレクション",
-        content_type="youtube_video_thumbnail_and_metadata",
-        inspected_surfaces=["1280x720 public thumbnail", "public video metadata"],
-        representative_sections=["thumbnail only; no frame-level claims"],
-        primary_visual_subject="dense collage of banknote feature images plus two avatars",
-        ratio="source_image_very_high / text_medium / characters_low",
-        composition="full-frame collage, two small speakers at bottom corners",
-        subtitle="large centered thumbnail promise; dialogue subtitle not inspected",
-        speaker="two small Yukkuri busts at lower corners",
+        content_type="youtube_video_thumbnail_metadata_and_bounded_in_video_frame",
+        inspected_surfaces=["1280x720 public thumbnail", "public video metadata", "public no-login player frame at 00:30.011"],
+        representative_sections=["thumbnail", "00:30.011 in-video frame"],
+        primary_visual_subject="six specimen banknote images in the observed video frame",
+        ratio="source_image_very_high / subtitle_medium / characters_low",
+        composition="observed frame centers a six-image object grid with speaker busts at both lower corners",
+        subtitle="observed centered lower subtitle, two lines",
+        speaker="observed two Yukkuri busts at lower-left and lower-right; persistence unknown",
         title_treatment="single red high-contrast phrase across lower middle",
-        callout="collage crops imply close-up; no explicit leader line",
-        credit="visible watermark on source imagery; description states image handling",
+        callout="no arrow, zoom, or bounded callout in the observed frame",
+        credit="visible grimm_moneycollection watermark on source images; production reuse remains prohibited",
         background="full-bleed image collage",
         palette="source-derived with red/black title",
-        motion="not inspected; thumbnail-limited",
+        motion="unknown; one decoded in-video frame cannot establish transition or motion frequency",
         strengths=["topic object fills the frame", "speakers remain secondary"],
         weaknesses=["dense collage and source images create high rights burden"],
         adopt=["object-first hierarchy", "secondary speaker cues", "one short promise"],
         avoid=["source-image collage", "creator character art", "watermark imitation"],
-        grade="thumbnail_limited",
+        grade="thumbnail_plus_single_in_video_frame",
         tags=["exact_topic", "two_character_dialogue", "object_centred", "thumbnail"],
         local_capture="local_reference_cache/youtube/PXI5Q57YXD4.jpg",
+        evidence_classes=["thumbnail_observed", "metadata_only", "in_video_frame_observed"],
+        in_video_observation_ids=["Y02-T0030"],
     ),
     _reference(
         "Y03",
@@ -463,27 +479,29 @@ REFERENCES: list[dict[str, Any]] = [
         "yukkuri_adjacent_explainer",
         "adjacent_format",
         creator="ゆっくりルーザーズ",
-        content_type="youtube_video_thumbnail_and_metadata",
-        inspected_surfaces=["1280x720 public thumbnail", "public video metadata"],
-        representative_sections=["thumbnail only; no frame-level claims"],
-        primary_visual_subject="one banknote image and one short question",
-        ratio="source_image_high / text_high / characters_low",
-        composition="rough half split: object left, question and two speakers right",
-        subtitle="bottom promise band; dialogue subtitle not inspected",
-        speaker="two busts grouped at upper right",
+        content_type="youtube_video_thumbnail_metadata_and_bounded_in_video_frame",
+        inspected_surfaces=["1280x720 public thumbnail", "public video metadata", "public no-login player frame at 00:30.000"],
+        representative_sections=["thumbnail", "00:30.000 in-video frame"],
+        primary_visual_subject="two-thousand-yen-note illustration on a central scenic screen",
+        ratio="characters_high / central_object_medium / subtitle_medium",
+        composition="observed frame uses two large Yukkuri heads at lower sides, central object screen, and lower subtitle",
+        subtitle="observed centered lower subtitle, two lines",
+        speaker="observed two large Yukkuri heads at lower-left and lower-right; persistence unknown",
         title_treatment="one very large word pair and one bottom explanatory line",
-        callout="none",
-        credit="not visible in thumbnail",
-        background="white text field plus object crop",
+        callout="no arrow, zoom, or bounded callout in the observed frame",
+        credit="no source credit visible in the observed frame",
+        background="central scenic image with a pale subtitle field",
         palette="black/white with red and yellow emphasis",
-        motion="not inspected; thumbnail-limited",
+        motion="unknown; one decoded in-video frame cannot establish transition or motion frequency",
         strengths=["question and object are immediately paired", "speaker role is compact"],
         weaknesses=["thumbnail exaggeration and source image are not proof grammar"],
         adopt=["compact speaker pair", "single question", "high text contrast"],
         avoid=["copying split", "copying character art", "sensational emphasis"],
-        grade="thumbnail_limited",
+        grade="thumbnail_plus_single_in_video_frame",
         tags=["two_character_dialogue", "object_centred", "thumbnail"],
         local_capture="local_reference_cache/youtube/aCYgLBDrNYk.jpg",
+        evidence_classes=["thumbnail_observed", "metadata_only", "in_video_frame_observed"],
+        in_video_observation_ids=["Y03-T0030"],
     ),
     _reference(
         "Y04",
@@ -515,6 +533,7 @@ REFERENCES: list[dict[str, Any]] = [
         grade="thumbnail_limited",
         tags=["two_character_dialogue", "thumbnail"],
         local_capture="local_reference_cache/youtube/NUjG_XKDYRw.jpg",
+        evidence_classes=["thumbnail_observed", "metadata_only"],
     ),
     _reference(
         "Y05",
@@ -546,10 +565,77 @@ REFERENCES: list[dict[str, Any]] = [
         grade="thumbnail_limited",
         tags=["two_character_dialogue", "thumbnail"],
         local_capture="local_reference_cache/youtube/5Uc_e7FHcX8.jpg",
+        evidence_classes=["thumbnail_observed", "metadata_only"],
     ),
 ]
 
-PATTERNS = [
+IN_VIDEO_OBSERVATIONS = [
+    {
+        "observation_id": "Y01-T0030",
+        "source_id": "Y01",
+        "publisher_channel": "にゃんだもん",
+        "canonical_url": "https://www.youtube.com/watch?v=hVx2x3YUIUM",
+        "evidence_class": "in_video_frame_observed",
+        "inspection_method": "fresh no-login headless Chrome profile; public watch player; CDP seek, pause, and player-region screenshot",
+        "requested_timestamp_seconds": 30,
+        "observed_player_time_seconds": 30.003,
+        "player_duration_seconds": 1167.141,
+        "decoded_ready_state": 4,
+        "local_capture": "local_in_video_observations/Y01_t0030_cdp.png",
+        "visible_subject": "ATM background with a cat character at left and green dialogue character at right",
+        "character_placement": "one character at each side; persistence and alternation unknown from one frame",
+        "subtitle_position_and_line_count": "white dialogue bubble in lower-right region; two lines",
+        "object_diagram_character_ratio": "background_object_high / characters_medium / dialogue_text_medium",
+        "callout_zoom_state": "one dialogue bubble; no arrow or zoom callout visible",
+        "source_credit_state": "no source credit visible in the observed frame",
+        "transition_motion_observation": "unknown; one paused decoded frame does not establish timing, frequency, transition, or pacing",
+        "limitations": ["single frame only", "no persistence claim", "no motion-frequency claim", "capture is ignored research evidence and not reusable"],
+    },
+    {
+        "observation_id": "Y02-T0030",
+        "source_id": "Y02",
+        "publisher_channel": "グリム貨幣コレクション",
+        "canonical_url": "https://www.youtube.com/watch?v=PXI5Q57YXD4",
+        "evidence_class": "in_video_frame_observed",
+        "inspection_method": "fresh no-login headless Chrome profile; public watch player; CDP seek, pause, and player-region screenshot",
+        "requested_timestamp_seconds": 30,
+        "observed_player_time_seconds": 30.011,
+        "player_duration_seconds": 335.661,
+        "decoded_ready_state": 4,
+        "local_capture": "local_in_video_observations/Y02_t0030_cdp.png",
+        "visible_subject": "six specimen banknote images centered in a grid",
+        "character_placement": "two small Yukkuri busts at lower-left and lower-right; persistence unknown",
+        "subtitle_position_and_line_count": "centered lower subtitle; two lines",
+        "object_diagram_character_ratio": "source_image_very_high / subtitle_medium / characters_low",
+        "callout_zoom_state": "no arrow, zoom, or bounded callout visible",
+        "source_credit_state": "grimm_moneycollection watermarks visible on source images; no production reuse permission inferred",
+        "transition_motion_observation": "unknown; one paused decoded frame does not establish timing, frequency, transition, or pacing",
+        "limitations": ["single frame only", "source-image rights unresolved", "no persistence claim", "capture is ignored research evidence and not reusable"],
+    },
+    {
+        "observation_id": "Y03-T0030",
+        "source_id": "Y03",
+        "publisher_channel": "ゆっくりルーザーズ",
+        "canonical_url": "https://www.youtube.com/watch?v=aCYgLBDrNYk",
+        "evidence_class": "in_video_frame_observed",
+        "inspection_method": "fresh no-login headless Chrome profile; public watch player; bounded seek, decoded-frame check, pause, and player-region screenshot",
+        "requested_timestamp_seconds": 30,
+        "observed_player_time_seconds": 30.0,
+        "player_duration_seconds": None,
+        "decoded_ready_state": 2,
+        "local_capture": "local_in_video_observations/Y03_t0030_cdp.png",
+        "visible_subject": "two-thousand-yen-note illustration on a central scenic screen",
+        "character_placement": "two large Yukkuri heads at lower-left and lower-right; persistence unknown",
+        "subtitle_position_and_line_count": "centered lower subtitle; two lines",
+        "object_diagram_character_ratio": "characters_high / central_object_medium / subtitle_medium",
+        "callout_zoom_state": "no arrow, zoom, or bounded callout visible",
+        "source_credit_state": "no source credit visible in the observed frame",
+        "transition_motion_observation": "unknown; one paused decoded frame does not establish timing, frequency, transition, or pacing",
+        "limitations": ["single frame only", "duration not retained", "no persistence claim", "capture is ignored research evidence and not reusable"],
+    },
+]
+
+PREDECESSOR_PATTERNS = [
     {
         "pattern_id": "P01_object_first",
         "dimension": "primary_subject",
@@ -652,7 +738,176 @@ PATTERNS = [
     },
 ]
 
-DECISIONS = [
+PATTERNS = [
+    {
+        "pattern_id": "P01_object_first",
+        "dimension": "primary_subject",
+        "surface_scope": "page_frame_thumbnail_and_in_video_static_composition",
+        "classification": "dominant",
+        "usable_reference_count": 11,
+        "usable_reference_ratio": 0.7857,
+        "video_body_claim": False,
+        "supporting_reference_ids": ["O01", "O02", "O06", "J02", "J03", "J04", "J05", "Y01", "Y02", "Y03", "Y05"],
+        "supporting_evidence": [
+            {"reference_id": item, "evidence_class": "page_or_frame_observed"}
+            for item in ["O01", "O02", "O06", "J02", "J03", "J04", "J05"]
+        ] + [
+            {"reference_id": item, "evidence_class": "in_video_frame_observed"}
+            for item in ["Y01", "Y02", "Y03"]
+        ] + [{"reference_id": "Y05", "evidence_class": "thumbnail_observed"}],
+        "finding": "Across static surfaces and three bounded video interiors, an object or source surface is a primary visual anchor.",
+        "transfer_rule": "Use a neutral, explicitly empty source slot; do not reconstruct or embed the real note.",
+    },
+    {
+        "pattern_id": "P02_one_focus_callout",
+        "dimension": "composition_callout",
+        "surface_scope": "page_or_frame_static_composition",
+        "classification": "recurring",
+        "usable_reference_count": 5,
+        "usable_reference_ratio": 0.3571,
+        "video_body_claim": False,
+        "supporting_reference_ids": ["O01", "O02", "J01", "J03", "J04"],
+        "supporting_evidence": [
+            {"reference_id": item, "evidence_class": "page_or_frame_observed"}
+            for item in ["O01", "O02", "J01", "J03", "J04"]
+        ],
+        "finding": "Five inspected page or preview surfaces emphasize one feature, crop, numbered point, or magnified region.",
+        "transfer_rule": "Use one bounded focus window or numbered focus card per cue.",
+    },
+    {
+        "pattern_id": "P03_short_key_term",
+        "dimension": "information_hierarchy",
+        "surface_scope": "cross_surface_title_and_key_term_hierarchy",
+        "classification": "dominant",
+        "usable_reference_count": 12,
+        "usable_reference_ratio": 0.8571,
+        "video_body_claim": False,
+        "supporting_reference_ids": ["O01", "O02", "O05", "O06", "J01", "J02", "J03", "J04", "J05", "Y01", "Y03", "Y05"],
+        "supporting_evidence": [
+            {"reference_id": item, "evidence_class": "page_or_frame_observed"}
+            for item in ["O01", "O02", "O05", "O06", "J01", "J02", "J03", "J04", "J05"]
+        ] + [
+            {"reference_id": item, "evidence_class": "thumbnail_observed"}
+            for item in ["Y01", "Y03", "Y05"]
+        ],
+        "finding": "A short topic label or key term is larger than explanatory copy on the inspected surface.",
+        "transfer_rule": "Keep one Japanese action label and one feature term above the approved subtitle.",
+    },
+    {
+        "pattern_id": "P04_bottom_text_band",
+        "dimension": "subtitle",
+        "surface_scope": "in_video_dialogue_or_observed_broadcast_frame",
+        "classification": "recurring",
+        "usable_reference_count": 4,
+        "usable_reference_ratio": 0.2857,
+        "video_body_claim": True,
+        "supporting_reference_ids": ["J05", "Y01", "Y02", "Y03"],
+        "supporting_evidence": [{"reference_id": "J05", "evidence_class": "page_or_frame_observed"}] + [
+            {"reference_id": item, "evidence_class": "in_video_frame_observed"}
+            for item in ["Y01", "Y02", "Y03"]
+        ],
+        "finding": "Three decoded dialogue-explainer frames and one broadcast frame place readable text in the lower region.",
+        "transfer_rule": "Retain the approved subtitle safe area as a production constraint; do not copy source styling.",
+    },
+    {
+        "pattern_id": "P05_speaker_cues",
+        "dimension": "speaker_representation",
+        "surface_scope": "bounded_in_video_frames",
+        "classification": "cohort_specific",
+        "usable_reference_count": 3,
+        "usable_reference_ratio": 0.2143,
+        "video_body_claim": True,
+        "supporting_reference_ids": ["Y01", "Y02", "Y03"],
+        "supporting_evidence": [
+            {"reference_id": item, "evidence_class": "in_video_frame_observed"}
+            for item in ["Y01", "Y02", "Y03"]
+        ],
+        "finding": "Each of three independent decoded frames distinguishes two speakers at opposing frame edges; persistence is unknown.",
+        "transfer_rule": "Use neutral speaker nameplates only; no character art or persistence claim is authorized.",
+    },
+    {
+        "pattern_id": "P06_adjacent_source_credit",
+        "dimension": "source_attribution",
+        "surface_scope": "page_or_evidence_surface_only",
+        "classification": "recurring",
+        "usable_reference_count": 4,
+        "usable_reference_ratio": 0.2857,
+        "video_body_claim": False,
+        "supporting_reference_ids": ["O02", "O05", "O06", "J04"],
+        "supporting_evidence": [
+            {"reference_id": item, "evidence_class": "page_or_frame_observed"}
+            for item in ["O02", "O05", "O06", "J04"]
+        ],
+        "finding": "Institutional identity or an image source caption stays adjacent on inspected evidence pages.",
+        "transfer_rule": "Keep reference IDs in annotation/lineage surfaces; production credit placement is deferred.",
+    },
+    {
+        "pattern_id": "P07_restrained_reveal",
+        "dimension": "motion",
+        "surface_scope": "inferred_motion_constraint_not_observed_playback",
+        "classification": "inferred_constraint",
+        "usable_reference_count": 0,
+        "usable_reference_ratio": 0.0,
+        "video_body_claim": True,
+        "supporting_reference_ids": ["O01", "O02", "J02", "J03"],
+        "supporting_evidence": [
+            {"reference_id": item, "evidence_class": "inferred_from_cross_reference"}
+            for item in ["O01", "O02", "J02", "J03"]
+        ],
+        "finding": "No inspected sequence establishes motion timing or frequency; a single non-looping action remains a conservative production constraint only.",
+        "transfer_rule": "Keep the storyboard proposal bounded and label playback behavior unobserved and YMM4-untested.",
+    },
+    {
+        "pattern_id": "P08_neutral_field",
+        "dimension": "background_palette",
+        "surface_scope": "static_background_and_contrast_role",
+        "classification": "dominant",
+        "usable_reference_count": 8,
+        "usable_reference_ratio": 0.5714,
+        "video_body_claim": False,
+        "supporting_reference_ids": ["O01", "O02", "O06", "J02", "J04", "J05", "Y03", "Y05"],
+        "supporting_evidence": [
+            {"reference_id": item, "evidence_class": "page_or_frame_observed"}
+            for item in ["O01", "O02", "O06", "J02", "J04", "J05"]
+        ] + [{"reference_id": "Y03", "evidence_class": "in_video_frame_observed"}, {"reference_id": "Y05", "evidence_class": "thumbnail_observed"}],
+        "finding": "Neutral or source-derived fields keep the primary subject and explanation legible.",
+        "transfer_rule": "Use charcoal and warm-white as neutral glue; accents encode speaker or focus only.",
+    },
+    {
+        "pattern_id": "P09_creator_brand_world",
+        "dimension": "background_branding",
+        "surface_scope": "page_thumbnail_and_in_video_brand_treatment",
+        "classification": "unsuitable",
+        "usable_reference_count": 6,
+        "usable_reference_ratio": 0.4286,
+        "video_body_claim": False,
+        "supporting_reference_ids": ["O05", "J01", "J02", "J03", "J05", "Y01"],
+        "supporting_evidence": [
+            {"reference_id": item, "evidence_class": "page_or_frame_observed"}
+            for item in ["O05", "J01", "J02", "J03", "J05"]
+        ] + [{"reference_id": "Y01", "evidence_class": "in_video_frame_observed"}],
+        "finding": "Publisher and creator packages are visible but remain source-specific.",
+        "transfer_rule": "Do not copy branded frames, character art, studio worlds, or creator palettes.",
+    },
+    {
+        "pattern_id": "P10_dense_collage",
+        "dimension": "thumbnail",
+        "surface_scope": "thumbnail_only",
+        "classification": "outlier",
+        "usable_reference_count": 2,
+        "usable_reference_ratio": 0.1429,
+        "video_body_claim": False,
+        "supporting_reference_ids": ["Y02", "Y04"],
+        "supporting_evidence": [
+            {"reference_id": item, "evidence_class": "thumbnail_observed"}
+            for item in ["Y02", "Y04"]
+        ],
+        "finding": "Dense multi-image collage is a thumbnail observation, not an in-video grammar claim.",
+        "transfer_rule": "Reject as full-frame proof grammar because it increases rights and comprehension burden.",
+    },
+]
+
+PREDECESSOR_DECISIONS = [
     ("D01", "primary subject", "neutral source/object slot", ["O01", "O02", "J02", "J04"], ["P01_object_first"]),
     ("D02", "full-frame composition", "single object field plus one bounded focus", ["O01", "O02", "J03", "J05"], ["P01_object_first", "P02_one_focus_callout"]),
     ("D03", "character/speaker treatment", "speaker nameplate only; no character art", ["Y01", "Y02", "Y03"], ["P05_speaker_cues"]),
@@ -665,6 +920,21 @@ DECISIONS = [
     ("D10", "typography roles", "large action label, medium feature term, exact subtitle", ["J01", "J03", "Y04", "Y05"], ["P03_short_key_term"]),
     ("D11", "transition/motion class", "single non-looping reveal or zoom", ["O01", "J02", "J03", "O05"], ["P07_restrained_reveal"]),
     ("D12", "thumbnail/contact-sheet grammar", "one subject, short label, small speaker cue", ["Y01", "Y02", "J01", "J05"], ["P01_object_first", "P03_short_key_term"]),
+]
+
+DECISIONS = [
+    {"decision_id": "D01", "decision_type": "primary subject", "selected_value": "neutral source/object slot", "refs": ["O01", "O02", "J02", "J04"], "patterns": ["P01_object_first"], "evidence_classes": ["page_or_frame_observed"]},
+    {"decision_id": "D02", "decision_type": "full-frame composition", "selected_value": "single object field plus one bounded focus", "refs": ["O01", "O02", "J03", "J05"], "patterns": ["P01_object_first", "P02_one_focus_callout"], "evidence_classes": ["page_or_frame_observed"]},
+    {"decision_id": "D03", "decision_type": "character/speaker treatment", "selected_value": "speaker nameplate only; no character art or persistence claim", "refs": ["Y01", "Y02", "Y03"], "patterns": ["P05_speaker_cues"], "evidence_classes": ["in_video_frame_observed"]},
+    {"decision_id": "D04", "decision_type": "subtitle placement", "selected_value": "approved text in bottom safe band", "refs": ["J05", "Y01", "Y02", "Y03"], "patterns": ["P04_bottom_text_band"], "evidence_classes": ["page_or_frame_observed", "in_video_frame_observed"]},
+    {"decision_id": "D05", "decision_type": "explanation text placement", "selected_value": "one short key point adjacent to focus", "refs": ["O06", "J01", "J03", "J04"], "patterns": ["P02_one_focus_callout", "P03_short_key_term"], "evidence_classes": ["page_or_frame_observed"]},
+    {"decision_id": "D06", "decision_type": "callout/zoom treatment", "selected_value": "one numbered focus window or close-up", "refs": ["O01", "O02", "J04"], "patterns": ["P02_one_focus_callout"], "evidence_classes": ["page_or_frame_observed"]},
+    {"decision_id": "D07", "decision_type": "source-credit placement", "selected_value": "reference IDs on annotation/lineage surfaces; production placement deferred", "refs": ["O05", "O06", "J04"], "patterns": ["P06_adjacent_source_credit"], "evidence_classes": ["page_or_frame_observed"]},
+    {"decision_id": "D08", "decision_type": "background", "selected_value": "neutral charcoal and warm-white field", "refs": ["O06", "J02", "J05"], "patterns": ["P08_neutral_field"], "evidence_classes": ["page_or_frame_observed"]},
+    {"decision_id": "D09", "decision_type": "color roles", "selected_value": "neutral base plus speaker/focus accents", "refs": ["J01", "Y01", "Y02", "Y03"], "patterns": ["P08_neutral_field", "P05_speaker_cues"], "evidence_classes": ["page_or_frame_observed", "in_video_frame_observed"]},
+    {"decision_id": "D10", "decision_type": "typography roles", "selected_value": "large action label, medium feature term, exact subtitle", "refs": ["J01", "J03", "Y02", "Y03"], "patterns": ["P03_short_key_term", "P04_bottom_text_band"], "evidence_classes": ["page_or_frame_observed", "in_video_frame_observed"]},
+    {"decision_id": "D11", "decision_type": "transition/motion class", "selected_value": "single non-looping action ceiling; timing and frequency unobserved", "refs": ["O01", "O05", "J02", "J03"], "patterns": ["P07_restrained_reveal"], "evidence_classes": ["inferred_from_cross_reference"]},
+    {"decision_id": "D12", "decision_type": "thumbnail/contact-sheet grammar", "selected_value": "one subject, short label, small speaker cue", "refs": ["J01", "Y01", "Y04", "Y05"], "patterns": ["P01_object_first", "P03_short_key_term"], "evidence_classes": ["page_or_frame_observed", "thumbnail_observed"]},
 ]
 
 KEYFRAME_SPECS = [
@@ -702,8 +972,10 @@ def build_reference_grounded_visual_design(*, root: str | Path | None = None) ->
     pilot = repo_root / DEFAULT_PILOT
     output = repo_root / DEFAULT_OUTPUT
     keyframes = output / "keyframes"
+    annotation_keyframes = output / "annotation_keyframes"
     keyframes.mkdir(parents=True, exist_ok=True)
-    for local_name in ("local_reference_cache", "local_reference_captures", "local_render_inspection"):
+    annotation_keyframes.mkdir(parents=True, exist_ok=True)
+    for local_name in ("local_reference_cache", "local_reference_captures", "local_in_video_observations", "local_render_inspection"):
         (output / local_name).mkdir(parents=True, exist_ok=True)
 
     script = _load_json(pilot / "canonical_script.json")
@@ -718,8 +990,8 @@ def build_reference_grounded_visual_design(*, root: str | Path | None = None) ->
 
     generated: dict[Path, str] = {}
     registry = {
-        "schema_version": "new_banknote.reference_registry.v1",
-        "status": "research_frozen_before_design",
+        "schema_version": "new_banknote.reference_registry.v2",
+        "status": "evidence_precision_strengthened",
         "retrieval_timestamp": RETRIEVED_AT,
         "research_frozen_at": RESEARCH_FROZEN_AT,
         "design_generation_started_at": DESIGN_GENERATION_STARTED_AT,
@@ -730,6 +1002,8 @@ def build_reference_grounded_visual_design(*, root: str | Path | None = None) ->
             "login_used": False,
             "paywall_or_access_control_circumvented": False,
             "video_or_audio_downloaded": False,
+            "public_no_login_player_frames_inspected": len(IN_VIDEO_OBSERVATIONS),
+            "personal_cookie_profile_used": False,
             "bulk_scraping_used": False,
             "public_visibility_treated_as_reuse_permission": False,
         },
@@ -737,17 +1011,23 @@ def build_reference_grounded_visual_design(*, root: str | Path | None = None) ->
     generated[output / "reference_registry.json"] = _json_text(registry)
     generated[output / "reference_audit_matrix.json"] = _json_text(
         {
-            "schema_version": "new_banknote.reference_audit_matrix.v1",
+            "schema_version": "new_banknote.reference_audit_matrix.v2",
             "status": "complete",
-            "required_field_count": 35,
+            "required_field_count": 37,
             "rows": REFERENCES,
         }
+    )
+    generated[output / "yukkuri_in_video_observation_readback.json"] = _json_text(
+        _in_video_observation_readback()
+    )
+    generated[output / "evidence_precision_revision_receipt.json"] = _json_text(
+        _evidence_precision_revision_receipt()
     )
     coverage = _coverage_readback()
     generated[output / "reference_coverage_readback.json"] = _json_text(coverage)
     generated[output / "visual_grammar_clusters.json"] = _json_text(
         {
-            "schema_version": "new_banknote.visual_grammar_clusters.v1",
+            "schema_version": "new_banknote.visual_grammar_clusters.v2",
             "status": "passed",
             "usable_reference_denominator": coverage["usable_visually_analyzed_references"],
             "classification_rules": {
@@ -756,13 +1036,15 @@ def build_reference_grounded_visual_design(*, root: str | Path | None = None) ->
                 "cohort_specific": "common within one cohort only",
                 "outlier": "one source or one creator pattern",
                 "unsuitable": "conflicts with fidelity, rights, readability, or feasibility",
+                "inferred_constraint": "not directly observed as video behavior; retained only as an explicit conservative production constraint",
             },
+            "hard_rule": "a video-body pattern may not be supported only by thumbnail evidence",
             "patterns": PATTERNS,
         }
     )
     generated[output / "visual_pattern_frequency.json"] = _json_text(
         {
-            "schema_version": "new_banknote.visual_pattern_frequency.v1",
+            "schema_version": "new_banknote.visual_pattern_frequency.v2",
             "usable_reference_denominator": coverage["usable_visually_analyzed_references"],
             "frequencies": [
                 {
@@ -770,6 +1052,9 @@ def build_reference_grounded_visual_design(*, root: str | Path | None = None) ->
                     "count": row["usable_reference_count"],
                     "ratio": row["usable_reference_ratio"],
                     "classification": row["classification"],
+                    "surface_scope": row["surface_scope"],
+                    "video_body_claim": row["video_body_claim"],
+                    "supporting_evidence_classes": sorted({item["evidence_class"] for item in row["supporting_evidence"]}),
                 }
                 for row in PATTERNS
             ],
@@ -791,7 +1076,10 @@ def build_reference_grounded_visual_design(*, root: str | Path | None = None) ->
     motion = _motion_storyboard(cues)
     generated[output / "reference_grounded_motion_storyboard.json"] = _json_text(motion)
     for spec in KEYFRAME_SPECS:
-        generated[keyframes / spec["filename"]] = _render_keyframe(spec, cue_by_id[spec["cue_id"]])
+        generated[keyframes / spec["filename"]] = _render_keyframe(spec, cue_by_id[spec["cue_id"]], surface="viewer")
+        generated[annotation_keyframes / spec["filename"]] = _render_keyframe(
+            spec, cue_by_id[spec["cue_id"]], surface="annotation"
+        )
     generated[output / "reference_grounded_nine_cue_contact_sheet.svg"] = _render_contact_sheet(cues)
     generated[output / "reference_grounded_motion_storyboard.svg"] = _render_motion_storyboard(cues)
     generated[output / "reference_grounded_visual_proof.html"] = _render_html(lineage)
@@ -814,7 +1102,7 @@ def build_reference_grounded_visual_design(*, root: str | Path | None = None) ->
             }
         )
     manifest = {
-        "schema_version": "new_banknote.reference_grounded_visual_proof_manifest.v1",
+        "schema_version": "new_banknote.reference_grounded_visual_proof_manifest.v2",
         "status": "human_review_ready_not_accepted",
         "source_base_revision": BASE_REVISION,
         "design_id": DESIGN_ID,
@@ -822,6 +1110,11 @@ def build_reference_grounded_visual_design(*, root: str | Path | None = None) ->
         "research": {
             "total_references": coverage["total_references"],
             "usable_visually_analyzed_references": coverage["usable_visually_analyzed_references"],
+            "evidence_class_counts": coverage["evidence_class_counts"],
+            "thumbnail_only_reference_ids": coverage["thumbnail_only_reference_ids"],
+            "in_video_frame_reference_ids": coverage["in_video_frame_reference_ids"],
+            "in_video_observation_count": coverage["in_video_observation_count"],
+            "in_video_publisher_count": coverage["in_video_publisher_count"],
             "cohort_counts": coverage["usable_cohort_counts"],
             "research_preceded_design_generation": RESEARCH_FROZEN_AT < DESIGN_GENERATION_STARTED_AT,
         },
@@ -836,8 +1129,12 @@ def build_reference_grounded_visual_design(*, root: str | Path | None = None) ->
         "proof_contract": {
             "canvas": [CANVAS_WIDTH, CANVAS_HEIGHT],
             "full_frame_keyframes": len(KEYFRAME_SPECS),
+            "clean_viewer_keyframes": len(KEYFRAME_SPECS),
+            "annotation_keyframes": len(KEYFRAME_SPECS),
+            "viewer_visible_scene_cue_reference_review_metadata": False,
             "cue_coverage": "9/9",
             "viewer_first": True,
+            "annotation_mode_second": True,
             "reference_lineage_second": True,
             "external_asset_count": 0,
             "source_images_embedded": False,
@@ -883,6 +1180,22 @@ def _coverage_readback() -> dict[str, Any]:
     cohort_counts = Counter(row["cohort"] for row in REFERENCES)
     usable_cohort_counts = Counter(row["cohort"] for row in usable)
     tag_counts = Counter(tag for row in usable for tag in row["coverage_tags"])
+    evidence_class_counts = Counter(
+        evidence_class for row in REFERENCES for evidence_class in row["evidence_classes"]
+    )
+    thumbnail_only = [
+        row["reference_id"]
+        for row in REFERENCES
+        if "thumbnail_observed" in row["evidence_classes"]
+        and "in_video_frame_observed" not in row["evidence_classes"]
+    ]
+    in_video_reference_ids = [
+        row["reference_id"]
+        for row in REFERENCES
+        if "in_video_frame_observed" in row["evidence_classes"]
+    ]
+    in_video_publishers = {row["publisher_channel"] for row in IN_VIDEO_OBSERVATIONS}
+    video_body_patterns = [row for row in PATTERNS if row["video_body_claim"]]
     checks = {
         "total_references_between_15_and_18": 15 <= len(REFERENCES) <= 18,
         "usable_visually_analyzed_minimum_12": len(usable) >= 12,
@@ -897,18 +1210,123 @@ def _coverage_readback() -> dict[str, Any]:
         "title_only_not_counted": all(
             "title only" not in " ".join(row["inspected_surfaces"]).lower() for row in usable
         ),
+        "evidence_classes_present_for_every_reference": all(row["evidence_classes"] for row in REFERENCES),
+        "in_video_frames_minimum_3": len(IN_VIDEO_OBSERVATIONS) >= 3,
+        "in_video_publishers_minimum_2": len(in_video_publishers) >= 2,
+        "in_video_exact_timestamps_present": all(
+            row["requested_timestamp_seconds"] is not None
+            and row["observed_player_time_seconds"] is not None
+            for row in IN_VIDEO_OBSERVATIONS
+        ),
+        "video_body_patterns_not_thumbnail_only": all(
+            any(
+                item["evidence_class"] in {"page_or_frame_observed", "in_video_frame_observed"}
+                for item in row["supporting_evidence"]
+            )
+            or row["classification"] == "inferred_constraint"
+            for row in video_body_patterns
+        ),
     }
     checks["all_passed"] = all(checks.values())
     return {
-        "schema_version": "new_banknote.reference_coverage_readback.v1",
+        "schema_version": "new_banknote.reference_coverage_readback.v2",
         "status": "passed" if checks["all_passed"] else "failed",
         "total_references": len(REFERENCES),
         "usable_visually_analyzed_references": len(usable),
         "limited_not_counted_reference_ids": [row["reference_id"] for row in REFERENCES if not row["visually_analyzed"]],
+        "evidence_class_counts": dict(sorted(evidence_class_counts.items())),
+        "thumbnail_only_reference_ids": thumbnail_only,
+        "in_video_frame_reference_ids": in_video_reference_ids,
+        "in_video_observation_count": len(IN_VIDEO_OBSERVATIONS),
+        "in_video_publisher_count": len(in_video_publishers),
+        "in_video_publishers": sorted(in_video_publishers),
         "cohort_counts": dict(sorted(cohort_counts.items())),
         "usable_cohort_counts": dict(sorted(usable_cohort_counts.items())),
         "coverage_tag_counts": dict(sorted(tag_counts.items())),
         "checks": checks,
+    }
+
+
+def _in_video_observation_readback() -> dict[str, Any]:
+    source_ids = [row["source_id"] for row in IN_VIDEO_OBSERVATIONS]
+    publisher_channels = {row["publisher_channel"] for row in IN_VIDEO_OBSERVATIONS}
+    checks = {
+        "public_no_login_frames_at_least_3": len(IN_VIDEO_OBSERVATIONS) >= 3,
+        "independent_channels_at_least_2": len(publisher_channels) >= 2,
+        "unique_source_ids": len(source_ids) == len(set(source_ids)),
+        "exact_requested_and_observed_timestamps": all(
+            isinstance(row["requested_timestamp_seconds"], (int, float))
+            and isinstance(row["observed_player_time_seconds"], (int, float))
+            for row in IN_VIDEO_OBSERVATIONS
+        ),
+        "decoded_frame_checks_recorded": all(row["decoded_ready_state"] >= 2 for row in IN_VIDEO_OBSERVATIONS),
+        "motion_not_overclaimed": all(
+            row["transition_motion_observation"].startswith("unknown")
+            for row in IN_VIDEO_OBSERVATIONS
+        ),
+        "captures_ignored_and_non_reusable": all(
+            row["local_capture"].startswith("local_in_video_observations/")
+            and "not reusable" in " ".join(row["limitations"])
+            for row in IN_VIDEO_OBSERVATIONS
+        ),
+    }
+    checks["all_passed"] = all(checks.values())
+    return {
+        "schema_version": "new_banknote.yukkuri_in_video_observation_readback.v1",
+        "status": "passed" if checks["all_passed"] else "failed",
+        "method_boundary": {
+            "public_watch_pages_only": True,
+            "fresh_no_login_profiles": True,
+            "personal_cookies_used": False,
+            "video_or_audio_downloaded": False,
+            "access_control_circumvented": False,
+            "frame_limit_per_video": 1,
+        },
+        "observation_count": len(IN_VIDEO_OBSERVATIONS),
+        "publisher_channel_count": len(publisher_channels),
+        "observations": IN_VIDEO_OBSERVATIONS,
+        "checks": checks,
+    }
+
+
+def _evidence_precision_revision_receipt() -> dict[str, Any]:
+    return {
+        "schema_version": "new_banknote.evidence_precision_revision_receipt.v1",
+        "receipt_id": "new-banknote-reference-evidence-precision-revision-v1",
+        "revised_at": EVIDENCE_PRECISION_REVISED_AT,
+        "predecessor": {
+            "commit": BASE_REVISION,
+            "artifact_path": (DEFAULT_OUTPUT / "reference_registry.json").as_posix(),
+            "sha256": PREDECESSOR_REGISTRY_SHA256,
+            "preserved_access": "available byte-exact at the predecessor Git commit",
+            "total_references": 16,
+            "usable_visually_analyzed_references": 14,
+            "thumbnail_only_reference_count": 5,
+            "in_video_frame_observation_count": 0,
+            "selected_candidate": DESIGN_ID,
+            "internal_selection_score": 92,
+        },
+        "revision": {
+            "total_references": len(REFERENCES),
+            "usable_any_visual_surface_references": 14,
+            "thumbnail_only_reference_ids": ["Y04", "Y05"],
+            "in_video_frame_reference_ids": ["Y01", "Y02", "Y03"],
+            "in_video_frame_observation_count": len(IN_VIDEO_OBSERVATIONS),
+            "independent_channel_count": len({row["publisher_channel"] for row in IN_VIDEO_OBSERVATIONS}),
+            "selected_candidate": DESIGN_ID,
+            "internal_selection_score": 89,
+            "selection_changed": False,
+        },
+        "corrected_claims": [
+            "Y01-Y03 now distinguish thumbnail, metadata, and one exact-timestamp in-video frame.",
+            "Y04-Y05 remain thumbnail-only and do not support video-body composition claims.",
+            "Speaker placement and lower text-band findings use three decoded frames from three channels.",
+            "Motion timing, transition, persistence, and frequency remain unobserved.",
+            "P07 is an inferred conservative constraint, not an observed playback pattern.",
+            "Production source-credit placement remains deferred; reference IDs belong to annotation and lineage surfaces.",
+        ],
+        "artifact_deletion_performed": False,
+        "human_visual_acceptance": False,
     }
 
 
@@ -927,7 +1345,7 @@ def _deviation_report() -> str:
         ("viewer/annotation separation", "route_a_visual_proof.html", "production constraint", "strong", "retain", "Viewer-first with a secondary evidence surface improves review clarity."),
         ("schematic disclaimer", "route_a_visual_proof keyframes", "production constraint", "strong", "retain", "Required to prevent exact-note or official-procedure interpretation."),
         ("subtitle safe-area geometry", "route_a_visual_proof keyframes", "production constraint", "not a visual reference claim", "retain as neutral glue", "Preserves approved text and platform fit."),
-        ("one-motion/non-looping budget", "route_a_motion_storyboard.json", "production constraint", "recurring", "retain", "Restrained one-time reveal/zoom is supported; playback remains untested."),
+        ("one-motion/non-looping budget", "route_a_motion_storyboard.json", "production constraint", "inferred only", "retain as conservative ceiling", "No inspected sequence establishes motion timing or frequency; playback remains untested."),
     ]
     body = [
         "# Current AI Design Deviation Report",
@@ -943,7 +1361,7 @@ def _deviation_report() -> str:
             "",
             "## Result",
             "",
-            "Approved text, cue mapping, subtitle safety, viewer/evidence separation, the schematic disclaimer, and the non-looping motion limit remain constraints. The Lab metaphor, palette, three-column UI, abstract-note styling, persistent right explanation block, decorative geometry, and bespoke motion naming are not carried forward.",
+            "Approved text, cue mapping, subtitle safety, clean-viewer/annotation separation, the schematic disclaimer, and the conservative non-looping motion ceiling remain constraints. The Lab metaphor, palette, three-column UI, abstract-note styling, persistent right explanation block, decorative geometry, and bespoke motion naming are not carried forward. Motion timing and frequency are not treated as observed grammar.",
             "",
             "Final acceptance remains a human decision. This audit authorizes neither YMM4 nor assets, render, production, publication, or rights use.",
         ]
@@ -956,7 +1374,7 @@ def _supersession_receipt(old_hashes: dict[str, str]) -> dict[str, Any]:
         "schema_version": "new_banknote.ai_original_visual_supersession_receipt.v1",
         "receipt_id": "new-banknote-route-a-ai-original-supersession-v1",
         "superseded_artifact_root": OLD_PROOF.as_posix(),
-        "source_commit": BASE_REVISION,
+        "source_commit": OLD_PROOF_BASE_REVISION,
         "supersession_reason": "existing content research was required before visual authority; the prior proof was created from original abstract geometry without external visual references",
         "status": "exploratory_ai_original_not_reference_grounded",
         "current_visual_authority": False,
@@ -990,20 +1408,21 @@ def _selection_scorecard() -> dict[str, Any]:
     candidates = [
         {
             "candidate_id": "documentary_object_focus_consensus",
-            "supporting_reference_ids": ["O01", "O02", "J02", "J03", "J04", "J05", "Y01", "Y02"],
+            "supporting_reference_ids": ["O01", "O02", "J02", "J03", "J04", "J05", "Y01", "Y02", "Y03"],
+            "supporting_evidence_classes": ["page_or_frame_observed", "in_video_frame_observed"],
             "cohort_coverage": 3,
             "subject_strategy": "single neutral source/object slot with one focus",
             "character_strategy": "speaker nameplates only",
             "subtitle_strategy": "bottom safe band",
             "callout_strategy": "one focus window or numbered point",
-            "source_credit_strategy": "compact reference footer",
-            "motion_strategy": "one non-looping reveal or zoom",
+            "source_credit_strategy": "reference IDs on annotation and lineage surfaces; production placement deferred",
+            "motion_strategy": "one non-looping reveal or zoom ceiling; timing and frequency unobserved",
             "rights_burden": "low",
             "YMM4_feasibility": "high",
             "content_risk": "low",
-            "deviations": ["real source imagery is replaced with neutral placeholders"],
+            "deviations": ["real source imagery is replaced with neutral placeholders", "motion behavior is a conservative proposal rather than observed playback grammar"],
             "score_components": {
-                "reference_support_breadth": 24,
+                "reference_support_breadth": 23,
                 "approved_content_fidelity": 20,
                 "viewer_comprehension_readability": 14,
                 "rights_and_asset_feasibility": 14,
@@ -1011,12 +1430,15 @@ def _selection_scorecard() -> dict[str, Any]:
                 "YMM4_feasibility": 8,
                 "motion_restraint_maintainability": 4,
             },
-            "score": 92,
+            "raw_score": 91,
+            "evidence_precision_penalty": 2,
+            "score": 89,
             "hard_fail": False,
         },
         {
             "candidate_id": "official_feature_map",
             "supporting_reference_ids": ["O01", "O02", "O06", "J04"],
+            "supporting_evidence_classes": ["page_or_frame_observed"],
             "cohort_coverage": 2,
             "subject_strategy": "numbered object map",
             "character_strategy": "voice only",
@@ -1029,20 +1451,23 @@ def _selection_scorecard() -> dict[str, Any]:
             "content_risk": "medium because a multi-callout map may imply exact placement",
             "deviations": ["exact object geometry cannot transfer"],
             "score_components": {
-                "reference_support_breadth": 20,
+                "reference_support_breadth": 19,
                 "approved_content_fidelity": 18,
                 "viewer_comprehension_readability": 13,
-                "rights_and_asset_feasibility": 13,
+                "rights_and_asset_feasibility": 12,
                 "yukkuri_dialogue_compatibility": 7,
                 "YMM4_feasibility": 7,
                 "motion_restraint_maintainability": 4,
             },
-            "score": 82,
+            "raw_score": 80,
+            "evidence_precision_penalty": 0,
+            "score": 80,
             "hard_fail": False,
         },
         {
             "candidate_id": "dialogue_overlay_object",
-            "supporting_reference_ids": ["J01", "J03", "Y01", "Y02", "Y03", "Y04", "Y05"],
+            "supporting_reference_ids": ["J01", "J03", "Y01", "Y02", "Y03"],
+            "supporting_evidence_classes": ["page_or_frame_observed", "in_video_frame_observed"],
             "cohort_coverage": 2,
             "subject_strategy": "object field plus two speaker cues",
             "character_strategy": "nameplates replace art",
@@ -1053,7 +1478,7 @@ def _selection_scorecard() -> dict[str, Any]:
             "rights_burden": "medium",
             "YMM4_feasibility": "high",
             "content_risk": "medium because dialogue framing can overpower technical evidence",
-            "deviations": ["creator character art is excluded"],
+            "deviations": ["creator character art is excluded", "Y04-Y05 thumbnail evidence is excluded from video-body support"],
             "score_components": {
                 "reference_support_breadth": 21,
                 "approved_content_fidelity": 18,
@@ -1063,25 +1488,45 @@ def _selection_scorecard() -> dict[str, Any]:
                 "YMM4_feasibility": 9,
                 "motion_restraint_maintainability": 4,
             },
-            "score": 86,
+            "raw_score": 85,
+            "evidence_precision_penalty": 2,
+            "score": 83,
             "hard_fail": False,
         },
     ]
     return {
-        "schema_version": "new_banknote.reference_selection_scorecard.v1",
+        "schema_version": "new_banknote.reference_selection_scorecard.v2",
         "status": "selected_for_human_review_proof",
+        "score_type": "internal_selection_heuristic",
+        "interpretation_boundary": "Scores compare candidate fitness inside this design exercise only; they are not audience-quality, factual-quality, production-readiness, or acceptance measurements.",
         "scoring_model_maximum": 100,
+        "rubric": {
+            "reference_support_breadth": 25,
+            "approved_content_fidelity": 20,
+            "viewer_comprehension_readability": 15,
+            "rights_and_asset_feasibility": 15,
+            "yukkuri_dialogue_compatibility": 10,
+            "YMM4_feasibility": 10,
+            "motion_restraint_maintainability": 5,
+        },
+        "evidence_adjustment": {
+            "thumbnail_only_video_body_support_allowed": False,
+            "single_frame_motion_support_allowed": False,
+            "in_video_frame_contribution": "eligible for static composition, speaker placement, subtitle location, and visible credit state only",
+            "thumbnail_penalty": "applied when a candidate previously depended on thumbnail-only sources for video-body grammar",
+        },
         "candidates": candidates,
         "selection": {
             "rule": "top valid candidate leads the second by at least 5 points",
             "selected_candidate": DESIGN_ID,
-            "selected_score": 92,
+            "selected_score": 89,
             "second_candidate": "dialogue_overlay_object",
-            "second_score": 86,
+            "second_score": 83,
             "lead": 6,
             "reference_threshold_passed": True,
             "hard_constraints_passed": True,
-            "selection_confidence": "medium_high",
+            "selection_preserved_after_evidence_revision": True,
+            "selection_confidence": "medium",
             "human_approval_status": "pending",
         },
     }
@@ -1089,8 +1534,8 @@ def _selection_scorecard() -> dict[str, Any]:
 
 def _design_contract() -> dict[str, Any]:
     return {
-        "schema_version": "new_banknote.reference_grounded_design_contract.v1",
-        "status": "implemented_proof_pending_human_review",
+        "schema_version": "new_banknote.reference_grounded_design_contract.v2",
+        "status": "evidence_graded_clean_viewer_proof_pending_human_review",
         "design_id": DESIGN_ID,
         "canvas": {"width": CANVAS_WIDTH, "height": CANVAS_HEIGHT},
         "selected_grammar": [
@@ -1108,7 +1553,9 @@ def _design_contract() -> dict[str, Any]:
             "composition": "single field plus one bounded focus",
             "speaker_treatment": "text-only speaker nameplate",
             "subtitle_safe_area": [84, 780, 1752, 220],
-            "source_credit": "compact reference IDs and rights boundary footer",
+            "viewer_surface": "six clean frames with no visible scene, cue, reference, evidence, or review metadata",
+            "annotation_surface": "six separate frames with visible scene, cue, reference IDs, evidence classes, adopted patterns, rights boundary, and pending approval status",
+            "source_credit": "reference IDs on annotation and lineage surfaces only; production credit placement deferred",
             "palette": {
                 "field": "#15181D",
                 "surface": "#F7F5EF",
@@ -1116,7 +1563,7 @@ def _design_contract() -> dict[str, Any]:
                 "marisa": "#E5B840",
                 "focus": "#52C7C7",
             },
-            "motion": "one non-looping reveal or zoom maximum per cue; storyboard only",
+            "motion": "one non-looping reveal or zoom maximum per cue as a conservative inferred constraint; no observed sequence establishes timing or frequency",
         },
         "rights_boundary": {
             "external_assets": 0,
@@ -1126,6 +1573,14 @@ def _design_contract() -> dict[str, Any]:
             "exact_banknote_likeness": False,
             "portrait_seal_serial_exact_security_pattern": False,
             "reference_captures": "ignored local research evidence only",
+        },
+        "evidence_boundary": {
+            "page_or_frame_observed": 9,
+            "thumbnail_observed": 5,
+            "thumbnail_only_reference_ids": ["Y04", "Y05"],
+            "in_video_frame_observed": 3,
+            "in_video_frame_reference_ids": ["Y01", "Y02", "Y03"],
+            "motion_sequence_observed": False,
         },
         "content_boundary": {
             "approved_text_changed": False,
@@ -1148,7 +1603,12 @@ def _design_contract() -> dict[str, Any]:
 def _lineage() -> dict[str, Any]:
     decisions = []
     contribution: Counter[str] = Counter()
-    for decision_id, decision_type, selected, refs, patterns in DECISIONS:
+    for row in DECISIONS:
+        decision_id = row["decision_id"]
+        decision_type = row["decision_type"]
+        selected = row["selected_value"]
+        refs = row["refs"]
+        patterns = row["patterns"]
         contribution.update(refs)
         decisions.append(
             {
@@ -1160,6 +1620,7 @@ def _lineage() -> dict[str, Any]:
                     row["cohort"] for row in REFERENCES if row["reference_id"] in refs
                 }),
                 "support_strength": "threshold_A",
+                "supporting_evidence_classes": row["evidence_classes"],
                 "adopted_pattern_ids": patterns,
                 "adaptation_description": "Shared grammar is reduced to an original, rights-minimal construction.",
                 "deviation_from_references": "No source image, logo, creator art, branded frame, or exact composition is copied.",
@@ -1182,7 +1643,7 @@ def _lineage() -> dict[str, Any]:
     ]
     max_share = max(row["share_of_major_decisions"] for row in contribution_rows)
     return {
-        "schema_version": "new_banknote.reference_to_visual_lineage.v1",
+        "schema_version": "new_banknote.reference_to_visual_lineage.v2",
         "status": "complete_pending_human_acceptance",
         "major_decision_count": len(decisions),
         "covered_major_decision_count": len(decisions),
@@ -1194,6 +1655,11 @@ def _lineage() -> dict[str, Any]:
             "passed": max_share <= 0.4,
             "by_reference": contribution_rows,
         },
+        "surface_boundary": {
+            "viewer": "approved visual content only; machine lineage remains in attributes",
+            "annotation": "visible scene, cue, reference, evidence, pattern, rights, and approval metadata",
+            "production_credit_placement": "deferred",
+        },
         "unreported_design_choice_count": 0,
         "human_approval_status": "pending",
     }
@@ -1202,7 +1668,7 @@ def _lineage() -> dict[str, Any]:
 def _mapping(cues: list[dict[str, Any]]) -> dict[str, Any]:
     frame_by_cue = {spec["cue_id"]: spec["filename"] for spec in KEYFRAME_SPECS}
     return {
-        "schema_version": "new_banknote.reference_grounded_visual_mapping.v1",
+        "schema_version": "new_banknote.reference_grounded_visual_mapping.v2",
         "status": "complete_pending_human_review",
         "cue_count": len(cues),
         "scene_allocation": {"S1": 2, "S2": 4, "S3": 3},
@@ -1214,7 +1680,9 @@ def _mapping(cues: list[dict[str, Any]]) -> dict[str, Any]:
                 "scene_id": cue["scene_id"],
                 "speaker": cue["speaker"],
                 "text": cue["text"],
-                "keyframe": frame_by_cue.get(cue["cue_id"]),
+                "viewer_keyframe": frame_by_cue.get(cue["cue_id"]),
+                "annotation_keyframe": frame_by_cue.get(cue["cue_id"]),
+                "viewer_visible_metadata": False,
                 "contact_sheet_thumbnail": True,
                 "adopted_pattern_ids": ["P01_object_first", "P03_short_key_term", "P04_bottom_text_band"],
                 "external_asset": False,
@@ -1228,20 +1696,24 @@ def _mapping(cues: list[dict[str, Any]]) -> dict[str, Any]:
 
 def _motion_storyboard(cues: list[dict[str, Any]]) -> dict[str, Any]:
     return {
-        "schema_version": "new_banknote.reference_grounded_motion_storyboard.v1",
-        "status": "proposal_only_not_implemented",
+        "schema_version": "new_banknote.reference_grounded_motion_storyboard.v2",
+        "status": "inferred_constraint_proposal_only_not_implemented",
         "motion_bearing_cue_count": len(cues),
         "principal_motion_maximum_per_cue": 1,
         "continuous_loop_allowed": False,
         "states": ["start", "emphasis", "settled"],
         "reference_pattern_id": "P07_restrained_reveal",
+        "evidence_class": "inferred_constraint",
+        "observed_playback_sequence_count": 0,
+        "timing_frequency_persistence_observed": False,
+        "interpretation_boundary": "Motion classes are production proposals bounded by a conservative one-action ceiling; they are not observed source playback grammar.",
         "cues": [
             {
                 "cue_id": cue["cue_id"],
                 "motion_class": MOTION_BY_CUE[cue["cue_id"]][0],
                 "display_label": MOTION_BY_CUE[cue["cue_id"]][1],
                 "start": "neutral hold",
-                "emphasis": "single supported focus action",
+                "emphasis": "single proposed focus action",
                 "settled": "stable reading frame",
                 "duration_seconds": 0.65,
                 "easing": "ease-out",
@@ -1254,19 +1726,30 @@ def _motion_storyboard(cues: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def _render_keyframe(spec: dict[str, Any], cue: dict[str, Any]) -> str:
+def _render_keyframe(spec: dict[str, Any], cue: dict[str, Any], *, surface: str) -> str:
+    if surface not in {"viewer", "annotation"}:
+        raise ValueError(f"unsupported keyframe surface: {surface}")
     speaker_color = "#CF3F57" if cue["speaker"] == "れいむ" else "#E5B840"
     refs = " ".join(spec["refs"])
+    reference_by_id = {row["reference_id"]: row for row in REFERENCES}
+    evidence_classes = sorted({
+        evidence_class
+        for reference_id in spec["refs"]
+        for evidence_class in reference_by_id[reference_id]["evidence_classes"]
+        if evidence_class != "metadata_only"
+    })
+    patterns = "P01 P02 P03 P04 P06"
     attrs = {
         "xmlns": "http://www.w3.org/2000/svg",
         "width": str(CANVAS_WIDTH),
         "height": str(CANVAS_HEIGHT),
         "viewBox": "0 0 1920 1080",
-        "data-surface": "viewer",
+        "data-surface": surface,
         "data-design-id": DESIGN_ID,
         "data-cue-id": cue["cue_id"],
         "data-approved-text": cue["text"],
         "data-reference-ids": refs,
+        "data-evidence-classes": " ".join(evidence_classes),
         "data-pattern-ids": "P01_object_first P02_one_focus_callout P03_short_key_term P04_bottom_text_band P06_adjacent_source_credit",
         "data-external-asset-count": "0",
         "data-human-approval": "pending",
@@ -1276,18 +1759,24 @@ def _render_keyframe(spec: dict[str, Any], cue: dict[str, Any]) -> str:
         _svg_open(attrs),
         '<rect width="1920" height="1080" fill="#15181D"/>',
         '<rect x="48" y="42" width="1824" height="696" rx="32" fill="#F7F5EF"/>',
-        f'<text x="84" y="116" font-size="30" font-weight="800" fill="#70757D">{_xml(spec["scene_id"])} / {_xml(cue["cue_id"])}</text>',
-        f'<text x="84" y="188" font-size="70" font-weight="900" fill="#15181D">{_xml(spec["action"])}</text>',
-        f'<text x="84" y="238" font-size="28" font-weight="800" fill="#387F82">{_xml(spec["term"])}</text>',
+        f'<text x="84" y="158" font-size="70" font-weight="900" fill="#15181D">{_xml(spec["action"])}</text>',
+        f'<text x="84" y="218" font-size="28" font-weight="800" fill="#387F82">{_xml(spec["term"])}</text>',
         _render_focus(spec["focus"]),
         f'<text x="84" y="724" font-size="24" font-weight="800" fill="#70757D">{_xml(DISCLAIMER)}</text>',
         '<rect x="84" y="780" width="1752" height="220" rx="26" fill="#24282F" stroke="#454B55" stroke-width="2"/>',
         f'<rect x="112" y="812" width="170" height="56" rx="28" fill="{speaker_color}"/>',
         f'<text x="197" y="850" text-anchor="middle" font-size="28" font-weight="900" fill="#15181D">{_xml(cue["speaker"])}</text>',
         _svg_text_lines(cue["text"], x=316, y=844, font_size=38, line_gap=50, max_chars=34, max_lines=3, fill="#FFFFFF"),
-        f'<text x="84" y="1044" font-size="20" font-weight="700" fill="#B7BDC5">参照文法 {refs} ｜ 外部画像不使用 ｜ human review pending</text>',
-        "</svg>",
     ]
+    if surface == "annotation":
+        pieces.insert(
+            3,
+            f'<text x="84" y="94" font-size="24" font-weight="800" fill="#70757D">{_xml(spec["scene_id"])} / {_xml(cue["cue_id"])}</text>',
+        )
+        pieces.append(
+            f'<text x="84" y="1036" font-size="18" font-weight="700" fill="#B7BDC5">refs {refs} ｜ evidence {_xml(" ".join(evidence_classes))} ｜ patterns {patterns} ｜ rights: external assets 0 ｜ approval pending</text>'
+        )
+    pieces.append("</svg>")
     return "\n".join(pieces) + "\n"
 
 
@@ -1405,11 +1894,11 @@ def _render_motion_storyboard(cues: list[dict[str, Any]]) -> str:
             "height": "1080",
             "viewBox": "0 0 1920 1080",
             "data-loop": "false",
-            "data-motion-status": "storyboard-only",
+            "data-motion-status": "inferred-constraint-storyboard-only",
         }),
         '<rect width="1920" height="1080" fill="#F7F5EF"/>',
-        '<text x="70" y="76" font-size="42" font-weight="900" fill="#15181D">MOTION STORYBOARD / START → EMPHASIS → SETTLED</text>',
-        '<text x="70" y="116" font-size="22" fill="#70757D">P07 restrained reveal · one principal motion maximum · continuous loop false · YMM4 untested</text>',
+        '<text x="70" y="76" font-size="42" font-weight="900" fill="#15181D">INFERRED MOTION CEILING / START → EMPHASIS → SETTLED</text>',
+        '<text x="70" y="116" font-size="22" fill="#70757D">proposal only · no observed playback sequence · one principal motion maximum · no loop · YMM4 untested</text>',
     ]
     for index, cue in enumerate(cues):
         y = 158 + index * 96
@@ -1432,10 +1921,15 @@ def _render_motion_storyboard(cues: list[dict[str, Any]]) -> str:
 
 def _render_html(lineage: dict[str, Any]) -> str:
     cards = []
+    annotation_cards = []
     for spec in KEYFRAME_SPECS:
         cards.append(
             f'<article class="frame"><h3>{html.escape(spec["action"])} <small>{html.escape(spec["term"])}</small></h3>'
             f'<img src="keyframes/{html.escape(spec["filename"])}" alt="{html.escape(spec["action"])} keyframe"></article>'
+        )
+        annotation_cards.append(
+            f'<article class="frame"><h3>{html.escape(spec["scene_id"])} / {html.escape(spec["cue_id"])} <small>{html.escape(spec["action"])}</small></h3>'
+            f'<img src="annotation_keyframes/{html.escape(spec["filename"])}" alt="{html.escape(spec["action"])} annotation keyframe"></article>'
         )
     lineage_cards = []
     for row in lineage["decisions"]:
@@ -1444,6 +1938,8 @@ def _render_html(lineage: dict[str, Any]) -> str:
             f'<p class="kicker">{html.escape(row["decision_id"])} / {html.escape(row["decision_type"])}</p>'
             f'<h3>{html.escape(row["selected_value"])}</h3>'
             f'<p><strong>refs</strong> {html.escape(" · ".join(row["supporting_reference_ids"]))}</p>'
+            f'<p><strong>evidence</strong> {html.escape(" · ".join(row["supporting_evidence_classes"]))}</p>'
+            f'<p><strong>patterns</strong> {html.escape(" · ".join(row["adopted_pattern_ids"]))}</p>'
             f'<p><strong>adapted</strong> {html.escape(row["adaptation_description"])}</p>'
             f'<p><strong>neutral glue</strong> {html.escape(row["original_glue"])}</p>'
             f'<p><strong>rights</strong> no source image, logo, creator art, or exact composition is copied.</p>'
@@ -1462,18 +1958,21 @@ h1{{font-size:clamp(40px,6vw,76px);line-height:1.05;margin:.2em 0}}h2{{font-size
 .pill{{display:inline-block;border:2px solid var(--focus);border-radius:999px;padding:5px 11px;margin:3px;font-weight:800}}.frames{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}}
 .frame img,.wide img{{display:block;width:100%;height:auto;border-radius:12px;background:white}}.wide{{background:var(--surface);padding:18px;border-radius:20px;margin:20px 0}}
 .lineage-grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}.kicker{{color:#387f82;font-weight:900;letter-spacing:.06em}}.review{{background:var(--field);color:white;border-radius:22px;padding:26px;margin-top:30px}}a{{color:inherit}}
+details{{margin-top:34px}}summary{{cursor:pointer;font-size:25px;padding:18px;background:var(--surface);border:1px solid var(--line);border-radius:16px}}
+body:has(#annotation:target) .banner{{display:none}}body:has(#annotation:target) main>:not(#annotation){{display:none}}body:has(#annotation:target) #annotation{{display:block}}
 body:has(#reference-lineage:target) .banner{{display:none}}body:has(#reference-lineage:target) main>:not(#reference-lineage){{display:none}}body:has(#reference-lineage:target) #reference-lineage{{display:block}}
 @media(max-width:900px){{.hero,.frames,.lineage-grid{{grid-template-columns:1fr}}main{{padding:18px}}}}
 </style></head>
 <body data-design-id="{DESIGN_ID}" data-default-surface="viewer" data-review-status="pending" data-external-resource-count="0">
 <div class="banner">内部レビュー用／REFERENCE-GROUNDED CANDIDATE／最終承認前／非公開／非本番</div>
-<main><section class="hero"><div><p class="kicker">EXISTING CONTENT → SHARED GRAMMAR → ORIGINAL PROOF</p><h1>実物を中心に、ひとつずつ見る</h1><p>16件の公開referenceを先に調査し、14件の実視覚面から横断文法を抽出しました。外部画像やcreator artは使わず、単一主対象・一つのfocus・短い要点・speaker nameplateへ翻案しています。</p><span class="pill">6 keyframes</span><span class="pill">9/9 cues</span><span class="pill">external assets 0</span></div><aside class="panel"><h2>Authority</h2><p>旧Route Aは探索的AI-original historyです。このproofだけが次のhuman-review candidateですが、final acceptance、Shot/Motion、Asset/Rights、YMM4、renderは未承認です。</p></aside></section>
-<section id="viewer"><h2>Viewer-first keyframes</h2><div class="frames">{''.join(cards)}</div></section>
+<main><section class="hero"><div><p class="kicker">EVIDENCE-GRADED GRAMMAR → ORIGINAL PROOF</p><h1>実物を中心に、ひとつずつ見る</h1><p>16件の公開referenceを調査し、ページ／静止画面、サムネイル、動画内単一フレームを分離しました。Y01–Y03は公開プレイヤーの時刻固定フレーム、Y04–Y05はサムネイル限定です。動きの頻度や継続は未観察です。</p><span class="pill">6 clean viewer frames</span><span class="pill">6 annotation frames</span><span class="pill">9/9 cues</span><span class="pill">external assets 0</span></div><aside class="panel"><h2>Authority</h2><p>旧Route Aは探索的AI-original historyです。このproofだけが次のhuman-review candidateですが、final acceptance、Shot/Motion、Asset/Rights、YMM4、renderは未承認です。</p></aside></section>
+<section id="viewer"><h2>Clean viewer keyframes</h2><p>画面内にscene／cue／reference／evidence／reviewメタデータを表示しない視聴者向け面です。</p><div class="frames">{''.join(cards)}</div></section>
 <section><h2>9-cue overview</h2><div class="wide"><img src="reference_grounded_nine_cue_contact_sheet.svg" alt="9 cue contact sheet"></div></section>
 <section><h2>Motion proposal</h2><div class="wide"><img src="reference_grounded_motion_storyboard.svg" alt="motion storyboard"></div></section>
-<details id="reference-lineage" open><summary><strong>Reference lineage mode</strong> — adopted grammar / neutral glue / rights boundary</summary><div class="lineage-grid">{''.join(lineage_cards)}</div></details>
+<details id="annotation"><summary><strong>Annotation mode</strong> — scene / cue / refs / evidence / patterns / rights / approval</summary><div class="frames">{''.join(annotation_cards)}</div></details>
+<details id="reference-lineage"><summary><strong>Reference lineage mode</strong> — adopted grammar / neutral glue / rights boundary</summary><div class="lineage-grid">{''.join(lineage_cards)}</div></details>
 <section class="review"><h2>Human review gate</h2><p><a href="reference_grounded_visual_review_sheet.md">5問のreview sheet</a> · <a href="README_REFERENCE_GROUNDED_VISUAL_DESIGN.md">research README</a> · <a href="reference_to_visual_lineage.json">machine lineage</a></p></section>
-</main><script>if(location.hash==="#reference-lineage"){{const lineage=document.getElementById("reference-lineage");lineage.open=true;window.addEventListener("load",()=>lineage.scrollIntoView({{block:"start"}}))}}</script></body></html>
+</main><script>const target=location.hash==="#annotation"?document.getElementById("annotation"):location.hash==="#reference-lineage"?document.getElementById("reference-lineage"):null;if(target){{target.open=true;window.addEventListener("load",()=>target.scrollIntoView({{block:"start"}}))}}</script></body></html>
 '''
 
 
@@ -1495,30 +1994,37 @@ The prior `Security Inspection Lab` proof was built from AI-original abstract SV
 - journalism / documentary usable: **{cohorts['journalism_documentary']}**
 - Yukkuri / adjacent explainer usable: **{cohorts['yukkuri_adjacent_explainer']}**
 - limited and not counted: **{', '.join(coverage['limited_not_counted_reference_ids'])}**
+- public no-login in-video frames: **{coverage['in_video_observation_count']} frames / {coverage['in_video_publisher_count']} independent channels**
+- in-video frame references: **{', '.join(coverage['in_video_frame_reference_ids'])}**
+- thumbnail-only references: **{', '.join(coverage['thumbnail_only_reference_ids'])}**
 
-The tracked registry records titles, publishers, dates, canonical URLs, inspected surfaces, visual observations, evidence grades, and rights boundaries. Captures and YouTube thumbnails remain only in ignored local research cache. `reference_contact_sheet.local.html` is the local visual comparison surface.
+The tracked registry distinguishes `page_or_frame_observed`, `thumbnail_observed`, `metadata_only`, `in_video_frame_observed`, and inaccessible-not-counted evidence. Y01–Y03 each have one decoded public-player frame at an exact recorded timestamp; Y04–Y05 remain thumbnail-only. Captures and thumbnails remain only in ignored local research cache. No login, personal cookie profile, video/audio download, or access-control circumvention was used. `reference_contact_sheet.local.html` is the local visual comparison surface.
 
 ## Common visual grammar
 
-Across cohorts, the most transferable grammar is: keep the object or source surface primary; emphasize one feature at a time; use one short action or key term; separate dialogue speakers visibly; place subtitles in a high-contrast lower region; keep source identity adjacent; and restrict motion to a bounded reveal, angle state, or zoom.
+Across cohorts, the most transferable static grammar is: keep the object or source surface primary; emphasize one feature at a time; use one short action or key term; distinguish dialogue speakers; place readable text in a lower region; and keep source identity adjacent on evidence surfaces. Three decoded frames support static speaker and subtitle placement only. They do not establish persistence, alternation, timing, transition, pacing, or motion frequency.
+
+`P07_restrained_reveal` is therefore an `inferred_constraint`, not an observed playback pattern. The one-action/non-looping ceiling remains a conservative proposal and is still untested in YMM4.
 
 The patterns rejected as authority are creator-specific branding, character art, full source-image reuse, dense collage, exact note likeness, branded lower thirds, and invented story worlds.
 
 ## Implemented direction
 
-`{DESIGN_ID}` scored **{scorecard['selection']['selected_score']}/100**, leading the next valid candidate by **{scorecard['selection']['lead']}** points. It uses a single neutral source/object slot, one focus window, short Japanese action labels, text-only speaker nameplates, the exact approved subtitle, and a compact reference footer.
+`{DESIGN_ID}` scored **{scorecard['selection']['selected_score']}/100** on an internal selection heuristic, leading the next valid candidate by **{scorecard['selection']['lead']}** points. This is not an audience-quality, factual-quality, production-readiness, or acceptance score. The selected direction remains unchanged after evidence re-grading. It uses a single neutral source/object slot, one focus window, short Japanese action labels, text-only speaker nameplates, and the exact approved subtitle.
 
-Reference-derived: hierarchy, object-first focus, bounded close-up, short key term, speaker distinction, adjacent credit, and restrained one-shot motion. Neutral glue: coordinates, semantic line wrapping, placeholder geometry, and contrast tuning.
+Reference-derived: static hierarchy, object-first focus, bounded close-up, short key term, speaker distinction, and adjacent credit on evidence surfaces. Inferred constraint: one non-looping motion maximum. Neutral glue: coordinates, semantic line wrapping, placeholder geometry, and contrast tuning.
 
 Nothing in the tracked proof copies a screenshot, thumbnail, logo, character, branded frame, portrait, seal, serial number, exact banknote geometry, or security pattern. Public visibility was not treated as reuse permission.
 
 ## How the new proof differs
 
-The Lab metaphor, three-column pseudo-interface, old palette, abstract-note geometry, persistent right explanation block, decorative system, and bespoke motion vocabulary are absent. Approved content, cue order, scene 2/4/3, speaker 3/6, claims, evidence, CSVs, lineage, and the non-looping motion ceiling are unchanged.
+The Lab metaphor, three-column pseudo-interface, old palette, abstract-note geometry, persistent right explanation block, decorative system, and bespoke motion vocabulary are absent. Approved content, cue order, scene 2/4/3, speaker 3/6, claims, and CSVs are unchanged. Evidence grades, grammar counts, scorecard, and lineage were recomputed; the selected direction and conservative non-looping ceiling remain.
+
+The six `keyframes/` files are clean viewer frames: no scene, cue, reference, evidence, or review metadata is visibly rendered. The six `annotation_keyframes/` files carry the full review metadata. Reference IDs are not a decision about production credit placement; that remains deferred.
 
 ## Review next
 
-Open `reference_grounded_visual_proof.html`, then answer the five questions in `reference_grounded_visual_review_sheet.md`. Human acceptance is still required before Shot/Motion or Asset/Rights contracts. YMM4, render, pronunciation/rhythm/clipping review, production, publication, rights approval, PR, and master integration remain closed.
+Open `reference_grounded_visual_proof.html` for the clean viewer surface, use `#annotation` for the review overlay, and use `#reference-lineage` for decision lineage. Then answer the five questions in `reference_grounded_visual_review_sheet.md`. Human acceptance is still required before Shot/Motion or Asset/Rights contracts. YMM4, render, pronunciation/rhythm/clipping review, production, publication, rights approval, PR, and master integration remain closed.
 """
 
 
@@ -1528,13 +2034,16 @@ def _proof_readme() -> str:
 > **HUMAN REVIEW CANDIDATE / NOT ACCEPTED / EXTERNAL ASSETS 0**
 
 - primary surface: `reference_grounded_visual_proof.html`
-- six 1920x1080 keyframes: `keyframes/`
+- six clean 1920x1080 viewer keyframes: `keyframes/`
+- six separate 1920x1080 annotation keyframes: `annotation_keyframes/`
+- direct annotation mode: `reference_grounded_visual_proof.html#annotation`
+- direct lineage mode: `reference_grounded_visual_proof.html#reference-lineage`
 - nine-cue coverage: `reference_grounded_nine_cue_contact_sheet.svg`
 - motion proposal: `reference_grounded_motion_storyboard.svg`
 - exact decision lineage: `reference_to_visual_lineage.json`
 - five-question gate: `reference_grounded_visual_review_sheet.md`
 
-The selected grammar is `{DESIGN_ID}`. Source captures and thumbnails are research-only ignored files and do not appear in the tracked proof. All visible diagram geometry is original, neutral, and non-likeness-based.
+The selected grammar is `{DESIGN_ID}`. Source captures and thumbnails are research-only ignored files and do not appear in the tracked proof. All visible diagram geometry is original, neutral, and non-likeness-based. Viewer keyframes do not visibly render scene/cue/reference/evidence/review metadata; annotation keyframes keep that evidence separate.
 
 The prior `route_a_visual_proof/` remains byte-exact exploratory AI-original history. Final visual acceptance, Shot/Motion, Asset/Rights, YMM4, render, production, publication, and rights approval remain false.
 """
@@ -1565,6 +2074,9 @@ def _review_sheet() -> str:
 
 def _render_local_contact_sheet() -> str:
     sections = []
+    observations_by_source = {
+        row["source_id"]: row for row in IN_VIDEO_OBSERVATIONS
+    }
     cohort_labels = {
         "official_educational": "A. Official / educational",
         "journalism_documentary": "B. Journalism / documentary",
@@ -1577,11 +2089,18 @@ def _render_local_contact_sheet() -> str:
                 visual = f'<img src="{html.escape(row["local_capture"])}" alt="local research capture for {row["reference_id"]}">'
             else:
                 visual = f'<div class="missing">metadata card only<br>{html.escape(row["capture_note"])}</div>'
+            observation = observations_by_source.get(row["reference_id"])
+            if observation:
+                visual += (
+                    f'<p class="evidence">in-video frame @ {observation["observed_player_time_seconds"]:.3f}s</p>'
+                    f'<img src="{html.escape(observation["local_capture"])}" alt="ignored in-video observation for {row["reference_id"]}">'
+                )
             cards.append(
                 '<article>'
                 f'<p class="id">{row["reference_id"]} · {html.escape(row["evidence_grade"])}</p>'
                 f'<h3>{html.escape(row["exact_title"])}</h3><p>{html.escape(row["publisher_channel"])}</p>{visual}'
                 f'<p><a href="{html.escape(row["canonical_url"])}">source URL</a></p>'
+                f'<p><strong>evidence</strong> {html.escape(", ".join(row["evidence_classes"]))}</p>'
                 f'<p><strong>grammar</strong> {html.escape(", ".join(row["patterns_worth_adopting"]))}</p>'
                 f'<p><strong>adopt</strong> {html.escape("; ".join(row["patterns_worth_adopting"]))}</p>'
                 f'<p><strong>avoid</strong> {html.escape("; ".join(row["patterns_to_avoid"]))}</p>'
@@ -1589,7 +2108,7 @@ def _render_local_contact_sheet() -> str:
             )
         sections.append(f'<section><h2>{html.escape(label)}</h2><div class="grid">{"".join(cards)}</div></section>')
     return f'''<!doctype html><html lang="ja"><head><meta charset="utf-8"><title>Local Reference Contact Sheet</title>
-<style>body{{margin:0;background:#171a1f;color:#f7f5ef;font-family:"Yu Gothic UI",sans-serif}}main{{max-width:1500px;margin:auto;padding:28px}}.notice{{border:2px solid #e5b840;padding:14px}}.grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}article{{background:#252a31;border-radius:16px;padding:16px}}img{{width:100%;height:230px;object-fit:contain;background:white}}.missing{{height:230px;display:grid;place-items:center;text-align:center;background:#343a43;color:#c7ccd3}}a{{color:#52c7c7}}.id{{color:#e5b840;font-weight:900}}@media(max-width:900px){{.grid{{grid-template-columns:1fr}}}}</style></head>
+<style>body{{margin:0;background:#171a1f;color:#f7f5ef;font-family:"Yu Gothic UI",sans-serif}}main{{max-width:1500px;margin:auto;padding:28px}}.notice{{border:2px solid #e5b840;padding:14px}}.grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}article{{background:#252a31;border-radius:16px;padding:16px}}img{{width:100%;height:230px;object-fit:contain;background:white}}.missing{{height:230px;display:grid;place-items:center;text-align:center;background:#343a43;color:#c7ccd3}}a{{color:#52c7c7}}.id{{color:#e5b840;font-weight:900}}.evidence{{color:#52c7c7;font-weight:900}}@media(max-width:900px){{.grid{{grid-template-columns:1fr}}}}</style></head>
 <body><main><h1>LOCAL RESEARCH CONTACT SHEET</h1><p class="notice">Research evidence only. Captures are ignored and untracked. Public visibility is not reuse permission. Do not publish or embed these images in the tracked proof.</p>{''.join(sections)}</main></body></html>
 '''
 
@@ -1610,7 +2129,43 @@ def _readback(
     old_exact = all(_sha(repo_root / path) == digest for path, digest in old_hashes.items())
     mapped = _load_json(output / "reference_grounded_visual_mapping.json")
     motion = _load_json(output / "reference_grounded_motion_storyboard.json")
+    coverage = _load_json(output / "reference_coverage_readback.json")
+    observation_readback = _load_json(output / "yukkuri_in_video_observation_readback.json")
+    grammar = _load_json(output / "visual_grammar_clusters.json")
+    scorecard = _load_json(output / "reference_selection_scorecard.json")
     proof_text = (output / "reference_grounded_visual_proof.html").read_text(encoding="utf-8")
+    viewer_paths = sorted((output / "keyframes").glob("*.svg"))
+    annotation_paths = sorted((output / "annotation_keyframes").glob("*.svg"))
+    viewer_visible_text = {
+        path.name: " ".join(text.strip() for text in ElementTree.parse(path).getroot().itertext() if text.strip())
+        for path in viewer_paths
+    }
+    annotation_visible_text = {
+        path.name: " ".join(text.strip() for text in ElementTree.parse(path).getroot().itertext() if text.strip())
+        for path in annotation_paths
+    }
+    spec_by_filename = {spec["filename"]: spec for spec in KEYFRAME_SPECS}
+    viewer_metadata_clean = all(
+        spec_by_filename[name]["scene_id"] not in text
+        and spec_by_filename[name]["cue_id"] not in text
+        and not any(reference_id in text for reference_id in spec_by_filename[name]["refs"])
+        and "review" not in text.lower()
+        and "evidence" not in text.lower()
+        and "patterns" not in text.lower()
+        and "approval" not in text.lower()
+        for name, text in viewer_visible_text.items()
+    )
+    annotation_complete = all(
+        spec_by_filename[name]["scene_id"] in text
+        and spec_by_filename[name]["cue_id"] in text
+        and all(reference_id in text for reference_id in spec_by_filename[name]["refs"])
+        and "evidence" in text.lower()
+        and "patterns" in text.lower()
+        and "rights" in text.lower()
+        and "approval pending" in text.lower()
+        for name, text in annotation_visible_text.items()
+    )
+    video_body_patterns = [row for row in grammar["patterns"] if row["video_body_claim"]]
     combined = "\n".join(
         path.read_text(encoding="utf-8", errors="strict")
         for path in output.rglob("*")
@@ -1620,11 +2175,34 @@ def _readback(
     )
     checks = {
         "research_preceded_design": RESEARCH_FROZEN_AT < DESIGN_GENERATION_STARTED_AT,
-        "corpus_coverage_passed": _coverage_readback()["checks"]["all_passed"],
+        "corpus_coverage_passed": coverage["checks"]["all_passed"],
+        "evidence_classes_recomputed": coverage["evidence_class_counts"] == {
+            "in_video_frame_observed": 3,
+            "inaccessible_not_counted": 2,
+            "metadata_only": 7,
+            "page_or_frame_observed": 9,
+            "thumbnail_observed": 5,
+        },
+        "thumbnail_only_y04_y05": coverage["thumbnail_only_reference_ids"] == ["Y04", "Y05"],
+        "in_video_3_frames_3_channels": coverage["in_video_observation_count"] == 3 and coverage["in_video_publisher_count"] == 3,
+        "in_video_observation_readback_passed": observation_readback["checks"]["all_passed"],
+        "video_body_patterns_not_thumbnail_only": all(
+            any(
+                item["evidence_class"] in {"page_or_frame_observed", "in_video_frame_observed"}
+                for item in row["supporting_evidence"]
+            )
+            or row["classification"] == "inferred_constraint"
+            for row in video_body_patterns
+        ),
+        "motion_is_inferred_not_observed": motion["evidence_class"] == "inferred_constraint" and motion["observed_playback_sequence_count"] == 0,
+        "selection_heuristic_recomputed_to_89": scorecard["score_type"] == "internal_selection_heuristic" and scorecard["selection"]["selected_score"] == 89,
         "approved_hashes_8_of_8_exact": approved_exact,
         "old_route_a_proof_byte_exact": old_exact,
         "old_route_a_not_current_authority": manifest["superseded_old_proof"]["current_visual_authority"] is False,
-        "six_keyframes": len(list((output / "keyframes").glob("*.svg"))) == 6,
+        "six_clean_viewer_keyframes": len(viewer_paths) == 6,
+        "six_annotation_keyframes": len(annotation_paths) == 6,
+        "viewer_visible_metadata_clean": viewer_metadata_clean,
+        "annotation_visible_metadata_complete": annotation_complete,
         "cue_coverage_9_of_9": mapped["cue_count"] == 9,
         "scene_allocation_2_4_3": mapped["scene_allocation"] == {"S1": 2, "S2": 4, "S3": 3},
         "speaker_counts_3_6": mapped["speaker_counts"] == {"れいむ": 3, "まりさ": 6},
@@ -1635,34 +2213,37 @@ def _readback(
         "no_security_inspection_lab_in_viewer": "Security Inspection Lab" not in proof_text,
         "no_absolute_path_or_uuid": not _contains_private_tokens(combined),
         "motion_budget": all(row["loop"] is False and row["simultaneous_principal_motions"] == 1 for row in motion["cues"]),
-        "viewer_lineage_separated": 'id="viewer"' in proof_text and 'id="reference-lineage"' in proof_text,
+        "viewer_annotation_lineage_separated": all(marker in proof_text for marker in ('id="viewer"', 'id="annotation"', 'id="reference-lineage"')),
         "final_acceptance_false": manifest["proof_contract"]["final_visual_acceptance"] is False,
         "YMM4_render_false": manifest["proof_contract"]["YMM4_authorized"] is False and manifest["proof_contract"]["render_authorized"] is False,
     }
     checks["all_passed"] = all(checks.values())
     return {
-        "schema_version": "new_banknote.reference_grounded_visual_proof_readback.v1",
+        "schema_version": "new_banknote.reference_grounded_visual_proof_readback.v2",
         "status": "passed" if checks["all_passed"] else "failed",
         "checks": checks,
         "evidence_grades": {
             "source_metadata": "web_and_public_metadata_verified",
-            "visual_observation": "14 usable captures_or_public_thumbnails; 2 limited not counted",
-            "rendered_output": "all_six_keyframes_contact_sheet_storyboard_primary_html_lineage_and_local_contact_sheet_inspected",
+            "visual_observation": "9 page_or_frame; 5 thumbnails including 2 thumbnail-only; 3 exact-time public no-login in-video frames; 2 inaccessible not counted",
+            "motion_observation": "no playback sequence observed; P07 is an inferred conservative constraint",
+            "rendered_output": "six_clean_viewer_keyframes_six_annotation_keyframes_contact_sheet_storyboard_primary_html_annotation_mode_lineage_mode_and_local_contact_sheet_inspected",
             "YMM4": "not_tested",
         },
         "output_inspection": {
             "inspected_at": OUTPUT_INSPECTED_AT,
             "method": "headless Chromium capture at 1920 px width plus manual visual inspection",
             "artifacts": [
-                "six keyframes",
+                "six clean viewer keyframes",
+                "six annotation keyframes",
                 "nine-cue contact sheet",
                 "motion storyboard",
                 "primary HTML viewer",
+                "annotation mode",
                 "reference lineage mode",
                 "ignored local reference contact sheet",
             ],
             "repair_cycles": 1,
-            "result": "passed_after_microtext_annotation_handle_overlap_repair",
+            "result": "passed_after_evidence_precision_and_clean_viewer_annotation_separation_repair",
         },
     }
 

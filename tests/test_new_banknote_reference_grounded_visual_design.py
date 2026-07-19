@@ -24,7 +24,7 @@ PILOT = ROOT / (
 )
 OUTPUT = PILOT / "reference_grounded_visual_design"
 OLD_PROOF = PILOT / "route_a_visual_proof"
-EXPECTED_STATE = "new-banknote-reference-grounded-visual-proof-human-review-ready-v1"
+EXPECTED_STATE = "new-banknote-reference-grounded-visual-proof-evidence-strengthened-human-review-ready-v1"
 
 
 def _load(path: Path) -> dict:
@@ -35,6 +35,14 @@ def _load(path: Path) -> dict:
 
 def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _visible_svg_text(path: Path) -> str:
+    return " ".join(
+        value.strip()
+        for value in ElementTree.parse(path).getroot().itertext()
+        if value.strip()
+    )
 
 
 def _git(*args: str) -> str:
@@ -96,6 +104,8 @@ def test_research_registry_has_complete_visual_evidence_and_cohort_coverage() ->
         "topic_scope",
         "accessibility_status",
         "visually_analyzed",
+        "evidence_classes",
+        "in_video_observation_ids",
         "inspected_surfaces",
         "representative_timestamps_or_sections",
         "primary_visual_subject",
@@ -133,6 +143,17 @@ def test_research_registry_has_complete_visual_evidence_and_cohort_coverage() ->
         "yukkuri_adjacent_explainer": 5,
     }
     assert coverage["checks"]["all_passed"] is True
+    assert coverage["evidence_class_counts"] == {
+        "in_video_frame_observed": 3,
+        "inaccessible_not_counted": 2,
+        "metadata_only": 7,
+        "page_or_frame_observed": 9,
+        "thumbnail_observed": 5,
+    }
+    assert coverage["thumbnail_only_reference_ids"] == ["Y04", "Y05"]
+    assert coverage["in_video_frame_reference_ids"] == ["Y01", "Y02", "Y03"]
+    assert coverage["in_video_observation_count"] == 3
+    assert coverage["in_video_publisher_count"] == 3
 
     ids = [row["reference_id"] for row in rows]
     urls = [row["canonical_url"] for row in rows]
@@ -140,20 +161,35 @@ def test_research_registry_has_complete_visual_evidence_and_cohort_coverage() ->
     assert len(urls) == len(set(urls))
     assert all(row["exact_title"].strip() for row in rows)
     assert all(urlparse(url).scheme == "https" and urlparse(url).netloc for url in urls)
-    assert registry["research_policy"] == {
-        "login_used": False,
-        "paywall_or_access_control_circumvented": False,
-        "video_or_audio_downloaded": False,
-        "bulk_scraping_used": False,
-        "public_visibility_treated_as_reuse_permission": False,
-    }
+    policy = registry["research_policy"]
+    assert policy["login_used"] is False
+    assert policy["personal_cookie_profile_used"] is False
+    assert policy["paywall_or_access_control_circumvented"] is False
+    assert policy["video_or_audio_downloaded"] is False
+    assert policy["bulk_scraping_used"] is False
+    assert policy["public_visibility_treated_as_reuse_permission"] is False
+    assert policy["public_no_login_player_frames_inspected"] == 3
+
+    observation = _load(OUTPUT / "yukkuri_in_video_observation_readback.json")
+    assert observation["status"] == "passed"
+    assert observation["observation_count"] == 3
+    assert observation["publisher_channel_count"] == 3
+    assert observation["checks"]["all_passed"] is True
+    assert all(row["observed_player_time_seconds"] is not None for row in observation["observations"])
+    assert all(row["transition_motion_observation"].startswith("unknown") for row in observation["observations"])
 
 
 def test_grammar_lineage_and_selection_are_thresholded_and_non_dominant() -> None:
     grammar = _load(OUTPUT / "visual_grammar_clusters.json")
-    valid = {"dominant", "recurring", "cohort_specific", "outlier", "unsuitable"}
+    valid = {"dominant", "recurring", "cohort_specific", "outlier", "unsuitable", "inferred_constraint"}
     assert all(row["classification"] in valid for row in grammar["patterns"])
     assert all(row["supporting_reference_ids"] for row in grammar["patterns"])
+    assert all(row["supporting_evidence"] for row in grammar["patterns"])
+    for row in [item for item in grammar["patterns"] if item["video_body_claim"]]:
+        assert row["classification"] == "inferred_constraint" or any(
+            item["evidence_class"] in {"page_or_frame_observed", "in_video_frame_observed"}
+            for item in row["supporting_evidence"]
+        )
 
     registry_ids = {
         row["reference_id"] for row in _load(OUTPUT / "reference_registry.json")["references"]
@@ -165,6 +201,8 @@ def test_grammar_lineage_and_selection_are_thresholded_and_non_dominant() -> Non
     for decision in lineage["decisions"]:
         assert set(decision["supporting_reference_ids"]) <= registry_ids
         assert decision["adaptation_description"]
+        assert decision["supporting_evidence_classes"]
+        assert decision["adopted_pattern_ids"]
         assert decision["original_glue_class"] == "neutral_glue"
         assert decision["human_approval_impact"] == "pending"
     dominance = lineage["source_dominance"]
@@ -175,8 +213,11 @@ def test_grammar_lineage_and_selection_are_thresholded_and_non_dominant() -> Non
     candidates = {row["candidate_id"]: row for row in scorecard["candidates"]}
     selection = scorecard["selection"]
     assert selection["selected_candidate"] == DESIGN_ID
-    assert candidates[DESIGN_ID]["score"] == selection["selected_score"] == 92
+    assert scorecard["score_type"] == "internal_selection_heuristic"
+    assert "not audience-quality" in scorecard["interpretation_boundary"]
+    assert candidates[DESIGN_ID]["score"] == selection["selected_score"] == 89
     assert selection["lead"] >= 5
+    assert selection["selection_preserved_after_evidence_revision"] is True
     assert selection["reference_threshold_passed"] is True
     assert selection["hard_constraints_passed"] is True
     assert selection["human_approval_status"] == "pending"
@@ -201,7 +242,9 @@ def test_six_keyframes_and_nine_cues_preserve_approved_content_and_rights_bounda
     script = _load(PILOT / "canonical_script.json")
     cue_text = {cue["cue_id"]: cue["text"] for cue in script["cues"]}
     keyframes = list((OUTPUT / "keyframes").glob("*.svg"))
+    annotation_keyframes = list((OUTPUT / "annotation_keyframes").glob("*.svg"))
     assert len(keyframes) == len(KEYFRAME_SPECS) == 6
+    assert len(annotation_keyframes) == len(KEYFRAME_SPECS) == 6
     for spec in KEYFRAME_SPECS:
         path = OUTPUT / "keyframes" / spec["filename"]
         text = path.read_text(encoding="utf-8")
@@ -210,11 +253,26 @@ def test_six_keyframes_and_nine_cues_preserve_approved_content_and_rights_bounda
         assert root.attrib["height"] == "1080"
         assert root.attrib["viewBox"] == "0 0 1920 1080"
         assert root.attrib["data-cue-id"] == spec["cue_id"]
+        assert root.attrib["data-surface"] == "viewer"
         assert root.attrib["data-approved-text"] == cue_text[spec["cue_id"]]
         assert "https://" not in text and "http://" not in text.replace(
             "http://www.w3.org/2000/svg", ""
         )
         assert not re.search(r"(portrait|banknote likeness|seal|serial number)", text, re.I)
+        visible = _visible_svg_text(path)
+        assert spec["scene_id"] not in visible
+        assert spec["cue_id"] not in visible
+        assert all(reference_id not in visible for reference_id in spec["refs"])
+        assert not re.search(r"\b(reference|refs|evidence|patterns|review|approval)\b", visible, re.I)
+
+        annotation = OUTPUT / "annotation_keyframes" / spec["filename"]
+        annotation_root = ElementTree.parse(annotation).getroot()
+        annotation_visible = _visible_svg_text(annotation)
+        assert annotation_root.attrib["data-surface"] == "annotation"
+        assert spec["scene_id"] in annotation_visible
+        assert spec["cue_id"] in annotation_visible
+        assert all(reference_id in annotation_visible for reference_id in spec["refs"])
+        assert all(term in annotation_visible.lower() for term in ("evidence", "patterns", "rights", "approval pending"))
 
     mapping = _load(OUTPUT / "reference_grounded_visual_mapping.json")
     assert mapping["cue_count"] == 9
@@ -233,6 +291,9 @@ def test_six_keyframes_and_nine_cues_preserve_approved_content_and_rights_bounda
     assert motion["motion_bearing_cue_count"] == 9
     assert motion["principal_motion_maximum_per_cue"] == 1
     assert motion["continuous_loop_allowed"] is False
+    assert motion["evidence_class"] == "inferred_constraint"
+    assert motion["observed_playback_sequence_count"] == 0
+    assert motion["timing_frequency_persistence_observed"] is False
     assert motion["states"] == ["start", "emphasis", "settled"]
     assert all(row["loop"] is False for row in motion["cues"])
     assert all(row["simultaneous_principal_motions"] == 1 for row in motion["cues"])
@@ -242,8 +303,10 @@ def test_viewer_is_offline_viewer_first_and_has_a_direct_lineage_mode() -> None:
     text = (OUTPUT / "reference_grounded_visual_proof.html").read_text(encoding="utf-8")
     parser = _OfflineParser()
     parser.feed(text)
-    assert {"viewer", "reference-lineage"} <= parser.ids
+    assert {"viewer", "annotation", "reference-lineage"} <= parser.ids
     assert text.index('id="viewer"') < text.index('id="reference-lineage"')
+    assert text.index('id="viewer"') < text.index('id="annotation"')
+    assert "#annotation" in text
     assert "#reference-lineage" in text
     assert "Security Inspection Lab" not in text
     assert all(not urlparse(value).scheme for value in parser.resources)
@@ -262,6 +325,7 @@ def test_local_research_media_are_ignored_and_absent_from_tracked_proof() -> Non
     for relative in (
         "local_reference_cache",
         "local_reference_captures",
+        "local_in_video_observations",
         "local_render_inspection",
         "reference_contact_sheet.local.html",
     ):
@@ -279,7 +343,11 @@ def test_local_research_media_are_ignored_and_absent_from_tracked_proof() -> Non
 def test_machine_outputs_parse_readback_passes_and_generation_is_deterministic() -> None:
     for path in OUTPUT.glob("*.json"):
         _load(path)
-    for path in [*(OUTPUT / "keyframes").glob("*.svg"), *OUTPUT.glob("*.svg")]:
+    for path in [
+        *(OUTPUT / "keyframes").glob("*.svg"),
+        *(OUTPUT / "annotation_keyframes").glob("*.svg"),
+        *OUTPUT.glob("*.svg"),
+    ]:
         ElementTree.parse(path)
     parser = _OfflineParser()
     parser.feed((OUTPUT / "reference_grounded_visual_proof.html").read_text(encoding="utf-8"))

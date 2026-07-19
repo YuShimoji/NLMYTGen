@@ -1,11 +1,11 @@
 # NLMYTGen Project Cockpit
 
-Project-State-ID: new-banknote-reference-grounded-visual-proof-human-review-ready-v1
-State-Revision: 2026-07-20.1
+Project-State-ID: new-banknote-reference-grounded-visual-proof-evidence-strengthened-human-review-ready-v1
+State-Revision: 2026-07-20.2
 Updated: 2026-07-20 JST
-Product-State: new-banknote-existing-content-researched-visual-grammar-implemented
+Product-State: new-banknote-reference-evidence-graded-clean-viewer-proof-ready
 Product-Gate: human-reference-grounded-visual-review
-Recommended-Next: review-reference-grounded-visual-proof-and-lineage
+Recommended-Next: review-evidence-strengthened-reference-grounded-proof
 External-State: public-repo-feature-branch
 Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0
@@ -19,22 +19,22 @@ Tracked-Worktree: clean; unrelated untracked supervision artifact and intentiona
 
 ## いまの一文
 
-16件の公開existing contentを先に調査し、14件の実視覚面から横断文法を抽出しました。
-旧Route AをAI-originalな探索履歴へ降格し、approved contentを変えずに、外部asset 0の
-reference-grounded proofを再設計しました。次はfinal宣言ではなくhuman reviewです。
+16件の公開existing contentを、page/frame・thumbnail・in-video frameへ証拠分類しました。
+Y01–Y03は3 channelの時刻固定動画内frame、Y04–Y05はthumbnail限定です。選定方向を維持し、
+clean viewerとannotationを分離しました。次はfinal宣言ではなくhuman reviewです。
 
 ## 判断に使える現在地
 
 | 対象 | 現在状態 | 次のgateで確認すること |
 | --- | --- | --- |
-| Research | 16件登録、14件usable、official/journalism/Yukkuriが4/5/5 | corpusの十分性と偏りをhuman判断 |
-| Route decision | documentary object-focus consensusが92点、次点差6 | final acceptanceはfalseのまま |
+| Research | 16件登録、page/frame 9、thumbnail 5、動画内frame 3、Y04–Y05 thumbnail-only | 証拠精度とcorpusの十分性をhuman判断 |
+| Route decision | internal heuristicでobject-focus consensusが89点、次点差6、選定維持 | 点数は品質/受容評価ではなくfinal acceptanceはfalse |
 | Approval/content | 8 hashes、9 cues、2/4/3、3/6、CSV、15/20/21がsource baseとexact | visual feedbackでscriptをsilent editしない |
-| Viewer frames | S1、S2 four techniques、S3の六つをoriginal neutral 1920×1080 SVG化 | flow、hierarchy、模式図riskをhuman判断 |
-| Lineage | 12/12 decision、単一reference最大share 0.3333 | shared grammarとneutral glueをhuman判断 |
+| Viewer frames | clean viewer 6枚は可視scene/cue/reference/evidence/review metadata 0 | flow、hierarchy、模式図riskをhuman判断 |
+| Annotation / lineage | annotation 6枚と12/12 decision、単一reference最大share 0.3333 | evidence class、shared grammar、neutral glueをhuman判断 |
 | Cue coverage | cue_001–cue_009をapproved subtitle付きcontact sheetで9/9表示 | omissionとscene/cue-specific revisionを確認 |
 | Rights boundary | capture/thumbnailはignored localのみ、tracked proofはsource image/logo/creator art 0 | adaptationか模倣かhuman判断 |
-| Motion | start/emphasis/settled、loop false、principal motion最大1 | restraintとcue主旨への干渉をhuman判断 |
+| Motion | sequence観察0、P07はinferred ceiling、loop false、principal motion最大1 | 未観察を前提にproposalのrestraintをhuman判断 |
 | Acceptance | final acceptance、Shot/Motion、Asset/Rights、YMM4、renderはfalse/untested | proof acceptance後も別gate |
 
 Primary review surface:
@@ -42,7 +42,7 @@ Primary review surface:
 
 ## 次の入口
 
-同HTMLのviewer面、`#reference-lineage`、5問のreview sheetを見て、`accept`または
+同HTMLのclean viewer面、`#annotation`、`#reference-lineage`、5問のreview sheetを見て、`accept`または
 source/decision/scene/cue-specific revisionを返します。human accept前にShot/Motion、
 Asset/Proxy/Rights、YMM4へ進みません。
 

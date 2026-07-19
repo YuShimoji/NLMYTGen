@@ -17,10 +17,10 @@
 | viewer/annotation separation | route_a_visual_proof.html | production constraint | strong | retain | Viewer-first with a secondary evidence surface improves review clarity. |
 | schematic disclaimer | route_a_visual_proof keyframes | production constraint | strong | retain | Required to prevent exact-note or official-procedure interpretation. |
 | subtitle safe-area geometry | route_a_visual_proof keyframes | production constraint | not a visual reference claim | retain as neutral glue | Preserves approved text and platform fit. |
-| one-motion/non-looping budget | route_a_motion_storyboard.json | production constraint | recurring | retain | Restrained one-time reveal/zoom is supported; playback remains untested. |
+| one-motion/non-looping budget | route_a_motion_storyboard.json | production constraint | inferred only | retain as conservative ceiling | No inspected sequence establishes motion timing or frequency; playback remains untested. |
 
 ## Result
 
-Approved text, cue mapping, subtitle safety, viewer/evidence separation, the schematic disclaimer, and the non-looping motion limit remain constraints. The Lab metaphor, palette, three-column UI, abstract-note styling, persistent right explanation block, decorative geometry, and bespoke motion naming are not carried forward.
+Approved text, cue mapping, subtitle safety, clean-viewer/annotation separation, the schematic disclaimer, and the conservative non-looping motion ceiling remain constraints. The Lab metaphor, palette, three-column UI, abstract-note styling, persistent right explanation block, decorative geometry, and bespoke motion naming are not carried forward. Motion timing and frequency are not treated as observed grammar.
 
 Final acceptance remains a human decision. This audit authorizes neither YMM4 nor assets, render, production, publication, or rights use.

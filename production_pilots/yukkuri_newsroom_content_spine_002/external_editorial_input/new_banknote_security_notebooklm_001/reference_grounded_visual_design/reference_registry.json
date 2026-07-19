@@ -1,6 +1,6 @@
 {
-  "schema_version": "new_banknote.reference_registry.v1",
-  "status": "research_frozen_before_design",
+  "schema_version": "new_banknote.reference_registry.v2",
+  "status": "evidence_precision_strengthened",
   "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
   "research_frozen_at": "2026-07-20T05:21:35+09:00",
   "design_generation_started_at": "2026-07-20T05:24:00+09:00",
@@ -30,6 +30,10 @@
       "topic_scope": "exact_topic",
       "accessibility_status": "public_no_login",
       "visually_analyzed": true,
+      "evidence_classes": [
+        "page_or_frame_observed"
+      ],
+      "in_video_observation_ids": [],
       "inspected_surfaces": [
         "page structure and image inventory",
         "high-definition watermark image",
@@ -93,6 +97,10 @@
       "topic_scope": "exact_topic",
       "accessibility_status": "public_no_login",
       "visually_analyzed": true,
+      "evidence_classes": [
+        "page_or_frame_observed"
+      ],
+      "in_video_observation_ids": [],
       "inspected_surfaces": [
         "1440x1100 page capture",
         "annotated note overview",
@@ -156,6 +164,11 @@
       "topic_scope": "exact_topic",
       "accessibility_status": "metadata_and_index_accessible_direct_capture_http_403",
       "visually_analyzed": false,
+      "evidence_classes": [
+        "metadata_only",
+        "inaccessible_not_counted"
+      ],
+      "in_video_observation_ids": [],
       "inspected_surfaces": [
         "search-index image descriptions only",
         "direct capture returned HTTP 403"
@@ -214,6 +227,11 @@
       "topic_scope": "exact_topic",
       "accessibility_status": "metadata_accessible_direct_capture_http_403",
       "visually_analyzed": false,
+      "evidence_classes": [
+        "metadata_only",
+        "inaccessible_not_counted"
+      ],
+      "in_video_observation_ids": [],
       "inspected_surfaces": [
         "public player metadata",
         "direct capture returned HTTP 403"
@@ -270,6 +288,10 @@
       "topic_scope": "adjacent_format",
       "accessibility_status": "public_no_login",
       "visually_analyzed": true,
+      "evidence_classes": [
+        "page_or_frame_observed"
+      ],
+      "in_video_observation_ids": [],
       "inspected_surfaces": [
         "1440x1100 page capture",
         "official video capture image"
@@ -330,6 +352,10 @@
       "topic_scope": "adjacent_format",
       "accessibility_status": "public_no_login",
       "visually_analyzed": true,
+      "evidence_classes": [
+        "page_or_frame_observed"
+      ],
+      "in_video_observation_ids": [],
       "inspected_surfaces": [
         "1440x1100 page capture",
         "new-banknote exhibit summary"
@@ -391,6 +417,10 @@
       "topic_scope": "exact_topic",
       "accessibility_status": "public_no_login",
       "visually_analyzed": true,
+      "evidence_classes": [
+        "page_or_frame_observed"
+      ],
+      "in_video_observation_ids": [],
       "inspected_surfaces": [
         "1440x1100 page capture",
         "video thumbnail/explainer card"
@@ -450,6 +480,10 @@
       "topic_scope": "exact_topic",
       "accessibility_status": "public_no_login",
       "visually_analyzed": true,
+      "evidence_classes": [
+        "page_or_frame_observed"
+      ],
+      "in_video_observation_ids": [],
       "inspected_surfaces": [
         "1440x1100 page capture",
         "manufacturing video preview frame"
@@ -510,6 +544,10 @@
       "topic_scope": "exact_topic",
       "accessibility_status": "public_no_login",
       "visually_analyzed": true,
+      "evidence_classes": [
+        "page_or_frame_observed"
+      ],
+      "in_video_observation_ids": [],
       "inspected_surfaces": [
         "1440x1100 page capture",
         "studio explainer preview frame"
@@ -571,6 +609,10 @@
       "topic_scope": "exact_topic",
       "accessibility_status": "public_no_login",
       "visually_analyzed": true,
+      "evidence_classes": [
+        "page_or_frame_observed"
+      ],
+      "in_video_observation_ids": [],
       "inspected_surfaces": [
         "1440x1100 page capture",
         "credited object images",
@@ -635,6 +677,10 @@
       "topic_scope": "exact_topic",
       "accessibility_status": "public_no_login",
       "visually_analyzed": true,
+      "evidence_classes": [
+        "page_or_frame_observed"
+      ],
+      "in_video_observation_ids": [],
       "inspected_surfaces": [
         "1440x1100 page capture",
         "broadcast opening frame",
@@ -691,29 +737,39 @@
       "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
       "canonical_url": "https://www.youtube.com/watch?v=hVx2x3YUIUM",
       "redirects_observed": [],
-      "content_type": "youtube_video_thumbnail_and_metadata",
+      "content_type": "youtube_video_thumbnail_metadata_and_bounded_in_video_frame",
       "cohort": "yukkuri_adjacent_explainer",
       "topic_scope": "exact_topic",
       "accessibility_status": "public_no_login",
       "visually_analyzed": true,
+      "evidence_classes": [
+        "thumbnail_observed",
+        "metadata_only",
+        "in_video_frame_observed"
+      ],
+      "in_video_observation_ids": [
+        "Y01-T0030"
+      ],
       "inspected_surfaces": [
         "1280x720 public thumbnail",
-        "public video metadata"
+        "public video metadata",
+        "public no-login player frame at 00:30.003"
       ],
       "representative_timestamps_or_sections": [
-        "thumbnail only; no frame-level claims"
+        "thumbnail",
+        "00:30.003 in-video frame"
       ],
-      "primary_visual_subject": "money imagery plus two dialogue avatars",
-      "object_image_diagram_character_ratio": "source_image_high / text_high / characters_medium",
-      "screen_composition": "split topic image with one speaker on each side",
-      "subtitle_position_and_approximate_line_count": "thumbnail speech boxes; dialogue subtitle not inspected",
-      "character_speaker_placement": "two avatars at left and right with separate speech boxes",
+      "primary_visual_subject": "ATM background with two dialogue characters in the observed video frame",
+      "object_image_diagram_character_ratio": "background_object_high / characters_medium / dialogue_text_medium",
+      "screen_composition": "observed frame places one character at each side around an ATM background and one dialogue bubble",
+      "subtitle_position_and_approximate_line_count": "observed white dialogue bubble in lower-right region, two lines; persistence unknown",
+      "character_speaker_placement": "observed two characters at left and right in one frame; persistence and alternation unknown",
       "title_and_key_term_treatment": "very large high-contrast promise at top",
-      "callout_arrow_zoom_usage": "speech boxes rather than arrows",
-      "source_credit_treatment": "source links in public description; not visible in thumbnail",
-      "background_treatment": "full-bleed topic image",
+      "callout_arrow_zoom_usage": "one dialogue bubble; no arrow or zoom callout in the observed frame",
+      "source_credit_treatment": "source links in public description; no source credit visible in the observed frame",
+      "background_treatment": "ATM image fills the observed frame",
       "palette_role": "black field with red/yellow headline and green-outlined speech boxes",
-      "motion_type_and_frequency": "not inspected; thumbnail-limited",
+      "motion_type_and_frequency": "unknown; one decoded in-video frame cannot establish transition or motion frequency",
       "thumbnail_grammar": "object-led, short promise where relevant",
       "strengths": [
         "speaker separation is immediate",
@@ -734,7 +790,7 @@
         "sensational wording",
         "copying thumbnail layout"
       ],
-      "evidence_grade": "thumbnail_limited",
+      "evidence_grade": "thumbnail_plus_single_in_video_frame",
       "coverage_tags": [
         "exact_topic",
         "two_character_dialogue",
@@ -753,29 +809,39 @@
       "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
       "canonical_url": "https://www.youtube.com/watch?v=PXI5Q57YXD4",
       "redirects_observed": [],
-      "content_type": "youtube_video_thumbnail_and_metadata",
+      "content_type": "youtube_video_thumbnail_metadata_and_bounded_in_video_frame",
       "cohort": "yukkuri_adjacent_explainer",
       "topic_scope": "exact_topic",
       "accessibility_status": "public_no_login",
       "visually_analyzed": true,
+      "evidence_classes": [
+        "thumbnail_observed",
+        "metadata_only",
+        "in_video_frame_observed"
+      ],
+      "in_video_observation_ids": [
+        "Y02-T0030"
+      ],
       "inspected_surfaces": [
         "1280x720 public thumbnail",
-        "public video metadata"
+        "public video metadata",
+        "public no-login player frame at 00:30.011"
       ],
       "representative_timestamps_or_sections": [
-        "thumbnail only; no frame-level claims"
+        "thumbnail",
+        "00:30.011 in-video frame"
       ],
-      "primary_visual_subject": "dense collage of banknote feature images plus two avatars",
-      "object_image_diagram_character_ratio": "source_image_very_high / text_medium / characters_low",
-      "screen_composition": "full-frame collage, two small speakers at bottom corners",
-      "subtitle_position_and_approximate_line_count": "large centered thumbnail promise; dialogue subtitle not inspected",
-      "character_speaker_placement": "two small Yukkuri busts at lower corners",
+      "primary_visual_subject": "six specimen banknote images in the observed video frame",
+      "object_image_diagram_character_ratio": "source_image_very_high / subtitle_medium / characters_low",
+      "screen_composition": "observed frame centers a six-image object grid with speaker busts at both lower corners",
+      "subtitle_position_and_approximate_line_count": "observed centered lower subtitle, two lines",
+      "character_speaker_placement": "observed two Yukkuri busts at lower-left and lower-right; persistence unknown",
       "title_and_key_term_treatment": "single red high-contrast phrase across lower middle",
-      "callout_arrow_zoom_usage": "collage crops imply close-up; no explicit leader line",
-      "source_credit_treatment": "visible watermark on source imagery; description states image handling",
+      "callout_arrow_zoom_usage": "no arrow, zoom, or bounded callout in the observed frame",
+      "source_credit_treatment": "visible grimm_moneycollection watermark on source images; production reuse remains prohibited",
       "background_treatment": "full-bleed image collage",
       "palette_role": "source-derived with red/black title",
-      "motion_type_and_frequency": "not inspected; thumbnail-limited",
+      "motion_type_and_frequency": "unknown; one decoded in-video frame cannot establish transition or motion frequency",
       "thumbnail_grammar": "object-led, short promise where relevant",
       "strengths": [
         "topic object fills the frame",
@@ -796,7 +862,7 @@
         "creator character art",
         "watermark imitation"
       ],
-      "evidence_grade": "thumbnail_limited",
+      "evidence_grade": "thumbnail_plus_single_in_video_frame",
       "coverage_tags": [
         "exact_topic",
         "two_character_dialogue",
@@ -815,29 +881,39 @@
       "retrieval_timestamp": "2026-07-20T05:21:35+09:00",
       "canonical_url": "https://www.youtube.com/watch?v=aCYgLBDrNYk",
       "redirects_observed": [],
-      "content_type": "youtube_video_thumbnail_and_metadata",
+      "content_type": "youtube_video_thumbnail_metadata_and_bounded_in_video_frame",
       "cohort": "yukkuri_adjacent_explainer",
       "topic_scope": "adjacent_format",
       "accessibility_status": "public_no_login",
       "visually_analyzed": true,
+      "evidence_classes": [
+        "thumbnail_observed",
+        "metadata_only",
+        "in_video_frame_observed"
+      ],
+      "in_video_observation_ids": [
+        "Y03-T0030"
+      ],
       "inspected_surfaces": [
         "1280x720 public thumbnail",
-        "public video metadata"
+        "public video metadata",
+        "public no-login player frame at 00:30.000"
       ],
       "representative_timestamps_or_sections": [
-        "thumbnail only; no frame-level claims"
+        "thumbnail",
+        "00:30.000 in-video frame"
       ],
-      "primary_visual_subject": "one banknote image and one short question",
-      "object_image_diagram_character_ratio": "source_image_high / text_high / characters_low",
-      "screen_composition": "rough half split: object left, question and two speakers right",
-      "subtitle_position_and_approximate_line_count": "bottom promise band; dialogue subtitle not inspected",
-      "character_speaker_placement": "two busts grouped at upper right",
+      "primary_visual_subject": "two-thousand-yen-note illustration on a central scenic screen",
+      "object_image_diagram_character_ratio": "characters_high / central_object_medium / subtitle_medium",
+      "screen_composition": "observed frame uses two large Yukkuri heads at lower sides, central object screen, and lower subtitle",
+      "subtitle_position_and_approximate_line_count": "observed centered lower subtitle, two lines",
+      "character_speaker_placement": "observed two large Yukkuri heads at lower-left and lower-right; persistence unknown",
       "title_and_key_term_treatment": "one very large word pair and one bottom explanatory line",
-      "callout_arrow_zoom_usage": "none",
-      "source_credit_treatment": "not visible in thumbnail",
-      "background_treatment": "white text field plus object crop",
+      "callout_arrow_zoom_usage": "no arrow, zoom, or bounded callout in the observed frame",
+      "source_credit_treatment": "no source credit visible in the observed frame",
+      "background_treatment": "central scenic image with a pale subtitle field",
       "palette_role": "black/white with red and yellow emphasis",
-      "motion_type_and_frequency": "not inspected; thumbnail-limited",
+      "motion_type_and_frequency": "unknown; one decoded in-video frame cannot establish transition or motion frequency",
       "thumbnail_grammar": "object-led, short promise where relevant",
       "strengths": [
         "question and object are immediately paired",
@@ -858,7 +934,7 @@
         "copying character art",
         "sensational emphasis"
       ],
-      "evidence_grade": "thumbnail_limited",
+      "evidence_grade": "thumbnail_plus_single_in_video_frame",
       "coverage_tags": [
         "two_character_dialogue",
         "object_centred",
@@ -881,6 +957,11 @@
       "topic_scope": "adjacent_format",
       "accessibility_status": "public_no_login",
       "visually_analyzed": true,
+      "evidence_classes": [
+        "thumbnail_observed",
+        "metadata_only"
+      ],
+      "in_video_observation_ids": [],
       "inspected_surfaces": [
         "1280x720 public thumbnail",
         "public video metadata"
@@ -941,6 +1022,11 @@
       "topic_scope": "adjacent_format",
       "accessibility_status": "public_no_login",
       "visually_analyzed": true,
+      "evidence_classes": [
+        "thumbnail_observed",
+        "metadata_only"
+      ],
+      "in_video_observation_ids": [],
       "inspected_surfaces": [
         "1280x720 public thumbnail",
         "public video metadata"
@@ -992,6 +1078,8 @@
     "login_used": false,
     "paywall_or_access_control_circumvented": false,
     "video_or_audio_downloaded": false,
+    "public_no_login_player_frames_inspected": 3,
+    "personal_cookie_profile_used": false,
     "bulk_scraping_used": false,
     "public_visibility_treated_as_reuse_permission": false
   }

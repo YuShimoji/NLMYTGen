@@ -1,13 +1,23 @@
 {
-  "schema_version": "new_banknote.reference_grounded_visual_proof_readback.v1",
+  "schema_version": "new_banknote.reference_grounded_visual_proof_readback.v2",
   "status": "passed",
   "checks": {
     "research_preceded_design": true,
     "corpus_coverage_passed": true,
+    "evidence_classes_recomputed": true,
+    "thumbnail_only_y04_y05": true,
+    "in_video_3_frames_3_channels": true,
+    "in_video_observation_readback_passed": true,
+    "video_body_patterns_not_thumbnail_only": true,
+    "motion_is_inferred_not_observed": true,
+    "selection_heuristic_recomputed_to_89": true,
     "approved_hashes_8_of_8_exact": true,
     "old_route_a_proof_byte_exact": true,
     "old_route_a_not_current_authority": true,
-    "six_keyframes": true,
+    "six_clean_viewer_keyframes": true,
+    "six_annotation_keyframes": true,
+    "viewer_visible_metadata_clean": true,
+    "annotation_visible_metadata_complete": true,
     "cue_coverage_9_of_9": true,
     "scene_allocation_2_4_3": true,
     "speaker_counts_3_6": true,
@@ -18,29 +28,32 @@
     "no_security_inspection_lab_in_viewer": true,
     "no_absolute_path_or_uuid": true,
     "motion_budget": true,
-    "viewer_lineage_separated": true,
+    "viewer_annotation_lineage_separated": true,
     "final_acceptance_false": true,
     "YMM4_render_false": true,
     "all_passed": true
   },
   "evidence_grades": {
     "source_metadata": "web_and_public_metadata_verified",
-    "visual_observation": "14 usable captures_or_public_thumbnails; 2 limited not counted",
-    "rendered_output": "all_six_keyframes_contact_sheet_storyboard_primary_html_lineage_and_local_contact_sheet_inspected",
+    "visual_observation": "9 page_or_frame; 5 thumbnails including 2 thumbnail-only; 3 exact-time public no-login in-video frames; 2 inaccessible not counted",
+    "motion_observation": "no playback sequence observed; P07 is an inferred conservative constraint",
+    "rendered_output": "six_clean_viewer_keyframes_six_annotation_keyframes_contact_sheet_storyboard_primary_html_annotation_mode_lineage_mode_and_local_contact_sheet_inspected",
     "YMM4": "not_tested"
   },
   "output_inspection": {
-    "inspected_at": "2026-07-20T05:35:35+09:00",
+    "inspected_at": "2026-07-20T08:23:44+09:00",
     "method": "headless Chromium capture at 1920 px width plus manual visual inspection",
     "artifacts": [
-      "six keyframes",
+      "six clean viewer keyframes",
+      "six annotation keyframes",
       "nine-cue contact sheet",
       "motion storyboard",
       "primary HTML viewer",
+      "annotation mode",
       "reference lineage mode",
       "ignored local reference contact sheet"
     ],
     "repair_cycles": 1,
-    "result": "passed_after_microtext_annotation_handle_overlap_repair"
+    "result": "passed_after_evidence_precision_and_clean_viewer_annotation_separation_repair"
   }
 }

@@ -1,6 +1,6 @@
 {
-  "schema_version": "new_banknote.reference_grounded_design_contract.v1",
-  "status": "implemented_proof_pending_human_review",
+  "schema_version": "new_banknote.reference_grounded_design_contract.v2",
+  "status": "evidence_graded_clean_viewer_proof_pending_human_review",
   "design_id": "documentary_object_focus_consensus",
   "canvas": {
     "width": 1920,
@@ -26,7 +26,9 @@
       1752,
       220
     ],
-    "source_credit": "compact reference IDs and rights boundary footer",
+    "viewer_surface": "six clean frames with no visible scene, cue, reference, evidence, or review metadata",
+    "annotation_surface": "six separate frames with visible scene, cue, reference IDs, evidence classes, adopted patterns, rights boundary, and pending approval status",
+    "source_credit": "reference IDs on annotation and lineage surfaces only; production credit placement deferred",
     "palette": {
       "field": "#15181D",
       "surface": "#F7F5EF",
@@ -34,7 +36,7 @@
       "marisa": "#E5B840",
       "focus": "#52C7C7"
     },
-    "motion": "one non-looping reveal or zoom maximum per cue; storyboard only"
+    "motion": "one non-looping reveal or zoom maximum per cue as a conservative inferred constraint; no observed sequence establishes timing or frequency"
   },
   "rights_boundary": {
     "external_assets": 0,
@@ -44,6 +46,21 @@
     "exact_banknote_likeness": false,
     "portrait_seal_serial_exact_security_pattern": false,
     "reference_captures": "ignored local research evidence only"
+  },
+  "evidence_boundary": {
+    "page_or_frame_observed": 9,
+    "thumbnail_observed": 5,
+    "thumbnail_only_reference_ids": [
+      "Y04",
+      "Y05"
+    ],
+    "in_video_frame_observed": 3,
+    "in_video_frame_reference_ids": [
+      "Y01",
+      "Y02",
+      "Y03"
+    ],
+    "motion_sequence_observed": false
   },
   "content_boundary": {
     "approved_text_changed": false,

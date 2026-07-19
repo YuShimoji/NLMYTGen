@@ -1,7 +1,24 @@
 {
-  "schema_version": "new_banknote.reference_selection_scorecard.v1",
+  "schema_version": "new_banknote.reference_selection_scorecard.v2",
   "status": "selected_for_human_review_proof",
+  "score_type": "internal_selection_heuristic",
+  "interpretation_boundary": "Scores compare candidate fitness inside this design exercise only; they are not audience-quality, factual-quality, production-readiness, or acceptance measurements.",
   "scoring_model_maximum": 100,
+  "rubric": {
+    "reference_support_breadth": 25,
+    "approved_content_fidelity": 20,
+    "viewer_comprehension_readability": 15,
+    "rights_and_asset_feasibility": 15,
+    "yukkuri_dialogue_compatibility": 10,
+    "YMM4_feasibility": 10,
+    "motion_restraint_maintainability": 5
+  },
+  "evidence_adjustment": {
+    "thumbnail_only_video_body_support_allowed": false,
+    "single_frame_motion_support_allowed": false,
+    "in_video_frame_contribution": "eligible for static composition, speaker placement, subtitle location, and visible credit state only",
+    "thumbnail_penalty": "applied when a candidate previously depended on thumbnail-only sources for video-body grammar"
+  },
   "candidates": [
     {
       "candidate_id": "documentary_object_focus_consensus",
@@ -13,23 +30,29 @@
         "J04",
         "J05",
         "Y01",
-        "Y02"
+        "Y02",
+        "Y03"
+      ],
+      "supporting_evidence_classes": [
+        "page_or_frame_observed",
+        "in_video_frame_observed"
       ],
       "cohort_coverage": 3,
       "subject_strategy": "single neutral source/object slot with one focus",
       "character_strategy": "speaker nameplates only",
       "subtitle_strategy": "bottom safe band",
       "callout_strategy": "one focus window or numbered point",
-      "source_credit_strategy": "compact reference footer",
-      "motion_strategy": "one non-looping reveal or zoom",
+      "source_credit_strategy": "reference IDs on annotation and lineage surfaces; production placement deferred",
+      "motion_strategy": "one non-looping reveal or zoom ceiling; timing and frequency unobserved",
       "rights_burden": "low",
       "YMM4_feasibility": "high",
       "content_risk": "low",
       "deviations": [
-        "real source imagery is replaced with neutral placeholders"
+        "real source imagery is replaced with neutral placeholders",
+        "motion behavior is a conservative proposal rather than observed playback grammar"
       ],
       "score_components": {
-        "reference_support_breadth": 24,
+        "reference_support_breadth": 23,
         "approved_content_fidelity": 20,
         "viewer_comprehension_readability": 14,
         "rights_and_asset_feasibility": 14,
@@ -37,7 +60,9 @@
         "YMM4_feasibility": 8,
         "motion_restraint_maintainability": 4
       },
-      "score": 92,
+      "raw_score": 91,
+      "evidence_precision_penalty": 2,
+      "score": 89,
       "hard_fail": false
     },
     {
@@ -47,6 +72,9 @@
         "O02",
         "O06",
         "J04"
+      ],
+      "supporting_evidence_classes": [
+        "page_or_frame_observed"
       ],
       "cohort_coverage": 2,
       "subject_strategy": "numbered object map",
@@ -62,15 +90,17 @@
         "exact object geometry cannot transfer"
       ],
       "score_components": {
-        "reference_support_breadth": 20,
+        "reference_support_breadth": 19,
         "approved_content_fidelity": 18,
         "viewer_comprehension_readability": 13,
-        "rights_and_asset_feasibility": 13,
+        "rights_and_asset_feasibility": 12,
         "yukkuri_dialogue_compatibility": 7,
         "YMM4_feasibility": 7,
         "motion_restraint_maintainability": 4
       },
-      "score": 82,
+      "raw_score": 80,
+      "evidence_precision_penalty": 0,
+      "score": 80,
       "hard_fail": false
     },
     {
@@ -80,9 +110,11 @@
         "J03",
         "Y01",
         "Y02",
-        "Y03",
-        "Y04",
-        "Y05"
+        "Y03"
+      ],
+      "supporting_evidence_classes": [
+        "page_or_frame_observed",
+        "in_video_frame_observed"
       ],
       "cohort_coverage": 2,
       "subject_strategy": "object field plus two speaker cues",
@@ -95,7 +127,8 @@
       "YMM4_feasibility": "high",
       "content_risk": "medium because dialogue framing can overpower technical evidence",
       "deviations": [
-        "creator character art is excluded"
+        "creator character art is excluded",
+        "Y04-Y05 thumbnail evidence is excluded from video-body support"
       ],
       "score_components": {
         "reference_support_breadth": 21,
@@ -106,20 +139,23 @@
         "YMM4_feasibility": 9,
         "motion_restraint_maintainability": 4
       },
-      "score": 86,
+      "raw_score": 85,
+      "evidence_precision_penalty": 2,
+      "score": 83,
       "hard_fail": false
     }
   ],
   "selection": {
     "rule": "top valid candidate leads the second by at least 5 points",
     "selected_candidate": "documentary_object_focus_consensus",
-    "selected_score": 92,
+    "selected_score": 89,
     "second_candidate": "dialogue_overlay_object",
-    "second_score": 86,
+    "second_score": 83,
     "lead": 6,
     "reference_threshold_passed": true,
     "hard_constraints_passed": true,
-    "selection_confidence": "medium_high",
+    "selection_preserved_after_evidence_revision": true,
+    "selection_confidence": "medium",
     "human_approval_status": "pending"
   }
 }

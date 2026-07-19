@@ -4,6 +4,7 @@ source_extracts/
 source_probe/
 reference_grounded_visual_design/local_reference_cache/
 reference_grounded_visual_design/local_reference_captures/
+reference_grounded_visual_design/local_in_video_observations/
 reference_grounded_visual_design/local_render_inspection/
 reference_grounded_visual_design/reference_contact_sheet.local.html
 !canonical_yymm4.csv

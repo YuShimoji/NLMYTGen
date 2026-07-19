@@ -1,5 +1,5 @@
 {
-  "schema_version": "new_banknote.reference_to_visual_lineage.v1",
+  "schema_version": "new_banknote.reference_to_visual_lineage.v2",
   "status": "complete_pending_human_acceptance",
   "major_decision_count": 12,
   "covered_major_decision_count": 12,
@@ -17,6 +17,9 @@
       ],
       "supporting_cohort_count": 2,
       "support_strength": "threshold_A",
+      "supporting_evidence_classes": [
+        "page_or_frame_observed"
+      ],
       "adopted_pattern_ids": [
         "P01_object_first"
       ],
@@ -41,6 +44,9 @@
       ],
       "supporting_cohort_count": 2,
       "support_strength": "threshold_A",
+      "supporting_evidence_classes": [
+        "page_or_frame_observed"
+      ],
       "adopted_pattern_ids": [
         "P01_object_first",
         "P02_one_focus_callout"
@@ -57,7 +63,7 @@
     {
       "decision_id": "D03",
       "decision_type": "character/speaker treatment",
-      "selected_value": "speaker nameplate only; no character art",
+      "selected_value": "speaker nameplate only; no character art or persistence claim",
       "supporting_reference_ids": [
         "Y01",
         "Y02",
@@ -65,6 +71,9 @@
       ],
       "supporting_cohort_count": 1,
       "support_strength": "threshold_A",
+      "supporting_evidence_classes": [
+        "in_video_frame_observed"
+      ],
       "adopted_pattern_ids": [
         "P05_speaker_cues"
       ],
@@ -84,10 +93,15 @@
       "supporting_reference_ids": [
         "J05",
         "Y01",
+        "Y02",
         "Y03"
       ],
       "supporting_cohort_count": 2,
       "support_strength": "threshold_A",
+      "supporting_evidence_classes": [
+        "page_or_frame_observed",
+        "in_video_frame_observed"
+      ],
       "adopted_pattern_ids": [
         "P04_bottom_text_band"
       ],
@@ -105,13 +119,16 @@
       "decision_type": "explanation text placement",
       "selected_value": "one short key point adjacent to focus",
       "supporting_reference_ids": [
+        "O06",
         "J01",
         "J03",
-        "Y02",
-        "Y05"
+        "J04"
       ],
       "supporting_cohort_count": 2,
       "support_strength": "threshold_A",
+      "supporting_evidence_classes": [
+        "page_or_frame_observed"
+      ],
       "adopted_pattern_ids": [
         "P02_one_focus_callout",
         "P03_short_key_term"
@@ -136,6 +153,9 @@
       ],
       "supporting_cohort_count": 2,
       "support_strength": "threshold_A",
+      "supporting_evidence_classes": [
+        "page_or_frame_observed"
+      ],
       "adopted_pattern_ids": [
         "P02_one_focus_callout"
       ],
@@ -151,14 +171,17 @@
     {
       "decision_id": "D07",
       "decision_type": "source-credit placement",
-      "selected_value": "compact source IDs in lower footer",
+      "selected_value": "reference IDs on annotation/lineage surfaces; production placement deferred",
       "supporting_reference_ids": [
-        "J04",
         "O05",
-        "O06"
+        "O06",
+        "J04"
       ],
       "supporting_cohort_count": 2,
       "support_strength": "threshold_A",
+      "supporting_evidence_classes": [
+        "page_or_frame_observed"
+      ],
       "adopted_pattern_ids": [
         "P06_adjacent_source_credit"
       ],
@@ -176,12 +199,15 @@
       "decision_type": "background",
       "selected_value": "neutral charcoal and warm-white field",
       "supporting_reference_ids": [
-        "O02",
-        "J04",
-        "Y03"
+        "O06",
+        "J02",
+        "J05"
       ],
-      "supporting_cohort_count": 3,
+      "supporting_cohort_count": 2,
       "support_strength": "threshold_A",
+      "supporting_evidence_classes": [
+        "page_or_frame_observed"
+      ],
       "adopted_pattern_ids": [
         "P08_neutral_field"
       ],
@@ -202,10 +228,14 @@
         "J01",
         "Y01",
         "Y02",
-        "Y05"
+        "Y03"
       ],
       "supporting_cohort_count": 2,
       "support_strength": "threshold_A",
+      "supporting_evidence_classes": [
+        "page_or_frame_observed",
+        "in_video_frame_observed"
+      ],
       "adopted_pattern_ids": [
         "P08_neutral_field",
         "P05_speaker_cues"
@@ -226,13 +256,18 @@
       "supporting_reference_ids": [
         "J01",
         "J03",
-        "Y04",
-        "Y05"
+        "Y02",
+        "Y03"
       ],
       "supporting_cohort_count": 2,
       "support_strength": "threshold_A",
+      "supporting_evidence_classes": [
+        "page_or_frame_observed",
+        "in_video_frame_observed"
+      ],
       "adopted_pattern_ids": [
-        "P03_short_key_term"
+        "P03_short_key_term",
+        "P04_bottom_text_band"
       ],
       "adaptation_description": "Shared grammar is reduced to an original, rights-minimal construction.",
       "deviation_from_references": "No source image, logo, creator art, branded frame, or exact composition is copied.",
@@ -246,15 +281,18 @@
     {
       "decision_id": "D11",
       "decision_type": "transition/motion class",
-      "selected_value": "single non-looping reveal or zoom",
+      "selected_value": "single non-looping action ceiling; timing and frequency unobserved",
       "supporting_reference_ids": [
         "O01",
+        "O05",
         "J02",
-        "J03",
-        "O05"
+        "J03"
       ],
       "supporting_cohort_count": 2,
       "support_strength": "threshold_A",
+      "supporting_evidence_classes": [
+        "inferred_from_cross_reference"
+      ],
       "adopted_pattern_ids": [
         "P07_restrained_reveal"
       ],
@@ -272,13 +310,17 @@
       "decision_type": "thumbnail/contact-sheet grammar",
       "selected_value": "one subject, short label, small speaker cue",
       "supporting_reference_ids": [
-        "Y01",
-        "Y02",
         "J01",
-        "J05"
+        "Y01",
+        "Y04",
+        "Y05"
       ],
       "supporting_cohort_count": 2,
       "support_strength": "threshold_A",
+      "supporting_evidence_classes": [
+        "page_or_frame_observed",
+        "thumbnail_observed"
+      ],
       "adopted_pattern_ids": [
         "P01_object_first",
         "P03_short_key_term"
@@ -305,8 +347,8 @@
       },
       {
         "reference_id": "J02",
-        "supported_major_decision_count": 2,
-        "share_of_major_decisions": 0.1667
+        "supported_major_decision_count": 3,
+        "share_of_major_decisions": 0.25
       },
       {
         "reference_id": "J03",
@@ -330,8 +372,8 @@
       },
       {
         "reference_id": "O02",
-        "supported_major_decision_count": 4,
-        "share_of_major_decisions": 0.3333
+        "supported_major_decision_count": 3,
+        "share_of_major_decisions": 0.25
       },
       {
         "reference_id": "O05",
@@ -340,8 +382,8 @@
       },
       {
         "reference_id": "O06",
-        "supported_major_decision_count": 1,
-        "share_of_major_decisions": 0.0833
+        "supported_major_decision_count": 3,
+        "share_of_major_decisions": 0.25
       },
       {
         "reference_id": "Y01",
@@ -355,8 +397,8 @@
       },
       {
         "reference_id": "Y03",
-        "supported_major_decision_count": 3,
-        "share_of_major_decisions": 0.25
+        "supported_major_decision_count": 4,
+        "share_of_major_decisions": 0.3333
       },
       {
         "reference_id": "Y04",
@@ -365,10 +407,15 @@
       },
       {
         "reference_id": "Y05",
-        "supported_major_decision_count": 3,
-        "share_of_major_decisions": 0.25
+        "supported_major_decision_count": 1,
+        "share_of_major_decisions": 0.0833
       }
     ]
+  },
+  "surface_boundary": {
+    "viewer": "approved visual content only; machine lineage remains in attributes",
+    "annotation": "visible scene, cue, reference, evidence, pattern, rights, and approval metadata",
+    "production_credit_placement": "deferred"
   },
   "unreported_design_choice_count": 0,
   "human_approval_status": "pending"

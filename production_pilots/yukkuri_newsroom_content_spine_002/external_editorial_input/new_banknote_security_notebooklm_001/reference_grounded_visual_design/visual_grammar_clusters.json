@@ -1,5 +1,5 @@
 {
-  "schema_version": "new_banknote.visual_grammar_clusters.v1",
+  "schema_version": "new_banknote.visual_grammar_clusters.v2",
   "status": "passed",
   "usable_reference_denominator": 14,
   "classification_rules": {
@@ -7,15 +7,19 @@
     "recurring": "at least three independent references",
     "cohort_specific": "common within one cohort only",
     "outlier": "one source or one creator pattern",
-    "unsuitable": "conflicts with fidelity, rights, readability, or feasibility"
+    "unsuitable": "conflicts with fidelity, rights, readability, or feasibility",
+    "inferred_constraint": "not directly observed as video behavior; retained only as an explicit conservative production constraint"
   },
+  "hard_rule": "a video-body pattern may not be supported only by thumbnail evidence",
   "patterns": [
     {
       "pattern_id": "P01_object_first",
       "dimension": "primary_subject",
+      "surface_scope": "page_frame_thumbnail_and_in_video_static_composition",
       "classification": "dominant",
       "usable_reference_count": 11,
       "usable_reference_ratio": 0.7857,
+      "video_body_claim": false,
       "supporting_reference_ids": [
         "O01",
         "O02",
@@ -29,33 +33,103 @@
         "Y03",
         "Y05"
       ],
-      "finding": "A real object or source image is the first visual anchor; text explains rather than replaces it.",
-      "transfer_rule": "Use a neutral, explicitly empty source slot in the proof; do not reconstruct or embed the real note."
+      "supporting_evidence": [
+        {
+          "reference_id": "O01",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "O02",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "O06",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J02",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J03",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J04",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J05",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "Y01",
+          "evidence_class": "in_video_frame_observed"
+        },
+        {
+          "reference_id": "Y02",
+          "evidence_class": "in_video_frame_observed"
+        },
+        {
+          "reference_id": "Y03",
+          "evidence_class": "in_video_frame_observed"
+        },
+        {
+          "reference_id": "Y05",
+          "evidence_class": "thumbnail_observed"
+        }
+      ],
+      "finding": "Across static surfaces and three bounded video interiors, an object or source surface is a primary visual anchor.",
+      "transfer_rule": "Use a neutral, explicitly empty source slot; do not reconstruct or embed the real note."
     },
     {
       "pattern_id": "P02_one_focus_callout",
       "dimension": "composition_callout",
-      "classification": "dominant",
-      "usable_reference_count": 7,
-      "usable_reference_ratio": 0.5,
+      "surface_scope": "page_or_frame_static_composition",
+      "classification": "recurring",
+      "usable_reference_count": 5,
+      "usable_reference_ratio": 0.3571,
+      "video_body_claim": false,
       "supporting_reference_ids": [
         "O01",
         "O02",
         "J01",
         "J03",
-        "J04",
-        "Y02",
-        "Y04"
+        "J04"
       ],
-      "finding": "One feature, crop, numbered point, or magnified region receives emphasis at a time.",
+      "supporting_evidence": [
+        {
+          "reference_id": "O01",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "O02",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J01",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J03",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J04",
+          "evidence_class": "page_or_frame_observed"
+        }
+      ],
+      "finding": "Five inspected page or preview surfaces emphasize one feature, crop, numbered point, or magnified region.",
       "transfer_rule": "Use one bounded focus window or numbered focus card per cue."
     },
     {
       "pattern_id": "P03_short_key_term",
       "dimension": "information_hierarchy",
+      "surface_scope": "cross_surface_title_and_key_term_hierarchy",
       "classification": "dominant",
       "usable_reference_count": 12,
       "usable_reference_ratio": 0.8571,
+      "video_body_claim": false,
       "supporting_reference_ids": [
         "O01",
         "O02",
@@ -70,77 +144,202 @@
         "Y03",
         "Y05"
       ],
-      "finding": "A short topic label or key term is larger than explanatory copy.",
-      "transfer_rule": "Keep one Japanese action label and one feature term above the subtitle."
+      "supporting_evidence": [
+        {
+          "reference_id": "O01",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "O02",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "O05",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "O06",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J01",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J02",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J03",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J04",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J05",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "Y01",
+          "evidence_class": "thumbnail_observed"
+        },
+        {
+          "reference_id": "Y03",
+          "evidence_class": "thumbnail_observed"
+        },
+        {
+          "reference_id": "Y05",
+          "evidence_class": "thumbnail_observed"
+        }
+      ],
+      "finding": "A short topic label or key term is larger than explanatory copy on the inspected surface.",
+      "transfer_rule": "Keep one Japanese action label and one feature term above the approved subtitle."
     },
     {
       "pattern_id": "P04_bottom_text_band",
       "dimension": "subtitle",
+      "surface_scope": "in_video_dialogue_or_observed_broadcast_frame",
       "classification": "recurring",
       "usable_reference_count": 4,
       "usable_reference_ratio": 0.2857,
+      "video_body_claim": true,
       "supporting_reference_ids": [
         "J05",
         "Y01",
-        "Y03",
-        "Y05"
+        "Y02",
+        "Y03"
       ],
-      "finding": "A high-contrast lower band carries a short promise or dialogue text.",
-      "transfer_rule": "Retain the approved subtitle safe area as a production constraint, not as copied styling."
+      "supporting_evidence": [
+        {
+          "reference_id": "J05",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "Y01",
+          "evidence_class": "in_video_frame_observed"
+        },
+        {
+          "reference_id": "Y02",
+          "evidence_class": "in_video_frame_observed"
+        },
+        {
+          "reference_id": "Y03",
+          "evidence_class": "in_video_frame_observed"
+        }
+      ],
+      "finding": "Three decoded dialogue-explainer frames and one broadcast frame place readable text in the lower region.",
+      "transfer_rule": "Retain the approved subtitle safe area as a production constraint; do not copy source styling."
     },
     {
       "pattern_id": "P05_speaker_cues",
       "dimension": "speaker_representation",
+      "surface_scope": "bounded_in_video_frames",
       "classification": "cohort_specific",
-      "usable_reference_count": 5,
-      "usable_reference_ratio": 0.3571,
+      "usable_reference_count": 3,
+      "usable_reference_ratio": 0.2143,
+      "video_body_claim": true,
       "supporting_reference_ids": [
         "Y01",
         "Y02",
-        "Y03",
-        "Y04",
-        "Y05"
+        "Y03"
       ],
-      "finding": "Dialogue explainers visibly distinguish two speakers, commonly with busts at edges or corners.",
-      "transfer_rule": "Use neutral speaker nameplates only; no character art is authorized."
+      "supporting_evidence": [
+        {
+          "reference_id": "Y01",
+          "evidence_class": "in_video_frame_observed"
+        },
+        {
+          "reference_id": "Y02",
+          "evidence_class": "in_video_frame_observed"
+        },
+        {
+          "reference_id": "Y03",
+          "evidence_class": "in_video_frame_observed"
+        }
+      ],
+      "finding": "Each of three independent decoded frames distinguishes two speakers at opposing frame edges; persistence is unknown.",
+      "transfer_rule": "Use neutral speaker nameplates only; no character art or persistence claim is authorized."
     },
     {
       "pattern_id": "P06_adjacent_source_credit",
       "dimension": "source_attribution",
+      "surface_scope": "page_or_evidence_surface_only",
       "classification": "recurring",
       "usable_reference_count": 4,
       "usable_reference_ratio": 0.2857,
+      "video_body_claim": false,
       "supporting_reference_ids": [
         "O02",
         "O05",
         "O06",
         "J04"
       ],
-      "finding": "Institutional identity or an image source caption stays adjacent to the evidence surface.",
-      "transfer_rule": "Show compact reference IDs and the research-only rights boundary in a footer."
+      "supporting_evidence": [
+        {
+          "reference_id": "O02",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "O05",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "O06",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J04",
+          "evidence_class": "page_or_frame_observed"
+        }
+      ],
+      "finding": "Institutional identity or an image source caption stays adjacent on inspected evidence pages.",
+      "transfer_rule": "Keep reference IDs in annotation/lineage surfaces; production credit placement is deferred."
     },
     {
       "pattern_id": "P07_restrained_reveal",
       "dimension": "motion",
-      "classification": "recurring",
-      "usable_reference_count": 5,
-      "usable_reference_ratio": 0.3571,
+      "surface_scope": "inferred_motion_constraint_not_observed_playback",
+      "classification": "inferred_constraint",
+      "usable_reference_count": 0,
+      "usable_reference_ratio": 0.0,
+      "video_body_claim": true,
       "supporting_reference_ids": [
         "O01",
         "O02",
-        "O05",
         "J02",
         "J03"
       ],
-      "finding": "Change is explained through angle states, a reveal, a process shot, or one focus shift.",
-      "transfer_rule": "Storyboard one non-looping reveal or zoom per cue; do not infer playback quality."
+      "supporting_evidence": [
+        {
+          "reference_id": "O01",
+          "evidence_class": "inferred_from_cross_reference"
+        },
+        {
+          "reference_id": "O02",
+          "evidence_class": "inferred_from_cross_reference"
+        },
+        {
+          "reference_id": "J02",
+          "evidence_class": "inferred_from_cross_reference"
+        },
+        {
+          "reference_id": "J03",
+          "evidence_class": "inferred_from_cross_reference"
+        }
+      ],
+      "finding": "No inspected sequence establishes motion timing or frequency; a single non-looping action remains a conservative production constraint only.",
+      "transfer_rule": "Keep the storyboard proposal bounded and label playback behavior unobserved and YMM4-untested."
     },
     {
       "pattern_id": "P08_neutral_field",
       "dimension": "background_palette",
+      "surface_scope": "static_background_and_contrast_role",
       "classification": "dominant",
       "usable_reference_count": 8,
       "usable_reference_ratio": 0.5714,
+      "video_body_claim": false,
       "supporting_reference_ids": [
         "O01",
         "O02",
@@ -151,15 +350,51 @@
         "Y03",
         "Y05"
       ],
-      "finding": "Neutral or source-derived fields keep the object and explanation dominant.",
-      "transfer_rule": "Use charcoal and warm-white neutral glue; accents encode speaker or focus only."
+      "supporting_evidence": [
+        {
+          "reference_id": "O01",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "O02",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "O06",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J02",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J04",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J05",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "Y03",
+          "evidence_class": "in_video_frame_observed"
+        },
+        {
+          "reference_id": "Y05",
+          "evidence_class": "thumbnail_observed"
+        }
+      ],
+      "finding": "Neutral or source-derived fields keep the primary subject and explanation legible.",
+      "transfer_rule": "Use charcoal and warm-white as neutral glue; accents encode speaker or focus only."
     },
     {
       "pattern_id": "P09_creator_brand_world",
       "dimension": "background_branding",
+      "surface_scope": "page_thumbnail_and_in_video_brand_treatment",
       "classification": "unsuitable",
       "usable_reference_count": 6,
       "usable_reference_ratio": 0.4286,
+      "video_body_claim": false,
       "supporting_reference_ids": [
         "O05",
         "J01",
@@ -168,21 +403,59 @@
         "J05",
         "Y01"
       ],
-      "finding": "Publisher and creator packages are common but source-specific.",
-      "transfer_rule": "Do not copy branded frames, character art, studio worlds, or a creator palette."
+      "supporting_evidence": [
+        {
+          "reference_id": "O05",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J01",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J02",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J03",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "J05",
+          "evidence_class": "page_or_frame_observed"
+        },
+        {
+          "reference_id": "Y01",
+          "evidence_class": "in_video_frame_observed"
+        }
+      ],
+      "finding": "Publisher and creator packages are visible but remain source-specific.",
+      "transfer_rule": "Do not copy branded frames, character art, studio worlds, or creator palettes."
     },
     {
       "pattern_id": "P10_dense_collage",
       "dimension": "thumbnail",
+      "surface_scope": "thumbnail_only",
       "classification": "outlier",
       "usable_reference_count": 2,
       "usable_reference_ratio": 0.1429,
+      "video_body_claim": false,
       "supporting_reference_ids": [
         "Y02",
         "Y04"
       ],
-      "finding": "Dense multi-image collage appears in individual thumbnails, not across cohorts.",
-      "transfer_rule": "Reject as a full-frame proof grammar because it increases rights and comprehension burden."
+      "supporting_evidence": [
+        {
+          "reference_id": "Y02",
+          "evidence_class": "thumbnail_observed"
+        },
+        {
+          "reference_id": "Y04",
+          "evidence_class": "thumbnail_observed"
+        }
+      ],
+      "finding": "Dense multi-image collage is a thumbnail observation, not an in-video grammar claim.",
+      "transfer_rule": "Reject as full-frame proof grammar because it increases rights and comprehension burden."
     }
   ]
 }

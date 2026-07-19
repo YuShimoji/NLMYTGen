@@ -1,66 +1,123 @@
 {
-  "schema_version": "new_banknote.visual_pattern_frequency.v1",
+  "schema_version": "new_banknote.visual_pattern_frequency.v2",
   "usable_reference_denominator": 14,
   "frequencies": [
     {
       "pattern_id": "P01_object_first",
       "count": 11,
       "ratio": 0.7857,
-      "classification": "dominant"
+      "classification": "dominant",
+      "surface_scope": "page_frame_thumbnail_and_in_video_static_composition",
+      "video_body_claim": false,
+      "supporting_evidence_classes": [
+        "in_video_frame_observed",
+        "page_or_frame_observed",
+        "thumbnail_observed"
+      ]
     },
     {
       "pattern_id": "P02_one_focus_callout",
-      "count": 7,
-      "ratio": 0.5,
-      "classification": "dominant"
+      "count": 5,
+      "ratio": 0.3571,
+      "classification": "recurring",
+      "surface_scope": "page_or_frame_static_composition",
+      "video_body_claim": false,
+      "supporting_evidence_classes": [
+        "page_or_frame_observed"
+      ]
     },
     {
       "pattern_id": "P03_short_key_term",
       "count": 12,
       "ratio": 0.8571,
-      "classification": "dominant"
+      "classification": "dominant",
+      "surface_scope": "cross_surface_title_and_key_term_hierarchy",
+      "video_body_claim": false,
+      "supporting_evidence_classes": [
+        "page_or_frame_observed",
+        "thumbnail_observed"
+      ]
     },
     {
       "pattern_id": "P04_bottom_text_band",
       "count": 4,
       "ratio": 0.2857,
-      "classification": "recurring"
+      "classification": "recurring",
+      "surface_scope": "in_video_dialogue_or_observed_broadcast_frame",
+      "video_body_claim": true,
+      "supporting_evidence_classes": [
+        "in_video_frame_observed",
+        "page_or_frame_observed"
+      ]
     },
     {
       "pattern_id": "P05_speaker_cues",
-      "count": 5,
-      "ratio": 0.3571,
-      "classification": "cohort_specific"
+      "count": 3,
+      "ratio": 0.2143,
+      "classification": "cohort_specific",
+      "surface_scope": "bounded_in_video_frames",
+      "video_body_claim": true,
+      "supporting_evidence_classes": [
+        "in_video_frame_observed"
+      ]
     },
     {
       "pattern_id": "P06_adjacent_source_credit",
       "count": 4,
       "ratio": 0.2857,
-      "classification": "recurring"
+      "classification": "recurring",
+      "surface_scope": "page_or_evidence_surface_only",
+      "video_body_claim": false,
+      "supporting_evidence_classes": [
+        "page_or_frame_observed"
+      ]
     },
     {
       "pattern_id": "P07_restrained_reveal",
-      "count": 5,
-      "ratio": 0.3571,
-      "classification": "recurring"
+      "count": 0,
+      "ratio": 0.0,
+      "classification": "inferred_constraint",
+      "surface_scope": "inferred_motion_constraint_not_observed_playback",
+      "video_body_claim": true,
+      "supporting_evidence_classes": [
+        "inferred_from_cross_reference"
+      ]
     },
     {
       "pattern_id": "P08_neutral_field",
       "count": 8,
       "ratio": 0.5714,
-      "classification": "dominant"
+      "classification": "dominant",
+      "surface_scope": "static_background_and_contrast_role",
+      "video_body_claim": false,
+      "supporting_evidence_classes": [
+        "in_video_frame_observed",
+        "page_or_frame_observed",
+        "thumbnail_observed"
+      ]
     },
     {
       "pattern_id": "P09_creator_brand_world",
       "count": 6,
       "ratio": 0.4286,
-      "classification": "unsuitable"
+      "classification": "unsuitable",
+      "surface_scope": "page_thumbnail_and_in_video_brand_treatment",
+      "video_body_claim": false,
+      "supporting_evidence_classes": [
+        "in_video_frame_observed",
+        "page_or_frame_observed"
+      ]
     },
     {
       "pattern_id": "P10_dense_collage",
       "count": 2,
       "ratio": 0.1429,
-      "classification": "outlier"
+      "classification": "outlier",
+      "surface_scope": "thumbnail_only",
+      "video_body_claim": false,
+      "supporting_evidence_classes": [
+        "thumbnail_observed"
+      ]
     }
   ]
 }

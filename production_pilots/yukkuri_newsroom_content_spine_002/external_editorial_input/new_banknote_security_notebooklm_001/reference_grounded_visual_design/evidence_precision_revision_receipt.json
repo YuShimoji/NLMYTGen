@@ -1,0 +1,45 @@
+{
+  "schema_version": "new_banknote.evidence_precision_revision_receipt.v1",
+  "receipt_id": "new-banknote-reference-evidence-precision-revision-v1",
+  "revised_at": "2026-07-20T08:04:21+09:00",
+  "predecessor": {
+    "commit": "2b8a32367a6b6ec4cf8d2cc5902625aad02524bb",
+    "artifact_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/reference_registry.json",
+    "sha256": "518355c9e9adcd503b47245846659241c98d77da0322174eca949e3597146b3c",
+    "preserved_access": "available byte-exact at the predecessor Git commit",
+    "total_references": 16,
+    "usable_visually_analyzed_references": 14,
+    "thumbnail_only_reference_count": 5,
+    "in_video_frame_observation_count": 0,
+    "selected_candidate": "documentary_object_focus_consensus",
+    "internal_selection_score": 92
+  },
+  "revision": {
+    "total_references": 16,
+    "usable_any_visual_surface_references": 14,
+    "thumbnail_only_reference_ids": [
+      "Y04",
+      "Y05"
+    ],
+    "in_video_frame_reference_ids": [
+      "Y01",
+      "Y02",
+      "Y03"
+    ],
+    "in_video_frame_observation_count": 3,
+    "independent_channel_count": 3,
+    "selected_candidate": "documentary_object_focus_consensus",
+    "internal_selection_score": 89,
+    "selection_changed": false
+  },
+  "corrected_claims": [
+    "Y01-Y03 now distinguish thumbnail, metadata, and one exact-timestamp in-video frame.",
+    "Y04-Y05 remain thumbnail-only and do not support video-body composition claims.",
+    "Speaker placement and lower text-band findings use three decoded frames from three channels.",
+    "Motion timing, transition, persistence, and frequency remain unobserved.",
+    "P07 is an inferred conservative constraint, not an observed playback pattern.",
+    "Production source-credit placement remains deferred; reference IDs belong to annotation and lineage surfaces."
+  ],
+  "artifact_deletion_performed": false,
+  "human_visual_acceptance": false
+}

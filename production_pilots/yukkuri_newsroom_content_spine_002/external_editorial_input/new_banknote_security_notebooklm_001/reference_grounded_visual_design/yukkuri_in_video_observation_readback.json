@@ -1,0 +1,104 @@
+{
+  "schema_version": "new_banknote.yukkuri_in_video_observation_readback.v1",
+  "status": "passed",
+  "method_boundary": {
+    "public_watch_pages_only": true,
+    "fresh_no_login_profiles": true,
+    "personal_cookies_used": false,
+    "video_or_audio_downloaded": false,
+    "access_control_circumvented": false,
+    "frame_limit_per_video": 1
+  },
+  "observation_count": 3,
+  "publisher_channel_count": 3,
+  "observations": [
+    {
+      "observation_id": "Y01-T0030",
+      "source_id": "Y01",
+      "publisher_channel": "にゃんだもん",
+      "canonical_url": "https://www.youtube.com/watch?v=hVx2x3YUIUM",
+      "evidence_class": "in_video_frame_observed",
+      "inspection_method": "fresh no-login headless Chrome profile; public watch player; CDP seek, pause, and player-region screenshot",
+      "requested_timestamp_seconds": 30,
+      "observed_player_time_seconds": 30.003,
+      "player_duration_seconds": 1167.141,
+      "decoded_ready_state": 4,
+      "local_capture": "local_in_video_observations/Y01_t0030_cdp.png",
+      "visible_subject": "ATM background with a cat character at left and green dialogue character at right",
+      "character_placement": "one character at each side; persistence and alternation unknown from one frame",
+      "subtitle_position_and_line_count": "white dialogue bubble in lower-right region; two lines",
+      "object_diagram_character_ratio": "background_object_high / characters_medium / dialogue_text_medium",
+      "callout_zoom_state": "one dialogue bubble; no arrow or zoom callout visible",
+      "source_credit_state": "no source credit visible in the observed frame",
+      "transition_motion_observation": "unknown; one paused decoded frame does not establish timing, frequency, transition, or pacing",
+      "limitations": [
+        "single frame only",
+        "no persistence claim",
+        "no motion-frequency claim",
+        "capture is ignored research evidence and not reusable"
+      ]
+    },
+    {
+      "observation_id": "Y02-T0030",
+      "source_id": "Y02",
+      "publisher_channel": "グリム貨幣コレクション",
+      "canonical_url": "https://www.youtube.com/watch?v=PXI5Q57YXD4",
+      "evidence_class": "in_video_frame_observed",
+      "inspection_method": "fresh no-login headless Chrome profile; public watch player; CDP seek, pause, and player-region screenshot",
+      "requested_timestamp_seconds": 30,
+      "observed_player_time_seconds": 30.011,
+      "player_duration_seconds": 335.661,
+      "decoded_ready_state": 4,
+      "local_capture": "local_in_video_observations/Y02_t0030_cdp.png",
+      "visible_subject": "six specimen banknote images centered in a grid",
+      "character_placement": "two small Yukkuri busts at lower-left and lower-right; persistence unknown",
+      "subtitle_position_and_line_count": "centered lower subtitle; two lines",
+      "object_diagram_character_ratio": "source_image_very_high / subtitle_medium / characters_low",
+      "callout_zoom_state": "no arrow, zoom, or bounded callout visible",
+      "source_credit_state": "grimm_moneycollection watermarks visible on source images; no production reuse permission inferred",
+      "transition_motion_observation": "unknown; one paused decoded frame does not establish timing, frequency, transition, or pacing",
+      "limitations": [
+        "single frame only",
+        "source-image rights unresolved",
+        "no persistence claim",
+        "capture is ignored research evidence and not reusable"
+      ]
+    },
+    {
+      "observation_id": "Y03-T0030",
+      "source_id": "Y03",
+      "publisher_channel": "ゆっくりルーザーズ",
+      "canonical_url": "https://www.youtube.com/watch?v=aCYgLBDrNYk",
+      "evidence_class": "in_video_frame_observed",
+      "inspection_method": "fresh no-login headless Chrome profile; public watch player; bounded seek, decoded-frame check, pause, and player-region screenshot",
+      "requested_timestamp_seconds": 30,
+      "observed_player_time_seconds": 30.0,
+      "player_duration_seconds": null,
+      "decoded_ready_state": 2,
+      "local_capture": "local_in_video_observations/Y03_t0030_cdp.png",
+      "visible_subject": "two-thousand-yen-note illustration on a central scenic screen",
+      "character_placement": "two large Yukkuri heads at lower-left and lower-right; persistence unknown",
+      "subtitle_position_and_line_count": "centered lower subtitle; two lines",
+      "object_diagram_character_ratio": "characters_high / central_object_medium / subtitle_medium",
+      "callout_zoom_state": "no arrow, zoom, or bounded callout visible",
+      "source_credit_state": "no source credit visible in the observed frame",
+      "transition_motion_observation": "unknown; one paused decoded frame does not establish timing, frequency, transition, or pacing",
+      "limitations": [
+        "single frame only",
+        "duration not retained",
+        "no persistence claim",
+        "capture is ignored research evidence and not reusable"
+      ]
+    }
+  ],
+  "checks": {
+    "public_no_login_frames_at_least_3": true,
+    "independent_channels_at_least_2": true,
+    "unique_source_ids": true,
+    "exact_requested_and_observed_timestamps": true,
+    "decoded_frame_checks_recorded": true,
+    "motion_not_overclaimed": true,
+    "captures_ignored_and_non_reusable": true,
+    "all_passed": true
+  }
+}
