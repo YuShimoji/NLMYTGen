@@ -25,6 +25,27 @@
 - **validation**: focused reconstruction tests、deterministic regeneration、HTML/XML/JSON parse、
   1920/1280 browser render、annotation/lineage、trace board/proxy preview、ignore/privacy、state sync、
   git checksを使う。`NLMYTGEN_AUDIO_POLICY=silent`を維持し、public mediaやYMM4を使わない。
+- **validated implementation commit**:
+  `cb93a23a435f57188dcf0fa651d5fae8cce849b9`（`fix(new-banknote): replace
+  AI-template visual proof`）。reconstruction 12 tests + project-state 8 tests = 20 passed、
+  deterministic second pass、compile、state sync、HTML/XML/JSON、privacy/ignore、
+  `git diff --check`がpassした。GitHub Actions runはtarget branchに未観測。
+- **actual render evidence**: isolated headless Chromeの1920×1080ではbody width 1920、
+  viewer 1504×846、1280×900ではbody width 1280、viewer width 1260。broken image、
+  external resource、audio/video elementはいずれも0。annotation mode、10-decision lineage、
+  6 trace sections、24-image supporting-trace proxy previewを実画面確認した。
+- **bounded repair history**: trace label overlapを凡例化し、proxy previewを各frameの実際の
+  supporting trace 3件との比較へ直し、generator由来Markdown trailing whitespaceを修正した。
+  silent wrapperはCDP startup timeoutを2回記録したため同failure classの再試行を止め、
+  isolated Chromeへ切替えた。unexpected audioは発生していない。
+- **別端末re-entry**: `git fetch --prune origin`後に上記remote branchをcheckoutし、
+  fast-forward限定で同期する。`HEAD...@{u}=0/0`とtracked cleanを確認してから、
+  `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md` → この節の順に読む。
+  次にprimary HTMLを開き、large viewer → annotation → lineage → review sheetの順で判定する。
+- **保持したlocal residue**: `.playwright-mcp/`、`artifacts/`、
+  `phase-e-01-contact-acquired-inspect.png`、`phase-e-01-contact-acquired.png`は
+  pre-existing untrackedとしてunstagedのまま。reconstruction配下のtrace board、proxy preview、
+  raster/browser evidence/profileもignoredで、production assetとして扱わない。
 - **exact next action**: large viewerを先に見て、必要時にannotation/lineageを開き、
   `reference_layout_review_sheet.md`の5問へ`accept`またはscene/cue/decision-specific revisionを返す。
 - **未完了境界**: human visual acceptance、Shot/Motion、Asset/Proxy/Rights、YMM4 feasibility、
