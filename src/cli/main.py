@@ -1698,6 +1698,26 @@ def main(argv: list[str] | None = None) -> int:
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
+    p_episode_video = subparsers.add_parser(
+        "build-episode-video",
+        help="Build one manifest-locked episode through validated internal-review MP4",
+    )
+    p_episode_video.add_argument("--episode", required=True, help="Episode manifest path")
+    p_episode_video.add_argument(
+        "--render", action="store_true", help="Run YMM4 output and validate the review MP4"
+    )
+    p_episode_video.add_argument(
+        "--dry-run", action="store_true", help="Validate inputs and print the stage plan without writes"
+    )
+    p_episode_video.add_argument(
+        "--resume", action="store_true", help="Verify and continue an existing run without overwriting media"
+    )
+    p_episode_video.add_argument(
+        "--force",
+        action="store_true",
+        help="Archive the existing local run and rebuild it from protected inputs",
+    )
+
     # build-csv
     p_build = subparsers.add_parser("build-csv", help="Build YMM4 CSV from input")
     p_build.add_argument("input", nargs="+", help="Input file path(s) (.txt or .csv)")
@@ -3271,7 +3291,9 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     try:
-        if args.command == "build-csv":
+        if args.command == "build-episode-video":
+            return _cmd_build_episode_video(args)
+        elif args.command == "build-csv":
             return _cmd_build_csv(args)
         elif args.command == "validate":
             return _cmd_validate(args)
@@ -6429,6 +6451,32 @@ def _cmd_score_thumbnail_s8(args: argparse.Namespace) -> int:
 
     # PASS 条件: pass band かつ warning なし
     return 0 if (result.band == "pass" and not result.warnings) else 1
+
+
+def _cmd_build_episode_video(args: argparse.Namespace) -> int:
+    from src.pipeline.episode_video import EpisodeVideoError, run_episode_video
+
+    try:
+        result = run_episode_video(
+            repo_root=Path.cwd(),
+            manifest_path=Path(args.episode),
+            render=bool(args.render),
+            dry_run=bool(args.dry_run),
+            resume=bool(args.resume),
+            force=bool(args.force),
+        )
+    except EpisodeVideoError as exc:
+        print(
+            json.dumps(
+                {"status": "failed", "error_code": exc.code, "message": str(exc)},
+                ensure_ascii=False,
+                indent=2,
+            ),
+            file=sys.stderr,
+        )
+        return 1
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    return 0
 
 
 def cli_entry() -> None:

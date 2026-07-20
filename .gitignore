@@ -42,3 +42,10 @@ _tmp/
 _local/rss/
 # Project-local, sanitized silent-runtime diagnostics. Never commit local PIDs/profiles.
 /artifacts/audio_diagnostics/
+
+# Local episode video runs: YMM4 projects, PNGs, MP4s, frames, and runtime receipts.
+production_pilots/**/auto_video_runs/
+
+# Local build outputs for the bounded YMM4 Windows automation helper.
+tools/Ymm4RenderAutomation/bin/
+tools/Ymm4RenderAutomation/obj/

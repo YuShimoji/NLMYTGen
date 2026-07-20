@@ -1,0 +1,187 @@
+{
+  "schema": "nlmytgen.episode_manifest.v1",
+  "episode_id": "new_banknote_security_notebooklm_001",
+  "source_package": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_capture_receipts.json",
+  "approved_script": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/human_script_approval_receipt.json",
+  "derived_csv": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/derived_yymm4_import.csv",
+  "cue_mapping": [
+    {
+      "cue_id": "cue_001",
+      "scene_id": "S1",
+      "speaker": "ゆっくり霊夢",
+      "visual_id": "reconstructed_S1_overview"
+    },
+    {
+      "cue_id": "cue_002",
+      "scene_id": "S1",
+      "speaker": "ゆっくり魔理沙",
+      "visual_id": "reconstructed_S1_overview",
+      "materialized_visual_id": "proxy_cue_002_overview",
+      "visual_source_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/proxy_visuals/proxy_cue_002_overview.svg"
+    },
+    {
+      "cue_id": "cue_003",
+      "scene_id": "S2",
+      "speaker": "ゆっくり魔理沙",
+      "visual_id": "reconstructed_cue_003_watermark"
+    },
+    {
+      "cue_id": "cue_004",
+      "scene_id": "S2",
+      "speaker": "ゆっくり魔理沙",
+      "visual_id": "reconstructed_cue_004_hologram"
+    },
+    {
+      "cue_id": "cue_005",
+      "scene_id": "S2",
+      "speaker": "ゆっくり霊夢",
+      "visual_id": "reconstructed_cue_005_intaglio"
+    },
+    {
+      "cue_id": "cue_006",
+      "scene_id": "S2",
+      "speaker": "ゆっくり魔理沙",
+      "visual_id": "reconstructed_cue_006_microtext"
+    },
+    {
+      "cue_id": "cue_007",
+      "scene_id": "S3",
+      "speaker": "ゆっくり魔理沙",
+      "visual_id": "reconstructed_S3_summary",
+      "materialized_visual_id": "proxy_cue_007_identification",
+      "visual_source_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/proxy_visuals/proxy_cue_007_identification.svg"
+    },
+    {
+      "cue_id": "cue_008",
+      "scene_id": "S3",
+      "speaker": "ゆっくり霊夢",
+      "visual_id": "reconstructed_S3_summary",
+      "materialized_visual_id": "proxy_cue_008_denomination",
+      "visual_source_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/proxy_visuals/proxy_cue_008_denomination.svg"
+    },
+    {
+      "cue_id": "cue_009",
+      "scene_id": "S3",
+      "speaker": "ゆっくり魔理沙",
+      "visual_id": "reconstructed_S3_summary"
+    }
+  ],
+  "visual_source_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_layout_reconstruction/keyframes",
+  "yymm4": {
+    "source_project_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/new_banknote_yymm4_import_observation.local.ymmp",
+    "source_project_sha256": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54",
+    "profile_id": "ymm4_4_53_0_9_yukkuri_characters_v1",
+    "profile_version_expected": "4.53.0.9",
+    "observed_product_version": "4.54.0.1",
+    "version_difference_policy": "same_major_minor_or_newer_warning_only",
+    "fps": 60,
+    "timeline_frames": 4415,
+    "duration_seconds": 73.583333
+  },
+  "output": {
+    "run_root_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_runs",
+    "run_id": "new_banknote_internal_review_v1",
+    "project_filename": "generated_project.local.ymmp",
+    "mp4_filename": "internal_review.mp4"
+  },
+  "render_settings": {
+    "container": "mp4",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "video_bitrate_kbps": 10000,
+    "video_maxrate_kbps": 12000,
+    "video_bufsize_kbps": 20000,
+    "audio_bitrate_kbps": 192,
+    "max_duration_delta_seconds": 0.5,
+    "max_size_bytes": 250000000,
+    "timeout_seconds": 1200
+  },
+  "boundaries": {
+    "internal_review_only": true,
+    "proxy_visual": true,
+    "final_aesthetic_acceptance": false,
+    "rights_approved": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "speaker_playback": false,
+    "preview_playback": false
+  },
+  "content_locks": [
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_capture_receipts.json",
+      "sha256": "6c4cc1817a3574b7278f2986522c91b05a51c1b8bba3ea4a544a78aee920e205"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/human_script_approval_receipt.json",
+      "sha256": "1ac490cbcd06483082b2d56a97ff758199ef37ab4b6d1229806c24b8698d7e0f"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.json",
+      "sha256": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.txt",
+      "sha256": "4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script_review.md",
+      "sha256": "9816c28e9b0099ef98e2aefb9e70bf22a32fbbd0f931fd8989c6ac19dcd99d3a"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/cue_source_traceability.json",
+      "sha256": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_yymm4.csv",
+      "sha256": "23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/derived_yymm4_import.csv",
+      "sha256": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_to_script_manifest.json",
+      "sha256": "e13fb57a2681875f577e4d85f13cf41bfc601519892fa4f975bdfcdd24d927b5"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_layout_reconstruction/keyframes/reconstructed_S1_overview.svg",
+      "sha256": "44911167bf1a674aa26e9c3ab63c7d87b1e43a6fd6cd78634ad447c5bdc92203"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_layout_reconstruction/keyframes/reconstructed_cue_003_watermark.svg",
+      "sha256": "37da4dde1abe699f085cc3385c4a363727d3241af749e2a515b70cf3ec84fcb1"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_layout_reconstruction/keyframes/reconstructed_cue_004_hologram.svg",
+      "sha256": "b8972a90e7cec5cbaa69627f15a4b57c01e3697a249611124013b51398db15df"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_layout_reconstruction/keyframes/reconstructed_cue_005_intaglio.svg",
+      "sha256": "115bda1dbbefd28349ef47b59c8ce217267fc3abfaf976d16b1f8450bfb19944"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_layout_reconstruction/keyframes/reconstructed_cue_006_microtext.svg",
+      "sha256": "6807af6dfb371d80abb28fe0c3d5218f42ccd6e9cffbafda7f09ada3fce410e3"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_layout_reconstruction/keyframes/reconstructed_S3_summary.svg",
+      "sha256": "87d6deeed475264af75d9f5993ec982a07dda2fedc7e45a8c4da6dac94f823a8"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/proxy_visuals/proxy_cue_002_overview.svg",
+      "sha256": "bb5953ff5102e222efadaea73890bc06eb36aacc99917827cc339e2968e8272d"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/proxy_visuals/proxy_cue_007_identification.svg",
+      "sha256": "9167f061969094b35c16d55464f91fd435143a19c28cdd99c9b5eef05e9d90c1"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/proxy_visuals/proxy_cue_008_denomination.svg",
+      "sha256": "4c980bc94a049bc5551a0193fbdf4aa629f7cbab11efece16119cf60321f4926"
+    }
+  ]
+}

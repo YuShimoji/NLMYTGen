@@ -1,0 +1,83 @@
+{
+  "schema": "nlmytgen.episode_video_validated_run.v1",
+  "status": "passed",
+  "validated_at_utc": "2026-07-20T21:20:54.807573+00:00",
+  "source_branch": "codex/new-banknote-reference-layout-reconstruction-v1",
+  "source_commit": "264a284cf527c1dac3731e3920973a15e99f0001",
+  "implementation_branch": "codex/nlmytgen-end-to-end-auto-video-v1",
+  "command": "uv run python -m src.cli.main build-episode-video --episode production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/new_banknote_episode_manifest.json --force --render",
+  "audio_policy": "silent",
+  "preflight": {
+    "protected_input_hash_count": 18,
+    "protected_input_hashes_verified": true,
+    "source_project_sha256": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54",
+    "voice_item_count": 9,
+    "speaker_counts": {
+      "ゆっくり霊夢": 3,
+      "ゆっくり魔理沙": 6
+    },
+    "scene_counts": {
+      "S1": 2,
+      "S2": 4,
+      "S3": 3
+    },
+    "exact_text_order": true,
+    "cue_scene_text_svg_binding": true
+  },
+  "project": {
+    "path": "../auto_video_runs/new_banknote_internal_review_v1/generated_project.local.ymmp",
+    "sha256": "f0361f4704adda2d87c342a9d281170ab3250fa9d9ea622a52bb3c8850019853",
+    "voice_items_unchanged": true,
+    "image_item_count": 9,
+    "timeline_frames": 4415,
+    "tool_states_stripped": true,
+    "layout_xml_stripped": true,
+    "private_path_leaks": 0
+  },
+  "media": {
+    "path": "../auto_video_runs/new_banknote_internal_review_v1/internal_review.mp4",
+    "sha256": "f2444f9657a569e9a374582765c41a28e414040a018f029b0180f256657421f7",
+    "container": "mp4",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60.0,
+    "duration_seconds": 73.583008,
+    "overall_bitrate_bps": 10151887,
+    "size_bytes": 93375804,
+    "frame_count": 4415,
+    "full_file_decode": "passed"
+  },
+  "visual_readback": {
+    "cue_frames_inspected": 9,
+    "unique_extracted_frame_hashes": 12,
+    "approved_subtitles_readable_and_not_clipped": true,
+    "speaker_labels_match_cues": true,
+    "proxy_visual_only": true,
+    "final_aesthetic_acceptance": false
+  },
+  "automation": {
+    "yymm4_product_version": "4.54.0.1",
+    "driver": "bounded_windows_uia",
+    "requested_video_bitrate_kbps": 10000,
+    "requested_audio_bitrate_kbps": 192,
+    "speaker_playback_used": false,
+    "preview_playback_used": false,
+    "project_owned_process_cleanup": true
+  },
+  "focused_tests": {
+    "tests/test_episode_video_pipeline.py": "8 passed",
+    "related_regression_tests": "42 passed"
+  },
+  "boundaries": {
+    "internal_review_only": true,
+    "rights_approved": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "pull_request_created": false,
+    "master_updated": false
+  },
+  "next_owner": "human_internal_reviewer"
+}

@@ -4017,3 +4017,36 @@ OPERATOR の workflow proof 節から移した観測メモ。現行条件は [OP
 - Carry-over scoring is now explicitly separated from in-page line breaks: `close+tail` boundaries and extra-page exact plans are allowed to win when they eliminate overflow without creating sparse fragment pages.
 - Exact page-count comparisons now use a target-specific ideal page width instead of reusing the base target, which fixed the `完璧に計算されたアルゴリズムが生身の / 人間という...` class by allowing one more page in the surrounding multi-sentence utterance.
 - Current sample residuals are down to 2 mechanical frontier cases in `_tmp_structural_balance.csv`: `誰の汗とリスクを動力にして回り始めるのかを / 解剖していくということですね。` and `自発的にリスクを取らせる罠のようなものです。 / データによると、`. Further automatic tightening risks over-fragmenting page flow more than it helps.
+
+## 2026-07-21 New-banknote end-to-end internal-review video
+
+- Scope: turn the approved new-banknote pilot into a real local one-command
+  pipeline ending in a validated YMM4 project and playable internal-review MP4.
+- Source lineage: implementation started from
+  `codex/new-banknote-reference-layout-reconstruction-v1` at
+  `264a284cf527c1dac3731e3920973a15e99f0001`; the prompt's earlier source SHA was
+  behind by one linear documentation-only commit.
+- Implementation: added `build-episode-video`, a manifest-locked pipeline,
+  deterministic silent Chrome SVG materialization, non-destructive YMM4 project
+  generation, bounded Windows UI Automation render, lossless fast-start remux,
+  media validation, frame extraction, receipts, resume, dry-run, and force archive.
+- Content preservation: the nine source VoiceItems remain unchanged; approved
+  text/order, 2/4/3 scenes, 3/6 speakers, 4415 frames, source inputs, and six
+  reconstruction SVGs remain hash-verified.
+- Visual correction: first frame inspection exposed shared layouts with another
+  cue's baked subtitle. Dedicated cue 2/7/8 proxy SVGs were added, and preflight
+  now rejects any SVG whose cue id, scene id, or approved text differs.
+- Actual local result: `internal_review.mp4` is H.264/AAC, 1920×1080, 60 fps,
+  73.583008 seconds, 10,151,887 bps overall, 93,375,804 bytes, SHA-256
+  `f2444f9657a569e9a374582765c41a28e414040a018f029b0180f256657421f7`.
+  The generated project SHA-256 is
+  `f0361f4704adda2d87c342a9d281170ab3250fa9d9ea622a52bb3c8850019853`.
+- Validation: all structural/media checks passed, all nine cue frames were
+  inspected with readable in-frame subtitles, and focused tests passed 8 new +
+  42 related cases. No speaker/preview playback was used.
+- Boundary: this is internal-review proxy evidence only. Human creative review,
+  asset rights, production, publication, external upload, PR, and master remain
+  separate false/pending gates.
+- Next move: the human reviewer opens the ignored local MP4 and returns
+  `accept`, `repair`, or `reject` with cue-specific notes. The assistant should
+  verify any requested repair against the manifest and regenerate the same run.
