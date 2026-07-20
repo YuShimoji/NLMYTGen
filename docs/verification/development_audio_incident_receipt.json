@@ -1,0 +1,177 @@
+{
+  "schema": "nlmytgen.development_audio_incident_receipt.v1",
+  "incident_date": "2026-07-20",
+  "root_cause": {
+    "strongest_class": "C1_BROWSER_MEDIA_PLAYBACK",
+    "confidence": "probable",
+    "evidence_grade": "probable_from_operation_timeline",
+    "exact_historical_emitter": "unknown",
+    "overclaim_prevented": true
+  },
+  "baseline": {
+    "capture_was_read_only": true,
+    "project_helper_launched_before_capture": false,
+    "process_counts": {
+      "browser_family": 16,
+      "browser_with_isolated_or_automation_marker": 1,
+      "scripting_runtime": 24,
+      "windows_audio_service": 1,
+      "voicevox_frontend": 0,
+      "voicevox_engine": 0,
+      "softalk": 0,
+      "yukkuri_movie_maker": 0,
+      "media_player": 0
+    },
+    "core_audio": {
+      "session_count": 8,
+      "candidate_session_count": 1,
+      "candidate_executable": "chrome.exe",
+      "candidate_pre_existing": true,
+      "candidate_active": false,
+      "candidate_muted": false,
+      "candidate_changed": false
+    },
+    "master_volume_operation": false,
+    "pre_existing_process_operation": false
+  },
+  "cause_matrix": [
+    {
+      "class": "C1_BROWSER_MEDIA_PLAYBACK",
+      "process_match": "historical_operation_timeline_plus_current_pre_existing_browser_family",
+      "parent_relation": "historical_unknown",
+      "listening_port": "not_cause_evidence",
+      "audio_session": "current_pre_existing_inactive_chrome_session_only",
+      "project_owned": false,
+      "evidence_grade": "probable_from_operation_timeline",
+      "confidence": "probable",
+      "disposition": "leading_hypothesis_not_verified"
+    },
+    {
+      "class": "C2_TTS_FRONTEND_OR_PLAYER",
+      "process_match": "none",
+      "parent_relation": "none",
+      "listening_port": "not_applicable",
+      "audio_session": "none_observed",
+      "project_owned": false,
+      "evidence_grade": "unsupported",
+      "confidence": "unsupported",
+      "disposition": "no_voicevox_softalk_or_player_blame"
+    },
+    {
+      "class": "C3_TTS_ENGINE_SERVER_ONLY",
+      "process_match": "none",
+      "parent_relation": "none",
+      "listening_port": "none_relevant",
+      "audio_session": "none_observed",
+      "project_owned": false,
+      "evidence_grade": "unsupported",
+      "confidence": "unsupported",
+      "disposition": "engine_existence_would_not_prove_playback"
+    },
+    {
+      "class": "C4_YMM4_OR_EDITOR_PREVIEW",
+      "process_match": "none",
+      "parent_relation": "none",
+      "listening_port": "not_applicable",
+      "audio_session": "none_observed",
+      "project_owned": false,
+      "evidence_grade": "unsupported",
+      "confidence": "unsupported",
+      "disposition": "not_launched"
+    },
+    {
+      "class": "C5_PREEXISTING_USER_PROCESS",
+      "process_match": "browser_family",
+      "parent_relation": "pre_existing_tree",
+      "listening_port": "not_cause_evidence",
+      "audio_session": "one_inactive_chrome_session",
+      "project_owned": false,
+      "evidence_grade": "verified_process_audio_session",
+      "confidence": "not_historical_attribution",
+      "disposition": "recorded_untouched"
+    },
+    {
+      "class": "C6_UNKNOWN",
+      "process_match": "historical_pid_unavailable",
+      "parent_relation": "unknown",
+      "listening_port": "unknown",
+      "audio_session": "historical_snapshot_unavailable",
+      "project_owned": false,
+      "evidence_grade": "unknown",
+      "confidence": "unresolved_exact_emitter",
+      "disposition": "retain_uncertainty"
+    }
+  ],
+  "remediation_verification": {
+    "status": "passed",
+    "audio_policy": "silent_by_default",
+    "explicit_audio_opt_in_available": false,
+    "browser_layers": {
+      "isolated_temporary_profile": true,
+      "headless": true,
+      "mute_audio_flag": true,
+      "autoplay_suppressed": true,
+      "background_persistence_disabled": true,
+      "remote_debugging_loopback_only": true,
+      "pre_document_dom_guard": true,
+      "mutation_observer": true
+    },
+    "dom_readback": {
+      "media_count": 1,
+      "all_muted": true,
+      "all_volume_zero": true,
+      "all_autoplay_false": true,
+      "all_paused": true,
+      "observer_active": true
+    },
+    "core_audio": {
+      "built_in_windows_com_supported": true,
+      "checks_per_final_smoke": 3,
+      "owned_sessions_observed": 0,
+      "unmuted_owned_sessions": 0,
+      "unowned_session_mutation": false,
+      "master_volume_operation": false
+    },
+    "process_containment": {
+      "direct_launch_and_ancestry_verified": true,
+      "owned_browser_processes_observed": 10,
+      "remaining_owned_processes": 0,
+      "temporary_profiles_remaining": 0,
+      "pre_existing_process_operation": false
+    },
+    "fixture": {
+      "kind": "zero_amplitude_pcm_wav",
+      "duration_seconds": 1,
+      "sample_rate_hz": 8000,
+      "sample_width_bits": 16,
+      "channels": 1,
+      "frame_count": 8000,
+      "all_pcm_samples_zero": true,
+      "sha256": "56d4af65701c26df20bd4021eda95b6e830348ce3a746086079fe89285548dc9",
+      "tracked": false,
+      "acoustic_measurement_claimed": false
+    },
+    "focused_test_count": 23,
+    "final_consecutive_smoke_passes": 2,
+    "autonomous_repair_cycles": 1,
+    "public_player_accessed": false,
+    "audible_test_intentionally_generated": false,
+    "audible_incident_reported_during_guarded_run": false
+  },
+  "post_run": {
+    "blocked_tts_editor_player_process_count": 0,
+    "guarded_browser_process_count": 0,
+    "isolated_profile_directory_count": 0,
+    "total_core_audio_session_count": 8,
+    "baseline_candidate_session_still_observed": true,
+    "baseline_candidate_session_mutation_count": 0,
+    "master_volume_operation": false,
+    "pre_existing_process_operation": false
+  },
+  "privacy": {
+    "absolute_paths_recorded": false,
+    "usernames_recorded": false,
+    "personal_browser_data_inspected": false,
+    "unrelated_application_details_recorded": false
+  }
+}

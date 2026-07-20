@@ -40,3 +40,5 @@ _tmp/
 *.opml
 *.opml.xml
 _local/rss/
+# Project-local, sanitized silent-runtime diagnostics. Never commit local PIDs/profiles.
+/artifacts/audio_diagnostics/

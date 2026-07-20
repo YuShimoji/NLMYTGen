@@ -24,7 +24,7 @@ PILOT = ROOT / (
 )
 OUTPUT = PILOT / "reference_grounded_visual_design"
 OLD_PROOF = PILOT / "route_a_visual_proof"
-EXPECTED_STATE = "new-banknote-reference-grounded-visual-proof-evidence-strengthened-human-review-ready-v1"
+EXPECTED_STATE = "nlmytgen-silent-execution-guarded-reference-proof-human-review-ready-v1"
 
 
 def _load(path: Path) -> dict:

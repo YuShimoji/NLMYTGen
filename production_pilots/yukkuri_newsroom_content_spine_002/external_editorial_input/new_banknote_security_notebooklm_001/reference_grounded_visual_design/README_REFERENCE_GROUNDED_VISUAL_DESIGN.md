@@ -20,6 +20,14 @@ The prior `Security Inspection Lab` proof was built from AI-original abstract SV
 
 The tracked registry distinguishes `page_or_frame_observed`, `thumbnail_observed`, `metadata_only`, `in_video_frame_observed`, and inaccessible-not-counted evidence. Y01–Y03 each have one decoded public-player frame at an exact recorded timestamp; Y04–Y05 remain thumbnail-only. Captures and thumbnails remain only in ignored local research cache. No login, personal cookie profile, video/audio download, or access-control circumvention was used. `reference_contact_sheet.local.html` is the local visual comparison surface.
 
+Future browser or public-player inspection is permitted only when separately
+authorized and must use `scripts/run_silent_media_inspection.ps1` under the
+project-wide `NLMYTGEN_AUDIO_POLICY=silent` contract. Direct browser media launch,
+personal-profile reuse, autoplay, and audible playback are not valid research
+paths. The 2026-07-20 corrective slice did not revisit any public player and did
+not alter the registry, observation conclusions, proof geometry, or approved
+content.
+
 ## Common visual grammar
 
 Across cohorts, the most transferable static grammar is: keep the object or source surface primary; emphasize one feature at a time; use one short action or key term; distinguish dialogue speakers; place readable text in a lower region; and keep source identity adjacent on evidence surfaces. Three decoded frames support static speaker and subtitle placement only. They do not establish persistence, alternation, timing, transition, pacing, or motion frequency.

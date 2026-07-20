@@ -1,41 +1,44 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-19 JST・Route A dual-surface proof / human review ready）
+## 現在の別端末再開ハンドオフ（2026-07-20 JST・silent development runtime / human review ready）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
 
-- **取得先**: `origin/codex/new-banknote-route-a-concrete-visual-proof-v1`。
-  remoteは`https://github.com/YuShimoji/NLMYTGen.git`に設定済みで、新規repository作成は不要。
-  `git fetch --prune origin`後、同branchをcheckoutしてfast-forward限定pullする。
-  exact content-authority baseは`d38075b97efabc99d1a23e8e0afafd5d44f1e2de`、presentation
-  revision baseは`f611aacd0e6d238bce76df7bdc6f55b86695b842`。outcome commitは
-  current remote branch tipから解決し、push後のremote parity `0/0`とclean tracked worktreeを確認する。
-  source successor、master、approved content、ignored evidenceは変更しない。
+- **取得先**: `origin/codex/new-banknote-reference-grounded-visual-redesign-v1`。
+  exact corrective-slice baseは`9cd067fffbb1e4004ac2264fe7f77d32dc9a103a`。`git fetch --prune
+  origin`後、同branchをcheckoutしてfast-forward限定pullする。outcome commitはcurrent remote
+  branch tipから解決し、push後のremote parity `0/0`とclean tracked worktreeを確認する。
+  source/master、approved content、visual proof、pre-existing untracked `artifacts/`を変更しない。
 - **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
-  `docs/runtime-state.md` → この節 → pilotの
-  `route_a_visual_proof/README_ROUTE_A_VISUAL_PROOF.md` → primary proof HTML。
-  旧Web thread、元A/B/C proposal、下のhandoffを現在の指示として使わない。
+  `docs/runtime-state.md` → `docs/DEVELOPMENT_AUDIO_SAFETY.md` → この節。incident再監査時だけ
+  `docs/verification/DEVELOPMENT_AUDIO_INCIDENT_2026-07-20.md`とJSON receiptを追加で読む。
+  下の日付付きhandoffを現在の指示として使わない。
 - **現在の状態**: Project-State-IDは
-  `new-banknote-route-a-dual-surface-visual-proof-human-review-ready-v1`、State-Revisionは
-  `2026-07-19.5`。Route Aはconcrete proof生成の方向として明示的に選択済みだが、
-  final visual acceptanceとimplementation authorizationはfalse。
-- **H0 dual-surface proof**: S1、cue_003–cue_006、S3の六つのclean viewer frameと
-  六つのannotation frameを分離した。HTMLはviewerを既定表示とし、annotation overlayは
-  動画graphicではないことを明記する。approved subtitles付き9/9 cue contact sheet、
-  全cueのstart/emphasis/settled storyboard、visible schematic disclaimerを保持する。
+  `nlmytgen-silent-execution-guarded-reference-proof-human-review-ready-v1`、revisionは
+  `2026-07-20.3`。証拠強化済みreference proofはhuman review readyのまま、project-owned
+  development browser/mediaはsilent-by-defaultになった。final visual/audio acceptanceはfalse。
+- **incident conclusion**: 直前の3 public-player interior inspectionとmute未証明の時系列から
+  C1 browser mediaを`probable_from_operation_timeline`と分類した。ただしhistoric PID、parent、
+  command line、Core Audio sessionがないためverifiedではない。VOICEVOX frontend/engine、SofTalk、
+  YMM4、player原因の証拠はない。
+- **silent guard**: `NLMYTGEN_AUDIO_POLICY=silent`だけを受理し、isolated temp profile、
+  headless Chromium、`--mute-audio`、autoplay suppression、pre-document DOM mute/pause/volume0、
+  MutationObserver、owned-PID-only Core Audio mute、Job Object containment、owned-tree/profile cleanupを使う。
+  audible frontend/playerとunguarded browser mediaはdenyし、audio opt-inはない。
+- **inaudible proof**: 1秒・8 kHz・mono・16-bitの全sample zero WAVだけでlocal smokeを実行。
+  DOM 1 elementのmuted/volume/autoplay/paused/observerを検証し、Core Audio COMを3回実行した。
+  owned sessionは生成されず、direct launch/ancestryでowned Chrome 10 processを識別し、終了後0を確認した。
 - **protected authority**: 8 approved hashes、9 cue text/order、2/4/3 scene、3/6 speaker、
-  claims/edges、canonical/derived CSV、lineage、current/historical YMM4 evidence、
-  five-action Operator Batch、元A/B/C proposalはsource baseとbyte-exact。
-- **inspection / validation**: all SVG/HTML/JSONをparseし、local Chromeでviewer 6、
-  annotation 6、contact sheet、storyboard、primary HTMLを1920×1080表示した。句読点単独、
-  既知語中分割、説明活用分割、motion label省略を修復し、四行annotation字幕のbaselineも
-  一回repairした。approved text、visual semantics、motion budgetは変更していない。
-- **exact next action**: `route_a_visual_proof.html`と四問review sheetを見て、
-  `accept`またはscene/cue-specific revisionを返す。A/B/Cは選び直さない。
+  claims/edges、canonical/derived CSV、lineage、old Route A proof、reference research conclusions、
+  clean/annotation proof geometry、current/historical YMM4 evidence、Operator Batchは不変。
+- **exact next action**: `reference_grounded_visual_proof.html`、`#annotation`、
+  `#reference-lineage`と五問review sheetを見て、`accept`または
+  source/decision/scene/cue-specific revisionを返す。proof自体にmedia playbackはない。
 - **未完了境界**: human visual acceptance、Shot/Motion、Asset/Proxy/Rights、YMM4 feasibility、
   pronunciation/rhythm/clipping、render、production/publication、PR、master integration、
-  remote CI/policy、full suite。untracked supervision artifactとignored evidenceは保持する。
+  remote CI/policy、full suite。historic emitting PIDはunknownのまま。pre-existing user process、
+  Windows master volume、untracked/ignored evidenceは触らない。
 
 ## 直前の別端末再開ハンドオフ（2026-07-13 JST・default branch integration・履歴）
 
