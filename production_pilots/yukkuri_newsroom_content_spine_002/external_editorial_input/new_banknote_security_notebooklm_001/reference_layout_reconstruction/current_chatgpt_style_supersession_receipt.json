@@ -1,0 +1,13 @@
+{
+  "schema_version": "new_banknote.chatgpt_style_supersession_receipt.v1",
+  "status": "reference_researched_but_ai_template_presentation_rejected",
+  "rejected_proof_root": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design",
+  "current_visual_authority": false,
+  "historical_evidence": true,
+  "user_rejection": "typical ChatGPT-generated page and frame presentation style",
+  "protected_historical_tree_oid": "66e099e3f10369019840ea44cc24ad7243d6d253",
+  "earlier_ai_original_tree_oid": "8b7f507ddca49d4f3fb5526960adfcd3457baa15",
+  "content_authority": "unchanged",
+  "replacement_required": true,
+  "replacement_design_id": "object_closeup_lowerthird_baseline"
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": "new_banknote.reference_layout_proof_readback.v1",
+  "status": "human_reference_layout_review_ready",
+  "project_state_id": "new-banknote-reference-layout-reconstructed-human-review-ready-v1",
+  "output_inspected_at": "2026-07-21T03:00:00+09:00",
+  "repo_relative_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_layout_reconstruction/reference_layout_proof.html",
+  "launcher_format": "Start-Process <exact-full-path-from-agent-report>",
+  "checks": {
+    "exact_base": true,
+    "prior_packages_byte_exact": true,
+    "supersession_complete": true,
+    "trace_count_at_least_6": true,
+    "cohort_counts_2_2_2": true,
+    "trace_precedes_design": true,
+    "shared_grammar_threshold": true,
+    "decision_lineage_complete": true,
+    "single_source_dominance": true,
+    "six_viewer_frames": true,
+    "six_annotation_frames": true,
+    "nine_cues": true,
+    "approved_content_changed": false,
+    "external_tracked_assets": false,
+    "silent_audio_policy": true,
+    "human_acceptance": false
+  }
+}

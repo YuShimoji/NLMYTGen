@@ -1,9 +1,39 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-20 JST・silent development runtime / human review ready）
+## 現在の別端末再開ハンドオフ（2026-07-21 JST・reference layout reconstruction / human review ready）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
+
+- **取得先**: `origin/codex/new-banknote-reference-layout-reconstruction-v1`。
+  exact slice baseは`649ada5050be5b9b2153c50c938d855797d5c19f`。push後はcurrent branch tip、
+  remote parity `0/0`、clean tracked worktreeを確認し、pre-existing untracked artifactsを保持する。
+- **現在の状態**: Project-State-IDは
+  `new-banknote-reference-layout-reconstructed-human-review-ready-v1`、revisionは
+  `2026-07-20.4`。Product gateは`human-reference-layout-review`。
+- **置換判断**: prior Lab proofはhistorical AI-original。prior reference-grounded proofは
+  research-backed historyだが、hero/pills/cards/generic paletteを使うAI-template presentationとして
+  human-rejected。両treeは変更せず、current visual authorityから外した。
+- **再構成根拠**: official 2、journalism 2、Yukkuri/adjacent 2の実画面を16:9 geometryへ
+  先にtraceした。shared grammarは各3 references以上・2 cohorts以上、decision coverage 10/10、
+  single-source share最大0.4以下。
+- **current artifact**: `reference_layout_reconstruction/reference_layout_proof.html`。
+  6 viewer、6 separate annotation、9/9 rectangular filmstripを持つplain production review tool。
+  tracked assetはoriginal proxy geometryのみで、source capturesは明記付きignored local previewだけ。
+- **protected authority**: 8 approved hashes、9 cue text/order、2/4/3 scenes、3/6 speakers、
+  claims/edges、canonical/derived CSV、lineage、YMM4 evidence、Operator Batch identitiesは不変。
+- **validation**: focused reconstruction tests、deterministic regeneration、HTML/XML/JSON parse、
+  1920/1280 browser render、annotation/lineage、trace board/proxy preview、ignore/privacy、state sync、
+  git checksを使う。`NLMYTGEN_AUDIO_POLICY=silent`を維持し、public mediaやYMM4を使わない。
+- **exact next action**: large viewerを先に見て、必要時にannotation/lineageを開き、
+  `reference_layout_review_sheet.md`の5問へ`accept`またはscene/cue/decision-specific revisionを返す。
+- **未完了境界**: human visual acceptance、Shot/Motion、Asset/Proxy/Rights、YMM4 feasibility、
+  pronunciation/rhythm/clipping、render、production/publication、PR、master integration、remote CI、
+  full suite。machine proofだけで下流gateを開かない。
+
+## 直前の別端末再開ハンドオフ（2026-07-20 JST・silent development runtime / human review ready・履歴）
+
+以下は判断履歴であり、現在の指示として読まない。
 
 - **取得先**: `origin/codex/new-banknote-reference-grounded-visual-redesign-v1`。
   exact corrective-slice baseは`9cd067fffbb1e4004ac2264fe7f77d32dc9a103a`。`git fetch --prune

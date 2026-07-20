@@ -1,11 +1,11 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: nlmytgen-silent-execution-guarded-reference-proof-human-review-ready-v1
-State-Revision: 2026-07-20.3
-Updated: 2026-07-20 JST
-Product-State: new-banknote-reference-proof-ready-with-silent-development-runtime
-Product-Gate: human-reference-grounded-visual-review
-Recommended-Next: review-evidence-strengthened-reference-grounded-proof
+Project-State-ID: new-banknote-reference-layout-reconstructed-human-review-ready-v1
+State-Revision: 2026-07-20.4
+Updated: 2026-07-21 JST
+Product-State: new-banknote-reference-traced-production-frame-proof-ready
+Product-Gate: human-reference-layout-review
+Recommended-Next: review-reference-reconstructed-production-frame-proof
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
 Handoff-Commit: resolved-by-current-branch-tip
@@ -14,89 +14,90 @@ Tracked-Worktree: clean after handoff commit; pre-existing untracked artifacts r
 
 ## Current Slice
 
-- **Unexpected audio was investigated before remediation**: the historical emitter
-  cannot be verified because no incident-time PID, command line, parent tree, or
-  Core Audio session was captured. Browser public-player playback is the leading
-  cause class with confidence `probable_from_operation_timeline`, not verified.
-  VOICEVOX frontend, engine-only, SofTalk, YMM4, and player attribution remain
-  unsupported.
-- **The safe baseline was read-only**: current browser/script/audio-service classes
-  and eight Core Audio sessions were enumerated. One inactive pre-existing Chrome
-  session was observed and left unchanged. No relevant TTS/player/editor process
-  was present. Windows master volume and pre-existing processes were untouched.
-- **Development audio is silent by default**: `NLMYTGEN_AUDIO_POLICY` accepts only
-  `silent`. There is no audio opt-in. Audible TTS/frontends, editor preview,
-  media-player tools, scripting playback APIs, and unguarded browser media are
-  denied by the reusable runtime policy.
-- **Browser defense is layered**: the wrapper uses a temporary isolated profile,
-  headless mode, `--mute-audio`, autoplay suppression, no background persistence,
-  loopback-only CDP, a pre-document DOM guard, project-PID-only Core Audio mute,
-  Windows Job Object containment, owned-tree cleanup, and profile deletion.
-- **The inaudible local smoke passed**: its one-second WAV contained 8,000 mono
-  16-bit zero-amplitude samples. DOM readback proved one media element muted,
-  volume zero, autoplay false, paused, and observed by the mutation guard. Core
-  Audio COM checks ran three times; no owned session materialized. Ten owned Chrome
-  processes were ancestry-mapped and zero remained after cleanup.
-- **Failure boundaries are explicit**: an unmuted owned session produces
-  `unexpected_audio_output`, closes only the guarded tree, preserves ignored
-  diagnostics, and prevents acceptance. Endpoint/master-volume operations and
-  pre-existing-process mutation do not exist in the implementation.
-- **Reference research is hardened, not continued**: future public-player work must
-  use the silent wrapper under separate authorization. No public URL, personal
-  profile, public video, new reference, YMM4, synthesis, or audible test was used
-  in this corrective slice.
-- **Protected product artifacts are unchanged**: eight approval hashes, approved
-  script/CSV/claim lineage, old Route A proof, reference registry and conclusions,
-  clean/annotation visual proof geometry, YMM4 evidence, and Operator Batch remain
-  unchanged. Only the reference README gained the runtime-safety entrypoint.
-- **Final product acceptance remains false**: human visual acceptance, Shot/Motion,
-  Asset/Rights, YMM4 feasibility, pronunciation/rhythm/clipping, render quality,
-  production, publication, PR, and master integration remain pending or closed.
-  In short, final acceptance is not granted.
+- **The prior Lab proof is historical AI-original evidence**: its protected tree is
+  unchanged and it is not the current visual authority.
+- **The prior reference-grounded proof is historical research-backed evidence**:
+  it remains byte-exact, but human visual review rejected its hero, pills,
+  rounded/nested cards, generic palette, and landing-page presentation grammar.
+- **Tracing preceded redesign**: six actual page/frame layouts were normalized to
+  16:9 geometry before replacement generation: two official/educational, two
+  journalism/documentary, and two Yukkuri/adjacent references from six publishers.
+- **Shared grammar is thresholded**: object dominance, bounded feature focus,
+  lower-third subtitles, edge speaker cues, and short adjacent key terms each have
+  at least three supporting traces across at least two cohorts.
+- **The new candidate is a production-frame proof, not a landing page**: it has one
+  large 16:9 viewer, a rectangular cue filmstrip, compact controls, separable
+  annotation mode, trace table, and decision-lineage table.
+- **Proof coverage is complete for this gate**: six 1920×1080 viewer frames, six
+  annotation frames, and cue_001 through cue_009 in approved order are present.
+- **AI-template styling is excluded**: no hero, metric pills, Authority card,
+  card-grid primary layout, nested mini-frame cards, decorative gradients/shadows,
+  old cyan palette, or named replacement theme remains in the new package.
+- **Rights are bounded**: tracked surfaces contain original proxy geometry only.
+  Source captures appear only in ignored local comparison surfaces marked
+  `INTERNAL REFERENCE PROXY — NOT A PRODUCTION ASSET`.
+- **Approved content is unchanged**: all eight approval hashes, nine subtitles and
+  order, 2/4/3 scene counts, 3/6 speaker counts, claims, CSVs, lineage, YMM4
+  evidence, and Operator Batch identities remain exact.
+- **Silent development remains mandatory**: validation used
+  `NLMYTGEN_AUDIO_POLICY=silent`, local files only, no media element, and an
+  isolated headless Chrome process with mute and autoplay suppression.
+- **Machine validation passed**: protected histories, trace coverage, grammar and
+  lineage thresholds, subtitle invariance, offline resources, deterministic
+  regeneration, parse checks, browser rendering, responsive width, ignore/privacy
+  boundaries, state sync, and git checks were verified by the focused slice.
+- **Final acceptance remains human-owned**: human layout acceptance is pending.
+  Shot/Motion, Asset/Rights, YMM4, render, production, publication, PR, and master
+  integration remain false.
 
 ## Product Position
 
-The evidence-strengthened reference-grounded proof remains the current product
-candidate. This slice added a development-runtime safety envelope without changing
-its content, research conclusions, visual grammar, or proof geometry. The guard
-makes incidental project-owned playback fail closed; it does not establish the
-exact historical audio emitter or any human visual/audio acceptance.
+`object_closeup_lowerthird_baseline` is the current human-review candidate. Its
+geometry is reconstructed from six inspected reference traces and its tracked
+visuals are rights-minimal proxies. It supersedes the rejected candidate only as
+the active review surface; both prior packages remain immutable history. Machine
+checks establish structure and invariance, not aesthetic acceptance or production
+rights.
 
 ## Exact Next Action
 
-Resume the existing human review of
-`reference_grounded_visual_design/reference_grounded_visual_proof.html`, its
-`#annotation` and `#reference-lineage` modes, and the five questions in
-`reference_grounded_visual_review_sheet.md`. The proof itself contains no external
-asset or media playback. Return `accept` or a source/decision/scene/cue-specific
-revision. Do not start Shot/Motion, Asset/Rights, YMM4, render, or publication from
-machine evidence alone.
+Open
+`production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_layout_reconstruction/reference_layout_proof.html`.
+Review the large viewer first, then annotation and lineage modes, and answer the
+five questions in `reference_layout_review_sheet.md`. Return `accept` or a
+scene/cue/decision-specific revision. Do not begin Shot/Motion, Asset/Rights,
+YMM4, render, production, or publication from machine evidence alone.
 
 ## Evidence and Access
 
-- Runtime contract: `docs/DEVELOPMENT_AUDIO_SAFETY.md`.
-- Incident analysis: `docs/verification/DEVELOPMENT_AUDIO_INCIDENT_2026-07-20.md`.
-- Deterministic incident receipt:
-  `docs/verification/development_audio_incident_receipt.json`.
-- Guard source: `src/pipeline/silent_media_runtime.py`.
-- Operator entrypoint: `scripts/run_silent_media_inspection.ps1`.
-- Core Audio helper: `scripts/inspect_project_audio_sessions.ps1`.
-- Focused tests: `tests/test_silent_media_runtime.py`.
-- Local ignored evidence: `artifacts/audio_diagnostics/`; zero-amplitude fixture,
-  sanitized result, and no retained browser profile.
-- Product review surface: `reference_grounded_visual_design/reference_grounded_visual_proof.html`.
+- Primary README:
+  `reference_layout_reconstruction/README_REFERENCE_LAYOUT_RECONSTRUCTION.md`.
+- AI-template audit and supersession:
+  `current_chatgpt_style_deviation_report.md` and
+  `current_chatgpt_style_supersession_receipt.json`.
+- Trace evidence: `reference_layout_trace_registry.json`,
+  `reference_layout_trace_matrix.json`, and `traces/*.svg`.
+- Reconstruction authority: `reference_layout_shared_grammar.json`,
+  `reconstructed_layout_contract.json`, and
+  `reference_layout_decision_lineage.json`.
+- Machine receipts: `reference_layout_proof_manifest.json` and
+  `reference_layout_proof_readback.json`.
+- Focused tests: `tests/test_new_banknote_reference_layout_reconstruction.py`.
+- Local ignored evidence: trace board, proxy preview, trace rasters, browser
+  screenshots, and isolated browser profile under the reconstruction package.
 
 ## Active Boundaries
 
-- Exact historical emitting PID and application remain unknown.
-- Human reference-grounded visual acceptance is pending.
-- YMM4/audio creative quality and actual motion playback are untested.
-- Production assets and rights clearance are pending.
-- No audible reproduction, public-player access, YMM4 launch, render,
-  production/publication, PR, master integration, remote CI acceptance, dependency
-  install, or full-suite run occurred.
+- Human layout preference and final visual acceptance are pending.
+- Local reference captures are research-only and are not reusable production assets.
+- Production assets and rights clearance are unresolved.
+- YMM4 feasibility, pronunciation, rhythm, clipping, motion, and render quality are untested.
+- No public media, audible process, new dependency, YMM4 launch, render,
+  production/publication, external communication, PR, master integration, remote
+  CI acceptance, or full-suite run occurred.
 
 ## Maintenance Note
 
 Keep this capsule within 160 lines. Resolve the handoff commit from the current
-branch tip; exact product artifact hashes remain in their owning receipts/manifests.
+branch tip; exact artifact hashes remain in the reconstruction manifest and the
+two historical tree IDs remain in the supersession receipt.

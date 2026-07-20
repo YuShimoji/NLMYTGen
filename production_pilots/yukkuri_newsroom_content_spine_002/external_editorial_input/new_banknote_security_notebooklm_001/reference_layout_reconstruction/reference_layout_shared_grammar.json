@@ -1,0 +1,88 @@
+{
+  "schema_version": "new_banknote.reference_layout_shared_grammar.v1",
+  "derivation_boundary": "selected only after six visual tracings were completed and inspected",
+  "patterns": [
+    {
+      "grammar_id": "SG01_OBJECT_DOMINANCE",
+      "description": "source object or object proxy carries the largest visual area",
+      "supporting_trace_ids": [
+        "T-O01",
+        "T-O02",
+        "T-J05",
+        "T-Y02"
+      ],
+      "cohorts": [
+        "official_educational",
+        "journalism_documentary",
+        "yukkuri_adjacent_explainer"
+      ],
+      "threshold": "at_least_3_independent_references_and_2_cohorts",
+      "passed": true
+    },
+    {
+      "grammar_id": "SG02_BOUNDED_FEATURE_FOCUS",
+      "description": "a feature is isolated in a bounded crop, board region, or detail state",
+      "supporting_trace_ids": [
+        "T-O01",
+        "T-O02",
+        "T-J03"
+      ],
+      "cohorts": [
+        "official_educational",
+        "journalism_documentary"
+      ],
+      "threshold": "at_least_3_independent_references_and_2_cohorts",
+      "passed": true
+    },
+    {
+      "grammar_id": "SG03_BOTTOM_SUBTITLE_BAND",
+      "description": "spoken explanation occupies a lower band while the object remains visible",
+      "supporting_trace_ids": [
+        "T-J05",
+        "T-Y01",
+        "T-Y02"
+      ],
+      "cohorts": [
+        "journalism_documentary",
+        "yukkuri_adjacent_explainer"
+      ],
+      "threshold": "at_least_3_independent_references_and_2_cohorts",
+      "passed": true
+    },
+    {
+      "grammar_id": "SG04_EDGE_SPEAKER_CUE",
+      "description": "speaker presence is kept at a frame edge and secondary to the object",
+      "supporting_trace_ids": [
+        "T-J03",
+        "T-Y01",
+        "T-Y02"
+      ],
+      "cohorts": [
+        "journalism_documentary",
+        "yukkuri_adjacent_explainer"
+      ],
+      "threshold": "at_least_3_independent_references_and_2_cohorts",
+      "passed": true
+    },
+    {
+      "grammar_id": "SG05_SHORT_KEY_ADJACENCY",
+      "description": "short feature terms sit adjacent to the object or focus region",
+      "supporting_trace_ids": [
+        "T-O01",
+        "T-O02",
+        "T-J03"
+      ],
+      "cohorts": [
+        "official_educational",
+        "journalism_documentary"
+      ],
+      "threshold": "at_least_3_independent_references_and_2_cohorts",
+      "passed": true
+    }
+  ],
+  "checks": {
+    "all_patterns_thresholded": true,
+    "minimum_three_references": true,
+    "minimum_two_cohorts": true
+  }
+}

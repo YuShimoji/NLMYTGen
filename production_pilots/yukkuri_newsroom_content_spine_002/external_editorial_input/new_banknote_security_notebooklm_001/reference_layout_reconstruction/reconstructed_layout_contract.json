@@ -1,0 +1,54 @@
+{
+  "schema_version": "new_banknote.reconstructed_layout_contract.v1",
+  "design_id": "object_closeup_lowerthird_baseline",
+  "design_generation_started_at": "2026-07-21T01:20:00+09:00",
+  "primary_surface": "production_shot_review_tool",
+  "composition": "one full-size 16:9 object field, no more than one bounded focus, lower-third subtitle, small edge speaker nameplate",
+  "palette_treatment": "neutral grayscale with only functional speaker/focus accents; no theme or brand palette",
+  "theme_created": false,
+  "external_assets": 0,
+  "viewer_annotation_separated": true,
+  "ai_template_bans": {
+    "hero": true,
+    "eyebrow": true,
+    "pills": true,
+    "authority_panel": true,
+    "card_grid": true,
+    "nested_frame_cards": true,
+    "saas_shell": true,
+    "large_radius_panels": true,
+    "unexplained_cyan": true,
+    "gradients": true,
+    "circular_number_icons": true,
+    "marketing_copy": true,
+    "giant_page_title": true,
+    "feature_gallery": true,
+    "decorative_shadows": true
+  },
+  "unsupported_elements_policy": {
+    "allowed_classes": [
+      "accessibility requirement",
+      "platform geometry",
+      "content lock requirement",
+      "neutral glue",
+      "unresolved proposal"
+    ],
+    "neutral_glue": [
+      "exact pixel coordinates",
+      "responsive scaling",
+      "line wrapping",
+      "focus outline",
+      "grayscale contrast tuning"
+    ],
+    "not_neutral_glue": [
+      "palette identity",
+      "theme",
+      "decorative system",
+      "icon family",
+      "card system",
+      "branded typography",
+      "fictional environment",
+      "marketing hierarchy"
+    ]
+  }
+}

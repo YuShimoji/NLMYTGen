@@ -1,0 +1,345 @@
+{
+  "schema_version": "new_banknote.reference_layout_decision_lineage.v1",
+  "design_id": "object_closeup_lowerthird_baseline",
+  "major_decision_count": 10,
+  "covered_major_decision_count": 10,
+  "coverage_ratio": 1.0,
+  "decisions": [
+    {
+      "decision_id": "D01",
+      "selected_structure": "dominant object field",
+      "supporting_trace_ids": [
+        "T-O01",
+        "T-O02",
+        "T-J05",
+        "T-Y02"
+      ],
+      "supporting_source_ids": [
+        "O01",
+        "O02",
+        "J05",
+        "Y02"
+      ],
+      "cohort_coverage": [
+        "journalism_documentary",
+        "official_educational",
+        "yukkuri_adjacent_explainer"
+      ],
+      "shared_pattern_threshold_result": "passed",
+      "source_specific_elements_rejected": [
+        "branding",
+        "creator art",
+        "source pixels",
+        "exact composition"
+      ],
+      "neutral_glue": [],
+      "ai_original_contribution": "none; geometry is trace-derived or explicitly classified",
+      "classification": "trace_supported",
+      "rights_consequence": "tracked proof uses original proxy geometry only",
+      "content_consequence": "approved subtitle and order unchanged",
+      "human_approval_status": "pending"
+    },
+    {
+      "decision_id": "D02",
+      "selected_structure": "one bounded feature focus",
+      "supporting_trace_ids": [
+        "T-O01",
+        "T-O02",
+        "T-J03"
+      ],
+      "supporting_source_ids": [
+        "O01",
+        "O02",
+        "J03"
+      ],
+      "cohort_coverage": [
+        "journalism_documentary",
+        "official_educational"
+      ],
+      "shared_pattern_threshold_result": "passed",
+      "source_specific_elements_rejected": [
+        "branding",
+        "creator art",
+        "source pixels",
+        "exact composition"
+      ],
+      "neutral_glue": [],
+      "ai_original_contribution": "none; geometry is trace-derived or explicitly classified",
+      "classification": "trace_supported",
+      "rights_consequence": "tracked proof uses original proxy geometry only",
+      "content_consequence": "approved subtitle and order unchanged",
+      "human_approval_status": "pending"
+    },
+    {
+      "decision_id": "D03",
+      "selected_structure": "bottom subtitle band",
+      "supporting_trace_ids": [
+        "T-J05",
+        "T-Y01",
+        "T-Y02"
+      ],
+      "supporting_source_ids": [
+        "J05",
+        "Y01",
+        "Y02"
+      ],
+      "cohort_coverage": [
+        "journalism_documentary",
+        "yukkuri_adjacent_explainer"
+      ],
+      "shared_pattern_threshold_result": "passed",
+      "source_specific_elements_rejected": [
+        "branding",
+        "creator art",
+        "source pixels",
+        "exact composition"
+      ],
+      "neutral_glue": [],
+      "ai_original_contribution": "none; geometry is trace-derived or explicitly classified",
+      "classification": "trace_supported",
+      "rights_consequence": "tracked proof uses original proxy geometry only",
+      "content_consequence": "approved subtitle and order unchanged",
+      "human_approval_status": "pending"
+    },
+    {
+      "decision_id": "D04",
+      "selected_structure": "small edge speaker nameplate instead of character art",
+      "supporting_trace_ids": [
+        "T-J03",
+        "T-Y01",
+        "T-Y02"
+      ],
+      "supporting_source_ids": [
+        "J03",
+        "Y01",
+        "Y02"
+      ],
+      "cohort_coverage": [
+        "journalism_documentary",
+        "yukkuri_adjacent_explainer"
+      ],
+      "shared_pattern_threshold_result": "passed",
+      "source_specific_elements_rejected": [
+        "branding",
+        "creator art",
+        "source pixels",
+        "exact composition"
+      ],
+      "neutral_glue": [],
+      "ai_original_contribution": "none; geometry is trace-derived or explicitly classified",
+      "classification": "content_lock_requirement",
+      "rights_consequence": "tracked proof uses original proxy geometry only",
+      "content_consequence": "approved subtitle and order unchanged",
+      "human_approval_status": "pending"
+    },
+    {
+      "decision_id": "D05",
+      "selected_structure": "short key term adjacent to focus",
+      "supporting_trace_ids": [
+        "T-O02",
+        "T-J03",
+        "T-Y01"
+      ],
+      "supporting_source_ids": [
+        "O02",
+        "J03",
+        "Y01"
+      ],
+      "cohort_coverage": [
+        "journalism_documentary",
+        "official_educational",
+        "yukkuri_adjacent_explainer"
+      ],
+      "shared_pattern_threshold_result": "passed",
+      "source_specific_elements_rejected": [
+        "branding",
+        "creator art",
+        "source pixels",
+        "exact composition"
+      ],
+      "neutral_glue": [],
+      "ai_original_contribution": "none; geometry is trace-derived or explicitly classified",
+      "classification": "trace_supported",
+      "rights_consequence": "tracked proof uses original proxy geometry only",
+      "content_consequence": "approved subtitle and order unchanged",
+      "human_approval_status": "pending"
+    },
+    {
+      "decision_id": "D06",
+      "selected_structure": "source-specific imagery and branding excluded",
+      "supporting_trace_ids": [
+        "T-O01",
+        "T-J05"
+      ],
+      "supporting_source_ids": [
+        "O01",
+        "J05"
+      ],
+      "cohort_coverage": [
+        "journalism_documentary",
+        "official_educational"
+      ],
+      "shared_pattern_threshold_result": "passed",
+      "source_specific_elements_rejected": [
+        "branding",
+        "creator art",
+        "source pixels",
+        "exact composition"
+      ],
+      "neutral_glue": [],
+      "ai_original_contribution": "none; geometry is trace-derived or explicitly classified",
+      "classification": "rights_requirement",
+      "rights_consequence": "tracked proof uses original proxy geometry only",
+      "content_consequence": "approved subtitle and order unchanged",
+      "human_approval_status": "pending"
+    },
+    {
+      "decision_id": "D07",
+      "selected_structure": "neutral grayscale contrast without a theme",
+      "supporting_trace_ids": [],
+      "supporting_source_ids": [],
+      "cohort_coverage": [],
+      "shared_pattern_threshold_result": "not_applicable_neutral_glue",
+      "source_specific_elements_rejected": [
+        "branding",
+        "creator art",
+        "source pixels",
+        "exact composition"
+      ],
+      "neutral_glue": [
+        "exact coordinates",
+        "responsive scaling",
+        "line wrapping",
+        "grayscale contrast tuning"
+      ],
+      "ai_original_contribution": "none; geometry is trace-derived or explicitly classified",
+      "classification": "neutral_glue",
+      "rights_consequence": "tracked proof uses original proxy geometry only",
+      "content_consequence": "approved subtitle and order unchanged",
+      "human_approval_status": "pending"
+    },
+    {
+      "decision_id": "D08",
+      "selected_structure": "straight full-frame geometry without outer cards",
+      "supporting_trace_ids": [
+        "T-O02",
+        "T-Y01"
+      ],
+      "supporting_source_ids": [
+        "O02",
+        "Y01"
+      ],
+      "cohort_coverage": [
+        "official_educational",
+        "yukkuri_adjacent_explainer"
+      ],
+      "shared_pattern_threshold_result": "passed",
+      "source_specific_elements_rejected": [
+        "branding",
+        "creator art",
+        "source pixels",
+        "exact composition"
+      ],
+      "neutral_glue": [],
+      "ai_original_contribution": "none; geometry is trace-derived or explicitly classified",
+      "classification": "trace_supported",
+      "rights_consequence": "tracked proof uses original proxy geometry only",
+      "content_consequence": "approved subtitle and order unchanged",
+      "human_approval_status": "pending"
+    },
+    {
+      "decision_id": "D09",
+      "selected_structure": "rectangular production filmstrip",
+      "supporting_trace_ids": [
+        "T-J03",
+        "T-J05"
+      ],
+      "supporting_source_ids": [
+        "J03",
+        "J05"
+      ],
+      "cohort_coverage": [
+        "journalism_documentary"
+      ],
+      "shared_pattern_threshold_result": "passed",
+      "source_specific_elements_rejected": [
+        "branding",
+        "creator art",
+        "source pixels",
+        "exact composition"
+      ],
+      "neutral_glue": [],
+      "ai_original_contribution": "none; geometry is trace-derived or explicitly classified",
+      "classification": "platform_geometry",
+      "rights_consequence": "tracked proof uses original proxy geometry only",
+      "content_consequence": "approved subtitle and order unchanged",
+      "human_approval_status": "pending"
+    },
+    {
+      "decision_id": "D10",
+      "selected_structure": "detail crop replaces abstract dashboard widgets",
+      "supporting_trace_ids": [
+        "T-O01",
+        "T-Y02"
+      ],
+      "supporting_source_ids": [
+        "O01",
+        "Y02"
+      ],
+      "cohort_coverage": [
+        "official_educational",
+        "yukkuri_adjacent_explainer"
+      ],
+      "shared_pattern_threshold_result": "passed",
+      "source_specific_elements_rejected": [
+        "branding",
+        "creator art",
+        "source pixels",
+        "exact composition"
+      ],
+      "neutral_glue": [],
+      "ai_original_contribution": "none; geometry is trace-derived or explicitly classified",
+      "classification": "trace_supported",
+      "rights_consequence": "tracked proof uses original proxy geometry only",
+      "content_consequence": "approved subtitle and order unchanged",
+      "human_approval_status": "pending"
+    }
+  ],
+  "source_dominance": {
+    "rule_maximum": 0.4,
+    "maximum_observed_share": 0.4,
+    "passed": true,
+    "by_source": [
+      {
+        "source_id": "J03",
+        "supported_major_decision_count": 4,
+        "share_of_major_decisions": 0.4
+      },
+      {
+        "source_id": "J05",
+        "supported_major_decision_count": 4,
+        "share_of_major_decisions": 0.4
+      },
+      {
+        "source_id": "O01",
+        "supported_major_decision_count": 4,
+        "share_of_major_decisions": 0.4
+      },
+      {
+        "source_id": "O02",
+        "supported_major_decision_count": 4,
+        "share_of_major_decisions": 0.4
+      },
+      {
+        "source_id": "Y01",
+        "supported_major_decision_count": 4,
+        "share_of_major_decisions": 0.4
+      },
+      {
+        "source_id": "Y02",
+        "supported_major_decision_count": 4,
+        "share_of_major_decisions": 0.4
+      }
+    ]
+  }
+}

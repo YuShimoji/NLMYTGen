@@ -1,0 +1,69 @@
+{
+  "schema_version": "new_banknote.reference_layout_proof_manifest.v1",
+  "artifact_id": "new-banknote-reference-layout-reconstruction-v1",
+  "design_id": "object_closeup_lowerthird_baseline",
+  "base_revision": "649ada5050be5b9b2153c50c938d855797d5c19f",
+  "tracing_completed_before_design": true,
+  "protected_history": {
+    "route_a_tree_oid": "8b7f507ddca49d4f3fb5526960adfcd3457baa15",
+    "rejected_reference_grounded_tree_oid": "66e099e3f10369019840ea44cc24ad7243d6d253"
+  },
+  "content_lock": {
+    "approved_hash_count": 8,
+    "cue_count": 9,
+    "scene_counts": {
+      "S1": 2,
+      "S2": 4,
+      "S3": 3
+    },
+    "speaker_counts": {
+      "れいむ": 3,
+      "まりさ": 6
+    },
+    "changed": false
+  },
+  "viewer_keyframe_count": 6,
+  "annotation_keyframe_count": 6,
+  "cue_coverage": "9/9",
+  "external_asset_count": 0,
+  "file_sha256": {
+    "README_REFERENCE_LAYOUT_RECONSTRUCTION.md": "287b96582406e0e54e7914184b4b7f79d93eda11d9709e24d8267fcc11a29faf",
+    "reference_layout_trace_registry.json": "cddf08f9c28610f6a5e27b7e210fcbe48f77ff8453203adad52beba589652381",
+    "reference_layout_trace_matrix.json": "69c3f615c5a9061808568504d2850b3630d082b351d50142d95cfad6dbce859a",
+    "reference_layout_shared_grammar.json": "2ebeeb9af23dbecb4215e3a5b2b944890cfc46ce6cd75d397f888b7fcc8c998b",
+    "current_chatgpt_style_deviation_report.md": "eb61a50364fdf467879eb999f55f7aaf571d2fd04667a30ebbc44d3e3a9b67d8",
+    "current_chatgpt_style_supersession_receipt.json": "c93777015b4bc8227951fa35036de2a5b5380cbdb097d59565bf4ed5f286c89f",
+    "reconstructed_layout_contract.json": "fbc56fcc4881be88e6dba7f3e3aed073cf37004e3ff128058be3a68fffe12242",
+    "reference_layout_decision_lineage.json": "9d4eec0349c22b7367d43fd68c80ab464a84556a8c7d98a352a8e79160a7984a",
+    "reference_layout_proof.html": "9075835cfb69231ff9f4909434d4ba63e442fb3e5eb60209cf860a085bc3ec9d",
+    "reference_layout_review_sheet.md": "5b77cf263676a5e9543eb271be010834c805fd3e64d733cc4d9b0f1c089f92ab",
+    "reference_layout_nine_cue_strip.svg": "23144fceb0904705e2c527808958c92bf28e28049ba8c8a0a6446265e952ef6f",
+    "traces/T-J03.svg": "3b86110e53ad2aee31bbf639610b66c33833916f6e015e4003b35d36a8033c81",
+    "traces/T-J05.svg": "cb95f8093274d66495234510030bf18a159f9a90a5254551f195c69536160386",
+    "traces/T-O01.svg": "893190ca2d2e2a70739c14f690c148247519ec08b771d48bfdc78e9c664f3266",
+    "traces/T-O02.svg": "a6dd0a0ade5441b98923bde9ded151ff93aa99a24c9d99263bc90080886ad786",
+    "traces/T-Y01.svg": "201e2d93de5507a5080ed5784c81c0e2f656036a4d7b7f5000d3a9caeb3adb59",
+    "traces/T-Y02.svg": "6ae3a1746554b291b8f289c6b66e8a9e76209bc7e0b6857ce9021d6ec075d320",
+    "keyframes/reconstructed_cue_003_watermark.svg": "37da4dde1abe699f085cc3385c4a363727d3241af749e2a515b70cf3ec84fcb1",
+    "keyframes/reconstructed_cue_004_hologram.svg": "b8972a90e7cec5cbaa69627f15a4b57c01e3697a249611124013b51398db15df",
+    "keyframes/reconstructed_cue_005_intaglio.svg": "115bda1dbbefd28349ef47b59c8ce217267fc3abfaf976d16b1f8450bfb19944",
+    "keyframes/reconstructed_cue_006_microtext.svg": "6807af6dfb371d80abb28fe0c3d5218f42ccd6e9cffbafda7f09ada3fce410e3",
+    "keyframes/reconstructed_S1_overview.svg": "44911167bf1a674aa26e9c3ab63c7d87b1e43a6fd6cd78634ad447c5bdc92203",
+    "keyframes/reconstructed_S3_summary.svg": "87d6deeed475264af75d9f5993ec982a07dda2fedc7e45a8c4da6dac94f823a8",
+    "annotation_keyframes/reconstructed_cue_003_watermark.svg": "cdb80135f8c632be9de2b5d64701cc1f0004b45466f7744c87f4a329b58e4e9d",
+    "annotation_keyframes/reconstructed_cue_004_hologram.svg": "0f286f0d96b301655a80ff3cf5925f080a8121c967b8dda2588a106eaa8fecc7",
+    "annotation_keyframes/reconstructed_cue_005_intaglio.svg": "d1a36eeef2b4cfd1cc1e08a8657701d8b1d3c9453a5296e782564fc544295da4",
+    "annotation_keyframes/reconstructed_cue_006_microtext.svg": "8b7eb83062f0b1c8b845935a350967df3d1926133b498febab9d3aab87a561ec",
+    "annotation_keyframes/reconstructed_S1_overview.svg": "4ed626d924e5b63b4f8277dfc53e2117f6331bb6b0e93c3c87c94883c2f7b0be",
+    "annotation_keyframes/reconstructed_S3_summary.svg": "4d16062ca2b0b1fa5c17eb6732a7a90705eeff3c14549250a4809113d5288764"
+  },
+  "human_visual_acceptance": false,
+  "shot_motion_authorized": false,
+  "asset_rights_authorized": false,
+  "yymm4_authorized": false,
+  "render_authorized": false,
+  "production_authorized": false,
+  "publication_authorized": false,
+  "pr_created": false,
+  "master_integrated": false
+}

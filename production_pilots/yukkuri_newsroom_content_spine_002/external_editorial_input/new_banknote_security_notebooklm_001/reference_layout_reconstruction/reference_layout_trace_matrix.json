@@ -1,0 +1,460 @@
+{
+  "schema_version": "new_banknote.reference_layout_trace_matrix.v1",
+  "coordinate_space": "normalized_16_9",
+  "bounds_fields": [
+    "primary_object_bounds",
+    "closeup_crop_bounds",
+    "subtitle_bounds",
+    "character_nameplate_bounds",
+    "callout_bounds",
+    "source_credit_bounds",
+    "title_key_term_bounds"
+  ],
+  "rows": [
+    {
+      "trace_id": "T-O01",
+      "source_id": "O01",
+      "cohort": "official_educational",
+      "publisher": "独立行政法人 国立印刷局",
+      "evidence_class": "page_or_frame_observed",
+      "inspected_surface": "multi-state hologram image / 3Dで見る偽造防止技術",
+      "local_capture": "../reference_grounded_visual_design/local_reference_captures/O01_npb_hologram.jpg",
+      "primary_object_bounds": [
+        {
+          "x": 0.02,
+          "y": 0.04,
+          "width": 0.23,
+          "height": 0.92
+        }
+      ],
+      "closeup_crop_bounds": [
+        {
+          "x": 0.31,
+          "y": 0.08,
+          "width": 0.64,
+          "height": 0.84
+        }
+      ],
+      "subtitle_bounds": [],
+      "character_nameplate_bounds": [],
+      "callout_bounds": [
+        {
+          "x": 0.31,
+          "y": 0.08,
+          "width": 0.64,
+          "height": 0.84
+        }
+      ],
+      "source_credit_bounds": [],
+      "title_key_term_bounds": [
+        {
+          "x": 0.27,
+          "y": 0.06,
+          "width": 0.05,
+          "height": 0.86
+        }
+      ],
+      "persistent_elements": [
+        "feature specimen strip",
+        "four feature rows"
+      ],
+      "temporary_elements": [
+        "angle-state change within each row"
+      ],
+      "dominant_visual_weight": "feature specimen and close-up states",
+      "simultaneous_focal_regions": 2,
+      "motion_state": "four bounded angle states represented as stills; timing not observed",
+      "source_specific_exclusions": [
+        "exact portrait",
+        "ornament",
+        "iridescent source pixels",
+        "numbering style"
+      ],
+      "shared_patterns": [
+        "SG01_OBJECT_DOMINANCE",
+        "SG02_BOUNDED_FEATURE_FOCUS",
+        "SG05_SHORT_KEY_ADJACENCY"
+      ],
+      "confidence": "high"
+    },
+    {
+      "trace_id": "T-O02",
+      "source_id": "O02",
+      "cohort": "official_educational",
+      "publisher": "日本銀行",
+      "evidence_class": "page_or_frame_observed",
+      "inspected_surface": "annotated note overview / 1．偽造防止技術",
+      "local_capture": "../reference_grounded_visual_design/local_reference_captures/O02_boj_annotated_note.png",
+      "primary_object_bounds": [
+        {
+          "x": 0.05,
+          "y": 0.08,
+          "width": 0.43,
+          "height": 0.82
+        },
+        {
+          "x": 0.53,
+          "y": 0.08,
+          "width": 0.43,
+          "height": 0.82
+        }
+      ],
+      "closeup_crop_bounds": [
+        {
+          "x": 0.09,
+          "y": 0.09,
+          "width": 0.39,
+          "height": 0.8
+        }
+      ],
+      "subtitle_bounds": [],
+      "character_nameplate_bounds": [],
+      "callout_bounds": [
+        {
+          "x": 0.07,
+          "y": 0.06,
+          "width": 0.42,
+          "height": 0.84
+        }
+      ],
+      "source_credit_bounds": [],
+      "title_key_term_bounds": [
+        {
+          "x": 0.04,
+          "y": 0.02,
+          "width": 0.09,
+          "height": 0.09
+        }
+      ],
+      "persistent_elements": [
+        "two object faces",
+        "numbered feature outlines"
+      ],
+      "temporary_elements": [
+        "feature magnification after overview"
+      ],
+      "dominant_visual_weight": "annotated source object",
+      "simultaneous_focal_regions": 2,
+      "motion_state": "paired stills; no timing claim",
+      "source_specific_exclusions": [
+        "exact note likeness",
+        "specimen marks",
+        "institutional color coding"
+      ],
+      "shared_patterns": [
+        "SG01_OBJECT_DOMINANCE",
+        "SG02_BOUNDED_FEATURE_FOCUS",
+        "SG05_SHORT_KEY_ADJACENCY"
+      ],
+      "confidence": "high"
+    },
+    {
+      "trace_id": "T-J03",
+      "source_id": "J03",
+      "cohort": "journalism_documentary",
+      "publisher": "毎日放送／TBS NEWS DIG",
+      "evidence_class": "page_or_frame_observed",
+      "inspected_surface": "studio explainer preview frame / presenter plus numbered three-point board",
+      "local_capture": "../reference_grounded_visual_design/local_reference_captures/J03_tbs_mbs.png",
+      "primary_object_bounds": [
+        {
+          "x": 0.28,
+          "y": 0.14,
+          "width": 0.69,
+          "height": 0.78
+        }
+      ],
+      "closeup_crop_bounds": [
+        {
+          "x": 0.35,
+          "y": 0.23,
+          "width": 0.22,
+          "height": 0.58
+        }
+      ],
+      "subtitle_bounds": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "width": 1.0,
+          "height": 0.12
+        }
+      ],
+      "character_nameplate_bounds": [
+        {
+          "x": 0.02,
+          "y": 0.24,
+          "width": 0.28,
+          "height": 0.7
+        }
+      ],
+      "callout_bounds": [
+        {
+          "x": 0.57,
+          "y": 0.2,
+          "width": 0.39,
+          "height": 0.61
+        }
+      ],
+      "source_credit_bounds": [
+        {
+          "x": 0.01,
+          "y": 0.02,
+          "width": 0.13,
+          "height": 0.08
+        }
+      ],
+      "title_key_term_bounds": [
+        {
+          "x": 0.59,
+          "y": 0.23,
+          "width": 0.36,
+          "height": 0.56
+        }
+      ],
+      "persistent_elements": [
+        "presenter edge",
+        "object board",
+        "broadcast title"
+      ],
+      "temporary_elements": [
+        "numbered topic emphasis"
+      ],
+      "dominant_visual_weight": "object board with presenter secondary",
+      "simultaneous_focal_regions": 2,
+      "motion_state": "preview still only; presenter and board persistence unknown",
+      "source_specific_exclusions": [
+        "presenter identity",
+        "studio set",
+        "broadcast logo",
+        "exact numbered copy"
+      ],
+      "shared_patterns": [
+        "SG02_BOUNDED_FEATURE_FOCUS",
+        "SG04_EDGE_SPEAKER_CUE",
+        "SG05_SHORT_KEY_ADJACENCY"
+      ],
+      "confidence": "medium_high"
+    },
+    {
+      "trace_id": "T-J05",
+      "source_id": "J05",
+      "cohort": "journalism_documentary",
+      "publisher": "FNNプライムオンライン／イット！",
+      "evidence_class": "page_or_frame_observed",
+      "inspected_surface": "broadcast opening frame / three object specimens plus lower-third",
+      "local_capture": "../reference_grounded_visual_design/local_reference_captures/J05_fnn.png",
+      "primary_object_bounds": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "width": 1.0,
+          "height": 0.78
+        }
+      ],
+      "closeup_crop_bounds": [],
+      "subtitle_bounds": [
+        {
+          "x": 0.06,
+          "y": 0.73,
+          "width": 0.89,
+          "height": 0.24
+        }
+      ],
+      "character_nameplate_bounds": [],
+      "callout_bounds": [],
+      "source_credit_bounds": [
+        {
+          "x": 0.92,
+          "y": 0.86,
+          "width": 0.06,
+          "height": 0.1
+        }
+      ],
+      "title_key_term_bounds": [
+        {
+          "x": 0.07,
+          "y": 0.76,
+          "width": 0.82,
+          "height": 0.18
+        }
+      ],
+      "persistent_elements": [
+        "full-frame object",
+        "two-line lower-third"
+      ],
+      "temporary_elements": [
+        "later feature close-ups, not traced from opening frame"
+      ],
+      "dominant_visual_weight": "full-frame object",
+      "simultaneous_focal_regions": 1,
+      "motion_state": "opening still; subsequent motion not inspected",
+      "source_specific_exclusions": [
+        "exact object pixels",
+        "publisher lower-third styling",
+        "logo"
+      ],
+      "shared_patterns": [
+        "SG01_OBJECT_DOMINANCE",
+        "SG03_BOTTOM_SUBTITLE_BAND"
+      ],
+      "confidence": "high"
+    },
+    {
+      "trace_id": "T-Y01",
+      "source_id": "Y01",
+      "cohort": "yukkuri_adjacent_explainer",
+      "publisher": "にゃんだもん",
+      "evidence_class": "in_video_frame_observed",
+      "inspected_surface": "00:30.003 decoded frame / ATM background and dialogue",
+      "local_capture": "../reference_grounded_visual_design/local_in_video_observations/Y01_t0030_cdp.png",
+      "primary_object_bounds": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "width": 1.0,
+          "height": 1.0
+        }
+      ],
+      "closeup_crop_bounds": [],
+      "subtitle_bounds": [
+        {
+          "x": 0.48,
+          "y": 0.55,
+          "width": 0.47,
+          "height": 0.25
+        }
+      ],
+      "character_nameplate_bounds": [
+        {
+          "x": 0.0,
+          "y": 0.23,
+          "width": 0.3,
+          "height": 0.77
+        },
+        {
+          "x": 0.7,
+          "y": 0.0,
+          "width": 0.3,
+          "height": 0.76
+        }
+      ],
+      "callout_bounds": [
+        {
+          "x": 0.48,
+          "y": 0.55,
+          "width": 0.47,
+          "height": 0.25
+        }
+      ],
+      "source_credit_bounds": [],
+      "title_key_term_bounds": [],
+      "persistent_elements": [
+        "object background in observed frame",
+        "two edge speakers"
+      ],
+      "temporary_elements": [
+        "dialogue bubble content"
+      ],
+      "dominant_visual_weight": "object environment with dialogue foreground",
+      "simultaneous_focal_regions": 2,
+      "motion_state": "single paused frame; persistence and alternation unknown",
+      "source_specific_exclusions": [
+        "character art",
+        "ATM image",
+        "bubble styling",
+        "creator colors"
+      ],
+      "shared_patterns": [
+        "SG03_BOTTOM_SUBTITLE_BAND",
+        "SG04_EDGE_SPEAKER_CUE"
+      ],
+      "confidence": "high_for_frame_only"
+    },
+    {
+      "trace_id": "T-Y02",
+      "source_id": "Y02",
+      "cohort": "yukkuri_adjacent_explainer",
+      "publisher": "グリム貨幣コレクション",
+      "evidence_class": "in_video_frame_observed",
+      "inspected_surface": "00:30.011 decoded frame / six-image object grid and lower subtitle",
+      "local_capture": "../reference_grounded_visual_design/local_in_video_observations/Y02_t0030_cdp.png",
+      "primary_object_bounds": [
+        {
+          "x": 0.2,
+          "y": 0.03,
+          "width": 0.62,
+          "height": 0.79
+        }
+      ],
+      "closeup_crop_bounds": [
+        {
+          "x": 0.2,
+          "y": 0.03,
+          "width": 0.62,
+          "height": 0.79
+        }
+      ],
+      "subtitle_bounds": [
+        {
+          "x": 0.24,
+          "y": 0.82,
+          "width": 0.58,
+          "height": 0.17
+        }
+      ],
+      "character_nameplate_bounds": [
+        {
+          "x": 0.0,
+          "y": 0.68,
+          "width": 0.23,
+          "height": 0.32
+        },
+        {
+          "x": 0.82,
+          "y": 0.69,
+          "width": 0.18,
+          "height": 0.31
+        }
+      ],
+      "callout_bounds": [],
+      "source_credit_bounds": [
+        {
+          "x": 0.21,
+          "y": 0.03,
+          "width": 0.59,
+          "height": 0.77
+        }
+      ],
+      "title_key_term_bounds": [],
+      "persistent_elements": [
+        "central object field",
+        "two lower-corner speakers"
+      ],
+      "temporary_elements": [
+        "two-line lower subtitle"
+      ],
+      "dominant_visual_weight": "central object grid",
+      "simultaneous_focal_regions": 1,
+      "motion_state": "single paused frame; persistence and frequency unknown",
+      "source_specific_exclusions": [
+        "source object collage",
+        "watermarks",
+        "character art",
+        "player controls"
+      ],
+      "shared_patterns": [
+        "SG01_OBJECT_DOMINANCE",
+        "SG03_BOTTOM_SUBTITLE_BAND",
+        "SG04_EDGE_SPEAKER_CUE"
+      ],
+      "confidence": "high_for_frame_only"
+    }
+  ],
+  "checks": {
+    "visual_wireframe_per_trace": true,
+    "actual_surface_per_trace": true,
+    "source_specific_branding_separated": true,
+    "minimum_two_per_cohort": true
+  }
+}
