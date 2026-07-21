@@ -1,9 +1,58 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-21 JST・reference layout reconstruction / human review ready）
+## 現在の別端末再開ハンドオフ（2026-07-21 JST・one-command internal-review video ready）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、
 現在の指示として読まない。
+
+- **取得先**: `origin/codex/nlmytgen-end-to-end-auto-video-v1`。pipeline implementationは
+  `e7ee831abe5fb4e51d39b1e4a7beda186ba2a8fa`。handoff commitはremote branch tipから解決する。
+- **現在の状態**: Project-State-IDは
+  `new-banknote-end-to-end-internal-review-video-ready-v1`、revisionは`2026-07-21.2`。
+  Product gateは`human-internal-review`で、machine implementation/validationは完了している。
+- **完成した経路**: manifest-locked preflight → silent isolated Chrome SVG-to-PNG →
+  non-destructive YMM4 project generation → bounded Windows UI Automation YMM4 render →
+  lossless fast-start remux → ISO-BMFF/ffprobe/full-decode validation → 12 frame extraction → receipts。
+- **content lock**: 18 protected input hashes、9 cue text/order、S1/S2/S3=`2/4/3`、
+  Reimu/Marisa=`3/6`、4415 framesを固定した。source project SHA-256は
+  `beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54`で、9 VoiceItemsは
+  generated projectでもobject-identical。cue 2/7/8だけはshared base visual identityを保ちながら
+  approved subtitleを正しく焼くdedicated tracked proxy SVGをmaterializeする。
+- **tracked portable authority**: `auto_video_pipeline/new_banknote_episode_manifest.json`、
+  `README_AUTO_VIDEO_PIPELINE.md`、`validated_run_receipt.json`、pipeline/CLI code、YMM4 UIA driver、
+  focused tests。validated receiptにはprivate absolute pathやmedia binaryを含めない。
+- **actual same-machine result**: ignored `auto_video_runs/new_banknote_internal_review_v1/`に
+  `generated_project.local.ymmp`（SHA-256
+  `f0361f4704adda2d87c342a9d281170ab3250fa9d9ea622a52bb3c8850019853`）と
+  `internal_review.mp4`（SHA-256
+  `f2444f9657a569e9a374582765c41a28e414040a018f029b0180f256657421f7`）を保持する。
+  MP4はH.264/AAC、1920×1080、60 fps、73.583008秒、93,375,804 bytes。
+- **validation**: media checksは全pass、全file decodeでsource hash不変、抽出12 framesは12 unique、
+  9 cueを目視してapproved subtitle、speaker label、frame内収まりを確認した。focused testsは
+  pipeline 8 passed + related 42 passed、UIA driver buildはwarning 0 / error 0。
+- **silent/process boundary**: speaker/preview playback、system volume変更、public media accessは0。
+  pre-existing YMM4 processを拒否し、project-owned processだけをcleanupする。
+- **別端末re-entry**: `git fetch --prune origin`後、上記remote branchをcheckoutし、
+  fast-forward限定で同期する。`HEAD...@{u}=0/0`とtracked cleanを確認後、`AGENTS.md` →
+  `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md` → この節の順に読む。
+- **portability requirement**: Gitだけでmanifest/code/tests/sanitized receiptまでは即再開できる。
+  ignored source `.local.ymmp`、MP4、frames、force-run archivesはpublic remoteへuploadしない。
+  別マシンでrender/review mediaが必要なら、manifestのexact repo-relative path/hashを満たすsource
+  projectとcompatible YMM4、Chrome、ffmpeg/ffprobe、`uv`、.NETを用意し、先にREADMEの
+  `--dry-run`を通す。同端末にvalidated MP4がある場合はhandoffだけのために再生成しない。
+- **保持したlocal residue**: `.playwright-mcp/`、`artifacts/`、
+  `phase-e-01-contact-acquired-inspect.png`、`phase-e-01-contact-acquired.png`はpre-existing untracked。
+  auto-video runと`.replaced-*.local` archiveはignored local evidenceとして保持しauthorityにしない。
+- **exact next action**: ローカルMP4の発音、リズム、cue切替、字幕comfort、proxy compositionを
+  human reviewerが確認し、`accept` / `repair` / `reject`をcue idと観測付きで返す。repair時だけ
+  manifest lockを維持して同run idを再生成し、receipt/hash/frame inspectionを更新する。
+- **未完了境界**: human creative/audio acceptance、production asset replacement、rights clearance、
+  production、publication、external upload、PR、master integration。machine passやbranch pushは
+  これらを承認しない。
+
+## 直前の別端末再開ハンドオフ（2026-07-21 JST・reference layout reconstruction / human review ready・履歴）
+
+以下は判断履歴であり、現在の指示として読まない。
 
 - **取得先**: `origin/codex/new-banknote-reference-layout-reconstruction-v1`。
   exact slice baseは`649ada5050be5b9b2153c50c938d855797d5c19f`。push後はcurrent branch tip、

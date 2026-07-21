@@ -1,13 +1,15 @@
 # NLMYTGen Project Cockpit
 
-Project-State-ID: new-banknote-reference-layout-reconstructed-human-review-ready-v1
-State-Revision: 2026-07-20.4
+Project-State-ID: new-banknote-end-to-end-internal-review-video-ready-v1
+State-Revision: 2026-07-21.2
 Updated: 2026-07-21 JST
-Product-State: new-banknote-reference-traced-production-frame-proof-ready
-Product-Gate: human-reference-layout-review
-Recommended-Next: review-reference-reconstructed-production-frame-proof
+Product-State: new-banknote-one-command-internal-review-video-ready
+Product-Gate: human-internal-review
+Recommended-Next: review-local-internal-review-mp4
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
+Handoff-Branch: codex/nlmytgen-end-to-end-auto-video-v1
+Pipeline-Implementation-Commit: e7ee831abe5fb4e51d39b1e4a7beda186ba2a8fa
 Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0 after handoff push
 Tracked-Worktree: clean after handoff commit; pre-existing untracked artifacts retained
@@ -19,37 +21,39 @@ Tracked-Worktree: clean after handoff commit; pre-existing untracked artifacts r
 
 ## いまの一文
 
-旧Lab proofと人間がAIテンプレ表現として却下したreference-grounded proofをbyte-exactな
-履歴として保持し、先に6参照レイアウトをトレースしてから、landing pageではない
-production-frame-oriented proofへ置換しました。次は人間によるreference-layout reviewです。
+承認済み新紙幣pilotを、manifestから実YMM4 project、実YMM4 render、検証済み内部レビュー
+MP4まで一コマンドで到達できる状態にしました。次はローカルMP4の人間レビューです。
 
 ## 判断に使える現在地
 
 | 対象 | 現在状態 | 境界 / 次の確認 |
 | --- | --- | --- |
-| Prior Lab proof | historical AI-original / tree unchanged | current authorityではない |
-| Prior reference proof | research-backed / AI-template presentation rejected / tree unchanged | rejected candidateの再reviewをしない |
-| Trace basis | official 2 / journalism 2 / Yukkuri-adjacent 2 | 6実画面、6publisher、16:9 geometry |
-| Shared grammar | 5 patterns threshold passed | 各3 references以上・2 cohorts以上 |
-| Current proof | 6 viewer + 6 annotation + cue coverage 9/9 | human layout acceptance pending |
-| Content | 8 hashes、9 cues、2/4/3 scenes、3/6 speakers exact | visual feedbackでsilent editしない |
-| Rights | tracked geometry only、capturesはignored research proxy | production asset/rights未確定 |
-| Silent policy | `NLMYTGEN_AUDIO_POLICY=silent`のみ | audible/public media/YMM4禁止 |
-| Downstream | Shot/Motion、Asset/Rights、YMM4、render、production、publication false | human gate前に進めない |
+| Pipeline | manifest → PNG → YMMP → YMM4 render → MP4 validation | implementation commit `e7ee831` |
+| Content | 18 locked inputs、9 cues、2/4/3 scenes、3/6 speakers exact | 9 VoiceItems object-identical |
+| Generated project | 1920×1080 / 60 fps / 4415 frames | SHA-256 `f0361f4704adda2d87c342a9d281170ab3250fa9d9ea622a52bb3c8850019853` |
+| Review MP4 | H.264/AAC / 73.583008 sec / 93,375,804 bytes | SHA-256 `f2444f9657a569e9a374582765c41a28e414040a018f029b0180f256657421f7` |
+| Validation | full decode、12 unique frames、9 cue visual inspection | 8 focused + 42 related tests passed |
+| Silent policy | `NLMYTGEN_AUDIO_POLICY=silent` | speaker/preview playbackなし、owned process cleanup済み |
+| Rights | tracked proxy geometryのみ | production asset/rights未確定 |
+| Downstream | human creative review、rights、production、publication false | machine proofだけでgateを開かない |
 
-Primary review surface:
-`production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_layout_reconstruction/reference_layout_proof.html`
+Primary review surface（ignored local artifact）:
+`production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_runs/new_banknote_internal_review_v1/internal_review.mp4`
 
 ## 次の入口
 
-上記HTMLのlarge viewerを先に確認し、必要時だけannotation toggleと構成判断の系譜を開きます。
-`reference_layout_review_sheet.md`の5問に対して、`accept`または
-scene/cue/decision-specific revisionを返します。machine validationは構造と内容不変を示しますが、
-最終美的判断やproduction rightsを承認しません。
+別端末では`origin/codex/nlmytgen-end-to-end-auto-video-v1`をfetchし、同branchへ
+fast-forward限定で同期します。`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
+`docs/runtime-state.md`を読み、必要時だけ`docs/project-context.md`最上部を参照します。
+
+MP4が同端末にある場合は再生成せず、発音、リズム、cue切替、字幕の読み心地、proxy構成を
+確認し、`accept` / `repair` / `reject`をcue id付きで返します。MP4やsource `.local.ymmp`は
+public Gitへ載せないsame-machine evidenceなので、別マシンで必要ならmanifest記載のexact path/hashを
+満たすsource projectとYMM4/Chrome/ffmpeg/uv/.NET環境を用意し、先に`--dry-run`を通します。
 
 ## 公開・実行境界
 
-このsliceでは既存ローカルcaptureのみを使い、public player、audio、YMM4、render、dependency
-install、external communication、production/publication、PR、master integration、full suiteを
-実行していません。pre-existing untracked artifacts、user process、Windows master volume、
-approved content、過去2 proof packageは変更していません。
+このsliceは内部レビュー用proxy evidenceです。公開upload、publication、rights承認、production、
+PR、master integrationは実施していません。tracked manifest/code/tests/sanitized receiptだけがGitで
+可搬です。ignored MP4/YMMP/frames/force-run archive、pre-existing untracked artifacts、
+Windows master volume、approved content、過去proof packageはpublic remoteへ送りません。

@@ -1,13 +1,15 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: new-banknote-end-to-end-internal-review-video-ready-v1
-State-Revision: 2026-07-21.1
+State-Revision: 2026-07-21.2
 Updated: 2026-07-21 JST
 Product-State: new-banknote-one-command-internal-review-video-ready
 Product-Gate: human-internal-review
 Recommended-Next: review-local-internal-review-mp4
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
+Handoff-Branch: codex/nlmytgen-end-to-end-auto-video-v1
+Pipeline-Implementation-Commit: e7ee831abe5fb4e51d39b1e4a7beda186ba2a8fa
 Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0 after handoff push
 Tracked-Worktree: clean after handoff commit; pre-existing untracked artifacts retained
@@ -68,6 +70,25 @@ as rights, production, or publication approval.
 - Main local outputs: `generated_project.local.ymmp`, `internal_review.mp4`,
   `media_validation.json`, `pipeline_run_receipt.json`, and
   `extracted_review_frames/`.
+
+## Cross-Terminal Re-entry
+
+- Fetch `origin/codex/nlmytgen-end-to-end-auto-video-v1`, check out that branch,
+  and use fast-forward-only synchronization. Confirm `HEAD...@{u}` is `0/0`
+  and the tracked worktree is clean before continuing.
+- Read only `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → this file for normal
+  restart. Read the current top section of `docs/project-context.md` when the
+  decision chain or local-artifact portability boundary is needed.
+- The tracked manifest, implementation, operator README, tests, and sanitized
+  validated receipt are portable through Git. The ignored source `.local.ymmp`,
+  rendered MP4, extracted frames, and force-run archives are same-machine local
+  evidence and are not uploaded to the public repository.
+- To regenerate on another machine, provide the source project at the manifest's
+  exact repo-relative path and SHA-256, then supply compatible YMM4, Chrome,
+  ffmpeg/ffprobe, `uv`, and .NET. Run the documented `--dry-run` before render.
+- If the local MP4 is available, do not regenerate merely for handoff. Human
+  review remains the first move; regeneration is for missing media or an approved
+  cue-specific repair.
 
 ## Active Boundaries
 
