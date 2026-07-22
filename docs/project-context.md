@@ -32,6 +32,22 @@ one-command internal-review video handoffを継承し、`Product-Gate` は
 - exact next actionは人間がsame-machine local MP4を通し視聴し、`accept`、`repair`、
   `reject`をcue idと観察付きで返すこと。回帰支援sliceの監修判断はdraft PRで行い、
   master merge、production、rights、publicationは別gateとする。
+- 2026-07-22 21:54 JSTの再開監査では、旧handoff branchを`7eaaef1`から`9ed7cdf`へ
+  fast-forwardした後、そこから4 commit直線的に進んだ本branch `6f12bbc`へ切り替えた。
+  upstream差分は`0/0`、`origin/master`に対して27 ahead / 0 behindである。
+- この端末ではPython 3.13.3 / uv 0.10.7 / pytest 8.4.2、Node 24.13.0 /
+  npm 11.6.2 / Electron 35.7.5、.NET 10.0.204、ffmpeg/ffprobe 8.0.1をreadbackした。
+  source YMM4、generated project、review MP4はexpected ignored pathに存在し、manifest/
+  receiptのSHA-256と一致する。focused 46 tests、state sync、compile、driver build、silent
+  dry-run、MP4 full decodeはpassした。音声再生と再renderは行っていない。
+- canonical regression runnerをevidence-rich checkoutで実行すると`135 passed / 11 failed /
+  16 errors / 4 skipped`になった。11 failuresはprivate HTML等のauthority混入、16 errorsは
+  ignored MP4/browser profileまでtemp copyしてdiskを枯渇させた結果で、runnerのGit差分保護は
+  passした。tracked-only linked worktreeでは`156 passed / 1 failed / 9 skipped`で、残る1件は
+  absolute pathを使う`git check-ignore`のlinked-worktree非互換だった。検証tempは回収済みで
+  C drive free spaceは38.62 GBへ戻り、main checkoutのtracked/untracked/cached diffは不変。
+- 最新の監修判断、同端末とclean-roomの差、長期goal案は
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-22.md`を読む。
 
 ## 現在の別端末再開ハンドオフ（2026-07-21 JST・one-command internal-review video ready）
 

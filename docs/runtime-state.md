@@ -1,7 +1,7 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: new-banknote-end-to-end-internal-review-video-ready-v1
-State-Revision: 2026-07-22.1
+State-Revision: 2026-07-22.2
 Updated: 2026-07-22 JST
 Product-State: new-banknote-one-command-internal-review-video-ready
 Product-Gate: human-internal-review
@@ -18,14 +18,23 @@ Tracked-Worktree: clean after handoff commit; pre-existing untracked artifacts r
 
 ## Current Slice
 
-- The support slice repaired the broad regression gate without changing the
-  product state, approved content, receipts, manifests, visual artifacts, or
-  tracked production pilots.
+- The support slice repaired the broad regression gate in its independent
+  clean-room without changing the product state, approved content, receipts,
+  manifests, visual artifacts, or tracked production pilots.
 - `scripts/check_regression_integrity.py` fixes the canonical 16-module
   selection and fails if Git status, worktree diff, or cached diff changes.
-- The final clean-room result is 166 collected, 157 passed, 9 exact-locator
+- The independent-checkout result is 166 collected, 157 passed, 9 exact-locator
   local-evidence skips, 0 failures, and 0 errors. Consecutive runs were
   classification-equivalent and workspace-integrity clean.
+- A same-machine audit with retained private evidence found that the runner is
+  not yet evidence-safe: 135 passed, 11 contract failures, 16 temp-copy disk
+  errors, and 4 skips. A tracked-only linked worktree reached 156 passed and 9
+  expected skips but failed one absolute-path `git check-ignore` assertion.
+  Both runs preserved Git status, worktree diff, and cached diff.
+- This checkout has the manifest-locked source YMM4 project, generated project,
+  and internal-review MP4 at the expected ignored paths with exact receipt
+  hashes. .NET 10.0.204 builds the render driver, the silent dry-run passes all
+  18 protected inputs, and a fresh full-file MP4 decode exits successfully.
 - The approved new-banknote pilot now has a concrete one-command path from its
   manifest and same-machine YMM4 source project through visual materialization,
   generated YMM4 project, actual YMM4 render, MP4 normalization, validation,
@@ -79,6 +88,8 @@ as rights, production, or publication approval.
 - Regression integrity runner: `scripts/check_regression_integrity.py`.
 - Full failure classification and handoff:
   `docs/verification/REGRESSION_INTEGRITY_2026-07-22.md`.
+- Latest sync, same-machine readiness, caveats, and long-range goals:
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-22.md`.
 - Local ignored outputs: `auto_video_runs/new_banknote_internal_review_v1/`.
 - Main local outputs: `generated_project.local.ymmp`, `internal_review.mp4`,
   `media_validation.json`, `pipeline_run_receipt.json`, and
@@ -96,6 +107,9 @@ as rights, production, or publication approval.
   `docs/verification/REGRESSION_INTEGRITY_2026-07-22.md`. On a clean room,
   nine skips are expected when their exact ignored/private locators are absent.
   The ignored `uv.lock` is not portable through Git and remains bounded debt.
+  Do not run the canonical gate in an evidence-rich checkout until its copy
+  fixtures exclude ignored media/browser profiles; a linked Git worktree also
+  needs the absolute-path `check-ignore` assertion repaired.
 - The tracked manifest, implementation, operator README, tests, and sanitized
   validated receipt are portable through Git. The ignored source `.local.ymmp`,
   rendered MP4, extracted frames, and force-run archives are same-machine local

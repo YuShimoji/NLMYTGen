@@ -1,7 +1,7 @@
 # NLMYTGen Project Cockpit
 
 Project-State-ID: new-banknote-end-to-end-internal-review-video-ready-v1
-State-Revision: 2026-07-22.1
+State-Revision: 2026-07-22.2
 Updated: 2026-07-22 JST
 Product-State: new-banknote-one-command-internal-review-video-ready
 Product-Gate: human-internal-review
@@ -34,7 +34,7 @@ MP4まで一コマンドで到達できる状態にしました。次はロー�
 | Content | 18 locked inputs、9 cues、2/4/3 scenes、3/6 speakers exact | 9 VoiceItems object-identical |
 | Generated project | 1920×1080 / 60 fps / 4415 frames | SHA-256 `f0361f4704adda2d87c342a9d281170ab3250fa9d9ea622a52bb3c8850019853` |
 | Review MP4 | H.264/AAC / 73.583008 sec / 93,375,804 bytes | SHA-256 `f2444f9657a569e9a374582765c41a28e414040a018f029b0180f256657421f7` |
-| Validation | full decode、12 unique frames、9 cue visual inspection | 8 focused + 42 related tests passed |
+| Validation | full decode、12 unique frames、9 cue visual inspection | focused 46 passed。独立clean-room回帰は157 passed / 9 skips、same-machine/worktree caveatあり |
 | Silent policy | `NLMYTGEN_AUDIO_POLICY=silent` | speaker/preview playbackなし、owned process cleanup済み |
 | Rights | tracked proxy geometryのみ | production asset/rights未確定 |
 | Downstream | human creative review、rights、production、publication false | machine proofだけでgateを開かない |
@@ -44,7 +44,7 @@ Primary review surface（ignored local artifact）:
 
 ## 次の入口
 
-別端末では`origin/codex/nlmytgen-end-to-end-auto-video-v1`をfetchし、同branchへ
+別端末では`origin/codex/nlmytgen-regression-integrity-v1`をfetchし、同branchへ
 fast-forward限定で同期します。`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
 `docs/runtime-state.md`を読み、必要時だけ`docs/project-context.md`最上部を参照します。
 
@@ -55,7 +55,8 @@ public Gitへ載せないsame-machine evidenceなので、別マシンで必要�
 
 ## 公開・実行境界
 
-このsliceは内部レビュー用proxy evidenceです。公開upload、publication、rights承認、production、
-PR、master integrationは実施していません。tracked manifest/code/tests/sanitized receiptだけがGitで
+このsliceは内部レビュー用proxy evidenceです。draft PR #2は回帰支援差分のreview-onlyで、
+公開upload、publication、rights承認、production、merge、master integrationは実施していません。
+tracked manifest/code/tests/sanitized receiptだけがGitで
 可搬です。ignored MP4/YMMP/frames/force-run archive、pre-existing untracked artifacts、
 Windows master volume、approved content、過去proof packageはpublic remoteへ送りません。
