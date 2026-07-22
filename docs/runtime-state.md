@@ -1,21 +1,30 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: new-banknote-end-to-end-internal-review-video-ready-v1
-State-Revision: 2026-07-21.2
-Updated: 2026-07-21 JST
+State-Revision: 2026-07-22.1
+Updated: 2026-07-22 JST
 Product-State: new-banknote-one-command-internal-review-video-ready
 Product-Gate: human-internal-review
 Recommended-Next: review-local-internal-review-mp4
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
-Handoff-Branch: codex/nlmytgen-end-to-end-auto-video-v1
+Handoff-Branch: codex/nlmytgen-regression-integrity-v1
 Pipeline-Implementation-Commit: e7ee831abe5fb4e51d39b1e4a7beda186ba2a8fa
+Regression-Integrity-Implementation-Commit: f34f79f93fcc2db1cbc779e960bf1ed318f38048
 Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0 after handoff push
 Tracked-Worktree: clean after handoff commit; pre-existing untracked artifacts retained
 
 ## Current Slice
 
+- The support slice repaired the broad regression gate without changing the
+  product state, approved content, receipts, manifests, visual artifacts, or
+  tracked production pilots.
+- `scripts/check_regression_integrity.py` fixes the canonical 16-module
+  selection and fails if Git status, worktree diff, or cached diff changes.
+- The final clean-room result is 166 collected, 157 passed, 9 exact-locator
+  local-evidence skips, 0 failures, and 0 errors. Consecutive runs were
+  classification-equivalent and workspace-integrity clean.
 - The approved new-banknote pilot now has a concrete one-command path from its
   manifest and same-machine YMM4 source project through visual materialization,
   generated YMM4 project, actual YMM4 render, MP4 normalization, validation,
@@ -66,6 +75,9 @@ as rights, production, or publication approval.
 - Sanitized tracked evidence:
   `auto_video_pipeline/validated_run_receipt.json`.
 - Focused contract tests: `tests/test_episode_video_pipeline.py`.
+- Regression integrity runner: `scripts/check_regression_integrity.py`.
+- Full failure classification and handoff:
+  `docs/verification/REGRESSION_INTEGRITY_2026-07-22.md`.
 - Local ignored outputs: `auto_video_runs/new_banknote_internal_review_v1/`.
 - Main local outputs: `generated_project.local.ymmp`, `internal_review.mp4`,
   `media_validation.json`, `pipeline_run_receipt.json`, and
@@ -73,12 +85,16 @@ as rights, production, or publication approval.
 
 ## Cross-Terminal Re-entry
 
-- Fetch `origin/codex/nlmytgen-end-to-end-auto-video-v1`, check out that branch,
+- Fetch `origin/codex/nlmytgen-regression-integrity-v1`, check out that branch,
   and use fast-forward-only synchronization. Confirm `HEAD...@{u}` is `0/0`
   and the tracked worktree is clean before continuing.
 - Read only `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → this file for normal
   restart. Read the current top section of `docs/project-context.md` when the
   decision chain or local-artifact portability boundary is needed.
+- Before changing the integrity gate, read
+  `docs/verification/REGRESSION_INTEGRITY_2026-07-22.md`. On a clean room,
+  nine skips are expected when their exact ignored/private locators are absent.
+  The ignored `uv.lock` is not portable through Git and remains bounded debt.
 - The tracked manifest, implementation, operator README, tests, and sanitized
   validated receipt are portable through Git. The ignored source `.local.ymmp`,
   rendered MP4, extracted frames, and force-run archives are same-machine local
@@ -95,8 +111,8 @@ as rights, production, or publication approval.
 - Human creative acceptance is pending.
 - Rights clearance and production asset replacement are unresolved.
 - The output is not authorized for public or external upload.
-- No PR, master update, publication, release, external communication, or remote
-  media access occurred.
+- The handoff draft PR is review-only. No master update, merge, publication,
+  release, remote media access, or product-gate advancement occurred.
 - Superseded local force-run archives are retained as ignored `.replaced-*.local`
   directories and are not authority.
 

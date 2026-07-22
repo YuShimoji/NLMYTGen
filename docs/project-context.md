@@ -1,5 +1,36 @@
 # Project Context — NLMYTGen
 
+## 現在の別端末再開ハンドオフ（2026-07-22 JST・regression integrity clean-room）
+
+この節だけが現在の回帰整合性支援sliceの再開地点である。製品判断は下の
+one-command internal-review video handoffを継承し、`Product-Gate` は
+`human-internal-review` のまま変えていない。
+
+- 取得先は `origin/codex/nlmytgen-regression-integrity-v1`。exact base は
+  `9ed7cdf676cc0f9a9745350635bd29686639a963`、回帰整合性実装commitは
+  `f34f79f93fcc2db1cbc779e960bf1ed318f38048`、handoff commitはremote branch tipから解決する。
+- 監修ログ指定の16モジュールはbaselineで `160 collected / 121 passed /
+  4 skipped / 35 failed`。修正後は `166 collected / 157 passed /
+  9 skipped / 0 failed / 0 errors`。連続二回とcommit後clean checkoutで同じ分類になり、
+  status、worktree diff、cached diffは全て実行前後不変だった。
+- 修正は、生成済みreview HTMLとsource bodyの分離、YMM4 resultの既知追加check互換、
+  generatorのtemp-copy隔離、historical receiptのrevision固定、ignored/private evidenceの
+  exact-locator marker化、canonical runner追加に限定した。
+- protectedな`production_pilots`全体、承認済みcontent、receipt、manifest、visual artifact、
+  `runtime-state`以外の主要状態文書は回帰実装baseから変更していない。今回のhandoff更新は
+  再開導線と判断履歴だけで、製品artifactを変更しない。
+- 詳細な35 node分類、9 skipの全locator、lock portability、検証commandと次の選択肢は
+  `docs/verification/REGRESSION_INTEGRITY_2026-07-22.md` を正本とする。
+- 別端末ではfetch後にこのbranchをcheckoutしてfast-forward-onlyで同期し、
+  `HEAD...@{u}=0/0`とclean statusを確認する。通常は`AGENTS.md`、
+  `docs/REPO_LOCAL_RULES.md`、`docs/runtime-state.md`の順に読み、回帰gateを触る場合だけ
+  上記verification reportを追加で読む。
+- ignored/private evidenceとlocal MP4はpublic remoteへ含めない。証跡なしclean-roomの
+  9 skipは期待値であり、人間の代表MP4内部視聴を機械検証で代替しない。
+- exact next actionは人間がsame-machine local MP4を通し視聴し、`accept`、`repair`、
+  `reject`をcue idと観察付きで返すこと。回帰支援sliceの監修判断はdraft PRで行い、
+  master merge、production、rights、publicationは別gateとする。
+
 ## 現在の別端末再開ハンドオフ（2026-07-21 JST・one-command internal-review video ready）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、

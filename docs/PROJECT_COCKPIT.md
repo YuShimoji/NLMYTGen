@@ -1,15 +1,16 @@
 # NLMYTGen Project Cockpit
 
 Project-State-ID: new-banknote-end-to-end-internal-review-video-ready-v1
-State-Revision: 2026-07-21.2
-Updated: 2026-07-21 JST
+State-Revision: 2026-07-22.1
+Updated: 2026-07-22 JST
 Product-State: new-banknote-one-command-internal-review-video-ready
 Product-Gate: human-internal-review
 Recommended-Next: review-local-internal-review-mp4
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
-Handoff-Branch: codex/nlmytgen-end-to-end-auto-video-v1
+Handoff-Branch: codex/nlmytgen-regression-integrity-v1
 Pipeline-Implementation-Commit: e7ee831abe5fb4e51d39b1e4a7beda186ba2a8fa
+Regression-Integrity-Implementation-Commit: f34f79f93fcc2db1cbc779e960bf1ed318f38048
 Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0 after handoff push
 Tracked-Worktree: clean after handoff commit; pre-existing untracked artifacts retained
