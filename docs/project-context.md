@@ -8,7 +8,9 @@ one-command internal-review video handoffを継承し、`Product-Gate` は
 
 - 取得先は `origin/codex/nlmytgen-regression-integrity-v1`。exact base は
   `9ed7cdf676cc0f9a9745350635bd29686639a963`、回帰整合性実装commitは
-  `f34f79f93fcc2db1cbc779e960bf1ed318f38048`、handoff commitはremote branch tipから解決する。
+  `f34f79f93fcc2db1cbc779e960bf1ed318f38048`。draft PRは
+  `https://github.com/YuShimoji/NLMYTGen/pull/2`、baseは
+  `codex/nlmytgen-end-to-end-auto-video-v1`。handoff commitはremote branch tipから解決する。
 - 監修ログ指定の16モジュールはbaselineで `160 collected / 121 passed /
   4 skipped / 35 failed`。修正後は `166 collected / 157 passed /
   9 skipped / 0 failed / 0 errors`。連続二回とcommit後clean checkoutで同じ分類になり、

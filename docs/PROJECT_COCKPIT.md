@@ -9,6 +9,7 @@ Recommended-Next: review-local-internal-review-mp4
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-regression-integrity-v1
+Handoff-PR: https://github.com/YuShimoji/NLMYTGen/pull/2
 Pipeline-Implementation-Commit: e7ee831abe5fb4e51d39b1e4a7beda186ba2a8fa
 Regression-Integrity-Implementation-Commit: f34f79f93fcc2db1cbc779e960bf1ed318f38048
 Handoff-Commit: resolved-by-current-branch-tip
