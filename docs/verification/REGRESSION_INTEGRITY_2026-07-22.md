@@ -14,10 +14,20 @@ YMM4、ブラウザ、音声、ネットワーク、.NET、外部サービスは
 | exact base | `9ed7cdf676cc0f9a9745350635bd29686639a963` | 開始時の branch tip と remote tip が一致していた |
 | 環境再現 | `uv sync --extra dev --locked` 成功 | pytest を lock 解決済み環境で実行した |
 | lock の由来 | main checkout にだけ存在した ignored `uv.lock` を同一バイトで隔離先へコピー | SHA-256 `40e64f793775f0b0181f5ba8972c17842717dbe14bc8c0a6c0cabd14442435d0`。lock は未追跡のため、新規 clean-room 単独再現には既知の不足が残る |
-| 外部効果 | push / PR / merge / message / upload なし | 監修前に remote や他者の作業面を動かしていない |
+| 支援実装時点の外部効果 | push / PR / merge / message / upload なし | 実装commit `f34f79f93fcc2db1cbc779e960bf1ed318f38048` の監修前にはremoteや他者の作業面を動かしていない |
 
 上表の lock hash は大文字小文字を区別しない SHA-256 表記であり、実測値は
 `40E64F793775F0B0181F5BA8972C17842717DBE14BC8C0A6C0CABD14442435D0` である。
+
+## Remote handoff追補
+
+支援実装後、ユーザーの明示依頼により
+`codex/nlmytgen-regression-integrity-v1` をoriginへpushし、
+`codex/nlmytgen-end-to-end-auto-video-v1` をbaseとするdraft PR
+`https://github.com/YuShimoji/NLMYTGen/pull/2` を作成した。handoff branch、PR、
+再開順序は`docs/runtime-state.md`、判断履歴は`docs/project-context.md`の先頭節に保持する。
+private evidence、local MP4、ignored `uv.lock`はpushしておらず、merge、master更新、
+製品gateの前進も行っていない。
 
 ## baseline で再現した35失敗
 
