@@ -40,6 +40,10 @@
   別マシンでrender/review mediaが必要なら、manifestのexact repo-relative path/hashを満たすsource
   projectとcompatible YMM4、Chrome、ffmpeg/ffprobe、`uv`、.NETを用意し、先にREADMEの
   `--dry-run`を通す。同端末にvalidated MP4がある場合はhandoffだけのために再生成しない。
+- **2026-07-22別端末readiness**: 最新remote tipへの同期、locked dependency再導入、focused
+  46 testsとstate syncはpassした。現在端末にはsource `.local.ymmp`とreview MP4がなく、.NETは
+  9系のみのため再renderは未成立。監修判断、検証詳細、長期goal案は
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-22.md`を参照する。
 - **保持したlocal residue**: `.playwright-mcp/`、`artifacts/`、
   `phase-e-01-contact-acquired-inspect.png`、`phase-e-01-contact-acquired.png`はpre-existing untracked。
   auto-video runと`.replaced-*.local` archiveはignored local evidenceとして保持しauthorityにしない。
