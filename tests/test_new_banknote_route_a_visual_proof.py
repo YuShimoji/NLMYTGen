@@ -3,10 +3,13 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import shutil
 import subprocess
 from html.parser import HTMLParser
 from pathlib import Path
 from xml.etree import ElementTree
+
+import pytest
 
 from src.pipeline.new_banknote_route_a_visual_proof import (
     APPROVED_SUBTITLE_LINES_BY_CUE,
@@ -34,6 +37,11 @@ PROOF = PILOT / "route_a_visual_proof"
 KEYFRAMES = PROOF / "keyframes"
 VIEWER_KEYFRAMES = PROOF / "viewer_keyframes"
 EXPECTED_STATE = "new-banknote-route-a-dual-surface-visual-proof-human-review-ready-v1"
+HISTORICAL_STATE_REVISION = "8d7fd5a19b392dd4869fa71536b7fe9f7fe3c028"
+INTEGRATION_MANIFEST = (
+    ROOT
+    / "docs/verification/new_banknote_successor_selective_integration_manifest.json"
+)
 
 
 def _load(path: Path) -> dict:
@@ -57,6 +65,28 @@ def _current_blob(path: Path) -> str:
     return subprocess.check_output(
         ["git", "hash-object", "--", str(path)], cwd=ROOT, text=True
     ).strip()
+
+
+def _git_text(revision: str, relative: str) -> str:
+    return subprocess.check_output(
+        ["git", "show", f"{revision}:{relative}"],
+        cwd=ROOT,
+        text=True,
+        encoding="utf-8",
+    )
+
+
+def _file_hashes(root: Path) -> dict[str, str]:
+    return {
+        path.relative_to(root).as_posix(): _sha(path)
+        for path in sorted(root.rglob("*"))
+        if path.is_file()
+    }
+
+
+def _ignored_local_evidence_locators() -> tuple[str, ...]:
+    manifest = _load(INTEGRATION_MANIFEST)
+    return tuple(row["path"] for row in manifest["ignored_local_evidence"]["artifacts"])
 
 
 def _all_keys(value: object) -> set[str]:
@@ -376,10 +406,14 @@ def test_approved_content_original_proposal_and_ignored_evidence_are_unchanged()
         path = ROOT / row["path"]
         assert _sha(path) == row["sha256"]
         assert _current_blob(path) == _git_blob(BASE_REVISION, path)
-    integration_manifest = _load(
-        ROOT
-        / "docs/verification/new_banknote_successor_selective_integration_manifest.json"
-    )
+
+
+@pytest.mark.requires_local_evidence(
+    "historical_yymm4_import_evidence",
+    *_ignored_local_evidence_locators(),
+)
+def test_ignored_yymm4_evidence_matches_historical_integration_receipt() -> None:
+    integration_manifest = _load(INTEGRATION_MANIFEST)
     ignored = integration_manifest["ignored_local_evidence"]
     assert ignored["file_count"] == 3
     for row in ignored["artifacts"]:
@@ -393,15 +427,26 @@ def test_approved_content_original_proposal_and_ignored_evidence_are_unchanged()
         ).returncode == 0
 
 
-def test_generation_is_deterministic_and_state_is_review_ready() -> None:
-    first = build_route_a_visual_proof(root=ROOT)
-    second = build_route_a_visual_proof(root=ROOT)
+def test_generation_is_deterministic_and_state_is_review_ready(
+    tmp_path: Path,
+) -> None:
+    isolated_root = tmp_path / "repo"
+    isolated_pilot = isolated_root / PILOT.relative_to(ROOT)
+    shutil.copytree(
+        PILOT,
+        isolated_pilot,
+        ignore=shutil.ignore_patterns("local_outputs"),
+    )
+    isolated_proof = isolated_root / PROOF.relative_to(ROOT)
+    first = build_route_a_visual_proof(root=isolated_root)
+    first_hashes = _file_hashes(isolated_proof)
+    second = build_route_a_visual_proof(root=isolated_root)
     assert first["status"] == "passed"
     assert second["status"] == "passed"
-    assert first["changed"] == []
     assert second["changed"] == []
-    runtime = (ROOT / "docs/runtime-state.md").read_text(encoding="utf-8")
-    cockpit = (ROOT / "docs/PROJECT_COCKPIT.md").read_text(encoding="utf-8")
+    assert _file_hashes(isolated_proof) == first_hashes
+    runtime = _git_text(HISTORICAL_STATE_REVISION, "docs/runtime-state.md")
+    cockpit = _git_text(HISTORICAL_STATE_REVISION, "docs/PROJECT_COCKPIT.md")
     for text in (runtime, cockpit):
         assert f"Project-State-ID: {EXPECTED_STATE}" in text
         assert "Product-State: new-banknote-route-a-viewer-and-annotation-proof-ready" in text

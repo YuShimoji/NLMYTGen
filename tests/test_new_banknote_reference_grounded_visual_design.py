@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import shutil
 import subprocess
 from html.parser import HTMLParser
 from pathlib import Path
@@ -25,6 +26,7 @@ PILOT = ROOT / (
 OUTPUT = PILOT / "reference_grounded_visual_design"
 OLD_PROOF = PILOT / "route_a_visual_proof"
 EXPECTED_STATE = "nlmytgen-silent-execution-guarded-reference-proof-human-review-ready-v1"
+HISTORICAL_STATE_REVISION = "649ada5050be5b9b2153c50c938d855797d5c19f"
 
 
 def _load(path: Path) -> dict:
@@ -47,6 +49,23 @@ def _visible_svg_text(path: Path) -> str:
 
 def _git(*args: str) -> str:
     return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
+
+
+def _git_text(revision: str, relative: str) -> str:
+    return subprocess.check_output(
+        ["git", "show", f"{revision}:{relative}"],
+        cwd=ROOT,
+        text=True,
+        encoding="utf-8",
+    )
+
+
+def _file_hashes(root: Path) -> dict[str, str]:
+    return {
+        path.relative_to(root).as_posix(): _sha(path)
+        for path in sorted(root.rglob("*"))
+        if path.is_file()
+    }
 
 
 class _OfflineParser(HTMLParser):
@@ -340,7 +359,9 @@ def test_local_research_media_are_ignored_and_absent_from_tracked_proof() -> Non
     assert all(not private.search(path.read_text(encoding="utf-8")) for path in tracked_surface)
 
 
-def test_machine_outputs_parse_readback_passes_and_generation_is_deterministic() -> None:
+def test_machine_outputs_parse_readback_passes_and_generation_is_deterministic(
+    tmp_path: Path,
+) -> None:
     for path in OUTPUT.glob("*.json"):
         _load(path)
     for path in [
@@ -355,13 +376,33 @@ def test_machine_outputs_parse_readback_passes_and_generation_is_deterministic()
     assert readback["status"] == "passed"
     assert readback["checks"]["all_passed"] is True
     assert readback["output_inspection"]["repair_cycles"] == 1
-    assert build_reference_grounded_visual_design(root=ROOT)["changed"] == []
+    isolated_root = tmp_path / "repo"
+    isolated_pilot = isolated_root / PILOT.relative_to(ROOT)
+    shutil.copytree(
+        PILOT,
+        isolated_pilot,
+        ignore=shutil.ignore_patterns(
+            "local_outputs",
+            "local_reference_cache",
+            "local_reference_captures",
+            "local_in_video_observations",
+            "local_render_inspection",
+        ),
+    )
+    isolated_output = isolated_root / OUTPUT.relative_to(ROOT)
+    first = build_reference_grounded_visual_design(root=isolated_root)
+    first_hashes = _file_hashes(isolated_output)
+    second = build_reference_grounded_visual_design(root=isolated_root)
+    assert first["status"] == "passed"
+    assert second["status"] == "passed"
+    assert second["changed"] == []
+    assert _file_hashes(isolated_output) == first_hashes
 
 
 def test_state_docs_point_to_the_reference_grounded_human_gate() -> None:
-    runtime = (ROOT / "docs/runtime-state.md").read_text(encoding="utf-8")
-    cockpit = (ROOT / "docs/PROJECT_COCKPIT.md").read_text(encoding="utf-8")
-    registry = (ROOT / "docs/THREAD_REGISTRY.md").read_text(encoding="utf-8")
+    runtime = _git_text(HISTORICAL_STATE_REVISION, "docs/runtime-state.md")
+    cockpit = _git_text(HISTORICAL_STATE_REVISION, "docs/PROJECT_COCKPIT.md")
+    registry = _git_text(HISTORICAL_STATE_REVISION, "docs/THREAD_REGISTRY.md")
     assert f"Project-State-ID: {EXPECTED_STATE}" in runtime
     assert f"Project-State-ID: {EXPECTED_STATE}" in cockpit
     assert "new-banknote-reference-grounded-visual-redesign-v1" in registry

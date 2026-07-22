@@ -3,10 +3,13 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import posixpath
 import re
 import subprocess
 from html.parser import HTMLParser
 from pathlib import Path
+
+import pytest
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +22,7 @@ MANIFEST = (
     REPO_ROOT
     / "docs/verification/new_banknote_successor_selective_integration_manifest.json"
 )
+HISTORICAL_INTEGRATION_REVISION = "d38075b97efabc99d1a23e8e0afafd5d44f1e2de"
 EXPECTED_REFS = {
     "primary": "5e50ff707806724e67a5e0cec215bdd3b604ce32",
     "candidate": "833717f63713db9555f563a2a26285fa2f621e3d",
@@ -48,12 +52,40 @@ def _load(path: Path) -> dict:
     return payload
 
 
-def _git_blob(path: Path) -> str:
-    return subprocess.check_output(
-        ["git", "hash-object", "--", str(path)],
+def _git_blob_at(revision: str, relative: str) -> str | None:
+    result = subprocess.run(
+        ["git", "rev-parse", "--verify", f"{revision}:{relative}"],
         cwd=REPO_ROOT,
         text=True,
-    ).strip()
+        capture_output=True,
+        check=False,
+    )
+    return result.stdout.strip() if result.returncode == 0 else None
+
+
+def _git_bytes_at(revision: str, relative: str) -> bytes:
+    blob = _git_blob_at(revision, relative)
+    if blob is None:
+        raise AssertionError(f"missing historical path: {revision}:{relative}")
+    return subprocess.check_output(
+        ["git", "cat-file", "blob", blob],
+        cwd=REPO_ROOT,
+    )
+
+
+def _git_text_at(revision: str, relative: str) -> str:
+    return _git_bytes_at(revision, relative).decode("utf-8")
+
+
+def _load_historical(relative: str) -> dict:
+    payload = json.loads(_git_text_at(HISTORICAL_INTEGRATION_REVISION, relative))
+    assert isinstance(payload, dict)
+    return payload
+
+
+def _ignored_local_evidence_locators() -> tuple[str, ...]:
+    manifest = _load(MANIFEST)
+    return tuple(row["path"] for row in manifest["ignored_local_evidence"]["artifacts"])
 
 
 def _all_keys(value: object) -> set[str]:
@@ -101,9 +133,10 @@ def test_exact_partition_hashes_and_exclusions_are_accounted_for() -> None:
     assert len(paths) == len(set(paths)) == 51
     for category in categories[:3]:
         for row in category:
-            path = REPO_ROOT / row["path"]
-            assert path.is_file()
-            assert _git_blob(path) == row["successor_git_blob"]
+            assert (
+                _git_blob_at(HISTORICAL_INTEGRATION_REVISION, row["path"])
+                == row["successor_git_blob"]
+            )
     assert {
         row["path"] for row in manifest["adapted_candidate_paths"]
     } == {
@@ -115,11 +148,13 @@ def test_exact_partition_hashes_and_exclusions_are_accounted_for() -> None:
         for row in manifest["excluded_candidate_paths"]
     )
     for row in manifest["excluded_candidate_paths"]:
-        path = REPO_ROOT / row["path"]
+        historical_blob = _git_blob_at(
+            HISTORICAL_INTEGRATION_REVISION, row["path"]
+        )
         if row["successor_git_blob"] is None:
-            assert not path.exists()
+            assert historical_blob is None
         else:
-            assert _git_blob(path) == row["successor_git_blob"]
+            assert historical_blob == row["successor_git_blob"]
             assert row["candidate_git_blob"] != row["successor_git_blob"]
     protected = manifest["protected_primary"]
     assert protected["artifact_count"] == 31
@@ -127,7 +162,10 @@ def test_exact_partition_hashes_and_exclusions_are_accounted_for() -> None:
     for row in protected["artifacts"]:
         assert row["exact"] is True
         assert row["primary_git_blob"] == row["successor_git_blob"]
-        assert _git_blob(REPO_ROOT / row["path"]) == row["successor_git_blob"]
+        assert (
+            _git_blob_at(HISTORICAL_INTEGRATION_REVISION, row["path"])
+            == row["successor_git_blob"]
+        )
 
 
 def test_primary_authority_historical_yymm4_and_visual_status_are_unified() -> None:
@@ -177,7 +215,7 @@ def test_primary_authority_historical_yymm4_and_visual_status_are_unified() -> N
 def test_integrated_json_html_privacy_and_local_binary_boundaries() -> None:
     manifest = _load(MANIFEST)
     paths = {
-        REPO_ROOT / row["path"]
+        row["path"]
         for key in (
             "accepted_candidate_paths",
             "historical_candidate_paths",
@@ -185,42 +223,46 @@ def test_integrated_json_html_privacy_and_local_binary_boundaries() -> None:
         )
         for row in manifest[key]
     }
-    paths.add(MANIFEST)
     paths.add(
-        REPO_ROOT
-        / "docs/verification/new_banknote_successor_selective_integration_receipt.json"
+        "docs/verification/new_banknote_successor_selective_integration_manifest.json"
     )
     paths.add(
-        REPO_ROOT
-        / "docs/verification/NEW_BANKNOTE_SUCCESSOR_SELECTIVE_INTEGRATION.md"
+        "docs/verification/new_banknote_successor_selective_integration_receipt.json"
     )
-    payloads = [_load(path) for path in paths if path.suffix == ".json"]
+    paths.add("docs/verification/NEW_BANKNOTE_SUCCESSOR_SELECTIVE_INTEGRATION.md")
+    payloads = [
+        _load_historical(path) for path in paths if Path(path).suffix == ".json"
+    ]
     assert not (_BANNED_BODY_KEYS & set().union(*map(_all_keys, payloads)))
     privacy_paths = {
         path
         for path in paths
-        if path.suffix != ".py" and path != REPO_ROOT / "docs/project-context.md"
+        if Path(path).suffix != ".py" and path != "docs/project-context.md"
     }
     current_context = (
-        (REPO_ROOT / "docs/project-context.md")
-        .read_text(encoding="utf-8")
+        _git_text_at(HISTORICAL_INTEGRATION_REVISION, "docs/project-context.md")
         .split("## 直前の別端末再開ハンドオフ", 1)[0]
     )
     combined = current_context + "\n" + "\n".join(
-        path.read_text(encoding="utf-8", errors="replace")
+        _git_bytes_at(HISTORICAL_INTEGRATION_REVISION, path).decode(
+            "utf-8", errors="replace"
+        )
         for path in privacy_paths
-        if path.suffix in {".json", ".md", ".html"}
+        if Path(path).suffix in {".json", ".md", ".html"}
     )
     assert _PRIVATE_PATH_RE.search(combined) is None
     assert _UUID_RE.search(combined) is None
     assert "notebooklm.google.com" not in combined.lower()
-    board = PILOT / "visual_scene_decision/visual_direction_board.html"
+    board = (
+        PILOT / "visual_scene_decision/visual_direction_board.html"
+    ).relative_to(REPO_ROOT).as_posix()
     parser = _BoardParser()
-    parser.feed(board.read_text(encoding="utf-8"))
+    parser.feed(_git_text_at(HISTORICAL_INTEGRATION_REVISION, board))
     assert parser.hrefs
     for href in parser.hrefs:
         assert not href.startswith(("http://", "https://", "file://", "/"))
-        assert (board.parent / href).resolve().is_file()
+        target = posixpath.normpath(f"{posixpath.dirname(board)}/{href}")
+        assert _git_blob_at(HISTORICAL_INTEGRATION_REVISION, target) is not None
     tracked = subprocess.check_output(
         ["git", "ls-files", "--", str(PILOT / "local_outputs")],
         cwd=REPO_ROOT,
@@ -231,6 +273,15 @@ def test_integrated_json_html_privacy_and_local_binary_boundaries() -> None:
     assert ignored["file_count"] == 3
     assert ignored["all_unchanged"] is True
     assert ignored["all_ignored"] is True
+
+
+@pytest.mark.requires_local_evidence(
+    "historical_yymm4_import_evidence",
+    *_ignored_local_evidence_locators(),
+)
+def test_ignored_local_evidence_matches_historical_integration_receipt() -> None:
+    manifest = _load(MANIFEST)
+    ignored = manifest["ignored_local_evidence"]
     for row in ignored["artifacts"]:
         path = REPO_ROOT / row["path"]
         assert path.stat().st_size == row["before"]["size"]

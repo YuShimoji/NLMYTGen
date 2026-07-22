@@ -311,9 +311,9 @@ def test_reconciliation_readback_backlog_and_derived_exclusion(
     assert derived["excluded_sources"][0]["factual_authority_use"] is False
 
 
-@pytest.mark.skipif(
-    not LOCAL_LINE_MAP.exists(),
-    reason="canonical lexical topic input is intentionally ignored local evidence",
+@pytest.mark.requires_local_evidence(
+    "notebooklm_lexical_topic_line_map",
+    LOCAL_LINE_MAP.relative_to(REPO_ROOT).as_posix(),
 )
 def test_generation_is_deterministic_and_cli_validates(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
@@ -351,9 +351,9 @@ def test_generation_is_deterministic_and_cli_validates(
     )
 
 
-@pytest.mark.skipif(
-    not LOCAL_LINE_MAP.exists(),
-    reason="canonical lexical topic input is intentionally ignored local evidence",
+@pytest.mark.requires_local_evidence(
+    "notebooklm_lexical_topic_line_map",
+    LOCAL_LINE_MAP.relative_to(REPO_ROOT).as_posix(),
 )
 def test_tracked_package_matches_fresh_canonical_generation(tmp_path: Path) -> None:
     fresh = tmp_path / "fresh"
@@ -368,9 +368,9 @@ def test_tracked_package_matches_fresh_canonical_generation(tmp_path: Path) -> N
     assert _tree_hashes(PACKAGE) == _tree_hashes(fresh)
 
 
-@pytest.mark.skipif(
-    not LOCAL_LINE_MAP.exists(),
-    reason="canonical lexical topic input is intentionally ignored local evidence",
+@pytest.mark.requires_local_evidence(
+    "notebooklm_lexical_topic_line_map",
+    LOCAL_LINE_MAP.relative_to(REPO_ROOT).as_posix(),
 )
 def test_local_line_map_text_fingerprint_is_recomputed(
     tmp_path: Path,

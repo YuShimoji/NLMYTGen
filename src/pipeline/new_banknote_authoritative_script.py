@@ -135,6 +135,18 @@ SCRIPT_RECEIPT_FILES = (
     "source_to_script_manifest.json",
 )
 
+# These directories contain generated review/output surfaces, not captured
+# source bodies. Unexpected PDF/HTML files anywhere else in the package still
+# fail the source-body boundary.
+DERIVED_DOCUMENT_ROOTS = frozenset(
+    {
+        "visual_scene_decision",
+        "route_a_visual_proof",
+        "reference_grounded_visual_design",
+        "reference_layout_reconstruction",
+    }
+)
+
 
 def _source(
     source_id: str,
@@ -1300,6 +1312,7 @@ def validate_new_banknote_authoritative_script_package(
     ]
     checks["no_source_bodies"] = not any(
         path.suffix.lower() in {".pdf", ".html", ".htm"}
+        and path.relative_to(root).parts[0] not in DERIVED_DOCUMENT_ROOTS
         for path in candidate_files
     )
     combined = "\n".join(

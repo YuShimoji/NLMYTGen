@@ -9,6 +9,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 from xml.etree import ElementTree
 
+import pytest
+
 from src.pipeline.new_banknote_reference_layout_reconstruction import (
     BASE_REVISION,
     DESIGN_ID,
@@ -63,6 +65,30 @@ def _file_hashes(root: Path) -> dict[str, str]:
         for path in sorted(root.rglob("*"))
         if path.is_file()
     }
+
+
+def _trace_capture_locators() -> tuple[str, ...]:
+    registry = _load(OUTPUT / "reference_layout_trace_registry.json")
+    return tuple(
+        (OUTPUT / row["local_capture"])
+        .resolve()
+        .relative_to(ROOT)
+        .as_posix()
+        for row in registry["traces"]
+    )
+
+
+def _local_surface_locators() -> tuple[str, ...]:
+    return tuple(
+        (OUTPUT / name).relative_to(ROOT).as_posix()
+        for name in (
+            "local_reference_trace_board.html",
+            "local_reference_proxy_preview.html",
+            "local_reference_traces",
+            "local_render_inspection",
+            "local_browser_profile",
+        )
+    )
 
 
 class _ResourceParser(HTMLParser):
@@ -168,11 +194,20 @@ def test_six_actual_surface_traces_cover_all_cohorts_and_visual_geometry() -> No
         assert trace["shared_patterns"]
         assert trace["confidence"]
         assert any(trace[field] for field in bounds)
-        assert (OUTPUT / trace["local_capture"]).is_file()
         trace_svg = OUTPUT / "traces" / f'{trace["trace_id"]}.svg'
         root = ElementTree.parse(trace_svg).getroot()
         assert root.attrib["viewBox"] == "0 0 1920 1080"
         assert root.attrib["data-trace-id"] == trace["trace_id"]
+
+
+@pytest.mark.requires_local_evidence(
+    "reference_layout_trace_captures",
+    *_trace_capture_locators(),
+)
+def test_six_actual_surface_local_captures_are_available() -> None:
+    registry = _load(OUTPUT / "reference_layout_trace_registry.json")
+    for trace in registry["traces"]:
+        assert (OUTPUT / trace["local_capture"]).is_file()
 
 
 def test_shared_grammar_and_decision_lineage_are_thresholded() -> None:
@@ -340,6 +375,10 @@ def test_all_generated_html_xml_json_parse_and_tracked_resources_remain_local() 
         assert "audio" not in parser.tags and "video" not in parser.tags
 
 
+@pytest.mark.requires_local_evidence(
+    "reference_layout_review_surfaces",
+    *_local_surface_locators(),
+)
 def test_ignored_local_surfaces_are_present_ignored_and_untracked() -> None:
     local_paths = [
         OUTPUT / "local_reference_trace_board.html",
