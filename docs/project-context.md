@@ -1,9 +1,42 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-23 JST・current terminal development ready）
+## 現在の別端末再開ハンドオフ（2026-07-23 JST・receiving terminal review ready）
 
-この節だけが現在の別端末再開地点である。製品達成履歴は変えず、current terminalの
-toolchain、private artifact availability、exact next actionを実測へ合わせた。
+この節だけが現在の別端末再開地点である。送信端末の開発基盤監査を継承しつつ、受信端末にだけ存在する
+private artifactをlive再検証し、直近gateを実測へ合わせた。
+
+- **取得先**: `origin/codex/nlmytgen-regression-integrity-v1`。受信worktree
+  `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen`を`2f55849`から
+  remote tip `58feb851e8fdd35c0f205e77b86d45d0fe9c78a0`へfast-forward-onlyで同期した。
+  最終handoff commitはremote branch tipから解決し、固定SHAを次の作業baseとみなさない。
+- **同期確認**: `git fetch --prune origin`後、upstream差分`0/0`、`origin/master`に
+  30 ahead / 0 behind、tracked cleanを確認した。pre-existing untracked
+  `.playwright-mcp/`、`artifacts/`、`phase-e-01-contact-acquired*.png`とignored evidenceは保持した。
+- **受信端末の開発基盤**: Python 3.13.3 / uv 0.10.7 / pytest 8.4.2、Node 24.13.0 /
+  npm 11.6.2 / Electron 35.7.5、ffmpeg/ffprobe 8.0.1、.NET SDK 10.0.204、
+  YMM4 4.54.0.1をreadbackした。locked uv sync、npm dependency tree、focused 46 tests、
+  state sync、対象module compile、driver Release build、silent dry-run、MP4 full decodeがpassした。
+- **private artifact availability**: manifest source `.local.ymmp`、generated project、
+  `internal_review.mp4`がexact ignored pathに存在し、SHA-256はそれぞれ
+  `beee7eab...eaa54`、`f0361f...19853`、`f2444f...421f7`でmanifest / receiptと一致した。
+  送信端末の「不在」はその端末だけの観測であり、Git可搬性や製品状態へ一般化しない。
+- **残存基盤負債**: `uv.lock`と`gui/package-lock.json`はignoredで、Git-only clean checkoutの
+  deterministic dependency syncは未成立。Electron 35.7.5はdirect high 1件で、自動fixは43.2.0への
+  semver-major。`dotnet --info`のworkload installer例外も残るがcurrent driver buildは0 warning /
+  0 errorである。いずれも今回無断upgrade・workload修復していない。
+- **exact next / next owner**: human reviewerがexact local MP4を音声再生可能な時に通し視聴し、
+  発音、rhythm、cue切替、字幕comfort、proxy compositionを`accept` / `repair` / `reject`へ
+  cue idと観察付きで決定する。assistantは返答後だけcue-specific repairまたはacceptance freezeへ進む。
+- **変えていない判断**: `Product-Gate`は`human-internal-review`。draft PR #2はreview-only。
+  rights、production asset replacement、master merge、external upload、publicationは未承認である。
+- **詳細正本**:
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-23.md`。
+  通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md`だけを読む。
+
+## 直前の別端末再開ハンドオフ（2026-07-23 JST・sending terminal development ready）
+
+以下は送信端末固有の観測履歴であり、現在の再開地点として読まない。製品達成履歴は変えず、
+送信端末のtoolchain、private artifact availability、exact next actionを当時の実測へ合わせた。
 
 - **取得先**: `origin/codex/nlmytgen-regression-integrity-v1`。既存linked worktreeを
   `6f12bbc`からtracked-clean remote tip `2f558499efc66810314d823627bce23ea6400883`へ
